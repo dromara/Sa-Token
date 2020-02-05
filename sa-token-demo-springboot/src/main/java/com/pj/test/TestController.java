@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.dev33.satoken.session.SaSessionUtil;
+import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.StpUtil;
 
 @RestController
@@ -22,9 +22,16 @@ public class TestController {
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
-		System.out.println("当前登录账号：" + StpUtil.getLoginId_asInt());	// 获取登录id并转为int 
-
+		System.out.println("当前登录账号：" + StpUtil.getLoginId_asInt());	// 获取登录id并转为int
+		
+//		StpUtil.logout();
+//		System.out.println("注销登录");
+//		System.out.println("当前是否登录：" + StpUtil.isLogin());
+//		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());
+//		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
+		
 		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	// 获取登录id并转为int 
+		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());
 		
 		return AjaxJson.getSuccess();
 	}
@@ -70,11 +77,11 @@ public class TestController {
 	public AjaxJson session2() {
 		System.out.println("======================= 进入方法，测试自定义session接口 ========================= ");
 		// 自定义session就是无需登录也可以使用 的session ：比如拿用户的手机号当做 key， 来获取 session 
-		System.out.println("自定义 session的id为：" + SaSessionUtil.getSessionById("1895544896").getId());
-		System.out.println("测试取值name：" + SaSessionUtil.getSessionById("1895544896").getAttribute("name"));
-		SaSessionUtil.getSessionById("1895544896").setAttribute("name", "张三");	// 写入值 
-		System.out.println("测试取值name：" + SaSessionUtil.getSessionById("1895544896").getAttribute("name"));
-		System.out.println("测试取值name：" + SaSessionUtil.getSessionById("1895544896").getAttribute("name"));
+		System.out.println("自定义 session的id为：" + SaSessionCustomUtil.getSessionById("1895544896").getId());
+		System.out.println("测试取值name：" + SaSessionCustomUtil.getSessionById("1895544896").getAttribute("name"));
+		SaSessionCustomUtil.getSessionById("1895544896").setAttribute("name", "张三");	// 写入值 
+		System.out.println("测试取值name：" + SaSessionCustomUtil.getSessionById("1895544896").getAttribute("name"));
+		System.out.println("测试取值name：" + SaSessionCustomUtil.getSessionById("1895544896").getAttribute("name"));
 		return AjaxJson.getSuccess();
 	}
 	

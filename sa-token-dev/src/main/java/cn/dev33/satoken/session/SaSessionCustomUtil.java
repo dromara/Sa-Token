@@ -3,11 +3,11 @@ package cn.dev33.satoken.session;
 import cn.dev33.satoken.SaTokenManager;
 
 /**
- * sa-session工具类  
+ *    自定义sa-session工具类  
  * @author kong
  *
  */
-public class SaSessionUtil {
+public class SaSessionCustomUtil {
 
 	// 添加上指定前缀，防止恶意伪造session  
 	public static String session_key = "custom";

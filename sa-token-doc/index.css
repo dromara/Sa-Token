@@ -1,0 +1,60 @@
+/* ================================== 内容 ====================================== */
+/* 总 */
+*{margin: 0px; padding: 0px;}
+body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica Neue","Arial,sans-serif";}
+header{height: 70px; border: 0px #000 solid; position: fixed; width: 100%;}
+/* logo部分 */
+.logo-box {margin-top: 15px; margin-left: 30px; cursor: pointer; color: #000; float: left;}
+.logo-box img {width: 50px; height: 50px; vertical-align: middle;}
+.logo-box .logo-text {display: inline-block;vertical-align: middle; font-size: 22px;font-weight: 400;}
+/* 右边导航 */
+.nav-right{float: right; line-height: 70px; padding-right: 4.5em;}
+.nav-right a{padding: 0px 1em; color: #34495E; text-decoration: none; transition: all 0.2s;}
+.nav-right a:hover{color: #42B983;}
+/* 主要 */
+html,body,.main-box{width: 100%; height: 100%; }
+.main-box{display: flex; align-items: center; text-align: center;}
+.main-box .content-box{flex: 1;}
+
+.content-box h1{font-size: 110px; font-weight: 300; position: relative;}
+.content-box h1 small{font-size: 20px; position: absolute; bottom: 0px;}
+.sub-title{font-size: 24px; font-weight: 400; margin-top: 30px; margin-bottom: 25px;}
+.content-box p{line-height: 30px;}
+
+.btn-box{margin-top: 16px;}
+.btn-box a{
+	border: 1px #42B983 solid;
+	border-radius: 2rem;
+	box-sizing: border-box;
+	color: #42B983;
+	display: inline-block;
+	font-size: 1.05rem;
+	letter-spacing: .1rem;
+	margin: .5rem 1rem;
+	padding: 0.9em 2rem;
+	text-decoration: none;
+	transition: all .15s ease;
+}
+/* 最后一个 */
+.btn-box a:last-child {
+    background-color: #42B983;
+    color: #fff;
+}
+.btn-box a:hover{color: #000;}
+
+/* 底部 */
+footer{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	line-height: 80px;
+	text-align: center;
+}
+footer a{color: inherit; text-decoration: none;}
+footer a:hover{text-decoration: underline;}
+
+/* 媒体查询 */
+@media screen and (max-width: 800px) {
+	.logo-box,.copyright {display: none;}
+}
+
