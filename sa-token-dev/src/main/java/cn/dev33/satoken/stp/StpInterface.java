@@ -7,7 +7,12 @@ import java.util.List;
  */
 public interface StpInterface {
 	
-	/** 返回指定login_id所拥有的权限码集合   */
+	/**
+	 * 返回指定login_id所拥有的权限码集合
+	 * @param login_id 账号id 
+	 * @param login_key 具体的stp标识 
+	 * @return
+	 */
 	public List<Object> getPermissionCodeList(Object login_id, String login_key);
 	
 	

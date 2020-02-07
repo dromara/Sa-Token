@@ -10,9 +10,7 @@ import cn.dev33.satoken.session.SaSession;
  */
 public class SaTokenDaoDefault implements SaTokenDao {
 
-	/**
-	 * 所有数据集合 
-	 */
+	// 所有数据集合 
 	Map<String, Object> dataMap = new HashMap<String, Object>();
 
 	

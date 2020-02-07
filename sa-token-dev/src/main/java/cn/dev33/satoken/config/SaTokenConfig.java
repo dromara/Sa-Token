@@ -12,51 +12,103 @@ public class SaTokenConfig {
 	private Boolean isReadBody = true;		// 是否在header读取不到token时，继续从请求题参数里继续尝试读取 
 	
 	private Boolean isV = true;	 // 是否在初始化配置时打印版本字符画
+
 	
 	
+	
+	/**
+	 * @return tokenName
+	 */
 	public String getTokenName() {
 		return tokenName;
 	}
+
+	/**
+	 * @param tokenName 要设置的 tokenName
+	 */
 	public void setTokenName(String tokenName) {
 		this.tokenName = tokenName;
 	}
+
+	/**
+	 * @return timeout
+	 */
 	public long getTimeout() {
 		return timeout;
 	}
+
+	/**
+	 * @param timeout 要设置的 timeout
+	 */
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
 	}
+
+	/**
+	 * @return isShare
+	 */
 	public Boolean getIsShare() {
 		return isShare;
 	}
+
+	/**
+	 * @param isShare 要设置的 isShare
+	 */
 	public void setIsShare(Boolean isShare) {
 		this.isShare = isShare;
 	}
+
+	/**
+	 * @return isReadHead
+	 */
 	public Boolean getIsReadHead() {
 		return isReadHead;
 	}
+
+	/**
+	 * @param isReadHead 要设置的 isReadHead
+	 */
 	public void setIsReadHead(Boolean isReadHead) {
 		this.isReadHead = isReadHead;
 	}
+
+	/**
+	 * @return isReadBody
+	 */
 	public Boolean getIsReadBody() {
 		return isReadBody;
 	}
+
+	/**
+	 * @param isReadBody 要设置的 isReadBody
+	 */
 	public void setIsReadBody(Boolean isReadBody) {
 		this.isReadBody = isReadBody;
 	}
+
+	/**
+	 * @return isV
+	 */
 	public Boolean getIsV() {
 		return isV;
 	}
+
+	/**
+	 * @param isV 要设置的 isV
+	 */
 	public void setIsV(Boolean isV) {
 		this.isV = isV;
 	}
-	
-	
+
+	/* （非 Javadoc）
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", isShare=" + isShare
 				+ ", isReadHead=" + isReadHead + ", isReadBody=" + isReadBody + ", isV=" + isV + "]";
 	}
+	
 	
 	
 	

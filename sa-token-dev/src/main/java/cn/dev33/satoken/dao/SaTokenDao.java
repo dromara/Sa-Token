@@ -33,27 +33,27 @@ public interface SaTokenDao {
 
 	/**
 	 * 根据指定key的session，如果没有，则返回空 
-	 * @param key 键名称 
+	 * @param sessionId 键名称 
 	 * @return
 	 */
 	public SaSession getSaSession(String sessionId);
 
 	/**
 	 *  将指定session持久化 
-	 * @param key 键名称 
-	 * @param value 值 
+	 * @param session 要保存的session对象
 	 * @param timeout 过期时间，单位: s
 	 */
 	public void saveSaSession(SaSession session, long timeout);
 
 	/**
-	 *  更新指定session 
+	 * 更新指定session
+	 * @param session 要更新的session对象
 	 */
 	public void updateSaSession(SaSession session);
 	
 	/**
 	 *   删除一个指定的session 
-	 * @param key 键名称 
+	 * @param sessionId sessionId
 	 */
 	public void delSaSession(String sessionId);
 	

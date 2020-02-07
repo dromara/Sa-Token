@@ -36,12 +36,18 @@ public class StpLogic {
 	// =================== 获取token 相关 ===================  
 	
 
-	/**  随机生成一个tokenValue */
+	/**
+	 * 随机生成一个tokenValue
+	 * @return 生成的tokenValue 
+	 */
  	public String randomTokenValue() {
 		return UUID.randomUUID().toString();
 	}
 	
-	/** 获取当前tokenValue */
+	/**
+	 *  获取当前tokenValue
+	 * @return 当前tokenValue
+	 */
 	public String getTokenValue(){
 		// 0、获取相应对象 
 		HttpServletRequest request = SpringMVCUtil.getRequest();
@@ -82,12 +88,19 @@ public class StpLogic {
 		return null;
 	}
 	
-	/** 获取指定id的tokenValue */
+	/** 
+	 * 获取指定id的tokenValue
+	 * @param login_id 
+	 * @return
+	 */
 	public String getTokenValueByLoginId(Object login_id) {
 		return SaTokenManager.getDao().getValue(getKey_LoginId(login_id)); 
 	}
 	
-	/** 获取当前会话的token信息：tokenName与tokenValue  */
+	/**
+	 * 获取当前会话的token信息：tokenName与tokenValue
+	 * @return 一个Map对象 
+	 */
 	public Map<String, String> getTokenInfo() {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("tokenName", getKey_tokenName());
@@ -98,7 +111,10 @@ public class StpLogic {
 	
 	// =================== 登录相关操作 ===================  
 
-	/** 在当前会话上登录id ，建议的类型：（long | int | String） */
+	/**
+	 * 在当前会话上登录id 
+	 * @param login_id 登录id ，建议的类型：（long | int | String）
+	 */
 	public void setLoginId(Object login_id) {
 		
 		// 1、获取相应对象  
@@ -125,7 +141,9 @@ public class StpLogic {
 		SaCookieUtil.addCookie(SpringMVCUtil.getResponse(), getKey_tokenName(), tokenValue, "/", (int)config.getTimeout());		// cookie注入 
 	}
 
-	/** 当前会话注销登录  */
+	/** 
+	 * 当前会话注销登录
+	 */
 	public void logout() {
 		Object login_id = getLoginId_defaultNull();
 		if(login_id != null) {
@@ -134,7 +152,10 @@ public class StpLogic {
 		}
 	}
 
-	/** 指定login_id的会话注销登录（踢人下线）  */
+	/**
+	 * 指定login_id的会话注销登录（踢人下线）
+	 * @param login_id 账号id 
+	 */
 	public void logoutByLoginId(Object login_id) {
 		
 		// 获取相应tokenValue
@@ -152,12 +173,18 @@ public class StpLogic {
 	
 	// 查询相关 
 	
- 	/** 获取当前会话是否已经登录 */
+ 	/** 
+ 	 * 获取当前会话是否已经登录
+ 	 * @return 是否已登录 
+ 	 */
  	public boolean isLogin() {
  		return getLoginId_defaultNull() != null;
  	}
 
- 	/** 获取当前会话登录id, 如果未登录，则抛出异常  */
+ 	/** 
+ 	 * 获取当前会话登录id, 如果未登录，则抛出异常
+ 	 * @return 
+ 	 */
  	public Object getLoginId() {
  		Object login_id = getLoginId_defaultNull();
  		if(login_id == null) {
@@ -166,7 +193,11 @@ public class StpLogic {
  		return login_id;
  	}
 	
-	/** 获取当前会话登录id, 如果未登录，则返回默认值  */
+	/** 
+	 * 获取当前会话登录id, 如果未登录，则返回默认值
+	 * @param default_value
+	 * @return
+	 */
  	@SuppressWarnings("unchecked")
 	public <T>T getLoginId(T default_value) {
 		Object login_id = getLoginId_defaultNull();
@@ -176,7 +207,10 @@ public class StpLogic {
 		return (T)login_id;
  	}
  	
-	/** 获取当前会话登录id, 如果未登录，则返回null  */
+	/** 
+	 * 获取当前会话登录id, 如果未登录，则返回null
+	 * @return
+	 */
 	public Object getLoginId_defaultNull() {
  		String tokenValue = getTokenValue();
  		if(tokenValue != null) {
@@ -188,12 +222,18 @@ public class StpLogic {
  		return null;
  	}
 
-	/** 获取当前会话登录id, 并转换为String  */ 
+	/** 
+	 * 获取当前会话登录id, 并转换为String
+	 * @return
+	 */
  	public String getLoginId_asString() {
  		return String.valueOf(getLoginId());
  	}
 
-	/** 获取当前会话登录id, 并转换为int  */ 
+	/** 
+	 * 获取当前会话登录id, 并转换为int
+	 * @return
+	 */
  	public int getLoginId_asInt() {
  		// Object login_id = getLoginId();
 // 		if(login_id instanceof Integer) {
@@ -202,7 +242,10 @@ public class StpLogic {
  		return Integer.valueOf(String.valueOf(getLoginId()));
  	}
 
-	/** 获取当前会话登录id, 并转换为long  */ 
+	/**
+	 * 获取当前会话登录id, 并转换为long
+	 * @return
+	 */
  	public long getLoginId_asLong() {
 // 		Object login_id = getLoginId();
 // 		if(login_id instanceof Long) {
@@ -215,7 +258,12 @@ public class StpLogic {
  	
 	// =================== session相关 ===================  
 
-	/** 获取指定key的session, 如果没有，is_create=是否新建并返回  */
+	/** 
+	 * 获取指定key的session, 如果没有，is_create=是否新建并返回
+	 * @param sessionId
+	 * @param is_create
+	 * @return
+	 */
 	protected SaSession getSessionBySessionId(String sessionId, boolean is_create) {
 		SaSession session = SaTokenManager.getDao().getSaSession(sessionId);
 		if(session == null && is_create) {
@@ -225,12 +273,19 @@ public class StpLogic {
 		return session;
 	}
 
-	/** 获取指定login_id的session  */
+	/** 
+	 * 获取指定login_id的session
+	 * @param login_id
+	 * @return
+	 */
 	public SaSession getSessionByLoginId(Object login_id) {
 		return getSessionBySessionId(getKey_session(login_id), false);
 	}
 
-	/** 获取当前会话的session  */
+	/** 
+	 * 获取当前会话的session
+	 * @return
+	 */
 	public SaSession getSession() {
 		return getSessionBySessionId(getKey_session(getLoginId()), true);
 	}
@@ -239,25 +294,40 @@ public class StpLogic {
 
 	// =================== 权限验证操作 ===================  
 
- 	/** 指定login_id是否含有指定权限 */
+ 	/** 
+ 	 * 指定login_id是否含有指定权限
+ 	 * @param login_id
+ 	 * @param pcode
+ 	 * @return
+ 	 */
  	public boolean hasPermission(Object login_id, Object pcode) {
  		List<Object> pcodeList = SaTokenManager.getStp().getPermissionCodeList(login_id, login_key);
 		return !(pcodeList == null || pcodeList.contains(pcode) == false);
  	}
  	
- 	/** 当前会话是否含有指定权限 */
+ 	/** 
+ 	 * 当前会话是否含有指定权限
+ 	 * @param pcode
+ 	 * @return
+ 	 */
  	public boolean hasPermission(Object pcode) {
  		return hasPermission(getLoginId(), pcode);
  	}
 	
- 	/** 当前账号是否含有指定权限 ， 没有就抛出异常  */
+ 	/** 
+ 	 * 当前账号是否含有指定权限 ， 没有就抛出异常
+ 	 * @param pcode
+ 	 */
  	public void checkPermission(Object pcode) {
  		if(hasPermission(pcode) == false) {
 			throw new NotPermissionException(pcode);
 		}
  	}
 
- 	/** 当前账号是否含有指定权限 ， 【指定多个，必须全都有】  */
+ 	/** 
+ 	 * 当前账号是否含有指定权限 ， 【指定多个，必须全都有】
+ 	 * @param pcodeArray
+ 	 */
  	public void checkPermissionAnd(Object... pcodeArray){
  		Object login_id = getLoginId();
  		List<Object> pcodeList = SaTokenManager.getStp().getPermissionCodeList(login_id, login_key);
@@ -268,7 +338,10 @@ public class StpLogic {
  		}
  	}
 
- 	/** 当前账号是否含有指定权限 ， 【指定多个，有一个就可以了】   */
+ 	/** 
+ 	 * 当前账号是否含有指定权限 ， 【指定多个，有一个就可以了】
+ 	 * @param pcodeArray
+ 	 */
  	public void checkPermissionOr(Object... pcodeArray){
  		Object login_id = getLoginId();
  		List<Object> pcodeList = SaTokenManager.getStp().getPermissionCodeList(login_id, login_key);
@@ -285,19 +358,34 @@ public class StpLogic {
 	
 	// =================== 返回相应key ===================  
 
-	/** 获取key：客户端 tokenName  */
+	/**
+	 *  获取key：客户端 tokenName 
+	 * @return
+	 */
 	public String getKey_tokenName() {
  		return SaTokenManager.getConfig().getTokenName();
  	}
-	/** 获取key： tokenValue 持久化  */
+	/**  
+	 * 获取key： tokenValue 持久化
+	 * @param tokenValue
+	 * @return
+	 */
 	public String getKey_TokenValue(String tokenValue) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + login_key + ":token:" + tokenValue;
 	}
-	/** 获取key： id 持久化  */
+	/** 
+	 * 获取key： id 持久化
+	 * @param login_id
+	 * @return
+	 */
 	public String getKey_LoginId(Object login_id) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + login_key + ":id:" + login_id;
 	}
-	/** 获取key： session 持久化  */
+	/** 
+	 * 获取key： session 持久化  
+	 * @param login_id
+	 * @return
+	 */
 	public String getKey_session(Object login_id) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + login_key + ":session:" + login_id;
 	}

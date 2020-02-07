@@ -13,7 +13,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class SpringMVCUtil {
 	
-	// 获取当前会话的 request 
+	/**
+	 * 获取当前会话的 request 
+	 * @return
+	 */
 	public static HttpServletRequest getRequest() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
 		if(servletRequestAttributes == null) {
@@ -22,7 +25,10 @@ public class SpringMVCUtil {
 		return servletRequestAttributes.getRequest();
 	}
 	
-	// 获取当前会话的  
+	/**
+	 * 获取当前会话的  response
+	 * @return
+	 */
 	public static HttpServletResponse getResponse() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
 		if(servletRequestAttributes == null) {

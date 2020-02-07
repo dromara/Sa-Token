@@ -25,14 +25,12 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		
-		<!-- sa-token 安全认证   -->
-	    <dependency>
-	        <groupId>cn.dev33.sa-token</groupId>
-	        <artifactId>sa-token-spring</artifactId>
-	        <version>1.0.0</version>
-	        <scope>system</scope>
-	        <systemPath>${project.basedir}/lib/sa-token-spring-1.0.0.jar</systemPath>
-	    </dependency>
+		<!-- sa-token权限验证  -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 		
 		<!-- SpringBoot整合redis -->
 		<dependency>
@@ -57,10 +55,6 @@
 							<classpathPrefix>lib/</classpathPrefix>
 							<mainClass>com.pj.SaTokenDemoApplication</mainClass>
 						</manifest>
-						<!-- jar清单添加此字符串 -->
-						<manifestEntries>
-							<Class-Path>lib/sa-token-spring-1.0.0.jar</Class-Path>
-						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>

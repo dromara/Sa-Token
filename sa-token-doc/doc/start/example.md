@@ -11,18 +11,15 @@
 在IDE中新建一个Springboot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考github示例）
 
 #### 2、设置jar包依赖
-- 在项目根目录新建文件夹`lib`，将 `sa-token-spring-xxx.jar` 复制到其中 
-- 并在 `pom.xml` 中添加依赖：
+- 在 `pom.xml` 中添加依赖：
 
 ``` xml 
-	<!-- sa-token 安全认证   -->
-	<dependency>
-		<groupId>cn.dev33.sa-token</groupId>
-		<artifactId>sa-token-spring</artifactId>
-		<version>1.0.0</version>
-		<scope>system</scope>
-		<systemPath>${project.basedir}/lib/sa-token-spring-1.0.0.jar</systemPath>
-	</dependency>
+<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token</artifactId>
+	<version>1.0.0</version>
+</dependency>
 ```
 
 #### 3、配置文件

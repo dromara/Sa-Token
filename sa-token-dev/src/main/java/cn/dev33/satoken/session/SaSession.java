@@ -41,14 +41,17 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 当前会话创建时间
+	 * 返回当前会话创建时间
+	 * @return 时间戳
 	 */
 	public long getCreateTime() {
 		return createTime;
 	}
 	
 	/**
-	 * 写入值
+	 * 写入一个值
+	 * @param key 名称
+	 * @param value 值 
 	 */
 	public void setAttribute(String key, Object value) {
 		dataMap.put(key, value);
@@ -56,14 +59,19 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 取值  
+	 * 取出一个值 
+	 * @param key 名称
+	 * @return 值 
 	 */
 	public Object getAttribute(String key) {
 		return dataMap.get(key);
 	}
 	
 	/**
-	 * 取值，并指定取不到值时的默认值 
+	 *  取值，并指定取不到值时的默认值 
+	 * @param key 名称
+	 * @param default_value 取不到值的时候返回的默认值 
+	 * @return
 	 */
 	public Object getAttribute(String key, Object default_value) {
 		Object value = getAttribute(key);
@@ -75,7 +83,8 @@ public class SaSession implements Serializable {
 
 
 	/**
-	 * 移除一个key
+	 * 移除一个值 
+	 * @param key 要移除的值的名字
 	 */
 	public void removeAttribute(String key) {
 		dataMap.remove(key);
@@ -83,7 +92,7 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 清空所有key
+	 * 清空所有值 
 	 */
 	public void clearAttribute() {
 		dataMap.clear();
@@ -91,14 +100,17 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 是否含有指定key
+	 * 是否含有指定key 
+	 * @param key 是否含有指定值 
+	 * @return 是否含有 
 	 */
 	public boolean containsAttribute(String key)  {
 		return dataMap.keySet().contains(key);
 	}
 	
 	/**
-	 * 当前session会话所有key
+	 * 返回当前session会话所有key 
+	 * @return 所有值的key列表  
 	 */
 	public Set<String> getAttributeKeys() {
 		return dataMap.keySet();
@@ -106,6 +118,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 获取数据集合（如果更新map里的值，请调用session.update()方法避免数据过时 ）
+	 * @return 返回底层储存值的map对象  
 	 */
 	public Map<String, Object> getDataMap() {
 		return dataMap;

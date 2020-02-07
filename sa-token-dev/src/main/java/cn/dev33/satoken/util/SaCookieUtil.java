@@ -15,6 +15,9 @@ public class SaCookieUtil {
 
 	/**
 	 * 获取指定cookie
+	 * @param request 
+	 * @param cookieName
+	 * @return
 	 */
     public static Cookie getCookie(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();
@@ -32,6 +35,11 @@ public class SaCookieUtil {
 
     /**
      * 添加cookie
+     * @param response
+     * @param name
+     * @param value
+     * @param path
+     * @param timeout
      */
     public static void addCookie(HttpServletResponse response,String name,String value,String path,int timeout) {
         Cookie cookie = new Cookie(name, value);
@@ -46,6 +54,9 @@ public class SaCookieUtil {
 
     /**
      * 删除cookie
+     * @param request
+     * @param response
+     * @param name
      */
     public static void delCookie(HttpServletRequest request,HttpServletResponse response,String name) {
         Cookie[] cookies = request.getCookies();
@@ -62,6 +73,10 @@ public class SaCookieUtil {
 
     /**
      * 修改cookie的value值
+     * @param request
+     * @param response
+     * @param name
+     * @param value
      */
     public static void updateCookie(HttpServletRequest request,HttpServletResponse response,String name,String value) {
         Cookie[] cookies = request.getCookies();

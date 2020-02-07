@@ -62,7 +62,7 @@ public class SaTokenConfigFactory {
     private static Object initPropByMap(Map<String, String> map, Object obj){
     	
     	if(map == null){
-    		map = new HashMap<>();
+    		map = new HashMap<String, String>();
     	}
     	
     	// 1、取出类型 
@@ -84,7 +84,9 @@ public class SaTokenConfigFactory {
 				Object valueConvert = getObjectByClass(value, field.getType());	// 转换值类型 
 				field.setAccessible(true);
 				field.set(obj, valueConvert);
-			} catch (IllegalArgumentException | IllegalAccessException e) {
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException("属性赋值出错：" + field.getName(), e);
+			} catch (IllegalAccessException e) {
 				throw new RuntimeException("属性赋值出错：" + field.getName(), e);
 			}
 		}
