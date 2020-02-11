@@ -204,6 +204,15 @@ public class StpLogic {
 		if(login_id == null) {
 			return default_value;
 		}
+		if(default_value instanceof Integer) {
+			return (T)Integer.valueOf(login_id.toString());
+		}
+		if(default_value instanceof Long) {
+			return (T)Long.valueOf(login_id.toString());
+		}
+		if(default_value instanceof String) {
+			return (T)login_id.toString();
+		}
 		return (T)login_id;
  	}
  	
