@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 // import org.springframework.stereotype.Component;
@@ -43,6 +44,8 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	public void setRedisTemplate(RedisTemplate redisTemplate) {
 		RedisSerializer stringSerializer = new StringRedisSerializer();
 	    redisTemplate.setKeySerializer(stringSerializer);
+	    JdkSerializationRedisSerializer jrSerializer = new JdkSerializationRedisSerializer();
+	    redisTemplate.setValueSerializer(jrSerializer);
 		this.redisTemplate = redisTemplate;
 	}
 	
