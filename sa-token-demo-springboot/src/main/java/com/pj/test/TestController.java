@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -86,5 +88,21 @@ public class TestController {
 	}
 	
 	
+	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/at_check
+	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
+	@SaCheckPermission("user-add")		// 注解式鉴权：当前会话必须具有指定权限才能通过 
+	@RequestMapping("at_check")
+	public AjaxJson at_check() {
+		System.out.println("======================= 进入方法，测试注解鉴权接口 ========================= ");
+		System.out.println("只有通过注解鉴权，才能进入此方法");
+		return AjaxJson.getSuccess();
+	}
+	
+	
+	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
+	@RequestMapping("getInfo")
+	public String getInfo() {
+		return "用户信息";
+	}
 	
 }

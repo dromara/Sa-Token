@@ -1,18 +1,18 @@
-//package com.pj.satoken;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.context.annotation.Primary;
-//
-//import cn.dev33.satoken.config.SaTokenConfig;
-//
-///**
-// * sa-token代码方式进行配置
-// */
-//@Configuration
-//public class MySaTokenConfig {
-//
-//	// 获取配置Bean 
+package com.pj.satoken;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import cn.dev33.satoken.annotation.SaCheckInterceptor;
+
+/**
+ * sa-token代码方式进行配置
+ */
+@Configuration
+public class MySaTokenConfig extends WebMvcConfigurationSupport {
+
+	// 获取配置Bean (以代码的方式配置sa-token)
 //	@Primary
 //	@Bean(name="MySaTokenConfig")
 //	public SaTokenConfig getSaTokenConfig() {
@@ -25,5 +25,11 @@
 //		config.setIsV(true);					// 是否在初始化配置时打印版本字符画
 //		return config;
 //	}
-//	
-//}
+	
+	// 注册sa-token的拦截器，打开注解式鉴权功能 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new SaCheckInterceptor()).addPathPatterns("/**");
+	}
+	
+}

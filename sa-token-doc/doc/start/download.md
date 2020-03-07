@@ -15,7 +15,7 @@
 
 
 ## jar包下载
-[点击下载：sa-token-1.0.1.jar](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/sa-token-1.0.1.jar)
+[点击下载：sa-token-1.0.2.jar](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/sa-token-1.0.2.jar)
 
 
 ## maven依赖
@@ -24,7 +24,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 </dependency>
 ```
 
