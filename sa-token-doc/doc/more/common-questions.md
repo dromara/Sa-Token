@@ -9,7 +9,10 @@
 - 参考：[踢人下线](use/kick)
 
 ### 能否集成redis?
-- 参考：[无cookie模式](use/dao-extend)
+- 参考：[持久层扩展](use/dao-extend)
+
+### 能否使用在APP、小程序等前后台分离项目中?
+- 参考：[无cookie模式](use/not-cookie)
 
 ### 还是有不明白到的地方?
 - 请在`github`提交`issues`，或者加入qq群交流（群链接在[首页](README?id=交流群)）

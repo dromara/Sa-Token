@@ -28,7 +28,7 @@ import cn.dev33.satoken.stp.StpInterface;
  *    自定义权限验证接口扩展 
  */
 @Component	// 保证此类被springboot扫描，完成sa-token的自定义权限验证扩展 
-public class StpCustom implements StpInterface {
+public class StpInterfaceImpl implements StpInterface {
 
 	// 返回一个账号所拥有的权限码集合 
 	@Override
@@ -47,7 +47,7 @@ public class StpCustom implements StpInterface {
 ```
 
 
-- 可参考代码：[码云：StpCustom.java](https://gitee.com/sz6/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpCustom.java)
+- 可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/sz6/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
 
 
 

@@ -23,7 +23,35 @@
 1. 无论是app还是小程序，其传递方式都大同小异
 2. 那就是，将token塞到请求header里 ，格式为：`{tokenName: tokenValue}`
 3. 以经典跨端框架`uni-app`为例： 
+
+**方式1，简单粗暴**
+
+``` js 
+	// 1、首先在登录时，将 tokenValue 存储在本地，例如：
+	uni.setStorageSync('tokenValue', tokenValue);
+	
+	// 2、在发起ajax请求的地方，获取这个值，并塞到header里 
+	uni.request({
+		url: 'https://www.example.com/request', // 仅为示例，并非真实接口地址。
+		header: {
+			"content-type": "application/x-www-form-urlencoded",
+			"satoken": uni.getStorageSync('tokenValue')		// 关键代码 
+		},
+		success: (res) => {
+			console.log(res.data);	
+		}
+	});
+	
 ```
+
+**方式2，更加灵活**
+	
+``` js
+	// 1、首先在登录时，将tokenName和tokenValue一起存储在本地，例如：
+	uni.setStorageSync('tokenName', tokenName); 
+	uni.setStorageSync('tokenValue', tokenValue); 
+	
+	// 2、在发起ajax的地方，获取这两个值, 并组织到head里 
 	var tokenName = uni.getStorageSync('tokenName');	// 从本地缓存读取tokenName值
 	var tokenValue = uni.getStorageSync('tokenValue');	// 从本地缓存读取tokenValue值
 	var header = {
@@ -32,7 +60,15 @@
 	if (tokenName != undefined && tokenName != '') {
 		header[tokenName] = tokenValue;
 	}
-	// 后续在发起请求时将 header 对象塞到请求头部 
+	
+	// 3、后续在发起请求时将 header 对象塞到请求头部 
+	uni.request({
+		url: 'https://www.example.com/request', // 仅为示例，并非真实接口地址。
+		header: header,
+		success: (res) => {
+			console.log(res.data);	
+		}
+	});
 ```
 
 4. 只要按照如此方法将token值传递到后端，`sa-token`就能像传统PC端一样自动读取到token值，进行鉴权
