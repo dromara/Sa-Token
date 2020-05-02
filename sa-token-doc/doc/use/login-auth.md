@@ -22,6 +22,10 @@
 #### StpUtil.isLogin()
 - 获取当前会话是否已经登录，返回true=已登录，false=未登录
 
+#### StpUtil.checkLogin()
+- 检验当前会话是否已经登录, 如果未登录，则抛出异常：`NotLoginException`
+- 扩展：`NotLoginException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
+
 #### StpUtil.getLoginId()
 - 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
 - 类似API还有：
@@ -34,5 +38,7 @@
 - 类似API还有：
 	- `StpUtil.getLoginId_defaultNull()`		获取当前会话登录id, 如果未登录，则返回null 
 
+#### getLoginIdByToken(String tokenValue)
+- 获取指定token对应的登录id，如果未登录，则返回 null
 
 

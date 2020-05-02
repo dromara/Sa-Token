@@ -7,7 +7,7 @@ spring:
     sa-token: 
         # token名称（同时也是cookie名称）
         token-name: satoken
-        # token有效期，单位s 默认30天，-1为永不过期   
+        # token有效期，单位s 默认30天
         timeout: 2592000
         # 在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）
         is-share: true

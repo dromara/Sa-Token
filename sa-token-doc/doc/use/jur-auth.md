@@ -59,6 +59,7 @@ public class StpInterfaceImpl implements StpInterface {
 
 #### StpUtil.checkPermission(Object pcode)
 - 检测当前账号是否含有指定权限，如果有则安全通过，如果没有则抛出异常：`NotPermissionException`
+- 扩展：`NotPermissionException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 #### StpUtil.checkPermissionAnd(Object... pcode)
 - 检测当前账号是否含有指定权限【指定多个，必须全都有，否则抛出异常】

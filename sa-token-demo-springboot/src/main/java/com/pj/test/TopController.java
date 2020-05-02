@@ -17,7 +17,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 /**
  * 加强版控制器
  */
-@ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.zyd.blog.controller.admin")
+@ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
 public class TopController {
 
 	// 在每个控制器之前触发的操作
@@ -31,27 +31,23 @@ public class TopController {
 	public void handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
-		e.printStackTrace(); // 打印堆栈，以供调试
+		// 打印堆栈，以供调试
+		e.printStackTrace(); 
 
-		response.setContentType("application/json; charset=utf-8"); // http说明，我要返回JSON对象
-
-		// 如果是未登录异常
-		if (e instanceof NotLoginException) {
-			String jsonStr = new ObjectMapper().writeValueAsString(AjaxJson.getNotLogin());
-			response.getWriter().print(jsonStr);
-			return;
-		}
-		// 如果是权限异常
-		if (e instanceof NotPermissionException) {
+		// 不同异常返回不同状态码 
+		AjaxJson aj = null;
+		if (e instanceof NotLoginException) {	// 如果是未登录异常
+			aj = AjaxJson.getNotLogin();
+		} else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
-			String jsonStr = new ObjectMapper().writeValueAsString(AjaxJson.getNotJur("无此权限：" + ee.getCode()));
-			response.getWriter().print(jsonStr);
-			return;
+			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
+		} else {	// 普通异常, 输出：500 + 异常信息
+			aj = AjaxJson.getError(e.getMessage());
 		}
 
-		// 普通异常输出：500 + 异常信息
-		response.getWriter().print(new ObjectMapper().writeValueAsString(AjaxJson.getError(e.getMessage())));
-
+		// 输出到客户端 
+		response.setContentType("application/json; charset=utf-8"); // http说明，我要返回JSON对象
+		response.getWriter().print(new ObjectMapper().writeValueAsString(aj));
 	}
 
 }

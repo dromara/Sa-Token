@@ -27,7 +27,7 @@ import cn.dev33.satoken.util.SpringMVCUtil;
 public class StpLogic {
 
 	
-	private String login_key = "";		// 持久化的key前缀，多账号体系时以此值区分，比如：login、user、admin
+	public String login_key = "";		// 持久化的key前缀，多账号体系时以此值区分，比如：login、user、admin
 	
 	public StpLogic(String login_key) {
 		this.login_key = login_key;
@@ -55,8 +55,8 @@ public class StpLogic {
 		String key_tokenName = getKey_tokenName();
 		
 		// 1、尝试从request里读取 
-		if(request.getAttribute(SaTokenUtil.just_created_save_key) != null) {
-			return String.valueOf(request.getAttribute(SaTokenUtil.just_created_save_key));
+		if(request.getAttribute(SaTokenUtil.JUST_CREATED_SAVE_KEY) != null) {
+			return String.valueOf(request.getAttribute(SaTokenUtil.JUST_CREATED_SAVE_KEY));
 		}
 		
 		// 2、尝试从cookie里读取 
@@ -137,7 +137,7 @@ public class StpLogic {
 		// 3、持久化 
 		dao.setValue(getKey_TokenValue(tokenValue), String.valueOf(login_id), config.getTimeout());	// token -> uid 
 		dao.setValue(getKey_LoginId(login_id), tokenValue, config.getTimeout());							// uid -> token 
-		request.setAttribute(SaTokenUtil.just_created_save_key, tokenValue);								// 保存到本次request里  
+		request.setAttribute(SaTokenUtil.JUST_CREATED_SAVE_KEY, tokenValue);								// 保存到本次request里  
 		SaCookieUtil.addCookie(SpringMVCUtil.getResponse(), getKey_tokenName(), tokenValue, "/", (int)config.getTimeout());		// cookie注入 
 	}
 
@@ -180,7 +180,14 @@ public class StpLogic {
  	public boolean isLogin() {
  		return getLoginId_defaultNull() != null;
  	}
-
+ 	
+ 	/** 
+ 	 * 检验当前会话是否已经登录，如未登录，则抛出异常
+ 	 */
+ 	public void checkLogin() {
+ 		getLoginId();
+ 	}
+ 	
  	/** 
  	 * 获取当前会话登录id, 如果未登录，则抛出异常
  	 * @return 
@@ -188,7 +195,7 @@ public class StpLogic {
  	public Object getLoginId() {
  		Object login_id = getLoginId_defaultNull();
  		if(login_id == null) {
- 			throw new NotLoginException();
+ 			throw new NotLoginException(this.login_key);
  		}
  		return login_id;
  	}
@@ -263,6 +270,19 @@ public class StpLogic {
  		return Long.valueOf(String.valueOf(getLoginId()));
  	}
  	
+ 	/** 
+ 	 * 获取指定token对应的登录id，如果未登录，则返回 null 
+ 	 * @return 
+ 	 */
+ 	public Object getLoginIdByToken(String tokenValue) {
+ 		if(tokenValue != null) {
+ 			Object login_id = SaTokenManager.getDao().getValue(getKey_TokenValue(tokenValue));
+ 			if(login_id != null) {
+ 				return login_id;
+ 			}
+ 		}
+ 		return null;
+ 	}
  	
  	
 	// =================== session相关 ===================  
@@ -329,7 +349,7 @@ public class StpLogic {
  	 */
  	public void checkPermission(Object pcode) {
  		if(hasPermission(pcode) == false) {
-			throw new NotPermissionException(pcode);
+			throw new NotPermissionException(pcode, this.login_key);
 		}
  	}
 
@@ -342,7 +362,7 @@ public class StpLogic {
  		List<Object> pcodeList = SaTokenManager.getStp().getPermissionCodeList(login_id, login_key);
  		for (Object pcode : pcodeArray) {
  			if(pcodeList.contains(pcode) == false) {
- 				throw new NotPermissionException(pcode);	// 没有权限抛出异常 
+ 				throw new NotPermissionException(pcode, this.login_key);	// 没有权限抛出异常 
  			}
  		}
  	}
@@ -360,7 +380,7 @@ public class StpLogic {
  			}
  		}
 		if(pcodeArray.length > 0) {
-	 		throw new NotPermissionException(pcodeArray[0]);	// 没有权限抛出异常 
+	 		throw new NotPermissionException(pcodeArray[0], this.login_key);	// 没有权限抛出异常 
 		}
  	}
  	

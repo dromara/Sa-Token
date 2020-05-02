@@ -17,7 +17,7 @@
 		// 注册sa-token的拦截器，打开注解式鉴权功能 
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(new SaCheckInterceptor()).addPathPatterns("/**");
+			registry.addInterceptor(new SaCheckInterceptor()).addPathPatterns("/**");		// 全局拦截器
 		}
 	}
 ```
@@ -47,3 +47,23 @@
 
 #### 注意事项
 以上两个注解都可以加在类上，代表为这个类所有方法进行鉴权
+
+
+
+## 3、扩展 
+- 其实在注册拦截器时，我们也可以根据路由前缀设置不同 `StpLogic`, 从而达到不同模块不同鉴权方式的目的
+- 以下为参考示例：
+``` java
+	@Configuration
+	public class MySaTokenConfig extends WebMvcConfigurationSupport {
+		// 注册sa-token的拦截器，打开注解式鉴权功能 
+		@Override
+		public void addInterceptors(InterceptorRegistry registry) {
+			registry.addInterceptor(new SaCheckInterceptor(StpUtil.stpLogic)).addPathPatterns("/admin/**");	
+			registry.addInterceptor(new SaCheckInterceptor(StpUserUtil.stpLogic)).addPathPatterns("/user/**");	
+		}
+	}
+```
+
+
+

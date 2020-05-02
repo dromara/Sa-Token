@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * ajax返回Json的封装 
- * 【此类封装了Meta和Body的功能，写法不同，但是返回数据格式相同】
  */
 public class AjaxJson implements Serializable{
 

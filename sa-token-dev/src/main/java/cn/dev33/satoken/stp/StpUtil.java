@@ -79,6 +79,13 @@ public class StpUtil {
 		return stpLogic.isLogin();
 	}
 
+	/**
+	 * 检验当前会话是否已经登录，如未登录，则抛出异常
+ 	 */
+ 	public static void checkLogin() {
+ 		getLoginId();
+ 	}
+	
 	/** 
  	 * 获取当前会话登录id, 如果未登录，则抛出异常
  	 * @return 
@@ -128,6 +135,14 @@ public class StpUtil {
 		return stpLogic.getLoginId_asLong();
 	}
 
+	/** 
+ 	 * 获取指定token对应的登录id，如果未登录，则返回 null 
+ 	 * @return 
+ 	 */
+ 	public static Object getLoginIdByToken(String tokenValue) {
+ 		return stpLogic.getLoginIdByToken(tokenValue);
+ 	}
+	
 	// =================== session相关 ===================
 
 	/** 

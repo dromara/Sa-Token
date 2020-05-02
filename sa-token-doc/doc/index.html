@@ -66,13 +66,13 @@
 		<div id="app">加载中...</div>
 		<script>
 			var name = '<img style="width: 50px; height: 50px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
-			name += '<b style="font-size: 24px; vertical-align: middle;">sa-token</b> <sub>v1.0.2</sub>'
+			name += '<b style="font-size: 24px; vertical-align: middle;">sa-token</b> <sub>v1.0.3</sub>'
 			window.$docsify = {
 				name: name, // 名字 
 				repo: 'https://github.com/click33/sa-token', // github地址 
 				// themeColor: '#06A3D7', // 主题颜色  
+				basePath: location.pathname.substr(0, location.pathname.lastIndexOf('/') + 1),	// 自动计算项目名字 
 				// basePath: '/sa-token-doc/',		// 设置文件加载的父路径, 这在一些带项目名部署的文件中非常有效
-				// basePath: '/sa-token-doc/index.html',
 				auto2top: true, // 是否在切换页面后回到顶部 
 				// coverpage: true, // 开启封面 
 				subMaxLevel: 3, // 标题解析层级, 写几就在目录树中解析到几级标题 ,一般写2吧也就 

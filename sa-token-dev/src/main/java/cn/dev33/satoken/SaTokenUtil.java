@@ -7,7 +7,7 @@ public class SaTokenUtil {
 
 	
 	// sa-token 版本号 
-	public static final String version = "v1.0.0";
+	public static final String version = "v1.0.3";
 
 	// sa-token 开源地址 
 	public static final String github_url = "https://github.com/click33/sa-token";
@@ -23,8 +23,8 @@ public class SaTokenUtil {
 		System.out.println(str);
 	}
 
-	// 如果token为本次请求新创建的，则以此字符串为key存储在当前request中  
-	public static final String just_created_save_key= "just_created_save_key_"; 	
+	// 如果token为本次请求新创建的，则以此字符串为key存储在当前request中  JUST_CREATED_SAVE_KEY
+	public static final String JUST_CREATED_SAVE_KEY= "JUST_CREATED_SAVE_KEY_"; 	
 	
 	
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
@@ -13,6 +14,28 @@ import cn.dev33.satoken.stp.StpUtil;
  */
 public class SaCheckInterceptor implements HandlerInterceptor {
 
+
+	// 底层的 StpLogic 对象  
+	public StpLogic stpLogic = null;
+	
+	/**
+	 * 创建，并指定一个默认的 StpLogic
+	 */
+	public  SaCheckInterceptor() {
+		this(StpUtil.stpLogic);
+	}
+	
+	/**
+	 * 创建，并指定一个的 StpLogic
+	 * @param stpLogic 指定的StpLogic
+	 */
+	public  SaCheckInterceptor(StpLogic stpLogic) {
+		this.stpLogic = stpLogic;
+	}
+	
+
+	
+	
 	// 每次请求之前触发 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -26,7 +49,7 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 		
 		// 验证登录 
 		if(method.hasMethodAnnotation(SaCheckLogin.class) || method.getBeanType().isAnnotationPresent(SaCheckLogin.class)) {
-			StpUtil.getLoginId();
+			stpLogic.checkLogin();
 		}
 		
 		// 获取权限注解 
@@ -41,13 +64,16 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 		// 开始验证权限 
 		Object[] codeArray = concatABC(scp.value(), scp.valueInt(), scp.valueLong());
 		if(scp.isAnd()) {
-			StpUtil.checkPermissionAnd(codeArray);		// 必须全部都有 
+			stpLogic.checkPermissionAnd(codeArray);		// 必须全部都有 
 		} else {
-			StpUtil.checkPermissionOr(codeArray);		// 有一个就行了  
+			stpLogic.checkPermissionOr(codeArray);		// 有一个就行了  
 		}
-		
+			
 		return true;
 	}
+	
+
+
 	
 	
 	// 合并三个数组 

@@ -31,6 +31,7 @@ public class TestController {
 //		System.out.println("当前是否登录：" + StpUtil.isLogin());
 //		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());
 //		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
+//		System.out.println("根据token找登录id：" + StpUtil.getLoginIdByToken(StpUtil.getTokenValue()));
 		
 		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	// 获取登录id并转为int 
 		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());

@@ -2,7 +2,7 @@
 
 - **开始**
 	- [介绍](/README)
-	- [下载](/start/download)
+	- [集成](/start/download)
 	- [示例](/start/example) 	
 
 - **使用**
