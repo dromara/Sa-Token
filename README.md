@@ -1,6 +1,6 @@
 # sa-token
 
-一个的JavaWeb权限认证框架，强大、简单、好用
+一个JavaWeb权限认证框架，强大、简单、好用
 在线文档：[http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
 
  :kissing_closed_eyes:  :kissing_closed_eyes:  :kissing_closed_eyes:  :yum:  :yum:  :yum: :innocent: :innocent: :innocent:  :heart:  :heart:  :heart:  
