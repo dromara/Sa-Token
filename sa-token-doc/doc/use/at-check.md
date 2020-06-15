@@ -55,7 +55,7 @@
 - 以下为参考示例：
 ``` java
 	@Configuration
-	public class MySaTokenConfig extends WebMvcConfigurationSupport {
+	public class MySaTokenConfig implements WebMvcConfigurer {
 		// 注册sa-token的拦截器，打开注解式鉴权功能 
 		@Override
 		public void addInterceptors(InterceptorRegistry registry) {
