@@ -102,8 +102,8 @@ public class TestController {
 	
 	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
 	@RequestMapping("getInfo")
-	public String getInfo() {
-		return "用户信息";
+	public AjaxJson getInfo() {
+		return AjaxJson.getSuccessData("用户信息");
 	}
 	
 }

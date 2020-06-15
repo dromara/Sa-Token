@@ -5,7 +5,7 @@ import java.util.List;
 
 
 /**
- * ajax返回Json的封装 
+ * ajax请求返回Json格式数据的封装 
  */
 public class AjaxJson implements Serializable{
 
@@ -21,7 +21,7 @@ public class AjaxJson implements Serializable{
 	public int code; 	// 状态码
 	public String msg; 	// 描述信息 
 	public Object data; // 携带对象
-	public Long dataCount;	// 数据总数 
+	public Long dataCount;	// 数据总数，用于分页 
 	
 	/**
 	 * 返回code  

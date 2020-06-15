@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 
 /**
- * 加强版控制器
+ * 全局异常处理 
  */
 @ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
-public class TopController {
+public class GlobalException {
 
 	// 在每个控制器之前触发的操作
 	@ModelAttribute
@@ -28,7 +26,7 @@ public class TopController {
 
 	// 全局异常拦截（拦截项目中的所有异常）
 	@ExceptionHandler
-	public void handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
+	public AjaxJson handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
 		// 打印堆栈，以供调试
@@ -44,10 +42,13 @@ public class TopController {
 		} else {	// 普通异常, 输出：500 + 异常信息
 			aj = AjaxJson.getError(e.getMessage());
 		}
+		
+		// 返回给前端
+		return aj;
 
 		// 输出到客户端 
-		response.setContentType("application/json; charset=utf-8"); // http说明，我要返回JSON对象
-		response.getWriter().print(new ObjectMapper().writeValueAsString(aj));
+//		response.setContentType("application/json; charset=utf-8"); // http说明，我要返回JSON对象
+//		response.getWriter().print(new ObjectMapper().writeValueAsString(aj));
 	}
 
 }

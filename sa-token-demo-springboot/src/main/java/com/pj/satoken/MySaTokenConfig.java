@@ -2,7 +2,7 @@ package com.pj.satoken;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import cn.dev33.satoken.annotation.SaCheckInterceptor;
 
@@ -10,7 +10,7 @@ import cn.dev33.satoken.annotation.SaCheckInterceptor;
  * sa-token代码方式进行配置
  */
 @Configuration
-public class MySaTokenConfig extends WebMvcConfigurationSupport {
+public class MySaTokenConfig implements WebMvcConfigurer {
 
 	// 获取配置Bean (以代码的方式配置sa-token)
 //	@Primary

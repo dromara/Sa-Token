@@ -73,4 +73,4 @@ public class StpInterfaceImpl implements StpInterface {
 ## 拦截全局异常
 - 有同学要问，鉴权失败，抛出异常，然后呢？要把异常显示给用户看吗？
 - 当然不能把异常抛给用户看，你可以创建一个全局异常拦截器，统一返回给前端的格式，例如以下示例：
-- 参考：[码云：TopController.java](https://gitee.com/sz6/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/test/TopController.java)
+- 参考：[码云：GlobalException.java](https://gitee.com/sz6/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/test/GlobalException.java)
