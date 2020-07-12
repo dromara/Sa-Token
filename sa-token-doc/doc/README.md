@@ -1,14 +1,15 @@
-# 介绍
+# sa-token
 
-------
+一个JavaWeb权限认证框架，强大、简单、好用
+在线文档：[http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
 
-## sa-token是什么？
-一个`JavaWeb`权限认证框架，强大、简单、好用
+ :kissing_closed_eyes:  :kissing_closed_eyes:  :kissing_closed_eyes:  :yum:  :yum:  :yum: :innocent: :innocent: :innocent:  :heart:  :heart:  :heart:  
 
- > 与其它权限认证框架相比，sa-token尽力保证两点：
- > - 上手简单：能自动化的配置全部自动化，不让你费脑子
- > - 功能强大：能涵盖的功能全部涵盖，不让你用个框架还要自己给框架打各种补丁
 
+## 优点
+与其它权限认证框架相比，sa-token尽力保证两点：
+- 上手简单：能自动化的配置全部自动化，不让你费脑子
+- 功能强大：能涵盖的功能全部涵盖，不让你用个框架还要自己给框架打各种补丁
 
 ## 涵盖功能
 - 登录验证
@@ -23,6 +24,8 @@
 - 零配置与Spring等框架集成
 - ...
 
+## 需求提交
+- 我们深知一个优秀的项目需要海纳百川，[点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-admin)
 
 ## 贡献代码
 1. 在github上fork一份到自己的仓库
@@ -43,8 +46,5 @@ QQ交流群：[782974737 点击加入](https://jq.qq.com/?_wv=1027&k=5DHN5Ib) �
 
 
 ![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sqlfly-doc/qqq.png ':size=150')
-
-
-
 
 
