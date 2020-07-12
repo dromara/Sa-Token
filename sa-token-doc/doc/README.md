@@ -25,7 +25,7 @@
 - ...
 
 ## 需求提交
-- 我们深知一个优秀的项目需要海纳百川，[点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-admin)
+- 我们深知一个优秀的项目需要海纳百川，[点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-token)
 
 ## 贡献代码
 1. 在github上fork一份到自己的仓库
