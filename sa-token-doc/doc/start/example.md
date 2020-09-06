@@ -18,7 +18,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token</artifactId>
-	<version>1.0.3</version>
+	<version>1.4.0</version>
 </dependency>
 ```
 

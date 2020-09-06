@@ -6,3 +6,5 @@ bin/
 unpackage/
 .classpath
 .project
+
+.idea/

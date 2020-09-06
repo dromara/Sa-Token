@@ -4,6 +4,8 @@ import cn.dev33.satoken.session.SaSession;
 
 /**
  * sa-token持久层的接口 
+ * @author kong
+ *
  */
 public interface SaTokenDao {
 
@@ -11,7 +13,7 @@ public interface SaTokenDao {
 	/**
 	 * 根据key获取value ，如果没有，则返回空 
 	 * @param key 键名称 
-	 * @return
+	 * @return value
 	 */
 	public String getValue(String key);
 
@@ -25,7 +27,7 @@ public interface SaTokenDao {
 
 	/**
 	 * 删除一个指定的key 
-	 * @param key 
+	 * @param key 键名称 
 	 */
 	public void delKey(String key);
 	
@@ -34,7 +36,7 @@ public interface SaTokenDao {
 	/**
 	 * 根据指定key的session，如果没有，则返回空 
 	 * @param sessionId 键名称 
-	 * @return
+	 * @return SaSession
 	 */
 	public SaSession getSaSession(String sessionId);
 

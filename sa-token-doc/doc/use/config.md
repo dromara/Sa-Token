@@ -1,17 +1,18 @@
 # 框架配置
 - 你可以零配置启动框架
-- 但同时你也可以通过配置，定制性使用框架，sa-token支持多种方式配置框架信息
+- 但同时你也可以通过配置，定制性使用框架，`sa-token`支持多种方式配置框架信息
 
 --- 
 ### 所有可配置项
-| 参数名称	| 类型		| 默认值		| 说明																				|
-| :--------	| :--------	| :--------	| :--------																			|
-| tokenName	| String	| satoken	| token名称（同时也是cookie名称）													|
-| timeout	| long		| 2592000	| token有效期，单位s 默认30天										|
-| isShare	| Boolean	| true		|  在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）	|
-| isReadHead| Boolean	| true		| 是否在cookie读取不到token时，继续从请求header里继续尝试读取							|
-| isReadBody| Boolean	| true		| 是否在header读取不到token时，继续从请求题参数里继续尝试读取						|
-| isV		| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
+| 参数名称		| 类型		| 默认值	| 说明																				|
+| :--------		| :--------	| :--------	| :--------																			|
+| tokenName		| String	| satoken	| token名称（同时也是cookie名称）													|
+| timeout		| long		| 2592000	| token有效期，单位s 默认30天														|
+| isShare		| Boolean	| true		|  在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）|
+| isReadBody	| Boolean	| true		| 是否尝试从请求体里读取token														|
+| isReadHead	| Boolean	| true		| 是否尝试从header里读取token														|
+| isReadCookie	| Boolean	| true		| 是否尝试从cookie里读取token														|
+| isV			| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 
 
 
@@ -25,16 +26,17 @@
 	@Configuration
 	public class MySaTokenConfig {
 	
-		// 获取配置Bean 
+		// 获取配置Bean (以代码的方式配置sa-token)
 		@Primary
 		@Bean(name="MySaTokenConfig")
 		public SaTokenConfig getSaTokenConfig() {
 			SaTokenConfig config = new SaTokenConfig();
-			config.setTokenName("satoken");		// token名称（同时也是cookie名称）
+			config.setTokenName("satoken");		// token名称 (同时也是cookie名称)
 			config.setTimeout(30 * 24 * 60 * 60); 	// token有效期，单位s 默认30天
-			config.setIsShare(true);				// 在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）
-			config.setIsReadHead(true);		// 是否在cookie读取不到token时，继续从请求header里继续尝试读取 
-			config.setIsReadBody(true);		// 是否在cookie读取不到token时，继续从请求header里继续尝试读取 
+			config.setIsShare(true);				// 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录)
+			config.setIsReadBody(true);		// 是否尝试从请求体里读取token
+			config.setIsReadHead(true);		// 是否尝试从header里读取token
+			config.setIsReadCookie(true);		// 是否尝试从cookie里读取token
 			config.setIsV(true);					// 是否在初始化配置时打印版本字符画
 			return config;
 		}
@@ -48,16 +50,18 @@
 spring: 
     # sa-token配置
     sa-token: 
-        # token名称（同时也是cookie名称）
+        # token名称 (同时也是cookie名称)
         token-name: satoken
         # token有效期，单位s 默认30天
         timeout: 2592000
-        # 在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）
+        # 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录)
         is-share: true
-        # 是否在cookie读取不到token时，继续从请求header里继续尝试读取 
-        is-read-head: true
-        #  是否在header读取不到token时，继续从请求题参数里继续尝试读取 
+        # 是否尝试从请求体里读取token
         is-read-body: true
+        # 是否尝试从header里读取token
+        is-read-head: true
+        # 是否尝试从cookie里读取token
+        is-read-cookie: true
         # 是否在初始化配置时打印版本字符画
         is-v: true
 ```

@@ -4,6 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 没有指定权限码，抛出的异常 
+ * @author kong
+ *
  */
 public class NotPermissionException extends RuntimeException {
    
@@ -26,23 +28,24 @@ public class NotPermissionException extends RuntimeException {
 	/**
 	 * login_key 
 	 */
-	private String login_key;
+	private String loginKey;
 	/** 
 	 * 	获得login_key
 	 * @return login_key
 	 */
 	public String getLoginKey() {
-		return login_key;
+		return loginKey;
 	}
 	
 
 	public NotPermissionException(Object code) {
-        this(code, StpUtil.stpLogic.login_key);
+        this(code, StpUtil.stpLogic.loginKey);
     }
-	public NotPermissionException(Object code, String login_key) {
-		super("无此权限：" + code);	// 这里到底要不要拼接上login_key呢？纠结
+	public NotPermissionException(Object code, String loginKey) {
+		// 这里到底要不要拼接上login_key呢？纠结
+		super("无此权限：" + code);	
         this.code = code;
-        this.login_key = login_key;
+        this.loginKey = loginKey;
     }
 
 

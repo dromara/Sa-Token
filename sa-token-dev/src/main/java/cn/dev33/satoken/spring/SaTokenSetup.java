@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Import;
 
 /**
  * 将此注解加到springboot启动类上，即可完成sa-token与springboot的集成  
+ * @author kong
+ *
  */
 @Documented
 @Target({java.lang.annotation.ElementType.TYPE})

@@ -6,7 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 	标注一个路由方法，当前会话必须具有指定权限才可以通过 
+ * 标注一个路由方法，当前会话必须具有指定权限才可以通过 
+ * @author kong
+ *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.TYPE})

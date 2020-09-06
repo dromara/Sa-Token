@@ -1,12 +1,25 @@
-# sa-token
+<p align="center">
+    <img alt="logo" src="http://sa-token.dev33.cn/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
+</p>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.4.0</h1>
+<h4 align="center">一个JavaWeb权限认证框架，强大、简单、好用</h4>
+<h4 align="center">
+	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.4.0-2B9939"></a>
+	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/language-java-2B9939"></a>
+	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
+	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
+	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
+	<a href="https://github.com/click33/sa-token/issues"><img src="https://img.shields.io/github/issues/click33/sa-token.svg"></a>
+	<a href="https://github.com/click33/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/click33/sa-token.svg"></a>
+</h4>
 
-一个JavaWeb权限认证框架，强大、简单、好用
-在线文档：[http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
+---
+ 
+## sa-token 😋
+- 在线文档：[http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
+- 需求提交：我们深知一个优秀的项目需要海纳百川，[点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-token)
 
- :kissing_closed_eyes:  :kissing_closed_eyes:  :kissing_closed_eyes:  :yum:  :yum:  :yum: :innocent: :innocent: :innocent:  :heart:  :heart:  :heart:  
-
-
-## 优点
+## 框架优点
 与其它权限认证框架相比，sa-token尽力保证两点：
 - 上手简单：能自动化的配置全部自动化，不让你费脑子
 - 功能强大：能涵盖的功能全部涵盖，不让你用个框架还要自己给框架打各种补丁
@@ -23,9 +36,6 @@
 - 注解式鉴权（优雅的将鉴权与业务代码分离）
 - 零配置与Spring等框架集成
 - ...
-
-## 需求提交
-- 我们深知一个优秀的项目需要海纳百川，[点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-token)
 
 ## 贡献代码
 1. 在github上fork一份到自己的仓库

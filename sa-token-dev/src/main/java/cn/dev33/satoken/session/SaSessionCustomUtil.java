@@ -9,7 +9,9 @@ import cn.dev33.satoken.SaTokenManager;
  */
 public class SaSessionCustomUtil {
 
-	// 添加上指定前缀，防止恶意伪造session  
+	/**
+	 * 添加上指定前缀，防止恶意伪造session  
+	 */
 	public static String session_key = "custom";
 	public static String getSessionKey(String sessionId) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + session_key + ":session:" + sessionId;
@@ -27,12 +29,12 @@ public class SaSessionCustomUtil {
 	/** 
 	 * 获取指定key的session
 	 * @param sessionId key
-	 * @param is_create 如果没有，是否新建并返回
+	 * @param isCreate 如果没有，是否新建并返回
 	 * @return
 	 */
-	public static SaSession getSessionById(String sessionId, boolean is_create) {
+	public static SaSession getSessionById(String sessionId, boolean isCreate) {
 		SaSession session = SaTokenManager.getDao().getSaSession(getSessionKey(sessionId));
-		if(session == null && is_create) {
+		if(session == null && isCreate) {
 			session = new SaSession(getSessionKey(sessionId));
 			SaTokenManager.getDao().saveSaSession(session, SaTokenManager.getConfig().getTimeout());
 		}

@@ -6,3 +6,7 @@ bin/
 unpackage/
 .classpath
 .project
+
+.factorypath
+
+.idea/

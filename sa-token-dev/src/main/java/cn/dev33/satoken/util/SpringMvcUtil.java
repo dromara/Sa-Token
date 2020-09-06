@@ -11,7 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author kong
  *
  */
-public class SpringMVCUtil {
+public class SpringMvcUtil {
 	
 	/**
 	 * 获取当前会话的 request 
@@ -37,4 +37,7 @@ public class SpringMVCUtil {
 		return servletRequestAttributes.getResponse();
 	}
 
+	
+	
+	
 }

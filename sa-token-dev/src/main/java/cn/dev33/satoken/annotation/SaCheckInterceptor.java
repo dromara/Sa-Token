@@ -11,11 +11,14 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  *  注解式鉴权 - 拦截器 
+ * @author kong
  */
 public class SaCheckInterceptor implements HandlerInterceptor {
 
 
-	// 底层的 StpLogic 对象  
+	/**
+	 * 底层的 StpLogic 对象  
+	 */
 	public StpLogic stpLogic = null;
 	
 	/**
@@ -36,7 +39,9 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 
 	
 	
-	// 每次请求之前触发 
+	/**
+	 * 每次请求之前触发 
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -62,7 +67,7 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 		}
 		
 		// 开始验证权限 
-		Object[] codeArray = concatABC(scp.value(), scp.valueInt(), scp.valueLong());
+		Object[] codeArray = concatAbc(scp.value(), scp.valueInt(), scp.valueLong());
 		if(scp.isAnd()) {
 			stpLogic.checkPermissionAnd(codeArray);		// 必须全部都有 
 		} else {
@@ -76,8 +81,14 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 
 	
 	
-	// 合并三个数组 
-	private Object[] concatABC(String[] a, int[] b, long[] c) {
+	/**
+	 * 合并三个数组 
+	 * @param a .
+	 * @param b .
+	 * @param c .
+	 * @return .
+	 */
+	private Object[] concatAbc(String[] a, int[] b, long[] c) {
 		// 循环赋值  
 		Object[] d = new Object[a.length + b.length + c.length];
 		for (int i = 0; i < a.length; i++) {

@@ -6,15 +6,19 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefault;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
+import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
- *     管理sa-token所有对象 
+ * 管理sa-token所有对象 
  * @author kong
  *
  */
 public class SaTokenManager {
 
-	// 配置文件 Bean 
+	
+	/**
+	 * 配置文件 Bean 
+	 */
 	private static SaTokenConfig config;	
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
@@ -25,7 +29,7 @@ public class SaTokenManager {
 	public static void setConfig(SaTokenConfig config) {
 		SaTokenManager.config = config;
 		if(config.getIsV()) {
-			SaTokenUtil.printSaToken();
+			SaTokenInsideUtil.printSaToken();
 		}
 	}
 	public synchronized static void initConfig() {
@@ -34,7 +38,10 @@ public class SaTokenManager {
 		}
 	}
 	
-	// 持久化 Bean 
+	
+	/**
+	 * 持久化 Bean 
+	 */
 	public static SaTokenDao dao;
 	public static SaTokenDao getDao() {
 		if (dao == null) {
@@ -52,7 +59,9 @@ public class SaTokenManager {
 	}
 	
 
-	// 权限认证 Bean 
+	/**
+	 * 权限认证 Bean 
+	 */
 	public static StpInterface stp;
 	public static StpInterface getStp() {
 		if (stp == null) {

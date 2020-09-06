@@ -4,6 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 没有登陆抛出的异常
+ * @author kong
+ *
  */
 public class NotLoginException extends RuntimeException {
 	
@@ -16,13 +18,13 @@ public class NotLoginException extends RuntimeException {
 	/**
 	 * login_key 
 	 */
-	private String login_key;
+	private String loginKey;
 	/** 
 	 * 获得login_key
 	 * @return login_key
 	 */
 	public String getLoginKey() {
-		return login_key;
+		return loginKey;
 	}
 	
 
@@ -30,16 +32,17 @@ public class NotLoginException extends RuntimeException {
 	 * 创建一个
 	 */
 	public NotLoginException() {
-        this(StpUtil.stpLogic.login_key);
+        this(StpUtil.stpLogic.loginKey);
     }
 	
 	/**
 	 *  创建一个
-	 * @param login_key login_key
+	 * @param loginKey login_key
 	 */
-	public NotLoginException(String login_key) {
-        super("当前会话未登录");	// 这里到底要不要拼接上login_key呢？纠结
-        this.login_key = login_key;
+	public NotLoginException(String loginKey) {
+		// 这里到底要不要拼接上login_key呢？纠结
+        super("当前会话未登录");	
+        this.loginKey = loginKey;
     }
 
 }

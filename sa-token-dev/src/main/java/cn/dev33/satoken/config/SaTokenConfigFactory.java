@@ -8,12 +8,17 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
-	创建一个配置文件  
+ * 创建一个配置文件  
+ * @author kong
+ *
  */
 public class SaTokenConfigFactory {
 
 
-	public static String configPath = "sa-token.properties";	// 默认配置文件地址 
+	/**
+	 *  默认配置文件地址 
+	 */
+	public static String configPath = "sa-token.properties";
 
 	/**
 	 * 根据指定路径获取配置信息 
@@ -97,7 +102,7 @@ public class SaTokenConfigFactory {
      * 将字符串转化为指定数据类型 
      * @param str 值 
      * @param cs 要转换的类型 
-     * @return 
+     * @return .
      */
 	@SuppressWarnings("unchecked")
 	private static <T>T getObjectByClass(String str, Class<T> cs){

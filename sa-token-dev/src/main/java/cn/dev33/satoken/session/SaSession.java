@@ -17,9 +17,18 @@ public class SaSession implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String id; 					// 会话id 
-	private long createTime;			// 当前会话创建时间 
-	private Map<String, Object> dataMap;	// 当前会话键值对  
+	/**
+	 * 会话id 
+	 */
+	private String id;	
+	/**
+	 * 当前会话创建时间 
+	 */
+	private long createTime;
+	/**
+	 * 当前会话键值对  
+	 */
+	private Map<String, Object> dataMap;
 	
 	
 	/**
@@ -34,7 +43,7 @@ public class SaSession implements Serializable {
 	
  	/**
  	 * 获取会话id 
- 	 * @return
+ 	 * @return id
  	 */
 	public String getId() {
 		return id;
@@ -70,15 +79,15 @@ public class SaSession implements Serializable {
 	/**
 	 *  取值，并指定取不到值时的默认值 
 	 * @param key 名称
-	 * @param default_value 取不到值的时候返回的默认值 
-	 * @return
+	 * @param defaultValue 取不到值的时候返回的默认值 
+	 * @return value
 	 */
-	public Object getAttribute(String key, Object default_value) {
+	public Object getAttribute(String key, Object defaultValue) {
 		Object value = getAttribute(key);
 		if(value != null) {
 			return value;
 		}
-		return default_value;
+		return defaultValue;
 	}
 
 

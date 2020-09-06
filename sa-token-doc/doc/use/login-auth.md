@@ -12,9 +12,9 @@
 
 ## 具体API
 
-#### StpUtil.setLoginId(Object login_id)
+#### StpUtil.setLoginId(Object loginId)
 - 标记当前会话登录的账号id
-- 建议的参数类型：long | int | String， 不可以传入复杂类型，如：User、Admin等等
+- 建议的参数类型：`long | int | String`， 不可以传入复杂类型，如：`User`、`Admin`等等
 
 #### StpUtil.logout()
 - 当前会话注销登录 
@@ -29,12 +29,12 @@
 #### StpUtil.getLoginId()
 - 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
 - 类似API还有：
-	- `StpUtil.getLoginId_asString()`		获取当前会话登录id, 并转化为String类型
-	- `StpUtil.getLoginId_asInt()`		获取当前会话登录id, 并转化为int类型
-	- `StpUtil.getLoginId_asLong()`		获取当前会话登录id, 并转化为long类型
+	- `StpUtil.getLoginIdAsString()`		获取当前会话登录id, 并转化为`String`类型
+	- `StpUtil.getLoginIdAsInt()`		获取当前会话登录id, 并转化为`int`类型
+	- `StpUtil.getLoginIdAsLong()`		获取当前会话登录id, 并转化为`long`类型
 
-#### StpUtil.getLoginId(T default_value)
-- 获取当前会话登录id, 如果未登录，则返回默认值 （default_value可以为任意类型）
+#### StpUtil.getLoginId(T defaultValue)
+- 获取当前会话登录id, 如果未登录，则返回默认值 （`defaultValue`可以为任意类型）
 - 类似API还有：
 	- `StpUtil.getLoginId_defaultNull()`		获取当前会话登录id, 如果未登录，则返回null 
 

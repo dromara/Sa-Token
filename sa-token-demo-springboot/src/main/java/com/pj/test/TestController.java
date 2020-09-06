@@ -9,6 +9,11 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.StpUtil;
 
+/**
+ * 测试专用Controller 
+ * @author kong
+ *
+ */
 @RestController
 @RequestMapping("/test/")
 public class TestController {
@@ -19,22 +24,22 @@ public class TestController {
 		System.out.println("======================= 进入方法，测试登录接口 ========================= ");
 		System.out.println("当前会话的token：" + StpUtil.getTokenValue());
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
-		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());
+		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
 		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
-		System.out.println("当前登录账号：" + StpUtil.getLoginId_asInt());	// 获取登录id并转为int
+		System.out.println("当前登录账号：" + StpUtil.getLoginIdAsInt());	// 获取登录id并转为int
 		
 //		StpUtil.logout();
 //		System.out.println("注销登录");
 //		System.out.println("当前是否登录：" + StpUtil.isLogin());
-//		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());
+//		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
 //		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
 //		System.out.println("根据token找登录id：" + StpUtil.getLoginIdByToken(StpUtil.getTokenValue()));
 		
 		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	// 获取登录id并转为int 
-		System.out.println("当前登录账号：" + StpUtil.getLoginId_defaultNull());
+		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
 		
 		return AjaxJson.getSuccess();
 	}
@@ -87,20 +92,27 @@ public class TestController {
 		System.out.println("测试取值name：" + SaSessionCustomUtil.getSessionById("1895544896").getAttribute("name"));
 		return AjaxJson.getSuccess();
 	}
+
+	// 打印当前token信息， 浏览器访问： http://localhost:8081/test/tokenInfo
+	@RequestMapping("tokenInfo")
+	public AjaxJson tokenInfo() {
+		System.out.println("======================= 进入方法，打印当前token信息 ========================= ");
+		System.out.println(StpUtil.getTokenInfo());
+		return AjaxJson.getSuccess();
+	}
 	
 	
-	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/at_check
+	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/atCheck
 	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
 	@SaCheckPermission("user-add")		// 注解式鉴权：当前会话必须具有指定权限才能通过 
-	@RequestMapping("at_check")
-	public AjaxJson at_check() {
+	@RequestMapping("atCheck")
+	public AjaxJson atCheck() {
 		System.out.println("======================= 进入方法，测试注解鉴权接口 ========================= ");
 		System.out.println("只有通过注解鉴权，才能进入此方法");
 		return AjaxJson.getSuccess();
 	}
 	
-	
-	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
+	@SaCheckLogin				// 注解式鉴权：当前会话必须登录才能通过 
 	@RequestMapping("getInfo")
 	public AjaxJson getInfo() {
 		return AjaxJson.getSuccessData("用户信息");

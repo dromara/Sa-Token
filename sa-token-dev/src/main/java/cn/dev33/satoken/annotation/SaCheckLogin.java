@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * 标注一个路由方法，当前会话必须已登录才能通过
+ * @author kong
+ *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })

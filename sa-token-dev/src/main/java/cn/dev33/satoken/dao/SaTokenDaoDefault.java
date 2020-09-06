@@ -7,10 +7,14 @@ import cn.dev33.satoken.session.SaSession;
 
 /**
  * sa-token持久层默认的实现类 , 基于内存Map 
+ * @author kong
+ *
  */
 public class SaTokenDaoDefault implements SaTokenDao {
 
-	// 所有数据集合 
+	/**
+	 * 所有数据集合 
+	 */
 	Map<String, Object> dataMap = new HashMap<String, Object>();
 
 	

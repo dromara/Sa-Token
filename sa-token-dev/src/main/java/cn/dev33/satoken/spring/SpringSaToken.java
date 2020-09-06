@@ -12,33 +12,45 @@ import cn.dev33.satoken.stp.StpInterface;
 
 /**
  * 与SpringBoot集成, 保证此类被扫描，即可完成sa-token与SpringBoot的集成 
- * @author kongyongshun
+ * @author kong
  *
  */
 @Component
 public class SpringSaToken {
 
 	
-	// 获取配置Bean 
+	/**
+	 * 获取配置Bean 
+	 * @return
+	 */
 	@Bean
 	@ConfigurationProperties(prefix="spring.sa-token")
 	public SaTokenConfig getSaTokenConfig() {
 		return new SaTokenConfig();
 	}
 	
-	// 注入配置Bean 
+	/**
+	 * 注入配置Bean 
+	 * @param saTokenConfig .
+	 */
 	@Autowired
 	public void setConfig(SaTokenConfig saTokenConfig){
 		SaTokenManager.setConfig(saTokenConfig);
 	}
 
-	// 注入持久化Bean 
+	/**
+	 * 注入持久化Bean 
+	 * @param dao .
+	 */
 	@Autowired(required = false)
 	public void setDao(SaTokenDao dao){
 		SaTokenManager.setDao(dao);
 	}
 
-	// 注入权限认证Bean 
+	/**
+	 * 注入权限认证Bean 
+	 * @param stp .
+	 */
 	@Autowired(required = false)
 	public void setStp(StpInterface stp){
 		SaTokenManager.setStp(stp);
