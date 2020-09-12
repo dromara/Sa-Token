@@ -51,7 +51,7 @@
 
 
 ## 交流群
-QQ交流群：[782974737 点击加入](https://jq.qq.com/?_wv=1027&k=5DHN5Ib) ，欢迎你的加入
+QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM) ，欢迎你的加入
 
 
 ![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sqlfly-doc/qqq.png ':size=150')
