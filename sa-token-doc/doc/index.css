@@ -7,8 +7,4 @@
 @media screen and (max-width: 800px) {
 	.logo-box {display: none;}
 }
-
-.main-box img{max-width: 600px; margin: 0.5em; box-shadow: 0 0 3px #999; transition: all 0.3s;}
-
-.main-box img:hover{box-shadow: 0 0 10px #333; cursor: pointer;}
-
+.main-box .markdown-section{max-width: 1000px; padding: 30px 20px;}
