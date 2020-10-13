@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
@@ -15,7 +15,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 /**
  * 全局异常处理 
  */
-@ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
+@RestControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
 public class GlobalException {
 
 	// 在每个控制器之前触发的操作
