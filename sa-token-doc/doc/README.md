@@ -42,7 +42,7 @@
 1. 在github上fork一份到自己的仓库
 2. clone自己的仓库到本地电脑
 3. 在本地电脑修改、commit、push
-4. 提交pr（点击：New Pull Request）（提交pr前请保证自己fork的仓库是最新版本，如若不是先强制更新一下）
+4. 提交pr（点击：New Pull Request）
 5. 等待合并
 
 ## 建议贡献的地方
