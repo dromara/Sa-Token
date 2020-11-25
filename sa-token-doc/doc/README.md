@@ -51,6 +51,10 @@
 - 更多demo示例：比如SSM版搭建步骤 
 - 如果更新实用功能，可在文档友情链接处留下自己的推广链接
 
+## 优秀项目链接
+[**okhttps** —— 一个轻量级http通信框架，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+
+
 
 ## 交流群
 QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM) ，欢迎你的加入
