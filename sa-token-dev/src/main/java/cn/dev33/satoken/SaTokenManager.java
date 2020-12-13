@@ -1,9 +1,13 @@
 package cn.dev33.satoken;
 
+import cn.dev33.satoken.action.SaTokenAction;
+import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
+import cn.dev33.satoken.cookie.SaCookieOper;
+import cn.dev33.satoken.cookie.SaCookieOperDefaultImpl;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.dao.SaTokenDaoDefault;
+import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
@@ -38,7 +42,6 @@ public class SaTokenManager {
 		}
 	}
 	
-	
 	/**
 	 * 持久化 Bean 
 	 */
@@ -54,11 +57,10 @@ public class SaTokenManager {
 	}
 	public synchronized static void initDao() {
 		if (dao == null) {
-			setDao(new SaTokenDaoDefault());
+			setDao(new SaTokenDaoDefaultImpl());
 		}
 	}
 	
-
 	/**
 	 * 权限认证 Bean 
 	 */
@@ -77,6 +79,45 @@ public class SaTokenManager {
 			setStp(new StpInterfaceDefaultImpl());
 		}
 	}
+	
+	/**
+	 * sa-token行为 Bean 
+	 */
+	public static SaTokenAction sta;
+	public static SaTokenAction getSta() {
+		if (sta == null) {
+			initSta();
+		}
+		return sta;
+	}
+	public static void setSta(SaTokenAction sta) {
+		SaTokenManager.sta = sta;
+	}
+	public synchronized static void initSta() {
+		if (sta == null) {
+			setSta(new SaTokenActionDefaultImpl());
+		}
+	}
+
+	/**
+	 * sa-token cookie操作 Bean 
+	 */
+	public static SaCookieOper saCookieOper;
+	public static SaCookieOper getSaCookieOper() {
+		if (saCookieOper == null) {
+			initgetSaCookieOper();
+		}
+		return saCookieOper;
+	}
+	public static void setSaCookieOper(SaCookieOper saCookieOper) {
+		SaTokenManager.saCookieOper = saCookieOper;
+	}
+	public synchronized static void initgetSaCookieOper() {
+		if (saCookieOper == null) {
+			setSaCookieOper(new SaCookieOperDefaultImpl());
+		}
+	}
+	
 	
 	
 	

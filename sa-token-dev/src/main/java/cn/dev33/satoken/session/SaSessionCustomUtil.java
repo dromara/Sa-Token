@@ -53,8 +53,8 @@ public class SaSessionCustomUtil {
 	 * 删除指定key的session
 	 * @param sessionId 删除指定key  
 	 */
-	public static void delSessionById(String sessionId) {
-		SaTokenManager.getDao().delSaSession(getSessionKey(sessionId));
+	public static void deleteSessionById(String sessionId) {
+		SaTokenManager.getDao().deleteSaSession(getSessionKey(sessionId));
 	}
 	
 	

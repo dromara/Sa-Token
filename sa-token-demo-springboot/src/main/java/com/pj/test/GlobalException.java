@@ -36,6 +36,20 @@ public class GlobalException {
 		AjaxJson aj = null;
 		if (e instanceof NotLoginException) {	// 如果是未登录异常
 			aj = AjaxJson.getNotLogin();
+			// 判断具体是什么类型 
+			NotLoginException ee = (NotLoginException) e;
+			if(ee.getType() == NotLoginException.NOT_TOKEN) {
+				aj.setMsg("未提供token");
+			}
+			if(ee.getType() == NotLoginException.INVALID_TOKEN) {
+				aj.setMsg("token无效");
+			}
+			if(ee.getType() == NotLoginException.BE_REPLACED) {
+				aj.setMsg("token已被顶下线");
+			}
+			if(ee.getType() == NotLoginException.TOKEN_TIMEOUT) {
+				aj.setMsg("token已过期");
+			}
 		} else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
 			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());

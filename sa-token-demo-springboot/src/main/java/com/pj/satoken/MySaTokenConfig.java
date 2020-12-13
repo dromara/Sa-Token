@@ -15,7 +15,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 @Configuration
 public class MySaTokenConfig implements WebMvcConfigurer {
 
-	// 获取配置Bean (以代码的方式配置sa-token)
+	// 获取配置Bean (以代码的方式配置sa-token, 此配置会覆盖yml中的配置  )
 	@Primary
 	@Bean(name="MySaTokenConfig")
 	public SaTokenConfig getSaTokenConfig() {

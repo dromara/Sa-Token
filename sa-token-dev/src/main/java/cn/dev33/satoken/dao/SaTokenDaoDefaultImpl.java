@@ -10,7 +10,7 @@ import cn.dev33.satoken.session.SaSession;
  * @author kong
  *
  */
-public class SaTokenDaoDefault implements SaTokenDao {
+public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	/**
 	 * 所有数据集合 
@@ -26,6 +26,11 @@ public class SaTokenDaoDefault implements SaTokenDao {
 	@Override
 	public void setValue(String key, String value, long timeout) {
 		dataMap.put(key, value);
+	}
+
+	@Override
+	public void updateValue(String key, String value) {
+		this.setValue(key, value, 0);
 	}
 
 	@Override
@@ -50,7 +55,7 @@ public class SaTokenDaoDefault implements SaTokenDao {
 	}
 
 	@Override
-	public void delSaSession(String sessionId) {
+	public void deleteSaSession(String sessionId) {
 		dataMap.remove(sessionId);
 	}
 	

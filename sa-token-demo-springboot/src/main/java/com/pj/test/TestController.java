@@ -112,10 +112,29 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
+	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/getInfo
 	@SaCheckLogin				// 注解式鉴权：当前会话必须登录才能通过 
 	@RequestMapping("getInfo")
 	public AjaxJson getInfo() {
 		return AjaxJson.getSuccessData("用户信息");
 	}
+	
+	
+
+	// 测试   浏览器访问： http://localhost:8081/test/test 
+	@RequestMapping("test")
+	public AjaxJson test() {
+		StpUtil.setLoginId(10001);
+		
+//		System.out.println(StpUtil.getSession().getId());
+//		System.out.println(StpUserUtil.getSession().getId());
+		StpUtil.getSessionByLoginId(10001).setAttribute("name", "123");
+		System.out.println(StpUtil.getSessionByLoginId(10001).getAttribute("name"));
+		
+		return AjaxJson.getSuccess();
+	}
+
+	
+	
 	
 }

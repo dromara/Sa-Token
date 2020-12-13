@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-// import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.session.SaSession;
@@ -15,7 +15,7 @@ import cn.dev33.satoken.session.SaSession;
 /**
  * sa-token持久层的实现类 , 基于redis 
  */
-// @Component	// 打开此注解，保证此类被springboot扫描，即可完成sa-token与redis的集成 
+@Component	// 打开此注解，保证此类被springboot扫描，即可完成sa-token与redis的集成 
 public class SaTokenDaoRedis implements SaTokenDao {
 
 
@@ -46,6 +46,16 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
 	}
 
+	// 更新指定key-value键值对 (过期时间取原来的值)
+	@Override
+	public void updateValue(String key, String value) {
+		long expire = redisTemplate.getExpire(key);
+		if(expire == -2) {	// -2 = 无此键 
+			return;
+		}
+		stringRedisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+	}
+	
 	// 删除一个指定的key 
 	@Override
 	public void delKey(String key) {
@@ -77,9 +87,12 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
 	// 删除一个指定的session 
 	@Override
-	public void delSaSession(String sessionId) {
+	public void deleteSaSession(String sessionId) {
 		redisTemplate.delete(sessionId);
 	}
+
+
+	
 
 	
 

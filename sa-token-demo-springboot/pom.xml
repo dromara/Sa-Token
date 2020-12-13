@@ -26,18 +26,18 @@
 		</dependency>
 		
 		<!-- 开发测试 -->
-		<!-- <dependency>
+		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dev</artifactId>
             <version>1.4.0</version>
-        </dependency> -->
+        </dependency>
 		
 		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
-		<dependency>
+		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token</artifactId>
             <version>1.4.0</version>
-        </dependency>
+        </dependency> -->
 		
 		<!-- SpringBoot整合redis -->
 		<dependency>

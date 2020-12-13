@@ -26,6 +26,13 @@ public interface SaTokenDao {
 	public void setValue(String key, String value, long timeout);
 
 	/**
+	 * 修改指定key-value键值对 (过期时间取原来的值)
+	 * @param key 键名称 
+	 * @param value 值 
+	 */
+	public void updateValue(String key, String value);
+
+	/**
 	 * 删除一个指定的key 
 	 * @param key 键名称 
 	 */
@@ -57,7 +64,7 @@ public interface SaTokenDao {
 	 *   删除一个指定的session 
 	 * @param sessionId sessionId
 	 */
-	public void delSaSession(String sessionId);
+	public void deleteSaSession(String sessionId);
 	
 	
 }

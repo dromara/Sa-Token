@@ -3,7 +3,6 @@ package cn.dev33.satoken.stp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +13,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.util.SaCookieUtil;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
-import cn.dev33.satoken.util.SpringMvcUtil;
 
 /**
  * sa-token 权限验证，逻辑 实现类 
@@ -42,13 +39,20 @@ public class StpLogic {
 	
 	// =================== 获取token 相关 ===================  
 	
+	/**
+	 * 返回token名称 
+	 * @return 此StpLogic的token名称
+	 */
+	public String getTokenName() {
+ 		return getKeyTokenName();
+ 	}
 
 	/**
 	 * 随机生成一个tokenValue
 	 * @return 生成的tokenValue 
 	 */
- 	public String randomTokenValue() {
-		return UUID.randomUUID().toString();
+ 	public String randomTokenValue(Object loginId) {
+		return SaTokenManager.getSta().createToken(loginId, loginKey);
 	}
 	
 	/**
@@ -57,9 +61,9 @@ public class StpLogic {
 	 */
 	public String getTokenValue(){
 		// 0、获取相应对象 
-		HttpServletRequest request = SpringMvcUtil.getRequest();
+		HttpServletRequest request = SaTokenManager.getSta().getCurrRequest();
 		SaTokenConfig config = SaTokenManager.getConfig();
-		String keyTokenName = getKeyTokenName();
+		String keyTokenName = getTokenName();
 		
 		// 1、尝试从request里读取 
 		if(request.getAttribute(SaTokenInsideUtil.JUST_CREATED_SAVE_KEY) != null) {
@@ -81,7 +85,7 @@ public class StpLogic {
 		}
 		// 4、尝试从cookie里读取 
 		if(config.getIsReadCookie() == true){
-			Cookie cookie = SaCookieUtil.getCookie(request, keyTokenName);
+			Cookie cookie = SaTokenManager.getSaCookieOper().getCookie(request, keyTokenName);
 			if(cookie != null){
 				String tokenValue = cookie.getValue();
 				if(tokenValue != null) {
@@ -108,7 +112,7 @@ public class StpLogic {
 	 */
 	public Map<String, String> getTokenInfo() {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("tokenName", getKeyTokenName());
+		map.put("tokenName", getTokenName());
 		map.put("tokenValue", getTokenValue());
 		return map;
 	}
@@ -123,19 +127,20 @@ public class StpLogic {
 	public void setLoginId(Object loginId) {
 		
 		// 1、获取相应对象  
-		HttpServletRequest request = SpringMvcUtil.getRequest();
+		HttpServletRequest request = SaTokenManager.getSta().getCurrRequest();
 		SaTokenConfig config = SaTokenManager.getConfig();
 		SaTokenDao dao = SaTokenManager.getDao();
 		
 		// 2、获取tokenValue
 		String tokenValue = getTokenValueByLoginId(loginId);	// 获取旧tokenValue
 		if(tokenValue == null){			// 为null则创建一个新的
-			tokenValue = randomTokenValue();
+			tokenValue = randomTokenValue(loginId);
 		} else {
-			// 不为null, 并且配置不共享，则删掉原来，并且创建新的 
+			// 不为null, 并且配置不共享，则：将原来的标记为[被顶替] 
 			if(config.getIsShare() == false){
-				dao.delKey(getKeyTokenValue(tokenValue)); 
-				tokenValue = randomTokenValue();
+//				dao.delKey(getKeyTokenValue(tokenValue)); 
+				dao.updateValue(getKeyTokenValue(tokenValue), NotLoginException.BE_REPLACED);
+				tokenValue = randomTokenValue(loginId);
 			}
 		}
 
@@ -144,7 +149,7 @@ public class StpLogic {
 		dao.setValue(getKeyLoginId(loginId), tokenValue, config.getTimeout());							// uid -> token 
 		request.setAttribute(SaTokenInsideUtil.JUST_CREATED_SAVE_KEY, tokenValue);								// 保存到本次request里  
 		if(config.getIsReadCookie() == true){
-			SaCookieUtil.addCookie(SpringMvcUtil.getResponse(), getKeyTokenName(), tokenValue, "/", (int)config.getTimeout());		// cookie注入 
+			SaTokenManager.getSaCookieOper().addCookie(SaTokenManager.getSta().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		// cookie注入 
 		}
 	}
 
@@ -152,14 +157,27 @@ public class StpLogic {
 	 * 当前会话注销登录
 	 */
 	public void logout() {
-		Object loginId = getLoginIdDefaultNull();
-		if(loginId != null) {
-			logoutByLoginId(loginId);
-			// 清除cookie  
-			if(SaTokenManager.getConfig().getIsReadCookie() == true){
-				SaCookieUtil.delCookie(SpringMvcUtil.getRequest(), SpringMvcUtil.getResponse(), getKeyTokenName()); 	
-			}
+		// 如果连token都没有，那么无需执行任何操作 
+		String tokenValue = getTokenValue();
+ 		if(tokenValue == null) {
+ 			return;
+ 		}
+ 		// 如果打开了cookie模式，第一步，先把cookie清除掉 
+ 		if(SaTokenManager.getConfig().getIsReadCookie() == true){
+			SaTokenManager.getSaCookieOper().delCookie(SaTokenManager.getSta().getCurrRequest(), SaTokenManager.getSta().getResponse(), getTokenName()); 	
 		}
+ 		// 尝试从db中获取loginId值 
+ 		String loginId = SaTokenManager.getDao().getValue(getKeyTokenValue(tokenValue));
+ 		// 如果根本查不到loginId，那么也无需执行任何操作 
+ 		if(loginId == null) {
+ 			return;
+ 		}
+ 		// 如果已经被顶替或已过期，那么只删除此token即可 
+ 		if(loginId.equals(NotLoginException.BE_REPLACED) || loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
+ 			return;
+ 		}
+		// 至此，已经是一个正常的loginId，开始三清 
+ 		logoutByLoginId(loginId);
 	}
 
 	/**
@@ -178,7 +196,6 @@ public class StpLogic {
 		SaTokenManager.getDao().delKey(getKeyTokenValue(tokenValue));	// 清除token-id键值对  
 		SaTokenManager.getDao().delKey(getKeyLoginId(loginId));		// 清除id-token键值对  
 		SaTokenManager.getDao().delKey(getKeySession(loginId));		// 清除其session 
-		// SaCookieUtil.delCookie(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse(), getKey_tokenName()); 	// 清除cookie 
 	}
 	
 	// 查询相关 
@@ -188,6 +205,7 @@ public class StpLogic {
  	 * @return 是否已登录 
  	 */
  	public boolean isLogin() {
+ 		// 判断条件：不为null，并且不在异常项集合里 
  		return getLoginIdDefaultNull() != null;
  	}
  	
@@ -203,10 +221,25 @@ public class StpLogic {
  	 * @return .
  	 */
  	public Object getLoginId() {
- 		Object loginId = getLoginIdDefaultNull();
- 		if(loginId == null) {
- 			throw new NotLoginException(this.loginKey);
+ 		// 如果获取不到token，则抛出：无token
+ 		String tokenValue = getTokenValue();
+ 		if(tokenValue == null) {
+ 			throw new NotLoginException(loginKey, NotLoginException.NOT_TOKEN);
  		}
+ 		// 查找此token对应loginId, 则抛出：无效token 
+ 		String loginId = SaTokenManager.getDao().getValue(getKeyTokenValue(tokenValue));
+ 		if(loginId == null) {
+ 			throw new NotLoginException(loginKey, NotLoginException.INVALID_TOKEN);
+ 		}
+ 		// 如果是已经被顶替下去了, 则抛出：已被顶下线 
+ 		if(loginId.equals(NotLoginException.BE_REPLACED)) {
+ 			throw new NotLoginException(loginKey, NotLoginException.BE_REPLACED);
+ 		}
+ 		// 如果是已经过期，则抛出已经过期 
+ 		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
+ 			throw new NotLoginException(loginKey, NotLoginException.TOKEN_TIMEOUT);
+ 		}
+ 		// 至此，返回loginId
  		return loginId;
  	}
 	
@@ -218,9 +251,11 @@ public class StpLogic {
  	@SuppressWarnings("unchecked")
 	public <T>T getLoginId(T defaultValue) {
 		Object loginId = getLoginIdDefaultNull();
+		// 如果loginId为null，则返回默认值 
 		if(loginId == null) {
 			return defaultValue;
 		}
+		// 开始尝试类型转换，只尝试三种类型：int、long、String 
 		if(defaultValue instanceof Integer) {
 			return (T)Integer.valueOf(loginId.toString());
 		}
@@ -235,17 +270,21 @@ public class StpLogic {
  	
 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回null
-	 * @return
+	 * @return .
 	 */
 	public Object getLoginIdDefaultNull() {
- 		String tokenValue = getTokenValue();
- 		if(tokenValue != null) {
- 			Object loginId = SaTokenManager.getDao().getValue(getKeyTokenValue(tokenValue));
- 			if(loginId != null) {
- 				return loginId;
- 			}
+		// 如果连token都是空的，则直接返回 
+		String tokenValue = getTokenValue();
+ 		if(tokenValue == null) {
+ 			return null;
  		}
- 		return null;
+ 		// loginId为null或者在异常项里面，均视为未登录
+ 		Object loginId = SaTokenManager.getDao().getValue(getKeyTokenValue(tokenValue));
+ 		if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
+ 			return null;
+ 		}
+ 		// 执行到此，证明loginId已经是个正常的账号id了 
+ 		return loginId;
  	}
 
 	/** 
@@ -328,7 +367,7 @@ public class StpLogic {
 	 * @return .
 	 */
 	public SaSession getSessionByLoginId(Object loginId) {
-		return getSessionByLoginId(getKeySession(loginId), false);
+		return getSessionByLoginId(loginId, true);
 	}
 	
 	/** 
@@ -336,7 +375,7 @@ public class StpLogic {
 	 * @return
 	 */
 	public SaSession getSession() {
-		return getSessionBySessionId(getKeySession(getLoginId()), true);
+		return getSessionByLoginId(getLoginId());
 	}
  	
 	

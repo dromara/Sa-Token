@@ -1,22 +1,29 @@
-package cn.dev33.satoken.stp;
+package com.pj.satoken;
 
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.StpLogic;
 
 /**
  * 一个默认的实现 
  * @author kong 
  */
 @Service
-public class StpUtil {
+public class StpUserUtil {
 
 	/**
 	 * 底层的 StpLogic 对象  
 	 */
-	public static StpLogic stpLogic = new StpLogic("login"); 
+	public static StpLogic stpLogic = new StpLogic("user") {
+		@Override
+		public String getKeyTokenName() {
+	 		return SaTokenManager.getConfig().getTokenName() + "-user";
+	 	}
+	}; 
 	
 	
 	// =================== 获取token 相关 ===================
