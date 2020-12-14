@@ -10,3 +10,23 @@
 	.logo-box {display: none;}
 	.main-box .markdown-section{max-width: 1000px;}
 }
+
+/* ============== 样式优化 ================ */
+
+/* 背景变黑 */
+.main-box [data-lang]{padding: 0px !important; border-radius: 10px; overflow: hidden;}
+.main-box [class^="lang-"]{/* color: red !important; */ border: 0px red solid; padding: 1.2em; background-color: #222; color: #FFF;}
+.main-box [class^="lang-api"]{color: #FFF;}
+
+
+.token.string{color: #65B042;}
+.token.number{color: #2487CC;}
+.token.punctuation{color: #FFF;}
+.token.comment{color: #FFF;}
+
+/* .main-box [class="lang-api"]{color: red;} */
+
+#main table{margin-left: 25px;}
+@media screen and (min-width: 800px) {
+	#main table tr th{min-width: 150px;}
+}
