@@ -2,10 +2,10 @@
     <img alt="logo" src="http://sa-token.dev33.cn/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.4.0</h1>
-<h4 align="center">一个JavaWeb权限认证框架，强大、简单、好用</h4>
+<h4 align="center">一个JavaWeb轻量级权限认证框架，功能全面，上手简单</h4>
 <h4 align="center">
+	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
 	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.4.0-2B9939"></a>
-	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/language-java-2B9939"></a>
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>

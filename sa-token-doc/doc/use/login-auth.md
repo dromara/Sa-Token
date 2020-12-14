@@ -36,7 +36,7 @@
 #### StpUtil.getLoginId(T defaultValue)
 - 获取当前会话登录id, 如果未登录，则返回默认值 （`defaultValue`可以为任意类型）
 - 类似API还有：
-	- `StpUtil.getLoginId_defaultNull()`		获取当前会话登录id, 如果未登录，则返回null 
+	- `StpUtil.getLoginIdDefaultNull()`		获取当前会话登录id, 如果未登录，则返回null 
 
 #### getLoginIdByToken(String tokenValue)
 - 获取指定token对应的登录id，如果未登录，则返回 null

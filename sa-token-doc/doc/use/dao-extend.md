@@ -5,8 +5,20 @@
 - 你需要做的就是重写`sa-token`的dao层实现方式，参考以下方案：
 
 
-## 具体代码
-- 新建文件`SaTokenDaoRedis.java`，实现接口`SaTokenDao`, 并加上注解`@Component`，保证此类被springboot扫描到
+
+### 1. 首先在pom.xml引入依赖
+``` xml 
+	<!-- SpringBoot整合redis -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-redis</artifactId>
+		<version>RELEASE</version>
+	</dependency>
+```
+
+
+### 2. 实现SaTokenDao接口 
+新建文件`SaTokenDaoRedis.java`，实现接口`SaTokenDao`, 并加上注解`@Component`，保证此类被springboot扫描到
 - 代码参考：
 	
 ```java
