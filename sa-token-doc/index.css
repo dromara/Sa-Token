@@ -66,3 +66,14 @@ footer a:hover{text-decoration: underline;}
 	footer{position: static; line-height: 40px;}
 }
 
+/* 闪光背景 */
+.main-box{
+    background-size: 500%;
+	background-image: linear-gradient(125deg,#BFFEBE,#F6F8B5,#FCD0B3,#BFB6F8,#E8D8B3);
+	animation: bganimation 15s infinite;
+}
+@keyframes bganimation{
+    0%{background-position: 0% 50%;}
+    50%{background-position: 100% 50%;}
+    100%{background-position: 0% 50%;}
+}
