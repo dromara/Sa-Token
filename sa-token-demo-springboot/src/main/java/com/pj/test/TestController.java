@@ -121,15 +121,34 @@ public class TestController {
 	
 	
 
+
+	// 测试踢人下线   浏览器访问： http://localhost:8081/test/kickOut 
+	@RequestMapping("kickOut")
+	public AjaxJson kickOut() {
+		// 先登录上 
+		StpUtil.setLoginId(10001);
+		// 清退下线 
+//		StpUtil.logoutByLoginId(10001);
+		// 踢下线 
+		StpUtil.kickoutByLoginId(10001);
+		// 再尝试获取
+		StpUtil.getLoginId();
+		// 返回 
+		return AjaxJson.getSuccess();
+	}
+	
+
 	// 测试   浏览器访问： http://localhost:8081/test/test 
 	@RequestMapping("test")
 	public AjaxJson test() {
 		StpUtil.setLoginId(10001);
+//		StpUtil.getSession();
+		StpUtil.logout();
 		
 //		System.out.println(StpUtil.getSession().getId());
 //		System.out.println(StpUserUtil.getSession().getId());
-		StpUtil.getSessionByLoginId(10001).setAttribute("name", "123");
-		System.out.println(StpUtil.getSessionByLoginId(10001).getAttribute("name"));
+//		StpUtil.getSessionByLoginId(10001).setAttribute("name", "123");
+//		System.out.println(StpUtil.getSessionByLoginId(10001).getAttribute("name"));
 		
 		return AjaxJson.getSuccess();
 	}

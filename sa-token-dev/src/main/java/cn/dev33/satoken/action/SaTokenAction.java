@@ -14,7 +14,7 @@ public interface SaTokenAction {
 	
 	/**
 	 * 获取当前会话的  response
-	 * @return
+	 * @return 当前请求的response
 	 */
 	public HttpServletResponse getResponse();
 	
@@ -22,7 +22,7 @@ public interface SaTokenAction {
 	 * 生成一个token 
 	 * @param loginId 账号id
 	 * @param loginKey 登录标识key 
-	 * @return
+	 * @return 一个token
 	 */
 	public String createToken(Object loginId, String loginKey); 
 	

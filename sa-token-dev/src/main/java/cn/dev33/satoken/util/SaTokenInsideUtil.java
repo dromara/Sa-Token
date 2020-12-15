@@ -11,7 +11,7 @@ public class SaTokenInsideUtil {
 	/**
 	 * sa-token 版本号 
 	 */
-	public static final String VERSION_NO = "v1.4.0";
+	public static final String VERSION_NO = "v1.5.1";
 
 	/**
 	 * sa-token 开源地址 

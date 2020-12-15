@@ -30,7 +30,7 @@ public class SaSessionCustomUtil {
 	 * 获取指定key的session
 	 * @param sessionId key
 	 * @param isCreate 如果没有，是否新建并返回
-	 * @return
+	 * @return SaSession
 	 */
 	public static SaSession getSessionById(String sessionId, boolean isCreate) {
 		SaSession session = SaTokenManager.getDao().getSaSession(getSessionKey(sessionId));

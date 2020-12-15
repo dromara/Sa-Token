@@ -24,6 +24,9 @@ public class GlobalException {
 
 	}
 
+	
+	
+	
 	// 全局异常拦截（拦截项目中的所有异常）
 	@ExceptionHandler
 	public AjaxJson handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
@@ -35,21 +38,8 @@ public class GlobalException {
 		// 不同异常返回不同状态码 
 		AjaxJson aj = null;
 		if (e instanceof NotLoginException) {	// 如果是未登录异常
-			aj = AjaxJson.getNotLogin();
-			// 判断具体是什么类型 
 			NotLoginException ee = (NotLoginException) e;
-			if(ee.getType() == NotLoginException.NOT_TOKEN) {
-				aj.setMsg("未提供token");
-			}
-			if(ee.getType() == NotLoginException.INVALID_TOKEN) {
-				aj.setMsg("token无效");
-			}
-			if(ee.getType() == NotLoginException.BE_REPLACED) {
-				aj.setMsg("token已被顶下线");
-			}
-			if(ee.getType() == NotLoginException.TOKEN_TIMEOUT) {
-				aj.setMsg("token已过期");
-			}
+			aj = AjaxJson.getNotLogin().setMsg(ee.getMessage());
 		} else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
 			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
@@ -64,5 +54,41 @@ public class GlobalException {
 //		response.setContentType("application/json; charset=utf-8"); // http说明，我要返回JSON对象
 //		response.getWriter().print(new ObjectMapper().writeValueAsString(aj));
 	}
+	
+	
+
+	// 全局异常拦截（拦截项目中的NotLoginException异常）
+//	@ExceptionHandler(NotLoginException.class)
+//	public AjaxJson handlerNotLoginException(NotLoginException nle, HttpServletRequest request, HttpServletResponse response)
+//			throws Exception {
+//
+//		// 打印堆栈，以供调试
+//		nle.printStackTrace(); 
+//		
+//		// 判断场景值，定制化异常信息 
+//		String message = "";
+//		if(nle.getType().equals(NotLoginException.NOT_TOKEN)) {
+//			message = "未提供token";
+//		}
+//		else if(nle.getType().equals(NotLoginException.INVALID_TOKEN)) {
+//			message = "token无效";
+//		}
+//		else if(nle.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
+//			message = "token已过期";
+//		}
+//		else if(nle.getType().equals(NotLoginException.BE_REPLACED)) {
+//			message = "token已被顶下线";
+//		}
+//		else if(nle.getType().equals(NotLoginException.KICK_OUT)) {
+//			message = "token已被踢下线";
+//		}
+//		else {
+//			message = "当前会话未登录";
+//		}
+//		
+//		// 返回给前端
+//		return AjaxJson.getError(message);
+//	}
+	
 
 }

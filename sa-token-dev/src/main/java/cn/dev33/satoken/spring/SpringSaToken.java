@@ -21,7 +21,7 @@ public class SpringSaToken {
 	
 	/**
 	 * 获取配置Bean 
-	 * @return
+	 * @return .
 	 */
 	@Bean
 	@ConfigurationProperties(prefix="spring.sa-token")

@@ -1,5 +1,18 @@
 # 更新日志 
 
+### 2020-12-16 @v1.5.1
+- 新增：细化未登录异常类型，提供五种场景值：未提供token、token无效、token已过期 、token已被顶下线、token已被踢下线 **[重要]**
+- 修复：修复`StpUtil.getSessionByLoginId(String loginId)`方法转换key出错的bug，感谢群友 @(＃°Д°)、@一米阳光 发现的bug 
+- 优化：修改方法`StpUtil.getSessionByLoginId(Object loginId)`的isCreate值默认为true 
+- 修改：`方法delSaSession`修改为`deleteSaSession`，更加语义化的函数名称 
+- 新增：新增`StpUtil.getTokenName()`方法，更语义化的获取tokenName 
+- 新增：新增`SaTokenAction`框架行为Bean，方便重写逻辑 
+- 优化：`Cookie操作`改为接口代理模式，使其可以被重写 
+- 优化：文档里集成redis部分增加redis的pom依赖示例
+- 修复：登录验证-> `StpUtil.getLoginId_defaultNull()` 修复方法名错误的问题 
+- 优化：优化`readme.md` 
+- 升级：开源协议修改为`MIT`
+
 ### 2020-9-7 @v1.4.0
 - 优化：修改一些函数、变量名称，使其更符合阿里java代码规范
 - 优化：`tokenValue`的读取优先级改为：`request` > `body` > `header` > `cookie`

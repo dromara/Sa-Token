@@ -49,6 +49,7 @@ public class StpLogic {
 
 	/**
 	 * 随机生成一个tokenValue
+	 * @param loginId loginId
 	 * @return 生成的tokenValue 
 	 */
  	public String randomTokenValue(Object loginId) {
@@ -100,7 +101,7 @@ public class StpLogic {
 	/** 
 	 * 获取指定id的tokenValue
 	 * @param loginId .
-	 * @return
+	 * @return .
 	 */
 	public String getTokenValueByLoginId(Object loginId) {
 		return SaTokenManager.getDao().getValue(getKeyLoginId(loginId)); 
@@ -172,8 +173,8 @@ public class StpLogic {
  		if(loginId == null) {
  			return;
  		}
- 		// 如果已经被顶替或已过期，那么只删除此token即可 
- 		if(loginId.equals(NotLoginException.BE_REPLACED) || loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
+ 		// 如果已过期或被顶替或被挤下线，那么只删除此token即可 
+ 		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT) || loginId.equals(NotLoginException.BE_REPLACED) || loginId.equals(NotLoginException.KICK_OUT)) {
  			return;
  		}
 		// 至此，已经是一个正常的loginId，开始三清 
@@ -181,7 +182,7 @@ public class StpLogic {
 	}
 
 	/**
-	 * 指定loginId的会话注销登录（踢人下线）
+	 * 指定loginId的会话注销登录（清退下线）
 	 * @param loginId 账号id 
 	 */
 	public void logoutByLoginId(Object loginId) {
@@ -195,7 +196,25 @@ public class StpLogic {
 		// 清除相关数据 
 		SaTokenManager.getDao().delKey(getKeyTokenValue(tokenValue));	// 清除token-id键值对  
 		SaTokenManager.getDao().delKey(getKeyLoginId(loginId));		// 清除id-token键值对  
-		SaTokenManager.getDao().delKey(getKeySession(loginId));		// 清除其session 
+		SaTokenManager.getDao().deleteSaSession(getKeySession(loginId));		// 清除其session 
+	}
+
+	/**
+	 * 指定loginId的会话注销登录（踢人下线）
+	 * @param loginId 账号id 
+	 */
+	public void kickoutByLoginId(Object loginId) {
+		
+		// 获取相应tokenValue
+		String tokenValue = getTokenValueByLoginId(loginId);
+		if(tokenValue == null) {
+			return;
+		}
+		
+		// 清除相关数据 
+		SaTokenManager.getDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);	// 标记：已被踢下线 
+		SaTokenManager.getDao().delKey(getKeyLoginId(loginId));		// 清除id-token键值对  
+		SaTokenManager.getDao().deleteSaSession(getKeySession(loginId));		// 清除其session 
 	}
 	
 	// 查询相关 
@@ -224,20 +243,24 @@ public class StpLogic {
  		// 如果获取不到token，则抛出：无token
  		String tokenValue = getTokenValue();
  		if(tokenValue == null) {
- 			throw new NotLoginException(loginKey, NotLoginException.NOT_TOKEN);
+ 			throw NotLoginException.newInstance(loginKey, NotLoginException.NOT_TOKEN);
  		}
  		// 查找此token对应loginId, 则抛出：无效token 
  		String loginId = SaTokenManager.getDao().getValue(getKeyTokenValue(tokenValue));
  		if(loginId == null) {
- 			throw new NotLoginException(loginKey, NotLoginException.INVALID_TOKEN);
- 		}
- 		// 如果是已经被顶替下去了, 则抛出：已被顶下线 
- 		if(loginId.equals(NotLoginException.BE_REPLACED)) {
- 			throw new NotLoginException(loginKey, NotLoginException.BE_REPLACED);
+ 			throw NotLoginException.newInstance(loginKey, NotLoginException.INVALID_TOKEN);
  		}
  		// 如果是已经过期，则抛出已经过期 
  		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
- 			throw new NotLoginException(loginKey, NotLoginException.TOKEN_TIMEOUT);
+ 			throw NotLoginException.newInstance(loginKey, NotLoginException.TOKEN_TIMEOUT);
+ 		}
+ 		// 如果是已经被顶替下去了, 则抛出：已被顶下线 
+ 		if(loginId.equals(NotLoginException.BE_REPLACED)) {
+ 			throw NotLoginException.newInstance(loginKey, NotLoginException.BE_REPLACED);
+ 		}
+ 		// 如果是已经被踢下线了, 则抛出：已被踢下线
+ 		if(loginId.equals(NotLoginException.KICK_OUT)) {
+ 			throw NotLoginException.newInstance(loginKey, NotLoginException.KICK_OUT);
  		}
  		// 至此，返回loginId
  		return loginId;
@@ -246,7 +269,7 @@ public class StpLogic {
 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回默认值
 	 * @param defaultValue .
-	 * @return
+	 * @return .
 	 */
  	@SuppressWarnings("unchecked")
 	public <T>T getLoginId(T defaultValue) {
@@ -297,7 +320,7 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为int
-	 * @return
+	 * @return .
 	 */
  	public int getLoginIdAsInt() {
  		// Object loginId = getLoginId();
@@ -309,7 +332,7 @@ public class StpLogic {
 
 	/**
 	 * 获取当前会话登录id, 并转换为long
-	 * @return
+	 * @return .
 	 */
  	public long getLoginIdAsLong() {
 // 		Object loginId = getLoginId();

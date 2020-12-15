@@ -72,13 +72,21 @@ public class StpUtil {
 	}
 
 	/**
-	 * 指定loginId的会话注销登录（踢人下线）
+	 * 指定loginId的会话注销登录（清退下线）
 	 * @param loginId 账号id 
 	 */
 	public static void logoutByLoginId(Object loginId) {
 		stpLogic.logoutByLoginId(loginId);
 	}
 
+	/**
+	 * 指定loginId的会话注销登录（踢人下线）
+	 * @param loginId 账号id 
+	 */
+	public static void kickoutByLoginId(Object loginId) {
+		stpLogic.kickoutByLoginId(loginId);
+	}
+	
 	// 查询相关
 
 	/** 

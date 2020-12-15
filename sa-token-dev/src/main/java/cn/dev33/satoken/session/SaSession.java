@@ -33,7 +33,7 @@ public class SaSession implements Serializable {
 	
 	/**
 	 * 构建一个 session对象
-	 * @param id
+	 * @param id sessionId
 	 */
  	public SaSession(String id) {
 		this.id = id;
