@@ -105,14 +105,14 @@ public class SaTokenManager {
 	public static SaCookieOper saCookieOper;
 	public static SaCookieOper getSaCookieOper() {
 		if (saCookieOper == null) {
-			initgetSaCookieOper();
+			initSaCookieOper();
 		}
 		return saCookieOper;
 	}
 	public static void setSaCookieOper(SaCookieOper saCookieOper) {
 		SaTokenManager.saCookieOper = saCookieOper;
 	}
-	public synchronized static void initgetSaCookieOper() {
+	public synchronized static void initSaCookieOper() {
 		if (saCookieOper == null) {
 			setSaCookieOper(new SaCookieOperDefaultImpl());
 		}

@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.cookie.SaCookieOper;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.stp.StpInterface;
 
@@ -54,6 +56,24 @@ public class SpringSaToken {
 	@Autowired(required = false)
 	public void setStp(StpInterface stp){
 		SaTokenManager.setStp(stp);
+	}
+
+	/**
+	 * 注入Cookie操作Bean 
+	 * @param saCookieOper .
+	 */
+	@Autowired(required = false)
+	public void setSaCookieOper(SaCookieOper saCookieOper){
+		SaTokenManager.setSaCookieOper(saCookieOper);
+	}
+
+	/**
+	 * 注入框架行为Bean 
+	 * @param sta .
+	 */
+	@Autowired(required = false)
+	public void setSta(SaTokenAction sta){
+		SaTokenManager.setSta(sta);
 	}
 	
 	

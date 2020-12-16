@@ -17,6 +17,8 @@ spring:
         is-read-head: true
         # 是否尝试从cookie里读取token
         is-read-cookie: true
+        # token风格
+        token-style: uuid
         # 是否在初始化配置时打印版本字符画
         is-v: true
         

@@ -13,6 +13,7 @@ public class SaTokenConfig {
 	private Boolean isReadBody = true;			// 是否尝试从请求体里读取token
 	private Boolean isReadHead = true;			// 是否尝试从header里读取token
 	private Boolean isReadCookie = true;		// 是否尝试从cookie里读取token
+	private String tokenStyle = "uuid";				// token风格 
 	
 	private Boolean isV = true;	 // 是否在初始化配置时打印版本字符画
 
@@ -102,7 +103,21 @@ public class SaTokenConfig {
 	public void setIsReadBody(Boolean isReadBody) {
 		this.isReadBody = isReadBody;
 	}
+	
+	/**
+	 * @return tokenStyle
+	 */
+	public String getTokenStyle() {
+		return tokenStyle;
+	}
 
+	/**
+	 * @param tokenStyle 要设置的 tokenStyle
+	 */
+	public void setTokenStyle(String tokenStyle) {
+		this.tokenStyle = tokenStyle;
+	}
+	
 	/**
 	 * @return isV
 	 */
@@ -124,8 +139,12 @@ public class SaTokenConfig {
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", isShare=" + isShare
 				+ ", isReadBody=" + isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie
-				+ ", isV=" + isV + "]";
+				+ ", tokenStyle=" + tokenStyle + ", isV=" + isV + "]";
 	}
+
+	
+	
+	
 
 	
 	
