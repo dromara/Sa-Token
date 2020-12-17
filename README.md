@@ -1,11 +1,11 @@
 <p align="center">
     <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.5.1</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.6.0</h1>
 <h4 align="center">一个JavaWeb轻量级权限认证框架，功能全面，上手简单</h4>
 <h4 align="center">
 	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
-	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.5.1-2B9939"></a>
+	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.6.0-2B9939"></a>
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
@@ -57,6 +57,7 @@ StpUtil.checkLogin();
 - ⚡ **多账号认证体系** —— 比如一个商城项目的user表和admin表分开鉴权
 - ⚡ **无cookie模式** —— APP、小程序等前后台分离场景 
 - ⚡ **注解式鉴权** —— 优雅的将鉴权与业务代码分离
+- ⚡ **花式token生成** —— 内置六种token风格，还可自定义token生成策略
 - ⚡ **组件自动注入** —— 零配置与Spring等框架集成
 - ⚡ **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
