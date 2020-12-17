@@ -26,18 +26,18 @@
 		</dependency>
 		
 		<!-- 开发测试 -->
-		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dev</artifactId>
-            <version>1.5.1</version>
-        </dependency>
-		
-		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token</artifactId>
-            <version>1.5.1</version>
+            <artifactId>sa-token-dev</artifactId>
+            <version>1.6.0</version>
         </dependency> -->
+		
+		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token</artifactId>
+            <version>1.6.0</version>
+        </dependency>
 		
 		<!-- SpringBoot整合redis -->
 		<dependency>
@@ -52,6 +52,14 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- hutool工具类，用来生成雪花算法唯一id -->
+		<!-- <dependency>
+		     <groupId>cn.hutool</groupId>
+		     <artifactId>hutool-all</artifactId>
+		     <version>5.5.4</version>
+		</dependency> -->
+		
 
 	</dependencies>
 	

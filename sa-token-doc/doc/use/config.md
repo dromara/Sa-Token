@@ -12,6 +12,7 @@
 | isReadBody	| Boolean	| true		| 是否尝试从请求体里读取token														|
 | isReadHead	| Boolean	| true		| 是否尝试从header里读取token														|
 | isReadCookie	| Boolean	| true		| 是否尝试从cookie里读取token														|
+| tokenStyle	| String	| uuid		| token风格, 参考：[花式token](/use/token-style)										|
 | isV			| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 
 
@@ -37,6 +38,7 @@
 			config.setIsReadBody(true);		// 是否尝试从请求体里读取token
 			config.setIsReadHead(true);		// 是否尝试从header里读取token
 			config.setIsReadCookie(true);		// 是否尝试从cookie里读取token
+			config.setTokenStyle("uuid"); 		// token风格 
 			config.setIsV(true);					// 是否在初始化配置时打印版本字符画
 			return config;
 		}
@@ -62,6 +64,8 @@ spring:
         is-read-head: true
         # 是否尝试从cookie里读取token
         is-read-cookie: true
+        # token风格
+        token-style: uuid
         # 是否在初始化配置时打印版本字符画
         is-v: true
 ```

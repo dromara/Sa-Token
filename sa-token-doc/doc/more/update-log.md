@@ -1,5 +1,12 @@
 # 更新日志 
 
+
+### 2020-12-17 @v1.6.0
+- 新增：花式token生成方案 **[重要]** 
+- 优化：优化`readme.md` 
+- 修复：修复`SaCookieOper`与`SaTokenAction`无法自动注入的问题 
+
+
 ### 2020-12-16 @v1.5.1
 - 新增：细化未登录异常类型，提供五种场景值：未提供token、token无效、token已过期 、token已被顶下线、token已被踢下线 **[重要]**
 - 修复：修复`StpUtil.getSessionByLoginId(String loginId)`方法转换key出错的bug，感谢群友 @(＃°Д°)、@一米阳光 发现的bug 
@@ -13,6 +20,7 @@
 - 优化：优化`readme.md` 
 - 升级：开源协议修改为`MIT`
 
+
 ### 2020-9-7 @v1.4.0
 - 优化：修改一些函数、变量名称，使其更符合阿里java代码规范
 - 优化：`tokenValue`的读取优先级改为：`request` > `body` > `header` > `cookie`
@@ -20,6 +28,7 @@
 - 优化：如果`isReadCookie`配置为`false`，那么在登录时也不会把`cookie`写入`cookie` 
 - 新增：新增`getSessionByLoginId(Object loginId, boolean isCreate)`方法
 - 修复：修复文档部分错误，修正群号码
+
 
 ### 2020-5-2 @v1.3.0
 - 新增：新增 `StpUtil.checkLogin()` 方法，更符合语义化的鉴权方法
@@ -29,12 +38,15 @@
 - 修复：修复文档部分不正确之处
 - 新增：新增文档的友情链接
 
+
 ### 2020-3-7 @v1.2.0
 - 新增：新增注解式验证，可在路由方法中使用注解进行权限验证
 - 参考：[注解式验证](use/at-check)
 
+
 ### 2020-2-12 @v1.1.0
 - 修复：修复`StpUtil.getLoginId(T defaultValue)`取值转换错误的bug
+
 
 ### 2020-2-4 @v1.0.0
 - 第一个版本出炉 

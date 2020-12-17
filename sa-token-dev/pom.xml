@@ -7,7 +7,7 @@
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dev</artifactId>
     <packaging>jar</packaging>
-    <version>1.5.1</version>
+    <version>1.6.0</version>
 	
 	<!-- SpringBoot -->
 	<parent>

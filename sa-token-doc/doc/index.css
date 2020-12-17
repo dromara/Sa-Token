@@ -15,7 +15,7 @@
 
 /* 背景变黑 */
 .main-box [data-lang]{padding: 0px !important; border-radius: 10px; overflow: hidden;}
-.main-box [class^="lang-"]{/* color: red !important; */ border: 0px red solid; padding: 1.2em; background-color: #222; color: #FFF;}
+.main-box [class^="lang-"]{/* color: red !important; */ border: 0px red solid; padding: 1.2em; background-color: #282828; color: #FFF;}
 .main-box [class^="lang-api"]{color: #FFF;}
 
 

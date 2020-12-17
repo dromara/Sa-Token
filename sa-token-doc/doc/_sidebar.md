@@ -15,6 +15,7 @@
 	- [模拟他人](/use/mock-person) 
 	- [多账号验证](/use/many-account) 
 	- [注解式鉴权](/use/at-check) 
+	- [花式token](/use/token-style) 
 	- [框架配置](/use/config) 
 
 - **其它**

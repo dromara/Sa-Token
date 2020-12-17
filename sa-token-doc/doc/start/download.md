@@ -9,7 +9,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token</artifactId>
-	<version>1.5.1</version>
+	<version>1.6.0</version>
 </dependency>
 ```
 
@@ -29,7 +29,7 @@
 
 
 ## jar包下载
-[点击下载：sa-token-1.5.1.jar](https://oss.dev33.cn/sa-token/sa-token-1.5.1.jar)
+[点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
 
 
 
