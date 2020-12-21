@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import cn.dev33.satoken.annotation.SaCheckInterceptor;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.interceptor.SaCheckInterceptor;
 
 /**
  * sa-token代码方式进行配置

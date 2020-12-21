@@ -4,9 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import cn.dev33.satoken.SaTokenManager;
-import cn.dev33.satoken.spring.SaTokenSetup;
 
-@SaTokenSetup // 必须有这个注解，用来标注加载sa-token
 @SpringBootApplication
 public class SaTokenDemoApplication {
 

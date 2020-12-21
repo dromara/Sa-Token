@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 基础信息 -->
+    <groupId>cn.dev33</groupId>
+    <artifactId>sa-token-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.6.0</version>
+	
+	<!-- 项目介绍 -->
+	<name>sa-token</name>
+	<description>A Java Web lightweight authority authentication framework, comprehensive function, easy to use</description>
+	<url>https://github.com/click33/sa-token</url>
+
+	
+	<!-- 所有模块 -->
+	<modules>
+		<module>sp-token-core</module>
+		<module>sa-token-spring-boot-starter</module>
+	</modules>
+	
+	<!-- 开源协议 apache 2.0 -->
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
+	
+	<!-- 一些属性 -->
+	<properties>
+        <jdk.version>1.8</jdk.version>
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+	</properties>
+
+	<!-- 仓库信息 -->
+	<scm>
+		<tag>master</tag>
+		<url>https://github.com/click33/sa-token.git</url>
+		<connection>scm:git:https://github.com/click33/sa-token.git</connection>
+		<developerConnection>scm:git:https://github.com/click33/sa-token.git</developerConnection>
+	</scm>
+	
+	<!-- 作者信息 -->
+	<developers>
+		<developer>
+			<name>shengzhang</name>
+			<email>2393584716@qq.com</email>
+		</developer>
+	</developers>
+	
+	
+	<!-- 父仓库 -->
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	
+	<!-- 仓库依赖 -->
+	<dependencies>
+		
+	</dependencies>
+	
+	<!-- 项目构建 -->
+	<build>
+	   <plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.2</version>
+			<configuration>
+				<source>1.8</source>
+				<target>1.8</target>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+	   </plugins>
+	</build>
+	
+</project>

@@ -22,7 +22,7 @@ spring:
         # 是否在初始化配置时打印版本字符画
         is-v: true
         
-          
+        
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）
