@@ -18,6 +18,16 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/test/")
 public class TestController {
 
+	
+	// 当前是否登录 ， 浏览器访问： http://localhost:8081/test/isLogin
+	@RequestMapping("isLogin")
+	public AjaxJson isLogin() {
+		System.out.println("当前是否登录：" + StpUtil.isLogin());
+		System.out.println("当前登录账号id：" + StpUtil.getLoginId(-1));
+		return AjaxJson.getSuccessData(StpUtil.getTokenInfo());
+	}
+	
+	
 	// 测试登录接口， 浏览器访问： http://localhost:8081/test/login
 	@RequestMapping("login")
 	public AjaxJson login(@RequestParam(defaultValue="10001") String id) {

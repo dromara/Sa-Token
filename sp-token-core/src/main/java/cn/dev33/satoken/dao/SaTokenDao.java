@@ -10,6 +10,14 @@ import cn.dev33.satoken.session.SaSession;
 public interface SaTokenDao {
 
 	
+	/** 常量，表示一个key永不过期 (在一个key被标注为永远不过期时返回此值) */ 
+	public static final Long NEVER_EXPIRE = -1L;
+	
+	/** 常量，表示系统中不存在这个缓存 (在对不存在的key获取剩余存活时间时返回此值) */ 
+	public static final Long NOT_VALUE_EXPIRE = -2L;
+	
+	
+	
 	/**
 	 * 根据key获取value ，如果没有，则返回空 
 	 * @param key 键名称 
@@ -38,6 +46,12 @@ public interface SaTokenDao {
 	 */
 	public void delKey(String key);
 	
+	/**
+	 * 获取指定key的剩余存活时间 (单位: 秒)
+	 * @param key 指定key 
+	 * @return 这个key的剩余存活时间 
+	 */
+	public long getTimeout(String key);
 	
 
 	/**
@@ -45,26 +59,36 @@ public interface SaTokenDao {
 	 * @param sessionId 键名称 
 	 * @return SaSession
 	 */
-	public SaSession getSaSession(String sessionId);
+	public SaSession getSession(String sessionId);
 
 	/**
-	 *  将指定session持久化 
+	 * 将指定session持久化 
 	 * @param session 要保存的session对象
 	 * @param timeout 过期时间，单位: s
 	 */
-	public void saveSaSession(SaSession session, long timeout);
+	public void saveSession(SaSession session, long timeout);
 
 	/**
 	 * 更新指定session
 	 * @param session 要更新的session对象
 	 */
-	public void updateSaSession(SaSession session);
+	public void updateSession(SaSession session);
 	
 	/**
-	 *   删除一个指定的session 
+	 * 删除一个指定的session 
 	 * @param sessionId sessionId
 	 */
-	public void deleteSaSession(String sessionId);
+	public void deleteSession(String sessionId);
+
+	/**
+	 * 获取指定SaSession的剩余存活时间 (单位: 秒)
+	 * @param sessionId 指定SaSession 
+	 * @return 这个SaSession的剩余存活时间 
+	 */
+	public long getSessionTimeout(String sessionId);
+	
+	
+	
 	
 	
 }

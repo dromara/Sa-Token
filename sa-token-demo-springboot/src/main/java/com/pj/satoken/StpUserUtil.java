@@ -57,7 +57,7 @@ public class StpUserUtil {
 	 * 获取当前会话的token信息：tokenName与tokenValue
 	 * @return 一个Map对象 
 	 */
-	public static Map<String, String> getTokenInfo() {
+	public static Map<String, Object> getTokenInfo() {
 		return stpLogic.getTokenInfo();
 	}
 

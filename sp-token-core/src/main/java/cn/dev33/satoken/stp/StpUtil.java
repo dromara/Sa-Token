@@ -44,10 +44,10 @@ public class StpUtil {
 	}
 
 	/**
-	 * 获取当前会话的token信息：tokenName与tokenValue
+	 * 获取当前会话的token信息：tokenName、tokenValue、timeout
 	 * @return 一个Map对象 
 	 */
-	public static Map<String, String> getTokenInfo() {
+	public static Map<String, Object> getTokenInfo() {
 		return stpLogic.getTokenInfo();
 	}
 
@@ -158,6 +158,7 @@ public class StpUtil {
  		return stpLogic.getLoginIdByToken(tokenValue);
  	}
 	
+ 	
 	// =================== session相关 ===================
 
 	/** 
@@ -187,6 +188,29 @@ public class StpUtil {
 		return stpLogic.getSession();
 	}
 
+
+
+	// =================== 过期时间相关 ===================  
+
+ 	/**
+ 	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
+ 	 * @return token剩余有效时间
+ 	 */
+ 	public long getTimeout() {
+ 		return stpLogic.getTimeout();
+ 	}
+ 	
+ 	/**
+ 	 * 获取指定loginId的token剩余有效时间 (单位: 秒) 
+ 	 * @param loginId 指定loginId 
+ 	 * @return token剩余有效时间 
+ 	 */
+ 	public long getTimeoutByLoginId(Object loginId) {
+ 		return stpLogic.getTimeoutByLoginId(loginId);
+ 	}
+	
+ 	
+	
 	// =================== 权限验证操作 ===================
 
 	/** 

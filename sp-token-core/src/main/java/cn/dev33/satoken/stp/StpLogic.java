@@ -108,13 +108,14 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 获取当前会话的token信息：tokenName与tokenValue
+	 * 获取当前会话的token信息：tokenName、tokenValue、timeout
 	 * @return 一个Map对象 
 	 */
-	public Map<String, String> getTokenInfo() {
-		Map<String, String> map = new HashMap<String, String>();
+	public Map<String, Object> getTokenInfo() {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("tokenName", getTokenName());
 		map.put("tokenValue", getTokenValue());
+		map.put("tokenTimeout", getTimeout());
 		return map;
 	}
 	
@@ -137,7 +138,7 @@ public class StpLogic {
 		if(tokenValue == null){			// 为null则创建一个新的
 			tokenValue = randomTokenValue(loginId);
 		} else {
-			// 不为null, 并且配置不共享，则：将原来的标记为[被顶替] 
+			// 不为null, 并且配置不共享会话，则：将原来的会话标记为[被顶替] 
 			if(config.getIsShare() == false){
 //				dao.delKey(getKeyTokenValue(tokenValue)); 
 				dao.updateValue(getKeyTokenValue(tokenValue), NotLoginException.BE_REPLACED);
@@ -196,7 +197,7 @@ public class StpLogic {
 		// 清除相关数据 
 		SaTokenManager.getSaTokenDao().delKey(getKeyTokenValue(tokenValue));	// 清除token-id键值对  
 		SaTokenManager.getSaTokenDao().delKey(getKeyLoginId(loginId));		// 清除id-token键值对  
-		SaTokenManager.getSaTokenDao().deleteSaSession(getKeySession(loginId));		// 清除其session 
+		SaTokenManager.getSaTokenDao().deleteSession(getKeySession(loginId));		// 清除其session 
 	}
 
 	/**
@@ -214,7 +215,7 @@ public class StpLogic {
 		// 清除相关数据 
 		SaTokenManager.getSaTokenDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);	// 标记：已被踢下线 
 		SaTokenManager.getSaTokenDao().delKey(getKeyLoginId(loginId));		// 清除id-token键值对  
-		SaTokenManager.getSaTokenDao().deleteSaSession(getKeySession(loginId));		// 清除其session 
+		SaTokenManager.getSaTokenDao().deleteSession(getKeySession(loginId));		// 清除其session 
 	}
 	
 	// 查询相关 
@@ -366,10 +367,10 @@ public class StpLogic {
 	 * @return .
 	 */
 	protected SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
-		SaSession session = SaTokenManager.getSaTokenDao().getSaSession(sessionId);
+		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
 			session = new SaSession(sessionId);
-			SaTokenManager.getSaTokenDao().saveSaSession(session, SaTokenManager.getConfig().getTimeout());
+			SaTokenManager.getSaTokenDao().saveSession(session, SaTokenManager.getConfig().getTimeout());
 		}
 		return session;
 	}
@@ -400,7 +401,26 @@ public class StpLogic {
 	public SaSession getSession() {
 		return getSessionByLoginId(getLoginId());
 	}
+
+
+	// =================== 过期时间相关 ===================  
+
+ 	/**
+ 	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
+ 	 * @return token剩余有效时间
+ 	 */
+ 	public long getTimeout() {
+ 		return SaTokenManager.getSaTokenDao().getTimeout(getKeyTokenValue(getTokenValue()));
+ 	}
  	
+ 	/**
+ 	 * 获取指定loginId的token剩余有效时间 (单位: 秒) 
+ 	 * @param loginId 指定loginId 
+ 	 * @return token剩余有效时间 
+ 	 */
+ 	public long getTimeoutByLoginId(Object loginId) {
+ 		return SaTokenManager.getSaTokenDao().getTimeout(getKeyTokenValue(getTokenValueByLoginId(loginId)));
+ 	}
 	
 
 	// =================== 权限验证操作 ===================  

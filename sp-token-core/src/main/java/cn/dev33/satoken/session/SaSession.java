@@ -137,7 +137,7 @@ public class SaSession implements Serializable {
 	 * 将这个session从持久库更新一下  
 	 */
 	public void update() {
-		SaTokenManager.getSaTokenDao().updateSaSession(this);
+		SaTokenManager.getSaTokenDao().updateSession(this);
 	}
 
 	
