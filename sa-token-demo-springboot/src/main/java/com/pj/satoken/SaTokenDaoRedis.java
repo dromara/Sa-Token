@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.session.SaSession;
@@ -15,7 +14,7 @@ import cn.dev33.satoken.session.SaSession;
 /**
  * sa-token持久层的实现类 , 基于redis 
  */
-@Component	// 打开此注解，保证此类被springboot扫描，即可完成sa-token与redis的集成 
+//@Component	// 打开此注解，保证此类被springboot扫描，即可完成sa-token与redis的集成 
 public class SaTokenDaoRedis implements SaTokenDao {
 
 
