@@ -15,12 +15,12 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	/**
 	 * 所有数据集合 
 	 */
-	Map<String, Object> dataMap = new HashMap<String, Object>();
+	public Map<String, Object> dataMap = new HashMap<String, Object>();
 
 	/**
 	 * 过期时间集合 (单位: 毫秒) , 记录所有key的到期时间 [注意不是剩余存活时间]
 	 */
-	Map<String, Long> expireMap = new HashMap<String, Long>();
+	public Map<String, Long> expireMap = new HashMap<String, Long>();
 	
 	
 	@Override
@@ -37,12 +37,16 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	@Override
 	public void updateValue(String key, String value) {
+		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
+			return;
+		}
 		dataMap.put(key, value);
 	}
 
 	@Override
-	public void delKey(String key) {
+	public void deleteKey(String key) {
 		dataMap.remove(key);
+		expireMap.remove(key);
 	}
 	
 	@Override
@@ -65,12 +69,16 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	@Override
 	public void updateSession(SaSession session) {
+		if(getKeyTimeout(session.getId()) == SaTokenDao.NOT_VALUE_EXPIRE) {
+			return;
+		}
 		// 无动作 
 	}
 
 	@Override
 	public void deleteSession(String sessionId) {
 		dataMap.remove(sessionId);
+		expireMap.remove(sessionId);
 	}
 	
 	@Override
@@ -99,7 +107,6 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	/**
 	 * 获取指定key的剩余存活时间 (单位：秒)
 	 */
-
 	long getKeyTimeout(String key) {
 		// 先检查是否已经过期
 		clearKeyByTimeout(key);
@@ -113,8 +120,15 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		if(expire == SaTokenDao.NEVER_EXPIRE) {
 			return SaTokenDao.NEVER_EXPIRE;
 		}
-		// 计算剩余时间并返回 
-		return (expire - System.currentTimeMillis()) / 1000;
+		// ---- 计算剩余时间并返回 
+		long timeout = (expire - System.currentTimeMillis()) / 1000;
+		// 小于零时，视为不存在 
+		if(timeout < 0) {
+			dataMap.remove(key);
+			expireMap.remove(key);
+			return SaTokenDao.NOT_VALUE_EXPIRE;
+		}
+		return timeout;
 	}
 	
 	

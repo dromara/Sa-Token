@@ -44,7 +44,7 @@ public interface SaTokenDao {
 	 * 删除一个指定的key 
 	 * @param key 键名称 
 	 */
-	public void delKey(String key);
+	public void deleteKey(String key);
 	
 	/**
 	 * 获取指定key的剩余存活时间 (单位: 秒)

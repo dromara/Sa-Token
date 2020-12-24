@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
+import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
@@ -18,15 +19,6 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/test/")
 public class TestController {
 
-	
-	// 当前是否登录 ， 浏览器访问： http://localhost:8081/test/isLogin
-	@RequestMapping("isLogin")
-	public AjaxJson isLogin() {
-		System.out.println("当前是否登录：" + StpUtil.isLogin());
-		System.out.println("当前登录账号id：" + StpUtil.getLoginId(-1));
-		return AjaxJson.getSuccessData(StpUtil.getTokenInfo());
-	}
-	
 	
 	// 测试登录接口， 浏览器访问： http://localhost:8081/test/login
 	@RequestMapping("login")
@@ -107,8 +99,9 @@ public class TestController {
 	@RequestMapping("tokenInfo")
 	public AjaxJson tokenInfo() {
 		System.out.println("======================= 进入方法，打印当前token信息 ========================= ");
-		System.out.println(StpUtil.getTokenInfo());
-		return AjaxJson.getSuccess();
+		SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+		System.out.println(tokenInfo);
+		return AjaxJson.getSuccessData(tokenInfo);
 	}
 	
 	
@@ -122,15 +115,22 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
-	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/getInfo
+	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/atLogin
 	@SaCheckLogin				// 注解式鉴权：当前会话必须登录才能通过 
-	@RequestMapping("getInfo")
-	public AjaxJson getInfo() {
+	@RequestMapping("atLogin")
+	public AjaxJson atLogin() {
 		return AjaxJson.getSuccessData("用户信息");
 	}
 	
 	
-
+	// [活动时间] 续签： http://localhost:8081/test/rene
+	@RequestMapping("rene")
+	public AjaxJson rene() {
+		StpUtil.checkActivityTimeout();
+		StpUtil.updateLastActivityToNow();
+		return AjaxJson.getSuccess("续签成功");
+	}
+	
 
 	// 测试踢人下线   浏览器访问： http://localhost:8081/test/kickOut 
 	@RequestMapping("kickOut")

@@ -1,7 +1,5 @@
 package cn.dev33.satoken.stp;
 
-import java.util.Map;
-
 import cn.dev33.satoken.session.SaSession;
 
 /**
@@ -35,19 +33,27 @@ public class StpUtil {
 	}
 
 	/** 
-	 * 获取指定id的tokenValue
+	 * 获取指定id的tokenValue 
 	 * @param loginId  .
 	 * @return
 	 */
 	public static String getTokenValueByLoginId(Object loginId) {
 		return stpLogic.getTokenValueByLoginId(loginId);
 	}
-
+	
 	/**
-	 * 获取当前会话的token信息：tokenName、tokenValue、timeout
-	 * @return 一个Map对象 
+	 * 获取当前StpLogin的loginKey 
+	 * @return 当前StpLogin的loginKey
 	 */
-	public static Map<String, Object> getTokenInfo() {
+	public static String getLoginKey(){
+		return stpLogic.getLoginKey();
+	}
+	
+	/**
+	 * 获取当前会话的token信息 
+	 * @return token信息 
+	 */
+	public static SaTokenInfo getTokenInfo() {
 		return stpLogic.getTokenInfo();
 	}
 
@@ -69,7 +75,7 @@ public class StpUtil {
 	}
 
 	/**
-	 * 指定loginId的会话注销登录（清退下线）
+	 * 指定loginId的会话注销登录（正常注销下线）
 	 * @param loginId 账号id 
 	 */
 	public static void logoutByLoginId(Object loginId) {
@@ -181,6 +187,15 @@ public class StpUtil {
 	}
 	
 	/** 
+	 * 获取当前会话的session, 如果没有，isCreate=是否新建并返回 
+	 * @param isCreate 是否新建
+	 * @return 当前会话的session 
+	 */
+	public static SaSession getSession(boolean isCreate) {
+		return stpLogic.getSession(isCreate);
+	}
+	
+	/** 
 	 * 获取当前会话的session
 	 * @return
 	 */
@@ -189,6 +204,24 @@ public class StpUtil {
 	}
 
 
+	// =================== [临时过期] 验证相关 ===================  
+
+ 	/**
+ 	 * 检查当前token 是否已经[临时过期]，如果已经过期则抛出异常  
+ 	 */
+ 	public static void checkActivityTimeout() {
+ 		stpLogic.checkActivityTimeout();
+ 	}
+
+ 	/**
+ 	 * 续签当前token：(将 [最后操作时间] 更新为当前时间戳) 
+ 	 * <h1>请注意: 即时token已经 [临时过期] 也可续签成功，
+ 	 * 如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否过期即可 </h1>
+ 	 */
+ 	public static void updateLastActivityToNow() {
+ 		stpLogic.updateLastActivityToNow();
+ 	}
+ 	
 
 	// =================== 过期时间相关 ===================  
 
@@ -196,8 +229,8 @@ public class StpUtil {
  	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
  	 */
- 	public long getTimeout() {
- 		return stpLogic.getTimeout();
+ 	public static long getTimeout() {
+ 		return stpLogic.getTokenTimeout();
  	}
  	
  	/**
@@ -205,10 +238,44 @@ public class StpUtil {
  	 * @param loginId 指定loginId 
  	 * @return token剩余有效时间 
  	 */
- 	public long getTimeoutByLoginId(Object loginId) {
- 		return stpLogic.getTimeoutByLoginId(loginId);
+ 	public static long getTimeoutByLoginId(Object loginId) {
+ 		return stpLogic.getTokenTimeoutByLoginId(loginId);
  	}
-	
+
+ 	/**
+ 	 * 获取当前登录者的Session剩余有效时间 (单位: 秒)
+ 	 * @return token剩余有效时间
+ 	 */
+ 	public static long getSessionTimeout() {
+ 		return stpLogic.getSessionTimeout();
+ 	}
+ 	
+ 	/**
+ 	 * 获取指定loginId的Session剩余有效时间 (单位: 秒) 
+ 	 * @param loginId 指定loginId 
+ 	 * @return token剩余有效时间 
+ 	 */
+ 	public static long getSessionTimeoutByLoginId(Object loginId) {
+ 		return stpLogic.getSessionTimeoutByLoginId(loginId);
+ 	}
+ 	
+ 	/**
+ 	 * 获取当前token[临时过期]剩余有效时间 (单位: 秒)
+ 	 * @return token[临时过期]剩余有效时间
+ 	 */
+ 	public static long getTokenActivityTimeout() {
+ 		return stpLogic.getTokenActivityTimeout();
+ 	}
+ 	
+ 	/**
+ 	 * 获取指定token[临时过期]剩余有效时间 (单位: 秒)
+ 	 * @param tokenValue 指定token 
+ 	 * @return token[临时过期]剩余有效时间
+ 	 */
+ 	public static long getTokenActivityTimeoutByToken(String tokenValue) {
+ 		return stpLogic.getTokenActivityTimeoutByToken(tokenValue);
+ 	}
+ 	
  	
 	
 	// =================== 权限验证操作 ===================

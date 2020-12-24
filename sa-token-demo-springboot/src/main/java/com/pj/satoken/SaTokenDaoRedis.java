@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.session.SaSession;
@@ -15,7 +14,7 @@ import cn.dev33.satoken.session.SaSession;
 /**
  * sa-token持久层的实现类 , 基于redis 
  */
-@Component	// 打开此注解，保证此类被springboot扫描，即可完成sa-token与redis的集成 
+//@Component	// 打开此注解，保证此类被springboot扫描，即可完成sa-token与redis的集成 
 public class SaTokenDaoRedis implements SaTokenDao {
 
 
@@ -58,12 +57,13 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
 			return;
 		}
-		stringRedisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+//		stringRedisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+		this.setValue(key, value, expire);
 	}
 	
 	// 删除一个指定的key 
 	@Override
-	public void delKey(String key) {
+	public void deleteKey(String key) {
 		stringRedisTemplate.delete(key);
 	}
 
@@ -99,7 +99,8 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
 			return;
 		}
-		redisTemplate.opsForValue().set(session.getId(), session, expire, TimeUnit.SECONDS);
+//		redisTemplate.opsForValue().set(session.getId(), session, expire, TimeUnit.SECONDS);
+		this.saveSession(session, expire);
 	}
 
 	// 删除一个指定的session 
@@ -108,11 +109,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		redisTemplate.delete(sessionId);
 	}
 
-
-	
 	// 获取指定SaSession的剩余存活时间 (单位: 秒)
-
-
 	@Override
 	public long getSessionTimeout(String sessionId) {
 		return redisTemplate.getExpire(sessionId);

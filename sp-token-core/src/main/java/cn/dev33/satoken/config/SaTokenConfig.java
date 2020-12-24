@@ -9,6 +9,7 @@ public class SaTokenConfig {
 
 	private String tokenName = "satoken";		// token名称 (同时也是cookie名称)
 	private long timeout = 30 * 24 * 60 * 60;	// token有效期，单位s 默认30天
+	private long activityTimeout = -1;			// token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 
 	private Boolean isShare = true;			// 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录)
 	private Boolean isReadBody = true;			// 是否尝试从请求体里读取token
 	private Boolean isReadHead = true;			// 是否尝试从header里读取token
@@ -47,7 +48,21 @@ public class SaTokenConfig {
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
 	}
+	
+	/**
+	 * @return activityTimeout
+	 */
+	public long getActivityTimeout() {
+		return activityTimeout;
+	}
 
+	/**
+	 * @param activityTimeout 要设置的 activityTimeout
+	 */
+	public void setActivityTimeout(long activityTimeout) {
+		this.activityTimeout = activityTimeout;
+	}
+	
 	/**
 	 * @return isShare
 	 */
@@ -137,10 +152,14 @@ public class SaTokenConfig {
 	
 	@Override
 	public String toString() {
-		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", isShare=" + isShare
-				+ ", isReadBody=" + isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie
-				+ ", tokenStyle=" + tokenStyle + ", isV=" + isV + "]";
+		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
+				+ ", isShare=" + isShare + ", isReadBody=" + isReadBody + ", isReadHead=" + isReadHead
+				+ ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle + ", isV=" + isV + "]";
 	}
+
+	
+	
+	
 
 	
 	

@@ -1,29 +1,19 @@
 package com.pj.satoken;
 
-import java.util.Map;
-
-import org.springframework.stereotype.Service;
-
-import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
  * 一个默认的实现 
  * @author kong 
  */
-@Service
 public class StpUserUtil {
 
 	/**
 	 * 底层的 StpLogic 对象  
 	 */
-	public static StpLogic stpLogic = new StpLogic("user") {
-		@Override
-		public String getKeyTokenName() {
-	 		return SaTokenManager.getConfig().getTokenName() + "-user";
-	 	}
-	}; 
+	public static StpLogic stpLogic = new StpLogic("user"); 
 	
 	
 	// =================== 获取token 相关 ===================
@@ -45,19 +35,27 @@ public class StpUserUtil {
 	}
 
 	/** 
-	 * 获取指定id的tokenValue
+	 * 获取指定id的tokenValue 
 	 * @param loginId  .
 	 * @return
 	 */
 	public static String getTokenValueByLoginId(Object loginId) {
 		return stpLogic.getTokenValueByLoginId(loginId);
 	}
-
+	
 	/**
-	 * 获取当前会话的token信息：tokenName与tokenValue
-	 * @return 一个Map对象 
+	 * 获取当前StpLogin的loginKey 
+	 * @return 当前StpLogin的loginKey
 	 */
-	public static Map<String, Object> getTokenInfo() {
+	public static String getLoginKey(){
+		return stpLogic.getLoginKey();
+	}
+	
+	/**
+	 * 获取当前会话的token信息 
+	 * @return token信息 
+	 */
+	public static SaTokenInfo getTokenInfo() {
 		return stpLogic.getTokenInfo();
 	}
 
@@ -79,13 +77,21 @@ public class StpUserUtil {
 	}
 
 	/**
-	 * 指定loginId的会话注销登录（踢人下线）
+	 * 指定loginId的会话注销登录（清退下线）
 	 * @param loginId 账号id 
 	 */
 	public static void logoutByLoginId(Object loginId) {
 		stpLogic.logoutByLoginId(loginId);
 	}
 
+	/**
+	 * 指定loginId的会话注销登录（踢人下线）
+	 * @param loginId 账号id 
+	 */
+	public static void kickoutByLoginId(Object loginId) {
+		stpLogic.kickoutByLoginId(loginId);
+	}
+	
 	// 查询相关
 
 	/** 
@@ -160,6 +166,7 @@ public class StpUserUtil {
  		return stpLogic.getLoginIdByToken(tokenValue);
  	}
 	
+ 	
 	// =================== session相关 ===================
 
 	/** 
@@ -189,6 +196,46 @@ public class StpUserUtil {
 		return stpLogic.getSession();
 	}
 
+
+
+	// =================== 过期时间相关 ===================  
+
+ 	/**
+ 	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
+ 	 * @return token剩余有效时间
+ 	 */
+ 	public long getTimeout() {
+ 		return stpLogic.getTokenTimeout();
+ 	}
+ 	
+ 	/**
+ 	 * 获取指定loginId的token剩余有效时间 (单位: 秒) 
+ 	 * @param loginId 指定loginId 
+ 	 * @return token剩余有效时间 
+ 	 */
+ 	public long getTimeoutByLoginId(Object loginId) {
+ 		return stpLogic.getTokenTimeoutByLoginId(loginId);
+ 	}
+
+ 	/**
+ 	 * 获取当前登录者的Session剩余有效时间 (单位: 秒)
+ 	 * @return token剩余有效时间
+ 	 */
+ 	public long getSessionTimeout() {
+ 		return stpLogic.getSessionTimeout();
+ 	}
+ 	
+ 	/**
+ 	 * 获取指定loginId的Session剩余有效时间 (单位: 秒) 
+ 	 * @param loginId 指定loginId 
+ 	 * @return token剩余有效时间 
+ 	 */
+ 	public long getSessionTimeoutByLoginId(Object loginId) {
+ 		return stpLogic.getSessionTimeoutByLoginId(loginId);
+ 	}
+ 	
+ 	
+	
 	// =================== 权限验证操作 ===================
 
 	/** 
