@@ -25,25 +25,11 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		
-		<!-- 开发测试 -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dev</artifactId>
-            <version>1.6.0</version>
-        </dependency> -->
-		
-		<!-- sa-token  -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token</artifactId>
-            <version>1.4.0</version>
-        </dependency> -->
-        
 		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.6.0</version>
+            <version>1.7.0</version>
         </dependency>
 		
 		<!-- SpringBoot整合redis -->

@@ -33,9 +33,9 @@ public class StpUtil {
 	}
 
 	/** 
-	 * 获取指定id的tokenValue 
+	 * 获取指定loginId的tokenValue 
 	 * @param loginId  .
-	 * @return
+	 * @return .
 	 */
 	public static String getTokenValueByLoginId(Object loginId) {
 		return stpLogic.getTokenValueByLoginId(loginId);
@@ -117,8 +117,9 @@ public class StpUtil {
 
 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回默认值
-	 * @param defaultValue .
-	 * @return .
+	 * @param <T> 返回类型 
+	 * @param defaultValue 默认值
+	 * @return 登录id 
 	 */
 	public static <T> T getLoginId(T defaultValue) {
 		return stpLogic.getLoginId(defaultValue);
@@ -126,7 +127,7 @@ public class StpUtil {
 	
 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回null
-	 * @return
+	 * @return .
 	 */
 	public static Object getLoginIdDefaultNull() {
 		return stpLogic.getLoginIdDefaultNull();
@@ -134,7 +135,7 @@ public class StpUtil {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为String
-	 * @return
+	 * @return 登录id
 	 */
 	public static String getLoginIdAsString() {
 		return stpLogic.getLoginIdAsString();
@@ -142,7 +143,7 @@ public class StpUtil {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为int
-	 * @return
+	 * @return 登录id
 	 */
 	public static int getLoginIdAsInt() {
 		return stpLogic.getLoginIdAsInt();
@@ -150,15 +151,16 @@ public class StpUtil {
 
 	/**
 	 * 获取当前会话登录id, 并转换为long
-	 * @return
+	 * @return 登录id
 	 */
 	public static long getLoginIdAsLong() {
 		return stpLogic.getLoginIdAsLong();
 	}
 
-	/** 
+ 	/** 
  	 * 获取指定token对应的登录id，如果未登录，则返回 null 
- 	 * @return .
+ 	 * @param tokenValue token
+ 	 * @return 登录id
  	 */
  	public static Object getLoginIdByToken(String tokenValue) {
  		return stpLogic.getLoginIdByToken(tokenValue);
@@ -197,7 +199,7 @@ public class StpUtil {
 	
 	/** 
 	 * 获取当前会话的session
-	 * @return
+	 * @return .
 	 */
 	public static SaSession getSession() {
 		return stpLogic.getSession();

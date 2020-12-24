@@ -25,7 +25,7 @@ public class SaTokenSpringAutowired {
 	
 	/**
 	 * 获取配置Bean 
-	 * @return .
+	 * @return 配置对象 
 	 */
 	@Bean
 	@ConfigurationProperties(prefix="spring.sa-token")
@@ -35,7 +35,7 @@ public class SaTokenSpringAutowired {
 	
 	/**
 	 * 注入配置Bean 
-	 * @param saTokenConfig .
+	 * @param saTokenConfig 配置对象
 	 */
 	@Autowired
 	public void setConfig(SaTokenConfig saTokenConfig){

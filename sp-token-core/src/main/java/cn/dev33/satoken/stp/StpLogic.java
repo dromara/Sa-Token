@@ -28,7 +28,7 @@ public class StpLogic {
 	
 	/**
 	 * 初始化StpLogic, 并制定loginKey
-	 * @param loginKey .
+	 * @param loginKey 账号标识 
 	 */
 	public StpLogic(String loginKey) {
 		this.loginKey = loginKey;
@@ -90,7 +90,7 @@ public class StpLogic {
 	}
 	
 	/** 
-	 * 获取指定id的tokenValue
+	 * 获取指定loginId的tokenValue
 	 * @param loginId .
 	 * @return .
 	 */
@@ -279,8 +279,9 @@ public class StpLogic {
 	
 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回默认值
-	 * @param defaultValue .
-	 * @return .
+	 * @param <T> 返回类型 
+	 * @param defaultValue 默认值
+	 * @return 登录id 
 	 */
  	@SuppressWarnings("unchecked")
 	public <T>T getLoginId(T defaultValue) {
@@ -327,7 +328,7 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为String
-	 * @return
+	 * @return 登录id
 	 */
  	public String getLoginIdAsString() {
  		return String.valueOf(getLoginId());
@@ -335,7 +336,7 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为int
-	 * @return .
+	 * @return 登录id
 	 */
  	public int getLoginIdAsInt() {
  		// Object loginId = getLoginId();
@@ -347,7 +348,7 @@ public class StpLogic {
 
 	/**
 	 * 获取当前会话登录id, 并转换为long
-	 * @return .
+	 * @return 登录id
 	 */
  	public long getLoginIdAsLong() {
 // 		Object loginId = getLoginId();
@@ -359,7 +360,8 @@ public class StpLogic {
  	
  	/** 
  	 * 获取指定token对应的登录id，如果未登录，则返回 null 
- 	 * @return .
+ 	 * @param tokenValue token
+ 	 * @return 登录id
  	 */
  	public Object getLoginIdByToken(String tokenValue) {
  		if(tokenValue != null) {
@@ -663,7 +665,7 @@ public class StpLogic {
 
 	/**
 	 *  获取key：客户端 tokenName 
-	 * @return
+	 * @return key
 	 */
 	public String getKeyTokenName() {
  		return SaTokenManager.getConfig().getTokenName();
@@ -671,7 +673,7 @@ public class StpLogic {
 	/**  
 	 * 获取key： tokenValue 持久化
 	 * @param tokenValue .
-	 * @return
+	 * @return key
 	 */
 	public String getKeyTokenValue(String tokenValue) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":token:" + tokenValue;
@@ -679,7 +681,7 @@ public class StpLogic {
 	/** 
 	 * 获取key： id 持久化
 	 * @param loginId .
-	 * @return
+	 * @return key
 	 */
 	public String getKeyLoginId(Object loginId) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":id:" + loginId;
@@ -687,15 +689,15 @@ public class StpLogic {
 	/** 
 	 * 获取key： session 持久化  
 	 * @param loginId .
-	 * @return .
+	 * @return key
 	 */
 	public String getKeySession(Object loginId) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":session:" + loginId;
 	}
 	/** 
 	 * 获取key： 指定token的最后操作时间 持久化 
-	 * @param loginId .
-	 * @return .
+	 * @param tokenValue token
+	 * @return key
 	 */
 	public String getKeyLastActivityTime(String tokenValue) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":last-activity:" + tokenValue;

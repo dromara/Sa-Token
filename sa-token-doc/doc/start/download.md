@@ -8,8 +8,8 @@
 <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token</artifactId>
-	<version>1.6.0</version>
+	<artifactId>sa-token-spring-boot-starter</artifactId>
+	<version>1.7.0</version>
 </dependency>
 ```
 
