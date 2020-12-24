@@ -1,7 +1,6 @@
 # 持久层扩展
 --- 
-- 每次重启项目就得重新登录一遍，我想把登录数据都放在`redis`里，这样重启项目也不用重新登录，行不行？
-- 行！
+- 每次重启项目就得重新登录一遍，我想把登录数据都放在`redis`里，这样重启项目也不用重新登录，行不行？**行！**
 - 你需要做的就是重写`sa-token`的dao层实现方式，参考以下方案：
 
 
@@ -22,7 +21,6 @@
 - 代码参考：
 	
 ```java
-
 package com.pj.satoken;
 
 import java.util.concurrent.TimeUnit;
@@ -68,56 +66,78 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	// 写入指定key-value键值对，并设定过期时间(单位：秒)
 	@Override
 	public void setValue(String key, String value, long timeout) {
-		stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+		// 判断是否为永不过期 
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			stringRedisTemplate.opsForValue().set(key, value);
+		} else {
+			stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+		}
 	}
 
 	// 更新指定key-value键值对 (过期时间取原来的值)
 	@Override
 	public void updateValue(String key, String value) {
-		long expire = redisTemplate.getExpire(key);
-		if(expire == -2) {	// -2 = 无此键 
+		long expire = getTimeout(key);
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
 			return;
 		}
-		stringRedisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+		this.setValue(key, value, expire);
 	}
 	
 	// 删除一个指定的key 
 	@Override
-	public void delKey(String key) {
+	public void deleteKey(String key) {
 		stringRedisTemplate.delete(key);
 	}
 
+	// 获取指定key的剩余存活时间 (单位: 秒)
+	@Override
+	public long getTimeout(String key) {
+		return stringRedisTemplate.getExpire(key);
+	}
+	
+	
 	
 	// 根据指定key的session，如果没有，则返回空 
 	@Override
-	public SaSession getSaSession(String sessionId) {
+	public SaSession getSession(String sessionId) {
 		return redisTemplate.opsForValue().get(sessionId);
 	}
 
 	// 将指定session持久化 
 	@Override
-	public void saveSaSession(SaSession session, long timeout) {
-		redisTemplate.opsForValue().set(session.getId(), session, timeout, TimeUnit.SECONDS);
+	public void saveSession(SaSession session, long timeout) {
+		// 判断是否为永不过期 
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			redisTemplate.opsForValue().set(session.getId(), session);
+		} else {
+			redisTemplate.opsForValue().set(session.getId(), session, timeout, TimeUnit.SECONDS);
+		}
 	}
 
 	// 更新指定session 
 	@Override
-	public void updateSaSession(SaSession session) {
-		long expire = redisTemplate.getExpire(session.getId());
-		if(expire == -2) {	// -2 = 无此键 
+	public void updateSession(SaSession session) {
+		long expire = getSessionTimeout(session.getId());
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
 			return;
 		}
-		redisTemplate.opsForValue().set(session.getId(), session, expire, TimeUnit.SECONDS);
+		this.saveSession(session, expire);
 	}
 
 	// 删除一个指定的session 
 	@Override
-	public void deleteSaSession(String sessionId) {
+	public void deleteSession(String sessionId) {
 		redisTemplate.delete(sessionId);
 	}
 
-}
+	// 获取指定SaSession的剩余存活时间 (单位: 秒)
+	@Override
+	public long getSessionTimeout(String sessionId) {
+		return redisTemplate.getExpire(sessionId);
+	}
 
+}
 
 ```
 

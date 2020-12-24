@@ -70,8 +70,8 @@ spring:
 | 参数名称			| 类型		| 默认值		| 说明																				|
 | :--------			| :--------	| :--------	| :--------																			|
 | tokenName			| String	| satoken	| token名称（同时也是cookie名称）													|
-| timeout			| long		| 2592000	| token有效期，单位/秒 默认30天，-1代表永久有效										|
-| activityTimeout	| long		| -1		| token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 														|
+| timeout			| long		| 2592000	| token有效期，单位/秒 默认30天，-1代表永久有效	[参考：token有效期详解](/fun/token-timeout)		|
+| activityTimeout	| long		| -1		| token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 	[参考：token有效期详解](/fun/token-timeout)													|
 | isShare			| Boolean	| true		|  在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）	|
 | isReadBody		| Boolean	| true		| 是否尝试从请求体里读取token														|
 | isReadHead		| Boolean	| true		| 是否尝试从header里读取token														|

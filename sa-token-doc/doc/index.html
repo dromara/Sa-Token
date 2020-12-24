@@ -7,9 +7,9 @@
 		<meta name="description" content="Description">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<meta name="keywords" content="sa-token|sa-token框架|sa-token文档|sa-token在线文档|权限认证框架">
-		<meta name="description" content="sa-token是一个JavaWeb权限认证框架，强大、简单、好用，登录验证、权限验证、自定义session会话、踢人下线、持久层扩展、无cookie模式、模拟他人账号、多账号体系、注解式鉴权、花式token、Spring集成...，零配置开箱即用，覆盖所有应用场景，你所需要的功能，这里都有">
+		<meta name="description" content="sa-token是一个JavaWeb权限认证框架，强大、简单、好用，登录验证、权限验证、自定义session会话、踢人下线、持久层扩展、无cookie模式、模拟他人账号、多账号体系、注解式鉴权、花式token、自动续签、Spring集成...，零配置开箱即用，覆盖所有应用场景，你所需要的功能，这里都有">
 		<link rel="stylesheet" href="https://unpkg.com/docsify@4.11.3/lib/themes/vue.css">
-		<link rel="stylesheet" href="./index.css">
+		<link rel="stylesheet" href="./lib/index.css">
 		<link rel="shortcut icon" type="image/x-icon" href="logo.png">
 	</head>
 	<body>
@@ -59,11 +59,12 @@
 					function(hook, vm) {
 						// 解析之后执行 
 						hook.afterEach(function(html) {
-							var url = 'https://github.com/click33/sa-token/tree/master/sa-token-doc/doc/' + vm.route.file;
+							var url = 'https://gitee.com/sz6/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
+							var url2 = 'https://github.com/click33/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
 							var footer = [
 								'<br/><br/><br/><br/><br/><br/><br/><hr/>',
 								'<footer>',
-								'&emsp;<span>发现错误？想参与编辑？ <a href="' + url + '" target="_blank">在 GitHub 上编辑此页！</a> </span>',
+								'<span>发现错误？想参与编辑？ 在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 + '" target="_blank">GitHub</a> 上编辑此页！</span>',
 								'</footer>'
 							].join('');
 							return html + footer;

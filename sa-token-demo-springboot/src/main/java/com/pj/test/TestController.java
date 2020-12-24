@@ -112,6 +112,8 @@ public class TestController {
 	public AjaxJson atCheck() {
 		System.out.println("======================= 进入方法，测试注解鉴权接口 ========================= ");
 		System.out.println("只有通过注解鉴权，才能进入此方法");
+		StpUtil.checkActivityTimeout();
+		StpUtil.updateLastActivityToNow();
 		return AjaxJson.getSuccess();
 	}
 	

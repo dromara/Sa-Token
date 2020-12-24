@@ -23,7 +23,7 @@
 ```
 
 #### 3、配置文件
-- 你可以零配置启动项目
+- 你可以**零配置启动项目**
 - 但同时你也可以在`application.yml`中增加如下配置，定制性使用框架：
 
 ``` java
@@ -32,8 +32,10 @@ spring:
     sa-token: 
         # token名称 (同时也是cookie名称)
         token-name: satoken
-        # token有效期，单位s 默认30天
+        # token有效期，单位s 默认30天, -1代表永不过期 
         timeout: 2592000
+        # token临时有效期, 默认-1 代表不限制    
+        activity-timeout: -1
         # 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录)
         is-share: true
         # 是否尝试从请求体里读取token
@@ -42,6 +44,8 @@ spring:
         is-read-head: true
         # 是否尝试从cookie里读取token
         is-read-cookie: true
+        # token风格
+        token-style: uuid
         # 是否在初始化配置时打印版本字符画
         is-v: true
 ```
@@ -53,7 +57,6 @@ spring:
 在项目中新建包 `com.pj` ，在此包内新建主类 `SaTokenDemoApplication.java`，输入以下代码：
 
 ``` java
-@SaTokenSetup // 标注启动 sa-token
 @SpringBootApplication
 public class SaTokenDemoApplication {
 	public static void main(String[] args) throws JsonProcessingException {
