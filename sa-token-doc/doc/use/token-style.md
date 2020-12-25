@@ -17,7 +17,7 @@
 	623368f0-ae5e-4475-a53f-93e4225f16ae
 ```
 
-2. token-style=`simple-uuid`，同上，uuid风格, 只不过去掉了下划线：
+2. token-style=`simple-uuid`，同上，uuid风格, 只不过去掉了中划线：
 ``` html
 	6fd4221395024b5f87edd34bc3258ee8
 ```
