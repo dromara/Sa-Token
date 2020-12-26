@@ -20,6 +20,7 @@
 	<modules>
 		<module>sa-token-core</module>
 		<module>sa-token-spring-boot-starter</module>
+		<module>sa-token-dao-redis-spring-boot-starter</module>
 	</modules>
 	
 	<!-- 开源协议 apache 2.0 -->

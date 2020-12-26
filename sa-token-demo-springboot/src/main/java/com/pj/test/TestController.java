@@ -104,7 +104,6 @@ public class TestController {
 		return AjaxJson.getSuccessData(tokenInfo);
 	}
 	
-	
 	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/atCheck
 	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
 	@SaCheckPermission("user-add")		// 注解式鉴权：当前会话必须具有指定权限才能通过 
@@ -124,7 +123,6 @@ public class TestController {
 		return AjaxJson.getSuccessData("用户信息");
 	}
 	
-	
 	// [活动时间] 续签： http://localhost:8081/test/rene
 	@RequestMapping("rene")
 	public AjaxJson rene() {
@@ -133,7 +131,6 @@ public class TestController {
 		return AjaxJson.getSuccess("续签成功");
 	}
 	
-
 	// 测试踢人下线   浏览器访问： http://localhost:8081/test/kickOut 
 	@RequestMapping("kickOut")
 	public AjaxJson kickOut() {
@@ -149,7 +146,6 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
-
 	// 测试   浏览器访问： http://localhost:8081/test/test 
 	@RequestMapping("test")
 	public AjaxJson test() {
@@ -165,7 +161,6 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
-	
 	
 	
 }
