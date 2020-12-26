@@ -69,7 +69,7 @@
 	}
 ```
 
-2. 再次调用 `StpUtil.setLoginId(10001)`方法进行登录，观察其生成的token样式
+2. 再次调用 `StpUtil.setLoginId(10001)`方法进行登录，观察其生成的token样式:
 ``` html
 	gfuPSwZsnUhwgz08GTCH4wOgasWtc3odP4HLwXJ7NDGOximTvT4OlW19zeLH
 ```
