@@ -33,22 +33,22 @@ public class StpUtil {
 	}
 
 	/** 
-	 * 获取指定loginId的tokenValue 
-	 * @param loginId  .
-	 * @return .
+	 * 获取指定loginId的tokenValue
+	 * @param loginId 账号id
+	 * @return token值 
 	 */
 	public static String getTokenValueByLoginId(Object loginId) {
 		return stpLogic.getTokenValueByLoginId(loginId);
 	}
-	
+
 	/**
-	 * 获取当前StpLogin的loginKey 
+	 * 获取当前StpLogin的loginKey
 	 * @return 当前StpLogin的loginKey
 	 */
 	public static String getLoginKey(){
 		return stpLogic.getLoginKey();
 	}
-	
+
 	/**
 	 * 获取当前会话的token信息 
 	 * @return token信息 
@@ -57,11 +57,12 @@ public class StpUtil {
 		return stpLogic.getTokenInfo();
 	}
 
+	
 	// =================== 登录相关操作 ===================
 
 	/**
 	 * 在当前会话上登录id 
-	 * @param loginId 登录id ，建议的类型：（long | int | String）
+	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 */
 	public static void setLoginId(Object loginId) {
 		stpLogic.setLoginId(loginId);
@@ -92,31 +93,31 @@ public class StpUtil {
 	
 	// 查询相关
 
-	/** 
- 	 * 获取当前会话是否已经登录
+ 	/** 
+ 	 * 获取当前会话是否已经登录 
  	 * @return 是否已登录 
  	 */
 	public static boolean isLogin() {
 		return stpLogic.isLogin();
 	}
 
-	/**
-	 * 检验当前会话是否已经登录，如未登录，则抛出异常
+ 	/** 
+ 	 * 检验当前会话是否已经登录，如未登录，则抛出异常 
  	 */
  	public static void checkLogin() {
- 		getLoginId();
+ 		stpLogic.checkLogin();
  	}
-	
-	/** 
- 	 * 获取当前会话登录id, 如果未登录，则抛出异常
- 	 * @return .
+
+ 	/** 
+ 	 * 获取当前会话账号id, 如果未登录，则抛出异常 
+ 	 * @return 账号id
  	 */
 	public static Object getLoginId() {
 		return stpLogic.getLoginId();
 	}
 
 	/** 
-	 * 获取当前会话登录id, 如果未登录，则返回默认值
+	 * 获取当前会话登录id, 如果未登录，则返回默认值 
 	 * @param <T> 返回类型 
 	 * @param defaultValue 默认值
 	 * @return 登录id 
@@ -124,10 +125,10 @@ public class StpUtil {
 	public static <T> T getLoginId(T defaultValue) {
 		return stpLogic.getLoginId(defaultValue);
 	}
-	
+
 	/** 
-	 * 获取当前会话登录id, 如果未登录，则返回null
-	 * @return .
+	 * 获取当前会话登录id, 如果未登录，则返回null 
+	 * @return 账号id 
 	 */
 	public static Object getLoginIdDefaultNull() {
 		return stpLogic.getLoginIdDefaultNull();
@@ -135,7 +136,7 @@ public class StpUtil {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为String
-	 * @return 登录id
+	 * @return 账号id 
 	 */
 	public static String getLoginIdAsString() {
 		return stpLogic.getLoginIdAsString();
@@ -143,7 +144,7 @@ public class StpUtil {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为int
-	 * @return 登录id
+	 * @return 账号id 
 	 */
 	public static int getLoginIdAsInt() {
 		return stpLogic.getLoginIdAsInt();
@@ -151,7 +152,7 @@ public class StpUtil {
 
 	/**
 	 * 获取当前会话登录id, 并转换为long
-	 * @return 登录id
+	 * @return 账号id 
 	 */
 	public static long getLoginIdAsLong() {
 		return stpLogic.getLoginIdAsLong();
@@ -170,8 +171,8 @@ public class StpUtil {
 	// =================== session相关 ===================
 
 	/** 
-	 * 获取指定loginId的session, 如果没有，isCreate=是否新建并返回
-	 * @param loginId 登录id
+	 * 获取指定loginId的session, 如果session尚未创建，isCreate=是否新建并返回
+	 * @param loginId 账号id
 	 * @param isCreate 是否新建
 	 * @return SaSession
 	 */
@@ -180,26 +181,27 @@ public class StpUtil {
 	}
 
 	/** 
-	 * 获取指定loginId的session
-	 * @param loginId .
-	 * @return .
+	 * 获取指定loginId的session, 如果session尚未创建，isCreate=是否新建并返回
+	 * @param loginId 账号id
+	 * @param isCreate 是否新建
+	 * @return SaSession
 	 */
 	public static SaSession getSessionByLoginId(Object loginId) {
 		return stpLogic.getSessionByLoginId(loginId);
 	}
-	
+
 	/** 
-	 * 获取当前会话的session, 如果没有，isCreate=是否新建并返回 
-	 * @param isCreate 是否新建
+	 * 获取当前会话的session, 如果session尚未创建，isCreate=是否新建并返回 
+	 * @param isCreate 是否新建 
 	 * @return 当前会话的session 
 	 */
 	public static SaSession getSession(boolean isCreate) {
 		return stpLogic.getSession(isCreate);
 	}
-	
+
 	/** 
-	 * 获取当前会话的session
-	 * @return .
+	 * 获取当前会话的session，如果session尚未创建，则新建并返回 
+	 * @return 当前会话的session 
 	 */
 	public static SaSession getSession() {
 		return stpLogic.getSession();
@@ -282,47 +284,47 @@ public class StpUtil {
 	
 	// =================== 权限验证操作 ===================
 
-	/** 
- 	 * 指定loginId是否含有指定权限
- 	 * @param loginId .
- 	 * @param pcode .
- 	 * @return .
+ 	/** 
+ 	 * 指定账号id是否含有指定权限 
+ 	 * @param loginId 账号id
+ 	 * @param permissionCode 权限码
+ 	 * @return 是否含有指定权限
  	 */
 	public static boolean hasPermission(Object loginId, Object pcode) {
 		return stpLogic.hasPermission(loginId, pcode);
 	}
 
-	/** 
- 	 * 当前会话是否含有指定权限
- 	 * @param pcode .
- 	 * @return .
+ 	/** 
+ 	 * 当前账号id是否含有指定权限 
+ 	 * @param permissionCode 权限码
+ 	 * @return 是否含有指定权限
  	 */
-	public static boolean hasPermission(Object pcode) {
-		return stpLogic.hasPermission(pcode);
+	public static boolean hasPermission(Object permissionCode) {
+		return stpLogic.hasPermission(permissionCode);
 	}
 
-	/** 
- 	 * 当前账号是否含有指定权限 ， 没有就抛出异常
- 	 * @param pcode .
+ 	/** 
+ 	 * 当前账号是否含有指定权限， 没有就抛出异常 
+ 	 * @param permissionCode 权限码
  	 */
-	public static void checkPermission(Object pcode) {
-		stpLogic.checkPermission(pcode);
+	public static void checkPermission(Object permissionCode) {
+		stpLogic.checkPermission(permissionCode);
 	}
 
-	/** 
- 	 * 当前账号是否含有指定权限 ， 【指定多个，必须全都有】
- 	 * @param pcodeArray .
+ 	/** 
+ 	 * 当前账号是否含有指定权限, [指定多个，必须全都有] 
+ 	 * @param permissionCodeArray 权限码数组
  	 */
-	public static void checkPermissionAnd(Object... pcodeArray) {
-		stpLogic.checkPermissionAnd(pcodeArray);
+	public static void checkPermissionAnd(Object... permissionCodeArray) {
+		stpLogic.checkPermissionAnd(permissionCodeArray);
 	}
 
-	/** 
- 	 * 当前账号是否含有指定权限 ， 【指定多个，有一个就可以了】
- 	 * @param pcodeArray .
+ 	/** 
+ 	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过] 
+ 	 * @param permissionCodeArray 权限码数组
  	 */
-	public static void checkPermissionOr(Object... pcodeArray) {
-		stpLogic.checkPermissionOr(pcodeArray);
+	public static void checkPermissionOr(Object... permissionCodeArray) {
+		stpLogic.checkPermissionOr(permissionCodeArray);
 	}
 
 

@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 没有登陆抛出的异常
- * @author kong
- *
+ * 一个异常：代表用户没有登录 
+ * @author kong 
  */
 public class NotLoginException extends RuntimeException {
 	
 	/**
-	 *
+	 * 
 	 */
 	private static final long serialVersionUID = 6806129545290130142L;
 	
@@ -59,7 +58,7 @@ public class NotLoginException extends RuntimeException {
 	private String type;
 	/**
 	 * 获取异常类型 
-	 * @return
+	 * @return 异常类型 
 	 */
 	public String getType() {
 		return type;
@@ -72,7 +71,7 @@ public class NotLoginException extends RuntimeException {
 	private String loginKey;
 	/** 
 	 * 获得loginKey
-	 * @return login_key
+	 * @return loginKey
 	 */
 	public String getLoginKey() {
 		return loginKey;
@@ -81,16 +80,8 @@ public class NotLoginException extends RuntimeException {
 	
 	
 
-//	/**
-//	 * 创建一个
-//	 */
-//	public NotLoginException() {
-//        this(StpUtil.stpLogic.loginKey);
-//    }
-	
-
 	/**
-	 * 创建一个
+	 * 构造方法创建一个 
 	 * @param message 异常消息 
 	 * @param loginKey loginKey
 	 * @param type 类型 
@@ -103,8 +94,8 @@ public class NotLoginException extends RuntimeException {
     }
 	
 	/**
-	 * 静态方法构建一个NotLoginException
-	 * @param loginKey loginKey
+	 * 静态方法构建一个NotLoginException 
+	 * @param loginKey loginKey 
 	 * @param type 场景类型 
 	 * @return 构建完毕的异常对象 
 	 */

@@ -15,7 +15,7 @@ public class SpringMVCUtil {
 	
 	/**
 	 * 获取当前会话的 request 
-	 * @return .
+	 * @return request
 	 */
 	public static HttpServletRequest getRequest() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
@@ -26,8 +26,8 @@ public class SpringMVCUtil {
 	}
 	
 	/**
-	 * 获取当前会话的  response
-	 * @return .
+	 * 获取当前会话的 response
+	 * @return response
 	 */
 	public static HttpServletResponse getResponse() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
@@ -37,7 +37,4 @@ public class SpringMVCUtil {
 		return servletRequestAttributes.getResponse();
 	}
 
-	
-	
-	
 }

@@ -39,8 +39,6 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 	}
 	
 
-	
-	
 	/**
 	 * 每次请求之前触发 
 	 */
@@ -78,10 +76,6 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 			
 		return true;
 	}
-	
-
-
-	
 	
 	/**
 	 * 合并三个数组 

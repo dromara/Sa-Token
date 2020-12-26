@@ -12,13 +12,16 @@ public class SaSessionCustomUtil {
 	/**
 	 * 添加上指定前缀，防止恶意伪造session  
 	 */
-	public static String session_key = "custom";
+	public static String sessionKey = "custom";
+
+	/** 组织一下key */
 	public static String getSessionKey(String sessionId) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + session_key + ":session:" + sessionId;
+		return SaTokenManager.getConfig().getTokenName() + ":" + sessionKey + ":session:" + sessionId;
 	}
 	
+	
 	/** 
-	 * 指定key的session是否存在
+	 * 指定key的session是否存在 
 	 * @param sessionId session的id
 	 * @return 是否存在 
 	 */
@@ -27,7 +30,7 @@ public class SaSessionCustomUtil {
 	}
 	
 	/** 
-	 * 获取指定key的session
+	 * 获取指定key的session 
 	 * @param sessionId key
 	 * @param isCreate 如果没有，是否新建并返回
 	 * @return SaSession
@@ -51,7 +54,7 @@ public class SaSessionCustomUtil {
 	}
 
 	/** 
-	 * 删除指定key的session
+	 * 删除指定key的session 
 	 * @param sessionId 删除指定key  
 	 */
 	public static void deleteSessionById(String sessionId) {

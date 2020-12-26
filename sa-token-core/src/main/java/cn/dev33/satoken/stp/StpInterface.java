@@ -9,10 +9,10 @@ import java.util.List;
 public interface StpInterface {
 	
 	/**
-	 * 返回指定login_id所拥有的权限码集合
+	 * 返回指定loginId所拥有的权限码集合 
 	 * @param loginId 账号id 
 	 * @param loginKey 具体的stp标识 
-	 * @return .
+	 * @return 该账号id具有的权限码集合 
 	 */
 	public List<Object> getPermissionCodeList(Object loginId, String loginKey);
 	

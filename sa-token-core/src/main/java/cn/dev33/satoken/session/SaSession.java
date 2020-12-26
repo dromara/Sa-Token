@@ -21,10 +21,12 @@ public class SaSession implements Serializable {
 	 * 会话id 
 	 */
 	private String id;	
+	
 	/**
 	 * 当前会话创建时间 
 	 */
 	private long createTime;
+	
 	/**
 	 * 当前会话键值对  
 	 */
@@ -32,8 +34,8 @@ public class SaSession implements Serializable {
 	
 	
 	/**
-	 * 构建一个 session对象
-	 * @param id sessionId
+	 * 构建一个 session对象 
+	 * @param id session的id 
 	 */
  	public SaSession(String id) {
 		this.id = id;
@@ -50,7 +52,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 返回当前会话创建时间
+	 * 返回当前会话创建时间 
 	 * @return 时间戳
 	 */
 	public long getCreateTime() {
@@ -58,7 +60,7 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 写入一个值
+	 * 写入一个值 
 	 * @param key 名称
 	 * @param value 值 
 	 */

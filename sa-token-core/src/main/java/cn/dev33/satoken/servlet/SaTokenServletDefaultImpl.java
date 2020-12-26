@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * sa-token 对Servlet的相关操作 接口默认实现类 
+ * sa-token 对SaTokenServlet接口默认实现类 
  * @author kong
  *
  */

@@ -12,14 +12,14 @@ public interface SaTokenServlet {
 
 
 	/**
-	 * 获取当前请求的Request对象
+	 * 获取当前请求的 Request 对象 
 	 * @return 当前请求的Request对象
 	 */
 	public HttpServletRequest getRequest();
 	
 	/**
-	 * 获取当前会话的  response
-	 * @return 当前请求的response
+	 * 获取当前请求的 Response 对象 
+	 * @return 当前请求的response对象
 	 */
 	public HttpServletResponse getResponse();
 	

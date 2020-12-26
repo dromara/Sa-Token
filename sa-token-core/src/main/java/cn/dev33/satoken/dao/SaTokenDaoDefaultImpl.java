@@ -18,7 +18,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public Map<String, Object> dataMap = new HashMap<String, Object>();
 
 	/**
-	 * 过期时间集合 (单位: 毫秒) , 记录所有key的到期时间 [注意不是剩余存活时间]
+	 * 过期时间集合 (单位: 毫秒) , 记录所有key的到期时间 [注意不是剩余存活时间] 
 	 */
 	public Map<String, Long> expireMap = new HashMap<String, Long>();
 	
@@ -103,7 +103,6 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		}
 	}
 
-	
 	/**
 	 * 获取指定key的剩余存活时间 (单位：秒)
 	 */

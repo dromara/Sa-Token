@@ -1,22 +1,56 @@
 package cn.dev33.satoken.config;
 
 /**
- * sa-token 总配置类  
+ * sa-token 配置类Model 
  * @author kong
  *
  */
 public class SaTokenConfig {
 
-	private String tokenName = "satoken";		// token名称 (同时也是cookie名称)
-	private long timeout = 30 * 24 * 60 * 60;	// token有效期，单位s 默认30天
-	private long activityTimeout = -1;			// token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 
-	private Boolean isShare = true;			// 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录)
-	private Boolean isReadBody = true;			// 是否尝试从请求体里读取token
-	private Boolean isReadHead = true;			// 是否尝试从header里读取token
-	private Boolean isReadCookie = true;		// 是否尝试从cookie里读取token
-	private String tokenStyle = "uuid";				// token风格 
+	/**
+	 * token名称 (同时也是cookie名称) 
+	 */
+	private String tokenName = "satoken";	
 	
-	private Boolean isV = true;	 // 是否在初始化配置时打印版本字符画
+	/**
+	 * token有效期，单位/秒 默认30天, -1代表永久 
+	 */
+	private long timeout = 30 * 24 * 60 * 60;	
+	
+	/**
+	 * token临时有效期 (指定时间内无操作就视为token过期) 单位/秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 
+	 */
+	private long activityTimeout = -1;		
+	
+	/**
+	 * 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录) 
+	 */
+	private Boolean isShare = true;		
+	
+	/**
+	 * 是否尝试从请求体里读取token 
+	 */
+	private Boolean isReadBody = true;		
+	
+	/**
+	 * 是否尝试从header里读取token 
+	 */
+	private Boolean isReadHead = true;		
+	
+	/**
+	 * 是否尝试从cookie里读取token 
+	 */
+	private Boolean isReadCookie = true;	
+	
+	/**
+	 * token风格 
+	 */
+	private String tokenStyle = "uuid";		
+	
+	/**
+	 * 是否在初始化配置时打印版本字符画 
+	 */
+	private Boolean isV = true;
 
 	
 	
@@ -149,7 +183,9 @@ public class SaTokenConfig {
 
 	
 	
-	
+	/**
+	 * 将对象转为String字符串 
+	 */
 	@Override
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout

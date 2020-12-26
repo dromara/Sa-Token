@@ -40,11 +40,11 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		else if(tokenStyle.equals("random-128")) {
 			return SaTokenInsideUtil.getRandomString(128);
 		}
-		// tik风格 
+		// tik风格 (2_14_16)
 		else if(tokenStyle.equals("tik")) {
 			return SaTokenInsideUtil.getRandomString(2) + "_" + SaTokenInsideUtil.getRandomString(14) + "_" + SaTokenInsideUtil.getRandomString(16) + "__";
 		}
-		// 默认 
+		// 默认，还是uuid
 		else {
 			return UUID.randomUUID().toString();
 		}

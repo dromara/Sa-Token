@@ -15,7 +15,7 @@ public class NotPermissionException extends RuntimeException {
 	private static final long serialVersionUID = 6806129545290130142L;
 	
 	/**
-	 * 权限码
+	 * 权限码 
 	 */
 	private Object code;
 	/**
@@ -26,12 +26,12 @@ public class NotPermissionException extends RuntimeException {
 	}
 	
 	/**
-	 * login_key 
+	 * loginKey 
 	 */
 	private String loginKey;
 	/** 
-	 * 	获得login_key
-	 * @return login_key
+	 * 	获得loginKey 
+	 * @return loginKey 
 	 */
 	public String getLoginKey() {
 		return loginKey;

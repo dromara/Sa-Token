@@ -21,7 +21,7 @@ public class SaTokenInsideUtil {
 	public static final String GITHUB_URL = "https://github.com/click33/sa-token";
 	
 	/**
-	 * 打印 sa-token
+	 * 打印 sa-token 版本字符画 
 	 */
 	public static void printSaToken() {
 		String str = 
@@ -44,7 +44,7 @@ public class SaTokenInsideUtil {
 	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY_"; 	
 	
 	/**
-	 * 生成指定长度的随机字符串
+	 * 生成指定长度的随机字符串 
 	 * @param length 字符串的长度 
 	 * @return 一个随机字符串 
 	 */

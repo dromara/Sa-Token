@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 标注一个路由方法，当前会话必须具有指定权限才可以通过 
+ * <p> 可标注在类上，其效果等同于标注在此类的所有方法上 
  * @author kong
  *
  */
@@ -15,26 +16,26 @@ import java.lang.annotation.Target;
 public @interface SaCheckPermission {
 
 	/**
-	 * 权限码数组 ，String类型 
-	 * @return .
+	 * 需要验证的权限码
+	 * @return 需要验证的权限码
 	 */
 	String [] value() default {};
 
 	/**
-	 * 权限码数组 ，int类型 
-	 * @return .
+	 * 需要验证的权限码 (int类型)
+	 * @return 需要验证的权限码 (int类型)
 	 */
 	int [] valueInt() default {};
 
 	/**
-	 * 权限码数组 ，long类型 
-	 * @return .
+	 * 需要验证的权限码 (long类型) 
+	 * @return 需要验证的权限码 (long类型) 
 	 */
 	long [] valueLong() default {};
 	
 	/**
-	 * 是否属于and型验证 ，true=必须全部具有，false=只要具有一个就可以通过 
-	 * @return .
+	 * 是否属于and型验证，true=必须全部具有，false=只要具有一个就可以通过 
+	 * @return 是否属于and型验证
 	 */
 	boolean isAnd() default true;
 	

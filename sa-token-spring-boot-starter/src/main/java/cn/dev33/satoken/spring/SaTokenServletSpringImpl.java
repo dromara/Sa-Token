@@ -20,7 +20,6 @@ public class SaTokenServletSpringImpl implements SaTokenServlet {
 		return SpringMVCUtil.getRequest();
 	}
 
-
 	/**
 	 * 获取当前请求的Response对象 
 	 */

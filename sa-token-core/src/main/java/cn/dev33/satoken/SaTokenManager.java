@@ -15,7 +15,7 @@ import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
- * 管理sa-token所有对象 
+ * 管理sa-token所有接口对象 
  * @author kong
  *
  */

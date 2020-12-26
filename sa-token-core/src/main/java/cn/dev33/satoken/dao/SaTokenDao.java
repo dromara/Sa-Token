@@ -4,8 +4,7 @@ import cn.dev33.satoken.session.SaSession;
 
 /**
  * sa-token持久层的接口 
- * @author kong
- *
+ * @author kong 
  */
 public interface SaTokenDao {
 
@@ -19,17 +18,17 @@ public interface SaTokenDao {
 	
 	
 	/**
-	 * 根据key获取value ，如果没有，则返回空 
+	 * 根据key获取value，如果没有，则返回空 
 	 * @param key 键名称 
 	 * @return value
 	 */
 	public String getValue(String key);
 
 	/**
-	 * 写入指定key-value键值对，并设定过期时间 (单位：秒)
+	 * 写入指定key-value键值对，并设定过期时间 (单位: 秒)
 	 * @param key 键名称 
 	 * @param value 值 
-	 * @param timeout 过期时间，单位：s 
+	 * @param timeout 过期时间 (单位: 秒)
 	 */
 	public void setValue(String key, String value, long timeout);
 
@@ -55,16 +54,16 @@ public interface SaTokenDao {
 	
 
 	/**
-	 * 根据指定key的session，如果没有，则返回空 
+	 * 根据指定key的Session，如果没有，则返回空 
 	 * @param sessionId 键名称 
 	 * @return SaSession
 	 */
 	public SaSession getSession(String sessionId);
 
 	/**
-	 * 将指定session持久化 
+	 * 将指定Session持久化 
 	 * @param session 要保存的session对象
-	 * @param timeout 过期时间，单位: s
+	 * @param timeout 过期时间 (单位: 秒)
 	 */
 	public void saveSession(SaSession session, long timeout);
 
@@ -83,7 +82,7 @@ public interface SaTokenDao {
 	/**
 	 * 获取指定SaSession的剩余存活时间 (单位: 秒)
 	 * @param sessionId 指定SaSession 
-	 * @return 这个SaSession的剩余存活时间 
+	 * @return 这个SaSession的剩余存活时间 (单位: 秒)
 	 */
 	public long getSessionTimeout(String sessionId);
 	

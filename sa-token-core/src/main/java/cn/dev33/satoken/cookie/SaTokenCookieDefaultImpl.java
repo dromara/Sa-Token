@@ -14,6 +14,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	/**
 	 * 获取指定cookie 
 	 */
+	@Override
 	public Cookie getCookie(HttpServletRequest request, String cookieName) {
 		return SaTokenCookieUtil.getCookie(request, cookieName);
 	}
@@ -21,6 +22,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	/**
 	 * 添加cookie 
 	 */
+	@Override
 	public void addCookie(HttpServletResponse response, String name, String value, String path, int timeout) {
 		SaTokenCookieUtil.addCookie(response, name, value, path, timeout);
 	}
@@ -28,6 +30,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	/**
 	 * 删除cookie 
 	 */
+	@Override
 	public void delCookie(HttpServletRequest request, HttpServletResponse response, String name) {
 		SaTokenCookieUtil.delCookie(request, response, name);
 	}
@@ -35,6 +38,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	/**
 	 * 修改cookie的value值 
 	 */
+	@Override
 	public void updateCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
 		SaTokenCookieUtil.updateCookie(request, response, name, value);
 	}

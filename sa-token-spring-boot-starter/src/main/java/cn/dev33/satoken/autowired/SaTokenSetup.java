@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * 将此注解加到springboot启动类上，即可完成sa-token与springboot的集成  
+ * 将此注解加到springboot启动类上，即可完成sa-token与springboot的集成 
+ * <p>注: v1.7版本以上已不再需要此注解，直接引入sa-token-spring-boot-starter依赖即可
  * @author kong
  *
  */

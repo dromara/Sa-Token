@@ -14,7 +14,7 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
- * sa-token 权限验证，逻辑 实现类 
+ * sa-token 权限验证，逻辑实现类 
  * <p>
  * (stp = sa-token-permission 的缩写 )
  * @author kong
@@ -91,8 +91,8 @@ public class StpLogic {
 	
 	/** 
 	 * 获取指定loginId的tokenValue
-	 * @param loginId .
-	 * @return .
+	 * @param loginId 账号id
+	 * @return token值 
 	 */
 	public String getTokenValueByLoginId(Object loginId) {
 		return SaTokenManager.getSaTokenDao().getValue(getKeyLoginId(loginId)); 
@@ -128,7 +128,7 @@ public class StpLogic {
 
 	/**
 	 * 在当前会话上登录id 
-	 * @param loginId 登录id ，建议的类型：（long | int | String）
+	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 */
 	public void setLoginId(Object loginId) {
 		
@@ -228,7 +228,7 @@ public class StpLogic {
 	// 查询相关 
 	
  	/** 
- 	 * 获取当前会话是否已经登录
+ 	 * 获取当前会话是否已经登录 
  	 * @return 是否已登录 
  	 */
  	public boolean isLogin() {
@@ -237,15 +237,15 @@ public class StpLogic {
  	}
  	
  	/** 
- 	 * 检验当前会话是否已经登录，如未登录，则抛出异常
+ 	 * 检验当前会话是否已经登录，如未登录，则抛出异常 
  	 */
  	public void checkLogin() {
  		getLoginId();
  	}
  	
  	/** 
- 	 * 获取当前会话登录id, 如果未登录，则抛出异常
- 	 * @return .
+ 	 * 获取当前会话账号id, 如果未登录，则抛出异常 
+ 	 * @return 账号id
  	 */
  	public Object getLoginId() {
  		// 如果获取不到token，则抛出：无token
@@ -278,7 +278,7 @@ public class StpLogic {
  	}
 	
 	/** 
-	 * 获取当前会话登录id, 如果未登录，则返回默认值
+	 * 获取当前会话登录id, 如果未登录，则返回默认值 
 	 * @param <T> 返回类型 
 	 * @param defaultValue 默认值
 	 * @return 登录id 
@@ -304,8 +304,8 @@ public class StpLogic {
  	}
  	
 	/** 
-	 * 获取当前会话登录id, 如果未登录，则返回null
-	 * @return .
+	 * 获取当前会话登录id, 如果未登录，则返回null 
+	 * @return 账号id 
 	 */
 	public Object getLoginIdDefaultNull() {
 		// 如果连token都是空的，则直接返回 
@@ -328,7 +328,7 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为String
-	 * @return 登录id
+	 * @return 账号id 
 	 */
  	public String getLoginIdAsString() {
  		return String.valueOf(getLoginId());
@@ -336,7 +336,7 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前会话登录id, 并转换为int
-	 * @return 登录id
+	 * @return 账号id 
 	 */
  	public int getLoginIdAsInt() {
  		// Object loginId = getLoginId();
@@ -348,7 +348,7 @@ public class StpLogic {
 
 	/**
 	 * 获取当前会话登录id, 并转换为long
-	 * @return 登录id
+	 * @return 账号id 
 	 */
  	public long getLoginIdAsLong() {
 // 		Object loginId = getLoginId();
@@ -378,9 +378,9 @@ public class StpLogic {
 
 	/** 
 	 * 获取指定key的session, 如果session尚未创建，isCreate=是否新建并返回
-	 * @param sessionId .
-	 * @param isCreate .
-	 * @return .
+	 * @param sessionId sessionId
+	 * @param isCreate 是否新建
+	 * @return session对象 
 	 */
 	protected SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
 		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
@@ -392,8 +392,8 @@ public class StpLogic {
 	}
 
 	/** 
-	 * 获取指定loginId的session, 如果没有，isCreate=是否新建并返回
-	 * @param loginId 登录id
+	 * 获取指定loginId的session, 如果session尚未创建，isCreate=是否新建并返回
+	 * @param loginId 账号id
 	 * @param isCreate 是否新建
 	 * @return SaSession
 	 */
@@ -402,9 +402,9 @@ public class StpLogic {
 	}
 
 	/** 
-	 * 获取指定loginId的session
-	 * @param loginId .
-	 * @return .
+	 * 获取指定loginId的session，如果session尚未创建，则新建并返回 
+	 * @param loginId 账号id 
+	 * @return session会话 
 	 */
 	public SaSession getSessionByLoginId(Object loginId) {
 		return getSessionByLoginId(loginId, true);
@@ -412,7 +412,7 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前会话的session, 如果session尚未创建，isCreate=是否新建并返回 
-	 * @param isCreate 是否新建
+	 * @param isCreate 是否新建 
 	 * @return 当前会话的session 
 	 */
 	public SaSession getSession(boolean isCreate) {
@@ -420,7 +420,7 @@ public class StpLogic {
 	}
 	
 	/** 
-	 * 获取当前会话的session 
+	 * 获取当前会话的session，如果session尚未创建，则新建并返回 
 	 * @return 当前会话的session 
 	 */
 	public SaSession getSession() {
@@ -600,43 +600,43 @@ public class StpLogic {
 	// =================== 权限验证操作 ===================  
 
  	/** 
- 	 * 指定loginId是否含有指定权限
- 	 * @param loginId .
- 	 * @param pcode .
- 	 * @return .
+ 	 * 指定账号id是否含有指定权限 
+ 	 * @param loginId 账号id
+ 	 * @param permissionCode 权限码
+ 	 * @return 是否含有指定权限
  	 */
- 	public boolean hasPermission(Object loginId, Object pcode) {
+ 	public boolean hasPermission(Object loginId, Object permissionCode) {
  		List<Object> pcodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
-		return !(pcodeList == null || pcodeList.contains(pcode) == false);
+		return !(pcodeList == null || pcodeList.contains(permissionCode) == false);
  	}
  	
  	/** 
- 	 * 当前会话是否含有指定权限
- 	 * @param pcode .
- 	 * @return .
+ 	 * 当前账号id是否含有指定权限 
+ 	 * @param permissionCode 权限码
+ 	 * @return 是否含有指定权限
  	 */
- 	public boolean hasPermission(Object pcode) {
- 		return hasPermission(getLoginId(), pcode);
+ 	public boolean hasPermission(Object permissionCode) {
+ 		return hasPermission(getLoginId(), permissionCode);
  	}
 	
  	/** 
- 	 * 当前账号是否含有指定权限 ， 没有就抛出异常
- 	 * @param pcode .
+ 	 * 当前账号是否含有指定权限， 没有就抛出异常
+ 	 * @param permissionCode 权限码
  	 */
- 	public void checkPermission(Object pcode) {
- 		if(hasPermission(pcode) == false) {
-			throw new NotPermissionException(pcode, this.loginKey);
+ 	public void checkPermission(Object permissionCode) {
+ 		if(hasPermission(permissionCode) == false) {
+			throw new NotPermissionException(permissionCode, this.loginKey);
 		}
  	}
 
  	/** 
- 	 * 当前账号是否含有指定权限 ， 【指定多个，必须全都有】
- 	 * @param pcodeArray .
+ 	 * 当前账号是否含有指定权限, [指定多个，必须全都有]
+ 	 * @param permissionCodeArray 权限码数组
  	 */
- 	public void checkPermissionAnd(Object... pcodeArray){
+ 	public void checkPermissionAnd(Object... permissionCodeArray){
  		Object loginId = getLoginId();
  		List<Object> pcodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
- 		for (Object pcode : pcodeArray) {
+ 		for (Object pcode : permissionCodeArray) {
  			if(pcodeList.contains(pcode) == false) {
  				throw new NotPermissionException(pcode, this.loginKey);	// 没有权限抛出异常 
  			}
@@ -644,19 +644,19 @@ public class StpLogic {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定权限 ， 【指定多个，有一个就可以了】
- 	 * @param pcodeArray .
+ 	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过]
+ 	 * @param permissionCodeArray 权限码数组
  	 */
- 	public void checkPermissionOr(Object... pcodeArray){
+ 	public void checkPermissionOr(Object... permissionCodeArray){
  		Object loginId = getLoginId();
  		List<Object> pcodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
- 		for (Object pcode : pcodeArray) {
+ 		for (Object pcode : permissionCodeArray) {
  			if(pcodeList.contains(pcode) == true) {
  				return;		// 有的话提前退出
  			}
  		}
-		if(pcodeArray.length > 0) {
-	 		throw new NotPermissionException(pcodeArray[0], this.loginKey);	// 没有权限抛出异常 
+		if(permissionCodeArray.length > 0) {
+	 		throw new NotPermissionException(permissionCodeArray[0], this.loginKey);	// 没有权限抛出异常 
 		}
  	}
  	
@@ -672,7 +672,7 @@ public class StpLogic {
  	}
 	/**  
 	 * 获取key： tokenValue 持久化
-	 * @param tokenValue .
+	 * @param tokenValue token值
 	 * @return key
 	 */
 	public String getKeyTokenValue(String tokenValue) {
@@ -680,7 +680,7 @@ public class StpLogic {
 	}
 	/** 
 	 * 获取key： id 持久化
-	 * @param loginId .
+	 * @param loginId 账号id
 	 * @return key
 	 */
 	public String getKeyLoginId(Object loginId) {
@@ -688,7 +688,7 @@ public class StpLogic {
 	}
 	/** 
 	 * 获取key： session 持久化  
-	 * @param loginId .
+	 * @param loginId 账号id
 	 * @return key
 	 */
 	public String getKeySession(Object loginId) {
@@ -696,7 +696,7 @@ public class StpLogic {
 	}
 	/** 
 	 * 获取key： 指定token的最后操作时间 持久化 
-	 * @param tokenValue token
+	 * @param tokenValue token值
 	 * @return key
 	 */
 	public String getKeyLastActivityTime(String tokenValue) {

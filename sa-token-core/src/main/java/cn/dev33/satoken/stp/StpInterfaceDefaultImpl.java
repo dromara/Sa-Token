@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  权限验证接口 ，默认实现
+ * 对StpInterface接口默认的实现类 
  * @author kong
  */
 public class StpInterfaceDefaultImpl implements StpInterface {
