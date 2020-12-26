@@ -11,8 +11,8 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-dao-redis-spring-boot-starter</name>
-    <artifactId>sa-token-dao-redis-spring-boot-starter</artifactId>
+	<name>sa-token-dao-redis</name>
+    <artifactId>sa-token-dao-redis</artifactId>
 	<description>sa-token integrate redis</description>
 
 	<dependencies>

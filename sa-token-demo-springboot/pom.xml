@@ -35,7 +35,7 @@
 		<!-- sa-token 整合 redis -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis-spring-boot-starter</artifactId>
+            <artifactId>sa-token-dao-redis</artifactId>
             <version>1.7.0</version>
         </dependency>
 
