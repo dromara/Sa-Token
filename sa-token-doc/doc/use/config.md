@@ -77,4 +77,5 @@ spring:
 | isReadHead		| Boolean	| true		| 是否尝试从header里读取token														|
 | isReadCookie		| Boolean	| true		| 是否尝试从cookie里读取token														|
 | tokenStyle		| String	| uuid		| token风格, [参考：花式token](/use/token-style)										|
+| dataRefreshPeriod	| int		| 30		| 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 		|
 | isV				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|

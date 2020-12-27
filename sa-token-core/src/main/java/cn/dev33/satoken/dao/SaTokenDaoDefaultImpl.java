@@ -1,9 +1,15 @@
 package cn.dev33.satoken.dao;
 
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Timer;
+import java.util.concurrent.ConcurrentHashMap;
+
+import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.util.SaTaskUtil;
+import cn.dev33.satoken.util.SaTaskUtil.FunctionRunClass;
 
 /**
  * sa-token持久层默认的实现类 , 基于内存Map 
@@ -11,17 +17,27 @@ import cn.dev33.satoken.session.SaSession;
  *
  */
 public class SaTokenDaoDefaultImpl implements SaTokenDao {
+	
 
 	/**
 	 * 所有数据集合 
 	 */
-	public Map<String, Object> dataMap = new HashMap<String, Object>();
+	public Map<String, Object> dataMap = new ConcurrentHashMap<String, Object>();
 
 	/**
 	 * 过期时间集合 (单位: 毫秒) , 记录所有key的到期时间 [注意不是剩余存活时间] 
 	 */
-	public Map<String, Long> expireMap = new HashMap<String, Long>();
+	public Map<String, Long> expireMap = new ConcurrentHashMap<String, Long>();
 	
+	/**
+	 * 构造函数
+	 */
+	public SaTokenDaoDefaultImpl() {
+		initRefreshTimer();
+	}
+	
+	
+	// ------------------------ String 读写操作 
 	
 	@Override
 	public String getValue(String key) {
@@ -53,7 +69,9 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public long getTimeout(String key) {
 		return getKeyTimeout(key);
 	}
+
 	
+	// ------------------------ Session 读写操作 
 	
 	@Override
 	public SaSession getSession(String sessionId) {
@@ -87,8 +105,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	}
 	
 
-
-	// --------------------- 
+	// ------------------------ Session 读写操作 
 
 	/**
 	 * 如果指定key已经过期，则立即清除它 
@@ -131,8 +148,51 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	}
 	
 	
+	// --------------------- 定时清理过期数据  
 	
+	/**
+	 * 定时任务对象 
+	 */
+	public Timer refreshTimer;
+
+	/**
+	 * 清理所有已经过期的key 
+	 */
+	public void refreshDataMap() {
+		Iterator<String> keys = expireMap.keySet().iterator();
+		while (keys.hasNext()) {
+			clearKeyByTimeout(keys.next());
+		}
+	}
 	
+	/**
+	 * 初始化定时任务 
+	 */
+	public void initRefreshTimer() {
+		// 如果已经被初始化过了, 则停止它
+		if(this.refreshTimer != null) {
+			this.endRefreshTimer();
+		}
+		
+		// 开始新的定时任务
+		if(SaTokenManager.getConfig().getDataRefreshPeriod() < 0) {
+			return;
+		}
+		int period = SaTokenManager.getConfig().getDataRefreshPeriod() * 1000;
+		this.refreshTimer = SaTaskUtil.setInterval(new FunctionRunClass() {
+			@Override
+			public void run() {
+				refreshDataMap(); 
+			}
+		}, period, period);
+	}
+	
+	/**
+	 * 结束定时任务
+	 */
+	public void endRefreshTimer() {
+		this.refreshTimer.cancel();
+	}
 	
 	
 	

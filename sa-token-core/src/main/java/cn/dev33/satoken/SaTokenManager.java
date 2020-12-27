@@ -55,6 +55,9 @@ public class SaTokenManager {
 		return saTokenDao;
 	}
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
+		if(SaTokenManager.saTokenDao != null && (SaTokenManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
+			((SaTokenDaoDefaultImpl)SaTokenManager.saTokenDao).endRefreshTimer();
+		}
 		SaTokenManager.saTokenDao = saTokenDao;
 	}
 	public synchronized static void initSaTokenDao() {

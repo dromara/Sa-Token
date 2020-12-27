@@ -46,6 +46,11 @@ public class SaTokenConfig {
 	 * token风格 
 	 */
 	private String tokenStyle = "uuid";		
+
+	/**
+	 * 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 
+	 */
+	private int dataRefreshPeriod = 30;
 	
 	/**
 	 * 是否在初始化配置时打印版本字符画 
@@ -53,8 +58,7 @@ public class SaTokenConfig {
 	private Boolean isV = true;
 
 	
-	
-	
+
 	/**
 	 * @return tokenName
 	 */
@@ -181,7 +185,20 @@ public class SaTokenConfig {
 		this.isV = isV;
 	}
 
-	
+	/**
+	 * @return dataRefreshPeriod
+	 */
+	public int getDataRefreshPeriod() {
+		return dataRefreshPeriod;
+	}
+
+	/**
+	 * @param dataRefreshPeriod 要设置的 dataRefreshPeriod
+	 */
+	public void setDataRefreshPeriod(int dataRefreshPeriod) {
+		this.dataRefreshPeriod = dataRefreshPeriod;
+	}
+
 	
 	/**
 	 * 将对象转为String字符串 
@@ -190,8 +207,11 @@ public class SaTokenConfig {
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
 				+ ", isShare=" + isShare + ", isReadBody=" + isReadBody + ", isReadHead=" + isReadHead
-				+ ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle + ", isV=" + isV + "]";
+				+ ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle + ", isV=" + isV
+				+ ", dataRefreshPeriod=" + dataRefreshPeriod + "]";
 	}
+	
+	
 
 	
 	
