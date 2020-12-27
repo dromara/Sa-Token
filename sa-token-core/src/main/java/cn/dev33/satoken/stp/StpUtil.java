@@ -311,8 +311,8 @@ public class StpUtil {
  	 * @param permissionCode 权限码
  	 * @return 是否含有指定权限
  	 */
-	public static boolean hasPermission(Object loginId, Object pcode) {
-		return stpLogic.hasPermission(loginId, pcode);
+	public static boolean hasPermission(Object loginId, String permissionCode) {
+		return stpLogic.hasPermission(loginId, permissionCode);
 	}
 
  	/** 
@@ -320,7 +320,7 @@ public class StpUtil {
  	 * @param permissionCode 权限码
  	 * @return 是否含有指定权限
  	 */
-	public static boolean hasPermission(Object permissionCode) {
+	public static boolean hasPermission(String permissionCode) {
 		return stpLogic.hasPermission(permissionCode);
 	}
 
@@ -328,7 +328,7 @@ public class StpUtil {
  	 * 当前账号是否含有指定权限， 没有就抛出异常 
  	 * @param permissionCode 权限码
  	 */
-	public static void checkPermission(Object permissionCode) {
+	public static void checkPermission(String permissionCode) {
 		stpLogic.checkPermission(permissionCode);
 	}
 
@@ -336,7 +336,7 @@ public class StpUtil {
  	 * 当前账号是否含有指定权限, [指定多个，必须全都有] 
  	 * @param permissionCodeArray 权限码数组
  	 */
-	public static void checkPermissionAnd(Object... permissionCodeArray) {
+	public static void checkPermissionAnd(String... permissionCodeArray) {
 		stpLogic.checkPermissionAnd(permissionCodeArray);
 	}
 
@@ -344,7 +344,7 @@ public class StpUtil {
  	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过] 
  	 * @param permissionCodeArray 权限码数组
  	 */
-	public static void checkPermissionOr(Object... permissionCodeArray) {
+	public static void checkPermissionOr(String... permissionCodeArray) {
 		stpLogic.checkPermissionOr(permissionCodeArray);
 	}
 

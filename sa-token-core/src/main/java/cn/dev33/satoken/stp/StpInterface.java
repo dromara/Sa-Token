@@ -14,7 +14,7 @@ public interface StpInterface {
 	 * @param loginKey 具体的stp标识 
 	 * @return 该账号id具有的权限码集合 
 	 */
-	public List<Object> getPermissionCodeList(Object loginId, String loginKey);
+	public List<String> getPermissionCodeList(Object loginId, String loginKey);
 	
 	
 }

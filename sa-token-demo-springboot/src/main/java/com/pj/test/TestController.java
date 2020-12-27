@@ -51,7 +51,7 @@ public class TestController {
 	public AjaxJson jur() {
 		System.out.println("======================= 进入方法，测试权限接口 ========================= ");
 		
-		System.out.println("是否具有权限101" + StpUtil.hasPermission(101));
+		System.out.println("是否具有权限101" + StpUtil.hasPermission("101"));
 		System.out.println("是否具有权限user-add" + StpUtil.hasPermission("user-add"));
 		System.out.println("是否具有权限article-get" + StpUtil.hasPermission("article-get"));
 		

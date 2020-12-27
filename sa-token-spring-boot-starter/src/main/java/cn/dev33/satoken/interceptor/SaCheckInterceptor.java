@@ -24,7 +24,7 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 	public StpLogic stpLogic = null;
 	
 	/**
-	 * 创建，并指定一个默认的 StpLogic
+	 * 创建，并指定一个默认的 StpLogic 
 	 */
 	public  SaCheckInterceptor() {
 		this(StpUtil.stpLogic);
@@ -52,51 +52,35 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 		}
 		HandlerMethod  method = (HandlerMethod ) handler;
 		
-		// 验证登录 
+		// ----------- 验证登录 
 		if(method.hasMethodAnnotation(SaCheckLogin.class) || method.getBeanType().isAnnotationPresent(SaCheckLogin.class)) {
 			stpLogic.checkLogin();
 		}
 		
-		// 获取权限注解 
+		// ----------- 验证权限 
+		// 验证方法上的 
 		SaCheckPermission scp = method.getMethodAnnotation(SaCheckPermission.class);
-		if(scp == null) {
-			scp = method.getBeanType().getAnnotation(SaCheckPermission.class);
+		if(scp != null) { 
+			String[] permissionCodeArray = scp.value();
+			if(scp.isAnd()) {
+				stpLogic.checkPermissionAnd(permissionCodeArray);		// 必须全部都有 
+			} else {
+				stpLogic.checkPermissionOr(permissionCodeArray);		// 有一个就行了  
+			}
 		}
-		if(scp == null) {
-			return true;
+		// 验证类上的 
+		scp = method.getBeanType().getAnnotation(SaCheckPermission.class);
+		if(scp != null) { 
+			String[] permissionCodeArray = scp.value();
+			if(scp.isAnd()) {
+				stpLogic.checkPermissionAnd(permissionCodeArray);		// 必须全部都有 
+			} else {
+				stpLogic.checkPermissionOr(permissionCodeArray);		// 有一个就行了  
+			}
 		}
 		
-		// 开始验证权限 
-		Object[] codeArray = concatAbc(scp.value(), scp.valueInt(), scp.valueLong());
-		if(scp.isAnd()) {
-			stpLogic.checkPermissionAnd(codeArray);		// 必须全部都有 
-		} else {
-			stpLogic.checkPermissionOr(codeArray);		// 有一个就行了  
-		}
-			
+		// 通过验证 
 		return true;
-	}
-	
-	/**
-	 * 合并三个数组 
-	 * @param a .
-	 * @param b .
-	 * @param c .
-	 * @return .
-	 */
-	private Object[] concatAbc(String[] a, int[] b, long[] c) {
-		// 循环赋值  
-		Object[] d = new Object[a.length + b.length + c.length];
-		for (int i = 0; i < a.length; i++) {
-			d[i] = a[i];
-		}
-		for (int i = 0; i < b.length; i++) {
-			d[a.length + i] = b[i];
-		}
-		for (int i = 0; i < c.length; i++) {
-			d[a.length + b.length + i] = c[i];
-		}
-		return d;
 	}
 
 	

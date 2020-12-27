@@ -678,9 +678,9 @@ public class StpLogic {
  	 * @param permissionCode 权限码
  	 * @return 是否含有指定权限
  	 */
- 	public boolean hasPermission(Object loginId, Object permissionCode) {
- 		List<Object> pcodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
-		return !(pcodeList == null || pcodeList.contains(permissionCode) == false);
+ 	public boolean hasPermission(Object loginId, String permissionCode) {
+ 		List<String> permissionCodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
+		return !(permissionCodeList == null || permissionCodeList.contains(permissionCode) == false);
  	}
  	
  	/** 
@@ -688,7 +688,7 @@ public class StpLogic {
  	 * @param permissionCode 权限码
  	 * @return 是否含有指定权限
  	 */
- 	public boolean hasPermission(Object permissionCode) {
+ 	public boolean hasPermission(String permissionCode) {
  		return hasPermission(getLoginId(), permissionCode);
  	}
 	
@@ -696,7 +696,7 @@ public class StpLogic {
  	 * 当前账号是否含有指定权限， 没有就抛出异常
  	 * @param permissionCode 权限码
  	 */
- 	public void checkPermission(Object permissionCode) {
+ 	public void checkPermission(String permissionCode) {
  		if(hasPermission(permissionCode) == false) {
 			throw new NotPermissionException(permissionCode, this.loginKey);
 		}
@@ -706,11 +706,11 @@ public class StpLogic {
  	 * 当前账号是否含有指定权限, [指定多个，必须全都有]
  	 * @param permissionCodeArray 权限码数组
  	 */
- 	public void checkPermissionAnd(Object... permissionCodeArray){
+ 	public void checkPermissionAnd(String... permissionCodeArray){
  		Object loginId = getLoginId();
- 		List<Object> pcodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
- 		for (Object pcode : permissionCodeArray) {
- 			if(pcodeList.contains(pcode) == false) {
+ 		List<String> permissionCodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
+ 		for (String pcode : permissionCodeArray) {
+ 			if(permissionCodeList.contains(pcode) == false) {
  				throw new NotPermissionException(pcode, this.loginKey);	// 没有权限抛出异常 
  			}
  		}
@@ -720,11 +720,11 @@ public class StpLogic {
  	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过]
  	 * @param permissionCodeArray 权限码数组
  	 */
- 	public void checkPermissionOr(Object... permissionCodeArray){
+ 	public void checkPermissionOr(String... permissionCodeArray){
  		Object loginId = getLoginId();
- 		List<Object> pcodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
- 		for (Object pcode : permissionCodeArray) {
- 			if(pcodeList.contains(pcode) == true) {
+ 		List<String> permissionCodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
+ 		for (String permissionCode : permissionCodeArray) {
+ 			if(permissionCodeList.contains(permissionCode) == true) {
  				return;		// 有的话提前退出
  			}
  		}
