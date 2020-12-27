@@ -33,11 +33,11 @@
         </dependency>
 		
 		<!-- sa-token 整合 redis -->
-		<dependency>
+		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
             <version>1.7.0</version>
-        </dependency>
+        </dependency> -->
 
 		<!-- @ConfigurationProperties -->
 		<dependency>
