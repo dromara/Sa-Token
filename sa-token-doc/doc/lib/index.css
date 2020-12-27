@@ -14,18 +14,31 @@
 /* ============== 样式优化 ================ */
 
 /* 背景变黑 */
-.main-box [data-lang]{padding: 0px !important; border-radius: 10px; overflow: hidden;}
-.main-box [class^="lang-"]{/* color: red !important; */ border: 0px red solid; padding: 1.2em; background-color: #282828; color: #FFF;}
-.main-box [class^="lang-api"]{color: #FFF;}
+.main-box [data-lang]{padding: 0px !important; border-radius: 8px; overflow: hidden;}
+.main-box [class^="lang-"]{border: 0px red solid; padding: 1.5em 1.2em;/* background-color: #282828; */ background-color: #090300; color: #FFF;}
+
+/* xml语言样式优化 */
+.lang-xml .token.comment{color: #CDAB53;}
+.lang-xml .token.tag *{color: #db2d20;}
+.lang-xml .token.attr-value{color: #A6E22E;}
+
+/* java语言样式优化 */
+.main-box .lang-java{color: #01a252; opacity: 1;}
+.lang-java .token.keyword{color: #db2d20;}
+.lang-java .token.namespace,.lang-java .token.namespace *{color: #01A252; opacity: 1;}
+.lang-java .token.class-name,.lang-java .cm-variable{color: #55b5db; opacity: 1;}
+.lang-java .token.comment{color: #CDAB53;}
+.lang-java .token.annotation.punctuation{color: #ddd;}
+.lang-java .token.punctuation{color: #ddd;}
+
+/* js语言样式优化 */
+.main-box .lang-js{color: #01a252;}
+.lang-js .token.comment{color: #CDAB53;}
+.lang-js .token.string{color: #fded02;}
+.lang-js .token.punctuation{color: #ddd;}
 
 
-.token.string{color: #65B042;}
-.token.number{color: #2487CC;}
-.token.punctuation{color: #FFF;}
-.token.comment{color: #FFF;}
-
-/* .main-box [class="lang-api"]{color: red;} */
-
+/* 调整表格的响应式 */
 #main table{margin-left: 25px;}
 @media screen and (min-width: 800px) {
 	#main table tr th{min-width: 150px;}
