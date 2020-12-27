@@ -7,54 +7,37 @@ package cn.dev33.satoken.config;
  */
 public class SaTokenConfig {
 
-	/**
-	 * token名称 (同时也是cookie名称) 
-	 */
+	/** token名称 (同时也是cookie名称) */
 	private String tokenName = "satoken";	
 	
-	/**
-	 * token有效期，单位/秒 默认30天, -1代表永久 
-	 */
+	/** token有效期，单位/秒 默认30天, -1代表永久 */
 	private long timeout = 30 * 24 * 60 * 60;	
 	
-	/**
-	 * token临时有效期 (指定时间内无操作就视为token过期) 单位/秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 
-	 */
+	/** token临时有效期 (指定时间内无操作就视为token过期) 单位/秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) */
 	private long activityTimeout = -1;		
 	
-	/**
-	 * 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录) 
-	 */
+	/** 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录) */
 	private Boolean isShare = true;		
 	
-	/**
-	 * 是否尝试从请求体里读取token 
-	 */
+	/** 是否尝试从请求体里读取token */
 	private Boolean isReadBody = true;		
 	
-	/**
-	 * 是否尝试从header里读取token 
-	 */
+	/** 是否尝试从header里读取token */
 	private Boolean isReadHead = true;		
 	
-	/**
-	 * 是否尝试从cookie里读取token 
-	 */
+	/** 是否尝试从cookie里读取token */
 	private Boolean isReadCookie = true;	
 	
-	/**
-	 * token风格 
-	 */
+	/** token风格 */
 	private String tokenStyle = "uuid";		
 
-	/**
-	 * 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 
-	 */
+	/** 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 */
 	private int dataRefreshPeriod = 30;
 	
-	/**
-	 * 是否在初始化配置时打印版本字符画 
-	 */
+	/** 获取token专属session时是否必须登录 */
+	private Boolean tokenSessionCheckLogin = true;	
+	 
+	/** 是否在初始化配置时打印版本字符画 */
 	private Boolean isV = true;
 
 	
@@ -199,7 +182,23 @@ public class SaTokenConfig {
 		this.dataRefreshPeriod = dataRefreshPeriod;
 	}
 
+	/**
+	 * @return tokenSessionCheckLogin
+	 */
+	public Boolean getTokenSessionCheckLogin() {
+		return tokenSessionCheckLogin;
+	}
+
+	/**
+	 * @param tokenSessionCheckLogin 要设置的 tokenSessionCheckLogin
+	 */
+	public void setTokenSessionCheckLogin(Boolean tokenSessionCheckLogin) {
+		this.tokenSessionCheckLogin = tokenSessionCheckLogin;
+	}
+
 	
+
+
 	/**
 	 * 将对象转为String字符串 
 	 */
@@ -207,8 +206,8 @@ public class SaTokenConfig {
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
 				+ ", isShare=" + isShare + ", isReadBody=" + isReadBody + ", isReadHead=" + isReadHead
-				+ ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle + ", isV=" + isV
-				+ ", dataRefreshPeriod=" + dataRefreshPeriod + "]";
+				+ ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle + ", dataRefreshPeriod="
+				+ dataRefreshPeriod + ", tokenSessionCheckLogin=" + tokenSessionCheckLogin + ", isV=" + isV + "]";
 	}
 	
 	

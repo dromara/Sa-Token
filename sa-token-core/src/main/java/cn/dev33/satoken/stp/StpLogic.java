@@ -61,7 +61,7 @@ public class StpLogic {
 	public String getTokenValue(){
 		// 0. 获取相应对象 
 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
-		SaTokenConfig config = SaTokenManager.getConfig();
+		SaTokenConfig config = getConfig();
 		String keyTokenName = getTokenName();
 		String tokenValue = null;
 		
@@ -135,7 +135,7 @@ public class StpLogic {
 		
 		// 1、获取相应对象  
 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
-		SaTokenConfig config = SaTokenManager.getConfig();
+		SaTokenConfig config = getConfig();
 		SaTokenDao dao = SaTokenManager.getSaTokenDao();
 		
 		// 2、获取tokenValue
@@ -171,7 +171,7 @@ public class StpLogic {
  			return;
  		}
  		// 如果打开了cookie模式，第一步，先把cookie清除掉 
- 		if(SaTokenManager.getConfig().getIsReadCookie() == true){
+ 		if(getConfig().getIsReadCookie() == true){
 			SaTokenManager.getSaTokenCookie().delCookie(SaTokenManager.getSaTokenServlet().getRequest(), SaTokenManager.getSaTokenServlet().getResponse(), getTokenName()); 	
 		}
  		// 尝试从db中获取loginId值 
@@ -387,7 +387,7 @@ public class StpLogic {
 		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
 			session = new SaSession(sessionId);
-			SaTokenManager.getSaTokenDao().saveSession(session, SaTokenManager.getConfig().getTimeout());
+			SaTokenManager.getSaTokenDao().saveSession(session, getConfig().getTimeout());
 		}
 		return session;
 	}
@@ -445,7 +445,9 @@ public class StpLogic {
 	 * @return session会话 
 	 */
 	public SaSession getTokenSession() {
-		checkLogin();
+		if(getConfig().getTokenSessionCheckLogin()) {
+			checkLogin();
+		}
 		return getTokenSessionByToken(getTokenValue());
 	}
 
@@ -458,11 +460,11 @@ public class StpLogic {
  	 */
  	protected void setLastActivityToNow(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || SaTokenManager.getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
  		// 将[最后操作时间]标记为当前时间戳 
- 		SaTokenManager.getSaTokenDao().setValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), SaTokenManager.getConfig().getTimeout());
+ 		SaTokenManager.getSaTokenDao().setValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
  	}
  	
  	/**
@@ -471,7 +473,7 @@ public class StpLogic {
  	 */
  	protected void clearLastActivity(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || SaTokenManager.getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
  		// 删除[最后操作时间]
@@ -486,7 +488,7 @@ public class StpLogic {
  	 */
  	public void checkActivityTimeout(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || SaTokenManager.getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
  		// 如果本次请求已经有了[检查标记], 则立即返回 
@@ -524,7 +526,7 @@ public class StpLogic {
  	 */
  	public void updateLastActivityToNow(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || SaTokenManager.getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
  		SaTokenManager.getSaTokenDao().updateValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
@@ -614,7 +616,7 @@ public class StpLogic {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
  		}
  		// 如果设置了永不过期, 则返回 -1 
- 		if(SaTokenManager.getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return SaTokenDao.NEVER_EXPIRE;
  		}
  		// ------ 开始查询 
@@ -628,7 +630,7 @@ public class StpLogic {
  		// 计算相差时间
  		long lastActivityTime = Long.valueOf(lastActivityTimeString);
  		long apartSecond = (System.currentTimeMillis() - lastActivityTime) / 1000;
- 		long timeout = SaTokenManager.getConfig().getActivityTimeout() - apartSecond;
+ 		long timeout = getConfig().getActivityTimeout() - apartSecond;
  		// 如果 < 0， 代表已经过期 ，返回-2 
  		if(timeout < 0) {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
@@ -709,7 +711,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String getKeyTokenName() {
- 		return SaTokenManager.getConfig().getTokenName();
+ 		return getConfig().getTokenName();
  	}
 	/**  
 	 * 获取key： tokenValue 持久化
@@ -717,7 +719,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String getKeyTokenValue(String tokenValue) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":token:" + tokenValue;
+		return getConfig().getTokenName() + ":" + loginKey + ":token:" + tokenValue;
 	}
 	/** 
 	 * 获取key： id 持久化
@@ -725,7 +727,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String getKeyLoginId(Object loginId) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":id:" + loginId;
+		return getConfig().getTokenName() + ":" + loginKey + ":id:" + loginId;
 	}
 	/** 
 	 * 获取key： session 持久化  
@@ -733,7 +735,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String getKeySession(Object loginId) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":session:" + loginId;
+		return getConfig().getTokenName() + ":" + loginKey + ":session:" + loginId;
 	}
 	/**  
 	 * 获取key： tokenValue的专属session 
@@ -741,7 +743,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String getKeyTokenSession(String tokenValue) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":token-session:" + tokenValue;
+		return getConfig().getTokenName() + ":" + loginKey + ":token-session:" + tokenValue;
 	}
 	/** 
 	 * 获取key： 指定token的最后操作时间 持久化 
@@ -749,8 +751,16 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String getKeyLastActivityTime(String tokenValue) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":last-activity:" + tokenValue;
+		return getConfig().getTokenName() + ":" + loginKey + ":last-activity:" + tokenValue;
 	}
  	
+	/**
+	 * 返回配置对象
+	 */
+	public SaTokenConfig getConfig() {
+		// 为什么再代理一层? 为某些极端业务场景下[需要不同StpLogic不同配置]提供便利 
+		return SaTokenManager.getConfig();
+	}
+	
 	
 }
