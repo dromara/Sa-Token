@@ -59,5 +59,12 @@ public class SaTokenInsideUtil {
 		return sb.toString();
 	}
 	
+	/**
+	 * 以当前时间戳和随机int数字拼接一个随机字符串 
+	 */
+	public static String getMarking28() {
+		return System.currentTimeMillis() + "" + new Random().nextInt(Integer.MAX_VALUE);
+	}
+			
 	
 }

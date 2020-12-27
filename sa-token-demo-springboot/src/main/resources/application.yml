@@ -23,6 +23,7 @@ spring:
         token-style: uuid
         # 是否在初始化配置时打印版本字符画
         is-v: true
+        tokenSessionCheckLogin: false
         
         
     # redis配置 

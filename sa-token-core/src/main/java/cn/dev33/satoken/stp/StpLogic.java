@@ -1,6 +1,7 @@
 package cn.dev33.satoken.stp;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -428,7 +429,18 @@ public class StpLogic {
 		return getSession(true);
 	}
 
-	// ---------- token专属session
+	
+	// =================== token专属session ===================  
+
+	/** 
+	 * 获取指定token的专属session，如果session尚未创建，isCreate代表是否新建并返回
+	 * @param tokenValue token值
+	 * @param isCreate 是否新建 
+	 * @return session会话 
+	 */
+	public SaSession getTokenSessionByToken(String tokenValue, boolean isCreate) {
+		return getSessionBySessionId(getKeyTokenSession(tokenValue), isCreate);
+	}
 	
 	/** 
 	 * 获取指定token的专属session，如果session尚未创建，则新建并返回 
@@ -438,6 +450,27 @@ public class StpLogic {
 	public SaSession getTokenSessionByToken(String tokenValue) {
 		return getSessionBySessionId(getKeyTokenSession(tokenValue), true);
 	}
+
+	/** 
+	 * 获取当前token的专属-session，如果session尚未创建，isCreate代表是否新建并返回 
+	 * <p> 只有当前会话属于登录状态才可调用 
+	 * @param isCreate 是否新建 
+	 * @return session会话 
+	 */
+	public SaSession getTokenSession(boolean isCreate) {
+		// 如果配置了需要校验登录状态，则验证一下
+		if(getConfig().getTokenSessionCheckLogin()) {
+			checkLogin();
+		} else {
+			// 如果配置忽略token登录校验，则必须保证token不为null (token为null的时候随机创建一个) 
+			String tokenValue = getTokenValue();
+			if(tokenValue == null || Objects.equals(tokenValue, "")) {
+				setLoginId(SaTokenInsideUtil.getMarking28());
+			}
+		}
+		// 返回这个token对应的专属session 
+		return getSessionBySessionId(getKeyTokenSession(getTokenValue()), isCreate);
+	}
 	
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回 
@@ -445,10 +478,7 @@ public class StpLogic {
 	 * @return session会话 
 	 */
 	public SaSession getTokenSession() {
-		if(getConfig().getTokenSessionCheckLogin()) {
-			checkLogin();
-		}
-		return getTokenSessionByToken(getTokenValue());
+		return getTokenSession(true);
 	}
 
  	
@@ -755,10 +785,10 @@ public class StpLogic {
 	}
  	
 	/**
-	 * 返回配置对象
+	 * 返回配置对象 
 	 */
 	public SaTokenConfig getConfig() {
-		// 为什么再代理一层? 为某些极端业务场景下[需要不同StpLogic不同配置]提供便利 
+		// 为什么再次代理一层? 为某些极端业务场景下[需要不同StpLogic不同配置]提供便利 
 		return SaTokenManager.getConfig();
 	}
 	

@@ -207,7 +207,8 @@ public class StpUtil {
 		return stpLogic.getSession();
 	}
 
-	// ---------- token专属session
+	
+	// =================== token专属session ===================  
 	
 	/** 
 	 * 获取指定token的专属session，如果session尚未创建，则新建并返回 
