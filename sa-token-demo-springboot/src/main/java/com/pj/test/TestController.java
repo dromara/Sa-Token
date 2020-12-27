@@ -95,6 +95,22 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
+	// ---------- 
+	// 测试token专属session， 浏览器访问： http://localhost:8081/test/getTokenSession 
+	@RequestMapping("getTokenSession")
+	public AjaxJson getTokenSession() {
+		System.out.println("======================= 进入方法，测试会话session接口 ========================= ");
+		System.out.println("当前是否登录：" + StpUtil.isLogin());
+		System.out.println("当前token专属session: " + StpUtil.getTokenSession().getId());
+
+		System.out.println("测试取值name：" + StpUtil.getTokenSession().getAttribute("name"));
+		StpUtil.getTokenSession().setAttribute("name", "张三");	// 写入一个值 
+		System.out.println("测试取值name：" + StpUtil.getTokenSession().getAttribute("name"));
+		
+		return AjaxJson.getSuccess();
+	}
+	
+	
 	// 打印当前token信息， 浏览器访问： http://localhost:8081/test/tokenInfo
 	@RequestMapping("tokenInfo")
 	public AjaxJson tokenInfo() {

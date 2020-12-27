@@ -28,6 +28,13 @@ public class SaTokenInfo {
 	/** session剩余有效时间 (单位: 秒) */
 	public long sessionTimeout;
 
+	/** token专属session剩余有效时间 (单位: 秒) */
+	public long tokenSessionTimeout;
+	
+
+
+
+
 	/**
 	 * token剩余无操作有效时间
 	 */
@@ -147,6 +154,21 @@ public class SaTokenInfo {
 	}
 
 	/**
+	 * @return tokenSessionTimeout
+	 */
+	public long getTokenSessionTimeout() {
+		return tokenSessionTimeout;
+	}
+
+	/**
+	 * @param tokenSessionTimeout 要设置的 tokenSessionTimeout
+	 */
+	public SaTokenInfo setTokenSessionTimeout(long tokenSessionTimeout) {
+		this.tokenSessionTimeout = tokenSessionTimeout;
+		return this;
+	}
+	
+	/**
 	 * @return tokenActivityTimeout
 	 */
 	public long getTokenActivityTimeout() {
@@ -169,8 +191,11 @@ public class SaTokenInfo {
 	public String toString() {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
 				+ ", loginId=" + loginId + ", loginKey=" + loginKey + ", tokenTimeout=" + tokenTimeout
-				+ ", sessionTimeout=" + sessionTimeout + ", tokenActivityTimeout=" + tokenActivityTimeout + "]";
+				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
+				+ ", tokenActivityTimeout=" + tokenActivityTimeout + "]";
 	}
+
+	
 	
 	
 	

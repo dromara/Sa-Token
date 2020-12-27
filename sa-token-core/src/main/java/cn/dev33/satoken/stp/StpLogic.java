@@ -119,6 +119,7 @@ public class StpLogic {
 		info.loginKey = getLoginKey();
 		info.tokenTimeout = getTokenTimeout();
 		info.sessionTimeout = getSessionTimeout();
+		info.tokenSessionTimeout = getTokenSessionTimeout();
 		info.tokenActivityTimeout = getTokenActivityTimeout();
 		return info;
 	}
@@ -382,7 +383,7 @@ public class StpLogic {
 	 * @param isCreate 是否新建
 	 * @return session对象 
 	 */
-	protected SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
+	public SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
 		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
 			session = new SaSession(sessionId);
@@ -425,6 +426,27 @@ public class StpLogic {
 	 */
 	public SaSession getSession() {
 		return getSession(true);
+	}
+
+	// ---------- token专属session
+	
+	/** 
+	 * 获取指定token的专属session，如果session尚未创建，则新建并返回 
+	 * @param tokenValue token值
+	 * @return session会话 
+	 */
+	public SaSession getTokenSessionByToken(String tokenValue) {
+		return getSessionBySessionId(getKeyTokenSession(tokenValue), true);
+	}
+	
+	/** 
+	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回 
+	 * <p> 只有当前会话属于登录状态才可调用 
+	 * @return session会话 
+	 */
+	public SaSession getTokenSession() {
+		checkLogin();
+		return getTokenSessionByToken(getTokenValue());
 	}
 
  	
@@ -556,6 +578,24 @@ public class StpLogic {
  	}
 
  	/**
+ 	 * 获取当前token的专属Session剩余有效时间 (单位: 秒) 
+ 	 * @return token剩余有效时间
+ 	 */
+ 	public long getTokenSessionTimeout() {
+ 		return getTokenSessionTimeoutByTokenValue(getTokenValue());
+ 	}
+ 	
+ 	/**
+ 	 * 获取指定token的专属Session剩余有效时间 (单位: 秒) 
+ 	 * @param tokenValue 指定token 
+ 	 * @return token剩余有效时间 
+ 	 */
+ 	public long getTokenSessionTimeoutByTokenValue(String tokenValue) {
+ 		return SaTokenManager.getSaTokenDao().getSessionTimeout(getKeyTokenSession(tokenValue));
+ 	}
+
+ 	
+ 	/**
  	 * 获取当前token[临时过期]剩余有效时间 (单位: 秒)
  	 * @return token[临时过期]剩余有效时间
  	 */
@@ -595,6 +635,7 @@ public class StpLogic {
  		}
  		return timeout;
  	}
+ 	
  	
 
 	// =================== 权限验证操作 ===================  
@@ -693,6 +734,14 @@ public class StpLogic {
 	 */
 	public String getKeySession(Object loginId) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":session:" + loginId;
+	}
+	/**  
+	 * 获取key： tokenValue的专属session 
+	 * @param tokenValue token值
+	 * @return key
+	 */
+	public String getKeyTokenSession(String tokenValue) {
+		return SaTokenManager.getConfig().getTokenName() + ":" + loginKey + ":token-session:" + tokenValue;
 	}
 	/** 
 	 * 获取key： 指定token的最后操作时间 持久化 

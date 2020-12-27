@@ -207,6 +207,26 @@ public class StpUtil {
 		return stpLogic.getSession();
 	}
 
+	// ---------- token专属session
+	
+	/** 
+	 * 获取指定token的专属session，如果session尚未创建，则新建并返回 
+	 * @param tokenValue token值
+	 * @return session会话 
+	 */
+	public static SaSession getTokenSessionByToken(String tokenValue) {
+		return stpLogic.getTokenSessionByToken(tokenValue);
+	}
+	
+	/** 
+	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回 
+	 * <p> 只有当前会话属于登录状态才可调用 
+	 * @return session会话 
+	 */
+	public static SaSession getTokenSession() {
+		return stpLogic.getTokenSession();
+	}
+
 
 	// =================== [临时过期] 验证相关 ===================  
 
