@@ -11,6 +11,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
@@ -626,7 +627,6 @@ public class StpLogic {
  		return SaTokenManager.getSaTokenDao().getSessionTimeout(getKeyTokenSession(tokenValue));
  	}
 
- 	
  	/**
  	 * 获取当前token[临时过期]剩余有效时间 (单位: 秒)
  	 * @return token[临时过期]剩余有效时间
@@ -667,73 +667,136 @@ public class StpLogic {
  		}
  		return timeout;
  	}
- 	
- 	
 
+ 	
+	// =================== 角色验证操作 ===================  
+
+ 	/** 
+ 	 * 指定账号id是否含有角色标识 
+ 	 * @param loginId 账号id
+ 	 * @param role 角色标识
+ 	 * @return 是否含有指定角色标识
+ 	 */
+ 	public boolean hasRole(Object loginId, String role) {
+ 		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
+		return !(roleList == null || roleList.contains(role) == false);
+ 	}
+ 	
+ 	/** 
+ 	 * 当前账号id是否含有指定角色标识
+ 	 * @param role 角色标识
+ 	 * @return 是否含有指定角色标识
+ 	 */
+ 	public boolean hasRole(String role) {
+ 		return hasRole(getLoginId(), role);
+ 	}
+	
+ 	/** 
+ 	 * 当前账号是否含有指定角色标识，没有就抛出异常
+ 	 * @param role 角色标识
+ 	 */
+ 	public void checkRole(String role) {
+ 		if(hasRole(role) == false) {
+			throw new NotRoleException(role, this.loginKey);
+		}
+ 	}
+
+ 	/** 
+ 	 * 当前账号是否含有指定角色标识, [指定多个，必须全都有]
+ 	 * @param roleArray 角色标识数组
+ 	 */
+ 	public void checkRoleAnd(String... roleArray){
+ 		Object loginId = getLoginId();
+ 		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
+ 		for (String role : roleArray) {
+ 			if(roleList.contains(role) == false) {
+ 				throw new NotRoleException(role, this.loginKey);	// 没有权限抛出异常 
+ 			}
+ 		}
+ 	}
+
+ 	/** 
+ 	 * 当前账号是否含有指定角色标识, [指定多个，有一个就可以通过]
+ 	 * @param roleArray 角色标识数组
+ 	 */
+ 	public void checkRoleOr(String... roleArray){
+ 		Object loginId = getLoginId();
+ 		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
+ 		for (String role : roleArray) {
+ 			if(roleList.contains(role) == true) {
+ 				return;		// 有的话提前退出
+ 			}
+ 		}
+		if(roleArray.length > 0) {
+	 		throw new NotRoleException(roleArray[0], this.loginKey);	// 没有权限抛出异常 
+		}
+ 	}
+ 	
+ 	
 	// =================== 权限验证操作 ===================  
 
  	/** 
  	 * 指定账号id是否含有指定权限 
  	 * @param loginId 账号id
- 	 * @param permissionCode 权限码
+ 	 * @param permission 权限码
  	 * @return 是否含有指定权限
  	 */
- 	public boolean hasPermission(Object loginId, String permissionCode) {
- 		List<String> permissionCodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
-		return !(permissionCodeList == null || permissionCodeList.contains(permissionCode) == false);
+ 	public boolean hasPermission(Object loginId, String permission) {
+ 		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
+		return !(permissionList == null || permissionList.contains(permission) == false);
  	}
  	
  	/** 
  	 * 当前账号id是否含有指定权限 
- 	 * @param permissionCode 权限码
+ 	 * @param permission 权限码
  	 * @return 是否含有指定权限
  	 */
- 	public boolean hasPermission(String permissionCode) {
- 		return hasPermission(getLoginId(), permissionCode);
+ 	public boolean hasPermission(String permission) {
+ 		return hasPermission(getLoginId(), permission);
  	}
 	
  	/** 
  	 * 当前账号是否含有指定权限， 没有就抛出异常
- 	 * @param permissionCode 权限码
+ 	 * @param permission 权限码
  	 */
- 	public void checkPermission(String permissionCode) {
- 		if(hasPermission(permissionCode) == false) {
-			throw new NotPermissionException(permissionCode, this.loginKey);
+ 	public void checkPermission(String permission) {
+ 		if(hasPermission(permission) == false) {
+			throw new NotPermissionException(permission, this.loginKey);
 		}
  	}
 
  	/** 
  	 * 当前账号是否含有指定权限, [指定多个，必须全都有]
- 	 * @param permissionCodeArray 权限码数组
+ 	 * @param permissionArray 权限码数组
  	 */
- 	public void checkPermissionAnd(String... permissionCodeArray){
+ 	public void checkPermissionAnd(String... permissionArray){
  		Object loginId = getLoginId();
- 		List<String> permissionCodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
- 		for (String pcode : permissionCodeArray) {
- 			if(permissionCodeList.contains(pcode) == false) {
- 				throw new NotPermissionException(pcode, this.loginKey);	// 没有权限抛出异常 
+ 		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
+ 		for (String permission : permissionArray) {
+ 			if(permissionList.contains(permission) == false) {
+ 				throw new NotPermissionException(permission, this.loginKey);	// 没有权限抛出异常 
  			}
  		}
  	}
 
  	/** 
  	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过]
- 	 * @param permissionCodeArray 权限码数组
+ 	 * @param permissionArray 权限码数组
  	 */
- 	public void checkPermissionOr(String... permissionCodeArray){
+ 	public void checkPermissionOr(String... permissionArray){
  		Object loginId = getLoginId();
- 		List<String> permissionCodeList = SaTokenManager.getStpInterface().getPermissionCodeList(loginId, loginKey);
- 		for (String permissionCode : permissionCodeArray) {
- 			if(permissionCodeList.contains(permissionCode) == true) {
+ 		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
+ 		for (String permission : permissionArray) {
+ 			if(permissionList.contains(permission) == true) {
  				return;		// 有的话提前退出
  			}
  		}
-		if(permissionCodeArray.length > 0) {
-	 		throw new NotPermissionException(permissionCodeArray[0], this.loginKey);	// 没有权限抛出异常 
+		if(permissionArray.length > 0) {
+	 		throw new NotPermissionException(permissionArray[0], this.loginKey);	// 没有权限抛出异常 
 		}
  	}
  	
-	
+
 	// =================== 返回相应key ===================  
 
 	/**

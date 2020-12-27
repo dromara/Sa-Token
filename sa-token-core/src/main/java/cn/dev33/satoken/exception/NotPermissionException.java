@@ -8,20 +8,19 @@ import cn.dev33.satoken.stp.StpUtil;
  *
  */
 public class NotPermissionException extends RuntimeException {
-   
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6806129545290130142L;
 	
-	/**
-	 * 权限码 
-	 */
-	private Object code;
+	/** 权限码 */
+	private String code;
+	
 	/**
 	 * @return 获得权限码 
 	 */
-	public Object getCode() {
+	public String getCode() {
 		return code;
 	}
 	
@@ -38,11 +37,11 @@ public class NotPermissionException extends RuntimeException {
 	}
 	
 
-	public NotPermissionException(Object code) {
+	public NotPermissionException(String code) {
         this(code, StpUtil.stpLogic.loginKey);
     }
-	public NotPermissionException(Object code, String loginKey) {
-		// 这里到底要不要拼接上login_key呢？纠结
+	public NotPermissionException(String code, String loginKey) {
+		// 这里到底要不要拼接上loginKey呢？纠结
 		super("无此权限：" + code);	
         this.code = code;
         this.loginKey = loginKey;

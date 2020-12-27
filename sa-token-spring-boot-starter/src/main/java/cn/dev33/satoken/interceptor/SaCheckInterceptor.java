@@ -8,6 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -62,7 +63,7 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 		SaCheckPermission scp = method.getMethodAnnotation(SaCheckPermission.class);
 		if(scp != null) { 
 			String[] permissionCodeArray = scp.value();
-			if(scp.isAnd()) {
+			if(scp.mode() == SaMode.AND) {
 				stpLogic.checkPermissionAnd(permissionCodeArray);		// 必须全部都有 
 			} else {
 				stpLogic.checkPermissionOr(permissionCodeArray);		// 有一个就行了  
@@ -72,7 +73,7 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 		scp = method.getBeanType().getAnnotation(SaCheckPermission.class);
 		if(scp != null) { 
 			String[] permissionCodeArray = scp.value();
-			if(scp.isAnd()) {
+			if(scp.mode() == SaMode.AND) {
 				stpLogic.checkPermissionAnd(permissionCodeArray);		// 必须全部都有 
 			} else {
 				stpLogic.checkPermissionOr(permissionCodeArray);		// 有一个就行了  

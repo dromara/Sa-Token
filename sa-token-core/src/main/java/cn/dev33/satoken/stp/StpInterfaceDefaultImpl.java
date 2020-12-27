@@ -10,7 +10,12 @@ import java.util.List;
 public class StpInterfaceDefaultImpl implements StpInterface {
 
 	@Override
-	public List<String> getPermissionCodeList(Object loginId, String loginKey) {
+	public List<String> getPermissionList(Object loginId, String loginKey) {
+		return new ArrayList<String>();
+	}
+
+	@Override
+	public List<String> getRoleList(Object loginId, String loginKey) {
 		return new ArrayList<String>();
 	}
 

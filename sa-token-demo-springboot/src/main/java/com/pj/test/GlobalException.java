@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 
 /**
  * 全局异常处理 
@@ -40,6 +41,9 @@ public class GlobalException {
 		if (e instanceof NotLoginException) {	// 如果是未登录异常
 			NotLoginException ee = (NotLoginException) e;
 			aj = AjaxJson.getNotLogin().setMsg(ee.getMessage());
+		} else if(e instanceof NotRoleException) {		// 如果是角色异常
+			NotRoleException ee = (NotRoleException) e;
+			aj = AjaxJson.getNotJur("无此角色：" + ee.getRole());
 		} else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
 			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());

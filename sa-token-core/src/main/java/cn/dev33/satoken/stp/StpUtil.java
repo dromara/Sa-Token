@@ -254,19 +254,10 @@ public class StpUtil {
  	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
  	 */
- 	public static long getTimeout() {
+ 	public static long getTokenTimeout() {
  		return stpLogic.getTokenTimeout();
  	}
  	
- 	/**
- 	 * 获取指定loginId的token剩余有效时间 (单位: 秒) 
- 	 * @param loginId 指定loginId 
- 	 * @return token剩余有效时间 
- 	 */
- 	public static long getTimeoutByLoginId(Object loginId) {
- 		return stpLogic.getTokenTimeoutByLoginId(loginId);
- 	}
-
  	/**
  	 * 获取当前登录者的Session剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
@@ -274,14 +265,13 @@ public class StpUtil {
  	public static long getSessionTimeout() {
  		return stpLogic.getSessionTimeout();
  	}
- 	
+
  	/**
- 	 * 获取指定loginId的Session剩余有效时间 (单位: 秒) 
- 	 * @param loginId 指定loginId 
- 	 * @return token剩余有效时间 
+ 	 * 获取当前token的专属Session剩余有效时间 (单位: 秒) 
+ 	 * @return token剩余有效时间
  	 */
- 	public static long getSessionTimeoutByLoginId(Object loginId) {
- 		return stpLogic.getSessionTimeoutByLoginId(loginId);
+ 	public static long getTokenSessionTimeout() {
+ 		return stpLogic.getTokenSessionTimeout();
  	}
  	
  	/**
@@ -292,15 +282,52 @@ public class StpUtil {
  		return stpLogic.getTokenActivityTimeout();
  	}
  	
- 	/**
- 	 * 获取指定token[临时过期]剩余有效时间 (单位: 秒)
- 	 * @param tokenValue 指定token 
- 	 * @return token[临时过期]剩余有效时间
+
+ 	
+	// =================== 角色验证操作 ===================  
+
+ 	/** 
+ 	 * 指定账号id是否含有角色标识 
+ 	 * @param loginId 账号id
+ 	 * @param role 角色标识
+ 	 * @return 是否含有指定角色标识
  	 */
- 	public static long getTokenActivityTimeoutByToken(String tokenValue) {
- 		return stpLogic.getTokenActivityTimeoutByToken(tokenValue);
+ 	public static boolean hasRole(Object loginId, String role) {
+ 		return stpLogic.hasRole(loginId, role);
  	}
  	
+ 	/** 
+ 	 * 当前账号id是否含有指定角色标识
+ 	 * @param role 角色标识
+ 	 * @return 是否含有指定角色标识
+ 	 */
+ 	public static boolean hasRole(String role) {
+ 		return stpLogic.hasRole(role);
+ 	}
+	
+ 	/** 
+ 	 * 当前账号是否含有指定角色标识，没有就抛出异常
+ 	 * @param role 角色标识
+ 	 */
+ 	public static void checkRole(String role) {
+ 		stpLogic.checkRole(role);
+ 	}
+
+ 	/** 
+ 	 * 当前账号是否含有指定角色标识, [指定多个，必须全都有]
+ 	 * @param roleArray 角色标识数组
+ 	 */
+ 	public static void checkRoleAnd(String... roleArray){
+ 		stpLogic.checkRoleAnd(roleArray);
+ 	}
+
+ 	/** 
+ 	 * 当前账号是否含有指定角色标识, [指定多个，有一个就可以通过]
+ 	 * @param roleArray 角色标识数组
+ 	 */
+ 	public static void checkRoleOr(String... roleArray){
+ 		stpLogic.checkRoleOr(roleArray);
+ 	}
  	
 	
 	// =================== 权限验证操作 ===================

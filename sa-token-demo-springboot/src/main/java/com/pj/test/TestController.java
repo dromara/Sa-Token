@@ -46,9 +46,31 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
-	// 测试权限接口， 浏览器访问： http://localhost:8081/test/jur
-	@RequestMapping("jur")
-	public AjaxJson jur() {
+	// 测试角色接口， 浏览器访问： http://localhost:8081/test/testRole
+	@RequestMapping("testRole")
+	public AjaxJson testRole() {
+		System.out.println("======================= 进入方法，测试角色接口 ========================= ");
+		
+		System.out.println("是否具有角色标识 user " + StpUtil.hasRole("user"));
+		System.out.println("是否具有角色标识 admin " + StpUtil.hasRole("admin"));
+		
+		System.out.println("没有admin权限就抛出异常");
+		StpUtil.checkRole("admin");
+		
+		System.out.println("在【admin、user】中只要拥有一个就不会抛出异常");
+		StpUtil.checkRoleOr("admin", "user");
+
+		System.out.println("在【admin、user】中必须全部拥有才不会抛出异常");
+		StpUtil.checkRoleAnd("admin", "user");
+
+		System.out.println("角色测试通过");
+		
+		return AjaxJson.getSuccess();
+	}
+
+	// 测试权限接口， 浏览器访问： http://localhost:8081/test/testJur
+	@RequestMapping("testJur")
+	public AjaxJson testJur() {
 		System.out.println("======================= 进入方法，测试权限接口 ========================= ");
 		
 		System.out.println("是否具有权限101" + StpUtil.hasPermission("101"));
@@ -69,6 +91,7 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
+	
 	// 测试会话session接口， 浏览器访问： http://localhost:8081/test/session 
 	@RequestMapping("session")
 	public AjaxJson session() {
