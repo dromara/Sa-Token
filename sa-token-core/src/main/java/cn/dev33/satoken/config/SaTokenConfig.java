@@ -16,7 +16,10 @@ public class SaTokenConfig {
 	/** token临时有效期 (指定时间内无操作就视为token过期) 单位/秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) */
 	private long activityTimeout = -1;		
 	
-	/** 在多人登录同一账号时，是否共享会话 (为true时共用一个，为false时新登录挤掉旧登录) */
+	/** 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)  */
+	private Boolean allowConcurrentLogin = true;	
+	
+	/** 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)  */
 	private Boolean isShare = true;		
 	
 	/** 是否尝试从请求体里读取token */
@@ -34,14 +37,13 @@ public class SaTokenConfig {
 	/** 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 */
 	private int dataRefreshPeriod = 30;
 	
-	/** 获取token专属session时是否必须登录 */
+	/** 获取token专属session时是否必须登录 (如果配置为true，会在每次获取token专属session时校验是否登录) */
 	private Boolean tokenSessionCheckLogin = true;	
 	 
 	/** 是否在初始化配置时打印版本字符画 */
 	private Boolean isV = true;
 
 	
-
 	/**
 	 * @return tokenName
 	 */
@@ -69,7 +71,7 @@ public class SaTokenConfig {
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
 	}
-	
+
 	/**
 	 * @return activityTimeout
 	 */
@@ -83,7 +85,21 @@ public class SaTokenConfig {
 	public void setActivityTimeout(long activityTimeout) {
 		this.activityTimeout = activityTimeout;
 	}
-	
+
+	/**
+	 * @return allowConcurrentLogin
+	 */
+	public Boolean getAllowConcurrentLogin() {
+		return allowConcurrentLogin;
+	}
+
+	/**
+	 * @param allowConcurrentLogin 要设置的 allowConcurrentLogin
+	 */
+	public void setAllowConcurrentLogin(Boolean allowConcurrentLogin) {
+		this.allowConcurrentLogin = allowConcurrentLogin;
+	}
+
 	/**
 	 * @return isShare
 	 */
@@ -99,19 +115,19 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @return isReadCookie
+	 * @return isReadBody
 	 */
-	public Boolean getIsReadCookie() {
-		return isReadCookie;
+	public Boolean getIsReadBody() {
+		return isReadBody;
 	}
 
 	/**
-	 * @param isReadCookie 要设置的 isReadCookie
+	 * @param isReadBody 要设置的 isReadBody
 	 */
-	public void setIsReadCookie(Boolean isReadCookie) {
-		this.isReadCookie = isReadCookie;
+	public void setIsReadBody(Boolean isReadBody) {
+		this.isReadBody = isReadBody;
 	}
-	
+
 	/**
 	 * @return isReadHead
 	 */
@@ -127,19 +143,19 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @return isReadBody
+	 * @return isReadCookie
 	 */
-	public Boolean getIsReadBody() {
-		return isReadBody;
+	public Boolean getIsReadCookie() {
+		return isReadCookie;
 	}
 
 	/**
-	 * @param isReadBody 要设置的 isReadBody
+	 * @param isReadCookie 要设置的 isReadCookie
 	 */
-	public void setIsReadBody(Boolean isReadBody) {
-		this.isReadBody = isReadBody;
+	public void setIsReadCookie(Boolean isReadCookie) {
+		this.isReadCookie = isReadCookie;
 	}
-	
+
 	/**
 	 * @return tokenStyle
 	 */
@@ -152,20 +168,6 @@ public class SaTokenConfig {
 	 */
 	public void setTokenStyle(String tokenStyle) {
 		this.tokenStyle = tokenStyle;
-	}
-	
-	/**
-	 * @return isV
-	 */
-	public Boolean getIsV() {
-		return isV;
-	}
-
-	/**
-	 * @param isV 要设置的 isV
-	 */
-	public void setIsV(Boolean isV) {
-		this.isV = isV;
 	}
 
 	/**
@@ -196,20 +198,31 @@ public class SaTokenConfig {
 		this.tokenSessionCheckLogin = tokenSessionCheckLogin;
 	}
 
-	
-
+	/**
+	 * @return isV
+	 */
+	public Boolean getIsV() {
+		return isV;
+	}
 
 	/**
-	 * 将对象转为String字符串 
+	 * @param isV 要设置的 isV
 	 */
+	public void setIsV(Boolean isV) {
+		this.isV = isV;
+	}
+
+	
+	
 	@Override
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
-				+ ", isShare=" + isShare + ", isReadBody=" + isReadBody + ", isReadHead=" + isReadHead
-				+ ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle + ", dataRefreshPeriod="
-				+ dataRefreshPeriod + ", tokenSessionCheckLogin=" + tokenSessionCheckLogin + ", isV=" + isV + "]";
+				+ ", allowConcurrentLogin=" + allowConcurrentLogin + ", isShare=" + isShare + ", isReadBody="
+				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
+				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
+				+ tokenSessionCheckLogin + ", isV=" + isV + "]";
 	}
-	
+
 	
 
 	

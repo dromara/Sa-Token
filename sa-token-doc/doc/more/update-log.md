@@ -1,6 +1,25 @@
 # 更新日志 
 
 
+### 2020-12-24 @v1.8.0
+- 优化：优化源码注释
+- 修复：修复部分文档错别字 
+- 修复：修复项目文件夹名称错误
+- 优化：优化文档配色，更舒服的代码展示
+- 新增：提供`sa-token`集成 `redis` 的 `spring-boot-starter` 方案  **[重要]**
+- 新增：新增集成 `redis` 时，以`jackson`作为序列化方案  **[重要]**
+- 新增：dao层默认实现增加定时清理过期数据功能  **[重要]**
+- 新增：新增`token专属session`, 更灵活的会话管理  **[重要]**
+- 新增：增加配置，指定在获取`token专属session`时是否必须登录
+- 新增：在无token时自动创建会话，完美兼容`token-session`会话模型!   **[重要]**
+- 修改：权限码限定必须为String类型 
+- 优化：注解验证模式由boolean属性改为枚举方式
+- 删除：`StpUtil`删除部分冗长API，保持API清爽性
+- 新增：新增角色验证 (角色验证与权限验证已完全分离)  **[重要]**
+- 优化：移除`StpUtil.kickoutByLoginId()`API，由`logoutByLoginId`代替
+- 升级：开源协议修改为`Apache-2.0`
+
+
 ### 2020-12-24 @v1.7.0
 - 优化：项目架构改为maven多模块形式，方便增加新模块 **[重要]**
 - 优化：与`springboot`的集成改为`springboot-starter`模式，无需`@SaTokenSetup`注解即可完成自动装配 **[重要]**
@@ -33,7 +52,7 @@
 
 ### 2020-9-7 @v1.4.0
 - 优化：修改一些函数、变量名称，使其更符合阿里java代码规范
-- 优化：`tokenValue`的读取优先级改为：`request` > `body` > `header` > `cookie`
+- 优化：`tokenValue`的读取优先级改为：`request` > `body` > `header` > `cookie`  **[重要]**
 - 新增：新增`isReadCookie`配置，决定是否从`cookie`里读取`token`信息 
 - 优化：如果`isReadCookie`配置为`false`，那么在登录时也不会把`cookie`写入`cookie` 
 - 新增：新增`getSessionByLoginId(Object loginId, boolean isCreate)`方法
@@ -50,7 +69,7 @@
 
 
 ### 2020-3-7 @v1.2.0
-- 新增：新增注解式验证，可在路由方法中使用注解进行权限验证
+- 新增：新增注解式验证，可在路由方法中使用注解进行权限验证  **[重要]**
 - 参考：[注解式验证](use/at-check)
 
 

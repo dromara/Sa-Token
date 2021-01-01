@@ -8,7 +8,7 @@
 
 ## 核心思想
 - sa-token在设计时充分考虑了多账号体系时的各种逻辑
-- 以上几篇介绍的api，都是经过 `StpUtil`类的各种静态方法进行各种验证，而如果你深入它的源码，[点此阅览](https://gitee.com/sz6/sa-token/blob/master/sa-token-dev/src/main/java/cn/dev33/satoken/stp/StpUtil.java)
+- 以上几篇介绍的api，都是经过 `StpUtil`类的各种静态方法进行各种验证，而如果你深入它的源码，[点此阅览](https://gitee.com/sz6/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/stp/StpUtil.java)
 - 就会发现，此类并没有任何代码逻辑，唯一做的事就是对成员变量`stpLogic`的各个API进行包装一下进行转发
 - 这样做有两个优点
 	- `StpLogic`类的所有函数都可以被重写，按需扩展
@@ -19,7 +19,7 @@
 1. 新建一个新的权限验证类，比如： `StpUserUtil.java`
 2. 将`StpUtil.java`类的全部代码复制粘贴到 `StpUserUtil.java`里
 3. 更改一下其 `loginKey`， 比如：
-```
+``` java
 	// 底层的 StpLogic 对象  
 	public static StpLogic stpLogic = new StpLogic("user");	// loginKey改为user 
 ```

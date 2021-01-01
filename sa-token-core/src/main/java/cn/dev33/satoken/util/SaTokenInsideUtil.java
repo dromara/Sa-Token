@@ -11,16 +11,6 @@ public class SaTokenInsideUtil {
 
 	
 	/**
-	 * sa-token 版本号 
-	 */
-	public static final String VERSION_NO = "v1.7.0";
-
-	/**
-	 * sa-token 开源地址 
-	 */
-	public static final String GITHUB_URL = "https://github.com/click33/sa-token";
-	
-	/**
 	 * 打印 sa-token 版本字符画 
 	 */
 	public static void printSaToken() {
@@ -28,20 +18,11 @@ public class SaTokenInsideUtil {
 				"____ ____    ___ ____ _  _ ____ _  _ \r\n" + 
 				"[__  |__| __  |  |  | |_/  |___ |\\ | \r\n" + 
 				"___] |  |     |  |__| | \\_ |___ | \\| \r\n" + 
-				"sa-token：" + VERSION_NO + "         \r\n" +
-				"GitHub：" + GITHUB_URL; // + "\r\n";
+				"sa-token：" + SaTokenConsts.VERSION_NO + "         \r\n" +
+				"GitHub：" + SaTokenConsts.GITHUB_URL; // + "\r\n";
 		System.out.println(str);
 	}
 
-	/**
-	 * 如果token为本次请求新创建的，则以此字符串为key存储在当前request中  JUST_CREATED_SAVE_KEY
-	 */
-	public static final String JUST_CREATED_SAVE_KEY = "JUST_CREATED_SAVE_KEY_"; 	
-
-	/**
-	 * 如果本次请求已经验证过[无操作过期], 则以此值存储在当前request中  TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY
-	 */
-	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY_"; 	
 	
 	/**
 	 * 生成指定长度的随机字符串 
@@ -61,6 +42,7 @@ public class SaTokenInsideUtil {
 	
 	/**
 	 * 以当前时间戳和随机int数字拼接一个随机字符串 
+	 * @return 随机字符串 
 	 */
 	public static String getMarking28() {
 		return System.currentTimeMillis() + "" + new Random().nextInt(Integer.MAX_VALUE);

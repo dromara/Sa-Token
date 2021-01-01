@@ -14,7 +14,11 @@ public class SaSessionCustomUtil {
 	 */
 	public static String sessionKey = "custom";
 
-	/** 组织一下key */
+	/**
+	 * 组织一下自定义session的id
+	 * @param sessionId 会话id
+	 * @return sessionId
+	 */
 	public static String getSessionKey(String sessionId) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + sessionKey + ":session:" + sessionId;
 	}

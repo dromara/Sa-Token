@@ -162,6 +162,7 @@ public class SaTokenInfo {
 
 	/**
 	 * @param tokenSessionTimeout 要设置的 tokenSessionTimeout
+	 * @return 对象自身
 	 */
 	public SaTokenInfo setTokenSessionTimeout(long tokenSessionTimeout) {
 		this.tokenSessionTimeout = tokenSessionTimeout;

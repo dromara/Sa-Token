@@ -1,11 +1,17 @@
 package com.pj.test;
 
+import java.util.Date;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
@@ -27,22 +33,22 @@ public class TestController {
 		System.out.println("当前会话的token：" + StpUtil.getTokenValue());
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
+		
 		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
 		System.out.println("当前登录账号：" + StpUtil.getLoginIdAsInt());	// 获取登录id并转为int
+//		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	
 		
-//		StpUtil.logout();
-//		System.out.println("注销登录");
-//		System.out.println("当前是否登录：" + StpUtil.isLogin());
-//		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
-//		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
-//		System.out.println("根据token找登录id：" + StpUtil.getLoginIdByToken(StpUtil.getTokenValue()));
-		
-		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	// 获取登录id并转为int 
-		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
-		
+		return AjaxJson.getSuccess();
+	}
+	
+	// 测试退出登录 ， 浏览器访问： http://localhost:8081/test/logout
+	@RequestMapping("logout")
+	public AjaxJson logout() {
+		StpUtil.logout();
+//		StpUtil.logoutByLoginId(10001);
 		return AjaxJson.getSuccess();
 	}
 	
@@ -91,17 +97,17 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
-	
 	// 测试会话session接口， 浏览器访问： http://localhost:8081/test/session 
 	@RequestMapping("session")
-	public AjaxJson session() {
+	public AjaxJson session() throws JsonProcessingException {
 		System.out.println("======================= 进入方法，测试会话session接口 ========================= ");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号session的id" + StpUtil.getSession().getId());
 		System.out.println("当前登录账号session的id" + StpUtil.getSession().getId());
 		System.out.println("测试取值name：" + StpUtil.getSession().getAttribute("name"));
-		StpUtil.getSession().setAttribute("name", "张三");	// 写入一个值 
+		StpUtil.getSession().setAttribute("name", new Date());	// 写入一个值 
 		System.out.println("测试取值name：" + StpUtil.getSession().getAttribute("name"));
+		System.out.println( new ObjectMapper().writeValueAsString(StpUtil.getSession()));
 		return AjaxJson.getSuccess();
 	}
 	
@@ -155,10 +161,10 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
-	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/atLogin
-	@SaCheckLogin				// 注解式鉴权：当前会话必须登录才能通过 
-	@RequestMapping("atLogin")
-	public AjaxJson atLogin() {
+	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/atJurOr
+	@RequestMapping("atJurOr")
+	@SaCheckPermission(value = {"user-add", "user-all", "user-delete"}, mode = SaMode.OR)		// 注解式鉴权：只要具有其中一个权限即可通过校验 
+	public AjaxJson atJurOr() {
 		return AjaxJson.getSuccessData("用户信息");
 	}
 	
@@ -175,10 +181,8 @@ public class TestController {
 	public AjaxJson kickOut() {
 		// 先登录上 
 		StpUtil.setLoginId(10001);
-		// 清退下线 
-//		StpUtil.logoutByLoginId(10001);
 		// 踢下线 
-		StpUtil.kickoutByLoginId(10001);
+		StpUtil.logoutByLoginId(10001);
 		// 再尝试获取
 		StpUtil.getLoginId();
 		// 返回 
@@ -188,15 +192,7 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test 
 	@RequestMapping("test")
 	public AjaxJson test() {
-		StpUtil.setLoginId(10001);
-//		StpUtil.getSession();
-		StpUtil.logout();
-		
-//		System.out.println(StpUtil.getSession().getId());
-//		System.out.println(StpUserUtil.getSession().getId());
-//		StpUtil.getSessionByLoginId(10001).setAttribute("name", "123");
-//		System.out.println(StpUtil.getSessionByLoginId(10001).getAttribute("name"));
-		
+		StpUtil.getTokenSession().logout();
 		return AjaxJson.getSuccess();
 	}
 

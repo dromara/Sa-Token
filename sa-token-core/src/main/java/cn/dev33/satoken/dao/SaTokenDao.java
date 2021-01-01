@@ -52,6 +52,13 @@ public interface SaTokenDao {
 	 */
 	public long getTimeout(String key);
 	
+	/**
+	 * 修改指定key的剩余存活时间 (单位: 秒)
+	 * @param key 指定key
+	 * @param timeout 过期时间 
+	 */
+	public void updateTimeout(String key, long timeout);
+	
 
 	/**
 	 * 根据指定key的Session，如果没有，则返回空 
@@ -80,11 +87,18 @@ public interface SaTokenDao {
 	public void deleteSession(String sessionId);
 
 	/**
-	 * 获取指定SaSession的剩余存活时间 (单位: 秒)
+	 * 获取指定SaSession的剩余存活时间 (单位: 秒) 
 	 * @param sessionId 指定SaSession 
 	 * @return 这个SaSession的剩余存活时间 (单位: 秒)
 	 */
 	public long getSessionTimeout(String sessionId);
+	
+	/**
+	 * 修改指定SaSession的剩余存活时间 (单位: 秒) 
+	 * @param sessionId sessionId
+	 * @param timeout 过期时间 
+	 */
+	public void updateSessionTimeout(String sessionId, long timeout);
 	
 	
 	

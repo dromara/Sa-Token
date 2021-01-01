@@ -19,10 +19,10 @@
 - 类似API还有：
 	- `StpUtil.getSessionByLoginId(Object loginId, boolean isCreate)` 获取当前会话登录id, `isCreate`代表指定是否在无`session`的情况下新建并返回
 
-#### StpUtil.hasRole(Object loginId, Object role)
+#### StpUtil.hasRole(Object loginId, String role)
 - 指定`loginId`是否含有指定角色
 
-#### StpUtil.hasPermission(Object loginId, Object permission)
+#### StpUtil.hasPermission(Object loginId, String permission)
 - 指定`loginId`是否含有指定权限
 
 

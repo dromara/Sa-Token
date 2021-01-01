@@ -1,5 +1,7 @@
 package cn.dev33.satoken.stp;
 
+import java.util.List;
+
 import cn.dev33.satoken.session.SaSession;
 
 /**
@@ -30,15 +32,6 @@ public class StpUtil {
 	 */
 	public static String getTokenValue() {
 		return stpLogic.getTokenValue();
-	}
-
-	/** 
-	 * 获取指定loginId的tokenValue
-	 * @param loginId 账号id
-	 * @return token值 
-	 */
-	public static String getTokenValueByLoginId(Object loginId) {
-		return stpLogic.getTokenValueByLoginId(loginId);
 	}
 
 	/**
@@ -76,20 +69,22 @@ public class StpUtil {
 	}
 
 	/**
-	 * 指定loginId的会话注销登录（正常注销下线）
+	 * 指定token的会话注销登录 
+	 * @param tokenValue 指定token
+	 */
+	public static void logoutByTokenValue(String tokenValue) {
+		stpLogic.logoutByTokenValue(tokenValue);
+	}
+	
+	/**
+	 * 指定loginId的会话注销登录（踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
 	public static void logoutByLoginId(Object loginId) {
 		stpLogic.logoutByLoginId(loginId);
 	}
 
-	/**
-	 * 指定loginId的会话注销登录（踢人下线）
-	 * @param loginId 账号id 
-	 */
-	public static void kickoutByLoginId(Object loginId) {
-		stpLogic.kickoutByLoginId(loginId);
-	}
 	
 	// 查询相关
 
@@ -181,10 +176,9 @@ public class StpUtil {
 	}
 
 	/** 
-	 * 获取指定loginId的session, 如果session尚未创建，isCreate=是否新建并返回
-	 * @param loginId 账号id
-	 * @param isCreate 是否新建
-	 * @return SaSession
+	 * 获取指定loginId的session，如果session尚未创建，则新建并返回 
+	 * @param loginId 账号id 
+	 * @return session会话 
 	 */
 	public static SaSession getSessionByLoginId(Object loginId) {
 		return stpLogic.getSessionByLoginId(loginId);
@@ -221,7 +215,6 @@ public class StpUtil {
 	
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回 
-	 * <p> 只有当前会话属于登录状态才可调用 
 	 * @return session会话 
 	 */
 	public static SaSession getTokenSession() {
@@ -376,4 +369,27 @@ public class StpUtil {
 	}
 
 
+	// =================== id 反查token 相关操作 ===================  
+	
+	/** 
+	 * 获取指定loginId的tokenValue 
+	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
+	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
+	 * @param loginId 账号id
+	 * @return token值 
+	 */
+	public static String getTokenValueByLoginId(Object loginId) {
+		return stpLogic.getTokenValueByLoginId(loginId);
+	}
+	
+ 	/** 
+	 * 获取指定loginId的tokenValue 
+	 * @param loginId 账号id 
+	 * @return 此loginId的所有相关token 
+ 	 */
+	public static List<String> getTokenValueListByLoginId(Object loginId) {
+		return stpLogic.getTokenValueListByLoginId(loginId);
+	}
+	
+	
 }

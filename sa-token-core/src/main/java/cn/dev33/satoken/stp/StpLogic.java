@@ -1,5 +1,7 @@
 package cn.dev33.satoken.stp;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +15,8 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.TokenSign;
+import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
@@ -52,10 +56,11 @@ public class StpLogic {
 	 * @param loginId loginId
 	 * @return 生成的tokenValue 
 	 */
- 	public String randomTokenValue(Object loginId) {
-		return SaTokenManager.getSaTokenAction().createToken(loginId, loginKey);
+ 	public String createTokenValue(Object loginId) {
+ 		// 去除掉所有逗号 
+		return SaTokenManager.getSaTokenAction().createToken(loginId, loginKey).replaceAll(",", "");
 	}
-	
+ 	
 	/**
 	 *  获取当前tokenValue
 	 * @return 当前tokenValue
@@ -68,8 +73,8 @@ public class StpLogic {
 		String tokenValue = null;
 		
 		// 1. 尝试从request里读取 
-		if(request.getAttribute(SaTokenInsideUtil.JUST_CREATED_SAVE_KEY) != null) {
-			tokenValue = String.valueOf(request.getAttribute(SaTokenInsideUtil.JUST_CREATED_SAVE_KEY));
+		if(request.getAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY) != null) {
+			tokenValue = String.valueOf(request.getAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY));
 		}
 		// 2. 尝试从请求体里面读取 
 		if(tokenValue == null && config.getIsReadBody() == true){
@@ -89,15 +94,6 @@ public class StpLogic {
 		
 		// 5. 返回 
 		return tokenValue;
-	}
-	
-	/** 
-	 * 获取指定loginId的tokenValue
-	 * @param loginId 账号id
-	 * @return token值 
-	 */
-	public String getTokenValueByLoginId(Object loginId) {
-		return SaTokenManager.getSaTokenDao().getValue(getKeyLoginId(loginId)); 
 	}
 	
 	/**
@@ -135,36 +131,64 @@ public class StpLogic {
 	 */
 	public void setLoginId(Object loginId) {
 		
-		// 1、获取相应对象  
+		// ------ 0、如果当前会话已经登录上了此LoginId，则立即返回 
+		Object loggedId = getLoginIdDefaultNull();
+		if(loggedId != null && loggedId.toString().equals(loginId.toString())) {
+			return;
+		}
+		
+		// ------ 1、获取相应对象  
 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
 		SaTokenConfig config = getConfig();
 		SaTokenDao dao = SaTokenManager.getSaTokenDao();
 		
-		// 2、获取tokenValue
-		String tokenValue = getTokenValueByLoginId(loginId);	// 获取旧tokenValue
-		if(tokenValue == null){			// 为null则创建一个新的
-			tokenValue = randomTokenValue(loginId);
+		// ------ 2、生成一个token 
+		String tokenValue = null;
+		// --- 如果允许并发登录 
+		if(config.getAllowConcurrentLogin() == true) {
+			// 如果配置为共享token, 则尝试从session签名记录里取出token 
+			if(config.getIsShare() == true) {
+				tokenValue = getTokenValueByLoginId(loginId);
+			}
 		} else {
-			// 不为null, 并且配置不共享会话，则：将原来的会话标记为[被顶替] 
-			if(config.getIsShare() == false){
-				dao.updateValue(getKeyTokenValue(tokenValue), NotLoginException.BE_REPLACED);
-				clearLastActivity(tokenValue); 	// 同时清理掉[最后操作时间] 
-				tokenValue = randomTokenValue(loginId);	// 再重新生成一个token 
+			// --- 如果不允许并发登录 
+			// 如果此时[id-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的token标记为被顶下线 
+			SaSession session = getSessionByLoginId(loginId, false);
+			if(session != null) {
+				List<String> tokenValueList = getTokenValueListByLoginId(loginId);
+				for (String token : tokenValueList) {
+					dao.updateValue(getKeyTokenValue(token), NotLoginException.BE_REPLACED);	// 1. 将此token 标记为已顶替 
+					clearLastActivity(token); 			// 2. 清理掉[token-最后操作时间] 
+					session.removeTokenSign(token); 	// 3. 清理账号session上的token签名 
+				}
 			}
 		}
-
-		// 3、持久化 
+		// 如果至此，仍未成功创建tokenValue 
+		if(tokenValue == null) {
+			tokenValue = createTokenValue(loginId);
+		}
+		
+		// ------ 3. 获取[id-session] (如果还没有创建session, 则新建, 如果已经创建，则续期) 
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session == null) {
+			session = getSessionByLoginId(loginId);
+		} else {
+			dao.updateSessionTimeout(session.getId(), config.getTimeout());
+		}
+		// 在session上记录token签名 
+		session.addTokenSign(new TokenSign(tokenValue, SaTokenConsts.DEFAULT_LOGIN_DEVICE));
+		
+		// ------ 4. 持久化其它数据 
 		dao.setValue(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	// token -> uid 
-		dao.setValue(getKeyLoginId(loginId), tokenValue, config.getTimeout());							// uid -> token 
-		request.setAttribute(SaTokenInsideUtil.JUST_CREATED_SAVE_KEY, tokenValue);								// 保存到本次request里  
-		setLastActivityToNow(tokenValue);  // 写入 [最后操作时间]
-		if(config.getIsReadCookie() == true){
-			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		// cookie注入 
+		request.setAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY, tokenValue);	// 将token保存到本次request里  
+		setLastActivityToNow(tokenValue);  	// 写入 [最后操作时间]
+		if(config.getIsReadCookie() == true){	// cookie注入 
+			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		
 		}
 	}
 
 	/** 
-	 * 当前会话注销登录
+	 * 当前会话注销登录 
 	 */
 	public void logout() {
 		// 如果连token都没有，那么无需执行任何操作 
@@ -176,57 +200,63 @@ public class StpLogic {
  		if(getConfig().getIsReadCookie() == true){
 			SaTokenManager.getSaTokenCookie().delCookie(SaTokenManager.getSaTokenServlet().getRequest(), SaTokenManager.getSaTokenServlet().getResponse(), getTokenName()); 	
 		}
- 		// 尝试从db中获取loginId值 
- 		String loginId = SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
- 		// 如果根本查不到loginId，那么也无需执行任何操作 
- 		if(loginId == null) {
- 			return;
- 		}
- 		// 如果已过期或被顶替或被挤下线，那么只删除此token即可 
- 		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT) || loginId.equals(NotLoginException.BE_REPLACED) || loginId.equals(NotLoginException.KICK_OUT)) {
- 			return;
- 		}
-		// 至此，已经是一个正常的loginId，开始三清 
- 		logoutByLoginId(loginId);
+ 		logoutByTokenValue(tokenValue);
 	}
 
 	/**
-	 * 指定loginId的会话注销登录（正常注销下线）
+	 * 指定token的会话注销登录 
+	 * @param tokenValue 指定token
+	 */
+	public void logoutByTokenValue(String tokenValue) {
+		// 1. 清理掉[token-最后操作时间] 
+		clearLastActivity(tokenValue); 	
+		
+ 		// 2. 尝试清除token-id键值对 (先从db中获取loginId值，如果根本查不到loginId，那么无需继续操作 )
+ 		String loginId = SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
+ 	 	if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
+ 			return;
+ 		}
+ 		SaTokenManager.getSaTokenDao().deleteKey(getKeyTokenValue(tokenValue));	
+ 		
+ 		// 2. 尝试清理账号session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
+ 	 	SaSession session = getSessionByLoginId(loginId, false);
+ 	 	if(session == null) {
+ 	 		return;
+ 	 	}
+ 	 	session.removeTokenSign(tokenValue); 
+ 	 	
+ 	 	// 3. 尝试注销session
+		session.logoutByTokenSignCountToZero();
+	}
+	
+	/**
+	 * 指定loginId的会话注销登录（踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
 	public void logoutByLoginId(Object loginId) {
-		
-		// 获取相应tokenValue
-		String tokenValue = getTokenValueByLoginId(loginId);
-		if(tokenValue == null) {
+		// 先获取这个账号的[id-session], 如果为null，则不执行任何操作 
+		SaSession session = getSessionByLoginId(loginId);
+		if(session == null) {
 			return;
 		}
 		
-		// 清除相关数据 
-		SaTokenManager.getSaTokenDao().deleteKey(getKeyTokenValue(tokenValue));	// 清除token-id键值对  
-		SaTokenManager.getSaTokenDao().deleteKey(getKeyLoginId(loginId));		// 清除id-token键值对  
-		SaTokenManager.getSaTokenDao().deleteSession(getKeySession(loginId));		// 清除其session 
-		clearLastActivity(tokenValue); 	// 同时清理掉 [最后操作时间] 
+		// 循环token签名列表，开始删除相关信息 
+		List<TokenSign> tokenSignList = session.getTokenSignList();
+		for (TokenSign tokenSign : tokenSignList) {
+			// 1. 获取token 
+			String tokenValue = tokenSign.getValue();
+			// 2. 清理掉[token-最后操作时间] 
+			clearLastActivity(tokenValue); 	
+	 		// 3. 标记：已被踢下线 
+			SaTokenManager.getSaTokenDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);	// 标记：已被踢下线 
+	 		// 4. 清理账号session上的token签名 
+	 		session.removeTokenSign(tokenValue); 
+		}
+ 	 	// 尝试注销session
+		session.logoutByTokenSignCountToZero();
 	}
 
-	/**
-	 * 指定loginId的会话注销登录（踢人下线）
-	 * @param loginId 账号id 
-	 */
-	public void kickoutByLoginId(Object loginId) {
-		
-		// 获取相应tokenValue
-		String tokenValue = getTokenValueByLoginId(loginId);
-		if(tokenValue == null) {
-			return;
-		}
-		
-		// 清除相关数据 
-		SaTokenManager.getSaTokenDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);	// 标记：已被踢下线 
-		SaTokenManager.getSaTokenDao().deleteKey(getKeyLoginId(loginId));		// 清除id-token键值对  
-		SaTokenManager.getSaTokenDao().deleteSession(getKeySession(loginId));		// 清除其session 
-		clearLastActivity(tokenValue); 	 // 同时清理掉 [最后操作时间] 
-	}
 	
 	// 查询相关 
 	
@@ -454,7 +484,6 @@ public class StpLogic {
 
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，isCreate代表是否新建并返回 
-	 * <p> 只有当前会话属于登录状态才可调用 
 	 * @param isCreate 是否新建 
 	 * @return session会话 
 	 */
@@ -474,8 +503,7 @@ public class StpLogic {
 	}
 	
 	/** 
-	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回 
-	 * <p> 只有当前会话属于登录状态才可调用 
+	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回
 	 * @return session会话 
 	 */
 	public SaSession getTokenSession() {
@@ -510,7 +538,7 @@ public class StpLogic {
  		// 删除[最后操作时间]
  		SaTokenManager.getSaTokenDao().deleteKey(getKeyLastActivityTime(tokenValue));
  		// 清除标记 
- 		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(SaTokenInsideUtil.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
+ 		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
  	
  	/**
@@ -524,7 +552,7 @@ public class StpLogic {
  		}
  		// 如果本次请求已经有了[检查标记], 则立即返回 
  		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
- 		if(request.getAttribute(SaTokenInsideUtil.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY) != null) {
+ 		if(request.getAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY) != null) {
  			return;
  		}
  		// ------------ 验证是否已经 [临时过期] 
@@ -541,7 +569,7 @@ public class StpLogic {
  		// --- 至此，验证已通过 
 
  		// 打上[检查标记]，标记一下当前请求已经通过验证，避免一次请求多次验证，造成不必要的性能消耗 
- 		request.setAttribute(SaTokenInsideUtil.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY, true);
+ 		request.setAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY, true);
  	}
 
  	/**
@@ -795,7 +823,43 @@ public class StpLogic {
 	 		throw new NotPermissionException(permissionArray[0], this.loginKey);	// 没有权限抛出异常 
 		}
  	}
- 	
+
+	
+	// =================== id 反查token 相关操作 ===================  
+	
+
+	/** 
+	 * 获取指定loginId的tokenValue 
+	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
+	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
+	 * @param loginId 账号id
+	 * @return token值 
+	 */
+	public String getTokenValueByLoginId(Object loginId) {
+		List<String> tokenValueList = getTokenValueListByLoginId(loginId);
+		return tokenValueList.size() == 0 ? null : tokenValueList.get(tokenValueList.size() - 1);
+	}
+	
+ 	/** 
+	 * 获取指定loginId的tokenValue 
+	 * @param loginId 账号id 
+	 * @return 此loginId的所有相关token 
+ 	 */
+	public List<String> getTokenValueListByLoginId(Object loginId) {
+		// 如果session为null的话直接返回空集合  
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session == null) {
+			return Arrays.asList();
+		}
+		// 遍历解析 
+		List<TokenSign> tokenSignList = session.getTokenSignList();
+		List<String> tokenValueList = new ArrayList<>();
+		for (TokenSign tokenSign : tokenSignList) {
+			tokenValueList.add(tokenSign.getValue());
+		}
+		return tokenValueList;
+	}
+	
 
 	// =================== 返回相应key ===================  
 
@@ -807,20 +871,12 @@ public class StpLogic {
  		return getConfig().getTokenName();
  	}
 	/**  
-	 * 获取key： tokenValue 持久化
+	 * 获取key： tokenValue 持久化 token-id
 	 * @param tokenValue token值
 	 * @return key
 	 */
 	public String getKeyTokenValue(String tokenValue) {
 		return getConfig().getTokenName() + ":" + loginKey + ":token:" + tokenValue;
-	}
-	/** 
-	 * 获取key： id 持久化
-	 * @param loginId 账号id
-	 * @return key
-	 */
-	public String getKeyLoginId(Object loginId) {
-		return getConfig().getTokenName() + ":" + loginKey + ":id:" + loginId;
 	}
 	/** 
 	 * 获取key： session 持久化  
@@ -846,14 +902,22 @@ public class StpLogic {
 	public String getKeyLastActivityTime(String tokenValue) {
 		return getConfig().getTokenName() + ":" + loginKey + ":last-activity:" + tokenValue;
 	}
- 	
+
+	
+	// =================== Bean对象代理 ===================  
+	
 	/**
 	 * 返回配置对象 
+	 * @return 配置对象 
 	 */
 	public SaTokenConfig getConfig() {
 		// 为什么再次代理一层? 为某些极端业务场景下[需要不同StpLogic不同配置]提供便利 
 		return SaTokenManager.getConfig();
 	}
+	
+	
+	
+	
 	
 	
 }

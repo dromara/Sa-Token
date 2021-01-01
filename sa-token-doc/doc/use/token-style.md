@@ -81,6 +81,7 @@
 
 1. 首先我们需要找一个合适的类库，帮助我们生成雪花算法唯一id，在此推荐 [Hutool](https://hutool.cn/docs/#/) ，在`pom.xml`里添加依赖：
 ``` xml
+	<!-- Hutool 一个小而全的Java工具类库 -->
 	<dependency>
 	    <groupId>cn.hutool</groupId>
 	    <artifactId>hutool-all</artifactId>

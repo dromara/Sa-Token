@@ -70,6 +70,11 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		return getKeyTimeout(key);
 	}
 
+	@Override
+	public void updateTimeout(String key, long timeout) {
+		expireMap.put(key, System.currentTimeMillis() + timeout * 1000);
+	}
+	
 	
 	// ------------------------ Session 读写操作 
 	
@@ -104,8 +109,13 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		return getKeyTimeout(sessionId);
 	}
 	
+	@Override
+	public void updateSessionTimeout(String sessionId, long timeout) {
+		expireMap.put(sessionId, System.currentTimeMillis() + timeout * 1000);
+	}
+	
 
-	// ------------------------ Session 读写操作 
+	// ------------------------ 过期时间相关操作 
 
 	/**
 	 * 如果指定key已经过期，则立即清除它 
@@ -193,6 +203,11 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public void endRefreshTimer() {
 		this.refreshTimer.cancel();
 	}
+
+
+	
+
+
 	
 	
 	

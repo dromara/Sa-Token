@@ -16,6 +16,8 @@
 /* 背景变黑 */
 .main-box [data-lang]{padding: 0px !important; border-radius: 8px; overflow: hidden;}
 .main-box [class^="lang-"]{border: 0px red solid; padding: 1.5em 1.2em;/* background-color: #282828; */ background-color: #090300; color: #FFF;}
+.main-box [data-lang]{overflow: auto;}
+/* .main-box h2{margin-top: 70px;} */
 
 /* xml语言样式优化 */
 .lang-xml .token.comment{color: #CDAB53;}
@@ -34,7 +36,8 @@
 /* js语言样式优化 */
 .main-box .lang-js{color: #01a252;}
 .lang-js .token.comment{color: #CDAB53;}
-.lang-js .token.string{color: #fded02;}
+/* .lang-js .token.string{color: #fded02;} */
+.lang-js .token.string{color: #ddd;}
 .lang-js .token.punctuation{color: #ddd;}
 
 

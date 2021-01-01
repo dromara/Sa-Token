@@ -1,23 +1,32 @@
 package cn.dev33.satoken.dao;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.dev33.satoken.session.SaSession;
 
 /**
- * sa-token持久层的实现类, 基于redis 
+ * sa-token持久层的实现类, 基于redis (to jackson)
  */
 @Component
-public class SaTokenDaoRedis implements SaTokenDao {
-
+public class SaTokenDaoRedisJackson implements SaTokenDao {
+	
+	/**
+	 * ObjectMapper对象 (以public作用于暴露出此对象，方便开发者二次更改配置)
+	 */
+	public ObjectMapper objectMapper;
+	
 	/**
 	 * string专用
 	 */
@@ -32,7 +41,17 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	public void setSessionRedisTemplate(RedisConnectionFactory connectionFactory) {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
-		JdkSerializationRedisSerializer valueSerializer = new JdkSerializationRedisSerializer();
+		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
+		// 通过反射获取Mapper对象, 配置[忽略未知字段], 增强兼容性
+		try {
+			Field field = GenericJackson2JsonRedisSerializer.class.getDeclaredField("mapper");
+			field.setAccessible(true);
+			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			this.objectMapper = objectMapper;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 		// 构建RedisTemplate
 		RedisTemplate<String, SaSession> template = new RedisTemplate<String, SaSession>();
 		template.setConnectionFactory(connectionFactory);
