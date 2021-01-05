@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.SaTokenInfo;
@@ -38,7 +39,8 @@ public class TestController {
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
-		System.out.println("当前登录账号：" + StpUtil.getLoginIdAsInt());	// 获取登录id并转为int
+//		System.out.println("当前登录账号并转为int：" + StpUtil.getLoginIdAsInt());
+		System.out.println("当前登录设备：" + StpUtil.getLoginDevice());
 //		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	
 		
 		return AjaxJson.getSuccess();
@@ -151,13 +153,14 @@ public class TestController {
 	
 	// 测试注解式鉴权， 浏览器访问： http://localhost:8081/test/atCheck
 	@SaCheckLogin						// 注解式鉴权：当前会话必须登录才能通过 
+	@SaCheckRole("super-admin")			// 注解式鉴权：当前会话必须具有指定角色标识才能通过 
 	@SaCheckPermission("user-add")		// 注解式鉴权：当前会话必须具有指定权限才能通过 
 	@RequestMapping("atCheck")
 	public AjaxJson atCheck() {
 		System.out.println("======================= 进入方法，测试注解鉴权接口 ========================= ");
 		System.out.println("只有通过注解鉴权，才能进入此方法");
-		StpUtil.checkActivityTimeout();
-		StpUtil.updateLastActivityToNow();
+//		StpUtil.checkActivityTimeout();
+//		StpUtil.updateLastActivityToNow();
 		return AjaxJson.getSuccess();
 	}
 	
@@ -192,10 +195,18 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test 
 	@RequestMapping("test")
 	public AjaxJson test() {
-		StpUtil.getTokenSession().logout();
+//		StpUtil.getTokenSession().logout();
+		StpUtil.logoutByLoginId(10001);
 		return AjaxJson.getSuccess();
 	}
 
+
 	
+	// 测试登录接口, 按照设备登录， 浏览器访问： http://localhost:8081/test/login2
+	@RequestMapping("login2")
+	public AjaxJson login2(@RequestParam(defaultValue="10001") String id, @RequestParam(defaultValue="PC") String device) {
+		StpUtil.setLoginId(id, device);
+		return AjaxJson.getSuccess();
+	}
 	
 }

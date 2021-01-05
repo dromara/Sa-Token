@@ -61,6 +61,15 @@ public class StpUtil {
 		stpLogic.setLoginId(loginId);
 	}
 
+	/**
+	 * 在当前会话上登录id 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param device 设备标识 
+	 */
+	public static void setLoginId(Object loginId, String device) {
+		stpLogic.setLoginId(loginId, device);
+	}
+	
 	/** 
 	 * 当前会话注销登录
 	 */
@@ -85,6 +94,16 @@ public class StpUtil {
 		stpLogic.logoutByLoginId(loginId);
 	}
 
+	/**
+	 * 指定loginId指定设备的会话注销登录（踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * @param loginId 账号id 
+	 * @param device 设备标识 
+	 */
+	public static void logoutByLoginId(Object loginId, String device) {
+		stpLogic.logoutByLoginId(loginId, device);
+	}
+	
 	
 	// 查询相关
 
@@ -381,15 +400,44 @@ public class StpUtil {
 	public static String getTokenValueByLoginId(Object loginId) {
 		return stpLogic.getTokenValueByLoginId(loginId);
 	}
+
+	/** 
+	 * 获取指定loginId指定设备端的tokenValue  
+	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
+	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
+	 * @param loginId 账号id
+	 * @param device 设备标识 
+	 * @return token值 
+	 */
+	public static String getTokenValueByLoginId(Object loginId, String device) {
+		return stpLogic.getTokenValueByLoginId(loginId, device);
+	}
 	
  	/** 
-	 * 获取指定loginId的tokenValue 
+	 * 获取指定loginId的tokenValue集合 
 	 * @param loginId 账号id 
 	 * @return 此loginId的所有相关token 
  	 */
 	public static List<String> getTokenValueListByLoginId(Object loginId) {
 		return stpLogic.getTokenValueListByLoginId(loginId);
 	}
+
+ 	/** 
+	 * 获取指定loginId指定设备端的tokenValue集合 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 
+	 * @return 此loginId的所有相关token 
+ 	 */
+	public static List<String> getTokenValueListByLoginId(Object loginId, String device) {
+		return stpLogic.getTokenValueListByLoginId(loginId, device);
+	}
 	
+	/**
+	 * 返回当前token的登录设备 
+	 * @return 当前令牌的登录设备 
+	 */
+	public static String getLoginDevice() {
+		return stpLogic.getLoginDevice(); 
+	}
 	
 }

@@ -14,6 +14,7 @@
 	- [无Cookie模式(前后台分离)](/use/not-cookie) 
 	- [模拟他人](/use/mock-person) 
 	- [多账号验证](/use/many-account) 
+	- [同端互斥登录](/use/mutex-login) 
 	- [注解式鉴权](/use/at-check) 
 	- [花式token](/use/token-style) 
 	- [框架配置](/use/config) 

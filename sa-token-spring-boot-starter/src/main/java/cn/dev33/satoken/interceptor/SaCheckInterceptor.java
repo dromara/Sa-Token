@@ -8,6 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -58,25 +59,47 @@ public class SaCheckInterceptor implements HandlerInterceptor {
 			stpLogic.checkLogin();
 		}
 		
+		// ----------- 验证角色
+		// 验证方法上的 
+		SaCheckRole scr = method.getMethodAnnotation(SaCheckRole.class);
+		if(scr != null) { 
+			String[] roleArray = scr.value();
+			if(scr.mode() == SaMode.AND) {
+				stpLogic.checkRoleAnd(roleArray);		// 必须全部都有 
+			} else {
+				stpLogic.checkRoleOr(roleArray);		// 有一个就行了  
+			}
+		}
+		// 验证类上的 
+		scr = method.getBeanType().getAnnotation(SaCheckRole.class);
+		if(scr != null) { 
+			String[] roleArray = scr.value();
+			if(scr.mode() == SaMode.AND) {
+				stpLogic.checkRoleAnd(roleArray);		// 必须全部都有 
+			} else {
+				stpLogic.checkRoleOr(roleArray);		// 有一个就行了  
+			}
+		}
+		
 		// ----------- 验证权限 
 		// 验证方法上的 
 		SaCheckPermission scp = method.getMethodAnnotation(SaCheckPermission.class);
 		if(scp != null) { 
-			String[] permissionCodeArray = scp.value();
+			String[] permissionArray = scp.value();
 			if(scp.mode() == SaMode.AND) {
-				stpLogic.checkPermissionAnd(permissionCodeArray);		// 必须全部都有 
+				stpLogic.checkPermissionAnd(permissionArray);		// 必须全部都有 
 			} else {
-				stpLogic.checkPermissionOr(permissionCodeArray);		// 有一个就行了  
+				stpLogic.checkPermissionOr(permissionArray);		// 有一个就行了  
 			}
 		}
 		// 验证类上的 
 		scp = method.getBeanType().getAnnotation(SaCheckPermission.class);
 		if(scp != null) { 
-			String[] permissionCodeArray = scp.value();
+			String[] permissionArray = scp.value();
 			if(scp.mode() == SaMode.AND) {
-				stpLogic.checkPermissionAnd(permissionCodeArray);		// 必须全部都有 
+				stpLogic.checkPermissionAnd(permissionArray);		// 必须全部都有 
 			} else {
-				stpLogic.checkPermissionOr(permissionCodeArray);		// 有一个就行了  
+				stpLogic.checkPermissionOr(permissionArray);		// 有一个就行了  
 			}
 		}
 		

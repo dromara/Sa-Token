@@ -31,18 +31,18 @@ public class SaTokenInfo {
 	/** token专属session剩余有效时间 (单位: 秒) */
 	public long tokenSessionTimeout;
 	
-
-
-
-
 	/**
 	 * token剩余无操作有效时间
 	 */
 	public long tokenActivityTimeout;
-	
 
+	/** 当前登录设备 */
+	public String loginDevice;
+
+	
+	
 	/**
-	 * @return tokenName token名称
+	 * @return tokenName
 	 */
 	public String getTokenName() {
 		return tokenName;
@@ -50,11 +50,9 @@ public class SaTokenInfo {
 
 	/**
 	 * @param tokenName 要设置的 tokenName
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setTokenName(String tokenName) {
+	public void setTokenName(String tokenName) {
 		this.tokenName = tokenName;
-		return this;
 	}
 
 	/**
@@ -66,11 +64,9 @@ public class SaTokenInfo {
 
 	/**
 	 * @param tokenValue 要设置的 tokenValue
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setTokenValue(String tokenValue) {
+	public void setTokenValue(String tokenValue) {
 		this.tokenValue = tokenValue;
-		return this;
 	}
 
 	/**
@@ -82,11 +78,9 @@ public class SaTokenInfo {
 
 	/**
 	 * @param isLogin 要设置的 isLogin
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setIsLogin(Boolean isLogin) {
+	public void setIsLogin(Boolean isLogin) {
 		this.isLogin = isLogin;
-		return this;
 	}
 
 	/**
@@ -98,11 +92,9 @@ public class SaTokenInfo {
 
 	/**
 	 * @param loginId 要设置的 loginId
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setLoginId(Object loginId) {
+	public void setLoginId(Object loginId) {
 		this.loginId = loginId;
-		return this;
 	}
 
 	/**
@@ -114,13 +106,11 @@ public class SaTokenInfo {
 
 	/**
 	 * @param loginKey 要设置的 loginKey
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setLoginKey(String loginKey) {
+	public void setLoginKey(String loginKey) {
 		this.loginKey = loginKey;
-		return this;
 	}
-	
+
 	/**
 	 * @return tokenTimeout
 	 */
@@ -130,11 +120,9 @@ public class SaTokenInfo {
 
 	/**
 	 * @param tokenTimeout 要设置的 tokenTimeout
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setTokenTimeout(long tokenTimeout) {
+	public void setTokenTimeout(long tokenTimeout) {
 		this.tokenTimeout = tokenTimeout;
-		return this;
 	}
 
 	/**
@@ -146,11 +134,9 @@ public class SaTokenInfo {
 
 	/**
 	 * @param sessionTimeout 要设置的 sessionTimeout
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setSessionTimeout(long sessionTimeout) {
+	public void setSessionTimeout(long sessionTimeout) {
 		this.sessionTimeout = sessionTimeout;
-		return this;
 	}
 
 	/**
@@ -162,13 +148,11 @@ public class SaTokenInfo {
 
 	/**
 	 * @param tokenSessionTimeout 要设置的 tokenSessionTimeout
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setTokenSessionTimeout(long tokenSessionTimeout) {
+	public void setTokenSessionTimeout(long tokenSessionTimeout) {
 		this.tokenSessionTimeout = tokenSessionTimeout;
-		return this;
 	}
-	
+
 	/**
 	 * @return tokenActivityTimeout
 	 */
@@ -178,11 +162,23 @@ public class SaTokenInfo {
 
 	/**
 	 * @param tokenActivityTimeout 要设置的 tokenActivityTimeout
-	 * @return 对象自身
 	 */
-	public SaTokenInfo setTokenActivityTimeout(long tokenActivityTimeout) {
+	public void setTokenActivityTimeout(long tokenActivityTimeout) {
 		this.tokenActivityTimeout = tokenActivityTimeout;
-		return this;
+	}
+
+	/**
+	 * @return loginDevice
+	 */
+	public String getLoginDevice() {
+		return loginDevice;
+	}
+
+	/**
+	 * @param loginDevice 要设置的 loginDevice
+	 */
+	public void setLoginDevice(String loginDevice) {
+		this.loginDevice = loginDevice;
 	}
 
 	
@@ -193,11 +189,10 @@ public class SaTokenInfo {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
 				+ ", loginId=" + loginId + ", loginKey=" + loginKey + ", tokenTimeout=" + tokenTimeout
 				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
-				+ ", tokenActivityTimeout=" + tokenActivityTimeout + "]";
+				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + "]";
 	}
+	
 
-	
-	
 	
 	
 	

@@ -7,8 +7,10 @@
 - 所谓权限验证，验证的核心就是当前账号是否拥有一个权限码
 - 有：就让你通过、没有：那么禁止访问
 - 再往底了说，就是每个账号都会拥有一个权限码集合，我来验证这个集合中是否包括我需要检测的那个权限码
-- 例如：当前账号拥有权限码集合：`[101, 102, "user-add", "user-get"]`，这时候我去验证权限码：`201`，则结果就是验证失败，禁止访问
-- 所以现在问题的核心就是，1、如何获取一个账号所拥有的的权限码集合，2、本次操作要验证的权限码是哪个 
+- 例如：当前账号拥有权限码集合：`["user:add", "user:delete", "user:get"]`，这时候我去验证权限码：`"user:update"`，则结果就是验证失败，禁止访问
+- 所以现在问题的核心就是: 
+    1. 如何获取一个账号所拥有的的权限码集合
+    2. 本次操作要验证的权限码是哪个 
 
 ## 获取当前账号权限码集合
 因为每个项目的需求不同，其权限设计也千变万化，所以【获取当前账号权限码集合】这一操作不可能内置到框架中，
@@ -34,8 +36,9 @@ public class StpInterfaceImpl implements StpInterface {
 	 * 返回一个账号所拥有的权限码集合 
 	 */
 	@Override
-	public List<Object> getPermissionCodeList(Object loginId, String loginKey) {
-		List<Object> list = new ArrayList<Object>();	// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询权限
+	public List<String> getPermissionCodeList(Object loginId, String loginKey) {
+		// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询权限
+		List<String> list = new ArrayList<String>();	
 		list.add("101");
 		list.add("user-add");
 		list.add("user-delete");
@@ -50,7 +53,8 @@ public class StpInterfaceImpl implements StpInterface {
 	 */
 	@Override
 	public List<String> getRoleList(Object loginId, String loginKey) {
-		List<String> list = new ArrayList<String>();	// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询角色
+		// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询角色
+		List<String> list = new ArrayList<String>();	
 		list.add("admin");
 		list.add("super-admin");
 		return list;
