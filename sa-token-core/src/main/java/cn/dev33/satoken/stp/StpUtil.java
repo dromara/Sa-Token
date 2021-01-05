@@ -402,7 +402,7 @@ public class StpUtil {
 	}
 
 	/** 
-	 * 获取指定loginId的tokenValue 
+	 * 获取指定loginId指定设备端的tokenValue  
 	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
 	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
 	 * @param loginId 账号id
@@ -423,7 +423,7 @@ public class StpUtil {
 	}
 
  	/** 
-	 * 获取指定loginId的tokenValue集合 
+	 * 获取指定loginId指定设备端的tokenValue集合 
 	 * @param loginId 账号id 
 	 * @param device 设备标识 
 	 * @return 此loginId的所有相关token 
