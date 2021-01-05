@@ -119,6 +119,7 @@ public class StpLogic {
 		info.sessionTimeout = getSessionTimeout();
 		info.tokenSessionTimeout = getTokenSessionTimeout();
 		info.tokenActivityTimeout = getTokenActivityTimeout();
+		info.loginDevice = getLoginDevice();
 		return info;
 	}
 	
@@ -130,11 +131,23 @@ public class StpLogic {
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 */
 	public void setLoginId(Object loginId) {
+		setLoginId(loginId, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+	}
+	
+	/**
+	 * 在当前会话上登录id 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param device 设备标识 
+	 */
+	public void setLoginId(Object loginId, String device) {
 		
-		// ------ 0、如果当前会话已经登录上了此LoginId，则立即返回 
+		// ------ 0、如果当前会话已经登录上了此LoginId，且登录设备相同，则立即返回 
 		Object loggedId = getLoginIdDefaultNull();
 		if(loggedId != null && loggedId.toString().equals(loginId.toString())) {
-			return;
+			String loggedDevice = getLoginDevice();
+			if(loggedDevice != null && loggedDevice.equals(device)) {
+				return;
+			}
 		}
 		
 		// ------ 1、获取相应对象  
@@ -148,18 +161,20 @@ public class StpLogic {
 		if(config.getAllowConcurrentLogin() == true) {
 			// 如果配置为共享token, 则尝试从session签名记录里取出token 
 			if(config.getIsShare() == true) {
-				tokenValue = getTokenValueByLoginId(loginId);
+				tokenValue = getTokenValueByLoginId(loginId, device);
 			}
 		} else {
 			// --- 如果不允许并发登录 
-			// 如果此时[id-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的token标记为被顶下线 
+			// 如果此时[id-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的同设备token标记为被顶下线 
 			SaSession session = getSessionByLoginId(loginId, false);
 			if(session != null) {
-				List<String> tokenValueList = getTokenValueListByLoginId(loginId);
-				for (String token : tokenValueList) {
-					dao.updateValue(getKeyTokenValue(token), NotLoginException.BE_REPLACED);	// 1. 将此token 标记为已顶替 
-					clearLastActivity(token); 			// 2. 清理掉[token-最后操作时间] 
-					session.removeTokenSign(token); 	// 3. 清理账号session上的token签名 
+				List<TokenSign> tokenSignList = session.getTokenSignList();
+				for (TokenSign tokenSign : tokenSignList) {
+					if(tokenSign.getDevice().equals(device)) {
+						dao.updateValue(getKeyTokenValue(tokenSign.getValue()), NotLoginException.BE_REPLACED);	// 1. 将此token 标记为已顶替 
+						clearLastActivity(tokenSign.getValue()); 			// 2. 清理掉[token-最后操作时间] 
+						session.removeTokenSign(tokenSign.getValue()); 		// 3. 清理账号session上的token签名记录 
+					}
 				}
 			}
 		}
@@ -176,7 +191,7 @@ public class StpLogic {
 			dao.updateSessionTimeout(session.getId(), config.getTimeout());
 		}
 		// 在session上记录token签名 
-		session.addTokenSign(new TokenSign(tokenValue, SaTokenConsts.DEFAULT_LOGIN_DEVICE));
+		session.addTokenSign(new TokenSign(tokenValue, device));
 		
 		// ------ 4. 持久化其它数据 
 		dao.setValue(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	// token -> uid 
@@ -187,6 +202,7 @@ public class StpLogic {
 		}
 	}
 
+	
 	/** 
 	 * 当前会话注销登录 
 	 */
@@ -203,6 +219,7 @@ public class StpLogic {
  		logoutByTokenValue(tokenValue);
 	}
 
+	
 	/**
 	 * 指定token的会话注销登录 
 	 * @param tokenValue 指定token
@@ -229,12 +246,23 @@ public class StpLogic {
 		session.logoutByTokenSignCountToZero();
 	}
 	
+	
 	/**
 	 * 指定loginId的会话注销登录（踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
 	public void logoutByLoginId(Object loginId) {
+		logoutByLoginId(loginId, null);
+	}
+	
+	/**
+	 * 指定loginId指定设备的会话注销登录（踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表所有注销设备) 
+	 */
+	public void logoutByLoginId(Object loginId, String device) {
 		// 先获取这个账号的[id-session], 如果为null，则不执行任何操作 
 		SaSession session = getSessionByLoginId(loginId);
 		if(session == null) {
@@ -244,14 +272,16 @@ public class StpLogic {
 		// 循环token签名列表，开始删除相关信息 
 		List<TokenSign> tokenSignList = session.getTokenSignList();
 		for (TokenSign tokenSign : tokenSignList) {
-			// 1. 获取token 
-			String tokenValue = tokenSign.getValue();
-			// 2. 清理掉[token-最后操作时间] 
-			clearLastActivity(tokenValue); 	
-	 		// 3. 标记：已被踢下线 
-			SaTokenManager.getSaTokenDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);	// 标记：已被踢下线 
-	 		// 4. 清理账号session上的token签名 
-	 		session.removeTokenSign(tokenValue); 
+			if(device == null || tokenSign.getDevice().equals(device)) {
+				// 1. 获取token 
+				String tokenValue = tokenSign.getValue();
+				// 2. 清理掉[token-最后操作时间] 
+				clearLastActivity(tokenValue); 	
+		 		// 3. 标记：已被踢下线 
+				SaTokenManager.getSaTokenDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);	// 标记：已被踢下线 
+		 		// 4. 清理账号session上的token签名 
+		 		session.removeTokenSign(tokenValue); 
+			}
 		}
  	 	// 尝试注销session
 		session.logoutByTokenSignCountToZero();
@@ -269,12 +299,14 @@ public class StpLogic {
  		return getLoginIdDefaultNull() != null;
  	}
  	
+ 	
  	/** 
  	 * 检验当前会话是否已经登录，如未登录，则抛出异常 
  	 */
  	public void checkLogin() {
  		getLoginId();
  	}
+ 	
  	
  	/** 
  	 * 获取当前会话账号id, 如果未登录，则抛出异常 
@@ -310,7 +342,8 @@ public class StpLogic {
  		return loginId;
  	}
 	
-	/** 
+	
+ 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回默认值 
 	 * @param <T> 返回类型 
 	 * @param defaultValue 默认值
@@ -336,7 +369,8 @@ public class StpLogic {
 		return (T)loginId;
  	}
  	
-	/** 
+	
+ 	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回null 
 	 * @return 账号id 
 	 */
@@ -359,6 +393,7 @@ public class StpLogic {
  		return loginId;
  	}
 
+	
 	/** 
 	 * 获取当前会话登录id, 并转换为String
 	 * @return 账号id 
@@ -367,7 +402,8 @@ public class StpLogic {
  		return String.valueOf(getLoginId());
  	}
 
-	/** 
+	
+ 	/** 
 	 * 获取当前会话登录id, 并转换为int
 	 * @return 账号id 
 	 */
@@ -379,7 +415,8 @@ public class StpLogic {
  		return Integer.valueOf(String.valueOf(getLoginId()));
  	}
 
-	/**
+	
+ 	/**
 	 * 获取当前会话登录id, 并转换为long
 	 * @return 账号id 
 	 */
@@ -390,6 +427,7 @@ public class StpLogic {
 // 		}
  		return Long.valueOf(String.valueOf(getLoginId()));
  	}
+ 	
  	
  	/** 
  	 * 获取指定token对应的登录id，如果未登录，则返回 null 
@@ -424,6 +462,7 @@ public class StpLogic {
 		return session;
 	}
 
+
 	/** 
 	 * 获取指定loginId的session, 如果session尚未创建，isCreate=是否新建并返回
 	 * @param loginId 账号id
@@ -434,6 +473,7 @@ public class StpLogic {
 		return getSessionBySessionId(getKeySession(loginId), isCreate);
 	}
 
+
 	/** 
 	 * 获取指定loginId的session，如果session尚未创建，则新建并返回 
 	 * @param loginId 账号id 
@@ -442,6 +482,7 @@ public class StpLogic {
 	public SaSession getSessionByLoginId(Object loginId) {
 		return getSessionByLoginId(loginId, true);
 	}
+
 
 	/** 
 	 * 获取当前会话的session, 如果session尚未创建，isCreate=是否新建并返回 
@@ -452,6 +493,7 @@ public class StpLogic {
 		return getSessionByLoginId(getLoginId(), isCreate);
 	}
 	
+
 	/** 
 	 * 获取当前会话的session，如果session尚未创建，则新建并返回 
 	 * @return 当前会话的session 
@@ -463,6 +505,7 @@ public class StpLogic {
 	
 	// =================== token专属session ===================  
 
+
 	/** 
 	 * 获取指定token的专属session，如果session尚未创建，isCreate代表是否新建并返回
 	 * @param tokenValue token值
@@ -473,6 +516,7 @@ public class StpLogic {
 		return getSessionBySessionId(getKeyTokenSession(tokenValue), isCreate);
 	}
 	
+
 	/** 
 	 * 获取指定token的专属session，如果session尚未创建，则新建并返回 
 	 * @param tokenValue token值
@@ -481,6 +525,7 @@ public class StpLogic {
 	public SaSession getTokenSessionByToken(String tokenValue) {
 		return getSessionBySessionId(getKeyTokenSession(tokenValue), true);
 	}
+
 
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，isCreate代表是否新建并返回 
@@ -502,6 +547,7 @@ public class StpLogic {
 		return getSessionBySessionId(getKeyTokenSession(getTokenValue()), isCreate);
 	}
 	
+
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回
 	 * @return session会话 
@@ -513,7 +559,8 @@ public class StpLogic {
  	
 	// =================== [临时过期] 验证相关 ===================  
 
- 	/**
+ 	
+	/**
  	 * 写入指定token的 [最后操作时间] 为当前时间戳 
  	 * @param tokenValue 指定token 
  	 */
@@ -526,6 +573,7 @@ public class StpLogic {
  		SaTokenManager.getSaTokenDao().setValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
  	}
  	
+ 
  	/**
  	 * 清除指定token的 [最后操作时间] 
  	 * @param tokenValue 指定token 
@@ -541,6 +589,7 @@ public class StpLogic {
  		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
  	
+ 
  	/**
  	 * 检查指定token 是否已经[临时过期]，如果已经过期则抛出异常  
  	 * @param tokenValue 指定token
@@ -572,6 +621,7 @@ public class StpLogic {
  		request.setAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY, true);
  	}
 
+ 
  	/**
  	 * 检查当前token 是否已经[临时过期]，如果已经过期则抛出异常  
  	 */
@@ -579,6 +629,7 @@ public class StpLogic {
  		checkActivityTimeout(getTokenValue());
  	}
  	
+ 
  	/**
  	 * 续签指定token：(将 [最后操作时间] 更新为当前时间戳) 
  	 * @param tokenValue 指定token 
@@ -591,6 +642,7 @@ public class StpLogic {
  		SaTokenManager.getSaTokenDao().updateValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
  	}
 
+ 	
  	/**
  	 * 续签当前token：(将 [最后操作时间] 更新为当前时间戳) 
  	 * <h1>请注意: 即时token已经 [临时过期] 也可续签成功，
@@ -827,7 +879,6 @@ public class StpLogic {
 	
 	// =================== id 反查token 相关操作 ===================  
 	
-
 	/** 
 	 * 获取指定loginId的tokenValue 
 	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
@@ -836,16 +887,38 @@ public class StpLogic {
 	 * @return token值 
 	 */
 	public String getTokenValueByLoginId(Object loginId) {
-		List<String> tokenValueList = getTokenValueListByLoginId(loginId);
+		return getTokenValueByLoginId(loginId, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+	}
+
+	/** 
+	 * 获取指定loginId的tokenValue 
+	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
+	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
+	 * @param loginId 账号id
+	 * @param device 设备标识 
+	 * @return token值 
+	 */
+	public String getTokenValueByLoginId(Object loginId, String device) {
+		List<String> tokenValueList = getTokenValueListByLoginId(loginId, device);
 		return tokenValueList.size() == 0 ? null : tokenValueList.get(tokenValueList.size() - 1);
 	}
 	
  	/** 
-	 * 获取指定loginId的tokenValue 
+	 * 获取指定loginId的tokenValue集合 
 	 * @param loginId 账号id 
 	 * @return 此loginId的所有相关token 
  	 */
 	public List<String> getTokenValueListByLoginId(Object loginId) {
+		return getTokenValueListByLoginId(loginId, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+	}
+
+ 	/** 
+	 * 获取指定loginId的tokenValue集合 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 
+	 * @return 此loginId的所有相关token 
+ 	 */
+	public List<String> getTokenValueListByLoginId(Object loginId, String device) {
 		// 如果session为null的话直接返回空集合  
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
@@ -855,9 +928,40 @@ public class StpLogic {
 		List<TokenSign> tokenSignList = session.getTokenSignList();
 		List<String> tokenValueList = new ArrayList<>();
 		for (TokenSign tokenSign : tokenSignList) {
-			tokenValueList.add(tokenSign.getValue());
+			if(tokenSign.getDevice().equals(device)) {
+				tokenValueList.add(tokenSign.getValue());
+			}
 		}
 		return tokenValueList;
+	}
+	
+	/**
+	 * 返回当前token的登录设备 
+	 * @return 当前令牌的登录设备 
+	 */
+	public String getLoginDevice() {
+		// 如果没有token，直接返回 
+		String tokenValue = getTokenValue();
+		if(tokenValue == null) {
+			return null;
+		}
+		// 如果还未登录，直接返回 null
+		if(isLogin() == false) {
+			return null;
+		}
+		// 如果session为null的话直接返回 null 
+		SaSession session = getSession(false);
+		if(session == null) {
+			return null;
+		}
+		// 遍历解析 
+		List<TokenSign> tokenSignList = session.getTokenSignList();
+		for (TokenSign tokenSign : tokenSignList) {
+			if(tokenSign.getValue().equals(tokenValue)) {
+				return tokenSign.getDevice();
+			}
+		}
+		return null;
 	}
 	
 
@@ -870,6 +974,7 @@ public class StpLogic {
 	public String getKeyTokenName() {
  		return getConfig().getTokenName();
  	}
+	
 	/**  
 	 * 获取key： tokenValue 持久化 token-id
 	 * @param tokenValue token值
@@ -878,6 +983,7 @@ public class StpLogic {
 	public String getKeyTokenValue(String tokenValue) {
 		return getConfig().getTokenName() + ":" + loginKey + ":token:" + tokenValue;
 	}
+	
 	/** 
 	 * 获取key： session 持久化  
 	 * @param loginId 账号id
@@ -886,6 +992,7 @@ public class StpLogic {
 	public String getKeySession(Object loginId) {
 		return getConfig().getTokenName() + ":" + loginKey + ":session:" + loginId;
 	}
+	
 	/**  
 	 * 获取key： tokenValue的专属session 
 	 * @param tokenValue token值
@@ -894,6 +1001,7 @@ public class StpLogic {
 	public String getKeyTokenSession(String tokenValue) {
 		return getConfig().getTokenName() + ":" + loginKey + ":token-session:" + tokenValue;
 	}
+	
 	/** 
 	 * 获取key： 指定token的最后操作时间 持久化 
 	 * @param tokenValue token值

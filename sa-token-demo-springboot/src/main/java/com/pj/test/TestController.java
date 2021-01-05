@@ -39,7 +39,8 @@ public class TestController {
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
-		System.out.println("当前登录账号：" + StpUtil.getLoginIdAsInt());	// 获取登录id并转为int
+//		System.out.println("当前登录账号并转为int：" + StpUtil.getLoginIdAsInt());
+		System.out.println("当前登录设备：" + StpUtil.getLoginDevice());
 //		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	
 		
 		return AjaxJson.getSuccess();
@@ -194,10 +195,18 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test 
 	@RequestMapping("test")
 	public AjaxJson test() {
-		StpUtil.getTokenSession().logout();
+//		StpUtil.getTokenSession().logout();
+		StpUtil.logoutByLoginId(10001);
 		return AjaxJson.getSuccess();
 	}
 
+
 	
+	// 测试登录接口, 按照设备登录， 浏览器访问： http://localhost:8081/test/login2
+	@RequestMapping("login2")
+	public AjaxJson login2(@RequestParam(defaultValue="10001") String id, @RequestParam(defaultValue="PC") String device) {
+		StpUtil.setLoginId(id, device);
+		return AjaxJson.getSuccess();
+	}
 	
 }
