@@ -1,11 +1,11 @@
 <p align="center">
     <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.8.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.9.0</h1>
 <h4 align="center">一个JavaWeb轻量级权限认证框架，功能全面，上手简单</h4>
 <h4 align="center">
 	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
-	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.8.0-2B9939"></a>
+	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.9.0-2B9939"></a>
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
@@ -60,6 +60,8 @@ StpUtil.hasPermission("user:add");  // 查询当前账号是否含有指定权�
 StpUtil.getSession();               // 获取当前账号id的Session 
 StpUtil.getSessionByLoginId(10001); // 获取账号id为10001的Session
 StpUtil.getTokenValueByLoginId(10001);  // 获取账号id为10001的token令牌值
+StpUtil.setLoginId(10001, "PC");        // 指定设备标识登录
+StpUtil.logoutByLoginId(10001, "PC");   // 指定设备标识进行强制注销 (不同端不受影响)
 ```
 sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳官方在线文档
 
@@ -78,6 +80,7 @@ sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳
 - **注解式鉴权** —— 优雅的将鉴权与业务代码分离
 - **花式token生成** —— 内置六种token风格，还可自定义token生成策略
 - **自动续签** —— 提供两种token过期策略，灵活搭配使用，还可自动续签
+- **同端互斥登录** —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录
 - **组件自动注入** —— 零配置与Spring等框架集成
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
