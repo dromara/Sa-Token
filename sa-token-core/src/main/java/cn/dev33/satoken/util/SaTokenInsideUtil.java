@@ -1,9 +1,13 @@
 package cn.dev33.satoken.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
- * sa-token 工具类 
+ * sa-token 内部代码工具类 
  * @author kong
  *
  */
@@ -48,5 +52,59 @@ public class SaTokenInsideUtil {
 		return System.currentTimeMillis() + "" + new Random().nextInt(Integer.MAX_VALUE);
 	}
 			
+	
+	/**
+	 * 从集合里查询数据
+	 * @param dataList 数据集合 
+	 * @param prefix 前缀
+	 * @param keyword 关键字
+	 * @param start 起始位置 (-1代表查询所有)
+	 * @param size 获取条数
+	 * @return 符合条件的新数据集合 
+	 */
+	public static List<String> searchList(Collection<String> dataList, String prefix, String keyword, int start, int size) {
+		if(prefix == null) {
+			prefix = "";
+		}
+		if(keyword == null) {
+			keyword = "";
+		}
+		// 挑选出所有符合条件的 
+		List<String> list = new ArrayList<String>();
+		Iterator<String> keys = dataList.iterator();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			if(key.startsWith(prefix) && key.indexOf(keyword) > -1) {
+				list.add(key);
+			}
+		}
+		// 取指定段数据
+		return searchList(list, start, size);
+	}
+	
+	/**
+	 * 从集合里查询数据
+	 * @param list 数据集合 
+	 * @param start 起始位置 (-1代表查询所有)
+	 * @param size 获取条数
+	 * @return 符合条件的新数据集合 
+	 */
+	public static List<String> searchList(List<String> list, int start, int size) {
+		// 取指定段数据
+		if(start < 0) {
+			return list;
+		}
+		int end = start + size;
+		List<String> list2 = new ArrayList<String>();
+		for (int i = start; i < end; i++) {
+			if(i >= list.size()) {
+				return list2;
+			}
+			list2.add(list.get(i));
+		}
+		return list2;
+	}
+	
+	
 	
 }

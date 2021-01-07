@@ -2,6 +2,7 @@ package cn.dev33.satoken.dao;
 
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,6 +11,7 @@ import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTaskUtil;
 import cn.dev33.satoken.util.SaTaskUtil.FunctionRunClass;
+import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
  * sa-token持久层默认的实现类 , 基于内存Map 
@@ -205,6 +207,14 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	}
 
 
+	
+
+	// --------------------- 会话管理 
+	
+	@Override
+	public List<String> searchData(String prefix, String keyword, int start, int size) {
+		return SaTokenInsideUtil.searchList(expireMap.keySet(), prefix, keyword, start, size);
+	}
 	
 
 

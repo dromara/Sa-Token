@@ -1,6 +1,9 @@
 package cn.dev33.satoken.dao;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
  * sa-token持久层的实现类, 基于redis (to jackson)
@@ -180,6 +184,16 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	@Override
 	public void updateSessionTimeout(String sessionId, long timeout) {
 		sessionRedisTemplate.expire(sessionId, timeout, TimeUnit.SECONDS);
+	}
+
+	/**
+	 * 搜索数据 
+	 */
+	@Override
+	public List<String> searchData(String prefix, String keyword, int start, int size) {
+		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
+		List<String> list = new ArrayList<String>(keys);
+		return SaTokenInsideUtil.searchList(list, start, size);
 	}
 	
 }

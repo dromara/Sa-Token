@@ -195,6 +195,15 @@ public class StpUtil {
 	}
 
 	/** 
+	 * 获取指定key的session, 如果session尚未创建，则返回null
+	 * @param sessionId sessionId
+	 * @return session对象 
+	 */
+	public static SaSession getSessionBySessionId(String sessionId) {
+		return stpLogic.getSessionBySessionId(sessionId);
+	}
+
+	/** 
 	 * 获取指定loginId的session，如果session尚未创建，则新建并返回 
 	 * @param loginId 账号id 
 	 * @return session会话 
@@ -439,5 +448,42 @@ public class StpUtil {
 	public static String getLoginDevice() {
 		return stpLogic.getLoginDevice(); 
 	}
+
 	
+	// =================== 会话管理 ===================  
+
+	/**
+	 * 根据条件查询token 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * @return token集合 
+	 */
+	public static List<String> searchTokenValue(String keyword, int start, int size) {
+		return stpLogic.searchTokenValue(keyword, start, size);
+	}
+	
+	/**
+	 * 根据条件查询SessionId 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * @return sessionId集合 
+	 */
+	public static List<String> searchSessionId(String keyword, int start, int size) {
+		return stpLogic.searchSessionId(keyword, start, size);
+	}
+
+	/**
+	 * 根据条件查询token专属Session的Id 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * @return sessionId集合 
+	 */
+	public static List<String> searchTokenSessionId(String keyword, int start, int size) {
+		return stpLogic.searchTokenSessionId(keyword, start, size);
+	}
+	
+
 }

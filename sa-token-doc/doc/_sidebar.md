@@ -18,6 +18,7 @@
 	- [注解式鉴权](/use/at-check) 
 	- [花式token](/use/token-style) 
 	- [框架配置](/use/config) 
+	- [会话治理](/use/search-session) 
 
 - **其它**
 	- [常见问题](/more/common-questions) 

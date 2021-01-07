@@ -1,4 +1,4 @@
-package com.pj.test;
+package com.pj.util;
 
 import java.io.Serializable;
 import java.util.List;

@@ -18,11 +18,14 @@ spring:
         # token风格
         token-style: uuid
         
+        # 是否从cookie里读取token
+        # is-read-cookie: false
+        
         
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）
-        database: 1
+        database: 0
         # Redis服务器地址
         host: 127.0.0.1
         # Redis服务器连接端口
@@ -30,7 +33,7 @@ spring:
         # Redis服务器连接密码（默认为空）
         password: 
         # 连接超时时间（毫秒）
-        timeout: 1000ms
+        timeout: 10000ms
         lettuce:
             pool:
                 # 连接池最大连接数

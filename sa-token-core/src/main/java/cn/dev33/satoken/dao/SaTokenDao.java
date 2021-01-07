@@ -1,5 +1,7 @@
 package cn.dev33.satoken.dao;
 
+import java.util.List;
+
 import cn.dev33.satoken.session.SaSession;
 
 /**
@@ -8,14 +10,14 @@ import cn.dev33.satoken.session.SaSession;
  */
 public interface SaTokenDao {
 
-	
 	/** 常量，表示一个key永不过期 (在一个key被标注为永远不过期时返回此值) */ 
 	public static final Long NEVER_EXPIRE = -1L;
 	
 	/** 常量，表示系统中不存在这个缓存 (在对不存在的key获取剩余存活时间时返回此值) */ 
 	public static final Long NOT_VALUE_EXPIRE = -2L;
+
 	
-	
+	// --------------------- token相关 ---------------------
 	
 	/**
 	 * 根据key获取value，如果没有，则返回空 
@@ -58,7 +60,9 @@ public interface SaTokenDao {
 	 * @param timeout 过期时间 
 	 */
 	public void updateTimeout(String key, long timeout);
+
 	
+	// --------------------- Session相关 ---------------------
 
 	/**
 	 * 根据指定key的Session，如果没有，则返回空 
@@ -101,7 +105,17 @@ public interface SaTokenDao {
 	public void updateSessionTimeout(String sessionId, long timeout);
 	
 	
-	
+	// --------------------- 会话管理 ---------------------
+
+	/**
+	 * 搜索数据 
+	 * @param prefix 前缀 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有)
+	 * @param size 获取数量 
+	 * @return sessionId集合 
+	 */
+	public List<String> searchData(String prefix, String keyword, int start, int size);
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.pj.test;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pj.util.AjaxJson;
+import com.pj.util.Ttime;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -191,17 +194,7 @@ public class TestController {
 		// 返回 
 		return AjaxJson.getSuccess();
 	}
-	
-	// 测试   浏览器访问： http://localhost:8081/test/test 
-	@RequestMapping("test")
-	public AjaxJson test() {
-//		StpUtil.getTokenSession().logout();
-		StpUtil.logoutByLoginId(10001);
-		return AjaxJson.getSuccess();
-	}
 
-
-	
 	// 测试登录接口, 按照设备登录， 浏览器访问： http://localhost:8081/test/login2
 	@RequestMapping("login2")
 	public AjaxJson login2(@RequestParam(defaultValue="10001") String id, @RequestParam(defaultValue="PC") String device) {
@@ -209,4 +202,30 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
+	
+	// 测试   浏览器访问： http://localhost:8081/test/searchSession
+	// 测试前，请先将 is-read-cookie 配置为 false
+	@RequestMapping("searchSession")
+	public AjaxJson searchSession() {
+		System.out.println("--------------");
+		Ttime t = new Ttime().start();
+		List<String> tokenValue = StpUtil.searchTokenValue("", 0, 10);
+		for (String v : tokenValue) {
+//			SaSession session = StpUtil.getSessionBySessionId(sid);
+			System.out.println(v);
+		}
+		System.out.println("用时：" + t.end().toString());
+		return AjaxJson.getSuccess();
+	}
+
+	
+	// 测试   浏览器访问： http://localhost:8081/test/test 
+	@RequestMapping("test")
+	public AjaxJson test() {
+		StpUtil.getTokenSession().logout();
+		StpUtil.logoutByLoginId(10001);
+		return AjaxJson.getSuccess();
+	}
+
+
 }

@@ -202,7 +202,6 @@ public class StpLogic {
 		}
 	}
 
-	
 	/** 
 	 * 当前会话注销登录 
 	 */
@@ -219,7 +218,6 @@ public class StpLogic {
  		logoutByTokenValue(tokenValue);
 	}
 
-	
 	/**
 	 * 指定token的会话注销登录 
 	 * @param tokenValue 指定token
@@ -245,7 +243,6 @@ public class StpLogic {
  	 	// 3. 尝试注销session
 		session.logoutByTokenSignCountToZero();
 	}
-	
 	
 	/**
 	 * 指定loginId的会话注销登录（踢人下线）
@@ -287,7 +284,6 @@ public class StpLogic {
 		session.logoutByTokenSignCountToZero();
 	}
 
-	
 	// 查询相关 
 	
  	/** 
@@ -299,14 +295,12 @@ public class StpLogic {
  		return getLoginIdDefaultNull() != null;
  	}
  	
- 	
  	/** 
  	 * 检验当前会话是否已经登录，如未登录，则抛出异常 
  	 */
  	public void checkLogin() {
  		getLoginId();
  	}
- 	
  	
  	/** 
  	 * 获取当前会话账号id, 如果未登录，则抛出异常 
@@ -342,7 +336,6 @@ public class StpLogic {
  		return loginId;
  	}
 	
-	
  	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回默认值 
 	 * @param <T> 返回类型 
@@ -369,7 +362,6 @@ public class StpLogic {
 		return (T)loginId;
  	}
  	
-	
  	/** 
 	 * 获取当前会话登录id, 如果未登录，则返回null 
 	 * @return 账号id 
@@ -393,7 +385,6 @@ public class StpLogic {
  		return loginId;
  	}
 
-	
 	/** 
 	 * 获取当前会话登录id, 并转换为String
 	 * @return 账号id 
@@ -402,7 +393,6 @@ public class StpLogic {
  		return String.valueOf(getLoginId());
  	}
 
-	
  	/** 
 	 * 获取当前会话登录id, 并转换为int
 	 * @return 账号id 
@@ -415,7 +405,6 @@ public class StpLogic {
  		return Integer.valueOf(String.valueOf(getLoginId()));
  	}
 
-	
  	/**
 	 * 获取当前会话登录id, 并转换为long
 	 * @return 账号id 
@@ -427,7 +416,6 @@ public class StpLogic {
 // 		}
  		return Long.valueOf(String.valueOf(getLoginId()));
  	}
- 	
  	
  	/** 
  	 * 获取指定token对应的登录id，如果未登录，则返回 null 
@@ -462,6 +450,14 @@ public class StpLogic {
 		return session;
 	}
 
+	/** 
+	 * 获取指定key的session, 如果session尚未创建，则返回null
+	 * @param sessionId sessionId
+	 * @return session对象 
+	 */
+	public SaSession getSessionBySessionId(String sessionId) {
+		return getSessionBySessionId(sessionId, false);
+	}
 
 	/** 
 	 * 获取指定loginId的session, 如果session尚未创建，isCreate=是否新建并返回
@@ -473,7 +469,6 @@ public class StpLogic {
 		return getSessionBySessionId(getKeySession(loginId), isCreate);
 	}
 
-
 	/** 
 	 * 获取指定loginId的session，如果session尚未创建，则新建并返回 
 	 * @param loginId 账号id 
@@ -482,7 +477,6 @@ public class StpLogic {
 	public SaSession getSessionByLoginId(Object loginId) {
 		return getSessionByLoginId(loginId, true);
 	}
-
 
 	/** 
 	 * 获取当前会话的session, 如果session尚未创建，isCreate=是否新建并返回 
@@ -493,7 +487,6 @@ public class StpLogic {
 		return getSessionByLoginId(getLoginId(), isCreate);
 	}
 	
-
 	/** 
 	 * 获取当前会话的session，如果session尚未创建，则新建并返回 
 	 * @return 当前会话的session 
@@ -505,7 +498,6 @@ public class StpLogic {
 	
 	// =================== token专属session ===================  
 
-
 	/** 
 	 * 获取指定token的专属session，如果session尚未创建，isCreate代表是否新建并返回
 	 * @param tokenValue token值
@@ -516,7 +508,6 @@ public class StpLogic {
 		return getSessionBySessionId(getKeyTokenSession(tokenValue), isCreate);
 	}
 	
-
 	/** 
 	 * 获取指定token的专属session，如果session尚未创建，则新建并返回 
 	 * @param tokenValue token值
@@ -525,7 +516,6 @@ public class StpLogic {
 	public SaSession getTokenSessionByToken(String tokenValue) {
 		return getSessionBySessionId(getKeyTokenSession(tokenValue), true);
 	}
-
 
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，isCreate代表是否新建并返回 
@@ -547,7 +537,6 @@ public class StpLogic {
 		return getSessionBySessionId(getKeyTokenSession(getTokenValue()), isCreate);
 	}
 	
-
 	/** 
 	 * 获取当前token的专属-session，如果session尚未创建，则新建并返回
 	 * @return session会话 
@@ -559,7 +548,6 @@ public class StpLogic {
  	
 	// =================== [临时过期] 验证相关 ===================  
 
- 	
 	/**
  	 * 写入指定token的 [最后操作时间] 为当前时间戳 
  	 * @param tokenValue 指定token 
@@ -573,7 +561,6 @@ public class StpLogic {
  		SaTokenManager.getSaTokenDao().setValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
  	}
  	
- 
  	/**
  	 * 清除指定token的 [最后操作时间] 
  	 * @param tokenValue 指定token 
@@ -589,7 +576,6 @@ public class StpLogic {
  		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
  	
- 
  	/**
  	 * 检查指定token 是否已经[临时过期]，如果已经过期则抛出异常  
  	 * @param tokenValue 指定token
@@ -621,7 +607,6 @@ public class StpLogic {
  		request.setAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY, true);
  	}
 
- 
  	/**
  	 * 检查当前token 是否已经[临时过期]，如果已经过期则抛出异常  
  	 */
@@ -629,7 +614,6 @@ public class StpLogic {
  		checkActivityTimeout(getTokenValue());
  	}
  	
- 
  	/**
  	 * 续签指定token：(将 [最后操作时间] 更新为当前时间戳) 
  	 * @param tokenValue 指定token 
@@ -642,7 +626,6 @@ public class StpLogic {
  		SaTokenManager.getSaTokenDao().updateValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
  	}
 
- 	
  	/**
  	 * 续签当前token：(将 [最后操作时间] 更新为当前时间戳) 
  	 * <h1>请注意: 即时token已经 [临时过期] 也可续签成功，
@@ -653,7 +636,6 @@ public class StpLogic {
  	}
  	
  	
-
 	// =================== 过期时间相关 ===================  
 
  	/**
@@ -962,6 +944,42 @@ public class StpLogic {
 			}
 		}
 		return null;
+	}
+	
+
+	// =================== 会话管理 ===================  
+
+	/**
+	 * 根据条件查询token 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * @return token集合 
+	 */
+	public List<String> searchTokenValue(String keyword, int start, int size) {
+		return SaTokenManager.getSaTokenDao().searchData(getKeyTokenValue(""), keyword, start, size);
+	}
+	
+	/**
+	 * 根据条件查询SessionId 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * @return sessionId集合 
+	 */
+	public List<String> searchSessionId(String keyword, int start, int size) {
+		return SaTokenManager.getSaTokenDao().searchData(getKeySession(""), keyword, start, size);
+	}
+
+	/**
+	 * 根据条件查询token专属Session的Id 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * @return sessionId集合 
+	 */
+	public List<String> searchTokenSessionId(String keyword, int start, int size) {
+		return SaTokenManager.getSaTokenDao().searchData(getKeyTokenSession(""), keyword, start, size);
 	}
 	
 
