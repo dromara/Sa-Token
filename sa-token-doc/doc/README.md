@@ -2,7 +2,7 @@
     <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.10.0</h1>
-<h4 align="center">一个JavaWeb轻量级权限认证框架，功能全面，上手简单</h4>
+<h4 align="center">这可能是史上功能最全的Java权限认证框架！</h4>
 <h4 align="center">
 	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
 	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.10.0-2B9939"></a>
