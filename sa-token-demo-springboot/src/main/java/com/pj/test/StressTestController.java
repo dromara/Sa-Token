@@ -27,13 +27,17 @@ public class StressTestController {
 	public AjaxJson login() {
 //			StpUtil.getTokenSession().logout();
 //			StpUtil.logoutByLoginId(10001);
+
+		int count = 10;	// 循环多少轮 
+		int loginCount = 10000;	// 每轮循环多少次  
+		
 		// 循环10次 取平均时间 
 		List<Double> list = new ArrayList<>();
-		for (int i = 10; i <= 1; i++) {
+		for (int i = 1; i <= count; i++) {
 			System.out.println("\n---------------------第" + i + "轮---------------------");
 			Ttime t = new Ttime().start();
 			// 每次登录的次数
-			for (int j = 1; j <= 10000; j++) {
+			for (int j = 1; j <= loginCount; j++) {
 				StpUtil.setLoginId("1000" + j, "PC-" + j);
 				if(j % 1000 == 0) {
 					System.out.println("已登录：" + j);

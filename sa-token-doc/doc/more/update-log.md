@@ -1,5 +1,11 @@
 # 更新日志 
 
+
+### 2021-1-6 @v1.10.0
+- 新增：提供查询所有会话方案  **[重要]**
+- 修复：修复token设置为永不过期时无法正常被顶下线的bug，感谢github用户 @zjh599245299 提出的bug
+
+
 ### 2021-1-6 @v1.9.0
 - 优化：`spring-boot-starter-data-redis` 由 `2.3.7.RELEASE` 改为 `2.3.3.RELEASE` 
 - 修复：补上注解拦截器里漏掉验证`@SaCheckRole`的bug

@@ -1,11 +1,11 @@
 <p align="center">
     <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.9.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.10.0</h1>
 <h4 align="center">一个JavaWeb轻量级权限认证框架，功能全面，上手简单</h4>
 <h4 align="center">
 	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
-	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.9.0-2B9939"></a>
+	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.10.0-2B9939"></a>
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
@@ -77,7 +77,7 @@ sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳
 
 ## 涵盖功能
 - **登录验证** —— 轻松登录鉴权，并提供五种细分场景值
-- **权限验证** —— 拦截违规调用，不同角色不同授权
+- **权限验证** —— 适配RBAC模型，不同角色不同授权
 - **Session会话** —— 专业的数据缓存中心
 - **踢人下线** —— 将违规用户立刻清退下线
 - **模拟他人账号** —— 实时操作任意用户状态数据
@@ -89,6 +89,7 @@ sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳
 - **自动续签** —— 提供两种token过期策略，灵活搭配使用，还可自动续签
 - **同端互斥登录** —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录
 - **组件自动注入** —— 零配置与Spring等框架集成
+- **会话治理** —— 提供方便灵活的会话查询接口
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
 

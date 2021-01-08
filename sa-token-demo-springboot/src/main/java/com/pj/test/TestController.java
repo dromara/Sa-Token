@@ -203,13 +203,12 @@ public class TestController {
 	}
 	
 	
-	// 测试   浏览器访问： http://localhost:8081/test/searchSession
-	// 测试前，请先将 is-read-cookie 配置为 false
-	@RequestMapping("searchSession")
-	public AjaxJson searchSession() {
+	// 测试会话治理   浏览器访问： http://localhost:8081/test/search
+	@RequestMapping("search")
+	public AjaxJson search() {
 		System.out.println("--------------");
 		Ttime t = new Ttime().start();
-		List<String> tokenValue = StpUtil.searchTokenValue("", 0, 10);
+		List<String> tokenValue = StpUtil.searchTokenValue("8feb8265f773", 0, 10);
 		for (String v : tokenValue) {
 //			SaSession session = StpUtil.getSessionBySessionId(sid);
 			System.out.println(v);

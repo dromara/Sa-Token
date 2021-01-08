@@ -29,21 +29,21 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.9.0</version>
+            <version>1.10.0</version>
         </dependency>
 		
 		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
-            <version>1.9.0</version>
+            <version>1.10.0</version>
         </dependency> -->
 		
 		<!-- sa-token整合redis (使用jackson序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>1.9.0</version>
+            <version>1.10.0</version>
         </dependency> -->
         
 		<!-- 提供redis连接池 -->

@@ -14,6 +14,7 @@ StpUtil.getSession();                       // 获取当前账号id的Session (�
 StpUtil.getSession(true);                   // 获取当前账号id的Session, 并决定在Session尚未创建时，是否新建并返回
 StpUtil.getSessionByLoginId(10001);         // 获取账号id为10001的Session
 StpUtil.getSessionByLoginId(10001, true);   // 获取账号id为10001的Session, 并决定在Session尚未创建时，是否新建并返回
+StpUtil.getSessionBySessionId("xxxx-xxxx"); // 获取SessionId为xxxx-xxxx的Session, 在Session尚未创建时, 返回null 
 ```
 
 

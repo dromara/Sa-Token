@@ -124,6 +124,17 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	 */
 	@Override
 	public void updateTimeout(String key, long timeout) {
+		// 判断是否想要设置为永久
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			long expire = getTimeout(key);
+			if(expire == SaTokenDao.NEVER_EXPIRE) {
+				// 如果其已经被设置为永久，则不作任何处理 
+			} else {
+				// 如果尚未被设置为永久，那么再次set一次
+				this.setValue(key, this.getValue(key), timeout);
+			}
+			return;
+		}
 		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 	
@@ -183,6 +194,17 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	 */
 	@Override
 	public void updateSessionTimeout(String sessionId, long timeout) {
+		// 判断是否想要设置为永久
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			long expire = getSessionTimeout(sessionId);
+			if(expire == SaTokenDao.NEVER_EXPIRE) {
+				// 如果其已经被设置为永久，则不作任何处理 
+			} else {
+				// 如果尚未被设置为永久，那么再次set一次
+				this.saveSession(this.getSession(sessionId), timeout);
+			}
+			return;
+		}
 		sessionRedisTemplate.expire(sessionId, timeout, TimeUnit.SECONDS);
 	}
 
