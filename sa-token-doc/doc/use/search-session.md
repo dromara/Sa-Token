@@ -32,7 +32,11 @@ StpUtil.searchTokenSessionId(String keyword, int start, int size);
 
 使用示例：
 ``` java
-StpUtil.searchTokenValue("1000", 0, 10);	// 查询value包括1000的所有token，结果集从第0条开始，返回10条
+// 查询value包括1000的所有token，结果集从第0条开始，返回10条
+List<String> tokenList = StpUtil.searchTokenValue("1000", 0, 10);	
+for (String token : tokenList) {
+	System.out.println(token);
+}
 ```
 
 

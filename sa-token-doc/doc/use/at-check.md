@@ -73,9 +73,51 @@
 ```
 
 
-- mode有两种取值：
-	- `SaMode.AND`, 标注一组权限，会话必须全部具有才可通过校验
-	- `SaMode.OR`, 标注一组权限，会话只要具有其一即可通过校验
+mode有两种取值：
+- `SaMode.AND`, 标注一组权限，会话必须全部具有才可通过校验
+- `SaMode.OR`, 标注一组权限，会话只要具有其一即可通过校验
+
+
+
+
+## 4、AOP模式使用注解
+
+使用拦截器方式，只能把注解加到`Controller层`上，那么如果我想把注解写到项目的任意位置，比如`Service层`，应该怎么办？ <br>
+很简单，你只需要将拦截器模式更换为`SpringAOP模式`即可, 在`pom.xml`里添加
+
+``` xml 
+<!-- sa-token整合SpringAOP实现注解鉴权 -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-spring-aop</artifactId>
+	<version>1.11.0</version>
+</dependency>
+```
+
+然后你就可以在任意地方使用注解鉴权，例如:
+``` java
+@Service
+public class UserService {
+	@SaCheckLogin
+	public List<String> getList() {
+		System.out.println("getList");
+		return new ArrayList<String>();
+	}
+}
+```
+
+
+**注意：拦截器模式和AOP模式不可同时集成，否则会在Controller层发生一个注解校验两次的bug**
+
+
+
+
+
+
+
+
+
+
 
 
 

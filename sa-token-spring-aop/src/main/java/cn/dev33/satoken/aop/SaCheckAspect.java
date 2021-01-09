@@ -31,7 +31,7 @@ public class SaCheckAspect {
 	}
 
 	/**
-	 * 定义AOP签名 --> (切入所有使用sa-token鉴权注解的方法) 
+	 * 定义AOP签名 (切入所有使用sa-token鉴权注解的方法) 
 	 */
 	public static final String POINTCUT_SIGN = "@within(cn.dev33.satoken.annotation.SaCheckLogin) || @annotation(cn.dev33.satoken.annotation.SaCheckLogin) || "
 			+ "@within(cn.dev33.satoken.annotation.SaCheckRole) || @annotation(cn.dev33.satoken.annotation.SaCheckRole) || "
@@ -48,7 +48,7 @@ public class SaCheckAspect {
 	 * 环绕切入 
 	 * @param joinPoint 切面对象
 	 * @return 底层方法执行后的返回值
-	 * @throws Throwable
+	 * @throws Throwable 底层方法抛出的异常 
 	 */
 	@Around("pointcut()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {

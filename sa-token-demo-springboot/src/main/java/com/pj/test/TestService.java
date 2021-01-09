@@ -14,7 +14,6 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
  *
  */
 @Service
-//@SaCheckLogin
 public class TestService {
 
 	@SaCheckLogin
