@@ -55,7 +55,7 @@
 		<!-- sa-token整合SpringAop实现注解鉴权 -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-aop</artifactId>
+            <artifactId>sa-token-spring-aop</artifactId>
             <version>1.10.0</version>
         </dependency> -->
 
