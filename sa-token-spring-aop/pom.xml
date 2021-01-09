@@ -11,8 +11,8 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-aop</name>
-    <artifactId>sa-token-aop</artifactId>
+	<name>sa-token-spring-aop</name>
+    <artifactId>sa-token-spring-aop</artifactId>
 	<description>sa-token authentication by spring-aop</description>
 
 	<dependencies>
