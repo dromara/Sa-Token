@@ -22,7 +22,6 @@ import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.util.SaTokenConsts;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
  * sa-token 权限验证，逻辑实现类 
@@ -535,7 +534,13 @@ public class StpLogic {
 			// 如果配置忽略token登录校验，则必须保证token不为null (token为null的时候随机创建一个) 
 			String tokenValue = getTokenValue();
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
-				setLoginId(SaTokenInsideUtil.getMarking28());
+				// 随机一个token送给ta 
+				tokenValue = createTokenValue(null);
+				SaTokenManager.getSaTokenServlet().getRequest().setAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY, tokenValue);
+				setLastActivityToNow(tokenValue);  	// 写入 [最后操作时间]
+				if(getConfig().getIsReadCookie() == true){	// cookie注入 
+					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)getConfig().getTimeout());		
+				}
 			}
 		}
 		// 返回这个token对应的专属session 
