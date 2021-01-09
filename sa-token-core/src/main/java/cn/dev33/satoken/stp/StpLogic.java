@@ -1,5 +1,6 @@
 package cn.dev33.satoken.stp;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +10,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
@@ -1041,8 +1046,66 @@ public class StpLogic {
 		return SaTokenManager.getConfig();
 	}
 	
+
+	// =================== 注解鉴权 ===================  
 	
-	
+	/**
+	 * 对一个Method对象进行注解检查（注解鉴权内部实现） 
+	 * @param method Method对象
+	 */
+	public void checkMethodAnnotation(Method method) {
+		
+		// ----------- 验证登录 
+		if(method.isAnnotationPresent(SaCheckLogin.class) || method.getDeclaringClass().isAnnotationPresent(SaCheckLogin.class)) {
+			this.checkLogin();
+		}
+		
+		// ----------- 验证角色
+		// 验证方法上的 
+		SaCheckRole scr = method.getAnnotation(SaCheckRole.class);
+		if(scr != null) { 
+			String[] roleArray = scr.value();
+			if(scr.mode() == SaMode.AND) {
+				this.checkRoleAnd(roleArray);	
+			} else {
+				this.checkRoleOr(roleArray);	
+			}
+		}
+		// 验证类上的 
+		scr = method.getDeclaringClass().getAnnotation(SaCheckRole.class);
+		if(scr != null) { 
+			String[] roleArray = scr.value();
+			if(scr.mode() == SaMode.AND) {
+				this.checkRoleAnd(roleArray);	
+			} else {
+				this.checkRoleOr(roleArray);	
+			}
+		}
+		
+		// ----------- 验证权限 
+		// 验证方法上的 
+		SaCheckPermission scp = method.getAnnotation(SaCheckPermission.class);
+		if(scp != null) { 
+			String[] permissionArray = scp.value();
+			if(scp.mode() == SaMode.AND) {
+				this.checkPermissionAnd(permissionArray);	
+			} else {
+				this.checkPermissionOr(permissionArray);	
+			}
+		}
+		// 验证类上的 
+		scp = method.getDeclaringClass().getAnnotation(SaCheckPermission.class);
+		if(scp != null) { 
+			String[] permissionArray = scp.value();
+			if(scp.mode() == SaMode.AND) {
+				this.checkPermissionAnd(permissionArray);	
+			} else {
+				this.checkPermissionOr(permissionArray);	
+			}
+		}
+		
+		// 验证通过 
+	}
 	
 	
 	

@@ -51,6 +51,13 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency> -->
+        
+		<!-- sa-token整合SpringAop实现注解鉴权 -->
+		<!-- <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-aop</artifactId>
+            <version>1.10.0</version>
+        </dependency> -->
 
 		<!-- @ConfigurationProperties -->
 		<dependency>

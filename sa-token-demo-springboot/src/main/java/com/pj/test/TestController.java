@@ -3,6 +3,7 @@ package com.pj.test;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -218,7 +219,19 @@ public class TestController {
 	}
 
 	
-	// 测试   浏览器访问： http://localhost:8081/test/test 
+	@Autowired
+	TestService TestService;
+	
+	// 测试AOP注解鉴权： http://localhost:8081/test/testAOP
+	@RequestMapping("testAOP")
+	public AjaxJson testAOP() {
+		System.out.println("testAOP");
+		TestService.getList();
+		return AjaxJson.getSuccess();
+	}
+
+	
+	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test() {
 		StpUtil.getTokenSession().logout();
