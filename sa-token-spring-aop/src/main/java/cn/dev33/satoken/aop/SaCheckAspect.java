@@ -19,16 +19,18 @@ import cn.dev33.satoken.stp.StpUtil;
 public class SaCheckAspect {
 
 	/**
-	 * 底层的 StpLogic 对象
-	 */
-	public StpLogic stpLogic = null;
-
-	/**
-	 * 创建，并指定一个默认的 StpLogic
+	 * 创建
 	 */
 	public SaCheckAspect() {
-		this.stpLogic = StpUtil.stpLogic;
 	}
+	
+	/**
+	 * 获取本切面使用的StpLogic
+	 */
+	public StpLogic getStpLogic() {
+		return StpUtil.stpLogic;
+	}
+	
 
 	/**
 	 * 定义AOP签名 (切入所有使用sa-token鉴权注解的方法) 
@@ -54,7 +56,7 @@ public class SaCheckAspect {
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		// 注解鉴权 
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		stpLogic.checkMethodAnnotation(signature.getMethod());
+		getStpLogic().checkMethodAnnotation(signature.getMethod());
 		try {
 			// 执行原有逻辑 
 			Object obj = joinPoint.proceed();

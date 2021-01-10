@@ -231,7 +231,7 @@ public class StpLogic {
 		clearLastActivity(tokenValue); 	
 		
  		// 2. 尝试清除token-id键值对 (先从db中获取loginId值，如果根本查不到loginId，那么无需继续操作 )
- 		String loginId = SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
+ 		String loginId = getLoginIdNotHandle(tokenValue);
  	 	if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
  			return;
  		}
@@ -317,7 +317,7 @@ public class StpLogic {
  			throw NotLoginException.newInstance(loginKey, NotLoginException.NOT_TOKEN);
  		}
  		// 查找此token对应loginId, 则抛出：无效token 
- 		String loginId = SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
+ 		String loginId = getLoginIdNotHandle(tokenValue);
  		if(loginId == null) {
  			throw NotLoginException.newInstance(loginKey, NotLoginException.INVALID_TOKEN);
  		}
@@ -377,7 +377,7 @@ public class StpLogic {
  			return null;
  		}
  		// loginId为null或者在异常项里面，均视为未登录
- 		Object loginId = SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
+ 		Object loginId = getLoginIdNotHandle(tokenValue);
  		if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
  			return null;
  		}
@@ -427,16 +427,24 @@ public class StpLogic {
  	 * @return 登录id
  	 */
  	public Object getLoginIdByToken(String tokenValue) {
- 		if(tokenValue != null) {
- 			Object loginId = SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
- 			if(loginId != null) {
- 				return loginId;
- 			}
+ 		if(tokenValue == null) {
+ 	 		return null;
  		}
- 		return null;
+ 		return getLoginIdNotHandle(tokenValue);
  	}
  	
+ 	 /**
+ 	  * 获取指定token对应的登录id (不做任何特殊处理) 
+ 	  * @param tokenValue token值 
+ 	  * @return loginId
+ 	  */
+ 	public String getLoginIdNotHandle(String tokenValue) {
+ 		return SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
+ 	}
+ 	 
  	
+ 	
+
 	// =================== session相关 ===================  
 
 	/** 

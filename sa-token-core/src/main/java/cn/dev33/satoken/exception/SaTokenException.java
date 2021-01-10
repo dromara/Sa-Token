@@ -21,5 +21,13 @@ public class SaTokenException extends RuntimeException {
 		super(message);	
     }
 
+	/**
+	 * 构建一个异常 
+	 * @param cause 异常对象 
+	 */
+	public SaTokenException(Throwable cause) {
+		super(cause);	
+    }
+
 
 }
