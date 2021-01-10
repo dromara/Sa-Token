@@ -145,14 +145,6 @@ public class StpLogic {
 	 */
 	public void setLoginId(Object loginId, String device) {
 		
-		// ------ 0、如果当前会话已经登录上了此LoginId，且登录设备相同，则立即返回 
-		Object loggedId = getLoginIdDefaultNull();
-		if(loggedId != null && loggedId.toString().equals(loginId.toString())) {
-			String loggedDevice = getLoginDevice();
-			if(loggedDevice != null && loggedDevice.equals(device)) {
-				return;
-			}
-		}
 		
 		// ------ 1、获取相应对象  
 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();

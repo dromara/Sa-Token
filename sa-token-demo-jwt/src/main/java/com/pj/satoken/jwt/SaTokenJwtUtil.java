@@ -27,7 +27,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class SaTokenJwtUtil {
 
 	/**
-	 * 秘钥
+	 * 秘钥 (随便手打几个字母就好了) 
 	 */
 	public static final String BASE64_SECURITY = "79e7c69681b8270162386e6daa53d1dd"; 
 
@@ -102,6 +102,14 @@ public class SaTokenJwtUtil {
 	
     
     static {
+    	
+    	// 判断秘钥
+    	if(BASE64_SECURITY.equals("79e7c69681b8270162386e6daa53d1dd")) {
+    		String warn = "-------------------------------------\n";
+    		warn += "请更换JWT秘钥，不要使用示例默认秘钥\n";
+    		warn += "-------------------------------------";
+    		System.err.println(warn);
+    	}
     
     	// 修改默认实现 
     	StpUtil.stpLogic = new StpLogic("login") {
@@ -206,7 +214,6 @@ public class SaTokenJwtUtil {
     		
     		
     	};
-    	
     	
     }
 	
