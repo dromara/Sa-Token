@@ -1,9 +1,13 @@
 package com.pj.test;
 
+import java.util.Date;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.util.AjaxJson;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
@@ -47,6 +51,22 @@ public class TestJwtController {
 		System.out.println(tokenInfo);
 		return AjaxJson.getSuccessData(tokenInfo);
 	}
+	
+
+	// 测试会话session接口， 浏览器访问： http://localhost:8081/test/session 
+	@RequestMapping("session")
+	public AjaxJson session() throws JsonProcessingException {
+		System.out.println("======================= 进入方法，测试会话session接口 ========================= ");
+		System.out.println("当前是否登录：" + StpUtil.isLogin());
+		System.out.println("当前登录账号session的id" + StpUtil.getSession().getId());
+		System.out.println("当前登录账号session的id" + StpUtil.getSession().getId());
+		System.out.println("测试取值name：" + StpUtil.getSession().getAttribute("name"));
+		StpUtil.getSession().setAttribute("name", new Date());	// 写入一个值 
+		System.out.println("测试取值name：" + StpUtil.getSession().getAttribute("name"));
+		System.out.println( new ObjectMapper().writeValueAsString(StpUtil.getSession()));
+		return AjaxJson.getSuccess();
+	}
+	
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
