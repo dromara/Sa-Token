@@ -84,7 +84,7 @@ public class StpLogic {
 		if(tokenValue == null && config.getIsReadBody() == true){
 			tokenValue = request.getParameter(keyTokenName);
 		}
-		// 3. 尝试从header力读取 
+		// 3. 尝试从header里读取 
 		if(tokenValue == null && config.getIsReadHead() == true){
 			tokenValue = request.getHeader(keyTokenName);
 		}
