@@ -237,7 +237,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 				getStpLogic().checkPermissionOr(codes);
 			}
 		} else if(this.type == SaRouteInterceptor.CUSTOM) {
-			function.run();
+			function.run(request, response, handler);
 		}
 		
 		// 通过验证 

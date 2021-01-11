@@ -27,9 +27,11 @@
 	├── sa-token-core                         // sa-token核心模块
 	├── sa-token-spring-boot-starter           // sa-token整合springboot快速集成 
 	├── sa-token-dao-redis                    // sa-token整合redis (使用jdk默认序列化方式)
-	├── sa-token-dao-redis-jackson             // sa-token整合redis (使用jackson序列化方式)
-	├── sa-token-demo-springboot               // sa-token示例 
-	├── sa-token-doc                          // sa-token开发文档 
+	├── sa-token-dao-redis-jackson            // sa-token整合redis (使用jackson序列化方式)
+	├── sa-token-spring-aop                   // sa-token整合SpringAOP 注解鉴权
+	├── sa-token-demo-springboot              // sa-token示例 
+	├── sa-token-demo-jwt                    // sa-token集成jwt示例 
+	├── sa-token-doc                        // sa-token开发文档 
 	├──pom.xml
 ```
 

@@ -44,19 +44,19 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 		registry.addInterceptor(SaRouteInterceptor.createPermissionVal("user:add", "user:deelete")).addPathPatterns("/UserController/**"); 
 
 		// 注册一个自定义认证拦截器 (可以写任意认证代码)
-		registry.addInterceptor(new SaRouteInterceptor(new SaFunction() {
-			@Override
-			public void run() {
-				// 你可以写任意认证代码, 例如: StpUtil.checkLogin(); 
-				System.out.println("---------- 进入自定义认证 --------------- ");
-			}
+        registry.addInterceptor(new SaRouteInterceptor(new SaFunction() {
+        	@Override
+            public void run(HttpServletRequest request, HttpServletResponse response, Object handler) {
+                // 你可以在这里写任意认证代码, 例如: StpUtil.checkLogin(); 
+                System.out.println("---------- 进入自定义认证 --------------- ");
+            }
 		})).addPathPatterns("/**");
 
 		/** ------ 如果你使用的JDK版本是1.8或以上，上面那一坨可以简写为以下形式 ------ */
 		
 		// 注册一个自定义认证拦截器 (可以写任意认证代码)
-		registry.addInterceptor(new SaRouteInterceptor(()->{
-			// 你可以写任意认证代码, 例如: StpUtil.checkLogin(); 
+		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
+			// 你可以在这里写任意认证代码, 例如: StpUtil.checkLogin(); 
 			System.out.println("---------- 进入自定义认证2 --------------- ");
 		})).addPathPatterns("/**");
 		
