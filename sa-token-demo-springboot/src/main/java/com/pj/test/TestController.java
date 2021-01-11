@@ -234,8 +234,14 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test() {
-		StpUtil.getTokenSession().logout();
-		StpUtil.logoutByLoginId(10001);
+//		StpUtil.getTokenSession().logout();
+//		StpUtil.logoutByLoginId(10001);
+		return AjaxJson.getSuccess();
+	}
+	
+	// 测试   浏览器访问： http://localhost:8081/test/test2
+	@RequestMapping("test2")
+	public AjaxJson test2() {
 		return AjaxJson.getSuccess();
 	}
 

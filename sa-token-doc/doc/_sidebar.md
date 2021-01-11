@@ -16,6 +16,7 @@
 	- [多账号验证](/use/many-account) 
 	- [同端互斥登录](/use/mutex-login) 
 	- [注解式鉴权](/use/at-check) 
+	- [路由拦截式鉴权](/use/route-check) 
 	- [花式token](/use/token-style) 
 	- [框架配置](/use/config) 
 	- [会话治理](/use/search-session) 
