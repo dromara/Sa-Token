@@ -145,7 +145,6 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
-	
 	// 打印当前token信息， 浏览器访问： http://localhost:8081/test/tokenInfo
 	@RequestMapping("tokenInfo")
 	public AjaxJson tokenInfo() {
@@ -203,6 +202,18 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
+	// 测试身份临时切换： http://localhost:8081/test/switchTo
+	@RequestMapping("switchTo")
+	public AjaxJson switchTo() {
+		System.out.println("当前会话身份：" + StpUtil.getLoginIdDefaultNull());
+		System.out.println("是否正在身份临时切换中: " + StpUtil.isSwitch()); 
+		StpUtil.switchTo(10044, () -> {
+			System.out.println("是否正在身份临时切换中: " + StpUtil.isSwitch()); 
+			System.out.println("当前会话身份已被切换为：" + StpUtil.getLoginId());
+		});		
+		System.out.println("是否正在身份临时切换中: " + StpUtil.isSwitch()); 
+		return AjaxJson.getSuccess();
+	}
 	
 	// 测试会话治理   浏览器访问： http://localhost:8081/test/search
 	@RequestMapping("search")

@@ -14,7 +14,16 @@ public class StpUtil {
 	 * 底层的 StpLogic 对象  
 	 */
 	public static StpLogic stpLogic = new StpLogic("login"); 
+
 	
+	/**
+	 * 获取当前StpLogin的loginKey 
+	 * @return 当前StpLogin的loginKey
+	 */
+	public static String getLoginKey(){
+		return stpLogic.getLoginKey();
+	}
+
 	
 	// =================== 获取token 相关 ===================
 
@@ -32,14 +41,6 @@ public class StpUtil {
 	 */
 	public static String getTokenValue() {
 		return stpLogic.getTokenValue();
-	}
-
-	/**
-	 * 获取当前StpLogin的loginKey
-	 * @return 当前StpLogin的loginKey
-	 */
-	public static String getLoginKey(){
-		return stpLogic.getLoginKey();
 	}
 
 	/**
@@ -486,4 +487,37 @@ public class StpUtil {
 	}
 	
 
+	// =================== 身份切换 ===================  
+
+	/**
+	 * 临时切换身份为指定loginId 
+	 * @param loginId 指定loginId 
+	 */
+	public static void switchTo(Object loginId) {
+		stpLogic.switchTo(loginId);
+	}
+	
+	/**
+	 * 结束临时切换身份
+	 */
+	public static void endSwitch() {
+		stpLogic.endSwitch();
+	}
+
+	/**
+	 * 当前是否正处于[身份临时切换]中 
+	 */
+	public static boolean isSwitch() {
+		return stpLogic.isSwitch();
+	}
+	
+	/**
+	 * 在一个代码段里方法内，临时切换身份为指定loginId 
+	 * @param loginId 指定loginId 
+	 */
+	public static void switchTo(Object loginId, SaFunction function) {
+		stpLogic.switchTo(loginId, function);
+	}
+	
+	
 }

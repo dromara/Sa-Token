@@ -44,7 +44,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 		registry.addInterceptor(SaRouteInterceptor.createPermissionVal("user:add", "user:deelete")).addPathPatterns("/UserController/**"); 
 
 		// 注册一个自定义认证拦截器 (可以写任意认证代码)
-        registry.addInterceptor(new SaRouteInterceptor(new SaFunction() {
+        registry.addInterceptor(new SaRouteInterceptor(new SaRouteFunction() {
         	@Override
             public void run(HttpServletRequest request, HttpServletResponse response, Object handler) {
                 // 你可以在这里写任意认证代码, 例如: StpUtil.checkLogin(); 
@@ -52,7 +52,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
             }
 		})).addPathPatterns("/**");
 
-		/** ------ 如果你使用的JDK版本是1.8或以上，上面那一坨可以简写为以下形式 ------ */
+		/** ------ 如果你使用的JDK版本是1.8或以上，上面这一坨可以简写为以下形式 ------ */
 		
 		// 注册一个自定义认证拦截器 (可以写任意认证代码)
 		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
@@ -66,7 +66,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 （你不必像上面的示例一样注册所有拦截器，只要按需注册即可 ）
 
 
-## 3、所有拦截器示例
+
 
 
 

@@ -44,6 +44,24 @@ public class StpLogic {
 		this.loginKey = loginKey;
 	}
 
+	/**
+	 * 获取当前StpLogin的loginKey
+	 * @return 当前StpLogin的loginKey
+	 */
+	public String getLoginKey(){
+		return loginKey;
+	}
+
+	/**
+	 * 写入当前StpLogin的loginKey
+	 * @param loginKey loginKey
+	 * @return 对象自身
+	 */
+	public StpLogic setLoginKey(String loginKey){
+		this.loginKey = loginKey;
+		return this;
+	}
+	
 	
 	// =================== 获取token 相关 ===================  
 	
@@ -77,8 +95,8 @@ public class StpLogic {
 		String tokenValue = null;
 		
 		// 1. 尝试从request里读取 
-		if(request.getAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY) != null) {
-			tokenValue = String.valueOf(request.getAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY));
+		if(request.getAttribute(getJustCreatedSaveKey()) != null) {
+			tokenValue = String.valueOf(request.getAttribute(getJustCreatedSaveKey()));
 		}
 		// 2. 尝试从请求体里面读取 
 		if(tokenValue == null && config.getIsReadBody() == true){
@@ -98,14 +116,6 @@ public class StpLogic {
 		
 		// 5. 返回 
 		return tokenValue;
-	}
-	
-	/**
-	 * 获取当前StpLogin的loginKey
-	 * @return 当前StpLogin的loginKey
-	 */
-	public String getLoginKey(){
-		return loginKey;
 	}
 	
 	/**
@@ -191,7 +201,7 @@ public class StpLogic {
 		
 		// ------ 4. 持久化其它数据 
 		dao.setValue(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	// token -> uid 
-		request.setAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY, tokenValue);	// 将token保存到本次request里  
+		request.setAttribute(getJustCreatedSaveKey(), tokenValue);	// 将token保存到本次request里  
 		setLastActivityToNow(tokenValue);  	// 写入 [最后操作时间]
 		if(config.getIsReadCookie() == true){	// cookie注入 
 			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		
@@ -303,6 +313,10 @@ public class StpLogic {
  	 * @return 账号id
  	 */
  	public Object getLoginId() {
+		// 如果正在[临时身份切换]
+		if(isSwitch()) {
+			return getSwitchLoginId();
+		}
  		// 如果获取不到token，则抛出：无token
  		String tokenValue = getTokenValue();
  		if(tokenValue == null) {
@@ -363,6 +377,10 @@ public class StpLogic {
 	 * @return 账号id 
 	 */
 	public Object getLoginIdDefaultNull() {
+		// 如果正在[临时身份切换]
+		if(isSwitch()) {
+			return getSwitchLoginId();
+		}
 		// 如果连token都是空的，则直接返回 
 		String tokenValue = getTokenValue();
  		if(tokenValue == null) {
@@ -536,7 +554,7 @@ public class StpLogic {
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给ta 
 				tokenValue = createTokenValue(null);
-				SaTokenManager.getSaTokenServlet().getRequest().setAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY, tokenValue);
+				SaTokenManager.getSaTokenServlet().getRequest().setAttribute(getJustCreatedSaveKey(), tokenValue);
 				setLastActivityToNow(tokenValue);  	// 写入 [最后操作时间]
 				if(getConfig().getIsReadCookie() == true){	// cookie注入 
 					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)getConfig().getTimeout());		
@@ -1039,6 +1057,20 @@ public class StpLogic {
 		return getConfig().getTokenName() + ":" + loginKey + ":last-activity:" + tokenValue;
 	}
 
+	/**
+	 * 在进行身份切换时，使用的存储key 
+	 */
+	public String getKeySwitch() {
+		return SaTokenConsts.SWITCH_TO_SAVE_KEY + getLoginKey();
+	}
+
+	/**
+	 * 如果token为本次请求新创建的，则以此字符串为key存储在当前request中 
+	 */
+	public String getJustCreatedSaveKey() {
+		return SaTokenConsts.JUST_CREATED_SAVE_KEY + getLoginKey();
+	}
+	
 	
 	// =================== Bean对象代理 ===================  
 	
@@ -1052,7 +1084,7 @@ public class StpLogic {
 	}
 	
 
-	// =================== 注解鉴权 ===================  
+	// =================== 其它方法 ===================  
 	
 	/**
 	 * 对一个Method对象进行注解检查（注解鉴权内部实现） 
@@ -1111,6 +1143,55 @@ public class StpLogic {
 		
 		// 验证通过 
 	}
+
+	
+	// =================== 身份切换 ===================  
+
+	/**
+	 * 临时切换身份为指定loginId 
+	 * @param loginId 指定loginId 
+	 */
+	public void switchTo(Object loginId) {
+		SaTokenManager.getSaTokenServlet().getRequest().setAttribute(getKeySwitch(), loginId);
+	}
+	
+	/**
+	 * 结束临时切换身份
+	 */
+	public void endSwitch() {
+		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(getKeySwitch());
+	}
+
+	/**
+	 * 当前是否正处于[身份临时切换]中 
+	 */
+	public boolean isSwitch() {
+		return SaTokenManager.getSaTokenServlet().getRequest().getAttribute(getKeySwitch()) != null;
+	}
+	
+	/**
+	 * 返回[身份临时切换]的loginId 
+	 */
+	public Object getSwitchLoginId() {
+		return SaTokenManager.getSaTokenServlet().getRequest().getAttribute(getKeySwitch());
+	}
+	
+	/**
+	 * 在一个代码段里方法内，临时切换身份为指定loginId
+	 * @param loginId 指定loginId 
+	 */
+	public void switchTo(Object loginId, SaFunction function) {
+		try {
+			switchTo(loginId);
+			function.run();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			endSwitch();
+		}
+	}
+	
+	
 	
 	
 	

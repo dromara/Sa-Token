@@ -41,7 +41,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	/**
 	 * 自定义模式下的执行函数
 	 */
-	private SaFunction function;
+	private SaRouteFunction function;
 	
 	
 	/**
@@ -131,14 +131,14 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	/**
 	 * @return 自定义模式下的执行函数
 	 */
-	public SaFunction getFunction() {
+	public SaRouteFunction getFunction() {
 		return function;
 	}
 
 	/**
 	 * @param function 设置自定义模式下的执行函数
 	 */
-	public SaRouteInterceptor setFunction(SaFunction function) {
+	public SaRouteInterceptor setFunction(SaRouteFunction function) {
 		this.type = SaRouteInterceptor.CUSTOM;
 		this.function = function;
 		return this;
@@ -171,7 +171,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	 * 创建 (默认为自定义认证) 
 	 * @param function 自定义模式下的执行函数
 	 */
-	public SaRouteInterceptor(SaFunction function) {
+	public SaRouteInterceptor(SaRouteFunction function) {
 		this(SaRouteInterceptor.CUSTOM, null, new String[0]);
 		setFunction(function);
 	}
@@ -207,7 +207,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	 * @param function 自定义模式下的执行函数
 	 * @return sa拦截器 
 	 */
-	public static SaRouteInterceptor createCustomVal(SaFunction function) {
+	public static SaRouteInterceptor createCustomVal(SaRouteFunction function) {
 		return new SaRouteInterceptor(function);
 	}
 	

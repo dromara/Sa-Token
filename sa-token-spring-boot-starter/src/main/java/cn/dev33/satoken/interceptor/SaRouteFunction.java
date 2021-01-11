@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author kong
  *
  */
-public interface SaFunction {
+public interface SaRouteFunction {
 
 	/**
 	 * 执行验证的方法 
