@@ -95,8 +95,8 @@ public class StpLogic {
 		String tokenValue = null;
 		
 		// 1. 尝试从request里读取 
-		if(request.getAttribute(getJustCreatedSaveKey()) != null) {
-			tokenValue = String.valueOf(request.getAttribute(getJustCreatedSaveKey()));
+		if(request.getAttribute(getKeyJustCreatedSave()) != null) {
+			tokenValue = String.valueOf(request.getAttribute(getKeyJustCreatedSave()));
 		}
 		// 2. 尝试从请求体里面读取 
 		if(tokenValue == null && config.getIsReadBody() == true){
@@ -201,7 +201,7 @@ public class StpLogic {
 		
 		// ------ 4. 持久化其它数据 
 		dao.setValue(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	// token -> uid 
-		request.setAttribute(getJustCreatedSaveKey(), tokenValue);	// 将token保存到本次request里  
+		request.setAttribute(getKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
 		setLastActivityToNow(tokenValue);  	// 写入 [最后操作时间]
 		if(config.getIsReadCookie() == true){	// cookie注入 
 			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		
@@ -554,7 +554,7 @@ public class StpLogic {
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给ta 
 				tokenValue = createTokenValue(null);
-				SaTokenManager.getSaTokenServlet().getRequest().setAttribute(getJustCreatedSaveKey(), tokenValue);
+				SaTokenManager.getSaTokenServlet().getRequest().setAttribute(getKeyJustCreatedSave(), tokenValue);
 				setLastActivityToNow(tokenValue);  	// 写入 [最后操作时间]
 				if(getConfig().getIsReadCookie() == true){	// cookie注入 
 					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)getConfig().getTimeout());		
@@ -1059,6 +1059,7 @@ public class StpLogic {
 
 	/**
 	 * 在进行身份切换时，使用的存储key 
+	 * @return key
 	 */
 	public String getKeySwitch() {
 		return SaTokenConsts.SWITCH_TO_SAVE_KEY + getLoginKey();
@@ -1066,8 +1067,9 @@ public class StpLogic {
 
 	/**
 	 * 如果token为本次请求新创建的，则以此字符串为key存储在当前request中 
+	 * @return key
 	 */
-	public String getJustCreatedSaveKey() {
+	public String getKeyJustCreatedSave() {
 		return SaTokenConsts.JUST_CREATED_SAVE_KEY + getLoginKey();
 	}
 	
@@ -1164,6 +1166,7 @@ public class StpLogic {
 
 	/**
 	 * 当前是否正处于[身份临时切换]中 
+	 * @return 是否正处于[身份临时切换]中 
 	 */
 	public boolean isSwitch() {
 		return SaTokenManager.getSaTokenServlet().getRequest().getAttribute(getKeySwitch()) != null;
@@ -1171,6 +1174,7 @@ public class StpLogic {
 	
 	/**
 	 * 返回[身份临时切换]的loginId 
+	 * @return 返回[身份临时切换]的loginId 
 	 */
 	public Object getSwitchLoginId() {
 		return SaTokenManager.getSaTokenServlet().getRequest().getAttribute(getKeySwitch());
@@ -1179,6 +1183,7 @@ public class StpLogic {
 	/**
 	 * 在一个代码段里方法内，临时切换身份为指定loginId
 	 * @param loginId 指定loginId 
+	 * @param function 要执行的方法 
 	 */
 	public void switchTo(Object loginId, SaFunction function) {
 		try {

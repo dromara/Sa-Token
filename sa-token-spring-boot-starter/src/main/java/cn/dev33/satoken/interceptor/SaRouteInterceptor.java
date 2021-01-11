@@ -186,7 +186,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	
 	/**
 	 * 构建一个模式为角色认证的sa路由拦截器 
-	 * @param roles 需要验证的数组标识列表
+	 * @param roles 需要验证的角色标识列表
 	 * @return sa拦截器 
 	 */
 	public static SaRouteInterceptor createRoleVal(String... roles) {
@@ -195,7 +195,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	
 	/**
 	 * 构建一个模式为权限认证的sa路由拦截器 
-	 * @param permissions 需要验证的数组权限列表 
+	 * @param permissions 需要验证的权限列表 
 	 * @return sa拦截器 
 	 */
 	public static SaRouteInterceptor createPermissionVal(String... permissions) {

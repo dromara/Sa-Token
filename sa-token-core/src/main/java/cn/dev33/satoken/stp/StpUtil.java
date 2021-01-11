@@ -506,14 +506,16 @@ public class StpUtil {
 
 	/**
 	 * 当前是否正处于[身份临时切换]中 
+	 * @return 是否正处于[身份临时切换]中 
 	 */
 	public static boolean isSwitch() {
 		return stpLogic.isSwitch();
 	}
-	
+
 	/**
-	 * 在一个代码段里方法内，临时切换身份为指定loginId 
+	 * 在一个代码段里方法内，临时切换身份为指定loginId
 	 * @param loginId 指定loginId 
+	 * @param function 要执行的方法 
 	 */
 	public static void switchTo(Object loginId, SaFunction function) {
 		stpLogic.switchTo(loginId, function);

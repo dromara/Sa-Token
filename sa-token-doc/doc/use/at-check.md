@@ -90,7 +90,7 @@ mode有两种取值：
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-aop</artifactId>
-	<version>1.11.0</version>
+	<version>1.12.0</version>
 </dependency>
 ```
 

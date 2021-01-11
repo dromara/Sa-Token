@@ -128,7 +128,7 @@ public class SaTokenJwtUtil {
     			SaTokenConfig config = getConfig();
     			// ------ 2、生成一个token 
     			String tokenValue = createTokenValue(loginId);
-    			request.setAttribute(SaTokenConsts.JUST_CREATED_SAVE_KEY, tokenValue);	// 将token保存到本次request里  
+    			request.setAttribute(getKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
     			if(config.getIsReadCookie() == true){	// cookie注入 
     				SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		
     			}

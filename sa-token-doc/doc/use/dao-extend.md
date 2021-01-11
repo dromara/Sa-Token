@@ -11,7 +11,7 @@
 	<dependency>
 		<groupId>cn.dev33</groupId>
 		<artifactId>sa-token-dao-redis</artifactId>
-		<version>1.11.0</version>
+		<version>1.12.0</version>
 	</dependency>
 ```
 优点：兼容性好，缺点：session序列化后基本不可读，对开发者来讲等同于乱码
@@ -23,7 +23,7 @@
 	<dependency>
 		<groupId>cn.dev33</groupId>
 		<artifactId>sa-token-dao-redis-jackson</artifactId>
-		<version>1.11.0</version>
+		<version>1.12.0</version>
 	</dependency>
 ```
 优点：session序列化后可读性强，可灵活手动修改，缺点：兼容性稍差
