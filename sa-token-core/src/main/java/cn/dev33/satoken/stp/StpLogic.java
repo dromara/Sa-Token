@@ -19,6 +19,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
+import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.util.SaTokenConsts;

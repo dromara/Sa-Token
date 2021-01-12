@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.action.SaTokenAction;
@@ -95,6 +96,22 @@ public class SaTokenSpringAutowired {
 	public void setSaTokenServlet(SaTokenServlet saTokenServlet){
 		SaTokenManager.setSaTokenServlet(saTokenServlet);
 	}
+	
+	
+
+	/**
+	 * 路由匹配器 
+	 */
+	public static PathMatcher pathMatcher;
+	/**
+	 * 利用自动匹配特性，获取SpringMVC框架内部使用的路由匹配器 
+	 * @param pathMatcher 要设置的 pathMatcher
+	 */
+	@Autowired(required = false)
+	public static void setPathMatcher(PathMatcher pathMatcher) {
+		SaTokenSpringAutowired.pathMatcher = pathMatcher;
+	}
+	
 	
 	
 }

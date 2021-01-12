@@ -43,7 +43,8 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	 */
 	private SaRouteFunction function;
 	
-	
+
+
 	/**
 	 * 表示登录验证 
 	 */
@@ -144,7 +145,6 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 		return this;
 	}
 
-	
 	// ----------------- 构建相关 ----------------- 
 	
 	/**

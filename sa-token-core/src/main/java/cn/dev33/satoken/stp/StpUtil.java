@@ -2,6 +2,7 @@ package cn.dev33.satoken.stp;
 
 import java.util.List;
 
+import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 
 /**
