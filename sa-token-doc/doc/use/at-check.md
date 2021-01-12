@@ -4,23 +4,18 @@
 - 尽管我们可以方便的一句代码完成权限验证，但是有时候我们仍希望可以将鉴权代码与我们的业务代码分离开来
 - 怎么做？`sa-token`内置三个注解，帮助你使用注解完成鉴权操作
 
+## 1、AOP模式使用注解
 
-## 1、注册拦截器
-- 为了不为项目带来不必要的性能负担，`sa-token`默认没有强制为项目注册全局拦截器
-- 因此，为了使用注解式鉴权功能，你必须手动将`sa-token`的全局拦截器注册到你项目中
-- 以`springboot2.0`为例, 新建配置类`MySaTokenConfig.java` 
+在`pom.xml`里添加
 
-``` java
-	@Configuration
-	public class MySaTokenConfig implements WebMvcConfigurer {
-		// 注册sa-token的注解拦截器，打开注解式鉴权功能 
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");	
-		}
-	}
+``` xml 
+<!-- sa-token整合SpringAOP实现注解鉴权 -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-spring-aop</artifactId>
+	<version>1.12.0</version>
+</dependency>
 ```
-- 保证此类被`springboot`启动类扫描到
 
 ## 2、使用注解
 
@@ -79,39 +74,27 @@ mode有两种取值：
 
 
 
+## 4、注册拦截器
+- 为了不为项目带来不必要的性能负担，`sa-token`默认没有强制为项目注册全局拦截器
+- 因此，为了使用注解式鉴权功能，你必须手动将`sa-token`的全局拦截器注册到你项目中
+- 以`springboot2.0`为例, 新建配置类`MySaTokenConfig.java` 
 
-## 4、AOP模式使用注解
-
-使用拦截器方式，只能把注解加到`Controller层`上，那么如果我想把注解写到项目的任意位置，比如`Service层`，应该怎么办？ <br>
-很简单，你只需要将拦截器模式更换为`SpringAOP模式`即可, 在`pom.xml`里添加
-
-``` xml 
-<!-- sa-token整合SpringAOP实现注解鉴权 -->
-<dependency>
-	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-spring-aop</artifactId>
-	<version>1.12.0</version>
-</dependency>
-```
-
-然后你就可以在任意地方使用注解鉴权，例如:
 ``` java
-@Service
-public class UserService {
-	@SaCheckLogin
-	public List<String> getList() {
-		System.out.println("getList");
-		return new ArrayList<String>();
+	@Configuration
+	public class MySaTokenConfig implements WebMvcConfigurer {
+		// 注册sa-token的注解拦截器，打开注解式鉴权功能 
+		@Override
+		public void addInterceptors(InterceptorRegistry registry) {
+			registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");	
+		}
 	}
-}
 ```
-
-
-**注意：拦截器模式和AOP模式不可同时集成，否则会在Controller层发生一个注解校验两次的bug**
-
+- 保证此类被`springboot`启动类扫描到
+- 使用拦截器方式，只能把注解加到`Controller层`上
 
 
 
+**`警告`：拦截器模式和AOP模式不可同时集成，否则会在Controller层发生一个注解校验两次的bug**
 
 
 
