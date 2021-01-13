@@ -9,6 +9,7 @@
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
+	<a href="https://github.com/click33/sa-token/issues"><img src="https://img.shields.io/github/issues/click33/sa-token.svg"></a>
 	<a href="https://github.com/click33/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/click33/sa-token.svg"></a>
 </h4>
 
@@ -32,7 +33,7 @@ sa-token是一个轻量级Java权限认证框架，主要解决: 登录认证、
 在架构设计上，`sa-token`拒绝引入复杂的概念，以实际业务需求为第一目标进行定向突破，例如踢人下线、自动续签、同端互斥登录等常见业务在框架内**均可以一行代码调用实现**，简单粗暴，拒绝复杂！
 
 对于传统Session会话模型的N多难题，例如难以分布式、水平扩展性差，难以兼容前后台分离环境，多会话管理混乱等，
-`sa-token`独创了以账号为主的`Id-Session`模式，同时又兼容传统以token为主的`Token-Session`模式，两者彼此独立，互不干扰，
+`sa-token`独创了以账号为主的`User-Session`模式，同时又兼容传统以token为主的`Token-Session`模式，两者彼此独立，互不干扰，
 让你在进行会话管理时如鱼得水，在`sa-toekn`的强力加持下，权限问题将不再成为业务逻辑的瓶颈！
 
 总的来说，与其它权限认证框架相比，`sa-token`具有以下优势：
