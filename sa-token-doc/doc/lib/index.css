@@ -40,6 +40,7 @@
 .lang-js .token.string{color: #ddd;}
 .lang-js .token.punctuation{color: #ddd;}
 
+.gt-container{padding: 1.5em; padding-bottom: 100px;}
 
 /* 调整表格的响应式 */
 #main table{margin-left: 25px;}

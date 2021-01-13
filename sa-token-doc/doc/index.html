@@ -46,7 +46,7 @@
 				name: name, // 名字 
 				repo: 'https://github.com/click33/sa-token', // github地址 
 				// themeColor: '#06A3D7', // 主题颜色  
-				basePath: location.pathname.substr(0, location.pathname.lastIndexOf('/') + 1),	// 自动计算项目名字 
+				basePath: location.pathname.substr(0, location.pathname.lastIndexOf('/') + 1), // 自动计算项目名字 
 				// basePath: '/sa-token-doc/',		// 设置文件加载的父路径, 这在一些带项目名部署的文件中非常有效
 				auto2top: true, // 是否在切换页面后回到顶部 
 				// coverpage: true, // 开启封面 
@@ -61,7 +61,7 @@
 				alias: {
 					'/.*/_sidebar.md': '/_sidebar.md'
 				},
-				plugins: [	// 自定义插件 
+				plugins: [ // 自定义插件 
 					function(hook, vm) {
 						// 解析之后执行 
 						hook.afterEach(function(html) {
@@ -70,13 +70,14 @@
 							var footer = [
 								'<br/><br/><br/><br/><br/><br/><br/><hr/>',
 								'<footer>',
-								'<span>发现错误？想参与编辑？ 在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 + '" target="_blank">GitHub</a> 上编辑此页！</span>',
+								'<span>发现错误？想参与编辑？ 在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
+								'" target="_blank">GitHub</a> 上编辑此页！</span>',
 								'</footer>'
 							].join('');
 							return html + footer;
 						});
 					}
-				]	
+				]
 			}
 		</script>
 		<script src="https://unpkg.zhimg.com/docsify@4.9.4/lib/docsify.min.js"></script>
@@ -100,6 +101,29 @@
 		<div style="height: 0px; overflow: hidden;">
 			<script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279021391&web_id=1279021391"></script>
 		</div>
+
+		<!-- Gitalk评论 -->
+		<link rel="stylesheet" href="https://unpkg.zhimg.com/gitalk@1.7.0/dist/gitalk.css">
+		<script src="https://unpkg.zhimg.com/docsify@4.11.6/lib/plugins/gitalk.min.js"></script>
+		<script src="https://unpkg.zhimg.com/gitalk@1.7.0/dist/gitalk.min.js"></script>
+		<script>
+			function f5Gitalk() {
+				window.gitalk = new Gitalk({
+					id: location.hash.replace('#', ''),
+					clientID: '19939399448841f818a1',
+					clientSecret: 'af67e0cc14a0f36e171895771c330471cfe36c23',
+					repo: 'sa-token',		// 仓库名称 
+					owner: 'click33',
+					admin: ['click33'],	// 管理员列表 
+					// facebook-like distraction free mode
+					distractionFreeMode: false
+				})
+			}
+			f5Gitalk();
+			window.onhashchange = function() {
+				f5Gitalk();
+			}
+		</script>
 
 	</body>
 </html>

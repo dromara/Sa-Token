@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150" style="margin-bottom: 10px;">
+    <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.12.0</h1>
 <h4 align="center">这可能是史上功能最全的Java权限认证框架！</h4>
@@ -27,14 +27,14 @@
 - [开源不易，求鼓励，点个star吧](###)
  
 
-## sa-token是什么？
-sa-token是一个JavaWeb轻量级权限认证框架，主要解决项目中登录认证、权限认证、Session会话等一系列由此衍生的权限相关业务
+## Sa-Token是什么？
+sa-token是一个轻量级Java权限认证框架，主要解决: 登录认证、权限认证、Session会话 等一系列权限相关问题
 
-在架构设计上`sa-token`拒绝引入复杂的概念，以实际业务需求为第一目标进行定向突破，例如踢人下线、自动续签、同端互斥登录等常见业务在框架内均可以一行代码调用实现，简单粗暴，拒绝复杂！
+在架构设计上，`sa-token`拒绝引入复杂的概念，以实际业务需求为第一目标进行定向突破，例如踢人下线、自动续签、同端互斥登录等常见业务在框架内**均可以一行代码调用实现**，简单粗暴，拒绝复杂！
 
 对于传统Session会话模型的N多难题，例如难以分布式、水平扩展性差，难以兼容前后台分离环境，多会话管理混乱等，
-`sa-token`独创了以账号为主的`Id-Session`模式，同时又兼容了传统以token为主的`Token-Session`模式，两者彼此独立，互不干扰，
-让你在进行会话管理时可以如鱼得水，在`sa-toekn`的强力加持下，权限问题将不再成为业务逻辑的瓶颈！
+`sa-token`独创了以账号为主的`User-Session`模式，同时又兼容传统以token为主的`Token-Session`模式，两者彼此独立，互不干扰，
+让你在进行会话管理时如鱼得水，在`sa-toekn`的强力加持下，权限问题将不再成为业务逻辑的瓶颈！
 
 总的来说，与其它权限认证框架相比，`sa-token`具有以下优势：
 1. 上手简单：可零配置启动框架，能自动化的均已自动化，不让你费脑子
@@ -42,7 +42,7 @@ sa-token是一个JavaWeb轻量级权限认证框架，主要解决项目中登�
 3. API简单易用：同样的一个功能，可能在别的框架中需要上百行代码，但是在sa-token中统统一行代码调个方法即可解决
 4. 组件易于扩展：框架中几乎所有组件都提供了对应的扩展接口，90%以上的逻辑都是可以被按需重写的
 
-有了sa-token，是时候和那些老旧权限框架说拜拜了！
+有了sa-token，你所有的权限认证问题，都不再是问题！
 
 
 ## 代码示例
@@ -55,6 +55,21 @@ StpUtil.setLoginId(10001);
 
 // 然后在任意需要校验登录处调用以下API  --- 如果当前会话未登录，这句代码会抛出 `NotLoginException`异常
 StpUtil.checkLogin();	
+```
+
+权限认证示例 (只有具有`user:add`权限的会话才可以进入请求)
+``` java
+@SaCheckPermission("user:add")        
+@RequestMapping("/user/insert")
+public String insert(SysUser user) {
+	return "用户增加";
+}
+```
+
+将某个账号踢下线 (待到对方再次访问系统时会抛出`NotLoginException`异常)
+``` java
+// 使账号id为10001的会话注销登录
+StpUtil.logoutByLoginId(10001); 
 ```
 
 如果上面的示例能够证明`sa-token`的简单，那么以下API则可以证明`sa-token`的强大
