@@ -56,9 +56,59 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 
 
 
+## 3、让我们利用自定义拦截器做点快活的事情
+你可以根据路由划分模块，不同模块不同鉴权 
+
+``` java 
+@Configuration
+public class MySaTokenConfig implements WebMvcConfigurer {
+	// 注册sa-token的所有拦截器
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		// 根据路由划分模块，不同模块不同鉴权 
+		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
+			SaRouterUtil.match("/user/**", () -> StpUtil.checkPermission("user"));
+			SaRouterUtil.match("/admin/**", () -> StpUtil.checkPermission("admin"));
+			SaRouterUtil.match("/goods/**", () -> StpUtil.checkPermission("goods"));
+			SaRouterUtil.match("/orders/**", () -> StpUtil.checkPermission("orders"));
+			SaRouterUtil.match("/notice/**", () -> StpUtil.checkPermission("notice"));
+			SaRouterUtil.match("/comment/**", () -> StpUtil.checkPermission("comment"));
+		})).addPathPatterns("/**");
+	}
+}
+```
 
 
+## 4、完整的示例 
+最终的代码，可能会类似于下面的样子：
 
+``` java 
+@Configuration
+public class MySaTokenConfig implements WebMvcConfigurer {
+	// 注册sa-token的拦截器
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		// 自定义验证拦截器 
+		registry.addInterceptor(new SaRouteInterceptor((request, response, handler) -> {
+			
+			// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
+			SaRouterUtil.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
+			
+			// 角色认证 -- 以/admin/** 开头的路由，必须具备[admin]角色或者[super-admin]角色才可以通过认证 
+			SaRouterUtil.match("/admin/**", () -> StpUtil.checkRoleOr("admin", "super-admin"));
+			
+			// 权限认证 -- 不同模块, 校验不同权限 
+			SaRouterUtil.match("/user/**", () -> StpUtil.checkPermission("user"));
+			SaRouterUtil.match("/admin/**", () -> StpUtil.checkPermission("admin"));
+			SaRouterUtil.match("/goods/**", () -> StpUtil.checkPermission("goods"));
+			SaRouterUtil.match("/orders/**", () -> StpUtil.checkPermission("orders"));
+			SaRouterUtil.match("/notice/**", () -> StpUtil.checkPermission("notice"));
+			SaRouterUtil.match("/comment/**", () -> StpUtil.checkPermission("comment"));
+			
+		})).addPathPatterns("/**");
+	}
+}
+```
 
 
 
