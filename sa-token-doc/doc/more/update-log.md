@@ -7,6 +7,7 @@
 - 新增：新增身份临时切换功能，可在一个代码段内将会话临时切换为其它账号  **[重要]**
 - 优化：将`SaCheckInterceptor.java`更名为`SaAnnotationInterceptor.java`，更语义化的名称 
 - 优化：优化文档
+- 升级：v1.12.1，新增`SaRouterUtil`工具类，更方便的路由鉴权 
 
 
 ### 2021-1-10 @v1.11.0

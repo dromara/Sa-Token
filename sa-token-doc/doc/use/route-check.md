@@ -65,8 +65,8 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 	// 注册sa-token的所有拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 根据路由划分模块，不同模块不同鉴权 
 		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
+			// 根据路由划分模块，不同模块不同鉴权 
 			SaRouterUtil.match("/user/**", () -> StpUtil.checkPermission("user"));
 			SaRouterUtil.match("/admin/**", () -> StpUtil.checkPermission("admin"));
 			SaRouterUtil.match("/goods/**", () -> StpUtil.checkPermission("goods"));
@@ -94,7 +94,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 			// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 			SaRouterUtil.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
 			
-			// 角色认证 -- 以/admin/** 开头的路由，必须具备[admin]角色或者[super-admin]角色才可以通过认证 
+			// 角色认证 -- 拦截以 admin 开头的路由，必须具备[admin]角色或者[super-admin]角色才可以通过认证 
 			SaRouterUtil.match("/admin/**", () -> StpUtil.checkRoleOr("admin", "super-admin"));
 			
 			// 权限认证 -- 不同模块, 校验不同权限 
@@ -104,6 +104,9 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 			SaRouterUtil.match("/orders/**", () -> StpUtil.checkPermission("orders"));
 			SaRouterUtil.match("/notice/**", () -> StpUtil.checkPermission("notice"));
 			SaRouterUtil.match("/comment/**", () -> StpUtil.checkPermission("comment"));
+			
+			// 匹配RESTful风格路由 
+			SaRouterUtil.match("/article/get/{id}", () -> StpUtil.checkPermission("article"));
 			
 		})).addPathPatterns("/**");
 	}

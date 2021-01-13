@@ -35,6 +35,7 @@ public class SaAnnotationInterceptor implements HandlerInterceptor {
 
 	/**
 	 * @param stpLogic 底层的 StpLogic 对象 
+	 * @return 拦截器自身
 	 */
 	public SaAnnotationInterceptor setStpLogic(StpLogic stpLogic) {
 		this.stpLogic = stpLogic;
@@ -45,7 +46,7 @@ public class SaAnnotationInterceptor implements HandlerInterceptor {
 	/**
 	 * 创建，并指定一个默认的 StpLogic 
 	 */
-	public  SaAnnotationInterceptor() {
+	public SaAnnotationInterceptor() {
 	}
 	
 	/**

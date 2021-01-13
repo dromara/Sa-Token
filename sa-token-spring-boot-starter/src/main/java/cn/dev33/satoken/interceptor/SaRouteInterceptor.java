@@ -78,6 +78,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
 	 * @param stpLogic 底层的 StpLogic 对象 
+	 * @return 拦截器自身
 	 */
 	public SaRouteInterceptor setStpLogic(StpLogic stpLogic) {
 		this.stpLogic = stpLogic;
@@ -93,6 +94,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
 	 * @param type 验证类型 (1=登录验证, 2=角色验证, 3=权限验证, 4=自定义验证) 
+	 * @return 拦截器自身
 	 */
 	public SaRouteInterceptor setType(int type) {
 		this.type = type;
@@ -108,6 +110,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
 	 * @param mode 验证模式 AND | OR 
+	 * @return 拦截器自身
 	 */
 	public SaRouteInterceptor setMode(SaMode mode) {
 		this.mode = mode;
@@ -123,6 +126,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
 	 * @param codes 标识码数组 
+	 * @return 拦截器自身
 	 */
 	public SaRouteInterceptor setCodes(String... codes) {
 		this.codes = codes;
@@ -138,6 +142,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
 	 * @param function 设置自定义模式下的执行函数
+	 * @return 拦截器自身
 	 */
 	public SaRouteInterceptor setFunction(SaRouteFunction function) {
 		this.type = SaRouteInterceptor.CUSTOM;

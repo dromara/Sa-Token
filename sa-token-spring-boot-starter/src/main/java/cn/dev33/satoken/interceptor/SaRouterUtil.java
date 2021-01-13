@@ -61,7 +61,7 @@ public class SaRouterUtil {
 
 	/**
 	 * 校验指定路由匹配符是否可以匹配成功指定路径   
-	 * @param pattern 路由匹配符 
+	 * @param patterns 路由匹配符 
 	 * @param path 需要匹配的路径集合 
 	 * @return 是否匹配成功 
 	 */
@@ -85,7 +85,7 @@ public class SaRouterUtil {
 
 	/**
 	 * 校验指定路由匹配符是否可以匹配成功当前URI 
-	 * @param pattern 路由匹配符 
+	 * @param patterns 路由匹配符 
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatchCurrURI(List<String> patterns) {

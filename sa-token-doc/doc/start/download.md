@@ -9,14 +9,14 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.12.0</version>
+	<version>1.12.1</version>
 </dependency>
 ```
 
 ## Gradle依赖
 Gradle用户引入依赖：
 ```
-implementation 'cn.dev33:sa-token-spring-boot-starter:1.12.0'
+implementation 'cn.dev33:sa-token-spring-boot-starter:1.12.1'
 ```
 
 

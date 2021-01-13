@@ -8,7 +8,7 @@
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.12.0</version>
+	<version>1.12.1</version>
 	
 	<!-- 项目介绍 -->
 	<name>sa-token</name>
