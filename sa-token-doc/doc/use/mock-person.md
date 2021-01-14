@@ -3,7 +3,7 @@
 
 
 - 以上介绍的api都是操作当前账号，对当前账号进行各种鉴权操作，你可能会问，我能不能对别的账号进行一些操作？
-- 比如：查看账号`10001`有无某个权限码、获取id账号为`10002`的用户`session`，等等...
+- 比如：查看账号`10001`有无某个权限码、获取id账号为`10002`的用户`User-Session`，等等...
 - `sa-token`在api设计时充分考虑了这一点，暴露出多个api进行此类操作 
 
 
@@ -14,8 +14,8 @@ StpUtil.getTokenValueByLoginId(10001);         // 获取指定账号10001的`tok
 StpUtil.logoutByLoginId(10001);                // 将账号10001的会话注销登录（踢人下线）
 StpUtil.getSessionByLoginId(10001);            // 获取账号10001的Session对象, 如果session尚未创建, 则新建并返回
 StpUtil.getSessionByLoginId(10001, false);     // 获取账号10001的Session对象, 如果session尚未创建, 则返回null 
-StpUtil.hasRole(10001, false);                 // 获取账号10001是否含有指定角色标识 
-StpUtil.hasPermission(10001, false);           // 获取账号10001是否含有指定权限码
+StpUtil.hasRole("super-admin");                // 获取账号10001是否含有指定角色标识 
+StpUtil.hasPermission("user:add");             // 获取账号10001是否含有指定权限码
 ```
 
 
@@ -24,8 +24,8 @@ StpUtil.hasPermission(10001, false);           // 获取账号10001是否含有�
 
 有时候，我们需要直接将当前会话的身份切换为其它账号，比如：
 ``` java
-StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号 
-StpUtil.getLoginId();       // 此时再调用此方法会返回 10044 
+StpUtil.switchTo(10044);    // 将当前会话[身份临时切换]为其它账号 
+StpUtil.getLoginId();       // 此时再调用此方法会返回 10044 (我们临时切换到的账号id)
 StpUtil.endSwitch();        // 结束 [身份临时切换]
 ```
 
