@@ -59,7 +59,7 @@ StpUtil.checkLogin();
 ```
 至此，我们已经借助sa-token框架完成登录授权！
 
-此时的你的小脑袋可能飘满了问号，就这么简单？自定义Realm呢？全局过滤器呢？我不用写各种配置文件吗？
+此时的你小脑袋可能飘满了问号，就这么简单？自定义Realm呢？全局过滤器呢？我不用写各种配置文件吗？
 
 事实上在此我可以负责的告诉你，在sa-token中，登录授权就是如此的简单，不需要什么全局过滤器，不需要各种乱七八糟的配置！只需要这一行简单的API调用，即可完成会话的登录授权！
 
@@ -154,6 +154,7 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 - [初识sa-token，一行代码搞定登录授权！](https://zhuanlan.zhihu.com/p/344106099)
 - [一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://zhuanlan.zhihu.com/p/344511415)
 - 文章已在 [csdn](https://blog.csdn.net/shengzhang_/article/details/112593247)、[掘金](https://juejin.cn/post/6917250126650015751)、[开源中国](https://my.oschina.net/u/3503445/blog/4897816)、[博客园](https://www.cnblogs.com/shengzhang/p/14275558.html) 等平台连载中...欢迎投稿 
+
 
 ## 使用sa-token的开源项目
 [**[ sa-plus]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/sz6/sa-plus)
