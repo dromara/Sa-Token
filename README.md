@@ -30,7 +30,7 @@
 ## Sa-Token是什么？
 sa-token是一个轻量级Java权限认证框架，主要解决: 登录认证、权限认证、Session会话 等一系列权限相关问题
 
-在架构设计上，`sa-token`拒绝引入复杂的概念，以实际业务需求为第一目标进行定向突破，例如踢人下线、自动续签、同端互斥登录等常见业务在框架内**均可以一行代码调用实现**，简单粗暴，拒绝复杂！
+在架构设计上，`sa-token`拒绝引入复杂的概念，以实际业务需求为第一目标，业务上需要什么，sa-token就做什么，例如踢人下线、自动续签、同端互斥登录等常见业务在框架内**均可以一行代码调用实现**，简单粗暴，拒绝复杂！
 
 对于传统Session会话模型的N多难题，例如难以分布式、水平扩展性差，难以兼容前后台分离环境，多会话管理混乱等，
 `sa-token`独创了以账号为主的`User-Session`模式，同时又兼容传统以token为主的`Token-Session`模式，两者彼此独立，互不干扰，
@@ -53,9 +53,17 @@ sa-token的API调用非常简单，有多简单呢？以登录验证为例，你
 // 在登录时写入当前会话的账号id 
 StpUtil.setLoginId(10001);	
 
-// 然后在任意需要校验登录处调用以下API  --- 如果当前会话未登录，这句代码会抛出 `NotLoginException`异常
+// 然后在任意需要校验登录处调用以下API  
+// 如果当前会话未登录，这句代码会抛出 `NotLoginException`异常
 StpUtil.checkLogin();	
 ```
+至此，我们已经借助sa-token框架完成登录授权！
+
+此时的你的小脑袋可能飘满了问号，就这么简单？自定义Realm呢？全局过滤器呢？我不用写各种配置文件吗？
+
+事实上在此我可以负责的告诉你，在sa-token中，登录授权就是如此的简单，不需要什么全局过滤器，不需要各种乱七八糟的配置！只需要这一行简单的API调用，即可完成会话的登录授权！
+
+当你受够Shiro、Security等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，sa-token的API设计是多么的清爽！
 
 权限认证示例 (只有具有`user:add`权限的会话才可以进入请求)
 ``` java
@@ -72,7 +80,7 @@ public String insert(SysUser user) {
 StpUtil.logoutByLoginId(10001); 
 ```
 
-如果上面的示例能够证明`sa-token`的简单，那么以下API则可以证明`sa-token`的强大
+除了以上的功能，sa-token还可以一行代码完成以下功能：
 ``` java
 StpUtil.setLoginId(10001);          // 标记当前会话登录的账号id
 StpUtil.getLoginId();               // 获取当前会话登录的账号id
@@ -111,14 +119,17 @@ sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
 
-## 知乎专栏
-- [初识sa-token，一行代码搞定登录授权！](https://zhuanlan.zhihu.com/p/344106099)
-- [一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://zhuanlan.zhihu.com/p/344511415)
-- 文章已在 [csdn](https://blog.csdn.net/shengzhang_/article/details/112593247)、[掘金](https://juejin.cn/post/6917250126650015751)、[开源中国](https://my.oschina.net/u/3503445/blog/4897816)、[博客园](https://www.cnblogs.com/shengzhang/p/14275558.html) 等平台连载中...欢迎投稿 
+## 迭代模式
+sa-token的功能提案主要来源于社区，这意味着人人都可以参与到sa-token的功能定制，决定框架的未来走向，
+如果你有好的想法，可以在issues提出或者加入群一起交流，对于社区的提出的功能要求，主要分为以下几类：
+- 对框架新增特性功能且比较简单，会在第一时间进行开发
+- 对框架新增特性功能但比较复杂，会延后几个版本制定相应的计划后进行开发
+- 与框架设计理念不太相符，或超出权限认证范畴，将会视需求人数决定是否开发
 
 
 ## 参与贡献
-众人拾柴火焰高，sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加瓦
+众人拾柴火焰高，万丈高楼众人起！
+sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加瓦，对框架有卓越贡献者将会出现在贡献者名单里
 
 1. 在gitee或者github上fork一份代码到自己的仓库
 2. clone自己的仓库到本地电脑
@@ -131,18 +142,31 @@ sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳
 
 
 ## 建议贡献的地方
-- 修复源码现有bug，或优化代码架构，或增加新的实用功能
-- 完善在线文档，或者修复现有描述错误之处
-- 更多的第三方框架集成方案，更多的demo示例：比如SSM版搭建步骤 
-- 您可以参考项目issues与需求墙进行贡献
+目前框架的主要有以下部分需要大家一起参与贡献：
+- 核心代码：该部分需要开发者了解整个框架的架构，遵循已有代码规范进行bug修复或提交新功能
+- 文档部分：需要以清晰明了的语句书写文档，力求简单易读，授人以鱼同时更授人以渔
+- 社区建设：如果框架帮助到了您，希望您可以加入qq群参与交流，对不熟悉框架的新人进行排难解惑
+- 框架推广：一个优秀的开源项目不能仅靠闭门造车，它还需要一定的推广方案让更多的人一起参与到项目中
+- 其它部分：您可以参考项目issues与需求墙进行贡献
+
+
+## 知乎专栏
+- [初识sa-token，一行代码搞定登录授权！](https://zhuanlan.zhihu.com/p/344106099)
+- [一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://zhuanlan.zhihu.com/p/344511415)
+- 文章已在 [csdn](https://blog.csdn.net/shengzhang_/article/details/112593247)、[掘金](https://juejin.cn/post/6917250126650015751)、[开源中国](https://my.oschina.net/u/3503445/blog/4897816)、[博客园](https://www.cnblogs.com/shengzhang/p/14275558.html) 等平台连载中...欢迎投稿 
+
+## 使用sa-token的开源项目
+[**[ sa-plus]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/sz6/sa-plus)
+
+如果您的项目使用了sa-token，欢迎提交pr
 
 
 ## 友情链接
-[**[ okhttps ]** 一个轻量级http通信框架，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+[**[ okhttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
 
 ## 交流群
-QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM) ，欢迎你的加入
+QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM) 
 
 
 ![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=150')
