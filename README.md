@@ -153,6 +153,7 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 ## 知乎专栏
 - [初识sa-token，一行代码搞定登录授权！](https://zhuanlan.zhihu.com/p/344106099)
 - [一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://zhuanlan.zhihu.com/p/344511415)
+- [java中如何踢人下线？封禁某个账号后使其会话立即掉线！](https://zhuanlan.zhihu.com/p/345397829)
 - 文章已在 [csdn](https://blog.csdn.net/shengzhang_/article/details/112593247)、[掘金](https://juejin.cn/post/6917250126650015751)、[开源中国](https://my.oschina.net/u/3503445/blog/4897816)、[博客园](https://www.cnblogs.com/shengzhang/p/14275558.html) 等平台连载中...欢迎投稿 
 
 
