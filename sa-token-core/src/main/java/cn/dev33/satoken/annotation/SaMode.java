@@ -1,7 +1,7 @@
 package cn.dev33.satoken.annotation;
 
 /**
- * 指定注解鉴权的验证模式 
+ * 注解鉴权的验证模式 
  * @author kong
  *
  */

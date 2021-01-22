@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标注一个路由方法，当前会话必须已登录才能通过 
+ * 登录校验：标注在一个方法上，当前会话必须已经登录才能进入该方法 
  * <p> 可标注在类上，其效果等同于标注在此类的所有方法上 
  * @author kong
  *

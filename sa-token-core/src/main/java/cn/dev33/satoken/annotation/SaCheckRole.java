@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 标注一个路由方法，当前会话必须具有指定角色标识才可以通过 
+ * 角色校验：标注在一个方法上，当前会话必须具有指定角色标识才能进入该方法 
  * <p> 可标注在类上，其效果等同于标注在此类的所有方法上 
  * @author kong
  *
@@ -16,13 +16,13 @@ import java.lang.annotation.Target;
 public @interface SaCheckRole {
 
 	/**
-	 * 需要验证的角色标识
-	 * @return 需要验证的权限码
+	 * 需要校验的角色标识
+	 * @return 需要校验的角色标识
 	 */
 	String [] value() default {};
 
 	/**
-	 * 指定验证模式是AND还是OR，默认AND
+	 * 验证模式：AND | OR，默认AND
 	 * @return 验证模式
 	 */
 	SaMode mode() default SaMode.AND;

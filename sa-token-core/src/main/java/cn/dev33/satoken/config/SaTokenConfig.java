@@ -1,7 +1,8 @@
 package cn.dev33.satoken.config;
 
 /**
- * sa-token 配置类Model 
+ * sa-token 配置类 Model 
+ * <p> 你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档 
  * @author kong
  *
  */
@@ -10,10 +11,10 @@ public class SaTokenConfig {
 	/** token名称 (同时也是cookie名称) */
 	private String tokenName = "satoken";	
 	
-	/** token有效期，单位/秒 默认30天, -1代表永久 */
+	/** token的长久有效期(单位:秒) 默认30天, -1代表永久 */
 	private long timeout = 30 * 24 * 60 * 60;	
 	
-	/** token临时有效期 (指定时间内无操作就视为token过期) 单位/秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) */
+	/** token临时有效期 [指定时间内无操作就视为token过期] (单位/秒), 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) */
 	private long activityTimeout = -1;		
 	
 	/** 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)  */
@@ -31,13 +32,13 @@ public class SaTokenConfig {
 	/** 是否尝试从cookie里读取token */
 	private Boolean isReadCookie = true;	
 	
-	/** token风格 */
+	/** token风格(默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik) */
 	private String tokenStyle = "uuid";		
 
 	/** 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 */
 	private int dataRefreshPeriod = 30;
 	
-	/** 获取token专属session时是否必须登录 (如果配置为true，会在每次获取token专属session时校验是否登录) */
+	/** 获取[token专属session]时是否必须登录 (如果配置为true，会在每次获取[token-session]时校验是否登录) */
 	private Boolean tokenSessionCheckLogin = true;	
 	 
 	/** 是否在初始化配置时打印版本字符画 */

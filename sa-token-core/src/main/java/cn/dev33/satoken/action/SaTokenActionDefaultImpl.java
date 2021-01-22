@@ -18,9 +18,9 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	 */
 	@Override
 	public String createToken(Object loginId, String loginKey) {
-		// 生成各种花式token 
+		// 根据配置的tokenStyle生成不同风格的token 
 		String tokenStyle = SaTokenManager.getConfig().getTokenStyle();
-		// uuid
+		// uuid 
 		if(tokenStyle.equals("uuid")) {
 			return UUID.randomUUID().toString();
 		}
