@@ -151,7 +151,6 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 
 
 ## 贡献者名单
-(根据commit次数排名) <br>
 [省长](https://gitee.com/sz6)、
 [RockMan](https://gitee.com/njx33)、
 [click33](https://github.com/click33)、
