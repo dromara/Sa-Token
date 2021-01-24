@@ -150,6 +150,19 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 - 其它部分：您可以参考项目issues与需求墙进行贡献
 
 
+## 贡献者名单
+(根据commit次数排名) <br>
+[省长](https://gitee.com/sz6)、
+[RockMan](https://gitee.com/njx33)、
+[click33](https://github.com/click33)、
+[AppleOfGray](https://gitee.com/appleOfGray)、
+[Auster](https://github.com/auster9021)、
+[legg](https://gitee.com/legg321)、
+[xiaoshitou](https://gitee.com/smallstoneZ)、
+[zhangjiaxiaozhuo](https://gitee.com/zhangjiaxiaozhuo)、
+[离你多远](https://gitee.com/liniduoyuan)
+
+
 ## 知乎专栏
 - [初识sa-token，一行代码搞定登录授权！](https://zhuanlan.zhihu.com/p/344106099)
 - [一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://zhuanlan.zhihu.com/p/344511415)
