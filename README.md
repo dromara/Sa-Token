@@ -185,4 +185,8 @@ QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
 ![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=150')
 
+ **微信群** ：
 
+![微信群](https://images.gitee.com/uploads/images/2021/0129/183207_4ad97c40_1766140.jpeg "sa-token-wx.jpg")
+
+<br>
