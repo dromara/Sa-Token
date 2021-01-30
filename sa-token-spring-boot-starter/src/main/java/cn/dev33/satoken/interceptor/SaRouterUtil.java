@@ -19,7 +19,7 @@ import cn.dev33.satoken.fun.SaFunction;
 public class SaRouterUtil {
 
 	/**
-	 * 在进行路由匹配时所使用的的 PathMatcher 对象 
+	 * 在进行路由匹配时所使用的 PathMatcher 对象 
 	 */
 	private static PathMatcher pathMatcher;
 

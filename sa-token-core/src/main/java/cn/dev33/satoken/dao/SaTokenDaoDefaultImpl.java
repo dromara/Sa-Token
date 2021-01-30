@@ -22,7 +22,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	
 
 	/**
-	 * 所有数据集合 
+	 * 数据集合 
 	 */
 	public Map<String, Object> dataMap = new ConcurrentHashMap<String, Object>();
 

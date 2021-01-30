@@ -1,7 +1,8 @@
 package cn.dev33.satoken.stp;
 
 /**
- * 用来描述一个token常用信息的类 
+ * token信息Model: 用来描述一个token的常用参数
+ * 
  * @author kong
  *
  */
@@ -13,177 +14,173 @@ public class SaTokenInfo {
 	/** token值 */
 	public String tokenValue;
 
-	/** 当前是否已经登录 */
+	/** 此token是否已经登录 */
 	public Boolean isLogin;
 
-	/** 当前loginId，未登录时为null */
+	/** 此token对应的LoginId，未登录时为null */
 	public Object loginId;
 
-	/** 当前loginKey */
+	/** LoginKey账号体系标识 */
 	public String loginKey;
 
 	/** token剩余有效期 (单位: 秒) */
 	public long tokenTimeout;
 
-	/** session剩余有效时间 (单位: 秒) */
+	/** User-Session剩余有效时间 (单位: 秒) */
 	public long sessionTimeout;
 
-	/** token专属session剩余有效时间 (单位: 秒) */
+	/** Token-Session剩余有效时间 (单位: 秒) */
 	public long tokenSessionTimeout;
-	
-	/**
-	 * token剩余无操作有效时间
-	 */
+
+	/** token剩余无操作有效时间 (单位: 秒) */
 	public long tokenActivityTimeout;
 
-	/** 当前登录设备 */
+	/** 登录设备标识 */
 	public String loginDevice;
 
-	
-	
 	/**
-	 * @return tokenName
+	 * @return token名称 
 	 */
 	public String getTokenName() {
 		return tokenName;
 	}
 
 	/**
-	 * @param tokenName 要设置的 tokenName
+	 * @param tokenName token名称 
 	 */
 	public void setTokenName(String tokenName) {
 		this.tokenName = tokenName;
 	}
 
 	/**
-	 * @return tokenValue
+	 * @return token值 
 	 */
 	public String getTokenValue() {
 		return tokenValue;
 	}
 
 	/**
-	 * @param tokenValue 要设置的 tokenValue
+	 * @param tokenValue token值 
 	 */
 	public void setTokenValue(String tokenValue) {
 		this.tokenValue = tokenValue;
 	}
 
 	/**
-	 * @return isLogin
+	 * @return 此token是否已经登录 
 	 */
 	public Boolean getIsLogin() {
 		return isLogin;
 	}
 
 	/**
-	 * @param isLogin 要设置的 isLogin
+	 * @param isLogin 此token是否已经登录 
 	 */
 	public void setIsLogin(Boolean isLogin) {
 		this.isLogin = isLogin;
 	}
 
 	/**
-	 * @return loginId
+	 * @return 此token对应的LoginId，未登录时为null 
 	 */
 	public Object getLoginId() {
 		return loginId;
 	}
 
 	/**
-	 * @param loginId 要设置的 loginId
+	 * @param loginId 此token对应的LoginId，未登录时为null 
 	 */
 	public void setLoginId(Object loginId) {
 		this.loginId = loginId;
 	}
 
 	/**
-	 * @return loginKey
+	 * @return LoginKey账号体系标识 
 	 */
 	public String getLoginKey() {
 		return loginKey;
 	}
 
 	/**
-	 * @param loginKey 要设置的 loginKey
+	 * @param loginKey LoginKey账号体系标识 
 	 */
 	public void setLoginKey(String loginKey) {
 		this.loginKey = loginKey;
 	}
 
 	/**
-	 * @return tokenTimeout
+	 * @return token剩余有效期 (单位: 秒) 
 	 */
 	public long getTokenTimeout() {
 		return tokenTimeout;
 	}
 
 	/**
-	 * @param tokenTimeout 要设置的 tokenTimeout
+	 * @param tokenTimeout token剩余有效期 (单位: 秒) 
 	 */
 	public void setTokenTimeout(long tokenTimeout) {
 		this.tokenTimeout = tokenTimeout;
 	}
 
 	/**
-	 * @return sessionTimeout
+	 * @return User-Session剩余有效时间 (单位: 秒) 
 	 */
 	public long getSessionTimeout() {
 		return sessionTimeout;
 	}
 
 	/**
-	 * @param sessionTimeout 要设置的 sessionTimeout
+	 * @param sessionTimeout User-Session剩余有效时间 (单位: 秒) 
 	 */
 	public void setSessionTimeout(long sessionTimeout) {
 		this.sessionTimeout = sessionTimeout;
 	}
 
 	/**
-	 * @return tokenSessionTimeout
+	 * @return Token-Session剩余有效时间 (单位: 秒) 
 	 */
 	public long getTokenSessionTimeout() {
 		return tokenSessionTimeout;
 	}
 
 	/**
-	 * @param tokenSessionTimeout 要设置的 tokenSessionTimeout
+	 * @param tokenSessionTimeout Token-Session剩余有效时间 (单位: 秒) 
 	 */
 	public void setTokenSessionTimeout(long tokenSessionTimeout) {
 		this.tokenSessionTimeout = tokenSessionTimeout;
 	}
 
 	/**
-	 * @return tokenActivityTimeout
+	 * @return token剩余无操作有效时间 (单位: 秒)
 	 */
 	public long getTokenActivityTimeout() {
 		return tokenActivityTimeout;
 	}
 
 	/**
-	 * @param tokenActivityTimeout 要设置的 tokenActivityTimeout
+	 * @param tokenActivityTimeout token剩余无操作有效时间 (单位: 秒)
 	 */
 	public void setTokenActivityTimeout(long tokenActivityTimeout) {
 		this.tokenActivityTimeout = tokenActivityTimeout;
 	}
 
 	/**
-	 * @return loginDevice
+	 * @return 登录设备标识 
 	 */
 	public String getLoginDevice() {
 		return loginDevice;
 	}
 
 	/**
-	 * @param loginDevice 要设置的 loginDevice
+	 * @param loginDevice 登录设备标识 
 	 */
 	public void setLoginDevice(String loginDevice) {
 		this.loginDevice = loginDevice;
 	}
 
-	
-	
-	
+	/**
+	 * toString
+	 */
 	@Override
 	public String toString() {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
@@ -191,18 +188,5 @@ public class SaTokenInfo {
 				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
 				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + "]";
 	}
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

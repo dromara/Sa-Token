@@ -10,7 +10,7 @@ import java.util.List;
 public class NotLoginException extends RuntimeException {
 	
 	/**
-	 * 
+	 * 序列化版本号 
 	 */
 	private static final long serialVersionUID = 6806129545290130142L;
 	
@@ -56,6 +56,7 @@ public class NotLoginException extends RuntimeException {
 	 * 异常类型 
 	 */
 	private String type;
+	
 	/**
 	 * 获取异常类型 
 	 * @return 异常类型 
@@ -69,6 +70,7 @@ public class NotLoginException extends RuntimeException {
 	 * loginKey 
 	 */
 	private String loginKey;
+	
 	/** 
 	 * 获得loginKey
 	 * @return loginKey
@@ -78,8 +80,6 @@ public class NotLoginException extends RuntimeException {
 	}
 	
 	
-	
-
 	/**
 	 * 构造方法创建一个 
 	 * @param message 异常消息 
@@ -87,7 +87,6 @@ public class NotLoginException extends RuntimeException {
 	 * @param type 类型 
 	 */
 	public NotLoginException(String message, String loginKey, String type) {
-		// 这里到底要不要拼接上login_key呢？纠结
 		super(message);	
         this.loginKey = loginKey;
         this.type = type;
@@ -101,19 +100,19 @@ public class NotLoginException extends RuntimeException {
 	 */
 	public static NotLoginException newInstance(String loginKey, String type) {
 		String message = null;
-		if(type.equals(NOT_TOKEN)) {
+		if(NOT_TOKEN.equals(type)) {
 			message = NOT_TOKEN_MESSAGE;
 		}
-		else if(type.equals(INVALID_TOKEN)) {
+		else if(INVALID_TOKEN.equals(type)) {
 			message = INVALID_TOKEN_MESSAGE;
 		}
-		else if(type.equals(TOKEN_TIMEOUT)) {
+		else if(TOKEN_TIMEOUT.equals(type)) {
 			message = TOKEN_TIMEOUT_MESSAGE;
 		}
-		else if(type.equals(BE_REPLACED)) {
+		else if(BE_REPLACED.equals(type)) {
 			message = BE_REPLACED_MESSAGE;
 		}
-		else if(type.equals(KICK_OUT)) {
+		else if(KICK_OUT.equals(type)) {
 			message = KICK_OUT_MESSAGE;
 		}
 		else {

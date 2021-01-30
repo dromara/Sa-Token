@@ -37,7 +37,7 @@ public class StpUtil {
  	}
 
 	/**
-	 *  获取当前tokenValue
+	 * 获取当前tokenValue
 	 * @return 当前tokenValue
 	 */
 	public static String getTokenValue() {

@@ -18,12 +18,15 @@ import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
  * sa-token持久层的实现类, 基于redis 
+ * 
+ * @author kong
+ *
  */
 @Component
 public class SaTokenDaoRedis implements SaTokenDao {
 
 	/**
-	 * string专用
+	 * string专用 
 	 */
 	@Autowired
 	public StringRedisTemplate stringRedisTemplate;	
@@ -52,7 +55,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	
 	
 	/**
-	 * 根据key获取value，如果没有，则返回空
+	 * 根据key获取value，如果没有，则返回空 
 	 */
 	@Override
 	public String getValue(String key) {
@@ -78,7 +81,8 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	@Override
 	public void updateValue(String key, String value) {
 		long expire = getTimeout(key);
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
+		// -2 = 无此键 
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
 		this.setValue(key, value, expire);
@@ -148,7 +152,8 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	@Override
 	public void updateSession(SaSession session) {
 		long expire = getSessionTimeout(session.getId());
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
+		// -2 = 无此键 
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
 		this.saveSession(session, expire);

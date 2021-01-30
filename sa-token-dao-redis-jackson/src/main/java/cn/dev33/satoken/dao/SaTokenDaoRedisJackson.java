@@ -21,7 +21,10 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
- * sa-token持久层的实现类, 基于redis (to jackson)
+ * sa-token持久层的实现类, 基于redis (使用 jackson 序列化方式)
+ * 
+ * @author kong
+ * 
  */
 @Component
 public class SaTokenDaoRedisJackson implements SaTokenDao {
@@ -97,7 +100,8 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	@Override
 	public void updateValue(String key, String value) {
 		long expire = getTimeout(key);
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
+		// -2 = 无此键 
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
 		this.setValue(key, value, expire);
@@ -167,7 +171,8 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	@Override
 	public void updateSession(SaSession session) {
 		long expire = getSessionTimeout(session.getId());
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	// -2 = 无此键 
+		// -2 = 无此键 
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	
 			return;
 		}
 		this.saveSession(session, expire);

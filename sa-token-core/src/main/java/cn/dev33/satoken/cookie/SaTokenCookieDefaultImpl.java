@@ -5,14 +5,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * sa-token 对cookie的相关操作 接口实现类 
+ * sa-token 对cookie的相关操作 接口实现类
+ * 
  * @author kong
  *
  */
 public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 
 	/**
-	 * 获取指定cookie 
+	 * 获取指定cookie
 	 */
 	@Override
 	public Cookie getCookie(HttpServletRequest request, String cookieName) {
@@ -20,7 +21,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	}
 
 	/**
-	 * 添加cookie 
+	 * 添加cookie
 	 */
 	@Override
 	public void addCookie(HttpServletResponse response, String name, String value, String path, int timeout) {
@@ -28,7 +29,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	}
 
 	/**
-	 * 删除cookie 
+	 * 删除cookie
 	 */
 	@Override
 	public void delCookie(HttpServletRequest request, HttpServletResponse response, String name) {
@@ -36,7 +37,7 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	}
 
 	/**
-	 * 修改cookie的value值 
+	 * 修改cookie的value值
 	 */
 	@Override
 	public void updateCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import cn.dev33.satoken.exception.SaTokenException;
+
 /**
  * SpringMVC相关操作  
  * @author kong
@@ -18,9 +20,9 @@ public class SpringMVCUtil {
 	 * @return request
 	 */
 	public static HttpServletRequest getRequest() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new RuntimeException("当前环境非JavaWeb");
+			throw new SaTokenException("非Web上下文无法获取Request");
 		}
 		return servletRequestAttributes.getRequest();
 	}
@@ -30,9 +32,9 @@ public class SpringMVCUtil {
 	 * @return response
 	 */
 	public static HttpServletResponse getResponse() {
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();// 大善人SpringMVC提供的封装 
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new RuntimeException("当前环境非JavaWeb");
+			throw new SaTokenException("非Web上下文无法获取Request");
 		}
 		return servletRequestAttributes.getResponse();
 	}

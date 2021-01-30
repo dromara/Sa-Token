@@ -51,6 +51,9 @@ public class SaTaskUtil {
 	 * @author kong 
 	 */
 	public static interface FunctionRunClass{
+		/**
+		 * 要执行的方法 
+		 */
 		public void run();
 	}
 	
