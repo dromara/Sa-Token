@@ -8,19 +8,14 @@ sa-token提供以下API助你直接操作会话列表
 
 ## 具体API
 
-#### 查询所有token
 ``` java
+// 查询所有token
 StpUtil.searchTokenValue(String keyword, int start, int size);
-```
 
-#### 查询所有账号Session会话
-``` java
+// 查询所有账号Session会话
 StpUtil.searchSessionId(String keyword, int start, int size);
-```
 
-
-#### 查询所有令牌Session会话
-``` java
+// 查询所有令牌Session会话
 StpUtil.searchTokenSessionId(String keyword, int start, int size);
 ```
 

@@ -13,27 +13,31 @@
 
 #### 指定设备标识登录
 ``` java
-StpUtil.setLoginId(10001, "PC");	// 指定`账号id`和`设备标识`进行登录
+// 指定`账号id`和`设备标识`进行登录
+StpUtil.setLoginId(10001, "PC");	
 ```
 调用此方法登录后，同设备的会被顶下线(不同设备不受影响)，再次访问系统时会抛出 `NotLoginException` 异常，场景值=`-4`
 
 
 #### 指定设备标识强制注销
 ``` java
-StpUtil.logoutByLoginId(10001, "PC");	// 指定`账号id`和`设备标识`进行强制注销 (踢人下线)
+// 指定`账号id`和`设备标识`进行强制注销 (踢人下线)
+StpUtil.logoutByLoginId(10001, "PC");	
 ```
 如果第二个参数填写null或不填，代表将这个账号id所有在线端踢下线，被踢出者再次访问系统时会抛出 `NotLoginException` 异常，场景值=`-5`
 
 
 #### 查询当前登录的设备标识
 ``` java
-StpUtil.getLoginDevice();	// 指返回当前token的登录设备
+// 返回当前token的登录设备
+StpUtil.getLoginDevice();	
 ```
 
 
 #### id反查token
 ``` java
-StpUtil.getTokenValueByLoginId(10001, "APP");	// 获取指定loginId指定设备端的tokenValue 
+// 获取指定loginId指定设备端的tokenValue 
+StpUtil.getTokenValueByLoginId(10001, "APP");	
 ```
 
 

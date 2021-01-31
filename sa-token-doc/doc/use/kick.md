@@ -10,7 +10,7 @@
 让指定loginId的会话注销登录（踢人下线），例如：
 
 ``` java
-	// 使账号id为10001的会话注销登录，待到10001再次访问系统时会抛出`NotLoginException`异常，场景值为-5
-	StpUtil.logoutByLoginId(10001); 
+// 使账号id为10001的会话注销登录，待到10001再次访问系统时会抛出`NotLoginException`异常，场景值为-5
+StpUtil.logoutByLoginId(10001); 
 ```
 

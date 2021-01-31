@@ -1,9 +1,10 @@
 # 示例
 
+本篇将带你从零开始集成sa-token，从而让你快速熟悉sa-token的使用姿势 <br>
+以maven + springboot为例
+
 ---
 
-> - 本篇将带你从零开始集成sa-token，从而让你快速熟悉sa-token的使用姿势
-> - 以maven + springboot为例
 
 ## springboot环境
 
@@ -11,7 +12,7 @@
 在IDE中新建一个Springboot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考github示例）
 
 #### 2、设置jar包依赖
-- 在 `pom.xml` 中添加依赖：
+在 `pom.xml` 中添加依赖：
 
 ``` xml 
 <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
@@ -23,8 +24,8 @@
 ```
 
 #### 3、配置文件
-- 你可以**零配置启动项目**
-- 但同时你也可以在`application.yml`中增加如下配置，定制性使用框架：
+你可以**零配置启动项目** <br>
+但同时你也可以在`application.yml`中增加如下配置，定制性使用框架：
 
 ``` java
 spring: 
@@ -44,8 +45,8 @@ spring:
         token-style: uuid
 ```
 
-> - 如果你习惯于 `application.properties` 类型的配置文件，那也很好办: 
-> - 百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
+如果你习惯于 `application.properties` 类型的配置文件，那也很好办:  <br>
+百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
 
 #### 4、创建主类
 在项目中新建包 `com.pj` ，在此包内新建主类 `SaTokenDemoApplication.java`，输入以下代码：
@@ -67,7 +68,7 @@ public class SaTokenDemoApplication {
 
 
 ## 普通spring环境
-- 普通spring环境与springboot环境大体无异，只不过需要在项目根目录手动创建配置文件`sa-token.properties`来完成配置
+普通spring环境与springboot环境大体无异，只不过需要在项目根目录手动创建配置文件`sa-token.properties`来完成配置
 
 
 ## 详细了解

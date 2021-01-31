@@ -310,7 +310,7 @@ public class StpUtil {
 	// =================== 角色验证操作 ===================  
 
  	/** 
- 	 * 指定账号id是否含有角色标识 
+ 	 * 指定账号id是否含有角色标识, 返回true或false  
  	 * @param loginId 账号id
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
@@ -320,7 +320,7 @@ public class StpUtil {
  	}
  	
  	/** 
- 	 * 当前账号id是否含有指定角色标识
+ 	 * 当前账号是否含有指定角色标识, 返回true或false 
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
  	 */
@@ -329,7 +329,7 @@ public class StpUtil {
  	}
 	
  	/** 
- 	 * 当前账号是否含有指定角色标识，没有就抛出异常
+ 	 * 当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException 
  	 * @param role 角色标识
  	 */
  	public static void checkRole(String role) {
@@ -337,7 +337,7 @@ public class StpUtil {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定角色标识, [指定多个，必须全都有]
+ 	 * 当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
  	 * @param roleArray 角色标识数组
  	 */
  	public static void checkRoleAnd(String... roleArray){
@@ -345,7 +345,7 @@ public class StpUtil {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定角色标识, [指定多个，有一个就可以通过]
+ 	 * 当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
  	 * @param roleArray 角色标识数组
  	 */
  	public static void checkRoleOr(String... roleArray){
@@ -356,46 +356,46 @@ public class StpUtil {
 	// =================== 权限验证操作 ===================
 
  	/** 
- 	 * 指定账号id是否含有指定权限 
+ 	 * 指定账号id是否含有指定权限, 返回true或false 
  	 * @param loginId 账号id
- 	 * @param permissionCode 权限码
+ 	 * @param permission 权限码
  	 * @return 是否含有指定权限
  	 */
-	public static boolean hasPermission(Object loginId, String permissionCode) {
-		return stpLogic.hasPermission(loginId, permissionCode);
+	public static boolean hasPermission(Object loginId, String permission) {
+		return stpLogic.hasPermission(loginId, permission);
 	}
 
  	/** 
- 	 * 当前账号id是否含有指定权限 
- 	 * @param permissionCode 权限码
+ 	 * 当前账号是否含有指定权限, 返回true或false 
+ 	 * @param permission 权限码
  	 * @return 是否含有指定权限
  	 */
-	public static boolean hasPermission(String permissionCode) {
-		return stpLogic.hasPermission(permissionCode);
+	public static boolean hasPermission(String permission) {
+		return stpLogic.hasPermission(permission);
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限， 没有就抛出异常 
- 	 * @param permissionCode 权限码
+ 	 * 当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
+ 	 * @param permission 权限码
  	 */
-	public static void checkPermission(String permissionCode) {
-		stpLogic.checkPermission(permissionCode);
+	public static void checkPermission(String permission) {
+		stpLogic.checkPermission(permission);
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限, [指定多个，必须全都有] 
- 	 * @param permissionCodeArray 权限码数组
+ 	 * 当前账号是否含有指定权限 [指定多个，必须全部验证通过] 
+ 	 * @param permissionArray 权限码数组
  	 */
-	public static void checkPermissionAnd(String... permissionCodeArray) {
-		stpLogic.checkPermissionAnd(permissionCodeArray);
+	public static void checkPermissionAnd(String... permissionArray) {
+		stpLogic.checkPermissionAnd(permissionArray);
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过] 
- 	 * @param permissionCodeArray 权限码数组
+ 	 * 当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
+ 	 * @param permissionArray 权限码数组
  	 */
-	public static void checkPermissionOr(String... permissionCodeArray) {
-		stpLogic.checkPermissionOr(permissionCodeArray);
+	public static void checkPermissionOr(String... permissionArray) {
+		stpLogic.checkPermissionOr(permissionArray);
 	}
 
 

@@ -763,7 +763,7 @@ public class StpLogic {
 	// =================== 角色验证操作 ===================  
 
  	/** 
- 	 * 指定账号id是否含有角色标识 
+ 	 * 指定账号id是否含有角色标识, 返回true或false 
  	 * @param loginId 账号id
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
@@ -774,7 +774,7 @@ public class StpLogic {
  	}
  	
  	/** 
- 	 * 当前账号id是否含有指定角色标识
+ 	 * 当前账号是否含有指定角色标识, 返回true或false 
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
  	 */
@@ -783,7 +783,7 @@ public class StpLogic {
  	}
 	
  	/** 
- 	 * 当前账号是否含有指定角色标识，没有就抛出异常
+ 	 * 当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException 
  	 * @param role 角色标识
  	 */
  	public void checkRole(String role) {
@@ -793,7 +793,7 @@ public class StpLogic {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定角色标识, [指定多个，必须全都有]
+ 	 * 当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleAnd(String... roleArray){
@@ -807,7 +807,7 @@ public class StpLogic {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定角色标识, [指定多个，有一个就可以通过]
+ 	 * 当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleOr(String... roleArray){
@@ -828,7 +828,7 @@ public class StpLogic {
 	// =================== 权限验证操作 ===================  
 
  	/** 
- 	 * 指定账号id是否含有指定权限 
+ 	 * 指定账号id是否含有指定权限, 返回true或false 
  	 * @param loginId 账号id
  	 * @param permission 权限码
  	 * @return 是否含有指定权限
@@ -839,7 +839,7 @@ public class StpLogic {
  	}
  	
  	/** 
- 	 * 当前账号id是否含有指定权限 
+ 	 * 当前账号是否含有指定权限, 返回true或false 
  	 * @param permission 权限码
  	 * @return 是否含有指定权限
  	 */
@@ -848,7 +848,7 @@ public class StpLogic {
  	}
 	
  	/** 
- 	 * 当前账号是否含有指定权限， 没有就抛出异常
+ 	 * 当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
  	 * @param permission 权限码
  	 */
  	public void checkPermission(String permission) {
@@ -858,7 +858,7 @@ public class StpLogic {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定权限, [指定多个，必须全都有]
+ 	 * 当前账号是否含有指定权限 [指定多个，必须全部验证通过] 
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionAnd(String... permissionArray){
@@ -872,7 +872,7 @@ public class StpLogic {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定权限, [指定多个，有一个就可以通过]
+ 	 * 当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionOr(String... permissionArray){

@@ -14,7 +14,7 @@
 		<version>1.12.1</version>
 	</dependency>
 ```
-优点：兼容性好，缺点：session序列化后基本不可读，对开发者来讲等同于乱码
+优点：兼容性好，缺点：Session序列化后基本不可读，对开发者来讲等同于乱码
 
 
 ### 2. sa-token 整合 Redis (使用jackson序列化方式)
@@ -26,7 +26,7 @@
 		<version>1.12.1</version>
 	</dependency>
 ```
-优点：session序列化后可读性强，可灵活手动修改，缺点：兼容性稍差
+优点：Session序列化后可读性强，可灵活手动修改，缺点：兼容性稍差
 
 
 <br>

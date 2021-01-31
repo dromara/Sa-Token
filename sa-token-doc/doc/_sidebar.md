@@ -10,8 +10,8 @@
 	- [权限验证](/use/jur-auth) 
 	- [Session会话](/use/session) 
 	- [踢人下线](/use/kick) 
-	- [持久层扩展(集成Redis)](/use/dao-extend) 
-	- [无Cookie模式(前后台分离)](/use/not-cookie) 
+	- [持久层扩展（集成Redis）](/use/dao-extend) 
+	- [无Cookie模式（前后台分离）](/use/not-cookie) 
 	- [模拟他人](/use/mock-person) 
 	- [多账号验证](/use/many-account) 
 	- [同端互斥登录](/use/mutex-login) 
@@ -29,6 +29,7 @@
 - **附录**
 	- [未登录场景值](/fun/not-login-scene)
 	- [token有效期详解](/fun/token-timeout)
+	- [TokenInfo参数详解](/fun/token-info)
 	
 
 
