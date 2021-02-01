@@ -24,10 +24,10 @@ StpUtil.getSessionByLoginId(10001);
 StpUtil.getSessionByLoginId(10001, false);
 
 // 获取账号10001是否含有指定角色标识 
-StpUtil.hasRole("super-admin");
+StpUtil.hasRole(10001, "super-admin");
 
 // 获取账号10001是否含有指定权限码
-StpUtil.hasPermission("user:add");
+StpUtil.hasPermission(10001, "user:add");
 ```
 
 
