@@ -175,6 +175,7 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 [click33](https://github.com/click33)、
 [AppleOfGray](https://gitee.com/appleOfGray)、
 [Auster](https://github.com/auster9021)、
+[ZhuBJ0510](https://gitee.com/zhubj0510)、
 [legg](https://gitee.com/legg321)、
 [xiaoshitou](https://gitee.com/smallstoneZ)、
 [zhangjiaxiaozhuo](https://gitee.com/zhangjiaxiaozhuo)、
