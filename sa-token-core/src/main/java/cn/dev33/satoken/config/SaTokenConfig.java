@@ -46,8 +46,13 @@ public class SaTokenConfig {
 	/** 获取[token专属session]时是否必须登录 (如果配置为true，会在每次获取[token-session]时校验是否登录) */
 	private Boolean tokenSessionCheckLogin = true;
 
+	/** 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作)  */
+	private Boolean autoRenew = true;
+
 	/** 是否在初始化配置时打印版本字符画 */
 	private Boolean isV = true;
+
+	
 
 	/**
 	 * @return token名称 (同时也是cookie名称)
@@ -208,6 +213,20 @@ public class SaTokenConfig {
 	}
 
 	/**
+	 * @return 是否打开了自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作) 
+	 */
+	public Boolean getAutoRenew() {
+		return autoRenew;
+	}
+
+	/**
+	 * @param autoRenew 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作) 
+	 */
+	public void setAutoRenew(Boolean autoRenew) {
+		this.autoRenew = autoRenew;
+	}
+	
+	/**
 	 * @return 是否在初始化配置时打印版本字符画
 	 */
 	public Boolean getIsV() {
@@ -221,13 +240,20 @@ public class SaTokenConfig {
 		this.isV = isV;
 	}
 
+	
+	/**
+	 * toString 
+	 */
 	@Override
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
 				+ ", allowConcurrentLogin=" + allowConcurrentLogin + ", isShare=" + isShare + ", isReadBody="
 				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
-				+ tokenSessionCheckLogin + ", isV=" + isV + "]";
+				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", isV=" + isV + "]";
 	}
+
+
+	
 
 }

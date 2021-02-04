@@ -1,4 +1,4 @@
-**<p align="center">
+<p align="center">
     <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.12.1</h1>
@@ -45,7 +45,7 @@ sa-token是一个轻量级Java权限认证框架，主要解决：登录认证�
 秉承着这个目的，`sa-token` 诞生了！
 
 
-## 架构设计
+## 框架优点？
 
 在架构设计上，`sa-token`拒绝引入复杂的概念，以实际业务需求为第一目标，业务上需要什么，sa-token就做什么，
 例如：踢人下线、自动续签、同端互斥登录等常见业务，均可以在框架内**一行代码调用实现**，简单粗暴，拒绝复杂！
@@ -57,8 +57,8 @@ sa-token是一个轻量级Java权限认证框架，主要解决：登录认证�
 总的来说，与其它权限认证框架相比，你将会从以下方面感受到 `sa-token` 的优势：
 1. **简单** ：可零配置启动框架，真正的开箱即用，低成本上手
 2. **强大** ：目前已集成几十项权限相关特性，涵盖了大部分业务场景的解决方案
-3. **易用** ：同样的一个功能，在别的框架中可能需要上百行代码，在sa-token中统统一行代码解决
-4. **高扩展** ：框架中几乎所有组件都提供了扩展接口，90%以上的逻辑都可以按需重写
+3. **易用** ：如丝般顺滑的API调用，大量高级特性统统只需一行代码即可实现
+4. **高扩展** ：几乎所有组件都提供了扩展接口，90%以上的逻辑都可以按需重写
 
 有了sa-token，你所有的权限认证问题，都不再是问题！
 
@@ -206,12 +206,10 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 ## 交流群
 QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM) 
 
-
 ![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=150')
 
  **微信群** ：
 
-![微信群](https://images.gitee.com/uploads/images/2021/0129/183207_4ad97c40_1766140.jpeg "sa-token-wx.jpg")
+![微信群](https://images.gitee.com/uploads/images/2021/0204/121632_63ee1287_1766140.png "sa-token-wx.jpg")
 
 <br>
-**

@@ -38,6 +38,8 @@
 	StpUtil.updateLastActivityToNow();
 ```
 
+同时，你还可以关闭框架的自动续签（在配置文件中配置 `autoRenew=false` ），此时续签操作完全由开发者控制，框架不再自动进行任何续签操作
+
 
 ### timeout与activity-timeout可以同时使用吗？
 **可以同时使用！**

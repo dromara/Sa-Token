@@ -345,9 +345,11 @@ public class StpLogic {
  		if(loginId.equals(NotLoginException.KICK_OUT)) {
  			throw NotLoginException.newInstance(loginKey, NotLoginException.KICK_OUT);
  		}
- 		// 检查是否已经 [临时过期]，同时更新[最后操作时间] 
- 		checkActivityTimeout(tokenValue);
- 		updateLastActivityToNow(tokenValue);
+ 		// 如果配置了自动续签, 则: 检查是否已经 [临时过期]，同时更新[最后操作时间] 
+ 		if(getConfig().getAutoRenew()) {
+ 	 		checkActivityTimeout(tokenValue);
+ 	 		updateLastActivityToNow(tokenValue);
+ 		}
  		// 至此，返回loginId 
  		return loginId;
  	}
@@ -961,7 +963,7 @@ public class StpLogic {
 			return null;
 		}
 		// 如果session为null的话直接返回 null 
-		SaSession session = getSession(false);
+		SaSession session = getSessionByLoginId(getLoginIdDefaultNull(), false);
 		if(session == null) {
 			return null;
 		}

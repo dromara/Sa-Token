@@ -247,6 +247,7 @@ public class TestController {
 	public AjaxJson test() {
 //		StpUtil.getTokenSession().logout();
 //		StpUtil.logoutByLoginId(10001);
+		StpUtil.getLoginId();
 		return AjaxJson.getSuccess();
 	}
 	
