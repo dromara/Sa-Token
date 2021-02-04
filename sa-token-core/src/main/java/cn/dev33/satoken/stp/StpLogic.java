@@ -451,8 +451,6 @@ public class StpLogic {
  	}
  	 
  	
- 	
-
 	// =================== session相关 ===================  
 
 	/** 
@@ -464,7 +462,7 @@ public class StpLogic {
 	public SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
 		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
-			session = new SaSession(sessionId);
+			session = SaTokenManager.getSaTokenAction().createSession(sessionId);
 			SaTokenManager.getSaTokenDao().saveSession(session, getConfig().getTimeout());
 		}
 		return session;

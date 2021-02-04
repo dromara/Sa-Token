@@ -113,7 +113,7 @@ public interface SaTokenDao {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有)
 	 * @param size 获取数量 
-	 * @return sessionId集合 
+	 * @return 查询到的数据集合 
 	 */
 	public List<String> searchData(String prefix, String keyword, int start, int size);
 	

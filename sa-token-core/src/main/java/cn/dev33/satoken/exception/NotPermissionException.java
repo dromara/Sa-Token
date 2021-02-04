@@ -8,7 +8,7 @@ import cn.dev33.satoken.stp.StpUtil;
  * @author kong
  *
  */
-public class NotPermissionException extends RuntimeException {
+public class NotPermissionException extends SaTokenException {
 
 	/**
 	 * 序列化版本号 

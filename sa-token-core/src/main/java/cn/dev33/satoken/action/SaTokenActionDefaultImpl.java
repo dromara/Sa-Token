@@ -3,6 +3,7 @@ package cn.dev33.satoken.action;
 import java.util.UUID;
 
 import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
@@ -47,6 +48,15 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		}
 		// 默认，还是uuid 
 		return UUID.randomUUID().toString();
+	}
+
+	
+	/**
+	 * 根据 SessionId 创建一个 Session 
+	 */
+	@Override
+	public SaSession createSession(String sessionId) {
+		return new SaSession(sessionId);
 	}
 	
 }

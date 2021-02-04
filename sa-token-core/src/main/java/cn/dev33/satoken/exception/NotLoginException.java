@@ -7,7 +7,7 @@ import java.util.List;
  * 一个异常：代表用户没有登录 
  * @author kong 
  */
-public class NotLoginException extends RuntimeException {
+public class NotLoginException extends SaTokenException {
 	
 	/**
 	 * 序列化版本号 

@@ -28,6 +28,8 @@ public class SaSession implements Serializable {
 	/** 此Session的所有挂载数据 */
 	private Map<String, Object> dataMap = new ConcurrentHashMap<String, Object>();
 
+	// ----------------------- 构建相关 
+	
 	/**
 	 * 构建一个Session对象
 	 */
@@ -36,7 +38,6 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 构建一个Session对象
-	 * 
 	 * @param id Session的id
 	 */
 	public SaSession(String id) {
@@ -45,8 +46,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 获取此会话id
-	 * 
+	 * 获取此Session的id
 	 * @return 此会话的id
 	 */
 	public String getId() {
@@ -55,13 +55,13 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 返回当前会话创建时间
-	 * 
 	 * @return 时间戳
 	 */
 	public long getCreateTime() {
 		return createTime;
 	}
 
+	
 	// ----------------------- TokenSign相关
 
 	/**
