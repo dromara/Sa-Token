@@ -1,4 +1,4 @@
-**<p align="center">
+<p align="center">
     <img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.12.1</h1>
@@ -206,12 +206,10 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 ## 交流群
 QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM) 
 
-
 ![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=150')
 
  **微信群** ：
 
-![微信群](https://images.gitee.com/uploads/images/2021/0204/114445_579bc4e4_8073399.png "sa-token-wx.jpg")
+![微信群](https://images.gitee.com/uploads/images/2021/0204/121632_63ee1287_1766140.png "sa-token-wx.jpg")
 
 <br>
-**
