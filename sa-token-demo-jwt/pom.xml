@@ -11,7 +11,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.0.RELEASE</version>
+		<relativePath/>
 	</parent>
+	
+	<!-- 定义sa-token版本号 -->
+	<properties>
+		<sa-token-version>1.12.1</sa-token-version>
+	</properties>
 
 	<dependencies>
 
@@ -29,7 +35,7 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.12.1</version>
+            <version>${sa-token-version}</version>
         </dependency>
         
         <!-- jwt -->
@@ -43,14 +49,14 @@
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
-            <version>1.12.1</version>
+            <version>${sa-token-version}</version>
         </dependency> -->
 		
 		<!-- sa-token整合redis (使用jackson序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>1.12.1</version>
+            <version>${sa-token-version}</version>
         </dependency> -->
         
 		<!-- 提供redis连接池 -->
@@ -63,7 +69,7 @@
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-aop</artifactId>
-            <version>1.12.1</version>
+            <version>${sa-token-version}</version>
         </dependency> -->
 
 		<!-- @ConfigurationProperties -->

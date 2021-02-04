@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-core</artifactId>
-			<version>1.12.1</version>
+            <version>${sa-token-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

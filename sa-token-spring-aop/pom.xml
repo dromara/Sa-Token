@@ -20,7 +20,7 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.12.1</version>
+            <version>${sa-token-version}</version>
         </dependency>
 		<!-- spring-boot-starter-aop -->
 		<dependency>
