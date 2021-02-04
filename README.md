@@ -211,7 +211,7 @@ QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
  **微信群** ：
 
-![微信群](https://images.gitee.com/uploads/images/2021/0129/183207_4ad97c40_1766140.jpeg "sa-token-wx.jpg")
+![微信群](https://images.gitee.com/uploads/images/2021/0204/114445_579bc4e4_8073399.png "sa-token-wx.jpg")
 
 <br>
 **
