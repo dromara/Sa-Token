@@ -54,6 +54,16 @@ public class SaSession implements Serializable {
 	}
 
 	/**
+	 * 写入此Session的id 
+	 * @param id SessionId
+	 * @return 对象自身 
+	 */
+	public SaSession setId(String id) {
+		this.id = id;
+		return this;
+	}
+	
+	/**
 	 * 返回当前会话创建时间
 	 * @return 时间戳
 	 */
@@ -61,6 +71,16 @@ public class SaSession implements Serializable {
 		return createTime;
 	}
 
+	/**
+	 * 写入此Session的创建时间 
+	 * @param createTime 时间戳 
+	 * @return 对象自身 
+	 */
+	public SaSession setCreateTime(long createTime) {
+		this.createTime = createTime;
+		return this;
+	}
+	
 	
 	// ----------------------- TokenSign相关
 
