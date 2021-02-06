@@ -98,7 +98,7 @@ public String insert(SysUser user) {
 StpUtil.logoutByLoginId(10001); 
 ```
 
-除了以上的功能，sa-token还可以一行代码完成以下功能：
+除了以上的示例，sa-token还可以一行代码完成以下功能：
 ``` java
 StpUtil.setLoginId(10001);          // 标记当前会话登录的账号id
 StpUtil.getLoginId();               // 获取当前会话登录的账号id
