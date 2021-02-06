@@ -2,10 +2,22 @@
 
 --- 
 
-- **sa-admin：**[一个多窗口后台模板，流畅、易上手、提高生产力](http://sa-admin.dev33.cn/)
-- **sa-vue-admin：**[对sa-admin的vue单页版实现, 基于vue-cli、element-ui的单页后台模板](http://sa-vue-admin.dev33.cn/)
-- **sa-plus：**[一个基于springboot架构的快速开发平台，内置代码生成器，吹灰之力快速CRUD](http://sa-plus.dev33.cn/)
-- **sa-doc：**[一个基于markdown的接口文档编写工具](http://sa-doc.dev33.cn/)
-- **SqlFly：**[一个java语言的ORM框架](https://sqlfly.dev33.cn/)
-- 虚位以待 
+#### 集成sa-token的开源项目:
+
+[**[ sa-plus ]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/sz6/sa-plus) 
+
+
+<br>
+
+#### 推荐项目：
+
+[[OkHttps] - 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps) 
+
+[[hasor] - 轻量级ioc/aop框架，采用"微内核+插件"的设计思想](https://gitee.com/zycgit/hasor) 
+
+[[sa-admin] - 一个多窗口后台模板，流畅、易上手、提高生产力](https://gitee.com/ejlchina-zhxu/okhttps) 
+
+
+<br>
+虚位以待... 
 
