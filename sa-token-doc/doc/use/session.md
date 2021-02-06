@@ -1,7 +1,10 @@
 # Session会话
 --- 
 
-Session是会话中专业的数据缓存组件，在`sa-token`中Session分为三种, 分别是：
+### Session是什么？
+
+Session是会话中专业的数据缓存组件，通过`Session`我们可以很方便的缓存一些高频读写数据，提高程序性能<br>
+在`sa-token`中, `Session` 分为三种, 分别是：
 - `User-Session`: 指的是框架为每个`loginId`分配的`Session` 
 - `Token-Session`: 指的是框架为每个`token`分配的`Session` 
 - `自定义Session`: 指的是以一个`特定的值`作为SessionId，来分配的`Session` 
