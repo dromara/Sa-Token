@@ -105,7 +105,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 			SaRouterUtil.match("/notice/**", () -> StpUtil.checkPermission("notice"));
 			SaRouterUtil.match("/comment/**", () -> StpUtil.checkPermission("comment"));
 			
-			// 匹配RESTful风格路由 
+			// 匹配 restful 风格路由 
 			SaRouterUtil.match("/article/get/{id}", () -> StpUtil.checkPermission("article"));
 			
 		})).addPathPatterns("/**");
