@@ -7,6 +7,16 @@
 ## 何为场景值
 在前面的章节中，我们了解到，在会话未登录的情况下尝试获取`loginId`会使框架抛出`NotLoginException`异常，而同为未登录异常却有五种抛出场景的区分 
 
+| 场景值  | 对应常量  |  含义说明                         |
+|---     |---        |---                            |
+| -1      | NotLoginException.NOT_TOKEN  |  未能从请求中读取到token         |
+| -2      | NotLoginException.INVALID_TOKEN|  已读取到token，但是token无效  |
+| -3      | NotLoginException.TOKEN_TIMEOUT|  已读取到token，但是token已经过期  |
+| -4      | NotLoginException.BE_REPLACED| 已读取到token，但是token已被顶下线  |
+| -5      | NotLoginException.KICK_OUT| 已读取到token，但是token已被踢下线  |
+
+
+
 那么，如何获取场景值呢？废话少说直接上代码：
 
 
