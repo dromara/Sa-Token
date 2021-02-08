@@ -50,7 +50,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .gt-container{padding: 1.5em; padding-bottom: 100px;}
 
 /* 调整表格的响应式 */
-#main table{margin-left: 25px;}
+#main table{margin-left: 0px;}
 @media screen and (min-width: 800px) {
 	#main table tr th{min-width: 150px;}
 }
