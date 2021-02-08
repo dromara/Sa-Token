@@ -49,6 +49,9 @@ public class SaTokenConfig {
 	/** 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作)  */
 	private Boolean autoRenew = true;
 
+	/** 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景 */
+	private String cookieDomain;
+
 	/** 是否在初始化配置时打印版本字符画 */
 	private Boolean isV = true;
 
@@ -225,7 +228,21 @@ public class SaTokenConfig {
 	public void setAutoRenew(Boolean autoRenew) {
 		this.autoRenew = autoRenew;
 	}
-	
+
+	/**
+	 * @return 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景
+	 */
+	public String getCookieDomain() {
+		return cookieDomain;
+	}
+
+	/**
+	 * @param cookieDomain 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景
+	 */
+	public void setCookieDomain(String cookieDomain) {
+		this.cookieDomain = cookieDomain;
+	}
+
 	/**
 	 * @return 是否在初始化配置时打印版本字符画
 	 */
@@ -240,7 +257,7 @@ public class SaTokenConfig {
 		this.isV = isV;
 	}
 
-	
+
 	/**
 	 * toString 
 	 */
@@ -250,9 +267,10 @@ public class SaTokenConfig {
 				+ ", allowConcurrentLogin=" + allowConcurrentLogin + ", isShare=" + isShare + ", isReadBody="
 				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
-				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", isV=" + isV + "]";
+				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain + ", isV="
+				+ isV + "]";
 	}
-
+	
 
 	
 

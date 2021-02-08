@@ -21,6 +21,10 @@
 	- [框架配置](/use/config) 
 	- [会话治理](/use/search-session) 
 
+- **进阶**
+	- [集群、分布式](/senior/dcs)
+	- [单点登录](/senior/sso)
+
 - **其它**
 	- [常见问题](/more/common-questions) 
 	- [友情链接](/more/link) 

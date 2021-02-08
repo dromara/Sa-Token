@@ -210,7 +210,8 @@ public class StpLogic {
 		setLastActivityToNow(tokenValue);  	
 		// cookie注入 
 		if(config.getIsReadCookie() == true){	
-			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)config.getTimeout());		
+			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, 
+					"/", config.getCookieDomain(), (int)config.getTimeout());		
 		}
 	}
 
@@ -558,7 +559,8 @@ public class StpLogic {
 				setLastActivityToNow(tokenValue);  
 				// cookie注入 
 				if(getConfig().getIsReadCookie() == true){	
-					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", (int)getConfig().getTimeout());		
+					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, 
+							"/", getConfig().getCookieDomain(), (int)getConfig().getTimeout());		
 				}
 			}
 		}

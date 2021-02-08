@@ -42,6 +42,13 @@ public class SaTokenInsideUtil {
 	}
 
 	/**
+	 * 指定字符串是否为null或者空字符串
+	 */
+	public static boolean isEmpty(String str) {
+		return str == null || "".equals(str);
+	}
+	
+	/**
 	 * 以当前时间戳和随机int数字拼接一个随机字符串
 	 * 
 	 * @return 随机字符串

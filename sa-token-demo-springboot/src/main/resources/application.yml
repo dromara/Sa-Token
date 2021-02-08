@@ -17,6 +17,8 @@ spring:
         is-share: true
         # token风格
         token-style: uuid
+        # 写入Cookie时显式指定的作用域, 用于单点登录二级域名共享Cookie的场景
+#        cookie-domain: stp.com
         
         
     # redis配置 

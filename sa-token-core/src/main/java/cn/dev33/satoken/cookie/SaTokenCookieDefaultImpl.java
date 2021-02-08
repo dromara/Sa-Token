@@ -24,8 +24,8 @@ public class SaTokenCookieDefaultImpl implements SaTokenCookie {
 	 * 添加cookie
 	 */
 	@Override
-	public void addCookie(HttpServletResponse response, String name, String value, String path, int timeout) {
-		SaTokenCookieUtil.addCookie(response, name, value, path, timeout);
+	public void addCookie(HttpServletResponse response, String name, String value, String path, String domain, int timeout) {
+		SaTokenCookieUtil.addCookie(response, name, value, path, domain, timeout);
 	}
 
 	/**

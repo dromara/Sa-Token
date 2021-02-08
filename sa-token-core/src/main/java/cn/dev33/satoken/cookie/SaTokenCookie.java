@@ -28,9 +28,10 @@ public interface SaTokenCookie {
 	 * @param name     Cookie名称
 	 * @param value    Cookie值
 	 * @param path     Cookie路径
+	 * @param domain   Cookie的作用域
 	 * @param timeout  过期时间 （秒）
 	 */
-	public void addCookie(HttpServletResponse response, String name, String value, String path, int timeout);
+	public void addCookie(HttpServletResponse response, String name, String value, String path, String domain, int timeout);
 
 	/**
 	 * 删除Cookie 

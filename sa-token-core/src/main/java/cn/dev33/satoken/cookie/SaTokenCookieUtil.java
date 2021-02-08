@@ -4,6 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.dev33.satoken.util.SaTokenInsideUtil;
+
 /**
  * Cookie操作工具类
  * 
@@ -37,12 +39,16 @@ public class SaTokenCookieUtil {
 	 * @param name     Cookie名称
 	 * @param value    Cookie值
 	 * @param path     Cookie写入路径
+	 * @param domain   Cookie的作用域
 	 * @param timeout  Cookie有效期 (秒)
 	 */
-	public static void addCookie(HttpServletResponse response, String name, String value, String path, int timeout) {
+	public static void addCookie(HttpServletResponse response, String name, String value, String path, String domain, int timeout) {
 		Cookie cookie = new Cookie(name, value);
-		if (path == null) {
+		if(SaTokenInsideUtil.isEmpty(path) == false) {
 			path = "/";
+		}
+		if(SaTokenInsideUtil.isEmpty(domain) == false) {
+			cookie.setDomain(domain);
 		}
 		cookie.setPath(path);
 		cookie.setMaxAge(timeout);
@@ -61,7 +67,7 @@ public class SaTokenCookieUtil {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie != null && (name).equals(cookie.getName())) {
-					addCookie(response, name, null, null, 0);
+					addCookie(response, name, null, null, null, 0);
 					return;
 				}
 			}
@@ -82,7 +88,7 @@ public class SaTokenCookieUtil {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if (cookie != null && (name).equals(cookie.getName())) {
-					addCookie(response, name, value, cookie.getPath(), cookie.getMaxAge());
+					addCookie(response, name, value, cookie.getPath(), cookie.getDomain(), cookie.getMaxAge());
 					return;
 				}
 			}
