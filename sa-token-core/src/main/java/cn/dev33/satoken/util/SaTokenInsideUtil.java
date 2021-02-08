@@ -43,6 +43,8 @@ public class SaTokenInsideUtil {
 
 	/**
 	 * 指定字符串是否为null或者空字符串
+	 * @param str 指定字符串
+	 * @return 是否为null或者空字符串
 	 */
 	public static boolean isEmpty(String str) {
 		return str == null || "".equals(str);

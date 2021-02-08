@@ -1,13 +1,28 @@
 # 更新日志 
 
 
+### 2021-2-8 @v1.13.0
+- 优化：优化源码注释与文档
+- 新增：文档集成Gitalk评论系统 
+- 优化：源码包`Maven`版本号更改为变量形式 
+- 修复：文档处方法名`getPermissionList`错误的bug 
+- 修复：修复`StpUtil.getTokenInfo()`会触发自动续签的bug 
+- 修复：修复接口 `SaTokenDao` 的 `searchData` 函数注释错误 
+- 新增：`SaSession`的创建抽象到`SaTokenAction`接口，方便按需重写 
+- 新建：框架内异常统一继承 `SaTokenException` 方便在异常处理时分辨处理 
+- 新增：`SaSession`新增`setId()`与`setCreateTime()`方法，方便部分框架的序列化 
+- 新增：新增`autoRenew`配置，用于控制是否打开自动续签模式
+- 新增：同域模式下的单点登录  **[重要]**
+- 新增：完善分布式会话的文档说明
+
+
 ### 2021-1-12 @v1.12.0
 - 新增：提供JWT集成示例 **[重要]**
 - 新增：新增路由式鉴权，可方便的根据路由匹配鉴权  **[重要]**
 - 新增：新增身份临时切换功能，可在一个代码段内将会话临时切换为其它账号  **[重要]**
 - 优化：将`SaCheckInterceptor.java`更名为`SaAnnotationInterceptor.java`，更语义化的名称 
 - 优化：优化文档
-- 升级：v1.12.1，新增`SaRouterUtil`工具类，更方便的路由鉴权 
+- 升级：v1.12.1，新增`SaRouterUtil`工具类，更方便的路由鉴权   **[重要]**
 
 
 ### 2021-1-10 @v1.11.0

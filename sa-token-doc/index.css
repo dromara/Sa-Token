@@ -22,7 +22,7 @@ body:not(.ready) {overflow: auto;}
 .content-box h1{font-size: 110px; font-weight: 300; position: relative;}
 .content-box h1 small{font-size: 20px; position: absolute; bottom: 0px;}
 .sub-title{font-size: 24px; font-weight: 400; margin-top: 30px; margin-bottom: 25px;}
-.content-box p{line-height: 30px;}
+.content-box p{line-height: 30px; padding: 0px 1em;}
 
 .btn-box{margin-top: 16px;}
 .btn-box a{

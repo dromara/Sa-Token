@@ -123,7 +123,7 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @param 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+	 * @param isShare 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
 	 */
 	public void setIsShare(Boolean isShare) {
 		this.isShare = isShare;
@@ -151,7 +151,7 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @param 是否尝试从header里读取token
+	 * @param isReadHead 是否尝试从header里读取token
 	 */
 	public void setIsReadHead(Boolean isReadHead) {
 		this.isReadHead = isReadHead;
@@ -165,7 +165,7 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @param 是否尝试从cookie里读取token
+	 * @param isReadCookie 是否尝试从cookie里读取token
 	 */
 	public void setIsReadCookie(Boolean isReadCookie) {
 		this.isReadCookie = isReadCookie;
@@ -179,7 +179,7 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @param token风格(默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik)
+	 * @param tokenStyle token风格(默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik)
 	 */
 	public void setTokenStyle(String tokenStyle) {
 		this.tokenStyle = tokenStyle;
