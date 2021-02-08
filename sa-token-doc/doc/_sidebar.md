@@ -13,7 +13,6 @@
 	- [持久层扩展（集成Redis）](/use/dao-extend) 
 	- [无Cookie模式（前后台分离）](/use/not-cookie) 
 	- [模拟他人](/use/mock-person) 
-	- [多账号验证](/use/many-account) 
 	- [同端互斥登录](/use/mutex-login) 
 	- [注解式鉴权](/use/at-check) 
 	- [路由拦截式鉴权](/use/route-check) 
@@ -24,6 +23,7 @@
 - **进阶**
 	- [集群、分布式](/senior/dcs)
 	- [单点登录](/senior/sso)
+	- [多账号验证](/use/many-account) 
 
 - **其它**
 	- [常见问题](/more/common-questions) 
