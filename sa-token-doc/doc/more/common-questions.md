@@ -1,21 +1,79 @@
 # 常见问题
+本篇整理大家在群聊里经常提问的一些问题，如有补充，欢迎提交pr
 
 --- 
 
-### 用这个框架我需要很多配置吗?
-零配置开箱即用，但同时也支持自定义配置：参考：[框架配置](use/config)
+### 加了注解进行鉴权认证，不生效？
+注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成`AOP模块`，
+如果已经打开仍然没有效果，加群说明一下复现步骤 
 
 
-### 如何踢人下线?
-参考：[踢人下线](use/kick)
+### 整合Redis时，除了引入pom依赖，还需要做其它的吗？
+引入pom依赖后，在框架层面你无须做其它事情，但是你需要为项目指定一下`Redis`的连接信息，参考此文件：[application-dev](https://gitee.com/sz6/sa-plus/blob/master/sp-server/src/main/resources/application-dev.yml)
 
 
-### 能否集成redis?
-参考：[持久层扩展](use/dao-extend)
+### 登录方法需要我自己实现吗？
+是的，不同于`shiro`等框架，`sa-token`不会在登录流程中强插一脚，开发者比对完用户的账号和密码之后，只需要调用`StpUtil.setLogin(id)`通知一下框架即可
 
 
-### 能否使用在APP、小程序等前后台分离项目中?
-参考：[无cookie模式](use/not-cookie)
+### 一个User对象存进Session后，再取出来时报错：无法从User类型转换成User类型？
+群员亲测，当你打开热部署模式后，先存进去的对象，再热刷新后再取出，会报错，关闭热刷新即可解决
+
+
+### 框架抛出的权限不足异常，我想根据自定义提示信息，可以吗？
+可以，在全局异常拦截器里捕获`NotPermissionException`，可以通过`getCode()`获取没有通过认证的权限码，可以据此自定义返回信息
+
+
+### 我的项目权限模型不是RBAC模型，很复杂，可以集成吗？
+无论什么模型，只要能把一个用户具有的所有权限塞到一个List里返回给框架，就能集成
+
+
+### SaRouterUtil.match 有多个路径需要排除怎么办？
+可以点进去源码看一下，`SaRouterUtil.match`方法有多个重载，可以放一个集合, 例如：<br>
+`SaRouterUtil.match(Arrays.asList("/**"), Arrays.asList("/login", "/reg"), () -> StpUtil.checkLogin());`
+
+
+### 为什么StpUtil.setLoginId() 不能直接写入一个User对象？
+`StpUtil.setLoginId()`只是为了给当前会话做个唯一标记，通常写入`UserId`即可，如果要存储User对象，可以使用`StpUtil.getSession()`获取Session对象进行存储 
+
+
+### 前后台分离模式下和普通模式有何不同？
+主要是失去了`Cookie`无法自动化保存和提交`token秘钥`，可以参考章节：[前后台分离](/use/not-cookie)
+
+
+### 前后台分离时，前端提交的header参数是叫token还是satoken还是tokenName？
+默认是satoken，如果想换一个名字，更改一下配置文件的`tokenName`即可
+
+
+### Springboot环境下采用自定义拦截器排除了某个路径仍然被拦截了？
+可能是404了，SpringBoot环境下如果访问接口404后，会被重定向到`/error`，然后被再次拦截，如果是其它原因，欢迎加群反馈
+
+
+### 如何把权限精确搭到按钮级？
+在登录时，把当前用户拥有的权限码一次性返回给前端，让前端进行判断，<br>
+例如使用vue等框架可以这样写：`<button v-if="arr.indexOf('user:delete') > -1">删除按钮</button>` <br>
+其中`arr`是当前用户拥有的权限码数组，`user:delete`是显示按钮需要拥有的权限码，`删除按钮`是用户拥有权限码才可以看到的内容
+
+
+### 权限可以做成动态的吗？
+权限本来就是动态的，只有jwt那种模式才是非动态的
+
+
+### 集成jwt后为什么在 getSession 时提示 jwt has not session ?
+`jwt`的招牌便是无须借助服务端完成会话管理，如果集成`jwt`后再次使用`Session`功能，那将又回到了传统`Session`模式，属于自断招牌，此种技术组合没有任何意义，因此jwt集成模式不提供`Session`功能，如果需要`Session`功能，就不要集成`jwt`
+
+
+### 怎么关闭默认的Cookie模式呢？
+在配置文件将`isReadCookie`值配置为`false`
+
+
+### 怎么关掉每次启动时的字符画打印？
+在配置文件将`isV`值配置为`false`
+
+
+### StpUtil.getSession()必须登录后才能调用吗？如果我想在用户未登录之前存储一些数据应该怎么办？
+`StpUtil.getSession()`获取的是`User-Session`，必须登录后才能使用，如果需要在未登录状态下也使用Session功能，请使用`Token-Session` <br>
+步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 
 
 
 ### 还是有不明白到的地方?
