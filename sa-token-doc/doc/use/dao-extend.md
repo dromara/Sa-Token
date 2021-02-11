@@ -11,24 +11,24 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 ### 1. sa-token 整合 Redis (使用jdk默认序列化方式)
 (注意: 整合Redis只需要引入对应的pom依赖即可，所有上层API保持不变)
 ``` xml 
-	<!-- sa-token整合redis (使用jdk默认序列化方式) -->
-	<dependency>
-		<groupId>cn.dev33</groupId>
-		<artifactId>sa-token-dao-redis</artifactId>
-		<version>1.13.0</version>
-	</dependency>
+<!-- sa-token整合redis (使用jdk默认序列化方式) -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis</artifactId>
+	<version>1.13.0</version>
+</dependency>
 ```
 优点：兼容性好，缺点：Session序列化后基本不可读，对开发者来讲等同于乱码
 
 
 ### 2. sa-token 整合 Redis (使用jackson序列化方式)
 ``` xml 
-	<!-- sa-token整合redis (使用jackson序列化方式) -->
-	<dependency>
-		<groupId>cn.dev33</groupId>
-		<artifactId>sa-token-dao-redis-jackson</artifactId>
-		<version>1.13.0</version>
-	</dependency>
+<!-- sa-token整合redis (使用jackson序列化方式) -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<version>1.13.0</version>
+</dependency>
 ```
 优点：Session序列化后可读性强，可灵活手动修改，缺点：兼容性稍差
 
@@ -37,11 +37,11 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 
 **请注意，无论使用哪种序列化方式，你都必须为项目提供一个Redis实例化方案，例如：**
 ``` xml
-	<!-- 提供redis连接池 -->
-	<dependency>
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-pool2</artifactId>
-	</dependency>
+<!-- 提供redis连接池 -->
+<dependency>
+	<groupId>org.apache.commons</groupId>
+	<artifactId>commons-pool2</artifactId>
+</dependency>
 ```
 
 

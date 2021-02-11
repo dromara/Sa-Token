@@ -77,14 +77,30 @@
 							].join('');
 							return html + footer;
 						});
+						// 每次路由切换时数据全部加载完成后调用，没有参数。
+						hook.doneEach(function() {
+							$('pre code').each(function(){
+								var lines = $(this).text().split('\n').length;
+								var $numbering = $('<ul/>').addClass('code-line-box');
+								$(this)
+									.addClass('has-numbering')
+									.parent()
+									.append($numbering);
+								for(i=1;i<=lines;i++){
+									$numbering.append($('<li/>').text(i));
+								}
+							});
+						});
 					}
-				]
+				],
 			}
 		</script>
 		<script src="https://unpkg.zhimg.com/docsify@4.9.4/lib/docsify.min.js"></script>
 		<script src="https://unpkg.zhimg.com/docsify-copy-code@2.1.0/dist/docsify-copy-code.min.js"></script>
 		<script src="https://unpkg.zhimg.com/prismjs@1.19.0/components/prism-java.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+		
+		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
 
 		<!-- 搜索引擎自动提交 -->
 		<script>

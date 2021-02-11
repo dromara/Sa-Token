@@ -42,14 +42,14 @@
 很简单，我们只要更改一下 `StpUserUtil` 的 `TokenName` 即可，参考示例如下：
 
 ``` java
-	// 底层的 StpLogic 对象  
-	public static StpLogic stpLogic = new StpLogic("login") {
-		// 重写 `getTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
-		@Override
-		public String getTokenName() {
-			return super.getKeyTokenName() + "-user";
-		}
-	}; 
+// 底层的 StpLogic 对象  
+public static StpLogic stpLogic = new StpLogic("login") {
+	// 重写 `getTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
+	@Override
+	public String getTokenName() {
+		return super.getKeyTokenName() + "-user";
+	}
+}; 
 ```
 
 再次调用 `StpUserUtil.setLoginId(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`

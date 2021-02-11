@@ -1,3 +1,4 @@
+/* 调整一下左侧树的样式 */
 body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;}
 .logo-box {position: absolute;left: 30px;top: 10px;cursor: pointer;color: #000;}
 .logo-box img {width: 50px;height: 50px;vertical-align: middle;}
@@ -12,18 +13,18 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 	.main-box .markdown-section{max-width: 1000px;}
 }
 
-/* 左侧树优化 */
+/* 调整一下左侧树的字体样式 */
 .sidebar .sidebar-nav>ul>li>p{font-size: 1.2em; margin-top: 10px;}
 .sidebar ul li a{color: #222;}
 .sidebar .sidebar-nav>ul>li>ul>li>a{/* color: #222; */font-size: 16px; /* font-weight: 700; */}
 
 
-/* ============== 样式优化 ================ */
+/* ============== 代码样式优化 ================ */
 
 /* 背景变黑 */
-.main-box [data-lang]{padding: 0px !important; border-radius: 8px; overflow: hidden;}
-.main-box [class^="lang-"]{border: 0px red solid; padding: 1.5em 1.2em;/* background-color: #282828; */ background-color: #090300; color: #FFF;}
-.main-box [data-lang]{overflow: auto;}
+.main-box [data-lang]{padding: 0px !important; border-radius: 4px;overflow-x: auto; overflow-y: hidden;}
+.main-box [v-pre] code{border: 0px red solid; border-radius: 0px; /* background-color: #282828; */ background-color: #111; color: #FFF;}
+.main-box [v-pre] code{padding: 1.5em 1.3em; margin-left: 40px !important;}
 /* .main-box h2{margin-top: 70px;} */
 
 /* xml语言样式优化 */
@@ -32,7 +33,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .lang-xml .token.attr-value{color: #A6E22E;}
 
 /* java语言样式优化 */
-.main-box .lang-java{color: #01a252; opacity: 1;}
+.main-box .lang-java{color: #01a252 !important;; opacity: 1;}
 .lang-java .token.keyword{color: #db2d20;}
 .lang-java .token.namespace,.lang-java .token.namespace *{color: #01A252; opacity: 1;}
 .lang-java .token.class-name,.lang-java .cm-variable{color: #55b5db; opacity: 1;}
@@ -41,7 +42,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .lang-java .token.punctuation{color: #ddd;}
 
 /* js语言样式优化 */
-.main-box .lang-js{color: #01a252;}
+.main-box .lang-js{color: #01a252 !important;}
 .lang-js .token.comment{color: #CDAB53;}
 /* .lang-js .token.string{color: #fded02;} */
 .lang-js .token.string{color: #ddd;}
@@ -54,3 +55,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 @media screen and (min-width: 800px) {
 	#main table tr th{min-width: 150px;}
 }
+
+/* 代码行号盒子样式 */
+.code-line-box {list-style-type: none; border-right: 1px solid #000; position: absolute; top: 0; left: 0; width: 40px;}
+.code-line-box {padding: calc(1.5em + 1px)  0px !important; padding-bottom: calc(1.5em + 20px) !important; margin: 0px !important;}
+.code-line-box {line-height: inherit !important; background-color: #111; color: #aaa;font-weight: 400;font-size: 0.85em;text-align: center;}
+.code-line-box {font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;}

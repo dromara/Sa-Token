@@ -48,7 +48,6 @@ StpUtil.getLoginIdDefaultNull();
 
 // 获取当前会话登录id, 如果未登录，则返回默认值 （`defaultValue`可以为任意类型）
 StpUtil.getLoginId(T defaultValue);
-
 ```
 
 

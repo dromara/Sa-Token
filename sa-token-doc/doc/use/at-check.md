@@ -30,34 +30,34 @@ sa-token内置两种模式完成注解鉴权，分别是`AOP模式`和`拦截器
 **登录验证**
 
 ``` java 
-	// 注解式鉴权：当前会话必须登录才能通过 
-	@SaCheckLogin						
-	@RequestMapping("info")
-	public String info() {
-		return "查询用户信息";
-	}
+// 注解式鉴权：当前会话必须登录才能通过 
+@SaCheckLogin						
+@RequestMapping("info")
+public String info() {
+	return "查询用户信息";
+}
 ```
 
 **角色验证**
 
 ``` java 
-	// 注解式鉴权：当前会话必须具有指定角色标识才能通过 
-	@SaCheckRole("super-admin")		
-	@RequestMapping("add")
-	public String add() {
-		return "用户增加";
-	}
+// 注解式鉴权：当前会话必须具有指定角色标识才能通过 
+@SaCheckRole("super-admin")		
+@RequestMapping("add")
+public String add() {
+	return "用户增加";
+}
 ```
 
 **权限验证**
 
 ``` java 
-	// 注解式鉴权：当前会话必须具有指定权限才能通过 
-	@SaCheckPermission("user-add")		
-	@RequestMapping("add")
-	public String add() {
-		return "用户增加";
-	}
+// 注解式鉴权：当前会话必须具有指定权限才能通过 
+@SaCheckPermission("user-add")		
+@RequestMapping("add")
+public String add() {
+	return "用户增加";
+}
 ```
 
 注：以上两个注解都可以加在类上，代表为这个类所有方法进行鉴权
@@ -66,12 +66,12 @@ sa-token内置两种模式完成注解鉴权，分别是`AOP模式`和`拦截器
 #### 设定校验模式
 `@SaCheckRole`与`@SaCheckPermission`注解可设置校验模式，例如：
 ``` java
-	// 注解式鉴权：只要具有其中一个权限即可通过校验 
-	@RequestMapping("atJurOr")
-	@SaCheckPermission(value = {"user-add", "user-all", "user-delete"}, mode = SaMode.OR)		
-	public AjaxJson atJurOr() {
-		return AjaxJson.getSuccessData("用户信息");
-	}
+// 注解式鉴权：只要具有其中一个权限即可通过校验 
+@RequestMapping("atJurOr")
+@SaCheckPermission(value = {"user-add", "user-all", "user-delete"}, mode = SaMode.OR)		
+public AjaxJson atJurOr() {
+	return AjaxJson.getSuccessData("用户信息");
+}
 ```
 
 
@@ -87,14 +87,14 @@ mode有两种取值：
 以`SpringBoot2.0`为例, 新建配置类`MySaTokenConfig.java` 
 
 ``` java
-	@Configuration
-	public class MySaTokenConfig implements WebMvcConfigurer {
-		// 注册sa-token的注解拦截器，打开注解式鉴权功能 
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");	
-		}
+@Configuration
+public class MySaTokenConfig implements WebMvcConfigurer {
+	// 注册sa-token的注解拦截器，打开注解式鉴权功能 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");	
 	}
+}
 ```
 保证此类被`springboot`启动类扫描到即可
 
