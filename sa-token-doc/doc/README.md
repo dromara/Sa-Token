@@ -118,19 +118,19 @@ StpUtil.logoutByLoginId(10001);
 
 除了以上的示例，sa-token还可以一行代码完成以下功能：
 ``` java
-StpUtil.setLoginId(10001); // 标记当前会话登录的账号id
-StpUtil.getLoginId(); // 获取当前会话登录的账号id
-StpUtil.isLogin(); // 获取当前会话是否已经登录, 返回true或false
-StpUtil.logout(); // 当前会话注销登录
-StpUtil.logoutByLoginId(10001); // 让账号为10001的会话注销登录（踢人下线）
-StpUtil.hasRole("super-admin"); // 查询当前账号是否含有指定角色标识, 返回true或false
-StpUtil.hasPermission("user:add"); // 查询当前账号是否含有指定权限, 返回true或false
-StpUtil.getSession(); // 获取当前账号id的Session
+StpUtil.setLoginId(10001);          // 标记当前会话登录的账号id
+StpUtil.getLoginId();               // 获取当前会话登录的账号id
+StpUtil.isLogin();                  // 获取当前会话是否已经登录, 返回true或false
+StpUtil.logout();                   // 当前会话注销登录
+StpUtil.logoutByLoginId(10001);     // 让账号为10001的会话注销登录（踢人下线）
+StpUtil.hasRole("super-admin");     // 查询当前账号是否含有指定角色标识, 返回true或false
+StpUtil.hasPermission("user:add");  // 查询当前账号是否含有指定权限, 返回true或false
+StpUtil.getSession();               // 获取当前账号id的Session 
 StpUtil.getSessionByLoginId(10001); // 获取账号id为10001的Session
-StpUtil.getTokenValueByLoginId(10001); // 获取账号id为10001的token令牌值
-StpUtil.setLoginId(10001, "PC"); // 指定设备标识登录
-StpUtil.logoutByLoginId(10001, "PC"); // 指定设备标识进行强制注销 (不同端不受影响)
-StpUtil.switchTo(10044); // 将当前会话身份临时切换为其它账号
+StpUtil.getTokenValueByLoginId(10001);  // 获取账号id为10001的token令牌值
+StpUtil.setLoginId(10001, "PC");        // 指定设备标识登录
+StpUtil.logoutByLoginId(10001, "PC");   // 指定设备标识进行强制注销 (不同端不受影响)
+StpUtil.switchTo(10044);                // 将当前会话身份临时切换为其它账号 
 ```
 sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳官方在线文档
 
