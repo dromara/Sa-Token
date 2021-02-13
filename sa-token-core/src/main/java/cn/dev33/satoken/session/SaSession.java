@@ -119,17 +119,15 @@ public class SaSession implements Serializable {
 	 * @param tokenSign token签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
-		// 判断是否存在列表
-		boolean tokenExits = this.getTokenSignList()
-				.stream()
-				.map(TokenSign::getValue)
-				.anyMatch(it -> it.equals(tokenSign.getValue()));
 		// 如果已经存在于列表中，则无需再次添加
-		if (tokenExits == false) {
-			// 添加并更新
-			tokenSignList.add(tokenSign);
-			update();
+		for (TokenSign tokenSign2 : getTokenSignList()) {
+			if (tokenSign2.getValue().equals(tokenSign.getValue())) {
+				return;
+			}
 		}
+		// 添加并更新
+		tokenSignList.add(tokenSign);
+		update();
 	}
 
 	/**
