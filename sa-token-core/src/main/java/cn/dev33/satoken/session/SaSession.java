@@ -1,5 +1,7 @@
 package cn.dev33.satoken.session;
 
+import cn.dev33.satoken.SaTokenManager;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -7,11 +9,9 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.dev33.satoken.SaTokenManager;
-
 /**
  * Session Model
- * 
+ *
  * @author kong
  *
  */
@@ -26,10 +26,10 @@ public class SaSession implements Serializable {
 	private long createTime;
 
 	/** 此Session的所有挂载数据 */
-	private Map<String, Object> dataMap = new ConcurrentHashMap<String, Object>();
+	private final Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
-	// ----------------------- 构建相关 
-	
+	// ----------------------- 构建相关
+
 	/**
 	 * 构建一个Session对象
 	 */
@@ -54,15 +54,15 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 写入此Session的id 
+	 * 写入此Session的id
 	 * @param id SessionId
-	 * @return 对象自身 
+	 * @return 对象自身
 	 */
 	public SaSession setId(String id) {
 		this.id = id;
 		return this;
 	}
-	
+
 	/**
 	 * 返回当前会话创建时间
 	 * @return 时间戳
@@ -72,26 +72,26 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 写入此Session的创建时间 
-	 * @param createTime 时间戳 
-	 * @return 对象自身 
+	 * 写入此Session的创建时间
+	 * @param createTime 时间戳
+	 * @return 对象自身
 	 */
 	public SaSession setCreateTime(long createTime) {
 		this.createTime = createTime;
 		return this;
 	}
-	
-	
+
+
 	// ----------------------- TokenSign相关
 
 	/**
 	 * 此Session绑定的token签名列表
 	 */
-	private List<TokenSign> tokenSignList = new Vector<TokenSign>();
+	private final List<TokenSign> tokenSignList = new Vector<>();
 
 	/**
 	 * 返回token签名列表的拷贝副本
-	 * 
+	 *
 	 * @return token签名列表
 	 */
 	public List<TokenSign> getTokenSignList() {
@@ -100,7 +100,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 查找一个token签名
-	 * 
+	 *
 	 * @param tokenValue token值
 	 * @return 查找到的tokenSign
 	 */
@@ -115,24 +115,26 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 添加一个token签名
-	 * 
+	 *
 	 * @param tokenSign token签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
+		// 判断是否存在列表
+		boolean tokenExits = this.getTokenSignList()
+				.stream()
+				.map(TokenSign::getValue)
+				.anyMatch(it -> it.equals(tokenSign.getValue()));
 		// 如果已经存在于列表中，则无需再次添加
-		for (TokenSign tokenSign2 : getTokenSignList()) {
-			if (tokenSign2.getValue().equals(tokenSign.getValue())) {
-				return;
-			}
+		if (tokenExits == false) {
+			// 添加并更新
+			tokenSignList.add(tokenSign);
+			update();
 		}
-		// 添加并更新
-		tokenSignList.add(tokenSign);
-		update();
 	}
 
 	/**
 	 * 移除一个token签名
-	 * 
+	 *
 	 * @param tokenValue token名称
 	 */
 	public void removeTokenSign(String tokenValue) {
@@ -146,7 +148,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 写入一个值
-	 * 
+	 *
 	 * @param key   名称
 	 * @param value 值
 	 */
@@ -157,7 +159,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 取出一个值
-	 * 
+	 *
 	 * @param key 名称
 	 * @return 值
 	 */
@@ -167,7 +169,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 取值，并指定取不到值时的默认值
-	 * 
+	 *
 	 * @param key          名称
 	 * @param defaultValue 取不到值的时候返回的默认值
 	 * @return value
@@ -182,7 +184,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 移除一个值
-	 * 
+	 *
 	 * @param key 要移除的值的名字
 	 */
 	public void removeAttribute(String key) {
@@ -200,17 +202,17 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 是否含有指定key
-	 * 
+	 *
 	 * @param key 是否含有指定值
 	 * @return 是否含有
 	 */
 	public boolean containsAttribute(String key) {
-		return dataMap.keySet().contains(key);
+		return dataMap.containsKey(key);
 	}
 
 	/**
 	 * 返回当前session会话所有key
-	 * 
+	 *
 	 * @return 所有值的key列表
 	 */
 	public Set<String> attributeKeys() {
@@ -219,7 +221,7 @@ public class SaSession implements Serializable {
 
 	/**
 	 * 获取数据挂载集合（如果更新map里的值，请调用session.update()方法避免产生脏数据 ）
-	 * 
+	 *
 	 * @return 返回底层储存值的map对象
 	 */
 	public Map<String, Object> getDataMap() {
