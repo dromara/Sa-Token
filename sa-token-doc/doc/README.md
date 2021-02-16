@@ -208,6 +208,6 @@ QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
 **微信群** ：
 
-![微信群](https://images.gitee.com/uploads/images/2021/0204/121632_63ee1287_1766140.png "sa-token-wx.jpg")
+![微信群](https://images.gitee.com/uploads/images/2021/0216/170729_25fcde8b_8073399.jpeg "sa-token-wx.jpg")
 
 <br>
