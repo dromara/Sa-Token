@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>服务提供方-确认授权页</title>
+		<style type="text/css">
+			*{margin: 0px; padding: 0px;}
+			.login-box{width: 300px; margin: 50px auto; padding: 100px; border: 1px #000 solid;}
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>服务提供方-确认授权页</h2> <br>
+			<div>
+				<div>应用id: <span class="client_id"></span></div>
+				<div>请求授权: <span class="scope"></span></div>
+				<br>
+				<div>是否同意授权: </div>
+				<div>
+					<button onclick="ok()">同意</button>
+					<button onclick="no()">拒绝</button>
+				</div>
+			</div>
+		</div>
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script type="text/javascript">
+			
+			// 获取code详细信息 
+			var code = getParam("code", null);
+			var codeObj = null;
+			if(code == null) {
+				throw alert("无效code");
+			}
+			$.ajax({
+				url: '/oauth2/getCodeInfo',
+				data: {code: code},
+				dataType: 'json',
+				success: function(res) {
+					if(res.data == null) {
+						return alert('无效授权码');
+					}
+					codeObj = res.data;
+					$(".client_id").html(res.data.clientId);
+					$(".scope").html(res.data.scope);
+				},
+				error: function(e, ee, eee) {
+					console.log('error');
+					alert(eee);
+				}
+			});
+			
+			// 确认授权 
+			function ok() {
+				$.ajax({
+					url: '/oauth2/confirm',
+					data: {code: code},
+					dataType: 'json',
+					success: function(res) {
+						if(res.code == 200) {
+							// 跳转 
+							location.href = codeObj.redirectUri;
+						} else {
+							alert(res.msg);
+						}
+					},
+					error: function(e, ee, eee) {
+						alert(eee);
+					}
+				});
+			}
+			
+			// 拒绝授权时，跳入拒绝授权地址 
+			function no() {
+				// alert(codeObj.rejectUri)
+				location.href = codeObj.rejectUri;
+			}
+			
+			// 从url中查询到指定名称的参数值 
+			function getParam(name, defaultValue){
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

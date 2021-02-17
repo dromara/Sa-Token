@@ -32,4 +32,14 @@ public class SaTokenException extends RuntimeException {
 		super(cause);
 	}
 
+	/**
+	 * 构建一个异常
+	 * 
+	 * @param message 异常信息
+	 * @param cause 异常对象
+	 */
+	public SaTokenException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

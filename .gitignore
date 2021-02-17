@@ -6,6 +6,7 @@ bin/
 unpackage/
 .classpath
 .project
+*.iml
 
 .factorypath
 /.factorypath

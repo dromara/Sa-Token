@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.pj</groupId>
+	<artifactId>sa-token-demo-oauth2-server</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<!-- SpringBoot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.3.RELEASE</version>
+	</parent>
+
+	<!-- 指定一些属性 -->
+	<properties> 
+		<java.version>1.8</java.version>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+	</properties>
+	
+	<dependencies>
+
+		<!-- springboot依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		
+		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<dependency>
+		    <groupId>cn.dev33</groupId>
+		    <artifactId>sa-token-spring-boot-starter</artifactId>
+		    <version>1.13.0</version>
+		</dependency>
+
+		<!-- sa-token 实现 oauth2.0 -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-oauth2</artifactId>
+            <version>1.13.0-alpha</version>
+        </dependency>
+
+		<!-- sa-token整合redis (使用jackson序列化方式) -->
+		<!-- <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-dao-redis-jackson</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency> -->
+        
+		<!-- ConfigurationProperties -->
+        <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-configuration-processor</artifactId>
+        	<optional>true</optional>
+        </dependency>
+        
+	</dependencies>
+
+
+
+
+</project>

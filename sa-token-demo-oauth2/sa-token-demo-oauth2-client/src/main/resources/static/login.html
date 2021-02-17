@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>客户端-登录页</title>
+		<style type="text/css">
+			*{margin: 0px; padding: 0px;}
+			.login-box{width: 500px; margin: 50px auto;}
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>客户端-登录页</h2> <br>
+			<div>
+				当前是否登录: <span class="login-info"></span>
+				<button onclick="logout()">注销登录</button>
+			</div>
+			<br/>
+			点此按钮开始使用OAuth2.0开放平台快捷登录：
+			<button onclick="requestOAuth2()">快捷登录</button>
+		</div>
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script type="text/javascript">
+
+			// 获取登录信息 
+			var currUserId = null;
+			function getLoginInfo() {
+				$.ajax({
+					url: '/getLoginInfo',
+					data: {},
+					dataType: 'json',
+					success: function(res) {
+						if(res.data == null) {
+							$(".login-info").html('<b style="color: red;">未登录</b>');
+							// 如果当前未登录，并且此时url中有code参数, 则尝试使用code码进行登录 
+							var code = getParam('code', null);
+							if(code != null) {
+								doCodeLogin();
+							}
+						} else {
+							$(".login-info").html('<b style="color: green;">已登录, userId=' + res.data + '</b>');
+							currUserId = res.data;
+						}
+					},
+					error: function(e, ee, eee) {
+						console.log('error');
+						alert(eee);
+					}
+				});
+			}
+			getLoginInfo();
+			
+			// 注销登录 
+			function logout() {
+				$.ajax({
+					url: '/logout',
+					dataType: 'json',
+					success: function(res) {
+						alert('注销成功');
+						location.href = "./login.html";
+					},
+					error: function(e, ee, eee) {
+						alert(eee);
+					}
+				});
+			}
+			
+			// 请求OAuth2授权
+			function requestOAuth2() {
+				// 如果当前已经登录，则必须先退出 
+				if(currUserId != null) {
+					alert('当前已经登录, 请先注销');
+					return;
+				}
+				// 拼接地址 
+				var url = "http://localhost:8001/oauth2/authorize" + 
+					"?client_id=123123123" +	// 应用id 
+					"&scope=userinfo" +	// 授权范围 
+					// "&redirect_uri=" + encodeURIComponent(location.href) // 重定向地址 
+					"&redirect_uri=" + encodeURIComponent("http://localhost:8002/login.html") // 重定向地址 
+					"&response_type=code" + // 返回格式
+					"&state=123456789"; // 授权范围 
+				console.log(url);
+				location.href = url;
+			}
+			
+			// 使用code进行 (从url中获取code码进行登录) 
+			function doCodeLogin() {
+				var code = getParam('code');
+				$.ajax({
+					url: '/doCodeLogin',
+					data: {
+						code: code
+					},
+					dataType: 'json',
+					success: function(res) {
+						if(res.code == 200) {
+							alert('OAuth2登录成功');
+							getLoginInfo();	// 刷新user信息 
+						} else {
+							alert("登录失败：" + res.msg);
+						}
+					},
+					error: function(e, ee, eee) {
+						alert(eee);
+					}
+				});
+			}
+			
+			
+			
+			// 从url中查询到指定名称的参数值 
+			function getParam(name, defaultValue){
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

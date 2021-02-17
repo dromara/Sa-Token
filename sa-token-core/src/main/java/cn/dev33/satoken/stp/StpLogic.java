@@ -177,7 +177,7 @@ public class StpLogic {
 				for (TokenSign tokenSign : tokenSignList) {
 					if(tokenSign.getDevice().equals(device)) {
 						// 1. 将此token 标记为已顶替 
-						dao.updateValue(getKeyTokenValue(tokenSign.getValue()), NotLoginException.BE_REPLACED);	
+						dao.update(getKeyTokenValue(tokenSign.getValue()), NotLoginException.BE_REPLACED);	
 						// 2. 清理掉[token-最后操作时间] 
 						clearLastActivity(tokenSign.getValue()); 			
 						// 3. 清理账号session上的token签名记录 
@@ -203,7 +203,7 @@ public class StpLogic {
 		
 		// ------ 4. 持久化其它数据 
 		// token -> uid 
-		dao.setValue(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	
+		dao.set(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	
 		// 将token保存到本次request里  
 		request.setAttribute(getKeyJustCreatedSave(), tokenValue);	
 		// 写入 [最后操作时间]
@@ -244,7 +244,7 @@ public class StpLogic {
  	 	if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
  			return;
  		}
- 		SaTokenManager.getSaTokenDao().deleteKey(getKeyTokenValue(tokenValue));	
+ 		SaTokenManager.getSaTokenDao().delete(getKeyTokenValue(tokenValue));	
  		
  		// 3. 尝试清理账号session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -288,7 +288,7 @@ public class StpLogic {
 				// 2. 清理掉[token-最后操作时间] 
 				clearLastActivity(tokenValue); 	
 		 		// 3. 标记：已被踢下线 
-				SaTokenManager.getSaTokenDao().updateValue(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);
+				SaTokenManager.getSaTokenDao().update(getKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);
 		 		// 4. 清理账号session上的token签名 
 		 		session.removeTokenSign(tokenValue); 
 			}
@@ -450,7 +450,7 @@ public class StpLogic {
  	  * @return loginId
  	  */
  	public String getLoginIdNotHandle(String tokenValue) {
- 		return SaTokenManager.getSaTokenDao().getValue(getKeyTokenValue(tokenValue));
+ 		return SaTokenManager.getSaTokenDao().get(getKeyTokenValue(tokenValue));
  	}
  	 
  	
@@ -466,7 +466,7 @@ public class StpLogic {
 		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
 			session = SaTokenManager.getSaTokenAction().createSession(sessionId);
-			SaTokenManager.getSaTokenDao().saveSession(session, getConfig().getTimeout());
+			SaTokenManager.getSaTokenDao().setSession(session, getConfig().getTimeout());
 		}
 		return session;
 	}
@@ -589,7 +589,7 @@ public class StpLogic {
  			return;
  		}
  		// 将[最后操作时间]标记为当前时间戳 
- 		SaTokenManager.getSaTokenDao().setValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
+ 		SaTokenManager.getSaTokenDao().set(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
  	}
  	
  	/**
@@ -602,7 +602,7 @@ public class StpLogic {
  			return;
  		}
  		// 删除[最后操作时间]
- 		SaTokenManager.getSaTokenDao().deleteKey(getKeyLastActivityTime(tokenValue));
+ 		SaTokenManager.getSaTokenDao().delete(getKeyLastActivityTime(tokenValue));
  		// 清除标记 
  		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
@@ -654,7 +654,7 @@ public class StpLogic {
  		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
- 		SaTokenManager.getSaTokenDao().updateValue(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
+ 		SaTokenManager.getSaTokenDao().update(getKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
  	}
 
  	/**
@@ -745,7 +745,7 @@ public class StpLogic {
  		// ------ 开始查询 
  		// 获取相关数据 
  		String keyLastActivityTime = getKeyLastActivityTime(tokenValue);
- 		String lastActivityTimeString = SaTokenManager.getSaTokenDao().getValue(keyLastActivityTime);
+ 		String lastActivityTimeString = SaTokenManager.getSaTokenDao().get(keyLastActivityTime);
  		// 查不到，返回-2 
  		if(lastActivityTimeString == null) {
  			return SaTokenDao.NOT_VALUE_EXPIRE;

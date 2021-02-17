@@ -23,6 +23,7 @@
 		<module>sa-token-dao-redis</module>
 		<module>sa-token-dao-redis-jackson</module>
 		<module>sa-token-spring-aop</module>
+		<module>sa-token-oauth2</module>
 	</modules>
 	
 	<!-- 开源协议 apache 2.0 -->

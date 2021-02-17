@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
@@ -35,17 +34,17 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	public ObjectMapper objectMapper;
 	
 	/**
-	 * string专用
+	 * String专用
 	 */
 	@Autowired
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
-	 * SaSession专用 
+	 * Object专用 
 	 */
-	public RedisTemplate<String, SaSession> sessionRedisTemplate;
+	public RedisTemplate<String, Object> objectRedisTemplate;
 	@Autowired
-	public void setSessionRedisTemplate(RedisConnectionFactory connectionFactory) {
+	public void setObjectRedisTemplate(RedisConnectionFactory connectionFactory) {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
@@ -60,15 +59,15 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 			System.err.println(e.getMessage());
 		}
 		// 构建RedisTemplate
-		RedisTemplate<String, SaSession> template = new RedisTemplate<String, SaSession>();
+		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
 		template.setConnectionFactory(connectionFactory);
 		template.setKeySerializer(keySerializer);
 		template.setHashKeySerializer(keySerializer);
 		template.setValueSerializer(valueSerializer);
 		template.setHashValueSerializer(valueSerializer);
 		template.afterPropertiesSet();
-		if(this.sessionRedisTemplate == null) {
-			this.sessionRedisTemplate = template;
+		if(this.objectRedisTemplate == null) {
+			this.objectRedisTemplate = template;
 		}
 	}
 	
@@ -77,7 +76,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	 * 根据key获取value，如果没有，则返回空
 	 */
 	@Override
-	public String getValue(String key) {
+	public String get(String key) {
 		return stringRedisTemplate.opsForValue().get(key);
 	}
 
@@ -85,7 +84,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	 * 写入指定key-value键值对，并设定过期时间(单位：秒)
 	 */
 	@Override
-	public void setValue(String key, String value, long timeout) {
+	public void set(String key, String value, long timeout) {
 		// 判断是否为永不过期 
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
 			stringRedisTemplate.opsForValue().set(key, value);
@@ -95,23 +94,23 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 修改指定key-value键值对 (过期时间取原来的值) 
+	 * 修改指定key-value键值对 (过期时间不变) 
 	 */
 	@Override
-	public void updateValue(String key, String value) {
+	public void update(String key, String value) {
 		long expire = getTimeout(key);
 		// -2 = 无此键 
 		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		this.setValue(key, value, expire);
+		this.set(key, value, expire);
 	}
 	
 	/**
 	 * 删除一个指定的key
 	 */
 	@Override
-	public void deleteKey(String key) {
+	public void delete(String key) {
 		stringRedisTemplate.delete(key);
 	}
 
@@ -135,7 +134,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 				// 如果其已经被设置为永久，则不作任何处理 
 			} else {
 				// 如果尚未被设置为永久，那么再次set一次
-				this.setValue(key, this.getValue(key), timeout);
+				this.set(key, this.get(key), timeout);
 			}
 			return;
 		}
@@ -143,76 +142,77 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 	
 	
-	
+
 	/**
-	 * 根据指定key的Session，如果没有，则返回空 
+	 * 根据key获取Object，如果没有，则返回空 
 	 */
 	@Override
-	public SaSession getSession(String sessionId) {
-		return sessionRedisTemplate.opsForValue().get(sessionId);
+	public Object getObject(String key) {
+		return objectRedisTemplate.opsForValue().get(key);
 	}
 
 	/**
-	 * 将指定Session持久化 
+	 * 写入指定键值对，并设定过期时间 (单位: 秒)
 	 */
 	@Override
-	public void saveSession(SaSession session, long timeout) {
+	public void setObject(String key, Object object, long timeout) {
 		// 判断是否为永不过期 
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			sessionRedisTemplate.opsForValue().set(session.getId(), session);
+			objectRedisTemplate.opsForValue().set(key, object);
 		} else {
-			sessionRedisTemplate.opsForValue().set(session.getId(), session, timeout, TimeUnit.SECONDS);
+			objectRedisTemplate.opsForValue().set(key, object, timeout, TimeUnit.SECONDS);
 		}
 	}
 
 	/**
-	 * 更新指定session 
+	 * 修改指定键值对 (过期时间不变)
 	 */
 	@Override
-	public void updateSession(SaSession session) {
-		long expire = getSessionTimeout(session.getId());
+	public void updateObject(String key, Object object) {
+		long expire = getObjectTimeout(key);
 		// -2 = 无此键 
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {	
+		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		this.saveSession(session, expire);
+		this.setObject(key, object, expire);
 	}
 
 	/**
-	 * 删除一个指定的session 
+	 * 删除一个指定的object 
 	 */
 	@Override
-	public void deleteSession(String sessionId) {
-		sessionRedisTemplate.delete(sessionId);
+	public void deleteObject(String key) {
+		objectRedisTemplate.delete(key);
 	}
 
 	/**
-	 * 获取指定SaSession的剩余存活时间 (单位: 秒) 
+	 * 获取指定key的剩余存活时间 (单位: 秒)
 	 */
 	@Override
-	public long getSessionTimeout(String sessionId) {
-		return sessionRedisTemplate.getExpire(sessionId);
+	public long getObjectTimeout(String key) {
+		return objectRedisTemplate.getExpire(key);
 	}
 
 	/**
-	 * 修改指定SaSession的剩余存活时间 (单位: 秒) 
+	 * 修改指定key的剩余存活时间 (单位: 秒)
 	 */
 	@Override
-	public void updateSessionTimeout(String sessionId, long timeout) {
+	public void updateObjectTimeout(String key, long timeout) {
 		// 判断是否想要设置为永久
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			long expire = getSessionTimeout(sessionId);
+			long expire = getObjectTimeout(key);
 			if(expire == SaTokenDao.NEVER_EXPIRE) {
 				// 如果其已经被设置为永久，则不作任何处理 
 			} else {
 				// 如果尚未被设置为永久，那么再次set一次
-				this.saveSession(this.getSession(sessionId), timeout);
+				this.setObject(key, this.getObject(key), timeout);
 			}
 			return;
 		}
-		sessionRedisTemplate.expire(sessionId, timeout, TimeUnit.SECONDS);
+		objectRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
+	
 	/**
 	 * 搜索数据 
 	 */

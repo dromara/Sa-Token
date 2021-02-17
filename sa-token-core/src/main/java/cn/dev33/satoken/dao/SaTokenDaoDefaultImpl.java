@@ -8,7 +8,6 @@ import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaTokenManager;
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTaskUtil;
 import cn.dev33.satoken.util.SaTaskUtil.FunctionRunClass;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
@@ -42,19 +41,19 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	// ------------------------ String 读写操作 
 	
 	@Override
-	public String getValue(String key) {
+	public String get(String key) {
 		clearKeyByTimeout(key);
 		return (String)dataMap.get(key);
 	}
 
 	@Override
-	public void setValue(String key, String value, long timeout) {
+	public void set(String key, String value, long timeout) {
 		dataMap.put(key, value);
 		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
 
 	@Override
-	public void updateValue(String key, String value) {
+	public void update(String key, String value) {
 		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
@@ -62,7 +61,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	}
 
 	@Override
-	public void deleteKey(String key) {
+	public void delete(String key) {
 		dataMap.remove(key);
 		expireMap.remove(key);
 	}
@@ -76,45 +75,49 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public void updateTimeout(String key, long timeout) {
 		expireMap.put(key, System.currentTimeMillis() + timeout * 1000);
 	}
+
 	
-	
-	// ------------------------ Session 读写操作 
+	// ------------------------ Object 读写操作 
 	
 	@Override
-	public SaSession getSession(String sessionId) {
-		clearKeyByTimeout(sessionId);
-		return (SaSession)dataMap.get(sessionId);
+	public Object getObject(String key) {
+		clearKeyByTimeout(key);
+		return dataMap.get(key);
 	}
 
 	@Override
-	public void saveSession(SaSession session, long timeout) {
-		dataMap.put(session.getId(), session);
-		expireMap.put(session.getId(), (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+	public void setObject(String key, Object object, long timeout) {
+		dataMap.put(key, object);
+		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
 
 	@Override
-	public void updateSession(SaSession session) {
-		if(getKeyTimeout(session.getId()) == SaTokenDao.NOT_VALUE_EXPIRE) {
+	public void updateObject(String key, Object object) {
+		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
 		// 无动作 
 	}
 
 	@Override
-	public void deleteSession(String sessionId) {
-		dataMap.remove(sessionId);
-		expireMap.remove(sessionId);
+	public void deleteObject(String key) {
+		dataMap.remove(key);
+		expireMap.remove(key);
+	}
+
+	@Override
+	public long getObjectTimeout(String key) {
+		return getKeyTimeout(key);
+	}
+
+	@Override
+	public void updateObjectTimeout(String key, long timeout) {
+		expireMap.put(key, System.currentTimeMillis() + timeout * 1000);
 	}
 	
-	@Override
-	public long getSessionTimeout(String sessionId) {
-		return getKeyTimeout(sessionId);
-	}
 	
-	@Override
-	public void updateSessionTimeout(String sessionId, long timeout) {
-		expireMap.put(sessionId, System.currentTimeMillis() + timeout * 1000);
-	}
+	// ------------------------ Session 读写操作 
+	// 使用接口默认实现 
 	
 
 	// ------------------------ 过期时间相关操作 
@@ -215,6 +218,8 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public List<String> searchData(String prefix, String keyword, int start, int size) {
 		return SaTokenInsideUtil.searchList(expireMap.keySet(), prefix, keyword, start, size);
 	}
+
+
 	
 
 
