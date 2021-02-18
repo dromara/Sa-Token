@@ -368,6 +368,7 @@ public interface SaOAuth2Interface {
 		}
 		// 获取新的 AccessToken 并保存 
 		AccessTokenModel tokenModel = converCodeToAccessToken(codeModel);
+		tokenModel.setRefreshToken(refreshToken);
 		SaTokenManager.getSaTokenDao().setObject(getKeyAccessToken(tokenModel.getAccessToken()), tokenModel, SaOAuth2Manager.getConfig().getAccessTokenTimeout());
 		
 		// 返回 
