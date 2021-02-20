@@ -28,36 +28,17 @@
 
 
 ## Sa-Token是什么？
-sa-token是一个轻量级Java权限认证框架，主要解决：登录认证、权限认证、Session会话、单点登录 等一系列权限相关问题
+sa-token是一个轻量级Java权限认证框架，主要解决：登录认证、权限认证、Session会话、单点登录、OAuth2.0 等一系列权限相关问题
 
-近年来，有关权限认证的解决方案层出不穷，例如单点登录、OAuth2.0、分布式Session等等难题，无一不有着各种优秀框架大行其道
+框架针对踢人下线、自动续签、前后台分离、分布式会话……等常见业务进行N多适配，通过sa-token，你可以以一种极简的方式实现系统的权限认证部分
 
-然而当我们把视线放低，那些最基础的有如：登录认证、权限认证、Session会话等基础问题却一直被两大上古神兽 `Apache Shiro`、`Spring Security` 所把持
-
-在此并非专门diss此两大框架，诚然两大框架背景强大，历史悠久，其生态也比较齐全。但是它们毕竟已经是十几年前的产物，那是一个还在用 `jsp` 写页面的时代，两大框架的很多功能都是为jsp那一套量身定做。
-
-在前后台分离已成标配的今天，两大框架的很多设计理念已经比较滞后，已经不能和我们的项目进行无缝适配，很多功能点都需要进行二次封装，甚至找一大堆扩展插件才能集成，已经逐渐不太适合现代化项目的应用
-
-所以，为什么不能有一个自底向上，从最基础的登录、权限做起，以业务需求为核心，做到开箱即用的轻量级权限认证框架？
-
-秉承着这个目的，`sa-token` 诞生了！
-
-
-## Sa-Token 优点？
-
-sa-token架构设计精简，不引入各种复杂的概念，如丝般顺滑的API调用，大量高级特性统统只需一行代码即可实现
-- 在sa-token之前，权限认证业务概念纷飞、代码复杂，在sa-token之后，权限认证将会变成：逻辑清晰，架构简单，人人可写
-- 在sa-token之前，你会在百度上频繁搜索: xx框架如何集成Redis？前后台分离下如何鉴权？踢人下线的原理是什么？在sa-token之后，你将轻松知道这一切的答案
-- 在sa-token之前，权限认证、分布式会话、单点登录、多账号认证，你需要找不同的框架，在sa-token之后，你只需要这一个框架就足够了
-
-与其它权限认证框架相比，你将会从以下方面感受到 `sa-token` 的优势：
+与其它权限认证框架相比，`sa-token` 具有以下优势：
 1. **简单** ：可零配置启动框架，真正的开箱即用，低成本上手
 2. **强大** ：目前已集成几十项权限相关特性，涵盖了大部分业务场景的解决方案
 3. **易用** ：如丝般顺滑的API调用，大量高级特性统统只需一行代码即可实现
 4. **高扩展** ：几乎所有组件都提供了扩展接口，90%以上的逻辑都可以按需重写
 
 有了sa-token，你所有的权限认证问题，都不再是问题！
-
 
 ## Sa-Token 能做什么？
 - **登录验证** —— 轻松登录鉴权，并提供五种细分场景值
@@ -118,19 +99,19 @@ StpUtil.logoutByLoginId(10001);
 
 除了以上的示例，sa-token还可以一行代码完成以下功能：
 ``` java
-StpUtil.setLoginId(10001);          // 标记当前会话登录的账号id
-StpUtil.getLoginId();               // 获取当前会话登录的账号id
-StpUtil.isLogin();                  // 获取当前会话是否已经登录, 返回true或false
-StpUtil.logout();                   // 当前会话注销登录
-StpUtil.logoutByLoginId(10001);     // 让账号为10001的会话注销登录（踢人下线）
-StpUtil.hasRole("super-admin");     // 查询当前账号是否含有指定角色标识, 返回true或false
-StpUtil.hasPermission("user:add");  // 查询当前账号是否含有指定权限, 返回true或false
-StpUtil.getSession();               // 获取当前账号id的Session 
-StpUtil.getSessionByLoginId(10001); // 获取账号id为10001的Session
-StpUtil.getTokenValueByLoginId(10001);  // 获取账号id为10001的token令牌值
-StpUtil.setLoginId(10001, "PC");        // 指定设备标识登录
-StpUtil.logoutByLoginId(10001, "PC");   // 指定设备标识进行强制注销 (不同端不受影响)
-StpUtil.switchTo(10044);                // 将当前会话身份临时切换为其它账号 
+StpUtil.setLoginId(10001);                // 标记当前会话登录的账号id
+StpUtil.getLoginId();                     // 获取当前会话登录的账号id
+StpUtil.isLogin();                        // 获取当前会话是否已经登录, 返回true或false
+StpUtil.logout();                         // 当前会话注销登录
+StpUtil.logoutByLoginId(10001);           // 让账号为10001的会话注销登录（踢人下线）
+StpUtil.hasRole("super-admin");           // 查询当前账号是否含有指定角色标识, 返回true或false
+StpUtil.hasPermission("user:add");        // 查询当前账号是否含有指定权限, 返回true或false
+StpUtil.getSession();                     // 获取当前账号id的Session
+StpUtil.getSessionByLoginId(10001);       // 获取账号id为10001的Session
+StpUtil.getTokenValueByLoginId(10001);    // 获取账号id为10001的token令牌值
+StpUtil.setLoginId(10001, "PC");          // 指定设备标识登录
+StpUtil.logoutByLoginId(10001, "PC");     // 指定设备标识进行强制注销 (不同端不受影响)
+StpUtil.switchTo(10044);                  // 将当前会话身份临时切换为其它账号
 ```
 sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳官方在线文档
 
