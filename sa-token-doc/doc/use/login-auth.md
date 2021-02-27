@@ -66,6 +66,6 @@ StpUtil.getTokenValue();
 StpUtil.getTokenInfo();
 ```
 
-有关TokenInfo参数详解，请参考：[参考：TokenInfo参数详解](/fun/token-info)	
+?> 有关TokenInfo参数详解，请参考：[参考：TokenInfo参数详解](/fun/token-info)	
 
 
