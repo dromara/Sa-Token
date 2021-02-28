@@ -66,9 +66,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param tokenName token名称 (同时也是cookie名称)
+	 * @return 对象自身
 	 */
-	public void setTokenName(String tokenName) {
+	public SaTokenConfig setTokenName(String tokenName) {
 		this.tokenName = tokenName;
+		return this;
 	}
 
 	/**
@@ -80,9 +82,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param timeout token的长久有效期(单位:秒) 默认30天, -1代表永久
+	 * @return 对象自身
 	 */
-	public void setTimeout(long timeout) {
+	public SaTokenConfig setTimeout(long timeout) {
 		this.timeout = timeout;
+		return this;
 	}
 
 	/**
@@ -96,9 +100,11 @@ public class SaTokenConfig {
 	/**
 	 * @param activityTimeout token临时有效期 [指定时间内无操作就视为token过期] (单位: 秒), 默认-1 代表不限制
 	 *                        (例如可以设置为1800代表30分钟内无操作就过期)
+	 * @return 对象自身
 	 */
-	public void setActivityTimeout(long activityTimeout) {
+	public SaTokenConfig setActivityTimeout(long activityTimeout) {
 		this.activityTimeout = activityTimeout;
+		return this;
 	}
 
 	/**
@@ -110,9 +116,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param allowConcurrentLogin 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+	 * @return 对象自身
 	 */
-	public void setAllowConcurrentLogin(Boolean allowConcurrentLogin) {
+	public SaTokenConfig setAllowConcurrentLogin(Boolean allowConcurrentLogin) {
 		this.allowConcurrentLogin = allowConcurrentLogin;
+		return this;
 	}
 
 	/**
@@ -124,9 +132,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param isShare 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
+	 * @return 对象自身
 	 */
-	public void setIsShare(Boolean isShare) {
+	public SaTokenConfig setIsShare(Boolean isShare) {
 		this.isShare = isShare;
+		return this;
 	}
 
 	/**
@@ -138,9 +148,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param isReadBody 是否尝试从请求体里读取token
+	 * @return 对象自身
 	 */
-	public void setIsReadBody(Boolean isReadBody) {
+	public SaTokenConfig setIsReadBody(Boolean isReadBody) {
 		this.isReadBody = isReadBody;
+		return this;
 	}
 
 	/**
@@ -152,9 +164,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param isReadHead 是否尝试从header里读取token
+	 * @return 对象自身
 	 */
-	public void setIsReadHead(Boolean isReadHead) {
+	public SaTokenConfig setIsReadHead(Boolean isReadHead) {
 		this.isReadHead = isReadHead;
+		return this;
 	}
 
 	/**
@@ -166,9 +180,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param isReadCookie 是否尝试从cookie里读取token
+	 * @return 对象自身
 	 */
-	public void setIsReadCookie(Boolean isReadCookie) {
+	public SaTokenConfig setIsReadCookie(Boolean isReadCookie) {
 		this.isReadCookie = isReadCookie;
+		return this;
 	}
 
 	/**
@@ -180,9 +196,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param tokenStyle token风格(默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik)
+	 * @return 对象自身
 	 */
-	public void setTokenStyle(String tokenStyle) {
+	public SaTokenConfig setTokenStyle(String tokenStyle) {
 		this.tokenStyle = tokenStyle;
+		return this;
 	}
 
 	/**
@@ -195,9 +213,11 @@ public class SaTokenConfig {
 	/**
 	 * @param dataRefreshPeriod 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒)
 	 *                          ，默认值30秒，设置为-1代表不启动定时清理
+	 * @return 对象自身
 	 */
-	public void setDataRefreshPeriod(int dataRefreshPeriod) {
+	public SaTokenConfig setDataRefreshPeriod(int dataRefreshPeriod) {
 		this.dataRefreshPeriod = dataRefreshPeriod;
+		return this;
 	}
 
 	/**
@@ -210,9 +230,11 @@ public class SaTokenConfig {
 	/**
 	 * @param tokenSessionCheckLogin 获取[token专属session]时是否必须登录
 	 *                               (如果配置为true，会在每次获取[token-session]时校验是否登录)
+	 * @return 对象自身
 	 */
-	public void setTokenSessionCheckLogin(Boolean tokenSessionCheckLogin) {
+	public SaTokenConfig setTokenSessionCheckLogin(Boolean tokenSessionCheckLogin) {
 		this.tokenSessionCheckLogin = tokenSessionCheckLogin;
+		return this;
 	}
 
 	/**
@@ -224,9 +246,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param autoRenew 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作) 
+	 * @return 对象自身
 	 */
-	public void setAutoRenew(Boolean autoRenew) {
+	public SaTokenConfig setAutoRenew(Boolean autoRenew) {
 		this.autoRenew = autoRenew;
+		return this;
 	}
 
 	/**
@@ -238,9 +262,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param cookieDomain 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景
+	 * @return 对象自身
 	 */
-	public void setCookieDomain(String cookieDomain) {
+	public SaTokenConfig setCookieDomain(String cookieDomain) {
 		this.cookieDomain = cookieDomain;
+		return this;
 	}
 
 	/**
@@ -252,9 +278,11 @@ public class SaTokenConfig {
 
 	/**
 	 * @param isV 是否在初始化配置时打印版本字符画
+	 * @return 对象自身
 	 */
-	public void setIsV(Boolean isV) {
+	public SaTokenConfig setIsV(Boolean isV) {
 		this.isV = isV;
+		return this;
 	}
 
 

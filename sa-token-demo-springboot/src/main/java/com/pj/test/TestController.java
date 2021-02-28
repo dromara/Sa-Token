@@ -3,6 +3,8 @@ package com.pj.test;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -244,10 +247,13 @@ public class TestController {
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
-	public AjaxJson test() {
+	public AjaxJson test(HttpServletResponse response) {
 //		StpUtil.getTokenSession().logout();
 //		StpUtil.logoutByLoginId(10001);
+//		StpUtil.setLoginId(10001);
+		StpUtil.setLoginId(10001, new SaLoginModel().setIsTempCookie(true));
 		StpUtil.getLoginId();
+		
 		return AjaxJson.getSuccess();
 	}
 	

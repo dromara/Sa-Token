@@ -64,12 +64,30 @@ public class StpUtil {
 	}
 
 	/**
-	 * 在当前会话上登录id 
+	 * 在当前会话上登录id, 并指定登录设备 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param device 设备标识 
 	 */
 	public static void setLoginId(Object loginId, String device) {
 		stpLogic.setLoginId(loginId, device);
+	}
+
+	/**
+	 * 在当前会话上登录id, 并指定登录设备 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param isTempCookie 是否为临时Cookie 
+	 */
+	public void setLoginId(Object loginId, boolean isTempCookie) {
+		stpLogic.setLoginId(loginId, isTempCookie);
+	}
+	
+	/**
+	 * 在当前会话上登录id, 并指定所有登录参数Model 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 */
+	public static void setLoginId(Object loginId, SaLoginModel loginModel) {
+		stpLogic.setLoginId(loginId, loginModel);
 	}
 	
 	/** 

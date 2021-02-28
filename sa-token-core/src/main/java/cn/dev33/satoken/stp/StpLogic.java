@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -145,20 +146,39 @@ public class StpLogic {
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 */
 	public void setLoginId(Object loginId) {
-		setLoginId(loginId, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+		setLoginId(loginId, new SaLoginModel());
 	}
-	
+
 	/**
-	 * 在当前会话上登录id 
+	 * 在当前会话上登录id, 并指定登录设备 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param device 设备标识 
 	 */
 	public void setLoginId(Object loginId, String device) {
+		setLoginId(loginId, new SaLoginModel().setDevice(device));
+	}
+
+	/**
+	 * 在当前会话上登录id, 并指定登录设备 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param isTempCookie 是否为临时Cookie 
+	 */
+	public void setLoginId(Object loginId, boolean isTempCookie) {
+		setLoginId(loginId, new SaLoginModel().setIsTempCookie(isTempCookie));
+	}
+	
+	/**
+	 * 在当前会话上登录id, 并指定所有登录参数Model 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 */
+	public void setLoginId(Object loginId, SaLoginModel loginModel) {
 		
 		// ------ 1、获取相应对象  
 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
 		SaTokenConfig config = getConfig();
 		SaTokenDao dao = SaTokenManager.getSaTokenDao();
+		loginModel.build(config);
 		
 		// ------ 2、生成一个token 
 		String tokenValue = null;
@@ -166,7 +186,7 @@ public class StpLogic {
 		if(config.getAllowConcurrentLogin() == true) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(config.getIsShare() == true) {
-				tokenValue = getTokenValueByLoginId(loginId, device);
+				tokenValue = getTokenValueByLoginId(loginId, loginModel.getDevice());
 			}
 		} else {
 			// --- 如果不允许并发登录 
@@ -175,7 +195,7 @@ public class StpLogic {
 			if(session != null) {
 				List<TokenSign> tokenSignList = session.getTokenSignList();
 				for (TokenSign tokenSign : tokenSignList) {
-					if(tokenSign.getDevice().equals(device)) {
+					if(tokenSign.getDevice().equals(loginModel.getDevice())) {
 						// 1. 将此token 标记为已顶替 
 						dao.update(getKeyTokenValue(tokenSign.getValue()), NotLoginException.BE_REPLACED);	
 						// 2. 清理掉[token-最后操作时间] 
@@ -196,22 +216,27 @@ public class StpLogic {
 		if(session == null) {
 			session = getSessionByLoginId(loginId);
 		} else {
-			dao.updateSessionTimeout(session.getId(), config.getTimeout());
+			// 保证此Session的有效期 >= token的有效期 
+			if(dao.getSessionTimeout(session.getId()) < loginModel.getTimeout()) {
+				dao.updateSessionTimeout(session.getId(), loginModel.getTimeout());
+			}
 		}
 		// 在session上记录token签名 
-		session.addTokenSign(new TokenSign(tokenValue, device));
+		session.addTokenSign(new TokenSign(tokenValue, loginModel.getDevice()));
 		
 		// ------ 4. 持久化其它数据 
 		// token -> uid 
-		dao.set(getKeyTokenValue(tokenValue), String.valueOf(loginId), config.getTimeout());	
+		dao.set(getKeyTokenValue(tokenValue), String.valueOf(loginId), loginModel.getTimeout());	
 		// 将token保存到本次request里  
 		request.setAttribute(getKeyJustCreatedSave(), tokenValue);	
 		// 写入 [最后操作时间]
 		setLastActivityToNow(tokenValue);  	
-		// cookie注入 
-		if(config.getIsReadCookie() == true){	
-			SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, 
-					"/", config.getCookieDomain(), (int)config.getTimeout());		
+		// 注入Cookie 
+		if(config.getIsReadCookie() == true){
+			HttpServletResponse response = SaTokenManager.getSaTokenServlet().getResponse();
+			int cookieTimeout = loginModel.getIsTempCookie() ? -1 : (int)(long)loginModel.getTimeout();
+			SaTokenManager.getSaTokenCookie().addCookie(response, getTokenName(), tokenValue, 
+					"/", config.getCookieDomain(), cookieTimeout);
 		}
 	}
 
