@@ -189,6 +189,6 @@ QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
 **微信群** ：
 
-![微信群](https://images.gitee.com/uploads/images/2021/0222/175350_55b70afe_8073399.jpeg "sa-token-wx.jpg")
+![微信群](https://images.gitee.com/uploads/images/2021/0302/112304_a64c408a_1766140.jpeg "qr.jpg")
 
 <br>
