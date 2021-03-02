@@ -16,7 +16,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 
 	
 	/**
-	 * 生成一个token 
+	 * 根据一定的算法生成一个token 
 	 */
 	@Override
 	public String createToken(Object loginId, String loginKey) {

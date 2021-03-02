@@ -20,7 +20,6 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
-import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -251,8 +250,8 @@ public class TestController {
 //		StpUtil.getTokenSession().logout();
 //		StpUtil.logoutByLoginId(10001);
 //		StpUtil.setLoginId(10001);
-		StpUtil.setLoginId(10001, new SaLoginModel().setIsTempCookie(true));
-		StpUtil.getLoginId();
+//		StpUtil.setLoginId(10001, new SaLoginModel().setIsTempCookie(true));
+//		StpUtil.getLoginId();
 		
 		return AjaxJson.getSuccess();
 	}
