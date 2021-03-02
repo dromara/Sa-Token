@@ -14,6 +14,7 @@ import com.pj.util.AjaxJson;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
+import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 全局异常处理 
@@ -21,10 +22,10 @@ import cn.dev33.satoken.exception.NotRoleException;
 @RestControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
 public class GlobalException {
 
-	// 在每个控制器之前触发的操作
+	// 在当前类每个方法进入之前触发的操作
 	@ModelAttribute
 	public void get(HttpServletRequest request) throws IOException {
-
+		StpUtil.checkPermission("user:add");
 	}
 
 	

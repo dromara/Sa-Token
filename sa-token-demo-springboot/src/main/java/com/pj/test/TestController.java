@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -232,18 +231,6 @@ public class TestController {
 	}
 
 	
-	@Autowired
-	TestService TestService;
-	
-	// 测试AOP注解鉴权： http://localhost:8081/test/testAOP
-	@RequestMapping("testAOP")
-	public AjaxJson testAOP() {
-		System.out.println("testAOP");
-		TestService.getList();
-		return AjaxJson.getSuccess();
-	}
-
-	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test(HttpServletResponse response) {
@@ -253,7 +240,7 @@ public class TestController {
 //		StpUtil.setLoginId(10001, new SaLoginModel().setIsTempCookie(true));
 //		StpUtil.getLoginId();
 		
-		return AjaxJson.getSuccess();
+		return AjaxJson.getSuccess("访问成功");
 	}
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test2

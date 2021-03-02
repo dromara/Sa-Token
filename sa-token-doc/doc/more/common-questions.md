@@ -49,7 +49,6 @@
 可能是404了，SpringBoot环境下如果访问接口404后，会被重定向到`/error`，然后被再次拦截，如果是其它原因，欢迎加群反馈
 
 
-
 ### 权限可以做成动态的吗？
 权限本来就是动态的，只有jwt那种模式才是非动态的
 
@@ -71,9 +70,14 @@
 步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 
 
 
+### 我只使用header来传输token，还需要打开Cookie模式吗？
+不需要，如果只使用header来传输token，可以在配置文件关闭Cookie模式，例：`isReadCookie=false`
+
+
 ### 还是有不明白到的地方?
 请在`github`提交`issues`，或者加入qq群交流（群链接在[首页](README?id=交流群)）
 
 
 ### 我能为这个框架贡献代码吗？
 **可以**，请参照首页的提交pr步骤 ，[贡献代码](README?id=贡献代码)
+
