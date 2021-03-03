@@ -230,6 +230,15 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
+	// 测试指定设备登录   浏览器访问： http://localhost:8081/test/loginByDevice
+	@RequestMapping("loginByDevice")
+	public AjaxJson loginByDevice() {
+		System.out.println("--------------");
+		StpUtil.setLoginId(10001, "PC");
+		return AjaxJson.getSuccessData("登录成功");
+	}
+
+
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")

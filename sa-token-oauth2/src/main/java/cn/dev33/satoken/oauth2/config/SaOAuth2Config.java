@@ -32,9 +32,11 @@ public class SaOAuth2Config {
 
 	/**
 	 * @param codeTimeout 要设置的 codeTimeout
+	 * @return 对象自身
 	 */
-	public void setCodeTimeout(long codeTimeout) {
+	public SaOAuth2Config setCodeTimeout(long codeTimeout) {
 		this.codeTimeout = codeTimeout;
+		return this;
 	}
 
 	/**
@@ -46,9 +48,11 @@ public class SaOAuth2Config {
 
 	/**
 	 * @param accessTokenTimeout 要设置的 accessTokenTimeout
+	 * @return 对象自身
 	 */
-	public void setAccessTokenTimeout(long accessTokenTimeout) {
+	public SaOAuth2Config setAccessTokenTimeout(long accessTokenTimeout) {
 		this.accessTokenTimeout = accessTokenTimeout;
+		return this;
 	}
 
 	/**
@@ -60,9 +64,11 @@ public class SaOAuth2Config {
 
 	/**
 	 * @param refreshTokenTimeout 要设置的 refreshTokenTimeout
+	 * @return 对象自身
 	 */
-	public void setRefreshTokenTimeout(long refreshTokenTimeout) {
+	public SaOAuth2Config setRefreshTokenTimeout(long refreshTokenTimeout) {
 		this.refreshTokenTimeout = refreshTokenTimeout;
+		return this;
 	}
 
 	
