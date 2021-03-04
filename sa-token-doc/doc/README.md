@@ -189,7 +189,7 @@ QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
 **微信群** ：
 
-![微信群](https://images.gitee.com/uploads/images/2021/0302/112304_a64c408a_1766140.jpeg "qr.jpg")
+![微信群](https://oss.dev33.cn/sa-token/sa-token-qr-wx.png "qr-wx.png")
 
 
 <br>

@@ -128,7 +128,7 @@ public interface SaTokenDao {
 	}
 
 	/**
-	 * 更新指定session
+	 * 更新指定session 
 	 * @param session 要更新的session对象
 	 */
 	public default void updateSession(SaSession session) {

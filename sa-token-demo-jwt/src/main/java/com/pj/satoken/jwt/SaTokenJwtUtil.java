@@ -48,9 +48,9 @@ public class SaTokenJwtUtil {
 	 */
     public static String createToken(Object loginId) {
     	// 判断，不可使用默认秘钥
-    	if(BASE64_SECURITY.equals("79e7c69681b8270162386e6daa53d1d3")) {
-    		throw new SaTokenException("请更换秘钥");
-    	}
+//    	if(BASE64_SECURITY.equals("79e7c69681b8270162386e6daa53d1dd")) {
+//    		throw new SaTokenException("请更换秘钥");
+//    	}
     	// 在这里你可以使用官方提供的claim方法构建载荷，也可以使用setPayload自定义载荷，但是两者不可一起使用
         JwtBuilder builder = Jwts.builder()
         		.setHeaderParam("type", "JWT")

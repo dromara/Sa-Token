@@ -74,6 +74,10 @@
 不需要，如果只使用header来传输token，可以在配置文件关闭Cookie模式，例：`isReadCookie=false`
 
 
+### 我想让用户修改密码后立即掉线重新登录，应该怎么做？
+框架内置 [强制指定账号下线] 的APi，在执行修改密码逻辑之后调用此API即可: `StpUtil.logout()`
+
+
 ### 还是有不明白到的地方?
 请在`github`提交`issues`，或者加入qq群交流（群链接在[首页](README?id=交流群)）
 
