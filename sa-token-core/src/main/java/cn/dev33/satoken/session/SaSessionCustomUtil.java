@@ -21,7 +21,7 @@ public class SaSessionCustomUtil {
 	 * @param sessionId 会话id
 	 * @return sessionId
 	 */
-	public static String getSessionKey(String sessionId) {
+	public static String splicingSessionKey(String sessionId) {
 		return SaTokenManager.getConfig().getTokenName() + ":" + sessionKey + ":session:" + sessionId;
 	}
 
@@ -32,7 +32,7 @@ public class SaSessionCustomUtil {
 	 * @return 是否存在
 	 */
 	public boolean isExists(String sessionId) {
-		return SaTokenManager.getSaTokenDao().getSession(getSessionKey(sessionId)) != null;
+		return SaTokenManager.getSaTokenDao().getSession(splicingSessionKey(sessionId)) != null;
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class SaSessionCustomUtil {
 	 * @return SaSession
 	 */
 	public static SaSession getSessionById(String sessionId, boolean isCreate) {
-		SaSession session = SaTokenManager.getSaTokenDao().getSession(getSessionKey(sessionId));
+		SaSession session = SaTokenManager.getSaTokenDao().getSession(splicingSessionKey(sessionId));
 		if (session == null && isCreate) {
 			session = SaTokenManager.getSaTokenAction().createSession(sessionId);
 			SaTokenManager.getSaTokenDao().setSession(session, SaTokenManager.getConfig().getTimeout());
@@ -67,7 +67,7 @@ public class SaSessionCustomUtil {
 	 * @param sessionId 指定key
 	 */
 	public static void deleteSessionById(String sessionId) {
-		SaTokenManager.getSaTokenDao().deleteSession(getSessionKey(sessionId));
+		SaTokenManager.getSaTokenDao().deleteSession(splicingSessionKey(sessionId));
 	}
 
 }

@@ -5,7 +5,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * 调用StpUtil.setLogin()时的配置 Model 
+ * 调用 `StpUtil.setLogin()` 时的 [配置参数 Model ]
  * @author kong
  *
  */

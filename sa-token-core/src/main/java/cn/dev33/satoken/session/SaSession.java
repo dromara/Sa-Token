@@ -226,6 +226,16 @@ public class SaSession implements Serializable {
 		return dataMap;
 	}
 
+	/**
+	 * 写入数据集合 (不改变底层对象，只将此dataMap所有数据进行替换) 
+	 * @param dataMap 数据集合 
+	 */
+	public void refreshDataMap(Map<String, Object> dataMap) {
+		this.dataMap.clear();
+		this.dataMap.putAll(dataMap);
+		this.update();
+	}
+
 	// ----------------------- 一些操作
 
 	/**
