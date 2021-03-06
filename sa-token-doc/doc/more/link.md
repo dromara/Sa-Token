@@ -17,6 +17,8 @@
 
 [[sa-admin] - 一个多窗口后台模板，流畅、易上手、提高生产力](https://gitee.com/ejlchina-zhxu/okhttps) 
 
+[[vue-next-admin] - 一套为开发者快速开发准备的基于 vue2.x 越看越精彩的后台管理系统一站式平台模板](https://gitee.com/lyt-top/vue-admin-wonderful) 
+
 
 <br>
 虚位以待... 
