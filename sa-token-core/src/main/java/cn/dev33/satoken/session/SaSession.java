@@ -236,6 +236,28 @@ public class SaSession implements Serializable {
 		this.update();
 	}
 
+	
+	// ----------------------- 存取值 (类型转换) 
+
+	/**
+	 * 从Session中取值，转化为Object类型 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public Object getObject(String key) {
+		return getAttribute(key);
+	}
+	
+	/**
+	 * 判断一个值是否为null 
+	 * @param value 指定值 
+	 * @return 此value是否为null 
+	 */
+	public boolean valueIsNull(Object value) {
+		return value == null || value.equals("");
+	}
+
+	
 	// ----------------------- 一些操作
 
 	/**

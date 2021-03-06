@@ -9,7 +9,6 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 
 
 ### 1. sa-token 整合 Redis (使用jdk默认序列化方式)
-(注意: 整合Redis只需要引入对应的pom依赖即可，所有上层API保持不变)
 ``` xml 
 <!-- sa-token整合redis (使用jdk默认序列化方式) -->
 <dependency>
@@ -35,7 +34,10 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 
 <br>
 
-**请注意，无论使用哪种序列化方式，你都必须为项目提供一个Redis实例化方案，例如：**
+### 集成Redis请注意
+
+
+**1. 无论使用哪种序列化方式，你都必须为项目提供一个Redis实例化方案，例如：**
 ``` xml
 <!-- 提供redis连接池 -->
 <dependency>
@@ -44,6 +46,13 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 </dependency>
 ```
 
+**2. 引入了依赖，我还需要为Redis配置连接信息吗？** <br>
+需要！只有项目初始化了正确的Redis实例，`sa-token`才可以使用Redis进行数据持久化，参考：[application-dev.yml](https://gitee.com/sz6/sa-plus/blob/master/sp-server/src/main/resources/application-dev.yml)
+
+
+
+**3. 集成Redis后，是我额外手动保存数据，还是框架自动保存？** <br>
+框架自动保存。集成`Redis`只需要引入对应的`pom依赖`即可，框架所有上层API保持不变
 
 
 <br><br>

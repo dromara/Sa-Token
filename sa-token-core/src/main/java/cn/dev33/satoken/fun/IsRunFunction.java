@@ -23,14 +23,27 @@ public class IsRunFunction {
 	}
 
 	/**
-	 * 根据变量决定是否执行此函数
-	 * 
+	 * 当 isRun == true 时执行此函数
 	 * @param function 函数
+	 * @return 对象自身
 	 */
-	public void exe(SaFunction function) {
+	public IsRunFunction exe(SaFunction function) {
 		if (isRun) {
 			function.run();
 		}
+		return this;
+	}
+
+	/**
+	 * 当 isRun == false 时执行此函数
+	 * @param function 函数
+	 * @return 对象自身
+	 */
+	public IsRunFunction noExe(SaFunction function) {
+		if (!isRun) {
+			function.run();
+		}
+		return this;
 	}
 
 }
