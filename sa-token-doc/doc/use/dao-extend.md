@@ -50,7 +50,6 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 需要！只有项目初始化了正确的Redis实例，`sa-token`才可以使用Redis进行数据持久化，参考：[application-dev.yml](https://gitee.com/sz6/sa-plus/blob/master/sp-server/src/main/resources/application-dev.yml)
 
 
-
 **3. 集成Redis后，是我额外手动保存数据，还是框架自动保存？** <br>
 框架自动保存。集成`Redis`只需要引入对应的`pom依赖`即可，框架所有上层API保持不变
 
