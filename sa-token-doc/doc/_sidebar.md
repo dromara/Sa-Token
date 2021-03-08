@@ -19,8 +19,8 @@
 	- [花式token](/use/token-style) 
 	- [框架配置](/use/config) 
 	- [会话治理](/use/search-session) 
+	- [记住我模式](/use/remember-me)
 	- [密码加密](/use/password-secure) 
-	<!-- - [记住我模式](/use/remember-me) -->
 
 - **进阶**
 	- [集群、分布式](/senior/dcs)
