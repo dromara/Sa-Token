@@ -78,8 +78,26 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 }
 ```
 
+## 4、多账号模式下使用方式
+很简单,把StpUtil类换成新的权限验证类(比如多账号验证示例里面的StpUserUtil)即可其它调用方法不变
 
-## 4、完整的示例 
+``` java 
+@Configuration
+public class MySaTokenConfig implements WebMvcConfigurer {
+	// 注册sa-token的所有拦截器
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
+			// 根据路由划分模块，不同模块不同鉴权 
+			SaRouterUtil.match("/user/**", () -> StpUserUtil.checkPermission("user"));
+			SaRouterUtil.match("/admin/**", () -> StpUtil.checkPermission("admin"));
+		})).addPathPatterns("/**");
+	}
+}
+```
+
+
+## 5、完整示例
 最终的代码，可能会类似于下面的样子：
 
 ``` java 
@@ -112,6 +130,8 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 	}
 }
 ```
+
+
 
 
 
