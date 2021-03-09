@@ -246,9 +246,10 @@ public class TestController {
 //		StpUtil.getTokenSession().logout();
 //		StpUtil.logoutByLoginId(10001);
 //		StpUtil.setLoginId(10001);
-//		StpUtil.setLoginId(10001, new SaLoginModel().setIsTempCookie(true));
+//		StpUtil.setLoginId(10001, false);
 //		StpUtil.getLoginId();
-		
+//		StpUtil.setLoginId(10001);
+//		StpUtil.getTokenSession();
 		return AjaxJson.getSuccess("访问成功");
 	}
 	

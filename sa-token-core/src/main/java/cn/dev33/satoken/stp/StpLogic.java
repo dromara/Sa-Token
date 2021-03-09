@@ -161,10 +161,10 @@ public class StpLogic {
 	/**
 	 * 在当前会话上登录id, 并指定登录设备 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param isTempCookie 是否为临时Cookie 
+	 * @param isLastingCookie 是否为持久Cookie 
 	 */
-	public void setLoginId(Object loginId, boolean isTempCookie) {
-		setLoginId(loginId, new SaLoginModel().setIsTempCookie(isTempCookie));
+	public void setLoginId(Object loginId, boolean isLastingCookie) {
+		setLoginId(loginId, new SaLoginModel().setIsLastingCookie(isLastingCookie));
 	}
 	
 	/**
@@ -234,9 +234,8 @@ public class StpLogic {
 		// 注入Cookie 
 		if(config.getIsReadCookie() == true){
 			HttpServletResponse response = SaTokenManager.getSaTokenServlet().getResponse();
-			int cookieTimeout = loginModel.getIsTempCookie() ? -1 : (int)(long)loginModel.getTimeout();
 			SaTokenManager.getSaTokenCookie().addCookie(response, getTokenName(), tokenValue, 
-					"/", config.getCookieDomain(), cookieTimeout);
+					"/", config.getCookieDomain(), loginModel.getCookieTimeout());
 		}
 	}
 
@@ -584,8 +583,9 @@ public class StpLogic {
 				setLastActivityToNow(tokenValue);  
 				// cookie注入 
 				if(getConfig().getIsReadCookie() == true){	
+					int cookieTimeout = (int)(getConfig().getTimeout() == SaTokenDao.NEVER_EXPIRE ? Integer.MAX_VALUE : getConfig().getTimeout());
 					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, 
-							"/", getConfig().getCookieDomain(), (int)getConfig().getTimeout());		
+							"/", getConfig().getCookieDomain(), cookieTimeout);		
 				}
 			}
 		}

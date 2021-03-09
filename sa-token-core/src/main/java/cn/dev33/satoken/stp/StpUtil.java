@@ -75,10 +75,10 @@ public class StpUtil {
 	/**
 	 * 在当前会话上登录id, 并指定登录设备 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param isTempCookie 是否为临时Cookie 
+	 * @param isLastingCookie 是否为持久Cookie 
 	 */
-	public void setLoginId(Object loginId, boolean isTempCookie) {
-		stpLogic.setLoginId(loginId, isTempCookie);
+	public static void setLoginId(Object loginId, boolean isLastingCookie) {
+		stpLogic.setLoginId(loginId, isLastingCookie);
 	}
 	
 	/**

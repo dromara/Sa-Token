@@ -14,7 +14,6 @@ import com.pj.util.AjaxJson;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
-import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 全局异常处理 
@@ -25,7 +24,7 @@ public class GlobalException {
 	// 在当前类每个方法进入之前触发的操作
 	@ModelAttribute
 	public void get(HttpServletRequest request) throws IOException {
-		StpUtil.checkPermission("user:add");
+		
 	}
 
 	

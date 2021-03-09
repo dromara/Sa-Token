@@ -2,6 +2,7 @@ package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -23,9 +24,9 @@ public class SaLoginModel {
 	public Long timeout;
 
 	/**
-	 * 是否为临时Cookie（临时Cookie会在浏览器关闭时自动删除）
+	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
-	public Boolean isTempCookie;
+	public Boolean isLastingCookie;
 
 	
 	/**
@@ -61,21 +62,36 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return isTempCookie
+	 * @return isLastingCookie
 	 */
-	public Boolean getIsTempCookie() {
-		return isTempCookie;
+	public Boolean getIsLastingCookie() {
+		return isLastingCookie;
 	}
 
 	/**
-	 * @param isTempCookie 要设置的 isTempCookie
+	 * @param isLastingCookie 要设置的 isLastingCookie
 	 * @return 对象自身
 	 */
-	public SaLoginModel setIsTempCookie(Boolean isTempCookie) {
-		this.isTempCookie = isTempCookie;
+	public SaLoginModel setIsLastingCookie(Boolean isLastingCookie) {
+		this.isLastingCookie = isLastingCookie;
 		return this;
 	}
 
+
+	/**
+	 * @return cookie时长
+	 */
+	public int getCookieTimeout() {
+		if(isLastingCookie == false) {
+			return -1;
+		}
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			return Integer.MAX_VALUE;
+		}
+		return (int)(long)timeout;
+	}
+
+	
 	/**
 	 * 构建对象，初始化默认值 
 	 * @return 对象自身
@@ -96,8 +112,8 @@ public class SaLoginModel {
 		if(timeout == null) {
 			timeout = config.getTimeout();
 		}
-		if(isTempCookie == null) {
-			isTempCookie = false;
+		if(isLastingCookie == null) {
+			isLastingCookie = true;
 		}
 		return this;
 	}
