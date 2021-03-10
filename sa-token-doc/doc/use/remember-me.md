@@ -59,4 +59,23 @@ Remember me, it's too easy!
 
 
 
+### 登录时指定token有效期
+登录时不仅可以指定是否为`[记住我]`模式，还可以指定一个特定的时间作为token有效时长，如下示例：
+``` java
+// 示例1：
+// 指定token有效期(单位: 秒)，如下所示token七天有效
+StpUtil.setLoginId(10001, new SaLoginModel().setTimeout(60 * 60 * 24 * 7));
+
+// ----------------------- 示例2：所有参数
+// `SaLoginModel`为登录参数Model，其有诸多参数决定登录时的各种逻辑，例如：
+StpUtil.setLoginId(10001, new SaLoginModel()
+			.setDevice("PC")				// 此次登录的客户端设备标识, 用于[同端互斥登录]时指定此次登录的设备名称
+			.setIsLastingCookie(true)		// 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+			.setTimeout(60 * 60 * 24 * 7)	// 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+			);
+```
+
+
+
+
 

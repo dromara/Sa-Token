@@ -35,6 +35,7 @@
 - **附录**
 	- [未登录场景值](/fun/not-login-scene)
 	- [token有效期详解](/fun/token-timeout)
+	- [Session模型详解](/fun/session-model)
 	- [TokenInfo参数详解](/fun/token-info)
 	
 

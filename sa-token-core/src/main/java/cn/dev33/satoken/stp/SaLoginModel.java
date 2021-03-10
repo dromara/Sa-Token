@@ -19,14 +19,14 @@ public class SaLoginModel {
 	public String device;
 	
 	/**
-	 * 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
-	 */
-	public Long timeout;
-
-	/**
 	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
 	public Boolean isLastingCookie;
+
+	/**
+	 * 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 */
+	public Long timeout;
 
 	
 	/**
@@ -46,22 +46,6 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return timeout
-	 */
-	public Long getTimeout() {
-		return timeout;
-	}
-
-	/**
-	 * @param timeout 要设置的 timeout
-	 * @return 对象自身
-	 */
-	public SaLoginModel setTimeout(long timeout) {
-		this.timeout = timeout;
-		return this;
-	}
-
-	/**
 	 * @return isLastingCookie
 	 */
 	public Boolean getIsLastingCookie() {
@@ -74,6 +58,22 @@ public class SaLoginModel {
 	 */
 	public SaLoginModel setIsLastingCookie(Boolean isLastingCookie) {
 		this.isLastingCookie = isLastingCookie;
+		return this;
+	}
+
+	/**
+	 * @return timeout
+	 */
+	public Long getTimeout() {
+		return timeout;
+	}
+
+	/**
+	 * @param timeout 要设置的 timeout
+	 * @return 对象自身
+	 */
+	public SaLoginModel setTimeout(long timeout) {
+		this.timeout = timeout;
 		return this;
 	}
 
@@ -109,11 +109,11 @@ public class SaLoginModel {
 		if(device == null) {
 			device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 		}
-		if(timeout == null) {
-			timeout = config.getTimeout();
-		}
 		if(isLastingCookie == null) {
 			isLastingCookie = true;
+		}
+		if(timeout == null) {
+			timeout = config.getTimeout();
 		}
 		return this;
 	}
@@ -127,5 +127,16 @@ public class SaLoginModel {
 		return new SaLoginModel();
 	}
 
+	
+	/**
+	 * toString
+	 */
+	@Override
+	public String toString() {
+		return "SaLoginModel [device=" + device + ", isLastingCookie=" + isLastingCookie + ", timeout=" + timeout + "]";
+	}
+
+	
+	
 	
 }
