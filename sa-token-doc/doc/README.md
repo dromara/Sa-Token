@@ -185,11 +185,11 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 ## 交流群
 QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
-![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=150')
+![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=230')
 
-**微信群** ：
+**微信群**
 
-![微信群](https://oss.dev33.cn/sa-token/i-wx-qr.jpg)
+![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
 
 (扫码添加微信，备注：sa-token，邀您加入群聊)
 
