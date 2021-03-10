@@ -243,13 +243,7 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test(HttpServletResponse response) {
-//		StpUtil.getTokenSession().logout();
-//		StpUtil.logoutByLoginId(10001);
-//		StpUtil.setLoginId(10001);
-//		StpUtil.setLoginId(10001, false);
-//		StpUtil.getLoginId();
-//		StpUtil.setLoginId(10001);
-//		StpUtil.getTokenSession();
+		System.out.println("进来了");
 		return AjaxJson.getSuccess("访问成功");
 	}
 	
