@@ -16,6 +16,8 @@
 	<properties> 
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<!-- 定义sa-token版本号 -->
+		<sa-token-version>1.14.0</sa-token-version>
 	</properties>
 	
 	<dependencies>
@@ -30,21 +32,21 @@
 		<dependency>
 		    <groupId>cn.dev33</groupId>
 		    <artifactId>sa-token-spring-boot-starter</artifactId>
-		    <version>1.13.0</version>
+            <version>${sa-token-version}</version>
 		</dependency>
 
 		<!-- sa-token 实现 oauth2.0 -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-oauth2</artifactId>
-            <version>1.13.0-alpha</version>
+            <version>1.14.0-alpha</version>
         </dependency>
 
 		<!-- sa-token整合redis (使用jackson序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>1.13.0</version>
+            <version>${sa-token-version}</version>
         </dependency>
 		<dependency>
             <groupId>org.apache.commons</groupId>

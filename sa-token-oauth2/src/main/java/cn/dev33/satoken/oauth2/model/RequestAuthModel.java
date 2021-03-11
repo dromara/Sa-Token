@@ -50,6 +50,7 @@ public class RequestAuthModel {
 
 	/**
 	 * @param clientId 要设置的 clientId
+	 * @return 对象自身
 	 */
 	public RequestAuthModel setClientId(String clientId) {
 		this.clientId = clientId;
@@ -65,6 +66,7 @@ public class RequestAuthModel {
 
 	/**
 	 * @param scope 要设置的 scope
+	 * @return 对象自身
 	 */
 	public RequestAuthModel setScope(String scope) {
 		this.scope = scope;
@@ -80,6 +82,7 @@ public class RequestAuthModel {
 
 	/**
 	 * @param loginId 要设置的 loginId
+	 * @return 对象自身
 	 */
 	public RequestAuthModel setLoginId(Object loginId) {
 		this.loginId = loginId;
@@ -95,6 +98,7 @@ public class RequestAuthModel {
 
 	/**
 	 * @param redirectUri 要设置的 redirectUri
+	 * @return 对象自身
 	 */
 	public RequestAuthModel setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
@@ -110,6 +114,7 @@ public class RequestAuthModel {
 
 	/**
 	 * @param responseType 要设置的 responseType
+	 * @return 对象自身
 	 */
 	public RequestAuthModel setResponseType(String responseType) {
 		this.responseType = responseType;
@@ -125,6 +130,7 @@ public class RequestAuthModel {
 
 	/**
 	 * @param state 要设置的 state
+	 * @return 对象自身
 	 */
 	public RequestAuthModel setState(String state) {
 		this.state = state;
@@ -133,6 +139,7 @@ public class RequestAuthModel {
 	
 	/**
 	 * 检查此Model参数是否有效  
+	 * @return 对象自身
 	 */
 	public RequestAuthModel checkModel() {
 		if(SaTokenInsideUtil.isEmpty(clientId)) {

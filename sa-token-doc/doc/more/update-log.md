@@ -1,5 +1,22 @@
 # 更新日志 
 
+### 2021-3-12 @v1.14.0
+- 新增：新增`SaLoginModel`登录参数Model，适配 [记住我] 模式	 **[重要]**
+- 新增：新增 `StpUtil.setLoginId()` 时指定token有效期，可灵活控制用户的一次登录免验证时长 
+- 新增：新增Cookie时间判断，在`timeout`设置为-1时，`Cookie`有效期将为`Integer.MAX_VALUE`	 **[重要]**
+- 新增：新增密码加密工具类，可快速MD5、SHA1、SHA256、AES、RSA加密 	**[重要]**
+- 新增：新增 OAuth2.0 模块  	**[重要]** 
+- 新增：`SaTokenConfig`配置类所有set方法支持链式调用 
+- 新增：`SaOAuth2Config` sa-token oauth2 配置类所有set方法新增支持链式调用 
+- 优化：`StpLogic`类所有`getKey`方法重名为`splicingKey`，更语义化的函数名称 
+- 新增：`IsRunFunction`新增`noExe`函数，用于指定当`isRun`值为`false`时执行的函数 
+- 新增：`SaSession`新增数据存取值操作API 
+- 优化：优化`SaTokenDao`接口，增加Object操作API
+- 优化：jwt示例`createToken`方法去除默认秘钥判断，只在启动项目时打印警告 
+- 文档：常见问题新增示例(修改密码后如何立即掉线)
+- 文档：权限认证文档新增[如何把权限精确搭到按钮级]示例说明 
+- 文档：优化文档，部分模块添加图片说明 
+
 
 ### 2021-2-9 @v1.13.0
 - 优化：优化源码注释与文档

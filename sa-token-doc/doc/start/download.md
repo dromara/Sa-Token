@@ -9,14 +9,14 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.13.0</version>
+	<version>1.14.0</version>
 </dependency>
 ```
 
 ## Gradle依赖
 Gradle用户引入依赖：
 ```
-implementation 'cn.dev33:sa-token-spring-boot-starter:1.13.0'
+implementation 'cn.dev33:sa-token-spring-boot-starter:1.14.0'
 ```
 
 
@@ -34,8 +34,12 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:1.13.0'
 	├── sa-token-dao-redis                    // sa-token整合redis (使用jdk默认序列化方式)
 	├── sa-token-dao-redis-jackson            // sa-token整合redis (使用jackson序列化方式)
 	├── sa-token-spring-aop                   // sa-token整合SpringAOP 注解鉴权
+	├── sa-token-oauth2                       // sa-token实现 OAuth2.0 模块(内测暂未发布)
 	├── sa-token-demo-springboot              // sa-token示例 
 	├── sa-token-demo-jwt                    // sa-token集成jwt示例 
+	├── sa-token-demo-oauth2                 // sa-token集成OAuth2.0模块示例 
+		├── sa-token-demo-oauth2-client       // OAuth2.0 客户端
+		├── sa-token-demo-oauth2-server       // OAuth2.0 服务端
 	├── sa-token-doc                        // sa-token开发文档 
 	├──pom.xml
 ```
@@ -46,7 +50,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:1.13.0'
 ## jar包下载
 [点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
 
-(注意：当前仅提供`v1.6.0`版本jar包下载，更多版本请前往maven中央仓库获取)
+(注意：当前仅提供`v1.6.0`版本jar包下载，更多版本请前往maven中央仓库获取，[直达链接](https://search.maven.org/search?q=sa-token))
 
 
 

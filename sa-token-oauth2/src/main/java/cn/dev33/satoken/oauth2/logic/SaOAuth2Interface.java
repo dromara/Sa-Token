@@ -523,7 +523,7 @@ public interface SaOAuth2Interface {
 	}
 	
 	/**  
-	 * 获取key：[Client&账号]最新授权码记录, 持久化使用的key 
+	 * 获取key：[Client and 账号]最新授权码记录, 持久化使用的key 
 	 * @param loginId 账号id
 	 * @param clientId 应用id
 	 * @return key

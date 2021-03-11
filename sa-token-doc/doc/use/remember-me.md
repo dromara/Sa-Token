@@ -26,8 +26,8 @@ Cookie作为浏览器提供的默认会话跟踪机制，其生命周期有两�
 - 永久Cookie：有效期为一个具体的时间，在时间未到期之前，即使用户关闭了浏览器Cookie也不会消失
 
 利用Cookie的此特性，我们便可以轻松实现 [记住我] 模式：
-- 勾选[记住我]按钮时：调用`StpUtil.setLoginId(10001, true)`，在浏览器写入一个`永久Cookie`保存token，此时用户即使重启浏览器token依然有效
-- 不勾选[记住我]按钮时：调用`StpUtil.setLoginId(10001, false)`，在浏览器写入一个`临时Cookie`保存token，此时用户在重启浏览器后token便会消失，导致会话失效
+- 勾选[记住我]按钮时：调用`StpUtil.setLoginId(10001, true)`，在浏览器写入一个`永久Cookie`储存token，此时用户即使重启浏览器token依然有效
+- 不勾选[记住我]按钮时：调用`StpUtil.setLoginId(10001, false)`，在浏览器写入一个`临时Cookie`储存token，此时用户在重启浏览器后token便会消失，导致会话失效
 
 
 ### 前后台分离模式下如何实现[记住我]?

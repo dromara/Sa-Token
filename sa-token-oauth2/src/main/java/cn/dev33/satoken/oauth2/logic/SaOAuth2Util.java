@@ -51,6 +51,7 @@ public class SaOAuth2Util {
 	 * @param clientId 应用id 
 	 * @param scope 权限 
 	 * @param loginId 账号id 
+	 * @return 是否已经授权
 	 */
 	public static boolean isGrant(Object loginId, String clientId, String scope) {
 		return SaOAuth2Manager.getInterface().isGrant(loginId, clientId, scope);

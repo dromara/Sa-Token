@@ -46,7 +46,7 @@ public class SaBase64Util {
 
 	/**
 	 * Base64解码，String 转 String
-	 * @param text Base64格式字符串
+	 * @param base64Text Base64格式字符串
 	 * @return 字符串
 	 */
 	public static String decode(String base64Text){

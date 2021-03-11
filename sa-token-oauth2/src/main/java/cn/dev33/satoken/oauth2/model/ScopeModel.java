@@ -26,7 +26,7 @@ public class ScopeModel {
 	}
 	/**
 	 * 构造一个 
-	 * @param id 权限id 
+	 * @param name 权限名称
 	 * @param introduce 权限详细介绍 
 	 */
 	public ScopeModel(String name, String introduce) {
