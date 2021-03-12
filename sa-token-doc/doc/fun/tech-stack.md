@@ -9,7 +9,7 @@
 - Java8 接口与default实现、静态方法、枚举、定时器、异常类、泛型、反射、IO流、自定义注解、Lambda表达式、函数式编程
 - package-info注释、Serializable序列化接口、
 - java加密算法：MD5、SHA1、SHA256、AES、RSA
-- OAuth2.0、同域单点登录、集群与分布式、路由Ant匹配、Ajax自定义header参数
+- OAuth2.0、同域单点登录、集群与分布式、路由Ant匹配
 
 
 
