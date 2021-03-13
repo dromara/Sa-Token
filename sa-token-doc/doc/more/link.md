@@ -19,6 +19,7 @@
 
 [[vue-next-admin] - 一套为开发者快速开发准备的基于 vue2.x 越看越精彩的后台管理系统一站式平台模板](https://gitee.com/lyt-top/vue-admin-wonderful) 
 
+[[小诺快速开发平台] - 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
 <br>
 虚位以待... 
