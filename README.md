@@ -182,7 +182,9 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 
 
 ## 友情链接
-[**[ okhttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+[**[OkHttps]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+
+[**[小诺快速开发平台]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
 
 ## 交流群
