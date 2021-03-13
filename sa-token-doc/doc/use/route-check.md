@@ -10,7 +10,7 @@
 
 
 ## 1、注册路由拦截器
-以`springboot2.0`为例, 新建配置类`MySaTokenConfig.java`
+以`SpringBoot2.0`为例, 新建配置类`MySaTokenConfig.java`
 ``` java 
 @Configuration
 public class MySaTokenConfig implements WebMvcConfigurer {
@@ -22,49 +22,19 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 	}
 }
 ```
-以上代码，我们注册了一个登录验证拦截器，并且排除了`/user/doLogin`接口用来开放登录 <br>
+以上代码，我们注册了一个登录验证拦截器，并且排除了`/user/doLogin`接口用来开放登录（除了`/user/doLogin`以外的所有接口都需要登录才能访问） <br>
 那么我们如何进行权限认证拦截呢，且往下看
 
 
-## 2、所有拦截器示例
-``` java 
-@Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
-	// 注册sa-token的所有拦截器
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		
-		// 注册一个登录验证拦截器 
-		registry.addInterceptor(SaRouteInterceptor.createLoginVal()).addPathPatterns("/**").excludePathPatterns("/user/doLogin"); 
-		
-		// 注册一个角色认证拦截器 
-		registry.addInterceptor(SaRouteInterceptor.createRoleVal("super-admin")).addPathPatterns("/**"); 
-
-		// 注册一个权限认证拦截器 
-		registry.addInterceptor(SaRouteInterceptor.createPermissionVal("user:add", "user:deelete")).addPathPatterns("/UserController/**"); 
-
-		// 注册一个自定义认证拦截器 (可以写任意认证代码)
-		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
-			System.out.println("---------- 进入自定义认证 --------------- ");
-			// 你可以在这里写任意认证代码, 例如: StpUtil.checkLogin(); 
-		})).addPathPatterns("/**");
-		
-	}
-}
-```
-（你不必像上面的示例一样注册所有拦截器，只要按需注册即可 ）
-
-
-
-## 3、让我们利用自定义拦截器做点快活的事情
-你可以根据路由划分模块，不同模块不同鉴权 
+## 2、自定义权限验证规则
+你可以使用函数式编程自定义验证规则
 
 ``` java 
 @Configuration
 public class MySaTokenConfig implements WebMvcConfigurer {
-	// 注册sa-token的所有拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		// 注册路由拦截器，自定义验证规则 
 		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
 			// 根据路由划分模块，不同模块不同鉴权 
 			SaRouterUtil.match("/user/**", () -> StpUtil.checkPermission("user"));
@@ -78,27 +48,8 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 }
 ```
 
-## 4、多账号模式下使用方式
-很简单,把StpUtil类换成新的权限验证类(比如多账号验证示例里面的StpUserUtil)即可其它调用方法不变
-
-``` java 
-@Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
-	// 注册sa-token的所有拦截器
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new SaRouteInterceptor((request, response, handler)->{
-			// 根据路由划分模块，不同模块不同鉴权 
-			SaRouterUtil.match("/user/**", () -> StpUserUtil.checkPermission("user"));
-			SaRouterUtil.match("/admin/**", () -> StpUtil.checkPermission("admin"));
-		})).addPathPatterns("/**");
-	}
-}
-```
-
-
-## 5、完整示例
-最终的代码，可能会类似于下面的样子：
+## 3、完整示例
+所有用法示例：
 
 ``` java 
 @Configuration
@@ -106,12 +57,15 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 	// 注册sa-token的拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 自定义验证拦截器 
+		// 注册路由拦截器，自定义验证规则 
 		registry.addInterceptor(new SaRouteInterceptor((request, response, handler) -> {
 			
 			// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 			SaRouterUtil.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
 			
+			// 登录验证 -- 排除多个路径
+			SaRouterUtil.match(Arrays.asList("/**"), Arrays.asList("/user/doLogin", "/user/reg"), () -> StpUtil.checkLogin());
+						
 			// 角色认证 -- 拦截以 admin 开头的路由，必须具备[admin]角色或者[super-admin]角色才可以通过认证 
 			SaRouterUtil.match("/admin/**", () -> StpUtil.checkRoleOr("admin", "super-admin"));
 			
@@ -125,6 +79,16 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 			
 			// 匹配 restful 风格路由 
 			SaRouterUtil.match("/article/get/{id}", () -> StpUtil.checkPermission("article"));
+			
+            // 检查请求方式 
+			SaRouterUtil.match("/notice/**", () -> {
+				if(request.getMethod().equals(HttpMethod.GET.toString())) {
+					StpUtil.checkPermission("notice");
+				}
+			});
+			
+			// 在多账号模式下，可以使用任意StpUtil进行校验
+			SaRouterUtil.match("/user/**", () -> StpUserUtil.checkLogin());
 			
 		})).addPathPatterns("/**");
 	}

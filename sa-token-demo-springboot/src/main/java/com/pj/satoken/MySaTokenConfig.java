@@ -9,6 +9,8 @@ import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 
 /**
  * sa-token代码方式进行配置
+ * @author kong
+ *
  */
 @Configuration
 public class MySaTokenConfig implements WebMvcConfigurer {
@@ -33,6 +35,5 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 		// 注册注解拦截器 
 		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
 	}
-	
 	
 }
