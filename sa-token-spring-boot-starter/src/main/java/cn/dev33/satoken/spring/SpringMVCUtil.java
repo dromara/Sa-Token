@@ -34,7 +34,7 @@ public class SpringMVCUtil {
 	public static HttpServletResponse getResponse() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new SaTokenException("非Web上下文无法获取Request");
+			throw new SaTokenException("非Web上下文无法获取Response");
 		}
 		return servletRequestAttributes.getResponse();
 	}
