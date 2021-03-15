@@ -44,7 +44,7 @@ public class SaTokenCookieUtil {
 	 */
 	public static void addCookie(HttpServletResponse response, String name, String value, String path, String domain, int timeout) {
 		Cookie cookie = new Cookie(name, value);
-		if(SaTokenInsideUtil.isEmpty(path) == false) {
+		if(SaTokenInsideUtil.isEmpty(path) == true) {
 			path = "/";
 		}
 		if(SaTokenInsideUtil.isEmpty(domain) == false) {
