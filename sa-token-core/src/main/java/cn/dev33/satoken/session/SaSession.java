@@ -249,6 +249,19 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
+	 * 从Session中取值，转化为String类型 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public String getString(String key) {
+		Object value = getObject(key);
+		if(value == null) {
+			return null;
+		}
+		return String.valueOf(value);
+	}
+	
+	/**
 	 * 判断一个值是否为null 
 	 * @param value 指定值 
 	 * @return 此value是否为null 
