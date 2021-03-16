@@ -81,3 +81,16 @@ session.logout();                         // 注销此Session会话 (从持久�
 具体可参考`javax.servlet.http.HttpSession`，`SaSession`所含方法与其大体类似
 
 
+### Session环境隔离说明
+在springboot环境下取得的session环境和通过StpUtil获取的session环境并不相通, 示例
+``` java
+@PostMapping("/resetPoints")
+public void reset(HttpSession session) {
+    session.setAttribute("pointsKey", 66);
+    SaSession session2 = StpUtil.getSession();
+    Object value = session2.getAttribute("pointsKey");
+    System.out.println(value)
+    // 输出null
+}
+```
+而且, 在使用sa-token多账号模式下, 不同的StpUtil获取的session之间也是环境隔离
