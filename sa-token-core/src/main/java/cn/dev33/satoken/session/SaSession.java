@@ -240,7 +240,7 @@ public class SaSession implements Serializable {
 	// ----------------------- 存取值 (类型转换) 
 
 	/**
-	 * 从Session中取值，转化为Object类型 
+	 * 从Session中取值，并转化为Object类型 
 	 * @param key key 
 	 * @return 值 
 	 */
@@ -249,7 +249,7 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 从Session中取值，转化为String类型 
+	 * 从Session中取值，并转化为String类型 
 	 * @param key key 
 	 * @return 值 
 	 */
@@ -259,6 +259,19 @@ public class SaSession implements Serializable {
 			return null;
 		}
 		return String.valueOf(value);
+	}
+
+	/**
+	 * 从Session中取值，并转化为int类型，如果value为空，则返回0
+	 * @param key key 
+	 * @return 值 
+	 */
+	public int getInt(String key) {
+		Object value = getObject(key);
+		if(valueIsNull(value)) {
+			return 0;
+		}
+		return Integer.valueOf(String.valueOf(value));
 	}
 	
 	/**

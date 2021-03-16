@@ -47,7 +47,33 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 ```
 
 **2. 引入了依赖，我还需要为Redis配置连接信息吗？** <br>
-需要！只有项目初始化了正确的Redis实例，`sa-token`才可以使用Redis进行数据持久化，参考：[application-dev.yml](https://gitee.com/sz6/sa-plus/blob/master/sp-server/src/main/resources/application-dev.yml)
+需要！只有项目初始化了正确的Redis实例，`sa-token`才可以使用Redis进行数据持久化，参考以下`yml配置`：
+``` java
+# 端口
+spring: 
+    # redis配置 
+    redis:
+        # Redis数据库索引（默认为0）
+        database: 1
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        # password: 
+        # 连接超时时间（毫秒）
+        timeout: 1000ms
+        lettuce:
+            pool:
+                # 连接池最大连接数
+                max-active: 200
+                # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                max-wait: -1ms
+                # 连接池中的最大空闲连接
+                max-idle: 10
+                # 连接池中的最小空闲连接
+                min-idle: 0
+```
 
 
 **3. 集成Redis后，是我额外手动保存数据，还是框架自动保存？** <br>
