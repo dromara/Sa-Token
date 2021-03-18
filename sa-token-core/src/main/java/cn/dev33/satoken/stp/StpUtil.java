@@ -36,6 +36,14 @@ public class StpUtil {
  		return stpLogic.getTokenName();
  	}
 
+ 	/**
+ 	 * 在当前会话写入当前tokenValue 
+ 	 * @param tokenValue token值 
+ 	 */
+	public static void setTokenValue(String tokenValue, int cookieTimeout){
+		stpLogic.setTokenValue(tokenValue, cookieTimeout);
+	}
+ 	
 	/**
 	 * 获取当前tokenValue
 	 * @return 当前tokenValue
