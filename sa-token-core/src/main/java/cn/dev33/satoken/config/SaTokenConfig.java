@@ -51,6 +51,9 @@ public class SaTokenConfig {
 
 	/** 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景 */
 	private String cookieDomain;
+	
+	/** token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx) */
+	private String tokenPrefix;
 
 	/** 是否在初始化配置时打印版本字符画 */
 	private Boolean isV = true;
@@ -270,6 +273,22 @@ public class SaTokenConfig {
 	}
 
 	/**
+	 * @return token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)
+	 */
+	public String getTokenPrefix() {
+		return tokenPrefix;
+	}
+
+	/**
+	 * @param tokenPrefix token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setTokenPrefix(String tokenPrefix) {
+		this.tokenPrefix = tokenPrefix;
+		return this;
+	}
+	
+	/**
 	 * @return 是否在初始化配置时打印版本字符画
 	 */
 	public Boolean getIsV() {
@@ -285,6 +304,7 @@ public class SaTokenConfig {
 		return this;
 	}
 
+	
 
 	/**
 	 * toString 
@@ -295,8 +315,8 @@ public class SaTokenConfig {
 				+ ", allowConcurrentLogin=" + allowConcurrentLogin + ", isShare=" + isShare + ", isReadBody="
 				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
-				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain + ", isV="
-				+ isV + "]";
+				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
+				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + "]";
 	}
 	
 

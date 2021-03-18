@@ -19,6 +19,7 @@ spring:
         token-style: uuid
         
         
+        
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）

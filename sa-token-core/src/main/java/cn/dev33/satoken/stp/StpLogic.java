@@ -24,6 +24,7 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.util.SaTokenConsts;
+import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
  * sa-token 权限验证，逻辑实现类 
@@ -84,6 +85,23 @@ public class StpLogic {
 		return SaTokenManager.getSaTokenAction().createToken(loginId, loginKey);
 	}
  	
+ 	/**
+ 	 * 在当前会话写入当前tokenValue 
+ 	 * @param tokenValue token值 
+ 	 */
+	public void setTokenValue(String tokenValue, int cookieTimeout){
+		// 将token保存到本次request里  
+		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
+		request.setAttribute(splicingKeyJustCreatedSave(), tokenValue);	
+		// 注入Cookie 
+		SaTokenConfig config = getConfig();
+		if(config.getIsReadCookie() == true){
+			HttpServletResponse response = SaTokenManager.getSaTokenServlet().getResponse();
+			SaTokenManager.getSaTokenCookie().addCookie(response, getTokenName(), tokenValue, 
+					"/", config.getCookieDomain(), cookieTimeout);
+		}
+	}
+ 	
 	/**
 	 * 获取当前tokenValue
 	 * @return 当前tokenValue
@@ -115,7 +133,16 @@ public class StpLogic {
 			}
 		}
 		
-		// 5. 返回 
+		// 5. 如果打开了前缀模式
+		String tokenPrefix = getConfig().getTokenPrefix();
+		if(SaTokenInsideUtil.isEmpty(tokenPrefix) == false && SaTokenInsideUtil.isEmpty(tokenValue) == false) {
+			// 如果token以指定的前缀开头, 则裁剪掉它 
+			if(tokenValue.startsWith(tokenPrefix + " ")) {
+				tokenValue = tokenValue.substring(tokenPrefix.length() + 1);
+			}
+		}
+		
+		// 6. 返回 
 		return tokenValue;
 	}
 	
@@ -175,7 +202,6 @@ public class StpLogic {
 	public void setLoginId(Object loginId, SaLoginModel loginModel) {
 		
 		// ------ 1、获取相应对象  
-		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
 		SaTokenConfig config = getConfig();
 		SaTokenDao dao = SaTokenManager.getSaTokenDao();
 		loginModel.build(config);
@@ -190,7 +216,7 @@ public class StpLogic {
 			}
 		} else {
 			// --- 如果不允许并发登录 
-			// 如果此时[id-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的同设备token标记为被顶下线 
+			// 如果此时[user-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的同设备token标记为被顶下线 
 			SaSession session = getSessionByLoginId(loginId, false);
 			if(session != null) {
 				List<TokenSign> tokenSignList = session.getTokenSignList();
@@ -200,7 +226,7 @@ public class StpLogic {
 						dao.update(splicingKeyTokenValue(tokenSign.getValue()), NotLoginException.BE_REPLACED);	
 						// 2. 清理掉[token-最后操作时间] 
 						clearLastActivity(tokenSign.getValue()); 			
-						// 3. 清理账号session上的token签名记录 
+						// 3. 清理user-session上的token签名记录 
 						session.removeTokenSign(tokenSign.getValue()); 		
 					}
 				}
@@ -227,16 +253,10 @@ public class StpLogic {
 		// ------ 4. 持久化其它数据 
 		// token -> uid 
 		dao.set(splicingKeyTokenValue(tokenValue), String.valueOf(loginId), loginModel.getTimeout());	
-		// 将token保存到本次request里  
-		request.setAttribute(splicingKeyJustCreatedSave(), tokenValue);	
 		// 写入 [最后操作时间]
 		setLastActivityToNow(tokenValue);  	
-		// 注入Cookie 
-		if(config.getIsReadCookie() == true){
-			HttpServletResponse response = SaTokenManager.getSaTokenServlet().getResponse();
-			SaTokenManager.getSaTokenCookie().addCookie(response, getTokenName(), tokenValue, 
-					"/", config.getCookieDomain(), loginModel.getCookieTimeout());
-		}
+		// 在当前会话写入当前tokenValue 
+		setTokenValue(tokenValue, loginModel.getCookieTimeout());
 	}
 
 	/** 
@@ -577,16 +597,11 @@ public class StpLogic {
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给Ta 
 				tokenValue = createTokenValue(null);
-				// Request做上标记 
-				SaTokenManager.getSaTokenServlet().getRequest().setAttribute(splicingKeyJustCreatedSave(), tokenValue);
 				// 写入 [最后操作时间]
 				setLastActivityToNow(tokenValue);  
-				// cookie注入 
-				if(getConfig().getIsReadCookie() == true){	
-					int cookieTimeout = (int)(getConfig().getTimeout() == SaTokenDao.NEVER_EXPIRE ? Integer.MAX_VALUE : getConfig().getTimeout());
-					SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, 
-							"/", getConfig().getCookieDomain(), cookieTimeout);		
-				}
+				// 在当前会话写入这个tokenValue 
+				int cookieTimeout = (int)(getConfig().getTimeout() == SaTokenDao.NEVER_EXPIRE ? Integer.MAX_VALUE : getConfig().getTimeout());
+				setTokenValue(tokenValue, cookieTimeout);
 			}
 		}
 		// 返回这个token对应的专属session 
@@ -1092,7 +1107,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeySwitch() {
-		return SaTokenConsts.SWITCH_TO_SAVE_KEY + getLoginKey();
+		return SaTokenConsts.SWITCH_TO_SAVE_KEY + loginKey;
 	}
 
 	/**
@@ -1100,7 +1115,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyJustCreatedSave() {
-		return SaTokenConsts.JUST_CREATED_SAVE_KEY + getLoginKey();
+		return SaTokenConsts.JUST_CREATED_SAVE_KEY + loginKey;
 	}
 	
 	

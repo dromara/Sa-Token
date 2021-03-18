@@ -44,7 +44,7 @@
 ``` java
 // 底层的 StpLogic 对象  
 public static StpLogic stpLogic = new StpLogic("user") {
-	// 重写 `getTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
+	// 重写 `splicingKeyTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
 	@Override
         public String splicingKeyTokenName() {
             return super.splicingKeyTokenName()+"-user";
