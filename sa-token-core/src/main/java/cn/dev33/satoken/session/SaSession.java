@@ -237,7 +237,38 @@ public class SaSession implements Serializable {
 	}
 
 	
+	// ----------------------- 一些操作
+
+	/**
+	 * 将这个Session从持久库更新一下
+	 */
+	public void update() {
+		SaTokenManager.getSaTokenDao().updateSession(this);
+	}
+
+	/** 注销会话 (注销后，此session会话将不再存储服务器上) */
+	public void logout() {
+		SaTokenManager.getSaTokenDao().deleteSession(this.id);
+	}
+
+	/** 当Session上的tokenSign数量为零时，注销会话 */
+	public void logoutByTokenSignCountToZero() {
+		if (tokenSignList.size() == 0) {
+			logout();
+		}
+	}
+
+	
 	// ----------------------- 存取值 (类型转换) 
+
+	/**
+	 * 判断一个值是否为null 
+	 * @param value 指定值 
+	 * @return 此value是否为null 
+	 */
+	public boolean valueIsNull(Object value) {
+		return value == null || value.equals("");
+	}
 
 	/**
 	 * 从Session中取值，并转化为Object类型 
@@ -273,36 +304,19 @@ public class SaSession implements Serializable {
 		}
 		return Integer.valueOf(String.valueOf(value));
 	}
-	
-	/**
-	 * 判断一个值是否为null 
-	 * @param value 指定值 
-	 * @return 此value是否为null 
-	 */
-	public boolean valueIsNull(Object value) {
-		return value == null || value.equals("");
-	}
-
-	
-	// ----------------------- 一些操作
 
 	/**
-	 * 将这个Session从持久库更新一下
+	 * 从Session中取值，并转化为long类型，如果value为空，则返回0
+	 * @param key key 
+	 * @return 值 
 	 */
-	public void update() {
-		SaTokenManager.getSaTokenDao().updateSession(this);
-	}
-
-	/** 注销会话 (注销后，此session会话将不再存储服务器上) */
-	public void logout() {
-		SaTokenManager.getSaTokenDao().deleteSession(this.id);
-	}
-
-	/** 当Session上的tokenSign数量为零时，注销会话 */
-	public void logoutByTokenSignCountToZero() {
-		if (tokenSignList.size() == 0) {
-			logout();
+	public long getLong(String key) {
+		Object value = getObject(key);
+		if(valueIsNull(value)) {
+			return 0;
 		}
+		return Long.valueOf(String.valueOf(value));
 	}
-
+	
+	
 }

@@ -45,6 +45,8 @@ public class StpLogic {
 	 */
 	public StpLogic(String loginKey) {
 		this.loginKey = loginKey;
+		// 在 SaTokenManager 中记录下此 StpLogic，以便根据 LoginKey 进行查找此对象 
+		SaTokenManager.putStpLogic(this);
 	}
 
 	/**

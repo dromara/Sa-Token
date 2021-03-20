@@ -1,5 +1,8 @@
 package cn.dev33.satoken;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -12,6 +15,7 @@ import cn.dev33.satoken.servlet.SaTokenServlet;
 import cn.dev33.satoken.servlet.SaTokenServletDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
@@ -21,129 +25,148 @@ import cn.dev33.satoken.util.SaTokenInsideUtil;
  */
 public class SaTokenManager {
 
-	
 	/**
 	 * 配置文件 Bean 
 	 */
 	private static SaTokenConfig config;	
-	public static SaTokenConfig getConfig() {
-		if (config == null) {
-			initConfig();
-		}
-		return config;
-	}
 	public static void setConfig(SaTokenConfig config) {
 		SaTokenManager.config = config;
 		if(config.getIsV()) {
 			SaTokenInsideUtil.printSaToken();
 		}
 	}
-	public synchronized static void initConfig() {
+	public static SaTokenConfig getConfig() {
 		if (config == null) {
-			setConfig(SaTokenConfigFactory.createConfig());
+			// 如果对象为空，则使用框架默认方式初始化 
+			synchronized (SaTokenManager.class) {
+				if (config == null) {
+					setConfig(SaTokenConfigFactory.createConfig());
+				}
+			}
 		}
+		return config;
 	}
 	
 	/**
 	 * 持久化 Bean 
 	 */
-	public static SaTokenDao saTokenDao;
-	public static SaTokenDao getSaTokenDao() {
-		if (saTokenDao == null) {
-			initSaTokenDao();
-		}
-		return saTokenDao;
-	}
+	private static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
 		if(SaTokenManager.saTokenDao != null && (SaTokenManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
 			((SaTokenDaoDefaultImpl)SaTokenManager.saTokenDao).endRefreshTimer();
 		}
 		SaTokenManager.saTokenDao = saTokenDao;
 	}
-	public synchronized static void initSaTokenDao() {
+	public static SaTokenDao getSaTokenDao() {
 		if (saTokenDao == null) {
-			setSaTokenDao(new SaTokenDaoDefaultImpl());
+			// 如果对象为空，则使用框架默认方式初始化 
+			synchronized (SaTokenManager.class) {
+				if (saTokenDao == null) {
+					setSaTokenDao(new SaTokenDaoDefaultImpl());
+				}
+			}
 		}
+		return saTokenDao;
 	}
 	
 	/**
 	 * 权限认证 Bean 
 	 */
-	public static StpInterface stpInterface;
-	public static StpInterface getStpInterface() {
-		if (stpInterface == null) {
-			initStpInterface();
-		}
-		return stpInterface;
-	}
+	private static StpInterface stpInterface;
 	public static void setStpInterface(StpInterface stpInterface) {
 		SaTokenManager.stpInterface = stpInterface;
 	}
-	public synchronized static void initStpInterface() {
+	public static StpInterface getStpInterface() {
 		if (stpInterface == null) {
-			setStpInterface(new StpInterfaceDefaultImpl());
+			// 如果对象为空，则使用框架默认方式初始化 
+			synchronized (SaTokenManager.class) {
+				if (stpInterface == null) {
+					setStpInterface(new StpInterfaceDefaultImpl());
+				}
+			}
 		}
+		return stpInterface;
 	}
 	
 	/**
 	 * 框架行为 Bean 
 	 */
-	public static SaTokenAction saTokenAction;
-	public static SaTokenAction getSaTokenAction() {
-		if (saTokenAction == null) {
-			initSaTokenAction();
-		}
-		return saTokenAction;
-	}
+	private static SaTokenAction saTokenAction;
 	public static void setSaTokenAction(SaTokenAction saTokenAction) {
 		SaTokenManager.saTokenAction = saTokenAction;
 	}
-	public synchronized static void initSaTokenAction() {
+	public static SaTokenAction getSaTokenAction() {
 		if (saTokenAction == null) {
-			setSaTokenAction(new SaTokenActionDefaultImpl());
+			// 如果对象为空，则使用框架默认方式初始化 
+			synchronized (SaTokenManager.class) {
+				if (saTokenAction == null) {
+					setSaTokenAction(new SaTokenActionDefaultImpl());
+				}
+			}
 		}
+		return saTokenAction;
 	}
-
+	
 	/**
 	 * Cookie操作 Bean 
 	 */
-	public static SaTokenCookie saTokenCookie;
-	public static SaTokenCookie getSaTokenCookie() {
-		if (saTokenCookie == null) {
-			initSaTokenCookie();
-		}
-		return saTokenCookie;
-	}
+	private static SaTokenCookie saTokenCookie;
 	public static void setSaTokenCookie(SaTokenCookie saTokenCookie) {
 		SaTokenManager.saTokenCookie = saTokenCookie;
 	}
-	public synchronized static void initSaTokenCookie() {
+	public static SaTokenCookie getSaTokenCookie() {
 		if (saTokenCookie == null) {
-			setSaTokenCookie(new SaTokenCookieDefaultImpl());
+			// 如果对象为空，则使用框架默认方式初始化 
+			synchronized (SaTokenManager.class) {
+				if (saTokenCookie == null) {
+					setSaTokenCookie(new SaTokenCookieDefaultImpl());
+				}
+			}
 		}
+		return saTokenCookie;
 	}
 	
 	/**
 	 * Servlet操作 Bean 
 	 */
-	public static SaTokenServlet saTokenServlet;
-	public static SaTokenServlet getSaTokenServlet() {
-		if (saTokenServlet == null) {
-			initSaTokenServlet();
-		}
-		return saTokenServlet;
-	}
+	private static SaTokenServlet saTokenServlet;
 	public static void setSaTokenServlet(SaTokenServlet saTokenServlet) {
 		SaTokenManager.saTokenServlet = saTokenServlet;
 	}
-	public synchronized static void initSaTokenServlet() {
+	public static SaTokenServlet getSaTokenServlet() {
 		if (saTokenServlet == null) {
-			setSaTokenServlet(new SaTokenServletDefaultImpl());
+			// 如果对象为空，则使用框架默认方式初始化 
+			if (saTokenServlet == null) {
+				setSaTokenServlet(new SaTokenServletDefaultImpl());
+			}
 		}
+		return saTokenServlet;
 	}
 	
-	
-	
+	/**
+	 * StpLogic集合, 记录框架所有成功初始化的StpLogic 
+	 */
+	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
+	/**
+	 * 向集合中 put 一个 StpLogic 
+	 * @param stpLogic
+	 */
+	public static void putStpLogic(StpLogic stpLogic) {
+		stpLogicMap.put(stpLogic.getLoginKey(), stpLogic);
+	}
+	/**
+	 * 根据 LoginKey 获取对应的StpLogic，如果不存在则返回null 
+	 * @param loginKey 对应的LoginKey 
+	 * @return 对应的StpLogic
+	 */
+	public static StpLogic getStpLogic(String loginKey) {
+		for (String key : stpLogicMap.keySet()) {
+			if(key.equals(loginKey)) {
+				return stpLogicMap.get(key);
+			}
+		}
+		return null;
+	}
 	
 	
 }
