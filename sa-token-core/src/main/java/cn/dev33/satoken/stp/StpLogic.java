@@ -244,19 +244,18 @@ public class StpLogic {
 		if(session == null) {
 			session = getSessionByLoginId(loginId);
 		} else {
-			// 保证此Session的有效期 >= token的有效期 
-			if(dao.getSessionTimeout(session.getId()) < loginModel.getTimeout()) {
-				dao.updateSessionTimeout(session.getId(), loginModel.getTimeout());
-			}
+			session.updateMinTimeout(loginModel.getTimeout());
 		}
 		// 在session上记录token签名 
 		session.addTokenSign(new TokenSign(tokenValue, loginModel.getDevice()));
 		
 		// ------ 4. 持久化其它数据 
 		// token -> uid 
-		dao.set(splicingKeyTokenValue(tokenValue), String.valueOf(loginId), loginModel.getTimeout());	
+		dao.set(splicingKeyTokenValue(tokenValue), String.valueOf(loginId), loginModel.getTimeout());
+		
 		// 写入 [最后操作时间]
-		setLastActivityToNow(tokenValue);  	
+		setLastActivityToNow(tokenValue); 
+		
 		// 在当前会话写入当前tokenValue 
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
 	}

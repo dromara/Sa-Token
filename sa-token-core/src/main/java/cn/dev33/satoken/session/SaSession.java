@@ -1,13 +1,13 @@
 package cn.dev33.satoken.session;
 
-import cn.dev33.satoken.SaTokenManager;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
+
+import cn.dev33.satoken.SaTokenManager;
 
 /**
  * Session Model
@@ -258,6 +258,33 @@ public class SaSession implements Serializable {
 		}
 	}
 
+	/**
+	 * 获取此Session的剩余存活时间 (单位: 秒) 
+	 * @return 此Session的剩余存活时间 (单位: 秒)
+	 */
+	public long getTimeout() {
+		return SaTokenManager.getSaTokenDao().getSessionTimeout(this.id);
+	}
+	
+	/**
+	 * 修改此Session的剩余存活时间
+	 * @param timeout 过期时间 (单位: 秒) 
+	 */
+	public void updateTimeout(long timeout) {
+		SaTokenManager.getSaTokenDao().updateSessionTimeout(this.id, timeout);
+	}
+	
+	/**
+	 * 修改此Session的最小剩余存活时间 (只有在Session的过期时间低于指定的minTimeout时才会进行修改)
+	 * @param minTimeout 过期时间 (单位: 秒) 
+	 */
+	public void updateMinTimeout(long minTimeout) {
+		if(getTimeout() < minTimeout) {
+			SaTokenManager.getSaTokenDao().updateSessionTimeout(this.id, minTimeout);
+		}
+	}
+	
+	
 	
 	// ----------------------- 存取值 (类型转换) 
 
