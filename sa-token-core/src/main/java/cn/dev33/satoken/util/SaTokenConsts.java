@@ -42,8 +42,8 @@ public class SaTokenConsts {
 	 * 常量key标记: 在进行临时身份切换时使用的key 
 	 */
 	public static final String SWITCH_TO_SAVE_KEY = "SWITCH_TO_SAVE_KEY_"; 
-	
-	
+
+
 	// =================== token-style 相关 ===================  
 	
 	/**
@@ -75,6 +75,13 @@ public class SaTokenConsts {
 	 * token风格: tik风格 (2_14_16) 
 	 */
 	public static final String TOKEN_STYLE_RANDOM_TIK = "tik"; 
+
 	
+	// =================== 其它 ===================  
+
+	/**
+	 * 连接token前缀和token值的字符 
+	 */
+	public static final String TOKEN_CONNECTOR_CHAT  = " "; 
 	
 }

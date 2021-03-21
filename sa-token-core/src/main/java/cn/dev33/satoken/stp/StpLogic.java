@@ -92,11 +92,19 @@ public class StpLogic {
  	 * @param tokenValue token值 
  	 */
 	public void setTokenValue(String tokenValue, int cookieTimeout){
+		SaTokenConfig config = getConfig();
 		// 将token保存到本次request里  
 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
-		request.setAttribute(splicingKeyJustCreatedSave(), tokenValue);	
+		// 判断是否配置了token前缀 
+		String tokenPrefix = config.getTokenPrefix();
+		if(SaTokenInsideUtil.isEmpty(tokenPrefix)) {
+			request.setAttribute(splicingKeyJustCreatedSave(), tokenValue);	
+		} else {
+			// 如果配置了token前缀，则拼接上前缀一起写入 
+			request.setAttribute(splicingKeyJustCreatedSave(), tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue);	
+		}
+		
 		// 注入Cookie 
-		SaTokenConfig config = getConfig();
 		if(config.getIsReadCookie() == true){
 			HttpServletResponse response = SaTokenManager.getSaTokenServlet().getResponse();
 			SaTokenManager.getSaTokenCookie().addCookie(response, getTokenName(), tokenValue, 
@@ -138,9 +146,11 @@ public class StpLogic {
 		// 5. 如果打开了前缀模式
 		String tokenPrefix = getConfig().getTokenPrefix();
 		if(SaTokenInsideUtil.isEmpty(tokenPrefix) == false && SaTokenInsideUtil.isEmpty(tokenValue) == false) {
-			// 如果token以指定的前缀开头, 则裁剪掉它 
-			if(tokenValue.startsWith(tokenPrefix + " ")) {
-				tokenValue = tokenValue.substring(tokenPrefix.length() + 1);
+			// 如果token以指定的前缀开头, 则裁剪掉它, 否则视为未提供token 
+			if(tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
+				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
+			} else {
+				tokenValue = null;
 			}
 		}
 		

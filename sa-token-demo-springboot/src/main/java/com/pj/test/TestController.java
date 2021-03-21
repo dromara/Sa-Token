@@ -248,7 +248,6 @@ public class TestController {
 //				.setIsLastingCookie(true)		// 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 //				.setTimeout(60 * 60 * 24 * 7)	// 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 //				);
-		StpUtil.getTokenSession();
 		return AjaxJson.getSuccess("访问成功");
 	}
 	

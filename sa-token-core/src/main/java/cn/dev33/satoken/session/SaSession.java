@@ -283,6 +283,16 @@ public class SaSession implements Serializable {
 			SaTokenManager.getSaTokenDao().updateSessionTimeout(this.id, minTimeout);
 		}
 	}
+
+	/**
+	 * 修改此Session的最大剩余存活时间 (只有在Session的过期时间高于指定的maxTimeout时才会进行修改)
+	 * @param maxTimeout 过期时间 (单位: 秒) 
+	 */
+	public void updateMaxTimeout(long maxTimeout) {
+		if(getTimeout() > maxTimeout) {
+			SaTokenManager.getSaTokenDao().updateSessionTimeout(this.id, maxTimeout);
+		}
+	}
 	
 	
 	
