@@ -40,7 +40,7 @@ public class SaTokenServletSpringImpl implements SaTokenServlet {
 
 	/**
 	 * 获取路由匹配器
-	 * @param pathMatcher 路由匹配器
+	 * @return 路由匹配器
 	 */
 	public static PathMatcher getPathMatcher() {
 		if(pathMatcher == null) {

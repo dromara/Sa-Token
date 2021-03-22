@@ -90,6 +90,7 @@ public class StpLogic {
  	/**
  	 * 在当前会话写入当前tokenValue 
  	 * @param tokenValue token值 
+ 	 * @param cookieTimeout Cookie存活时间(秒)
  	 */
 	public void setTokenValue(String tokenValue, int cookieTimeout){
 		SaTokenConfig config = getConfig();

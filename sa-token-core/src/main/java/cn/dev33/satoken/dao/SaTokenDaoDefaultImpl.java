@@ -4,12 +4,9 @@ package cn.dev33.satoken.dao;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaTokenManager;
-import cn.dev33.satoken.util.SaTaskUtil;
-import cn.dev33.satoken.util.SaTaskUtil.FunctionRunClass;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
@@ -34,7 +31,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	 * 构造函数
 	 */
 	public SaTokenDaoDefaultImpl() {
-		initRefreshTimer();
+		initRefreshThread();
 	}
 	
 	
@@ -166,9 +163,15 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	// --------------------- 定时清理过期数据  
 	
 	/**
-	 * 定时任务对象 
+	 * 执行数据清理的线程
 	 */
-	public Timer refreshTimer;
+	public Thread refreshThread;
+	
+	/**
+	 * 是否继续执行数据清理的线程标记
+	 */
+	public boolean refreshFlag;
+	
 
 	/**
 	 * 清理所有已经过期的key 
@@ -183,30 +186,46 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	/**
 	 * 初始化定时任务 
 	 */
-	public void initRefreshTimer() {
-		// 如果已经被初始化过了, 则停止它
-		if(this.refreshTimer != null) {
-			this.endRefreshTimer();
-		}
-		
-		// 开始新的定时任务
-		if(SaTokenManager.getConfig().getDataRefreshPeriod() < 0) {
+	public void initRefreshThread() {
+
+		// 如果配置了<=0的值，则不启动定时清理
+		if(SaTokenManager.getConfig().getDataRefreshPeriod() <= 0) {
 			return;
 		}
-		int period = SaTokenManager.getConfig().getDataRefreshPeriod() * 1000;
-		this.refreshTimer = SaTaskUtil.setInterval(new FunctionRunClass() {
-			@Override
-			public void run() {
-				refreshDataMap(); 
+		// 启动定时刷新
+		this.refreshFlag = true;
+		this.refreshThread = new Thread(() -> {
+			for (;;) {
+				try {
+					try {
+						// 如果已经被标记为结束
+						if(refreshFlag == false) {
+							return;
+						}
+						// 执行清理
+						refreshDataMap(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					// 休眠N秒 
+					int dataRefreshPeriod = SaTokenManager.getConfig().getDataRefreshPeriod();
+					if(dataRefreshPeriod <= 0) {
+						dataRefreshPeriod = 1;
+					}
+					Thread.sleep(dataRefreshPeriod * 1000);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		}, period, period);
+		});
+		refreshThread.start();
 	}
 	
 	/**
 	 * 结束定时任务
 	 */
-	public void endRefreshTimer() {
-		this.refreshTimer.cancel();
+	public void endRefreshThread() {
+		this.refreshFlag = false;
 	}
 
 

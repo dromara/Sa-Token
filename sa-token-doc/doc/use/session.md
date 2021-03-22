@@ -65,32 +65,97 @@ SaSessionCustomUtil.deleteSessionById("goods-10001");
 ### Session相关操作
 那么获取到的`SaSession`具体有哪些方法可供操作？
 ``` java
-session.getId();                          // 返回此Session的id 
-session.getCreateTime();                  // 返回此Session的创建时间 (时间戳) 
-session.getAttribute('name');             // 在Session上获取一个值 
-session.getAttribute('name', 'zhang');    // 在Session上获取一个值，并指定取不到值时返回的默认值
-session.setAttribute('name', 'zhang');    // 在Session上写入一个值 
-session.removeAttribute('name');          // 在Session上移除一个值 
-session.clearAttribute();                 // 清空此Session的所有值 
-session.containsAttribute('name');        // 获取此Session是否含有指定key (返回true或false)
-session.attributeKeys();                  // 获取此Session会话上所有key (返回Set<String>)
-session.getDataMap();                     // 返回此Session会话上的底层数据对象（如果更新map里的值，请调用session.update()方法避免产生脏数据）
-session.update();                         // 将这个Session从持久库更新一下
-session.logout();                         // 注销此Session会话 (从持久库删除此Session)
+// 返回此Session的id 
+session.getId();                          
+
+// 返回此Session的创建时间 (时间戳) 
+session.getCreateTime();                  
+
+// 在Session上获取一个值 
+session.getAttribute('name');             
+
+// 在Session上获取一个值，并指定取不到值时返回的默认值
+session.getAttribute('name', 'zhang');    
+
+// 在Session上写入一个值 
+session.setAttribute('name', 'zhang');    
+
+// 在Session上移除一个值 
+session.removeAttribute('name');          
+
+// 清空此Session的所有值 
+session.clearAttribute();                 
+
+// 获取此Session是否含有指定key (返回true或false)
+session.containsAttribute('name');        
+
+// 获取此Session会话上所有key (返回Set<String>)
+session.attributeKeys();                  
+
+// 返回此Session会话上的底层数据对象（如果更新map里的值，请调用session.update()方法避免产生脏数据）
+session.getDataMap();                     
+
+// 将这个Session从持久库更新一下
+session.update();                         
+
+// 注销此Session会话 (从持久库删除此Session)
+session.logout();                         
 ```
-具体可参考`javax.servlet.http.HttpSession`，`SaSession`所含方法与其大体类似
+
+
+### 类型转换API
+由于Session存取值默认的类型都是Object，因此我们通常会写很多不必要类型转换代码 <br>
+为了简化操作，sa-token自`v1.15.0`封装了存取值API的类型转换，你可以非常方便的调用以下方法：
+``` java
+// 写值 
+session.set("name", "zhang"); 
+
+// 写值(只有在此key原本无值的时候才会写入)
+session.set("name", "zhang");
+
+// 取值
+session.get("name");
+
+// 取值 (指定默认值)
+session.get("name", "<defaultValue>"); 
+
+// 取值 (转String类型)
+session.getString("name"); 
+
+// 取值 (转int类型)
+session.getInt("age"); 
+
+// 取值 (转long类型)
+session.getLong("age"); 
+
+// 取值 (转double类型)
+session.getDouble("result"); 
+
+// 取值 (转float类型)
+session.getFloat("result"); 
+
+// 取值 (指定转换类型)
+session.getModel("key", Student.class); 
+
+// 取值 (指定转换类型, 并指定值为Null时返回的默认值)
+session.getModel("key", Student.class, <defaultValue>); 
+
+// 是否含有某个key
+session.has("key"); 
+```
 
 
 ### Session环境隔离说明
-在springboot环境下取得的session环境和通过StpUtil获取的session环境并不相通, 示例
+有同学经常会把 `SaSession` 与 `HttpSession` 进行混淆，例如：
 ``` java
 @PostMapping("/resetPoints")
 public void reset(HttpSession session) {
-    session.setAttribute("pointsKey", 66);
-    SaSession session2 = StpUtil.getSession();
-    Object value = session2.getAttribute("pointsKey");
-    System.out.println(value)
-    // 输出null
+	// 在HttpSession上写入一个值 
+    session.setAttribute("name", 66);
+	// 在SaSession进行取值
+    System.out.println(StpUtil.getSession().getAttribute("name"));	// 输出null
 }
 ```
-而且, 在使用sa-token多账号模式下, 不同的StpUtil获取的session之间也是环境隔离
+**要点：**
+1. `SaSession` 与 `HttpSession` 没有任何关系，在`HttpSession`上写入的值，在`SaSession`中无法取出
+2. `HttpSession`并未被框架接管，在使用sa-token时，请在任何情况下均使用`SaSession`，不要使用`HttpSession` 

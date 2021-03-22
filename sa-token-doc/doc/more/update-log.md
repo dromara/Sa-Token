@@ -1,5 +1,26 @@
 # 更新日志 
 
+
+### 2021-3-23 @v1.15.0
+- 新增：文档添加源码涉及技术栈说明 
+- 优化：优化路由拦截器模块文档，更简洁的示例
+- 修复：修复非web环境下的错误提示，Request->Response
+- 修复：修复Cookie注入时path判断错误，感谢@zhangzi0291提供的PR
+- 新增：文档集成Redis章节新增redis配置示例说明，感谢群友 `@-)` 提供的建议
+- 新增：增加token前缀模式，可在配置token读取前缀，适配`Bearer token`规范 **[重要]**
+- 优化：`SaTokenManager`初始化Bean去除`initXxx`方法，优化代码逻辑
+- 新增：`SaTokenManager`新增`stpLogicMap`集合，记录所有`StpLogic`的初始化，方便查找
+- 新增：`Session`新增timeout操作API，可灵活修改Session的剩余有效时间 
+- 新增：token前缀改为强制校验模式，如果配置了前缀，则前端提交token时必须带有
+- 优化：精简`SaRouteInterceptor`，只保留自定义验证和默认的登陆验证，去除冗余功能 
+- 优化：`SaRouterUtil`迁移到core核心包，优化依赖架构
+- 优化：默认Dao实现类里`Timer定时器`改为子线程 + sleep 模拟 
+- 新增：`Session`新增各种类型转换API，可快速方便存取值  **[重要]** 
+- 升级注意：
+	- `SaRouterUtil`类迁移到核心包，注意更换import地址
+	- `SaRouteInterceptor`去出冗余API，详情参考路由鉴权部分
+
+
 ### 2021-3-12 @v1.14.0
 - 新增：新增`SaLoginModel`登录参数Model，适配 [记住我] 模式	 **[重要]**
 - 新增：新增 `StpUtil.setLoginId()` 时指定token有效期，可灵活控制用户的一次登录免验证时长 

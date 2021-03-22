@@ -299,6 +299,138 @@ public class SaSession implements Serializable {
 	// ----------------------- 存取值 (类型转换) 
 
 	/**
+	 * 写值
+	 * @param key   名称
+	 * @param value 值
+	 */
+	public void set(String key, Object value) {
+		dataMap.put(key, value);
+		update();
+	}
+
+	/**
+	 * 写值(只有在此key原本无值的时候才会写入)
+	 * @param key   名称
+	 * @param value 值
+	 */
+	public void setDefaultValue(String key, Object value) {
+		if(has(key) == false) {
+			dataMap.put(key, value);
+			update();
+		}
+	}
+
+	/**
+	 * 取值
+	 * @param key key 
+	 * @return 值 
+	 */
+	public Object get(String key) {
+		return dataMap.get(key);
+	}
+
+	/**
+	 * 
+	 * 取值 (指定默认值) 
+	 * @param <T> 默认值的类型
+	 * @param key key 
+	 * @param defaultValue 取不到值时返回的默认值 
+	 * @return 值 
+	 */
+	public <T> T get(String key, T defaultValue) {
+		return getValueByDefaultValue(get(key), defaultValue);
+	}
+	
+	/**
+	 * 取值 (转String类型) 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public String getString(String key) {
+		Object value = get(key);
+		if(value == null) {
+			return null;
+		}
+		return String.valueOf(value);
+	}
+
+	/**
+	 * 取值 (转int类型) 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public int getInt(String key) {
+		return getValueByDefaultValue(get(key), 0);
+	}
+
+	/**
+	 * 取值 (转long类型) 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public long getLong(String key) {
+		return getValueByDefaultValue(get(key), 0L);
+	}
+
+	/**
+	 * 取值 (转double类型) 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public double getDouble(String key) {
+		return getValueByDefaultValue(get(key), 0.0);
+	}
+
+	/**
+	 * 取值 (转float类型) 
+	 * @param key key 
+	 * @return 值 
+	 */
+	public float getFloat(String key) {
+		return getValueByDefaultValue(get(key), 0.0f);
+	}
+
+	/**
+	 * 取值 (指定转换类型)
+	 * @param <T> 泛型
+	 * @param key key 
+	 * @param cs 指定转换类型 
+	 * @return 值 
+	 */
+	public <T> T getModel(String key, Class<T> cs) {
+		return getValueByClass(get(key), cs);
+	}
+
+	/**
+	 * 取值 (指定转换类型, 并指定值为Null时返回的默认值)
+	 * @param <T> 泛型
+	 * @param key key 
+	 * @param cs 指定转换类型 
+	 * @param defaultValue 值为Null时返回的默认值
+	 * @return 值 
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T getModel(String key, Class<T> cs, Object defaultValue) {
+		Object value = get(key);
+		if(valueIsNull(value)) {
+			return (T)defaultValue;
+		}
+		return getValueByClass(value, cs);
+	}
+
+	/**
+	 * 是否含有某个key
+	 * @param key has
+	 * @return 是否含有
+	 */
+	public boolean has(String key) {
+		return !valueIsNull(get(key));
+	}
+	
+	
+	// --------- 工具方法 
+
+	/**
 	 * 判断一个值是否为null 
 	 * @param value 指定值 
 	 * @return 此value是否为null 
@@ -308,52 +440,63 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 从Session中取值，并转化为Object类型 
-	 * @param key key 
-	 * @return 值 
+	 * 将指定值转化为指定类型
+	 * @param <T> 泛型
+	 * @param obj 值
+	 * @param cs 类型
+	 * @return 转换后的值 
 	 */
-	public Object getObject(String key) {
-		return getAttribute(key);
+	@SuppressWarnings("unchecked")
+	protected <T> T getValueByClass(Object obj, Class<T> cs) {
+		// 如果 obj 本来就是 cs 类型 
+		if(obj != null && obj.getClass().equals(cs)) {
+			return (T)obj;
+		}
+		// 开始转换
+		String obj2 = String.valueOf(obj);
+		Object obj3 = null;
+		if (cs.equals(String.class)) {
+			obj3 = obj2;
+		} else if (cs.equals(int.class) || cs.equals(Integer.class)) {
+			obj3 = Integer.valueOf(obj2);
+		} else if (cs.equals(long.class) || cs.equals(Long.class)) {
+			obj3 = Long.valueOf(obj2);
+		} else if (cs.equals(short.class) || cs.equals(Short.class)) {
+			obj3 = Short.valueOf(obj2);
+		} else if (cs.equals(byte.class) || cs.equals(Byte.class)) {
+			obj3 = Byte.valueOf(obj2);
+		} else if (cs.equals(float.class) || cs.equals(Float.class)) {
+			obj3 = Float.valueOf(obj2);
+		} else if (cs.equals(double.class) || cs.equals(Double.class)) {
+			obj3 = Double.valueOf(obj2);
+		} else if (cs.equals(boolean.class) || cs.equals(Boolean.class)) {
+			obj3 = Boolean.valueOf(obj2);
+		} else {
+			obj3 = (T)obj;
+		}
+		return (T)obj3;
 	}
 	
 	/**
-	 * 从Session中取值，并转化为String类型 
-	 * @param key key 
-	 * @return 值 
+	 * 根据默认值来获取值
+	 * @param <T> 泛型
+	 * @param value 值 
+	 * @param defaultValue 默认值
+	 * @return 转换后的值 
 	 */
-	public String getString(String key) {
-		Object value = getObject(key);
-		if(value == null) {
-			return null;
-		}
-		return String.valueOf(value);
-	}
-
-	/**
-	 * 从Session中取值，并转化为int类型，如果value为空，则返回0
-	 * @param key key 
-	 * @return 值 
-	 */
-	public int getInt(String key) {
-		Object value = getObject(key);
+	@SuppressWarnings("unchecked")
+	protected <T> T getValueByDefaultValue(Object value, T defaultValue) {
+		
+		// 如果 obj 为 null，则直接返回默认值 
 		if(valueIsNull(value)) {
-			return 0;
+			return (T)defaultValue;
 		}
-		return Integer.valueOf(String.valueOf(value));
+		
+		// 开始转换
+		Class<T> cs = (Class<T>) defaultValue.getClass();
+		return getValueByClass(value, cs);
 	}
-
-	/**
-	 * 从Session中取值，并转化为long类型，如果value为空，则返回0
-	 * @param key key 
-	 * @return 值 
-	 */
-	public long getLong(String key) {
-		Object value = getObject(key);
-		if(valueIsNull(value)) {
-			return 0;
-		}
-		return Long.valueOf(String.valueOf(value));
-	}
+	
 	
 	
 }

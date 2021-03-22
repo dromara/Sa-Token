@@ -7,13 +7,13 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-parent</artifactId>
-        <version>1.14.0</version>
+        <version>1.15.0</version>
     </parent>
     <packaging>jar</packaging>
 
 	<name>sa-token-dao-redis</name>
     <artifactId>sa-token-oauth2</artifactId>
-    <version>1.14.0-alpha</version>
+    <version>1.15.0-alpha</version>
 	<description>sa-token realization oauth2.0</description>
 
 	<dependencies>

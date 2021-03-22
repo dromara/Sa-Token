@@ -53,7 +53,7 @@ public class SaTokenManager {
 	private static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
 		if(SaTokenManager.saTokenDao != null && (SaTokenManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
-			((SaTokenDaoDefaultImpl)SaTokenManager.saTokenDao).endRefreshTimer();
+			((SaTokenDaoDefaultImpl)SaTokenManager.saTokenDao).endRefreshThread();
 		}
 		SaTokenManager.saTokenDao = saTokenDao;
 	}
@@ -149,7 +149,7 @@ public class SaTokenManager {
 	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
 	/**
 	 * 向集合中 put 一个 StpLogic 
-	 * @param stpLogic
+	 * @param stpLogic StpLogic
 	 */
 	public static void putStpLogic(StpLogic stpLogic) {
 		stpLogicMap.put(stpLogic.getLoginKey(), stpLogic);
