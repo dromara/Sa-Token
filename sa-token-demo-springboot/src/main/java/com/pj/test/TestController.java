@@ -3,8 +3,6 @@ package com.pj.test;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -241,7 +239,7 @@ public class TestController {
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
-	public AjaxJson test(HttpServletResponse response) {
+	public AjaxJson test() {
 		System.out.println("进来了");
 //		StpUtil.setLoginId(10001, new SaLoginModel()
 //				.setDevice("PC")			// 此次登录的客户端设备标识, 用于[同端互斥登录]时指定此次登录的设备名称

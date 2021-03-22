@@ -1,4 +1,4 @@
-package cn.dev33.satoken.interceptor;
+package cn.dev33.satoken.router;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

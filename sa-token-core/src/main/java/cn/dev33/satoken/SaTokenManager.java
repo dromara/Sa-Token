@@ -160,12 +160,7 @@ public class SaTokenManager {
 	 * @return 对应的StpLogic
 	 */
 	public static StpLogic getStpLogic(String loginKey) {
-		for (String key : stpLogicMap.keySet()) {
-			if(key.equals(loginKey)) {
-				return stpLogicMap.get(key);
-			}
-		}
-		return null;
+		return stpLogicMap.get(loginKey);
 	}
 	
 	

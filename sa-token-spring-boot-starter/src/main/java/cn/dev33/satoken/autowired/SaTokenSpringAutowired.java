@@ -106,18 +106,14 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 路由匹配器
-	 */
-	public static PathMatcher pathMatcher;
-
-	/**
 	 * 利用自动匹配特性，获取SpringMVC框架内部使用的路由匹配器
 	 * 
 	 * @param pathMatcher 要设置的 pathMatcher
 	 */
 	@Autowired(required = false)
-	public static void setPathMatcher(PathMatcher pathMatcher) {
-		SaTokenSpringAutowired.pathMatcher = pathMatcher;
+	public void setPathMatcher(PathMatcher pathMatcher) {
+		SaTokenServletSpringImpl.setPathMatcher(pathMatcher);
 	}
+
 
 }

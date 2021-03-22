@@ -18,7 +18,7 @@ public class SaTokenServletDefaultImpl implements SaTokenServlet {
 	 */
 	@Override
 	public HttpServletRequest getRequest() {
-		throw new SaTokenException("请实现SaTokenServlet接口后进行Servlet相关操作");
+		throw new SaTokenException("SaTokenServlet接口未实现");
 	}
 
 	/**
@@ -26,7 +26,16 @@ public class SaTokenServletDefaultImpl implements SaTokenServlet {
 	 */
 	@Override
 	public HttpServletResponse getResponse() {
-		throw new SaTokenException("请实现SaTokenServlet接口后进行Servlet相关操作");
+		throw new SaTokenException("SaTokenServlet接口未实现");
+	}
+
+	
+	/**
+	 * 校验指定路由匹配符是否可以匹配成功指定路径 
+	 */
+	@Override
+	public boolean matchPath(String pattern, String path) {
+		throw new SaTokenException("SaTokenServlet接口未实现");
 	}
 
 }

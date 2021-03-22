@@ -1,13 +1,9 @@
-package cn.dev33.satoken.interceptor;
+package cn.dev33.satoken.router;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.PathMatcher;
-
 import cn.dev33.satoken.SaTokenManager;
-import cn.dev33.satoken.autowired.SaTokenSpringAutowired;
 import cn.dev33.satoken.fun.IsRunFunction;
 import cn.dev33.satoken.fun.SaFunction;
 
@@ -18,32 +14,6 @@ import cn.dev33.satoken.fun.SaFunction;
  */
 public class SaRouterUtil {
 
-	/**
-	 * 在进行路由匹配时所使用的 PathMatcher 对象 
-	 */
-	private static PathMatcher pathMatcher;
-
-	/**
-	 * @return 在进行路由匹配时所使用的的 PathMatcher 对象
-	 */
-	public static PathMatcher getPathMatcher() {
-		if(pathMatcher == null) {
-			pathMatcher = SaTokenSpringAutowired.pathMatcher;
-			if(pathMatcher == null) {
-				pathMatcher = new AntPathMatcher();
-			}
-		}
-		return pathMatcher;
-	}
-
-	/**
-	 * @param pathMatcher 写入: 在进行路由匹配时所使用的的 PathMatcher 对象
-	 */
-	public static void setPathMatcher(PathMatcher pathMatcher) {
-		SaRouterUtil.pathMatcher = pathMatcher;
-	}
-	
-	
 	// -------------------- 路由匹配相关 -------------------- 
 	
 	/**
@@ -53,10 +23,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(String pattern, String path) {
-		if(getPathMatcher().match(pattern, path)) {
-			return true;
-		}
-		return false;
+		return SaTokenManager.getSaTokenServlet().matchPath(pattern, path);
 	}
 
 	/**

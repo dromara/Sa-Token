@@ -5,9 +5,10 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.util.AjaxJson;
 
@@ -18,7 +19,7 @@ import cn.dev33.satoken.exception.NotRoleException;
 /**
  * 全局异常处理 
  */
-@RestControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
+@ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
 public class GlobalException {
 
 	// 在当前类每个方法进入之前触发的操作
@@ -28,14 +29,14 @@ public class GlobalException {
 	}
 
 	
-	
-	
 	// 全局异常拦截（拦截项目中的所有异常）
+	@ResponseBody
 	@ExceptionHandler
 	public AjaxJson handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
 		// 打印堆栈，以供调试
+		System.out.println("全局异常---------------");
 		e.printStackTrace(); 
 
 		// 不同异常返回不同状态码 

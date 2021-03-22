@@ -17,6 +17,7 @@
 	- [注解式鉴权](/use/at-check) 
 	- [路由拦截式鉴权](/use/route-check) 
 	- [花式token](/use/token-style) 
+	- [Token前缀](/use/token-prefix) 
 	- [框架配置](/use/config) 
 	- [会话治理](/use/search-session) 
 	- [记住我模式](/use/remember-me)

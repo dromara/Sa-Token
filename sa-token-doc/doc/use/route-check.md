@@ -99,8 +99,18 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 
 
 
+## 注意事项
+在`v1.14`及以前版本下，路由拦截器提供了提供了封装式写法，该方法代码比较冗余，在`v1.15`版本已移除，解决方案如下：
 
+``` java
+// 原写法
+registry.addInterceptor(SaRouteInterceptor.createPermissionVal("user")).addPathPatterns("/user/**");
 
-
-
-
+// 改为以下方式，效果同上 
+registry.addInterceptor(new SaRouteInterceptor((request, response, handler) -> {
+	SaRouterUtil.match("/user/**", () -> StpUtil.checkPermission("user"));
+})).addPathPatterns("/**");
+```
+		
+		
+		

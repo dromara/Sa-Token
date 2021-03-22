@@ -71,4 +71,5 @@ public class MySaTokenConfig {
 | dataRefreshPeriod		| int		| 30		| 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取token专属session时是否必须登录 (如果配置为true，会在每次获取token专属session时校验是否登录)		|
 | autoRenew				| Boolean	| true		| 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作)		|
+| tokenPrefix			| Boolean	| true		| token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)	[参考：token前缀](/use/token-prefix) 			|
 | isV					| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
