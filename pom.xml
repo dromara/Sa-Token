@@ -8,7 +8,7 @@
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.15.0</version>
+	<version>1.15.0.RELEASE</version>
 	
 	<!-- 项目介绍 -->
 	<name>sa-token</name>
@@ -23,7 +23,7 @@
 		<module>sa-token-dao-redis</module>
 		<module>sa-token-dao-redis-jackson</module>
 		<module>sa-token-spring-aop</module>
-		<module>sa-token-oauth2</module>
+		<!-- <module>sa-token-oauth2</module> -->
 	</modules>
 	
 	<!-- 开源协议 apache 2.0 -->
@@ -38,7 +38,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-		<sa-token-version>1.15.0</sa-token-version>
+		<sa-token-version>1.15.0.RELEASE</sa-token-version>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>

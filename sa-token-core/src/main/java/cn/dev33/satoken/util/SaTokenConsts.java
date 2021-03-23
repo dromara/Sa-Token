@@ -13,7 +13,7 @@ public class SaTokenConsts {
 	/**
 	 * sa-token 版本号 
 	 */
-	public static final String VERSION_NO = "v1.15.0";
+	public static final String VERSION_NO = "v1.15.0.RELEASE";
 
 	/**
 	 * sa-token 开源地址 
@@ -74,7 +74,7 @@ public class SaTokenConsts {
 	/**
 	 * token风格: tik风格 (2_14_16) 
 	 */
-	public static final String TOKEN_STYLE_RANDOM_TIK = "tik"; 
+	public static final String TOKEN_STYLE_TIK = "tik"; 
 
 	
 	// =================== 其它 ===================  

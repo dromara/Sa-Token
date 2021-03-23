@@ -19,7 +19,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.15.0</version>
+	<version>1.15.0.RELEASE</version>
 </dependency>
 ```
 

@@ -426,6 +426,16 @@ public class SaSession implements Serializable {
 	public boolean has(String key) {
 		return !valueIsNull(get(key));
 	}
+
+	/**
+	 * 删值
+	 * @param key 要删除的key
+	 */
+	public void delete(String key) {
+		dataMap.remove(key);
+		update();
+	}
+
 	
 	
 	// --------- 工具方法 

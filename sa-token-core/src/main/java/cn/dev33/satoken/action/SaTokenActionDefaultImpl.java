@@ -43,7 +43,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 			return SaTokenInsideUtil.getRandomString(128);
 		}
 		// tik风格 (2_14_16)
-		if(SaTokenConsts.TOKEN_STYLE_RANDOM_TIK.equals(tokenStyle)) {
+		if(SaTokenConsts.TOKEN_STYLE_TIK.equals(tokenStyle)) {
 			return SaTokenInsideUtil.getRandomString(2) + "_" + SaTokenInsideUtil.getRandomString(14) + "_" + SaTokenInsideUtil.getRandomString(16) + "__";
 		}
 		// 默认，还是uuid 

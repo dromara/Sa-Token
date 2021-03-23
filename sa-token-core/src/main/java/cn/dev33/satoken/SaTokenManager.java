@@ -136,8 +136,10 @@ public class SaTokenManager {
 	public static SaTokenServlet getSaTokenServlet() {
 		if (saTokenServlet == null) {
 			// 如果对象为空，则使用框架默认方式初始化 
-			if (saTokenServlet == null) {
-				setSaTokenServlet(new SaTokenServletDefaultImpl());
+			synchronized (SaTokenManager.class) {
+				if (saTokenServlet == null) {
+					setSaTokenServlet(new SaTokenServletDefaultImpl());
+				}
 			}
 		}
 		return saTokenServlet;
