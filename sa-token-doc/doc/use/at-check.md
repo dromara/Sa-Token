@@ -21,7 +21,7 @@ sa-token内置两种模式完成注解鉴权，分别是`AOP模式`和`拦截器
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-aop</artifactId>
-	<version>1.15.0.RELEASE</version>
+	<version>1.15.2</version>
 </dependency>
 ```
 

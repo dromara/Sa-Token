@@ -1,11 +1,11 @@
 <p align="center">
 	<img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.2</h1>
 <h4 align="center">这可能是史上功能最全的Java权限认证框架！</h4>
 <h4 align="center">
 	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
-	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.15.0.RELEASE-2B9939"></a>
+	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.15.2-2B9939"></a>
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
@@ -182,10 +182,9 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 
 
 ## 友情链接
-[**[ OkHttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+[**[ okhttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
 [**[ 小诺快速开发平台 ]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
-
 
 ## 交流群
 QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
