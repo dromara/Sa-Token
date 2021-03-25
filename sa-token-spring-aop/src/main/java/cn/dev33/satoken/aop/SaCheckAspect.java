@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.stp.StpLogic;
@@ -17,8 +18,14 @@ import cn.dev33.satoken.stp.StpUtil;
  */
 @Aspect
 @Component
+@Order(SaCheckAspect.aspectOrder)
 public class SaCheckAspect {
-
+	
+	/**
+	 * 切面执行顺序
+	 */
+	public static final int aspectOrder = -1;
+	
 	/**
 	 * 构建
 	 */
