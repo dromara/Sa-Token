@@ -16,3 +16,10 @@
 StpUtil.logoutByLoginId(10001); 
 ```
 
+
+#### StpUtil.logoutByTokenValue(String tokenValue);
+你还可以让指定token的会话注销登录 (此方法直接删除了`token->uid`的映射关系，对方再次访问时提示:`token无效`，场景值为-2)
+``` java
+// 使账号id为10001的会话注销登录
+StpUtil.logoutByTokenValue("xxxx-xxxx-xxxx-xxxx-xxxx");
+```
