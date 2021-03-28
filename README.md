@@ -1,16 +1,16 @@
 <p align="center">
-	<img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
+	<img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.2</h1>
-<h4 align="center">这可能是史上功能最全的Java权限认证框架！</h4>
+<h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
 <h4 align="center">
 	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
-	<a href="https://github.com/click33/sa-token"><img src="https://img.shields.io/badge/sa--token-v1.15.2-2B9939"></a>
-	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token"></a>
-	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token"></a>
-	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token"></a>
-	<a href="https://github.com/click33/sa-token/issues"><img src="https://img.shields.io/github/issues/click33/sa-token.svg"></a>
-	<a href="https://github.com/click33/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/click33/sa-token.svg"></a>
+	<a href="https://gitee.com/sz6/sa-token/members"><img src="https://gitee.com/sz6/sa-token/badge/fork.svg"></a>
+	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/click33/sa-token/issues"><img src="https://img.shields.io/github/issues/click33/sa-token.svg?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/click33/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/click33/sa-token.svg?style=flat-square"></a>
 </h4>
 
 ---
@@ -24,7 +24,7 @@
 
 - [需求提交：我们深知一个优秀的项目需要海纳百川，点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-token)
 
-- [开源不易，求鼓励，点个star吧](###)
+- [开源不易，求鼓励，点个star吧 ！](###)
 
 
 ## Sa-Token是什么？
@@ -116,63 +116,27 @@ StpUtil.setLoginId(10001, "PC");          // 指定设备标识登录
 StpUtil.logoutByLoginId(10001, "PC");     // 指定设备标识进行强制注销 (不同端不受影响)
 StpUtil.switchTo(10044);                  // 将当前会话身份临时切换为其它账号
 ```
-sa-token的API众多，请恕此处无法为您逐一展示，更多示例请戳官方在线文档
+sa-token API 众多，请恕此处无法为您逐一展示，更多示例请戳官方在线文档
 
 
-## 迭代模式
-sa-token的功能提案主要来源于社区，这意味着人人都可以参与到sa-token的功能定制，决定框架的未来走向，
-如果你有好的想法，可以在issues提出或者加入群一起交流，对于社区的提出的功能要求，主要分为以下几类：
-- 对框架新增特性功能且比较简单，会在第一时间进行开发
-- 对框架新增特性功能但比较复杂，会延后几个版本制定相应的计划后进行开发
-- 与框架设计理念不太相符，或超出权限认证范畴，将会视需求人数决定是否开发
+## Star 趋势
+[![Giteye chart](https://chart.giteye.net/gitee/sz6/sa-token/NXJBWMNR.png 'Gitee')](https://giteye.net/chart/NXJBWMNR)
+
+[![github-chart](https://starchart.cc/click33/sa-token.svg 'GitHub')](https://starchart.cc/click33/sa-token)
 
 
 ## 参与贡献
 众人拾柴火焰高，万丈高楼众人起！
-sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加瓦，对框架有卓越贡献者将会出现在贡献者名单里
+sa-token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
-1. 在gitee或者github上fork一份代码到自己的仓库
-2. clone自己的仓库到本地电脑
-3. 在本地电脑修改、commit、push
-4. 提交pr（点击：New Pull Request）
-5. 等待合并
+1. 核心代码：该部分需要开发者了解整个框架的架构，遵循已有代码规范进行bug修复或提交新功能
+2. 文档部分：需要以清晰明了的语句书写文档，力求简单易读，授人以鱼同时更授人以渔
+3. 社区建设：如果框架帮助到了您，希望您可以加入qq群参与交流，对不熟悉框架的新人进行排难解惑
+4. 框架推广：一个优秀的开源项目不能仅靠闭门造车，它还需要一定的推广方案让更多的人一起参与到项目中
+5. 其它部分：您可以参考项目issues与需求墙进行贡献
 
-作者寄语：参与贡献不光只有提交代码一个选择，点一个star、提一个issues都是对开源项目的促进，
-如果框架帮助到了你，欢迎你把框架推荐给你的朋友、同事使用，为sa-token的推广做一份贡献
-
-
-## 建议贡献的地方
-目前框架的主要有以下部分需要大家一起参与贡献：
-- 核心代码：该部分需要开发者了解整个框架的架构，遵循已有代码规范进行bug修复或提交新功能
-- 文档部分：需要以清晰明了的语句书写文档，力求简单易读，授人以鱼同时更授人以渔
-- 社区建设：如果框架帮助到了您，希望您可以加入qq群参与交流，对不熟悉框架的新人进行排难解惑
-- 框架推广：一个优秀的开源项目不能仅靠闭门造车，它还需要一定的推广方案让更多的人一起参与到项目中
-- 其它部分：您可以参考项目issues与需求墙进行贡献
-
-
-## 贡献者名单
-[省长](https://gitee.com/sz6)、
-[RockMan](https://gitee.com/njx33)、
-[click33](https://github.com/click33)、
-[AppleOfGray](https://gitee.com/appleOfGray)、
-[Auster](https://github.com/auster9021)、
-[ZhuBJ0510](https://gitee.com/zhubj0510)、
-[legg](https://gitee.com/legg321)、
-[xiaoshitou](https://gitee.com/smallstoneZ)、
-[zhangjiaxiaozhuo](https://gitee.com/zhangjiaxiaozhuo)、
-[离你多远](https://gitee.com/liniduoyuan)
-
-
-## 知乎专栏
-- [初识sa-token，一行代码搞定登录授权！](https://zhuanlan.zhihu.com/p/344106099)
-- [一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://zhuanlan.zhihu.com/p/344511415)
-- [浅谈踢人下线的设计思路！（附代码实现方案）](https://zhuanlan.zhihu.com/p/345844002)
-- 文章已在 [csdn](https://blog.csdn.net/shengzhang_/article/details/112593247)、
-[掘金](https://juejin.cn/post/6917250126650015751)、
-[开源中国](https://my.oschina.net/u/3503445/blog/4897816)、
-[博客园](https://www.cnblogs.com/shengzhang/p/14275558.html)、
-[知乎](https://zhuanlan.zhihu.com/p/344106099)
-等平台连载中...欢迎投稿
+作者寄语：参与贡献不光只有提交代码，点一个star、提一个issues都是对开源项目的促进，
+如果sa-token帮助到了你，欢迎你把框架推荐给朋友、同事使用，为sa-token的推广做一份贡献
 
 
 ## 使用sa-token的开源项目
@@ -186,12 +150,11 @@ sa-token秉承着开放的思想，欢迎大家贡献代码，为框架添砖加
 
 [**[ 小诺快速开发平台 ]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
+
 ## 交流群
-QQ交流群：[1002350610 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
+QQ交流群：1002350610 [sa-token交流群 点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
-![扫码加群](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/qq-group.png ':size=230')
-
-**微信群**
+微信交流群：
 
 ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
 
