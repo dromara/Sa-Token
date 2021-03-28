@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png">
+	<img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.2</h1>
 <h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
