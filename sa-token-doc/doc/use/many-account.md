@@ -12,7 +12,7 @@
 ### 解决方案
 
 以上几篇介绍的api调用，都是经过 `StpUtil` 类的各种静态方法进行授权验证，
-而如果我们深入它的源码，[点此阅览](https://gitee.com/sz6/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/stp/StpUtil.java) <br/>
+而如果我们深入它的源码，[点此阅览](https://gitee.com/click33/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/stp/StpUtil.java) <br/>
 就会发现，此类并没有任何代码逻辑，唯一做的事就是对成员变量`stpLogic`的各个API包装一下进行转发
 
 这样做有两个优点: 

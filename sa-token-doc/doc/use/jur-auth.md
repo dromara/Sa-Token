@@ -8,10 +8,8 @@
 有，就让你通过。没有？那么禁止访问!
 
 再往底了说，就是每个账号都会拥有一个权限码集合，我来验证这个集合中是否包含指定的权限码 <br/>
-例如：当前账号拥有权限码集合：`["user:add", "user:delete", "user:get"]`，这时候我来验证权限 `"user:update"`，则其结果就是：**验证失败，禁止访问**
+例如：当前账号拥有权限码集合：`["user:add", "user:delete", "user:get"]`，这时候我来验证权限 `"user:update"`，则其结果就是：**验证失败，禁止访问** <br/>
 (注意: 冒号无特殊含义,可有可无)
-
-![无权限](../static/not-jur.png)
 
 所以现在问题的核心就是: 
 1. 如何获取一个账号所拥有的的权限码集合
@@ -68,7 +66,7 @@ public class StpInterfaceImpl implements StpInterface {
 }
 ```
 
-可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/sz6/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
+可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/click33/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
 
 
 
@@ -115,7 +113,7 @@ StpUtil.checkRoleOr("user:update", "user:delete");
 
 ### 拦截全局异常
 有同学要问，鉴权失败，抛出异常，然后呢？要把异常显示给用户看吗？**当然不可以！** <br>
-你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：[码云：GlobalException.java](https://gitee.com/sz6/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/test/GlobalException.java)
+你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：[码云：GlobalException.java](https://gitee.com/click33/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/test/GlobalException.java)
 
 
 ### 如何把权限精确搭到按钮级？

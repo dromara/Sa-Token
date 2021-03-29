@@ -9,7 +9,7 @@
 
 
 ### 整合Redis时，除了引入pom依赖，还需要做其它的吗？
-引入pom依赖后，在框架层面你无须做其它事情，但是你需要为项目指定一下`Redis`的连接信息，参考此文件：[application-dev](https://gitee.com/sz6/sa-plus/blob/master/sp-server/src/main/resources/application-dev.yml)
+引入pom依赖后，在框架层面你无须做其它事情，但是你需要为项目指定一下`Redis`的连接信息，参考此文件：[application-dev](https://gitee.com/click33/sa-plus/blob/master/sp-server/src/main/resources/application-dev.yml)
 
 
 ### 登录方法需要我自己实现吗？

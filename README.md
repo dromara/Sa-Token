@@ -1,11 +1,11 @@
 <p align="center">
-	<img alt="logo" src="https://gitee.com/sz6/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
+	<img alt="logo" src="https://gitee.com/click33/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.2</h1>
 <h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
 <h4 align="center">
-	<a href="https://gitee.com/sz6/sa-token/stargazers"><img src="https://gitee.com/sz6/sa-token/badge/star.svg"></a>
-	<a href="https://gitee.com/sz6/sa-token/members"><img src="https://gitee.com/sz6/sa-token/badge/fork.svg"></a>
+	<a href="https://gitee.com/click33/sa-token/stargazers"><img src="https://gitee.com/click33/sa-token/badge/star.svg"></a>
+	<a href="https://gitee.com/click33/sa-token/members"><img src="https://gitee.com/click33/sa-token/badge/fork.svg"></a>
 	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token?style=flat-square&logo=GitHub"></a>
@@ -120,7 +120,7 @@ sa-token API 众多，请恕此处无法为您逐一展示，更多示例请戳�
 
 
 ## Star 趋势
-[![Giteye chart](https://chart.giteye.net/gitee/sz6/sa-token/NXJBWMNR.png 'Gitee')](https://giteye.net/chart/NXJBWMNR)
+[![Giteye chart](https://chart.giteye.net/gitee/click33/sa-token/NXJBWMNR.png 'Gitee')](https://giteye.net/chart/NXJBWMNR)
 
 [![github-chart](https://starchart.cc/click33/sa-token.svg 'GitHub')](https://starchart.cc/click33/sa-token)
 
@@ -140,7 +140,7 @@ sa-token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 
 ## 使用sa-token的开源项目
-[**[ sa-plus]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/sz6/sa-plus)
+[**[ sa-plus]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
 
 如果您的项目使用了sa-token，欢迎提交pr
 
