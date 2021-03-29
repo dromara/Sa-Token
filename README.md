@@ -120,7 +120,7 @@ sa-token API 众多，请恕此处无法为您逐一展示，更多示例请戳�
 
 
 ## Star 趋势
-[![Giteye chart](https://chart.giteye.net/gitee/click33/sa-token/NXJBWMNR.png 'Gitee')](https://giteye.net/chart/NXJBWMNR)
+[![Giteye chart](https://chart.giteye.net/gitee/click33/sa-token/23UX6XHN.png 'Gitee')](https://giteye.net/chart/23UX6XHN)
 
 [![github-chart](https://starchart.cc/click33/sa-token.svg 'GitHub')](https://starchart.cc/click33/sa-token)
 
