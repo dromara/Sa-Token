@@ -1,0 +1,87 @@
+# 推荐公众号
+
+--- 
+
+### Java技术公众号：
+
+
+<table class="gzh-table" style="text-align: center;">
+    <tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzkyNzExODM3OA==&mid=2247485166&idx=1&sn=fe7ff42336d050a7fbbe6b06fdd8c3ec&send_time="/>
+			<b>Java仓库</b>
+			<span>专注Java全栈开发，分享实用技术干货。</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzU3MDc3OTI1NA==&mid=2247490668&idx=1&sn=cd9efecdf1ac34cc8cac04902a9f8319&send_time="/>
+			<b>Java技术江湖</b>
+			<span>一位阿里 Java 工程师的技术小站, 分享技术干货和学习经验</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MjM5MTM0NjQ2MQ==&mid=2650152326&idx=2&sn=62643fd0987a56095663b12a2ec622c5&send_time="/>
+			<b>java那些事</b>
+			<span>分享java中各种新技术的应用方法，做一个潮流的java技术人！</span>
+		</td>
+		<td>...</td>
+		<td>...</td>
+    </tr>
+    <tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzIwNTk5NjEzNw==&mid=2247494012&idx=1&sn=378001dabae76b2df4de9a0dadf5842d&send_time="/>
+			<b>Java研发军团</b>
+			<span>Java系列文章个人博客，MySQL、SSM、Redis、Spring</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzIwMTY0NDU3Nw==&mid=2651952104&idx=1&sn=315a840285b4f5b243d68e31cd0f2008&send_time="/>
+			<b>Java团长</b>
+			<span>分享些技术干货，致力于Java全栈开发！</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzAwMjk5Mjk3Mw==&mid=2247496042&idx=1&sn=3c246a6feea74d24b92d49b564509fe8&send_time="/>
+			<b>武哥聊编程</b>
+			<span>你若对得起时间，时间便对得起你~ 我是武哥！谢谢你的关注~每天进步一点点！</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzU2MTI4MjI0MQ==&mid=2247501218&idx=3&sn=599c40e5cd1acf597c8f392f1c5bd150&send_time="/>
+			<b>Java笔记虾</b>
+			<span>专注于Java技术栈，推送 Spring全家桶，Dubbo，Zookeeper，Redis，Linux，多线程</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI1MDQwMDE3MQ==&mid=2247489606&idx=1&sn=d215fce776c5f56fc439cfdc024de504&send_time="/>
+			<b>Java项目学习</b>
+			<span>关注我，我来带你从零开始做Java项目！</span>
+		</td>
+    </tr>
+	<tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzIwNjg4MzY4NA==&mid=2247490744&idx=2&sn=2cea21ce873cae0cc4a1c5097265e678&send_time="/>
+			<b>程序员追风</b>
+			<span>专注于分享Java各类学习笔记、面试题以及IT类资讯。</span>
+		</td>
+		<td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzU2OTYxNjk0Mg==&mid=2247489042&idx=1&sn=3526217770b7ec0661dc53b18eb98500&send_time="/>
+			<b>程序员编程</b>
+			<span>每天下午13：30分发文，主要发布开源项目、面试题、最新技术资讯、干货学习资源～</span>
+		</td>
+		<td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzUzMDE4NjE4Mg==&mid=2247486739&idx=1&sn=339aed2b872c5c2f291e83b7ab107b4d&send_time="/>
+			<b>写代码的渣渣鹏</b>
+			<span>关注我，学好Java。Spring Boot、 微服务、高并发、多线程、JVM、Spring Cloud</span>
+		</td>
+		<td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzA3MzE4ODY0Mg==&mid=2455988316&idx=1&sn=6d70a967f1ff757cdda320472c1deb87&send_time="/>
+			<b>GitHub精选</b>
+			<span>专注于分享优质的开源项目、学习资源，Java、Python、Go、Web 前端、AI、数据分析</span>
+		</td>
+		<td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzA5MzYyNzQ0MQ==&mid=2247498873&idx=1&sn=8cb67e3057f81fc68ec5fd407076c7eb&send_time="/>
+			<b>HelloGitHub</b>
+			<span>分享 GitHub 上有趣、入门级的开源项目。</span>
+		</td>
+	</tr>
+</table>
+
+<br>
+
+感谢以上公众号对 sa-token 项目的推荐，如果您也是java公众号运营者，欢迎 [相互推荐](/more/tj-gzh-hz)
+

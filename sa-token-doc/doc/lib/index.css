@@ -21,6 +21,17 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 /* GitHub折线图最大宽度 */
 [alt=github-chart]{max-width: 897px;}
 
+/* 公众号table */
+.gzh-table{ /* table-layout:fixed !important; */}
+/* .gzh-table,.gzh-table tr,.gzh-table td{display: block !important;} */
+/* .gzh-table tbody{display: block !important; width: 100% !important;} */
+#main .gzh-table tr{background-color: #FFF;}
+.gzh-table td{padding: 20px !important; width: 20%; border: 0;}
+.gzh-table td b{display: block; margin-bottom: 10px; }
+/* .gzh-table td img{width: 100%;} */
+/* .gzh-table tr, .gzh-table td{ border: 0px !important;} */
+
+
 /* ============== 代码样式优化 ================ */
 
 /* 背景变黑 */
