@@ -23,8 +23,8 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:1.15.2'
 
 ## 获取源码
 如果你想深入了解`sa-token`，你可以通过`github`或者`gitee`来获取源码
-- github地址：[https://github.com/click33/sa-token](https://github.com/click33/sa-token)
-- gitee地址：[https://gitee.com/click33/sa-token](https://gitee.com/click33/sa-token)
+- github地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
+- gitee地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - 开源不易，求鼓励，给个`star`吧
 - 源码目录介绍: 
 ```

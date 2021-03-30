@@ -157,5 +157,3 @@
 
 ### 2020-2-4 @v1.0.0
 - 第一个版本出炉 
-- GitHub：[https://github.com/click33/sa-token](https://github.com/click33/sa-token)
-- gitee：[https://gitee.com/click33/sa-token](https://gitee.com/click33/sa-token)

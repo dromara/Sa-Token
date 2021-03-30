@@ -18,7 +18,7 @@ public class SaTokenConsts {
 	/**
 	 * sa-token 开源地址 
 	 */
-	public static final String GITHUB_URL = "https://github.com/click33/sa-token";
+	public static final String GITHUB_URL = "https://github.com/dromara/sa-token";
 
 	
 	// =================== 常量key标记 ===================  

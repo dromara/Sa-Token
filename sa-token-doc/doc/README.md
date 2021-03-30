@@ -1,16 +1,16 @@
 <p align="center">
-	<img alt="logo" src="https://gitee.com/click33/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
+	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.2</h1>
 <h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
 <h4 align="center">
-	<a href="https://gitee.com/click33/sa-token/stargazers"><img src="https://gitee.com/click33/sa-token/badge/star.svg"></a>
-	<a href="https://gitee.com/click33/sa-token/members"><img src="https://gitee.com/click33/sa-token/badge/fork.svg"></a>
-	<a href="https://github.com/click33/sa-token/stargazers"><img src="https://img.shields.io/github/stars/click33/sa-token?style=flat-square&logo=GitHub"></a>
-	<a href="https://github.com/click33/sa-token/network/members"><img src="https://img.shields.io/github/forks/click33/sa-token?style=flat-square&logo=GitHub"></a>
-	<a href="https://github.com/click33/sa-token/watchers"><img src="https://img.shields.io/github/watchers/click33/sa-token?style=flat-square&logo=GitHub"></a>
-	<a href="https://github.com/click33/sa-token/issues"><img src="https://img.shields.io/github/issues/click33/sa-token.svg?style=flat-square&logo=GitHub"></a>
-	<a href="https://github.com/click33/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/click33/sa-token.svg?style=flat-square"></a>
+	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
+	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg"></a>
+	<a href="https://github.com/dromara/sa-token/stargazers"><img src="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
+	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </h4>
 
 ---
@@ -122,7 +122,7 @@ sa-token API 众多，请恕此处无法为您逐一展示，更多示例请戳�
 ## Star 趋势
 [![Giteye chart](https://chart.giteye.net/gitee/dromara/sa-token/77YQZ6UK.png 'Gitee')](https://giteye.net/chart/77YQZ6UK)
 
-[![github-chart](https://starchart.cc/click33/sa-token.svg 'GitHub')](https://starchart.cc/click33/sa-token)
+[![github-chart](https://starchart.cc/dromara/sa-token.svg 'GitHub')](https://starchart.cc/dromara/sa-token)
 
 
 ## 参与贡献
