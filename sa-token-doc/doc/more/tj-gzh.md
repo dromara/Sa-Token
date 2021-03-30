@@ -8,6 +8,16 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzUzNTY2NjAzMg==&mid=2247484321&idx=1&sn=52e7e5e0dc03437e94908b6a67985500&send_time="/>
+			<b>dromara开源组织</b>
+			<span>dromara开源组织官方公众号 [https://github.com/dromara][https://gitee.com/dromara]</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzAxNjk4ODE4OQ==&mid=2247503088&idx=3&sn=f7e82b05d8f155b1fa79601393c437dc&send_time="/>
+			<b>方志朋</b>
+			<span>主要分享Java、Python等技术，用大厂程序员的视角来探讨技术进阶、面试指南、职业规划等。</span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzkyNzExODM3OA==&mid=2247485166&idx=1&sn=fe7ff42336d050a7fbbe6b06fdd8c3ec&send_time="/>
 			<b>Java仓库</b>
 			<span>专注Java全栈开发，分享实用技术干货。</span>
@@ -22,8 +32,6 @@
 			<b>java那些事</b>
 			<span>分享java中各种新技术的应用方法，做一个潮流的java技术人！</span>
 		</td>
-		<td>...</td>
-		<td>...</td>
     </tr>
     <tr>
         <td>
