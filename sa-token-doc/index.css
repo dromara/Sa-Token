@@ -2,72 +2,114 @@
 /* 总 */
 *{margin: 0px; padding: 0px;}
 body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica Neue","Arial,sans-serif";}
-header{height: 70px; border: 0px #000 solid; position: fixed; width: 100%;}
+.s-width{width: 1000px; margin: auto;}
+/* 栏目标题 */
+.s-title{color: #000; margin-top: 90px; margin-bottom: 50px;}
+/* 解释性文字 */
+.re-text{color: #4e6e8e;}
+/* 分割线 */
+.s-fenge{width: 80%; margin: auto; border-top: 1px #ddd solid;}
+
+/* -------- header头部 --------- */
+.s-header{height: 70px; border: 0px #000 solid; position: fixed; width: 100%;}
+.s-header{background-color: #FFF; color: #000; z-index: 99999; box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
 /* logo部分 */
-.logo-box {margin-top: 15px; margin-left: 30px; cursor: pointer; color: #000; float: left;}
+.logo-box {margin-top: 10px; margin-left: 30px; cursor: pointer; color: #000; float: left;}
 .logo-box img {width: 50px; height: 50px; vertical-align: middle;}
 .logo-box .logo-text {display: inline-block;vertical-align: middle; font-size: 22px;font-weight: 400;}
+/* 小章鱼 */
+.github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px;}
 /* 右边导航 */
 .nav-right{float: right; line-height: 70px; padding-right: 4.5em; white-space: nowrap;}
 .nav-right a{padding: 0px 1em; color: #34495E; text-decoration: none; transition: all 0.2s;}
 .nav-right a:hover{color: #42B983;}
-/* 主要 */
-html{width: 100%; height: 100vh;}
-body{width: 100%; min-height: 100vh;}
-body:not(.ready) {overflow: auto;}
-.main-box{width: 100%; height: 100vh;}
-.main-box{display: flex; align-items: center; text-align: center;}
-.main-box .content-box{flex: 1;}
 
-.content-box h1{font-size: 110px; font-weight: 300; position: relative;}
-.content-box h1 small{font-size: 20px; position: absolute; bottom: 0px;}
-.sub-title{font-size: 24px; font-weight: 400; margin-top: 30px; margin-bottom: 25px;}
+/* -------- 海报部分 --------- */
+.main-box{width: 100%; /* height: 80vh; */ text-align: center; background-image: url(http://yun94.cn/static/images/comment_bg.jpg2);}
+.main-box{}
+.fenge{min-height: 90px;}
+.content-box{color: #000;}
+.content-box h1{font-size: 70px; font-weight: 400; position: relative; margin-top: 10px;}
+.content-box h1 small{font-size: 20px; position: absolute; bottom: 10px; margin-left: 5px; font-weight: 100;}
+.title-logo{width: 221px; cursor: pointer; transition: all 0.2s;}
+.title-logo:hover{transform: scale(1.2, 1.2);}
+
+.sub-title{font-size: 24px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad;}
 .content-box p{line-height: 30px; padding: 0px 1em;}
 
-.btn-box{margin-top: 16px;}
-.btn-box a{
-	border: 1px #42B983 solid;
-	border-radius: 2rem;
-	box-sizing: border-box;
-	color: #42B983;
-	display: inline-block;
-	font-size: 1.05rem;
-	letter-spacing: .1rem;
-	margin: .5rem 1rem;
-	padding: 0.9em 2rem;
-	text-decoration: none;
-	transition: all .15s ease;
-}
-/* 最后一个 */
-.btn-box a:last-child {
-    background-color: #42B983;
-    color: #fff;
-}
+/* 几个按钮 */
+.btn-box{margin-top: 40px;}
+.btn-box a{border: 1px #42B983 solid; border-radius: 2rem; box-sizing: border-box; color: #42B983; display: inline-block;}
+.btn-box a{font-size: 1.05rem;letter-spacing: .1rem;margin: .5rem 1rem;padding: 0.9em 2rem;text-decoration: none;}
+/* 最后一个加深底色 */
+.btn-box a:last-child {color: #fff; background-color: #42B983; border: 1px green solid;}
 .btn-box a:hover{color: #000;}
 
-/* 底部 */
-footer{
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	line-height: 80px;
-	text-align: center;
+/* 按钮发光动画 */
+.btn-box a:last-child{animation: bganimation 3s infinite;}
+@keyframes bganimation{
+    0%{box-shadow: 0 0 1px #42B983;}
+    50%{box-shadow: 0 0 20px #42B983;}
+    100%{box-shadow: 0 0 20px #FFF;}
 }
-footer a{color: inherit; text-decoration: none;}
-footer a:hover{text-decoration: underline;}
 
+/* -------- 支持特性 --------- */
+.feature-z{padding: 0em 1em; padding-top: 0px; padding-bottom: 60px; text-align: center; color: #000;}
+.feature-z .s-title{font-size: 30px; font-weight: 400; margin-top: 70px; margin-bottom: 40px;}
+.feature-z{color: rgb(128, 128, 128); text-align: center; box-sizing: border-box; line-height: 24px; font-size: 16px;}
+
+.feature-box{margin-top: 40px; margin-bottom: 60px; display: flex; flex-wrap: wrap; justify-content: flex-start;}
+.feature{border: 0px #000 solid; flex: 1; min-width: 33%; max-width: 33%; text-align: left; padding: 1.5em; box-sizing: border-box;}
+.feature h2{font-size: 24px; color: #000; font-weight: 400;}
+.feature p{margin-top: 14px; font-size: 16px; color: #4e6e8e;}
+
+/* -------- 使用公司 --------- */
+.com-box-f{padding: 1em 1em; padding-bottom: 30px; text-align: center;}
+.com-box-f h2{font-size: 30px; color: #000; font-weight: 400;}
+.com-box{display: flex; flex-wrap: wrap; width: 100%; margin-bottom: 50px; justify-content: flex-start;}
+.com-box a{flex: 1; display: block; cursor: pointer; border: 0px #ddd solid;}
+.com-box a{min-width: 17%; max-width: 18%; margin: 5px; line-height: 100px;}
+.com-box a img{transition: all 0.2s; vertical-align: middle; min-width: 60%; max-width: 100%; max-height: 100%;}
+.com-box a:hover img{transform: scale(1.05, 1.05);}
+
+/* -------- 友情链接 --------- */
+.com-box-you a{min-width: 13%; max-width: 14%; line-height: 60px; height: 60px; margin: 10px;}
+.com-box-you a img{min-width: 60%; max-width: 100%; vertical-align: middle; max-height: 100%;}
+
+/* -------- 底部 - 连接 --------- */
+#footer{background-color: #181818;}
+#footer h3{font-weight: 400; font-size: 16px; color: #ccc; margin-top: 20px; margin-bottom: 20px;}
+#footer{border-top: 1px #666 solid;}
+.footer-r-b{display: flex; padding: 40px 0;}
+.ss-box{display: inline-block; flex: 1; color: #595959; margin: 0 50px; font-size: 14px;}
+.ss-box a{color: #595959; text-decoration: none;}
+.ss-box a:hover{color: #EEE; text-decoration: underline;}
+.ss-box ul{margin: 0; padding: 0;}
+.ss-box li{list-style: none; line-height: 28px;}
+
+/* -------- 底部 - 版权 --------- */
+.foot-box{background-color: #000; color: #ddd; padding: 2em 0px; line-height: 28px; overflow: hidden; position: relative; z-index: 100;}
+.foot-box{border-top: 0px #666 solid;}
+.foot-box p{text-indent: 1em;}
+.foot-box b{font-size: 1.1em;}
+.foot-box a{color: #ddd; font-size: 0.9em;}
+.foot-box a:hover{text-decoration: underline;}
+
+
+
+/* -------- 自适应 --------- */
 /* 媒体查询 */
 @media screen and (max-width: 800px) {
 	.logo-box,.copyright {display: none;}
 	.main-box{ height: auto;}
 	.content-box{ padding: 2em 1em;}
-	.content-box h1{font-size: 70px;}
-	header{position: static;}
+	.content-box h1{font-size: 50px;}
+	/* .s-header{position: static;} */
 	footer{position: static; line-height: 40px;}
 }
 
 /* 闪光背景 */
-.z-div{
+/* .main-box{
     background-size: 500%;
 	background-image: linear-gradient(125deg,#BFFEBE,#F6F8B5,#FCD0B3,#BFB6F8,#E8D8B3);
 	animation: bganimation 15s infinite;
@@ -76,4 +118,4 @@ footer a:hover{text-decoration: underline;}
     0%{background-position: 0% 50%;}
     50%{background-position: 100% 50%;}
     100%{background-position: 0% 50%;}
-}
+} */

@@ -9,15 +9,18 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="shortcut icon" type="image/x-icon" href="doc/logo.png">
 		<link rel="stylesheet" href="./index.css">
-		<link rel="stylesheet" href="https://unpkg.zhimg.com/docsify@4.11.3/lib/themes/vue.css">
+		<!-- <link rel="stylesheet" href="https://unpkg.zhimg.com/docsify@4.11.3/lib/themes/vue.css"> -->
 	</head>
 	<body>
-		<div class="z-div" style="height: 100vh; overflow: auto;">		
-			<header>
+		<!-- 总盒子 -->
+		<div class="z-div" style="">		
+		
+			<!-- ------------ 头部 ------------- -->
+			<header class="s-header">
 				<a href="/" style="text-decoration: none;">
 					<div class="logo-box">
 						<img src="doc/logo.png" title="logo">
-						<span class="logo-text">sa-token</span>
+						<span class="logo-text">Sa-Token</span>
 					</div>
 				</a>
 				<nav class="nav-right">
@@ -25,8 +28,8 @@
 					<a href="doc/index.html">文档</a>
 					<a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a>
 					<a href="doc/#/more/update-log">更新日志</a>
-					<!-- github小猫图标 -->
-					<a href="https://github.com/dromara/sa-token" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px;">
+					<!-- github小章鱼图标 -->
+					<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px;">
 						<svg viewBox="0 0 250 250" aria-hidden="true">
 							<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
 							<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
@@ -38,48 +41,238 @@
 				</nav>
 			</header>
 			
-			<!-- 内容部分 -->
+			<!-- ------------ 海报部分 ------------- -->
 			<div class="main-box">
 				<div class="content-box">
-					<h1>sa-token<small>v1.15.2</small></h1>
+					<div class="fenge"></div>
+					<img class="title-logo" src="./doc/logo.png" onclick="alert('别点我, 快去点star！')">
+					<h1>Sa-Token<small>v1.15.2</small></h1>
 					<div class="sub-title">这可能是史上功能最全的java权限认证框架！</div>
-					<!-- <p>0配置开箱即用，低学习成本</p> -->
-					<p>登录验证、权限验证、Session会话、踢人下线、集成Redis、分布式会话、单点登录、前后台分离、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成...</p>
-					<!-- <p>零配置开箱即用，覆盖所有应用场景，你所需要的功能，这里都有</p> -->
-					<p>有了sa-token，你所有的权限认证问题，都不再是问题！</p>
 					<div class="btn-box">
 						<a href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
 						<a href="https://gitee.com/dromara/sa-token" target="_blank">码云</a>
-						<a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a>
-						<a href="doc/index.html" target="_self">开发文档</a>
+						<!-- <a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a> -->
+						<a href="doc/index.html" target="_self" class="doc-btn">开发文档</a>
+					</div>
+					<br><br>
+					<h4 align="center">
+						<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
+						<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg"></a>
+						<a href="https://github.com/dromara/sa-token/stargazers"><img src="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
+					</h4>
+				</div>
+			</div>
+			
+			<!-- ------------ 支持特性 ------------- -->
+			<div >
+				<div class="feature-z s-width">
+					<h2 class="s-title">支持 ⚡ 特性</h2>
+					<div class="feature-box">
+						<div class="feature">
+							<h2>登录认证</h2>
+							<p>多地登录、单地登录、同端互斥登录…… 轻松登录鉴权，并提供五种细分场景值</p>
+						</div>
+						<div class="feature">
+							<h2>权限认证</h2>
+							<p>拦截违规调用，适配RBAC权限模型，不同角色不同授权，权限分配精细到按钮级</p>
+						</div>
+						<div class="feature">
+							<h2>Session会话</h2>
+							<p>专业的数据缓存中心，内置三种会话模型：User-Session、Token-Session、自定义Session</p>
+						</div>
+						<div class="feature">
+							<h2>踢人下线</h2>
+							<p>一行代码实现踢人下线功能，清退违规用户，对方再次访问系统提示“已被踢下线”</p>
+						</div>
+						<div class="feature">
+							<h2>Redis集成</h2>
+							<p>可扩展持久层，集成Redis、Memcached等专业缓存中间件，重启数据不丢失</p>
+						</div>
+						<div class="feature">
+							<h2>分布式会话</h2>
+							<p>保证多节点数据一致性，提供jwt集成和共享数据中心两种分布式会话方案</p>
+						</div>
+						<div class="feature">
+							<h2>单点登录</h2>
+							<p>一行配置集成单点登录，多个系统，一处登录，处处通行</p>
+						</div>
+						<div class="feature">
+							<h2>临时身份切换</h2>
+							<p>实时操作任意用户状态数据，还可临时身份切换，关键时刻让你少写N多代码</p>
+						</div>
+						<div class="feature">
+							<h2>前后台分离</h2>
+							<p>三种token读取策略，适配无Cookie模式，完美兼容APP、小程序等前后台分离场景</p>
+						</div>
+						<div class="feature">
+							<h2>同端互斥登录</h2>
+							<p>像QQ一样手机电脑可以同时在线，但是在两个手机上互斥登录</p>
+						</div>
+						
+						<div class="feature">
+							<h2>多账号体系认证</h2>
+							<p>一个商城项目的User表和Admin表想要分开鉴权？sa-token教你如何轻松搞定一个系统多套权限体系的场景！</p>
+						</div>
+						<div class="feature">
+							<h2>定制Token风格</h2>
+							<p>默认uuid风格太过单调？内置六种token风格随意切换，还可自定义token生成策略</p>
+						</div>
+						<div class="feature">
+							<h2>注解式鉴权</h2>
+							<p>拒绝混乱，优雅的将鉴权与业务代码分离！</p>
+						</div>
+						<div class="feature">
+							<h2>路由拦截式鉴权</h2>
+							<p>轻松搞定不同模块不同权限校验，还可适配Restful风格路由</p>
+						</div>
+						<div class="feature">
+							<h2>自动续签</h2>
+							<p>提供两种token过期策略，灵活搭配使用，还可自动续签</p>
+						</div>
+						<div class="feature">
+							<h2>会话治理</h2>
+							<p>提供方便灵活的会话查询接口，绕过API，直达数据底层，解决各种边际场景的疑难杂症</p>
+						</div>
+						<div class="feature">
+							<h2>记住我模式</h2>
+							<p>一个参数即可轻松适配 [记住我] 模式，做到重启浏览器免验证</p>
+						</div>
+						<div class="feature">
+							<h2>密码加密</h2>
+							<p>提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密</p>
+						</div>
+						<!-- <div class="feature">
+							<h2>组件自动注入</h2>
+							<p>零配置与Spring等框架集成</p>
+						</div> -->
+					</div>
+					<div class="re-text">有了sa-token，你所有的权限认证问题，都不再是问题！</div>
+				</div>
+			</div>
+			
+			<!-- ------------ 使用公司 ------------- -->
+			<div>
+				<div class="com-box-f s-width">
+					<div class="s-fenge"></div>
+					<br>
+					<h2 class="s-title">正在使用 Sa-Token 的公司 / 机构</h2>
+					<div class="com-box">
+						<a href="http://yun94.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/com/liangyunwangluo.png">
+						</a>
+						<a href="http://www.jmwl51.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/com/jimengwangluo.png">
+						</a>
+						<a href="https://www.suancheng.co/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/com/suanchengdudu.png">
+						</a>
+						<a href="https://chykj.com/" target="_blank">
+							<img src="https://chykj.com/upload/1/cms/content/cylogoc.jpg">
+						</a>
+						<a href="https://shop.jfh.com/6089/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/com/banxiawangluo.png">
+						</a>
+					</div>
+					<div style="height: 10px; clear: both;"></div>
+					<p style="color: #666;">
+						（如果您的项目也使用了Sa-Token，您可以
+						<a href="https://gitee.com/dromara/sa-token/issues/I3EV1M" target="_blank" style="text-decoration: none;">在此</a>
+						提交）
+					</p>
+				</div>
+				<div style="height: 60px;"></div>
+			</div>
+			
+			
+			<!-- ------------ 友情链接 ------------- -->
+			<div>
+				<div class="com-box-f s-width">
+					<div class="s-fenge"></div>
+					<br>
+					<h2 class="s-title">友情链接</h2>
+					<div class="com-box com-box-you">
+						<a href="https://gitee.com/dromara/soul" target="_blank">
+							<img src="https://dromara.org/img/logo/soul.png">
+						</a>
+						<a href="https://yomahub.com/tlog/" target="_blank">
+							<img src="https://gitee.com/dromara/TLog/raw/master/static/img/logo.png">
+						</a>
+						<a href="https://dromara.org/zh/projects/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/dromara.png">
+						</a>
+						<a href="https://okhttps.ejlchina.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/okhttps.png">
+						</a>
+						<a href="https://xiaonuo.vip/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/xiaonuo.png">
+						</a>
+						<a href="https://cubic.jiagoujishu.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/cubic.png">
+						</a>
+					</div>
+					<div style="height: 10px; clear: both;"></div>
+				</div>
+				<div style="height: 60px;"></div>
+			</div>
+			
+			<!-- ------------ 底部 连接 ------------- -->
+			<div id="footer">
+				<div id="s-footer" class="mao-link"></div>
+				<div class="footer-r-b s-width">
+					<div class="ss-box">
+						<h3>友情链接</h3>
+						<ul class="list-unstyle">
+							<li><a href="https://dromara.org/zh/projects/" target="_blank">Dromara社区</a></li>
+							<li><a href="https://docsify.js.org/#/zh-cn/" target="_blank">docsify</a></li>
+							<li><a href="https://juejin.cn/" target="_blank">掘金 · 技术社区</a></li>
+						</ul>
+					</div>
+					<div class="ss-box">
+						<h3>友情链接</h3>
+						<ul class="list-unstyle">
+							<li><a href="https://www.aliyun.com/" target="_blank">阿里云</a></li>
+							<li><a href="https://cloud.tencent.com/" target="_blank">腾讯云</a></li>
+							<li><a href="http://yanzhi21.com" target="_blank">颜值排行榜</a></li>
+						</ul>
+					</div>
+					<div class="ss-box">
+						<h3>联系我们</h3>
+						<ul class="list-unstyle">
+							<!-- <li>电话：<a href="tel:123;">123</a></li> -->
+							<li>QQ群 ：<a href="https://jq.qq.com/?_wv=1027&k=5DHN5Ib" target="_blank">1002350610</a></li>
+							<li>邮箱：<a href="javascript: alert('暂无');">暂无</a></li>
+							<li>联系：<a href="javascript: alert('暂无');">暂无</a></li>
+						</ul>
+					</div>
+					<div class="ss-box">
+						<h3 class="last" style="text-align: left; float: none; padding-left: 0px;">Dromara公众号</h3>
+						<div class="media-img padding-small-top" style="text-align: left;">
+							<a href="https://dromara.org/img/qrcode/qrcode_1.png" target="_blank">
+								<img src="https://dromara.org/img/qrcode/qrcode_1.png" width="100" height="100" />
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
 			
-			<footer>
-				<p>
-					<span class="copyright">Copyright © 2020 &nbsp;</span>
-					<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-2</a> &nbsp;
-					QQ交流群：<a href="https://jq.qq.com/?_wv=1027&k=45H977HM" target="_blank">1002350610</a>
-					<!-- QQ交流群：<a href="https://jq.qq.com/?_wv=1027&k=5DHN5Ib" target="_blank">782974737</a> -->
-				</p>
-			</footer>
+			<!-- -------------- 底部 版权 -------------- -->
+			<div>
+				<meta charset="UTF-8">
+				<style type="text/css">
+					
+				</style>
+				<div class="foot-box" id="foot">
+					<div class="s-width" style="text-align: center;">
+						Copyright ©2021 sa-token java权限认证 | sa-token.dev33.cn | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-2</a>
+					</div>
+				</div>
+			</div>
 			
 		</div>
-		<script>
-			// 随机数
-			function randomNum(minNum, maxNum) {
-				return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10)
-			}
-			// 随机一个渐变背景色 
-			function randomBG() {
-				var c1 = randomNum(0, 255);
-				var c2 = randomNum(0, 255);
-				document.body.style.background = 'linear-gradient(to left bottom, hsl(' + c1 + ', 100%, 85%) 0%,hsl(' + c2 +
-					', 100%, 85%) 100%)';
-			}
-			randomBG();
-		</script>
 
 		<!-- 搜索引擎自动提交 -->
 		<script>
@@ -95,7 +288,7 @@
 				s.parentNode.insertBefore(bp, s);
 			})();
 		</script>
-		<!-- 友盟 -->
+		<!-- 友盟统计 -->
 		<div style="height: 0px; overflow: hidden;">
 			<script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1279646043&web_id=1279646043"></script>
 		</div>

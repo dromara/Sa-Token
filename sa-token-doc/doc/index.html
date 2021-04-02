@@ -141,12 +141,16 @@
 		<script src="https://unpkg.zhimg.com/gitalk@1.7.0/dist/gitalk.min.js"></script>
 		<script>
 			function f5Gitalk() {
+				var id = location.hash.replace('#', '');
+				if(id.indexOf('?') > -1) {
+					id = id.substr(0, id.indexOf('?'));
+				}
 				window.gitalk = new Gitalk({
-					id: location.hash.replace('#', ''),
+					id: id,
 					clientID: '19939399448841f818a1',
 					clientSecret: 'af67e0cc14a0f36e171895771c330471cfe36c23',
 					repo: 'sa-token',		// 仓库名称 
-					owner: 'click33',
+					owner: 'dromara',
 					admin: ['click33'],	// 管理员列表 
 					// facebook-like distraction free mode
 					distractionFreeMode: false
