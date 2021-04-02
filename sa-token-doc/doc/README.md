@@ -141,6 +141,8 @@ sa-token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 ## 使用sa-token的开源项目
 [**[ sa-plus]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
+[**[ jthink]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
+
 
 如果您的项目使用了sa-token，欢迎提交pr
 
