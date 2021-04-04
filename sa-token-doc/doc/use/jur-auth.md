@@ -67,6 +67,7 @@ public class StpInterfaceImpl implements StpInterface {
 ```
 
 可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
+注意: 这里的getPermissionList()和getRoleList()是每次权限或者角色验证都会重新执行
 
 
 
