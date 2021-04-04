@@ -25,7 +25,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .nav-right a:hover{color: #42B983;}
 
 /* -------- 海报部分 --------- */
-.main-box{width: 100%; /* height: 80vh; */ text-align: center; background-image: url(http://yun94.cn/static/images/comment_bg.jpg2);}
+.main-box{width: 100%; /* height: 80vh; */ text-align: center;}
 .main-box{}
 .fenge{min-height: 90px;}
 .content-box{color: #000;}

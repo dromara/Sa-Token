@@ -17,6 +17,7 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -181,6 +182,8 @@ public class StpLogic {
 	
 	// =================== 登录相关操作 ===================  
 
+	// 登录与注销 
+	
 	/**
 	 * 在当前会话上登录id 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
@@ -213,6 +216,11 @@ public class StpLogic {
 	 * @param loginModel 此次登录的参数Model 
 	 */
 	public void setLoginId(Object loginId, SaLoginModel loginModel) {
+		
+		// ------ 0、检查此账号是否已被封禁 
+		if(isDisable(loginId)) {
+			throw new DisableLoginException(loginKey, loginId, getDisableTime(loginId));
+		}
 		
 		// ------ 1、获取相应对象  
 		SaTokenConfig config = getConfig();
@@ -353,6 +361,34 @@ public class StpLogic {
 		session.logoutByTokenSignCountToZero();
 	}
 
+	/**
+	 * 封禁指定账号
+	 * <p> 此方法不会直接将此账号id踢下线，而是在对方再次登录时抛出`DisableLoginException`异常 
+	 * @param loginId 指定账号id 
+	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public void disableLoginId(Object loginId, long disableTime) {
+		SaTokenManager.getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
+	}
+	
+	/**
+	 * 指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @return see note
+	 */
+	public boolean isDisable(Object loginId) {
+		return SaTokenManager.getSaTokenDao().get(splicingKeyDisable(loginId)) != null;
+	}
+	
+	/**
+	 * 获取指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * @param loginId 账号id
+	 * @return see note 
+	 */
+	public long getDisableTime(Object loginId) {
+		return SaTokenManager.getSaTokenDao().getTimeout(splicingKeyDisable(loginId));
+	}
+	
 	// 查询相关 
 	
  	/** 
@@ -1129,7 +1165,15 @@ public class StpLogic {
 	public String splicingKeyJustCreatedSave() {
 		return SaTokenConsts.JUST_CREATED_SAVE_KEY + loginKey;
 	}
-	
+
+	/**  
+	 * 拼接key： 账号封禁
+	 * @param loginId 账号id
+	 * @return key 
+	 */
+	public String splicingKeyDisable(Object loginId) {
+		return getConfig().getTokenName() + ":" + loginKey + ":disable:" + loginId;
+	}
 	
 	// =================== Bean对象代理 ===================  
 	

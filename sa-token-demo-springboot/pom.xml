@@ -46,17 +46,17 @@
         </dependency> -->
 		
 		<!-- sa-token整合redis (使用jackson序列化方式) -->
-		<!-- <dependency>
+		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
             <version>${sa-token-version}</version>
-        </dependency> -->
+        </dependency>
         
 		<!-- 提供redis连接池 -->
-		<!-- <dependency>
+		<dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-        </dependency> -->
+        </dependency>
         
 		<!-- sa-token整合SpringAOP实现注解鉴权 -->
 		<!-- <dependency>
