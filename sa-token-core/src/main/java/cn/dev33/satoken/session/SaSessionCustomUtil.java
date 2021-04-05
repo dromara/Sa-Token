@@ -31,7 +31,7 @@ public class SaSessionCustomUtil {
 	 * @param sessionId session的id
 	 * @return 是否存在
 	 */
-	public boolean isExists(String sessionId) {
+	public static boolean isExists(String sessionId) {
 		return SaTokenManager.getSaTokenDao().getSession(splicingSessionKey(sessionId)) != null;
 	}
 
