@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import cn.dev33.satoken.context.model.servlet.SaRequestForServlet;
+import cn.dev33.satoken.context.model.servlet.SaResponseForServlet;
 import cn.dev33.satoken.router.SaRouteFunction;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -57,7 +59,7 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 			StpUtil.checkLogin();
 		} else {
 			// 否则执行函数 
-			function.run(request, response, handler);
+			function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
 		}
 		
 		// 通过验证 

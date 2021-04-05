@@ -6,16 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.exception.NotLoginException;
@@ -95,8 +93,8 @@ public class StpLogic {
  	 */
 	public void setTokenValue(String tokenValue, int cookieTimeout){
 		SaTokenConfig config = getConfig();
-		// 将token保存到本次request里  
-		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
+		// 将token保存到本次Request里  
+		SaRequest request = SaTokenManager.getSaTokenContext().getRequest();
 		// 判断是否配置了token前缀 
 		String tokenPrefix = config.getTokenPrefix();
 		if(SaTokenInsideUtil.isEmpty(tokenPrefix)) {
@@ -108,9 +106,8 @@ public class StpLogic {
 		
 		// 注入Cookie 
 		if(config.getIsReadCookie() == true){
-			HttpServletResponse response = SaTokenManager.getSaTokenServlet().getResponse();
-			SaTokenManager.getSaTokenCookie().addCookie(response, getTokenName(), tokenValue, 
-					"/", config.getCookieDomain(), cookieTimeout);
+			SaResponse response = SaTokenManager.getSaTokenContext().getResponse();
+			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout);
 		}
 	}
  	
@@ -120,7 +117,7 @@ public class StpLogic {
 	 */
 	public String getTokenValue(){
 		// 0. 获取相应对象 
-		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
+		SaRequest request = SaTokenManager.getSaTokenContext().getRequest();
 		SaTokenConfig config = getConfig();
 		String keyTokenName = getTokenName();
 		String tokenValue = null;
@@ -139,10 +136,7 @@ public class StpLogic {
 		}
 		// 4. 尝试从cookie里读取 
 		if(tokenValue == null && config.getIsReadCookie()){
-			Cookie cookie = SaTokenManager.getSaTokenCookie().getCookie(request, keyTokenName);
-			if(cookie != null){
-				tokenValue = cookie.getValue();
-			}
+			tokenValue = request.getCookieValue(keyTokenName);
 		}
 		
 		// 5. 如果打开了前缀模式
@@ -290,7 +284,7 @@ public class StpLogic {
  		}
  		// 如果打开了cookie模式，第一步，先把cookie清除掉 
  		if(getConfig().getIsReadCookie() == true){
-			SaTokenManager.getSaTokenCookie().delCookie(SaTokenManager.getSaTokenServlet().getRequest(), SaTokenManager.getSaTokenServlet().getResponse(), getTokenName()); 	
+ 			SaTokenManager.getSaTokenContext().getResponse().deleteCookie(getTokenName());
 		}
  		logoutByTokenValue(tokenValue);
 	}
@@ -379,7 +373,7 @@ public class StpLogic {
 	public boolean isDisable(Object loginId) {
 		return SaTokenManager.getSaTokenDao().get(splicingKeyDisable(loginId)) != null;
 	}
-	
+
 	/**
 	 * 获取指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
 	 * @param loginId 账号id
@@ -692,7 +686,7 @@ public class StpLogic {
  		// 删除[最后操作时间]
  		SaTokenManager.getSaTokenDao().delete(splicingKeyLastActivityTime(tokenValue));
  		// 清除标记 
- 		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
+ 		SaTokenManager.getSaTokenContext().getRequest().removeAttribute((SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY));
  	}
  	
  	/**
@@ -705,7 +699,7 @@ public class StpLogic {
  			return;
  		}
  		// 如果本次请求已经有了[检查标记], 则立即返回 
- 		HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
+ 		SaRequest request = SaTokenManager.getSaTokenContext().getRequest();
  		if(request.getAttribute(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY) != null) {
  			return;
  		}
@@ -1255,14 +1249,14 @@ public class StpLogic {
 	 * @param loginId 指定loginId 
 	 */
 	public void switchTo(Object loginId) {
-		SaTokenManager.getSaTokenServlet().getRequest().setAttribute(splicingKeySwitch(), loginId);
+		SaTokenManager.getSaTokenContext().getRequest().setAttribute(splicingKeySwitch(), loginId);
 	}
 	
 	/**
 	 * 结束临时切换身份
 	 */
 	public void endSwitch() {
-		SaTokenManager.getSaTokenServlet().getRequest().removeAttribute(splicingKeySwitch());
+		SaTokenManager.getSaTokenContext().getRequest().removeAttribute(splicingKeySwitch());
 	}
 
 	/**
@@ -1270,7 +1264,7 @@ public class StpLogic {
 	 * @return 是否正处于[身份临时切换]中 
 	 */
 	public boolean isSwitch() {
-		return SaTokenManager.getSaTokenServlet().getRequest().getAttribute(splicingKeySwitch()) != null;
+		return SaTokenManager.getSaTokenContext().getRequest().getAttribute(splicingKeySwitch()) != null;
 	}
 	
 	/**
@@ -1278,7 +1272,7 @@ public class StpLogic {
 	 * @return 返回[身份临时切换]的loginId 
 	 */
 	public Object getSwitchLoginId() {
-		return SaTokenManager.getSaTokenServlet().getRequest().getAttribute(splicingKeySwitch());
+		return SaTokenManager.getSaTokenContext().getRequest().getAttribute(splicingKeySwitch());
 	}
 	
 	/**

@@ -23,7 +23,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(String pattern, String path) {
-		return SaTokenManager.getSaTokenServlet().matchPath(pattern, path);
+		return SaTokenManager.getSaTokenContext().matchPath(pattern, path);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatchCurrURI(String pattern) {
-		return isMatch(pattern, SaTokenManager.getSaTokenServlet().getRequest().getRequestURI());
+		return isMatch(pattern, SaTokenManager.getSaTokenContext().getRequest().getRequestURI());
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatchCurrURI(List<String> patterns) {
-		return isMatch(patterns, SaTokenManager.getSaTokenServlet().getRequest().getRequestURI());
+		return isMatch(patterns, SaTokenManager.getSaTokenContext().getRequest().getRequestURI());
 	}
 	
 
@@ -119,7 +119,7 @@ public class SaRouterUtil {
 	 * @return 匹配结果包装对象 
 	 */
 	public static IsRunFunction match(String... patterns) {
-		boolean matchResult = isMatch(Arrays.asList(patterns), SaTokenManager.getSaTokenServlet().getRequest().getRequestURI());
+		boolean matchResult = isMatch(Arrays.asList(patterns), SaTokenManager.getSaTokenContext().getRequest().getRequestURI());
 		return new IsRunFunction(matchResult);
 	}
 	

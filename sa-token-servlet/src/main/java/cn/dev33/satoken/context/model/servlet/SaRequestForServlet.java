@@ -1,0 +1,100 @@
+package cn.dev33.satoken.context.model.servlet;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import cn.dev33.satoken.context.model.SaRequest;
+
+/**
+ * Request for Servlet 
+ * @author kong
+ *
+ */
+public class SaRequestForServlet implements SaRequest {
+
+	/**
+	 * 底层Request对象
+	 */
+	HttpServletRequest request;
+	
+	/**
+	 * 实例化
+	 * @param request request对象 
+	 */
+	public SaRequestForServlet(HttpServletRequest request) {
+		this.request = request;
+	}
+	
+	/**
+	 * 获取底层源对象 
+	 */
+	@Override
+	public Object getSource() {
+		return request;
+	}
+
+	/**
+	 * 在 [Request作用域] 里写入一个值 
+	 */
+	@Override
+	public void setAttribute(String name, Object value) {
+		request.setAttribute(name, value);
+	}
+
+	/**
+	 * 在 [Request作用域] 里获取一个值
+	 */
+	@Override
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
+	}
+
+	/**
+	 * 在 [Request作用域] 里删除一个值 
+	 */
+	@Override
+	public void removeAttribute(String name) {
+		request.removeAttribute(name);
+	}
+
+	/**
+	 * 在 [请求体] 里获取一个值 
+	 */
+	@Override
+	public String getParameter(String name) {
+		return request.getParameter(name);
+	}
+
+	/**
+	 * 在 [请求头] 里获取一个值 
+	 */
+	@Override
+	public String getHeader(String name) {
+		return request.getHeader(name);
+	}
+
+	/**
+	 * 在 [Cookie作用域] 里获取一个值 
+	 */
+	@Override
+	public String getCookieValue(String name) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie != null && name.equals(cookie.getName())) {
+					return cookie.getValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 返回当前请求的URL 
+	 */
+	@Override
+	public String getRequestURI() {
+		return request.getRequestURI();
+	}
+
+}

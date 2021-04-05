@@ -9,10 +9,9 @@ import org.springframework.util.PathMatcher;
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.cookie.SaTokenCookie;
+import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.servlet.SaTokenServlet;
-import cn.dev33.satoken.spring.SaTokenServletSpringImpl;
+import cn.dev33.satoken.spring.SaTokenContextForSpring;
 import cn.dev33.satoken.stp.StpInterface;
 
 /**
@@ -66,16 +65,6 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 注入Cookie操作Bean
-	 * 
-	 * @param saTokenCookie SaTokenCookie对象
-	 */
-	@Autowired(required = false)
-	public void setSaTokenCookie(SaTokenCookie saTokenCookie) {
-		SaTokenManager.setSaTokenCookie(saTokenCookie);
-	}
-
-	/**
 	 * 注入框架行为Bean
 	 * 
 	 * @param saTokenAction SaTokenAction对象 
@@ -86,23 +75,23 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 获取Servlet操作Bean (Spring版)
+	 * 获取容器交互Bean (Spring版)
 	 * 
-	 * @return Servlet操作Bean (Spring版)
+	 * @return 容器交互Bean (Spring版)
 	 */
 	@Bean
-	public SaTokenServlet getSaTokenServlet() {
-		return new SaTokenServletSpringImpl();
+	public SaTokenContext getSaTokenContext() {
+		return new SaTokenContextForSpring();
 	}
 
 	/**
-	 * 注入Servlet操作Bean
+	 * 注入容器交互Bean
 	 * 
-	 * @param saTokenServlet SaTokenServlet对象 
+	 * @param saTokenContext SaTokenContext对象 
 	 */
 	@Autowired
-	public void setSaTokenServlet(SaTokenServlet saTokenServlet) {
-		SaTokenManager.setSaTokenServlet(saTokenServlet);
+	public void setSaTokenContext(SaTokenContext saTokenContext) {
+		SaTokenManager.setSaTokenContext(saTokenContext);
 	}
 
 	/**
@@ -112,7 +101,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired(required = false)
 	public void setPathMatcher(PathMatcher pathMatcher) {
-		SaTokenServletSpringImpl.setPathMatcher(pathMatcher);
+		SaTokenContextForSpring.setPathMatcher(pathMatcher);
 	}
 
 

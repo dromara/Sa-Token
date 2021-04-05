@@ -16,11 +16,7 @@
 	<description>A Java Web lightweight authority authentication framework, comprehensive function, easy to use</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-		</dependency>
+		<!-- Zero dependence！ -->
 	</dependencies>
 
 

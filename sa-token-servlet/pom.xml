@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-parent</artifactId>
+        <version>1.15.2</version>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-servlet</name>
+    <artifactId>sa-token-servlet</artifactId>
+	<description>sa-token authentication by Sservlet API</description>
+
+	<dependencies>
+		<!-- sa-token-spring-boot-starter -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+        <!-- Servlet API -->
+        <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+	</dependencies>
+
+
+
+</project>

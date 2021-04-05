@@ -24,7 +24,7 @@ public class SaCheckAspect {
 	/**
 	 * 切面执行顺序
 	 */
-	public static final int aspectOrder = -1;
+	public static final int aspectOrder = -100;
 	
 	/**
 	 * 构建

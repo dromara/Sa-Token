@@ -7,12 +7,10 @@ import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
-import cn.dev33.satoken.cookie.SaTokenCookie;
-import cn.dev33.satoken.cookie.SaTokenCookieDefaultImpl;
+import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
-import cn.dev33.satoken.servlet.SaTokenServlet;
-import cn.dev33.satoken.servlet.SaTokenServletDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
@@ -108,47 +106,29 @@ public class SaTokenManager {
 	}
 	
 	/**
-	 * Cookie操作 Bean 
+	 * 容器操作 Bean  
 	 */
-	private static SaTokenCookie saTokenCookie;
-	public static void setSaTokenCookie(SaTokenCookie saTokenCookie) {
-		SaTokenManager.saTokenCookie = saTokenCookie;
+	private static SaTokenContext saTokenContext;
+	public static void setSaTokenContext(SaTokenContext saTokenContext) {
+		SaTokenManager.saTokenContext = saTokenContext;
 	}
-	public static SaTokenCookie getSaTokenCookie() {
-		if (saTokenCookie == null) {
+	public static SaTokenContext getSaTokenContext() {
+		if (saTokenContext == null) {
 			// 如果对象为空，则使用框架默认方式初始化 
 			synchronized (SaTokenManager.class) {
-				if (saTokenCookie == null) {
-					setSaTokenCookie(new SaTokenCookieDefaultImpl());
+				if (saTokenContext == null) {
+					setSaTokenContext(new SaTokenContextDefaultImpl());
 				}
 			}
 		}
-		return saTokenCookie;
-	}
-	
-	/**
-	 * Servlet操作 Bean 
-	 */
-	private static SaTokenServlet saTokenServlet;
-	public static void setSaTokenServlet(SaTokenServlet saTokenServlet) {
-		SaTokenManager.saTokenServlet = saTokenServlet;
-	}
-	public static SaTokenServlet getSaTokenServlet() {
-		if (saTokenServlet == null) {
-			// 如果对象为空，则使用框架默认方式初始化 
-			synchronized (SaTokenManager.class) {
-				if (saTokenServlet == null) {
-					setSaTokenServlet(new SaTokenServletDefaultImpl());
-				}
-			}
-		}
-		return saTokenServlet;
+		return saTokenContext;
 	}
 	
 	/**
 	 * StpLogic集合, 记录框架所有成功初始化的StpLogic 
 	 */
 	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
+	
 	/**
 	 * 向集合中 put 一个 StpLogic 
 	 * @param stpLogic StpLogic
@@ -156,6 +136,7 @@ public class SaTokenManager {
 	public static void putStpLogic(StpLogic stpLogic) {
 		stpLogicMap.put(stpLogic.getLoginKey(), stpLogic);
 	}
+
 	/**
 	 * 根据 LoginKey 获取对应的StpLogic，如果不存在则返回null 
 	 * @param loginKey 对应的LoginKey 

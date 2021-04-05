@@ -1,12 +1,13 @@
 package cn.dev33.satoken.spring;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import cn.dev33.satoken.servlet.SaTokenServlet;
+import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
+import cn.dev33.satoken.context.model.servlet.SaRequestForServlet;
+import cn.dev33.satoken.context.model.servlet.SaResponseForServlet;
 
 /**
  * sa-token 对Cookie的相关操作 接口实现类
@@ -14,24 +15,23 @@ import cn.dev33.satoken.servlet.SaTokenServlet;
  * @author kong
  *
  */
-public class SaTokenServletSpringImpl implements SaTokenServlet {
+public class SaTokenContextForSpring implements SaTokenContext {
 
 	/**
 	 * 获取当前请求的Request对象
 	 */
 	@Override
-	public HttpServletRequest getRequest() {
-		return SpringMVCUtil.getRequest();
+	public SaRequest getRequest() {
+		return new SaRequestForServlet(SpringMVCUtil.getRequest());
 	}
 
 	/**
 	 * 获取当前请求的Response对象
 	 */
 	@Override
-	public HttpServletResponse getResponse() {
-		return SpringMVCUtil.getResponse();
+	public SaResponse getResponse() {
+		return new SaResponseForServlet(SpringMVCUtil.getResponse());
 	}
-
 
 	/**
 	 * 路由匹配器
@@ -54,7 +54,7 @@ public class SaTokenServletSpringImpl implements SaTokenServlet {
 	 * @param pathMatcher 路由匹配器
 	 */
 	public static void setPathMatcher(PathMatcher pathMatcher) {
-		SaTokenServletSpringImpl.pathMatcher = pathMatcher;
+		SaTokenContextForSpring.pathMatcher = pathMatcher;
 	}
 	
 	/**
