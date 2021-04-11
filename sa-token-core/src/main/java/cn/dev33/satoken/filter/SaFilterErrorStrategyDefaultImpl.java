@@ -12,7 +12,6 @@ public class SaFilterErrorStrategyDefaultImpl implements SaFilterErrorStrategy {
 
 	/**
 	 * 执行方法
-	 * @throws Throwable 抛出异常
 	 */
 	@Override
 	public Object run(Throwable e) {

@@ -11,15 +11,19 @@ public class SaTokenConsts {
 	// =================== sa-token版本信息 ===================  
 	
 	/**
-	 * sa-token 版本号 
+	 * sa-token 当前版本号 
 	 */
-	public static final String VERSION_NO = "v1.15.2";
+	public static final String VERSION_NO = "v1.16.0";
 
 	/**
 	 * sa-token 开源地址 
 	 */
 	public static final String GITHUB_URL = "https://github.com/dromara/sa-token";
 
+	/**
+	 * sa-token 开发文档地址 
+	 */
+	public static final String DEV_DOC_URL = "http://sa-token.dev33.cn/";
 	
 	// =================== 常量key标记 ===================  
 	

@@ -20,7 +20,7 @@ public class SaResponseForServlet implements SaResponse {
 	
 	/**
 	 * 实例化
-	 * @param request request对象 
+	 * @param response response对象 
 	 */
 	public SaResponseForServlet(HttpServletResponse response) {
 		this.response = response;

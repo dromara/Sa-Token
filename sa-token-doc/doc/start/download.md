@@ -12,7 +12,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.15.2</version>
+	<version>1.16.0</version>
 </dependency>
 ```
 
@@ -23,7 +23,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-	<version>1.15.2</version>
+	<version>1.16.0</version>
 </dependency>
 ```
 <!-- tabs:end -->
@@ -34,11 +34,11 @@
 <!-- tabs:start -->
 <!-- tab:SpringMVC环境 （ServletAPI）  -->
 ``` xml
-implementation 'cn.dev33:sa-token-spring-boot-starter:1.15.2'
+implementation 'cn.dev33:sa-token-spring-boot-starter:1.16.0'
 ```
 <!-- tab:WebFlux环境 （Reactor）  -->
 ``` xml
-implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.15.2'
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.16.0'
 ```
 <!-- tabs:end -->
 

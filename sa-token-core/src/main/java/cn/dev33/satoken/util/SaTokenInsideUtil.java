@@ -20,6 +20,7 @@ public class SaTokenInsideUtil {
 	public static void printSaToken() {
 		String str = "____ ____    ___ ____ _  _ ____ _  _ \r\n" + "[__  |__| __  |  |  | |_/  |___ |\\ | \r\n"
 				+ "___] |  |     |  |__| | \\_ |___ | \\| \r\n" + "sa-token：" + SaTokenConsts.VERSION_NO
+//				+ "         \r\n" + "DevDoc：" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
 				+ "         \r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL; // + "\r\n";
 		System.out.println(str);
 	}

@@ -1,7 +1,7 @@
 <p align="center">
 	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.15.2</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">sa-token v1.16.0</h1>
 <h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
 <h4 align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
@@ -45,8 +45,10 @@ sa-token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **权限验证** —— 适配RBAC权限模型，不同角色不同授权
 - **Session会话** —— 专业的数据缓存中心
 - **踢人下线** —— 将违规用户立刻清退下线
+- **账号封禁** —— 封禁指定账号，使其无法登陆，还可指定解封时间
 - **持久层扩展** —— 可集成Redis、Memcached等专业缓存中间件，重启数据不丢失
 - **分布式会话** —— 提供jwt集成和共享数据中心两种分布式会话方案
+- **微服务网关鉴权** —— 适配Gateway、Soul、Zuul等常见网关组件的请求拦截认证
 - **单点登录** —— 一处登录，处处通行
 - **模拟他人账号** —— 实时操作任意用户状态数据
 - **临时身份切换** —— 将会话身份临时切换为其它账号
@@ -60,7 +62,7 @@ sa-token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **会话治理** —— 提供方便灵活的会话查询接口
 - **记住我模式** —— 适配[记住我]模式，重启浏览器免验证
 - **密码加密** —— 提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密 
-- **组件自动注入** —— 零配置与Spring等框架集成
+- **开箱即用** —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
 
