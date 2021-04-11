@@ -1,4 +1,4 @@
-package cn.dev33.satoken.context.model.servlet;
+package cn.dev33.satoken.servlet.model;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

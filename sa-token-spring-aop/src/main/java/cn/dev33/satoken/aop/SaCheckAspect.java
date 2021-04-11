@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * sa-token 基于 Spring Aop 的注解鉴权
@@ -18,13 +19,8 @@ import cn.dev33.satoken.stp.StpUtil;
  */
 @Aspect
 @Component
-@Order(SaCheckAspect.aspectOrder)
+@Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaCheckAspect {
-	
-	/**
-	 * 切面执行顺序
-	 */
-	public static final int aspectOrder = -100;
 	
 	/**
 	 * 构建

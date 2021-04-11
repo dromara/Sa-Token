@@ -84,4 +84,9 @@ public class SaTokenConsts {
 	 */
 	public static final String TOKEN_CONNECTOR_CHAT  = " "; 
 	
+	/**
+	 * 切面、拦截器、过滤器等各种组件的注册优先级顺序
+	 */
+	public static final int ASSEMBLY_ORDER = -100;
+	
 }

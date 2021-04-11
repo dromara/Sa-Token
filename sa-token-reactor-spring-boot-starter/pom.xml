@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-parent</artifactId>
+        <version>1.15.2</version>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-reactor-spring-boot-starter</name>
+    <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+	<description>springboot reactor integrate sa-token</description>
+
+	<dependencies>
+		<!-- sa-token-core -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+		<!-- spring-boot-starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+			<version>2.0.0.RELEASE</version>
+	    	<scope>compile</scope>
+        </dependency>
+		<!-- spring-web -->
+	    <dependency>
+	    	<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.0.4.RELEASE</version>
+			<scope>compile</scope>
+	    </dependency>
+		<!-- reactor-core -->
+	    <dependency>
+	    	<groupId>io.projectreactor</groupId>
+	    	<artifactId>reactor-core</artifactId>
+	   		<version>3.1.4.RELEASE</version>
+	    	<scope>compile</scope>
+	    </dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<version>2.0.0.RELEASE</version>
+			<optional>true</optional>
+		</dependency>
+    
+		<!-- <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-webflux</artifactId>
+			<version>2.0.0.RELEASE</version>
+		</dependency> -->
+	</dependencies>
+
+
+
+</project>

@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import cn.dev33.satoken.context.model.servlet.SaRequestForServlet;
-import cn.dev33.satoken.context.model.servlet.SaResponseForServlet;
 import cn.dev33.satoken.router.SaRouteFunction;
+import cn.dev33.satoken.servlet.model.SaRequestForServlet;
+import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**

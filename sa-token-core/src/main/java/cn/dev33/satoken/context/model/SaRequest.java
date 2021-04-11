@@ -14,26 +14,6 @@ public interface SaRequest {
 	public Object getSource();
 	
 	/**
-	 * 在 [Request作用域] 里写入一个值 
-	 * @param name 键 
-	 * @param value 值
-	 */
-	public void setAttribute(String name, Object value);
-	
-	/**
-	 * 在 [Request作用域] 里获取一个值 
-	 * @param name 键 
-	 * @return 值 
-	 */
-	public Object getAttribute(String name);
-
-	/**
-	 * 在 [Request作用域] 里删除一个值 
-	 * @param name 键 
-	 */
-	public void removeAttribute(String name);
-
-	/**
 	 * 在 [请求体] 里获取一个值 
 	 * @param name 键 
 	 * @return 值 

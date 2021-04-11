@@ -24,5 +24,5 @@ public interface SaTokenAction {
 	 * @return 创建后的Session 
 	 */
 	public SaSession createSession(String sessionId); 
-		
+	
 }

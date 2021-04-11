@@ -1,4 +1,4 @@
-package cn.dev33.satoken.context.model.servlet;
+package cn.dev33.satoken.servlet.model;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -31,30 +31,6 @@ public class SaRequestForServlet implements SaRequest {
 	@Override
 	public Object getSource() {
 		return request;
-	}
-
-	/**
-	 * 在 [Request作用域] 里写入一个值 
-	 */
-	@Override
-	public void setAttribute(String name, Object value) {
-		request.setAttribute(name, value);
-	}
-
-	/**
-	 * 在 [Request作用域] 里获取一个值
-	 */
-	@Override
-	public Object getAttribute(String name) {
-		return request.getAttribute(name);
-	}
-
-	/**
-	 * 在 [Request作用域] 里删除一个值 
-	 */
-	@Override
-	public void removeAttribute(String name) {
-		request.removeAttribute(name);
 	}
 
 	/**

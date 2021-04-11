@@ -11,6 +11,10 @@ import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
+import cn.dev33.satoken.filter.SaFilterErrorStrategy;
+import cn.dev33.satoken.filter.SaFilterErrorStrategyDefaultImpl;
+import cn.dev33.satoken.filter.SaFilterStrategy;
+import cn.dev33.satoken.filter.SaFilterStrategyDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
@@ -122,6 +126,42 @@ public class SaTokenManager {
 			}
 		}
 		return saTokenContext;
+	}
+
+	/**
+	 * 全局过滤器-认证策略 Bean  
+	 */
+	private static SaFilterStrategy strategy;
+	public static void setSaFilterStrategy(SaFilterStrategy strategy) {
+		SaTokenManager.strategy = strategy;
+	}
+	public static SaFilterStrategy getSaFilterStrategy() {
+		if (strategy == null) {
+			synchronized (SaTokenManager.class) {
+				if (strategy == null) {
+					setSaFilterStrategy(new SaFilterStrategyDefaultImpl());
+				}
+			}
+		}
+		return strategy;
+	}
+
+	/**
+	 * 全局过滤器-异常处理策略 Bean  
+	 */
+	private static SaFilterErrorStrategy errorStrategy;
+	public static void setSaFilterErrorStrategy(SaFilterErrorStrategy errorStrategy) {
+		SaTokenManager.errorStrategy = errorStrategy;
+	}
+	public static SaFilterErrorStrategy getSaFilterErrorStrategy() {
+		if (errorStrategy == null) {
+			synchronized (SaTokenManager.class) {
+				if (errorStrategy == null) {
+					setSaFilterErrorStrategy(new SaFilterErrorStrategyDefaultImpl());
+				}
+			}
+		}
+		return errorStrategy;
 	}
 	
 	/**

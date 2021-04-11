@@ -1,13 +1,12 @@
 package cn.dev33.satoken.spring;
 
-import org.springframework.util.AntPathMatcher;
-import org.springframework.util.PathMatcher;
-
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.context.model.servlet.SaRequestForServlet;
-import cn.dev33.satoken.context.model.servlet.SaResponseForServlet;
+import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.servlet.model.SaRequestForServlet;
+import cn.dev33.satoken.servlet.model.SaResponseForServlet;
+import cn.dev33.satoken.servlet.model.SaStorageForServlet;
 
 /**
  * sa-token 对Cookie的相关操作 接口实现类
@@ -34,27 +33,11 @@ public class SaTokenContextForSpring implements SaTokenContext {
 	}
 
 	/**
-	 * 路由匹配器
+	 * 获取当前请求的 [存储器] 对象 
 	 */
-	private static PathMatcher pathMatcher;
-
-	/**
-	 * 获取路由匹配器
-	 * @return 路由匹配器
-	 */
-	public static PathMatcher getPathMatcher() {
-		if(pathMatcher == null) {
-			pathMatcher = new AntPathMatcher();
-		}
-		return pathMatcher;
-	}
-	
-	/**
-	 * 写入路由匹配器
-	 * @param pathMatcher 路由匹配器
-	 */
-	public static void setPathMatcher(PathMatcher pathMatcher) {
-		SaTokenContextForSpring.pathMatcher = pathMatcher;
+	@Override
+	public SaStorage getStorage() {
+		return new SaStorageForServlet(SpringMVCUtil.getRequest());
 	}
 	
 	/**
@@ -62,7 +45,9 @@ public class SaTokenContextForSpring implements SaTokenContext {
 	 */
 	@Override
 	public boolean matchPath(String pattern, String path) {
-		return getPathMatcher().match(pattern, path);
+		return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
 	}
+
+	
 
 }

@@ -31,13 +31,16 @@ StpUtil.logoutByTokenValue("xxxx-xxxx-xxxx-xxxx-xxxx");
 // 封禁指定账号 
 // 参数一：账号id
 // 参数二：封禁时长，单位：秒  (86400秒=1天，此值为-1时，代表永久封禁)
-StpUtil.disableLoginId(10001, 86400); 
+StpUtil.disable(10001, 86400); 
 
 // 获取指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
 StpUtil.isDisable(10001); 
 
 // 获取指定账号剩余封禁时间，单位：秒
 StpUtil.getDisableTime(10001); 
+
+// 解除封禁
+StpUtil.untieDisable(10001); 
 ```
 
 

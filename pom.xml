@@ -19,7 +19,9 @@
 	<!-- 所有模块 -->
 	<modules>
 		<module>sa-token-core</module>
+		<module>sa-token-servlet</module>
 		<module>sa-token-spring-boot-starter</module>
+		<module>sa-token-reactor-spring-boot-starter</module>
 		<module>sa-token-dao-redis</module>
 		<module>sa-token-dao-redis-jackson</module>
 		<module>sa-token-spring-aop</module>

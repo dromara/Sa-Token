@@ -1,4 +1,4 @@
-package cn.dev33.satoken.autowired;
+package cn.dev33.satoken.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,7 +11,8 @@ import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.spring.SaTokenContextForSpring;
+import cn.dev33.satoken.filter.SaFilterErrorStrategy;
+import cn.dev33.satoken.filter.SaFilterStrategy;
 import cn.dev33.satoken.stp.StpInterface;
 
 /**
@@ -95,13 +96,33 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
+	 * 注入[sa-token全局过滤器-认证策略]
+	 * 
+	 * @param strategy see note 
+	 */
+	@Autowired(required = false)
+	public void setSaFilterStrategy(SaFilterStrategy strategy) {
+		SaTokenManager.setSaFilterStrategy(strategy);
+	}
+
+	/**
+	 * 注入[sa-token全局过滤器-异常处理策略]
+	 * 
+	 * @param errorStrategy see note 
+	 */
+	@Autowired(required = false)
+	public void setSaFilterErrorStrategy(SaFilterErrorStrategy errorStrategy) {
+		SaTokenManager.setSaFilterErrorStrategy(errorStrategy);
+	}
+
+	/**
 	 * 利用自动匹配特性，获取SpringMVC框架内部使用的路由匹配器
 	 * 
 	 * @param pathMatcher 要设置的 pathMatcher
 	 */
 	@Autowired(required = false)
 	public void setPathMatcher(PathMatcher pathMatcher) {
-		SaTokenContextForSpring.setPathMatcher(pathMatcher);
+		SaPathMatcherHolder.setPathMatcher(pathMatcher);
 	}
 
 

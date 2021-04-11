@@ -5,6 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import cn.dev33.satoken.SaTokenManager;
 
+/**
+ * sa-token整合SpringBoot 示例 
+ * @author kong
+ *
+ */
 @SpringBootApplication
 public class SaTokenDemoApplication {
 
