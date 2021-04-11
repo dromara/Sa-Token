@@ -84,11 +84,11 @@ mode有两种取值：
 ## 2、使用拦截器模式
 使用AOP方式需要引入新的pom依赖，与此相比，拦截器模式显的更加轻量级  <br>
 你只需要将sa-token的注解校验拦截器注册到你的项目中即可打开注解鉴权功能 <br>
-以`SpringBoot2.0`为例, 新建配置类`MySaTokenConfig.java` 
+以`SpringBoot2.0`为例, 新建配置类`SaTokenConfigure.java` 
 
 ``` java
 @Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
+public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册sa-token的注解拦截器，打开注解式鉴权功能 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

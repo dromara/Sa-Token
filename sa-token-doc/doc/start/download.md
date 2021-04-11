@@ -3,7 +3,10 @@
 ------
 
 ## Maven依赖
-在项目中直接通过 `pom.xml` 导入 `sa-token` 的依赖即可
+在项目中直接通过 `pom.xml` 导入 `sa-token` 的依赖即可：
+
+<!-- tabs:start -->
+<!-- tab:SpringMVC环境 （ServletAPI）  -->
 ``` xml
 <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -13,27 +16,46 @@
 </dependency>
 ```
 
-## Gradle依赖
-Gradle用户引入依赖：
+<!-- tab:WebFlux环境 （Reactor）  -->
+注：此依赖适合在 Reactor模式 的web框架中导入（例如`Netty`、`WebFlux`等），如果您的项目基于 ServletAPI (`SpringMVC`、`SpringBoot`等)，请以前者为准 
+``` xml
+<!-- sa-token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+	<version>1.15.2</version>
+</dependency>
 ```
+<!-- tabs:end -->
+
+
+
+## Gradle依赖
+<!-- tabs:start -->
+<!-- tab:SpringMVC环境 （ServletAPI）  -->
+``` xml
 implementation 'cn.dev33:sa-token-spring-boot-starter:1.15.2'
 ```
-
+<!-- tab:WebFlux环境 （Reactor）  -->
+``` xml
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.15.2'
+```
+<!-- tabs:end -->
 
 
 ## 获取源码
-如果你想深入了解`sa-token`，你可以通过`github`或者`gitee`来获取源码
+如果你想深入了解`sa-token`，你可以通过`github`或者`gitee`来获取源码 （**学习测试请拉取master分支**，dev为正在开发的分支，有很多特性并不稳定）
 - github地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
 - gitee地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - 开源不易，求鼓励，给个`star`吧
 - 源码目录介绍: 
 
-```
+``` js
 ── sa-token
 	├── sa-token-core                         // sa-token 核心模块
 	├── sa-token-servlet                      // sa-token 整合 Servlet容器实现类包
 	├── sa-token-spring-boot-starter          // sa-token 整合 SpringBoot 快速集成 
-	├── sa-token-webflux-spring-boot-starter  // sa-token 整合 WebFlux 快速集成 
+	├── sa-token-reactor-spring-boot-starter  // sa-token 整合 Reactor响应式编程 快速集成 
 	├── sa-token-dao-redis                    // sa-token 整合 Redis (使用jdk默认序列化方式)
 	├── sa-token-dao-redis-jackson            // sa-token 整合 Redis (使用jackson序列化方式)
 	├── sa-token-spring-aop                   // sa-token 整合 SpringAOP 注解鉴权

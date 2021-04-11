@@ -10,10 +10,10 @@
 
 
 ## 1、注册路由拦截器
-以`SpringBoot2.0`为例, 新建配置类`MySaTokenConfig.java`
+以`SpringBoot2.0`为例, 新建配置类`SaTokenConfigure.java`
 ``` java 
 @Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
+public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册sa-token的登录拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -31,7 +31,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 
 ``` java 
 @Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
+public class SaTokenConfigure implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册路由拦截器，自定义验证规则 
@@ -53,7 +53,7 @@ public class MySaTokenConfig implements WebMvcConfigurer {
 
 ``` java 
 @Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
+public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册sa-token的拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

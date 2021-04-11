@@ -31,6 +31,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 /* .gzh-table td img{width: 100%;} */
 /* .gzh-table tr, .gzh-table td{ border: 0px !important;} */
 
+/* tab选项卡优化 */
+.docsify-tabs__tab{outline: 0; cursor: pointer;}
+.docsify-tabs--classic .docsify-tabs__tab--active{box-shadow: 0 0 0;}
 
 /* ============== 代码样式优化 ================ */
 

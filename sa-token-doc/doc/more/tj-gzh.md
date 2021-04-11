@@ -8,9 +8,35 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MjM5NzA1MTcyMA==&mid=2651175957&idx=3&sn=93343b003a8a3c2c600b909499cb554a&send_time="/>
+			<b>程序猿</b>
+			<span>传播编程经验，挖掘程序员优秀的学习资源。</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI3MDE0NzYwNA==&mid=2651443022&idx=2&sn=65db50021c95493d2df03dc58f6dae49&send_time="/>
+			<b>架构师必备</b>
+			<span>分享干货文章，做一个有逼格的架构师社区！</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI4MjI1MTI0Mw==&mid=2247493681&idx=1&sn=4257550a48bf3dfc5c312b0750171c61&send_time="/>
+			<b>GitHuboy</b>
+			<span>专注于分享 Python、Java、Web、AI、数据分析等多个领域的优质学习资源</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzA3NzA2MDMyNA==&mid=2650359032&idx=1&sn=79eea2f0cb16d5054bbb731885c310e5&send_time="/>
+			<b>开源最前线</b>
+			<span>推荐热门开源软件，介绍新开源项目，报导开源资讯！</span>
+		</td>
+		<td></td>
+    </tr>
+    <tr>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzUzNTY2NjAzMg==&mid=2247484321&idx=1&sn=52e7e5e0dc03437e94908b6a67985500&send_time="/>
-			<b>dromara开源组织</b>
-			<span>dromara开源组织官方公众号 [https://github.com/dromara][https://gitee.com/dromara]</span>
+			<b>Dromara开源组织</b>
+			<span>Dromara开源组织官方公众号</span><br>
+			<a href="https://gitee.com/dromara" target="_blank">Gitee</a>
+			<a href="https://github.com/dromara" target="_blank">GitHub</a>
+			<a href="https://dromara.org/zh/projects/" target="_blank">官网</a>
 		</td>
         <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzAxNjk4ODE4OQ==&mid=2247503088&idx=3&sn=f7e82b05d8f155b1fa79601393c437dc&send_time="/>

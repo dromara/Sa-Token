@@ -1,22 +1,25 @@
-# SpringBoot 集成 Sa-Token 示例
+# Spring WebFlux 集成 Sa-Token 示例
 
-本篇将带你从零开始集成sa-token，从而让你快速熟悉sa-token的使用姿势 <br>
-整合示例在官方仓库的`/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行测试学习
+WebFlux基于Reactor响应式模型开发，有着与标准ServletAPI完全不同的底层架构，因此要适配WebFlux, 必须提供与Reactor相关的整合实现，
+本篇将以WebFlux为例，展示sa-token与Reactor响应式模型web框架相整合的示例, **你可以用同样方式去对接其它Reactor模型Web框架**
+
+整合示例在官方仓库的`/sa-token-demo-webflux`文件夹下，如遇到难点可结合源码进行测试学习
+
 
 ---
 
 ### 1、创建项目
-在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考github示例）
+在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-webflux`（不会的同学请自行百度或者参考github示例）
 
 
 ### 2、设置pom包依赖
 在 `pom.xml` 中添加依赖：
 
 ``` xml 
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-spring-boot-starter</artifactId>
+	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
 	<version>1.15.2</version>
 </dependency>
 ```
@@ -64,14 +67,6 @@ public class SaTokenDemoApplication {
 运行代码，当你从控制台看到类似下面的内容时，就代表框架已经成功集成了
 
 ![运行结果](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/app-run.jpg)
-
-
-### 普通Spring环境
-普通spring环境与springboot环境大体无异，只不过需要在项目根目录手动创建配置文件`sa-token.properties`来完成配置
-
-
-### 详细了解
-通过这个示例，你已经对sa-token有了初步的了解，那么现在开始详细了解一下它都有哪些 [能力](/use/login-auth) 吧
 
 
 

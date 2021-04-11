@@ -13,9 +13,11 @@ import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
  *
  */
 @Configuration
-public class SaTokenConfiguration implements WebMvcConfigurer {
+public class SaTokenConfigure implements WebMvcConfigurer {
 
-	// 注册sa-token的拦截器，打开注解式鉴权功能 
+	/**
+	 * 注册sa-token的拦截器，打开注解式鉴权功能 
+	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册注解拦截器 
