@@ -2,16 +2,16 @@ package com.pj.satoken.jwt;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -122,15 +122,15 @@ public class SaTokenJwtUtil {
     		
     		// 重写 (在当前会话上登录id )
     		@Override
-    		public void setLoginId(Object loginId, String device) {
+    		public void setLoginId(Object loginId, SaLoginModel loginModel) {
     			// ------ 1、获取相应对象  
-    			HttpServletRequest request = SaTokenManager.getSaTokenServlet().getRequest();
+    			SaStorage storage = SaTokenManager.getSaTokenContext().getStorage();
     			SaTokenConfig config = getConfig();
     			// ------ 2、生成一个token 
     			String tokenValue = createTokenValue(loginId);
-    			request.setAttribute(splicingKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
+    			storage.set(splicingKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
     			if(config.getIsReadCookie() == true){	// cookie注入 
-    				SaTokenManager.getSaTokenCookie().addCookie(SaTokenManager.getSaTokenServlet().getResponse(), getTokenName(), tokenValue, "/", config.getCookieDomain(), (int)config.getTimeout());		
+    				SaTokenManager.getSaTokenContext().getResponse().addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), (int)config.getTimeout());		
     			}
     		}
     		
@@ -154,7 +154,7 @@ public class SaTokenJwtUtil {
     	 		}
     	 		// 如果打开了cookie模式，把cookie清除掉 
     	 		if(getConfig().getIsReadCookie() == true){
-    				SaTokenManager.getSaTokenCookie().delCookie(SaTokenManager.getSaTokenServlet().getRequest(), SaTokenManager.getSaTokenServlet().getResponse(), getTokenName()); 	
+    				SaTokenManager.getSaTokenContext().getResponse().deleteCookie(getTokenName()); 	
     			}
     		}
     		
