@@ -1,7 +1,7 @@
 <!-- 这是目录树文件 -->
 
 - **开始**
-	- [框架](/README)
+	- [介绍](/README)
 	- [集成](/start/download)
 	- [在SpringBoot环境集成](/start/example) 	
 	- [在WebFlux环境集成](/start/webflux-example) 	
@@ -21,7 +21,7 @@
 	- [花式token](/use/token-style) 
 	- [Token前缀](/use/token-prefix) 
 	- [记住我模式](/use/remember-me)
-	- [模拟他人&身份切换](/use/mock-person) 
+	- [模拟他人 & 身份切换](/use/mock-person) 
 	- [同端互斥登录](/use/mutex-login) 
 	- [密码加密](/use/password-secure) 
 	- [会话治理](/use/search-session) 

@@ -23,7 +23,7 @@ public class SaTokenConsts {
 	/**
 	 * sa-token 开发文档地址 
 	 */
-	public static final String DEV_DOC_URL = "http://sa-token.dev33.cn/";
+	public static final String DEV_DOC_URL = "http://sa-token.dev33.cn";
 	
 	// =================== 常量key标记 ===================  
 	

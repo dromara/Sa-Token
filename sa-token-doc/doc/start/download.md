@@ -44,9 +44,9 @@ implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.16.0'
 
 
 ## 获取源码
-如果你想深入了解`sa-token`，你可以通过`github`或者`gitee`来获取源码 （**学习测试请拉取master分支**，dev为正在开发的分支，有很多特性并不稳定）
-- github地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
+如果你想深入了解`sa-token`，你可以通过`gitee`或者`github`来获取源码 （**学习测试请拉取master分支**，dev为正在开发的分支，有很多特性并不稳定）
 - gitee地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
+- github地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
 - 开源不易，求鼓励，给个`star`吧
 - 源码目录介绍: 
 
