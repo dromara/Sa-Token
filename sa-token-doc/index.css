@@ -59,7 +59,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .feature-z{color: rgb(128, 128, 128); text-align: center; box-sizing: border-box; line-height: 24px; font-size: 16px;}
 
 .feature-box{margin-top: 40px; margin-bottom: 60px; display: flex; flex-wrap: wrap; justify-content: flex-start;}
-.feature{border: 0px #000 solid; flex: 1; min-width: 33%; max-width: 33%; text-align: left; padding: 1.5em; box-sizing: border-box;}
+.feature{border: 0px #000 solid; flex: 1; min-width: 33%; max-width: 33%; text-align: left; padding: 1.5em 1.2em; box-sizing: border-box;}
 .feature h2{font-size: 24px; color: #000; font-weight: 400;}
 .feature p{margin-top: 14px; font-size: 16px; color: #4e6e8e;}
 
@@ -70,7 +70,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .com-box a{flex: 1; display: block; cursor: pointer; border: 0px #ddd solid;}
 .com-box a{min-width: 17%; max-width: 18%; margin: 5px; line-height: 100px;}
 .com-box a img{transition: all 0.2s; vertical-align: middle; min-width: 60%; max-width: 100%; max-height: 100%;}
-.com-box a:hover img{transform: scale(1.05, 1.05);}
+.com-box a img:hover{transform: scale(1.05, 1.05);}
+.com-box-you a img:hover{transform: none;}
 
 /* -------- 友情链接 --------- */
 .com-box-you a{min-width: 13%; max-width: 14%; line-height: 60px; height: 60px; margin: 10px;}
@@ -100,10 +101,24 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* -------- 自适应 --------- */
 /* 媒体查询 */
 @media screen and (max-width: 800px) {
+	
+	.s-title{padding: 0 16px;}
+	.s-width{width: 100%;}
+	
 	.logo-box,.copyright {display: none;}
 	.main-box{ height: auto;}
 	.content-box{ padding: 2em 1em;}
 	.content-box h1{font-size: 50px;}
+	
+	.feature-z{padding: 0em;}
+	.feature{min-width: 100%;}
+	
+	.com-box-f{padding: 0em;}
+	.com-box a{min-width: 90%;}
+	
+	.footer-r-b{display: block;}
+	.ss-box{display: block; width: 90%; margin: 0px; padding-left: 1.5em;}
+	
 	/* .s-header{position: static;} */
 	footer{position: static; line-height: 40px;}
 }
