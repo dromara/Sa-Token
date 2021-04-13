@@ -159,3 +159,7 @@ public void reset(HttpSession session) {
 **要点：**
 1. `SaSession` 与 `HttpSession` 没有任何关系，在`HttpSession`上写入的值，在`SaSession`中无法取出
 2. `HttpSession`并未被框架接管，在使用sa-token时，请在任何情况下均使用`SaSession`，不要使用`HttpSession` 
+
+
+> 如果想管理其他账号的session怎么办? 请参考：[踢人下线](/use/kick)
+> 如果想查询所有账号的session怎么办? 请参考：[会话治理](/use/search-session)
