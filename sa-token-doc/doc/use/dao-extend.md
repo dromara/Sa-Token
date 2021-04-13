@@ -14,7 +14,7 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis</artifactId>
-	<version>1.16.0</version>
+	<version>1.16.0.RELEASE</version>
 </dependency>
 ```
 优点：兼容性好，缺点：Session序列化后基本不可读，对开发者来讲等同于乱码
@@ -26,7 +26,7 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
-	<version>1.16.0</version>
+	<version>1.16.0.RELEASE</version>
 </dependency>
 ```
 优点：Session序列化后可读性强，可灵活手动修改，缺点：兼容性稍差

@@ -21,9 +21,9 @@ public class SaTokenInsideUtil {
 		String str = "____ ____    ___ ____ _  _ ____ _  _ \r\n" + "[__  |__| __  |  |  | |_/  |___ |\\ | \r\n"
 				+ "___] |  |     |  |__| | \\_ |___ | \\| " 
 //				+ "sa-token：" 
-				+ "         \r\n" + "DevDoc：" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
+				+ "\r\n" + "DevDoc：" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
 				+ " (" + SaTokenConsts.VERSION_NO + ")" 
-				+ "         \r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL // + "\r\n";
+				+ "\r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL // + "\r\n";
 				;
 		System.out.println(str);
 	}

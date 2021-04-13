@@ -13,7 +13,7 @@ public class SaTokenConsts {
 	/**
 	 * sa-token 当前版本号 
 	 */
-	public static final String VERSION_NO = "v1.16.0";
+	public static final String VERSION_NO = "v1.16.0.RELEASE";
 
 	/**
 	 * sa-token 开源地址 
