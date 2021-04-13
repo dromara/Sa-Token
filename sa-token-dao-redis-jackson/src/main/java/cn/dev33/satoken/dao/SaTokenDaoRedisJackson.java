@@ -29,7 +29,7 @@ import cn.dev33.satoken.util.SaTokenInsideUtil;
 public class SaTokenDaoRedisJackson implements SaTokenDao {
 	
 	/**
-	 * ObjectMapper对象 (以public作用于暴露出此对象，方便开发者二次更改配置)
+	 * ObjectMapper对象 (以public作用域暴露出此对象，方便开发者二次更改配置)
 	 */
 	public ObjectMapper objectMapper;
 	

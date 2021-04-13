@@ -19,7 +19,7 @@
 		<!-- sa-token-spring-boot-starter -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
+            <artifactId>sa-token-core</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
 		<!-- RedisTemplate 相关操作API -->
@@ -28,6 +28,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
 			<version>2.3.3.RELEASE</version>
         </dependency>
+		<!-- jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+      	  	<version>2.11.2</version>	
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 

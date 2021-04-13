@@ -19,7 +19,7 @@
 		<!-- sa-token-spring-boot-starter -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
+            <artifactId>sa-token-core</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
 		<!-- RedisTemplate 相关操作API -->
