@@ -45,3 +45,4 @@ for (String token : tokenList) {
 请根据业务实际水平合理调用API
 
 
+> 如果需要实时获取当前登录人数或者需要在用户退出后自动触发某事件等, 建议采用websocket技术
