@@ -5,7 +5,7 @@
 ## Maven依赖
 在项目中直接通过 `pom.xml` 导入 `sa-token` 的依赖即可：
 
-<!-- tabs:start -->
+<!------------------------------ tabs:start ------------------------------>
 <!-- tab:SpringMVC环境 （ServletAPI）  -->
 ``` xml
 <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
@@ -26,7 +26,29 @@
 	<version>1.16.0</version>
 </dependency>
 ```
-<!-- tabs:end -->
+
+<!-- tab:Servlet容器环境   -->
+注：如果你的项目没有使用Spring，但是Web框架是基于`ServletAPI`规范的，可以引入此包
+``` xml
+<!-- sa-token 权限认证（ServletAPI规范）, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-servlet</artifactId>
+	<version>1.16.0</version>
+</dependency>
+```
+
+<!-- tab:其它   -->
+注：如果你的项目既没有使用`SpringMVC`、`WebFlux`，也不是基于`ServletAPI`规范，那么可以引入`core`核心包
+``` xml
+<!-- sa-token 权限认证（core核心包）, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-core</artifactId>
+	<version>1.16.0</version>
+</dependency>
+```
+<!---------------------------- tabs:end ------------------------------>
 
 
 
@@ -39,6 +61,14 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:1.16.0'
 <!-- tab:WebFlux环境 （Reactor）  -->
 ``` xml
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.16.0'
+```
+<!-- tab:Servlet容器环境  -->
+``` xml
+implementation 'cn.dev33:sa-token-servlet:1.16.0'
+```
+<!-- tab:其它  -->
+``` xml
+implementation 'cn.dev33:sa-token-core:1.16.0'
 ```
 <!-- tabs:end -->
 
