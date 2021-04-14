@@ -33,7 +33,9 @@ public class SaTokenConfigure {
 	 */
 	@Bean
 	public SaServletFilter getSaReactorFilter() {
-		return new SaServletFilter();
+		return new SaServletFilter()
+				.addInclude("/**")
+				.addExclude("/favicon.ico");
 	}
 	
 	/**
@@ -93,7 +95,9 @@ public class SaTokenConfigure {
 	 */
 	@Bean
 	public SaReactorFilter getSaReactorFilter() {
-		return new SaReactorFilter();
+		return new SaReactorFilter()
+				.addInclude("/**")
+				.addExclude("/favicon.ico");
 	}
 	
 	// 其它代码 ... 

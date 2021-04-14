@@ -1,6 +1,9 @@
 package cn.dev33.satoken.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,6 +15,7 @@ import javax.servlet.ServletResponse;
 import org.springframework.core.annotation.Order;
 
 import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.router.SaRouterUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -22,13 +26,84 @@ import cn.dev33.satoken.util.SaTokenConsts;
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaServletFilter implements Filter {
 
+	// ------------------------ 设置此过滤器 拦截 & 放行 的路由 
+
+	/**
+	 * 拦截路由 
+	 */
+	private List<String> includeList = new ArrayList<>();
+
+	/**
+	 * 放行路由 
+	 */
+	private List<String> excludeList = new ArrayList<>();
+
+	/**
+	 * 添加 [拦截路由] 
+	 * @param paths 路由
+	 * @return 对象自身
+	 */
+	public SaServletFilter addInclude(String... paths) {
+		includeList.addAll(Arrays.asList(paths));
+		return this;
+	}
+	
+	/**
+	 * 添加 [放行路由]
+	 * @param paths 路由
+	 * @return 对象自身
+	 */
+	public SaServletFilter addExclude(String... paths) {
+		excludeList.addAll(Arrays.asList(paths));
+		return this;
+	}
+
+	/**
+	 * 写入 [拦截路由] 集合
+	 * @param pathList 路由集合 
+	 * @return 对象自身
+	 */
+	public SaServletFilter setIncludeList(List<String> pathList) {
+		includeList = pathList;
+		return this;
+	}
+	
+	/**
+	 * 写入 [放行路由] 集合
+	 * @param pathList 路由集合 
+	 * @return 对象自身
+	 */
+	public SaServletFilter setExcludeList(List<String> pathList) {
+		excludeList = pathList;
+		return this;
+	}
+	
+	/**
+	 * 获取 [拦截路由] 集合
+	 * @return see note 
+	 */
+	public List<String> getIncludeList() {
+		return includeList;
+	}
+	
+	/**
+	 * 获取 [放行路由] 集合
+	 * @return see note 
+	 */
+	public List<String> getExcludeList() {
+		return excludeList;
+	}
+
+	
+	// ------------------------ doFilter
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
 		try {
 			// 执行全局过滤器 
-			SaTokenManager.getSaFilterStrategy().run(null);
+			SaRouterUtil.match(includeList, excludeList, () -> SaTokenManager.getSaFilterStrategy().run(null));
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
@@ -53,4 +128,6 @@ public class SaServletFilter implements Filter {
 	public void destroy() {
 	}
 
+	
+	
 }

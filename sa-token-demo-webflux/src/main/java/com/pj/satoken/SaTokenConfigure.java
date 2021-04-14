@@ -24,7 +24,9 @@ public class SaTokenConfigure {
 	 */
 	@Bean
 	public SaReactorFilter getSaReactorFilter() {
-		return new SaReactorFilter();
+		return new SaReactorFilter()
+        		.addInclude("/**")
+        		.addExclude("/favicon.ico");
 	}
 	
 	/**

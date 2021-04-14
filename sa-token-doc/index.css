@@ -29,12 +29,12 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .main-box{display: flex; align-items: center; text-align: center; }
 .fenge{min-height: 90px;}
 .content-box{color: #000; flex: 1;}
-.content-box h1{font-size: 90px; font-weight: 400; position: relative; margin-top: 40px; /* margin-top: 15vh; */}
+.content-box h1{font-size: 100px; font-weight: 400; position: relative; margin-top: 40px; /* margin-top: 15vh; */}
 .content-box h1 small{font-size: 18px; position: absolute; bottom: 10px; margin-left: 5px; font-weight: 100;}
-.title-logo{width: 221px; cursor: pointer; transition: all 0.2s;}
-.title-logo:hover{transform: scale(1.2, 1.2);}
+/* .title-logo{width: 221px; cursor: pointer; transition: all 0.2s;}
+.title-logo:hover{transform: scale(1.2, 1.2);} */
 
-.sub-title{font-size: 24px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #444;}
+.sub-title{font-size: 26px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #444;}
 .content-box p{line-height: 30px; padding: 0px 1em;}
 
 .main-box{animation: changes 60s 0.2s linear infinite normal; background-attachment: ;}  /* normal | alternate */
@@ -44,12 +44,12 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 }
 
 /* 几个按钮 */
-.btn-box{margin-top: 50px; margin-bottom: 28px;}
+.btn-box{margin-top: 50px; margin-bottom: 40px;}
 .btn-box a{border: 1px #42B983 solid; border-radius: 2em; box-sizing: border-box; color: #3eaf7c; display: inline-block;transition: all 0.1s;}
-.btn-box a{font-size: 14px; background-color: rgba(0,255,0,0.03); letter-spacing: 1px; margin: 0 0.5em; padding: 0.8em 1.5em; margin-bottom: 14px; text-decoration: none; }
+.btn-box a{font-size: 14px; background-color: rgba(0,255,0,0.04); letter-spacing: 1px; padding: 1em 2em; margin: 0 0.5em; margin-bottom: 14px; text-decoration: none; }
 /* 最后一个加深底色 */
 .btn-box a:last-child {color: #fff; background-color: #42B983; border: 1px green solid;}
-.btn-box a:hover{/* transform: scale(1.05, 1.05); */padding: 0.8em 1.7em;margin: 0 0.3em;}
+.btn-box a:hover{/* transform: scale(1.05, 1.05); */padding: 1em 2.3em; margin: 0 0.2em;}
 
 /* 按钮发光动画 */
 .btn-box a:last-child{animation: bganimation 3s infinite;}
@@ -59,7 +59,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
     100%{box-shadow: 0 0 20px #FFF;}
 }
 /* 微信二维码 */
-.wx-qr-box{margin-top: 40px; margin-bottom: 20px;}
+.wx-qr-box{margin-top: 50px; margin-bottom: 20px;}
 .wx-qr{width: 150px;}
 .wx-qr-box p{margin-top: 10px; color: #666;}
 .wx-qr,.dro-qr{cursor: pointer;}

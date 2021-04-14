@@ -1,5 +1,9 @@
 package cn.dev33.satoken.reactor.filter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.core.annotation.Order;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -8,6 +12,7 @@ import org.springframework.web.server.WebFilterChain;
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
+import cn.dev33.satoken.router.SaRouterUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import reactor.core.publisher.Mono;
 
@@ -19,6 +24,77 @@ import reactor.core.publisher.Mono;
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaReactorFilter implements WebFilter {
 
+	// ------------------------ 设置此过滤器 拦截 & 放行 的路由 
+
+	/**
+	 * 拦截路由 
+	 */
+	private List<String> includeList = new ArrayList<>();
+
+	/**
+	 * 放行路由 
+	 */
+	private List<String> excludeList = new ArrayList<>();
+
+	/**
+	 * 添加 [拦截路由] 
+	 * @param paths 路由
+	 * @return 对象自身
+	 */
+	public SaReactorFilter addInclude(String... paths) {
+		includeList.addAll(Arrays.asList(paths));
+		return this;
+	}
+	
+	/**
+	 * 添加 [放行路由]
+	 * @param paths 路由
+	 * @return 对象自身
+	 */
+	public SaReactorFilter addExclude(String... paths) {
+		excludeList.addAll(Arrays.asList(paths));
+		return this;
+	}
+
+	/**
+	 * 写入 [拦截路由] 集合
+	 * @param pathList 路由集合 
+	 * @return 对象自身
+	 */
+	public SaReactorFilter setIncludeList(List<String> pathList) {
+		includeList = pathList;
+		return this;
+	}
+	
+	/**
+	 * 写入 [放行路由] 集合
+	 * @param pathList 路由集合 
+	 * @return 对象自身
+	 */
+	public SaReactorFilter setExcludeList(List<String> pathList) {
+		excludeList = pathList;
+		return this;
+	}
+	
+	/**
+	 * 获取 [拦截路由] 集合
+	 * @return see note 
+	 */
+	public List<String> getIncludeList() {
+		return includeList;
+	}
+	
+	/**
+	 * 获取 [放行路由] 集合
+	 * @return see note 
+	 */
+	public List<String> getExcludeList() {
+		return excludeList;
+	}
+
+	
+	// ------------------------ filter
+
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		// ---------- 全局认证处理 
@@ -27,7 +103,7 @@ public class SaReactorFilter implements WebFilter {
 			SaReactorSyncHolder.setContent(exchange);
 			
 			// 执行全局过滤器 
-			SaTokenManager.getSaFilterStrategy().run(null);
+			SaRouterUtil.match(includeList, excludeList, () -> SaTokenManager.getSaFilterStrategy().run(null));
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
@@ -60,6 +136,5 @@ public class SaReactorFilter implements WebFilter {
 			SaReactorSyncHolder.clearContent();
 		});
 	}
-	
 	
 }

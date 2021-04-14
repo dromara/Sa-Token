@@ -21,7 +21,17 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册注解拦截器 
-		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**").excludePathPatterns("");
 	}
 	
+//	/**
+//     * 注册 [sa-token全局过滤器] 
+//     */
+//    @Bean
+//    public SaServletFilter getSaReactorFilter() {
+//        return new SaServletFilter()
+//        		.addInclude("/**")
+//        		.addExclude("/favicon.ico");
+//    }
+    
 }
