@@ -8,6 +8,26 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzg2MDIxNjAzNg==&mid=2247485810&idx=1&sn=afd46d5924afbc1030a87b5d56265fdf&send_time="/>
+			<b>Java大厂面试官</b>
+			<span>一名一直奋斗在一线的程序员, 记录工作用遇到的问题和解决方案</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI2ODQwMTI0MA==&mid=2247486194&idx=2&sn=3fef462f77bdf0354a223e2e6d9d9136&send_time="/>
+			<b>程序员大神</b>
+			<span>有一个在程序员圈混了10年的老程序员, 分享程序员相关的精选内容教程</span>
+		</td>
+		<td></td>
+		<td></td>
+		<td></td>
+    </tr>
+    <tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzUyMDk4OTU5OA==&mid=2247499610&idx=6&sn=bc12403d060cba70be5739b808057d14&send_time="/>
+			<b>码农学习联盟</b>
+			<span>码农学习联盟，程序员码农学习第一站！Java、Python、大数据、机器学习、人工智能</span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MjM5NzA1MTcyMA==&mid=2651175957&idx=3&sn=93343b003a8a3c2c600b909499cb554a&send_time="/>
 			<b>程序猿</b>
 			<span>传播编程经验，挖掘程序员优秀的学习资源。</span>
@@ -27,7 +47,6 @@
 			<b>开源最前线</b>
 			<span>推荐热门开源软件，介绍新开源项目，报导开源资讯！</span>
 		</td>
-		<td></td>
     </tr>
     <tr>
         <td>

@@ -45,9 +45,9 @@
 			<div class="main-box">
 				<div class="content-box">
 					<div class="fenge"></div>
-					<img class="title-logo" src="./doc/logo.png" onclick="alert('别点我, 快去点star！')">
+					<!-- <img class="title-logo" src="./doc/logo.png" onclick="alert('别点我, 快去点star！')"> -->
 					<h1>Sa-Token<small>v1.16.0</small></h1>
-					<div class="sub-title">这可能是史上功能最全的java权限认证框架！</div>
+					<div class="sub-title"> 这可能是史上功能最全的java权限认证框架！</div>
 					<div class="btn-box">
 						<a href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
 						<a href="https://gitee.com/dromara/sa-token" target="_blank">码云</a>
@@ -55,7 +55,6 @@
 						<!-- <a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a> -->
 						<a href="doc/index.html" target="_self" class="doc-btn">开发文档</a>
 					</div>
-					<br><br>
 					<h4 align="center">
 						<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
 						<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg"></a>
@@ -65,11 +64,15 @@
 						<a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
 						<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 					</h4>
+					<div class="wx-qr-box">
+						<img class="wx-qr" src="https://oss.dev33.cn/sa-token/wx-qr-300.png" >
+						<p style="">（扫码添加微信，备注: sa-token，邀您加入技术群聊）</p>
+					</div>
 				</div>
 			</div>
 			
 			<!-- ------------ 支持特性 ------------- -->
-			<div >
+			<div>
 				<div class="feature-z s-width">
 					<h2 class="s-title">支持 ⚡ 特性</h2>
 					<div class="feature-box">
@@ -285,9 +288,7 @@
 					<div class="ss-box">
 						<h3 class="last" style="text-align: left; float: none; padding-left: 0px;">Dromara公众号</h3>
 						<div class="media-img padding-small-top" style="text-align: left;">
-							<a href="https://dromara.org/img/qrcode/qrcode_1.png" target="_blank">
-								<img src="https://dromara.org/img/qrcode/qrcode_1.png" width="100" height="100" />
-							</a>
+							<img class="dro-qr" src="https://dromara.org/img/qrcode/qrcode_1.png" width="100" height="100" />
 						</div>
 					</div>
 				</div>
@@ -353,6 +354,22 @@
 					layer.close(index);
 				}, 1000);
 			});
+			// 点击二维码放大
+			$('.wx-qr,.dro-qr').click(function() {
+				var w = '300px';
+				var h = '300px';
+				var content = '<div style="height: 100%; overflow: hidden !important;">' + 
+							'<img src="' + this.src + ' " style="width: 100%; height: 100%;" />' + 
+						 '</div>';
+				layer.open({
+					type: 1,
+					title: false,
+					shadeClose: true,
+					closeBtn: 0,
+					area: [w, h], //宽高
+					content: content
+				});
+			})
 		</script>
 
 	</body>
