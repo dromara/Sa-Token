@@ -11,8 +11,6 @@ import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.filter.SaFilterErrorStrategy;
-import cn.dev33.satoken.filter.SaFilterStrategy;
 import cn.dev33.satoken.stp.StpInterface;
 
 /**
@@ -93,26 +91,6 @@ public class SaTokenSpringAutowired {
 	@Autowired
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaTokenManager.setSaTokenContext(saTokenContext);
-	}
-
-	/**
-	 * 注入[sa-token全局过滤器-认证策略]
-	 * 
-	 * @param strategy see note 
-	 */
-	@Autowired(required = false)
-	public void setSaFilterStrategy(SaFilterStrategy strategy) {
-		SaTokenManager.setSaFilterStrategy(strategy);
-	}
-
-	/**
-	 * 注入[sa-token全局过滤器-异常处理策略]
-	 * 
-	 * @param errorStrategy see note 
-	 */
-	@Autowired(required = false)
-	public void setSaFilterErrorStrategy(SaFilterErrorStrategy errorStrategy) {
-		SaTokenManager.setSaFilterErrorStrategy(errorStrategy);
 	}
 
 	/**

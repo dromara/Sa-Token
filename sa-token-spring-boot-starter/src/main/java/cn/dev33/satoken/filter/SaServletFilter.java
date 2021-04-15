@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
 
 import org.springframework.core.annotation.Order;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.router.SaRouterUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -94,6 +94,41 @@ public class SaServletFilter implements Filter {
 		return excludeList;
 	}
 
+
+	// ------------------------ 执行函数
+	
+	/**
+	 * 认证函数：每次请求执行 
+	 */
+	public SaFilterAuthStrategy auth = r -> {};
+
+	/**
+	 * 异常处理函数：每次[认证函数]发生异常时执行此函数
+	 */
+	public SaFilterErrorStrategy error = e -> {
+		throw new SaTokenException(e);
+	};
+
+	/**
+	 * 写入[认证函数]: 每次请求执行 
+	 * @param auth see note 
+	 * @return 对象自身
+	 */
+	public SaServletFilter setAuth(SaFilterAuthStrategy auth) {
+		this.auth = auth;
+		return this;
+	}
+
+	/**
+	 * 写入[异常处理函数]：每次[认证函数]发生异常时执行此函数 
+	 * @param error see note 
+	 * @return 对象自身
+	 */
+	public SaServletFilter setError(SaFilterErrorStrategy error) {
+		this.error = error;
+		return this;
+	}
+
 	
 	// ------------------------ doFilter
 
@@ -103,11 +138,11 @@ public class SaServletFilter implements Filter {
 		
 		try {
 			// 执行全局过滤器 
-			SaRouterUtil.match(includeList, excludeList, () -> SaTokenManager.getSaFilterStrategy().run(null));
+			SaRouterUtil.match(includeList, excludeList, () -> auth.run(null));
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
-			Object result = SaTokenManager.getSaFilterErrorStrategy().run(e);
+			Object result = error.run(e);
 			String resultString = String.valueOf(result);
 			
 			// 2. 写入输出流 

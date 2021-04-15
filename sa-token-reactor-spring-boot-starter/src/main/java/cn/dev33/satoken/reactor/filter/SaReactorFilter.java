@@ -9,7 +9,9 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.filter.SaFilterAuthStrategy;
+import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.router.SaRouterUtil;
@@ -92,6 +94,41 @@ public class SaReactorFilter implements WebFilter {
 		return excludeList;
 	}
 
+
+	// ------------------------ 执行函数
+	
+	/**
+	 * 认证函数：每次请求执行 
+	 */
+	public SaFilterAuthStrategy auth = r -> {};
+
+	/**
+	 * 异常处理函数：每次[认证函数]发生异常时执行此函数
+	 */
+	public SaFilterErrorStrategy error = e -> {
+		throw new SaTokenException(e);
+	};
+
+	/**
+	 * 写入[认证函数]: 每次请求执行 
+	 * @param auth see note 
+	 * @return 对象自身
+	 */
+	public SaReactorFilter setAuth(SaFilterAuthStrategy auth) {
+		this.auth = auth;
+		return this;
+	}
+
+	/**
+	 * 写入[异常处理函数]：每次[认证函数]发生异常时执行此函数 
+	 * @param error see note 
+	 * @return 对象自身
+	 */
+	public SaReactorFilter setError(SaFilterErrorStrategy error) {
+		this.error = error;
+		return this;
+	}
+
 	
 	// ------------------------ filter
 
@@ -103,11 +140,11 @@ public class SaReactorFilter implements WebFilter {
 			SaReactorSyncHolder.setContent(exchange);
 			
 			// 执行全局过滤器 
-			SaRouterUtil.match(includeList, excludeList, () -> SaTokenManager.getSaFilterStrategy().run(null));
+			SaRouterUtil.match(includeList, excludeList, () -> auth.run(null));
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
-			Object result = SaTokenManager.getSaFilterErrorStrategy().run(e);
+			Object result = error.run(e);
 			String resultString = String.valueOf(result);
 			
 			// 2. 写入输出流

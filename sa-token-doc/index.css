@@ -59,12 +59,12 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
     100%{box-shadow: 0 0 20px #FFF;}
 }
 /* 微信二维码 */
-.wx-qr-box{margin-top: 50px; margin-bottom: 20px;}
+.wx-qr-box{margin-top: 50px;}
 .qr-item{display: inline-block;}
 .qr-item p{font-size: 12px; padding: 0 0.5em;}
 /* .qr-item a{color: #42B983;} */
 .wx-qr{width: 150px;}
-.wx-qr-box p{margin-top: 10px; color: #666;}
+.wx-qr-box p{margin-top: 10px; color: #666; margin-bottom: 20px;}
 .wx-qr,.dro-qr{cursor: pointer;}
 
 /* -------- 支持特性 --------- */
