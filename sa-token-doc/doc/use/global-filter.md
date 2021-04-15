@@ -33,50 +33,39 @@ public class SaTokenConfigure {
 	 */
 	@Bean
 	public SaServletFilter getSaReactorFilter() {
-		return new SaServletFilter()
-				.addInclude("/**")
-				.addExclude("/favicon.ico");
-	}
-	
-	/**
-	 * 注册 [sa-token全局过滤器-认证策略] 
-	 */
-	@Bean
-	public SaFilterStrategy getSaFilterStrategy() {
-		return r -> {
-			System.out.println("---------- 进入sa-token全局过滤器 -----------");
-			
-			// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
-            SaRouterUtil.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
-			
-			// 权限认证 -- 不同模块, 校验不同权限 
-			SaRouterUtil.match("/user/**", () -> StpUtil.checkPermission("user"));
-			SaRouterUtil.match("/admin/**", () -> StpUtil.checkPermission("admin"));
-			SaRouterUtil.match("/goods/**", () -> StpUtil.checkPermission("goods"));
-			SaRouterUtil.match("/orders/**", () -> StpUtil.checkPermission("orders"));
-			SaRouterUtil.match("/notice/**", () -> StpUtil.checkPermission("notice"));
-			SaRouterUtil.match("/comment/**", () -> StpUtil.checkPermission("comment"));
-			
-			// 匹配 restful 风格路由 
-			SaRouterUtil.match("/article/get/{id}", () -> StpUtil.checkPermission("article"));
-		};
-	}
-	
-	/**
-	 * 注册 [sa-token全局过滤器-异常处理策略] 
-	 */
-	@Bean
-	public SaFilterErrorStrategy getSaFilterErrorStrategy() {
-		return e -> AjaxJson.getError(e.getMessage());
+        return new SaServletFilter()
+		
+        		// 指定 [拦截路由]
+        		.addInclude("/**")
+				
+        		// 指定 [放行路由]
+        		.addExclude("/favicon.ico")
+				
+        		// 指定[认证函数]: 每次请求执行 
+        		.setAuth(r -> {
+					System.out.println("---------- 进入sa-token全局认证 -----------");
+					
+					// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
+					SaRouterUtil.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
+					
+					// 更多拦截处理方式，请参考“路由拦截式鉴权”章节 
+        		})
+				
+        		// 指定[异常处理函数]：每次[认证函数]发生异常时执行此函数 
+        		.setError(e -> {
+					System.out.println("---------- 进入sa-token异常处理 -----------");
+        			return AjaxJson.getError(e.getMessage());
+        		})
+        		;
 	}
 	
 }
 ```
 
 ### 注意事项
-- 在`[认证策略]`里，你可以和拦截器里一致的代码，进行路由匹配鉴权
-- 由于过滤器中抛出的异常不进入全局异常处理，所以你必须提供`[异常处理策略]`来处理`[认证策略]`里抛出的异常
-- 在`[异常处理策略]`里的返回值，将作为字符串输出到前端，如果需要定制化返回数据，请注意其中的格式转换
+- 在`[认证函数]`里，你可以写和拦截器里一致的代码，进行路由匹配鉴权，参考：[路由拦截式鉴权](/use/route-check)
+- 由于过滤器中抛出的异常不进入全局异常处理，所以你必须提供`[异常处理函数]`来处理`[认证函数]`里抛出的异常
+- 在`[异常处理函数]`里的返回值，将作为字符串输出到前端，如果需要定制化返回数据，请注意其中的格式转换
 
 
 ### 在WebFlux中使用过滤器
@@ -96,11 +85,9 @@ public class SaTokenConfigure {
 	@Bean
 	public SaReactorFilter getSaReactorFilter() {
 		return new SaReactorFilter()
-				.addInclude("/**")
-				.addExclude("/favicon.ico");
+			// 其它代码... 
+		;
 	}
-	
-	// 其它代码 ... 
 	
 }
 ```

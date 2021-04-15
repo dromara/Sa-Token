@@ -20,6 +20,11 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* GitHub折线图最大宽度 */
 [alt=github-chart]{max-width: 897px;}
+/* 大屏幕时，某些图片限制一下宽度 */
+@media screen and (min-width: 800px) {
+	[title=s-w]{max-width: 80%;}
+}
+
 
 /* 公众号table */
 .gzh-table{ /* table-layout:fixed !important; */}

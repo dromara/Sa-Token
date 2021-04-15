@@ -5,7 +5,7 @@ package cn.dev33.satoken.filter;
  * @author kong
  *
  */
-public interface SaFilterStrategy {
+public interface SaFilterAuthStrategy {
 	
 	/**
 	 * 执行方法 
