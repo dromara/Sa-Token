@@ -146,6 +146,8 @@ sa-token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ jthink]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
 
+[**[ UniAdmin]** 一个基于springboot+sa-token的零前端通用后台，无需一行前端代码即可拥有一个vue+elementUI后台](https://uniadmin.jiangruyi.com/)
+
 
 如果您的项目使用了sa-token，欢迎提交pr
 
