@@ -8,6 +8,7 @@ import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.action.SaTokenAction;
+import cn.dev33.satoken.aop.SaTokenListener;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -91,6 +92,16 @@ public class SaTokenSpringAutowired {
 	@Autowired
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaTokenManager.setSaTokenContext(saTokenContext);
+	}
+
+	/**
+	 * 注入监听器Bean
+	 * 
+	 * @param saTokenListener saTokenListener对象 
+	 */
+	@Autowired(required = false)
+	public void setSaTokenListener(SaTokenListener saTokenListener) {
+		SaTokenManager.setSaTokenListener(saTokenListener);
 	}
 
 	/**

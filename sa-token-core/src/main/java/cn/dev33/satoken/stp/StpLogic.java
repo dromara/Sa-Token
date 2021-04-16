@@ -245,6 +245,8 @@ public class StpLogic {
 						clearLastActivity(tokenSign.getValue()); 			
 						// 3. 清理user-session上的token签名记录 
 						session.removeTokenSign(tokenSign.getValue()); 		
+				 		// $$ 通知监听器 
+				 		SaTokenManager.getSaTokenListener().doReplaced(loginKey, loginId, tokenSign.getValue(), tokenSign.getDevice());
 					}
 				}
 			}
@@ -273,6 +275,9 @@ public class StpLogic {
 		
 		// 在当前会话写入当前tokenValue 
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
+		
+		// $$ 通知监听器
+		SaTokenManager.getSaTokenListener().doLogin(loginKey, loginId, loginModel);
 	}
 
 	/** 
@@ -306,6 +311,9 @@ public class StpLogic {
  		}
  		SaTokenManager.getSaTokenDao().delete(splicingKeyTokenValue(tokenValue));	
  		
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doLogout(loginKey, loginId, tokenValue);
+ 		
  		// 3. 尝试清理账号session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
  	 	SaSession session = getSessionByLoginId(loginId, false);
  	 	if(session == null) {
@@ -333,8 +341,8 @@ public class StpLogic {
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
 	public void logoutByLoginId(Object loginId, String device) {
-		// 1. 先获取这个账号的[id-session], 如果为null，则不执行任何操作 
-		SaSession session = getSessionByLoginId(loginId);
+		// 1. 先获取这个账号的[user-session], 如果为null，则不执行任何操作 
+		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
 			return;
 		}
@@ -351,6 +359,8 @@ public class StpLogic {
 				SaTokenManager.getSaTokenDao().update(splicingKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);
 		 		// 4. 清理账号session上的token签名 
 		 		session.removeTokenSign(tokenValue); 
+		 		// $$ 通知监听器 
+		 		SaTokenManager.getSaTokenListener().doLogoutByLoginId(loginKey, loginId, tokenValue, tokenSign.getDevice());
 			}
 		}
  	 	// 3. 尝试注销session
@@ -364,7 +374,11 @@ public class StpLogic {
 	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
 	public void disable(Object loginId, long disableTime) {
+		// 标注为已被封禁 
 		SaTokenManager.getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
+ 		
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doDisable(loginKey, loginId, disableTime);
 	}
 	
 	/**
@@ -391,6 +405,9 @@ public class StpLogic {
 	 */
 	public void untieDisable(Object loginId) {
 		SaTokenManager.getSaTokenDao().delete(splicingKeyDisable(loginId));
+		
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doUntieDisable(loginKey, loginId);
 	}
 	
 	

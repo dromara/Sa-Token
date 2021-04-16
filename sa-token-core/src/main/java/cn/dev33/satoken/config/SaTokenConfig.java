@@ -58,7 +58,9 @@ public class SaTokenConfig {
 	/** 是否在初始化配置时打印版本字符画 */
 	private Boolean isV = true;
 
-	
+	/** 是否打印操作日志 */
+	private Boolean isLog = false;
+
 
 	/**
 	 * @return token名称 (同时也是cookie名称)
@@ -304,10 +306,23 @@ public class SaTokenConfig {
 		return this;
 	}
 
-	
+	/**
+	 * @return 是否打印操作日志
+	 */
+	public Boolean getIsLog() {
+		return isLog;
+	}
 
 	/**
-	 * toString 
+	 * @param isLog 是否打印操作日志
+	 */
+	public SaTokenConfig setIsLog(Boolean isLog) {
+		this.isLog = isLog;
+		return this;
+	}
+
+	/**
+	 * toString()
 	 */
 	@Override
 	public String toString() {
@@ -316,8 +331,10 @@ public class SaTokenConfig {
 				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
 				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
-				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + "]";
+				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + ", isLog=" + isLog + "]";
 	}
+
+	
 	
 
 	

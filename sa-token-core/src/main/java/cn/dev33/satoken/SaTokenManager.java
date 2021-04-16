@@ -5,6 +5,8 @@ import java.util.Map;
 
 import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
+import cn.dev33.satoken.aop.SaTokenListener;
+import cn.dev33.satoken.aop.SaTokenListenerDefaultImpl;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
 import cn.dev33.satoken.context.SaTokenContext;
@@ -122,6 +124,24 @@ public class SaTokenManager {
 			}
 		}
 		return saTokenContext;
+	}
+
+	/**
+	 * 监听器 Bean  
+	 */
+	private static SaTokenListener saTokenListener;
+	public static void setSaTokenListener(SaTokenListener saTokenListener) {
+		SaTokenManager.saTokenListener = saTokenListener;
+	}
+	public static SaTokenListener getSaTokenListener() {
+		if (saTokenListener == null) {
+			synchronized (SaTokenManager.class) {
+				if (saTokenListener == null) {
+					setSaTokenListener(new SaTokenListenerDefaultImpl());
+				}
+			}
+		}
+		return saTokenListener;
 	}
 
 	/**

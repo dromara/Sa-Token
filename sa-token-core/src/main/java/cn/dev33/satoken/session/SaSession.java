@@ -34,6 +34,7 @@ public class SaSession implements Serializable {
 	 * 构建一个Session对象
 	 */
 	public SaSession() {
+		this(null);
 	}
 
 	/**
@@ -43,6 +44,8 @@ public class SaSession implements Serializable {
 	public SaSession(String id) {
 		this.id = id;
 		this.createTime = System.currentTimeMillis();
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doCreateSession(id);
 	}
 
 	/**
@@ -249,6 +252,8 @@ public class SaSession implements Serializable {
 	/** 注销Session (从持久库删除) */
 	public void logout() {
 		SaTokenManager.getSaTokenDao().deleteSession(this.id);
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doLogoutSession(id);
 	}
 
 	/** 当Session上的tokenSign数量为零时，注销会话 */
