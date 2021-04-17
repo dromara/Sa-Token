@@ -7,7 +7,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.util.SaTokenInsideUtil;
 
 /**
- * Sa-Token 监听器的默认实现：log打印 
+ * Sa-Token 侦听器的默认实现：log打印 
  * @author kong
  *
  */

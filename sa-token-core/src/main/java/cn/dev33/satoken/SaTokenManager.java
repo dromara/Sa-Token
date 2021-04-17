@@ -37,7 +37,6 @@ public class SaTokenManager {
 	}
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
-			// 如果对象为空，则使用框架默认方式初始化 
 			synchronized (SaTokenManager.class) {
 				if (config == null) {
 					setConfig(SaTokenConfigFactory.createConfig());
@@ -59,7 +58,6 @@ public class SaTokenManager {
 	}
 	public static SaTokenDao getSaTokenDao() {
 		if (saTokenDao == null) {
-			// 如果对象为空，则使用框架默认方式初始化 
 			synchronized (SaTokenManager.class) {
 				if (saTokenDao == null) {
 					setSaTokenDao(new SaTokenDaoDefaultImpl());
@@ -78,7 +76,6 @@ public class SaTokenManager {
 	}
 	public static StpInterface getStpInterface() {
 		if (stpInterface == null) {
-			// 如果对象为空，则使用框架默认方式初始化 
 			synchronized (SaTokenManager.class) {
 				if (stpInterface == null) {
 					setStpInterface(new StpInterfaceDefaultImpl());
@@ -97,7 +94,6 @@ public class SaTokenManager {
 	}
 	public static SaTokenAction getSaTokenAction() {
 		if (saTokenAction == null) {
-			// 如果对象为空，则使用框架默认方式初始化 
 			synchronized (SaTokenManager.class) {
 				if (saTokenAction == null) {
 					setSaTokenAction(new SaTokenActionDefaultImpl());
@@ -116,7 +112,6 @@ public class SaTokenManager {
 	}
 	public static SaTokenContext getSaTokenContext() {
 		if (saTokenContext == null) {
-			// 如果对象为空，则使用框架默认方式初始化 
 			synchronized (SaTokenManager.class) {
 				if (saTokenContext == null) {
 					setSaTokenContext(new SaTokenContextDefaultImpl());
@@ -127,7 +122,7 @@ public class SaTokenManager {
 	}
 
 	/**
-	 * 监听器 Bean  
+	 * 侦听器 Bean  
 	 */
 	private static SaTokenListener saTokenListener;
 	public static void setSaTokenListener(SaTokenListener saTokenListener) {

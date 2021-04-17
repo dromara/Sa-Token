@@ -11,10 +11,10 @@ import cn.dev33.satoken.session.SaSession;
 public interface SaTokenDao {
 
 	/** 常量，表示一个key永不过期 (在一个key被标注为永远不过期时返回此值) */ 
-	public static final Long NEVER_EXPIRE = -1L;
+	public static final long NEVER_EXPIRE = -1;
 	
 	/** 常量，表示系统中不存在这个缓存 (在对不存在的key获取剩余存活时间时返回此值) */ 
-	public static final Long NOT_VALUE_EXPIRE = -2L;
+	public static final long NOT_VALUE_EXPIRE = -2;
 
 	
 	// --------------------- token相关 ---------------------

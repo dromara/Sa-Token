@@ -95,7 +95,7 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 注入监听器Bean
+	 * 注入侦听器Bean
 	 * 
 	 * @param saTokenListener saTokenListener对象 
 	 */

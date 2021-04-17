@@ -25,6 +25,7 @@
 	- [同端互斥登录](/use/mutex-login) 
 	- [密码加密](/use/password-secure) 
 	- [会话治理](/use/search-session) 
+	- [全局侦听器](/use/global-listener) 
 
 - **进阶**
 	- [全局过滤器](/use/global-filter) 

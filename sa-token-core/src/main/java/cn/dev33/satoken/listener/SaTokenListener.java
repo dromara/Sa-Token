@@ -3,7 +3,7 @@ package cn.dev33.satoken.listener;
 import cn.dev33.satoken.stp.SaLoginModel;
 
 /**
- * Sa-Token的监听器
+ * Sa-Token的侦听器
  * <p> 你可以通过实现此接口在用户登陆、退出等关键性操作时进行一些AOP操作 
  * @author kong
  *

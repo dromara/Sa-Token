@@ -104,7 +104,7 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 注入监听器Bean
+	 * 注入侦听器Bean
 	 * 
 	 * @param saTokenListener saTokenListener对象 
 	 */
@@ -112,6 +112,7 @@ public class SaTokenSpringAutowired {
 	public void setSaTokenListener(SaTokenListener saTokenListener) {
 		SaTokenManager.setSaTokenListener(saTokenListener);
 	}
+	
 	/**
 	 * 利用自动匹配特性，获取SpringMVC框架内部使用的路由匹配器
 	 * 
