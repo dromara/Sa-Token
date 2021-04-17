@@ -41,6 +41,9 @@ sa-token是一个轻量级Java权限认证框架，主要解决：登录认证�
 有了sa-token，你所有的权限认证问题，都不再是问题！
 
 ## Sa-Token 能做什么？
+
+![sa-token-js](https://oss.dev33.cn/sa-token/doc/sa-token-js.png)
+
 - **登录验证** —— 轻松登录鉴权，并提供五种细分场景值
 - **权限验证** —— 适配RBAC权限模型，不同角色不同授权
 - **Session会话** —— 专业的数据缓存中心
@@ -122,7 +125,7 @@ sa-token API 众多，请恕此处无法为您逐一展示，更多示例请戳�
 
 
 ## Star 趋势
-[![Giteye chart](https://chart.giteye.net/gitee/dromara/sa-token/77YQZ6UK.png 'Gitee')](https://giteye.net/chart/77YQZ6UK)
+[![giteye-chart](https://chart.giteye.net/gitee/dromara/sa-token/77YQZ6UK.png 'Gitee')](https://giteye.net/chart/77YQZ6UK)
 
 [![github-chart](https://starchart.cc/dromara/sa-token.svg 'GitHub')](https://starchart.cc/dromara/sa-token)
 

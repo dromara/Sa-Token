@@ -7,39 +7,29 @@
 
 ## 内置风格
 
-sa-token默认的token生成策略是uuid风格, 其模样类似于：`623368f0-ae5e-4475-a53f-93e4225f16ae`<br>
+Sa-Token默认的token生成策略是uuid风格, 其模样类似于：`623368f0-ae5e-4475-a53f-93e4225f16ae`<br>
 如果你对这种风格不太感冒，还可以将token生成设置为其他风格
 
 怎么设置呢？只需要在yml配置文件里设置 `spring.sa-token.token-style=风格类型` 即可，其有多种取值： 
 
-1、token-style=`uuid`，uuid风格 **(默认风格)**
-``` html
-623368f0-ae5e-4475-a53f-93e4225f16ae
-```
+``` java
+// 1. token-style=uuid    —— uuid风格 (默认风格)
+"623368f0-ae5e-4475-a53f-93e4225f16ae"
 
-2、token-style=`simple-uuid`，同上，uuid风格, 只不过去掉了中划线：
-``` html
-6fd4221395024b5f87edd34bc3258ee8
-```
+// 2. token-style=simple-uuid    —— 同上，uuid风格, 只不过去掉了中划线
+"6fd4221395024b5f87edd34bc3258ee8"
 
-3、token-style=`random-32`，随机32位字符串：
-``` html
-qEjyPsEA1Bkc9dr8YP6okFr5umCZNR6W
-```
+// 3. token-style=random-32    —— 随机32位字符串
+"qEjyPsEA1Bkc9dr8YP6okFr5umCZNR6W"
 
-4、token-style=`random-64`，随机64位字符串：
-``` html
-v4ueNLEpPwMtmOPMBtOOeIQsvP8z9gkMgIVibTUVjkrNrlfra5CGwQkViDjO8jcc
-```
+// 4. token-style=random-64    —— 随机64位字符串
+"v4ueNLEpPwMtmOPMBtOOeIQsvP8z9gkMgIVibTUVjkrNrlfra5CGwQkViDjO8jcc"
 
-5、token-style=`random-128`，随机128位字符串：
-``` html
-nojYPmcEtrFEaN0Otpssa8I8jpk8FO53UcMZkCP9qyoHaDbKS6dxoRPky9c6QlftQ0pdzxRGXsKZmUSrPeZBOD6kJFfmfgiRyUmYWcj4WU4SSP2ilakWN1HYnIuX0Olj
-```
+// 5. token-style=random-128    —— 随机128位字符串
+"nojYPmcEtrFEaN0Otpssa8I8jpk8FO53UcMZkCP9qyoHaDbKS6dxoRPky9c6QlftQ0pdzxRGXsKZmUSrPeZBOD6kJFfmfgiRyUmYWcj4WU4SSP2ilakWN1HYnIuX0Olj"
 
-6、token-style=`tik`，tik风格：
-``` html
-gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__
+// 6. token-style=tik    —— tik风格
+"gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__"
 ```
 
 

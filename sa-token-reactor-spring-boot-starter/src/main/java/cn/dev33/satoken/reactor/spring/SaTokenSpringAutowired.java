@@ -8,11 +8,11 @@ import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.action.SaTokenAction;
-import cn.dev33.satoken.aop.SaTokenListener;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.StpInterface;
 
 /**

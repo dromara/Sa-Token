@@ -8,9 +8,9 @@
 - `自定义Session`: 指的是以一个`特定的值`作为SessionId，来分配的`Session` 
 
 
-User-Session和Token-Session到底有什么不同？下面这张图可以解释两者的区别
+**假设三个客户端登录同一账号，且配置了不共享token，那么此时的Session模型是：**
 
-![session-model](https://oss.dev33.cn/sa-token/doc/session-model2.png 's-w')
+![session-model](https://oss.dev33.cn/sa-token/doc/session-model3.png 's-w')
 
 简而言之：
 - `Token-Session` 以token为主，只要token不同，那么对应的Session对象就不同

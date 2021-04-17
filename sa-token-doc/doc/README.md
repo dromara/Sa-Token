@@ -41,6 +41,9 @@ sa-token是一个轻量级Java权限认证框架，主要解决：登录认证�
 有了sa-token，你所有的权限认证问题，都不再是问题！
 
 ## Sa-Token 能做什么？
+
+![sa-token-js](https://oss.dev33.cn/sa-token/doc/sa-token-js.png)
+
 - **登录验证** —— 轻松登录鉴权，并提供五种细分场景值
 - **权限验证** —— 适配RBAC权限模型，不同角色不同授权
 - **Session会话** —— 专业的数据缓存中心

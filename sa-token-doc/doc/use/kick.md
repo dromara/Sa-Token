@@ -54,6 +54,3 @@ StpUtil.logoutByLoginId(10001);
 StpUtil.disableLoginId(10001, 86400); 
 ```
 
-
-> 如果想管理当前账号的session怎么办? 请参考：[Session会话](/use/session)
-> 如果想查询所有账号的session怎么办? 请参考：[会话治理](/use/search-session)

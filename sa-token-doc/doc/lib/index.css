@@ -12,6 +12,10 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 	.logo-box {display: none;}
 	.main-box .markdown-section{max-width: 1000px;}
 }
+/* @media screen and (min-width: 1700px) {
+	.main-box .markdown-section{max-width: 70%;}
+} */
+
 
 /* 调整一下左侧树的字体样式 */
 .sidebar .sidebar-nav>ul>li>p{font-size: 1.2em; margin-top: 10px;}

@@ -8,15 +8,14 @@
 有，就让你通过。没有？那么禁止访问!
 
 再往底了说，就是每个账号都会拥有一个权限码集合，我来验证这个集合中是否包含指定的权限码 <br/>
-例如：当前账号拥有权限码集合：`["user:add", "user:delete", "user:get"]`，这时候我来验证权限 `"user:update"`，则其结果就是：**验证失败，禁止访问** <br/>
-(注意: 冒号无特殊含义,可有可无)
+例如：当前账号拥有权限码集合：`["user-add", "user-delete", "user-get"]`，这时候我来验证权限 `"user-update"`，则其结果就是：**验证失败，禁止访问** <br/>
 
 所以现在问题的核心就是: 
 1. 如何获取一个账号所拥有的的权限码集合
 2. 本次操作需要验证的权限码是哪个 
 
 ### 获取当前账号权限码集合
-因为每个项目的需求不同，其权限设计也千变万化，【获取当前账号权限码集合】这一操作不可能内置到框架中，
+因为每个项目的需求不同，其权限设计也千变万化，因此【获取当前账号权限码集合】这一操作不可能内置到框架中，
 所以`sa-token`将此操作以接口的方式暴露给你，以方便的你根据自己的业务逻辑进行重写
 
 你需要做的就是新建一个类，实现`StpInterface`接口，例如以下代码：
@@ -67,7 +66,8 @@ public class StpInterfaceImpl implements StpInterface {
 ```
 
 可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
-注意: 这里的getPermissionList()和getRoleList()是每次权限或者角色验证都会重新执行
+
+<!-- todo: 缓存逻辑 -->
 
 
 
@@ -76,16 +76,16 @@ public class StpInterfaceImpl implements StpInterface {
 
 ``` java
 // 当前账号是否含有指定权限, 返回true或false 
-StpUtil.hasPermission("user:update");		
+StpUtil.hasPermission("user-update");		
 
 // 当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
-StpUtil.checkPermission("user:update");		
+StpUtil.checkPermission("user-update");		
 
 // 当前账号是否含有指定权限 [指定多个，必须全部验证通过] 
-StpUtil.checkPermissionAnd("user:update", "user:delete");		
+StpUtil.checkPermissionAnd("user-update", "user-delete");		
 
 // 当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
-StpUtil.checkPermissionOr("user:update", "user:delete");		
+StpUtil.checkPermissionOr("user-update", "user-delete");		
 ```
 
 扩展：`NotPermissionException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
@@ -96,16 +96,16 @@ StpUtil.checkPermissionOr("user:update", "user:delete");
 
 ``` java
 // 当前账号是否含有指定角色标识, 返回true或false 
-StpUtil.hasRole("user:update");		
+StpUtil.hasRole("super-admin");		
 
 // 当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException 
-StpUtil.checkRole("user:update");		
+StpUtil.checkRole("super-admin");		
 
 // 当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
-StpUtil.checkRoleAnd("user:update", "user:delete");		
+StpUtil.checkRoleAnd("super-admin", "shop-admin");		
 
 // 当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
-StpUtil.checkRoleOr("user:update", "user:delete");		
+StpUtil.checkRoleOr("super-admin", "shop-admin");		
 ```
 
 扩展：`NotRoleException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
