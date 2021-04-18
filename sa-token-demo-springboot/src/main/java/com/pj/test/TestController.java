@@ -241,8 +241,6 @@ public class TestController {
 	@RequestMapping("test")
 	public AjaxJson test() {
 		System.out.println("进来了");
-		StpUtil.disable(10001, 10002);
-		StpUtil.untieDisable(10001);
 		return AjaxJson.getSuccess("访问成功");
 	}
 	

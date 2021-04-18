@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * sa-token持久层的实现类, 基于redis 
@@ -201,7 +201,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	public List<String> searchData(String prefix, String keyword, int start, int size) {
 		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
 		List<String> list = new ArrayList<String>(keys);
-		return SaTokenInsideUtil.searchList(list, start, size);
+		return SaFoxUtil.searchList(list, start, size);
 	}
 	
 	

@@ -13,7 +13,7 @@ import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
 import cn.dev33.satoken.oauth2.util.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.util.SaOAuth2InsideUtil;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * sa-token-oauth2 模块 逻辑接口 
@@ -435,7 +435,7 @@ public interface SaOAuth2Interface {
 	 * @return 授权码 
 	 */
 	public default String createCode(String clientId, String scope, Object loginId) {
-		return SaTokenInsideUtil.getRandomString(60).toLowerCase();
+		return SaFoxUtil.getRandomString(60).toLowerCase();
 	}
 	
 	/**
@@ -444,7 +444,7 @@ public interface SaOAuth2Interface {
 	 * @return AccessToken 
 	 */
 	public default String createAccessToken(CodeModel codeModel) {
-		return SaTokenInsideUtil.getRandomString(60).toLowerCase();
+		return SaFoxUtil.getRandomString(60).toLowerCase();
 	}
 	
 	/**
@@ -453,7 +453,7 @@ public interface SaOAuth2Interface {
 	 * @return RefreshToken 
 	 */
 	public default String createRefreshToken(CodeModel codeModel) {
-		return SaTokenInsideUtil.getRandomString(60).toLowerCase();
+		return SaFoxUtil.getRandomString(60).toLowerCase();
 	}
 
 	/**

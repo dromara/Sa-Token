@@ -17,5 +17,5 @@ public class SaTokenDemoApplication {
 		SpringApplication.run(SaTokenDemoApplication.class, args);
 		System.out.println("\n启动成功：sa-token配置如下：" + SaTokenManager.getConfig());
 	}
-
+	
 }

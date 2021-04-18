@@ -7,14 +7,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
- * sa-token 内部代码工具类
+ * Sa-Token 内部工具类 
  * 
  * @author kong
  *
  */
-public class SaTokenInsideUtil {
+public class SaFoxUtil {
 
 	/**
 	 * 打印 sa-token 版本字符画
@@ -127,6 +128,23 @@ public class SaTokenInsideUtil {
 			list2.add(list.get(i));
 		}
 		return list2;
+	}
+
+	/**
+	 * 字符串模糊匹配
+	 * <p>example:
+	 * <p> user* user-add   -> true 
+	 * <p> user* art-add    -> false  
+	 * @param patt 表达式
+	 * @param str 待匹配的字符串
+	 * @return 是否可以匹配 
+	 */
+	public static boolean vagueMatch(String patt, String str) {
+		// 如果表达式不带有*号，则只需简单equals即可 (速度提升200倍) 
+		if(patt.indexOf("*") == -1) {
+			return patt.equals(str);
+		}
+		return Pattern.matches(patt.replaceAll("\\*", ".*"), str);
 	}
 
 }

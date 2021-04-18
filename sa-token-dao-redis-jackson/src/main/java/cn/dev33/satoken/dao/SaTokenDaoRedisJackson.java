@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * sa-token持久层的实现类, 基于redis (使用 jackson 序列化方式)
@@ -220,7 +220,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	public List<String> searchData(String prefix, String keyword, int start, int size) {
 		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
 		List<String> list = new ArrayList<String>(keys);
-		return SaTokenInsideUtil.searchList(list, start, size);
+		return SaFoxUtil.searchList(list, start, size);
 	}
 	
 }

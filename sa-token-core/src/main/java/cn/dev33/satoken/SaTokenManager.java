@@ -16,7 +16,7 @@ import cn.dev33.satoken.listener.SaTokenListenerDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * 管理sa-token所有接口对象 
@@ -32,7 +32,7 @@ public class SaTokenManager {
 	public static void setConfig(SaTokenConfig config) {
 		SaTokenManager.config = config;
 		if(config.getIsV()) {
-			SaTokenInsideUtil.printSaToken();
+			SaFoxUtil.printSaToken();
 		}
 	}
 	public static SaTokenConfig getConfig() {

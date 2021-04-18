@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaTokenManager;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * sa-token持久层默认的实现类 , 基于内存Map 
@@ -235,7 +235,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	
 	@Override
 	public List<String> searchData(String prefix, String keyword, int start, int size) {
-		return SaTokenInsideUtil.searchList(expireMap.keySet(), prefix, keyword, start, size);
+		return SaFoxUtil.searchList(expireMap.keySet(), prefix, keyword, start, size);
 	}
 
 

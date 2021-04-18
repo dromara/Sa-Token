@@ -333,8 +333,6 @@ public class SaTokenConfig {
 				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
 				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + ", isLog=" + isLog + "]";
 	}
-
-	
 	
 
 	

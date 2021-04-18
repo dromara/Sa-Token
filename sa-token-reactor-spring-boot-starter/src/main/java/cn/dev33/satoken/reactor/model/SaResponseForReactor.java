@@ -5,7 +5,7 @@ import org.springframework.http.ResponseCookie.ResponseCookieBuilder;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Response for Reactor
@@ -57,13 +57,13 @@ public class SaResponseForReactor implements SaResponse {
 				;
 		
 		// set path 
-		if(SaTokenInsideUtil.isEmpty(path) == true) {
+		if(SaFoxUtil.isEmpty(path) == true) {
 			path = "/";
 		}
 		builder.path(path);
 		
 		// set domain 
-		if(SaTokenInsideUtil.isEmpty(domain) == false) {
+		if(SaFoxUtil.isEmpty(domain) == false) {
 			builder.domain(domain);
 		}
 		

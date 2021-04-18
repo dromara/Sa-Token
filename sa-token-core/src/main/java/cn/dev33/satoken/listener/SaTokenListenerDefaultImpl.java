@@ -4,7 +4,7 @@ import java.util.Date;
 
 import cn.dev33.satoken.SaTokenManager;
 import cn.dev33.satoken.stp.SaLoginModel;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token 侦听器的默认实现：log打印 
@@ -51,7 +51,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	@Override
 	public void doDisable(String loginKey, Object loginId, long disableTime) {
 		Date date = new Date(System.currentTimeMillis() + disableTime * 1000);
-		println("账号[" + loginId + "]被封禁 (解封时间: " + SaTokenInsideUtil.formatDate(date) + ")");
+		println("账号[" + loginId + "]被封禁 (解封时间: " + SaFoxUtil.formatDate(date) + ")");
 	}
 
 	/**

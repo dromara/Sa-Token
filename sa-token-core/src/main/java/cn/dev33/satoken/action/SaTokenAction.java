@@ -1,5 +1,7 @@
 package cn.dev33.satoken.action;
 
+import java.util.List;
+
 import cn.dev33.satoken.session.SaSession;
 
 /**
@@ -24,5 +26,13 @@ public interface SaTokenAction {
 	 * @return 创建后的Session 
 	 */
 	public SaSession createSession(String sessionId); 
+	
+	/**
+	 * 指定集合是否包含指定元素（模糊匹配） 
+	 * @param list 集合
+	 * @param element 元素
+	 * @return 是否包含
+	 */
+	public boolean hasElement(List<String> list, String element);
 	
 }

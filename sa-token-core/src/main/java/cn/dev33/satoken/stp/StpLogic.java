@@ -24,7 +24,7 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.util.SaTokenConsts;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * sa-token 权限验证，逻辑实现类 
@@ -98,7 +98,7 @@ public class StpLogic {
 		SaStorage storage = SaTokenManager.getSaTokenContext().getStorage();
 		// 判断是否配置了token前缀 
 		String tokenPrefix = config.getTokenPrefix();
-		if(SaTokenInsideUtil.isEmpty(tokenPrefix)) {
+		if(SaFoxUtil.isEmpty(tokenPrefix)) {
 			storage.set(splicingKeyJustCreatedSave(), tokenValue);	
 		} else {
 			// 如果配置了token前缀，则拼接上前缀一起写入 
@@ -143,7 +143,7 @@ public class StpLogic {
 		
 		// 5. 如果打开了前缀模式
 		String tokenPrefix = getConfig().getTokenPrefix();
-		if(SaTokenInsideUtil.isEmpty(tokenPrefix) == false && SaTokenInsideUtil.isEmpty(tokenValue) == false) {
+		if(SaFoxUtil.isEmpty(tokenPrefix) == false && SaFoxUtil.isEmpty(tokenValue) == false) {
 			// 如果token以指定的前缀开头, 则裁剪掉它, 否则视为未提供token 
 			if(tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
 				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
@@ -882,7 +882,8 @@ public class StpLogic {
  	 */
  	public boolean hasRole(Object loginId, String role) {
  		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
-		return !(roleList == null || roleList.contains(role) == false);
+ 		return SaTokenManager.getSaTokenAction().hasElement(roleList, role);
+//		return !(roleList == null || roleList.contains(role) == false);
  	}
  	
  	/** 
@@ -912,7 +913,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
  		for (String role : roleArray) {
- 			if(roleList.contains(role) == false) {
+ 			if(SaTokenManager.getSaTokenAction().hasElement(roleList, role) == false) {
  				throw new NotRoleException(role, this.loginKey);
  			}
  		}
@@ -926,7 +927,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
  		for (String role : roleArray) {
- 			if(roleList.contains(role) == true) {
+ 			if(SaTokenManager.getSaTokenAction().hasElement(roleList, role) == true) {
  				// 有的话提前退出
  				return;		
  			}
@@ -947,7 +948,8 @@ public class StpLogic {
  	 */
  	public boolean hasPermission(Object loginId, String permission) {
  		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
-		return !(permissionList == null || permissionList.contains(permission) == false);
+ 		return SaTokenManager.getSaTokenAction().hasElement(permissionList, permission);
+//		return !(permissionList == null || permissionList.contains(permission) == false);
  	}
  	
  	/** 
@@ -977,7 +979,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
  		for (String permission : permissionArray) {
- 			if(permissionList.contains(permission) == false) {
+ 			if(SaTokenManager.getSaTokenAction().hasElement(permissionList, permission) == false) {
  				throw new NotPermissionException(permission, this.loginKey);	
  			}
  		}
@@ -991,7 +993,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
  		for (String permission : permissionArray) {
- 			if(permissionList.contains(permission) == true) {
+ 			if(SaTokenManager.getSaTokenAction().hasElement(permissionList, permission) == true) {
  				// 有的话提前退出
  				return;		
  			}

@@ -4,7 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Response for Servlet
@@ -48,10 +48,10 @@ public class SaResponseForServlet implements SaResponse {
 	@Override
 	public void addCookie(String name, String value, String path, String domain, int timeout) {
 		Cookie cookie = new Cookie(name, value);
-		if(SaTokenInsideUtil.isEmpty(path) == true) {
+		if(SaFoxUtil.isEmpty(path) == true) {
 			path = "/";
 		}
-		if(SaTokenInsideUtil.isEmpty(domain) == false) {
+		if(SaFoxUtil.isEmpty(domain) == false) {
 			cookie.setDomain(domain);
 		}
 		cookie.setPath(path);

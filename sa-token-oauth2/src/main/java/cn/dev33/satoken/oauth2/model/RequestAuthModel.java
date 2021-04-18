@@ -1,7 +1,7 @@
 package cn.dev33.satoken.oauth2.model;
 
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.util.SaTokenInsideUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * 请求授权参数的Model
@@ -142,16 +142,16 @@ public class RequestAuthModel {
 	 * @return 对象自身
 	 */
 	public RequestAuthModel checkModel() {
-		if(SaTokenInsideUtil.isEmpty(clientId)) {
+		if(SaFoxUtil.isEmpty(clientId)) {
 			throw new SaTokenException("无效client_id");
 		}
-		if(SaTokenInsideUtil.isEmpty(scope)) {
+		if(SaFoxUtil.isEmpty(scope)) {
 			throw new SaTokenException("无效scope");
 		}
-		if(SaTokenInsideUtil.isEmpty(redirectUri)) {
+		if(SaFoxUtil.isEmpty(redirectUri)) {
 			throw new SaTokenException("无效redirect_uri");
 		}
-		if(SaTokenInsideUtil.isEmpty(String.valueOf(loginId))) {
+		if(SaFoxUtil.isEmpty(String.valueOf(loginId))) {
 			throw new SaTokenException("无效LoginId");
 		}
 		return this;
