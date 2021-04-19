@@ -313,8 +313,11 @@ public class StpLogic {
  		
  		// $$ 通知监听器 
  		SaTokenManager.getSaTokenListener().doLogout(loginKey, loginId, tokenValue);
- 		
- 		// 3. 尝试清理账号session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
+
+		// 清理token-session
+		SaTokenManager.getSaTokenDao().delete(splicingKeyTokenSession(tokenValue));
+
+		// 3. 尝试清理账号session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
  	 	SaSession session = getSessionByLoginId(loginId, false);
  	 	if(session == null) {
  	 		return;
