@@ -150,6 +150,7 @@ sa-token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ jthink]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
 
+[**[ dcy-fast]** 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
 
 如果您的项目使用了sa-token，欢迎提交pr
 
