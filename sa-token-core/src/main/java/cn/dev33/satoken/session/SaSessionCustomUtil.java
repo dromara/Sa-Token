@@ -45,8 +45,8 @@ public class SaSessionCustomUtil {
 	public static SaSession getSessionById(String sessionId, boolean isCreate) {
 		SaSession session = SaManager.getSaTokenDao().getSession(splicingSessionKey(sessionId));
 		if (session == null && isCreate) {
-			session = SaManager.getSaTokenAction().createSession(sessionId);
-			SaManager.getSaTokenDao().setSession(session, SaManager.getConfig().getTimeout());
+			session = SaManager.getSaTokenAction().createSession(splicingSessionKey(sessionId));
+			SaManager.getSaTokenDao().setSession(session, SaManager.getConfig().getTimeout());		
 		}
 		return session;
 	}
