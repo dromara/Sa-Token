@@ -136,7 +136,7 @@ public class SaReactorFilter implements WebFilter {
 
 	/**
 	 * 写入[前置函数]：在每次[认证函数]之前执行
-	 * @param auth see note 
+	 * @param beforeAuth see note 
 	 * @return 对象自身
 	 */
 	public SaReactorFilter setBeforeAuth(SaFilterAuthStrategy beforeAuth) {

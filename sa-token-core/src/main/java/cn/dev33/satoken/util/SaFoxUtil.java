@@ -133,8 +133,8 @@ public class SaFoxUtil {
 	/**
 	 * 字符串模糊匹配
 	 * <p>example:
-	 * <p> user* user-add   -> true 
-	 * <p> user* art-add    -> false  
+	 * <p> user* user-add   --  true 
+	 * <p> user* art-add    --  false  
 	 * @param patt 表达式
 	 * @param str 待匹配的字符串
 	 * @return 是否可以匹配 
