@@ -3,7 +3,8 @@ package cn.dev33.satoken.router;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.fun.IsRunFunction;
 import cn.dev33.satoken.fun.SaFunction;
 
@@ -23,7 +24,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(String pattern, String path) {
-		return SaTokenManager.getSaTokenContext().matchPath(pattern, path);
+		return SaManager.getSaTokenContext().matchPath(pattern, path);
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatchCurrURI(String pattern) {
-		return isMatch(pattern, SaTokenManager.getSaTokenContext().getRequest().getRequestURI());
+		return isMatch(pattern, SaHolder.getRequest().getRequestPath());
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatchCurrURI(List<String> patterns) {
-		return isMatch(patterns, SaTokenManager.getSaTokenContext().getRequest().getRequestURI());
+		return isMatch(patterns, SaHolder.getRequest().getRequestPath());
 	}
 	
 
@@ -119,7 +120,7 @@ public class SaRouterUtil {
 	 * @return 匹配结果包装对象 
 	 */
 	public static IsRunFunction match(String... patterns) {
-		boolean matchResult = isMatch(Arrays.asList(patterns), SaTokenManager.getSaTokenContext().getRequest().getRequestURI());
+		boolean matchResult = isMatch(Arrays.asList(patterns), SaHolder.getRequest().getRequestPath());
 		return new IsRunFunction(matchResult);
 	}
 	

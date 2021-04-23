@@ -59,4 +59,14 @@ public class SaResponseForServlet implements SaResponse {
 		response.addCookie(cookie);
 	}
 
+	
+	/**
+	 * 在响应头里写入一个值 
+	 */
+	@Override
+	public SaResponse setHeader(String name, String value) {
+		response.setHeader(name, value);
+		return this;
+	}
+
 }

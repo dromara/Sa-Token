@@ -14,7 +14,7 @@ package com.pj;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 
 /**
  * sa-token整合webflux 示例 
@@ -26,7 +26,7 @@ public class SaTokenWebfluxDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaTokenWebfluxDemoApplication.class, args);
-		System.out.println("\n启动成功：sa-token配置如下：" + SaTokenManager.getConfig());
+		System.out.println("\n启动成功：sa-token配置如下：" + SaManager.getConfig());
 	}
 	
 }

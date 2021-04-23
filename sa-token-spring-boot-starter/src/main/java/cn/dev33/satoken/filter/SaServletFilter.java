@@ -95,7 +95,7 @@ public class SaServletFilter implements Filter {
 	}
 
 
-	// ------------------------ 执行函数
+	// ------------------------ 钩子函数
 	
 	/**
 	 * 认证函数：每次请求执行 
@@ -108,6 +108,11 @@ public class SaServletFilter implements Filter {
 	public SaFilterErrorStrategy error = e -> {
 		throw new SaTokenException(e);
 	};
+
+	/**
+	 * 前置函数：在每次[认证函数]之前执行 
+	 */
+	public SaFilterAuthStrategy beforeAuth = r -> {};
 
 	/**
 	 * 写入[认证函数]: 每次请求执行 
@@ -129,6 +134,16 @@ public class SaServletFilter implements Filter {
 		return this;
 	}
 
+	/**
+	 * 写入[前置函数]：在每次[认证函数]之前执行
+	 * @param auth see note 
+	 * @return 对象自身
+	 */
+	public SaServletFilter setBeforeAuth(SaFilterAuthStrategy beforeAuth) {
+		this.beforeAuth = beforeAuth;
+		return this;
+	}
+
 	
 	// ------------------------ doFilter
 
@@ -138,7 +153,10 @@ public class SaServletFilter implements Filter {
 		
 		try {
 			// 执行全局过滤器 
-			SaRouterUtil.match(includeList, excludeList, () -> auth.run(null));
+			SaRouterUtil.match(includeList, excludeList, () -> {
+				beforeAuth.run(null);
+				auth.run(null);
+			});
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 

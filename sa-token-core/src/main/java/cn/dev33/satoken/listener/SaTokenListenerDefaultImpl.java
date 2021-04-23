@@ -2,7 +2,7 @@ package cn.dev33.satoken.listener;
 
 import java.util.Date;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -88,7 +88,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * @param str 字符串
 	 */
 	public void println(String str) {
-		if(SaTokenManager.getConfig().getIsLog()) {
+		if(SaManager.getConfig().getIsLog()) {
 			System.out.println(LOG_PREFIX + str);
 		}
 	}

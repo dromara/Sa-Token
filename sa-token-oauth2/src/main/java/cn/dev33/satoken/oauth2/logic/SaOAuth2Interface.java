@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.model.AccessTokenModel;
@@ -261,15 +261,15 @@ public interface SaOAuth2Interface {
 		
 		// 将此授权码保存到DB 
 		long codeTimeout = SaOAuth2Manager.getConfig().getCodeTimeout();
-		SaTokenManager.getSaTokenDao().setObject(getKeyCodeModel(code), codeModel, codeTimeout);
+		SaManager.getSaTokenDao().setObject(getKeyCodeModel(code), codeModel, codeTimeout);
 		
 		// 如果此[Client&账号]已经有code正在存储，则先删除它
 		String key = getKeyClientLoginId(loginId, clientId);
-		SaTokenManager.getSaTokenDao().delete(key);
+		SaManager.getSaTokenDao().delete(key);
 		
 		// 将此[Client&账号]的最新授权码保存到DB中
 		// 以便于完成授权码覆盖操作: 保证每次只有最新的授权码有效 
-		SaTokenManager.getSaTokenDao().set(key, code, codeTimeout);
+		SaManager.getSaTokenDao().set(key, code, codeTimeout);
 		
 		// 返回 
 		return codeModel;
@@ -281,7 +281,7 @@ public interface SaOAuth2Interface {
 	 * @return 授权码Model
 	 */
 	public default CodeModel getCode(String code) {
-		return (CodeModel)SaTokenManager.getSaTokenDao().getObject(getKeyCodeModel(code));
+		return (CodeModel)SaManager.getSaTokenDao().getObject(getKeyCodeModel(code));
 	}
 
 	/**
@@ -290,7 +290,7 @@ public interface SaOAuth2Interface {
 	 * @param codeModel 授权码Model 
 	 */
 	public default void updateCode(String code, CodeModel codeModel) {
-		SaTokenManager.getSaTokenDao().updateObject(getKeyCodeModel(code), codeModel);
+		SaManager.getSaTokenDao().updateObject(getKeyCodeModel(code), codeModel);
 	}
 
 	/**
@@ -314,7 +314,7 @@ public interface SaOAuth2Interface {
 	 * @param code 授权码 
 	 */
 	public default void deleteCode(String code) {
-		SaTokenManager.getSaTokenDao().deleteObject(getKeyCodeModel(code));
+		SaManager.getSaTokenDao().deleteObject(getKeyCodeModel(code));
 	}
 
 	
@@ -337,10 +337,10 @@ public interface SaOAuth2Interface {
 		
 		// 获取 TokenModel 并保存 
 		AccessTokenModel tokenModel = converCodeToAccessToken(codeModel);
-		SaTokenManager.getSaTokenDao().setObject(getKeyAccessToken(tokenModel.getAccessToken()), tokenModel, SaOAuth2Manager.getConfig().getAccessTokenTimeout());
+		SaManager.getSaTokenDao().setObject(getKeyAccessToken(tokenModel.getAccessToken()), tokenModel, SaOAuth2Manager.getConfig().getAccessTokenTimeout());
 		
 		// 将此 CodeModel 当做 refresh_token 保存下来 
-		SaTokenManager.getSaTokenDao().setObject(getKeyRefreshToken(tokenModel.getRefreshToken()), codeModel, SaOAuth2Manager.getConfig().getRefreshTokenTimeout());
+		SaManager.getSaTokenDao().setObject(getKeyRefreshToken(tokenModel.getRefreshToken()), codeModel, SaOAuth2Manager.getConfig().getRefreshTokenTimeout());
 		
 		// 返回 
 		return tokenModel;
@@ -352,7 +352,7 @@ public interface SaOAuth2Interface {
 	 * @return AccessTokenModel (授权码Model) 
 	 */
 	public default AccessTokenModel getAccessToken(String accessToken) {
-		return (AccessTokenModel)SaTokenManager.getSaTokenDao().getObject(getKeyAccessToken(accessToken));
+		return (AccessTokenModel)SaManager.getSaTokenDao().getObject(getKeyAccessToken(accessToken));
 	}
 
 	/**
@@ -369,7 +369,7 @@ public interface SaOAuth2Interface {
 		// 获取新的 AccessToken 并保存 
 		AccessTokenModel tokenModel = converCodeToAccessToken(codeModel);
 		tokenModel.setRefreshToken(refreshToken);
-		SaTokenManager.getSaTokenDao().setObject(getKeyAccessToken(tokenModel.getAccessToken()), tokenModel, SaOAuth2Manager.getConfig().getAccessTokenTimeout());
+		SaManager.getSaTokenDao().setObject(getKeyAccessToken(tokenModel.getAccessToken()), tokenModel, SaOAuth2Manager.getConfig().getAccessTokenTimeout());
 		
 		// 返回 
 		return tokenModel;
@@ -381,7 +381,7 @@ public interface SaOAuth2Interface {
 	 * @return RefreshToken (授权码Model) 
 	 */
 	public default CodeModel getRefreshToken(String refreshToken) {
-		return (CodeModel)SaTokenManager.getSaTokenDao().getObject(getKeyRefreshToken(refreshToken));
+		return (CodeModel)SaManager.getSaTokenDao().getObject(getKeyRefreshToken(refreshToken));
 	}
 
 	/**
@@ -390,7 +390,7 @@ public interface SaOAuth2Interface {
 	 * @return 有效期 
 	 */
 	public default long getAccessTokenExpiresIn(String accessToken) {
-		return SaTokenManager.getSaTokenDao().getObjectTimeout(getKeyAccessToken(accessToken));
+		return SaManager.getSaTokenDao().getObjectTimeout(getKeyAccessToken(accessToken));
 	}
 
 	/**
@@ -399,7 +399,7 @@ public interface SaOAuth2Interface {
 	 * @return 有效期 
 	 */
 	public default long getRefreshTokenExpiresIn(String refreshToken) {
-		return SaTokenManager.getSaTokenDao().getObjectTimeout(getKeyRefreshToken(refreshToken));
+		return SaManager.getSaTokenDao().getObjectTimeout(getKeyRefreshToken(refreshToken));
 	}
 	
 	/**
@@ -519,7 +519,7 @@ public interface SaOAuth2Interface {
 	 * @return key
 	 */
 	public default String getKeyCodeModel(String code) {
-		return SaTokenManager.getConfig().getTokenName() + ":oauth2:code:" + code;
+		return SaManager.getConfig().getTokenName() + ":oauth2:code:" + code;
 	}
 	
 	/**  
@@ -529,7 +529,7 @@ public interface SaOAuth2Interface {
 	 * @return key
 	 */
 	public default String getKeyClientLoginId(Object loginId, String clientId) {
-		return SaTokenManager.getConfig().getTokenName() + ":oauth2:newest-code:" + clientId + ":" + loginId;
+		return SaManager.getConfig().getTokenName() + ":oauth2:newest-code:" + clientId + ":" + loginId;
 	}
 
 	/**  
@@ -538,7 +538,7 @@ public interface SaOAuth2Interface {
 	 * @return key
 	 */
 	public default String getKeyRefreshToken(String refreshToken) {
-		return SaTokenManager.getConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
+		return SaManager.getConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
 	}
 
 	/**  
@@ -547,7 +547,7 @@ public interface SaOAuth2Interface {
 	 * @return key
 	 */
 	public default String getKeyAccessToken(String accessToken) {
-		return SaTokenManager.getConfig().getTokenName() + ":oauth2:access-token:" + accessToken;
+		return SaManager.getConfig().getTokenName() + ":oauth2:access-token:" + accessToken;
 	}
 	
 	

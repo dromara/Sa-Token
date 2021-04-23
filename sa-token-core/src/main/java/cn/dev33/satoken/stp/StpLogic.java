@@ -6,12 +6,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -46,7 +47,7 @@ public class StpLogic {
 	public StpLogic(String loginKey) {
 		this.loginKey = loginKey;
 		// 在 SaTokenManager 中记录下此 StpLogic，以便根据 LoginKey 进行查找此对象 
-		SaTokenManager.putStpLogic(this);
+		SaManager.putStpLogic(this);
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class StpLogic {
 	 * @return 生成的tokenValue 
 	 */
  	public String createTokenValue(Object loginId) {
-		return SaTokenManager.getSaTokenAction().createToken(loginId, loginKey);
+		return SaManager.getSaTokenAction().createToken(loginId, loginKey);
 	}
  	
  	/**
@@ -95,7 +96,7 @@ public class StpLogic {
 	public void setTokenValue(String tokenValue, int cookieTimeout){
 		SaTokenConfig config = getConfig();
 		// 将token保存到[存储器]里  
-		SaStorage storage = SaTokenManager.getSaTokenContext().getStorage();
+		SaStorage storage = SaHolder.getStorage();
 		// 判断是否配置了token前缀 
 		String tokenPrefix = config.getTokenPrefix();
 		if(SaFoxUtil.isEmpty(tokenPrefix)) {
@@ -107,7 +108,7 @@ public class StpLogic {
 		
 		// 注入Cookie 
 		if(config.getIsReadCookie() == true){
-			SaResponse response = SaTokenManager.getSaTokenContext().getResponse();
+			SaResponse response = SaHolder.getResponse();
 			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout);
 		}
 	}
@@ -118,8 +119,8 @@ public class StpLogic {
 	 */
 	public String getTokenValue(){
 		// 0. 获取相应对象 
-		SaStorage storage = SaTokenManager.getSaTokenContext().getStorage();
-		SaRequest request = SaTokenManager.getSaTokenContext().getRequest();
+		SaStorage storage = SaHolder.getStorage();
+		SaRequest request = SaHolder.getRequest();
 		SaTokenConfig config = getConfig();
 		String keyTokenName = getTokenName();
 		String tokenValue = null;
@@ -220,7 +221,7 @@ public class StpLogic {
 		
 		// ------ 1、获取相应对象  
 		SaTokenConfig config = getConfig();
-		SaTokenDao dao = SaTokenManager.getSaTokenDao();
+		SaTokenDao dao = SaManager.getSaTokenDao();
 		loginModel.build(config);
 		
 		// ------ 2、生成一个token 
@@ -246,7 +247,7 @@ public class StpLogic {
 						// 3. 清理user-session上的token签名记录 
 						session.removeTokenSign(tokenSign.getValue()); 		
 				 		// $$ 通知监听器 
-				 		SaTokenManager.getSaTokenListener().doReplaced(loginKey, loginId, tokenSign.getValue(), tokenSign.getDevice());
+				 		SaManager.getSaTokenListener().doReplaced(loginKey, loginId, tokenSign.getValue(), tokenSign.getDevice());
 					}
 				}
 			}
@@ -277,7 +278,7 @@ public class StpLogic {
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
 		
 		// $$ 通知监听器
-		SaTokenManager.getSaTokenListener().doLogin(loginKey, loginId, loginModel);
+		SaManager.getSaTokenListener().doLogin(loginKey, loginId, loginModel);
 	}
 
 	/** 
@@ -291,7 +292,7 @@ public class StpLogic {
  		}
  		// 如果打开了cookie模式，第一步，先把cookie清除掉 
  		if(getConfig().getIsReadCookie() == true){
- 			SaTokenManager.getSaTokenContext().getResponse().deleteCookie(getTokenName());
+ 			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
  		logoutByTokenValue(tokenValue);
 	}
@@ -303,28 +304,28 @@ public class StpLogic {
 	public void logoutByTokenValue(String tokenValue) {
 		// 1. 清理掉[token-最后操作时间] 
 		clearLastActivity(tokenValue); 	
+
+		// 2. 清理Token-Session 
+		SaManager.getSaTokenDao().delete(splicingKeyTokenSession(tokenValue));
 		
- 		// 2. 尝试清除token-id键值对 (先从db中获取loginId值，如果根本查不到loginId，那么无需继续操作 )
+ 		// 3. 尝试清除token-id键值对 (先从db中获取loginId值，如果根本查不到loginId，那么无需继续操作 )
  		String loginId = getLoginIdNotHandle(tokenValue);
  	 	if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
  			return;
  		}
- 		SaTokenManager.getSaTokenDao().delete(splicingKeyTokenValue(tokenValue));	
+ 		SaManager.getSaTokenDao().delete(splicingKeyTokenValue(tokenValue));	
  		
  		// $$ 通知监听器 
- 		SaTokenManager.getSaTokenListener().doLogout(loginKey, loginId, tokenValue);
+ 		SaManager.getSaTokenListener().doLogout(loginKey, loginId, tokenValue);
 
-		// 清理token-session
-		SaTokenManager.getSaTokenDao().delete(splicingKeyTokenSession(tokenValue));
-
-		// 3. 尝试清理账号session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
+		// 4. 尝试清理User-Session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
  	 	SaSession session = getSessionByLoginId(loginId, false);
  	 	if(session == null) {
  	 		return;
  	 	}
  	 	session.removeTokenSign(tokenValue); 
  	 	
- 	 	// 4. 尝试注销session
+ 	 	// 5. 尝试注销User-Session
 		session.logoutByTokenSignCountToZero();
 	}
 	
@@ -359,11 +360,11 @@ public class StpLogic {
 				// 2. 清理掉[token-最后操作时间] 
 				clearLastActivity(tokenValue); 	
 		 		// 3. 标记：已被踢下线 
-				SaTokenManager.getSaTokenDao().update(splicingKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);
+				SaManager.getSaTokenDao().update(splicingKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);
 		 		// 4. 清理账号session上的token签名 
 		 		session.removeTokenSign(tokenValue); 
 		 		// $$ 通知监听器 
-		 		SaTokenManager.getSaTokenListener().doLogoutByLoginId(loginKey, loginId, tokenValue, tokenSign.getDevice());
+		 		SaManager.getSaTokenListener().doLogoutByLoginId(loginKey, loginId, tokenValue, tokenSign.getDevice());
 			}
 		}
  	 	// 3. 尝试注销session
@@ -378,10 +379,10 @@ public class StpLogic {
 	 */
 	public void disable(Object loginId, long disableTime) {
 		// 标注为已被封禁 
-		SaTokenManager.getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
+		SaManager.getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
  		
  		// $$ 通知监听器 
- 		SaTokenManager.getSaTokenListener().doDisable(loginKey, loginId, disableTime);
+ 		SaManager.getSaTokenListener().doDisable(loginKey, loginId, disableTime);
 	}
 	
 	/**
@@ -390,7 +391,7 @@ public class StpLogic {
 	 * @return see note
 	 */
 	public boolean isDisable(Object loginId) {
-		return SaTokenManager.getSaTokenDao().get(splicingKeyDisable(loginId)) != null;
+		return SaManager.getSaTokenDao().get(splicingKeyDisable(loginId)) != null;
 	}
 
 	/**
@@ -399,7 +400,7 @@ public class StpLogic {
 	 * @return see note 
 	 */
 	public long getDisableTime(Object loginId) {
-		return SaTokenManager.getSaTokenDao().getTimeout(splicingKeyDisable(loginId));
+		return SaManager.getSaTokenDao().getTimeout(splicingKeyDisable(loginId));
 	}
 	
 	/**
@@ -407,10 +408,10 @@ public class StpLogic {
 	 * @param loginId 账号id
 	 */
 	public void untieDisable(Object loginId) {
-		SaTokenManager.getSaTokenDao().delete(splicingKeyDisable(loginId));
+		SaManager.getSaTokenDao().delete(splicingKeyDisable(loginId));
 		
  		// $$ 通知监听器 
- 		SaTokenManager.getSaTokenListener().doUntieDisable(loginKey, loginId);
+ 		SaManager.getSaTokenListener().doUntieDisable(loginKey, loginId);
 	}
 	
 	
@@ -463,9 +464,10 @@ public class StpLogic {
  		if(loginId.equals(NotLoginException.KICK_OUT)) {
  			throw NotLoginException.newInstance(loginKey, NotLoginException.KICK_OUT);
  		}
- 		// 如果配置了自动续签, 则: 检查是否已经 [临时过期]，同时更新[最后操作时间] 
+ 		// 检查是否已经 [临时过期]
+	 	checkActivityTimeout(tokenValue);
+ 		// 如果配置了自动续签, 则: 更新[最后操作时间] 
  		if(getConfig().getAutoRenew()) {
- 	 		checkActivityTimeout(tokenValue);
  	 		updateLastActivityToNow(tokenValue);
  		}
  		// 至此，返回loginId 
@@ -567,7 +569,7 @@ public class StpLogic {
  	  * @return loginId
  	  */
  	public String getLoginIdNotHandle(String tokenValue) {
- 		return SaTokenManager.getSaTokenDao().get(splicingKeyTokenValue(tokenValue));
+ 		return SaManager.getSaTokenDao().get(splicingKeyTokenValue(tokenValue));
  	}
  	 
  	
@@ -580,10 +582,10 @@ public class StpLogic {
 	 * @return session对象 
 	 */
 	public SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
-		SaSession session = SaTokenManager.getSaTokenDao().getSession(sessionId);
+		SaSession session = SaManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
-			session = SaTokenManager.getSaTokenAction().createSession(sessionId);
-			SaTokenManager.getSaTokenDao().setSession(session, getConfig().getTimeout());
+			session = SaManager.getSaTokenAction().createSession(sessionId);
+			SaManager.getSaTokenDao().setSession(session, getConfig().getTimeout());
 		}
 		return session;
 	}
@@ -702,7 +704,7 @@ public class StpLogic {
  			return;
  		}
  		// 将[最后操作时间]标记为当前时间戳 
- 		SaTokenManager.getSaTokenDao().set(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
+ 		SaManager.getSaTokenDao().set(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
  	}
  	
  	/**
@@ -715,9 +717,9 @@ public class StpLogic {
  			return;
  		}
  		// 删除[最后操作时间]
- 		SaTokenManager.getSaTokenDao().delete(splicingKeyLastActivityTime(tokenValue));
+ 		SaManager.getSaTokenDao().delete(splicingKeyLastActivityTime(tokenValue));
  		// 清除标记 
- 		SaTokenManager.getSaTokenContext().getStorage().delete((SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY));
+ 		SaHolder.getStorage().delete((SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY));
  	}
  	
  	/**
@@ -730,7 +732,7 @@ public class StpLogic {
  			return;
  		}
  		// 如果本次请求已经有了[检查标记], 则立即返回 
- 		SaStorage storage = SaTokenManager.getSaTokenContext().getStorage();
+ 		SaStorage storage = SaHolder.getStorage();
  		if(storage.get(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY) != null) {
  			return;
  		}
@@ -767,7 +769,7 @@ public class StpLogic {
  		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
- 		SaTokenManager.getSaTokenDao().update(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
+ 		SaManager.getSaTokenDao().update(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
  	}
 
  	/**
@@ -787,7 +789,7 @@ public class StpLogic {
  	 * @return token剩余有效时间
  	 */
  	public long getTokenTimeout() {
- 		return SaTokenManager.getSaTokenDao().getTimeout(splicingKeyTokenValue(getTokenValue()));
+ 		return SaManager.getSaTokenDao().getTimeout(splicingKeyTokenValue(getTokenValue()));
  	}
  	
  	/**
@@ -796,7 +798,7 @@ public class StpLogic {
  	 * @return token剩余有效时间 
  	 */
  	public long getTokenTimeoutByLoginId(Object loginId) {
- 		return SaTokenManager.getSaTokenDao().getTimeout(splicingKeyTokenValue(getTokenValueByLoginId(loginId)));
+ 		return SaManager.getSaTokenDao().getTimeout(splicingKeyTokenValue(getTokenValueByLoginId(loginId)));
  	}
 
  	/**
@@ -813,7 +815,7 @@ public class StpLogic {
  	 * @return token剩余有效时间 
  	 */
  	public long getSessionTimeoutByLoginId(Object loginId) {
- 		return SaTokenManager.getSaTokenDao().getSessionTimeout(splicingKeySession(loginId));
+ 		return SaManager.getSaTokenDao().getSessionTimeout(splicingKeySession(loginId));
  	}
 
  	/**
@@ -830,7 +832,7 @@ public class StpLogic {
  	 * @return token剩余有效时间 
  	 */
  	public long getTokenSessionTimeoutByTokenValue(String tokenValue) {
- 		return SaTokenManager.getSaTokenDao().getSessionTimeout(splicingKeyTokenSession(tokenValue));
+ 		return SaManager.getSaTokenDao().getSessionTimeout(splicingKeyTokenSession(tokenValue));
  	}
 
  	/**
@@ -858,7 +860,7 @@ public class StpLogic {
  		// ------ 开始查询 
  		// 获取相关数据 
  		String keyLastActivityTime = splicingKeyLastActivityTime(tokenValue);
- 		String lastActivityTimeString = SaTokenManager.getSaTokenDao().get(keyLastActivityTime);
+ 		String lastActivityTimeString = SaManager.getSaTokenDao().get(keyLastActivityTime);
  		// 查不到，返回-2 
  		if(lastActivityTimeString == null) {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
@@ -884,8 +886,8 @@ public class StpLogic {
  	 * @return 是否含有指定角色标识
  	 */
  	public boolean hasRole(Object loginId, String role) {
- 		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
- 		return SaTokenManager.getSaTokenAction().hasElement(roleList, role);
+ 		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginKey);
+ 		return SaManager.getSaTokenAction().hasElement(roleList, role);
 //		return !(roleList == null || roleList.contains(role) == false);
  	}
  	
@@ -914,9 +916,9 @@ public class StpLogic {
  	 */
  	public void checkRoleAnd(String... roleArray){
  		Object loginId = getLoginId();
- 		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
+ 		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginKey);
  		for (String role : roleArray) {
- 			if(SaTokenManager.getSaTokenAction().hasElement(roleList, role) == false) {
+ 			if(SaManager.getSaTokenAction().hasElement(roleList, role) == false) {
  				throw new NotRoleException(role, this.loginKey);
  			}
  		}
@@ -928,9 +930,9 @@ public class StpLogic {
  	 */
  	public void checkRoleOr(String... roleArray){
  		Object loginId = getLoginId();
- 		List<String> roleList = SaTokenManager.getStpInterface().getRoleList(loginId, loginKey);
+ 		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginKey);
  		for (String role : roleArray) {
- 			if(SaTokenManager.getSaTokenAction().hasElement(roleList, role) == true) {
+ 			if(SaManager.getSaTokenAction().hasElement(roleList, role) == true) {
  				// 有的话提前退出
  				return;		
  			}
@@ -950,8 +952,8 @@ public class StpLogic {
  	 * @return 是否含有指定权限
  	 */
  	public boolean hasPermission(Object loginId, String permission) {
- 		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
- 		return SaTokenManager.getSaTokenAction().hasElement(permissionList, permission);
+ 		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginKey);
+ 		return SaManager.getSaTokenAction().hasElement(permissionList, permission);
 //		return !(permissionList == null || permissionList.contains(permission) == false);
  	}
  	
@@ -980,9 +982,9 @@ public class StpLogic {
  	 */
  	public void checkPermissionAnd(String... permissionArray){
  		Object loginId = getLoginId();
- 		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
+ 		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginKey);
  		for (String permission : permissionArray) {
- 			if(SaTokenManager.getSaTokenAction().hasElement(permissionList, permission) == false) {
+ 			if(SaManager.getSaTokenAction().hasElement(permissionList, permission) == false) {
  				throw new NotPermissionException(permission, this.loginKey);	
  			}
  		}
@@ -994,9 +996,9 @@ public class StpLogic {
  	 */
  	public void checkPermissionOr(String... permissionArray){
  		Object loginId = getLoginId();
- 		List<String> permissionList = SaTokenManager.getStpInterface().getPermissionList(loginId, loginKey);
+ 		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginKey);
  		for (String permission : permissionArray) {
- 			if(SaTokenManager.getSaTokenAction().hasElement(permissionList, permission) == true) {
+ 			if(SaManager.getSaTokenAction().hasElement(permissionList, permission) == true) {
  				// 有的话提前退出
  				return;		
  			}
@@ -1105,7 +1107,7 @@ public class StpLogic {
 	 * @return token集合 
 	 */
 	public List<String> searchTokenValue(String keyword, int start, int size) {
-		return SaTokenManager.getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size);
+		return SaManager.getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size);
 	}
 	
 	/**
@@ -1116,7 +1118,7 @@ public class StpLogic {
 	 * @return sessionId集合 
 	 */
 	public List<String> searchSessionId(String keyword, int start, int size) {
-		return SaTokenManager.getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size);
+		return SaManager.getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size);
 	}
 
 	/**
@@ -1127,7 +1129,7 @@ public class StpLogic {
 	 * @return sessionId集合 
 	 */
 	public List<String> searchTokenSessionId(String keyword, int start, int size) {
-		return SaTokenManager.getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size);
+		return SaManager.getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size);
 	}
 	
 
@@ -1210,7 +1212,7 @@ public class StpLogic {
 	 */
 	public SaTokenConfig getConfig() {
 		// 为什么再次代理一层? 为某些极端业务场景下[需要不同StpLogic不同配置]提供便利 
-		return SaTokenManager.getConfig();
+		return SaManager.getConfig();
 	}
 	
 
@@ -1282,14 +1284,14 @@ public class StpLogic {
 	 * @param loginId 指定loginId 
 	 */
 	public void switchTo(Object loginId) {
-		SaTokenManager.getSaTokenContext().getStorage().set(splicingKeySwitch(), loginId);
+		SaHolder.getStorage().set(splicingKeySwitch(), loginId);
 	}
 	
 	/**
 	 * 结束临时切换身份
 	 */
 	public void endSwitch() {
-		SaTokenManager.getSaTokenContext().getStorage().delete(splicingKeySwitch());
+		SaHolder.getStorage().delete(splicingKeySwitch());
 	}
 
 	/**
@@ -1297,7 +1299,7 @@ public class StpLogic {
 	 * @return 是否正处于[身份临时切换]中 
 	 */
 	public boolean isSwitch() {
-		return SaTokenManager.getSaTokenContext().getStorage().get(splicingKeySwitch()) != null;
+		return SaHolder.getStorage().get(splicingKeySwitch()) != null;
 	}
 	
 	/**
@@ -1305,7 +1307,7 @@ public class StpLogic {
 	 * @return 返回[身份临时切换]的loginId 
 	 */
 	public Object getSwitchLoginId() {
-		return SaTokenManager.getSaTokenContext().getStorage().get(splicingKeySwitch());
+		return SaHolder.getStorage().get(splicingKeySwitch());
 	}
 	
 	/**

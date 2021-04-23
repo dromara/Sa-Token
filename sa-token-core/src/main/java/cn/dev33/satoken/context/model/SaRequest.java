@@ -35,9 +35,15 @@ public interface SaRequest {
 	public String getCookieValue(String name);
 
 	/**
-	 * 返回当前请求的URL 
+	 * 返回当前请求path (不包括上下文名称) 
 	 * @return see note
 	 */
-	public String getRequestURI();
+	public String getRequestPath();
+
+	/**
+	 * 返回当前请求的类型 
+	 * @return see note
+	 */
+	public String getMethod();
 	
 }

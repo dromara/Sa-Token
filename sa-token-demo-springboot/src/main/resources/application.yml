@@ -20,7 +20,6 @@ spring:
         # 是否输出操作日志 
         is-log: false
         
-        
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）
@@ -43,5 +42,13 @@ spring:
                 max-idle: 10
                 # 连接池中的最小空闲连接
                 min-idle: 0
+        
+        
+      
+    # 静态文件路径映射 
+    resources: 
+        static-locations: file:E:\work\project-yun\sa-admin
+        
+        
         
         

@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -124,13 +124,13 @@ public class SaTokenJwtUtil {
     		@Override
     		public void setLoginId(Object loginId, SaLoginModel loginModel) {
     			// ------ 1、获取相应对象  
-    			SaStorage storage = SaTokenManager.getSaTokenContext().getStorage();
+    			SaStorage storage = SaManager.getSaTokenContext().getStorage();
     			SaTokenConfig config = getConfig();
     			// ------ 2、生成一个token 
     			String tokenValue = createTokenValue(loginId);
     			storage.set(splicingKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
     			if(config.getIsReadCookie() == true){	// cookie注入 
-    				SaTokenManager.getSaTokenContext().getResponse().addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), (int)config.getTimeout());		
+    				SaManager.getSaTokenContext().getResponse().addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), (int)config.getTimeout());		
     			}
     		}
     		
@@ -154,7 +154,7 @@ public class SaTokenJwtUtil {
     	 		}
     	 		// 如果打开了cookie模式，把cookie清除掉 
     	 		if(getConfig().getIsReadCookie() == true){
-    				SaTokenManager.getSaTokenContext().getResponse().deleteCookie(getTokenName()); 	
+    				SaManager.getSaTokenContext().getResponse().deleteCookie(getTokenName()); 	
     			}
     		}
     		

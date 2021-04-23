@@ -23,21 +23,21 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author kong
  *
  */
-public class SaTokenManager {
+public class SaManager {
 
 	/**
 	 * 配置文件 Bean 
 	 */
 	private static SaTokenConfig config;	
 	public static void setConfig(SaTokenConfig config) {
-		SaTokenManager.config = config;
+		SaManager.config = config;
 		if(config.getIsV()) {
 			SaFoxUtil.printSaToken();
 		}
 	}
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
-			synchronized (SaTokenManager.class) {
+			synchronized (SaManager.class) {
 				if (config == null) {
 					setConfig(SaTokenConfigFactory.createConfig());
 				}
@@ -51,14 +51,14 @@ public class SaTokenManager {
 	 */
 	private static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
-		if(SaTokenManager.saTokenDao != null && (SaTokenManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
-			((SaTokenDaoDefaultImpl)SaTokenManager.saTokenDao).endRefreshThread();
+		if(SaManager.saTokenDao != null && (SaManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
+			((SaTokenDaoDefaultImpl)SaManager.saTokenDao).endRefreshThread();
 		}
-		SaTokenManager.saTokenDao = saTokenDao;
+		SaManager.saTokenDao = saTokenDao;
 	}
 	public static SaTokenDao getSaTokenDao() {
 		if (saTokenDao == null) {
-			synchronized (SaTokenManager.class) {
+			synchronized (SaManager.class) {
 				if (saTokenDao == null) {
 					setSaTokenDao(new SaTokenDaoDefaultImpl());
 				}
@@ -72,11 +72,11 @@ public class SaTokenManager {
 	 */
 	private static StpInterface stpInterface;
 	public static void setStpInterface(StpInterface stpInterface) {
-		SaTokenManager.stpInterface = stpInterface;
+		SaManager.stpInterface = stpInterface;
 	}
 	public static StpInterface getStpInterface() {
 		if (stpInterface == null) {
-			synchronized (SaTokenManager.class) {
+			synchronized (SaManager.class) {
 				if (stpInterface == null) {
 					setStpInterface(new StpInterfaceDefaultImpl());
 				}
@@ -90,11 +90,11 @@ public class SaTokenManager {
 	 */
 	private static SaTokenAction saTokenAction;
 	public static void setSaTokenAction(SaTokenAction saTokenAction) {
-		SaTokenManager.saTokenAction = saTokenAction;
+		SaManager.saTokenAction = saTokenAction;
 	}
 	public static SaTokenAction getSaTokenAction() {
 		if (saTokenAction == null) {
-			synchronized (SaTokenManager.class) {
+			synchronized (SaManager.class) {
 				if (saTokenAction == null) {
 					setSaTokenAction(new SaTokenActionDefaultImpl());
 				}
@@ -108,11 +108,11 @@ public class SaTokenManager {
 	 */
 	private static SaTokenContext saTokenContext;
 	public static void setSaTokenContext(SaTokenContext saTokenContext) {
-		SaTokenManager.saTokenContext = saTokenContext;
+		SaManager.saTokenContext = saTokenContext;
 	}
 	public static SaTokenContext getSaTokenContext() {
 		if (saTokenContext == null) {
-			synchronized (SaTokenManager.class) {
+			synchronized (SaManager.class) {
 				if (saTokenContext == null) {
 					setSaTokenContext(new SaTokenContextDefaultImpl());
 				}
@@ -126,11 +126,11 @@ public class SaTokenManager {
 	 */
 	private static SaTokenListener saTokenListener;
 	public static void setSaTokenListener(SaTokenListener saTokenListener) {
-		SaTokenManager.saTokenListener = saTokenListener;
+		SaManager.saTokenListener = saTokenListener;
 	}
 	public static SaTokenListener getSaTokenListener() {
 		if (saTokenListener == null) {
-			synchronized (SaTokenManager.class) {
+			synchronized (SaManager.class) {
 				if (saTokenListener == null) {
 					setSaTokenListener(new SaTokenListenerDefaultImpl());
 				}

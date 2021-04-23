@@ -1,6 +1,6 @@
 package cn.dev33.satoken.stp;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -97,7 +97,7 @@ public class SaLoginModel {
 	 * @return 对象自身
 	 */
 	public SaLoginModel build() {
-		return build(SaTokenManager.getConfig());
+		return build(SaManager.getConfig());
 	}
 	
 	/**

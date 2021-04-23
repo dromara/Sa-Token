@@ -1,6 +1,6 @@
 package cn.dev33.satoken.session;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 
 /**
  * 自定义Session工具类
@@ -22,7 +22,7 @@ public class SaSessionCustomUtil {
 	 * @return sessionId
 	 */
 	public static String splicingSessionKey(String sessionId) {
-		return SaTokenManager.getConfig().getTokenName() + ":" + sessionKey + ":session:" + sessionId;
+		return SaManager.getConfig().getTokenName() + ":" + sessionKey + ":session:" + sessionId;
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class SaSessionCustomUtil {
 	 * @return 是否存在
 	 */
 	public static boolean isExists(String sessionId) {
-		return SaTokenManager.getSaTokenDao().getSession(splicingSessionKey(sessionId)) != null;
+		return SaManager.getSaTokenDao().getSession(splicingSessionKey(sessionId)) != null;
 	}
 
 	/**
@@ -43,10 +43,10 @@ public class SaSessionCustomUtil {
 	 * @return SaSession
 	 */
 	public static SaSession getSessionById(String sessionId, boolean isCreate) {
-		SaSession session = SaTokenManager.getSaTokenDao().getSession(splicingSessionKey(sessionId));
+		SaSession session = SaManager.getSaTokenDao().getSession(splicingSessionKey(sessionId));
 		if (session == null && isCreate) {
-			session = SaTokenManager.getSaTokenAction().createSession(sessionId);
-			SaTokenManager.getSaTokenDao().setSession(session, SaTokenManager.getConfig().getTimeout());
+			session = SaManager.getSaTokenAction().createSession(sessionId);
+			SaManager.getSaTokenDao().setSession(session, SaManager.getConfig().getTimeout());
 		}
 		return session;
 	}
@@ -67,7 +67,7 @@ public class SaSessionCustomUtil {
 	 * @param sessionId 指定key
 	 */
 	public static void deleteSessionById(String sessionId) {
-		SaTokenManager.getSaTokenDao().deleteSession(splicingSessionKey(sessionId));
+		SaManager.getSaTokenDao().deleteSession(splicingSessionKey(sessionId));
 	}
 
 }

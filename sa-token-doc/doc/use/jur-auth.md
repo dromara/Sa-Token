@@ -117,6 +117,29 @@ StpUtil.checkRoleOr("super-admin", "shop-admin");
 你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：[码云：GlobalException.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo-springboot/src/main/java/com/pj/test/GlobalException.java)
 
 
+### 权限通配符
+Sa-Token允许你根据通配符指定泛权限，例如当一个账号拥有`user*`的权限时，`user-add`、`user-delete`、`user-update`都将匹配通过
+
+``` java
+// 当拥有 user* 权限时
+StpUtil.hasPermission("user-add");        // true
+StpUtil.hasPermission("user-update");     // true
+StpUtil.hasPermission("art-add");         // false
+
+// 当拥有 *-delete 权限时
+StpUtil.hasPermission("user-add");        // false
+StpUtil.hasPermission("user-delete");     // true
+StpUtil.hasPermission("art-delete");      // true
+
+// 当拥有 *.js 权限时
+StpUtil.hasPermission("index.js");        // true
+StpUtil.hasPermission("index.css");       // false
+StpUtil.hasPermission("index.html");      // false
+```
+
+上帝权限：当一个账号拥有 `"*"` 权限时，他可以验证通过任何权限码 (角色认证同理)
+
+
 ### 如何把权限精确搭到按钮级？
 权限精确到按钮级的意思就是指：**权限范围可以控制到页面上的每一个按钮是否显示**
 

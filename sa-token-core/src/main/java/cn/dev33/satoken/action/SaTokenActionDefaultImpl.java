@@ -3,7 +3,7 @@ package cn.dev33.satoken.action;
 import java.util.List;
 import java.util.UUID;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -21,7 +21,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	@Override
 	public String createToken(Object loginId, String loginKey) {
 		// 根据配置的tokenStyle生成不同风格的token 
-		String tokenStyle = SaTokenManager.getConfig().getTokenStyle();
+		String tokenStyle = SaManager.getConfig().getTokenStyle();
 		// uuid 
 		if(SaTokenConsts.TOKEN_STYLE_UUID.equals(tokenStyle)) {
 			return UUID.randomUUID().toString();

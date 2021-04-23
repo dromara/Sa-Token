@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
@@ -41,7 +41,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired
 	public void setConfig(SaTokenConfig saTokenConfig) {
-		SaTokenManager.setConfig(saTokenConfig);
+		SaManager.setConfig(saTokenConfig);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired(required = false)
 	public void setSaTokenDao(SaTokenDao saTokenDao) {
-		SaTokenManager.setSaTokenDao(saTokenDao);
+		SaManager.setSaTokenDao(saTokenDao);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired(required = false)
 	public void setStpInterface(StpInterface stpInterface) {
-		SaTokenManager.setStpInterface(stpInterface);
+		SaManager.setStpInterface(stpInterface);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired(required = false)
 	public void setSaTokenAction(SaTokenAction saTokenAction) {
-		SaTokenManager.setSaTokenAction(saTokenAction);
+		SaManager.setSaTokenAction(saTokenAction);
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
-		SaTokenManager.setSaTokenContext(saTokenContext);
+		SaManager.setSaTokenContext(saTokenContext);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class SaTokenSpringAutowired {
 	 */
 	@Autowired(required = false)
 	public void setSaTokenListener(SaTokenListener saTokenListener) {
-		SaTokenManager.setSaTokenListener(saTokenListener);
+		SaManager.setSaTokenListener(saTokenListener);
 	}
 
 	/**

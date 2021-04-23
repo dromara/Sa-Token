@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import cn.dev33.satoken.SaTokenManager;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -189,7 +189,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public void initRefreshThread() {
 
 		// 如果配置了<=0的值，则不启动定时清理
-		if(SaTokenManager.getConfig().getDataRefreshPeriod() <= 0) {
+		if(SaManager.getConfig().getDataRefreshPeriod() <= 0) {
 			return;
 		}
 		// 启动定时刷新
@@ -208,7 +208,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 						e.printStackTrace();
 					}
 					// 休眠N秒 
-					int dataRefreshPeriod = SaTokenManager.getConfig().getDataRefreshPeriod();
+					int dataRefreshPeriod = SaManager.getConfig().getDataRefreshPeriod();
 					if(dataRefreshPeriod <= 0) {
 						dataRefreshPeriod = 1;
 					}

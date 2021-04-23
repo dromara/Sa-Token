@@ -71,4 +71,13 @@ public class SaResponseForReactor implements SaResponse {
 		response.addCookie(builder.build());
 	}
 
+	/**
+	 * 在响应头里写入一个值 
+	 */
+	@Override
+	public SaResponse setHeader(String name, String value) {
+		response.getHeaders().set(name, value);
+		return this;
+	}
+	
 }

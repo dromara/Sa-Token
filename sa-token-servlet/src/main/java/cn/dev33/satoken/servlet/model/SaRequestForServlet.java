@@ -66,11 +66,19 @@ public class SaRequestForServlet implements SaRequest {
 	}
 
 	/**
-	 * 返回当前请求的URL 
+	 * 返回当前请求path (不包括上下文名称) 
 	 */
 	@Override
-	public String getRequestURI() {
-		return request.getRequestURI();
+	public String getRequestPath() {
+		return request.getServletPath();
+	}
+
+	/**
+	 * 返回当前请求的类型 
+	 */
+	@Override
+	public String getMethod() {
+		return request.getMethod();
 	}
 
 }
