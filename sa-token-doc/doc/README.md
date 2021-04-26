@@ -91,6 +91,7 @@ StpUtil.checkLogin();
 当你受够Shiro、Security等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，sa-token的API设计是多么的清爽！
 
 权限认证示例 (只有具有`user:add`权限的会话才可以进入请求)
+
 ``` java
 @SaCheckPermission("user:add")
 @RequestMapping("/user/insert")
