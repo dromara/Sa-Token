@@ -55,3 +55,5 @@ public static StpLogic stpLogic = new StpLogic("user") {
 再次调用 `StpUserUtil.setLoginId(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`
 
 
+
+> 不同体系账号在登录时设置不同的token有效期等信息, 详见[登录时指定token有效期](/use/remember-me?id=登录时指定token有效期)
