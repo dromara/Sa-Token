@@ -15,4 +15,13 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD, ElementType.TYPE })
 public @interface SaCheckLogin {
 
+    /**
+     * 多账号下哪些需要校验
+     * 每个StpUtil都有一个stpLogic属性
+     * 初始化StpLogic时,指定的LoginKey字符串放入这里
+     * 可以放多个,所以类型为数组
+     * @return LoginKey字符串数组
+     */
+    String [] loginKeys() default {};
+
 }

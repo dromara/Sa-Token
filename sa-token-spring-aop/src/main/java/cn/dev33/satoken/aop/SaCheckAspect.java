@@ -1,5 +1,7 @@
 package cn.dev33.satoken.aop;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
+
+import java.lang.reflect.Method;
 
 /**
  * sa-token 基于 Spring Aop 的注解鉴权
@@ -58,8 +62,31 @@ public class SaCheckAspect {
 	 */
 	@Around("pointcut()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+
+
+
 		// 注解鉴权
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		Method method = signature.getMethod();
+		// ----------- 验证登录
+		if(method.isAnnotationPresent(SaCheckLogin.class) || method.getDeclaringClass().isAnnotationPresent(SaCheckLogin.class)) {
+			SaCheckLogin checkLogin = method.getAnnotation(SaCheckLogin.class);
+			if(checkLogin.loginKeys().length == 0) {
+				getStpLogic().checkLogin();
+			} else {
+				for(String loginKey : checkLogin.loginKeys()) {
+					if (SaManager.stpLogicMap.containsKey(loginKey)) {
+						StpLogic stpLogic = SaManager.stpLogicMap.get(loginKey);
+						stpLogic.checkLogin();
+					} else {
+
+					}
+
+				}
+			}
+		}
+
+
 		getStpLogic().checkMethodAnnotation(signature.getMethod());
 		try {
 			// 执行原有逻辑

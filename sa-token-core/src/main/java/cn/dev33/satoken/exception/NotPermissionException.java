@@ -1,7 +1,5 @@
 package cn.dev33.satoken.exception;
 
-import cn.dev33.satoken.stp.StpUtil;
-
 /**
  * 没有指定权限码，抛出的异常 
  * 
@@ -13,7 +11,7 @@ public class NotPermissionException extends SaTokenException {
 	/**
 	 * 序列化版本号 
 	 */
-	private static final long serialVersionUID = 6806129545290130142L;
+	private static final long serialVersionUID = 6806129545290130141L;
 
 	/** 权限码 */
 	private String code;
@@ -37,10 +35,6 @@ public class NotPermissionException extends SaTokenException {
 	 */
 	public String getLoginKey() {
 		return loginKey;
-	}
-
-	public NotPermissionException(String code) {
-		this(code, StpUtil.stpLogic.loginKey);
 	}
 
 	public NotPermissionException(String code, String loginKey) {
