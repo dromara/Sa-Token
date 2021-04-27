@@ -28,11 +28,11 @@ public @interface SaCheckPermission {
 	SaMode mode() default SaMode.AND;
 
 	/**
-	 * 多账号下哪些需要校验
+	 * 多账号体系下使用哪个体系检测权限
 	 * 每个StpUtil都有一个stpLogic属性
-	 * 初始化StpLogic时,指定的LoginKey字符串放入这里
-	 * 可以放多个,所以类型为数组
-	 * @return LoginKey字符串数组
+	 * 初始化StpLogic时, 指定的LoginKey字符串复制到这里
+	 * @return LoginKey字符串
 	 */
-	String [] loginKeys() default {};
+	String key() default "login";
+
 }

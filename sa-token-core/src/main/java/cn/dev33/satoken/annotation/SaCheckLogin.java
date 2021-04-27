@@ -1,5 +1,7 @@
 package cn.dev33.satoken.annotation;
 
+import cn.dev33.satoken.stp.StpUtil;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -16,12 +18,11 @@ import java.lang.annotation.Target;
 public @interface SaCheckLogin {
 
     /**
-     * 多账号下哪些需要校验
+     * 多账号体系下使用哪个体系检测登录
      * 每个StpUtil都有一个stpLogic属性
-     * 初始化StpLogic时,指定的LoginKey字符串放入这里
-     * 可以放多个,所以类型为数组
-     * @return LoginKey字符串数组
+     * 初始化StpLogic时, 指定的LoginKey字符串复制到这里
+     * @return LoginKey字符串
      */
-    String [] loginKeys() default {};
+    String key() default "login";
 
 }
