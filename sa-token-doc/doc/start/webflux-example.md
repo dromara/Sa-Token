@@ -32,7 +32,7 @@ WebFlux基于Reactor响应式模型开发，有着与标准ServletAPI完全不�
 public class SaTokenDemoApplication {
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(SaTokenDemoApplication.class, args);
-		System.out.println("启动成功：sa-token配置如下：" + SaTokenManager.getConfig());
+		System.out.println("启动成功：sa-token配置如下：" + SaManager.getConfig());
 	}
 }
 ```
