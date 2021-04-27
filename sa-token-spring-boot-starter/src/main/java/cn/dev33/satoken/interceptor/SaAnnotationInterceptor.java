@@ -1,10 +1,16 @@
 package cn.dev33.satoken.interceptor;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.exception.UnrecognizedLoginKeyException;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -62,7 +68,100 @@ public class SaAnnotationInterceptor implements HandlerInterceptor {
 		Method method = ((HandlerMethod) handler).getMethod();
 
 		// 进行验证
-		getStpLogic().checkMethodAnnotation(method);
+		Map<String, StpLogic> stpLogicMap = SaManager.stpLogicMap;
+
+		// ----------- 验证登录
+		if(method.isAnnotationPresent(SaCheckLogin.class) || method.getDeclaringClass().isAnnotationPresent(SaCheckLogin.class)) {
+			SaCheckLogin checkLogin = method.getAnnotation(SaCheckLogin.class);
+			if(checkLogin.loginKeys().length == 0) {
+				getStpLogic().checkLogin();
+			} else {
+				for(String loginKey : checkLogin.loginKeys()) {
+					if (stpLogicMap.containsKey(loginKey)) {
+						StpLogic stpLogic = stpLogicMap.get(loginKey);
+						stpLogic.checkLogin();
+					} else {
+						throw new UnrecognizedLoginKeyException(loginKey);
+					}
+				}
+			}
+		}
+
+		// ----------- 验证角色
+		// 验证方法上的
+		SaCheckRole scr = method.getAnnotation(SaCheckRole.class);
+		if(scr != null) {
+			if (scr.loginKeys().length == 0) {
+				String[] roleArray = scr.value();
+				getStpLogic().checkHasRoles(roleArray, scr.mode());
+			} else {
+				for(String loginKey : scr.loginKeys()) {
+					if (stpLogicMap.containsKey(loginKey)) {
+						StpLogic stpLogic = stpLogicMap.get(loginKey);
+						String[] roleArray = scr.value();
+						stpLogic.checkHasRoles(roleArray, scr.mode());
+					} else {
+						throw new UnrecognizedLoginKeyException(loginKey);
+					}
+				}
+			}
+		}
+		// 验证类上的
+		scr = method.getDeclaringClass().getAnnotation(SaCheckRole.class);
+		if(scr != null) {
+			if (scr.loginKeys().length == 0) {
+				String[] roleArray = scr.value();
+				getStpLogic().checkHasRoles(roleArray, scr.mode());
+			} else {
+				for(String loginKey : scr.loginKeys()) {
+					if (stpLogicMap.containsKey(loginKey)) {
+						StpLogic stpLogic = stpLogicMap.get(loginKey);
+						String[] roleArray = scr.value();
+						stpLogic.checkHasRoles(roleArray, scr.mode());
+					} else {
+						throw new UnrecognizedLoginKeyException(loginKey);
+					}
+				}
+			}
+		}
+
+		// ----------- 验证权限
+		// 验证方法上的
+		SaCheckPermission scp = method.getAnnotation(SaCheckPermission.class);
+		if(scp != null) {
+			if (scr.loginKeys().length == 0) {
+				String[] permissionArray = scp.value();
+				getStpLogic().checkHasPermissions(permissionArray, scp.mode());
+			} else {
+				for(String loginKey : scr.loginKeys()) {
+					if (stpLogicMap.containsKey(loginKey)) {
+						StpLogic stpLogic = stpLogicMap.get(loginKey);
+						String[] permissionArray = scp.value();
+						stpLogic.checkHasPermissions(permissionArray, scp.mode());
+					} else {
+						throw new UnrecognizedLoginKeyException(loginKey);
+					}
+				}
+			}
+		}
+		// 验证类上的
+		scp = method.getDeclaringClass().getAnnotation(SaCheckPermission.class);
+		if(scp != null) {
+			if (scr.loginKeys().length == 0) {
+				String[] permissionArray = scp.value();
+				getStpLogic().checkHasPermissions(permissionArray, scp.mode());
+			} else {
+				for(String loginKey : scr.loginKeys()) {
+					if (stpLogicMap.containsKey(loginKey)) {
+						StpLogic stpLogic = stpLogicMap.get(loginKey);
+						String[] permissionArray = scp.value();
+						stpLogic.checkHasPermissions(permissionArray, scp.mode());
+					} else {
+						throw new UnrecognizedLoginKeyException(loginKey);
+					}
+				}
+			}
+		}
 
 		// 通过验证
 		return true;
