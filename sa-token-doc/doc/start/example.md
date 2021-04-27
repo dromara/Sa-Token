@@ -61,7 +61,7 @@ spring:
 public class SaTokenDemoApplication {
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(SaTokenDemoApplication.class, args);
-		System.out.println("启动成功：sa-token配置如下：" + SaTokenManager.getConfig());
+		System.out.println("启动成功：sa-token配置如下：" + SaManager.getConfig());
 	}
 }
 ```
