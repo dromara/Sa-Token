@@ -3,10 +3,12 @@
 ------
 
 ## Maven依赖
-在项目中直接通过 `pom.xml` 导入 `sa-token` 的依赖即可：
+在项目中直接通过 `pom.xml` 引入 `sa-token` 的依赖即可（四选一）：
 
 <!------------------------------ tabs:start ------------------------------>
+
 <!-- tab:SpringMVC环境 （ServletAPI）  -->
+如果你使用的框架基于 ServletAPI 构建（ `SpringMVC`、`SpringBoot`、`Zuul`等 ），请引入此包
 ``` xml
 <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -17,7 +19,7 @@
 ```
 
 <!-- tab:WebFlux环境 （Reactor）  -->
-注：此依赖适合在 Reactor模式 的web框架中导入（例如`Netty`、`WebFlux`等），如果您的项目基于 ServletAPI (`SpringMVC`、`SpringBoot`等)，请以前者为准 
+注：如果你使用的框架基于 Reactor 模型构建（`Netty`、`WebFlux`、`Soul`、`SC Gateway`等），请引入此包
 ``` xml
 <!-- sa-token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>

@@ -110,8 +110,8 @@ session.logout();
 // 写值 
 session.set("name", "zhang"); 
 
-// 写值(只有在此key原本无值的时候才会写入)
-session.set("name", "zhang");
+// 写值 (只有在此key原本无值的时候才会写入)
+session.setDefaultValue("name", "zhang");
 
 // 取值
 session.get("name");

@@ -1,14 +1,14 @@
-# 权限验证
+# 权限认证
 --- 
 
 
 ### 核心思想
 
-所谓权限验证，验证的核心就是一个账号是否拥有一个权限码 <br/>
+所谓权限认证，认证的核心就是一个账号是否拥有一个权限码 <br/>
 有，就让你通过。没有？那么禁止访问!
 
-再往底了说，就是每个账号都会拥有一个权限码集合，我来验证这个集合中是否包含指定的权限码 <br/>
-例如：当前账号拥有权限码集合：`["user-add", "user-delete", "user-get"]`，这时候我来验证权限 `"user-update"`，则其结果就是：**验证失败，禁止访问** <br/>
+再往底了说，就是每个账号都会拥有一个权限码集合，我来校验这个集合中是否包含指定的权限码 <br/>
+例如：当前账号拥有权限码集合：`["user-add", "user-delete", "user-get"]`，这时候我来校验权限 `"user-update"`，则其结果就是：**验证失败，禁止访问** <br/>
 
 所以现在问题的核心就是: 
 1. 如何获取一个账号所拥有的的权限码集合
@@ -71,7 +71,7 @@ public class StpInterfaceImpl implements StpInterface {
 
 
 
-### 权限验证
+### 权限认证
 然后就可以用以下api来鉴权了
 
 ``` java
@@ -91,7 +91,7 @@ StpUtil.checkPermissionOr("user-update", "user-delete");
 扩展：`NotPermissionException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 
-### 角色验证
+### 角色认证
 在sa-token中，角色和权限可以独立验证
 
 ``` java

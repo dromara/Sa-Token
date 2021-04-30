@@ -7,8 +7,8 @@
 	- [在WebFlux环境集成](/start/webflux-example) 	
 
 - **基础**
-	- [登录验证](/use/login-auth) 
-	- [权限验证](/use/jur-auth) 
+	- [登录认证](/use/login-auth) 
+	- [权限认证](/use/jur-auth) 
 	- [Session会话](/use/session) 
 	- [踢人下线](/use/kick) 
 	- [注解式鉴权](/use/at-check) 

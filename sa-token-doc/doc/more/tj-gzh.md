@@ -8,6 +8,22 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI1MTA3Mzk4Mg==&mid=2651026326&idx=1&sn=3244e18a9a799cd8e0ec375c6c730670&send_time="/>
+			<b>Java爱好者</b>
+			<span>分享Java开发编程资源和Java技术文章 </span>
+		</td>
+		<td>-</td> 
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+    </tr>
+    <tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzIxODQxMjc0MA==&mid=2247511029&idx=1&sn=42fbb1b8180dc2c995429dabc6f97500&send_time="/>
+			<b>IT大咖说</b>
+			<span>大咖干货，不再错过。 </span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzIxNjA5MTM2MA==&mid=2652444329&idx=1&sn=2a040e87f49a977a116c90e1107a9fdc&send_time="/>
 			<b>Java编程</b>
 			<span>专注Java技术分享，Java基础知识/数据结构/算法</span>
@@ -27,7 +43,6 @@
 			<b>程序员大神</b>
 			<span>有一个在程序员圈混了10年的老程序员, 分享程序员相关的精选内容教程</span>
 		</td>
-		<td></td>
     </tr>
     <tr>
         <td>
