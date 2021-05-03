@@ -1217,65 +1217,32 @@ public class StpLogic {
 	
 
 	// =================== 其它方法 ===================  
-	
+
 	/**
-	 * 对一个Method对象进行注解检查（注解鉴权内部实现） 
-	 * @param method Method对象
+	 * 检查当前登录体系是否拥有给定角色
+	 * @param roleArray 角色字符串数组
+	 * @param saMode SaMode.AND, SaMode.OR
 	 */
-	public void checkMethodAnnotation(Method method) {
-		
-		// ----------- 验证登录 
-		if(method.isAnnotationPresent(SaCheckLogin.class) || method.getDeclaringClass().isAnnotationPresent(SaCheckLogin.class)) {
-			this.checkLogin();
+	public void checkHasRoles(String[] roleArray, SaMode saMode) {
+		if(saMode == SaMode.AND) {
+			this.checkRoleAnd(roleArray);
+		} else {
+			this.checkRoleOr(roleArray);
 		}
-		
-		// ----------- 验证角色
-		// 验证方法上的 
-		SaCheckRole scr = method.getAnnotation(SaCheckRole.class);
-		if(scr != null) { 
-			String[] roleArray = scr.value();
-			if(scr.mode() == SaMode.AND) {
-				this.checkRoleAnd(roleArray);	
-			} else {
-				this.checkRoleOr(roleArray);	
-			}
-		}
-		// 验证类上的 
-		scr = method.getDeclaringClass().getAnnotation(SaCheckRole.class);
-		if(scr != null) { 
-			String[] roleArray = scr.value();
-			if(scr.mode() == SaMode.AND) {
-				this.checkRoleAnd(roleArray);	
-			} else {
-				this.checkRoleOr(roleArray);	
-			}
-		}
-		
-		// ----------- 验证权限 
-		// 验证方法上的 
-		SaCheckPermission scp = method.getAnnotation(SaCheckPermission.class);
-		if(scp != null) { 
-			String[] permissionArray = scp.value();
-			if(scp.mode() == SaMode.AND) {
-				this.checkPermissionAnd(permissionArray);	
-			} else {
-				this.checkPermissionOr(permissionArray);	
-			}
-		}
-		// 验证类上的 
-		scp = method.getDeclaringClass().getAnnotation(SaCheckPermission.class);
-		if(scp != null) { 
-			String[] permissionArray = scp.value();
-			if(scp.mode() == SaMode.AND) {
-				this.checkPermissionAnd(permissionArray);	
-			} else {
-				this.checkPermissionOr(permissionArray);	
-			}
-		}
-		
-		// 验证通过 
 	}
 
+	/**
+	 * 检查当前登录体系是否拥有给定权限
+	 * @param permissionArray 权限字符串数组
+	 * @param saMode SaMode.AND, SaMode.OR
+	 */
+	public void checkHasPermissions(String[] permissionArray, SaMode saMode) {
+		if(saMode == SaMode.AND) {
+			this.checkPermissionAnd(permissionArray);
+		} else {
+			this.checkPermissionOr(permissionArray);
+		}
+	}
 	
 	// =================== 身份切换 ===================  
 

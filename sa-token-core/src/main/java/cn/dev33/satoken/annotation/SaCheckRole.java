@@ -26,5 +26,13 @@ public @interface SaCheckRole {
 	 * @return 验证模式
 	 */
 	SaMode mode() default SaMode.AND;
+
+	/**
+	 * 多账号体系下使用哪个体系检测角色
+	 * 每个StpUtil都有一个stpLogic属性
+	 * 初始化StpLogic时, 指定的LoginKey字符串复制到这里
+	 * @return LoginKey字符串
+	 */
+	String key() default "login";
 	
 }

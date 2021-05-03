@@ -1,7 +1,5 @@
 package cn.dev33.satoken.exception;
 
-import cn.dev33.satoken.stp.StpUtil;
-
 /**
  * 没有指定角色标识，抛出的异常 
  * 
@@ -37,10 +35,6 @@ public class NotRoleException extends SaTokenException {
 	 */
 	public String getLoginKey() {
 		return loginKey;
-	}
-
-	public NotRoleException(String role) {
-		this(role, StpUtil.stpLogic.loginKey);
 	}
 
 	public NotRoleException(String role, String loginKey) {
