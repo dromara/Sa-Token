@@ -26,11 +26,22 @@
 1. 新建一个新的权限验证类，比如： `StpUserUtil.java`
 2. 将`StpUtil.java`类的全部代码复制粘贴到 `StpUserUtil.java`里
 3. 更改一下其 `LoginKey`， 比如：
+
 ``` java
-	// 底层的 StpLogic 对象  
-	public static StpLogic stpLogic = new StpLogic("user");	// 将 LoginKey 改为 user 
+public class StpUserUtil {
+	
+	/**
+	 * 账号体系标识 
+	 */
+	public static final String KEY = "user";	// 将 LoginKey 从`login`改为`user` 
+
+	// 其它代码 ... 
+
+}
 ```
 4. 接下来就可以像调用`StpUtil.java`一样调用 `StpUserUtil.java`了，这两套账号认证的逻辑是完全隔离的
+
+> 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/click33/sa-plus/blob/master/sp-server/src/main/java/com/pj/current/satoken/StpUserUtil.java)
 
 
 ### 进阶
@@ -46,9 +57,9 @@
 public static StpLogic stpLogic = new StpLogic("user") {
 	// 重写 `splicingKeyTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
 	@Override
-        public String splicingKeyTokenName() {
-            return super.splicingKeyTokenName()+"-user";
-        }
+	public String splicingKeyTokenName() {
+		return super.splicingKeyTokenName() + "-user";
+	}
 }; 
 ```
 

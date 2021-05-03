@@ -10,13 +10,17 @@ import cn.dev33.satoken.session.SaSession;
  * @author kong 
  */
 public class StpUtil {
-
+	
+	/**
+	 * 账号体系标识 
+	 */
+	public static final String KEY = "login";
+	
 	/**
 	 * 底层的 StpLogic 对象  
 	 */
-	public static StpLogic stpLogic = new StpLogic("login"); 
+	public static StpLogic stpLogic = new StpLogic(KEY); 
 
-	
 	/**
 	 * 获取当前StpLogin的loginKey 
 	 * @return 当前StpLogin的loginKey

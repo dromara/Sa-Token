@@ -1,5 +1,6 @@
 package cn.dev33.satoken.action;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import cn.dev33.satoken.session.SaSession;
@@ -34,5 +35,11 @@ public interface SaTokenAction {
 	 * @return 是否包含
 	 */
 	public boolean hasElement(List<String> list, String element);
+
+	/**
+	 * 对一个Method对象进行注解检查（注解鉴权内部实现） 
+	 * @param method Method对象
+	 */
+	public void checkMethodAnnotation(Method method);
 	
 }

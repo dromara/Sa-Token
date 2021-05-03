@@ -1,12 +1,16 @@
 package cn.dev33.satoken.action;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * 对 SaTokenAction 接口的默认实现 
@@ -75,6 +79,54 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		}
 		// 走出for循环说明没有一个元素可以匹配成功 
 		return false;
+	}
+
+	/**
+	 * 对一个Method对象进行注解权限校验（注解鉴权逻辑内部实现） 
+	 */
+	@Override
+	public void checkMethodAnnotation(Method method) {
+
+		// 获取这个 Method 所属的 Class 
+		Class<?> clazz = method.getDeclaringClass();
+		
+		
+		// 从 Class 校验 @SaCheckLogin 注解 
+		if(clazz.isAnnotationPresent(SaCheckLogin.class)) {
+			SaCheckLogin at = clazz.getAnnotation(SaCheckLogin.class);
+			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+		}
+
+		// 从 Class 校验 @SaCheckRole 注解 
+		if(clazz.isAnnotationPresent(SaCheckRole.class)) {
+			SaCheckRole at = clazz.getAnnotation(SaCheckRole.class);
+			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+		}
+
+		// 从 Class 校验 @SaCheckPermission 注解 
+		if(clazz.isAnnotationPresent(SaCheckPermission.class)) {
+			SaCheckPermission at = clazz.getAnnotation(SaCheckPermission.class);
+			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+		}
+
+		// 从 Method 校验 @SaCheckLogin 注解 
+		if(method.isAnnotationPresent(SaCheckLogin.class)) {
+			SaCheckLogin at = method.getAnnotation(SaCheckLogin.class);
+			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+		}
+
+		// 从 Method 校验 @SaCheckRole 注解 
+		if(method.isAnnotationPresent(SaCheckRole.class)) {
+			SaCheckRole at = method.getAnnotation(SaCheckRole.class);
+			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+		}
+
+		// 从 Method 校验 @SaCheckPermission 注解 
+		if(method.isAnnotationPresent(SaCheckPermission.class)) {
+			SaCheckPermission at = method.getAnnotation(SaCheckPermission.class);
+			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+		}
+
 	}
 	
 }

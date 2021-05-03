@@ -71,8 +71,10 @@ public class TestJwtController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test() {
-		StpUtil.getTokenSession().logout();
-		StpUtil.logoutByLoginId(10001);
+		System.out.println();
+		System.out.println("--------------进入请求--------------");
+		StpUtil.setLoginId(10001);	
+		System.out.println(StpUtil.getTokenInfo().getTokenValue());
 		return AjaxJson.getSuccess();
 	}
 

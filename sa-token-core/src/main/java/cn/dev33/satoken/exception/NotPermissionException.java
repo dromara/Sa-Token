@@ -1,5 +1,7 @@
 package cn.dev33.satoken.exception;
 
+import cn.dev33.satoken.stp.StpUtil;
+
 /**
  * 没有指定权限码，抛出的异常 
  * 
@@ -35,6 +37,10 @@ public class NotPermissionException extends SaTokenException {
 	 */
 	public String getLoginKey() {
 		return loginKey;
+	}
+
+	public NotPermissionException(String code) {
+		this(code, StpUtil.stpLogic.loginKey);
 	}
 
 	public NotPermissionException(String code, String loginKey) {

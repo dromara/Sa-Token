@@ -1,6 +1,5 @@
 package cn.dev33.satoken.stp;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +23,8 @@ import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
-import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * sa-token 权限验证，逻辑实现类 
@@ -1219,30 +1218,39 @@ public class StpLogic {
 	// =================== 其它方法 ===================  
 
 	/**
-	 * 检查当前登录体系是否拥有给定角色
-	 * @param roleArray 角色字符串数组
-	 * @param saMode SaMode.AND, SaMode.OR
+	 * 根据注解(@SaCheckLogin)鉴权
+	 * @param at 注解对象 
 	 */
-	public void checkHasRoles(String[] roleArray, SaMode saMode) {
-		if(saMode == SaMode.AND) {
-			this.checkRoleAnd(roleArray);
-		} else {
-			this.checkRoleOr(roleArray);
-		}
+	public void checkByAnnotation(SaCheckLogin at) {
+		this.checkLogin();
 	}
 
 	/**
-	 * 检查当前登录体系是否拥有给定权限
-	 * @param permissionArray 权限字符串数组
-	 * @param saMode SaMode.AND, SaMode.OR
+	 * 根据注解(@SaCheckRole)鉴权
+	 * @param at 注解对象 
 	 */
-	public void checkHasPermissions(String[] permissionArray, SaMode saMode) {
-		if(saMode == SaMode.AND) {
-			this.checkPermissionAnd(permissionArray);
+	public void checkByAnnotation(SaCheckRole at) {
+		String[] roleArray = at.value();
+		if(at.mode() == SaMode.AND) {
+			this.checkRoleAnd(roleArray);	
 		} else {
-			this.checkPermissionOr(permissionArray);
+			this.checkRoleOr(roleArray);	
 		}
 	}
+	
+	/**
+	 * 根据注解(@SaCheckPermission)鉴权
+	 * @param at 注解对象 
+	 */
+	public void checkByAnnotation(SaCheckPermission at) {
+		String[] permissionArray = at.value();
+		if(at.mode() == SaMode.AND) {
+			this.checkPermissionAnd(permissionArray);	
+		} else {
+			this.checkPermissionOr(permissionArray);	
+		}
+	}
+
 	
 	// =================== 身份切换 ===================  
 
