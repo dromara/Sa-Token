@@ -44,6 +44,29 @@ public class StpUserUtil {
 > 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/click33/sa-plus/blob/master/sp-server/src/main/java/com/pj/current/satoken/StpUserUtil.java)
 
 
+### 在多账号模式下使用注解鉴权
+框架默认的注解鉴权 如`@SaCheckLogin` 只针对原生`StpUtil`进行鉴权 
+
+例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.setLoginId(id)`进行登录的会话，
+而对于通过`StpUserUtil.setLoginId(id)`进行登录的都会话，则始终不会通过校验
+
+那么如何告诉`@SaCheckLogin`要鉴别的是哪套账号的登录会话呢？很简单，你只需要指定一下注解的key属性即可：
+
+``` java
+// 通过key属性指定此注解校验的是我们自定义的`StpUserUtil`，而不是原生`StpUtil`
+@SaCheckLogin(key = StpUserUtil.KEY)
+@RequestMapping("info")
+public String info() {
+    return "查询用户信息";
+}
+```
+
+注：`@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，亦可根据key属性指定其校验的账号体系，此属性默认为`""`，代表使用原生`StpUtil`账号体系
+
+
+
+
+
 ### 进阶
 假设我们不仅需要在后台同时集成两套账号，我们还需要在一个客户端同时登陆两套账号（业务场景举例：一个APP中可以同时登陆商家账号和用户账号）
 
