@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-plugin</artifactId>
+        <version>1.18.0</version>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-dao-redis-jackson</name>
+    <artifactId>sa-token-dao-redis-jackson</artifactId>
+	<description>sa-token integrate redis (to jackson)</description>
+
+	<dependencies>
+		<!-- sa-token-spring-boot-starter -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+		<!-- RedisTemplate 相关操作API -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+			<version>2.3.3.RELEASE</version>
+        </dependency>
+		<!-- jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+      	  	<version>2.11.2</version>	
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+
+
+</project>

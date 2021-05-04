@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+   
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-parent</artifactId>
+        <version>1.18.0</version>
+    </parent>
+    <packaging>pom</packaging>
+    
+	<name>sa-token-plugin</name>
+    <artifactId>sa-token-plugin</artifactId>
+	<description>sa-token plugins</description>
+	
+    <modules>
+        <module>sa-token-dao-redis</module>
+        <module>sa-token-dao-redis-jackson</module>
+        <module>sa-token-oauth2</module>
+        <module>sa-token-spring-aop</module>
+    </modules>
+
+</project>

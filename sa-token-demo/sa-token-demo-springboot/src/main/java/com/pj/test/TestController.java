@@ -241,6 +241,7 @@ public class TestController {
 	@RequestMapping("test")
 	public AjaxJson test() {
 		System.out.println("进来了");
+		System.out.println(StpUtil.getTokenInfo());
 		return AjaxJson.getSuccess("访问成功");
 	}
 	

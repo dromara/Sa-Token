@@ -6,14 +6,14 @@
 	
 	<parent>
         <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-parent</artifactId>
+        <artifactId>sa-token-plugin</artifactId>
         <version>1.18.0</version>
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-dao-redis-jackson</name>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-	<description>sa-token integrate redis (to jackson)</description>
+	<name>sa-token-dao-redis</name>
+    <artifactId>sa-token-dao-redis</artifactId>
+	<description>sa-token integrate redis</description>
 
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->
@@ -28,13 +28,6 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
 			<version>2.3.3.RELEASE</version>
         </dependency>
-		<!-- jackson-databind -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-      	  	<version>2.11.2</version>	
-			<optional>true</optional>
-		</dependency>
 	</dependencies>
 
 

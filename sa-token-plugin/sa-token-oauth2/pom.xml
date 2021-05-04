@@ -6,7 +6,7 @@
 	
 	<parent>
         <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-parent</artifactId>
+        <artifactId>sa-token-plugin</artifactId>
         <version>1.18.0</version>
     </parent>
     <packaging>jar</packaging>

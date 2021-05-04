@@ -84,21 +84,23 @@ implementation 'cn.dev33:sa-token-core:1.18.0'
 
 ``` js
 ── sa-token
-	├── sa-token-core                         // sa-token 核心模块
-	├── sa-token-servlet                      // sa-token 整合 Servlet容器实现类包
-	├── sa-token-spring-boot-starter          // sa-token 整合 SpringBoot 快速集成 
-	├── sa-token-reactor-spring-boot-starter  // sa-token 整合 Reactor响应式编程 快速集成 
-	├── sa-token-dao-redis                    // sa-token 整合 Redis (使用jdk默认序列化方式)
-	├── sa-token-dao-redis-jackson            // sa-token 整合 Redis (使用jackson序列化方式)
-	├── sa-token-spring-aop                   // sa-token 整合 SpringAOP 注解鉴权
-	├── sa-token-oauth2                       // sa-token 实现 OAuth2.0 模块(内测暂未发布)
-	├── sa-token-demo-springboot              // [示例] sa-token 整合 SpringBoot 
-	├── sa-token-demo-jwt                     // [示例] sa-token 集成 jwt [示例]
-	├── sa-token-demo-webflux                 // [示例] sa-token 整合 WebFlux [示例]
-	├── sa-token-demo-oauth2                  // [示例] sa-token集成OAuth2.0模块 [示例]
-		├── sa-token-demo-oauth2-client       // [示例] OAuth2.0 客户端
-		├── sa-token-demo-oauth2-server       // [示例] OAuth2.0 服务端
-	├── sa-token-doc                          // [文档] sa-token开发文档 
+	├── sa-token-core                         // [核心] sa-token 核心模块
+	├── sa-token-starter                      // [整合] sa-token 与其它框架整合
+		├── sa-token-servlet                      // [整合] sa-token 整合 Servlet容器实现类包
+		├── sa-token-spring-boot-starter          // [整合] sa-token 整合 SpringBoot 快速集成 
+		├── sa-token-reactor-spring-boot-starter  // [整合] sa-token 整合 Reactor响应式编程 快速集成 
+	├── sa-token-plugin                       // [插件] sa-token 插件合集
+		├── sa-token-dao-redis                    // [插件] sa-token 整合 Redis (使用jdk默认序列化方式)
+		├── sa-token-dao-redis-jackson            // [插件] sa-token 整合 Redis (使用jackson序列化方式)
+		├── sa-token-spring-aop                   // [插件] sa-token 整合 SpringAOP 注解鉴权
+		├── sa-token-oauth2                       // [插件] sa-token 实现 OAuth2.0 模块(内测暂未发布)
+	├── sa-token-demo                         // [示例] sa-token 示例合集
+		├── sa-token-demo-springboot              // [示例] sa-token 整合 SpringBoot 
+		├── sa-token-demo-jwt                     // [示例] sa-token 集成 jwt [示例]
+		├── sa-token-demo-webflux                 // [示例] sa-token 整合 WebFlux [示例]
+		├── sa-token-demo-oauth2-client           // [示例] sa-token 集成 OAuth2.0 (客户端)
+		├── sa-token-demo-oauth2-server           // [示例] sa-token 集成 OAuth2.0 (服务端)
+	├── sa-token-doc                          // [文档] sa-token 开发文档 
 	├──pom.xml
 ```
 

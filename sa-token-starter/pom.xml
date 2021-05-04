@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+   
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-parent</artifactId>
+        <version>1.18.0</version>
+    </parent>
+    <packaging>pom</packaging>
+    
+	<name>sa-token-starter</name>
+    <artifactId>sa-token-starter</artifactId>
+	<description>sa-token starters</description>
+	
+    <modules>
+        <module>sa-token-servlet</module>
+        <module>sa-token-spring-boot-starter</module>
+        <module>sa-token-reactor-spring-boot-starter</module>
+    </modules>
+
+</project>
