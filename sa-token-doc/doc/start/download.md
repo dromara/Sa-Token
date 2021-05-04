@@ -96,10 +96,10 @@ implementation 'cn.dev33:sa-token-core:1.18.0'
 		├── sa-token-oauth2                       // [插件] sa-token 实现 OAuth2.0 模块(内测暂未发布)
 	├── sa-token-demo                         // [示例] sa-token 示例合集
 		├── sa-token-demo-springboot              // [示例] sa-token 整合 SpringBoot 
-		├── sa-token-demo-jwt                     // [示例] sa-token 集成 jwt [示例]
 		├── sa-token-demo-webflux                 // [示例] sa-token 整合 WebFlux [示例]
-		├── sa-token-demo-oauth2-client           // [示例] sa-token 集成 OAuth2.0 (客户端)
+		├── sa-token-demo-jwt                     // [示例] sa-token 集成 jwt [示例]
 		├── sa-token-demo-oauth2-server           // [示例] sa-token 集成 OAuth2.0 (服务端)
+		├── sa-token-demo-oauth2-client           // [示例] sa-token 集成 OAuth2.0 (客户端)
 	├── sa-token-doc                          // [文档] sa-token 开发文档 
 	├──pom.xml
 ```
