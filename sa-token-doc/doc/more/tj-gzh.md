@@ -8,11 +8,15 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzk0MjE5MTk5Mw==&mid=2247485576&idx=1&sn=d955d60ab193d895fbd15c37bedebcb8&send_time="/>
+			<b>Github导航站</b>
+			<span>分享好玩有趣、新奇、实用的开源项目 </span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI1MTA3Mzk4Mg==&mid=2651026326&idx=1&sn=3244e18a9a799cd8e0ec375c6c730670&send_time="/>
 			<b>Java爱好者</b>
 			<span>分享Java开发编程资源和Java技术文章 </span>
 		</td>
-		<td>-</td> 
 		<td>-</td>
 		<td>-</td>
 		<td>-</td>
