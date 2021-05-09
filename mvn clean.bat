@@ -25,6 +25,10 @@ cd sa-token-demo-oauth2-server
 call mvn clean
 cd ..
 
+cd sa-token-demo-quick-login
+call mvn clean
+cd ..
+
 cd ..
 
 :: 最后打印

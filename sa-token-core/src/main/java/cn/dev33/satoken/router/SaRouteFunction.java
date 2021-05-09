@@ -9,6 +9,7 @@ import cn.dev33.satoken.context.model.SaResponse;
  * @author kong
  *
  */
+@FunctionalInterface
 public interface SaRouteFunction {
 
 	/**

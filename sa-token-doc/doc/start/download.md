@@ -14,7 +14,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.18.0</version>
+	<version>1.19.0</version>
 </dependency>
 ```
 
@@ -25,7 +25,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-	<version>1.18.0</version>
+	<version>1.19.0</version>
 </dependency>
 ```
 
@@ -36,7 +36,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-servlet</artifactId>
-	<version>1.18.0</version>
+	<version>1.19.0</version>
 </dependency>
 ```
 
@@ -47,7 +47,7 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-core</artifactId>
-	<version>1.18.0</version>
+	<version>1.19.0</version>
 </dependency>
 ```
 <!---------------------------- tabs:end ------------------------------>
@@ -58,19 +58,19 @@
 <!-- tabs:start -->
 <!-- tab:SpringMVC环境 （ServletAPI）  -->
 ``` xml
-implementation 'cn.dev33:sa-token-spring-boot-starter:1.18.0'
+implementation 'cn.dev33:sa-token-spring-boot-starter:1.19.0'
 ```
 <!-- tab:WebFlux环境 （Reactor）  -->
 ``` xml
-implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.18.0'
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.19.0'
 ```
 <!-- tab:Servlet容器环境  -->
 ``` xml
-implementation 'cn.dev33:sa-token-servlet:1.18.0'
+implementation 'cn.dev33:sa-token-servlet:1.19.0'
 ```
 <!-- tab:其它  -->
 ``` xml
-implementation 'cn.dev33:sa-token-core:1.18.0'
+implementation 'cn.dev33:sa-token-core:1.19.0'
 ```
 <!-- tabs:end -->
 

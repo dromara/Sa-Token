@@ -10,7 +10,6 @@ import com.pj.util.AjaxJson;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
-import cn.dev33.satoken.router.SaRouterUtil;
 
 
 /**
@@ -42,9 +41,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		
         		// 认证函数: 每次请求执行 
         		.setAuth(r -> {
-        			System.out.println("---------- sa全局认证");
+        			// System.out.println("---------- sa全局认证");
         			
-                    SaRouterUtil.match("/test/test", () -> new Object());
+                    // SaRouterUtil.match("/test/test", () -> new Object());
         		})
         		
         		// 异常处理函数：每次认证函数发生异常时执行此函数 

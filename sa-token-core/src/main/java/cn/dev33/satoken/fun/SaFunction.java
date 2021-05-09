@@ -6,6 +6,7 @@ package cn.dev33.satoken.fun;
  * @author kong
  *
  */
+@FunctionalInterface
 public interface SaFunction {
 
 	/**

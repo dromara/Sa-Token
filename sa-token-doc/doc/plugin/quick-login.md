@@ -49,7 +49,7 @@ Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-quick-login</artifactId>
-	<version>1.18.0</version>
+	<version>1.19.0</version>
 </dependency>
 ```
 
@@ -97,7 +97,7 @@ public class TestController {
 
 
 ### 可配置信息
-你可以在yml中添加如下配置
+你可以在yml中添加如下配置 (所有配置都是可选的) 
 ``` java
 # Sa-Token-Quick-Login 配置
 sa: 
@@ -161,11 +161,9 @@ sa-token-demo-quick-login-0.0.1-SNAPSHOT.jar
 java -jar sa-quick-dist.jar
 ```
 
-5、测试访问，根据控制台输出提示，我们使用浏览器访问测试
+5、测试访问，根据控制台输出提示，我们使用浏览器访问测试: `http://localhost:8080`
 
-``` java
-http://localhost:8080
-```
+![sa-quick-start](https://oss.dev33.cn/sa-token/doc/sa-quick-start.png 's-w')
 
 如果可以进入登录界面，则代表打包运行成功 <br>
 当然仅仅运行成功还不够，下面我们演示一下如何使用这个jar包进行静态网站部署
@@ -201,12 +199,7 @@ java -jar sa-quick-dist.jar --sa.title="XXX 系统登录"
 java -jar sa-quick-dist.jar --sa.auth=false
 ```
 
-##### Case 6. 关闭账号校验，仅作为静态资源部署使用
-``` cmd
-java -jar sa-quick-dist.jar --sa.auth=false
-```
-
-##### Case 7. 指定启动端口（默认8080）
+##### Case 6. 指定启动端口（默认8080）
 ``` cmd
 java -jar sa-quick-dist.jar --server.port=80 
 ```
