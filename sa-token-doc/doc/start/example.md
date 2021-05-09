@@ -1,7 +1,7 @@
 # SpringBoot 集成 Sa-Token 示例
 
 本篇将带你从零开始集成sa-token，从而让你快速熟悉sa-token的使用姿势 <br>
-整合示例在官方仓库的`/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行测试学习
+整合示例在官方仓库的`/sa-token-demo/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行测试学习
 
 ---
 

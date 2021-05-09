@@ -33,6 +33,10 @@
 	- [单点登录](/senior/sso)
 	- [多账号验证](/use/many-account) 
 
+- **插件**
+	- [AOP注解鉴权](/plugin/aop-at)
+	- [Quick-Login快速登录插件](/plugin/quick-login)
+
 - **其它**
 	- [常见问题](/more/common-questions) 
 	- [更新日志](/more/update-log) 

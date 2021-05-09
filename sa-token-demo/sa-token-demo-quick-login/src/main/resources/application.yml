@@ -1,0 +1,27 @@
+# 端口
+server:
+    port: 8081
+
+# Sa-Token-Quick-Login 配置
+sa: 
+    # 登录账号
+    name: sa
+    # 登录密码
+    pwd: 123456
+    # 是否自动随机生成账号密码 (此项为true时, name与pwd失效)
+    auto: false
+    # 是否开启全局认证(关闭后将不再强行拦截) 
+    auth: true
+    # 登录页标题
+    title: Sa-Token 登录
+    # 是否显示底部版权信息 
+    copr: true
+    # 将本地磁盘的某个路径作为静态资源开放 
+    # dir: file:E:\static
+    
+    
+# 静态文件路径映射 
+spring: 
+    resources: 
+        static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/, ${sa.dir:}
+        

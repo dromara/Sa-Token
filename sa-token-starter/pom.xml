@@ -15,6 +15,7 @@
     <artifactId>sa-token-starter</artifactId>
 	<description>sa-token starters</description>
 	
+	<!-- 所有子模块 -->
     <modules>
         <module>sa-token-servlet</module>
         <module>sa-token-spring-boot-starter</module>

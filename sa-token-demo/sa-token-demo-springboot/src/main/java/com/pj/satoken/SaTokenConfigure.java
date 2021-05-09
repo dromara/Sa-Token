@@ -34,7 +34,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
      * 注册 [sa-token全局过滤器] 
      */
     @Bean
-    public SaServletFilter getSaReactorFilter() {
+    public SaServletFilter getSaServletFilter() {
         return new SaServletFilter()
         		
         		// 指定 [拦截路由] 与 [放行路由]
