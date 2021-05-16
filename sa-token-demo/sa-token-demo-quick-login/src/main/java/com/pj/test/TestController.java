@@ -15,7 +15,7 @@ public class TestController {
 
 	// 浏览器访问测试： http://localhost:8081
 	@RequestMapping({"/"})
-	public String login(String username, String password) {
+	public String index() {
 		String str = "<br />"
 //				+ "<h1 style='text-align: center;'>Welcome to the system</h1>"
 				+ "<h1 style='text-align: center;'>资源页 （登录后才可进入本页面） </h1>"
