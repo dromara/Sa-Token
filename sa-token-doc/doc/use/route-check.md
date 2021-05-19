@@ -17,7 +17,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册sa-token的登录拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 注册登录拦截器，并排除登录接口地址 
+		// 注册登录拦截器，并排除登录接口或其他可匿名访问的接口地址 (与注解拦截器无关)
 		registry.addInterceptor(new SaRouteInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/doLogin"); 
 	}
 }
