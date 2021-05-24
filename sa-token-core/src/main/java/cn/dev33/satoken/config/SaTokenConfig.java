@@ -115,7 +115,7 @@ public class SaTokenConfig {
 	/**
 	 * @return 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
 	 */
-	public Boolean isAllowConcurrentLogin() {
+	public Boolean getAllowConcurrentLogin() {
 		return allowConcurrentLogin;
 	}
 
@@ -131,7 +131,7 @@ public class SaTokenConfig {
 	/**
 	 * @return 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
 	 */
-	public Boolean isShareToken() {
+	public Boolean getIsShare() {
 		return isShare;
 	}
 
@@ -179,7 +179,7 @@ public class SaTokenConfig {
 	/**
 	 * @return 是否尝试从cookie里读取token
 	 */
-	public Boolean isReadCookie() {
+	public Boolean getIsReadCookie() {
 		return isReadCookie;
 	}
 

@@ -1,7 +1,6 @@
 package cn.dev33.satoken.stp;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -107,7 +106,7 @@ public class StpLogic {
 		}
 		
 		// 注入Cookie 
-		if(config.isReadCookie()){
+		if(config.getIsReadCookie()){
 			SaResponse response = SaHolder.getResponse();
 			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout);
 		}
@@ -138,7 +137,7 @@ public class StpLogic {
 			tokenValue = request.getHeader(keyTokenName);
 		}
 		// 4. 尝试从cookie里读取 
-		if(tokenValue == null && config.isReadCookie()){
+		if(tokenValue == null && config.getIsReadCookie()){
 			tokenValue = request.getCookieValue(keyTokenName);
 		}
 		
@@ -227,9 +226,9 @@ public class StpLogic {
 		// ------ 2、生成一个token 
 		String tokenValue = null;
 		// --- 如果允许并发登录 
-		if(config.isAllowConcurrentLogin()) {
+		if(config.getAllowConcurrentLogin()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
-			if(config.isShareToken()) {
+			if(config.getIsShare()) {
 				tokenValue = getTokenValueByLoginId(loginId, loginModel.getDevice());
 			}
 		} else {
@@ -291,7 +290,7 @@ public class StpLogic {
  			return;
  		}
  		// 如果打开了cookie模式，第一步，先把cookie清除掉 
- 		if(getConfig().isReadCookie()){
+ 		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
  		logoutByTokenValue(tokenValue);

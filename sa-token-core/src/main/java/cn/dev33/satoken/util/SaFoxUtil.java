@@ -129,5 +129,22 @@ public class SaFoxUtil {
 		}
 		return list2;
 	}
+	
+	/**
+	 * 字符串模糊匹配
+	 * <p>example:
+	 * <p> user* user-add   --  true 
+	 * <p> user* art-add    --  false  
+	 * @param patt 表达式 
+	 * @param str 待匹配的字符串 
+	 * @return 是否可以匹配 
+	 */
+	public static boolean vagueMatch(String patt, String str) {
+		// 如果表达式不带有*号，则只需简单equals即可 (速度提升200倍) 
+		if(patt.indexOf("*") == -1) {
+			return patt.equals(str);
+		}
+		return Pattern.matches(patt.replaceAll("\\*", ".*"), str);
+	}
 
 }

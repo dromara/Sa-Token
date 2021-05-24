@@ -111,7 +111,9 @@ public class SaTokenConfigFactory {
 	@SuppressWarnings("unchecked")
 	private static <T> T getObjectByClass(String str, Class<T> cs) {
 		Object value;
-		if (cs.equals(String.class)) {
+		if (str == null) {
+			value = null;
+		} else if (cs.equals(String.class)) {
 			value = str;
 		} else if (cs.equals(int.class) || cs.equals(Integer.class)) {
 			value = Integer.valueOf(str);

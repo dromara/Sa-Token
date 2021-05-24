@@ -4,7 +4,6 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -73,11 +72,21 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		if(list == null || list.size() == 0) {
 			return false;
 		}
+
+		// 先尝试一下简单匹配，如果可以匹配成功则无需继续模糊匹配 
 		if (list.contains(element)) {
 			return true;
-		}else{
-			return list.stream().anyMatch(patt-> Pattern.matches(patt.replaceAll("\\*", ".*"), element));
 		}
+		
+		// 开始模糊匹配 
+		for (String patt : list) {
+			if(SaFoxUtil.vagueMatch(patt, element)) {
+				return true;
+			}
+		}
+		
+		// 走出for循环说明没有一个元素可以匹配成功 
+		return false;
 	}
 
 	/**
@@ -86,21 +95,26 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	@Override
 	public void checkMethodAnnotation(Method method) {
 
-		// 获取这个 Method 所属的 Class 
-		Class<?> clazz = method.getDeclaringClass();
-
-		validateAnnotation(clazz);
+		// 先校验 Method 所属 Class 上的注解 
+		validateAnnotation(method.getDeclaringClass());
+		
+		// 再校验 Method 上的注解  
 		validateAnnotation(method);
 	}
 
-	private  void validateAnnotation(AnnotatedElement target) {
-		// 校验 @SaCheckLogin 注解
+	/**
+	 * 从指定元素校验注解 
+	 * @param target see note 
+	 */
+	protected void validateAnnotation(AnnotatedElement target) {
+		
+		// 校验 @SaCheckLogin 注解 
 		if(target.isAnnotationPresent(SaCheckLogin.class)) {
 			SaCheckLogin at = target.getAnnotation(SaCheckLogin.class);
 			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
 		}
 
-		// 校验 @SaCheckRole 注解
+		// 校验 @SaCheckRole 注解 
 		if(target.isAnnotationPresent(SaCheckRole.class)) {
 			SaCheckRole at = target.getAnnotation(SaCheckRole.class);
 			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
