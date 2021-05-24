@@ -2,6 +2,7 @@ package cn.dev33.satoken.stp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,7 +38,7 @@ public class StpLogic {
 	/**
 	 * 持久化的key前缀，多账号认证体系时以此值区分，比如：login、user、admin 
 	 */
-	public String loginKey = "";		
+	public String loginKey;
 	
 	/**
 	 * 初始化StpLogic, 并指定LoginKey
@@ -106,7 +107,7 @@ public class StpLogic {
 		}
 		
 		// 注入Cookie 
-		if(config.getIsReadCookie() == true){
+		if(config.isReadCookie()){
 			SaResponse response = SaHolder.getResponse();
 			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout);
 		}
@@ -137,13 +138,13 @@ public class StpLogic {
 			tokenValue = request.getHeader(keyTokenName);
 		}
 		// 4. 尝试从cookie里读取 
-		if(tokenValue == null && config.getIsReadCookie()){
+		if(tokenValue == null && config.isReadCookie()){
 			tokenValue = request.getCookieValue(keyTokenName);
 		}
 		
 		// 5. 如果打开了前缀模式
 		String tokenPrefix = getConfig().getTokenPrefix();
-		if(SaFoxUtil.isEmpty(tokenPrefix) == false && SaFoxUtil.isEmpty(tokenValue) == false) {
+		if(!SaFoxUtil.isEmpty(tokenPrefix) && !SaFoxUtil.isEmpty(tokenValue)) {
 			// 如果token以指定的前缀开头, 则裁剪掉它, 否则视为未提供token 
 			if(tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
 				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
@@ -226,9 +227,9 @@ public class StpLogic {
 		// ------ 2、生成一个token 
 		String tokenValue = null;
 		// --- 如果允许并发登录 
-		if(config.getAllowConcurrentLogin() == true) {
+		if(config.isAllowConcurrentLogin()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
-			if(config.getIsShare() == true) {
+			if(config.isShareToken()) {
 				tokenValue = getTokenValueByLoginId(loginId, loginModel.getDevice());
 			}
 		} else {
@@ -290,7 +291,7 @@ public class StpLogic {
  			return;
  		}
  		// 如果打开了cookie模式，第一步，先把cookie清除掉 
- 		if(getConfig().getIsReadCookie() == true){
+ 		if(getConfig().isReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
  		logoutByTokenValue(tokenValue);
@@ -539,7 +540,7 @@ public class StpLogic {
 	 * @return 账号id 
 	 */
  	public int getLoginIdAsInt() {
- 		return Integer.valueOf(String.valueOf(getLoginId()));
+ 		return Integer.parseInt(String.valueOf(getLoginId()));
  	}
 
  	/**
@@ -547,7 +548,7 @@ public class StpLogic {
 	 * @return 账号id 
 	 */
  	public long getLoginIdAsLong() {
- 		return Long.valueOf(String.valueOf(getLoginId()));
+ 		return Long.parseLong(String.valueOf(getLoginId()));
  	}
  	
  	/** 
@@ -865,7 +866,7 @@ public class StpLogic {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
  		}
  		// 计算相差时间
- 		long lastActivityTime = Long.valueOf(lastActivityTimeString);
+ 		long lastActivityTime = Long.parseLong(lastActivityTimeString);
  		long apartSecond = (System.currentTimeMillis() - lastActivityTime) / 1000;
  		long timeout = getConfig().getActivityTimeout() - apartSecond;
  		// 如果 < 0， 代表已经过期 ，返回-2 
@@ -904,7 +905,7 @@ public class StpLogic {
  	 * @param role 角色标识
  	 */
  	public void checkRole(String role) {
- 		if(hasRole(role) == false) {
+ 		if(!hasRole(role)) {
 			throw new NotRoleException(role, this.loginKey);
 		}
  	}
@@ -917,7 +918,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginKey);
  		for (String role : roleArray) {
- 			if(SaManager.getSaTokenAction().hasElement(roleList, role) == false) {
+ 			if(!SaManager.getSaTokenAction().hasElement(roleList, role)) {
  				throw new NotRoleException(role, this.loginKey);
  			}
  		}
@@ -931,7 +932,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginKey);
  		for (String role : roleArray) {
- 			if(SaManager.getSaTokenAction().hasElement(roleList, role) == true) {
+ 			if(SaManager.getSaTokenAction().hasElement(roleList, role)) {
  				// 有的话提前退出
  				return;		
  			}
@@ -983,7 +984,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginKey);
  		for (String permission : permissionArray) {
- 			if(SaManager.getSaTokenAction().hasElement(permissionList, permission) == false) {
+ 			if(!SaManager.getSaTokenAction().hasElement(permissionList, permission)) {
  				throw new NotPermissionException(permission, this.loginKey);	
  			}
  		}
@@ -997,7 +998,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginKey);
  		for (String permission : permissionArray) {
- 			if(SaManager.getSaTokenAction().hasElement(permissionList, permission) == true) {
+ 			if(SaManager.getSaTokenAction().hasElement(permissionList, permission)) {
  				// 有的话提前退出
  				return;		
  			}
@@ -1053,7 +1054,7 @@ public class StpLogic {
 		// 如果session为null的话直接返回空集合  
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
-			return Arrays.asList();
+			return Collections.emptyList();
 		}
 		// 遍历解析 
 		List<TokenSign> tokenSignList = session.getTokenSignList();
@@ -1077,7 +1078,7 @@ public class StpLogic {
 			return null;
 		}
 		// 如果还未登录，直接返回 null
-		if(isLogin() == false) {
+		if(!isLogin()) {
 			return null;
 		}
 		// 如果session为null的话直接返回 null 
