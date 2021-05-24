@@ -4,6 +4,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -72,14 +73,11 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		if(list == null || list.size() == 0) {
 			return false;
 		}
-		// 遍历匹配
-		for (String patt : list) {
-			if(SaFoxUtil.vagueMatch(patt, element)) {
-				return true;
-			}
+		if (list.contains(element)) {
+			return true;
+		}else{
+			return list.stream().anyMatch(patt-> Pattern.matches(patt.replaceAll("\\*", ".*"), element));
 		}
-		// 走出for循环说明没有一个元素可以匹配成功 
-		return false;
 	}
 
 	/**
