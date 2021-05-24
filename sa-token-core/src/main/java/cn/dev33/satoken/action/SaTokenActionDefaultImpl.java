@@ -1,8 +1,10 @@
 package cn.dev33.satoken.action;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -71,14 +73,11 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		if(list == null || list.size() == 0) {
 			return false;
 		}
-		// 遍历匹配
-		for (String patt : list) {
-			if(SaFoxUtil.vagueMatch(patt, element)) {
-				return true;
-			}
+		if (list.contains(element)) {
+			return true;
+		}else{
+			return list.stream().anyMatch(patt-> Pattern.matches(patt.replaceAll("\\*", ".*"), element));
 		}
-		// 走出for循环说明没有一个元素可以匹配成功 
-		return false;
 	}
 
 	/**
@@ -89,44 +88,29 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 
 		// 获取这个 Method 所属的 Class 
 		Class<?> clazz = method.getDeclaringClass();
-		
-		
-		// 从 Class 校验 @SaCheckLogin 注解 
-		if(clazz.isAnnotationPresent(SaCheckLogin.class)) {
-			SaCheckLogin at = clazz.getAnnotation(SaCheckLogin.class);
+
+		validateAnnotation(clazz);
+		validateAnnotation(method);
+	}
+
+	private  void validateAnnotation(AnnotatedElement target) {
+		// 校验 @SaCheckLogin 注解
+		if(target.isAnnotationPresent(SaCheckLogin.class)) {
+			SaCheckLogin at = target.getAnnotation(SaCheckLogin.class);
 			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
 		}
 
-		// 从 Class 校验 @SaCheckRole 注解 
-		if(clazz.isAnnotationPresent(SaCheckRole.class)) {
-			SaCheckRole at = clazz.getAnnotation(SaCheckRole.class);
+		// 校验 @SaCheckRole 注解
+		if(target.isAnnotationPresent(SaCheckRole.class)) {
+			SaCheckRole at = target.getAnnotation(SaCheckRole.class);
 			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
 		}
 
-		// 从 Class 校验 @SaCheckPermission 注解 
-		if(clazz.isAnnotationPresent(SaCheckPermission.class)) {
-			SaCheckPermission at = clazz.getAnnotation(SaCheckPermission.class);
+		// 校验 @SaCheckPermission 注解
+		if(target.isAnnotationPresent(SaCheckPermission.class)) {
+			SaCheckPermission at = target.getAnnotation(SaCheckPermission.class);
 			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
 		}
-
-		// 从 Method 校验 @SaCheckLogin 注解 
-		if(method.isAnnotationPresent(SaCheckLogin.class)) {
-			SaCheckLogin at = method.getAnnotation(SaCheckLogin.class);
-			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
-		}
-
-		// 从 Method 校验 @SaCheckRole 注解 
-		if(method.isAnnotationPresent(SaCheckRole.class)) {
-			SaCheckRole at = method.getAnnotation(SaCheckRole.class);
-			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
-		}
-
-		// 从 Method 校验 @SaCheckPermission 注解 
-		if(method.isAnnotationPresent(SaCheckPermission.class)) {
-			SaCheckPermission at = method.getAnnotation(SaCheckPermission.class);
-			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
-		}
-
 	}
 	
 }

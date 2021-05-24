@@ -94,9 +94,7 @@ public class SaTokenConfigFactory {
 				Object valueConvert = getObjectByClass(value, field.getType());
 				field.setAccessible(true);
 				field.set(obj, valueConvert);
-			} catch (IllegalArgumentException e) {
-				throw new RuntimeException("属性赋值出错：" + field.getName(), e);
-			} catch (IllegalAccessException e) {
+			} catch (IllegalArgumentException | IllegalAccessException e) {
 				throw new RuntimeException("属性赋值出错：" + field.getName(), e);
 			}
 		}
@@ -112,23 +110,21 @@ public class SaTokenConfigFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> T getObjectByClass(String str, Class<T> cs) {
-		Object value = null;
-		if (str == null) {
-			value = null;
-		} else if (cs.equals(String.class)) {
+		Object value;
+		if (cs.equals(String.class)) {
 			value = str;
 		} else if (cs.equals(int.class) || cs.equals(Integer.class)) {
-			value = new Integer(str);
+			value = Integer.valueOf(str);
 		} else if (cs.equals(long.class) || cs.equals(Long.class)) {
-			value = new Long(str);
+			value = Long.valueOf(str);
 		} else if (cs.equals(short.class) || cs.equals(Short.class)) {
-			value = new Short(str);
+			value = Short.valueOf(str);
 		} else if (cs.equals(float.class) || cs.equals(Float.class)) {
-			value = new Float(str);
+			value = Float.valueOf(str);
 		} else if (cs.equals(double.class) || cs.equals(Double.class)) {
-			value = new Double(str);
+			value = Double.valueOf(str);
 		} else if (cs.equals(boolean.class) || cs.equals(Boolean.class)) {
-			value = new Boolean(str);
+			value = Boolean.valueOf(str);
 		} else {
 			throw new RuntimeException("未能将值：" + str + "，转换类型为：" + cs, null);
 		}
