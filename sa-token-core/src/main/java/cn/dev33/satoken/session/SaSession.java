@@ -8,6 +8,7 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.SaRetFunction;
 
 /**
  * Session Model
@@ -323,6 +324,24 @@ public class SaSession implements Serializable {
 	 */
 	public <T> T get(String key, T defaultValue) {
 		return getValueByDefaultValue(get(key), defaultValue);
+	}
+	
+	/**
+	 * 
+	 * 取值 (如果值为null，则执行fun函数获取值) 
+	 * @param <T> 返回值的类型 
+	 * @param key key 
+	 * @param fun 值为null时执行的函数 
+	 * @return 值 
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T get(String key, SaRetFunction fun) {
+		Object value = get(key);
+		if(value == null) {
+			value = fun.run();
+			set(key, value);
+		}
+		return (T) value;
 	}
 	
 	/**

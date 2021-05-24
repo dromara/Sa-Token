@@ -241,7 +241,20 @@ public class TestController {
 	@RequestMapping("test")
 	public AjaxJson test() {
 		System.out.println("进来了");
-		System.out.println(StpUtil.getTokenInfo());
+//		System.out.println(StpUtil.getTokenInfo());
+		StpUtil.setLoginId(10001);
+		String ss = StpUtil.getSession().get("name", () -> {
+			System.out.println("-=------进入方法");
+			return "zhangsan";
+		});
+		ss = StpUtil.getSession().get("name", () -> {
+			System.out.println("-=------进入方法2");
+			return "zhangsan2";
+		});
+		
+		StpUtil.getSession().delete("name");
+		System.out.println(ss);
+		
 		return AjaxJson.getSuccess("访问成功");
 	}
 	
