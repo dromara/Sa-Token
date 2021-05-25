@@ -55,7 +55,7 @@ public class SaManager {
 	 */
 	private static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
-		if(SaManager.saTokenDao != null && (SaManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
+		if((SaManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
 			((SaTokenDaoDefaultImpl)SaManager.saTokenDao).endRefreshThread();
 		}
 		SaManager.saTokenDao = saTokenDao;
