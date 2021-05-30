@@ -12,7 +12,7 @@ import org.noear.solon.annotation.Configuration;
 /**
  * [Sa-Token 权限认证] 配置类 
  * @author kong
- *
+ * @author noear
  */
 @Configuration
 public class SaTokenConfigure {

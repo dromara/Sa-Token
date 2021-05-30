@@ -7,7 +7,7 @@ import org.noear.solon.annotation.Mapping;
 /**
  * 登录测试
  * @author kong
- *
+ * @author noear
  */
 @Controller
 @Mapping("/user/")

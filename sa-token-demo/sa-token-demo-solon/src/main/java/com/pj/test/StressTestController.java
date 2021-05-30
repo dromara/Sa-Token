@@ -14,7 +14,7 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * 压力测试 
  * @author kong
- *
+ * @author noear
  */
 @Controller
 @Mapping("/s-test/")

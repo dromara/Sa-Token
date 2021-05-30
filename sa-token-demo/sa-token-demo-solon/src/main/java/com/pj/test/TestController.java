@@ -21,7 +21,7 @@ import org.noear.solon.annotation.Param;
 /**
  * 测试专用Controller 
  * @author kong
- *
+ * @author noear
  */
 @Controller
 @Mapping("/test/")
