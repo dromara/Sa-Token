@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-demo-solon</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	
+	<!-- 定义sa-token版本号 -->
+	<properties>
+		<sa-token-version>1.19.0</sa-token-version>
+	</properties>
+
+	<dependencies>
+
+		<!-- springboot依赖 -->
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon-web</artifactId>
+			<version>1.4.8</version>
+		</dependency>
+		
+		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-solon-plugin</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+		
+		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
+		<!-- <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-dao-redis</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency> -->
+		
+		<!-- sa-token整合redis (使用jackson序列化方式) -->
+		<!-- <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-dao-redis-jackson</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency> -->
+        
+		<!-- 提供redis连接池 -->
+		<!-- <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency> -->
+        
+		<!-- sa-token整合SpringAOP实现注解鉴权 -->
+		<!-- <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-aop</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency> -->
+
+		<!-- hutool工具类，用来生成雪花算法唯一id -->
+		<!-- <dependency>
+		     <groupId>cn.hutool</groupId>
+		     <artifactId>hutool-all</artifactId>
+		     <version>5.5.4</version>
+		</dependency> -->
+		
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerArgument>-parameters</compilerArgument>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	
+</project>

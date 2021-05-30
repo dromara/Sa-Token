@@ -21,7 +21,8 @@
 		<module>sa-token-core</module>
 		<module>sa-token-starter</module>
 		<module>sa-token-plugin</module>
-		<!-- <module>sa-token-demo\sa-token-demo-quick-login</module> -->
+		<module>sa-token-demo/sa-token-demo-solon</module>
+		<module>sa-token-demo/sa-token-demo-springboot</module>
 	</modules>
 	
 	<!-- 开源协议 apache 2.0 -->
