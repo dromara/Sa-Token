@@ -14,10 +14,10 @@ import org.noear.solon.core.handle.Context;
  * @author noear
  */
 @Component
-public class GlobalException implements EventListener<SaTokenException> {
+public class GlobalException implements EventListener<Throwable> {
 
 	@Override
-	public void onEvent(SaTokenException e) {
+	public void onEvent(Throwable e) {
 		Context c = Context.current();
 
 		if (c != null) {
