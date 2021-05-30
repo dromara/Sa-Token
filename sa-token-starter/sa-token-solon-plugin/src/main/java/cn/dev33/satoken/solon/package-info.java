@@ -1,4 +1,4 @@
 /**
- * sa-token集成SpringBoot的各个组件 
+ * sa-token 集成  solon 的各个组件
  */
 package cn.dev33.satoken.solon;
