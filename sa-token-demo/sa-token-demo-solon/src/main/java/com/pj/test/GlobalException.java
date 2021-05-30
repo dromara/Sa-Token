@@ -10,6 +10,7 @@ import org.noear.solon.core.handle.Context;
 
 /**
  * 全局异常处理
+ *
  * @author noear
  */
 @Component
