@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>org.noear</groupId>
 			<artifactId>solon-web</artifactId>
-			<version>1.4.8</version>
+			<version>1.4.9</version>
 		</dependency>
 		
 		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
