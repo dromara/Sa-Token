@@ -21,7 +21,7 @@ import cn.dev33.satoken.stp.StpInterface;
  * @author noear
  * @since 1.4
  */
-public class SolonPluginImpl implements Plugin {
+public class XPluginImp implements Plugin {
     
 	@Override
     public void start(SolonApp app) {

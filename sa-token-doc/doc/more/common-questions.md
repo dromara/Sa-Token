@@ -28,9 +28,9 @@
 无论什么模型，只要能把一个用户具有的所有权限塞到一个List里返回给框架，就能集成
 
 
-### SaRouterUtil.match 有多个路径需要排除怎么办？
-可以点进去源码看一下，`SaRouterUtil.match`方法有多个重载，可以放一个集合, 例如：<br>
-`SaRouterUtil.match(Arrays.asList("/**"), Arrays.asList("/login", "/reg"), () -> StpUtil.checkLogin());`
+### SaRouter.match 有多个路径需要排除怎么办？
+可以点进去源码看一下，`SaRouter.match`方法有多个重载，可以放一个集合, 例如：<br>
+`SaRouter.match(Arrays.asList("/**"), Arrays.asList("/login", "/reg"), () -> StpUtil.checkLogin());`
 
 
 ### 为什么StpUtil.setLoginId() 不能直接写入一个User对象？

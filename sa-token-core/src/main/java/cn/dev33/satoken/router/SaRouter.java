@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.IsRunFunction;
 import cn.dev33.satoken.fun.SaFunction;
 
@@ -13,7 +14,7 @@ import cn.dev33.satoken.fun.SaFunction;
  * @author kong
  *
  */
-public class SaRouterUtil {
+public class SaRouter {
 
 	// -------------------- 路由匹配相关 -------------------- 
 	
@@ -123,7 +124,16 @@ public class SaRouterUtil {
 		boolean matchResult = isMatch(Arrays.asList(patterns), SaHolder.getRequest().getRequestPath());
 		return new IsRunFunction(matchResult);
 	}
+
 	
+	// -------------------- 其它操作 -------------------- 
+	
+	/**
+	 * 停止匹配，跳出函数 (在多个匹配链中一次性跳出Auth函数) 
+	 */
+	public static void stop() {
+		throw new StopMatchException();
+	}
 	
 	
 	

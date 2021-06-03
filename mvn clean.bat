@@ -17,6 +17,10 @@ cd sa-token-demo-webflux
 call mvn clean
 cd ..
 
+cd sa-token-demo-solon
+call mvn clean
+cd ..
+
 cd sa-token-demo-oauth2-client
 call mvn clean
 cd ..

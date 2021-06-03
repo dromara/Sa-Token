@@ -31,7 +31,7 @@ public class SaTokenConfigure {
 				.setAuth(r -> {
 					// System.out.println("---------- sa全局认证");
 
-					// SaRouterUtil.match("/test/test", () -> new Object());
+					// SaRouter.match("/test/test", () -> new Object());
 				})
 
 				// 异常处理函数：每次认证函数发生异常时执行此函数

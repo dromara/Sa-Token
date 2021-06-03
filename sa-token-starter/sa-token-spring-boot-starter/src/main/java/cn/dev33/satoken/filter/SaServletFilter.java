@@ -15,7 +15,8 @@ import javax.servlet.ServletResponse;
 import org.springframework.core.annotation.Order;
 
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.router.SaRouterUtil;
+import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -153,10 +154,12 @@ public class SaServletFilter implements Filter {
 		
 		try {
 			// 执行全局过滤器 
-			SaRouterUtil.match(includeList, excludeList, () -> {
+			SaRouter.match(includeList, excludeList, () -> {
 				beforeAuth.run(null);
 				auth.run(null);
 			});
+			
+		} catch (StopMatchException e) {
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 

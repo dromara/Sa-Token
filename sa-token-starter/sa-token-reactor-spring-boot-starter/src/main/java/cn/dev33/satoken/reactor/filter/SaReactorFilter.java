@@ -10,11 +10,12 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
-import cn.dev33.satoken.router.SaRouterUtil;
+import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
 import reactor.core.publisher.Mono;
 
@@ -155,10 +156,12 @@ public class SaReactorFilter implements WebFilter {
 			SaReactorSyncHolder.setContent(exchange);
 			
 			// 执行全局过滤器 
-			SaRouterUtil.match(includeList, excludeList, () -> {
+			SaRouter.match(includeList, excludeList, () -> {
 				beforeAuth.run(null);
 				auth.run(null);
 			});
+			
+		} catch (StopMatchException e) {
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 

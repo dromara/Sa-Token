@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.router.SaRouteFunction;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
 import cn.dev33.satoken.servlet.model.SaResponseForServlet;
@@ -58,8 +59,11 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 		if(function == null) {
 			StpUtil.checkLogin();
 		} else {
-			// 否则执行函数 
-			function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
+			// 否则执行认证函数 
+			try {
+				function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
+			} catch (StopMatchException e) {
+			}
 		}
 		
 		// 通过验证 
