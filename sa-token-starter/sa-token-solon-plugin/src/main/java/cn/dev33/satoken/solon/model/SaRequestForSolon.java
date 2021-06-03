@@ -8,8 +8,10 @@ import org.noear.solon.core.handle.Context;
  * @since 1.4
  */
 public class SaRequestForSolon implements SaRequest {
-    Context ctx;
-    public SaRequestForSolon(){
+    
+	Context ctx;
+    
+	public SaRequestForSolon(){
         ctx = Context.current();
     }
 

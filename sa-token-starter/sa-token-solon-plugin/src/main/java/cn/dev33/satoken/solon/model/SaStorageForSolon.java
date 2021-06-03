@@ -8,7 +8,8 @@ import org.noear.solon.core.handle.Context;
  * @since 1.4
  */
 public class SaStorageForSolon implements SaStorage {
-    Context ctx;
+   
+	Context ctx;
 
     public SaStorageForSolon() {
         ctx = Context.current();

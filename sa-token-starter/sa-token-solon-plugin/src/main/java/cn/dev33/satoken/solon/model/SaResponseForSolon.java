@@ -9,6 +9,7 @@ import org.noear.solon.core.handle.Context;
  * @since 1.4
  */
 public class SaResponseForSolon implements SaResponse {
+	
     Context ctx;
 
     public SaResponseForSolon() {
