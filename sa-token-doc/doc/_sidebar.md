@@ -38,7 +38,8 @@
 	- [Quick-Login快速登录插件](/plugin/quick-login)
 
 - **其它**
-	- [常见问题](/more/common-questions) 
+	- [常用类、方法](/more/common-action) 
+	- [常见问题排查](/more/common-questions) 
 	- [更新日志](/more/update-log) 
 	- [友情链接](/more/link) 
 	- [推荐公众号](/more/tj-gzh) 
