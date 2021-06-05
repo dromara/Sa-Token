@@ -75,7 +75,7 @@
 			<span>推荐热门开源软件，介绍新开源项目，报导开源资讯！</span>
 		</td>
     </tr>
-    <tr>
+    <!-- <tr>
         <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzUzNTY2NjAzMg==&mid=2247484321&idx=1&sn=52e7e5e0dc03437e94908b6a67985500&send_time="/>
 			<b>Dromara开源组织</b>
@@ -158,7 +158,7 @@
 			<b>HelloGitHub</b>
 			<span>分享 GitHub 上有趣、入门级的开源项目。</span>
 		</td>
-	</tr>
+	</tr> -->
 </table>
 
 <br>

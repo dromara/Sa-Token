@@ -45,8 +45,9 @@
 	- [推荐公众号](/more/tj-gzh) 
 
 - **附录**
-	- [未登录场景值](/fun/not-login-scene)
-	- [token有效期详解](/fun/token-timeout)
+	- [Sa-Token认证流程图](/fun/auth-flow)
+	- [未登录场景值详解](/fun/not-login-scene)
+	- [Token有效期详解](/fun/token-timeout)
 	- [Session模型详解](/fun/session-model)
 	- [TokenInfo参数详解](/fun/token-info)
 	- [框架源码所有技术栈](/fun/tech-stack)

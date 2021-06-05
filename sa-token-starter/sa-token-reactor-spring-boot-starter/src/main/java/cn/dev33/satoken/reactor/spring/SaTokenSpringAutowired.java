@@ -1,6 +1,7 @@
 package cn.dev33.satoken.reactor.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -114,11 +115,12 @@ public class SaTokenSpringAutowired {
 	}
 	
 	/**
-	 * 利用自动匹配特性，获取SpringMVC框架内部使用的路由匹配器
+	 * 利用自动注入特性，获取Spring框架内部使用的路由匹配器
 	 * 
 	 * @param pathMatcher 要设置的 pathMatcher
 	 */
 	@Autowired(required = false)
+	@Qualifier("mvcPathMatcher")
 	public void setPathMatcher(PathMatcher pathMatcher) {
 		SaPathMatcherHolder.setPathMatcher(pathMatcher);
 	}
