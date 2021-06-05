@@ -43,6 +43,6 @@ public class SaContextForSolon implements SaTokenContext {
      */
     @Override
     public boolean matchPath(String pattern, String path) {
-        return  PathAnalyzer.get(path).matches(path);
+        return  PathAnalyzer.get(pattern).matches(path);
     }
 }
