@@ -67,7 +67,11 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **开箱即用** —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
+##### Sa-Token 功能结构图
 ![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/sa-token-js.png 's-w')
+
+##### Sa-Token 认证流程图
+![sa-token-rz](https://oss.dev33.cn/sa-token/doc/sa-token-rz.png 's-w')
 
 
 ## 代码示例
