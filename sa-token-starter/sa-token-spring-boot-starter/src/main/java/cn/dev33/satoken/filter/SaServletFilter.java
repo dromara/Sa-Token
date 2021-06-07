@@ -167,7 +167,9 @@ public class SaServletFilter implements Filter {
 			String resultString = String.valueOf(result);
 			
 			// 2. 写入输出流 
-			response.setContentType("text/plain; charset=utf-8"); 
+			if(response.getContentType() == null) {
+				response.setContentType("text/plain; charset=utf-8"); 
+			}
 			response.getWriter().print(resultString);
 			return;
 		}
