@@ -24,6 +24,8 @@ spring:
         is-share: false
         # token风格
         token-style: uuid
+        # 是否输出操作日志 
+        is-log: false
 ```
 
 如果你习惯于 `application.properties` 类型的配置文件，那也很好办: 百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
@@ -48,6 +50,7 @@ public class SaTokenConfigure {
 		config.setAllowConcurrentLogin(true);       // 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
 		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
 		config.setTokenStyle("uuid");               // token风格 
+		config.setIsLog(false);                     // 是否输出操作日志 
 		return config;
 	}
 	
@@ -73,3 +76,4 @@ public class SaTokenConfigure {
 | autoRenew				| Boolean	| true		| 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作)		|
 | tokenPrefix			| Boolean	| true		| token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)	[参考：token前缀](/use/token-prefix) 			|
 | isV					| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
+| isLog					| Boolean	| false		| 是否打印操作日志																	|

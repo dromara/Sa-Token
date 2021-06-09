@@ -18,6 +18,8 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempInterface;
+import cn.dev33.satoken.temp.SaTempInterfaceDefaultImpl;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -143,6 +145,24 @@ public class SaManager {
 		return saTokenListener;
 	}
 
+	/**
+	 * 临时验证模块 Bean  
+	 */
+	private static SaTempInterface saTemp;
+	public static void setSaTemp(SaTempInterface saTemp) {
+		SaManager.saTemp = saTemp;
+	}
+	public static SaTempInterface getSaTemp() {
+		if (saTemp == null) {
+			synchronized (SaManager.class) {
+				if (saTemp == null) {
+					setSaTemp(new SaTempInterfaceDefaultImpl());
+				}
+			}
+		}
+		return saTemp;
+	}
+	
 	/**
 	 * StpLogic集合, 记录框架所有成功初始化的StpLogic 
 	 */

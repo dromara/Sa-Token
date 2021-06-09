@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -126,6 +127,8 @@ public class SaTokenSpringBootStarterTest {
     	session.set("age", "18");
     	Assert.assertEquals(session.get("name"), "zhang");
     	Assert.assertEquals(session.getInt("age"), 18);
+    	Assert.assertEquals((int)session.getModel("age", int.class), 18);
+    	Assert.assertEquals((int)session.get("age", 20), 18);
     	Assert.assertEquals((int)session.get("name2", 20), 20);
     	Assert.assertEquals((int)session.get("name2", () -> 30), 30);
     	
@@ -163,6 +166,23 @@ public class SaTokenSpringBootStarterTest {
     	// 查询 
     	List<String> list = StpUtil.searchTokenValue("", 0, 10);
     	Assert.assertTrue(list.size() >= 5);
+    }
+    
+    // 测试：临时验证模块
+    @Test
+    public void testSaTemp() {
+    	// 生成token 
+    	String token = SaTempUtil.createToken("group-1014", 200);
+    	Assert.assertNotNull(token);
+    	
+    	// 解析token  
+    	String value = SaTempUtil.parseToken(token, String.class);
+    	System.out.println(value);
+    	Assert.assertEquals(value, "group-1014"); 
+    	
+    	// 过期时间 
+    	long timeout = SaTempUtil.getTimeout(token);
+    	Assert.assertTrue(timeout > 195);
     }
     
 }
