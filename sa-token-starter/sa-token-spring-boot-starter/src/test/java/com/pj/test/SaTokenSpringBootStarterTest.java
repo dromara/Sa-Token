@@ -177,7 +177,6 @@ public class SaTokenSpringBootStarterTest {
     	
     	// 解析token  
     	String value = SaTempUtil.parseToken(token, String.class);
-    	System.out.println(value);
     	Assert.assertEquals(value, "group-1014"); 
     	
     	// 过期时间 

@@ -4,7 +4,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 临时验证模块接口 
+ * Sa-Token 临时令牌验证模块接口 
  * @author kong
  *
  */
@@ -69,4 +69,11 @@ public interface SaTempInterface {
 		return SaManager.getConfig().getTokenName() + ":temp-token:" + token;
 	}
 
+	/**
+	 * @return jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
+	 */
+	public default String getJwtSecretKey() {
+		return null;
+	}
+	
 }

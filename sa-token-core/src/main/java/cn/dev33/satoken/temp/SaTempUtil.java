@@ -3,7 +3,7 @@ package cn.dev33.satoken.temp;
 import cn.dev33.satoken.SaManager;
 
 /**
- * Sa-Token 临时验证模块 
+ * Sa-Token 临时验证令牌模块 
  * @author kong
  *
  */

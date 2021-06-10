@@ -61,6 +61,11 @@ public class SaTokenConfig {
 	/** 是否打印操作日志 */
 	private Boolean isLog = false;
 
+	/**
+	 * jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效) 
+	 */
+	private String jwtSecretKey;
+	
 
 	/**
 	 * @return token名称 (同时也是cookie名称)
@@ -315,6 +320,7 @@ public class SaTokenConfig {
 
 	/**
 	 * @param isLog 是否打印操作日志
+	 * @return 对象自身
 	 */
 	public SaTokenConfig setIsLog(Boolean isLog) {
 		this.isLog = isLog;
@@ -322,7 +328,23 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * toString()
+	 * @return jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
+	 */
+	public String getJwtSecretKey() {
+		return jwtSecretKey;
+	}
+
+	/**
+	 * @param jwtSecretKey jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setJwtSecretKey(String jwtSecretKey) {
+		this.jwtSecretKey = jwtSecretKey;
+		return this;
+	}
+
+	/**
+	 * toString() 
 	 */
 	@Override
 	public String toString() {
@@ -331,8 +353,10 @@ public class SaTokenConfig {
 				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
 				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
-				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + ", isLog=" + isLog + "]";
+				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + ", isLog=" + isLog + ", jwtSecretKey="
+				+ jwtSecretKey + "]";
 	}
+	
 	
 
 	

@@ -14,6 +14,7 @@ import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.temp.SaTempInterface;
 
 /**
  * 利用spring的自动装配来加载开发者重写的Bean
@@ -105,6 +106,16 @@ public class SaTokenSpringAutowired {
 		SaManager.setSaTokenListener(saTokenListener);
 	}
 
+	/**
+	 * 注入临时令牌验证模块 Bean
+	 * 
+	 * @param saTemp saTemp对象 
+	 */
+	@Autowired(required = false)
+	public void setSaTemp(SaTempInterface saTemp) {
+		SaManager.setSaTemp(saTemp);
+	}
+	
 	/**
 	 * 利用自动注入特性，获取Spring框架内部使用的路由匹配器
 	 * 

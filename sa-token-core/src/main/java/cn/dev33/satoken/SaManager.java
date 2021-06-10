@@ -19,7 +19,7 @@ import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
-import cn.dev33.satoken.temp.SaTempInterfaceDefaultImpl;
+import cn.dev33.satoken.temp.SaTempDefaultImpl;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -146,7 +146,7 @@ public class SaManager {
 	}
 
 	/**
-	 * 临时验证模块 Bean  
+	 * 临时令牌验证模块 Bean  
 	 */
 	private static SaTempInterface saTemp;
 	public static void setSaTemp(SaTempInterface saTemp) {
@@ -156,7 +156,7 @@ public class SaManager {
 		if (saTemp == null) {
 			synchronized (SaManager.class) {
 				if (saTemp == null) {
-					setSaTemp(new SaTempInterfaceDefaultImpl());
+					setSaTemp(new SaTempDefaultImpl());
 				}
 			}
 		}

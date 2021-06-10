@@ -22,6 +22,7 @@
         <module>sa-token-spring-aop</module>
         <!-- <module>sa-token-oauth2</module> -->
         <module>sa-token-quick-login</module>
+        <module>sa-token-temp-jwt</module>
     </modules>
 
 </project>

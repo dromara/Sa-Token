@@ -77,3 +77,4 @@ public class SaTokenConfigure {
 | tokenPrefix			| Boolean	| true		| token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)	[参考：token前缀](/use/token-prefix) 			|
 | isV					| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
+| jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)							|

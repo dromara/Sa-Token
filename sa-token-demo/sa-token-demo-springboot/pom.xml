@@ -37,7 +37,7 @@
             <artifactId>sa-token-spring-boot-starter</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
-		
+        
 		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>

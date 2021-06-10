@@ -95,6 +95,8 @@ implementation 'cn.dev33:sa-token-core:1.19.0'
 		├── sa-token-dao-redis                    // [插件] Sa-Token 整合 Redis (使用jdk默认序列化方式)
 		├── sa-token-dao-redis-jackson            // [插件] Sa-Token 整合 Redis (使用jackson序列化方式)
 		├── sa-token-spring-aop                   // [插件] Sa-Token 整合 SpringAOP 注解鉴权
+		├── sa-token-temp-jwt                     // [插件] Sa-Token 整合 jwt 临时令牌鉴权 
+		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
 		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 模块(内测暂未发布)
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
@@ -104,7 +106,7 @@ implementation 'cn.dev33:sa-token-core:1.19.0'
 		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
 	├── sa-token-doc                          // [文档] Sa-Token 开发文档 
-	├──pom.xml
+	├──pom.xml                                // [依赖] 顶级pom文件 
 ```
 
 
