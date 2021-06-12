@@ -39,7 +39,7 @@ public class SaTempUtil {
 	}
 	
 	/**
-	 * 返回指定token的剩余有效期，单位：秒 
+	 * 获取指定 token 的剩余有效期，单位：秒 
 	 * <p> 返回值 -1 代表永久，-2 代表token无效 
 	 * @param token see note 
 	 * @return see note 

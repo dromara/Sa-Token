@@ -36,6 +36,7 @@
 - **插件**
 	- [AOP注解鉴权](/plugin/aop-at)
 	- [Quick-Login快速登录插件](/plugin/quick-login)
+	- [临时Token验证](/plugin/temp-token)
 
 - **其它**
 	- [常用类、方法](/more/common-action) 
