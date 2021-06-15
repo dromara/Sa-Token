@@ -103,6 +103,7 @@ implementation 'cn.dev33:sa-token-core:1.19.0'
 		├── sa-token-demo-webflux                 // [示例] Sa-Token 整合 WebFlux 
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 
 		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 
+		├── sa-token-demo-quick-login             // [示例] Sa-Token 集成 quick-login 模块 
 		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
 	├── sa-token-doc                          // [文档] Sa-Token 开发文档 
