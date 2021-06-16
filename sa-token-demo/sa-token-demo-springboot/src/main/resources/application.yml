@@ -20,8 +20,6 @@ spring:
         # 是否输出操作日志 
         is-log: false
         
-        is-print: false
-        
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）

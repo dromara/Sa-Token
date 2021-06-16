@@ -14,7 +14,7 @@
 ``` java
 // 标记当前会话登录的账号id 
 // 建议的参数类型：long | int | String， 不可以传入复杂类型，如：User、Admin等等
-StpUtil.login(Object loginId);	
+StpUtil.login(Object id);	
 
 // 当前会话注销登录
 StpUtil.logout();

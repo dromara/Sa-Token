@@ -8,7 +8,7 @@
 ## 具体API
 
 在`sa-token`中如何做到同端互斥登录? <br/>
-首先在配置文件中，将 `allowConcurrentLogin` 配置为false，然后调用登录等相关接口时声明设备标识即可：
+首先在配置文件中，将 `isConcurrent` 配置为false，然后调用登录等相关接口时声明设备标识即可：
 
 
 #### 指定设备标识登录
