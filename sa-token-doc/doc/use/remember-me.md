@@ -14,7 +14,7 @@ sa-token的登录授权，**默认就是`[记住我]`模式**，为了实现`[�
 
 ``` java
 // 设置登录账号id为10001，第二个参数指定是否为[记住我]，当此值为false后，关闭浏览器后再次打开需要重新登录
-StpUtil.setLoginId(10001, false);
+StpUtil.login(10001, false);
 ```
 
 那么，sa-token实现`[记住我]`的具体原理是？
@@ -26,8 +26,8 @@ Cookie作为浏览器提供的默认会话跟踪机制，其生命周期有两�
 - 永久Cookie：有效期为一个具体的时间，在时间未到期之前，即使用户关闭了浏览器Cookie也不会消失
 
 利用Cookie的此特性，我们便可以轻松实现 [记住我] 模式：
-- 勾选[记住我]按钮时：调用`StpUtil.setLoginId(10001, true)`，在浏览器写入一个`永久Cookie`储存token，此时用户即使重启浏览器token依然有效
-- 不勾选[记住我]按钮时：调用`StpUtil.setLoginId(10001, false)`，在浏览器写入一个`临时Cookie`储存token，此时用户在重启浏览器后token便会消失，导致会话失效
+- 勾选[记住我]按钮时：调用`StpUtil.login(10001, true)`，在浏览器写入一个`永久Cookie`储存token，此时用户即使重启浏览器token依然有效
+- 不勾选[记住我]按钮时：调用`StpUtil.login(10001, false)`，在浏览器写入一个`临时Cookie`储存token，此时用户在重启浏览器后token便会消失，导致会话失效
 
 
 ### 前后台分离模式下如何实现[记住我]?
@@ -64,11 +64,11 @@ Remember me, it's too easy!
 ``` java
 // 示例1：
 // 指定token有效期(单位: 秒)，如下所示token七天有效
-StpUtil.setLoginId(10001, new SaLoginModel().setTimeout(60 * 60 * 24 * 7));
+StpUtil.login(10001, new SaLoginModel().setTimeout(60 * 60 * 24 * 7));
 
 // ----------------------- 示例2：所有参数
 // `SaLoginModel`为登录参数Model，其有诸多参数决定登录时的各种逻辑，例如：
-StpUtil.setLoginId(10001, new SaLoginModel()
+StpUtil.login(10001, new SaLoginModel()
 			.setDevice("PC")				// 此次登录的客户端设备标识, 用于[同端互斥登录]时指定此次登录的设备名称
 			.setIsLastingCookie(true)		// 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 			.setTimeout(60 * 60 * 24 * 7)	// 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）

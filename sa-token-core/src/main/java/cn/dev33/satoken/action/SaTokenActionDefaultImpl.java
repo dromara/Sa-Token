@@ -24,7 +24,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	 * 根据一定的算法生成一个token 
 	 */
 	@Override
-	public String createToken(Object loginId, String loginKey) {
+	public String createToken(Object loginId, String loginType) {
 		// 根据配置的tokenStyle生成不同风格的token 
 		String tokenStyle = SaManager.getConfig().getTokenStyle();
 		// uuid 
@@ -111,19 +111,19 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		// 校验 @SaCheckLogin 注解 
 		if(target.isAnnotationPresent(SaCheckLogin.class)) {
 			SaCheckLogin at = target.getAnnotation(SaCheckLogin.class);
-			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
 		}
 
 		// 校验 @SaCheckRole 注解 
 		if(target.isAnnotationPresent(SaCheckRole.class)) {
 			SaCheckRole at = target.getAnnotation(SaCheckRole.class);
-			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
 		}
 
 		// 校验 @SaCheckPermission 注解
 		if(target.isAnnotationPresent(SaCheckPermission.class)) {
 			SaCheckPermission at = target.getAnnotation(SaCheckPermission.class);
-			SaManager.getStpLogic(at.key()).checkByAnnotation(at);
+			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
 		}
 	}
 	

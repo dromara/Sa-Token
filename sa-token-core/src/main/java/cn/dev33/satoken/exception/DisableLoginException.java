@@ -19,9 +19,9 @@ public class DisableLoginException extends SaTokenException {
 	public static final String BE_MESSAGE = "此账号已被封禁";
 
 	/**
-	 * LoginKey
+	 * 账号类型 
 	 */
-	private String loginKey;
+	private String loginType;
 
 	/**
 	 * 被封禁的账号id 
@@ -34,12 +34,12 @@ public class DisableLoginException extends SaTokenException {
 	private long disableTime;
 	
 	/**
-	 * 获得LoginKey
+	 * 获取账号类型 
 	 * 
-	 * @return See above
+	 * @return See Note
 	 */
-	public String getLoginKey() {
-		return loginKey;
+	public String getLoginType() {
+		return loginType;
 	}
 
 	/**
@@ -62,14 +62,14 @@ public class DisableLoginException extends SaTokenException {
 	/**
 	 * 构造方法创建一个
 	 * 
-	 * @param loginKey loginKey
+	 * @param loginType 账号类型
 	 * @param loginId  被封禁的账号id 
 	 * @param disableTime 封禁剩余时间，单位：秒 
 	 */
-	public DisableLoginException(String loginKey, Object loginId, long disableTime) {
+	public DisableLoginException(String loginType, Object loginId, long disableTime) {
 		super(BE_MESSAGE);
 		this.loginId = loginId;
-		this.loginKey = loginKey;
+		this.loginType = loginType;
 		this.disableTime = disableTime;
 	}
 

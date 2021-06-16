@@ -20,8 +20,8 @@ public class SaTokenInfo {
 	/** 此token对应的LoginId，未登录时为null */
 	public Object loginId;
 
-	/** LoginKey账号体系标识 */
-	public String loginKey;
+	/** 账号类型 */
+	public String loginType;
 
 	/** token剩余有效期 (单位: 秒) */
 	public long tokenTimeout;
@@ -95,17 +95,17 @@ public class SaTokenInfo {
 	}
 
 	/**
-	 * @return LoginKey账号体系标识 
+	 * @return 账号类型
 	 */
-	public String getLoginKey() {
-		return loginKey;
+	public String getLoginType() {
+		return loginType;
 	}
 
 	/**
-	 * @param loginKey LoginKey账号体系标识 
+	 * @param loginType 账号类型
 	 */
-	public void setLoginKey(String loginKey) {
-		this.loginKey = loginKey;
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class SaTokenInfo {
 	@Override
 	public String toString() {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
-				+ ", loginId=" + loginId + ", loginKey=" + loginKey + ", tokenTimeout=" + tokenTimeout
+				+ ", loginId=" + loginId + ", loginType=" + loginType + ", tokenTimeout=" + tokenTimeout
 				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
 				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + "]";
 	}

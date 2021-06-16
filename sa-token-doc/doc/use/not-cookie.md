@@ -20,7 +20,7 @@
 
 ### 1、后端将 token 返回到前端
 
-1. 首先调用 `StpUtil.setLoginId(Object loginId)` 进行登录 
+1. 首先调用 `StpUtil.login(Object loginId)` 进行登录 
 2. 调用 `StpUtil.getTokenInfo()` 返回当前会话的token详细参数 
 	- 此方法返回一个对象，其有两个关键属性：`tokenName`和`tokenValue`（`token`的名称和`token`的值）
 	- 将此对象传递到前台，让前端人员将这两个值保存到本地

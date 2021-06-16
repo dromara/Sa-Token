@@ -67,38 +67,38 @@ public class NotLoginException extends SaTokenException {
 	
 	
 	/**
-	 * loginKey 
+	 * 账号类型 
 	 */
-	private String loginKey;
+	private String loginType;
 	
 	/** 
-	 * 获得loginKey
-	 * @return loginKey
+	 * 获得账号类型 
+	 * @return 账号类型
 	 */
-	public String getLoginKey() {
-		return loginKey;
+	public String getLoginType() {
+		return loginType;
 	}
 	
 	
 	/**
 	 * 构造方法创建一个 
 	 * @param message 异常消息 
-	 * @param loginKey loginKey
+	 * @param loginType 账号类型
 	 * @param type 类型 
 	 */
-	public NotLoginException(String message, String loginKey, String type) {
+	public NotLoginException(String message, String loginType, String type) {
 		super(message);	
-        this.loginKey = loginKey;
+        this.loginType = loginType;
         this.type = type;
     }
 	
 	/**
 	 * 静态方法构建一个NotLoginException 
-	 * @param loginKey loginKey 
-	 * @param type 场景类型 
+	 * @param loginType 账号类型
+	 * @param type 账号类型 
 	 * @return 构建完毕的异常对象 
 	 */
-	public static NotLoginException newInstance(String loginKey, String type) {
+	public static NotLoginException newInstance(String loginType, String type) {
 		String message = null;
 		if(NOT_TOKEN.equals(type)) {
 			message = NOT_TOKEN_MESSAGE;
@@ -118,7 +118,7 @@ public class NotLoginException extends SaTokenException {
 		else {
 			message = DEFAULT_MESSAGE;
 		}
-		return new NotLoginException(message, loginKey, type);
+		return new NotLoginException(message, loginType, type);
     }
 
 }

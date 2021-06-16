@@ -12,7 +12,7 @@ SaManager.getStpInterface();        // 获取权限认证对象
 SaManager.getSaTokenAction();       // 获取框架行为对象
 SaManager.getSaTokenContext();      // 获取上下文处理对象
 SaManager.getSaTokenListener();     // 获取侦听器对象 
-SaManager.getStpLogic("key");       // 获取指定key的StpLogic对象 
+SaManager.getStpLogic("type");      // 获取指定账号类型的StpLogic对象 
 ```
 
 

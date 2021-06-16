@@ -14,7 +14,7 @@
 #### 指定设备标识登录
 ``` java
 // 指定`账号id`和`设备标识`进行登录
-StpUtil.setLoginId(10001, "PC");	
+StpUtil.login(10001, "PC");	
 ```
 调用此方法登录后，同设备的会被顶下线(不同设备不受影响)，再次访问系统时会抛出 `NotLoginException` 异常，场景值=`-4`
 

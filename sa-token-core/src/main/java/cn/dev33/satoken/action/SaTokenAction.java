@@ -16,10 +16,10 @@ public interface SaTokenAction {
 	/**
 	 * 根据一定的算法生成一个token 
 	 * @param loginId 账号id 
-	 * @param loginKey 账号体系key 
+	 * @param loginType 账号类型 
 	 * @return 一个token
 	 */
-	public String createToken(Object loginId, String loginKey); 
+	public String createToken(Object loginId, String loginType); 
 	
 	/**
 	 * 根据 SessionId 创建一个 Session

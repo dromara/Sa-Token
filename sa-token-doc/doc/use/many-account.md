@@ -17,7 +17,7 @@
 
 这样做有两个优点: 
 - `StpLogic`类的所有函数都可以被重写，按需扩展
-- 在构造方法时随意传入一个不同的 `loginKey`，就可以再造一套账号登录体系 
+- 在构造方法时随意传入一个不同的 `loginType`，就可以再造一套账号登录体系 
 
 
 ### 操作示例
@@ -25,7 +25,7 @@
 比如说，对于原生`StpUtil`类，我们只做`admin账号`权限验证，而对于`user账号`，我们则：
 1. 新建一个新的权限验证类，比如： `StpUserUtil.java`
 2. 将`StpUtil.java`类的全部代码复制粘贴到 `StpUserUtil.java`里
-3. 更改一下其 `LoginKey`， 比如：
+3. 更改一下其 `LoginType`， 比如：
 
 ``` java
 public class StpUserUtil {
@@ -33,7 +33,7 @@ public class StpUserUtil {
 	/**
 	 * 账号体系标识 
 	 */
-	public static final String KEY = "user";	// 将 LoginKey 从`login`改为`user` 
+	public static final String KEY = "user";	// 将 LoginType 从`login`改为`user` 
 
 	// 其它代码 ... 
 
@@ -47,21 +47,21 @@ public class StpUserUtil {
 ### 在多账号模式下使用注解鉴权
 框架默认的注解鉴权 如`@SaCheckLogin` 只针对原生`StpUtil`进行鉴权 
 
-例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.setLoginId(id)`进行登录的会话，
-而对于通过`StpUserUtil.setLoginId(id)`进行登录的都会话，则始终不会通过校验
+例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.login(id)`进行登录的会话，
+而对于通过`StpUserUtil.login(id)`进行登录的都会话，则始终不会通过校验
 
-那么如何告诉`@SaCheckLogin`要鉴别的是哪套账号的登录会话呢？很简单，你只需要指定一下注解的key属性即可：
+那么如何告诉`@SaCheckLogin`要鉴别的是哪套账号的登录会话呢？很简单，你只需要指定一下注解的type属性即可：
 
 ``` java
-// 通过key属性指定此注解校验的是我们自定义的`StpUserUtil`，而不是原生`StpUtil`
-@SaCheckLogin(key = StpUserUtil.KEY)
+// 通过type属性指定此注解校验的是我们自定义的`StpUserUtil`，而不是原生`StpUtil`
+@SaCheckLogin(type = StpUserUtil.TYPE)
 @RequestMapping("info")
 public String info() {
     return "查询用户信息";
 }
 ```
 
-注：`@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，亦可根据key属性指定其校验的账号体系，此属性默认为`""`，代表使用原生`StpUtil`账号体系
+注：`@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，亦可根据type属性指定其校验的账号体系，此属性默认为`""`，代表使用原生`StpUtil`账号体系
 
 
 
@@ -86,7 +86,7 @@ public static StpLogic stpLogic = new StpLogic("user") {
 }; 
 ```
 
-再次调用 `StpUserUtil.setLoginId(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`
+再次调用 `StpUserUtil.login(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`
 
 
 

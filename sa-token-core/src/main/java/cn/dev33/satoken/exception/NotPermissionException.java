@@ -26,27 +26,27 @@ public class NotPermissionException extends SaTokenException {
 	}
 
 	/**
-	 * loginKey
+	 * 账号类型
 	 */
-	private String loginKey;
+	private String loginType;
 
 	/**
-	 * 获得loginKey
+	 * 获得账号类型
 	 * 
-	 * @return loginKey
+	 * @return 账号类型
 	 */
-	public String getLoginKey() {
-		return loginKey;
+	public String getLoginType() {
+		return loginType;
 	}
 
 	public NotPermissionException(String code) {
-		this(code, StpUtil.stpLogic.loginKey);
+		this(code, StpUtil.stpLogic.loginType);
 	}
 
-	public NotPermissionException(String code, String loginKey) {
+	public NotPermissionException(String code, String loginType) {
 		super("无此权限：" + code);
 		this.code = code;
-		this.loginKey = loginKey;
+		this.loginType = loginType;
 	}
 
 }

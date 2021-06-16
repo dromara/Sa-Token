@@ -8,12 +8,12 @@ package cn.dev33.satoken.annotation;
 public enum SaMode {
 
 	/**
-	 * 必须具有所有的选项 
+	 * 必须具有所有的元素 
 	 */
 	AND,
 
 	/**
-	 * 只需具有其中一个选项 
+	 * 只需具有其中一个元素
 	 */
 	OR
 	

@@ -80,7 +80,7 @@ Sa-Token的API调用非常简单，有多简单呢？以登录验证为例，你
 
 ``` java
 // 在登录时写入当前会话的账号id
-StpUtil.setLoginId(10001);
+StpUtil.login(10001);
 
 // 然后在任意需要校验登录处调用以下API
 // 如果当前会话未登录，这句代码会抛出 `NotLoginException`异常
@@ -112,7 +112,7 @@ StpUtil.logoutByLoginId(10001);
 
 除了以上的示例，Sa-Token还可以一行代码完成以下功能：
 ``` java
-StpUtil.setLoginId(10001);                // 标记当前会话登录的账号id
+StpUtil.login(10001);                     // 标记当前会话登录的账号id
 StpUtil.getLoginId();                     // 获取当前会话登录的账号id
 StpUtil.isLogin();                        // 获取当前会话是否已经登录, 返回true或false
 StpUtil.logout();                         // 当前会话注销登录
@@ -122,7 +122,7 @@ StpUtil.hasPermission("user:add");        // 查询当前账号是否含有指�
 StpUtil.getSession();                     // 获取当前账号id的Session
 StpUtil.getSessionByLoginId(10001);       // 获取账号id为10001的Session
 StpUtil.getTokenValueByLoginId(10001);    // 获取账号id为10001的token令牌值
-StpUtil.setLoginId(10001, "PC");          // 指定设备标识登录
+StpUtil.login(10001, "PC");               // 指定设备标识登录
 StpUtil.logoutByLoginId(10001, "PC");     // 指定设备标识进行强制注销 (不同端不受影响)
 StpUtil.switchTo(10044);                  // 将当前会话身份临时切换为其它账号
 ```

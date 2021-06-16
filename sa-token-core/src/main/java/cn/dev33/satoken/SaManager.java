@@ -39,7 +39,7 @@ public class SaManager {
 			SaFoxUtil.printSaToken();
 		}
 		// 调用一次StpUtil中的方法，保证其可以尽早的初始化 StpLogic 
-		StpUtil.getLoginKey();
+		StpUtil.getLoginType();
 	}
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
@@ -173,31 +173,31 @@ public class SaManager {
 	 * @param stpLogic StpLogic
 	 */
 	public static void putStpLogic(StpLogic stpLogic) {
-		stpLogicMap.put(stpLogic.getLoginKey(), stpLogic);
+		stpLogicMap.put(stpLogic.getLoginType(), stpLogic);
 	}
 
 	/**
-	 * 根据 LoginKey 获取对应的StpLogic，如果不存在则抛出异常 
-	 * @param loginKey 对应的LoginKey 
+	 * 根据 LoginType 获取对应的StpLogic，如果不存在则抛出异常 
+	 * @param loginType 对应的账号类型 
 	 * @return 对应的StpLogic
 	 */
-	public static StpLogic getStpLogic(String loginKey) {
-		// 如果key为空则返回框架内置的 
-		if(loginKey == null || loginKey.isEmpty()) {
+	public static StpLogic getStpLogic(String loginType) {
+		// 如果type为空则返回框架内置的 
+		if(loginType == null || loginType.isEmpty()) {
 			return StpUtil.stpLogic;
 		}
 		
 		// 从SaManager中获取 
-		StpLogic stpLogic = stpLogicMap.get(loginKey);
+		StpLogic stpLogic = stpLogicMap.get(loginType);
 		if(stpLogic == null) {
 			/*
 			 * 此时有两种情况会造成 StpLogic == null 
-			 * 1. LoginKey拼写错误，请改正 （建议使用常量） 
+			 * 1. loginType拼写错误，请改正 （建议使用常量） 
 			 * 2. 自定义StpUtil尚未初始化（静态类中的属性至少一次调用后才会初始化），解决方法两种
 			 * 		(1) 从main方法里调用一次
 			 * 		(2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
 			 */
-			throw new SaTokenException("未能获取对应StpLogic，key="+ loginKey);
+			throw new SaTokenException("未能获取对应StpLogic，type="+ loginType);
 		}
 		
 		// 返回 

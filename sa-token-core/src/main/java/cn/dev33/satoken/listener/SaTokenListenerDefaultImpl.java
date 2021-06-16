@@ -17,7 +17,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次登录时触发 
 	 */
 	@Override
-	public void doLogin(String loginKey, Object loginId, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, SaLoginModel loginModel) {
 		println("账号[" + loginId + "]登录成功");
 	}
 
@@ -25,7 +25,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次注销时触发 
 	 */
 	@Override
-	public void doLogout(String loginKey, Object loginId, String tokenValue) {
+	public void doLogout(String loginType, Object loginId, String tokenValue) {
 		println("账号[" + loginId + "]注销成功");
 	}
 
@@ -33,7 +33,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次被踢下线时触发
 	 */
 	@Override
-	public void doLogoutByLoginId(String loginKey, Object loginId, String tokenValue, String device) {
+	public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device) {
 		println("账号[" + loginId + "]被踢下线 (终端: " + device + ")");
 	}
 
@@ -41,7 +41,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次被顶下线时触发
 	 */
 	@Override
-	public void doReplaced(String loginKey, Object loginId, String tokenValue, String device) {
+	public void doReplaced(String loginType, Object loginId, String tokenValue, String device) {
 		println("账号[" + loginId + "]被顶下线 (终端: " + device + ")");
 	}
 
@@ -49,7 +49,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次被封禁时触发
 	 */
 	@Override
-	public void doDisable(String loginKey, Object loginId, long disableTime) {
+	public void doDisable(String loginType, Object loginId, long disableTime) {
 		Date date = new Date(System.currentTimeMillis() + disableTime * 1000);
 		println("账号[" + loginId + "]被封禁 (解封时间: " + SaFoxUtil.formatDate(date) + ")");
 	}
@@ -58,7 +58,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次被解封时触发
 	 */
 	@Override
-	public void doUntieDisable(String loginKey, Object loginId) {
+	public void doUntieDisable(String loginType, Object loginId) {
 		println("账号[" + loginId + "]被解除封禁");
 	}
 

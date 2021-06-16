@@ -77,7 +77,7 @@ public class SaQuickBean implements WebMvcConfigurer  {
 						e.printStackTrace();
 					}
 					// 抛出异常，不再继续执行 
-					throw NotLoginException.newInstance(StpUtil.getLoginKey(), "");
+					throw NotLoginException.newInstance(StpUtil.getLoginType(), "");
 				}
 	
 			}).

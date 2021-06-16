@@ -43,7 +43,7 @@ public class SaTokenSpringBootStarterTest {
     @Test
     public void testDoLogin() {
     	// 登录
-    	StpUtil.setLoginId(10001);
+    	StpUtil.login(10001);
     	Assert.assertTrue(StpUtil.isLogin());	
     	Assert.assertNotNull(StpUtil.getTokenValue());	// token不为null
     	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
@@ -59,7 +59,7 @@ public class SaTokenSpringBootStarterTest {
     // 测试：权限认证 
     @Test
     public void testCheckPermission() {
-    	StpUtil.setLoginId(10001);
+    	StpUtil.login(10001);
     	
     	// 权限认证 
     	Assert.assertTrue(StpUtil.hasPermission("user-add"));
@@ -72,7 +72,7 @@ public class SaTokenSpringBootStarterTest {
     // 测试：角色认证
     @Test
     public void testCheckRole() {
-    	StpUtil.setLoginId(10001);
+    	StpUtil.login(10001);
     	
     	// 角色认证 
     	Assert.assertTrue(StpUtil.hasRole("admin")); 
@@ -84,13 +84,13 @@ public class SaTokenSpringBootStarterTest {
     public void testKickOut() {
     	
     	// 根据token踢人 
-    	StpUtil.setLoginId(10001); 
+    	StpUtil.login(10001); 
     	Assert.assertTrue(StpUtil.isLogin());	
     	StpUtil.logoutByTokenValue(StpUtil.getTokenValue()); 
     	Assert.assertFalse(StpUtil.isLogin()); 
 
     	// 根据账号id踢人
-    	StpUtil.setLoginId(10001); 
+    	StpUtil.login(10001); 
     	Assert.assertTrue(StpUtil.isLogin());	
     	StpUtil.logoutByLoginId(10001);
     	Assert.assertFalse(StpUtil.isLogin()); 
@@ -110,13 +110,13 @@ public class SaTokenSpringBootStarterTest {
     	
     	// 封号后登陆 (会抛出 DisableLoginException 异常)
     	StpUtil.disable(10007, 200); 
-    	StpUtil.setLoginId(10007);  
+    	StpUtil.login(10007);  
     }
 
     // 测试：Session会话 
     @Test
     public void testSession() {
-    	StpUtil.setLoginId(10001);
+    	StpUtil.login(10001);
     	
     	// Session 应该存在 
     	Assert.assertNotNull(StpUtil.getSession(false));
@@ -138,7 +138,7 @@ public class SaTokenSpringBootStarterTest {
     @Test
     public void testSwitch() {
     	// 登录
-    	StpUtil.setLoginId(10001);
+    	StpUtil.login(10001);
     	Assert.assertFalse(StpUtil.isSwitch());
     	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);
     	
@@ -157,11 +157,11 @@ public class SaTokenSpringBootStarterTest {
     @Test
     public void testSearchTokenValue() {
     	// 登录
-    	StpUtil.setLoginId(10001);
-    	StpUtil.setLoginId(10002);
-    	StpUtil.setLoginId(10003);
-    	StpUtil.setLoginId(10004);
-    	StpUtil.setLoginId(10005);
+    	StpUtil.login(10001);
+    	StpUtil.login(10002);
+    	StpUtil.login(10003);
+    	StpUtil.login(10004);
+    	StpUtil.login(10005);
     	
     	// 查询 
     	List<String> list = StpUtil.searchTokenValue("", 0, 10);

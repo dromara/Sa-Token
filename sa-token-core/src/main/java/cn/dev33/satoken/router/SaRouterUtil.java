@@ -10,8 +10,8 @@ import cn.dev33.satoken.fun.IsRunFunction;
 import cn.dev33.satoken.fun.SaFunction;
 
 /**
+ * <h1> 本类设计已过时，未来版本可能移除此类，请及时更换为 SaRouter ，使用方式保持不变 </h1>
  * 对路由匹配符相关操作的封装工具类 
- * <h1> 本类设计已过时，未来版本可能移除此类，请及时更换为 SaRouter ，所有方法不变 </h1>
  * @author kong
  *
  */

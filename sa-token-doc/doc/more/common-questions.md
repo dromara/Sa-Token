@@ -33,8 +33,8 @@
 `SaRouter.match(Arrays.asList("/**"), Arrays.asList("/login", "/reg"), () -> StpUtil.checkLogin());`
 
 
-### 为什么StpUtil.setLoginId() 不能直接写入一个User对象？
-`StpUtil.setLoginId()`只是为了给当前会话做个唯一标记，通常写入`UserId`即可，如果要存储User对象，可以使用`StpUtil.getSession()`获取Session对象进行存储 
+### 为什么StpUtil.login() 不能直接写入一个User对象？
+`StpUtil.login()`只是为了给当前会话做个唯一标记，通常写入`UserId`即可，如果要存储User对象，可以使用`StpUtil.getSession()`获取Session对象进行存储 
 
 
 ### 前后台分离模式下和普通模式有何不同？

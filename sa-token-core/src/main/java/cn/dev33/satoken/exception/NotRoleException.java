@@ -26,27 +26,27 @@ public class NotRoleException extends SaTokenException {
 	}
 
 	/**
-	 * loginKey
+	 * 账号类型
 	 */
-	private String loginKey;
+	private String loginType;
 
 	/**
-	 * 获得loginKey
+	 * 获得账号类型
 	 * 
-	 * @return loginKey
+	 * @return 账号类型
 	 */
-	public String getLoginKey() {
-		return loginKey;
+	public String getLoginType() {
+		return loginType;
 	}
 
 	public NotRoleException(String role) {
-		this(role, StpUtil.stpLogic.loginKey);
+		this(role, StpUtil.stpLogic.loginType);
 	}
 
-	public NotRoleException(String role, String loginKey) {
+	public NotRoleException(String role, String loginType) {
 		super("无此角色：" + role);
 		this.role = role;
-		this.loginKey = loginKey;
+		this.loginType = loginType;
 	}
 
 }

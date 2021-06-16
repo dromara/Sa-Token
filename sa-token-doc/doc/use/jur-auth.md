@@ -38,7 +38,7 @@ public class StpInterfaceImpl implements StpInterface {
 	 * 返回一个账号所拥有的权限码集合 
 	 */
 	@Override
-	public List<String> getPermissionList(Object loginId, String loginKey) {
+	public List<String> getPermissionList(Object loginId, String loginType) {
 		// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询权限
 		List<String> list = new ArrayList<String>();	
 		list.add("101");
@@ -54,7 +54,7 @@ public class StpInterfaceImpl implements StpInterface {
 	 * 返回一个账号所拥有的角色标识集合 (权限与角色可分开校验)
 	 */
 	@Override
-	public List<String> getRoleList(Object loginId, String loginKey) {
+	public List<String> getRoleList(Object loginId, String loginType) {
 		// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询角色
 		List<String> list = new ArrayList<String>();	
 		list.add("admin");
@@ -88,7 +88,7 @@ StpUtil.checkPermissionAnd("user-update", "user-delete");
 StpUtil.checkPermissionOr("user-update", "user-delete");		
 ```
 
-扩展：`NotPermissionException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
+扩展：`NotPermissionException` 对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 
 ### 角色认证
@@ -108,7 +108,7 @@ StpUtil.checkRoleAnd("super-admin", "shop-admin");
 StpUtil.checkRoleOr("super-admin", "shop-admin");		
 ```
 
-扩展：`NotRoleException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常
+扩展：`NotRoleException` 对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 
 

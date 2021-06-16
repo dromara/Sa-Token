@@ -28,9 +28,10 @@ public @interface SaCheckRole {
 	SaMode mode() default SaMode.AND;
 
     /**
-     * 多账号体系下所属的账号体系标识 
+     * 账号类型 
+     * <p> 建议使用常量，避免因错误拼写带来的bug 
      * @return see note 
      */
-	String key() default "";
+	String type() default "";
 	
 }

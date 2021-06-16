@@ -90,10 +90,10 @@ public class SaTokenJwtUtil {
         	}
         	return String.valueOf(loginId);
         } catch (ExpiredJwtException e) {
-//        	throw NotLoginException.newInstance(StpUtil.stpLogic.loginKey, NotLoginException.TOKEN_TIMEOUT);
+//        	throw NotLoginException.newInstance(StpUtil.TYPE, NotLoginException.TOKEN_TIMEOUT);
         	return NotLoginException.TOKEN_TIMEOUT;
 		} catch (MalformedJwtException e) {
-        	throw NotLoginException.newInstance(StpUtil.stpLogic.loginKey, NotLoginException.INVALID_TOKEN);
+        	throw NotLoginException.newInstance(StpUtil.stpLogic.loginType, NotLoginException.INVALID_TOKEN);
 		} catch (Exception e) {
         	throw new SaTokenException(e);
         }
@@ -122,7 +122,7 @@ public class SaTokenJwtUtil {
     		
     		// 重写 (在当前会话上登录id )
     		@Override
-    		public void setLoginId(Object loginId, SaLoginModel loginModel) {
+    		public void login(Object loginId, SaLoginModel loginModel) {
     			// ------ 1、获取相应对象  
     			SaStorage storage = SaManager.getSaTokenContext().getStorage();
     			SaTokenConfig config = getConfig();
@@ -203,7 +203,7 @@ public class SaTokenJwtUtil {
     			info.tokenValue = getTokenValue();
     			info.isLogin = isLogin();
     			info.loginId = getLoginIdDefaultNull();
-    			info.loginKey = getLoginKey();
+    			info.loginType = getLoginType();
     			info.tokenTimeout = getTokenTimeout();
 //    			info.sessionTimeout = getSessionTimeout();
 //    			info.tokenSessionTimeout = getTokenSessionTimeout();

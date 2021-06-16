@@ -12,52 +12,52 @@ public interface SaTokenListener {
 
 	/**
 	 * 每次登录时触发 
-	 * @param loginKey 账号类别
+	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param loginModel 登录参数
 	 */
-	public void doLogin(String loginKey, Object loginId, SaLoginModel loginModel);
+	public void doLogin(String loginType, Object loginId, SaLoginModel loginModel);
 			
 	/**
 	 * 每次注销时触发 
-	 * @param loginKey 账号类别
+	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue token值
 	 */
-	public void doLogout(String loginKey, Object loginId, String tokenValue);
+	public void doLogout(String loginType, Object loginId, String tokenValue);
 	
 	/**
 	 * 每次被踢下线时触发
-	 * @param loginKey 账号类别
+	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue token值
 	 * @param device 设备标识 
 	 */
-	public void doLogoutByLoginId(String loginKey, Object loginId, String tokenValue, String device);
+	public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device);
 
 	/**
 	 * 每次被顶下线时触发
-	 * @param loginKey 账号类别
+	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue token值
 	 * @param device 设备标识 
 	 */
-	public void doReplaced(String loginKey, Object loginId, String tokenValue, String device);
+	public void doReplaced(String loginType, Object loginId, String tokenValue, String device);
 
 	/**
 	 * 每次被封禁时触发
-	 * @param loginKey 账号类别
+	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param disableTime 封禁时长，单位: 秒
 	 */
-	public void doDisable(String loginKey, Object loginId, long disableTime);
+	public void doDisable(String loginType, Object loginId, long disableTime);
 	
 	/**
 	 * 每次被解封时触发
-	 * @param loginKey 账号类别
+	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 */
-	public void doUntieDisable(String loginKey, Object loginId);
+	public void doUntieDisable(String loginType, Object loginId);
 	
 	/**
 	 * 每次创建Session时触发

@@ -55,13 +55,13 @@ import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 public class MySaTokenAction extends SaTokenActionDefaultImpl {
 	// 重写token生成策略 
 	@Override
-	public String createToken(Object loginId, String loginKey) {
+	public String createToken(Object loginId, String loginType) {
 		return SaTokenInsideUtil.getRandomString(60);	// 随机60位字符串
 	}
 }
 ```
 
-2、再次调用 `StpUtil.setLoginId(10001)`方法进行登录，观察其生成的token样式:
+2、再次调用 `StpUtil.login(10001)`方法进行登录，观察其生成的token样式:
 ``` html
 gfuPSwZsnUhwgz08GTCH4wOgasWtc3odP4HLwXJ7NDGOximTvT4OlW19zeLH
 ```
@@ -96,13 +96,13 @@ import cn.hutool.core.util.IdUtil;
 public class MySaTokenAction extends SaTokenActionDefaultImpl {
 	// 重写token生成策略 
 	@Override
-	public String createToken(Object loginId, String loginKey) {
+	public String createToken(Object loginId, String loginType) {
 		return IdUtil.getSnowflake(1, 1).nextIdStr();	// 以雪花算法生成token 
 	}
 }
 ```
 
-3、再次调用 `StpUtil.setLoginId(10001)`方法进行登录，观察其生成的token样式: 
+3、再次调用 `StpUtil.login(10001)`方法进行登录，观察其生成的token样式: 
 ``` html
 1339604338175250432
 ```

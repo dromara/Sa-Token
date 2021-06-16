@@ -20,7 +20,7 @@ public class StpInterfaceImpl implements StpInterface {
 	 * 返回一个账号所拥有的权限码集合 
 	 */
 	@Override
-	public List<String> getPermissionList(Object loginId, String loginKey) {
+	public List<String> getPermissionList(Object loginId, String loginType) {
 		return Arrays.asList("user*", "art-add", "art-delete", "art-update", "art-get");
 	}
 
@@ -28,7 +28,7 @@ public class StpInterfaceImpl implements StpInterface {
 	 * 返回一个账号所拥有的角色标识集合 
 	 */
 	@Override
-	public List<String> getRoleList(Object loginId, String loginKey) {
+	public List<String> getRoleList(Object loginId, String loginType) {
 		return Arrays.asList("admin", "super-admin");
 	}
 

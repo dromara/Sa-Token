@@ -53,7 +53,7 @@ public class SaQuickController {
 		// 密码校验 
 		SaQuickConfig config = SaQuickManager.getConfig();
 		if(name.equals(config.getName()) && pwd.equals(config.getPwd())) {
-			StpUtil.setLoginId(config.getName());
+			StpUtil.login(config.getName());
 			return getResult(200, "ok", StpUtil.getTokenInfo());
 		} else {
 			// 校验失败 

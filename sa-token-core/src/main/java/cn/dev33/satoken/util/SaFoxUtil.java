@@ -67,7 +67,7 @@ public class SaFoxUtil {
 	}
 
 	/**
-	 * 将日期格式化
+	 * 将日期格式化 （yyyy-MM-dd HH:mm:ss）
 	 * @param date 日期
 	 * @return 格式化后的时间 
 	 */

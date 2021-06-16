@@ -19,6 +19,6 @@ public @interface SaCheckLogin {
      * 多账号体系下所属的账号体系标识 
      * @return see note 
      */
-    String key() default "";
+    String type() default "";
 
 }

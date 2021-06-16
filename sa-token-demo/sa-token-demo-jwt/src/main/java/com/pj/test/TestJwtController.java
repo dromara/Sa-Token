@@ -32,7 +32,7 @@ public class TestJwtController {
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
 		
-		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
+		StpUtil.login(id);			// 在当前会话登录此账号 	
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
@@ -73,7 +73,7 @@ public class TestJwtController {
 	public AjaxJson test() {
 		System.out.println();
 		System.out.println("--------------进入请求--------------");
-		StpUtil.setLoginId(10001);	
+		StpUtil.login(10001);	
 		System.out.println(StpUtil.getTokenInfo().getTokenValue());
 		return AjaxJson.getSuccess();
 	}

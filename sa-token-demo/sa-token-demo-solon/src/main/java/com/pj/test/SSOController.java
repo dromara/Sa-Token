@@ -21,7 +21,7 @@ public class SSOController {
 	@Mapping("doLogin")
 	public AjaxJson doLogin(@Param(defaultValue = "10001") String id) {
 		System.out.println("---------------- 进行登录 ");
-		StpUtil.setLoginId(id);
+		StpUtil.login(id);
 		return AjaxJson.getSuccess("登录成功: " + id);
 	}
 

@@ -14,7 +14,7 @@
 ``` java
 // 标记当前会话登录的账号id 
 // 建议的参数类型：long | int | String， 不可以传入复杂类型，如：User、Admin等等
-StpUtil.setLoginId(Object loginId);	
+StpUtil.login(Object loginId);	
 
 // 当前会话注销登录
 StpUtil.logout();
@@ -26,7 +26,7 @@ StpUtil.isLogin();
 StpUtil.checkLogin()
 ```
 
-扩展：`NotLoginException` 对象可通过 `getLoginKey()` 方法获取具体是哪个 `StpLogic` 抛出的异常 <br>
+扩展：`NotLoginException` 对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常 <br>
 扩展：`NotLoginException` 对象可通过 `getType()` 方法获取具体的场景值，详细参考章节：[未登录场景值](/fun/not-login-scene)
 
 

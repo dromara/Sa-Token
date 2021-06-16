@@ -21,37 +21,37 @@ public class MySaTokenListener implements SaTokenListener {
 
 	/** 每次登录时触发 */
 	@Override
-	public void doLogin(String loginKey, Object loginId, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, SaLoginModel loginModel) {
 		// ... 
 	}
 
 	/** 每次注销时触发 */
 	@Override
-	public void doLogout(String loginKey, Object loginId, String tokenValue) {
+	public void doLogout(String loginType, Object loginId, String tokenValue) {
 		// ... 
 	}
 
 	/** 每次被踢下线时触发 */
 	@Override
-	public void doLogoutByLoginId(String loginKey, Object loginId, String tokenValue, String device) {
+	public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device) {
 		// ... 
 	}
 
 	/** 每次被顶下线时触发 */
 	@Override
-	public void doReplaced(String loginKey, Object loginId, String tokenValue, String device) {
+	public void doReplaced(String loginType, Object loginId, String tokenValue, String device) {
 		// ... 
 	}
 
 	/** 每次被封禁时触发 */
 	@Override
-	public void doDisable(String loginKey, Object loginId, long disableTime) {
+	public void doDisable(String loginType, Object loginId, long disableTime) {
 		// ... 
 	}
 
 	/** 每次被解封时触发 */
 	@Override
-	public void doUntieDisable(String loginKey, Object loginId) {
+	public void doUntieDisable(String loginType, Object loginId) {
 		// ... 
 	}
 

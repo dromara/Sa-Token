@@ -36,7 +36,7 @@ public class TestController {
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
 		
-		StpUtil.setLoginId(id);			// 在当前会话登录此账号 	
+		StpUtil.login(id);			// 在当前会话登录此账号 	
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
@@ -183,7 +183,7 @@ public class TestController {
 	@Mapping("kickOut")
 	public AjaxJson kickOut() {
 		// 先登录上 
-		StpUtil.setLoginId(10001);
+		StpUtil.login(10001);
 		// 踢下线 
 		StpUtil.logoutByLoginId(10001);
 		// 再尝试获取
@@ -195,7 +195,7 @@ public class TestController {
 	// 测试登录接口, 按照设备登录， 浏览器访问： http://localhost:8081/test/login2
 	@Mapping("login2")
 	public AjaxJson login2(@Param(defaultValue="10001") String id, @Param(defaultValue="PC") String device) {
-		StpUtil.setLoginId(id, device);
+		StpUtil.login(id, device);
 		return AjaxJson.getSuccess();
 	}
 	
@@ -230,7 +230,7 @@ public class TestController {
 	@Mapping("loginByDevice")
 	public AjaxJson loginByDevice() {
 		System.out.println("--------------");
-		StpUtil.setLoginId(10001, "PC");
+		StpUtil.login(10001, "PC");
 		return AjaxJson.getSuccessData("登录成功");
 	}
 

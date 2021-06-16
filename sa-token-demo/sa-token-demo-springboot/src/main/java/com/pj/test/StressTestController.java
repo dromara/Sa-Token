@@ -38,7 +38,7 @@ public class StressTestController {
 			Ttime t = new Ttime().start();
 			// 每次登录的次数
 			for (int j = 1; j <= loginCount; j++) {
-				StpUtil.setLoginId("1000" + j, "PC-" + j);
+				StpUtil.login("1000" + j, "PC-" + j);
 				if(j % 1000 == 0) {
 					System.out.println("已登录：" + j);
 				}

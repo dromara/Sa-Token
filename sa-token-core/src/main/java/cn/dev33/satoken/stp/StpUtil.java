@@ -6,27 +6,27 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 
 /**
- * 一个默认的实现 
+ * Sa-Token 权限验证, 工具类 
  * @author kong 
  */
 public class StpUtil {
 	
 	/**
-	 * 账号体系标识 
+	 * 账号类型标识 
 	 */
-	public static final String KEY = "login";
+	public static final String TYPE = "login";
 	
 	/**
 	 * 底层的 StpLogic 对象  
 	 */
-	public static StpLogic stpLogic = new StpLogic(KEY); 
+	public static StpLogic stpLogic = new StpLogic(TYPE); 
 
 	/**
-	 * 获取当前StpLogin的loginKey 
-	 * @return 当前StpLogin的loginKey
+	 * 获取当前 StpLogic 的账号类型
+	 * @return See Note 
 	 */
-	public static String getLoginKey(){
-		return stpLogic.getLoginKey();
+	public static String getLoginType(){
+		return stpLogic.getLoginType();
 	}
 
 	
@@ -72,8 +72,8 @@ public class StpUtil {
 	 * 在当前会话上登录id 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 */
-	public static void setLoginId(Object loginId) {
-		stpLogic.setLoginId(loginId);
+	public static void login(Object loginId) {
+		stpLogic.login(loginId);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class StpUtil {
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param device 设备标识 
 	 */
-	public static void setLoginId(Object loginId, String device) {
-		stpLogic.setLoginId(loginId, device);
+	public static void login(Object loginId, String device) {
+		stpLogic.login(loginId, device);
 	}
 
 	/**
@@ -90,8 +90,8 @@ public class StpUtil {
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param isLastingCookie 是否为持久Cookie 
 	 */
-	public static void setLoginId(Object loginId, boolean isLastingCookie) {
-		stpLogic.setLoginId(loginId, isLastingCookie);
+	public static void login(Object loginId, boolean isLastingCookie) {
+		stpLogic.login(loginId, isLastingCookie);
 	}
 	
 	/**
@@ -99,8 +99,8 @@ public class StpUtil {
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
 	 */
-	public static void setLoginId(Object loginId, SaLoginModel loginModel) {
-		stpLogic.setLoginId(loginId, loginModel);
+	public static void login(Object loginId, SaLoginModel loginModel) {
+		stpLogic.login(loginId, loginModel);
 	}
 	
 	/** 
@@ -588,5 +588,60 @@ public class StpUtil {
 		stpLogic.switchTo(loginId, function);
 	}
 	
+
+	// =================== 历史API，兼容旧版本 ===================  
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.getLoginType() ，使用方式保持不变 </h1>
+	 * 获取当前StpLogin的loginKey 
+	 * @return 当前StpLogin的loginKey
+	 */
+	@Deprecated
+	public static String getLoginKey(){
+		return stpLogic.getLoginType();
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 在当前会话上登录id 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 */
+	@Deprecated
+	public static void setLoginId(Object loginId) {
+		stpLogic.login(loginId);
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 在当前会话上登录id, 并指定登录设备 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param device 设备标识 
+	 */
+	@Deprecated
+	public static void setLoginId(Object loginId, String device) {
+		stpLogic.login(loginId, device);
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 在当前会话上登录id, 并指定登录设备 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param isLastingCookie 是否为持久Cookie 
+	 */
+	@Deprecated
+	public static void setLoginId(Object loginId, boolean isLastingCookie) {
+		stpLogic.login(loginId, isLastingCookie);
+	}
+	
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 在当前会话上登录id, 并指定所有登录参数Model 
+	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 */
+	@Deprecated
+	public static void setLoginId(Object loginId, SaLoginModel loginModel) {
+		stpLogic.login(loginId, loginModel);
+	}
 	
 }

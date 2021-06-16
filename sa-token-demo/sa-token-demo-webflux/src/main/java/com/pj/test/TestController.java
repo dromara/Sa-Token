@@ -24,7 +24,7 @@ public class TestController {
 	// 测试登录接口 [同步模式]， 浏览器访问： http://localhost:8081/test/login
 	@RequestMapping("login")
 	public AjaxJson login(@RequestParam(defaultValue="10001") String id) {
-		StpUtil.setLoginId(id);			
+		StpUtil.login(id);			
 		return AjaxJson.getSuccess("登录成功");
 	}
 	
