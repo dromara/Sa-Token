@@ -35,7 +35,7 @@ public class SaManager {
 	private static SaTokenConfig config;	
 	public static void setConfig(SaTokenConfig config) {
 		SaManager.config = config;
-		if(config.getIsV()) {
+		if(config.getIsPrint()) {
 			SaFoxUtil.printSaToken();
 		}
 		// 调用一次StpUtil中的方法，保证其可以尽早的初始化 StpLogic 

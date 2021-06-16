@@ -6,7 +6,7 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 
 /**
- * Sa-Token 权限验证, 工具类 
+ * Sa-Token 权限验证工具类 
  * @author kong 
  */
 public class StpUtil {
@@ -69,38 +69,38 @@ public class StpUtil {
 	// =================== 登录相关操作 ===================
 
 	/**
-	 * 在当前会话上登录id 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录 
+	 * @param id 账号id，建议的类型：（long | int | String）
 	 */
-	public static void login(Object loginId) {
-		stpLogic.login(loginId);
+	public static void login(Object id) {
+		stpLogic.login(id);
 	}
 
 	/**
-	 * 在当前会话上登录id, 并指定登录设备 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录，并指定登录设备 
+	 * @param id 账号id，建议的类型：（long | int | String）
 	 * @param device 设备标识 
 	 */
-	public static void login(Object loginId, String device) {
-		stpLogic.login(loginId, device);
+	public static void login(Object id, String device) {
+		stpLogic.login(id, device);
 	}
 
 	/**
-	 * 在当前会话上登录id, 并指定登录设备 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录，并指定是否 [记住我] 
+	 * @param id 账号id，建议的类型：（long | int | String）
 	 * @param isLastingCookie 是否为持久Cookie 
 	 */
-	public static void login(Object loginId, boolean isLastingCookie) {
-		stpLogic.login(loginId, isLastingCookie);
+	public static void login(Object id, boolean isLastingCookie) {
+		stpLogic.login(id, isLastingCookie);
 	}
-	
+
 	/**
-	 * 在当前会话上登录id, 并指定所有登录参数Model 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录，并指定所有登录参数Model 
+	 * @param id 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
 	 */
-	public static void login(Object loginId, SaLoginModel loginModel) {
-		stpLogic.login(loginId, loginModel);
+	public static void login(Object id, SaLoginModel loginModel) {
+		stpLogic.login(id, loginModel);
 	}
 	
 	/** 
@@ -119,7 +119,7 @@ public class StpUtil {
 	}
 	
 	/**
-	 * 指定loginId的会话注销登录（踢人下线）
+	 * 指定账号id的会话注销登录（踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
@@ -128,7 +128,7 @@ public class StpUtil {
 	}
 
 	/**
-	 * 指定loginId指定设备的会话注销登录（踢人下线）
+	 * 指定账号id指定设备的会话注销登录（踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 * @param device 设备标识 

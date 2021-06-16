@@ -6,7 +6,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * 调用 `StpUtil.setLogin()` 时的 [配置参数 Model ]
+ * 调用 `StpUtil.login()` 时的 [配置参数 Model ]
  * @author kong
  *
  */

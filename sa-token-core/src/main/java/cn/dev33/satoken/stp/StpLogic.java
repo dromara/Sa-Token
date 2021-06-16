@@ -179,41 +179,41 @@ public class StpLogic {
 	// 登录与注销 
 	
 	/**
-	 * 在当前会话上登录id 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录 
+	 * @param id 账号id，建议的类型：（long | int | String）
 	 */
-	public void login(Object loginId) {
-		login(loginId, new SaLoginModel());
+	public void login(Object id) {
+		login(id, new SaLoginModel());
 	}
 
 	/**
-	 * 在当前会话上登录id, 并指定登录设备 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录，并指定登录设备 
+	 * @param id 账号id，建议的类型：（long | int | String）
 	 * @param device 设备标识 
 	 */
-	public void login(Object loginId, String device) {
-		login(loginId, new SaLoginModel().setDevice(device));
+	public void login(Object id, String device) {
+		login(id, new SaLoginModel().setDevice(device));
 	}
 
 	/**
-	 * 在当前会话上登录id, 并指定登录设备 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录，并指定是否 [记住我] 
+	 * @param id 账号id，建议的类型：（long | int | String）
 	 * @param isLastingCookie 是否为持久Cookie 
 	 */
-	public void login(Object loginId, boolean isLastingCookie) {
-		login(loginId, new SaLoginModel().setIsLastingCookie(isLastingCookie));
+	public void login(Object id, boolean isLastingCookie) {
+		login(id, new SaLoginModel().setIsLastingCookie(isLastingCookie));
 	}
 	
 	/**
-	 * 在当前会话上登录id, 并指定所有登录参数Model 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
+	 * 会话登录，并指定所有登录参数Model 
+	 * @param id 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
 	 */
-	public void login(Object loginId, SaLoginModel loginModel) {
+	public void login(Object id, SaLoginModel loginModel) {
 		
 		// ------ 0、检查此账号是否已被封禁 
-		if(isDisable(loginId)) {
-			throw new DisableLoginException(loginType, loginId, getDisableTime(loginId));
+		if(isDisable(id)) {
+			throw new DisableLoginException(loginType, id, getDisableTime(id));
 		}
 		
 		// ------ 1、获取相应对象  
@@ -224,15 +224,15 @@ public class StpLogic {
 		// ------ 2、生成一个token 
 		String tokenValue = null;
 		// --- 如果允许并发登录 
-		if(config.getAllowConcurrentLogin()) {
+		if(config.getIsConcurrent()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(config.getIsShare()) {
-				tokenValue = getTokenValueByLoginId(loginId, loginModel.getDevice());
+				tokenValue = getTokenValueByLoginId(id, loginModel.getDevice());
 			}
 		} else {
 			// --- 如果不允许并发登录 
 			// 如果此时[user-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的同设备token标记为被顶下线 
-			SaSession session = getSessionByLoginId(loginId, false);
+			SaSession session = getSessionByLoginId(id, false);
 			if(session != null) {
 				List<TokenSign> tokenSignList = session.getTokenSignList();
 				for (TokenSign tokenSign : tokenSignList) {
@@ -244,20 +244,20 @@ public class StpLogic {
 						// 3. 清理user-session上的token签名记录 
 						session.removeTokenSign(tokenSign.getValue()); 		
 				 		// $$ 通知监听器 
-				 		SaManager.getSaTokenListener().doReplaced(loginType, loginId, tokenSign.getValue(), tokenSign.getDevice());
+				 		SaManager.getSaTokenListener().doReplaced(loginType, id, tokenSign.getValue(), tokenSign.getDevice());
 					}
 				}
 			}
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
-			tokenValue = createTokenValue(loginId);
+			tokenValue = createTokenValue(id);
 		}
 		
 		// ------ 3. 获取[User-Session] (如果还没有创建session, 则新建, 如果已经创建，则续期) 
-		SaSession session = getSessionByLoginId(loginId, false);
+		SaSession session = getSessionByLoginId(id, false);
 		if(session == null) {
-			session = getSessionByLoginId(loginId);
+			session = getSessionByLoginId(id);
 		} else {
 			session.updateMinTimeout(loginModel.getTimeout());
 		}
@@ -266,7 +266,7 @@ public class StpLogic {
 		
 		// ------ 4. 持久化其它数据 
 		// token -> uid 
-		dao.set(splicingKeyTokenValue(tokenValue), String.valueOf(loginId), loginModel.getTimeout());
+		dao.set(splicingKeyTokenValue(tokenValue), String.valueOf(id), loginModel.getTimeout());
 		
 		// 写入 [最后操作时间]
 		setLastActivityToNow(tokenValue); 
@@ -275,7 +275,7 @@ public class StpLogic {
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
 		
 		// $$ 通知监听器
-		SaManager.getSaTokenListener().doLogin(loginType, loginId, loginModel);
+		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
 	}
 
 	/** 
@@ -327,7 +327,7 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 指定loginId的会话注销登录（踢人下线）
+	 * 指定账号id的会话注销登录（踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
@@ -336,7 +336,7 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 指定loginId指定设备的会话注销登录（踢人下线）
+	 * 指定账号id指定设备的会话注销登录（踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 

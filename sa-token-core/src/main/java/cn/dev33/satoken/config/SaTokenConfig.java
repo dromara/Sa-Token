@@ -23,7 +23,7 @@ public class SaTokenConfig {
 	private long activityTimeout = -1;
 
 	/** 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) */
-	private Boolean allowConcurrentLogin = true;
+	private Boolean isConcurrent = true;
 
 	/** 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) */
 	private Boolean isShare = true;
@@ -56,7 +56,7 @@ public class SaTokenConfig {
 	private String tokenPrefix;
 
 	/** 是否在初始化配置时打印版本字符画 */
-	private Boolean isV = true;
+	private Boolean isPrint = true;
 
 	/** 是否打印操作日志 */
 	private Boolean isLog = false;
@@ -118,18 +118,18 @@ public class SaTokenConfig {
 	}
 
 	/**
-	 * @return 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+	 * @return 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
 	 */
-	public Boolean getAllowConcurrentLogin() {
-		return allowConcurrentLogin;
+	public Boolean getIsConcurrent() {
+		return isConcurrent;
 	}
 
 	/**
-	 * @param allowConcurrentLogin 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
+	 * @param isConcurrent 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setAllowConcurrentLogin(Boolean allowConcurrentLogin) {
-		this.allowConcurrentLogin = allowConcurrentLogin;
+	public SaTokenConfig setIsConcurrent(Boolean isConcurrent) {
+		this.isConcurrent = isConcurrent;
 		return this;
 	}
 
@@ -298,16 +298,16 @@ public class SaTokenConfig {
 	/**
 	 * @return 是否在初始化配置时打印版本字符画
 	 */
-	public Boolean getIsV() {
-		return isV;
+	public Boolean getIsPrint() {
+		return isPrint;
 	}
 
 	/**
-	 * @param isV 是否在初始化配置时打印版本字符画
+	 * @param isPrint 是否在初始化配置时打印版本字符画
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setIsV(Boolean isV) {
-		this.isV = isV;
+	public SaTokenConfig setIsPrint(Boolean isPrint) {
+		this.isPrint = isPrint;
 		return this;
 	}
 
@@ -349,16 +349,36 @@ public class SaTokenConfig {
 	@Override
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
-				+ ", allowConcurrentLogin=" + allowConcurrentLogin + ", isShare=" + isShare + ", isReadBody="
+				+ ", isConcurrent=" + isConcurrent + ", isShare=" + isShare + ", isReadBody="
 				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
 				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
-				+ ", tokenPrefix=" + tokenPrefix + ", isV=" + isV + ", isLog=" + isLog + ", jwtSecretKey="
+				+ ", tokenPrefix=" + tokenPrefix + ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey="
 				+ jwtSecretKey + "]";
 	}
 	
-	
 
-	
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>
+	 * @param allowConcurrentLogin see note
+	 * @return  see note
+	 */
+	@Deprecated
+	public SaTokenConfig setAllowConcurrentLogin(Boolean allowConcurrentLogin) {
+		this.isConcurrent = allowConcurrentLogin;
+		return this;
+	}
+
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>
+	 * @param isV see note
+	 * @return see note
+	 */
+	public SaTokenConfig setIsV(Boolean isV) {
+		this.isPrint = isV;
+		return this;
+	}
+
 
 }
