@@ -33,7 +33,7 @@ public class StpUserUtil {
 	/**
 	 * 账号体系标识 
 	 */
-	public static final String KEY = "user";	// 将 LoginType 从`login`改为`user` 
+	public static final String TYPE = "user";	// 将 LoginType 从`login`改为`user` 
 
 	// 其它代码 ... 
 

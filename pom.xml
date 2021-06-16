@@ -8,7 +8,7 @@
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.19.0</version>
+	<version>1.20.0</version>
 	
 	<!-- 项目介绍 -->
 	<name>sa-token</name>
@@ -36,7 +36,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-		<sa-token-version>1.19.0</sa-token-version>
+		<sa-token-version>1.20.0</sa-token-version>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>

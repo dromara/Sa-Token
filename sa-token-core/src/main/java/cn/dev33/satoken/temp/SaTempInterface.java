@@ -13,7 +13,7 @@ public interface SaTempInterface {
 	/**
 	 * 根据value创建一个token 
 	 * @param value 指定值
-	 * @param time 有效期，单位：秒 
+	 * @param timeout 有效期，单位：秒 
 	 * @return 生成的token
 	 */
 	public default String createToken(Object value, long timeout) {
@@ -43,6 +43,7 @@ public interface SaTempInterface {
 	 * 解析token获取value，并转换为指定类型 
 	 * @param token 指定token 
 	 * @param cs 指定类型 
+	 * @param <T> 默认值的类型 
 	 * @return  See Note 
 	 */
 	public default<T> T parseToken(String token, Class<T> cs) {

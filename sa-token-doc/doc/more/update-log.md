@@ -1,5 +1,27 @@
 # 更新日志 
 
+
+### 2021-5-10 @v1.20.0
+- 新增：新增Solon适配插件，感谢大佬 `@刘西东` 提供的pr **[重要]** 
+- 新增：新增`SaRouter.stop()`函数，用于一次性跳出匹配链功能 **[重要]** 
+- 新增：新增单元测试   **[重要]** 
+- 新增：新增临时令牌验证模块   **[重要]**  
+- 新增：新增`sa-token-temp-jwt`模块整合jwt临时令牌鉴权    **[重要]**  
+- 新增：会话 `SaSession.get()` 增加缓存API，简化代码 
+- 新增：新增框架调查问卷 
+- 修复：修复同时引入 `Spring Cloud Bus` 与 `Sa-Token` 冲突的问题   **[重要]** 
+- 修复：修复`SaServletFilter`异常函数中无法自定义`Content-Type`的问题 
+- 文档：新增微服务依赖引入说明 
+- 文档：新增认证流程图 
+- 不兼容更新重构：
+	- 方法：`StpUtil.setLoginId(id)` -> `StpUtil.login(id)` 
+	- 方法：`StpUtil.getLoginKey()` -> `StpUtil.getLoginType()` (注意其它所有地方的`LoginKey`均已更改为`loginType`)
+	- 工具类：`SaRouterUtil` -> `SaRouter` 
+	- 配置类：`allowConcurrentLogin` -> `isConcurrent` 
+	- 配置类：`isV` -> `isPrint` 
+	- 为保证平滑更新，旧API仍旧保留，但已增加`@Deprecated`注解，请尽快更新至新API  
+
+
 ### 2021-5-10 @v1.19.0
 - 新增：注解鉴权新增定制loginType功能  **[重要]** 
 - 重构：重构目录结构，抽离`plugin`模块  **[重要]** 

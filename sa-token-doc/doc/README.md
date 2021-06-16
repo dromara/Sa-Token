@@ -1,7 +1,7 @@
 <p align="center">
 	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.19.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.20.0</h1>
 <h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
 <h4 align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
@@ -51,6 +51,7 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **分布式会话** —— 提供jwt集成和共享数据中心两种分布式会话方案
 - **微服务网关鉴权** —— 适配Gateway、Soul、Zuul等常见网关组件的请求拦截认证
 - **单点登录** —— 一处登录，处处通行
+- **临时Token验证** —— 解决短时间的Token授权问题
 - **模拟他人账号** —— 实时操作任意用户状态数据
 - **临时身份切换** —— 将会话身份临时切换为其它账号
 - **无Cookie模式** —— APP、小程序等前后台分离场景
