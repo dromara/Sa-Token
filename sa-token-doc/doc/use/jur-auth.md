@@ -16,7 +16,7 @@
 
 ### 获取当前账号权限码集合
 因为每个项目的需求不同，其权限设计也千变万化，因此【获取当前账号权限码集合】这一操作不可能内置到框架中，
-所以`sa-token`将此操作以接口的方式暴露给你，以方便的你根据自己的业务逻辑进行重写
+所以`Sa-Token`将此操作以接口的方式暴露给你，以方便的你根据自己的业务逻辑进行重写
 
 你需要做的就是新建一个类，实现`StpInterface`接口，例如以下代码：
 
@@ -31,7 +31,7 @@ import cn.dev33.satoken.stp.StpInterface;
 /**
  * 自定义权限验证接口扩展 
  */
-@Component	// 保证此类被SpringBoot扫描，完成sa-token的自定义权限验证扩展 
+@Component	// 保证此类被SpringBoot扫描，完成Sa-Token的自定义权限验证扩展 
 public class StpInterfaceImpl implements StpInterface {
 
 	/**
@@ -92,7 +92,7 @@ StpUtil.checkPermissionOr("user-update", "user-delete");
 
 
 ### 角色认证
-在sa-token中，角色和权限可以独立验证
+在Sa-Token中，角色和权限可以独立验证
 
 ``` java
 // 当前账号是否含有指定角色标识, 返回true或false 

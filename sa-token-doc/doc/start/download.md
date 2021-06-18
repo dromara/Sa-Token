@@ -3,12 +3,12 @@
 ------
 
 ## Maven依赖
-在项目中直接通过 `pom.xml` 引入 `sa-token` 的依赖即可（四选一）：
+在项目中直接通过 `pom.xml` 引入 Sa-Token 的依赖即可（四选一）：
 
 <!------------------------------ tabs:start ------------------------------>
 
 <!-- tab:SpringMVC环境 （ServletAPI）  -->
-如果你使用的框架基于 ServletAPI 构建（ `SpringMVC`、`SpringBoot`、`Zuul`等 ），请引入此包
+如果你使用的框架基于 ServletAPI 构建（ SpringMVC、SpringBoot、Zuul等 ），请引入此包
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -19,7 +19,7 @@
 ```
 
 <!-- tab:WebFlux环境 （Reactor）  -->
-注：如果你使用的框架基于 Reactor 模型构建（`Netty`、`WebFlux`、`Soul`、`SC Gateway`等），请引入此包
+注：如果你使用的框架基于 Reactor 模型构建（Netty、WebFlux、Soul、SC Gateway等），请引入此包
 ``` xml
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -30,7 +30,7 @@
 ```
 
 <!-- tab:Servlet容器环境   -->
-注：如果你的项目没有使用Spring，但是Web框架是基于`ServletAPI`规范的，可以引入此包
+注：如果你的项目没有使用Spring，但是Web框架是基于 ServletAPI 规范的，可以引入此包
 ``` xml
 <!-- Sa-Token 权限认证（ServletAPI规范）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -41,7 +41,7 @@
 ```
 
 <!-- tab:其它   -->
-注：如果你的项目既没有使用`SpringMVC`、`WebFlux`，也不是基于`ServletAPI`规范，那么可以引入`core`核心包
+注：如果你的项目既没有使用 SpringMVC、WebFlux，也不是基于 ServletAPI 规范，那么可以引入core核心包
 ``` xml
 <!-- Sa-Token 权限认证（core核心包）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -78,8 +78,8 @@ implementation 'cn.dev33:sa-token-core:1.20.0'
 
 ## 获取源码
 如果你想深入了解Sa-Token，你可以通过`Gitee`或者`GitHub`来获取源码 （**学习测试请拉取master分支**，dev为正在开发的分支，有很多特性并不稳定）
-- Gitee地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
-- GitHub地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
+- **Gitee**地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
+- **GitHub**地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
 - 开源不易，求鼓励，给个`star`吧
 - 源码目录介绍: 
 

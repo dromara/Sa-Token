@@ -1,7 +1,7 @@
 # 密码加密
 
 严格来讲，密码加密不属于 [权限认证] 的范畴，但是对于大多数系统来讲，密码加密又是安全认证不可或缺的部分，
-所以，应大家要求，`sa-token`在`v1.14版本`添加密码加密模块，该模块非常简单，仅仅封装了一些常见的加密算法
+所以，应大家要求，`Sa-Token`在`v1.14版本`添加密码加密模块，该模块非常简单，仅仅封装了一些常见的加密算法
 
 
 
@@ -27,7 +27,7 @@ AES加密
 ``` java
 // 定义秘钥和明文
 String key = "123456";
-String text = "sa-token 一个轻量级java权限认证框架";
+String text = "Sa-Token 一个轻量级java权限认证框架";
 
 // 加密 
 String ciphertext = SaSecureUtil.aesEncrypt(key, text);
@@ -47,7 +47,7 @@ String privateKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAO+wmt01pwm
 String publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDvsJrdNacJvZRzHauwPIJBIoJNFyjH47/uCIwBYVgkok3j+3bZZ3HhSW5Fsb23O0KN3wjqcJn3LJMFHN1UoMoiZDSQ7PYrz275bfCFNm2fjwQ8WMUgiRa4KLlTqQK/Gq/2+oDbmE4tb7dxZBrUowAhW9NNv+vESlE8nvP7XXFYpQIDAQAB";
 
 // 文本
-String text = "sa-token 一个轻量级java权限认证框架";
+String text = "Sa-Token 一个轻量级java权限认证框架";
 
 // 使用公钥加密
 String ciphertext = SaSecureUtil.rsaEncryptByPublic(publicKey, text);
@@ -68,7 +68,7 @@ System.out.println(SaSecureUtil.rsaGenerateKeyPair());
 ### Base64编码与解码
 ``` java
 // 文本
-String text = "sa-token 一个轻量级java权限认证框架";
+String text = "Sa-Token 一个轻量级java权限认证框架";
 
 // 使用Base64编码
 String base64Text = SaBase64Util.encode(text);

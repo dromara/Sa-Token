@@ -5,7 +5,7 @@
 > 项目中所有接口均需要登录验证，只有'登录接口'本身对外开放
 
 我们怎么实现呢？给每个接口加上鉴权注解？手写全局拦截器？似乎都不是非常方便。<br/>
-在这个需求中我们真正需要的是一种基于路由拦截的鉴权模式, 那么在sa-token怎么实现路由拦截鉴权呢？
+在这个需求中我们真正需要的是一种基于路由拦截的鉴权模式, 那么在Sa-Token怎么实现路由拦截鉴权呢？
 
 
 
@@ -14,7 +14,7 @@
 ``` java 
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-	// 注册sa-token的登录拦截器
+	// 注册Sa-Token的登录拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册登录拦截器，并排除登录接口或其他可匿名访问的接口地址 (与注解拦截器无关)
@@ -54,7 +54,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ``` java 
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-	// 注册sa-token的拦截器
+	// 注册Sa-Token的拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册路由拦截器，自定义验证规则 

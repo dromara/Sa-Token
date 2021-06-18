@@ -1,6 +1,6 @@
 # 框架配置
 你可以**零配置启动框架** <br>
-但同时你也可以通过配置，定制性使用框架，`sa-token`支持多种方式配置框架信息
+但同时你也可以通过配置，定制性使用框架，`Sa-Token`支持多种方式配置框架信息
 
 
 
@@ -10,7 +10,7 @@
 
 ``` java
 spring: 
-    # sa-token配置
+    # Sa-Token配置
     sa-token: 
         # token名称 (同时也是cookie名称)
         token-name: satoken
@@ -34,12 +34,12 @@ spring:
 ### 方式2、通过代码配置
 ``` java 
 /**
- * sa-token代码方式进行配置
+ * Sa-Token代码方式进行配置
  */
 @Configuration
 public class SaTokenConfigure {
 
-	// 获取配置Bean (以代码的方式配置sa-token, 此配置会覆盖yml中的配置)
+	// 获取配置Bean (以代码的方式配置Sa-Token, 此配置会覆盖yml中的配置)
 	@Primary
 	@Bean(name="SaTokenConfigure")
 	public SaTokenConfig getSaTokenConfig() {

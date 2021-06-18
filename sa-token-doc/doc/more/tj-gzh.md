@@ -163,5 +163,5 @@
 
 <br>
 
-感谢以上公众号对 sa-token 项目的推荐，如果您也是java公众号运营者，欢迎 [相互推荐](/more/tj-gzh-hz)
+感谢以上公众号对 Sa-Token 项目的推荐，如果您也是java公众号运营者，欢迎 [相互推荐](/more/tj-gzh-hz)
 

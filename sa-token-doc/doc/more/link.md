@@ -2,7 +2,7 @@
 
 --- 
 
-#### 集成sa-token的开源项目:
+#### 集成Sa-Token的开源项目:
 
 [[sa-plus] 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus) 
 

@@ -5,7 +5,7 @@
 有的时候，我们会在一个项目中设计两套账号体系，比如一个电商系统的 `user表` 和 `admin表`<br>
 在这种场景下，如果两套账号我们都使用 `StpUtil` 类的API进行登录鉴权，那么势必会发生逻辑冲突
 
-在sa-token中，这个问题的模型叫做：多账号体系验证 <br>
+在Sa-Token中，这个问题的模型叫做：多账号体系验证 <br>
 要解决这个问题，我们必须有一个合理的机制将这两套账号的授权给区分开，让它们互不干扰才行
 
 
@@ -76,14 +76,21 @@ public String info() {
 很简单，我们只要更改一下 `StpUserUtil` 的 `TokenName` 即可，参考示例如下：
 
 ``` java
-// 底层的 StpLogic 对象  
-public static StpLogic stpLogic = new StpLogic("user") {
-	// 重写 StpLogic 类下的 `splicingKeyTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
-	@Override
-	public String splicingKeyTokenName() {
-		return super.splicingKeyTokenName() + "-user";
-	}
-}; 
+public class StpUserUtil {
+	
+	// 使用匿名子类 重写`stpLogic对象`的一些方法 
+	public static StpLogic stpLogic = new StpLogic("user") {
+		// 重写 StpLogic 类下的 `splicingKeyTokenName` 函数，返回一个与 `StpUtil` 不同的token名称, 防止冲突 
+		@Override
+		public String splicingKeyTokenName() {
+			return super.splicingKeyTokenName() + "-user";
+		}
+		// 同理你可以按需重写一些其它方法 ... 
+	}; 
+	
+	// ... 
+	
+}
 ```
 
 再次调用 `StpUserUtil.login(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`

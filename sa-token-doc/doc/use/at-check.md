@@ -6,12 +6,12 @@
 注解鉴权 —— 优雅的将鉴权与业务代码分离！
 
 - `@SaCheckLogin`: 登录认证 —— 只有登录之后才能进入该方法 
-- `@SaCheckRole("admin")`: 权限认证 —— 必须具有指定权限才能进入该方法 
-- `@SaCheckPermission("user:add")`: 角色认证 —— 必须具有指定角色标识才能进入该方法 
+- `@SaCheckRole("admin")`: 角色认证 —— 必须具有指定角色标识才能进入该方法 
+- `@SaCheckPermission("user:add")`: 权限认证 —— 必须具有指定权限才能进入该方法 
 - `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法 
 
 Sa-Token使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态<br>
-因此，为了使用注解鉴权，你必须手动将sa-token的全局拦截器注册到你项目中
+因此，为了使用注解鉴权，你必须手动将Sa-Token的全局拦截器注册到你项目中
 
 <!-- Sa-Token内置两种模式完成注解鉴权，分别是`拦截器模式`和`AOP模式`, 为了避免不必要的性能浪费，这两种模式默认都处于关闭状态 <br>
 因此如若使用注解鉴权，你必须选择其一进行注册 -->
@@ -23,7 +23,7 @@ Sa-Token使用全局拦截器完成注解鉴权功能，为了不为项目带来
 ``` java
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-	// 注册sa-token的注解拦截器，打开注解式鉴权功能 
+	// 注册Sa-Token的注解拦截器，打开注解式鉴权功能 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
                 // 注册注解拦截器，并排除不需要注解鉴权的接口地址 (与登录拦截器无关)

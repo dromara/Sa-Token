@@ -49,7 +49,7 @@ import org.springframework.stereotype.Component;
 import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 
 /**
- * 继承sa-token行为Bean默认实现, 重写部分逻辑 
+ * 继承Sa-Token行为Bean默认实现, 重写部分逻辑 
  */
 @Component
 public class MySaTokenAction extends SaTokenActionDefaultImpl {
@@ -90,7 +90,7 @@ import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 import cn.hutool.core.util.IdUtil;
 	
 /**
- * 继承sa-token行为Bean默认实现, 重写部分逻辑 
+ * 继承Sa-Token行为Bean默认实现, 重写部分逻辑 
  */
 @Component
 public class MySaTokenAction extends SaTokenActionDefaultImpl {

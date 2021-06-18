@@ -1,6 +1,6 @@
 # SpringBoot 集成 Sa-Token 示例
 
-本篇将带你从零开始集成sa-token，从而让你快速熟悉sa-token的使用姿势 <br>
+本篇将带你从零开始集成Sa-Token，从而让你快速熟悉Sa-Token的使用姿势 <br>
 整合示例在官方仓库的`/sa-token-demo/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行测试学习
 
 ---
@@ -31,7 +31,7 @@ server:
     port: 8081
 	
 spring: 
-    # sa-token配置
+    # Sa-Token配置
     sa-token: 
         # token名称 (同时也是cookie名称)
         token-name: satoken
@@ -61,7 +61,7 @@ spring:
 public class SaTokenDemoApplication {
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(SaTokenDemoApplication.class, args);
-		System.out.println("启动成功：sa-token配置如下：" + SaManager.getConfig());
+		System.out.println("启动成功：Sa-Token配置如下：" + SaManager.getConfig());
 	}
 }
 ```
@@ -106,7 +106,7 @@ public class UserController {
 
 
 ### 详细了解
-通过这个示例，你已经对sa-token有了初步的了解，那么现在开始详细了解一下它都有哪些 [能力](/use/login-auth) 吧
+通过这个示例，你已经对Sa-Token有了初步的了解，那么现在开始详细了解一下它都有哪些 [能力](/use/login-auth) 吧
 
 
 

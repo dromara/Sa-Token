@@ -25,7 +25,7 @@
 1. 使用`共享Cookie`来解决`token共享`问题
 2. 使用`Redis`来解决`Session共享`问题
 
-在前面的章节我们已经了解了`sa-token`整合`Redis`的步骤，现在我们来讲一下如何在多个域名下共享Cookie。
+在前面的章节我们已经了解了`Sa-Token`整合`Redis`的步骤，现在我们来讲一下如何在多个域名下共享Cookie。
 
 首先我们需要明确一点：根据`CORS策略`，在A域名下写入的Cookie，在B域名下是无法读取的，浏览器对跨域访问有着非常严格的限制 <br>
 
@@ -37,7 +37,7 @@ OK，所有理论就绪，下面开始实战
 
 ### 集成步骤
 
-sa-token整合同域下的单点登录非常简单，相比于正常的登录，你只需要在配置文件中增加配置 `sa-token.cookie-domain=xxx.com` 来指定一下Cookie写入时指定的父级域名即可，详细步骤示例如下：
+Sa-Token整合同域下的单点登录非常简单，相比于正常的登录，你只需要在配置文件中增加配置 `sa-token.cookie-domain=xxx.com` 来指定一下Cookie写入时指定的父级域名即可，详细步骤示例如下：
 
 #### 1. 准备工作
 首先修改hosts文件(`C:\WINDOWS\system32\drivers\etc\hosts`)，添加以下IP映射，方便我们进行测试：
