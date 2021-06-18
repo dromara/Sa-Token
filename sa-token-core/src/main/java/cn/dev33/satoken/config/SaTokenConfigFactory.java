@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * sa-token配置文件的构建工厂类
+ * Sa-Token配置文件的构建工厂类
  * <p>
  * 只有在非IOC环境下才会用到此类
  * 

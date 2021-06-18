@@ -9,19 +9,20 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * 对 SaTokenAction 接口的默认实现 
+ * Sa-Token 逻辑代理接口 [默认实现类] 
  * @author kong
  *
  */
 public class SaTokenActionDefaultImpl implements SaTokenAction {
 
 	/**
-	 * 根据一定的算法生成一个token 
+	 * 创建一个Token 
 	 */
 	@Override
 	public String createToken(Object loginId, String loginType) {
@@ -56,7 +57,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	}
 
 	/**
-	 * 根据 SessionId 创建一个 Session 
+	 * 创建一个Session 
 	 */
 	@Override
 	public SaSession createSession(String sessionId) {
@@ -64,11 +65,12 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	}
 
 	/**
-	 * 指定集合是否包含指定元素（模糊匹配） 
+	 * 判断：集合中是否包含指定元素（模糊匹配） 
 	 */
 	@Override
 	public boolean hasElement(List<String> list, String element) {
-		// 集合为空直接返回false
+		
+		// 空集合直接返回false
 		if(list == null || list.size() == 0) {
 			return false;
 		}
@@ -90,7 +92,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	}
 
 	/**
-	 * 对一个Method对象进行注解权限校验（注解鉴权逻辑内部实现） 
+	 * 对一个Method对象进行注解检查（注解鉴权内部实现） 
 	 */
 	@Override
 	public void checkMethodAnnotation(Method method) {
@@ -124,6 +126,12 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		if(target.isAnnotationPresent(SaCheckPermission.class)) {
 			SaCheckPermission at = target.getAnnotation(SaCheckPermission.class);
 			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		}
+
+		// 校验 @SaCheckSafe 注解
+		if(target.isAnnotationPresent(SaCheckSafe.class)) {
+			SaCheckSafe at = target.getAnnotation(SaCheckSafe.class);
+			SaManager.getStpLogic(null).checkByAnnotation(at);
 		}
 	}
 	

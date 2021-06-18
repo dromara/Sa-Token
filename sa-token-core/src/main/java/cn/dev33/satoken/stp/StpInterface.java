@@ -10,7 +10,7 @@ import java.util.List;
 public interface StpInterface {
 
 	/**
-	 * 返回指定 LoginId 所拥有的权限码集合 
+	 * 返回指定账号id所拥有的权限码集合 
 	 * 
 	 * @param loginId  账号id
 	 * @param loginType 账号类型
@@ -19,7 +19,7 @@ public interface StpInterface {
 	public List<String> getPermissionList(Object loginId, String loginType);
 
 	/**
-	 * 返回指定loginId所拥有的角色标识集合 
+	 * 返回指定账号id所拥有的角色标识集合 
 	 * 
 	 * @param loginId  账号id
 	 * @param loginType 账号类型

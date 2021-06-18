@@ -11,12 +11,12 @@ import cn.dev33.satoken.SaManager;
 public class SaSessionCustomUtil {
 
 	/**
-	 * 添加上指定前缀，防止恶意伪造session
+	 * 添加上指定前缀，防止恶意伪造Session
 	 */
 	public static String sessionKey = "custom";
 
 	/**
-	 * 组织一下自定义Session的id
+	 * 拼接Key: 自定义Session的Id
 	 * 
 	 * @param sessionId 会话id
 	 * @return sessionId
@@ -26,9 +26,9 @@ public class SaSessionCustomUtil {
 	}
 
 	/**
-	 * 验证指定key的Session是否存在
+	 * 指定key的Session是否存在
 	 * 
-	 * @param sessionId session的id
+	 * @param sessionId Session的id
 	 * @return 是否存在
 	 */
 	public static boolean isExists(String sessionId) {
@@ -62,7 +62,7 @@ public class SaSessionCustomUtil {
 	}
 
 	/**
-	 * 删除指定key的session
+	 * 删除指定key的Session 
 	 * 
 	 * @param sessionId 指定key
 	 */

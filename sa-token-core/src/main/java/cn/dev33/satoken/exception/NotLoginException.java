@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 一个异常：代表用户没有登录 
+ * 一个异常：代表会话未能通过登录认证 
  * @author kong 
  */
 public class NotLoginException extends SaTokenException {

@@ -4,7 +4,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 
 /**
- * 执行验证方法的辅助类
+ * 路由拦截器验证方法Lambda 
  * 
  * @author kong
  *

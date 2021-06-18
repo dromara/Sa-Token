@@ -3,7 +3,7 @@ package cn.dev33.satoken.exception;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * 没有指定角色标识，抛出的异常 
+ * 一个异常：代表会话未能通过角色认证 
  * 
  * @author kong
  *

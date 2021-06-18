@@ -1,7 +1,7 @@
 package cn.dev33.satoken.fun;
 
 /**
- * 根据boolean变量，决定是否执行一个函数
+ * 根据Boolean变量，决定是否执行一个函数
  * 
  * @author kong
  *

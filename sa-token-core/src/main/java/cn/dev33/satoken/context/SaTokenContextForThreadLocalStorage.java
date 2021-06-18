@@ -6,19 +6,19 @@ import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
- * 基于ThreadLocal的上下文对象存储器 
+ * Sa-Token 上下文处理器 [ThreadLocal版本] ---- 对象存储器 
  * @author kong
  *
  */
 public class SaTokenContextForThreadLocalStorage {
 	
 	/**
-	 * 基于 ThreadLocal 的上下文 
+	 * 基于 ThreadLocal 的 [Box存储器] 
 	 */
-	static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<Box>();
+	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<Box>();
 	
 	/**
-	 * 初始化 [容器]
+	 * 初始化 [Box存储器]
 	 * @param request {@link SaRequest}
 	 * @param response {@link SaResponse}
 	 * @param storage {@link SaStorage}
@@ -29,14 +29,14 @@ public class SaTokenContextForThreadLocalStorage {
 	};
 
 	/**
-	 * 清除 [容器]
+	 * 清除 [Box存储器]
 	 */
 	public static void clearBox() {
 		boxThreadLocal.remove();
 	};
 
 	/**
-	 * 获取 [容器]
+	 * 获取 [Box存储器]
 	 * @return see note
 	 */
 	public static Box getBox() {
@@ -44,7 +44,7 @@ public class SaTokenContextForThreadLocalStorage {
 	};
 	
 	/**
-	 * 获取 [容器], 如果为空则抛出异常 
+	 * 获取 [Box存储器], 如果为空则抛出异常 
 	 * @return see note
 	 */
 	public static Box getBoxNotNull() {
@@ -56,7 +56,7 @@ public class SaTokenContextForThreadLocalStorage {
 	};
 
 	/**
-	 * 在 [上下文容器] 获取 [Request] 对象
+	 * 在 [Box存储器] 获取 [Request] 对象
 	 * 
 	 * @return see note 
 	 */
@@ -65,7 +65,7 @@ public class SaTokenContextForThreadLocalStorage {
 	}
 
 	/**
-	 * 在 [上下文容器] 获取 [Response] 对象
+	 * 在 [Box存储器] 获取 [Response] 对象
 	 * 
 	 * @return see note 
 	 */
@@ -74,7 +74,7 @@ public class SaTokenContextForThreadLocalStorage {
 	}
 
 	/**
-	 * 在 [上下文容器] 获取 [存储器] 对象 
+	 * 在 [Box存储器] 获取 [存储器] 对象 
 	 * 
 	 * @return see note 
 	 */
@@ -84,7 +84,7 @@ public class SaTokenContextForThreadLocalStorage {
 
 	
 	/**
-	 * 临时内部类，存储三个对象 
+	 * 临时内部类，用于存储[request、response、storage]三个对象 
 	 * @author kong
 	 */
 	/**

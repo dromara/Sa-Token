@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 /**
- * Base64工具类
+ * Sa-Token Base64工具类
  * @author kong
  *
  */
@@ -56,6 +56,5 @@ public class SaBase64Util {
 			throw new RuntimeException(e); 
 		}
 	}
-	
 	
 }

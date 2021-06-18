@@ -60,9 +60,9 @@ public class TestJwtController {
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号session的id" + StpUtil.getSession().getId());
 		System.out.println("当前登录账号session的id" + StpUtil.getSession().getId());
-		System.out.println("测试取值name：" + StpUtil.getSession().getAttribute("name"));
-		StpUtil.getSession().setAttribute("name", new Date());	// 写入一个值 
-		System.out.println("测试取值name：" + StpUtil.getSession().getAttribute("name"));
+		System.out.println("测试取值name：" + StpUtil.getSession().get("name"));
+		StpUtil.getSession().set("name", new Date());	// 写入一个值 
+		System.out.println("测试取值name：" + StpUtil.getSession().get("name"));
 		System.out.println( new ObjectMapper().writeValueAsString(StpUtil.getSession()));
 		return AjaxJson.getSuccess();
 	}

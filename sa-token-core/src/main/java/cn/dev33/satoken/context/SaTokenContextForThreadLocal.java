@@ -5,7 +5,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 
 /**
- * 上下文环境 [ThreadLocal版本] 
+ * Sa-Token 上下文处理器 [ThreadLocal版本] 
  * @author kong
  *
  */

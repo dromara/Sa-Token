@@ -1,7 +1,7 @@
 package cn.dev33.satoken.stp;
 
 /**
- * token信息Model: 用来描述一个token的常用参数
+ * Token信息Model: 用来描述一个Token的常用参数
  * 
  * @author kong
  *
@@ -37,6 +37,11 @@ public class SaTokenInfo {
 
 	/** 登录设备标识 */
 	public String loginDevice;
+
+	/** 自定义数据 */
+	public String tag;
+	
+
 
 	/**
 	 * @return token名称 
@@ -179,6 +184,20 @@ public class SaTokenInfo {
 	}
 
 	/**
+	 * @return 自定义数据
+	 */
+	public String getTag() {
+		return tag;
+	}
+
+	/**
+	 * @param tag 自定义数据
+	 */
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	/**
 	 * toString
 	 */
 	@Override
@@ -186,7 +205,10 @@ public class SaTokenInfo {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
 				+ ", loginId=" + loginId + ", loginType=" + loginType + ", tokenTimeout=" + tokenTimeout
 				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
-				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + "]";
+				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + ", tag=" + tag
+				+ "]";
 	}
+	
+	
 
 }

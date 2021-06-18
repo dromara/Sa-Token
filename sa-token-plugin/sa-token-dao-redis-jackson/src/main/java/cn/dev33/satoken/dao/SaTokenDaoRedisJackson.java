@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * sa-token持久层的实现类, 基于redis (使用 jackson 序列化方式)
+ * Sa-Token持久层接口 [Redis版] (使用 jackson 序列化方式)
  * 
  * @author kong
  * 
@@ -73,7 +73,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	
 	
 	/**
-	 * 根据key获取value，如果没有，则返回空
+	 * 获取Value，如无返空 
 	 */
 	@Override
 	public String get(String key) {
@@ -81,7 +81,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 写入指定key-value键值对，并设定过期时间(单位：秒)
+	 * 写入Value，并设定存活时间 (单位: 秒) 
 	 */
 	@Override
 	public void set(String key, String value, long timeout) {
@@ -94,7 +94,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 修改指定key-value键值对 (过期时间不变) 
+	 * 修修改指定key-value键值对 (过期时间不变) 
 	 */
 	@Override
 	public void update(String key, String value) {
@@ -107,7 +107,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 	
 	/**
-	 * 删除一个指定的key
+	 * 删除Value 
 	 */
 	@Override
 	public void delete(String key) {
@@ -115,7 +115,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 根据key获取value，如果没有，则返回空 
+	 * 获取Value的剩余存活时间 (单位: 秒) 
 	 */
 	@Override
 	public long getTimeout(String key) {
@@ -123,7 +123,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 修改指定key的剩余存活时间 (单位: 秒) 
+	 * 修改Value的剩余存活时间 (单位: 秒) 
 	 */
 	@Override
 	public void updateTimeout(String key, long timeout) {
@@ -144,7 +144,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	
 
 	/**
-	 * 根据key获取Object，如果没有，则返回空 
+	 * 获取Object，如无返空 
 	 */
 	@Override
 	public Object getObject(String key) {
@@ -152,7 +152,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 写入指定键值对，并设定过期时间 (单位: 秒)
+	 * 写入Object，并设定存活时间 (单位: 秒) 
 	 */
 	@Override
 	public void setObject(String key, Object object, long timeout) {
@@ -165,7 +165,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 修改指定键值对 (过期时间不变)
+	 * 更新Object (过期时间不变) 
 	 */
 	@Override
 	public void updateObject(String key, Object object) {
@@ -178,7 +178,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 删除一个指定的object 
+	 * 删除Object 
 	 */
 	@Override
 	public void deleteObject(String key) {
@@ -186,7 +186,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 获取指定key的剩余存活时间 (单位: 秒)
+	 * 获取Object的剩余存活时间 (单位: 秒)
 	 */
 	@Override
 	public long getObjectTimeout(String key) {
@@ -194,7 +194,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 修改指定key的剩余存活时间 (单位: 秒)
+	 * 修改Object的剩余存活时间 (单位: 秒)
 	 */
 	@Override
 	public void updateObjectTimeout(String key, long timeout) {

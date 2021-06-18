@@ -59,11 +59,11 @@
         </dependency> -->
         
 		<!-- sa-token整合SpringAOP实现注解鉴权 -->
-		<!-- <dependency>
+		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-aop</artifactId>
             <version>${sa-token-version}</version>
-        </dependency> -->
+        </dependency>
 
 		<!-- @ConfigurationProperties -->
 		<dependency>

@@ -3,7 +3,7 @@ package cn.dev33.satoken.exception;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * 没有指定权限码，抛出的异常 
+ * 一个异常：代表会话未能通过权限认证 
  * 
  * @author kong
  *

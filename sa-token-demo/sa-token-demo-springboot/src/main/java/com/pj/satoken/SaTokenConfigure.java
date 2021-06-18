@@ -41,8 +41,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		
         		// 认证函数: 每次请求执行 
         		.setAuth(r -> {
-        			 System.out.println("---------- sa全局认证");
-        			 System.out.println(SaHolder.getRequest().getRequestPath());
+        			// System.out.println("---------- sa全局认证");
         			 
                     // SaRouter.match("/test/test", () -> new Object());
         		})

@@ -30,14 +30,14 @@ public class SaLoginModel {
 
 	
 	/**
-	 * @return device
+	 * @return 参考 {@link #device}
 	 */
 	public String getDevice() {
 		return device;
 	}
 
 	/**
-	 * @param device 要设置的 device
+	 * @param device 参考 {@link #device}
 	 * @return 对象自身
 	 */
 	public SaLoginModel setDevice(String device) {
@@ -46,14 +46,14 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return isLastingCookie
+	 * @return 参考 {@link #isLastingCookie}
 	 */
 	public Boolean getIsLastingCookie() {
 		return isLastingCookie;
 	}
 
 	/**
-	 * @param isLastingCookie 要设置的 isLastingCookie
+	 * @param isLastingCookie 参考 {@link #isLastingCookie}
 	 * @return 对象自身
 	 */
 	public SaLoginModel setIsLastingCookie(Boolean isLastingCookie) {
@@ -62,14 +62,14 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return timeout
+	 * @return 参考 {@link #timeout}
 	 */
 	public Long getTimeout() {
 		return timeout;
 	}
 
 	/**
-	 * @param timeout 要设置的 timeout
+	 * @param timeout 参考 {@link #timeout}
 	 * @return 对象自身
 	 */
 	public SaLoginModel setTimeout(long timeout) {
@@ -79,7 +79,7 @@ public class SaLoginModel {
 
 
 	/**
-	 * @return cookie时长
+	 * @return Cookie时长
 	 */
 	public int getCookieTimeout() {
 		if(isLastingCookie == false) {
@@ -91,7 +91,6 @@ public class SaLoginModel {
 		return (int)(long)timeout;
 	}
 
-	
 	/**
 	 * 构建对象，初始化默认值 
 	 * @return 对象自身
@@ -118,7 +117,6 @@ public class SaLoginModel {
 		return this;
 	}
 	
-	
 	/**
 	 * 静态方法获取一个 SaLoginModel 对象
 	 * @return SaLoginModel 对象 
@@ -127,7 +125,6 @@ public class SaLoginModel {
 		return new SaLoginModel();
 	}
 
-	
 	/**
 	 * toString
 	 */
@@ -136,7 +133,4 @@ public class SaLoginModel {
 		return "SaLoginModel [device=" + device + ", isLastingCookie=" + isLastingCookie + ", timeout=" + timeout + "]";
 	}
 
-	
-	
-	
 }

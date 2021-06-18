@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class SaFoxUtil {
 
 	/**
-	 * 打印 sa-token 版本字符画
+	 * 打印 Sa-Token 版本字符画
 	 */
 	public static void printSaToken() {
 		String str = "____ ____    ___ ____ _  _ ____ _  _ \r\n" + "[__  |__| __  |  |  | |_/  |___ |\\ | \r\n"

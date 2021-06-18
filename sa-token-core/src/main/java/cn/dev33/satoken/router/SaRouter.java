@@ -10,7 +10,7 @@ import cn.dev33.satoken.fun.IsRunFunction;
 import cn.dev33.satoken.fun.SaFunction;
 
 /**
- * 对路由匹配符相关操作的封装工具类 
+ * 路由匹配操作工具类 
  * @author kong
  *
  */
@@ -19,9 +19,9 @@ public class SaRouter {
 	// -------------------- 路由匹配相关 -------------------- 
 	
 	/**
-	 * 校验指定路由匹配符是否可以匹配成功指定路径  
+	 * 路由匹配
 	 * @param pattern 路由匹配符 
-	 * @param path 需要匹配的路径 
+	 * @param path 被匹配的路由  
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(String pattern, String path) {
@@ -29,9 +29,9 @@ public class SaRouter {
 	}
 
 	/**
-	 * 校验指定路由匹配符是否可以匹配成功指定路径   
-	 * @param patterns 路由匹配符 
-	 * @param path 需要匹配的路径集合 
+	 * 路由匹配   
+	 * @param patterns 路由匹配符集合 
+	 * @param path 被匹配的路由  
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(List<String> patterns, String path) {
@@ -44,7 +44,7 @@ public class SaRouter {
 	}
 	
 	/**
-	 * 校验指定路由匹配符是否可以匹配成功当前URI
+	 * 路由匹配 (使用当前URI) 
 	 * @param pattern 路由匹配符 
 	 * @return 是否匹配成功 
 	 */
@@ -53,8 +53,8 @@ public class SaRouter {
 	}
 
 	/**
-	 * 校验指定路由匹配符是否可以匹配成功当前URI 
-	 * @param patterns 路由匹配符 
+	 * 路由匹配 (使用当前URI) 
+	 * @param patterns 路由匹配符集合 
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatchCurrURI(List<String> patterns) {
@@ -65,7 +65,7 @@ public class SaRouter {
 	// -------------------- 执行相关 -------------------- 
 	
 	/**
-	 * 使用路由匹配符与当前URI执行匹配，如果匹配成功则执行验证函数 
+	 * 路由匹配，如果匹配成功则执行认证函数 
 	 * @param pattern 路由匹配符
 	 * @param function 要执行的方法 
 	 */
@@ -76,7 +76,7 @@ public class SaRouter {
 	}
 
 	/**
-	 * 使用路由匹配符与当前URI执行匹配 (并指定排除匹配符)，如果匹配成功则执行验证函数 
+	 * 路由匹配 (并指定排除匹配符)，如果匹配成功则执行认证函数 
 	 * @param pattern 路由匹配符 
 	 * @param excludePattern 要排除的路由匹配符 
 	 * @param function 要执行的方法 
@@ -90,7 +90,7 @@ public class SaRouter {
 	}
 
 	/**
-	 * 使用路由匹配符集合与当前URI执行匹配，如果匹配成功则执行验证函数 
+	 * 路由匹配，如果匹配成功则执行认证函数 
 	 * @param patterns 路由匹配符集合
 	 * @param function 要执行的方法 
 	 */
@@ -101,7 +101,7 @@ public class SaRouter {
 	}
 
 	/**
-	 * 使用路由匹配符集合与当前URI执行匹配 (并指定排除匹配符)，如果匹配成功则执行验证函数 
+	 * 路由匹配 (并指定排除匹配符)，如果匹配成功则执行认证函数 
 	 * @param patterns 路由匹配符集合
 	 * @param excludePatterns 要排除的路由匹配符集合
 	 * @param function 要执行的方法 
@@ -116,7 +116,7 @@ public class SaRouter {
 	
 	
 	/**
-	 * 使用路由匹配符集合与当前URI执行匹配，如果匹配成功则执行验证函数 
+	 * 路由匹配，如果匹配成功则执行认证函数 
 	 * @param patterns 路由匹配符集合
 	 * @return 匹配结果包装对象 
 	 */

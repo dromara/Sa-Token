@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 角色校验：标注在一个方法上，当前会话必须具有指定角色标识才能进入该方法 
- * <p> 可标注在类上，其效果等同于标注在此类的所有方法上 
+ * 角色校验：必须具有指定角色标识才能进入该方法 
+ * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
  * @author kong
  *
  */

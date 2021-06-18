@@ -183,5 +183,27 @@ public class SaTokenSpringBootStarterTest {
     	long timeout = SaTempUtil.getTimeout(token);
     	Assert.assertTrue(timeout > 195);
     }
+
+    // 测试：二级认证
+    @Test
+    public void testSafe() throws InterruptedException {
+    	// 登录 
+    	StpUtil.login(10001);
+    	Assert.assertFalse(StpUtil.isSafe());
+    	
+    	// 开启二级认证 
+    	StpUtil.openSafe(2);
+    	Assert.assertTrue(StpUtil.isSafe()); 
+    	Assert.assertTrue(StpUtil.getSafeTime() > 0); 
+    	
+    	// 自然结束 
+    	Thread.sleep(2500);
+    	Assert.assertFalse(StpUtil.isSafe());
+    	
+    	// 手动结束
+    	StpUtil.openSafe(2);
+    	StpUtil.closeSafe();
+    	Assert.assertFalse(StpUtil.isSafe());
+    }
     
 }

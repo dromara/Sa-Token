@@ -26,7 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
- * sa-token 常见加密算法工具类
+ * Sa-Token 常见加密算法工具类
  * 
  * @author kong
  *

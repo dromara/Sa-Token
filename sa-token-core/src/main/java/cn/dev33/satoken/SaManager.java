@@ -23,7 +23,7 @@ import cn.dev33.satoken.temp.SaTempDefaultImpl;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * 管理sa-token所有接口对象 
+ * 管理 Sa-Token 所有接口对象 
  * @author kong
  *
  */

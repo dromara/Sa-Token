@@ -1,7 +1,7 @@
 package cn.dev33.satoken.filter;
 
 /**
- * sa-token全局过滤器-认证策略
+ * Sa-Token全局过滤器-认证策略
  * @author kong
  *
  */

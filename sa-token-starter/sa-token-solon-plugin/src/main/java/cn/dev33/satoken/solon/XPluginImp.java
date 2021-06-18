@@ -10,6 +10,7 @@ import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.listener.SaTokenListener;
@@ -29,6 +30,7 @@ public class XPluginImp implements Plugin {
         Aop.context().beanAroundAdd(SaCheckPermission.class, SaTokenMethodInterceptor.INSTANCE);
         Aop.context().beanAroundAdd(SaCheckRole.class, SaTokenMethodInterceptor.INSTANCE);
         Aop.context().beanAroundAdd(SaCheckLogin.class, SaTokenMethodInterceptor.INSTANCE);
+        Aop.context().beanAroundAdd(SaCheckSafe.class, SaTokenMethodInterceptor.INSTANCE);
 
         //集成初始化
 

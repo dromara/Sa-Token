@@ -60,7 +60,7 @@ public class DisableLoginException extends SaTokenException {
 	}
 	
 	/**
-	 * 构造方法创建一个
+	 * 一个异常：代表账号已被封禁 
 	 * 
 	 * @param loginType 账号类型
 	 * @param loginId  被封禁的账号id 
@@ -73,6 +73,4 @@ public class DisableLoginException extends SaTokenException {
 		this.disableTime = disableTime;
 	}
 
-	
-	
 }

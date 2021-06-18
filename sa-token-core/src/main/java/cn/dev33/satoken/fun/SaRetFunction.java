@@ -5,14 +5,13 @@ package cn.dev33.satoken.fun;
  * @author kong
  *
  */
+@FunctionalInterface
 public interface SaRetFunction {
 	
-
 	/**
 	 * 执行的方法 
 	 * @return 返回值 
 	 */
 	public Object run();
-	
 	
 }

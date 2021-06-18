@@ -80,4 +80,6 @@ System.out.println("Base64解码后：" + text2);
 ```
 
 <br>
-如需更多加密算法请提交pr
+
+如需更多加密算法，可参考 [Hutool-crypto: 加密](https://hutool.cn/docs/#/crypto/%E6%A6%82%E8%BF%B0)
+

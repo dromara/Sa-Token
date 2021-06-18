@@ -10,7 +10,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * sa-token持久层默认的实现类 , 基于内存Map 
+ * Sa-Token持久层接口 [默认实现类, 基于内存Map] 
  * @author kong
  *
  */

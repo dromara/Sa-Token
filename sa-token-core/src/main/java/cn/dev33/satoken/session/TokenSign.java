@@ -3,7 +3,7 @@ package cn.dev33.satoken.session;
 import java.io.Serializable;
 
 /**
- * token签名 Model
+ * Token签名 Model
  * 
  * 挂在到SaSession上的token签名
  * 

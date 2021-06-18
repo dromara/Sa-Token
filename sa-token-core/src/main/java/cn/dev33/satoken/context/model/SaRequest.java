@@ -1,7 +1,7 @@
 package cn.dev33.satoken.context.model;
 
 /**
- * Request包装类
+ * Request 包装类
  * @author kong
  *
  */

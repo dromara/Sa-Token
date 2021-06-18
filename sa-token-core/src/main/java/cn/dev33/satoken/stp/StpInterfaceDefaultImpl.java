@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 对StpInterface接口默认的实现类
+ * 对 {@link StpInterface} 接口默认的实现类
  * <p>
  * 如果开发者没有实现StpInterface接口，则使用此默认实现
  * 
