@@ -9,10 +9,10 @@
 - **基础**
 	- [登录认证](/use/login-auth) 
 	- [权限认证](/use/jur-auth) 
-	- [Session会话](/use/session) 
 	- [踢人下线](/use/kick) 
 	- [注解式鉴权](/use/at-check) 
 	- [路由拦截式鉴权](/use/route-check) 
+	- [Session会话](/use/session) 
 	- [框架配置](/use/config) 
 
 - **深入**
@@ -23,6 +23,7 @@
 	- [记住我模式](/use/remember-me)
 	- [模拟他人 & 身份切换](/use/mock-person) 
 	- [同端互斥登录](/use/mutex-login) 
+	- [二级认证](/use/safe-auth) 
 	- [密码加密](/use/password-secure) 
 	- [会话治理](/use/search-session) 
 	- [全局侦听器](/use/global-listener) 
@@ -39,13 +40,13 @@
 	- [临时Token验证](/plugin/temp-token)
 
 - **其它**
-	- [常用类、方法](/more/common-action) 
-	- [常见问题排查](/more/common-questions) 
 	- [更新日志](/more/update-log) 
 	- [友情链接](/more/link) 
 	- [推荐公众号](/more/tj-gzh) 
 
 - **附录**
+	- [常用类、方法](/more/common-action) 
+	- [常见问题排查](/more/common-questions) 
 	- [Sa-Token认证流程图](/fun/auth-flow)
 	- [未登录场景值详解](/fun/not-login-scene)
 	- [Token有效期详解](/fun/token-timeout)
