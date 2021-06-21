@@ -36,15 +36,21 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	/**
 	 * String专用
 	 */
-	@Autowired
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
 	 * Object专用 
 	 */
 	public RedisTemplate<String, Object> objectRedisTemplate;
+	
+	/**
+	 * 标记：是否已初始化成功
+	 */
+	public boolean isInit;
+	
 	@Autowired
-	public void setObjectRedisTemplate(RedisConnectionFactory connectionFactory) {
+	public void init(RedisConnectionFactory connectionFactory) {
+		
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
@@ -58,6 +64,10 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		// 构建StringRedisTemplate
+		StringRedisTemplate stringTemplate = new StringRedisTemplate();
+		stringTemplate.setConnectionFactory(connectionFactory);
+		stringTemplate.afterPropertiesSet();
 		// 构建RedisTemplate
 		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
 		template.setConnectionFactory(connectionFactory);
@@ -66,8 +76,12 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		template.setValueSerializer(valueSerializer);
 		template.setHashValueSerializer(valueSerializer);
 		template.afterPropertiesSet();
-		if(this.objectRedisTemplate == null) {
+		
+		// 开始初始化相关组件 
+		if(this.isInit == false) {
+			this.stringRedisTemplate = stringTemplate;
 			this.objectRedisTemplate = template;
+			this.isInit = true;
 		}
 	}
 	
