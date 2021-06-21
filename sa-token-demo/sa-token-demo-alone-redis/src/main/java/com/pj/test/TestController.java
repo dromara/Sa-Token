@@ -13,7 +13,7 @@ import cn.dev33.satoken.stp.StpUtil;
  * @author kong
  *
  */
-@RestController()
+@RestController
 @RequestMapping("/test/")
 public class TestController {
 

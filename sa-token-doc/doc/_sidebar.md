@@ -36,8 +36,9 @@
 
 - **插件**
 	- [AOP注解鉴权](/plugin/aop-at)
-	- [Quick-Login快速登录插件](/plugin/quick-login)
 	- [临时Token验证](/plugin/temp-token)
+	- [Quick-Login快速登录插件](/plugin/quick-login)
+	- [Alone独立Redis插件](/plugin/alone-redis)
 
 - **其它**
 	- [更新日志](/more/update-log) 
