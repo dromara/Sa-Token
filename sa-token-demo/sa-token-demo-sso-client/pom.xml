@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-demo-alone-redis</artifactId>
+	<artifactId>sa-token-demo-sso-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<!-- SpringBoot -->
@@ -26,10 +26,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
 		
 		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 		<dependency>
@@ -51,20 +47,6 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
         
-		<!-- Sa-Token插件：独立使用一个Redis -->
-		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-alone-redis</artifactId>
-            <version>${sa-token-version}</version>
-        </dependency>
-        
-		<!-- @ConfigurationProperties -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
 	</dependencies>
 	
 	

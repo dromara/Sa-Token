@@ -71,6 +71,14 @@ public class SaRequestForReactor implements SaRequest {
 	}
 
 	/**
+	 * 返回当前请求的url，例：http://xxx.com/?id=127
+	 * @return see note
+	 */
+	public String getUrl() {
+		return request.getURI().toString();
+	}
+	
+	/**
 	 * 返回当前请求的类型 
 	 */
 	@Override

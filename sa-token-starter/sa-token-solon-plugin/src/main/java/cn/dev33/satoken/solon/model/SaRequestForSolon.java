@@ -41,6 +41,11 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
+	public String getUrl() {
+		return ctx.url();
+	}
+    
+    @Override
     public String getMethod() {
         return ctx.method();
     }

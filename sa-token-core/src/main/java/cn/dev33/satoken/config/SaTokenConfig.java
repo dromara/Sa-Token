@@ -66,6 +66,11 @@ public class SaTokenConfig {
 	 */
 	private String jwtSecretKey;
 	
+	/**
+	 * SSO单点登录配置对象 
+	 */
+	public SaSsoConfig sso = new SaSsoConfig();
+	
 
 	/**
 	 * @return token名称 (同时也是cookie名称)
@@ -344,6 +349,22 @@ public class SaTokenConfig {
 	}
 
 	/**
+	 * @return SSO单点登录配置对象 
+	 */
+	public SaSsoConfig getSso() {
+		return sso;
+	}
+	
+
+	/**
+	 * @param sso SSO单点登录配置对象 
+	 */
+	public void setSso(SaSsoConfig sso) {
+		this.sso = sso;
+	}
+	
+
+	/**
 	 * toString() 
 	 */
 	@Override
@@ -354,10 +375,12 @@ public class SaTokenConfig {
 				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
 				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
 				+ ", tokenPrefix=" + tokenPrefix + ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey="
-				+ jwtSecretKey + "]";
+				+ jwtSecretKey + ", sso=" + sso + "]";
 	}
 	
 
+	
+	
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>
 	 * @param allowConcurrentLogin see note
@@ -368,7 +391,6 @@ public class SaTokenConfig {
 		this.isConcurrent = allowConcurrentLogin;
 		return this;
 	}
-
 
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>

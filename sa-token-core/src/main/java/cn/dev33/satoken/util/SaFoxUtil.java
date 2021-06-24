@@ -1,5 +1,8 @@
 package cn.dev33.satoken.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
+
+import cn.dev33.satoken.exception.SaTokenException;
 
 /**
  * Sa-Token 内部工具类 
@@ -147,7 +152,6 @@ public class SaFoxUtil {
 		return Pattern.matches(patt.replaceAll("\\*", ".*"), str);
 	}
 
-
 	/**
 	 * 将指定值转化为指定类型
 	 * @param <T> 泛型
@@ -184,6 +188,105 @@ public class SaFoxUtil {
 			obj3 = (T)obj;
 		}
 		return (T)obj3;
+	}
+	
+	/**
+	 * 在url上拼接上kv参数并返回 
+	 * @param url url
+	 * @param parameStr 参数, 例如 id=1001
+	 * @return 拼接后的url字符串 
+	 */
+	public static String joinParam(String url, String parameStr) {
+		// 如果参数为空, 直接返回 
+		if(parameStr == null || parameStr.length() == 0) {
+			return url;
+		}
+		if(url == null) {
+			url = "";
+		}
+		int index = url.indexOf('?');
+		// ? 不存在
+		if(index == -1) {
+			return url + '?' + parameStr;
+		}
+		// ? 是最后一位
+		if(index == url.length() - 1) {
+			return url + parameStr;
+		}
+		// ? 是其中一位
+		if(index > -1 && index < url.length() - 1) {
+			String separatorChar = "&";
+			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
+			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
+				return url + separatorChar + parameStr;
+			} else {
+				return url + parameStr;
+			}
+		}
+		// 正常情况下, 代码不可能执行到此 
+		return url;
+	}
+	
+	/**
+	 * 将数组的所有元素使用逗号拼接在一起
+	 * @param arr 数组
+	 * @return 字符串，例: a,b,c
+	 */
+	public static String arrayJoin(String[] arr) {
+		if(arr == null) {
+			return "";
+		}
+		String str = "";
+		for (int i = 0; i < arr.length; i++) {
+			str += arr[i];
+			if(i != arr.length - 1) {
+				str += ",";
+			}
+		}
+		return str;
+	}
+	
+	/**
+	 * 验证URL的正则表达式 
+	 */
+	public static final String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]"; 
+	
+	/**
+	 * 使用正则表达式判断一个字符串是否为URL
+	 * @param str 字符串 
+	 * @return 拼接后的url字符串 
+	 */
+	public static boolean isUrl(String str) {
+		if(str == null) {
+			return false;
+		}
+        return str.toLowerCase().matches(URL_REGEX);
+	}
+	
+	/**
+	 * URL编码 
+	 * @param url see note 
+	 * @return see note 
+	 */
+	public static String encodeUrl(String url) {
+		try {
+			return URLEncoder.encode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new SaTokenException(e);
+		}
+	}
+
+	/**
+	 * URL解码 
+	 * @param url see note 
+	 * @return see note 
+	 */
+	public static String decoderUrl(String url) {
+		try {
+			return URLDecoder.decode(url, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new SaTokenException(e);
+		}
 	}
 	
 	
