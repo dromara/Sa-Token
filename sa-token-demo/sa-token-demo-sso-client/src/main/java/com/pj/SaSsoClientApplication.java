@@ -3,8 +3,6 @@ package com.pj;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import cn.dev33.satoken.SaManager;
-
 /**
  * Sa-Token整合SpringBoot 示例 
  * @author kong
@@ -13,9 +11,9 @@ import cn.dev33.satoken.SaManager;
 @SpringBootApplication
 public class SaSsoClientApplication {
 
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) {
 		SpringApplication.run(SaSsoClientApplication.class, args);
-		System.out.println("\nSa-Token-SSO客户端启动成功：Sa-Token配置如下：" + SaManager.getConfig());
+		System.out.println("\nSa-Token-SSO Client端启动成功");
 	}
 	
 }

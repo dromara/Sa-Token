@@ -13,6 +13,7 @@ Sa-Token默认的Redis集成方式会把权限数据和业务缓存放在一起�
 ### 1、首先引入Alone-Redis依赖 
 
 ``` xml
+<!-- Sa-Token插件：权限缓存与业务缓存分离 -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-alone-redis</artifactId>

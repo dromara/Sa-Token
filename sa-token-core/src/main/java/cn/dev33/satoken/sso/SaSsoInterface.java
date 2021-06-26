@@ -21,7 +21,7 @@ public interface SaSsoInterface {
 	 */
 	public default String createTicket(Object loginId) {
 		// 随机一个ticket
-		String ticket = SaFoxUtil.getRandomString(64);
+		String ticket = randomTicket(loginId);
 		
 		// 保存入库 
 		long ticketTimeout = SaManager.getConfig().getSso().getTicketTimeout();
@@ -97,9 +97,15 @@ public interface SaSsoInterface {
 			throw new SaTokenException("无效回调地址：" + url);
 		}
 		
-		// 2、是否在[允许地址列表]之中 
-		String authUrl = SaManager.getConfig().getSso().getAllowUrl(); 
-		List<String> authUrlList =  Arrays.asList(authUrl.split(",")); 
+		// 2、截取掉?后面的部分 
+		int qIndex = url.indexOf("?");
+		if(qIndex != -1) {
+			url = url.substring(0, qIndex);
+		}
+		
+		// 3、是否在[允许地址列表]之中 
+		String authUrl = SaManager.getConfig().getSso().getAllowUrl().replaceAll(" ", "");
+		List<String> authUrlList = Arrays.asList(authUrl.split(",")); 
 		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
 			throw new SaTokenException("非法回调地址：" + url);
 		}
@@ -155,6 +161,15 @@ public interface SaSsoInterface {
 		url = url.substring(0, index + length) + back;
 		return url;
 	}
+
+	/**
+	 * 随机一个 Ticket码 
+	 * @param loginId 账号id 
+	 * @return 票据 
+	 */
+	public default String randomTicket(Object loginId) {
+		return SaFoxUtil.getRandomString(64);
+	}
 	
 	
 	// ------------------- 返回相应key ------------------- 
@@ -176,5 +191,6 @@ public interface SaSsoInterface {
 	public default String splicingKeyIdToTicket(Object id) {
 		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
 	}
+
 	
 }

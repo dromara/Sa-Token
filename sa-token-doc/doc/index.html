@@ -68,6 +68,7 @@
 				},
 				// search: 'auto', // 搜索功能 
 				alias: {
+					'/sso/_sidebar.md': '/sso/_sidebar.md',
 					'/.*/_sidebar.md': '/_sidebar.md'
 				},
 				// tab选项卡
@@ -80,21 +81,23 @@
 				},
 				plugins: [ // 自定义插件 
 					function(hook, vm) {
-						// 解析之后执行 
+						// 每次路由切换时，解析内容之后执行 
 						hook.afterEach(function(html) {
 							var url = 'https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
 							var url2 = 'https://github.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
 							var footer = [
 								'<br/><br/><br/><br/><br/><br/><br/><hr/>',
 								'<footer>',
-								'<span>发现错误？想参与编辑？ 在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
-								'" target="_blank">GitHub</a> 上编辑此页！</span>',
+								'<span>发现错误？ 在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
+								'" target="_blank">GitHub</a> 帮助我们完善此页文档！</span>',
+								'<a href="https://jq.qq.com/?_wv=1027&k=45H977HM" target="_blank">点我加入QQ群</a>交流反馈',
 								'</footer>'
 							].join('');
 							return html + footer;
 						});
 						// 每次路由切换时数据全部加载完成后调用，没有参数。
 						hook.doneEach(function() {
+							// 添加代码行数样式
 							$('pre code').each(function(){
 								var lines = $(this).text().split('\n').length;
 								var $numbering = $('<ul/>').addClass('code-line-box');
@@ -106,6 +109,9 @@
 									$numbering.append($('<li/>').text(i));
 								}
 							});
+						});
+						// 初始化并第一次加载完成数据后调用，没有参数。
+						hook.ready(function() {
 						});
 					}
 				],
@@ -151,32 +157,6 @@
 			})();
 		</script>
 
-		<!-- Gitalk评论 -->
-		<link rel="stylesheet" href="https://unpkg.zhimg.com/gitalk@1.7.0/dist/gitalk.css">
-		<script src="https://unpkg.zhimg.com/docsify@4.11.6/lib/plugins/gitalk.min.js"></script>
-		<script src="https://unpkg.zhimg.com/gitalk@1.7.0/dist/gitalk.min.js"></script>
-		<script>
-			function f5Gitalk() {
-				var id = location.hash.replace('#', '');
-				if(id.indexOf('?') > -1) {
-					id = id.substr(0, id.indexOf('?'));
-				}
-				window.gitalk = new Gitalk({
-					id: id,
-					clientID: '19939399448841f818a1',
-					clientSecret: 'af67e0cc14a0f36e171895771c330471cfe36c23',
-					repo: 'sa-token',		// 仓库名称 
-					owner: 'dromara',
-					admin: ['click33'],	// 管理员列表 
-					// facebook-like distraction free mode
-					distractionFreeMode: false
-				})
-			}
-			f5Gitalk();
-			window.onhashchange = function() {
-				f5Gitalk();
-			}
-		</script>
 
 	</body>
 </html>

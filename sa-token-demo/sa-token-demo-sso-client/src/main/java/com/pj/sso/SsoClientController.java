@@ -15,11 +15,19 @@ import cn.dev33.satoken.stp.StpUtil;
 @RestController
 public class SsoClientController {
 
-	// Client端登录地址 
+	// SSO-Client端：首页
+	@RequestMapping("/")
+	public String index() {
+		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
+					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
+					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + lencodeURIComponent(location.href);\">登录</a></p>";
+		return str;
+	}
+	
+	// SSO-Client端：登录地址 
 	@RequestMapping("ssoLogin")
 	public Object login(String back, String ticket) {
-		// 如果当前已经登录，则无需访问SSO认证中心，可以直接返回 
-		System.out.println("是否已登录：" + StpUtil.isLogin());
+		// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回 
 		if(StpUtil.isLogin()) {
 			return new ModelAndView("redirect:" + back);
 		}

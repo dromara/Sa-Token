@@ -5,21 +5,19 @@ server:
 spring: 
     # Sa-Token配置
     sa-token: 
-        # Token名称
-        token-name: satoken
-        # Token有效期
-        timeout: 2592000
-        # Token风格
-        token-style: uuid
-        # SSO单点登录-相关配置
-#        sso: 
-#            allow-url: http*
+        # SSO-相关配置
+        sso: 
+            # Ticket有效期 (单位: 秒)，默认三分钟 
+            ticket-timeout: 300
+            # 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
+            allow-url: http://sa-sso-client1.com:9001/ssoLogin, http://sa-sso-client2.com:9001/ssoLogin, http://sa-sso-client3.com:9001/ssoLogin
+            # 接口调用秘钥（模式三才会用到此参数）
+            # secret-key: 
         
-        
-    # redis配置 
+    # Redis配置 
     redis:
         # Redis数据库索引（默认为0）
-        database: 0
+        database: 1
         # Redis服务器地址
         host: 127.0.0.1
         # Redis服务器连接端口

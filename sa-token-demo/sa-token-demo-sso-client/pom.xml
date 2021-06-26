@@ -21,7 +21,7 @@
 
 	<dependencies>
 
-		<!-- springboot依赖 -->
+		<!-- SpringBoot依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -34,18 +34,25 @@
             <version>${sa-token-version}</version>
         </dependency>
         
-		<!-- sa-token整合redis (使用jackson序列化方式) -->
+		<!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
         
-		<!-- 提供redis连接池 -->
+		<!-- 提供Redis连接池 -->
 		<dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
+        
+		<!-- Sa-Token插件：权限缓存与业务缓存分离 -->
+		<dependency>
+		    <groupId>cn.dev33</groupId>
+		    <artifactId>sa-token-alone-redis</artifactId>
+		    <version>1.20.0</version>
+		</dependency>
         
 	</dependencies>
 	

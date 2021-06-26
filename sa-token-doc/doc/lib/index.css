@@ -19,6 +19,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* 调整一下左侧树的字体样式 */
 .sidebar .sidebar-nav>ul>li>p{font-size: 1.2em; margin-top: 10px;}
+.sidebar .sidebar-nav>ul>li> strong{font-size: 1.2em; margin-top: 10px;}
 .sidebar ul li a{color: #222;}
 .sidebar .sidebar-nav>ul>li>ul>li>a{/* color: #222; */font-size: 16px; /* font-weight: 700; */}
 
@@ -26,9 +27,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 [alt=github-chart]{max-width: 897px;}
 /* 大屏幕时，某些图片限制一下宽度 */
 @media screen and (min-width: 800px) {
-	[title=s-w]{max-width: 80%;}
+	[title=s-w],[title=s-w-sh]{max-width: 80%;}
 }
-
+[title=s-w-sh]{display: inline-block; border: 1px #eee solid;}
 
 /* 公众号table */
 .gzh-table{ /* table-layout:fixed !important; */}
@@ -89,3 +90,5 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .code-line-box {padding: calc(1.5em + 1px)  0px !important; padding-bottom: calc(1.5em + 20px) !important; margin: 0px !important;}
 .code-line-box {line-height: inherit !important; background-color: #111; color: #aaa;font-weight: 400;font-size: 0.85em;text-align: center;}
 .code-line-box {font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;}
+
+
