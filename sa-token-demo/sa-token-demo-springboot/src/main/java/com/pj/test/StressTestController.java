@@ -20,7 +20,6 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/s-test/")
 public class StressTestController {
 
-	
 	// 测试   浏览器访问： http://localhost:8081/s-test/login 
 	// 测试前，请先将 is-read-cookie 配置为 false
 	@RequestMapping("login")
@@ -58,9 +57,5 @@ public class StressTestController {
 		System.out.println("平均用时: " + ss / list.size());
 		return AjaxJson.getSuccess();
 	}
-	
-	
-	
-	
 	
 }

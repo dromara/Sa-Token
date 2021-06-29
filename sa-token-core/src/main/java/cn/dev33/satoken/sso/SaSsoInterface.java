@@ -1,10 +1,14 @@
 package cn.dev33.satoken.sso;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -41,14 +45,14 @@ public interface SaSsoInterface {
 	}
 	
 	/**
-	 * 根据 账号id & 重定向地址，构建[SSO-Client端-重定向地址] 
+	 * 构建URL：Server端向Client下放ticke的地址
 	 * @param loginId 账号id 
-	 * @param redirect 重定向地址
-	 * @return [SSO-Client端-重定向地址]
+	 * @param redirect Client端提供的重定向地址
+	 * @return see note 
 	 */
 	public default String buildRedirectUrl(Object loginId, String redirect) {
-		// 校验授权地址 
-		checkAuthUrl(redirect);
+		// 校验重定向地址 
+		checkRedirectUrl(redirect);
 		
 		// 删掉旧ticket  
 		String oldTicket = SaManager.getSaTokenDao().get(splicingKeyIdToTicket(loginId));
@@ -61,7 +65,7 @@ public interface SaSsoInterface {
 		
 		// 构建 授权重定向地址
 		redirect = encodeBackParam(redirect);
-		String redirectUrl = SaFoxUtil.joinParam(redirect, SaSsoConsts.TICKET_NAME + "=" + ticket);
+		String redirectUrl = SaFoxUtil.joinParam(redirect, SaSsoConsts.TICKET_NAME, ticket);
 		return redirectUrl;
 	}
 	
@@ -87,10 +91,23 @@ public interface SaSsoInterface {
 	}
 	
 	/**
-	 * 校验url合法性
-	 * @param url 地址
+	 * 校验ticket码，获取账号id，如果ticket可以有效，则立刻删除 
+	 * @param ticket Ticket码
+	 * @return 账号id 
 	 */
-	public default void checkAuthUrl(String url) {
+	public default Object checkTicket(String ticket) {
+		Object loginId = getLoginId(ticket);
+		if(loginId != null) {
+			deleteTicket(ticket);
+		}
+		return loginId;
+	}
+	
+	/**
+	 * 校验重定向url合法性
+	 * @param url 下放ticket的url地址 
+	 */
+	public default void checkRedirectUrl(String url) {
 		
 		// 1、是否是一个有效的url
 		if(SaFoxUtil.isUrl(url) == false) {
@@ -122,15 +139,15 @@ public interface SaSsoInterface {
 	 */
 	public default String buildServerAuthUrl(String clientLoginUrl, String back) {
 		// 服务端认证地址 
-		String serverUrl = SaManager.getConfig().getSso().getServerUrl();
+		String serverUrl = SaManager.getConfig().getSso().getAuthUrl();
 		
 		// 对back地址编码 
 		back = (back == null ? "" : back);
 		back = SaFoxUtil.encodeUrl(back);
 		
-		// 拼接最终地址，格式：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
-		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, SaSsoConsts.BACK_NAME + "=" + back); 
-		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, SaSsoConsts.REDIRECT_NAME + "=" + clientLoginUrl);
+		// 拼接最终地址，格式示例：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
+		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, SaSsoConsts.BACK_NAME, back); 
+		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, SaSsoConsts.REDIRECT_NAME, clientLoginUrl);
 		
 		// 返回 
 		return serverAuthUrl;
@@ -171,6 +188,101 @@ public interface SaSsoInterface {
 		return SaFoxUtil.getRandomString(64);
 	}
 	
+
+	// ------------------- SSO 模式三 ------------------- 
+
+	/**
+	 * 校验secretkey秘钥是否有效 
+	 * @param secretkey 秘钥 
+	 */
+	public default void checkSecretkey(String secretkey) {
+		 if(secretkey == null || secretkey.isEmpty() || secretkey.equals(SaManager.getConfig().getSso().getSecretkey()) == false) {
+			 throw new SaTokenException("无效秘钥：" + secretkey);
+		 }
+	}
+	
+	/**
+	 * 构建URL：校验ticket的URL 
+	 * @param ticket ticket码
+	 * @param sloCallbackUrl 单点注销时的回调URL 
+	 * @return 构建完毕的URL 
+	 */
+	public default String buildCheckTicketUrl(String ticket, String sloCallbackUrl) {
+		String url = SaManager.getConfig().getSso().getCheckTicketUrl();
+		// 拼接ticket参数
+		url = SaFoxUtil.joinParam(url, SaSsoConsts.TICKET_NAME, ticket);
+		// 拼接单点注销时的回调URL 
+		if(sloCallbackUrl != null) {
+			url = SaFoxUtil.joinParam(url, SaSsoConsts.SLO_CALLBACK_NAME, sloCallbackUrl);
+		}
+		// 返回 
+		return url;
+	}
+	
+	/**
+	 * 为指定账号id注册单点注销回调URL 
+	 * @param loginId 账号id
+	 * @param sloCallbackUrl 单点注销时的回调URL 
+	 */
+	public default void registerSloCallbackUrl(Object loginId, String sloCallbackUrl) {
+		if(loginId == null || sloCallbackUrl == null || sloCallbackUrl.isEmpty()) {
+			return;
+		}
+		Set<String> urlSet = StpUtil.getSessionByLoginId(loginId).get(SaSsoConsts.SLO_CALLBACK_SET_KEY, ()-> new HashSet<String>());
+		urlSet.add(sloCallbackUrl);
+		StpUtil.getSessionByLoginId(loginId).set(SaSsoConsts.SLO_CALLBACK_SET_KEY, urlSet);
+	}
+	
+	/**
+	 * 循环调用Client端单点注销回调 
+	 * @param loginId 账号id
+	 * @param fun 调用方法 
+	 */
+	public default void forEachSloUrl(Object loginId, CallSloUrlFunction fun) {
+		String secretkey = SaManager.getConfig().getSso().getSecretkey();
+		Set<String> urlSet = StpUtil.getSessionByLoginId(loginId).get(SaSsoConsts.SLO_CALLBACK_SET_KEY,
+				() -> new HashSet<String>());
+		
+		for (String url : urlSet) {
+			// 拼接：login参数、秘钥参数
+			url = SaFoxUtil.joinParam(url, SaSsoConsts.LOGIN_ID_NAME, loginId);
+			url = SaFoxUtil.joinParam(url, SaSsoConsts.SECRETKEY, secretkey);
+			// 调用 
+			fun.run(url);
+		}
+	}
+
+	/**
+	 * 构建URL：单点注销URL 
+	 * @param loginId 要注销的账号id
+	 * @return 单点注销URL 
+	 */
+	public default String buildSloUrl(Object loginId) {
+		SaSsoConfig ssoConfig = SaManager.getConfig().getSso();
+		String url = ssoConfig.getSloUrl();
+		url = SaFoxUtil.joinParam(url, SaSsoConsts.LOGIN_ID_NAME, loginId);
+		url = SaFoxUtil.joinParam(url, SaSsoConsts.SECRETKEY, ssoConfig.getSecretkey());
+		return url;
+	}
+	
+	/**
+	 * 指定账号单点注销 
+	 * @param secretkey 校验秘钥
+	 * @param loginId 指定账号 
+	 * @param fun 调用方法 
+	 */
+	public default void singleLogout(String secretkey, Object loginId, CallSloUrlFunction fun) {
+		// step.1 校验秘钥 
+		checkSecretkey(secretkey);
+		
+		// step.2 遍历通知Client端注销会话 
+		forEachSloUrl(loginId, fun);
+		
+		// step.3 Server端注销 
+		StpUtil.logoutByLoginId(loginId);
+	}
+
+	
 	
 	// ------------------- 返回相应key ------------------- 
 
@@ -192,5 +304,15 @@ public interface SaSsoInterface {
 		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
 	}
 
+	
+	@FunctionalInterface
+	static interface CallSloUrlFunction{
+		/**
+		 * 调用function 
+		 * @param url 注销回调URL
+		 */
+		public void run(String url);
+	}
+	
 	
 }

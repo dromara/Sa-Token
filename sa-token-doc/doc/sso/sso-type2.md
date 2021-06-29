@@ -1,11 +1,11 @@
 # SSO模式二 URL重定向传播会话
 
-如果我们的系统部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 [URL重定向传播会话] 的方式做到单点登录
+如果我们的系统部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 **`[URL重定向传播会话]`** 的方式做到单点登录
 
 
 ### 0、解题思路
 
-首先我们再次复习一下多个系统之间为什么无法同步登录状态？
+首先我们再次复习一下多个系统之间，为什么无法同步登录状态？
 
 1. 前端的`Token`无法在多个系统下共享
 2. 后端的`Session`无法在多个系统间共享
@@ -25,12 +25,12 @@
 整个过程，除了第四步用户在SSO认证中心登录时会被打断，其余过程均是自动化的，当用户在另一个子系统再次点击`[登录]`按钮，由于此用户在SSO认证中心已有会话登录，
 所以第四步也将自动化，也就是单点登录的最终目的 —— 一次登录，处处通行。
 
-下面我们按照步骤依次完成上述步骤
+下面我们按照步骤依次完成上述过程
 
 
 ### 1、搭建SSO-Server认证中心
 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-server/`，如遇到难点可结合源码进行测试学习
 
 ##### 1.1、创建SSO-Server端项目
 创建一个SpringBoot项目 `sa-token-demo-sso-server`（不会的同学自行百度或参考仓库示例），添加pom依赖：
@@ -116,12 +116,10 @@ spring:
     sa-token: 
         # SSO-相关配置
         sso: 
-            # Ticket有效期 (单位: 秒)，默认三分钟 
+            # Ticket有效期 (单位: 秒)，默认五分钟 
             ticket-timeout: 300
             # 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
             allow-url: "*"
-            # 接口调用秘钥（模式三才会用到此参数）
-            # secret-key: 
         
     # Redis配置 
     redis:
@@ -134,7 +132,7 @@ spring:
         # Redis服务器连接密码（默认为空）
         password: 
 ```
-注意点：`allow-url`为了方便测试配置为*，线上生产环境一定要配置为详细URL地址 
+注意点：`allow-url`为了方便测试配置为*，线上生产环境一定要配置为详细URL地址 （详见下方“配置域名校验”）
 
 ##### 1.4、创建SSO-Server端启动类
 ``` java 
@@ -147,12 +145,10 @@ public class SaSsoServerApplication {
 }
 ```
 
-启动此项目，用作**`SSO-Server认证中心`**
-
 
 ### 2、搭建SSO-Client应用端 
 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso-client/`，如遇到难点可结合源码进行测试学习
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-client/`，如遇到难点可结合源码进行测试学习
 
 ##### 2.1、创建SSO-Client端项目
 创建一个SpringBoot项目 `sa-token-demo-sso-client`，添加pom依赖：
@@ -206,38 +202,40 @@ public class SsoClientController {
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + lencodeURIComponent(location.href);\">登录</a></p>";
+					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + encodeURIComponent(location.href);\">登录</a></p>";
 		return str;
 	}
 	
 	// SSO-Client端：登录地址 
 	@RequestMapping("ssoLogin")
-	public Object login(String back, String ticket) {
+	public Object ssoLogin(String back, String ticket) {
 		// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回 
 		if(StpUtil.isLogin()) {
 			return new ModelAndView("redirect:" + back);
 		}
 		/*
 		 * 接下来两种情况：
-		 * ticket有值，说明此请求从SSO认证中心重定向而来，需要根据ticket进行登录 
 		 * ticket无值，说明此请求是Client端访问，需要重定向至SSO认证中心
+		 * ticket有值，说明此请求从SSO认证中心重定向而来，需要根据ticket进行登录 
 		 */
-		if(ticket != null) {
-			Object loginId = SaSsoUtil.getLoginId(ticket);
+		if(ticket == null) {
+			String serverAuthUrl = SaSsoUtil.buildServerAuthUrl(SaHolder.getRequest().getUrl(), back);
+			return new ModelAndView("redirect:" + serverAuthUrl);
+		} else {
+			Object loginId = checkTicket(ticket);
 			if(loginId != null ) {
-				// 如果ticket是有效的 (可以获取到值)，需要就此登录 且清除此ticket
+				// loginId有值，说明ticket有效
 				StpUtil.login(loginId); 
-				SaSsoUtil.deleteTicket(ticket);
-				// 最后重定向回back地址 
 				return new ModelAndView("redirect:" + back);
 			}
 			// 此处向客户端提示ticket无效即可，不要重定向到SSO认证中心，否则容易引起无限重定向 
 			return "ticket无效: " + ticket;
 		}
-
-		// 重定向至 SSO-Server端 认证地址 
-		String serverAuthUrl = SaSsoUtil.buildServerAuthUrl(SaHolder.getRequest().getUrl(), back);
-		return new ModelAndView("redirect:" + serverAuthUrl);
+	}
+	
+	// SSO-Client端：校验ticket，获取账号id 
+	private Object checkTicket(String ticket) {
+		return SaSsoUtil.checkTicket(ticket);
 	}
 	
 }
@@ -255,8 +253,8 @@ spring:
     sa-token: 
         # SSO-相关配置
         sso: 
-            # SSO-Server端授权地址 
-            server-url: http://sa-sso-server.com:9000/ssoAuth
+            # SSO-Server端 单点登录地址 
+            auth-url: http://sa-sso-server.com:9000/ssoAuth
         
         # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
         alone-redis: 
@@ -377,7 +375,7 @@ public class SaSsoClientApplication {
 
 | 配置方式		| 举例										| 安全性								|  建议									|
 | :--------		| :--------									| :--------							| :--------								|
-| 配置为*		| `*`										| <font color="#F00" >低</font>		| <font color="#F00" >禁止在生产环境下使用</font>	|
+| 配置为*		| `*`										| <font color="#F00" >低</font>		| **<font color="#F00" >禁止在生产环境下使用</font>**	|
 | 配置到域名	| `http://sa-sso-client1.com/*`					| <font color="#F70" >中</font>		| <font color="#F70" >不建议在生产环境下使用</font>	|
 | 配置到详细地址| `http://sa-sso-client1.com:9001/ssoLogin`	| <font color="#080" >高</font>		| <font color="#080" >可以在生产环境下使用</font>	|
 
@@ -387,6 +385,12 @@ Token作为长时间有效的会话凭证，在任何时候都不应该直接在
 
 因此Sa-Token-SSO选择先回传ticket，再由ticket获取账号id，且ticket一次性用完即废，提高安全性
 
+
+
+### 6、跨Redis的单点登录
+以上流程解决了跨域模式下的单点登录，但是后端仍然采用了共享Redis来同步会话，如果我们的架构设计中Client端与Server端无法共享Redis，又该怎么完成单点登录？
+
+这就要采用模式三了，且往下看：[Http请求获取会话](/sso/sso-type3)
 
 
 

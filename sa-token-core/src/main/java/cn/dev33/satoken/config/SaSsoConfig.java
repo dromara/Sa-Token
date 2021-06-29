@@ -25,23 +25,21 @@ public class SaSsoConfig {
 	public String secretkey;
 	
 	/**
-	 * SSO-Server端授权地址
+	 * SSO-Server端 单点登录地址
 	 */
-	public String serverUrl;
+	public String authUrl;
 
 	/**
-	 * @return SSO-Server端授权地址
+	 * SSO-Server端 Ticket校验地址 [模式三专用配置]
 	 */
-	public String getServerUrl() {
-		return serverUrl;
-	}
+	public String checkTicketUrl;
 
 	/**
-	 * @param serverUrl SSO-Server端授权地址
+	 * SSO-Server端 单点注销地址 [模式三专用配置]
 	 */
-	public void setServerUrl(String serverUrl) {
-		this.serverUrl = serverUrl;
-	}
+	public String sloUrl;
+
+
 
 	/**
 	 * @return Ticket有效期 (单位: 秒) 
@@ -91,12 +89,53 @@ public class SaSsoConfig {
 		return this;
 	}
 
+	/**
+	 * @return SSO-Server端 单点登录地址
+	 */
+	public String getAuthUrl() {
+		return authUrl;
+	}
+
+	/**
+	 * @param authUrl SSO-Server端 单点登录地址
+	 */
+	public void setAuthUrl(String authUrl) {
+		this.authUrl = authUrl;
+	}
+
+	/**
+	 * @return SSO-Server端Ticket校验地址 
+	 */
+	public String getCheckTicketUrl() {
+		return checkTicketUrl;
+	}
+
+	/**
+	 * @param checkTicketUrl SSO-Server端Ticket校验地址
+	 */
+	public void setCheckTicketUrl(String checkTicketUrl) {
+		this.checkTicketUrl = checkTicketUrl;
+	}
+
+	/**
+	 * @return SSO-Server端单点注销地址
+	 */
+	public String getSloUrl() {
+		return sloUrl;
+	}
+
+	/**
+	 * @param sloUrl SSO-Server端单点注销地址
+	 */
+	public void setSloUrl(String sloUrl) {
+		this.sloUrl = sloUrl;
+	}
+
 	@Override
 	public String toString() {
 		return "SaSsoConfig [ticketTimeout=" + ticketTimeout + ", allowUrl=" + allowUrl + ", secretkey=" + secretkey
-				+ ", serverUrl=" + serverUrl + "]";
+				+ ", authUrl=" + authUrl + ", checkTicketUrl=" + checkTicketUrl + ", sloUrl=" + sloUrl + "]";
 	}
-	
 	
 
 	/**

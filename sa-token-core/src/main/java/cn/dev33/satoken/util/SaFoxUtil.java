@@ -226,6 +226,21 @@ public class SaFoxUtil {
 		// 正常情况下, 代码不可能执行到此 
 		return url;
 	}
+
+	/**
+	 * 在url上拼接上kv参数并返回 
+	 * @param url url
+	 * @param key 参数名称
+	 * @param value 参数值 
+	 * @return 拼接后的url字符串 
+	 */
+	public static String joinParam(String url, String key, Object value) {
+		// 如果参数为空, 直接返回 
+		if(isEmpty(url) || isEmpty(key) || isEmpty(String.valueOf(value))) {
+			return url;
+		}
+		return joinParam(url, key + "=" + value);
+	}
 	
 	/**
 	 * 将数组的所有元素使用逗号拼接在一起

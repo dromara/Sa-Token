@@ -1,0 +1,51 @@
+# 端口
+server:
+    port: 9001
+
+spring: 
+    # sa-token配置 
+    sa-token: 
+        # Token名称
+        token-name: satoken
+        # Token有效期
+        timeout: 2592000
+        # Token风格
+        token-style: uuid
+        # SSO-相关配置
+        sso: 
+            # SSO-Server端 单点登录地址 
+            auth-url: http://sa-sso-server.com:9000/ssoAuth
+            # SSO-Server端 ticket校验地址 
+            check-ticket-url: http://sa-sso-server.com:9000/checkTicket
+            # SSO-Server端 单点注销地址 
+            slo-url: http://sa-sso-server.com:9000/ssoLogout
+            # 接口调用秘钥（用于SSO模式三的单点注销功能）
+            secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        
+    # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    redis: 
+        # Redis数据库索引
+        database: 6
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        password: 
+        # 连接超时时间（毫秒）
+        timeout: 10ms
+        lettuce:
+            pool:
+                # 连接池最大连接数
+                max-active: 200
+                # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                max-wait: -1ms
+                # 连接池中的最大空闲连接
+                max-idle: 10
+                # 连接池中的最小空闲连接
+                min-idle: 0
+        
+        
+        
+        
+        

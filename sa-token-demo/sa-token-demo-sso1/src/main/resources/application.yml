@@ -1,0 +1,9 @@
+# 端口
+server:
+    port: 8081
+
+spring: 
+    sa-token: 
+        # 写入Cookie时显式指定的作用域, 用于单点登录二级域名共享Cookie
+        cookie-domain: stp.com
+        
