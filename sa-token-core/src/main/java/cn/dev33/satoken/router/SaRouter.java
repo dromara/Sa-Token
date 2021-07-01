@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.IsRunFunction;
 import cn.dev33.satoken.fun.SaFunction;
@@ -134,8 +135,20 @@ public class SaRouter {
 	public static void stop() {
 		throw new StopMatchException();
 	}
-	
-	
-	
+
+	/**
+	 * 停止匹配，结束执行，向前端返回结果 
+	 * @param result 要输出的结果 
+	 */
+	public static void back(Object result) {
+		throw new BackResultException(result);
+	}
+
+	/**
+	 * 停止匹配，结束执行，向前端返回结果 
+	 */
+	public static void back() {
+		throw new BackResultException("");
+	}
 	
 }

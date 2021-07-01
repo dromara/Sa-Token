@@ -116,6 +116,13 @@ registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
 ```
 如上示例，代码运行至第2条匹配链时，会在stop函数处提前退出整个匹配函数，从而忽略掉剩余的所有match匹配 
 
+除了`stop()`函数，`SaRouter`还提供了 `SaRouter.back()` 函数，用于：停止匹配，结束执行，直接向前端返回结果
+``` java
+SaRouter.match("/user/back", () -> SaRouter.back("执行back函数后将停止匹配，也不会进入Controller，而是直接将此参数作为返回值输出到前端"));
+```
+
+
+
 
 
 

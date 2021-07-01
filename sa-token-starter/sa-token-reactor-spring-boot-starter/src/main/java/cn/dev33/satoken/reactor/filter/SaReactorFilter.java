@@ -9,6 +9,7 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
@@ -165,14 +166,13 @@ public class SaReactorFilter implements WebFilter {
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
-			Object result = error.run(e);
-			String resultString = String.valueOf(result);
+			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
 			
 			// 2. 写入输出流
 			if(exchange.getResponse().getHeaders().getFirst("Content-Type") == null) {
 				exchange.getResponse().getHeaders().set("Content-Type", "text/plain; charset=utf-8");
 			}
-			return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(resultString.getBytes())));
+			return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(result.getBytes())));
 			
 		} finally {
 			// 清除上下文 

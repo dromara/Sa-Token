@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 
 import org.springframework.core.annotation.Order;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.router.SaRouter;
@@ -163,14 +164,13 @@ public class SaServletFilter implements Filter {
 			
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
-			Object result = error.run(e);
-			String resultString = String.valueOf(result);
+			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
 			
 			// 2. 写入输出流 
 			if(response.getContentType() == null) {
 				response.setContentType("text/plain; charset=utf-8"); 
 			}
-			response.getWriter().print(resultString);
+			response.getWriter().print(result);
 			return;
 		}
 		

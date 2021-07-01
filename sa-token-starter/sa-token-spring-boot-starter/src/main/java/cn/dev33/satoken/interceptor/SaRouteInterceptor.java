@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.router.SaRouteFunction;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
@@ -63,6 +64,14 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 			try {
 				function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
 			} catch (StopMatchException e) {
+				// 停止匹配，进入Controller 
+			} catch (BackResultException e) {
+				// 停止匹配，向前端输出结果 
+				if(response.getContentType() == null) {
+					response.setContentType("text/plain; charset=utf-8"); 
+				}
+				response.getWriter().print(e.getMessage());
+				return false;
 			}
 		}
 		

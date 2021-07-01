@@ -35,7 +35,7 @@ public class XPluginImp implements Plugin {
         //集成初始化
 
         //注入配置Bean
-        SaTokenConfig saTokenConfig = Solon.cfg().getBean("solon.sa-token", SaTokenConfig.class);
+        SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
 
 
