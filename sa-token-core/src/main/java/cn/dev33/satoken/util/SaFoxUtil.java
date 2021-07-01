@@ -304,5 +304,4 @@ public class SaFoxUtil {
 		}
 	}
 	
-	
 }

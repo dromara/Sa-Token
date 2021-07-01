@@ -1,7 +1,7 @@
 # 多账号验证
 --- 
 
-### 需求场景
+### 0、需求场景
 有的时候，我们会在一个项目中设计两套账号体系，比如一个电商系统的 `user表` 和 `admin表`<br>
 在这种场景下，如果两套账号我们都使用 `StpUtil` 类的API进行登录鉴权，那么势必会发生逻辑冲突
 
@@ -9,7 +9,7 @@
 要解决这个问题，我们必须有一个合理的机制将这两套账号的授权给区分开，让它们互不干扰才行
 
 
-### 解决方案
+### 1、解决方案
 
 以上几篇介绍的api调用，都是经过 `StpUtil` 类的各种静态方法进行授权验证，
 而如果我们深入它的源码，[点此阅览](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/stp/StpUtil.java) <br/>
@@ -20,7 +20,7 @@
 - 在构造方法时随意传入一个不同的 `loginType`，就可以再造一套账号登录体系 
 
 
-### 操作示例
+### 2、操作示例
 
 比如说，对于原生`StpUtil`类，我们只做`admin账号`权限验证，而对于`user账号`，我们则：
 1. 新建一个新的权限验证类，比如： `StpUserUtil.java`
@@ -44,7 +44,7 @@ public class StpUserUtil {
 > 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/click33/sa-plus/blob/master/sp-server/src/main/java/com/pj/current/satoken/StpUserUtil.java)
 
 
-### 在多账号模式下使用注解鉴权
+### 3、在多账号模式下使用注解鉴权
 框架默认的注解鉴权 如`@SaCheckLogin` 只针对原生`StpUtil`进行鉴权 
 
 例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.login(id)`进行登录的会话，
@@ -64,10 +64,88 @@ public String info() {
 注：`@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，亦可根据type属性指定其校验的账号体系，此属性默认为`""`，代表使用原生`StpUtil`账号体系
 
 
+### 4、使用注解合并简化代码
+交流群里有同学反应，虽然可以根据 `@SaCheckLogin(type = "user")` 指定账号类型，但几十上百个注解都加上这个的话，还是有些繁琐，代码也不够优雅，有么有更改的解决方案？
+
+我们期待一种`[注解继承/合并]`的能力，即：自定义一个注解，标注上`@SaCheckLogin(type = "user")`，然后在方法上标注这个自定义注解，效果等同于标注`@SaCheckLogin(type = "user")`
+
+很遗憾，JDK默认的注解处理器并没有提供这种`[注解继承/合并]`的能力，不过好在我们可以利用Spring的注解处理器，达到同样的目的
+
+1. 重写Sa-Token默认的注解处理器
+
+``` java
+/**
+ * 继承Sa-Token行为Bean默认实现, 重写部分逻辑 
+ */
+@Component
+public class MySaTokenAction extends SaTokenActionDefaultImpl {
+
+	/**
+	 * 重写Sa-Token的注解处理器，加强注解合并功能 
+	 */
+	@Override
+	protected void validateAnnotation(AnnotatedElement target) {
+		
+		// 校验 @SaCheckLogin 注解 
+		if(AnnotatedElementUtils.isAnnotated(target, SaCheckLogin.class)) {
+			SaCheckLogin at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckLogin.class);
+			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		}
+
+		// 校验 @SaCheckRole 注解 
+		if(AnnotatedElementUtils.isAnnotated(target, SaCheckRole.class)) {
+			SaCheckRole at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckRole.class);
+			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		}
+
+		// 校验 @SaCheckPermission 注解
+		if(AnnotatedElementUtils.isAnnotated(target, SaCheckPermission.class)) {
+			SaCheckPermission at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckPermission.class);
+			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		}
+
+		// 校验 @SaCheckSafe 注解
+		if(AnnotatedElementUtils.isAnnotated(target, SaCheckSafe.class)) {
+			SaCheckSafe at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckSafe.class);
+			SaManager.getStpLogic(null).checkByAnnotation(at);
+		}
+	}
+	
+}
+```
+
+2. 自定义一个注解
+
+``` java
+/**
+ * 登录认证(User版)：只有登录之后才能进入该方法 
+ * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
+ */
+@SaCheckLogin(type = "user")
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD, ElementType.TYPE})
+public @interface SaUserCheckLogin {
+	
+}
+```
+
+3. 接下来就可以使用我们的自定义注解了
+
+``` java
+// 使用 @SaUserCheckLogin 的效果等同于使用：@SaCheckLogin(type = "user")
+@SaUserCheckLogin
+@RequestMapping("info")
+public String info() {
+    return "查询用户信息";
+}
+```
+
+注：其它注解 `@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，完整示例参考：[码云：自定义注解](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/at)
 
 
 
-### 进阶
+
+### 5、同端多登陆 
 假设我们不仅需要在后台同时集成两套账号，我们还需要在一个客户端同时登陆两套账号（业务场景举例：一个APP中可以同时登陆商家账号和用户账号）
 
 如果我们不做任何特殊处理的话，在客户端会发生`token覆盖`，新登录的token会覆盖掉旧登录的token从而导致旧登录失效

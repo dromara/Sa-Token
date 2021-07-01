@@ -2,16 +2,16 @@
 server:
     port: 9000
 
-spring: 
-    # Sa-Token配置
-    sa-token: 
-        # SSO-相关配置
-        sso: 
-            # Ticket有效期 (单位: 秒)，默认五分钟 
-            ticket-timeout: 300
-            # 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
-            allow-url: http://sa-sso-client1.com:9001/ssoLogin, http://sa-sso-client2.com:9001/ssoLogin, http://sa-sso-client3.com:9001/ssoLogin
+# Sa-Token配置
+sa-token: 
+    # SSO-相关配置
+    sso: 
+        # Ticket有效期 (单位: 秒)，默认五分钟 
+        ticket-timeout: 300
+        # 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
+        allow-url: http://sa-sso-client1.com:9001/ssoLogin, http://sa-sso-client2.com:9001/ssoLogin, http://sa-sso-client3.com:9001/ssoLogin
         
+spring: 
     # Redis配置 
     redis:
         # Redis数据库索引（默认为0）

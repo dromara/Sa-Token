@@ -66,8 +66,7 @@ SaTempUtil.getTimeout(token);
 
 并在配置文件中配置上jwt秘钥 **`(必填!)`**
 ``` java
-spring:
-    sa-token: 
-		# sa-token-temp-jwt 模块的秘钥 （随便乱摁几个字母就行了） 
-	    jwt-secret-key: JfdDSgfCmPsDfmsAaQwnXk
+sa-token: 
+	# sa-token-temp-jwt 模块的秘钥 （随便乱摁几个字母就行了） 
+	jwt-secret-key: JfdDSgfCmPsDfmsAaQwnXk
 ```

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
 
@@ -23,6 +24,7 @@ import cn.dev33.satoken.temp.SaTempInterface;
  *
  */
 @Component
+@Import(SaHistoryVersionInject.class)
 public class SaTokenSpringAutowired {
 
 	/**
@@ -31,11 +33,11 @@ public class SaTokenSpringAutowired {
 	 * @return 配置对象
 	 */
 	@Bean
-	@ConfigurationProperties(prefix = "spring.sa-token")
+	@ConfigurationProperties(prefix = "sa-token")
 	public SaTokenConfig getSaTokenConfig() {
 		return new SaTokenConfig();
 	}
-
+	
 	/**
 	 * 注入配置Bean
 	 * 

@@ -97,6 +97,7 @@ implementation 'cn.dev33:sa-token-core:1.20.0'
 		├── sa-token-spring-aop                   // [插件] Sa-Token 整合 SpringAOP 注解鉴权
 		├── sa-token-temp-jwt                     // [插件] Sa-Token 整合 jwt 临时令牌鉴权 
 		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
+		├── sa-token-alone-redis                  // [插件] Sa-Token 独立Redis插件，实现[权限缓存与业务缓存分离]
 		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 模块(内测暂未发布)
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
@@ -104,6 +105,12 @@ implementation 'cn.dev33:sa-token-core:1.20.0'
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 
 		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 
 		├── sa-token-demo-quick-login             // [示例] Sa-Token 集成 quick-login 模块 
+		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
+		├── sa-token-demo-sso1                    // [示例] Sa-Token 集成 SSO单点登录-模式一
+		├── sa-token-demo-sso2-server             // [示例] Sa-Token 集成 SSO单点登录-模式二 认证中心
+		├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端
+		├── sa-token-demo-sso3-server             // [示例] Sa-Token 集成 SSO单点登录-模式三 认证中心
+		├── sa-token-demo-sso3-client             // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端
 		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
 	├── sa-token-doc                          // [文档] Sa-Token 开发文档 

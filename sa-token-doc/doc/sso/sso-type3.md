@@ -55,11 +55,10 @@ public Object checkTicket(String ticket, String sloCallback) {
 
 ##### 1.3、Client端新增配置
 ``` yml
-spring: 
-    sa-token: 
-        sso: 
-            # SSO-Server端 ticket校验地址 
-            check-ticket-url: http://sa-sso-server.com:9000/checkTicket
+sa-token: 
+	sso: 
+		# SSO-Server端 ticket校验地址 
+		check-ticket-url: http://sa-sso-server.com:9000/checkTicket
 ```
 
 ##### 1.4、修改校验ticket的逻辑 
@@ -129,11 +128,10 @@ public class SsoServerLogoutController {
 
 并在 `application.yml` 下配置API调用秘钥
 ``` yml
-spring: 
-    sa-token: 
-        sso: 
-            # API调用秘钥（用于SSO模式三的单点注销功能）
-            secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+sa-token: 
+	sso: 
+		# API调用秘钥（用于SSO模式三的单点注销功能）
+		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 
 ##### 2.2、SSO-Client端增加注销接口
@@ -182,13 +180,12 @@ public class SsoClientLogoutController {
 
 并在 `application.yml` 增加配置： API调用秘钥 和 单点注销接口URL
 ``` yml
-spring: 
-    sa-token: 
-        sso: 
-            # SSO-Server端 单点注销地址 
-            slo-url: http://sa-sso-server.com:9000/ssoLogout
-            # 接口调用秘钥（用于SSO模式三的单点注销功能）
-            secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+sa-token: 
+	sso: 
+		# SSO-Server端 单点注销地址 
+		slo-url: http://sa-sso-server.com:9000/ssoLogout
+		# 接口调用秘钥（用于SSO模式三的单点注销功能）
+		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 
 ##### 2.3 更改Client端首页代码

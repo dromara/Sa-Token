@@ -14,11 +14,9 @@
 
 为此，我们需要在yml中添加如下配置：
 ``` java
-spring: 
-    # Sa-Token配置
-    sa-token: 
-        # token前缀
-        tokenPrefix: Bearer
+sa-token: 
+	# token前缀
+	tokenPrefix: Bearer
 ```
 
 此时 Sa-Token 便可在读取token时裁剪掉 `Bearer`，成功获取`xxxx-xxxx-xxxx-xxxx`

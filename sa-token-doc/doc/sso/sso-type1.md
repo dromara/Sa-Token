@@ -39,10 +39,9 @@ OK，所有理论就绪，下面开始实战
 ### 2、指定Cookie的作用域
 在`s1.stp.com`访问服务器，其Cookie也只能写入到`s1.stp.com`下，为了将Cookie写入到其父级域名`stp.com`下，我们需要新增配置: 
 ``` yml
-spring: 
-	sa-token:
-		# 写入Cookie时显式指定的作用域, 用于单点登录二级域名共享Cookie
-		cookie-domain: stp.com
+sa-token:
+	# 写入Cookie时显式指定的作用域, 用于单点登录二级域名共享Cookie
+	cookie-domain: stp.com
 ```
 
 ### 3、新增测试Controller

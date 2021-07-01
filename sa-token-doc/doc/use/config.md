@@ -9,26 +9,27 @@
 ### 方式1、在`application.yml`配置
 
 ``` java
-spring: 
-    # Sa-Token配置
-    sa-token: 
-        # token名称 (同时也是cookie名称)
-        token-name: satoken
-        # token有效期，单位s 默认30天, -1代表永不过期 
-        timeout: 2592000
-        # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-        activity-timeout: -1
-        # 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
-        is-concurrent: false
-        # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
-        is-share: false
-        # token风格
-        token-style: uuid
-        # 是否输出操作日志 
-        is-log: false
+# Sa-Token配置
+sa-token: 
+	# token名称 (同时也是cookie名称)
+	token-name: satoken
+	# token有效期，单位s 默认30天, -1代表永不过期 
+	timeout: 2592000
+	# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+	activity-timeout: -1
+	# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+	is-concurrent: false
+	# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+	is-share: false
+	# token风格
+	token-style: uuid
+	# 是否输出操作日志 
+	is-log: false
 ```
 
 如果你习惯于 `application.properties` 类型的配置文件，那也很好办: 百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
+
+!> 注：旧版本配置前缀为`[spring.sa-token.]`，自v1.21.0开始，均改为`[sa-token.]`，目前版本暂时向下兼容，请尽快更新 
 
 
 ### 方式2、通过代码配置
@@ -40,9 +41,9 @@ spring:
 public class SaTokenConfigure {
 
 	// 获取配置Bean (以代码的方式配置Sa-Token, 此配置会覆盖yml中的配置)
-	@Primary
-	@Bean(name="SaTokenConfigure")
-	public SaTokenConfig getSaTokenConfig() {
+    @Bean
+    @Primary
+    public SaTokenConfig getSaTokenConfigPrimary() {
 		SaTokenConfig config = new SaTokenConfig();
 		config.setTokenName("satoken");             // token名称 (同时也是cookie名称)
 		config.setTimeout(30 * 24 * 60 * 60);       // token有效期，单位s 默认30天

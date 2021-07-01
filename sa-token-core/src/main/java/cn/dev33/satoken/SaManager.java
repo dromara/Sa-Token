@@ -32,7 +32,7 @@ public class SaManager {
 	/**
 	 * 配置文件 Bean 
 	 */
-	private static SaTokenConfig config;	
+	public static SaTokenConfig config;	
 	public static void setConfig(SaTokenConfig config) {
 		SaManager.config = config;
 		if(config.getIsPrint()) {

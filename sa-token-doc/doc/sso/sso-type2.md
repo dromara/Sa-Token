@@ -111,16 +111,16 @@ public class SsoServerController {
 server:
     port: 9000
 
-spring: 
-    # Sa-Token配置
-    sa-token: 
-        # SSO-相关配置
-        sso: 
-            # Ticket有效期 (单位: 秒)，默认五分钟 
-            ticket-timeout: 300
-            # 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
-            allow-url: "*"
+# Sa-Token配置
+sa-token: 
+	# SSO-相关配置
+	sso: 
+		# Ticket有效期 (单位: 秒)，默认五分钟 
+		ticket-timeout: 300
+		# 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
+		allow-url: "*"
         
+spring: 
     # Redis配置 
     redis:
         # Redis数据库索引（默认为0）
@@ -248,26 +248,25 @@ public class SsoClientController {
 server:
     port: 9001
 	
-spring: 
-    # sa-token配置 
-    sa-token: 
-        # SSO-相关配置
-        sso: 
-            # SSO-Server端 单点登录地址 
-            auth-url: http://sa-sso-server.com:9000/ssoAuth
-        
-        # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
-        alone-redis: 
-            # Redis数据库索引 (默认为0)
-            database: 1
-            # Redis服务器地址
-            host: 127.0.0.1
-            # Redis服务器连接端口
-            port: 6379
-            # Redis服务器连接密码（默认为空）
-            password: 
+# sa-token配置 
+sa-token: 
+	# SSO-相关配置
+	sso: 
+		# SSO-Server端 单点登录地址 
+		auth-url: http://sa-sso-server.com:9000/ssoAuth
+	
+	# 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+	alone-redis: 
+		# Redis数据库索引 (默认为0)
+		database: 1
+		# Redis服务器地址
+		host: 127.0.0.1
+		# Redis服务器连接端口
+		port: 6379
+		# Redis服务器连接密码（默认为空）
+		password: 
 ```
-注意点：`spring.sa-token.alone-redis` 的配置需要和SSO-Server端连接同一个Redis（database也要一样）
+注意点：`sa-token.alone-redis` 的配置需要和SSO-Server端连接同一个Redis（database也要一样）
 
 ##### 1.4、写启动类
 ``` java
@@ -347,7 +346,7 @@ public class SaSsoClientApplication {
 ### 5、配置域名校验
 
 ##### 5.1、Ticket劫持攻击
-在以上的SSO-Server端示例中，配置项 `spring.sa-token.sso.allow-url=*` 意为配置所有允许的Client端授权地址，不在此配置项中的URL将无法单点登录成功
+在以上的SSO-Server端示例中，配置项 `sa-token.sso.allow-url=*` 意为配置所有允许的Client端授权地址，不在此配置项中的URL将无法单点登录成功
 
 以上示例为了方便测试被配置为*，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被ticket劫持的风险 
 

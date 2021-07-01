@@ -30,7 +30,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 	/**
 	 * 配置信息的前缀 
 	 */
-	public static final String ALONE_PREFIX = "spring.sa-token.alone-redis";
+	public static final String ALONE_PREFIX = "sa-token.alone-redis";
 	
 	/**
 	 * Sa-Token 持久层接口 
