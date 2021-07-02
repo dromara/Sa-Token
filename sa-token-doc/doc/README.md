@@ -20,47 +20,39 @@
 
 - [在线文档：http://sa-token.dev33.cn/](http://sa-token.dev33.cn/)
 
-- [调查问卷：Sa-Token 邀您填写满意度调查问卷](https://wj.qq.com/s2/8475114/2f6a/)
-
 - [需求提交：我们深知一个优秀的项目需要海纳百川，点我在线提交需求](http://sa-app.dev33.cn/wall.html?name=sa-token)
 
 - [开源不易，求鼓励，点个star吧 ！](###)
 
 
-## Sa-Token是什么？
+## Sa-Token 是什么？
 Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证、权限认证、Session会话、单点登录、OAuth2.0 等一系列权限相关问题
 
-框架针对踢人下线、自动续签、前后台分离、分布式会话……等常见业务进行N多适配，通过Sa-Token，你可以以一种极简的方式实现系统的权限认证部分
-
-与其它权限认证框架相比，`Sa-Token` 具有以下优势：
-1. **简单** ：可零配置启动框架，真正的开箱即用，低成本上手
-2. **强大** ：目前已集成几十项权限相关特性，涵盖了大部分业务场景的解决方案
-3. **易用** ：如丝般顺滑的API调用，大量高级特性统统只需一行代码即可实现
-4. **高扩展** ：几乎所有组件都提供了扩展接口，90%以上的逻辑都可以按需重写
-
-有了Sa-Token，你所有的权限认证问题，都不再是问题！
+框架集成简单、开箱即用、API设计清爽，通过Sa-Token，你将以一种极其简单的方式实现系统的权限认证部分
 
 ## Sa-Token 能做什么？
 
-- **登录验证** —— 轻松登录鉴权，并提供五种细分场景值
-- **权限验证** —— 适配RBAC权限模型，不同角色不同授权
-- **Session会话** —— 专业的数据缓存中心
-- **踢人下线** —— 将违规用户立刻清退下线
-- **账号封禁** —— 封禁指定账号，使其无法登陆，还可指定解封时间
+- **登录验证** —— 单端登录、多端登录、同端互斥登录、七天内免登录
+- **权限验证** —— 权限认证、角色认证、会话二级认证
+- **Session会话** —— 全端共享Session、单端独享Session、自定义Session 
+- **踢人下线** —— 根据账号id踢人下线、根据Token值踢人下线
+- **账号封禁** —— 指定天数封禁、永久封禁、设定解封时间 
 - **持久层扩展** —— 可集成Redis、Memcached等专业缓存中间件，重启数据不丢失
-- **分布式会话** —— 提供jwt集成和共享数据中心两种分布式会话方案
-- **微服务网关鉴权** —— 适配Gateway、Soul、Zuul等常见网关组件的请求拦截认证
-- **单点登录** —— 一处登录，处处通行
+- **分布式会话** —— 提供jwt集成、共享数据中心两种分布式会话方案
+- **微服务网关鉴权** —— 适配Gateway、Soul、Zuul等常见网关的路由拦截认证
+- **单点登录** —— 内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以搞定
+- **二级认证** —— 在已登录的基础上再次认证，保证安全性 
+- **独立Redis** —— 将权限缓存与业务缓存分离 
 - **临时Token验证** —— 解决短时间的Token授权问题
 - **模拟他人账号** —— 实时操作任意用户状态数据
 - **临时身份切换** —— 将会话身份临时切换为其它账号
-- **无Cookie模式** —— APP、小程序等前后台分离场景
+- **前后台分离** —— APP、小程序等不支持Cookie的终端
 - **同端互斥登录** —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录
 - **多账号认证体系** —— 比如一个商城项目的user表和admin表分开鉴权
-- **花式token生成** —— 内置六种token风格，还可自定义token生成策略
+- **花式token生成** —— 内置六种Token风格，还可：自定义Token生成策略、自定义Token前缀
 - **注解式鉴权** —— 优雅的将鉴权与业务代码分离
 - **路由拦截式鉴权** —— 根据路由拦截鉴权，可适配restful模式
-- **自动续签** —— 提供两种token过期策略，灵活搭配使用，还可自动续签
+- **自动续签** —— 提供两种Token过期策略，灵活搭配使用，还可自动续签
 - **会话治理** —— 提供方便灵活的会话查询接口
 - **记住我模式** —— 适配[记住我]模式，重启浏览器免验证
 - **密码加密** —— 提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密 
@@ -69,10 +61,36 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
 ##### Sa-Token 功能结构图
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/sa-token-js.png 's-w')
+![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js2.png 's-w')
 
 ##### Sa-Token 认证流程图
-![sa-token-rz](https://oss.dev33.cn/sa-token/doc/sa-token-rz.png 's-w')
+![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png 's-w')
+
+
+### Sa-Token-SSO 单点登录
+对于单点登录，网上教程大多以CAS模式为主，其实对于不同的系统架构，实现单点登录的步骤也大为不同，Sa-Token由简入难将其划分为三种模式：
+
+| 系统架构						| 采用模式	| 简介						|  文档链接	|
+| :--------						| :--------	| :--------					| :--------	|
+| 前端同域 + 后端同 Redis		| 模式一		| 共享Cookie同步会话			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso1)	|
+| 前端不同域 + 后端同 Redis		| 模式二		| URL重定向传播会话 			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso2-server)	|
+| 前端不同域 + 后端 不同Redis	| 模式三		| Http请求获取会话			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso3-server)	|
+
+
+1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`
+2. 后端同Redis：就是指多个系统可以连接同一个Redis，其它的缓存数据中心亦可。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳：[Alone独立Redis插件](http://sa-token.dev33.cn/doc/index.html#/plugin/alone-redis)
+3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）
+4. 技术选型一定要根据系统架构对症下药，切不可胡乱选择 
+
+
+### Sa-Token-SSO 特性
+1. API简单易用，文档介绍详细，且提供直接可用的集成示例
+2. 支持三种模式，不论是否跨域、是否共享Redis，都可以完美解决
+3. 安全性高：内置域名校验、Ticket校验、秘钥校验等，杜绝`Ticket劫持`、`Token窃取`等常见攻击手段（文档讲述攻击原理和防御手段）
+4. 不丢参数：笔者曾试验多个单点登录框架，均有参数丢失的情况，比如重定向之前是：`http://a.com?id=1&name=2`，登录成功之后就变成了：`http://a.com?id=1`，Sa-Token-SSO内有专门的算法保证了参数不丢失，登录成功之后原路返回页面
+5. 无缝集成：由于Sa-Token本身就是一个权限认证框架，因此你可以只用一个框架同时解决`权限认证` + `单点登录`问题，让你不再到处搜索：xxx单点登录与xxx权限认证如何整合……
+6. 高可定制：Sa-Token-SSO模块对代码架构侵入性极低，结合Sa-Token本身的路由拦截特性，你可以非常轻松的定制化开发 
+
 
 
 ## 代码示例
@@ -151,11 +169,11 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 
 ## 使用Sa-Token的开源项目
-[**[ sa-plus]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
+[**[ sa-plus ]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
 
-[**[ jthink]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
+[**[ jthink ]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
 
-[**[ dcy-fast]** 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
+[**[ dcy-fast ]** 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
 
 如果您的项目使用了Sa-Token，欢迎提交pr
 
