@@ -41,7 +41,11 @@ public interface SaSsoInterface {
 	 * @param ticket Ticket码
 	 */
 	public default void deleteTicket(String ticket) {
-		SaManager.getSaTokenDao().delete(splicingKeyTicketToId(ticket)); 
+		Object loginId = getLoginId(ticket);
+		if(loginId != null) {
+			SaManager.getSaTokenDao().delete(splicingKeyTicketToId(ticket)); 
+			SaManager.getSaTokenDao().delete(splicingKeyIdToTicket(loginId));
+		}
 	}
 	
 	/**
@@ -279,7 +283,8 @@ public interface SaSsoInterface {
 		forEachSloUrl(loginId, fun);
 		
 		// step.3 Server端注销 
-		StpUtil.logoutByLoginId(loginId);
+		// StpUtil.logoutByLoginId(loginId);
+		StpUtil.logoutByTokenValue(StpUtil.getTokenValueByLoginId(loginId));
 	}
 
 	

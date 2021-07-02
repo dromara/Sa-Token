@@ -178,7 +178,9 @@ public class SsoClientLogoutController {
 }
 ```
 
-并在 `application.yml` 增加配置： API调用秘钥 和 单点注销接口URL
+!> `logoutByLoginId(id)`为踢人下线，如果要彻底清除数据，可更换为`StpUtil.logoutByTokenValue(StpUtil.getTokenValueByLoginId(loginId));`
+
+并在 `application.yml` 增加配置： `API调用秘钥` 和 `单点注销接口URL`
 ``` yml
 sa-token: 
 	sso: 

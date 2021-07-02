@@ -20,7 +20,7 @@ public class SaSsoConfig {
 	public String allowUrl = "*";
 	
 	/**
-	 * 调用秘钥 
+	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)
 	 */
 	public String secretkey;
 	
@@ -30,12 +30,12 @@ public class SaSsoConfig {
 	public String authUrl;
 
 	/**
-	 * SSO-Server端 Ticket校验地址 [模式三专用配置]
+	 * SSO-Server端 Ticket校验地址
 	 */
 	public String checkTicketUrl;
 
 	/**
-	 * SSO-Server端 单点注销地址 [模式三专用配置]
+	 * SSO-Server端 单点注销地址 
 	 */
 	public String sloUrl;
 
@@ -74,14 +74,14 @@ public class SaSsoConfig {
 	}
 
 	/**
-	 * @return 调用秘钥
+	 * @return 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)
 	 */
 	public String getSecretkey() {
 		return secretkey;
 	}
 
 	/**
-	 * @param secretkey 调用秘钥 
+	 * @param secretkey 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setSecretkey(String secretkey) {

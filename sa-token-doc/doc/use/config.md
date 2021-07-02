@@ -79,3 +79,25 @@ public class SaTokenConfigure {
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
 | jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)							|
+| sso					| Object	| new SaSsoConfig()		| SSO 单点登录相关配置													|
+
+
+### 单点登录相关配置 
+| 参数名称		| 类型		| 默认值		| 说明																			|
+| :--------		| :--------	| :--------	| :--------																		|
+| ticketTimeout	| long		| 300		| Ticket有效期 (单位: 秒)														|
+| allowUrl		| String	| *			| 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)，[详情请参考 SSO模式二的域名校验章节]		|
+| secretkey		| String	| null		| 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)								|
+| authUrl		| String	| null		| SSO-Server端 单点登录地址														|
+| checkTicketUrl| String	| null		| SSO-Server端 Ticket校验地址													|
+| sloUrl		| String	| null		| SSO-Server端 单点注销地址														|
+
+配置示例：
+``` yml
+# sa-token配置 
+sa-token: 
+    # SSO-相关配置
+    sso: 
+        # SSO-Server端 单点登录地址 
+        auth-url: http://sa-sso-server.com:9000/ssoAuth
+```
