@@ -67,7 +67,7 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 ![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png 's-w')
 
 
-### Sa-Token-SSO 单点登录
+## Sa-Token-SSO 单点登录
 对于单点登录，网上教程大多以CAS模式为主，其实对于不同的系统架构，实现单点登录的步骤也大为不同，Sa-Token由简入难将其划分为三种模式：
 
 | 系统架构						| 采用模式	| 简介						|  文档链接	|
@@ -83,7 +83,7 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 4. 技术选型一定要根据系统架构对症下药，切不可胡乱选择 
 
 
-### Sa-Token-SSO 特性
+## Sa-Token-SSO 特性
 1. API简单易用，文档介绍详细，且提供直接可用的集成示例
 2. 支持三种模式，不论是否跨域、是否共享Redis，都可以完美解决
 3. 安全性高：内置域名校验、Ticket校验、秘钥校验等，杜绝`Ticket劫持`、`Token窃取`等常见攻击手段（文档讲述攻击原理和防御手段）
