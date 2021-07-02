@@ -19,6 +19,7 @@ public class BackResultException extends SaTokenException {
 	
 	/**
 	 * 构造 
+	 * @param result 要输出的结果 
 	 */
 	public BackResultException(Object result) {
 		super(String.valueOf(result));

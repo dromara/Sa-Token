@@ -60,7 +60,7 @@ SaTempUtil.getTimeout(token);
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-temp-jwt</artifactId>
-	<version>1.20.0</version>
+	<version>1.21.0</version>
 </dependency>
 ```
 

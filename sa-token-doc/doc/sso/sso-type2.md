@@ -46,14 +46,14 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.20.0</version>
+	<version>1.21.0</version>
 </dependency>
 
 <!-- Sa-Token整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
-	<version>1.20.0</version>
+	<version>1.21.0</version>
 </dependency>
 
 <!-- 提供Redis连接池 -->
@@ -183,7 +183,7 @@ public class SaSsoServerApplication {
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-alone-redis</artifactId>
-	<version>1.20.0</version>
+	<version>1.21.0</version>
 </dependency>
 ```
 

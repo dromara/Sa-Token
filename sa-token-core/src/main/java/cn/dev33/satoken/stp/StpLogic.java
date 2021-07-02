@@ -340,8 +340,8 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 会话注销，根据账号id & 设备标识 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * 会话注销，根据账号id and 设备标识 （踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
@@ -1235,7 +1235,7 @@ public class StpLogic {
 	
 	/**
 	 * 在当前会话 开启二级认证 
-	 * @param timeout 维持时间 (单位: 秒) 
+	 * @param safeTime 维持时间 (单位: 秒) 
 	 */
 	public void openSafe(long safeTime) {
 		long eff = System.currentTimeMillis() + safeTime * 1000;
@@ -1265,7 +1265,7 @@ public class StpLogic {
 	
 	/**
 	 * 获取当前会话的二级认证剩余有效时间 (单位: 秒, 返回-2代表尚未通过二级认证)
-	 * @return
+	 * @return 剩余有效时间
 	 */
 	public long getSafeTime() {
 		long eff = getTokenSession().get(SaTokenConsts.SAFE_AUTH_SAVE_KEY, 0L);

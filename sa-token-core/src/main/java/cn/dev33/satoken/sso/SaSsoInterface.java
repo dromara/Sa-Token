@@ -87,7 +87,9 @@ public interface SaSsoInterface {
 
 	/**
 	 * 根据 Ticket码 获取账号id，并转换为指定类型 
+	 * @param <T> 要转换的类型 
 	 * @param ticket Ticket码
+	 * @param cs 要转换的类型 
 	 * @return 账号id 
 	 */
 	public default <T> T getLoginId(String ticket, Class<T> cs) {
@@ -136,7 +138,7 @@ public interface SaSsoInterface {
 	}
 	
 	/**
-	 * 根据 Client端登录地址 & back地址 ，构建[SSO-Server端-认证地址] 
+	 * 构建URL：Server端 单点登录地址
 	 * @param clientLoginUrl Client端登录地址 
 	 * @param back 回调路径 
 	 * @return [SSO-Server端-认证地址 ]
