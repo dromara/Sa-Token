@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import cn.dev33.satoken.SaManager;
 
 /**
- * sa-token整合webflux 示例 
+ * Sa-Token整合webflux 示例 
  * @author kong
  *
  */

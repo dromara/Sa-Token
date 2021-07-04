@@ -1,9 +1,7 @@
-package cn.dev33.satoken.reactor.spring;
+package cn.dev33.satoken.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
@@ -12,39 +10,27 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.temp.SaTempInterface;
 
 /**
- * 利用spring的自动装配来加载开发者重写的Bean
+ * 注入Sa-Token所需要的Bean 
  * 
  * @author kong
  *
  */
 @Component
-@Import(SaHistoryVersionInject.class)
-public class SaTokenSpringAutowired {
-
-	/**
-	 * 获取配置Bean
-	 * 
-	 * @return 配置对象
-	 */
-	@Bean
-	@ConfigurationProperties(prefix = "sa-token")
-	public SaTokenConfig getSaTokenConfig() {
-		return new SaTokenConfig();
-	}
+@Import({SaBeanRegister.class, SaHistoryVersionInject.class})
+public class SaBeanInject {
 
 	/**
 	 * 注入配置Bean
 	 * 
 	 * @param saTokenConfig 配置对象
 	 */
-	@Autowired
+	@Autowired(required = false)
 	public void setConfig(SaTokenConfig saTokenConfig) {
 		SaManager.setConfig(saTokenConfig);
 	}
@@ -80,29 +66,11 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 获取容器交互Bean (ThreadLocal版)
-	 * 
-	 * @return 容器交互Bean (ThreadLocal版)
-	 */
-	@Bean
-	public SaTokenContext getSaTokenContext() {
-		return new SaTokenContextForThreadLocal() {
-			/**
-			 * 重写路由匹配方法
-			 */
-			@Override
-			public boolean matchPath(String pattern, String path) {
-				return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
-			}
-		};
-	}
-
-	/**
 	 * 注入容器交互Bean
 	 * 
 	 * @param saTokenContext SaTokenContext对象 
 	 */
-	@Autowired
+	@Autowired(required = false)
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.setSaTokenContext(saTokenContext);
 	}
@@ -137,6 +105,5 @@ public class SaTokenSpringAutowired {
 	public void setPathMatcher(PathMatcher pathMatcher) {
 		SaPathMatcherHolder.setPathMatcher(pathMatcher);
 	}
-
 
 }

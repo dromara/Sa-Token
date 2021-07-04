@@ -1,9 +1,7 @@
-package cn.dev33.satoken.spring;
+package cn.dev33.satoken.reactor.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
@@ -24,26 +22,15 @@ import cn.dev33.satoken.temp.SaTempInterface;
  *
  */
 @Component
-@Import(SaHistoryVersionInject.class)
-public class SaTokenSpringAutowired {
+@Import({SaHistoryVersionInject.class, SaBeanRegister.class})
+public class SaBeanInject {
 
-	/**
-	 * 获取配置Bean
-	 * 
-	 * @return 配置对象
-	 */
-	@Bean
-	@ConfigurationProperties(prefix = "sa-token")
-	public SaTokenConfig getSaTokenConfig() {
-		return new SaTokenConfig();
-	}
-	
 	/**
 	 * 注入配置Bean
 	 * 
 	 * @param saTokenConfig 配置对象
 	 */
-	@Autowired
+	@Autowired(required = false)
 	public void setConfig(SaTokenConfig saTokenConfig) {
 		SaManager.setConfig(saTokenConfig);
 	}
@@ -79,21 +66,11 @@ public class SaTokenSpringAutowired {
 	}
 
 	/**
-	 * 获取容器交互Bean (Spring版)
-	 * 
-	 * @return 容器交互Bean (Spring版)
-	 */
-	@Bean
-	public SaTokenContext getSaTokenContext() {
-		return new SaTokenContextForSpring();
-	}
-
-	/**
 	 * 注入容器交互Bean
 	 * 
 	 * @param saTokenContext SaTokenContext对象 
 	 */
-	@Autowired
+	@Autowired(required = false)
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.setSaTokenContext(saTokenContext);
 	}

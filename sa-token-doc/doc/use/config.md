@@ -33,6 +33,7 @@ sa-token:
 
 
 ### 方式2、通过代码配置
+方式1：
 ``` java 
 /**
  * Sa-Token代码方式进行配置
@@ -57,6 +58,18 @@ public class SaTokenConfigure {
 	
 }
 ```
+
+方式2：
+``` java
+// 以代码的方式配置Sa-Token-Config 
+@Autowired
+public void configSaToken(SaTokenConfig config) {
+	// config.setTokenName("satoken333");             // token名称 (同时也是cookie名称)
+	// ... 
+}
+```
+
+PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与yml中的配置合并`**
 
 
 --- 

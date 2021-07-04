@@ -14,7 +14,7 @@ import cn.dev33.satoken.reactor.filter.SaReactorFilter;
  */
 @Configuration
 public class SaTokenConfigure {
-	
+
 	/**
      * 注册 [sa-token全局过滤器] 
      */
