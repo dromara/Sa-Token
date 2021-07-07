@@ -1,5 +1,8 @@
 package cn.dev33.satoken.reactor.model;
 
+import java.net.URI;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseCookie.ResponseCookieBuilder;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -79,5 +82,15 @@ public class SaResponseForReactor implements SaResponse {
 		response.getHeaders().set(name, value);
 		return this;
 	}
-	
+
+	/**
+	 * 重定向 
+	 */
+	@Override
+	public Object redirect(String url) {
+		response.setStatusCode(HttpStatus.FOUND);
+        response.getHeaders().setLocation(URI.create(url));
+		return null;
+	}
+
 }

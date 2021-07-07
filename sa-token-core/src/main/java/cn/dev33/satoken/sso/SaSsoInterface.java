@@ -8,6 +8,7 @@ import java.util.Set;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -69,7 +70,7 @@ public interface SaSsoInterface {
 		
 		// 构建 授权重定向地址
 		redirect = encodeBackParam(redirect);
-		String redirectUrl = SaFoxUtil.joinParam(redirect, SaSsoConsts.TICKET_NAME, ticket);
+		String redirectUrl = SaFoxUtil.joinParam(redirect, ParamName.ticket, ticket);
 		return redirectUrl;
 	}
 	
@@ -152,8 +153,8 @@ public interface SaSsoInterface {
 		back = SaFoxUtil.encodeUrl(back);
 		
 		// 拼接最终地址，格式示例：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
-		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, SaSsoConsts.BACK_NAME, back); 
-		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, SaSsoConsts.REDIRECT_NAME, clientLoginUrl);
+		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, ParamName.back, back); 
+		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, ParamName.redirect, clientLoginUrl);
 		
 		// 返回 
 		return serverAuthUrl;
@@ -167,16 +168,16 @@ public interface SaSsoInterface {
 	public default String encodeBackParam(String url) {
 		
 		// 获取back参数所在位置 
-		int index = url.indexOf("?" + SaSsoConsts.BACK_NAME + "=");
+		int index = url.indexOf("?" + ParamName.back + "=");
 		if(index == -1) {
-			index = url.indexOf("&" + SaSsoConsts.BACK_NAME + "=");
+			index = url.indexOf("&" + ParamName.back + "=");
 			if(index == -1) {
 				return url;
 			}
 		}
 		
 		// 开始编码 
-		int length = SaSsoConsts.BACK_NAME.length() + 2;
+		int length = ParamName.back.length() + 2;
 		String back = url.substring(index + length);
 		back = SaFoxUtil.encodeUrl(back);
 		
@@ -210,16 +211,16 @@ public interface SaSsoInterface {
 	/**
 	 * 构建URL：校验ticket的URL 
 	 * @param ticket ticket码
-	 * @param sloCallbackUrl 单点注销时的回调URL 
+	 * @param ssoLogoutCallUrl 单点注销时的回调URL 
 	 * @return 构建完毕的URL 
 	 */
-	public default String buildCheckTicketUrl(String ticket, String sloCallbackUrl) {
+	public default String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
 		String url = SaManager.getConfig().getSso().getCheckTicketUrl();
-		// 拼接ticket参数
-		url = SaFoxUtil.joinParam(url, SaSsoConsts.TICKET_NAME, ticket);
+		// 拼接ticket参数 
+		url = SaFoxUtil.joinParam(url, ParamName.ticket, ticket);
 		// 拼接单点注销时的回调URL 
-		if(sloCallbackUrl != null) {
-			url = SaFoxUtil.joinParam(url, SaSsoConsts.SLO_CALLBACK_NAME, sloCallbackUrl);
+		if(ssoLogoutCallUrl != null) {
+			url = SaFoxUtil.joinParam(url, ParamName.ssoLogoutCall, ssoLogoutCallUrl);
 		}
 		// 返回 
 		return url;
@@ -251,8 +252,8 @@ public interface SaSsoInterface {
 		
 		for (String url : urlSet) {
 			// 拼接：login参数、秘钥参数
-			url = SaFoxUtil.joinParam(url, SaSsoConsts.LOGIN_ID_NAME, loginId);
-			url = SaFoxUtil.joinParam(url, SaSsoConsts.SECRETKEY, secretkey);
+			url = SaFoxUtil.joinParam(url, ParamName.loginId, loginId);
+			url = SaFoxUtil.joinParam(url, ParamName.secretkey, secretkey);
 			// 调用 
 			fun.run(url);
 		}
@@ -266,8 +267,8 @@ public interface SaSsoInterface {
 	public default String buildSloUrl(Object loginId) {
 		SaSsoConfig ssoConfig = SaManager.getConfig().getSso();
 		String url = ssoConfig.getSloUrl();
-		url = SaFoxUtil.joinParam(url, SaSsoConsts.LOGIN_ID_NAME, loginId);
-		url = SaFoxUtil.joinParam(url, SaSsoConsts.SECRETKEY, ssoConfig.getSecretkey());
+		url = SaFoxUtil.joinParam(url, ParamName.loginId, loginId);
+		url = SaFoxUtil.joinParam(url, ParamName.secretkey, ssoConfig.getSecretkey());
 		return url;
 	}
 	

@@ -1,5 +1,7 @@
 package cn.dev33.satoken.context.model;
 
+import cn.dev33.satoken.util.SaFoxUtil;
+
 /**
  * Request 包装类
  * @author kong
@@ -19,6 +21,20 @@ public interface SaRequest {
 	 * @return 值 
 	 */
 	public String getParameter(String name);
+
+	/**
+	 * 在 [请求体] 里获取一个值，值为空时返回默认值  
+	 * @param name 键 
+	 * @param defaultValue 值为空时的默认值  
+	 * @return 值 
+	 */
+	public default String getParameter(String name, String defaultValue) {
+		String value = getParameter(name);
+		if(SaFoxUtil.isEmpty(value)) {
+			return defaultValue;
+		}
+		return value;
+	}
 
 	/**
 	 * 在 [请求头] 里获取一个值 
@@ -51,5 +67,13 @@ public interface SaRequest {
 	 * @return see note
 	 */
 	public String getMethod();
+	
+	/**
+	 * 此请求是否为Ajax请求 
+	 * @return see note 
+	 */
+	public default boolean isAjax() {
+		return getHeader("X-Requested-With") != null;
+	}
 	
 }

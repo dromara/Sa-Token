@@ -12,6 +12,10 @@ sa-token:
         allow-url: http://sa-sso-client1.com:9001/ssoLogin, http://sa-sso-client2.com:9001/ssoLogin, http://sa-sso-client3.com:9001/ssoLogin
         # 接口调用秘钥（用于SSO模式三的单点注销功能）
         secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        # 使用Http请求校验ticket 
+        is-http: true
+        # 打开单点注销功能 
+        is-slo: true
         
 spring: 
     # Redis配置 

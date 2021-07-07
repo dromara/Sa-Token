@@ -6,7 +6,7 @@
 
 
 ### 0、问题分析
-我们先来分析一下，当后端不使用共享Redis时，会对架构发生哪些影响 
+我们先来分析一下，当后端不使用共享Redis时，会对架构产生哪些影响 
 
 1. Client端 无法直连 Redis 校验 ticket，取出账号id 
 2. Client端 无法与 Server端 共用一套会话，需要自行维护子会话
@@ -36,53 +36,37 @@
 > OkHttps是一个轻量级http请求工具，详情参考：[OkHttps](https://gitee.com/ejlchina-zhxu/okhttps)
 
 ##### 1.2、认证中心开放接口
-在SSO-Server端的`SsoServerController`中，新增以下接口：
-``` java
-// SSO-Server端：校验ticket 获取账号id 
-@RequestMapping("checkTicket")
-public Object checkTicket(String ticket, String sloCallback) {
-	// 校验ticket，获取对应的账号id 
-	Object loginId = SaSsoUtil.checkTicket(ticket);
-	
-	// 注册此客户端的单点注销回调URL（不需要单点注销功能可删除此行代码）
-	SaSsoUtil.registerSloCallbackUrl(loginId, sloCallback);
-	
-	// 返回给Client端 
-	return loginId;
-}
+在SSO-Server端的`application.yml`中，新增以下配置：
+``` yml
+sa-token: 
+    sso: 
+        # 使用Http请求校验ticket 
+        is-http: true
 ```
-此接口的作用是让Client端通过http请求校验ticket，获取对应的账号id
+此配置项的作用是开放ticket校验接口，让Client端通过http请求获取会话
 
 ##### 1.3、Client端新增配置
+在SSO-Client端的`SsoClientController`中，新增以下配置
+``` java
+// 配置SSO相关参数 
+@Autowired
+private void configSso(SaTokenConfig cfg) {
+	cfg.sso
+		// 配置Http请求处理器
+		.setSendHttp(url -> {
+			return OkHttps.sync(url).get().getBody().toString();
+		})
+		;
+}
+```
+
 ``` yml
 sa-token: 
 	sso: 
+        # 使用Http请求校验ticket 
+        is-http: true
 		# SSO-Server端 ticket校验地址 
-		check-ticket-url: http://sa-sso-server.com:9000/checkTicket
-```
-
-##### 1.4、修改校验ticket的逻辑 
-在模式二的`SsoClientController`中，校验ticket的方法是：
-``` java
-// SSO-Client端：校验ticket，获取账号id 
-private Object checkTicket(String ticket) {
-	return SaSsoUtil.checkTicket(ticket);
-}
-```
-不能直连Redis后，上述方法也将无效，我们把它改为以下方式：
-``` java
-// SSO-Client端：校验ticket码，获取对应的账号id 
-private Object checkTicket(String ticket) {
-	// 构建单点注销的回调URL（不需要单点注销时此值可填null ）
-	String sloCallback = SaHolder.getRequest().getUrl().replace("/ssoLogin", "/sloCallback");
-	
-	// 使用OkHttps请求SSO-Server端，校验ticket 
-	String checkUrl = SaSsoUtil.buildCheckTicketUrl(ticket, sloCallback);
-	String loginId = OkHttps.sync(checkUrl).get().getBody().toString();
-	
-	// 判断返回值是否为有效账号Id
-	return (SaFoxUtil.isEmpty(loginId) ? null : loginId);
-}
+		check-ticket-url: http://sa-sso-server.com:9000/ssoCheckTicket
 ```
 
 ##### 1.5 启动项目测试
@@ -103,110 +87,48 @@ private Object checkTicket(String ticket) {
 5. Server端注销下线
 6. 单点注销完成
 
-##### 2.1、SSO-Server认证中心增加单点注销接口
-新建 `SsoServerLogoutController` 增加以下代码 
+##### 2.1、SSO-Server认证中心增加配置 
+在 `SsoServerController` 中新增配置 
 ``` java
-/**
- * Sa-Token-SSO Server端 单点注销 Controller 
- */
-@RestController
-public class SsoServerLogoutController {
-
-	// SSO-Server端：单点注销
-	@RequestMapping("ssoLogout")
-	public String ssoLogout(String loginId, String secretkey) {
-		
-		// 遍历通知Client端注销会话 (为了提高响应速度这里可将sync换为async)
-		SaSsoUtil.singleLogout(secretkey, loginId, url -> OkHttps.sync(url).get());
-		
-		// 完成
-		return "ok";
-	}
-	
+// 配置SSO相关参数 
+@Autowired
+private void configSso(SaTokenConfig cfg) {
+	cfg.sso
+		// ... (其它配置保持不变) 
+		// 配置Http请求处理器
+		.setSendHttp(url -> {
+			// 此处为了提高响应速度这里可将sync换为async 
+			return OkHttps.sync(url).get();
+		})
+		;
 }
 ```
 
-并在 `application.yml` 下配置API调用秘钥
+并在 `application.yml` 下新增配置：
 ``` yml
 sa-token: 
 	sso: 
+        # 打开单点注销功能 
+        is-slo: true
 		# API调用秘钥（用于SSO模式三的单点注销功能）
 		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 
-##### 2.2、SSO-Client端增加注销接口
-新建 `SsoClientLogoutController` 增加以下代码 
-``` java
-/**
- * Sa-Token-SSO Client端 单点注销 Controller 
- * @author kong
- */
-@RestController
-public class SsoClientLogoutController {
+##### 2.2、SSO-Client端新增配置 
 
-	// SSO-Client端：单端注销 (其它Client端会话不受影响)
-	@RequestMapping("logout")
-	public AjaxJson logout() {
-		StpUtil.logout();
-		return AjaxJson.getSuccess();
-	}
-	
-	// SSO-Client端：单点注销 (所有端一起下线)
-	@RequestMapping("ssoLogout")
-	public AjaxJson ssoLogout() {
-		// 如果未登录，则无需注销 
-		if(StpUtil.isLogin() == false) {
-			return AjaxJson.getSuccess();
-		}
-		// 调用SSO-Server认证中心API 
-		String url = SaSsoUtil.buildSloUrl(StpUtil.getLoginId());
-		String res = OkHttps.sync(url).get().getBody().toString();
-		if(res.equals("ok")) {
-			return AjaxJson.getSuccess("单点注销成功");
-		}
-		return AjaxJson.getError("单点注销失败"); 
-	}
-	
-	// 单点注销的回调
-	@RequestMapping("sloCallback")
-	public String sloCallback(String loginId, String secretkey) {
-		SaSsoUtil.checkSecretkey(secretkey);
-		StpUtil.logoutByLoginId(loginId);
-		return "ok";
-	}
-	
-}
-```
-
-!> `logoutByLoginId(id)`为踢人下线，如果要彻底清除数据，可更换为`StpUtil.logoutByTokenValue(StpUtil.getTokenValueByLoginId(loginId));`
-
-并在 `application.yml` 增加配置： `API调用秘钥` 和 `单点注销接口URL`
+在 `application.yml` 增加配置：`API调用秘钥` 和 `单点注销接口URL`
 ``` yml
 sa-token: 
 	sso: 
-		# SSO-Server端 单点注销地址 
+        # 打开单点注销功能 
+        is-slo: true
+		# 单点注销地址 
 		slo-url: http://sa-sso-server.com:9000/ssoLogout
-		# 接口调用秘钥（用于SSO模式三的单点注销功能）
+		# 接口调用秘钥 
 		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 
-##### 2.3 更改Client端首页代码
-为了方便测试，我们更改一下Client端中`SsoClientController`类的`index`方法代码
-``` java
-// SSO-Client端：首页
-@RequestMapping("/")
-public String index() {
-	String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-				"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-				"<p><a href=\"javascript:location.href='/ssoLogin?back=' + encodeURIComponent(location.href);\">登录</a>" + 
-				" <a href='/ssoLogout' target='_blank'>注销</a></p>";
-	return str;
-}
-```
-PS：相比于模式二，增加了单点注销的按钮
-
-
-##### 2.4 启动测试 
+##### 2.3 启动测试 
 启动SSO-Server、SSO-Client，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，
 我们主要的测试点在于 `单点注销`，正常登陆即可
 

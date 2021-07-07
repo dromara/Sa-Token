@@ -104,6 +104,7 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 | authUrl		| String	| null		| SSO-Server端 单点登录地址														|
 | checkTicketUrl| String	| null		| SSO-Server端 Ticket校验地址													|
 | sloUrl		| String	| null		| SSO-Server端 单点注销地址														|
+| ssoLogoutCall	| String	| null		| SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取）					|
 
 配置示例：
 ``` yml

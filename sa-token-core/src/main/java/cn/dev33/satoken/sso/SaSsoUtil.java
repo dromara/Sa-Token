@@ -102,11 +102,11 @@ public class SaSsoUtil {
 	/**
 	 * 构建URL：校验ticket的URL 
 	 * @param ticket ticket码
-	 * @param sloCallbackUrl 单点注销时的回调URL (如果不需要单点注销功能，此值可以填null)
+	 * @param ssoLogoutCallUrl 单点注销时的回调URL 
 	 * @return 构建完毕的URL 
 	 */
-	public static String buildCheckTicketUrl(String ticket, String sloCallbackUrl) {
-		return saSsoInterface.buildCheckTicketUrl(ticket, sloCallbackUrl);
+	public static String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
+		return saSsoInterface.buildCheckTicketUrl(ticket, ssoLogoutCallUrl);
 	}
 
 	/**
@@ -145,5 +145,5 @@ public class SaSsoUtil {
 	public static void singleLogout(String secretkey, Object loginId, CallSloUrlFunction fun) {
 		saSsoInterface.singleLogout(secretkey, loginId, fun); 
 	}
-	
+
 }

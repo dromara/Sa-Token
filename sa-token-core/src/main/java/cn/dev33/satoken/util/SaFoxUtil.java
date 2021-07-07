@@ -54,11 +54,11 @@ public class SaFoxUtil {
 	}
 
 	/**
-	 * 指定字符串是否为null或者空字符串
-	 * @param str 指定字符串
+	 * 指定元素是否为null或者空字符串
+	 * @param str 指定元素 
 	 * @return 是否为null或者空字符串
 	 */
-	public static boolean isEmpty(String str) {
+	public static boolean isEmpty(Object str) {
 		return str == null || "".equals(str);
 	}
 	

@@ -1,9 +1,6 @@
 # SSO模式一 共享Cookie同步会话
 
-如果我们的系统可以保证部署在同一个主域名之下，并且后端连接同一个Redis，那么便可以使用 **`[共享Cookie同步会话]`** 的方式做到单点登录 
-
-> Sa-Token整合同域单点登录非常简单，相比于正常的登录，你只需增加配置 `sa-token.cookie-domain=xxx.com` 指定一下Cookie写入时的父级域名即可 <br>
-> 整合示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso1/`，如遇到难点可结合源码进行测试学习
+如果我们的多个系统可以做到：前端同域、后端同Redis，那么便可以使用 **`[共享Cookie同步会话]`** 的方式做到单点登录 
 
 --- 
 
@@ -24,6 +21,9 @@
 > PS：这里建议不要用B项目去连接A项目的Redis，也不要A项目连接B项目的Redis，而是抽离出一个单独的 SSO-Redis，A 和 B 一起连接这个 SSO-Redis
 
 OK，所有理论就绪，下面开始实战
+
+> Sa-Token整合同域单点登录非常简单，相比于正常的登录，你只需增加配置 `sa-token.cookie-domain=xxx.com` 指定一下Cookie写入时的父级域名即可 <br>
+> 整合示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso1/`，如遇到难点可结合源码进行测试学习
 
 
 

@@ -1,9 +1,12 @@
 package cn.dev33.satoken.servlet.model;
 
+import java.io.IOException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.dev33.satoken.context.model.SaResponse;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -59,7 +62,6 @@ public class SaResponseForServlet implements SaResponse {
 		response.addCookie(cookie);
 	}
 
-	
 	/**
 	 * 在响应头里写入一个值 
 	 */
@@ -67,6 +69,19 @@ public class SaResponseForServlet implements SaResponse {
 	public SaResponse setHeader(String name, String value) {
 		response.setHeader(name, value);
 		return this;
+	}
+
+	/**
+	 * 重定向 
+	 */
+	@Override
+	public Object redirect(String url) {
+		try {
+			response.sendRedirect(url);
+		} catch (IOException e) {
+			throw new SaTokenException(e);
+		}
+		return null;
 	}
 
 }

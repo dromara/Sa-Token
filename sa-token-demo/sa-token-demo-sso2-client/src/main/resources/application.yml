@@ -14,6 +14,8 @@ sa-token:
     sso: 
         # SSO-Server端 单点登录地址 
         auth-url: http://sa-sso-server.com:9000/ssoAuth
+        # 是否打开单点注销接口
+        is-slo: true
     
     # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 

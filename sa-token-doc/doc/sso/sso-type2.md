@@ -1,6 +1,6 @@
 # SSO模式二 URL重定向传播会话
 
-如果我们的系统部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 **`[URL重定向传播会话]`** 的方式做到单点登录
+如果我们的多个系统：部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 **`[URL重定向传播会话]`** 的方式做到单点登录
 
 
 ### 0、解题思路
@@ -33,15 +33,9 @@
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-server/`，如遇到难点可结合源码进行测试学习
 
 ##### 1.1、创建SSO-Server端项目
-创建一个SpringBoot项目 `sa-token-demo-sso-server`（不会的同学自行百度或参考仓库示例），添加pom依赖：
+创建SpringBoot项目 `sa-token-demo-sso-server`（不会的同学自行百度或参考仓库示例），添加pom依赖：
 
 ``` xml
-<!-- SpringBoot依赖 -->
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -55,8 +49,6 @@
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
 	<version>1.21.0</version>
 </dependency>
-
-<!-- 提供Redis连接池 -->
 <dependency>
 	<groupId>org.apache.commons</groupId>
 	<artifactId>commons-pool2</artifactId>
@@ -71,35 +63,33 @@
 @RestController
 public class SsoServerController {
 
-	// SSO-Server端：授权地址，跳转到登录页面 
-	@RequestMapping("ssoAuth")
-	public Object ssoAuth(String redirect) {
-		/*
-		 * 此处两种情况分开处理：
-		 * 1、如果在SSO认证中心尚未登录，则先去登登录 
-		 * 2、如果在SSO认证中心尚已登录，则开始对redirect地址下放ticket引导授权 
-		 */
-		// 情况1：尚未登录 
-		if(StpUtil.isLogin() == false) {
-			String msg = "当前会话在SSO-Server端尚未登录，请先访问"
-					+ "<a href='/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
-					+ "进行登录之后，刷新页面开始授权";
-			return msg;
-		}
-		// 情况2：已经登录，开始构建授权重定向地址，下放ticket
-		String redirectUrl = SaSsoUtil.buildRedirectUrl(StpUtil.getLoginId(), redirect);
-		return new ModelAndView("redirect:" + redirectUrl);
+	// SSO-Server端：处理所有SSO相关请求 
+	@RequestMapping("/sso*")
+	public Object ssoRequest() {
+		return SaSsoHandle.serverRequest();
 	}
 	
-	// SSO-Server端：登录接口 
-	@RequestMapping("doLogin")
-	public AjaxJson doLogin(String name, String pwd) {
-		// 此处仅做模拟登录，真实环境应该查询数据进行登录 
-		if("sa".equals(name) && "123456".equals(pwd)) {
-			StpUtil.login(10001);
-			return AjaxJson.getSuccess("登录成功！");
-		}
-		return AjaxJson.getError("登录失败！");
+	// 配置SSO相关参数 
+	@Autowired
+	private void configSso(SaTokenConfig cfg) {
+		cfg.sso
+			// 配置：未登录时返回的View 
+			.setNotLoginView(() -> {
+				String msg = "当前会话在SSO-Server端尚未登录，请先访问"
+						+ "<a href='/ssoDoLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
+						+ "进行登录之后，刷新页面开始授权";
+				return msg;
+			})
+			// 配置：登录处理函数 
+			.setDoLoginHandle((name, pwd) -> {
+				// 此处仅做模拟登录，真实环境应该查询数据进行登录 
+				if("sa".equals(name) && "123456".equals(pwd)) {
+					StpUtil.login(10001);
+					return SaResult.ok("登录成功！");
+				}
+				return SaResult.error("登录失败！");
+			})
+			;
 	}
 	
 }
@@ -153,27 +143,19 @@ public class SaSsoServerApplication {
 ##### 2.1、创建SSO-Client端项目
 创建一个SpringBoot项目 `sa-token-demo-sso-client`，添加pom依赖：
 ``` xml
-<!-- SpringBoot依赖 -->
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>${sa-token-version}</version>
+	<version>1.21.0</version>
 </dependency>
 
 <!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
-	<version>${sa-token-version}</version>
+	<version>1.21.0</version>
 </dependency>
-
-<!-- 提供Redis连接池 -->
 <dependency>
 	<groupId>org.apache.commons</groupId>
 	<artifactId>commons-pool2</artifactId>
@@ -202,42 +184,17 @@ public class SsoClientController {
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + encodeURIComponent(location.href);\">登录</a></p>";
+					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + encodeURIComponent(location.href);\">登录</a> " + 
+					"<a href='/ssoLogout' target='_blank'>注销</a></p>";
 		return str;
 	}
 	
-	// SSO-Client端：登录地址 
-	@RequestMapping("ssoLogin")
-	public Object ssoLogin(String back, String ticket) {
-		// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回 
-		if(StpUtil.isLogin()) {
-			return new ModelAndView("redirect:" + back);
-		}
-		/*
-		 * 接下来两种情况：
-		 * ticket无值，说明此请求是Client端访问，需要重定向至SSO认证中心
-		 * ticket有值，说明此请求从SSO认证中心重定向而来，需要根据ticket进行登录 
-		 */
-		if(ticket == null) {
-			String serverAuthUrl = SaSsoUtil.buildServerAuthUrl(SaHolder.getRequest().getUrl(), back);
-			return new ModelAndView("redirect:" + serverAuthUrl);
-		} else {
-			Object loginId = checkTicket(ticket);
-			if(loginId != null ) {
-				// loginId有值，说明ticket有效
-				StpUtil.login(loginId); 
-				return new ModelAndView("redirect:" + back);
-			}
-			// 此处向客户端提示ticket无效即可，不要重定向到SSO认证中心，否则容易引起无限重定向 
-			return "ticket无效: " + ticket;
-		}
+	// SSO-Client端：处理所有SSO相关请求 
+	@RequestMapping("/sso*")
+	public Object ssoRequest() {
+		return SaSsoHandle.clientRequest();
 	}
-	
-	// SSO-Client端：校验ticket，获取账号id 
-	private Object checkTicket(String ticket) {
-		return SaSsoUtil.checkTicket(ticket);
-	}
-	
+
 }
 ```
 
@@ -254,6 +211,8 @@ sa-token:
 	sso: 
 		# SSO-Server端 单点登录地址 
 		auth-url: http://sa-sso-server.com:9000/ssoAuth
+        # 是否打开单点注销接口
+        is-slo: true
 	
 	# 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
 	alone-redis: 
@@ -385,11 +344,25 @@ Token作为长时间有效的会话凭证，在任何时候都不应该直接在
 因此Sa-Token-SSO选择先回传ticket，再由ticket获取账号id，且ticket一次性用完即废，提高安全性
 
 
-
 ### 6、跨Redis的单点登录
 以上流程解决了跨域模式下的单点登录，但是后端仍然采用了共享Redis来同步会话，如果我们的架构设计中Client端与Server端无法共享Redis，又该怎么完成单点登录？
 
 这就要采用模式三了，且往下看：[Http请求获取会话](/sso/sso-type3)
+
+
+<!-- 
+### 6、如何单点注销？
+由于Server端与所有Client端都是在共用同一套会话，因此只要一端注销，即可全端下线，达到单点注销的效果 
+
+在`SsoClientController`中添加以下代码：
+``` java
+// SSO-Client端：单点注销 (所有端一起下线)
+@RequestMapping("logout")
+public SaResult logout() {
+	StpUtil.logout();
+	return SaResult.ok();
+}
+``` -->
 
 
 

@@ -1,8 +1,9 @@
 package cn.dev33.satoken.solon.model;
 
-import cn.dev33.satoken.context.model.SaResponse;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
+
+import cn.dev33.satoken.context.model.SaResponse;
 
 /**
  * @author noear
@@ -40,4 +41,10 @@ public class SaResponseForSolon implements SaResponse {
         ctx.headerSet(name, value);
         return this;
     }
+    
+	@Override
+	public Object redirect(String url) {
+		ctx.redirect(url);
+		return null;
+	}
 }

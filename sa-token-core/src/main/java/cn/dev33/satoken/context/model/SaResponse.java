@@ -46,4 +46,11 @@ public interface SaResponse {
 		return this.setHeader("Server", value);
 	}
 
+	/**
+	 * 重定向 
+	 * @param url 重定向地址 
+	 * @return 任意值 
+	 */
+	public Object redirect(String url);
+	
 }
