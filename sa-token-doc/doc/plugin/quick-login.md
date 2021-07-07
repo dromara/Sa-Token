@@ -49,7 +49,7 @@ Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-quick-login</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
 

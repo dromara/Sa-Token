@@ -19,7 +19,7 @@ WebFlux基于Reactor响应式模型开发，有着与标准ServletAPI完全不�
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
 

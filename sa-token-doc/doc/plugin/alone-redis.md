@@ -17,7 +17,7 @@ Sa-Token默认的Redis集成方式会把权限数据和业务缓存放在一起�
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-alone-redis</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
 

@@ -40,14 +40,14 @@
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 
 <!-- Sa-Token整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
 	<groupId>org.apache.commons</groupId>
@@ -147,14 +147,14 @@ public class SaSsoServerApplication {
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 
 <!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
 	<groupId>org.apache.commons</groupId>
@@ -165,7 +165,7 @@ public class SaSsoServerApplication {
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-alone-redis</artifactId>
-	<version>1.21.0</version>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
 

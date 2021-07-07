@@ -50,8 +50,9 @@
 			<div id="app">加载中...</div>
 		</div>
 		<script>
+			var saTokenTopVersion = '1.21.0';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
-			name += '<b style="font-size: 28px; vertical-align: middle;">Sa-Token</b> <sub>v1.21.0</sub>'
+			name += '<b style="font-size: 28px; vertical-align: middle;">Sa-Token</b> <sub>v' + saTokenTopVersion + '</sub>'
 			window.$docsify = {
 				name: name, // 名字 
 				repo: 'https://github.com/dromara/sa-token', // github地址 
@@ -83,6 +84,16 @@
 				},
 				plugins: [ // 自定义插件 
 					function(hook, vm) {
+						// 解析之前执行
+						hook.beforeEach(function(content) {
+							try{
+								var reg = /\$\{sa.top.version\}/g;
+								content = content.replace(reg, window.saTokenTopVersion);
+							}catch(e){
+								// 
+							}
+							return content;
+						});
 						// 每次路由切换时，解析内容之后执行 
 						hook.afterEach(function(html) {
 							var url = 'https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
