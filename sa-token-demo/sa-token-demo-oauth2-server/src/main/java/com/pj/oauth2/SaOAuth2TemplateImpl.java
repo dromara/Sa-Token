@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Interface;
+import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
 
 /**
  * 使用oauth2.0 所必须的一些自定义实现 
  * @author kong
  */
 @Component
-public class SaOAuth2InterfaceImpl implements SaOAuth2Interface {
+public class SaOAuth2TemplateImpl extends SaOAuth2Template {
 	
 
 	/*

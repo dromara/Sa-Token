@@ -64,7 +64,7 @@
 public class SsoServerController {
 
 	// SSO-Server端：处理所有SSO相关请求 
-	@RequestMapping("/sso*")
+	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.serverRequest();
 	}
@@ -76,7 +76,7 @@ public class SsoServerController {
 			// 配置：未登录时返回的View 
 			.setNotLoginView(() -> {
 				String msg = "当前会话在SSO-Server端尚未登录，请先访问"
-						+ "<a href='/ssoDoLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
+						+ "<a href='/sso/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
 						+ "进行登录之后，刷新页面开始授权";
 				return msg;
 			})
@@ -184,13 +184,13 @@ public class SsoClientController {
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + encodeURIComponent(location.href);\">登录</a> " + 
-					"<a href='/ssoLogout' target='_blank'>注销</a></p>";
+					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " + 
+					"<a href='/sso/logout' target='_blank'>注销</a></p>";
 		return str;
 	}
 	
 	// SSO-Client端：处理所有SSO相关请求 
-	@RequestMapping("/sso*")
+	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.clientRequest();
 	}
@@ -210,7 +210,7 @@ sa-token:
 	# SSO-相关配置
 	sso: 
 		# SSO-Server端 单点登录地址 
-		auth-url: http://sa-sso-server.com:9000/ssoAuth
+		auth-url: http://sa-sso-server.com:9000/sso/auth
         # 是否打开单点注销接口
         is-slo: true
 	
@@ -311,7 +311,7 @@ public class SaSsoClientApplication {
 
 假设攻击者根据模仿我们的授权地址，巧妙的构造一个URL
 
-> [http://sa-sso-server.com:9000/ssoAuth?redirect=https://www.baidu.com/](http://sa-sso-server.com:9000/ssoAuth?redirect=https://www.baidu.com/)
+> [http://sa-sso-server.com:9000/sso/auth?redirect=https://www.baidu.com/](http://sa-sso-server.com:9000/sso/auth?redirect=https://www.baidu.com/)
 
 当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页
 
@@ -323,7 +323,7 @@ public class SaSsoClientApplication {
 
 造成此漏洞的直接原因就是SSO-Server认证中心没有对 `redirect地址` 进行任何的限制，防范的方法也很简单，就是对`redirect参数`进行校验，如果其不在指定的URL列表中时，拒绝下放ticket 
 
-我们将其配置为一个具体的URL：`allow-url=http://sa-sso-client1.com:9001/ssoLogin`，再次访问上述连接：
+我们将其配置为一个具体的URL：`allow-url=http://sa-sso-client1.com:9001/sso/login`，再次访问上述连接：
 
 ![sso-feifa-rf](https://oss.dev33.cn/sa-token/doc/sso/sso-feifa-rf.png 's-w-sh')
 
@@ -335,7 +335,7 @@ public class SaSsoClientApplication {
 | :--------		| :--------									| :--------							| :--------								|
 | 配置为*		| `*`										| <font color="#F00" >低</font>		| **<font color="#F00" >禁止在生产环境下使用</font>**	|
 | 配置到域名	| `http://sa-sso-client1.com/*`					| <font color="#F70" >中</font>		| <font color="#F70" >不建议在生产环境下使用</font>	|
-| 配置到详细地址| `http://sa-sso-client1.com:9001/ssoLogin`	| <font color="#080" >高</font>		| <font color="#080" >可以在生产环境下使用</font>	|
+| 配置到详细地址| `http://sa-sso-client1.com:9001/sso/login`	| <font color="#080" >高</font>		| <font color="#080" >可以在生产环境下使用</font>	|
 
 
 ##### 5.4、疑问：为什么不直接回传Token，而是先回传ticket，再用ticket去查询对应的账号id？

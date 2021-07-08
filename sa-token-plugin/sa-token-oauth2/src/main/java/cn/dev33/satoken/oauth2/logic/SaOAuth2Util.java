@@ -2,7 +2,6 @@ package cn.dev33.satoken.oauth2.logic;
 
 import java.util.List;
 
-import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
@@ -14,6 +13,9 @@ import cn.dev33.satoken.oauth2.model.RequestAuthModel;
  */
 public class SaOAuth2Util {
 
+	public static SaOAuth2Template saOAuth2Template = new SaOAuth2Template();
+	
+	
 	// ------------------- 获取数据 
 	
 	/**
@@ -21,7 +23,7 @@ public class SaOAuth2Util {
 	 * @return 此平台所有权限名称集合 
 	 */
 	public static List<String> getAppScopeList() {
-		return SaOAuth2Manager.getInterface().getAppScopeList();
+		return saOAuth2Template.getAppScopeList();
 	}
 
 	/**
@@ -30,7 +32,7 @@ public class SaOAuth2Util {
 	 * @return Scope集合 
 	 */
 	public static List<String> getClientScopeList(String clientId) {
-		return SaOAuth2Manager.getInterface().getClientScopeList(clientId);
+		return saOAuth2Template.getClientScopeList(clientId);
 	}
 
 	/**
@@ -40,7 +42,7 @@ public class SaOAuth2Util {
 	 * @return Scope集合 
 	 */
 	public static List<String> getGrantScopeList(Object loginId, String clientId) {
-		return SaOAuth2Manager.getInterface().getGrantScopeList(loginId, clientId);
+		return saOAuth2Template.getGrantScopeList(loginId, clientId);
 	}
 
 	
@@ -54,7 +56,7 @@ public class SaOAuth2Util {
 	 * @return 是否已经授权
 	 */
 	public static boolean isGrant(Object loginId, String clientId, String scope) {
-		return SaOAuth2Manager.getInterface().isGrant(loginId, clientId, scope);
+		return saOAuth2Template.isGrant(loginId, clientId, scope);
 	}
 	
 	/**
@@ -65,7 +67,7 @@ public class SaOAuth2Util {
 	 * @return CodeModel对象 
 	 */
 	public static CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret) {
-		return SaOAuth2Manager.getInterface().checkCodeIdSecret(code, clientId, clientSecret);
+		return saOAuth2Template.checkCodeIdSecret(code, clientId, clientSecret);
 	}
 	
 	/**
@@ -76,7 +78,7 @@ public class SaOAuth2Util {
 	 * @return AccessTokenModel对象 
 	 */
 	public static AccessTokenModel checkTokenIdSecret(String accessToken, String clientId, String clientSecret) {
-		return SaOAuth2Manager.getInterface().checkTokenIdSecret(accessToken, clientId, clientSecret);
+		return saOAuth2Template.checkTokenIdSecret(accessToken, clientId, clientSecret);
 	}
 	
 	
@@ -89,7 +91,7 @@ public class SaOAuth2Util {
 	 * @return 授权码Model
 	 */
 	public static CodeModel generateCode(RequestAuthModel authModel) {
-		return SaOAuth2Manager.getInterface().generateCode(authModel);
+		return saOAuth2Template.generateCode(authModel);
 	}
 	
 	/**
@@ -98,7 +100,7 @@ public class SaOAuth2Util {
 	 * @return 授权码Model
 	 */
 	public static CodeModel getCode(String code) {
-		return SaOAuth2Manager.getInterface().getCode(code);
+		return saOAuth2Template.getCode(code);
 	}
 
 	/**
@@ -107,7 +109,7 @@ public class SaOAuth2Util {
 	 * @param codeModel 授权码Model 
 	 */
 	public static void updateCode(String code, CodeModel codeModel) {
-		SaOAuth2Manager.getInterface().updateCode(code, codeModel);
+		saOAuth2Template.updateCode(code, codeModel);
 	}
 
 	/**
@@ -115,7 +117,7 @@ public class SaOAuth2Util {
 	 * @param code 授权码 
 	 */
 	public static void confirmCode(String code) {
-		SaOAuth2Manager.getInterface().confirmCode(code);
+		saOAuth2Template.confirmCode(code);
 	}
 
 	/**
@@ -123,7 +125,7 @@ public class SaOAuth2Util {
 	 * @param code 授权码 
 	 */
 	public static void deleteCode(String code) {
-		SaOAuth2Manager.getInterface().deleteCode(code);
+		saOAuth2Template.deleteCode(code);
 	}
 	
 	/**
@@ -132,7 +134,7 @@ public class SaOAuth2Util {
 	 * @return AccessTokenModel
 	 */
 	public static AccessTokenModel generateAccessToken(CodeModel codeModel) {
-		return SaOAuth2Manager.getInterface().generateAccessToken(codeModel);
+		return saOAuth2Template.generateAccessToken(codeModel);
 	}
 
 	/**
@@ -141,7 +143,7 @@ public class SaOAuth2Util {
 	 * @return AccessTokenModel (授权码Model) 
 	 */
 	public static AccessTokenModel getAccessToken(String accessToken) {
-		return SaOAuth2Manager.getInterface().getAccessToken(accessToken);
+		return saOAuth2Template.getAccessToken(accessToken);
 	}
 
 	/**
@@ -150,7 +152,7 @@ public class SaOAuth2Util {
 	 * @return 新的 access_token 
 	 */
 	public static AccessTokenModel refreshAccessToken(String refreshToken) {
-		return SaOAuth2Manager.getInterface().refreshAccessToken(refreshToken);
+		return saOAuth2Template.refreshAccessToken(refreshToken);
 	}
 
 	/**
@@ -159,7 +161,7 @@ public class SaOAuth2Util {
 	 * @return RefreshToken (授权码Model) 
 	 */
 	public static CodeModel getRefreshToken(String refreshToken) {
-		return SaOAuth2Manager.getInterface().getRefreshToken(refreshToken);
+		return saOAuth2Template.getRefreshToken(refreshToken);
 	}
 
 	/**
@@ -168,7 +170,7 @@ public class SaOAuth2Util {
 	 * @return 有效期 
 	 */
 	public static long getAccessTokenExpiresIn(String accessToken) {
-		return SaOAuth2Manager.getInterface().getAccessTokenExpiresIn(accessToken);
+		return saOAuth2Template.getAccessTokenExpiresIn(accessToken);
 	}
 
 	/**
@@ -177,7 +179,7 @@ public class SaOAuth2Util {
 	 * @return 有效期 
 	 */
 	public static long getRefreshTokenExpiresIn(String refreshToken) {
-		return SaOAuth2Manager.getInterface().getRefreshTokenExpiresIn(refreshToken);
+		return saOAuth2Template.getRefreshTokenExpiresIn(refreshToken);
 	}
 
 	/**
@@ -186,7 +188,7 @@ public class SaOAuth2Util {
 	 * @return LoginId 
 	 */
 	public static Object getLoginIdByAccessToken(String accessToken) {
-		return SaOAuth2Manager.getInterface().getLoginIdByAccessToken(accessToken);
+		return saOAuth2Template.getLoginIdByAccessToken(accessToken);
 	}
 	
 	

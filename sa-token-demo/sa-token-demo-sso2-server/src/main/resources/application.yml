@@ -8,8 +8,8 @@ sa-token:
     sso: 
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
-        # 所有允许的授权回调地址 （此处为了方便测试配置为*，线上生产环境一定要配置为详细地地址）
-        allow-url: http://sa-sso-client1.com:9001/ssoLogin, http://sa-sso-client2.com:9001/ssoLogin, http://sa-sso-client3.com:9001/ssoLogin
+        # 所有允许的授权回调地址
+        allow-url: http://sa-sso-client1.com:9001/sso/login, http://sa-sso-client2.com:9001/sso/login, http://sa-sso-client3.com:9001/sso/login
         
 spring: 
     # Redis配置 

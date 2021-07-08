@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Interface;
+import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
+import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
 
 /**
  * 利用Spring完成自动装配
@@ -24,7 +25,7 @@ public class SaOAuth2SpringAutowired {
 	 * @return 配置对象
 	 */
 	@Bean
-	@ConfigurationProperties(prefix = "spring.sa-token.oauth2")
+	@ConfigurationProperties(prefix = "sa-token.oauth2")
 	public SaOAuth2Config getSaOAuth2Config() {
 		return new SaOAuth2Config();
 	}
@@ -45,8 +46,8 @@ public class SaOAuth2SpringAutowired {
 	 * @param saOAuth2Interface OAuth2接口Bean 
 	 */
 	@Autowired(required = false)
-	public void setSaOAuth2Interface(SaOAuth2Interface saOAuth2Interface) {
-		SaOAuth2Manager.setInterface(saOAuth2Interface);
+	public void setSaOAuth2Interface(SaOAuth2Template saOAuth2Interface) {
+		SaOAuth2Util.saOAuth2Template = saOAuth2Interface;
 	}
 	
 

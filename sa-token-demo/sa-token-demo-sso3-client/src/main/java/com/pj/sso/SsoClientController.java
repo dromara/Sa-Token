@@ -22,13 +22,13 @@ public class SsoClientController {
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/ssoLogin?back=' + encodeURIComponent(location.href);\">登录</a>" + 
-					" <a href='/ssoLogout' target='_blank'>注销</a></p>";
+					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a>" + 
+					" <a href='/sso/logout' target='_blank'>注销</a></p>";
 		return str;
 	}
 	
 	// SSO-Client端：处理所有SSO相关请求 
-	@RequestMapping("/sso*")
+	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.clientRequest();
 	}

@@ -14,22 +14,22 @@ public class SaSsoConsts {
 	public static final class Api {
 		
 		/** SSO-Server端：授权地址 */ 
-		public static String ssoAuth = "/ssoAuth";
+		public static String ssoAuth = "/sso/auth";
 
 		/** SSO-Server端：RestAPI 登录接口 */ 
-		public static String ssoDoLogin = "/ssoDoLogin";
+		public static String ssoDoLogin = "/sso/doLogin";
 
 		/** SSO-Server端：校验ticket 获取账号id */ 
-		public static String ssoCheckTicket = "/ssoCheckTicket";
+		public static String ssoCheckTicket = "/sso/checkTicket";
 
 		/** SSO-Server端 (and Client端)：单点注销 */ 
-		public static String ssoLogout = "/ssoLogout";
+		public static String ssoLogout = "/sso/logout";
 
 		/** SSO-Client端：登录地址 */ 
-		public static String ssoLogin = "/ssoLogin";
+		public static String ssoLogin = "/sso/login";
 
 		/** SSO-Client端：单点注销的回调 */ 
-		public static String ssoLogoutCall = "/ssoLogoutCall";
+		public static String ssoLogoutCall = "/sso/logoutCall";
 		
 	}
 	

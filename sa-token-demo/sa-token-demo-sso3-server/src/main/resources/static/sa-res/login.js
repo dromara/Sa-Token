@@ -20,7 +20,7 @@ $('.login-btn').click(function(){
 	// 开始登录
 	setTimeout(function() {
 		$.ajax({
-			url: "ssoDoLogin",
+			url: "sso/doLogin",
 			type: "post", 
 			data: {
 				name: $('[name=name]').val(),

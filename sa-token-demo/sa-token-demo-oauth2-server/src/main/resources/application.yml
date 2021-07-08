@@ -1,18 +1,17 @@
 server: 
     port: 8001
 
+# sa-token配置
+sa-token: 
+    # token名称 (同时也是cookie名称)
+    token-name: satoken-server
+    
 spring: 
     # 静态文件路径映射 
     resources: 
         static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/
         # static-locations: file:E:\work\project-yun\sa-token\sa-token-demo-oauth2\sa-token-demo-oauth2-server\src\main\resources\static\
 
-    # sa-token配置
-    sa-token: 
-        # token名称 (同时也是cookie名称)
-        token-name: satoken-server
-        
-        
     # redis配置 
     redis:
         # Redis数据库索引（默认为0）

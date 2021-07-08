@@ -19,7 +19,7 @@ public class ServerAccController {
 	public AjaxJson test(String username, String password) {
 		System.out.println("------------------ 成功进入请求 ------------------");
 		if("test".equals(username) && "test".equals(password)) {
-			StpUtil.setLoginId(10001);
+			StpUtil.login(10001);
 			return AjaxJson.getSuccess();
 		}
 		return AjaxJson.getError();

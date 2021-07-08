@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<!-- 定义sa-token版本号 -->
-		<sa-token-version>1.15.0.RELEASE</sa-token-version>
+		<sa-token-version>1.21.0</sa-token-version>
 	</properties>
 	
 	<dependencies>

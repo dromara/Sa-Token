@@ -1,6 +1,7 @@
 package cn.dev33.satoken.sso;
 
-import cn.dev33.satoken.sso.SaSsoInterface.CallSloUrlFunction;
+import cn.dev33.satoken.sso.SaSsoTemplate.CallSloUrlFunction;
+import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * Sa-Token-SSO 单点登录工具类 
@@ -10,9 +11,9 @@ import cn.dev33.satoken.sso.SaSsoInterface.CallSloUrlFunction;
 public class SaSsoUtil {
 
 	/**
-	 * 底层 SaSsoServerInterface 对象 
+	 * 底层 SaSsoTemplate 对象 
 	 */
-	public static SaSsoInterface saSsoInterface = new SaSsoInterface() {};
+	public static SaSsoTemplate saSsoTemplate = new SaSsoTemplate(StpUtil.stpLogic);
 	
 	/**
 	 * 创建一个 Ticket票据 
@@ -20,7 +21,7 @@ public class SaSsoUtil {
 	 * @return 票据 
 	 */
 	public static String createTicket(Object loginId) {
-		return saSsoInterface.createTicket(loginId);
+		return saSsoTemplate.createTicket(loginId);
 	}
 	
 	/**
@@ -28,7 +29,7 @@ public class SaSsoUtil {
 	 * @param ticket Ticket码
 	 */
 	public static void deleteTicket(String ticket) {
-		saSsoInterface.deleteTicket(ticket);
+		saSsoTemplate.deleteTicket(ticket);
 	}
 
 	/**
@@ -38,7 +39,7 @@ public class SaSsoUtil {
 	 * @return see note 
 	 */
 	public static String buildRedirectUrl(Object loginId, String redirect) {
-		return saSsoInterface.buildRedirectUrl(loginId, redirect);
+		return saSsoTemplate.buildRedirectUrl(loginId, redirect);
 	}
 	
 	/**
@@ -47,7 +48,7 @@ public class SaSsoUtil {
 	 * @return 账号id 
 	 */
 	public static Object getLoginId(String ticket) {
-		return saSsoInterface.getLoginId(ticket);
+		return saSsoTemplate.getLoginId(ticket);
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class SaSsoUtil {
 	 * @return 账号id 
 	 */
 	public static <T> T getLoginId(String ticket, Class<T> cs) {
-		return saSsoInterface.getLoginId(ticket, cs);
+		return saSsoTemplate.getLoginId(ticket, cs);
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class SaSsoUtil {
 	 * @return 账号id 
 	 */
 	public static Object checkTicket(String ticket) {
-		return saSsoInterface.checkTicket(ticket);
+		return saSsoTemplate.checkTicket(ticket);
 	}
 	
 	/**
@@ -75,7 +76,7 @@ public class SaSsoUtil {
 	 * @param url 下放ticket的url地址 
 	 */
 	public static void checkAuthUrl(String url) {
-		saSsoInterface.checkRedirectUrl(url);
+		saSsoTemplate.checkRedirectUrl(url);
 	}
 
 	/**
@@ -85,7 +86,7 @@ public class SaSsoUtil {
 	 * @return [SSO-Server端-认证地址 ]
 	 */
 	public static String buildServerAuthUrl(String clientLoginUrl, String back) {
-		return saSsoInterface.buildServerAuthUrl(clientLoginUrl, back);
+		return saSsoTemplate.buildServerAuthUrl(clientLoginUrl, back);
 	}
 
 	
@@ -96,7 +97,7 @@ public class SaSsoUtil {
 	 * @param secretkey 秘钥 
 	 */
 	public static void checkSecretkey(String secretkey) {
-		saSsoInterface.checkSecretkey(secretkey);
+		saSsoTemplate.checkSecretkey(secretkey);
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class SaSsoUtil {
 	 * @return 构建完毕的URL 
 	 */
 	public static String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
-		return saSsoInterface.buildCheckTicketUrl(ticket, ssoLogoutCallUrl);
+		return saSsoTemplate.buildCheckTicketUrl(ticket, ssoLogoutCallUrl);
 	}
 
 	/**
@@ -115,7 +116,7 @@ public class SaSsoUtil {
 	 * @param sloCallbackUrl 单点注销时的回调URL 
 	 */
 	public static void registerSloCallbackUrl(Object loginId, String sloCallbackUrl) {
-		saSsoInterface.registerSloCallbackUrl(loginId, sloCallbackUrl);
+		saSsoTemplate.registerSloCallbackUrl(loginId, sloCallbackUrl);
 	}
 
 	/**
@@ -124,7 +125,7 @@ public class SaSsoUtil {
 	 * @param fun 调用方法 
 	 */
 	public static void forEachSloUrl(Object loginId, CallSloUrlFunction fun) {
-		saSsoInterface.forEachSloUrl(loginId, fun);
+		saSsoTemplate.forEachSloUrl(loginId, fun);
 	}
 
 	/**
@@ -133,7 +134,7 @@ public class SaSsoUtil {
 	 * @return 单点注销URL 
 	 */
 	public static String buildSloUrl(Object loginId) {
-		return saSsoInterface.buildSloUrl(loginId);
+		return saSsoTemplate.buildSloUrl(loginId);
 	}
 
 	/**
@@ -143,7 +144,7 @@ public class SaSsoUtil {
 	 * @param fun 调用方法 
 	 */
 	public static void singleLogout(String secretkey, Object loginId, CallSloUrlFunction fun) {
-		saSsoInterface.singleLogout(secretkey, loginId, fun); 
+		saSsoTemplate.singleLogout(secretkey, loginId, fun); 
 	}
 
 }

@@ -9,7 +9,7 @@ sa-token:
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
         # 所有允许的授权回调地址 
-        allow-url: http://sa-sso-client1.com:9001/ssoLogin, http://sa-sso-client2.com:9001/ssoLogin, http://sa-sso-client3.com:9001/ssoLogin
+        allow-url: http://sa-sso-client1.com:9001/sso/login, http://sa-sso-client2.com:9001/sso/login, http://sa-sso-client3.com:9001/sso/login
         # 接口调用秘钥（用于SSO模式三的单点注销功能）
         secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # 使用Http请求校验ticket 

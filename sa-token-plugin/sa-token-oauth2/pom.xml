@@ -11,9 +11,8 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-dao-redis</name>
+	<name>sa-token-oauth2</name>
     <artifactId>sa-token-oauth2</artifactId>
-    <version>1.15.0-alpha</version>
 	<description>sa-token realization oauth2.0</description>
 
 	<dependencies>

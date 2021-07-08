@@ -115,5 +115,5 @@ sa-token:
     # SSO-相关配置
     sso: 
         # SSO-Server端 单点登录地址 
-        auth-url: http://sa-sso-server.com:9000/ssoAuth
+        auth-url: http://sa-sso-server.com:9000/sso/auth
 ```

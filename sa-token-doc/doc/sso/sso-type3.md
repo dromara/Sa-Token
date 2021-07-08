@@ -66,7 +66,7 @@ sa-token:
         # 使用Http请求校验ticket 
         is-http: true
 		# SSO-Server端 ticket校验地址 
-		check-ticket-url: http://sa-sso-server.com:9000/ssoCheckTicket
+		check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
 ```
 
 ##### 1.5 启动项目测试
@@ -123,7 +123,7 @@ sa-token:
         # 打开单点注销功能 
         is-slo: true
 		# 单点注销地址 
-		slo-url: http://sa-sso-server.com:9000/ssoLogout
+		slo-url: http://sa-sso-server.com:9000/sso/logout
 		# 接口调用秘钥 
 		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```

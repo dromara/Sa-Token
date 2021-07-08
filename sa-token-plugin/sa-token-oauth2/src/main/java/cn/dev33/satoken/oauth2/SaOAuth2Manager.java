@@ -1,8 +1,6 @@
 package cn.dev33.satoken.oauth2;
 
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Interface;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2InterfaceDefaultImpl;
 
 /**
  * sa-token oauth2 模块 总控类
@@ -31,24 +29,4 @@ public class SaOAuth2Manager {
 		SaOAuth2Manager.config = config;
 	}
 
-	/**
-	 * sa-token-oauth2 逻辑 Bean 
-	 */
-	private static SaOAuth2Interface saOAuth2Interface;
-	public static SaOAuth2Interface getInterface() {
-		if (saOAuth2Interface == null) {
-			// 初始化默认值
-			synchronized (SaOAuth2Manager.class) {
-				if (saOAuth2Interface == null) {
-					setInterface(new SaOAuth2InterfaceDefaultImpl());
-				}
-			}
-		}
-		return saOAuth2Interface;
-	}
-	public static void setInterface(SaOAuth2Interface interfaceObj) {
-		SaOAuth2Manager.saOAuth2Interface = interfaceObj;
-	}
-
-	
 }

@@ -12,7 +12,6 @@ import cn.dev33.satoken.oauth2.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
 import cn.dev33.satoken.oauth2.util.SaOAuth2Consts;
-import cn.dev33.satoken.oauth2.util.SaOAuth2InsideUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -20,75 +19,75 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author kong
  *
  */
-public interface SaOAuth2Interface {
+public class SaOAuth2Template {
 
 	
 	// ------------------- 获取数据 
 	
 	/**
-	 * [default] 返回此平台所有权限集合 
+	 * 返回此平台所有权限集合 
 	 * @return 此平台所有权限名称集合 
 	 */
-	public default List<String> getAppScopeList() {
+	public List<String> getAppScopeList() {
 		return Arrays.asList("userinfo");
 	}
 
 	/**
-	 * [default] 返回指定Client签约的所有Scope名称集合 
+	 * 返回指定Client签约的所有Scope名称集合 
 	 * @param clientId 应用id 
 	 * @return Scope集合 
 	 */
-	public default List<String> getClientScopeList(String clientId) {
+	public List<String> getClientScopeList(String clientId) {
 		// 默认返回此APP的所有权限 
 		return getAppScopeList();
 	}
 
 	/**
-	 * [default] 获取指定 LoginId 对指定 Client 已经授权过的所有 Scope 
+	 * 获取指定 LoginId 对指定 Client 已经授权过的所有 Scope 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @return Scope集合 
 	 */
-	public default List<String> getGrantScopeList(Object loginId, String clientId) {
+	public List<String> getGrantScopeList(Object loginId, String clientId) {
 		// 默认返回空集合  
 		return Arrays.asList(); 
 	}
 
 	/**
-	 * [default] 返回指定Client允许的回调域名, 多个用逗号隔开, *代表不限制 
+	 * 返回指定Client允许的回调域名, 多个用逗号隔开, *代表不限制 
 	 * @param clientId 应用id 
 	 * @return domain集合 
 	 */
-	public default String getClientDomain(String clientId) {
+	public String getClientDomain(String clientId) {
 		return "*";
 	}
 
 	/**
-	 * [default] 返回指定ClientId的ClientSecret 
+	 * 返回指定ClientId的ClientSecret 
 	 * @param clientId 应用id 
 	 * @return 此应用的秘钥 
 	 */
-	public default String getClientSecret(String clientId) {
+	public String getClientSecret(String clientId) {
 		return null;
 	}
 
 	/**
-	 * [default] 根据ClientId和LoginId返回openid 
+	 * 根据ClientId和LoginId返回openid 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @return 此账号在此Client下的openid 
 	 */
-	public default String getOpenid(String clientId, Object loginId) {
+	public String getOpenid(String clientId, Object loginId) {
 		return null;
 	}
 
 	/**
-	 * [default] 根据ClientId和openid返回LoginId 
+	 * 根据ClientId和openid返回LoginId 
 	 * @param clientId 应用id 
 	 * @param openid openid
 	 * @return LoginId 
 	 */
-	public default Object getLoginId(String clientId, String openid) {
+	public Object getLoginId(String clientId, String openid) {
 		return null;
 	}
 
@@ -96,11 +95,11 @@ public interface SaOAuth2Interface {
 	// ------------------- 数据校验 
 	
 	/**
-	 * [default] 检查一个 Client 是否签约了指定的Scope 
+	 * 检查一个 Client 是否签约了指定的Scope 
 	 * @param clientId 应用id
 	 * @param scope 权限 
 	 */
-	public default void checkContract(String clientId, String scope) {
+	public void checkContract(String clientId, String scope) {
 		List<String> clientScopeList = getClientScopeList(clientId);
 		List<String> scopelist = Arrays.asList(scope.split(","));
 		if(clientScopeList.containsAll(scopelist) == false) {
@@ -109,26 +108,26 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 指定 loginId 是否对一个 Client 授权给了指定 Scope 
+	 * 指定 loginId 是否对一个 Client 授权给了指定 Scope 
 	 * @param loginId 账号id 
 	 * @param clientId 应用id 
 	 * @param scope 权限 
 	 * @return 是否已经授权
 	 */
-	public default boolean isGrant(Object loginId, String clientId, String scope) {
+	public boolean isGrant(Object loginId, String clientId, String scope) {
 		List<String> grantScopeList = getGrantScopeList(loginId, clientId);
 		List<String> scopeList = convertStringToList(scope);
 		return grantScopeList.containsAll(scopeList);
 	}
 	
 	/**
-	 * [default] 指定Client使用指定url作为回调地址，是否合法 
+	 * 指定Client使用指定url作为回调地址，是否合法 
 	 * @param clientId 应用id 
 	 * @param url 指定url
 	 */
-	public default void checkRightUrl(String clientId, String url) {
+	public void checkRightUrl(String clientId, String url) {
 		// 首先检测url格式 
-		if(SaOAuth2InsideUtil.isUrl(url) == false) {
+		if(SaFoxUtil.isUrl(url) == false) {
 			throw new SaTokenException("url格式错误");
 		}
 		// ---- 检测
@@ -157,13 +156,13 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 校验code、clientId、clientSecret 三者是否正确 
+	 * 校验code、clientId、clientSecret 三者是否正确 
 	 * @param code 授权码
 	 * @param clientId 应用id 
 	 * @param clientSecret 秘钥 
 	 * @return CodeModel对象 
 	 */
-	public default CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret) {
+	public CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret) {
 		
 		// 获取授权码信息 
 		CodeModel codeModel = getCode(code);
@@ -188,13 +187,13 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 校验access_token、clientId、clientSecret 三者是否正确 
+	 * 校验access_token、clientId、clientSecret 三者是否正确 
 	 * @param accessToken access_token
 	 * @param clientId 应用id 
 	 * @param clientSecret 秘钥 
 	 * @return AccessTokenModel对象 
 	 */
-	public default AccessTokenModel checkTokenIdSecret(String accessToken, String clientId, String clientSecret) {
+	public AccessTokenModel checkTokenIdSecret(String accessToken, String clientId, String clientSecret) {
 		
 		// 获取授权码信息 
 		AccessTokenModel tokenModel = getAccessToken(accessToken);
@@ -220,11 +219,11 @@ public interface SaOAuth2Interface {
 	
 	// ---- 授权码 
 	/**
-	 * [default] 根据参数生成一个授权码并返回 
+	 * 根据参数生成一个授权码并返回 
 	 * @param authModel 请求授权参数Model 
 	 * @return 授权码Model
 	 */
-	public default CodeModel generateCode(RequestAuthModel authModel) {
+	public CodeModel generateCode(RequestAuthModel authModel) {
 		
 		// 获取参数 
 		String clientId = authModel.getClientId();
@@ -276,28 +275,28 @@ public interface SaOAuth2Interface {
 	}
 	
 	/**
-	 * [default] 根据授权码获得授权码Model 
+	 * 根据授权码获得授权码Model 
 	 * @param code 授权码 
 	 * @return 授权码Model
 	 */
-	public default CodeModel getCode(String code) {
+	public CodeModel getCode(String code) {
 		return (CodeModel)SaManager.getSaTokenDao().getObject(getKeyCodeModel(code));
 	}
 
 	/**
-	 * [default] 手动更改授权码对象信息
+	 * 手动更改授权码对象信息
 	 * @param code 授权码 
 	 * @param codeModel 授权码Model 
 	 */
-	public default void updateCode(String code, CodeModel codeModel) {
+	public void updateCode(String code, CodeModel codeModel) {
 		SaManager.getSaTokenDao().updateObject(getKeyCodeModel(code), codeModel);
 	}
 
 	/**
-	 * [default] 确认授权一个code 
+	 * 确认授权一个code 
 	 * @param code 授权码 
 	 */
-	public default void confirmCode(String code) {
+	public void confirmCode(String code) {
 		// 获取codeModel
 		CodeModel codeModel = getCode(code);
 		// 如果该code码已经确认 
@@ -310,10 +309,10 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 删除一个授权码 
+	 * 删除一个授权码 
 	 * @param code 授权码 
 	 */
-	public default void deleteCode(String code) {
+	public void deleteCode(String code) {
 		SaManager.getSaTokenDao().deleteObject(getKeyCodeModel(code));
 	}
 
@@ -321,11 +320,11 @@ public interface SaOAuth2Interface {
 	// ------------------- access_token 和 refresh_token 相关 
 	
 	/**
-	 * [default] 根据授权码Model生成一个access_token
+	 * 根据授权码Model生成一个access_token
 	 * @param codeModel 授权码Model
 	 * @return AccessTokenModel
 	 */
-	public default AccessTokenModel generateAccessToken(CodeModel codeModel) {
+	public AccessTokenModel generateAccessToken(CodeModel codeModel) {
 
 		// 先校验 
 		if(codeModel == null) {
@@ -347,20 +346,20 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 根据 access_token 获得其Model详细信息 
+	 * 根据 access_token 获得其Model详细信息 
 	 * @param accessToken access_token 
 	 * @return AccessTokenModel (授权码Model) 
 	 */
-	public default AccessTokenModel getAccessToken(String accessToken) {
+	public AccessTokenModel getAccessToken(String accessToken) {
 		return (AccessTokenModel)SaManager.getSaTokenDao().getObject(getKeyAccessToken(accessToken));
 	}
 
 	/**
-	 * [default] 根据 refresh_token 生成一个新的 access_token 
+	 * 根据 refresh_token 生成一个新的 access_token 
 	 * @param refreshToken refresh_token
 	 * @return 新的 access_token 
 	 */
-	public default AccessTokenModel refreshAccessToken(String refreshToken) {
+	public AccessTokenModel refreshAccessToken(String refreshToken) {
 		// 获取Model信息 
 		CodeModel codeModel = getRefreshToken(refreshToken);
 		if(codeModel == null) {
@@ -376,38 +375,38 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 根据 refresh_token 获得其Model详细信息 (授权码Model) 
+	 * 根据 refresh_token 获得其Model详细信息 (授权码Model) 
 	 * @param refreshToken refresh_token 
 	 * @return RefreshToken (授权码Model) 
 	 */
-	public default CodeModel getRefreshToken(String refreshToken) {
+	public CodeModel getRefreshToken(String refreshToken) {
 		return (CodeModel)SaManager.getSaTokenDao().getObject(getKeyRefreshToken(refreshToken));
 	}
 
 	/**
-	 * [default] 获取 access_token 的有效期 
+	 * 获取 access_token 的有效期 
 	 * @param accessToken access_token 
 	 * @return 有效期 
 	 */
-	public default long getAccessTokenExpiresIn(String accessToken) {
+	public long getAccessTokenExpiresIn(String accessToken) {
 		return SaManager.getSaTokenDao().getObjectTimeout(getKeyAccessToken(accessToken));
 	}
 
 	/**
-	 * [default] 获取 refresh_token 的有效期 
+	 * 获取 refresh_token 的有效期 
 	 * @param refreshToken refresh_token 
 	 * @return 有效期 
 	 */
-	public default long getRefreshTokenExpiresIn(String refreshToken) {
+	public long getRefreshTokenExpiresIn(String refreshToken) {
 		return SaManager.getSaTokenDao().getObjectTimeout(getKeyRefreshToken(refreshToken));
 	}
 	
 	/**
-	 * [default] 获取 access_token 所代表的LoginId 
+	 * 获取 access_token 所代表的LoginId 
 	 * @param accessToken access_token 
 	 * @return LoginId 
 	 */
-	public default Object getLoginIdByAccessToken(String accessToken) {
+	public Object getLoginIdByAccessToken(String accessToken) {
 		AccessTokenModel tokenModel = SaOAuth2Util.getAccessToken(accessToken);
 		if(tokenModel == null) {
 			throw new SaTokenException("无效access_token");
@@ -419,50 +418,50 @@ public interface SaOAuth2Interface {
 	// ------------------- 自定义策略相关
 
 	/**
-	 * [default] 将指定字符串按照逗号分隔符转化为字符串集合 
+	 * 将指定字符串按照逗号分隔符转化为字符串集合 
 	 * @param str 字符串
 	 * @return 分割后的字符串集合 
 	 */
-	public default List<String> convertStringToList(String str) {
+	public List<String> convertStringToList(String str) {
 		return Arrays.asList(str.split(","));
 	}
 	
 	/**
-	 * [default] 生成授权码 
+	 * 生成授权码 
 	 * @param clientId 应用id 
 	 * @param scope 权限
 	 * @param loginId 账号id 
 	 * @return 授权码 
 	 */
-	public default String createCode(String clientId, String scope, Object loginId) {
+	public String createCode(String clientId, String scope, Object loginId) {
 		return SaFoxUtil.getRandomString(60).toLowerCase();
 	}
 	
 	/**
-	 * [default] 生成AccessToken 
+	 * 生成AccessToken 
 	 * @param codeModel CodeModel对象
 	 * @return AccessToken 
 	 */
-	public default String createAccessToken(CodeModel codeModel) {
+	public String createAccessToken(CodeModel codeModel) {
 		return SaFoxUtil.getRandomString(60).toLowerCase();
 	}
 	
 	/**
-	 * [default] 生成RefreshToken 
+	 * 生成RefreshToken 
 	 * @param codeModel CodeModel对象
 	 * @return RefreshToken 
 	 */
-	public default String createRefreshToken(CodeModel codeModel) {
+	public String createRefreshToken(CodeModel codeModel) {
 		return SaFoxUtil.getRandomString(60).toLowerCase();
 	}
 
 	/**
-	 * [default] 在url上拼接上kv参数并返回 
+	 * 在url上拼接上kv参数并返回 
 	 * @param url url
 	 * @param parameStr 参数, 例如 id=1001
 	 * @return 拼接后的url字符串 
 	 */
-	public default String splicingParame(String url, String parameStr) {
+	public String splicingParame(String url, String parameStr) {
 		// 如果参数为空, 直接返回 
 		if(parameStr == null || parameStr.length() == 0) {
 			return url;
@@ -491,11 +490,11 @@ public interface SaOAuth2Interface {
 	}
 
 	/**
-	 * [default] 将 CodeModel 转换为 AccessTokenModel 
+	 * 将 CodeModel 转换为 AccessTokenModel 
 	 * @param codeModel CodeModel对象
 	 * @return AccessToken对象 
 	 */
-	public default AccessTokenModel converCodeToAccessToken(CodeModel codeModel) {
+	public AccessTokenModel converCodeToAccessToken(CodeModel codeModel) {
 		if(codeModel == null) {
 			throw new SaTokenException("无效code");
 		}
@@ -518,7 +517,7 @@ public interface SaOAuth2Interface {
 	 * @param code 授权码
 	 * @return key
 	 */
-	public default String getKeyCodeModel(String code) {
+	public String getKeyCodeModel(String code) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:code:" + code;
 	}
 	
@@ -528,7 +527,7 @@ public interface SaOAuth2Interface {
 	 * @param clientId 应用id
 	 * @return key
 	 */
-	public default String getKeyClientLoginId(Object loginId, String clientId) {
+	public String getKeyClientLoginId(Object loginId, String clientId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:newest-code:" + clientId + ":" + loginId;
 	}
 
@@ -537,7 +536,7 @@ public interface SaOAuth2Interface {
 	 * @param refreshToken refreshToken
 	 * @return key
 	 */
-	public default String getKeyRefreshToken(String refreshToken) {
+	public String getKeyRefreshToken(String refreshToken) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
 	}
 
@@ -546,7 +545,7 @@ public interface SaOAuth2Interface {
 	 * @param accessToken accessToken
 	 * @return key
 	 */
-	public default String getKeyAccessToken(String accessToken) {
+	public String getKeyAccessToken(String accessToken) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:access-token:" + accessToken;
 	}
 	

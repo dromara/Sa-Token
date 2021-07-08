@@ -21,7 +21,7 @@ import cn.dev33.satoken.util.SaResult;
 public class SsoServerController {
 
 	// SSO-Server端：处理所有SSO相关请求 
-	@RequestMapping("/sso*")
+	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.serverRequest();
 	}

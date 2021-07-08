@@ -58,7 +58,7 @@ public class ClientAccController {
 		long userId = getUserIdByOpenid(openid);
 		
 		// 登录并返回账号信息 
-		StpUtil.setLoginId(userId);
+		StpUtil.login(userId);
 		return AjaxJson.getSuccessData(userId).set("openid", openid);
 	}
 	

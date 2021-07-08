@@ -8,7 +8,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.sso.SaSsoConsts.Api;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
-import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -29,16 +29,17 @@ public class SaSsoHandle {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoConfig sso = SaManager.getConfig().getSso();
+		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// ---------- SSO-Server端：单点登录授权地址 
 		if(match(Api.ssoAuth)) {
 			// ---------- 此处两种情况分开处理：
 			// 情况1：在SSO认证中心尚未登录，则先去登登录 
-			if(StpUtil.isLogin() == false) {
+			if(stpLogic.isLogin() == false) {
 				return sso.notLoginView.get();
 			}
 			// 情况2：在SSO认证中心已经登录，开始构建授权重定向地址，下放ticket
-			String redirectUrl = SaSsoUtil.buildRedirectUrl(StpUtil.getLoginId(), req.getParameter(ParamName.redirect));
+			String redirectUrl = SaSsoUtil.buildRedirectUrl(stpLogic.getLoginId(), req.getParameter(ParamName.redirect));
 			return res.redirect(redirectUrl);
 		}
 
@@ -88,6 +89,7 @@ public class SaSsoHandle {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoConfig sso = SaManager.getConfig().getSso();
+		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 
 		// ---------- SSO-Client端：登录地址 
 		if(match(Api.ssoLogin)) {
@@ -95,7 +97,7 @@ public class SaSsoHandle {
 			String ticket = req.getParameter(ParamName.ticket);
 			
 			// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回 
-			if(StpUtil.isLogin()) {
+			if(stpLogic.isLogin()) {
 				return res.redirect(back);
 			}
 			/*
@@ -124,7 +126,7 @@ public class SaSsoHandle {
 				}
 				// ------- 2、如果loginId有值，说明ticket有效，进行登录并重定向至back地址 
 				if(loginId != null ) {
-					StpUtil.login(loginId); 
+					stpLogic.login(loginId); 
 					return res.redirect(back);
 				} else {
 					// 如果ticket无效: 
@@ -135,7 +137,7 @@ public class SaSsoHandle {
 
 		// ---------- SSO-Client端：单点注销 [模式二]
 		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp == false) {
-			StpUtil.logout();
+			stpLogic.logout();
 			if(req.getParameter(ParamName.back) == null) {
 				return SaResult.ok("单点注销成功");
 			} else {
@@ -146,11 +148,11 @@ public class SaSsoHandle {
 		// ---------- SSO-Client端：单点注销 [模式三]
 		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp) {
 			// 如果未登录，则无需注销 
-	        if(StpUtil.isLogin() == false) {
+	        if(stpLogic.isLogin() == false) {
 	            return SaResult.ok();
 	        }
 	        // 调用SSO-Server认证中心API 
-	        String url = SaSsoUtil.buildSloUrl(StpUtil.getLoginId());
+	        String url = SaSsoUtil.buildSloUrl(stpLogic.getLoginId());
 	        String body = String.valueOf(sso.sendHttp.apply(url));
 	        if(SaSsoConsts.OK.equals(body)) {
 				if(req.getParameter(ParamName.back) == null) {
@@ -168,7 +170,7 @@ public class SaSsoHandle {
 			String secretkey = req.getParameter(ParamName.secretkey);
 			
 			SaSsoUtil.checkSecretkey(secretkey);
-	        StpUtil.logoutByTokenValue(StpUtil.getTokenValueByLoginId(loginId));
+			stpLogic.logoutByTokenValue(stpLogic.getTokenValueByLoginId(loginId));
 	        return SaSsoConsts.OK;
 		}
 		

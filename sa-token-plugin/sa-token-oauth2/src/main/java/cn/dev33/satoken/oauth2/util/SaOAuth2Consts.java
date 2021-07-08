@@ -12,8 +12,4 @@ public class SaOAuth2Consts {
 	 */
 	public static final String UNLIMITED_DOMAIN = "*";
 	
-	
-	
-	
-	
 }
