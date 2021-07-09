@@ -80,6 +80,12 @@ public class SaResult implements Serializable{
 	public static SaResult error(String msg) {
 		return new SaResult(CODE_ERROR, msg, null);
 	}
+
+	// 构建指定状态码 
+	public static SaResult get(int code, String msg, Object data) {
+		return new SaResult(code, msg, data);
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

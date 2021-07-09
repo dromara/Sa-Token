@@ -113,6 +113,10 @@ sa:
 	title: Sa-Token 登录
 	# 是否显示底部版权信息 
 	copr: true
+    # 指定拦截路径 
+    # include: /**
+    # 指定排除路径
+    # exclude: /sss,/fff
 ```
 
 <br>

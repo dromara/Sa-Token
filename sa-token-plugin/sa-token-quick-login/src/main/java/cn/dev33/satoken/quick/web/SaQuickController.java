@@ -1,8 +1,5 @@
 package cn.dev33.satoken.quick.web;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,7 @@ import cn.dev33.satoken.quick.SaQuickManager;
 import cn.dev33.satoken.quick.config.SaQuickConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaResult;
 
 /**
  * 登录Controller
@@ -34,7 +32,6 @@ public class SaQuickController {
 		return "sa-login.html";
 	}
 
-	
 	/**
 	 * 登录接口
 	 * @param name 账号
@@ -43,31 +40,22 @@ public class SaQuickController {
 	 */
 	@PostMapping("/doLogin")
 	@ResponseBody
-	public Map<String, Object> doLogin(String name, String pwd) {
+	public SaResult doLogin(String name, String pwd) {
 		
 		// 参数完整性校验
 		if(SaFoxUtil.isEmpty(name) || SaFoxUtil.isEmpty(pwd)) {
-			return getResult(500, "请输入账号和密码", null);
+			return SaResult.get(500, "请输入账号和密码", null);
 		}
 		
 		// 密码校验 
 		SaQuickConfig config = SaQuickManager.getConfig();
 		if(name.equals(config.getName()) && pwd.equals(config.getPwd())) {
 			StpUtil.login(config.getName());
-			return getResult(200, "ok", StpUtil.getTokenInfo());
+			return SaResult.get(200, "ok", StpUtil.getTokenInfo());
 		} else {
 			// 校验失败 
-			return getResult(500, "账号或密码输入错误", null);
+			return SaResult.get(500, "账号或密码输入错误", null);
 		}
-	}
-	
-	
-	private Map<String, Object> getResult(int code, String msg, Object data) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("code", code);
-		map.put("msg", msg);
-		map.put("data", data);
-		return map;
 	}
 	
 }
