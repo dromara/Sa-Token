@@ -1,6 +1,15 @@
 # 更新日志 
 
 
+### 2021-7-10 @v1.22.0
+- 新增：SaSsoConfig 部分属性增加set连缀风格 
+- 优化：SaSsoUtil 可定制化底层的 `StpLogic`
+- 新增：新增 `SaSsoHandle` 大幅度简化单点登录整合步骤  **[重要]** 
+- 新增：新增Sa-Token在线测评，链接：[https://ks.wjx.top/vj/wFKPziD.aspx](https://ks.wjx.top/vj/wFKPziD.aspx)  **[重要]**
+- 新增：Sa-Token-Quick-Login 插件新增拦截与放行路径配置
+- 优化：大幅度优化文档示例 
+
+
 ### 2021-7-2 @v1.21.0
 - 新增：新增Token二级认证 	**[重要]** 
 - 新增：新增`Sa-Token-Alone-Redis`独立Redis插件   **[重要]**  
