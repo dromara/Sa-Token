@@ -67,4 +67,7 @@ StpUtil.getTokenInfo();
 
 ?> 有关TokenInfo参数详解，请参考：[参考：TokenInfo参数详解](/fun/token-info)	
 
+?> Stpuitl依赖的是当前的线程上下文，不支持多线程异步调用
+?> 开发者传到其它的异步方法里面，需要先将必要参数取出来，否则这一块的数据会丢失的
+
 
