@@ -51,6 +51,6 @@ StpUtil.untieDisable(10001);
 // 先踢下线
 StpUtil.logoutByLoginId(10001); 
 // 再封禁账号
-StpUtil.disableLoginId(10001, 86400); 
+StpUtil.disable(10001, 86400); 
 ```
 
