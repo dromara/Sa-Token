@@ -2,8 +2,11 @@ package cn.dev33.satoken.oauth2.logic;
 
 import java.util.List;
 
+import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
+import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
 
 /**
@@ -14,8 +17,29 @@ import cn.dev33.satoken.oauth2.model.RequestAuthModel;
 public class SaOAuth2Util {
 
 	public static SaOAuth2Template saOAuth2Template = new SaOAuth2Template();
+
+	/**
+	 * 根据 SaRequest 对象创建 RequestAuthModel
+	 * @param req SaRequest对象 
+	 * @param loginId 账号id 
+	 * @return RequestAuthModel对象 
+	 */
+	public static RequestAuthModel generateRequestAuth(SaRequest req, Object loginId) {
+		return saOAuth2Template.generateRequestAuth(req, loginId);
+	}
+	
+
+
 	
 	
+	
+	
+	
+	
+	
+	// ---------------------------------------------- 分界线 -----------------------------------------------------
+	
+	 
 	// ------------------- 获取数据 
 	
 	/**
@@ -47,6 +71,15 @@ public class SaOAuth2Util {
 
 	
 	// ------------------- 数据校验 
+
+	/**
+	 * [OK] 判断：该Client是否签约了指定的Scope 
+	 * @param clientId 应用id
+	 * @param scope 权限 
+	 */
+	public static boolean isContract(String clientId, String scope) {
+		return saOAuth2Template.isContract(clientId, scope);
+	}
 	
 	/**
 	 * 指定 loginId 是否对一个 Client 授权给了指定 Scope 
@@ -60,14 +93,25 @@ public class SaOAuth2Util {
 	}
 	
 	/**
-	 * 校验code、clientId、clientSecret 三者是否正确 
+	 * [OK] 指定Client使用指定url作为回调地址，是否合法 
+	 * @param clientId 应用id 
+	 * @param url 指定url
+	 * @return 是否合法 
+	 */
+	public static boolean isRightUrl(String clientId, String url) {
+		return saOAuth2Template.isRightUrl(clientId, url);
+	}
+	
+	/**
+	 * [OK 方法名改一下]校验code、clientId、clientSecret 三者是否正确 
 	 * @param code 授权码
 	 * @param clientId 应用id 
 	 * @param clientSecret 秘钥 
+	 * @param redirectUri 秘钥 
 	 * @return CodeModel对象 
 	 */
-	public static CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret) {
-		return saOAuth2Template.checkCodeIdSecret(code, clientId, clientSecret);
+	public static CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret, String redirectUri) {
+		return saOAuth2Template.checkCodeIdSecret(code, clientId, clientSecret, redirectUri);
 	}
 	
 	/**
@@ -86,13 +130,14 @@ public class SaOAuth2Util {
 	// ------------------- 逻辑相关 
 	
 	/**
-	 * 根据参数生成一个授权码并返回 
+	 * [OK] 根据参数生成一个授权码并返回 
 	 * @param authModel 请求授权参数Model 
 	 * @return 授权码Model
 	 */
 	public static CodeModel generateCode(RequestAuthModel authModel) {
 		return saOAuth2Template.generateCode(authModel);
 	}
+	
 	
 	/**
 	 * 根据授权码获得授权码Model 
@@ -104,23 +149,6 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 手动更改授权码对象信息
-	 * @param code 授权码 
-	 * @param codeModel 授权码Model 
-	 */
-	public static void updateCode(String code, CodeModel codeModel) {
-		saOAuth2Template.updateCode(code, codeModel);
-	}
-
-	/**
-	 * 确认授权一个code 
-	 * @param code 授权码 
-	 */
-	public static void confirmCode(String code) {
-		saOAuth2Template.confirmCode(code);
-	}
-
-	/**
 	 * [default] 删除一个授权码 
 	 * @param code 授权码 
 	 */
@@ -129,12 +157,12 @@ public class SaOAuth2Util {
 	}
 	
 	/**
-	 * [default] 根据授权码Model生成一个access_token
+	 * 根据授权码Model生成一个access_token
 	 * @param codeModel 授权码Model
 	 * @return AccessTokenModel
 	 */
-	public static AccessTokenModel generateAccessToken(CodeModel codeModel) {
-		return saOAuth2Template.generateAccessToken(codeModel);
+	public static AccessTokenModel generateAccessToken(String code) {
+		return saOAuth2Template.generateAccessToken(code);
 	}
 
 	/**
@@ -156,30 +184,12 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * [default] 根据 refresh_token 获得其Model详细信息 (授权码Model) 
+	 * [default] 根据 refresh_token 获得其Model详细信息 
 	 * @param refreshToken refresh_token 
-	 * @return RefreshToken (授权码Model) 
+	 * @return RefreshToken 
 	 */
-	public static CodeModel getRefreshToken(String refreshToken) {
+	public static RefreshTokenModel getRefreshToken(String refreshToken) {
 		return saOAuth2Template.getRefreshToken(refreshToken);
-	}
-
-	/**
-	 * [default] 获取 access_token 的有效期 
-	 * @param accessToken access_token 
-	 * @return 有效期 
-	 */
-	public static long getAccessTokenExpiresIn(String accessToken) {
-		return saOAuth2Template.getAccessTokenExpiresIn(accessToken);
-	}
-
-	/**
-	 * [default] 获取 refresh_token 的有效期 
-	 * @param refreshToken refresh_token 
-	 * @return 有效期 
-	 */
-	public static long getRefreshTokenExpiresIn(String refreshToken) {
-		return saOAuth2Template.getRefreshTokenExpiresIn(refreshToken);
 	}
 
 	/**
@@ -191,10 +201,46 @@ public class SaOAuth2Util {
 		return saOAuth2Template.getLoginIdByAccessToken(accessToken);
 	}
 	
-	
-	
-	
-	
+	/**
+	 * 构建：AccessToken Model (根据RequestAuthModel) 用于隐藏式 
+	 * @param ra 请求授权参数Model 
+	 * @return 授权码Model 
+	 */
+	public static AccessTokenModel generateAccessToken(RequestAuthModel ra) {
+		return saOAuth2Template.generateAccessToken(ra);
+	}
+
+	/**
+	 * 构建：ClientToken Model 
+	 * @param ra 请求授权参数Model 
+	 * @return ClientToken-Model 
+	 */
+	public static ClientTokenModel generateClientToken(String clientId, String scope) {
+		return saOAuth2Template.generateClientToken(clientId, scope);
+	}
+
+	// ------------------- 自定义策略相关
+
+	/**
+	 * [OK] 构建URL：下放授权码URL 
+	 * @param redirectUri 下放地址 
+	 * @param code code参数
+	 * @param state state参数 
+	 * @return 构建完毕的URL 
+	 */
+	public static String buildRedirectUri(String redirectUri, String code, String state) {
+		return saOAuth2Template.buildRedirectUri(redirectUri, code, state);
+	}
+	/**
+	 * [OK] 构建URL：下放Token URL 
+	 * @param redirectUri 下放地址 
+	 * @param token token
+	 * @param state state参数 
+	 * @return 构建完毕的URL 
+	 */
+	public static String buildRedirectUri2(String redirectUri, String token, String state) {
+		return saOAuth2Template.buildRedirectUri2(redirectUri, token, state);
+	}
 	
 	
 }

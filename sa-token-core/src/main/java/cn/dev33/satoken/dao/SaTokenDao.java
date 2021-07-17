@@ -30,7 +30,7 @@ public interface SaTokenDao {
 	 * 写入Value，并设定存活时间 (单位: 秒)
 	 * @param key 键名称 
 	 * @param value 值 
-	 * @param timeout 过期时间
+	 * @param timeout 过期时间(值>0时限时存储，值=-1时永久存储，值=0或<=-2时不存储)
 	 */
 	public void set(String key, String value, long timeout);
 
@@ -75,7 +75,7 @@ public interface SaTokenDao {
 	 * 写入Object，并设定存活时间 (单位: 秒)
 	 * @param key 键名称 
 	 * @param object 值 
-	 * @param timeout 存活时间 
+	 * @param timeout 存活时间 (值>0时限时存储，值=-1时永久存储，值=0或<=-2时不存储)
 	 */
 	public void setObject(String key, Object object, long timeout);
 

@@ -204,7 +204,7 @@ public class SaFoxUtil {
 		if(url == null) {
 			url = "";
 		}
-		int index = url.indexOf('?');
+		int index = url.lastIndexOf('?');
 		// ? 不存在
 		if(index == -1) {
 			return url + '?' + parameStr;
@@ -236,10 +236,62 @@ public class SaFoxUtil {
 	 */
 	public static String joinParam(String url, String key, Object value) {
 		// 如果参数为空, 直接返回 
-		if(isEmpty(url) || isEmpty(key) || isEmpty(String.valueOf(value))) {
+		if(isEmpty(url) || isEmpty(key) || isEmpty(value)) {
 			return url;
 		}
 		return joinParam(url, key + "=" + value);
+	}
+
+	/**
+	 * 在url上拼接锚参数 
+	 * @param url url
+	 * @param parameStr 参数, 例如 id=1001
+	 * @return 拼接后的url字符串 
+	 */
+	public static String joinSharpParam(String url, String parameStr) {
+		// 如果参数为空, 直接返回 
+		if(parameStr == null || parameStr.length() == 0) {
+			return url;
+		}
+		if(url == null) {
+			url = "";
+		}
+		int index = url.lastIndexOf('#');
+		// ? 不存在
+		if(index == -1) {
+			return url + '#' + parameStr;
+		}
+		// ? 是最后一位
+		if(index == url.length() - 1) {
+			return url + parameStr;
+		}
+		// ? 是其中一位
+		if(index > -1 && index < url.length() - 1) {
+			String separatorChar = "&";
+			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
+			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
+				return url + separatorChar + parameStr;
+			} else {
+				return url + parameStr;
+			}
+		}
+		// 正常情况下, 代码不可能执行到此 
+		return url;
+	}
+
+	/**
+	 * 在url上拼接锚参数 
+	 * @param url url
+	 * @param key 参数名称
+	 * @param value 参数值 
+	 * @return 拼接后的url字符串 
+	 */
+	public static String joinSharpParam(String url, String key, Object value) {
+		// 如果参数为空, 直接返回 
+		if(isEmpty(url) || isEmpty(key) || isEmpty(value)) {
+			return url;
+		}
+		return joinSharpParam(url, key + "=" + value);
 	}
 	
 	/**

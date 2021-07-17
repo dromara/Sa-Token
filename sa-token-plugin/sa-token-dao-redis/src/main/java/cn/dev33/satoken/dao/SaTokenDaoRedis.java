@@ -79,6 +79,9 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	 */
 	@Override
 	public void set(String key, String value, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return;
+		}
 		// 判断是否为永不过期 
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
 			stringRedisTemplate.opsForValue().set(key, value);
@@ -149,6 +152,9 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	 */
 	@Override
 	public void setObject(String key, Object object, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return;
+		}
 		// 判断是否为永不过期 
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
 			objectRedisTemplate.opsForValue().set(key, object);

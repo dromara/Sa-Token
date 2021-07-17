@@ -38,7 +38,7 @@ public class SaRequestForReactor implements SaRequest {
 	 * 在 [请求体] 里获取一个值 
 	 */
 	@Override
-	public String getParameter(String name) {
+	public String getParam(String name) {
 		return request.getQueryParams().getFirst(name);
 	}
 

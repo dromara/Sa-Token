@@ -7,48 +7,31 @@ package cn.dev33.satoken.oauth2.model;
  */
 public class CodeModel {
 
-	/**
+	/** 
 	 * 授权码 
 	 */
-	private String code;
+	public String code;
 	
 	/**
 	 * 应用id 
 	 */
-	private String clientId;
+	public String clientId;
 	
 	/**
 	 * 授权范围
 	 */
-	private String scope;
+	public String scope;
 
 	/**
 	 * 对应账号id 
 	 */
-	private Object loginId;
+	public Object loginId;
 
 	/**
-	 * 用户是否已经确认了这个授权 
+	 * 重定向的地址 
 	 */
-	private Boolean isConfirm;
-
-	/**
-	 * 确认授权后重定向的地址 
-	 */
-	private String redirectUri;
-
-	/**
-	 * 拒绝授权后重定向的地址 
-	 */
-	private String rejectUri;
-
-
-	/**
-	 * 其他自定义数据 
-	 */
-	private Object tag;
+	public String redirectUri;
 	
-
 	/**
 	 * 构建一个 
 	 */
@@ -62,15 +45,14 @@ public class CodeModel {
 	 * @param scope 请求授权范围 
 	 * @param loginId 对应的账号id 
 	 */
-	public CodeModel(String code, String clientId, String scope, Object loginId) {
+	public CodeModel(String code, String clientId, String scope, Object loginId, String redirectUri) {
 		super();
 		this.code = code;
 		this.clientId = clientId;
 		this.scope = scope;
 		this.loginId = loginId;
-		this.isConfirm = false;
+		this.redirectUri = redirectUri;
 	}
-
 
 	
 	/**
@@ -128,21 +110,7 @@ public class CodeModel {
 	public void setLoginId(Object loginId) {
 		this.loginId = loginId;
 	}
-
-	/**
-	 * @return isConfirm
-	 */
-	public Boolean getIsConfirm() {
-		return isConfirm;
-	}
-
-	/**
-	 * @param isConfirm 要设置的 isConfirm
-	 */
-	public void setIsConfirm(Boolean isConfirm) {
-		this.isConfirm = isConfirm;
-	}
-
+	
 	/**
 	 * @return redirectUri
 	 */
@@ -156,36 +124,11 @@ public class CodeModel {
 	public void setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
 	}
-
-	/**
-	 * @return rejectUri
-	 */
-	public String getRejectUri() {
-		return rejectUri;
+	
+	@Override
+	public String toString() {
+		return "CodeModel [code=" + code + ", clientId=" + clientId + ", scope=" + scope + ", loginId=" + loginId
+				+ ", redirectUri=" + redirectUri + "]";
 	}
-	/**
-	 * @param rejectUri 要设置的 rejectUri
-	 */
-	public void setRejectUri(String rejectUri) {
-		this.rejectUri = rejectUri;
-	}
-	
-	/**
-	 * @return tag
-	 */
-	public Object getTag() {
-		return tag;
-	}
-
-	/**
-	 * @param tag 要设置的 tag
-	 */
-	public void setTag(Object tag) {
-		this.tag = tag;
-	}
-	
-	
-	
-	
 	
 }

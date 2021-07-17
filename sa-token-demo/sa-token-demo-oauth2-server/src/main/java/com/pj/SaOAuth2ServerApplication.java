@@ -12,7 +12,7 @@ public class SaOAuth2ServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaOAuth2ServerApplication.class, args);
-		System.out.println("\n服务端启动成功");
+		System.out.println("\nOAuth-Server端启动成功");
 	}
 	
 }

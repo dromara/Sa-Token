@@ -132,7 +132,7 @@ public class StpLogic {
 		}
 		// 2. 尝试从请求体里面读取 
 		if(tokenValue == null && config.getIsReadBody()){
-			tokenValue = request.getParameter(keyTokenName);
+			tokenValue = request.getParam(keyTokenName);
 		}
 		// 3. 尝试从header里读取 
 		if(tokenValue == null && config.getIsReadHead()){

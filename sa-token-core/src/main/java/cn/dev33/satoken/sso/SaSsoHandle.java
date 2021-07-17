@@ -39,19 +39,19 @@ public class SaSsoHandle {
 				return sso.notLoginView.get();
 			}
 			// 情况2：在SSO认证中心已经登录，开始构建授权重定向地址，下放ticket
-			String redirectUrl = SaSsoUtil.buildRedirectUrl(stpLogic.getLoginId(), req.getParameter(ParamName.redirect));
+			String redirectUrl = SaSsoUtil.buildRedirectUrl(stpLogic.getLoginId(), req.getParam(ParamName.redirect));
 			return res.redirect(redirectUrl);
 		}
 
 		// ---------- SSO-Server端：RestAPI 登录接口  
 		if(match(Api.ssoDoLogin)) {
-			return sso.doLoginHandle.apply(req.getParameter("name"), req.getParameter("pwd"));
+			return sso.doLoginHandle.apply(req.getParam("name"), req.getParam("pwd"));
 		}
 
 		// ---------- SSO-Server端：校验ticket 获取账号id 
 		if(match(Api.ssoCheckTicket) && sso.isHttp) {
-			String ticket = req.getParameter(ParamName.ticket);
-			String sloCallback = req.getParameter(ParamName.ssoLogoutCall);
+			String ticket = req.getParam(ParamName.ticket);
+			String sloCallback = req.getParam(ParamName.ssoLogoutCall);
 			
 			// 校验ticket，获取对应的账号id 
 			Object loginId = SaSsoUtil.checkTicket(ticket);
@@ -65,8 +65,8 @@ public class SaSsoHandle {
 		
 		// ---------- SSO-Server端：单点注销 
 		if(match(Api.ssoLogout) && sso.isSlo) {
-			String loginId = req.getParameter(ParamName.loginId);
-			String secretkey = req.getParameter(ParamName.secretkey);
+			String loginId = req.getParam(ParamName.loginId);
+			String secretkey = req.getParam(ParamName.secretkey);
 			
 			 // 遍历通知Client端注销会话 
 	        SaSsoUtil.singleLogout(secretkey, loginId, url -> sso.sendHttp.apply(url)); 
@@ -93,8 +93,8 @@ public class SaSsoHandle {
 
 		// ---------- SSO-Client端：登录地址 
 		if(match(Api.ssoLogin)) {
-			String back = req.getParameter(ParamName.back, "/");
-			String ticket = req.getParameter(ParamName.ticket);
+			String back = req.getParam(ParamName.back, "/");
+			String ticket = req.getParam(ParamName.ticket);
 			
 			// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回 
 			if(stpLogic.isLogin()) {
@@ -138,10 +138,10 @@ public class SaSsoHandle {
 		// ---------- SSO-Client端：单点注销 [模式二]
 		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp == false) {
 			stpLogic.logout();
-			if(req.getParameter(ParamName.back) == null) {
+			if(req.getParam(ParamName.back) == null) {
 				return SaResult.ok("单点注销成功");
 			} else {
-				return res.redirect(req.getParameter(ParamName.back, "/"));
+				return res.redirect(req.getParam(ParamName.back, "/"));
 			}
 		}
 
@@ -155,10 +155,10 @@ public class SaSsoHandle {
 	        String url = SaSsoUtil.buildSloUrl(stpLogic.getLoginId());
 	        String body = String.valueOf(sso.sendHttp.apply(url));
 	        if(SaSsoConsts.OK.equals(body)) {
-				if(req.getParameter(ParamName.back) == null) {
+				if(req.getParam(ParamName.back) == null) {
 					return SaResult.ok("单点注销成功");
 				} else {
-					return res.redirect(req.getParameter(ParamName.back, "/"));
+					return res.redirect(req.getParam(ParamName.back, "/"));
 				}
 	        }
 	        return SaResult.error("单点注销失败"); 
@@ -166,8 +166,8 @@ public class SaSsoHandle {
 
 		// ---------- SSO-Client端：单点注销的回调 	[模式三]
 		if(match(Api.ssoLogoutCall) && sso.isSlo && sso.isHttp) {
-			String loginId = req.getParameter(ParamName.loginId);
-			String secretkey = req.getParameter(ParamName.secretkey);
+			String loginId = req.getParam(ParamName.loginId);
+			String secretkey = req.getParam(ParamName.secretkey);
 			
 			SaSsoUtil.checkSecretkey(secretkey);
 			stpLogic.logoutByTokenValue(stpLogic.getTokenValueByLoginId(loginId));

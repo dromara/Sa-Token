@@ -21,7 +21,7 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
-    public String getParameter(String s) {
+    public String getParam(String s) {
         return ctx.param(s);
     }
 

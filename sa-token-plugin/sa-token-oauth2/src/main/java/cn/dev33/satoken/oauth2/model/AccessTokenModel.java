@@ -1,5 +1,8 @@
 package cn.dev33.satoken.oauth2.model;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Model: access_token
  * @author kong
@@ -10,177 +13,100 @@ public class AccessTokenModel {
 	/**
 	 * access_token 值
 	 */
-	private String accessToken;
+	public String accessToken;
 	
 	/**
 	 * refresh_token 值
 	 */
-	private String refreshToken;
+	public String refreshToken;
 	
 	/**
-	 * access_token 剩余有效时间 (秒) 
+	 * access_token 到期时间 
 	 */
-	private long expiresIn;
+	public long expiresTime;
 
 	/**
-	 * refresh_token 剩余有效期 (秒)  
+	 * refresh_token 到期时间   
 	 */
-	private long refreshExpiresIn;
+	public long refreshExpiresTime;
 
-	/**
-	 * 此 access_token令牌 是由哪个code码创建 
-	 */
-	private String code;
-	
 	/**
 	 * 应用id 
 	 */
-	private String clientId;
-	
-	/**
-	 * 授权范围
-	 */
-	private String scope;
+	public String clientId;
 
+	/**
+	 * 账号id 
+	 */
+	public Object loginId;
+	
 	/**
 	 * 开放账号id 
 	 */
-	private String openid;
+	public String openid;
 
 	/**
-	 * 其他自定义数据 
+	 * 授权范围
 	 */
-	private Object tag;
+	public String scope;  
 
-	
+	public AccessTokenModel() {}
 	/**
-	 * @return accessToken
+	 * 构建一个 
+	 * @param accessToken accessToken
+	 * @param clientId 应用id 
+	 * @param scope 请求授权范围 
+	 * @param loginId 对应的账号id 
 	 */
-	public String getAccessToken() {
-		return accessToken;
-	}
-
-	/**
-	 * @param accessToken 要设置的 accessToken
-	 */
-	public void setAccessToken(String accessToken) {
+	public AccessTokenModel(String accessToken, String clientId, Object loginId, String scope) {
+		super();
 		this.accessToken = accessToken;
-	}
-
-	/**
-	 * @return refreshToken
-	 */
-	public String getRefreshToken() {
-		return refreshToken;
-	}
-
-	/**
-	 * @param refreshToken 要设置的 refreshToken
-	 */
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
-	}
-
-	/**
-	 * @return expiresIn
-	 */
-	public long getExpiresIn() {
-		return expiresIn;
-	}
-
-	/**
-	 * @param expiresIn 要设置的 expiresIn
-	 */
-	public void setExpiresIn(long expiresIn) {
-		this.expiresIn = expiresIn;
-	}
-
-	/**
-	 * @return refreshExpiresIn
-	 */
-	public long getRefreshExpiresIn() {
-		return refreshExpiresIn;
-	}
-
-	/**
-	 * @param refreshExpiresIn 要设置的 refreshExpiresIn
-	 */
-	public void setRefreshExpiresIn(long refreshExpiresIn) {
-		this.refreshExpiresIn = refreshExpiresIn;
-	}
-
-	/**
-	 * @return code
-	 */
-	public String getCode() {
-		return code;
-	}
-
-	/**
-	 * @param code 要设置的 code
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	/**
-	 * @return clientId
-	 */
-	public String getClientId() {
-		return clientId;
-	}
-
-	/**
-	 * @param clientId 要设置的 clientId
-	 */
-	public void setClientId(String clientId) {
 		this.clientId = clientId;
-	}
-
-	/**
-	 * @return scope
-	 */
-	public String getScope() {
-		return scope;
-	}
-
-	/**
-	 * @param scope 要设置的 scope
-	 */
-	public void setScope(String scope) {
+		this.loginId = loginId;
 		this.scope = scope;
 	}
+	
+	@Override
+	public String toString() {
+		return "AccessTokenModel [accessToken=" + accessToken + ", refreshToken=" + refreshToken
+				+ ", accessTokenTimeout=" + expiresTime + ", refreshTokenTimeout=" + refreshExpiresTime
+				+ ", clientId=" + clientId + ", scope=" + scope + ", openid=" + openid + "]";
+	}
+
 
 	/**
-	 * @return openid
+	 * 获取：此 Access-Token 的剩余有效期（秒）
+	 * @return see note 
 	 */
-	public String getOpenid() {
-		return openid;
+	public long getExpiresIn() {
+		long s = (expiresTime - System.currentTimeMillis()) / 1000;
+		return s < 1 ? -2 : s;
 	}
 
 	/**
-	 * @param openid 要设置的 openid
+	 * 获取：此 Refresh-Token 的剩余有效期（秒）
+	 * @return see note 
 	 */
-	public void setOpenid(String openid) {
-		this.openid = openid;
+	public long getRefreshExpiresIn() {
+		long s = (refreshExpiresTime - System.currentTimeMillis()) / 1000;
+		return s < 1 ? -2 : s;
 	}
-
-	/**
-	 * @return tag
-	 */
-	public Object getTag() {
-		return tag;
-	}
-
-	/**
-	 * @param tag 要设置的 tag
-	 */
-	public void setTag(Object tag) {
-		this.tag = tag;
-	}
-
 	
 	
-	
+	/**
+	 * 将所有属性转换为下划线形式的Map 
+	 * @return
+	 */
+	public Map<String, Object> toLineMap() {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("access_token", accessToken);
+		map.put("refresh_token", refreshToken);
+		map.put("expires_in", getExpiresIn());
+		map.put("refresh_expires_in", getRefreshExpiresIn());
+		map.put("client_id", clientId);
+		map.put("scope", scope);
+		map.put("openid", openid);
+		return map;
+	}
 	
 }

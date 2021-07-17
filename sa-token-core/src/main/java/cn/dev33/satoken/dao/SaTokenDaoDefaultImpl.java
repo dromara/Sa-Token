@@ -45,6 +45,9 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	@Override
 	public void set(String key, String value, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return;
+		}
 		dataMap.put(key, value);
 		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
@@ -84,6 +87,9 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	@Override
 	public void setObject(String key, Object object, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return;
+		}
 		dataMap.put(key, object);
 		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
