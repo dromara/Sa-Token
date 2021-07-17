@@ -1,11 +1,15 @@
 package cn.dev33.satoken.oauth2.model;
 
+import java.io.Serializable;
+
 /**
- * Model: [授权码 - 数据 对应关系] 
+ * Model: 授权码 
  * @author kong
  *
  */
-public class CodeModel {
+public class CodeModel implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
 
 	/** 
 	 * 授权码 

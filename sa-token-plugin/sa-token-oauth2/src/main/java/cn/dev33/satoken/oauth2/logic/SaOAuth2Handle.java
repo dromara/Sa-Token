@@ -5,12 +5,15 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.AuthType;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Api;
+import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Param;
+import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.ResponseType;
 import cn.dev33.satoken.oauth2.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
-import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -20,106 +23,236 @@ import cn.dev33.satoken.util.SaResult;
  *
  */
 public class SaOAuth2Handle {
-	
+
 	/**
-	 * 处理Server端请求 
+	 * 处理Server端请求， 路由分发
 	 * @return 处理结果 
 	 */
-	public static Object authorize() {
+	public static Object serverRequest() {
 		
 		// 获取变量 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
-		// StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
-		// match(Api.authorize) && 
 		
-		// 授权  
-		if(req.isParam(Param.response_type, AuthType.code)) {
-			// 1、构建请求Model  TODO： 貌似这个RequestAuthModel对象也可以省略掉 
-			RequestAuthModel ra = SaOAuth2Util.generateRequestAuth(req, StpUtil.getLoginId());
-			
-			// 2、如果尚未登录, 则先去登录 
-			if(StpUtil.isLogin() == false) {
-				return cfg.notLoginView.get();
-			}
-			
-			// 3、判断：重定向域名的格式是否合法 
-			boolean isRigh = SaOAuth2Util.isRightUrl(ra.clientId, ra.redirectUri);
-			if(isRigh == false) {
-				return cfg.invalidUrlView.apply(ra.clientId, ra.redirectUri);
-			}
-			
-			// 4、判断：此次申请的Scope，该Client是否已经签约 
-			boolean isContract = SaOAuth2Util.isContract(ra.clientId, ra.scope);
-			if(isContract == false) {
-				return cfg.invalidScopeView.apply(ra.clientId, ra.scope);
-			}
-			
-			// 5、判断：此次申请的Scope，该用户是否已经授权过了 
-			boolean isGrant = SaOAuth2Util.isGrant(StpUtil.getLoginId(), ra.clientId, ra.scope);
-			if(isGrant == false) {
-				// 如果尚未授权，则转到授权页面，开始授权操作  
-				return cfg.confirmView.apply(ra.clientId, ra.scope);
-			}
+		// ------------------ 路由分发 ------------------ 
+		
+		// 模式一：Code授权码
+		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code) && cfg.isCode) {
+			return authorize(req, res, cfg);
+		}
 
-			// 6、开始重定向授权，下放code 
+		// Code授权码 获取 Access-Token 
+		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.authorization_code)) {
+			return token(req, res, cfg);
+		}
+		
+		// Refresh-Token 刷新 Access-Token 
+		if(req.isPath(Api.refresh) && req.isParam(Param.grant_type, GrantType.refresh_token)) {
+			return refreshToken(req);
+		}
+		
+		// doLogin 登录接口 
+		if(req.isPath(Api.doLogin)) {
+			return doLogin(req, res, cfg);
+		}
+		
+		// doConfirm 确认授权接口  
+		if(req.isPath(Api.doConfirm)) {
+			return doConfirm(req);
+		}
+		
+		// 模式二：隐藏式 
+		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token) && cfg.isImplicit) {
+			return authorize(req, res, cfg);
+		}
+		
+		// 模式三：密码式 
+		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password) && cfg.isPassword) {
+			return password(req, res, cfg);
+		}
+
+		// 模式四：凭证式 
+		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials) && cfg.isClient) {
+			return clientToken(req, res, cfg);
+		}
+		
+		// 默认返回 
+		return SaOAuth2Consts.NOT_HANDLE;
+	}
+	
+	/**
+	 * 模式一：Code授权码 / 模式二：隐藏式 
+	 * @param req 请求对象 
+	 * @param res 响应对象 
+	 * @param cfg 配置对象 
+	 * @return 处理结果 
+	 */
+	public static Object authorize(SaRequest req, SaResponse res, SaOAuth2Config cfg) { 
+
+		// 1、如果尚未登录, 则先去登录 
+		if(StpUtil.isLogin() == false) {
+			return cfg.notLoginView.get();
+		}
+
+		// 2、构建请求Model 
+		RequestAuthModel ra = SaOAuth2Util.generateRequestAuth(req, StpUtil.getLoginId());
+
+		// 3、校验：重定向域名是否合法 
+		SaOAuth2Util.checkRightUrl(ra.clientId, ra.redirectUri);
+
+		// 4、校验：此次申请的Scope，该Client是否已经签约 
+		SaOAuth2Util.checkContract(ra.clientId, ra.scope);
+
+		// 5、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面  
+		boolean isGrant = SaOAuth2Util.isGrant(ra.loginId, ra.clientId, ra.scope);
+		if(isGrant == false) {
+			return cfg.confirmView.apply(ra.clientId, ra.scope);
+		}
+		
+		// 6、判断授权类型 
+		// 如果是 授权码式，则：开始重定向授权，下放code 
+		if(ResponseType.code.equals(ra.responseType)) {
 			CodeModel codeModel = SaOAuth2Util.generateCode(ra); 
 			String redirectUri = SaOAuth2Util.buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
 			return res.redirect(redirectUri); 
 		}
-		
-		
-		
-
-		// 默认返回 
-		return SaOAuth2Consts.NOT_HANDLE;
-	}
-	
-	/**
-	 * 获取Token 
-	 * @return
-	 */
-	public static Object token() {
-		
-		// 获取变量 
-		SaRequest req = SaHolder.getRequest();
-		// SaResponse res = SaHolder.getResponse();
-		// SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
-
-		// 根据code换token  
-		if(req.isParam(Param.grant_type, AuthType.authorization_code)) {
-			System.out.println("------------获取token，，，");
-			
-			// 获取参数 
-			String code = req.getParamNotNull(Param.code); 					// code码 
-			String clientId = req.getParamNotNull(Param.client_id); 		// 应用id
-			String clientSecret = req.getParamNotNull(Param.client_secret); // 应用秘钥 
-			String redirectUri = req.getParam(Param.redirect_uri); 	// 应用秘钥 
-			
-			// 校验参数 
-			SaOAuth2Util.checkCodeIdSecret(code, clientId, clientSecret, redirectUri);
-			
-			// 构建 access_token 
-			AccessTokenModel token = SaOAuth2Util.generateAccessToken(code);
-
-			// 返回 
-			return SaResult.data(token.toLineMap()); 
+		// 如果是 隐藏式，则：开始重定向授权，下放 token 
+		if(ResponseType.token.equals(ra.responseType)) {
+			AccessTokenModel at = SaOAuth2Util.generateAccessToken(ra, false); 
+			String redirectUri = SaOAuth2Util.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
+			return res.redirect(redirectUri); 
 		}
 		
 		// 默认返回 
-		return SaOAuth2Consts.NOT_HANDLE;
+		throw new SaOAuth2Exception("无效response_type: " + ra.responseType); 
 	}
 	
-	
-	
+	/**
+	 * Code授权码 获取 Access-Token 
+	 * @param req 请求对象 
+	 * @param res 响应对象 
+	 * @param cfg 配置对象 
+	 * @return 处理结果 
+	 */
+	public static Object token(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+		// 获取参数 
+		String code = req.getParamNotNull(Param.code); 					
+		String clientId = req.getParamNotNull(Param.client_id); 		
+		String clientSecret = req.getParamNotNull(Param.client_secret);
+		String redirectUri = req.getParam(Param.redirect_uri); 	
+
+		// 校验参数
+		SaOAuth2Util.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
+
+		// 构建 Access-Token 
+		AccessTokenModel token = SaOAuth2Util.generateAccessToken(code);
+		
+		// 返回 
+		return SaResult.data(token.toLineMap()); 
+	}
 
 	/**
-	 * 路由匹配算法 
-	 * @param pattern 路由表达式 
-	 * @return 是否可以匹配 
+	 * Refresh-Token 刷新 Access-Token  
+	 * @param req 请求对象 
+	 * @return 处理结果 
 	 */
-	static boolean match(String pattern) {
-		return SaRouter.isMatch(pattern, SaHolder.getRequest().getRequestPath());
+	public static Object refreshToken(SaRequest req) {
+		// 获取参数 
+		String clientId = req.getParamNotNull(Param.client_id);
+		String clientSecret = req.getParamNotNull(Param.client_secret);
+		String refreshToken = req.getParamNotNull(Param.refresh_token);
+		
+		// 校验参数 
+		SaOAuth2Util.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
+
+		// 获取新Token返回 
+		Object data = SaOAuth2Util.saOAuth2Template.refreshAccessToken(refreshToken).toLineMap();
+		return SaResult.data(data); 
 	}
+
+	/**
+	 * doLogin 登录接口  
+	 * @param req 请求对象 
+	 * @param res 响应对象 
+	 * @param cfg 配置对象 
+	 * @return 处理结果 
+	 */
+	public static Object doLogin(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+		return cfg.doLoginHandle.apply(req.getParamNotNull(Param.name), req.getParamNotNull("pwd"));
+	}
+
+	/**
+	 * doConfirm 确认授权接口   
+	 * @param req 请求对象 
+	 * @return 处理结果 
+	 */
+	public static Object doConfirm(SaRequest req) {
+		String clientId = req.getParamNotNull(Param.client_id);
+		String scope = req.getParamNotNull(Param.scope);
+		Object loginId = StpUtil.getLoginId();
+		SaOAuth2Util.saveGrantScope(clientId, loginId, scope);
+		return SaResult.ok();
+	}
+	
+	/**
+	 * 模式三：密码式 
+	 * @param req 请求对象 
+	 * @param res 响应对象 
+	 * @param cfg 配置对象 
+	 * @return 处理结果 
+	 */
+	public static Object password(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+		
+		// 1、获取请求参数 
+		String username = req.getParamNotNull(Param.username);
+		String password = req.getParamNotNull(Param.password);
+		String clientId = req.getParamNotNull(Param.client_id);
+		
+		// 2、校验client_id
+		SaOAuth2Util.checkClientModel(clientId);
+
+		// 3、防止因前端误传token造成逻辑干扰 
+		SaHolder.getStorage().set(StpUtil.stpLogic.splicingKeyJustCreatedSave(), "no-token");
+		
+		// 4、调用API 开始登录，如果没能成功登录，则直接退出
+		Object retObj = cfg.doLoginHandle.apply(username, password); 
+		if(StpUtil.isLogin() == false) {
+			return retObj;
+		}
+		
+		// 5、构建 ra对象 
+		RequestAuthModel ra = new RequestAuthModel();
+		ra.clientId = clientId;
+		ra.loginId = StpUtil.getLoginId(); 
+		ra.scope = req.getParam(Param.scope, ""); 
+		
+		// 6、生成 Access-Token 
+		AccessTokenModel at = SaOAuth2Util.generateAccessToken(ra, true); 
+		
+		// 7、返回 Access-Token 
+		return SaResult.data(at.toLineMap());
+	}
+
+	/**
+	 * 模式四：凭证式  
+	 * @return 处理结果 
+	 */
+	public static Object clientToken(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+		
+		// 获取参数 
+		String clientId = req.getParamNotNull(Param.client_id);
+		String clientSecret = req.getParamNotNull(Param.client_secret);
+		String scope = req.getParam(Param.scope);
+		
+		// 校验 ClientSecret
+		SaOAuth2Util.checkClientSecret(clientId, clientSecret);
+		
+		// 返回 Client-Token
+		ClientTokenModel ct = SaOAuth2Util.generateClientToken(clientId, scope);
+		
+		// 返回 Client-Token
+		return SaResult.data(ct.toLineMap()); 
+	}
+	
 }

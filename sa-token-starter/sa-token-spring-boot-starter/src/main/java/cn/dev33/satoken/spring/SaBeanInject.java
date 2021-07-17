@@ -2,8 +2,6 @@ package cn.dev33.satoken.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Import;
-import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaManager;
@@ -21,8 +19,6 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * @author kong
  *
  */
-@Component
-@Import({SaBeanRegister.class, SaHistoryVersionInject.class})
 public class SaBeanInject {
 
 	/**

@@ -83,6 +83,14 @@ public interface SaRequest {
 	public String getRequestPath();
 
 	/**
+	 * 返回当前请求path是否为指定值 
+	 * @return see note
+	 */
+	public default boolean isPath(String path) {
+		return getRequestPath().equals(path);
+	}
+
+	/**
 	 * 返回当前请求的url，例：http://xxx.com/?id=127
 	 * @return see note
 	 */

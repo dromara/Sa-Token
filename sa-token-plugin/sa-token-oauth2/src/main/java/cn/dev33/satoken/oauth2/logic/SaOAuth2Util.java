@@ -1,199 +1,39 @@
 package cn.dev33.satoken.oauth2.logic;
 
-import java.util.List;
-
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
+import cn.dev33.satoken.oauth2.model.SaClientModel;
 
 /**
- * sa-token-oauth2 模块 静态类接口转发, 方便调用 
+ * Sa-Token-OAuth2 模块 工具类 
  * @author kong
- *
+ * 
  */
 public class SaOAuth2Util {
 
+	/**
+	 * 模板代码对象 
+	 */
 	public static SaOAuth2Template saOAuth2Template = new SaOAuth2Template();
 
-	/**
-	 * 根据 SaRequest 对象创建 RequestAuthModel
-	 * @param req SaRequest对象 
-	 * @param loginId 账号id 
-	 * @return RequestAuthModel对象 
-	 */
-	public static RequestAuthModel generateRequestAuth(SaRequest req, Object loginId) {
-		return saOAuth2Template.generateRequestAuth(req, loginId);
-	}
 	
-
-
-	
-	
-	
-	
-	
-	
-	
-	// ---------------------------------------------- 分界线 -----------------------------------------------------
-	
-	 
-	// ------------------- 获取数据 
+	// ------------------- 资源获取 
 	
 	/**
-	 * 返回此平台所有权限集合 
-	 * @return 此平台所有权限名称集合 
-	 */
-	public static List<String> getAppScopeList() {
-		return saOAuth2Template.getAppScopeList();
-	}
-
-	/**
-	 * 返回指定Client签约的所有Scope名称集合 
-	 * @param clientId 应用id 
-	 * @return Scope集合 
-	 */
-	public static List<String> getClientScopeList(String clientId) {
-		return saOAuth2Template.getClientScopeList(clientId);
-	}
-
-	/**
-	 * 获取指定 LoginId 对指定 Client 已经授权过的所有 Scope 
-	 * @param clientId 应用id 
-	 * @param loginId 账号id 
-	 * @return Scope集合 
-	 */
-	public static List<String> getGrantScopeList(Object loginId, String clientId) {
-		return saOAuth2Template.getGrantScopeList(loginId, clientId);
-	}
-
-	
-	// ------------------- 数据校验 
-
-	/**
-	 * [OK] 判断：该Client是否签约了指定的Scope 
+	 * 根据id获取Client信息, 如果Client为空，则抛出异常 
 	 * @param clientId 应用id
-	 * @param scope 权限 
+	 * @return ClientModel 
 	 */
-	public static boolean isContract(String clientId, String scope) {
-		return saOAuth2Template.isContract(clientId, scope);
+	public static SaClientModel checkClientModel(String clientId) {
+		return saOAuth2Template.checkClientModel(clientId);
 	}
 	
 	/**
-	 * 指定 loginId 是否对一个 Client 授权给了指定 Scope 
-	 * @param clientId 应用id 
-	 * @param scope 权限 
-	 * @param loginId 账号id 
-	 * @return 是否已经授权
-	 */
-	public static boolean isGrant(Object loginId, String clientId, String scope) {
-		return saOAuth2Template.isGrant(loginId, clientId, scope);
-	}
-	
-	/**
-	 * [OK] 指定Client使用指定url作为回调地址，是否合法 
-	 * @param clientId 应用id 
-	 * @param url 指定url
-	 * @return 是否合法 
-	 */
-	public static boolean isRightUrl(String clientId, String url) {
-		return saOAuth2Template.isRightUrl(clientId, url);
-	}
-	
-	/**
-	 * [OK 方法名改一下]校验code、clientId、clientSecret 三者是否正确 
-	 * @param code 授权码
-	 * @param clientId 应用id 
-	 * @param clientSecret 秘钥 
-	 * @param redirectUri 秘钥 
-	 * @return CodeModel对象 
-	 */
-	public static CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret, String redirectUri) {
-		return saOAuth2Template.checkCodeIdSecret(code, clientId, clientSecret, redirectUri);
-	}
-	
-	/**
-	 * [default] 校验access_token、clientId、clientSecret 三者是否正确 
-	 * @param accessToken access_token
-	 * @param clientId 应用id 
-	 * @param clientSecret 秘钥 
-	 * @return AccessTokenModel对象 
-	 */
-	public static AccessTokenModel checkTokenIdSecret(String accessToken, String clientId, String clientSecret) {
-		return saOAuth2Template.checkTokenIdSecret(accessToken, clientId, clientSecret);
-	}
-	
-	
-
-	// ------------------- 逻辑相关 
-	
-	/**
-	 * [OK] 根据参数生成一个授权码并返回 
-	 * @param authModel 请求授权参数Model 
-	 * @return 授权码Model
-	 */
-	public static CodeModel generateCode(RequestAuthModel authModel) {
-		return saOAuth2Template.generateCode(authModel);
-	}
-	
-	
-	/**
-	 * 根据授权码获得授权码Model 
-	 * @param code 授权码 
-	 * @return 授权码Model
-	 */
-	public static CodeModel getCode(String code) {
-		return saOAuth2Template.getCode(code);
-	}
-
-	/**
-	 * [default] 删除一个授权码 
-	 * @param code 授权码 
-	 */
-	public static void deleteCode(String code) {
-		saOAuth2Template.deleteCode(code);
-	}
-	
-	/**
-	 * 根据授权码Model生成一个access_token
-	 * @param codeModel 授权码Model
-	 * @return AccessTokenModel
-	 */
-	public static AccessTokenModel generateAccessToken(String code) {
-		return saOAuth2Template.generateAccessToken(code);
-	}
-
-	/**
-	 * [default] 根据 access_token 获得其Model详细信息 
-	 * @param accessToken access_token 
-	 * @return AccessTokenModel (授权码Model) 
-	 */
-	public static AccessTokenModel getAccessToken(String accessToken) {
-		return saOAuth2Template.getAccessToken(accessToken);
-	}
-
-	/**
-	 * 根据 refresh_token 生成一个新的 access_token 
-	 * @param refreshToken refresh_token
-	 * @return 新的 access_token 
-	 */
-	public static AccessTokenModel refreshAccessToken(String refreshToken) {
-		return saOAuth2Template.refreshAccessToken(refreshToken);
-	}
-
-	/**
-	 * [default] 根据 refresh_token 获得其Model详细信息 
-	 * @param refreshToken refresh_token 
-	 * @return RefreshToken 
-	 */
-	public static RefreshTokenModel getRefreshToken(String refreshToken) {
-		return saOAuth2Template.getRefreshToken(refreshToken);
-	}
-
-	/**
-	 * [default] 获取 access_token 所代表的LoginId 
+	 * 获取 access_token 所代表的LoginId 
 	 * @param accessToken access_token 
 	 * @return LoginId 
 	 */
@@ -202,27 +42,85 @@ public class SaOAuth2Util {
 	}
 	
 	/**
-	 * 构建：AccessToken Model (根据RequestAuthModel) 用于隐藏式 
-	 * @param ra 请求授权参数Model 
-	 * @return 授权码Model 
+	 * 获取 Access-Token，如果AccessToken为空则抛出异常 
+	 * @param accessToken . 
+	 * @return .
 	 */
-	public static AccessTokenModel generateAccessToken(RequestAuthModel ra) {
-		return saOAuth2Template.generateAccessToken(ra);
+	public static AccessTokenModel checkAccessToken(String accessToken) {
+		return saOAuth2Template.checkAccessToken(accessToken);
+	}
+	
+	/**
+	 * 获取 Client-Token，如果ClientToken为空则抛出异常 
+	 * @param clientToken . 
+	 * @return .
+	 */
+	public static ClientTokenModel checkClientToken(String clientToken) {
+		return saOAuth2Template.checkClientToken(clientToken);
+	}
+	
+	
+	// ------------------- generate 构建数据 
+	
+	/**
+	 * 构建Model：请求Model  
+	 * @param req SaRequest对象 
+	 * @param loginId 账号id 
+	 * @return RequestAuthModel对象 
+	 */
+	public static RequestAuthModel generateRequestAuth(SaRequest req, Object loginId) {
+		return saOAuth2Template.generateRequestAuth(req, loginId);
+	}
+	
+	/**
+	 * 构建Model：Code授权码 
+	 * @param ra 请求参数Model 
+	 * @return 授权码Model
+	 */
+	public static CodeModel generateCode(RequestAuthModel ra) {
+		return saOAuth2Template.generateCode(ra);
+	}
+	
+	/**
+	 * 构建Model：Access-Token  
+	 * @param code 授权码Model
+	 * @return AccessToken Model
+	 */
+	public static AccessTokenModel generateAccessToken(String code) {
+		return saOAuth2Template.generateAccessToken(code);
 	}
 
 	/**
-	 * 构建：ClientToken Model 
-	 * @param ra 请求授权参数Model 
-	 * @return ClientToken-Model 
+	 * 刷新Model：根据 Refresh-Token 生成一个新的 Access-Token 
+	 * @param refreshToken Refresh-Token值 
+	 * @return 新的 Access-Token 
+	 */
+	public static AccessTokenModel refreshAccessToken(String refreshToken) {
+		return saOAuth2Template.refreshAccessToken(refreshToken);
+	}
+
+	/**
+	 * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式) 
+	 * @param ra 请求参数Model 
+	 * @param isCreateRt 是否生成对应的Refresh-Token 
+	 * @return Access-Token Model 
+	 */
+	public static AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt) {
+		return saOAuth2Template.generateAccessToken(ra, isCreateRt);
+	}
+	
+	/**
+	 * 构建Model：Client-Token 
+	 * @param clientId 应用id 
+	 * @param scope 授权范围 
+	 * @return Client-Token Model 
 	 */
 	public static ClientTokenModel generateClientToken(String clientId, String scope) {
 		return saOAuth2Template.generateClientToken(clientId, scope);
 	}
-
-	// ------------------- 自定义策略相关
-
+	
 	/**
-	 * [OK] 构建URL：下放授权码URL 
+	 * 构建URL：下放Code URL (Authorization Code 授权码)
 	 * @param redirectUri 下放地址 
 	 * @param code code参数
 	 * @param state state参数 
@@ -231,16 +129,144 @@ public class SaOAuth2Util {
 	public static String buildRedirectUri(String redirectUri, String code, String state) {
 		return saOAuth2Template.buildRedirectUri(redirectUri, code, state);
 	}
+
 	/**
-	 * [OK] 构建URL：下放Token URL 
+	 * 构建URL：下放Access-Token URL （implicit 隐藏式）
 	 * @param redirectUri 下放地址 
 	 * @param token token
 	 * @param state state参数 
 	 * @return 构建完毕的URL 
 	 */
-	public static String buildRedirectUri2(String redirectUri, String token, String state) {
-		return saOAuth2Template.buildRedirectUri2(redirectUri, token, state);
+	public static String buildImplicitRedirectUri(String redirectUri, String token, String state) {
+		return saOAuth2Template.buildImplicitRedirectUri(redirectUri, token, state);
 	}
 	
 	
+	// ------------------- 数据校验 
+	
+	/**
+	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope 
+	 * @param loginId 账号id 
+	 * @param clientId 应用id 
+	 * @param scope 权限 
+	 * @return 是否已经授权
+	 */
+	public static boolean isGrant(Object loginId, String clientId, String scope) {
+		return saOAuth2Template.isGrant(loginId, clientId, scope);
+	}
+	
+	/**
+	 * 校验：该Client是否签约了指定的Scope 
+	 * @param clientId 应用id
+	 * @param scope 权限(多个用逗号隔开) 
+	 */
+	public static void checkContract(String clientId, String scope) {
+		saOAuth2Template.checkContract(clientId, scope);
+	}
+	
+	/**
+	 * 校验：该Client使用指定url作为回调地址，是否合法 
+	 * @param clientId 应用id 
+	 * @param url 指定url
+	 */
+	public static void checkRightUrl(String clientId, String url) {
+		saOAuth2Template.checkRightUrl(clientId, url);
+	}
+	/**
+	 * 校验：clientId 与 clientSecret 是否正确
+	 * @param clientId 应用id 
+	 * @param clientSecret 秘钥 
+	 * @return SaClientModel对象 
+	 */
+	public static SaClientModel checkClientSecret(String clientId, String clientSecret) {
+		return saOAuth2Template.checkClientSecret(clientId, clientSecret);
+	}
+	
+	/**
+	 * 校验：使用 code 获取 token 时提供的参数校验 
+	 * @param code 授权码
+	 * @param clientId 应用id 
+	 * @param clientSecret 秘钥 
+	 * @param redirectUri 重定向地址 
+	 * @return CodeModel对象 
+	 */
+	public static CodeModel checkGainTokenParam(String code, String clientId, String clientSecret, String redirectUri) {
+		return saOAuth2Template.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
+	}
+
+	/**
+	 * 校验：使用 Refresh-Token 刷新 Access-Token 时提供的参数校验 
+	 * @param clientId 应用id 
+	 * @param clientSecret 秘钥 
+	 * @param refreshToken Refresh-Token
+	 * @return CodeModel对象 
+	 */
+	public static RefreshTokenModel checkRefreshTokenParam(String clientId, String clientSecret, String refreshToken) {
+		return saOAuth2Template.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
+	}
+	
+	
+	// ------------------- save 数据 
+	
+	/**
+	 * 持久化：用户授权记录 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @param scope 权限列表(多个逗号隔开) 
+	 */
+	public static void saveGrantScope(String clientId, Object loginId, String scope) {
+		saOAuth2Template.saveGrantScope(clientId, loginId, scope);
+	}
+	
+	
+	// ------------------- get 数据
+	
+	/**
+	 * 获取：Code Model  
+	 * @param code .
+	 * @return .
+	 */
+	public static CodeModel getCode(String code) {
+		return saOAuth2Template.getCode(code);
+	}
+
+	/**
+	 * 获取：Access-Token Model 
+	 * @param accessToken . 
+	 * @return .
+	 */
+	public static AccessTokenModel getAccessToken(String accessToken) {
+		return saOAuth2Template.getAccessToken(accessToken);
+	}
+	
+	/**
+	 * 获取：Refresh-Token Model 
+	 * @param refreshToken . 
+	 * @return . 
+	 */
+	public static RefreshTokenModel getRefreshToken(String refreshToken) {
+		return saOAuth2Template.getRefreshToken(refreshToken);
+	}
+	
+	/**
+	 * 获取：Client-Token Model 
+	 * @param clientToken . 
+	 * @return .
+	 */
+	public static ClientTokenModel getClientToken(String clientToken) {
+		return saOAuth2Template.getClientToken(clientToken);
+	}
+	
+	/**
+	 * 获取：用户授权记录 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @return 权限 
+	 */
+	public static String getGrantScope(String clientId, Object loginId) {
+		return saOAuth2Template.getGrantScope(clientId, loginId);
+	}
+	
+	
+
 }

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Sa-OAuth2-Client端-测试页</title>
+		<style type="text/css">
+			body{background-color: #D0D9E0;}
+			*{margin: 0px; padding: 0px;}
+			.login-box{max-width: 1000px; margin: 30px auto; padding: 1em;}
+			.info{line-height: 30px;}
+			.btn-box{margin-top: 10px; margin-bottom: 15px;}
+			.btn-box a{margin-right: 10px;}
+			.btn-box a:hover{text-decoration:underline !important;}
+			.login-box input{line-height: 25px; margin-bottom: 10px; padding-left: 5px;}
+			.login-box button{padding: 5px 15px; margin-top: 20px; cursor: pointer; }
+			.login-box a{text-decoration: none;}
+			.pst{color: #666; margin-top: 15px;}
+			.ps{color: #666; margin-left: 10px;}
+			.login-box code{display: block; background-color: #F5F2F0; border: 1px #ccc solid; color: #600; padding: 15px; margin-top: 5px; border-radius: 2px; }
+			.info b,.info span{color: green;}
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>Sa-OAuth2-Client端-测试页</h2> <br>
+			<div class="info">
+				<div>当前账号id： 
+					<b class="uid" th:utext="${uid}"></b>
+				</div>
+				<div>当前Openid： <span class="openid"></span></div>
+				<div>当前Access-Token： <span class="access_token"></span></div>
+				<div>当前Refresh-Token： <span class="refresh_token"></span></div>
+				<div>当前Client-Token： <span class="client_token"></span></div>
+			</div>
+			<div class="btn-box">
+				<a href="javascript:logout();">注销</a>
+				<a href="/">回到首页</a>
+			</div>
+			<hr><br>
+			
+			<h3>模式一：授权码（Authorization Code）</h3>
+			<p class="pst">授权码：OAuth2.0标准授权流程，先 (重定向) 获取Code授权码，再 (Rest API) 获取 Access-Token 和 Openid </p> 
+			
+			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/">
+				<button>点我开始授权登录（静默授权）</button> 
+			</a>
+			<span class="ps">当请求链接不包含scope权限时，将无需用户手动确认，做到静默授权，当然此时我们也只能获取openid</span>
+			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/</code>
+			
+			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo">
+				<button>授权登录（显式授权）</button> 
+			</a>
+			<span class="ps">当请求链接包含具体的scope权限时，将需要用户手动确认，此时我们除了openid以外还可以获取更多的资源</span>
+			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo</code>
+			
+			<button onclick="refreshToken()">刷新令牌</button> 
+			<span class="ps">我们可以拿着 Refresh-Token 去刷新我们的 Access-Token，每次刷新后旧Token将作废</span>
+			<code>http://sa-oauth-server.com:8001/oauth2/refresh?grant_type=refresh_token&client_id={value}&client_secret={value}&refresh_token={value}</code>
+			
+			<button onclick="getUserinfo()">获取账号信息</button> 
+			<span class="ps">使用 Access-Token 置换资源: 获取账号昵称、头像、性别等信息 </span>
+			<code>http://sa-oauth-server.com:8001/oauth2/userinfo?access_token={value}</code>
+			
+			<br>
+			<h3>模式二：隐藏式（Implicit）</h3>
+			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=token&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo">
+				<button>隐藏式</button> 
+			</a>
+			<span class="ps">越过授权码的步骤，直接返回token到前端页面（ 格式：http//:domain.com#token=xxxx-xxxx ）</span>
+			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=token&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo</code>
+			
+			<br>
+			<h3>模式三：密码式（Password）</h3>
+			<p class="pst">在下面输入Server端的用户名和密码，使用密码式进行 OAuth2 授权登录</p>
+			账号：<input name="username">
+			密码：<input name="password">
+			<button onclick="passwordLogin()">登录</button> 
+			<code>http://sa-oauth-server.com:8001/oauth2/token?grant_type=password&client_id={value}&username={value}&password={value}</code>
+			
+			<br>
+			<h3>模式四：凭证式（Client Credentials）</h3>
+			<p class="pst">以上三种模式获取的都是用户的 Access-Token，代表用户对第三方应用的授权，在OAuth2.0中还有一种针对 Client级别的授权，
+				即：Client-Token，代表应用自身的资源授权</p>
+			<p class="pst">Client-Token具有延迟作废特性，即：在每次获取最新Client-Token的时候，旧Client-Token不会立即过期，而是作为Past-Token再次
+				储存起来，资源请求方只要携带其中之一便可通过Token校验，这种特性保证了在大量并发请求时不会出现“新旧Token交替造成的授权失效”，
+				保证了服务的高可用</p>
+				
+			<button onclick="getClientToken()">获取应用Client-Token</button> 
+			<code>http://sa-oauth-server.com:8001/oauth2/client_token?grant_type=client_credentials&client_id={value}&client_secret={value}</code>
+			
+			<br><br>
+			<span>更多资料请参考 Sa-Token 官方文档地址：</span>
+			<a href="http://sa-token.dev33.cn/">http://sa-token.dev33.cn/</a>
+			
+			<div style="height: 200px;"></div>
+		</div>
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script>window.jQuery || alert('当前页面CDN服务商已宕机，请将所有js包更换为本地依赖')</script>
+		<script type="text/javascript">
+		
+			// 根据code授权码进行登录 
+			function doLogin(code) {
+				$.ajax({
+					url: '/codeLogin?code=' + code,
+					dataType: 'json', 
+					success: function(res) {
+						console.log('返回：', res);
+						if(res.code == 200) {
+							setInfo(res.data);
+							layer.msg('登录成功！');
+						} else {
+							layer.msg(res.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown){
+						return layer.alert("异常：" + JSON.stringify(xhr));
+					}
+				});
+			}
+			var code = getParam('code');
+			if(code) {
+				doLogin(code);
+			}
+			
+			// 根据 Refresh-Token 去刷新 Access-Token 
+			function refreshToken() {
+				var refreshToken = $('.refresh_token').text();
+				if(refreshToken == '') {
+					return layer.alert('您还没有获取 Refresh-Token ，请先授权登录');
+				}
+				$.ajax({
+					url: '/refresh?refreshToken=' + refreshToken,
+					dataType: 'json', 
+					success: function(res) {
+						console.log('返回：', res);
+						if(res.code == 200) {
+							setInfo(res.data);
+							layer.msg('登录成功！');
+						} else {
+							layer.msg(res.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown){
+						return layer.alert("异常：" + JSON.stringify(xhr));
+					}
+				});
+			}
+			
+			// 模式三：密码式-授权登录
+			function passwordLogin() {
+				$.ajax({
+					url: '/passwordLogin',
+					data: {
+						username: $('[name=username]').val(),
+						password: $('[name=password]').val()
+					},
+					dataType: 'json', 
+					success: function(res) {
+						console.log('返回：', res);
+						if(res.code == 200) {
+							setInfo(res.data);
+							layer.msg('登录成功！');
+						} else {
+							layer.msg(res.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown){
+						return layer.alert("异常：" + JSON.stringify(xhr));
+					}
+				});
+			}
+			
+			// 模式四：获取应用的 Client-Token
+			function getClientToken () {
+				$.ajax({
+					url: '/clientToken',
+					dataType: 'json', 
+					success: function(res) {
+						console.log('返回：', res);
+						if(res.code == 200) {
+							setInfo(res.data);
+							layer.msg('获取成功！');
+						} else {
+							layer.msg(res.msg);
+						}
+					},
+					error: function(xhr, type, errorThrown){
+						return layer.alert("异常：" + JSON.stringify(xhr));
+					}
+				});
+			}
+			
+			// 使用 Access-Token 置换资源: 获取账号昵称、头像、性别等信息 
+			function getUserinfo() {
+				var accessToken = $('.access_token').text();
+				if(accessToken == '') {
+					return layer.alert('您还没有获取 Access-Token ，请先授权登录');
+				}
+				$.ajax({
+					url: '/getUserinfo',
+					data: {accessToken: accessToken},
+					dataType: 'json', 
+					success: function(res) {
+						layer.alert(JSON.stringify(res.data));
+					},
+					error: function(xhr, type, errorThrown){
+						return layer.alert("异常：" + JSON.stringify(xhr));
+					}
+				});
+			}
+			
+			// 注销 
+			function logout() {
+				$.ajax({
+					url: '/logout',
+					dataType: 'json', 
+					success: function(res) {
+						location.href = '/';
+					},
+					error: function(xhr, type, errorThrown){
+						return layer.alert("异常：" + JSON.stringify(xhr));
+					}
+				});
+			}
+				
+			
+			// 写入数据
+			function setInfo(info) {
+				console.log('info', info);
+				for (var key in info) {
+					$('.' + key).text(info[key]);
+				}
+				if($('.uid').text() == '') {
+					$('.uid').html('<b style="color: #E00;">未登录</b>')
+				}
+			}
+			setInfo({});
+			
+			// 从url中查询到指定名称的参数值 
+			function getParam(name, defaultValue){
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+			
+		</script>
+	</body>
+</html>

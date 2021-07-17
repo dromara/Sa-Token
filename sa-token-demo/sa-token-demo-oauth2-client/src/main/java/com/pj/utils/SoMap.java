@@ -33,12 +33,10 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	public SoMap() {
 	}
 	
-
 	/** 以下元素会在isNull函数中被判定为Null， */
 	public static final Object[] NULL_ELEMENT_ARRAY = {null, ""};
 	public static final List<Object> NULL_ELEMENT_LIST;
 
-	
 	static {
 		NULL_ELEMENT_LIST = Arrays.asList(NULL_ELEMENT_ARRAY);
 	}
@@ -142,6 +140,22 @@ public class SoMap extends LinkedHashMap<String, Object> {
 	/** 转为Date并返回，根据格式： yyyy-MM-dd HH:mm:ss */
 	public Date getDateTime(String key) {
 		return getDateByFormat(key, "yyyy-MM-dd HH:mm:ss");
+	}
+
+	/** 转为Map并返回 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public SoMap getMap(String key) {
+		Object value = get(key);
+		if(value == null) {
+			return SoMap.getSoMap();
+		}
+		if(value instanceof Map) {
+			return SoMap.getSoMap((Map)value);
+		}
+		if(value instanceof String) {
+			return SoMap.getSoMap().setJsonString((String)value);
+		}
+		throw new RuntimeException("值无法转化为SoMap: " + value);
 	}
 
 	/** 获取集合(必须原先就是个集合，否则会创建个新集合并返回) */

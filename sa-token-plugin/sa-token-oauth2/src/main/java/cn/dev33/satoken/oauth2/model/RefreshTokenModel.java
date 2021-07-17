@@ -1,18 +1,23 @@
 package cn.dev33.satoken.oauth2.model;
+
+import java.io.Serializable;
+
 /**
- * Model: refresh_token
+ * Model: Refresh-Token 
  * @author kong
  *
  */
-public class RefreshTokenModel {
+public class RefreshTokenModel implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
  
 	/**
-	 * refresh_token 值
+	 * Refresh-Token 值
 	 */
 	public String refreshToken;
 
 	/**
-	 * refresh_token到期时间 
+	 * Refresh-Token 到期时间 
 	 */
 	public long expiresTime;
 	

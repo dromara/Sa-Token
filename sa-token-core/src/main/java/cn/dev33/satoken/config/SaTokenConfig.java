@@ -1,5 +1,7 @@
 package cn.dev33.satoken.config;
 
+import java.io.Serializable;
+
 /**
  * Sa-Token 配置类 Model
  * <p>
@@ -8,7 +10,9 @@ package cn.dev33.satoken.config;
  * @author kong
  *
  */
-public class SaTokenConfig {
+public class SaTokenConfig implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
 
 	/** token名称 (同时也是cookie名称) */
 	private String tokenName = "satoken";

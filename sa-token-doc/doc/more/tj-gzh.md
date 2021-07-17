@@ -8,6 +8,36 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU2OTMyMTAxNA==&mid=2247496684&idx=2&sn=be1520743589ca43c129fde828af16ef&send_time="/>
+			<b>终码一生</b>
+			<span>分享Java开发技术（JVM，多线程，高并发，性能调优）</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU4ODI1MjA3NQ==&mid=2247502759&idx=2&sn=87ef078b86f5a0015d97807e76691b09&send_time="/>
+			<b>CodeSheep</b>
+			<span>一只爱技术的程序羊，想把分享变成一种习惯！</span>
+		</td>
+		<td>-</td>
+		<td>-</td>
+		<td>-</td>
+    </tr>
+    <tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzI4Njk5OTg1MA==&mid=2247489188&idx=1&sn=0098f458660d194817d4fc40bca55e4d&send_time="/>
+			<b>Java开发宝典</b>
+			<span>分享Java基础、Java框架、数据库、微服务、中间件、分布式、架构等技术干货</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzIwODkzOTc1MQ==&mid=2247489717&idx=1&sn=1c295f070123c84ee3791ac4d4898ae9&send_time="/>
+			<b>MarkerHub</b>
+			<span>专注于梳理java知识，解析开源项目。 </span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzI3MDE0NzYwNA==&mid=2651444525&idx=3&sn=e266f94ada851a5ba6a61c1d71e9a62f&send_time="/>
+			<b>架构师必备</b>
+			<span>分享干货文章，做一个有逼格的架构师社区！ </span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzk0MjE5MTk5Mw==&mid=2247485576&idx=1&sn=d955d60ab193d895fbd15c37bedebcb8&send_time="/>
 			<b>Github导航站</b>
 			<span>分享好玩有趣、新奇、实用的开源项目 </span>
@@ -17,9 +47,6 @@
 			<b>Java爱好者</b>
 			<span>分享Java开发编程资源和Java技术文章 </span>
 		</td>
-		<td>-</td>
-		<td>-</td>
-		<td>-</td>
     </tr>
     <tr>
         <td>

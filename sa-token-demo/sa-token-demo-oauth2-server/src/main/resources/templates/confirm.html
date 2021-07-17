@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Sa-OAuth2-认证中心-确认授权页</title>
+		<style type="text/css">
+			body{background-color: #F5F5D5;}
+			*{margin: 0px; padding: 0px;}
+			.login-box{width: 400px; margin: 20vh auto; padding: 70px; border: 1px #000 solid;}
+			.login-box button{padding: 5px 15px; cursor: pointer; }
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>Sa-OAuth2-认证中心-确认授权页</h2> <br>
+			<div>
+				<div><b>应用ID：</b><span th:utext="${clientId}"></span></div>
+				<div><b>请求授权：</b><span th:utext="${scope}"></span></div>
+				<br><div>------------- 是否同意授权 -------------</div><br>
+				<div>
+					<button onclick="yes()">同意</button>
+					<button onclick="no()">拒绝</button>
+				</div>
+			</div>
+		</div>
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script>window.jQuery || alert('当前页面CDN服务商已宕机，请将所有js包更换为本地依赖')</script>
+		<script type="text/javascript">
+			
+			// 同意授权
+			function yes() {
+				console.log('-----------');
+				$.ajax({
+					url: '/oauth2/doConfirm',
+					data: {
+						client_id: getParam('client_id'),
+						scope: getParam('scope')
+					},
+					dataType: 'json',
+					success: function(res) {
+						if(res.code == 200) {
+							layer.msg('授权成功！');
+							setTimeout(function() {
+								location.reload(true);
+							}, 800);
+						} else {
+							// 重定向至授权失败URL 
+							layer.alert('授权失败！');
+						}
+					},
+					error: function(e) {
+						console.log('error');
+					}
+				});
+			}
+			
+			// 拒绝授权
+			function no() {
+				var url = joinParam(getParam('redirect_uri'), "handle=refuse&msg=用户拒绝了授权");
+				location.href = url;
+			}
+			
+			// 从url中查询到指定名称的参数值 
+			function getParam(name, defaultValue){
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+			
+			// 在url上拼接上kv参数并返回 
+			function joinParam(url, parameStr) {
+				if(parameStr == null || parameStr.length == 0) {
+					return url;
+				}
+				var index = url.indexOf('?');
+				// ? 不存在
+				if(index == -1) {
+					return url + '?' + parameStr;
+				}
+				// ? 是最后一位
+				if(index == url.length - 1) {
+					return url + parameStr;
+				}
+				// ? 是其中一位
+				if(index > -1 && index < url.length - 1) {
+					// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
+					if(url.lastIndexOf('&') != url.length - 1 && parameStrindexOf('&') != 0) {
+						return url + '&' + parameStr;
+					} else {
+						return url + parameStr;
+					}
+				}
+			}
+
+						
+		</script>
+	</body>
+</html>

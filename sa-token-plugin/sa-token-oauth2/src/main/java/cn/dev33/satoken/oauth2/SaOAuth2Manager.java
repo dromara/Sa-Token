@@ -3,7 +3,7 @@ package cn.dev33.satoken.oauth2;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 
 /**
- * sa-token oauth2 模块 总控类
+ * Sa-Token-OAuth2 模块 总控类
  * 
  * @author kong
  *

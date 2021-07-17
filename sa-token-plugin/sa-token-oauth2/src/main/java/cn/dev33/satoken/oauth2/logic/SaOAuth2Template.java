@@ -1,12 +1,9 @@
 package cn.dev33.satoken.oauth2.logic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Param;
@@ -15,65 +12,27 @@ import cn.dev33.satoken.oauth2.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
+import cn.dev33.satoken.oauth2.model.SaClientModel;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * sa-token-oauth2 模块 逻辑接口 
+ * Sa-Token-OAuth2 模块 代码实现 
  * @author kong
  *
  */
 public class SaOAuth2Template {
 
-	// ------------------- 获取数据 
+	// ------------------- 获取数据 (开发者必须重写的函数) 
 	/**
-	 * 返回此平台所有权限集合 
-	 * @return 此平台所有权限名称集合 
+	 * 根据id获取Client信息 
+	 * @param clientId 应用id
+	 * @return ClientModel
 	 */
-	public List<String> getAppScopeList() {
-		return Arrays.asList("userinfo");
-	}
-
-	/**
-	 * 返回指定Client签约的所有Scope名称集合 
-	 * @param clientId 应用id 
-	 * @return Scope集合 
-	 */
-	public List<String> getClientScopeList(String clientId) {
-		// 默认返回此APP的所有权限 
-		return getAppScopeList();
-	}
-
-	/**
-	 * [转Redis]获取指定 LoginId 对指定 Client 已经授权过的所有 Scope 
-	 * @param clientId 应用id 
-	 * @param loginId 账号id 
-	 * @return Scope集合 
-	 */
-	public List<String> getGrantScopeList(Object loginId, String clientId) {
-		// 默认返回空集合  
-		return Arrays.asList(); 
-	}
-
-	/**
-	 * 返回指定Client允许的回调域名, 多个用逗号隔开, *代表不限制 
-	 * @param clientId 应用id 
-	 * @return domain集合 
-	 */
-	public String getClientDomain(String clientId) {
-		return "*";
-	}
-
-	/**
-	 * 返回指定ClientId的ClientSecret 
-	 * @param clientId 应用id 
-	 * @return 此应用的秘钥 
-	 */
-	public String getClientSecret(String clientId) {
+	public SaClientModel getClientModel(String clientId) {
 		return null;
 	}
-
 	/**
-	 * 根据ClientId和LoginId返回openid 
+	 * 根据ClientId 和 LoginId 获取openid 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @return 此账号在此Client下的openid 
@@ -81,86 +40,52 @@ public class SaOAuth2Template {
 	public String getOpenid(String clientId, Object loginId) {
 		return null;
 	}
-
+	
+	// ------------------- 资源获取 
 	/**
-	 * [可取消]根据ClientId和openid返回LoginId 
-	 * @param clientId 应用id 
-	 * @param openid openid
+	 * 根据id获取Client信息, 如果Client为空，则抛出异常 
+	 * @param clientId 应用id
+	 * @return ClientModel 
+	 */
+	public SaClientModel checkClientModel(String clientId) {
+		SaClientModel clientModel = getClientModel(clientId);
+		if(clientModel == null) {
+			throw new SaOAuth2Exception("无效client_id: " + clientId);
+		}
+		return clientModel;
+	}
+	/**
+	 * 获取 access_token 所代表的LoginId 
+	 * @param accessToken access_token 
 	 * @return LoginId 
 	 */
-	public Object getLoginId(String clientId, String openid) {
-		return null;
+	public Object getLoginIdByAccessToken(String accessToken) {
+		return checkAccessToken(accessToken).loginId;
 	}
-
-	// ------------------- conver 数据转换  
 	/**
-	 * [OK] 将 CodeModel 转换为 AccessTokenModel 
-	 * @param cm CodeModel对象
-	 * @return AccessToken对象 
+	 * 获取 Access-Token，如果AccessToken为空则抛出异常 
+	 * @param accessToken . 
+	 * @return .
 	 */
-	public AccessTokenModel converCodeToAccessToken(CodeModel cm) {
-		AccessTokenModel at = new AccessTokenModel();
-		at.accessToken = randomAccessToken(cm.clientId, cm.loginId, cm.scope); 
-		at.refreshToken = randomRefreshToken(cm.clientId, cm.loginId, cm.scope);
-		at.clientId = cm.clientId;
-		at.loginId = cm.loginId;
-		at.scope = cm.scope;
-		at.openid = getOpenid(cm.clientId, cm.loginId);
-		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
-		// at.refreshExpiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+	public AccessTokenModel checkAccessToken(String accessToken) {
+		AccessTokenModel at = getAccessToken(accessToken);
+		SaOAuth2Exception.throwBy(at == null, "无效：access_token" + accessToken);
 		return at;
 	}
 	/**
-	 * [OK] 将 AccessToken 转换为 RefreshTokenModel 
-	 * @param at AccessToken对象
-	 * @return RefreshToken对象 
+	 * 获取 Client-Token，如果ClientToken为空则抛出异常 
+	 * @param clientToken . 
+	 * @return .
 	 */
-	public RefreshTokenModel converAccessTokenToRefreshToken(AccessTokenModel at) {
-		RefreshTokenModel rt = new RefreshTokenModel();
-		rt.refreshToken = at.refreshToken;
-		rt.clientId = at.clientId;
-		rt.loginId = at.loginId;
-		rt.scope = at.scope;
-		rt.openid = at.openid;
-		rt.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
-		return rt;
-	}
-	/**
-	 * [OK] 将 RefreshTokenModel 转换为 AccessTokenModel 
-	 * @param codeModel CodeModel对象
-	 * @return RefreshToken对象 
-	 */
-	public AccessTokenModel converRefreshTokenToAccessToken(RefreshTokenModel rt) {
-		AccessTokenModel at = new AccessTokenModel();
-		at.accessToken = randomAccessToken(rt.clientId, rt.loginId, rt.scope);
-		at.refreshToken = rt.refreshToken;
-		at.clientId = rt.clientId;
-		at.loginId = rt.loginId;
-		at.scope = rt.scope;
-		at.openid = rt.openid;
-		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
-		at.refreshExpiresTime = rt.expiresTime;
-		return at;
-	}
-	/**
-	 * 将指定字符串按照逗号分隔符转化为字符串集合 
-	 * @param str 字符串
-	 * @return 分割后的字符串集合 
-	 */
-	public List<String> convertStringToList(String str) {
-		String[] arr = str.split(",");
-		List<String> list = new ArrayList<String>();
-		for (String s : arr) {
-			if(SaFoxUtil.isEmpty(s) == false) {
-				list.add(s);
-			}
-		}
-		return list;
+	public ClientTokenModel checkClientToken(String clientToken) {
+		ClientTokenModel ct = getClientToken(clientToken);
+		SaOAuth2Exception.throwBy(ct == null, "无效：client_token" + ct);
+		return ct;
 	}
 	
 	// ------------------- generate 构建数据 
 	/**
-	 * 构建：请求Model  
+	 * 构建Model：请求Model  
 	 * @param req SaRequest对象 
 	 * @param loginId 账号id 
 	 * @return RequestAuthModel对象 
@@ -176,134 +101,142 @@ public class SaOAuth2Template {
 		return ra;
 	}
 	/**
-	 * 构建：授权码Model 
-	 * @param ra 请求授权参数Model 
+	 * 构建Model：Code授权码 
+	 * @param ra 请求参数Model 
 	 * @return 授权码Model
 	 */
 	public CodeModel generateCode(RequestAuthModel ra) {
 		
 		// 删除旧Code 
-		String oldCode = getCodeValue(ra.clientId, ra.loginId);
-		if(oldCode != null) {
-			deleteCode(oldCode);
-			// deleteCodeIndex(ra.clientId, ra.loginId); // 此处无需删除，因为下边的set会直接覆盖掉 
-		}
+		deleteCode(getCodeValue(ra.clientId, ra.loginId));
 
 		// 生成新Code 
 		String code = randomCode(ra.clientId, ra.loginId, ra.scope);
-		CodeModel codeModel = new CodeModel(code, ra.clientId, ra.scope, ra.loginId, ra.redirectUri);
+		CodeModel cm = new CodeModel(code, ra.clientId, ra.scope, ra.loginId, ra.redirectUri);
 		
 		// 保存新Code 
-		saveCode(codeModel);
-		saveCodeIndex(codeModel);
+		saveCode(cm);
+		saveCodeIndex(cm);
 		
 		// 返回 
-		return codeModel;
+		return cm;
 	}
 	/**
-	 * 构建：AccessToken Model 
-	 * @param codeModel 授权码Model
-	 * @return AccessTokenModel
+	 * 构建Model：Access-Token  
+	 * @param code 授权码Model
+	 * @return AccessToken Model
 	 */
 	public AccessTokenModel generateAccessToken(String code) {
 
-		// 先校验 
+		// 1、先校验 
 		CodeModel cm = getCode(code);
 		SaOAuth2Exception.throwBy(cm == null, "无效code");
 		
-		// 生成token 
+		// 2、删除旧Token 
+		deleteAccessToken(getAccessTokenValue(cm.clientId, cm.loginId));
+		deleteRefreshToken(getRefreshTokenValue(cm.clientId, cm.loginId));
+		
+		// 3、生成token 
 		AccessTokenModel at = converCodeToAccessToken(cm); 
 		RefreshTokenModel rt = converAccessTokenToRefreshToken(at);
+		at.refreshToken = rt.refreshToken;
 		at.refreshExpiresTime = rt.expiresTime;
 
-		// 保存Token 
+		// 4、保存token 
 		saveAccessToken(at);
 		saveAccessTokenIndex(at);
 		saveRefreshToken(rt);
 		saveRefreshTokenIndex(rt);
 		
-		// 删除此Code 
+		// 5、删除此Code 
 		deleteCode(code);
 		deleteCodeIndex(cm.clientId, cm.loginId);
 		
-		// 返回 
+		// 6、返回 Access-Token
 		return at;
 	}
 	/**
-	 * 刷新：根据 RefreshToken 生成一个 AccessToken 
-	 * @param refreshToken refresh_token
-	 * @return 新的 access_token 
+	 * 刷新Model：根据 Refresh-Token 生成一个新的 Access-Token 
+	 * @param refreshToken Refresh-Token值 
+	 * @return 新的 Access-Token 
 	 */
 	public AccessTokenModel refreshAccessToken(String refreshToken) {
 		
-		// 获取RefreshToken信息 
+		// 获取 Refresh-Token 信息 
 		RefreshTokenModel rt = getRefreshToken(refreshToken);
 		SaOAuth2Exception.throwBy(rt == null, "无效refresh_token: " + refreshToken); 
 		
-		// 删除旧AccessToken 
-		String atValue = getAccessTokenValue(rt.clientId, rt.loginId);
-		if(atValue != null) {
-			deleteAccessToken(atValue);
-			deleteAccessTokenIndex(rt.clientId, rt.loginId);
+		// 如果配置了[每次刷新产生新的Refresh-Token]
+		if(SaOAuth2Manager.getConfig().getIsNewRefresh()) {
+			// 删除旧 Refresh-Token 
+			deleteRefreshToken(rt.refreshToken);
+			
+			// 创建并保持新的 Refresh-Token 
+			rt = converRefreshTokenToRefreshToken(rt);
+			saveRefreshToken(rt);
+			saveRefreshTokenIndex(rt);
 		}
 		
-		// 生成新AccessToken 
+		// 删除旧 Access-Token 
+		deleteAccessToken(getAccessTokenValue(rt.clientId, rt.loginId));
+		
+		// 生成新 Access-Token 
 		AccessTokenModel at = converRefreshTokenToAccessToken(rt);
 		
-		// 保存新AccessToken 
+		// 保存新 Access-Token 
 		saveAccessToken(at);
 		saveAccessTokenIndex(at); 
 		
-		// 返回新AccessToken  
+		// 返回新 Access-Token 
 		return at;
 	}
 	/**
-	 * 构建：AccessToken Model (根据RequestAuthModel) 用于隐藏式 
-	 * @param ra 请求授权参数Model 
-	 * @return 授权码Model 
+	 * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式) 
+	 * @param ra 请求参数Model 
+	 * @param isCreateRt 是否生成对应的Refresh-Token 
+	 * @return Access-Token Model 
 	 */
-	public AccessTokenModel generateAccessToken(RequestAuthModel ra) {
+	public AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt) {
 		
-		// 删除旧AccessToken 
-		String oldAccessToken = getAccessTokenValue(ra.clientId, ra.loginId);
-		if(oldAccessToken != null) {
-			deleteAccessToken(oldAccessToken);
+		// 1、删除 旧Token 
+		deleteAccessToken(getAccessTokenValue(ra.clientId, ra.loginId));
+		if(isCreateRt) {
+			deleteRefreshToken(getRefreshTokenValue(ra.clientId, ra.loginId)); 
 		}
 
-		// 生成新AccessToken 
-		String atValue = randomAccessToken(ra.clientId, ra.loginId, ra.scope);
-		AccessTokenModel at = new AccessTokenModel(atValue, ra.clientId, ra.loginId, ra.scope);
+		// 2、生成 新Access-Token 
+		String newAtValue = randomAccessToken(ra.clientId, ra.loginId, ra.scope);
+		AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scope);
 		at.openid = getOpenid(ra.clientId, ra.loginId);
 		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
 
-		// 保存新Token 
+		// 3、生成&保存 Refresh-Token 
+		if(isCreateRt) {
+			RefreshTokenModel rt = converAccessTokenToRefreshToken(at);
+			saveRefreshToken(rt);
+			saveRefreshTokenIndex(rt);
+		}
+
+		// 5、保存 新Access-Token 
 		saveAccessToken(at);
 		saveAccessTokenIndex(at);
 		
-		// 返回新Token 
+		// 6、返回 新Access-Token 
 		return at;
 	}
-	
 	/**
-	 * 构建：ClientToken Model 
-	 * @param ra 请求授权参数Model 
-	 * @return ClientToken-Model 
+	 * 构建Model：Client-Token 
+	 * @param clientId 应用id 
+	 * @param scope 授权范围 
+	 * @return Client-Token Model 
 	 */
 	public ClientTokenModel generateClientToken(String clientId, String scope) {
 		// 1、删掉 Past-Token 
-		String ptValue = getPastTokenValue(clientId);
-		if(ptValue != null) {
-			deleteClientToken(ptValue);
-		}
+		deleteClientToken(getPastTokenValue(clientId));
 		
-		// 2、将Client-Token 标记 Past-Token 
+		// 2、将Client-Token 标记 Past-Token  
 		String ctValue = getClientTokenValue(clientId);
-		if(ctValue != null) {
-			ClientTokenModel ct = getClientToken(ctValue);
-			if(ct != null) {
-				savePastClientTokenIndex(ct); 	
-			}
-		}
+		savePastTokenIndex(getClientToken(ctValue)); 
 		
 		// 3、生成新Token 
 		ClientTokenModel ct = new ClientTokenModel(randomClientToken(clientId, scope), clientId, scope);
@@ -316,22 +249,8 @@ public class SaOAuth2Template {
 		// 4、返回 
 		return ct;
 	}
-	
-	// ------------------- 其它方法 
 	/**
-	 * 获取 access_token 所代表的LoginId 
-	 * @param accessToken access_token 
-	 * @return LoginId 
-	 */
-	public Object getLoginIdByAccessToken(String accessToken) {
-		AccessTokenModel tokenModel = SaOAuth2Util.getAccessToken(accessToken);
-		if(tokenModel == null) {
-			throw new SaTokenException("无效access_token");
-		}
-		return getLoginId(tokenModel.clientId, tokenModel.openid);
-	}
-	/**
-	 * [OK] 构建URL：下放授权码URL 
+	 * 构建URL：下放Code URL (Authorization Code 授权码)
 	 * @param redirectUri 下放地址 
 	 * @param code code参数
 	 * @param state state参数 
@@ -345,57 +264,54 @@ public class SaOAuth2Template {
 		return url;
 	}
 	/**
-	 * [OK] 构建URL：下放Token URL 
+	 * 构建URL：下放Access-Token URL （implicit 隐藏式）
 	 * @param redirectUri 下放地址 
 	 * @param token token
 	 * @param state state参数 
 	 * @return 构建完毕的URL 
 	 */
-	public String buildRedirectUri2(String redirectUri, String token, String state) {
+	public String buildImplicitRedirectUri(String redirectUri, String token, String state) {
 		String url = SaFoxUtil.joinSharpParam(redirectUri, Param.token, token);
 		if(SaFoxUtil.isEmpty(state) == false) {
-			url = SaFoxUtil.joinParam(url, Param.state, state); 
+			url = SaFoxUtil.joinSharpParam(url, Param.state, state); 
 		}
 		return url;
 	}
 
-	// ------------------- 数据校验 
+	// ------------------- check 数据校验 
 	/**
-	 * [OK] 判断：该Client是否签约了指定的Scope 
-	 * @param clientId 应用id
-	 * @param scope 权限 
-	 */
-	public boolean isContract(String clientId, String scope) {
-		if(SaFoxUtil.isEmpty(scope)) {
-			return true;
-		}
-		List<String> clientScopeList = getClientScopeList(clientId);
-		List<String> scopelist = Arrays.asList(scope.split(","));
-		return clientScopeList.containsAll(scopelist);
-	}
-	/**
-	 * [OK] 指定 loginId 是否对一个 Client 授权给了指定 Scope 
+	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope 
 	 * @param loginId 账号id 
 	 * @param clientId 应用id 
 	 * @param scope 权限 
 	 * @return 是否已经授权
 	 */
 	public boolean isGrant(Object loginId, String clientId, String scope) {
-		List<String> grantScopeList = getGrantScopeList(loginId, clientId);
-		List<String> scopeList = convertStringToList(scope);
+		List<String> grantScopeList = SaFoxUtil.convertStringToList(getGrantScope(clientId, loginId));
+		List<String> scopeList = SaFoxUtil.convertStringToList(scope);
 		return scopeList.size() == 0 || grantScopeList.containsAll(scopeList);
 	}
 	/**
-	 * [OK] 指定Client使用指定url作为回调地址，是否合法 
+	 * 校验：该Client是否签约了指定的Scope 
+	 * @param clientId 应用id
+	 * @param scope 权限(多个用逗号隔开) 
+	 */
+	public void checkContract(String clientId, String scope) {
+		List<String> clientScopeList = SaFoxUtil.convertStringToList(checkClientModel(clientId).contractScope);
+		List<String> scopelist = SaFoxUtil.convertStringToList(scope);
+		if(clientScopeList.containsAll(scopelist) == false) {
+			throw new SaOAuth2Exception("请求的Scope暂未签约");
+		}
+	}
+	/**
+	 * 校验：该Client使用指定url作为回调地址，是否合法 
 	 * @param clientId 应用id 
 	 * @param url 指定url
-	 * @return 是否合法 
 	 */
-	public boolean isRightUrl(String clientId, String url) {
-		
-		// 1、是否是一个有效的url
+	public void checkRightUrl(String clientId, String url) {
+		// 1、是否是一个有效的url 
 		if(SaFoxUtil.isUrl(url) == false) {
-			return false;
+			throw new SaOAuth2Exception("无效redirect_url：" + url);
 		}
 		
 		// 2、截取掉?后面的部分 
@@ -405,81 +321,142 @@ public class SaOAuth2Template {
 		}
 		
 		// 3、是否在[允许地址列表]之中 
-		String domain = getClientDomain(clientId);
-		if(SaFoxUtil.isEmpty(domain)) {
-			return false;
+		List<String> allowList = SaFoxUtil.convertStringToList(checkClientModel(clientId).allowUrl); 
+		if(SaManager.getSaTokenAction().hasElement(allowList, url) == false) {
+			throw new SaOAuth2Exception("非法redirect_url：" + url);
 		}
-		List<String> authUrlList = Arrays.asList(domain.replaceAll(" ", "").split(",")); 
-		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
-			return false;
-		}
-		
-		// 验证通过 
-		return true;
 	}
 	/**
-	 * [OK 方法名改一下]校验code、clientId、clientSecret 三者是否正确 
+	 * 校验：clientId 与 clientSecret 是否正确
+	 * @param clientId 应用id 
+	 * @param clientSecret 秘钥 
+	 * @return SaClientModel对象 
+	 */
+	public SaClientModel checkClientSecret(String clientId, String clientSecret) {
+		SaClientModel cm = checkClientModel(clientId);
+		SaOAuth2Exception.throwBy(cm.clientSecret == null || cm.clientSecret.equals(clientSecret) == false, "无效client_secret: " + clientSecret);
+		return cm;
+	}
+	/**
+	 * 校验：使用 code 获取 token 时提供的参数校验 
 	 * @param code 授权码
 	 * @param clientId 应用id 
 	 * @param clientSecret 秘钥 
-	 * @param redirectUri 秘钥 
+	 * @param redirectUri 重定向地址 
 	 * @return CodeModel对象 
 	 */
-	public CodeModel checkCodeIdSecret(String code, String clientId, String clientSecret, String redirectUri) {
+	public CodeModel checkGainTokenParam(String code, String clientId, String clientSecret, String redirectUri) {
 		
 		// 校验：Code是否存在 
-		CodeModel codeModel = getCode(code);
-		if(codeModel == null) {
-			throw new SaOAuth2Exception("无效code");
-		}
+		CodeModel cm = getCode(code);
+		SaOAuth2Exception.throwBy(cm == null, "无效code: " + code);
 
 		// 校验：ClientId是否一致 
-		if(codeModel.getClientId().equals(clientId) == false){
-			throw new SaOAuth2Exception("无效client_id");
-		}
+		SaOAuth2Exception.throwBy(cm.clientId.equals(clientId) == false, "无效client_id: " + clientId);
 		
 		// 校验：Secret是否正确 
-		String dbClientSecret = getClientSecret(clientId);
-		if(dbClientSecret == null || dbClientSecret.equals(clientSecret) == false){
-			throw new SaOAuth2Exception("无效client_secret");
-		}
+		String dbSecret = checkClientModel(clientId).clientSecret;
+		SaOAuth2Exception.throwBy(dbSecret == null || dbSecret.equals(clientSecret) == false, "无效client_secret: " + clientSecret);
 		
 		// 如果提供了redirectUri，则校验其是否与请求Code时提供的一致 
 		if(SaFoxUtil.isEmpty(redirectUri) == false) {
-			if(redirectUri.equals(codeModel.redirectUri) == false) {
-				throw new SaOAuth2Exception("无效redirect_uri"); 
-			}
+			SaOAuth2Exception.throwBy(redirectUri.equals(cm.redirectUri) == false, "无效redirect_uri: " + redirectUri);
 		}
 		
-		// 返回CodeMdoel
-		return codeModel;
+		// 返回CodeMdoel 
+		return cm;
 	}
 	/**
-	 * 校验access_token、clientId、clientSecret 三者是否正确 
-	 * @param accessToken access_token
+	 * 校验：使用 Refresh-Token 刷新 Access-Token 时提供的参数校验 
 	 * @param clientId 应用id 
 	 * @param clientSecret 秘钥 
-	 * @return AccessTokenModel对象 
+	 * @param refreshToken Refresh-Token
+	 * @return CodeModel对象 
 	 */
-	public AccessTokenModel checkTokenIdSecret(String accessToken, String clientId, String clientSecret) {
+	public RefreshTokenModel checkRefreshTokenParam(String clientId, String clientSecret, String refreshToken) {
 		
-		// 获取授权码信息 
-		AccessTokenModel tokenModel = getAccessToken(accessToken);
+		// 校验：Refresh-Token是否存在 
+		RefreshTokenModel rt = getRefreshToken(refreshToken);
+		SaOAuth2Exception.throwBy(rt == null, "无效refresh_token: " + refreshToken);
+
+		// 校验：ClientId是否一致 
+		SaOAuth2Exception.throwBy(rt.clientId.equals(clientId) == false, "无效client_id: " + clientId);
 		
-		// 验证code、client_id、client_secret
-		if(tokenModel == null) {
-			throw new SaTokenException("无效access_token");
-		}
-		if(tokenModel.clientId.equals(clientId) == false){
-			throw new SaTokenException("无效client_id");
-		}
-		String dbClientSecret = getClientSecret(clientId);
-		if(dbClientSecret == null || dbClientSecret.equals(clientSecret)){
-			throw new SaTokenException("无效client_secret");
-		}
+		// 校验：Secret是否正确 
+		String dbSecret = checkClientModel(clientId).clientSecret;
+		SaOAuth2Exception.throwBy(dbSecret == null || dbSecret.equals(clientSecret) == false, "无效client_secret: " + clientSecret);
 		
-		// 返回AccessTokenModel
-		return tokenModel;
+		// 返回Refresh-Token 
+		return rt;
+	}
+	
+	// ------------------- conver 数据转换 
+	/**
+	 * 将 Code 转换为 Access-Token 
+	 * @param cm CodeModel对象
+	 * @return AccessToken对象 
+	 */
+	public AccessTokenModel converCodeToAccessToken(CodeModel cm) {
+		AccessTokenModel at = new AccessTokenModel();
+		at.accessToken = randomAccessToken(cm.clientId, cm.loginId, cm.scope); 
+		// at.refreshToken = randomRefreshToken(cm.clientId, cm.loginId, cm.scope);
+		at.clientId = cm.clientId;
+		at.loginId = cm.loginId;
+		at.scope = cm.scope;
+		at.openid = getOpenid(cm.clientId, cm.loginId);
+		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
+		// at.refreshExpiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+		return at;
+	}
+	/**
+	 * 将 Access-Token 转换为 Refresh-Token 
+	 * @param at .
+	 * @return .
+	 */
+	public RefreshTokenModel converAccessTokenToRefreshToken(AccessTokenModel at) {
+		RefreshTokenModel rt = new RefreshTokenModel();
+		rt.refreshToken = randomRefreshToken(at.clientId, at.loginId, at.scope);
+		rt.clientId = at.clientId;
+		rt.loginId = at.loginId;
+		rt.scope = at.scope;
+		rt.openid = at.openid;
+		rt.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+		// 改变at属性 
+		at.refreshToken = rt.refreshToken;
+		at.refreshExpiresTime = rt.expiresTime;
+		return rt;
+	}
+	/**
+	 * 将 Refresh-Token 转换为 Access-Token 
+	 * @param rt .
+	 * @return .
+	 */
+	public AccessTokenModel converRefreshTokenToAccessToken(RefreshTokenModel rt) {
+		AccessTokenModel at = new AccessTokenModel();
+		at.accessToken = randomAccessToken(rt.clientId, rt.loginId, rt.scope);
+		at.refreshToken = rt.refreshToken;
+		at.clientId = rt.clientId;
+		at.loginId = rt.loginId;
+		at.scope = rt.scope;
+		at.openid = rt.openid;
+		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
+		at.refreshExpiresTime = rt.expiresTime;
+		return at;
+	}
+	/**
+	 * 根据 Refresh-Token 创建一个新的 Refresh-Token 
+	 * @param rt .
+	 * @return .
+	 */
+	public RefreshTokenModel converRefreshTokenToRefreshToken(RefreshTokenModel rt) {
+		RefreshTokenModel newRt = new RefreshTokenModel();
+		newRt.refreshToken = randomRefreshToken(rt.clientId, rt.loginId, rt.scope);
+		newRt.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+		newRt.clientId = rt.clientId;
+		newRt.scope = rt.scope;
+		newRt.loginId = rt.loginId;
+		newRt.openid = rt.openid;
+		return newRt;
 	}
 
 	// ------------------- save 数据 
@@ -488,266 +465,344 @@ public class SaOAuth2Template {
 	 * @param c . 
 	 */
 	public void saveCode(CodeModel c) {
-		SaManager.getSaTokenDao().setObject(splicingKeySaveCode(c.code), c, SaOAuth2Manager.getConfig().getCodeTimeout());
+		if(c == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().setObject(splicingCodeSaveKey(c.code), c, SaOAuth2Manager.getConfig().getCodeTimeout());
 	}
 	/**
 	 * 持久化：Code-索引 
 	 * @param c . 
 	 */
 	public void saveCodeIndex(CodeModel c) {
-		SaManager.getSaTokenDao().set(splicingKeyCodeIndex(c.clientId, c.loginId), c.code, SaOAuth2Manager.getConfig().getCodeTimeout());
+		if(c == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().set(splicingCodeIndexKey(c.clientId, c.loginId), c.code, SaOAuth2Manager.getConfig().getCodeTimeout());
 	}
 	/**
 	 * 持久化：AccessToken-Model 
 	 * @param at . 
 	 */
 	public void saveAccessToken(AccessTokenModel at) {
-		SaManager.getSaTokenDao().setObject(splicingKeySaveAccessToken(at.accessToken), at, at.getExpiresIn());
+		if(at == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().setObject(splicingAccessTokenSaveKey(at.accessToken), at, at.getExpiresIn());
 	}
 	/**
 	 * 持久化：AccessToken-索引 
 	 * @param at . 
 	 */
 	public void saveAccessTokenIndex(AccessTokenModel at) {
-		SaManager.getSaTokenDao().set(splicingKeyAccessTokenIndex(at.clientId, at.loginId), at.accessToken, at.getExpiresIn());
+		if(at == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().set(splicingAccessTokenIndexKey(at.clientId, at.loginId), at.accessToken, at.getExpiresIn());
 	}
 	/**
 	 * 持久化：RefreshToken-Model 
 	 * @param rt . 
 	 */
 	public void saveRefreshToken(RefreshTokenModel rt) {
-		SaManager.getSaTokenDao().setObject(splicingKeySaveRefreshToken(rt.refreshToken), rt, rt.getExpiresIn());
+		if(rt == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().setObject(splicingRefreshTokenSaveKey(rt.refreshToken), rt, rt.getExpiresIn());
 	}
 	/**
 	 * 持久化：RefreshToken-索引 
 	 * @param rt . 
 	 */
 	public void saveRefreshTokenIndex(RefreshTokenModel rt) {
-		SaManager.getSaTokenDao().set(splicingKeyRefreshTokenIndex(rt.clientId, rt.loginId), rt.refreshToken, rt.getExpiresIn());
+		if(rt == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().set(splicingRefreshTokenIndexKey(rt.clientId, rt.loginId), rt.refreshToken, rt.getExpiresIn());
 	}
 	/**
 	 * 持久化：ClientToken-Model 
-	 * @param at . 
+	 * @param ct . 
 	 */
 	public void saveClientToken(ClientTokenModel ct) {
-		SaManager.getSaTokenDao().setObject(splicingKeySaveClientToken(ct.clientToken), ct, ct.getExpiresIn());
+		if(ct == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().setObject(splicingClientTokenSaveKey(ct.clientToken), ct, ct.getExpiresIn());
 	}
 	/**
 	 * 持久化：ClientToken-索引 
-	 * @param at . 
+	 * @param ct . 
 	 */
 	public void saveClientTokenIndex(ClientTokenModel ct) {
-		SaManager.getSaTokenDao().set(splicingKeyClientTokenIndex(ct.clientId), ct.clientToken, ct.getExpiresIn());
+		if(ct == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().set(splicingClientTokenIndexKey(ct.clientId), ct.clientToken, ct.getExpiresIn());
 	}
 	/**
-	 * 持久化：Past-ClientToken-索引  
-	 * @param at . 
+	 * 持久化：Past-Token-索引  
+	 * @param ct . 
 	 */
-	public void savePastClientTokenIndex(ClientTokenModel ct) {
-		SaManager.getSaTokenDao().set(splicingKeyPastTokenIndex(ct.clientId), ct.clientToken, ct.getExpiresIn());
+	public void savePastTokenIndex(ClientTokenModel ct) {
+		if(ct == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().set(splicingPastTokenIndexKey(ct.clientId), ct.clientToken, ct.getExpiresIn());
+	}
+	/**
+	 * 持久化：用户授权记录 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @param scope 权限列表(多个逗号隔开) 
+	 */
+	public void saveGrantScope(String clientId, Object loginId, String scope) {
+		if(SaFoxUtil.isEmpty(scope) == false) {
+			long ttl = SaOAuth2Manager.getConfig().getAccessTokenTimeout();
+			SaManager.getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), scope, ttl);
+		}
 	}
 	
-	// ------------------- get 数据 [OK] 
+	// ------------------- get 数据 
 	/**
-	 * 获取：授权码 
+	 * 获取：Code Model  
 	 * @param code .
 	 * @return .
 	 */
 	public CodeModel getCode(String code) {
-		return (CodeModel)SaManager.getSaTokenDao().getObject(splicingKeySaveCode(code));
+		if(code == null) {
+			return null;
+		}
+		return (CodeModel)SaManager.getSaTokenDao().getObject(splicingCodeSaveKey(code));
 	}
 	/**
-	 * 获取：授权码-Value 
+	 * 获取：Code Value 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @return .
 	 */
 	public String getCodeValue(String clientId, Object loginId) {
-		return SaManager.getSaTokenDao().get(splicingKeyCodeIndex(clientId, loginId)); 
+		return SaManager.getSaTokenDao().get(splicingCodeIndexKey(clientId, loginId)); 
 	}
 	/**
-	 * 获取：AccessToken 
+	 * 获取：Access-Token Model 
 	 * @param accessToken . 
 	 * @return .
 	 */
 	public AccessTokenModel getAccessToken(String accessToken) {
-		return (AccessTokenModel)SaManager.getSaTokenDao().getObject(splicingKeySaveAccessToken(accessToken));
+		if(accessToken == null) {
+			return null;
+		}
+		return (AccessTokenModel)SaManager.getSaTokenDao().getObject(splicingAccessTokenSaveKey(accessToken));
 	}
 	/**
-	 * 获取：AccessToken-Value 
+	 * 获取：Access-Token Value 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @return .
 	 */
 	public String getAccessTokenValue(String clientId, Object loginId) {
-		return SaManager.getSaTokenDao().get(splicingKeyAccessTokenIndex(clientId, loginId)); 
+		return SaManager.getSaTokenDao().get(splicingAccessTokenIndexKey(clientId, loginId)); 
 	}
 	/**
-	 * 获取：RefreshToken 
+	 * 获取：Refresh-Token Model 
 	 * @param refreshToken . 
 	 * @return . 
 	 */
 	public RefreshTokenModel getRefreshToken(String refreshToken) {
-		return (RefreshTokenModel)SaManager.getSaTokenDao().getObject(splicingKeySaveRefreshToken(refreshToken));
+		if(refreshToken == null) {
+			return null;
+		}
+		return (RefreshTokenModel)SaManager.getSaTokenDao().getObject(splicingRefreshTokenSaveKey(refreshToken));
 	}
 	/**
-	 * 获取：RefreshToken-Value 
+	 * 获取：Refresh-Token Value 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @return .
 	 */
 	public String getRefreshTokenValue(String clientId, Object loginId) {
-		return SaManager.getSaTokenDao().get(splicingKeyRefreshTokenIndex(clientId, loginId)); 
+		return SaManager.getSaTokenDao().get(splicingRefreshTokenIndexKey(clientId, loginId)); 
 	}
-	
 	/**
-	 * 获取：ClientTokenModel 
+	 * 获取：Client-Token Model 
 	 * @param clientToken . 
 	 * @return .
 	 */
 	public ClientTokenModel getClientToken(String clientToken) {
-		return (ClientTokenModel)SaManager.getSaTokenDao().getObject(splicingKeySaveClientToken(clientToken));
+		if(clientToken == null) {
+			return null;
+		}
+		return (ClientTokenModel)SaManager.getSaTokenDao().getObject(splicingClientTokenSaveKey(clientToken));
 	}
 	/**
-	 * 获取：ClientTokenModel-Value 
+	 * 获取：Client-Token Value 
 	 * @param clientId 应用id 
-	 * @param loginId 账号id 
 	 * @return .
 	 */
 	public String getClientTokenValue(String clientId) {
-		return SaManager.getSaTokenDao().get(splicingKeyClientTokenIndex(clientId)); 
+		return SaManager.getSaTokenDao().get(splicingClientTokenIndexKey(clientId)); 
 	}
 	/**
-	 * 获取：ClientTokenModel-Value 
+	 * 获取：Past-Token Value 
 	 * @param clientId 应用id 
-	 * @param loginId 账号id 
 	 * @return .
 	 */
 	public String getPastTokenValue(String clientId) {
-		return SaManager.getSaTokenDao().get(splicingKeyPastTokenIndex(clientId)); 
+		return SaManager.getSaTokenDao().get(splicingPastTokenIndexKey(clientId)); 
+	}
+	/**
+	 * 获取：用户授权记录 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @return 权限 
+	 */
+	public String getGrantScope(String clientId, Object loginId) {
+		return SaManager.getSaTokenDao().get(splicingGrantScopeKey(clientId, loginId));
 	}
 	
-	
-	// ------------------- delete 数据 [OK]
+	// ------------------- delete数据 
 	/**
-	 * 删除：授权码
-	 * @param code 授权码 
+	 * 删除：Code 
+	 * @param code 值 
 	 */
 	public void deleteCode(String code) {
-		SaManager.getSaTokenDao().deleteObject(splicingKeySaveCode(code));
+		if(code != null) {
+			SaManager.getSaTokenDao().deleteObject(splicingCodeSaveKey(code));
+		}
 	}
 	/**
-	 * 删除：授权码索引 
+	 * 删除：Code索引 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 */
 	public void deleteCodeIndex(String clientId, Object loginId) {
-		SaManager.getSaTokenDao().delete(splicingKeyCodeIndex(clientId, loginId)); 
+		SaManager.getSaTokenDao().delete(splicingCodeIndexKey(clientId, loginId)); 
 	}
 	/**
-	 * 删除：AccessToken
-	 * @param accessToken .
+	 * 删除：Access-Token 
+	 * @param accessToken 值 
 	 */
 	public void deleteAccessToken(String accessToken) {
-		SaManager.getSaTokenDao().deleteObject(splicingKeySaveAccessToken(accessToken));
+		if(accessToken != null) {
+			SaManager.getSaTokenDao().deleteObject(splicingAccessTokenSaveKey(accessToken));
+		}
 	}
 	/**
-	 * 删除：AccessToken索引 
+	 * 删除：Access-Token索引 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 */
 	public void deleteAccessTokenIndex(String clientId, Object loginId) {
-		SaManager.getSaTokenDao().delete(splicingKeyAccessTokenIndex(clientId, loginId)); 
+		SaManager.getSaTokenDao().delete(splicingAccessTokenIndexKey(clientId, loginId)); 
 	}
 	/**
-	 * 删除：RefreshAccess
-	 * @param refreshAccess .
+	 * 删除：Refresh-Token 
+	 * @param refreshToken 值 
 	 */
-	public void deleteRefreshAccess(String refreshAccess) {
-		SaManager.getSaTokenDao().deleteObject(splicingKeySaveRefreshToken(refreshAccess));
+	public void deleteRefreshToken(String refreshToken) {
+		if(refreshToken != null) {
+			SaManager.getSaTokenDao().deleteObject(splicingRefreshTokenSaveKey(refreshToken));
+		}
 	}
 	/**
-	 * 删除：RefreshAccess索引 
+	 * 删除：Refresh-Token索引 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 */
-	public void deleteRefreshAccessIndex(String clientId, Object loginId) {
-		SaManager.getSaTokenDao().delete(splicingKeyRefreshTokenIndex(clientId, loginId)); 
+	public void deleteRefreshTokenIndex(String clientId, Object loginId) {
+		SaManager.getSaTokenDao().delete(splicingRefreshTokenIndexKey(clientId, loginId)); 
 	}
 	/**
-	 * 删除：ClientToken
-	 * @param clientToken .
+	 * 删除：Client-Token 
+	 * @param clientToken 值 
 	 */
 	public void deleteClientToken(String clientToken) {
-		SaManager.getSaTokenDao().deleteObject(splicingKeySaveClientToken(clientToken));
+		if(clientToken != null) {
+			SaManager.getSaTokenDao().deleteObject(splicingClientTokenSaveKey(clientToken));
+		}
 	}
 	/**
-	 * 删除：ClientToken索引 
+	 * 删除：Client-Token索引 
 	 * @param clientId 应用id 
 	 */
 	public void deleteClientTokenIndex(String clientId) {
-		SaManager.getSaTokenDao().delete(splicingKeyClientTokenIndex(clientId)); 
+		SaManager.getSaTokenDao().delete(splicingClientTokenIndexKey(clientId)); 
 	}
 	/**
 	 * 删除：Past-Token索引 
 	 * @param clientId 应用id 
 	 */
 	public void deletePastTokenIndex(String clientId) {
-		SaManager.getSaTokenDao().delete(splicingKeyPastTokenIndex(clientId)); 
+		SaManager.getSaTokenDao().delete(splicingPastTokenIndexKey(clientId)); 
+	}
+	/**
+	 * 删除：用户授权记录 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 */
+	public void deleteGrantScope(String clientId, Object loginId) {
+		SaManager.getSaTokenDao().delete(splicingGrantScopeKey(clientId, loginId)); 
 	}
 	
-	
-	// ------------------- Random数据 [OK] 
+	// ------------------- Random数据 
 	/**
-	 * 生成授权码 
+	 * 随机一个 Code 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
 	 * @param scope 权限
-	 * @return 授权码 
+	 * @return Code 
 	 */
 	public String randomCode(String clientId, Object loginId, String scope) {
 		return SaFoxUtil.getRandomString(60); 
 	}
 	/**
-	 * 生成AccessToken 
-	 * @param codeModel CodeModel对象
-	 * @return AccessToken 
+	 * 随机一个 Access-Token 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @param scope 权限
+	 * @return Access-Token 
 	 */
 	public String randomAccessToken(String clientId, Object loginId, String scope) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	/**
-	 * 生成RefreshToken 
-	 * @param codeModel CodeModel对象
-	 * @return RefreshToken 
+	 * 随机一个 Refresh-Token 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @param scope 权限
+	 * @return Refresh-Token 
 	 */
 	public String randomRefreshToken(String clientId, Object loginId, String scope) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	/**
-	 * 生成ClientToken  
-	 * @return RefreshToken 
+	 * 随机一个 Client-Token 
+	 * @param clientId 应用id 
+	 * @param loginId 账号id 
+	 * @param scope 权限
+	 * @return Client-Token 
 	 */
 	public String randomClientToken(String clientId, Object loginId) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	
-	// ------------------- 拼接key [OK] 
+	// ------------------- 拼接key 
 	/**  
-	 * 拼接key：授权码持久化 
+	 * 拼接key：Code持久化 
 	 * @param code 授权码
 	 * @return key
 	 */
-	public String splicingKeySaveCode(String code) {
+	public String splicingCodeSaveKey(String code) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:code:" + code;
 	}
 	/**  
-	 * 拼接key：授权码索引 
+	 * 拼接key：Code索引 
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return key
 	 */
-	public String splicingKeyCodeIndex(String clientId, Object loginId) {
+	public String splicingCodeIndexKey(String clientId, Object loginId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:code-index:" + clientId + ":" + loginId;
 	}
 	/**  
@@ -755,7 +810,7 @@ public class SaOAuth2Template {
 	 * @param accessToken accessToken
 	 * @return key
 	 */
-	public String splicingKeySaveAccessToken(String accessToken) {
+	public String splicingAccessTokenSaveKey(String accessToken) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:access-token:" + accessToken;
 	}
 	/**  
@@ -764,49 +819,58 @@ public class SaOAuth2Template {
 	 * @param loginId 账号id
 	 * @return key
 	 */
-	public String splicingKeyAccessTokenIndex(String clientId, Object loginId) {
+	public String splicingAccessTokenIndexKey(String clientId, Object loginId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:access-token-index:" + clientId + ":" + loginId;
 	}
 	/**  
-	 * 拼接key：RefreshToken持久化 
+	 * 拼接key：Refresh-Token持久化 
 	 * @param refreshToken refreshToken
 	 * @return key
 	 */
-	public String splicingKeySaveRefreshToken(String refreshToken) {
+	public String splicingRefreshTokenSaveKey(String refreshToken) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
 	}
 	/**  
-	 * 拼接key：RefreshToken索引 
+	 * 拼接key：Refresh-Token索引 
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return key
 	 */
-	public String splicingKeyRefreshTokenIndex(String clientId, Object loginId) {
+	public String splicingRefreshTokenIndexKey(String clientId, Object loginId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:refresh-token-index:" + clientId + ":" + loginId;
 	}
 	/**  
 	 * 拼接key：Client-Token持久化 
-	 * @param clientToken accessToken
+	 * @param clientToken clientToken
 	 * @return key
 	 */
-	public String splicingKeySaveClientToken(String clientToken) {
+	public String splicingClientTokenSaveKey(String clientToken) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:client-token:" + clientToken;
 	}
 	/**  
-	 * 拼接key：ClientToken 索引 
-	 * @param clientToken accessToken
+	 * 拼接key：Past-Token 索引 
+	 * @param clientId clientId 
 	 * @return key
 	 */
-	public String splicingKeyClientTokenIndex(String clientId) {
+	public String splicingClientTokenIndexKey(String clientId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:client-token-indedx:" + clientId;
 	}
 	/**  
-	 * 拼接key：Past-ClientToken 索引 
+	 * 拼接key：Past-Token 索引 
 	 * @param clientId clientId 
 	 * @return key 
 	 */
-	public String splicingKeyPastTokenIndex(String clientId) {
+	public String splicingPastTokenIndexKey(String clientId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:past-token-indedx:" + clientId;
+	}
+	/**  
+	 * 拼接key：用户授权记录  
+	 * @param clientId 应用id
+	 * @param loginId 账号id
+	 * @return key 
+	 */
+	public String splicingGrantScopeKey(String clientId, Object loginId) {
+		return SaManager.getConfig().getTokenName() + ":oauth2:grant-scope:" + clientId + ":" + loginId;
 	}
 	
 }

@@ -1,32 +1,35 @@
 package cn.dev33.satoken.oauth2.model;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Model: access_token
+ * Model: Access-Token
  * @author kong
  *
  */
-public class AccessTokenModel {
+public class AccessTokenModel implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
 
 	/**
-	 * access_token 值
+	 * Access-Token 值
 	 */
 	public String accessToken;
 	
 	/**
-	 * refresh_token 值
+	 * Refresh-Token 值
 	 */
 	public String refreshToken;
 	
 	/**
-	 * access_token 到期时间 
+	 * Access-Token 到期时间 
 	 */
 	public long expiresTime;
 
 	/**
-	 * refresh_token 到期时间   
+	 * Refresh-Token 到期时间   
 	 */
 	public long refreshExpiresTime;
 
@@ -91,7 +94,6 @@ public class AccessTokenModel {
 		long s = (refreshExpiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
-	
 	
 	/**
 	 * 将所有属性转换为下划线形式的Map 

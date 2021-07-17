@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 启动 
+ * 启动：OAuth2-Server端 
  * @author kong 
  */
 @SpringBootApplication 
@@ -12,7 +12,7 @@ public class SaOAuth2ServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaOAuth2ServerApplication.class, args);
-		System.out.println("\nOAuth-Server端启动成功");
+		System.out.println("\nSa-Token-OAuth Server端启动成功");
 	}
 	
 }

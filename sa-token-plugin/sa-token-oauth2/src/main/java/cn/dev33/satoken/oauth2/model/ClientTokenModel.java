@@ -1,22 +1,25 @@
 package cn.dev33.satoken.oauth2.model;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Model: client_token
+ * Model: Client-Token
  * @author kong
  *
  */
-public class ClientTokenModel {
+public class ClientTokenModel implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
 
 	/**
-	 * client_token 值
+	 * Client-Token 值
 	 */
 	public String clientToken;
 	
 	/**
-	 * client_token 到期时间 
+	 * Client-Token 到期时间 
 	 */
 	public long expiresTime;
 

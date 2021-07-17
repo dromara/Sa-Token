@@ -22,26 +22,39 @@
 	
 	<dependencies>
 
-		<!-- springboot依赖 -->
+		<!-- SpringBoot依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 		<dependency>
 		    <groupId>cn.dev33</groupId>
 		    <artifactId>sa-token-spring-boot-starter</artifactId>
             <version>${sa-token-version}</version>
 		</dependency>
+
+		<!-- thymeleaf 视图引擎 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
         
         <!-- OkHttps网络请求库： http://okhttps.ejlchina.com/ -->
         <dependency>
-		     <groupId>com.ejlchina</groupId>
-		     <artifactId>okhttps</artifactId>
-		     <version>2.4.5</version>
+			<groupId>com.ejlchina</groupId>
+			<artifactId>okhttps</artifactId>
+			<version>3.1.1</version>
 		</dependency>
-        
+		
+		<!-- 热刷新 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
 		<!-- ConfigurationProperties -->
         <dependency>
         	<groupId>org.springframework.boot</groupId>

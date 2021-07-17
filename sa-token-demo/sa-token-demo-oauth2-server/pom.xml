@@ -22,27 +22,27 @@
 	
 	<dependencies>
 
-		<!-- springboot依赖 -->
+		<!-- SpringBoot依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 		<dependency>
 		    <groupId>cn.dev33</groupId>
 		    <artifactId>sa-token-spring-boot-starter</artifactId>
             <version>${sa-token-version}</version>
 		</dependency>
 
-		<!-- sa-token 实现 oauth2.0 -->
+		<!-- Sa-Token-OAuth2.0 模块 -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-oauth2</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
 
-		<!-- sa-token整合redis (使用jackson序列化方式) -->
+		<!-- Sa-Token整合Redis (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
@@ -52,6 +52,19 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
+        
+		<!-- thymeleaf 视图引擎 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		
+		<!-- 热刷新 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
         
 		<!-- ConfigurationProperties -->
         <dependency>

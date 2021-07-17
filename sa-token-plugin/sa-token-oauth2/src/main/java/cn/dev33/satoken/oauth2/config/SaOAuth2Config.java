@@ -1,40 +1,118 @@
 package cn.dev33.satoken.oauth2.config;
 
+import java.io.Serializable;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * sa-token oauth2 配置类 Model
+ * Sa-Token-OAuth2 配置类 Model 
  * @author kong
  *
  */
-public class SaOAuth2Config {
+public class SaOAuth2Config implements Serializable {
 
-	/**
-	 * 授权码默认保存的时间(单位秒) 默认五分钟 
-	 */
-	private long codeTimeout = 60 * 5;
+	private static final long serialVersionUID = -6541180061782004705L;
 
-	/**
-	 * access_token默认保存的时间(单位秒) 默认两个小时 
-	 */
-	private long accessTokenTimeout = 60 * 60 * 2;
+	/** 是否打开模式：授权码（Authorization Code） */
+	public Boolean isCode = true;
 
-	/**
-	 * refresh_token默认保存的时间(单位秒) 默认30 天 
-	 */
-	private long refreshTokenTimeout = 60 * 60 * 24 * 30;
+	/** 是否打开模式：隐藏式（Implicit） */
+	public Boolean isImplicit = false;
 
-	/**
-	 * client_token默认保存的时间(单位秒) 默认两个小时 
-	 */
-	private long clientTokenTimeout = 60 * 60 * 2;
+	/** 是否打开模式：密码式（Password） */
+	public Boolean isPassword = false;
 
+	/** 是否打开模式：凭证式（Client Credentials） */
+	public Boolean isClient = false;
+
+	/** 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token */
+	public Boolean isNewRefresh = false;
 	
+	/** Code授权码 保存的时间(单位秒) 默认五分钟 */
+	public long codeTimeout = 60 * 5;
+
+	/** Access-Token 保存的时间(单位秒) 默认两个小时 */
+	public long accessTokenTimeout = 60 * 60 * 2;
+
+	/** Refresh-Token 保存的时间(单位秒) 默认30 天 */
+	public long refreshTokenTimeout = 60 * 60 * 24 * 30;
+
+	/** Client-Token 保存的时间(单位秒) 默认两个小时 */
+	public long clientTokenTimeout = 60 * 60 * 2;
+
+
+	/**
+	 * @return isCode
+	 */
+	public Boolean getIsCode() {
+		return isCode;
+	}
+
+	/**
+	 * @param isCode 要设置的 isCode
+	 */
+	public void setIsCode(Boolean isCode) {
+		this.isCode = isCode;
+	}
+
+	/**
+	 * @return isImplicit
+	 */
+	public Boolean getIsImplicit() {
+		return isImplicit;
+	}
+
+	/**
+	 * @param isImplicit 要设置的 isImplicit
+	 */
+	public void setIsImplicit(Boolean isImplicit) {
+		this.isImplicit = isImplicit;
+	}
+
+	/**
+	 * @return isPassword
+	 */
+	public Boolean getIsPassword() {
+		return isPassword;
+	}
+
+	/**
+	 * @param isPassword 要设置的 isPassword
+	 */
+	public void setIsPassword(Boolean isPassword) {
+		this.isPassword = isPassword;
+	}
+
+	/**
+	 * @return isClient
+	 */
+	public Boolean getIsClient() {
+		return isClient;
+	}
+
+	/**
+	 * @param isClient 要设置的 isClient
+	 */
+	public void setIsClient(Boolean isClient) {
+		this.isClient = isClient;
+	}
+
+	/**
+	 * @return isNewRefresh
+	 */
+	public Boolean getIsNewRefresh() {
+		return isNewRefresh;
+	}
+
+	/**
+	 * @param isNewRefresh 要设置的 isNewRefresh
+	 */
+	public void setIsNewRefresh(Boolean isNewRefresh) {
+		this.isNewRefresh = isNewRefresh;
+	}
+
 	/**
 	 * @return codeTimeout
 	 */
@@ -100,26 +178,13 @@ public class SaOAuth2Config {
 	}
 
 	
-	
-
 	// -------------------- SaOAuth2Handle 所有回调函数 -------------------- 
 	
-
 	/**
 	 * OAuth-Server端：未登录时返回的View 
 	 */
 	public Supplier<Object> notLoginView = () -> "当前会话在OAuth-Server认证中心尚未登录";
 
-	/**
-	 * OAuth-Server端：重定向URL无效时返回的View  
-	 */
-	public BiFunction<String, String, Object> invalidUrlView = (clientId, url) -> "无效重定向URL：" + url;
-	
-	/**
-	 * OAuth-Server端：Client请求的Scope暂未签约时返回的View 
-	 */
-	public BiFunction<String, String, Object> invalidScopeView = (clientId, scope) -> "请求的Scope暂未签约";
-	
 	/**
 	 * OAuth-Server端：确认授权时返回的View 
 	 */
@@ -131,35 +196,11 @@ public class SaOAuth2Config {
 	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> SaResult.error();
 
 	/**
-	 * SSO-Client端：发送Http请求的处理函数 
-	 */
-	public Function<String, Object> sendHttp = url -> {throw new SaTokenException("请配置Http处理器");};
-
-
-	/**
 	 * @param notLoginView OAuth-Server端：未登录时返回的View 
 	 * @return 对象自身
 	 */
 	public SaOAuth2Config setNotLoginView(Supplier<Object> notLoginView) {
 		this.notLoginView = notLoginView;
-		return this;
-	}
-
-	/**
-	 * @param invalidScopeView OAuth-Server端：重定向URL无效时返回的View 
-	 * @return 对象自身
-	 */
-	public SaOAuth2Config setInvalidUrlView(BiFunction<String, String, Object> invalidUrlView) {
-		this.invalidUrlView = invalidUrlView;
-		return this;
-	}
-
-	/**
-	 * @param invalidScopeView OAuth-Server端：Client请求的Scope暂未签约时返回的View 
-	 * @return 对象自身
-	 */
-	public SaOAuth2Config setInvalidScopeView(BiFunction<String, String, Object> invalidScopeView) {
-		this.invalidScopeView = invalidScopeView;
 		return this;
 	}
 
@@ -181,23 +222,13 @@ public class SaOAuth2Config {
 		return this;
 	}
 
-	/**
-	 * @param sendHttp 发送Http请求的处理函数 
-	 * @return 对象自身 
-	 */
-	public SaOAuth2Config setSendHttp(Function<String, Object> sendHttp) {
-		this.sendHttp = sendHttp;
-		return this;
-	}
-
-	
-	
-	
 	
 	@Override
 	public String toString() {
-		return "SaOAuth2Config [codeTimeout=" + codeTimeout + ", accessTokenTimeout=" + accessTokenTimeout
-				+ ", refreshTokenTimeout=" + refreshTokenTimeout + "]";
+		return "SaOAuth2Config [isCode=" + isCode + ", isImplicit=" + isImplicit + ", isPassword=" + isPassword
+				+ ", isClient=" + isClient + ", isNewRefresh=" + isNewRefresh + ", codeTimeout=" + codeTimeout
+				+ ", accessTokenTimeout=" + accessTokenTimeout + ", refreshTokenTimeout=" + refreshTokenTimeout
+				+ ", clientTokenTimeout=" + clientTokenTimeout + "]";
 	}
-
+	
 }

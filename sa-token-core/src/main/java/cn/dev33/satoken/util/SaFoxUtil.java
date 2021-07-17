@@ -356,4 +356,43 @@ public class SaFoxUtil {
 		}
 	}
 	
+	/**
+	 * 将指定字符串按照逗号分隔符转化为字符串集合 
+	 * @param str 字符串
+	 * @return 分割后的字符串集合 
+	 */
+	public static List<String> convertStringToList(String str) {
+		List<String> list = new ArrayList<String>();
+		if(isEmpty(str)) {
+			return list;
+		}
+		String[] arr = str.split(",");
+		for (String s : arr) {
+			s = s.trim();
+			if(isEmpty(s) == false) {
+				list.add(s);
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * 将指定集合按照逗号连接成一个字符串 
+	 * @param list 集合 
+	 * @return 字符串 
+	 */
+	public static String convertListToString(List<?> list) {
+		if(list == null || list.size() == 0) {
+			return "";
+		}
+		String str = "";
+		for (int i = 0; i < list.size(); i++) {
+			str += list.get(i);
+			if(i != list.size() - 1) {
+				str += ",";
+			}
+		}
+		return str;
+	}
+	
 }

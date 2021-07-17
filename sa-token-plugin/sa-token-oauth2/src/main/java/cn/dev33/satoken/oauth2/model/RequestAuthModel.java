@@ -1,5 +1,7 @@
 package cn.dev33.satoken.oauth2.model;
 
+import java.io.Serializable;
+
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -8,7 +10,9 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author kong
  *
  */
-public class RequestAuthModel {
+public class RequestAuthModel implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
 
 	/**
 	 * 应用id 

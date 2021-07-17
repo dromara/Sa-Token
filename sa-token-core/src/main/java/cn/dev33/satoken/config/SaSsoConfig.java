@@ -1,5 +1,6 @@
 package cn.dev33.satoken.config;
 
+import java.io.Serializable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -13,7 +14,9 @@ import cn.dev33.satoken.util.SaResult;
  * @author kong
  *
  */
-public class SaSsoConfig {
+public class SaSsoConfig implements Serializable {
+
+	private static final long serialVersionUID = -6541180061782004705L;
 
 	/**
 	 * Ticket有效期 (单位: 秒)

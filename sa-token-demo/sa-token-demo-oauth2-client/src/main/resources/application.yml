@@ -5,9 +5,3 @@ server:
 sa-token: 
     # token名称 (同时也是cookie名称)
     token-name: satoken-client
-
-spring: 
-    # 静态文件路径映射 
-    resources: 
-        static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/
-        # static-locations: file:E:\work\project-yun\sa-token\sa-token-demo-oauth2\sa-token-demo-oauth2-client\src\main\resources\static\
