@@ -25,12 +25,10 @@
 - [开源不易，求鼓励，点个star吧 ！](###)
 
 
-## Sa-Token 是什么？
+## Sa-Token 介绍
 Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证、权限认证、Session会话、单点登录、OAuth2.0 等一系列权限相关问题
 
 框架集成简单、开箱即用、API设计清爽，通过Sa-Token，你将以一种极其简单的方式实现系统的权限认证部分
-
-## Sa-Token 能做什么？
 
 - **登录验证** —— 单端登录、多端登录、同端互斥登录、七天内免登录
 - **权限验证** —— 权限认证、角色认证、会话二级认证
@@ -61,7 +59,7 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
 ##### Sa-Token 功能结构图
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js2.png 's-w')
+![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js3.png 's-w')
 
 ##### Sa-Token 认证流程图
 ![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png 's-w')
@@ -91,6 +89,16 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 5. 无缝集成：由于Sa-Token本身就是一个权限认证框架，因此你可以只用一个框架同时解决`权限认证` + `单点登录`问题，让你不再到处搜索：xxx单点登录与xxx权限认证如何整合……
 6. 高可定制：Sa-Token-SSO模块对代码架构侵入性极低，结合Sa-Token本身的路由拦截特性，你可以非常轻松的定制化开发 
 
+
+## Sa-Token-OAuth2.0 授权登录
+Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) 编写，通过Sa-OAuth2你可以非常轻松的实现系统的OAuth2.0授权认证 
+
+1. 授权码（Authorization Code）：OAuth2.0标准授权步骤，Server端向Client端下放Code码，Client端再用Code码换取授权Token
+2. 隐藏式（Implicit）：无法使用授权码模式时的备用选择，Server端使用URL重定向方式直接将Token下放到Client端页面
+3. 密码式（Password）：Client直接拿着用户的账号密码换取授权Token
+4. 客户端凭证（Client Credentials）：Server端针对Client级别的Token，代表应用自身的资源授权
+
+详细参考文档：[http://sa-token.dev33.cn/doc/index.html#/oauth2/readme](http://sa-token.dev33.cn/doc/index.html#/oauth2/readme)
 
 
 ## 代码示例

@@ -94,6 +94,7 @@ public class SsoServerController {
 	
 }
 ```
+注意：在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
 
 ##### 1.4、application.yml配置
 ``` yml
@@ -243,8 +244,8 @@ public class SaSsoClientApplication {
 ### 3、测试访问 
 
 ##### 3.1 修改host文件
-首先修改hosts文件`(C:\WINDOWS\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
-```
+首先修改hosts文件`(C:\windows\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
+``` url
 127.0.0.1 sa-sso-server.com
 127.0.0.1 sa-sso-client1.com
 127.0.0.1 sa-sso-client2.com

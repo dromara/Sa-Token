@@ -110,7 +110,10 @@ public class SaTokenJwtUtil {
     		warn += "-------------------------------------";
     		System.err.println(warn);
     	}
-    
+
+    	// 提前调用一下方法，促使其属性初始化 
+    	StpUtil.getLoginType();	
+    	
     	// 修改默认实现 
     	StpUtil.stpLogic = new StpLogic("login") {
     		

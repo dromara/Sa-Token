@@ -87,9 +87,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 				}
 			});
 			
-			// 提前退出 
-			
-			
+			// 提前退出 (执行SaRouter.stop()后会直接退出匹配链)
+			SaRouter.match("/test/back", () -> SaRouter.stop());
 			
 			// 在多账号模式下，可以使用任意StpUtil进行校验
 			SaRouter.match("/user/**", () -> StpUserUtil.checkLogin());

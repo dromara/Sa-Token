@@ -69,7 +69,7 @@ public class SaOAuth2Template {
 	 */
 	public AccessTokenModel checkAccessToken(String accessToken) {
 		AccessTokenModel at = getAccessToken(accessToken);
-		SaOAuth2Exception.throwBy(at == null, "无效：access_token" + accessToken);
+		SaOAuth2Exception.throwBy(at == null, "无效access_token：" + accessToken);
 		return at;
 	}
 	/**

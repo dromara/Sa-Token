@@ -31,7 +31,6 @@
 - **进阶**
 	- [全局过滤器](/use/global-filter) 
 	- [集群、分布式](/senior/dcs)
-	<!-- - [单点登录](/senior/sso) -->
 	- [多账号验证](/use/many-account) 
 
 - **单点登录**
@@ -39,6 +38,11 @@
 	- [SSO模式一 共享Cookie同步会话](/sso/sso-type1)
 	- [SSO模式二 URL重定向传播会话](/sso/sso-type2)
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)
+
+- **OAuth2.0**
+	- [OAuth2.0简述](/oauth2/readme)
+	- [OAuth2-Server搭建](/oauth2/oauth2-server)
+	- [OAuth2-API列表](/oauth2/oauth2-api)
 
 - **插件**
 	- [AOP注解鉴权](/plugin/aop-at)

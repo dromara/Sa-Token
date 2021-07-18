@@ -258,13 +258,10 @@ public class StpLogic {
 			tokenValue = createTokenValue(id);
 		}
 		
-		// ------ 3. 获取[User-Session] (如果还没有创建session, 则新建, 如果已经创建，则续期) 
-		SaSession session = getSessionByLoginId(id, false);
-		if(session == null) {
-			session = getSessionByLoginId(id);
-		} else {
-			session.updateMinTimeout(loginModel.getTimeout());
-		}
+		// ------ 3. 获取[User-Session], 续期 
+		SaSession session = getSessionByLoginId(id, true);
+		session.updateMinTimeout(loginModel.getTimeout());
+		
 		// 在session上记录token签名 
 		session.addTokenSign(new TokenSign(tokenValue, loginModel.getDevice()));
 		

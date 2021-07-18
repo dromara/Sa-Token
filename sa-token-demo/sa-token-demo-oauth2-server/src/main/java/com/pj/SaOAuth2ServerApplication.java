@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 启动：OAuth2-Server端 
+ * 启动：Sa-OAuth2 Server端 
  * @author kong 
  */
 @SpringBootApplication 

@@ -18,9 +18,9 @@ sa-token:
 	# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
 	activity-timeout: -1
 	# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
-	is-concurrent: false
+	is-concurrent: true
 	# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
-	is-share: false
+	is-share: true
 	# token风格
 	token-style: uuid
 	# 是否输出操作日志 
@@ -116,4 +116,32 @@ sa-token:
     sso: 
         # SSO-Server端 单点登录地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
+```
+
+
+
+### OAuth2.0相关配置 
+| 参数名称				| 类型		| 默认值	| 说明																		|
+| :--------				| :--------	| :--------	| :--------																	|
+| isCode				| Boolean	| true		| 是否打开模式：授权码（Authorization Code）								|
+| isImplicit			| Boolean	| false		| 是否打开模式：隐藏式（Implicit）											|
+| isPassword			| Boolean	| false		| 是否打开模式：密码式（Password）											|
+| isClient				| Boolean	| false		| 是否打开模式：凭证式（Client Credentials）								|
+| isNewRefresh			| Boolean	| false		| 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token	|
+| codeTimeout			| long		| 300		| Code授权码 保存的时间(单位秒) 默认五分钟									|
+| accessTokenTimeout	| long		| 7200		| Access-Token 保存的时间(单位秒) 默认两个小时								|
+| refreshTokenTimeout	| long		| 2592000	| Refresh-Token 保存的时间(单位秒) 默认30 天								|
+| clientTokenTimeout	| long		| 7200		| Client-Token 保存的时间(单位秒) 默认两个小时								|
+
+配置示例：
+``` yml
+# sa-token配置 
+sa-token: 
+    token-name: satoken-server
+    # OAuth2.0 配置 
+    oauth2: 
+        is-code: true
+        is-implicit: true
+        is-password: true
+        is-client: true
 ```

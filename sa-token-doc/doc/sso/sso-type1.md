@@ -29,8 +29,8 @@ OK，所有理论就绪，下面开始实战
 
 ### 1、准备工作
 
-首先修改hosts文件`(C:\WINDOWS\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
-``` text
+首先修改hosts文件`(C:\windows\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
+``` url
 127.0.0.1 s1.stp.com
 127.0.0.1 s2.stp.com
 127.0.0.1 s3.stp.com

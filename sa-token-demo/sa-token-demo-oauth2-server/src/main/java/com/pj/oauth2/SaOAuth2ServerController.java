@@ -28,7 +28,7 @@ public class SaOAuth2ServerController {
 	// 处理所有OAuth相关请求 
 	@RequestMapping("/oauth2/*")
 	public Object request() {
-		System.out.println("--------------进入请求 ");
+		System.out.println("------- 进入请求: " + SaHolder.getRequest().getUrl());
 		return SaOAuth2Handle.serverRequest();
 	}
 	

@@ -40,8 +40,8 @@ OK，所有理论就绪，下面开始实战
 Sa-Token整合同域下的单点登录非常简单，相比于正常的登录，你只需要在配置文件中增加配置 `sa-token.cookie-domain=xxx.com` 来指定一下Cookie写入时指定的父级域名即可，详细步骤示例如下：
 
 #### 1. 准备工作
-首先修改hosts文件(`C:\WINDOWS\system32\drivers\etc\hosts`)，添加以下IP映射，方便我们进行测试：
-``` text
+首先修改hosts文件(`C:\windows\system32\drivers\etc\hosts`)，添加以下IP映射，方便我们进行测试：
+``` url
 127.0.0.1 s1.stp.com
 127.0.0.1 s2.stp.com
 127.0.0.1 s3.stp.com
