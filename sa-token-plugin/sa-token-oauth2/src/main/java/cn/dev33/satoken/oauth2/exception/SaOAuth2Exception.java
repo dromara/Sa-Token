@@ -16,6 +16,7 @@ public class SaOAuth2Exception extends SaTokenException {
 	
 	/**
 	 * 一个异常：代表OAuth2认证流程错误 
+	 * @param message 异常描述 
 	 */
 	public SaOAuth2Exception(String message) {
 		super(message);

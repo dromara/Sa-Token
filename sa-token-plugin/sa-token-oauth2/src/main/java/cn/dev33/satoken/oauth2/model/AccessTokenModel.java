@@ -97,7 +97,7 @@ public class AccessTokenModel implements Serializable {
 	
 	/**
 	 * 将所有属性转换为下划线形式的Map 
-	 * @return
+	 * @return 属性转Map
 	 */
 	public Map<String, Object> toLineMap() {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();

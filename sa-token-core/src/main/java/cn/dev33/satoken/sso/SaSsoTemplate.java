@@ -301,7 +301,7 @@ public class SaSsoTemplate {
 
 	/** 
 	 * 拼接key：Ticket 查 账号Id 
-	 * @param ticket 
+	 * @param ticket ticket值 
 	 * @return key
 	 */
 	public String splicingKeyTicketToId(String ticket) {

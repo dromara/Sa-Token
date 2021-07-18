@@ -40,7 +40,6 @@ public class ClientTokenModel implements Serializable {
 	 * @param accessToken accessToken
 	 * @param clientId 应用id 
 	 * @param scope 请求授权范围 
-	 * @param loginId 对应的账号id 
 	 */
 	public ClientTokenModel(String accessToken, String clientId, String scope) {
 		super();
@@ -66,7 +65,7 @@ public class ClientTokenModel implements Serializable {
 	
 	/**
 	 * 将所有属性转换为下划线形式的Map 
-	 * @return
+	 * @return 属性转Map 
 	 */
 	public Map<String, Object> toLineMap() {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();

@@ -779,11 +779,10 @@ public class SaOAuth2Template {
 	/**
 	 * 随机一个 Client-Token 
 	 * @param clientId 应用id 
-	 * @param loginId 账号id 
 	 * @param scope 权限
 	 * @return Client-Token 
 	 */
-	public String randomClientToken(String clientId, Object loginId) {
+	public String randomClientToken(String clientId, String scope) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	

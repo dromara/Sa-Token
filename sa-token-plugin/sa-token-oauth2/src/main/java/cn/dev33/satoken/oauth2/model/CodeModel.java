@@ -48,6 +48,7 @@ public class CodeModel implements Serializable {
 	 * @param clientId 应用id 
 	 * @param scope 请求授权范围 
 	 * @param loginId 对应的账号id 
+	 * @param redirectUri 重定向地址 
 	 */
 	public CodeModel(String code, String clientId, String scope, Object loginId, String redirectUri) {
 		super();

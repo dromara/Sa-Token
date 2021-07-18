@@ -236,6 +236,9 @@ public class SaOAuth2Handle {
 
 	/**
 	 * 模式四：凭证式  
+	 * @param req 请求对象 
+	 * @param res 响应对象 
+	 * @param cfg 配置对象 
 	 * @return 处理结果 
 	 */
 	public static Object clientToken(SaRequest req, SaResponse res, SaOAuth2Config cfg) {

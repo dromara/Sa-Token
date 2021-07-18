@@ -84,6 +84,7 @@ public interface SaRequest {
 
 	/**
 	 * 返回当前请求path是否为指定值 
+	 * @param path path 
 	 * @return see note
 	 */
 	public default boolean isPath(String path) {
