@@ -1,6 +1,13 @@
 # 更新日志 
 
 
+### 2021-7-19 @v1.23.0
+- 新增：Sa-Token-OAuth2 模块正式发布   **[重要]** 
+- 修复：修复jwt集成demo无法正确注册StpLogic的bug
+- 修复：修复登录时某些场景下Session续期可能不正常的bug  
+- 优化：代码注释优化，文档优化  
+
+
 ### 2021-7-10 @v1.22.0
 - 新增：SaSsoConfig 部分属性增加set连缀风格 
 - 优化：SaSsoUtil 可定制化底层的 `StpLogic`
