@@ -3,6 +3,7 @@ package cn.dev33.satoken.spring;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -18,6 +19,8 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * <p> 1. yml配置前缀 [spring.sa-token.] 更改为 [sa-token.]
  * @author kong
  */
+//SpringBoot 1.5.x 版本下不存在 OriginTrackedMapPropertySource ，不加这个注解会导致项目无法启动 
+@ConditionalOnClass(OriginTrackedMapPropertySource.class)	
 public class SaHistoryVersionInject implements EnvironmentAware{
 
 	@Override
