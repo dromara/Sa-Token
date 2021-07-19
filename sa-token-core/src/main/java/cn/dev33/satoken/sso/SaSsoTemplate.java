@@ -75,8 +75,7 @@ public class SaSsoTemplate {
 		
 		// 构建 授权重定向地址
 		redirect = encodeBackParam(redirect);
-		String redirectUrl = SaFoxUtil.joinParam(redirect, ParamName.ticket, ticket);
-		return redirectUrl;
+		return SaFoxUtil.joinParam(redirect, ParamName.ticket, ticket);
 	}
 	
 	/**
@@ -122,7 +121,7 @@ public class SaSsoTemplate {
 	public void checkRedirectUrl(String url) {
 		
 		// 1、是否是一个有效的url
-		if(SaFoxUtil.isUrl(url) == false) {
+		if(!SaFoxUtil.isUrl(url)) {
 			throw new SaTokenException("无效回调地址：" + url);
 		}
 		
@@ -135,12 +134,9 @@ public class SaSsoTemplate {
 		// 3、是否在[允许地址列表]之中 
 		String authUrl = SaManager.getConfig().getSso().getAllowUrl().replaceAll(" ", "");
 		List<String> authUrlList = Arrays.asList(authUrl.split(",")); 
-		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
+		if(!SaManager.getSaTokenAction().hasElement(authUrlList, url)) {
 			throw new SaTokenException("非法回调地址：" + url);
 		}
-		
-		// 验证通过 
-		return;
 	}
 	
 	/**
@@ -158,11 +154,10 @@ public class SaSsoTemplate {
 		back = SaFoxUtil.encodeUrl(back);
 		
 		// 拼接最终地址，格式示例：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
-		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, ParamName.back, back); 
-		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, ParamName.redirect, clientLoginUrl);
-		
+		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, ParamName.back, back);
+
 		// 返回 
-		return serverAuthUrl;
+		return SaFoxUtil.joinParam(serverUrl, ParamName.redirect, clientLoginUrl);
 	}
 	
 	/**
@@ -208,7 +203,7 @@ public class SaSsoTemplate {
 	 * @param secretkey 秘钥 
 	 */
 	public void checkSecretkey(String secretkey) {
-		 if(secretkey == null || secretkey.isEmpty() || secretkey.equals(SaManager.getConfig().getSso().getSecretkey()) == false) {
+		 if(secretkey == null || secretkey.isEmpty() || !secretkey.equals(SaManager.getConfig().getSso().getSecretkey())) {
 			 throw new SaTokenException("无效秘钥：" + secretkey);
 		 }
 	}
@@ -252,8 +247,8 @@ public class SaSsoTemplate {
 	 */
 	public void forEachSloUrl(Object loginId, CallSloUrlFunction fun) {
 		String secretkey = SaManager.getConfig().getSso().getSecretkey();
-		Set<String> urlSet = stpLogic.getSessionByLoginId(loginId).get(SaSsoConsts.SLO_CALLBACK_SET_KEY,
-				() -> new HashSet<String>());
+		Set<String> urlSet = stpLogic.getSessionByLoginId(loginId)
+				.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, HashSet::new);
 		
 		for (String url : urlSet) {
 			// 拼接：login参数、秘钥参数

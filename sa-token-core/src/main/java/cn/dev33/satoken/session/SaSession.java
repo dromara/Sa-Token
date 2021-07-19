@@ -114,12 +114,9 @@ public class SaSession implements Serializable {
 	 * @return 查找到的tokenSign
 	 */
 	public TokenSign getTokenSign(String tokenValue) {
-		for (TokenSign tokenSign : getTokenSignList()) {
-			if (tokenSign.getValue().equals(tokenValue)) {
-				return tokenSign;
-			}
-		}
-		return null;
+		return tokenSignList.stream()
+				.filter(sign -> sign.getValue().equals(tokenValue))
+				.findFirst().orElse(null);
 	}
 
 	/**
@@ -128,15 +125,12 @@ public class SaSession implements Serializable {
 	 * @param tokenSign token签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
-		// 如果已经存在于列表中，则无需再次添加
-		for (TokenSign tokenSign2 : getTokenSignList()) {
-			if (tokenSign2.getValue().equals(tokenSign.getValue())) {
-				return;
-			}
+		boolean anyMatch = tokenSignList.stream().anyMatch(sign -> sign.getValue().equals(tokenSign.getValue()));
+		if (!anyMatch) {
+			// 添加并更新
+			tokenSignList.add(tokenSign);
+			update();
 		}
-		// 添加并更新
-		tokenSignList.add(tokenSign);
-		update();
 	}
 
 	/**
@@ -361,7 +355,7 @@ public class SaSession implements Serializable {
 	 * @return 对象自身
 	 */
 	public SaSession setDefaultValue(String key, Object value) {
-		if(has(key) == false) {
+		if(!has(key)) {
 			dataMap.put(key, value);
 			update();
 		}
@@ -424,7 +418,7 @@ public class SaSession implements Serializable {
 	 * @return 此value是否为null 
 	 */
 	public boolean valueIsNull(Object value) {
-		return value == null || value.equals("");
+		return value == null || "".equals(value);
 	}
 
 	/**
@@ -439,7 +433,7 @@ public class SaSession implements Serializable {
 		
 		// 如果 obj 为 null，则直接返回默认值 
 		if(valueIsNull(value)) {
-			return (T)defaultValue;
+			return defaultValue;
 		}
 		
 		// 开始转换

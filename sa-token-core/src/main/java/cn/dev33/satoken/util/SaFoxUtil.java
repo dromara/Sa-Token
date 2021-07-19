@@ -4,13 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import cn.dev33.satoken.exception.SaTokenException;
 
@@ -45,7 +41,7 @@ public class SaFoxUtil {
 	public static String getRandomString(int length) {
 		String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			int number = random.nextInt(62);
 			sb.append(str.charAt(number));
@@ -92,21 +88,13 @@ public class SaFoxUtil {
 	 */
 	public static List<String> searchList(Collection<String> dataList, String prefix, String keyword, int start,
 			int size) {
-		if (prefix == null) {
-			prefix = "";
-		}
-		if (keyword == null) {
-			keyword = "";
-		}
 		// 挑选出所有符合条件的
-		List<String> list = new ArrayList<String>();
-		Iterator<String> keys = dataList.iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			if (key.startsWith(prefix) && key.indexOf(keyword) > -1) {
-				list.add(key);
-			}
-		}
+		List<String> list = new ArrayList<>();
+		String finalKeyword = keyword == null ? "" : keyword;
+		String finalPrefix = prefix == null ? "" : prefix;
+		dataList.stream()
+				.filter(key -> key.startsWith(finalPrefix) && key.contains(finalKeyword))
+				.forEach(list::add);
 		// 取指定段数据
 		return searchList(list, start, size);
 	}
@@ -146,7 +134,7 @@ public class SaFoxUtil {
 	 */
 	public static boolean vagueMatch(String patt, String str) {
 		// 如果表达式不带有*号，则只需简单equals即可 (速度提升200倍) 
-		if(patt.indexOf("*") == -1) {
+		if(!patt.contains("*")) {
 			return patt.equals(str);
 		}
 		return Pattern.matches(patt.replaceAll("\\*", ".*"), str);
@@ -185,7 +173,7 @@ public class SaFoxUtil {
 		} else if (cs.equals(boolean.class) || cs.equals(Boolean.class)) {
 			obj3 = Boolean.valueOf(obj2);
 		} else {
-			obj3 = (T)obj;
+			obj3 = obj;
 		}
 		return (T)obj3;
 	}
@@ -214,7 +202,7 @@ public class SaFoxUtil {
 			return url + parameStr;
 		}
 		// ? 是其中一位
-		if(index > -1 && index < url.length() - 1) {
+		if(index < url.length() - 1) {
 			String separatorChar = "&";
 			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
 			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
@@ -266,7 +254,7 @@ public class SaFoxUtil {
 			return url + parameStr;
 		}
 		// ? 是其中一位
-		if(index > -1 && index < url.length() - 1) {
+		if(index < url.length() - 1) {
 			String separatorChar = "&";
 			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
 			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
@@ -303,14 +291,7 @@ public class SaFoxUtil {
 		if(arr == null) {
 			return "";
 		}
-		String str = "";
-		for (int i = 0; i < arr.length; i++) {
-			str += arr[i];
-			if(i != arr.length - 1) {
-				str += ",";
-			}
-		}
-		return str;
+		return String.join(",", arr);
 	}
 	
 	/**
@@ -362,17 +343,22 @@ public class SaFoxUtil {
 	 * @return 分割后的字符串集合 
 	 */
 	public static List<String> convertStringToList(String str) {
-		List<String> list = new ArrayList<String>();
+		return convertStringToList(str, ",");
+	}
+
+	/**
+	 * 将指定字符串按照逗号分隔符转化为字符串集合
+	 * @param str 字符串
+	 * @param delimiter 分隔符
+	 * @return 分割后的字符串集合
+	 */
+	public static List<String> convertStringToList(String str, String delimiter) {
+		List<String> list = new ArrayList<>();
 		if(isEmpty(str)) {
 			return list;
 		}
-		String[] arr = str.split(",");
-		for (String s : arr) {
-			s = s.trim();
-			if(isEmpty(s) == false) {
-				list.add(s);
-			}
-		}
+		Arrays.stream(str.split(delimiter)).filter(s -> !isEmpty(s.trim()))
+				.forEach(list::add);
 		return list;
 	}
 
@@ -382,17 +368,20 @@ public class SaFoxUtil {
 	 * @return 字符串 
 	 */
 	public static String convertListToString(List<?> list) {
+		return convertListToString(list, ",");
+	}
+
+	/**
+	 * 将指定集合按照逗号连接成一个字符串
+	 * @param list 集合
+	 * @param delimiter 分隔符
+	 * @return 字符串，如果list为空则返回""
+	 */
+	public static String convertListToString(List<?> list, String delimiter) {
 		if(list == null || list.size() == 0) {
 			return "";
 		}
-		String str = "";
-		for (int i = 0; i < list.size(); i++) {
-			str += list.get(i);
-			if(i != list.size() - 1) {
-				str += ",";
-			}
-		}
-		return str;
+		return list.stream().map(String::valueOf).collect(Collectors.joining(delimiter));
 	}
 	
 }

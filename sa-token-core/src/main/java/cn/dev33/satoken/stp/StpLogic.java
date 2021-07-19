@@ -658,7 +658,8 @@ public class StpLogic {
  			return;
  		}
  		// 将[最后操作时间]标记为当前时间戳 
- 		SaManager.getSaTokenDao().set(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
+ 		SaManager.getSaTokenDao().set(splicingKeyLastActivityTime(tokenValue),
+				String.valueOf(System.currentTimeMillis()), getConfig().getTimeout());
  	}
  	
  	/**
@@ -723,7 +724,8 @@ public class StpLogic {
  		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
  			return;
  		}
- 		SaManager.getSaTokenDao().update(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
+ 		SaManager.getSaTokenDao().update(splicingKeyLastActivityTime(tokenValue),
+				String.valueOf(System.currentTimeMillis()));
  	}
 
  	/**
@@ -925,7 +927,7 @@ public class StpLogic {
  	 * @param permission 权限码
  	 */
  	public void checkPermission(String permission) {
- 		if(hasPermission(permission) == false) {
+ 		if(!hasPermission(permission)) {
 			throw new NotPermissionException(permission, this.loginType);
 		}
  	}
@@ -954,7 +956,7 @@ public class StpLogic {
  		for (String permission : permissionArray) {
  			if(SaManager.getSaTokenAction().hasElement(permissionList, permission)) {
  				// 有的话提前退出
- 				return;		
+ 				return;
  			}
  		}
 		if(permissionArray.length > 0) {
@@ -1026,28 +1028,22 @@ public class StpLogic {
 	 * @return 当前令牌的登录设备 
 	 */
 	public String getLoginDevice() {
-		// 如果没有token，直接返回 
+		// 如果没有token 或未登录，直接返回
 		String tokenValue = getTokenValue();
-		if(tokenValue == null) {
+		if(tokenValue == null || !isLogin()) {
 			return null;
 		}
-		// 如果还未登录，直接返回 null
-		if(!isLogin()) {
-			return null;
-		}
+
 		// 如果session为null的话直接返回 null 
 		SaSession session = getSessionByLoginId(getLoginIdDefaultNull(), false);
 		if(session == null) {
 			return null;
 		}
-		// 遍历解析 
-		List<TokenSign> tokenSignList = session.getTokenSignList();
-		for (TokenSign tokenSign : tokenSignList) {
-			if(tokenSign.getValue().equals(tokenValue)) {
-				return tokenSign.getDevice();
-			}
-		}
-		return null;
+		return session.getTokenSignList().stream()
+				.filter(sign -> sign.getValue().equals(tokenValue))
+				.map(TokenSign::getDevice)
+				.findFirst().orElse(null);
+
 	}
 	
 
@@ -1245,17 +1241,14 @@ public class StpLogic {
 	 */
 	public boolean isSafe() {
 		long eff = getTokenSession().get(SaTokenConsts.SAFE_AUTH_SAVE_KEY, 0L);
-		if(eff == 0 || eff < System.currentTimeMillis()) {
-			return false;
-		}
-		return true;
+		return eff != 0 && eff >= System.currentTimeMillis();
 	}
 
 	/**
 	 * 检查当前会话是否已通过二级认证，如未通过则抛出异常 
 	 */
 	public void checkSafe() {
-		if (isSafe() == false) {
+		if (!isSafe()) {
 			throw new NotSafeException();
 		}
 	}

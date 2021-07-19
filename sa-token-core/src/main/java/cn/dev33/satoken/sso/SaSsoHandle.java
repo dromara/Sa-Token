@@ -35,7 +35,7 @@ public class SaSsoHandle {
 		if(match(Api.ssoAuth)) {
 			// ---------- 此处两种情况分开处理：
 			// 情况1：在SSO认证中心尚未登录，则先去登登录 
-			if(stpLogic.isLogin() == false) {
+			if(!stpLogic.isLogin()) {
 				return sso.notLoginView.get();
 			}
 			// 情况2：在SSO认证中心已经登录，开始构建授权重定向地址，下放ticket
@@ -136,7 +136,7 @@ public class SaSsoHandle {
 		}
 
 		// ---------- SSO-Client端：单点注销 [模式二]
-		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp == false) {
+		if(match(Api.ssoLogout) && sso.isSlo && !sso.isHttp) {
 			stpLogic.logout();
 			if(req.getParam(ParamName.back) == null) {
 				return SaResult.ok("单点注销成功");
@@ -148,7 +148,7 @@ public class SaSsoHandle {
 		// ---------- SSO-Client端：单点注销 [模式三]
 		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp) {
 			// 如果未登录，则无需注销 
-	        if(stpLogic.isLogin() == false) {
+	        if(!stpLogic.isLogin()) {
 	            return SaResult.ok();
 	        }
 	        // 调用SSO-Server认证中心API 

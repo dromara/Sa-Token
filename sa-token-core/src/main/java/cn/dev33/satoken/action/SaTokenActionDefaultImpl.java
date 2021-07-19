@@ -81,15 +81,8 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		}
 		
 		// 开始模糊匹配 
-		for (String patt : list) {
-			if(SaFoxUtil.vagueMatch(patt, element)) {
-				return true;
-			}
-		}
-		
-		// 走出for循环说明没有一个元素可以匹配成功 
-		return false;
-	}
+        return list.parallelStream().anyMatch(pat -> SaFoxUtil.vagueMatch(pat, element));
+    }
 
 	/**
 	 * 对一个Method对象进行注解检查（注解鉴权内部实现） 

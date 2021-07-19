@@ -36,12 +36,7 @@ public class SaRouter {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(List<String> patterns, String path) {
-		for (String pattern : patterns) {
-			if(isMatch(pattern, path)) {
-				return true;
-			}
-		}
-		return false;
+		return patterns.parallelStream().anyMatch(pat -> isMatch(pat, path));
 	}
 	
 	/**
@@ -83,10 +78,8 @@ public class SaRouter {
 	 * @param function 要执行的方法 
 	 */
 	public static void match(String pattern, String excludePattern, SaFunction function) {
-		if(isMatchCurrURI(pattern)) {
-			if(isMatchCurrURI(excludePattern) == false) {
-				function.run();
-			}
+		if(isMatchCurrURI(pattern) && !isMatchCurrURI(excludePattern)) {
+			function.run();
 		}
 	}
 
@@ -108,10 +101,8 @@ public class SaRouter {
 	 * @param function 要执行的方法 
 	 */
 	public static void match(List<String> patterns, List<String> excludePatterns, SaFunction function) {
-		if(isMatchCurrURI(patterns)) {
-			if(isMatchCurrURI(excludePatterns) == false) {
-				function.run();
-			}
+		if(isMatchCurrURI(patterns) && !isMatchCurrURI(excludePatterns)) {
+			function.run();
 		}
 	}
 	

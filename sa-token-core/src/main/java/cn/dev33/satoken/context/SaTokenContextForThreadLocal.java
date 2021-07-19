@@ -11,6 +11,8 @@ import cn.dev33.satoken.context.model.SaStorage;
  */
 public class SaTokenContextForThreadLocal implements SaTokenContext {
 
+	private static final String ERROR_MESSAGE = "method matchPath should be override";
+
 	@Override
 	public SaRequest getRequest() {
 		return SaTokenContextForThreadLocalStorage.getRequest();
@@ -28,7 +30,7 @@ public class SaTokenContextForThreadLocal implements SaTokenContext {
 
 	@Override
 	public boolean matchPath(String pattern, String path) {
-		return false;
+		throw new RuntimeException(ERROR_MESSAGE);
 	}
 
 }

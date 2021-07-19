@@ -15,7 +15,7 @@ public class SaTokenContextForThreadLocalStorage {
 	/**
 	 * 基于 ThreadLocal 的 [Box存储器] 
 	 */
-	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<Box>();
+	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<>();
 	
 	/**
 	 * 初始化 [Box存储器]
@@ -86,10 +86,6 @@ public class SaTokenContextForThreadLocalStorage {
 	/**
 	 * 临时内部类，用于存储[request、response、storage]三个对象 
 	 * @author kong
-	 */
-	/**
-	 * @author kong
-	 *
 	 */
 	public static class Box {
 		

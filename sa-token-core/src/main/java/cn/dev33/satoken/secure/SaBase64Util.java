@@ -1,6 +1,6 @@
 package cn.dev33.satoken.secure;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
@@ -10,8 +10,8 @@ import java.util.Base64;
  */
 public class SaBase64Util {
 
-	private static Base64.Encoder encoder = Base64.getEncoder();
-	private static Base64.Decoder decoder = Base64.getDecoder();
+	private static final Base64.Encoder ENCODER = Base64.getEncoder();
+	private static final Base64.Decoder DECODER = Base64.getDecoder();
 	
 	/**
 	 * Base64编码，byte[] 转 String
@@ -19,7 +19,7 @@ public class SaBase64Util {
 	 * @return 字符串
 	 */
 	public static String encodeBytesToString(byte[] bytes){
-		return encoder.encodeToString(bytes);
+		return ENCODER.encodeToString(bytes);
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class SaBase64Util {
 	 * @return byte[]
 	 */
 	public static byte[] decodeStringToBytes(String text){
-		return decoder.decode(text);
+		return DECODER.decode(text);
 	}
 	
 	/**
@@ -37,11 +37,7 @@ public class SaBase64Util {
 	 * @return Base64格式字符串
 	 */
 	public static String encode(String text){
-		try {
-			return encoder.encodeToString(text.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
+		return ENCODER.encodeToString(text.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -50,11 +46,7 @@ public class SaBase64Util {
 	 * @return 字符串
 	 */
 	public static String decode(String base64Text){
-		try {
-			return new String(decoder.decode(base64Text), "UTF-8"); 
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e); 
-		}
+		return new String(DECODER.decode(base64Text), StandardCharsets.UTF_8);
 	}
 	
 }

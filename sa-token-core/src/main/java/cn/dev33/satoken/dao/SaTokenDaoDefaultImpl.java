@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -20,12 +21,12 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	/**
 	 * 数据集合 
 	 */
-	public Map<String, Object> dataMap = new ConcurrentHashMap<String, Object>();
+	public Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
 	/**
 	 * 过期时间集合 (单位: 毫秒) , 记录所有key的到期时间 [注意不是剩余存活时间] 
 	 */
-	public Map<String, Long> expireMap = new ConcurrentHashMap<String, Long>();
+	public Map<String, Long> expireMap = new ConcurrentHashMap<>();
 	
 	/**
 	 * 构造函数
@@ -49,7 +50,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 			return;
 		}
 		dataMap.put(key, value);
-		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+		expireMap.put(key, timeout == SaTokenDao.NEVER_EXPIRE ? SaTokenDao.NEVER_EXPIRE : (System.currentTimeMillis() + timeout * 1000));
 	}
 
 	@Override
@@ -99,7 +100,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		// 无动作 
+		dataMap.put(key, object);
 	}
 
 	@Override
@@ -167,26 +168,18 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	
 	
 	// --------------------- 定时清理过期数据  
-	
-	/**
-	 * 执行数据清理的线程
-	 */
-	public Thread refreshThread;
-	
+
 	/**
 	 * 是否继续执行数据清理的线程标记
 	 */
-	public boolean refreshFlag;
+	private boolean refreshFlag;
 	
 
 	/**
 	 * 清理所有已经过期的key 
 	 */
 	public void refreshDataMap() {
-		Iterator<String> keys = expireMap.keySet().iterator();
-		while (keys.hasNext()) {
-			clearKeyByTimeout(keys.next());
-		}
+		expireMap.keySet().parallelStream().forEach(this::clearKeyByTimeout);
 	}
 	
 	/**
@@ -195,30 +188,31 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	public void initRefreshThread() {
 
 		// 如果配置了<=0的值，则不启动定时清理
-		if(SaManager.getConfig().getDataRefreshPeriod() <= 0) {
+		final int dataRefreshPeriod = SaManager.getConfig().getDataRefreshPeriod();
+		if(dataRefreshPeriod <= 0) {
 			return;
 		}
 		// 启动定时刷新
 		this.refreshFlag = true;
-		this.refreshThread = new Thread(() -> {
-			for (;;) {
+		// 如果已经被标记为结束
+		// 执行清理
+		/**
+		 * 执行数据清理的线程
+		 */
+		Thread refreshThread = new Thread(() -> {
+			for (; ; ) {
 				try {
 					try {
 						// 如果已经被标记为结束
-						if(refreshFlag == false) {
+						if (!refreshFlag) {
 							return;
 						}
 						// 执行清理
-						refreshDataMap(); 
+						refreshDataMap();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					// 休眠N秒 
-					int dataRefreshPeriod = SaManager.getConfig().getDataRefreshPeriod();
-					if(dataRefreshPeriod <= 0) {
-						dataRefreshPeriod = 1;
-					}
-					Thread.sleep(dataRefreshPeriod * 1000);
+					TimeUnit.SECONDS.sleep(dataRefreshPeriod);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

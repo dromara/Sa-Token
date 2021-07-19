@@ -1,6 +1,6 @@
 package cn.dev33.satoken.secure;
 
-import java.security.InvalidParameterException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -36,12 +36,12 @@ public class SaSecureUtil {
 	/**
 	 * Base64编码
 	 */
-	private static Base64.Encoder encoder = Base64.getEncoder();
+	private static final Base64.Encoder ENCODER = Base64.getEncoder();
 
 	/**
 	 * Base64解码
 	 */
-	private static Base64.Decoder decoder = Base64.getDecoder();
+	private static final Base64.Decoder DECODER = Base64.getDecoder();
 	
 	// ----------------------- 摘要加密 -----------------------
 	
@@ -109,7 +109,7 @@ public class SaSecureUtil {
 		try {
 			str = (str == null ? "" : str);
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-			messageDigest.update(str.getBytes("UTF-8"));
+			messageDigest.update(str.getBytes(StandardCharsets.UTF_8));
 			
 			byte[] bytes = messageDigest.digest();
 			StringBuilder builder = new StringBuilder();
@@ -156,10 +156,10 @@ public class SaSecureUtil {
     public static String aesEncrypt(String key, String text) {
         try {
             Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
-            byte[] byteContent = text.getBytes("utf-8");
+            byte[] byteContent = text.getBytes(StandardCharsets.UTF_8);
             cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(key));
             byte[] result = cipher.doFinal(byteContent);
-            return encoder.encodeToString(result);
+            return ENCODER.encodeToString(result);
  		} catch (Exception e) {
  			throw new SaTokenException(e);
  		}
@@ -175,8 +175,8 @@ public class SaSecureUtil {
        try {
     	   Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
            cipher.init(Cipher.DECRYPT_MODE, getSecretKey(key));
-           byte[] result = cipher.doFinal(decoder.decode(text));
-           return new String(result, "utf-8");
+           byte[] result = cipher.doFinal(DECODER.decode(text));
+           return new String(result, StandardCharsets.UTF_8);
 		} catch (Exception e) {
 			throw new SaTokenException(e);
 		}
@@ -217,22 +217,16 @@ public class SaSecureUtil {
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
 		KeyPair keyPair;
 
-		try {
-			keyPairGenerator.initialize(KEY_SIZE,
-					new SecureRandom(UUID.randomUUID().toString().replaceAll("-", "").getBytes()));
-			keyPair = keyPairGenerator.generateKeyPair();
-		} catch (InvalidParameterException e) {
-			throw e;
-		} catch (NullPointerException e) {
-			throw e;
-		}
+		keyPairGenerator.initialize(KEY_SIZE,
+				new SecureRandom(UUID.randomUUID().toString().replaceAll("-", "").getBytes()));
+		keyPair = keyPairGenerator.generateKeyPair();
 
 		RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
 
 		HashMap<String, String> map = new HashMap<String, String>(16);
-		map.put("private", encoder.encodeToString(rsaPrivateKey.getEncoded()));
-		map.put("public", encoder.encodeToString(rsaPublicKey.getEncoded()));
+		map.put("private", ENCODER.encodeToString(rsaPrivateKey.getEncoded()));
+		map.put("public", ENCODER.encodeToString(rsaPublicKey.getEncoded()));
 		return map;
 	}
 
@@ -252,11 +246,11 @@ public class SaSecureUtil {
 			// 该密钥能够加密的最大字节长度
 			int splitLength = ((RSAPublicKey) publicKey).getModulus().bitLength() / 8 - 11;
 			byte[][] arrays = splitBytes(content.getBytes(), splitLength);
-			StringBuffer stringBuffer = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (byte[] array : arrays) {
-				stringBuffer.append(bytesToHexString(cipher.doFinal(array)));
+				sb.append(bytesToHexString(cipher.doFinal(array)));
 			}
-			return stringBuffer.toString();
+			return sb.toString();
 		} catch (Exception e) {
 			throw new SaTokenException(e);
 		}
@@ -277,11 +271,11 @@ public class SaSecureUtil {
 			// 该密钥能够加密的最大字节长度
 			int splitLength = ((RSAPrivateKey) privateKey).getModulus().bitLength() / 8 - 11;
 			byte[][] arrays = splitBytes(content.getBytes(), splitLength);
-			StringBuffer stringBuffer = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (byte[] array : arrays) {
-				stringBuffer.append(bytesToHexString(cipher.doFinal(array)));
+				sb.append(bytesToHexString(cipher.doFinal(array)));
 			}
-			return stringBuffer.toString();
+			return sb.toString();
 		} catch (Exception e) {
 			throw new SaTokenException(e);
 		}
@@ -304,11 +298,11 @@ public class SaSecureUtil {
 			int splitLength = ((RSAPublicKey) publicKey).getModulus().bitLength() / 8;
 			byte[] contentBytes = hexStringToBytes(content);
 			byte[][] arrays = splitBytes(contentBytes, splitLength);
-			StringBuffer stringBuffer = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (byte[] array : arrays) {
-				stringBuffer.append(new String(cipher.doFinal(array)));
+				sb.append(new String(cipher.doFinal(array)));
 			}
-			return stringBuffer.toString();
+			return sb.toString();
 		} catch (Exception e) {
 			throw new SaTokenException(e);
 		}
@@ -330,11 +324,11 @@ public class SaSecureUtil {
 			int splitLength = ((RSAPrivateKey) privateKey).getModulus().bitLength() / 8;
 			byte[] contentBytes = hexStringToBytes(content);
 			byte[][] arrays = splitBytes(contentBytes, splitLength);
-			StringBuffer stringBuffer = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (byte[] array : arrays) {
-				stringBuffer.append(new String(cipher.doFinal(array)));
+				sb.append(new String(cipher.doFinal(array)));
 			}
-			return stringBuffer.toString();
+			return sb.toString();
 		} catch (Exception e) {
 			throw new SaTokenException(e);
 		}
@@ -351,13 +345,11 @@ public class SaSecureUtil {
 		key = key.replace("\r\n", "");
 
 		// 取得公钥
-		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(decoder.decode(key));
+		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(DECODER.decode(key));
 
 		KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
 
-		PublicKey publicKey = keyFactory.generatePublic(x509KeySpec);
-
-		return publicKey;
+		return keyFactory.generatePublic(x509KeySpec);
 	}
 
 	/** 根据私钥字符串获取 私钥对象 */
@@ -368,13 +360,11 @@ public class SaSecureUtil {
 		key = key.replace("\r\n", "");
 
 		// 取得私钥
-		PKCS8EncodedKeySpec x509KeySpec = new PKCS8EncodedKeySpec(decoder.decode(key));
+		PKCS8EncodedKeySpec x509KeySpec = new PKCS8EncodedKeySpec(DECODER.decode(key));
 
 		KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
 
-		PrivateKey privateKey = keyFactory.generatePrivate(x509KeySpec);
-
-		return privateKey;
+		return keyFactory.generatePrivate(x509KeySpec);
 	}
 
 
@@ -406,7 +396,7 @@ public class SaSecureUtil {
 	/** 将字节数组转换成16进制字符串 */
 	private static String bytesToHexString(byte[] bytes) {
 
-		StringBuffer sb = new StringBuffer(bytes.length);
+		StringBuilder sb = new StringBuilder(bytes.length);
 		String temp = null;
 		for (int i = 0; i < bytes.length; i++) {
 			temp = Integer.toHexString(0xFF & bytes[i]);

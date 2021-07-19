@@ -32,7 +32,7 @@ public class SaManager {
 	/**
 	 * 配置文件 Bean 
 	 */
-	public static SaTokenConfig config;	
+	private static volatile SaTokenConfig config;
 	public static void setConfig(SaTokenConfig config) {
 		SaManager.config = config;
 		if(config.getIsPrint()) {
@@ -55,7 +55,7 @@ public class SaManager {
 	/**
 	 * 持久化 Bean 
 	 */
-	private static SaTokenDao saTokenDao;
+	private static volatile SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
 		if((SaManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
 			((SaTokenDaoDefaultImpl)SaManager.saTokenDao).endRefreshThread();
@@ -76,7 +76,7 @@ public class SaManager {
 	/**
 	 * 权限认证 Bean 
 	 */
-	private static StpInterface stpInterface;
+	private static volatile StpInterface stpInterface;
 	public static void setStpInterface(StpInterface stpInterface) {
 		SaManager.stpInterface = stpInterface;
 	}
@@ -94,7 +94,7 @@ public class SaManager {
 	/**
 	 * 框架行为 Bean 
 	 */
-	private static SaTokenAction saTokenAction;
+	private static volatile SaTokenAction saTokenAction;
 	public static void setSaTokenAction(SaTokenAction saTokenAction) {
 		SaManager.saTokenAction = saTokenAction;
 	}
@@ -112,7 +112,7 @@ public class SaManager {
 	/**
 	 * 容器操作 Bean  
 	 */
-	private static SaTokenContext saTokenContext;
+	private static volatile SaTokenContext saTokenContext;
 	public static void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.saTokenContext = saTokenContext;
 	}
@@ -130,7 +130,7 @@ public class SaManager {
 	/**
 	 * 侦听器 Bean  
 	 */
-	private static SaTokenListener saTokenListener;
+	private static volatile SaTokenListener saTokenListener;
 	public static void setSaTokenListener(SaTokenListener saTokenListener) {
 		SaManager.saTokenListener = saTokenListener;
 	}
@@ -148,7 +148,7 @@ public class SaManager {
 	/**
 	 * 临时令牌验证模块 Bean  
 	 */
-	private static SaTempInterface saTemp;
+	private static volatile SaTempInterface saTemp;
 	public static void setSaTemp(SaTempInterface saTemp) {
 		SaManager.saTemp = saTemp;
 	}
@@ -166,7 +166,7 @@ public class SaManager {
 	/**
 	 * StpLogic集合, 记录框架所有成功初始化的StpLogic 
 	 */
-	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
+	public static Map<String, StpLogic> stpLogicMap = new HashMap<>();
 	
 	/**
 	 * 向集合中 put 一个 StpLogic 

@@ -82,7 +82,7 @@ public class SaLoginModel {
 	 * @return Cookie时长
 	 */
 	public int getCookieTimeout() {
-		if(isLastingCookie == false) {
+		if(!isLastingCookie) {
 			return -1;
 		}
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
