@@ -1,7 +1,7 @@
 # Spring WebFlux 集成 Sa-Token 示例
 
 WebFlux基于Reactor响应式模型开发，有着与标准ServletAPI完全不同的底层架构，因此要适配WebFlux, 必须提供与Reactor相关的整合实现，
-本篇将以WebFlux为例，展示Sa-Token与Reactor响应式模型web框架相整合的示例, **你可以用同样方式去对接其它Reactor模型Web框架**(Netty、Soul、Gateway等)
+本篇将以WebFlux为例，展示Sa-Token与Reactor响应式模型web框架相整合的示例, **你可以用同样方式去对接其它Reactor模型Web框架**(Netty、ShenYu、Gateway等)
 
 整合示例在官方仓库的`/sa-token-demo/sa-token-demo-webflux`文件夹下，如遇到难点可结合源码进行测试学习
 

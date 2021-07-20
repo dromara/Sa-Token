@@ -19,7 +19,7 @@
 ```
 
 <!-- tab:WebFlux环境 （Reactor）  -->
-注：如果你使用的框架基于 Reactor 模型构建（Netty、WebFlux、Soul、SC Gateway等），请引入此包
+注：如果你使用的框架基于 Reactor 模型构建（Netty、WebFlux、ShenYu、SC Gateway等），请引入此包
 ``` xml
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
