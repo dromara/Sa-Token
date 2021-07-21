@@ -6,10 +6,10 @@
 
 
 
-### 方式1、在`application.yml`配置
+### 方式1、在 application.yml 配置
 
 ``` java
-# Sa-Token配置
+# Sa-Token 配置
 sa-token: 
 	# token名称 (同时也是cookie名称)
 	token-name: satoken
@@ -110,7 +110,7 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 
 配置示例：
 ``` yml
-# sa-token配置 
+# Sa-Token 配置
 sa-token: 
     # SSO-相关配置
     sso: 
@@ -135,7 +135,7 @@ sa-token:
 
 配置示例：
 ``` yml
-# sa-token配置 
+# Sa-Token 配置
 sa-token: 
     token-name: satoken-server
     # OAuth2.0 配置 

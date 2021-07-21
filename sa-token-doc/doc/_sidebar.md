@@ -11,7 +11,7 @@
 	- [权限认证](/use/jur-auth) 
 	- [踢人下线](/use/kick) 
 	- [注解式鉴权](/use/at-check) 
-	- [路由拦截式鉴权](/use/route-check) 
+	- [路由拦截鉴权](/use/route-check) 
 	- [Session会话](/use/session) 
 	- [框架配置](/use/config) 
 

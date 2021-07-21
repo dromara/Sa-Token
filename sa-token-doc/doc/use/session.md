@@ -3,11 +3,12 @@
 
 ### Session是什么？
 
-Session是会话中专业的数据缓存组件，通过`Session`我们可以很方便的缓存一些高频读写数据，提高程序性能<br>
-在`Sa-Token`中, `Session` 分为三种, 分别是：
-- `User-Session`: 指的是框架为每个`loginId`分配的`Session` 
-- `Token-Session`: 指的是框架为每个`token`分配的`Session` 
-- `自定义Session`: 指的是以一个`特定的值`作为SessionId，来分配的`Session` 
+Session是会话中专业的数据缓存组件，通过 Session 我们可以很方便的缓存一些高频读写数据，提高程序性能<br>
+在 Sa-Token 中，Session 分为三种，分别是：
+
+- `User-Session`: 指的是框架为每个 账号id 分配的 Session 
+- `Token-Session`: 指的是框架为每个 token 分配的 Session  
+- `Custom-Session`: 指的是以一个 特定的值 作为SessionId，来分配的 Session 
 
 > 有关User-Session与Token-Session的详细区别，请参考：[Session模型详解](/fun/session-model)
 
