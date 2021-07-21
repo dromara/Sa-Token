@@ -9,7 +9,7 @@
 在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考github示例）
 
 
-### 2、设置依赖
+### 2、添加依赖
 在 `pom.xml` 中添加依赖：
 
 ``` xml 

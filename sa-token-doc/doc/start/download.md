@@ -1,4 +1,4 @@
-# 集成
+# 集成 Sa-Token 
 
 ------
 
@@ -73,7 +73,7 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 ```
 <!-- tabs:end -->
 
-注：JDK版本：`v1.8+`
+注：JDK版本：`v1.8+`，SpringBoot：`建议2.0以上`
 
 
 ## 获取源码
