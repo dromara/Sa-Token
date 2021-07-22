@@ -41,7 +41,7 @@ public class SaOAuth2Template {
 		return null;
 	}
 	
-	// ------------------- 资源获取 
+	// ------------------- 资源校验API  
 	/**
 	 * 根据id获取Client信息, 如果Client为空，则抛出异常 
 	 * @param clientId 应用id
@@ -53,14 +53,6 @@ public class SaOAuth2Template {
 			throw new SaOAuth2Exception("无效client_id: " + clientId);
 		}
 		return clientModel;
-	}
-	/**
-	 * 获取 access_token 所代表的LoginId 
-	 * @param accessToken access_token 
-	 * @return LoginId 
-	 */
-	public Object getLoginIdByAccessToken(String accessToken) {
-		return checkAccessToken(accessToken).loginId;
 	}
 	/**
 	 * 获取 Access-Token，如果AccessToken为空则抛出异常 
@@ -81,6 +73,29 @@ public class SaOAuth2Template {
 		ClientTokenModel ct = getClientToken(clientToken);
 		SaOAuth2Exception.throwBy(ct == null, "无效：client_token" + ct);
 		return ct;
+	}
+	/**
+	 * 获取 Access-Token 所代表的LoginId 
+	 * @param accessToken Access-Token 
+	 * @return LoginId 
+	 */
+	public Object getLoginIdByAccessToken(String accessToken) {
+		return checkAccessToken(accessToken).loginId;
+	}
+	/**
+	 * 校验：指定 Access-Token 是否具有指定 Scope 
+	 * @param accessToken Access-Token
+	 * @param scopes 需要校验的权限列表 
+	 */
+	public void checkScope(String accessToken, String... scopes) {
+		if(scopes == null || scopes.length == 0) {
+			return;
+		}
+		AccessTokenModel at = checkAccessToken(accessToken);
+		List<String> scopeList = SaFoxUtil.convertStringToList(at.scope);
+		for (String scope : scopes) {
+			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Access-Token 不具备 Scope：" + scope);
+		}
 	}
 	
 	// ------------------- generate 构建数据 
@@ -277,7 +292,28 @@ public class SaOAuth2Template {
 		}
 		return url;
 	}
-
+	/**
+	 * 回收 Access-Token 
+	 * @param accessToken Access-Token值 
+	 */
+	public void revokeAccessToken(String accessToken) {
+		
+		// 如果查不到任何东西, 直接返回 
+		AccessTokenModel at = getAccessToken(accessToken);
+		if(at == null) {
+			return;
+		}
+		
+		// 删除 Access-Token 
+		deleteAccessToken(accessToken);
+		deleteAccessTokenIndex(at.clientId, at.accessToken); 
+		
+		// 删除对应的 Refresh-Token
+		String refreshToken = getRefreshTokenValue(at.clientId, at.loginId);
+		deleteRefreshToken(refreshToken);
+		deleteRefreshTokenIndex(at.clientId, at.loginId);
+	}
+	
 	// ------------------- check 数据校验 
 	/**
 	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope 
@@ -388,6 +424,19 @@ public class SaOAuth2Template {
 		
 		// 返回Refresh-Token 
 		return rt;
+	}
+	/**
+	 * 校验：Access-Token、clientId、clientSecret 三者是否匹配成功 
+	 * @param clientId 应用id 
+	 * @param clientSecret 秘钥 
+	 * @param accessToken Access-Token 
+	 * @return SaClientModel对象 
+	 */
+	public AccessTokenModel checkAccessTokenParam(String clientId, String clientSecret, String accessToken) {
+		AccessTokenModel at = checkAccessToken(accessToken);
+		SaOAuth2Exception.throwBy(at.clientId.equals(clientId) == false, "无效client_id：" + clientId);
+		checkClientSecret(clientId, clientSecret);
+		return at;
 	}
 	
 	// ------------------- conver 数据转换 

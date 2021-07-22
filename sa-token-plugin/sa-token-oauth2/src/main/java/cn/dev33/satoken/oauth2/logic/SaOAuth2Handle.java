@@ -51,6 +51,11 @@ public class SaOAuth2Handle {
 		if(req.isPath(Api.refresh) && req.isParam(Param.grant_type, GrantType.refresh_token)) {
 			return refreshToken(req);
 		}
+
+		// 回收 Access-Token 
+		if(req.isPath(Api.revoke)) {
+			return revokeToken(req);
+		}
 		
 		// doLogin 登录接口 
 		if(req.isPath(Api.doLogin)) {
@@ -167,10 +172,34 @@ public class SaOAuth2Handle {
 		SaOAuth2Util.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
 
 		// 获取新Token返回 
-		Object data = SaOAuth2Util.saOAuth2Template.refreshAccessToken(refreshToken).toLineMap();
+		Object data = SaOAuth2Util.refreshAccessToken(refreshToken).toLineMap();
 		return SaResult.data(data); 
 	}
 
+	/**
+	 * 回收 Access-Token  
+	 * @param req 请求对象 
+	 * @return 处理结果 
+	 */
+	public static Object revokeToken(SaRequest req) {
+		// 获取参数 
+		String clientId = req.getParamNotNull(Param.client_id);
+		String clientSecret = req.getParamNotNull(Param.client_secret);
+		String accessToken = req.getParamNotNull(Param.access_token);
+		
+		// 如果 Access-Token 不存在，直接返回
+		if(SaOAuth2Util.getAccessToken(accessToken) == null) {
+			return SaResult.ok("access_token不存在：" + accessToken);
+		}
+		
+		// 校验参数 
+		SaOAuth2Util.checkAccessTokenParam(clientId, clientSecret, accessToken);
+
+		// 获取新Token返回 
+		SaOAuth2Util.revokeAccessToken(accessToken);
+		return SaResult.ok(); 
+	}
+	
 	/**
 	 * doLogin 登录接口  
 	 * @param req 请求对象 

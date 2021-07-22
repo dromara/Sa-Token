@@ -105,7 +105,35 @@ http://sa-oauth-server.com:8001/oauth2/refresh
 接口返回值同章节1.2，此处不再赘述 
 
 
-### 1.4、根据 Access-Token 获取相应用户的账号信息  
+### 1.4、回收 Access-Token （如果需要的话）
+在Access-Token过期前主动将其回收 
+
+``` url
+http://sa-oauth-server.com:8001/oauth2/revoke
+	?client_id={value}
+	&client_secret={value}
+	&access_token={value}
+```
+
+参数详解：
+
+| 参数			| 是否必填	| 说明													|
+| :--------		| :--------	| :--------												|
+| client_id		| 是		| 应用id												|
+| client_secret	| 是		| 应用秘钥												|
+| access_token  | 是		| 步骤1.2中获取到的`Access-Token`值						|
+
+返回值样例：
+``` js
+{
+    "code": 200,
+    "msg": "ok",
+    "data": null
+}
+```
+
+
+### 1.5、根据 Access-Token 获取相应用户的账号信息  
 注：此接口为官方仓库模拟接口，正式项目中大家可以根据此样例，自定义需要的接口及参数 
 
 ``` url

@@ -30,6 +30,7 @@
 				<div>当前Openid： <span class="openid"></span></div>
 				<div>当前Access-Token： <span class="access_token"></span></div>
 				<div>当前Refresh-Token： <span class="refresh_token"></span></div>
+				<div>当前令牌包含Scope： <span class="scope"></span></div>
 				<div>当前Client-Token： <span class="client_token"></span></div>
 			</div>
 			<div class="btn-box">
@@ -58,7 +59,7 @@
 			<code>http://sa-oauth-server.com:8001/oauth2/refresh?grant_type=refresh_token&client_id={value}&client_secret={value}&refresh_token={value}</code>
 			
 			<button onclick="getUserinfo()">获取账号信息</button> 
-			<span class="ps">使用 Access-Token 置换资源: 获取账号昵称、头像、性别等信息 </span>
+			<span class="ps">使用 Access-Token 置换资源: 获取账号昵称、头像、性别等信息 (Access-Token具备userinfo权限时才可以获取成功) </span>
 			<code>http://sa-oauth-server.com:8001/oauth2/userinfo?access_token={value}</code>
 			
 			<br>
@@ -202,7 +203,11 @@
 					data: {accessToken: accessToken},
 					dataType: 'json', 
 					success: function(res) {
-						layer.alert(JSON.stringify(res.data));
+						if(res.code == 200) {
+							layer.alert(JSON.stringify(res.data));
+						} else {
+							layer.alert(res.msg);
+						}
 					},
 					error: function(xhr, type, errorThrown){
 						return layer.alert("异常：" + JSON.stringify(xhr));

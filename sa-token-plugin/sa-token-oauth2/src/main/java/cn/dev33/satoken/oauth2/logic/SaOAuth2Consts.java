@@ -15,6 +15,7 @@ public class SaOAuth2Consts {
 		public static String authorize = "/oauth2/authorize";
 		public static String token = "/oauth2/token";
 		public static String refresh = "/oauth2/refresh";
+		public static String revoke = "/oauth2/revoke";
 		public static String client_token = "/oauth2/client_token";
 		public static String doLogin = "/oauth2/doLogin";
 		public static String doConfirm = "/oauth2/doConfirm";
@@ -33,6 +34,7 @@ public class SaOAuth2Consts {
 		public static String state = "state";
 		public static String code = "code";
 		public static String token = "token";
+		public static String access_token = "access_token";
 		public static String refresh_token = "refresh_token";
 		public static String grant_type = "grant_type";
 		public static String username = "username";
