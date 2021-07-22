@@ -27,12 +27,21 @@
 
 下面我们按照步骤依次完成上述过程
 
+### 1、准备工作 
+首先修改hosts文件`(C:\windows\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
+``` url
+127.0.0.1 sa-sso-server.com
+127.0.0.1 sa-sso-client1.com
+127.0.0.1 sa-sso-client2.com
+127.0.0.1 sa-sso-client3.com
+```
 
-### 1、搭建SSO-Server认证中心
+
+### 2、搭建SSO-Server认证中心
 
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-server/`，如遇到难点可结合源码进行测试学习
 
-##### 1.1、创建SSO-Server端项目
+##### 2.1、创建SSO-Server端项目
 创建SpringBoot项目 `sa-token-demo-sso-server`（不会的同学自行百度或参考仓库示例），添加pom依赖：
 
 ``` xml
@@ -55,7 +64,7 @@
 </dependency>
 ```
 
-##### 1.2、创建SSO-Server端认证接口
+##### 2.2、创建SSO-Server端认证接口
 ``` java
 /**
  * Sa-Token-SSO Server端 Controller 
@@ -96,7 +105,7 @@ public class SsoServerController {
 ```
 注意：在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
 
-##### 1.4、application.yml配置
+##### 2.3、application.yml配置
 ``` yml
 # 端口
 server:
@@ -123,9 +132,9 @@ spring:
         # Redis服务器连接密码（默认为空）
         password: 
 ```
-注意点：`allow-url`为了方便测试配置为*，线上生产环境一定要配置为详细URL地址 （详见下方“配置域名校验”）
+注意点：`allow-url`为了方便测试配置为`*`，线上生产环境一定要配置为详细URL地址 （详见下方“配置域名校验”）
 
-##### 1.4、创建SSO-Server端启动类
+##### 2.4、创建SSO-Server端启动类
 ``` java 
 @SpringBootApplication
 public class SaSsoServerApplication {
@@ -137,11 +146,11 @@ public class SaSsoServerApplication {
 ```
 
 
-### 2、搭建SSO-Client应用端 
+### 3、搭建SSO-Client应用端 
 
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-client/`，如遇到难点可结合源码进行测试学习
 
-##### 2.1、创建SSO-Client端项目
+##### 3.1、创建SSO-Client端项目
 创建一个SpringBoot项目 `sa-token-demo-sso-client`，添加pom依赖：
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
@@ -171,7 +180,7 @@ public class SaSsoServerApplication {
 ```
 
 
-##### 1.2、创建SSO-Client端认证接口
+##### 3.2、创建SSO-Client端认证接口
 ``` java
 
 /**
@@ -199,7 +208,7 @@ public class SsoClientController {
 }
 ```
 
-##### 1.3、配置SSO认证中心地址 
+##### 3.3、配置SSO认证中心地址 
 你需要在 `application.yml` 配置如下信息：
 ``` yml
 # 端口
@@ -228,7 +237,7 @@ sa-token:
 ```
 注意点：`sa-token.alone-redis` 的配置需要和SSO-Server端连接同一个Redis（database也要一样）
 
-##### 1.4、写启动类
+##### 3.4、写启动类
 ``` java
 @SpringBootApplication
 public class SaSsoClientApplication {
@@ -241,18 +250,8 @@ public class SaSsoClientApplication {
 启动项目 
 
 
-### 3、测试访问 
+### 4、测试访问 
 
-##### 3.1 修改host文件
-首先修改hosts文件`(C:\windows\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
-``` url
-127.0.0.1 sa-sso-server.com
-127.0.0.1 sa-sso-client1.com
-127.0.0.1 sa-sso-client2.com
-127.0.0.1 sa-sso-client3.com
-```
-
-##### 3.2 启动项目并访问
 (1) 依次启动SSO-Server与SSO-Client端，然后从浏览器访问：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
 
 ![sso-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index.png 's-w-sh')
@@ -292,7 +291,7 @@ public class SaSsoClientApplication {
 ![sso-genzong](https://oss.dev33.cn/sa-token/doc/sso/sso-genzong.png 's-w-sh')
 
 
-### 4、运行官方仓库 
+### 5、运行官方仓库 
 
 以上示例，虽然完整的复现了单点登录的过程，但是页面还是有些简陋，我们可以运行一下官方仓库的示例，里面有制作好的登录页面
 
@@ -303,9 +302,9 @@ public class SaSsoClientApplication {
 默认测试密码：`sa / 123456`，其余流程保持不变 
 
 
-### 5、配置域名校验
+### 6、配置域名校验
 
-##### 5.1、Ticket劫持攻击
+##### 6.1、Ticket劫持攻击
 在以上的SSO-Server端示例中，配置项 `sa-token.sso.allow-url=*` 意为配置所有允许的Client端授权地址，不在此配置项中的URL将无法单点登录成功
 
 以上示例为了方便测试被配置为*，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被ticket劫持的风险 
@@ -320,7 +319,7 @@ public class SaSsoClientApplication {
 
 可以看到，代表着用户身份的ticket码也显现到了URL之中，借此漏洞，攻击者完全可以构建一个URL将小红的ticket码自动提交到攻击者自己的服务器，伪造小红身份登录网站
 
-##### 5.2、防范方法
+##### 6.2、防范方法
 
 造成此漏洞的直接原因就是SSO-Server认证中心没有对 `redirect地址` 进行任何的限制，防范的方法也很简单，就是对`redirect参数`进行校验，如果其不在指定的URL列表中时，拒绝下放ticket 
 
@@ -330,7 +329,7 @@ public class SaSsoClientApplication {
 
 域名没有通过校验，拒绝授权！
 
-##### 5.3、配置安全性参考表
+##### 6.3、配置安全性参考表
 
 | 配置方式		| 举例										| 安全性								|  建议									|
 | :--------		| :--------									| :--------							| :--------								|
@@ -339,13 +338,14 @@ public class SaSsoClientApplication {
 | 配置到详细地址| `http://sa-sso-client1.com:9001/sso/login`	| <font color="#080" >高</font>		| <font color="#080" >可以在生产环境下使用</font>	|
 
 
-##### 5.4、疑问：为什么不直接回传Token，而是先回传ticket，再用ticket去查询对应的账号id？
+##### 6.4、疑问：为什么不直接回传Token，而是先回传ticket，再用ticket去查询对应的账号id？
 Token作为长时间有效的会话凭证，在任何时候都不应该直接在暴露URL之中（虽然Token直接的暴露本身不会造成安全漏洞，但会为很多漏洞提供可乘之机）
 
 因此Sa-Token-SSO选择先回传ticket，再由ticket获取账号id，且ticket一次性用完即废，提高安全性
 
 
-### 6、跨Redis的单点登录
+
+### 7、跨Redis的单点登录
 以上流程解决了跨域模式下的单点登录，但是后端仍然采用了共享Redis来同步会话，如果我们的架构设计中Client端与Server端无法共享Redis，又该怎么完成单点登录？
 
 这就要采用模式三了，且往下看：[Http请求获取会话](/sso/sso-type3)

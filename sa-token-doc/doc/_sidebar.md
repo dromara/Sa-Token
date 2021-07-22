@@ -36,6 +36,7 @@
 	- [SSO模式一 共享Cookie同步会话](/sso/sso-type1)
 	- [SSO模式二 URL重定向传播会话](/sso/sso-type2)
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)
+	- [SSO整合-常见问题总结](/sso/sso-cd)
 
 - **OAuth2.0**
 	- [OAuth2.0简述](/oauth2/readme)
