@@ -16,17 +16,19 @@
 	- [框架配置](/use/config) 
 
 - **深入**
-	- [持久层扩展（集成Redis）](/use/dao-extend) 
-	- [无Cookie模式（前后台分离）](/use/not-cookie) 
-	- [花式token](/use/token-style) 
-	- [Token前缀](/use/token-prefix) 
-	- [记住我模式](/use/remember-me)
-	- [模拟他人 & 身份切换](/use/mock-person) 
-	- [同端互斥登录](/use/mutex-login) 
-	- [二级认证](/use/safe-auth) 
-	- [密码加密](/use/password-secure) 
-	- [会话治理](/use/search-session) 
-	- [全局侦听器](/use/global-listener) 
+	<!-- - [持久层扩展（集成Redis）](/use/dao-extend) -->
+	- [集成Redis](/up/integ-redis)
+	<!-- - [无Cookie模式（前后台分离）](/use/not-cookie) -->
+	- [前后台分离](/up/not-cookie) 
+	- [自定义Token风格](/up/token-style) 
+	- [自定义Token前缀](/up/token-prefix) 
+	- [记住我模式](/up/remember-me)
+	- [模拟他人 & 身份切换](/up/mock-person) 
+	- [同端互斥登录](/up/mutex-login) 
+	- [二级认证](/up/safe-auth) 
+	- [密码加密](/up/password-secure) 
+	- [会话治理](/up/search-session) 
+	- [全局侦听器](/up/global-listener) 
 
 - **进阶**
 	- [全局过滤器](/use/global-filter) 

@@ -3,7 +3,7 @@
 
 
 以上介绍的api都是操作当前账号，对当前账号进行各种鉴权操作，你可能会问，我能不能对别的账号进行一些操作？<br>
-比如：查看账号`10001`有无某个权限码、获取id账号为`10002`的用户`User-Session`，等等...
+比如：查看账号10001有无某个权限码、获取 账号id=10002 的 `User-Session`，等等...
 
 Sa-Token在api设计时充分考虑了这一点，暴露出多个api进行此类操作 
 
@@ -46,7 +46,7 @@ StpUtil.getLoginId();
 StpUtil.endSwitch();
 ```
 
-你还可以: 直接在一个代码段里方法内，临时切换身份为指定loginId (此方式无需手动调用`StpUtil.endSwitch()`关闭身份切换)
+你还可以: 直接在一个代码段里方法内，临时切换身份为指定loginId（此方式无需手动调用`StpUtil.endSwitch()`关闭身份切换）
 ``` java
 System.out.println("------- [身份临时切换]调用开始...");
 StpUtil.switchTo(10044, () -> {

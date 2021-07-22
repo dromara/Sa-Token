@@ -1,13 +1,13 @@
-# 花式token
+# 自定义 Token 风格
 
-本篇介绍token生成的各种风格，以及自定义token生成策略
+本篇介绍token生成的各种风格，以及自定义token生成策略 
 
 --- 
 
 
 ## 内置风格
 
-Sa-Token默认的token生成策略是uuid风格, 其模样类似于：`623368f0-ae5e-4475-a53f-93e4225f16ae`<br>
+Sa-Token默认的token生成策略是uuid风格，其模样类似于：`623368f0-ae5e-4475-a53f-93e4225f16ae`<br>
 如果你对这种风格不太感冒，还可以将token生成设置为其他风格
 
 怎么设置呢？只需要在yml配置文件里设置 `sa-token.token-style=风格类型` 即可，其有多种取值： 
@@ -56,7 +56,7 @@ public class MySaTokenAction extends SaTokenActionDefaultImpl {
 	// 重写token生成策略 
 	@Override
 	public String createToken(Object loginId, String loginType) {
-		return SaTokenInsideUtil.getRandomString(60);	// 随机60位字符串
+		return SaFoxUtil.getRandomString(60);	// 随机60位字符串
 	}
 }
 ```
@@ -68,20 +68,20 @@ gfuPSwZsnUhwgz08GTCH4wOgasWtc3odP4HLwXJ7NDGOximTvT4OlW19zeLH
 
 
 
-## 以雪花算法生成token
-在此再举一个例子，以`自定义token生成策略`的方式集成`雪花算法`来生成token
+<!-- ## 以雪花算法生成token
+在此再举一个例子，以`自定义token生成策略`的方式集成`雪花算法`来生成token -->
 
-1、首先我们需要找一个合适的类库，帮助我们生成雪花算法唯一id，在此推荐 [Hutool](https://hutool.cn/docs/#/) ，在`pom.xml`里添加依赖：
+<!-- 1、首先我们需要找一个合适的类库，帮助我们生成雪花算法唯一id，在此推荐 [Hutool](https://hutool.cn/docs/#/) ，在`pom.xml`里添加依赖：
 ``` xml
-<!-- Hutool 一个小而全的Java工具类库 -->
+Hutool 一个小而全的Java工具类库
 <dependency>
 	<groupId>cn.hutool</groupId>
 	<artifactId>hutool-all</artifactId>
 	<version>5.5.4</version>
 </dependency>
-```
+``` -->
 
-2、同上，我们需要新建文件`MySaTokenAction.java`，继承`SaTokenActionDefaultImpl`默认实现类, 并添加上注解`@Component`，保证此类被`springboot`扫描到 
+<!-- 2、同上，我们需要新建文件`MySaTokenAction.java`，继承`SaTokenActionDefaultImpl`默认实现类, 并添加上注解`@Component`，保证此类被`springboot`扫描到 
 ``` java 
 package com.pj.satoken;
 
@@ -100,9 +100,9 @@ public class MySaTokenAction extends SaTokenActionDefaultImpl {
 		return IdUtil.getSnowflake(1, 1).nextIdStr();	// 以雪花算法生成token 
 	}
 }
-```
+``` -->
 
-3、再次调用 `StpUtil.login(10001)`方法进行登录，观察其生成的token样式: 
+<!-- 3、再次调用 `StpUtil.login(10001)`方法进行登录，观察其生成的token样式: 
 ``` html
 1339604338175250432
-```
+``` -->
