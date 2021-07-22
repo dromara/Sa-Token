@@ -38,7 +38,7 @@
 
 
 ### 前后台分离模式下和普通模式有何不同？
-主要是失去了`Cookie`无法自动化保存和提交`token秘钥`，可以参考章节：[前后台分离](/use/not-cookie)
+主要是失去了`Cookie`无法自动化保存和提交`token秘钥`，可以参考章节：[前后台分离](/up/not-cookie)
 
 
 ### 前后台分离时，前端提交的header参数是叫token还是satoken还是tokenName？

@@ -39,6 +39,7 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **分布式会话** —— 提供jwt集成、共享数据中心两种分布式会话方案
 - **微服务网关鉴权** —— 适配Gateway、ShenYu、Zuul等常见网关的路由拦截认证
 - **单点登录** —— 内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以搞定
+- **OAuth2.0认证** —— 基于RFC-6749标准编写，OAuth2.0标准流程的授权认证，支持openid模式 
 - **二级认证** —— 在已登录的基础上再次认证，保证安全性 
 - **独立Redis** —— 将权限缓存与业务缓存分离 
 - **临时Token验证** —— 解决短时间的Token授权问题
@@ -182,6 +183,8 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 [**[ jthink ]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
 
 [**[ dcy-fast ]** 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
+
+[**[ helio-starters ]** 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
 如果您的项目使用了Sa-Token，欢迎提交pr
 

@@ -41,4 +41,4 @@ StpUtil.getTokenValueByLoginId(10001, "APP");
 ```
 
 
-> 不同设备账号在登录时设置不同的token有效期等信息, 详见[登录时指定token有效期](/use/remember-me?id=登录时指定token有效期)
+> 不同设备账号在登录时设置不同的token有效期等信息, 详见[登录时指定token有效期](/up/remember-me?id=登录时指定token有效期)

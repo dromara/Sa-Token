@@ -84,11 +84,11 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 | isReadBody			| Boolean	| true		| 是否尝试从请求体里读取token														|
 | isReadHead			| Boolean	| true		| 是否尝试从header里读取token														|
 | isReadCookie			| Boolean	| true		| 是否尝试从cookie里读取token														|
-| tokenStyle			| String	| uuid		| token风格, [参考：花式token](/use/token-style)										|
+| tokenStyle			| String	| uuid		| token风格, [参考：自定义Token风格](/up/token-style)										|
 | dataRefreshPeriod		| int		| 30		| 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取token专属session时是否必须登录 (如果配置为true，会在每次获取token专属session时校验是否登录)		|
 | autoRenew				| Boolean	| true		| 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用getLoginId()时进行一次过期检查与续签操作)		|
-| tokenPrefix			| Boolean	| true		| token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)	[参考：token前缀](/use/token-prefix) 			|
+| tokenPrefix			| Boolean	| true		| token前缀, 格式样例(satoken: Bearer xxxx-xxxx-xxxx-xxxx)	[参考：自定义Token前缀](/up/token-prefix) 			|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
 | jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)							|

@@ -3,7 +3,7 @@
 
 如图所示，一般网站的登录界面都会有一个 **`[记住我]`** 按钮，当你勾选它后，即时你关闭浏览器再次打开网站，也依然会处于登录状态，无须重复验证密码
 
-![../static/login-view.png](../static/login-view.png)
+![../static/login-view.png](https://oss.dev33.cn/sa-token/doc/login-view.png)
 
 那么在Sa-Token中，如何做到 [ 记住我 ] 功能呢？
 

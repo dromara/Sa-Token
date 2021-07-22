@@ -1,7 +1,7 @@
 # 踢人下线
 所谓踢人下线，核心操作就是找到其指定`loginId`对应的`token`，并设置其失效
 
-![踢下线](../static/kickout.png)
+![踢下线](https://oss.dev33.cn/sa-token/doc/kickout.png)
 
 --- 
 

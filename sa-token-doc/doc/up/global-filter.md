@@ -18,7 +18,7 @@
 Sa-Token同时提供过滤器和拦截器机制，不是为了让谁替代谁，而是为了让大家根据自己的实际业务合理选择，拥有更多的发挥空间。
 
 
-### 注册过滤器
+### 在 SpringBoot 中注册过滤器
 同拦截器一样，为了避免不必要的性能浪费，Sa-Token全局过滤器默认处于关闭状态，若要使用过滤器组件，首先你需要注册它到项目中：
 ``` java
 /**
@@ -62,7 +62,7 @@ public class SaTokenConfigure {
         			.setServer("sa-server")
         			// 是否可以在iframe显示视图： DENY=不可以 | SAMEORIGIN=同域下可以 | ALLOW-FROM uri=指定域名下可以 
         			.setHeader("X-Frame-Options", "SAMEORIGIN")
-        			// 是否启用浏览器默认XSS防护： 0=禁用 | 1=启用 | 1; mode=block 启用, 并在检查到XSS攻击时，停止渲染页面
+        			// 是否启用浏览器默认XSS防护： 0=禁用 | 1=启用 | 1; mode=block 启用, 并在检查到XSS攻击时，停止渲染页面 
         			.setHeader("X-XSS-Protection", "1; mode=block")
         			// 禁用浏览器内容嗅探 
         			.setHeader("X-Content-Type-Options", "nosniff")
@@ -74,13 +74,13 @@ public class SaTokenConfigure {
 }
 ```
 
-### 注意事项
+##### 注意事项：
 - 在`[认证函数]`里，你可以写和拦截器里一致的代码，进行路由匹配鉴权，参考：[路由拦截式鉴权](/use/route-check)
 - 由于过滤器中抛出的异常不进入全局异常处理，所以你必须提供`[异常处理函数]`来处理`[认证函数]`里抛出的异常
 - 在`[异常处理函数]`里的返回值，将作为字符串输出到前端，如果需要定制化返回数据，请注意其中的格式转换
 
 
-### 在WebFlux中使用过滤器
+### 在 WebFlux 中注册过滤器
 `Spring WebFlux`中不提供拦截器机制，因此若你的项目需要路由鉴权功能，过滤器是你唯一的选择，在`Spring WebFlux`注册过滤器的流程与上述流程几乎完全一致，
 除了您需要将过滤器名称由`SaServletFilter`更换为`SaReactorFilter`以外，其它所有步骤均可参考以上示例
 ``` java

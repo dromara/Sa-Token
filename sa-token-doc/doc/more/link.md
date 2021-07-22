@@ -4,7 +4,13 @@
 
 #### 集成Sa-Token的开源项目:
 
-[[sa-plus] 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus) 
+[**[ sa-plus ]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
+
+[**[ jthink ]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
+
+[**[ dcy-fast ]** 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
+
+[**[ helio-starters ]** 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
 
 <br>

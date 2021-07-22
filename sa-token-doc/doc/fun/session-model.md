@@ -95,9 +95,9 @@ session.set("name", "张三");
 ![session-model](https://oss.dev33.cn/sa-token/doc/session-model3.png 's-w')
 
 简而言之：
-- `Token-Session` 以token为主，只要token不同，那么对应的Session对象就不同
 - `User-Session`  以UserId为主，只要token指向的UserId一致，那么对应的Session对象就一致
-- `Custom-Session` 以特定的key为主，不同key对应不同的Session对象
+- `Token-Session` 以token为主，只要token不同，那么对应的Session对象就不同
+- `Custom-Session` 以特定的key为主，不同key对应不同的Session对象，同样的key指向同一个Session对象 
 
 
 

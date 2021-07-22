@@ -16,9 +16,7 @@
 	- [框架配置](/use/config) 
 
 - **深入**
-	<!-- - [持久层扩展（集成Redis）](/use/dao-extend) -->
 	- [集成Redis](/up/integ-redis)
-	<!-- - [无Cookie模式（前后台分离）](/use/not-cookie) -->
 	- [前后台分离](/up/not-cookie) 
 	- [自定义Token风格](/up/token-style) 
 	- [自定义Token前缀](/up/token-prefix) 
@@ -29,11 +27,9 @@
 	- [密码加密](/up/password-secure) 
 	- [会话治理](/up/search-session) 
 	- [全局侦听器](/up/global-listener) 
-
-- **进阶**
-	- [全局过滤器](/use/global-filter) 
-	- [集群、分布式](/senior/dcs)
-	- [多账号验证](/use/many-account) 
+	- [全局过滤器](/up/global-filter) 
+	- [多账号验证](/up/many-account) 
+	- [微服务](/senior/dcs)
 
 - **单点登录**
 	- [单点登录简述](/sso/readme)
@@ -45,6 +41,9 @@
 	- [OAuth2.0简述](/oauth2/readme)
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
 	- [OAuth2-API列表](/oauth2/oauth2-api)
+
+<!-- - **微服务** -->
+
 
 - **插件**
 	- [AOP注解鉴权](/plugin/aop-at)
@@ -60,7 +59,7 @@
 - **附录**
 	- [常用类、方法](/more/common-action) 
 	- [常见问题排查](/more/common-questions) 
-	- [Sa-Token认证流程图](/fun/auth-flow)
+	- [Sa-Token功能结构图](/fun/auth-flow)
 	- [未登录场景值详解](/fun/not-login-scene)
 	- [Token有效期详解](/fun/token-timeout)
 	- [Session模型详解](/fun/session-model)
