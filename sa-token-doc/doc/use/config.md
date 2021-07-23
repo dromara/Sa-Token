@@ -92,6 +92,7 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
 | jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)							|
+| idTokenTimeout		| long		| 86400		| Id-Token的有效期 (单位: 秒)														|
 | sso					| Object	| new SaSsoConfig()		| SSO 单点登录相关配置													|
 
 

@@ -41,7 +41,8 @@
 - **OAuth2.0**
 	- [OAuth2.0简述](/oauth2/readme)
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
-	- [OAuth2-API列表](/oauth2/oauth2-api)
+	- [OAuth2-Server端-API列表](/oauth2/oauth2-api)
+	- [OAuth2-二次开发说明](/oauth2/oauth2-dev)
 
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)

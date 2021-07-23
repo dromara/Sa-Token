@@ -13,9 +13,13 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.id.SaIdTemplate;
+import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.solon.integration.SaContextForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenMethodInterceptor;
+import cn.dev33.satoken.sso.SaSsoTemplate;
+import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.temp.SaTempInterface;
 
@@ -37,7 +41,6 @@ public class XPluginImp implements Plugin {
         //注入配置Bean
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
-
 
         //注入容器交互Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
@@ -65,6 +68,16 @@ public class XPluginImp implements Plugin {
         // 临时令牌验证模块 Bean
         Aop.getAsyn(SaTempInterface.class, bw->{
             SaManager.setSaTemp(bw.raw());
+        });
+
+        // Sa-Token-Id 身份凭证模块 Bean
+        Aop.getAsyn(SaIdTemplate.class, bw->{
+        	SaIdUtil.saIdTemplate = bw.raw();
+        });
+
+        // Sa-Token-SSO 单点登录模块 Bean
+        Aop.getAsyn(SaSsoTemplate.class, bw->{
+        	SaSsoUtil.saSsoTemplate = bw.raw();
         });
         
     }

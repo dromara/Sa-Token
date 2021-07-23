@@ -9,7 +9,11 @@ import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.id.SaIdTemplate;
+import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.sso.SaSsoTemplate;
+import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.temp.SaTempInterface;
 
@@ -89,6 +93,26 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaTemp(SaTempInterface saTemp) {
 		SaManager.setSaTemp(saTemp);
+	}
+
+	/**
+	 * 注入 Sa-Id-Token 模块 Bean
+	 * 
+	 * @param saIdTemplate saIdTemplate对象 
+	 */
+	@Autowired(required = false)
+	public void setSaIdTemplate(SaIdTemplate saIdTemplate) {
+		SaIdUtil.saIdTemplate = saIdTemplate;
+	}
+
+	/**
+	 * 注入 Sa-Token-SSO 单点登录模块 Bean
+	 * 
+	 * @param saSsoTemplate saSsoTemplate对象 
+	 */
+	@Autowired(required = false)
+	public void setSaSsoTemplate(SaSsoTemplate saSsoTemplate) {
+		SaSsoUtil.saSsoTemplate = saSsoTemplate;
 	}
 	
 	/**
