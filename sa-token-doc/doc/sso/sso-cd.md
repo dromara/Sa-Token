@@ -10,7 +10,7 @@
 ##### 1.1、前端按钮跳转 
 前端页面准备一个**`[登录]`**按钮，当用户点击按钮时，跳转到登录接口 
 ``` js
-<a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a>
+<a href="javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);">登录</a>
 ```
 
 ##### 1.2、后端拦截重定向

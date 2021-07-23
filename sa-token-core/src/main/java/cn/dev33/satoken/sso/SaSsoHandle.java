@@ -5,7 +5,6 @@ import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.sso.SaSsoConsts.Api;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
@@ -32,7 +31,7 @@ public class SaSsoHandle {
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// ---------- SSO-Server端：单点登录授权地址 
-		if(match(Api.ssoAuth)) {
+		if(req.isPath(Api.ssoAuth)) {
 			// ---------- 此处两种情况分开处理：
 			// 情况1：在SSO认证中心尚未登录，则先去登登录 
 			if(stpLogic.isLogin() == false) {
@@ -44,12 +43,12 @@ public class SaSsoHandle {
 		}
 
 		// ---------- SSO-Server端：RestAPI 登录接口  
-		if(match(Api.ssoDoLogin)) {
+		if(req.isPath(Api.ssoDoLogin)) {
 			return sso.doLoginHandle.apply(req.getParam("name"), req.getParam("pwd"));
 		}
 
 		// ---------- SSO-Server端：校验ticket 获取账号id 
-		if(match(Api.ssoCheckTicket) && sso.isHttp) {
+		if(req.isPath(Api.ssoCheckTicket) && sso.isHttp) {
 			String ticket = req.getParam(ParamName.ticket);
 			String sloCallback = req.getParam(ParamName.ssoLogoutCall);
 			
@@ -64,7 +63,7 @@ public class SaSsoHandle {
 		}
 		
 		// ---------- SSO-Server端：单点注销 
-		if(match(Api.ssoLogout) && sso.isSlo) {
+		if(req.isPath(Api.ssoLogout) && sso.isSlo) {
 			String loginId = req.getParam(ParamName.loginId);
 			String secretkey = req.getParam(ParamName.secretkey);
 			
@@ -92,7 +91,7 @@ public class SaSsoHandle {
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 
 		// ---------- SSO-Client端：登录地址 
-		if(match(Api.ssoLogin)) {
+		if(req.isPath(Api.ssoLogin)) {
 			String back = req.getParam(ParamName.back, "/");
 			String ticket = req.getParam(ParamName.ticket);
 			
@@ -136,7 +135,7 @@ public class SaSsoHandle {
 		}
 
 		// ---------- SSO-Client端：单点注销 [模式二]
-		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp == false) {
+		if(req.isPath(Api.ssoLogout) && sso.isSlo && sso.isHttp == false) {
 			stpLogic.logout();
 			if(req.getParam(ParamName.back) == null) {
 				return SaResult.ok("单点注销成功");
@@ -146,7 +145,7 @@ public class SaSsoHandle {
 		}
 
 		// ---------- SSO-Client端：单点注销 [模式三]
-		if(match(Api.ssoLogout) && sso.isSlo && sso.isHttp) {
+		if(req.isPath(Api.ssoLogout) && sso.isSlo && sso.isHttp) {
 			// 如果未登录，则无需注销 
 	        if(stpLogic.isLogin() == false) {
 	            return SaResult.ok();
@@ -165,7 +164,7 @@ public class SaSsoHandle {
 		}
 
 		// ---------- SSO-Client端：单点注销的回调 	[模式三]
-		if(match(Api.ssoLogoutCall) && sso.isSlo && sso.isHttp) {
+		if(req.isPath(Api.ssoLogoutCall) && sso.isSlo && sso.isHttp) {
 			String loginId = req.getParam(ParamName.loginId);
 			String secretkey = req.getParam(ParamName.secretkey);
 			
@@ -176,15 +175,6 @@ public class SaSsoHandle {
 		
 		// 默认返回 
 		return SaSsoConsts.NOT_HANDLE;
-	}
-	
-	/**
-	 * 路由匹配算法 
-	 * @param pattern 路由表达式
-	 * @return 是否可以匹配 
-	 */
-	static boolean match(String pattern) {
-		return SaRouter.isMatchCurrURI(pattern);
 	}
 	
 }
