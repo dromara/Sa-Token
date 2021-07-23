@@ -18,7 +18,7 @@ public class SaTokenConfig implements Serializable {
 	private String tokenName = "satoken";
 
 	/** token的长久有效期(单位:秒) 默认30天, -1代表永久 */
-	private long timeout = 30 * 24 * 60 * 60;
+	private long timeout = 60 * 60 * 24 * 30;
 
 	/**
 	 * token临时有效期 [指定时间内无操作就视为token过期] (单位: 秒), 默认-1 代表不限制
@@ -70,6 +70,12 @@ public class SaTokenConfig implements Serializable {
 	 */
 	private String jwtSecretKey;
 	
+	/**
+	 * Id-Token的有效期 (单位: 秒)
+	 */
+	private long idTokenTimeout = 60 * 60 * 24;
+	
+
 	/**
 	 * SSO单点登录配置对象 
 	 */
@@ -353,13 +359,28 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
+	 * @return Id-Token的有效期 (单位: 秒)
+	 */
+	public long getIdTokenTimeout() {
+		return idTokenTimeout;
+	}
+
+	/**
+	 * @param idTokenTimeout Id-Token的有效期 (单位: 秒)
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIdTokenTimeout(long idTokenTimeout) {
+		this.idTokenTimeout = idTokenTimeout;
+		return this;
+	}
+	
+	/**
 	 * @return SSO单点登录配置对象 
 	 */
 	public SaSsoConfig getSso() {
 		return sso;
 	}
 	
-
 	/**
 	 * @param sso SSO单点登录配置对象 
 	 */
@@ -367,19 +388,15 @@ public class SaTokenConfig implements Serializable {
 		this.sso = sso;
 	}
 	
-
-	/**
-	 * toString() 
-	 */
 	@Override
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
-				+ ", isConcurrent=" + isConcurrent + ", isShare=" + isShare + ", isReadBody="
-				+ isReadBody + ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle="
-				+ tokenStyle + ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin="
-				+ tokenSessionCheckLogin + ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain
-				+ ", tokenPrefix=" + tokenPrefix + ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey="
-				+ jwtSecretKey + ", sso=" + sso + "]";
+				+ ", isConcurrent=" + isConcurrent + ", isShare=" + isShare + ", isReadBody=" + isReadBody
+				+ ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle
+				+ ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
+				+ ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain + ", tokenPrefix=" + tokenPrefix
+				+ ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey=" + jwtSecretKey + ", idTokenTimeout="
+				+ idTokenTimeout + ", sso=" + sso + "]";
 	}
 	
 

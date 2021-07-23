@@ -43,8 +43,11 @@
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
 	- [OAuth2-API列表](/oauth2/oauth2-api)
 
-<!-- - **微服务** -->
-
+- **微服务**
+	- [分布式Session会话](/micro/dcs-session)
+	- [网关统一鉴权](/micro/gateway-auth)
+	- [内部服务调用鉴权](/micro/id-token)
+	- [依赖引入说明](/micro/import-intro)
 
 - **插件**
 	- [AOP注解鉴权](/plugin/aop-at)

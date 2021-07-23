@@ -13,7 +13,7 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token-SSO 单点登录接口 
+ * Sa-Token-SSO 单点登录模块
  * @author kong
  *
  */

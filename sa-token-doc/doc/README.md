@@ -195,6 +195,8 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ 小诺快速开发平台 ]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
+[**[ Jpom ]** 简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件](https://gitee.com/dromara/Jpom)
+
 
 ## 交流群
 QQ交流群：1002350610 [点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
