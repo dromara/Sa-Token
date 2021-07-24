@@ -29,7 +29,7 @@
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 
 	- [多账号验证](/up/many-account) 
-	- [微服务](/senior/dcs)
+	<!-- - [微服务](/senior/dcs) -->
 
 - **单点登录**
 	- [单点登录简述](/sso/readme)
@@ -47,7 +47,7 @@
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)
 	- [网关统一鉴权](/micro/gateway-auth)
-	- [内部服务调用鉴权](/micro/id-token)
+	- [服务内部调用鉴权](/micro/id-token)
 	- [依赖引入说明](/micro/import-intro)
 
 - **插件**
@@ -55,6 +55,7 @@
 	- [临时Token验证](/plugin/temp-token)
 	- [Quick-Login快速登录插件](/plugin/quick-login)
 	- [Alone独立Redis插件](/plugin/alone-redis)
+	- [持久层扩展](/plugin/dao-extend)
 
 - **其它**
 	- [更新日志](/more/update-log) 

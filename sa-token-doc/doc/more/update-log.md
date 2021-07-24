@@ -1,6 +1,16 @@
 # 更新日志 
 
 
+### 2021-7-24 @v1.24.0
+- 修复：修复部分场景下Alone-Redis插件导致项目无法启动的问题
+- 优化：增加对SpringBoot1.x版本的兼容性 
+- 新增：SaOAuth2Util新增checkScope函数，用于校验令牌是否具备指定权限 
+- 新增：OAuth2.0模块新增revoke接口，用于提前回收 Access-Token 令牌 
+- 新增：新增`Sa-Id-Token` 模块，解决微服务内部调用鉴权  **[重要]**
+- 文档：新增OAuth2.0模块常用方法说明  
+- 优化：大幅度优化文档示例 
+
+
 ### 2021-7-19 @v1.23.0
 - 新增：Sa-Token-OAuth2 模块正式发布   **[重要]** 
 - 修复：修复jwt集成demo无法正确注册StpLogic的bug

@@ -42,7 +42,7 @@ Sa-token默认将数据保存在内存中，此模式读写速度最快，且避
 
 **1. 无论使用哪种序列化方式，你都必须为项目提供一个Redis实例化方案，例如：**
 ``` xml
-<!-- 提供redis连接池 -->
+<!-- 提供Redis连接池 -->
 <dependency>
 	<groupId>org.apache.commons</groupId>
 	<artifactId>commons-pool2</artifactId>
