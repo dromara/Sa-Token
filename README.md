@@ -59,6 +59,41 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **开箱即用** —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
 
+##### Sa-Token 源码模块一览
+``` js
+── sa-token
+	├── sa-token-core                         // [核心] Sa-Token 核心模块
+	├── sa-token-starter                      // [整合] Sa-Token 与其它框架整合
+		├── sa-token-servlet                      // [整合] Sa-Token 整合 Servlet容器实现类包
+		├── sa-token-spring-boot-starter          // [整合] Sa-Token 整合 SpringBoot 快速集成 
+		├── sa-token-reactor-spring-boot-starter  // [整合] Sa-Token 整合 Reactor响应式编程 快速集成 
+		├── sa-token-solon-plugin                 // [整合] Sa-Token 整合 Solon 快速集成 
+	├── sa-token-plugin                       // [插件] Sa-Token 插件合集
+		├── sa-token-dao-redis                    // [插件] Sa-Token 整合 Redis (使用jdk默认序列化方式)
+		├── sa-token-dao-redis-jackson            // [插件] Sa-Token 整合 Redis (使用jackson序列化方式)
+		├── sa-token-spring-aop                   // [插件] Sa-Token 整合 SpringAOP 注解鉴权
+		├── sa-token-temp-jwt                     // [插件] Sa-Token 整合 jwt 临时令牌鉴权 
+		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
+		├── sa-token-alone-redis                  // [插件] Sa-Token 独立Redis插件，实现[权限缓存与业务缓存分离]
+		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 模块 
+	├── sa-token-demo                         // [示例] Sa-Token 示例合集
+		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
+		├── sa-token-demo-webflux                 // [示例] Sa-Token 整合 WebFlux 
+		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 
+		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 
+		├── sa-token-demo-quick-login             // [示例] Sa-Token 集成 quick-login 模块 
+		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
+		├── sa-token-demo-sso1                    // [示例] Sa-Token 集成 SSO单点登录-模式一
+		├── sa-token-demo-sso2-server             // [示例] Sa-Token 集成 SSO单点登录-模式二 认证中心
+		├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端
+		├── sa-token-demo-sso3-server             // [示例] Sa-Token 集成 SSO单点登录-模式三 认证中心
+		├── sa-token-demo-sso3-client             // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端
+		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
+		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
+	├── sa-token-doc                          // [文档] Sa-Token 开发文档 
+	├──pom.xml                                // [依赖] 顶级pom文件 
+```
+
 ##### Sa-Token 功能结构图
 ![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js3.png 's-w')
 

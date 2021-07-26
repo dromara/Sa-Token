@@ -150,7 +150,7 @@ public class SaSsoHandle {
 	        if(stpLogic.isLogin() == false) {
 	            return SaResult.ok();
 	        }
-	        // 调用SSO-Server认证中心API 
+	        // 调用SSO-Server认证中心API，进行注销
 	        String url = SaSsoUtil.buildSloUrl(stpLogic.getLoginId());
 	        String body = String.valueOf(sso.sendHttp.apply(url));
 	        if(SaSsoConsts.OK.equals(body)) {

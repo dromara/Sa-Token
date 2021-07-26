@@ -29,7 +29,6 @@ import cn.dev33.satoken.stp.StpUtil;
 @RequestMapping("/test/")
 public class TestController {
 
-	
 	// 测试登录接口， 浏览器访问： http://localhost:8081/test/login
 	@RequestMapping("login")
 	public AjaxJson login(@RequestParam(defaultValue="10001") String id) {

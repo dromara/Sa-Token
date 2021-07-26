@@ -70,6 +70,20 @@ public interface SaRequest {
 	public String getHeader(String name);
 
 	/**
+	 * 在 [请求头] 里获取一个值 
+	 * @param name 键 
+	 * @param defaultValue 值为空时的默认值  
+	 * @return 值 
+	 */
+	public default String getHeader(String name, String defaultValue) {
+		String value = getHeader(name);
+		if(SaFoxUtil.isEmpty(value)) {
+			return defaultValue;
+		}
+		return value;
+	}
+
+	/**
 	 * 在 [Cookie作用域] 里获取一个值 
 	 * @param name 键 
 	 * @return 值 
