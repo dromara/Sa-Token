@@ -8,77 +8,87 @@ import java.util.Set;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token-SSO 单点登录模块
+ * Sa-Token-SSO 单点登录模块 
  * @author kong
  *
  */
 public class SaSsoTemplate {
 	
+	/**
+	 * 单点登录模块使用的 StpLogic 对象 
+	 */
 	public StpLogic stpLogic;
 	public SaSsoTemplate(StpLogic stpLogic) {
 		this.stpLogic = stpLogic;
 	}
 	
+	// ---------------------- Ticket 操作 ---------------------- 
+	
 	/**
-	 * 创建一个 Ticket码 
+	 * 根据 账号id 创建一个 Ticket码 
 	 * @param loginId 账号id 
-	 * @return 票据 
+	 * @return Ticket码 
 	 */
 	public String createTicket(Object loginId) {
-		// 随机一个ticket
+		// 创建 Ticket
 		String ticket = randomTicket(loginId);
 		
-		// 保存入库 
-		long ticketTimeout = SaManager.getConfig().getSso().getTicketTimeout();
-		SaManager.getSaTokenDao().set(splicingKeyTicketToId(ticket), String.valueOf(loginId), ticketTimeout); 
-		SaManager.getSaTokenDao().set(splicingKeyIdToTicket(loginId), String.valueOf(ticket), ticketTimeout); 
+		// 保存 Ticket
+		saveTicket(ticket, loginId);
+		saveTicketIndex(ticket, loginId);
 		
-		// 返回 
+		// 返回 Ticket
 		return ticket;
 	}
 	
 	/**
-	 * 删除一个 Ticket码
-	 * @param ticket Ticket码
+	 * 保存 Ticket 
+	 * @param ticket ticket码
+	 * @param loginId 账号id 
 	 */
-	public void deleteTicket(String ticket) {
-		Object loginId = getLoginId(ticket);
-		if(loginId != null) {
-			SaManager.getSaTokenDao().delete(splicingKeyTicketToId(ticket)); 
-			SaManager.getSaTokenDao().delete(splicingKeyIdToTicket(loginId));
-		}
+	public void saveTicket(String ticket, Object loginId) {
+		long ticketTimeout = SaManager.getConfig().getSso().getTicketTimeout();
+		SaManager.getSaTokenDao().set(splicingTicketSaveKey(ticket), String.valueOf(loginId), ticketTimeout); 
 	}
 	
 	/**
-	 * 构建URL：Server端向Client下放ticke的地址
+	 * 保存 Ticket 索引 
+	 * @param ticket ticket码
 	 * @param loginId 账号id 
-	 * @param redirect Client端提供的重定向地址
-	 * @return see note 
 	 */
-	public String buildRedirectUrl(Object loginId, String redirect) {
-		// 校验重定向地址 
-		checkRedirectUrl(redirect);
-		
-		// 删掉旧ticket  
-		String oldTicket = SaManager.getSaTokenDao().get(splicingKeyIdToTicket(loginId));
-		if(oldTicket != null) {
-			deleteTicket(oldTicket);
-		}
-		
-		// 获取新ticket
-		String ticket = createTicket(loginId);
-		
-		// 构建 授权重定向地址
-		redirect = encodeBackParam(redirect);
-		String redirectUrl = SaFoxUtil.joinParam(redirect, ParamName.ticket, ticket);
-		return redirectUrl;
+	public void saveTicketIndex(String ticket, Object loginId) {
+		long ticketTimeout = SaManager.getConfig().getSso().getTicketTimeout();
+		SaManager.getSaTokenDao().set(splicingTicketIndexKey(loginId), String.valueOf(ticket), ticketTimeout); 
 	}
 	
+	/**
+	 * 删除 Ticket 
+	 * @param ticket Ticket码
+	 */
+	public void deleteTicket(String ticket) {
+		if(ticket == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().delete(splicingTicketSaveKey(ticket)); 
+	}
+	
+	/**
+	 * 删除 Ticket索引 
+	 * @param loginId 账号id 
+	 */
+	public void deleteTicketIndex(Object loginId) {
+		if(loginId == null) {
+			return;
+		}
+		SaManager.getSaTokenDao().delete(splicingTicketIndexKey(loginId)); 
+	}
+
 	/**
 	 * 根据 Ticket码 获取账号id，如果Ticket码无效则返回null 
 	 * @param ticket Ticket码
@@ -88,7 +98,7 @@ public class SaSsoTemplate {
 		if(SaFoxUtil.isEmpty(ticket)) {
 			return null;
 		}
-		return SaManager.getSaTokenDao().get(splicingKeyTicketToId(ticket));
+		return SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
 	}
 
 	/**
@@ -101,9 +111,21 @@ public class SaSsoTemplate {
 	public <T> T getLoginId(String ticket, Class<T> cs) {
 		return SaFoxUtil.getValueByType(getLoginId(ticket), cs);
 	}
-	
+
 	/**
-	 * 校验ticket码，获取账号id，如果ticket可以有效，则立刻删除 
+	 * 查询 指定账号id的 Ticket值 
+	 * @param loginId 账号id 
+	 * @return Ticket值 
+	 */
+	public String getTicketValue(Object loginId) {
+		if(loginId == null) {
+			return null;
+		}
+		return SaManager.getSaTokenDao().get(splicingTicketIndexKey(loginId));
+	}
+
+	/**
+	 * 校验ticket码，获取账号id，如果此ticket是有效的，则立即删除 
 	 * @param ticket Ticket码
 	 * @return 账号id 
 	 */
@@ -111,45 +133,31 @@ public class SaSsoTemplate {
 		Object loginId = getLoginId(ticket);
 		if(loginId != null) {
 			deleteTicket(ticket);
+			deleteTicketIndex(loginId);
 		}
 		return loginId;
 	}
 	
 	/**
-	 * 校验重定向url合法性
-	 * @param url 下放ticket的url地址 
+	 * 随机一个 Ticket码 
+	 * @param loginId 账号id 
+	 * @return Ticket码 
 	 */
-	public void checkRedirectUrl(String url) {
-		
-		// 1、是否是一个有效的url
-		if(SaFoxUtil.isUrl(url) == false) {
-			throw new SaTokenException("无效回调地址：" + url);
-		}
-		
-		// 2、截取掉?后面的部分 
-		int qIndex = url.indexOf("?");
-		if(qIndex != -1) {
-			url = url.substring(0, qIndex);
-		}
-		
-		// 3、是否在[允许地址列表]之中 
-		String authUrl = SaManager.getConfig().getSso().getAllowUrl().replaceAll(" ", "");
-		List<String> authUrlList = Arrays.asList(authUrl.split(",")); 
-		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
-			throw new SaTokenException("非法回调地址：" + url);
-		}
-		
-		// 验证通过 
-		return;
+	public String randomTicket(Object loginId) {
+		return SaFoxUtil.getRandomString(64);
 	}
+
 	
+	// ---------------------- 构建URL ---------------------- 
+
 	/**
-	 * 构建URL：Server端 单点登录地址
+	 * 构建URL：Server端 单点登录地址 
 	 * @param clientLoginUrl Client端登录地址 
 	 * @param back 回调路径 
-	 * @return [SSO-Server端-认证地址 ]
+	 * @return [SSO-Server端-认证地址 ] 
 	 */
 	public String buildServerAuthUrl(String clientLoginUrl, String back) {
+		
 		// 服务端认证地址 
 		String serverUrl = SaManager.getConfig().getSso().getAuthUrl();
 		
@@ -163,6 +171,55 @@ public class SaSsoTemplate {
 		
 		// 返回 
 		return serverAuthUrl;
+	}
+	
+	/**
+	 * 构建URL：Server端向Client下放ticke的地址 
+	 * @param loginId 账号id 
+	 * @param redirect Client端提供的重定向地址 
+	 * @return see note 
+	 */
+	public String buildRedirectUrl(Object loginId, String redirect) {
+		
+		// 校验 重定向地址 是否合法 
+		checkRedirectUrl(redirect);
+		
+		// 删掉 旧Ticket  
+		deleteTicket(getTicketValue(loginId));
+		
+		// 创建 新Ticket
+		String ticket = createTicket(loginId);
+		
+		// 构建 授权重定向地址 （Server端 根据此地址向 Client端 下放Ticket）
+		return SaFoxUtil.joinParam(encodeBackParam(redirect), ParamName.ticket, ticket);
+	}
+	
+	/**
+	 * 校验重定向url合法性
+	 * @param url 下放ticket的url地址 
+	 */
+	public void checkRedirectUrl(String url) {
+		
+		// 1、是否是一个有效的url 
+		if(SaFoxUtil.isUrl(url) == false) {
+			throw new SaTokenException("无效redirect：" + url);
+		}
+		
+		// 2、截取掉?后面的部分 
+		int qIndex = url.indexOf("?");
+		if(qIndex != -1) {
+			url = url.substring(0, qIndex);
+		}
+		
+		// 3、是否在[允许地址列表]之中 
+		String authUrl = SaManager.getConfig().getSso().getAllowUrl().replaceAll(" ", "");
+		List<String> authUrlList = Arrays.asList(authUrl.split(",")); 
+		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
+			throw new SaTokenException("非法redirect：" + url);
+		}
+		
+		// 校验通过 √ 
+		return;
 	}
 	
 	/**
@@ -191,17 +248,8 @@ public class SaSsoTemplate {
 		return url;
 	}
 
-	/**
-	 * 随机一个 Ticket码 
-	 * @param loginId 账号id 
-	 * @return 票据 
-	 */
-	public String randomTicket(Object loginId) {
-		return SaFoxUtil.getRandomString(64);
-	}
-	
 
-	// ------------------- SSO 模式三 ------------------- 
+	// ------------------- SSO 模式三相关 ------------------- 
 
 	/**
 	 * 校验secretkey秘钥是否有效 
@@ -215,18 +263,23 @@ public class SaSsoTemplate {
 	
 	/**
 	 * 构建URL：校验ticket的URL 
+	 * <p> 在模式三下，Client端拿到Ticket后根据此地址向Server端发送请求，获取账号id 
 	 * @param ticket ticket码
 	 * @param ssoLogoutCallUrl 单点注销时的回调URL 
 	 * @return 构建完毕的URL 
 	 */
 	public String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
+		// 裸地址 
 		String url = SaManager.getConfig().getSso().getCheckTicketUrl();
+		
 		// 拼接ticket参数 
 		url = SaFoxUtil.joinParam(url, ParamName.ticket, ticket);
+		
 		// 拼接单点注销时的回调URL 
 		if(ssoLogoutCallUrl != null) {
 			url = SaFoxUtil.joinParam(url, ParamName.ssoLogoutCall, ssoLogoutCallUrl);
 		}
+		
 		// 返回 
 		return url;
 	}
@@ -240,9 +293,10 @@ public class SaSsoTemplate {
 		if(loginId == null || sloCallbackUrl == null || sloCallbackUrl.isEmpty()) {
 			return;
 		}
-		Set<String> urlSet = stpLogic.getSessionByLoginId(loginId).get(SaSsoConsts.SLO_CALLBACK_SET_KEY, ()-> new HashSet<String>());
+		SaSession session = stpLogic.getSessionByLoginId(loginId);
+		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, ()-> new HashSet<String>());
 		urlSet.add(sloCallbackUrl);
-		stpLogic.getSessionByLoginId(loginId).set(SaSsoConsts.SLO_CALLBACK_SET_KEY, urlSet);
+		session.set(SaSsoConsts.SLO_CALLBACK_SET_KEY, urlSet);
 	}
 	
 	/**
@@ -304,20 +358,23 @@ public class SaSsoTemplate {
 	 * @param ticket ticket值 
 	 * @return key
 	 */
-	public String splicingKeyTicketToId(String ticket) {
+	public String splicingTicketSaveKey(String ticket) {
 		return SaManager.getConfig().getTokenName() + ":ticket:" + ticket;
 	}
 
 	/** 
-	 * 拼接key：账号Id 反查 Ticket
+	 * 拼接key：账号Id 反查 Ticket 
 	 * @param id 账号id
 	 * @return key
 	 */
-	public String splicingKeyIdToTicket(Object id) {
+	public String splicingTicketIndexKey(Object id) {
 		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
 	}
 
-	
+	/**
+	 * 单点注销回调函数 
+	 * @author kong
+	 */
 	@FunctionalInterface
 	static interface CallSloUrlFunction{
 		/**
@@ -326,6 +383,5 @@ public class SaSsoTemplate {
 		 */
 		public void run(String url);
 	}
-	
 	
 }

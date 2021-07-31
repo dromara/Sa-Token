@@ -1,7 +1,7 @@
 package cn.dev33.satoken.sso;
 
 /**
- * Sa-Token-SSO模块相关常量
+ * Sa-Token-SSO模块相关常量 
  * @author kong
  *
  */
@@ -22,7 +22,7 @@ public class SaSsoConsts {
 		/** SSO-Server端：校验ticket 获取账号id */ 
 		public static String ssoCheckTicket = "/sso/checkTicket";
 
-		/** SSO-Server端 (and Client端)：单点注销 */ 
+		/** SSO-Server端 (and Client端)：单点注销地址 */ 
 		public static String ssoLogout = "/sso/logout";
 
 		/** SSO-Client端：登录地址 */ 
@@ -56,6 +56,9 @@ public class SaSsoConsts {
 		
 		/** Client端单点注销时-回调URL 参数名称 */
 		public static String ssoLogoutCall = "ssoLogoutCall";
+
+		public static String name = "name";
+		public static String pwd = "pwd";
 
 	}
 

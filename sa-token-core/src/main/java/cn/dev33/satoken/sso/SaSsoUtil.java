@@ -4,7 +4,7 @@ import cn.dev33.satoken.sso.SaSsoTemplate.CallSloUrlFunction;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * Sa-Token-SSO 单点登录工具类 
+ * Sa-Token-SSO 单点登录模块 工具类 
  * @author kong
  *
  */
@@ -15,33 +15,34 @@ public class SaSsoUtil {
 	 */
 	public static SaSsoTemplate saSsoTemplate = new SaSsoTemplate(StpUtil.stpLogic);
 	
+
+	// ---------------------- Ticket 操作 ---------------------- 
+	
 	/**
-	 * 创建一个 Ticket票据 
+	 * 根据 账号id 创建一个 Ticket码 
 	 * @param loginId 账号id 
-	 * @return 票据 
+	 * @return Ticket码 
 	 */
 	public static String createTicket(Object loginId) {
 		return saSsoTemplate.createTicket(loginId);
 	}
 	
 	/**
-	 * 删除一个 Ticket码
+	 * 删除 Ticket 
 	 * @param ticket Ticket码
 	 */
 	public static void deleteTicket(String ticket) {
 		saSsoTemplate.deleteTicket(ticket);
 	}
-
-	/**
-	 * 构建URL：Server端向Client下放ticke的地址
-	 * @param loginId 账号id 
-	 * @param redirect Client端提供的重定向地址
-	 * @return see note 
-	 */
-	public static String buildRedirectUrl(Object loginId, String redirect) {
-		return saSsoTemplate.buildRedirectUrl(loginId, redirect);
-	}
 	
+	/**
+	 * 删除 Ticket索引 
+	 * @param loginId 账号id 
+	 */
+	public static void deleteTicketIndex(Object loginId) {
+		saSsoTemplate.deleteTicketIndex(loginId);
+	}
+
 	/**
 	 * 根据 Ticket码 获取账号id，如果Ticket码无效则返回null 
 	 * @param ticket Ticket码
@@ -63,7 +64,7 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 校验ticket码，获取账号id，如果ticket可以有效，则立刻删除 
+	 * 校验ticket码，获取账号id，如果此ticket是有效的，则立即删除 
 	 * @param ticket Ticket码
 	 * @return 账号id 
 	 */
@@ -71,13 +72,8 @@ public class SaSsoUtil {
 		return saSsoTemplate.checkTicket(ticket);
 	}
 	
-	/**
-	 * 校验重定向url合法性
-	 * @param url 下放ticket的url地址 
-	 */
-	public static void checkAuthUrl(String url) {
-		saSsoTemplate.checkRedirectUrl(url);
-	}
+
+	// ---------------------- 构建URL ---------------------- 
 
 	/**
 	 * 构建URL：Server端 单点登录地址
@@ -87,6 +83,24 @@ public class SaSsoUtil {
 	 */
 	public static String buildServerAuthUrl(String clientLoginUrl, String back) {
 		return saSsoTemplate.buildServerAuthUrl(clientLoginUrl, back);
+	}
+
+	/**
+	 * 构建URL：Server端向Client下放ticke的地址 
+	 * @param loginId 账号id 
+	 * @param redirect Client端提供的重定向地址 
+	 * @return see note 
+	 */
+	public static String buildRedirectUrl(Object loginId, String redirect) {
+		return saSsoTemplate.buildRedirectUrl(loginId, redirect);
+	}
+	
+	/**
+	 * 校验重定向url合法性
+	 * @param url 下放ticket的url地址 
+	 */
+	public static void checkAuthUrl(String url) {
+		saSsoTemplate.checkRedirectUrl(url);
 	}
 
 	
