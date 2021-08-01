@@ -241,6 +241,7 @@ http://sa-oauth-server.com:8001/oauth2/client_token
 | grant_type	| 是		| 返回类型，这里请填写：client_credentials|
 | client_id		| 是		| 应用id								|
 | client_secret	| 是		| 应用秘钥								|
+| scope			| 否		| 申请权限								|
 
 接口返回值样例：
 ``` js
