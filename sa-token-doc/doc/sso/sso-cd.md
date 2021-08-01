@@ -125,3 +125,8 @@ public SaResult ss(String name, String pwd) {
 答：不必须，只是推荐，权限缓存与业务缓存分离后会减少SSO-Redis的访问压力，且可以避免多个Client端的缓存读写冲突
 
 
+##### 问：将旧有系统改造为单点登录时，应该注意哪些？
+建议不要把其中一个系统改造为SSO服务端，而是新起一个项目作为Server端，所有旧有项目全部作为Client端与此对接 
+
+
+
