@@ -103,6 +103,14 @@ public class SaSsoUtil {
 		saSsoTemplate.checkRedirectUrl(url);
 	}
 
+	/**
+	 * 构建URL：Server端 账号资料查询地址 
+	 * @param loginId 账号id
+	 * @return Server端 账号资料查询地址 
+	 */
+	public static String buildUserinfoUrl(Object loginId) {
+		return saSsoTemplate.buildUserinfoUrl(loginId);
+	}
 	
 	// ------------------- SSO 模式三 ------------------- 
 	
@@ -161,4 +169,13 @@ public class SaSsoUtil {
 		saSsoTemplate.singleLogout(secretkey, loginId, fun); 
 	}
 
+	/**
+	 * 获取：账号资料 
+	 * @param loginId 账号id
+	 * @return 账号资料 
+	 */
+	public static Object getUserinfo(Object loginId) {
+		return saSsoTemplate.getUserinfo(loginId);
+	}
+	
 }

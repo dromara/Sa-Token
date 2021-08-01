@@ -74,7 +74,53 @@ sa-token:
 > 注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰
 
 
-### 2、无刷单点注销
+### 2、获取Userinfo 
+除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的同步。要解决这个需求，我们只需：
+
+##### 2.1、在Server端自定义接口，查询用户资料
+``` java
+// 自定义接口：获取userinfo 
+@RequestMapping("/sso/userinfo")
+public Object userinfo(String loginId, String secretkey) {
+	System.out.println("---------------- 获取userinfo --------");
+	
+	// 校验调用秘钥 
+	SaSsoUtil.checkSecretkey(secretkey);
+	
+	// 自定义返回结果（模拟）
+	return SaResult.ok()
+			.set("id", loginId)
+			.set("name", "linxiaoyu")
+			.set("sex", "女")
+			.set("age", 18);
+}
+```
+
+##### 2.2、在Client端调用此接口查询userinfo
+首先在yml中配置接口地址 
+``` yml
+sa-token: 
+    sso: 
+        # SSO-Server端 查询userinfo地址 
+        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
+```
+
+然后在`SsoClientController`中新增接口 
+``` java
+// 查询我的账号信息 
+@RequestMapping("/sso/myinfo")
+public Object myinfo() {
+	Object userinfo = SaSsoUtil.getUserinfo(StpUtil.getLoginId());
+	System.out.println("--------info：" + userinfo);
+	return userinfo;
+}
+```
+
+访问测试：[http://sa-sso-client2.com:9001/sso/myinfo](http://sa-sso-client2.com:9001/sso/myinfo)
+
+
+
+### 3、无刷单点注销
 
 有了单点登录就必然要有单点注销，网上给出的大多数解决方案是将注销请求重定向至SSO-Server中心，逐个通知Client端下线
 
@@ -151,7 +197,7 @@ PS：这里我们为了方便演示，使用的是超链接跳页面的形式，
 
 
 
-### 3、后记
+### 4、后记
 当我们熟读三种模式的单点登录之后，其实不难发现：所谓单点登录，其本质就是多个系统之间的会话共享 
 
 当我们理解这一点之后，三种模式的工作原理也浮出水面：

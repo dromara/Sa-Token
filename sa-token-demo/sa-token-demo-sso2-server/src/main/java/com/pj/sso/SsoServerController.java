@@ -1,6 +1,7 @@
 package com.pj.sso;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +43,13 @@ public class SsoServerController {
 				return SaResult.error("登录失败！");
 			})
 			;
+	}
+
+	// 全局异常拦截 
+	@ExceptionHandler
+	public SaResult handlerException(Exception e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
 	}
 	
 }

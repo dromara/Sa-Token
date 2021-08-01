@@ -97,17 +97,18 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 
 
 ### 单点登录相关配置 
-| 参数名称		| 类型		| 默认值		| 说明																			|
-| :--------		| :--------	| :--------	| :--------																		|
-| ticketTimeout	| long		| 300		| Ticket有效期 (单位: 秒)														|
-| allowUrl		| String	| *			| 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)，[详情请参考 SSO模式二的域名校验章节]		|
-| secretkey		| String	| null		| 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)								|
-| authUrl		| String	| null		| SSO-Server端 单点登录地址														|
-| isHttp		| Boolean	| false		| 是否使用http请求校验ticket值													|
-| checkTicketUrl| String	| null		| SSO-Server端 Ticket校验地址													|
-| isSlo			| Boolean	| false		| 是否打开单点注销功能															|
-| sloUrl		| String	| null		| SSO-Server端 单点注销地址														|
-| ssoLogoutCall	| String	| null		| SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取）					|
+| 参数名称		| 类型		| 默认值		| 所属端					| 说明																			|
+| :--------		| :--------	| :--------	| :--------				| :--------																		|
+| ticketTimeout	| long		| 300		| Server端				| Ticket有效期 (单位: 秒)														|
+| allowUrl		| String	| *			| Server端				| 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)，[详情请参考 SSO模式二的域名校验章节]		|
+| secretkey		| String	| null		| Server端 & Client端	| 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)								|
+| authUrl		| String	| null		| Client端				| SSO-Server端 单点登录地址														|
+| isHttp		| Boolean	| false		| Server端 & Client端	| 是否使用http请求校验ticket值													|
+| checkTicketUrl| String	| null		| Client端				| SSO-Server端 Ticket校验地址													|
+| isSlo			| Boolean	| false		| Client端				| 是否打开单点注销功能															|
+| sloUrl		| String	| null		| Client端				| SSO-Server端 单点注销地址														|
+| ssoLogoutCall	| String	| null		| Client端				| SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取）					|
+| userinfoUrl	| String	| null		| Client端				| SSO-Server端 查询userinfo地址													|
 
 配置示例：
 ``` yml

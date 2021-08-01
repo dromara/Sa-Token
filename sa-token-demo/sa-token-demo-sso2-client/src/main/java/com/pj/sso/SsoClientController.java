@@ -1,10 +1,12 @@
 package com.pj.sso;
 
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token-SSO Client端 Controller 
@@ -30,4 +32,11 @@ public class SsoClientController {
 		return SaSsoHandle.clientRequest();
 	}
 
+	// 全局异常拦截 
+	@ExceptionHandler
+	public SaResult handlerException(Exception e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
+	}
+	
 }

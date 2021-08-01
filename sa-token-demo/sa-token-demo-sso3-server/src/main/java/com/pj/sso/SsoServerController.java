@@ -1,6 +1,7 @@
 package com.pj.sso;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,6 +10,7 @@ import com.ejlchina.okhttps.OkHttps;
 
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.sso.SaSsoHandle;
+import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -24,6 +26,22 @@ public class SsoServerController {
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.serverRequest();
+	}
+
+	// 自定义接口：获取userinfo 
+	@RequestMapping("/sso/userinfo")
+	public Object userinfo(String loginId, String secretkey) {
+		System.out.println("---------------- 获取userinfo --------");
+		
+		// 校验调用秘钥 
+		SaSsoUtil.checkSecretkey(secretkey);
+		
+		// 自定义返回结果（模拟）
+		return SaResult.ok()
+				.set("id", loginId)
+				.set("name", "linxiaoyu")
+				.set("sex", "女")
+				.set("age", 18);
 	}
 	
 	// 配置SSO相关参数 
@@ -49,6 +67,13 @@ public class SsoServerController {
 				return OkHttps.sync(url).get();
 			})
 			;
+	}
+
+	// 全局异常拦截 
+	@ExceptionHandler
+	public SaResult handlerException(Exception e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
 	}
 	
 }

@@ -248,6 +248,20 @@ public class SaSsoTemplate {
 		return url;
 	}
 
+	/**
+	 * 构建URL：Server端 账号资料查询地址 
+	 * @param loginId 账号id
+	 * @return Server端 账号资料查询地址 
+	 */
+	public String buildUserinfoUrl(Object loginId) {
+		// 拼接 
+		String userinfoUrl = SaManager.getConfig().getSso().getUserinfoUrl();
+		userinfoUrl = SaFoxUtil.joinParam(userinfoUrl, ParamName.loginId, loginId);
+		userinfoUrl = SaFoxUtil.joinParam(userinfoUrl, ParamName.secretkey, SaManager.getConfig().getSso().getSecretkey());
+		// 返回 
+		return userinfoUrl;
+	}
+
 
 	// ------------------- SSO 模式三相关 ------------------- 
 
@@ -349,6 +363,16 @@ public class SaSsoTemplate {
 		stpLogic.logoutByTokenValue(stpLogic.getTokenValueByLoginId(loginId));
 	}
 
+	/**
+	 * 获取：账号资料 
+	 * @param loginId 账号id
+	 * @return 账号资料  
+	 */
+	public Object getUserinfo(Object loginId) {
+		String url = buildUserinfoUrl(loginId);
+		return SaManager.getConfig().getSso().sendHttp.apply(url);
+	}
+	
 	
 	
 	// ------------------- 返回相应key ------------------- 

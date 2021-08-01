@@ -1,6 +1,7 @@
 package com.pj.sso;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,7 +9,9 @@ import com.ejlchina.okhttps.OkHttps;
 
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.sso.SaSsoHandle;
+import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token-SSO Client端 Controller 
@@ -42,6 +45,21 @@ public class SsoClientController {
 				return OkHttps.sync(url).get().getBody().toString();
 			})
 			;
+	}
+	
+	// 查询我的账号信息 
+	@RequestMapping("/sso/myinfo")
+	public Object myinfo() {
+		Object userinfo = SaSsoUtil.getUserinfo(StpUtil.getLoginId());
+		System.out.println("--------info：" + userinfo);
+		return userinfo;
+	}
+
+	// 全局异常拦截 
+	@ExceptionHandler
+	public SaResult handlerException(Exception e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
 	}
 	
 }

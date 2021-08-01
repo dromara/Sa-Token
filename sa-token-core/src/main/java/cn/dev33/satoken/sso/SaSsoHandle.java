@@ -5,6 +5,7 @@ import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.sso.SaSsoConsts.Api;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
@@ -24,7 +25,7 @@ public class SaSsoHandle {
 	 */
 	public static Object serverRequest() {
 		
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
 
@@ -59,7 +60,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoAuth() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
@@ -80,7 +81,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoDoLogin() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
 		
@@ -93,7 +94,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoCheckTicket() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		
 		// 获取参数 
@@ -115,7 +116,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoServerLogout() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
@@ -146,7 +147,7 @@ public class SaSsoHandle {
 	 */
 	public static Object clientRequest() {
 
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
 
@@ -181,7 +182,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoLogin() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
@@ -219,13 +220,17 @@ public class SaSsoHandle {
 				// 方式2：直连Redis校验ticket 
 				loginId = SaSsoUtil.checkTicket(ticket);
 			}
+			// Be: 如果开发者自定义了处理逻辑 
+			if(cfg.ticketResultHandle != null) {
+				return cfg.ticketResultHandle.apply(loginId, back);
+			}
 			// ------- 2、如果loginId有值，说明ticket有效，进行登录并重定向至back地址 
 			if(loginId != null ) {
 				stpLogic.login(loginId); 
 				return res.redirect(back);
 			} else {
 				// 如果ticket无效: 
-				return cfg.ticketInvalidView.apply(ticket);
+				throw new SaTokenException("无效ticket：" + ticket);
 			}
 		}
 	}
@@ -235,7 +240,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoLogoutType2() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
@@ -254,7 +259,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoLogoutType3() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoConfig cfg = SaManager.getConfig().getSso();
@@ -283,7 +288,7 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoLogoutCall() {
-		// 获取变量 
+		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
