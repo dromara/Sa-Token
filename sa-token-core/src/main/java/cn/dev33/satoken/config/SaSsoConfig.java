@@ -46,7 +46,7 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * SSO-Server端 单点注销地址 
 	 */
-//	public String sloUrl;
+	public String sloUrl;
 
 	/**
 	 * SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取） 
@@ -138,22 +138,22 @@ public class SaSsoConfig implements Serializable {
 		this.checkTicketUrl = checkTicketUrl;
 		return this;
 	}
-//
-//	/**
-//	 * @return SSO-Server端单点注销地址
-//	 */
-//	public String getSloUrl() {
-//		return sloUrl;
-//	}
-//
-//	/**
-//	 * @param sloUrl SSO-Server端单点注销地址
-//	 * @return 对象自身
-//	 */
-//	public SaSsoConfig setSloUrl(String sloUrl) {
-//		this.sloUrl = sloUrl;
-//		return this;
-//	}
+
+	/**
+	 * @return SSO-Server端单点注销地址
+	 */
+	public String getSloUrl() {
+		return sloUrl;
+	}
+
+	/**
+	 * @param sloUrl SSO-Server端单点注销地址
+	 * @return 对象自身
+	 */
+	public SaSsoConfig setSloUrl(String sloUrl) {
+		this.sloUrl = sloUrl;
+		return this;
+	}
 
 	/**
 	 * @return SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取） 
