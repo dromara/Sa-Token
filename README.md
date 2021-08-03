@@ -222,6 +222,9 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ helio-starters ]** 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
+[**[ sa-token-plugin ]** Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充，针对spring-boot特性进行针对优化，更加方便于spring-boot一起使用](https://gitee.com/bootx/sa-token-plugin)
+
+
 如果您的项目使用了Sa-Token，欢迎提交pr
 
 
