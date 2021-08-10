@@ -4,12 +4,6 @@ server:
 
 # sa-token配置 
 sa-token: 
-    # Token名称
-    token-name: satoken
-    # Token有效期
-    timeout: 2592000
-    # Token风格
-    token-style: uuid
     # SSO-相关配置
     sso: 
         # SSO-Server端 单点登录地址 
