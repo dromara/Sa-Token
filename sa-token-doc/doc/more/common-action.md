@@ -86,12 +86,12 @@ SpringMVCUtil.getResponse();          // 获取当前会话的 response
 Sa-Token集成Reactor时的 ServerWebExchange 工具类，位于包：`sa-token-reactor-spring-boot-starter`
 ``` java
 // 异步方式获取 ServerWebExchange 对象 
-SaReactorHolder.getContent().map(e -> {
+SaReactorHolder.getContext().map(e -> {
 	System.out.println(e);
 });
 
 // 同步方式获取 ServerWebExchange 对象 
-ServerWebExchange e = SaReactorSyncHolder.getContent();
+ServerWebExchange e = SaReactorSyncHolder.getContext();
 System.out.println(e);
 ```
 

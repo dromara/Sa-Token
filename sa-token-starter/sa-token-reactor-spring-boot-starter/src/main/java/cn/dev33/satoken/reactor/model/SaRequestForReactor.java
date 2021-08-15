@@ -95,7 +95,7 @@ public class SaRequestForReactor implements SaRequest {
 	 */
 	@Override
 	public Object forward(String path) {
-		ServerWebExchange exchange = SaReactorSyncHolder.getContent();
+		ServerWebExchange exchange = SaReactorSyncHolder.getContext();
 		WebFilterChain chain = exchange.getAttribute(SaReactorHolder.CHAIN_KEY);
 		
 		ServerHttpRequest newRequest = request.mutate().path(path).build();

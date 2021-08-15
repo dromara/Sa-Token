@@ -48,7 +48,7 @@ public class TestController {
 	public Mono<AjaxJson> isLogin3() {
 		System.out.println("当前会话是否登录：" + StpUtil.isLogin());
 		// 异步方式 
-		return SaReactorHolder.getContent().map(e -> {
+		return SaReactorHolder.getContext().map(e -> {
 			System.out.println("当前会话是否登录2：" + StpUtil.isLogin());
 			return AjaxJson.getSuccessData(StpUtil.getTokenInfo());
 		});
@@ -60,7 +60,7 @@ public class TestController {
 		System.out.println("当前会话是否登录：" + StpUtil.isLogin());
 		System.out.println("线程id-----" + Thread.currentThread().getId());
 		return Mono.delay(Duration.ofSeconds(1)).flatMap(r->{
-			return SaReactorHolder.getContent().map(rr->{
+			return SaReactorHolder.getContext().map(rr->{
 				System.out.println("线程id---内--" + Thread.currentThread().getId());
 				System.out.println("当前会话是否登录2：" + StpUtil.isLogin());
 				return AjaxJson.getSuccessData(StpUtil.getTokenInfo());

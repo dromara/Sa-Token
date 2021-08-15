@@ -158,7 +158,7 @@ public class SaReactorFilter implements WebFilter {
 		// ---------- 全局认证处理 
 		try {
 			// 写入全局上下文 (同步) 
-			SaReactorSyncHolder.setContent(exchange);
+			SaReactorSyncHolder.setContext(exchange);
 			
 			// 执行全局过滤器 
 			SaRouter.match(includeList, excludeList, () -> {
@@ -180,13 +180,13 @@ public class SaReactorFilter implements WebFilter {
 			
 		} finally {
 			// 清除上下文 
-			SaReactorSyncHolder.clearContent();
+			SaReactorSyncHolder.clearContext();
 		}
 
 		// ---------- 执行
 
 		// 写入全局上下文 (同步) 
-		SaReactorSyncHolder.setContent(exchange);
+		SaReactorSyncHolder.setContext(exchange);
 		
 		// 执行 
 		return chain.filter(exchange).subscriberContext(ctx -> {
@@ -195,7 +195,7 @@ public class SaReactorFilter implements WebFilter {
 			return ctx;
 		}).doFinally(r -> {
 			// 清除上下文 
-			SaReactorSyncHolder.clearContent();
+			SaReactorSyncHolder.clearContext();
 		});
 	}
 	

@@ -23,7 +23,7 @@ public class SaReactorSyncHolder {
 	 * 写入上下文对象 
 	 * @param exchange see note 
 	 */
-	public static void setContent(ServerWebExchange exchange) {
+	public static void setContext(ServerWebExchange exchange) {
 		SaRequest request = new SaRequestForReactor(exchange.getRequest());
 		SaResponse response = new SaResponseForReactor(exchange.getResponse());
 		SaStorage storage = new SaStorageForReactor(exchange);
@@ -34,7 +34,7 @@ public class SaReactorSyncHolder {
 	 * 获取上下文对象 
 	 * @return see note 
 	 */
-	public static ServerWebExchange getContent() {
+	public static ServerWebExchange getContext() {
 		Box box = SaTokenContextForThreadLocalStorage.getBoxNotNull();
 		return (ServerWebExchange)box.getStorage().getSource();
 	}
@@ -42,7 +42,7 @@ public class SaReactorSyncHolder {
 	/**
 	 * 清除上下文对象
 	 */
-	public static void clearContent() {
+	public static void clearContext() {
 		SaTokenContextForThreadLocalStorage.clearBox();
 	}
 	
@@ -51,12 +51,12 @@ public class SaReactorSyncHolder {
 	 * @param exchange see note 
 	 * @param fun see note 
 	 */
-	public static void setContent(ServerWebExchange exchange, SaFunction fun) {
+	public static void setContext(ServerWebExchange exchange, SaFunction fun) {
 		try {
-			setContent(exchange);
+			setContext(exchange);
 			fun.run();
 		} finally {
-			clearContent();
+			clearContext();
 		}
 	}
 	
