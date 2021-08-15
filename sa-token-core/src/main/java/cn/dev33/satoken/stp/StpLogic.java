@@ -64,6 +64,7 @@ public class StpLogic {
 	 */
 	public StpLogic setLoginType(String loginType){
 		this.loginType = loginType;
+		SaManager.putStpLogic(this);
 		return this;
 	}
 	

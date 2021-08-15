@@ -21,8 +21,7 @@ public class SsoClientController {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
 					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " + 
-					"<a href=\"javascript:location.href='/sso/logout?back=' + encodeURIComponent(location.href);\">注销</a></p>";
-					// "<a href='/sso/logout' target='_blank'>注销</a></p>";		// 上面是[跳页面]方式，这个是[RestAPI]方式 区别在于是否加了back参数 
+					"<a href='/sso/logout?back=self'>注销</a></p>"; 
 		return str;
 	}
 	

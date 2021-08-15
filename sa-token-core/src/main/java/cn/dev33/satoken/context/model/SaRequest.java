@@ -45,7 +45,16 @@ public interface SaRequest {
 	 */
 	public default boolean isParam(String name, String value) {
 		 String paramValue = getParam(name);
-		 return paramValue != null && paramValue.equals(value);
+		 return SaFoxUtil.isNotEmpty(paramValue) && paramValue.equals(value);
+	}
+
+	/**
+	 * 检测请求是否提供了指定参数 
+	 * @param name 参数名称 
+	 * @return 是否提供 
+	 */
+	public default boolean hasParam(String name) {
+		 return SaFoxUtil.isNotEmpty(getParam(name));
 	}
 	
 	/**
@@ -106,7 +115,7 @@ public interface SaRequest {
 	}
 
 	/**
-	 * 返回当前请求的url，例：http://xxx.com/
+	 * 返回当前请求的url，不带query参数，例：http://xxx.com/
 	 * @return see note
 	 */
 	public String getUrl();
@@ -123,6 +132,15 @@ public interface SaRequest {
 	 */
 	public default boolean isAjax() {
 		return getHeader("X-Requested-With") != null;
+	}
+
+	/**
+	 * 转发请求 
+	 * @param url 转发地址 
+	 * @return 任意值 
+	 */
+	public default Object forward(String path) {
+		throw new SaTokenException("No implementation");
 	}
 	
 }

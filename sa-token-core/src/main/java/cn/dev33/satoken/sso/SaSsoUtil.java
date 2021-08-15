@@ -99,8 +99,16 @@ public class SaSsoUtil {
 	 * 校验重定向url合法性
 	 * @param url 下放ticket的url地址 
 	 */
-	public static void checkAuthUrl(String url) {
+	public static void checkRedirectUrl(String url) {
 		saSsoTemplate.checkRedirectUrl(url);
+	}
+
+	/**
+	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) 
+	 * @return see note 
+	 */
+	public static String getAllowUrl() {
+		return saSsoTemplate.getAllowUrl();
 	}
 
 	/**

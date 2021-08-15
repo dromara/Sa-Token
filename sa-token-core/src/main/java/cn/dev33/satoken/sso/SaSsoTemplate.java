@@ -212,14 +212,22 @@ public class SaSsoTemplate {
 		}
 		
 		// 3、是否在[允许地址列表]之中 
-		String authUrl = SaManager.getConfig().getSso().getAllowUrl().replaceAll(" ", "");
-		List<String> authUrlList = Arrays.asList(authUrl.split(",")); 
+		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
 		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
 			throw new SaTokenException("非法redirect：" + url);
 		}
 		
 		// 校验通过 √ 
 		return;
+	}
+	
+	/**
+	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) 
+	 * @return see note 
+	 */
+	public String getAllowUrl() {
+		// 默认从配置文件中返回 
+		return SaManager.getConfig().getSso().getAllowUrl();
 	}
 	
 	/**

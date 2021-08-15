@@ -247,11 +247,9 @@ public class SaSsoHandle {
 		
 		// 开始处理 
 		stpLogic.logout();
-		if(req.getParam(ParamName.back) == null) {
-			return SaResult.ok("单点注销成功");
-		} else {
-			return res.redirect(req.getParam(ParamName.back, "/"));
-		}
+		
+		// 返回
+		return ssoLogoutBack(req, res);
 	}
 
 	/**
@@ -273,14 +271,12 @@ public class SaSsoHandle {
         // 调用SSO-Server认证中心API，进行注销
         String url = SaSsoUtil.buildSloUrl(stpLogic.getLoginId());
         String body = String.valueOf(cfg.sendHttp.apply(url));
-        if(SaSsoConsts.OK.equals(body)) {
-			if(req.getParam(ParamName.back) == null) {
-				return SaResult.ok("单点注销成功");
-			} else {
-				return res.redirect(req.getParam(ParamName.back, "/"));
-			}
+        if(SaSsoConsts.OK.equals(body) == false) {
+            return SaResult.error("单点注销失败"); 
         }
-        return SaResult.error("单点注销失败"); 
+        
+        // 返回 
+        return ssoLogoutBack(req, res);
 	}
 
 	/**
@@ -301,4 +297,28 @@ public class SaSsoHandle {
         return SaSsoConsts.OK;
 	}
 	
+	/**
+	 * 封装：单点注销成功后返回结果 
+	 * @param req SaRequest对象 
+	 * @param res SaResponse对象 
+	 * @return 返回结果 
+	 */
+	public static Object ssoLogoutBack(SaRequest req, SaResponse res) {
+		/* 
+		 * 三种情况：
+		 * 	1. 有back参数，值为SELF -> 回退一级并刷新 
+		 * 	2. 有back参数，值为url -> 跳转back地址 
+		 * 	3. 无back参数 -> 返回json数据 
+		 */
+		String back = req.getParam(ParamName.back);
+		if(SaFoxUtil.isNotEmpty(back)) {
+			if(back.equals(SaSsoConsts.SELF)) {
+				return "<script>if(document.referrer != location.href){ location.replace(document.referrer || '/'); }</script>";
+			}
+			return res.redirect(back);
+		} else {
+			return SaResult.ok("单点注销成功");
+		}
+	}
+
 }

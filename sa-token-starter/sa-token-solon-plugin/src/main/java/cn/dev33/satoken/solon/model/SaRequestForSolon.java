@@ -1,7 +1,8 @@
 package cn.dev33.satoken.solon.model;
 
-import cn.dev33.satoken.context.model.SaRequest;
 import org.noear.solon.core.handle.Context;
+
+import cn.dev33.satoken.context.model.SaRequest;
 
 /**
  * @author noear
@@ -49,4 +50,5 @@ public class SaRequestForSolon implements SaRequest {
     public String getMethod() {
         return ctx.method();
     }
+
 }

@@ -17,6 +17,11 @@ public class SaReactorHolder {
 	public static final Class<ServerWebExchange> CONTEXT_KEY = ServerWebExchange.class;
 
 	/**
+	 * chain_key 
+	 */
+	public static final String CHAIN_KEY = "WEB_FILTER_CHAIN_KEY";
+	
+	/**
 	 * 获取上下文对象 
 	 * @return see note 
 	 */

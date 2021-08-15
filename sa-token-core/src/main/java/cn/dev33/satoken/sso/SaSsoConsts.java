@@ -68,7 +68,10 @@ public class SaSsoConsts {
 	/** 表示OK的返回结果 */
 	public static final String OK = "ok";
 
+	/** 表示自己 */
+	public static final String SELF = "self";
+	
 	/** 表示请求没有得到任何有效处理 {msg: "not handle"} */
 	public static final String NOT_HANDLE = "{\"msg\": \"not handle\"}";
-	
+
 }

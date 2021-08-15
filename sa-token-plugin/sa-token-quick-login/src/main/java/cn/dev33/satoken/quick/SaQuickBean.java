@@ -1,8 +1,5 @@
 package cn.dev33.satoken.quick;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +8,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.quick.config.SaQuickConfig;
 import cn.dev33.satoken.quick.web.SaQuickController;
-import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -65,26 +62,16 @@ public class SaQuickBean implements WebMvcConfigurer  {
 			.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**").
 			// 认证函数: 每次请求执行
 			setAuth(r -> {
-				// System.out.println("---------- 进入sa-token全局认证 -----------");
-	
 				// 未登录时直接转发到login.html页面 
 				if (SaQuickManager.getConfig().getAuth() && StpUtil.isLogin() == false) {
-					try {
-						HttpServletRequest request = SpringMVCUtil.getRequest();
-						HttpServletResponse response = SpringMVCUtil.getResponse();
-						request.getRequestDispatcher("/saLogin").forward(request, response);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					SaHolder.getRequest().forward("/saLogin");
 					// 抛出异常，不再继续执行 
 					throw NotLoginException.newInstance(StpUtil.getLoginType(), "");
 				}
-	
 			}).
 	
 			// 异常处理函数：每次认证函数发生异常时执行此函数
 			setError(e -> {
-				// System.out.println("---------- 进入sa-token异常处理 -----------");
 				return e.getMessage();
 			});
 	}

@@ -151,6 +151,10 @@ public class SaReactorFilter implements WebFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+		
+		// 写入WebFilterChain对象 
+		exchange.getAttributes().put(SaReactorHolder.CHAIN_KEY, chain);
+		
 		// ---------- 全局认证处理 
 		try {
 			// 写入全局上下文 (同步) 

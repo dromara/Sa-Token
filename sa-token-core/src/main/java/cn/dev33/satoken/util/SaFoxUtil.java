@@ -61,6 +61,15 @@ public class SaFoxUtil {
 	public static boolean isEmpty(Object str) {
 		return str == null || "".equals(str);
 	}
+
+	/**
+	 * 指定元素是否不为 (null或者空字符串)
+	 * @param str 指定元素 
+	 * @return 是否为null或者空字符串
+	 */
+	public static boolean isNotEmpty(Object str) {
+		return isEmpty(str) == false;
+	}
 	
 	/**
 	 * 以当前时间戳和随机int数字拼接一个随机字符串

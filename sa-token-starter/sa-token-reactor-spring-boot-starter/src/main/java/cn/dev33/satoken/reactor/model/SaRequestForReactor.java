@@ -3,8 +3,12 @@ package cn.dev33.satoken.reactor.model;
 
 import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 
 import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.reactor.context.SaReactorHolder;
+import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 
 /**
  * Request for Reactor 
@@ -85,4 +89,19 @@ public class SaRequestForReactor implements SaRequest {
 	public String getMethod() {
 		return request.getMethodValue();
 	}
+
+	/**
+	 * 转发请求 
+	 */
+	@Override
+	public Object forward(String path) {
+		ServerWebExchange exchange = SaReactorSyncHolder.getContent();
+		WebFilterChain chain = exchange.getAttribute(SaReactorHolder.CHAIN_KEY);
+		
+		ServerHttpRequest newRequest = request.mutate().path(path).build();
+		ServerWebExchange newExchange = exchange.mutate().request(newRequest).build();
+		
+		return chain.filter(newExchange); 
+	}
+	
 }
