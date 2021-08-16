@@ -116,7 +116,7 @@ public Object myinfo() {
 }
 ```
 
-访问测试：[http://sa-sso-client2.com:9001/sso/myinfo](http://sa-sso-client2.com:9001/sso/myinfo)
+访问测试：[http://sa-sso-client1.com:9001/sso/myinfo](http://sa-sso-client1.com:9001/sso/myinfo)
 
 
 
