@@ -77,8 +77,8 @@ SaManager.setConfig(config);
 ### SpringMVCUtil
 SpringMVC操作的工具类，位于包：`sa-token-spring-boot-starter`
 ``` java
-SpringMVCUtil.getRequest();           // 获取当前会话的 request
-SpringMVCUtil.getResponse();          // 获取当前会话的 response
+SpringMVCUtil.getRequest();           // 获取本次请求的 request 对象 
+SpringMVCUtil.getResponse();          // 获取本次请求的 response 对象 
 ```
 
 

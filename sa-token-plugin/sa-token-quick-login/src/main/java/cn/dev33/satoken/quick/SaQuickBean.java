@@ -9,10 +9,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.quick.config.SaQuickConfig;
 import cn.dev33.satoken.quick.web.SaQuickController;
+import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -65,8 +65,7 @@ public class SaQuickBean implements WebMvcConfigurer  {
 				// 未登录时直接转发到login.html页面 
 				if (SaQuickManager.getConfig().getAuth() && StpUtil.isLogin() == false) {
 					SaHolder.getRequest().forward("/saLogin");
-					// 抛出异常，不再继续执行 
-					throw NotLoginException.newInstance(StpUtil.getLoginType(), "");
+					SaRouter.back();
 				}
 			}).
 	

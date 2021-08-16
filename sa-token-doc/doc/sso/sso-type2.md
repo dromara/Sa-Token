@@ -72,7 +72,13 @@
 @RestController
 public class SsoServerController {
 
-	// SSO-Server端：处理所有SSO相关请求 
+	/*
+	 * SSO-Server端：处理所有SSO相关请求 
+	 * 		http://{host}:{port}/sso/auth           -- 单点登录授权地址，接受参数：redirect=授权重定向地址 
+	 * 		http://{host}:{port}/sso/doLogin        -- 账号密码登录接口，接受参数：name、pwd 
+	 * 		http://{host}:{port}/sso/checkTicket    -- Ticket校验接口（isHttp=true时打开），接受参数：ticket=ticket码、ssoLogoutCall=单点注销回调地址 [可选] 
+	 * 		http://{host}:{port}/sso/logout         -- 单点注销地址（isSlo=true时打开），接受参数：loginId=账号id、secretkey=接口调用秘钥 
+	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.serverRequest();
@@ -189,7 +195,12 @@ public class SaSsoServerApplication {
 @RestController
 public class SsoClientController {
 
-	// SSO-Client端：首页
+	/*
+	 * SSO-Client端：处理所有SSO相关请求 
+	 * 		http://{host}:{port}/sso/login          -- Client端登录地址，接受参数：back=登录后的跳转地址 
+	 * 		http://{host}:{port}/sso/logout         -- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址 
+	 * 		http://{host}:{port}/sso/logoutCall     -- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
+	 */
 	@RequestMapping("/")
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
