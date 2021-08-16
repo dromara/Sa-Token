@@ -1,6 +1,26 @@
 # 更新日志 
 
 
+### 2021-8-16 @v1.25.0
+- 新增：`SaRequest`新增`getHeader(name, defaultValue)`方法，用于获取header默认值 
+- 新增：`SaRequest` 添加 `forward` 转发方法  
+- 新增：Readme新增源码模块介绍、友情链接、正在使用Sa-Token的项目 
+- 重构：重构SSO单点登录模块源码，增加可读性 
+- 新增：SSO配置表新增所属端说明 
+- 新增：SSO模式三新增账号资料同步示例  **[重要]** 
+- 新增：前后端分离模式下接入SSO的示例  **[重要]** 
+- 优化：优化SSO单点注销重定向逻辑 
+- 重构：重构SSO单点登录模块部分API 
+- 优化：优化SaQuickBean中过滤器处理逻辑  
+- 文档：优化文档样式，增加示例  
+- 文档：代码鉴权、注解鉴权、路由拦截鉴权，选择指南 
+- 文档：文档新增 SSO旧有系统改造指南 
+- 文档：SSO集成文档里添加API列表 
+- 文档：新增 `Sa-Token-Study` 链接，讲解 Sa-Token 源码涉及到的技术点 
+- 不兼容更新重构：
+	- 重构：修复 `SaReactorHolder.getContent()` 拼写错误：`content` -> `context` 
+
+
 ### 2021-7-24 @v1.24.0
 - 修复：修复部分场景下Alone-Redis插件导致项目无法启动的问题
 - 优化：增加对SpringBoot1.x版本的兼容性 

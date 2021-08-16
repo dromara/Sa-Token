@@ -14,6 +14,7 @@ public class IdTokenInvalidException extends SaTokenException {
 	
 	/**
 	 * 一个异常：代表提供的 Id-Token 无效 
+	 * @param message 异常描述 
 	 */
 	public IdTokenInvalidException(String message) {
 		super(message);

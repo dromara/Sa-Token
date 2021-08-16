@@ -133,6 +133,7 @@ public class SaSsoConfig implements Serializable {
 
 	/**
 	 * @param checkTicketUrl SSO-Server端Ticket校验地址
+	 * @return 对象自身
 	 */
 	public SaSsoConfig setCheckTicketUrl(String checkTicketUrl) {
 		this.checkTicketUrl = checkTicketUrl;
@@ -294,7 +295,7 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @param SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
+	 * @param ticketResultHandle SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setTicketResultHandle(BiFunction<Object, String, Object> ticketResultHandle) {

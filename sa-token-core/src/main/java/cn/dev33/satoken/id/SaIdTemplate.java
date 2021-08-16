@@ -91,7 +91,7 @@ public class SaIdTemplate {
 	
 	/**
 	 * 保存Id-Token
-	 * @param token
+	 * @param token token 
 	 */
 	public void saveToken(String token) {
 		if(SaFoxUtil.isEmpty(token)) {

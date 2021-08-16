@@ -51,6 +51,7 @@ public class SaRequestForSolon implements SaRequest {
         return ctx.method();
     }
 
+    @Override
 	public Object forward(String path) {
     	ctx.forward(path);
     	return null;

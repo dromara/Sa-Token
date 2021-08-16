@@ -5,7 +5,7 @@
 
 ### 一、何时引导用户去登录？
 
-以下解决方案三选一：
+以下方案三选一：
 
 ##### 1.1、前端按钮跳转 
 前端页面准备一个**`[登录]`**按钮，当用户点击按钮时，跳转到登录接口 
@@ -76,9 +76,8 @@ if(res.code == 401) {
 
 
 
-### 二、定制化开发 
+### 二、如何自定义登录视图？
 
-##### 2.1、如何自定义登录视图？
 - 方式一：在demo示例中直接更改页面代码 
 - 方式二：在配置中配置登录视图地址 
 
@@ -90,16 +89,17 @@ cfg.sso
 })
 ```
 
-##### 2.2、如何自定义登录API的接口？
+
+### 三、如何自定义登录API的接口？
 根据需求点选择解决方案：
 
-**2.2.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？**
+##### 3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？
 ``` java
 // 在任意代码处获取前端提交的参数 
 String xxx = SaHolder.getRequest().getParam("xxx");
 ```
 
-**2.2.2、想完全自定义一个接口来接受前端登录请求？**
+##### 3.2、想完全自定义一个接口来接受前端登录请求？
 ``` java
 // 直接定义一个拦截路由为 `/sso/doLogin` 的接口即可 
 @RequestMapping("/sso/doLogin")
@@ -113,18 +113,18 @@ public SaResult ss(String name, String pwd) {
 }
 ```
 
-**2.2.3、不想使用`/sso/doLogin`这个接口，想自定义一个API地址？**
+##### 3.3、不想使用`/sso/doLogin`这个接口，想自定义一个API地址？
 
 答：直接在前端更改点击按钮时 Ajax 的请求地址即可 
 
 
-### 三、前后端分离架构下的整合方案
+### 四、前后端分离架构下的整合方案
 
 如果我们已有的系统是前后端分离模式，我们显然不能为了接入SSO而改造系统的基础架构，官方仓库的示例采用的是前后端一体方案，要将其改造为前后台分离架构模式非常简单
 
 以`sa-token-demo-sso2-client`为例：
 
-##### 3.1、新建`H5Controller`开放接口
+##### 4.1、新建`H5Controller`开放接口
 ``` java
 /**
  * 前后台分离架构下集成SSO所需的代码 
@@ -166,13 +166,13 @@ public class H5Controller {
 }
 ```
 
-##### 3.2、增加跨域过滤器`CorsFilter.java`
+##### 4.2、增加跨域过滤器`CorsFilter.java`
 源码详见：[CorsFilter.java](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso2-client/src/main/java/com/pj/h5/CorsFilter.java)，
 将其复制到项目中即可 
 
-##### 3.3、新建前端项目 
+##### 4.3、新建前端项目 
 任意文件夹新建前端项目：`sa-token-demo-sso2-client-h5`，在根目录添加测试文件：`index.html`
-``` xml
+``` js
 <!DOCTYPE html>
 <html>
 	<head>
@@ -214,16 +214,16 @@ public class H5Controller {
 </html>
 ```
 
-##### 3.4、添加登录处理文件`sso-login.html`
+##### 4.4、添加登录处理文件`sso-login.html`
 源码详见：[sso-login.html](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso2-client-h5/sso-login.html)，
 将其复制到项目中即可，与`index.html`一样放在根目录下 
 
 
-##### 3.5、测试 
+##### 4.5、测试 
 先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如[HBuilderX](https://www.dcloud.io/hbuilderx.html)），测试流程与一体版一致 
 
 
-### 四、常见疑问
+### 五、常见疑问
 
 ##### 问：在模式一与模式二中，Client端 必须通过 Alone-Redis 插件来访问Redis吗？
 

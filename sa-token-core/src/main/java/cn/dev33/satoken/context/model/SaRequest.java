@@ -136,7 +136,7 @@ public interface SaRequest {
 
 	/**
 	 * 转发请求 
-	 * @param url 转发地址 
+	 * @param path 转发地址 
 	 * @return 任意值 
 	 */
 	public default Object forward(String path) {
