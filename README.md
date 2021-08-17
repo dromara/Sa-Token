@@ -224,11 +224,13 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ sa-token-plugin ]** Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充，针对spring-boot特性进行针对优化，更加方便于spring-boot一起使用](https://gitee.com/bootx/sa-token-plugin)
 
+[**[ easy-admin ]** 一个基于SpringBoot2+sa-token+Mybatis-Plus+Snakerflow+Layui的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
+
 
 如果您的项目使用了Sa-Token，欢迎提交pr
 
-
 ## 友情链接
+
 [**[ okhttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
 [**[ 小诺快速开发平台 ]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
