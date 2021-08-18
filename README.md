@@ -2,7 +2,7 @@
 	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.25.0</h1>
-<h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
+<h4 align="center">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg"></a>
@@ -224,7 +224,7 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ sa-token-plugin ]** Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充，针对spring-boot特性进行针对优化，更加方便于spring-boot一起使用](https://gitee.com/bootx/sa-token-plugin)
 
-[**[ easy-admin ]** 一个基于SpringBoot2+sa-token+Mybatis-Plus+Snakerflow+Layui的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
+[**[ easy-admin ]** 一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
 
 
 如果您的项目使用了Sa-Token，欢迎提交pr

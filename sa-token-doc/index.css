@@ -34,7 +34,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* .title-logo{width: 221px; cursor: pointer; transition: all 0.2s;}
 .title-logo:hover{transform: scale(1.2, 1.2);} */
 
-.sub-title{font-size: 26px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #444;}
+.sub-title{font-size: 22px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #444;}
 /* .content-box p{line-height: 30px; padding: 0px 1em;} */
 
 .main-box{animation: changes 60s 0.2s linear infinite normal; background-attachment: ;}  /* normal | alternate */

@@ -14,6 +14,11 @@
 
 [**[ Sa-Token-Study ]** 以demo示例的方式讲解 Sa-Token 源码涉及到的技术点，连载中……](https://gitee.com/click33/sa-token-study)
 
+[**[ sa-token-plugin ]** Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充，针对spring-boot特性进行针对优化，更加方便于spring-boot一起使用](https://gitee.com/bootx/sa-token-plugin)
+
+[**[ easy-admin ]** 一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
+
+
 如果您的开源项目使用了Sa-Token，欢迎提交... 
 
 <br>
@@ -30,6 +35,11 @@
 [[ vue-next-admin ] - 一套为开发者快速开发准备的基于 vue2.x 越看越精彩的后台管理系统一站式平台模板](https://gitee.com/lyt-top/vue-next-admin) 
 
 [[ 小诺快速开发平台 ] - 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
+
+[[ Jpom ] 简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件](https://gitee.com/dromara/Jpom)
+
+[[ TLog ] 一个轻量级的分布式日志标记追踪神器](https://gitee.com/dromara/TLog)
+
 
 <br>
 虚位以待... 

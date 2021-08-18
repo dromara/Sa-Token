@@ -2,7 +2,7 @@
 	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.25.0</h1>
-<h4 align="center">这可能是史上功能最全的 Java 权限认证框架！</h4>
+<h4 align="center">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg"></a>
@@ -58,6 +58,41 @@ Sa-Token是一个轻量级Java权限认证框架，主要解决：登录认证�
 - **全局侦听器** —— 在用户登陆、注销、被踢下线等关键性操作时进行一些AOP操作
 - **开箱即用** —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用
 - **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
+
+##### Sa-Token 源码模块一览
+``` js
+── sa-token
+	├── sa-token-core                         // [核心] Sa-Token 核心模块
+	├── sa-token-starter                      // [整合] Sa-Token 与其它框架整合
+		├── sa-token-servlet                      // [整合] Sa-Token 整合 Servlet容器实现类包
+		├── sa-token-spring-boot-starter          // [整合] Sa-Token 整合 SpringBoot 快速集成 
+		├── sa-token-reactor-spring-boot-starter  // [整合] Sa-Token 整合 Reactor响应式编程 快速集成 
+		├── sa-token-solon-plugin                 // [整合] Sa-Token 整合 Solon 快速集成 
+	├── sa-token-plugin                       // [插件] Sa-Token 插件合集
+		├── sa-token-dao-redis                    // [插件] Sa-Token 整合 Redis (使用jdk默认序列化方式)
+		├── sa-token-dao-redis-jackson            // [插件] Sa-Token 整合 Redis (使用jackson序列化方式)
+		├── sa-token-spring-aop                   // [插件] Sa-Token 整合 SpringAOP 注解鉴权
+		├── sa-token-temp-jwt                     // [插件] Sa-Token 整合 jwt 临时令牌鉴权 
+		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
+		├── sa-token-alone-redis                  // [插件] Sa-Token 独立Redis插件，实现[权限缓存与业务缓存分离]
+		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 模块 
+	├── sa-token-demo                         // [示例] Sa-Token 示例合集
+		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
+		├── sa-token-demo-webflux                 // [示例] Sa-Token 整合 WebFlux 
+		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 
+		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 
+		├── sa-token-demo-quick-login             // [示例] Sa-Token 集成 quick-login 模块 
+		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
+		├── sa-token-demo-sso1                    // [示例] Sa-Token 集成 SSO单点登录-模式一
+		├── sa-token-demo-sso2-server             // [示例] Sa-Token 集成 SSO单点登录-模式二 认证中心
+		├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端
+		├── sa-token-demo-sso3-server             // [示例] Sa-Token 集成 SSO单点登录-模式三 认证中心
+		├── sa-token-demo-sso3-client             // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端
+		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
+		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
+	├── sa-token-doc                          // [文档] Sa-Token 开发文档 
+	├──pom.xml                                // [依赖] 顶级pom文件 
+```
 
 ##### Sa-Token 功能结构图
 ![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js3.png 's-w')
@@ -187,10 +222,15 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 
 [**[ helio-starters ]** 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
+[**[ sa-token-plugin ]** Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充，针对spring-boot特性进行针对优化，更加方便于spring-boot一起使用](https://gitee.com/bootx/sa-token-plugin)
+
+[**[ easy-admin ]** 一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
+
+
 如果您的项目使用了Sa-Token，欢迎提交pr
 
-
 ## 友情链接
+
 [**[ okhttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
 [**[ 小诺快速开发平台 ]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
