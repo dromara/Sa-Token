@@ -32,7 +32,7 @@ public class H5Controller {
 	// 根据ticket进行登录 
 	@RequestMapping("/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = SaSsoUtil.checkTicket(ticket);
+		Object loginId = checkTicket(ticket);
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());
@@ -40,6 +40,11 @@ public class H5Controller {
 		return SaResult.error("无效ticket：" + ticket); 
 	}
 
+	// 校验 Ticket码，获取账号Id 
+	private Object checkTicket(String ticket) {
+		return SaSsoUtil.checkTicket(ticket);
+	}
+	
 	// 全局异常拦截 
 	@ExceptionHandler
 	public SaResult handlerException(Exception e) {

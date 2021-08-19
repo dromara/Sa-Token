@@ -148,12 +148,17 @@ public class H5Controller {
 	// 根据ticket进行登录 
 	@RequestMapping("/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = SaSsoUtil.checkTicket(ticket);
+		Object loginId = checkTicket(ticket);
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());
 		}
 		return SaResult.error("无效ticket：" + ticket); 
+	}
+
+	// 校验 Ticket码，获取账号Id 
+	private Object checkTicket(String ticket) {
+		return SaSsoUtil.checkTicket(ticket);
 	}
 
 	// 全局异常拦截 
@@ -219,16 +224,37 @@ public class H5Controller {
 将其复制到项目中即可，与`index.html`一样放在根目录下 
 
 
-##### 4.5、测试 
+##### 4.5、测试运行
 先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如[HBuilderX](https://www.dcloud.io/hbuilderx.html)），测试流程与一体版一致 
+
+##### 4.6、疑问：我在SSO模式三的demo中加入上述代码，提示我ticket无效，是怎么回事？
+上述代码是以SSO模式二为基础的，提示“Ticket无效”的原因很简单，因为SSO模式三种 Server端 与 Client端 连接的不是同一个Redis，
+所以Client端校验Ticket时无法在Redis中查询到相应的值，才会产生异常：“Ticket无效”
+
+要使上述代码生效很简单，我们只需更改一下校验Ticket的逻辑即可，将 `H5Controller` 中的 `checkTicket` 方法代码改为：
+``` java
+// 校验 Ticket码，获取账号Id 
+private Object checkTicket(String ticket) {
+	SaSsoConfig cfg = SaManager.getConfig().getSso();
+	String ssoLogoutCall = null; 
+	if(cfg.isSlo) {
+		ssoLogoutCall = SaHolder.getRequest().getUrl().replace("/doLoginByTicket", Api.ssoLogoutCall); 
+	}
+	String checkUrl = SaSsoUtil.buildCheckTicketUrl(ticket, ssoLogoutCall);
+	Object body = cfg.sendHttp.apply(checkUrl);
+	return (SaFoxUtil.isEmpty(body) ? null : body);
+}
+```
+
+重新运行项目，即可在SSO模式三中成功整合前后台分离模式 。
+
+
 
 
 ### 五、常见疑问
 
 ##### 问：在模式一与模式二中，Client端 必须通过 Alone-Redis 插件来访问Redis吗？
-
 答：不必须，只是推荐，权限缓存与业务缓存分离后会减少SSO-Redis的访问压力，且可以避免多个Client端的缓存读写冲突
-
 
 ##### 问：将旧有系统改造为单点登录时，应该注意哪些？
 建议不要把其中一个系统改造为SSO服务端，而是新起一个项目作为Server端，所有旧有项目全部作为Client端与此对接 
