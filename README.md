@@ -187,6 +187,8 @@ StpUtil.getSessionByLoginId(10001);       // 获取账号id为10001的Session
 StpUtil.getTokenValueByLoginId(10001);    // 获取账号id为10001的token令牌值
 StpUtil.login(10001, "PC");               // 指定设备标识登录
 StpUtil.logoutByLoginId(10001, "PC");     // 指定设备标识进行强制注销 (不同端不受影响)
+StpUtil.openSafe(120);                    // 在当前会话开启二级认证，有效期为120秒 
+StpUtil.checkSafe();                      // 校验当前会话是否处于二级认证有效期内，校验失败会抛出异常 
 StpUtil.switchTo(10044);                  // 将当前会话身份临时切换为其它账号
 ```
 Sa-Token API 众多，请恕此处无法为您逐一展示，更多示例请戳官方在线文档
@@ -213,31 +215,30 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 -->
 
 
-## 使用Sa-Token的开源项目
-[**[ sa-plus ]** 一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
+## 使用Sa-Token的开源项目 
+- **[ sa-plus ]**：[一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
 
-[**[ jthink ]** 一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
+- **[ jthink ]**： [一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
 
-[**[ dcy-fast ]** 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
+- **[ dcy-fast ]**：[ 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
 
-[**[ helio-starters ]** 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
+- **[ helio-starters ]**：[ 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
-[**[ sa-token-plugin ]** Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充，针对spring-boot特性进行针对优化，更加方便于spring-boot一起使用](https://gitee.com/bootx/sa-token-plugin)
+- **[ sa-token-plugin ]**：[Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充](https://gitee.com/bootx/sa-token-plugin)
 
-[**[ easy-admin ]** 一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
-
+- **[ easy-admin ]**：[一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
 
 如果您的项目使用了Sa-Token，欢迎提交pr
 
 ## 友情链接
+- **[ okhttps ]**：[ 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
-[**[ okhttps ]** 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+- **[ 小诺快速开发平台 ]**：[ 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
-[**[ 小诺快速开发平台 ]** 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
+- **[ Jpom ]**：[ 简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件](https://gitee.com/dromara/Jpom)
 
-[**[ Jpom ]** 简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件](https://gitee.com/dromara/Jpom)
+- **[ TLog ]**：[ 一个轻量级的分布式日志标记追踪神器](https://gitee.com/dromara/TLog)
 
-[**[ TLog ]** 一个轻量级的分布式日志标记追踪神器](https://gitee.com/dromara/TLog)
 
 
 ## 交流群
