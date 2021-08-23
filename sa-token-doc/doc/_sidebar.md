@@ -36,7 +36,11 @@
 	- [SSO模式一 共享Cookie同步会话](/sso/sso-type1)
 	- [SSO模式二 URL重定向传播会话](/sso/sso-type2)
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)
-	- [SSO整合-常见问题总结](/sso/sso-cd)
+	- [SSO整合：配置域名校验](/sso/sso-check-domain)
+	- [SSO整合：定制化登录页面](/sso/sso-custom-login)
+	- [SSO整合：前后端分离下的整合方案](/sso/sso-h5)
+	- [SSO整合：常见问题总结](/sso/sso-questions)
+	- [Sa-Sso-Pro：单点登录商业版](/sso/sso-pro)
 
 - **OAuth2.0**
 	- [OAuth2.0简述](/oauth2/readme)

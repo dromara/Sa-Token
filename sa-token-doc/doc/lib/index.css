@@ -8,6 +8,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 #main h3 {font-size: 1.25rem;}
 
 .main-box .markdown-section{ padding: 30px 20px; max-width: 75%; margin-left: 10%;}
+.main-box .markdown-section h4{font-size: 1rem;}
 @media screen and (max-width: 800px) {
 	.logo-box {display: none;}
 	.main-box .markdown-section{max-width: 1000px; margin-left: auto;}

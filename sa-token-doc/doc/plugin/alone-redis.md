@@ -33,7 +33,7 @@ sa-token:
 	# Token风格
 	token-style: uuid
 	
-	# 配置Sa-Token单独使用的Redis连接 
+	# 配置 Sa-Token 单独使用的 Redis 连接 
 	alone-redis: 
 		# Redis数据库索引（默认为0）
 		database: 2
@@ -43,11 +43,11 @@ sa-token:
 		port: 6379
 		# Redis服务器连接密码（默认为空）
 		password: 
-		# 连接超时时间（毫秒）
-		timeout: 10ms
+		# 连接超时时间
+		timeout: 10s
 
 spring: 
-	# 配置业务使用的Redis连接 
+	# 配置业务使用的 Redis 连接 
 	redis: 
 		# Redis数据库索引（默认为0）
 		database: 0
@@ -57,8 +57,8 @@ spring:
 		port: 6379
 		# Redis服务器连接密码（默认为空）
 		password: 
-		# 连接超时时间（毫秒）
-		timeout: 10ms
+		# 连接超时时间
+		timeout: 10s
 ```
 
 具体可参考示例：[码云：application.yml](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-alone-redis/src/main/resources/application.yml)

@@ -29,8 +29,8 @@ spring:
         port: 6379
         # Redis服务器连接密码（默认为空）
         password: 
-        # 连接超时时间（毫秒）
-        timeout: 10ms
+        # 连接超时时间
+        timeout: 10s
         lettuce:
             pool:
                 # 连接池最大连接数

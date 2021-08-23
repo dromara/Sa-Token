@@ -15,13 +15,13 @@ sa-token:
         # Redis数据库索引（默认为0）
         database: 2
         # Redis服务器地址
-        host: 127.0.0.1
+        host: 49.235.117.153
         # Redis服务器连接端口
         port: 6379
         # Redis服务器连接密码（默认为空）
-        password: 
+        password: Kdfsjia.d.1212dsa
         # 连接超时时间（毫秒）
-        timeout: 10ms
+        timeout: 10s
         lettuce: 
             pool:
                 # 连接池最大连接数
@@ -45,7 +45,7 @@ spring:
         # Redis服务器连接密码（默认为空）
         password: 
         # 连接超时时间（毫秒）
-        timeout: 10ms
+        timeout: 10s
         lettuce: 
             pool:
                 # 连接池最大连接数
