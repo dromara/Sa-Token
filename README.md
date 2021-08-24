@@ -27,21 +27,20 @@
 
 Sa-Token 的 API 设计非常简单，有多简单呢？以登录认证为例，你只需要：
 
-
 ``` java
 // 在登录时写入当前会话的账号id
 StpUtil.login(10001);
 
-// 然后在任意需要校验登录处调用以下API
-// 如果当前会话未登录，这句代码会抛出 `NotLoginException`异常
+// 然后在需要校验登录处调用以下方法：
+// 如果当前会话未登录，这句代码会抛出 `NotLoginException` 异常
 StpUtil.checkLogin();
 ```
 
-至此，我们已经借助 Sa-Token 完成登录授权！
+至此，我们已经借助 Sa-Token 完成登录认证！
 
 此时的你小脑袋可能飘满了问号，就这么简单？自定义 Realm 呢？全局过滤器呢？我不用写各种配置文件吗？
 
-事实上在此我可以负责的告诉你，在 Sa-Token 中，登录授权就是如此的简单，不需要什么全局过滤器，不需要各种乱七八糟的配置！只需要这一行简单的API调用，即可完成会话的登录授权！
+没错，在 Sa-Token 中，登录认证就是如此简单，不需要任何复杂在的前置工作，只需这一行简单的API调用，就可以完成会话登录认证！
 
 当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
 
@@ -61,7 +60,7 @@ public String insert(SysUser user) {
 StpUtil.logoutByLoginId(10001);
 ```
 
-除了以上的示例，Sa-Token还可以一行代码完成以下功能：
+在 Sa-Token 中，绝大多数功能都可以 **一行代码** 完成：
 ``` java
 StpUtil.login(10001);                     // 标记当前会话登录的账号id
 StpUtil.getLoginId();                     // 获取当前会话登录的账号id
@@ -164,28 +163,13 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 [![github-chart](https://starchart.cc/dromara/sa-token.svg 'GitHub')](https://starchart.cc/dromara/sa-token)
 
-<!-- 
-## 参与贡献
-众人拾柴火焰高，万丈高楼众人起！
-Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
-
-1. 核心代码：该部分需要开发者了解整个框架的架构，遵循已有代码规范进行bug修复或提交新功能
-2. 文档部分：需要以清晰明了的语句书写文档，力求简单易读，授人以鱼同时更授人以渔
-3. 社区建设：如果框架帮助到了您，希望您可以加入qq群参与交流，对不熟悉框架的新人进行排难解惑
-4. 框架推广：一个优秀的开源项目不能仅靠闭门造车，它还需要一定的推广方案让更多的人一起参与到项目中
-5. 其它部分：您可以参考项目issues与需求墙进行贡献
-
-作者寄语：参与贡献不光只有提交代码，点一个star、提一个issues都是对开源项目的促进，
-如果Sa-Token帮助到了你，欢迎你把框架推荐给朋友、同事使用，为Sa-Token的推广做一份贡献 
--->
-
 
 ## 使用Sa-Token的开源项目 
-- **[ sa-plus ]**：[一个基于springboot架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
+- **[ sa-plus ]**：[一个基于 SpringBoot 架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
 
-- **[ jthink ]**： [一个基于springboot+sa-token+thymeleaf的博客系统](https://gitee.com/wtsoftware/jthink)
+- **[ jthink ]**： [一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统](https://gitee.com/wtsoftware/jthink)
 
-- **[ dcy-fast ]**：[ 一个基于springboot+sa-token+mybatis-plus的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
+- **[ dcy-fast ]**：[ 一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
 
 - **[ helio-starters ]**：[ 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
@@ -196,7 +180,7 @@ Sa-Token秉承着开放的思想，欢迎大家为框架添砖加瓦：
 如果您的项目使用了Sa-Token，欢迎提交pr
 
 ## 友情链接
-- **[ okhttps ]**：[ 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
+- **[ OkHttps ]**：[ 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
 - **[ 小诺快速开发平台 ]**：[ 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
