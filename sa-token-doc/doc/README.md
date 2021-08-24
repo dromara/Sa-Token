@@ -2,7 +2,7 @@
 	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.25.0</h1>
-<h5 align="center">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</h5>
+<h5 align="center">一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h5>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg"></a>
@@ -27,7 +27,7 @@
 
 <!-- 框架集成简单、开箱即用、API设计清爽，通过Sa-Token，你将以一种极其简单的方式实现系统的权限认证部分 -->
 
-Sa-Token 的 API 调用非常简单，有多简单呢？以登录认证为例，你只需要：
+Sa-Token 的 API 设计非常简单，有多简单呢？以登录认证为例，你只需要：
 
 ``` java
 // 在登录时写入当前会话的账号id
