@@ -1,11 +1,13 @@
 # Sa-Token-SSO 单点登录模块 
 
+凡是稍微上点规模的系统，统一认证中心都是绕不过去的槛。而单点登录——便是我们搭建统一认证中心的关键。
+
 --- 
 
 ### 什么是单点登录？解决什么问题？
 
 举个场景，假设我们的系统被切割为N个部分：商城、论坛、直播、社交…… 如果用户每访问一个模块都要登录一次，那么用户将会疯掉，
-为了优化用户体验，我们急需一套机制将这N个系统的认证授权互通共享，让用户在一个系统登录之后，便可以畅通无阻的访问其它所有系统 
+为了优化用户体验，我们急需一套机制将这N个系统的认证授权互通共享，让用户在一个系统登录之后，便可以畅通无阻的访问其它所有系统。 
 
 单点登录——就是为了解决这个问题而生！
 
@@ -13,19 +15,19 @@
 
 
 ### 架构选型
-对于单点登录，网上教程大多以CAS模式为主，其实对于不同的系统架构，实现单点登录的步骤也大为不同，Sa-Token由简入难将其划分为三种模式：
+对于单点登录，网上教程大多以CAS模式为主，其实对于不同的系统架构，实现单点登录的步骤也大为不同，Sa-Token 由简入难将其划分为三种模式：
 
-| 系统架构						| 采用模式	| 简介						|  文档链接	|
-| :--------						| :--------	| :--------					| :--------	|
-| 前端同域 + 后端同 Redis		| 模式一		| 共享Cookie同步会话			| [文档](/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso1)	|
-| 前端不同域 + 后端同 Redis		| 模式二		| URL重定向传播会话 			| [文档](/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso2-server)	|
-| 前端不同域 + 后端 不同Redis	| 模式三		| Http请求获取会话			| [文档](/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso3-server)	|
+| 系统架构					| 采用模式	| 简介					|  文档链接	|
+| :--------					| :--------	| :--------				| :--------	|
+| 前端同域 + 后端同 Redis		| 模式一		| 共享 Cookie 同步会话	| [文档](/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso1)	|
+| 前端不同域 + 后端同 Redis	| 模式二		| URL重定向传播会话 		| [文档](/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso2-server)	|
+| 前端不同域 + 后端不同 Redis	| 模式三		| Http请求获取会话		| [文档](/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso3-server)	|
 
 
-1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`
-2. 后端同Redis：就是指多个系统可以连接同一个Redis，其它的缓存数据中心亦可。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳：[Alone独立Redis插件](http://sa-token.dev33.cn/doc/index.html#/plugin/alone-redis)
-3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）
-4. 技术选型一定要根据系统架构对症下药，切不可胡乱选择 
+1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`。
+2. 后端同Redis：就是指多个系统可以连接同一个Redis，其它的缓存数据中心亦可。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳：[Alone独立Redis插件](http://sa-token.dev33.cn/doc/index.html#/plugin/alone-redis)。
+3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）。
+4. 技术选型一定要根据系统架构对症下药，切不可胡乱选择。 
 
 
 ### Sa-Token-SSO 特性

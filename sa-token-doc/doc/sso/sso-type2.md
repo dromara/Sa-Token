@@ -306,7 +306,12 @@ public class SaSsoClientApplication {
 
 以上示例，虽然完整的复现了单点登录的过程，但是页面还是有些简陋，我们可以运行一下官方仓库的示例，里面有制作好的登录页面
 
-> 下载官方示例，依次运行 `/sa-token-demo/sa-token-demo-sso-client/` 和 `/sa-token-demo/sa-token-demo-sso-server/`，访问：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+> 下载官方示例，依次运行：
+> - `/sa-token-demo/sa-token-demo-sso2-server/`
+> - `/sa-token-demo/sa-token-demo-sso2-client/`
+> 
+> 然后访问：
+> - [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
 
 ![sso-server-login-hua](https://oss.dev33.cn/sa-token/doc/sso/sso-server-login-hua.png 's-w-sh')
 
