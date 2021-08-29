@@ -6,7 +6,7 @@ server:
 sa-token: 
     # SSO-相关配置
     sso: 
-        # SSO-Server端 单点登录地址 
+        # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
         # 是否打开单点注销接口
         is-slo: true

@@ -18,8 +18,6 @@
 
 而共享Redis，并不需要我们把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **[权限缓存与业务缓存分离]** 的解决方案，详情戳：[Alone独立Redis插件](/plugin/alone-redis)。
 
-<!-- > PS：这里建议不要用B项目去连接A项目的Redis，也不要A项目连接B项目的Redis，而是抽离出一个单独的 SSO-Redis，A 和 B 一起连接这个 SSO-Redis -->
-
 OK，所有理论就绪，下面开始实战：
 
 > Sa-Token整合同域单点登录非常简单，相比于正常的登录，你只需增加配置 `sa-token.cookie-domain=xxx.com` 指定一下Cookie写入时的父级域名即可。 <br>
@@ -37,7 +35,8 @@ OK，所有理论就绪，下面开始实战：
 127.0.0.1 s3.stp.com
 ```
 
-其中：`sso.stp.com`为统一认证地址，当用户在其它 Client 端发起登录请求时，均将其重定向至认证中心，待到登录成功之后再原路返回到 Client 端。
+<!-- 其中：`sso.stp.com`为统一认证地址，当用户在其它 Client 端发起登录请求时，均将其重定向至认证中心，待到登录成功之后再原路返回到 Client 端。 -->
+其中：`sso.stp.com`为统一认证地址，其它均为 Client 端。
 
 
 ### 2、指定Cookie的作用域
@@ -100,7 +99,7 @@ public class SaSsoApplication {
 
 ![sso-type1-wd.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type1-wd.png 's-w-sh')
 
-现在访问任意节点的登录接口：[http://s1.stp.com:8081/sso/doLogin](http://s1.stp.com:8081/sso/doLogin) 
+现在访问SSO认证中心的登录接口：[http://sso.stp.com:8081/sso/doLogin](http://sso.stp.com:8081/sso/doLogin) 
 
 ![sso-type1-login.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type1-login.png 's-w-sh')
 
@@ -111,11 +110,11 @@ public class SaSsoApplication {
 测试完毕！
 
 
-### 5、搭建统一认证中心
+### 5、完善统一认证中心
 
 上面的示例，我们简单的演示了SSO模式一的认证原理。
 
-当然，在实际的正式项目中，我们肯定不会每个系统都内置一个登录接口，一般的做法是搭建一个独立的SSO认证中心，我们所有 Client 端的登录请求都会被重定向至认证中心，
+当然，在实际的正式项目中，我们肯定不会每个 Client 端都内置一个登录接口，一般的做法是只在SSO认证中心保留登录接口，我们所有 Client 端的登录请求都会被重定向至认证中心，
 待到登录成功之后再原路返回到 Client 端。
 
 我们可以运行一下官方仓库的示例，里面有制作好的登录页面

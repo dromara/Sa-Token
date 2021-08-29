@@ -1,31 +1,34 @@
 # SSO模式二 URL重定向传播会话
 
-如果我们的多个系统：部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 **`[URL重定向传播会话]`** 的方式做到单点登录
+如果我们的多个系统：部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 **`[URL重定向传播会话]`** 的方式做到单点登录。
 
 
 ### 0、解题思路
 
-首先我们再次复习一下多个系统之间，为什么无法同步登录状态？
+首先我们再次复习一下，多个系统之间为什么无法同步登录状态？
 
-1. 前端的`Token`无法在多个系统下共享
-2. 后端的`Session`无法在多个系统间共享
+1. 前端的`Token`无法在多个系统下共享。
+2. 后端的`Session`无法在多个系统间共享。
 
-关于第二点，我们已经在"SSO模式一"章节中阐述，使用 [Alone独立Redis插件](/plugin/alone-redis) 做到权限缓存直连SSO-Redis数据中心，在此不再赘述
+关于第二点，我们已在 "SSO模式一" 章节中阐述，使用 [Alone独立Redis插件](/plugin/alone-redis) 做到权限缓存直连 SSO-Redis 数据中心，在此不再赘述。
 
-而第一点，才是我们解决问题的关键所在，在跨域模式下，意味着"共享Cookie方案"的失效，我们必须采用一种新的方案来传递Token 
+而第一点，才是我们解决问题的关键所在，在跨域模式下，意味着 "共享Cookie方案" 的失效，我们必须采用一种新的方案来传递Token。
 
-1. 用户在 子系统 点击`[登录]`按钮
-2. 用户跳转到子系统登录页面，并携带`back参数`记录初始页面URL 
-3. 子系统检测到此用户尚未登录，再次将其重定向至SSO认证中心，并携带`redirect参数`记录子系统的登录页URL
-4. 用户在SSO认证中心尚未登录，开始登录
-5. 用户在SSO认证中心登录成功，重定向至子系统的登录页URL，并携带`ticket码`
-6. 子系统使用ticket码从`SSO-Redis`中获取账号id，并在子系统登录此账号会话
-7. 子系统将用户再次重定向至最初始的`back`页面
+1. 用户在 子系统 点击 `[登录]` 按钮。
+2. 用户跳转到子系统登录接口 `/sso/login`，并携带 `back参数` 记录初始页面URL。
+	- 形如：`http://{sso-client}/sso/login?back=xxx` 
+3. 子系统检测到此用户尚未登录，再次将其重定向至SSO认证中心，并携带`redirect参数`记录子系统的登录页URL。
+	- 形如：`http://{sso-server}/sso/auth?redirect=xxx?back=xxx` 
+4. 用户进入了 SSO认证中心 的登录页面，开始登录。
+5. 用户 输入账号密码 并 登录成功，SSO认证中心再次将用户重定向至子系统的登录接口`/sso/login`，并携带`ticket码`参数。
+	- 形如：`http://{sso-client}/sso/login?back=xxx&ticket=xxxxxxxxx`
+6. 子系统根据 `ticket码` 从 `SSO-Redis` 中获取账号id，并在子系统登录此账号会话。
+7. 子系统将用户再次重定向至最初始的 `back` 页面。
 
-整个过程，除了第四步用户在SSO认证中心登录时会被打断，其余过程均是自动化的，当用户在另一个子系统再次点击`[登录]`按钮，由于此用户在SSO认证中心已有会话登录，
+整个过程，除了第四步用户在SSO认证中心登录时会被打断，其余过程均是自动化的，当用户在另一个子系统再次点击`[登录]`按钮，由于此用户在SSO认证中心已有会话存在，
 所以第四步也将自动化，也就是单点登录的最终目的 —— 一次登录，处处通行。
 
-下面我们按照步骤依次完成上述过程
+下面我们按照步骤依次完成上述过程：
 
 ### 1、准备工作 
 首先修改hosts文件`(C:\windows\system32\drivers\etc\hosts)`，添加以下IP映射，方便我们进行测试：
@@ -37,12 +40,12 @@
 ```
 
 
-### 2、搭建SSO-Server认证中心
+### 2、搭建 SSO-Server 认证中心
 
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-server/`，如遇到难点可结合源码进行测试学习
 
-##### 2.1、创建SSO-Server端项目
-创建SpringBoot项目 `sa-token-demo-sso-server`（不会的同学自行百度或参考仓库示例），添加pom依赖：
+#### 2.1、创建 SSO-Server 端项目
+创建 SpringBoot 项目 `sa-token-demo-sso-server`，引入依赖：
 
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
@@ -52,7 +55,7 @@
 	<version>${sa.top.version}</version>
 </dependency>
 
-<!-- Sa-Token整合redis (使用jackson序列化方式) -->
+<!-- Sa-Token 整合 Redis (使用 jackson 序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
@@ -64,7 +67,14 @@
 </dependency>
 ```
 
-##### 2.2、创建SSO-Server端认证接口
+#### 2.2、开放认证接口
+一个完整的SSO认证中心应该至少包含以下接口：
+- `/sso/auth`：单点登录统一认证地址。
+- `/sso/doLogin`：RestAPI 登录接口，根据账号密码进行登录。
+- `/sso/logout`：统一单点注销地址，一次注销，全端下线。
+
+别急，这里不需要你亲自完成这些接口 —— Sa-Token 已经为你封装了实现。你要做的，就是提供一个访问入口，接入 Sa-Token 的方法。
+
 ``` java
 /**
  * Sa-Token-SSO Server端 Controller 
@@ -111,7 +121,7 @@ public class SsoServerController {
 ```
 注意：在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
 
-##### 2.3、application.yml配置
+#### 2.3、application.yml配置
 ``` yml
 # 端口
 server:
@@ -140,7 +150,7 @@ spring:
 ```
 注意点：`allow-url`为了方便测试配置为`*`，线上生产环境一定要配置为详细URL地址 （之后的章节我们会详细阐述此配置项）
 
-##### 2.4、创建SSO-Server端启动类
+#### 2.4、创建SSO-Server端启动类
 ``` java 
 @SpringBootApplication
 public class SaSsoServerApplication {
@@ -152,12 +162,12 @@ public class SaSsoServerApplication {
 ```
 
 
-### 3、搭建SSO-Client应用端 
+### 3、搭建 SSO-Client 应用端 
 
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-client/`，如遇到难点可结合源码进行测试学习
 
-##### 3.1、创建SSO-Client端项目
-创建一个SpringBoot项目 `sa-token-demo-sso-client`，添加pom依赖：
+#### 3.1、创建SSO-Client端项目
+创建一个 SpringBoot 项目 `sa-token-demo-sso-client`，引入依赖：
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -186,7 +196,10 @@ public class SaSsoServerApplication {
 ```
 
 
-##### 3.2、创建SSO-Client端认证接口
+#### 3.2、创建 SSO-Client 端认证接口
+
+同 SSO-Server 一样，Sa-Token 为 SSO-Client 端所需代码也提供了完整的封装，你只需提供一个访问入口，接入 Sa-Token 的方法即可。
+
 ``` java
 
 /**
@@ -195,12 +208,7 @@ public class SaSsoServerApplication {
 @RestController
 public class SsoClientController {
 
-	/*
-	 * SSO-Client端：处理所有SSO相关请求 
-	 * 		http://{host}:{port}/sso/login          -- Client端登录地址，接受参数：back=登录后的跳转地址 
-	 * 		http://{host}:{port}/sso/logout         -- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址 
-	 * 		http://{host}:{port}/sso/logoutCall     -- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
-	 */
+	// 首页 
 	@RequestMapping("/")
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
@@ -210,7 +218,12 @@ public class SsoClientController {
 		return str;
 	}
 	
-	// SSO-Client端：处理所有SSO相关请求 
+	/*
+	 * SSO-Client端：处理所有SSO相关请求 
+	 * 		http://{host}:{port}/sso/login          -- Client端登录地址，接受参数：back=登录后的跳转地址 
+	 * 		http://{host}:{port}/sso/logout         -- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址 
+	 * 		http://{host}:{port}/sso/logoutCall     -- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
+	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoHandle.clientRequest();
@@ -230,7 +243,7 @@ server:
 sa-token: 
 	# SSO-相关配置
 	sso: 
-		# SSO-Server端 单点登录地址 
+		# SSO-Server端 统一认证地址 
 		auth-url: http://sa-sso-server.com:9000/sso/auth
         # 是否打开单点注销接口
         is-slo: true
@@ -248,7 +261,7 @@ sa-token:
 ```
 注意点：`sa-token.alone-redis` 的配置需要和SSO-Server端连接同一个Redis（database也要一样）
 
-##### 3.4、写启动类
+#### 3.4、写启动类
 ``` java
 @SpringBootApplication
 public class SaSsoClientApplication {
@@ -263,7 +276,7 @@ public class SaSsoClientApplication {
 
 ### 4、测试访问 
 
-(1) 依次启动SSO-Server与SSO-Client端，然后从浏览器访问：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+(1) 依次启动 `SSO-Server` 与 `SSO-Client`，然后从浏览器访问：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
 
 ![sso-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index.png 's-w-sh')
 
