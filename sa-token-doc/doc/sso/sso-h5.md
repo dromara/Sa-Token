@@ -110,7 +110,7 @@ public class H5Controller {
 先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如[HBuilderX](https://www.dcloud.io/hbuilderx.html)），测试流程与一体版一致 
 
 ### 6、疑问：我在SSO模式三的demo中加入上述代码，提示我ticket无效，是怎么回事？
-上述代码是以SSO模式二为基础的，提示“Ticket无效”的原因很简单，因为SSO模式三种 Server端 与 Client端 连接的不是同一个Redis，
+上述代码是以SSO模式二为基础的，提示“Ticket无效”的原因很简单，因为SSO模式三中 Server端 与 Client端 连接的不是同一个Redis，
 所以Client端校验Ticket时无法在Redis中查询到相应的值，才会产生异常：“Ticket无效”
 
 要使上述代码生效很简单，我们只需更改一下校验Ticket的逻辑即可，将 `H5Controller` 中的 `checkTicket` 方法代码改为：

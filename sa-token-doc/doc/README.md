@@ -160,8 +160,10 @@ QQ交流群：1002350610 [点击加入](https://jq.qq.com/?_wv=1027&k=45H977HM)
 
 微信交流群：
 
-![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
+![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/doc/km/sa-token-hm1.jpg ':size=230')
 
-（扫码添加微信，备注：sa-token，邀您加入群聊）
+<!-- ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
+
+（扫码添加微信，备注：sa-token，邀您加入群聊） -->
 
 <br>
