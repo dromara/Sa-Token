@@ -24,6 +24,7 @@
 	- [模拟他人 & 身份切换](/up/mock-person) 
 	- [同端互斥登录](/up/mutex-login) 
 	- [二级认证](/up/safe-auth) 
+	- [Http Basic 认证](/up/basic-auth) 
 	- [密码加密](/up/password-secure) 
 	- [会话治理](/up/search-session) 
 	- [全局侦听器](/up/global-listener) 

@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import cn.dev33.satoken.basic.SaBasicTemplate;
 
 /**
- * Http Basic 认证：只有通过 Basic 认证才能进入该方法 
+ * Http Basic 认证：只有通过 Basic 认证后才能进入该方法 
  * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
  * @author kong
  *

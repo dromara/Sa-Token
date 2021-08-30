@@ -76,7 +76,7 @@ public class SaTokenConfig implements Serializable {
 	private long idTokenTimeout = 60 * 60 * 24;
 
 	/**
-	 * Http Basic 认证的账号&密码 
+	 * Http Basic 认证的账号和密码 
 	 */
 	private String basic = "";
 	
@@ -380,14 +380,14 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return Http Basic 认证的账号&密码 
+	 * @return Http Basic 认证的账号和密码 
 	 */
 	public String getBasic() {
 		return basic;
 	}
 
 	/**
-	 * @param basic Http Basic 认证的账号&密码 
+	 * @param basic Http Basic 认证的账号和密码 
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setBasic(String basic) {
