@@ -11,6 +11,8 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.basic.SaBasicTemplate;
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
@@ -75,10 +77,16 @@ public class XPluginImp implements Plugin {
         	SaIdUtil.saIdTemplate = bw.raw();
         });
 
+        // Sa-Token Http Basic 认证模块 Bean 
+        Aop.getAsyn(SaBasicTemplate.class, bw->{
+        	SaBasicUtil.saBasicTemplate = bw.raw();
+        });
+
         // Sa-Token-SSO 单点登录模块 Bean
         Aop.getAsyn(SaSsoTemplate.class, bw->{
         	SaSsoUtil.saSsoTemplate = bw.raw();
         });
         
     }
+	
 }

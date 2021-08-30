@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaCheckBasic;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -132,6 +134,12 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 		if(target.isAnnotationPresent(SaCheckSafe.class)) {
 			SaCheckSafe at = target.getAnnotation(SaCheckSafe.class);
 			SaManager.getStpLogic(null).checkByAnnotation(at);
+		}
+
+		// 校验 @SaCheckBasic 注解
+		if(target.isAnnotationPresent(SaCheckBasic.class)) {
+			SaCheckBasic at = target.getAnnotation(SaCheckBasic.class);
+			SaBasicUtil.check(at.realm(), at.account());
 		}
 	}
 	

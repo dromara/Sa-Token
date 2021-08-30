@@ -75,6 +75,15 @@ public class SaResponseForReactor implements SaResponse {
 	}
 
 	/**
+	 * 设置响应状态码 
+	 */
+	@Override
+	public SaResponse setStatus(int sc) {
+		response.setStatusCode(HttpStatus.valueOf(sc));
+		return this;
+	}
+	
+	/**
 	 * 在响应头里写入一个值 
 	 */
 	@Override

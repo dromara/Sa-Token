@@ -28,6 +28,13 @@ public interface SaResponse {
 	 * @param timeout  过期时间 （秒）
 	 */
 	public void addCookie(String name, String value, String path, String domain, int timeout);
+
+	/**
+	 * 设置响应状态码 
+	 * @param sc 响应状态码
+	 * @return 对象自身 
+	 */
+	public SaResponse setStatus(int sc);
 	
 	/**
 	 * 在响应头里写入一个值 

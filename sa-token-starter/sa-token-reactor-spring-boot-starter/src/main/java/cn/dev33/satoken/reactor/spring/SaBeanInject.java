@@ -6,6 +6,8 @@ import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.action.SaTokenAction;
+import cn.dev33.satoken.basic.SaBasicTemplate;
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -105,6 +107,16 @@ public class SaBeanInject {
 		SaIdUtil.saIdTemplate = saIdTemplate;
 	}
 
+	/**
+	 * 注入 Sa-Token Http Basic 认证模块 
+	 * 
+	 * @param saBasicTemplate saBasicTemplate对象 
+	 */
+	@Autowired(required = false)
+	public void setSaSsoTemplate(SaBasicTemplate saBasicTemplate) {
+		SaBasicUtil.saBasicTemplate = saBasicTemplate;
+	}
+	
 	/**
 	 * 注入 Sa-Token-SSO 单点登录模块 Bean
 	 * 
