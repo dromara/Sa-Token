@@ -91,6 +91,10 @@
 So：从鉴权粒度的角度来看，需要针对一个模块鉴权的时候，就用路由拦截鉴权，需要控制到方法级的时候，就用注解鉴权，需要根据条件判断是否鉴权的时候，就用代码鉴权 
 
 
+### 我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
+参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
+
+
 ### 还是有不明白到的地方?
 请在`gitee` 、 `github` 提交 `issues`，或者加入qq群交流（群链接在[首页](README?id=交流群)）
 
