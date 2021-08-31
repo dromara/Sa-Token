@@ -96,7 +96,7 @@ public class SaOAuth2Handle {
 	public static Object authorize(SaRequest req, SaResponse res, SaOAuth2Config cfg) { 
 
 		// 1、如果尚未登录, 则先去登录 
-		if(StpUtil.isLogin() == false) {
+		if(!StpUtil.isLogin()) {
 			return cfg.notLoginView.get();
 		}
 
@@ -111,7 +111,7 @@ public class SaOAuth2Handle {
 
 		// 5、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面  
 		boolean isGrant = SaOAuth2Util.isGrant(ra.loginId, ra.clientId, ra.scope);
-		if(isGrant == false) {
+		if(!isGrant) {
 			return cfg.confirmView.apply(ra.clientId, ra.scope);
 		}
 		
@@ -246,7 +246,7 @@ public class SaOAuth2Handle {
 		
 		// 4、调用API 开始登录，如果没能成功登录，则直接退出
 		Object retObj = cfg.doLoginHandle.apply(username, password); 
-		if(StpUtil.isLogin() == false) {
+		if(!StpUtil.isLogin()) {
 			return retObj;
 		}
 		

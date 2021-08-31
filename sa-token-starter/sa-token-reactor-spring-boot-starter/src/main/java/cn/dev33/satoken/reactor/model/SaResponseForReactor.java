@@ -60,13 +60,13 @@ public class SaResponseForReactor implements SaResponse {
 				;
 		
 		// set path 
-		if(SaFoxUtil.isEmpty(path) == true) {
+		if(SaFoxUtil.isEmpty(path)) {
 			path = "/";
 		}
 		builder.path(path);
 		
 		// set domain 
-		if(SaFoxUtil.isEmpty(domain) == false) {
+		if(!SaFoxUtil.isEmpty(domain)) {
 			builder.domain(domain);
 		}
 		

@@ -84,7 +84,7 @@ public class SaRouter {
 	 */
 	public static void match(String pattern, String excludePattern, SaFunction function) {
 		if(isMatchCurrURI(pattern)) {
-			if(isMatchCurrURI(excludePattern) == false) {
+			if(!isMatchCurrURI(excludePattern)) {
 				function.run();
 			}
 		}
@@ -109,7 +109,7 @@ public class SaRouter {
 	 */
 	public static void match(List<String> patterns, List<String> excludePatterns, SaFunction function) {
 		if(isMatchCurrURI(patterns)) {
-			if(isMatchCurrURI(excludePatterns) == false) {
+			if(!isMatchCurrURI(excludePatterns)) {
 				function.run();
 			}
 		}

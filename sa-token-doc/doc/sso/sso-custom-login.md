@@ -25,7 +25,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		.addInclude("/**")
         		.addExclude("/sso/*", "/favicon.ico")
         		.setAuth(r -> {
-        			if(StpUtil.isLogin() == false) {
+        			if(!StpUtil.isLogin()) {
         				String back = SaFoxUtil.joinParam(SaHolder.getRequest().getUrl(), SpringMVCUtil.getRequest().getQueryString());
         				SaHolder.getResponse().redirect("/sso/login?back=" + SaFoxUtil.encodeUrl(back));
         				SaRouter.back();
@@ -51,7 +51,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		.addInclude("/**")
         		.addExclude("/sso/*", "/favicon.ico")
         		.setAuth(r -> {
-        			if(StpUtil.isLogin() == false) {
+        			if(!StpUtil.isLogin()) {
         				// 与前端约定好，code=401时代表会话未登录 
         				SaRouter.back(SaResult.ok().setCode(401));
         			}

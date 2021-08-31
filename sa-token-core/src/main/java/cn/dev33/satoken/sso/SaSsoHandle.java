@@ -68,7 +68,7 @@ public class SaSsoHandle {
 		
 		// ---------- 此处两种情况分开处理：
 		// 情况1：在SSO认证中心尚未登录，则先去登登录 
-		if(stpLogic.isLogin() == false) {
+		if(!stpLogic.isLogin()) {
 			return cfg.notLoginView.get();
 		}
 		// 情况2：在SSO认证中心已经登录，开始构建授权重定向地址，下放ticket 
@@ -159,7 +159,7 @@ public class SaSsoHandle {
 		}
 
 		// ---------- SSO-Client端：单点注销 [模式二]
-		if(req.isPath(Api.ssoLogout) && cfg.isSlo && cfg.isHttp == false) {
+		if(req.isPath(Api.ssoLogout) && cfg.isSlo && !cfg.isHttp) {
 			return ssoLogoutType2();
 		}
 
@@ -264,14 +264,14 @@ public class SaSsoHandle {
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// 如果未登录，则无需注销 
-        if(stpLogic.isLogin() == false) {
+        if(!stpLogic.isLogin()) {
             return SaResult.ok();
         }
         
         // 调用SSO-Server认证中心API，进行注销
         String url = SaSsoUtil.buildSloUrl(stpLogic.getLoginId());
         String body = String.valueOf(cfg.sendHttp.apply(url));
-        if(SaSsoConsts.OK.equals(body) == false) {
+        if(!SaSsoConsts.OK.equals(body)) {
             return SaResult.error("单点注销失败"); 
         }
         

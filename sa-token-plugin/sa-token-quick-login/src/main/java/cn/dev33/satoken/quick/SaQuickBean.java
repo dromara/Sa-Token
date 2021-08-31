@@ -63,7 +63,7 @@ public class SaQuickBean implements WebMvcConfigurer  {
 			// 认证函数: 每次请求执行
 			setAuth(r -> {
 				// 未登录时直接转发到login.html页面 
-				if (SaQuickManager.getConfig().getAuth() && StpUtil.isLogin() == false) {
+				if (SaQuickManager.getConfig().getAuth() && !StpUtil.isLogin()) {
 					SaHolder.getRequest().forward("/saLogin");
 					SaRouter.back();
 				}

@@ -37,7 +37,7 @@ public class SaBasicTemplate {
 		String authorization = SaHolder.getRequest().getHeader("Authorization");
 		
 		// 如果不是以 Basic 作为前缀，则视为无效 
-		if(authorization == null || authorization.startsWith("Basic ") == false) {
+		if(authorization == null || !authorization.startsWith("Basic ")) {
 			return null;
 		}
 		
@@ -71,7 +71,7 @@ public class SaBasicTemplate {
 			account = SaManager.getConfig().getBasic();
 		}
 		String authorization = getAuthorizationValue();
-		if(SaFoxUtil.isEmpty(authorization) || authorization.equals(account) == false) {
+		if(SaFoxUtil.isEmpty(authorization) || !authorization.equals(account)) {
 			throwNotBasicAuthException(realm);
 		}
 	}

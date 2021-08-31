@@ -68,7 +68,7 @@ public class SaFoxUtil {
 	 * @return 是否为null或者空字符串
 	 */
 	public static boolean isNotEmpty(Object str) {
-		return isEmpty(str) == false;
+		return !isEmpty(str);
 	}
 	
 	/**
@@ -378,7 +378,7 @@ public class SaFoxUtil {
 		String[] arr = str.split(",");
 		for (String s : arr) {
 			s = s.trim();
-			if(isEmpty(s) == false) {
+			if(!isEmpty(s)) {
 				list.add(s);
 			}
 		}

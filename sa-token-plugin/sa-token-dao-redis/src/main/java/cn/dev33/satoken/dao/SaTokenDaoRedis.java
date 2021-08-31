@@ -58,7 +58,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		template.afterPropertiesSet();
 
 		// 开始初始化相关组件 
-		if(this.isInit == false) {
+		if(!this.isInit) {
 			this.stringRedisTemplate = stringTemplate;
 			this.objectRedisTemplate = template;
 			this.isInit = true;

@@ -132,7 +132,7 @@ public class SaTokenJwtUtil {
     			// ------ 2、生成一个token 
     			String tokenValue = createTokenValue(loginId);
     			storage.set(splicingKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
-    			if(config.getIsReadCookie() == true){	// cookie注入 
+    			if(config.getIsReadCookie()){	// cookie注入 
     				SaManager.getSaTokenContext().getResponse().addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), (int)config.getTimeout());		
     			}
     		}
@@ -156,7 +156,7 @@ public class SaTokenJwtUtil {
     	 			return;
     	 		}
     	 		// 如果打开了cookie模式，把cookie清除掉 
-    	 		if(getConfig().getIsReadCookie() == true){
+    	 		if(getConfig().getIsReadCookie()){
     				SaManager.getSaTokenContext().getResponse().deleteCookie(getTokenName()); 	
     			}
     		}

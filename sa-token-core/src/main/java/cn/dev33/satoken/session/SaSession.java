@@ -361,7 +361,7 @@ public class SaSession implements Serializable {
 	 * @return 对象自身
 	 */
 	public SaSession setDefaultValue(String key, Object value) {
-		if(has(key) == false) {
+		if(!has(key)) {
 			dataMap.put(key, value);
 			update();
 		}

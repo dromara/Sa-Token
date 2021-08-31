@@ -201,7 +201,7 @@ public class SaSsoTemplate {
 	public void checkRedirectUrl(String url) {
 		
 		// 1、是否是一个有效的url 
-		if(SaFoxUtil.isUrl(url) == false) {
+		if(!SaFoxUtil.isUrl(url)) {
 			throw new SaTokenException("无效redirect：" + url);
 		}
 		
@@ -213,7 +213,7 @@ public class SaSsoTemplate {
 		
 		// 3、是否在[允许地址列表]之中 
 		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
-		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
+		if(!SaManager.getSaTokenAction().hasElement(authUrlList, url)) {
 			throw new SaTokenException("非法redirect：" + url);
 		}
 		
@@ -278,7 +278,7 @@ public class SaSsoTemplate {
 	 * @param secretkey 秘钥 
 	 */
 	public void checkSecretkey(String secretkey) {
-		 if(secretkey == null || secretkey.isEmpty() || secretkey.equals(SaManager.getConfig().getSso().getSecretkey()) == false) {
+		 if(secretkey == null || secretkey.isEmpty() || !secretkey.equals(SaManager.getConfig().getSso().getSecretkey())) {
 			 throw new SaTokenException("无效秘钥：" + secretkey);
 		 }
 	}

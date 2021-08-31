@@ -363,7 +363,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 		Iterator<String> iterator = this.keySet().iterator();
 		while(iterator.hasNext()) {
 			String key = iterator.next();
-			if(keys2.contains(key) == true) {
+			if(keys2.contains(key)) {
 				iterator.remove();
 				this.remove(key);
 			}
@@ -376,7 +376,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 		Iterator<String> iterator = this.keySet().iterator();
 		while(iterator.hasNext()) {
 			String key = iterator.next();
-			if(keys2.contains(key) == false) {
+			if(!keys2.contains(key)) {
 				iterator.remove();
 				this.remove(key);
 			}
@@ -579,7 +579,7 @@ public class SoMap extends LinkedHashMap<String, Object> {
 		}
 		// 当前request
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
-		if (request.getAttribute("currentSoMap") == null || request.getAttribute("currentSoMap") instanceof SoMap == false ) {
+		if (request.getAttribute("currentSoMap") == null || !(request.getAttribute("currentSoMap") instanceof SoMap)) {
 			initRequestSoMap(request);
 		}
 		return (SoMap)request.getAttribute("currentSoMap");

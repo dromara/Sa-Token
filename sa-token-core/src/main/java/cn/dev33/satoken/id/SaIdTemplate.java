@@ -53,7 +53,7 @@ public class SaIdTemplate {
 	 * @param token 要验证的token
 	 */
 	public void checkToken(String token) {
-		if(isValid(token) == false) {
+		if(!isValid(token)) {
 			token = (token == null ? "" : token);
 			throw new IdTokenInvalidException("无效Id-Token：" + token);
 		}
@@ -74,7 +74,7 @@ public class SaIdTemplate {
 		
 		// 1. 先将当前 Id-Token 写入到 Past-Id-Token 中 
 		String idToken = getTokenNh(); 
-		if(SaFoxUtil.isEmpty(idToken) == false) {
+		if(!SaFoxUtil.isEmpty(idToken)) {
 			savePastToken(idToken, getTokenTimeout());
 		}
 		

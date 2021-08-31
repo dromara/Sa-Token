@@ -205,7 +205,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 				try {
 					try {
 						// 如果已经被标记为结束
-						if(refreshFlag == false) {
+						if(!refreshFlag) {
 							return;
 						}
 						// 执行清理

@@ -31,7 +31,7 @@ public class SaAnnotationInterceptor implements HandlerInterceptor {
 			throws Exception {
 
 		// 获取处理method
-		if (handler instanceof HandlerMethod == false) {
+		if (!(handler instanceof HandlerMethod)) {
 			return true;
 		}
 		Method method = ((HandlerMethod) handler).getMethod();

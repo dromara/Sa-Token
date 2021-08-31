@@ -843,7 +843,7 @@ public class StpLogic {
  	public boolean hasRole(Object loginId, String role) {
  		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
  		return SaManager.getSaTokenAction().hasElement(roleList, role);
-//		return !(roleList == null || roleList.contains(role) == false);
+//		return !(roleList == null || !roleList.contains(role));
  	}
  	
  	/** 
@@ -909,7 +909,7 @@ public class StpLogic {
  	public boolean hasPermission(Object loginId, String permission) {
  		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
  		return SaManager.getSaTokenAction().hasElement(permissionList, permission);
-//		return !(permissionList == null || permissionList.contains(permission) == false);
+//		return !(permissionList == null || !permissionList.contains(permission));
  	}
  	
  	/** 
@@ -926,7 +926,7 @@ public class StpLogic {
  	 * @param permission 权限码
  	 */
  	public void checkPermission(String permission) {
- 		if(hasPermission(permission) == false) {
+ 		if(!hasPermission(permission)) {
 			throw new NotPermissionException(permission, this.loginType);
 		}
  	}
@@ -1256,7 +1256,7 @@ public class StpLogic {
 	 * 检查当前会话是否已通过二级认证，如未通过则抛出异常 
 	 */
 	public void checkSafe() {
-		if (isSafe() == false) {
+		if (!isSafe()) {
 			throw new NotSafeException();
 		}
 	}

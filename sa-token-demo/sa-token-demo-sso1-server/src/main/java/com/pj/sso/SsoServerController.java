@@ -24,7 +24,7 @@ public class SsoServerController {
 	@RequestMapping("/sso/auth")
 	public Object ssoAuth(String redirect) {
 		// 如果尚未登录，则返回登录视图进行登录 
-		if(StpUtil.isLogin() == false) {
+		if(!StpUtil.isLogin()) {
 			return new ModelAndView("sa-login.html");
 		}
 		// 如果已登录，则原路返回到 Client端 

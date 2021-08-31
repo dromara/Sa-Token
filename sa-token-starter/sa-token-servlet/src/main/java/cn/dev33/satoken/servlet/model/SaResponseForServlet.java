@@ -51,10 +51,10 @@ public class SaResponseForServlet implements SaResponse {
 	@Override
 	public void addCookie(String name, String value, String path, String domain, int timeout) {
 		Cookie cookie = new Cookie(name, value);
-		if(SaFoxUtil.isEmpty(path) == true) {
+		if(SaFoxUtil.isEmpty(path)) {
 			path = "/";
 		}
-		if(SaFoxUtil.isEmpty(domain) == false) {
+		if(!SaFoxUtil.isEmpty(domain)) {
 			cookie.setDomain(domain);
 		}
 		cookie.setPath(path);
