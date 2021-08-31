@@ -109,7 +109,7 @@ public class H5Controller {
 ### 5、测试运行
 先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如[HBuilderX](https://www.dcloud.io/hbuilderx.html)），测试流程与一体版一致 
 
-### 6、疑问：我在SSO模式三的demo中加入上述代码，提示我ticket无效，是怎么回事？
+### 6、疑问：我在SSO模式三的demo中加入上述代码，提示我 ticket无效，是怎么回事？
 上述代码是以SSO模式二为基础的，提示“Ticket无效”的原因很简单，因为SSO模式三中 Server端 与 Client端 连接的不是同一个Redis，
 所以Client端校验Ticket时无法在Redis中查询到相应的值，才会产生异常：“Ticket无效”
 
@@ -131,5 +131,26 @@ private Object checkTicket(String ticket) {
 重新运行项目，即可在SSO模式三中成功整合前后台分离模式 。
 
 
+### 7、SSO-Server 端的前后台分离
+疑问：上述代码都是针对 Client 端进行拆分，如果我想在 SSO-Server 端也进行前后台分离改造，应该怎么做？
 
+> 答：解决思路都是大同小异的，与Client一样，我们需要把原本在 “后端处理的授权重定向逻辑” 拿到前端来实现。
+
+由于集成代码与 Client 端类似，这里暂不贴详细代码，我们可以下载官方仓库，里面有搭建好的demo
+
+使用前端ide导入项目 `/sa-token-demo/sa-token-demo-sso2-h5`，浏览器访问 `sso-auth.html` 页面：
+
+![sso-type2-server-h5-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type2-server-h5-auth.png 's-w-sh')
+
+复制上述地址，将其配置到 Client 端的 yml 配置文件中，例如：
+
+``` yml
+sa-token:
+    sso: 
+		# SSO-Server端 统一认证地址 
+	    auth-url: http://127.0.0.1:8848/sa-token-demo-sso2-server-h5/sso-auth.html
+```
+
+然后我们启动项目 `sa-token-demo-sso2-server` 与 `sa-token-demo-sso2-client`，按照之前的测试步骤访问：
+[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，即可以前后端分离模式完成 SSO-Server 端的授权登录。
 

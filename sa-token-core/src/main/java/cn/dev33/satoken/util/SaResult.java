@@ -109,6 +109,9 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	public static SaResult ok(String msg) {
 		return new SaResult(CODE_SUCCESS, msg, null);
 	}
+	public static SaResult code(int code) {
+		return new SaResult(code, null, null);
+	}
 	public static SaResult data(Object data) {
 		return new SaResult(CODE_SUCCESS, "ok", data);
 	}
