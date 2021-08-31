@@ -19,7 +19,7 @@ public class SaResponseForServlet implements SaResponse {
 	/**
 	 * 底层Request对象
 	 */
-	HttpServletResponse response;
+	protected HttpServletResponse response;
 	
 	/**
 	 * 实例化

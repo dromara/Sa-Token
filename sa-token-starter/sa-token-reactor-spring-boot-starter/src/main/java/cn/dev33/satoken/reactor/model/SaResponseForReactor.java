@@ -20,7 +20,7 @@ public class SaResponseForReactor implements SaResponse {
 	/**
 	 * 底层Response对象
 	 */
-	ServerHttpResponse response;
+	protected ServerHttpResponse response;
 	
 	/**
 	 * 实例化

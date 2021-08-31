@@ -9,7 +9,7 @@ import org.noear.solon.core.handle.Context;
  */
 public class SaStorageForSolon implements SaStorage {
    
-	Context ctx;
+	protected Context ctx;
 
     public SaStorageForSolon() {
         ctx = Context.current();

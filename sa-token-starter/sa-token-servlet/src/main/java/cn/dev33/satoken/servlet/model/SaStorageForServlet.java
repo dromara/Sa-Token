@@ -14,7 +14,7 @@ public class SaStorageForServlet implements SaStorage {
 	/**
 	 * 底层Request对象
 	 */
-	HttpServletRequest request;
+	protected HttpServletRequest request;
 	
 	/**
 	 * 实例化

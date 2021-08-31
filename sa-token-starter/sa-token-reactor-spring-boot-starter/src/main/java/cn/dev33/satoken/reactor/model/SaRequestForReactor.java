@@ -6,9 +6,11 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Request for Reactor 
@@ -20,7 +22,7 @@ public class SaRequestForReactor implements SaRequest {
 	/**
 	 * 底层Request对象
 	 */
-	ServerHttpRequest request;
+	protected ServerHttpRequest request;
 	
 	/**
 	 * 实例化
@@ -75,10 +77,14 @@ public class SaRequestForReactor implements SaRequest {
 	}
 
 	/**
-	 * 返回当前请求的url，例：http://xxx.com/?id=127
+	 * 返回当前请求的url，例：http://xxx.com/test
 	 * @return see note
 	 */
 	public String getUrl() {
+		String currDomain = SaManager.getConfig().getCurrDomain();
+		if(SaFoxUtil.isEmpty(currDomain) == false) {
+			return currDomain + this.getRequestPath();
+		}
 		return request.getURI().toString();
 	}
 	

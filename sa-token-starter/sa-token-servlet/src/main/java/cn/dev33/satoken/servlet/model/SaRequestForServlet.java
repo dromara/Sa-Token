@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Request for Servlet 
@@ -21,7 +22,7 @@ public class SaRequestForServlet implements SaRequest {
 	/**
 	 * 底层Request对象
 	 */
-	HttpServletRequest request;
+	protected HttpServletRequest request;
 	
 	/**
 	 * 实例化
@@ -80,10 +81,14 @@ public class SaRequestForServlet implements SaRequest {
 	}
 
 	/**
-	 * 返回当前请求的url，例：http://xxx.com/?id=127
+	 * 返回当前请求的url，例：http://xxx.com/test
 	 * @return see note
 	 */
 	public String getUrl() {
+		String currDomain = SaManager.getConfig().getCurrDomain();
+		if(SaFoxUtil.isEmpty(currDomain) == false) {
+			return currDomain + this.getRequestPath();
+		}
 		return request.getRequestURL().toString();
 	}
 	

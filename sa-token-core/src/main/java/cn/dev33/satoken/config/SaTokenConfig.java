@@ -79,7 +79,10 @@ public class SaTokenConfig implements Serializable {
 	 * Http Basic 认证的账号和密码 
 	 */
 	private String basic = "";
-	
+
+	/** 配置当前项目的网络访问地址 */
+	private String currDomain;
+
 
 	/**
 	 * SSO单点登录配置对象 
@@ -394,6 +397,22 @@ public class SaTokenConfig implements Serializable {
 		this.basic = basic;
 		return this;
 	}
+
+	/**
+	 * @return 配置当前项目的网络访问地址
+	 */
+	public String getCurrDomain() {
+		return currDomain;
+	}
+
+	/**
+	 * @param currDomain 配置当前项目的网络访问地址
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setCurrDomain(String currDomain) {
+		this.currDomain = currDomain;
+		return this;
+	}
 	
 	/**
 	 * @return SSO单点登录配置对象 
@@ -418,7 +437,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
 				+ ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain + ", tokenPrefix=" + tokenPrefix
 				+ ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey=" + jwtSecretKey + ", idTokenTimeout="
-				+ idTokenTimeout + ", basic=" + basic + ", sso=" + sso + "]";
+				+ idTokenTimeout + ", basic=" + basic + ", currDomain=" + currDomain + ", sso=" + sso + "]";
 	}
 
 	/**

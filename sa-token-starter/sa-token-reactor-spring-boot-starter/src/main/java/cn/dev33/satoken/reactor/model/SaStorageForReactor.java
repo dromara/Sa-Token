@@ -14,7 +14,7 @@ public class SaStorageForReactor implements SaStorage {
 	/**
 	 * 底层Request对象
 	 */
-	ServerWebExchange exchange;
+	protected ServerWebExchange exchange;
 	
 	/**
 	 * 实例化

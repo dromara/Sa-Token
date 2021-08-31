@@ -11,7 +11,7 @@ import cn.dev33.satoken.context.model.SaResponse;
  */
 public class SaResponseForSolon implements SaResponse {
 	
-    Context ctx;
+	protected Context ctx;
 
     public SaResponseForSolon() {
         ctx = Context.current();

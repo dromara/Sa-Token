@@ -115,7 +115,7 @@ public interface SaRequest {
 	}
 
 	/**
-	 * 返回当前请求的url，不带query参数，例：http://xxx.com/
+	 * 返回当前请求的url，不带query参数，例：http://xxx.com/test
 	 * @return see note
 	 */
 	public String getUrl();
