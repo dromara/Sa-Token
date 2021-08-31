@@ -39,6 +39,7 @@
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)
 	- [SSO整合：配置域名校验](/sso/sso-check-domain)
 	- [SSO整合：定制化登录页面](/sso/sso-custom-login)
+	- [SSO整合：自定义API路由](/sso/sso-custom-api)
 	- [SSO整合：前后端分离下的整合方案](/sso/sso-h5)
 	- [SSO整合：常见问题总结](/sso/sso-questions)
 	- [Sa-Sso-Pro：单点登录商业版](/sso/sso-pro)
