@@ -1,6 +1,15 @@
 # 更新日志 
 
 
+### 2021-9-2 @v1.26.0
+- 优化：优化单点登录文档 
+- 新增：新增 `Http Basic` 认证 **[重要]** 
+- 新增：文档新增跨域解决方案 
+- 文档：新增 Nginx 转发请求丢失uri的解决方案
+- 文档：新增 SSO 自定义 API 路由示例  **[重要]** 
+- 示例：新增 `SSO-Server` 端前后端分离示例  **[重要]** 
+
+
 ### 2021-8-16 @v1.25.0
 - 新增：`SaRequest`新增`getHeader(name, defaultValue)`方法，用于获取header默认值 
 - 新增：`SaRequest` 添加 `forward` 转发方法  

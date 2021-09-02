@@ -47,7 +47,6 @@ public class SaBasicTemplate {
 	
 	/**
 	 * 对当前会话进行 Basic 校验（使用全局配置的账号密码），校验不通过则抛出异常  
-	 * @param basicAccount 账号（格式为 user:password） 
 	 */
 	public void check() {
 		check(DEFAULT_REALM, SaManager.getConfig().getBasic());
@@ -62,7 +61,7 @@ public class SaBasicTemplate {
 	}
 
 	/**
-	 * 对当前会话进行 Basic 校验（手动设置 Realm & 账号密码），校验不通过则抛出异常 
+	 * 对当前会话进行 Basic 校验（手动设置 Realm 和 账号密码），校验不通过则抛出异常 
 	 * @param realm 领域 
 	 * @param account 账号（格式为 user:password）
 	 */

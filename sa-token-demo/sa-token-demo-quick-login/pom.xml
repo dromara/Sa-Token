@@ -15,7 +15,7 @@
 	
 	<!-- 定义sa-token版本号 -->
 	<properties>
-		<sa-token-version>1.25.0</sa-token-version>
+		<sa-token-version>1.26.0</sa-token-version>
 	</properties>
 
 	<dependencies>
