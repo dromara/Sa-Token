@@ -13,7 +13,7 @@ Sa-token默认将数据保存在内存中，此模式读写速度最快，且避
 
 ---
 
-### 1. Sa-Token 整合 Redis （使用jdk默认序列化方式）
+### 方式A. 使用jdk默认序列化方式 （Sa-Token 整合 Redis）
 ``` xml 
 <!-- Sa-Token 整合 Redis （使用jdk默认序列化方式） -->
 <dependency>
@@ -25,7 +25,7 @@ Sa-token默认将数据保存在内存中，此模式读写速度最快，且避
 优点：兼容性好，缺点：Session序列化后基本不可读，对开发者来讲等同于乱码
 
 
-### 2. Sa-Token 整合 Redis（使用jackson序列化方式）
+### 方式B. 使用jackson序列化方式（Sa-Token 整合 Redis）
 ``` xml 
 <!-- Sa-Token 整合 Redis （使用jackson序列化方式） -->
 <dependency>
