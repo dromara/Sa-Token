@@ -189,7 +189,6 @@ public List<String> getPermissionList(Object loginId, String loginType) {
 	return list;
 }
 ```
-以上仅为代码示例，角色列表步骤同理 
 
 ##### 疑问：为什么不直接缓存 `[账号id->权限列表]`的关系，而是 `[账号id -> 角色id -> 权限列表]`？
 
