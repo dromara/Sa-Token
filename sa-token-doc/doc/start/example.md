@@ -6,7 +6,7 @@
 ---
 
 ### 1、创建项目
-在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考github示例）
+在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考：[SpringBoot-Pure](https://gitee.com/click33/springboot-pure)）
 
 
 ### 2、添加依赖
