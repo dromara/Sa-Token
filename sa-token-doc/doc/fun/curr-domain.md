@@ -18,7 +18,7 @@ public String test() {
 
 ![test-curr-domain.png](https://oss.dev33.cn/sa-token/doc/test-curr-domain.png 's-w-sh')
 
-此 API 在本地开发时一般可以正常工作，然后如果我们在部署时使用 Nginx 做了一层反向代理后，其最终结果可能会和我们预想的有一点偏差：
+此 API 在本地开发时一般可以正常工作，然而如果我们在部署时使用 Nginx 做了一层反向代理后，其最终结果可能会和我们预想的有一点偏差：
 
 ![test-curr-domain-fxdl.png](https://oss.dev33.cn/sa-token/doc/test-curr-domain-fxdl.png 's-w-sh')
 
