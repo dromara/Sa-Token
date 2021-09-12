@@ -59,6 +59,7 @@ public class SaResponseForServlet implements SaResponse {
 		}
 		cookie.setPath(path);
 		cookie.setMaxAge(timeout);
+		cookie.setHttpOnly(true);
 		response.addCookie(cookie);
 	}
 
