@@ -11,12 +11,15 @@
 [OAuth2.0 简单解释](https://www.ruanyifeng.com/blog/2019/04/oauth_design.html)
 <!-- 、[OAuth2.0 的四种方式](http://www.ruanyifeng.com/blog/2019/04/oauth-grant-types.html) -->
 
-Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) 编写，通过Sa-OAuth2你可以非常轻松的实现系统的OAuth2.0授权认证 
+<!-- Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) 编写，通过Sa-OAuth2你可以非常轻松的实现系统的OAuth2.0授权认证 -->
+
+如果你还不知道你的项目应该选择 SSO 还是 OAuth2.0，可以参考这篇：[技术选型：[ 单点登录 ] VS [ OAuth2.0 ]](/fun/sso-vs-oauth2)
+
 
 
 ### OAuth2.0 四种模式 
 
-基于不同的使用场景，OAuth2.0设计了四种模式：
+Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) 编写，基于不同的使用场景，OAuth2.0设计了四种模式：
 
 1. 授权码（Authorization Code）：OAuth2.0标准授权步骤，Server端向Client端下放Code码，Client端再用Code码换取授权Token
 2. 隐藏式（Implicit）：无法使用授权码模式时的备用选择，Server端使用URL重定向方式直接将Token下放到Client端页面

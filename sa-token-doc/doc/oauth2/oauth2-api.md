@@ -200,7 +200,8 @@ http://sa-oauth-server.com:8001/oauth2/token
 | grant_type| 是		| 返回类型，这里请填写：password|
 | client_id	| 是		| 应用id						|
 | username	| 是		| 用户的Server端账号			|
-| password	| 否		| 用户的Server端密码			|
+| password	| 是		| 用户的Server端密码			|
+| scope		| 否		| 具体请求的权限，多个用逗号隔开						|
 
 接口返回示例：
 
