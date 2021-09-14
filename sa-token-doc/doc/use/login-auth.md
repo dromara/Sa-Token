@@ -66,6 +66,47 @@ StpUtil.getTokenValue();
 StpUtil.getTokenInfo();
 ```
 
-有关`TokenInfo`参数详解，请参考：[TokenInfo参数详解](/fun/token-info)	
+
+### 来个小测试，加深一下理解
+新建 `LoginController`，复制以下代码
+``` java
+/**
+ * 登录测试 
+ * @author kong
+ *
+ */
+@RestController
+@RequestMapping("/acc/")
+public class LoginController {
+
+	// 测试登录  ---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
+	@RequestMapping("doLogin")
+	public SaResult doLogin(String name, String pwd) {
+		// 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对 
+		if("zhang".equals(name) && "123456".equals(pwd)) {
+			StpUtil.login(10001);
+			return SaResult.ok("登录成功");
+		}
+		return SaResult.error("登录失败");
+	}
+
+	// 查询登录状态  ---- http://localhost:8081/acc/isLogin
+	@RequestMapping("isLogin")
+	public SaResult isLogin() {
+		return SaResult.ok("是否登录：" + StpUtil.isLogin());
+	}
+	
+	// 测试注销  ---- http://localhost:8081/acc/logout
+	@RequestMapping("logout")
+	public SaResult logout() {
+		StpUtil.logout();
+		return SaResult.ok();
+	}
+	
+}
+```
+
+> 有关`TokenInfo`参数详解，请参考：[TokenInfo参数详解](/fun/token-info)	
+
 
 

@@ -97,4 +97,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .code-line-box {line-height: inherit !important; background-color: #111; color: #aaa;font-weight: 400;font-size: 0.85em;text-align: center;}
 .code-line-box {font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;}
 
+/* 提示框加上灰色背景 */
+.main-box .markdown-section blockquote{padding: 1px 24px 1px 30px; background-color: #f8f8f8;}
 
+/* 行级代码样式 */
+blockquote code {font-weight: 400;}
+.markdown-section strong code{font-family: "宋体";}

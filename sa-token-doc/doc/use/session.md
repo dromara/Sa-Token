@@ -3,7 +3,16 @@
 
 ### Session是什么？
 
-Session是会话中专业的数据缓存组件，通过 Session 我们可以很方便的缓存一些高频读写数据，提高程序性能<br>
+Session是会话中专业的数据缓存组件，通过 Session 我们可以很方便的缓存一些高频读写数据，提高程序性能，例如：
+
+``` java
+// 在登录时缓存user对象 
+StpUtil.getSession().set("user", user);
+
+// 然后我们就可以在任意处使用这个user对象
+SysUser user = (SysUser) StpUtil.getSession().get("user");
+```
+
 在 Sa-Token 中，Session 分为三种，分别是：
 
 - `User-Session`: 指的是框架为每个 账号id 分配的 Session 

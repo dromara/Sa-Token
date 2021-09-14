@@ -25,18 +25,24 @@ public class LoginController {
 		}
 		return SaResult.error("登录失败");
 	}
+
+	// 查询登录状态  ---- http://localhost:8081/acc/isLogin
+	@RequestMapping("isLogin")
+	public SaResult isLogin() {
+		return SaResult.ok("是否登录：" + StpUtil.isLogin());
+	}
+
+	// 查询 Token 信息  ---- http://localhost:8081/acc/tokenInfo
+	@RequestMapping("tokenInfo")
+	public SaResult tokenInfo() {
+		return SaResult.data(StpUtil.getTokenInfo());
+	}
 	
 	// 测试注销  ---- http://localhost:8081/acc/logout
 	@RequestMapping("logout")
 	public SaResult logout() {
 		StpUtil.logout();
 		return SaResult.ok();
-	}
-	
-	// 查询登录状态  ---- http://localhost:8081/acc/isLogin
-	@RequestMapping("isLogin")
-	public SaResult isLogin(String username, String password) {
-		return SaResult.ok("是否登录：" + StpUtil.isLogin());
 	}
 	
 }
