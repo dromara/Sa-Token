@@ -39,6 +39,7 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+引入此依赖需要自定义 SaTokenContext 实现，参考：[自定义 SaTokenContext 指南](/fun/sa-token-context)
 
 <!-- tab:其它   -->
 注：如果你的项目既没有使用 SpringMVC、WebFlux，也不是基于 ServletAPI 规范，那么可以引入core核心包
@@ -50,6 +51,7 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+引入此依赖需要自定义 SaTokenContext 实现，参考：[自定义 SaTokenContext 指南](/fun/sa-token-context)
 <!---------------------------- tabs:end ------------------------------>
 
 

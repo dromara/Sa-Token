@@ -30,6 +30,7 @@
 	- 如果是 WebFlux 环境就引入 `sa-token-reactor-spring-boot-starter` 依赖，参考：[在WebFlux环境集成](/start/webflux-example)
 	- 引入错误的依赖会导致`SaTokenContext`初始化失败，抛出上述异常 
 	- 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖，如果引入了`spring-boot-starter-web`就是SpringMVC环境，如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。……什么？你说你两个都引入了？那你的项目能启动成功吗？
+	- 你说你两个包都没引入？那你为什么不引入一个呢？
 3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的。
 4. 如果以上步骤排除无误后依然报错，请直接提 issues 或者加入QQ群求助。
 

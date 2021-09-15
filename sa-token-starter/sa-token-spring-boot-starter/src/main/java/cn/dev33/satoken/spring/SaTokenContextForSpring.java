@@ -9,7 +9,7 @@ import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.servlet.model.SaStorageForServlet;
 
 /**
- * sa-token 对Cookie的相关操作 接口实现类
+ * Sa-Token 上下文处理器 [ SpringMVC版本实现 ] 
  * 
  * @author kong
  *
