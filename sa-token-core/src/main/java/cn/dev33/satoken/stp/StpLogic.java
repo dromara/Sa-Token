@@ -22,6 +22,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
+import cn.dev33.satoken.exception.SaHolderSpringContextException;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
@@ -120,43 +121,51 @@ public class StpLogic {
 	 * @return 当前tokenValue
 	 */
 	public String getTokenValue(){
-		// 0. 获取相应对象 
-		SaStorage storage = SaHolder.getStorage();
-		SaRequest request = SaHolder.getRequest();
-		SaTokenConfig config = getConfig();
-		String keyTokenName = getTokenName();
-		String tokenValue = null;
-		
-		// 1. 尝试从Storage里读取 
-		if(storage.get(splicingKeyJustCreatedSave()) != null) {
-			tokenValue = String.valueOf(storage.get(splicingKeyJustCreatedSave()));
-		}
-		// 2. 尝试从请求体里面读取 
-		if(tokenValue == null && config.getIsReadBody()){
-			tokenValue = request.getParam(keyTokenName);
-		}
-		// 3. 尝试从header里读取 
-		if(tokenValue == null && config.getIsReadHead()){
-			tokenValue = request.getHeader(keyTokenName);
-		}
-		// 4. 尝试从cookie里读取 
-		if(tokenValue == null && config.getIsReadCookie()){
-			tokenValue = request.getCookieValue(keyTokenName);
-		}
-		
-		// 5. 如果打开了前缀模式
-		String tokenPrefix = getConfig().getTokenPrefix();
-		if(!SaFoxUtil.isEmpty(tokenPrefix) && !SaFoxUtil.isEmpty(tokenValue)) {
-			// 如果token以指定的前缀开头, 则裁剪掉它, 否则视为未提供token 
-			if(tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
-				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
-			} else {
-				tokenValue = null;
+		// 非Web上下文无法获取Request/Response会抛出异常
+		try {
+			// 0. 获取相应对象
+			SaStorage storage = SaHolder.getStorage();
+			SaRequest request = SaHolder.getRequest();
+			SaTokenConfig config = getConfig();
+			String keyTokenName = getTokenName();
+			String tokenValue = null;
+
+			// 1. 尝试从Storage里读取
+			if (storage.get(splicingKeyJustCreatedSave()) != null) {
+				tokenValue = String.valueOf(storage.get(splicingKeyJustCreatedSave()));
 			}
+			// 2. 尝试从请求体里面读取
+			if (tokenValue == null && config.getIsReadBody()) {
+				tokenValue = request.getParam(keyTokenName);
+			}
+			// 3. 尝试从header里读取
+			if (tokenValue == null && config.getIsReadHead()) {
+				tokenValue = request.getHeader(keyTokenName);
+			}
+			// 4. 尝试从cookie里读取
+			if (tokenValue == null && config.getIsReadCookie()) {
+				tokenValue = request.getCookieValue(keyTokenName);
+			}
+
+			// 5. 如果打开了前缀模式
+			String tokenPrefix = getConfig().getTokenPrefix();
+			if (!SaFoxUtil.isEmpty(tokenPrefix) && !SaFoxUtil.isEmpty(tokenValue)) {
+				// 如果token以指定的前缀开头, 则裁剪掉它, 否则视为未提供token
+				if (tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
+					tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
+				} else {
+					tokenValue = null;
+				}
+			}
+
+			// 6. 返回
+			return tokenValue;
+		} catch (Exception e) {
+			if (e instanceof SaHolderSpringContextException) {
+				return null;
+			}
+			throw e;
 		}
-		
-		// 6. 返回 
-		return tokenValue;
 	}
 	
 	/**
@@ -1201,7 +1210,15 @@ public class StpLogic {
 	 * @return 是否正处于[身份临时切换]中 
 	 */
 	public boolean isSwitch() {
-		return SaHolder.getStorage().get(splicingKeySwitch()) != null;
+		try {
+			return SaHolder.getStorage().get(splicingKeySwitch()) != null;
+		} catch (Exception e) {
+			// 非Web上下文无法获取Request/Response会抛出异常
+			if (e instanceof SaHolderSpringContextException) {
+				return false;
+			}
+			throw e;
+		}
 	}
 	
 	/**
