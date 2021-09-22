@@ -103,10 +103,6 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 使用 `SaRouter.stop()` 可以提前退出匹配链，例：
 
 ``` java
-// 原写法
-registry.addInterceptor(SaRouteInterceptor.createPermissionVal("user")).addPathPatterns("/user/**");
-
-// 改为以下方式，效果同上 
 registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
 			SaRouter.match("/**", () -> System.out.println("进入1"));
 			SaRouter.match("/**", () -> {System.out.println("进入2"); SaRouter.stop();});
@@ -115,11 +111,14 @@ registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
 ```
 如上示例，代码运行至第2条匹配链时，会在stop函数处提前退出整个匹配函数，从而忽略掉剩余的所有match匹配 
 
-除了`stop()`函数，`SaRouter`还提供了 `SaRouter.back()` 函数，用于：停止匹配，结束执行，直接向前端返回结果
+除了`stop()`函数，`SaRouter`还提供了 `back()` 函数，用于：停止匹配，结束执行，直接向前端返回结果
 ``` java
 SaRouter.match("/user/back", () -> SaRouter.back("执行back函数后将停止匹配，也不会进入Controller，而是直接将此参数作为返回值输出到前端"));
 ```
 
+`stop()` 与 `back()` 函数的区别在于：
+- `SaRouter.stop()` 会停止匹配，进入Controller。
+- `SaRouter.back()` 会停止匹配，直接返回结果到前端。
 
 
 

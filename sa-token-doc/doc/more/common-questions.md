@@ -10,10 +10,11 @@
 ### 报错：非Web上下文无法获取Request？
 报错原因：Sa-Token 的部分 API 只能在 Web 上下文中调用，报这个错说明你调用 Sa-Token 的地方不在 Web 上下文中，请排查：
 
-1. 在 main 在方法中调用了 Sa-Token 的API
-2. 在带有 `@Async` 注解的方法中调用了 Sa-Token 的API
-3. 在一些丢失web上下文的子线程中调用了 Sa-Token 的API，例如 `MyBatis-Plus` 的 `insertFill` 自动填充
-4. 在一些非 Http 协议的 RPC 框架中（例如 Dubbo）调用了 Sa-Token 的API 
+1. 是否在 main 方法中调用了 Sa-Token 的API
+2. 是否在带有 `@Async` 注解的方法中调用了 Sa-Token 的API
+3. 是否在一些丢失web上下文的子线程中调用了 Sa-Token 的API，例如 `MyBatis-Plus` 的 `insertFill` 自动填充
+4. 是否在一些非 Http 协议的 RPC 框架中（例如 Dubbo）调用了 Sa-Token 的API 
+5. 是否在 SpringBoot 启动初始化的方法中调用了 Sa-Token 的API，例如`@PostConstruct`
 
 解决方案：先获取你想要的值，再把这个值当做一个参数传递到这些方法中，而不是直接从方法内调用 Sa-Token 的API。
 
