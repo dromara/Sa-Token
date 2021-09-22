@@ -88,7 +88,7 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 | dataRefreshPeriod		| int		| 30		| 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 (如果配置为true，会在每次获取 `Token-Session` 时校验是否登录)		|
 | autoRenew				| Boolean	| true		| 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作)		|
-| tokenPrefix			| Boolean	| true		| token前缀, 格式样例(`satoken: Bearer xxxx-xxxx-xxxx-xxxx`)	[参考：自定义Token前缀](/up/token-prefix) 			|
+| tokenPrefix			| String	| null		| token前缀, 例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
 | jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 `sa-token-temp-jwt` 模块时此参数才会生效)							|
