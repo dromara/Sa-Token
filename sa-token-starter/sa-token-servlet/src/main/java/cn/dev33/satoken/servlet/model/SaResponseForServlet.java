@@ -42,14 +42,14 @@ public class SaResponseForServlet implements SaResponse {
 	 */
 	@Override
 	public void deleteCookie(String name) {
-		addCookie(name, null, null, null, 0);
+		addCookie(name, null, null, null, 0, false, false);
 	}
 
 	/**
-	 * 写入指定Cookie 
+	 * 写入指定Cookie
 	 */
 	@Override
-	public void addCookie(String name, String value, String path, String domain, int timeout) {
+	public void addCookie(String name, String value, String path, String domain, int timeout, boolean isHttpOnly, boolean isSecure) {
 		Cookie cookie = new Cookie(name, value);
 		if(SaFoxUtil.isEmpty(path) == true) {
 			path = "/";
@@ -59,6 +59,8 @@ public class SaResponseForServlet implements SaResponse {
 		}
 		cookie.setPath(path);
 		cookie.setMaxAge(timeout);
+		cookie.setHttpOnly(isHttpOnly);
+		cookie.setSecure(isSecure);
 		response.addCookie(cookie);
 	}
 

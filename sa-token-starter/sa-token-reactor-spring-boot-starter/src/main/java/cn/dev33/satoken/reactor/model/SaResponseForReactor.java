@@ -43,34 +43,35 @@ public class SaResponseForReactor implements SaResponse {
 	 */
 	@Override
 	public void deleteCookie(String name) {
-		addCookie(name, null, null, null, 0);
+		addCookie(name, null, null, null, 0, false, false);
 	}
 
 	/**
-	 * 写入指定Cookie 
+	 * 写入指定Cookie
 	 */
 	@Override
-	public void addCookie(String name, String value, String path, String domain, int timeout) {
-		
+	public void addCookie(String name, String value, String path, String domain, int timeout, boolean isHttpOnly, boolean isSecure) {
 		// 构建CookieBuilder
 		ResponseCookieBuilder builder = ResponseCookie.from(name, value)
-				.domain(domain)
-				.path(path)
-				.maxAge(timeout)
+			    .domain(domain)
+			    .path(path)
+			    .maxAge(timeout)
+			    .httpOnly(isHttpOnly)
+			    .secure(isHttpOnly)
 				;
-		
-		// set path 
+
+		// set path
 		if(SaFoxUtil.isEmpty(path) == true) {
 			path = "/";
 		}
 		builder.path(path);
-		
-		// set domain 
+
+		// set domain
 		if(SaFoxUtil.isEmpty(domain) == false) {
 			builder.domain(domain);
 		}
-		
-		// 写入Cookie 
+
+		// 写入Cookie
 		response.addCookie(builder.build());
 	}
 

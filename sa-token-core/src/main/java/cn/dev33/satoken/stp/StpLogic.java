@@ -109,9 +109,9 @@ public class StpLogic {
 		}
 		
 		// 注入Cookie 
-		if(config.getIsReadCookie()){
+		if (config.getIsReadCookie()) {
 			SaResponse response = SaHolder.getResponse();
-			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout);
+			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout, config.getIsCookieHttpOnly(), config.getIsCookieSecure());
 		}
 	}
  	
