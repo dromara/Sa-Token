@@ -28,7 +28,7 @@ public class SaResponseForSolon implements SaResponse {
     }
 
     @Override
-    public void addCookie(String name, String value, String path, String domain, int timeout) {
+    public void addCookie(String name, String value, String path, String domain, int timeout, boolean isHttpOnly, boolean isSecure) {
         if (Utils.isNotEmpty(path)) {
             path = "/";
         }
