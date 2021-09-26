@@ -41,6 +41,12 @@ public class SaTokenConfig implements Serializable {
 	/** 是否尝试从cookie里读取token */
 	private Boolean isReadCookie = true;
 
+	/** 使用Cookie时,是否为HttpOnly */
+	private Boolean isCookieHttpOnly = false;
+
+	/** 使用Cookie时,是否为Secure */
+	private Boolean isCookieSecure = false;
+
 	/** token风格(默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik) */
 	private String tokenStyle = "uuid";
 
@@ -217,6 +223,38 @@ public class SaTokenConfig implements Serializable {
 	 */
 	public SaTokenConfig setIsReadCookie(Boolean isReadCookie) {
 		this.isReadCookie = isReadCookie;
+		return this;
+	}
+
+	/**
+	 * @return 使用Cookie时,是否为HttpOnly
+	 */
+	public Boolean getIsCookieHttpOnly() {
+		return isCookieHttpOnly;
+	}
+
+	/**
+	 * @param isCookieHttpOnly 使用Cookie时,是否为HttpOnly
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIsCookieHttpOnly(Boolean isCookieHttpOnly) {
+		this.isCookieHttpOnly = isCookieHttpOnly;
+		return this;
+	}
+
+	/**
+	 * @return 使用Cookie时,是否为Secure
+	 */
+	public Boolean getIsCookieSecure() {
+		return isCookieSecure;
+	}
+
+	/**
+	 * @param isCookieSecure 使用Cookie时,是否为Secure
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIsCookieSecure(Boolean isCookieSecure) {
+		this.isCookieSecure = isCookieSecure;
 		return this;
 	}
 
@@ -433,7 +471,9 @@ public class SaTokenConfig implements Serializable {
 	public String toString() {
 		return "SaTokenConfig [tokenName=" + tokenName + ", timeout=" + timeout + ", activityTimeout=" + activityTimeout
 				+ ", isConcurrent=" + isConcurrent + ", isShare=" + isShare + ", isReadBody=" + isReadBody
-				+ ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie + ", tokenStyle=" + tokenStyle
+				+ ", isReadHead=" + isReadHead + ", isReadCookie=" + isReadCookie
+				+ ", isCookieHttpOnly=" + isCookieHttpOnly + ", isCookieSecure=" + isCookieSecure
+				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
 				+ ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain + ", tokenPrefix=" + tokenPrefix
 				+ ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey=" + jwtSecretKey + ", idTokenTimeout="
