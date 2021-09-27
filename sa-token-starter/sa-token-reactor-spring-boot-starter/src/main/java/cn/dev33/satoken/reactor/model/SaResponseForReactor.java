@@ -57,7 +57,7 @@ public class SaResponseForReactor implements SaResponse {
 			    .path(path)
 			    .maxAge(timeout)
 			    .httpOnly(isHttpOnly)
-			    .secure(isHttpOnly)
+			    .secure(isSecure)
 				;
 
 		// set path
