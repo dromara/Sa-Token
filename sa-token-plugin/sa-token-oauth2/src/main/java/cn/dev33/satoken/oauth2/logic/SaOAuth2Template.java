@@ -13,6 +13,7 @@ import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
 import cn.dev33.satoken.oauth2.model.SaClientModel;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -358,7 +359,7 @@ public class SaOAuth2Template {
 		
 		// 3、是否在[允许地址列表]之中 
 		List<String> allowList = SaFoxUtil.convertStringToList(checkClientModel(clientId).allowUrl); 
-		if(SaManager.getSaTokenAction().hasElement(allowList, url) == false) {
+		if(SaStrategy.me.hasElement.apply(allowList, url) == false) {
 			throw new SaOAuth2Exception("非法redirect_url：" + url);
 		}
 	}

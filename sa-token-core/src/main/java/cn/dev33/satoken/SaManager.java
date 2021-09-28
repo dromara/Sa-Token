@@ -27,12 +27,13 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author kong
  *
  */
+@SuppressWarnings("deprecation")
 public class SaManager {
 
 	/**
 	 * 配置文件 Bean 
 	 */
-	public static SaTokenConfig config;	
+	public volatile static SaTokenConfig config;	
 	public static void setConfig(SaTokenConfig config) {
 		SaManager.config = config;
 		if(config.getIsPrint()) {
@@ -55,7 +56,7 @@ public class SaManager {
 	/**
 	 * 持久化 Bean 
 	 */
-	private static SaTokenDao saTokenDao;
+	private volatile static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
 		if((SaManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
 			((SaTokenDaoDefaultImpl)SaManager.saTokenDao).endRefreshThread();
@@ -76,7 +77,7 @@ public class SaManager {
 	/**
 	 * 权限认证 Bean 
 	 */
-	private static StpInterface stpInterface;
+	private volatile static StpInterface stpInterface;
 	public static void setStpInterface(StpInterface stpInterface) {
 		SaManager.stpInterface = stpInterface;
 	}
@@ -94,7 +95,7 @@ public class SaManager {
 	/**
 	 * 框架行为 Bean 
 	 */
-	private static SaTokenAction saTokenAction;
+	private volatile static SaTokenAction saTokenAction;
 	public static void setSaTokenAction(SaTokenAction saTokenAction) {
 		SaManager.saTokenAction = saTokenAction;
 	}
@@ -112,7 +113,7 @@ public class SaManager {
 	/**
 	 * 容器操作 Bean  
 	 */
-	private static SaTokenContext saTokenContext;
+	private volatile static SaTokenContext saTokenContext;
 	public static void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.saTokenContext = saTokenContext;
 	}
@@ -130,7 +131,7 @@ public class SaManager {
 	/**
 	 * 侦听器 Bean  
 	 */
-	private static SaTokenListener saTokenListener;
+	private volatile static SaTokenListener saTokenListener;
 	public static void setSaTokenListener(SaTokenListener saTokenListener) {
 		SaManager.saTokenListener = saTokenListener;
 	}
@@ -148,7 +149,7 @@ public class SaManager {
 	/**
 	 * 临时令牌验证模块 Bean  
 	 */
-	private static SaTempInterface saTemp;
+	private volatile static SaTempInterface saTemp;
 	public static void setSaTemp(SaTempInterface saTemp) {
 		SaManager.saTemp = saTemp;
 	}

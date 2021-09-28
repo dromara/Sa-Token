@@ -18,9 +18,11 @@ import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * Sa-Token 逻辑代理接口 [默认实现类] 
+ * <p> v1.27+ 此接口已废弃，目前版本暂时向下兼容，请更换为 SaStrategy 
  * @author kong
  *
  */
+@Deprecated
 public class SaTokenActionDefaultImpl implements SaTokenAction {
 
 	/**
@@ -110,7 +112,7 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	 * 从指定元素校验注解 
 	 * @param target see note 
 	 */
-	protected void validateAnnotation(AnnotatedElement target) {
+	public void validateAnnotation(AnnotatedElement target) {
 		
 		// 校验 @SaCheckLogin 注解 
 		if(target.isAnnotationPresent(SaCheckLogin.class)) {

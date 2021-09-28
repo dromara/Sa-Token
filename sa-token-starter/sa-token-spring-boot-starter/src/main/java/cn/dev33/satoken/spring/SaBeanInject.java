@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.basic.SaBasicTemplate;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -63,7 +62,7 @@ public class SaBeanInject {
 	 * @param saTokenAction SaTokenAction对象 
 	 */
 	@Autowired(required = false)
-	public void setSaTokenAction(SaTokenAction saTokenAction) {
+	public void setSaTokenAction(@SuppressWarnings("deprecation") cn.dev33.satoken.action.SaTokenAction saTokenAction) {
 		SaManager.setSaTokenAction(saTokenAction);
 	}
 

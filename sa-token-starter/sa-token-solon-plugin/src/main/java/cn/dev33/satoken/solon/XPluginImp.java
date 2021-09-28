@@ -29,6 +29,7 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * @author noear
  * @since 1.4
  */
+@SuppressWarnings("deprecation")
 public class XPluginImp implements Plugin {
     
 	@Override

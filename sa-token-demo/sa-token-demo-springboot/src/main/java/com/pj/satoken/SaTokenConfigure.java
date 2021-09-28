@@ -1,15 +1,26 @@
 package com.pj.satoken;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.pj.util.AjaxJson;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaCheckBasic;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
+import cn.dev33.satoken.strategy.SaStrategy;
 
 
 /**
@@ -21,7 +32,7 @@ import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 public class SaTokenConfigure implements WebMvcConfigurer {
 
 	/**
-	 * 注册sa-token的拦截器，打开注解式鉴权功能 
+	 * 注册Sa-Token 的拦截器，打开注解式鉴权功能 
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -30,7 +41,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	}
 	
 	/**
-     * 注册 [sa-token全局过滤器] 
+     * 注册 [Sa-Token 全局过滤器] 
      */
     @Bean
     public SaServletFilter getSaServletFilter() {
@@ -69,5 +80,34 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		;
     }
     
-
+    /**
+     * 重写 Sa-Token 框架内部算法策略 
+     */
+    @PostConstruct
+    public void rewriteSaStrategy() {
+    	// 重写Sa-Token的注解处理器，增加注解合并功能 
+    	SaStrategy.me.setCheckElementAnnotation(element -> {
+    		if(AnnotatedElementUtils.isAnnotated(element, SaCheckLogin.class)) {
+    			SaCheckLogin at = AnnotatedElementUtils.getMergedAnnotation(element, SaCheckLogin.class);
+    			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+    		}
+    		if(AnnotatedElementUtils.isAnnotated(element, SaCheckRole.class)) {
+    			SaCheckRole at = AnnotatedElementUtils.getMergedAnnotation(element, SaCheckRole.class);
+    			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+    		}
+    		if(AnnotatedElementUtils.isAnnotated(element, SaCheckPermission.class)) {
+    			SaCheckPermission at = AnnotatedElementUtils.getMergedAnnotation(element, SaCheckPermission.class);
+    			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+    		}
+    		if(AnnotatedElementUtils.isAnnotated(element, SaCheckSafe.class)) {
+    			SaCheckSafe at = AnnotatedElementUtils.getMergedAnnotation(element, SaCheckSafe.class);
+    			SaManager.getStpLogic(null).checkByAnnotation(at);
+    		}
+    		if(AnnotatedElementUtils.isAnnotated(element, SaCheckBasic.class)) {
+    			SaCheckBasic at = AnnotatedElementUtils.getMergedAnnotation(element, SaCheckBasic.class);
+    			SaBasicUtil.check(at.realm(), at.account());
+    		}
+    	});
+    }
+    
 }

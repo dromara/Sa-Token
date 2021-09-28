@@ -25,6 +25,7 @@ import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -85,7 +86,7 @@ public class StpLogic {
 	 * @return 生成的tokenValue 
 	 */
  	public String createTokenValue(Object loginId) {
-		return SaManager.getSaTokenAction().createToken(loginId, loginType);
+ 		return SaStrategy.me.createToken.apply(loginId, loginType);
 	}
  	
  	/**
@@ -539,7 +540,7 @@ public class StpLogic {
 	public SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
 		SaSession session = SaManager.getSaTokenDao().getSession(sessionId);
 		if(session == null && isCreate) {
-			session = SaManager.getSaTokenAction().createSession(sessionId);
+			session = SaStrategy.me.createSession.apply(sessionId);
 			SaManager.getSaTokenDao().setSession(session, getConfig().getTimeout());
 		}
 		return session;
@@ -842,8 +843,7 @@ public class StpLogic {
  	 */
  	public boolean hasRole(Object loginId, String role) {
  		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
- 		return SaManager.getSaTokenAction().hasElement(roleList, role);
-//		return !(roleList == null || roleList.contains(role) == false);
+ 		return SaStrategy.me.hasElement.apply(roleList, role);
  	}
  	
  	/** 
@@ -873,7 +873,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
  		for (String role : roleArray) {
- 			if(!SaManager.getSaTokenAction().hasElement(roleList, role)) {
+ 			if(!SaStrategy.me.hasElement.apply(roleList, role)) {
  				throw new NotRoleException(role, this.loginType);
  			}
  		}
@@ -887,7 +887,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
  		for (String role : roleArray) {
- 			if(SaManager.getSaTokenAction().hasElement(roleList, role)) {
+ 			if(SaStrategy.me.hasElement.apply(roleList, role)) {
  				// 有的话提前退出
  				return;		
  			}
@@ -908,8 +908,7 @@ public class StpLogic {
  	 */
  	public boolean hasPermission(Object loginId, String permission) {
  		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
- 		return SaManager.getSaTokenAction().hasElement(permissionList, permission);
-//		return !(permissionList == null || permissionList.contains(permission) == false);
+ 		return SaStrategy.me.hasElement.apply(permissionList, permission);
  	}
  	
  	/** 
@@ -939,7 +938,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
  		for (String permission : permissionArray) {
- 			if(!SaManager.getSaTokenAction().hasElement(permissionList, permission)) {
+ 			if(!SaStrategy.me.hasElement.apply(permissionList, permission)) {
  				throw new NotPermissionException(permission, this.loginType);	
  			}
  		}
@@ -953,7 +952,7 @@ public class StpLogic {
  		Object loginId = getLoginId();
  		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
  		for (String permission : permissionArray) {
- 			if(SaManager.getSaTokenAction().hasElement(permissionList, permission)) {
+ 			if(SaStrategy.me.hasElement.apply(permissionList, permission)) {
  				// 有的话提前退出
  				return;		
  			}

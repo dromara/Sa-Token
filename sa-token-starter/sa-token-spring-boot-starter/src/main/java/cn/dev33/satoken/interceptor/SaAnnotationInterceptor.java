@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
  * 注解式鉴权 - 拦截器
@@ -37,7 +37,7 @@ public class SaAnnotationInterceptor implements HandlerInterceptor {
 		Method method = ((HandlerMethod) handler).getMethod();
 
 		// 进行验证
-		SaManager.getSaTokenAction().checkMethodAnnotation(method);
+		SaStrategy.me.checkMethodAnnotation.accept(method);
 		
 		// 通过验证
 		return true;

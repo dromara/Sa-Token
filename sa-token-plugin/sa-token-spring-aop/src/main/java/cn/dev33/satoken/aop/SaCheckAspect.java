@@ -8,7 +8,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -56,7 +56,7 @@ public class SaCheckAspect {
 		
 		// 注解鉴权
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		SaManager.getSaTokenAction().checkMethodAnnotation(signature.getMethod());
+		SaStrategy.me.checkMethodAnnotation.accept(signature.getMethod());
 
 		try {
 			// 执行原有逻辑

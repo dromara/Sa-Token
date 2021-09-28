@@ -11,6 +11,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -213,7 +214,7 @@ public class SaSsoTemplate {
 		
 		// 3、是否在[允许地址列表]之中 
 		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
-		if(SaManager.getSaTokenAction().hasElement(authUrlList, url) == false) {
+		if(SaStrategy.me.hasElement.apply(authUrlList, url) == false) {
 			throw new SaTokenException("非法redirect：" + url);
 		}
 		

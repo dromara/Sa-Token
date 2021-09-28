@@ -1,6 +1,7 @@
 package cn.dev33.satoken.session;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
  * 自定义Session工具类
@@ -45,7 +46,7 @@ public class SaSessionCustomUtil {
 	public static SaSession getSessionById(String sessionId, boolean isCreate) {
 		SaSession session = SaManager.getSaTokenDao().getSession(splicingSessionKey(sessionId));
 		if (session == null && isCreate) {
-			session = SaManager.getSaTokenAction().createSession(splicingSessionKey(sessionId));
+			session = SaStrategy.me.createSession.apply(splicingSessionKey(sessionId));
 			SaManager.getSaTokenDao().setSession(session, SaManager.getConfig().getTimeout());		
 		}
 		return session;

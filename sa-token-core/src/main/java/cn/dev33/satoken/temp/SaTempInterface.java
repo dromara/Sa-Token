@@ -1,6 +1,7 @@
 package cn.dev33.satoken.temp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -19,7 +20,7 @@ public interface SaTempInterface {
 	public default String createToken(Object value, long timeout) {
 		
 		// 生成 token 
-		String token = SaManager.getSaTokenAction().createToken(null, null);
+		String token = SaStrategy.me.createToken.apply(null, null);
 		
 		// 持久化映射关系 
 		String key = splicingKeyTempToken(token);
