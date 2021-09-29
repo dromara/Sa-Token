@@ -3,7 +3,7 @@ package cn.dev33.satoken.session;
 import java.io.Serializable;
 
 /**
- * Token签名 Model
+ * Token 签名 Model 
  * 
  * 挂在到SaSession上的token签名
  * 
@@ -43,7 +43,7 @@ public class TokenSign implements Serializable {
 	}
 
 	/**
-	 * @return token value
+	 * @return token值 
 	 */
 	public String getValue() {
 		return value;

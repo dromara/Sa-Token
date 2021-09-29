@@ -147,14 +147,14 @@ public class SaIdTemplate {
 	 * @return Token 
 	 */
 	public String createToken() {
-		return SaFoxUtil.getRandomString(60);
+		return SaFoxUtil.getRandomString(64);
 	}
 
 
 	// -------------------- 拼接key 
 
 	/** 
-	 * 拼接key：Id-Token的存储key
+	 * 拼接key：Id-Token 的存储 key
 	 * @return key
 	 */
 	public String splicingTokenSaveKey() {
@@ -162,7 +162,7 @@ public class SaIdTemplate {
 	}
 
 	/** 
-	 * 拼接key：Id-Token的存储key
+	 * 拼接key：次级 Id-Token 的存储 key
 	 * @return key
 	 */
 	public String splicingPastTokenSaveKey() {

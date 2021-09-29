@@ -74,7 +74,7 @@ public class SaTokenConfig implements Serializable {
 	/**
 	 * jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效) 
 	 */
-	private String jwtSecretKey;
+	private String jwtSecretkey;
 	
 	/**
 	 * Id-Token的有效期 (单位: 秒)
@@ -391,16 +391,16 @@ public class SaTokenConfig implements Serializable {
 	/**
 	 * @return jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
 	 */
-	public String getJwtSecretKey() {
-		return jwtSecretKey;
+	public String getJwtSecretkey() {
+		return jwtSecretkey;
 	}
 
 	/**
-	 * @param jwtSecretKey jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
+	 * @param jwtSecretkey jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setJwtSecretKey(String jwtSecretKey) {
-		this.jwtSecretKey = jwtSecretKey;
+	public SaTokenConfig setJwtSecretkey(String jwtSecretkey) {
+		this.jwtSecretkey = jwtSecretkey;
 		return this;
 	}
 
@@ -476,10 +476,11 @@ public class SaTokenConfig implements Serializable {
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod + ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
 				+ ", autoRenew=" + autoRenew + ", cookieDomain=" + cookieDomain + ", tokenPrefix=" + tokenPrefix
-				+ ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretKey=" + jwtSecretKey + ", idTokenTimeout="
+				+ ", isPrint=" + isPrint + ", isLog=" + isLog + ", jwtSecretkey=" + jwtSecretkey + ", idTokenTimeout="
 				+ idTokenTimeout + ", basic=" + basic + ", currDomain=" + currDomain + ", sso=" + sso + "]";
 	}
 
+	
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>
 	 * @param allowConcurrentLogin see note
@@ -501,5 +502,20 @@ public class SaTokenConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getJwtSecretkey() ，使用方式保持不变 </h1>
+	 */
+	public String getJwtSecretKey() {
+		return jwtSecretkey;
+	}
+
+	/**
+	 * @param <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setJwtSecretkey() ，使用方式保持不变 </h1>
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setJwtSecretKey(String jwtSecretKey) {
+		this.jwtSecretkey = jwtSecretKey;
+		return this;
+	}
 
 }

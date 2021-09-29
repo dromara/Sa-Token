@@ -48,6 +48,9 @@ String value = SaTempUtil.parseToken(token, String.class);
 
 // 获取指定 token 的剩余有效期，单位：秒 
 SaTempUtil.getTimeout(token);
+
+// 删除指定 token
+SaTempUtil.deleteToken(token);
 ```
 
 
@@ -68,5 +71,5 @@ SaTempUtil.getTimeout(token);
 ``` java
 sa-token: 
 	# sa-token-temp-jwt 模块的秘钥 （随便乱摁几个字母就行了） 
-	jwt-secret-key: JfdDSgfCmPsDfmsAaQwnXk
+	jwt-secretkey: JfdDSgfCmPsDfmsAaQwnXk
 ```

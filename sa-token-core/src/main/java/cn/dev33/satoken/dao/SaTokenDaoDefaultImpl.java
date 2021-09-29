@@ -176,7 +176,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	/**
 	 * 是否继续执行数据清理的线程标记
 	 */
-	public boolean refreshFlag;
+	public volatile boolean refreshFlag;
 	
 
 	/**
@@ -224,7 +224,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 				}
 			}
 		});
-		refreshThread.start();
+		this.refreshThread.start();
 	}
 	
 	/**

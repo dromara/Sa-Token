@@ -61,6 +61,15 @@ public interface SaTempInterface {
 		String key = splicingKeyTempToken(token);
 		return SaManager.getSaTokenDao().getObjectTimeout(key);
 	}
+
+	/**
+	 * 删除一个token
+	 * @param token 指定token 
+	 */
+	public default void deleteToken(String token) {
+		String key = splicingKeyTempToken(token);
+		SaManager.getSaTokenDao().deleteObject(key);
+	}
 	
 	/**  
 	 * 获取映射关系的持久化key 
@@ -74,7 +83,7 @@ public interface SaTempInterface {
 	/**
 	 * @return jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
 	 */
-	public default String getJwtSecretKey() {
+	public default String getJwtSecretkey() {
 		return null;
 	}
 	

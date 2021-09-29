@@ -6,7 +6,13 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
- * Sa-Token 上下文处理器 [默认实现类] 
+ * Sa-Token 上下文处理器 [默认实现类]
+ * 
+ * <p>  
+ * 一般情况下框架会为你自动注入合适的上下文处理器，如果代码断点走到了此默认实现类，
+ * 说明你引入的依赖有问题或者错误的调用了Sa-Token的API， 请在[在线开发文档 > 附录 > 常见问题排查] 中按照提示进行排查
+ * </p>
+ * 
  * @author kong
  *
  */

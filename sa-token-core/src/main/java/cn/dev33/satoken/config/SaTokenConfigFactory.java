@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Sa-Token配置文件的构建工厂类
  * <p>
- * 只有在非IOC环境下才会用到此类
+ * 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 
  * 
  * @author kong
  *

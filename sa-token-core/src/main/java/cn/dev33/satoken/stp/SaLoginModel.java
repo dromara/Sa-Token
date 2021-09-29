@@ -12,7 +12,6 @@ import cn.dev33.satoken.util.SaTokenConsts;
  */
 public class SaLoginModel {
 
-	
 	/**
 	 * 此次登录的客户端设备标识 
 	 */

@@ -1,7 +1,7 @@
 package cn.dev33.satoken.exception;
 
 /**
- * 一个异常：代表停止路由匹配 
+ * 一个异常：代表停止路由匹配，进入Controller 
  * 
  * @author kong
  */
