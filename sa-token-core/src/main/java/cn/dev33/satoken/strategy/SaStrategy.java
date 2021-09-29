@@ -13,7 +13,14 @@ import cn.dev33.satoken.session.SaSession;
 /**
  * Sa-Token 策略对象 
  * <p>
- * 此类统一定义框架内的一些关键性逻辑算法，方便开发者进行按需重写 
+ * 此类统一定义框架内的一些关键性逻辑算法，方便开发者进行按需重写，例：
+ * <pre>
+	// SaStrategy全局单例，所有方法都用以下形式重写 
+	SaStrategy.me.setCreateToken((loginId, loginType) -> {
+		// 自定义Token生成的算法 
+		return "xxxx";
+	});
+ * </pre>
  * </p>
  * 
  * @author kong
