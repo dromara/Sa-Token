@@ -7,9 +7,9 @@ import java.util.List;
 import cn.dev33.satoken.session.SaSession;
 
 /**
- * Sa-Token 逻辑代理接口 
+ * <h1> v1.27+ 此接口已废弃，目前版本暂时向下兼容，请及时更换为 SaStrategy </h1>
+ * <p>Sa-Token 逻辑代理接口 </p> 
  * <p>此接口将会代理框架内部的一些关键性逻辑，方便开发者进行按需重写</p> 
- * <p> v1.27+ 此接口已废弃，目前版本暂时向下兼容，请更换为 SaStrategy 
  * @author kong
  *
  */

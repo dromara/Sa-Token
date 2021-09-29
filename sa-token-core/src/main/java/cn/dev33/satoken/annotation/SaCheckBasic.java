@@ -24,7 +24,7 @@ public @interface SaCheckBasic {
     String realm() default SaBasicTemplate.DEFAULT_REALM;
 
     /**
-     * 需要校验的账号密码 
+     * 需要校验的账号密码，格式形如 sa:123456 
      * @return see note 
      */
     String account() default "";

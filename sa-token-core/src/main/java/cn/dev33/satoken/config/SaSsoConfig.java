@@ -10,7 +10,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * Sa-Token-SSO 单点登录模块 配置Model
+ * Sa-Token SSO 单点登录模块 配置类 Model 
  * @author kong
  *
  */
@@ -18,8 +18,11 @@ public class SaSsoConfig implements Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 
+	
+	// ----------------- Server端相关配置 
+	
 	/**
-	 * Ticket有效期 (单位: 秒)
+	 * Ticket有效期 (单位: 秒) 
 	 */
 	public long ticketTimeout = 60 * 5;
 	
@@ -27,48 +30,77 @@ public class SaSsoConfig implements Serializable {
 	 * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) 
 	 */
 	public String allowUrl = "*";
+
+	/**
+	 * 是否打开单点注销功能 
+	 */
+	public Boolean isSlo = true; 
 	
 	/**
-	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)
+	 * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
+	 */
+	public Boolean isHttp = false; 
+
+	/**
+	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
 	 */
 	public String secretkey;
+
 	
+	// ----------------- Client端相关配置 
+
 	/**
-	 * SSO-Server端 单点登录地址
+	 * 配置 Server 端单点登录授权地址 
 	 */
 	public String authUrl;
 
 	/**
-	 * SSO-Server端 Ticket校验地址
+	 * 是否打开单点注销功能 
+	 */
+	// public Boolean isSlo = true;  // 同上 
+
+	/**
+	 * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
+	 */
+	// public Boolean isHttp = false;  // 同上 
+
+	/**
+	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
+	 */
+	// public String secretkey;  // 同上 
+
+	/**
+	 * 配置 Server 端的 ticket 校验地址 
 	 */
 	public String checkTicketUrl;
 
 	/**
-	 * SSO-Server端 单点注销地址 
+	 * 配置 Server 端查询 userinfo 地址 
+	 */
+	public String userinfoUrl;
+	
+	/**
+	 * 配置 Server 端单点注销地址 
 	 */
 	public String sloUrl;
 
 	/**
-	 * SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取） 
+	 * 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
 	 */
 	public String ssoLogoutCall;
 
-	/**
-	 * SSO-Server端 账号资料查询地址 
-	 */
-	public String userinfoUrl;
 
 
 
 	/**
-	 * @return Ticket有效期 (单位: 秒) 
+	 * @return Ticket有效期 (单位: 秒)  
 	 */
 	public long getTicketTimeout() {
 		return ticketTimeout;
 	}
 
 	/**
-	 * @param ticketTimeout Ticket有效期 (单位: 秒) 
+	 * @param ticketTimeout Ticket有效期 (单位: 秒)   
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setTicketTimeout(long ticketTimeout) {
@@ -93,14 +125,46 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)
+	 * @return 是否打开单点注销功能 
+	 */
+	public Boolean getIsSlo() {
+		return isSlo;
+	}
+
+	/**
+	 * @param isSlo 是否打开单点注销功能 
+	 * @return 对象自身 
+	 */
+	public SaSsoConfig setIsSlo(Boolean isSlo) {
+		this.isSlo = isSlo;
+		return this;
+	}
+
+	/**
+	 * @return isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
+	 */
+	public Boolean getIsHttp() {
+		return isHttp;
+	}
+
+	/**
+	 * @param isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
+	 * @return 对象自身 
+	 */
+	public SaSsoConfig setIsHttp(Boolean isHttp) {
+		this.isHttp = isHttp;
+		return this;
+	}
+
+	/**
+	 * @return 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)  
 	 */
 	public String getSecretkey() {
 		return secretkey;
 	}
 
 	/**
-	 * @param secretkey 调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
+	 * @param secretkey 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)  
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setSecretkey(String secretkey) {
@@ -109,14 +173,14 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return SSO-Server端 单点登录地址
+	 * @return 配置的 Server 端单点登录授权地址 
 	 */
 	public String getAuthUrl() {
 		return authUrl;
 	}
 
 	/**
-	 * @param authUrl SSO-Server端 单点登录地址
+	 * @param authUrl 配置 Server 端单点登录授权地址  
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setAuthUrl(String authUrl) {
@@ -125,14 +189,14 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return SSO-Server端Ticket校验地址 
+	 * @return 配置的 Server 端的 ticket 校验地址  
 	 */
 	public String getCheckTicketUrl() {
 		return checkTicketUrl;
 	}
 
 	/**
-	 * @param checkTicketUrl SSO-Server端Ticket校验地址
+	 * @param checkTicketUrl 配置 Server 端的 ticket 校验地址  
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setCheckTicketUrl(String checkTicketUrl) {
@@ -141,14 +205,30 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return SSO-Server端单点注销地址
+	 * @return 配置的 Server 端查询 userinfo 地址 
+	 */
+	public String getUserinfoUrl() {
+		return userinfoUrl;
+	}
+
+	/**
+	 * @param userinfoUrl 配置 Server 端查询 userinfo 地址 
+	 * @return 对象自身 
+	 */
+	public SaSsoConfig setUserinfoUrl(String userinfoUrl) {
+		this.userinfoUrl = userinfoUrl;
+		return this;
+	}
+
+	/**
+	 * @return 配置 Server 端单点注销地址  
 	 */
 	public String getSloUrl() {
 		return sloUrl;
 	}
 
 	/**
-	 * @param sloUrl SSO-Server端单点注销地址
+	 * @param sloUrl 配置 Server 端单点注销地址  
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setSloUrl(String sloUrl) {
@@ -157,14 +237,14 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取） 
+	 * @return 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
 	 */
 	public String getSsoLogoutCall() {
 		return ssoLogoutCall;
 	}
 
 	/**
-	 * @param ssoLogoutCall SSO-Client端 当前Client端的单点注销回调URL （为空时自动获取） 
+	 * @param ssoLogoutCall 配置当前 Client 端的单点注销回调URL （为空时自动获取）  
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setSsoLogoutCall(String ssoLogoutCall) {
@@ -172,30 +252,14 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
-	/**
-	 * @return SSO-Server端 账号资料查询地址 
-	 */
-	public String getUserinfoUrl() {
-		return userinfoUrl;
-	}
-
-	/**
-	 * @param userinfoUrl SSO-Server端 账号资料查询地址 
-	 * @return 对象自身 
-	 */
-	public SaSsoConfig setUserinfoUrl(String userinfoUrl) {
-		this.userinfoUrl = userinfoUrl;
-		return this;
-	}
-	
 	@Override
 	public String toString() {
-		return "SaSsoConfig [ticketTimeout=" + ticketTimeout + ", allowUrl=" + allowUrl + ", secretkey=" + secretkey
-				+ ", authUrl=" + authUrl + ", checkTicketUrl=" + checkTicketUrl + ", sloUrl=" + sloUrl
-				+ ", ssoLogoutCall=" + ssoLogoutCall + ", userinfoUrl=" + userinfoUrl + ", isHttp=" + isHttp + ", isSlo=" + isSlo + "]";
+		return "SaSsoConfig [ticketTimeout=" + ticketTimeout + ", allowUrl=" + allowUrl + ", isSlo=" + isSlo
+				+ ", isHttp=" + isHttp + ", secretkey=" + secretkey + ", authUrl=" + authUrl + ", checkTicketUrl="
+				+ checkTicketUrl + ", userinfoUrl=" + userinfoUrl + ", sloUrl=" + sloUrl + ", ssoLogoutCall="
+				+ ssoLogoutCall + "]";
 	}
 	
-
 	/**
 	 * 以数组形式写入允许的授权回调地址 
 	 * @param url 所有集合 
@@ -206,50 +270,6 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
-	// -------------------- SaSsoHandle 相关配置 -------------------- 
-	
-	/**
-	 * 是否使用http请求校验ticket值 
-	 */
-	public Boolean isHttp = false; 
-
-	/**
-	 * 是否打开单点注销 
-	 */
-	public Boolean isSlo = false; 
-	
-
-	/**
-	 * @return isHttp 是否使用http请求校验ticket值 
-	 */
-	public Boolean getIsHttp() {
-		return isHttp;
-	}
-
-	/**
-	 * @param isHttp 是否使用http请求校验ticket值 
-	 * @return 对象自身 
-	 */
-	public SaSsoConfig setIsHttp(Boolean isHttp) {
-		this.isHttp = isHttp;
-		return this;
-	}
-
-	/**
-	 * @return 是否打开单点注销 
-	 */
-	public Boolean getIsSlo() {
-		return isSlo;
-	}
-
-	/**
-	 * @param isSlo 是否打开单点注销 
-	 * @return 对象自身 
-	 */
-	public SaSsoConfig setIsSlo(Boolean isSlo) {
-		this.isSlo = isSlo;
-		return this;
-	}
 	
 	
 	// -------------------- SaSsoHandle 所有回调函数 -------------------- 
@@ -312,4 +332,7 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
+	
+
+	
 }

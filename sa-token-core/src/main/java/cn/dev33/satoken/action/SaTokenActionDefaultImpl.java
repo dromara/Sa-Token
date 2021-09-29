@@ -17,8 +17,8 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * Sa-Token 逻辑代理接口 [默认实现类] 
- * <p> v1.27+ 此接口已废弃，目前版本暂时向下兼容，请更换为 SaStrategy 
+ * <h1> v1.27+ 此接口已废弃，目前版本暂时向下兼容，请及时更换为 SaStrategy </h1>
+ * <p> Sa-Token 逻辑代理接口 [默认实现类]  </p> 
  * @author kong
  *
  */

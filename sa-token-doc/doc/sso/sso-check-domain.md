@@ -39,5 +39,5 @@
 ### 4、疑问：为什么不直接回传 Token，而是先回传 Ticket，再用 Ticket 去查询对应的账号id？
 Token 作为长时间有效的会话凭证，在任何时候都不应该直接暴露在 URL 之中（虽然 Token 直接的暴露本身不会造成安全漏洞，但会为很多漏洞提供可乘之机）
 
-因此 Sa-Token-SSO 选择先回传 Ticket，再由 Ticket 获取账号id，且 Ticket 一次性用完即废，提高安全性
+为了不让系统安全处于亚健康状态，Sa-Token-SSO 选择先回传 Ticket，再由 Ticket 获取账号id，且 Ticket 一次性用完即废，提高安全性。
 
