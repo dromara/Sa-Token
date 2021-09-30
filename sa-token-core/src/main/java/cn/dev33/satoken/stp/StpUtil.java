@@ -387,7 +387,7 @@ public class StpUtil {
 	// =================== 角色验证操作 ===================  
 
  	/** 
- 	 * 指定账号id是否含有角色标识, 返回true或false 
+ 	 * 判断：指定账号id是否含有角色标识, 返回true或false 
  	 * @param loginId 账号id
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
@@ -397,16 +397,34 @@ public class StpUtil {
  	}
  	
  	/** 
- 	 * 当前账号是否含有指定角色标识, 返回true或false 
+ 	 * 判断：当前账号是否含有指定角色标识, 返回true或false 
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
  	 */
  	public static boolean hasRole(String role) {
  		return stpLogic.hasRole(role);
  	}
-	
+
  	/** 
- 	 * 当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException 
+ 	 * 判断：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
+ 	 * @param roleArray 角色标识数组
+ 	 * @return true或false
+ 	 */
+ 	public static boolean hasRoleAnd(String... roleArray){
+ 		return stpLogic.hasRoleAnd(roleArray);
+ 	}
+
+ 	/** 
+ 	 * 判断：当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
+ 	 * @param roleArray 角色标识数组
+ 	 * @return true或false
+ 	 */
+ 	public static boolean hasRoleOr(String... roleArray){
+ 		return stpLogic.hasRoleOr(roleArray);
+ 	}
+ 	
+ 	/** 
+ 	 * 校验：当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException 
  	 * @param role 角色标识
  	 */
  	public static void checkRole(String role) {
@@ -414,7 +432,7 @@ public class StpUtil {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
+ 	 * 校验：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
  	 * @param roleArray 角色标识数组
  	 */
  	public static void checkRoleAnd(String... roleArray){
@@ -422,7 +440,7 @@ public class StpUtil {
  	}
 
  	/** 
- 	 * 当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
+ 	 * 校验：当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
  	 * @param roleArray 角色标识数组
  	 */
  	public static void checkRoleOr(String... roleArray){
@@ -433,7 +451,7 @@ public class StpUtil {
 	// =================== 权限验证操作 ===================
 
  	/** 
- 	 * 指定账号id是否含有指定权限, 返回true或false 
+ 	 * 判断：指定账号id是否含有指定权限, 返回true或false 
  	 * @param loginId 账号id
  	 * @param permission 权限码
  	 * @return 是否含有指定权限
@@ -443,7 +461,7 @@ public class StpUtil {
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限, 返回true或false 
+ 	 * 判断：当前账号是否含有指定权限, 返回true或false 
  	 * @param permission 权限码
  	 * @return 是否含有指定权限
  	 */
@@ -452,7 +470,25 @@ public class StpUtil {
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
+ 	 * 判断：当前账号是否含有指定权限, [指定多个，必须全部具有] 
+ 	 * @param permissionArray 权限码数组
+ 	 * @return true 或 false 
+ 	 */
+ 	public static boolean hasPermissionAnd(String... permissionArray){
+ 		return stpLogic.hasPermissionAnd(permissionArray);
+ 	}
+
+ 	/** 
+ 	 * 判断：当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
+ 	 * @param permissionArray 权限码数组
+ 	 * @return true 或 false 
+ 	 */
+ 	public static boolean hasPermissionOr(String... permissionArray){
+ 		return stpLogic.hasPermissionOr(permissionArray);
+ 	}
+ 	
+ 	/** 
+ 	 * 校验：当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
  	 * @param permission 权限码
  	 */
 	public static void checkPermission(String permission) {
@@ -460,7 +496,7 @@ public class StpUtil {
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限 [指定多个，必须全部验证通过] 
+ 	 * 校验：当前账号是否含有指定权限 [指定多个，必须全部验证通过] 
  	 * @param permissionArray 权限码数组
  	 */
 	public static void checkPermissionAnd(String... permissionArray) {
@@ -468,7 +504,7 @@ public class StpUtil {
 	}
 
  	/** 
- 	 * 当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
+ 	 * 校验：当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
  	 * @param permissionArray 权限码数组
  	 */
 	public static void checkPermissionOr(String... permissionArray) {
