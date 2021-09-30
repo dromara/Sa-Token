@@ -186,7 +186,7 @@ public class TestController {
 		// 先登录上 
 		StpUtil.login(10001);
 		// 踢下线 
-		StpUtil.logoutByLoginId(10001);
+		StpUtil.kickout(10001);
 		// 再尝试获取
 		StpUtil.getLoginId();
 		// 返回 
@@ -240,6 +240,7 @@ public class TestController {
 	@RequestMapping("test")
 	public AjaxJson test() {
 		System.out.println("进来了");
+		StpUtil.checkLogin();
 		return AjaxJson.getSuccess();
 	}
 	

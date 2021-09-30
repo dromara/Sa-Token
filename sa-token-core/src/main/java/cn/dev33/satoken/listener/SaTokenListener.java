@@ -27,22 +27,20 @@ public interface SaTokenListener {
 	public void doLogout(String loginType, Object loginId, String tokenValue);
 	
 	/**
-	 * 每次被踢下线时触发
-	 * @param loginType 账号类别
-	 * @param loginId 账号id
-	 * @param tokenValue token值
-	 * @param device 设备标识 
+	 * 每次被踢下线时触发 
+	 * @param loginType 账号类别 
+	 * @param loginId 账号id 
+	 * @param tokenValue token值 
 	 */
-	public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device);
+	public void doKickout(String loginType, Object loginId, String tokenValue);
 
 	/**
 	 * 每次被顶下线时触发
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue token值
-	 * @param device 设备标识 
 	 */
-	public void doReplaced(String loginType, Object loginId, String tokenValue, String device);
+	public void doReplaced(String loginType, Object loginId, String tokenValue);
 
 	/**
 	 * 每次被封禁时触发

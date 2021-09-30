@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -22,6 +23,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
@@ -30,7 +32,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * Sa-Token 权限验证，逻辑实现类 
+ * Sa-Token 权限认证，逻辑实现类 
  * @author kong
  */
 public class StpLogic {
@@ -97,22 +99,22 @@ public class StpLogic {
 	public void setTokenValue(String tokenValue, int cookieTimeout){
 		SaTokenConfig config = getConfig();
 		
-		// 将token保存到[存储器]里  
+		// 1. 将token保存到[存储器]里  
 		SaStorage storage = SaHolder.getStorage();
 		
-		// 判断是否配置了token前缀 
+		// 如果打开了token前缀模式，则拼接上前缀一起写入 
 		String tokenPrefix = config.getTokenPrefix();
-		if(SaFoxUtil.isEmpty(tokenPrefix)) {
-			storage.set(splicingKeyJustCreatedSave(), tokenValue);	
-		} else {
-			// 如果配置了token前缀，则拼接上前缀一起写入 
+		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
 			storage.set(splicingKeyJustCreatedSave(), tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue);	
+		} else {
+			storage.set(splicingKeyJustCreatedSave(), tokenValue);	
 		}
 		
-		// 注入Cookie 
+		// 2. 将token保存到[Cookie]里 
 		if (config.getIsReadCookie()) {
 			SaResponse response = SaHolder.getResponse();
-			response.addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), cookieTimeout, config.getIsCookieHttpOnly(), config.getIsCookieSecure());
+			response.addCookie(getTokenName(), tokenValue, "/", 
+					config.getCookieDomain(), cookieTimeout, config.getIsCookieHttpOnly(), config.getIsCookieSecure());
 		}
 	}
  	
@@ -145,14 +147,15 @@ public class StpLogic {
 			tokenValue = request.getCookieValue(keyTokenName);
 		}
 		
-		// 5. 如果打开了前缀模式
+		// 5. 如果打开了前缀模式 
 		String tokenPrefix = getConfig().getTokenPrefix();
-		if(!SaFoxUtil.isEmpty(tokenPrefix) && !SaFoxUtil.isEmpty(tokenValue)) {
-			// 如果token以指定的前缀开头, 则裁剪掉它, 否则视为未提供token 
-			if(tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
-				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
-			} else {
+		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
+			// 如果token并没有按照指定的前缀开头，则视为未提供token 
+			if(SaFoxUtil.isEmpty(tokenValue) || tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT) == false) {
 				tokenValue = null;
+			} else {
+				// 则裁剪掉前缀 
+				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
 			}
 		}
 		
@@ -182,7 +185,7 @@ public class StpLogic {
 	
 	// ------------------- 登录相关操作 -------------------  
 
-	// 登录与注销 
+	// --- 登录 
 	
 	/**
 	 * 会话登录 
@@ -217,17 +220,18 @@ public class StpLogic {
 	 */
 	public void login(Object id, SaLoginModel loginModel) {
 		
-		// ------ 0、检查此账号是否已被封禁 
+		SaTokenException.throwByNull(id, "账号id不能为空");
+		
+		// ------ 0、前置检查：如果此账号已被封禁. 
 		if(isDisable(id)) {
 			throw new DisableLoginException(loginType, id, getDisableTime(id));
 		}
 		
-		// ------ 1、获取相应对象  
+		// ------ 1、初始化 loginModel 
 		SaTokenConfig config = getConfig();
-		SaTokenDao dao = SaManager.getSaTokenDao();
 		loginModel.build(config);
 		
-		// ------ 2、生成一个token 
+		// ------ 2、生成一个token  
 		String tokenValue = null;
 		// --- 如果允许并发登录 
 		if(config.getIsConcurrent()) {
@@ -236,61 +240,47 @@ public class StpLogic {
 				tokenValue = getTokenValueByLoginId(id, loginModel.getDevice());
 			}
 		} else {
-			// --- 如果不允许并发登录 
-			// 如果此时[user-session]不为null，说明此账号在其他地正在登录，现在需要先把其它地的同设备token标记为被顶下线 
-			SaSession session = getSessionByLoginId(id, false);
-			if(session != null) {
-				List<TokenSign> tokenSignList = session.getTokenSignList();
-				for (TokenSign tokenSign : tokenSignList) {
-					if(tokenSign.getDevice().equals(loginModel.getDevice())) {
-						// 1. 将此token 标记为已顶替 
-						dao.update(splicingKeyTokenValue(tokenSign.getValue()), NotLoginException.BE_REPLACED);	
-						// 2. 清理掉[token-最后操作时间] 
-						clearLastActivity(tokenSign.getValue()); 			
-						// 3. 清理user-session上的token签名记录 
-						session.removeTokenSign(tokenSign.getValue()); 		
-				 		// $$ 通知监听器 
-				 		SaManager.getSaTokenListener().doReplaced(loginType, id, tokenSign.getValue(), tokenSign.getDevice());
-					}
-				}
-			}
+			// --- 如果不允许并发登录，则将这个账号的历史登录标记为：被顶下线 
+			replaced(id, loginModel.getDevice());
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
 			tokenValue = createTokenValue(id);
 		}
 		
-		// ------ 3. 获取[User-Session], 续期 
+		// ------ 3. 获取 User-Session , 续期 
 		SaSession session = getSessionByLoginId(id, true);
 		session.updateMinTimeout(loginModel.getTimeout());
 		
-		// 在session上记录token签名 
-		session.addTokenSign(new TokenSign(tokenValue, loginModel.getDevice()));
+		// 在 User-Session 上记录token签名 
+		session.addTokenSign(tokenValue, loginModel.getDevice());
 		
 		// ------ 4. 持久化其它数据 
-		// token -> uid 
-		dao.set(splicingKeyTokenValue(tokenValue), String.valueOf(id), loginModel.getTimeout());
+		// token -> id 映射关系  
+		saveTokenToIdMapping(tokenValue, id, loginModel.getTimeout());
 		
-		// 写入 [最后操作时间]
+		// 在当前会话写入tokenValue 
+		setTokenValue(tokenValue, loginModel.getCookieTimeout());
+
+		// 写入 [token-last-activity] 
 		setLastActivityToNow(tokenValue); 
 		
-		// 在当前会话写入当前tokenValue 
-		setTokenValue(tokenValue, loginModel.getCookieTimeout());
-		
-		// $$ 通知监听器
+		// $$ 通知监听器，账号xxx 登录成功 
 		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
 	}
 
+	// --- 注销 
+	
 	/** 
 	 * 会话注销 
 	 */
 	public void logout() {
 		// 如果连token都没有，那么无需执行任何操作 
 		String tokenValue = getTokenValue();
- 		if(tokenValue == null) {
+ 		if(SaFoxUtil.isEmpty(tokenValue)) {
  			return;
  		}
- 		// 如果打开了cookie模式，第一步，先把cookie清除掉 
+ 		// 如果打开了Cookie模式，第一步，先把cookie清除掉 
  		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
@@ -298,80 +288,169 @@ public class StpLogic {
 	}
 
 	/**
-	 * 会话注销，根据指定Token 
-	 * @param tokenValue 指定token
-	 */
-	public void logoutByTokenValue(String tokenValue) {
-		// 1. 清理掉[token-最后操作时间] 
-		clearLastActivity(tokenValue); 	
-
-		// 2. 清理Token-Session 
-		SaManager.getSaTokenDao().delete(splicingKeyTokenSession(tokenValue));
-		
- 		// 3. 尝试清除token-id键值对 (先从db中获取loginId值，如果根本查不到loginId，那么无需继续操作 )
- 		String loginId = getLoginIdNotHandle(tokenValue);
- 	 	if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
- 			return;
- 		}
- 		SaManager.getSaTokenDao().delete(splicingKeyTokenValue(tokenValue));	
- 		
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
-
-		// 4. 尝试清理User-Session上的token签名 (如果为null或已被标记为异常, 那么无需继续执行 )
- 	 	SaSession session = getSessionByLoginId(loginId, false);
- 	 	if(session == null) {
- 	 		return;
- 	 	}
- 	 	session.removeTokenSign(tokenValue); 
- 	 	
- 	 	// 5. 尝试注销User-Session
-		session.logoutByTokenSignCountToZero();
-	}
-	
-	/**
-	 * 会话注销，根据账号id （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * 会话注销，根据账号id 
+	 * 
 	 * @param loginId 账号id 
 	 */
-	public void logoutByLoginId(Object loginId) {
-		logoutByLoginId(loginId, null);
+	public void logout(Object loginId) {
+		logout(loginId, null);
 	}
 	
 	/**
-	 * 会话注销，根据账号id and 设备标识 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
+	 * 会话注销，根据账号id 和 设备标识 
+	 * 
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
-	public void logoutByLoginId(Object loginId, String device) {
-		// 1. 先获取这个账号的[user-session], 如果为null，则不执行任何操作 
+	public void logout(Object loginId, String device) {
+		clearTokenCommonMethod(loginId, device, tokenValue -> {
+	 		// 删除Token-Id映射 & 清除Token-Session 
+			deleteTokenToIdMapping(tokenValue);
+			deleteTokenSession(tokenValue);
+			SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+		}, true);
+	}
+	
+	/**
+	 * 会话注销，根据指定 Token 
+	 * 
+	 * @param tokenValue 指定token
+	 */
+	public void logoutByTokenValue(String tokenValue) {
+		// 1. 清理 token-last-activity
+		clearLastActivity(tokenValue); 	
+		
+		// 2. 注销 Token-Session 
+		deleteTokenSession(tokenValue);
+
+		// if. 无效 loginId 立即返回 
+ 		String loginId = getLoginIdNotHandle(tokenValue);
+ 	 	if(isValidLoginId(loginId) == false) {
+ 	 		if(loginId != null) {
+ 	 			deleteTokenToIdMapping(tokenValue);
+ 	 		}
+ 			return;
+ 		}
+ 		// 3. 清理token-id索引 
+ 	 	deleteTokenToIdMapping(tokenValue);
+ 	 	
+ 	 	// $$ 通知监听器，某某Token注销下线了 
+		SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+
+		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
+ 	 	SaSession session = getSessionByLoginId(loginId, false);
+ 	 	if(session != null) {
+ 	 	 	session.removeTokenSign(tokenValue); 
+ 			session.logoutByTokenSignCountToZero();
+ 	 	}
+	}
+	
+	/**
+	 * 踢人下线，根据账号id 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param loginId 账号id 
+	 */
+	public void kickout(Object loginId) {
+		kickout(loginId, null);
+	}
+	
+	/**
+	 * 踢人下线，根据账号id 和 设备标识 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表踢出所有设备) 
+	 */
+	public void kickout(Object loginId, String device) {
+		clearTokenCommonMethod(loginId, device, tokenValue -> {
+			// 将此 token 标记为已被踢下线  
+			updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
+	 		SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+		}, true);
+	}
+
+	/**
+	 * 踢人下线，根据指定 Token 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param tokenValue 指定token
+	 */
+	public void kickoutByTokenValue(String tokenValue) {
+		// 1. 清理 token-last-activity
+		clearLastActivity(tokenValue); 	
+		
+		// 2. 不注销 Token-Session 
+
+ 		// if. 无效 loginId 立即返回 
+ 		String loginId = getLoginIdNotHandle(tokenValue);
+ 	 	if(isValidLoginId(loginId) == false) {
+ 			return;
+ 		}
+ 	 	
+ 		// 3. 给token打上标记：被踢下线 
+ 	 	updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
+		
+ 	 	// $$. 否则通知监听器，某某Token被踢下线了 
+		SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+
+		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
+ 	 	SaSession session = getSessionByLoginId(loginId, false);
+ 	 	if(session != null) {
+ 	 	 	session.removeTokenSign(tokenValue); 
+ 			session.logoutByTokenSignCountToZero();
+ 	 	}
+	}
+	
+	/**
+	 * 顶人下线，根据账号id 和 设备标识 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-4 </p>
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表顶替所有设备) 
+	 */
+	public void replaced(Object loginId, String device) {
+		clearTokenCommonMethod(loginId, device, tokenValue -> {
+			// 将此 token 标记为已被顶替 
+			updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
+	 		SaManager.getSaTokenListener().doReplaced(loginType, loginId, tokenValue);
+		}, false);
+	}
+	
+	/**
+	 * 封装 注销、踢人、顶人 三个动作的相同代码（无API含义方法）
+	 * @param loginId 账号id 
+	 * @param device 设备标识 
+	 * @param appendFun 追加操作 
+	 * @param isLogoutSession 是否注销 User-Session 
+	 */
+	private void clearTokenCommonMethod(Object loginId, String device, Consumer<String> appendFun, boolean isLogoutSession) {
+		// 1. 如果此账号尚未登录，则不执行任何操作 
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
 			return;
 		}
-		
 		// 2. 循环token签名列表，开始删除相关信息 
-		List<TokenSign> tokenSignList = session.getTokenSignList();
-		for (TokenSign tokenSign : tokenSignList) {
+		for (TokenSign tokenSign : session.getTokenSignList()) {
 			if(device == null || tokenSign.getDevice().equals(device)) {
-				// 1. 获取token 
+				// -------- 共有操作 
+				// s1. 获取token 
 				String tokenValue = tokenSign.getValue();
-				// 2. 清理掉[token-最后操作时间] 
+				// s2. 清理掉[token-last-activity] 
 				clearLastActivity(tokenValue); 	
-		 		// 3. 标记：已被踢下线 
-				SaManager.getSaTokenDao().update(splicingKeyTokenValue(tokenValue), NotLoginException.KICK_OUT);
-		 		// 4. 清理账号session上的token签名 
+		 		// s3. 从token签名列表移除 
 		 		session.removeTokenSign(tokenValue); 
-		 		// $$ 通知监听器 
-		 		SaManager.getSaTokenListener().doLogoutByLoginId(loginType, loginId, tokenValue, tokenSign.getDevice());
+				// -------- 追加操作 
+		 		appendFun.accept(tokenValue);
 			}
 		}
- 	 	// 3. 尝试注销session
-		session.logoutByTokenSignCountToZero();
+ 	 	// 3. 尝试注销session 
+		if(isLogoutSession) {
+			session.logoutByTokenSignCountToZero();
+		}
 	}
-
-	// 查询相关 
+	
+	// ---- 会话查询 
 	
  	/** 
  	 * 当前会话是否已经登录 
@@ -527,9 +606,45 @@ public class StpLogic {
  	public String getLoginIdNotHandle(String tokenValue) {
  		return SaManager.getSaTokenDao().get(splicingKeyTokenValue(tokenValue));
  	}
- 	 
  	
-	// ------------------- Session相关 -------------------  
+	// ---- 其它操作 
+ 	/**
+	 * 判断一个 loginId 是否是有效的 
+	 * @param loginId 账号id 
+	 * @return / 
+	 */
+	public boolean isValidLoginId(Object loginId) {
+		return loginId != null && !NotLoginException.ABNORMAL_LIST.contains(loginId.toString());
+	}
+	/**
+	 * 删除 Token-Id 映射 
+	 * @param tokenValue token值 
+	 */
+	public void deleteTokenToIdMapping(String tokenValue) {
+		SaManager.getSaTokenDao().delete(splicingKeyTokenValue(tokenValue));
+	}
+	/**
+	 * 更改 Token 指向的 账号Id 值 
+	 * @param tokenValue token值 
+	 * @param loginId 新的账号Id值
+	 */
+	public void updateTokenToIdMapping(String tokenValue, Object loginId) {
+		SaTokenException.throwBy(SaFoxUtil.isEmpty(loginId), "LoginId 不能为空");
+		SaManager.getSaTokenDao().update(splicingKeyTokenValue(tokenValue), loginId.toString());
+	}
+	/**
+	 * 存储 Token-Id 映射 
+	 * @param tokenValue token值 
+	 * @param loginId 账号id 
+	 * @param timeout 会话有效期 (单位: 秒) 
+	 */
+	public void saveTokenToIdMapping(String tokenValue, Object loginId, long timeout) {
+		SaManager.getSaTokenDao().set(splicingKeyTokenValue(tokenValue), String.valueOf(loginId), timeout);
+	}
+	
+	
+	
+	// ------------------- User-Session 相关 -------------------  
 
 	/** 
 	 * 获取指定key的Session, 如果Session尚未创建，isCreate=是否新建并返回
@@ -556,7 +671,7 @@ public class StpLogic {
 	}
 
 	/** 
-	 * 获取指定账号id的Session, 如果Session尚未创建，isCreate=是否新建并返回
+	 * 获取指定账号id的User-Session, 如果Session尚未创建，isCreate=是否新建并返回
 	 * @param loginId 账号id
 	 * @param isCreate 是否新建
 	 * @return Session对象
@@ -566,16 +681,16 @@ public class StpLogic {
 	}
 
 	/** 
-	 * 获取指定账号id的Session，如果Session尚未创建，则新建并返回 
+	 * 获取指定账号id的User-Session，如果Session尚未创建，则新建并返回 
 	 * @param loginId 账号id 
 	 * @return Session对象 
 	 */
 	public SaSession getSessionByLoginId(Object loginId) {
-		return getSessionByLoginId(loginId, true);
+		return getSessionBySessionId(splicingKeySession(loginId), true);
 	}
 
 	/** 
-	 * 获取当前会话的Session, 如果Session尚未创建，isCreate=是否新建并返回 
+	 * 获取当前User-Session, 如果Session尚未创建，isCreate=是否新建并返回 
 	 * @param isCreate 是否新建 
 	 * @return Session对象 
 	 */
@@ -584,7 +699,7 @@ public class StpLogic {
 	}
 	
 	/** 
-	 * 获取当前会话的Session，如果Session尚未创建，则新建并返回 
+	 * 获取当前User-Session，如果Session尚未创建，则新建并返回 
 	 * @return Session对象 
 	 */
 	public SaSession getSession() {
@@ -592,7 +707,7 @@ public class StpLogic {
 	}
 
 	
-	// ------------------- token专属session -------------------  
+	// ------------------- Token-Session 相关 -------------------  
 
 	/** 
 	 * 获取指定Token-Session，如果Session尚未创建，isCreate代表是否新建并返回
@@ -635,7 +750,7 @@ public class StpLogic {
 				setTokenValue(tokenValue, cookieTimeout);
 			}
 		}
-		// 返回这个token对应的专属session 
+		// 返回这个token对应的Token-Session 
 		return getSessionBySessionId(splicingKeyTokenSession(getTokenValue()), isCreate);
 	}
 	
@@ -646,7 +761,14 @@ public class StpLogic {
 	public SaSession getTokenSession() {
 		return getTokenSession(true);
 	}
-
+	
+	/**
+	 * 删除Token-Session 
+	 * @param tokenValue token值 
+	 */
+	public void deleteTokenSession(String tokenValue) {
+		SaManager.getSaTokenDao().delete(splicingKeyTokenSession(tokenValue));
+	}
  	
 	// ------------------- [临时过期] 验证相关 -------------------  
 
@@ -675,7 +797,7 @@ public class StpLogic {
  		// 删除[最后操作时间]
  		SaManager.getSaTokenDao().delete(splicingKeyLastActivityTime(tokenValue));
  		// 清除标记 
- 		SaHolder.getStorage().delete((SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY));
+ 		SaHolder.getStorage().delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
  	
  	/**
@@ -741,7 +863,7 @@ public class StpLogic {
 	// ------------------- 过期时间相关 -------------------  
 
  	/**
- 	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
+ 	 * 获取当前登录者的 token 剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
  	 */
  	public long getTokenTimeout() {
@@ -749,7 +871,7 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 获取指定loginId的token剩余有效时间 (单位: 秒) 
+ 	 * 获取指定 loginId 的 token 剩余有效时间 (单位: 秒) 
  	 * @param loginId 指定loginId 
  	 * @return token剩余有效时间 
  	 */
@@ -758,7 +880,7 @@ public class StpLogic {
  	}
 
  	/**
- 	 * 获取当前登录者的Session剩余有效时间 (单位: 秒)
+ 	 * 获取当前登录者的 User-Session 剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
  	 */
  	public long getSessionTimeout() {
@@ -766,7 +888,7 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 获取指定loginId的Session剩余有效时间 (单位: 秒) 
+ 	 * 获取指定 loginId 的 User-Session 剩余有效时间 (单位: 秒) 
  	 * @param loginId 指定loginId 
  	 * @return token剩余有效时间 
  	 */
@@ -775,7 +897,7 @@ public class StpLogic {
  	}
 
  	/**
- 	 * 获取当前token的专属Session剩余有效时间 (单位: 秒) 
+ 	 * 获取当前 Token-Session 剩余有效时间 (单位: 秒) 
  	 * @return token剩余有效时间
  	 */
  	public long getTokenSessionTimeout() {
@@ -783,7 +905,7 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 获取指定token的专属Session剩余有效时间 (单位: 秒) 
+ 	 * 获取指定 Token-Session 剩余有效时间 (单位: 秒) 
  	 * @param tokenValue 指定token 
  	 * @return token剩余有效时间 
  	 */
@@ -792,15 +914,15 @@ public class StpLogic {
  	}
 
  	/**
- 	 * 获取当前token[临时过期]剩余有效时间 (单位: 秒)
- 	 * @return token[临时过期]剩余有效时间
+ 	 * 获取当前 token [临时过期] 剩余有效时间 (单位: 秒)
+ 	 * @return token [临时过期] 剩余有效时间
  	 */
  	public long getTokenActivityTimeout() {
  		return getTokenActivityTimeoutByToken(getTokenValue());
  	}
  	
  	/**
- 	 * 获取指定token[临时过期]剩余有效时间 (单位: 秒)
+ 	 * 获取指定 token [临时过期] 剩余有效时间 (单位: 秒)
  	 * @param tokenValue 指定token 
  	 * @return token[临时过期]剩余有效时间
  	 */
@@ -962,6 +1084,8 @@ public class StpLogic {
 		}
  	}
 
+
+ 	
 	
 	// ------------------- id 反查token 相关操作 -------------------  
 	
@@ -1026,12 +1150,12 @@ public class StpLogic {
 	 * @return 当前令牌的登录设备 
 	 */
 	public String getLoginDevice() {
-		// 如果没有token，直接返回 
+		// 如果没有token，直接返回 null 
 		String tokenValue = getTokenValue();
 		if(tokenValue == null) {
 			return null;
 		}
-		// 如果还未登录，直接返回 null
+		// 如果还未登录，直接返回 null 
 		if(!isLogin()) {
 			return null;
 		}
@@ -1279,7 +1403,7 @@ public class StpLogic {
 		getTokenSession().delete(SaTokenConsts.SAFE_AUTH_SAVE_KEY);
 	}
 
-
+	
 	// ------------------- 返回相应key -------------------  
 
 	/**
@@ -1363,5 +1487,31 @@ public class StpLogic {
 		return SaManager.getConfig();
 	}
 	
+	
+
+	// ------------------- 历史API，兼容旧版本 -------------------  
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
+	 * 
+	 * 会话注销，根据账号id （踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * @param loginId 账号id 
+	 */
+	public void logoutByLoginId(Object loginId) {
+		this.kickout(loginId);
+	}
+	
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
+	 * 
+	 * 会话注销，根据账号id and 设备标识 （踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表所有注销设备) 
+	 */
+	public void logoutByLoginId(Object loginId, String device) {
+		this.kickout(loginId, device);
+	}
 	
 }

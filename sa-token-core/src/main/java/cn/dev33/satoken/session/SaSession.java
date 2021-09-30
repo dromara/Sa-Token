@@ -140,6 +140,16 @@ public class SaSession implements Serializable {
 	}
 
 	/**
+	 * 添加一个token签名
+	 *
+	 * @param tokenValue token值
+	 * @param device 设备标识 
+	 */
+	public void addTokenSign(String tokenValue, String device) {
+		addTokenSign(new TokenSign(tokenValue, device));
+	}
+
+	/**
 	 * 移除一个token签名
 	 *
 	 * @param tokenValue token名称

@@ -92,7 +92,7 @@ public class SaTokenSpringBootStarterTest {
     	// 根据账号id踢人
     	StpUtil.login(10001); 
     	Assert.assertTrue(StpUtil.isLogin());	
-    	StpUtil.logoutByLoginId(10001);
+    	StpUtil.kickout(10001);
     	Assert.assertFalse(StpUtil.isLogin()); 
     }
 

@@ -6,7 +6,7 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 
 /**
- * Sa-Token 权限验证工具类 
+ * Sa-Token 权限认证工具类 
  * @author kong 
  */
 public class StpUtil {
@@ -68,6 +68,8 @@ public class StpUtil {
 	
 	// =================== 登录相关操作 ===================
 
+	// --- 登录 
+	
 	/**
 	 * 会话登录 
 	 * @param id 账号id，建议的类型：（long | int | String）
@@ -102,16 +104,37 @@ public class StpUtil {
 	public static void login(Object id, SaLoginModel loginModel) {
 		stpLogic.login(id, loginModel);
 	}
+
+	// --- 注销 
 	
 	/** 
-	 * 会话注销
+	 * 会话注销 
 	 */
 	public static void logout() {
 		stpLogic.logout();
 	}
 
 	/**
-	 * 会话注销，根据指定Token
+	 * 会话注销，根据账号id 
+	 * @param loginId 账号id 
+	 */
+	public static void logout(Object loginId) {
+		stpLogic.logout(loginId);
+	}
+
+	/**
+	 * 会话注销，根据账号id 和 设备标识 
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表所有注销设备) 
+	 */
+	public static void logout(Object loginId, String device) {
+		stpLogic.logout(loginId, device);
+	}
+	
+	/**
+	 * 会话注销，根据指定 Token 
+	 * 
 	 * @param tokenValue 指定token
 	 */
 	public static void logoutByTokenValue(String tokenValue) {
@@ -119,24 +142,48 @@ public class StpUtil {
 	}
 	
 	/**
-	 * 会话注销，根据账号id （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
+	 * 踢人下线，根据账号id 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
 	 * @param loginId 账号id 
 	 */
-	public static void logoutByLoginId(Object loginId) {
-		stpLogic.logoutByLoginId(loginId);
+	public static void kickout(Object loginId) {
+		stpLogic.kickout(loginId);
+	}
+	
+	/**
+	 * 踢人下线，根据账号id 和 设备标识 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表踢出所有设备) 
+	 */
+	public static void kickout(Object loginId, String device) {
+		stpLogic.kickout(loginId, device);
 	}
 
 	/**
-	 * 会话注销，根据账号id and 设备标识 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
-	 * @param loginId 账号id 
-	 * @param device 设备标识 
+	 * 踢人下线，根据指定 Token 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param tokenValue 指定token
 	 */
-	public static void logoutByLoginId(Object loginId, String device) {
-		stpLogic.logoutByLoginId(loginId, device);
+	public static void kickoutByTokenValue(String tokenValue) {
+		stpLogic.kickoutByTokenValue(tokenValue);
 	}
-
+	
+	/**
+	 * 顶人下线，根据账号id 和 设备标识 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-4 </p>
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表顶替所有设备) 
+	 */
+	public static void replaced(Object loginId, String device) {
+		stpLogic.replaced(loginId, device);
+	}
+	
+	
 	// 查询相关
 
 	/** 
@@ -214,7 +261,7 @@ public class StpUtil {
  	}
 	
  	
-	// =================== session相关 ===================
+	// =================== User-Session 相关 ===================
 
  	/** 
 	 * 获取指定账号id的Session, 如果Session尚未创建，isCreate=是否新建并返回
@@ -262,7 +309,7 @@ public class StpUtil {
 	}
 
 	
-	// =================== token专属session ===================  
+	// =================== Token-Session 相关 ===================  
 	
 	/** 
 	 * 获取指定Token-Session，如果Session尚未创建，则新建并返回 
@@ -304,7 +351,7 @@ public class StpUtil {
 	// =================== 过期时间相关 ===================  
 
  	/**
- 	 * 获取当前登录者的token剩余有效时间 (单位: 秒)
+ 	 * 获取当前登录者的 token 剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
  	 */
  	public static long getTokenTimeout() {
@@ -312,7 +359,7 @@ public class StpUtil {
  	}
  	
  	/**
- 	 * 获取当前登录者的Session剩余有效时间 (单位: 秒)
+ 	 * 获取当前登录者的 User-Session 剩余有效时间 (单位: 秒)
  	 * @return token剩余有效时间
  	 */
  	public static long getSessionTimeout() {
@@ -320,7 +367,7 @@ public class StpUtil {
  	}
 
  	/**
- 	 * 获取当前token的专属Session剩余有效时间 (单位: 秒) 
+ 	 * 获取当前 Token-Session 剩余有效时间 (单位: 秒) 
  	 * @return token剩余有效时间
  	 */
  	public static long getTokenSessionTimeout() {
@@ -328,8 +375,8 @@ public class StpUtil {
  	}
  	
  	/**
- 	 * 获取当前token[临时过期]剩余有效时间 (单位: 秒)
- 	 * @return token[临时过期]剩余有效时间
+ 	 * 获取当前 token [临时过期] 剩余有效时间 (单位: 秒)
+ 	 * @return token [临时过期] 剩余有效时间
  	 */
  	public static long getTokenActivityTimeout() {
  		return stpLogic.getTokenActivityTimeout();
@@ -637,6 +684,7 @@ public class StpUtil {
 
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.getLoginType() ，使用方式保持不变 </h1>
+	 * 
 	 * 获取当前StpLogin的loginKey 
 	 * @return 当前StpLogin的loginKey
 	 */
@@ -647,6 +695,7 @@ public class StpUtil {
 
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 
 	 * 在当前会话上登录id 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 */
@@ -657,6 +706,7 @@ public class StpUtil {
 
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 
 	 * 在当前会话上登录id, 并指定登录设备 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param device 设备标识 
@@ -668,6 +718,7 @@ public class StpUtil {
 
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 
 	 * 在当前会话上登录id, 并指定登录设备 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param isLastingCookie 是否为持久Cookie 
@@ -679,6 +730,7 @@ public class StpUtil {
 	
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
+	 * 
 	 * 在当前会话上登录id, 并指定所有登录参数Model 
 	 * @param loginId 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
@@ -686,6 +738,29 @@ public class StpUtil {
 	@Deprecated
 	public static void setLoginId(Object loginId, SaLoginModel loginModel) {
 		stpLogic.login(loginId, loginModel);
+	}
+	
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
+	 * 
+	 * 会话注销，根据账号id （踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * @param loginId 账号id 
+	 */
+	public static void logoutByLoginId(Object loginId) {
+		stpLogic.kickout(loginId);
+	}
+	
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
+	 * 
+	 * 会话注销，根据账号id and 设备标识 （踢人下线）
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表所有注销设备) 
+	 */
+	public static void logoutByLoginId(Object loginId, String device) {
+		stpLogic.kickout(loginId, device);
 	}
 	
 }

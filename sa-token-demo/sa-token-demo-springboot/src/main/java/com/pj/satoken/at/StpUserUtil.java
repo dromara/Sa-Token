@@ -2,8 +2,6 @@ package com.pj.satoken.at;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
@@ -11,10 +9,9 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
- * Sa-Token 权限验证工具类 (User版)
+ * Sa-Token 权限认证工具类 
  * @author kong 
  */
-@Component
 public class StpUserUtil {
 	
 	/**
@@ -74,6 +71,8 @@ public class StpUserUtil {
 	
 	// =================== 登录相关操作 ===================
 
+	// --- 登录 
+	
 	/**
 	 * 会话登录 
 	 * @param id 账号id，建议的类型：（long | int | String）
@@ -108,16 +107,37 @@ public class StpUserUtil {
 	public static void login(Object id, SaLoginModel loginModel) {
 		stpLogic.login(id, loginModel);
 	}
+
+	// --- 注销 
 	
 	/** 
-	 * 会话注销
+	 * 会话注销 
 	 */
 	public static void logout() {
 		stpLogic.logout();
 	}
 
 	/**
-	 * 会话注销，根据指定Token
+	 * 会话注销，根据账号id 
+	 * @param loginId 账号id 
+	 */
+	public static void logout(Object loginId) {
+		stpLogic.logout(loginId);
+	}
+
+	/**
+	 * 会话注销，根据账号id 和 设备标识 
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表所有注销设备) 
+	 */
+	public static void logout(Object loginId, String device) {
+		stpLogic.logout(loginId, device);
+	}
+	
+	/**
+	 * 注销会话，根据指定 Token 
+	 * 
 	 * @param tokenValue 指定token
 	 */
 	public static void logoutByTokenValue(String tokenValue) {
@@ -125,24 +145,48 @@ public class StpUserUtil {
 	}
 	
 	/**
-	 * 会话注销，根据账号id （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
+	 * 踢人下线，根据账号id 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
 	 * @param loginId 账号id 
 	 */
-	public static void logoutByLoginId(Object loginId) {
-		stpLogic.logoutByLoginId(loginId);
+	public static void kickout(Object loginId) {
+		stpLogic.kickout(loginId);
+	}
+	
+	/**
+	 * 踢人下线，根据账号id 和 设备标识 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表踢出所有设备) 
+	 */
+	public static void kickout(Object loginId, String device) {
+		stpLogic.kickout(loginId, device);
 	}
 
 	/**
-	 * 会话注销，根据账号id & 设备标识 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
-	 * @param loginId 账号id 
-	 * @param device 设备标识 
+	 * 踢人下线，根据指定 Token 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
+	 * 
+	 * @param tokenValue 指定token
 	 */
-	public static void logoutByLoginId(Object loginId, String device) {
-		stpLogic.logoutByLoginId(loginId, device);
+	public static void kickoutByTokenValue(String tokenValue) {
+		stpLogic.kickoutByTokenValue(tokenValue);
 	}
-
+	
+	/**
+	 * 顶人下线，根据账号id 和 设备标识 
+	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-4 </p>
+	 * 
+	 * @param loginId 账号id 
+	 * @param device 设备标识 (填null代表顶替所有设备) 
+	 */
+	public static void replaced(Object loginId, String device) {
+		stpLogic.replaced(loginId, device);
+	}
+	
+	
 	// 查询相关
 
 	/** 
@@ -602,7 +646,7 @@ public class StpUserUtil {
 	
 	/**
 	 * 在当前会话 开启二级认证 
-	 * @param timeout 维持时间 (单位: 秒) 
+	 * @param safeTime 维持时间 (单位: 秒) 
 	 */
 	public static void openSafe(long safeTime) {
 		stpLogic.openSafe(safeTime);
@@ -625,7 +669,7 @@ public class StpUserUtil {
 	
 	/**
 	 * 获取当前会话的二级认证剩余有效时间 (单位: 秒, 返回-2代表尚未通过二级认证)
-	 * @return
+	 * @return 剩余有效时间
 	 */
 	public static long getSafeTime() {
 		return stpLogic.getSafeTime();

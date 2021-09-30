@@ -26,23 +26,23 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 */
 	@Override
 	public void doLogout(String loginType, Object loginId, String tokenValue) {
-		println("账号[" + loginId + "]注销成功");
+		println("账号[" + loginId + "]注销成功 (Token=" + tokenValue + ")");
 	}
 
 	/**
 	 * 每次被踢下线时触发
 	 */
 	@Override
-	public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device) {
-		println("账号[" + loginId + "]被踢下线 (终端: " + device + ")");
+	public void doKickout(String loginType, Object loginId, String tokenValue) {
+		println("账号[" + loginId + "]被踢下线 (Token=" + tokenValue + ")");
 	}
 
 	/**
 	 * 每次被顶下线时触发
 	 */
 	@Override
-	public void doReplaced(String loginType, Object loginId, String tokenValue, String device) {
-		println("账号[" + loginId + "]被顶下线 (终端: " + device + ")");
+	public void doReplaced(String loginType, Object loginId, String tokenValue) {
+		println("账号[" + loginId + "]被顶下线 (Token=" + tokenValue + ")");
 	}
 
 	/**
