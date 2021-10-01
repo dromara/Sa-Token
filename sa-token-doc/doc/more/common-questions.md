@@ -60,7 +60,7 @@
 
 
 ### 我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？
-不更新是正常现象，`active-timeout`不是根据 ttl 计算的，是根据value值计算的，value 记录的是改 Token 最后访问系统的时间戳，
+不更新是正常现象，`active-timeout`不是根据 ttl 计算的，是根据value值计算的，value 记录的是该 Token 最后访问系统的时间戳，
 每次验签时用：当前时间 - 时间戳 > active-timeout，来判断这个 Token 是否已经超时 
 
 
