@@ -19,9 +19,9 @@ import cn.dev33.satoken.stp.StpUtil;
 public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
-	 * 每次进入拦截器的[执行函数]
+	 * 每次进入拦截器的[执行函数]，默认为登录校验 
 	 */
-	public SaRouteFunction function;
+	public SaRouteFunction function = (req, res, handler) -> StpUtil.checkLogin();
 
 	/**
 	 * 创建一个路由拦截器
@@ -56,28 +56,21 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		// 如果未提供function，默认进行登录验证 
-		if(function == null) {
-			StpUtil.checkLogin();
-		} else {
-			// 否则执行认证函数 
-			try {
-				function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
-			} catch (StopMatchException e) {
-				// 停止匹配，进入Controller 
-			} catch (BackResultException e) {
-				// 停止匹配，向前端输出结果 
-				if(response.getContentType() == null) {
-					response.setContentType("text/plain; charset=utf-8"); 
-				}
-				response.getWriter().print(e.getMessage());
-				return false;
+		try {
+			function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
+		} catch (StopMatchException e) {
+			// 停止匹配，进入Controller 
+		} catch (BackResultException e) {
+			// 停止匹配，向前端输出结果 
+			if(response.getContentType() == null) {
+				response.setContentType("text/plain; charset=utf-8"); 
 			}
+			response.getWriter().print(e.getMessage());
+			return false;
 		}
 		
 		// 通过验证 
 		return true;
 	}
 
-	
 }
