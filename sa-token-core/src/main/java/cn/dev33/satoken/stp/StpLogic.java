@@ -253,7 +253,7 @@ public class StpLogic {
 		session.updateMinTimeout(loginModel.getTimeout());
 		
 		// 在 User-Session 上记录token签名 
-		session.addTokenSign(tokenValue, loginModel.getDevice());
+		session.addTokenSign(tokenValue, loginModel.getDeviceOrDefalut());
 		
 		// ------ 4. 持久化其它数据 
 		// token -> id 映射关系  
@@ -974,7 +974,7 @@ public class StpLogic {
  	 * @return 是否含有指定角色标识
  	 */
  	public boolean hasRole(String role) {
- 		return hasRole(getLoginId(), role);
+ 		return isLogin() && hasRole(getLoginId(), role);
  	}
 
  	/** 
@@ -986,7 +986,7 @@ public class StpLogic {
  		try {
 			checkRoleAnd(roleArray);
 			return true;
-		} catch (NotRoleException e) {
+		} catch (NotLoginException | NotRoleException e) {
 			return false;
 		}
  	}
@@ -1000,7 +1000,7 @@ public class StpLogic {
  		try {
 			checkRoleOr(roleArray);
 			return true;
-		} catch (NotRoleException e) {
+		} catch (NotLoginException | NotRoleException e) {
 			return false;
 		}
  	}
@@ -1046,6 +1046,16 @@ public class StpLogic {
 	 		throw new NotRoleException(roleArray[0], this.loginType);
 		}
  	}
+
+ 	// -- 
+	/**
+	 * 返回当前账号所拥有的角色标识集合 
+	 * @return /
+	 */
+	public List<String> getRoleList() {
+		return SaManager.getStpInterface().getRoleList(getLoginId(), loginType);
+	}
+	
  	
  	
 	// ------------------- 权限验证操作 -------------------  
@@ -1067,7 +1077,7 @@ public class StpLogic {
  	 * @return 是否含有指定权限
  	 */
  	public boolean hasPermission(String permission) {
- 		return hasPermission(getLoginId(), permission);
+ 		return isLogin() && hasPermission(getLoginId(), permission);
  	}
 
  	/** 
@@ -1079,7 +1089,7 @@ public class StpLogic {
  		try {
 			checkPermissionAnd(permissionArray);
 			return true;
-		} catch (NotPermissionException e) {
+		} catch (NotLoginException | NotPermissionException e) {
 			return false;
 		}
  	}
@@ -1093,7 +1103,7 @@ public class StpLogic {
  		try {
 			checkPermissionOr(permissionArray);
 			return true;
-		} catch (NotPermissionException e) {
+		} catch (NotLoginException | NotPermissionException e) {
 			return false;
 		}
  	}
@@ -1140,10 +1150,17 @@ public class StpLogic {
 		}
  	}
 
-
+ 	// -- 
+	/**
+	 * 返回当前账号所拥有的权限码集合 
+	 * @return / 
+	 */
+	public List<String> getPermissionList() {
+		return SaManager.getStpInterface().getPermissionList(getLoginId(), loginType);
+	}
  	
 	
-	// ------------------- id 反查token 相关操作 -------------------  
+	// ------------------- id 反查 token 相关操作 -------------------  
 	
 	/** 
 	 * 获取指定账号id的tokenValue 
@@ -1153,7 +1170,7 @@ public class StpLogic {
 	 * @return token值 
 	 */
 	public String getTokenValueByLoginId(Object loginId) {
-		return getTokenValueByLoginId(loginId, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+		return getTokenValueByLoginId(loginId, null);
 	}
 
 	/** 
@@ -1161,7 +1178,7 @@ public class StpLogic {
 	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
 	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
 	 * @param loginId 账号id
-	 * @param device 设备标识 
+	 * @param device 设备标识，填null代表不限设备 
 	 * @return token值 
 	 */
 	public String getTokenValueByLoginId(Object loginId, String device) {
@@ -1175,13 +1192,13 @@ public class StpLogic {
 	 * @return 此loginId的所有相关token 
  	 */
 	public List<String> getTokenValueListByLoginId(Object loginId) {
-		return getTokenValueListByLoginId(loginId, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+		return getTokenValueListByLoginId(loginId, null);
 	}
 
  	/** 
 	 * 获取指定账号id指定设备端的tokenValue 集合 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 
+	 * @param device 设备标识，填null代表不限设备 
 	 * @return 此loginId的所有相关token 
  	 */
 	public List<String> getTokenValueListByLoginId(Object loginId, String device) {
@@ -1194,7 +1211,7 @@ public class StpLogic {
 		List<TokenSign> tokenSignList = session.getTokenSignList();
 		List<String> tokenValueList = new ArrayList<>();
 		for (TokenSign tokenSign : tokenSignList) {
-			if(tokenSign.getDevice().equals(device)) {
+			if(device == null || tokenSign.getDevice().equals(device)) {
 				tokenValueList.add(tokenSign.getValue());
 			}
 		}
@@ -1267,7 +1284,7 @@ public class StpLogic {
 	}
 	
 
-	// ------------------- 其它方法 -------------------  
+	// ------------------- 注解鉴权 -------------------  
 
 	/**
 	 * 根据注解(@SaCheckLogin)鉴权

@@ -2,6 +2,7 @@ package cn.dev33.satoken.stp;
 
 import java.util.List;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
 
@@ -29,6 +30,16 @@ public class StpUtil {
 		return stpLogic.getLoginType();
 	}
 
+	/**
+	 * 重置 StpLogic 对象
+	 * @param stpLogic / 
+	 */
+	public static void setStpLogic(StpLogic stpLogic) {
+		StpUtil.stpLogic = stpLogic;
+		// 防止自定义 stpLogic 被覆盖 
+		SaManager.putStpLogic(stpLogic);
+	}
+	
 	
 	// =================== 获取token 相关 ===================
 
@@ -446,7 +457,16 @@ public class StpUtil {
  	public static void checkRoleOr(String... roleArray){
  		stpLogic.checkRoleOr(roleArray);
  	}
- 	
+
+ 	// -- 
+	/**
+	 * 返回当前账号所拥有的角色标识集合 
+	 * @return /
+	 */
+	public static List<String> getRoleList() {
+		return stpLogic.getRoleList();
+	}
+	
 	
 	// =================== 权限验证操作 ===================
 
@@ -511,6 +531,15 @@ public class StpUtil {
 		stpLogic.checkPermissionOr(permissionArray);
 	}
 
+ 	// -- 
+	/**
+	 * 返回当前账号所拥有的权限码集合 
+	 * @return / 
+	 */
+	public static List<String> getPermissionList() {
+		return stpLogic.getPermissionList();
+	}
+ 	
 
 	// =================== id 反查token 相关操作 ===================  
 	

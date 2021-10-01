@@ -7,6 +7,7 @@ import org.noear.solon.core.Plugin;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.action.SaTokenAction;
+import cn.dev33.satoken.annotation.SaCheckBasic;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
@@ -23,6 +24,8 @@ import cn.dev33.satoken.solon.integration.SaTokenMethodInterceptor;
 import cn.dev33.satoken.sso.SaSsoTemplate;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
 
 /**
@@ -38,6 +41,7 @@ public class XPluginImp implements Plugin {
         Aop.context().beanAroundAdd(SaCheckRole.class, SaTokenMethodInterceptor.INSTANCE);
         Aop.context().beanAroundAdd(SaCheckLogin.class, SaTokenMethodInterceptor.INSTANCE);
         Aop.context().beanAroundAdd(SaCheckSafe.class, SaTokenMethodInterceptor.INSTANCE);
+        Aop.context().beanAroundAdd(SaCheckBasic.class, SaTokenMethodInterceptor.INSTANCE);
 
         //集成初始化
 
@@ -86,6 +90,11 @@ public class XPluginImp implements Plugin {
         // Sa-Token-SSO 单点登录模块 Bean
         Aop.getAsyn(SaSsoTemplate.class, bw->{
         	SaSsoUtil.saSsoTemplate = bw.raw();
+        });
+
+        // 自定义 StpLogic 对象 
+        Aop.getAsyn(StpLogic.class, bw->{
+        	StpUtil.setStpLogic(bw.raw());
         });
         
     }

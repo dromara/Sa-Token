@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Sa-Token 集成 Thymeleaf 标签方言</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	</head>
+	<body>
+		<div class="view-box" style="padding: 30px;">
+			<h2>Sa-Token 集成 Thymeleaf 标签方言 —— 测试页面</h2>
+			<p>
+				<a href="login" target="_blank">登录</a> 
+				<a href="logout" target="_blank">注销</a>
+			</p>
+			
+			<p>登录之后才能显示：<span sa:login>value</span></p>
+			<p>不登录之后才能显示：<span sa:notLogin>value</span></p>
+			
+			<p>具有角色 admin 才能显示：<span sa:hasRole="admin">value</span></p>
+			<p>同时具备多个角色才能显示：<span sa:hasRoleAnd="admin, ceo, cto">value</span></p>
+			<p>只要具有其中一个角色就能显示：<span sa:hasRoleOr="admin, ceo, cto">value</span></p>
+			<p>不具有角色 admin 才能显示：<span sa:lackRole="admin">value</span></p>
+			
+			<p>具有权限 user-add 才能显示：<span sa:hasPermission="user-add">value</span></p>
+			<p>同时具备多个权限才能显示：<span sa:hasPermissionAnd="user-add, user-delete, user-get">value</span></p>
+			<p>只要具有其中一个权限就能显示：<span sa:hasPermissionOr="user-add, user-delete, user-get">value</span></p>
+			<p>不具有权限 user-add 才能显示：<span sa:lackPermission="user-add">value</span></p>
+			
+			<p th:if="${stp.isLogin()}">
+				从SaSession中取值：
+				<span th:text="${stp.getSession().get('name', )}"></span>
+			</p>
+			
+		</div>
+	</body>
+</html>

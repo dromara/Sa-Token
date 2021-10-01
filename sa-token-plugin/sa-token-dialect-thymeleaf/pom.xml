@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-plugin</artifactId>
+        <version>1.26.0</version>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-dialect-thymeleaf</name>
+    <artifactId>sa-token-dialect-thymeleaf</artifactId>
+	<description>sa-token-dialect-thymeleaf</description>
+
+	<dependencies>
+		<!-- sa-token-spring-boot-starter -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+		<!-- thymeleaf -->
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>3.0.9.RELEASE</version>
+			<optional>true</optional>
+	    </dependency>
+		<!-- spring-boot-configuration -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<version>2.0.0.RELEASE</version>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+</project>

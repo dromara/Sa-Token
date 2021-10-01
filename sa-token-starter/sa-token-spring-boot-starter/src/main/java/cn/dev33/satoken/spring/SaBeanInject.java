@@ -16,6 +16,8 @@ import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.sso.SaSsoTemplate;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
 
 /**
@@ -124,6 +126,15 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaSsoTemplate(SaSsoTemplate saSsoTemplate) {
 		SaSsoUtil.saSsoTemplate = saSsoTemplate;
+	}
+
+	/**
+	 * 注入自定义的 StpLogic 
+	 * @param stpLogic / 
+	 */
+	@Autowired(required = false)
+	public void setStpLogic(StpLogic stpLogic) {
+		StpUtil.setStpLogic(stpLogic);
 	}
 	
 	/**
