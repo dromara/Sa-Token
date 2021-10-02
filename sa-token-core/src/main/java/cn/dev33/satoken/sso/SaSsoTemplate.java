@@ -409,7 +409,7 @@ public class SaSsoTemplate {
 	 * @author kong
 	 */
 	@FunctionalInterface
-	static interface CallSloUrlFunction{
+	public static interface CallSloUrlFunction{
 		/**
 		 * 调用function 
 		 * @param url 注销回调URL

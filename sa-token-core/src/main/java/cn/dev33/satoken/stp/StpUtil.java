@@ -812,6 +812,7 @@ public class StpUtil {
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
+	@Deprecated
 	public static void logoutByLoginId(Object loginId) {
 		stpLogic.kickout(loginId);
 	}
@@ -824,6 +825,7 @@ public class StpUtil {
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
+	@Deprecated
 	public static void logoutByLoginId(Object loginId, String device) {
 		stpLogic.kickout(loginId, device);
 	}

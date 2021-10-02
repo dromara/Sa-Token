@@ -239,9 +239,8 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test() {
-		System.out.println("进来了");
-		StpUtil.checkLogin();
-		return AjaxJson.getSuccess();
+		System.out.println("进来了"); 
+		return AjaxJson.getSuccess(); 
 	}
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test2

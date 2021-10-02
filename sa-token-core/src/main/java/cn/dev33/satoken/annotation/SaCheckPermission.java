@@ -33,4 +33,19 @@ public @interface SaCheckPermission {
      */
 	String type() default "";
 
+	/**
+	 * 在权限认证不通过时的次要选择，两者只要其一认证成功即可通过校验  
+	 * 
+	 * <p> 
+	 * 	例1：@SaCheckPermission(value="user-add", orRole="admin")，
+	 * 	代表本次请求只要具有 user-add权限 或 admin角色 其一即可通过校验 
+	 * </p>
+	 * 
+	 * <p> 
+	 * 	例2： orRole={"admin", "manager", "staff"}，具有三个角色其一即可 <br> 
+	 * 	例3： orRole={"admin, manager, staff"}，必须三个角色同时具备 
+	 * </p>
+	 */
+	String[] orRole() default {};
+	
 }

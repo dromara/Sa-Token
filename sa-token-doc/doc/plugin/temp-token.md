@@ -71,5 +71,5 @@ SaTempUtil.deleteToken(token);
 ``` java
 sa-token: 
 	# sa-token-temp-jwt 模块的秘钥 （随便乱摁几个字母就行了） 
-	jwt-secretkey: JfdDSgfCmPsDfmsAaQwnXk
+	jwt-secret-key: JfdDSgfCmPsDfmsAaQwnXk
 ```

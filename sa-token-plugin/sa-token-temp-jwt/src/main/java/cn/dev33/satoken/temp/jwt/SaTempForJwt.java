@@ -17,7 +17,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public String createToken(Object value, long timeout) {
-		String token = SaJwtUtil.createToken(value, timeout, getJwtSecretkey());
+		String token = SaJwtUtil.createToken(value, timeout, getJwtSecretKey());
 		return token;
 	}
 	
@@ -26,7 +26,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public Object parseToken(String token) {
-		Object value = SaJwtUtil.getValue(token, getJwtSecretkey());
+		Object value = SaJwtUtil.getValue(token, getJwtSecretKey());
 		return value;
 	}
 	
@@ -35,7 +35,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public long getTimeout(String token) {
-		long timeout = SaJwtUtil.getTimeout(token, getJwtSecretkey());
+		long timeout = SaJwtUtil.getTimeout(token, getJwtSecretKey());
 		return timeout;
 	}
 
@@ -52,7 +52,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 * @return jwt秘钥 
 	 */
 	@Override
-	public String getJwtSecretkey() {
+	public String getJwtSecretKey() {
 		String jwtSecretKey = SaManager.getConfig().getJwtSecretKey();
 		if(SaFoxUtil.isEmpty(jwtSecretKey)) {
 			throw new SaTokenException("请配置：jwtSecretKey");

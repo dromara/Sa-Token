@@ -83,7 +83,7 @@ public interface SaTempInterface {
 	/**
 	 * @return jwt秘钥 (只有集成 sa-token-temp-jwt 模块时此参数才会生效)  
 	 */
-	public default String getJwtSecretkey() {
+	public default String getJwtSecretKey() {
 		return null;
 	}
 	

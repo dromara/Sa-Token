@@ -1313,10 +1313,24 @@ public class StpLogic {
 	 */
 	public void checkByAnnotation(SaCheckPermission at) {
 		String[] permissionArray = at.value();
-		if(at.mode() == SaMode.AND) {
-			this.checkPermissionAnd(permissionArray);	
-		} else {
-			this.checkPermissionOr(permissionArray);	
+		try {
+			if(at.mode() == SaMode.AND) {
+				this.checkPermissionAnd(permissionArray);	
+			} else {
+				this.checkPermissionOr(permissionArray);	
+			}
+		} catch (NotPermissionException e) {
+			// 权限认证未通过，再开始角色认证 
+			if(at.orRole().length > 0) {
+				for (String role : at.orRole()) {
+					String[] rArr = SaFoxUtil.convertStringToArray(role);
+					// 某一项role认证通过，则可以提前退出了，代表通过 
+					if(hasRoleAnd(rArr)) {
+						return;
+					}
+				}
+			}
+			throw e;
 		}
 	}
 
