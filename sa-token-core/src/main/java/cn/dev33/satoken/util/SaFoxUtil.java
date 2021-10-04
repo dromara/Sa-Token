@@ -426,4 +426,29 @@ public class SaFoxUtil {
     	return String.join(",", arr);
     }
     
+    /**
+     * 返回一个空集合 
+     * @param <T> 集合类型 
+     * @return 空集合 
+     */
+    public static <T>List<T> emptyList() {
+    	return new ArrayList<>();
+    }
+
+    /**
+     * String数组转集合 
+     * @param strs String数组 
+     * @return 集合 
+     */
+    public static List<String> toList(String... strs) {
+    	List<String> list = new ArrayList<>();
+    	for (String str : strs) {
+    		list.add(str);
+		}
+    	return list;
+    }
+    
+    
+    
+    
 }

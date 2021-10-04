@@ -143,11 +143,11 @@ public class SaTokenPathFilter implements Filter {
     public void doFilter(Context ctx, FilterChain chain) throws Throwable {
         try {
             // 执行全局过滤器
-            SaRouter.match(includeList, excludeList, () -> {
-                beforeAuth.run(null);
+            SaRouter.match(includeList).notMatch(excludeList).check(r -> {
+            	beforeAuth.run(null);
                 auth.run(null);
             });
-
+            
         } catch (StopMatchException e) {
 			
 		} catch (Throwable e) {

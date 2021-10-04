@@ -38,7 +38,7 @@ public class SaResponseForSolon implements SaResponse {
 
 	@Override
 	public SaResponse setStatus(int sc) {
-		ctx.statusSet(sc);
+		ctx.status(sc);
 		return this;
 	}
 	

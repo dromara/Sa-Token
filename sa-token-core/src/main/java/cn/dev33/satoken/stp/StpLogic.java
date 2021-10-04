@@ -957,26 +957,46 @@ public class StpLogic {
  	
 	// ------------------- 角色验证操作 -------------------  
 
+	/**
+	 * 获取：当前账号的角色集合 
+	 * @return /
+	 */
+	public List<String> getRoleList() {
+		try {
+			return getRoleList(getLoginId());
+		} catch (NotLoginException e) {
+			return SaFoxUtil.emptyList();
+		}
+	}
+ 	
+	/**
+	 * 获取：指定账号的角色集合 
+	 * @param loginId 指定账号id 
+	 * @return /
+	 */
+	public List<String> getRoleList(Object loginId) {
+		return SaManager.getStpInterface().getRoleList(loginId, loginType);
+	}
+
  	/** 
- 	 * 判断：指定账号id是否含有指定角色标识, 返回true或false 
+ 	 * 判断：当前账号是否拥有指定角色, 返回true或false 
+ 	 * @param role 角色
+ 	 * @return / 
+ 	 */
+ 	public boolean hasRole(String role) {
+ 		return hasElement(getRoleList(), role);
+ 	}
+
+ 	/** 
+ 	 * 判断：指定账号是否含有指定角色标识, 返回true或false 
  	 * @param loginId 账号id
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
  	 */
  	public boolean hasRole(Object loginId, String role) {
- 		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
- 		return SaStrategy.me.hasElement.apply(roleList, role);
+ 		return hasElement(getRoleList(loginId), role);
  	}
  	
- 	/** 
- 	 * 判断：当前账号是否含有指定角色标识, 返回true或false 
- 	 * @param role 角色标识
- 	 * @return 是否含有指定角色标识
- 	 */
- 	public boolean hasRole(String role) {
- 		return isLogin() && hasRole(getLoginId(), role);
- 	}
-
  	/** 
  	 * 判断：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
  	 * @param roleArray 角色标识数组
@@ -1010,7 +1030,7 @@ public class StpLogic {
  	 * @param role 角色标识
  	 */
  	public void checkRole(String role) {
- 		if(!hasRole(role)) {
+ 		if(hasRole(role) == false) {
 			throw new NotRoleException(role, this.loginType);
 		}
  	}
@@ -1021,9 +1041,9 @@ public class StpLogic {
  	 */
  	public void checkRoleAnd(String... roleArray){
  		Object loginId = getLoginId();
- 		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
+ 		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
- 			if(!SaStrategy.me.hasElement.apply(roleList, role)) {
+ 			if(!hasElement(roleList, role)) {
  				throw new NotRoleException(role, this.loginType);
  			}
  		}
@@ -1035,10 +1055,10 @@ public class StpLogic {
  	 */
  	public void checkRoleOr(String... roleArray){
  		Object loginId = getLoginId();
- 		List<String> roleList = SaManager.getStpInterface().getRoleList(loginId, loginType);
+ 		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
- 			if(SaStrategy.me.hasElement.apply(roleList, role)) {
- 				// 有的话提前退出
+ 			if(hasElement(roleList, role)) {
+ 				// 有的话提前退出 
  				return;		
  			}
  		}
@@ -1047,18 +1067,38 @@ public class StpLogic {
 		}
  	}
 
- 	// -- 
-	/**
-	 * 返回当前账号所拥有的角色标识集合 
-	 * @return /
-	 */
-	public List<String> getRoleList() {
-		return SaManager.getStpInterface().getRoleList(getLoginId(), loginType);
-	}
-	
- 	
  	
 	// ------------------- 权限验证操作 -------------------  
+
+	/**
+	 * 获取：当前账号的权限码集合 
+	 * @return / 
+	 */
+	public List<String> getPermissionList() {
+		try {
+			return getPermissionList(getLoginId());
+		} catch (NotLoginException e) {
+			return SaFoxUtil.emptyList();
+		}
+	}
+
+	/**
+	 * 获取：指定账号的权限码集合 
+	 * @param loginId 指定账号id
+	 * @return / 
+	 */
+	public List<String> getPermissionList(Object loginId) {
+		return SaManager.getStpInterface().getPermissionList(loginId, loginType);
+	}
+
+ 	/** 
+ 	 * 判断：当前账号是否含有指定权限, 返回true或false 
+ 	 * @param permission 权限码
+ 	 * @return 是否含有指定权限
+ 	 */
+ 	public boolean hasPermission(String permission) {
+ 		return hasElement(getPermissionList(), permission);
+ 	}
 
  	/** 
  	 * 判断：指定账号id是否含有指定权限, 返回true或false 
@@ -1067,19 +1107,9 @@ public class StpLogic {
  	 * @return 是否含有指定权限
  	 */
  	public boolean hasPermission(Object loginId, String permission) {
- 		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
- 		return SaStrategy.me.hasElement.apply(permissionList, permission);
+ 		return hasElement(getPermissionList(loginId), permission);
  	}
  	
- 	/** 
- 	 * 判断：当前账号是否含有指定权限, 返回true或false 
- 	 * @param permission 权限码
- 	 * @return 是否含有指定权限
- 	 */
- 	public boolean hasPermission(String permission) {
- 		return isLogin() && hasPermission(getLoginId(), permission);
- 	}
-
  	/** 
  	 * 判断：当前账号是否含有指定权限, [指定多个，必须全部具有] 
  	 * @param permissionArray 权限码数组
@@ -1124,9 +1154,9 @@ public class StpLogic {
  	 */
  	public void checkPermissionAnd(String... permissionArray){
  		Object loginId = getLoginId();
- 		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
+ 		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
- 			if(!SaStrategy.me.hasElement.apply(permissionList, permission)) {
+ 			if(!hasElement(permissionList, permission)) {
  				throw new NotPermissionException(permission, this.loginType);	
  			}
  		}
@@ -1138,9 +1168,9 @@ public class StpLogic {
  	 */
  	public void checkPermissionOr(String... permissionArray){
  		Object loginId = getLoginId();
- 		List<String> permissionList = SaManager.getStpInterface().getPermissionList(loginId, loginType);
+ 		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
- 			if(SaStrategy.me.hasElement.apply(permissionList, permission)) {
+ 			if(hasElement(permissionList, permission)) {
  				// 有的话提前退出
  				return;		
  			}
@@ -1150,14 +1180,6 @@ public class StpLogic {
 		}
  	}
 
- 	// -- 
-	/**
-	 * 返回当前账号所拥有的权限码集合 
-	 * @return / 
-	 */
-	public List<String> getPermissionList() {
-		return SaManager.getStpInterface().getPermissionList(getLoginId(), loginType);
-	}
  	
 	
 	// ------------------- id 反查 token 相关操作 -------------------  
@@ -1574,7 +1596,15 @@ public class StpLogic {
 		return SaManager.getConfig();
 	}
 	
-	
+	/**
+	 * 判断：集合中是否包含指定元素（模糊匹配）
+	 * @param list 集合 
+	 * @param element 元素 
+	 * @return
+	 */
+	public boolean hasElement(List<String> list, String element) {
+		return SaStrategy.me.hasElement.apply(list, element);
+	}
 
 	// ------------------- 历史API，兼容旧版本 -------------------  
 

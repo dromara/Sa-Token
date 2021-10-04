@@ -397,8 +397,34 @@ public class StpUtil {
  	
 	// =================== 角色验证操作 ===================  
 
+	/**
+	 * 获取：当前账号的角色集合 
+	 * @return /
+	 */
+	public static List<String> getRoleList() {
+		return stpLogic.getRoleList();
+	}
+
+	/**
+	 * 获取：指定账号的角色集合 
+	 * @param loginId 指定账号id 
+	 * @return /
+	 */
+	public static List<String> getRoleList(Object loginId) {
+		return stpLogic.getRoleList(loginId);
+	}
+
  	/** 
- 	 * 判断：指定账号id是否含有角色标识, 返回true或false 
+ 	 * 判断：当前账号是否拥有指定角色, 返回true或false 
+ 	 * @param role 角色标识
+ 	 * @return 是否含有指定角色标识
+ 	 */
+ 	public static boolean hasRole(String role) {
+ 		return stpLogic.hasRole(role);
+ 	}
+
+ 	/** 
+ 	 * 判断：指定账号是否含有指定角色标识, 返回true或false 
  	 * @param loginId 账号id
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
@@ -407,15 +433,6 @@ public class StpUtil {
  		return stpLogic.hasRole(loginId, role);
  	}
  	
- 	/** 
- 	 * 判断：当前账号是否含有指定角色标识, 返回true或false 
- 	 * @param role 角色标识
- 	 * @return 是否含有指定角色标识
- 	 */
- 	public static boolean hasRole(String role) {
- 		return stpLogic.hasRole(role);
- 	}
-
  	/** 
  	 * 判断：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
  	 * @param roleArray 角色标识数组
@@ -458,26 +475,24 @@ public class StpUtil {
  		stpLogic.checkRoleOr(roleArray);
  	}
 
- 	// -- 
-	/**
-	 * 返回当前账号所拥有的角色标识集合 
-	 * @return /
-	 */
-	public static List<String> getRoleList() {
-		return stpLogic.getRoleList();
-	}
-	
 	
 	// =================== 权限验证操作 ===================
 
- 	/** 
- 	 * 判断：指定账号id是否含有指定权限, 返回true或false 
- 	 * @param loginId 账号id
- 	 * @param permission 权限码
- 	 * @return 是否含有指定权限
- 	 */
-	public static boolean hasPermission(Object loginId, String permission) {
-		return stpLogic.hasPermission(loginId, permission);
+	/**
+	 * 获取：当前账号的权限码集合 
+	 * @return / 
+	 */
+	public static List<String> getPermissionList() {
+		return stpLogic.getPermissionList();
+	}
+
+	/**
+	 * 获取：指定账号的权限码集合 
+	 * @param loginId 指定账号id
+	 * @return / 
+	 */
+	public static List<String> getPermissionList(Object loginId) {
+		return stpLogic.getPermissionList(loginId);
 	}
 
  	/** 
@@ -487,6 +502,16 @@ public class StpUtil {
  	 */
 	public static boolean hasPermission(String permission) {
 		return stpLogic.hasPermission(permission);
+	}
+
+ 	/** 
+ 	 * 判断：指定账号id是否含有指定权限, 返回true或false 
+ 	 * @param loginId 账号id
+ 	 * @param permission 权限码
+ 	 * @return 是否含有指定权限
+ 	 */
+	public static boolean hasPermission(Object loginId, String permission) {
+		return stpLogic.hasPermission(loginId, permission);
 	}
 
  	/** 
@@ -531,15 +556,6 @@ public class StpUtil {
 		stpLogic.checkPermissionOr(permissionArray);
 	}
 
- 	// -- 
-	/**
-	 * 返回当前账号所拥有的权限码集合 
-	 * @return / 
-	 */
-	public static List<String> getPermissionList() {
-		return stpLogic.getPermissionList();
-	}
- 	
 
 	// =================== id 反查token 相关操作 ===================  
 	

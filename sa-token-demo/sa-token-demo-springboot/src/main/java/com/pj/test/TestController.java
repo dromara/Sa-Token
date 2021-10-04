@@ -248,6 +248,7 @@ public class TestController {
 	public AjaxJson test2() {
 		return AjaxJson.getSuccess();
 	}
+	
 
 
 }

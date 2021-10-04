@@ -155,7 +155,7 @@ public class SaServletFilter implements Filter {
 		
 		try {
 			// 执行全局过滤器 
-			SaRouter.match(includeList, excludeList, () -> {
+			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
 				beforeAuth.run(null);
 				auth.run(null);
 			});

@@ -20,7 +20,17 @@ import cn.dev33.satoken.util.SaFoxUtil;
 public class SaSession implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 在 Session 上存储角色时建议使用的key 
+	 */
+	public static final String ROLE_LIST = "ROLE_LIST";
 
+	/**
+	 * 在 Session 上存储权限时建议使用的key 
+	 */
+	public static final String PERMISSION_LIST = "PERMISSION_LIST";
+	
 	/** 此Session的id */
 	private String id;
 
