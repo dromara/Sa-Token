@@ -133,7 +133,7 @@ public class SaTokenJwtUtil {
     			String tokenValue = createTokenValue(loginId);
     			storage.set(splicingKeyJustCreatedSave(), tokenValue);	// 将token保存到本次request里  
     			if(config.getIsReadCookie() == true){	// cookie注入 
-    				SaManager.getSaTokenContext().getResponse().addCookie(getTokenName(), tokenValue, "/", config.getCookieDomain(), (int)config.getTimeout());		
+    				SaManager.getSaTokenContext().getResponse().addCookie(getTokenName(), tokenValue, "/", config.getCookie().getDomain(), (int)config.getTimeout());		
     			}
     		}
     		

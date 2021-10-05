@@ -2,12 +2,10 @@ package cn.dev33.satoken.servlet.model;
 
 import java.io.IOException;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Response for Servlet
@@ -38,33 +36,6 @@ public class SaResponseForServlet implements SaResponse {
 	}
 
 	/**
-	 * 删除指定Cookie 
-	 */
-	@Override
-	public void deleteCookie(String name) {
-		addCookie(name, null, null, null, 0, false, false);
-	}
-
-	/**
-	 * 写入指定Cookie
-	 */
-	@Override
-	public void addCookie(String name, String value, String path, String domain, int timeout, boolean isHttpOnly, boolean isSecure) {
-		Cookie cookie = new Cookie(name, value);
-		if(SaFoxUtil.isEmpty(path) == true) {
-			path = "/";
-		}
-		if(SaFoxUtil.isEmpty(domain) == false) {
-			cookie.setDomain(domain);
-		}
-		cookie.setPath(path);
-		cookie.setMaxAge(timeout);
-		cookie.setHttpOnly(isHttpOnly);
-		cookie.setSecure(isSecure);
-		response.addCookie(cookie);
-	}
-
-	/**
 	 * 设置响应状态码 
 	 */
 	@Override
@@ -82,6 +53,17 @@ public class SaResponseForServlet implements SaResponse {
 		return this;
 	}
 
+	/**
+	 * 在响应头里添加一个值 
+	 * @param name 名字
+	 * @param value 值 
+	 * @return 对象自身 
+	 */
+	public SaResponse addHeader(String name, String value) {
+		response.addHeader(name, value);
+		return this;
+	}
+	
 	/**
 	 * 重定向 
 	 */

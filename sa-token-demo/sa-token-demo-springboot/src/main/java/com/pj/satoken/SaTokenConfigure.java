@@ -37,7 +37,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册注解拦截器 
-		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**").excludePathPatterns("");
+		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
 	}
 	
 	/**

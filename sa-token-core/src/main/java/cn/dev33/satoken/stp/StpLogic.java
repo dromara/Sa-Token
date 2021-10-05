@@ -12,10 +12,11 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.annotation.SaMode;
+import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.context.model.SaCookie;
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.DisableLoginException;
@@ -110,12 +111,30 @@ public class StpLogic {
 			storage.set(splicingKeyJustCreatedSave(), tokenValue);	
 		}
 		
-		// 2. 将token保存到[Cookie]里 
+		// 2. 将 Token 保存到 [Cookie] 里 
 		if (config.getIsReadCookie()) {
-			SaResponse response = SaHolder.getResponse();
-			response.addCookie(getTokenName(), tokenValue, "/", 
-					config.getCookieDomain(), cookieTimeout, config.getIsCookieHttpOnly(), config.getIsCookieSecure());
+			setTokenValueToCookie(tokenValue, cookieTimeout);
 		}
+	}
+	
+ 	/**
+ 	 * 将 Token 保存到 [Cookie] 里 
+ 	 * @param tokenValue token值 
+ 	 * @param cookieTimeout Cookie存活时间(秒)
+ 	 */
+	public void setTokenValueToCookie(String tokenValue, int cookieTimeout){
+		SaCookieConfig cfg = getConfig().getCookie();
+		SaCookie cookie = new SaCookie()
+				.setName(getTokenName())
+				.setValue(tokenValue)
+				.setMaxAge(cookieTimeout)
+				.setDomain(cfg.getDomain())
+				.setPath(cfg.getPath())
+				.setSecure(cfg.getSecure())
+				.setHttpOnly(cfg.getHttpOnly())
+				.setSameSite(cfg.getSameSite())
+				;
+		SaHolder.getResponse().addCookie(cookie);
 	}
  	
 	/**

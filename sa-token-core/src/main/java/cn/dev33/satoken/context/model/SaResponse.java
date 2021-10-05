@@ -17,7 +17,9 @@ public interface SaResponse {
 	 * 删除指定Cookie 
 	 * @param name Cookie名称
 	 */
-	public void deleteCookie(String name);
+	public default void deleteCookie(String name) {
+		addCookie(name, null, null, null, 0);
+	}
 
 	/**
 	 * 写入指定Cookie
@@ -28,21 +30,17 @@ public interface SaResponse {
 	 * @param timeout  过期时间 （秒）
 	 */
 	public default void addCookie(String name, String value, String path, String domain, int timeout) {
-		this.addCookie(name, value, path, domain, timeout, false, false);
+		this.addCookie(new SaCookie(name, value).setPath(path).setDomain(domain).setMaxAge(timeout)); 
 	}
 	
 	/**
 	 * 写入指定Cookie
-	 * @param name     Cookie名称
-	 * @param value    Cookie值
-	 * @param path     Cookie路径
-	 * @param domain   Cookie的作用域
-	 * @param timeout  过期时间 （秒）
-	 * @param isHttpOnly 是否为HttpOnly
-	 * @param isSecure 是否为Secure
+	 * @param cookie Cookie-Model
 	 */
-	public void addCookie(String name, String value, String path, String domain, int timeout, boolean isHttpOnly, boolean isSecure);
-
+	public default void addCookie(SaCookie cookie) {
+		this.addHeader(SaCookie.HEADER_NAME, cookie.toHeaderValue());
+	}
+	
 	/**
 	 * 设置响应状态码
 	 * @param sc 响应状态码
@@ -57,6 +55,14 @@ public interface SaResponse {
 	 * @return 对象自身 
 	 */
 	public SaResponse setHeader(String name, String value);
+
+	/**
+	 * 在响应头里添加一个值 
+	 * @param name 名字
+	 * @param value 值 
+	 * @return 对象自身 
+	 */
+	public SaResponse addHeader(String name, String value);
 	
 	/**
 	 * 在响应头写入 [Server] 服务器名称 

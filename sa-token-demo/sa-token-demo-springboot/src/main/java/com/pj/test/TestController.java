@@ -239,7 +239,7 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test() {
-		System.out.println("进来了"); 
+		System.out.println("------------进来了"); 
 		return AjaxJson.getSuccess(); 
 	}
 	
@@ -249,6 +249,4 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 	
-
-
 }
