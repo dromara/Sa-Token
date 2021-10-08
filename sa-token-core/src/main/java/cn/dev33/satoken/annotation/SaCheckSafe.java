@@ -15,4 +15,10 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD, ElementType.TYPE })
 public @interface SaCheckSafe {
 
+    /**
+     * 多账号体系下所属的账号体系标识 
+     * @return see note 
+     */
+	String type() default "";
+
 }

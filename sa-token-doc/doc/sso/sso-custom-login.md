@@ -80,15 +80,14 @@ if(res.code == 401) {
 #### 方式二：在配置中配置登录视图地址 
 
 ``` java
-cfg.sso
 // 配置：未登录时返回的View 
-.setNotLoginView(() -> {
+cfg.sso.setNotLoginView(() -> {
 	return new ModelAndView("xxx.html");
 })
 ```
 
 
-### 3、如何自定义登录API的接口？
+### 3、如何自定义登录API的接口地址？
 根据需求点选择解决方案：
 
 #### 3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？

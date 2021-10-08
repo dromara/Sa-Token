@@ -443,7 +443,7 @@ public class StpLogic {
 	 * @param appendFun 追加操作 
 	 * @param isLogoutSession 是否注销 User-Session 
 	 */
-	private void clearTokenCommonMethod(Object loginId, String device, Consumer<String> appendFun, boolean isLogoutSession) {
+	protected void clearTokenCommonMethod(Object loginId, String device, Consumer<String> appendFun, boolean isLogoutSession) {
 		// 1. 如果此账号尚未登录，则不执行任何操作 
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {

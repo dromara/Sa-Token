@@ -48,6 +48,9 @@ public class SaSsoConsts {
 		/** back参数名称 */
 		public static String back = "back";
 
+		/** mode参数名称 */
+		public static String mode = "mode";
+		
 		/** loginId参数名称 */
 		public static String loginId = "loginId";
 
@@ -70,6 +73,12 @@ public class SaSsoConsts {
 
 	/** 表示自己 */
 	public static final String SELF = "self";
+
+	/** 表示简单模式（SSO模式一） */
+	public static final String MODE_SIMPLE = "simple";
+
+	/** 表示ticket模式（SSO模式二和模式三） */
+	public static final String MODE_TICKET = "ticket";
 	
 	/** 表示请求没有得到任何有效处理 {msg: "not handle"} */
 	public static final String NOT_HANDLE = "{\"msg\": \"not handle\"}";

@@ -34,6 +34,7 @@
 
 - **单点登录**
 	- [单点登录简述](/sso/readme)
+	- [搭建统一认证中心：SSO-Server](/sso/sso-server)
 	- [SSO模式一 共享Cookie同步会话](/sso/sso-type1)
 	- [SSO模式二 URL重定向传播会话](/sso/sso-type2)
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)

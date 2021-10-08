@@ -13,6 +13,7 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -115,34 +116,35 @@ public class SaTokenActionDefaultImpl implements SaTokenAction {
 	public void validateAnnotation(AnnotatedElement target) {
 		
 		// 校验 @SaCheckLogin 注解 
-		if(target.isAnnotationPresent(SaCheckLogin.class)) {
-			SaCheckLogin at = target.getAnnotation(SaCheckLogin.class);
-			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.me.getAnnotation.apply(target, SaCheckLogin.class);
+		if(checkLogin != null) {
+			SaManager.getStpLogic(checkLogin.type()).checkByAnnotation(checkLogin);
 		}
-
+		
 		// 校验 @SaCheckRole 注解 
-		if(target.isAnnotationPresent(SaCheckRole.class)) {
-			SaCheckRole at = target.getAnnotation(SaCheckRole.class);
-			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		SaCheckRole checkRole = (SaCheckRole) SaStrategy.me.getAnnotation.apply(target, SaCheckRole.class);
+		if(checkRole != null) {
+			SaManager.getStpLogic(checkRole.type()).checkByAnnotation(checkRole);
 		}
-
+		
 		// 校验 @SaCheckPermission 注解
-		if(target.isAnnotationPresent(SaCheckPermission.class)) {
-			SaCheckPermission at = target.getAnnotation(SaCheckPermission.class);
-			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
+		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.me.getAnnotation.apply(target, SaCheckPermission.class);
+		if(checkPermission != null) {
+			SaManager.getStpLogic(checkPermission.type()).checkByAnnotation(checkPermission);
 		}
 
 		// 校验 @SaCheckSafe 注解
-		if(target.isAnnotationPresent(SaCheckSafe.class)) {
-			SaCheckSafe at = target.getAnnotation(SaCheckSafe.class);
-			SaManager.getStpLogic(null).checkByAnnotation(at);
+		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.me.getAnnotation.apply(target, SaCheckSafe.class);
+		if(checkSafe != null) {
+			SaManager.getStpLogic(checkSafe.type()).checkByAnnotation(checkSafe);
 		}
-
+		
 		// 校验 @SaCheckBasic 注解
-		if(target.isAnnotationPresent(SaCheckBasic.class)) {
-			SaCheckBasic at = target.getAnnotation(SaCheckBasic.class);
-			SaBasicUtil.check(at.realm(), at.account());
+		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.me.getAnnotation.apply(target, SaCheckBasic.class);
+		if(checkBasic != null) {
+			SaBasicUtil.check(checkBasic.realm(), checkBasic.account());
 		}
+		
 	}
 	
 }

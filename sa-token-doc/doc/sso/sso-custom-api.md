@@ -18,7 +18,7 @@ public class SsoServerController {
 		return SaSsoHandle.serverRequest();
 	}
 	
-	// ... 其它方法 
+	// ... 其它代码
 	
 }
 ```

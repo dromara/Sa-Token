@@ -328,14 +328,17 @@ public class SaSsoTemplate {
 	 * @param fun 调用方法 
 	 */
 	public void forEachSloUrl(Object loginId, CallSloUrlFunction fun) {
+		SaSession session = stpLogic.getSessionByLoginId(loginId, false);
+		if(session == null) {
+			return;
+		}
+
 		String secretkey = SaManager.getConfig().getSso().getSecretkey();
-		Set<String> urlSet = stpLogic.getSessionByLoginId(loginId).get(SaSsoConsts.SLO_CALLBACK_SET_KEY,
-				() -> new HashSet<String>());
-		
+		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, () -> new HashSet<String>());
 		for (String url : urlSet) {
 			// 拼接：login参数、秘钥参数
 			url = SaFoxUtil.joinParam(url, ParamName.loginId, loginId);
-			url = SaFoxUtil.joinParam(url, ParamName.secretkey, secretkey);
+			url = SaFoxUtil.joinParam(url, ParamName.secretkey, secretkey); 
 			// 调用 
 			fun.run(url);
 		}

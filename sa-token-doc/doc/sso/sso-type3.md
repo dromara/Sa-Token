@@ -5,7 +5,7 @@
 > 阅读本篇之前请务必先熟读SSO模式二！因为模式三仅仅属于模式二的一个特殊场景，熟读模式二有助于您快速理解本章内容
 
 
-### 0、问题分析
+### 1、问题分析
 我们先来分析一下，当后端不使用共享 Redis 时，会对架构产生哪些影响：
 
 1. Client 端无法直连 Redis 校验 ticket，取出账号id。
@@ -14,72 +14,59 @@
 
 所以模式三的主要目标：也就是在 模式二的基础上 解决上述 三个难题 
 
-> 模式三的 Demo 示例地址：
-> 
-> - SSO-Server 端：`/sa-token-demo/sa-token-demo-sso3-server/` [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso3-server) <br/>
-> - SSO-Client 端：`/sa-token-demo/sa-token-demo-sso3-client/` [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso3-client) <br/>
-> 
-> 如遇难点可参考示例
+> 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso3-client/` 
+> [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso3-client)，如遇难点可参考示例 
 
 
-### 1、SSO-Server 认证中心开放 Ticket 校验接口
-既然 Client 端无法直连 Redis 校验 Ticket，那我们就在 Server 端开放 Ticket 校验接口，然后 Client 端通过 http 请求获取数据。
+### 2、在Client 端更改 Ticket 校验方式
 
-#### 1.1、添加依赖
-首先在 Server 端和 Client 端均添加以下依赖（如果不需要单点注销功能则 Server 端可不引入）
+#### 2.1、增加 pom.xml 配置 
 ``` xml
 <!-- Http请求工具 -->
 <dependency>
-	 <groupId>com.ejlchina</groupId>
-	 <artifactId>okhttps</artifactId>
-	 <version>3.1.1</version>
+     <groupId>com.ejlchina</groupId>
+     <artifactId>okhttps</artifactId>
+     <version>3.1.1</version>
 </dependency>
 ```
 > OkHttps是一个轻量级http请求工具，详情参考：[OkHttps](https://gitee.com/ejlchina-zhxu/okhttps)
 
-#### 1.2、认证中心开放接口
-在 SSO-Server 端的 `application.yml` 中，新增以下配置：
-``` yml
-sa-token: 
-    sso: 
-        # 使用Http请求校验ticket 
-        is-http: true
-```
-此配置项的作用是开放ticket校验接口，让Client端通过http请求获取会话
-
-#### 1.3、Client端新增配置
+#### 2.2、配置 http 请求处理器 
 在SSO-Client端的 `SsoClientController` 中，新增以下配置
 ``` java
 // 配置SSO相关参数 
 @Autowired
 private void configSso(SaTokenConfig cfg) {
-	cfg.sso
-		// 配置 Http 请求处理器
-		.setSendHttp(url -> {
-			return OkHttps.sync(url).get().getBody().toString();
-		})
-		;
+	// ... 其他代码
+	
+	// 配置 Http 请求处理器
+	cfg.sso.setSendHttp(url -> {
+		return OkHttps.sync(url).get().getBody().toString();
+	});
 }
 ```
 
+#### 2.3、application.yml 新增配置
 ``` yml
 sa-token: 
 	sso: 
-        # 使用Http请求校验ticket 
+        # 打开模式三（使用Http请求校验ticket）
         is-http: true
 		# SSO-Server端 ticket校验地址 
 		check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
 ```
 
-#### 1.4、启动项目测试
-启动SSO-Server、SSO-Client，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+#### 2.4、启动项目测试
+重启项目，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
 > 注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰
 
 
-### 2、获取 Userinfo 
-除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的同步。要解决这个需求，我们只需：
+### 3、获取 Userinfo 
+除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的同步。
 
-#### 2.1、在 Server 端自定义接口，查询用户资料
+在模式二中我们只需要将需要同步的资料放到 SaSession 即可，但是在模式三中两端不再连接同一个Redis，这时候我们需要通过http接口来同步信息：
+
+#### 3.1、在 Server 端自定义接口，查询用户资料
 ``` java
 // 自定义接口：获取userinfo 
 @RequestMapping("/sso/userinfo")
@@ -98,7 +85,7 @@ public Object userinfo(String loginId, String secretkey) {
 }
 ```
 
-#### 2.2、在 Client 端调用此接口查询 userinfo
+#### 3.2、在 Client 端调用此接口查询 userinfo
 首先在yml中配置接口地址 
 ``` yml
 sa-token: 
@@ -122,7 +109,7 @@ public Object myinfo() {
 
 
 
-### 3、无刷单点注销
+### 4、无刷单点注销
 
 有了单点登录就必然要有单点注销，网上给出的大多数解决方案是将注销请求重定向至SSO-Server中心，逐个通知Client端下线
 
@@ -137,34 +124,7 @@ public Object myinfo() {
 
 这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文章增加以下配置即可：
 
-#### 2.1、SSO-Server认证中心增加配置 
-在 `SsoServerController` 中新增配置 
-``` java
-// 配置SSO相关参数 
-@Autowired
-private void configSso(SaTokenConfig cfg) {
-	cfg.sso
-		// ... (其它配置保持不变) 
-		// 配置Http请求处理器
-		.setSendHttp(url -> {
-			// 此处为了提高响应速度这里可将sync换为async 
-			return OkHttps.sync(url).get();
-		})
-		;
-}
-```
-
-并在 `application.yml` 下新增配置：
-``` yml
-sa-token: 
-	sso: 
-        # 打开单点注销功能 
-        is-slo: true
-		# API调用秘钥（用于SSO模式三的单点注销功能）
-		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
-```
-
-#### 2.2、SSO-Client 端新增配置 
+#### 4.1、SSO-Client 端新增配置 
 
 在 `application.yml` 增加配置：`API调用秘钥` 和 `单点注销接口URL`。
 ``` yml
@@ -177,9 +137,11 @@ sa-token:
 		# 接口调用秘钥 
 		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
+注意 secretkey 秘钥需要与SSO认证中心的一致 
 
-#### 2.3 启动测试 
-启动SSO-Server、SSO-Client，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，
+
+#### 4.2 启动测试 
+重启项目，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，
 我们主要的测试点在于 `单点注销`，正常登录即可。
 
 ![sso-type3-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-client-index.png 's-w-sh')

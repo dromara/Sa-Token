@@ -44,12 +44,10 @@ public class SsoClientController {
 	// 配置SSO相关参数 
 	@Autowired
 	private void configSso(SaTokenConfig cfg) {
-		cfg.sso
-			// 配置Http请求处理器 
-			.setSendHttp(url -> {
-				return OkHttps.sync(url).get().getBody().toString();
-			})
-			;
+		// 配置Http请求处理器 
+		cfg.sso.setSendHttp(url -> {
+			return OkHttps.sync(url).get().getBody().toString();
+		});
 	}
 	
 	// 查询我的账号信息 

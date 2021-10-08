@@ -6,9 +6,9 @@ server:
 sa-token: 
     # SSO-相关配置
     sso: 
-        # SSO-Server端 单点登录地址 
+        # SSO-Server端-单点登录授权地址 
         auth-url: http://sso.stp.com:9000/sso/auth
-        # SSO-Server端 单点注销地址
+        # SSO-Server端-单点注销地址
         slo-url: http://sso.stp.com:9000/sso/logout
     
     # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）

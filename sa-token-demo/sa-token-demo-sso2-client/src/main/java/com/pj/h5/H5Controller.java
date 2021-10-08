@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -33,7 +34,7 @@ public class H5Controller {
 	// 根据ticket进行登录 
 	@RequestMapping("/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = checkTicket(ticket);
+		Object loginId = SaSsoHandle.checkTicket(ticket, "/doLoginByTicket");
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());
@@ -41,11 +42,6 @@ public class H5Controller {
 		return SaResult.error("无效ticket：" + ticket); 
 	}
 
-	// 校验 Ticket码，获取账号Id 
-	private Object checkTicket(String ticket) {
-		return SaSsoUtil.checkTicket(ticket);
-	}
-	
 	// 全局异常拦截 
 	@ExceptionHandler
 	public SaResult handlerException(Exception e) {

@@ -1,5 +1,6 @@
 package cn.dev33.satoken.strategy;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -24,6 +25,7 @@ import cn.dev33.satoken.session.SaSession;
  * </p>
  * 
  * @author kong
+ * @param <T>
  *
  */
 @SuppressWarnings("deprecation")
@@ -80,12 +82,22 @@ public final class SaStrategy {
 
 	/**
 	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现） 
-	 * <p> 参数 [target元素] 
+	 * <p> 参数 [element元素] 
 	 */
 	public Consumer<AnnotatedElement> checkElementAnnotation = (element) -> {
+		// 为了兼容旧版本 
 		SaManager.getSaTokenAction().validateAnnotation(element);
 	};
 
+	/**
+	 * 从元素上获取注解（注解鉴权内部实现） 
+	 * <p> 参数 [element元素，要获取的注解类型] 
+	 */
+	public BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation = (element, annotationClass)->{
+		// 默认使用jdk的注解处理器 
+		return element.getAnnotation(annotationClass);
+	};
+	
 
 	// 
 	// 重写策略 set连缀风格 
@@ -137,12 +149,23 @@ public final class SaStrategy {
 
 	/**
 	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现） 
-	 * <p> 参数 [target元素] 
+	 * <p> 参数 [element元素] 
 	 * @param checkElementAnnotation / 
 	 * @return 对象自身 
 	 */
 	public SaStrategy setCheckElementAnnotation(Consumer<AnnotatedElement> checkElementAnnotation) {
 		this.checkElementAnnotation = checkElementAnnotation;
+		return this;
+	}
+
+	/**
+	 * 从元素上获取注解（注解鉴权内部实现） 
+	 * <p> 参数 [element元素，要获取的注解类型] 
+	 * @param getAnnotation / 
+	 * @return 对象自身 
+	 */
+	public SaStrategy setGetAnnotation(BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation) {
+		this.getAnnotation = getAnnotation;
 		return this;
 	}
 	
