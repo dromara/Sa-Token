@@ -21,10 +21,10 @@ StpUtil.login(10001, "PC");
 
 #### 指定设备标识强制注销
 ``` java
-// 指定`账号id`和`设备标识`进行强制注销 (踢人下线)
-StpUtil.logoutByLoginId(10001, "PC");	
+// 指定`账号id`和`设备标识`进行强制注销 
+StpUtil.logout(10001, "PC");	
 ```
-如果第二个参数填写null或不填，代表将这个账号id所有在线端踢下线，被踢出者再次访问系统时会抛出 `NotLoginException` 异常，场景值=`-5`
+如果第二个参数填写null或不填，代表将这个账号id所有在线端强制注销，被踢出者再次访问系统时会抛出 `NotLoginException` 异常，场景值=`-2`
 
 
 #### 查询当前登录的设备标识
@@ -40,5 +40,3 @@ StpUtil.getLoginDevice();
 StpUtil.getTokenValueByLoginId(10001, "APP");	
 ```
 
-
-> 不同设备账号在登录时设置不同的token有效期等信息, 详见[登录时指定token有效期](/up/remember-me?id=登录时指定token有效期)

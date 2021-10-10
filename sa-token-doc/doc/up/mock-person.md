@@ -14,8 +14,8 @@ Sa-Token在api设计时充分考虑了这一点，暴露出多个api进行此类
 // 获取指定账号10001的`tokenValue`值 
 StpUtil.getTokenValueByLoginId(10001);
 
-// 将账号10001的会话注销登录（踢人下线）
-StpUtil.logoutByLoginId(10001);
+// 将账号10001的会话注销登录
+StpUtil.logout(10001);
 
 // 获取账号10001的Session对象, 如果session尚未创建, 则新建并返回
 StpUtil.getSessionByLoginId(10001);

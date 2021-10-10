@@ -1,4 +1,4 @@
-# 多账号验证
+# 多账号认证
 --- 
 
 ### 0、需求场景
@@ -80,48 +80,20 @@ public String info() {
 
 我们期待一种`[注解继承/合并]`的能力，即：自定义一个注解，标注上`@SaCheckLogin(type = "user")`，然后在方法上标注这个自定义注解，效果等同于标注`@SaCheckLogin(type = "user")`
 
-很遗憾，JDK默认的注解处理器并没有提供这种`[注解继承/合并]`的能力，不过好在我们可以利用Spring的注解处理器，达到同样的目的
+很遗憾，JDK默认的注解处理器并没有提供这种`[注解继承/合并]`的能力，不过好在我们可以利用 Spring 的注解处理器，达到同样的目的
 
 1. 重写Sa-Token默认的注解处理器
 
 ``` java
-/**
- * 继承Sa-Token行为Bean默认实现, 重写部分逻辑 
- */
-@Component
-public class MySaTokenAction extends SaTokenActionDefaultImpl {
-
-	/**
-	 * 重写Sa-Token的注解处理器，加强注解合并功能 
-	 */
-	@Override
-	protected void validateAnnotation(AnnotatedElement target) {
-		
-		// 校验 @SaCheckLogin 注解 
-		if(AnnotatedElementUtils.isAnnotated(target, SaCheckLogin.class)) {
-			SaCheckLogin at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckLogin.class);
-			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
-		}
-
-		// 校验 @SaCheckRole 注解 
-		if(AnnotatedElementUtils.isAnnotated(target, SaCheckRole.class)) {
-			SaCheckRole at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckRole.class);
-			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
-		}
-
-		// 校验 @SaCheckPermission 注解
-		if(AnnotatedElementUtils.isAnnotated(target, SaCheckPermission.class)) {
-			SaCheckPermission at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckPermission.class);
-			SaManager.getStpLogic(at.type()).checkByAnnotation(at);
-		}
-
-		// 校验 @SaCheckSafe 注解
-		if(AnnotatedElementUtils.isAnnotated(target, SaCheckSafe.class)) {
-			SaCheckSafe at = AnnotatedElementUtils.getMergedAnnotation(target, SaCheckSafe.class);
-			SaManager.getStpLogic(null).checkByAnnotation(at);
-		}
-	}
-	
+@Configuration
+public class SaTokenConfigure {
+    @Autowired
+    public void rewriteSaStrategy() {
+    	// 重写Sa-Token的注解处理器，增加注解合并功能 
+		SaStrategy.me.getAnnotation = (element, annotationClass) -> {
+			return AnnotatedElementUtils.getMergedAnnotation(element, annotationClass); 
+		};
+    }
 }
 ```
 
@@ -184,6 +156,3 @@ public class StpUserUtil {
 
 再次调用 `StpUserUtil.login(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`
 
-
-
-> 不同体系账号在登录时设置不同的token有效期等信息，详见[登录时指定token有效期](/up/remember-me?id=登录时指定token有效期)

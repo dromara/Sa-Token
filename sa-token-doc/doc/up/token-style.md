@@ -37,27 +37,24 @@ Sa-Token默认的token生成策略是uuid风格，其模样类似于：`623368f0
 
 如果你觉着以上风格都不是你喜欢的类型，那么你还可以**自定义token生成策略**，来定制化token生成风格 <br>
 
-怎么做呢？只需要重写`SaTokenAction`接口的`createToken`方法即可
+怎么做呢？只需要重写 `SaStrategy` 策略类的 `createToken` 算法即可
 
 
 #### 参考步骤如下：
-1、新建文件`MySaTokenAction.java`，继承`SaTokenActionDefaultImpl`默认实现类, 并添加上注解`@Component`，保证此类被`springboot`扫描到
+1、在`SaTokenConfigure`配置类中添加代码：
 ``` java 
-package com.pj.satoken;
-
-import org.springframework.stereotype.Component;
-import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
-
-/**
- * 继承Sa-Token行为Bean默认实现, 重写部分逻辑 
- */
-@Component
-public class MySaTokenAction extends SaTokenActionDefaultImpl {
-	// 重写token生成策略 
-	@Override
-	public String createToken(Object loginId, String loginType) {
-		return SaFoxUtil.getRandomString(60);	// 随机60位字符串
-	}
+@Configuration
+public class SaTokenConfigure {
+    /**
+     * 重写 Sa-Token 框架内部算法策略 
+     */
+    @Autowired
+    public void rewriteSaStrategy() {
+    	// 重写 Token 生成策略 
+    	SaStrategy.me.createToken = (loginId, loginType) -> {
+    		return SaFoxUtil.getRandomString(60);	// 随机60位长度字符串
+    	};
+    }
 }
 ```
 
@@ -67,42 +64,3 @@ gfuPSwZsnUhwgz08GTCH4wOgasWtc3odP4HLwXJ7NDGOximTvT4OlW19zeLH
 ```
 
 
-
-<!-- ## 以雪花算法生成token
-在此再举一个例子，以`自定义token生成策略`的方式集成`雪花算法`来生成token -->
-
-<!-- 1、首先我们需要找一个合适的类库，帮助我们生成雪花算法唯一id，在此推荐 [Hutool](https://hutool.cn/docs/#/) ，在`pom.xml`里添加依赖：
-``` xml
-Hutool 一个小而全的Java工具类库
-<dependency>
-	<groupId>cn.hutool</groupId>
-	<artifactId>hutool-all</artifactId>
-	<version>5.5.4</version>
-</dependency>
-``` -->
-
-<!-- 2、同上，我们需要新建文件`MySaTokenAction.java`，继承`SaTokenActionDefaultImpl`默认实现类, 并添加上注解`@Component`，保证此类被`springboot`扫描到 
-``` java 
-package com.pj.satoken;
-
-import org.springframework.stereotype.Component;
-import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
-import cn.hutool.core.util.IdUtil;
-	
-/**
- * 继承Sa-Token行为Bean默认实现, 重写部分逻辑 
- */
-@Component
-public class MySaTokenAction extends SaTokenActionDefaultImpl {
-	// 重写token生成策略 
-	@Override
-	public String createToken(Object loginId, String loginType) {
-		return IdUtil.getSnowflake(1, 1).nextIdStr();	// 以雪花算法生成token 
-	}
-}
-``` -->
-
-<!-- 3、再次调用 `StpUtil.login(10001)`方法进行登录，观察其生成的token样式: 
-``` html
-1339604338175250432
-``` -->

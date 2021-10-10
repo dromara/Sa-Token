@@ -75,16 +75,16 @@ public class StpInterfaceImpl implements StpInterface {
 然后就可以用以下api来鉴权了
 
 ``` java
-// 当前账号是否含有指定权限, 返回true或false 
+// 判断：当前账号是否含有指定权限, 返回true或false
 StpUtil.hasPermission("user-update");		
 
-// 当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
+// 校验：当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
 StpUtil.checkPermission("user-update");		
 
-// 当前账号是否含有指定权限 [指定多个，必须全部验证通过] 
+// 校验：当前账号是否含有指定权限 [指定多个，必须全部验证通过]
 StpUtil.checkPermissionAnd("user-update", "user-delete");		
 
-// 当前账号是否含有指定权限 [指定多个，只要其一验证通过即可] 
+// 校验：当前账号是否含有指定权限 [指定多个，只要其一验证通过即可]
 StpUtil.checkPermissionOr("user-update", "user-delete");		
 ```
 
@@ -95,16 +95,16 @@ StpUtil.checkPermissionOr("user-update", "user-delete");
 在Sa-Token中，角色和权限可以独立验证
 
 ``` java
-// 当前账号是否含有指定角色标识, 返回true或false 
+// 判断：当前账号是否拥有指定角色, 返回true或false
 StpUtil.hasRole("super-admin");		
 
-// 当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException 
+// 校验：当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException
 StpUtil.checkRole("super-admin");		
 
-// 当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
+// 校验：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过]
 StpUtil.checkRoleAnd("super-admin", "shop-admin");		
 
-// 当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
+// 校验：当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
 StpUtil.checkRoleOr("super-admin", "shop-admin");		
 ```
 

@@ -6,25 +6,28 @@
 --- 
 
 
-### 根据账号id踢人
-让指定账号id的会话注销登录，例如：
-
+### 1、强制注销
 ``` java
-// 使账号id为10001的会话注销登录（踢人下线），待到10001再次访问系统时会抛出`NotLoginException`异常，场景值为-5
-StpUtil.logoutByLoginId(10001); 
+StpUtil.logout(10001);                    // 强制指定账号注销下线 
+StpUtil.logout(10001, "PC");              // 强制指定账号指定端注销下线 
+StpUtil.logoutByTokenValue("token");      // 强制指定 Token 注销下线 
 ```
 
-### 根据Token令牌踢人
-你还可以让指定token的会话注销登录
+
+### 2、踢人下线
 ``` java
-// 使账号id为10001的会话注销登录
-StpUtil.logoutByTokenValue("xxxx-xxxx-xxxx-xxxx-xxxx");
+StpUtil.kickout(10001);                    // 将指定账号踢下线 
+StpUtil.kickout(10001, "PC");              // 将指定账号指定端踢下线
+StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
 ```
-此方法直接删除了`token->uid`的映射关系，对方再次访问时提示:`token无效`，场景值为-2
+
+强制注销 和 踢人下线 的区别在于：
+- 强制注销等价于对方主动调用了注销方法，再次访问会提示：Token无效。
+- 踢人下线不会清除Token信息，而是将其打上特定标记，再次访问会提示：Token已被踢下线。
 
 
 
-### 账号封禁
+### 3、账号封禁
 对于违规账号，有时候我们仅仅将其踢下线还是远远不够的，我们还需要对其进行**账号封禁**防止其再次登录
 
 ``` java
@@ -49,7 +52,7 @@ StpUtil.untieDisable(10001);
 如果需要将其封禁后立即掉线，可采取先踢再封禁的策略，例如：
 ``` java
 // 先踢下线
-StpUtil.logoutByLoginId(10001); 
+StpUtil.kickout(10001); 
 // 再封禁账号
 StpUtil.disable(10001, 86400); 
 ```

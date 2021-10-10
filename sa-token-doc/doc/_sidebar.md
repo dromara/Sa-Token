@@ -29,7 +29,7 @@
 	- [会话治理](/up/search-session) 
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 
-	- [多账号验证](/up/many-account) 
+	- [多账号认证](/up/many-account) 
 	<!-- - [微服务](/senior/dcs) -->
 
 - **单点登录**
@@ -63,6 +63,7 @@
 	- [Quick-Login快速登录插件](/plugin/quick-login)
 	- [Alone独立Redis插件](/plugin/alone-redis)
 	- [持久层扩展](/plugin/dao-extend)
+	- [和 Thymeleaf 集成](/plugin/thymeleaf-extend)
 
 - **其它**
 	- [更新日志](/more/update-log) 

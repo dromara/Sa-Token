@@ -111,7 +111,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 容器操作 Bean  
+	 * 上下文 Bean  
 	 */
 	private volatile static SaTokenContext saTokenContext;
 	public static void setSaTokenContext(SaTokenContext saTokenContext) {

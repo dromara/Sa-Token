@@ -42,8 +42,8 @@ public @interface SaCheckPermission {
 	 * </p>
 	 * 
 	 * <p> 
-	 * 	例2： orRole={"admin", "manager", "staff"}，具有三个角色其一即可 <br> 
-	 * 	例3： orRole={"admin, manager, staff"}，必须三个角色同时具备 
+	 * 	例2： orRole = {"admin", "manager", "staff"}，具有三个角色其一即可 <br> 
+	 * 	例3： orRole = {"admin, manager, staff"}，必须三个角色同时具备 
 	 * </p>
 	 */
 	String[] orRole() default {};

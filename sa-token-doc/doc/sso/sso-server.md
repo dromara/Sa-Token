@@ -181,16 +181,16 @@ public class SaSsoServerApplication {
 
 ![sso-server-init-login.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login.png 's-w-sh')
 
-可以看到这个页面非常简陋，这是因为我们以上的代码示例，主要目标是为了带大家从零搭建一个可用的SSO认证服务端，所以就对一些不太必要的步骤做了简化
+可以看到这个页面目前非常简陋，这是因为我们以上的代码示例，主要目标是为了带大家从零搭建一个可用的SSO认证服务端，所以就对一些不太必要的步骤做了简化。
 
 大家可以下载运行一下官方仓库里的示例`/sa-token-demo/sa-token-demo-sso-server/`，里面有制作好的登录页面：
 
 ![sso-server-init-login2.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login2.png 's-w-sh')
 
-默认账号密码为：`sa / 123456`，大家先别着急点击登录，因为我们还没有搭建对应的 Client 端项目，
+默认账号密码为：`sa / 123456`，先别着急点击登录，因为我们还没有搭建对应的 Client 端项目，
 真实项目中我们是不会直接从浏览器访问 `/sso/auth` 授权地址的，我们需要在 Client 端点击登录按钮重定向而来。
 
-现在我们先来看看除了 `/sso/auth` 统一授权地址，这个 SSO-Server 认证中心还开放了哪些API呢，且往下看
+现在我们先来看看除了 `/sso/auth` 统一授权地址，这个 SSO-Server 认证中心还开放了哪些API。
 
 ### 5、API 列表
 
@@ -244,7 +244,7 @@ http://{host}:{port}/sso/checkTicket
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
 | ticket		| 是		| 在步骤 5.1 中授权重定向时的 ticket 参数 						|
-| ssoLogoutCall	| 否		| 单点注销时的回调通知地址，只在SSO模式三时需要携带此参数|
+| ssoLogoutCall	| 否		| 单点注销时的回调通知地址，只在SSO模式三单点注销时需要携带此参数|
 
 返回值场景：
 - 返回空，代表校验失败。
@@ -267,7 +267,7 @@ http://{host}:{port}/sso/logout
 
 此接口有两种调用方式
 
-##### 方式一：在前端页面引导用户直接跳转，并带有 back 参数 
+##### 方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数 
 例如：`http://{host}:{port}/sso/logout?back=xxx`，代表用户注销成功后返回back地址 
 
 ##### 方式二：在 Client 的后端通过 http 工具来调用

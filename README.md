@@ -56,8 +56,8 @@ public String insert(SysUser user) {
 
 将某个账号踢下线（待到对方再次访问系统时会抛出`NotLoginException`异常）
 ``` java
-// 使账号id为 10001 的会话强制注销登录
-StpUtil.logoutByLoginId(10001);
+// 将账号id为 10001 的会话踢下线 
+StpUtil.kickout(10001);
 ```
 
 在 Sa-Token 中，绝大多数功能都可以 **一行代码** 完成：
@@ -66,14 +66,14 @@ StpUtil.login(10001);                     // 标记当前会话登录的账号id
 StpUtil.getLoginId();                     // 获取当前会话登录的账号id
 StpUtil.isLogin();                        // 获取当前会话是否已经登录, 返回true或false
 StpUtil.logout();                         // 当前会话注销登录
-StpUtil.logoutByLoginId(10001);           // 让账号为10001的会话注销登录（踢人下线）
+StpUtil.kickout(10001);                   // 将账号为10001的会话踢下线
 StpUtil.hasRole("super-admin");           // 查询当前账号是否含有指定角色标识, 返回true或false
 StpUtil.hasPermission("user:add");        // 查询当前账号是否含有指定权限, 返回true或false
 StpUtil.getSession();                     // 获取当前账号id的Session
 StpUtil.getSessionByLoginId(10001);       // 获取账号id为10001的Session
 StpUtil.getTokenValueByLoginId(10001);    // 获取账号id为10001的token令牌值
 StpUtil.login(10001, "PC");               // 指定设备标识登录，常用于“同端互斥登录”
-StpUtil.logoutByLoginId(10001, "PC");     // 指定设备标识进行强制注销 (不同端不受影响)
+StpUtil.kickout(10001, "PC");             // 指定账号指定设备标识踢下线 (不同端不受影响)
 StpUtil.openSafe(120);                    // 在当前会话开启二级认证，有效期为120秒 
 StpUtil.checkSafe();                      // 校验当前会话是否处于二级认证有效期内，校验失败会抛出异常 
 StpUtil.switchTo(10044);                  // 将当前会话身份临时切换为其它账号 

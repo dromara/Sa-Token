@@ -12,6 +12,7 @@
 ### 自定义侦听器实现
 
 新建`MySaTokenListener.java`，继承`SaTokenListener`接口，并添加上注解`@Component`，保证此类被`SpringBoot`扫描到
+
 ``` java
 /**
  * 自定义侦听器的实现 
@@ -33,13 +34,13 @@ public class MySaTokenListener implements SaTokenListener {
 
 	/** 每次被踢下线时触发 */
 	@Override
-	public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device) {
+	public void doKickout(String loginType, Object loginId, String tokenValue) {
 		// ... 
 	}
 
 	/** 每次被顶下线时触发 */
 	@Override
-	public void doReplaced(String loginType, Object loginId, String tokenValue, String device) {
+	public void doReplaced(String loginType, Object loginId, String tokenValue) {
 		// ... 
 	}
 

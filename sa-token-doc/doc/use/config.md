@@ -33,7 +33,7 @@ sa-token:
 
 
 ### 方式2、通过代码配置
-方式1：
+模式1：
 ``` java 
 /**
  * Sa-Token代码方式进行配置
@@ -59,7 +59,7 @@ public class SaTokenConfigure {
 }
 ```
 
-方式2：
+模式2：
 ``` java
 // 以代码的方式配置Sa-Token-Config 
 @Autowired
@@ -69,7 +69,7 @@ public void configSaToken(SaTokenConfig config) {
 }
 ```
 
-PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与yml中的配置合并`**
+PS：两者的区别在于：**`模式1会覆盖yml中的配置，模式2会与yml中的配置合并`**
 
 
 --- 
@@ -96,6 +96,18 @@ PS：两者的区别在于：**`方式1会覆盖yml中的配置，方式2会与y
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
 | currDomain			| null		| ""		| 配置当前项目的网络访问地址															|
 | sso					| Object	| new SaSsoConfig()		| SSO 单点登录相关配置													|
+| cookie				| Object	| new SaCookieConfig()	| Cookie配置对象															|
+
+Cookie相关配置：
+
+| 参数名称		| 类型		| 默认值		| 说明																			|
+| :--------		| :--------	| :--------	| :--------																		|
+| domain		| String	| null		| 作用域（写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景）			|
+| path			| String	| /		| 路径，默认写在域名根路径下			|
+| secure		| Boolean	| false		| 是否只在 https 协议下有效												|
+| httpOnly		| Boolean	| false		| 是否禁止 js 操作 Cookie 	|
+| sameSite		| String	| Lax		| 第三方限制级别（Strict=完全禁止，Lax=部分允许，None=不限制）		|
+
 
 
 ### 单点登录相关配置 
@@ -130,7 +142,7 @@ Client 端：
 sa-token: 
     # SSO-相关配置
     sso: 
-        # SSO-Server端 单点登录地址 
+        # SSO-Server端 单点登录授权地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
 ```
 
