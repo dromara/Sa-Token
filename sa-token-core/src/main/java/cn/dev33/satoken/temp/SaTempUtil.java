@@ -48,5 +48,13 @@ public class SaTempUtil {
 	public static long getTimeout(String token) {
 		return SaManager.getSaTemp().getTimeout(token);
 	}
+
+	/**
+	 * 删除一个 token 
+	 * @param token 指定token 
+	 */
+	public static void deleteToken(String token) {
+		SaManager.getSaTemp().deleteToken(token);
+	}
 	
 }

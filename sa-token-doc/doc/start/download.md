@@ -101,6 +101,7 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
 		├── sa-token-alone-redis                  // [插件] Sa-Token 独立Redis插件，实现[权限缓存与业务缓存分离]
 		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 模块 
+		├── sa-token-dialect-thymeleaf            // [插件] Sa-Token 标签方言（Thymeleaf版）
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
 		├── sa-token-demo-webflux                 // [示例] Sa-Token 整合 WebFlux 
@@ -108,6 +109,7 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 
 		├── sa-token-demo-quick-login             // [示例] Sa-Token 集成 quick-login 模块 
 		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
+		├── sa-token-demo-thymeleaf               // [示例] Sa-Token 集成 Thymeleaf 标签方言
 		├── sa-token-demo-sso-server              // [示例] Sa-Token 集成 SSO单点登录-Server认证中心
 		├── sa-token-demo-sso1-client             // [示例] Sa-Token 集成 SSO单点登录-模式一 应用端 
 		├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端

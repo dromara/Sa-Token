@@ -63,7 +63,7 @@ public interface SaTempInterface {
 	}
 
 	/**
-	 * 删除一个token
+	 * 删除一个 token
 	 * @param token 指定token 
 	 */
 	public default void deleteToken(String token) {
