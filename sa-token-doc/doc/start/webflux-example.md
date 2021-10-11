@@ -58,7 +58,7 @@ public class SaTokenConfigure {
         		// 指定 [放行路由]
         		.addExclude("/favicon.ico")
         		// 指定[认证函数]: 每次请求执行 
-        		.setAuth(r -> {
+        		.setAuth(obj -> {
         			System.out.println("---------- sa全局认证");
                     // SaRouter.match("/test/test", () -> StpUtil.checkLogin());
         		})

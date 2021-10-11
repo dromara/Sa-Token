@@ -1,6 +1,31 @@
 # 更新日志 
 
 
+### 2021-10-11 @v1.27.0
+- 升级：增强 SaRouter 链式匹配能力  	**[重要]**  	
+- 新增：新增插件 Thymeleaf 标签方言   **[重要]**  	
+- 新增：@SaCheckPermission 增加 orRole 字段，用于权限角色“双重or”匹配    **[重要]**
+- 升级：Cookie模式增加 `secure`、`httpOnly`、`sameSite`等属性的配置 	**[重要]**  	
+- 重构：重构SSO三种模式，抽离出统一的认证中心   **[重要]**   
+- 新增：新增 SaStrategy 策略类，方便内部逻辑按需重写 **[重要]**		
+- 新增：临时认证模块新增 deleteToken 方法用于回收 Token  
+- 新增：新增 kickout、replaced 等注销会话的方法，更灵活的控制会话周期  **[重要]** 
+- 新增：权限认证增加API：`StpUtil.hasPermissionAnd`、`StpUtil.hasPermissionOr` 
+- 新增：角色认证增加API：`StpUtil.hasRoleAnd`、`StpUtil.hasRoleOr` 
+- 新增：新增 `StpUtil.getRoleList()` 和 `StpUtil.getPermissionList()` 方法  
+- 新增：新增 StpLogic 自动注入特性，可快速方便的扩展 StpLogic 对象 
+- 优化：优化同端互斥登录逻辑，如果登录时没有指定设备标识，则默认顶替所有设备下线  
+- 优化：在未登录时调用 hasRole 和 hasPermission 不再抛出异常，而是返回false 
+- 升级：升级注解鉴权算法，并提供更简单的重写方式    
+- 文档：新增常见报错排查，方便快速排查异常报错 
+- 文档：文档新增SSO单点登录与OAuth2技术选型对比  
+- 破坏式更新：
+	- [向下兼容] 废弃 SaTokenAction 接口，替代方案： SaStrategy  
+	- [向下兼容] 移除 `StpUtil.logoutByLoginId()` 更换为 `StpUtil.kickout()`;
+	- [不向下兼容] 侦听器 doLogoutByLoginId 与 doReplaced 方法移除 device 参数 
+	- [不向下兼容] 侦听器 doLogoutByLoginId 方法重命名为 doKickout  
+
+
 ### 2021-9-2 @v1.26.0
 - 优化：优化单点登录文档 
 - 新增：新增 `Http Basic` 认证 **[重要]** 

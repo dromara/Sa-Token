@@ -39,7 +39,7 @@ public class SaTokenConfigure {
         		.addInclude("/**").addExclude("/favicon.ico")
 				
         		// 认证函数: 每次请求执行 
-        		.setAuth(r -> {
+        		.setAuth(obj -> {
 					System.out.println("---------- 进入Sa-Token全局认证 -----------");
 					
 					// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 

@@ -49,7 +49,7 @@ public SaResult test3() {
 public SaServletFilter getSaServletFilter() {
 	return new SaServletFilter()
 			.addInclude("/**").addExclude("/favicon.ico")
-			.setAuth(r -> {
+			.setAuth(obj -> {
 				SaRouter.match("/test/**", () -> SaBasicUtil.check("sa:123456"));
 			});
 }

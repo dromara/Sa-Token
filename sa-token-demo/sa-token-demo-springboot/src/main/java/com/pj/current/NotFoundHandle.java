@@ -25,8 +25,6 @@ public class NotFoundHandle implements ErrorController {
 
 	@RequestMapping("/error")
     public Object error(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//		response.sendError(200);
-		System.out.println("--------------------大闸蟹");
 		response.setStatus(200);
         return SaResult.get(404, "not found", null);
     }

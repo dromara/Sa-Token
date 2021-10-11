@@ -102,7 +102,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         return new SaServletFilter()
         		.addInclude("/**")
         		.addExclude("/favicon.ico")
-        		.setAuth(r -> {
+        		.setAuth(obj -> {
         			// 校验 Id-Token 身份凭证 	—— 以下两句代码可简化为：SaIdUtil.checkCurrentRequestToken(); 
         			String token = SaHolder.getRequest().getHeader(SaIdUtil.ID_TOKEN);
         			SaIdUtil.checkToken(token);

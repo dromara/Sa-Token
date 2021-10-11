@@ -22,7 +22,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
  */
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-
+	
 	/**
 	 * 注册Sa-Token 的拦截器，打开注解式鉴权功能 
 	 */
@@ -43,10 +43,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		.addInclude("/**")// .addExclude("/favicon.ico")
         		
         		// 认证函数: 每次请求执行 
-        		.setAuth(r -> {
-        			// System.out.println("---------- sa全局认证");
-        			 
-                    // SaRouter.match("/test/test", () -> new Object());
+        		.setAuth(obj -> {
+        			// System.out.println("---------- sa全局认证 " + SaHolder.getRequest().getRequestPath()); 
+        			
         		})
         		
         		// 异常处理函数：每次认证函数发生异常时执行此函数 
