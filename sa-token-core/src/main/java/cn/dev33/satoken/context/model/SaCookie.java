@@ -88,6 +88,7 @@ public class SaCookie {
 
 	/**
 	 * @param name 名称 
+	 * @return 对象自身 
 	 */
 	public SaCookie setName(String name) {
 		this.name = name;

@@ -250,6 +250,7 @@ public class SaRouterStaff {
 	 * 路由匹配，如果匹配成功则执行认证函数 
 	 * @param pattern 路由匹配符
 	 * @param fun 要执行的校验方法 
+	 * @return /
 	 */
 	public SaRouterStaff match(String pattern, SaFunction fun) {
 		return this.match(pattern).check(fun);
@@ -259,6 +260,7 @@ public class SaRouterStaff {
 	 * 路由匹配，如果匹配成功则执行认证函数 
 	 * @param pattern 路由匹配符
 	 * @param fun 要执行的校验方法 
+	 * @return /
 	 */
 	public SaRouterStaff match(String pattern, SaParamFunction<SaRouterStaff> fun) {
 		return this.match(pattern).check(fun);
@@ -269,6 +271,7 @@ public class SaRouterStaff {
 	 * @param pattern 路由匹配符 
 	 * @param excludePattern 要排除的路由匹配符 
 	 * @param fun 要执行的方法 
+	 * @return /
 	 */
 	public SaRouterStaff match(String pattern, String excludePattern, SaFunction fun) {
 		return this.match(pattern).notMatch(excludePattern).check(fun);
@@ -279,6 +282,7 @@ public class SaRouterStaff {
 	 * @param pattern 路由匹配符 
 	 * @param excludePattern 要排除的路由匹配符 
 	 * @param fun 要执行的方法 
+	 * @return /
 	 */
 	public SaRouterStaff match(String pattern, String excludePattern, SaParamFunction<SaRouterStaff> fun) {
 		return this.match(pattern).notMatch(excludePattern).check(fun);

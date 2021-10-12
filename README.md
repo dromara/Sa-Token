@@ -197,6 +197,11 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 - **[ TLog ]**：[ 一个轻量级的分布式日志标记追踪神器](https://gitee.com/dromara/TLog)
 
 
+## 贡献者名单
+感谢每一个为 Sa-Token 贡献代码的小伙伴
+
+[![Giteye chart](https://chart.giteye.net/gitee/dromara/sa-token/CGZ7GT8E.png)](https://giteye.net/chart/CGZ7GT8E)
+
 
 ## 交流群
 QQ交流群：1群：1002350610 (已满) 、

@@ -1619,7 +1619,7 @@ public class StpLogic {
 	 * 判断：集合中是否包含指定元素（模糊匹配）
 	 * @param list 集合 
 	 * @param element 元素 
-	 * @return
+	 * @return /
 	 */
 	public boolean hasElement(List<String> list, String element) {
 		return SaStrategy.me.hasElement.apply(list, element);
