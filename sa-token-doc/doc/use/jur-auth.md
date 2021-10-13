@@ -65,9 +65,7 @@ public class StpInterfaceImpl implements StpInterface {
 }
 ```
 
-可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
-
-<!-- todo: 缓存逻辑 -->
+可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/current/GlobalException.java)
 
 
 
