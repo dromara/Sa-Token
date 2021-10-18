@@ -81,6 +81,8 @@ public class BasicsTest {
     	// 注销
     	StpUtil.logout();
     	// token 应该被清除
+    	Assert.assertNull(StpUtil.getTokenValue());
+    	Assert.assertFalse(StpUtil.isLogin());
     	Assert.assertNull(dao.get("satoken:login:token:" + token));
     	// Session 应该被清除 
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);

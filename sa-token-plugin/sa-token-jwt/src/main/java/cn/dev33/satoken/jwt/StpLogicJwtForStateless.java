@@ -1,6 +1,7 @@
 package cn.dev33.satoken.jwt;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
@@ -132,11 +133,14 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public void logout() {
-		// stateless模式下清除Cookie即可 
-		
- 		// 如果打开了cookie模式，把cookie清除掉 
- 		if(getConfig().getIsReadCookie() == true){
-			SaManager.getSaTokenContext().getResponse().deleteCookie(getTokenName()); 	
+		// ... 
+
+ 		// 从当前 [storage存储器] 里删除 
+ 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
+ 		
+ 		// 如果打开了Cookie模式，则把cookie清除掉 
+ 		if(getConfig().getIsReadCookie()){
+ 			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}
 	

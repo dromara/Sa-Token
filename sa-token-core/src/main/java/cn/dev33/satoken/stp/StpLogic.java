@@ -299,10 +299,16 @@ public class StpLogic {
  		if(SaFoxUtil.isEmpty(tokenValue)) {
  			return;
  		}
- 		// 如果打开了Cookie模式，第一步，先把cookie清除掉 
+ 		
+ 		// 从当前 [storage存储器] 里删除 
+ 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
+ 		
+ 		// 如果打开了Cookie模式，则把cookie清除掉 
  		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
+ 		
+ 		// 清除这个token的相关信息
  		logoutByTokenValue(tokenValue);
 	}
 
