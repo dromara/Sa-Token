@@ -112,7 +112,8 @@ StpUtil.checkRoleOr("super-admin", "shop-admin");
 
 ### 拦截全局异常
 有同学要问，鉴权失败，抛出异常，然后呢？要把异常显示给用户看吗？**当然不可以！** <br>
-你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：[码云：GlobalException.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/test/GlobalException.java)
+你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：
+[码云：GlobalException.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/current/GlobalException.java)
 
 
 ### 权限通配符

@@ -1,4 +1,4 @@
-# 临时Token令牌验证  
+# 临时Token令牌认证  
 
 ---
 
@@ -37,7 +37,7 @@ http://xxx.com/apply?token=oEwQBnglXDoGraSJdGaLooPZnGrk
 
 ### 相关API 
 
-**[sa-token-temp临时验证模块]** 已内嵌到核心包，无需引入其它依赖即可使用
+**[sa-token-temp临时认证模块]** 已内嵌到核心包，无需引入其它依赖即可使用
 
 ``` java
 // 根据 value 创建一个 token 
@@ -55,7 +55,7 @@ SaTempUtil.deleteToken(token);
 
 
 ### 集成jwt
-提到 [临时Token验证]，你是不是想到一个专门干这件事的框架？对，就是JWT！
+提到 [临时Token认证]，你是不是想到一个专门干这件事的框架？对，就是JWT！
 
 **[sa-token-temp]** 模块允许以JWT作为逻辑内核完成工作，你只需要引入以下依赖，所有上层API保持不变
 

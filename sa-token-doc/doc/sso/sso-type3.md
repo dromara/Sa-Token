@@ -107,6 +107,14 @@ public Object myinfo() {
 
 访问测试：[http://sa-sso-client1.com:9001/sso/myinfo](http://sa-sso-client1.com:9001/sso/myinfo)
 
+#### 3.3、疑问
+
+群里有小伙伴提问：`SaSsoUtil.getUserinfo` 提供的参数太少，只有一个 loginId，无法满足业务需求怎么办？
+
+答：SaSsoUtil.getUserinfo只是为了避免你在项目中硬编码认证中心 url 而提供的简易封装，如果这个API无法满足你的业务需求，
+你完全可以在 Server 端自定义一些接口然后从 Client 端使用 http 工具调用即可。
+
+
 
 
 ### 4、无刷单点注销

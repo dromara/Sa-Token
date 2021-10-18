@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.util.AjaxJson;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -21,8 +22,6 @@ import cn.dev33.satoken.stp.StpUtil;
 @RestController
 @RequestMapping("/test/")
 public class TestJwtController {
-
-	
 
 	// 测试登录接口， 浏览器访问： http://localhost:8081/test/login
 	@RequestMapping("login")
@@ -51,7 +50,7 @@ public class TestJwtController {
 		System.out.println(tokenInfo);
 		return AjaxJson.getSuccessData(tokenInfo);
 	}
-	
+		
 
 	// 测试会话session接口， 浏览器访问： http://localhost:8081/test/session 
 	@RequestMapping("session")
@@ -70,11 +69,10 @@ public class TestJwtController {
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
+	@SaCheckLogin
 	public AjaxJson test() {
 		System.out.println();
 		System.out.println("--------------进入请求--------------");
-		StpUtil.login(10001);	
-		System.out.println(StpUtil.getTokenInfo().getTokenValue());
 		return AjaxJson.getSuccess();
 	}
 

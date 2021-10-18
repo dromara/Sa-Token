@@ -83,7 +83,7 @@ public class SaTokenConfigure {
 			.addExclude("/favicon.ico")
 			// 鉴权方法：每次访问进入 
 			.setAuth(obj -> {
-				// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
+				// 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 				SaRouter.match("/**", "/user/doLogin", r -> StpUtil.checkLogin());
 				
 				// 权限认证 -- 不同模块, 校验不同权限 

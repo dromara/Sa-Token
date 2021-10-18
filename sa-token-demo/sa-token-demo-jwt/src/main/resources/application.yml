@@ -16,6 +16,9 @@ sa-token:
     is-share: true
     # token风格
     token-style: uuid
+    # jwt秘钥 
+    jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk
+    
 spring: 
     # redis配置 
     redis:

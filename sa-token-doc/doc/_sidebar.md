@@ -59,7 +59,7 @@
 
 - **插件**
 	- [AOP注解鉴权](/plugin/aop-at)
-	- [临时Token验证](/plugin/temp-token)
+	- [临时Token认证](/plugin/temp-token)
 	- [Quick-Login快速登录插件](/plugin/quick-login)
 	- [Alone独立Redis插件](/plugin/alone-redis)
 	- [持久层扩展](/plugin/dao-extend)

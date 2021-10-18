@@ -42,7 +42,7 @@ public class SaTokenConfigure {
         		.setAuth(obj -> {
 					System.out.println("---------- 进入Sa-Token全局认证 -----------");
 					
-					// 登录验证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
+					// 登录认证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 					SaRouter.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
 					
 					// 更多拦截处理方式，请参考“路由拦截式鉴权”章节 
