@@ -156,3 +156,31 @@ public class StpUserUtil {
 
 再次调用 `StpUserUtil.login(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`
 
+
+### 7、不同体系不同配置
+SaLoginModel 对象只是一个简单的配置对象, SaTokenConfig 对象的配置才是完整配置, 定义过程同上, 也很简单, 示例如下:
+
+``` java
+public class StpUserUtil {
+	
+	// 使用匿名子类 重写`stpLogic对象`的一些方法 
+	public static StpLogic stpLogic = new StpLogic(TYPE) {
+                // 重写配置获取方法
+		@Override
+		public SaTokenConfig getConfig() {
+			SaTokenConfig stpConfig = new SaTokenConfig();
+			stpConfig.setTimeout(-1);
+			stpConfig.setTokenPrefix("Bear");
+			stpConfig.setIsShare(true);
+			stpConfig.setIsConcurrent(true);
+			stpConfig.setTokenName("satoken");
+			stpConfig.setActivityTimeout(Duration.ofMinutes(30).getSeconds());
+			// 配置其他属性
+			return stpConfig;
+		}
+	};
+	
+	// ... 
+	
+}
+```

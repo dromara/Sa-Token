@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -60,6 +61,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 			field.setAccessible(true);
 			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			objectMapper.registerModule(new JavaTimeModule());
 			this.objectMapper = objectMapper;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
