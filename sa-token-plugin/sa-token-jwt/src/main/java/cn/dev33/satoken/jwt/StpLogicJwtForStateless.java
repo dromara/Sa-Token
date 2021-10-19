@@ -97,7 +97,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 		String tokenValue = SaJwtUtil.createToken(
 				loginType, 
 				id, 
-				loginModel.getDeviceOrDefalut(), 
+				loginModel.getDeviceOrDefault(), 
 				loginModel.getTimeout(), 
 				jwtSecretKey()
 				);

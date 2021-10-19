@@ -256,7 +256,7 @@ public class StpLogic {
 		if(config.getIsConcurrent()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(config.getIsShare()) {
-				tokenValue = getTokenValueByLoginId(id, loginModel.getDevice());
+				tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 			}
 		} else {
 			// --- 如果不允许并发登录，则将这个账号的历史登录标记为：被顶下线 
@@ -272,7 +272,7 @@ public class StpLogic {
 		session.updateMinTimeout(loginModel.getTimeout());
 		
 		// 在 User-Session 上记录token签名 
-		session.addTokenSign(tokenValue, loginModel.getDeviceOrDefalut());
+		session.addTokenSign(tokenValue, loginModel.getDeviceOrDefault());
 		
 		// ------ 4. 持久化其它数据 
 		// token -> id 映射关系  

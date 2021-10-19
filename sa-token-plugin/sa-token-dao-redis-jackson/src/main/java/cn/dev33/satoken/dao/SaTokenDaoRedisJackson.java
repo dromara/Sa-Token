@@ -55,14 +55,16 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
-		// 通过反射获取Mapper对象, 配置[忽略未知字段], 增强兼容性
+		// 通过反射获取Mapper对象, 增加一些配置, 增强兼容性 
 		try {
 			Field field = GenericJackson2JsonRedisSerializer.class.getDeclaredField("mapper");
 			field.setAccessible(true);
 			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
-			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			objectMapper.registerModule(new JavaTimeModule());
 			this.objectMapper = objectMapper;
+			// 配置[忽略未知字段]
+			this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			// 配置[时间类型转换]
+			this.objectMapper.registerModule(new JavaTimeModule());
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
