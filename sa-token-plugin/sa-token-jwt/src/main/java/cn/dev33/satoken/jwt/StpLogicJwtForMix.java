@@ -187,7 +187,7 @@ public class StpLogicJwtForMix extends StpLogic {
 	// ------------------- 会话管理 -------------------  
 
 	/**
-	 * 根据条件查询Token 
+	 * [禁用] 根据条件查询Token 
 	 */
 	@Override
 	public List<String> searchTokenValue(String keyword, int start, int size) {

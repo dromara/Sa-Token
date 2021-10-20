@@ -64,6 +64,7 @@
 	- [Alone独立Redis插件](/plugin/alone-redis)
 	- [持久层扩展](/plugin/dao-extend)
 	- [和 Thymeleaf 集成](/plugin/thymeleaf-extend)
+	- [和 jwt 集成](/plugin/jwt-extend)
 
 - **其它**
 	- [更新日志](/more/update-log) 

@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.jwt.StpLogicJwtForTokenStyle;
+import cn.dev33.satoken.jwt.StpLogicJwtForStyle;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -18,14 +18,14 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 
 /**
- * Sa-Token 整合 jwt：token-style 模式 测试
+ * Sa-Token 整合 jwt：Style 模式 测试
  * 
  * @author kong 
  *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartUpApplication.class)
-public class JwtForTokenStyleTest {
+public class JwtForStyleTest {
 
 	// 持久化Bean 
 	static SaTokenDao dao;
@@ -33,15 +33,15 @@ public class JwtForTokenStyleTest {
 	// 开始 
 	@BeforeClass
     public static void beforeClass() {
-    	System.out.println("\n\n------------------------ TokenStyleTest star ...");
+    	System.out.println("\n\n------------------------ JwtForStyleTest star ...");
     	dao = SaManager.getSaTokenDao();
-    	StpUtil.setStpLogic(new StpLogicJwtForTokenStyle());
+    	StpUtil.setStpLogic(new StpLogicJwtForStyle());
     }
 
 	// 结束 
     @AfterClass
     public static void afterClass() {
-    	System.out.println("\n\n------------------------ TokenStyleTest end ... \n");
+    	System.out.println("\n\n------------------------ JwtForStyleTest end ... \n");
     }
 
     // 测试：登录 

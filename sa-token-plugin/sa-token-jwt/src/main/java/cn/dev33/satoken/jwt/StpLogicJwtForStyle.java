@@ -4,24 +4,24 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * Sa-Token 整合 jwt -- Token-Style 
+ * Sa-Token 整合 jwt -- Style模式 
  * @author kong
  *
  */
-public class StpLogicJwtForTokenStyle extends StpLogic {
+public class StpLogicJwtForStyle extends StpLogic {
 
 	/**
-	 * Sa-Token 整合 jwt -- Token-Style
+	 * Sa-Token 整合 jwt -- Style模式 
 	 */
-	public StpLogicJwtForTokenStyle() {
+	public StpLogicJwtForStyle() {
 		super(StpUtil.TYPE);
 	}
 
 	/**
-	 * 初始化StpLogic, 并指定账号类型 
+	 * Sa-Token 整合 jwt -- Style模式 
 	 * @param loginType 账号体系标识 
 	 */
-	public StpLogicJwtForTokenStyle(String loginType) {
+	public StpLogicJwtForStyle(String loginType) {
 		super(loginType);
 	}
 

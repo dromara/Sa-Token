@@ -22,7 +22,7 @@
             <artifactId>sa-token-core</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
-		<!-- hutool -->
+		<!-- hutool (jwt) -->
         <dependency>
 		    <groupId>cn.hutool</groupId>
 		    <artifactId>hutool-all</artifactId>
