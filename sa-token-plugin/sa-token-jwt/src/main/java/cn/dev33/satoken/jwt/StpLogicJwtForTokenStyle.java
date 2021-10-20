@@ -4,15 +4,14 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * Sa-Token 整合 jwt -- Token风格 
+ * Sa-Token 整合 jwt -- Token-Style 
  * @author kong
  *
  */
 public class StpLogicJwtForTokenStyle extends StpLogic {
 
 	/**
-	 * 初始化StpLogic, 并指定账号类型 
-	 * @param loginType 账号体系标识 
+	 * Sa-Token 整合 jwt -- Token-Style
 	 */
 	public StpLogicJwtForTokenStyle() {
 		super(StpUtil.TYPE);
@@ -42,7 +41,7 @@ public class StpLogicJwtForTokenStyle extends StpLogic {
 	 * @return 生成的tokenValue 
 	 */
 	@Override
- 	public String createTokenValue(Object loginId) {
+ 	public String createTokenValue(Object loginId, String device, long timeout) {
  		return SaJwtUtil.createToken(loginId, jwtSecretKey());
 	}
  	

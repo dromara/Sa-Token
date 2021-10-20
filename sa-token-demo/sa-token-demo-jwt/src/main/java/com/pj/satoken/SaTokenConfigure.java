@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
-import cn.dev33.satoken.jwt.StpLogicJwtForStateless;
+import cn.dev33.satoken.jwt.StpLogicJwtForTokenStyle;
 import cn.dev33.satoken.stp.StpLogic;
 
 
@@ -32,7 +32,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
      */
 	@Bean
     public StpLogic getStpLogicJwt() {
-    	return new StpLogicJwtForStateless();
+    	return new StpLogicJwtForTokenStyle();
     }
     
 }

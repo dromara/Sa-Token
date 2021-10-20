@@ -84,14 +84,16 @@ public class StpLogic {
  	}
 
 	/**
-	 * 创建一个TokenValue
-	 * @param loginId loginId
+	 * 创建一个TokenValue 
+	 * @param loginId loginId 
+	 * @param device 设备标识 
+	 * @param timeout 过期时间 
 	 * @return 生成的tokenValue 
 	 */
- 	public String createTokenValue(Object loginId) {
+ 	public String createTokenValue(Object loginId, String device, long timeout) {
  		return SaStrategy.me.createToken.apply(loginId, loginType);
 	}
- 	
+
  	/**
  	 * 在当前会话写入当前TokenValue 
  	 * @param tokenValue token值 
@@ -255,7 +257,7 @@ public class StpLogic {
 		// --- 如果允许并发登录 
 		if(config.getIsConcurrent()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
-			if(config.getIsShare()) {
+			if(getConfigOfIsShare()) {
 				tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 			}
 		} else {
@@ -264,7 +266,7 @@ public class StpLogic {
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
-			tokenValue = createTokenValue(id);
+			tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout());
 		}
 		
 		// ------ 3. 获取 User-Session , 续期 
@@ -767,7 +769,7 @@ public class StpLogic {
 			String tokenValue = getTokenValue();
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给Ta 
-				tokenValue = createTokenValue(null);
+				tokenValue = createTokenValue(null, null, getConfig().getTimeout());
 				// 写入 [最后操作时间]
 				setLastActivityToNow(tokenValue);  
 				// 在当前会话写入这个tokenValue 
@@ -1621,6 +1623,14 @@ public class StpLogic {
 		return SaManager.getConfig();
 	}
 
+	/**
+	 * 返回全局配置对象的isShare属性 
+	 * @return / 
+	 */
+	public boolean getConfigOfIsShare() {
+		return getConfig().getIsShare();
+	}
+	
 	/**
 	 * 返回持久化对象 
 	 * @return / 
