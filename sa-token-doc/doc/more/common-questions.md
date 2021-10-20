@@ -52,7 +52,7 @@
 
 
 ### 一个User对象存进Session后，再取出来时报错：无法从User类型转换成User类型？
-群员亲测，当你打开热部署模式后，先存进去的对象，再热刷新后再取出，会报错，关闭热刷新即可解决
+群员亲测，当你打开热部署模式后，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决
 
 
 ### Springboot环境下采用自定义拦截器排除了某个路径仍然被拦截了？
@@ -115,7 +115,7 @@ jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`�
 
 ### SaRouter.match 有多个路径需要排除怎么办？
 可以点进去源码看一下，`SaRouter.match`方法有多个重载，可以放一个集合, 例如：<br>
-`SaRouter.match(Arrays.asList("/**"), Arrays.asList("/login", "/reg"), () -> StpUtil.checkLogin());`
+`SaRouter.match(/**).notMatch("/login", "/reg").check(r -> StpUtil.checkLogin());`
 
 
 ### 为什么StpUtil.login() 不能直接写入一个User对象？
