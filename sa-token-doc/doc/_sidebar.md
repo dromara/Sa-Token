@@ -70,6 +70,7 @@
 	- [更新日志](/more/update-log) 
 	- [友情链接](/more/link) 
 	- [推荐公众号](/more/tj-gzh) 
+	- [赞助 Sa-Token](/more/sa-token-donate)
 
 - **附录**
 	- [常用类、方法](/more/common-action) 
@@ -86,9 +87,8 @@
 	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
 	- [框架源码所有技术栈](/fun/tech-stack)
 	- [为Sa-Token贡献代码](/fun/git-pr)
+	- [Sa-Token开源大事记](/fun/timeline)
 	- [Sa-Token框架掌握度--在线考试](/fun/sa-token-test)
-	<!-- - [Web开发常见漏洞防护](/fun/web-loophole) -->
-	<!-- - [Sa-Token大事记](/fun/timeline) -->
 	
 
 

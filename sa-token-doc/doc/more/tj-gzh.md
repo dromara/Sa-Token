@@ -8,6 +8,40 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU2MTI4MjI0MQ==&mid=2247508620&idx=1&sn=500448fce310a6012aa58616c304dec2&send_time="/>
+			<b>Java笔记虾</b>
+			<span>专注于Java技术栈，推送 Spring全家桶，Dubbo等相关技术知识</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzAxODcyNjEzNQ==&mid=2247541818&idx=2&sn=2b0e7190ed40fa07196de26be51bb432&send_time="/>
+			<b>程序猿DD</b>
+			<span>一线技术工作者的学习、生活与见闻</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU5Mjc5NTIzMA==&mid=2247485007&idx=1&sn=d3bc0cc74a4efbc88b52cc5812c6573a&send_time="/>
+			<b>TJ君</b>
+			<span>一个励志推荐10000款开源项目与免费工具的程序猿</span>
+		</td>
+        <td>-</td>
+        <td>-</td>
+    </tr>
+    <tr>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzg2OTA0Njk0OA==&mid=2247511204&idx=2&sn=e1c689f459474fcc1b8ee2ca20a52d3a&send_time="/>
+			<b>JavaGuide</b>
+			<span>专注Java后端学习和大厂面试的公众号！</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzI3NzE0NjcwMg==&mid=2650166553&idx=3&sn=c8457e76c3fea17235fb7370cd2279d8&send_time="/>
+			<b>Hollis</b>
+			<span>《Java工程师成神之路》系列作者</span>
+		</td>
+        <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU1Nzg4NjgyMw==&mid=2247493156&idx=1&sn=571db231d274a90ae9a47ac9c4f0a034&send_time="/>
+			<b>macrozheng</b>
+			<span>专注Java技术分享，作者Github开源项目mall（40K+Star）</span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU2OTMyMTAxNA==&mid=2247496684&idx=2&sn=be1520743589ca43c129fde828af16ef&send_time="/>
 			<b>终码一生</b>
 			<span>分享Java开发技术（JVM，多线程，高并发，性能调优）</span>
@@ -17,9 +51,6 @@
 			<b>CodeSheep</b>
 			<span>一只爱技术的程序羊，想把分享变成一种习惯！</span>
 		</td>
-		<td>-</td>
-		<td>-</td>
-		<td>-</td>
     </tr>
     <tr>
         <td>
