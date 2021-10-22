@@ -192,6 +192,8 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 ## 友情链接
 - **[ OkHttps ]**：[ 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
 
+- **[ Bean Searcher ]**：[ 轻量级关系数据库条件检索引擎，使一行代码实现复杂列表检索成为可能！](https://github.com/ejlchina/bean-searcher)
+
 - **[ 小诺快速开发平台 ]**：[ 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
 
 - **[ Jpom ]**：[ 简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件](https://gitee.com/dromara/Jpom)
