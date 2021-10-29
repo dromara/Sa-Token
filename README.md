@@ -127,9 +127,9 @@ StpUtil.switchTo(10044);                  // 将当前会话身份临时切换�
 
 | 系统架构						| 采用模式	| 简介						|  文档链接	|
 | :--------						| :--------	| :--------					| :--------	|
-| 前端同域 + 后端同 Redis		| 模式一		| 共享Cookie同步会话			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso1)	|
-| 前端不同域 + 后端同 Redis		| 模式二		| URL重定向传播会话 			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso2-server)	|
-| 前端不同域 + 后端 不同Redis	| 模式三		| Http请求获取会话			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso3-server)	|
+| 前端同域 + 后端同 Redis		| 模式一		| 共享Cookie同步会话			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso1-client)	|
+| 前端不同域 + 后端同 Redis		| 模式二		| URL重定向传播会话 			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso2-client)	|
+| 前端不同域 + 后端 不同Redis	| 模式三		| Http请求获取会话			| [文档](http://sa-token.dev33.cn/doc/index.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-sso3-client)	|
 
 
 1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`
