@@ -37,4 +37,9 @@ public class SaTokenContextForThreadLocal implements SaTokenContext {
 		return false;
 	}
 
+	@Override
+	public boolean isValid() {
+		return SaTokenContextForThreadLocalStorage.getBox() != null;
+	}
+
 }

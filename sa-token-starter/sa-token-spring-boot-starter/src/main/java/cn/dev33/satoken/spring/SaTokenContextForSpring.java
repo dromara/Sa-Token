@@ -48,6 +48,12 @@ public class SaTokenContextForSpring implements SaTokenContext {
 		return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
 	}
 
-	
+	/**
+	 * 此上下文是否有效 
+	 */
+	@Override
+	public boolean isValid() {
+		return SpringMVCUtil.isWeb();
+	}
 
 }

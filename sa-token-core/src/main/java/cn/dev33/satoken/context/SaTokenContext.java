@@ -41,4 +41,12 @@ public interface SaTokenContext {
 	 */
 	public boolean matchPath(String pattern, String path);
 
+	/**
+	 * 此上下文是否有效 
+	 * @return / 
+	 */
+	public default boolean isValid() {
+		return false;
+	}
+	
 }

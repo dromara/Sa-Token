@@ -27,7 +27,7 @@ public class SaRouterUtil {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(String pattern, String path) {
-		return SaManager.getSaTokenContext().matchPath(pattern, path);
+		return SaManager.getSaTokenContextOrSecond().matchPath(pattern, path);
 	}
 
 	/**

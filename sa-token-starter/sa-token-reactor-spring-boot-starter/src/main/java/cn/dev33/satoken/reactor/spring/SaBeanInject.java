@@ -9,6 +9,7 @@ import cn.dev33.satoken.basic.SaBasicTemplate;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
@@ -69,13 +70,23 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入容器交互Bean
+	 * 注入上下文Bean
 	 * 
 	 * @param saTokenContext SaTokenContext对象 
 	 */
 	@Autowired(required = false)
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.setSaTokenContext(saTokenContext);
+	}
+
+	/**
+	 * 注入二级上下文Bean
+	 * 
+	 * @param saTokenSecondContextCreator 二级上下文创建器 
+	 */
+	@Autowired(required = false)
+	public void setSaTokenContext(SaTokenSecondContextCreator saTokenSecondContextCreator) {
+		SaManager.setSaTokenSecondContext(saTokenSecondContextCreator.create());
 	}
 
 	/**

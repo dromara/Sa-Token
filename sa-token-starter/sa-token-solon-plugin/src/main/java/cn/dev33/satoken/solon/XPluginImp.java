@@ -15,6 +15,7 @@ import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.basic.SaBasicTemplate;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
@@ -49,9 +50,15 @@ public class XPluginImp implements Plugin {
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
 
-        //注入容器交互Bean
+        // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
+        // 注入二级上下文 Bean 
+        Aop.getAsyn(SaTokenSecondContextCreator.class, bw->{
+        	SaTokenSecondContextCreator raw = bw.raw();
+            SaManager.setSaTokenSecondContext(raw.create());
+        });
+        
         // 注入侦听器 Bean
         Aop.getAsyn(SaTokenListener.class, bw->{
             SaManager.setSaTokenListener(bw.raw());

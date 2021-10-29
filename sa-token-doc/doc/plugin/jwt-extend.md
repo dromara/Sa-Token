@@ -8,7 +8,7 @@
 首先在项目已经引入 Sa-Token 的基础上，继续添加：
 
 ``` xml
-<!-- 在 thymeleaf 标签中使用 Sa-Token -->
+<!-- Sa-Token 整合 jwt -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-jwt</artifactId>
