@@ -30,7 +30,7 @@ public class H5Controller {
 	// 根据ticket进行登录 
 	@RequestMapping("/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = SaSsoHandle.checkTicket(ticket);
+		Object loginId = SaSsoHandle.checkTicket(ticket, "/doLoginByTicket");
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());
