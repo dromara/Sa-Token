@@ -54,6 +54,14 @@ public class StpUtil {
  	/**
  	 * 在当前会话写入当前TokenValue 
  	 * @param tokenValue token值 
+ 	 */
+	public static void setTokenValue(String tokenValue){
+		stpLogic.setTokenValue(tokenValue);
+	}
+	
+ 	/**
+ 	 * 在当前会话写入当前TokenValue 
+ 	 * @param tokenValue token值 
  	 * @param cookieTimeout Cookie存活时间(秒)
  	 */
 	public static void setTokenValue(String tokenValue, int cookieTimeout){
@@ -66,6 +74,14 @@ public class StpUtil {
 	 */
 	public static String getTokenValue() {
 		return stpLogic.getTokenValue();
+	}
+
+	/**
+	 * 获取当前TokenValue (不裁剪前缀) 
+	 * @return / 
+	 */
+	public static String getTokenValueNotCut(){
+		return stpLogic.getTokenValueNotCut();
 	}
 
 	/**

@@ -2,8 +2,6 @@ package com.pj.satoken.at;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
@@ -13,10 +11,9 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * Sa-Token 权限认证工具类 
+ * Sa-Token 权限认证工具类 (User版)
  * @author kong 
  */
-@Component
 public class StpUserUtil {
 	
 	/**
@@ -61,6 +58,14 @@ public class StpUserUtil {
  	/**
  	 * 在当前会话写入当前TokenValue 
  	 * @param tokenValue token值 
+ 	 */
+	public static void setTokenValue(String tokenValue){
+		stpLogic.setTokenValue(tokenValue);
+	}
+	
+ 	/**
+ 	 * 在当前会话写入当前TokenValue 
+ 	 * @param tokenValue token值 
  	 * @param cookieTimeout Cookie存活时间(秒)
  	 */
 	public static void setTokenValue(String tokenValue, int cookieTimeout){
@@ -73,6 +78,14 @@ public class StpUserUtil {
 	 */
 	public static String getTokenValue() {
 		return stpLogic.getTokenValue();
+	}
+
+	/**
+	 * 获取当前TokenValue (不裁剪前缀) 
+	 * @return / 
+	 */
+	public static String getTokenValueNotCut(){
+		return stpLogic.getTokenValueNotCut();
 	}
 
 	/**
@@ -347,7 +360,7 @@ public class StpUserUtil {
 	}
 
 
-	// =================== [临时过期] 验证相关 ===================  
+	// =================== [临时有效期] 验证相关 ===================  
 
 	/**
  	 * 检查当前token 是否已经[临时过期]，如果已经过期则抛出异常  
@@ -404,8 +417,34 @@ public class StpUserUtil {
  	
 	// =================== 角色验证操作 ===================  
 
+	/**
+	 * 获取：当前账号的角色集合 
+	 * @return /
+	 */
+	public static List<String> getRoleList() {
+		return stpLogic.getRoleList();
+	}
+
+	/**
+	 * 获取：指定账号的角色集合 
+	 * @param loginId 指定账号id 
+	 * @return /
+	 */
+	public static List<String> getRoleList(Object loginId) {
+		return stpLogic.getRoleList(loginId);
+	}
+
  	/** 
- 	 * 判断：指定账号id是否含有角色标识, 返回true或false 
+ 	 * 判断：当前账号是否拥有指定角色, 返回true或false 
+ 	 * @param role 角色标识
+ 	 * @return 是否含有指定角色标识
+ 	 */
+ 	public static boolean hasRole(String role) {
+ 		return stpLogic.hasRole(role);
+ 	}
+
+ 	/** 
+ 	 * 判断：指定账号是否含有指定角色标识, 返回true或false 
  	 * @param loginId 账号id
  	 * @param role 角色标识
  	 * @return 是否含有指定角色标识
@@ -414,15 +453,6 @@ public class StpUserUtil {
  		return stpLogic.hasRole(loginId, role);
  	}
  	
- 	/** 
- 	 * 判断：当前账号是否含有指定角色标识, 返回true或false 
- 	 * @param role 角色标识
- 	 * @return 是否含有指定角色标识
- 	 */
- 	public static boolean hasRole(String role) {
- 		return stpLogic.hasRole(role);
- 	}
-
  	/** 
  	 * 判断：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过] 
  	 * @param roleArray 角色标识数组
@@ -465,26 +495,24 @@ public class StpUserUtil {
  		stpLogic.checkRoleOr(roleArray);
  	}
 
- 	// -- 
-	/**
-	 * 返回当前账号所拥有的角色标识集合 
-	 * @return /
-	 */
-	public static List<String> getRoleList() {
-		return stpLogic.getRoleList();
-	}
-	
 	
 	// =================== 权限验证操作 ===================
 
- 	/** 
- 	 * 判断：指定账号id是否含有指定权限, 返回true或false 
- 	 * @param loginId 账号id
- 	 * @param permission 权限码
- 	 * @return 是否含有指定权限
- 	 */
-	public static boolean hasPermission(Object loginId, String permission) {
-		return stpLogic.hasPermission(loginId, permission);
+	/**
+	 * 获取：当前账号的权限码集合 
+	 * @return / 
+	 */
+	public static List<String> getPermissionList() {
+		return stpLogic.getPermissionList();
+	}
+
+	/**
+	 * 获取：指定账号的权限码集合 
+	 * @param loginId 指定账号id
+	 * @return / 
+	 */
+	public static List<String> getPermissionList(Object loginId) {
+		return stpLogic.getPermissionList(loginId);
 	}
 
  	/** 
@@ -494,6 +522,16 @@ public class StpUserUtil {
  	 */
 	public static boolean hasPermission(String permission) {
 		return stpLogic.hasPermission(permission);
+	}
+
+ 	/** 
+ 	 * 判断：指定账号id是否含有指定权限, 返回true或false 
+ 	 * @param loginId 账号id
+ 	 * @param permission 权限码
+ 	 * @return 是否含有指定权限
+ 	 */
+	public static boolean hasPermission(Object loginId, String permission) {
+		return stpLogic.hasPermission(loginId, permission);
 	}
 
  	/** 
@@ -538,15 +576,6 @@ public class StpUserUtil {
 		stpLogic.checkPermissionOr(permissionArray);
 	}
 
- 	// -- 
-	/**
-	 * 返回当前账号所拥有的权限码集合 
-	 * @return / 
-	 */
-	public static List<String> getPermissionList() {
-		return stpLogic.getPermissionList();
-	}
- 	
 
 	// =================== id 反查token 相关操作 ===================  
 	
@@ -819,6 +848,7 @@ public class StpUserUtil {
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
+	@Deprecated
 	public static void logoutByLoginId(Object loginId) {
 		stpLogic.kickout(loginId);
 	}
@@ -831,6 +861,7 @@ public class StpUserUtil {
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
+	@Deprecated
 	public static void logoutByLoginId(Object loginId, String device) {
 		stpLogic.kickout(loginId, device);
 	}

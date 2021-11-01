@@ -26,6 +26,7 @@
         <module>sa-token-spring-aop</module>
         <module>sa-token-temp-jwt</module>
         <module>sa-token-jwt</module>
+        <module>sa-token-context-dubbo</module>
     </modules>
 
 	<dependencies>

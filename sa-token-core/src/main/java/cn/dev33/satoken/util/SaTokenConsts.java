@@ -30,7 +30,12 @@ public class SaTokenConsts {
 	/**
 	 * 常量key标记: 如果token为本次请求新创建的，则以此字符串为key存储在当前request中 
 	 */
-	public static final String JUST_CREATED_SAVE_KEY = "JUST_CREATED_SAVE_KEY_"; 	
+	public static final String JUST_CREATED = "JUST_CREATED_"; 	
+
+	/**
+	 * 常量key标记: 如果token为本次请求新创建的，则以此字符串为key存储在当前request中（不拼接前缀，纯Token）
+	 */
+	public static final String JUST_CREATED_NOT_PREFIX = "JUST_CREATED_NOT_PREFIX_"; 	
 
 	/**
 	 * 常量key标记: 如果本次请求已经验证过[无操作过期], 则以此值存储在当前request中 
@@ -97,5 +102,14 @@ public class SaTokenConsts {
 	 * 切面、拦截器、过滤器等各种组件的注册优先级顺序
 	 */
 	public static final int ASSEMBLY_ORDER = -100;
+
+	
+	// =================== 废弃 ===================  
+
+	/**
+	 * 请更换为 JUST_CREATED  
+	 */
+	@Deprecated
+	public static final String JUST_CREATED_SAVE_KEY = JUST_CREATED; 	
 	
 }

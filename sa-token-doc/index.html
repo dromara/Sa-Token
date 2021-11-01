@@ -311,7 +311,7 @@
 							<img src="https://oss.dev33.cn/sa-token/link/maxkey.png" msg="业界领先的身份管理和认证产品">
 						</a>
 						<a href="http://forest.dtflyx.com/" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/link/forest-logo.png" msg="Forest能够帮助您使用更简单的方式编写Java的HTTP客户端">
+							<img src="https://oss.dev33.cn/sa-token/link/forest-logo.png" msg="Forest能够帮助您使用更简单的方式编写Java的HTTP客户端" nf>
 						</a>
 						<a href="https://jpom.io/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/jpom.png" msg="一款简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件">
@@ -442,6 +442,42 @@
 					content: content
 				});
 			})
+			
+			// set 一下 img 的宽度 
+			function setImgWidth(img) {
+				// 如果已经有了宽度参数，则不追加 
+				if(img.src.indexOf('?') > -1) {
+					return;
+				}
+				// console.log(img.getAttribute('nf'));
+				if(img.getAttribute('nf') != null) {
+					return;
+				}
+				img.src = img.src + "?x-oss-process=image/resize,m_lfit,w_" + (img.width) + ",limit_0/auto-orient,0";
+			}
+			
+			// set 一遍 img 的尺寸，防止失真 
+			function f5ImgSize() {
+				$('.com-box-f .com-box a img').each(function() {
+					// console.log(this.src, this.width);
+					// 未加载完毕时，则等待其load之后再设置 
+					if(this.complete == false) {
+						this.onload = function() {
+							setImgWidth(this);
+						}
+						return;
+					}
+					// 追加宽度参数 
+					setImgWidth(this);
+				})
+			}
+			if(window.innerWidth > 1800) {
+				if(navigator.userAgent.indexOf('WebKit') > -1) {
+					f5ImgSize();
+				}
+			}
+			
+			
 		</script>
 
 	</body>
