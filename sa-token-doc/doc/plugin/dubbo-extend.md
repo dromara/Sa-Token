@@ -145,4 +145,6 @@ public class DubboProviderFilter implements Filter {
 }
 ```
 
+
 然后我们就可以进行安全的 RPC 调用了，不带有 Id-Token 参数的调用都会抛出异常，无法调用成功。
+

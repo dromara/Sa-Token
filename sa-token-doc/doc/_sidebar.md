@@ -75,7 +75,8 @@
 
 - **附录**
 	- [常用类、方法](/more/common-action) 
-	- [常见问题排查](/more/common-questions) 
+	- [常见问题排查](/more/common-questions)  
+	- [框架名词解释](/more/noun-intro)  
 	- [Sa-Token功能结构图](/fun/auth-flow)
 	- [未登录场景值详解](/fun/not-login-scene)
 	- [Token有效期详解](/fun/token-timeout)
