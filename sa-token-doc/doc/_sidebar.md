@@ -66,6 +66,7 @@
 	- [和 Thymeleaf 集成](/plugin/thymeleaf-extend)
 	- [和 jwt 集成](/plugin/jwt-extend)
 	- [和 Dubbo 集成](/plugin/dubbo-extend)
+	- [Sa-Token 插件开发指南](/fun/plugin-dev)
 
 - **其它**
 	- [更新日志](/more/update-log) 
@@ -94,5 +95,5 @@
 	
 
 
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/>
 <p style="text-align: center;">----- 到底线了 -----</p>

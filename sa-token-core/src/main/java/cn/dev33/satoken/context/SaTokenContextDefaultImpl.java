@@ -21,7 +21,7 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 	/**
 	 * 默认的上下文处理器对象  
 	 */
-	public static SaTokenContextDefaultImpl defaultContext = new SaTokenContextDefaultImpl();
+	public static SaTokenContext defaultContext = new SaTokenContextDefaultImpl();
 
 	/**
 	 * 默认的错误提示语 
