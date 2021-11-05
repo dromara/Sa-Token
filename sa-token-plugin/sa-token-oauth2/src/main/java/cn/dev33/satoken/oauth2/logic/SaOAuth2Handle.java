@@ -256,10 +256,13 @@ public class SaOAuth2Handle {
 		ra.loginId = StpUtil.getLoginId();
 		ra.scope = req.getParam(Param.scope, "");
 
-		// 6、生成 Access-Token
+		// 6、校验 ClientScope
+		SaOAuth2Util.checkContract(clientId, ra.scope);
+
+		// 7、生成 Access-Token
 		AccessTokenModel at = SaOAuth2Util.generateAccessToken(ra, true);
 
-		// 7、返回 Access-Token
+		// 8、返回 Access-Token
 		return SaResult.data(at.toLineMap());
 	}
 

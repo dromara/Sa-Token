@@ -20,7 +20,6 @@ public class StpLogicJwtForStateless extends StpLogic {
 
 	/**
 	 * Sa-Token 整合 jwt -- stateless 无状态 
-	 * @param loginType 账号体系标识 
 	 */
 	public StpLogicJwtForStateless() {
 		super(StpUtil.TYPE);
