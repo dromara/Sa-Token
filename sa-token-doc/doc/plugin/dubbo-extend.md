@@ -70,14 +70,9 @@ sa-token:
 	check-id-token: true
 ```
 
-成功后， [ 被调用端 ] 可以自由使用 `StpUtil` 中的方法，如：
-``` java
-String appId = StpUtil.getSession().get("appId");
-```
-
 
 ##### 方式二、自建 Dubbo 过滤器校验
-> 适用于需要另外传递自定义附加数据( attachment )的情况
+此方式略显繁琐，好处是除了Id-Token，我们还可以添加其它自定义参数 (attachment)。
 
 1、在 [ 调用端 ] 的 `\resources\META-INF\dubbo\` 目录新建 `org.apache.dubbo.rpc.Filter` 文件
 ``` html
@@ -106,6 +101,7 @@ public class DubboConsumerFilter implements Filter {
 		
 		// 追加 Id-Token 参数 
 		RpcContext.getContext().setAttachment(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
+		
 		// 如果有其他自定义附加数据，如租户
 		// RpcContext.getContext().setAttachment("tenantContext", tenantContext);
 		
@@ -159,12 +155,3 @@ public class DubboProviderFilter implements Filter {
 
 然后我们就可以进行安全的 RPC 调用了，不带有 Id-Token 参数的调用都会抛出异常，无法调用成功。
 
-### 题外话
-一定程度上来说，这样使得Dubbo调用变成“有状态”了。若项目或团队风格有要求，使用“无状态”的调用方式也未尝不可，只是略显繁琐，如：
-``` java
-// 取C端用户信用
-appMemberDubboService.getCredit(UserContext currentUser, TenantContext tenantContext);
-
-// 后台管理分页列表支付订单
-paymentOrderDubboService.adminPage(UserContext currentUser, TenantContext tenantContext, PageParam pageParam, AdminPagePaymentOrderDTO dto);
-```
