@@ -107,7 +107,7 @@ public class DubboConsumerFilter implements Filter {
 		// 追加 Id-Token 参数 
 		RpcContext.getContext().setAttachment(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
 		// 如果有其他自定义附加数据，如租户
-		// RpcContext.getContext().setAttachment("tenantContext", tenantContextBO);
+		// RpcContext.getContext().setAttachment("tenantContext", tenantContext);
 		
 		// 开始调用
 		return invoker.invoke(invocation);
