@@ -1,12 +1,19 @@
 package cn.dev33.satoken.dao;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,7 +35,12 @@ import cn.dev33.satoken.util.SaFoxUtil;
  */
 @Component
 public class SaTokenDaoRedisJackson implements SaTokenDao {
-	
+
+	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	public static final String DATE_PATTERN = "yyyy-MM-dd";
+	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
+
 	/**
 	 * ObjectMapper对象 (以public作用域暴露出此对象，方便开发者二次更改配置)
 	 */
@@ -61,7 +73,14 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 			field.setAccessible(true);
 			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			objectMapper.registerModule(new JavaTimeModule());
+			JavaTimeModule timeModule = new JavaTimeModule();
+			// LocalDateTime序列化与反序列化
+			timeModule.addSerializer(new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
+			timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+			// LocalDate序列化与反序列化
+			timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
+			timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+			objectMapper.registerModule(timeModule);
 			this.objectMapper = objectMapper;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
