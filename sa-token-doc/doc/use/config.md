@@ -94,7 +94,8 @@ PS：两者的区别在于：**`模式1会覆盖yml中的配置，模式2会与y
 | jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 `sa-token-temp-jwt` 模块时此参数才会生效)							|
 | idTokenTimeout		| long		| 86400		| Id-Token的有效期 (单位: 秒)														|
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
-| currDomain			| null		| ""		| 配置当前项目的网络访问地址															|
+| currDomain			| String	| null		| 配置当前项目的网络访问地址													|
+| checkIdToken			| Boolean		| false		| 是否校验Id-Token（部分rpc插件有效）															|
 | sso					| Object	| new SaSsoConfig()		| SSO 单点登录相关配置													|
 | cookie				| Object	| new SaCookieConfig()	| Cookie配置对象															|
 

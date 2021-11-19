@@ -39,4 +39,12 @@ public class SpringMVCUtil {
 		return servletRequestAttributes.getResponse();
 	}
 
+	/**
+	 * 判断当前是否处于 Web 上下文中  
+	 * @return request
+	 */
+	public static boolean isWeb() {
+		return RequestContextHolder.getRequestAttributes() != null;
+	}
+	
 }

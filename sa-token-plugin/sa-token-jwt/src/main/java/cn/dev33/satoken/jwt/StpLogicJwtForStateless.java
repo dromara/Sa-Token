@@ -1,7 +1,9 @@
 package cn.dev33.satoken.jwt;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.SaLoginModel;
@@ -17,20 +19,14 @@ import cn.dev33.satoken.stp.StpUtil;
 public class StpLogicJwtForStateless extends StpLogic {
 
 	/**
-	 * 异常描述 
-	 */
-	public static final String ERROR_MESSAGE = "This API is disabled"; 
-	
-	/**
-	 * 初始化StpLogic, 并指定账号类型 
-	 * @param loginType 账号体系标识 
+	 * Sa-Token 整合 jwt -- stateless 无状态 
 	 */
 	public StpLogicJwtForStateless() {
 		super(StpUtil.TYPE);
 	}
 
 	/**
-	 * 初始化StpLogic, 并指定账号类型 
+	 * Sa-Token 整合 jwt -- stateless 无状态 
 	 * @param loginType 账号体系标识 
 	 */
 	public StpLogicJwtForStateless(String loginType) {
@@ -55,8 +51,8 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 * 创建一个TokenValue 
 	 */
 	@Override
- 	public String createTokenValue(Object loginId) {
- 		return SaJwtUtil.createToken(loginId, jwtSecretKey());
+ 	public String createTokenValue(Object loginId, String device, long timeout) {
+ 		return SaJwtUtil.createToken(loginType, loginId, device, timeout, jwtSecretKey());
 	}
 
 	/**
@@ -93,13 +89,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 		loginModel.build(getConfig());
 		
 		// ------ 2、生成一个token  
-		String tokenValue = SaJwtUtil.createToken(
-				loginType, 
-				id, 
-				loginModel.getDeviceOrDefalut(), 
-				loginModel.getTimeout(), 
-				jwtSecretKey()
-				);
+		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout());
 		
 		// 3、在当前会话写入tokenValue 
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
@@ -113,7 +103,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public String getLoginIdNotHandle(String tokenValue) {
-		// 先验证 loginType，如果不符，相当于null 
+		// 先验证 loginType，如果不符，则视为无效token，返回null 
 		String loginType = SaJwtUtil.getPayloadsNotCheck(tokenValue, jwtSecretKey()).getStr(SaJwtUtil.LOGIN_TYPE);
 		if(getLoginType().equals(loginType) == false) {
 			return null;
@@ -132,11 +122,14 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public void logout() {
-		// stateless模式下清除Cookie即可 
-		
- 		// 如果打开了cookie模式，把cookie清除掉 
- 		if(getConfig().getIsReadCookie() == true){
-			SaManager.getSaTokenContext().getResponse().deleteCookie(getTokenName()); 	
+		// ... 
+
+ 		// 从当前 [storage存储器] 里删除 
+ 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
+ 		
+ 		// 如果打开了Cookie模式，则把cookie清除掉 
+ 		if(getConfig().getIsReadCookie()){
+ 			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}
 	
@@ -177,11 +170,11 @@ public class StpLogicJwtForStateless extends StpLogic {
 	// ------------------- Bean对象代理 -------------------  
 	
 	/**
-	 * 返回持久化对象 
+	 * [禁用] 返回持久化对象 
 	 */
 	@Override
 	public SaTokenDao getSaTokenDao() {
-		throw new SaTokenException(ERROR_MESSAGE); 
+		throw new ApiDisabledException();
 	}
 	
 	

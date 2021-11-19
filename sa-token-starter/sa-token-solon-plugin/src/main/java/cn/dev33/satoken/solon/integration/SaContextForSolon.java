@@ -7,6 +7,8 @@ import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.solon.model.SaRequestForSolon;
 import cn.dev33.satoken.solon.model.SaResponseForSolon;
 import cn.dev33.satoken.solon.model.SaStorageForSolon;
+
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.util.PathAnalyzer;
 
 /**
@@ -45,4 +47,13 @@ public class SaContextForSolon implements SaTokenContext {
     public boolean matchPath(String pattern, String path) {
         return  PathAnalyzer.get(pattern).matches(path);
     }
+
+	/**
+	 * 此上下文是否有效 
+	 * @return / 
+	 */
+	public boolean isValid() {
+		return Context.current() != null;
+	}
+	
 }

@@ -7,7 +7,7 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-plugin</artifactId>
-        <version>1.27.0</version>
+        <version>1.28.0</version>
     </parent>
     <packaging>jar</packaging>
 
@@ -22,7 +22,7 @@
             <artifactId>sa-token-core</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
-		<!-- hutool -->
+		<!-- hutool (jwt) -->
         <dependency>
 		    <groupId>cn.hutool</groupId>
 		    <artifactId>hutool-all</artifactId>

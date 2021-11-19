@@ -11,6 +11,15 @@ import cn.dev33.satoken.context.model.SaStorage;
  *
  */
 public class SaHolder {
+	
+	/**
+	 * 获取当前请求的 SaTokenContext
+	 * 
+	 * @return see note 
+	 */
+	public static SaTokenContext getContext() {
+		return SaManager.getSaTokenContextOrSecond();
+	}
 
 	/**
 	 * 获取当前请求的 [Request] 对象
@@ -18,7 +27,7 @@ public class SaHolder {
 	 * @return see note 
 	 */
 	public static SaRequest getRequest() {
-		return SaManager.getSaTokenContext().getRequest();
+		return SaManager.getSaTokenContextOrSecond().getRequest();
 	}
 
 	/**
@@ -27,7 +36,7 @@ public class SaHolder {
 	 * @return see note 
 	 */
 	public static SaResponse getResponse() {
-		return SaManager.getSaTokenContext().getResponse();
+		return SaManager.getSaTokenContextOrSecond().getResponse();
 	}
 
 	/**
@@ -36,7 +45,7 @@ public class SaHolder {
 	 * @return see note 
 	 */
 	public static SaStorage getStorage() {
-		return SaManager.getSaTokenContext().getStorage();
+		return SaManager.getSaTokenContextOrSecond().getStorage();
 	}
 
 }

@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Sa-Token</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="description" content="sa-token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后台分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
+		<meta name="description" content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后台分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
 		<meta name="keywords" content="sa-token,sa-token框架,sa-token文档,java权限认证">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="shortcut icon" type="image/x-icon" href="logo.png">
@@ -22,6 +22,7 @@
 		<nav>
 			<select onchange="location.href=this.value">
 				<option value="http://sa-token.dev33.cn/doc/index.html">最新版</option>
+				<option value="http://sa-token.dev33.cn/v/v1.27.0/doc/index.html">v1.27.0</option>
 				<option value="http://sa-token.dev33.cn/v/v1.26.0/doc/index.html">v1.26.0</option>
 				<option value="http://sa-token.dev33.cn/v/v1.25.0/doc/index.html">v1.25.0</option>
 				<option value="http://sa-token.dev33.cn/v/v1.24.0/doc/index.html">v1.24.0</option>
@@ -46,13 +47,16 @@
 				<option value="http://sa-token.dev33.cn/v/v1.6.0/doc/index.html">v1.6.0</option>
 				<option value="http://sa-token.dev33.cn/v/v1.5.1/doc/index.html">v1.5.1</option>
 				<option value="http://sa-token.dev33.cn/v/v1.4.0/doc/index.html">v1.4.0</option>
+				<option value="http://sa-token.dev33.cn/v/v1.3.0/doc/index.html">v1.3.0</option>
+				<option value="http://sa-token.dev33.cn/v/v1.2.0/doc/index.html">v1.2.0</option>
+				<option value="http://sa-token.dev33.cn/v/v1.1.0/doc/index.html">v1.1.0</option>
+				<option value="http://sa-token.dev33.cn/v/v1.0.0/doc/index.html">v1.0.0</option>
 			</select>
-			<a href="../index.html">首页</a>
-			<!-- <a href="index.html">文档</a> -->
-			<a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a>
-			<!-- <a href="#/more/tj-gzh">推荐公众号</a> -->
-			<a href="#/more/link">生态</a>
-			<a href="#/more/update-log">更新日志</a>
+			<a href="../index.html">🔨️️ 首页</a>
+			<!-- <a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a> -->
+			<a href="#/more/link">🌱 生态</a>
+			<a class="p-none" href="#/more/sa-token-donate">❤️ 赞助</a>
+			<a href="#/more/update-log"><span style="transform: rotateY(180deg); display: inline-block;">🧾</span> 更新日志</a>
 		</nav>
 		<div class="main-box">
 			<div id="app">加载中...</div>
@@ -62,9 +66,9 @@
 		</div>
 		
 		<script>
-			var saTokenTopVersion = '1.27.0';	// Sa-Token最新版本 
+			var saTokenTopVersion = '1.28.0';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
-			name += '<b style="font-size: 28px; vertical-align: middle;">Sa-Token</b> <sub>v' + saTokenTopVersion + '</sub>'
+			name += '<b style="font-size: 28px; vertical-align: middle;">Sa-Token</b> <sub>v' + saTokenTopVersion + '</sub>';
 			window.$docsify = {
 				name: name, // 名字 
 				repo: 'https://github.com/dromara/sa-token', // github地址 

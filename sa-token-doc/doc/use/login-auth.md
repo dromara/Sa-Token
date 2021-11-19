@@ -96,6 +96,12 @@ public class LoginController {
 		return SaResult.ok("是否登录：" + StpUtil.isLogin());
 	}
 	
+	// 查询 Token 信息  ---- http://localhost:8081/acc/tokenInfo
+	@RequestMapping("tokenInfo")
+	public SaResult tokenInfo() {
+		return SaResult.data(StpUtil.getTokenInfo());
+	}
+	
 	// 测试注销  ---- http://localhost:8081/acc/logout
 	@RequestMapping("logout")
 	public SaResult logout() {

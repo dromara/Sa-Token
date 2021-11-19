@@ -106,7 +106,7 @@ public class SaRequestForServlet implements SaRequest {
 	@Override
 	public Object forward(String path) {
 		try {
-			HttpServletResponse response = (HttpServletResponse)SaManager.getSaTokenContext().getResponse().getSource();
+			HttpServletResponse response = (HttpServletResponse)SaManager.getSaTokenContextOrSecond().getResponse().getSource();
 			request.getRequestDispatcher(path).forward(request, response);
 			return null;
 		} catch (ServletException | IOException e) {

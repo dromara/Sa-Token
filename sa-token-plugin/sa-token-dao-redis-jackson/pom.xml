@@ -7,7 +7,7 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-plugin</artifactId>
-        <version>1.27.0</version>
+        <version>1.28.0</version>
     </parent>
     <packaging>jar</packaging>
 
@@ -35,6 +35,7 @@
       	  	<version>2.11.2</version>	
 			<optional>true</optional>
 		</dependency>
+		<!-- jackson-datatype-jsr310 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>

@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -28,13 +29,13 @@ import cn.dev33.satoken.stp.StpUtil;
 public class ManyLoginTest {
 
 	// 持久化Bean 
-	static SaTokenDao dao;
+	@Autowired(required = false)
+	SaTokenDao dao = SaManager.getSaTokenDao();
 	
 	// 开始 
 	@BeforeClass
     public static void beforeClass() {
     	System.out.println("\n------------ 多端登录测试 star ...");
-    	dao = SaManager.getSaTokenDao();
     }
 	// 结束 
     @AfterClass

@@ -40,7 +40,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
-
+	
 	/**
 	 * ObjectMapper对象 (以public作用域暴露出此对象，方便开发者二次更改配置)
 	 */
@@ -67,12 +67,15 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
-		// 通过反射获取Mapper对象, 配置[忽略未知字段], 增强兼容性
+		// 通过反射获取Mapper对象, 增加一些配置, 增强兼容性 
 		try {
 			Field field = GenericJackson2JsonRedisSerializer.class.getDeclaredField("mapper");
 			field.setAccessible(true);
 			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
-			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			this.objectMapper = objectMapper;
+			// 配置[忽略未知字段]
+			this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			// 配置[时间类型转换]
 			JavaTimeModule timeModule = new JavaTimeModule();
 			// LocalDateTime序列化与反序列化
 			timeModule.addSerializer(new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
@@ -80,8 +83,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 			// LocalDate序列化与反序列化
 			timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
 			timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
-			objectMapper.registerModule(timeModule);
-			this.objectMapper = objectMapper;
+			this.objectMapper.registerModule(timeModule);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}

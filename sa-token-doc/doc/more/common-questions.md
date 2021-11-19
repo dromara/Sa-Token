@@ -52,11 +52,13 @@
 
 
 ### 一个User对象存进Session后，再取出来时报错：无法从User类型转换成User类型？
-群员亲测，当你打开热部署模式后，先存进去的对象，再热刷新后再取出，会报错，关闭热刷新即可解决
+群员亲测，当你打开热部署模式后，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决
 
 
 ### Springboot环境下采用自定义拦截器排除了某个路径仍然被拦截了？
-可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截，如果是其它原因，欢迎加群反馈
+可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。
+
+如果不是404，可以先打印一下访问的路由，因为后端拦截的未必是你前端访问的这个path，先获取到具体path再仔细分析。
 
 
 ### 我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？
@@ -64,13 +66,22 @@
 每次验签时用：当前时间 - 时间戳 > active-timeout，来判断这个 Token 是否已经超时 
 
 
-### 集成 jwt 后为什么在 getSession 时提示 jwt has not session ?
-jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`后再使用`Session`功能，那将又回到了传统`Session`模式，属于自断招牌，此种技术组合没有意义，
-因此jwt集成模式不提供`Session`功能，如果需要`Session`功能，就不要集成`jwt`
+### 集成 Redis 后，明明 Redis 中有值，却还是提示无效Token？
+根据以往的处理经验，发生这种情况 90% 的概率是因为你找错了Redis，即：代码连接的Redis和你用管理工具看到的Redis并不是同一个。
+
+你可能会问：我看配置文件明明是同一个啊？
+
+我的回答是：别光看配置文件，不一定准确，在启动时直接执行 `SaManager.getSaTokenDao().set("name", "value", 100000);`，
+随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的才能证明 Redis 连接没问题，再进行下一步排查。
 
 
 ### 整合 Redis 时先选择了默认jdk序列化，后又改成 jackson 序列化，程序开始报错，SerializationException？
 两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新 
+
+
+### 集成 jwt 后为什么在 getSession 时提示 jwt has not session ?
+jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`后再使用`Session`功能，那将又回到了传统`Session`模式，属于自断招牌，此种技术组合没有意义，
+因此jwt集成模式不提供`Session`功能，如果需要`Session`功能，就不要集成`jwt`
 
 
 ### 我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
@@ -115,7 +126,7 @@ jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`�
 
 ### SaRouter.match 有多个路径需要排除怎么办？
 可以点进去源码看一下，`SaRouter.match`方法有多个重载，可以放一个集合, 例如：<br>
-`SaRouter.match(Arrays.asList("/**"), Arrays.asList("/login", "/reg"), () -> StpUtil.checkLogin());`
+`SaRouter.match(/**).notMatch("/login", "/reg").check(r -> StpUtil.checkLogin());`
 
 
 ### 为什么StpUtil.login() 不能直接写入一个User对象？

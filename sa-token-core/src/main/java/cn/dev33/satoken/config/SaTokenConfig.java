@@ -80,6 +80,8 @@ public class SaTokenConfig implements Serializable {
 	/** 配置当前项目的网络访问地址 */
 	private String currDomain;
 
+	/** 是否校验Id-Token（部分rpc插件有效） */
+	private Boolean checkIdToken = false;
 
 	/**
 	 * Cookie配置对象 
@@ -399,6 +401,22 @@ public class SaTokenConfig implements Serializable {
 		this.currDomain = currDomain;
 		return this;
 	}
+
+	/**
+	 * @return 是否校验Id-Token（部分rpc插件有效）
+	 */
+	public Boolean getCheckIdToken() {
+		return checkIdToken;
+	}
+
+	/**
+	 * @param checkIdToken 是否校验Id-Token（部分rpc插件有效）
+	 * @return 对象自身 
+	 */
+	public SaTokenConfig setCheckIdToken(Boolean checkIdToken) {
+		this.checkIdToken = checkIdToken;
+		return this;
+	}
 	
 	/**
 	 * @return SSO单点登录配置对象 
@@ -454,6 +472,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", idTokenTimeout=" + idTokenTimeout 
 				+ ", basic=" + basic 
 				+ ", currDomain=" + currDomain 
+				+ ", checkIdToken=" + checkIdToken 
 				+ ", sso=" + sso 
 				+ ", cookie=" + cookie 
 				+ "]";

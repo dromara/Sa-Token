@@ -57,6 +57,23 @@ cd sa-token-demo-sso3-client
 call mvn clean
 cd ..
 
+cd sa-token-demo-jwt
+call mvn clean
+cd ..
+
+cd sa-token-demo-jwt
+call mvn clean
+cd ..
+
+
+cd sa-token-demo-dubbo-provider
+call mvn clean
+cd ..
+
+cd sa-token-demo-dubbo-consumer
+call mvn clean
+cd ..
+
 
 
 

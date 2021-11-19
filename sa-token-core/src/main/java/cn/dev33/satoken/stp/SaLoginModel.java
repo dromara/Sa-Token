@@ -93,7 +93,7 @@ public class SaLoginModel {
 	/**
 	 * @return 获取device参数，如果为null，则返回默认值
 	 */
-	public String getDeviceOrDefalut() {
+	public String getDeviceOrDefault() {
 		if(device == null) {
 			return SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 		}
@@ -142,4 +142,13 @@ public class SaLoginModel {
 		return "SaLoginModel [device=" + device + ", isLastingCookie=" + isLastingCookie + ", timeout=" + timeout + "]";
 	}
 
+	
+	/**
+	 * 更换为 getDeviceOrDefault() 
+	 * @return / 
+	 */
+	@Deprecated
+	public String getDeviceOrDefalut() {
+		return getDeviceOrDefault();
+	}
 }

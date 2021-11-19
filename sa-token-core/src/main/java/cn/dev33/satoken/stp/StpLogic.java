@@ -84,37 +84,62 @@ public class StpLogic {
  	}
 
 	/**
-	 * 创建一个TokenValue
-	 * @param loginId loginId
+	 * 创建一个TokenValue 
+	 * @param loginId loginId 
+	 * @param device 设备标识 
+	 * @param timeout 过期时间 
 	 * @return 生成的tokenValue 
 	 */
- 	public String createTokenValue(Object loginId) {
+ 	public String createTokenValue(Object loginId, String device, long timeout) {
  		return SaStrategy.me.createToken.apply(loginId, loginType);
 	}
- 	
+
+ 	/**
+ 	 * 在当前会话写入当前TokenValue 
+ 	 * @param tokenValue token值 
+ 	 */
+	public void setTokenValue(String tokenValue){
+		setTokenValue(tokenValue, (int)SaManager.getConfig().getTimeout());
+	}
+	
  	/**
  	 * 在当前会话写入当前TokenValue 
  	 * @param tokenValue token值 
  	 * @param cookieTimeout Cookie存活时间(秒)
  	 */
 	public void setTokenValue(String tokenValue, int cookieTimeout){
-		SaTokenConfig config = getConfig();
 		
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			return;
+		}
+		
+		// 1. 将token保存到[存储器]里  
+		setTokenValueToStorage(tokenValue);
+		
+		// 2. 将 Token 保存到 [Cookie] 里 
+		if (getConfig().getIsReadCookie()) {
+			setTokenValueToCookie(tokenValue, cookieTimeout);
+		}
+	}
+
+ 	/**
+ 	 * 将 Token 保存到 [Storage] 里 
+ 	 * @param tokenValue token值 
+ 	 */
+	public void setTokenValueToStorage(String tokenValue){
 		// 1. 将token保存到[存储器]里  
 		SaStorage storage = SaHolder.getStorage();
 		
-		// 如果打开了token前缀模式，则拼接上前缀一起写入 
-		String tokenPrefix = config.getTokenPrefix();
+		// 2. 如果打开了 Token 前缀模式，则拼接上前缀
+		String tokenPrefix = getConfig().getTokenPrefix();
 		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
 			storage.set(splicingKeyJustCreatedSave(), tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue);	
 		} else {
 			storage.set(splicingKeyJustCreatedSave(), tokenValue);	
 		}
 		
-		// 2. 将 Token 保存到 [Cookie] 里 
-		if (config.getIsReadCookie()) {
-			setTokenValueToCookie(tokenValue, cookieTimeout);
-		}
+		// 3. 写入 (无前缀) 
+		storage.set(SaTokenConsts.JUST_CREATED_NOT_PREFIX, tokenValue);  
 	}
 	
  	/**
@@ -142,6 +167,30 @@ public class StpLogic {
 	 * @return 当前tokenValue
 	 */
 	public String getTokenValue(){
+		// 1. 获取
+		String tokenValue = getTokenValueNotCut();
+		
+		// 2. 如果打开了前缀模式，则裁剪掉 
+		String tokenPrefix = getConfig().getTokenPrefix();
+		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
+			// 如果token并没有按照指定的前缀开头，则视为未提供token 
+			if(SaFoxUtil.isEmpty(tokenValue) || tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT) == false) {
+				tokenValue = null;
+			} else {
+				// 则裁剪掉前缀 
+				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
+			}
+		}
+		
+		// 3. 返回 
+		return tokenValue;
+	}
+	
+	/**
+	 * 获取当前TokenValue (不裁剪前缀)
+	 * @return / 
+	 */
+	public String getTokenValueNotCut(){
 		// 0. 获取相应对象 
 		SaStorage storage = SaHolder.getStorage();
 		SaRequest request = SaHolder.getRequest();
@@ -166,19 +215,7 @@ public class StpLogic {
 			tokenValue = request.getCookieValue(keyTokenName);
 		}
 		
-		// 5. 如果打开了前缀模式 
-		String tokenPrefix = getConfig().getTokenPrefix();
-		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
-			// 如果token并没有按照指定的前缀开头，则视为未提供token 
-			if(SaFoxUtil.isEmpty(tokenValue) || tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT) == false) {
-				tokenValue = null;
-			} else {
-				// 则裁剪掉前缀 
-				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
-			}
-		}
-		
-		// 6. 返回 
+		// 5. 返回 
 		return tokenValue;
 	}
 	
@@ -255,8 +292,8 @@ public class StpLogic {
 		// --- 如果允许并发登录 
 		if(config.getIsConcurrent()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
-			if(config.getIsShare()) {
-				tokenValue = getTokenValueByLoginId(id, loginModel.getDevice());
+			if(getConfigOfIsShare()) {
+				tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 			}
 		} else {
 			// --- 如果不允许并发登录，则将这个账号的历史登录标记为：被顶下线 
@@ -264,7 +301,7 @@ public class StpLogic {
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
-			tokenValue = createTokenValue(id);
+			tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout());
 		}
 		
 		// ------ 3. 获取 User-Session , 续期 
@@ -272,7 +309,7 @@ public class StpLogic {
 		session.updateMinTimeout(loginModel.getTimeout());
 		
 		// 在 User-Session 上记录token签名 
-		session.addTokenSign(tokenValue, loginModel.getDeviceOrDefalut());
+		session.addTokenSign(tokenValue, loginModel.getDeviceOrDefault());
 		
 		// ------ 4. 持久化其它数据 
 		// token -> id 映射关系  
@@ -299,10 +336,16 @@ public class StpLogic {
  		if(SaFoxUtil.isEmpty(tokenValue)) {
  			return;
  		}
- 		// 如果打开了Cookie模式，第一步，先把cookie清除掉 
+ 		
+ 		// 从当前 [storage存储器] 里删除 
+ 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
+ 		
+ 		// 如果打开了Cookie模式，则把cookie清除掉 
  		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
+ 		
+ 		// 清除这个token的相关信息
  		logoutByTokenValue(tokenValue);
 	}
 
@@ -761,7 +804,7 @@ public class StpLogic {
 			String tokenValue = getTokenValue();
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给Ta 
-				tokenValue = createTokenValue(null);
+				tokenValue = createTokenValue(null, null, getConfig().getTimeout());
 				// 写入 [最后操作时间]
 				setLastActivityToNow(tokenValue);  
 				// 在当前会话写入这个tokenValue 
@@ -1591,7 +1634,8 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyJustCreatedSave() {
-		return SaTokenConsts.JUST_CREATED_SAVE_KEY + loginType;
+//		return SaTokenConsts.JUST_CREATED_SAVE_KEY + loginType;
+		return SaTokenConsts.JUST_CREATED;
 	}
 
 	/**  
@@ -1615,6 +1659,14 @@ public class StpLogic {
 		return SaManager.getConfig();
 	}
 
+	/**
+	 * 返回全局配置对象的isShare属性 
+	 * @return / 
+	 */
+	public boolean getConfigOfIsShare() {
+		return getConfig().getIsShare();
+	}
+	
 	/**
 	 * 返回持久化对象 
 	 * @return / 
