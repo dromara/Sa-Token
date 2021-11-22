@@ -1,19 +1,15 @@
 package cn.dev33.satoken.dao;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
+import cn.dev33.satoken.util.SaFoxUtil;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,10 +18,15 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import cn.dev33.satoken.util.SaFoxUtil;
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Sa-Token持久层接口 [Redis版] (使用 jackson 序列化方式)
@@ -38,9 +39,11 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 
 	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
+	public static final String TIME_PATTERN = "HH:mm:ss";
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
 	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
-	
+	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
+
 	/**
 	 * ObjectMapper对象 (以public作用域暴露出此对象，方便开发者二次更改配置)
 	 */
@@ -83,6 +86,9 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 			// LocalDate序列化与反序列化
 			timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
 			timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+			// LocalTime序列化与反序列化
+			timeModule.addSerializer(new LocalTimeSerializer(TIME_FORMATTER));
+			timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
 			this.objectMapper.registerModule(timeModule);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
