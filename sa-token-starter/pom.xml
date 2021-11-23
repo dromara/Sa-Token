@@ -21,6 +21,8 @@
         <module>sa-token-spring-boot-starter</module>
         <module>sa-token-reactor-spring-boot-starter</module>
         <module>sa-token-solon-plugin</module>
+        <module>sa-token-jboot-plugin</module>
+        <module>sa-token-jfinal-plugin</module>
     </modules>
 
 </project>
