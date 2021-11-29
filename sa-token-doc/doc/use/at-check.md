@@ -117,6 +117,45 @@ orRole 字段代表权限认证未通过时的次要选择，两者只要其一�
 
 使用拦截器模式，只能在`Controller层`进行注解鉴权，如需在任意层级使用注解鉴权，请参考：[AOP注解鉴权](/plugin/aop-at)
 
+### 6、使用组合注解
+假设代码中大量接口存在相似的注解，如都包含针对文档的注解 `@SecurityRequirement`、Sa-Token 登录认证注解 `@SaCheckLogin`，可以将多个注解组合成自定义注解使用。
+```java
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@SaCheckLogin
+@SecurityRequirement(name = Constant.securitySchemeName)
+public @interface Authentication {
+}
+```
+
+在接口上使用此组合注解：
+```java
+// 登录认证：只有登录之后才能进入该方法 
+// @SaCheckLogin
+// @SecurityRequirement(name = Constant.securitySchemeName)				
+@Authentication
+@RequestMapping("info")
+public String info() {
+	return "查询用户信息";
+}
+```
+
+此外为了使 Sa-Token 的拦截器正常工作，还需要重写 Sa-Token 的注解获取方法：
+
+```java
+@Configuration
+public class SaTokenConfigure  {
+
+    /**
+     * 重写 Sa-Token 框架内部算法策略
+     */
+    @PostConstruct
+    public void rewriteSaStrategy() {
+        // 重写注解获取方法，使用 Spring 框架自带的注解工具类 AnnotationUtils
+        SaStrategy.me.getAnnotation = AnnotationUtils::getAnnotation;
+    }
+}
+```
 
 
 
