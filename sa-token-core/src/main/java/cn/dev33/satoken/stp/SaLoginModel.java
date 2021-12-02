@@ -5,6 +5,8 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
 
+import java.util.Map;
+
 /**
  * 调用 `StpUtil.login()` 时的 [配置参数 Model ]
  * @author kong
@@ -26,6 +28,11 @@ public class SaLoginModel {
 	 * 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 	 */
 	public Long timeout;
+
+	/**
+	 * jwt扩展信息
+	 */
+	public Map<String, Object> expandInfoMap;
 
 	
 	/**
@@ -76,6 +83,21 @@ public class SaLoginModel {
 		return this;
 	}
 
+	/**
+	 * @return 参考 {@link #expandInfoMap}
+	 */
+	public Map<String, Object> getExpandInfoMap() {
+		return expandInfoMap;
+	}
+
+	/**
+	 * @param expandInfoMap 参考 {@link #expandInfoMap}
+	 * @return 对象自身
+	 */
+	public SaLoginModel setExpandInfoMap(Map<String, Object> expandInfoMap) {
+		this.expandInfoMap = expandInfoMap;
+		return this;
+	}
 
 	/**
 	 * @return Cookie时长
