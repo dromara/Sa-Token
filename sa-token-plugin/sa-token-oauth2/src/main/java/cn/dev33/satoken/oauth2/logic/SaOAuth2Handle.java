@@ -35,10 +35,13 @@ public class SaOAuth2Handle {
 		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
+		//读取client_id,此参数在所有模式中必填
+		String clientId = req.getParamNotNull(Param.client_id);
+
 		// ------------------ 路由分发 ------------------
 
 		// 模式一：Code授权码
-		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code) && cfg.isCode) {
+		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code) && (SaOAuth2Util.supportType(clientId,GrantType.authorization_code) || cfg.isCode)) {
 			return authorize(req, res, cfg);
 		}
 
@@ -68,17 +71,17 @@ public class SaOAuth2Handle {
 		}
 
 		// 模式二：隐藏式
-		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token) && cfg.isImplicit) {
+		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token) && (SaOAuth2Util.supportType(clientId,GrantType.implicit) || cfg.isImplicit)) {
 			return authorize(req, res, cfg);
 		}
 
 		// 模式三：密码式
-		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password) && cfg.isPassword) {
+		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password) && (SaOAuth2Util.supportType(clientId,GrantType.password) || cfg.isPassword)) {
 			return password(req, res, cfg);
 		}
 
 		// 模式四：凭证式
-		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials) && cfg.isClient) {
+		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials) && (SaOAuth2Util.supportType(clientId,GrantType.client_credentials) || cfg.isClient)) {
 			return clientToken(req, res, cfg);
 		}
 
