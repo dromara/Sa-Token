@@ -11,14 +11,14 @@ import io.jboot.support.redis.JbootRedisConfig;
 )
 public class SaRedisConfig extends JbootRedisConfig{
 
-    private Integer sadb = 1;
+    private Integer db;
 
-    public Integer getSadb() {
-        return this.sadb;
+    public Integer getDb() {
+        return this.db;
     }
 
-    public void setSadb(Integer sadb) {
-        this.sadb = sadb;
+    public void setDb(Integer db) {
+        this.db = db;
     }
 
 }

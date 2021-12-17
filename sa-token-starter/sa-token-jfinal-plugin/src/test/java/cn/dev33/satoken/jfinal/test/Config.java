@@ -2,13 +2,10 @@ package cn.dev33.satoken.jfinal.test;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.jfinal.*;
 import com.jfinal.config.*;
 import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.template.Engine;
-import cn.dev33.satoken.jfinal.SaAnnotationInterceptor;
-import cn.dev33.satoken.jfinal.SaTokenActionHandler;
-import cn.dev33.satoken.jfinal.SaTokenContextForJfinal;
-import cn.dev33.satoken.jfinal.SaTokenDaoRedis;
 
 public class Config extends JFinalConfig {
 
@@ -62,7 +59,9 @@ public class Config extends JFinalConfig {
      * @return
      */
     private RedisPlugin createRedisPlugin(String name, Integer dbIndex) {
-        return new RedisPlugin(name, "redis-host", 6379, 3000,"pwd",dbIndex);
+        RedisPlugin redisPlugin=new RedisPlugin(name, "redis-host", 6379, 3000,"pwd",dbIndex);
+        redisPlugin.setSerializer(SaJdkSerializer.me);
+        return redisPlugin;
     }
     @Override
     public void onStart(){

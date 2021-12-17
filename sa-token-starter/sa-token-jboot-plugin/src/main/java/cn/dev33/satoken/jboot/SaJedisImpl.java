@@ -38,7 +38,7 @@ public class SaJedisImpl {
         Integer port = config.getPort();
         Integer timeout = config.getTimeout();
         String password = config.getPassword();
-        Integer database = config.getSadb();
+        Integer database = config.getDb()==null?config.getDatabase():config.getDb();
         String clientName = config.getClientName();
 
         if (host.contains(":")) {

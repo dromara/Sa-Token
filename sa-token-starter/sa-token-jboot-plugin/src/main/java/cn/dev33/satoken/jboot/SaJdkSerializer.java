@@ -1,36 +1,22 @@
 package cn.dev33.satoken.jboot;
 
-import com.jfinal.kit.LogKit;
-import com.jfinal.plugin.redis.serializer.ISerializer;
-import com.jfinal.plugin.redis.serializer.JdkSerializer;
-import redis.clients.jedis.util.SafeEncoder;
+import com.jfinal.log.Log;
+import io.jboot.components.serializer.JbootSerializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class SaJdkSerializer implements ISerializer {
+public class SaJdkSerializer implements JbootSerializer {
 
-    public static final ISerializer me = new JdkSerializer();
+    private static final Log LOG = Log.getLog(SaJdkSerializer.class);
 
-    public byte[] keyToBytes(String key) {
-        return SafeEncoder.encode(key);
-    }
-
-    public String keyFromBytes(byte[] bytes) {
-        return SafeEncoder.encode(bytes);
-    }
-
-    public byte[] fieldToBytes(Object field) {
-        return valueToBytes(field);
-    }
-
-    public Object fieldFromBytes(byte[] bytes) {
-        return valueFromBytes(bytes);
-    }
-
-    public byte[] valueToBytes(Object value) {
+    @Override
+    public byte[] serialize(Object value) {
+        if (value == null) {
+            return null;
+        }
         ObjectOutputStream objectOut = null;
         try {
             ByteArrayOutputStream bytesOut = new ByteArrayOutputStream(1024);
@@ -45,14 +31,15 @@ public class SaJdkSerializer implements ISerializer {
         finally {
             if(objectOut != null)
                 try {objectOut.close();} catch (Exception e) {
-                    LogKit.error(e.getMessage(), e);}
+                    LOG.error(e.getMessage(), e);}
         }
     }
 
-    public Object valueFromBytes(byte[] bytes) {
-        if(bytes == null || bytes.length == 0)
+    @Override
+    public Object deserialize(byte[] bytes) {
+        if (bytes == null || bytes.length == 0) {
             return null;
-
+        }
         ObjectInputStream objectInput = null;
         try {
             ByteArrayInputStream bytesInput = new ByteArrayInputStream(bytes);
@@ -64,7 +51,7 @@ public class SaJdkSerializer implements ISerializer {
         }
         finally {
             if (objectInput != null)
-                try {objectInput.close();} catch (Exception e) {LogKit.error(e.getMessage(), e);}
+                try {objectInput.close();} catch (Exception e) {LOG.error(e.getMessage(), e);}
         }
     }
 }
