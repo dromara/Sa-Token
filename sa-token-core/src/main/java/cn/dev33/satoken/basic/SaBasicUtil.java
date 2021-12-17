@@ -41,7 +41,12 @@ public class SaBasicUtil {
 	 * @param account 账号（格式为 user:password）
 	 */
 	public static void check(String realm, String account) {
-		saBasicTemplate.check(realm, account);
+		try {
+                	saBasicTemplate.check(realm, account);
+		} catch (NotBasicAuthException e) {
+			SaRouter.back();
+		}
+		
 	}
 
 }
