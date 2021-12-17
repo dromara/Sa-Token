@@ -3,10 +3,7 @@ package cn.dev33.satoken.jboot;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
 import io.jboot.Jboot;
-import io.jboot.components.cache.redis.JbootRedisCacheConfig;
 import io.jboot.exception.JbootIllegalConfigException;
-import io.jboot.support.redis.JbootRedis;
-import io.jboot.support.redis.JbootRedisManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,23 +11,18 @@ import java.util.Set;
 
 public class SaTokenDaoRedis implements SaTokenDao {
 
-    private final JbootRedis redis;
+    private SaJedisImpl redis;
     /**
      * 标记：是否已初始化成功
      */
     public boolean isInit;
 
     public SaTokenDaoRedis(){
-        JbootRedisCacheConfig redisConfig = Jboot.config(JbootRedisCacheConfig.class);
-
+        SaRedisConfig redisConfig = Jboot.config(SaRedisConfig.class);
+        redisConfig.setSerializer("cn.dev33.satoken.jboot.SaJdkSerializer");
         //优先使用 jboot.cache.redis 的配置
         if (redisConfig.isConfigOk()) {
-            redis = JbootRedisManager.me().getRedis(redisConfig);
-        }
-        // 当 jboot.cache.redis 配置不存在时，
-        // 使用 jboot.redis 的配置
-        else {
-            redis = Jboot.getRedis();
+            redis = SaRedisManager.me().getRedis(redisConfig);
         }
 
         if (redis == null) {
@@ -65,7 +57,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
         if(timeout == SaTokenDao.NEVER_EXPIRE) {
             redis.set(key, value);
         }else{
-            redis.setex(key,Integer.parseInt(timeout+""),value);
+            redis.setex(key,value,timeout);
         }
     }
 
@@ -121,7 +113,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
             }
             return;
         }
-        redis.expire(key,Integer.parseInt(timeout+""));
+        redis.expire(key,timeout);
     }
 
     /**
@@ -131,7 +123,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
      */
     @Override
     public Object getObject(String key) {
-        return redis.get(key);
+        return redis.getObject(key);
     }
 
     /**
@@ -146,9 +138,9 @@ public class SaTokenDaoRedis implements SaTokenDao {
             return;
         }
         if(timeout == SaTokenDao.NEVER_EXPIRE) {
-            redis.set(key, object);
+            redis.setObject(key, object);
         }else{
-            redis.setex(key,Integer.parseInt(timeout+""),object);
+            redis.setexObject(key,object,timeout);
         }
     }
 
@@ -173,12 +165,12 @@ public class SaTokenDaoRedis implements SaTokenDao {
      */
     @Override
     public void deleteObject(String key) {
-        redis.del(key);
+        redis.deleteObject(key);
     }
 
     @Override
     public long getObjectTimeout(String key) {
-        return redis.ttl(key);
+        return redis.getObjectTimeout(key);
     }
 
     /**
@@ -195,11 +187,11 @@ public class SaTokenDaoRedis implements SaTokenDao {
                 // 如果其已经被设置为永久，则不作任何处理
             } else {
                 // 如果尚未被设置为永久，那么再次set一次
-                this.set(key, this.get(key), timeout);
+                this.setObject(key, this.get(key), timeout);
             }
             return;
         }
-        redis.expire(key,Integer.parseInt(timeout+""));
+        redis.expireObject(key,timeout);
     }
 
     /**

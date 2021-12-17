@@ -29,7 +29,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
      */
     @Override
     public String get(String key) {
-        return redis.get(key);
+        return redis.getJedis().get(key);
     }
 
     /**
@@ -44,9 +44,9 @@ public class SaTokenDaoRedis implements SaTokenDao {
             return;
         }
         if(timeout == SaTokenDao.NEVER_EXPIRE) {
-            redis.set(key, value);
+            redis.getJedis().set(key, value);
         }else{
-            redis.setex(key,Integer.parseInt(timeout+""),value);
+            redis.getJedis().setex(key,timeout,value);
         }
     }
 
@@ -71,7 +71,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
      */
     @Override
     public void delete(String key) {
-        redis.del(key);
+        redis.getJedis().del(key);
     }
 
     /**
@@ -81,7 +81,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
      */
     @Override
     public long getTimeout(String key) {
-        return redis.ttl(key);
+        return redis.getJedis().ttl(key);
     }
 
     /**
@@ -102,7 +102,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
             }
             return;
         }
-        redis.expire(key,Integer.parseInt(timeout+""));
+        redis.getJedis().expire(key,timeout);
     }
 
     /**
