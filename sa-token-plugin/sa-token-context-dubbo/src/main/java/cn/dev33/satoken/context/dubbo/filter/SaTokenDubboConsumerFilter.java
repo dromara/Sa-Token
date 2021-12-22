@@ -1,6 +1,5 @@
 package cn.dev33.satoken.context.dubbo.filter;
 
-import cn.dev33.satoken.exception.SaTokenException;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.Filter;
@@ -11,6 +10,7 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -34,15 +34,10 @@ public class SaTokenDubboConsumerFilter implements Filter {
 		}
 		
 		// 1. 调用前，向下传递会话Token
-		String tokenValueNotCut = null;
-		try {
-			tokenValueNotCut = StpUtil.getTokenValueNotCut();
-		} catch (SaTokenException exception){
-
-		} finally {
-			RpcContext.getContext().setAttachment(SaTokenConsts.JUST_CREATED, tokenValueNotCut);
+		if(SaManager.getSaTokenContextOrSecond() != SaTokenContextDefaultImpl.defaultContext) {
+			RpcContext.getContext().setAttachment(SaTokenConsts.JUST_CREATED, StpUtil.getTokenValueNotCut()); 
 		}
-		
+
 		// 2. 开始调用 
 		Result invoke = invoker.invoke(invocation);
 		
