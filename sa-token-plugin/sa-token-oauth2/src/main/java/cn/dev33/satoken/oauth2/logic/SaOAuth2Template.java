@@ -149,8 +149,8 @@ public class SaOAuth2Template {
 		deleteRefreshToken(getRefreshTokenValue(cm.clientId, cm.loginId));
 
 		// 3、生成token
-		AccessTokenModel at = converCodeToAccessToken(cm);
-		RefreshTokenModel rt = converAccessTokenToRefreshToken(at);
+		AccessTokenModel at = convertCodeToAccessToken(cm);
+		RefreshTokenModel rt = convertAccessTokenToRefreshToken(at);
 		at.refreshToken = rt.refreshToken;
 		at.refreshExpiresTime = rt.expiresTime;
 
@@ -184,7 +184,7 @@ public class SaOAuth2Template {
 			deleteRefreshToken(rt.refreshToken);
 
 			// 创建并保持新的 Refresh-Token
-			rt = converRefreshTokenToRefreshToken(rt);
+			rt = convertRefreshTokenToRefreshToken(rt);
 			saveRefreshToken(rt);
 			saveRefreshTokenIndex(rt);
 		}
@@ -193,7 +193,7 @@ public class SaOAuth2Template {
 		deleteAccessToken(getAccessTokenValue(rt.clientId, rt.loginId));
 
 		// 生成新 Access-Token
-		AccessTokenModel at = converRefreshTokenToAccessToken(rt);
+		AccessTokenModel at = convertRefreshTokenToAccessToken(rt);
 
 		// 保存新 Access-Token
 		saveAccessToken(at);
@@ -224,7 +224,7 @@ public class SaOAuth2Template {
 
 		// 3、生成&保存 Refresh-Token
 		if(isCreateRt) {
-			RefreshTokenModel rt = converAccessTokenToRefreshToken(at);
+			RefreshTokenModel rt = convertAccessTokenToRefreshToken(at);
 			saveRefreshToken(rt);
 			saveRefreshTokenIndex(rt);
 		}
@@ -436,13 +436,13 @@ public class SaOAuth2Template {
 		return at;
 	}
 
-	// ------------------- conver 数据转换
+	// ------------------- convert 数据转换
 	/**
 	 * 将 Code 转换为 Access-Token
 	 * @param cm CodeModel对象
 	 * @return AccessToken对象
 	 */
-	public AccessTokenModel converCodeToAccessToken(CodeModel cm) {
+	public AccessTokenModel convertCodeToAccessToken(CodeModel cm) {
 		AccessTokenModel at = new AccessTokenModel();
 		at.accessToken = randomAccessToken(cm.clientId, cm.loginId, cm.scope);
 		// at.refreshToken = randomRefreshToken(cm.clientId, cm.loginId, cm.scope);
@@ -459,7 +459,7 @@ public class SaOAuth2Template {
 	 * @param at .
 	 * @return .
 	 */
-	public RefreshTokenModel converAccessTokenToRefreshToken(AccessTokenModel at) {
+	public RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at) {
 		RefreshTokenModel rt = new RefreshTokenModel();
 		rt.refreshToken = randomRefreshToken(at.clientId, at.loginId, at.scope);
 		rt.clientId = at.clientId;
@@ -477,7 +477,7 @@ public class SaOAuth2Template {
 	 * @param rt .
 	 * @return .
 	 */
-	public AccessTokenModel converRefreshTokenToAccessToken(RefreshTokenModel rt) {
+	public AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt) {
 		AccessTokenModel at = new AccessTokenModel();
 		at.accessToken = randomAccessToken(rt.clientId, rt.loginId, rt.scope);
 		at.refreshToken = rt.refreshToken;
@@ -494,7 +494,7 @@ public class SaOAuth2Template {
 	 * @param rt .
 	 * @return .
 	 */
-	public RefreshTokenModel converRefreshTokenToRefreshToken(RefreshTokenModel rt) {
+	public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt) {
 		RefreshTokenModel newRt = new RefreshTokenModel();
 		newRt.refreshToken = randomRefreshToken(rt.clientId, rt.loginId, rt.scope);
 		newRt.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
