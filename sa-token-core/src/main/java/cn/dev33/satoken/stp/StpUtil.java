@@ -1,6 +1,7 @@
 package cn.dev33.satoken.stp;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
@@ -112,6 +113,15 @@ public class StpUtil {
 	 */
 	public static void login(Object id, String device) {
 		stpLogic.login(id, device);
+	}
+
+	/**
+	 * 会话登录，并指定登录设备
+	 * @param id 账号id，建议的类型：（long | int | String）
+	 * @param expandInfoMap 扩展信息
+	 */
+	public static void login(Object id, Map<String, Object> expandInfoMap) {
+		stpLogic.login(id, expandInfoMap);
 	}
 
 	/**
@@ -286,6 +296,15 @@ public class StpUtil {
  	public static Object getLoginIdByToken(String tokenValue) {
  		return stpLogic.getLoginIdByToken(tokenValue);
  	}
+
+	/**
+	 * 获取指定Token对应的扩展数据，如果未登录，则返回 null
+	 * @param tokenValue token
+	 * @return 账号id
+	 */
+	public static Object getExpandInfoByToken(String tokenValue) {
+		return stpLogic.getExpandInfoByToken(tokenValue);
+	}
 	
  	
 	// =================== User-Session 相关 ===================
