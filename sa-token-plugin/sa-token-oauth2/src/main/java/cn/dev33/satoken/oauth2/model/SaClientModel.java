@@ -31,15 +31,21 @@ public class SaClientModel implements Serializable {
 	 */
 	public String allowUrl;
 
+	/**
+	 * 应用允许授权的所有URL, 多个用逗号隔开
+	 */
+	public String allowType;
+
 	public SaClientModel() {
 		
 	}
-	public SaClientModel(String clientId, String clientSecret, String contractScope, String allowUrl) {
+	public SaClientModel(String clientId, String clientSecret, String contractScope, String allowUrl,String allowType) {
 		super();
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.contractScope = contractScope;
 		this.allowUrl = allowUrl;
+		this.allowType = allowType;
 	}
 
 	/**
@@ -103,6 +109,22 @@ public class SaClientModel implements Serializable {
 	 */
 	public SaClientModel setAllowUrl(String allowUrl) {
 		this.allowUrl = allowUrl;
+		return this;
+	}
+
+	/**
+	 * @return 应用允许的授权模式, 多个用逗号隔开
+	 */
+	public String getAllowType() {
+		return allowType;
+	}
+
+	/**
+	 * @param allowType 应用允许的授权模式, 多个用逗号隔开
+	 * @return 对象自身
+	 */
+	public SaClientModel setAllowType(String allowType) {
+		this.allowType = allowType;
 		return this;
 	}
 	

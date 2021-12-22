@@ -9,6 +9,7 @@ import cn.dev33.satoken.oauth2.model.*;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -302,7 +303,7 @@ public class SaOAuth2Template {
 
 		// 删除 Access-Token
 		deleteAccessToken(accessToken);
-		deleteAccessTokenIndex(at.clientId, at.accessToken);
+		deleteAccessTokenIndex(at.clientId, at.loginId);
 
 		// 删除对应的 Refresh-Token
 		String refreshToken = getRefreshTokenValue(at.clientId, at.loginId);
@@ -915,6 +916,14 @@ public class SaOAuth2Template {
 	 */
 	public String splicingGrantScopeKey(String clientId, Object loginId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:grant-scope:" + clientId + ":" + loginId;
+	}
+
+	/**
+	 * 检查是否支持的type类型
+	 */
+	public Boolean supportType(String clientId,String type){
+		SaClientModel saClientModel = checkClientModel(clientId);
+	 	return Arrays.asList(saClientModel.getAllowType().split(",")).contains(type);
 	}
 
 }

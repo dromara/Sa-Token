@@ -1,6 +1,7 @@
 package cn.dev33.satoken.jwt;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -54,6 +55,11 @@ public class StpLogicJwtForMix extends StpLogic {
 		return SaJwtUtil.createToken(loginType, loginId, device, timeout, jwtSecretKey());
 	}
 
+	@Override
+	public String createTokenValue(Object loginId, String device, Map<String, Object> expandInfoMap, long timeout) {
+		return SaJwtUtil.createToken(loginType, loginId, device, expandInfoMap, timeout, jwtSecretKey());
+	}
+
 	/**
 	 * 获取当前会话的Token信息 
 	 * @return token信息 
@@ -90,6 +96,21 @@ public class StpLogicJwtForMix extends StpLogic {
 		try {
 			Object loginId = SaJwtUtil.getLoginId(tokenValue, jwtSecretKey());
 			return String.valueOf(loginId);
+		} catch (NotLoginException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Object getExpandInfoNotHandle(String tokenValue) {
+		// 先验证 loginType，如果不符，则视为无效token，返回null
+		String loginType = SaJwtUtil.getPayloadsNotCheck(tokenValue, jwtSecretKey()).getStr(SaJwtUtil.LOGIN_TYPE);
+		if(getLoginType().equals(loginType) == false) {
+			return null;
+		}
+		// 获取 expandInfo
+		try {
+			return SaJwtUtil.getExpandInfo(tokenValue, jwtSecretKey());
 		} catch (NotLoginException e) {
 			return null;
 		}
