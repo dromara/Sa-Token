@@ -1,16 +1,20 @@
 package cn.dev33.satoken.oauth2.logic;
 
+import java.util.List;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Param;
-import cn.dev33.satoken.oauth2.model.*;
+import cn.dev33.satoken.oauth2.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.model.CodeModel;
+import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
+import cn.dev33.satoken.oauth2.model.RequestAuthModel;
+import cn.dev33.satoken.oauth2.model.SaClientModel;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Sa-Token-OAuth2 模块 代码实现
@@ -916,14 +920,6 @@ public class SaOAuth2Template {
 	 */
 	public String splicingGrantScopeKey(String clientId, Object loginId) {
 		return SaManager.getConfig().getTokenName() + ":oauth2:grant-scope:" + clientId + ":" + loginId;
-	}
-
-	/**
-	 * 检查是否支持的type类型
-	 */
-	public Boolean supportType(String clientId,String type){
-		SaClientModel saClientModel = checkClientModel(clientId);
-	 	return Arrays.asList(saClientModel.getAllowType().split(",")).contains(type);
 	}
 
 }

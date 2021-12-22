@@ -21,7 +21,8 @@ public class SaOAuth2TemplateImpl extends SaOAuth2Template {
 					.setClientId("10001")
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")
 					.setAllowUrl("*")
-					.setContractScope("userinfo");
+					.setContractScope("userinfo")
+					.setIsAutoMode(true);
 		}
 		return null;
 	}

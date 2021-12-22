@@ -14,6 +14,7 @@ import cn.dev33.satoken.oauth2.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
+import cn.dev33.satoken.oauth2.model.SaClientModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -35,16 +36,17 @@ public class SaOAuth2Handle {
 		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
-		//读取client_id,此参数在所有模式中必填
-		String clientId = req.getParamNotNull(Param.client_id);
-
 		// ------------------ 路由分发 ------------------
 
 		// 模式一：Code授权码
-		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code) && (SaOAuth2Util.supportType(clientId,GrantType.authorization_code) || cfg.isCode)) {
-			return authorize(req, res, cfg);
+		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code)) {
+			SaClientModel cm = currClientModel();
+			if(cfg.isCode && (cm.isCode || cm.isAutoMode)) {
+				return authorize(req, res, cfg);
+			}
+			throw new SaOAuth2Exception("暂未开放的授权模式");
 		}
-
+		
 		// Code授权码 获取 Access-Token
 		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.authorization_code)) {
 			return token(req, res, cfg);
@@ -71,18 +73,31 @@ public class SaOAuth2Handle {
 		}
 
 		// 模式二：隐藏式
-		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token) && (SaOAuth2Util.supportType(clientId,GrantType.implicit) || cfg.isImplicit)) {
-			return authorize(req, res, cfg);
+		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token)) {
+			SaClientModel cm = currClientModel();
+			if(cfg.isImplicit && (cm.isImplicit || cm.isAutoMode)) {
+				return authorize(req, res, cfg);
+			}
+			throw new SaOAuth2Exception("暂未开放的授权模式");
 		}
 
 		// 模式三：密码式
-		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password) && (SaOAuth2Util.supportType(clientId,GrantType.password) || cfg.isPassword)) {
-			return password(req, res, cfg);
+		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password)) {
+			SaClientModel cm = currClientModel();
+			if(cfg.isPassword && (cm.isPassword || cm.isAutoMode)) {
+				return password(req, res, cfg);
+			}
+			throw new SaOAuth2Exception("暂未开放的授权模式");
+			
 		}
 
 		// 模式四：凭证式
-		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials) && (SaOAuth2Util.supportType(clientId,GrantType.client_credentials) || cfg.isClient)) {
-			return clientToken(req, res, cfg);
+		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials)) {
+			SaClientModel cm = currClientModel();
+			if(cfg.isClient && (cm.isClient || cm.isAutoMode)) {
+				return clientToken(req, res, cfg);
+			}
+			throw new SaOAuth2Exception("暂未开放的授权模式");
 		}
 
 		// 默认返回
@@ -97,7 +112,7 @@ public class SaOAuth2Handle {
 	 * @return 处理结果
 	 */
 	public static Object authorize(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
-
+		
 		// 1、如果尚未登录, 则先去登录
 		if(StpUtil.isLogin() == false) {
 			return cfg.notLoginView.get();
@@ -125,6 +140,7 @@ public class SaOAuth2Handle {
 			String redirectUri = SaOAuth2Util.buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
 			return res.redirect(redirectUri);
 		}
+		
 		// 如果是 隐藏式，则：开始重定向授权，下放 token
 		if(ResponseType.token.equals(ra.responseType)) {
 			AccessTokenModel at = SaOAuth2Util.generateAccessToken(ra, false);
@@ -296,4 +312,13 @@ public class SaOAuth2Handle {
 		return SaResult.data(ct.toLineMap());
 	}
 
+	/**
+	 * 根据当前请求提交的 client_id 参数获取 SaClientModel 对象 
+	 * @return / 
+	 */
+	public static SaClientModel currClientModel() {
+		String clientId = SaHolder.getRequest().getParam(Param.client_id);
+		return SaOAuth2Util.checkClientModel(clientId);
+	}
+	
 }

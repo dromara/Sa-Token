@@ -293,16 +293,4 @@ public class SaOAuth2Util {
 		return saOAuth2Template.getGrantScope(clientId, loginId);
 	}
 
-	/**
-	 * 获取：检查是否支持的授权类型
-	 * @param clientId 应用id
-	 * @param type 授权类型
-	 * @return 是否
-	 */
-	public static Boolean supportType(String clientId, String type) {
-		return saOAuth2Template.supportType(clientId, type);
-	}
-	
-	
-
 }

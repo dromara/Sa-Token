@@ -16,19 +16,15 @@ public class SaOAuth2Config implements Serializable {
 	private static final long serialVersionUID = -6541180061782004705L;
 
 	/** 是否打开模式：授权码（Authorization Code） */
-	@Deprecated
 	public Boolean isCode = true;
 
 	/** 是否打开模式：隐藏式（Implicit） */
-	@Deprecated
 	public Boolean isImplicit = false;
 
 	/** 是否打开模式：密码式（Password） */
-	@Deprecated
 	public Boolean isPassword = false;
 
 	/** 是否打开模式：凭证式（Client Credentials） */
-	@Deprecated
 	public Boolean isClient = false;
 
 	/** 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token */
