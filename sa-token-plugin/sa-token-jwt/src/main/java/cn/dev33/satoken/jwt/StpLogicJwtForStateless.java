@@ -11,6 +11,8 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
+import java.util.Map;
+
 /**
  * Sa-Token 整合 jwt -- stateless 无状态 
  * @author kong
@@ -55,6 +57,11 @@ public class StpLogicJwtForStateless extends StpLogic {
  		return SaJwtUtil.createToken(loginType, loginId, device, timeout, jwtSecretKey());
 	}
 
+	@Override
+	public String createTokenValue(Object loginId, String device, Map<String, Object> expandInfoMap, long timeout) {
+		return SaJwtUtil.createToken(loginType, loginId, device, expandInfoMap, timeout, jwtSecretKey());
+	}
+
 	/**
 	 * 获取当前会话的Token信息 
 	 * @return token信息 
@@ -89,7 +96,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 		loginModel.build(getConfig());
 		
 		// ------ 2、生成一个token  
-		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout());
+		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getExpandInfoMap(), loginModel.getTimeout());
 		
 		// 3、在当前会话写入tokenValue 
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
@@ -112,6 +119,21 @@ public class StpLogicJwtForStateless extends StpLogic {
 		try {
 			Object loginId = SaJwtUtil.getLoginId(tokenValue, jwtSecretKey());
 			return String.valueOf(loginId);
+		} catch (NotLoginException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Object getExpandInfoNotHandle(String tokenValue) {
+		// 先验证 loginType，如果不符，则视为无效token，返回null
+		String loginType = SaJwtUtil.getPayloadsNotCheck(tokenValue, jwtSecretKey()).getStr(SaJwtUtil.LOGIN_TYPE);
+		if(getLoginType().equals(loginType) == false) {
+			return null;
+		}
+		// 获取 expandInfoMap
+		try {
+			return SaJwtUtil.getExpandInfo(tokenValue, jwtSecretKey());
 		} catch (NotLoginException e) {
 			return null;
 		}
