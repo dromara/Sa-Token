@@ -32,8 +32,13 @@ public class SaTokenDubboConsumerFilter implements Filter {
 			RpcContext.getContext().setAttachment(SaIdUtil.ID_TOKEN, SaIdUtil.getToken()); 
 		}
 		
-		// 1. 调用前，向下传递会话Token 
-		RpcContext.getContext().setAttachment(SaTokenConsts.JUST_CREATED, StpUtil.getTokenValueNotCut()); 
+		// 1. 调用前，向下传递会话Token
+		String tokenValueNotCut = null;
+		try {
+			tokenValueNotCut = StpUtil.getTokenValueNotCut();
+		} finally {
+			RpcContext.getContext().setAttachment(SaTokenConsts.JUST_CREATED, tokenValueNotCut);
+		}
 		
 		// 2. 开始调用 
 		Result invoke = invoker.invoke(invocation);
