@@ -492,37 +492,5 @@
 			
 		</script>
 
-		<script type="text/javascript">
-			
-			// 弹出提示 
-			function show() {
-				var not_alert_time = localStorage.getItem('not_alert_time');
-				if (not_alert_time != null && not_alert_time != '') {
-					not_alert_time = parseInt(not_alert_time);
-					// var t = 1000 * 60 * 60 * 24 * 30;
-					var t = 1000 * 60 * 60 * 24;
-					// var t = 1000 * 5;
-					if (new Date().getTime() < not_alert_time + t) {
-						return;
-					}
-				}
-				// 弹出
-				var str = '<p style="color: #000;">《2021年度OSC中国最佳开源项目评选》<b style="color:red;">第二轮投票</b> 开始了（第一轮投票已清空），希望大家可以为 <b style="color:red;">Sa-Token</b> 投上一票，感谢！ ❤️❤️❤️' +
-					'<br><a href="https://www.oschina.net/project/top_cn_2021/?id=520" target="_blank">https://www.oschina.net/project/top_cn_2021/?id=520</a>' + 
-					'<br><br>PS：点击 确定/取消 后近期不再弹出此信息</p>';
-				layer.confirm(str, {btn: ['好的！', '残忍拒绝'], title: '支持 Sa-Token '}, function() {
-					console.log('点击了确定');
-					localStorage.setItem('not_alert_time', new Date().getTime() + '');
-					window.open('https://www.oschina.net/project/top_cn_2021/?id=520');
-					layer.closeAll();
-				}, function() {
-					console.log('点击了取消');
-					layer.closeAll();
-					localStorage.setItem('not_alert_time', new Date().getTime() + '');
-				});
-			}
-			show();
-		</script>
-		
 	</body>
 </html>
