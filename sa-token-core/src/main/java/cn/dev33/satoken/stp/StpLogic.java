@@ -16,6 +16,7 @@ import cn.dev33.satoken.context.model.SaCookie;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
@@ -81,25 +82,14 @@ public class StpLogic {
  	}
 
 	/**
-	 * 创建一个TokenValue 
-	 * @param loginId loginId 
-	 * @param device 设备标识 
-	 * @param timeout 过期时间 
-	 * @return 生成的tokenValue 
-	 */
- 	public String createTokenValue(Object loginId, String device, long timeout) {
- 		return SaStrategy.me.createToken.apply(loginId, loginType);
-	}
-
-	/**
 	 * 创建一个TokenValue
 	 * @param loginId loginId
 	 * @param device 设备标识
-	 * @param expandInfoMap 扩展信息
 	 * @param timeout 过期时间
+	 * @param extraData 扩展信息
 	 * @return 生成的tokenValue
 	 */
-	public String createTokenValue(Object loginId, String device, Map<String, Object> expandInfoMap, long timeout) {
+	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
 		return SaStrategy.me.createToken.apply(loginId, loginType);
 	}
 
@@ -270,15 +260,6 @@ public class StpLogic {
 	}
 
 	/**
-	 * 会话登录，并指定扩展信息 for Jwt
-	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param expandInfoMap 扩展数据
-	 */
-	public void login(Object id, Map<String, Object> expandInfoMap) {
-		login(id, new SaLoginModel().setExpandInfoMap(expandInfoMap));
-	}
-
-	/**
 	 * 会话登录，并指定是否 [记住我] 
 	 * @param id 账号id，建议的类型：（long | int | String）
 	 * @param isLastingCookie 是否为持久Cookie 
@@ -319,7 +300,7 @@ public class StpLogic {
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
-			tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getExpandInfoMap(), loginModel.getTimeout());
+			tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
 		}
 		
 		// ------ 3. 获取 User-Session , 续期 
@@ -678,18 +659,6 @@ public class StpLogic {
  		return getLoginIdNotHandle(tokenValue);
  	}
 
-	/**
-	 * 获取指定Token对应的扩展信息，如果未登录，则返回 null
-	 * @param tokenValue token
-	 * @return 账号id
-	 */
-	public Object getExpandInfoByToken(String tokenValue) {
-		if(tokenValue == null) {
-			return null;
-		}
-		return getExpandInfoNotHandle(tokenValue);
-	}
- 	
  	 /**
  	  * 获取指定Token对应的账号id (不做任何特殊处理) 
  	  * @param tokenValue token值 
@@ -700,15 +669,14 @@ public class StpLogic {
  	}
 
 	/**
-	 * 获取指定Token对应的扩展信息 (不做任何特殊处理)
-	 * @param tokenValue token值
-	 * @return 账号id
+	 * 获取Token扩展信息（只在jwt模式下有效）
+	 * @param key 键值 
+	 * @return 对应的扩展数据 
 	 */
-	public Object getExpandInfoNotHandle(String tokenValue) {
-		return getSaTokenDao().get(splicingKeyTokenValue(tokenValue));
+	public Object getExtra(String key) {
+		throw new ApiDisabledException();
 	}
-
-
+ 	
  	
 	// ---- 其它操作 
  	/**
@@ -845,7 +813,7 @@ public class StpLogic {
 			String tokenValue = getTokenValue();
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给Ta 
-				tokenValue = createTokenValue(null, null, getConfig().getTimeout());
+				tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
 				// 写入 [最后操作时间]
 				setLastActivityToNow(tokenValue);  
 				// 在当前会话写入这个tokenValue 
@@ -1750,5 +1718,17 @@ public class StpLogic {
 	public void logoutByLoginId(Object loginId, String device) {
 		this.kickout(loginId, device);
 	}
-	
+
+	/**
+	 * 创建一个TokenValue
+	 * @param loginId loginId 
+	 * @param device 设备标识 
+	 * @param timeout 过期时间 
+	 * @return 生成的tokenValue 
+	 */
+	@Deprecated
+ 	public String createTokenValue(Object loginId, String device, long timeout) {
+ 		return createTokenValue(loginId, device, timeout, null);
+	}
+
 }

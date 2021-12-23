@@ -1,11 +1,12 @@
 package cn.dev33.satoken.stp;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
-
-import java.util.Map;
 
 /**
  * 调用 `StpUtil.login()` 时的 [配置参数 Model ]
@@ -30,9 +31,9 @@ public class SaLoginModel {
 	public Long timeout;
 
 	/**
-	 * jwt扩展信息
+	 * 扩展信息（只在jwt模式下生效）
 	 */
-	public Map<String, Object> expandInfoMap;
+	public Map<String, Object> extraData;
 
 	
 	/**
@@ -84,19 +85,45 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 参考 {@link #expandInfoMap}
+	 * @return 参考 {@link #extraData}
 	 */
-	public Map<String, Object> getExpandInfoMap() {
-		return expandInfoMap;
+	public Map<String, Object> getExtraData() {
+		return extraData;
 	}
 
 	/**
-	 * @param expandInfoMap 参考 {@link #expandInfoMap}
+	 * @param extraData 参考 {@link #extraData}
 	 * @return 对象自身
 	 */
-	public SaLoginModel setExpandInfoMap(Map<String, Object> expandInfoMap) {
-		this.expandInfoMap = expandInfoMap;
+	public SaLoginModel setExtraData(Map<String, Object> extraData) {
+		this.extraData = extraData;
 		return this;
+	}
+
+	/**
+	 * 写入扩展数据（只在jwt模式下生效） 
+	 * @param key 键
+	 * @param value 值 
+	 * @return
+	 */
+	public SaLoginModel setExtra(String key, Object value) {
+		if(this.extraData == null) {
+			this.extraData = new LinkedHashMap<>();
+		}
+		this.extraData.put(key, value);
+		return this;
+	}
+
+	/**
+	 * 获取扩展数据（只在jwt模式下生效） 
+	 * @param key 键
+	 * @return 扩展数据的值 
+	 */
+	public Object getExtra(String key) {
+		if(this.extraData == null) {
+			return null;
+		}
+		return this.extraData.get(key);
 	}
 
 	/**

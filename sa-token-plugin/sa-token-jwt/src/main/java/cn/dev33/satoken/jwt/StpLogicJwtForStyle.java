@@ -1,5 +1,7 @@
 package cn.dev33.satoken.jwt;
 
+import java.util.Map;
+
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -37,12 +39,18 @@ public class StpLogicJwtForStyle extends StpLogic {
 	
 	/**
 	 * 创建一个TokenValue
-	 * @param loginId loginId
-	 * @return 生成的tokenValue 
 	 */
 	@Override
- 	public String createTokenValue(Object loginId, String device, long timeout) {
- 		return SaJwtUtil.createToken(loginId, jwtSecretKey());
+ 	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+ 		return SaJwtUtil.createToken(loginId, extraData, jwtSecretKey());
 	}
- 	
+
+	/**
+	 * 获取Token携带的扩展信息
+	 */
+	@Override
+	public Object getExtra(String key) {
+		return SaJwtUtil.getPayloads(getTokenValue(), jwtSecretKey()).get(key);
+	}
+
 }

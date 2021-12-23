@@ -1,15 +1,14 @@
 package cn.dev33.satoken.jwt;
 
+import java.util.Map;
+
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTException;
-
-import java.util.Map;
 
 /**
  * jwt操作工具类封装 
@@ -38,24 +37,21 @@ public class SaJwtUtil {
 	 */
 	public static final String EFF = "eff";
 
-	/**
-	 * key: 扩展数据
-	 */
-	public static final String EXPAND = "expand";
-
 	/** 
 	 * 当有效期被设为此值时，代表永不过期 
 	 */ 
 	public static final long NEVER_EXPIRE = SaTokenDao.NEVER_EXPIRE;
 	
-	
+	// ------ 创建
+
 	/**
 	 * 创建 jwt （简单方式）
 	 * @param loginId 账号id 
+	 * @param extraData 扩展数据
      * @param keyt 秘钥
 	 * @return jwt-token 
 	 */
-    public static String createToken(Object loginId, String keyt) {
+    public static String createToken(Object loginId, Map<String, Object> extraData, String keyt) {
     	
     	// 秘钥不可以为空 
     	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
@@ -65,39 +61,7 @@ public class SaJwtUtil {
 			    .setPayload(LOGIN_ID, loginId)
 			    // 混入随机字符 
 			    .setPayload("rn", SaFoxUtil.getRandomString(32))
-			    .setKey(keyt.getBytes())
-			    .sign();
-    	
-    	// 返回 
-    	return token;
-    }
-
-	/**
-	 * 创建 jwt （全参数方式） 
-	 * @param loginType 账号类型 
-	 * @param loginId 账号id 
-	 * @param device 设备标识
-	 * @param timeout token有效期 (单位 秒)
-     * @param keyt 秘钥
-	 * @return jwt-token 
-	 */
-    public static String createToken(String loginType, Object loginId, String device, long timeout, String keyt) {
-
-    	// 秘钥不可以为空 
-    	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
-    	
-    	// 计算有效期 
-    	long effTime = timeout;
-    	if(timeout != NEVER_EXPIRE) {
-    		effTime = timeout * 1000 + System.currentTimeMillis();
-    	}
-    	
-    	// 构建
-    	String token = JWT.create()
-			    .setPayload(LOGIN_TYPE, loginType)
-			    .setPayload(LOGIN_ID, loginId)
-			    .setPayload(DEVICE, device)
-			    .setPayload(EFF, effTime)
+				.addPayloads(extraData)
 			    .setKey(keyt.getBytes())
 			    .sign();
     	
@@ -110,13 +74,13 @@ public class SaJwtUtil {
 	 * @param loginType 账号类型
 	 * @param loginId 账号id
 	 * @param device 设备标识
-	 * @param expandInfoMap 扩展数据
 	 * @param timeout token有效期 (单位 秒)
+	 * @param extraData 扩展数据
 	 * @param keyt 秘钥
 	 * @return jwt-token
 	 */
 	public static String createToken(String loginType, Object loginId, String device,
-									 Map<String, Object> expandInfoMap, long timeout, String keyt) {
+									 long timeout, Map<String, Object> extraData, String keyt) {
 
 		// 秘钥不可以为空
 		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
@@ -127,24 +91,22 @@ public class SaJwtUtil {
 			effTime = timeout * 1000 + System.currentTimeMillis();
 		}
 
+		// 创建  
 		JWT jwt = JWT.create()
 				.setPayload(LOGIN_TYPE, loginType)
 				.setPayload(LOGIN_ID, loginId)
 				.setPayload(DEVICE, device)
-				.setPayload(EFF, effTime);
-
-		// 设定扩展数据
-		if (CollectionUtil.isNotEmpty(expandInfoMap)) {
-			jwt.setPayload(EXPAND, expandInfoMap);
-		}
+				.setPayload(EFF, effTime)
+				.addPayloads(extraData);
 
 		// 返回
 		return jwt.setKey(keyt.getBytes()).sign();
 	}
 
+	// ------ 解析 
 
     /**
-     * jwt 解析（校验签名和密码） 
+     * jwt 解析（校验签名和有效期） 
      * @param token Jwt-Token值 
      * @param keyt 秘钥
      * @return 解析后的jwt 对象 
@@ -185,7 +147,7 @@ public class SaJwtUtil {
     }
 
     /**
-     * 获取 jwt 数据载荷 （校验签名和密码） 
+     * 获取 jwt 数据载荷 （校验签名和有效期） 
      * @param token token值
      * @param keyt 秘钥 
      * @return 载荷 
@@ -195,7 +157,7 @@ public class SaJwtUtil {
     }
 
     /**
-     * 获取 jwt 数据载荷 （不校验签名和密码） 
+     * 获取 jwt 数据载荷 （只校验签名，不校验有效期） 
      * @param token token值
      * @param keyt 秘钥 
      * @return 载荷 
@@ -204,6 +166,13 @@ public class SaJwtUtil {
     	try {
     		JWT jwt = JWT.of(token);
         	JSONObject payloads = jwt.getPayloads();
+
+        	// 校验 Token 签名 
+        	boolean verify = jwt.setKey(keyt.getBytes()).verify();
+        	if(verify == false) {
+        		throw NotLoginException.newInstance(payloads.getStr(LOGIN_TYPE), NotLoginException.INVALID_TOKEN, token);
+        	};
+        	
         	return payloads;
 		} catch (JWTException e) {
 			return new JSONObject();
@@ -233,33 +202,6 @@ public class SaJwtUtil {
 			return null;
 		}
     }
-
-	/**
-	 * getExpandMap
-	 *
-	 * @since 2021/11/23 5:05 下午
-	 * @param token token值
-	 * @param keyt 秘钥
-	 * @return 值
-	 */
-	public static Object getExpandInfo(String token, String keyt) {
-		return getPayloads(token, keyt).get(EXPAND);
-	}
-
-	/**
-	 * 获取 jwt 代表的账号id (未登录时返回null)
-	 * @param token Token值
-	 * @param keyt 秘钥
-	 * @return 值
-	 */
-	public static Object getExpandInfoOrNull(String token, String keyt) {
-		try {
-			return getPayloads(token, keyt).get(EXPAND);
-		} catch (NotLoginException e) {
-			return null;
-		}
-	}
-
 
     /**
      * 获取 jwt 剩余有效期 
@@ -303,6 +245,32 @@ public class SaJwtUtil {
         // 计算timeout (转化为以秒为单位的有效时间)
         return (effTime - System.currentTimeMillis()) / 1000;
     }
-    
-    
+
+	// ------ 废弃API 
+
+	/**
+	 * 创建 jwt （简单方式）
+	 * @param loginId 账号id 
+     * @param keyt 秘钥
+	 * @return jwt-token 
+	 */
+	@Deprecated
+    public static String createToken(Object loginId, String keyt) {
+    	return createToken(loginId, null, keyt);
+    }
+
+	/**
+	 * 创建 jwt （全参数方式） 
+	 * @param loginType 账号类型 
+	 * @param loginId 账号id 
+	 * @param device 设备标识
+	 * @param timeout token有效期 (单位 秒)
+     * @param keyt 秘钥
+	 * @return jwt-token 
+	 */
+    @Deprecated
+    public static String createToken(String loginType, Object loginId, String device, long timeout, String keyt) {
+    	return createToken(loginType, loginId, device, timeout, null, keyt);
+    }
+
 }

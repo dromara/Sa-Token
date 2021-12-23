@@ -51,13 +51,8 @@ public class StpLogicJwtForMix extends StpLogic {
 	 * 创建一个TokenValue 
 	 */
 	@Override
- 	public String createTokenValue(Object loginId, String device, long timeout) {
-		return SaJwtUtil.createToken(loginType, loginId, device, timeout, jwtSecretKey());
-	}
-
-	@Override
-	public String createTokenValue(Object loginId, String device, Map<String, Object> expandInfoMap, long timeout) {
-		return SaJwtUtil.createToken(loginType, loginId, device, expandInfoMap, timeout, jwtSecretKey());
+	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+		return SaJwtUtil.createToken(loginType, loginId, device, timeout, extraData, jwtSecretKey());
 	}
 
 	/**
@@ -96,21 +91,6 @@ public class StpLogicJwtForMix extends StpLogic {
 		try {
 			Object loginId = SaJwtUtil.getLoginId(tokenValue, jwtSecretKey());
 			return String.valueOf(loginId);
-		} catch (NotLoginException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public Object getExpandInfoNotHandle(String tokenValue) {
-		// 先验证 loginType，如果不符，则视为无效token，返回null
-		String loginType = SaJwtUtil.getPayloadsNotCheck(tokenValue, jwtSecretKey()).getStr(SaJwtUtil.LOGIN_TYPE);
-		if(getLoginType().equals(loginType) == false) {
-			return null;
-		}
-		// 获取 expandInfo
-		try {
-			return SaJwtUtil.getExpandInfo(tokenValue, jwtSecretKey());
 		} catch (NotLoginException e) {
 			return null;
 		}
@@ -171,7 +151,15 @@ public class StpLogicJwtForMix extends StpLogic {
 	public void replaced(Object loginId, String device) {
 		throw new ApiDisabledException(); 
 	}
-	
+
+	/**
+	 * 获取Token携带的扩展信息
+	 */
+	@Override
+	public Object getExtra(String key) {
+		return SaJwtUtil.getPayloads(getTokenValue(), jwtSecretKey()).get(key);
+	}
+
 	/**
 	 * 删除 Token-Id 映射 
 	 */
