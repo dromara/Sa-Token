@@ -116,3 +116,19 @@ blockquote code {font-weight: 400;}
 .zanzhu-pre+table tr td:nth-child(2){
 	color: red;
 }
+
+
+body {
+  /* --a-color: #42b983; */
+  --a-color: #01a252;
+  --a-hover-color: #0969da;
+}
+
+/* 超链接样式 */
+#main *:not(h1,h2,h3,h4,h5,h6) a{font-weight: 400; text-decoration: none; font-family: "Helvetica Neue", Helvetica, "PingFang SC", Tahoma, Arial, sans-serif;}
+#main *:not(h1,h2,h3,h4,h5,h6) a{color: var(--a-color); border-bottom: 1px var(--a-color) solid;}
+#main *:not(h1,h2,h3,h4,h5,h6) a:hover{color: var(--a-hover-color); border-bottom: 1px var(--a-hover-color) solid;}
+
+#main .un-dec-a-pre+p a,
+#main p[align=center] a{border-bottom:0px;}
+

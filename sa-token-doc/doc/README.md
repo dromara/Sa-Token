@@ -119,7 +119,12 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 
 
 ## 开源仓库 Star 趋势
+
+<p class="un-dec-a-pre"></p>
+
 [![giteye-chart](https://chart.giteye.net/gitee/dromara/sa-token/77YQZ6UK.png 'Gitee')](https://giteye.net/chart/77YQZ6UK)
+
+<p class="un-dec-a-pre"></p>
 
 [![github-chart](https://starchart.cc/dromara/sa-token.svg 'GitHub')](https://starchart.cc/dromara/sa-token)
 
@@ -159,6 +164,8 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 
 ## 贡献者名单
 感谢每一个为 Sa-Token 贡献代码的小伙伴
+
+<p class="un-dec-a-pre"></p>
 
 [![Giteye chart](https://chart.giteye.net/gitee/dromara/sa-token/CGZ7GT8E.png)](https://giteye.net/chart/CGZ7GT8E)
 
