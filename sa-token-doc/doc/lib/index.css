@@ -114,13 +114,14 @@ blockquote code {font-weight: 400;}
 .markdown-section strong code{font-family: "宋体";}
 
 /* 赞助列表 */
-.zanzhu-pre+table tr td:nth-child(2){
-	color: red;
-}
+.zanzhu-pre+table tr td:nth-child(2){color: red;}
+#main .zanzhu-pre+table tr td a{border-color: rgba(0,0,0,0); color: inherit;}
+#main .zanzhu-pre+table tr td a:hover{border-color: var(--a-hover-color); color: var(--a-hover-color);}
 
+/* 角标位置修复 */
+.badge-box a:nth-child(-n+2) img{position: relative; top: 1px;}
 
 body {
-  /* --a-color: #42b983; */
   --a-color: #01a252;
   --a-hover-color: #0969da;
 }
