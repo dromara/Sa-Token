@@ -92,6 +92,8 @@
 			}, 1);
 		</script>
 		
+		<!--  -->
+		<script src="./lib/docsify-plugin.js"></script>
 		<script>
 			var saTokenTopVersion = '1.28.0';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
@@ -126,52 +128,8 @@
 					tabComments: true,      // 用注释来标注选项卡标题，例如：<!-- tab:SpringBoot  -->
 					tabHeadings: true       // 用标题+粗体来定制选项卡
 				},
-				plugins: [ // 自定义插件 
-					function(hook, vm) {
-						// 解析之前执行
-						hook.beforeEach(function(content) {
-							try{
-								var reg = /\$\{sa.top.version\}/g;
-								content = content.replace(reg, window.saTokenTopVersion);
-							}catch(e){
-								// 
-							}
-							return content;
-						});
-						// 每次路由切换时，解析内容之后执行 
-						hook.afterEach(function(html) {
-							var url = 'https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
-							var url2 = 'https://github.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
-							var footer = [
-								'<br/><br/><br/><br/><br/><br/><br/><hr/>',
-								'<footer>',
-								'<span>发现错误？ 您可以在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
-								'" target="_blank">GitHub</a> 帮助我们完善此页文档！</span>',
-								'或 <a href="https://jq.qq.com/?_wv=1027&k=b759RZrL" target="_blank">加入QQ群</a> 交流反馈',
-								'</footer>'
-							].join('');
-							return html + footer;
-						});
-						// 每次路由切换时数据全部加载完成后调用，没有参数。
-						hook.doneEach(function() {
-							// 添加代码行数样式
-							$('pre code').each(function(){
-								var lines = $(this).text().split('\n').length;
-								var $numbering = $('<ul/>').addClass('code-line-box');
-								$(this)
-									.addClass('has-numbering')
-									.parent()
-									.append($numbering);
-								for(i=1;i<=lines;i++){
-									$numbering.append($('<li/>').text(i));
-								}
-							});
-						});
-						// 初始化并第一次加载完成数据后调用，没有参数。
-						hook.ready(function() {
-						});
-					}
-				],
+				// 自定义插件 
+				plugins: [myDocsifyPlugin],
 			}
 		</script>
 		<script src="https://unpkg.zhimg.com/docsify@4.9.4/lib/docsify.min.js"></script>

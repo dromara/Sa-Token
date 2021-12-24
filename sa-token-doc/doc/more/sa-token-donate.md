@@ -19,6 +19,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [网络小渣渣](https://gitee.com/a9777)			| ¥ 10			| 感谢您的开源项目！							| 2021-12-24	|
 | [周周周杨](https://gitee.com/ChaoGeWanJiu)		| ¥ 10			| 感谢您的开源项目！							| 2021-12-18	|
 | [MrXionGe](https://gitee.com/MrXionGe)		| ¥ 10			| SA加油~~									| 2021-12-17	|
 | [duyiliu](https://gitee.com/duyiliu)			| ¥ 10			| 化繁为简，是门艺术。						| 2021-12-16	|

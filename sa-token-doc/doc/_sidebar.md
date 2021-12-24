@@ -70,7 +70,7 @@
 
 - **其它**
 	- [更新日志](/more/update-log) 
-	- [友情链接](/more/link) 
+	- [框架生态](/more/link) 
 	- [推荐公众号](/more/tj-gzh) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 
