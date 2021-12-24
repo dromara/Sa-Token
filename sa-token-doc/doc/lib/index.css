@@ -134,3 +134,24 @@ body {
 #main .un-dec-a-pre+p a,
 #main p[align=center] a{border-bottom:0px;}
 
+/* 工具栏超链接 展开、收缩div */
+body .a-box a{font-size: 16px; display: inline-block;}
+.zk-box{display: inline-block;}
+/* 外层盒 */
+.zk-box .zk-context{max-height: 0px; position: absolute; overflow: hidden;}
+.zk-box:hover .zk-context{max-height: 300px;}
+/* 内层盒 */
+.zk-context>div{padding: 1em 0; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
+.zk-box:hover .zk-context>div{opacity: 1;}
+/* 小链接 */
+.zk-box .zk-context a{font-size: 14px; display: block; line-height: 32px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.zk-box .zk-context a{text-align: left; padding: 0 1.5em 0 1em;}
+.zk-box .zk-context .zk-fengexian{border-bottom: 1px #d9d9d9 solid; margin: 10px 0;}
+
+/* 下三角小图标 */
+.zk-icon{display: inline-block; width: 0px; height: 0px; position: relative;top: 3px; margin-left: 4px;}
+.zk-icon{border-style: solid; border-width: 5px; border-color: #aaa transparent transparent transparent; }
+
+/* .a-box a{font-family: "Helvetica Neue", Helvetica, "PingFang SC", Tahoma, Arial, sans-serif;}
+.a-box a{color: var(--a-color); }
+.a-box a:hover{color: var(--a-hover-color) !important; border-bottom: 1px var(--a-hover-color) solid;} */

@@ -24,6 +24,9 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .nav-right a{padding: 0px 1em; color: #34495E; text-decoration: none; transition: all 0.2s;}
 .nav-right a:hover{color: #42B983;}
 
+/* 手机端不显示广告，和一些其它东西 */
+@media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} 
+
 /* -------- 海报部分 --------- */
 .main-box{width: 100%; min-height: 100vh;; /* height: 80vh; */ text-align: center; background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg); }
 .main-box{display: flex; align-items: center; text-align: center; }
@@ -85,6 +88,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .sa-token-js-box img{max-width: 100%;}
 .sa-token-js-box:hover{cursor: pointer; box-shadow: 0 0 20px #ccc;} */
 
+.re-text{padding: 0 1em;}
 .re-text a{color: #0969da; text-decoration: none;}
 .re-text a:hover{border-bottom: 1px #0969da solid;}
 
@@ -131,7 +135,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 	.s-title{padding: 0 16px;}
 	.s-width{width: 100%;}
 	
-	.logo-box,.copyright {display: none;}
+	.logo-box .logo-text,.copyright {display: none;}
 	.main-box{ height: auto;}
 	.content-box{ padding: 2em 1em;}
 	.content-box h1{font-size: 50px;}
@@ -154,15 +158,20 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 }
 
 
-/* 闪光背景 */
-/* .main-box{
-    background-size: 500%;
-	background-image: linear-gradient(125deg,#BFFEBE,#F6F8B5,#FCD0B3,#BFB6F8,#E8D8B3);
-	animation: bganimation 15s infinite;
-}
-@keyframes bganimation{
-    0%{background-position: 0% 50%;}
-    50%{background-position: 100% 50%;}
-    100%{background-position: 0% 50%;}
-} */
 
+/* 工具栏超链接 展开、收缩div */
+.zk-box{display: inline-block; padding-right: 0px; margin-right: -25px;}
+/* 外层盒 */
+.zk-box .zk-context{max-height: 0px; position: absolute; overflow: hidden;}
+.zk-box:hover .zk-context{max-height: 300px;}
+/* 内层盒 */
+.zk-context>div{padding: 1em 0; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
+.zk-box:hover .zk-context>div{opacity: 1;}
+/* 小链接 */
+.zk-box .zk-context a{font-size: 14px; display: block; line-height: 32px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.zk-box .zk-context a{text-align: left; padding: 0 1.5em 0 1em;}
+.zk-box .zk-context .zk-fengexian{border-bottom: 1px #d9d9d9 solid; margin: 10px 0;}
+
+/* 下三角小图标 */
+.zk-icon{display: inline-block; width: 0px; height: 0px; position: relative;top: 3px; margin-left: 4px;}
+.zk-icon{border-style: solid; border-width: 5px; border-color: #aaa transparent transparent transparent; }
