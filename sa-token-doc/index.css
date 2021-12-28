@@ -10,19 +10,29 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* 分割线 */
 .s-fenge{width: 80%; margin: auto; border-top: 1px #ddd solid;}
 
-/* -------- header头部 --------- */
-.s-header{height: 70px; border: 0px #000 solid; position: fixed; width: 100%;}
-.s-header{background-color: #FFF; color: #000; z-index: 99999; box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
-/* logo部分 */
-.logo-box {margin-top: 10px; margin-left: 30px; cursor: pointer; color: #000; float: left;}
-.logo-box img {width: 50px; height: 50px; vertical-align: middle;}
-.logo-box .logo-text {display: inline-block;vertical-align: middle; font-size: 22px;font-weight: 400;}
-/* 小章鱼 */
-.github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px;}
+/* ------- 头部样式 ------- */
+.doc-header{position: fixed; top: 0; z-index: 1000; width: 100%; height: 60px; line-height: 60px;}
+.doc-header{background-color: hsla(0,0%,100%,0.97); box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
+
+/* 左边logo */
+.nav-left{display: inline-block; float: left;}
+.logo-box {display: inline-block; cursor: pointer; color: #000; padding-left: 24px; height: 60px; line-height: 60px;}
+.logo-box img {width: 50px; height: 50px; vertical-align: middle; position: relative; top: -1px;}
+.logo-box .logo-text {display: inline-block; margin: 0; padding: 0; padding-left: 5px; vertical-align: middle; font-size: 22px;/* font-weight: 700; */}
+
 /* 右边导航 */
-.nav-right{float: right; line-height: 70px; padding-right: 4.5em; white-space: nowrap;}
-.nav-right a{padding: 0px 1em; color: #34495E; text-decoration: none; transition: all 0.2s;}
+.doc-header .nav-right{margin: 0;  float: right; line-height: 60px; padding-right: 4em; white-space: nowrap; font-size: 15px; }
+.doc-header .nav-right>*{padding: 0px; margin: 0 14px;}
+.doc-header .nav-right>*:last-child{position: relative; z-index: 1002; }
+
+.nav-right a{color: #34495E; text-decoration: none; transition: all 0.2s;}
 .nav-right a:hover{color: #42B983;}
+.doc-header .nav-right .wzi{font-size: 15px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
+.doc-header .nav-right .wzi:hover{border-bottom: 2px #42B983 solid;}
+
+/* 小章鱼 */
+.github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px; z-index: 1001 !important;}
+
 
 /* 手机端不显示广告，和一些其它东西 */
 @media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} 
