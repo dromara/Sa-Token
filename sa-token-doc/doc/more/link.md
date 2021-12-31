@@ -41,6 +41,8 @@
 
 - **[ 人事管理系统后端 ]**：[人事管理系统后端，框架：springboot，持久层：mybatis，缓存：redis，权限：sa-token](https://gitee.com/sdones_1512/personnel-management-system-back-end)
 
+- **[ YC-Framework ]**：[致力于打造一款优秀的分布式微服务解决方案](http://framework.youcongtech.com/)
+
 
 
 <br>
