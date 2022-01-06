@@ -186,6 +186,8 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 - **[ RuoYi-Vue-Plus ]**：[基于 RuoYi-Vue 集成 SaToken + Lombok + Mybatis-Plus + Undertow + knife4j + Hutool + Feign 重写所有原生业务 定期与 RuoYi-Vue 同步](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/tree/satoken/)
 
+- **[ falser-cloud ]**: [基于 SpringCloud Alibaba + SpringCloud gateway + SpringBoot + Sa-Token + vue-admin-template + Nacos + Rabbit MQ + Redis 的一个后台管理系统，前后端分离，权限管理，菜单管理，数据字典，停车场系统管理等功能](https://gitee.com/falser/falser-cloud)
+
 
 如果您的项目使用了Sa-Token，欢迎提交pr
 
