@@ -43,6 +43,10 @@
 
 - **[ YC-Framework ]**：[致力于打造一款优秀的分布式微服务解决方案](http://framework.youcongtech.com/)
 
+- **[ falser-cloud ]**: [基于 SpringCloud Alibaba + SpringCloud gateway + SpringBoot + Sa-Token + vue-admin-template + Nacos + Rabbit MQ + Redis 的一个后台管理系统，前后端分离，权限管理，菜单管理，数据字典，停车场系统管理等功能](https://gitee.com/falser/falser-cloud)
+
+- **[ bootx-platform ]**：[集成sa-token和sa-token-plugin并深度定制认证模块，包含多级别数据范围权限、数据自动加解密、数据脱敏、超级查询器、以及支付收单、消息通知等准商用功能的开源免费开发脚手架项目](https://gitee.com/bootx/bootx-platform)
+
 
 
 <br>

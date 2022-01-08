@@ -11,8 +11,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* 媒体查询 */
 @media screen and (max-width: 800px) {
-	.logo-box {display: none;}
-	.main-box .markdown-section{max-width: 1000px; margin-left: auto;}
+	.nav-left .logo-box .logo-text,
+	.nav-left .logo-box sub{display: none;}
+	.main-box .markdown-section{max-width: 1000px; margin-left: auto; margin-top: 40px;}
 }
 /* 手机端不显示广告，和一些其它东西 */
 @media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} 
