@@ -47,6 +47,8 @@
 
 - **[ bootx-platform ]**：[集成sa-token和sa-token-plugin并深度定制认证模块，包含多级别数据范围权限、数据自动加解密、数据脱敏、超级查询器、以及支付收单、消息通知等准商用功能的开源免费开发脚手架项目](https://gitee.com/bootx/bootx-platform)
 
+- **[ spba-admin ]**：[基于SpringBoot、Vue开发的通用后台管理系统，做到开箱即用，为新项目开发省去了基础功能开发的步骤。主要使用Sa-Token权限认证、MyBatis-Plus、MySQL、Redis、validation、七牛云等技术。](https://gitee.com/qkdja/spring-boot-admin)
+
 
 
 <br>
