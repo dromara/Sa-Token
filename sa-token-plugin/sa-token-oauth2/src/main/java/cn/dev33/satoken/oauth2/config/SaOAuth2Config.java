@@ -42,6 +42,9 @@ public class SaOAuth2Config implements Serializable {
 	/** Client-Token 保存的时间(单位秒) 默认两个小时 */
 	public long clientTokenTimeout = 60 * 60 * 2;
 
+	/** Past-Client-Token 保存的时间(单位秒) 默认為 null */
+	public Long pastClientTokenTimeout = null;
+
 
 	/**
 	 * @return isCode
@@ -177,6 +180,22 @@ public class SaOAuth2Config implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return pastClientTokenTimeout
+	 */
+	public Long getPastClientTokenTimeout() {
+		return pastClientTokenTimeout;
+	}
+
+	/**
+	 * @param pastClientTokenTimeout 要设置的 pastClientTokenTimeout
+	 * @return 对象自身
+	 */
+	public SaOAuth2Config setPastClientTokenTimeout(long pastClientTokenTimeout) {
+		this.pastClientTokenTimeout = pastClientTokenTimeout;
+		return this;
+	}
+
 	
 	// -------------------- SaOAuth2Handle 所有回调函数 -------------------- 
 	
@@ -228,7 +247,8 @@ public class SaOAuth2Config implements Serializable {
 		return "SaOAuth2Config [isCode=" + isCode + ", isImplicit=" + isImplicit + ", isPassword=" + isPassword
 				+ ", isClient=" + isClient + ", isNewRefresh=" + isNewRefresh + ", codeTimeout=" + codeTimeout
 				+ ", accessTokenTimeout=" + accessTokenTimeout + ", refreshTokenTimeout=" + refreshTokenTimeout
-				+ ", clientTokenTimeout=" + clientTokenTimeout + "]";
+				+ ", clientTokenTimeout=" + clientTokenTimeout + ", pastClientTokenTimeout=" + pastClientTokenTimeout
+				+"]";
 	}
 	
 }
