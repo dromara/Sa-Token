@@ -598,7 +598,11 @@ public class SaOAuth2Template {
 		if(ct == null) {
 			return;
 		}
-		SaManager.getSaTokenDao().set(splicingPastTokenIndexKey(ct.clientId), ct.clientToken, ct.getExpiresIn());
+		Long ttl = ct.getExpiresIn();
+		if (null != SaOAuth2Manager.getConfig().getPastClientTokenTimeout()) {
+			ttl = SaOAuth2Manager.getConfig().getPastClientTokenTimeout();
+		}
+		SaManager.getSaTokenDao().set(splicingPastTokenIndexKey(ct.clientId), ct.clientToken, ttl);
 	}
 	/**
 	 * 持久化：用户授权记录
