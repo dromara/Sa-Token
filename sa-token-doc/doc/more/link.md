@@ -49,6 +49,8 @@
 
 - **[ spba-admin ]**：[基于SpringBoot、Vue开发的通用后台管理系统，做到开箱即用，为新项目开发省去了基础功能开发的步骤。主要使用Sa-Token权限认证、MyBatis-Plus、MySQL、Redis、validation、七牛云等技术。](https://gitee.com/qkdja/spring-boot-admin)
 
+- **[ QForum-Core ]**：[QForum 论坛系统官方核心，可拓展性强、轻量级、高性能、前后端分离，基于 SpringBoot2 + Sa-Token + Mybatis-Plus](https://github.com/Project-QForum/QForum-Core/)
+
 
 
 <br>

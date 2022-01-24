@@ -191,7 +191,6 @@ public class BCrypt {
      * @return an array containing the decoded bytes
      * @throws IllegalArgumentException if maxolen is invalid
      */
-    @SuppressWarnings("SameParameterValue")
     private static byte[] decodeBase64(String s, int maxolen) throws IllegalArgumentException {
         final StringBuilder rs = new StringBuilder();
         int off = 0, slen = s.length(), olen = 0;
