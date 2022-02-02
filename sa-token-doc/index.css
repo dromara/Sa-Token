@@ -108,7 +108,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .com-box-f h2{font-size: 30px; color: #000; font-weight: 400;}
 .com-box{display: flex; flex-wrap: wrap; width: 100%; margin-bottom: 50px; justify-content: flex-start;}
 .com-box a{flex: 1; display: block; cursor: pointer; border: 0px #ddd solid;}
-.com-box a{min-width: 17%; max-width: 18%; margin: 5px; line-height: 100px;}
+.com-box a{min-width: 13%; max-width: 14%; margin: 5px; line-height: 75px;}
 .com-box a img{transition: all 0.2s; vertical-align: middle; min-width: 60%; max-width: 100%; max-height: 100%;}
 .com-box a img:hover{transform: scale(1.05, 1.05);}
 .com-box-you a img:hover{transform: none;}
