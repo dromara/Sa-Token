@@ -4,7 +4,6 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 #main {padding-bottom: 100px;}
 #main h2 {font-size: 1.6rem;}
 #main h3 {font-size: 1.25rem;}
-#main p strong{font-family: -apple-system,BlinkMacSystemFont,Segoe UI;}
 
 .main-box .markdown-section{ padding: 38px 20px; max-width: 70%; margin-left: 12%;}
 .main-box .markdown-section h4{font-size: 1rem;}
@@ -27,8 +26,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .nav-left{display: inline-block; float: left;}
 .logo-box {display: inline-block; cursor: pointer; color: #000; padding-left: 24px; height: 60px; line-height: 60px;}
 .logo-box img {width: 50px; height: 50px; vertical-align: middle; position: relative; top: -1px; margin-right: 5px;}
-.logo-box .logo-text {display: inline-block; margin: 0; padding: 0; color: #000; vertical-align: middle; font-size: 22px;font-weight: 500;}
-.logo-box .logo-text {font-family: "Ubuntu","Helvetica Neue","Arial,sans-serif";}
+.logo-box .logo-text {display: inline-block; margin: 0; padding: 0; color: #000; vertical-align: middle; font-size: 26px;font-weight: 500;}
 .logo-box sub{margin-left: 5px; color: #666;}
 
 /* 右边导航 */
@@ -101,7 +99,6 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .code-line-box {list-style-type: none; border-right: 1px solid #000; position: absolute; top: 0; left: 0; width: 40px;  user-select: none;}
 .code-line-box {padding: calc(1.5em + 1px)  0px !important; padding-bottom: calc(1.5em + 20px) !important; margin: 0px !important;}
 .code-line-box {line-height: inherit !important; background-color: #191919; color: #aaa;font-weight: 400;font-size: 0.85em;text-align: center;}
-.code-line-box {font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;}
 
 /* xml语言样式优化 */
 .lang-xml .token.comment{color: #CDAB53;}
@@ -175,7 +172,6 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* 行级代码样式 */
 blockquote code {font-weight: 400;}
-.markdown-section strong code{font-family: "宋体";}
 
 /* 赞助列表 */
 .zanzhu-pre+table tr td:nth-child(2){color: red;}
@@ -191,7 +187,7 @@ body {
 }
 
 /* 超链接样式 */
-#main *:not(h1,h2,h3,h4,h5,h6) a{font-weight: 400; text-decoration: none; font-family: "Helvetica Neue", Helvetica, "PingFang SC", Tahoma, Arial, sans-serif;}
+#main *:not(h1,h2,h3,h4,h5,h6) a{font-weight: 400; text-decoration: none; font-family: "思源黑体";}
 #main *:not(h1,h2,h3,h4,h5,h6) a{color: var(--a-color); border-bottom: 1px var(--a-color) solid;}
 #main *:not(h1,h2,h3,h4,h5,h6) a:hover{color: var(--a-hover-color); border-bottom: 1px var(--a-hover-color) solid;}
 
