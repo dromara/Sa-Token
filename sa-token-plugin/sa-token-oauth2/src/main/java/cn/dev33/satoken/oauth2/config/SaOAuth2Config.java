@@ -30,19 +30,19 @@ public class SaOAuth2Config implements Serializable {
 	/** 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token */
 	public Boolean isNewRefresh = false;
 	
-	/** Code授权码 保存的时间(单位秒) 默认五分钟 */
+	/** Code授权码 保存的时间(单位：秒) 默认五分钟 */
 	public long codeTimeout = 60 * 5;
 
-	/** Access-Token 保存的时间(单位秒) 默认两个小时 */
+	/** Access-Token 保存的时间(单位：秒) 默认两个小时 */
 	public long accessTokenTimeout = 60 * 60 * 2;
 
-	/** Refresh-Token 保存的时间(单位秒) 默认30 天 */
+	/** Refresh-Token 保存的时间(单位：秒) 默认30 天 */
 	public long refreshTokenTimeout = 60 * 60 * 24 * 30;
 
-	/** Client-Token 保存的时间(单位秒) 默认两个小时 */
+	/** Client-Token 保存的时间(单位：秒) 默认两个小时 */
 	public long clientTokenTimeout = 60 * 60 * 2;
 
-	/** Past-Client-Token 保存的时间(单位秒) 默认為 null */
+	/** Past-Client-Token 保存的时间(单位：秒) 默认為 null */
 	public Long pastClientTokenTimeout = null;
 
 

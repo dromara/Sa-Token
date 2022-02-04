@@ -256,9 +256,10 @@ public class SaOAuth2Handle {
 		String username = req.getParamNotNull(Param.username);
 		String password = req.getParamNotNull(Param.password);
 		String clientId = req.getParamNotNull(Param.client_id);
+		String scope = req.getParam(Param.scope, "");
 
-		// 2、校验client_id
-		SaOAuth2Util.checkClientModel(clientId);
+		// 2、校验 ClientScope
+		SaOAuth2Util.checkContract(clientId, scope);
 
 		// 3、防止因前端误传token造成逻辑干扰
 		SaHolder.getStorage().set(StpUtil.stpLogic.splicingKeyJustCreatedSave(), "no-token");
@@ -273,10 +274,7 @@ public class SaOAuth2Handle {
 		RequestAuthModel ra = new RequestAuthModel();
 		ra.clientId = clientId;
 		ra.loginId = StpUtil.getLoginId();
-		ra.scope = req.getParam(Param.scope, "");
-
-		// 6、校验 ClientScope
-		SaOAuth2Util.checkContract(clientId, ra.scope);
+		ra.scope = scope;
 
 		// 7、生成 Access-Token
 		AccessTokenModel at = SaOAuth2Util.generateAccessToken(ra, true);

@@ -548,7 +548,7 @@ public class StpLogic {
  		if(loginId == null) {
  			throw NotLoginException.newInstance(loginType, NotLoginException.INVALID_TOKEN, tokenValue);
  		}
- 		// 如果是已经过期，则抛出已经过期 
+ 		// 如果是已经过期，则抛出：已经过期 
  		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
  			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue);
  		}
@@ -612,7 +612,7 @@ public class StpLogic {
  		}
  		// loginId为null或者在异常项里面，均视为未登录, 返回null 
  		Object loginId = getLoginIdNotHandle(tokenValue);
- 		if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
+ 		if(isValidLoginId(loginId) == false) {
  			return null;
  		}
  		// 如果已经[临时过期] 
@@ -653,10 +653,17 @@ public class StpLogic {
  	 * @return 账号id
  	 */
  	public Object getLoginIdByToken(String tokenValue) {
+ 		// token为空时，直接返回null 
  		if(tokenValue == null) {
  	 		return null;
  		}
- 		return getLoginIdNotHandle(tokenValue);
+ 		// loginId为无效值时，直接返回null 
+ 		String loginId = getLoginIdNotHandle(tokenValue);
+ 		if(isValidLoginId(loginId) == false) {
+ 			return null;
+ 		}
+ 		// 
+ 		return loginId;
  	}
 
  	 /**
