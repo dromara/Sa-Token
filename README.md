@@ -178,7 +178,7 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 - **[ dcy-fast ]**：[ 一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
 
-- **[ helio-starters ]**：[ 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
+- **[ helio-starters ]**：[ 单体 Boot 版脚手架 + 微服务 Cloud 版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
 
 - **[ sa-token-plugin ]**：[Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充](https://gitee.com/bootx/sa-token-plugin)
 
