@@ -267,13 +267,36 @@ public class StpLogic {
 	public void login(Object id, boolean isLastingCookie) {
 		login(id, new SaLoginModel().setIsLastingCookie(isLastingCookie));
 	}
-	
+
 	/**
 	 * 会话登录，并指定所有登录参数Model 
 	 * @param id 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
 	 */
 	public void login(Object id, SaLoginModel loginModel) {
+		// 1、创建会话 
+		String token = createLoginSession(id, loginModel);
+
+		// 2、在当前客户端注入Token 
+		setTokenValue(token, loginModel.getCookieTimeout());
+	}
+
+	/**
+	 * 创建指定账号id的登录会话 
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌 
+	 */
+	public String createLoginSession(Object id) {
+		return createLoginSession(id, new SaLoginModel());
+	}
+	
+	/**
+	 * 创建指定账号id的登录会话
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 * @return 返回会话令牌 
+	 */
+	public String createLoginSession(Object id, SaLoginModel loginModel) {
 		
 		SaTokenException.throwByNull(id, "账号id不能为空");
 		
@@ -300,7 +323,11 @@ public class StpLogic {
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
-			tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+			if(SaFoxUtil.isEmpty(loginModel.getToken())) {
+				tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+			} else {
+				tokenValue = loginModel.getToken();
+			}
 		}
 		
 		// ------ 3. 获取 User-Session , 续期 
@@ -313,15 +340,15 @@ public class StpLogic {
 		// ------ 4. 持久化其它数据 
 		// token -> id 映射关系  
 		saveTokenToIdMapping(tokenValue, id, loginModel.getTimeout());
-		
-		// 在当前会话写入tokenValue 
-		setTokenValue(tokenValue, loginModel.getCookieTimeout());
 
 		// 写入 [token-last-activity] 
 		setLastActivityToNow(tokenValue); 
-		
+
 		// $$ 通知监听器，账号xxx 登录成功 
 		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
+		
+		// 返回Token 
+		return tokenValue;
 	}
 
 	// --- 注销 

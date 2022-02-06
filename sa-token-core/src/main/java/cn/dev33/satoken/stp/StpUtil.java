@@ -132,6 +132,25 @@ public class StpUtil {
 		stpLogic.login(id, loginModel);
 	}
 
+	/**
+	 * 创建指定账号id的登录会话 
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌 
+	 */
+	public static String createLoginSession(Object id) {
+		return stpLogic.createLoginSession(id);
+	}
+	
+	/**
+	 * 创建指定账号id的登录会话
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 * @return 返回会话令牌 
+	 */
+	public static String createLoginSession(Object id, SaLoginModel loginModel) {
+		return stpLogic.createLoginSession(id, loginModel);
+	}
+	
 	// --- 注销 
 	
 	/** 

@@ -35,16 +35,21 @@ public class SaLoginModel {
 	 */
 	public Map<String, Object> extraData;
 
+	/**
+	 * 预定Token（预定本次登录生成的Token值）
+	 */
+	public String token;
+	
 	
 	/**
-	 * @return 参考 {@link #device}
+	 * @return 此次登录的客户端设备标识 
 	 */
 	public String getDevice() {
 		return device;
 	}
 
 	/**
-	 * @param device 参考 {@link #device}
+	 * @param device 此次登录的客户端设备标识 
 	 * @return 对象自身
 	 */
 	public SaLoginModel setDevice(String device) {
@@ -53,14 +58,14 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 参考 {@link #isLastingCookie}
+	 * @return 参考 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
 	public Boolean getIsLastingCookie() {
 		return isLastingCookie;
 	}
 
 	/**
-	 * @param isLastingCookie 参考 {@link #isLastingCookie}
+	 * @param isLastingCookie 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 * @return 对象自身
 	 */
 	public SaLoginModel setIsLastingCookie(Boolean isLastingCookie) {
@@ -69,14 +74,14 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 参考 {@link #timeout}
+	 * @return 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 	 */
 	public Long getTimeout() {
 		return timeout;
 	}
 
 	/**
-	 * @param timeout 参考 {@link #timeout}
+	 * @param timeout 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 	 * @return 对象自身
 	 */
 	public SaLoginModel setTimeout(long timeout) {
@@ -85,14 +90,14 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 参考 {@link #extraData}
+	 * @return 扩展信息（只在jwt模式下生效）
 	 */
 	public Map<String, Object> getExtraData() {
 		return extraData;
 	}
 
 	/**
-	 * @param extraData 参考 {@link #extraData}
+	 * @param extraData 扩展信息（只在jwt模式下生效）
 	 * @return 对象自身
 	 */
 	public SaLoginModel setExtraData(Map<String, Object> extraData) {
@@ -101,10 +106,38 @@ public class SaLoginModel {
 	}
 
 	/**
+	 * @return 预定Token（预定本次登录生成的Token值）
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token 预定Token（预定本次登录生成的Token值）
+	 * @return 对象自身
+	 */
+	public SaLoginModel setToken(String token) {
+		this.token = token;
+		return this;
+	}
+
+	/*
+	 * toString 
+	 */
+	@Override
+	public String toString() {
+		return "SaLoginModel [device=" + device + ", isLastingCookie=" + isLastingCookie + ", timeout=" + timeout
+				+ ", extraData=" + extraData + ", token=" + token + "]";
+	}
+
+	// ------ 附加方法 
+	
+
+	/**
 	 * 写入扩展数据（只在jwt模式下生效） 
 	 * @param key 键
 	 * @param value 值 
-	 * @return
+	 * @return 对象自身 
 	 */
 	public SaLoginModel setExtra(String key, Object value) {
 		if(this.extraData == null) {
@@ -181,14 +214,6 @@ public class SaLoginModel {
 	 */
 	public static SaLoginModel create() {
 		return new SaLoginModel();
-	}
-
-	/**
-	 * toString
-	 */
-	@Override
-	public String toString() {
-		return "SaLoginModel [device=" + device + ", isLastingCookie=" + isLastingCookie + ", timeout=" + timeout + "]";
 	}
 
 	
