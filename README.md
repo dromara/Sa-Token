@@ -192,6 +192,8 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 - **[ QForum-Core ]**：[QForum 论坛系统官方核心，可拓展性强、轻量级、高性能、前后端分离，基于 SpringBoot2 + Sa-Token + Mybatis-Plus](https://github.com/Project-QForum/QForum-Core/)
 
+- **[ ExciteCMS-Layui ]**：[ExciteCMS 快速开发脚手架：一款后端基于 SpringBoot2 + Sa-Token + Mybatis-Plus，前端基于 Layuimini 的内容管理系统，具备RBAC、日志管理、代码生成等功能，并集成常用的支付、OSS等第三方服务，拥有详细的开发文档](https://gitee.com/ExciteTeam/ExciteCMS-SpringBoot-Layui)
+
 如果您的项目使用了Sa-Token，欢迎提交pr
 
 ## 友情链接
