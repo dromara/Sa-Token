@@ -88,7 +88,6 @@ public class SaOAuth2Handle {
 				return password(req, res, cfg);
 			}
 			throw new SaOAuth2Exception("暂未开放的授权模式");
-			
 		}
 
 		// 模式四：凭证式

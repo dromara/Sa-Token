@@ -181,9 +181,9 @@ public class SaOAuth2Template {
 		// 获取 Refresh-Token 信息
 		RefreshTokenModel rt = getRefreshToken(refreshToken);
 		SaOAuth2Exception.throwBy(rt == null, "无效refresh_token: " + refreshToken);
-
+		
 		// 如果配置了[每次刷新产生新的Refresh-Token]
-		if(SaOAuth2Manager.getConfig().getIsNewRefresh()) {
+		if(checkClientModel(rt.clientId).getIsNewRefresh()) {
 			// 删除旧 Refresh-Token
 			deleteRefreshToken(rt.refreshToken);
 
@@ -224,7 +224,7 @@ public class SaOAuth2Template {
 		String newAtValue = randomAccessToken(ra.clientId, ra.loginId, ra.scope);
 		AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scope);
 		at.openid = getOpenid(ra.clientId, ra.loginId);
-		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
+		at.expiresTime = System.currentTimeMillis() + (checkClientModel(ra.clientId).getAccessTokenTimeout() * 1000);
 
 		// 3、生成&保存 Refresh-Token
 		if(isCreateRt) {
@@ -247,18 +247,25 @@ public class SaOAuth2Template {
 	 * @return Client-Token Model
 	 */
 	public ClientTokenModel generateClientToken(String clientId, String scope) {
-		// 1、删掉 Past-Token
+		// 1、删掉旧 Past-Token
 		deleteClientToken(getPastTokenValue(clientId));
 
-		// 2、将Client-Token 标记 Past-Token
-		String ctValue = getClientTokenValue(clientId);
-		savePastTokenIndex(getClientToken(ctValue));
+		// 2、将旧Client-Token 标记为新 Past-Token
+		ClientTokenModel oldCt = getClientToken(getClientTokenValue(clientId));
+		savePastTokenIndex(oldCt);
+		
+		// 2.5、如果配置了 PastClientToken 的 ttl ，则需要更新一下 
+		SaClientModel cm = checkClientModel(clientId);
+		if(oldCt != null && cm.getPastClientTokenTimeout() != null) {
+			oldCt.expiresTime = System.currentTimeMillis() + (cm.getPastClientTokenTimeout() * 1000);
+			saveClientToken(oldCt);
+		}
 
-		// 3、生成新Token
+		// 3、生成新Client-Token
 		ClientTokenModel ct = new ClientTokenModel(randomClientToken(clientId, scope), clientId, scope);
-		ct.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getClientTokenTimeout() * 1000);
+		ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
 
-		// 3、保存新Token
+		// 3、保存新Client-Token 
 		saveClientToken(ct);
 		saveClientTokenIndex(ct);
 
@@ -454,8 +461,8 @@ public class SaOAuth2Template {
 		at.loginId = cm.loginId;
 		at.scope = cm.scope;
 		at.openid = getOpenid(cm.clientId, cm.loginId);
-		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
-		// at.refreshExpiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+		at.expiresTime = System.currentTimeMillis() + (checkClientModel(cm.clientId).getAccessTokenTimeout() * 1000);
+		// at.refreshExpiresTime = System.currentTimeMillis() + (checkClientModel(cm.clientId).getRefreshTokenTimeout() * 1000);
 		return at;
 	}
 	/**
@@ -470,7 +477,7 @@ public class SaOAuth2Template {
 		rt.loginId = at.loginId;
 		rt.scope = at.scope;
 		rt.openid = at.openid;
-		rt.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+		rt.expiresTime = System.currentTimeMillis() + (checkClientModel(at.clientId).getRefreshTokenTimeout() * 1000);
 		// 改变at属性
 		at.refreshToken = rt.refreshToken;
 		at.refreshExpiresTime = rt.expiresTime;
@@ -489,7 +496,7 @@ public class SaOAuth2Template {
 		at.loginId = rt.loginId;
 		at.scope = rt.scope;
 		at.openid = rt.openid;
-		at.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getAccessTokenTimeout() * 1000);
+		at.expiresTime = System.currentTimeMillis() + (checkClientModel(rt.clientId).getAccessTokenTimeout() * 1000);
 		at.refreshExpiresTime = rt.expiresTime;
 		return at;
 	}
@@ -501,7 +508,7 @@ public class SaOAuth2Template {
 	public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt) {
 		RefreshTokenModel newRt = new RefreshTokenModel();
 		newRt.refreshToken = randomRefreshToken(rt.clientId, rt.loginId, rt.scope);
-		newRt.expiresTime = System.currentTimeMillis() + (SaOAuth2Manager.getConfig().getRefreshTokenTimeout() * 1000);
+		newRt.expiresTime = System.currentTimeMillis() + (checkClientModel(rt.clientId).getRefreshTokenTimeout() * 1000);
 		newRt.clientId = rt.clientId;
 		newRt.scope = rt.scope;
 		newRt.loginId = rt.loginId;
@@ -599,8 +606,9 @@ public class SaOAuth2Template {
 			return;
 		}
 		Long ttl = ct.getExpiresIn();
-		if (null != SaOAuth2Manager.getConfig().getPastClientTokenTimeout()) {
-			ttl = SaOAuth2Manager.getConfig().getPastClientTokenTimeout();
+		SaClientModel cm = checkClientModel(ct.clientId);
+		if (null != cm.getPastClientTokenTimeout()) {
+			ttl = cm.getPastClientTokenTimeout();
 		}
 		SaManager.getSaTokenDao().set(splicingPastTokenIndexKey(ct.clientId), ct.clientToken, ttl);
 	}
@@ -612,7 +620,7 @@ public class SaOAuth2Template {
 	 */
 	public void saveGrantScope(String clientId, Object loginId, String scope) {
 		if(SaFoxUtil.isEmpty(scope) == false) {
-			long ttl = SaOAuth2Manager.getConfig().getAccessTokenTimeout();
+			long ttl = checkClientModel(clientId).getAccessTokenTimeout();
 			SaManager.getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), scope, ttl);
 		}
 	}

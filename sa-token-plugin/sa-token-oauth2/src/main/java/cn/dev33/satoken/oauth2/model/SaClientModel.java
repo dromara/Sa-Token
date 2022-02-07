@@ -2,6 +2,9 @@ package cn.dev33.satoken.oauth2.model;
 
 import java.io.Serializable;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+
 /**
  * Client应用信息 Model 
  * @author kong
@@ -43,11 +46,36 @@ public class SaClientModel implements Serializable {
 	/** 此 Client 是否打开模式：凭证式（Client Credentials） */
 	public Boolean isClient = false;
 
-	/** 是否自动判断开放的授权模式，此值为true时单独设置（isCode、isImplicit、isPassword、isClient）不再有效，而是跟随全局设置 */
+	/** 
+	 * 是否自动判断开放的授权模式 
+	 * <br> 此值为true时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠全局设置
+	 * <br> 此值为false时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠局部配置+全局配置 
+	 */
 	public Boolean isAutoMode = false;
 
+	/** 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
+	public Boolean isNewRefresh;
+
+	/** 单独配置此Client：Access-Token 保存的时间(单位秒)  [默认取全局配置] */
+	public long accessTokenTimeout;
+
+	/** 单独配置此Client：Refresh-Token 保存的时间(单位秒) [默认取全局配置] */
+	public long refreshTokenTimeout;
+
+	/** 单独配置此Client：Client-Token 保存的时间(单位秒) [默认取全局配置] */
+	public long clientTokenTimeout;
+
+	/** 单独配置此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置] */
+	public Long pastClientTokenTimeout;
+
+	
 	public SaClientModel() {
-		
+		SaOAuth2Config config = SaOAuth2Manager.getConfig();
+		this.isNewRefresh = config.getIsNewRefresh();
+		this.accessTokenTimeout = config.getAccessTokenTimeout();
+		this.refreshTokenTimeout = config.getRefreshTokenTimeout();
+		this.clientTokenTimeout = config.getClientTokenTimeout();
+		this.pastClientTokenTimeout = config.getPastClientTokenTimeout();
 	}
 	public SaClientModel(String clientId, String clientSecret, String contractScope, String allowUrl) {
 		super();
@@ -202,12 +230,97 @@ public class SaClientModel implements Serializable {
 		return this;
 	}
 	
+	
+	/**
+	 * @return 此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
+	 */
+	public Boolean getIsNewRefresh() {
+		return isNewRefresh;
+	}
+	
+	/**
+	 * @param isNewRefresh 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
+	 * @return 对象自身 
+	 */
+	public SaClientModel setIsNewRefresh(Boolean isNewRefresh) {
+		this.isNewRefresh = isNewRefresh;
+		return this;
+	}
+	
+	/**
+	 * @return 此Client：Access-Token 保存的时间(单位秒)  [默认取全局配置]
+	 */
+	public long getAccessTokenTimeout() {
+		return accessTokenTimeout;
+	}
+	
+	/**
+	 * @param accessTokenTimeout 单独配置此Client：Access-Token 保存的时间(单位秒)  [默认取全局配置]
+	 * @return 对象自身 
+	 */
+	public SaClientModel setAccessTokenTimeout(long accessTokenTimeout) {
+		this.accessTokenTimeout = accessTokenTimeout;
+		return this;
+	}
+	
+	/**
+	 * @return 此Client：Refresh-Token 保存的时间(单位秒) [默认取全局配置]
+	 */
+	public long getRefreshTokenTimeout() {
+		return refreshTokenTimeout;
+	}
+	
+	/**
+	 * @param refreshTokenTimeout 单独配置此Client：Refresh-Token 保存的时间(单位秒) [默认取全局配置]
+	 * @return 对象自身 
+	 */
+	public SaClientModel setRefreshTokenTimeout(long refreshTokenTimeout) {
+		this.refreshTokenTimeout = refreshTokenTimeout;
+		return this;
+	}
+	
+	/**
+	 * @return 此Client：Client-Token 保存的时间(单位秒) [默认取全局配置]
+	 */
+	public long getClientTokenTimeout() {
+		return clientTokenTimeout;
+	}
+	
+	/**
+	 * @param clientTokenTimeout 单独配置此Client：Client-Token 保存的时间(单位秒) [默认取全局配置]
+	 * @return 对象自身 
+	 */
+	public SaClientModel setClientTokenTimeout(long clientTokenTimeout) {
+		this.clientTokenTimeout = clientTokenTimeout;
+		return this;
+	}
+	
+	/**
+	 * @return 此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置]
+	 */
+	public Long getPastClientTokenTimeout() {
+		return pastClientTokenTimeout;
+	}
+	
+	/**
+	 * @param pastClientTokenTimeout 单独配置此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置]
+	 * @return 对象自身 
+	 */
+	public SaClientModel setPastClientTokenTimeout(Long pastClientTokenTimeout) {
+		this.pastClientTokenTimeout = pastClientTokenTimeout;
+		return this;
+	}
+	
 	// 
 	@Override
 	public String toString() {
 		return "SaClientModel [clientId=" + clientId + ", clientSecret=" + clientSecret + ", contractScope="
 				+ contractScope + ", allowUrl=" + allowUrl + ", isCode=" + isCode + ", isImplicit=" + isImplicit
-				+ ", isPassword=" + isPassword + ", isClient=" + isClient + ", isAutoMode=" + isAutoMode + "]";
+				+ ", isPassword=" + isPassword + ", isClient=" + isClient + ", isAutoMode=" + isAutoMode
+				+ ", isNewRefresh=" + isNewRefresh + ", accessTokenTimeout=" + accessTokenTimeout
+				+ ", refreshTokenTimeout=" + refreshTokenTimeout + ", clientTokenTimeout=" + clientTokenTimeout
+				+ ", pastClientTokenTimeout=" + pastClientTokenTimeout + "]";
 	}
+	
 	
 }
