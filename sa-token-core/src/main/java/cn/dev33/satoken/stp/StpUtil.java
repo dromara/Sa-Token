@@ -436,8 +436,23 @@ public class StpUtil {
  	public static long getTokenActivityTimeout() {
  		return stpLogic.getTokenActivityTimeout();
  	}
- 	
 
+ 	/**
+ 	 * 对当前 Token 的 timeout 值进行续期 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public static void renewTimeout(long timeout) {
+ 		stpLogic.renewTimeout(timeout);
+ 	}
+ 	
+ 	/**
+ 	 * 对指定 Token 的 timeout 值进行续期 
+ 	 * @param tokenValue 指定token 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public static void renewTimeout(String tokenValue, long timeout) {
+ 		stpLogic.renewTimeout(tokenValue, timeout);
+ 	}
  	
 	// =================== 角色验证操作 ===================  
 

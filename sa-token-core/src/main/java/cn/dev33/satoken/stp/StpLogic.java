@@ -681,7 +681,7 @@ public class StpLogic {
  	 */
  	public Object getLoginIdByToken(String tokenValue) {
  		// token为空时，直接返回null 
- 		if(tokenValue == null) {
+ 		if(SaFoxUtil.isEmpty(tokenValue)) {
  	 		return null;
  		}
  		// loginId为无效值时，直接返回null 
@@ -883,7 +883,7 @@ public class StpLogic {
  	 */
  	protected void setLastActivityToNow(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		// 将[最后操作时间]标记为当前时间戳 
@@ -896,7 +896,7 @@ public class StpLogic {
  	 */
  	protected void clearLastActivity(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		// 删除[最后操作时间]
@@ -911,7 +911,7 @@ public class StpLogic {
  	 */
  	public void checkActivityTimeout(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		// 如果本次请求已经有了[检查标记], 则立即返回 
@@ -949,7 +949,7 @@ public class StpLogic {
  	 */
  	public void updateLastActivityToNow(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		getSaTokenDao().update(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
@@ -963,7 +963,6 @@ public class StpLogic {
  	public void updateLastActivityToNow() {
  		updateLastActivityToNow(getTokenValue());
  	}
- 	
  	
 	// ------------------- 过期时间相关 -------------------  
 
@@ -1037,7 +1036,7 @@ public class StpLogic {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
  		}
  		// 如果设置了永不过期, 则返回 -1 
- 		if(getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(isOpenActivityCheck() == false) {
  			return SaTokenDao.NEVER_EXPIRE;
  		}
  		// ------ 开始查询 
@@ -1059,6 +1058,53 @@ public class StpLogic {
  		return timeout;
  	}
 
+ 	/**
+ 	 * 对当前 Token 的 timeout 值进行续期 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public void renewTimeout(long timeout) {
+ 		// 续期 db 数据 
+ 		String tokenValue = getTokenValue();
+ 		renewTimeout(tokenValue, timeout);
+ 		
+ 		// 续期客户端Cookie有效期 
+ 		if(getConfig().getIsReadCookie()) {
+ 			setTokenValueToCookie(tokenValue, (int)timeout);
+ 		}
+ 	}
+ 	
+ 	/**
+ 	 * 对指定 Token 的 timeout 值进行续期 
+ 	 * @param tokenValue 指定token 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public void renewTimeout(String tokenValue, long timeout) {
+ 		
+ 		// Token 指向的 LoginId 异常时，不进行任何操作 
+ 		Object loginId = getLoginIdByToken(tokenValue);
+ 		if(loginId == null) {
+ 			return;
+ 		}
+ 		
+ 		SaTokenDao dao = getSaTokenDao();
+ 		
+ 		// 续期 Token 有效期 
+ 		dao.updateTimeout(splicingKeyTokenValue(tokenValue), timeout);
+
+ 		// 续期 Token-Session 有效期 
+		SaSession tokenSession = getTokenSessionByToken(tokenValue, false);
+		if(tokenSession != null) {
+			tokenSession.updateTimeout(timeout);
+		}
+		
+ 		// 续期指向的 User-Session 有效期 
+ 		getSessionByLoginId(loginId).updateMinTimeout(timeout);
+ 		
+ 		// Token-Activity 活跃检查相关 
+ 		if(isOpenActivityCheck()) {
+ 			dao.updateTimeout(splicingKeyLastActivityTime(tokenValue), timeout);
+ 		}
+ 	}
  	
 	// ------------------- 角色验证操作 -------------------  
 
@@ -1647,7 +1693,7 @@ public class StpLogic {
 	}
 	
 	/**  
-	 * 拼接key： tokenValue的专属session 
+	 * 拼接key： tokenValue的Token-Session 
 	 * @param tokenValue token值
 	 * @return key
 	 */
@@ -1709,7 +1755,15 @@ public class StpLogic {
 	public boolean getConfigOfIsShare() {
 		return getConfig().getIsShare();
 	}
-	
+
+ 	/**
+ 	 * 返回全局配置是否开启了Token 活跃校验 
+ 	 * @return / 
+ 	 */
+ 	public boolean isOpenActivityCheck() {
+ 		return getConfig().getActivityTimeout() != SaTokenDao.NEVER_EXPIRE;
+ 	}
+ 	
 	/**
 	 * 返回持久化对象 
 	 * @return / 
@@ -1737,7 +1791,8 @@ public class StpLogic {
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
-	public void logoutByLoginId(Object loginId) {
+	@Deprecated
+ 	public void logoutByLoginId(Object loginId) {
 		this.kickout(loginId);
 	}
 	
@@ -1749,7 +1804,8 @@ public class StpLogic {
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
-	public void logoutByLoginId(Object loginId, String device) {
+	@Deprecated
+ 	public void logoutByLoginId(Object loginId, String device) {
 		this.kickout(loginId, device);
 	}
 
