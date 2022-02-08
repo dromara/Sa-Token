@@ -47,11 +47,11 @@ public class SaClientModel implements Serializable {
 	public Boolean isClient = false;
 
 	/** 
-	 * 是否自动判断开放的授权模式 
+	 * 是否自动判断此 Client 开放的授权模式 
 	 * <br> 此值为true时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠全局设置
 	 * <br> 此值为false时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠局部配置+全局配置 
 	 */
-	public Boolean isAutoMode = false;
+	public Boolean isAutoMode = true;
 
 	/** 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
 	public Boolean isNewRefresh;
@@ -66,7 +66,7 @@ public class SaClientModel implements Serializable {
 	public long clientTokenTimeout;
 
 	/** 单独配置此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置] */
-	public Long pastClientTokenTimeout;
+	public long pastClientTokenTimeout;
 
 	
 	public SaClientModel() {
@@ -215,14 +215,14 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @return 是否自动判断开放的授权模式
+	 * @return 是否自动判断此 Client 开放的授权模式
 	 */
 	public Boolean getIsAutoMode() {
 		return isAutoMode;
 	}
 	
 	/**
-	 * @param isAutoMode 是否自动判断开放的授权模式
+	 * @param isAutoMode 是否自动判断此 Client 开放的授权模式
 	 * @return 对象自身 
 	 */
 	public SaClientModel setIsAutoMode(Boolean isAutoMode) {
@@ -298,7 +298,7 @@ public class SaClientModel implements Serializable {
 	/**
 	 * @return 此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置]
 	 */
-	public Long getPastClientTokenTimeout() {
+	public long getPastClientTokenTimeout() {
 		return pastClientTokenTimeout;
 	}
 	
@@ -306,7 +306,7 @@ public class SaClientModel implements Serializable {
 	 * @param pastClientTokenTimeout 单独配置此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置]
 	 * @return 对象自身 
 	 */
-	public SaClientModel setPastClientTokenTimeout(Long pastClientTokenTimeout) {
+	public SaClientModel setPastClientTokenTimeout(long pastClientTokenTimeout) {
 		this.pastClientTokenTimeout = pastClientTokenTimeout;
 		return this;
 	}

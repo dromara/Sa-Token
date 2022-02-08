@@ -42,8 +42,8 @@ public class SaOAuth2Config implements Serializable {
 	/** Client-Token 保存的时间(单位：秒) 默认两个小时 */
 	public long clientTokenTimeout = 60 * 60 * 2;
 
-	/** Past-Client-Token 保存的时间(单位：秒) 默认为 null，代表取 clientTokenTimeout 值 */
-	public Long pastClientTokenTimeout = null;
+	/** Past-Client-Token 保存的时间(单位：秒) 默认为 -1，代表延续 Client-Token有效期 */
+	public long pastClientTokenTimeout = -1;
 
 
 	/**
@@ -183,7 +183,7 @@ public class SaOAuth2Config implements Serializable {
 	/**
 	 * @return pastClientTokenTimeout
 	 */
-	public Long getPastClientTokenTimeout() {
+	public long getPastClientTokenTimeout() {
 		return pastClientTokenTimeout;
 	}
 

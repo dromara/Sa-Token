@@ -152,15 +152,16 @@ sa-token:
 ### OAuth2.0相关配置 
 | 参数名称				| 类型		| 默认值	| 说明																		|
 | :--------				| :--------	| :--------	| :--------																	|
-| isCode				| Boolean	| true		| 是否打开模式：授权码（Authorization Code）								|
-| isImplicit			| Boolean	| false		| 是否打开模式：隐藏式（Implicit）											|
-| isPassword			| Boolean	| false		| 是否打开模式：密码式（Password）											|
-| isClient				| Boolean	| false		| 是否打开模式：凭证式（Client Credentials）								|
-| isNewRefresh			| Boolean	| false		| 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token	|
-| codeTimeout			| long		| 300		| Code授权码 保存的时间(单位秒) 默认五分钟									|
-| accessTokenTimeout	| long		| 7200		| Access-Token 保存的时间(单位秒) 默认两个小时								|
-| refreshTokenTimeout	| long		| 2592000	| Refresh-Token 保存的时间(单位秒) 默认30 天								|
-| clientTokenTimeout	| long		| 7200		| Client-Token 保存的时间(单位秒) 默认两个小时								|
+| isCode				| Boolean	| true		| 是否打开模式：授权码（`Authorization Code`）								|
+| isImplicit			| Boolean	| false		| 是否打开模式：隐藏式（`Implicit`）											|
+| isPassword			| Boolean	| false		| 是否打开模式：密码式（`Password`）											|
+| isClient				| Boolean	| false		| 是否打开模式：凭证式（`Client Credentials`）								|
+| isNewRefresh			| Boolean	| false		| 是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token	|
+| codeTimeout			| long		| 300		| Code授权码 保存的时间（单位：秒） 默认五分钟									|
+| accessTokenTimeout	| long		| 7200		| `Access-Token` 保存的时间（单位：秒）默认两个小时								|
+| refreshTokenTimeout	| long		| 2592000	| `Refresh-Token` 保存的时间（单位：秒） 默认30 天								|
+| clientTokenTimeout	| long		| 7200		| `Client-Token` 保存的时间（单位：秒） 默认两个小时								|
+| pastClientTokenTimeout	| long	| 7200		| `Past-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
 
 配置示例：
 ``` yml
@@ -174,3 +175,23 @@ sa-token:
         is-password: true
         is-client: true
 ```
+
+##### SaClientModel属性定义
+| 参数名称				| 类型		| 默认值	| 说明													|
+| :--------				| :--------	| :--------	| :--------											|
+| clientId				| String	| null		| 应用id，应该全局唯一								|
+| clientSecret			| String	| null		| 应用秘钥											|
+| contractScope			| String	| null		| 应用签约的所有权限, 多个用逗号隔开					|
+| allowUrl				| String	| null		| 应用允许授权的所有URL, 多个用逗号隔开 （可以使用 `*` 号通配符）			|
+| isCode				| Boolean	| false		| 单独配置此 Client 是否打开模式：授权码（`Authorization Code`）		|
+| isImplicit			| Boolean	| false		| 单独配置此 Client 是否打开模式：隐藏式（`Implicit`）		|
+| isPassword			| Boolean	| false		| 单独配置此 Client 是否打开模式：密码式（`Password`）		|
+| isClient				| Boolean	| false		| 单独配置此 Client 是否打开模式：凭证式（`Client Credentials`）		|
+| isAutoMode			| Boolean	| true		| 是否自动判断此 Client 开放的授权模式。<br>此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；<br>此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置 |
+| isNewRefresh			| Boolean	| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
+| accessTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
+| refreshTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| clientTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| pastClientTokenTimeout	| long	| 取全局配置		| 单独配置此Client：`Past-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+
+

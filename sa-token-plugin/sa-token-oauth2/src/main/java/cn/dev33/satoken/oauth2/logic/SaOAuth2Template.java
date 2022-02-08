@@ -256,7 +256,7 @@ public class SaOAuth2Template {
 		
 		// 2.5、如果配置了 PastClientToken 的 ttl ，则需要更新一下 
 		SaClientModel cm = checkClientModel(clientId);
-		if(oldCt != null && cm.getPastClientTokenTimeout() != null) {
+		if(oldCt != null && cm.getPastClientTokenTimeout() != -1) {
 			oldCt.expiresTime = System.currentTimeMillis() + (cm.getPastClientTokenTimeout() * 1000);
 			saveClientToken(oldCt);
 		}
@@ -607,7 +607,7 @@ public class SaOAuth2Template {
 		}
 		Long ttl = ct.getExpiresIn();
 		SaClientModel cm = checkClientModel(ct.clientId);
-		if (null != cm.getPastClientTokenTimeout()) {
+		if (cm.getPastClientTokenTimeout() != -1) {
 			ttl = cm.getPastClientTokenTimeout();
 		}
 		SaManager.getSaTokenDao().set(splicingPastTokenIndexKey(ct.clientId), ct.clientToken, ttl);
