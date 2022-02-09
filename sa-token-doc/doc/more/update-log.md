@@ -1,5 +1,26 @@
 # 更新日志 
 
+### 2022-02-10 @v1.29.0
+- 升级：sa-token-jwt插件可在登录时添加额外数据。
+- 重构：优化Dubbo调用时向下传递Token的规则，可避免在项目启动时由于Context无效引发的bug。
+- 重构：OAuth2 授权模式开放由全局配置和Client单独配置共同设定。
+- 重构：OAuth2 模块部分属性支持每个 Client 单独配置。
+- 重构：OAuth2 模块部分方法名修复单词拼写错误：converXxx -> convertXxx。
+- 重构：修复 OAuth2 模块 `deleteAccessTokenIndex` 回收 token 不彻底的bug。
+- 新增：OAuth2 模块新增 `pastClientTokenTimeout`，用于指定 PastClientToken 默认有效期。
+- 文档：常见报错章节增加目录树，方便查阅。
+- 文档：优化文档样式。
+- 新增：新增 BCrypt 加密。
+- 修复：修复StpUtil.getLoginIdByToken(token) 在部分场景下返回出错的bug。
+- 重构：优化OAuth2模块密码式校验步骤。
+- 新增：新增Jackson定制版Session，避免timeout属性的序列化。
+- 新增：SaLoginModel新增setToken方法，用于预定本次登录产生的Token。 
+- 新增：新增 StpUtil.createLoginSession() 方法，用于无Token注入的方式创建登录会话。 
+- 新增：OAuth2 与 StpUtil 登录会话数据互通。
+- 新增：新增 `StpUtil.renewTimeout(100);` 方法，用于 Token 的 Timeout 值续期。 
+- 修复：修复默认dao实现类中 `updateObject` 无效的bug 
+- 完善：完善单元测试。
+
 
 ### 2021-11-5 @v1.28.0
 - 新增：新增 `sa-token-jwt` 插件，用于与jwt的整合 **[重要]**

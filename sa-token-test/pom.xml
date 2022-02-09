@@ -7,7 +7,7 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-parent</artifactId>
-        <version>1.28.0</version>
+        <version>1.29.0</version>
     </parent>
     <packaging>pom</packaging>
 
@@ -22,6 +22,7 @@
         <module>sa-token-core-test</module>
         <module>sa-token-springboot-test</module>
         <module>sa-token-springboot-integrate-test</module>
+        <module>sa-token-jwt-test</module>
     </modules>
 
 	<dependencies>
