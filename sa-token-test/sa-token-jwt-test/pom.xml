@@ -11,14 +11,19 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-springboot-test</name>
-    <artifactId>sa-token-springboot-test</artifactId>
-	<description>sa-token-springboot-test</description>
+	<name>sa-token-jwt-test</name>
+    <artifactId>sa-token-jwt-test</artifactId>
+	<description>sa-token-jwt-test</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-starter</artifactId>
+            <version>${sa-token-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jwt</artifactId>
             <version>${sa-token-version}</version>
 		</dependency>
 	</dependencies>

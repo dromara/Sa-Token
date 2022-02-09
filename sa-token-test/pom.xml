@@ -21,6 +21,7 @@
     <modules>
         <module>sa-token-core-test</module>
         <module>sa-token-springboot-test</module>
+        <module>sa-token-springboot-integrate-test</module>
     </modules>
 
 	<dependencies>
