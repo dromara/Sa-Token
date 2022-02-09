@@ -20,6 +20,7 @@
 	<!-- 所有子模块 -->
     <modules>
         <module>sa-token-core-test</module>
+        <module>sa-token-springboot-test</module>
     </modules>
 
 	<dependencies>

@@ -24,7 +24,6 @@ import cn.dev33.satoken.util.SaTokenConsts;
 /**
  * Sa-Token 基础API测试 
  * 
- * <p> 注解详解参考： https://www.cnblogs.com/flypig666/p/11505277.html
  * @author Auster 
  *
  */
