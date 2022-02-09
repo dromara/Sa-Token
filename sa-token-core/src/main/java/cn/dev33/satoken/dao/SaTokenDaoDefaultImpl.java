@@ -99,7 +99,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		// 无动作 
+		dataMap.put(key, object);
 	}
 
 	@Override
