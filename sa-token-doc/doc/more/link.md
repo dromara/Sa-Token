@@ -65,7 +65,7 @@
 
 - **[ Hasor ]**：[轻量级ioc/aop框架，采用"微内核+插件"的设计思想](https://gitee.com/zycgit/hasor) 
 
-- **[ Sa-Admin ]**：[一个多窗口后台模板，流畅、易上手、提高生产力](https://gitee.com/ejlchina-zhxu/okhttps) 
+- **[ Sa-Admin ]**：[一个多窗口后台模板，流畅、易上手、提高生产力](https://gitee.com/click33/sa-admin) 
 
 - **[ vue-next-admin ]**：[一套为开发者快速开发准备的基于 vue2.x 越看越精彩的后台管理系统一站式平台模板](https://gitee.com/lyt-top/vue-next-admin) 
 
