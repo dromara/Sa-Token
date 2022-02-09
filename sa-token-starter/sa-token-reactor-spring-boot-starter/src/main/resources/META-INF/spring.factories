@@ -1,6 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.dev33.satoken.reactor.spring.SaBeanRegister,\
 cn.dev33.satoken.reactor.spring.SaBeanInject,\
-cn.dev33.satoken.reactor.spring.SaHistoryVersionInject,\
 cn.dev33.satoken.reactor.spring.oauth2.SaOAuth2BeanRegister,\
 cn.dev33.satoken.reactor.spring.oauth2.SaOAuth2BeanInject

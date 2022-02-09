@@ -29,8 +29,6 @@ sa-token:
 
 如果你习惯于 `application.properties` 类型的配置文件，那也很好办: 百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
 
-!> 注：旧版本配置前缀为`[spring.sa-token.]`，自v1.21.0开始，均改为`[sa-token.]`，目前版本暂时向下兼容，请尽快更新 
-
 
 ### 方式2、通过代码配置
 模式1：
