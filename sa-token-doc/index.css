@@ -175,7 +175,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .zk-box .zk-context{max-height: 0px; position: absolute; overflow: hidden;}
 .zk-box:hover .zk-context{max-height: 300px;}
 /* 内层盒 */
-.zk-context>div{padding: 1em 0; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
+.zk-context>div{padding: 1em 0.5em 1em 1em; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
 .zk-box:hover .zk-context>div{opacity: 1;}
 /* 小链接 */
 .zk-box .zk-context a{font-size: 14px; display: block; line-height: 32px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
