@@ -120,6 +120,8 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 		├── sa-token-demo-sso-client-h5           // [示例] Sa-Token 集成 SSO单点登录-client应用端 (前后端分离)
 		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
+		├── sa-token-demo-websocket               // [示例] Sa-Token 集成 Web-Socket 鉴权示例
+		├── sa-token-demo-websocket-spring        // [示例] Sa-Token 集成 Web-Socket（Spring封装版） 鉴权示例
 	├── sa-token-test                         // [测试] Sa-Token 单元测试合集
 		├── sa-token-core-test                    // [测试] Sa-Token Core核心包单元测试
 		├── sa-token-springboot-test              // [测试] Sa-Token SpringBoot 整合测试
