@@ -91,8 +91,10 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 	├── sa-token-starter                      // [整合] Sa-Token 与其它框架整合
 		├── sa-token-servlet                      // [整合] Sa-Token 整合 Servlet容器实现类包
 		├── sa-token-spring-boot-starter          // [整合] Sa-Token 整合 SpringBoot 快速集成 
-		├── sa-token-reactor-spring-boot-starter  // [整合] Sa-Token 整合 Reactor响应式编程 快速集成 
+		├── sa-token-reactor-spring-boot-starter  // [整合] Sa-Token 整合 Reactor 响应式编程 快速集成 
 		├── sa-token-solon-plugin                 // [整合] Sa-Token 整合 Solon 快速集成 
+		├── sa-token-jfinal-plugin                // [整合] Sa-Token 整合 JFinal 快速集成 
+		├── sa-token-jboot-plugin                 // [整合] Sa-Token 整合 jboot 快速集成 
 	├── sa-token-plugin                       // [插件] Sa-Token 插件合集
 		├── sa-token-dao-redis                    // [插件] Sa-Token 整合 Redis (使用jdk默认序列化方式)
 		├── sa-token-dao-redis-jackson            // [插件] Sa-Token 整合 Redis (使用jackson序列化方式)

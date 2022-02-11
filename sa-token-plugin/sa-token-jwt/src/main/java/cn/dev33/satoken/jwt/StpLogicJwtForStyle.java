@@ -50,7 +50,7 @@ public class StpLogicJwtForStyle extends StpLogic {
 	 */
 	@Override
 	public Object getExtra(String key) {
-		return SaJwtUtil.getPayloads(getTokenValue(), jwtSecretKey()).get(key);
+		return SaJwtUtil.getPayloadsNotCheck(getTokenValue(), jwtSecretKey()).get(key);
 	}
 
 }
