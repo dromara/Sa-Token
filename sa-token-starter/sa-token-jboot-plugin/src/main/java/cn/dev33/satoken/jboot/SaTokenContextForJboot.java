@@ -10,7 +10,7 @@ import cn.dev33.satoken.servlet.model.SaStorageForServlet;
 import io.jboot.web.controller.JbootControllerContext;
 
 /**
- * Sa-Token 上下文处理器 [Jboot 版本实现]
+ * Sa-Token 上线文处理器 [Jboot 版本实现]
  */
 public class SaTokenContextForJboot implements SaTokenContext {
     /**

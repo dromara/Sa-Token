@@ -1,13 +1,11 @@
 package cn.dev33.satoken.jboot;
 
-import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
 import com.jfinal.log.Log;
 import io.jboot.Jboot;
 import io.jboot.components.serializer.JbootSerializer;
 import io.jboot.components.serializer.JbootSerializerManager;
 import io.jboot.exception.JbootIllegalConfigException;
-import io.jboot.support.redis.JbootRedisBase;
 import io.jboot.utils.StrUtil;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -34,12 +32,13 @@ public class SaJedisImpl {
             serializer = JbootSerializerManager.me().getSerializer(config.getSerializer());
         }
         this.config = config;
-        String host = config.getHost();
-        Integer port = config.getPort();
-        Integer timeout = config.getTimeout();
-        String password = config.getPassword();
-        Integer database = config.getDb()==null?config.getDatabase():config.getDb();
-        String clientName = config.getClientName();
+        assert this.config != null;
+        String host = this.config.getHost();
+        Integer port = this.config.getPort();
+        Integer timeout = this.config.getTimeout();
+        String password = this.config.getPassword();
+        Integer database = this.config.getSaDb()==null?this.config.getDatabase():this.config.getSaDb();
+        String clientName = this.config.getClientName();
 
         if (host.contains(":")) {
             port = Integer.valueOf(host.split(":")[1]);

@@ -4,21 +4,24 @@ import io.jboot.app.config.annotation.ConfigModel;
 import io.jboot.support.redis.JbootRedisConfig;
 
 /**
- * SA-Token redis缓存配置
+ * SA-Token redis缓存配置,获取database
  */
 @ConfigModel(
-        prefix = "sa.redis"
+        prefix = "jboot.redis"
 )
 public class SaRedisConfig extends JbootRedisConfig{
 
-    private Integer db;
+    private Integer saDb;
 
-    public Integer getDb() {
-        return this.db;
+    public SaRedisConfig(){
+
+    }
+    public Integer getSaDb() {
+        return this.saDb;
     }
 
-    public void setDb(Integer db) {
-        this.db = db;
+    public void setSaDb(Integer saDb) {
+        this.saDb = saDb;
     }
 
 }

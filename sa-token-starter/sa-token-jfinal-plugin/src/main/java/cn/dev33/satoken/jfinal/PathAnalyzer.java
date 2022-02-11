@@ -42,7 +42,7 @@ public class PathAnalyzer {
         p = p.replace("$", "\\$");
         p = p.replace("**", ".[]");
         p = p.replace("*", "[^/]*");
-        if (p.indexOf("{") >= 0) {
+        if (p.contains("{")) {
             if (p.indexOf("_}") > 0) {
                 p = p.replaceAll("\\{[^\\}]+?\\_\\}", "(.+?)");
             }

@@ -12,6 +12,7 @@ import com.jfinal.render.RenderManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 public class SaTokenActionHandler extends ActionHandler {
     protected boolean devMode;
     protected ActionMapping actionMapping;

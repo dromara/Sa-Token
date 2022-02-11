@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * 缓存处理类
- */
 public class SaTokenDaoRedis implements SaTokenDao {
 
     protected Cache redis;
