@@ -10,19 +10,32 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* 分割线 */
 .s-fenge{width: 80%; margin: auto; border-top: 1px #ddd solid;}
 
-/* -------- header头部 --------- */
-.s-header{height: 70px; border: 0px #000 solid; position: fixed; width: 100%;}
-.s-header{background-color: #FFF; color: #000; z-index: 99999; box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
-/* logo部分 */
-.logo-box {margin-top: 10px; margin-left: 30px; cursor: pointer; color: #000; float: left;}
-.logo-box img {width: 50px; height: 50px; vertical-align: middle;}
-.logo-box .logo-text {display: inline-block;vertical-align: middle; font-size: 22px;font-weight: 400;}
-/* 小章鱼 */
-.github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px;}
+/* ------- 头部样式 ------- */
+.doc-header{position: fixed; top: 0; z-index: 1000; width: 100%; height: 60px; line-height: 60px;}
+.doc-header{background-color: hsla(0,0%,100%,0.97); box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
+
+/* 左边logo */
+.nav-left{display: inline-block; float: left;}
+.logo-box {display: inline-block; cursor: pointer; color: #000; padding-left: 24px; height: 60px; line-height: 60px;}
+.logo-box img {width: 50px; height: 50px; vertical-align: middle; position: relative; top: -1px;}
+.logo-box .logo-text {display: inline-block; margin: 0; padding: 0; padding-left: 5px; vertical-align: middle; font-size: 22px;/* font-weight: 700; */}
+
 /* 右边导航 */
-.nav-right{float: right; line-height: 70px; padding-right: 4.5em; white-space: nowrap;}
-.nav-right a{padding: 0px 1em; color: #34495E; text-decoration: none; transition: all 0.2s;}
+.doc-header .nav-right{margin: 0;  float: right; line-height: 60px; padding-right: 4em; white-space: nowrap; font-size: 15px; }
+.doc-header .nav-right>*{padding: 0px; margin: 0 14px;}
+.doc-header .nav-right>*:last-child{position: relative; z-index: 1002; }
+
+.nav-right a{color: #34495E; text-decoration: none; transition: all 0.2s;}
 .nav-right a:hover{color: #42B983;}
+.doc-header .nav-right .wzi{font-size: 15px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
+.doc-header .nav-right .wzi:hover{border-bottom: 2px #42B983 solid;}
+
+/* 小章鱼 */
+.github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px; z-index: 1001 !important;}
+
+
+/* 手机端不显示广告，和一些其它东西 */
+@media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} 
 
 /* -------- 海报部分 --------- */
 .main-box{width: 100%; min-height: 100vh;; /* height: 80vh; */ text-align: center; background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg); }
@@ -36,6 +49,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 .sub-title{font-size: 22px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #444;}
 /* .content-box p{line-height: 30px; padding: 0px 1em;} */
+/* 角标位置修复 */
+.badge-box a:nth-child(-n+2) img{position: relative; top: 1px;}
 
 .main-box{animation: changes 60s 0.2s linear infinite normal; background-attachment: ;}  /* normal | alternate */
 @keyframes changes {
@@ -67,22 +82,33 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .wx-qr-box p{margin-top: 10px; color: #666; margin-bottom: 20px;}
 .wx-qr,.dro-qr{cursor: pointer;}
 
+
 /* -------- 支持特性 --------- */
 .feature-z{padding: 0em 1em; padding-top: 0px; padding-bottom: 60px; text-align: center; color: #000;}
 .feature-z .s-title{font-size: 30px; font-weight: 400; margin-top: 70px; margin-bottom: 40px;}
 .feature-z{color: rgb(128, 128, 128); text-align: center; box-sizing: border-box; line-height: 24px; font-size: 16px;}
 
-.feature-box{margin-top: 40px; margin-bottom: 60px; display: flex; flex-wrap: wrap; justify-content: flex-start;}
-.feature{border: 0px #000 solid; flex: 1; min-width: 33%; max-width: 33%; text-align: left; padding: 1.5em 1.2em; box-sizing: border-box;}
-.feature h2{font-size: 24px; color: #000; font-weight: 400;}
+.feature-box{margin-top: 50px; margin-bottom: 70px; display: flex; flex-wrap: wrap; justify-content: flex-start;}
+.feature{border: 0px #000 solid; flex: 1; min-width: 33%; max-width: 33%; text-align: left; padding: 1.8em 1.2em; box-sizing: border-box;}
+.feature h2{font-size: 22px; color: #000; font-weight: 400;}
 .feature p{margin-top: 14px; font-size: 16px; color: #4e6e8e;}
+
+/* 功能结构图介绍 */
+/* .sa-token-js-box{margin-bottom: 50px; transition: all 0.2s;}
+.sa-token-js-box img{max-width: 100%;}
+.sa-token-js-box:hover{cursor: pointer; box-shadow: 0 0 20px #ccc;} */
+
+.re-text{padding: 0 1em;}
+.re-text a{color: #0969da; text-decoration: none;}
+.re-text a:hover{border-bottom: 1px #0969da solid;}
+
 
 /* -------- 使用公司 --------- */
 .com-box-f{padding: 1em 1em; padding-bottom: 30px; text-align: center;}
 .com-box-f h2{font-size: 30px; color: #000; font-weight: 400;}
 .com-box{display: flex; flex-wrap: wrap; width: 100%; margin-bottom: 50px; justify-content: flex-start;}
 .com-box a{flex: 1; display: block; cursor: pointer; border: 0px #ddd solid;}
-.com-box a{min-width: 17%; max-width: 18%; margin: 5px; line-height: 100px;}
+.com-box a{min-width: 13%; max-width: 14%; margin: 5px; line-height: 75px;}
 .com-box a img{transition: all 0.2s; vertical-align: middle; min-width: 60%; max-width: 100%; max-height: 100%;}
 .com-box a img:hover{transform: scale(1.05, 1.05);}
 .com-box-you a img:hover{transform: none;}
@@ -119,7 +145,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 	.s-title{padding: 0 16px;}
 	.s-width{width: 100%;}
 	
-	.logo-box,.copyright {display: none;}
+	.logo-box .logo-text,.copyright {display: none;}
 	.main-box{ height: auto;}
 	.content-box{ padding: 2em 1em;}
 	.content-box h1{font-size: 50px;}
@@ -142,18 +168,20 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 }
 
 
-/* 闪光背景 */
-/* .main-box{
-    background-size: 500%;
-	background-image: linear-gradient(125deg,#BFFEBE,#F6F8B5,#FCD0B3,#BFB6F8,#E8D8B3);
-	animation: bganimation 15s infinite;
-}
-@keyframes bganimation{
-    0%{background-position: 0% 50%;}
-    50%{background-position: 100% 50%;}
-    100%{background-position: 0% 50%;}
-} */
 
+/* 工具栏超链接 展开、收缩div */
+.zk-box{display: inline-block; padding-right: 0px; margin-right: -25px;}
+/* 外层盒 */
+.zk-box .zk-context{max-height: 0px; position: absolute; overflow: hidden;}
+.zk-box:hover .zk-context{max-height: 300px;}
+/* 内层盒 */
+.zk-context>div{padding: 1em 0.5em 1em 1em; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
+.zk-box:hover .zk-context>div{opacity: 1;}
+/* 小链接 */
+.zk-box .zk-context a{font-size: 14px; display: block; line-height: 32px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.zk-box .zk-context a{text-align: left; padding: 0 1.5em 0 1em;}
+.zk-box .zk-context .zk-fengexian{border-bottom: 1px #d9d9d9 solid; margin: 10px 0;}
 
-
-
+/* 下三角小图标 */
+.zk-icon{display: inline-block; width: 0px; height: 0px; position: relative;top: 3px; margin-left: 4px;}
+.zk-icon{border-style: solid; border-width: 5px; border-color: #aaa transparent transparent transparent; }

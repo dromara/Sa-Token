@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-test</artifactId>
+        <version>1.29.0</version>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-jwt-test</name>
+    <artifactId>sa-token-jwt-test</artifactId>
+	<description>sa-token-jwt-test</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-starter</artifactId>
+            <version>${sa-token-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jwt</artifactId>
+            <version>${sa-token-version}</version>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -73,6 +73,8 @@ public class TestJwtController {
 	public AjaxJson test() {
 		System.out.println();
 		System.out.println("--------------进入请求--------------");
+		System.out.println(StpUtil.getExtra("username"));
+		System.out.println(StpUtil.getExtra("nick"));
 		return AjaxJson.getSuccess();
 	}
 

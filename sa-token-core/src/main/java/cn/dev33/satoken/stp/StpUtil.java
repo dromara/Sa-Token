@@ -132,6 +132,25 @@ public class StpUtil {
 		stpLogic.login(id, loginModel);
 	}
 
+	/**
+	 * 创建指定账号id的登录会话 
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌 
+	 */
+	public static String createLoginSession(Object id) {
+		return stpLogic.createLoginSession(id);
+	}
+	
+	/**
+	 * 创建指定账号id的登录会话
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 * @return 返回会话令牌 
+	 */
+	public static String createLoginSession(Object id, SaLoginModel loginModel) {
+		return stpLogic.createLoginSession(id, loginModel);
+	}
+	
 	// --- 注销 
 	
 	/** 
@@ -286,7 +305,16 @@ public class StpUtil {
  	public static Object getLoginIdByToken(String tokenValue) {
  		return stpLogic.getLoginIdByToken(tokenValue);
  	}
-	
+
+	/**
+	 * 获取Token扩展信息（只在jwt模式下有效）
+	 * @param key 键值 
+	 * @return 对应的扩展数据 
+	 */
+	public static Object getExtra(String key) {
+		return stpLogic.getExtra(key);
+	}
+ 	
  	
 	// =================== User-Session 相关 ===================
 
@@ -408,8 +436,23 @@ public class StpUtil {
  	public static long getTokenActivityTimeout() {
  		return stpLogic.getTokenActivityTimeout();
  	}
- 	
 
+ 	/**
+ 	 * 对当前 Token 的 timeout 值进行续期 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public static void renewTimeout(long timeout) {
+ 		stpLogic.renewTimeout(timeout);
+ 	}
+ 	
+ 	/**
+ 	 * 对指定 Token 的 timeout 值进行续期 
+ 	 * @param tokenValue 指定token 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public static void renewTimeout(String tokenValue, long timeout) {
+ 		stpLogic.renewTimeout(tokenValue, timeout);
+ 	}
  	
 	// =================== 角色验证操作 ===================  
 

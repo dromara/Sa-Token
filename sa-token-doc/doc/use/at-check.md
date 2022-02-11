@@ -34,6 +34,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ```
 保证此类被`springboot`启动类扫描到即可
 
+!> 注意：有同学亲测，在高版本 `SpringBoot (≥2.6.x)` 版本下，需要额外添加 `@EnableWebMvc` 注解才可以使注册拦截器生效。
+
 
 ### 2、使用注解鉴权
 然后我们就可以愉快的使用注解鉴权：

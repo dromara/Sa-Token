@@ -1,5 +1,7 @@
 package cn.dev33.satoken.jwt;
 
+import java.util.Map;
+
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
@@ -33,21 +35,23 @@ public class SaJwtUtil {
 	/**
 	 * key：有效截止期 (时间戳) 
 	 */
-	public static final String EFF = "eff"; 
+	public static final String EFF = "eff";
 
 	/** 
 	 * 当有效期被设为此值时，代表永不过期 
 	 */ 
 	public static final long NEVER_EXPIRE = SaTokenDao.NEVER_EXPIRE;
 	
-	
+	// ------ 创建
+
 	/**
 	 * 创建 jwt （简单方式）
 	 * @param loginId 账号id 
+	 * @param extraData 扩展数据
      * @param keyt 秘钥
 	 * @return jwt-token 
 	 */
-    public static String createToken(Object loginId, String keyt) {
+    public static String createToken(Object loginId, Map<String, Object> extraData, String keyt) {
     	
     	// 秘钥不可以为空 
     	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
@@ -57,6 +61,7 @@ public class SaJwtUtil {
 			    .setPayload(LOGIN_ID, loginId)
 			    // 混入随机字符 
 			    .setPayload("rn", SaFoxUtil.getRandomString(32))
+				.addPayloads(extraData)
 			    .setKey(keyt.getBytes())
 			    .sign();
     	
@@ -65,40 +70,43 @@ public class SaJwtUtil {
     }
 
 	/**
-	 * 创建 jwt （全参数方式） 
-	 * @param loginType 账号类型 
-	 * @param loginId 账号id 
+	 * 创建 jwt （全参数方式）
+	 * @param loginType 账号类型
+	 * @param loginId 账号id
 	 * @param device 设备标识
 	 * @param timeout token有效期 (单位 秒)
-     * @param keyt 秘钥
-	 * @return jwt-token 
+	 * @param extraData 扩展数据
+	 * @param keyt 秘钥
+	 * @return jwt-token
 	 */
-    public static String createToken(String loginType, Object loginId, String device, long timeout, String keyt) {
+	public static String createToken(String loginType, Object loginId, String device,
+									 long timeout, Map<String, Object> extraData, String keyt) {
 
-    	// 秘钥不可以为空 
-    	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
-    	
-    	// 计算有效期 
-    	long effTime = timeout;
-    	if(timeout != NEVER_EXPIRE) {
-    		effTime = timeout * 1000 + System.currentTimeMillis();
-    	}
-    	
-    	// 构建
-    	String token = JWT.create()
-			    .setPayload(LOGIN_TYPE, loginType)
-			    .setPayload(LOGIN_ID, loginId)
-			    .setPayload(DEVICE, device)
-			    .setPayload(EFF, effTime)
-			    .setKey(keyt.getBytes())
-			    .sign();
-    	
-    	// 返回 
-    	return token;
-    }
+		// 秘钥不可以为空
+		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+
+		// 计算有效期
+		long effTime = timeout;
+		if(timeout != NEVER_EXPIRE) {
+			effTime = timeout * 1000 + System.currentTimeMillis();
+		}
+
+		// 创建  
+		JWT jwt = JWT.create()
+				.setPayload(LOGIN_TYPE, loginType)
+				.setPayload(LOGIN_ID, loginId)
+				.setPayload(DEVICE, device)
+				.setPayload(EFF, effTime)
+				.addPayloads(extraData);
+
+		// 返回
+		return jwt.setKey(keyt.getBytes()).sign();
+	}
+
+	// ------ 解析 
 
     /**
-     * jwt 解析（校验签名和密码） 
+     * jwt 解析（校验签名和有效期） 
      * @param token Jwt-Token值 
      * @param keyt 秘钥
      * @return 解析后的jwt 对象 
@@ -139,7 +147,7 @@ public class SaJwtUtil {
     }
 
     /**
-     * 获取 jwt 数据载荷 （校验签名和密码） 
+     * 获取 jwt 数据载荷 （校验签名和有效期） 
      * @param token token值
      * @param keyt 秘钥 
      * @return 载荷 
@@ -149,7 +157,7 @@ public class SaJwtUtil {
     }
 
     /**
-     * 获取 jwt 数据载荷 （不校验签名和密码） 
+     * 获取 jwt 数据载荷 （只校验签名，不校验有效期） 
      * @param token token值
      * @param keyt 秘钥 
      * @return 载荷 
@@ -158,6 +166,13 @@ public class SaJwtUtil {
     	try {
     		JWT jwt = JWT.of(token);
         	JSONObject payloads = jwt.getPayloads();
+
+        	// 校验 Token 签名 
+        	boolean verify = jwt.setKey(keyt.getBytes()).verify();
+        	if(verify == false) {
+        		throw NotLoginException.newInstance(payloads.getStr(LOGIN_TYPE), NotLoginException.INVALID_TOKEN, token);
+        	};
+        	
         	return payloads;
 		} catch (JWTException e) {
 			return new JSONObject();
@@ -230,6 +245,32 @@ public class SaJwtUtil {
         // 计算timeout (转化为以秒为单位的有效时间)
         return (effTime - System.currentTimeMillis()) / 1000;
     }
-    
-    
+
+	// ------ 废弃API 
+
+	/**
+	 * 创建 jwt （简单方式）
+	 * @param loginId 账号id 
+     * @param keyt 秘钥
+	 * @return jwt-token 
+	 */
+	@Deprecated
+    public static String createToken(Object loginId, String keyt) {
+    	return createToken(loginId, null, keyt);
+    }
+
+	/**
+	 * 创建 jwt （全参数方式） 
+	 * @param loginType 账号类型 
+	 * @param loginId 账号id 
+	 * @param device 设备标识
+	 * @param timeout token有效期 (单位 秒)
+     * @param keyt 秘钥
+	 * @return jwt-token 
+	 */
+    @Deprecated
+    public static String createToken(String loginType, Object loginId, String device, long timeout, String keyt) {
+    	return createToken(loginType, loginId, device, timeout, null, keyt);
+    }
+
 }

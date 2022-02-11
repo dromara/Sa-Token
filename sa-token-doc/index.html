@@ -16,20 +16,44 @@
 		<div class="z-div" style="">		
 		
 			<!-- ------------ 头部 ------------- -->
-			<header class="s-header">
-				<a href="/" style="text-decoration: none;">
-					<div class="logo-box">
-						<img src="doc/logo.png" title="logo">
-						<span class="logo-text">Sa-Token</span>
-					</div>
-				</a>
+			<header class="doc-header">
+				<div class="nav-left">
+					<a href="index.html">
+						<div class="logo-box">
+							<img src="./doc/logo.png" title="logo" />
+							<span class="logo-text">Sa-Token</span>
+							<!-- <h1 class="logo-text">Sa-Token</h1> -->
+							<!-- <sub>v1.29.0</sub> -->
+						</div>
+					</a>
+				</div>
 				<nav class="nav-right">
-					<a href="index.html">首页</a>
-					<a href="doc/index.html">文档</a>
-					<a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a>
-					<a href="doc/#/more/update-log">更新日志</a>
+					<a class="wzi" href="index.html">首页</a>
+					<a class="wzi" href="doc/index.html">文档</a>
+					<a class="p-none wzi" href="doc/index.html#/more/link">生态</a>
+					<a class="p-none wzi" href="doc/index.html#/more/sa-token-donate">赞助</a>
+					<a class="p-none wzi" href="doc/index.html#/sso/sso-pro">🔥 SSO商业版</a>
+					<div class="zk-box">
+						<a class="wzi" href="javascript:;">
+							<span>相关资源 </span>
+							<span class="zk-icon"></span>
+						</a>
+						<div class="zk-context">
+							<div>
+								<!-- <a href="#/more/sa-token-donate">❤️ &nbsp;赞助</a> -->
+								<a href="doc/index.html#/more/update-log">更新日志</a>
+								<a href="doc/index.html#/more/common-questions">常见报错</a>
+								<a href="doc/index.html#/more/tj-gzh">推荐公众号</a>
+								<a href="doc/index.html#/fun/sa-token-test">在线考试 ++</a>
+								<div class="zk-fengexian"></div>
+								<a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a>
+								<a href="https://wj.qq.com/s2/8475114/2f6a/" target="_blank">问卷调查</a>
+							</div>
+						</div>
+					</div>
 					<!-- github小章鱼图标 -->
-					<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px;">
+					<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github"
+						style="position: fixed; right: -16px; padding-left: 0px;">
 						<svg viewBox="0 0 250 250" aria-hidden="true">
 							<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
 							<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
@@ -45,17 +69,14 @@
 			<div class="main-box">
 				<div class="content-box">
 					<div class="fenge"></div>
-					<!-- <img class="title-logo" src="./doc/logo.png" onclick="alert('别点我, 快去点star！')"> -->
-					<h1>Sa-Token<small>v1.28.0</small></h1>
+					<h1>Sa-Token<small>v1.29.0</small></h1>
 					<div class="sub-title">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</div>
 					<div class="btn-box">
 						<a href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
 						<a href="https://gitee.com/dromara/sa-token" target="_blank">码云</a>
-						<!-- <a href="https://jq.qq.com/?_wv=1027&k=45H977HM" target="_blank">加QQ群</a> -->
-						<!-- <a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a> -->
 						<a href="doc/index.html" target="_self" class="doc-btn">开发文档</a>
 					</div>
-					<h4 align="center">
+					<h4 align="center" class="badge-box">
 						<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 						<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
 						<a href="https://github.com/dromara/sa-token/stargazers"><img src="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
@@ -80,118 +101,49 @@
 			<!-- ------------ 支持特性 ------------- -->
 			<div>
 				<div class="feature-z s-width">
-					<h2 class="s-title">支持 ⚡ 特性</h2>
+					<h2 class="s-title">Sa-Token 支持特性</h2>
 					<div class="feature-box">
 						<div class="feature">
-							<h2>登录认证</h2>
-							<p>多地登录、单地登录、同端互斥登录…… 轻松登录鉴权，并提供五种细分场景值</p>
+							<h2>⚡️ 登录认证</h2>
+							<p>多端登录、单端登录、同端互斥登录、七天免登录…… 多种登录策略只需改个配置即可完成</p>
 						</div>
 						<div class="feature">
-							<h2>权限认证</h2>
-							<p>权限认证、角色认证、会话二级认证……适配RBAC权限模型，权限分配精细到按钮级</p>
+							<h2>🔑️ 权限认证</h2>
+							<p>权限认证、角色认证、会话二级认证、注解鉴权、路由鉴权……多种姿势灵活鉴权</p>
 						</div>
 						<div class="feature">
-							<h2>Session会话</h2>
-							<p>内置三种会话模型：全端共享Session、单端独享Session、自定义Session</p>
+							<h2>🔥️ 踢人下线</h2>
+							<p>强制注销、踢人下线、账号封禁、身份切换、自动续签 …… 提供完善的会话管理方案</p>
 						</div>
 						<div class="feature">
-							<h2>踢人下线</h2>
-							<p>一行代码实现踢人下线功能，清退违规用户，对方再次访问系统提示“已被踢下线”</p>
+							<h2>⭐️ Redis集成</h2>
+							<p>提供 Redis 集成方案、项目重启数据不丢失、多系统数据互通，可自定义数据持久化策略</p>
 						</div>
 						<div class="feature">
-							<h2>账号封禁</h2>
-							<p>封禁指定账号，使其无法登陆，还可指定解封时间，亦或永久封禁！</p>
+							<h2>🚀️ 前后端分离</h2>
+							<p>内置多种 Token 读取策略，适配APP、小程序、SPA单页应用等前后端分离场景</p>
 						</div>
 						<div class="feature">
-							<h2>Redis集成</h2>
-							<p>可扩展持久层，集成Redis、Memcached等专业缓存中间件，重启数据不丢失</p>
+							<h2>️🍃 单点登录</h2>
+							<p>同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离……提供各种架构下的SSO接入方案</p>
 						</div>
 						<div class="feature">
-							<h2>前后台分离</h2>
-							<p>三种token读取策略，适配无Cookie模式，完美兼容APP、小程序等前后台分离场景</p>
+							<h2>🍂 OAuth2.0</h2>
+							<p>基于 RFC-6749 标准编写，轻松搭建 OAuth2.0 认证中心，支持四种授权模式，支持openid机制</p>
 						</div>
 						<div class="feature">
-							<h2>分布式会话</h2>
-							<p>保证多节点数据一致性，提供jwt集成和共享数据中心两种分布式会话方案</p>
+							<h2>💦️ 微服务支持</h2>
+							<p>分布式 Session 会话、网关统一鉴权、RPC调用鉴权……提供开箱即用的微服务认证方案</p>
 						</div>
 						<div class="feature">
-							<h2>微服务网关鉴权</h2>
-							<p>适配Gateway、ShenYu、Zuul等常见网关组件的请求拦截认证</p>
-						</div>
-						<div class="feature">
-							<h2>单点登录</h2>
-							<p>内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以轻松搞定</p>
-						</div>
-						<div class="feature">
-							<h2>OAuth2.0</h2>
-							<p>基于RFC-6749标准编写，OAuth2.0标准流程的授权认证，支持openid模式 </p>
-						</div>
-						<div class="feature">
-							<h2>Alone独立Redis</h2>
-							<p>为Sa-Token单独配置一个Redis实例，将权限缓存与业务缓存分离 </p>
-						</div>
-						<div class="feature">
-							<h2>临时Token验证</h2>
-							<p>集成jwt临时验证模块，用于短时间的权限验证</p>
-						</div>
-						<div class="feature">
-							<h2>临时身份切换</h2>
-							<p>实时操作任意用户状态数据，还可临时身份切换，关键时刻让你少写N多代码</p>
-						</div>
-						<div class="feature">
-							<h2>同端互斥登录</h2>
-							<p>像QQ一样手机电脑可以同时在线，但是在两个手机上互斥登录</p>
-						</div>
-						<div class="feature">
-							<h2>多账号体系认证</h2>
-							<p>例如一个商城项目的User表和Admin表分开鉴权，互不干扰，轻松搞定一个系统多套权限体系的场景！</p>
-						</div>
-						<div class="feature">
-							<h2>二级认证</h2>
-							<p>在已登录的会话上再次认证，保证安全性</p>
-						</div>
-						<div class="feature">
-							<h2>Http Basic 认证</h2>
-							<p>一行代码接入 Http Basic 认证</p>
-						</div>
-						<div class="feature">
-							<h2>定制Token风格</h2>
-							<p>内置六种token风格随意切换，还可自定义token生成策略</p>
-						</div>
-						<div class="feature">
-							<h2>注解式鉴权</h2>
-							<p>优雅的将鉴权与业务代码分离！</p>
-						</div>
-						<div class="feature">
-							<h2>路由拦截式鉴权</h2>
-							<p>轻松搞定不同模块不同权限校验，还可适配Restful风格路由</p>
-						</div>
-						<div class="feature">
-							<h2>自动续签</h2>
-							<p>提供两种token过期策略，灵活搭配使用，还可自动续签</p>
-						</div>
-						<div class="feature">
-							<h2>会话治理</h2>
-							<p>提供方便灵活的会话查询接口，绕过API，直达数据底层，解决各种边际场景的疑难杂症</p>
-						</div>
-						<div class="feature">
-							<h2>记住我模式</h2>
-							<p>轻松适配 [记住我] 模式，重启浏览器免验证，还可指定免验证具体时长</p>
-						</div>
-						<div class="feature">
-							<h2>密码加密</h2>
-							<p>提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密</p>
-						</div>
-						<div class="feature">
-							<h2>全局侦听器</h2>
-							<p>可在用户登陆、注销、被踢下线等关键性操作时进行一些AOP操作</p>
-						</div>
-						<div class="feature">
-							<h2>开箱即用</h2>
-							<p>提供SpringMVC、WebFlux、Solon等常见web框架的starter集成包，真正的开箱即用</p>
+							<h2>🗳️ 开箱即用</h2>
+							<p>提供SpringMVC、WebFlux、Solon、jwt 等常见框架集成包，真正的开箱即用……</p>
 						</div>
 					</div>
-					<div class="re-text">有了Sa-Token，你所有的权限认证问题，都不再是问题！</div>
+					<div class="re-text">
+						<span>有了Sa-Token，你所有的权限认证问题，都不再是问题！</span>
+						<a href="https://oss.dev33.cn/sa-token/art/sa-token-js4.png" target="_blank">点击查看功能结构图</a>
+					</div>
 				</div>
 			</div>
 			
@@ -214,9 +166,6 @@
 						</a>
 						<a href="https://chykj.com/" target="_blank" title="山东察远信息科技有限公司">
 							<img src="https://chykj.com/upload/1/cms/content/cylogoc.jpg">
-						</a>
-						<a href="https://shop.jfh.com/6089/" target="_blank" title="山东半夏网络科技有限公司">
-							<img src="https://oss.dev33.cn/sa-token/com/banxiawangluo.png">
 						</a>
 						<a href="https://ms.airsr.com/" target="_blank" title="北京天衢航空服务有限公司">
 							<img src="https://oss.dev33.cn/sa-token/com/tianquhangkong.png">
@@ -263,7 +212,18 @@
 						<a href="https://www.pactera.com/?renqun_youhua=2483561&bd_vid=9062916023494825120" target="_blank" title="中电文思海辉">
 							<img src="https://oss.dev33.cn/sa-token/com/zhongdianwensi-logo.png">
 						</a>
-						
+						<a href="###" title="辽宁薪达网络科技有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/taipingyangcanyin.png">
+						</a>
+						<a href="https://tisiqikeji.com/" target="_blank" title="吉林省体思奇健康科技有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/tisiqi.png">
+						</a>
+						<a href="http://www.qaqavr.com/" target="_blank" title="合肥中锐智能科技有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/hefeizhongrui2.png">
+						</a>
+						<a href="https://www.hstong.com/" target="_blank" title="价值网络">
+							<img src="https://oss.dev33.cn/sa-token/com/huashengtong.png">
+						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 					<p style="color: #666;">
@@ -383,6 +343,16 @@
 			</div>
 			
 		</div>
+		
+		<!-- UI逐渐显现 -->
+		<style type="text/css">
+			body{opacity: 0.01; transition: opacity 0.5s;}
+		</style>
+		<script type="text/javascript">
+			setTimeout(function() {
+				document.body.style.opacity = 1;
+			}, 1);
+		</script>
 
 		<!-- 搜索引擎自动提交 -->
 		<script>

@@ -50,6 +50,7 @@
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
 	- [OAuth2-Server端-API列表](/oauth2/oauth2-api)
 	- [OAuth2-二次开发说明](/oauth2/oauth2-dev)
+	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
 
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)
@@ -70,7 +71,7 @@
 
 - **其它**
 	- [更新日志](/more/update-log) 
-	- [友情链接](/more/link) 
+	- [框架生态](/more/link) 
 	- [推荐公众号](/more/tj-gzh) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 

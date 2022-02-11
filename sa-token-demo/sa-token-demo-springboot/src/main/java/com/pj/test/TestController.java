@@ -235,7 +235,6 @@ public class TestController {
 		return AjaxJson.getSuccessData("登录成功");
 	}
 
-	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public AjaxJson test() {
@@ -248,5 +247,5 @@ public class TestController {
 	public AjaxJson test2() {
 		return AjaxJson.getSuccess();
 	}
-	
+
 }

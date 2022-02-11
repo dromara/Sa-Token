@@ -292,7 +292,5 @@ public class SaOAuth2Util {
 	public static String getGrantScope(String clientId, Object loginId) {
 		return saOAuth2Template.getGrantScope(clientId, loginId);
 	}
-	
-	
 
 }

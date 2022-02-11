@@ -1,9 +1,6 @@
 package cn.dev33.satoken.stp;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 
 import cn.dev33.satoken.SaManager;
@@ -19,6 +16,7 @@ import cn.dev33.satoken.context.model.SaCookie;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
@@ -84,14 +82,15 @@ public class StpLogic {
  	}
 
 	/**
-	 * 创建一个TokenValue 
-	 * @param loginId loginId 
-	 * @param device 设备标识 
-	 * @param timeout 过期时间 
-	 * @return 生成的tokenValue 
+	 * 创建一个TokenValue
+	 * @param loginId loginId
+	 * @param device 设备标识
+	 * @param timeout 过期时间
+	 * @param extraData 扩展信息
+	 * @return 生成的tokenValue
 	 */
- 	public String createTokenValue(Object loginId, String device, long timeout) {
- 		return SaStrategy.me.createToken.apply(loginId, loginType);
+	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+		return SaStrategy.me.createToken.apply(loginId, loginType);
 	}
 
  	/**
@@ -268,13 +267,36 @@ public class StpLogic {
 	public void login(Object id, boolean isLastingCookie) {
 		login(id, new SaLoginModel().setIsLastingCookie(isLastingCookie));
 	}
-	
+
 	/**
 	 * 会话登录，并指定所有登录参数Model 
 	 * @param id 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
 	 */
 	public void login(Object id, SaLoginModel loginModel) {
+		// 1、创建会话 
+		String token = createLoginSession(id, loginModel);
+
+		// 2、在当前客户端注入Token 
+		setTokenValue(token, loginModel.getCookieTimeout());
+	}
+
+	/**
+	 * 创建指定账号id的登录会话 
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌 
+	 */
+	public String createLoginSession(Object id) {
+		return createLoginSession(id, new SaLoginModel());
+	}
+	
+	/**
+	 * 创建指定账号id的登录会话
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 * @return 返回会话令牌 
+	 */
+	public String createLoginSession(Object id, SaLoginModel loginModel) {
 		
 		SaTokenException.throwByNull(id, "账号id不能为空");
 		
@@ -301,7 +323,11 @@ public class StpLogic {
 		}
 		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
 		if(tokenValue == null) {
-			tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout());
+			if(SaFoxUtil.isEmpty(loginModel.getToken())) {
+				tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+			} else {
+				tokenValue = loginModel.getToken();
+			}
 		}
 		
 		// ------ 3. 获取 User-Session , 续期 
@@ -314,15 +340,15 @@ public class StpLogic {
 		// ------ 4. 持久化其它数据 
 		// token -> id 映射关系  
 		saveTokenToIdMapping(tokenValue, id, loginModel.getTimeout());
-		
-		// 在当前会话写入tokenValue 
-		setTokenValue(tokenValue, loginModel.getCookieTimeout());
 
 		// 写入 [token-last-activity] 
 		setLastActivityToNow(tokenValue); 
-		
+
 		// $$ 通知监听器，账号xxx 登录成功 
 		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
+		
+		// 返回Token 
+		return tokenValue;
 	}
 
 	// --- 注销 
@@ -549,7 +575,7 @@ public class StpLogic {
  		if(loginId == null) {
  			throw NotLoginException.newInstance(loginType, NotLoginException.INVALID_TOKEN, tokenValue);
  		}
- 		// 如果是已经过期，则抛出已经过期 
+ 		// 如果是已经过期，则抛出：已经过期 
  		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
  			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue);
  		}
@@ -613,7 +639,7 @@ public class StpLogic {
  		}
  		// loginId为null或者在异常项里面，均视为未登录, 返回null 
  		Object loginId = getLoginIdNotHandle(tokenValue);
- 		if(loginId == null || NotLoginException.ABNORMAL_LIST.contains(loginId)) {
+ 		if(isValidLoginId(loginId) == false) {
  			return null;
  		}
  		// 如果已经[临时过期] 
@@ -654,12 +680,19 @@ public class StpLogic {
  	 * @return 账号id
  	 */
  	public Object getLoginIdByToken(String tokenValue) {
- 		if(tokenValue == null) {
+ 		// token为空时，直接返回null 
+ 		if(SaFoxUtil.isEmpty(tokenValue)) {
  	 		return null;
  		}
- 		return getLoginIdNotHandle(tokenValue);
+ 		// loginId为无效值时，直接返回null 
+ 		String loginId = getLoginIdNotHandle(tokenValue);
+ 		if(isValidLoginId(loginId) == false) {
+ 			return null;
+ 		}
+ 		// 
+ 		return loginId;
  	}
- 	
+
  	 /**
  	  * 获取指定Token对应的账号id (不做任何特殊处理) 
  	  * @param tokenValue token值 
@@ -668,6 +701,16 @@ public class StpLogic {
  	public String getLoginIdNotHandle(String tokenValue) {
  		return getSaTokenDao().get(splicingKeyTokenValue(tokenValue));
  	}
+
+	/**
+	 * 获取Token扩展信息（只在jwt模式下有效）
+	 * @param key 键值 
+	 * @return 对应的扩展数据 
+	 */
+	public Object getExtra(String key) {
+		throw new ApiDisabledException();
+	}
+ 	
  	
 	// ---- 其它操作 
  	/**
@@ -804,7 +847,7 @@ public class StpLogic {
 			String tokenValue = getTokenValue();
 			if(tokenValue == null || Objects.equals(tokenValue, "")) {
 				// 随机一个token送给Ta 
-				tokenValue = createTokenValue(null, null, getConfig().getTimeout());
+				tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
 				// 写入 [最后操作时间]
 				setLastActivityToNow(tokenValue);  
 				// 在当前会话写入这个tokenValue 
@@ -840,7 +883,7 @@ public class StpLogic {
  	 */
  	protected void setLastActivityToNow(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		// 将[最后操作时间]标记为当前时间戳 
@@ -853,7 +896,7 @@ public class StpLogic {
  	 */
  	protected void clearLastActivity(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		// 删除[最后操作时间]
@@ -868,7 +911,7 @@ public class StpLogic {
  	 */
  	public void checkActivityTimeout(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		// 如果本次请求已经有了[检查标记], 则立即返回 
@@ -906,7 +949,7 @@ public class StpLogic {
  	 */
  	public void updateLastActivityToNow(String tokenValue) {
  		// 如果token == null 或者 设置了[永不过期], 则立即返回 
- 		if(tokenValue == null || getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(tokenValue == null || isOpenActivityCheck() == false) {
  			return;
  		}
  		getSaTokenDao().update(splicingKeyLastActivityTime(tokenValue), String.valueOf(System.currentTimeMillis()));
@@ -920,7 +963,6 @@ public class StpLogic {
  	public void updateLastActivityToNow() {
  		updateLastActivityToNow(getTokenValue());
  	}
- 	
  	
 	// ------------------- 过期时间相关 -------------------  
 
@@ -994,7 +1036,7 @@ public class StpLogic {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
  		}
  		// 如果设置了永不过期, 则返回 -1 
- 		if(getConfig().getActivityTimeout() == SaTokenDao.NEVER_EXPIRE) {
+ 		if(isOpenActivityCheck() == false) {
  			return SaTokenDao.NEVER_EXPIRE;
  		}
  		// ------ 开始查询 
@@ -1016,6 +1058,53 @@ public class StpLogic {
  		return timeout;
  	}
 
+ 	/**
+ 	 * 对当前 Token 的 timeout 值进行续期 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public void renewTimeout(long timeout) {
+ 		// 续期 db 数据 
+ 		String tokenValue = getTokenValue();
+ 		renewTimeout(tokenValue, timeout);
+ 		
+ 		// 续期客户端Cookie有效期 
+ 		if(getConfig().getIsReadCookie()) {
+ 			setTokenValueToCookie(tokenValue, (int)timeout);
+ 		}
+ 	}
+ 	
+ 	/**
+ 	 * 对指定 Token 的 timeout 值进行续期 
+ 	 * @param tokenValue 指定token 
+ 	 * @param timeout 要修改成为的有效时间 (单位: 秒) 
+ 	 */
+ 	public void renewTimeout(String tokenValue, long timeout) {
+ 		
+ 		// Token 指向的 LoginId 异常时，不进行任何操作 
+ 		Object loginId = getLoginIdByToken(tokenValue);
+ 		if(loginId == null) {
+ 			return;
+ 		}
+ 		
+ 		SaTokenDao dao = getSaTokenDao();
+ 		
+ 		// 续期 Token 有效期 
+ 		dao.updateTimeout(splicingKeyTokenValue(tokenValue), timeout);
+
+ 		// 续期 Token-Session 有效期 
+		SaSession tokenSession = getTokenSessionByToken(tokenValue, false);
+		if(tokenSession != null) {
+			tokenSession.updateTimeout(timeout);
+		}
+		
+ 		// 续期指向的 User-Session 有效期 
+ 		getSessionByLoginId(loginId).updateMinTimeout(timeout);
+ 		
+ 		// Token-Activity 活跃检查相关 
+ 		if(isOpenActivityCheck()) {
+ 			dao.updateTimeout(splicingKeyLastActivityTime(tokenValue), timeout);
+ 		}
+ 	}
  	
 	// ------------------- 角色验证操作 -------------------  
 
@@ -1604,7 +1693,7 @@ public class StpLogic {
 	}
 	
 	/**  
-	 * 拼接key： tokenValue的专属session 
+	 * 拼接key： tokenValue的Token-Session 
 	 * @param tokenValue token值
 	 * @return key
 	 */
@@ -1666,7 +1755,15 @@ public class StpLogic {
 	public boolean getConfigOfIsShare() {
 		return getConfig().getIsShare();
 	}
-	
+
+ 	/**
+ 	 * 返回全局配置是否开启了Token 活跃校验 
+ 	 * @return / 
+ 	 */
+ 	public boolean isOpenActivityCheck() {
+ 		return getConfig().getActivityTimeout() != SaTokenDao.NEVER_EXPIRE;
+ 	}
+ 	
 	/**
 	 * 返回持久化对象 
 	 * @return / 
@@ -1694,7 +1791,8 @@ public class StpLogic {
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
 	 * @param loginId 账号id 
 	 */
-	public void logoutByLoginId(Object loginId) {
+	@Deprecated
+ 	public void logoutByLoginId(Object loginId) {
 		this.kickout(loginId);
 	}
 	
@@ -1706,8 +1804,21 @@ public class StpLogic {
 	 * @param loginId 账号id 
 	 * @param device 设备标识 (填null代表所有注销设备) 
 	 */
-	public void logoutByLoginId(Object loginId, String device) {
+	@Deprecated
+ 	public void logoutByLoginId(Object loginId, String device) {
 		this.kickout(loginId, device);
 	}
-	
+
+	/**
+	 * 创建一个TokenValue
+	 * @param loginId loginId 
+	 * @param device 设备标识 
+	 * @param timeout 过期时间 
+	 * @return 生成的tokenValue 
+	 */
+	@Deprecated
+ 	public String createTokenValue(Object loginId, String device, long timeout) {
+ 		return createTokenValue(loginId, device, timeout, null);
+	}
+
 }

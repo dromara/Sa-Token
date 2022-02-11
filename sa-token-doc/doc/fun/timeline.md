@@ -18,8 +18,9 @@
 - **2021-07-29：** Gitee star 数量破3K。
 - **2021-09-07：** GitHub star 数量破6K。
 - **2021-09-24：** Sa-Token star 数量 (6280) 超过 SpringSecurity (6247)。
-- **2021-10-19：** Gitee star数量破4K。
+- **2021-10-19：** Gitee star 数量破4K。
 - **2021-11-08：** 荣获开源中国 “码云 GVP 认证”。
-- **2021-11-17：** GitHub star数量破7K。
+- **2021-11-17：** GitHub star 数量破7K。
+- **2021-11-28：** Gitee star 数量破5K。
 
 		

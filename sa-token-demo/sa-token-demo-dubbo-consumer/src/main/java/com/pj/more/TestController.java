@@ -56,5 +56,17 @@ public class TestController {
 		
         return "ok";
     }
+
+	// Provider端登录，状态在Provider端保持 
+    @RequestMapping("test4")
+    public String test4() {
+    	// 登录 
+    	demoService.doLogin(10004);
+		
+    	// 打印一下 
+		demoService.isLogin("----------- 会话信息 ");
+		
+        return "ok";
+    }
     
 }

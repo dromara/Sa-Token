@@ -47,7 +47,8 @@ public class SaOAuth2TemplateImpl extends SaOAuth2Template {
 					.setClientId("10001")
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")
 					.setAllowUrl("*")
-					.setContractScope("userinfo");
+					.setContractScope("userinfo")
+					.setIsAutoMode(true);
 		}
 		return null;
 	}
@@ -61,6 +62,9 @@ public class SaOAuth2TemplateImpl extends SaOAuth2Template {
 	
 }
 ```
+
+你可以在 [框架配置](/use/config?id=SaClientModel属性定义) 了解有关 `SaClientModel` 对象所有属性的详细定义
+
 
 2、新建`SaOAuth2ServerController`
 ``` java

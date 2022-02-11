@@ -1,6 +1,7 @@
 package cn.dev33.satoken.jwt;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -50,8 +51,8 @@ public class StpLogicJwtForMix extends StpLogic {
 	 * 创建一个TokenValue 
 	 */
 	@Override
- 	public String createTokenValue(Object loginId, String device, long timeout) {
-		return SaJwtUtil.createToken(loginType, loginId, device, timeout, jwtSecretKey());
+	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+		return SaJwtUtil.createToken(loginType, loginId, device, timeout, extraData, jwtSecretKey());
 	}
 
 	/**
@@ -150,7 +151,15 @@ public class StpLogicJwtForMix extends StpLogic {
 	public void replaced(Object loginId, String device) {
 		throw new ApiDisabledException(); 
 	}
-	
+
+	/**
+	 * 获取Token携带的扩展信息
+	 */
+	@Override
+	public Object getExtra(String key) {
+		return SaJwtUtil.getPayloads(getTokenValue(), jwtSecretKey()).get(key);
+	}
+
 	/**
 	 * 删除 Token-Id 映射 
 	 */

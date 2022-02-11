@@ -7,7 +7,7 @@ Sa-Token 提供两种Token自动过期策略，分别是`timeout`与`activity-ti
 
 ### timeout
 1. `timeout`代表Token的长久有效期，单位/秒，例如将其配置为 2592000 (30天)，代表在30天后，Token必定过期，无法继续使用
-2. `timeout`无法续签，想要继续使用必须重新登录
+2. `timeout`~~无法续签，想要继续使用必须重新登录~~。v1.29.0+ 版本新增续期方法：`StpUtil.renewTimeout(100)`。
 3. `timeout`的值配置为-1后，代表永久有效，不会过期
 
 

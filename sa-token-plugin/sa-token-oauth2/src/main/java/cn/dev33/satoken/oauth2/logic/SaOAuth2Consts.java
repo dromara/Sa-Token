@@ -59,6 +59,7 @@ public class SaOAuth2Consts {
 		public static String refresh_token = "refresh_token";
 		public static String password = "password";
 		public static String client_credentials = "client_credentials";
+		public static String implicit = "implicit";
 	}
 	
 	/** 表示OK的返回结果 */

@@ -11,6 +11,8 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
+import java.util.Map;
+
 /**
  * Sa-Token 整合 jwt -- stateless 无状态 
  * @author kong
@@ -51,8 +53,8 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 * 创建一个TokenValue 
 	 */
 	@Override
- 	public String createTokenValue(Object loginId, String device, long timeout) {
- 		return SaJwtUtil.createToken(loginType, loginId, device, timeout, jwtSecretKey());
+	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+		return SaJwtUtil.createToken(loginType, loginId, device, timeout, extraData, jwtSecretKey());
 	}
 
 	/**
@@ -89,7 +91,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 		loginModel.build(getConfig());
 		
 		// ------ 2、生成一个token  
-		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout());
+		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
 		
 		// 3、在当前会话写入tokenValue 
 		setTokenValue(tokenValue, loginModel.getCookieTimeout());
@@ -132,7 +134,15 @@ public class StpLogicJwtForStateless extends StpLogic {
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}
-	
+
+	/**
+	 * 获取Token携带的扩展信息
+	 */
+	@Override
+	public Object getExtra(String key) {
+		return SaJwtUtil.getPayloads(getTokenValue(), jwtSecretKey()).get(key);
+	}
+
  	
  	// ------------------- 过期时间相关 -------------------  
 

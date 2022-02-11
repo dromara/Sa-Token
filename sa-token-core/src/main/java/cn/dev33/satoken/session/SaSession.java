@@ -8,6 +8,7 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.SaRetFunction;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -216,8 +217,10 @@ public class SaSession implements Serializable {
 	 * @param minTimeout 过期时间 (单位: 秒) 
 	 */
 	public void updateMinTimeout(long minTimeout) {
-		if(getTimeout() < minTimeout) {
-			SaManager.getSaTokenDao().updateSessionTimeout(this.id, minTimeout);
+		long min = trans(minTimeout);
+		long curr = trans(getTimeout());
+		if(curr < min) {
+			updateTimeout(minTimeout);
 		}
 	}
 
@@ -226,12 +229,21 @@ public class SaSession implements Serializable {
 	 * @param maxTimeout 过期时间 (单位: 秒) 
 	 */
 	public void updateMaxTimeout(long maxTimeout) {
-		if(getTimeout() > maxTimeout) {
-			SaManager.getSaTokenDao().updateSessionTimeout(this.id, maxTimeout);
+		long max = trans(maxTimeout);
+		long curr = trans(getTimeout());
+		if(curr > max) {
+			updateTimeout(maxTimeout);
 		}
 	}
 	
-	
+	/**
+	 * value为 -1 时返回 Long.MAX_VALUE，否则原样返回 
+	 * @param value /
+	 * @return /
+	 */
+	protected long trans(long value) {
+		return value == SaTokenDao.NEVER_EXPIRE ? Long.MAX_VALUE : value;
+	}
 	
 	// ----------------------- 存取值 (类型转换) 
 
