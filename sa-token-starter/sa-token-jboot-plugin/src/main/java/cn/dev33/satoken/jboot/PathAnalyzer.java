@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class PathAnalyzer {
 
-    private static Map<String, PathAnalyzer> cached = new LinkedHashMap();
+    private static Map<String, PathAnalyzer> cached = new LinkedHashMap<>();
     private Pattern pattern;
 
     public static PathAnalyzer get(String expr) {

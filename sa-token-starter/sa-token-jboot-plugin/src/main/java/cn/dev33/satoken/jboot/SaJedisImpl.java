@@ -23,7 +23,8 @@ public class SaJedisImpl {
     private final JbootSerializer serializer;
 
     protected JedisPool jedisPool;
-    private static final Log LOG = Log.getLog(SaJedisImpl.class);
+    @SuppressWarnings("unused")
+	private static final Log LOG = Log.getLog(SaJedisImpl.class);
     private final SaRedisConfig config;
     public SaJedisImpl(SaRedisConfig config) {
         if (config == null || StrUtil.isBlank(config.getSerializer())) {
