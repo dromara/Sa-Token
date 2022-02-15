@@ -22,7 +22,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * @author kong
  *
  */
-@Activate(group = {CommonConstants.CONSUMER}, order = -10000)
+@Activate(group = {CommonConstants.CONSUMER}, order = -30000)
 public class SaTokenDubboConsumerFilter implements Filter {
 
 	@Override

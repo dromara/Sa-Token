@@ -18,7 +18,7 @@ import cn.dev33.satoken.id.SaIdUtil;
  * @author kong
  *
  */
-@Activate(group = {CommonConstants.PROVIDER}, order = -10000)
+@Activate(group = {CommonConstants.PROVIDER}, order = -30000)
 public class SaTokenDubboProviderFilter implements Filter {
 
 	@Override
