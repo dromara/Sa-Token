@@ -146,7 +146,9 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 
 - **[ easy-admin ]**：[一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
 
-- **[ RuoYi-Vue-Plus ]**：[基于 RuoYi-Vue 集成 SaToken + Lombok + Mybatis-Plus + Undertow + knife4j + Hutool + Feign 重写所有原生业务 定期与 RuoYi-Vue 同步](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/tree/satoken/)
+- **[ RuoYi-Vue-Plus ]**：[重写RuoYi-Vue所有功能 集成 Sa-Token + Lombok + Mybatis-Plus + Jackson + Xxl-Job + knife4j + Hutool 定期同步](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)
+
+- **[ RuoYi-Cloud-Plus ]**：[重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba + Sa-Token + Dubbo + Mybatis-Plus + Xxl-Job 全方位升级 定期同步](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)
 
 更多请参考：[Sa-Token 生态](/more/link)
 
