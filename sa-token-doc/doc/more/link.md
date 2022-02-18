@@ -53,6 +53,7 @@
 
 - **[ ExciteCMS-Layui ]**：[ExciteCMS 快速开发脚手架：一款后端基于 SpringBoot2 + Sa-Token + Mybatis-Plus，前端基于 Layuimini 的内容管理系统，具备RBAC、日志管理、代码生成等功能，并集成常用的支付、OSS等第三方服务，拥有详细的开发文档](https://gitee.com/ExciteTeam/ExciteCMS-SpringBoot-Layui)
 
+- **[ sss-rbac-admin ]**：[基于springboot，整合satoken、sqltoy的权限管理系统](https://gitee.com/momoljw/sss-rbac-admin)
 
 
 <br>
