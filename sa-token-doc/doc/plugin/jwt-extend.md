@@ -15,7 +15,7 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-
+> 注意: sa-token-jwt 依赖 hutool-all 5.7.14 版本
 
 ### 2、配置秘钥
 在 `application.yml` 配置文件中配置 jwt 生成秘钥：
