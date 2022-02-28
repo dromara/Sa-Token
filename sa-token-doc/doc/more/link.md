@@ -55,6 +55,8 @@
 
 - **[ sss-rbac-admin ]**：[基于springboot，整合satoken、sqltoy的权限管理系统](https://gitee.com/momoljw/sss-rbac-admin)
 
+- **[ Huanxing-mall ]**：[HuanXing 商城基于SpringCloud 2021 & Alibaba  + Sa-token，前端基于 Vue3 +Element plus 的微服务商城 ](https://gitee.com/lijiaxing_boy/huanxing-mall)
+
 
 <br>
 
