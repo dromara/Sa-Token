@@ -5,7 +5,8 @@
     <parent>
         <artifactId>sa-token-starter</artifactId>
         <groupId>cn.dev33</groupId>
-        <version>1.29.1.trial</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -28,12 +29,12 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-servlet</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
