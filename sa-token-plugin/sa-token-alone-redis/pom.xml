@@ -7,7 +7,8 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-plugin</artifactId>
-        <version>1.29.1.trial</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
 
@@ -20,13 +21,13 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${revision}</version>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${revision}</version>
 			<optional>true</optional>
         </dependency>
         <!-- redis pool -->
