@@ -8,7 +8,7 @@
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.29.1.trial</version>
+	<version>${revision}</version>
 	
 	<!-- 项目介绍 -->
 	<name>sa-token</name>
@@ -37,7 +37,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-		<sa-token-version>1.29.1.trial</sa-token-version>
+		<revision>1.29.1.trial</revision>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
@@ -86,6 +86,35 @@
 				<encoding>UTF-8</encoding>
 			</configuration>
 		</plugin>
+
+		<!-- 版本号管理 -->
+	   <plugin>
+		   <groupId>org.codehaus.mojo</groupId>
+		   <artifactId>flatten-maven-plugin</artifactId>
+		   <version>1.2.7</version>
+		   <configuration>
+			   <updatePomFile>true</updatePomFile>
+			   <flattenMode>resolveCiFriendliesOnly</flattenMode>
+		   </configuration>
+		   <executions>
+			   <execution>
+				   <id>flatten</id>
+				   <phase>process-resources</phase>
+				   <goals>
+					   <goal>flatten</goal>
+				   </goals>
+			   </execution>
+			   <execution>
+				   <id>flatten.clean</id>
+				   <phase>clean</phase>
+				   <goals>
+					   <goal>clean</goal>
+				   </goals>
+			   </execution>
+		   </executions>
+	   </plugin>
+
+
 	   </plugins>
 	   <pluginManagement>
 		   	<plugins>
