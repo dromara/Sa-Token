@@ -100,9 +100,11 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 SaRouter.match("/user/**").check(r -> StpUtil.checkLogin());
 
 // 根据 path 路由匹配   ——— 支持写多个path，支持写 restful 风格路由 
+// 功能说明: 使用 /user , /goods 或者 /art/get 开头的任意路由都将进入 check 方法
 SaRouter.match("/user/**", "/goods/**", "/art/get/{id}").check( /* 要执行的校验函数 */ );
 
 // 根据 path 路由排除匹配 
+// 功能说明: 使用 .html , .css 或者 .js 结尾的任意路由都将跳过, 不会进入 check 方法
 SaRouter.match("/**").notMatch("*.html", "*.css", "*.js").check( /* 要执行的校验函数 */ );
 
 // 根据请求类型匹配 
@@ -115,13 +117,15 @@ SaRouter.match( StpUtil.isLogin() ).check( /* 要执行的校验函数 */ );
 SaRouter.match( r -> StpUtil.isLogin() ).check( /* 要执行的校验函数 */ );
 
 // 多个条件一起使用 
+// 功能说明: 必须是 Get 方式的任意请求
 SaRouter.match(SaHttpMethod.GET).match("/**").check( /* 要执行的校验函数 */ );
 
 // 可以无限连缀下去 
+// 功能说明: 同时满足 Get 方式请求, 且路由以 /admin 开头, 路由中间带有 /send/ 字符串, 路由结尾不能是 .js 和 .css
 SaRouter
 	.match(SaHttpMethod.GET)
 	.match("/admin/**")
-	.match("/user/**") 
+	.match("/**/send/**") 
 	.notMatch("/**/*.js")
 	.notMatch("/**/*.css")
 	// ....
