@@ -395,7 +395,7 @@ public class StpUtil {
 
  	/**
  	 * 续签当前token：(将 [最后操作时间] 更新为当前时间戳) 
- 	 * <h1>请注意: 即时token已经 [临时过期] 也可续签成功，
+ 	 * <h1>请注意: 即使token已经 [临时过期] 也可续签成功，
  	 * 如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否过期即可 </h1>
  	 */
  	public static void updateLastActivityToNow() {
