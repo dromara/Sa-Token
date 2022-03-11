@@ -47,3 +47,41 @@ StpUtil.updateLastActivityToNow();
 **可以同时使用！** 
 两者的认证逻辑彼此独立，互不干扰，可以同时使用。
 
+### StpUtil 类中哪些公开方法支持临时有效期自动续签? 
+> 间接调用过 StpUtil.updateLastActivityToNow() 方法
+
+| 支持自动续签的方法 |
+|---|
+| StpUtil.checkLogin() |
+| StpUtil.getLoginId() |
+| StpUtil.getLoginIdAsInt() |
+| StpUtil.getLoginIdAsString() |
+| StpUtil.getLoginIdAsLong() |
+|---|
+| StpUtil.getSession() |
+| StpUtil.getSession() |
+| StpUtil.getTokenSession() |
+|---|
+| StpUtil.getRoleList() |
+| StpUtil.hasRole() |
+| StpUtil.hasRoleAnd() |
+| StpUtil.hasRoleOr() |
+| StpUtil.checkRole() |
+| StpUtil.checkRoleAnd() |
+| StpUtil.checkRoleOr() |
+|---|
+| StpUtil.getPermissionList() |
+| StpUtil.hasPermission() |
+| StpUtil.hasPermissionAnd() |
+| StpUtil.hasPermissionOr() |
+| StpUtil.checkPermission() |
+| StpUtil.checkPermissionAnd() |
+| StpUtil.checkPermissionOr() |
+|---|
+| StpUtil.openSafe() |
+| StpUtil.isSafe() |
+| StpUtil.checkSafe() |
+| StpUtil.getSafeTime() |
+| StpUtil.closeSafe() |
+
+
