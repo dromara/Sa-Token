@@ -125,6 +125,6 @@ sa-token:
 	    auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
 ```
 
-然后我们启动项目 `sa-token-demo-sso2-server` 与 `sa-token-demo-sso2-client`，按照之前的测试步骤访问：
+然后我们启动项目 `sa-token-demo-sso-server` 与 `sa-token-demo-sso2-client`，按照之前的测试步骤访问：
 [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，即可以前后端分离模式完成 SSO-Server 端的授权登录。
 
