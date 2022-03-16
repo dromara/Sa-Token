@@ -15,7 +15,7 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-> 注意: sa-token-jwt 依赖 hutool-all 5.7.14 版本
+> 注意: sa-token-jwt 显式依赖 hutool-all 5.7.14 版本，意味着：你的项目中要么不引入 Hutool，要么引入版本 >= 5.7.14 的 Hutool 版本
 
 ### 2、配置秘钥
 在 `application.yml` 配置文件中配置 jwt 生成秘钥：
@@ -149,6 +149,7 @@ String name = StpUtil.getExtra("name");
 | id反查Token				| 支持			| 支持				| 不支持				|
 | 会话管理					| 支持			| 部分支持			| 不支持				|
 | 注解鉴权					| 支持			| 支持				| 支持				|
+| 路由拦截鉴权				| 支持			| 支持				| 支持				|
 | 账号封禁					| 支持			| 支持				| 不支持				|
 | 身份切换					| 支持			| 支持				| 支持				|
 | 二级认证					| 支持			| 支持				| 支持				|

@@ -136,31 +136,7 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 
 
 ## 使用Sa-Token的开源项目 
-- **[ sa-plus ]**：[一个基于 SpringBoot 架构的快速开发框架，内置代码生成器](https://gitee.com/click33/sa-plus)
-
-- **[ jthink ]**： [一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统](https://gitee.com/wtsoftware/jthink)
-
-- **[ dcy-fast ]**：[ 一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器](https://gitee.com/dcy421/dcy-fast)
-
-- **[ helio-starters ]**：[ 基于JDK15 + Spring Boot 2.4 + Sa-Token + Mybatis-Plus的单体Boot版脚手架和微服务Cloud版脚手架，带有配套后台管理前端模板及代码生成器](https://gitee.com/uncarbon97/helio-starters)
-
-- **[ easy-admin ]**：[一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等](https://gitee.com/lakernote/easy-admin)
-
-- **[ RuoYi-Vue-Plus ]**：[重写RuoYi-Vue所有功能 集成 Sa-Token + Lombok + Mybatis-Plus + Jackson + Xxl-Job + knife4j + Hutool 定期同步](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)
-
-- **[ RuoYi-Cloud-Plus ]**：[重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba + Sa-Token + Dubbo + Mybatis-Plus + Xxl-Job 全方位升级 定期同步](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)
-
-更多请参考：[Sa-Token 生态](/more/link)
-
-
-## 友情链接
-- **[ OkHttps ]**：[ 一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议](https://gitee.com/ejlchina-zhxu/okhttps)
-
-- **[ 小诺快速开发平台 ]**：[ 基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本](https://xiaonuo.vip/index#pricing)
-
-- **[ Jpom ]**：[ 简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件](https://gitee.com/dromara/Jpom)
-
-- **[ TLog ]**：[ 一个轻量级的分布式日志标记追踪神器](https://gitee.com/dromara/TLog)
+参考：[Sa-Token 生态](/more/link)
 
 
 ## 贡献者名单
