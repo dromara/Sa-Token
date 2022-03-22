@@ -112,7 +112,9 @@ public class SaJwtUtil {
      * @return 解析后的jwt 对象 
      */
     public static JWT parseToken(String token, String keyt) {
-
+	// 秘钥不可以为空
+	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+	
     	// 如果token为null 
     	if(token == null) {
     		throw NotLoginException.newInstance(null, NotLoginException.NOT_TOKEN);
