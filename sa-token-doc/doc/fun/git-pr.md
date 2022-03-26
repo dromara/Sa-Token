@@ -57,7 +57,8 @@ git clone 这里替换为复制后的链接
 1. 下载结束后, 开启 idea, 选择 File->Open... 选中项目下载后的Sa-Token文件夹(Trust Project 相信此项目, 否则不可编辑)
 2. 这时项目就是可编辑状态, 修改完代码并测试完成后即可提交
 
-## 项目暂存过程
+## 项目暂存并提交远程
+### 方式一
 1. 在idea中打开项目进入Commit选项
 
 ![本地暂存](https://oss.dev33.cn/sa-token/doc/git-pr/code_5.png)
@@ -68,8 +69,7 @@ git clone 这里替换为复制后的链接
 ![提示信息](https://oss.dev33.cn/sa-token/doc/git-pr/code_6.png)
 
 4. 点击Commit按钮暂存到本地, 点击Commit and Push按钮暂存之后提交到远程
-
-## 项目提交远程
+### 方式二
 1. 除了点击Commit and Push按钮外,还有一个地方可以提交git
 
 ![git按钮](https://oss.dev33.cn/sa-token/doc/git-pr/code_7.png)
@@ -78,16 +78,17 @@ git clone 这里替换为复制后的链接
 3. 指向左下箭头为拉取项目,可以随时更新
 4. 打对号为本地暂存
 5. 指向右上箭头提交远程
-6. 提交后进入Gitee个人仓库中的Sa-Token项目
-7. 找到下图的Pull Request按钮
+## 私人项目推送到主项目
+1. 提交后进入Gitee个人仓库中克隆的Sa-Token项目
+2. 找到下图的Pull Request按钮
 
 ![工具栏](https://oss.dev33.cn/sa-token/doc/git-pr/code_8.png)
 
-8. 点击提交, 进入如下页面
+3. 点击提交, 进入如下页面
 
 ![提交信息填写页面](https://oss.dev33.cn/sa-token/doc/git-pr/code_9.png 's-width')
 
-9. 在这里,你可以选择要提交的分支,一般都是dev开发分支.可以填写合并信息,其他测试审查之类的可以不填写, 最后点击创建即可完成一次提交.
+4. 在这里,你可以选择要提交的分支,一般都是dev开发分支.可以填写合并信息,其他测试审查之类的可以不填写, 最后点击创建即可完成一次提交.
 
 ## 远程项目更新
 1. 有时候主项目更新了,之前克隆的项目代码陈旧,如何处理?
