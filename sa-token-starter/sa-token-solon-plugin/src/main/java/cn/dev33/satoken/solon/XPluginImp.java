@@ -53,6 +53,11 @@ public class XPluginImp implements Plugin {
         // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
+        // 注入Dao Bean
+        Aop.getAsyn(SaTokenDao.class, bw -> {
+            SaManager.setSaTokenDao(bw.raw());
+        });
+
         // 注入二级上下文 Bean 
         Aop.getAsyn(SaTokenSecondContextCreator.class, bw->{
         	SaTokenSecondContextCreator raw = bw.raw();
