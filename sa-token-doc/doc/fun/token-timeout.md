@@ -84,4 +84,11 @@ StpUtil.updateLastActivityToNow();
 | StpUtil.getSafeTime() |
 | StpUtil.closeSafe() |
 
+> 以下注解都间接调用过 getLoginId() 方法
 
+| 支持自动续签的注解 |
+|---|
+| @SaCheckLogin      |
+| @SaCheckRole       |
+| @SaCheckPermission |
+| @SaCheckSafe       |
