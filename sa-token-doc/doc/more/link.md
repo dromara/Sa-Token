@@ -60,7 +60,7 @@
 
 - [[ Huanxing-mall ]](https://gitee.com/lijiaxing_boy/huanxing-mall)：HuanXing 商城基于SpringCloud 2021 & Alibaba  + Sa-token，前端基于 Vue3 +Element plus 的微服务商城 
 
-
+- [[ SpringMvc+Sa-Token ]](https://gitee.com/SRD_01/spring-mvc-sa-token): Jsp+SpringMVC+SSO+Sa-Token+Redis | Spring MVC 集成 SaToken Demo 项目
 <br>
 
 --- 
