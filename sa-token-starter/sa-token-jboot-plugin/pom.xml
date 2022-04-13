@@ -16,13 +16,14 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <jedis.version>3.8.0</jedis.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>io.jboot</groupId>
             <artifactId>jboot</artifactId>
-            <version>3.14.2</version>
+            <version>3.14.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -34,6 +35,12 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-servlet</artifactId>
             <version>${sa-token-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
