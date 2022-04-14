@@ -382,7 +382,7 @@ public class SaSsoTemplate {
 	 */
 	public Object getUserinfo(Object loginId) {
 		String url = buildUserinfoUrl(loginId);
-		return SaManager.getConfig().getSso().sendHttp.apply(url);
+		return SaManager.getConfig().getSso().getSendHttp().apply(url);
 	}
 	
 	

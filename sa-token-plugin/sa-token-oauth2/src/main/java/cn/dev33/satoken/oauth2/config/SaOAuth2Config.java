@@ -224,6 +224,13 @@ public class SaOAuth2Config implements Serializable {
 	}
 
 	/**
+	 * @return 函数 OAuth-Server端：未登录时返回的View
+	 */
+	public Supplier<Object> getNotLoginView() {
+		return notLoginView;
+	}
+
+	/**
 	 * @param confirmView OAuth-Server端：确认授权时返回的View 
 	 * @return 对象自身
 	 */
@@ -231,7 +238,14 @@ public class SaOAuth2Config implements Serializable {
 		this.confirmView = confirmView;
 		return this;
 	}
-	
+
+	/**
+	 * @return 函数 OAuth-Server端：确认授权时返回的View
+	 */
+	public BiFunction<String, String, Object> getConfirmView() {
+		return confirmView;
+	}
+
 	/**
 	 * @param doLoginHandle OAuth-Server端：登录函数 
 	 * @return 对象自身
@@ -241,7 +255,13 @@ public class SaOAuth2Config implements Serializable {
 		return this;
 	}
 
-	
+	/**
+	 * @return 函数 OAuth-Server端：登录函数
+	 */
+	public BiFunction<String, String, Object> getDoLoginHandle() {
+		return doLoginHandle;
+	}
+
 	@Override
 	public String toString() {
 		return "SaOAuth2Config [isCode=" + isCode + ", isImplicit=" + isImplicit + ", isPassword=" + isPassword
