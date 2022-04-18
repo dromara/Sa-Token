@@ -26,13 +26,13 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>redisx</artifactId>
-            <version>1.3.4</version>
+            <version>1.4.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-test</artifactId>
-            <version>1.6.34</version>
+            <version>1.7.2</version>
         </dependency>
 	</dependencies>
 
