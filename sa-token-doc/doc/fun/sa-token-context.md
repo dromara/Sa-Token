@@ -1,7 +1,7 @@
 # 自定义 SaTokenContext 指南 
 
 目前 Sa-Token 仅对 SpringBoot、SpringMVC、WebFlux、Solon 等部分 Web 框架制作了 Starter 集成包，
-如果我们使用的都 Web 框架不在上述列表之中，则需要自定义 SaTokenContext 接口的实现完成整合工作。
+如果我们使用的 Web 框架不在上述列表之中，则需要自定义 SaTokenContext 接口的实现完成整合工作。
 
 ---
 
