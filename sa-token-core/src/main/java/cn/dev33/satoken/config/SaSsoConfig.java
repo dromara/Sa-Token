@@ -304,7 +304,14 @@ public class SaSsoConfig implements Serializable {
 		this.notLoginView = notLoginView;
 		return this;
 	}
-	
+
+	/**
+	 * @return 函数 SSO-Server端：未登录时返回的View
+	 */
+	public Supplier<Object> getNotLoginView() {
+		return notLoginView;
+	}
+
 	/**
 	 * @param doLoginHandle SSO-Server端：登录函数 
 	 * @return 对象自身
@@ -315,6 +322,13 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
+	 * @return 函数 SSO-Server端：登录函数
+	 */
+	public BiFunction<String, String, Object> getDoLoginHandle() {
+		return doLoginHandle;
+	}
+
+	/**
 	 * @param ticketResultHandle SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
 	 * @return 对象自身
 	 */
@@ -322,7 +336,14 @@ public class SaSsoConfig implements Serializable {
 		this.ticketResultHandle = ticketResultHandle;
 		return this;
 	}
-	
+
+	/**
+	 * @return 函数 SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
+	 */
+	public BiFunction<Object, String, Object> getTicketResultHandle() {
+		return ticketResultHandle;
+	}
+
 	/**
 	 * @param sendHttp SSO-Client端：发送Http请求的处理函数 
 	 * @return 对象自身 
@@ -332,7 +353,12 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
-	
+	/**
+	 * @return 函数 SSO-Client端：发送Http请求的处理函数
+	 */
+	public Function<String, Object> getSendHttp() {
+		return sendHttp;
+	}
 
 	
 }
