@@ -69,7 +69,7 @@ public class AtteStartListener implements JbootAppListener {
 
     @Override
     public void onStart() {
-        SaManager.setSaTokenDao(new SaTokenCacheDao(null));
+        SaManager.setSaTokenDao(new SaTokenCacheDao("sa"));
     }
 
     @Override
