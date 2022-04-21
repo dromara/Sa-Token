@@ -148,6 +148,12 @@ public class StpLogic {
  	 */
 	public void setTokenValueToCookie(String tokenValue, int cookieTimeout){
 		SaCookieConfig cfg = getConfig().getCookie();
+
+		String tokenPrefix = getConfig().getTokenPrefix();
+		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
+			tokenValue = tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue;
+		}
+
 		SaCookie cookie = new SaCookie()
 				.setName(getTokenName())
 				.setValue(tokenValue)
