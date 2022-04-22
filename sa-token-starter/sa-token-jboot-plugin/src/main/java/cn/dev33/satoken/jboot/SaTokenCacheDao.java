@@ -3,13 +3,18 @@ package cn.dev33.satoken.jboot;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
+import io.jboot.Jboot;
 import io.jboot.components.serializer.JbootSerializer;
-import io.jboot.utils.CacheUtil;
+import io.jboot.exception.JbootIllegalConfigException;
+import io.jboot.support.redis.JbootRedisConfig;
+import io.jboot.utils.ConfigUtil;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 使用Jboot的缓存方法存取Token数据
@@ -19,13 +24,43 @@ public class SaTokenCacheDao implements SaTokenDao {
     protected SaRedisCache saRedisCache;
     protected JbootSerializer serializer;
 
+    private Map<String, SaRedisCache> saRedisMap = new ConcurrentHashMap();
+
+    /**
+     * 使用默认redis配置
+     */
+    public SaTokenCacheDao() {
+        JbootRedisConfig config = (JbootRedisConfig) Jboot.config(JbootRedisConfig.class);
+        this.saRedisCache = new SaRedisCache(config);
+        this.serializer = new SaJdkSerializer();
+    }
+
     /**
      * 调用的Cache名称
+     *
      * @param cacheName 使用的缓存配置名，默认为 default
      */
     public SaTokenCacheDao(String cacheName) {
-        saRedisCache = (SaRedisCache) CacheUtil.use(cacheName);
-        serializer = new SaJdkSerializer();
+        SaRedisCache saCache = (SaRedisCache) this.saRedisMap.get(cacheName);
+        if (saCache == null) {
+            synchronized (this) {
+                saCache = (SaRedisCache) this.saRedisMap.get(cacheName);
+                if (saCache == null) {
+                    Map<String, JbootRedisConfig> configModels = ConfigUtil.getConfigModels(JbootRedisConfig.class);
+                    if (!configModels.containsKey(cacheName)) {
+                        throw new JbootIllegalConfigException("Please config \"jboot.redis." + cacheName + ".host\" in your jboot.properties.");
+                    }
+
+                    JbootRedisConfig jbootRedisConfig = (JbootRedisConfig) configModels.get(cacheName);
+                    saCache = new SaRedisCache(jbootRedisConfig);
+                    if (saCache != null) {
+                        this.saRedisMap.put(cacheName, saCache);
+                    }
+                }
+            }
+        }
+        this.saRedisCache = saCache;
+        this.serializer = new SaJdkSerializer();
     }
 
 
