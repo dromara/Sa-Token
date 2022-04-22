@@ -3,6 +3,7 @@ package cn.dev33.satoken.jboot;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
+import io.jboot.Jboot;
 import io.jboot.components.serializer.JbootSerializer;
 import io.jboot.exception.JbootIllegalConfigException;
 import io.jboot.support.redis.JbootRedisConfig;
@@ -24,8 +25,19 @@ public class SaTokenCacheDao implements SaTokenDao {
     protected JbootSerializer serializer;
 
     private Map<String, SaRedisCache> saRedisMap = new ConcurrentHashMap();
+
+    /**
+     * 使用默认redis配置
+     */
+    public SaTokenCacheDao() {
+        JbootRedisConfig config = (JbootRedisConfig) Jboot.config(JbootRedisConfig.class);
+        this.saRedisCache = new SaRedisCache(config);
+        this.serializer = new SaJdkSerializer();
+    }
+
     /**
      * 调用的Cache名称
+     *
      * @param cacheName 使用的缓存配置名，默认为 default
      */
     public SaTokenCacheDao(String cacheName) {
@@ -48,7 +60,7 @@ public class SaTokenCacheDao implements SaTokenDao {
             }
         }
         this.saRedisCache = saCache;
-        serializer = new SaJdkSerializer();
+        this.serializer = new SaJdkSerializer();
     }
 
 
