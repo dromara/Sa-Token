@@ -35,8 +35,9 @@ public class AppRun extends JbootController {
         renderText("超级管理员方法！");
     }
 
+    @SuppressWarnings("unused")
     public void token(String token) {
-        Object t = Jboot.getRedis().get("xxxxx"); //默认redis库
+		Object t = Jboot.getRedis().get("xxxxx"); //默认redis库
         SaSession saSession = StpUtil.getSessionByLoginId(StpUtil.getLoginIdByToken(token), false); //satoken redis库
         renderJson(saSession);
     }

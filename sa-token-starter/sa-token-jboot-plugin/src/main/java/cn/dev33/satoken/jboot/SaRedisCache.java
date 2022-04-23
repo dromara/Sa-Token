@@ -18,12 +18,13 @@ import java.util.List;
  * sa 缓存处理
  */
 @JbootSpi("sacache")
+@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 public class SaRedisCache implements JbootCache {
     protected JbootRedisConfig config;
     protected JedisPool jedisPool;
     private ThreadLocal<String> CACHE_NAME_PREFIX_TL = new ThreadLocal<>();
 
-    public SaRedisCache(JbootRedisConfig config) {
+	public SaRedisCache(JbootRedisConfig config) {
         this.config = config;
 
         String host = config.getHost();
@@ -111,7 +112,7 @@ public class SaRedisCache implements JbootCache {
         return null;
     }
 
-    @Override
+	@Override
     public <T> T get(String cacheName, Object key) {
         Jedis jedis = getJedis();
         try {

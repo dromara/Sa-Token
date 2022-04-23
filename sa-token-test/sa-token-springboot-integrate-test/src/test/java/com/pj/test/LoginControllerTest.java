@@ -27,6 +27,7 @@ import com.pj.test.util.SoMap;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartUpApplication.class)
+@SuppressWarnings("deprecation")
 public class LoginControllerTest {
 	
 	@Autowired

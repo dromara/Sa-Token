@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 使用Jboot的缓存方法存取Token数据
  */
+@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 public class SaTokenCacheDao implements SaTokenDao {
 
     protected SaRedisCache saRedisCache;
