@@ -7,7 +7,8 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-starter</artifactId>
-        <version>1.29.1.trial</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
 
@@ -20,7 +21,7 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${revision}</version>
         </dependency>
 		<!-- spring-boot-starter -->
         <dependency>
@@ -47,7 +48,7 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-oauth2</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${revision}</version>
 			<optional>true</optional>
 		</dependency>
 		
