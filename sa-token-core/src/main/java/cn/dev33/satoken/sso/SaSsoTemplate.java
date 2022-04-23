@@ -166,8 +166,15 @@ public class SaSsoTemplate {
 		back = (back == null ? "" : back);
 		back = SaFoxUtil.encodeUrl(back);
 		
-		// 拼接最终地址，格式示例：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
-		clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, ParamName.back, back); 
+		// 开始拼接 sso 统一认证地址，形如：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
+		
+		/*
+		 * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
+		 * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题 
+		 */
+		if(clientLoginUrl.indexOf(ParamName.back + "=" + back) == -1) {
+			clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, ParamName.back, back); 
+		}
 		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, ParamName.redirect, clientLoginUrl);
 		
 		// 返回 

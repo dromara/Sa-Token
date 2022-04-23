@@ -50,7 +50,7 @@ Mix 模式：混入部分逻辑
 ``` java
 @Configuration
 public class SaTokenConfigure {
-    // Sa-Token 整合 jwt (Style模式)
+    // Sa-Token 整合 jwt (Mix模式)
 	@Bean
     public StpLogic getStpLogicJwt() {
     	return new StpLogicJwtForMix();
@@ -63,7 +63,7 @@ Stateless 模式：服务器完全无状态
 ``` java
 @Configuration
 public class SaTokenConfigure {
-    // Sa-Token 整合 jwt (Style模式)
+    // Sa-Token 整合 jwt (Stateless模式)
 	@Bean
     public StpLogic getStpLogicJwt() {
     	return new StpLogicJwtForStateless();
