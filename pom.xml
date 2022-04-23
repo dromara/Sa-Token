@@ -87,7 +87,7 @@
 			</configuration>
 		</plugin>
         
-           <!-- 版本号管理 -->
+        <!-- 统一版本号管理 -->
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>flatten-maven-plugin</artifactId>

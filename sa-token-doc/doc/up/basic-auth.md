@@ -14,12 +14,21 @@ Http Basic 是 http 协议中最基础的认证方式，其有两个特点：
 ``` java
 @RequestMapping("test3")
 public SaResult test3() {
-        try {
-	    SaBasicUtil.check("sa:123456");
-        } catch(NotBasicAuthException e) {
-            System.out.println("校验失败处理");
-        }
+    SaBasicUtil.check("sa:123456");
+	// ... 其它代码
 	return SaResult.ok();
+}
+```
+
+全局异常处理：
+``` java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+	@ExceptionHandler
+	public SaResult handlerException(Exception e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
+	}
 }
 ```
 

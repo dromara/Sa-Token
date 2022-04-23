@@ -35,7 +35,7 @@
 
 对于网关服务，大体来讲分为两种：
 - 一种是基于Servlet模型的，如：Zuul，我们需要引入的是：`sa-token-spring-boot-starter`，详细戳：[在SpringBoot环境集成](/start/example)
-- 一种是基于Reactor模型的，如：SpringCloud Gateway、ShenYu、Fizz Gateway 等等，我们需要引入的是：`sa-token-reactor-spring-boot-starter`，**并且注册全局过滤器！**，详细戳：[在WebFlux环境集成](/start/webflux-example)
+- 一种是基于Reactor模型的，如：SpringCloud Gateway、ShenYu 等等，我们需要引入的是：`sa-token-reactor-spring-boot-starter`，**并且注册全局过滤器！**，详细戳：[在WebFlux环境集成](/start/webflux-example)
 
 注：切不可直接在一个项目里同时引入这两个依赖，否则会造成项目无法启动
 

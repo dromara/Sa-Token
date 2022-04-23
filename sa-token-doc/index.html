@@ -253,7 +253,7 @@
 							<img src="https://oss.dev33.cn/sa-token/link/liteflow.png" msg="轻量，快速，稳定，可编排的组件式流程引擎">
 						</a>
 						<a href="https://hutool.cn/" target="_blank">
-							<img src="https://cdn.jsdelivr.net/gh/looly/hutool-site/images/logo.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
+							<img src="https://plus.hutool.cn/images/logo.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
 						</a>
 						<a href="https://dromara.org/zh/projects/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/dromara.png" msg="让每一位开源爱好者，体会到开源的快乐。">
@@ -424,6 +424,10 @@
 				}
 				// console.log(img.getAttribute('nf'));
 				if(img.getAttribute('nf') != null) {
+					return;
+				}
+				// 如果不是oss上的图片 
+				if(img.src.indexOf('https://oss.dev33.cn') == -1) {
 					return;
 				}
 				img.src = img.src + "?x-oss-process=image/resize,m_lfit,w_" + (img.width) + ",limit_0/auto-orient,0";
