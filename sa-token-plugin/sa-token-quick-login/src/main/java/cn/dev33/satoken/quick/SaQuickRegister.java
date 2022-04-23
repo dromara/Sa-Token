@@ -1,33 +1,28 @@
 package cn.dev33.satoken.quick;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.quick.config.SaQuickConfig;
-import cn.dev33.satoken.quick.web.SaQuickController;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * 自动注入
+ * Quick-Bean 注册 
  * 
  * @author kong
  *
  */
 @Configuration
-@Import({ SaQuickController.class })
-public class SaQuickBean implements WebMvcConfigurer  {
+public class SaQuickRegister {
 
 	/**
-	 * quick-login 配置
+	 * 注册 Quick-Login 配置
 	 * 
 	 * @return see note
 	 */
@@ -38,17 +33,7 @@ public class SaQuickBean implements WebMvcConfigurer  {
 	}
 	
 	/**
-	 * 注入quick-login 配置 
-	 * 
-	 * @param saQuickConfig 配置对象
-	 */
-	@Autowired
-	public void setSaQuickConfig(SaQuickConfig saQuickConfig) {
-		SaQuickManager.setConfig(saQuickConfig);
-	}
-
-	/**
-	 * 注册 [sa-token全局过滤器]
+	 * 注册 [sa-token全局过滤器] 
 	 * 
 	 * @return see note
 	 */

@@ -312,7 +312,7 @@ public class SaSsoHandle {
 		String secretkey = req.getParam(ParamName.secretkey);
 		
 		SaSsoUtil.checkSecretkey(secretkey);
-		stpLogic.logoutByTokenValue(stpLogic.getTokenValueByLoginId(loginId));
+		stpLogic.logout(loginId);
         return SaSsoConsts.OK;
 	}
 	
