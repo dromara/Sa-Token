@@ -3,8 +3,6 @@ package cn.dev33.satoken;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.dev33.satoken.action.SaTokenAction;
-import cn.dev33.satoken.action.SaTokenActionDefaultImpl;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
 import cn.dev33.satoken.context.SaTokenContext;
@@ -28,7 +26,6 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author kong
  *
  */
-@SuppressWarnings("deprecation")
 public class SaManager {
 
 	/**
@@ -91,24 +88,6 @@ public class SaManager {
 			}
 		}
 		return stpInterface;
-	}
-	
-	/**
-	 * 框架行为 Bean 
-	 */
-	private volatile static SaTokenAction saTokenAction;
-	public static void setSaTokenAction(SaTokenAction saTokenAction) {
-		SaManager.saTokenAction = saTokenAction;
-	}
-	public static SaTokenAction getSaTokenAction() {
-		if (saTokenAction == null) {
-			synchronized (SaManager.class) {
-				if (saTokenAction == null) {
-					setSaTokenAction(new SaTokenActionDefaultImpl());
-				}
-			}
-		}
-		return saTokenAction;
 	}
 	
 	/**

@@ -1,12 +1,10 @@
 package com.pj.test;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -23,7 +21,7 @@ import cn.hutool.jwt.JWT;
  * @author kong 
  *
  */
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartUpApplication.class)
 public class JwtForStyleTest {
 
@@ -31,7 +29,7 @@ public class JwtForStyleTest {
 	static SaTokenDao dao;
 	
 	// 开始 
-	@BeforeClass
+	@BeforeAll
     public static void beforeClass() {
     	System.out.println("\n\n------------------------ JwtForStyleTest star ...");
     	dao = SaManager.getSaTokenDao();
@@ -39,7 +37,7 @@ public class JwtForStyleTest {
     }
 
 	// 结束 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
     	System.out.println("\n\n------------------------ JwtForStyleTest end ... \n");
     }
@@ -52,24 +50,24 @@ public class JwtForStyleTest {
     	String token = StpUtil.getTokenValue();
     	
     	// API 验证 
-    	Assert.assertTrue(StpUtil.isLogin());	
-    	Assert.assertNotNull(token);	// token不为null
-    	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
-    	Assert.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型
+    	Assertions.assertTrue(StpUtil.isLogin());	
+    	Assertions.assertNotNull(token);	// token不为null
+    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
+    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型
 
     	// token 验证 
     	JWT jwt = JWT.of(token);
     	JSONObject payloads = jwt.getPayloads();
-    	Assert.assertEquals(payloads.getStr("loginId"), "10001");
+    	Assertions.assertEquals(payloads.getStr("loginId"), "10001");
     	
     	// db数据 验证  
     	// token存在 
-    	Assert.assertEquals(dao.get("satoken:login:token:" + token), "10001");
+    	Assertions.assertEquals(dao.get("satoken:login:token:" + token), "10001");
     	// Session 存在 
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
-    	Assert.assertNotNull(session);
-    	Assert.assertEquals(session.getId(), "satoken:login:session:" + 10001);
-    	Assert.assertTrue(session.getTokenSignList().size() >= 1);
+    	Assertions.assertNotNull(session);
+    	Assertions.assertEquals(session.getId(), "satoken:login:session:" + 10001);
+    	Assertions.assertTrue(session.getTokenSignList().size() >= 1);
     }
     
 }

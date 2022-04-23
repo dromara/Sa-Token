@@ -1,9 +1,7 @@
 package cn.dev33.satoken.fun;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * IsRunFunction 测试 
@@ -11,7 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author kong
  * @date: 2022-2-9 16:11:10
  */
-@RunWith(SpringRunner.class)
 public class IsRunFunctionTest {
 
     @Test
@@ -29,7 +26,7 @@ public class IsRunFunctionTest {
     		obj.count = 3;
     	});
     	
-    	Assert.assertEquals(obj.count, 2);
+    	Assertions.assertEquals(obj.count, 2);
     }
 
 }

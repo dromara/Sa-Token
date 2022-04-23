@@ -60,16 +60,6 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入框架行为Bean
-	 * 
-	 * @param saTokenAction SaTokenAction对象 
-	 */
-	@Autowired(required = false)
-	public void setSaTokenAction(@SuppressWarnings("deprecation") cn.dev33.satoken.action.SaTokenAction saTokenAction) {
-		SaManager.setSaTokenAction(saTokenAction);
-	}
-
-	/**
 	 * 注入上下文Bean
 	 * 
 	 * @param saTokenContext SaTokenContext对象 

@@ -2,14 +2,12 @@ package com.pj.test;
 
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -28,7 +26,6 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * @author Auster 
  *
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartUpApplication.class)
 public class BasicsTest {
 
@@ -37,13 +34,13 @@ public class BasicsTest {
 	SaTokenDao dao = SaManager.getSaTokenDao();
 	
 	// 开始 
-	@BeforeClass
+	@BeforeAll
     public static void beforeClass() {
     	System.out.println("\n\n------------------------ 基础测试 star ...");
     }
 
 	// 结束 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
     	System.out.println("\n\n------------------------ 基础测试 end ... \n");
     }
@@ -56,19 +53,19 @@ public class BasicsTest {
     	String token = StpUtil.getTokenValue();
     	
     	// API 验证 
-    	Assert.assertTrue(StpUtil.isLogin());	
-    	Assert.assertNotNull(token);	// token不为null
-    	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
-    	Assert.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型 
+    	Assertions.assertTrue(StpUtil.isLogin());	
+    	Assertions.assertNotNull(token);	// token不为null
+    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
+    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型 
     	
     	// db数据 验证  
     	// token存在 
-    	Assert.assertEquals(dao.get("satoken:login:token:" + token), "10001");
+    	Assertions.assertEquals(dao.get("satoken:login:token:" + token), "10001");
     	// Session 存在 
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
-    	Assert.assertNotNull(session);
-    	Assert.assertEquals(session.getId(), "satoken:login:session:" + 10001);
-    	Assert.assertTrue(session.getTokenSignList().size() >= 1);
+    	Assertions.assertNotNull(session);
+    	Assertions.assertEquals(session.getId(), "satoken:login:session:" + 10001);
+    	Assertions.assertTrue(session.getTokenSignList().size() >= 1);
     }
     
     // 测试：注销 
@@ -77,17 +74,17 @@ public class BasicsTest {
     	// 登录
     	StpUtil.login(10001);
     	String token = StpUtil.getTokenValue();
-    	Assert.assertEquals(dao.get("satoken:login:token:" + token), "10001");
+    	Assertions.assertEquals(dao.get("satoken:login:token:" + token), "10001");
     	
     	// 注销
     	StpUtil.logout();
     	// token 应该被清除
-    	Assert.assertNull(StpUtil.getTokenValue());
-    	Assert.assertFalse(StpUtil.isLogin());
-    	Assert.assertNull(dao.get("satoken:login:token:" + token));
+    	Assertions.assertNull(StpUtil.getTokenValue());
+    	Assertions.assertFalse(StpUtil.isLogin());
+    	Assertions.assertNull(dao.get("satoken:login:token:" + token));
     	// Session 应该被清除 
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
-    	Assert.assertNull(session);
+    	Assertions.assertNull(session);
     }
     
     // 测试：Session会话 
@@ -96,23 +93,23 @@ public class BasicsTest {
     	StpUtil.login(10001);
     	
     	// API 应该可以获取 Session 
-    	Assert.assertNotNull(StpUtil.getSession(false));
+    	Assertions.assertNotNull(StpUtil.getSession(false));
     	
     	// db中应该存在 Session
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
-    	Assert.assertNotNull(session);
+    	Assertions.assertNotNull(session);
     	
     	// 存取值 
     	session.set("name", "zhang");
     	session.set("age", "18");
-    	Assert.assertEquals(session.get("name"), "zhang");
-    	Assert.assertEquals(session.getInt("age"), 18);
-    	Assert.assertEquals((int)session.getModel("age", int.class), 18);
-    	Assert.assertEquals((int)session.get("age", 20), 18);
-    	Assert.assertEquals((int)session.get("name2", 20), 20);
-    	Assert.assertEquals((int)session.get("name2", () -> 30), 30);
+    	Assertions.assertEquals(session.get("name"), "zhang");
+    	Assertions.assertEquals(session.getInt("age"), 18);
+    	Assertions.assertEquals((int)session.getModel("age", int.class), 18);
+    	Assertions.assertEquals((int)session.get("age", 20), 18);
+    	Assertions.assertEquals((int)session.get("name2", 20), 20);
+    	Assertions.assertEquals((int)session.get("name2", () -> 30), 30);
     	session.clear();
-    	Assert.assertEquals(session.get("name"), null);
+    	Assertions.assertEquals(session.get("name"), null);
     }
     
     // 测试：权限认证 
@@ -121,17 +118,17 @@ public class BasicsTest {
     	StpUtil.login(10001);
     	
     	// 权限认证 
-    	Assert.assertTrue(StpUtil.hasPermission("user-add"));
-    	Assert.assertTrue(StpUtil.hasPermission("user-list"));
-    	Assert.assertTrue(StpUtil.hasPermission("user"));
-    	Assert.assertTrue(StpUtil.hasPermission("art-add"));
-    	Assert.assertFalse(StpUtil.hasPermission("get-user"));
+    	Assertions.assertTrue(StpUtil.hasPermission("user-add"));
+    	Assertions.assertTrue(StpUtil.hasPermission("user-list"));
+    	Assertions.assertTrue(StpUtil.hasPermission("user"));
+    	Assertions.assertTrue(StpUtil.hasPermission("art-add"));
+    	Assertions.assertFalse(StpUtil.hasPermission("get-user"));
     	// and
-    	Assert.assertTrue(StpUtil.hasPermissionAnd("art-add", "art-get"));
-    	Assert.assertFalse(StpUtil.hasPermissionAnd("art-add", "comment-add"));
+    	Assertions.assertTrue(StpUtil.hasPermissionAnd("art-add", "art-get"));
+    	Assertions.assertFalse(StpUtil.hasPermissionAnd("art-add", "comment-add"));
     	// or 
-    	Assert.assertTrue(StpUtil.hasPermissionOr("art-add", "comment-add"));
-    	Assert.assertFalse(StpUtil.hasPermissionOr("comment-add", "comment-delete"));
+    	Assertions.assertTrue(StpUtil.hasPermissionOr("art-add", "comment-add"));
+    	Assertions.assertFalse(StpUtil.hasPermissionOr("comment-add", "comment-delete"));
     }
 
     // 测试：角色认证
@@ -140,14 +137,14 @@ public class BasicsTest {
     	StpUtil.login(10001);
     	
     	// 角色认证 
-    	Assert.assertTrue(StpUtil.hasRole("admin")); 
-    	Assert.assertFalse(StpUtil.hasRole("teacher")); 
+    	Assertions.assertTrue(StpUtil.hasRole("admin")); 
+    	Assertions.assertFalse(StpUtil.hasRole("teacher")); 
     	// and
-    	Assert.assertTrue(StpUtil.hasRoleAnd("admin", "super-admin")); 
-    	Assert.assertFalse(StpUtil.hasRoleAnd("admin", "ceo")); 
+    	Assertions.assertTrue(StpUtil.hasRoleAnd("admin", "super-admin")); 
+    	Assertions.assertFalse(StpUtil.hasRoleAnd("admin", "ceo")); 
     	// or
-    	Assert.assertTrue(StpUtil.hasRoleOr("admin", "ceo")); 
-    	Assert.assertFalse(StpUtil.hasRoleOr("ceo", "cto")); 
+    	Assertions.assertTrue(StpUtil.hasRoleOr("admin", "ceo")); 
+    	Assertions.assertFalse(StpUtil.hasRoleOr("ceo", "cto")); 
     }
 	
     // 测试：根据token强制注销 
@@ -156,24 +153,24 @@ public class BasicsTest {
     	
     	// 先登录上 
     	StpUtil.login(10001); 
-    	Assert.assertTrue(StpUtil.isLogin());	
+    	Assertions.assertTrue(StpUtil.isLogin());	
     	String token = StpUtil.getTokenValue();
     	
     	// 根据token注销 
     	StpUtil.logoutByTokenValue(token); 
-    	Assert.assertFalse(StpUtil.isLogin()); 
+    	Assertions.assertFalse(StpUtil.isLogin()); 
     	
     	// token 应该被清除
-    	Assert.assertNull(dao.get("satoken:login:token:" + token));
+    	Assertions.assertNull(dao.get("satoken:login:token:" + token));
     	// Session 应该被清除 
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
-    	Assert.assertNull(session);
+    	Assertions.assertNull(session);
 
 		// 场景值应该是token无效 
     	try {
     		StpUtil.checkLogin();
 		} catch (NotLoginException e) {
-			Assert.assertEquals(e.getType(), NotLoginException.INVALID_TOKEN);
+			Assertions.assertEquals(e.getType(), NotLoginException.INVALID_TOKEN);
 		}
     }
 
@@ -183,24 +180,24 @@ public class BasicsTest {
 
     	// 先登录上 
     	StpUtil.login(10001); 
-    	Assert.assertTrue(StpUtil.isLogin());	
+    	Assertions.assertTrue(StpUtil.isLogin());	
     	String token = StpUtil.getTokenValue();
     	
     	// 根据账号id注销 
     	StpUtil.logout(10001);
-    	Assert.assertFalse(StpUtil.isLogin()); 
+    	Assertions.assertFalse(StpUtil.isLogin()); 
     	
     	// token 应该被清除
-    	Assert.assertNull(dao.get("satoken:login:token:" + token));
+    	Assertions.assertNull(dao.get("satoken:login:token:" + token));
     	// Session 应该被清除 
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
-    	Assert.assertNull(session);
+    	Assertions.assertNull(session);
 
 		// 场景值应该是token无效 
     	try {
     		StpUtil.checkLogin();
 		} catch (NotLoginException e) {
-			Assert.assertEquals(e.getType(), NotLoginException.INVALID_TOKEN);
+			Assertions.assertEquals(e.getType(), NotLoginException.INVALID_TOKEN);
 		}
     }
 
@@ -213,40 +210,40 @@ public class BasicsTest {
     	String token = StpUtil.getTokenValue();
     	
     	// 刚开始不存在 
-    	Assert.assertNull(StpUtil.stpLogic.getTokenSession(false));
+    	Assertions.assertNull(StpUtil.stpLogic.getTokenSession(false));
     	SaSession session = dao.getSession("satoken:login:token-session:" + token);
-    	Assert.assertNull(session);
+    	Assertions.assertNull(session);
     	
     	// 调用一次就存在了 
     	StpUtil.getTokenSession();
-    	Assert.assertNotNull(StpUtil.stpLogic.getTokenSession(false));
+    	Assertions.assertNotNull(StpUtil.stpLogic.getTokenSession(false));
     	SaSession session2 = dao.getSession("satoken:login:token-session:" + token);
-    	Assert.assertNotNull(session2);
+    	Assertions.assertNotNull(session2);
     }
     
     // 测试自定义Session 
     @Test
     public void testCustomSession() {
     	// 刚开始不存在 
-    	Assert.assertFalse(SaSessionCustomUtil.isExists("art-1"));
+    	Assertions.assertFalse(SaSessionCustomUtil.isExists("art-1"));
     	SaSession session = dao.getSession("satoken:custom:session:" + "art-1");
-    	Assert.assertNull(session);
+    	Assertions.assertNull(session);
     	
     	// 调用一下 
     	SaSessionCustomUtil.getSessionById("art-1");
     	
     	// 就存在了 
-    	Assert.assertTrue(SaSessionCustomUtil.isExists("art-1"));
+    	Assertions.assertTrue(SaSessionCustomUtil.isExists("art-1"));
     	SaSession session2 = dao.getSession("satoken:custom:session:" + "art-1");
-    	Assert.assertNotNull(session2);
+    	Assertions.assertNotNull(session2);
     	
     	// 给删除掉 
     	SaSessionCustomUtil.deleteSessionById("art-1");
     	
     	// 就又不存在了 
-    	Assert.assertFalse(SaSessionCustomUtil.isExists("art-1"));
+    	Assertions.assertFalse(SaSessionCustomUtil.isExists("art-1"));
     	SaSession session3 = dao.getSession("satoken:custom:session:" + "art-1");
-    	Assert.assertNull(session3);
+    	Assertions.assertNull(session3);
     }
     
     // 测试：根据账号id踢人
@@ -259,33 +256,34 @@ public class BasicsTest {
     	StpUtil.kickout(10001);
     	
     	// token 应该被打标记 
-    	Assert.assertEquals(dao.get("satoken:login:token:" + token), NotLoginException.KICK_OUT);
+    	Assertions.assertEquals(dao.get("satoken:login:token:" + token), NotLoginException.KICK_OUT);
 
 		// 场景值应该是token已被踢下线 
     	try {
     		StpUtil.checkLogin();
 		} catch (NotLoginException e) {
-			Assert.assertEquals(e.getType(), NotLoginException.KICK_OUT);
+			Assertions.assertEquals(e.getType(), NotLoginException.KICK_OUT);
 		}
     }
     
     // 测试：账号封禁 
-    @Test(expected = DisableLoginException.class)
+    @Test
     public void testDisable() {
-    	
-    	// 封号 
-    	StpUtil.disable(10007, 200);
-    	Assert.assertTrue(StpUtil.isDisable(10007));
-    	Assert.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableLoginException.BE_VALUE); 
-    	
-    	// 解封  
-    	StpUtil.untieDisable(10007);
-    	Assert.assertFalse(StpUtil.isDisable(10007));
-    	Assert.assertEquals(dao.get("satoken:login:disable:" + 10007), null); 
-    	
-    	// 封号后登陆 (会抛出 DisableLoginException 异常)
-    	StpUtil.disable(10007, 200); 
-    	StpUtil.login(10007);  
+		Assertions.assertThrows(DisableLoginException.class, () -> {
+	    	// 封号 
+	    	StpUtil.disable(10007, 200);
+	    	Assertions.assertTrue(StpUtil.isDisable(10007));
+	    	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableLoginException.BE_VALUE); 
+	    	
+	    	// 解封  
+	    	StpUtil.untieDisable(10007);
+	    	Assertions.assertFalse(StpUtil.isDisable(10007));
+	    	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), null); 
+	    	
+	    	// 封号后登陆 (会抛出 DisableLoginException 异常)
+	    	StpUtil.disable(10007, 200); 
+	    	StpUtil.login(10007);  
+    	});
     }
 
     // 测试：身份切换 
@@ -293,18 +291,18 @@ public class BasicsTest {
     public void testSwitch() {
     	// 登录
     	StpUtil.login(10001);
-    	Assert.assertFalse(StpUtil.isSwitch());
-    	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);
+    	Assertions.assertFalse(StpUtil.isSwitch());
+    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);
     	
     	// 开始身份切换 
     	StpUtil.switchTo(10044);
-    	Assert.assertTrue(StpUtil.isSwitch());
-    	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10044);
+    	Assertions.assertTrue(StpUtil.isSwitch());
+    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10044);
     	
     	// 结束切换 
     	StpUtil.endSwitch(); 
-    	Assert.assertFalse(StpUtil.isSwitch());
-    	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);
+    	Assertions.assertFalse(StpUtil.isSwitch());
+    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);
     }
     
     // 测试：会话管理
@@ -319,7 +317,7 @@ public class BasicsTest {
     	
     	// 查询 
     	List<String> list = StpUtil.searchTokenValue("", 0, 10);
-    	Assert.assertTrue(list.size() >= 5);
+    	Assertions.assertTrue(list.size() >= 5);
     }
     
     // 测试：临时Token认证模块
@@ -327,22 +325,22 @@ public class BasicsTest {
     public void testSaTemp() {
     	// 生成token 
     	String token = SaTempUtil.createToken("group-1014", 200);
-    	Assert.assertNotNull(token);
+    	Assertions.assertNotNull(token);
     	
     	// 解析token  
     	String value = SaTempUtil.parseToken(token, String.class);
-    	Assert.assertEquals(value, "group-1014"); 
-    	Assert.assertEquals(dao.getObject("satoken:temp-token:" + token), "group-1014");
+    	Assertions.assertEquals(value, "group-1014"); 
+    	Assertions.assertEquals(dao.getObject("satoken:temp-token:" + token), "group-1014");
     	
     	// 过期时间 
     	long timeout = SaTempUtil.getTimeout(token);
-    	Assert.assertTrue(timeout > 195);
+    	Assertions.assertTrue(timeout > 195);
     	
     	// 回收token 
     	SaTempUtil.deleteToken(token);
     	String value2 = SaTempUtil.parseToken(token, String.class);
-    	Assert.assertEquals(value2, null); 
-    	Assert.assertEquals(dao.getObject("satoken:temp-token:" + token), null);
+    	Assertions.assertEquals(value2, null); 
+    	Assertions.assertEquals(dao.getObject("satoken:temp-token:" + token), null);
     }
 
     // 测试：二级认证
@@ -350,21 +348,21 @@ public class BasicsTest {
     public void testSafe() {
     	// 登录 
     	StpUtil.login(10001);
-    	Assert.assertFalse(StpUtil.isSafe());
+    	Assertions.assertFalse(StpUtil.isSafe());
     	
     	// 开启二级认证 
     	StpUtil.openSafe(2);
-    	Assert.assertTrue(StpUtil.isSafe()); 
-    	Assert.assertTrue(StpUtil.getSafeTime() > 0); 
+    	Assertions.assertTrue(StpUtil.isSafe()); 
+    	Assertions.assertTrue(StpUtil.getSafeTime() > 0); 
     	
     	// 自然结束 
 //    	Thread.sleep(2500);
-//    	Assert.assertFalse(StpUtil.isSafe());
+//    	Assertions.assertFalse(StpUtil.isSafe());
     	
     	// 手动结束
 //    	StpUtil.openSafe(2);
     	StpUtil.closeSafe();
-    	Assert.assertFalse(StpUtil.isSafe());
+    	Assertions.assertFalse(StpUtil.isSafe());
     }
     
 }

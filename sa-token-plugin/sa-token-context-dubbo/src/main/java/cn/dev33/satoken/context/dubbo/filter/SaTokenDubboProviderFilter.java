@@ -27,6 +27,10 @@ public class SaTokenDubboProviderFilter implements Filter {
 		// RPC 调用鉴权 
 		if(SaManager.getConfig().getCheckIdToken()) {
 			String idToken = invocation.getAttachment(SaIdUtil.ID_TOKEN);
+			// dubbo部分协议会将参数变为小写，详细参考：https://gitee.com/dromara/sa-token/issues/I4WXQG
+			if(idToken == null) {
+				idToken = invocation.getAttachment(SaIdUtil.ID_TOKEN.toLowerCase());
+			}
 			SaIdUtil.checkToken(idToken);
 		}
 		

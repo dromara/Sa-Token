@@ -2,14 +2,12 @@ package com.pj.test;
 
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -25,7 +23,6 @@ import com.pj.test.util.SoMap;
  * @author Auster 
  *
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartUpApplication.class)
 @SuppressWarnings("deprecation")
 public class LoginControllerTest {
@@ -36,7 +33,7 @@ public class LoginControllerTest {
 	private MockMvc mvc;
 	
 	// 开始 
-	@Before
+	@BeforeEach
     public void before() {
 		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
@@ -61,9 +58,9 @@ public class LoginControllerTest {
 		String token = so.getString("token");
 		
 		// 断言 
-		Assert.assertTrue(mvcResult.getResponse().getHeader("Set-Cookie") != null);
-		Assert.assertEquals(so.getInt("code"), 200);
-		Assert.assertNotNull(token);
+		Assertions.assertTrue(mvcResult.getResponse().getHeader("Set-Cookie") != null);
+		Assertions.assertEquals(so.getInt("code"), 200);
+		Assertions.assertNotNull(token);
     }
 
 	@Test
@@ -71,26 +68,26 @@ public class LoginControllerTest {
     public void testLogin2() throws Exception{
     	// 获取token 
     	SoMap so = request("/acc/doLogin?name=zhang&pwd=123456");
-		Assert.assertNotNull(so.getString("token"));
+    	Assertions.assertNotNull(so.getString("token"));
 
     	String token = so.getString("token");
 
     	// 是否登录
     	SoMap so2 = request("/acc/isLogin?satoken=" + token);
-		Assert.assertTrue(so2.getBoolean("data"));
+    	Assertions.assertTrue(so2.getBoolean("data"));
 
     	// tokenInfo 
     	SoMap so3 = request("/acc/tokenInfo?satoken=" + token);
     	SoMap so4 = SoMap.getSoMap((Map<String, ?>)so3.get("data"));
-		Assert.assertEquals(so4.getString("tokenName"), "satoken");
-		Assert.assertEquals(so4.getString("tokenValue"), token);
+    	Assertions.assertEquals(so4.getString("tokenName"), "satoken");
+		Assertions.assertEquals(so4.getString("tokenValue"), token);
     	
 		// 注销
 		request("/acc/logout?satoken=" + token);
 
     	// 是否登录 
     	SoMap so5 = request("/acc/isLogin?satoken=" + token);
-		Assert.assertFalse(so5.getBoolean("data"));
+    	Assertions.assertFalse(so5.getBoolean("data"));
     }
     
     // 封装请求 

@@ -1,9 +1,7 @@
 package cn.dev33.satoken.secure;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * SaSecureUtil 加密工具类 测试 
@@ -11,23 +9,22 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author kong
  * @date: 2022-2-9
  */
-@RunWith(SpringRunner.class)
 public class SaSecureUtilTest {
 	
     @Test
     public void test() {
     	
     	// md5加密 
-    	Assert.assertEquals(SaSecureUtil.md5("123456"), "e10adc3949ba59abbe56e057f20f883e");
+    	Assertions.assertEquals(SaSecureUtil.md5("123456"), "e10adc3949ba59abbe56e057f20f883e");
 
     	// sha1加密 
-    	Assert.assertEquals(SaSecureUtil.sha1("123456"), "7c4a8d09ca3762af61e59520943dc26494f8941b");
+    	Assertions.assertEquals(SaSecureUtil.sha1("123456"), "7c4a8d09ca3762af61e59520943dc26494f8941b");
 
     	// sha256加密 
-    	Assert.assertEquals(SaSecureUtil.sha256("123456"), "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
+    	Assertions.assertEquals(SaSecureUtil.sha256("123456"), "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
 
     	// md5加盐加密: md5(md5(str) + md5(salt)) 
-    	Assert.assertEquals(SaSecureUtil.md5BySalt("123456", "salt"), "f52020dca765fd3943ed40a615dc2c5c");
+    	Assertions.assertEquals(SaSecureUtil.md5BySalt("123456", "salt"), "f52020dca765fd3943ed40a615dc2c5c");
     	
     }
 
@@ -39,11 +36,11 @@ public class SaSecureUtilTest {
 
     	// 加密 
     	String ciphertext = SaSecureUtil.aesEncrypt(key, text);
-    	Assert.assertEquals(ciphertext, "KmSqfwxY5BRuWoHMWJqtebcOZ2lEEZaj2OSi1Ei8pRx4zdi24wsnwsTQVjbXRQ0M");
+    	Assertions.assertEquals(ciphertext, "KmSqfwxY5BRuWoHMWJqtebcOZ2lEEZaj2OSi1Ei8pRx4zdi24wsnwsTQVjbXRQ0M");
 
     	// 解密 
     	String text2 = SaSecureUtil.aesDecrypt(key, ciphertext);
-    	Assert.assertEquals(text2, "Sa-Token 一个轻量级java权限认证框架");
+    	Assertions.assertEquals(text2, "Sa-Token 一个轻量级java权限认证框架");
     }
 
     @Test
@@ -61,7 +58,7 @@ public class SaSecureUtilTest {
 
     	// 使用私钥解密
     	String text2 = SaSecureUtil.rsaDecryptByPrivate(privateKey, ciphertext);
-    	Assert.assertEquals(text2, "Sa-Token 一个轻量级java权限认证框架");
+    	Assertions.assertEquals(text2, "Sa-Token 一个轻量级java权限认证框架");
     }
 
 }
