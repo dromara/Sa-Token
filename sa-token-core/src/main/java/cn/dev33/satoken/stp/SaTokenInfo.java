@@ -35,7 +35,7 @@ public class SaTokenInfo {
 	/** token剩余无操作有效时间 (单位: 秒) */
 	public long tokenActivityTimeout;
 
-	/** 登录设备标识 */
+	/** 登录设备类型 */
 	public String loginDevice;
 
 	/** 自定义数据 */
@@ -170,14 +170,14 @@ public class SaTokenInfo {
 	}
 
 	/**
-	 * @return 登录设备标识 
+	 * @return 登录设备类型
 	 */
 	public String getLoginDevice() {
 		return loginDevice;
 	}
 
 	/**
-	 * @param loginDevice 登录设备标识 
+	 * @param loginDevice 登录设备类型
 	 */
 	public void setLoginDevice(String loginDevice) {
 		this.loginDevice = loginDevice;

@@ -33,7 +33,7 @@ Sa-Token 无意发明任何晦涩概念提升逼格，但在处理 issues 、Q�
 
 #### 账号标识：
 - loginId：账号id，用来区分不同账号，通过 `StpUtil.login(id)` 来指定。
-- device：登录设备端，例如：`PC`、`APP`，通过 `StpUtil.login(id, device)` 来指定。
+- device：登录设备类型，例如：`PC`、`APP`，通过 `StpUtil.login(id, device)` 来指定。
 - loginType：账号类型，用来区分不同体系的账号，如同一系统的 `User账号` 和 `Admin账号`，详见：[多账号认证](/up/many-account) 
 
 

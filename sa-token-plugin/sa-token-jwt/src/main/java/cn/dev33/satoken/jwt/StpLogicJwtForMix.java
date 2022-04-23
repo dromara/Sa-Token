@@ -113,7 +113,7 @@ public class StpLogicJwtForMix extends StpLogic {
 	}
 
 	/**
-	 * [禁用] 会话注销，根据账号id 和 设备标识  
+	 * [禁用] 会话注销，根据账号id 和 设备类型
 	 */
 	@Override
 	public void logout(Object loginId, String device) {
@@ -129,7 +129,7 @@ public class StpLogicJwtForMix extends StpLogic {
 	}
 
 	/**
-	 * [禁用] 踢人下线，根据账号id 和 设备标识 
+	 * [禁用] 踢人下线，根据账号id 和 设备类型 
 	 */
 	@Override
 	public void kickout(Object loginId, String device) {
@@ -145,7 +145,7 @@ public class StpLogicJwtForMix extends StpLogic {
 	}
 
 	/**
-	 * [禁用] 顶人下线，根据账号id 和 设备标识 
+	 * [禁用] 顶人下线，根据账号id 和 设备类型 
 	 */
 	@Override
 	public void replaced(Object loginId, String device) {

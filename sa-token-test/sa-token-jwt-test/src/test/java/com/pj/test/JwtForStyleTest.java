@@ -55,7 +55,7 @@ public class JwtForStyleTest {
     	Assert.assertTrue(StpUtil.isLogin());	
     	Assert.assertNotNull(token);	// token不为null
     	Assert.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
-    	Assert.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备 
+    	Assert.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型
 
     	// token 验证 
     	JWT jwt = JWT.of(token);

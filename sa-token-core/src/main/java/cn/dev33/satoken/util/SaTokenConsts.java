@@ -43,7 +43,7 @@ public class SaTokenConsts {
 	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY_"; 	
 
 	/**
-	 * 常量key标记: 在登录时，默认使用的设备名称 
+	 * 常量key标记: 在登录时，默认使用的设备类型 
 	 */
 	public static final String DEFAULT_LOGIN_DEVICE = "default-device"; 
 	

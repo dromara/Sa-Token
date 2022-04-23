@@ -49,7 +49,7 @@
 - 新增：角色认证增加API：`StpUtil.hasRoleAnd`、`StpUtil.hasRoleOr` 
 - 新增：新增 `StpUtil.getRoleList()` 和 `StpUtil.getPermissionList()` 方法  
 - 新增：新增 StpLogic 自动注入特性，可快速方便的扩展 StpLogic 对象 
-- 优化：优化同端互斥登录逻辑，如果登录时没有指定设备标识，则默认顶替所有设备下线  
+- 优化：优化同端互斥登录逻辑，如果登录时没有指定设备类型标识，则默认顶替所有设备类型下线  
 - 优化：在未登录时调用 hasRole 和 hasPermission 不再抛出异常，而是返回false 
 - 升级：升级注解鉴权算法，并提供更简单的重写方式    
 - 文档：新增常见报错排查，方便快速排查异常报错 

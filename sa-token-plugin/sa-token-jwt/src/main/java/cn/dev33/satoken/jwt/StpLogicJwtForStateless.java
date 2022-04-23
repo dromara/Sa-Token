@@ -158,8 +158,8 @@ public class StpLogicJwtForStateless extends StpLogic {
  	// ------------------- id 反查 token 相关操作 -------------------  
 
 	/**
-	 * 返回当前会话的登录设备 
-	 * @return 当前令牌的登录设备 
+	 * 返回当前会话的登录设备类型 
+	 * @return 当前令牌的登录设备类型
 	 */
 	@Override
 	public String getLoginDevice() {

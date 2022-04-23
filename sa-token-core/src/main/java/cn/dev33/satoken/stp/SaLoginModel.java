@@ -16,7 +16,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 public class SaLoginModel {
 
 	/**
-	 * 此次登录的客户端设备标识 
+	 * 此次登录的客户端设备类型 
 	 */
 	public String device;
 	
@@ -42,14 +42,14 @@ public class SaLoginModel {
 	
 	
 	/**
-	 * @return 此次登录的客户端设备标识 
+	 * @return 此次登录的客户端设备类型
 	 */
 	public String getDevice() {
 		return device;
 	}
 
 	/**
-	 * @param device 此次登录的客户端设备标识 
+	 * @param device 此次登录的客户端设备类型
 	 * @return 对象自身
 	 */
 	public SaLoginModel setDevice(String device) {

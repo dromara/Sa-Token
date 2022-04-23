@@ -28,7 +28,7 @@ public class SaJwtUtil {
 	public static final String LOGIN_ID = "loginId"; 
 	
 	/**
-	 * key：登录设备 
+	 * key：登录设备类型
 	 */
 	public static final String DEVICE = "device"; 
 	
@@ -73,7 +73,7 @@ public class SaJwtUtil {
 	 * 创建 jwt （全参数方式）
 	 * @param loginType 账号类型
 	 * @param loginId 账号id
-	 * @param device 设备标识
+	 * @param device 设备类型
 	 * @param timeout token有效期 (单位 秒)
 	 * @param extraData 扩展数据
 	 * @param keyt 秘钥
@@ -265,7 +265,7 @@ public class SaJwtUtil {
 	 * 创建 jwt （全参数方式） 
 	 * @param loginType 账号类型 
 	 * @param loginId 账号id 
-	 * @param device 设备标识
+	 * @param device 设备类型
 	 * @param timeout token有效期 (单位 秒)
      * @param keyt 秘钥
 	 * @return jwt-token 

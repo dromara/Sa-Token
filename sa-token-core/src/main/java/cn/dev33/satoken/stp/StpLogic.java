@@ -84,7 +84,7 @@ public class StpLogic {
 	/**
 	 * 创建一个TokenValue
 	 * @param loginId loginId
-	 * @param device 设备标识
+	 * @param device 设备类型
 	 * @param timeout 过期时间
 	 * @param extraData 扩展信息
 	 * @return 生成的tokenValue
@@ -251,9 +251,9 @@ public class StpLogic {
 	}
 
 	/**
-	 * 会话登录，并指定登录设备 
+	 * 会话登录，并指定登录设备类型
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param device 设备标识 
+	 * @param device 设备类型 
 	 */
 	public void login(Object id, String device) {
 		login(id, new SaLoginModel().setDevice(device));
@@ -385,10 +385,10 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 会话注销，根据账号id 和 设备标识 
+	 * 会话注销，根据账号id 和 设备类型
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表所有注销设备) 
+	 * @param device 设备类型 (填null代表注销所有设备类型) 
 	 */
 	public void logout(Object loginId, String device) {
 		clearTokenCommonMethod(loginId, device, tokenValue -> {
@@ -444,11 +444,11 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 踢人下线，根据账号id 和 设备标识 
+	 * 踢人下线，根据账号id 和 设备类型 
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表踢出所有设备) 
+	 * @param device 设备类型 (填null代表踢出所有设备类型) 
 	 */
 	public void kickout(Object loginId, String device) {
 		clearTokenCommonMethod(loginId, device, tokenValue -> {
@@ -491,11 +491,11 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 顶人下线，根据账号id 和 设备标识 
+	 * 顶人下线，根据账号id 和 设备类型 
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-4 </p>
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表顶替所有设备) 
+	 * @param device 设备类型 (填null代表顶替所有设备类型) 
 	 */
 	public void replaced(Object loginId, String device) {
 		clearTokenCommonMethod(loginId, device, tokenValue -> {
@@ -508,7 +508,7 @@ public class StpLogic {
 	/**
 	 * 封装 注销、踢人、顶人 三个动作的相同代码（无API含义方法）
 	 * @param loginId 账号id 
-	 * @param device 设备标识 
+	 * @param device 设备类型 
 	 * @param appendFun 追加操作 
 	 * @param isLogoutSession 是否注销 User-Session 
 	 */
@@ -1347,11 +1347,11 @@ public class StpLogic {
 	}
 
 	/** 
-	 * 获取指定账号id指定设备端的tokenValue 
+	 * 获取指定账号id指定设备类型端的tokenValue 
 	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
 	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
 	 * @param loginId 账号id
-	 * @param device 设备标识，填null代表不限设备 
+	 * @param device 设备类型，填null代表不限设备类型 
 	 * @return token值 
 	 */
 	public String getTokenValueByLoginId(Object loginId, String device) {
@@ -1369,9 +1369,9 @@ public class StpLogic {
 	}
 
  	/** 
-	 * 获取指定账号id指定设备端的tokenValue 集合 
+	 * 获取指定账号id指定设备类型端的tokenValue 集合 
 	 * @param loginId 账号id 
-	 * @param device 设备标识，填null代表不限设备 
+	 * @param device 设备类型，填null代表不限设备类型
 	 * @return 此loginId的所有相关token 
  	 */
 	public List<String> getTokenValueListByLoginId(Object loginId, String device) {
@@ -1392,8 +1392,8 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 返回当前会话的登录设备 
-	 * @return 当前令牌的登录设备 
+	 * 返回当前会话的登录设备类型
+	 * @return 当前令牌的登录设备类型
 	 */
 	public String getLoginDevice() {
 		// 如果没有token，直接返回 null 
@@ -1799,10 +1799,10 @@ public class StpLogic {
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout(id) ，使用方式保持不变 </h1>
 	 * 
-	 * 会话注销，根据账号id and 设备标识 （踢人下线）
+	 * 会话注销，根据账号id and 设备类型 （踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表所有注销设备) 
+	 * @param device 设备类型 (填null代表注销所有设备类型) 
 	 */
 	@Deprecated
  	public void logoutByLoginId(Object loginId, String device) {
@@ -1812,7 +1812,7 @@ public class StpLogic {
 	/**
 	 * 创建一个TokenValue
 	 * @param loginId loginId 
-	 * @param device 设备标识 
+	 * @param device 设备类型 
 	 * @param timeout 过期时间 
 	 * @return 生成的tokenValue 
 	 */
