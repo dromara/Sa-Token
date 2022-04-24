@@ -3,7 +3,7 @@ package cn.dev33.satoken.config;
 import java.io.Serializable;
 
 /**
- * Sa-Token 配置类 Model
+ * Sa-Token 配置类 Model 
  * <p>
  * 你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档: http://sa-token.dev33.cn/
  * 
@@ -31,6 +31,11 @@ public class SaTokenConfig implements Serializable {
 
 	/** 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) */
 	private Boolean isShare = true;
+
+	/**
+	 * 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置才有效）
+	 */
+	private int maxLoginCount = 10;
 
 	/** 是否尝试从请求体里读取token */
 	private Boolean isReadBody = true;
@@ -173,6 +178,22 @@ public class SaTokenConfig implements Serializable {
 	 */
 	public SaTokenConfig setIsShare(Boolean isShare) {
 		this.isShare = isShare;
+		return this;
+	}
+
+	/**
+	 * @return 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置才有效）
+	 */
+	public int getMaxLoginCount() {
+		return maxLoginCount;
+	}
+
+	/**
+	 * @param maxLoginCount 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置才有效）
+	 * @return 对象自身 
+	 */
+	public SaTokenConfig setMaxLoginCount(int maxLoginCount) {
+		this.maxLoginCount = maxLoginCount;
 		return this;
 	}
 
@@ -458,6 +479,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", activityTimeout=" + activityTimeout
 				+ ", isConcurrent=" + isConcurrent 
 				+ ", isShare=" + isShare 
+				+ ", maxLoginCount=" + maxLoginCount 
 				+ ", isReadBody=" + isReadBody
 				+ ", isReadHead=" + isReadHead 
 				+ ", isReadCookie=" + isReadCookie
