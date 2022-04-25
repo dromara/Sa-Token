@@ -42,7 +42,7 @@ public class GlobalException {
 		} 
 		else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
-			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
+			aj = AjaxJson.getNotJur("无此权限：" + ee.getPermission());
 		} 
 		else if(e instanceof DisableLoginException) {	// 如果是被封禁异常
 			DisableLoginException ee = (DisableLoginException) e;

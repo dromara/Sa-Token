@@ -1,5 +1,6 @@
 package cn.dev33.satoken.config;
 
+
 import java.io.Serializable;
 import java.util.function.BiFunction;
 import java.util.function.Function;

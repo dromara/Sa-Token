@@ -34,6 +34,13 @@
             <version>${sa-token-version}</version>
         </dependency>
         
+		<!-- Sa-Token 插件：整合SSO -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sso</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+        
 		<!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>

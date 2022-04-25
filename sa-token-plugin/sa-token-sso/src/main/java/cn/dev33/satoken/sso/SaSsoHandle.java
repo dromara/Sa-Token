@@ -1,13 +1,13 @@
 package cn.dev33.satoken.sso;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.sso.SaSsoConsts.Api;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
+import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.exception.SaSsoExceptionCode;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -27,7 +27,7 @@ public class SaSsoHandle {
 		
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 
 		// ------------------ 路由分发 ------------------ 
 		
@@ -68,7 +68,7 @@ public class SaSsoHandle {
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// ---------- 此处有两种情况分开处理：
@@ -98,7 +98,7 @@ public class SaSsoHandle {
 	public static Object ssoDoLogin() {
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 		
 		// 处理 
 		return cfg.getDoLoginHandle().apply(req.getParam(ParamName.name), req.getParam(ParamName.pwd));
@@ -150,7 +150,7 @@ public class SaSsoHandle {
 	public static Object ssoServerLogout() {
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// 获取参数 
@@ -180,7 +180,7 @@ public class SaSsoHandle {
 
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 
 		// ------------------ 路由分发 ------------------ 
 		
@@ -216,7 +216,7 @@ public class SaSsoHandle {
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// 获取参数 
@@ -249,7 +249,7 @@ public class SaSsoHandle {
 				return res.redirect(back);
 			} else {
 				// 如果ticket无效: 
-				throw new SaTokenException("无效ticket：" + ticket);
+				throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoExceptionCode.CODE_20004);
 			}
 		}
 	}
@@ -279,7 +279,7 @@ public class SaSsoHandle {
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// 如果未登录，则无需注销 
@@ -347,7 +347,7 @@ public class SaSsoHandle {
 	 * @return loginId
 	 */
 	public static Object checkTicket(String ticket, String currUri) {
-		SaSsoConfig cfg = SaManager.getConfig().getSso();
+		SaSsoConfig cfg = SaSsoManager.getConfig();
 		// --------- 两种模式 
 		if(cfg.getIsHttp()) {
 			// 模式三：使用http请求校验ticket 

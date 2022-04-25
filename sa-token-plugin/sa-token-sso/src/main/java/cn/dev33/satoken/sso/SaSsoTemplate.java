@@ -7,9 +7,10 @@ import java.util.Set;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
+import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.exception.SaSsoExceptionCode;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -54,7 +55,7 @@ public class SaSsoTemplate {
 	 * @param loginId 账号id 
 	 */
 	public void saveTicket(String ticket, Object loginId) {
-		long ticketTimeout = SaManager.getConfig().getSso().getTicketTimeout();
+		long ticketTimeout = SaSsoManager.getConfig().getTicketTimeout();
 		SaManager.getSaTokenDao().set(splicingTicketSaveKey(ticket), String.valueOf(loginId), ticketTimeout); 
 	}
 	
@@ -64,7 +65,7 @@ public class SaSsoTemplate {
 	 * @param loginId 账号id 
 	 */
 	public void saveTicketIndex(String ticket, Object loginId) {
-		long ticketTimeout = SaManager.getConfig().getSso().getTicketTimeout();
+		long ticketTimeout = SaSsoManager.getConfig().getTicketTimeout();
 		SaManager.getSaTokenDao().set(splicingTicketIndexKey(loginId), String.valueOf(ticket), ticketTimeout); 
 	}
 	
@@ -160,7 +161,7 @@ public class SaSsoTemplate {
 	public String buildServerAuthUrl(String clientLoginUrl, String back) {
 		
 		// 服务端认证地址 
-		String serverUrl = SaManager.getConfig().getSso().getAuthUrl();
+		String serverUrl = SaSsoManager.getConfig().getAuthUrl();
 		
 		// 对back地址编码 
 		back = (back == null ? "" : back);
@@ -210,7 +211,7 @@ public class SaSsoTemplate {
 		
 		// 1、是否是一个有效的url 
 		if(SaFoxUtil.isUrl(url) == false) {
-			throw new SaTokenException("无效redirect：" + url);
+			throw new SaSsoException("无效redirect：" + url).setCode(SaSsoExceptionCode.CODE_20001);
 		}
 		
 		// 2、截取掉?后面的部分 
@@ -222,7 +223,7 @@ public class SaSsoTemplate {
 		// 3、是否在[允许地址列表]之中 
 		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
 		if(SaStrategy.me.hasElement.apply(authUrlList, url) == false) {
-			throw new SaTokenException("非法redirect：" + url);
+			throw new SaSsoException("非法redirect：" + url).setCode(SaSsoExceptionCode.CODE_20002);
 		}
 		
 		// 校验通过 √ 
@@ -235,7 +236,7 @@ public class SaSsoTemplate {
 	 */
 	public String getAllowUrl() {
 		// 默认从配置文件中返回 
-		return SaManager.getConfig().getSso().getAllowUrl();
+		return SaSsoManager.getConfig().getAllowUrl();
 	}
 	
 	/**
@@ -271,9 +272,9 @@ public class SaSsoTemplate {
 	 */
 	public String buildUserinfoUrl(Object loginId) {
 		// 拼接 
-		String userinfoUrl = SaManager.getConfig().getSso().getUserinfoUrl();
+		String userinfoUrl = SaSsoManager.getConfig().getUserinfoUrl();
 		userinfoUrl = SaFoxUtil.joinParam(userinfoUrl, ParamName.loginId, loginId);
-		userinfoUrl = SaFoxUtil.joinParam(userinfoUrl, ParamName.secretkey, SaManager.getConfig().getSso().getSecretkey());
+		userinfoUrl = SaFoxUtil.joinParam(userinfoUrl, ParamName.secretkey, SaSsoManager.getConfig().getSecretkey());
 		// 返回 
 		return userinfoUrl;
 	}
@@ -286,8 +287,8 @@ public class SaSsoTemplate {
 	 * @param secretkey 秘钥 
 	 */
 	public void checkSecretkey(String secretkey) {
-		 if(secretkey == null || secretkey.isEmpty() || secretkey.equals(SaManager.getConfig().getSso().getSecretkey()) == false) {
-			 throw new SaTokenException("无效秘钥：" + secretkey);
+		 if(secretkey == null || secretkey.isEmpty() || secretkey.equals(SaSsoManager.getConfig().getSecretkey()) == false) {
+			 throw new SaSsoException("无效秘钥：" + secretkey).setCode(SaSsoExceptionCode.CODE_20003);
 		 }
 	}
 	
@@ -300,7 +301,7 @@ public class SaSsoTemplate {
 	 */
 	public String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
 		// 裸地址 
-		String url = SaManager.getConfig().getSso().getCheckTicketUrl();
+		String url = SaSsoManager.getConfig().getCheckTicketUrl();
 		
 		// 拼接ticket参数 
 		url = SaFoxUtil.joinParam(url, ParamName.ticket, ticket);
@@ -340,7 +341,7 @@ public class SaSsoTemplate {
 			return;
 		}
 
-		String secretkey = SaManager.getConfig().getSso().getSecretkey();
+		String secretkey = SaSsoManager.getConfig().getSecretkey();
 		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, () -> new HashSet<String>());
 		for (String url : urlSet) {
 			// 拼接：login参数、秘钥参数
@@ -357,7 +358,7 @@ public class SaSsoTemplate {
 	 * @return 单点注销URL 
 	 */
 	public String buildSloUrl(Object loginId) {
-		SaSsoConfig ssoConfig = SaManager.getConfig().getSso();
+		SaSsoConfig ssoConfig = SaSsoManager.getConfig();
 		String url = ssoConfig.getSloUrl();
 		url = SaFoxUtil.joinParam(url, ParamName.loginId, loginId);
 		url = SaFoxUtil.joinParam(url, ParamName.secretkey, ssoConfig.getSecretkey());
@@ -389,7 +390,7 @@ public class SaSsoTemplate {
 	 */
 	public Object getUserinfo(Object loginId) {
 		String url = buildUserinfoUrl(loginId);
-		return SaManager.getConfig().getSso().getSendHttp().apply(url);
+		return SaSsoManager.getConfig().getSendHttp().apply(url);
 	}
 	
 	

@@ -14,8 +14,6 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.sso.SaSsoTemplate;
-import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -119,16 +117,6 @@ public class SaBeanInject {
 		SaBasicUtil.saBasicTemplate = saBasicTemplate;
 	}
 	
-	/**
-	 * 注入 Sa-Token-SSO 单点登录模块 Bean
-	 * 
-	 * @param saSsoTemplate saSsoTemplate对象 
-	 */
-	@Autowired(required = false)
-	public void setSaSsoTemplate(SaSsoTemplate saSsoTemplate) {
-		SaSsoUtil.saSsoTemplate = saSsoTemplate;
-	}
-
 	/**
 	 * 注入自定义的 StpLogic 
 	 * @param stpLogic / 

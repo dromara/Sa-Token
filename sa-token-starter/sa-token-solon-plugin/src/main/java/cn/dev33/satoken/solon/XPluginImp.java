@@ -21,8 +21,6 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.solon.integration.SaContextForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenMethodInterceptor;
-import cn.dev33.satoken.sso.SaSsoTemplate;
-import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -90,11 +88,6 @@ public class XPluginImp implements Plugin {
         // Sa-Token Http Basic 认证模块 Bean 
         Aop.getAsyn(SaBasicTemplate.class, bw->{
         	SaBasicUtil.saBasicTemplate = bw.raw();
-        });
-
-        // Sa-Token-SSO 单点登录模块 Bean
-        Aop.getAsyn(SaSsoTemplate.class, bw->{
-        	SaSsoUtil.saSsoTemplate = bw.raw();
         });
 
         // 自定义 StpLogic 对象 

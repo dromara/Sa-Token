@@ -17,12 +17,39 @@ public class SaTokenException extends RuntimeException {
 	private static final long serialVersionUID = 6806129545290130132L;
 
 	/**
+	 * 异常细分状态码 
+	 */
+	private int code = SaExceptionCode.CODE_UNDEFINED;
+
+	/**
+	 * 构建一个异常
+	 * 
+	 * @param code 异常细分状态码 
+	 */
+	public SaTokenException(int code) {
+		super();
+		this.code = code;
+	}
+
+
+	/**
 	 * 构建一个异常
 	 * 
 	 * @param message 异常描述信息
 	 */
 	public SaTokenException(String message) {
 		super(message);
+	}
+
+	/**
+	 * 构建一个异常
+	 * 
+	 * @param code 异常细分状态码 
+	 * @param message 异常信息
+	 */
+	public SaTokenException(int code, String message) {
+		super(message);
+		this.code = code;
 	}
 
 	/**
@@ -44,6 +71,23 @@ public class SaTokenException extends RuntimeException {
 		super(message, cause);
 	}
 
+	/**
+	 * @return 异常细分状态码
+	 */
+	public int getCode() {
+		return code;
+	}
+
+	/**
+	 * 写入异常细分状态码 
+	 * @param code 异常细分状态码
+	 * @return 对象自身 
+	 */
+	public SaTokenException setCode(int code) {
+		this.code = code;
+		return this;
+	}
+	
 	/**
 	 * 如果flag==true，则抛出message异常 
 	 * @param flag 标记

@@ -320,10 +320,7 @@ public class StpLogic {
 			if(getConfigOfIsShare()) {
 				tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 			} else {
-				// 如果配置为不共享token，需要检查会话是否超出 max-login-count 
-				if(config.getMaxLoginCount() != -1) {
-					logoutByRetainCount(id, null, config.getMaxLoginCount() - 1);
-				}
+				// 
 			}
 		} else {
 			// --- 如果不允许并发登录，则将这个账号的历史登录标记为：被顶下线 
@@ -354,6 +351,11 @@ public class StpLogic {
 
 		// $$ 通知监听器，账号xxx 登录成功 
 		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
+
+		// 检查此账号会话数量是否超出最大值 
+		if(config.getMaxLoginCount() != -1) {
+			logoutByMaxLoginCount(id, session, null, config.getMaxLoginCount());
+		}
 		
 		// 返回Token 
 		return tokenValue;
@@ -399,28 +401,11 @@ public class StpLogic {
 	 * @param device 设备类型 (填null代表注销所有设备类型) 
 	 */
 	public void logout(Object loginId, String device) {
-		logoutByRetainCount(loginId, device, 0);
-	}
-	
-	/**
-	 * 会话注销，根据账号id 和 设备类型 和 保留数量 
-	 * 
-	 * @param loginId 账号id 
-	 * @param device 设备类型 (填null代表注销所有设备类型) 
-	 * @param retainCount 保留最近的n次登录 
-	 */
-	public void logoutByRetainCount(Object loginId, String device, int retainCount) {
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session != null) {
-			List<TokenSign> list = session.tokenSignListCopyByDevice(device);
-			// 遍历操作 
-			for (int i = 0; i < list.size(); i++) {
-				// 只操作前n条 
-				if(i >= list.size() - retainCount) {
-					continue;
-				}
+			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
 				// 清理： token签名、token最后活跃时间 
-				String tokenValue = list.get(i).getValue();
+				String tokenValue = tokenSign.getValue();
 				session.removeTokenSign(tokenValue); 
 				clearLastActivity(tokenValue); 	
 		 		// 删除Token-Id映射 & 清除Token-Session 
@@ -431,6 +416,41 @@ public class StpLogic {
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
 		}
+	}
+	
+	/**
+	 * 会话注销，根据账号id 和 设备类型 和 最大同时在线数量 
+	 * 
+	 * @param loginId 账号id 
+	 * @param session 此账号的 Session 对象，可填写null，框架将自动获取 
+	 * @param device 设备类型 (填null代表注销所有设备类型) 
+	 * @param maxLoginCount 保留最近的几次登录 
+	 */
+	public void logoutByMaxLoginCount(Object loginId, SaSession session, String device, int maxLoginCount) {
+		if(session == null) {
+			session = getSessionByLoginId(loginId, false);
+			if(session == null) {
+				return;
+			}
+		}
+		List<TokenSign> list = session.tokenSignListCopyByDevice(device);
+		// 遍历操作 
+		for (int i = 0; i < list.size(); i++) {
+			// 只操作前n条 
+			if(i >= list.size() - maxLoginCount) {
+				continue;
+			}
+			// 清理： token签名、token最后活跃时间 
+			String tokenValue = list.get(i).getValue();
+			session.removeTokenSign(tokenValue); 
+			clearLastActivity(tokenValue); 	
+	 		// 删除Token-Id映射 & 清除Token-Session 
+			deleteTokenToIdMapping(tokenValue);
+			deleteTokenSession(tokenValue);
+			SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+		}
+		// 注销 Session 
+		session.logoutByTokenSignCountToZero();
 	}
 	
 	/**

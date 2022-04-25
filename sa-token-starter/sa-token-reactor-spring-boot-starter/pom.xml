@@ -51,6 +51,13 @@
             <version>${revision}</version>
 			<optional>true</optional>
 		</dependency>
+		<!-- SSO (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sso</artifactId>
+            <version>${revision}</version>
+			<optional>true</optional>
+		</dependency>
 		
 		<!-- config -->
 		<dependency>

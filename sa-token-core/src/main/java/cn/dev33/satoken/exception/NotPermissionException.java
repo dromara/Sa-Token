@@ -16,13 +16,13 @@ public class NotPermissionException extends SaTokenException {
 	private static final long serialVersionUID = 6806129545290130141L;
 
 	/** 权限码 */
-	private String code;
+	private String permission;
 
 	/**
-	 * @return 获得权限码
+	 * @return 获得具体缺少的权限码
 	 */
-	public String getCode() {
-		return code;
+	public String getPermission() {
+		return permission;
 	}
 
 	/**
@@ -39,14 +39,23 @@ public class NotPermissionException extends SaTokenException {
 		return loginType;
 	}
 
-	public NotPermissionException(String code) {
-		this(code, StpUtil.stpLogic.loginType);
+	public NotPermissionException(String permission) {
+		this(permission, StpUtil.stpLogic.loginType);
 	}
 
-	public NotPermissionException(String code, String loginType) {
-		super("无此权限：" + code);
-		this.code = code;
+	public NotPermissionException(String permission, String loginType) {
+		super("无此权限：" + permission);
+		this.permission = permission;
 		this.loginType = loginType;
+	}
+
+	/**
+	 * <h1> 警告：自 v1.30+ 版本起，获取异常权限码由 getCode() 更改为 getPermission()，请及时更换！ 
+	 * @return 获得权限码
+	 */
+	@Deprecated
+	public int getCode() {
+		return super.getCode();
 	}
 
 }

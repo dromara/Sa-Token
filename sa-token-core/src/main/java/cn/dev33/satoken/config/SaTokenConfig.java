@@ -35,7 +35,7 @@ public class SaTokenConfig implements Serializable {
 	/**
 	 * 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置才有效）
 	 */
-	private int maxLoginCount = 10;
+	private int maxLoginCount = 12;
 
 	/** 是否尝试从请求体里读取token */
 	private Boolean isReadBody = true;
@@ -92,11 +92,6 @@ public class SaTokenConfig implements Serializable {
 	 * Cookie配置对象 
 	 */
 	public SaCookieConfig cookie = new SaCookieConfig();
-	
-	/**
-	 * SSO单点登录配置对象 
-	 */
-	public SaSsoConfig sso = new SaSsoConfig();
 	
 
 	/**
@@ -440,22 +435,6 @@ public class SaTokenConfig implements Serializable {
 	}
 	
 	/**
-	 * @return SSO单点登录配置对象 
-	 */
-	public SaSsoConfig getSso() {
-		return sso;
-	}
-	
-	/**
-	 * @param sso SSO单点登录配置对象 
-	 * @return 对象自身 
-	 */
-	public SaTokenConfig setSso(SaSsoConfig sso) {
-		this.sso = sso;
-		return this;
-	}
-	
-	/**
 	 * @return Cookie 全局配置对象
 	 */
 	public SaCookieConfig getCookie() {
@@ -495,7 +474,6 @@ public class SaTokenConfig implements Serializable {
 				+ ", basic=" + basic 
 				+ ", currDomain=" + currDomain 
 				+ ", checkIdToken=" + checkIdToken 
-				+ ", sso=" + sso 
 				+ ", cookie=" + cookie 
 				+ "]";
 	}
