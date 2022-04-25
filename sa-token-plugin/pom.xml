@@ -23,6 +23,7 @@
         <module>sa-token-dao-redis-jackson</module>
         <module>sa-token-dao-redisx</module>
         <module>sa-token-dialect-thymeleaf</module>
+       	<module>sa-token-sso</module>
        	<module>sa-token-oauth2</module>
         <module>sa-token-quick-login</module>
         <module>sa-token-spring-aop</module>
