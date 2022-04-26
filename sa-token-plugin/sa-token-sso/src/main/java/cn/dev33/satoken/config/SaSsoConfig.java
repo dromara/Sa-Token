@@ -279,12 +279,16 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * SSO-Server端：未登录时返回的View 
 	 */
-	public Supplier<Object> notLoginView = () -> "当前会话在SSO-Server认证中心尚未登录";
+	public Supplier<Object> notLoginView = () -> {
+		return "当前会话在SSO-Server认证中心尚未登录";
+	};
 
 	/**
 	 * SSO-Server端：登录函数 
 	 */
-	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> SaResult.error();
+	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> {
+		return SaResult.error();
+	};
 
 	/**
 	 * SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
@@ -294,7 +298,9 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * SSO-Client端：发送Http请求的处理函数 
 	 */
-	public Function<String, Object> sendHttp = url -> {throw new SaTokenException("请配置Http处理器");};
+	public Function<String, String> sendHttp = url -> {
+		throw new SaTokenException("请配置 Http 请求处理器");
+	};
 
 
 	/**
@@ -349,7 +355,7 @@ public class SaSsoConfig implements Serializable {
 	 * @param sendHttp SSO-Client端：发送Http请求的处理函数 
 	 * @return 对象自身 
 	 */
-	public SaSsoConfig setSendHttp(Function<String, Object> sendHttp) {
+	public SaSsoConfig setSendHttp(Function<String, String> sendHttp) {
 		this.sendHttp = sendHttp;
 		return this;
 	}
@@ -357,7 +363,7 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * @return 函数 SSO-Client端：发送Http请求的处理函数
 	 */
-	public Function<String, Object> getSendHttp() {
+	public Function<String, String> getSendHttp() {
 		return sendHttp;
 	}
 

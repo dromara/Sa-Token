@@ -19,7 +19,11 @@ public class SaSsoExceptionCode {
 
 	/** 提供的 ticket 是无效的 */
 	public static final int CODE_20004 = 20004;
-	
-	
+
+	/** 在模式三下，sso-client 调用 sso-server 端 校验ticket接口 时，得到的响应是校验失败 */
+	public static final int CODE_20005 = 20005;
+
+	/** 在模式三下，sso-client 调用 sso-server 端 单点注销接口 时，得到的响应是注销失败 */
+	public static final int CODE_20006 = 20006;
 	
 }

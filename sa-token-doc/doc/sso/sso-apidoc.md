@@ -37,8 +37,9 @@ http://{host}:{port}/sso/doLogin
 | name			| 是		| 用户名  |
 | pwd			| 是		| 密码	 |
 
-此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 `setDoLoginHandle` 函数中，另外需要注意：
-此接口并非只能携带 name、pwd 参数，因为你可以在 setDoLoginHandle 函数里通过 `SaHolder.getRequest().getParam("xxx")` 来获取其它参数。 
+此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 `sso.setDoLoginHandle` 函数中，此函数的返回值即是此接口的响应值。
+
+另外需要注意：此接口并非只能携带 name、pwd 参数，因为你可以在方法里通过 `SaHolder.getRequest().getParam("xxx")` 来获取前端提交的其它参数。 
 
 
 ### 3、Ticket 校验接口
@@ -52,12 +53,29 @@ http://{host}:{port}/sso/checkTicket
 
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
-| ticket		| 是		| 在步骤 5.1 中授权重定向时的 ticket 参数 						|
+| ticket		| 是		| 在步骤 1 中授权重定向时的 ticket 参数 						|
 | ssoLogoutCall	| 否		| 单点注销时的回调通知地址，只在SSO模式三单点注销时需要携带此参数|
 
 返回值场景：
-- 返回空，代表校验失败。
-- 返回具体的 loginId，例如10001，代表校验成功，值为此 ticket 码代表的用户id。
+- 校验成功时：
+
+``` js
+{
+    "code": 200,
+    "msg": "ok",
+    "data": "10001"	// 此 ticket 指向的 loginId
+}
+```
+
+- 校验失败时：
+
+``` js
+{
+    "code": 500,
+    "msg": "无效ticket：vESj0MtqrtSoucz4DDHJnsqU3u7AKFzbj0KH57EfJvuhkX1uAH23DuNrMYSjTnEq",
+    "data": null
+}
+```
 
 
 ### 4、单点注销接口
@@ -89,6 +107,17 @@ http://{host}:{port}/sso/logout
     "data": null
 }
 ```
+
+如果单点注销失败，将返回：
+
+``` js
+{
+    "code": 500,    // 200表示请求成功，非200标识请求失败
+    "msg": "无效秘钥：xxx",	// 失败原因 
+    "data": null
+}
+```
+
 
 <br>
 

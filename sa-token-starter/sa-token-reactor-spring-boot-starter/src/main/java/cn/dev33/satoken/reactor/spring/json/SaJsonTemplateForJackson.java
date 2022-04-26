@@ -5,7 +5,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.exception.SaJsonConvertException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 
 /**
@@ -31,7 +31,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 		try {
 			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
-			throw new SaTokenException(e);
+			throw new SaJsonConvertException(e);
 		}
 	}
 	
@@ -45,7 +45,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			Map<String, Object> map = objectMapper.readValue(jsonStr, Map.class);
 			return map;
 		} catch (JsonProcessingException e) {
-			throw new SaTokenException(e);
+			throw new SaJsonConvertException(e);
 		}
 	}
 
