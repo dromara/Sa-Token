@@ -20,6 +20,20 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 * 底层 Mapper 对象 
 	 */
 	public ObjectMapper objectMapper = new ObjectMapper();
+
+	/**
+	 * 将任意对象转换为 json 字符串 
+	 * 
+	 * @param obj 对象 
+	 * @return 转换后的 json 字符串
+	 */
+	public String toJsonString(Object obj) {
+		try {
+			return objectMapper.writeValueAsString(obj);
+		} catch (JsonProcessingException e) {
+			throw new SaTokenException(e);
+		}
+	}
 	
 	/**
 	 * 将 json 字符串解析为 Map
