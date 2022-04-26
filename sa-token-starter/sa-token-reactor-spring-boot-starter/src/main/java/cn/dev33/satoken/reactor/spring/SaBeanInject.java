@@ -13,6 +13,7 @@ import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
@@ -113,8 +114,18 @@ public class SaBeanInject {
 	 * @param saBasicTemplate saBasicTemplate对象 
 	 */
 	@Autowired(required = false)
-	public void setSaSsoTemplate(SaBasicTemplate saBasicTemplate) {
+	public void setSaBasicTemplate(SaBasicTemplate saBasicTemplate) {
 		SaBasicUtil.saBasicTemplate = saBasicTemplate;
+	}
+	
+	/**
+	 * 注入自定义的 JSON 转换器 Bean 
+	 * 
+	 * @param saJsonTemplate JSON 转换器 
+	 */
+	@Autowired(required = false)
+	public void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
+		SaManager.setSaJsonTemplate(saJsonTemplate);
 	}
 	
 	/**

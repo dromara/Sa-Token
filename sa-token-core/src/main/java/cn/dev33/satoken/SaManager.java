@@ -11,6 +11,8 @@ import cn.dev33.satoken.context.second.SaTokenSecondContext;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.listener.SaTokenListenerDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
@@ -170,6 +172,24 @@ public class SaManager {
 			}
 		}
 		return saTemp;
+	}
+
+	/**
+	 * JSON 转换器 Bean 
+	 */
+	private volatile static SaJsonTemplate saJsonTemplate;
+	public static void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
+		SaManager.saJsonTemplate = saJsonTemplate;
+	}
+	public static SaJsonTemplate getSaJsonTemplate() {
+		if (saJsonTemplate == null) {
+			synchronized (SaManager.class) {
+				if (saJsonTemplate == null) {
+					setSaJsonTemplate(new SaJsonTemplateDefaultImpl());
+				}
+			}
+		}
+		return saJsonTemplate;
 	}
 	
 	/**

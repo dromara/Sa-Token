@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
+import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.reactor.spring.json.SaJsonTemplateForJackson;
 
 /**
  * 注册Sa-Token所需要的Bean 
@@ -44,4 +46,14 @@ public class SaBeanRegister {
 		};
 	}
 
+	/**
+	 * 获取 json 转换器 Bean (Jackson版)
+	 * 
+	 * @return json 转换器 Bean (Jackson版)
+	 */
+	@Bean
+	public SaJsonTemplate getSaJsonTemplateForJackson() {
+		return new SaJsonTemplateForJackson();
+	}
+	
 }
