@@ -93,14 +93,23 @@ public class SsoServerController {
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
 		cfg.sso.setSendHttp(url -> {
-			return OkHttps.sync(url).get().getBody().toString();
+			try {
+				// 发起 http 请求 
+				System.out.println("发起请求：" + url);
+				return OkHttps.sync(url).get().getBody().toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 		});
 	}
 	
 }
 ```
 
-注：在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
+注意：
+- 在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
+- 在 `setSendHttp` 函数中，使用 `try-catch` 是为了提高整个注销流程的容错性，避免在一些极端情况下注销失败（例如：某个 Client 端上线之后又下线，导致 http 请求无法调用成功，从而阻断了整个注销流程）
 
 全局异常处理：
 ``` java

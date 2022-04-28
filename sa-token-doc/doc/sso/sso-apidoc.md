@@ -83,22 +83,33 @@ http://{host}:{port}/sso/checkTicket
 http://{host}:{port}/sso/logout         
 ```
 
-接受参数：
-
-| 参数			| 是否必填	| 说明													|
-| :--------		| :--------	| :--------												|
-| loginId		| 否		| 要注销的账号id			 						|
-| secretkey		| 否		| 接口通信秘钥									|
-| back			| 否		| 注销成功后的重定向地址							|
-
-
 此接口有两种调用方式
 
-##### 方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数 
-例如：`http://{host}:{port}/sso/logout?back=xxx`，代表用户注销成功后返回back地址 
+##### 4.1、方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数 
+例如：
 
-##### 方式二：在 Client 的后端通过 http 工具来调用
-例如：`http://{host}:{port}/sso/logout?loginId={value}&secretkey={value}`，代表注销 账号=loginId 的账号，返回json数据结果，形如：
+``` url
+http://{host}:{port}/sso/logout?back=xxx
+```
+用户注销成功后将返回 back 地址 
+
+##### 4.2、方式二：在 Client 的后端通过 http 工具来调用
+
+接受参数：
+
+| 参数			| 是否必填	| 说明											|
+| :--------		| :--------	| :--------										|
+| loginId		| 是		| 要注销的账号 id			 					|
+| timestamp		| 是		| 当前时间戳，13位									|
+| nonce			| 是		| 随机字符串										|
+| sign			| 是		| 签名，生成算法：`md5( loginId={value}&nonce={value}&timestamp={value}&key={secretkey秘钥} )`							|
+
+例如：
+``` url
+http://{host}:{port}/sso/logout?loginId={value}&timestamp={value}&nonce={value}&sign={value}
+```
+
+将返回 json 数据结果，形如：
 
 ``` js
 {
@@ -113,7 +124,7 @@ http://{host}:{port}/sso/logout
 ``` js
 {
     "code": 500,    // 200表示请求成功，非200标识请求失败
-    "msg": "无效秘钥：xxx",	// 失败原因 
+    "msg": "签名无效：xxx",	// 失败原因 
     "data": null
 }
 ```

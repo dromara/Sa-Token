@@ -18,7 +18,9 @@ import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.integration.SaContextForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenMethodInterceptor;
 import cn.dev33.satoken.stp.StpInterface;
@@ -88,6 +90,16 @@ public class XPluginImp implements Plugin {
         // Sa-Token Http Basic 认证模块 Bean 
         Aop.getAsyn(SaBasicTemplate.class, bw->{
         	SaBasicUtil.saBasicTemplate = bw.raw();
+        });
+
+        // Sa-Token JSON 转换器 Bean 
+        Aop.getAsyn(SaJsonTemplate.class, bw->{
+        	SaManager.setSaJsonTemplate(bw.raw());
+        });
+
+        // Sa-Token 参数签名算法 Bean 
+        Aop.getAsyn(SaSignTemplate.class, bw->{
+        	SaManager.setSaSignTemplate(bw.raw());
         });
 
         // 自定义 StpLogic 对象 

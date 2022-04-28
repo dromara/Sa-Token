@@ -4,7 +4,6 @@ import java.util.Map;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
@@ -53,9 +52,6 @@ public class SaJwtUtil {
 	 */
     public static String createToken(Object loginId, Map<String, Object> extraData, String keyt) {
     	
-    	// 秘钥不可以为空 
-    	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
-    	
     	// 构建
     	String token = JWT.create()
 			    .setPayload(LOGIN_ID, loginId)
@@ -81,9 +77,6 @@ public class SaJwtUtil {
 	 */
 	public static String createToken(String loginType, Object loginId, String device,
 									 long timeout, Map<String, Object> extraData, String keyt) {
-
-		// 秘钥不可以为空
-		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
 
 		// 计算有效期
 		long effTime = timeout;
@@ -112,9 +105,7 @@ public class SaJwtUtil {
      * @return 解析后的jwt 对象 
      */
     public static JWT parseToken(String token, String keyt) {
-	// 秘钥不可以为空
-	SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
-	
+
     	// 如果token为null 
     	if(token == null) {
     		throw NotLoginException.newInstance(null, NotLoginException.NOT_TOKEN);

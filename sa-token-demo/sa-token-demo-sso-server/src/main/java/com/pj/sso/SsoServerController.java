@@ -53,8 +53,15 @@ public class SsoServerController {
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
 		sso.setSendHttp(url -> {
-			return OkHttps.sync(url).get().getBody().toString();
+			try {
+				// 发起 http 请求 
+				System.out.println("发起请求：" + url);
+				return OkHttps.sync(url).get().getBody().toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 		});
 	}
-
+	
 }

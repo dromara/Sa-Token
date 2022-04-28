@@ -62,6 +62,10 @@ public class SaSsoConsts {
 
 		public static String name = "name";
 		public static String pwd = "pwd";
+		
+		public static String timestamp = "timestamp";
+		public static String nonce = "nonce";
+		public static String sign = "sign";
 
 	}
 

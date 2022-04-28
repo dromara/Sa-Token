@@ -91,6 +91,14 @@ public class SaSsoConfig implements Serializable {
 	public String ssoLogoutCall;
 
 
+	// ----------------- 其它 
+	
+	/**
+	 * 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
+	 */
+	public long timestampDisparity = 1000  * 60 * 10;
+
+
 
 
 	/**
@@ -253,12 +261,37 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
+	 */
+	public long getTimestampDisparity() {
+		return timestampDisparity;
+	}
+
+	/**
+	 * @param timestampDisparity 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
+	 * @return 对象自身 
+	 */
+	public SaSsoConfig setTimestampDisparity(long timestampDisparity) {
+		this.timestampDisparity = timestampDisparity;
+		return this;
+	}
+	
 	@Override
 	public String toString() {
-		return "SaSsoConfig [ticketTimeout=" + ticketTimeout + ", allowUrl=" + allowUrl + ", isSlo=" + isSlo
-				+ ", isHttp=" + isHttp + ", secretkey=" + secretkey + ", authUrl=" + authUrl + ", checkTicketUrl="
-				+ checkTicketUrl + ", userinfoUrl=" + userinfoUrl + ", sloUrl=" + sloUrl + ", ssoLogoutCall="
-				+ ssoLogoutCall + "]";
+		return "SaSsoConfig ["
+				+ "ticketTimeout=" + ticketTimeout 
+				+ ", allowUrl=" + allowUrl 
+				+ ", isSlo=" + isSlo
+				+ ", isHttp=" + isHttp 
+				+ ", secretkey=" + secretkey 
+				+ ", authUrl=" + authUrl 
+				+ ", checkTicketUrl=" + checkTicketUrl
+				+ ", userinfoUrl=" + userinfoUrl 
+				+ ", sloUrl=" + sloUrl 
+				+ ", ssoLogoutCall=" + ssoLogoutCall 
+				+ ", timestampDisparity=" + timestampDisparity 
+				+ "]";
 	}
 	
 	/**

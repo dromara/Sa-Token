@@ -2,6 +2,7 @@ package cn.dev33.satoken.jwt;
 
 import java.util.Map;
 
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -32,7 +33,9 @@ public class StpLogicJwtForStyle extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		return getConfig().getJwtSecretKey();
+		String keyt = getConfig().getJwtSecretKey();
+		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+		return keyt;
 	}
 	
 	// ------ 重写方法 

@@ -1,7 +1,8 @@
 package cn.dev33.satoken.sso;
 
-import cn.dev33.satoken.sso.SaSsoTemplate.CallSloUrlFunction;
+import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token-SSO 单点登录模块 工具类 
@@ -71,7 +72,71 @@ public class SaSsoUtil {
 	public static Object checkTicket(String ticket) {
 		return saSsoTemplate.checkTicket(ticket);
 	}
+
+	/**
+	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) 
+	 * @return see note 
+	 */
+	public static String getAllowUrl() {
+		return saSsoTemplate.getAllowUrl();
+	}
+
+	/**
+	 * 校验重定向url合法性
+	 * @param url 下放ticket的url地址 
+	 */
+	public static void checkRedirectUrl(String url) {
+		saSsoTemplate.checkRedirectUrl(url);
+	}
+
 	
+	// ------------------- SSO 模式三 ------------------- 
+	
+	/**
+	 * 构建URL：校验ticket的URL 
+	 * @param ticket ticket码
+	 * @param ssoLogoutCallUrl 单点注销时的回调URL 
+	 * @return 构建完毕的URL 
+	 */
+	public static String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
+		return saSsoTemplate.buildCheckTicketUrl(ticket, ssoLogoutCallUrl);
+	}
+
+	/**
+	 * 为指定账号id注册单点注销回调URL 
+	 * @param loginId 账号id
+	 * @param sloCallbackUrl 单点注销时的回调URL 
+	 */
+	public static void registerSloCallbackUrl(Object loginId, String sloCallbackUrl) {
+		saSsoTemplate.registerSloCallbackUrl(loginId, sloCallbackUrl);
+	}
+
+	/**
+	 * 构建URL：单点注销URL 
+	 * @param loginId 要注销的账号id
+	 * @return 单点注销URL 
+	 */
+	public static String buildSloUrl(Object loginId) {
+		return saSsoTemplate.buildSloUrl(loginId);
+	}
+
+	/**
+	 * 指定账号单点注销 
+	 * @param loginId 指定账号 
+	 */
+	public static void ssoLogout(Object loginId) {
+		saSsoTemplate.ssoLogout(loginId);
+	}
+
+	/**
+	 * 获取：账号资料 
+	 * @param loginId 账号id
+	 * @return 账号资料 
+	 */
+	public static Object getUserinfo(Object loginId) {
+		return saSsoTemplate.getUserinfo(loginId);
+	}
+
 
 	// ---------------------- 构建URL ---------------------- 
 
@@ -94,22 +159,6 @@ public class SaSsoUtil {
 	public static String buildRedirectUrl(Object loginId, String redirect) {
 		return saSsoTemplate.buildRedirectUrl(loginId, redirect);
 	}
-	
-	/**
-	 * 校验重定向url合法性
-	 * @param url 下放ticket的url地址 
-	 */
-	public static void checkRedirectUrl(String url) {
-		saSsoTemplate.checkRedirectUrl(url);
-	}
-
-	/**
-	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) 
-	 * @return see note 
-	 */
-	public static String getAllowUrl() {
-		return saSsoTemplate.getAllowUrl();
-	}
 
 	/**
 	 * 构建URL：Server端 账号资料查询地址 
@@ -120,70 +169,62 @@ public class SaSsoUtil {
 		return saSsoTemplate.buildUserinfoUrl(loginId);
 	}
 	
-	// ------------------- SSO 模式三 ------------------- 
 	
+	// ------------------- 请求相关 ------------------- 
+
 	/**
-	 * 校验secretkey秘钥是否有效 
+	 * 发出请求，并返回 SaResult 结果 
+	 * @param url 请求地址 
+	 * @return 返回的结果 
+	 */
+	public static SaResult request(String url) {
+		return saSsoTemplate.request(url);
+	}
+
+	/**
+	 * 校验secretkey秘钥是否有效 （API已过期，请更改为更安全的 sign 式校验）
 	 * @param secretkey 秘钥 
 	 */
+	@Deprecated
 	public static void checkSecretkey(String secretkey) {
 		saSsoTemplate.checkSecretkey(secretkey);
 	}
 
 	/**
-	 * 构建URL：校验ticket的URL 
-	 * @param ticket ticket码
-	 * @param ssoLogoutCallUrl 单点注销时的回调URL 
-	 * @return 构建完毕的URL 
-	 */
-	public static String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
-		return saSsoTemplate.buildCheckTicketUrl(ticket, ssoLogoutCallUrl);
-	}
-
-	/**
-	 * 为指定账号id注册单点注销回调URL 
+	 * 根据参数计算签名 
 	 * @param loginId 账号id
-	 * @param sloCallbackUrl 单点注销时的回调URL 
+	 * @param timestamp 当前时间戳，13位
+	 * @param nonce 随机字符串 
+	 * @param secretkey 账号id
+	 * @return 签名 
 	 */
-	public static void registerSloCallbackUrl(Object loginId, String sloCallbackUrl) {
-		saSsoTemplate.registerSloCallbackUrl(loginId, sloCallbackUrl);
+	public static String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
+		return saSsoTemplate.getSign(loginId, timestamp, nonce, secretkey);
 	}
 
 	/**
-	 * 循环调用Client端单点注销回调 
-	 * @param loginId 账号id
-	 * @param fun 调用方法 
+	 * 给 url 追加 sign 等参数 
+	 * @param loginId
+	 * @return 加工后的url 
 	 */
-	public static void forEachSloUrl(Object loginId, CallSloUrlFunction fun) {
-		saSsoTemplate.forEachSloUrl(loginId, fun);
+	public static String addSignParams(String url, Object loginId) {
+		return saSsoTemplate.addSignParams(url, loginId);
 	}
 
 	/**
-	 * 构建URL：单点注销URL 
-	 * @param loginId 要注销的账号id
-	 * @return 单点注销URL 
+	 * 校验签名
+	 * @param req request 
 	 */
-	public static String buildSloUrl(Object loginId) {
-		return saSsoTemplate.buildSloUrl(loginId);
+	public static void checkSign(SaRequest req) {
+		saSsoTemplate.checkSign(req);
 	}
 
 	/**
-	 * 指定账号单点注销 
-	 * @param secretkey 校验秘钥
-	 * @param loginId 指定账号 
-	 * @param fun 调用方法 
+	 * 校验时间戳与当前时间的差距是否超出限制 
+	 * @param timestamp 时间戳 
 	 */
-	public static void singleLogout(String secretkey, Object loginId, CallSloUrlFunction fun) {
-		saSsoTemplate.singleLogout(secretkey, loginId, fun); 
-	}
-
-	/**
-	 * 获取：账号资料 
-	 * @param loginId 账号id
-	 * @return 账号资料 
-	 */
-	public static Object getUserinfo(Object loginId) {
-		return saSsoTemplate.getUserinfo(loginId);
+	public static void checkTimestamp(long timestamp) {
+		saSsoTemplate.checkTimestamp(timestamp);
 	}
 	
 }

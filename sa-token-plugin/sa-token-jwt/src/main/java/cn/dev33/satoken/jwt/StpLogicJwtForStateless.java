@@ -40,7 +40,9 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		return getConfig().getJwtSecretKey();
+		String keyt = getConfig().getJwtSecretKey();
+		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+		return keyt;
 	}
 	
 	// 

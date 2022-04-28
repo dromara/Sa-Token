@@ -1,8 +1,5 @@
 package cn.dev33.satoken.sso;
 
-import java.util.Map;
-
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
@@ -110,15 +107,13 @@ public class SaSsoHandle {
 	}
 
 	/**
-	 * SSO-Server端：校验ticket 获取账号id 
+	 * SSO-Server端：校验ticket 获取账号id [模式三]
 	 * @return 处理结果 
 	 */
 	public static Object ssoCheckTicket() {
-		// 获取对象 
-		SaRequest req = SaHolder.getRequest();
-		
 		// 获取参数 
-		String ticket = req.getParam(ParamName.ticket);
+		SaRequest req = SaHolder.getRequest();
+		String ticket = req.getParamNotNull(ParamName.ticket);
 		String sloCallback = req.getParam(ParamName.ssoLogoutCall);
 		
 		// 校验ticket，获取 loginId 
@@ -143,15 +138,12 @@ public class SaSsoHandle {
 		// 获取对象 
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		SaSsoConfig cfg = SaSsoManager.getConfig();
-		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
-		String loginId = req.getParam(ParamName.loginId);
+		Object loginId = SaSsoUtil.saSsoTemplate.stpLogic.getLoginIdDefaultNull();
 
-		// step.1 遍历 Client 端注销 
-		SaSsoUtil.forEachSloUrl(loginId, url -> cfg.getSendHttp().apply(url));
-		
-		// step.2 Server 端注销 
-		stpLogic.logout();
+		// 单点注销 
+		if(SaFoxUtil.isNotEmpty(loginId)) {
+			SaSsoUtil.ssoLogout(loginId);
+		}
 		
 		// 完成
 		return ssoLogoutBack(req, res);
@@ -162,25 +154,17 @@ public class SaSsoHandle {
 	 * @return 处理结果 
 	 */
 	public static Object ssoLogoutByClientHttp() {
-		// 获取对象 
-		SaRequest req = SaHolder.getRequest();
-		SaSsoConfig cfg = SaSsoManager.getConfig();
-		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
-		
 		// 获取参数 
+		SaRequest req = SaHolder.getRequest();
 		String loginId = req.getParam(ParamName.loginId);
-		String secretkey = req.getParam(ParamName.secretkey);
 		
-		// step.1 校验秘钥 
-		SaSsoUtil.checkSecretkey(secretkey);
+		// step.1 校验签名 
+		SaSsoUtil.checkSign(req);
 		
-		// step.2 遍历 Client 端注销 
-		SaSsoUtil.forEachSloUrl(loginId, url -> cfg.getSendHttp().apply(url));
-		
-		// step.3 Server 端注销 
-		stpLogic.logout(loginId);
-        	
-        // 完成
+		// step.2 单点注销 
+		SaSsoUtil.ssoLogout(loginId);
+        
+        // 响应 
 		return SaResult.ok();
 	}
 	
@@ -302,12 +286,16 @@ public class SaSsoHandle {
             return SaResult.ok();
         }
         
-        // 调用SSO-Server认证中心API，进行注销
+        // 调用 sso-server 认证中心单点注销API 
         String url = SaSsoUtil.buildSloUrl(stpLogic.getLoginId());
-        SaResult result = request(url);
+        SaResult result = SaSsoUtil.request(url);
         
-		// 校验 
+		// 校验响应状态码 
 		if(result.getCode() == SaResult.CODE_SUCCESS) {
+	        // 极端场景下，sso-server 中心的单点注销可能并不会通知到此 client 端，所以这里需要再补一刀
+	        if(stpLogic.isLogin()) {
+	        	stpLogic.logout();
+	        }
 	        return ssoLogoutBack(req, res);
 		} else {
 			// 将 sso-server 回应的消息作为异常抛出 
@@ -325,11 +313,10 @@ public class SaSsoHandle {
 		StpLogic stpLogic = SaSsoUtil.saSsoTemplate.stpLogic;
 		
 		// 获取参数 
-		String loginId = req.getParam(ParamName.loginId);
-		String secretkey = req.getParam(ParamName.secretkey);
+		String loginId = req.getParamNotNull(ParamName.loginId);
 		
 		// 注销当前应用端会话
-		SaSsoUtil.checkSecretkey(secretkey);
+		SaSsoUtil.checkSign(req);
 		stpLogic.logout(loginId);
 		
 		// 响应 
@@ -382,7 +369,7 @@ public class SaSsoHandle {
 			
 			// 发起请求 
 			String checkUrl = SaSsoUtil.buildCheckTicketUrl(ticket, ssoLogoutCall);
-			SaResult result = request(checkUrl);
+			SaResult result = SaSsoUtil.request(checkUrl);
 			
 			// 校验 
 			if(result.getCode() == SaResult.CODE_SUCCESS) {
@@ -397,15 +384,4 @@ public class SaSsoHandle {
 		}
 	}
 	
-	/**
-	 * 发出请求，并返回 SaResult 结果 
-	 * @param url 请求地址 
-	 * @return 返回的结果 
-	 */
-	public static SaResult request(String url) {
-		String body = SaSsoManager.getConfig().getSendHttp().apply(url);
-		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(body);
-		return new SaResult(map);
-	}
-
 }

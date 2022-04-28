@@ -46,6 +46,7 @@ public class SsoClientController {
 	private void configSso(SaSsoConfig sso) {
 		// 配置Http请求处理器 
 		sso.setSendHttp(url -> {
+			System.out.println("发起请求：" + url);
 			return OkHttps.sync(url).get().getBody().toString();
 		});
 	}

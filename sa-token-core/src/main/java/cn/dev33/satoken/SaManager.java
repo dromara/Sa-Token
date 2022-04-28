@@ -15,6 +15,8 @@ import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.listener.SaTokenListenerDefaultImpl;
+import cn.dev33.satoken.sign.SaSignTemplate;
+import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
@@ -190,6 +192,24 @@ public class SaManager {
 			}
 		}
 		return saJsonTemplate;
+	}
+
+	/**
+	 * 参数签名 Bean 
+	 */
+	private volatile static SaSignTemplate saSignTemplate;
+	public static void setSaSignTemplate(SaSignTemplate saSignTemplate) {
+		SaManager.saSignTemplate = saSignTemplate;
+	}
+	public static SaSignTemplate getSaSignTemplate() {
+		if (saSignTemplate == null) {
+			synchronized (SaManager.class) {
+				if (saSignTemplate == null) {
+					setSaSignTemplate(new SaSignTemplateDefaultImpl());
+				}
+			}
+		}
+		return saSignTemplate;
 	}
 	
 	/**

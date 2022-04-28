@@ -15,6 +15,7 @@ import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -126,6 +127,16 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
 		SaManager.setSaJsonTemplate(saJsonTemplate);
+	}
+
+	/**
+	 * 注入自定义的 参数签名 Bean 
+	 * 
+	 * @param saSignTemplate 参数签名 Bean 
+	 */
+	@Autowired(required = false)
+	public void setSaSignTemplate(SaSignTemplate saSignTemplate) {
+		SaManager.setSaSignTemplate(saSignTemplate);
 	}
 	
 	/**
