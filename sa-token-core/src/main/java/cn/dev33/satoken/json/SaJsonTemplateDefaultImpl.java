@@ -17,6 +17,7 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	/**
 	 * 将任意对象转换为 json 字符串 
 	 */
+	@Override
 	public String toJsonString(Object obj) {
 		throw new ApiDisabledException(ERROR_MESSAGE);
 	}
@@ -24,6 +25,7 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	/**
 	 * 将 json 字符串解析为 Map 
 	 */
+	@Override
 	public Map<String, Object> parseJsonToMap(String jsonStr) {
 		throw new ApiDisabledException(ERROR_MESSAGE);
 	};
