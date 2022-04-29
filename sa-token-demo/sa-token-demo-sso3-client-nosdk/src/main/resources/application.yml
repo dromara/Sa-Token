@@ -3,7 +3,7 @@ server:
     port: 9001
 
 spring: 
-    # 配置Sa-Token单独使用的Redis连接 （此处与SSO-Server端连接不同的Redis）
+    # Redis连接
     redis: 
         # Redis数据库索引
         database: 2
