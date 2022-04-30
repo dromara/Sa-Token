@@ -82,11 +82,13 @@ public class StpLogicJwtForStateless extends StpLogic {
 	// ------------------- 登录相关操作 -------------------  
 
 	/**
-	 * 会话登录，并指定所有登录参数Model 
+	 * 创建指定账号id的登录会话
+	 * @param id 登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model 
+	 * @return 返回会话令牌 
 	 */
 	@Override
-	public void login(Object id, SaLoginModel loginModel) {
-
+	public String createLoginSession(Object id, SaLoginModel loginModel) {
 		SaTokenException.throwByNull(id, "账号id不能为空");
 		
 		// ------ 1、初始化 loginModel 
@@ -95,11 +97,10 @@ public class StpLogicJwtForStateless extends StpLogic {
 		// ------ 2、生成一个token  
 		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
 		
-		// 3、在当前会话写入tokenValue 
-		setTokenValue(tokenValue, loginModel.getCookieTimeout());
-
 		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
+		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
+		
+		return tokenValue;
 	}
 
 	/**

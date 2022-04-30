@@ -17,7 +17,7 @@ public class SaTokenListenerDefaultImpl implements SaTokenListener {
 	 * 每次登录时触发 
 	 */
 	@Override
-	public void doLogin(String loginType, Object loginId, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
 		println("账号[" + loginId + "]登录成功");
 	}
 

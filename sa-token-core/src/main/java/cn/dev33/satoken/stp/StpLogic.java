@@ -350,7 +350,7 @@ public class StpLogic {
 		setLastActivityToNow(tokenValue); 
 
 		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
+		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
 
 		// 检查此账号会话数量是否超出最大值 
 		if(config.getMaxLoginCount() != -1) {

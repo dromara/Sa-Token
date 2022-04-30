@@ -1,14 +1,12 @@
 package com.pj.sso;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Random;
 
-import com.ejlchina.okhttps.OkHttps;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dtflys.forest.Forest;
 import com.pj.sso.util.AjaxJson;
 
 /**
@@ -62,18 +60,9 @@ public class SsoRequestUtil {
 	 * @param url 请求地址 
 	 * @return 返回的结果 
 	 */
-	@SuppressWarnings("unchecked")
 	public static AjaxJson request(String url) {
-		String body = OkHttps.sync(url)
-				.post()
-				.getBody()
-				.toString();
-		try {
-			Map<String, Object> map = new ObjectMapper().readValue(body, Map.class);
-			return new AjaxJson(map);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		Map<String, Object> map = Forest.post(url).executeAsMap();
+		return new AjaxJson(map);
 	}
 
 	/**

@@ -14,9 +14,10 @@ public interface SaTokenListener {
 	 * 每次登录时触发 
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
+	 * @param tokenValue 本次登录产生的 token 值 
 	 * @param loginModel 登录参数
 	 */
-	public void doLogin(String loginType, Object loginId, SaLoginModel loginModel);
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel);
 			
 	/**
 	 * 每次注销时触发 

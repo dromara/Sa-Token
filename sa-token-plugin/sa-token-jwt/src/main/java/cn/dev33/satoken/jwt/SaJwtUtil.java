@@ -55,7 +55,7 @@ public class SaJwtUtil {
     	// 构建
     	String token = JWT.create()
 			    .setPayload(LOGIN_ID, loginId)
-			    // 混入随机字符 
+			    // 混入随机字符串，防止每次生成的 token 都是一样的 
 			    .setPayload("rn", SaFoxUtil.getRandomString(32))
 				.addPayloads(extraData)
 			    .setKey(keyt.getBytes())
