@@ -102,6 +102,7 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 		├── sa-token-temp-jwt                     // [插件] Sa-Token 整合 jwt 临时令牌鉴权 
 		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
 		├── sa-token-alone-redis                  // [插件] Sa-Token 独立Redis插件，实现[权限缓存与业务缓存分离]
+		├── sa-token-sso                          // [插件] Sa-Token 整合 SSO 单点登录
 		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 模块 
 		├── sa-token-dialect-thymeleaf            // [插件] Sa-Token 标签方言（Thymeleaf版）
 		├── sa-token-jwt                          // [插件] Sa-Token 整合 jwt 登录认证

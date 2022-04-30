@@ -8,22 +8,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.jwt.StpLogicJwtForStyle;
+import cn.dev33.satoken.jwt.StpLogicJwtForSimple;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 
 /**
- * Sa-Token 整合 jwt：Style 模式 测试
+ * Sa-Token 整合 jwt：Simple 模式 测试
  * 
  * @author kong 
  *
  */
 //@RunWith(SpringRunner.class)
 @SpringBootTest(classes = StartUpApplication.class)
-public class JwtForStyleTest {
+public class JwtForSimpleTest {
 
 	// 持久化Bean 
 	static SaTokenDao dao;
@@ -33,7 +34,7 @@ public class JwtForStyleTest {
     public static void beforeClass() {
     	System.out.println("\n\n------------------------ JwtForStyleTest star ...");
     	dao = SaManager.getSaTokenDao();
-    	StpUtil.setStpLogic(new StpLogicJwtForStyle());
+    	StpUtil.setStpLogic(new StpLogicJwtForSimple());
     }
 
 	// 结束 
@@ -68,6 +69,18 @@ public class JwtForStyleTest {
     	Assertions.assertNotNull(session);
     	Assertions.assertEquals(session.getId(), "satoken:login:session:" + 10001);
     	Assertions.assertTrue(session.getTokenSignList().size() >= 1);
+    }
+
+    // 测试：getExtra 
+    @Test
+    public void getExtra() {
+    	// 登录
+    	StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+    	
+    	// 可以取到
+    	Assertions.assertEquals(StpUtil.getExtra("name"), "zhangsan");
+    	// 取不到 
+    	Assertions.assertEquals(StpUtil.getExtra("name2"), null);
     }
     
 }

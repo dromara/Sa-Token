@@ -318,7 +318,10 @@ public class StpLogic {
 		if(config.getIsConcurrent()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(getConfigOfIsShare()) {
-				tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
+				if(loginModel.getExtraData() == null || loginModel.getExtraData().size() == 0) {
+					tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				}
 			} else {
 				// 
 			}

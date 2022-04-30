@@ -1,38 +1,36 @@
 package cn.dev33.satoken.jwt;
 
+import java.util.List;
 import java.util.Map;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
-import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 整合 jwt -- Stateless 无状态模式 
+ * Sa-Token 整合 jwt -- Mixin 混入模式  
  * @author kong
  *
  */
-public class StpLogicJwtForStateless extends StpLogic {
+public class StpLogicJwtForMixin extends StpLogic {
 
 	/**
-	 * Sa-Token 整合 jwt -- Stateless 无状态 
+	 * Sa-Token 整合 jwt -- Mixin 混入  
 	 */
-	public StpLogicJwtForStateless() {
+	public StpLogicJwtForMixin() {
 		super(StpUtil.TYPE);
 	}
 
 	/**
-	 * Sa-Token 整合 jwt -- Stateless 无状态 
+	 * Sa-Token 整合 jwt -- Mixin 混入 
 	 * @param loginType 账号体系标识 
 	 */
-	public StpLogicJwtForStateless(String loginType) {
+	public StpLogicJwtForMixin(String loginType) {
 		super(loginType);
 	}
 
@@ -83,28 +81,6 @@ public class StpLogicJwtForStateless extends StpLogic {
 	// ------------------- 登录相关操作 -------------------  
 
 	/**
-	 * 创建指定账号id的登录会话
-	 * @param id 登录id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
-	 * @return 返回会话令牌 
-	 */
-	@Override
-	public String createLoginSession(Object id, SaLoginModel loginModel) {
-		SaTokenException.throwByNull(id, "账号id不能为空");
-		
-		// ------ 1、初始化 loginModel 
-		loginModel.build(getConfig());
-		
-		// ------ 2、生成一个token  
-		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
-		
-		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
-		
-		return tokenValue;
-	}
-
-	/**
 	 * 获取指定Token对应的账号id (不做任何特殊处理) 
 	 */
 	@Override
@@ -122,11 +98,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public void logout() {
-		// 如果连token都没有，那么无需执行任何操作 
-		String tokenValue = getTokenValue();
- 		if(SaFoxUtil.isEmpty(tokenValue)) {
- 			return;
- 		}
+		// ... 
 
  		// 从当前 [storage存储器] 里删除 
  		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
@@ -138,6 +110,46 @@ public class StpLogicJwtForStateless extends StpLogic {
 	}
 
 	/**
+	 * [禁用] 会话注销，根据账号id 和 设备类型
+	 */
+	@Override
+	public void logout(Object loginId, String device) {
+		throw new ApiDisabledException(); 
+	}
+	
+	/**
+	 * [禁用] 会话注销，根据指定 Token 
+	 */
+	@Override
+	public void logoutByTokenValue(String tokenValue) {
+		throw new ApiDisabledException(); 
+	}
+
+	/**
+	 * [禁用] 踢人下线，根据账号id 和 设备类型 
+	 */
+	@Override
+	public void kickout(Object loginId, String device) {
+		throw new ApiDisabledException(); 
+	}
+
+	/**
+	 * [禁用] 踢人下线，根据指定 Token 
+	 */
+	@Override
+	public void kickoutByTokenValue(String tokenValue) { 
+		throw new ApiDisabledException(); 
+	}
+
+	/**
+	 * [禁用] 顶人下线，根据账号id 和 设备类型 
+	 */
+	@Override
+	public void replaced(Object loginId, String device) {
+		throw new ApiDisabledException(); 
+	}
+
+	/**
 	 * 获取Token携带的扩展信息
 	 */
 	@Override
@@ -145,6 +157,27 @@ public class StpLogicJwtForStateless extends StpLogic {
 		return SaJwtUtil.getPayloads(getTokenValue(), loginType, jwtSecretKey()).get(key);
 	}
 
+	/**
+	 * 删除 Token-Id 映射 
+	 */
+	@Override
+	public void deleteTokenToIdMapping(String tokenValue) {
+		// not action 
+	}
+	/**
+	 * 更改 Token 指向的 账号Id 值 
+	 */
+	@Override
+	public void updateTokenToIdMapping(String tokenValue, Object loginId) {
+		// not action 
+	}
+	/**
+	 * 存储 Token-Id 映射 
+	 */
+	@Override
+	public void saveTokenToIdMapping(String tokenValue, Object loginId, long timeout) {
+		// not action 
+	}
  	
  	// ------------------- 过期时间相关 -------------------  
 
@@ -156,38 +189,27 @@ public class StpLogicJwtForStateless extends StpLogic {
  		return SaJwtUtil.getTimeout(getTokenValue(), loginType, jwtSecretKey());
  	}
  	
- 	
- 	// ------------------- id 反查 token 相关操作 -------------------  
+
+	// ------------------- 会话管理 -------------------  
 
 	/**
-	 * 返回当前会话的登录设备类型 
-	 * @return 当前令牌的登录设备类型
+	 * [禁用] 根据条件查询Token 
 	 */
 	@Override
-	public String getLoginDevice() {
-		// 如果没有token，直接返回 null 
-		String tokenValue = getTokenValue();
-		if(tokenValue == null) {
-			return null;
-		}
-		// 如果还未登录，直接返回 null 
-		if(!isLogin()) {
-			return null;
-		}
-		// 获取
-		return SaJwtUtil.getPayloadsNotCheck(tokenValue, loginType, jwtSecretKey()).getStr(SaJwtUtil.DEVICE); 
+	public List<String> searchTokenValue(String keyword, int start, int size) {
+		throw new ApiDisabledException(); 
 	}
-
 	
+
 	// ------------------- Bean对象代理 -------------------  
 	
 	/**
-	 * [禁用] 返回持久化对象 
+	 * 返回全局配置对象的isShare属性 
+	 * @return / 
 	 */
 	@Override
-	public SaTokenDao getSaTokenDao() {
-		throw new ApiDisabledException();
+	public boolean getConfigOfIsShare() {
+		return false;
 	}
-	
 	
 }

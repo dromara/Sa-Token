@@ -2,6 +2,10 @@
 server:
     port: 9001
 
+forest: 
+    # 打开/关闭Forest请求日志（默认为 true）
+    log-request: true
+    
 spring: 
     # Redis连接
     redis: 

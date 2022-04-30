@@ -14,21 +14,22 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.jwt.SaJwtUtil;
-import cn.dev33.satoken.jwt.StpLogicJwtForMix;
+import cn.dev33.satoken.jwt.StpLogicJwtForMixin;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 
 /**
- * Sa-Token 整合 jwt：mix 模式 测试 
+ * Sa-Token 整合 jwt：mixin 模式 测试 
  * 
  * @author kong 
  *
  */
 @SpringBootTest(classes = StartUpApplication.class)
-public class JwtForMixTest {
+public class JwtForMixinTest {
 
 	// 持久化Bean 
 	@Autowired(required = false)
@@ -38,7 +39,7 @@ public class JwtForMixTest {
 	@BeforeAll
     public static void beforeClass() {
     	System.out.println("\n\n------------------------ JwtForMixTest star ...");
-    	StpUtil.setStpLogic(new StpLogicJwtForMix());
+    	StpUtil.setStpLogic(new StpLogicJwtForMixin());
     }
 
 	// 结束 
@@ -253,6 +254,18 @@ public class JwtForMixTest {
         	List<String> list = StpUtil.searchTokenValue("", 0, 10);
         	Assertions.assertTrue(list.size() >= 5);
     	});
+    }
+
+    // 测试：getExtra 
+    @Test
+    public void getExtra() {
+    	// 登录
+    	StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+    	
+    	// 可以取到
+    	Assertions.assertEquals(StpUtil.getExtra("name"), "zhangsan");
+    	// 取不到 
+    	Assertions.assertEquals(StpUtil.getExtra("name2"), null);
     }
     
 }

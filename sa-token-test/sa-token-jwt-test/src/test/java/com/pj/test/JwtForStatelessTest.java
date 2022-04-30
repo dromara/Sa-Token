@@ -12,6 +12,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.jwt.SaJwtUtil;
 import cn.dev33.satoken.jwt.StpLogicJwtForStateless;
+import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.hutool.json.JSONObject;
@@ -164,4 +165,16 @@ public class JwtForStatelessTest {
     	});
     }
 
+    // 测试：getExtra 
+    @Test
+    public void getExtra() {
+    	// 登录
+    	StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+    	
+    	// 可以取到
+    	Assertions.assertEquals(StpUtil.getExtra("name"), "zhangsan");
+    	// 取不到 
+    	Assertions.assertEquals(StpUtil.getExtra("name2"), null);
+    }
+    
 }
