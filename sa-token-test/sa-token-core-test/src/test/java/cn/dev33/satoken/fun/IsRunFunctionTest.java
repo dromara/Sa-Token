@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
  * IsRunFunction 测试 
  * 
  * @author kong
- * @date: 2022-2-9 16:11:10
+ * @since: 2022-2-9 16:11:10
  */
 public class IsRunFunctionTest {
 

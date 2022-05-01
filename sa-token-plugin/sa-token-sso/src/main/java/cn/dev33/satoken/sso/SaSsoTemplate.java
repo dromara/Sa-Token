@@ -441,7 +441,8 @@ public class SaSsoTemplate {
 
 	/**
 	 * 给 url 追加 sign 等参数 
-	 * @param loginId
+	 * @param url 连接
+	 * @param loginId 账号id 
 	 * @return 加工后的url 
 	 */
 	public String addSignParams(String url, Object loginId) {

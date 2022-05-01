@@ -12,7 +12,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  * 处理 WebSocket 连接 
  * 
  * @author kong
- * @date: 2022-2-11
+ * @since: 2022-2-11
  */
 public class MyWebSocketHandler extends TextWebSocketHandler {
 

@@ -13,7 +13,7 @@ import com.pj.sso.util.AjaxJson;
  * 封装一些 sso 共用方法 
  * 
  * @author kong
- * @date: 2022-4-30
+ * @since: 2022-4-30
  */
 public class SsoRequestUtil {
 

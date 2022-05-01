@@ -12,7 +12,7 @@ import cn.dev33.satoken.json.SaJsonTemplate;
  *  JSON 转换器， Jackson 版实现 
  * 
  * @author kong
- * @date: 2022-4-26
+ * @since: 2022-4-26
  */
 public class SaJsonTemplateForJackson implements SaJsonTemplate {
 

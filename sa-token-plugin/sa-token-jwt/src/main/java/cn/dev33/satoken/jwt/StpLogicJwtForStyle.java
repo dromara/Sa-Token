@@ -4,7 +4,7 @@ package cn.dev33.satoken.jwt;
  * 已更名为 StpLogicJwtForSimple，请更换 
  * 
  * @author kong
- * @date: 2022-5-1
+ * @since: 2022-5-1
  */
 @Deprecated
 public class StpLogicJwtForStyle extends StpLogicJwtForSimple {

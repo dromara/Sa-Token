@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
  * BCrypt 加密测试
  * 
  * @author dream.
- * @date 2022/1/20
+ * @since 2022/1/20
  */
 public class BCryptTest {
 

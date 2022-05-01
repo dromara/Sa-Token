@@ -72,6 +72,7 @@ public class SaTokenException extends RuntimeException {
 	}
 
 	/**
+	 * 获取异常细分状态码
 	 * @return 异常细分状态码
 	 */
 	public int getCode() {

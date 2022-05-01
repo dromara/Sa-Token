@@ -4,7 +4,7 @@ package cn.dev33.satoken.jwt.exception;
  * 定义所有 JWT 异常细分状态码 
  * 
  * @author kong
- * @date: 2022-5-1 
+ * @since: 2022-5-1 
  */
 public class SaJwtExceptionCode {
 

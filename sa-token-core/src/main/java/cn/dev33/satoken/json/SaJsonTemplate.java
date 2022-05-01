@@ -19,10 +19,9 @@ public interface SaJsonTemplate {
 	public String toJsonString(Object obj);
 
 	/**
-	 * 将 json 字符串解析为 Map
-	 * 
-	 * @param jsonStr json  字符串
-	 * @return 转换后的 Map 对象
+	 * 解析 json 字符串为map对象 
+	 * @param jsonStr json字符串 
+	 * @return map对象
 	 */
 	public Map<String, Object> parseJsonToMap(String jsonStr);
 	

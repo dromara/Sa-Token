@@ -14,9 +14,10 @@ public class SaJsonConvertException extends SaTokenException {
 	
 	/**
 	 * 一个异常：代表 JSON 转换失败 
+	 * @param cause 异常对象
 	 */
-	public SaJsonConvertException(Throwable e) {
-		super(e);
+	public SaJsonConvertException(Throwable cause) {
+		super(cause);
 	}
 
 }

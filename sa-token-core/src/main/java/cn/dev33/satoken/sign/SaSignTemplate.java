@@ -10,12 +10,12 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * 参数签名算法 
  * 
  * @author kong
- * @date: 2022-4-27
+ * @since: 2022-4-27
  */
 public interface SaSignTemplate {
 
 	/**
-	 * 将所有参数连接成一个字符串，形如： k1=v1&k2=v2&k3=v3
+	 * 将所有参数连接成一个字符串 
 	 * @param paramsMap 参数列表
 	 * @return 字符串
 	 */
@@ -47,7 +47,7 @@ public interface SaSignTemplate {
 	 * 创建签名：md5(paramsStr + keyStr)
 	 * @param paramsMap 参数列表 
 	 * @param key 秘钥 
-	 * @return
+	 * @return 签名 
 	 */
 	public default String createSign(Map<String, Object> paramsMap, String key) {
 		String paramsStr = joinParams(paramsMap);
