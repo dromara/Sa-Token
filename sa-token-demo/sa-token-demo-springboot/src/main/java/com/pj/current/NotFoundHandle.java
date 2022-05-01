@@ -18,11 +18,6 @@ import cn.dev33.satoken.util.SaResult;
 @RestController
 public class NotFoundHandle implements ErrorController {
 
-	@Override
-	public String getErrorPath() {
-		return "/error";
-	}
-
 	@RequestMapping("/error")
     public Object error(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setStatus(200);

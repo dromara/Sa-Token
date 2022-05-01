@@ -122,6 +122,11 @@ public class SaJwtUtil {
      */
     public static JWT parseToken(String token, String loginType, String keyt, boolean isCheckTimeout) {
 
+    	// 秘钥不可以为空
+    	if(keyt == null) {
+    		throw new SaJwtException("请配置 jwt 秘钥");
+    	}
+
     	// 如果token为null 
     	if(token == null) {
     		throw new SaJwtException("jwt 字符串不可为空");
