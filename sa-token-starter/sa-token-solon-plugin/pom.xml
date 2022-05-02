@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.5</version>
         </dependency>
 
         <dependency>
