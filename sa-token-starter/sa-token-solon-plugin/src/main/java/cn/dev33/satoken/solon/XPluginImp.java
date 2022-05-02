@@ -44,12 +44,17 @@ public class XPluginImp implements Plugin {
 
         //集成初始化
 
+        // 注入上下文Bean
+        SaManager.setSaTokenContext(new SaContextForSolon());
+
         //注入配置Bean
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
 
-        // 注入上下文Bean
-        SaManager.setSaTokenContext(new SaContextForSolon());
+        Aop.getAsyn(SaTokenConfig.class, bw -> {
+            SaManager.setConfig(bw.raw());
+        });
+
 
         // 注入Dao Bean
         Aop.getAsyn(SaTokenDao.class, bw -> {
