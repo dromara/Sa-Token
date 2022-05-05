@@ -19,6 +19,7 @@ public class DefineRoutes {
 	 * 函数式编程，初始化路由表 
 	 * @return 路由表 
 	 */
+	@SuppressWarnings("deprecation")
 	@Bean
 	public RouterFunction<ServerResponse> getRoutes() {
 		return RouterFunctions.route(RequestPredicates.GET("/fun"), req -> {

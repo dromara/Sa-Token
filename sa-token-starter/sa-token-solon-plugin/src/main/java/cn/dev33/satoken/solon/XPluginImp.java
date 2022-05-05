@@ -6,7 +6,6 @@ import org.noear.solon.core.Aop;
 import org.noear.solon.core.Plugin;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.action.SaTokenAction;
 import cn.dev33.satoken.annotation.SaCheckBasic;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -19,11 +18,11 @@ import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.integration.SaContextForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenMethodInterceptor;
-import cn.dev33.satoken.sso.SaSsoTemplate;
-import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -33,7 +32,6 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * @author noear
  * @since 1.4
  */
-@SuppressWarnings("deprecation")
 public class XPluginImp implements Plugin {
     
 	@Override
@@ -69,11 +67,6 @@ public class XPluginImp implements Plugin {
             SaManager.setSaTokenListener(bw.raw());
         });
 
-        // 注入框架行为 Bean
-        Aop.getAsyn(SaTokenAction.class, bw->{
-            SaManager.setSaTokenAction(bw.raw());
-        });
-
         // 注入权限认证 Bean
         Aop.getAsyn(StpInterface.class, bw->{
             SaManager.setStpInterface(bw.raw());
@@ -99,9 +92,14 @@ public class XPluginImp implements Plugin {
         	SaBasicUtil.saBasicTemplate = bw.raw();
         });
 
-        // Sa-Token-SSO 单点登录模块 Bean
-        Aop.getAsyn(SaSsoTemplate.class, bw->{
-        	SaSsoUtil.saSsoTemplate = bw.raw();
+        // Sa-Token JSON 转换器 Bean 
+        Aop.getAsyn(SaJsonTemplate.class, bw->{
+        	SaManager.setSaJsonTemplate(bw.raw());
+        });
+
+        // Sa-Token 参数签名算法 Bean 
+        Aop.getAsyn(SaSignTemplate.class, bw->{
+        	SaManager.setSaSignTemplate(bw.raw());
         });
 
         // 自定义 StpLogic 对象 

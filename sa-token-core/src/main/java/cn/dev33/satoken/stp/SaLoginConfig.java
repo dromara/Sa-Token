@@ -12,7 +12,7 @@ import java.util.Map;
 public class SaLoginConfig {
 
 	/**
-	 * @param device 此次登录的客户端设备标识 
+	 * @param device 此次登录的客户端设备类型 
 	 * @return SaLoginModel配置对象 
 	 */
 	public static SaLoginModel setDevice(String device) {

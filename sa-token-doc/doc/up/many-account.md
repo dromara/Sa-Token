@@ -1,11 +1,11 @@
-# 多账号认证
+# 多账户认证
 --- 
 
 ### 0、需求场景
 有的时候，我们会在一个项目中设计两套账号体系，比如一个电商系统的 `user表` 和 `admin表`，
 在这种场景下，如果两套账号我们都使用 `StpUtil` 类的API进行登录鉴权，那么势必会发生逻辑冲突
 
-在Sa-Token中，这个问题的模型叫做：多账号体系认证
+在Sa-Token中，这个问题的模型叫做：多账户体系认证
 
 要解决这个问题，我们必须有一个合理的机制将这两套账号的授权给区分开，让它们互不干扰才行
 
@@ -55,7 +55,7 @@ public class StpUserUtil {
 > 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/at/StpUserUtil.java)
 
 
-### 4、在多账号模式下使用注解鉴权
+### 4、在多账户模式下使用注解鉴权
 框架默认的注解鉴权 如`@SaCheckLogin` 只针对原生`StpUtil`进行鉴权 
 
 例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.login(id)`进行登录的会话，

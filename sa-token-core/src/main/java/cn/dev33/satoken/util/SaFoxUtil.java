@@ -26,12 +26,16 @@ public class SaFoxUtil {
 	 * 打印 Sa-Token 版本字符画
 	 */
 	public static void printSaToken() {
-		String str = "____ ____    ___ ____ _  _ ____ _  _ \r\n" + "[__  |__| __  |  |  | |_/  |___ |\\ | \r\n"
+		String str = ""
+				+ "____ ____    ___ ____ _  _ ____ _  _ \r\n" 
+				+ "[__  |__| __  |  |  | |_/  |___ |\\ | \r\n"
 				+ "___] |  |     |  |__| | \\_ |___ | \\| " 
+//				+ SaTokenConsts.VERSION_NO 
 //				+ "sa-token：" 
-				+ "\r\n" + "DevDoc：" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
+//				+ "\r\n" + "DevDoc：" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
+				+ "\r\n" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
 				+ " (" + SaTokenConsts.VERSION_NO + ")" 
-				+ "\r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL // + "\r\n";
+//				+ "\r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL // + "\r\n";
 				;
 		System.out.println(str);
 	}

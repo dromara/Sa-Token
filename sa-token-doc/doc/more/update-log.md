@@ -1,5 +1,50 @@
 # 更新日志 
 
+
+### 2022-05-01 @v1.30.0
+- 新增：新增集成 Web-Socket 鉴权示例。 **[重要]**
+- 新增：新增集成 Web-Socket（Spring封装版） 鉴权示例。
+- 新增：新增 jfinal 集成包 `sa-token-jfinal-plugin`  **[重要]**
+- 新增：新增 jboot 集成包 `sa-token-jboot-plugin` （感谢 @nxstv 提交的pr）
+- 修复：修复整合 sa-token-jwt Style 模式时，`StpUtil.getExtra("key")` 无效的bug  
+- 升级：升级 `sa-token-context-dubbo` dubbo版本：`2.7.11` -> `2.7.15`
+- 升级：借助 `flatten-maven-plugin` 统一版本号定义 （感谢 @ruansheng8 提交的pr）   **[重要]**
+- 修复：修复在 `springboot 2.6.x` 下 `quick-login` 插件循环依赖无法启动的问题 
+- 优化：`sa-token-spring-aop` 依赖改为 `sa-token-core`，避免在webflux环境下启动报错的问题 
+- 优化：源码注释 设备标识 改为 设备类型 更符合语义 
+- 修复：解决部分协议下 dubbo 参数变为小写导致 `Id-Token` 鉴权无效的问题 
+- 升级：单元测试升级为 JUnit5 
+- 新增：新增 `maxLoginCount` 配置，指定同一账号可同时在线的最大数量   **[重要]** 
+- 升级：彻底删除 SaTokenAction 接口，完全由 SaStrategy 代替 
+- 新增：新增 `sa-token-dao-redisx` 插件，感谢 @noear 提交的pr  **[重要]** 
+- 优化：增加 parseToken 未配置 jwt 密钥时的异常提示，感谢 @BATTLEHAWK00 提交的pr 
+- 优化：sso,oauth2 插件中调用配置类使用 getter 方法，感谢 @Naah 提交的pr 
+- 新增：新增 json 转换器模块 
+- 重构：SaTokenListener#doLogin 方法新增 tokenValue 参数  **[不向下兼容]** 
+- 升级：SpringBoot 相关组件依赖版本升级至 `2.5.12` 
+- 文档：在线文档所有 `AjaxJson` 改为 `SaResult` 
+- 文档：“多账号认证” -> 改为 “多账户认证” 
+- 升级：顶级异常类 `SaTokenException` 增加 code 异常细分状态码。 **[重要]** 
+- **注意升级：受异常细分状态码影响，`NotPermissionException` 类中 `getCode()` 方法改为 `getPermission()`。** **[不向下兼容]**
+- SSO 模块升级：
+	- 重构：SSO 模块从核心包拆分为独立插件 `sa-token-sso` **[重要]** 
+	- 优化：SSO模式三单点注销回调方法中，注销语句改为：`stpLogic.logout(loginId)` 更符合情景  
+	- 修复：解决 sso 构建认证地址时，部分 Servlet 版本内部实现不一致带来的双 back 参数问题。
+	- 升级：SSO 模块提供精细化异常处理 
+	- 重构：SSO 模式三接口 `/sso/checkTicket`、`/sso/logout`，更改响应体格式   **[不向下兼容]** 
+	- 优化：SSO 模式三单点注销搭建示例增加 `try-catch`，提高容错性  
+	- 优化：`SsoUtil.singleLogout` 改为 `SsoUtil.ssoLogout`，且无需再提供 secretkey 参数   **[不向下兼容]** 
+	- 升级：将 SSO 模式三的接口调用改为签名式校验。  **[重要]**  **[不向下兼容]** 
+	- 新增：新增 SSO 模式三下无 sdk 的对接示例， 感谢 @Sa-药水 的建议反馈 	**[重要]** 
+- sa-token-jwt 模块升级：
+	- 重构：`sa-token-jwt` 的创建，强制校验loginType  **[不向下兼容]** 
+	- 重构：`StpLogicJwtForStateless` 由重写 login 方法改为重写 createLoginSession 
+	- 重构：`SaJwtUtil` 工具类不再吞并异常消息，且提供精细化异常 code 码。
+	- 重构：改名：StpLogicJwtForStyle -> StpLogicJwtForSimple
+	- 重构：改名：StpLogicJwtForMix -> StpLogicJwtForMixin
+	- 修复：修复 `StpLogicJwtForSimple` 模式下 Extra 数据可能受到旧 token 影响的bug
+
+
 ### 2022-02-10 @v1.29.0
 - 升级：sa-token-jwt插件可在登录时添加额外数据。
 - 重构：优化Dubbo调用时向下传递Token的规则，可避免在项目启动时由于Context无效引发的bug。
@@ -49,7 +94,7 @@
 - 新增：角色认证增加API：`StpUtil.hasRoleAnd`、`StpUtil.hasRoleOr` 
 - 新增：新增 `StpUtil.getRoleList()` 和 `StpUtil.getPermissionList()` 方法  
 - 新增：新增 StpLogic 自动注入特性，可快速方便的扩展 StpLogic 对象 
-- 优化：优化同端互斥登录逻辑，如果登录时没有指定设备标识，则默认顶替所有设备下线  
+- 优化：优化同端互斥登录逻辑，如果登录时没有指定设备类型标识，则默认顶替所有设备类型下线  
 - 优化：在未登录时调用 hasRole 和 hasPermission 不再抛出异常，而是返回false 
 - 升级：升级注解鉴权算法，并提供更简单的重写方式    
 - 文档：新增常见报错排查，方便快速排查异常报错 

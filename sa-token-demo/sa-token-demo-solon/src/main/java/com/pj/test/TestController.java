@@ -192,7 +192,7 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
-	// 测试登录接口, 按照设备登录， 浏览器访问： http://localhost:8081/test/login2
+	// 测试登录接口, 按照设备类型登录， 浏览器访问： http://localhost:8081/test/login2
 	@Mapping("login2")
 	public AjaxJson login2(@Param(defaultValue="10001") String id, @Param(defaultValue="PC") String device) {
 		StpUtil.login(id, device);
@@ -226,7 +226,7 @@ public class TestController {
 		return AjaxJson.getSuccess();
 	}
 
-	// 测试指定设备登录   浏览器访问： http://localhost:8081/test/loginByDevice
+	// 测试指定设备类型登录   浏览器访问： http://localhost:8081/test/loginByDevice
 	@Mapping("loginByDevice")
 	public AjaxJson loginByDevice() {
 		System.out.println("--------------");

@@ -86,8 +86,8 @@ public String add() {
 // 注解式鉴权：只要具有其中一个权限即可通过校验 
 @RequestMapping("atJurOr")
 @SaCheckPermission(value = {"user-add", "user-all", "user-delete"}, mode = SaMode.OR)		
-public AjaxJson atJurOr() {
-	return AjaxJson.getSuccessData("用户信息");
+public SaResult atJurOr() {
+	return SaResult.data("用户信息");
 }
 ```
 
@@ -103,8 +103,8 @@ mode有两种取值：
 // 注解式鉴权：只要具有其中一个权限即可通过校验 
 @RequestMapping("userAdd")
 @SaCheckPermission(value = "user-add", orRole = "admin")		
-public AjaxJson userAdd() {
-	return AjaxJson.getSuccessData("用户信息");
+public SaResult userAdd() {
+	return SaResult.data("用户信息");
 }
 ```
 

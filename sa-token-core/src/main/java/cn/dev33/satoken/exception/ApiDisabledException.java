@@ -12,7 +12,7 @@ public class ApiDisabledException extends SaTokenException {
 	private static final long serialVersionUID = 6806129545290130133L;
 	
 	/** 异常提示语 */
-	public static final String BE_MESSAGE = "This API is disabled";
+	public static final String BE_MESSAGE = "this api is disabled";
 
 	/**
 	 * 一个异常：代表 API 已被禁用  

@@ -7,7 +7,8 @@
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-plugin</artifactId>
-        <version>1.29.1.trial</version>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
 
@@ -19,14 +20,14 @@
 		<!-- sa-token-spring-boot-starter -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa-token-version}</version>
+            <artifactId>sa-token-core</artifactId>
+            <version>${revision}</version>
         </dependency>
 		<!-- spring-boot-starter-aop -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
-			<version>2.0.0.RELEASE</version>
+			<version>2.5.12</version>
 		</dependency>
 	</dependencies>
 

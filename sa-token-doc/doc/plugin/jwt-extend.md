@@ -32,38 +32,38 @@ sa-token:
 
 <!------------------------------ tabs:start ------------------------------>
 
-<!-- tab: Style 模式  -->
-Style 模式：Token 风格替换
+<!-- tab: Simple 简单模式  -->
+Simple 模式：Token 风格替换
 ``` java
 @Configuration
 public class SaTokenConfigure {
-    // Sa-Token 整合 jwt (Style模式)
+    // Sa-Token 整合 jwt (Simple 简单模式)
 	@Bean
     public StpLogic getStpLogicJwt() {
-    	return new StpLogicJwtForStyle();
+    	return new StpLogicJwtForSimple();
     }
 }
 ```
 
-<!-- tab: Mix 模式  -->
-Mix 模式：混入部分逻辑
+<!-- tab: Mixin 混入模式  -->
+Mixin 模式：混入部分逻辑
 ``` java
 @Configuration
 public class SaTokenConfigure {
-    // Sa-Token 整合 jwt (Style模式)
+    // Sa-Token 整合 jwt (Mixin 混入模式)
 	@Bean
     public StpLogic getStpLogicJwt() {
-    	return new StpLogicJwtForMix();
+    	return new StpLogicJwtForMixin();
     }
 }
 ```
 
-<!-- tab: Stateless模式  -->
+<!-- tab: Stateless 无状态模式  -->
 Stateless 模式：服务器完全无状态
 ``` java
 @Configuration
 public class SaTokenConfigure {
-    // Sa-Token 整合 jwt (Style模式)
+    // Sa-Token 整合 jwt (Stateless 无状态模式)
 	@Bean
     public StpLogic getStpLogicJwt() {
     	return new StpLogicJwtForStateless();
@@ -134,7 +134,7 @@ String name = StpUtil.getExtra("name");
 
 注入不同模式会让框架具有不同的行为策略，以下是三种模式的差异点（为方便叙述，以下比较以同时引入 jwt 与 Redis 作为前提）：
 
-| 功能点						| Style 模式		| Mix 模式			| Stateless 模式	|
+| 功能点						| Simple 简单模式		| Mixin 混入模式			| Stateless 无状态模式	|
 | :--------					| :--------		| :--------			| :--------			|
 | Token风格					| jwt风格		| jwt风格			| jwt风格			|
 | 登录数据存储				| Redis中		| Token中			| Token中			|

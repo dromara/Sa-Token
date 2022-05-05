@@ -29,12 +29,13 @@
 	- [会话治理](/up/search-session) 
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 
-	- [多账号认证](/up/many-account) 
+	- [多账户认证](/up/many-account) 
 	<!-- - [微服务](/senior/dcs) -->
 
 - **单点登录**
 	- [单点登录简述](/sso/readme)
 	- [搭建统一认证中心：SSO-Server](/sso/sso-server)
+	- [SSO-Server 认证中心开放接口](/sso/sso-apidoc)
 	- [SSO模式一 共享Cookie同步会话](/sso/sso-type1)
 	- [SSO模式二 URL重定向传播会话](/sso/sso-type2)
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)

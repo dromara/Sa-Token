@@ -3,8 +3,12 @@ package cn.dev33.satoken.stp;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.*;
 import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -87,7 +91,7 @@ public class StpLogic {
 	/**
 	 * 创建一个TokenValue
 	 * @param loginId loginId
-	 * @param device 设备标识
+	 * @param device 设备类型
 	 * @param timeout 过期时间
 	 * @param extraData 扩展信息
 	 * @return 生成的tokenValue
@@ -271,9 +275,9 @@ public class StpLogic {
 	}
 
 	/**
-	 * 会话登录，并指定登录设备 
+	 * 会话登录，并指定登录设备类型
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param device 设备标识 
+	 * @param device 设备类型 
 	 */
 	public void login(Object id, String device) {
 		login(id, new SaLoginModel().setDevice(device));
@@ -335,7 +339,12 @@ public class StpLogic {
 		if(config.getIsConcurrent()) {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(getConfigOfIsShare()) {
-				tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
+				if(loginModel.getExtraData() == null || loginModel.getExtraData().size() == 0) {
+					tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				}
+			} else {
+				// 
 			}
 		} else {
 			// --- 如果不允许并发登录，则将这个账号的历史登录标记为：被顶下线 
@@ -365,7 +374,12 @@ public class StpLogic {
 		setLastActivityToNow(tokenValue); 
 
 		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, loginModel);
+		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
+
+		// 检查此账号会话数量是否超出最大值 
+		if(config.getMaxLoginCount() != -1) {
+			logoutByMaxLoginCount(id, session, null, config.getMaxLoginCount());
+		}
 		
 		// 返回Token 
 		return tokenValue;
@@ -403,20 +417,64 @@ public class StpLogic {
 	public void logout(Object loginId) {
 		logout(loginId, null);
 	}
-	
+
 	/**
-	 * 会话注销，根据账号id 和 设备标识 
+	 * 会话注销，根据账号id 和 设备类型
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表所有注销设备) 
+	 * @param device 设备类型 (填null代表注销所有设备类型) 
 	 */
 	public void logout(Object loginId, String device) {
-		clearTokenCommonMethod(loginId, device, tokenValue -> {
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session != null) {
+			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
+				// 清理： token签名、token最后活跃时间 
+				String tokenValue = tokenSign.getValue();
+				session.removeTokenSign(tokenValue); 
+				clearLastActivity(tokenValue); 	
+		 		// 删除Token-Id映射 & 清除Token-Session 
+				deleteTokenToIdMapping(tokenValue);
+				deleteTokenSession(tokenValue);
+				SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+			}
+			// 注销 Session 
+			session.logoutByTokenSignCountToZero();
+		}
+	}
+	
+	/**
+	 * 会话注销，根据账号id 和 设备类型 和 最大同时在线数量 
+	 * 
+	 * @param loginId 账号id 
+	 * @param session 此账号的 Session 对象，可填写null，框架将自动获取 
+	 * @param device 设备类型 (填null代表注销所有设备类型) 
+	 * @param maxLoginCount 保留最近的几次登录 
+	 */
+	public void logoutByMaxLoginCount(Object loginId, SaSession session, String device, int maxLoginCount) {
+		if(session == null) {
+			session = getSessionByLoginId(loginId, false);
+			if(session == null) {
+				return;
+			}
+		}
+		List<TokenSign> list = session.tokenSignListCopyByDevice(device);
+		// 遍历操作 
+		for (int i = 0; i < list.size(); i++) {
+			// 只操作前n条 
+			if(i >= list.size() - maxLoginCount) {
+				continue;
+			}
+			// 清理： token签名、token最后活跃时间 
+			String tokenValue = list.get(i).getValue();
+			session.removeTokenSign(tokenValue); 
+			clearLastActivity(tokenValue); 	
 	 		// 删除Token-Id映射 & 清除Token-Session 
 			deleteTokenToIdMapping(tokenValue);
 			deleteTokenSession(tokenValue);
 			SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
-		}, true);
+		}
+		// 注销 Session 
+		session.logoutByTokenSignCountToZero();
 	}
 	
 	/**
@@ -464,18 +522,27 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 踢人下线，根据账号id 和 设备标识 
+	 * 踢人下线，根据账号id 和 设备类型 
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-5 </p>
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表踢出所有设备) 
+	 * @param device 设备类型 (填null代表踢出所有设备类型) 
 	 */
 	public void kickout(Object loginId, String device) {
-		clearTokenCommonMethod(loginId, device, tokenValue -> {
-			// 将此 token 标记为已被踢下线  
-			updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-	 		SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
-		}, true);
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session != null) {
+			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
+				// 清理： token签名、token最后活跃时间 
+				String tokenValue = tokenSign.getValue();
+				session.removeTokenSign(tokenValue); 
+				clearLastActivity(tokenValue); 	
+				// 将此 token 标记为已被踢下线  
+				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
+				SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+			}
+			// 注销 Session 
+			session.logoutByTokenSignCountToZero();
+		}
 	}
 
 	/**
@@ -511,50 +578,24 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 顶人下线，根据账号id 和 设备标识 
+	 * 顶人下线，根据账号id 和 设备类型 
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-4 </p>
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表顶替所有设备) 
+	 * @param device 设备类型 (填null代表顶替所有设备类型) 
 	 */
 	public void replaced(Object loginId, String device) {
-		clearTokenCommonMethod(loginId, device, tokenValue -> {
-			// 将此 token 标记为已被顶替 
-			updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
-	 		SaManager.getSaTokenListener().doReplaced(loginType, loginId, tokenValue);
-		}, false);
-	}
-	
-	/**
-	 * 封装 注销、踢人、顶人 三个动作的相同代码（无API含义方法）
-	 * @param loginId 账号id 
-	 * @param device 设备标识 
-	 * @param appendFun 追加操作 
-	 * @param isLogoutSession 是否注销 User-Session 
-	 */
-	protected void clearTokenCommonMethod(Object loginId, String device, Consumer<String> appendFun, boolean isLogoutSession) {
-		// 1. 如果此账号尚未登录，则不执行任何操作 
 		SaSession session = getSessionByLoginId(loginId, false);
-		if(session == null) {
-			return;
-		}
-		// 2. 循环token签名列表，开始删除相关信息 
-		for (TokenSign tokenSign : session.getTokenSignList()) {
-			if(device == null || tokenSign.getDevice().equals(device)) {
-				// -------- 共有操作 
-				// s1. 获取token 
+		if(session != null) {
+			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
+				// 清理： token签名、token最后活跃时间 
 				String tokenValue = tokenSign.getValue();
-				// s2. 清理掉[token-last-activity] 
+				session.removeTokenSign(tokenValue); 
 				clearLastActivity(tokenValue); 	
-		 		// s3. 从token签名列表移除 
-		 		session.removeTokenSign(tokenValue); 
-				// -------- 追加操作 
-		 		appendFun.accept(tokenValue);
+				// 将此 token 标记为已被顶替 
+				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
+				SaManager.getSaTokenListener().doReplaced(loginType, loginId, tokenValue);
 			}
-		}
- 	 	// 3. 尝试注销session 
-		if(isLogoutSession) {
-			session.logoutByTokenSignCountToZero();
 		}
 	}
 	
@@ -1367,11 +1408,11 @@ public class StpLogic {
 	}
 
 	/** 
-	 * 获取指定账号id指定设备端的tokenValue 
+	 * 获取指定账号id指定设备类型端的tokenValue 
 	 * <p> 在配置为允许并发登录时，此方法只会返回队列的最后一个token，
 	 * 如果你需要返回此账号id的所有token，请调用 getTokenValueListByLoginId 
 	 * @param loginId 账号id
-	 * @param device 设备标识，填null代表不限设备 
+	 * @param device 设备类型，填null代表不限设备类型 
 	 * @return token值 
 	 */
 	public String getTokenValueByLoginId(Object loginId, String device) {
@@ -1389,9 +1430,9 @@ public class StpLogic {
 	}
 
  	/** 
-	 * 获取指定账号id指定设备端的tokenValue 集合 
+	 * 获取指定账号id指定设备类型端的tokenValue 集合 
 	 * @param loginId 账号id 
-	 * @param device 设备标识，填null代表不限设备 
+	 * @param device 设备类型，填null代表不限设备类型
 	 * @return 此loginId的所有相关token 
  	 */
 	public List<String> getTokenValueListByLoginId(Object loginId, String device) {
@@ -1401,7 +1442,7 @@ public class StpLogic {
 			return Collections.emptyList();
 		}
 		// 遍历解析 
-		List<TokenSign> tokenSignList = session.getTokenSignList();
+		List<TokenSign> tokenSignList = session.tokenSignListCopy();
 		List<String> tokenValueList = new ArrayList<>();
 		for (TokenSign tokenSign : tokenSignList) {
 			if(device == null || tokenSign.getDevice().equals(device)) {
@@ -1412,8 +1453,8 @@ public class StpLogic {
 	}
 	
 	/**
-	 * 返回当前会话的登录设备 
-	 * @return 当前令牌的登录设备 
+	 * 返回当前会话的登录设备类型
+	 * @return 当前令牌的登录设备类型
 	 */
 	public String getLoginDevice() {
 		// 如果没有token，直接返回 null 
@@ -1431,7 +1472,7 @@ public class StpLogic {
 			return null;
 		}
 		// 遍历解析 
-		List<TokenSign> tokenSignList = session.getTokenSignList();
+		List<TokenSign> tokenSignList = session.tokenSignListCopy();
 		for (TokenSign tokenSign : tokenSignList) {
 			if(tokenSign.getValue().equals(tokenValue)) {
 				return tokenSign.getDevice();
@@ -1819,10 +1860,10 @@ public class StpLogic {
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout(id) ，使用方式保持不变 </h1>
 	 * 
-	 * 会话注销，根据账号id and 设备标识 （踢人下线）
+	 * 会话注销，根据账号id and 设备类型 （踢人下线）
 	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
 	 * @param loginId 账号id 
-	 * @param device 设备标识 (填null代表所有注销设备) 
+	 * @param device 设备类型 (填null代表注销所有设备类型) 
 	 */
 	@Deprecated
  	public void logoutByLoginId(Object loginId, String device) {
@@ -1832,7 +1873,7 @@ public class StpLogic {
 	/**
 	 * 创建一个TokenValue
 	 * @param loginId loginId 
-	 * @param device 设备标识 
+	 * @param device 设备类型 
 	 * @param timeout 过期时间 
 	 * @return 生成的tokenValue 
 	 */

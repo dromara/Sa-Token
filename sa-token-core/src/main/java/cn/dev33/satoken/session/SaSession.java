@@ -1,6 +1,7 @@
 package cn.dev33.satoken.session;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -110,12 +111,37 @@ public class SaSession implements Serializable {
 	private final List<TokenSign> tokenSignList = new Vector<>();
 
 	/**
-	 * 返回token签名列表的拷贝副本
+	 * 此Session绑定的token签名列表
 	 *
 	 * @return token签名列表
 	 */
 	public List<TokenSign> getTokenSignList() {
-		return new Vector<>(tokenSignList);
+		return tokenSignList;
+	}
+
+	/**
+	 * 返回token签名列表的拷贝副本
+	 *
+	 * @return token签名列表
+	 */
+	public List<TokenSign> tokenSignListCopy() {
+		return new ArrayList<>(tokenSignList);
+	}
+
+	/**
+	 * 返回token签名列表的拷贝副本，根据 device 筛选 
+	 *
+	 * @param device 设备类型，填 null 代表不限设备类型  
+	 * @return token签名列表
+	 */
+	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+		List<TokenSign> list = new ArrayList<>();
+		for (TokenSign tokenSign : tokenSignListCopy()) {
+			if(device == null || tokenSign.getDevice().equals(device)) {
+				list.add(tokenSign);
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -125,7 +151,7 @@ public class SaSession implements Serializable {
 	 * @return 查找到的tokenSign
 	 */
 	public TokenSign getTokenSign(String tokenValue) {
-		for (TokenSign tokenSign : getTokenSignList()) {
+		for (TokenSign tokenSign : tokenSignListCopy()) {
 			if (tokenSign.getValue().equals(tokenValue)) {
 				return tokenSign;
 			}
@@ -140,7 +166,7 @@ public class SaSession implements Serializable {
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
 		// 如果已经存在于列表中，则无需再次添加
-		for (TokenSign tokenSign2 : getTokenSignList()) {
+		for (TokenSign tokenSign2 : tokenSignListCopy()) {
 			if (tokenSign2.getValue().equals(tokenSign.getValue())) {
 				return;
 			}
@@ -154,7 +180,7 @@ public class SaSession implements Serializable {
 	 * 添加一个token签名
 	 *
 	 * @param tokenValue token值
-	 * @param device 设备标识 
+	 * @param device 设备类型
 	 */
 	public void addTokenSign(String tokenValue, String device) {
 		addTokenSign(new TokenSign(tokenValue, device));

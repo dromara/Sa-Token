@@ -26,7 +26,7 @@ public class NotLoginException extends SaTokenException {
 	
 	/** 表示未提供token */
 	public static final String NOT_TOKEN = "-1";
-	public static final String NOT_TOKEN_MESSAGE = "未提供Token";
+	public static final String NOT_TOKEN_MESSAGE = "未能读取到有效Token";
 	
 	/** 表示token无效 */
 	public static final String INVALID_TOKEN = "-2";

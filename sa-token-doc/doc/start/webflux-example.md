@@ -65,7 +65,7 @@ public class SaTokenConfigure {
         		// 指定[异常处理函数]：每次[认证函数]发生异常时执行此函数 
         		.setError(e -> {
         			System.out.println("---------- sa全局异常 ");
-        			return AjaxJson.getError(e.getMessage());
+        			return SaResult.error(e.getMessage());
         		})
         		;
     }

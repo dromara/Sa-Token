@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ejlchina.okhttps.OkHttps;
 
-import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
@@ -43,9 +43,10 @@ public class SsoClientController {
 
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSso(SaTokenConfig cfg) {
+	private void configSso(SaSsoConfig sso) {
 		// 配置Http请求处理器 
-		cfg.sso.setSendHttp(url -> {
+		sso.setSendHttp(url -> {
+			System.out.println("发起请求：" + url);
 			return OkHttps.sync(url).get().getBody().toString();
 		});
 	}

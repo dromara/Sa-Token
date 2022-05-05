@@ -36,7 +36,7 @@ public class GlobalException {
 			aj = AjaxJson.getNotJur("无此角色：" + ee.getRole());
 		} else if(e instanceof NotPermissionException) {	// 如果是权限异常
 			NotPermissionException ee = (NotPermissionException) e;
-			aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
+			aj = AjaxJson.getNotJur("无此权限：" + ee.getPermission());
 		} else {	// 普通异常, 输出：500 + 异常信息
 			aj = AjaxJson.getError(e.getMessage());
 		}

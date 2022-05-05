@@ -43,6 +43,8 @@
 					if(res.code == 200) {
 						localStorage.setItem('satoken', res.data);
 						location.href = decodeURIComponent(back); 
+					} else {
+						alert(res.msg);
 					}
 				})
 			}

@@ -23,7 +23,7 @@
 ``` java
 // 全局异常拦截（拦截项目中的NotLoginException异常）
 @ExceptionHandler(NotLoginException.class)
-public AjaxJson handlerNotLoginException(NotLoginException nle, HttpServletRequest request, HttpServletResponse response)
+public SaResult handlerNotLoginException(NotLoginException nle)
 		throws Exception {
 
 	// 打印堆栈，以供调试
@@ -51,7 +51,7 @@ public AjaxJson handlerNotLoginException(NotLoginException nle, HttpServletReque
 	}
 	
 	// 返回给前端
-	return AjaxJson.getError(message);
+	return SaResult.error(message);
 }
 ```
 

@@ -1,7 +1,7 @@
 <p align="center">
-	<img alt="logo" src="https://gitee.com/dromara/sa-token/raw/master/sa-token-doc/doc/logo.png" width="150" height="150">
+	<img alt="logo" src="https://sa-token.dev33.cn/doc/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.29.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.30.0.RC</h1>
 <h4 align="center">一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
@@ -75,8 +75,8 @@ StpUtil.hasPermission("user:add");    // 查询当前账号是否含有指定权
 StpUtil.getSession();    // 获取当前账号id的Session
 StpUtil.getSessionByLoginId(10001);    // 获取账号id为10001的Session
 StpUtil.getTokenValueByLoginId(10001);    // 获取账号id为10001的token令牌值
-StpUtil.login(10001, "PC");    // 指定设备标识登录，常用于“同端互斥登录”
-StpUtil.kickout(10001, "PC");    // 指定账号指定设备标识踢下线 (不同端不受影响)
+StpUtil.login(10001, "PC");    // 指定设备类型登录，常用于“同端互斥登录”
+StpUtil.kickout(10001, "PC");    // 指定账号指定设备类型踢下线 (不同端不受影响)
 StpUtil.openSafe(120);    // 在当前会话开启二级认证，有效期为120秒 
 StpUtil.checkSafe();    // 校验当前会话是否处于二级认证有效期内，校验失败会抛出异常 
 StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号 

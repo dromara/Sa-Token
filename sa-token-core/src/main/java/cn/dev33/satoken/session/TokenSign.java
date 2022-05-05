@@ -23,7 +23,7 @@ public class TokenSign implements Serializable {
 	private String value;
 
 	/**
-	 * 所在设备标识
+	 * 所属设备类型
 	 */
 	private String device;
 
@@ -35,7 +35,7 @@ public class TokenSign implements Serializable {
 	 * 构建一个
 	 * 
 	 * @param value  token值
-	 * @param device 所在设备标识
+	 * @param device 所属设备类型
 	 */
 	public TokenSign(String value, String device) {
 		this.value = value;
@@ -50,7 +50,7 @@ public class TokenSign implements Serializable {
 	}
 
 	/**
-	 * @return token登录设备 
+	 * @return 所属设备类型
 	 */
 	public String getDevice() {
 		return device;

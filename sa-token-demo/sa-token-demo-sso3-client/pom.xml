@@ -10,13 +10,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.0.RELEASE</version>
+		<version>2.5.12</version>
 		<relativePath/>
 	</parent>
 	
 	<!-- 定义sa-token版本号 -->
 	<properties>
-		<sa-token-version>1.29.1.trial</sa-token-version>
+		<sa-token-version>1.30.0.RC</sa-token-version>
 	</properties>
 
 	<dependencies>
@@ -31,6 +31,13 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
+            <version>${sa-token-version}</version>
+        </dependency>
+        
+		<!-- Sa-Token 插件：整合SSO -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sso</artifactId>
             <version>${sa-token-version}</version>
         </dependency>
         

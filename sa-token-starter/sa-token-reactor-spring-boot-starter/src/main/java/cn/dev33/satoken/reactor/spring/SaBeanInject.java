@@ -13,9 +13,9 @@ import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.sso.SaSsoTemplate;
-import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -57,16 +57,6 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setStpInterface(StpInterface stpInterface) {
 		SaManager.setStpInterface(stpInterface);
-	}
-
-	/**
-	 * 注入框架行为Bean
-	 * 
-	 * @param saTokenAction SaTokenAction对象 
-	 */
-	@Autowired(required = false)
-	public void setSaTokenAction(@SuppressWarnings("deprecation") cn.dev33.satoken.action.SaTokenAction saTokenAction) {
-		SaManager.setSaTokenAction(saTokenAction);
 	}
 
 	/**
@@ -125,20 +115,30 @@ public class SaBeanInject {
 	 * @param saBasicTemplate saBasicTemplate对象 
 	 */
 	@Autowired(required = false)
-	public void setSaSsoTemplate(SaBasicTemplate saBasicTemplate) {
+	public void setSaBasicTemplate(SaBasicTemplate saBasicTemplate) {
 		SaBasicUtil.saBasicTemplate = saBasicTemplate;
 	}
 	
 	/**
-	 * 注入 Sa-Token-SSO 单点登录模块 Bean
+	 * 注入自定义的 JSON 转换器 Bean 
 	 * 
-	 * @param saSsoTemplate saSsoTemplate对象 
+	 * @param saJsonTemplate JSON 转换器 
 	 */
 	@Autowired(required = false)
-	public void setSaSsoTemplate(SaSsoTemplate saSsoTemplate) {
-		SaSsoUtil.saSsoTemplate = saSsoTemplate;
+	public void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
+		SaManager.setSaJsonTemplate(saJsonTemplate);
 	}
 
+	/**
+	 * 注入自定义的 参数签名 Bean 
+	 * 
+	 * @param saSignTemplate 参数签名 Bean 
+	 */
+	@Autowired(required = false)
+	public void setSaSignTemplate(SaSignTemplate saSignTemplate) {
+		SaManager.setSaSignTemplate(saSignTemplate);
+	}
+	
 	/**
 	 * 注入自定义的 StpLogic 
 	 * @param stpLogic / 

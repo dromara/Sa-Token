@@ -9,7 +9,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
  * WebSocket 相关配置 
  * 
  * @author kong
- * @date: 2022-2-11
+ * @since: 2022-2-11
  */
 @Configuration
 @EnableWebSocket

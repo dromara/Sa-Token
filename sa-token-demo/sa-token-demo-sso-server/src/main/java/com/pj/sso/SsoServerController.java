@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ejlchina.okhttps.OkHttps;
 
-import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoHandle;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -34,15 +34,15 @@ public class SsoServerController {
 	
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSso(SaTokenConfig cfg) {
+	private void configSso(SaSsoConfig sso) {
 		
 		// 配置：未登录时返回的View 
-		cfg.sso.setNotLoginView(() -> {
+		sso.setNotLoginView(() -> {
 			return new ModelAndView("sa-login.html");
 		});
 		
 		// 配置：登录处理函数 
-		cfg.sso.setDoLoginHandle((name, pwd) -> {
+		sso.setDoLoginHandle((name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
@@ -52,9 +52,16 @@ public class SsoServerController {
 		});
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
-		cfg.sso.setSendHttp(url -> {
-			return OkHttps.sync(url).get().getBody().toString();
+		sso.setSendHttp(url -> {
+			try {
+				// 发起 http 请求 
+				System.out.println("发起请求：" + url);
+				return OkHttps.sync(url).get().getBody().toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 		});
 	}
-
+	
 }

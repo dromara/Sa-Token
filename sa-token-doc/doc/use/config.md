@@ -79,6 +79,7 @@ PS：两者的区别在于：**`模式1会覆盖yml中的配置，模式2会与y
 | activityTimeout		| long		| -1		| token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 	[参考：token有效期详解](/fun/token-timeout)													|
 | isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)															|
 | isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 	|
+| maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置才有效）	|
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHead			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
 | isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token														|

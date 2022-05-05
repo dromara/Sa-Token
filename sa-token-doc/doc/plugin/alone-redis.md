@@ -76,18 +76,18 @@ public class TestController {
 	
 	// 测试Sa-Token缓存
 	@RequestMapping("login")
-	public AjaxJson login(@RequestParam(defaultValue="10001") String id) {
+	public SaResult login(@RequestParam(defaultValue="10001") String id) {
 		System.out.println("--------------- 测试Sa-Token缓存");
 		StpUtil.login(id);	
-		return AjaxJson.getSuccess();
+		return SaResult.ok();
 	}
 	
 	// 测试业务缓存
 	@RequestMapping("test")
-	public AjaxJson test() {
+	public SaResult test() {
 		System.out.println("--------------- 测试业务缓存");
 		stringRedisTemplate.opsForValue().set("hello", "Hello World");
-		return AjaxJson.getSuccess();
+		return SaResult.ok();
 	}
 	
 }

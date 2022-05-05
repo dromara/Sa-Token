@@ -13,10 +13,15 @@ public class SaTokenConsts {
 	/**
 	 * Sa-Token 当前版本号 
 	 */
-	public static final String VERSION_NO = "v1.29.1.trial";
+	public static final String VERSION_NO = "v1.30.0.RC";
 
 	/**
-	 * Sa-Token 开源地址 
+	 * Sa-Token 开源地址 Gitee 
+	 */
+	public static final String GITEE_URL = "https://gitee.com/dromara/sa-token";
+
+	/**
+	 * Sa-Token 开源地址 GitHub  
 	 */
 	public static final String GITHUB_URL = "https://github.com/dromara/sa-token";
 
@@ -43,7 +48,7 @@ public class SaTokenConsts {
 	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY_"; 	
 
 	/**
-	 * 常量key标记: 在登录时，默认使用的设备名称 
+	 * 常量key标记: 在登录时，默认使用的设备类型 
 	 */
 	public static final String DEFAULT_LOGIN_DEVICE = "default-device"; 
 	

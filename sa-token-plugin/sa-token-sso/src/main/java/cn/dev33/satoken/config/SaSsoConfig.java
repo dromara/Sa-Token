@@ -1,5 +1,6 @@
 package cn.dev33.satoken.config;
 
+
 import java.io.Serializable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -88,6 +89,14 @@ public class SaSsoConfig implements Serializable {
 	 * 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
 	 */
 	public String ssoLogoutCall;
+
+
+	// ----------------- 其它 
+	
+	/**
+	 * 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
+	 */
+	public long timestampDisparity = 1000  * 60 * 10;
 
 
 
@@ -252,12 +261,37 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
+	 */
+	public long getTimestampDisparity() {
+		return timestampDisparity;
+	}
+
+	/**
+	 * @param timestampDisparity 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
+	 * @return 对象自身 
+	 */
+	public SaSsoConfig setTimestampDisparity(long timestampDisparity) {
+		this.timestampDisparity = timestampDisparity;
+		return this;
+	}
+	
 	@Override
 	public String toString() {
-		return "SaSsoConfig [ticketTimeout=" + ticketTimeout + ", allowUrl=" + allowUrl + ", isSlo=" + isSlo
-				+ ", isHttp=" + isHttp + ", secretkey=" + secretkey + ", authUrl=" + authUrl + ", checkTicketUrl="
-				+ checkTicketUrl + ", userinfoUrl=" + userinfoUrl + ", sloUrl=" + sloUrl + ", ssoLogoutCall="
-				+ ssoLogoutCall + "]";
+		return "SaSsoConfig ["
+				+ "ticketTimeout=" + ticketTimeout 
+				+ ", allowUrl=" + allowUrl 
+				+ ", isSlo=" + isSlo
+				+ ", isHttp=" + isHttp 
+				+ ", secretkey=" + secretkey 
+				+ ", authUrl=" + authUrl 
+				+ ", checkTicketUrl=" + checkTicketUrl
+				+ ", userinfoUrl=" + userinfoUrl 
+				+ ", sloUrl=" + sloUrl 
+				+ ", ssoLogoutCall=" + ssoLogoutCall 
+				+ ", timestampDisparity=" + timestampDisparity 
+				+ "]";
 	}
 	
 	/**
@@ -278,12 +312,16 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * SSO-Server端：未登录时返回的View 
 	 */
-	public Supplier<Object> notLoginView = () -> "当前会话在SSO-Server认证中心尚未登录";
+	public Supplier<Object> notLoginView = () -> {
+		return "当前会话在SSO-Server认证中心尚未登录";
+	};
 
 	/**
 	 * SSO-Server端：登录函数 
 	 */
-	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> SaResult.error();
+	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> {
+		return SaResult.error();
+	};
 
 	/**
 	 * SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
@@ -293,7 +331,9 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * SSO-Client端：发送Http请求的处理函数 
 	 */
-	public Function<String, Object> sendHttp = url -> {throw new SaTokenException("请配置Http处理器");};
+	public Function<String, String> sendHttp = url -> {
+		throw new SaTokenException("请配置 Http 请求处理器");
+	};
 
 
 	/**
@@ -348,7 +388,7 @@ public class SaSsoConfig implements Serializable {
 	 * @param sendHttp SSO-Client端：发送Http请求的处理函数 
 	 * @return 对象自身 
 	 */
-	public SaSsoConfig setSendHttp(Function<String, Object> sendHttp) {
+	public SaSsoConfig setSendHttp(Function<String, String> sendHttp) {
 		this.sendHttp = sendHttp;
 		return this;
 	}
@@ -356,7 +396,7 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * @return 函数 SSO-Client端：发送Http请求的处理函数
 	 */
-	public Function<String, Object> getSendHttp() {
+	public Function<String, String> getSendHttp() {
 		return sendHttp;
 	}
 

@@ -1,7 +1,6 @@
 package cn.dev33.satoken.jboot;
 
 import com.jfinal.plugin.ehcache.IDataLoader;
-import io.jboot.Jboot;
 import io.jboot.components.cache.JbootCache;
 import io.jboot.components.cache.JbootCacheConfig;
 import io.jboot.core.spi.JbootSpi;
@@ -19,16 +18,15 @@ import java.util.List;
  * sa 缓存处理
  */
 @JbootSpi("sacache")
+@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
 public class SaRedisCache implements JbootCache {
     protected JbootRedisConfig config;
     protected JedisPool jedisPool;
-    protected JbootCacheConfig cacheConfig;
     private ThreadLocal<String> CACHE_NAME_PREFIX_TL = new ThreadLocal<>();
 
-    public SaRedisCache(JbootCacheConfig cacheConfig) {
-        this.cacheConfig = cacheConfig;
+	public SaRedisCache(JbootRedisConfig config) {
+        this.config = config;
 
-        config = Jboot.config(JbootRedisConfig.class);
         String host = config.getHost();
         Integer port = config.getPort();
         Integer timeout = config.getTimeout();
@@ -111,10 +109,10 @@ public class SaRedisCache implements JbootCache {
 
     @Override
     public JbootCacheConfig getConfig() {
-        return cacheConfig;
+        return null;
     }
 
-    @Override
+	@Override
     public <T> T get(String cacheName, Object key) {
         Jedis jedis = getJedis();
         try {
@@ -237,6 +235,7 @@ public class SaRedisCache implements JbootCache {
                     " cause : " + e.toString(), e);
         }
     }
+
 
     public void returnResource(Jedis jedis) {
         if (jedis != null) {

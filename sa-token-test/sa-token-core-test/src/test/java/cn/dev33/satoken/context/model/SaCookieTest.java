@@ -1,17 +1,14 @@
 package cn.dev33.satoken.context.model;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * SaFoxUtil 工具类测试 
  * 
  * @author kong
- * @date: 2022-2-8 22:14:25
+ * @since: 2022-2-8 22:14:25
  */
-@RunWith(SpringRunner.class)
 public class SaCookieTest {
 
     @Test
@@ -24,7 +21,7 @@ public class SaCookieTest {
     			.setHttpOnly(true)
     			.setSecure(true);
     			
-    	Assert.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.dev33.cn/; Path=/; Secure; HttpOnly; sameSite=Lax");
+    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.dev33.cn/; Path=/; Secure; HttpOnly; sameSite=Lax");
     }
 
 }

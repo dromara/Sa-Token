@@ -1,36 +1,33 @@
 package cn.dev33.satoken.util;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * SaResult 结果集 测试 
  * 
  * @author kong
- * @date: 2022-2-8 22:14:25
+ * @since: 2022-2-8 22:14:25
  */
-@RunWith(SpringRunner.class)
 public class SaResultTest {
 
     @Test
     public void test() {
     	SaResult res = new SaResult(200, "ok", "zhangsan");
-    	Assert.assertEquals((int)res.getCode(), 200);
-    	Assert.assertEquals(res.getMsg(), "ok");
-    	Assert.assertEquals(res.getData(), "zhangsan");
+    	Assertions.assertEquals((int)res.getCode(), 200);
+    	Assertions.assertEquals(res.getMsg(), "ok");
+    	Assertions.assertEquals(res.getData(), "zhangsan");
     	
     	res.set("age", 18);
-    	Assert.assertEquals(res.get("age"), 18);
-    	Assert.assertEquals(res.getOrDefault("age", 20), 18);
-    	Assert.assertEquals(res.getOrDefault("age2", 20), 20);
+    	Assertions.assertEquals(res.get("age"), 18);
+    	Assertions.assertEquals(res.getOrDefault("age", 20), 18);
+    	Assertions.assertEquals(res.getOrDefault("age2", 20), 20);
     }
 
     @Test
     public void test2() {
-    	Assert.assertEquals((int)SaResult.ok().getCode(), 200);
-    	Assert.assertEquals((int)SaResult.error().getCode(), 500);
+    	Assertions.assertEquals((int)SaResult.ok().getCode(), 200);
+    	Assertions.assertEquals((int)SaResult.error().getCode(), 500);
     }
 	
 }
