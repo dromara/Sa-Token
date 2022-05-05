@@ -3,7 +3,6 @@ package cn.dev33.satoken.stp;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.function.Consumer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
