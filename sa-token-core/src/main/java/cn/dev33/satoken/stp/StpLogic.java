@@ -1,5 +1,8 @@
 package cn.dev33.satoken.stp;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -150,8 +153,12 @@ public class StpLogic {
 		SaCookieConfig cfg = getConfig().getCookie();
 
 		String tokenPrefix = getConfig().getTokenPrefix();
-		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
-			tokenValue = tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue;
+		if(!SaFoxUtil.isEmpty(tokenPrefix)) {
+			try {
+				tokenValue = URLEncoder.encode(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue, "UTF-8");
+			} catch (UnsupportedEncodingException ex) {
+				// ignore
+			}
 		}
 
 		SaCookie cookie = new SaCookie()
@@ -177,9 +184,9 @@ public class StpLogic {
 		
 		// 2. 如果打开了前缀模式，则裁剪掉 
 		String tokenPrefix = getConfig().getTokenPrefix();
-		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
+		if(!SaFoxUtil.isEmpty(tokenPrefix)) {
 			// 如果token并没有按照指定的前缀开头，则视为未提供token 
-			if(SaFoxUtil.isEmpty(tokenValue) || tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT) == false) {
+			if(SaFoxUtil.isEmpty(tokenValue) || !tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
 				tokenValue = null;
 			} else {
 				// 则裁剪掉前缀 
@@ -218,6 +225,13 @@ public class StpLogic {
 		// 4. 尝试从cookie里读取 
 		if(tokenValue == null && config.getIsReadCookie()){
 			tokenValue = request.getCookieValue(keyTokenName);
+			if (!SaFoxUtil.isEmpty(getConfig().getTokenPrefix())) {
+				try {
+					tokenValue = URLDecoder.decode(tokenValue, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// ignore
+				}
+			}
 		}
 		
 		// 5. 返回 
