@@ -24,7 +24,7 @@
 - 升级：SpringBoot 相关组件依赖版本升级至 `2.5.12` 
 - 文档：在线文档所有 `AjaxJson` 改为 `SaResult` 
 - 文档：“多账号认证” -> 改为 “多账户认证” 
-- 升级：顶级异常类 `SaTokenException` 增加 code 异常细分状态码。 **[重要]** 
+- 升级：顶级异常类 `SaTokenException` 增加 code 异常细分状态码。[详见](/fun/exception-code) **[重要]** 
 - **注意升级：受异常细分状态码影响，`NotPermissionException` 类中 `getCode()` 方法改为 `getPermission()`。** **[不向下兼容]**
 - SSO 模块升级：
 	- 重构：SSO 模块从核心包拆分为独立插件 `sa-token-sso` **[重要]** 

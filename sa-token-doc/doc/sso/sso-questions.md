@@ -34,6 +34,16 @@
 解决方案：在 sso-client 也新建上这个类，而且包名需要与 sso-server 端的一致（直接从 sso-server 把实体类复制过来就好了）
 
 
+### 问：如果 sso-client 端我没有集成 sa-token-sso，如何对接？
+需要手动调用 http 请求来对接 sso-server 开放的接口，参考示例：[sa-token-demo-sso3-client-nosdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso3-client-nosdk)
+
+
+### 问：如果 sso-client 端不是 java语言，可以对接吗？
+可以，只不过有点麻烦，基本思路和上个问题一致，需要手动调用 http 请求来对接 sso-server 开放的接口，参考：
+[SSO-Server 认证中心开放接口](/sso/sso-apidoc)
+
+
+
 ### 还有其它问题？
 可以加群反馈一下，比较典型的问题我们解决之后都会提交到此页面方便大家快速排查
 

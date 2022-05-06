@@ -8,7 +8,7 @@ package cn.dev33.satoken.exception;
  */
 public class SaExceptionCode {
 	
-	/** 代表未指定异常细分状态码 */
+	/** 代表这个异常在抛出时未指定异常细分状态码 */
 	public static final int CODE_UNDEFINED = -1;
 
 }

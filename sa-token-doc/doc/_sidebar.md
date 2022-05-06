@@ -85,6 +85,7 @@
 	- [Token有效期详解](/fun/token-timeout)
 	- [Session模型详解](/fun/session-model)
 	- [TokenInfo参数详解](/fun/token-info)
+	- [异常细分状态码](/fun/exception-code)
 	- [解决反向代理 uri 丢失的问题](/fun/curr-domain)
 	- [参考：把权限放在缓存里](/fun/jur-cache)
 	- [解决跨域问题](/fun/cors-filter)

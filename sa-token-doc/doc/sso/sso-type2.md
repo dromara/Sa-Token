@@ -65,6 +65,12 @@ sa-token:
 	<artifactId>sa-token-spring-boot-starter</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
+<!-- Sa-Token 插件：整合SSO -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-sso</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
 
 <!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 <dependency>

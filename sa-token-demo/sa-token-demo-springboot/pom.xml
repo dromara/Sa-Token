@@ -39,26 +39,6 @@
             <version>${sa-token-version}</version>
         </dependency>
         
-		<!-- Sa-Token 整合  Redis (使用jdk默认序列化方式) -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis</artifactId>
-            <version>${sa-token-version}</version>
-        </dependency> -->
-		
-		<!-- Sa-Token整合 Redis (使用jackson序列化方式) -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${sa-token-version}</version>
-        </dependency> -->
-        
-		<!-- 提供Redis连接池 -->
-		<!-- <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-        </dependency> -->
-        
 		<!-- Sa-Token整合SpringAOP实现注解鉴权 -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
@@ -72,13 +52,6 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
-		<!-- hutool工具类，用来生成雪花算法唯一id -->
-		<!-- <dependency>
-		     <groupId>cn.hutool</groupId>
-		     <artifactId>hutool-all</artifactId>
-		     <version>5.5.4</version>
-		</dependency> -->
 		
 	</dependencies>
 	
