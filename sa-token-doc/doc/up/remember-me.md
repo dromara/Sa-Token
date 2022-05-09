@@ -23,11 +23,14 @@ StpUtil.login(10001, false);
 ### 实现原理
 Cookie作为浏览器提供的默认会话跟踪机制，其生命周期有两种形式，分别是：
 - 临时Cookie：有效期为本次会话，只要关闭浏览器窗口，Cookie就会消失
-- 永久Cookie：有效期为一个具体的时间，在时间未到期之前，即使用户关闭了浏览器Cookie也不会消失
+- 持久Cookie：有效期为一个具体的时间，在时间未到期之前，即使用户关闭了浏览器Cookie也不会消失
 
 利用Cookie的此特性，我们便可以轻松实现 [记住我] 模式：
-- 勾选 [记住我] 按钮时：调用`StpUtil.login(10001, true)`，在浏览器写入一个`永久Cookie`储存 Token，此时用户即使重启浏览器 Token 依然有效
+- 勾选 [记住我] 按钮时：调用`StpUtil.login(10001, true)`，在浏览器写入一个`持久Cookie`储存 Token，此时用户即使重启浏览器 Token 依然有效
 - 不勾选 [记住我] 按钮时：调用`StpUtil.login(10001, false)`，在浏览器写入一个`临时Cookie`储存 Token，此时用户在重启浏览器后 Token 便会消失，导致会话失效
+
+
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--remember-me.gif">加载动态演示图</button>
 
 
 ### 前后台分离模式下如何实现[记住我]?
@@ -39,7 +42,7 @@ Cookie作为浏览器提供的默认会话跟踪机制，其生命周期有两�
 
 以经典跨端框架 [uni-app](https://uniapp.dcloud.io/) 为例，我们可以使用如下方式达到同样的效果：
 ``` js
-// 使用本地存储保存token，达到 [永久Cookie] 的效果
+// 使用本地存储保存token，达到 [持久Cookie] 的效果
 uni.setStorageSync("satoken", "xxxx-xxxx-xxxx-xxxx-xxx");
 
 // 使用globalData保存token，达到 [临时Cookie] 的效果
@@ -48,7 +51,7 @@ getApp().globalData.satoken = "xxxx-xxxx-xxxx-xxxx-xxx";
 
 如果你决定在PC浏览器环境下进行前后台分离模式开发，那么更加简单：
 ``` js
-// 使用 localStorage 保存token，达到 [永久Cookie] 的效果
+// 使用 localStorage 保存token，达到 [持久Cookie] 的效果
 localStorage.setItem("satoken", "xxxx-xxxx-xxxx-xxxx-xxx");
 
 // 使用 sessionStorage 保存token，达到 [临时Cookie] 的效果

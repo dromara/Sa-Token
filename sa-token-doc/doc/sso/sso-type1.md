@@ -18,6 +18,10 @@
 
 而共享Redis，并不需要我们把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **[权限缓存与业务缓存分离]** 的解决方案，详情戳：[Alone独立Redis插件](/plugin/alone-redis)。
 
+
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso1.gif">加载动态演示图</button>
+
+
 OK，所有理论就绪，下面开始实战：
 
 

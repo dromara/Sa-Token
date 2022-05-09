@@ -8,6 +8,9 @@
 那么如何判断一个会话是否登录？框架会在登录成功后给你做个标记，每次登录认证时校验这个标记，有标记者视为已登录，无标记者视为未登录！
 
 
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--login-auth.gif">加载动态演示图</button>
+
+
 ### 登录与注销
 根据以上思路，我们很容易想到以下api：
 
