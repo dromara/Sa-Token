@@ -7,8 +7,8 @@
 
 <!------------------------------ tabs:start ------------------------------>
 
-<!-- tab:SpringMVC环境 （ServletAPI）  -->
-如果你使用的框架基于 ServletAPI 构建（ SpringMVC、SpringBoot、Zuul等 ），请引入此包
+<!------------- tab:SpringMVC环境 （ServletAPI）  ------------->
+如果你使用的框架基于 ServletAPI 构建（ SpringMVC、SpringBoot等 ），请引入此包
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -18,7 +18,7 @@
 </dependency>
 ```
 
-<!-- tab:WebFlux环境 （Reactor）  -->
+<!------------- tab:WebFlux环境 （Reactor）  ------------->
 注：如果你使用的框架基于 Reactor 模型构建（Netty、WebFlux、ShenYu、SC Gateway等），请引入此包
 ``` xml
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
@@ -29,7 +29,40 @@
 </dependency>
 ```
 
-<!-- tab:Servlet容器环境   -->
+<!------------- tab:Solon 集成  ------------->
+参考：[Solon官网](https://solon.noear.org/)
+``` xml
+<!-- Sa-Token 整合 Solon, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-solon-plugin</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
+
+<!------------- tab:JFinal 集成  ------------->
+参考：[JFinal官网](https://jfinal.com/)
+``` xml
+<!-- Sa-Token 整合 JFinal, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-jfinal-plugin</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
+
+<!------------- tab:Jboot 集成  ------------->
+参考：[Jboot官网](http://www.jboot.com.cn/)
+``` xml
+<!-- Sa-Token 整合 Jboot, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-jboot-plugin</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
+
+<!------------- tab:裸Servlet容器环境   ------------->
 注：如果你的项目没有使用Spring，但是Web框架是基于 ServletAPI 规范的，可以引入此包
 ``` xml
 <!-- Sa-Token 权限认证（ServletAPI规范）, 在线文档：http://sa-token.dev33.cn/ -->
@@ -41,7 +74,7 @@
 ```
 引入此依赖需要自定义 SaTokenContext 实现，参考：[自定义 SaTokenContext 指南](/fun/sa-token-context)
 
-<!-- tab:其它   -->
+<!------------- tab:其它   ------------->
 注：如果你的项目既没有使用 SpringMVC、WebFlux，也不是基于 ServletAPI 规范，那么可以引入core核心包
 ``` xml
 <!-- Sa-Token 权限认证（core核心包）, 在线文档：http://sa-token.dev33.cn/ -->
@@ -52,6 +85,7 @@
 </dependency>
 ```
 引入此依赖需要自定义 SaTokenContext 实现，参考：[自定义 SaTokenContext 指南](/fun/sa-token-context)
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -61,18 +95,37 @@
 ``` xml
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
+
 <!-- tab:WebFlux环境 （Reactor）  -->
 ``` xml
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
-<!-- tab:Servlet容器环境  -->
+
+<!-- tab:Solon 集成  -->
+``` xml
+implementation 'cn.dev33:sa-token-solon-plugin:${sa.top.version}'
+```
+
+<!-- tab:JFinal 集成  -->
+``` xml
+implementation 'cn.dev33:sa-token-jfinal-plugin:${sa.top.version}'
+```
+
+<!-- tab:Jboot 集成  -->
+``` xml
+implementation 'cn.dev33:sa-token-jboot-plugin:${sa.top.version}'
+```
+
+<!-- tab:裸Servlet容器环境  -->
 ``` xml
 implementation 'cn.dev33:sa-token-servlet:${sa.top.version}'
 ```
+
 <!-- tab:其它  -->
 ``` xml
 implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 ```
+
 <!-- tabs:end -->
 
 注：JDK版本：`v1.8+`，SpringBoot：`建议2.0以上`
@@ -108,6 +161,7 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 		├── sa-token-jwt                          // [插件] Sa-Token 整合 jwt 登录认证
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
+		├── sa-token-demo-springboot-redis        // [示例] Sa-Token 整合 SpringBoot 
 		├── sa-token-demo-webflux                 // [示例] Sa-Token 整合 WebFlux 
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 
 		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 

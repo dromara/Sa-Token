@@ -81,6 +81,20 @@ var myDocsifyPlugin = function(hook, vm) {
 			// $('.search input').val('');
 			$('.results-panel').removeClass('show');
 		});
+		
+		// 点击按钮，加载图片
+		$(document).on('click', '.show-img', function(){
+			var src = $(this).attr('img-src');
+			var img = '<img class="show-to-img" src="' + src + '" />';
+			$(this).after(img);
+			$(this).remove();
+		})
+		
+		// 点击按钮，加载图片
+		$(document).on('click', '.show-to-img', function(){
+			open(this.src);
+		})
+		
 	});
 	
 }

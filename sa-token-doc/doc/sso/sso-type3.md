@@ -131,6 +131,10 @@ public Object myinfo() {
 5. Server 端注销下线。
 6. 单点注销完成。
 
+
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso3-logout.gif">加载动态演示图</button>
+
+
 这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文档增加以下配置即可：
 
 #### 4.1、SSO-Client 端新增配置 

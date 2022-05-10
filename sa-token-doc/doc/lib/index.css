@@ -204,7 +204,20 @@ body {
 #main .toc-box a{border-color: rgba(0,0,0,0); transition: 0s;}
 #main .toc-box a span{color: inherit;}
 
-
+/* 加载图片的按钮 */
+.show-img{
+	background-color: #FFF;
+	padding: 8px 15px;
+	border: 1px #42b983 solid;
+	color: #42b983;
+	cursor: pointer;
+	border-radius: 2px;
+	transition: all 0.2s;
+}
+.show-img:hover{
+	background-color: #eaf6eb;
+}
+.show-to-img{cursor: pointer;}
 
 /* 导航栏悬浮时出现下滑条条 */
 /* .doc-header .nav-right .wzi::after {

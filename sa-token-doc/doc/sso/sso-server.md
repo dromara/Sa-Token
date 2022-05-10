@@ -17,6 +17,13 @@
 	<version>${sa.top.version}</version>
 </dependency>
 
+<!-- Sa-Token 插件：整合SSO -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-sso</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+        
 <!-- Sa-Token 整合 Redis (使用 jackson 序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -42,10 +49,10 @@
 </dependency>
 ```
 
-除了 **sa-token-spring-boot-starter** 以外，其它包都是可选的：
-- 在SSO模式三时 Redis 相关包是可选的  
+除了 `sa-token-spring-boot-starter` 和 `sa-token-sso` 以外，其它包都是可选的：
+- 在 SSO 模式三时 Redis 相关包是可选的  
 - 在前后端分离模式下可以删除 thymeleaf 相关包
-- 在不需要SSO模式三单点注销的情况下可以删除 http 工具包 
+- 在不需要 SSO 模式三单点注销的情况下可以删除 http 工具包 
 
 建议先完整测试三种模式之后再对pom依赖进行酌情删减。
 

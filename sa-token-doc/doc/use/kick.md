@@ -26,6 +26,8 @@ StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
 - 踢人下线不会清除Token信息，而是将其打上特定标记，再次访问会提示：Token已被踢下线。
 
 
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--kickout.gif">加载动态演示图</button>
+
 
 ### 3、账号封禁
 对于违规账号，有时候我们仅仅将其踢下线还是远远不够的，我们还需要对其进行**账号封禁**防止其再次登录

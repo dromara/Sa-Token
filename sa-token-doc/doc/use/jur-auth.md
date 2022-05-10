@@ -10,6 +10,10 @@
 再往底了说，就是每个账号都会拥有一个权限码集合，我来校验这个集合中是否包含指定的权限码 <br/>
 例如：当前账号拥有权限码集合：`["user-add", "user-delete", "user-get"]`，这时候我来校验权限 `"user-update"`，则其结果就是：**验证失败，禁止访问** <br/>
 
+
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--jur-auth.gif">加载动态演示图</button>
+
+
 所以现在问题的核心就是: 
 1. 如何获取一个账号所拥有的的权限码集合
 2. 本次操作需要验证的权限码是哪个 

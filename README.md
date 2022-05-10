@@ -1,7 +1,7 @@
 <p align="center">
 	<img alt="logo" src="https://sa-token.dev33.cn/doc/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.30.0.RC</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.30.0</h1>
 <h4 align="center">一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
@@ -28,64 +28,6 @@
 **Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**`登录认证`**、**`权限认证`**、**`Session会话`**、**`单点登录`**、**`OAuth2.0`**、**`微服务网关鉴权`** 
 等一系列权限相关问题。
 
-Sa-Token 的 API 设计非常简单，有多简单呢？以登录认证为例，你只需要：
-
-``` java
-// 在登录时写入当前会话的账号id
-StpUtil.login(10001);
-
-// 然后在需要校验登录处调用以下方法：
-// 如果当前会话未登录，这句代码会抛出 `NotLoginException` 异常
-StpUtil.checkLogin();
-```
-
-至此，我们已经借助 Sa-Token 完成登录认证！
-
-此时的你小脑袋可能飘满了问号，就这么简单？自定义 Realm 呢？全局过滤器呢？我不用写各种配置文件吗？
-
-没错，在 Sa-Token 中，登录认证就是如此简单，不需要任何的复杂前置工作，只需这一行简单的API调用，就可以完成会话登录认证！
-
-当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
-
-权限认证示例（只有具备 `user:add` 权限的会话才可以进入请求）
-``` java
-@SaCheckPermission("user:add")
-@RequestMapping("/user/insert")
-public String insert(SysUser user) {
-	// ... 
-	return "用户增加";
-}
-```
-
-将某个账号踢下线（待到对方再次访问系统时会抛出`NotLoginException`异常）
-``` java
-// 将账号id为 10001 的会话踢下线 
-StpUtil.kickout(10001);
-```
-
-在 Sa-Token 中，绝大多数功能都可以 **一行代码** 完成：
-``` java
-StpUtil.login(10001);    // 标记当前会话登录的账号id
-StpUtil.getLoginId();    // 获取当前会话登录的账号id
-StpUtil.isLogin();    // 获取当前会话是否已经登录, 返回true或false
-StpUtil.logout();    // 当前会话注销登录
-StpUtil.kickout(10001);    // 将账号为10001的会话踢下线
-StpUtil.hasRole("super-admin");    // 查询当前账号是否含有指定角色标识, 返回true或false
-StpUtil.hasPermission("user:add");    // 查询当前账号是否含有指定权限, 返回true或false
-StpUtil.getSession();    // 获取当前账号id的Session
-StpUtil.getSessionByLoginId(10001);    // 获取账号id为10001的Session
-StpUtil.getTokenValueByLoginId(10001);    // 获取账号id为10001的token令牌值
-StpUtil.login(10001, "PC");    // 指定设备类型登录，常用于“同端互斥登录”
-StpUtil.kickout(10001, "PC");    // 指定账号指定设备类型踢下线 (不同端不受影响)
-StpUtil.openSafe(120);    // 在当前会话开启二级认证，有效期为120秒 
-StpUtil.checkSafe();    // 校验当前会话是否处于二级认证有效期内，校验失败会抛出异常 
-StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号 
-```
-
-即使不运行测试，相信您也能意会到绝大多数 API 的用法。
-
-
-## Sa-Token 功能一览
 
 - **登录认证** —— 单端登录、多端登录、同端互斥登录、七天内免登录
 - **权限认证** —— 权限认证、角色认证、会话二级认证
@@ -119,7 +61,7 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 
 
 ## Sa-Token-SSO 单点登录
-网上的单点登录教程大多以CAS流程为主，其实对于不同的系统架构，实现单点登录的步骤也大为不同，Sa-Token由简入难将其划分为三种模式：
+Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO 接入问题：
 
 | 系统架构						| 采用模式	| 简介						|  文档链接	|
 | :--------						| :--------	| :--------					| :--------	|
@@ -131,8 +73,6 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`
 2. 后端同Redis：就是指多个系统可以连接同一个Redis。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳：[Alone独立Redis插件](http://sa-token.dev33.cn/doc/index.html#/plugin/alone-redis)
 3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）
-4. 技术选型一定要根据系统架构对症下药，切不可胡乱选择 
-
 
 ## Sa-Token-OAuth2.0 授权登录
 Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) 编写，通过Sa-OAuth2你可以非常轻松的实现系统的OAuth2.0授权认证 
@@ -152,12 +92,6 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 ![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png 's-w')
 
 ![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png 's-w')
-
-
-## Star 趋势
-[![giteye-chart](https://chart.giteye.net/gitee/dromara/sa-token/77YQZ6UK.png 'Gitee')](https://giteye.net/chart/77YQZ6UK)
-
-[![github-chart](https://starchart.cc/dromara/sa-token.svg 'GitHub')](https://starchart.cc/dromara/sa-token)
 
 
 ## 使用Sa-Token的开源项目 
@@ -200,11 +134,6 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 - [[ TLog ]](https://gitee.com/dromara/TLog)：一个轻量级的分布式日志标记追踪神器
 
-
-## 贡献者名单
-感谢每一个为 Sa-Token 贡献代码的小伙伴
-
-[![Giteye chart](https://chart.giteye.net/gitee/dromara/sa-token/CGZ7GT8E.png)](https://giteye.net/chart/CGZ7GT8E)
 
 
 ## 交流群

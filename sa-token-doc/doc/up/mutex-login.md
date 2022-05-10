@@ -3,6 +3,9 @@
 如果你经常使用腾讯QQ，就会发现它的登录有如下特点：它可以手机电脑同时在线，但是不能在两个手机上同时登录一个账号 <br/>
 同端互斥登录，指的就是像腾讯QQ一样，在同一类型设备上只允许单地点登录，在不同类型设备上允许同时在线
 
+
+<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--mutex-login.gif">加载动态演示图</button>
+
 --- 
 
 ## 具体API
