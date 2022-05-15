@@ -169,7 +169,7 @@
 		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
 		
 		<script>
-			if(window.jQuery === undefined) {
+			if(window.jQuery === undefined || window.Docsify === undefined) {
 				var str = 'CDN 加载失败，请打开备用地址：<a href="index-backup.html" target="_blank">index-backup.html</a>';
 				document.querySelector('#app').innerHTML = str;
 			}

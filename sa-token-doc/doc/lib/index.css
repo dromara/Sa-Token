@@ -78,6 +78,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* 做到悬浮出现下划线的效果 */
 .main-box .sidebar>.sidebar-nav>ul{padding-left: 6px;}
+.main-box .sidebar li a:hover{color: #42b983;}
 /* .main-box .sidebar li{white-space: nowrap; text-overflow: ellipsis; overflow: hidden; margin: 5px 0;}
 .main-box .sidebar li a{display: inline; line-height: 30px; padding: 5px 0 2px;}
 .main-box .sidebar li a:hover{text-decoration: none; color: #42b983; border-bottom: 1px #42b983 solid;}

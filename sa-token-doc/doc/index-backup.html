@@ -150,7 +150,7 @@
 				plugins: [myDocsifyPlugin],
 			}
 		</script>
-		<script src="https://unpkg.zhimg.com/docsify@4.9.4/lib/docsify.min.js"></script>
+		<script src="https://unpkg.com/docsify@4.9.4/lib/docsify.min.js"></script>
 		<script src="https://unpkg.com/docsify-copy-code@2.1.0/dist/docsify-copy-code.min.js"></script>
 		<script src="https://unpkg.com/prismjs@1.20.0/components/prism-java.min.js"></script>
 		<!-- 搜索框 -->
@@ -168,7 +168,7 @@
 		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
 		
 		<script>
-			if(window.jQuery === undefined) {
+			if(window.jQuery === undefined || window.Docsify === undefined) {
 				var str = '备用地址貌似也不行了……';
 				document.querySelector('#app').innerHTML = str;
 			}
