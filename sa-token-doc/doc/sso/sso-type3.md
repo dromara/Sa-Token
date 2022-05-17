@@ -106,19 +106,60 @@ public Object myinfo() {
 }
 ```
 
+#### 3.3、访问测试
 访问测试：[http://sa-sso-client1.com:9001/sso/myinfo](http://sa-sso-client1.com:9001/sso/myinfo)
 
-#### 3.3、疑问
+
+### 4、自定义接口通信
 
 群里有小伙伴提问：`SaSsoUtil.getUserinfo` 提供的参数太少，只有一个 loginId，无法满足业务需求怎么办？
 
 答：SaSsoUtil.getUserinfo只是为了避免你在项目中硬编码认证中心 url 而提供的简易封装，如果这个API无法满足你的业务需求，
 你完全可以在 Server 端自定义一些接口然后从 Client 端使用 http 工具调用即可。
 
+以下是一个简单的示例：
+
+#### 4.1、先在 sso-server 端自定义一个接口
+``` java
+// 获取指定用户的关注列表 
+@RequestMapping("/sso/getFollowList")
+public Object ssoRequest(Long loginId) {
+
+	// 校验签名，签名不通过直接抛出异常 
+	SaSsoUtil.checkSign(SaHolder.getRequest());
+
+	// 查询数据 (此处仅做模拟)
+	List<Integer> list = Arrays.asList(10041, 10042, 10043, 10044);
+	
+	// 返回 
+	return list;
+}
+```
+
+
+#### 4.2、然后在 sso-client 端调用这个接口 
+``` java
+// 查询我的账号信息 
+@RequestMapping("/sso/myFollowList")
+public Object myFollowList() {
+	// 组织url，加上签名参数 
+	String url = SaSsoUtil.addSignParams("http://sa-sso-server.com:9000/sso/getFollowList", StpUtil.getLoginId());
+	
+	// 调用，并返回 SaResult 结果 
+	SaResult res = SaSsoUtil.request(url);
+	
+	// 返回给前端 
+	return res;
+}
+```
+
+#### 4.3、访问测试
+访问测试：[http://sa-sso-client1.com:9001/sso/myFollowList](http://sa-sso-client1.com:9001/sso/myFollowList)
 
 
 
-### 4、无刷单点注销
+
+### 5、无刷单点注销
 
 有了单点登录就必然要有单点注销，网上给出的大多数解决方案是将注销请求重定向至SSO-Server中心，逐个通知Client端下线
 
@@ -137,7 +178,7 @@ public Object myinfo() {
 
 这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文档增加以下配置即可：
 
-#### 4.1、SSO-Client 端新增配置 
+#### 5.1、SSO-Client 端新增配置 
 
 在 `application.yml` 增加配置：`API调用秘钥` 和 `单点注销接口URL`。
 ``` yml
@@ -153,7 +194,7 @@ sa-token:
 注意 secretkey 秘钥需要与SSO认证中心的一致 
 
 
-#### 4.2 启动测试 
+#### 5.2、启动测试 
 重启项目，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，
 我们主要的测试点在于 `单点注销`，正常登录即可。
 
@@ -167,16 +208,16 @@ sa-token:
 
 PS：这里我们为了方便演示，使用的是超链接跳页面的形式，正式项目中使用 Ajax 调用接口即可做到无刷单点登录退出。
 
-例如，我们使用 [APIPost接口测试工具](https://www.apipost.cn/) 可以做到同样的效果：
+例如，我们使用 [Apifox 接口测试工具](https://www.apifox.cn/) 可以做到同样的效果：
 
-![sso-slo-apipost.png](https://oss.dev33.cn/sa-token/doc/sso/sso-slo-apipost.png 's-w-sh')
+![sso-slo-apifox.png](https://oss.dev33.cn/sa-token/doc/sso/sso-slo-apifox.png 's-w-sh')
 
 测试完毕！
 
 
 
 
-### 4、后记
+### 6、后记
 当我们熟读三种模式的单点登录之后，其实不难发现：所谓单点登录，其本质就是多个系统之间的会话共享。
 
 当我们理解这一点之后，三种模式的工作原理也浮出水面：
