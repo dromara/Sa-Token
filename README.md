@@ -137,12 +137,9 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 
 ## 交流群
-QQ交流群：1群：1002350610 (已满) 、
-2群：614714762 [点击加入](https://jq.qq.com/?_wv=1027&k=b759RZrL)
+QQ交流群：496757342 [点击加入](https://jq.qq.com/?_wv=1027&k=ceibbMFr)
 
 微信交流群：
-
-<!-- ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/doc/km/sa-token-hm1.jpg ':size=230') -->
 
 ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
 

@@ -15,6 +15,7 @@
 
 
 ### 使用 Sa-Token 的开源项目:
+- [[ iot-kit ]](https://gitee.com/iotkit-open-source/iotkit-parent)：一个轻量级低门槛的物联网平台，包含了多协议设备接入、规则引擎、第三方平台接入、智能家居小程序等模块的项目，基于SpringBoot架构并集成了Sa-Token的OAuth2认证。
 
 - [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器
 
