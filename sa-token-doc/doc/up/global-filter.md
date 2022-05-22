@@ -79,6 +79,17 @@ public class SaTokenConfigure {
 - 由于过滤器中抛出的异常不进入全局异常处理，所以你必须提供`[异常处理函数]`来处理`[认证函数]`里抛出的异常
 - 在`[异常处理函数]`里的返回值，将作为字符串输出到前端，如果需要定制化返回数据，请注意其中的格式转换
 
+改写 `setError` 函数的响应格式示例：
+``` java
+.setError(e -> {
+	// 设置响应头
+	SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
+	// 使用封装的 JSON 工具类转换数据格式 
+	return JSONUtil.toJsonStr( SaResult.error(e.getMessage()) );
+})
+```
+JSON 工具类可参考：[Hutool-Json](https://hutool.cn/docs/#/json/JSONUtil)
+
 
 ### 在 WebFlux 中注册过滤器
 `Spring WebFlux`中不提供拦截器机制，因此若你的项目需要路由鉴权功能，过滤器是你唯一的选择，在`Spring WebFlux`注册过滤器的流程与上述流程几乎完全一致，

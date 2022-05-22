@@ -36,11 +36,11 @@
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaTokenConfig cfg) {
+private void configSso(SaSsoConfig sso) {
 	// ... 其他代码
 	
 	// 配置 Http 请求处理器
-	cfg.sso.setSendHttp(url -> {
+	sso.setSendHttp(url -> {
 		System.out.println("发起请求：" + url);
 		return OkHttps.sync(url).get().getBody().toString();
 	});

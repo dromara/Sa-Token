@@ -79,9 +79,9 @@ public class SsoServerController {
 	 * 配置SSO相关参数 
 	 */
 	@Autowired
-	private void configSso(SaTokenConfig cfg) {
+	private void configSso(SaSsoConfig sso) {
 		// 配置：未登录时返回的View 
-		cfg.sso.setNotLoginView(() -> {
+		sso.setNotLoginView(() -> {
 			String msg = "当前会话在SSO-Server端尚未登录，请先访问"
 					+ "<a href='/sso/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
 					+ "进行登录之后，刷新页面开始授权";
@@ -89,7 +89,7 @@ public class SsoServerController {
 		});
 		
 		// 配置：登录处理函数 
-		cfg.sso.setDoLoginHandle((name, pwd) -> {
+		sso.setDoLoginHandle((name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
@@ -99,7 +99,7 @@ public class SsoServerController {
 		});
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
-		cfg.sso.setSendHttp(url -> {
+		sso.setSendHttp(url -> {
 			try {
 				// 发起 http 请求 
 				System.out.println("发起请求：" + url);

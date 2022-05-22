@@ -32,13 +32,13 @@ public class SsoServerController {
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaTokenConfig cfg) {
+private void configSso(SaSsoConfig sso) {
 	// 自定义API地址
 	SaSsoConsts.Api.ssoAuth = "/sso/auth2";
 	// ... 
 	
 	// SSO 相关配置
-	cfg.sso.setXxx ... ;
+	sso.setXxx ... ;
 }
 ```
 

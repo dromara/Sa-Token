@@ -81,7 +81,7 @@ if(res.code == 401) {
 
 ``` java
 // 配置：未登录时返回的View 
-cfg.sso.setNotLoginView(() -> {
+sso.setNotLoginView(() -> {
 	return new ModelAndView("xxx.html");
 })
 ```
