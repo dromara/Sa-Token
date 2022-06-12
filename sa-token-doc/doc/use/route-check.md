@@ -117,8 +117,8 @@ SaRouter.match( StpUtil.isLogin() ).check( /* 要执行的校验函数 */ );
 SaRouter.match( r -> StpUtil.isLogin() ).check( /* 要执行的校验函数 */ );
 
 // 多个条件一起使用 
-// 功能说明: 必须是 Get 方式的任意请求
-SaRouter.match(SaHttpMethod.GET).match("/**").check( /* 要执行的校验函数 */ );
+// 功能说明: 必须是 Get 请求 并且 请求路径以 `/user/` 开头 
+SaRouter.match(SaHttpMethod.GET).match("/user/**").check( /* 要执行的校验函数 */ );
 
 // 可以无限连缀下去 
 // 功能说明: 同时满足 Get 方式请求, 且路由以 /admin 开头, 路由中间带有 /send/ 字符串, 路由结尾不能是 .js 和 .css
@@ -142,6 +142,8 @@ registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
 	SaRouter.match("/**").check(r -> System.out.println("进入1"));
 	SaRouter.match("/**").check(r -> System.out.println("进入2")).stop();
 	SaRouter.match("/**").check(r -> System.out.println("进入3"));
+	SaRouter.match("/**").check(r -> System.out.println("进入4"));
+	SaRouter.match("/**").check(r -> System.out.println("进入5"));
 })).addPathPatterns("/**");
 ```
 如上示例，代码运行至第2条匹配链时，会在stop函数处提前退出整个匹配函数，从而忽略掉剩余的所有match匹配 
@@ -149,7 +151,7 @@ registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
 除了`stop()`函数，`SaRouter`还提供了 `back()` 函数，用于：停止匹配，结束执行，直接向前端返回结果
 ``` java
 // 执行back函数后将停止匹配，也不会进入Controller，而是直接将 back参数 作为返回值输出到前端
-SaRouter.match("/user/back").back("参数");
+SaRouter.match("/user/back").back("要返回到前端的内容");
 ```
 
 stop() 与 back() 函数的区别在于：
