@@ -15,8 +15,6 @@
 
 
 ### 使用 Sa-Token 的开源项目:
-- [[ iot-kit ]](https://gitee.com/iotkit-open-source/iotkit-parent)：一个轻量级低门槛的物联网平台，包含了多协议设备接入、规则引擎、第三方平台接入、智能家居小程序等模块的项目，基于SpringBoot架构并集成了Sa-Token的OAuth2认证。
-
 - [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器
 
 - [[ jthink ]](https://gitee.com/wtsoftware/jthink)： 一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统
@@ -63,8 +61,15 @@
 
 - [[ SpringMvc+Sa-Token ]](https://gitee.com/SRD_01/spring-mvc-sa-token): Jsp+SpringMVC+SSO+Sa-Token+Redis | Spring MVC 集成 SaToken Demo 项目
 
-
 - [[ 自定义快速搭建平台 ]](https://gitee.com/CodeLiQing/custom-quick-build-platform): MybatisPlus+SpringMVC+SSO+Sa-Token+Redis | 基于springboot+as-token+neety+代码生产器（vm实现）| 以及前端vue的element-ui 和大屏框架DataV  
+
+- [[ iot-kit ]](https://gitee.com/iotkit-open-source/iotkit-parent)：一个轻量级低门槛的物联网平台，包含了多协议设备接入、规则引擎、第三方平台接入、智能家居小程序等模块的项目，基于SpringBoot架构并集成了Sa-Token的OAuth2认证。
+
+- [[ 拾壹博客 ]](https://gitee.com/quequnlong/shiyi-blog.git)：一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。
+
+
+
+
 <br>
 
 
