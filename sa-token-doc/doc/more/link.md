@@ -62,7 +62,7 @@
 
 - [[ SpringMvc+Sa-Token ]](https://gitee.com/SRD_01/spring-mvc-sa-token): Jsp+SpringMVC+SSO+Sa-Token+Redis | Spring MVC 集成 SaToken Demo 项目
 
-- [[ 自定义快速搭建平台 ]](https://gitee.com/CodeLiQing/custom-quick-build-platform): MybatisPlus+SpringMVC+SSO+Sa-Token+Redis | 基于springboot+as-token+neety+代码生产器（vm实现）| 以及前端vue的element-ui 和大屏框架DataV  
+- [[ QuickBuild ]](https://gitee.com/CodeLiQing/custom-quick-build-platform): 快速构建 | 基于springboot+as-token+neety+代码生产器（生成vue页面和增删改查代码）| 以及前端vue3和字节arco.design框架整合 
 
 - [[ iot-kit ]](https://gitee.com/iotkit-open-source/iotkit-parent)：一个轻量级低门槛的物联网平台，包含了多协议设备接入、规则引擎、第三方平台接入、智能家居小程序等模块的项目，基于SpringBoot架构并集成了Sa-Token的OAuth2认证。
 
