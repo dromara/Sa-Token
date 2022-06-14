@@ -10,12 +10,13 @@
 > 经过 Sa-Token 开发组审核通过后：
 > - 将展示在此页面。
 > - 在 Sa-Token 交流群中宣传推广，为项目带来流量。
+> - 按照 star 量排序择取前六名展示在官网首页。
 
 --- 
 
 
 ### 使用 Sa-Token 的开源项目:
-- [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器
+1. [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器
 
 - [[ jthink ]](https://gitee.com/wtsoftware/jthink)： 一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统
 
@@ -31,7 +32,7 @@
 
 - [[ RuoYi-Cloud-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba + Sa-Token + Dubbo + Mybatis-Plus + Xxl-Job 全方位升级 定期同步
 
-- [[ SpringBoot_v2 ]](https://gitee.com/bdj/SpringBoot_v2/tree/sa-token/)：SpringBoot_v2项目是努力打造springboot框架的极致细腻的脚手架。
+- [[ SpringBoot_v2 ]](https://gitee.com/bdj/SpringBoot_v2)：SpringBoot_v2项目是努力打造springboot框架的极致细腻的脚手架。
 
 - [[ Sa-Token-Study ]](https://gitee.com/click33/sa-token-study)：以demo示例的方式讲解 Sa-Token 源码涉及到的技术点，连载中……
 
