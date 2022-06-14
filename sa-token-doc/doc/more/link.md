@@ -68,6 +68,8 @@
 
 - [[ 拾壹博客 ]](https://gitee.com/quequnlong/shiyi-blog.git)：一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。
 
+- [[ dcy-fast-cloud ]](https://gitee.com/dcy421/dcy-fast-cloud)：一个基于 SpringCloudAlibaba + Sa-Token + dubbo2.7.8 + Seata + knife4j + Mybatis-Plus + MapStruct +  的后台管理系统，前端vue-element-admin，并且内置代码生成器+动态路由权限等功能
+
 
 
 
