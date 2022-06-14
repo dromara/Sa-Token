@@ -70,6 +70,8 @@
 
 - [[ dcy-fast-cloud ]](https://gitee.com/dcy421/dcy-fast-cloud)：一个基于 SpringCloudAlibaba + Sa-Token + dubbo2.7.8 + Seata + knife4j + Mybatis-Plus + MapStruct +  的后台管理系统，前端vue-element-admin，并且内置代码生成器+动态路由权限等功能
 
+- [[ magic-boot ]](https://gitee.com/ssssssss-team/magic-boot)：基于 magic-api + Sa-Token 搭建的快速开发平台，可以实现在浏览器编写Vue代码，既改即生效
+
 
 
 
