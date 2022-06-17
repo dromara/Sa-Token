@@ -19,6 +19,8 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [风如歌](https://gitee.com/the-wind-is-like-a-song)	| ¥ 10.0	| 这个框架简直满足了我所有对于安全框架的需求,赞一个,加油sa-token加油中国开源!	| 2022-06-17 	|
+| [qiuyue](https://gitee.com/bmlt)				| ¥ 10.0		| satoken牛逼								| 2022-06-16 	|
 | [刘时立](https://gitee.com/liu-shili)			| ¥ 10.0		| 非常棒的开源项目!							| 2022-06-13 	|
 | [yuncai929](https://gitee.com/null_448_5562)	| ¥ 10.0		| 感谢您的开源项目！							| 2022-06-10 	|
 | [sun_2020](https://gitee.com/sun-two-thousand-and-twenty)	| ¥ 50.0	| 感谢您的开源项目！					| 2022-06-08 	|
@@ -80,7 +82,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 | [知知](https://gitee.com/double_zhi)			| ¥ 10			| 感谢您的开源项目！							| 2020-12-15 	|
 | [省长](https://gitee.com/click33)				| ¥ 10			| java中最好用的权限认证框架！				| 2020-12-15 	|
 
-感谢每一位小伙伴的热心支持！
+感谢每一位小伙伴的热心支持 ❤️ ❤️ ❤️ ！
 
 
 
