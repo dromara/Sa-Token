@@ -92,6 +92,7 @@
 	- [技术选型：SSO 与 OAuth2 对比](/fun/sso-vs-oauth2)
 	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
 	- [框架源码所有技术栈](/fun/tech-stack)
+	- [issue 提问模板](/fun/issue-template)
 	- [为Sa-Token贡献代码](/fun/git-pr)
 	- [Sa-Token开源大事记](/fun/timeline)
 	- [Sa-Token框架掌握度--在线考试](/fun/sa-token-test)
