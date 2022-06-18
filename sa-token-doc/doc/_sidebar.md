@@ -73,6 +73,7 @@
 - **其它**
 	- [更新日志](/more/update-log) 
 	- [框架生态](/more/link) 
+	- [框架博客](/more/blog) 
 	- [推荐公众号](/more/tj-gzh) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 
