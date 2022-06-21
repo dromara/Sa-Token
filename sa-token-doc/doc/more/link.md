@@ -72,6 +72,9 @@
 
 - [[ magic-boot ]](https://gitee.com/ssssssss-team/magic-boot)：基于 magic-api + Sa-Token 搭建的快速开发平台，可以实现在浏览器编写Vue代码，既改即生效
 
+- [[ fhs-framework ]](https://gitee.com/fhs-opensource/fhs-framework)：基于Springboot+Springcloud + Mybatis Plus + sa-token+ vue + elementui 的快速开发平台(低代码开发平台)，本框架永远免费，永久全开源
+
+
 
 
 
