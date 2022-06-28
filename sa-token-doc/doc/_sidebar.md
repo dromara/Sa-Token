@@ -3,8 +3,8 @@
 - **开始**
 	- [介绍](/)
 	- [引入](/start/download)
-	- [在SpringBoot环境集成](/start/example) 	
-	- [在WebFlux环境集成](/start/webflux-example) 	
+	- [在 SpringBoot 环境集成](/start/example) 	
+	- [在 WebFlux 环境集成](/start/webflux-example) 	
 
 - **基础**
 	- [登录认证](/use/login-auth) 

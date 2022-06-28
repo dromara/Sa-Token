@@ -2,8 +2,7 @@
 
 本篇带你从零开始集成 Sa-Token，从而快速熟悉框架的使用姿势。
 
-整合示例地址： [/sa-token-demo/sa-token-demo-springboot](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-springboot)，
-如遇到难点可结合示例源码进行学习测试。
+整合示例在官方仓库的`/sa-token-demo/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行学习测试。
 
 ---
 
