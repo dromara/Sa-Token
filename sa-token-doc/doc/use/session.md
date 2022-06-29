@@ -19,7 +19,7 @@ SysUser user = (SysUser) StpUtil.getSession().get("user");
 - `Token-Session`: 指的是框架为每个 token 分配的 Session  
 - `Custom-Session`: 指的是以一个 特定的值 作为SessionId，来分配的 Session 
 
-> 有关User-Session与Token-Session的详细区别，请参考：[Session模型详解](/fun/session-model)
+> 有关User-Session与Token-Session的详细区别，可参考：[Session模型详解](/fun/session-model)
 
 
 ### User-Session
@@ -72,50 +72,8 @@ SaSessionCustomUtil.deleteSessionById("goods-10001");
 ```
 
 
-### Session相关操作
-那么获取到的`SaSession`具体有哪些方法可供操作？
-``` java
-// 返回此Session的id 
-session.getId();                          
+### 在 Session 上存取值
 
-// 返回此Session的创建时间 (时间戳) 
-session.getCreateTime();                  
-
-// 在Session上获取一个值 
-session.getAttribute('name');             
-
-// 在Session上获取一个值，并指定取不到值时返回的默认值
-session.getAttribute('name', 'zhang');    
-
-// 在Session上写入一个值 
-session.setAttribute('name', 'zhang');    
-
-// 在Session上移除一个值 
-session.removeAttribute('name');          
-
-// 清空此Session的所有值 
-session.clearAttribute();                 
-
-// 获取此Session是否含有指定key (返回true或false)
-session.containsAttribute('name');        
-
-// 获取此Session会话上所有key (返回Set<String>)
-session.attributeKeys();                  
-
-// 返回此Session会话上的底层数据对象（如果更新map里的值，请调用session.update()方法避免产生脏数据）
-session.getDataMap();                     
-
-// 将这个Session从持久库更新一下
-session.update();                         
-
-// 注销此Session会话 (从持久库删除此Session)
-session.logout();                         
-```
-
-
-### 类型转换API
-由于Session存取值默认的类型都是Object，因此我们通常会写很多不必要类型转换代码 <br>
-为了简化操作，Sa-Token自`v1.15.0`封装了存取值API的类型转换，你可以非常方便的调用以下方法：
 ``` java
 // 写值 
 session.set("name", "zhang"); 
@@ -129,29 +87,46 @@ session.get("name");
 // 取值 (指定默认值)
 session.get("name", "<defaultValue>"); 
 
-// 取值 (转String类型)
-session.getString("name"); 
+// ---------- 数据类型转换： ----------
+session.getInt("age");         // 取值 (转int类型)
+session.getLong("age");        // 取值 (转long类型)
+session.getString("name");     // 取值 (转String类型)
+session.getDouble("result");   // 取值 (转double类型)
+session.getFloat("result");    // 取值 (转float类型)
+session.getModel("key", Student.class);     // 取值 (指定转换类型)
+session.getModel("key", Student.class, <defaultValue>);  // 取值 (指定转换类型, 并指定值为Null时返回的默认值)
 
-// 取值 (转int类型)
-session.getInt("age"); 
-
-// 取值 (转long类型)
-session.getLong("age"); 
-
-// 取值 (转double类型)
-session.getDouble("result"); 
-
-// 取值 (转float类型)
-session.getFloat("result"); 
-
-// 取值 (指定转换类型)
-session.getModel("key", Student.class); 
-
-// 取值 (指定转换类型, 并指定值为Null时返回的默认值)
-session.getModel("key", Student.class, <defaultValue>); 
-
-// 是否含有某个key
+// 是否含有某个key (返回true或false)
 session.has("key"); 
+
+// 删值 
+session.delete('name');          
+
+// 清空所有值 
+session.clear();                 
+
+// 获取此 Session 的所有key (返回Set<String>)
+session.keys();      
+```
+
+
+### 其它操作
+
+``` java
+// 返回此 Session 的id 
+session.getId();                          
+
+// 返回此 Session 的创建时间 (时间戳) 
+session.getCreateTime();                  
+
+// 返回此 Session 会话上的底层数据对象（如果更新map里的值，请调用session.update()方法避免产生脏数据）
+session.getDataMap();                     
+
+// 将这个 Session 从持久库更新一下
+session.update();                         
+
+// 注销此 Session 会话 (从持久库删除此Session)
+session.logout();                         
 ```
 
 
