@@ -28,6 +28,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册注解拦截器，并排除不需要注解鉴权的接口地址 (与登录拦截器无关)
+		// 偶尔有倒霉孩子错误地使用成了 SaRouteInterceptor, 然后吐槽为什么注解鉴权不生效……请睁大你的双眼！
 		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");	
 	}
 }
