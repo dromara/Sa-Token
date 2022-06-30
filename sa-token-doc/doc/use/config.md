@@ -89,16 +89,15 @@ PS：两者的区别在于：**`模式1会覆盖yml中的配置，模式2会与y
 | tokenStyle			| String	| uuid		| token风格， [参考：自定义Token风格](/up/token-style)										|
 | dataRefreshPeriod		| int		| 30		| 默认数据持久组件实现类中，每次清理过期数据间隔的时间 （单位: 秒） ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录），[详解](/use/config?id=tokenSessionCheckLogin)		|
-| autoRenew				| Boolean	| true		| 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作)		|
-| tokenPrefix			| String	| null		| token前缀, 例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
+| autoRenew				| Boolean	| true		| 是否打开自动续签 （如果此值为true, 框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作），[参考：token有效期详解](/fun/token-timeout)		|
+| tokenPrefix			| String	| null		| token前缀，例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
-| jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 `sa-token-temp-jwt` 模块时此参数才会生效)							|
-| idTokenTimeout		| long		| 86400		| Id-Token的有效期 (单位: 秒)														|
+| jwtSecretKey			| String	| null		| jwt秘钥 （只有集成 `sa-token-temp-jwt` 模块时此参数才会生效），[参考：和 jwt 集成](/plugin/jwt-extend)	|
+| idTokenTimeout		| long		| 86400		| Id-Token的有效期 （单位: 秒），[参考：内部服务外网隔离](/micro/id-token)					|
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
 | currDomain			| String	| null		| 配置当前项目的网络访问地址													|
 | checkIdToken			| Boolean		| false		| 是否校验Id-Token（部分rpc插件有效）															|
-| sso					| Object	| new SaSsoConfig()		| SSO 单点登录相关配置													|
 | cookie				| Object	| new SaCookieConfig()	| Cookie配置对象															|
 
 Cookie相关配置：
@@ -189,7 +188,7 @@ sa-token:
 | isImplicit			| Boolean	| false		| 单独配置此 Client 是否打开模式：隐藏式（`Implicit`）		|
 | isPassword			| Boolean	| false		| 单独配置此 Client 是否打开模式：密码式（`Password`）		|
 | isClient				| Boolean	| false		| 单独配置此 Client 是否打开模式：凭证式（`Client Credentials`）		|
-| isAutoMode			| Boolean	| true		| 是否自动判断此 Client 开放的授权模式。<br>此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；<br>此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置 |
+| isAutoMode			| Boolean	| true		| 是否自动判断此 Client 开放的授权模式。 参考：[详解](/use/config?id=isAutoMode)  |
 | isNewRefresh			| Boolean	| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
 | accessTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
 | refreshTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
@@ -218,7 +217,7 @@ sa-token:
 #### tokenSessionCheckLogin
 配置含义：获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录）。
 
-主要用法：在调用 `StpUtil.login(id)` 登录后，
+在调用 `StpUtil.login(id)` 登录后，
 
 - 调用 `StpUtil.getSession()` 可以获取这个会话的 `User-Session` 对象。
 - 调用 `StpUtil.getTokenSession()` 可以获取这个会话 `Token-Session` 对象。
@@ -230,9 +229,18 @@ sa-token:
 
 为了解决这个问题，`StpUtil.getTokenSession()` 方法在获取 `Token-Session` 时，会率先检测一下这个 Token 是否是一个有效Token：
 - 如果是有效Token，正常返回 `Token-Session` 对象
-- 如果是无效Token，则
+- 如果是无效Token，则抛出异常。
+
+这样就保证了伪造的 Token 是无法获取 `Token-Session` 对象的。
+
+但是 —— 有的场景下我们又确实需要关闭这个校验功能，这时候就把配置项 `tokenSessionCheckLogin` 值改为 `false` 即可。
 
 
+#### isAutoMode
 
+配置含义：是否自动判断此 Client 开放的授权模式。
+
+- 此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；
+- 此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置（两个都为 true 时才打开） 
 
 
