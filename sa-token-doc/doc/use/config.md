@@ -121,7 +121,7 @@ Server 端：
 | ticketTimeout	| long		| 300		| ticket 有效期 （单位: 秒）														|
 | allowUrl		| String	| *			| 所有允许的授权回调地址，多个用逗号隔开（不在此列表中的URL将禁止下放ticket），参考：[SSO整合：配置域名校验](/sso/sso-check-domain)	|
 | isSlo			| Boolean	| false		| 是否打开单点注销功能															|
-| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）		|
+| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo），参考：[详解](/use/config?id=isHttp) 	|
 | secretkey		| String	| null		| 调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）								|
 
 
@@ -131,7 +131,7 @@ Client 端：
 | :--------		| :--------	| :--------	| :--------										|
 | authUrl		| String	| null		| 配置 Server 端单点登录授权地址					|
 | isSlo			| Boolean	| false		| 是否打开单点注销功能							|
-| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）				|
+| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo），参考：[详解](/use/config?id=isHttp) 	|
 | checkTicketUrl| String	| null		| 配置 Server 端的 ticket 校验地址							|
 | userinfoUrl	| String	| null		| 配置 Server 端查询 userinfo 地址									|
 | sloUrl		| String	| null		| 配置 Server 端单点注销地址										|
@@ -242,5 +242,13 @@ sa-token:
 
 - 此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；
 - 此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置（两个都为 true 时才打开） 
+
+
+#### isHttp
+
+配置含义：是否打开单点登录模式三。
+
+- 此配置项为 false 时，代表使用SSO模式二：使用 Redis 校验 ticket 值、删除 Redis 数据做到单点注销、使用 Redis 同步 Userinfo 数据。
+- 此配置项为 true 时，代表使用SSO模式三：使用 Http 请求校验 ticket 值、使用 Http 请求做到单点注销、使用 Http 请求同步 Userinfo 数据。
 
 
