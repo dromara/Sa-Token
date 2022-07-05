@@ -111,26 +111,8 @@ public class LoginController {
 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzBHVWV3Uk5NTTl1dFdjbnpFZFZHTVNYd3JOIn0.F_7fbHsFsDZmckHlGDaBuwDotZwAjZ0HB14DRujQfOQ
 ```
 
-### 5、扩展参数
-你可以通过以下方式在登录时注入扩展参数：
 
-``` java
-// 登录10001账号，并为生成的 Token 追加扩展参数name
-StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
-
-// 连缀写法追加多个
-StpUtil.login(10001, SaLoginConfig
-				.setExtra("name", "zhangsan")
-				.setExtra("age", 18)
-				.setExtra("role", "超级管理员"));
-
-// 获取扩展参数 
-String name = StpUtil.getExtra("name");
-```
-
-
-
-### 6、不同模式策略对比
+### 5、不同模式策略对比
 
 注入不同模式会让框架具有不同的行为策略，以下是三种模式的差异点（为方便叙述，以下比较以同时引入 jwt 与 Redis 作为前提）：
 
@@ -154,6 +136,41 @@ String name = StpUtil.getExtra("name");
 | 身份切换					| 支持			| 支持				| 支持				|
 | 二级认证					| 支持			| 支持				| 支持				|
 | 模式总结					| Token风格替换	| jwt 与 Redis 逻辑混合	| 完全舍弃Redis，只用jwt		|
+
+
+
+### 6、扩展参数
+你可以通过以下方式在登录时注入扩展参数：
+
+``` java
+// 登录10001账号，并为生成的 Token 追加扩展参数name
+StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+
+// 连缀写法追加多个
+StpUtil.login(10001, SaLoginConfig
+				.setExtra("name", "zhangsan")
+				.setExtra("age", 18)
+				.setExtra("role", "超级管理员"));
+
+// 获取扩展参数 
+String name = StpUtil.getExtra("name");
+```
+
+
+
+### 7、在多账户模式中集成 jwt
+sa-token-jwt 插件默认只为 `StpUtil` 注入 `StpLogicJwtFoxXxx` 实现，自定义的 `StpUserUtil` 是不会自动注入的，我们需要帮其手动注入：
+
+``` java
+/**
+ * 为 StpUserUtil 注入 StpLogicJwt 实现 
+ */
+@Autowired
+public void setUserStpLogic() {
+	StpUserUtil.stpLogic = new StpLogicJwtForSimple(StpUserUtil.TYPE);
+	SaManager.putStpLogic(StpUserUtil.stpLogic);
+}
+```
 
 
 
