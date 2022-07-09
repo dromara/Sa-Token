@@ -69,7 +69,7 @@
 <dependency>
 	<groupId>io.quarkiverse.satoken</groupId>
 	<artifactId>quarkus-satoken-resteasy</artifactId>
-	<version>1.0.1</version>
+	<version>1.30.0</version>
 </dependency>
 ```
 
@@ -129,7 +129,7 @@ implementation 'cn.dev33:sa-token-jboot-plugin:${sa.top.version}'
 
 <!-- tab:Quarkus 集成  -->
 ``` xml
-implementation 'io.quarkiverse.satoken:quarkus-satoken-resteasy:1.0.1'
+implementation 'io.quarkiverse.satoken:quarkus-satoken-resteasy:1.30.0'
 ```
 
 <!-- tab:裸Servlet容器环境  -->
