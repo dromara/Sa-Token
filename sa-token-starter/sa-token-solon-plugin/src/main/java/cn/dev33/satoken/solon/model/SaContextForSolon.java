@@ -1,4 +1,4 @@
-package cn.dev33.satoken.solon.integration;
+package cn.dev33.satoken.solon.model;
 
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.model.SaRequest;

@@ -1,12 +1,12 @@
 package cn.dev33.satoken.solon.integration;
 
-
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
+import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Filter;
 import org.noear.solon.core.handle.FilterChain;
@@ -16,24 +16,26 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author noear 2021/5/30 created
+ * @author noear
+ * @since 1.9
  */
 public class SaTokenPathFilter implements Filter {
-	
+
     // ------------------------ 设置此过滤器 拦截 & 放行 的路由
 
     /**
      * 拦截路由
      */
-    private List<String> includeList = new ArrayList<>();
+    protected List<String> includeList = new ArrayList<>();
 
     /**
      * 放行路由
      */
-    private List<String> excludeList = new ArrayList<>();
+    protected List<String> excludeList = new ArrayList<>();
 
     /**
      * 添加 [拦截路由]
+     *
      * @param paths 路由
      * @return 对象自身
      */
@@ -44,6 +46,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 添加 [放行路由]
+     *
      * @param paths 路由
      * @return 对象自身
      */
@@ -54,6 +57,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 写入 [拦截路由] 集合
+     *
      * @param pathList 路由集合
      * @return 对象自身
      */
@@ -64,6 +68,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 写入 [放行路由] 集合
+     *
      * @param pathList 路由集合
      * @return 对象自身
      */
@@ -74,6 +79,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 获取 [拦截路由] 集合
+     *
      * @return see note
      */
     public List<String> getIncludeList() {
@@ -82,6 +88,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 获取 [放行路由] 集合
+     *
      * @return see note
      */
     public List<String> getExcludeList() {
@@ -94,22 +101,29 @@ public class SaTokenPathFilter implements Filter {
     /**
      * 认证函数：每次请求执行
      */
-    public SaFilterAuthStrategy auth = r -> {};
+    protected SaFilterAuthStrategy auth = r -> {
+    };
 
     /**
      * 异常处理函数：每次[认证函数]发生异常时执行此函数
      */
-    public SaFilterErrorStrategy error = e -> {
-        throw new SaTokenException(e);
+    protected SaFilterErrorStrategy error = e -> {
+        if (e instanceof SaTokenException) {
+            throw (SaTokenException) e;
+        } else {
+            throw new SaTokenException(e);
+        }
     };
 
     /**
      * 前置函数：在每次[认证函数]之前执行
      */
-    public SaFilterAuthStrategy beforeAuth = r -> {};
+    protected SaFilterAuthStrategy beforeAuth = r -> {
+    };
 
     /**
      * 写入[认证函数]: 每次请求执行
+     *
      * @param auth see note
      * @return 对象自身
      */
@@ -120,6 +134,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 写入[异常处理函数]：每次[认证函数]发生异常时执行此函数
+     *
      * @param error see note
      * @return 对象自身
      */
@@ -130,6 +145,7 @@ public class SaTokenPathFilter implements Filter {
 
     /**
      * 写入[前置函数]：在每次[认证函数]之前执行
+     *
      * @param beforeAuth see note
      * @return 对象自身
      */
@@ -144,20 +160,30 @@ public class SaTokenPathFilter implements Filter {
         try {
             // 执行全局过滤器
             SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-            	beforeAuth.run(null);
+                beforeAuth.run(null);
                 auth.run(null);
             });
-            
+
         } catch (StopMatchException e) {
-			
-		} catch (Throwable e) {
-			// 1. 获取异常处理策略结果 
-			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
+
+        } catch (SaTokenException e) {
+            // 1. 获取异常处理策略结果
+            Object result;
+            if (e instanceof BackResultException) {
+                result = e.getMessage();
+            } else {
+                result = error.run(e);
+            }
 
             // 2. 写入输出流
-            ctx.contentType("text/plain; charset=utf-8");
-            ctx.output(result);
+            if(result != null) {
+                ctx.render(result);
+            }
+            ctx.setHandled(true);
             return;
+        } catch (Throwable e) {
+            // 异常解包
+            throw Utils.throwableUnwrap(e); //solon 的最后层还有保底处理
         }
 
         // 执行
