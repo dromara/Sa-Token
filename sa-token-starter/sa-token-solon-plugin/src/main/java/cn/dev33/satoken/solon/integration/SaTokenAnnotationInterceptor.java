@@ -9,9 +9,9 @@ import cn.dev33.satoken.strategy.SaStrategy;
  * @author noear
  * @since 1.4
  */
-public class SaTokenMethodInterceptor implements Interceptor {
+public class SaTokenAnnotationInterceptor implements Interceptor {
     
-	public static final SaTokenMethodInterceptor INSTANCE = new SaTokenMethodInterceptor();
+	public static final SaTokenAnnotationInterceptor INSTANCE = new SaTokenAnnotationInterceptor();
 
     @Override
     public Object doIntercept(Invocation inv) throws Throwable {

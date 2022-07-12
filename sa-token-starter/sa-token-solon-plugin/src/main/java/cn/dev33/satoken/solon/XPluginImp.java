@@ -16,8 +16,8 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.sign.SaSignTemplate;
-import cn.dev33.satoken.solon.integration.SaContextForSolon;
-import cn.dev33.satoken.solon.integration.SaTokenMethodInterceptor;
+import cn.dev33.satoken.solon.model.SaContextForSolon;
+import cn.dev33.satoken.solon.integration.SaTokenAnnotationInterceptor;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -31,11 +31,11 @@ public class XPluginImp implements Plugin {
     
 	@Override
     public void start(AopContext context) {
-        context.beanAroundAdd(SaCheckPermission.class, SaTokenMethodInterceptor.INSTANCE);
-        context.beanAroundAdd(SaCheckRole.class, SaTokenMethodInterceptor.INSTANCE);
-        context.beanAroundAdd(SaCheckLogin.class, SaTokenMethodInterceptor.INSTANCE);
-        context.beanAroundAdd(SaCheckSafe.class, SaTokenMethodInterceptor.INSTANCE);
-        context.beanAroundAdd(SaCheckBasic.class, SaTokenMethodInterceptor.INSTANCE);
+        context.beanAroundAdd(SaCheckPermission.class, SaTokenAnnotationInterceptor.INSTANCE);
+        context.beanAroundAdd(SaCheckRole.class, SaTokenAnnotationInterceptor.INSTANCE);
+        context.beanAroundAdd(SaCheckLogin.class, SaTokenAnnotationInterceptor.INSTANCE);
+        context.beanAroundAdd(SaCheckSafe.class, SaTokenAnnotationInterceptor.INSTANCE);
+        context.beanAroundAdd(SaCheckBasic.class, SaTokenAnnotationInterceptor.INSTANCE);
 
         //集成初始化
 
