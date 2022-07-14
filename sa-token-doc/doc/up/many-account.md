@@ -74,7 +74,7 @@ public String info() {
 
 注：`@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，亦可根据type属性指定其校验的账号体系，此属性默认为`""`，代表使用原生`StpUtil`账号体系。
 
-
+> 使用注解必须[添加注解拦截器](https://sa-token.dev33.cn/doc/index.html#/use/at-check?id=_1%e3%80%81%e6%b3%a8%e5%86%8c%e6%8b%a6%e6%88%aa%e5%99%a8)
 ### 6、使用注解合并简化代码
 交流群里有同学反应，虽然可以根据 `@SaCheckLogin(type = "user")` 指定账号类型，但几十上百个注解都加上这个的话，还是有些繁琐，代码也不够优雅，有么有更简单的解决方案？
 
