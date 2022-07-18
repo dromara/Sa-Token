@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Sa-Token持久层接口 [Redis版 (使用JDK默认序列化方式)] 
  * 
- * @author kong
+ * @author sikadai
  *
  */
 @Component
