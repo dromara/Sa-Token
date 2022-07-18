@@ -74,6 +74,8 @@
 
 - [[ fhs-framework ]](https://gitee.com/fhs-opensource/fhs-framework)：基于Springboot+Springcloud + Mybatis Plus + sa-token+ vue + elementui 的快速开发平台(低代码开发平台)，本框架永远免费，永久全开源
 
+- [[ chaos ]](https://gitee.com/qishanor/chaos)：一个基于 SpringBoot + Sa-Token + Mybatis-Plus的快速开发框架，前端vue-element-avue,内置代码生成器，代码最简洁，最佳学习实践方案。
+
 
 
 
