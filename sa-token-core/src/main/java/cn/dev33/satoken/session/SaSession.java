@@ -108,7 +108,14 @@ public class SaSession implements Serializable {
 	/**
 	 * 此Session绑定的token签名列表
 	 */
-	private final List<TokenSign> tokenSignList = new Vector<>();
+	private Vector<TokenSign> tokenSignList = new Vector<>();
+
+	/**
+	 * 设置此Session绑定的token签名列表-反序列化需要
+	 */
+	public void setTokenSignList(Vector<TokenSign> tokenSignList) {
+		this.tokenSignList = tokenSignList;
+	}
 
 	/**
 	 * 此Session绑定的token签名列表
@@ -597,6 +604,4 @@ public class SaSession implements Serializable {
 		return dataMap.keySet();
 	}
 
-	
-	
 }
