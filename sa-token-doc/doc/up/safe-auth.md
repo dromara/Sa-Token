@@ -57,7 +57,7 @@ public String add() {
 @RequestMapping("deleteProject")
 public SaResult deleteProject(String projectId) {
 	// 第1步，先检查当前会话是否已完成二级认证 
-	if(StpUtil.isSafe()) {
+	if(!StpUtil.isSafe()) {
 		return SaResult.error("请完成二级认证后再次访问接口");
 	}
 	
