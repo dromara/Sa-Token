@@ -90,6 +90,33 @@ jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`�
 参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
 
 
+### 集成redis后对象模型序列化异常
+假设执行如下代码:
+``` java
+@Data
+public class User implements Serializable {
+    private Long userId;
+    private String username;
+    private String password;
+}
+
+User user = new User();
+user.setUserId(10000L);
+user.setUsername("oneName");
+user.setPassword("onePass");        
+StpUtil.getSession().set("userObjKey", user); // 这里报错
+```
+报错信息如下:
+```
+SerializationException: Could not read JSON: 
+Cannot deserialize value of type `java.lang.Long` from Array value (token `JsonToken.START_ARRAY`)
+```
+
+springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能出现此问题
+
+原因是redis里面有之前的 satoken 会话数据, 清空 Redis 即可
+
+
 
 
 
