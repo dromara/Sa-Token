@@ -112,7 +112,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .s-case-link img{transition: all 0.3s;}
 .s-case-title,.s-case-intro{padding: 0 16px;}
 .s-case-title{margin-top: 20px; font-size: 18px; font-weight: 400; color: #333; font-family: "microsoft yahei";}
-.s-case-intro{margin-top: 10px; font-size: 14px; line-height: 20px; color: #777; word-break:break-all;}
+.s-case-intro{margin-top: 15px; font-size: 14px; line-height: 20px; color: #777; word-break:break-all;}
 .s-author{color: #ff5722; border: 1px #ff5722 solid; position: absolute; right: 20px; display: inline-block;}
 .s-author{padding: 0 5px; font-size: 12px; transform: translate(0, -25px);}
 
@@ -149,7 +149,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 /* -------- 友情链接 --------- */
 .com-box-you a{flex: 0 0 14.5%; line-height: 60px; height: 60px; margin: 10px;}
-.com-box-you a img{min-width: 60%; max-width: 100%; vertical-align: middle; max-height: 100%;}
+.com-box-you a img{min-width: 60%; max-width: 85%; vertical-align: middle; max-height: 100%;}
 
 /* -------- 底部 - 连接 --------- */
 #footer{background-color: #181818;}
