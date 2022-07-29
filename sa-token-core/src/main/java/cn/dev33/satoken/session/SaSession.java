@@ -21,6 +21,9 @@ import cn.dev33.satoken.util.SaFoxUtil;
  */
 public class SaSession implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -33,30 +36,30 @@ public class SaSession implements Serializable {
 	 */
 	public static final String PERMISSION_LIST = "PERMISSION_LIST";
 	
-	/** 此Session的id */
+	/** 此 Session 的 id */
 	private String id;
 
-	/** 此Session的创建时间 */
+	/** 此 Session 的创建时间（时间戳） */
 	private long createTime;
 
-	/** 此Session的所有挂载数据 */
+	/** 此 Session 的所有挂载数据 */
 	private final Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
 	// ----------------------- 构建相关
 
 	/**
-	 * 构建一个Session对象
+	 * 构建一个 Session 对象
 	 */
 	public SaSession() {
 		/*
-		 * 当Session从Redis中反序列化取出时，框架会误以为创建了新的Session，
+		 * 当 Session 从 Redis 中反序列化取出时，框架会误以为创建了新的Session，
 		 * 因此此处不可以调用this(null); 避免监听器收到错误的通知 
 		 */
 		// this(null);
 	}
 
 	/**
-	 * 构建一个Session对象
+	 * 构建一个 Session 对象
 	 * @param id Session的id
 	 */
 	public SaSession(String id) {
@@ -67,15 +70,15 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 获取此Session的id
-	 * @return 此会话的id
+	 * 获取此 Session 的 id
+	 * @return 此 Session 的id
 	 */
 	public String getId() {
 		return id;
 	}
 
 	/**
-	 * 写入此Session的id
+	 * 写入此 Session 的 id
 	 * @param id SessionId
 	 * @return 对象自身
 	 */
@@ -85,7 +88,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 返回当前会话创建时间
+	 * 返回当前会话创建时间（时间戳）
 	 * @return 时间戳
 	 */
 	public long getCreateTime() {
@@ -93,7 +96,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 写入此Session的创建时间
+	 * 写入此 Session 的创建时间（时间戳）
 	 * @param createTime 时间戳
 	 * @return 对象自身
 	 */
@@ -103,31 +106,32 @@ public class SaSession implements Serializable {
 	}
 
 
-	// ----------------------- TokenSign相关
+	// ----------------------- TokenSign 相关
 
 	/**
-	 * 此Session绑定的token签名列表
+	 * 此 Session 绑定的 Token 签名列表 
 	 */
 	private Vector<TokenSign> tokenSignList = new Vector<>();
 
 	/**
-	 * 设置此Session绑定的token签名列表-反序列化需要
+	 * 写入此 Session 绑定的 Token 签名列表 
+	 * @param tokenSignList Token 签名列表
 	 */
 	public void setTokenSignList(Vector<TokenSign> tokenSignList) {
 		this.tokenSignList = tokenSignList;
 	}
 
 	/**
-	 * 此Session绑定的token签名列表
+	 * 获取此 Session 绑定的 Token 签名列表 
 	 *
-	 * @return token签名列表
+	 * @return Token 签名列表
 	 */
 	public List<TokenSign> getTokenSignList() {
 		return tokenSignList;
 	}
 
 	/**
-	 * 返回token签名列表的拷贝副本
+	 * 获取 Token 签名列表 的拷贝副本
 	 *
 	 * @return token签名列表
 	 */
@@ -136,15 +140,20 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 返回token签名列表的拷贝副本，根据 device 筛选 
+	 * 返回 Token 签名列表 的拷贝副本，根据 device 筛选 
 	 *
 	 * @param device 设备类型，填 null 代表不限设备类型  
 	 * @return token签名列表
 	 */
 	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+		// 返回全部
+		if(device == null) {
+			return tokenSignListCopy();
+		}
+		// 返回筛选后的 
 		List<TokenSign> list = new ArrayList<>();
 		for (TokenSign tokenSign : tokenSignListCopy()) {
-			if(device == null || tokenSign.getDevice().equals(device)) {
+			if(tokenSign.getDevice().equals(device)) {
 				list.add(tokenSign);
 			}
 		}
@@ -152,10 +161,10 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 查找一个token签名
+	 * 查找一个 Token 签名
 	 *
 	 * @param tokenValue token值
-	 * @return 查找到的tokenSign
+	 * @return 查找到的 TokenSign
 	 */
 	public TokenSign getTokenSign(String tokenValue) {
 		for (TokenSign tokenSign : tokenSignListCopy()) {
@@ -167,16 +176,14 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 添加一个token签名
+	 * 添加一个 Token 签名
 	 *
-	 * @param tokenSign token签名
+	 * @param tokenSign Token 签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
-		// 如果已经存在于列表中，则无需再次添加
-		for (TokenSign tokenSign2 : tokenSignListCopy()) {
-			if (tokenSign2.getValue().equals(tokenSign.getValue())) {
-				return;
-			}
+		// 如果已经存在于列表中，则无需再次添加 
+		if(getTokenSign(tokenSign.getValue()) != null) {
+			return;
 		}
 		// 添加并更新
 		tokenSignList.add(tokenSign);
@@ -184,7 +191,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 添加一个token签名
+	 * 添加一个 Token 签名
 	 *
 	 * @param tokenValue token值
 	 * @param device 设备类型
@@ -194,9 +201,9 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 移除一个token签名
+	 * 移除一个 Token 签名
 	 *
-	 * @param tokenValue token名称
+	 * @param tokenValue token值 
 	 */
 	public void removeTokenSign(String tokenValue) {
 		TokenSign tokenSign = getTokenSign(tokenValue);
@@ -246,7 +253,7 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 修改此Session的最小剩余存活时间 (只有在Session的过期时间低于指定的minTimeout时才会进行修改)
+	 * 修改此Session的最小剩余存活时间 (只有在 Session 的过期时间低于指定的 minTimeout 时才会进行修改)
 	 * @param minTimeout 过期时间 (单位: 秒) 
 	 */
 	public void updateMinTimeout(long minTimeout) {
@@ -258,7 +265,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 修改此Session的最大剩余存活时间 (只有在Session的过期时间高于指定的maxTimeout时才会进行修改)
+	 * 修改此Session的最大剩余存活时间 (只有在 Session 的过期时间高于指定的 maxTimeout 时才会进行修改)
 	 * @param maxTimeout 过期时间 (单位: 秒) 
 	 */
 	public void updateMaxTimeout(long maxTimeout) {
@@ -420,12 +427,12 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 写值(只有在此key原本无值的时候才会写入)
+	 * 写值 (只有在此 key 原本无值的情况下才会写入)
 	 * @param key   名称
 	 * @param value 值
 	 * @return 对象自身
 	 */
-	public SaSession setDefaultValue(String key, Object value) {
+	public SaSession setByNull(String key, Object value) {
 		if(has(key) == false) {
 			dataMap.put(key, value);
 			update();
@@ -602,6 +609,22 @@ public class SaSession implements Serializable {
 	@Deprecated
 	public Set<String> attributeKeys() {
 		return dataMap.keySet();
+	}
+
+	/**
+	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.setByNull()，用法保持不变 </h1>
+	 * 写值(只有在此key原本无值的时候才会写入)
+	 * @param key   名称
+	 * @param value 值
+	 * @return 对象自身
+	 */
+	@Deprecated
+	public SaSession setDefaultValue(String key, Object value) {
+		if(has(key) == false) {
+			dataMap.put(key, value);
+			update();
+		}
+		return this;
 	}
 
 }
