@@ -226,7 +226,7 @@ public class SaOAuth2Handle {
 	 * @return 处理结果
 	 */
 	public static Object doLogin(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
-		return cfg.getDoLoginHandle().apply(req.getParamNotNull(Param.name), req.getParamNotNull("pwd"));
+		return cfg.getDoLoginHandle().apply(req.getParamNotNull(Param.name), req.getParamNotNull(Param.pwd));
 	}
 
 	/**
