@@ -349,7 +349,7 @@
 							<img src="https://oss.dev33.cn/sa-token/link/liteflow.png" msg="轻量，快速，稳定，可编排的组件式流程引擎">
 						</a>
 						<a href="https://hutool.cn/" target="_blank">
-							<img src="https://plus.hutool.cn/images/logo.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
+							<img src="https://oss.dev33.cn/sa-token/link/hutool.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
 						</a>
 						<a href="https://sa-token.dev33.cn/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/sa-token.png" msg="一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！">
@@ -439,11 +439,14 @@
 						<a href="http://www.pearadmin.com/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/pear-admin.png" msg="致 力 于 让 Web 开 发 变 得 简 单 优 雅">
 						</a>
-						<a href="https://dwz.cn/L9hCwepg" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/com/yungouos.png" msg="官方直连支付系统解决方案，支持个人、个体户、企业全渠道签约。">
-						</a>
 						<a href="http://www.layui-vue.com/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/layui-vue.png" msg="layui - vue（谐音：类 UI) 是 一 套 Vue 3.0 的 桌 面 端 组 件 库.">
+						</a>
+						<a href="https://shenyu.apache.org/zh/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/shenyu.svg" msg="一个异步的，高性能的，跨语言的，响应式的 API 网关。">
+						</a>
+						<a href="https://dwz.cn/L9hCwepg" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/com/yungouos.png" msg="官方直连支付系统解决方案，支持个人、个体户、企业全渠道签约。">
 						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
@@ -588,7 +591,7 @@
 					return;
 				}
 				// 如果不是oss上的图片 
-				if(img.src.indexOf('https://oss.dev33.cn') == -1) {
+				if(img.src.indexOf('https://oss.dev33.cn') == -1 || img.src.endsWith('.svg')) {
 					return;
 				}
 				img.src = img.src + "?x-oss-process=image/resize,m_lfit,w_" + (img.width) + ",limit_0/auto-orient,0";
