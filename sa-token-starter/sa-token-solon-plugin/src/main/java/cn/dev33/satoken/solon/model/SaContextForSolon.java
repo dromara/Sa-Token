@@ -1,15 +1,12 @@
 package cn.dev33.satoken.solon.model;
 
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.util.PathAnalyzer;
+
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
-import cn.dev33.satoken.solon.model.SaRequestForSolon;
-import cn.dev33.satoken.solon.model.SaResponseForSolon;
-import cn.dev33.satoken.solon.model.SaStorageForSolon;
-
-import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.util.PathAnalyzer;
 
 /**
  * @author noear
