@@ -1,7 +1,7 @@
 # 框架博客
 
-> 此页面收集 Sa-Token 相关技术文章，欢迎大家投稿（不限平台），
-> 直接提交 [轻量级pr](https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/doc/more/blog.md) 即可（按照发表日期倒叙）。
+> 此页面收集 Sa-Token 相关技术文章，欢迎大家投稿（不限平台，按照发表日期倒叙），
+> [投稿链接](https://wj.qq.com/s2/10596458/aa96/) 
 
 --- 
 

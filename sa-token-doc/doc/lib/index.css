@@ -75,6 +75,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .sidebar .sidebar-nav>ul>li> strong{font-size: 1.2em; margin-top: 10px;}
 /* .sidebar ul li a{color: #222;} */
 .sidebar .sidebar-nav>ul>li>ul>li>a{/* color: #222; */font-size: 16px; /* font-weight: 700; */}
+.main-box .sidebar ul li a{color: #00323c;}
 
 /* 做到悬浮出现下划线的效果 */
 .main-box .sidebar>.sidebar-nav>ul{padding-left: 6px;}

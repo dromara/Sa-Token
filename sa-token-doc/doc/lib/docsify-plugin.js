@@ -27,7 +27,7 @@ var myDocsifyPlugin = function(hook, vm) {
 			'<footer>',
 			'<span>发现错误？ 您可以在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
 			'" target="_blank">GitHub</a> 帮助我们完善此页文档！</span>',
-			'或 <a href="https://jq.qq.com/?_wv=1027&k=ceibbMFr" target="_blank">加入QQ群</a> 交流反馈',
+			'或 <a href="#/more/join-group">加入讨论群</a> 交流反馈',
 			'</footer>'
 		].join('');
 		return html + footer;
