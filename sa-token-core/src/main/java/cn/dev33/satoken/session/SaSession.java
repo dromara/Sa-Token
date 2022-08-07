@@ -153,7 +153,7 @@ public class SaSession implements Serializable {
 		// 返回筛选后的 
 		List<TokenSign> list = new ArrayList<>();
 		for (TokenSign tokenSign : tokenSignListCopy()) {
-			if(tokenSign.getDevice().equals(device)) {
+			if(SaFoxUtil.equals(tokenSign.getDevice(), device)) {
 				list.add(tokenSign);
 			}
 		}
@@ -168,7 +168,7 @@ public class SaSession implements Serializable {
 	 */
 	public TokenSign getTokenSign(String tokenValue) {
 		for (TokenSign tokenSign : tokenSignListCopy()) {
-			if (tokenSign.getValue().equals(tokenValue)) {
+			if (SaFoxUtil.equals(tokenSign.getValue(), tokenValue)) {
 				return tokenSign;
 			}
 		}
