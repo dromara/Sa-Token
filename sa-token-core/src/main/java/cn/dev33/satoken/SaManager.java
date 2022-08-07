@@ -236,7 +236,7 @@ public class SaManager {
 			return StpUtil.stpLogic;
 		}
 		
-		// 从SaManager中获取 
+		// 从 stpLogicMap 中获取 
 		StpLogic stpLogic = stpLogicMap.get(loginType);
 		if(stpLogic == null) {
 			/*

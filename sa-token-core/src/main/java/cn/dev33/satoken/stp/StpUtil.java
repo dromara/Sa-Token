@@ -32,12 +32,18 @@ public class StpUtil {
 
 	/**
 	 * 重置 StpLogic 对象
-	 * @param stpLogic / 
+	 * <br> 1、更改此账户的 StpLogic 对象 
+	 * <br> 2、put 到全局 StpLogic 集合中 
+	 * 
+	 * @param newStpLogic / 
 	 */
-	public static void setStpLogic(StpLogic stpLogic) {
-		StpUtil.stpLogic = stpLogic;
-		// 防止自定义 stpLogic 被覆盖 
-		SaManager.putStpLogic(stpLogic);
+	public static void setStpLogic(StpLogic newStpLogic) {
+		// 重置此账户的 StpLogic 对象 
+		stpLogic = newStpLogic;
+		
+		// 添加到全局 StpLogic 集合中
+		// 以便可以通过 SaManager.getStpLogic(type) 的方式来全局获取到这个 StpLogic 
+		SaManager.putStpLogic(newStpLogic);
 	}
 	
 	
