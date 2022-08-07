@@ -34,7 +34,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ```
 保证此类被`springboot`启动类扫描到即可
 
-!> 注意：如果在高版本 `SpringBoot (≥2.6.x)` 下注册拦截器生效，则需要额外添加 `@EnableWebMvc` 注解才可以使用。
+!> 注意：如果在高版本 `SpringBoot (≥2.6.x)` 下注册拦截器失效，则需要额外添加 `@EnableWebMvc` 注解才可以使用。
 
 
 ### 2、使用注解鉴权
