@@ -37,7 +37,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 
 /* -------- 海报部分 --------- */
-.main-box{width: 100%; /* min-height: 70vh; */ /* height: 80vh; */ text-align: center; background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg); }
+.main-box{width: 100%; /* min-height: 70vh; */ /* height: 80vh; */ text-align: center; }
 .main-box{display: flex; align-items: center; text-align: center; }
 .fenge{min-height: 90px;}
 .content-box{color: #000; flex: 1; padding: 120px 1em 70px;}
@@ -46,21 +46,23 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* .title-logo{width: 221px; cursor: pointer; transition: all 0.2s;}
 .title-logo:hover{transform: scale(1.2, 1.2);} */
 
-.sub-title{font-size: 22px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #555;}
+.sub-title{font-size: 22px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #234;}
 /* .content-box p{line-height: 30px; padding: 0px 1em;} */
 /* 角标位置修复 */
 .badge-box a:nth-child(-n+2) img{position: relative; top: 1px;}
 
-.main-box{animation: changes 60s 0.2s linear infinite normal; background-attachment: ;}  /* normal | alternate */
+/* .main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg);} */
+.main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg3.png); background-size: 120% 100%;}
+.main-box{animation: changes 30s 0.2s linear infinite normal; /* background-attachment: ; */}  /* normal | alternate */
 @keyframes changes {
 	from {background-position: 0vw 0%;}
-	to {background-position: -100vw 0%;}
+	to {background-position: -20vw 0%;}
 }
 
 /* 几个按钮 */
 .btn-box{margin-top: 50px; margin-bottom: 40px;}
-.btn-box a{border: 1px #42B983 solid; border-radius: 2em; box-sizing: border-box; color: #3eaf7c; display: inline-block;transition: all 0.1s;}
-.btn-box a{font-size: 14px; background-color: rgba(0,255,0,0.04); letter-spacing: 1px; padding: 1em 2em; margin: 0 0.5em; margin-bottom: 14px; text-decoration: none; }
+.btn-box a{border: 1px #1e8f5c solid; border-radius: 2em; box-sizing: border-box; color: #1e8f5c; display: inline-block;transition: all 0.1s;}
+.btn-box a{font-size: 14px; background-color: rgba(0,255,0,0.06); letter-spacing: 1px; padding: 1em 2em; margin: 0 0.5em; margin-bottom: 14px; text-decoration: none; }
 .btn-box a:hover{/* transform: scale(1.05, 1.05); */padding: 1em 2.3em; margin-left: 0.2em; margin-right: 0.2em;}
 /* 最后一个加深底色 */
 .btn-box .doc-btn {color: #fff; background-color: #42B983; border: 1px green solid;}
