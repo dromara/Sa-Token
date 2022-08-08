@@ -319,6 +319,7 @@ public class StpLogic {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(getConfigOfIsShare()) {
 				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
+				// 即：在 login 时提供了 Extra 数据后，即使配置了 is-share=true 也不能复用旧 Token，必须创建新 Token  
 				if(loginModel.getExtraData() == null || loginModel.getExtraData().size() == 0) {
 					tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 				}
