@@ -98,6 +98,21 @@ public class SaOAuth2Template {
 			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Access-Token 不具备 Scope：" + scope);
 		}
 	}
+	/**
+	 * 校验：指定 Client-Token 是否具有指定 Scope
+	 * @param clientToken Client-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public void checkClientTokenScope(String clientToken, String... scopes) {
+		if(scopes == null || scopes.length == 0) {
+			return;
+		}
+		ClientTokenModel ct = checkClientToken(clientToken);
+		List<String> scopeList = SaFoxUtil.convertStringToList(ct.scope);
+		for (String scope : scopes) {
+			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Client-Token 不具备 Scope：" + scope);
+		}
+	}
 
 	// ------------------- generate 构建数据
 	/**
