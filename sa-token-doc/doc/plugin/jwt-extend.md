@@ -154,6 +154,9 @@ StpUtil.login(10001, SaLoginConfig
 
 // 获取扩展参数 
 String name = StpUtil.getExtra("name");
+
+// 获取任意 Token 的扩展参数 
+String name = StpUtil.getExtra("tokenValue", "name");
 ```
 
 
@@ -170,8 +173,6 @@ public void setUserStpLogic() {
 	StpUserUtil.setStpLogic(new StpLogicJwtForSimple(StpUserUtil.TYPE));
 }
 ```
-
-
 
 
 
