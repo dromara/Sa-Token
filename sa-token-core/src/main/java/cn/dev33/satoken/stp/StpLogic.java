@@ -377,18 +377,18 @@ public class StpLogic {
  			return;
  		}
  		
- 		// 从当前 [Storage存储器] 里删除 
- 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
- 		
  		// 如果打开了 Cookie 模式，则把 Cookie 清除掉 
  		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 
+ 		// 从当前 [Storage存储器] 里删除 Token 
+ 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
+ 		
  		// 清除当前上下文的 [临时有效期check标记] 
  	 	SaHolder.getStorage().delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  		
- 		// 清除这个token的相关信息 
+ 		// 清除这个 Token 的相关信息 
  		logoutByTokenValue(tokenValue);
 	}
 
