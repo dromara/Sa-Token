@@ -167,8 +167,7 @@ sa-token-jwt 插件默认只为 `StpUtil` 注入 `StpLogicJwtFoxXxx` 实现，�
  */
 @Autowired
 public void setUserStpLogic() {
-	StpUserUtil.stpLogic = new StpLogicJwtForSimple(StpUserUtil.TYPE);
-	SaManager.putStpLogic(StpUserUtil.stpLogic);
+	StpUserUtil.setStpLogic(new StpLogicJwtForSimple(StpUserUtil.TYPE));
 }
 ```
 
