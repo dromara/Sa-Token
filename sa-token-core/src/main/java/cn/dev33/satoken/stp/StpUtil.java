@@ -313,12 +313,22 @@ public class StpUtil {
  	}
 
 	/**
-	 * 获取Token扩展信息（只在jwt模式下有效）
+	 * 获取当前 Token 的扩展信息（此函数只在jwt模式下生效）
 	 * @param key 键值 
 	 * @return 对应的扩展数据 
 	 */
 	public static Object getExtra(String key) {
 		return stpLogic.getExtra(key);
+	}
+
+	/**
+	 * 获取指定 Token 的扩展信息（此函数只在jwt模式下生效）
+	 * @param tokenValue 指定的 Token 值 
+	 * @param key 键值 
+	 * @return 对应的扩展数据 
+	 */
+	public static Object getExtra(String tokenValue, String key) {
+		return stpLogic.getExtra(tokenValue, key);
 	}
  	
  	

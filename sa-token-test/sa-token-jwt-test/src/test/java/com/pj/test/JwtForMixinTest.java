@@ -38,14 +38,14 @@ public class JwtForMixinTest {
 	// 开始 
 	@BeforeAll
     public static void beforeClass() {
-    	System.out.println("\n\n------------------------ JwtForMixTest star ...");
+    	System.out.println("\n\n------------------------ JwtForMixinTest star ...");
     	StpUtil.setStpLogic(new StpLogicJwtForMixin());
     }
 
 	// 结束 
     @AfterAll
     public static void afterClass() {
-    	System.out.println("\n\n------------------------ JwtForMixTest end ... \n");
+    	System.out.println("\n\n------------------------ JwtForMixinTest end ... \n");
     }
 
     // 测试：登录 
@@ -261,9 +261,12 @@ public class JwtForMixinTest {
     public void getExtra() {
     	// 登录
     	StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+    	String tokenValue = StpUtil.getTokenValue();
     	
     	// 可以取到
     	Assertions.assertEquals(StpUtil.getExtra("name"), "zhangsan");
+    	Assertions.assertEquals(StpUtil.getExtra(tokenValue, "name"), "zhangsan");
+    	
     	// 取不到 
     	Assertions.assertEquals(StpUtil.getExtra("name2"), null);
     }
