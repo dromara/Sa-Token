@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -101,7 +100,7 @@ public class StpLogic {
  	 * @param tokenValue token值 
  	 */
 	public void setTokenValue(String tokenValue){
-		setTokenValue(tokenValue, (int)SaManager.getConfig().getTimeout());
+		setTokenValue(tokenValue, getConfigOfCookieTimeout());
 	}
 	
  	/**
@@ -896,21 +895,41 @@ public class StpLogic {
 		// 如果配置了需要校验登录状态，则验证一下
 		if(getConfig().getTokenSessionCheckLogin()) {
 			checkLogin();
+			return getTokenSessionByToken(getTokenValue(), isCreate);
 		} else {
-			// 如果配置忽略token登录校验，则必须保证token不为null (token为null的时候随机创建一个) 
+			/* 
+			 * 情况1、如果调用方提供了有效 Token，则：直接返回其 [Token-Session]
+			 * 情况2、如果调用方提供了无效 Token，或根本没有提供 Token，则：创建新 Token -> 返回 [Token-Session] 
+			 */
 			String tokenValue = getTokenValue();
-			if(tokenValue == null || Objects.equals(tokenValue, "")) {
-				// 随机一个token送给Ta 
+			
+			// q1 
+			if(SaFoxUtil.isNotEmpty(tokenValue)) {
+				SaSession session = getTokenSessionByToken(tokenValue, false);
+				if(session != null) {
+					return session;
+				}
+			}
+			
+			// q2 —— 此时q2又分两种情况：
+			/*
+			 * 情况 2.1、isCreate=true：说明调用方想让框架帮其创建一个 SaSession，那框架就创建并返回 
+			 * 情况 2.2、isCreate=false：说明调用方并不想让框架帮其创建一个 SaSession，那框架就直接返回 null 
+			 */
+			if(isCreate) {
+				// 随机创建一个 Token  
 				tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
-				// 写入 [最后操作时间]
+				// 写入 [最后操作时间]  
 				setLastActivityToNow(tokenValue);  
-				// 在当前会话写入这个tokenValue 
-				int cookieTimeout = (int)(getConfig().getTimeout() == SaTokenDao.NEVER_EXPIRE ? Integer.MAX_VALUE : getConfig().getTimeout());
-				setTokenValue(tokenValue, cookieTimeout);
+				// 在当前上下文写入此 TokenValue 
+				setTokenValue(tokenValue);
+				// 返回其 Token-Session 对象 
+				return getTokenSessionByToken(tokenValue, isCreate);
+			} 
+			else {
+				return null;
 			}
 		}
-		// 返回这个token对应的Token-Session 
-		return getSessionBySessionId(splicingKeyTokenSession(getTokenValue()), isCreate);
 	}
 	
 	/** 
@@ -1815,7 +1834,20 @@ public class StpLogic {
  	public boolean isOpenActivityCheck() {
  		return getConfig().getActivityTimeout() != SaTokenDao.NEVER_EXPIRE;
  	}
- 	
+
+    /**
+     * 返回全局配置的 Cookie 保存时长，单位：秒 （根据全局 timeout 计算） 
+     * @return Cookie 应该保存的时长
+     */
+    public int getConfigOfCookieTimeout() {
+    	long timeout = getConfig().getTimeout();
+    	if(timeout == SaTokenDao.NEVER_EXPIRE) {
+    		return Integer.MAX_VALUE;
+    	}
+		return (int) timeout;
+	}
+    
+    
 	/**
 	 * 返回持久化对象 
 	 * @return / 
