@@ -111,13 +111,13 @@ public class SaSession implements Serializable {
 	/**
 	 * 此 Session 绑定的 Token 签名列表 
 	 */
-	private Vector<TokenSign> tokenSignList = new Vector<>();
+	private List<TokenSign> tokenSignList = new Vector<>();
 
 	/**
 	 * 写入此 Session 绑定的 Token 签名列表 
 	 * @param tokenSignList Token 签名列表
 	 */
-	public void setTokenSignList(Vector<TokenSign> tokenSignList) {
+	public void setTokenSignList(List<TokenSign> tokenSignList) {
 		this.tokenSignList = tokenSignList;
 	}
 

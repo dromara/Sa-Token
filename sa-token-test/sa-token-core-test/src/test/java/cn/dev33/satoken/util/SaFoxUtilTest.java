@@ -71,6 +71,9 @@ public class SaFoxUtilTest {
     	Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello world"));
     	Assertions.assertFalse(SaFoxUtil.vagueMatch("hello*", "he"));
     	Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello*"));
+    	Assertions.assertTrue(SaFoxUtil.vagueMatch(null, null));
+    	Assertions.assertFalse(SaFoxUtil.vagueMatch(null, "hello"));
+    	Assertions.assertFalse(SaFoxUtil.vagueMatch("hello*", null));
     }
 
     @Test
