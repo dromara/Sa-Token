@@ -363,7 +363,7 @@ public class SaSsoHandle {
 		if(cfg.getIsHttp()) {
 			// 模式三：使用 http 请求从认证中心校验ticket 
 			String ssoLogoutCall = null; 
-			if(cfg.getIsSlo()) {
+			if(cfg.getIsSlo() && SaFoxUtil.isNotEmpty(currUri)) {
 				ssoLogoutCall = SaHolder.getRequest().getUrl().replace(currUri, Api.ssoLogoutCall); 
 			}
 			
