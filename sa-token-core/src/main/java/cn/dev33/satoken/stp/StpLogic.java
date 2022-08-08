@@ -371,21 +371,24 @@ public class StpLogic {
 	 * 会话注销 
 	 */
 	public void logout() {
-		// 如果连token都没有，那么无需执行任何操作 
+		// 如果连 Token 都没有，那么无需执行任何操作 
 		String tokenValue = getTokenValue();
  		if(SaFoxUtil.isEmpty(tokenValue)) {
  			return;
  		}
  		
- 		// 从当前 [storage存储器] 里删除 
+ 		// 从当前 [Storage存储器] 里删除 
  		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
  		
- 		// 如果打开了Cookie模式，则把cookie清除掉 
+ 		// 如果打开了 Cookie 模式，则把 Cookie 清除掉 
  		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
+
+ 		// 清除当前上下文的 [临时有效期check标记] 
+ 	 	SaHolder.getStorage().delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  		
- 		// 清除这个token的相关信息
+ 		// 清除这个token的相关信息 
  		logoutByTokenValue(tokenValue);
 	}
 
@@ -469,16 +472,16 @@ public class StpLogic {
 		// 2. 注销 Token-Session 
 		deleteTokenSession(tokenValue);
 
-		// if. 无效 loginId 立即返回 
+		// 3. 清理 token -> id 索引 
  		String loginId = getLoginIdNotHandle(tokenValue);
+ 		if(loginId != null) {
+ 			deleteTokenToIdMapping(tokenValue);
+ 		}
+
+		// if. 无效 loginId 立即返回 
  	 	if(isValidLoginId(loginId) == false) {
- 	 		if(loginId != null) {
- 	 			deleteTokenToIdMapping(tokenValue);
- 	 		}
  			return;
  		}
- 		// 3. 清理token-id索引 
- 	 	deleteTokenToIdMapping(tokenValue);
  	 	
  	 	// $$ 通知监听器，某某Token注销下线了 
 		SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
@@ -942,7 +945,7 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 清除指定token的 [最后操作时间] 
+ 	 * 清除指定 Token 的 [最后操作时间记录] 
  	 * @param tokenValue 指定token 
  	 */
  	protected void clearLastActivity(String tokenValue) {
@@ -952,8 +955,6 @@ public class StpLogic {
  		}
  		// 删除[最后操作时间]
  		getSaTokenDao().delete(splicingKeyLastActivityTime(tokenValue));
- 		// 清除标记 
- 		SaHolder.getStorage().delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
  	
  	/**
