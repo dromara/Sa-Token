@@ -204,7 +204,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * [禁用] 根据条件查询Token 
 	 */
 	@Override
-	public List<String> searchTokenValue(String keyword, int start, int size) {
+	public List<String> searchTokenValue(String keyword, int start, int size, boolean sortType) {
 		throw new ApiDisabledException(); 
 	}
 	

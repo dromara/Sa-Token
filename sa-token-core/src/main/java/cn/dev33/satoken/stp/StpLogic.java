@@ -1499,10 +1499,12 @@ public class StpLogic {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return token集合 
 	 */
-	public List<String> searchTokenValue(String keyword, int start, int size) {
-		return getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size);
+	public List<String> searchTokenValue(String keyword, int start, int size, boolean sortType) {
+		return getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size, sortType);
 	}
 	
 	/**
@@ -1510,10 +1512,12 @@ public class StpLogic {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return sessionId集合 
 	 */
-	public List<String> searchSessionId(String keyword, int start, int size) {
-		return getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size);
+	public List<String> searchSessionId(String keyword, int start, int size, boolean sortType) {
+		return getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size, sortType);
 	}
 
 	/**
@@ -1521,10 +1525,12 @@ public class StpLogic {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return sessionId集合 
 	 */
-	public List<String> searchTokenSessionId(String keyword, int start, int size) {
-		return getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size);
+	public List<String> searchTokenSessionId(String keyword, int start, int size, boolean sortType) {
+		return getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size, sortType);
 	}
 	
 

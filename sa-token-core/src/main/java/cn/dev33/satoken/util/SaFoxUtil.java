@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -111,10 +112,11 @@ public class SaFoxUtil {
 	 * @param keyword  关键字
 	 * @param start    起始位置 (-1代表查询所有)
 	 * @param size     获取条数
+	 * @param sortType     排序类型（true=正序，false=反序）
+	 * 
 	 * @return 符合条件的新数据集合
 	 */
-	public static List<String> searchList(Collection<String> dataList, String prefix, String keyword, int start,
-			int size) {
+	public static List<String> searchList(Collection<String> dataList, String prefix, String keyword, int start, int size, boolean sortType) {
 		if (prefix == null) {
 			prefix = "";
 		}
@@ -131,7 +133,7 @@ public class SaFoxUtil {
 			}
 		}
 		// 取指定段数据
-		return searchList(list, start, size);
+		return searchList(list, start, size, sortType);
 	}
 
 	/**
@@ -140,9 +142,15 @@ public class SaFoxUtil {
 	 * @param list  数据集合
 	 * @param start 起始位置 (-1代表查询所有)
 	 * @param size  获取条数
+	 * @param sortType     排序类型（true=正序，false=反序）
+	 * 
 	 * @return 符合条件的新数据集合
 	 */
-	public static List<String> searchList(List<String> list, int start, int size) {
+	public static List<String> searchList(List<String> list, int start, int size, boolean sortType) {
+		// 如果是反序的话 
+		if(sortType == false) {
+			Collections.reverse(list);
+		}
 		// 取指定段数据
 		if (start < 0) {
 			return list;

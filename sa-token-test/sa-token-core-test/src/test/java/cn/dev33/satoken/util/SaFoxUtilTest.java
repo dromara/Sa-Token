@@ -47,21 +47,21 @@ public class SaFoxUtilTest {
     	List<String> dataList = Arrays.asList("token1", "token2", "token3", "token4", "token5", "aaa1");
     	
     	// 分页 
-    	List<String> list1 = SaFoxUtil.searchList(dataList, 1, 2);
+    	List<String> list1 = SaFoxUtil.searchList(dataList, 1, 2, true);
     	Assertions.assertEquals(list1.size(), 2);
     	Assertions.assertEquals(list1.get(0), "token2");
     	Assertions.assertEquals(list1.get(1), "token3");
     	
     	// 前缀筛选 
-    	List<String> list2 = SaFoxUtil.searchList(dataList, "token", "", 0, 10);
+    	List<String> list2 = SaFoxUtil.searchList(dataList, "token", "", 0, 10, true);
     	Assertions.assertEquals(list2.size(), 5);
 
     	// 关键字筛选 
-    	List<String> list3 = SaFoxUtil.searchList(dataList, "", "1", 0, 10);
+    	List<String> list3 = SaFoxUtil.searchList(dataList, "", "1", 0, 10, true);
     	Assertions.assertEquals(list3.size(), 2);
 
     	// 综合筛选 
-    	List<String> list4 = SaFoxUtil.searchList(dataList, "token", "1", 0, 10);
+    	List<String> list4 = SaFoxUtil.searchList(dataList, "token", "1", 0, 10, true);
     	Assertions.assertEquals(list4.size(), 1);
     }
 

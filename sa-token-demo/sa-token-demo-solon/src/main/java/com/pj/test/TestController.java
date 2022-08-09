@@ -217,7 +217,7 @@ public class TestController {
 	public AjaxJson search() {
 		System.out.println("--------------");
 		Ttime t = new Ttime().start();
-		List<String> tokenValue = StpUtil.searchTokenValue("8feb8265f773", 0, 10);
+		List<String> tokenValue = StpUtil.searchTokenValue("8feb8265f773", 0, 10, true);
 		for (String v : tokenValue) {
 //			SaSession session = StpUtil.getSessionBySessionId(sid);
 			System.out.println(v);

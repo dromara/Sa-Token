@@ -251,7 +251,7 @@ public class JwtForMixinTest {
         	StpUtil.login(10005);
         	
         	// 查询 
-        	List<String> list = StpUtil.searchTokenValue("", 0, 10);
+        	List<String> list = StpUtil.searchTokenValue("", 0, 10, true);
         	Assertions.assertTrue(list.size() >= 5);
     	});
     }

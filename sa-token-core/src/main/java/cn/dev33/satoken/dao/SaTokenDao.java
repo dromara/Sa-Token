@@ -170,9 +170,11 @@ public interface SaTokenDao {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有)
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return 查询到的数据集合 
 	 */
-	public List<String> searchData(String prefix, String keyword, int start, int size);
+	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType);
 	
 	
 }
