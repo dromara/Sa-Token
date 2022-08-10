@@ -11,13 +11,13 @@ Sa-Token提供以下API助你直接操作会话列表：
 
 ``` java
 // 查询所有token
-StpUtil.searchTokenValue(String keyword, int start, int size);
+StpUtil.searchTokenValue(String keyword, int start, int size, boolean sortType);
 
 // 查询所有账号Session会话
-StpUtil.searchSessionId(String keyword, int start, int size);
+StpUtil.searchSessionId(String keyword, int start, int size, boolean sortType);
 
 // 查询所有令牌Session会话
-StpUtil.searchTokenSessionId(String keyword, int start, int size);
+StpUtil.searchTokenSessionId(String keyword, int start, int size, boolean sortType);
 ```
 
 
@@ -25,11 +25,12 @@ StpUtil.searchTokenSessionId(String keyword, int start, int size);
 - `keyword`: 查询关键字，只有包括这个字符串的 token 值才会被查询出来。
 - `start`: 数据开始处索引, 值为-1时代表一次性取出所有数据。
 - `size`: 要获取的数据条数。
+- `sortType`: 排序方式（true=正序，false=反序）。
 
 使用示例：
 ``` java
 // 查询value包括1000的所有token，结果集从第0条开始，返回10条
-List<String> tokenList = StpUtil.searchTokenValue("1000", 0, 10);	
+List<String> tokenList = StpUtil.searchTokenValue("1000", 0, 10, true);	
 for (String token : tokenList) {
 	System.out.println(token);
 }
