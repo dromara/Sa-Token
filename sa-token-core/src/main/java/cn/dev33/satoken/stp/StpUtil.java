@@ -399,6 +399,14 @@ public class StpUtil {
 		return stpLogic.getTokenSession();
 	}
 
+	/** 
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @return Token-Session 对象 
+	 */
+	public static SaSession getAnonTokenSession() {
+		return stpLogic.getAnonTokenSession();
+	}
+	
 
 	// =================== [临时有效期] 验证相关 ===================  
 

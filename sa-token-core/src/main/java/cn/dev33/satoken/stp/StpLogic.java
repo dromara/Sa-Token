@@ -892,44 +892,17 @@ public class StpLogic {
 	 * @return Session对象  
 	 */
 	public SaSession getTokenSession(boolean isCreate) {
+		// Token 为空的情况下直接返回 null 
+		String tokenValue = getTokenValue();
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			return null;
+		}
 		// 如果配置了需要校验登录状态，则验证一下
 		if(getConfig().getTokenSessionCheckLogin()) {
 			checkLogin();
-			return getTokenSessionByToken(getTokenValue(), isCreate);
-		} else {
-			/* 
-			 * 情况1、如果调用方提供了有效 Token，则：直接返回其 [Token-Session]
-			 * 情况2、如果调用方提供了无效 Token，或根本没有提供 Token，则：创建新 Token -> 返回 [Token-Session] 
-			 */
-			String tokenValue = getTokenValue();
-			
-			// q1 
-			if(SaFoxUtil.isNotEmpty(tokenValue)) {
-				SaSession session = getTokenSessionByToken(tokenValue, false);
-				if(session != null) {
-					return session;
-				}
-			}
-			
-			// q2 —— 此时q2又分两种情况：
-			/*
-			 * 情况 2.1、isCreate=true：说明调用方想让框架帮其创建一个 SaSession，那框架就创建并返回 
-			 * 情况 2.2、isCreate=false：说明调用方并不想让框架帮其创建一个 SaSession，那框架就直接返回 null 
-			 */
-			if(isCreate) {
-				// 随机创建一个 Token  
-				tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
-				// 写入 [最后操作时间]  
-				setLastActivityToNow(tokenValue);  
-				// 在当前上下文写入此 TokenValue 
-				setTokenValue(tokenValue);
-				// 返回其 Token-Session 对象 
-				return getTokenSessionByToken(tokenValue, isCreate);
-			} 
-			else {
-				return null;
-			}
-		}
+		} 
+		// 获取 SaSession 数据 
+		return getTokenSessionByToken(tokenValue, isCreate);
 	}
 	
 	/** 
@@ -938,6 +911,64 @@ public class StpLogic {
 	 */
 	public SaSession getTokenSession() {
 		return getTokenSession(true);
+	}
+
+	/** 
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @param isCreate 在 Token-Session 尚未创建的情况是否新建并返回 
+	 * @return Token-Session 对象 
+	 */
+	public SaSession getAnonTokenSession(boolean isCreate) {
+		/* 
+		 * 情况1、如果调用方提供了有效 Token，则：直接返回其 [Token-Session]
+		 * 情况2、如果调用方提供了无效 Token，或根本没有提供 Token，则：创建新 Token -> 返回 [Token-Session] 
+		 */
+		String tokenValue = getTokenValue();
+		
+		// q1 —— 判断这个 Token 是否有效，两个条件符合其一即可：
+		/*
+		 * 条件1、能查出 Token-Session 
+		 * 条件2、能查出 LoginId 
+		 */
+		if(SaFoxUtil.isNotEmpty(tokenValue)) {
+			// 符合条件1
+			SaSession session = getTokenSessionByToken(tokenValue, false);
+			if(session != null) {
+				return session;
+			}
+			// 符合条件2 
+			String loginId = getLoginIdNotHandle(tokenValue);
+			if(isValidLoginId(loginId)) {
+				return getTokenSessionByToken(tokenValue, isCreate);
+			}
+		}
+		
+		// q2 —— 此时q2分两种情况：
+		/*
+		 * 情况 2.1、isCreate=true：说明调用方想让框架帮其创建一个 SaSession，那框架就创建并返回 
+		 * 情况 2.2、isCreate=false：说明调用方并不想让框架帮其创建一个 SaSession，那框架就直接返回 null 
+		 */
+		if(isCreate) {
+			// 随机创建一个 Token  
+			tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
+			// 写入 [最后操作时间]  
+			setLastActivityToNow(tokenValue);  
+			// 在当前上下文写入此 TokenValue 
+			setTokenValue(tokenValue);
+			// 返回其 Token-Session 对象 
+			return getTokenSessionByToken(tokenValue, isCreate);
+		} 
+		else {
+			return null;
+		}
+	}
+
+	/** 
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @return Token-Session 对象 
+	 */
+	public SaSession getAnonTokenSession() {
+		return getAnonTokenSession(true);
 	}
 	
 	/**
@@ -1602,6 +1633,11 @@ public class StpLogic {
 	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
 	public void disable(Object loginId, long disableTime) {
+		// 空值不做处理 
+		if(SaFoxUtil.isEmpty(loginId)) {
+			return;
+		}
+		
 		// 标注为已被封禁 
 		getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
  		
