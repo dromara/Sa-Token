@@ -45,13 +45,16 @@ StpUtil.getSessionBySessionId("xxxx-xxxx");
 ### Token-Session
 有关令牌Session的API如下：
 ``` java
-// 获取当前token的专属Session 
+// 获取当前 Token 的 Token-Session 对象
 StpUtil.getTokenSession();
 
-// 获取指定token的专属Session 
+// 获取指定 Token 的 Token-Session 对象
 StpUtil.getTokenSessionByToken(token);
+
+// 获取当前 Token 的匿名 Token-Session （可在未登录情况下使用的Token-Session）
+StpUtil.getAnonTokenSession();
 ```
-在未登录状态下是否可以获取`Token-Session`？这取决于你配置的`tokenSessionCheckLogin`值是否为false，详见：[框架配置](/use/config?id=所有可配置项)
+在未登录状态下是否通过 `StpUtil.getTokenSession()` 获取`Token-Session`？这取决于你配置的`tokenSessionCheckLogin`值是否为false，详见：[框架配置](/use/config?id=所有可配置项)
 
 
 ### 自定义Session
