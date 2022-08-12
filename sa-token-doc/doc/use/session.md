@@ -50,11 +50,7 @@ StpUtil.getTokenSession();
 
 // 获取指定 Token 的 Token-Session 对象
 StpUtil.getTokenSessionByToken(token);
-
-// 获取当前 Token 的匿名 Token-Session （可在未登录情况下使用的Token-Session）
-StpUtil.getAnonTokenSession();
 ```
-在未登录状态下是否通过 `StpUtil.getTokenSession()` 获取`Token-Session`？这取决于你配置的`tokenSessionCheckLogin`值是否为false，详见：[框架配置](/use/config?id=所有可配置项)
 
 
 ### 自定义Session
@@ -148,3 +144,20 @@ public void reset(HttpSession session) {
 1. `SaSession` 与 `HttpSession` 没有任何关系，在`HttpSession`上写入的值，在`SaSession`中无法取出
 2. `HttpSession`并未被框架接管，在使用Sa-Token时，请在任何情况下均使用`SaSession`，不要使用`HttpSession` 
 
+
+### 未登录场景下获取 Token-Session 
+
+默认场景下，只有登录后才能通过 `StpUtil.getTokenSession()` 获取 `Token-Session`。
+
+如果想要在未登录场景下获取 Token-Session ，有两种方法：
+
+- 方法一：将全局配置项 `tokenSessionCheckLogin` 改为 false，详见：[框架配置](/use/config?id=所有可配置项)
+- 方法二：使用匿名 Token-Session
+
+``` java
+// 获取当前 Token 的匿名 Token-Session （可在未登录情况下使用的 Token-Session）
+StpUtil.getAnonTokenSession();
+```
+
+注意点：如果前端没有提交 Token ，或者提交的 Token 是一个无效 Token 的话，框架将不会根据此 Token 创建 `Token-Session` 对象，
+而是随机一个新的 Token 值来创建 `Token-Session` 对象，此 Token 值可以通过 `StpUtil.getTokenValue()` 获取到。
