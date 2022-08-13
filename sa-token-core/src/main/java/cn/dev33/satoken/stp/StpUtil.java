@@ -1,10 +1,10 @@
 package cn.dev33.satoken.stp;
 
-import java.util.List;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
+
+import java.util.List;
 
 /**
  * Sa-Token 权限认证工具类 
@@ -121,18 +121,30 @@ public class StpUtil {
 	}
 
 	/**
-	 * 会话登录，并指定是否 [记住我] 
-	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param isLastingCookie 是否为持久Cookie 
+	 * 会话登录，并指定是否 [记住我]
+	 *
+	 * @param id              账号id，建议的类型：（long | int | String）
+	 * @param isLastingCookie 是否为持久Cookie
 	 */
 	public static void login(Object id, boolean isLastingCookie) {
 		stpLogic.login(id, isLastingCookie);
 	}
 
 	/**
-	 * 会话登录，并指定所有登录参数Model 
-	 * @param id 登录id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
+	 * 会话登录，并指定此次登录token的有效期, 单位:秒
+	 *
+	 * @param id      账号id，建议的类型：（long | int | String）
+	 * @param timeout 此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 */
+	public static void login(Object id, Long timeout) {
+		stpLogic.login(id, timeout);
+	}
+
+	/**
+	 * 会话登录，并指定所有登录参数Model
+	 *
+	 * @param id         登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model
 	 */
 	public static void login(Object id, SaLoginModel loginModel) {
 		stpLogic.login(id, loginModel);
