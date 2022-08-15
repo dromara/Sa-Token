@@ -178,12 +178,36 @@ public final class SaStrategy {
 		// 默认使用jdk的注解处理器 
 		return element.getAnnotation(annotationClass);
 	};
+
+	/**
+	 * 拼接两个url 
+	 * <p> 例如：url1=http://domain.cn，url2=/sso/auth，则返回：http://domain.cn/sso/auth
+	 * <p> 参数 [第一个url, 第二个url] 
+	 */
+	public BiFunction<String, String, String> spliceTwoUrl = (url1, url2) -> {
+		// q1、任意一个为空，则直接返回另一个 
+		if(url1 == null) {
+			return url2;
+		}
+		if(url2 == null) {
+			return url1;
+		}
+		
+		// q2、如果 url2 以 http 开头，将其视为一个完整地址 
+		if(url2.startsWith("http")) {
+			return url2;
+		}
+		
+		// q3、将两个地址拼接在一起 
+		return url1 + url2;
+	};
 	
 
 	// 
 	// 重写策略 set连缀风格 
 	// 
 	
+
 	/**
 	 * 重写创建 Token 的策略 
 	 * <p> 参数 [账号id, 账号类型] 
@@ -248,6 +272,17 @@ public final class SaStrategy {
 	public SaStrategy setGetAnnotation(BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation) {
 		this.getAnnotation = getAnnotation;
 		return this;
+	}
+
+	/**
+	 * 拼接两个url 
+	 * <p> 例如：url1=http://domain.cn，url2=/sso/auth，则返回：http://domain.cn/sso/auth
+	 * <p> 参数 [第一个url, 第二个url] 
+	 * 
+	 * @param spliceTwoUrl 要设置的 spliceTwoUrl
+	 */
+	public void setSpliceTwoUrl(BiFunction<String, String, String> spliceTwoUrl) {
+		this.spliceTwoUrl = spliceTwoUrl;
 	}
 	
 	

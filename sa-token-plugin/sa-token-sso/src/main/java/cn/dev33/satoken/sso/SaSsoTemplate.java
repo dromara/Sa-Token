@@ -253,7 +253,7 @@ public class SaSsoTemplate {
 	public String buildServerAuthUrl(String clientLoginUrl, String back) {
 		
 		// 服务端认证地址 
-		String serverUrl = SaSsoManager.getConfig().getAuthUrl();
+		String serverUrl = SaSsoManager.getConfig().splicingAuthUrl();
 		
 		// 对back地址编码 
 		back = (back == null ? "" : back);
@@ -327,7 +327,7 @@ public class SaSsoTemplate {
 	 * @return Server端 账号资料查询地址 
 	 */
 	public String buildUserinfoUrl(Object loginId) {
-		String userinfoUrl = SaSsoManager.getConfig().getUserinfoUrl();
+		String userinfoUrl = SaSsoManager.getConfig().splicingUserinfoUrl();
 		return addSignParams(userinfoUrl, loginId);
 	}
 
@@ -340,7 +340,7 @@ public class SaSsoTemplate {
 	 */
 	public String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
 		// 裸地址 
-		String url = SaSsoManager.getConfig().getCheckTicketUrl();
+		String url = SaSsoManager.getConfig().splicingCheckTicketUrl();
 		
 		// 拼接ticket参数 
 		url = SaFoxUtil.joinParam(url, ParamName.ticket, ticket);
@@ -360,7 +360,7 @@ public class SaSsoTemplate {
 	 * @return 单点注销URL 
 	 */
 	public String buildSloUrl(Object loginId) {
-		String url = SaSsoManager.getConfig().getSloUrl();
+		String url = SaSsoManager.getConfig().splicingSloUrl();
 		return addSignParams(url, loginId);
 	}
 
