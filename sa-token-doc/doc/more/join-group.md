@@ -15,6 +15,6 @@ QQ交流群：496757342 [点击加入](https://jq.qq.com/?_wv=1027&k=WNggbsFe)
 
 ![微信群](https://oss.dev33.cn/sa-token/wx-qr-300.png ':size=180')
 
-（扫码添加微信，备注：sa-token，邀您加入群聊）
+（扫码添加微信，备注：sa，邀您加入群聊）
 
 
