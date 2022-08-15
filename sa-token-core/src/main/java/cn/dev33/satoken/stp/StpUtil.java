@@ -136,7 +136,7 @@ public class StpUtil {
 	 * @param id      账号id，建议的类型：（long | int | String）
 	 * @param timeout 此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 	 */
-	public static void login(Object id, Long timeout) {
+	public static void login(Object id, long timeout) {
 		stpLogic.login(id, timeout);
 	}
 
