@@ -14,7 +14,7 @@ http://sa-oauth-server.com:8001/oauth2/authorize
 	&client_id={value}
 	&redirect_uri={value}
 	&scope={value}
-	$state={value}
+	&state={value}
 ```
 
 参数详解：
