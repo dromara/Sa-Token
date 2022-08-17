@@ -9,6 +9,7 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.SaSetValueInterface;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -18,7 +19,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author kong
  *
  */
-public class SaSession implements SaGetValueInterface, Serializable {
+public class SaSession implements SaSetValueInterface, Serializable {
 
 	/**
 	 * 
@@ -286,7 +287,7 @@ public class SaSession implements SaGetValueInterface, Serializable {
 	
 	// ----------------------- 存取值 (类型转换) 
 
-	// ---- 实现接口存取值方法 
+	// ---- 重写接口方法 
 	
 	/**
 	 * 取值 
@@ -326,26 +327,19 @@ public class SaSession implements SaGetValueInterface, Serializable {
 		return this;
 	}
 
-	// ---- 其它方法 
-	
 	/**
 	 * 删值
 	 * @param key 要删除的key
 	 * @return 对象自身
 	 */
+	@Override
 	public SaSession delete(String key) {
 		dataMap.remove(key);
 		update();
 		return this;
 	}
 
-	/**
-	 * 清空所有值
-	 */
-	public void clear() {
-		dataMap.clear();
-		update();
-	}
+	// ---- 其它方法 
 
 	/**
 	 * 返回当前Session的所有key 
@@ -356,6 +350,14 @@ public class SaSession implements SaGetValueInterface, Serializable {
 		return dataMap.keySet();
 	}
 	
+	/**
+	 * 清空所有值 
+	 */
+	public void clear() {
+		dataMap.clear();
+		update();
+	}
+
 	/**
 	 * 获取数据挂载集合（如果更新map里的值，请调用session.update()方法避免产生脏数据 ）
 	 *

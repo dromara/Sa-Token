@@ -1,10 +1,9 @@
-package cn.dev33.satoken.session;
+package cn.dev33.satoken.application;
 
-import cn.dev33.satoken.fun.SaRetFunction;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * 对取值写值的一组方法封装 
+ * 对取值的一组方法封装 
  * 
  * @author kong
  * @since: 2022-8-16
@@ -20,19 +19,9 @@ public interface SaGetValueInterface {
 	 */
 	public abstract Object get(String key);
 	
-	/**
-	 * 写值 
-	 * @param key   名称
-	 * @param value 值
-	 * @return 对象自身
-	 */
-	public abstract SaGetValueInterface set(String key, Object value);
-
 	
 	// --------- 接口提供封装的方法 
 
-	// 取值 
-	
 	/**
 	 * 
 	 * 取值 (指定默认值) 
@@ -45,24 +34,6 @@ public interface SaGetValueInterface {
 		return getValueByDefaultValue(get(key), defaultValue);
 	}
 
-	/**
-	 * 
-	 * 取值 (如果值为 null，则执行 fun 函数获取值，并把函数返回值写入缓存) 
-	 * @param <T> 返回值的类型 
-	 * @param key key 
-	 * @param fun 值为null时执行的函数 
-	 * @return 值 
-	 */
-	@SuppressWarnings("unchecked")
-	public default <T> T get(String key, SaRetFunction fun) {
-		Object value = get(key);
-		if(value == null) {
-			value = fun.run();
-			set(key, value);
-		}
-		return (T) value;
-	}
-	
 	/**
 	 * 取值 (转String类型) 
 	 * @param key key 
@@ -140,21 +111,6 @@ public interface SaGetValueInterface {
 		return SaFoxUtil.getValueByType(value, cs);
 	}
 
-	// 写值 & 其它 
-
-	/**
-	 * 写值 (只有在此 key 原本无值的情况下才会写入)
-	 * @param key   名称
-	 * @param value 值
-	 * @return 对象自身
-	 */
-	public default SaGetValueInterface setByNull(String key, Object value) {
-		if(has(key) == false) {
-			set(key, value);
-		}
-		return this;
-	}
-
 	/**
 	 * 是否含有某个key
 	 * @param key has
@@ -164,8 +120,6 @@ public interface SaGetValueInterface {
 		return !valueIsNull(get(key));
 	}
 
-	
-	
 	
 	// --------- 内部工具方法 
 
