@@ -233,3 +233,10 @@ body {
 	transition: all 0.2s;
 }
 .doc-header .nav-right .wzi:hover::after {width: 100%;} */
+
+
+/* 保证点开图片时在最上面 */
+.medium-zoom-image.medium-zoom-image--opened{
+	z-index: 10000;
+}
+
