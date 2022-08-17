@@ -30,8 +30,7 @@ public class SaApplication implements SaSetValueInterface {
 	/** 写值 */
 	@Override
 	public SaApplication set(String key, Object value) {
-		SaManager.getSaTokenDao().setObject(splicingDataKey(key), value, SaTokenDao.NEVER_EXPIRE);
-		return this;
+		return set(key, value, SaTokenDao.NEVER_EXPIRE);
 	}
 
 	/**
@@ -46,6 +45,18 @@ public class SaApplication implements SaSetValueInterface {
 
 	
 	// ---- 其它方法 
+
+	/**
+	 * 写值
+	 * @param key   名称
+	 * @param value 值
+	 * @param ttl 有效时间（单位：秒）
+	 * @return 对象自身
+	 */
+	public SaApplication set(String key, Object value, long ttl) {
+		SaManager.getSaTokenDao().setObject(splicingDataKey(key), value, ttl);
+		return this;
+	}
 
 	/**
 	 * 返回存入的所有 key 
