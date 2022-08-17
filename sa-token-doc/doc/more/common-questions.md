@@ -37,6 +37,8 @@
 3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的。
 4. 如果以上步骤排除无误后依然报错，请直接提 issues 或者加入QQ群求助。
 
+> 提示: zuul 网关是 SpringMVC 环境, spring cloud gateway 网关是 WebFlux 环境
+
 
 ### 报错：NotLoginException：xxx
 这个错是说明调用接口的人没有通过登录认证，请注意通常**异常提示语已经描述清楚了没有通过认证的具体原因**，例如：没有提供Token、提供的Token是无效的、提供的Token已经过期……等等

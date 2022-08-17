@@ -86,6 +86,11 @@ session.get("name");
 // 取值 (指定默认值)
 session.get("name", "<defaultValue>"); 
 
+// 取值 (若无值则执行参数方法, 之后将结果保存到此键名下,并返回此结果   若有值则直接返回, 无需执行参数方法)
+session.get("name", () -> {
+            return ...;
+        });
+
 // ---------- 数据类型转换： ----------
 session.getInt("age");         // 取值 (转int类型)
 session.getLong("age");        // 取值 (转long类型)
