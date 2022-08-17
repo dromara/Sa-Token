@@ -147,8 +147,14 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 注：JDK版本：`v1.8+`，SpringBoot：`建议2.0以上`
 
 
+## jar包下载
+[点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
+
+注：当前仅提供 `v1.6.0` 版本jar包下载，更多版本请前往 maven 中央仓库获取，[直达链接](https://search.maven.org/search?q=sa-token)
+
+
 ## 获取源码
-如果你想深入了解Sa-Token，你可以通过`Gitee`或者`GitHub`来获取源码 （**学习测试请拉取master分支**，dev为正在开发的分支，有很多特性并不稳定）
+如果你想深入了解 Sa-Token，你可以通过`Gitee`或者`GitHub`来获取源码 （**学习测试请拉取 master 分支**，dev为正在开发的分支，有很多特性并不稳定）
 - **Gitee**地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - **GitHub**地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
 - 开源不易，求鼓励，给个`star`吧
@@ -207,11 +213,10 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 
 
 
+## 运行示例
 
-## jar包下载
-[点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
+- 1、下载代码（学习测试用 master 分支）。
+- 2、从根目录导入项目。
+- 3、选择相应的示例添加为 Maven 项目，打开 XxxApplication.java 运行。
 
-注：当前仅提供 `v1.6.0` 版本jar包下载，更多版本请前往 maven 中央仓库获取，[直达链接](https://search.maven.org/search?q=sa-token)
-
-
-
+![运行示例](https://oss.dev33.cn/sa-token/doc/import-demo-run.png  's-w-sh')
