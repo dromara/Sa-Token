@@ -218,7 +218,7 @@ public class SaManager {
 	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
 	
 	/**
-	 * 向集合中 put 一个 StpLogic 
+	 * 向全局集合中 put 一个 StpLogic 
 	 * @param stpLogic StpLogic
 	 */
 	public static void putStpLogic(StpLogic stpLogic) {
