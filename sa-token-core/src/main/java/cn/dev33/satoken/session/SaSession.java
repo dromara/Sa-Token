@@ -25,7 +25,12 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * 在 Session 上存储用户对象时建议使用的key 
+	 */
+	public static final String USER = "USER";
+
 	/**
 	 * 在 Session 上存储角色时建议使用的key 
 	 */
