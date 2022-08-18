@@ -14,7 +14,8 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Session Model
+ * Session Model，会话作用域的读取值对象 
+ * <p> 在一次会话范围内: 存值、取值
  *
  * @author kong
  *

@@ -37,12 +37,13 @@ public class SaStorageForDubbo implements SaStorage {
 	 * 在 [Request作用域] 里写入一个值 
 	 */
 	@Override
-	public void set(String key, Object value) {
+	public SaStorageForDubbo set(String key, Object value) {
 		rpcContext.setObjectAttachment(key, value);
 		// 如果是token写入，则回传到Consumer端  
 		if(key.equals(SaTokenConsts.JUST_CREATED_NOT_PREFIX)) {
 			RpcContext.getServerContext().setAttachment(key, value);
 		}
+		return this;
 	}
 
 	/**
@@ -57,8 +58,9 @@ public class SaStorageForDubbo implements SaStorage {
 	 * 在 [Request作用域] 里删除一个值 
 	 */
 	@Override
-	public void delete(String key) {
+	public SaStorageForDubbo delete(String key) {
 		rpcContext.removeAttachment(key);
+		return this;
 	}
 
 }

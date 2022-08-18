@@ -8,6 +8,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 
 /**
  * Application Model，全局作用域的读取值对象 
+ * <p> 在应用全局范围内: 存值、取值
  * 
  * @author kong
  * @since: 2022-8-17
@@ -33,11 +34,8 @@ public class SaApplication implements SaSetValueInterface {
 		return set(key, value, SaTokenDao.NEVER_EXPIRE);
 	}
 
-	/**
-	 * 删值
-	 * @param key 要删除的key
-	 * @return 对象自身
-	 */
+	/** 删值 */
+	@Override
 	public SaApplication delete(String key) {
 		SaManager.getSaTokenDao().deleteObject(splicingDataKey(key));
 		return this;

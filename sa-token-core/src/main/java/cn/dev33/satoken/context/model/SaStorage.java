@@ -1,37 +1,34 @@
 package cn.dev33.satoken.context.model;
 
+import cn.dev33.satoken.application.SaSetValueInterface;
+
 /**
- * [存储器] 包装类
- * <p> 在 Request作用域里: 存值、取值
+ * Storage Model，请求作用域的读取值对象 
+ * <p> 在一次请求范围内: 存值、取值
+ * 
  * @author kong
  *
  */
-public interface SaStorage {
+public interface SaStorage extends SaSetValueInterface {
 
 	/**
 	 * 获取底层源对象 
 	 * @return see note 
 	 */
 	public Object getSource();
-	
-	/**
-	 * 在 [Request作用域] 里写入一个值 
-	 * @param key 键 
-	 * @param value 值
-	 */
-	public void set(String key, Object value);
-	
-	/**
-	 * 在 [Request作用域] 里获取一个值 
-	 * @param key 键 
-	 * @return 值 
-	 */
+
+	// ---- 实现接口存取值方法 
+
+	/** 取值 */
+	@Override
 	public Object get(String key);
 
-	/**
-	 * 在 [Request作用域] 里删除一个值 
-	 * @param key 键 
-	 */
-	public void delete(String key);
+	/** 写值 */
+	@Override
+	public SaStorage set(String key, Object value);
+	
+	/** 删值 */
+	@Override
+	public SaStorage delete(String key);
 
 }
