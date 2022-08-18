@@ -48,6 +48,14 @@ public class StpUserUtil {
 		// 以便可以通过 SaManager.getStpLogic(type) 的方式来全局获取到这个 StpLogic 
 		SaManager.putStpLogic(newStpLogic);
 	}
+
+	/**
+	 * 获取 StpLogic 对象
+	 * @return / 
+	 */
+	public static StpLogic getStpLogic() {
+		return stpLogic;
+	}
 	
 	
 	// =================== 获取token 相关 ===================
