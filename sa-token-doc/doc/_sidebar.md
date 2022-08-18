@@ -70,6 +70,14 @@
 	- [和 Dubbo 集成](/plugin/dubbo-extend)
 	- [Sa-Token 插件开发指南](/fun/plugin-dev)
 
+- **API手册**
+	- [StpUtil-鉴权工具类](/api/stp-util)
+	- [SaSession-会话对象](/api/sa-session)
+	- [SaTokenDao-数据持久接口](/api/sa-token-dao)
+	- [SaStrategy-全局策略](/api/sa-strategy)
+	- [全局类、方法](/more/common-action) 
+
+
 - **其它**
 	- [更新日志](/more/update-log) 
 	- [框架生态](/more/link) 
@@ -79,7 +87,6 @@
 	- [赞助 Sa-Token](/more/sa-token-donate)
 
 - **附录**
-	- [常用类、方法](/more/common-action) 
 	- [常见问题排查](/more/common-questions)  
 	- [框架名词解释](/more/noun-intro)  
 	- [Sa-Token功能结构图](/fun/auth-flow)
