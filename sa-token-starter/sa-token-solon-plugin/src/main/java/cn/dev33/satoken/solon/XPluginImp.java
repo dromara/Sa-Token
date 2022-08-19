@@ -14,6 +14,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.listener.SaTokenEventRelease;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
@@ -63,8 +64,10 @@ public class XPluginImp implements Plugin {
         });
 
         // 注入侦听器 Bean
+        // TODO：这里需要改为注入一组 Bean 
         context.getWrapAsyn(SaTokenListener.class, bw->{
-            SaManager.setSaTokenListener(bw.raw());
+//            SaManager.setSaTokenListener(bw.raw());
+        	SaTokenEventRelease.registerListener(bw.raw());
         });
 
         // 注入权限认证 Bean
@@ -107,4 +110,5 @@ public class XPluginImp implements Plugin {
             StpUtil.setStpLogic(bw.raw());
         });
     }
+	
 }

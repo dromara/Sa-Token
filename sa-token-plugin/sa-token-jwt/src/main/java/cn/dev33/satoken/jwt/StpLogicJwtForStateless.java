@@ -2,12 +2,12 @@ package cn.dev33.satoken.jwt;
 
 import java.util.Map;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
+import cn.dev33.satoken.listener.SaTokenEventRelease;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
@@ -98,8 +98,8 @@ public class StpLogicJwtForStateless extends StpLogic {
 		// ------ 2、生成一个token  
 		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
 		
-		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
+		// $$ 发布事件：账号xxx 登录成功 
+		SaTokenEventRelease.doLogin(loginType, id, tokenValue, loginModel);
 		
 		return tokenValue;
 	}

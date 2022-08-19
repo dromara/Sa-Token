@@ -1,5 +1,10 @@
 package cn.dev33.satoken.stp;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -21,16 +26,12 @@ import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.listener.SaTokenEventRelease;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Sa-Token 权限认证，逻辑实现类 
@@ -362,8 +363,8 @@ public class StpLogic {
 		// 写入 [token-last-activity] 
 		setLastActivityToNow(tokenValue); 
 
-		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
+		// $$ 发布事件：账号xxx 登录成功 
+		SaTokenEventRelease.doLogin(loginType, id, tokenValue, loginModel);
 
 		// 检查此账号会话数量是否超出最大值 
 		if(config.getMaxLoginCount() != -1) {
@@ -427,7 +428,8 @@ public class StpLogic {
 		 		// 删除Token-Id映射 & 清除Token-Session 
 				deleteTokenToIdMapping(tokenValue);
 				deleteTokenSession(tokenValue);
-				SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+				// $$ 发布事件：指定账号注销 
+				SaTokenEventRelease.doLogout(loginType, loginId, tokenValue);
 			}
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
@@ -463,7 +465,8 @@ public class StpLogic {
 	 		// 删除Token-Id映射 & 清除Token-Session 
 			deleteTokenToIdMapping(tokenValue);
 			deleteTokenSession(tokenValue);
-			SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+			// $$ 发布事件：指定账号注销 
+			SaTokenEventRelease.doLogout(loginType, loginId, tokenValue);
 		}
 		// 注销 Session 
 		session.logoutByTokenSignCountToZero();
@@ -492,8 +495,8 @@ public class StpLogic {
  			return;
  		}
  	 	
- 	 	// $$ 通知监听器，某某Token注销下线了 
-		SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+ 	 	// $$ 发布事件：某某Token注销下线了 
+ 		SaTokenEventRelease.doLogout(loginType, loginId, tokenValue);
 
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -530,7 +533,7 @@ public class StpLogic {
 				clearLastActivity(tokenValue); 	
 				// 将此 token 标记为已被踢下线  
 				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-				SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+				SaTokenEventRelease.doKickout(loginType, loginId, tokenValue);
 			}
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
@@ -558,8 +561,8 @@ public class StpLogic {
  		// 3. 给token打上标记：被踢下线 
  	 	updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
 		
- 	 	// $$. 否则通知监听器，某某Token被踢下线了 
-		SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+ 	 	// $$. 发布事件：某某Token被踢下线了 
+ 		SaTokenEventRelease.doKickout(loginType, loginId, tokenValue);
 
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -586,7 +589,7 @@ public class StpLogic {
 				clearLastActivity(tokenValue); 	
 				// 将此 token 标记为已被顶替 
 				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
-				SaManager.getSaTokenListener().doReplaced(loginType, loginId, tokenValue);
+				SaTokenEventRelease.doReplaced(loginType, loginId, tokenValue);
 			}
 		}
 	}
@@ -1651,8 +1654,8 @@ public class StpLogic {
 		// 标注为已被封禁
 		getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
  		
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doDisable(loginType, loginId, disableTime);
+ 		// $$ 发布事件 
+		SaTokenEventRelease.doDisable(loginType, loginId, disableTime);
 	}
 	
 	/**
@@ -1680,8 +1683,8 @@ public class StpLogic {
 	public void untieDisable(Object loginId) {
 		getSaTokenDao().delete(splicingKeyDisable(loginId));
 		
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doUntieDisable(loginType, loginId);
+ 		// $$ 发布事件 
+		SaTokenEventRelease.doUntieDisable(loginType, loginId);
 	}
 	
 	

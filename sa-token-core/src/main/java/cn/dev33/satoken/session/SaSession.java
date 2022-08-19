@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.application.SaSetValueInterface;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.listener.SaTokenEventRelease;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -71,8 +72,8 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	public SaSession(String id) {
 		this.id = id;
 		this.createTime = System.currentTimeMillis();
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doCreateSession(id);
+ 		// $$ 发布事件
+		SaTokenEventRelease.doCreateSession(id);
 	}
 
 	/**
@@ -231,8 +232,8 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	/** 注销Session (从持久库删除) */
 	public void logout() {
 		SaManager.getSaTokenDao().deleteSession(this.id);
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doLogoutSession(id);
+ 		// $$ 发布事件 
+		SaTokenEventRelease.doLogoutSession(id);
 	}
 
 	/** 当Session上的tokenSign数量为零时，注销会话 */

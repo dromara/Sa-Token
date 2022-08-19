@@ -7,11 +7,11 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 侦听器的默认实现：log打印 
+ * Sa-Token 侦听器实现：控制台 log 打印 
  * @author kong
  *
  */
-public class SaTokenListenerDefaultImpl implements SaTokenListener {
+public class SaTokenListenerForConsolePrint implements SaTokenListener {
 
 	/**
 	 * 每次登录时触发 

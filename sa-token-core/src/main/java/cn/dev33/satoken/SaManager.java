@@ -13,8 +13,6 @@ import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
-import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.listener.SaTokenListenerDefaultImpl;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
@@ -138,24 +136,6 @@ public class SaManager {
 		
 		// s3. 都不行，就返回默认的 Context 
 		return SaTokenContextDefaultImpl.defaultContext; 
-	}
-
-	/**
-	 * 侦听器 Bean  
-	 */
-	private volatile static SaTokenListener saTokenListener;
-	public static void setSaTokenListener(SaTokenListener saTokenListener) {
-		SaManager.saTokenListener = saTokenListener;
-	}
-	public static SaTokenListener getSaTokenListener() {
-		if (saTokenListener == null) {
-			synchronized (SaManager.class) {
-				if (saTokenListener == null) {
-					setSaTokenListener(new SaTokenListenerDefaultImpl());
-				}
-			}
-		}
-		return saTokenListener;
 	}
 
 	/**
