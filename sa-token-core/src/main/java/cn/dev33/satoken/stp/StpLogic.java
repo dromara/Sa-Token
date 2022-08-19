@@ -26,7 +26,7 @@ import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaFunction;
-import cn.dev33.satoken.listener.SaTokenEventRelease;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -364,7 +364,7 @@ public class StpLogic {
 		setLastActivityToNow(tokenValue); 
 
 		// $$ 发布事件：账号xxx 登录成功 
-		SaTokenEventRelease.doLogin(loginType, id, tokenValue, loginModel);
+		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
 
 		// 检查此账号会话数量是否超出最大值 
 		if(config.getMaxLoginCount() != -1) {
@@ -429,7 +429,7 @@ public class StpLogic {
 				deleteTokenToIdMapping(tokenValue);
 				deleteTokenSession(tokenValue);
 				// $$ 发布事件：指定账号注销 
-				SaTokenEventRelease.doLogout(loginType, loginId, tokenValue);
+				SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 			}
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
@@ -466,7 +466,7 @@ public class StpLogic {
 			deleteTokenToIdMapping(tokenValue);
 			deleteTokenSession(tokenValue);
 			// $$ 发布事件：指定账号注销 
-			SaTokenEventRelease.doLogout(loginType, loginId, tokenValue);
+			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 		}
 		// 注销 Session 
 		session.logoutByTokenSignCountToZero();
@@ -496,7 +496,7 @@ public class StpLogic {
  		}
  	 	
  	 	// $$ 发布事件：某某Token注销下线了 
- 		SaTokenEventRelease.doLogout(loginType, loginId, tokenValue);
+ 		SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -533,7 +533,7 @@ public class StpLogic {
 				clearLastActivity(tokenValue); 	
 				// 将此 token 标记为已被踢下线  
 				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-				SaTokenEventRelease.doKickout(loginType, loginId, tokenValue);
+				SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
 			}
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
@@ -562,7 +562,7 @@ public class StpLogic {
  	 	updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
 		
  	 	// $$. 发布事件：某某Token被踢下线了 
- 		SaTokenEventRelease.doKickout(loginType, loginId, tokenValue);
+ 		SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
 
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -589,7 +589,7 @@ public class StpLogic {
 				clearLastActivity(tokenValue); 	
 				// 将此 token 标记为已被顶替 
 				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
-				SaTokenEventRelease.doReplaced(loginType, loginId, tokenValue);
+				SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
 			}
 		}
 	}
@@ -1655,7 +1655,7 @@ public class StpLogic {
 		getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
  		
  		// $$ 发布事件 
-		SaTokenEventRelease.doDisable(loginType, loginId, disableTime);
+		SaTokenEventCenter.doDisable(loginType, loginId, disableTime);
 	}
 	
 	/**
@@ -1684,7 +1684,7 @@ public class StpLogic {
 		getSaTokenDao().delete(splicingKeyDisable(loginId));
 		
  		// $$ 发布事件 
-		SaTokenEventRelease.doUntieDisable(loginType, loginId);
+		SaTokenEventCenter.doUntieDisable(loginType, loginId);
 	}
 	
 	

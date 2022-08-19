@@ -16,7 +16,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
-import cn.dev33.satoken.listener.SaTokenEventRelease;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
@@ -89,7 +89,7 @@ public class SaBeanInject {
 	 */
 	@Autowired(required = false)
 	public void setSaTokenListener(List<SaTokenListener> listenerList) {
-		SaTokenEventRelease.registerListenerList(listenerList);
+		SaTokenEventCenter.registerListenerList(listenerList);
 	}
 
 	/**

@@ -7,12 +7,12 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.SaLoginModel;
 
 /**
- * Sa-Token 事件发布器 
+ * Sa-Token 事件中心 事件发布器
  * 
  * @author kong
  * @since: 2022-8-19
  */
-public class SaTokenEventRelease {
+public class SaTokenEventCenter {
 
 	// --------- 注册侦听器 
 	
@@ -39,7 +39,7 @@ public class SaTokenEventRelease {
 		if(listenerList == null) {
 			throw new SaTokenException("重置的侦听器集合不可以为空");
 		}
-		SaTokenEventRelease.listenerList = listenerList;
+		SaTokenEventCenter.listenerList = listenerList;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class SaTokenEventRelease {
 				throw new SaTokenException("注册的侦听器不可以为空");
 			}
 		}
-		SaTokenEventRelease.listenerList.addAll(listenerList);
+		SaTokenEventCenter.listenerList.addAll(listenerList);
 	}
 
 	/**
