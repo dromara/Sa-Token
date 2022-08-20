@@ -22,7 +22,7 @@ public class H5Controller {
 	/**
 	 * 获取 redirectUrl 
 	 */
-	@RequestMapping("/getRedirectUrl")
+	@RequestMapping("/sso/getRedirectUrl")
 	private Object getRedirectUrl(String redirect, String mode) {
 		// 未登录情况下，返回 code=401 
 		if(StpUtil.isLogin() == false) {

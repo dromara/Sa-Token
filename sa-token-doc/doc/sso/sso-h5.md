@@ -21,16 +21,16 @@ public class H5Controller {
 	}
 	
 	// 返回SSO认证中心登录地址 
-	@RequestMapping("/getSsoAuthUrl")
+	@RequestMapping("/sso/getSsoAuthUrl")
 	public SaResult getSsoAuthUrl(String clientLoginUrl) {
 		String serverAuthUrl = SaSsoUtil.buildServerAuthUrl(clientLoginUrl, "");
 		return SaResult.data(serverAuthUrl);
 	}
 	
 	// 根据ticket进行登录 
-	@RequestMapping("/doLoginByTicket")
+	@RequestMapping("/sso/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = SaSsoHandle.checkTicket(ticket, "/doLoginByTicket");
+		Object loginId = SaSsoHandle.checkTicket(ticket, "/sso/doLoginByTicket");
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());

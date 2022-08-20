@@ -42,7 +42,7 @@ sa.ajax = function(url, data, successFn) {
 // ----------------------------------- 相关事件 -----------------------------------
 
 // 检查当前是否已经登录，如果已登录则直接开始跳转，如果未登录则等待用户输入账号密码 
-sa.ajax("/getRedirectUrl", {redirect: getParam('redirect', ''), mode: getParam('mode', '')}, function(res) {
+sa.ajax("/sso/getRedirectUrl", {redirect: getParam('redirect', ''), mode: getParam('mode', '')}, function(res) {
 	if(res.code == 200) {
 		// 已登录，并且redirect地址有效，开始跳转  
 		location.href = decodeURIComponent(res.data);
