@@ -79,6 +79,18 @@ public class SaTokenListenerForConsolePrint implements SaTokenListener {
 	}
 
 	/**
+	 * 每次更新超时时间后触发
+	 *
+	 * @param tokenValue
+	 * @param loginId
+	 * @param timeout
+	 */
+	@Override
+	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
+		println("帐号[" + loginId + "]更新超时时间成功!");
+	}
+
+	/**
 	 * 日志输出的前缀
 	 */
 	public static final String LOG_PREFIX = "SaLog -->: ";

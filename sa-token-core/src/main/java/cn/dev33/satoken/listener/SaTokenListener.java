@@ -69,5 +69,13 @@ public interface SaTokenListener {
 	 * @param id SessionId
 	 */
 	public void doLogoutSession(String id);
-	
+
+	/**
+	 * 执行renew超时时间操作的时触发
+	 *
+	 * @param tokenValue
+	 * @param loginId
+	 * @param timeout
+	 */
+	public void doRenewTimeout(String tokenValue,  Object loginId, long timeout);
 }

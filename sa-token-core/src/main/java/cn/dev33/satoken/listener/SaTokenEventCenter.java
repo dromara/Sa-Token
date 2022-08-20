@@ -214,5 +214,17 @@ public class SaTokenEventCenter {
 			listener.doLogoutSession(id);
 		}
 	}
-	
+
+	/**
+	 * 每次renew timeout时触发
+	 *
+	 * @param tokenValue
+	 * @param loginId
+	 * @param timeout
+	 */
+	public static void doRenewTimeout(String tokenValue,  Object loginId, long timeout) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doRenewTimeout(tokenValue, loginId, timeout);
+		}
+	}
 }

@@ -52,4 +52,9 @@ public class SaTokenListenerForSimple implements SaTokenListener {
 		
 	}
 
+	@Override
+	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
+
+	}
+
 }
