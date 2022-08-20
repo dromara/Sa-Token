@@ -13,9 +13,10 @@ import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * sa-token基于路由的拦截式鉴权 
+ * Sa-Token 拦截式鉴权 - 拦截器
  * @author kong
  */
+@Deprecated
 public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**

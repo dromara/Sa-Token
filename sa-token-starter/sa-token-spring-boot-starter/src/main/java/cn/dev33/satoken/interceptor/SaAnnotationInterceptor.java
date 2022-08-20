@@ -11,10 +11,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
- * 注解式鉴权 - 拦截器
+ * Sa-Token 注解式鉴权 - 拦截器
  * 
  * @author kong
  */
+@Deprecated
 public class SaAnnotationInterceptor implements HandlerInterceptor {
 
 	/**
@@ -30,7 +31,7 @@ public class SaAnnotationInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		// 获取处理method
+		// 获取处理 Method 
 		if (handler instanceof HandlerMethod == false) {
 			return true;
 		}
