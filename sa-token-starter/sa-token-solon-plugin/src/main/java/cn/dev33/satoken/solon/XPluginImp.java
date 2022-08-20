@@ -3,9 +3,14 @@ package cn.dev33.satoken.solon;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
+import org.noear.solon.core.event.EventBus;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.*;
+import cn.dev33.satoken.annotation.SaCheckBasic;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.basic.SaBasicTemplate;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -17,8 +22,8 @@ import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.sign.SaSignTemplate;
-import cn.dev33.satoken.solon.model.SaContextForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenAnnotationInterceptor;
+import cn.dev33.satoken.solon.model.SaContextForSolon;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
@@ -64,10 +69,8 @@ public class XPluginImp implements Plugin {
         });
 
         // 注入侦听器 Bean
-        // TODO：这里需要改为注入一组 Bean 
-        context.getWrapAsyn(SaTokenListener.class, bw->{
-//            SaManager.setSaTokenListener(bw.raw());
-        	SaTokenEventCenter.registerListener(bw.raw());
+        EventBus.subscribe(SaTokenListener.class, bw->{
+        	SaTokenEventCenter.registerListener(bw);
         });
 
         // 注入权限认证 Bean
