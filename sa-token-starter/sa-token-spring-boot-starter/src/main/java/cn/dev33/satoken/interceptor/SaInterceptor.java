@@ -79,8 +79,9 @@ public class SaInterceptor implements HandlerInterceptor {
 		
 		try {
 
-			// 获取此请求对应的 Method 处理函数 
-			if(handler instanceof HandlerMethod) {
+			if(isAnnotation && handler instanceof HandlerMethod) {
+				
+				// 获取此请求对应的 Method 处理函数 
 				Method method = ((HandlerMethod) handler).getMethod();
 
 				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权 
@@ -89,9 +90,7 @@ public class SaInterceptor implements HandlerInterceptor {
 				}
 
 				// 注解校验 
-				if(isAnnotation) {
-					SaStrategy.me.checkMethodAnnotation.accept(method);
-				}
+				SaStrategy.me.checkMethodAnnotation.accept(method);
 			}
 			
 			// Auth 校验  

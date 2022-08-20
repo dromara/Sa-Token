@@ -76,7 +76,7 @@
 
 - [[ chaos ]](https://gitee.com/qishanor/chaos)：一个基于 SpringBoot + Sa-Token + Mybatis-Plus的快速开发框架，前端vue-element-avue,内置代码生成器，代码最简洁，最佳学习实践方案。
 
-- [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写Pig授权方式为Satoken,其他代码不变
+- [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写 Pig 授权方式为 Sa-Token，其他代码不变。
 
 
 

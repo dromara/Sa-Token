@@ -12,6 +12,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
  * Sa-Token 注解式鉴权 - 拦截器
+ * <h2> [ 当前拦截器写法已过期，可能将在以后的版本删除，推荐升级为 SaInterceptor ] </h2>
  * 
  * @author kong
  */
