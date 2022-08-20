@@ -377,6 +377,8 @@ public class SaSsoConfig implements Serializable {
 
 	/**
 	 * SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
+	 * <p> 参数：loginId, back
+	 * <p> 返回值：返回给前端的值 
 	 */
 	public BiFunction<Object, String, Object> ticketResultHandle = null;
 
