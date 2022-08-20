@@ -15,6 +15,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -177,6 +178,16 @@ public final class SaStrategy {
 	public BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation = (element, annotationClass)->{
 		// 默认使用jdk的注解处理器 
 		return element.getAnnotation(annotationClass);
+	};
+
+	/**
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
+	 * 
+	 * <p> 参数 [Method, 注解] 
+	 */
+	public BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent = (method, annotationClass) -> {
+		return me.getAnnotation.apply(method, SaIgnore.class) != null || 
+				me.getAnnotation.apply(method.getDeclaringClass(), SaIgnore.class) != null;
 	};
 
 	/**

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaParamFunction;
@@ -26,9 +27,6 @@ public class SaInterceptor implements HandlerInterceptor {
 	 */
 	public boolean isAnnotation = true;
 	
-
-
-
 	/**
 	 * 认证函数：每次请求执行 
 	 * <p> 参数：路由处理函数指针 
@@ -84,7 +82,16 @@ public class SaInterceptor implements HandlerInterceptor {
 			// 获取此请求对应的 Method 处理函数 
 			if(handler instanceof HandlerMethod) {
 				Method method = ((HandlerMethod) handler).getMethod();
-				SaStrategy.me.checkMethodAnnotation.accept(method);
+
+				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权 
+				if(SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+					return true;
+				}
+
+				// 注解校验 
+				if(isAnnotation) {
+					SaStrategy.me.checkMethodAnnotation.accept(method);
+				}
 			}
 			
 			// Auth 校验  
