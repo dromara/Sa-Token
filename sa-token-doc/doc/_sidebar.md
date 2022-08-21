@@ -29,8 +29,7 @@
 	- [会话治理](/up/search-session) 
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 
-	- [多账户认证](/up/many-account) 
-	<!-- - [微服务](/senior/dcs) -->
+	- [多账号认证](/up/many-account) 
 
 - **单点登录**
 	- [单点登录简述](/sso/readme)

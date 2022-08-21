@@ -63,7 +63,7 @@ public SaResult doLogin(String name, String pwd) {
 如果你对 Cookie 功能还不太了解，也不用担心，我们会在之后的 [ 前后端分离 ] 章节中详细的阐述 Cookie 功能，现在你只需要了解最基本的两点：
 
 - Cookie 可以从后端控制往浏览器中写入 Token 值。
-- Cookie 会在每次请求时自动提交 Token 值。
+- Cookie 会在前端每次发起请求时自动提交 Token 值。
 
 因此，在 Cookie 功能的加持下，我们可以仅靠 `StpUtil.login(id)` 一句代码就完成登录认证。
 
