@@ -1219,6 +1219,9 @@ public class StpLogic {
  		if(isOpenActivityCheck()) {
  			dao.updateTimeout(splicingKeyLastActivityTime(tokenValue), timeout);
  		}
+
+		// 通知更新超时事件
+		SaTokenEventCenter.doRenewTimeout(tokenValue, loginId, timeout);
  	}
  	
 	// ------------------- 角色验证操作 -------------------  

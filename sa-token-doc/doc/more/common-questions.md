@@ -47,8 +47,13 @@
 
 
 ### 加了注解进行鉴权认证，不生效？
-注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成AOP模块，参考：[注解式鉴权](/use/at-check)，
-如果已经打开仍然没有效果，加群说明一下复现步骤 
+1. 注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成AOP模块，参考：[注解式鉴权](/use/at-check)
+2. 在Spring环境中, 如果同时配置了`WebMvcConfigurer`和`WebMvcConfigurationSupport`时, 也会导致拦截器失效.
+
+   **常见场景**: 很多项目中会在`WebMvcConfigurationSupport`中配置`addResourceHandlers`方法开放Swagger等相关静态资源映射, 同时基于Sa-Token添加了`WebMvcConfigurer`配置`addInterceptors`方法注册注解拦截器, 这样会导致注解拦截器失效. 
+
+   **解决方案**: `WebMvcConfigurer`和`WebMvcConfigurationSupport`只选一个配置, 建议统一通过实现`WebMvcConfigurer`接口进行配置.
+4. 如果以上步骤处理后仍然没有效果，加群说明一下复现步骤 
 
 
 ### 有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
