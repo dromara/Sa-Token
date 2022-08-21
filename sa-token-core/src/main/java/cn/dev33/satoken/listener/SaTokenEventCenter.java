@@ -216,15 +216,16 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次renew timeout时触发
-	 *
-	 * @param tokenValue
-	 * @param loginId
-	 * @param timeout
+	 * 每次Token续期时触发
+	 * 
+	 * @param tokenValue token 值 
+	 * @param loginId 账号id 
+	 * @param timeout 续期时间 
 	 */
 	public static void doRenewTimeout(String tokenValue,  Object loginId, long timeout) {
 		for (SaTokenListener listener : listenerList) {
 			listener.doRenewTimeout(tokenValue, loginId, timeout);
 		}
 	}
+
 }

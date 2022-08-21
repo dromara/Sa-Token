@@ -79,15 +79,11 @@ public class SaTokenListenerForConsolePrint implements SaTokenListener {
 	}
 
 	/**
-	 * 每次更新超时时间后触发
-	 *
-	 * @param tokenValue
-	 * @param loginId
-	 * @param timeout
+	 * 每次Token续期时触发
 	 */
 	@Override
 	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
-		println("帐号[" + loginId + "]更新超时时间成功!");
+		println("帐号[" + loginId + "]，Token=" + tokenValue + " 续期timeout成功!");
 	}
 
 	/**
