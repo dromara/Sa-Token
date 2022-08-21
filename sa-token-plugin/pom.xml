@@ -21,8 +21,8 @@
         <module>sa-token-alone-redis</module>
         <module>sa-token-dao-redis</module>
         <module>sa-token-dao-redis-jackson</module>
+        <module>sa-token-dao-redis-fastjson</module>
         <module>sa-token-dao-redisx</module>
-        <module>sa-token-dao-redis-string</module>
         <module>sa-token-dialect-thymeleaf</module>
        	<module>sa-token-sso</module>
        	<module>sa-token-oauth2</module>

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  *
  */
 @Component
-public class SaTokenDaoRedisString implements SaTokenDao {
+public class SaTokenDaoRedisFastjson implements SaTokenDao {
 
 	/**
 	 * String专用 
@@ -29,7 +29,7 @@ public class SaTokenDaoRedisString implements SaTokenDao {
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
-	 * Objecy专用 
+	 * Object专用 
 	 */
 	public StringRedisTemplate objectRedisTemplate;
 
@@ -40,6 +40,11 @@ public class SaTokenDaoRedisString implements SaTokenDao {
 	
 	@Autowired
 	public void init(RedisConnectionFactory connectionFactory) {
+		// 不重复初始化 
+		if(this.isInit) {
+			return;
+		}
+		
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		StringRedisSerializer valueSerializer = new StringRedisSerializer();
@@ -57,11 +62,9 @@ public class SaTokenDaoRedisString implements SaTokenDao {
 		template.afterPropertiesSet();
 
 		// 开始初始化相关组件 
-		if(!this.isInit) {
-			this.stringRedisTemplate = stringTemplate;
-			this.objectRedisTemplate = template;
-			this.isInit = true;
-		}
+		this.stringRedisTemplate = stringTemplate;
+		this.objectRedisTemplate = template;
+		this.isInit = true;
 	}
 	
 	

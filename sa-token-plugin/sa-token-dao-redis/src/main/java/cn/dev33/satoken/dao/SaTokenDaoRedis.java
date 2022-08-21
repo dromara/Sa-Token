@@ -41,6 +41,11 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	
 	@Autowired
 	public void init(RedisConnectionFactory connectionFactory) {
+		// 不重复初始化 
+		if(this.isInit) {
+			return;
+		}
+				
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		JdkSerializationRedisSerializer valueSerializer = new JdkSerializationRedisSerializer();
@@ -58,11 +63,9 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		template.afterPropertiesSet();
 
 		// 开始初始化相关组件 
-		if(this.isInit == false) {
-			this.stringRedisTemplate = stringTemplate;
-			this.objectRedisTemplate = template;
-			this.isInit = true;
-		}
+		this.stringRedisTemplate = stringTemplate;
+		this.objectRedisTemplate = template;
+		this.isInit = true;
 	}
 	
 	

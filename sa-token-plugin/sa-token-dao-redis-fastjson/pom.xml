@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>sa-token-dao-redix-string</artifactId>
+    <artifactId>sa-token-dao-redis-fastjson</artifactId>
 
     <dependencies>
         <!-- sa-token-spring-boot-starter -->
