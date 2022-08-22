@@ -10,6 +10,7 @@
 - `@SaCheckPermission("user:add")`: 权限认证 —— 必须具有指定权限才能进入该方法。 
 - `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法。 
 - `@SaCheckBasic`: HttpBasic认证 —— 只有通过 Basic 认证后才能进入该方法。 
+- `@SaIgnore`：忽略认证 —— 表示被修饰的方法或类无需进行注解认证和路由拦截认证。
 
 Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态<br>
 因此，为了使用注解鉴权，**你必须手动将 Sa-Token 的全局拦截器注册到你项目中**
@@ -24,11 +25,11 @@ Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带�
 ``` java
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-	// 注册Sa-Token的注解拦截器，打开注解式鉴权功能 
+	// 注册 Sa-Token 拦截器，打开注解式鉴权功能 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 注册注解拦截器，并排除不需要注解鉴权的接口地址 (与登录拦截器无关)
-		registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");	
+		// 注册 Sa-Token 拦截器，打开注解式鉴权功能 
+		registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");	
 	}
 }
 ```
@@ -114,7 +115,36 @@ orRole 字段代表权限认证未通过时的次要选择，两者只要其一�
 - 写法三：`orRole = {"admin, manager, staff"}`，代表必须同时具有三个角色。
 
 
-### 5、在业务逻辑层使用注解鉴权
+### 5、忽略认证 
+
+使用 `@SaIgnore` 可表示一个接口忽略认证：
+
+``` java
+@SaCheckLogin
+@RestController
+public class TestController {
+	
+	// ... 其它方法 
+	
+	// 此接口加上了 @SaIgnore 可以游客访问 
+	@SaIgnore
+	@RequestMapping("getList")
+	public SaResult getList() {
+		// ... 
+		return SaResult.ok(); 
+	}
+}
+```
+
+如上代码表示：`TestController` 中的所有方法都需要登录后才可以访问，但是 `getList` 接口可以匿名游客访问。
+
+- @SaIgnore 修饰方法时代表这个方法可以被游客访问，修饰类时代表这个类中的所有接口都可以游客访问。
+- @SaIgnore 具有最高优先级，当 @SaIgnore 和其它鉴权注解一起出现时，其它鉴权注解都将被忽略。
+- @SaIgnore 同样可以忽略掉 Sa-Token 拦截器中的路由鉴权，在下面的 [路由拦截鉴权] 章节中我们会讲到。
+
+
+
+### 6、在业务逻辑层使用注解鉴权
 疑问：我能否将注解写在其它架构层呢，比如业务逻辑层？
 
 使用拦截器模式，只能在`Controller层`进行注解鉴权，如需在任意层级使用注解鉴权，请参考：[AOP注解鉴权](/plugin/aop-at)

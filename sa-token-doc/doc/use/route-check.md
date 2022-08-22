@@ -18,28 +18,29 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 注册 Sa-Token 的路由拦截器
-		registry.addInterceptor(new SaRouteInterceptor())
-			.addPathPatterns("/**")
-			.excludePathPatterns("/user/doLogin"); 
+		// 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
+		registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+				.addPathPatterns("/**")
+				.excludePathPatterns("/user/doLogin"); 
 	}
 }
 ```
-以上代码，我们注册了一个登录认证拦截器，并且排除了`/user/doLogin`接口用来开放登录（除了`/user/doLogin`以外的所有接口都需要登录才能访问）。
+以上代码，我们注册了一个基于 `StpUtil.checkLogin()` 的登录校验拦截器，并且排除了`/user/doLogin`接口用来开放登录（除了`/user/doLogin`以外的所有接口都需要登录才能访问）。
 
+!> `SaInterceptor` 是新版本提供的拦截器，点此 [查看旧版本代码迁移示例](https://blog.csdn.net/shengzhang_/article/details/126458949)。
 
 ### 2、校验函数详解  
-自定义认证规则：`new SaRouteInterceptor()` 是最简单的无参构造写法，代表只进行默认的登录校验功能。
+自定义认证规则：`new SaInterceptor(handle -> StpUtil.checkLogin())` 是最简单的写法，代表只进行登录校验功能。
 
-我们可以往构造函数塞一个 lambda 表达式，来自定义认证规则，例如：
+我们可以往构造函数塞一个完整的 lambda 表达式，来定义详细的校验规则，例如：
 
 ``` java 
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 注册 Sa-Token 的路由拦截器，自定义认证规则 
-		registry.addInterceptor(new SaRouteInterceptor((req, res, handler)->{
+		// 注册 Sa-Token 拦截器，定义详细认证规则 
+		registry.addInterceptor(new SaInterceptor(handler -> {
 			// 根据路由划分模块，不同模块不同鉴权 
 			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
 			SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
@@ -61,11 +62,11 @@ SaRouter.match() 匹配函数有两个参数：
 ``` java 
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-	// 注册Sa-Token的拦截器
+	// 注册 Sa-Token 的拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册路由拦截器，自定义认证规则 
-		registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
+		registry.addInterceptor(new SaInterceptor((req, res, handler) -> {
 			
 			// 登录认证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 			SaRouter.match("/**", "/user/doLogin", r -> StpUtil.checkLogin());
@@ -140,7 +141,7 @@ SaRouter
 使用 `SaRouter.stop()` 可以提前退出匹配链，例：
 
 ``` java
-registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> {
+registry.addInterceptor(new SaInterceptor((req, res, handler) -> {
 	SaRouter.match("/**").check(r -> System.out.println("进入1"));
 	SaRouter.match("/**").check(r -> System.out.println("进入2")).stop();
 	SaRouter.match("/**").check(r -> System.out.println("进入3"));
@@ -175,4 +176,37 @@ SaRouter.match("/**").check(/* --- */);
 ```
 
 free() 的作用是：打开一个独立的作用域，使内部的 stop() 不再一次性跳出整个 Auth 函数，而是仅仅跳出当前 free 作用域。
+
+
+### 6、使用注解忽略掉路由拦截校验
+
+我们可以使用 `@SaIgnore` 注解，忽略掉路由拦截认证：
+
+1、先配置好了拦截规则：
+``` java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handler -> {
+		// 根据路由划分模块，不同模块不同鉴权 
+		SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
+		SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
+		SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
+		// ... 
+	})).addPathPatterns("/**");
+}
+```
+
+2、然后在 `Controller` 里又添加了忽略校验的注解
+``` java
+@SaIgnore
+@RequestMapping("/user/getList")
+public SaResult getList() {
+	System.out.println("------------ 访问进来方法"); 
+	return SaResult.ok(); 
+}
+```
+
+请求将会跳过拦截器的校验，直接进入 Controller 的方法中。
+
+**注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 APO注解鉴权 生效，对自定义拦截器与过滤器不生效。**
 
