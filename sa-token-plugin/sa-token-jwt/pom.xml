@@ -26,8 +26,8 @@
 		<!-- hutool (jwt) -->
         <dependency>
 		    <groupId>cn.hutool</groupId>
-		    <artifactId>hutool-all</artifactId>
-		    <version>5.7.14</version>
+		    <artifactId>hutool-jwt</artifactId>
+		    <version>5.8.5</version>
 		</dependency>
 	</dependencies>
 
