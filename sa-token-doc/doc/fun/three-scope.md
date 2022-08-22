@@ -8,7 +8,7 @@ Sa-Token 数据存储有三大作用域，分别是：
 - `SaApplication` - 全局作用域：存储的数据在全局范围内有效。
 
 
-### SaStorage - 数据读写三大作用域
+### SaStorage - 请求作用域
 在 SaStorage 中存储的数据只在一次请求范围内有效，请求结束后数据自动清除。使用 SaStorage 时无需处于登录状态。
 
 ``` java
