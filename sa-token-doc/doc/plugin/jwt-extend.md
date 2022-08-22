@@ -176,3 +176,22 @@ public void setUserStpLogic() {
 
 
 
+### 8、自定义 SaJwtUtil 生成 token 的算法 
+
+如果需要自定义生成 token 的算法（例如更换sign方式），直接重写 SaJwtTemplate 对象即可：
+
+``` java
+/**
+ * 自定义 SaJwtUtil 生成 token 的算法 
+ */
+@Autowired
+public void setSaJwtTemplate() {
+	SaJwtUtil.setSaJwtTemplate(new SaJwtTemplate() {
+		@Override
+		public String generateToken(JWT jwt, String keyt) {
+			System.out.println("------ 自定义了 token 生成算法");
+			return super.generateToken(jwt, keyt);
+		}
+	});
+}
+```
