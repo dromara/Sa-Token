@@ -208,6 +208,17 @@ public class SaOAuth2Util {
 	}
 	
 	/**
+	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes 
+	 * @param clientId 应用id
+	 * @param clientSecret 秘钥
+	 * @param scopes 权限（多个用逗号隔开）
+	 * @return SaClientModel对象
+	 */
+	public static SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, String scopes) {
+		return saOAuth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
+	}
+	
+	/**
 	 * 校验：使用 code 获取 token 时提供的参数校验 
 	 * @param code 授权码
 	 * @param clientId 应用id 
