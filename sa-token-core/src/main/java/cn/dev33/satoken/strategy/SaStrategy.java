@@ -172,7 +172,7 @@ public final class SaStrategy {
 	};
 
 	/**
-	 * 从元素上获取注解（注解鉴权内部实现） 
+	 * 从元素上获取注解  
 	 * <p> 参数 [element元素，要获取的注解类型] 
 	 */
 	public BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation = (element, annotationClass)->{
@@ -182,7 +182,6 @@ public final class SaStrategy {
 
 	/**
 	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
-	 * 
 	 * <p> 参数 [Method, 注解] 
 	 */
 	public BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent = (method, annotationClass) -> {
@@ -190,29 +189,6 @@ public final class SaStrategy {
 				me.getAnnotation.apply(method.getDeclaringClass(), SaIgnore.class) != null;
 	};
 
-	/**
-	 * 拼接两个url 
-	 * <p> 例如：url1=http://domain.cn，url2=/sso/auth，则返回：http://domain.cn/sso/auth
-	 * <p> 参数 [第一个url, 第二个url] 
-	 */
-	public BiFunction<String, String, String> spliceTwoUrl = (url1, url2) -> {
-		// q1、任意一个为空，则直接返回另一个 
-		if(url1 == null) {
-			return url2;
-		}
-		if(url2 == null) {
-			return url1;
-		}
-		
-		// q2、如果 url2 以 http 开头，将其视为一个完整地址 
-		if(url2.startsWith("http")) {
-			return url2;
-		}
-		
-		// q3、将两个地址拼接在一起 
-		return url1 + url2;
-	};
-	
 
 	// 
 	// 重写策略 set连缀风格 
@@ -275,7 +251,7 @@ public final class SaStrategy {
 	}
 
 	/**
-	 * 从元素上获取注解（注解鉴权内部实现） 
+	 * 从元素上获取注解  
 	 * <p> 参数 [element元素，要获取的注解类型] 
 	 * @param getAnnotation / 
 	 * @return 对象自身 
@@ -286,15 +262,14 @@ public final class SaStrategy {
 	}
 
 	/**
-	 * 拼接两个url 
-	 * <p> 例如：url1=http://domain.cn，url2=/sso/auth，则返回：http://domain.cn/sso/auth
-	 * <p> 参数 [第一个url, 第二个url] 
-	 * 
-	 * @param spliceTwoUrl 要设置的 spliceTwoUrl
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
+	 * <p> 参数 [Method, 注解] 
+	 * @param isAnnotationPresent / 
+	 * @return 对象自身 
 	 */
-	public void setSpliceTwoUrl(BiFunction<String, String, String> spliceTwoUrl) {
-		this.spliceTwoUrl = spliceTwoUrl;
+	public SaStrategy setIsAnnotationPresent(BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent) {
+		this.isAnnotationPresent = isAnnotationPresent;
+		return this;
 	}
-	
 	
 }

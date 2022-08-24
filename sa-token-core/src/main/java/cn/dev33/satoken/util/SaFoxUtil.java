@@ -333,6 +333,32 @@ public class SaFoxUtil {
 		}
 		return joinSharpParam(url, key + "=" + value);
 	}
+
+	/**
+	 * 拼接两个url 
+	 * <p> 例如：url1=http://domain.cn，url2=/sso/auth，则返回：http://domain.cn/sso/auth </p>
+	 * 
+	 * @param url1 第一个url 
+	 * @param url2 第二个url 
+	 * @return 拼接完成的url 
+	 */
+	public static String spliceTwoUrl(String url1, String url2) {
+		// q1、任意一个为空，则直接返回另一个 
+		if(url1 == null) {
+			return url2;
+		}
+		if(url2 == null) {
+			return url1;
+		}
+		
+		// q2、如果 url2 以 http 开头，将其视为一个完整地址 
+		if(url2.startsWith("http")) {
+			return url2;
+		}
+		
+		// q3、将两个地址拼接在一起 
+		return url1 + url2;
+	}
 	
 	/**
 	 * 将数组的所有元素使用逗号拼接在一起

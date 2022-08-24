@@ -7,7 +7,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -323,28 +322,28 @@ public class SaSsoConfig implements Serializable {
 	 * @return 获取拼接url：Server 端单点登录授权地址 
 	 */
 	public String splicingAuthUrl() {
-		return SaStrategy.me.spliceTwoUrl.apply(getServerUrl(), getAuthUrl());
+		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getAuthUrl());
 	}
 
 	/**
 	 * @return 获取拼接url：Server 端的 ticket 校验地址  
 	 */
 	public String splicingCheckTicketUrl() {
-		return SaStrategy.me.spliceTwoUrl.apply(getServerUrl(), getCheckTicketUrl());
+		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getCheckTicketUrl());
 	}
 
 	/**
 	 * @return 获取拼接url：Server 端查询 userinfo 地址 
 	 */
 	public String splicingUserinfoUrl() {
-		return SaStrategy.me.spliceTwoUrl.apply(getServerUrl(), getUserinfoUrl());
+		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getUserinfoUrl());
 	}
 
 	/**
 	 * @return 获取拼接url：Server 端单点注销地址 
 	 */
 	public String splicingSloUrl() {
-		return SaStrategy.me.spliceTwoUrl.apply(getServerUrl(), getSloUrl());
+		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getSloUrl());
 	}
 	
 	/**
