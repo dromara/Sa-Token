@@ -112,11 +112,11 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 
 ## 友情链接
-- [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：一个轻量级 http 通信框架，API无比优雅，支持 WebSocket、Stomp 协议
+- [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：轻量级 http 通信框架，API无比优雅，支持 WebSocket、Stomp 协议
 
-- [[ Bean Searcher ]](https://github.com/ejlchina/bean-searcher)：比 MyBatis 效率快 100 倍的条件检索引擎，一行代码实现复杂列表检索！
+- [[ Bean Searcher ]](https://github.com/ejlchina/bean-searcher)：专注高级查询的只读 ORM，使一行代码实现复杂列表检索！
 
-- [[ 小诺快速开发平台 ]](https://xiaonuo.vip/index#pricing)：基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本。
+- [[ Snowy ]](https://xiaonuo.vip/index#pricing)：小诺快速开发平台，同时拥有 Layui、Vue、SpringCloud 三个版本。
 
 - [[ Jpom ]](https://gitee.com/dromara/Jpom)：简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件。
 
