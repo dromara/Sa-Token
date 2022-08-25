@@ -21,8 +21,9 @@ public class SaStorageForSolon implements SaStorage {
     }
 
     @Override
-    public void set(String key, Object value) {
+    public SaStorageForSolon set(String key, Object value) {
         ctx.attrSet(key, value);
+		return this;
     }
 
     @Override
@@ -31,7 +32,8 @@ public class SaStorageForSolon implements SaStorage {
     }
 
     @Override
-    public void delete(String key) {
+    public SaStorageForSolon delete(String key) {
         ctx.attrMap().remove(key);
+		return this;
     }
 }

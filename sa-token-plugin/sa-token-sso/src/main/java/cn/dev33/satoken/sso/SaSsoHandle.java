@@ -361,10 +361,22 @@ public class SaSsoHandle {
 		
 		// --------- 两种模式 
 		if(cfg.getIsHttp()) {
-			// 模式三：使用 http 请求从认证中心校验ticket 
+			// q1、使用模式三：使用 http 请求从认证中心校验ticket 
+			
+			// 计算当前 sso-client 的单点注销回调地址 
 			String ssoLogoutCall = null; 
 			if(cfg.getIsSlo()) {
-				ssoLogoutCall = SaHolder.getRequest().getUrl().replace(currUri, Api.ssoLogoutCall); 
+				// 如果配置了回调地址，就使用配置的值：
+				if(SaFoxUtil.isNotEmpty(cfg.getSsoLogoutCall())) {
+					ssoLogoutCall = cfg.getSsoLogoutCall();
+				}
+				// 如果提供了当前 uri，则根据此值来计算：
+				else if(SaFoxUtil.isNotEmpty(currUri)) {
+					ssoLogoutCall = SaHolder.getRequest().getUrl().replace(currUri, Api.ssoLogoutCall); 
+				}
+				// 否则视为不注册单点注销回调地址 
+				else {
+				}
 			}
 			
 			// 发起请求 
@@ -379,7 +391,7 @@ public class SaSsoHandle {
 				throw new SaSsoException(result.getMsg()).setCode(SaSsoExceptionCode.CODE_20005);
 			}
 		} else {
-			// 模式二：直连Redis校验ticket 
+			// q2、使用模式二：直连Redis校验ticket 
 			return SaSsoUtil.checkTicket(ticket);
 		}
 	}

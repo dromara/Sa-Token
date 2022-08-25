@@ -14,11 +14,11 @@
 
 	<dependencies>
 
-		<!-- springboot依赖 -->
+		<!-- Solon 依赖 -->
 		<dependency>
 			<groupId>org.noear</groupId>
 			<artifactId>solon-web</artifactId>
-			<version>1.7.5</version>
+            <version>1.10.0</version>
 		</dependency>
 		
 		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->

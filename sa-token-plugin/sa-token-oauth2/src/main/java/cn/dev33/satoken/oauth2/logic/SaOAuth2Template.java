@@ -98,6 +98,21 @@ public class SaOAuth2Template {
 			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Access-Token 不具备 Scope：" + scope);
 		}
 	}
+	/**
+	 * 校验：指定 Client-Token 是否具有指定 Scope
+	 * @param clientToken Client-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public void checkClientTokenScope(String clientToken, String... scopes) {
+		if(scopes == null || scopes.length == 0) {
+			return;
+		}
+		ClientTokenModel ct = checkClientToken(clientToken);
+		List<String> scopeList = SaFoxUtil.convertStringToList(ct.scope);
+		for (String scope : scopes) {
+			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Client-Token 不具备 Scope：" + scope);
+		}
+	}
 
 	// ------------------- generate 构建数据
 	/**
@@ -379,6 +394,25 @@ public class SaOAuth2Template {
 	public SaClientModel checkClientSecret(String clientId, String clientSecret) {
 		SaClientModel cm = checkClientModel(clientId);
 		SaOAuth2Exception.throwBy(cm.clientSecret == null || cm.clientSecret.equals(clientSecret) == false, "无效client_secret: " + clientSecret);
+		return cm;
+	}
+	/**
+	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes 
+	 * @param clientId 应用id
+	 * @param clientSecret 秘钥
+	 * @param scopes 权限（多个用逗号隔开）
+	 * @return SaClientModel对象
+	 */
+	public SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, String scopes) {
+		// 先校验 clientSecret
+		SaClientModel cm = checkClientSecret(clientId, clientSecret);
+		// 再校验 是否签约 
+		List<String> clientScopeList = SaFoxUtil.convertStringToList(cm.contractScope);
+		List<String> scopelist = SaFoxUtil.convertStringToList(scopes);
+		if(clientScopeList.containsAll(scopelist) == false) {
+			throw new SaOAuth2Exception("请求的Scope暂未签约");
+		}
+		// 返回数据
 		return cm;
 	}
 	/**

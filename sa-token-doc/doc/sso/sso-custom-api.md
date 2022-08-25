@@ -25,20 +25,20 @@ public class SsoServerController {
 
 这种写法集成简单但却不够灵活。例如认证中心地址只能是：`http://{host}:{port}/sso/auth`，如果我们想要自定义其API地址，应该怎么做呢？
 
-我们可以打开SSO模块相关源码，有关 API 的设计都定义在：[SaSsoConsts.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/sso/SaSsoConsts.java)
+我们可以打开SSO模块相关源码，有关 API 的设计都定义在：[SaSsoConsts.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-sso/src/main/java/cn/dev33/satoken/sso/SaSsoConsts.java)
 中，这些值从架构设计上来讲属于常量却并未使用 `final` 修饰，目的就是为了方便我们对其二次修改。
 
 例如，我们可以在 Main 方法启动类或者 SSO 配置方法中修改变量值：
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaTokenConfig cfg) {
+private void configSso(SaSsoConfig sso) {
 	// 自定义API地址
 	SaSsoConsts.Api.ssoAuth = "/sso/auth2";
 	// ... 
 	
 	// SSO 相关配置
-	cfg.sso.setXxx ... ;
+	sso.setXxx ... ;
 }
 ```
 

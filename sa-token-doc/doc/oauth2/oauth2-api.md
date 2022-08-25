@@ -14,7 +14,7 @@ http://sa-oauth-server.com:8001/oauth2/authorize
 	&client_id={value}
 	&redirect_uri={value}
 	&scope={value}
-	$state={value}
+	&state={value}
 ```
 
 参数详解：
@@ -189,19 +189,21 @@ redirect_uri#token=xxxx-xxxx-xxxx-xxxx
 http://sa-oauth-server.com:8001/oauth2/token
 	?grant_type=password
 	&client_id={value}
+	&client_secret={value}
 	&username={value}
 	&password={value}
 ```
 
 参数详解：
 
-| 参数		| 是否必填	| 说明							|
-| :--------	| :--------	| :--------						|
-| grant_type| 是		| 返回类型，这里请填写：password|
-| client_id	| 是		| 应用id						|
-| username	| 是		| 用户的Server端账号			|
-| password	| 是		| 用户的Server端密码			|
-| scope		| 否		| 具体请求的权限，多个用逗号隔开						|
+| 参数			| 是否必填	| 说明							|
+| :--------		| :--------	| :--------						|
+| grant_type	| 是		| 返回类型，这里请填写：password|
+| client_id		| 是		| 应用id						|
+| client_secret	| 是		| 应用秘钥												|
+| username		| 是		| 用户的Server端账号			|
+| password		| 是		| 用户的Server端密码			|
+| scope			| 否		| 具体请求的权限，多个用逗号隔开						|
 
 接口返回示例：
 

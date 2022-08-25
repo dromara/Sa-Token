@@ -3,14 +3,14 @@
 - **开始**
 	- [介绍](/)
 	- [引入](/start/download)
-	- [在SpringBoot环境集成](/start/example) 	
-	- [在WebFlux环境集成](/start/webflux-example) 	
+	- [在 SpringBoot 环境集成](/start/example) 	
+	- [在 WebFlux 环境集成](/start/webflux-example) 	
 
 - **基础**
 	- [登录认证](/use/login-auth) 
 	- [权限认证](/use/jur-auth) 
 	- [踢人下线](/use/kick) 
-	- [注解式鉴权](/use/at-check) 
+	- [注解鉴权](/use/at-check) 
 	- [路由拦截鉴权](/use/route-check) 
 	- [Session会话](/use/session) 
 	- [框架配置](/use/config) 
@@ -29,8 +29,7 @@
 	- [会话治理](/up/search-session) 
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 
-	- [多账户认证](/up/many-account) 
-	<!-- - [微服务](/senior/dcs) -->
+	- [多账号认证](/up/many-account) 
 
 - **单点登录**
 	- [单点登录简述](/sso/readme)
@@ -69,29 +68,40 @@
 	- [和 jwt 集成](/plugin/jwt-extend)
 	- [和 Dubbo 集成](/plugin/dubbo-extend)
 	- [Sa-Token 插件开发指南](/fun/plugin-dev)
+	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
+
+- **API手册**
+	- [StpUtil-鉴权工具类](/api/stp-util)
+	- [SaSession-会话对象](/api/sa-session)
+	- [SaTokenDao-数据持久接口](/api/sa-token-dao)
+	- [SaStrategy-全局策略](/api/sa-strategy)
+	- [全局类、方法](/more/common-action) 
+
 
 - **其它**
 	- [更新日志](/more/update-log) 
 	- [框架生态](/more/link) 
+	- [框架博客](/more/blog) 
 	- [推荐公众号](/more/tj-gzh) 
+	- [加入讨论群](/more/join-group) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 
 - **附录**
-	- [常用类、方法](/more/common-action) 
 	- [常见问题排查](/more/common-questions)  
 	- [框架名词解释](/more/noun-intro)  
 	- [Sa-Token功能结构图](/fun/auth-flow)
 	- [未登录场景值详解](/fun/not-login-scene)
 	- [Token有效期详解](/fun/token-timeout)
 	- [Session模型详解](/fun/session-model)
+	- [数据读写三大作用域](/fun/three-scope)  
 	- [TokenInfo参数详解](/fun/token-info)
 	- [异常细分状态码](/fun/exception-code)
 	- [解决反向代理 uri 丢失的问题](/fun/curr-domain)
 	- [参考：把权限放在缓存里](/fun/jur-cache)
 	- [解决跨域问题](/fun/cors-filter)
 	- [技术选型：SSO 与 OAuth2 对比](/fun/sso-vs-oauth2)
-	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
 	- [框架源码所有技术栈](/fun/tech-stack)
+	- [issue 提问模板](/fun/issue-template)
 	- [为Sa-Token贡献代码](/fun/git-pr)
 	- [Sa-Token开源大事记](/fun/timeline)
 	- [Sa-Token框架掌握度--在线考试](/fun/sa-token-test)

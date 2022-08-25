@@ -72,30 +72,32 @@ PS：两者的区别在于：**`模式1会覆盖yml中的配置，模式2会与y
 
 --- 
 ### 所有可配置项
+
+你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可
+
 | 参数名称				| 类型		| 默认值		| 说明																				|
 | :--------				| :--------	| :--------	| :--------																			|
-| tokenName				| String	| satoken	| token名称 (同时也是cookie名称)													|
-| timeout				| long		| 2592000	| token有效期，单位/秒 默认30天，-1代表永久有效	[参考：token有效期详解](/fun/token-timeout)		|
-| activityTimeout		| long		| -1		| token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒, 默认-1 代表不限制 (例如可以设置为1800代表30分钟内无操作就过期) 	[参考：token有效期详解](/fun/token-timeout)													|
-| isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)															|
-| isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 	|
-| maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置才有效）	|
+| tokenName				| String	| satoken	| Token 名称 （同时也是 Cookie 名称、数据持久化前缀）													|
+| timeout				| long		| 2592000	| Token 有效期，单位/秒 默认30天，-1代表永久有效	[参考：token有效期详解](/fun/token-timeout)		|
+| activityTimeout		| long		| -1		| Token 临时有效期 （指定时间内无操作就视为token过期） 单位: 秒, 默认-1 代表不限制 （例如可以设置为1800代表30分钟内无操作就过期） 	[参考：token有效期详解](/fun/token-timeout)													|
+| isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 （为 true 时允许一起登录，为 false 时新登录挤掉旧登录）															|
+| isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token） 	|
+| maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`, `isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHead			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
-| isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token														|
-| tokenStyle			| String	| uuid		| token风格, [参考：自定义Token风格](/up/token-style)										|
-| dataRefreshPeriod		| int		| 30		| 默认dao层实现类中，每次清理过期数据间隔的时间 (单位: 秒) ，默认值30秒，设置为-1代表不启动定时清理 		|
-| tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 (如果配置为true，会在每次获取 `Token-Session` 时校验是否登录)		|
-| autoRenew				| Boolean	| true		| 是否打开自动续签 (如果此值为true, 框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作)		|
-| tokenPrefix			| String	| null		| token前缀, 例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
+| isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token，此值为 false 后，`StpUtil.login(id)` 登录时也不会再往前端注入Cookie				|
+| tokenStyle			| String	| uuid		| token风格， [参考：自定义Token风格](/up/token-style)										|
+| dataRefreshPeriod		| int		| 30		| 默认数据持久组件实现类中，每次清理过期数据间隔的时间 （单位: 秒） ，默认值30秒，设置为-1代表不启动定时清理 		|
+| tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录），[详解](/use/config?id=配置项详解：tokenSessionCheckLogin)		|
+| autoRenew				| Boolean	| true		| 是否打开自动续签 （如果此值为true, 框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作），[参考：token有效期详解](/fun/token-timeout)		|
+| tokenPrefix			| String	| null		| token前缀，例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
-| jwtSecretKey			| String	| null		| jwt秘钥 (只有集成 `sa-token-temp-jwt` 模块时此参数才会生效)							|
-| idTokenTimeout		| long		| 86400		| Id-Token的有效期 (单位: 秒)														|
+| jwtSecretKey			| String	| null		| jwt秘钥 （只有集成 `sa-token-temp-jwt` 模块时此参数才会生效），[参考：和 jwt 集成](/plugin/jwt-extend)	|
+| idTokenTimeout		| long		| 86400		| Id-Token的有效期 （单位: 秒），[参考：内部服务外网隔离](/micro/id-token)					|
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
 | currDomain			| String	| null		| 配置当前项目的网络访问地址													|
 | checkIdToken			| Boolean		| false		| 是否校验Id-Token（部分rpc插件有效）															|
-| sso					| Object	| new SaSsoConfig()		| SSO 单点登录相关配置													|
 | cookie				| Object	| new SaCookieConfig()	| Cookie配置对象															|
 
 Cookie相关配置：
@@ -119,7 +121,7 @@ Server 端：
 | ticketTimeout	| long		| 300		| ticket 有效期 （单位: 秒）														|
 | allowUrl		| String	| *			| 所有允许的授权回调地址，多个用逗号隔开（不在此列表中的URL将禁止下放ticket），参考：[SSO整合：配置域名校验](/sso/sso-check-domain)	|
 | isSlo			| Boolean	| false		| 是否打开单点注销功能															|
-| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）		|
+| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
 | secretkey		| String	| null		| 调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）								|
 
 
@@ -129,12 +131,14 @@ Client 端：
 | :--------		| :--------	| :--------	| :--------										|
 | authUrl		| String	| null		| 配置 Server 端单点登录授权地址					|
 | isSlo			| Boolean	| false		| 是否打开单点注销功能							|
-| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）				|
-| checkTicketUrl| String	| null		| 配置 Server 端的 ticket 校验地址							|
-| userinfoUrl	| String	| null		| 配置 Server 端查询 userinfo 地址									|
+| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
+| checkTicketUrl| String	| null		| 配置 Server 端的 `ticket` 校验地址							|
+| userinfoUrl	| String	| null		| 配置 Server 端查询 `userinfo` 地址									|
 | sloUrl		| String	| null		| 配置 Server 端单点注销地址										|
 | ssoLogoutCall	| String	| null		| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
 | secretkey		| String	| null		| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
+| serverUrl		| String	| null		| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，[详解](/use/config?id=配置项详解：serverUrl)		|
+
 
 配置示例：
 ``` yml
@@ -186,7 +190,7 @@ sa-token:
 | isImplicit			| Boolean	| false		| 单独配置此 Client 是否打开模式：隐藏式（`Implicit`）		|
 | isPassword			| Boolean	| false		| 单独配置此 Client 是否打开模式：密码式（`Password`）		|
 | isClient				| Boolean	| false		| 单独配置此 Client 是否打开模式：凭证式（`Client Credentials`）		|
-| isAutoMode			| Boolean	| true		| 是否自动判断此 Client 开放的授权模式。<br>此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；<br>此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置 |
+| isAutoMode			| Boolean	| true		| 是否自动判断此 Client 开放的授权模式。 参考：[详解](/use/config?id=配置项详解：isAutoMode)  |
 | isNewRefresh			| Boolean	| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
 | accessTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
 | refreshTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
@@ -194,3 +198,104 @@ sa-token:
 | pastClientTokenTimeout	| long	| 取全局配置		| 单独配置此Client：`Past-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
 
 
+
+### 部分配置项详解
+
+对部分配置项做一下详解 
+
+#### 配置项详解：maxLoginCount
+
+配置含义：同一账号最大登录数量。
+
+在配置 `isConcurrent=true`, `isShare=false` 时，Sa-Token 将允许同一账号并发登录，且每次登录都会产生一个新Token，
+这些 Token 都会以 `TokenSign` 的形式记录在其 `User-Session` 之上，这就造成一个问题：
+
+随着同一账号登录的次数越来越多，TokenSign 的列表也会越来越大，极端情况下，列表长度可能达到成百上千以上，严重拖慢数据处理速度，
+为此 Sa-Token 对这个 TokenSign 列表的大小设定一个上限值，也就是 `maxLoginCount`，默认值=12。
+
+假设一个账号的登录数量超过 `maxLoginCount` 后，将会主动注销第一个登录的会话（先进先出），以此保证队列中的有效会话数量始终 `<= maxLoginCount` 值。
+
+
+#### 配置项详解：tokenSessionCheckLogin
+配置含义：获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录）。
+
+在调用 `StpUtil.login(id)` 登录后，
+
+- 调用 `StpUtil.getSession()` 可以获取这个会话的 `User-Session` 对象。
+- 调用 `StpUtil.getTokenSession()` 可以获取这个会话 `Token-Session` 对象。
+
+关于两种 Session 有何区别，可以参考这篇：[Session模型详解](/fun/session-model)，此处暂不赘述。
+
+从设计上讲，无论会话是否已经登录，只要前端提供了Token，我们就可以找到这个 Token 的专属 `Token-Session` 对象，**这非常灵活但不安全**，
+因为前端提交的 Token 可能是任意伪造的。
+
+为了解决这个问题，`StpUtil.getTokenSession()` 方法在获取 `Token-Session` 时，会率先检测一下这个 Token 是否是一个有效Token：
+- 如果是有效Token，正常返回 `Token-Session` 对象
+- 如果是无效Token，则抛出异常。
+
+这样就保证了伪造的 Token 是无法获取 `Token-Session` 对象的。
+
+但是 —— 有的场景下我们又确实需要在登录之前就使用 Token-Session 对象，这时候就把配置项 `tokenSessionCheckLogin` 值改为 `false` 即可。
+
+
+#### 配置项详解：isAutoMode
+
+配置含义：是否自动判断此 Client 开放的授权模式。
+
+- 此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；
+- 此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置（两个都为 true 时才打开） 
+
+
+#### 配置项详解：isHttp
+
+配置含义：是否打开单点登录模式三。
+
+- 此配置项为 false 时，代表使用SSO模式二：使用 Redis 校验 ticket 值、删除 Redis 数据做到单点注销、使用 Redis 同步 Userinfo 数据。
+- 此配置项为 true 时，代表使用SSO模式三：使用 Http 请求校验 ticket 值、使用 Http 请求做到单点注销、使用 Http 请求同步 Userinfo 数据。
+
+
+#### 配置项详解：serverUrl
+
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置。
+
+在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
+
+``` java
+sa-token: 
+    sso: 
+        # SSO-Server端 统一认证地址 
+        auth-url: http://sa-sso-server.com:9000/sso/auth
+        # 使用Http请求校验ticket 
+        is-http: true
+        # SSO-Server端 ticket校验地址 
+        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
+        # 单点注销地址 
+        slo-url: http://sa-sso-server.com:9000/sso/logout
+        # 接口调用秘钥 
+        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        # SSO-Server端 查询userinfo地址 
+        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
+```
+
+一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
+``` java
+sa-token: 
+    sso: 
+        server-url: http://sa-sso-server.com:9000
+        is-http: true
+        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+```
+
+只要你配置了 `server-url` 地址，Sa-Token 就可以自动拼接出其它四个地址：
+
+**例1，使用 server-url 简化：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`。
+- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth`，其它三个 url 配置项同理。
+
+**例2，使用 server-url + auth-url 简化：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`/sso/auth2`。
+- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth2`，其它三个 url 配置项同理。
+
+**例3，auth-url 地址以 http 字符开头：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`http://my-site.com/sso/auth2`。
+- 此时框架只以 auth-url 值为准，得到的 auth-url 值是：`http://my-site.com/sso/auth2`，其它三个 url 配置项同理。

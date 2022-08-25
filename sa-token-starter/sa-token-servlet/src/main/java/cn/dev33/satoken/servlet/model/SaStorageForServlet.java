@@ -36,8 +36,9 @@ public class SaStorageForServlet implements SaStorage {
 	 * 在 [Request作用域] 里写入一个值 
 	 */
 	@Override
-	public void set(String key, Object value) {
+	public SaStorageForServlet set(String key, Object value) {
 		request.setAttribute(key, value);
+		return this;
 	}
 
 	/**
@@ -52,8 +53,9 @@ public class SaStorageForServlet implements SaStorage {
 	 * 在 [Request作用域] 里删除一个值 
 	 */
 	@Override
-	public void delete(String key) {
+	public SaStorageForServlet delete(String key) {
 		request.removeAttribute(key);
+		return this;
 	}
 
 }

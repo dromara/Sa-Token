@@ -65,6 +65,7 @@
 				<a class="wzi" href="../index.html">首页</a>
 				<a class="wzi" href="index.html">文档</a>
 				<a class="p-none wzi" href="#/more/link">生态</a>
+				<a class="p-none wzi" href="#/more/blog">博客</a>
 				<a class="p-none wzi" href="#/more/sa-token-donate">赞助</a>
 				<a class="p-none wzi" href="#/sso/sso-pro">🔥 SSO商业版</a>
 				<div class="zk-box">
@@ -152,21 +153,28 @@
 			}
 		</script>
 		<script src="https://unpkg.zhimg.com/docsify@4.9.4/lib/docsify.min.js"></script>
-		<script src="https://unpkg.zhimg.com/docsify-copy-code@2.1.0/dist/docsify-copy-code.min.js"></script>
-		<script src="https://unpkg.zhimg.com/prismjs@1.20.0/components/prism-java.min.js"></script>
+		<script src="lib/docsify-copy-code.min.js"></script>
+		<script src="lib/prism-java.min.js"></script>
 		<!-- 搜索框 -->
 		<script src="lib/search.min.js"></script>
 		<!-- 多 tab 切换 -->
 		<script src="lib/docsify-tabs.min.js"></script>
 		<!-- img点击放大 -->
 		<script src="lib/zoom-image.min.js"></script>
-		
+
 		<!-- sidebar折叠 -->
 		<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
 		<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script> -->
 
 		<!-- jqeury -->
 		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		
+		<script>
+			if(window.jQuery === undefined || window.Docsify === undefined) {
+				var str = 'CDN 加载失败，请打开备用地址：<a href="index-backup.html" target="_blank">index-backup.html</a>';
+				document.querySelector('#app').innerHTML = str;
+			}
+		</script>
 
 		<!-- 搜索引擎自动提交 -->
 		<script>

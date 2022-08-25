@@ -1,10 +1,10 @@
 package cn.dev33.satoken.stp;
 
-import java.util.List;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
+
+import java.util.List;
 
 /**
  * Sa-Token 权限认证工具类 
@@ -32,12 +32,26 @@ public class StpUtil {
 
 	/**
 	 * 重置 StpLogic 对象
-	 * @param stpLogic / 
+	 * <br> 1、更改此账户的 StpLogic 对象 
+	 * <br> 2、put 到全局 StpLogic 集合中 
+	 * 
+	 * @param newStpLogic / 
 	 */
-	public static void setStpLogic(StpLogic stpLogic) {
-		StpUtil.stpLogic = stpLogic;
-		// 防止自定义 stpLogic 被覆盖 
-		SaManager.putStpLogic(stpLogic);
+	public static void setStpLogic(StpLogic newStpLogic) {
+		// 重置此账户的 StpLogic 对象 
+		stpLogic = newStpLogic;
+		
+		// 添加到全局 StpLogic 集合中
+		// 以便可以通过 SaManager.getStpLogic(type) 的方式来全局获取到这个 StpLogic 
+		SaManager.putStpLogic(newStpLogic);
+	}
+
+	/**
+	 * 获取 StpLogic 对象
+	 * @return / 
+	 */
+	public static StpLogic getStpLogic() {
+		return stpLogic;
 	}
 	
 	
@@ -115,18 +129,30 @@ public class StpUtil {
 	}
 
 	/**
-	 * 会话登录，并指定是否 [记住我] 
-	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param isLastingCookie 是否为持久Cookie 
+	 * 会话登录，并指定是否 [记住我]
+	 *
+	 * @param id              账号id，建议的类型：（long | int | String）
+	 * @param isLastingCookie 是否为持久Cookie
 	 */
 	public static void login(Object id, boolean isLastingCookie) {
 		stpLogic.login(id, isLastingCookie);
 	}
 
 	/**
-	 * 会话登录，并指定所有登录参数Model 
-	 * @param id 登录id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
+	 * 会话登录，并指定此次登录token的有效期, 单位:秒
+	 *
+	 * @param id      账号id，建议的类型：（long | int | String）
+	 * @param timeout 此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 */
+	public static void login(Object id, long timeout) {
+		stpLogic.login(id, timeout);
+	}
+
+	/**
+	 * 会话登录，并指定所有登录参数Model
+	 *
+	 * @param id         登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model
 	 */
 	public static void login(Object id, SaLoginModel loginModel) {
 		stpLogic.login(id, loginModel);
@@ -307,12 +333,22 @@ public class StpUtil {
  	}
 
 	/**
-	 * 获取Token扩展信息（只在jwt模式下有效）
+	 * 获取当前 Token 的扩展信息（此函数只在jwt模式下生效）
 	 * @param key 键值 
 	 * @return 对应的扩展数据 
 	 */
 	public static Object getExtra(String key) {
 		return stpLogic.getExtra(key);
+	}
+
+	/**
+	 * 获取指定 Token 的扩展信息（此函数只在jwt模式下生效）
+	 * @param tokenValue 指定的 Token 值 
+	 * @param key 键值 
+	 * @return 对应的扩展数据 
+	 */
+	public static Object getExtra(String tokenValue, String key) {
+		return stpLogic.getExtra(tokenValue, key);
 	}
  	
  	
@@ -383,6 +419,14 @@ public class StpUtil {
 		return stpLogic.getTokenSession();
 	}
 
+	/** 
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @return Token-Session 对象 
+	 */
+	public static SaSession getAnonTokenSession() {
+		return stpLogic.getAnonTokenSession();
+	}
+	
 
 	// =================== [临时有效期] 验证相关 ===================  
 
@@ -676,10 +720,12 @@ public class StpUtil {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return token集合 
 	 */
-	public static List<String> searchTokenValue(String keyword, int start, int size) {
-		return stpLogic.searchTokenValue(keyword, start, size);
+	public static List<String> searchTokenValue(String keyword, int start, int size, boolean sortType) {
+		return stpLogic.searchTokenValue(keyword, start, size, sortType);
 	}
 	
 	/**
@@ -687,10 +733,12 @@ public class StpUtil {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return sessionId集合 
 	 */
-	public static List<String> searchSessionId(String keyword, int start, int size) {
-		return stpLogic.searchSessionId(keyword, start, size);
+	public static List<String> searchSessionId(String keyword, int start, int size, boolean sortType) {
+		return stpLogic.searchSessionId(keyword, start, size, sortType);
 	}
 
 	/**
@@ -698,10 +746,12 @@ public class StpUtil {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 * 
 	 * @return sessionId集合 
 	 */
-	public static List<String> searchTokenSessionId(String keyword, int start, int size) {
-		return stpLogic.searchTokenSessionId(keyword, start, size);
+	public static List<String> searchTokenSessionId(String keyword, int start, int size, boolean sortType) {
+		return stpLogic.searchTokenSessionId(keyword, start, size, sortType);
 	}
 
 	
@@ -904,5 +954,50 @@ public class StpUtil {
 	public static void logoutByLoginId(Object loginId, String device) {
 		stpLogic.kickout(loginId, device);
 	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchTokenValue(keyword, start, size, sortType) ，使用方式保持不变 </h1>
+	 * 
+	 * 根据条件查询Token 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * 
+	 * @return token集合 
+	 */
+	@Deprecated
+	public static List<String> searchTokenValue(String keyword, int start, int size) {
+		return stpLogic.searchTokenValue(keyword, start, size, true);
+	}
 	
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchSessionId(keyword, start, size, sortType) ，使用方式保持不变 </h1>
+	 * 
+	 * 根据条件查询SessionId 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * 
+	 * @return sessionId集合 
+	 */
+	@Deprecated
+	public static List<String> searchSessionId(String keyword, int start, int size) {
+		return stpLogic.searchSessionId(keyword, start, size, true);
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchTokenSessionId(keyword, start, size, sortType) ，使用方式保持不变 </h1>
+	 * 
+	 * 根据条件查询Token专属Session的Id 
+	 * @param keyword 关键字 
+	 * @param start 开始处索引 (-1代表查询所有) 
+	 * @param size 获取数量 
+	 * 
+	 * @return sessionId集合 
+	 */
+	@Deprecated
+	public static List<String> searchTokenSessionId(String keyword, int start, int size) {
+		return stpLogic.searchTokenSessionId(keyword, start, size, true);
+	}
+
 }

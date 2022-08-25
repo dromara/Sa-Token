@@ -41,6 +41,11 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	
 	@Autowired
 	public void init(RedisConnectionFactory connectionFactory) {
+		// 不重复初始化 
+		if(this.isInit) {
+			return;
+		}
+				
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		JdkSerializationRedisSerializer valueSerializer = new JdkSerializationRedisSerializer();
@@ -58,11 +63,9 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		template.afterPropertiesSet();
 
 		// 开始初始化相关组件 
-		if(this.isInit == false) {
-			this.stringRedisTemplate = stringTemplate;
-			this.objectRedisTemplate = template;
-			this.isInit = true;
-		}
+		this.stringRedisTemplate = stringTemplate;
+		this.objectRedisTemplate = template;
+		this.isInit = true;
 	}
 	
 	
@@ -217,10 +220,10 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	 * 搜索数据 
 	 */
 	@Override
-	public List<String> searchData(String prefix, String keyword, int start, int size) {
+	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
 		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
 		List<String> list = new ArrayList<String>(keys);
-		return SaFoxUtil.searchList(list, start, size);
+		return SaFoxUtil.searchList(list, start, size, sortType);
 	}
 	
 	

@@ -1,5 +1,7 @@
 package cn.dev33.satoken.aop;
 
+import java.lang.reflect.Method;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,6 +10,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -54,9 +57,18 @@ public class SaCheckAspect {
 	@Around("pointcut()")
 	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 		
-		// 注解鉴权
+		// 获取对应的 Method 处理函数 
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-		SaStrategy.me.checkMethodAnnotation.accept(signature.getMethod());
+		Method method = signature.getMethod();
+		
+		// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权 
+		if(SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+			// ... 
+		} else {
+			// 注解鉴权 
+			SaStrategy.me.checkMethodAnnotation.accept(method);
+		}
+		
 
 		try {
 			// 执行原有逻辑

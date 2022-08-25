@@ -36,8 +36,9 @@ public class SaStorageForReactor implements SaStorage {
 	 * 在 [Request作用域] 里写入一个值 
 	 */
 	@Override
-	public void set(String key, Object value) {
+	public SaStorageForReactor set(String key, Object value) {
 		exchange.getAttributes().put(key, value);
+		return this;
 	}
 
 	/**
@@ -52,8 +53,9 @@ public class SaStorageForReactor implements SaStorage {
 	 * 在 [Request作用域] 里删除一个值 
 	 */
 	@Override
-	public void delete(String key) {
+	public SaStorageForReactor delete(String key) {
 		exchange.getAttributes().remove(key);
+		return this;
 	}
 
 }

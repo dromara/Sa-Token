@@ -1,12 +1,13 @@
 # SpringBoot 集成 Sa-Token 示例
 
-本篇将带你从零开始集成Sa-Token，从而让你快速熟悉Sa-Token的使用姿势 <br>
-整合示例在官方仓库的`/sa-token-demo/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行测试学习
+本篇带你从零开始集成 Sa-Token，从而快速熟悉框架的使用姿势。
+
+整合示例在官方仓库的`/sa-token-demo/sa-token-demo-springboot`文件夹下，如遇到难点可结合源码进行学习测试。
 
 ---
 
 ### 1、创建项目
-在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考：[SpringBoot-Pure](https://gitee.com/click33/springboot-pure)）
+在 IDE 中新建一个 SpringBoot 项目，例如：`sa-token-demo-springboot`（不会的同学请自行百度或者参考：[SpringBoot-Pure](https://gitee.com/click33/springboot-pure)）
 
 
 ### 2、添加依赖
@@ -23,7 +24,7 @@
 
 
 ### 3、设置配置文件
-你可以**零配置启动项目** ，但同时你也可以在`application.yml`中增加如下配置，定制性使用框架：
+你可以**零配置启动项目** ，但同时你也可以在 `application.yml` 中增加如下配置，定制性使用框架：
 
 ``` java
 server:
@@ -32,11 +33,11 @@ server:
 	
 # Sa-Token配置
 sa-token: 
-	# token名称 (同时也是cookie名称)
+	# token 名称 (同时也是cookie名称)
 	token-name: satoken
-	# token有效期，单位s 默认30天, -1代表永不过期 
+	# token 有效期，单位s 默认30天, -1代表永不过期 
 	timeout: 2592000
-	# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+	# token 临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
 	activity-timeout: -1
 	# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
 	is-concurrent: true
@@ -48,12 +49,12 @@ sa-token:
 	is-log: false
 ```
 
-如果你习惯于 `application.properties` 类型的配置文件，那也很好办:  <br> 
+如果你习惯于 `application.properties` 类型配置文件，那也很好办:  <br> 
 百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
 
 
 ### 4、创建启动类
-在项目中新建包 `com.pj` ，在此包内新建主类 `SaTokenDemoApplication.java`，输入以下代码：
+在项目中新建包 `com.pj` ，在此包内新建主类 `SaTokenDemoApplication.java`，复制以下代码：
 
 ``` java
 @SpringBootApplication
@@ -105,7 +106,7 @@ public class UserController {
 
 
 ### 详细了解
-通过这个示例，你已经对Sa-Token有了初步的了解，那么现在开始详细了解一下它都有哪些 [能力](/use/login-auth) 吧
+通过这个示例，你已经对 Sa-Token 有了初步的了解，那么现在开始详细了解一下它都有哪些吧：[登录认证](/use/login-auth) 
 
 
 

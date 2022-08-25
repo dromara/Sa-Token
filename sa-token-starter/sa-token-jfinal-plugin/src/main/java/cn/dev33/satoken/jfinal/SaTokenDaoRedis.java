@@ -257,10 +257,10 @@ public class SaTokenDaoRedis implements SaTokenDao {
      * @return
      */
     @Override
-    public List<String> searchData(String prefix, String keyword, int start, int size) {
+    public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
         Set<String> keys = redis.keys(prefix + "*" + keyword + "*");
         List<String> list = new ArrayList<String>(keys);
-        return SaFoxUtil.searchList(list, start, size);
+        return SaFoxUtil.searchList(list, start, size, sortType);
     }
 
     public Jedis getJedis() {

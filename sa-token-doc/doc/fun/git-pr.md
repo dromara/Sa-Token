@@ -96,7 +96,7 @@ git clone 这里替换为复制后的链接
 
 ![更新按钮](https://oss.dev33.cn/sa-token/doc/git-pr/code_10.png)
 
-3. 点击右侧圆圈按钮后Gitee会自动同步主项目, 这样就不用向我之前一样,删除项目又重新fork了.
+3. 点击右侧圆圈按钮后Gitee会自动同步主项目, 这样就不用像我之前一样,删除项目又重新fork了.
 
 ## 为什么在国内推荐Gitee
 1. 近期Github下载网速较慢

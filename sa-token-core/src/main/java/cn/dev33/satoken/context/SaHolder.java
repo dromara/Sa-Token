@@ -1,6 +1,7 @@
 package cn.dev33.satoken.context;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.SaApplication;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -46,6 +47,15 @@ public class SaHolder {
 	 */
 	public static SaStorage getStorage() {
 		return SaManager.getSaTokenContextOrSecond().getStorage();
+	}
+
+	/**
+	 * 获取全局 SaApplication 对象 
+	 * 
+	 * @return see note 
+	 */
+	public static SaApplication getApplication() {
+		return SaApplication.defaultInstance;
 	}
 
 }

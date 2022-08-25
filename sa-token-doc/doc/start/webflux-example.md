@@ -1,16 +1,16 @@
 # Spring WebFlux 集成 Sa-Token 示例
 
 **Reactor** 是一种非阻塞的响应式模型，本篇将以 **WebFlux** 为例，展示 Sa-Token 与 Reactor 响应式模型框架相整合的示例，
-**你可以用同样方式去对接其它Reactor模型框架（Netty、ShenYu、SpringCloud Gateway等）**
+**你可以用同样方式去对接其它 Reactor 模型框架（Netty、ShenYu、SpringCloud Gateway等）**
 
 整合示例在官方仓库的`/sa-token-demo/sa-token-demo-webflux`文件夹下，如遇到难点可结合源码进行测试学习
 
-!> WebFlux常用于微服务网关架构中，如果您的应用基于单体架构且非 Reactor 模型，可以先跳过本章 
+!> WebFlux 常用于微服务网关架构中，如果您的应用基于单体架构且非 Reactor 模型，可以先跳过本章 
 
 ---
 
 ### 1、创建项目
-在IDE中新建一个SpringBoot项目，例如：`sa-token-demo-webflux`（不会的同学请自行百度或者参考github示例）
+在 IDE 中新建一个 SpringBoot 项目，例如：`sa-token-demo-webflux`
 
 
 ### 2、添加依赖
@@ -40,7 +40,7 @@ public class SaTokenDemoApplication {
 ```
 
 ### 4、创建全局过滤器
-新建`SaTokenConfigure.java`，注册Sa-Token的全局过滤器
+新建`SaTokenConfigure.java`，注册 Sa-Token 的全局过滤器
 ``` java
 /**
  * [Sa-Token 权限认证] 全局配置类 
@@ -71,7 +71,7 @@ public class SaTokenConfigure {
     }
 }
 ```
-?> 你只需要按照此格式复制代码即可，有关过滤器的详细用法，会在之后的章节详细介绍
+你只需要按照此格式复制代码即可，有关过滤器的详细用法，会在之后的章节详细介绍。
 
 
 ### 5、创建测试Controller
@@ -108,7 +108,7 @@ public class UserController {
 ![运行结果](https://oss.dev33.cn/sa-token/doc/test-is-login.png)
 
 
-**注意事项**
+**注意事项：**
 
 更多使用示例请参考官方仓库demo
 

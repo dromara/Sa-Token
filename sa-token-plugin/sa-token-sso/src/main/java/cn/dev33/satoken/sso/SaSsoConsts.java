@@ -22,6 +22,9 @@ public class SaSsoConsts {
 		/** SSO-Server端：校验ticket 获取账号id */ 
 		public static String ssoCheckTicket = "/sso/checkTicket";
 
+		/** SSO-Server端：获取userinfo  */ 
+		public static String ssoUserinfo = "/sso/userinfo";
+
 		/** SSO-Server端 (and Client端)：单点注销地址 */ 
 		public static String ssoLogout = "/sso/logout";
 

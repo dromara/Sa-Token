@@ -31,6 +31,9 @@ SaOAuth2Util.refreshAccessToken(refreshToken);
 // 构建 Client-Token 
 SaOAuth2Util.generateClientToken(clientId, scope);
 
+// 校验 Client-Token 是否含有指定 Scope 
+SaOAuth2Util.checkClientTokenScope(clientToken, scopes);
+
 // 回收 Access-Token 
 SaOAuth2Util.revokeAccessToken(accessToken);
 

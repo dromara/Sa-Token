@@ -2,6 +2,8 @@
 /* 总 */
 *{margin: 0px; padding: 0px;}
 body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica Neue","Arial,sans-serif";}
+.z-div{}
+
 .s-width{width: 1000px; margin: auto;}
 /* 栏目标题 */
 .s-title{color: #000; margin-top: 90px; margin-bottom: 50px;}
@@ -34,40 +36,39 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px; z-index: 1001 !important;}
 
 
-/* 手机端不显示广告，和一些其它东西 */
-@media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} 
-
 /* -------- 海报部分 --------- */
-.main-box{width: 100%; min-height: 100vh;; /* height: 80vh; */ text-align: center; background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg); }
+.main-box{width: 100%; /* min-height: 70vh; */ /* height: 80vh; */ text-align: center; }
 .main-box{display: flex; align-items: center; text-align: center; }
 .fenge{min-height: 90px;}
-.content-box{color: #000; flex: 1;}
+.content-box{color: #000; flex: 1; padding: 120px 1em 70px;}
 .content-box h1{font-size: 100px; font-weight: 400; position: relative; margin-top: 40px; /* margin-top: 15vh; */}
 .content-box h1 small{font-size: 18px; position: absolute; bottom: 10px; margin-left: 5px; font-weight: 100;}
 /* .title-logo{width: 221px; cursor: pointer; transition: all 0.2s;}
 .title-logo:hover{transform: scale(1.2, 1.2);} */
 
-.sub-title{font-size: 22px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #444;}
+.sub-title{font-size: 22px; font-weight: 400; margin-top: 30px; margin-bottom: 25px; color: #6a8bad; color: #234;}
 /* .content-box p{line-height: 30px; padding: 0px 1em;} */
 /* 角标位置修复 */
 .badge-box a:nth-child(-n+2) img{position: relative; top: 1px;}
 
-.main-box{animation: changes 60s 0.2s linear infinite normal; background-attachment: ;}  /* normal | alternate */
+/* .main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg);} */
+.main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg3.png); background-size: 120% 100%;}
+.main-box{animation: changes 30s 0.2s linear infinite normal; /* background-attachment: ; */}  /* normal | alternate */
 @keyframes changes {
 	from {background-position: 0vw 0%;}
-	to {background-position: -100vw 0%;}
+	to {background-position: -20vw 0%;}
 }
 
 /* 几个按钮 */
 .btn-box{margin-top: 50px; margin-bottom: 40px;}
-.btn-box a{border: 1px #42B983 solid; border-radius: 2em; box-sizing: border-box; color: #3eaf7c; display: inline-block;transition: all 0.1s;}
-.btn-box a{font-size: 14px; background-color: rgba(0,255,0,0.04); letter-spacing: 1px; padding: 1em 2em; margin: 0 0.5em; margin-bottom: 14px; text-decoration: none; }
+.btn-box a{border: 1px #1e8f5c solid; border-radius: 2em; box-sizing: border-box; color: #1e8f5c; display: inline-block;transition: all 0.1s;}
+.btn-box a{font-size: 14px; background-color: rgba(0,255,0,0.06); letter-spacing: 1px; padding: 1em 2em; margin: 0 0.5em; margin-bottom: 14px; text-decoration: none; }
+.btn-box a:hover{/* transform: scale(1.05, 1.05); */padding: 1em 2.3em; margin-left: 0.2em; margin-right: 0.2em;}
 /* 最后一个加深底色 */
-.btn-box a:last-child {color: #fff; background-color: #42B983; border: 1px green solid;}
-.btn-box a:hover{/* transform: scale(1.05, 1.05); */padding: 1em 2.3em; margin: 0 0.2em;}
+.btn-box .doc-btn {color: #fff; background-color: #42B983; border: 1px green solid;}
 
 /* 按钮发光动画 */
-.btn-box a:last-child{animation: bganimation 3s infinite;}
+.btn-box .doc-btn{animation: bganimation 3s infinite;}
 @keyframes bganimation{
     0%{box-shadow: 0 0 1px #42B983;}
     50%{box-shadow: 0 0 20px #42B983;}
@@ -88,8 +89,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .feature-z .s-title{font-size: 30px; font-weight: 400; margin-top: 70px; margin-bottom: 40px;}
 .feature-z{color: rgb(128, 128, 128); text-align: center; box-sizing: border-box; line-height: 24px; font-size: 16px;}
 
-.feature-box{margin-top: 50px; margin-bottom: 70px; display: flex; flex-wrap: wrap; justify-content: flex-start;}
-.feature{border: 0px #000 solid; flex: 1; min-width: 33%; max-width: 33%; text-align: left; padding: 1.8em 1.2em; box-sizing: border-box;}
+.feature-box{margin-top: 10px; margin-bottom: 70px; display: flex; flex-wrap: wrap; justify-content: space-between; /* justify-content: flex-start; */}
+.feature{border: 0px #000 solid; flex: 0 0 33%; text-align: left; padding: 1.8em 1.2em; box-sizing: border-box;}
 .feature h2{font-size: 22px; color: #000; font-weight: 400;}
 .feature p{margin-top: 14px; font-size: 16px; color: #4e6e8e;}
 
@@ -102,20 +103,54 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .re-text a{color: #0969da; text-decoration: none;}
 .re-text a:hover{border-bottom: 1px #0969da solid;}
 
+/* -------- 集成案例 --------- */
+.s-case-box{justify-content: space-between;}
+.s-case{border: 1px #e5e5e5 solid; flex: 0 0 31.5%; margin-top: 30px; text-align: left; box-sizing: border-box; padding-bottom: 16px; overflow: hidden;}
+.s-case{position: relative; transition: all 0.2s;}
+.s-case-link{display: block; width: 100%; height: 0px; padding-bottom: 50%; position: relative; overflow: hidden;}
+.s-case-link img{width: 100%; height: 100%; object-fit: cover; object-position: center; position: absolute;}
+.s-case-link img{transition: all 0.3s;}
+.s-case-title,.s-case-intro{padding: 0 16px;}
+.s-case-title{margin-top: 20px; font-size: 18px; font-weight: 400; color: #333; font-family: "microsoft yahei";}
+.s-case-intro{margin-top: 15px; font-size: 14px; line-height: 20px; color: #777; word-break:break-all;}
+.s-author{color: #ff5722; border: 1px #ff5722 solid; position: absolute; right: 20px; display: inline-block;}
+.s-author{padding: 0 5px; font-size: 12px; transform: translate(0, -25px);}
+
+
+/* 悬浮动画 */
+.s-case:hover{box-shadow: 0 0 20px #ccc;}
+.s-case:hover img{transform: scale(1.3, 1.3); }
+.s-case img:hover{cursor: pointer;}
+.s-case:hover .s-case-link:after {background-color: rgba(0, 0, 0, .35); color: #FFF;}
+.s-case .s-case-link:after {
+    content: "详情";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all .4s;
+	text-align: center;
+	line-height: 10;
+	color: rgba(0,0,0,0);
+	cursor: pointer;
+}
+
 
 /* -------- 使用公司 --------- */
 .com-box-f{padding: 1em 1em; padding-bottom: 30px; text-align: center;}
 .com-box-f h2{font-size: 30px; color: #000; font-weight: 400;}
 .com-box{display: flex; flex-wrap: wrap; width: 100%; margin-bottom: 50px; justify-content: flex-start;}
-.com-box a{flex: 1; display: block; cursor: pointer; border: 0px #ddd solid;}
-.com-box a{min-width: 13%; max-width: 14%; margin: 5px; line-height: 75px;}
+.com-box a{display: block; flex: 0 0 13%; margin: 5px; cursor: pointer; border: 0px #ddd solid;}
+.com-box a{line-height: 75px;}
 .com-box a img{transition: all 0.2s; vertical-align: middle; min-width: 60%; max-width: 100%; max-height: 100%;}
 .com-box a img:hover{transform: scale(1.05, 1.05);}
 .com-box-you a img:hover{transform: none;}
 
 /* -------- 友情链接 --------- */
-.com-box-you a{min-width: 13%; max-width: 14%; line-height: 60px; height: 60px; margin: 10px;}
-.com-box-you a img{min-width: 60%; max-width: 100%; vertical-align: middle; max-height: 100%;}
+.com-box-you a{flex: 0 0 14.5%; line-height: 60px; height: 60px; margin: 10px;}
+.com-box-you a img{min-width: 60%; max-width: 85%; vertical-align: middle; max-height: 100%;}
 
 /* -------- 底部 - 连接 --------- */
 #footer{background-color: #181818;}
@@ -139,7 +174,16 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 
 /* -------- 自适应 --------- */
-/* 媒体查询 */
+/* 一般的笔记本 */
+@media screen and (max-width: 1700px) {
+	.content-box{padding-top: 100px;}
+	.content-box h1{font-size: 80px;}
+	
+	/* 支持特性部分的间距 */
+	.s-title.s-title-tx{margin-top: 50px; margin-bottom: 20px; /* display: none; */}
+}
+
+/* 一般的手机 */
 @media screen and (max-width: 800px) {
 	
 	.s-title{padding: 0 16px;}
@@ -147,25 +191,31 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 	
 	.logo-box .logo-text,.copyright {display: none;}
 	.main-box{ height: auto;}
-	.content-box{ padding: 2em 1em;}
+	.content-box{padding-top: 100px;}
 	.content-box h1{font-size: 50px;}
 	
-	.feature-z{padding: 0em;}
+	.feature-z{padding: 0em; padding-bottom: 50px;}
 	.feature{min-width: 100%;}
 	
 	.com-box-f{padding: 0em;}
-	.com-box a{min-width: 90%;}
+	.com-box{justify-content: space-around;}
+	.com-box a{flex: 0 0 90%;}
+	
+	.s-case-box{justify-content: space-around;}
+	.s-case{flex: 0 0 90%;}
 	
 	.footer-r-b{display: block;}
-	.ss-box{display: block; width: 90%; margin: 0px; padding-left: 1.5em;}
+	.ss-box{display: block; text-align: center; width: 90%; margin: 0px; padding-left: 1.5em;}
 	
 	/* .s-header{position: static;} */
 	footer{position: static; line-height: 40px;}
+	
+	/* 手机端不显示广告，和一些其它东西 */
+	.wwads-cn,.p-none{display:none!important}
 }
 
-@media screen and (min-width: 1700px) {
-	.content-box h1{margin-top: 120px;}
-}
+/* 手机端不显示广告，和一些其它东西 */
+/* @media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} */
 
 
 

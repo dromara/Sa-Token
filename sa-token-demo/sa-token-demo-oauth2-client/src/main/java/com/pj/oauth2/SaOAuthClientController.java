@@ -94,6 +94,7 @@ public class SaOAuthClientController {
 		String str = OkHttps.sync(serverUrl + "/oauth2/token")
 				.addBodyPara("grant_type", "password")
 				.addBodyPara("client_id", clientId)
+				.addBodyPara("client_secret", clientSecret)
 				.addBodyPara("username", username)
 				.addBodyPara("password", password)
 				.post()

@@ -33,7 +33,8 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-test</artifactId>
-            <version>1.7.5</version>
+            <version>1.9.1</version>
+            <scope>test</scope>
         </dependency>
 	</dependencies>
 

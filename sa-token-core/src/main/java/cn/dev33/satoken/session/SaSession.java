@@ -9,20 +9,30 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.SaSetValueInterface;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.fun.SaRetFunction;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Session Model
+ * Session Model，会话作用域的读取值对象 
+ * <p> 在一次会话范围内: 存值、取值
  *
  * @author kong
  *
  */
-public class SaSession implements Serializable {
+public class SaSession implements SaSetValueInterface, Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	/**
+	 * 在 Session 上存储用户对象时建议使用的key 
+	 */
+	public static final String USER = "USER";
+
 	/**
 	 * 在 Session 上存储角色时建议使用的key 
 	 */
@@ -33,49 +43,49 @@ public class SaSession implements Serializable {
 	 */
 	public static final String PERMISSION_LIST = "PERMISSION_LIST";
 	
-	/** 此Session的id */
+	/** 此 Session 的 id */
 	private String id;
 
-	/** 此Session的创建时间 */
+	/** 此 Session 的创建时间（时间戳） */
 	private long createTime;
 
-	/** 此Session的所有挂载数据 */
+	/** 此 Session 的所有挂载数据 */
 	private final Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
 	// ----------------------- 构建相关
 
 	/**
-	 * 构建一个Session对象
+	 * 构建一个 Session 对象
 	 */
 	public SaSession() {
 		/*
-		 * 当Session从Redis中反序列化取出时，框架会误以为创建了新的Session，
+		 * 当 Session 从 Redis 中反序列化取出时，框架会误以为创建了新的Session，
 		 * 因此此处不可以调用this(null); 避免监听器收到错误的通知 
 		 */
 		// this(null);
 	}
 
 	/**
-	 * 构建一个Session对象
+	 * 构建一个 Session 对象
 	 * @param id Session的id
 	 */
 	public SaSession(String id) {
 		this.id = id;
 		this.createTime = System.currentTimeMillis();
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doCreateSession(id);
+ 		// $$ 发布事件
+		SaTokenEventCenter.doCreateSession(id);
 	}
 
 	/**
-	 * 获取此Session的id
-	 * @return 此会话的id
+	 * 获取此 Session 的 id
+	 * @return 此 Session 的id
 	 */
 	public String getId() {
 		return id;
 	}
 
 	/**
-	 * 写入此Session的id
+	 * 写入此 Session 的 id
 	 * @param id SessionId
 	 * @return 对象自身
 	 */
@@ -85,7 +95,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 返回当前会话创建时间
+	 * 返回当前会话创建时间（时间戳）
 	 * @return 时间戳
 	 */
 	public long getCreateTime() {
@@ -93,7 +103,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 写入此Session的创建时间
+	 * 写入此 Session 的创建时间（时间戳）
 	 * @param createTime 时间戳
 	 * @return 对象自身
 	 */
@@ -103,24 +113,32 @@ public class SaSession implements Serializable {
 	}
 
 
-	// ----------------------- TokenSign相关
+	// ----------------------- TokenSign 相关
 
 	/**
-	 * 此Session绑定的token签名列表
+	 * 此 Session 绑定的 Token 签名列表 
 	 */
-	private final List<TokenSign> tokenSignList = new Vector<>();
+	private List<TokenSign> tokenSignList = new Vector<>();
 
 	/**
-	 * 此Session绑定的token签名列表
+	 * 写入此 Session 绑定的 Token 签名列表 
+	 * @param tokenSignList Token 签名列表
+	 */
+	public void setTokenSignList(List<TokenSign> tokenSignList) {
+		this.tokenSignList = tokenSignList;
+	}
+
+	/**
+	 * 获取此 Session 绑定的 Token 签名列表 
 	 *
-	 * @return token签名列表
+	 * @return Token 签名列表
 	 */
 	public List<TokenSign> getTokenSignList() {
 		return tokenSignList;
 	}
 
 	/**
-	 * 返回token签名列表的拷贝副本
+	 * 获取 Token 签名列表 的拷贝副本
 	 *
 	 * @return token签名列表
 	 */
@@ -129,15 +147,20 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 返回token签名列表的拷贝副本，根据 device 筛选 
+	 * 返回 Token 签名列表 的拷贝副本，根据 device 筛选 
 	 *
 	 * @param device 设备类型，填 null 代表不限设备类型  
 	 * @return token签名列表
 	 */
 	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+		// 返回全部
+		if(device == null) {
+			return tokenSignListCopy();
+		}
+		// 返回筛选后的 
 		List<TokenSign> list = new ArrayList<>();
 		for (TokenSign tokenSign : tokenSignListCopy()) {
-			if(device == null || tokenSign.getDevice().equals(device)) {
+			if(SaFoxUtil.equals(tokenSign.getDevice(), device)) {
 				list.add(tokenSign);
 			}
 		}
@@ -145,14 +168,14 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 查找一个token签名
+	 * 查找一个 Token 签名
 	 *
 	 * @param tokenValue token值
-	 * @return 查找到的tokenSign
+	 * @return 查找到的 TokenSign
 	 */
 	public TokenSign getTokenSign(String tokenValue) {
 		for (TokenSign tokenSign : tokenSignListCopy()) {
-			if (tokenSign.getValue().equals(tokenValue)) {
+			if (SaFoxUtil.equals(tokenSign.getValue(), tokenValue)) {
 				return tokenSign;
 			}
 		}
@@ -160,16 +183,14 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 添加一个token签名
+	 * 添加一个 Token 签名
 	 *
-	 * @param tokenSign token签名
+	 * @param tokenSign Token 签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
-		// 如果已经存在于列表中，则无需再次添加
-		for (TokenSign tokenSign2 : tokenSignListCopy()) {
-			if (tokenSign2.getValue().equals(tokenSign.getValue())) {
-				return;
-			}
+		// 如果已经存在于列表中，则无需再次添加 
+		if(getTokenSign(tokenSign.getValue()) != null) {
+			return;
 		}
 		// 添加并更新
 		tokenSignList.add(tokenSign);
@@ -177,7 +198,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 添加一个token签名
+	 * 添加一个 Token 签名
 	 *
 	 * @param tokenValue token值
 	 * @param device 设备类型
@@ -187,9 +208,9 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 移除一个token签名
+	 * 移除一个 Token 签名
 	 *
-	 * @param tokenValue token名称
+	 * @param tokenValue token值 
 	 */
 	public void removeTokenSign(String tokenValue) {
 		TokenSign tokenSign = getTokenSign(tokenValue);
@@ -211,8 +232,8 @@ public class SaSession implements Serializable {
 	/** 注销Session (从持久库删除) */
 	public void logout() {
 		SaManager.getSaTokenDao().deleteSession(this.id);
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doLogoutSession(id);
+ 		// $$ 发布事件 
+		SaTokenEventCenter.doLogoutSession(id);
 	}
 
 	/** 当Session上的tokenSign数量为零时，注销会话 */
@@ -239,7 +260,7 @@ public class SaSession implements Serializable {
 	}
 	
 	/**
-	 * 修改此Session的最小剩余存活时间 (只有在Session的过期时间低于指定的minTimeout时才会进行修改)
+	 * 修改此Session的最小剩余存活时间 (只有在 Session 的过期时间低于指定的 minTimeout 时才会进行修改)
 	 * @param minTimeout 过期时间 (单位: 秒) 
 	 */
 	public void updateMinTimeout(long minTimeout) {
@@ -251,7 +272,7 @@ public class SaSession implements Serializable {
 	}
 
 	/**
-	 * 修改此Session的最大剩余存活时间 (只有在Session的过期时间高于指定的maxTimeout时才会进行修改)
+	 * 修改此Session的最大剩余存活时间 (只有在 Session 的过期时间高于指定的 maxTimeout 时才会进行修改)
 	 * @param maxTimeout 过期时间 (单位: 秒) 
 	 */
 	public void updateMaxTimeout(long maxTimeout) {
@@ -273,122 +294,59 @@ public class SaSession implements Serializable {
 	
 	// ----------------------- 存取值 (类型转换) 
 
-	// ---- 取值 
+	// ---- 重写接口方法 
+	
 	/**
-	 * 取值
+	 * 取值 
 	 * @param key key 
 	 * @return 值 
 	 */
+	@Override
 	public Object get(String key) {
 		return dataMap.get(key);
 	}
-
-	/**
-	 * 
-	 * 取值 (指定默认值) 
-	 * @param <T> 默认值的类型
-	 * @param key key 
-	 * @param defaultValue 取不到值时返回的默认值 
-	 * @return 值 
-	 */
-	public <T> T get(String key, T defaultValue) {
-		return getValueByDefaultValue(get(key), defaultValue);
-	}
 	
 	/**
-	 * 
-	 * 取值 (如果值为null，则执行fun函数获取值) 
-	 * @param <T> 返回值的类型 
-	 * @param key key 
-	 * @param fun 值为null时执行的函数 
-	 * @return 值 
+	 * 写值 
+	 * @param key   名称
+	 * @param value 值
+	 * @return 对象自身
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T get(String key, SaRetFunction fun) {
-		Object value = get(key);
-		if(value == null) {
-			value = fun.run();
-			set(key, value);
+	@Override
+	public SaSession set(String key, Object value) {
+		dataMap.put(key, value);
+		update();
+		return this;
+	}
+
+	/**
+	 * 写值 (只有在此 key 原本无值的情况下才会写入)
+	 * @param key   名称
+	 * @param value 值
+	 * @return 对象自身
+	 */
+	@Override
+	public SaSession setByNull(String key, Object value) {
+		if(has(key) == false) {
+			dataMap.put(key, value);
+			update();
 		}
-		return (T) value;
-	}
-	
-	/**
-	 * 取值 (转String类型) 
-	 * @param key key 
-	 * @return 值 
-	 */
-	public String getString(String key) {
-		Object value = get(key);
-		if(value == null) {
-			return null;
-		}
-		return String.valueOf(value);
+		return this;
 	}
 
 	/**
-	 * 取值 (转int类型) 
-	 * @param key key 
-	 * @return 值 
+	 * 删值
+	 * @param key 要删除的key
+	 * @return 对象自身
 	 */
-	public int getInt(String key) {
-		return getValueByDefaultValue(get(key), 0);
+	@Override
+	public SaSession delete(String key) {
+		dataMap.remove(key);
+		update();
+		return this;
 	}
 
-	/**
-	 * 取值 (转long类型) 
-	 * @param key key 
-	 * @return 值 
-	 */
-	public long getLong(String key) {
-		return getValueByDefaultValue(get(key), 0L);
-	}
-
-	/**
-	 * 取值 (转double类型) 
-	 * @param key key 
-	 * @return 值 
-	 */
-	public double getDouble(String key) {
-		return getValueByDefaultValue(get(key), 0.0);
-	}
-
-	/**
-	 * 取值 (转float类型) 
-	 * @param key key 
-	 * @return 值 
-	 */
-	public float getFloat(String key) {
-		return getValueByDefaultValue(get(key), 0.0f);
-	}
-
-	/**
-	 * 取值 (指定转换类型)
-	 * @param <T> 泛型
-	 * @param key key 
-	 * @param cs 指定转换类型 
-	 * @return 值 
-	 */
-	public <T> T getModel(String key, Class<T> cs) {
-		return SaFoxUtil.getValueByType(get(key), cs);
-	}
-
-	/**
-	 * 取值 (指定转换类型, 并指定值为Null时返回的默认值)
-	 * @param <T> 泛型
-	 * @param key key 
-	 * @param cs 指定转换类型 
-	 * @param defaultValue 值为Null时返回的默认值
-	 * @return 值 
-	 */
-	@SuppressWarnings("unchecked")
-	public <T> T getModel(String key, Class<T> cs, Object defaultValue) {
-		Object value = get(key);
-		if(valueIsNull(value)) {
-			return (T)defaultValue;
-		}
-		return SaFoxUtil.getValueByType(value, cs);
-	}
+	// ---- 其它方法 
 
 	/**
 	 * 返回当前Session的所有key 
@@ -399,55 +357,8 @@ public class SaSession implements Serializable {
 		return dataMap.keySet();
 	}
 	
-	// ---- 其他
 	/**
-	 * 写值
-	 * @param key   名称
-	 * @param value 值
-	 * @return 对象自身
-	 */
-	public SaSession set(String key, Object value) {
-		dataMap.put(key, value);
-		update();
-		return this;
-	}
-
-	/**
-	 * 写值(只有在此key原本无值的时候才会写入)
-	 * @param key   名称
-	 * @param value 值
-	 * @return 对象自身
-	 */
-	public SaSession setDefaultValue(String key, Object value) {
-		if(has(key) == false) {
-			dataMap.put(key, value);
-			update();
-		}
-		return this;
-	}
-
-	/**
-	 * 是否含有某个key
-	 * @param key has
-	 * @return 是否含有
-	 */
-	public boolean has(String key) {
-		return !valueIsNull(get(key));
-	}
-
-	/**
-	 * 删值
-	 * @param key 要删除的key
-	 * @return 对象自身
-	 */
-	public SaSession delete(String key) {
-		dataMap.remove(key);
-		update();
-		return this;
-	}
-
-	/**
-	 * 清空所有值
+	 * 清空所有值 
 	 */
 	public void clear() {
 		dataMap.clear();
@@ -473,130 +384,4 @@ public class SaSession implements Serializable {
 		this.update();
 	}
 
-	
-	// --------- 工具方法 
-
-	/**
-	 * 判断一个值是否为null 
-	 * @param value 指定值 
-	 * @return 此value是否为null 
-	 */
-	public boolean valueIsNull(Object value) {
-		return value == null || value.equals("");
-	}
-
-	/**
-	 * 根据默认值来获取值
-	 * @param <T> 泛型
-	 * @param value 值 
-	 * @param defaultValue 默认值
-	 * @return 转换后的值 
-	 */
-	@SuppressWarnings("unchecked")
-	protected <T> T getValueByDefaultValue(Object value, T defaultValue) {
-		
-		// 如果 obj 为 null，则直接返回默认值 
-		if(valueIsNull(value)) {
-			return (T)defaultValue;
-		}
-		
-		// 开始转换
-		Class<T> cs = (Class<T>) defaultValue.getClass();
-		return SaFoxUtil.getValueByType(value, cs);
-	}
-	
-	
-	
-
-	// ----------------------- 旧API 
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.set(key) </h1>
-	 * 写入一个值
-	 *
-	 * @param key   名称
-	 * @param value 值
-	 */
-	@Deprecated
-	public void setAttribute(String key, Object value) {
-		dataMap.put(key, value);
-		update();
-	}
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.get(key) </h1>
-	 * 取出一个值
-	 *
-	 * @param key 名称
-	 * @return 值
-	 */
-	@Deprecated
-	public Object getAttribute(String key) {
-		return dataMap.get(key);
-	}
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.get(key, defaultValue) </h1>
-	 * 取值，并指定取不到值时的默认值
-	 *
-	 * @param key          名称
-	 * @param defaultValue 取不到值的时候返回的默认值
-	 * @return value
-	 */
-	@Deprecated
-	public Object getAttribute(String key, Object defaultValue) {
-		Object value = getAttribute(key);
-		if (value != null) {
-			return value;
-		}
-		return defaultValue;
-	}
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.delete(key) </h1>
-	 * 移除一个值
-	 *
-	 * @param key 要移除的值的名字
-	 */
-	@Deprecated
-	public void removeAttribute(String key) {
-		dataMap.remove(key);
-		update();
-	}
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.clear() </h1>
-	 * 清空所有值
-	 */
-	@Deprecated
-	public void clearAttribute() {
-		dataMap.clear();
-		update();
-	}
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.has(key) </h1>
-	 * 是否含有指定key
-	 *
-	 * @param key 是否含有指定值
-	 * @return 是否含有
-	 */
-	@Deprecated
-	public boolean containsAttribute(String key) {
-		return dataMap.containsKey(key);
-	}
-
-	/**
-	 * <h1> 此函数设计已过时，未来版本可能移除此类，请及时更换为: session.keys() </h1>
-	 * 返回当前session会话所有key
-	 *
-	 * @return 所有值的key列表
-	 */
-	@Deprecated
-	public Set<String> attributeKeys() {
-		return dataMap.keySet();
-	}
-
-	
-	
 }

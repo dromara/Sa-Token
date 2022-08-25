@@ -13,8 +13,6 @@ import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
-import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.listener.SaTokenListenerDefaultImpl;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
@@ -141,24 +139,6 @@ public class SaManager {
 	}
 
 	/**
-	 * 侦听器 Bean  
-	 */
-	private volatile static SaTokenListener saTokenListener;
-	public static void setSaTokenListener(SaTokenListener saTokenListener) {
-		SaManager.saTokenListener = saTokenListener;
-	}
-	public static SaTokenListener getSaTokenListener() {
-		if (saTokenListener == null) {
-			synchronized (SaManager.class) {
-				if (saTokenListener == null) {
-					setSaTokenListener(new SaTokenListenerDefaultImpl());
-				}
-			}
-		}
-		return saTokenListener;
-	}
-
-	/**
 	 * 临时令牌验证模块 Bean  
 	 */
 	private volatile static SaTempInterface saTemp;
@@ -218,7 +198,7 @@ public class SaManager {
 	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
 	
 	/**
-	 * 向集合中 put 一个 StpLogic 
+	 * 向全局集合中 put 一个 StpLogic 
 	 * @param stpLogic StpLogic
 	 */
 	public static void putStpLogic(StpLogic stpLogic) {
@@ -236,7 +216,7 @@ public class SaManager {
 			return StpUtil.stpLogic;
 		}
 		
-		// 从SaManager中获取 
+		// 从 stpLogicMap 中获取 
 		StpLogic stpLogic = stpLogicMap.get(loginType);
 		if(stpLogic == null) {
 			/*

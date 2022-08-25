@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
@@ -27,6 +26,7 @@ import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -101,7 +101,7 @@ public class StpLogic {
  	 * @param tokenValue token值 
  	 */
 	public void setTokenValue(String tokenValue){
-		setTokenValue(tokenValue, (int)SaManager.getConfig().getTimeout());
+		setTokenValue(tokenValue, getConfigOfCookieTimeout());
 	}
 	
  	/**
@@ -272,6 +272,16 @@ public class StpLogic {
 	}
 
 	/**
+	 * 会话登录，并指定此次登录token的有效期, 单位:秒
+	 *
+	 * @param id      账号id，建议的类型：（long | int | String）
+	 * @param timeout 此次登录token的有效期, 单位:秒
+	 */
+	public void login(Object id, long timeout) {
+		login(id, new SaLoginModel().setTimeout(timeout));
+	}
+
+	/**
 	 * 会话登录，并指定所有登录参数Model 
 	 * @param id 登录id，建议的类型：（long | int | String）
 	 * @param loginModel 此次登录的参数Model 
@@ -319,6 +329,7 @@ public class StpLogic {
 			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
 			if(getConfigOfIsShare()) {
 				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
+				// 即：在 login 时提供了 Extra 数据后，即使配置了 is-share=true 也不能复用旧 Token，必须创建新 Token
 				if(loginModel.getExtraData() == null || loginModel.getExtraData().size() == 0) {
 					tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 				}
@@ -352,8 +363,8 @@ public class StpLogic {
 		// 写入 [token-last-activity] 
 		setLastActivityToNow(tokenValue); 
 
-		// $$ 通知监听器，账号xxx 登录成功 
-		SaManager.getSaTokenListener().doLogin(loginType, id, tokenValue, loginModel);
+		// $$ 发布事件：账号xxx 登录成功 
+		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
 
 		// 检查此账号会话数量是否超出最大值 
 		if(config.getMaxLoginCount() != -1) {
@@ -370,21 +381,24 @@ public class StpLogic {
 	 * 会话注销 
 	 */
 	public void logout() {
-		// 如果连token都没有，那么无需执行任何操作 
+		// 如果连 Token 都没有，那么无需执行任何操作
 		String tokenValue = getTokenValue();
  		if(SaFoxUtil.isEmpty(tokenValue)) {
  			return;
  		}
  		
- 		// 从当前 [storage存储器] 里删除 
- 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
- 		
- 		// 如果打开了Cookie模式，则把cookie清除掉 
+ 		// 如果打开了 Cookie 模式，则把 Cookie 清除掉
  		if(getConfig().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
- 		
- 		// 清除这个token的相关信息
+
+ 		// 从当前 [Storage存储器] 里删除 Token
+ 		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
+
+ 		// 清除当前上下文的 [临时有效期check标记]
+ 	 	SaHolder.getStorage().delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
+
+ 		// 清除这个 Token 的相关信息
  		logoutByTokenValue(tokenValue);
 	}
 
@@ -414,7 +428,8 @@ public class StpLogic {
 		 		// 删除Token-Id映射 & 清除Token-Session 
 				deleteTokenToIdMapping(tokenValue);
 				deleteTokenSession(tokenValue);
-				SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+				// $$ 发布事件：指定账号注销 
+				SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 			}
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
@@ -450,7 +465,8 @@ public class StpLogic {
 	 		// 删除Token-Id映射 & 清除Token-Session 
 			deleteTokenToIdMapping(tokenValue);
 			deleteTokenSession(tokenValue);
-			SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+			// $$ 发布事件：指定账号注销 
+			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 		}
 		// 注销 Session 
 		session.logoutByTokenSignCountToZero();
@@ -468,19 +484,19 @@ public class StpLogic {
 		// 2. 注销 Token-Session 
 		deleteTokenSession(tokenValue);
 
-		// if. 无效 loginId 立即返回 
+		// 3. 清理 token -> id 索引
  		String loginId = getLoginIdNotHandle(tokenValue);
+ 		if(loginId != null) {
+ 			deleteTokenToIdMapping(tokenValue);
+ 		}
+
+		// if. 无效 loginId 立即返回
  	 	if(isValidLoginId(loginId) == false) {
- 	 		if(loginId != null) {
- 	 			deleteTokenToIdMapping(tokenValue);
- 	 		}
  			return;
  		}
- 		// 3. 清理token-id索引 
- 	 	deleteTokenToIdMapping(tokenValue);
  	 	
- 	 	// $$ 通知监听器，某某Token注销下线了 
-		SaManager.getSaTokenListener().doLogout(loginType, loginId, tokenValue);
+ 	 	// $$ 发布事件：某某Token注销下线了 
+ 		SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -517,7 +533,7 @@ public class StpLogic {
 				clearLastActivity(tokenValue); 	
 				// 将此 token 标记为已被踢下线  
 				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-				SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+				SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
 			}
 			// 注销 Session 
 			session.logoutByTokenSignCountToZero();
@@ -545,8 +561,8 @@ public class StpLogic {
  		// 3. 给token打上标记：被踢下线 
  	 	updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
 		
- 	 	// $$. 否则通知监听器，某某Token被踢下线了 
-		SaManager.getSaTokenListener().doKickout(loginType, loginId, tokenValue);
+ 	 	// $$. 发布事件：某某Token被踢下线了 
+ 		SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
 
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
@@ -573,7 +589,7 @@ public class StpLogic {
 				clearLastActivity(tokenValue); 	
 				// 将此 token 标记为已被顶替 
 				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
-				SaManager.getSaTokenListener().doReplaced(loginType, loginId, tokenValue);
+				SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
 			}
 		}
 	}
@@ -743,14 +759,24 @@ public class StpLogic {
  	}
 
 	/**
-	 * 获取Token扩展信息（只在jwt模式下有效）
+	 * 获取当前 Token 的扩展信息（此函数只在jwt模式下生效）
 	 * @param key 键值 
 	 * @return 对应的扩展数据 
 	 */
 	public Object getExtra(String key) {
 		throw new ApiDisabledException();
 	}
- 	
+
+	/**
+	 * 获取指定 Token 的扩展信息（此函数只在jwt模式下生效）
+	 * @param tokenValue 指定的 Token 值
+	 * @param key 键值
+	 * @return 对应的扩展数据
+	 */
+	public Object getExtra(String tokenValue, String key) {
+		throw new ApiDisabledException();
+	}
+
  	
 	// ---- 其它操作 
  	/**
@@ -879,32 +905,83 @@ public class StpLogic {
 	 * @return Session对象  
 	 */
 	public SaSession getTokenSession(boolean isCreate) {
+		// Token 为空的情况下直接返回 null
+		String tokenValue = getTokenValue();
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			return null;
+		}
 		// 如果配置了需要校验登录状态，则验证一下
 		if(getConfig().getTokenSessionCheckLogin()) {
 			checkLogin();
-		} else {
-			// 如果配置忽略token登录校验，则必须保证token不为null (token为null的时候随机创建一个) 
-			String tokenValue = getTokenValue();
-			if(tokenValue == null || Objects.equals(tokenValue, "")) {
-				// 随机一个token送给Ta 
-				tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
-				// 写入 [最后操作时间]
-				setLastActivityToNow(tokenValue);  
-				// 在当前会话写入这个tokenValue 
-				int cookieTimeout = (int)(getConfig().getTimeout() == SaTokenDao.NEVER_EXPIRE ? Integer.MAX_VALUE : getConfig().getTimeout());
-				setTokenValue(tokenValue, cookieTimeout);
-			}
 		}
-		// 返回这个token对应的Token-Session 
-		return getSessionBySessionId(splicingKeyTokenSession(getTokenValue()), isCreate);
+		// 获取 SaSession 数据
+		return getTokenSessionByToken(tokenValue, isCreate);
 	}
-	
-	/** 
+
+	/**
 	 * 获取当前Token-Session，如果Session尚未创建，则新建并返回
-	 * @return Session对象 
+	 * @return Session对象
 	 */
 	public SaSession getTokenSession() {
 		return getTokenSession(true);
+	}
+
+	/**
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @param isCreate 在 Token-Session 尚未创建的情况是否新建并返回
+	 * @return Token-Session 对象
+	 */
+	public SaSession getAnonTokenSession(boolean isCreate) {
+		/*
+		 * 情况1、如果调用方提供了有效 Token，则：直接返回其 [Token-Session]
+		 * 情况2、如果调用方提供了无效 Token，或根本没有提供 Token，则：创建新 Token -> 返回 [Token-Session]
+		 */
+		String tokenValue = getTokenValue();
+
+		// q1 —— 判断这个 Token 是否有效，两个条件符合其一即可：
+		/*
+		 * 条件1、能查出 Token-Session
+		 * 条件2、能查出 LoginId
+		 */
+		if(SaFoxUtil.isNotEmpty(tokenValue)) {
+			// 符合条件1
+			SaSession session = getTokenSessionByToken(tokenValue, false);
+			if(session != null) {
+				return session;
+			}
+			// 符合条件2
+			String loginId = getLoginIdNotHandle(tokenValue);
+			if(isValidLoginId(loginId)) {
+				return getTokenSessionByToken(tokenValue, isCreate);
+			}
+		}
+
+		// q2 —— 此时q2分两种情况：
+		/*
+		 * 情况 2.1、isCreate=true：说明调用方想让框架帮其创建一个 SaSession，那框架就创建并返回
+		 * 情况 2.2、isCreate=false：说明调用方并不想让框架帮其创建一个 SaSession，那框架就直接返回 null
+		 */
+		if(isCreate) {
+			// 随机创建一个 Token
+			tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
+			// 写入 [最后操作时间]
+			setLastActivityToNow(tokenValue);
+			// 在当前上下文写入此 TokenValue
+			setTokenValue(tokenValue);
+			// 返回其 Token-Session 对象
+			return getTokenSessionByToken(tokenValue, isCreate);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/** 
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @return Token-Session 对象
+	 */
+	public SaSession getAnonTokenSession() {
+		return getAnonTokenSession(true);
 	}
 	
 	/**
@@ -931,7 +1008,7 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 清除指定token的 [最后操作时间] 
+ 	 * 清除指定 Token 的 [最后操作时间记录]
  	 * @param tokenValue 指定token 
  	 */
  	protected void clearLastActivity(String tokenValue) {
@@ -941,8 +1018,6 @@ public class StpLogic {
  		}
  		// 删除[最后操作时间]
  		getSaTokenDao().delete(splicingKeyLastActivityTime(tokenValue));
- 		// 清除标记 
- 		SaHolder.getStorage().delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
  	}
  	
  	/**
@@ -1144,6 +1219,9 @@ public class StpLogic {
  		if(isOpenActivityCheck()) {
  			dao.updateTimeout(splicingKeyLastActivityTime(tokenValue), timeout);
  		}
+
+		// 通知更新超时事件
+		SaTokenEventCenter.doRenewTimeout(tokenValue, loginId, timeout);
  	}
  	
 	// ------------------- 角色验证操作 -------------------  
@@ -1468,10 +1546,12 @@ public class StpLogic {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
-	 * @return token集合 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 *
+	 * @return token集合
 	 */
-	public List<String> searchTokenValue(String keyword, int start, int size) {
-		return getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size);
+	public List<String> searchTokenValue(String keyword, int start, int size, boolean sortType) {
+		return getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size, sortType);
 	}
 	
 	/**
@@ -1479,10 +1559,12 @@ public class StpLogic {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
-	 * @return sessionId集合 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 *
+	 * @return sessionId集合
 	 */
-	public List<String> searchSessionId(String keyword, int start, int size) {
-		return getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size);
+	public List<String> searchSessionId(String keyword, int start, int size, boolean sortType) {
+		return getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size, sortType);
 	}
 
 	/**
@@ -1490,10 +1572,12 @@ public class StpLogic {
 	 * @param keyword 关键字 
 	 * @param start 开始处索引 (-1代表查询所有) 
 	 * @param size 获取数量 
-	 * @return sessionId集合 
+	 * @param sortType 排序类型（true=正序，false=反序）
+	 *
+	 * @return sessionId集合
 	 */
-	public List<String> searchTokenSessionId(String keyword, int start, int size) {
-		return getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size);
+	public List<String> searchTokenSessionId(String keyword, int start, int size, boolean sortType) {
+		return getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size, sortType);
 	}
 	
 
@@ -1565,11 +1649,16 @@ public class StpLogic {
 	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
 	public void disable(Object loginId, long disableTime) {
-		// 标注为已被封禁 
+		// 空值不做处理
+		if(SaFoxUtil.isEmpty(loginId)) {
+			return;
+		}
+
+		// 标注为已被封禁
 		getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
  		
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doDisable(loginType, loginId, disableTime);
+ 		// $$ 发布事件 
+		SaTokenEventCenter.doDisable(loginType, loginId, disableTime);
 	}
 	
 	/**
@@ -1597,8 +1686,8 @@ public class StpLogic {
 	public void untieDisable(Object loginId) {
 		getSaTokenDao().delete(splicingKeyDisable(loginId));
 		
- 		// $$ 通知监听器 
- 		SaManager.getSaTokenListener().doUntieDisable(loginType, loginId);
+ 		// $$ 发布事件 
+		SaTokenEventCenter.doUntieDisable(loginType, loginId);
 	}
 	
 	
@@ -1803,7 +1892,20 @@ public class StpLogic {
  	public boolean isOpenActivityCheck() {
  		return getConfig().getActivityTimeout() != SaTokenDao.NEVER_EXPIRE;
  	}
- 	
+
+    /**
+     * 返回全局配置的 Cookie 保存时长，单位：秒 （根据全局 timeout 计算）
+     * @return Cookie 应该保存的时长
+     */
+    public int getConfigOfCookieTimeout() {
+    	long timeout = getConfig().getTimeout();
+    	if(timeout == SaTokenDao.NEVER_EXPIRE) {
+    		return Integer.MAX_VALUE;
+    	}
+		return (int) timeout;
+	}
+
+
 	/**
 	 * 返回持久化对象 
 	 * @return / 

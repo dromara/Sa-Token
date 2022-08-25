@@ -15,6 +15,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -171,19 +172,29 @@ public final class SaStrategy {
 	};
 
 	/**
-	 * 从元素上获取注解（注解鉴权内部实现） 
+	 * 从元素上获取注解  
 	 * <p> 参数 [element元素，要获取的注解类型] 
 	 */
 	public BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation = (element, annotationClass)->{
 		// 默认使用jdk的注解处理器 
 		return element.getAnnotation(annotationClass);
 	};
-	
+
+	/**
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
+	 * <p> 参数 [Method, 注解] 
+	 */
+	public BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent = (method, annotationClass) -> {
+		return me.getAnnotation.apply(method, SaIgnore.class) != null || 
+				me.getAnnotation.apply(method.getDeclaringClass(), SaIgnore.class) != null;
+	};
+
 
 	// 
 	// 重写策略 set连缀风格 
 	// 
 	
+
 	/**
 	 * 重写创建 Token 的策略 
 	 * <p> 参数 [账号id, 账号类型] 
@@ -240,7 +251,7 @@ public final class SaStrategy {
 	}
 
 	/**
-	 * 从元素上获取注解（注解鉴权内部实现） 
+	 * 从元素上获取注解  
 	 * <p> 参数 [element元素，要获取的注解类型] 
 	 * @param getAnnotation / 
 	 * @return 对象自身 
@@ -249,6 +260,16 @@ public final class SaStrategy {
 		this.getAnnotation = getAnnotation;
 		return this;
 	}
-	
+
+	/**
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
+	 * <p> 参数 [Method, 注解] 
+	 * @param isAnnotationPresent / 
+	 * @return 对象自身 
+	 */
+	public SaStrategy setIsAnnotationPresent(BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent) {
+		this.isAnnotationPresent = isAnnotationPresent;
+		return this;
+	}
 	
 }

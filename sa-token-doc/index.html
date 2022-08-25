@@ -31,6 +31,7 @@
 					<a class="wzi" href="index.html">首页</a>
 					<a class="wzi" href="doc/index.html">文档</a>
 					<a class="p-none wzi" href="doc/index.html#/more/link">生态</a>
+					<a class="p-none wzi" href="doc/index.html#/more/blog">博客</a>
 					<a class="p-none wzi" href="doc/index.html#/more/sa-token-donate">赞助</a>
 					<a class="p-none wzi" href="doc/index.html#/sso/sso-pro">🔥 SSO商业版</a>
 					<div class="zk-box">
@@ -68,40 +69,33 @@
 			<!-- ------------ 海报部分 ------------- -->
 			<div class="main-box">
 				<div class="content-box">
-					<div class="fenge"></div>
+					<!-- <div class="fenge"></div> -->
 					<h1>Sa-Token<small>v1.30.0</small></h1>
 					<div class="sub-title">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</div>
 					<div class="btn-box">
-						<a href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
-						<a href="https://gitee.com/dromara/sa-token" target="_blank">码云</a>
-						<a href="doc/index.html" target="_self" class="doc-btn">开发文档</a>
+						<a class="abtn" href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
+						<a class="abtn" href="https://gitee.com/dromara/sa-token" target="_blank">码云</a>
+						<a class="abtn" href="doc/index.html#/more/join-group" target="_self">加入讨论群</a>
+						<a class="abtn doc-btn" href="doc/index.html" target="_self">开发文档</a>
+						<!-- <a href="https://gitee.com/dromara/sa-token" target="_blank">集成案例</a> -->
 					</div>
 					<h4 align="center" class="badge-box">
 						<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 						<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
+						<!-- <br><br> -->
 						<a href="https://github.com/dromara/sa-token/stargazers"><img src="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 						<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 						<a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 						<a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
 						<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 					</h4>
-					<div class="wx-qr-box">
-						<div class="qr-item">
-							<img class="wx-qr" src="https://oss.dev33.cn/sa-token/qq-group-2.png" >
-							<p style="">QQ交流群: 614714762 <a href="https://jq.qq.com/?_wv=1027&k=b759RZrL" target="_blank">点击加入</a></p>
-						</div>
-						<div class="qr-item">
-							<img class="wx-qr" src="https://oss.dev33.cn/sa-token/wx-qr-300.png" >
-							<p>微信交流群：扫码加入 (请备注: sa)</p>
-						</div>
-					</div>
 				</div>
 			</div>
 			
 			<!-- ------------ 支持特性 ------------- -->
 			<div>
 				<div class="feature-z s-width">
-					<h2 class="s-title">Sa-Token 支持特性</h2>
+					<h2 class="s-title s-title-tx">Sa-Token 支持特性</h2>
 					<div class="feature-box">
 						<div class="feature">
 							<h2>⚡️ 登录认证</h2>
@@ -112,11 +106,11 @@
 							<p>权限认证、角色认证、会话二级认证、注解鉴权、路由鉴权……多种姿势灵活鉴权</p>
 						</div>
 						<div class="feature">
-							<h2>🔥️ 踢人下线</h2>
+							<h2>⛏️ 踢人下线</h2>
 							<p>强制注销、踢人下线、账号封禁、身份切换、自动续签 …… 提供完善的会话管理方案</p>
 						</div>
 						<div class="feature">
-							<h2>⭐️ Redis集成</h2>
+							<h2>🔎️ Redis集成</h2>
 							<p>提供 Redis 集成方案、项目重启数据不丢失、多系统数据互通，可自定义数据持久化策略</p>
 						</div>
 						<div class="feature">
@@ -129,7 +123,7 @@
 						</div>
 						<div class="feature">
 							<h2>🍂 OAuth2.0</h2>
-							<p>基于 RFC-6749 标准编写，轻松搭建 OAuth2.0 认证中心，支持四种授权模式，支持openid机制</p>
+							<p>轻松搭建 OAuth2.0 认证中心，支持四种授权模式，支持 openid 授权机制，支持二次扩展开发</p>
 						</div>
 						<div class="feature">
 							<h2>💦️ 微服务支持</h2>
@@ -147,13 +141,94 @@
 				</div>
 			</div>
 			
+			<!-- ------------ 开源案例 ------------- -->
+			<div>
+				<div class="feature-z s-width">
+					<div class="s-fenge"></div>
+					<h2 class="s-title">优秀开源集成案例</h2>
+					<div class="feature-box s-case-box">
+						<!-- SpringBoot_v2  4.8k -->
+						<div class="s-case">
+							<a href="https://gitee.com/bdj/SpringBoot_v2" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--springboot_v2.png">
+							</a>
+							<h3 class="s-case-title">SpringBoot_v2</h3>
+							<span class="s-author">开源oschina</span>
+							<p class="s-case-intro">努力打造 springboot 框架的极致细腻的脚手架，原生纯净。</p>
+						</div>
+						<!-- RuoYi-Vue-Plus  2.4k -->
+						<div class="s-case">
+							<a href="https://gitee.com/JavaLionLi/RuoYi-Vue-Plus" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--ruoyi-vue-plus.png">
+							</a>
+							<h3 class="s-case-title">RuoYi-Vue-Plus</h3>
+							<span class="s-author"> 疯狂的狮子Li </span>
+							<p class="s-case-intro">重写 RuoYi-Vue 所有功能，集成 Sa-Token、Mybatis-Plus、Hutool 定期同步</p>
+						</div>
+						<!-- Sa-Plus  875 -->
+						<div class="s-case">
+							<a href="https://gitee.com/click33/sa-plus" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--sa-plus.png">
+							</a>
+							<h3 class="s-case-title">Sa-Plus</h3>
+							<span class="s-author"> 孔明 </span>
+							<p class="s-case-intro">一个基于 SpringBoot 的快速开发框架，内置代码生成器</p>
+						</div>
+						<!-- EasyAdmin  628 -->
+						<div class="s-case">
+							<a href="https://gitee.com/lakernote/easy-admin" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--easy-admin.png">
+							</a>
+							<h3 class="s-case-title">EasyAdmin</h3>
+							<span class="s-author"> laker </span>
+							<p class="s-case-intro">轻量级的后台管理系统脚手架，内置代码生成器、权限管理、工作流引擎等</p>
+						</div>
+						<!-- RuoYi-Cloud-Plus  475 -->
+						<div class="s-case">
+							<a href="https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--ruoyi-cloud-plus.png">
+							</a>
+							<h3 class="s-case-title">RuoYi-Cloud-Plus</h3>
+							<span class="s-author"> 疯狂的狮子Li </span>
+							<p class="s-case-intro">重写 RuoYi-Cloud 所有功能 整合 SpringCloudAlibaba、Dubbo3.0、Sa-Token</p>
+						</div>
+						<!-- dcy-fast  315 -->
+						<!-- <div class="s-case">
+							<a href="https://gitee.com/dcy421/dcy-fast" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--dcy-fast.png">
+							</a>
+							<h3 class="s-case-title">dcy-fast</h3>
+							<span class="s-author"> 青年 </span>
+							<p class="s-case-intro">一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统</p>
+						</div> -->
+						<!-- fhs  543 -->
+						<div class="s-case">
+							<a href="https://gitee.com/fhs-opensource/fhs-framework" target="_blank" class="s-case-link">
+								<img src="https://oss.dev33.cn/sa-token/case/case--fhs.png">
+							</a>
+							<h3 class="s-case-title">fhs-framework</h3>
+							<span class="s-author"> fhs-opensource </span>
+							<p class="s-case-intro">FHS-Framwork 是一个集成了国内外诸多优秀开源项目的快速开发平台</p>
+						</div>
+						
+					</div>
+					<div class="re-text">
+						<span>
+							如果您的开源项目也使用了 Sa-Token，您可以
+							<a href="doc/index.html#/more/link" target="_blank" style="text-decoration: none;">在此</a>
+							提交
+						</span>
+					</div>
+				</div>
+			</div>
+			
 			
 			<!-- ------------ 使用公司 ------------- -->
 			<div>
 				<div class="com-box-f s-width">
 					<div class="s-fenge"></div>
 					<br>
-					<h2 class="s-title">正在使用 Sa-Token 的公司 / 机构</h2>
+					<h2 class="s-title">正在使用 Sa-Token 的企业 / 机构</h2>
 					<div class="com-box">
 						<a href="http://yun94.cn/" target="_blank" title="济南凉云网络科技有限公司">
 							<img src="https://oss.dev33.cn/sa-token/com/liangyunwangluo.png">
@@ -200,6 +275,9 @@
 						<a href="http://www.dchealth.com/" target="_blank" title="神州医疗">
 							<img src="https://oss.dev33.cn/sa-token/com/shenzhouyiliao.png">
 						</a>
+						<a href="javascript:;" title="暖通管家">
+							<img src="https://oss.dev33.cn/sa-token/com/nuantong.png">
+						</a>
 						<a href="https://www.quoting.cn/" target="_blank" title="引止">
 							<img src="https://oss.dev33.cn/sa-token/com/yinzhi.png">
 						</a>
@@ -209,11 +287,11 @@
 						<a href="http://www.turingoal.com" target="_blank" title="图灵谷（北京）科技有限公司">
 							<img src="https://oss.dev33.cn/sa-token/com/tulinggu.png">
 						</a>
+						<a href="javascript:;" title="辽宁薪达网络科技有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/taipingyangcanyin.png">
+						</a>
 						<a href="https://www.pactera.com/?renqun_youhua=2483561&bd_vid=9062916023494825120" target="_blank" title="中电文思海辉">
 							<img src="https://oss.dev33.cn/sa-token/com/zhongdianwensi-logo.png">
-						</a>
-						<a href="###" title="辽宁薪达网络科技有限公司">
-							<img src="https://oss.dev33.cn/sa-token/com/taipingyangcanyin.png">
 						</a>
 						<a href="https://tisiqikeji.com/" target="_blank" title="吉林省体思奇健康科技有限公司">
 							<img src="https://oss.dev33.cn/sa-token/com/tisiqi.png">
@@ -224,10 +302,22 @@
 						<a href="https://www.hstong.com/" target="_blank" title="价值网络">
 							<img src="https://oss.dev33.cn/sa-token/com/huashengtong.png">
 						</a>
+						<a href="https://www.shylsoft.com/" target="_blank" title="上海营联信息技术有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/yinglian.png">
+						</a>
+						<a href="http://www.sxpartner.com/" target="_blank" title="陕西小伙伴网络科技有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/cptc.png">
+						</a>
+						<a href="https://gitee.com/fhs-opensource/fhs-framework" target="_blank" title="FHS 快速开发平台">
+							<img src="https://oss.dev33.cn/sa-token/com/fhs.png">
+						</a>
+						<a href="http://www.hmnst.com/index.html" target="_blank" title="微纳感知（合肥）技术有限公司">
+							<img src="https://oss.dev33.cn/sa-token/com/weinaganzhi.png">
+						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
-					<p style="color: #666;">
-						（如果您的项目也使用了 Sa-Token，您可以
+					<p>
+						（如果您的企业也使用了 Sa-Token，您可以
 						<a href="https://gitee.com/dromara/sa-token/issues/I3EV1M" target="_blank" style="text-decoration: none;">在此</a>
 						提交）
 					</p>
@@ -236,16 +326,15 @@
 			</div>
 			
 			
-			<!-- ------------ 友情链接 ------------- -->
+			<!-- ------------ Dromara 成员项目 ------------- -->
 			<div>
 				<div class="com-box-f s-width">
 					<div class="s-fenge"></div>
 					<br>
-					<h2 class="s-title">友情链接</h2>
+					<h2 class="s-title">
+						Dromara 成员项目
+					</h2>
 					<div class="com-box com-box-you">
-						<a href="https://gitee.com/Apache-ShenYu/incubator-shenyu" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/link/shenyu.png" msg="JAVA语言中可扩展，高性能，响应式的 API 网关">
-						</a>
 						<a href="https://gitee.com/dromara/TLog" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/tlog2.png" msg="一个轻量级的分布式日志标记追踪神器，10分钟即可接入，自动对日志打标签完成微服务的链路追踪">
 						</a>
@@ -253,22 +342,22 @@
 							<img src="https://oss.dev33.cn/sa-token/link/liteflow.png" msg="轻量，快速，稳定，可编排的组件式流程引擎">
 						</a>
 						<a href="https://hutool.cn/" target="_blank">
-							<img src="https://plus.hutool.cn/images/logo.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
+							<img src="https://oss.dev33.cn/sa-token/link/hutool.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
 						</a>
-						<a href="https://dromara.org/zh/projects/" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/link/dromara.png" msg="让每一位开源爱好者，体会到开源的快乐。">
+						<a href="https://sa-token.dev33.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/sa-token.png" msg="一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！">
 						</a>
-						<a href="https://okhttps.ejlchina.com/" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/link/okhttps.png" msg="如艺术一般优雅，像 1、2、3 一样简单，前后端通用，轻量却强大的 HTTP 客户端（同时支持 WebSocket 以及 Stomp 协议）">
+						<a href="https://gitee.com/dromara/hmily" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/hmily.png" msg="高性能一站式分布式事务解决方案。">
 						</a>
-						<a href="https://xiaonuo.vip/" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/link/xiaonuo.png" msg="通用型后台权限管理框架，紧随潮流、开箱即用, 同时拥有Vue、Layui、SpringCloud三个版本">
+						<a href="https://gitee.com/dromara/Raincat" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/raincat.png" msg="强一致性分布式事务解决方案。">
+						</a>
+						<a href="https://gitee.com/dromara/myth" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/myth.png" msg="可靠消息分布式事务解决方案。">
 						</a>
 						<a href="https://cubic.jiagoujishu.com/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/cubic.png" msg="一站式问题定位平台，以agent的方式无侵入接入应用，完整集成arthas功能模块，致力于应用级监控，帮助开发人员快速定位问题">
-						</a>
-						<a href="http://www.pearadmin.com/" target="_blank">
-							<img src="https://oss.dev33.cn/sa-token/link/pear-admin.png" msg="致 力 于 让 Web 开 发 变 得 简 单 优 雅">
 						</a>
 						<a href="https://maxkey.top/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/maxkey.png" msg="业界领先的身份管理和认证产品">
@@ -282,14 +371,92 @@
 						<a href="https://su.usthe.com/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/sureness.png" msg="面向 REST API 的高性能认证鉴权框架">
 						</a>
+						<a href="https://easy-es.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/easy-es2.png" msg="🚀傻瓜级ElasticSearch搜索引擎ORM框架">
+						</a>
+						<a href="https://gitee.com/dromara/northstar" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/northstar_logo.png" msg="Northstar盈富量化交易平台">
+						</a>
+						<a href="https://hertzbeat.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/hertzbeat_brand.jpg" msg="易用友好的云监控系统">
+						</a>
+						<a href="https://plugins.sheng90.wang/fast-request/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/fast-request.png" msg="Idea 版 Postman，为简化调试API而生">
+						</a>
+						<a href="https://www.jeesuite.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/mendmix.png" msg="开源分布式云原生架构一站式解决方案">
+						</a>
+						<a href="https://gitee.com/dromara/koalas-rpc" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/koalas-rpc2.png" msg="企业生产级百亿日PV高可用可拓展的RPC框架。">
+						</a>
+						<a href="https://async.sizegang.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/gobrs-async.png" msg="🔥 配置极简功能强大的异步任务动态编排框架">
+						</a>
+						<a href="https://dynamictp.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/dynamic-tp.png" msg="🔥🔥🔥 基于配置中心的轻量级动态可监控线程池">
+						</a>
+						<a href="https://www.x-easypdf.cn" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/x-easypdf.png" msg="一个用搭积木的方式构建pdf的框架（基于pdfbox）">
+						</a>
+						<a href="http://dromara.gitee.io/image-combiner" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/image-combiner.png" msg="一个专门用于图片合成的工具，没有很复杂的功能，简单实用，却不失强大">
+						</a>
+						<a href="https://www.herodotus.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/dante-cloud2.png" msg="Dante-Cloud 是一款企业级微服务架构和服务能力开发平台。">
+						</a>
+						<a href="https://dromara.org/zh/projects/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/dromara.png" msg="让每一位开源爱好者，体会到开源的快乐。">
+						</a>
+					</div>
+					<div style="height: 10px; clear: both;"></div>
+					<p>
+						为往圣继绝学，一个人或许能走的更快，但一群人会走的更远。
+					</p>
+					<div style=" margin: 40px 14px 0; padding: 20px 0 10px; background-color: #f4f5f7;">
+						<h3 style="padding: 0px 0 10px; ">Dromara 知识星球</h3>
+						<img src="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg" style="width: 300px;">
+					</div>
+				</div>
+				<div style="height: 30px;"></div>
+			</div>
+			
+			<!-- ------------ 友情链接 ------------- -->
+			<div>
+				<div class="com-box-f s-width">
+					<div class="s-fenge"></div>
+					<br>
+					<h2 class="s-title">友情链接</h2>
+					<div class="com-box com-box-you">
+						<a href="https://okhttps.ejlchina.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/okhttps.png" msg="如艺术一般优雅，像 1、2、3 一样简单，前后端通用，轻量却强大的 HTTP 客户端（同时支持 WebSocket 以及 Stomp 协议）">
+						</a>
 						<a href="https://searcher.ejlchina.com/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/bean-searcher.png" msg="轻量级关系数据库条件检索引擎，使一行代码实现复杂列表检索成为可能！">
+						</a>
+						<a href="https://xiaonuo.vip/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/xiaonuo.png" msg="通用型后台权限管理框架，紧随潮流、开箱即用, 同时拥有Vue、Layui、SpringCloud三个版本">
+						</a>
+						<a href="http://www.pearadmin.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/pear-admin.png" msg="致 力 于 让 Web 开 发 变 得 简 单 优 雅">
+						</a>
+						<a href="http://www.layui-vue.com/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/layui-vue.png" msg="layui - vue（谐音：类 UI) 是 一 套 Vue 3.0 的 桌 面 端 组 件 库.">
+						</a>
+						<a href="https://shenyu.apache.org/zh/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/shenyu.svg" msg="一个异步的，高性能的，跨语言的，响应式的 API 网关。">
+						</a>
+						<a href="https://dwz.cn/L9hCwepg" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/com/yungouos.png" msg="官方直连支付系统解决方案，支持个人、个体户、企业全渠道签约。">
+						</a>
+						<a href="https://hippo4j.cn/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/hippo4j.jpg" msg="强大的动态线程池框架，附带监控报警功能，支持 Tomcat、Jetty、Undertow、RocketMQ、Dubbo、RabbitMQ、Hystrix 消费线程池">
 						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 				</div>
 				<div style="height: 60px;"></div>
 			</div>
+			
 			
 			<!-- ------------ 底部 连接 ------------- -->
 			<div id="footer">
@@ -315,11 +482,17 @@
 						<h3>联系我们</h3>
 						<ul class="list-unstyle">
 							<!-- <li>电话：<a href="tel:123;">123</a></li> -->
-							<li>QQ群 ：<a href="https://jq.qq.com/?_wv=1027&k=b759RZrL" target="_blank">614714762</a></li>
+							<li>QQ群 ：<a href="https://jq.qq.com/?_wv=1027&k=ceibbMFr" target="_blank">496757342</a></li>
 							<li>邮箱：<a href="javascript: alert('暂无');">暂无</a></li>
 							<li>联系：<a href="javascript: alert('暂无');">暂无</a></li>
 						</ul>
 					</div>
+					<!-- <div class="ss-box">
+						<h3 class="last">Dromara 知识星球</h3>
+						<div class="media-img padding-small-top" style="text-align: center;">
+							<img class="dro-qr" src="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg" width="200" height="100" />
+						</div>
+					</div> -->
 					<div class="ss-box">
 						<h3 class="last" style="text-align: left; float: none; padding-left: 0px;">Sa-Token 公众号</h3>
 						<div class="media-img padding-small-top" style="text-align: left;">
@@ -402,7 +575,7 @@
 			// 点击二维码放大
 			$('.wx-qr,.dro-qr').click(function() {
 				var w = '300px';
-				var h = '300px';
+				var h = 'auto';
 				var content = '<div style="height: 100%; overflow: hidden !important;">' + 
 							'<img src="' + this.src + ' " style="width: 100%; height: 100%;" />' + 
 						 '</div>';
@@ -427,7 +600,7 @@
 					return;
 				}
 				// 如果不是oss上的图片 
-				if(img.src.indexOf('https://oss.dev33.cn') == -1) {
+				if(img.src.indexOf('https://oss.dev33.cn') == -1 || img.src.endsWith('.svg')) {
 					return;
 				}
 				img.src = img.src + "?x-oss-process=image/resize,m_lfit,w_" + (img.width) + ",limit_0/auto-orient,0";
@@ -450,7 +623,7 @@
 			}
 			if(window.innerWidth > 1800) {
 				if(navigator.userAgent.indexOf('WebKit') > -1) {
-					f5ImgSize();
+					// f5ImgSize();
 				}
 			}
 			

@@ -33,9 +33,10 @@
 	- 如果是 WebFlux 环境就引入 `sa-token-reactor-spring-boot-starter` 依赖，参考：[在WebFlux环境集成](/start/webflux-example)
 	- 引入错误的依赖会导致`SaTokenContext`初始化失败，抛出上述异常 
 	- 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖，如果引入了`spring-boot-starter-web`就是SpringMVC环境，如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。……什么？你说你两个都引入了？那你的项目能启动成功吗？
-	- 你说你两个包都没引入？那你为什么不引入一个呢？
 3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的。
 4. 如果以上步骤排除无误后依然报错，请直接提 issues 或者加入QQ群求助。
+
+> 提示: zuul 网关是 SpringMVC 环境, spring cloud gateway 网关是 WebFlux 环境
 
 
 ### 报错：NotLoginException：xxx
@@ -45,8 +46,11 @@
 
 
 ### 加了注解进行鉴权认证，不生效？
-注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成AOP模块，参考：[注解式鉴权](/use/at-check)，
-如果已经打开仍然没有效果，加群说明一下复现步骤 
+1. 注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成AOP模块，参考：[注解式鉴权](/use/at-check)
+2. 在Spring环境中, 如果同时配置了`WebMvcConfigurer`和`WebMvcConfigurationSupport`时, 也会导致拦截器失效.
+   - **常见场景**: 很多项目中会在`WebMvcConfigurationSupport`中配置`addResourceHandlers`方法开放Swagger等相关静态资源映射, 同时基于Sa-Token添加了`WebMvcConfigurer`配置`addInterceptors`方法注册注解拦截器, 这样会导致注解拦截器失效. 
+   - **解决方案**: `WebMvcConfigurer`和`WebMvcConfigurationSupport`只选一个配置, 建议统一通过实现`WebMvcConfigurer`接口进行配置.
+3. 如果以上步骤处理后仍然没有效果，加群说明一下复现步骤 
 
 
 ### 有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
@@ -88,6 +92,33 @@ jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`�
 
 ### 我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
 参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
+
+
+### 集成redis后对象模型序列化异常
+假设执行如下代码:
+``` java
+@Data
+public class User implements Serializable {
+    private Long userId;
+    private String username;
+    private String password;
+}
+
+User user = new User();
+user.setUserId(10000L);
+user.setUsername("oneName");
+user.setPassword("onePass");        
+StpUtil.getSession().set("userObjKey", user); // 这里报错
+```
+报错信息如下:
+```
+SerializationException: Could not read JSON: 
+Cannot deserialize value of type `java.lang.Long` from Array value (token `JsonToken.START_ARRAY`)
+```
+
+springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能出现此问题
+
+原因是redis里面有之前的 satoken 会话数据, 清空 Redis 即可
 
 
 

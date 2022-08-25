@@ -8,6 +8,9 @@
 --- 
 
 
+## 一、SSO-Server 认证中心接口 
+
+
 ### 1、单点登录授权地址
 ``` url
 http://{host}:{port}/sso/auth
@@ -102,7 +105,7 @@ http://{host}:{port}/sso/logout?back=xxx
 | loginId		| 是		| 要注销的账号 id			 					|
 | timestamp		| 是		| 当前时间戳，13位									|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法：`md5( loginId={value}&nonce={value}&timestamp={value}&key={secretkey秘钥} )`							|
+| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`							|
 
 例如：
 ``` url
@@ -133,6 +136,82 @@ http://{host}:{port}/sso/logout?loginId={value}&timestamp={value}&nonce={value}&
 <br>
 
 SSO 认证中心只有这四个接口，接下来让我一起来看一下 Client 端的对接流程：[SSO模式一 共享Cookie同步会话](/sso/sso-type1) 
+
+
+
+---
+
+## 二、SSO-Client 应用端开放接口 
+
+### 1、登录地址
+``` url
+http://{host}:{port}/sso/login
+```
+
+接收参数：
+
+| 参数			| 是否必填	| 说明																|
+| :--------		| :--------	| :--------															|
+| back			| 是		| 登录成功后的重定向地址，一般填写 location.href（从哪来回哪去）			|
+| ticket		| 否		| 授权 ticket 码			|
+
+此接口有两种访问方式：
+- 方式一：我们需要登录操作，所以带着 back 参数主动访问此接口，框架会拼接好参数后再次将用户重定向至认证中心。
+- 方式二：用户在认证中心登录成功后，带着 ticket 参数重定向而来，此为框架自动处理的逻辑，开发者无需关心。
+
+
+### 2、注销地址
+``` url
+http://{host}:{port}/sso/logout
+```
+
+接收参数：
+
+| 参数			| 是否必填	| 说明																|
+| :--------		| :--------	| :--------															|
+| back			| 否		| 注销成功后的重定向地址，一般填写 location.href（从哪来回哪去），也可以填写 self 字符串，含义同上			|
+
+此接口有两种访问方式：
+- 方式一：直接 `location.href` 网页跳转，此时可携带 back 参数。
+- 方式二：使用 Ajax 异步调用，注销成功将返回以下内容：
+
+``` js
+{
+    "code": 200,    // 200表示请求成功，非200标识请求失败
+    "msg": "单点注销成功",
+    "data": null
+}
+```
+
+
+### 3、单点注销回调接口
+此接口仅配置模式三 `(isHttp=true)` 时打开，且为框架回调，开发者无需关心
+
+``` url
+http://{host}:{port}/sso/logoutCall
+```
+
+接受参数：
+
+| 参数			| 是否必填	| 说明											|
+| :--------		| :--------	| :--------										|
+| loginId		| 是		| 要注销的账号 id			 					|
+| timestamp		| 是		| 当前时间戳，13位								|
+| nonce			| 是		| 随机字符串										|
+| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`							|
+
+返回数据：
+
+``` js
+{
+    "code": 200,    // 200表示请求成功，非200标识请求失败
+    "msg": "单点注销回调成功",
+    "data": null
+}
+```
+
+
+
 
 
 

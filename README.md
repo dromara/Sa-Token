@@ -25,7 +25,7 @@
 
 ## Sa-Token 介绍
 
-**Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**`登录认证`**、**`权限认证`**、**`Session会话`**、**`单点登录`**、**`OAuth2.0`**、**`微服务网关鉴权`** 
+**Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**登录认证**、**权限认证**、**单点登录**、**OAuth2.0**、**分布式Session会话**、**微服务网关鉴权**
 等一系列权限相关问题。
 
 
@@ -38,7 +38,7 @@
 - **分布式会话** —— 提供jwt集成、共享数据中心两种分布式会话方案
 - **微服务网关鉴权** —— 适配Gateway、ShenYu、Zuul等常见网关的路由拦截认证
 - **单点登录** —— 内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以搞定
-- **OAuth2.0认证** —— 基于RFC-6749标准编写，OAuth2.0标准流程的授权认证，支持openid模式 
+- **OAuth2.0认证** —— 轻松搭建 OAuth2.0 服务，支持openid模式 
 - **二级认证** —— 在已登录的基础上再次认证，保证安全性 
 - **Basic认证** —— 一行代码接入 Http Basic 认证 
 - **独立Redis** —— 将权限缓存与业务缓存分离 
@@ -75,7 +75,7 @@ Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO �
 3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）
 
 ## Sa-Token-OAuth2.0 授权登录
-Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) 编写，通过Sa-OAuth2你可以非常轻松的实现系统的OAuth2.0授权认证 
+Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求 
 
 | 授权模式						| 简介						|
 | :--------						| :--------					|
@@ -89,60 +89,50 @@ Sa-OAuth2 模块基于 [RFC-6749 标准](https://tools.ietf.org/html/rfc6749) �
 
 
 ## Sa-Token 功能结构图
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png 's-w')
+![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png)
 
-![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png 's-w')
+![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png)
 
 
 ## 使用Sa-Token的开源项目 
-- [[ sa-plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器
 
-- [[ jthink ]](https://gitee.com/wtsoftware/jthink)： 一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统
-
-- [[ dcy-fast ]](https://gitee.com/dcy421/dcy-fast)： 一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器
-
-- [[ Helio开发脚手架 ]](https://gitee.com/uncarbon97)： 基于 `SpringBoot + Sa-Token + Mybatis-Plus` 的单体or微服务开发脚手架，带有配套后台管理前端模板及代码生成器
-
-- [[ sa-token-plugin ]](https://gitee.com/bootx/sa-token-plugin)：Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充
-
-- [[ easy-admin ]](https://gitee.com/lakernote/easy-admin)：一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等
+- [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器。
 
 - [[ RuoYi-Vue-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
 
 - [[ RuoYi-Cloud-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步
 
-- [[ falser-cloud ]](https://gitee.com/falser/falser-cloud): 基于 SpringCloud Alibaba + SpringCloud gateway + SpringBoot + Sa-Token + vue-admin-template + Nacos + Rabbit MQ + Redis 的一个后台管理系统，前后端分离，权限管理，菜单管理，数据字典，停车场系统管理等功能
+- [[ EasyAdmin ]](https://gitee.com/lakernote/easy-admin)：一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等
 
-- [[ bootx-platform ]](https://gitee.com/bootx/bootx-platform)：集成sa-token和sa-token-plugin并深度定制认证模块，包含多级别数据范围权限、数据自动加解密、数据脱敏、超级查询器、以及支付收单、消息通知等准商用功能的开源免费开发脚手架项目
+- [[ YC-Framework ]](http://framework.youcongtech.com/)：致力于打造一款优秀的分布式微服务解决方案。
 
-- [[ QForum-Core ]](https://github.com/Project-QForum/QForum-Core/)：QForum 论坛系统官方核心，可拓展性强、轻量级、高性能、前后端分离，基于 SpringBoot2 + Sa-Token + Mybatis-Plus
+- [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写 Pig 授权方式为 Sa-Token，其他代码不变。
 
-- [[ ExciteCMS-Layui ]](https://gitee.com/ExciteTeam/ExciteCMS-SpringBoot-Layui)：ExciteCMS 快速开发脚手架：一款后端基于 SpringBoot2 + Sa-Token + Mybatis-Plus，前端基于 Layuimini 的内容管理系统，具备RBAC、日志管理、代码生成等功能，并集成常用的支付、OSS等第三方服务，拥有详细的开发文档
+更对开源案例可参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
 
-- [[ 拾壹博客 ]](https://gitee.com/quequnlong/shiyi-blog)：一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。
-
-如果您的项目使用了Sa-Token，欢迎提交pr
 
 ## 友情链接
-- [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：一个轻量级http通信框架，API设计无比优雅，支持 WebSocket 以及 Stomp 协议
+- [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：轻量级 http 通信框架，API无比优雅，支持 WebSocket、Stomp 协议
 
-- [[ Bean Searcher ]](https://github.com/ejlchina/bean-searcher)：比 MyBatis 效率快 100 倍的条件检索引擎，天生支持联表，使一行代码实现复杂列表检索成为可能！
+- [[ Bean Searcher ]](https://github.com/ejlchina/bean-searcher)：专注高级查询的只读 ORM，使一行代码实现复杂列表检索！
 
-- [[ 小诺快速开发平台 ]](https://xiaonuo.vip/index#pricing)：基于SpringBoot2 + AntDesignVue全新快速开发平台，同时拥有三个版本
+- [[ Snowy ]](https://xiaonuo.vip/index#pricing)：小诺快速开发平台，同时拥有 Layui、Vue、SpringCloud 三个版本。
 
-- [[ Jpom ]](https://gitee.com/dromara/Jpom)：简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件
+- [[ Jpom ]](https://gitee.com/dromara/Jpom)：简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件。
 
-- [[ TLog ]](https://gitee.com/dromara/TLog)：一个轻量级的分布式日志标记追踪神器
+- [[ TLog ]](https://gitee.com/dromara/TLog)：一个轻量级的分布式日志标记追踪神器。
 
+- [[ hippo4j ]](https://gitee.com/agentart/hippo4j)：强大的动态线程池框架，附带监控报警功能。
+
+
+## 知识星球
+<img src="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg" width="300px" />
 
 
 ## 交流群
-QQ交流群：1群：1002350610 (已满) 、
-2群：614714762 [点击加入](https://jq.qq.com/?_wv=1027&k=b759RZrL)
+QQ交流群：496757342 [点击加入](https://jq.qq.com/?_wv=1027&k=ceibbMFr)
 
 微信交流群：
-
-<!-- ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/doc/km/sa-token-hm1.jpg ':size=230') -->
 
 ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
 

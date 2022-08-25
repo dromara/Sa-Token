@@ -1,5 +1,7 @@
 package cn.dev33.satoken.spring;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.PathMatcher;
@@ -14,6 +16,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.id.SaIdTemplate;
 import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
@@ -82,11 +85,11 @@ public class SaBeanInject {
 	/**
 	 * 注入侦听器Bean
 	 * 
-	 * @param saTokenListener saTokenListener对象 
+	 * @param listenerList 侦听器集合 
 	 */
 	@Autowired(required = false)
-	public void setSaTokenListener(SaTokenListener saTokenListener) {
-		SaManager.setSaTokenListener(saTokenListener);
+	public void setSaTokenListener(List<SaTokenListener> listenerList) {
+		SaTokenEventCenter.registerListenerList(listenerList);
 	}
 
 	/**

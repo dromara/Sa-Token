@@ -170,9 +170,12 @@ public class JwtForStatelessTest {
     public void getExtra() {
     	// 登录
     	StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+    	String tokenValue = StpUtil.getTokenValue();
     	
     	// 可以取到
     	Assertions.assertEquals(StpUtil.getExtra("name"), "zhangsan");
+    	Assertions.assertEquals(StpUtil.getExtra(tokenValue, "name"), "zhangsan");
+    	
     	// 取不到 
     	Assertions.assertEquals(StpUtil.getExtra("name2"), null);
     }

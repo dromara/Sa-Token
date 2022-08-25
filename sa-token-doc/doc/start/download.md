@@ -62,6 +62,17 @@
 </dependency>
 ```
 
+<!------------- tab:Quarkus 集成  ------------->
+参考：[quarkus-sa-token](https://github.com/quarkiverse/quarkus-sa-token)
+``` xml
+<!-- Sa-Token 整合 Quarkus, 在线文档：http://sa-token.dev33.cn/ -->
+<dependency>
+	<groupId>io.quarkiverse.satoken</groupId>
+	<artifactId>quarkus-satoken-resteasy</artifactId>
+	<version>1.30.0</version>
+</dependency>
+```
+
 <!------------- tab:裸Servlet容器环境   ------------->
 注：如果你的项目没有使用Spring，但是Web框架是基于 ServletAPI 规范的，可以引入此包
 ``` xml
@@ -116,6 +127,11 @@ implementation 'cn.dev33:sa-token-jfinal-plugin:${sa.top.version}'
 implementation 'cn.dev33:sa-token-jboot-plugin:${sa.top.version}'
 ```
 
+<!-- tab:Quarkus 集成  -->
+``` xml
+implementation 'io.quarkiverse.satoken:quarkus-satoken-resteasy:1.30.0'
+```
+
 <!-- tab:裸Servlet容器环境  -->
 ``` xml
 implementation 'cn.dev33:sa-token-servlet:${sa.top.version}'
@@ -131,8 +147,14 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 注：JDK版本：`v1.8+`，SpringBoot：`建议2.0以上`
 
 
+## jar包下载
+[点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
+
+注：当前仅提供 `v1.6.0` 版本jar包下载，更多版本请前往 maven 中央仓库获取，[直达链接](https://search.maven.org/search?q=sa-token)
+
+
 ## 获取源码
-如果你想深入了解Sa-Token，你可以通过`Gitee`或者`GitHub`来获取源码 （**学习测试请拉取master分支**，dev为正在开发的分支，有很多特性并不稳定）
+如果你想深入了解 Sa-Token，你可以通过`Gitee`或者`GitHub`来获取源码 （**学习测试请拉取 master 分支**，dev为正在开发的分支，有很多特性并不稳定）
 - **Gitee**地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - **GitHub**地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
 - 开源不易，求鼓励，给个`star`吧
@@ -191,11 +213,10 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 
 
 
+## 运行示例
 
-## jar包下载
-[点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
+- 1、下载代码（学习测试用 master 分支）。
+- 2、从根目录导入项目。
+- 3、选择相应的示例添加为 Maven 项目，打开 XxxApplication.java 运行。
 
-(注意：当前仅提供`v1.6.0`版本jar包下载，更多版本请前往maven中央仓库获取，[直达链接](https://search.maven.org/search?q=sa-token))
-
-
-
+![运行示例](https://oss.dev33.cn/sa-token/doc/import-demo-run.png  's-w-sh')

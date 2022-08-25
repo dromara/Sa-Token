@@ -30,7 +30,7 @@
 			
 			// 重定向至认证中心 
 			function goSsoAuthUrl() {
-				sa.ajax('/getSsoAuthUrl', {clientLoginUrl: location.href}, function(res) {
+				sa.ajax('/sso/getSsoAuthUrl', {clientLoginUrl: location.href}, function(res) {
 					console.log(res);
 					location.href = res.data;
 				})
@@ -38,7 +38,7 @@
 		
 			// 根据ticket值登录 
 			function doLoginByTicket(ticket) {
-				sa.ajax('/doLoginByTicket', {ticket: ticket}, function(res) {
+				sa.ajax('/sso/doLoginByTicket', {ticket: ticket}, function(res) {
 					console.log(res);
 					if(res.code == 200) {
 						localStorage.setItem('satoken', res.data);

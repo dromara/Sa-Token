@@ -150,11 +150,19 @@ public class StpLogicJwtForMixin extends StpLogic {
 	}
 
 	/**
-	 * 获取Token携带的扩展信息
+	 * 获取当前 Token 的扩展信息 
 	 */
 	@Override
 	public Object getExtra(String key) {
-		return SaJwtUtil.getPayloads(getTokenValue(), loginType, jwtSecretKey()).get(key);
+		return getExtra(getTokenValue(), key);
+	}
+
+	/**
+	 * 获取指定 Token 的扩展信息 
+	 */
+	@Override
+	public Object getExtra(String tokenValue, String key) {
+		return SaJwtUtil.getPayloads(tokenValue, loginType, jwtSecretKey()).get(key);
 	}
 
 	/**
@@ -196,7 +204,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * [禁用] 根据条件查询Token 
 	 */
 	@Override
-	public List<String> searchTokenValue(String keyword, int start, int size) {
+	public List<String> searchTokenValue(String keyword, int start, int size, boolean sortType) {
 		throw new ApiDisabledException(); 
 	}
 	

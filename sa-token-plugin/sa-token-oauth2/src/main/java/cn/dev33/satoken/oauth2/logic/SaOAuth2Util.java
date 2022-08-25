@@ -49,7 +49,7 @@ public class SaOAuth2Util {
 	public static ClientTokenModel checkClientToken(String clientToken) {
 		return saOAuth2Template.checkClientToken(clientToken);
 	}
-
+	
 	/**
 	 * 获取 Access-Token 所代表的LoginId 
 	 * @param accessToken Access-Token 
@@ -68,6 +68,15 @@ public class SaOAuth2Util {
 		saOAuth2Template.checkScope(accessToken, scopes);
 	}
 	
+	/**
+	 * 校验：指定 Client-Token 是否具有指定 Scope
+	 * @param clientToken Client-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public static void checkClientTokenScope(String clientToken, String... scopes) {
+		saOAuth2Template.checkClientTokenScope(clientToken, scopes);
+	}
+
 	// ------------------- generate 构建数据 
 	
 	/**
@@ -196,6 +205,17 @@ public class SaOAuth2Util {
 	 */
 	public static SaClientModel checkClientSecret(String clientId, String clientSecret) {
 		return saOAuth2Template.checkClientSecret(clientId, clientSecret);
+	}
+	
+	/**
+	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes 
+	 * @param clientId 应用id
+	 * @param clientSecret 秘钥
+	 * @param scopes 权限（多个用逗号隔开）
+	 * @return SaClientModel对象
+	 */
+	public static SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, String scopes) {
+		return saOAuth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
 	}
 	
 	/**

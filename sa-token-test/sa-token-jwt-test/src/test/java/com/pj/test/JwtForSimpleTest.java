@@ -32,7 +32,7 @@ public class JwtForSimpleTest {
 	// 开始 
 	@BeforeAll
     public static void beforeClass() {
-    	System.out.println("\n\n------------------------ JwtForStyleTest star ...");
+    	System.out.println("\n\n------------------------ JwtForSimpleTest star ...");
     	dao = SaManager.getSaTokenDao();
     	StpUtil.setStpLogic(new StpLogicJwtForSimple());
     }
@@ -40,7 +40,7 @@ public class JwtForSimpleTest {
 	// 结束 
     @AfterAll
     public static void afterClass() {
-    	System.out.println("\n\n------------------------ JwtForStyleTest end ... \n");
+    	System.out.println("\n\n------------------------ JwtForSimpleTest end ... \n");
     }
 
     // 测试：登录 
@@ -76,9 +76,11 @@ public class JwtForSimpleTest {
     public void getExtra() {
     	// 登录
     	StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+    	String tokenValue = StpUtil.getTokenValue();
     	
     	// 可以取到
     	Assertions.assertEquals(StpUtil.getExtra("name"), "zhangsan");
+    	Assertions.assertEquals(StpUtil.getExtra(tokenValue, "name"), "zhangsan");
     	// 取不到 
     	Assertions.assertEquals(StpUtil.getExtra("name2"), null);
     }
