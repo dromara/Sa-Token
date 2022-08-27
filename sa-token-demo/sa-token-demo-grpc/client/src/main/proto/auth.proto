@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package auth;
+
+option java_package = "com.lym.grpc.auth";
+import "google/protobuf/empty.proto";
+
+message GrpcBool{
+  bool val = 1;
+}
+
+message GrpcInt{
+  int32 val = 1;
+}
+
+message GrpcString{
+  string val = 1;
+}
+
+
+service AuthService{
+  rpc isLogin(google.protobuf.Empty) returns (GrpcBool);
+  rpc login(GrpcInt) returns (GrpcString);
+}

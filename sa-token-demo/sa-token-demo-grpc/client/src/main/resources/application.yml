@@ -1,0 +1,18 @@
+server:
+  port: 2222
+spring:
+  application:
+    name: test-client
+  redis:
+    host: localhost
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+sa-token:
+  is-read-cookie: false
+grpc:
+  server:
+    port: 2223
+  client:
+    test-server:
+      negotiation-type: PLAINTEXT
