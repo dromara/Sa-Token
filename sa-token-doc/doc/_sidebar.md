@@ -67,6 +67,7 @@
 	- [和 Thymeleaf 集成](/plugin/thymeleaf-extend)
 	- [和 jwt 集成](/plugin/jwt-extend)
 	- [和 Dubbo 集成](/plugin/dubbo-extend)
+	- [和 gRPC 集成](/plugin/grpc-extend)
 	- [Sa-Token 插件开发指南](/fun/plugin-dev)
 	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
 
