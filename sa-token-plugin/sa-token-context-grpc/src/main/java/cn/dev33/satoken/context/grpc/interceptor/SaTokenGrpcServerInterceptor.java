@@ -9,9 +9,10 @@ import io.grpc.*;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
 
 /**
+ * 鉴权，设置token
+ * 
  * @author lym
- * @description 鉴权，设置token
- * @date 2022/8/25 11:33
+ * @since 2022/8/25 11:33
  **/
 @GrpcGlobalServerInterceptor
 public class SaTokenGrpcServerInterceptor implements ServerInterceptor {

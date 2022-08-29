@@ -27,7 +27,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.10</lombok.version>
-        <sa-token-version>1.30.0</sa-token-version>
+        <sa-token-version>1.31.0.RC</sa-token-version>
     </properties>
 
     <dependencies>
@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>2.7.2</version>
+            <!-- <version>2.7.2</version> -->
         </dependency>
 
         <dependency>

@@ -5,10 +5,11 @@ import cn.dev33.satoken.util.SaTokenConsts;
 import io.grpc.Metadata;
 
 /**
+ * 常量 
+ * 
  * @author lym
- * @description
- * @date 2022/8/26 14:27
- **/
+ * @since: 2022/8/26 14:27
+ */
 public class GrpcContextConstants {
     public static final Metadata.Key<String> SA_ID_TOKEN =
             Metadata.Key.of(SaIdUtil.ID_TOKEN, Metadata.ASCII_STRING_MARSHALLER);

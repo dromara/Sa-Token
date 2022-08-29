@@ -12,9 +12,10 @@ import org.springframework.core.Ordered;
 
 
 /**
+ * 客户端请求的时候，带上token
+ * 
  * @author lym
- * @date 2022/8/24 15:45
- * @description 客户端请求的时候，带上token
+ * @since 2022/8/24 15:45
  */
 @GrpcGlobalClientInterceptor
 public class SaTokenGrpcClientInterceptor implements ClientInterceptor, Ordered {

@@ -23,7 +23,7 @@
 							<img src="./doc/logo.png" title="logo" />
 							<span class="logo-text">Sa-Token</span>
 							<!-- <h1 class="logo-text">Sa-Token</h1> -->
-							<!-- <sub>v1.30.0</sub> -->
+							<!-- <sub>v1.31.0.RC</sub> -->
 						</div>
 					</a>
 				</div>
@@ -70,7 +70,7 @@
 			<div class="main-box">
 				<div class="content-box">
 					<!-- <div class="fenge"></div> -->
-					<h1>Sa-Token<small>v1.30.0</small></h1>
+					<h1>Sa-Token<small>v1.31.0.RC</small></h1>
 					<div class="sub-title">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</div>
 					<div class="btn-box">
 						<a class="abtn" href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
@@ -628,6 +628,14 @@
 			}
 			
 			
+		</script>
+
+		<script type="text/javascript">
+			// 预览版提示 
+			if(location.host === 'rc.sa-token.dev33.cn') {
+				const newTips = '<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.dev33.cn/" target="_blank">https://sa-token.dev33.cn/</a></b>';
+				layer.alert(newTips);
+			}
 		</script>
 
 	</body>

@@ -6,9 +6,10 @@ import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
 import org.springframework.core.Ordered;
 
 /**
+ * 处理请求前，创建上下文
+ * 
  * @author lym
- * @date 2022/8/24 10:09
- * @description 处理请求前，创建上下文
+ * @since 2022/8/24 10:09
  */
 @GrpcGlobalServerInterceptor
 public class SaTokenContextGrpcServerInterceptor implements ServerInterceptor, Ordered {
