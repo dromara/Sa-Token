@@ -33,16 +33,48 @@
 	- 如果是 WebFlux 环境就引入 `sa-token-reactor-spring-boot-starter` 依赖，参考：[在WebFlux环境集成](/start/webflux-example)
 	- 引入错误的依赖会导致`SaTokenContext`初始化失败，抛出上述异常 
 	- 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖，如果引入了`spring-boot-starter-web`就是SpringMVC环境，如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。……什么？你说你两个都引入了？那你的项目能启动成功吗？
-3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的。
-4. 如果以上步骤排除无误后依然报错，请直接提 issues 或者加入QQ群求助。
-
-> 提示: zuul 网关是 SpringMVC 环境, spring cloud gateway 网关是 WebFlux 环境
+3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的**。
+4. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
 
 
 ### 报错：NotLoginException：xxx
-这个错是说明调用接口的人没有通过登录认证，请注意通常**异常提示语已经描述清楚了没有通过认证的具体原因**，例如：没有提供Token、提供的Token是无效的、提供的Token已经过期……等等
 
-请根据异常提示语以及报错位置进行排查，可参考：[NotLoginException 场景值](/fun/not-login-scene)
+这个错是说明调用接口的人没有通过登录校验，请注意通常**异常提示语已经描述清楚了没有通过认证的具体原因：**
+   
+**如果是：未能读取到有效Token**
+- 可能1：前端没有提交 Token（最好从前端f12控制台看看请求参数里有 token 吗）。
+- 可能2：前端提交了 Token，但是参数名不对。默认参数名是 `satoken`，可通过配置文件 `sa-token.token-name: satoken` 来更改。
+- 可能3：前端提交了 Token，但是你配置了框架不读取，比如说你配置了 `is-read-head=false`（关闭header读取），此时你再从 header 里提交token，框架就无法读取到。
+- 可能4：前端提交了 Token，但是 Token前缀 不对，可参考：[自定义 Token 前缀](/up/token-prefix)
+
+**如果是：Token无效：6ad93254-b286-4ec9-9997-4430b0341ca0**
+- 可能1：前端提交的 token 是乱填的，或者从别的项目拷过来的。
+- 可能2：前端提交的 token 已过期（timeout超时了）。
+- 可能3：在不集成 Redis 的情况下：颁发 token 后，项目重启了，导致 token 无效。
+- 可能4：在集成 Redis 的情况下：颁发 token 后，Redis重启了，导致 token 无效。
+- 可能5：你提交的 token 和框架读取到的 token 不一致：
+	- 可能5.1：比如说你配置了`is-read-head=false`（关闭header读取），然后你从header提交`token-A`，而框架从Cookie里读取`token-B`，导致鉴权不通过（框架读取顺序为`body->header->cookie`）
+	- 可能5.2：比如说你配置了`token-name=x-token`（自定义token名称），此时你从header提交：`satoken:token-A`（参数名没对上），然后框架从header里读取不到你提交的token，转而继续从Cookie读取到了`token-B`。
+- 可能6：在集成 jwt 插件的情况下：
+	- 如果使用的是 Simple 模式：情况和不集成jwt一样。
+	- 如果使用的是 Mixin 和 Stateless 模式：查看这个 token 颁发后是否更改了 `jwtSecretKey` 配置项。
+- 可能7：同一账号登录数量超过12个，导致最先登录的被强制注销掉，这个值可以通过 `maxLoginCount` 来配置，默认值12，-1代表不做限制。
+- 可能8：在配置了 `is-concurrent=true, is-share=true`的情况下，你和别人共同登录了同一账号，此时对方注销了登录，由于你们使用的是同一个token，导致你这边的会话也失效了。
+
+**如果是：Token已过期：6ad93254-b286-4ec9-9997-4430b0341ca0**
+- 可能1：前端提交的 token 临时过期（activity-timeout超时了）。
+- 可能2：集成jwt，而且使用的是 Mixin 或 Stateless 模式，而且token过期了（timeout超时了）。
+
+**如果是：Token已被顶下线：6ad93254-b286-4ec9-9997-4430b0341ca0**
+- 可能1：在项目配置了 `is-concurrent=false` 的前提下，这个账号又被别人登录了，导致旧登录被挤了下去。
+- 可能2：这个账号被 `StpUtil.replaced(loginId, device)` 方法强制顶下线了。
+
+**如果是：Token已被踢下线：6ad93254-b286-4ec9-9997-4430b0341ca0**
+- 可能1：这个账号被 `StpUtil.kickout(loginId)` 方法强制踢下线了。
+
+
+
+
 
 
 ### 加了注解进行鉴权认证，不生效？
