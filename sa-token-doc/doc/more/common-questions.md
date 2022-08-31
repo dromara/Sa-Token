@@ -9,7 +9,7 @@
 
 ## 一、常见报错
 
-### 报错：非Web上下文无法获取Request？
+### Q：报错：非Web上下文无法获取Request？
 报错原因：Sa-Token 的部分 API 只能在 Web 上下文中调用，报这个错说明你调用 Sa-Token 的地方不在 Web 上下文中，请排查：
 
 1. 是否在 main 方法中调用了 Sa-Token 的API
@@ -21,7 +21,7 @@
 解决方案：先获取你想要的值，再把这个值当做一个参数传递到这些方法中，而不是直接从方法内调用 Sa-Token 的API。
 
 
-### 报错：未初始化任何有效上下文处理器？
+### Q：报错：未初始化任何有效上下文处理器？
 报错原因：Sa-Token底层不能确认最终运行的web容器，所以抽象了 `SaTokenContext` 接口，对接不同容器时需要注入不同的实现，通常这个注入工作都是框架自动完成的，
 你只需要按照文档开始部分集成相应的依赖即可
 
@@ -36,8 +36,7 @@
 3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的**。
 4. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
 
-
-### 报错：NotLoginException：xxx
+### Q：报错：NotLoginException：xxx
 
 这个错是说明调用接口的人没有通过登录校验，请注意通常**异常提示语已经描述清楚了没有通过认证的具体原因：**
    
@@ -46,9 +45,10 @@
 - 可能2：前端提交了 Token，但是参数名不对。默认参数名是 `satoken`，可通过配置文件 `sa-token.token-name: satoken` 来更改。
 - 可能3：前端提交了 Token，但是你配置了框架不读取，比如说你配置了 `is-read-head=false`（关闭header读取），此时你再从 header 里提交token，框架就无法读取到。
 - 可能4：前端提交了 Token，但是 Token前缀 不对，可参考：[自定义 Token 前缀](/up/token-prefix)
+- 可能5：你使用了 Nginx 反向代理，而且配置了 自定义Token名称，而且自定义的名称还带有下划线（比如 shop_token），而且还是你的项目还是从 Header头提交Token的，此时 Nginx 默认会吞掉你的下划线参数，可参考：[nginx做转发时，带下划线的header参数丢失](https://blog.csdn.net/zfw_666666/article/details/124420828)
 
 **如果是：Token无效：6ad93254-b286-4ec9-9997-4430b0341ca0**
-- 可能1：前端提交的 token 是乱填的，或者从别的项目拷过来的。
+- 可能1：前端提交的 token 是乱填的，或者从别的项目拷过来的，或者多个项目一起开发时彼此的 Token 串项目了。
 - 可能2：前端提交的 token 已过期（timeout超时了）。
 - 可能3：在不集成 Redis 的情况下：颁发 token 后，项目重启了，导致 token 无效。
 - 可能4：在集成 Redis 的情况下：颁发 token 后，Redis重启了，导致 token 无效。
@@ -60,6 +60,7 @@
 	- 如果使用的是 Mixin 和 Stateless 模式：查看这个 token 颁发后是否更改了 `jwtSecretKey` 配置项。
 - 可能7：同一账号登录数量超过12个，导致最先登录的被强制注销掉，这个值可以通过 `maxLoginCount` 来配置，默认值12，-1代表不做限制。
 - 可能8：在配置了 `is-concurrent=true, is-share=true`的情况下，你和别人共同登录了同一账号，此时对方注销了登录，由于你们使用的是同一个token，导致你这边的会话也失效了。
+- 可能9：可能是多账号鉴权的关系，在多账号模式下，如果是 `StpUserUtil.login()` 颁发的token，你从 `StpUtil.checkLogin()` 进行校验，永远都是无效token，因为账号体系没对上。
 
 **如果是：Token已过期：6ad93254-b286-4ec9-9997-4430b0341ca0**
 - 可能1：前端提交的 token 临时过期（activity-timeout超时了）。
@@ -73,11 +74,16 @@
 - 可能1：这个账号被 `StpUtil.kickout(loginId)` 方法强制踢下线了。
 
 
+### Q：集成 Redis 后，明明 Redis 中有值，却还是提示无效Token？
+根据以往的处理经验，发生这种情况 90% 的概率是因为你找错了Redis，即：代码连接的Redis和你用管理工具看到的Redis并不是同一个。
+
+你可能会问：我看配置文件明明是同一个啊？
+
+我的回答是：别光看配置文件，不一定准确，在启动时直接执行 `SaManager.getSaTokenDao().set("name", "value", 100000);`，
+随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的话才能证明`代码连接的Reids` 和`你用管理工具看到的Redis` 是同一个，再进行下一步排查。
 
 
-
-
-### 加了注解进行鉴权认证，不生效？
+### Q：加了注解进行鉴权认证，不生效？
 1. 注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成AOP模块，参考：[注解式鉴权](/use/at-check)
 2. 在Spring环境中, 如果同时配置了`WebMvcConfigurer`和`WebMvcConfigurationSupport`时, 也会导致拦截器失效.
    - **常见场景**: 很多项目中会在`WebMvcConfigurationSupport`中配置`addResourceHandlers`方法开放Swagger等相关静态资源映射, 同时基于Sa-Token添加了`WebMvcConfigurer`配置`addInterceptors`方法注册注解拦截器, 这样会导致注解拦截器失效. 
@@ -85,48 +91,35 @@
 3. 如果以上步骤处理后仍然没有效果，加群说明一下复现步骤 
 
 
-### 有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
+### Q：我使用拦截器鉴权时，明明排除了某个路径却仍然被拦截了？
+- 可能1：你的项目可能是跨域了，先把跨域问题解决掉，参考：[解决跨域问题](/fun/cors-filter)
+- 可能2：你访问的接口可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。请确保你访问的 path 有对应的 Controller 承接！
+- 可能3：可能这里并没有拦截，但是又被其他地方拦截了，请仔细查看一下控制台抛出的堆栈信息，定位一下到底是哪行代码拦截住这个请求的。
+- 可能4：后端拦截的 path 未必是你前端访问的这个path，建议先打印一下 path 信息，看看和你预想的是否一致，再做分析。
+
+
+### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
 可能是Cookie帮你自动传了，在浏览器或 Postman 中会自动维护Cookie模式，如不需要可以在配置文件：`is-read-cookie: false`，然后重启项目再测试一下
 
 
-### 一个User对象存进Session后，再取出来时报错：无法从User类型转换成User类型？
+### Q：一个User对象存进Session后，再取出来时报错：无法从User类型转换成User类型？
 群员亲测，当你打开热部署模式后，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决
 
 
-### Springboot环境下采用自定义拦截器排除了某个路径仍然被拦截了？
-可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。
-
-如果不是404，可以先打印一下访问的路由，因为后端拦截的未必是你前端访问的这个path，先获取到具体path再仔细分析。
-
-
-### 我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？
+### Q：我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？
 不更新是正常现象，`active-timeout`不是根据 ttl 计算的，是根据value值计算的，value 记录的是该 Token 最后访问系统的时间戳，
 每次验签时用：当前时间 - 时间戳 > active-timeout，来判断这个 Token 是否已经超时 
 
 
-### 集成 Redis 后，明明 Redis 中有值，却还是提示无效Token？
-根据以往的处理经验，发生这种情况 90% 的概率是因为你找错了Redis，即：代码连接的Redis和你用管理工具看到的Redis并不是同一个。
-
-你可能会问：我看配置文件明明是同一个啊？
-
-我的回答是：别光看配置文件，不一定准确，在启动时直接执行 `SaManager.getSaTokenDao().set("name", "value", 100000);`，
-随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的才能证明 Redis 连接没问题，再进行下一步排查。
-
-
-### 整合 Redis 时先选择了默认jdk序列化，后又改成 jackson 序列化，程序开始报错，SerializationException？
+### Q：整合 Redis 时先选择了默认jdk序列化，后又改成 jackson 序列化，程序开始报错，SerializationException？
 两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新 
 
 
-### 集成 jwt 后为什么在 getSession 时提示 jwt has not session ?
-jwt 的招牌便是无须借助服务端完成会话管理，如果集成`jwt`后再使用`Session`功能，那将又回到了传统`Session`模式，属于自断招牌，此种技术组合没有意义，
-因此jwt集成模式不提供`Session`功能，如果需要`Session`功能，就不要集成`jwt`
-
-
-### 我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
+### Q：我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
 参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
 
 
-### 集成redis后对象模型序列化异常
+### Q：集成redis后对象模型序列化异常
 假设执行如下代码:
 ``` java
 @Data
@@ -160,19 +153,19 @@ springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能�
 
 ## 二、常见疑问
 
-### 登录方法需要我自己实现吗？
+### Q：登录方法需要我自己实现吗？
 是的，不同于`shiro`等框架，`Sa-Token`不会在登录流程中强插一脚，开发者比对完用户的账号和密码之后，只需要调用`StpUtil.login(id)`通知一下框架即可
 
 
-### 框架抛出的权限不足异常，我想根据自定义提示信息，可以吗？
+### Q：框架抛出的权限不足异常，我想根据自定义提示信息，可以吗？
 可以，在全局异常拦截器里捕获`NotPermissionException`，可以通过`getPermission()`获取没有通过认证的权限码，可以据此自定义返回信息
 
 
-### 我的项目权限模型不是RBAC模型，很复杂，可以集成吗？
+### Q：我的项目权限模型不是RBAC模型，很复杂，可以集成吗？
 无论什么模型，只要能把一个用户具有的所有权限塞到一个List里返回给框架，就能集成
 
 
-### 当我配置不并发登录时，每次登陆都会产生一个新的 Token，旧 Token 依然被保存在 Redis 中，框架为什么不删除呢？
+### Q：当我配置不并发登录时，每次登陆都会产生一个新的 Token，旧 Token 依然被保存在 Redis 中，框架为什么不删除呢？
 首先，不删除旧 Token 的原因是为了在旧 Token 再次访问系统时提示他：已被顶下线。
 
 而且这个 Token 不会永远留在 `Redis` 里，在其 TTL 到期后就会自动清除，如果你想让它立即消失，可以：
@@ -182,55 +175,55 @@ springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能�
 - 方法三：写一个定时任务查询Redis值进行删除。
 
 
-### 我使用过滤器鉴权 or 全局拦截器鉴权，结果 Swagger 不能访问了，我应该排除哪些地址？
+### Q：我使用过滤器鉴权 or 全局拦截器鉴权，结果 Swagger 不能访问了，我应该排除哪些地址？
 尝试加上排除 `"/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**" ,"/doc.html/**","/error","/favicon.ico"`
 
 不同版本可能会有所不同，其实在前端摁一下 `F12` 看看哪个 url 报错排除哪个就行了（另附：注解鉴权是不需要排除的，因为 `Swagger` 本身也没有使用 Sa-Token 的注解）
 
 
 
-### SaRouter.match 有多个路径需要排除怎么办？
+### Q：SaRouter.match 有多个路径需要排除怎么办？
 可以点进去源码看一下，`SaRouter.match`方法有多个重载，可以放一个集合, 例如：<br>
 `SaRouter.match(/**).notMatch("/login", "/reg").check(r -> StpUtil.checkLogin());`
 
 
-### 为什么StpUtil.login() 不能直接写入一个User对象？
+### Q：为什么StpUtil.login() 不能直接写入一个User对象？
 `StpUtil.login()`只是为了给当前会话做个唯一标记，通常写入`UserId`即可，如果要存储User对象，可以使用`StpUtil.getSession()`获取Session对象进行存储。 
 
 
-### 前后台分离模式下和普通模式有何不同？
+### Q：前后台分离模式下和普通模式有何不同？
 主要是失去了`Cookie`无法自动化保存和提交`token秘钥`，可以参考章节：[前后台分离](/up/not-cookie)
 
 
-### 前后台分离时，前端提交的 header 参数是叫 token 还是 satoken 还是 tokenName？
+### Q：前后台分离时，前端提交的 header 参数是叫 token 还是 satoken 还是 tokenName？
 默认是satoken，如果想换一个名字，更改一下配置文件的`tokenName`即可。
 
-### 权限可以做成动态的吗？
+### Q：权限可以做成动态的吗？
 权限本来就是动态的，只有jwt那种模式才是非动态的
 
 
-### 我不想让框架自动操作Cookie，怎么办？
+### Q：我不想让框架自动操作Cookie，怎么办？
 在配置文件将`isReadCookie`值配置为`false`
 
 
-### 怎么关掉每次启动时的字符画打印？
+### Q：怎么关掉每次启动时的字符画打印？
 在配置文件将`isPrint`值配置为`false`
 
 
-### StpUtil.getSession()必须登录后才能调用吗？如果我想在用户未登录之前存储一些数据应该怎么办？
+### Q：StpUtil.getSession()必须登录后才能调用吗？如果我想在用户未登录之前存储一些数据应该怎么办？
 `StpUtil.getSession()`获取的是`User-Session`，必须登录后才能使用，如果需要在未登录状态下也使用Session功能，请使用`Token-Session` <br>
 步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 
 
 
-### 我只使用header来传输token，还需要打开Cookie模式吗？
+### Q：我只使用header来传输token，还需要打开Cookie模式吗？
 不需要，如果只使用header来传输token，可以在配置文件关闭Cookie模式，例：`isReadCookie=false`
 
 
-### 我想让用户修改密码后立即掉线重新登录，应该怎么做？
+### Q：我想让用户修改密码后立即掉线重新登录，应该怎么做？
 框架内置 [强制指定账号下线] 的APi，在执行修改密码逻辑之后调用此API即可: `StpUtil.logout()`
 
 
-### 代码鉴权、注解鉴权、路由拦截鉴权，我该如何选择？
+### Q：代码鉴权、注解鉴权、路由拦截鉴权，我该如何选择？
 这个问题没有标准答案，这里只能给你提供一些建议，从鉴权粒度的角度来看：
 1. 路由拦截鉴权：粒度最粗，只能粗略的拦截一个模块进行权限认证
 2. 注解鉴权：粒度较细，可以详细到方法级，比较灵活
@@ -239,10 +232,10 @@ springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能�
 So：从鉴权粒度的角度来看，需要针对一个模块鉴权的时候，就用路由拦截鉴权，需要控制到方法级的时候，就用注解鉴权，需要根据条件判断是否鉴权的时候，就用代码鉴权 
 
 
-### Sa-Token的全局过滤器我应该怎么指定它的优先级呢？
+### Q：Sa-Token的全局过滤器我应该怎么指定它的优先级呢？
 为了保证相关组件能够及时初始化，框架默认给过滤器注册的优先级为-100，如果你想更改优先级，直接在注册过滤器的方法上加上 `@Order(xxx)` 即可覆盖框架的默认配置
 
 
-### 还是有不明白到的地方?
+### Q：还是有不明白到的地方?
 请在`gitee` 、 `github` 提交 `issues`，或者加入qq群交流（群链接在[首页](README?id=交流群)）
 
