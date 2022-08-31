@@ -20,9 +20,9 @@
 	
 	<!-- 所有子模块 -->
     <modules>
-        <module>sa-token-core-test</module>
+        <!-- <module>sa-token-core-test</module> -->
         <module>sa-token-springboot-test</module>
-        <module>sa-token-springboot-integrate-test</module>
+        <!-- <module>sa-token-springboot-integrate-test</module> -->
         <module>sa-token-jwt-test</module>
     </modules>
 
@@ -43,4 +43,40 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+	    <plugins>
+	    	<!-- 单元测试报告生成 -->
+	        <plugin>
+	            <groupId>org.jacoco</groupId>
+	            <artifactId>jacoco-maven-plugin</artifactId>
+	            <version>0.8.6</version>
+	            <executions>
+	                <execution>
+	                    <id>prepare-agent</id>
+	                    <goals>
+	                        <goal>prepare-agent</goal>
+	                    </goals>
+	                </execution>
+	                <execution>
+	                    <id>report-aggregate</id>
+	                    <phase>test</phase>
+	                    <goals>
+	                        <goal>report-aggregate</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version>
+	            <configuration>
+	                <argLine>${argLine} -Xms256m -Xmx2048m</argLine>
+	                <forkCount>1</forkCount>
+	                <runOrder>random</runOrder>
+	            </configuration>
+	        </plugin>
+	    </plugins>
+	</build>
+	
 </project>

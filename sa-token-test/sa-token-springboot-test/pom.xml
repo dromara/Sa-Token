@@ -22,6 +22,17 @@
 			<artifactId>sa-token-spring-boot-starter</artifactId>
             <version>${revision}</version>
 		</dependency>
+		<!-- 冗余（生成单元测试报告） -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-servlet</artifactId>
+            <version>${revision}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-core</artifactId>
+            <version>${revision}</version>
+		</dependency>
 	</dependencies>
 
 </project>

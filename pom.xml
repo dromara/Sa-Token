@@ -21,7 +21,7 @@
 		<module>sa-token-core</module>
 		<module>sa-token-starter</module>
 		<module>sa-token-plugin</module>
-		<!-- <module>sa-token-test</module> -->
+		<module>sa-token-test</module>
 		<!-- <module>sa-token-demo/sa-token-demo-solon</module> -->
 	</modules>
 	
