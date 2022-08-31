@@ -63,7 +63,7 @@
 - 可能9：可能是多账号鉴权的关系，在多账号模式下，如果是 `StpUserUtil.login()` 颁发的token，你从 `StpUtil.checkLogin()` 进行校验，永远都是无效token，因为账号体系没对上。
 
 **如果是：Token已过期：6ad93254-b286-4ec9-9997-4430b0341ca0**
-- 可能1：前端提交的 token 临时过期（activity-timeout超时了）。
+- 可能1：前端提交的 token 临时过期（activity-timeout超时了，比如配置了 activity-timeout=120，但是超过了120秒没有访问接口）。
 - 可能2：集成jwt，而且使用的是 Mixin 或 Stateless 模式，而且token过期了（timeout超时了）。
 
 **如果是：Token已被顶下线：6ad93254-b286-4ec9-9997-4430b0341ca0**
