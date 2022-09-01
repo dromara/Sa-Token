@@ -94,8 +94,17 @@
 ### Q：我使用拦截器鉴权时，明明排除了某个路径却仍然被拦截了？
 - 可能1：你的项目可能是跨域了，先把跨域问题解决掉，参考：[解决跨域问题](/fun/cors-filter)
 - 可能2：你访问的接口可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。请确保你访问的 path 有对应的 Controller 承接！
-- 可能3：可能这里并没有拦截，但是又被其他地方拦截了，请仔细查看一下控制台抛出的堆栈信息，定位一下到底是哪行代码拦截住这个请求的。
+- 可能3：可能这里并没有拦截，但是又被其他地方拦截了。请先把这个拦截器给注释掉，看看还会不会拦截，如果依然拦截，那说明不是这个拦截器的锅，请仔细查看一下控制台抛出的堆栈信息，定位一下到底是哪行代码拦截住这个请求的。
 - 可能4：后端拦截的 path 未必是你前端访问的这个path，建议先打印一下 path 信息，看看和你预想的是否一致，再做分析。
+- 可能5：你写了多个匹配规则，请求只越过了第一个规则，被其它规则拦下了，例如以下代码：
+``` java
+registry.addInterceptor(new SaInterceptor(handler -> {
+	SaRouter.match("/**").notMatch("/user/doLogin").check(r -> StpUtil.checkLogin());  // 第1个规则 
+	SaRouter.match("/**").notMatch("/article/getList").check(r -> StpUtil.checkLogin());  // 第2个规则 
+	SaRouter.match("/**").notMatch("/goods/getList").check(r -> StpUtil.checkLogin());  // 第3个规则 
+})).addPathPatterns("/**");
+```
+以上代码，当你未登录访问 `/user/doLogin` 时，会被第1条规则越过，然后被第2条拦下，校验登录，然后抛出异常：`NotLoginException：xxx`
 
 
 ### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？

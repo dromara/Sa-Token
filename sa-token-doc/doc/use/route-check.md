@@ -66,7 +66,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册路由拦截器，自定义认证规则 
-		registry.addInterceptor(new SaInterceptor((req, res, handler) -> {
+		registry.addInterceptor(new SaInterceptor(handler -> {
 			
 			// 登录认证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 			SaRouter.match("/**", "/user/doLogin", r -> StpUtil.checkLogin());
@@ -141,7 +141,7 @@ SaRouter
 使用 `SaRouter.stop()` 可以提前退出匹配链，例：
 
 ``` java
-registry.addInterceptor(new SaInterceptor((req, res, handler) -> {
+registry.addInterceptor(new SaInterceptor(handler -> {
 	SaRouter.match("/**").check(r -> System.out.println("进入1"));
 	SaRouter.match("/**").check(r -> System.out.println("进入2")).stop();
 	SaRouter.match("/**").check(r -> System.out.println("进入3"));
