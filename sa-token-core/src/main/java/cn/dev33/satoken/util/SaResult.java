@@ -43,10 +43,8 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * 根据 Map 快速构建 
 	 * @param map / 
 	 */
-	public SaResult(Map<String, Object> map) {
-		for (String key: map.keySet()) {
-			this.set(key, map.get(key));
-		}
+	public SaResult(Map<String, ?> map) {
+		this.setMap(map);
 	}
 	
 	/**

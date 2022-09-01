@@ -1,5 +1,6 @@
 package cn.dev33.satoken.core.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -25,11 +26,22 @@ public class SaFoxUtilTest {
 
     @Test
     public void isEmpty() {
-    	Assertions.assertFalse(SaFoxUtil.isEmpty("abc"));
     	Assertions.assertTrue(SaFoxUtil.isEmpty(""));
     	Assertions.assertTrue(SaFoxUtil.isEmpty(null));
+    	Assertions.assertFalse(SaFoxUtil.isEmpty("abc"));
     	
     	Assertions.assertTrue(SaFoxUtil.isNotEmpty("abc"));
+    	Assertions.assertFalse(SaFoxUtil.isNotEmpty(null));
+    	Assertions.assertFalse(SaFoxUtil.isNotEmpty(""));
+    }
+
+    @Test
+    public void equals() {
+    	Assertions.assertTrue(SaFoxUtil.equals(null, null));
+    	Assertions.assertTrue(SaFoxUtil.equals("a", "a"));
+    	Assertions.assertFalse(SaFoxUtil.equals("1", 1));
+    	Assertions.assertFalse(SaFoxUtil.equals("1", null));
+    	Assertions.assertFalse(SaFoxUtil.equals(null, "1"));
     }
 
     @Test
@@ -65,6 +77,20 @@ public class SaFoxUtilTest {
     	// 综合筛选 
     	List<String> list4 = SaFoxUtil.searchList(dataList, "token", "1", 0, 10, true);
     	Assertions.assertEquals(list4.size(), 1);
+
+    	// 关键字为null时，效果和 "" 等同 
+    	List<String> list4_2 = SaFoxUtil.searchList(dataList, null, null, 0, 10, true);
+    	List<String> list4_3 = SaFoxUtil.searchList(dataList, "", "", 0, 10, true);
+    	Assertions.assertEquals(list4_2.get(0), list4_3.get(0));
+    	
+    	
+    	// 不做分页  
+    	List<String> list5 = SaFoxUtil.searchList(dataList, "", "", -1, 0, true);
+    	Assertions.assertEquals(list5.size(), dataList.size());
+    	
+    	// 反序排列 list6的第一个元素 == dataList最后一个元素 
+    	List<String> list6 = SaFoxUtil.searchList(dataList, "", "", -1, 0, false);
+    	Assertions.assertEquals(list6.get(0), dataList.get(dataList.size() - 1));
     }
 
     @Test
@@ -80,42 +106,103 @@ public class SaFoxUtilTest {
 
     @Test
     public void getValueByType() {
-    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Integer.class).getClass(), Integer.class);
-    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Long.class).getClass(), Long.class);
-    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Double.class).getClass(), Double.class);
+    	// 基础类型，转换 
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", int.class), 1);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", long.class), 1L);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Long.class), 1L);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", String.class), "1");
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", short.class), (short)1);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Short.class), (short)1);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", byte.class), (byte)1);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Byte.class), (byte)1);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", float.class), 1f);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Float.class), 1f);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", double.class), 1.0);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Double.class), 1.0);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", boolean.class), false);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Boolean.class), false);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType(1, String.class), "1");
+
+    	// 复杂类型，还原 
+    	Object obj = new ArrayList<>();
+    	Assertions.assertEquals(SaFoxUtil.getValueByType(obj, List.class).getClass(), ArrayList.class);
     }
 
     @Test
     public void joinParam() {
+    	// 参数为空时，返回原url
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", null), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", ""), "https://sa-token.dev33.cn");
+    	// url为空时，视为空字符串 
+    	Assertions.assertEquals(SaFoxUtil.joinParam(null, "id=1"), "?id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("", "id=1"), "?id=1");
+    	
+    	// 各种情况的测试 
     	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", "id=1"), "https://sa-token.dev33.cn?id=1");
     	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?", "id=1"), "https://sa-token.dev33.cn?id=1");
     	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?name=zhang", "id=1"), "https://sa-token.dev33.cn?name=zhang&id=1");
     	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?name=zhang&", "id=1"), "https://sa-token.dev33.cn?name=zhang&id=1");
     	
+    	// 重载方法测试 
     	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?name=zhang&", "id", 1), "https://sa-token.dev33.cn?name=zhang&id=1");
+    	// url或key为null时，不拼接 
+    	Assertions.assertEquals(SaFoxUtil.joinParam(null, "id", 1), null);
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", null, 1), "https://sa-token.dev33.cn");
+    	// value为null时，会拼接出一个null字符串 
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", "id", null), "https://sa-token.dev33.cn?id=null");
     }
 
     @Test
     public void joinSharpParam() {
+    	// 参数为空时，返回原url
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", null), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", ""), "https://sa-token.dev33.cn");
+    	// url为空时，视为空字符串 
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam(null, "id=1"), "#id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("", "id=1"), "#id=1");
+    	
+    	// 各种情况的测试 
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", "id=1"), "https://sa-token.dev33.cn#id=1");
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#", "id=1"), "https://sa-token.dev33.cn#id=1");
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#name=zhang", "id=1"), "https://sa-token.dev33.cn#name=zhang&id=1");
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#name=zhang&", "id=1"), "https://sa-token.dev33.cn#name=zhang&id=1");
-    	
+
+    	// 重载方法测试 
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#name=zhang&", "id", 1), "https://sa-token.dev33.cn#name=zhang&id=1");
+    	// url或key为null时，不拼接 
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam(null, "id", 1), null);
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", null, 1), "https://sa-token.dev33.cn");
+    	// value为null时，会拼接出一个null字符串 
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", "id", null), "https://sa-token.dev33.cn#id=null");
     }
 
+    @Test
+    public void spliceTwoUrl() {
+    	// 其中一个为null时，直接返回另一个
+    	Assertions.assertEquals(SaFoxUtil.spliceTwoUrl("https://sa-sso-server.com/sso/auth", null), "https://sa-sso-server.com/sso/auth");
+    	Assertions.assertEquals(SaFoxUtil.spliceTwoUrl(null, "https://sa-sso-server.com/sso/auth"), "https://sa-sso-server.com/sso/auth");
+    	
+    	// 正常情况，拼接
+    	Assertions.assertEquals(SaFoxUtil.spliceTwoUrl("https://sa-sso-server.com", "/sso/auth"), "https://sa-sso-server.com/sso/auth");
+    	
+    	// url2以http开头时，直接返回url2 
+    	Assertions.assertEquals(SaFoxUtil.spliceTwoUrl("https://sa-sso-server2.com", "https://sa-sso-server.com/sso/auth2"), "https://sa-sso-server.com/sso/auth2");
+    }
+    
     @Test
     public void arrayJoin() {
     	Assertions.assertEquals(SaFoxUtil.arrayJoin(new String[] {"a", "b", "c"}), "a,b,c");
     	Assertions.assertEquals(SaFoxUtil.arrayJoin(new String[] {}), "");
+    	Assertions.assertEquals(SaFoxUtil.arrayJoin(null), "");
     }
 
     @Test
     public void isUrl() {
     	Assertions.assertTrue(SaFoxUtil.isUrl("https://sa-token.dev33.cn"));
     	Assertions.assertTrue(SaFoxUtil.isUrl("https://www.baidu.com/"));
-    	
+
+    	Assertions.assertFalse(SaFoxUtil.isUrl(null));
+    	Assertions.assertFalse(SaFoxUtil.isUrl(""));
     	Assertions.assertFalse(SaFoxUtil.isUrl("htt://www.baidu.com/"));
     	Assertions.assertFalse(SaFoxUtil.isUrl("https:www.baidu.com/"));
     	Assertions.assertFalse(SaFoxUtil.isUrl("httpswwwbaiducom/"));
@@ -127,10 +214,10 @@ public class SaFoxUtilTest {
     	Assertions.assertEquals(SaFoxUtil.encodeUrl("https://sa-token.dev33.cn"), "https%3A%2F%2Fsa-token.dev33.cn");
     	Assertions.assertEquals(SaFoxUtil.decoderUrl("https%3A%2F%2Fsa-token.dev33.cn"), "https://sa-token.dev33.cn");
     }
-
+    
     @Test
     public void convertStringToList() {
-    	List<String> list = SaFoxUtil.convertStringToList("a,b,c");
+    	List<String> list = SaFoxUtil.convertStringToList("a,b,,c");
     	Assertions.assertEquals(list.size(), 3);
     	Assertions.assertEquals(list.get(0), "a");
     	Assertions.assertEquals(list.get(1), "b");
@@ -151,11 +238,17 @@ public class SaFoxUtilTest {
 
     @Test
     public void convertListToString() {
+    	// 正常
     	List<String> list = Arrays.asList("a", "b", "c");
     	Assertions.assertEquals(SaFoxUtil.convertListToString(list), "a,b,c");
 
+    	// 空数组 
     	List<String> list2 = Arrays.asList();
     	Assertions.assertEquals(SaFoxUtil.convertListToString(list2), "");
+    	
+    	// 空 
+    	List<String> list3 = null;
+    	Assertions.assertEquals(SaFoxUtil.convertListToString(list3), "");
     }
 
     @Test
@@ -181,11 +274,17 @@ public class SaFoxUtilTest {
 
     @Test
     public void convertArrayToString() {
+    	// 正常 
     	String[] array = new String[] {"a", "b", "c"};
     	Assertions.assertEquals(SaFoxUtil.convertArrayToString(array), "a,b,c");
 
-    	String[] array2 = new String[] {};
+    	// null
+    	String[] array2 = null;
     	Assertions.assertEquals(SaFoxUtil.convertArrayToString(array2), "");
+    	
+    	// 空数组 
+    	String[] array3 = new String[] {};
+    	Assertions.assertEquals(SaFoxUtil.convertArrayToString(array3), "");
     }
 
     @Test

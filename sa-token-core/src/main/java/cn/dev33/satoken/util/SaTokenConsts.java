@@ -7,6 +7,8 @@ package cn.dev33.satoken.util;
  */
 public class SaTokenConsts {
 
+	private SaTokenConsts() {
+	}
 	
 	// =================== sa-token版本信息 ===================  
 	

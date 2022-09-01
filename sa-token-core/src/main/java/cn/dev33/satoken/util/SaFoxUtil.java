@@ -23,6 +23,9 @@ import cn.dev33.satoken.exception.SaTokenException;
  */
 public class SaFoxUtil {
 
+	private SaFoxUtil() {
+	}
+	
 	/**
 	 * 打印 Sa-Token 版本字符画
 	 */
@@ -275,8 +278,8 @@ public class SaFoxUtil {
 	 * @return 拼接后的url字符串 
 	 */
 	public static String joinParam(String url, String key, Object value) {
-		// 如果参数为空, 直接返回 
-		if(isEmpty(url) || isEmpty(key) || isEmpty(value)) {
+		// 如果url或者key为空, 直接返回 
+		if(isEmpty(url) || isEmpty(key)) {
 			return url;
 		}
 		return joinParam(url, key + "=" + value);
@@ -327,8 +330,8 @@ public class SaFoxUtil {
 	 * @return 拼接后的url字符串 
 	 */
 	public static String joinSharpParam(String url, String key, Object value) {
-		// 如果参数为空, 直接返回 
-		if(isEmpty(url) || isEmpty(key) || isEmpty(value)) {
+		// 如果url或者key为空, 直接返回 
+		if(isEmpty(url) || isEmpty(key)) {
 			return url;
 		}
 		return joinSharpParam(url, key + "=" + value);
@@ -390,7 +393,7 @@ public class SaFoxUtil {
 	 * @return 拼接后的url字符串 
 	 */
 	public static boolean isUrl(String str) {
-		if(str == null) {
+		if(isEmpty(str)) {
 			return false;
 		}
         return str.toLowerCase().matches(URL_REGEX);
