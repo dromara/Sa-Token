@@ -1,10 +1,10 @@
 package cn.dev33.satoken.stp;
 
+import java.util.List;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
-
-import java.util.List;
 
 /**
  * Sa-Token 权限认证工具类 
@@ -869,137 +869,6 @@ public class StpUtil {
 	 */
 	public static void closeSafe() {
 		stpLogic.closeSafe();
-	}
-
-
-	// =================== 历史API，兼容旧版本 ===================  
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.getLoginType() ，使用方式保持不变 </h1>
-	 * 
-	 * 获取当前StpLogin的loginKey 
-	 * @return 当前StpLogin的loginKey
-	 */
-	@Deprecated
-	public static String getLoginKey(){
-		return stpLogic.getLoginType();
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId) {
-		stpLogic.login(loginId);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id, 并指定登录设备类型
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param device 设备类型 
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId, String device) {
-		stpLogic.login(loginId, device);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id, 并指定登录设备类型
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param isLastingCookie 是否为持久Cookie 
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId, boolean isLastingCookie) {
-		stpLogic.login(loginId, isLastingCookie);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id, 并指定所有登录参数Model 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId, SaLoginModel loginModel) {
-		stpLogic.login(loginId, loginModel);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
-	 * 
-	 * 会话注销，根据账号id （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
-	 * @param loginId 账号id 
-	 */
-	@Deprecated
-	public static void logoutByLoginId(Object loginId) {
-		stpLogic.kickout(loginId);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
-	 * 
-	 * 会话注销，根据账号id and 设备类型 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
-	 * @param loginId 账号id 
-	 * @param device 设备类型 (填null代表注销所有设备类型) 
-	 */
-	@Deprecated
-	public static void logoutByLoginId(Object loginId, String device) {
-		stpLogic.kickout(loginId, device);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchTokenValue(keyword, start, size, sortType) ，使用方式保持不变 </h1>
-	 * 
-	 * 根据条件查询Token 
-	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有) 
-	 * @param size 获取数量 
-	 * 
-	 * @return token集合 
-	 */
-	@Deprecated
-	public static List<String> searchTokenValue(String keyword, int start, int size) {
-		return stpLogic.searchTokenValue(keyword, start, size, true);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchSessionId(keyword, start, size, sortType) ，使用方式保持不变 </h1>
-	 * 
-	 * 根据条件查询SessionId 
-	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有) 
-	 * @param size 获取数量 
-	 * 
-	 * @return sessionId集合 
-	 */
-	@Deprecated
-	public static List<String> searchSessionId(String keyword, int start, int size) {
-		return stpLogic.searchSessionId(keyword, start, size, true);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchTokenSessionId(keyword, start, size, sortType) ，使用方式保持不变 </h1>
-	 * 
-	 * 根据条件查询Token专属Session的Id 
-	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有) 
-	 * @param size 获取数量 
-	 * 
-	 * @return sessionId集合 
-	 */
-	@Deprecated
-	public static List<String> searchTokenSessionId(String keyword, int start, int size) {
-		return stpLogic.searchTokenSessionId(keyword, start, size, true);
 	}
 
 }
