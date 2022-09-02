@@ -13,6 +13,8 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.StpUtil;
@@ -55,6 +57,8 @@ public class BasicsTest {
     	Assertions.assertTrue(StpUtil.isLogin());	
     	Assertions.assertNotNull(token);	// token不为null
     	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
+    	Assertions.assertEquals(StpUtil.getLoginIdAsInt(), 10001);	// loginId=10001 
+    	Assertions.assertEquals(StpUtil.getLoginIdAsString(), "10001");	// loginId=10001 
     	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型 
     	
     	// db数据 验证  
@@ -116,7 +120,12 @@ public class BasicsTest {
     public void testCheckPermission() {
     	StpUtil.login(10001);
     	
-    	// 权限认证 
+    	// 获取权限 
+    	List<String> permissionList = StpUtil.getPermissionList();
+    	List<String> permissionList2 = StpUtil.getPermissionList(10001);
+    	Assertions.assertEquals(permissionList.size(), permissionList2.size());
+    	
+    	// 权限校验  
     	Assertions.assertTrue(StpUtil.hasPermission("user-add"));
     	Assertions.assertTrue(StpUtil.hasPermission("user-list"));
     	Assertions.assertTrue(StpUtil.hasPermission("user"));
@@ -128,6 +137,14 @@ public class BasicsTest {
     	// or 
     	Assertions.assertTrue(StpUtil.hasPermissionOr("art-add", "comment-add"));
     	Assertions.assertFalse(StpUtil.hasPermissionOr("comment-add", "comment-delete"));
+    	// more
+    	Assertions.assertTrue(StpUtil.hasPermission(10001, "user-add"));
+    	Assertions.assertFalse(StpUtil.hasPermission(10002, "user-add"));
+    	
+    	// 抛异常 
+    	Assertions.assertThrows(NotPermissionException.class, () -> StpUtil.checkPermission("goods-add"));
+    	Assertions.assertThrows(NotPermissionException.class, () -> StpUtil.checkPermissionAnd("goods-add", "art-add"));
+    	Assertions.assertDoesNotThrow(() -> StpUtil.checkPermissionOr("goods-add", "art-add"));
     }
 
     // 测试：角色认证
@@ -135,7 +152,12 @@ public class BasicsTest {
     public void testCheckRole() {
     	StpUtil.login(10001);
     	
-    	// 角色认证 
+    	// 获取角色 
+    	List<String> roleList = StpUtil.getRoleList();
+    	List<String> roleList2 = StpUtil.getRoleList(10001);
+    	Assertions.assertEquals(roleList.size(), roleList2.size());
+    	
+    	// 角色校验  
     	Assertions.assertTrue(StpUtil.hasRole("admin")); 
     	Assertions.assertFalse(StpUtil.hasRole("teacher")); 
     	// and
@@ -144,6 +166,14 @@ public class BasicsTest {
     	// or
     	Assertions.assertTrue(StpUtil.hasRoleOr("admin", "ceo")); 
     	Assertions.assertFalse(StpUtil.hasRoleOr("ceo", "cto")); 
+    	// more
+    	Assertions.assertTrue(StpUtil.hasRole(10001, "admin"));
+    	Assertions.assertFalse(StpUtil.hasRole(10002, "admin2"));
+    	
+    	// 抛异常 
+    	Assertions.assertThrows(NotRoleException.class, () -> StpUtil.checkRole("ceo"));
+    	Assertions.assertThrows(NotRoleException.class, () -> StpUtil.checkRoleAnd("ceo", "admin"));
+    	Assertions.assertDoesNotThrow(() -> StpUtil.checkRoleOr("ceo", "admin"));
     }
 	
     // 测试：根据token强制注销 

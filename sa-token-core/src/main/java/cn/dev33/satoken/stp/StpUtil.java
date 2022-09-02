@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class StpUtil {
 	
+	private StpUtil() {}
+	
 	/**
 	 * 账号类型标识 
 	 */

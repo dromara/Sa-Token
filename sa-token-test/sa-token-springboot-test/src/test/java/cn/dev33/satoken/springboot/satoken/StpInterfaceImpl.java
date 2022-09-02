@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.stp.StpInterface;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * 自定义权限验证接口扩展 
@@ -21,7 +22,12 @@ public class StpInterfaceImpl implements StpInterface {
 	 */
 	@Override
 	public List<String> getPermissionList(Object loginId, String loginType) {
-		return Arrays.asList("user*", "art-add", "art-delete", "art-update", "art-get");
+		int id = SaFoxUtil.getValueByType(loginId, int.class);
+		if(id == 10001) {
+			return Arrays.asList("user*", "art-add", "art-delete", "art-update", "art-get");
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -29,7 +35,12 @@ public class StpInterfaceImpl implements StpInterface {
 	 */
 	@Override
 	public List<String> getRoleList(Object loginId, String loginType) {
-		return Arrays.asList("admin", "super-admin");
+		int id = SaFoxUtil.getValueByType(loginId, int.class);
+		if(id == 10001) {
+			return Arrays.asList("admin", "super-admin");
+		} else {
+			return null;
+		}
 	}
 
 }
