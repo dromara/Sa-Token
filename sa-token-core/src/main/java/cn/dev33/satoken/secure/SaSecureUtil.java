@@ -33,6 +33,9 @@ import cn.dev33.satoken.exception.SaTokenException;
  */
 public class SaSecureUtil {
 
+	private SaSecureUtil() {
+	}
+	
 	/**
 	 * Base64编码
 	 */

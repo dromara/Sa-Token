@@ -14,7 +14,7 @@ import cn.dev33.satoken.secure.BCrypt;
 public class BCryptTest {
 
 	@Test
-	public void checkpwTest() {
+	public void testCheckpw() {
 		final String hashed = BCrypt.hashpw("12345");
 //		System.out.println(hashed);
 		Assertions.assertTrue(BCrypt.checkpw("12345", hashed));

@@ -1,5 +1,7 @@
 package cn.dev33.satoken.core.secure;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -60,6 +62,25 @@ public class SaSecureUtilTest {
 
     	// 使用私钥解密
     	String text2 = SaSecureUtil.rsaDecryptByPrivate(privateKey, ciphertext);
+    	Assertions.assertEquals(text2, "Sa-Token 一个轻量级java权限认证框架");
+    }
+
+    @Test
+    public void rsaEncryptByPrivate() throws Exception {
+    	
+    	// 生成私钥和公钥 
+    	HashMap<String, String> map = SaSecureUtil.rsaGenerateKeyPair();
+    	String privateKey = map.get("private"); 
+    	String publicKey = map.get("public");
+
+    	// 文本
+    	String text = "Sa-Token 一个轻量级java权限认证框架";
+
+    	// 使用公钥加密
+    	String ciphertext = SaSecureUtil.rsaEncryptByPrivate(privateKey, text);
+    	
+    	// 使用私钥解密
+    	String text2 = SaSecureUtil.rsaDecryptByPublic(publicKey, ciphertext);
     	Assertions.assertEquals(text2, "Sa-Token 一个轻量级java权限认证框架");
     }
 
