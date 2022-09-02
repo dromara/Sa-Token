@@ -9,6 +9,9 @@ import cn.dev33.satoken.SaManager;
  */
 public class SaTempUtil {
 
+	private SaTempUtil() {
+	}
+	
 	/**
 	 * 根据value创建一个token 
 	 * @param value 指定值

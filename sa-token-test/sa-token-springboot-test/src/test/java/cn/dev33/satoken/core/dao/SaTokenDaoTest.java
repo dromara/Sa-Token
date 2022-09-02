@@ -17,6 +17,7 @@ public class SaTokenDaoTest {
 
 	SaTokenDao dao = new SaTokenDaoDefaultImpl();
 
+	// 字符串存取 
     @Test
     public void get() {
     	dao.set("name", "zhangsan", 60);
@@ -34,6 +35,7 @@ public class SaTokenDaoTest {
     	Assertions.assertEquals(dao.get("name"), null);
     }
 
+	// 对象存取 
     @Test
     public void getObject() {
     	dao.setObject("name", "zhangsan", 60);
@@ -50,6 +52,7 @@ public class SaTokenDaoTest {
     	Assertions.assertEquals(dao.getObject("name"), null);
     }
 
+	// SaSession 存取 
     @Test
     public void getSession() {
     	SaSession session = new SaSession("session-1001");
@@ -69,4 +72,68 @@ public class SaTokenDaoTest {
     	Assertions.assertEquals(dao.getSession("session-1001"), null);
     }
 
+    // 测试永久有效期的写值改值 
+    @Test
+    public void testUpdate() {
+
+    	// ----------- 字符串 相关 
+    	
+    	// 永久有效 
+    	dao.set("age", "20", -1);
+    	Assertions.assertEquals(dao.get("age"), "20");
+    	Assertions.assertEquals(dao.getTimeout("age"), SaTokenDao.NEVER_EXPIRE);
+    	
+    	// 修改值 
+    	dao.update("age", "22");
+    	Assertions.assertEquals(dao.get("age"), "22");
+    	// 有效期应该不变，还是永久 
+    	Assertions.assertEquals(dao.getTimeout("age"), SaTokenDao.NEVER_EXPIRE);
+    	
+    	
+    	// ----------- Session 相关 
+    	
+    	// 永久有效 
+    	SaSession session = new SaSession("session-1001");
+    	dao.setSession(session, -1);
+    	Assertions.assertEquals(dao.getSession("session-1001").getId(), session.getId());
+    	Assertions.assertEquals(dao.getSessionTimeout("session-1001"), SaTokenDao.NEVER_EXPIRE);
+    	
+    	// 修改值 
+    	dao.updateSession(session);
+    	Assertions.assertEquals(dao.getSession("session-1001").getId(), session.getId());
+    	// 有效期应该不变，还是永久 
+    	Assertions.assertEquals(dao.getSessionTimeout("session-1001"), SaTokenDao.NEVER_EXPIRE);
+    	
+    	
+    	// ----------- 无效update 
+    	dao.update("mid", "zhang");
+    	Assertions.assertNull(dao.get("mid"));
+    }
+
+    // timeout为0或者小于-2时，不写入
+    @Test
+    public void test0Timeout() {
+    	
+    	// ----------- 字符串 相关 
+    	
+    	// 字符串 0 和 <-2 
+    	dao.set("avatar", "1.jpg", 0);
+    	Assertions.assertNull(dao.get("avatar"));
+    	
+    	dao.set("avatar", "1.jpg", -9);
+    	Assertions.assertNull(dao.get("avatar"));
+
+    	// ----------- Session 相关 
+    	
+    	// Session 0 和 <-2 
+    	SaSession session = new SaSession("session-1001");
+    	dao.setSession(session, 0);
+    	Assertions.assertNull(dao.getSession("session-1001"));
+
+    	dao.setSession(session, -9);
+    	Assertions.assertNull(dao.getSession("session-1001"));
+    }
+
+    // TO-DO 和时间相关的测试 
+    
 }

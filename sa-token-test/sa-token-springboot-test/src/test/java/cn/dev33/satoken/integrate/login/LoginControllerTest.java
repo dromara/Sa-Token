@@ -1,4 +1,4 @@
-package cn.dev33.satoken.integrate;
+package cn.dev33.satoken.integrate.login;
 
 import java.util.Map;
 
@@ -15,7 +15,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import cn.dev33.satoken.integrate.util.SoMap;
+import cn.dev33.satoken.integrate.StartUpApplication;
+import cn.dev33.satoken.util.SoMap;
 
 /**
  * Sa-Token 登录API测试 

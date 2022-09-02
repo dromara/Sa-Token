@@ -31,4 +31,22 @@ public class IsRunFunctionTest {
     	Assertions.assertEquals(obj.count, 2);
     }
 
+    @Test
+    public void test2() {
+    	
+    	class TempClass{
+    		int count = 1;
+    	}
+    	TempClass obj = new TempClass();
+
+    	IsRunFunction fun = new IsRunFunction(false);
+    	fun.exe(()->{
+    		obj.count = 2;
+    	}).noExe(()->{
+    		obj.count = 3;
+    	});
+    	
+    	Assertions.assertEquals(obj.count, 3);
+    }
+
 }

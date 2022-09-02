@@ -16,7 +16,6 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.temp.SaTempUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -320,29 +319,6 @@ public class BasicsTest {
     	Assertions.assertTrue(list.size() >= 5);
     }
     
-    // 测试：临时Token认证模块
-    @Test
-    public void testSaTemp() {
-    	// 生成token 
-    	String token = SaTempUtil.createToken("group-1014", 200);
-    	Assertions.assertNotNull(token);
-    	
-    	// 解析token  
-    	String value = SaTempUtil.parseToken(token, String.class);
-    	Assertions.assertEquals(value, "group-1014"); 
-    	Assertions.assertEquals(dao.getObject("satoken:temp-token:" + token), "group-1014");
-    	
-    	// 过期时间 
-    	long timeout = SaTempUtil.getTimeout(token);
-    	Assertions.assertTrue(timeout > 195);
-    	
-    	// 回收token 
-    	SaTempUtil.deleteToken(token);
-    	String value2 = SaTempUtil.parseToken(token, String.class);
-    	Assertions.assertEquals(value2, null); 
-    	Assertions.assertEquals(dao.getObject("satoken:temp-token:" + token), null);
-    }
-
     // 测试：二级认证
     @Test
     public void testSafe() {

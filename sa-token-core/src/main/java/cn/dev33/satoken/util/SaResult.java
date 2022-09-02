@@ -109,6 +109,17 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	}
 
 	/**
+	 * 获取一个值 根据自定义key 
+	 * @param <T> 要转换为的类型 
+	 * @param key key
+	 * @param cs 要转换为的类型 
+	 * @return 值 
+	 */
+	public <T> T get(String key, Class<T> cs) {
+		return SaFoxUtil.getValueByType(get(key), cs);
+	}
+
+	/**
 	 * 写入一个Map, 连缀风格
 	 * @param map map 
 	 * @return 对象自身 

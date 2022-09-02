@@ -1,4 +1,4 @@
-package cn.dev33.satoken.integrate.util;
+package cn.dev33.satoken.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

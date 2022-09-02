@@ -34,6 +34,7 @@ public class SaResultTest {
     	// 自定义写值取值 
     	res.set("age", 18);
     	Assertions.assertEquals(res.get("age"), 18);
+    	Assertions.assertEquals(res.get("age", String.class), "18");
     	Assertions.assertEquals(res.getOrDefault("age", 20), 18);
     	Assertions.assertEquals(res.getOrDefault("age2", 20), 20);
     }

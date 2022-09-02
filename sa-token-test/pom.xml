@@ -71,7 +71,8 @@
 	            <artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 	            <configuration>
-	                <argLine>${argLine} -Xms256m -Xmx2048m</argLine>
+	            	<!-- 命令行执行 mvn test 时默认字符集为GBK，与项目设置的utf-8造成冲突，所以这里需要指定字符集为utf-8 -->
+	                <argLine>${argLine} -Xms256m -Xmx2048m -Dfile.encoding=utf-8</argLine>
 	                <forkCount>1</forkCount>
 	                <runOrder>random</runOrder>
 	            </configuration>
