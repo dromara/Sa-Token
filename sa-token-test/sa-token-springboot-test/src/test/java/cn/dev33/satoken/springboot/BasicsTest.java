@@ -17,6 +17,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -46,6 +47,20 @@ public class BasicsTest {
     	System.out.println("\n\n------------------------ 基础测试 end ... \n");
     }
 
+    // 测试：基础API
+    @Test
+    public void testBasicsApi() {
+    	// 基本API 
+    	Assertions.assertEquals(StpUtil.getLoginType(), "login");
+    	Assertions.assertEquals(StpUtil.getStpLogic(), SaManager.getStpLogic("login"));
+    	
+    	// 安全的更新 StpUtil 的 StpLogic 对象 
+    	StpLogic loginStpLogic = new StpLogic("login");
+    	StpUtil.setStpLogic(loginStpLogic);
+    	Assertions.assertEquals(StpUtil.getStpLogic(), loginStpLogic);
+    	Assertions.assertEquals(SaManager.getStpLogic("login"), loginStpLogic);
+    }
+    
     // 测试：登录 
     @Test
     public void doLogin() {
