@@ -3,7 +3,6 @@ package cn.dev33.satoken.integrate.annotation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.dev33.satoken.annotation.SaCheckBasic;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
@@ -21,8 +20,6 @@ import cn.dev33.satoken.util.SaResult;
 @RequestMapping("/at/")
 public class SaAnnotationController {
 
-	// ------------------------ 简单测试 
-	
 	// 登录 
 	@RequestMapping("login")
 	public SaResult login(long id) {
@@ -58,16 +55,9 @@ public class SaAnnotationController {
 		return SaResult.ok();
 	}
 
-	// Http Basic 认证 
-	@SaCheckBasic
-	@RequestMapping("checkBasic")
-	public SaResult checkBasic() {
-		return SaResult.ok();
-	}
-
 	// 开启二级认证 
 	@RequestMapping("openSafe")
-	public SaResult openSafe(long id) {
+	public SaResult openSafe() {
 		StpUtil.openSafe(120);
 		return SaResult.ok();
 	}
@@ -78,6 +68,5 @@ public class SaAnnotationController {
 	public SaResult checkSafe() {
 		return SaResult.ok();
 	}
-	
 	
 }

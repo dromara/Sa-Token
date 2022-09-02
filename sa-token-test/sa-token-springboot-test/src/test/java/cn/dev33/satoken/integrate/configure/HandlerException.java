@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
+import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -32,6 +33,12 @@ public class HandlerException {
 	@ExceptionHandler(NotPermissionException.class)
 	public SaResult handlerNotPermissionException(NotPermissionException e) {
 		return SaResult.error().setCode(403);
+	}
+
+	// 二级认证失败，code=901
+	@ExceptionHandler(NotSafeException.class)
+	public SaResult handlerNotSafeException(NotSafeException e) {
+		return SaResult.error().setCode(901);
 	}
 	
 }

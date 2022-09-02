@@ -62,6 +62,14 @@ public class SaAnnotationControllerTest {
     	// 权限校验or角色校验，通过  
     	SaResult res5 = request("/at/checkPermission2?satoken=" + satoken);
     	Assertions.assertEquals(res5.getCode(), 200);
+
+    	// 开启二级认证 
+    	SaResult res6 = request("/at/openSafe?satoken=" + satoken);
+    	Assertions.assertEquals(res6.getCode(), 200);
+    	
+    	// 校验二级认证，通过
+    	SaResult res7 = request("/at/checkSafe?satoken=" + satoken);
+    	Assertions.assertEquals(res7.getCode(), 200);
     }
 
 	// 校验不通过的情况 
@@ -87,8 +95,23 @@ public class SaAnnotationControllerTest {
     	// 权限校验or角色校验，不通过  
     	SaResult res5 = request("/at/checkPermission2?satoken=" + satoken);
     	Assertions.assertEquals(res5.getCode(), 403);
+    	
+    	// 校验二级认证，不通过
+    	SaResult res7 = request("/at/checkSafe?satoken=" + satoken);
+    	Assertions.assertEquals(res7.getCode(), 901);
     }
 
+	// 测试忽略认证 
+    @Test
+    public void testIgnore() {
+    	// 必须登录才能访问的
+    	SaResult res1 = request("/ig/show1");
+    	Assertions.assertEquals(res1.getCode(), 401);
+    	
+    	// 不登录也可以访问的 
+    	SaResult res2 = request("/ig/show2");
+    	Assertions.assertEquals(res2.getCode(), 200);
+    }
 
     // 封装请求 
     private SaResult request(String path) {
@@ -114,5 +137,4 @@ public class SaAnnotationControllerTest {
 		}
     }
     
-	
 }
