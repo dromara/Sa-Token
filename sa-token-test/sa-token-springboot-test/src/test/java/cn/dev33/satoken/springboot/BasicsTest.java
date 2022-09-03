@@ -2,7 +2,6 @@ package cn.dev33.satoken.springboot;
 
 import java.util.List;
 
-import org.apache.tomcat.util.descriptor.web.LoginConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

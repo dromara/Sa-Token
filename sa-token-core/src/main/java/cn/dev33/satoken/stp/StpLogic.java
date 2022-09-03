@@ -1941,43 +1941,4 @@ public class StpLogic {
 		return SaStrategy.me.hasElement.apply(list, element);
 	}
 
-	// ------------------- 历史API，兼容旧版本 -------------------  
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout(id) ，使用方式保持不变 </h1>
-	 * 
-	 * 会话注销，根据账号id （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
-	 * @param loginId 账号id 
-	 */
-	@Deprecated
- 	public void logoutByLoginId(Object loginId) {
-		this.kickout(loginId);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout(id) ，使用方式保持不变 </h1>
-	 * 
-	 * 会话注销，根据账号id and 设备类型 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
-	 * @param loginId 账号id 
-	 * @param device 设备类型 (填null代表注销所有设备类型) 
-	 */
-	@Deprecated
- 	public void logoutByLoginId(Object loginId, String device) {
-		this.kickout(loginId, device);
-	}
-
-	/**
-	 * 创建一个TokenValue
-	 * @param loginId loginId 
-	 * @param device 设备类型 
-	 * @param timeout 过期时间 
-	 * @return 生成的tokenValue 
-	 */
-	@Deprecated
- 	public String createTokenValue(Object loginId, String device, long timeout) {
- 		return createTokenValue(loginId, device, timeout, null);
-	}
-
 }
