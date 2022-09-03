@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import cn.dev33.satoken.util.SaFoxUtil;
+
 /**
  * Sa-Token配置文件的构建工厂类
  * <p>
@@ -17,6 +19,9 @@ import java.util.Properties;
  */
 public class SaTokenConfigFactory {
 
+	private SaTokenConfigFactory() {
+	}
+	
 	/**
 	 * 配置文件地址 
 	 */
@@ -101,7 +106,7 @@ public class SaTokenConfigFactory {
 				continue;
 			}
 			try {
-				Object valueConvert = getObjectByClass(value, field.getType());
+				Object valueConvert = SaFoxUtil.getValueByType(value, field.getType());
 				field.setAccessible(true);
 				field.set(obj, valueConvert);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
@@ -109,38 +114,6 @@ public class SaTokenConfigFactory {
 			}
 		}
 		return obj;
-	}
-
-	/**
-	 * 工具方法: 将字符串转化为指定数据类型 
-	 * 
-	 * @param str 值
-	 * @param cs  要转换的类型
-	 * @return 转化好的结果
-	 */
-	@SuppressWarnings("unchecked")
-	private static <T> T getObjectByClass(String str, Class<T> cs) {
-		Object value;
-		if (str == null) {
-			value = null;
-		} else if (cs.equals(String.class)) {
-			value = str;
-		} else if (cs.equals(int.class) || cs.equals(Integer.class)) {
-			value = Integer.valueOf(str);
-		} else if (cs.equals(long.class) || cs.equals(Long.class)) {
-			value = Long.valueOf(str);
-		} else if (cs.equals(short.class) || cs.equals(Short.class)) {
-			value = Short.valueOf(str);
-		} else if (cs.equals(float.class) || cs.equals(Float.class)) {
-			value = Float.valueOf(str);
-		} else if (cs.equals(double.class) || cs.equals(Double.class)) {
-			value = Double.valueOf(str);
-		} else if (cs.equals(boolean.class) || cs.equals(Boolean.class)) {
-			value = Boolean.valueOf(str);
-		} else {
-			throw new RuntimeException("未能将值：" + str + "，转换类型为：" + cs, null);
-		}
-		return (T) value;
 	}
 
 }

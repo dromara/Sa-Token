@@ -23,6 +23,9 @@ import cn.dev33.satoken.strategy.SaStrategy;
  */
 public class SaSessionCustomUtil {
 
+	private SaSessionCustomUtil() {
+	}
+	
 	/**
 	 * 添加上指定前缀，防止恶意伪造Session 
 	 */

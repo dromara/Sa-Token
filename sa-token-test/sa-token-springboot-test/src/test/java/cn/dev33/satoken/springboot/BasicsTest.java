@@ -17,7 +17,6 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpLogic;
@@ -313,31 +312,6 @@ public class BasicsTest {
     	SaSession tokenSession = StpUtil.getTokenSession();
     	SaSession tokenSession2 = StpUtil.getTokenSessionByToken(token);
     	Assertions.assertEquals(tokenSession.getId(), tokenSession2.getId());
-    }
-    
-    // 测试自定义Session 
-    @Test
-    public void testCustomSession() {
-    	// 刚开始不存在 
-    	Assertions.assertFalse(SaSessionCustomUtil.isExists("art-1"));
-    	SaSession session = dao.getSession("satoken:custom:session:" + "art-1");
-    	Assertions.assertNull(session);
-    	
-    	// 调用一下 
-    	SaSessionCustomUtil.getSessionById("art-1");
-    	
-    	// 就存在了 
-    	Assertions.assertTrue(SaSessionCustomUtil.isExists("art-1"));
-    	SaSession session2 = dao.getSession("satoken:custom:session:" + "art-1");
-    	Assertions.assertNotNull(session2);
-    	
-    	// 给删除掉 
-    	SaSessionCustomUtil.deleteSessionById("art-1");
-    	
-    	// 就又不存在了 
-    	Assertions.assertFalse(SaSessionCustomUtil.isExists("art-1"));
-    	SaSession session3 = dao.getSession("satoken:custom:session:" + "art-1");
-    	Assertions.assertNull(session3);
     }
     
     // 测试：根据账号id踢人

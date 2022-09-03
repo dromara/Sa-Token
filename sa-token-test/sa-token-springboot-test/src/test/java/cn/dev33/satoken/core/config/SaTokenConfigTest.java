@@ -86,6 +86,8 @@ public class SaTokenConfigTest {
 		SaCookieConfig scc = new SaCookieConfig();
 		config.setCookie(scc);
 		Assertions.assertEquals(config.getCookie(), scc);
+		
+		config.toString();
 	}
 
 	// 从文件读取 
