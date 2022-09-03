@@ -73,7 +73,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	@Override
 	public void updateTimeout(String key, long timeout) {
-		expireMap.put(key, System.currentTimeMillis() + timeout * 1000);
+		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
 
 	
@@ -115,7 +115,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 
 	@Override
 	public void updateObjectTimeout(String key, long timeout) {
-		expireMap.put(key, System.currentTimeMillis() + timeout * 1000);
+		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
 	
 	
