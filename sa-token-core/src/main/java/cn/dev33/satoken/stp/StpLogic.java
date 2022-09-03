@@ -209,7 +209,7 @@ public class StpLogic {
 			tokenValue = request.getParam(keyTokenName);
 		}
 		// 3. 尝试从header里读取 
-		if(tokenValue == null && config.getIsReadHead()){
+		if(tokenValue == null && config.getIsReadHeader()){
 			tokenValue = request.getHeader(keyTokenName);
 		}
 		// 4. 尝试从cookie里读取 

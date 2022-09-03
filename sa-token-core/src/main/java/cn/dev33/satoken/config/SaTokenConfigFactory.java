@@ -28,7 +28,17 @@ public class SaTokenConfigFactory {
 	 * @return 一个SaTokenConfig对象
 	 */
 	public static SaTokenConfig createConfig() {
-		Map<String, String> map = readPropToMap(configPath);
+		return createConfig(configPath);
+	}
+
+	/**
+	 * 根据指定路径路径获取配置信息 
+	 * 
+	 * @param path 配置文件路径 
+	 * @return 一个SaTokenConfig对象
+	 */
+	public static SaTokenConfig createConfig(String path) {
+		Map<String, String> map = readPropToMap(path);
 		if (map == null) {
 			// throw new RuntimeException("找不到配置文件：" + configPath, null);
 		}

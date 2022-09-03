@@ -43,7 +43,7 @@
 **如果是：未能读取到有效Token**
 - 可能1：前端没有提交 Token（最好从前端f12控制台看看请求参数里有 token 吗）。
 - 可能2：前端提交了 Token，但是参数名不对。默认参数名是 `satoken`，可通过配置文件 `sa-token.token-name: satoken` 来更改。
-- 可能3：前端提交了 Token，但是你配置了框架不读取，比如说你配置了 `is-read-head=false`（关闭header读取），此时你再从 header 里提交token，框架就无法读取到。
+- 可能3：前端提交了 Token，但是你配置了框架不读取，比如说你配置了 `is-read-header=false`（关闭header读取），此时你再从 header 里提交token，框架就无法读取到。
 - 可能4：前端提交了 Token，但是 Token前缀 不对，可参考：[自定义 Token 前缀](/up/token-prefix)
 - 可能5：你使用了 Nginx 反向代理，而且配置了 自定义Token名称，而且自定义的名称还带有下划线（比如 shop_token），而且还是你的项目还是从 Header头提交Token的，此时 Nginx 默认会吞掉你的下划线参数，可参考：[nginx做转发时，带下划线的header参数丢失](https://blog.csdn.net/zfw_666666/article/details/124420828)
 
@@ -53,7 +53,7 @@
 - 可能3：在不集成 Redis 的情况下：颁发 token 后，项目重启了，导致 token 无效。
 - 可能4：在集成 Redis 的情况下：颁发 token 后，Redis重启了，导致 token 无效。
 - 可能5：你提交的 token 和框架读取到的 token 不一致：
-	- 可能5.1：比如说你配置了`is-read-head=false`（关闭header读取），然后你从header提交`token-A`，而框架从Cookie里读取`token-B`，导致鉴权不通过（框架读取顺序为`body->header->cookie`）
+	- 可能5.1：比如说你配置了`is-read-header=false`（关闭header读取），然后你从header提交`token-A`，而框架从Cookie里读取`token-B`，导致鉴权不通过（框架读取顺序为`body->header->cookie`）
 	- 可能5.2：比如说你配置了`token-name=x-token`（自定义token名称），此时你从header提交：`satoken:token-A`（参数名没对上），然后框架从header里读取不到你提交的token，转而继续从Cookie读取到了`token-B`。
 - 可能6：在集成 jwt 插件的情况下：
 	- 如果使用的是 Simple 模式：情况和不集成jwt一样。

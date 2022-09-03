@@ -41,7 +41,7 @@ public class SaTokenConfig implements Serializable {
 	private Boolean isReadBody = true;
 
 	/** 是否尝试从header里读取token */
-	private Boolean isReadHead = true;
+	private Boolean isReadHeader = true;
 
 	/** 是否尝试从cookie里读取token */
 	private Boolean isReadCookie = true;
@@ -211,16 +211,16 @@ public class SaTokenConfig implements Serializable {
 	/**
 	 * @return 是否尝试从header里读取token
 	 */
-	public Boolean getIsReadHead() {
-		return isReadHead;
+	public Boolean getIsReadHeader() {
+		return isReadHeader;
 	}
 
 	/**
-	 * @param isReadHead 是否尝试从header里读取token
+	 * @param isReadHeader 是否尝试从header里读取token
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setIsReadHead(Boolean isReadHead) {
-		this.isReadHead = isReadHead;
+	public SaTokenConfig setIsReadHeader(Boolean isReadHeader) {
+		this.isReadHeader = isReadHeader;
 		return this;
 	}
 
@@ -460,7 +460,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", isShare=" + isShare 
 				+ ", maxLoginCount=" + maxLoginCount 
 				+ ", isReadBody=" + isReadBody
-				+ ", isReadHead=" + isReadHead 
+				+ ", isReadHeader=" + isReadHeader 
 				+ ", isReadCookie=" + isReadCookie
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
@@ -480,44 +480,22 @@ public class SaTokenConfig implements Serializable {
 
 	
 	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>
-	 * @param allowConcurrentLogin see note
-	 * @return  see note
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getIsReadHead() ，使用方式保持不变 </h1>
+	 * @return 是否尝试从header里读取token
 	 */
 	@Deprecated
-	public SaTokenConfig setAllowConcurrentLogin(Boolean allowConcurrentLogin) {
-		this.isConcurrent = allowConcurrentLogin;
-		return this;
+	public Boolean getIsReadHead() {
+		return isReadHeader;
 	}
 
 	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsConcurrent() ，使用方式保持不变 </h1>
-	 * @param isV see note
-	 * @return see note
-	 */
-	@Deprecated
-	public SaTokenConfig setIsV(Boolean isV) {
-		this.isPrint = isV;
-		return this;
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getCookie().getDomain() ，使用方式保持不变 </h1>
-	 * @return 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景
-	 */
-	@Deprecated
-	public String getCookieDomain() {
-		return getCookie().getDomain();
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getCookie().setDomain() ，使用方式保持不变 </h1>
-	 * @param cookieDomain 写入Cookie时显式指定的作用域, 常用于单点登录二级域名共享Cookie的场景
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsReadHead() ，使用方式保持不变 </h1>
+	 * @param isReadHeader 是否尝试从header里读取token
 	 * @return 对象自身
 	 */
 	@Deprecated
-	public SaTokenConfig setCookieDomain(String cookieDomain) {
-		this.getCookie().setDomain(cookieDomain);
+	public SaTokenConfig setIsReadHead(Boolean isReadHead) {
+		this.isReadHeader = isReadHead;
 		return this;
 	}
 

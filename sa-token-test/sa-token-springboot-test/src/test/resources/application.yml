@@ -1,0 +1,10 @@
+# 端口
+server:
+    port: 8081
+
+# Sa-Token配置
+sa-token: 
+    # Token名称 (同时也是cookie名称)
+    token-name: satoken
+        
+        
