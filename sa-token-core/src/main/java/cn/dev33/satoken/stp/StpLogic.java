@@ -311,10 +311,10 @@ public class StpLogic {
 	 */
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
 		
+		// ------ 前置检查
 		SaTokenException.throwByNull(id, "账号id不能为空");
-		
-		// ------ 0、前置检查：如果此账号已被封禁. 
 		if(isDisable(id)) {
+			// 如果此账号已被封禁 
 			throw new DisableLoginException(loginType, id, getDisableTime(id));
 		}
 		
@@ -322,32 +322,8 @@ public class StpLogic {
 		SaTokenConfig config = getConfig();
 		loginModel.build(config);
 		
-		// ------ 2、生成一个token  
-		String tokenValue = null;
-		// --- 如果允许并发登录 
-		if(config.getIsConcurrent()) {
-			// 如果配置为共享token, 则尝试从Session签名记录里取出token 
-			if(getConfigOfIsShare()) {
-				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
-				// 即：在 login 时提供了 Extra 数据后，即使配置了 is-share=true 也不能复用旧 Token，必须创建新 Token
-				if(loginModel.getExtraData() == null || loginModel.getExtraData().size() == 0) {
-					tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
-				}
-			} else {
-				// 
-			}
-		} else {
-			// --- 如果不允许并发登录，则将这个账号的历史登录标记为：被顶下线 
-			replaced(id, loginModel.getDevice());
-		}
-		// 如果至此，仍未成功创建tokenValue, 则开始生成一个 
-		if(tokenValue == null) {
-			if(SaFoxUtil.isEmpty(loginModel.getToken())) {
-				tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
-			} else {
-				tokenValue = loginModel.getToken();
-			}
-		}
+		// ------ 2、分配一个可用的 Token  
+		String tokenValue = distUsableToken(id, loginModel);
 		
 		// ------ 3. 获取 User-Session , 续期 
 		SaSession session = getSessionByLoginId(id, true);
@@ -375,6 +351,47 @@ public class StpLogic {
 		return tokenValue;
 	}
 
+	/**
+	 * 为指定账号id的登录操作，分配一个可用的 Token 
+	 * @param id 账号id 
+	 * @param loginModel 此次登录的参数Model 
+	 * @return 返回 Token
+	 */
+	protected String distUsableToken(Object id, SaLoginModel loginModel) {
+		
+		// 获取全局配置
+		Boolean isConcurrent = getConfig().getIsConcurrent();
+		
+		// 如果配置为：不允许并发登录，则先将这个账号的历史登录标记为：被顶下线 
+		if(isConcurrent == false) {
+			replaced(id, loginModel.getDevice());
+		}
+		
+		// 如果调用者预定了Token，则直接返回这个预定的 
+		if(SaFoxUtil.isNotEmpty(loginModel.getToken())) {
+			return loginModel.getToken();
+		} 
+
+		// 只有在配置为 [允许并发登录] 时，才尝试复用旧 Token，这样可以避免不必须的查询，节省开销 
+		if(isConcurrent) {
+			// 全局配置是否允许复用旧 Token 
+			if(getConfigOfIsShare()) {
+				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
+				// 即：在 login 时提供了 Extra 数据后，即使配置了 is-share=true 也不能复用旧 Token，必须创建新 Token 
+				if(loginModel.isSetExtraData() == false) {
+					String tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+					// 复用成功的话就直接返回，否则还是要继续新建Token 
+					if(SaFoxUtil.isNotEmpty(tokenValue)) {
+						return tokenValue;
+					}
+				}
+			}
+		}
+		
+		// 如果代码走到此处，说明未能成功复用旧Token，需要新建Token 
+		return createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+	}
+	
 	// --- 注销 
 	
 	/** 

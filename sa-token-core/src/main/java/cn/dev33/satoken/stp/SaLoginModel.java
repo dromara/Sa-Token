@@ -160,6 +160,17 @@ public class SaLoginModel {
 	}
 
 	/**
+	 * 判断是否设置了扩展数据 
+	 * @return / 
+	 */
+	public boolean isSetExtraData() {
+		if(extraData == null || extraData.size() == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * @return Cookie时长
 	 */
 	public int getCookieTimeout() {
