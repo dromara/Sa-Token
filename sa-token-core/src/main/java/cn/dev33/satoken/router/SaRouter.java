@@ -17,6 +17,9 @@ import cn.dev33.satoken.fun.SaParamRetFunction;
  */
 public class SaRouter {
 
+	private SaRouter() {
+	}
+	
 	// -------------------- 路由匹配相关 -------------------- 
 	
 	/**
@@ -317,38 +320,6 @@ public class SaRouter {
 	 */
 	public static SaRouterStaff back(Object result) {
 		throw new BackResultException(result);
-	}
-
-
-	// -------------------- 历史API兼容 -------------------- 
-	
-	/**
-	 * <h1>本函数设计已过时，请更换为：SaRouter.match(path...).ckeck(fun) </h1>
-	 * 路由匹配，如果匹配成功则执行认证函数 
-	 * @param patterns 路由匹配符集合
-	 * @param function 要执行的方法 
-	 */
-	@Deprecated
-	public static void match(List<String> patterns, SaFunction function) {
-		if(isMatchCurrURI(patterns)) {
-			function.run();
-		}
-	}
-
-	/**
-	 * <h1>本函数设计已过时，请更换为：SaRouter.match(path...).notMatch(path...).ckeck(fun) </h1>
-	 * 路由匹配 (并指定排除匹配符)，如果匹配成功则执行认证函数 
-	 * @param patterns 路由匹配符集合
-	 * @param excludePatterns 要排除的路由匹配符集合
-	 * @param function 要执行的方法 
-	 */
-	@Deprecated
-	public static void match(List<String> patterns, List<String> excludePatterns, SaFunction function) {
-		if(isMatchCurrURI(patterns)) {
-			if(isMatchCurrURI(excludePatterns) == false) {
-				function.run();
-			}
-		}
 	}
 
 }

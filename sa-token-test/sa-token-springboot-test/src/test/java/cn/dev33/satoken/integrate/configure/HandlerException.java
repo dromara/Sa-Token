@@ -3,6 +3,7 @@ package cn.dev33.satoken.integrate.configure;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import cn.dev33.satoken.exception.IdTokenInvalidException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -39,6 +40,12 @@ public class HandlerException {
 	@ExceptionHandler(NotSafeException.class)
 	public SaResult handlerNotSafeException(NotSafeException e) {
 		return SaResult.error().setCode(901);
+	}
+
+	// id-token 校验失败，code=902
+	@ExceptionHandler(IdTokenInvalidException.class)
+	public SaResult handlerIdTokenInvalidException(IdTokenInvalidException e) {
+		return SaResult.error().setCode(902);
 	}
 	
 }

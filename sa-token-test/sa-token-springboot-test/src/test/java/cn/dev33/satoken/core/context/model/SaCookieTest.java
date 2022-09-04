@@ -22,8 +22,18 @@ public class SaCookieTest {
     			.setSameSite("Lax")
     			.setHttpOnly(true)
     			.setSecure(true);
-    			
+
+    	Assertions.assertEquals(cookie.getName(), "satoken");
+    	Assertions.assertEquals(cookie.getValue(), "xxxx-xxxx-xxxx-xxxx");
+    	Assertions.assertEquals(cookie.getDomain(), "https://sa-token.dev33.cn/");
+    	Assertions.assertEquals(cookie.getMaxAge(), -1);
+    	Assertions.assertEquals(cookie.getPath(), "/");
+    	Assertions.assertEquals(cookie.getSameSite(), "Lax");
+    	Assertions.assertEquals(cookie.getHttpOnly(), true);
+    	Assertions.assertEquals(cookie.getSecure(), true);
     	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.dev33.cn/; Path=/; Secure; HttpOnly; sameSite=Lax");
+    	
+    	Assertions.assertNotNull(cookie.toString());
     }
 
 }

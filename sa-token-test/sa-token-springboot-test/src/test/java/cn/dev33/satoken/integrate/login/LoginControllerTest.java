@@ -21,7 +21,7 @@ import cn.dev33.satoken.util.SoMap;
 /**
  * Sa-Token 登录API测试 
  * 
- * @author Auster 
+ * @author kong 
  *
  */
 @SpringBootTest(classes = StartUpApplication.class)
@@ -95,8 +95,8 @@ public class LoginControllerTest {
     private SoMap request(String path) throws Exception {
     	MvcResult mvcResult = mvc.perform(
     			MockMvcRequestBuilders.post(path)
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
-					.accept(MediaType.APPLICATION_JSON_UTF8)
+					.contentType(MediaType.APPLICATION_PROBLEM_JSON)
+					.accept(MediaType.APPLICATION_PROBLEM_JSON)
     			)
     			.andExpect(MockMvcResultMatchers.status().isOk())
     			.andReturn();

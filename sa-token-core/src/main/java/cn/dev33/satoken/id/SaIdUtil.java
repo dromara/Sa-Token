@@ -6,6 +6,8 @@ package cn.dev33.satoken.id;
  *
  */
 public class SaIdUtil {
+	
+	private SaIdUtil(){}
 
 	/**
 	 * 在 Request 上储存 Id-Token 时建议使用的key 
