@@ -5,12 +5,13 @@
 
 注解鉴权 —— 优雅的将鉴权与业务代码分离！
 
-- `@SaCheckLogin`: 登录认证 —— 只有登录之后才能进入该方法。 
-- `@SaCheckRole("admin")`: 角色认证 —— 必须具有指定角色标识才能进入该方法。 
-- `@SaCheckPermission("user:add")`: 权限认证 —— 必须具有指定权限才能进入该方法。 
-- `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法。 
-- `@SaCheckBasic`: HttpBasic认证 —— 只有通过 Basic 认证后才能进入该方法。 
+- `@SaCheckLogin`: 登录认证 —— 只有登录之后才能进入该方法。
+- `@SaCheckRole("admin")`: 角色认证 —— 必须具有指定角色标识才能进入该方法。
+- `@SaCheckPermission("user:add")`: 权限认证 —— 必须具有指定权限才能进入该方法。
+- `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法。
+- `@SaCheckBasic`: HttpBasic认证 —— 只有通过 Basic 认证后才能进入该方法。
 - `@SaIgnore`：忽略认证 —— 表示被修饰的方法或类无需进行注解认证和路由拦截认证。
+- `@SaCheckEnable`：账户可用性校验 —— 校验当前操作账户是否可用, 也可以直接在`@SaCheckLogin`中设置参数`checkEnable="true""`即可完成登陆和账户可用性同事校验。
 
 Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态<br>
 因此，为了使用注解鉴权，**你必须手动将 Sa-Token 的全局拦截器注册到你项目中**
@@ -20,7 +21,7 @@ Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带�
 
 
 ### 1、注册拦截器
-以`SpringBoot2.0`为例，新建配置类`SaTokenConfigure.java` 
+以`SpringBoot2.0`为例，新建配置类`SaTokenConfigure.java`
 
 ``` java
 @Configuration
@@ -44,6 +45,13 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ``` java 
 // 登录认证：只有登录之后才能进入该方法 
 @SaCheckLogin						
+@RequestMapping("info")
+public String info() {
+	return "查询用户信息";
+}
+
+// 登录认证加账户可用性认证：只有登录后, 并且账户可用才能进入该方法 
+@SaCheckLogin(checkEnable = "true")						
 @RequestMapping("info")
 public String info() {
 	return "查询用户信息";
@@ -76,6 +84,13 @@ public String add() {
 public String add() {
 	return "用户增加";
 }
+
+// 账户可用性校验: 只有当前账户可用的情况下, 才能进入方法 
+@SaCheckEnable				
+@RequestMapping("info")
+public String info() {
+	return "查询用户信息";
+}
 ```
 
 注：以上注解都可以加在类上，代表为这个类所有方法进行鉴权
@@ -97,7 +112,7 @@ mode有两种取值：
 - `SaMode.OR`, 标注一组权限，会话只要具有其一即可通过校验。
 
 
-### 4、角色权限双重 “or校验” 
+### 4、角色权限双重 “or校验”
 假设有以下业务场景：一个接口在具有权限 `user-add` 或角色 `admin` 时可以调通。怎么写？
 
 ``` java
@@ -115,7 +130,7 @@ orRole 字段代表权限认证未通过时的次要选择，两者只要其一�
 - 写法三：`orRole = {"admin, manager, staff"}`，代表必须同时具有三个角色。
 
 
-### 5、忽略认证 
+### 5、忽略认证
 
 使用 `@SaIgnore` 可表示一个接口忽略认证：
 

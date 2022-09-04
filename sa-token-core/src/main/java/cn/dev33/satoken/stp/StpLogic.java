@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.annotation.SaCheckRole;
-import cn.dev33.satoken.annotation.SaCheckSafe;
-import cn.dev33.satoken.annotation.SaMode;
+import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
@@ -1606,6 +1602,10 @@ public class StpLogic {
 	 */
 	public void checkByAnnotation(SaCheckLogin at) {
 		this.checkLogin();
+		Object loginId = getLoginId();
+		if ("true".equalsIgnoreCase(at.checkEnable().trim()) && isDisable(loginId)) {
+			throw new DisableLoginException(getLoginType(), loginId, getDisableTime(loginId));
+		}
 	}
 
 	/**
@@ -1656,6 +1656,14 @@ public class StpLogic {
 		this.checkSafe();
 	}
 
+	/**
+	 * 根据注解(@SaCheckEnable)鉴权
+	 *
+	 * @param at 注解对象
+	 */
+	public void checkByAnnotation(SaCheckEnable at) {
+		this.isDisable(getLoginId());
+	}
 	
 	// ------------------- 账号封禁 -------------------  
 
