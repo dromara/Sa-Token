@@ -21,4 +21,9 @@ public @interface SaCheckLogin {
      */
     String type() default "";
 
+    /**
+     * 是否检查当前登陆账号是否禁用 (true: 检查 false: 不检查)
+     * @return see note
+     */
+    String checkEnable() default "false";
 }

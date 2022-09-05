@@ -1,16 +1,12 @@
 package cn.dev33.satoken.solon;
 
+import cn.dev33.satoken.annotation.*;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.event.EventBus;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.SaCheckBasic;
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.annotation.SaCheckRole;
-import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.basic.SaBasicTemplate;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -42,6 +38,7 @@ public class XPluginImp implements Plugin {
         context.beanAroundAdd(SaCheckLogin.class, SaTokenAnnotationInterceptor.INSTANCE);
         context.beanAroundAdd(SaCheckSafe.class, SaTokenAnnotationInterceptor.INSTANCE);
         context.beanAroundAdd(SaCheckBasic.class, SaTokenAnnotationInterceptor.INSTANCE);
+        context.beanAroundAdd(SaCheckEnable.class, SaTokenAnnotationInterceptor.INSTANCE);
 
         //集成初始化
 
