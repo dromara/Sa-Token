@@ -3,6 +3,7 @@ package cn.dev33.satoken.integrate.more;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -33,8 +34,17 @@ public class MoreController {
     			&& SaFoxUtil.equals(req.getHeader("div", "zhang"), "val")
     			&& SaFoxUtil.equals(req.getHeader("div2", "zhang"), "zhang")
     			;
-    	
+
+    	System.out.println("::: "+SaHolder.getRequest().getUrl());
+    	SaHolder.getResponse().setServer("sa-server");
     	return SaResult.data(flag);
     }
 
+	// Http Basic 认证 
+    @RequestMapping("basicAuth")
+    public SaResult basicAuth() {
+    	SaBasicUtil.check("sa:123456");
+    	return SaResult.ok();
+    }
+    
 }

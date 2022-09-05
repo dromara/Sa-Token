@@ -1,6 +1,7 @@
 package cn.dev33.satoken.springboot;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -10,18 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.DisableLoginException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
+import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
+import cn.dev33.satoken.util.SoMap;
 
 /**
  * Sa-Token 基础API测试 
@@ -590,6 +595,28 @@ public class BasicsTest {
     	// 不会抛出异常 
     	Assertions.assertDoesNotThrow(() -> StpUtil.checkActivityTimeout());
     }
-    
+
+    // 测试，上下文 API 
+    @Test
+    public void testSaTokenContext() {
+    	SaTokenContext context = SaHolder.getContext();
+    	Assertions.assertTrue(context.matchPath("/user/**", "/user/add"));
+    }
+
+    // 测试json转换 
+    @Test
+    public void testSaJsonTemplate() {
+    	SaJsonTemplate saJsonTemplate = SaManager.getSaJsonTemplate();
+    	
+    	// map 转 json 
+    	SoMap map = SoMap.getSoMap("name", "zhangsan");
+    	String jsonString = saJsonTemplate.toJsonString(map);
+    	Assertions.assertEquals(jsonString, "{\"name\":\"zhangsan\"}");
+    	
+    	// json 转 map 
+    	Map<String, Object> map2 = saJsonTemplate.parseJsonToMap("{\"name\":\"zhangsan\"}");
+    	Assertions.assertEquals(map2.get("name"), "zhangsan");
+    }
+
     
 }

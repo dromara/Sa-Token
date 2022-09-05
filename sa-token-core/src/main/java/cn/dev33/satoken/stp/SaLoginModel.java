@@ -227,13 +227,4 @@ public class SaLoginModel {
 		return new SaLoginModel();
 	}
 
-	
-	/**
-	 * 更换为 getDeviceOrDefault() 
-	 * @return / 
-	 */
-	@Deprecated
-	public String getDeviceOrDefalut() {
-		return getDeviceOrDefault();
-	}
 }

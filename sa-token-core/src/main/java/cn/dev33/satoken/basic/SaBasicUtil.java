@@ -7,6 +7,9 @@ package cn.dev33.satoken.basic;
  */
 public class SaBasicUtil {
 
+	private SaBasicUtil() {
+	}
+	
 	/**
 	 * 底层 SaBasicTemplate 对象 
 	 */

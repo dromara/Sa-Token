@@ -3,6 +3,8 @@ package cn.dev33.satoken.integrate.router;
 import java.util.Arrays;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,6 +90,7 @@ public class RouterControllerTest {
     	Assertions.assertTrue(SaRouter.notMatch(r -> false).isHit());
 	}
 	
+	// 各种路由测试 
 	@Test
 	public void testRouter() {
 		// getInfo 
@@ -149,9 +152,69 @@ public class RouterControllerTest {
 		// getInfo15
 		SaResult res15 = request("/rt/getInfo15");
 		Assertions.assertEquals(res15.getCode(), 215);
+		
+	}
+
+	// 测试 getUrl() 
+	@Test
+	public void testGetUrl() {
+		// getInfo_101 
+		SaResult res = request("/rt/getInfo_101");
+		Assertions.assertTrue(res.getData().toString().endsWith("/rt/getInfo_101"));
+		
+		// getInfo_101，不包括后面的参数 
+		SaResult res2 = request("/rt/getInfo_101?id=1");
+		Assertions.assertTrue(res2.getData().toString().endsWith("/rt/getInfo_101"));
+		
+		// 自定义当前域名 
+		SaManager.getConfig().setCurrDomain("http://xxx.com");
+		SaResult res3 = request("/rt/getInfo_101?id=1");
+		Assertions.assertEquals(res3.getData().toString(), "http://xxx.com/rt/getInfo_101");
+		SaManager.getConfig().setCurrDomain(null);
+	}
+
+	// 测试读取Cookie 
+	@Test
+	public void testGetCookie() throws Exception {
+		MvcResult mvcResult = mvc.perform(
+				MockMvcRequestBuilders.post("/rt/getInfo_102")
+				.contentType(MediaType.APPLICATION_PROBLEM_JSON)
+				.accept(MediaType.APPLICATION_PROBLEM_JSON)
+				.cookie(new Cookie("x-token", "token-111"))
+			)
+			.andExpect(MockMvcResultMatchers.status().is(200))
+			.andReturn();
+		
+		// 转 Map 
+		String content = mvcResult.getResponse().getContentAsString();
+		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(content);
+		
+		// 转 SaResult 对象 
+		SaResult res = new SaResult().setMap(map);
+		Assertions.assertEquals(res.getData(), "token-111");
 	}
 	
+	// 测试重定向 
+	@Test
+	public void testRedirect() throws Exception {
+		MvcResult mvcResult = mvc.perform(
+				MockMvcRequestBuilders.post("/rt/getInfo16")
+				.contentType(MediaType.APPLICATION_PROBLEM_JSON)
+				.accept(MediaType.APPLICATION_PROBLEM_JSON)
+			)
+			.andExpect(MockMvcResultMatchers.status().is(302))
+			.andReturn();
+	
+		Assertions.assertEquals(mvcResult.getResponse().getHeader("Location"), "/rt/getInfo3");
+	}
 
+	// 测试转发 
+	@Test
+	public void testForward() {
+		SaResult res = request("/rt/getInfo_103");
+		Assertions.assertEquals(res.getCode(), 200);
+	}
+	
     // 封装请求 
     private SaResult request(String path) {
     	try {

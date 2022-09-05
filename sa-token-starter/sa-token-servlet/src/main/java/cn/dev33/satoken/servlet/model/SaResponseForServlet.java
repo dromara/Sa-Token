@@ -1,7 +1,5 @@
 package cn.dev33.satoken.servlet.model;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
 
 import cn.dev33.satoken.context.model.SaResponse;
@@ -71,7 +69,7 @@ public class SaResponseForServlet implements SaResponse {
 	public Object redirect(String url) {
 		try {
 			response.sendRedirect(url);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new SaTokenException(e);
 		}
 		return null;

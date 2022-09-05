@@ -2,6 +2,7 @@ package cn.dev33.satoken.integrate.router;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Assertions;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,6 +11,7 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -70,10 +72,22 @@ public class SaTokenConfigure2 implements WebMvcConfigurer {
         	
 //        	SaRouter.match(Arrays.asList("/rt/getInfo15", "/rt/getInfo16"))
         	if(SaRouter.isMatchCurrURI("/rt/getInfo15")) {
-        		SaRouter.newMatch().free(r -> SaRouter.back(SaResult.code(215)));
+    			if(SaHolder.getRequest().getCookieValue("ddd") == null
+    					&& SaHolder.getStorage().getSource() == SpringMVCUtil.getRequest()
+    					&& SaHolder.getRequest().getSource() == SpringMVCUtil.getRequest()
+    					&& SaHolder.getResponse().getSource() == SpringMVCUtil.getResponse()
+    					) {
+    				SaRouter.newMatch().free(r -> SaRouter.back(SaResult.code(215)));
+    			}
         	}
+        	
+        	SaRouter.match("/rt/getInfo16", () -> {
+        		Assertions.assertThrows(Exception.class, () -> SaHolder.getResponse().redirect(null));
+        		SaHolder.getResponse().redirect("/rt/getInfo3");
+        	});
         	
         })).addPathPatterns("/**");
     }
+    
 }
 

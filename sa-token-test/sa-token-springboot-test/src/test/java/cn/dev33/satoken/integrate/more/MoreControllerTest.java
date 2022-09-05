@@ -64,8 +64,48 @@ public class MoreControllerTest {
 	public void testApi() {
 		SaResult res = request("/more/getInfo?name=zhang");
 		Assertions.assertEquals(res.getData(), true);
+	}
+
+	// Http Basic 认证 
+	@Test
+	public void testBasic() throws Exception {
+		
+		// ---------------- 认证不通过
+		MvcResult mvcResult = mvc.perform(
+				MockMvcRequestBuilders.post("/more/basicAuth")
+				.contentType(MediaType.APPLICATION_PROBLEM_JSON)
+				.accept(MediaType.APPLICATION_PROBLEM_JSON)
+			)
+			.andExpect(MockMvcResultMatchers.status().is(401))
+			.andReturn();
+	
+		// 转 Map 
+		String content = mvcResult.getResponse().getContentAsString();
+		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(content);
+		// 转 SaResult 对象 
+		SaResult res = new SaResult().setMap(map);
+		Assertions.assertEquals(res.getCode(), 903);
+		// 会有一个特殊响应头
+		String header = mvcResult.getResponse().getHeader("WWW-Authenticate");
+		Assertions.assertEquals(header, "Basic Realm=Sa-Token");
 		
 		
+		// ---------------- 认证通过
+    	MvcResult mvcResult2 = mvc.perform(
+    				MockMvcRequestBuilders.post("/more/basicAuth")
+					.contentType(MediaType.APPLICATION_PROBLEM_JSON)
+					.accept(MediaType.APPLICATION_PROBLEM_JSON)
+					.header("Authorization", "Basic c2E6MTIzNDU2")
+    			)
+    			.andExpect(MockMvcResultMatchers.status().isOk())
+    			.andReturn();
+    	
+		// 转 Map 
+		String content2 = mvcResult2.getResponse().getContentAsString();
+		Map<String, Object> map2 = SaManager.getSaJsonTemplate().parseJsonToMap(content2);
+		// 转 SaResult 对象 
+		SaResult res2 = new SaResult().setMap(map2);
+		Assertions.assertEquals(res2.getCode(), 200);
 	}
 	
 
