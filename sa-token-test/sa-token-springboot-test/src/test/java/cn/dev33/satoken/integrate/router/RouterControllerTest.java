@@ -208,6 +208,23 @@ public class RouterControllerTest {
 		Assertions.assertEquals(mvcResult.getResponse().getHeader("Location"), "/rt/getInfo3");
 	}
 
+	// 空接口 
+	@Test
+	public void testGetInfo200() {
+		SaResult res = request("/rt/getInfo_200");
+		Assertions.assertEquals(res.getCode(), 200);
+		SaResult res1 = request("/rt/getInfo_201");
+		Assertions.assertEquals(res1.getCode(), 201);
+		SaResult res2 = request("/rt/getInfo_202");
+		Assertions.assertEquals(res2.getCode(), 401);
+		
+		// 登录拿到Token 
+    	SaResult resLogin = request("/rt/login?id=10001");
+    	String satoken = resLogin.get("token", String.class);
+		SaResult res3 = request("/rt/getInfo_202?satoken=" + satoken);
+		Assertions.assertEquals(res3.getCode(), 200);
+	}
+
 	// 测试转发 
 	@Test
 	public void testForward() {

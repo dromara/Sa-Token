@@ -1,7 +1,11 @@
 package cn.dev33.satoken.springboot;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -9,6 +13,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockFilterChain;
+import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
@@ -19,8 +25,13 @@ import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
+import cn.dev33.satoken.exception.SaJsonConvertException;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.spring.SaPathMatcherHolder;
+import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpLogic;
@@ -41,6 +52,9 @@ public class BasicsTest {
 	// 持久化Bean 
 	@Autowired(required = false)
 	SaTokenDao dao = SaManager.getSaTokenDao();
+	
+	@Autowired
+	PathMatcher pathMatcher;
 	
 	// 开始 
 	@BeforeAll
@@ -600,7 +614,18 @@ public class BasicsTest {
     @Test
     public void testSaTokenContext() {
     	SaTokenContext context = SaHolder.getContext();
+    	// path 匹配 
     	Assertions.assertTrue(context.matchPath("/user/**", "/user/add"));
+    	// context 是否有效 
+    	Assertions.assertTrue(context.isValid());
+    	// 是否为web环境 
+    	Assertions.assertTrue(SpringMVCUtil.isWeb());
+    	// pathMatcher
+    	// Assertions.assertEquals(pathMatcher, SaPathMatcherHolder.getPathMatcher());
+    	// 自创建 
+    	SaPathMatcherHolder.pathMatcher = null;
+    	Assertions.assertNotNull(SaPathMatcherHolder.getPathMatcher());
+    	SaPathMatcherHolder.pathMatcher = pathMatcher;
     }
 
     // 测试json转换 
@@ -613,9 +638,39 @@ public class BasicsTest {
     	String jsonString = saJsonTemplate.toJsonString(map);
     	Assertions.assertEquals(jsonString, "{\"name\":\"zhangsan\"}");
     	
+    	// 抛异常 
+    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.toJsonString(new Object()));
+    	
     	// json 转 map 
     	Map<String, Object> map2 = saJsonTemplate.parseJsonToMap("{\"name\":\"zhangsan\"}");
     	Assertions.assertEquals(map2.get("name"), "zhangsan");
+    	
+    	// 抛异常 
+    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.parseJsonToMap(""));
+    }
+
+    // 测试过滤器、拦截器 基础API 
+    @Test
+    public void testFilter() throws IOException, ServletException {
+    	// 过滤器 
+    	SaServletFilter filter = new SaServletFilter()
+    			.addInclude("/**")
+    			.setIncludeList(Arrays.asList("/**"))
+    			.addExclude("/favicon.ico")
+    			.setExcludeList(Arrays.asList("/favicon.ico"))
+    			.setAuth(obj -> {})
+    			.setBeforeAuth(obj -> {})
+    			;
+    	Assertions.assertEquals(filter.getIncludeList().get(0), "/**");
+    	Assertions.assertEquals(filter.getExcludeList().get(0), "/favicon.ico");
+    	// 以下功能无法测试
+    	filter.init(null);
+    	filter.doFilter(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse(), new MockFilterChain());
+    	filter.destroy();
+    	Assertions.assertThrows(SaTokenException.class, () -> filter.error.run(new SaTokenException("xxx")));
+    	
+    	filter.setError(e -> e.getMessage());
+    	Assertions.assertEquals(filter.error.run(new SaTokenException("msg")), "msg");
     }
 
     

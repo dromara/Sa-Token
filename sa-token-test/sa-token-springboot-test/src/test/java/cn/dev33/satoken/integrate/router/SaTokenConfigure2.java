@@ -27,7 +27,9 @@ public class SaTokenConfigure2 implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 路由鉴权
-        registry.addInterceptor(new SaInterceptor(handle -> {
+        registry.addInterceptor(new SaInterceptor(handle -> {})
+        		.isAnnotation(true)
+        		.setAuth(handle -> {
         	
         	// 匹配 getInfo ，返回code=201 
         	SaRouter.match("/**")

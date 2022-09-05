@@ -15,6 +15,7 @@ import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.exception.SaSsoExceptionCode;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -32,6 +33,9 @@ public class SaSsoTemplate {
 	public StpLogic stpLogic;
 	public SaSsoTemplate(StpLogic stpLogic) {
 		this.stpLogic = stpLogic;
+	}
+	public SaSsoTemplate() {
+		this.stpLogic = StpUtil.stpLogic;
 	}
 	
 	// ---------------------- Ticket 操作 ---------------------- 

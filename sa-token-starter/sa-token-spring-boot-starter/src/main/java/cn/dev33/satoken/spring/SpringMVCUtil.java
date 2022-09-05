@@ -15,6 +15,9 @@ import cn.dev33.satoken.exception.SaTokenException;
  */
 public class SpringMVCUtil {
 	
+	private SpringMVCUtil() {
+	}
+	
 	/**
 	 * 获取当前会话的 request 
 	 * @return request

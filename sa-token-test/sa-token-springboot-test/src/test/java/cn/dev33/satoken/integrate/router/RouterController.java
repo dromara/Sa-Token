@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -44,5 +45,24 @@ public class RouterController {
     	SaHolder.getRequest().forward("/rt/getInfo_102");
     	return SaResult.ok();
     }
+
+    // 空接口 
+    @RequestMapping("getInfo_200")
+    public SaResult getInfo_200() {
+    	return SaResult.ok();
+    }
+    @RequestMapping("getInfo_201")
+    public SaResult getInfo_201() {
+    	return SaResult.ok();
+    }
+    @RequestMapping("getInfo_202")
+    public SaResult getInfo_202() {
+    	return SaResult.ok();
+    }
+	@RequestMapping("login")
+	public SaResult login(long id) {
+		StpUtil.login(id);
+		return SaResult.ok().set("token", StpUtil.getTokenValue());
+	}
 
 }

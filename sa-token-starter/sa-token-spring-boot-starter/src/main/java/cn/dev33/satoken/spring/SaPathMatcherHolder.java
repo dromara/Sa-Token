@@ -9,6 +9,9 @@ import org.springframework.util.PathMatcher;
  *
  */
 public class SaPathMatcherHolder {
+	
+	private SaPathMatcherHolder() {
+	}
 
 	/**
 	 * 路由匹配器
