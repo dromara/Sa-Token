@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pj.util.AjaxJson;
 
-import cn.dev33.satoken.exception.DisableLoginException;
+import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -44,8 +44,8 @@ public class GlobalException {
 			NotPermissionException ee = (NotPermissionException) e;
 			aj = AjaxJson.getNotJur("无此权限：" + ee.getPermission());
 		} 
-		else if(e instanceof DisableLoginException) {	// 如果是被封禁异常
-			DisableLoginException ee = (DisableLoginException) e;
+		else if(e instanceof DisableServiceException) {	// 如果是被封禁异常
+			DisableServiceException ee = (DisableServiceException) e;
 			aj = AjaxJson.getNotJur("账号被封禁：" + ee.getDisableTime() + "秒后解封");
 		} 
 		else {	// 普通异常, 输出：500 + 异常信息 

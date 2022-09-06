@@ -20,7 +20,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.exception.DisableLoginException;
+import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -359,7 +359,7 @@ public class BasicsTest {
     	// 封号 
     	StpUtil.disable(10007, 200);
     	Assertions.assertTrue(StpUtil.isDisable(10007));
-    	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableLoginException.BE_VALUE); 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableServiceException.BE_VALUE); 
     	
     	// 封号时间 
     	long disableTime = StpUtil.getDisableTime(10007);
@@ -370,9 +370,9 @@ public class BasicsTest {
     	Assertions.assertFalse(StpUtil.isDisable(10007));
     	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), null); 
 
-    	// 封号后登陆 (会抛出 DisableLoginException 异常)
+    	// 封号后检测一下 (会抛出 DisableLoginException 异常) 
     	StpUtil.disable(10007, 200); 
-		Assertions.assertThrows(DisableLoginException.class, () -> StpUtil.login(10007));
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisable(10007));
     }
 
     // 测试：身份切换 

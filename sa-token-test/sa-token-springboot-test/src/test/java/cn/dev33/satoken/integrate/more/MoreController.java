@@ -35,7 +35,6 @@ public class MoreController {
     			&& SaFoxUtil.equals(req.getHeader("div2", "zhang"), "zhang")
     			;
 
-    	System.out.println("::: "+SaHolder.getRequest().getUrl());
     	SaHolder.getResponse().setServer("sa-server");
     	return SaResult.data(flag);
     }

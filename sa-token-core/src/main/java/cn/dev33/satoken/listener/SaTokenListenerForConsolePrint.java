@@ -49,17 +49,17 @@ public class SaTokenListenerForConsolePrint implements SaTokenListener {
 	 * 每次被封禁时触发
 	 */
 	@Override
-	public void doDisable(String loginType, Object loginId, long disableTime) {
+	public void doDisable(String loginType, Object loginId, String service, long disableTime) {
 		Date date = new Date(System.currentTimeMillis() + disableTime * 1000);
-		println("账号[" + loginId + "]被封禁 (解封时间: " + SaFoxUtil.formatDate(date) + ")");
+		println("账号[" + loginId + "] " + service + " 服务被封禁 (解封时间: " + SaFoxUtil.formatDate(date) + ")");
 	}
 
 	/**
 	 * 每次被解封时触发
 	 */
 	@Override
-	public void doUntieDisable(String loginType, Object loginId) {
-		println("账号[" + loginId + "]被解除封禁");
+	public void doUntieDisable(String loginType, Object loginId, String service) {
+		println("账号[" + loginId + "] " + service + " 服务被解除封禁");
 	}
 
 	/**

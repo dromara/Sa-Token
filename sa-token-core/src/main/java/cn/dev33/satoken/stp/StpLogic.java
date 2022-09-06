@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.*;
+import cn.dev33.satoken.annotation.SaCheckDisable;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
@@ -15,7 +20,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
-import cn.dev33.satoken.exception.DisableLoginException;
+import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -309,10 +314,6 @@ public class StpLogic {
 		
 		// ------ 前置检查
 		SaTokenException.throwByNull(id, "账号id不能为空");
-		if(isDisable(id)) {
-			// 如果此账号已被封禁 
-			throw new DisableLoginException(loginType, id, getDisableTime(id));
-		}
 		
 		// ------ 1、初始化 loginModel 
 		SaTokenConfig config = getConfig();
@@ -1602,10 +1603,6 @@ public class StpLogic {
 	 */
 	public void checkByAnnotation(SaCheckLogin at) {
 		this.checkLogin();
-		Object loginId = getLoginId();
-		if ("true".equalsIgnoreCase(at.checkEnable().trim()) && isDisable(loginId)) {
-			throw new DisableLoginException(getLoginType(), loginId, getDisableTime(loginId));
-		}
 	}
 
 	/**
@@ -1661,29 +1658,43 @@ public class StpLogic {
 	 *
 	 * @param at 注解对象
 	 */
-	public void checkByAnnotation(SaCheckEnable at) {
-		this.isDisable(getLoginId());
+	public void checkByAnnotation(SaCheckDisable at) {
+		this.checkDisable(getLoginId(), at.value());
 	}
 	
 	// ------------------- 账号封禁 -------------------  
 
 	/**
 	 * 封禁指定账号
-	 * <p> 此方法不会直接将此账号id踢下线，而是在对方再次登录时抛出`DisableLoginException`异常 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
 	 * @param loginId 指定账号id 
 	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
 	public void disable(Object loginId, long disableTime) {
-		// 空值不做处理
+		disable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, disableTime);
+	}
+
+	/**
+	 * 封禁 指定账号 指定服务 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * @param loginId 指定账号id 
+	 * @param service 指定服务 
+	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public void disable(Object loginId, String service, long disableTime) {
+		// 空值检查 
 		if(SaFoxUtil.isEmpty(loginId)) {
-			return;
+			throw new SaTokenException("请提供要封禁的账号");
+		}
+		if(SaFoxUtil.isEmpty(service)) {
+			throw new SaTokenException("请提供要封禁的服务");
 		}
 
 		// 标注为已被封禁
-		getSaTokenDao().set(splicingKeyDisable(loginId), DisableLoginException.BE_VALUE, disableTime);
+		getSaTokenDao().set(splicingKeyDisable(loginId, service), DisableServiceException.BE_VALUE, disableTime);
  		
  		// $$ 发布事件 
-		SaTokenEventCenter.doDisable(loginType, loginId, disableTime);
+		SaTokenEventCenter.doDisable(loginType, loginId, service, disableTime);
 	}
 	
 	/**
@@ -1692,27 +1703,90 @@ public class StpLogic {
 	 * @return see note
 	 */
 	public boolean isDisable(Object loginId) {
-		return getSaTokenDao().get(splicingKeyDisable(loginId)) != null;
+		return isDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
 	}
 
 	/**
-	 * 获取指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * 指定账号 指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return see note
+	 */
+	public boolean isDisable(Object loginId, String service) {
+		return getSaTokenDao().get(splicingKeyDisable(loginId, service)) != null;
+	}
+
+	/**
+	 * 校验指定账号是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 */
+	public void checkDisable(Object loginId) {
+		checkDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
+	}
+	
+	/**
+	 * 校验 指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public void checkDisable(Object loginId, String... services) {
+		if(services != null) {
+			for (String service : services) {
+				if(isDisable(loginId, service)) {
+					throw new DisableServiceException(loginType, loginId, service, getDisableTime(loginId, service));
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 获取 指定账号 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
 	 * @param loginId 账号id
 	 * @return see note 
 	 */
 	public long getDisableTime(Object loginId) {
-		return getSaTokenDao().getTimeout(splicingKeyDisable(loginId));
+		return getDisableTime(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
 	}
-	
+
+	/**
+	 * 获取 指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return see note 
+	 */
+	public long getDisableTime(Object loginId, String service) {
+		return getSaTokenDao().getTimeout(splicingKeyDisable(loginId, service));
+	}
+
 	/**
 	 * 解封指定账号
 	 * @param loginId 账号id
 	 */
 	public void untieDisable(Object loginId) {
-		getSaTokenDao().delete(splicingKeyDisable(loginId));
-		
- 		// $$ 发布事件 
-		SaTokenEventCenter.doUntieDisable(loginType, loginId);
+		untieDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
+	}
+	
+	/**
+	 * 解封指定账号、指定服务
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public void untieDisable(Object loginId, String... services) {
+		// 空值检查 
+		if(SaFoxUtil.isEmpty(loginId)) {
+			throw new SaTokenException("请提供要解禁的账号");
+		}
+		if(services == null || services.length == 0) {
+			throw new SaTokenException("请提供要解禁的服务");
+		}
+				
+		for (String service : services) {
+			// 解封 
+			getSaTokenDao().delete(splicingKeyDisable(loginId, service));
+			
+	 		// $$ 发布事件 
+			SaTokenEventCenter.doUntieDisable(loginType, loginId, service);
+		}
 	}
 	
 	
@@ -1884,10 +1958,11 @@ public class StpLogic {
 	/**  
 	 * 拼接key： 账号封禁
 	 * @param loginId 账号id
+	 * @param service 具体封禁的服务 
 	 * @return key 
 	 */
-	public String splicingKeyDisable(Object loginId) {
-		return getConfig().getTokenName() + ":" + loginType + ":disable:" + loginId;
+	public String splicingKeyDisable(Object loginId, String service) {
+		return getConfig().getTokenName() + ":" + loginType + ":disable:" + service + ":" + loginId;
 	}
 
 	

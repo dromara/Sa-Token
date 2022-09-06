@@ -47,16 +47,18 @@ public interface SaTokenListener {
 	 * 每次被封禁时触发
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
+	 * @param service 指定服务 
 	 * @param disableTime 封禁时长，单位: 秒
 	 */
-	public void doDisable(String loginType, Object loginId, long disableTime);
+	public void doDisable(String loginType, Object loginId, String service, long disableTime);
 	
 	/**
 	 * 每次被解封时触发
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
+	 * @param service 指定服务 
 	 */
-	public void doUntieDisable(String loginType, Object loginId);
+	public void doUntieDisable(String loginType, Object loginId, String service);
 	
 	/**
 	 * 每次创建Session时触发

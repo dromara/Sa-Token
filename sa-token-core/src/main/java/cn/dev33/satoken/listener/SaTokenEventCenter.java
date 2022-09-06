@@ -176,11 +176,12 @@ public class SaTokenEventCenter {
 	 * 每次被封禁时触发
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
+	 * @param service 指定服务 
 	 * @param disableTime 封禁时长，单位: 秒
 	 */
-	public static void doDisable(String loginType, Object loginId, long disableTime) {
+	public static void doDisable(String loginType, Object loginId, String service, long disableTime) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doDisable(loginType, loginId, disableTime);
+			listener.doDisable(loginType, loginId, service, disableTime);
 		}
 	}
 	
@@ -188,10 +189,11 @@ public class SaTokenEventCenter {
 	 * 每次被解封时触发
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
+	 * @param service 指定服务 
 	 */
-	public static void doUntieDisable(String loginType, Object loginId) {
+	public static void doUntieDisable(String loginType, Object loginId, String service) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doUntieDisable(loginType, loginId);
+			listener.doUntieDisable(loginType, loginId, service);
 		}
 	}
 	

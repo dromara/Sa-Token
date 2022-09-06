@@ -53,6 +53,11 @@ public class SaTokenConsts {
 	 * 常量key标记: 在登录时，默认使用的设备类型 
 	 */
 	public static final String DEFAULT_LOGIN_DEVICE = "default-device"; 
+
+	/**
+	 * 常量key标记: 在封禁账号时，默认封禁的服务类型 
+	 */
+	public static final String DEFAULT_DISABLE_SERVICE = "login"; 
 	
 	/**
 	 * 常量key标记: 在进行临时身份切换时使用的key 

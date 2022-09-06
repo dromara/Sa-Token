@@ -761,12 +761,23 @@ public class StpUtil {
 
 	/**
 	 * 封禁指定账号
-	 * <p> 此方法不会直接将此账号id踢下线，而是在对方再次登录时抛出`DisableLoginException`异常 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
 	 * @param loginId 指定账号id 
 	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
 	public static void disable(Object loginId, long disableTime) {
 		stpLogic.disable(loginId, disableTime);
+	}
+
+	/**
+	 * 封禁 指定账号 指定服务 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * @param loginId 指定账号id 
+	 * @param service 指定服务 
+	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public static void disable(Object loginId, String service, long disableTime) {
+		stpLogic.disable(loginId, service, disableTime);
 	}
 	
 	/**
@@ -776,6 +787,33 @@ public class StpUtil {
 	 */
 	public static boolean isDisable(Object loginId) {
 		return stpLogic.isDisable(loginId);
+	}
+
+	/**
+	 * 指定账号 指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return see note
+	 */
+	public static boolean isDisable(Object loginId, String service) {
+		return stpLogic.isDisable(loginId, service);
+	}
+
+	/**
+	 * 校验指定账号是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 */
+	public static void checkDisable(Object loginId) {
+		stpLogic.checkDisable(loginId);
+	}
+
+	/**
+	 * 校验 指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public static void checkDisable(Object loginId, String... services) {
+		stpLogic.checkDisable(loginId, services);
 	}
 	
 	/**
@@ -788,11 +826,30 @@ public class StpUtil {
 	}
 
 	/**
+	 * 获取 指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return see note 
+	 */
+	public static long getDisableTime(Object loginId, String service) {
+		return stpLogic.getDisableTime(loginId, service);
+	}
+
+	/**
 	 * 解封指定账号
 	 * @param loginId 账号id 
 	 */
 	public static void untieDisable(Object loginId) {
 		stpLogic.untieDisable(loginId);
+	}
+
+	/**
+	 * 解封指定账号、指定服务
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public static void untieDisable(Object loginId, String... services) {
+		stpLogic.untieDisable(loginId, services);
 	}
 	
 	

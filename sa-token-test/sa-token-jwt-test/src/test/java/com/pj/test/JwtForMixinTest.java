@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
-import cn.dev33.satoken.exception.DisableLoginException;
+import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.jwt.SaJwtUtil;
 import cn.dev33.satoken.jwt.StpLogicJwtForMixin;
 import cn.dev33.satoken.session.SaSession;
@@ -203,11 +203,11 @@ public class JwtForMixinTest {
     // 测试：账号封禁 
     @Test
     public void testDisable() {
-    	Assertions.assertThrows(DisableLoginException.class, () -> {
+    	Assertions.assertThrows(DisableServiceException.class, () -> {
         	// 封号 
         	StpUtil.disable(10007, 200);
         	Assertions.assertTrue(StpUtil.isDisable(10007));
-        	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableLoginException.BE_VALUE); 
+        	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableServiceException.BE_VALUE); 
         	
         	// 解封  
         	StpUtil.untieDisable(10007);

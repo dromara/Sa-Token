@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 二级认证校验：必须二级认证之后才能进入该方法 
+ * 
  * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
  * @author kong
  *

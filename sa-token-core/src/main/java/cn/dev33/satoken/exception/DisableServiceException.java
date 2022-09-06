@@ -1,11 +1,11 @@
 package cn.dev33.satoken.exception;
 
 /**
- * 一个异常：代表账号已被封禁 
+ * 一个异常：代表指定账号指定服务已被封禁 
  * 
  * @author kong
  */
-public class DisableLoginException extends SaTokenException {
+public class DisableServiceException extends SaTokenException {
 
 	/**
 	 * 序列化版本号
@@ -16,7 +16,7 @@ public class DisableLoginException extends SaTokenException {
 	public static final String BE_VALUE = "disable";
 	
 	/** 异常提示语 */
-	public static final String BE_MESSAGE = "此账号已被封禁";
+	public static final String BE_MESSAGE = "此账号已被禁止访问服务：";
 
 	/**
 	 * 账号类型 
@@ -32,7 +32,12 @@ public class DisableLoginException extends SaTokenException {
 	 * 封禁剩余时间，单位：秒 
 	 */
 	private long disableTime;
-	
+
+	/**
+	 * 具体被封禁的服务 
+	 */
+	private String service;
+
 	/**
 	 * 获取账号类型 
 	 * 
@@ -50,6 +55,15 @@ public class DisableLoginException extends SaTokenException {
 	public Object getLoginId() {
 		return loginId;
 	}
+
+	/**
+	 * 获取: 被封禁的服务 
+	 * 
+	 * @return See above
+	 */
+	public Object getService() {
+		return service;
+	}
 	
 	/**
 	 * 获取: 封禁剩余时间，单位：秒
@@ -60,16 +74,18 @@ public class DisableLoginException extends SaTokenException {
 	}
 	
 	/**
-	 * 一个异常：代表账号已被封禁 
+	 * 一个异常：代表指定账号指定服务已被封禁 
 	 * 
 	 * @param loginType 账号类型
 	 * @param loginId  被封禁的账号id 
+	 * @param service  具体封禁的服务 
 	 * @param disableTime 封禁剩余时间，单位：秒 
 	 */
-	public DisableLoginException(String loginType, Object loginId, long disableTime) {
-		super(BE_MESSAGE);
+	public DisableServiceException(String loginType, Object loginId, String service, long disableTime) {
+		super(BE_MESSAGE + service);
 		this.loginId = loginId;
 		this.loginType = loginType;
+		this.service = service;
 		this.disableTime = disableTime;
 	}
 

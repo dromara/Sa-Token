@@ -33,12 +33,12 @@ public class SaTokenListenerForSimple implements SaTokenListener {
 	}
 
 	@Override
-	public void doDisable(String loginType, Object loginId, long disableTime) {
+	public void doDisable(String loginType, Object loginId, String service, long disableTime) {
 		
 	}
 
 	@Override
-	public void doUntieDisable(String loginType, Object loginId) {
+	public void doUntieDisable(String loginType, Object loginId, String service) {
 		
 	}
 

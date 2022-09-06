@@ -10,7 +10,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.*;
+import cn.dev33.satoken.annotation.SaCheckBasic;
+import cn.dev33.satoken.annotation.SaCheckDisable;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.annotation.SaCheckSafe;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -157,17 +163,17 @@ public final class SaStrategy {
 		if(checkSafe != null) {
 			SaManager.getStpLogic(checkSafe.type()).checkByAnnotation(checkSafe);
 		}
+
+		// 校验 @SaCheckDisable 注解
+		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.me.getAnnotation.apply(target, SaCheckDisable.class);
+		if(checkDisable != null) {
+			SaManager.getStpLogic(checkDisable.type()).checkByAnnotation(checkDisable);
+		}
 		
 		// 校验 @SaCheckBasic 注解
 		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.me.getAnnotation.apply(target, SaCheckBasic.class);
 		if(checkBasic != null) {
 			SaBasicUtil.check(checkBasic.realm(), checkBasic.account());
-		}
-
-		// 校验 @SaCheckEable 注解
-		SaCheckEnable checkEable = (SaCheckEnable) SaStrategy.me.getAnnotation.apply(target, SaCheckEnable.class);
-		if(checkEable != null) {
-			SaManager.getStpLogic(checkEable.type()).checkByAnnotation(checkEable);
 		}
 	};
 
