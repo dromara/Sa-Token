@@ -3,6 +3,7 @@ package cn.dev33.satoken.integrate.annotation;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.dev33.satoken.annotation.SaCheckDisable;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
@@ -68,5 +69,26 @@ public class SaAnnotationController {
 	public SaResult checkSafe() {
 		return SaResult.ok();
 	}
-	
+
+	// 封禁账号 
+	@RequestMapping("disable")
+	public SaResult disable(long id) {
+		StpUtil.disable(id, "comment", 200);
+		return SaResult.ok();
+	}
+
+	// 服务封禁校验 
+	@SaCheckDisable("comment")
+	@RequestMapping("checkDisable")
+	public SaResult checkDisable() {
+		return SaResult.ok();
+	}
+
+	// 解封账号 
+	@RequestMapping("untieDisable")
+	public SaResult untieDisable(long id) {
+		StpUtil.untieDisable(id, "comment");
+		return SaResult.ok();
+	}
+
 }

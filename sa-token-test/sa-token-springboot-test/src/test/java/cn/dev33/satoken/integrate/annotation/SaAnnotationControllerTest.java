@@ -70,6 +70,10 @@ public class SaAnnotationControllerTest {
     	// 校验二级认证，通过
     	SaResult res7 = request("/at/checkSafe?satoken=" + satoken);
     	Assertions.assertEquals(res7.getCode(), 200);
+    	
+    	// 访问校验封禁的接口 ，通过
+    	SaResult res9 = request("/at/checkDisable?satoken=" + satoken);
+    	Assertions.assertEquals(res9.getCode(), 200);
     }
 
 	// 校验不通过的情况 
@@ -99,6 +103,23 @@ public class SaAnnotationControllerTest {
     	// 校验二级认证，不通过
     	SaResult res7 = request("/at/checkSafe?satoken=" + satoken);
     	Assertions.assertEquals(res7.getCode(), 901);
+
+    	// -------- 登录拿到Token 
+    	String satoken10042 = request("/at/login?id=10042").get("token", String.class);
+    	Assertions.assertNotNull(satoken10042);
+    	
+    	// 校验账号封禁 ，通过
+    	SaResult res8 = request("/at/disable?id=10042");
+    	Assertions.assertEquals(res8.getCode(), 200);
+    	
+    	// 访问校验封禁的接口 ，不通过
+    	SaResult res9 = request("/at/checkDisable?satoken=" + satoken10042);
+    	Assertions.assertEquals(res9.getCode(), 904);
+    	
+    	// 解封后就能访问了 
+    	request("/at/untieDisable?id=10042");
+    	SaResult res10 = request("/at/checkDisable?satoken=" + satoken10042);
+    	Assertions.assertEquals(res10.getCode(), 200);
     }
 
 	// 测试忽略认证 

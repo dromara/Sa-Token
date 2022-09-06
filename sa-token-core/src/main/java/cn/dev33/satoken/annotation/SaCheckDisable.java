@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * 服务禁用校验：在没有被禁用服务的情况下才可以进入方法 
+ * 服务禁用校验：在没有被禁用指定服务的情况下才可以进入方法 
  *
  * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上）
  *

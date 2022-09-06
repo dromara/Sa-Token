@@ -207,15 +207,16 @@ public class JwtForMixinTest {
         	// 封号 
         	StpUtil.disable(10007, 200);
         	Assertions.assertTrue(StpUtil.isDisable(10007));
-        	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableServiceException.BE_VALUE); 
+        	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), DisableServiceException.BE_VALUE); 
         	
         	// 解封  
         	StpUtil.untieDisable(10007);
         	Assertions.assertFalse(StpUtil.isDisable(10007));
-        	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), null); 
+        	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), null); 
         	
-        	// 封号后登陆 (会抛出 DisableLoginException 异常)
+        	// 封号后校验 (会抛出 DisableLoginException 异常)
         	StpUtil.disable(10007, 200); 
+        	StpUtil.checkDisable(10007);
         	StpUtil.login(10007);  
     	});
     }

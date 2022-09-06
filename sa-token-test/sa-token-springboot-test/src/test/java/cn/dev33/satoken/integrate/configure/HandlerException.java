@@ -3,6 +3,7 @@ package cn.dev33.satoken.integrate.configure;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.IdTokenInvalidException;
 import cn.dev33.satoken.exception.NotBasicAuthException;
 import cn.dev33.satoken.exception.NotLoginException;
@@ -53,6 +54,12 @@ public class HandlerException {
 	@ExceptionHandler(NotBasicAuthException.class)
 	public SaResult handlerNotBasicAuthException(NotBasicAuthException e) {
 		return SaResult.error().setCode(903);
+	}
+
+	// 服务被封禁 ，code=904
+	@ExceptionHandler(DisableServiceException.class)
+	public SaResult handlerDisableServiceException(DisableServiceException e) {
+		return SaResult.error().setCode(904);
 	}
 	
 }

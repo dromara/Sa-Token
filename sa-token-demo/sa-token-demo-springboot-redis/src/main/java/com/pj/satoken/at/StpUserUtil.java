@@ -15,6 +15,8 @@ import cn.dev33.satoken.stp.StpLogic;
  */
 public class StpUserUtil {
 	
+	private StpUserUtil() {}
+	
 	/**
 	 * 账号类型标识 
 	 */
@@ -132,18 +134,30 @@ public class StpUserUtil {
 	}
 
 	/**
-	 * 会话登录，并指定是否 [记住我] 
-	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param isLastingCookie 是否为持久Cookie 
+	 * 会话登录，并指定是否 [记住我]
+	 *
+	 * @param id              账号id，建议的类型：（long | int | String）
+	 * @param isLastingCookie 是否为持久Cookie
 	 */
 	public static void login(Object id, boolean isLastingCookie) {
 		stpLogic.login(id, isLastingCookie);
 	}
 
 	/**
-	 * 会话登录，并指定所有登录参数Model 
-	 * @param id 登录id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
+	 * 会话登录，并指定此次登录token的有效期, 单位:秒
+	 *
+	 * @param id      账号id，建议的类型：（long | int | String）
+	 * @param timeout 此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 */
+	public static void login(Object id, long timeout) {
+		stpLogic.login(id, timeout);
+	}
+
+	/**
+	 * 会话登录，并指定所有登录参数Model
+	 *
+	 * @param id         登录id，建议的类型：（long | int | String）
+	 * @param loginModel 此次登录的参数Model
 	 */
 	public static void login(Object id, SaLoginModel loginModel) {
 		stpLogic.login(id, loginModel);
@@ -410,6 +424,14 @@ public class StpUserUtil {
 		return stpLogic.getTokenSession();
 	}
 
+	/** 
+	 * 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
+	 * @return Token-Session 对象 
+	 */
+	public static SaSession getAnonTokenSession() {
+		return stpLogic.getAnonTokenSession();
+	}
+	
 
 	// =================== [临时有效期] 验证相关 ===================  
 
@@ -742,12 +764,23 @@ public class StpUserUtil {
 
 	/**
 	 * 封禁指定账号
-	 * <p> 此方法不会直接将此账号id踢下线，而是在对方再次登录时抛出`DisableLoginException`异常 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
 	 * @param loginId 指定账号id 
 	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
 	public static void disable(Object loginId, long disableTime) {
 		stpLogic.disable(loginId, disableTime);
+	}
+
+	/**
+	 * 封禁 指定账号 指定服务 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * @param loginId 指定账号id 
+	 * @param service 指定服务 
+	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public static void disable(Object loginId, String service, long disableTime) {
+		stpLogic.disable(loginId, service, disableTime);
 	}
 	
 	/**
@@ -757,6 +790,33 @@ public class StpUserUtil {
 	 */
 	public static boolean isDisable(Object loginId) {
 		return stpLogic.isDisable(loginId);
+	}
+
+	/**
+	 * 指定账号 指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return see note
+	 */
+	public static boolean isDisable(Object loginId, String service) {
+		return stpLogic.isDisable(loginId, service);
+	}
+
+	/**
+	 * 校验指定账号是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 */
+	public static void checkDisable(Object loginId) {
+		stpLogic.checkDisable(loginId);
+	}
+
+	/**
+	 * 校验 指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public static void checkDisable(Object loginId, String... services) {
+		stpLogic.checkDisable(loginId, services);
 	}
 	
 	/**
@@ -769,11 +829,30 @@ public class StpUserUtil {
 	}
 
 	/**
+	 * 获取 指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return see note 
+	 */
+	public static long getDisableTime(Object loginId, String service) {
+		return stpLogic.getDisableTime(loginId, service);
+	}
+
+	/**
 	 * 解封指定账号
 	 * @param loginId 账号id 
 	 */
 	public static void untieDisable(Object loginId) {
 		stpLogic.untieDisable(loginId);
+	}
+
+	/**
+	 * 解封指定账号、指定服务
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public static void untieDisable(Object loginId, String... services) {
+		stpLogic.untieDisable(loginId, services);
 	}
 	
 	
@@ -850,137 +929,6 @@ public class StpUserUtil {
 	 */
 	public static void closeSafe() {
 		stpLogic.closeSafe();
-	}
-
-
-	// =================== 历史API，兼容旧版本 ===================  
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.getLoginType() ，使用方式保持不变 </h1>
-	 * 
-	 * 获取当前StpLogin的loginKey 
-	 * @return 当前StpLogin的loginKey
-	 */
-	@Deprecated
-	public static String getLoginKey(){
-		return stpLogic.getLoginType();
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId) {
-		stpLogic.login(loginId);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id, 并指定登录设备类型
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param device 设备类型 
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId, String device) {
-		stpLogic.login(loginId, device);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id, 并指定登录设备类型
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param isLastingCookie 是否为持久Cookie 
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId, boolean isLastingCookie) {
-		stpLogic.login(loginId, isLastingCookie);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.login() ，使用方式保持不变 </h1>
-	 * 
-	 * 在当前会话上登录id, 并指定所有登录参数Model 
-	 * @param loginId 登录id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
-	 */
-	@Deprecated
-	public static void setLoginId(Object loginId, SaLoginModel loginModel) {
-		stpLogic.login(loginId, loginModel);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
-	 * 
-	 * 会话注销，根据账号id （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2
-	 * @param loginId 账号id 
-	 */
-	@Deprecated
-	public static void logoutByLoginId(Object loginId) {
-		stpLogic.kickout(loginId);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.kickout() ，使用方式保持不变 </h1>
-	 * 
-	 * 会话注销，根据账号id and 设备类型 （踢人下线）
-	 * <p> 当对方再次访问系统时，会抛出NotLoginException异常，场景值=-2 </p>
-	 * @param loginId 账号id 
-	 * @param device 设备类型 (填null代表注销所有设备类型) 
-	 */
-	@Deprecated
-	public static void logoutByLoginId(Object loginId, String device) {
-		stpLogic.kickout(loginId, device);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchTokenValue(keyword, start, size, sortType) ，使用方式保持不变 </h1>
-	 * 
-	 * 根据条件查询Token 
-	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有) 
-	 * @param size 获取数量 
-	 * 
-	 * @return token集合 
-	 */
-	@Deprecated
-	public static List<String> searchTokenValue(String keyword, int start, int size) {
-		return stpLogic.searchTokenValue(keyword, start, size, true);
-	}
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchSessionId(keyword, start, size, sortType) ，使用方式保持不变 </h1>
-	 * 
-	 * 根据条件查询SessionId 
-	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有) 
-	 * @param size 获取数量 
-	 * 
-	 * @return sessionId集合 
-	 */
-	@Deprecated
-	public static List<String> searchSessionId(String keyword, int start, int size) {
-		return stpLogic.searchSessionId(keyword, start, size, true);
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 StpUtil.searchTokenSessionId(keyword, start, size, sortType) ，使用方式保持不变 </h1>
-	 * 
-	 * 根据条件查询Token专属Session的Id 
-	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有) 
-	 * @param size 获取数量 
-	 * 
-	 * @return sessionId集合 
-	 */
-	@Deprecated
-	public static List<String> searchTokenSessionId(String keyword, int start, int size) {
-		return stpLogic.searchTokenSessionId(keyword, start, size, true);
 	}
 
 }

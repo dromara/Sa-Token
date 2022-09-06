@@ -359,7 +359,10 @@ public class BasicsTest {
     	// 封号 
     	StpUtil.disable(10007, 200);
     	Assertions.assertTrue(StpUtil.isDisable(10007));
-    	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), DisableServiceException.BE_VALUE); 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), DisableServiceException.BE_VALUE); 
+
+    	// 封号后检测一下 (会抛出 DisableLoginException 异常) 
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisable(10007));
     	
     	// 封号时间 
     	long disableTime = StpUtil.getDisableTime(10007);
@@ -368,11 +371,38 @@ public class BasicsTest {
     	// 解封  
     	StpUtil.untieDisable(10007);
     	Assertions.assertFalse(StpUtil.isDisable(10007));
-    	Assertions.assertEquals(dao.get("satoken:login:disable:" + 10007), null); 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), null); 
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisable(10007));
+    }
 
-    	// 封号后检测一下 (会抛出 DisableLoginException 异常) 
-    	StpUtil.disable(10007, 200); 
-		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisable(10007));
+    // 测试：账号封禁，根据服务 
+    @Test
+    public void testDisableService() {
+    	// 封掉评论功能 
+    	StpUtil.disable(10008, "comment", 200);
+    	Assertions.assertTrue(StpUtil.isDisable(10008, "comment"));
+    	Assertions.assertEquals(dao.get("satoken:login:disable:comment:" + 10008), DisableServiceException.BE_VALUE); 
+    	Assertions.assertNull(dao.get("satoken:login:disable:login:" + 10008)); 
+
+    	// 封号后检测一下 
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisable(10008, "comment"));
+		// 检查多个，有一个不通过就报异常 
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisable(10008, "comment", "login"));
+		
+    	// 封号时间 
+    	long disableTime = StpUtil.getDisableTime(10008, "comment");
+    	Assertions.assertTrue(disableTime <= 200 && disableTime >= 199);
+    	
+    	// 解封 (不加服务名不会成功)
+    	StpUtil.untieDisable(10008);
+    	Assertions.assertTrue(StpUtil.isDisable(10008, "comment"));
+    	Assertions.assertNotNull(dao.get("satoken:login:disable:comment:" + 10008)); 
+    	
+    	// 解封 (加服务名才会成功)
+    	StpUtil.untieDisable(10008, "comment");
+    	Assertions.assertFalse(StpUtil.isDisable(10008, "comment"));
+    	Assertions.assertEquals(dao.get("satoken:login:disable:comment:" + 10008), null); 
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisable(10007, "comment"));
     }
 
     // 测试：身份切换 
