@@ -11,13 +11,10 @@
 - `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法。
 - `@SaCheckBasic`: HttpBasic认证 —— 只有通过 Basic 认证后才能进入该方法。
 - `@SaIgnore`：忽略认证 —— 表示被修饰的方法或类无需进行注解认证和路由拦截认证。
-- `@SaCheckEnable`：账户可用性校验 —— 校验当前操作账户是否可用, 也可以直接在`@SaCheckLogin`中设置参数`checkEnable="true""`即可完成登陆和账户可用性同事校验。
+- `@SaCheckDisable("comment")`：账号服务封禁校验 —— 校验当前账号指定服务是否被封禁。
 
 Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态<br>
 因此，为了使用注解鉴权，**你必须手动将 Sa-Token 的全局拦截器注册到你项目中**
-
-<!-- Sa-Token内置两种模式完成注解鉴权，分别是`拦截器模式`和`AOP模式`, 为了避免不必要的性能浪费，这两种模式默认都处于关闭状态 <br>
-因此如若使用注解鉴权，你必须选择其一进行注册 -->
 
 
 ### 1、注册拦截器
@@ -45,13 +42,6 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ``` java 
 // 登录认证：只有登录之后才能进入该方法 
 @SaCheckLogin						
-@RequestMapping("info")
-public String info() {
-	return "查询用户信息";
-}
-
-// 登录认证加账户可用性认证：只有登录后, 并且账户可用才能进入该方法 
-@SaCheckLogin(checkEnable = "true")						
 @RequestMapping("info")
 public String info() {
 	return "查询用户信息";
@@ -85,10 +75,10 @@ public String add() {
 	return "用户增加";
 }
 
-// 账户可用性校验: 只有当前账户可用的情况下, 才能进入方法 
-@SaCheckEnable				
-@RequestMapping("info")
-public String info() {
+// 校验当前账号是否被封禁 comment 服务，如果已被封禁会抛出异常，无法进入方法 
+@SaCheckDisable("comment")				
+@RequestMapping("send")
+public String send() {
 	return "查询用户信息";
 }
 ```

@@ -57,13 +57,13 @@ public class MySaTokenListener implements SaTokenListener {
 
 	/** 每次被封禁时触发 */
 	@Override
-	public void doDisable(String loginType, Object loginId, long disableTime) {
+	public void doDisable(String loginType, Object loginId, String service, long disableTime) {
 		System.out.println("---------- 自定义侦听器实现 doDisable");
 	}
 
 	/** 每次被解封时触发 */
 	@Override
-	public void doUntieDisable(String loginType, Object loginId) {
+	public void doUntieDisable(String loginType, String service, Object loginId) {
 		System.out.println("---------- 自定义侦听器实现 doUntieDisable");
 	}
 
