@@ -112,6 +112,7 @@ public class SaJwtTemplate {
 	/**
 	 * 为 JWT 对象和 keyt 秘钥，生成 token 字符串 
 	 * @param jwt JWT构建对象
+	 * @param keyt 秘钥 
 	 * @return 根据 JWT 对象和 keyt 秘钥，生成的 token 字符串
 	 */
 	public String generateToken (JWT jwt, String keyt) {

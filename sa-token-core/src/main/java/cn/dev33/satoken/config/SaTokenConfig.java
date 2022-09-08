@@ -490,7 +490,7 @@ public class SaTokenConfig implements Serializable {
 
 	/**
 	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsReadHead() ，使用方式保持不变 </h1>
-	 * @param isReadHeader 是否尝试从header里读取token
+	 * @param isReadHead 是否尝试从header里读取token
 	 * @return 对象自身
 	 */
 	@Deprecated
