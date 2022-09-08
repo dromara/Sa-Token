@@ -1,7 +1,7 @@
 # 更新日志 
 
 
-### 2022-8-29 @v1.31.0
+### 2022-9-8 @v1.31.0
 - 文档：新增优秀开源案例展示。
 - 文档：新增博客展示，欢迎大家投稿。 
 - 新增：新增 `SaInterceptor` 综合拦截器。   **[重要]**  **[不向下兼容]**
@@ -16,10 +16,13 @@
 - 修复：解决当权限码为 null 时可能带来的空指针问题。
 - 新增：新增 `StpUtil.getExtra(tokenValue, key)` 方法，用于获取任意 token 的扩展参数。 
 - 优化：优化 `StpLogic#logoutByTokenValue` 方法逻辑，精简代码。
+- 重构：`SaTokenConfig` 配置类字段 `isReadHead` 改为 `isReadHeader`。 **[不向下兼容]** 
 - 修复：修复部分场景下踢人下线会抛出异常 `非Web上下文无法获取Request` 的问题。 
 - 新增：新增方法 `StpLogic#getAnonTokenSession`，可在未登录情况下安全的获取 Token-Session。  **[重要]** 
 - 新增：新增 `SaApplication` 对象，用于全局作用域存取值。   **[重要]** 
 - 重构：将 `SaTokenListener` 改为事件发布订阅模式，允许同时注册多个侦听器。  **[重要]**  **[不向下兼容]**
+- 重构：StpUtil.login(id) 不再强制校验账号是否禁用，需要手动校验。 **[不向下兼容]** 
+- 重构：新增对账号限制、分类封禁、阶梯封禁功能。	 **[重要]** 
 - 新增：会话查询API增加反序获取会话方式。
 - 新增：SSO模块增加 server-url 属性，用于简化各种 url 配置。  **[重要]**
 - 修复：修复单点登录模块 `ssoLogoutCall` 配置项无效的问题。 
@@ -31,7 +34,9 @@
 - 重构：`sa-token-jwt` 模块改为 `Util + Template` 形式，方便针对部分代码重写。  **[重要]** 
 - 新增：在线文档添加API手册。
 - 重构：`sa-token-oauth2` 模块密码模式新增 `client_secret` 参数校验。**[不向下兼容]** 
+- 新增：集成 `jacoco` 插件，核心包单元测试覆盖率提高至 90% 以上。
 - 优化：开源案例分离专属仓库：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
+
 
 
 ### 2022-05-9 @v1.30.0

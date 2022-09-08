@@ -152,14 +152,34 @@ StpUtil.searchTokenSessionId(keyword, start, size, sortType);   // 根据条件�
 
 ### 11、账号封禁
 ``` java
-StpUtil.disable(10001, 1200);   // 封禁指定账号 
-StpUtil.disable(10001);   // 指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
-StpUtil.getDisableTime(10001);   // 获取指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
-StpUtil.untieDisable(loginId);   // 解封指定账号
+StpUtil.disable(10001, 1200);   // 封禁：指定账号
+StpUtil.isDisable(10001);   // 判断：指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+StpUtil.checkDisable(10001);   // 校验：指定账号是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
+StpUtil.getDisableTime(10001);   // 获取：指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+StpUtil.untieDisable(loginId);   // 解封：指定账号
 ```
 
 
-### 12、身份切换
+### 12、分类封禁
+``` java
+StpUtil.disable(10001, "<业务标识>", 86400);   // 封禁：指定账号的指定服务 
+StpUtil.isDisable(10001, "<业务标识>");   // 判断：指定账号的指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+StpUtil.checkDisable(10001, "<业务标识>");   // 校验：指定账号的指定服务 是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
+StpUtil.getDisableTime(10001, "<业务标识>");   // 获取：指定账号的指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+StpUtil.untieDisable(loginId, "<业务标识>");   // 解封：指定账号的指定服务
+```
+
+
+### 13、阶梯封禁
+``` java
+StpUtil.disableLevel(10001, "comment", 3, 10000);   // 分类阶梯封禁，参数：封禁账号、封禁服务、封禁级别、封禁时间 
+StpUtil.getDisableLevel(10001, "comment");   // 获取：指定账号的指定服务 封禁的级别 （如果此账号未被封禁则返回 -2）
+StpUtil.isDisableLevel(10001, "comment", 3);   // 判断：指定账号的指定服务 是否已被封禁到指定级别，返回 true 或 false
+StpUtil.checkDisableLevel(10001, "comment", 2);   // 校验：指定账号的指定服务 是否已被封禁到指定级别（例如 comment服务 已被3级封禁，这里校验是否达到2级），如果已达到此级别，则抛出异常 
+```
+
+
+### 14、身份切换
 ``` java
 StpUtil.switchTo(10044);   // 临时切换身份为指定账号id 
 StpUtil.endSwitch();   // 结束临时切换身份
@@ -168,7 +188,7 @@ StpUtil.switchTo(10044, () -> {});   // 在一个代码段里方法内，临时�
 ```
 
 
-### 13、二级认证
+### 15、二级认证
 ``` java
 StpUtil.openSafe(safeTime);   // 在当前会话 开启二级认证 
 StpUtil.isSafe();   // 当前会话 是否处于二级认证时间内 
