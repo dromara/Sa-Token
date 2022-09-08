@@ -359,7 +359,7 @@ public class BasicsTest {
     	// 封号 
     	StpUtil.disable(10007, 200);
     	Assertions.assertTrue(StpUtil.isDisable(10007));
-    	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), DisableServiceException.BE_VALUE); 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), String.valueOf(SaTokenConsts.DEFAULT_DISABLE_LEVEL)); 
 
     	// 封号后检测一下 (会抛出 DisableLoginException 异常) 
 		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisable(10007));
@@ -375,13 +375,13 @@ public class BasicsTest {
 		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisable(10007));
     }
 
-    // 测试：账号封禁，根据服务 
+    // 测试：分类封禁 
     @Test
     public void testDisableService() {
     	// 封掉评论功能 
     	StpUtil.disable(10008, "comment", 200);
     	Assertions.assertTrue(StpUtil.isDisable(10008, "comment"));
-    	Assertions.assertEquals(dao.get("satoken:login:disable:comment:" + 10008), DisableServiceException.BE_VALUE); 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:comment:" + 10008), String.valueOf(SaTokenConsts.DEFAULT_DISABLE_LEVEL)); 
     	Assertions.assertNull(dao.get("satoken:login:disable:login:" + 10008)); 
 
     	// 封号后检测一下 
@@ -403,6 +403,77 @@ public class BasicsTest {
     	Assertions.assertFalse(StpUtil.isDisable(10008, "comment"));
     	Assertions.assertEquals(dao.get("satoken:login:disable:comment:" + 10008), null); 
 		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisable(10007, "comment"));
+    }
+
+    // 测试：阶梯封禁 
+    @Test
+    public void testDisableLevel() {
+    	// 封禁等级5
+    	StpUtil.disableLevel(10009, 5, 200);
+    	Assertions.assertTrue(StpUtil.isDisableLevel(10009, 3));
+    	Assertions.assertTrue(StpUtil.isDisableLevel(10009, 5));
+    	// 未达到7级 
+    	Assertions.assertFalse(StpUtil.isDisableLevel(10009, 7));
+    	// 账号未封禁 
+    	Assertions.assertFalse(StpUtil.isDisableLevel(20009, 3));
+    	
+    	// dao中应该有值 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10009), String.valueOf(5)); 
+
+    	// 封号后检测一下 
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisableLevel(10009, 3));
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisableLevel(10009, 5));
+		// 未达到等级，不抛出异常
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisableLevel(10009, 7));
+		// 账号未被封禁，不抛出异常 
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisableLevel(20009, 3));
+		
+    	// 封号等级 
+    	Assertions.assertEquals(StpUtil.getDisableLevel(10009), 5);
+    	Assertions.assertEquals(StpUtil.getDisableLevel(20009), -2);
+    	
+    	// 解封
+    	StpUtil.untieDisable(10009);
+    	Assertions.assertFalse(StpUtil.isDisable(10009));
+    	Assertions.assertFalse(StpUtil.isDisableLevel(10009, 5));
+    	Assertions.assertNull(dao.get("satoken:login:disable:login:" + 10009)); 
+    }
+
+    // 测试：分类封禁 + 阶梯封禁 
+    @Test
+    public void testDisableServiceLevel() {
+    	// 封禁服务 shop，等级5
+    	StpUtil.disableLevel(10010, "shop", 5, 200);
+    	Assertions.assertTrue(StpUtil.isDisableLevel(10010, "shop", 3));
+    	Assertions.assertTrue(StpUtil.isDisableLevel(10010, "shop", 5));
+    	// 未达到7级 
+    	Assertions.assertFalse(StpUtil.isDisableLevel(10010, "shop", 7));
+    	// 账号未封禁 
+    	Assertions.assertFalse(StpUtil.isDisableLevel(20010, "shop", 3));
+    	// 服务名不对 
+    	Assertions.assertFalse(StpUtil.isDisableLevel(10010, "shop2", 5));
+    	
+    	// dao中应该有值 
+    	Assertions.assertEquals(dao.get("satoken:login:disable:shop:" + 10010), String.valueOf(5)); 
+
+    	// 封号后检测一下 
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisableLevel(10010, "shop", 3));
+		Assertions.assertThrows(DisableServiceException.class, () -> StpUtil.checkDisableLevel(10010, "shop", 5));
+		// 未达到等级，不抛出异常
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisableLevel(10010, "shop", 7));
+		// 账号未被封禁，不抛出异常 
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkDisableLevel(20010, "shop", 3));
+		
+    	// 封号等级 
+    	Assertions.assertEquals(StpUtil.getDisableLevel(10010, "shop"), 5);
+    	Assertions.assertEquals(StpUtil.getDisableLevel(10010, "shop2"), -2);
+    	Assertions.assertEquals(StpUtil.getDisableLevel(20010, "shop"), -2);
+    	
+    	// 解封
+    	StpUtil.untieDisable(10010, "shop");
+    	Assertions.assertFalse(StpUtil.isDisable(10010, "shop"));
+    	Assertions.assertFalse(StpUtil.isDisableLevel(10010, "shop", 5));
+    	Assertions.assertNull(dao.get("satoken:login:disable:shop:" + 10010)); 
     }
 
     // 测试：身份切换 

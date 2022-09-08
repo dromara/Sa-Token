@@ -58,6 +58,21 @@ public class SaTokenConsts {
 	 * 常量key标记: 在封禁账号时，默认封禁的服务类型 
 	 */
 	public static final String DEFAULT_DISABLE_SERVICE = "login"; 
+
+	/**
+	 * 常量key标记: 在封禁账号时，默认封禁的等级 
+	 */
+	public static final int DEFAULT_DISABLE_LEVEL = 1; 
+
+	/**
+	 * 常量key标记: 在封禁账号时，可使用的最小封禁级别 
+	 */
+	public static final int MIN_DISABLE_LEVEL = 1; 
+
+	/**
+	 * 常量key标记: 账号封禁级别，表示未被封禁 
+	 */
+	public static final int NOT_DISABLE_LEVEL = -2; 
 	
 	/**
 	 * 常量key标记: 在进行临时身份切换时使用的key 

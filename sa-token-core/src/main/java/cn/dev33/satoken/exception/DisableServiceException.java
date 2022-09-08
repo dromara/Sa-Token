@@ -12,7 +12,8 @@ public class DisableServiceException extends SaTokenException {
 	 */
 	private static final long serialVersionUID = 6806129545290130143L;
 
-	/** 异常标记值 */
+	/** 异常标记值（已更改为 SaTokenConsts.DEFAULT_DISABLE_LEVEL） */
+	@Deprecated
 	public static final String BE_VALUE = "disable";
 	
 	/** 异常提示语 */
@@ -27,11 +28,6 @@ public class DisableServiceException extends SaTokenException {
 	 * 被封禁的账号id 
 	 */
 	private Object loginId;
-	
-	/**
-	 * 封禁剩余时间，单位：秒 
-	 */
-	private long disableTime;
 
 	/**
 	 * 具体被封禁的服务 
@@ -39,9 +35,24 @@ public class DisableServiceException extends SaTokenException {
 	private String service;
 
 	/**
-	 * 获取账号类型 
+	 * 具体被封禁的等级 
+	 */
+	private int level;
+
+	/**
+	 * 校验时要求低于的等级 
+	 */
+	private int limitLevel;
+	
+	/**
+	 * 封禁剩余时间，单位：秒 
+	 */
+	private long disableTime;
+
+	/**
+	 * 获取：账号类型 
 	 * 
-	 * @return See Note
+	 * @return / 
 	 */
 	public String getLoginType() {
 		return loginType;
@@ -50,7 +61,7 @@ public class DisableServiceException extends SaTokenException {
 	/**
 	 * 获取: 被封禁的账号id 
 	 * 
-	 * @return See above
+	 * @return / 
 	 */
 	public Object getLoginId() {
 		return loginId;
@@ -59,15 +70,33 @@ public class DisableServiceException extends SaTokenException {
 	/**
 	 * 获取: 被封禁的服务 
 	 * 
-	 * @return See above
+	 * @return / 
 	 */
 	public Object getService() {
 		return service;
 	}
+
+	/**
+	 * 获取: 被封禁的等级 
+	 * 
+	 * @return / 
+	 */
+	public int getLevel() {
+		return level;
+	}
+
+	/**
+	 * 获取: 校验时要求低于的等级 
+	 * 
+	 * @return / 
+	 */
+	public int getLimitLevel() {
+		return limitLevel;
+	}
 	
 	/**
 	 * 获取: 封禁剩余时间，单位：秒
-	 * @return See above
+	 * @return / 
 	 */
 	public long getDisableTime() {
 		return disableTime;
@@ -79,13 +108,17 @@ public class DisableServiceException extends SaTokenException {
 	 * @param loginType 账号类型
 	 * @param loginId  被封禁的账号id 
 	 * @param service  具体封禁的服务 
+	 * @param level 被封禁的等级 
+	 * @param limitLevel 校验时要求低于的等级 
 	 * @param disableTime 封禁剩余时间，单位：秒 
 	 */
-	public DisableServiceException(String loginType, Object loginId, String service, long disableTime) {
+	public DisableServiceException(String loginType, Object loginId, String service, int level, int limitLevel, long disableTime) {
 		super(BE_MESSAGE + service);
 		this.loginId = loginId;
 		this.loginType = loginType;
 		this.service = service;
+		this.level = level;
+		this.limitLevel = limitLevel;
 		this.disableTime = disableTime;
 	}
 

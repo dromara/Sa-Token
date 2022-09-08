@@ -49,9 +49,9 @@ public class SaTokenListenerForConsolePrint implements SaTokenListener {
 	 * 每次被封禁时触发
 	 */
 	@Override
-	public void doDisable(String loginType, Object loginId, String service, long disableTime) {
+	public void doDisable(String loginType, Object loginId, String service, int level, long disableTime) {
 		Date date = new Date(System.currentTimeMillis() + disableTime * 1000);
-		println("账号[" + loginId + "] " + service + " 服务被封禁 (解封时间: " + SaFoxUtil.formatDate(date) + ")");
+		println("账号[" + loginId + "] " + service + " 服务被封禁，封禁等级=" + level + " (解封时间: " + SaFoxUtil.formatDate(date) + ")");
 	}
 
 	/**

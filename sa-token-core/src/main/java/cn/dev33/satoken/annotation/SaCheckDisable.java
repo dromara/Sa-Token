@@ -30,5 +30,12 @@ public @interface SaCheckDisable {
      * @return see note
      */
     String[] value() default { SaTokenConsts.DEFAULT_DISABLE_SERVICE };
+
+    /**
+     * 封禁等级（只有 封禁等级 ≥ 此值 才会抛出异常）
+     * 
+     * @return / 
+     */
+    int level() default SaTokenConsts.DEFAULT_DISABLE_LEVEL;
     
 }

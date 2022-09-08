@@ -57,7 +57,7 @@ public class StpUtil {
 	}
 	
 	
-	// =================== 获取token 相关 ===================
+	// ------------------- 获取token 相关 -------------------
 
 	/**
 	 * 返回token名称 
@@ -109,7 +109,7 @@ public class StpUtil {
 	}
 
 	
-	// =================== 登录相关操作 ===================
+	// ------------------- 登录相关操作 -------------------
 
 	// --- 登录 
 	
@@ -354,7 +354,7 @@ public class StpUtil {
 	}
  	
  	
-	// =================== User-Session 相关 ===================
+	// ------------------- User-Session 相关 -------------------
 
  	/** 
 	 * 获取指定账号id的Session, 如果Session尚未创建，isCreate=是否新建并返回
@@ -402,7 +402,7 @@ public class StpUtil {
 	}
 
 	
-	// =================== Token-Session 相关 ===================  
+	// ------------------- Token-Session 相关 -------------------  
 	
 	/** 
 	 * 获取指定Token-Session，如果Session尚未创建，则新建并返回 
@@ -430,7 +430,7 @@ public class StpUtil {
 	}
 	
 
-	// =================== [临时有效期] 验证相关 ===================  
+	// ------------------- [临时有效期] 验证相关 -------------------  
 
 	/**
  	 * 检查当前token 是否已经[临时过期]，如果已经过期则抛出异常  
@@ -449,7 +449,7 @@ public class StpUtil {
  	}
  	
 
-	// =================== 过期时间相关 ===================  
+	// ------------------- 过期时间相关 -------------------  
 
  	/**
  	 * 获取当前登录者的 token 剩余有效时间 (单位: 秒)
@@ -500,7 +500,8 @@ public class StpUtil {
  		stpLogic.renewTimeout(tokenValue, timeout);
  	}
  	
-	// =================== 角色验证操作 ===================  
+ 	
+	// ------------------- 角色验证操作 -------------------  
 
 	/**
 	 * 获取：当前账号的角色集合 
@@ -581,7 +582,7 @@ public class StpUtil {
  	}
 
 	
-	// =================== 权限验证操作 ===================
+	// ------------------- 权限验证操作 -------------------
 
 	/**
 	 * 获取：当前账号的权限码集合 
@@ -662,7 +663,7 @@ public class StpUtil {
 	}
 
 
-	// =================== id 反查token 相关操作 ===================  
+	// ------------------- id 反查token 相关操作 -------------------  
 	
 	/** 
 	 * 获取指定账号id的tokenValue 
@@ -715,7 +716,7 @@ public class StpUtil {
 	}
 
 	
-	// =================== 会话管理 ===================  
+	// ------------------- 会话管理 -------------------  
 
 	/**
 	 * 根据条件查询Token 
@@ -760,47 +761,28 @@ public class StpUtil {
 	// ------------------- 账号封禁 -------------------  
 
 	/**
-	 * 封禁指定账号
+	 * 封禁：指定账号
 	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * 
 	 * @param loginId 指定账号id 
-	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
-	public static void disable(Object loginId, long disableTime) {
-		stpLogic.disable(loginId, disableTime);
+	public static void disable(Object loginId, long time) {
+		stpLogic.disable(loginId, time);
 	}
 
 	/**
-	 * 封禁 指定账号 指定服务 
-	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
-	 * @param loginId 指定账号id 
-	 * @param service 指定服务 
-	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
-	 */
-	public static void disable(Object loginId, String service, long disableTime) {
-		stpLogic.disable(loginId, service, disableTime);
-	}
-	
-	/**
-	 * 指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * 判断：指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * 
 	 * @param loginId 账号id
-	 * @return see note
+	 * @return / 
 	 */
 	public static boolean isDisable(Object loginId) {
 		return stpLogic.isDisable(loginId);
 	}
 
 	/**
-	 * 指定账号 指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
-	 * @param loginId 账号id
-	 * @param service 指定服务 
-	 * @return see note
-	 */
-	public static boolean isDisable(Object loginId, String service) {
-		return stpLogic.isDisable(loginId, service);
-	}
-
-	/**
-	 * 校验指定账号是否已被封禁，如果被封禁则抛出异常 
+	 * 校验：指定账号是否已被封禁，如果被封禁则抛出异常 
 	 * @param loginId 账号id
 	 */
 	public static void checkDisable(Object loginId) {
@@ -808,25 +790,57 @@ public class StpUtil {
 	}
 
 	/**
-	 * 校验 指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * 获取：指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
 	 * @param loginId 账号id
-	 * @param services 指定服务，可以指定多个 
-	 */
-	public static void checkDisable(Object loginId, String... services) {
-		stpLogic.checkDisable(loginId, services);
-	}
-	
-	/**
-	 * 获取指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
-	 * @param loginId 账号id
-	 * @return see note 
+	 * @return / 
 	 */
 	public static long getDisableTime(Object loginId) {
 		return stpLogic.getDisableTime(loginId);
 	}
 
 	/**
-	 * 获取 指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * 解封：指定账号
+	 * @param loginId 账号id
+	 */
+	public static void untieDisable(Object loginId) {
+		stpLogic.untieDisable(loginId);
+	}
+
+	
+	// ------------------- 分类封禁 -------------------  
+
+	/**
+	 * 封禁：指定账号的指定服务 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * @param loginId 指定账号id 
+	 * @param service 指定服务 
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public static void disable(Object loginId, String service, long time) {
+		stpLogic.disable(loginId, service, time);
+	}
+
+	/**
+	 * 判断：指定账号的指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return / 
+	 */
+	public static boolean isDisable(Object loginId, String service) {
+		return stpLogic.isDisable(loginId, service);
+	}
+
+	/**
+	 * 校验：指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public static void checkDisable(Object loginId, String... services) {
+		stpLogic.checkDisable(loginId, services);
+	}
+
+	/**
+	 * 获取：指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
 	 * @param loginId 账号id
 	 * @param service 指定服务 
 	 * @return see note 
@@ -836,24 +850,105 @@ public class StpUtil {
 	}
 
 	/**
-	 * 解封指定账号
-	 * @param loginId 账号id 
-	 */
-	public static void untieDisable(Object loginId) {
-		stpLogic.untieDisable(loginId);
-	}
-
-	/**
-	 * 解封指定账号、指定服务
+	 * 解封：指定账号、指定服务
 	 * @param loginId 账号id
 	 * @param services 指定服务，可以指定多个 
 	 */
 	public static void untieDisable(Object loginId, String... services) {
 		stpLogic.untieDisable(loginId, services);
 	}
+
+
+	// ------------------- 阶梯封禁 -------------------  
+
+	/**
+	 * 封禁：指定账号，并指定封禁等级 
+	 * @param loginId 指定账号id 
+	 * @param level 指定封禁等级 
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public static void disableLevel(Object loginId, int level, long time) {
+		stpLogic.disableLevel(loginId, level, time);
+	}
+
+	/**
+	 * 封禁：指定账号的指定服务，并指定封禁等级 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @param level 指定封禁等级 
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public static void disableLevel(Object loginId, String service, int level, long time) {
+		stpLogic.disableLevel(loginId, service, level, time);
+	}
+
+	/**
+	 * 判断：指定账号是否已被封禁到指定等级
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param level 指定封禁等级 
+	 * @return / 
+	 */
+	public static boolean isDisableLevel(Object loginId, int level) {
+		return stpLogic.isDisableLevel(loginId, level);
+	}
+
+	/**
+	 * 判断：指定账号的指定服务，是否已被封禁到指定等级 
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @param level 指定封禁等级 
+	 * @return / 
+	 */
+	public static boolean isDisableLevel(Object loginId, String service, int level) {
+		return stpLogic.isDisableLevel(loginId, service, level);
+	}
+
+	/**
+	 * 校验：指定账号是否已被封禁到指定等级（如果已经达到，则抛出异常）
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param level 封禁等级 （只有 封禁等级 ≥ 此值 才会抛出异常）
+	 */
+	public static void checkDisableLevel(Object loginId, int level) {
+		stpLogic.checkDisableLevel(loginId, level);
+	}
+
+	/**
+	 * 校验：指定账号的指定服务，是否已被封禁到指定等级（如果已经达到，则抛出异常）
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @param level 封禁等级 （只有 封禁等级 ≥ 此值 才会抛出异常）
+	 */
+	public static void checkDisableLevel(Object loginId, String service, int level) {
+		stpLogic.checkDisableLevel(loginId, service, level);
+	}
+
+	/**
+	 * 获取：指定账号被封禁的等级，如果未被封禁则返回-2 
+	 * 
+	 * @param loginId 指定账号id 
+	 * @return / 
+	 */
+	public static int getDisableLevel(Object loginId) {
+		return stpLogic.getDisableLevel(loginId);
+	}
+
+	/**
+	 * 获取：指定账号的 指定服务 被封禁的等级，如果未被封禁则返回-2 
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @return / 
+	 */
+	public static int getDisableLevel(Object loginId, String service) {
+		return stpLogic.getDisableLevel(loginId, service);
+	}
 	
 	
-	// =================== 身份切换 ===================  
+	// ------------------- 身份切换 -------------------  
 
 	/**
 	 * 临时切换身份为指定账号id 

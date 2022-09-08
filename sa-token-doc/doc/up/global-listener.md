@@ -57,7 +57,7 @@ public class MySaTokenListener implements SaTokenListener {
 
 	/** 每次被封禁时触发 */
 	@Override
-	public void doDisable(String loginType, Object loginId, String service, long disableTime) {
+	public void doDisable(String loginType, Object loginId, String service, int level, long disableTime) {
 		System.out.println("---------- 自定义侦听器实现 doDisable");
 	}
 

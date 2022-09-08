@@ -207,7 +207,7 @@ public class JwtForMixinTest {
         	// 封号 
         	StpUtil.disable(10007, 200);
         	Assertions.assertTrue(StpUtil.isDisable(10007));
-        	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), DisableServiceException.BE_VALUE); 
+        	Assertions.assertEquals(dao.get("satoken:login:disable:login:" + 10007), String.valueOf(SaTokenConsts.DEFAULT_DISABLE_LEVEL)); 
         	
         	// 解封  
         	StpUtil.untieDisable(10007);

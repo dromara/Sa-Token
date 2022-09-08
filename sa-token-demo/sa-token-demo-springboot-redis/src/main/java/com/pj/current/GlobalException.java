@@ -44,7 +44,7 @@ public class GlobalException {
 		} 
 		else if(e instanceof DisableServiceException) {	// 如果是被封禁异常
 			DisableServiceException ee = (DisableServiceException) e;
-			aj = AjaxJson.getNotJur("当前账号 " + ee.getService() + " 服务已被封禁：" + ee.getDisableTime() + "秒后解封");
+			aj = AjaxJson.getNotJur("当前账号 " + ee.getService() + " 服务已被封禁 (level=" + ee.getLevel() + ")：" + ee.getDisableTime() + "秒后解封");
 		} 
 		else {	// 普通异常, 输出：500 + 异常信息 
 			aj = AjaxJson.getError(e.getMessage());

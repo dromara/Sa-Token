@@ -177,11 +177,12 @@ public class SaTokenEventCenter {
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param service 指定服务 
+	 * @param level 封禁等级 
 	 * @param disableTime 封禁时长，单位: 秒
 	 */
-	public static void doDisable(String loginType, Object loginId, String service, long disableTime) {
+	public static void doDisable(String loginType, Object loginId, String service, int level, long disableTime) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doDisable(loginType, loginId, service, disableTime);
+			listener.doDisable(loginType, loginId, service, level, disableTime);
 		}
 	}
 	

@@ -1654,102 +1654,105 @@ public class StpLogic {
 	}
 
 	/**
-	 * 根据注解(@SaCheckEnable)鉴权
+	 * 根据注解(@SaCheckDisable)鉴权
 	 *
 	 * @param at 注解对象
 	 */
 	public void checkByAnnotation(SaCheckDisable at) {
-		this.checkDisable(getLoginId(), at.value());
+		Object loginId = getLoginId();
+		for (String service : at.value()) {
+			this.checkDisableLevel(loginId, service, at.level());
+		}
 	}
+	
 	
 	// ------------------- 账号封禁 -------------------  
 
 	/**
-	 * 封禁指定账号
+	 * 封禁：指定账号
 	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * 
 	 * @param loginId 指定账号id 
-	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
 	 */
-	public void disable(Object loginId, long disableTime) {
-		disable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, disableTime);
+	public void disable(Object loginId, long time) {
+		disableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, SaTokenConsts.DEFAULT_DISABLE_LEVEL, time);
 	}
 
 	/**
-	 * 封禁 指定账号 指定服务 
-	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
-	 * @param loginId 指定账号id 
-	 * @param service 指定服务 
-	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
-	 */
-	public void disable(Object loginId, String service, long disableTime) {
-		// 空值检查 
-		if(SaFoxUtil.isEmpty(loginId)) {
-			throw new SaTokenException("请提供要封禁的账号");
-		}
-		if(SaFoxUtil.isEmpty(service)) {
-			throw new SaTokenException("请提供要封禁的服务");
-		}
-
-		// 标注为已被封禁
-		getSaTokenDao().set(splicingKeyDisable(loginId, service), DisableServiceException.BE_VALUE, disableTime);
- 		
- 		// $$ 发布事件 
-		SaTokenEventCenter.doDisable(loginType, loginId, service, disableTime);
-	}
-	
-	/**
-	 * 指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * 判断：指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * 
 	 * @param loginId 账号id
-	 * @return see note
+	 * @return / 
 	 */
 	public boolean isDisable(Object loginId) {
-		return isDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
+		return isDisableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, SaTokenConsts.MIN_DISABLE_LEVEL);
 	}
 
 	/**
-	 * 指定账号 指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
-	 * @param loginId 账号id
-	 * @param service 指定服务 
-	 * @return see note
-	 */
-	public boolean isDisable(Object loginId, String service) {
-		return getSaTokenDao().get(splicingKeyDisable(loginId, service)) != null;
-	}
-
-	/**
-	 * 校验指定账号是否已被封禁，如果被封禁则抛出异常 
+	 * 校验：指定账号是否已被封禁，如果被封禁则抛出异常 
 	 * @param loginId 账号id
 	 */
 	public void checkDisable(Object loginId) {
-		checkDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
+		checkDisableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, SaTokenConsts.MIN_DISABLE_LEVEL);
 	}
 	
 	/**
-	 * 校验 指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * 获取：指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
 	 * @param loginId 账号id
-	 * @param services 指定服务，可以指定多个 
-	 */
-	public void checkDisable(Object loginId, String... services) {
-		if(services != null) {
-			for (String service : services) {
-				if(isDisable(loginId, service)) {
-					throw new DisableServiceException(loginType, loginId, service, getDisableTime(loginId, service));
-				}
-			}
-		}
-	}
-	
-	/**
-	 * 获取 指定账号 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
-	 * @param loginId 账号id
-	 * @return see note 
+	 * @return / 
 	 */
 	public long getDisableTime(Object loginId) {
 		return getDisableTime(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
 	}
 
 	/**
-	 * 获取 指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * 解封：指定账号
+	 * @param loginId 账号id
+	 */
+	public void untieDisable(Object loginId) {
+		untieDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
+	}
+	
+	
+	// ------------------- 分类封禁 -------------------  
+
+	/**
+	 * 封禁：指定账号的指定服务 
+	 * <p> 此方法不会直接将此账号id踢下线，如需封禁后立即掉线，请追加调用 StpUtil.logout(id)
+	 * @param loginId 指定账号id 
+	 * @param service 指定服务 
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public void disable(Object loginId, String service, long time) {
+		disableLevel(loginId, service, SaTokenConsts.DEFAULT_DISABLE_LEVEL, time);
+	}
+
+	/**
+	 * 判断：指定账号的指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @param service 指定服务 
+	 * @return / 
+	 */
+	public boolean isDisable(Object loginId, String service) {
+		return isDisableLevel(loginId, service, SaTokenConsts.MIN_DISABLE_LEVEL);
+	}
+
+	/**
+	 * 校验：指定账号 指定服务 是否已被封禁，如果被封禁则抛出异常 
+	 * @param loginId 账号id
+	 * @param services 指定服务，可以指定多个 
+	 */
+	public void checkDisable(Object loginId, String... services) {
+		if(services != null) {
+			for (String service : services) {
+				checkDisableLevel(loginId, service, SaTokenConsts.MIN_DISABLE_LEVEL);
+			}
+		}
+	}
+
+	/**
+	 * 获取：指定账号 指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
 	 * @param loginId 账号id
 	 * @param service 指定服务 
 	 * @return see note 
@@ -1759,15 +1762,7 @@ public class StpLogic {
 	}
 
 	/**
-	 * 解封指定账号
-	 * @param loginId 账号id
-	 */
-	public void untieDisable(Object loginId) {
-		untieDisable(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
-	}
-	
-	/**
-	 * 解封指定账号、指定服务
+	 * 解封：指定账号、指定服务
 	 * @param loginId 账号id
 	 * @param services 指定服务，可以指定多个 
 	 */
@@ -1788,7 +1783,132 @@ public class StpLogic {
 			SaTokenEventCenter.doUntieDisable(loginType, loginId, service);
 		}
 	}
+
 	
+	// ------------------- 阶梯封禁 -------------------  
+
+	/**
+	 * 封禁：指定账号，并指定封禁等级 
+	 * @param loginId 指定账号id 
+	 * @param level 指定封禁等级 
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public void disableLevel(Object loginId, int level, long time) {
+		disableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, level, time);
+	}
+
+	/**
+	 * 封禁：指定账号的指定服务，并指定封禁等级 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @param level 指定封禁等级 
+	 * @param time 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public void disableLevel(Object loginId, String service, int level, long time) {
+		// 空值检查 
+		if(SaFoxUtil.isEmpty(loginId)) {
+			throw new SaTokenException("请提供要封禁的账号");
+		}
+		if(SaFoxUtil.isEmpty(service)) {
+			throw new SaTokenException("请提供要封禁的服务");
+		}
+		if(level < SaTokenConsts.MIN_DISABLE_LEVEL) {
+			throw new SaTokenException("封禁等级不可以小于最小值：" + SaTokenConsts.MIN_DISABLE_LEVEL);
+		}
+
+		// 标注为已被封禁
+		getSaTokenDao().set(splicingKeyDisable(loginId, service), String.valueOf(level), time);
+ 		
+ 		// $$ 发布事件 
+		SaTokenEventCenter.doDisable(loginType, loginId, service, level, time);
+	}
+
+	/**
+	 * 判断：指定账号是否已被封禁到指定等级
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param level 指定封禁等级 
+	 * @return / 
+	 */
+	public boolean isDisableLevel(Object loginId, int level) {
+		return isDisableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, level);
+	}
+
+	/**
+	 * 判断：指定账号的指定服务，是否已被封禁到指定等级 
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @param level 指定封禁等级 
+	 * @return / 
+	 */
+	public boolean isDisableLevel(Object loginId, String service, int level) {
+		// s1. 检查是否被封禁 
+		int disableLevel = getDisableLevel(loginId, service);
+		if(disableLevel == SaTokenConsts.NOT_DISABLE_LEVEL) {
+			return false;
+		}
+		// s2. 检测被封禁的等级是否达到指定级别 
+		return disableLevel >= level;
+	}
+
+	/**
+	 * 校验：指定账号是否已被封禁到指定等级（如果已经达到，则抛出异常）
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param level 封禁等级 （只有 封禁等级 ≥ 此值 才会抛出异常）
+	 */
+	public void checkDisableLevel(Object loginId, int level) {
+		checkDisableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE, level); 
+	}
+
+	/**
+	 * 校验：指定账号的指定服务，是否已被封禁到指定等级（如果已经达到，则抛出异常）
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @param level 封禁等级 （只有 封禁等级 ≥ 此值 才会抛出异常）
+	 */
+	public void checkDisableLevel(Object loginId, String service, int level) {
+		// s1. 检查是否被封禁 
+		String value = getSaTokenDao().get(splicingKeyDisable(loginId, service));
+		if(SaFoxUtil.isEmpty(value)) {
+			return;
+		}
+		// s2. 检测被封禁的等级是否达到指定级别 
+		Integer disableLevel = SaFoxUtil.getValueByType(value, int.class);
+		if(disableLevel >= level) {
+			throw new DisableServiceException(loginType, loginId, service, disableLevel, level, getDisableTime(loginId, service));
+		}
+	}
+
+	/**
+	 * 获取：指定账号被封禁的等级，如果未被封禁则返回-2 
+	 * 
+	 * @param loginId 指定账号id 
+	 * @return / 
+	 */
+	public int getDisableLevel(Object loginId) {
+		return getDisableLevel(loginId, SaTokenConsts.DEFAULT_DISABLE_SERVICE);
+	}
+
+	/**
+	 * 获取：指定账号的 指定服务 被封禁的等级，如果未被封禁则返回-2 
+	 * 
+	 * @param loginId 指定账号id 
+	 * @param service 指定封禁服务 
+	 * @return / 
+	 */
+	public int getDisableLevel(Object loginId, String service) {
+		// q1. 如果尚未被封禁，则返回-2 
+		String value = getSaTokenDao().get(splicingKeyDisable(loginId, service));
+		if(SaFoxUtil.isEmpty(value)) {
+			return SaTokenConsts.NOT_DISABLE_LEVEL;
+		}
+		// q2. 转为 int 类型 
+		return SaFoxUtil.getValueByType(value, int.class);
+	}
+
 	
 	// ------------------- 身份切换 -------------------  
 

@@ -33,7 +33,7 @@ public class SaTokenListenerForSimple implements SaTokenListener {
 	}
 
 	@Override
-	public void doDisable(String loginType, Object loginId, String service, long disableTime) {
+	public void doDisable(String loginType, Object loginId, String service, int level, long disableTime) {
 		
 	}
 
