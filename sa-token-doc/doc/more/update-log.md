@@ -21,8 +21,9 @@
 - 新增：新增方法 `StpLogic#getAnonTokenSession`，可在未登录情况下安全的获取 Token-Session。  **[重要]** 
 - 新增：新增 `SaApplication` 对象，用于全局作用域存取值。   **[重要]** 
 - 重构：将 `SaTokenListener` 改为事件发布订阅模式，允许同时注册多个侦听器。  **[重要]**  **[不向下兼容]**
-- 重构：StpUtil.login(id) 不再强制校验账号是否禁用，需要手动校验。 **[不向下兼容]** 
-- 重构：新增对账号限制、分类封禁、阶梯封禁功能。	 **[重要]** 
+- 重构：**StpUtil.login(id) 不再强制校验账号是否禁用，需要手动校验。** **[不向下兼容]** 
+- 重构：`DisableLoginException` 更换名称为 `DisableServiceException`。 **[不向下兼容]** 
+- 新增：新增对账号限制、分类封禁、阶梯封禁功能。	 **[重要]** 
 - 新增：会话查询API增加反序获取会话方式。
 - 新增：SSO模块增加 server-url 属性，用于简化各种 url 配置。  **[重要]**
 - 修复：修复单点登录模块 `ssoLogoutCall` 配置项无效的问题。 
