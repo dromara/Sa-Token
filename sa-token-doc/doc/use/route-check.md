@@ -208,5 +208,5 @@ public SaResult getList() {
 
 请求将会跳过拦截器的校验，直接进入 Controller 的方法中。
 
-**注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 APO注解鉴权 生效，对自定义拦截器与过滤器不生效。**
+**注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。**
 
