@@ -190,9 +190,9 @@ public final class SaStrategy {
 	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
 	 * <p> 参数 [Method, 注解] 
 	 */
-	public BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent = (method, annotationClass) -> {
-		return me.getAnnotation.apply(method, SaIgnore.class) != null || 
-				me.getAnnotation.apply(method.getDeclaringClass(), SaIgnore.class) != null;
+	public BiFunction<Method, Class<? extends Annotation>, Boolean> isAnnotationPresent = (method, annotationClass) -> {
+		return me.getAnnotation.apply(method, annotationClass) != null ||
+				me.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
 	};
 
 
@@ -273,7 +273,7 @@ public final class SaStrategy {
 	 * @param isAnnotationPresent / 
 	 * @return 对象自身 
 	 */
-	public SaStrategy setIsAnnotationPresent(BiFunction<Method, AnnotatedElement, Boolean> isAnnotationPresent) {
+	public SaStrategy setIsAnnotationPresent(BiFunction<Method, Class<? extends Annotation>, Boolean> isAnnotationPresent) {
 		this.isAnnotationPresent = isAnnotationPresent;
 		return this;
 	}
