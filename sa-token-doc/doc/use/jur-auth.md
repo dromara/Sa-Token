@@ -28,7 +28,7 @@
 
 ``` java 
 /**
- * 自定义权限验证接口扩展 
+ * 自定义权限验证接口扩展
  */
 @Component	// 保证此类被SpringBoot扫描，完成Sa-Token的自定义权限验证扩展 
 public class StpInterfaceImpl implements StpInterface {
@@ -70,6 +70,7 @@ public class StpInterfaceImpl implements StpInterface {
 
 可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
 
+> 注意: StpInterface 接口在需要鉴权时由框架自动调用, 开发者只需要配置好就可以使用下面的鉴权方法或后面的注解鉴权
 
 
 ### 权限认证
