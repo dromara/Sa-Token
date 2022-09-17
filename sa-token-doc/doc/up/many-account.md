@@ -59,7 +59,7 @@ public class StpUserUtil {
 框架默认的注解鉴权 如`@SaCheckLogin` 只针对原生`StpUtil`进行鉴权。
 
 例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.login(id)`进行登录的会话，
-而对于通过`StpUserUtil.login(id)`进行登录的都会话，则始终不会通过校验。
+而对于通过`StpUserUtil.login(id)`进行登录的会话，则始终不会通过校验。
 
 那么如何告诉`@SaCheckLogin`要鉴别的是哪套账号的登录会话呢？很简单，你只需要指定一下注解的type属性即可：
 
