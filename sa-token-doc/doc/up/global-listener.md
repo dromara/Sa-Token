@@ -177,7 +177,7 @@ SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
 ```
 
 ##### 3.3、使用 try-catch 包裹不安全的代码：
-如果你认为你的事件处理代码是不安全的（代码可能在运行时抛出异常），你则需要使用 `try-catch` 包裹代码，以防因为抛出异常导致 Sa-Token 的整个登录流程被强制中断。
+如果你认为你的事件处理代码是不安全的（代码可能在运行时抛出异常），则需要使用 `try-catch` 包裹代码，以防因为抛出异常导致 Sa-Token 的整个登录流程被强制中断。
 
 ``` java
 // 登录时触发 
