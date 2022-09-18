@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -105,6 +107,15 @@ public class SaFoxUtil {
 	 */
 	public static String formatDate(Date date){
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+	}
+
+	/**
+	 * 将日期格式化 （yyyy-MM-dd HH:mm:ss）
+	 * @param zonedDateTime 日期
+	 * @return 格式化后的时间
+	 */
+	public static String formatDate(ZonedDateTime zonedDateTime) {
+		return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	}
 	
 	/**

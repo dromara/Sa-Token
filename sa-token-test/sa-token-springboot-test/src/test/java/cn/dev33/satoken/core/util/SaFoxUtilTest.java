@@ -1,8 +1,10 @@
 package cn.dev33.satoken.core.util;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -51,7 +53,9 @@ public class SaFoxUtilTest {
 
     @Test
     public void formatDate() {
-    	String formatDate = SaFoxUtil.formatDate(new Date(1644328600364L));
+		Instant instant = Instant.ofEpochMilli(1644328600364L);
+		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("Asia/Shanghai"));
+		String formatDate = SaFoxUtil.formatDate(zonedDateTime);
     	Assertions.assertEquals(formatDate, "2022-02-08 21:56:40");
     }
 
