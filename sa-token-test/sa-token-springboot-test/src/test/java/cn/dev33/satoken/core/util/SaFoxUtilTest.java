@@ -51,13 +51,13 @@ public class SaFoxUtilTest {
     	Assertions.assertNotEquals(SaFoxUtil.getMarking28(), SaFoxUtil.getMarking28());
     }
 
-    @Test
-    public void formatDate() {
+	@Test
+	public void formatDate() {
 		Instant instant = Instant.ofEpochMilli(1644328600364L);
 		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("Asia/Shanghai"));
 		String formatDate = SaFoxUtil.formatDate(zonedDateTime);
-    	Assertions.assertEquals(formatDate, "2022-02-08 21:56:40");
-    }
+		Assertions.assertEquals(formatDate, "2022-02-08 21:56:40");
+	}
 
     @Test
     public void searchList() {
