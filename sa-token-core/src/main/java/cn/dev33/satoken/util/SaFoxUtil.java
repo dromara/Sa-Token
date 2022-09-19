@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 import cn.dev33.satoken.exception.SaTokenException;
@@ -22,6 +22,10 @@ import cn.dev33.satoken.exception.SaTokenException;
  *
  */
 public class SaFoxUtil {
+	/**
+	 * 可以减少线程争用的随机对象
+	 */
+	private static final ThreadLocalRandom RANDOM = ThreadLocalRandom.current();
 
 	private SaFoxUtil() {
 	}
@@ -52,10 +56,9 @@ public class SaFoxUtil {
 	 */
 	public static String getRandomString(int length) {
 		String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		Random random = new Random();
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < length; i++) {
-			int number = random.nextInt(62);
+			int number = RANDOM.nextInt(62);
 			sb.append(str.charAt(number));
 		}
 		return sb.toString();
@@ -95,7 +98,7 @@ public class SaFoxUtil {
 	 * @return 随机字符串
 	 */
 	public static String getMarking28() {
-		return System.currentTimeMillis() + "" + new Random().nextInt(Integer.MAX_VALUE);
+		return System.currentTimeMillis() + "" + RANDOM.nextInt(Integer.MAX_VALUE);
 	}
 
 	/**
