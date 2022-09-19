@@ -47,9 +47,9 @@ StpUtil.logout();   // 会话注销
 StpUtil.logout(10001);   // 会话注销，根据账号id
 StpUtil.logout(10001, "PC");   // 会话注销，根据账号id 和 设备类型
 StpUtil.logoutByTokenValue(token);   // 指定 Token 强制注销
-StpUtil.kickout(10001);   // 踢人下线 
-StpUtil.kickout(10001, "PC");   // 踢人下线，根据账号id
-StpUtil.kickoutByTokenValue(token);   // 踢人下线，根据账号id 和 设备类型
+StpUtil.kickout(10001);   // 踢人下线，根据账号id
+StpUtil.kickout(10001, "PC");   // 踢人下线，根据账号id 和 设备类型
+StpUtil.kickoutByTokenValue(token);   // 踢人下线，根据token
 ```
 
 
@@ -152,7 +152,7 @@ StpUtil.searchTokenSessionId(keyword, start, size, sortType);   // 根据条件�
 
 ### 11、账号封禁
 ``` java
-StpUtil.disable(10001, 1200);   // 封禁：指定账号
+StpUtil.disable(10001, 1200);   // 封禁：指定账号 指定时间(单位s)
 StpUtil.isDisable(10001);   // 判断：指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
 StpUtil.checkDisable(10001);   // 校验：指定账号是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
 StpUtil.getDisableTime(10001);   // 获取：指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
@@ -160,9 +160,9 @@ StpUtil.untieDisable(loginId);   // 解封：指定账号
 ```
 
 
-### 12、分类封禁
+### 12、分类封禁 (version >= 1.31.0)
 ``` java
-StpUtil.disable(10001, "<业务标识>", 86400);   // 封禁：指定账号的指定服务 
+StpUtil.disable(10001, "<业务标识>", 86400);   // 封禁：指定账号的指定服务 指定时间(单位s)
 StpUtil.isDisable(10001, "<业务标识>");   // 判断：指定账号的指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
 StpUtil.checkDisable(10001, "<业务标识>");   // 校验：指定账号的指定服务 是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
 StpUtil.getDisableTime(10001, "<业务标识>");   // 获取：指定账号的指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
@@ -170,7 +170,7 @@ StpUtil.untieDisable(loginId, "<业务标识>");   // 解封：指定账号的�
 ```
 
 
-### 13、阶梯封禁
+### 13、阶梯封禁 (version >= 1.31.0)
 ``` java
 StpUtil.disableLevel(10001, "comment", 3, 10000);   // 分类阶梯封禁，参数：封禁账号、封禁服务、封禁级别、封禁时间 
 StpUtil.getDisableLevel(10001, "comment");   // 获取：指定账号的指定服务 封禁的级别 （如果此账号未被封禁则返回 -2）
