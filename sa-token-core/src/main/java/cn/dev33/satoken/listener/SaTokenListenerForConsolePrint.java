@@ -1,6 +1,8 @@
 package cn.dev33.satoken.listener;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.stp.SaLoginModel;
@@ -50,8 +52,9 @@ public class SaTokenListenerForConsolePrint implements SaTokenListener {
 	 */
 	@Override
 	public void doDisable(String loginType, Object loginId, String service, int level, long disableTime) {
-		Date date = new Date(System.currentTimeMillis() + disableTime * 1000);
-		println("账号[" + loginId + "] " + service + " 服务被封禁，封禁等级=" + level + " (解封时间: " + SaFoxUtil.formatDate(date) + ")");
+		Instant instant = Instant.ofEpochMilli(System.currentTimeMillis() + disableTime * 1000);
+		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+		println("账号[" + loginId + "] " + service + " 服务被封禁，封禁等级=" + level + " (解封时间: " + SaFoxUtil.formatDate(zonedDateTime) + ")");
 	}
 
 	/**
