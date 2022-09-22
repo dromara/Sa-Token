@@ -30,7 +30,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
-	 * Objecy专用 
+	 * Object专用 
 	 */
 	public RedisTemplate<String, Object> objectRedisTemplate;
 
