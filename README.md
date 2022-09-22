@@ -38,7 +38,7 @@ StpUtil.login(10001);
 // 会话校验：在需要校验登录处调用以下方法，如果会话未登录会抛出 `NotLoginException` 异常
 StpUtil.checkLogin();
 
-// 会话注销
+// 会话注销：在当前客户端退出已登录的会话
 StpUtil.logout();
 ```
 
