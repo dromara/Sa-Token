@@ -210,3 +210,18 @@ public SaResult getList() {
 
 **注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。**
 
+
+### 7、关闭注解校验
+
+`SaInterceptor` 只要注册到项目中，默认就会打开注解校验，如果要关闭此能力，需要：
+
+``` java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(
+		new SaInterceptor(handle -> {
+			SaRouter.match("/**").check(r -> StpUtil.checkLogin());
+		}).isAnnotation(false)  // 指定关闭掉注解鉴权能力，这样框架就只会做路由拦截校验了 
+	).addPathPatterns("/**");
+}
+```

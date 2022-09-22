@@ -60,8 +60,14 @@ public interface SaTokenContext {
 }
 ```
 
-你可能对 `SaRequest` 比较疑惑，这个对象是干什么用的？正如每个 Web 框架都有 Request 概念的抽象，Sa-Token 也封装了 `Request`、`Response`、`Storage`三者的抽象，
-因此在实现 `SaTokenContext` 之前，你必须先实现这三个 Model 接口。
+你可能对 `SaRequest` 比较疑惑，这个对象是干什么用的？正如每个 Web 框架都有 Request 概念的抽象，Sa-Token 也封装了 `Request`、`Response`、`Storage`三者的抽象：
+
+- `Request`：请求对象，携带着一次请求的所有参数数据。参考：[SaRequest.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/context/model/SaRequest.java)。
+- `Response`：响应对象，携带着对客户端一次响应的所有数据。参考：[SaResponse.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/context/model/SaResponse.java)。
+- `Storage`：请求上下文对象，提供 [一次请求范围内] 的上下文数据读写。参考：[SaStorage.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/context/model/SaStorage.java)。
+
+
+因此，在实现 `SaTokenContext` 之前，你必须先实现这三个 Model 接口。
 
 先别着急动手，如果你的 Web 框架是基于 Servlet 规范开发的，那么 Sa-Token 已经为你封装好了三个 Model 接口的实现，你要做的就是引入 `sa-token-servlet`包即可：
 

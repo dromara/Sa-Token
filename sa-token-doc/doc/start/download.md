@@ -7,7 +7,7 @@
 
 <!------------------------------ tabs:start ------------------------------>
 
-<!------------- tab:SpringMVC环境 （ServletAPI）  ------------->
+<!------------- tab:SpringBoot环境 （ServletAPI）  ------------->
 如果你使用的框架基于 ServletAPI 构建（ SpringMVC、SpringBoot等 ），请引入此包
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
@@ -102,7 +102,7 @@
 
 ## Gradle依赖
 <!-- tabs:start -->
-<!-- tab:SpringMVC环境 （ServletAPI）  -->
+<!-- tab:SpringBoot环境 （ServletAPI）  -->
 ``` xml
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
