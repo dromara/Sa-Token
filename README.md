@@ -25,15 +25,64 @@
 
 ## Sa-Token 介绍
 
-**Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**登录认证**、**权限认证**、**单点登录**、**OAuth2.0**、**分布式Session会话**、**微服务网关鉴权**
-等一系列权限相关问题。
+**Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：登录认证、权限认证、单点登录、OAuth2.0、分布式Session会话、微服务网关鉴权 等一系列权限相关问题。
 
+Sa-Token 可以让系统的权限认证变得简单、优雅。
+
+登录认证示例：
+
+``` java
+// 会话登录：参数指定在当前客户端登录的账号id
+StpUtil.login(10001);
+
+// 会话校验：在需要校验登录处调用以下方法，如果会话未登录会抛出 `NotLoginException` 异常
+StpUtil.checkLogin();
+
+// 会话注销
+StpUtil.logout();
+```
+
+踢人下线：
+``` java
+// 将账号id为 10077 的会话踢下线 
+StpUtil.kickout(10077);
+```
+
+权限认证示例：
+``` java
+// 注解鉴权：只有具备 `user:add` 权限的会话才可以进入方法
+@SaCheckPermission("user:add")
+public String insert(SysUser user) {
+    // ... 
+    return "用户增加";
+}
+```
+
+路由拦截鉴权：
+
+``` java
+// 根据路由划分模块，不同模块不同鉴权 
+registry.addInterceptor(new SaInterceptor(handler -> {
+	SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
+	SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
+	SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
+	SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
+	SaRouter.match("/notice/**", r -> StpUtil.checkPermission("notice"));
+	// 更多模块... 
+})).addPathPatterns("/**");
+```
+
+
+
+## Sa-Token 功能模块一览
+
+Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
 - **登录认证** —— 单端登录、多端登录、同端互斥登录、七天内免登录
 - **权限认证** —— 权限认证、角色认证、会话二级认证
 - **Session会话** —— 全端共享Session、单端独享Session、自定义Session 
 - **踢人下线** —— 根据账号id踢人下线、根据Token值踢人下线
-- **账号封禁** —— 指定天数封禁、永久封禁、设定解封时间 
+- **账号封禁** —— 登录封禁、按照业务分类封禁、按照处罚阶梯封禁 
 - **持久层扩展** —— 可集成Redis、Memcached等专业缓存中间件，重启数据不丢失
 - **分布式会话** —— 提供jwt集成、共享数据中心两种分布式会话方案
 - **微服务网关鉴权** —— 适配Gateway、ShenYu、Zuul等常见网关的路由拦截认证
@@ -42,13 +91,13 @@
 - **二级认证** —— 在已登录的基础上再次认证，保证安全性 
 - **Basic认证** —— 一行代码接入 Http Basic 认证 
 - **独立Redis** —— 将权限缓存与业务缓存分离 
-- **临时Token验证** —— 解决短时间的Token授权问题
+- **临时Token认证** —— 解决短时间的Token授权问题
 - **模拟他人账号** —— 实时操作任意用户状态数据
 - **临时身份切换** —— 将会话身份临时切换为其它账号
 - **前后台分离** —— APP、小程序等不支持Cookie的终端
 - **同端互斥登录** —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录
 - **多账号认证体系** —— 比如一个商城项目的user表和admin表分开鉴权
-- **花式token生成** —— 内置六种Token风格，还可：自定义Token生成策略、自定义Token前缀
+- **Token风格定制** —— 内置六种Token风格，还可：自定义Token生成策略、自定义Token前缀
 - **注解式鉴权** —— 优雅的将鉴权与业务代码分离
 - **路由拦截式鉴权** —— 根据路由拦截鉴权，可适配restful模式
 - **自动续签** —— 提供两种Token过期策略，灵活搭配使用，还可自动续签
@@ -57,7 +106,10 @@
 - **密码加密** —— 提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密 
 - **全局侦听器** —— 在用户登陆、注销、被踢下线等关键性操作时进行一些AOP操作
 - **开箱即用** —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用
-- **更多功能正在集成中...** —— 如有您有好想法或者建议，欢迎加群交流
+
+功能结构图：
+
+![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png)
 
 
 ## Sa-Token-SSO 单点登录
@@ -74,7 +126,7 @@ Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO �
 2. 后端同Redis：就是指多个系统可以连接同一个Redis。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳：[Alone独立Redis插件](http://sa-token.dev33.cn/doc/index.html#/plugin/alone-redis)
 3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）
 
-## Sa-Token-OAuth2.0 授权登录
+## Sa-Token-OAuth2 授权认证
 Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求 
 
 | 授权模式						| 简介						|
@@ -87,14 +139,7 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 详细参考文档：[http://sa-token.dev33.cn/doc/index.html#/oauth2/readme](http://sa-token.dev33.cn/doc/index.html#/oauth2/readme)
 
 
-
-## Sa-Token 功能结构图
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png)
-
-![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-rz2.png)
-
-
-## 使用Sa-Token的开源项目 
+## 使用 Sa-Token 的开源项目 
 
 - [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器。
 
