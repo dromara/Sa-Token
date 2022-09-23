@@ -75,6 +75,21 @@ StpUtil.untieDisable(10001);
 ``` java
 // 封禁指定用户评论能力，期限为 1天
 StpUtil.disable(10001, "comment", 86400);
+```
+参数释义：
+- 参数1：要封禁的账号id。
+- 参数2：针对这个账号，要封禁的服务标识（可以是任意的自定义字符串）。
+- 参数3：要封禁的时间，单位：秒，此为 86400秒 = 1天（此值为 -1 时，代表永久封禁）。
+
+分类封禁模块所有可用API：
+
+``` java
+/*
+ * 以下示例中："comment"=评论服务标识、"place-order"=下单服务标识、"open-shop"=开店服务标识
+ */
+
+// 封禁指定用户评论能力，期限为 1天
+StpUtil.disable(10001, "comment", 86400);
 
 // 在评论接口，校验一下，会抛出异常：`DisableServiceException`，使用 e.getService() 可获取业务标识 `comment` 
 StpUtil.checkDisable(10001, "comment");
