@@ -91,6 +91,45 @@
 3. 如果以上步骤处理后仍然没有效果，加群说明一下复现步骤 
 
 
+### Q：我加了拦截器鉴权，但是好像没有什么效果，请求没有被拦截住？
+- 可能1：这个拦截器可能没有注册成功。
+- 可能2：你访问的请求没有进入这个拦截器。
+
+尝试按照下面的代码测试一下看看：
+
+``` java
+// 注册拦截器 
+@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		System.out.println("--------- flag 1");
+		registry.addInterceptor(new SaInterceptor(handle -> {
+			System.out.println("--------- flag 2");
+			StpUtil.checkLogin();  // 登录校验，只有会话登录后才能通过这句代码 
+		}))
+		.addPathPatterns("/user/**")
+		.excludePathPatterns("/user/doLogin");
+	}
+}
+```
+
+在启动时 `flag 1` 被打印出来，才证明拦截器注册成功了，在访问请求时 `flag 2` 被打印出来，才证明请求进入了拦截器。
+
+如果拦截器没有注册成功，则：
+- 可能1：SpringBoot 版本较高（`>= 2.6.0`），请尝试在启动类加上 `@EnableWebMvc` 注解再重新启动。
+- 可能2：`SaTokenConfigure` 配置类不在启动类的同包或者子包下，导致没有被 SpringBoot 扫描到。
+- 可能3：`SaTokenConfigure` 配置类在启动类的同包或者子包下，但启动类上加了 `@ComponentScan("com.xxx")` 注解，导致包扫描范围不正确，请将此注解删除或移动到其它配置类上。
+- 可能4：项目属于 Maven 多模块项目，`SaTokenConfigure` 和启动类没有在一个模块，且启动类模块没有引入配置类的模块，导致加载不到。
+
+如果拦截器已经注册成功，但请求没有进入拦截器：
+- 可能1：你访问的 path，没有被 `.addPathPatterns("/user/**")` 拦截住。
+- 可能2：你访问的 path，被 `.excludePathPatterns("/xxx/xx")` 排除掉了。
+- 可能3：你访问的是另一个项目，请把当前项目停掉，看看你的请求还能不能访问成功。
+
+注：以上的排查步骤，对过滤器不生效的情形一样适用。
+
+
 ### Q：我使用拦截器鉴权时，明明排除了某个路径却仍然被拦截了？
 - 可能1：你的项目可能是跨域了，先把跨域问题解决掉，参考：[解决跨域问题](/fun/cors-filter)
 - 可能2：你访问的接口可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。请确保你访问的 path 有对应的 Controller 承接！
@@ -108,20 +147,22 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 
 
 ### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
-可能是Cookie帮你自动传了，在浏览器或 Postman 中会自动维护Cookie模式，如不需要可以在配置文件：`is-read-cookie: false`，然后重启项目再测试一下
+可能1：你访问的这个接口，根本就没有鉴权的代码，所以可以安全的访问通过。
+可能2：可能是 Cookie 帮你自动提交了 Token，在浏览器或 Postman 中会自动维护Cookie模式，如不需要可以在配置文件：`is-read-cookie: false`，然后重启项目再测试一下。
 
 
-### Q：一个User对象存进Session后，再取出来时报错：无法从User类型转换成User类型？
-群员亲测，当你打开热部署模式后，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决
+### Q：一个 User 对象存进 Session 后，再取出来时报错：无法从 User 类型转换成 User 类型？
+可能1：你的 User 类中途换了包名，导致存进去时和取出来时对不上，无法成功创建实例。
+可能2：你打开了代码热刷新模式，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决。
 
 
 ### Q：我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？
 不更新是正常现象，`active-timeout`不是根据 ttl 计算的，是根据value值计算的，value 记录的是该 Token 最后访问系统的时间戳，
-每次验签时用：当前时间 - 时间戳 > active-timeout，来判断这个 Token 是否已经超时 
+每次验签时用：当前时间 - 时间戳 > active-timeout，来判断这个 Token 是否已经超时。 
 
 
 ### Q：整合 Redis 时先选择了默认jdk序列化，后又改成 jackson 序列化，程序开始报错，SerializationException？
-两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新 
+两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新。
 
 
 ### Q：我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
@@ -180,8 +221,8 @@ springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能�
 而且这个 Token 不会永远留在 `Redis` 里，在其 TTL 到期后就会自动清除，如果你想让它立即消失，可以：
 
 - 方法一：配置文件把 `is-concurrent` 和 `is-share` 都打开，这样每次登陆都会复用以前的旧 Token，就不会有废弃 Token 产生了。 
-- 方法二：每次登录前把先调用注销方法，把这个账号的旧登录都给清除了。
-- 方法三：写一个定时任务查询Redis值进行删除。
+- 方法二：每次登录前把先调用注销方法 `StpUtil.logout(10001)` ，把这个账号的旧登录都给清除了。
+- 方法三：写一个定时任务查询 Redis 值进行删除。
 
 
 ### Q：我使用过滤器鉴权 or 全局拦截器鉴权，结果 Swagger 不能访问了，我应该排除哪些地址？
@@ -192,8 +233,11 @@ springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能�
 
 
 ### Q：SaRouter.match 有多个路径需要排除怎么办？
-可以点进去源码看一下，`SaRouter.match`方法有多个重载，可以放一个集合, 例如：<br>
-`SaRouter.match(/**).notMatch("/login", "/reg").check(r -> StpUtil.checkLogin());`
+可以点进去源码看一下，`SaRouter.match`方法有多个重载，可以放一个集合, 例如：
+
+``` java
+SaRouter.match("/**").notMatch("/login", "/reg").check(r -> StpUtil.checkLogin());
+```
 
 
 ### Q：为什么StpUtil.login() 不能直接写入一个User对象？
@@ -207,8 +251,55 @@ springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能�
 ### Q：前后台分离时，前端提交的 header 参数是叫 token 还是 satoken 还是 tokenName？
 默认是satoken，如果想换一个名字，更改一下配置文件的`tokenName`即可。
 
-### Q：权限可以做成动态的吗？
-权限本来就是动态的，只有jwt那种模式才是非动态的
+
+### Q：一个账号拥有哪些权限，可以做成动态的吗？
+权限本来就是动态的，框架预留的 `StpInterface` 接口，就是为了让你可以写任意代码来获取数据
+
+
+### Q：路由拦截鉴权，可以做成动态的吗？
+框架提供的示例是硬代码写死的，不过稍微做一下改的，你就可以让他动态化，比如：
+``` java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		SaRouter
+			.match("/**")
+			.notMatch(excludePaths())
+			.check(r -> StpUtil.checkLogin());
+	})).addPathPatterns("/**");
+}
+
+// 动态获取哪些 path 可以忽略鉴权 
+public List<String> excludePaths() {
+	// 此处仅为示例，实际项目你可以写任意代码来查询这些path
+	return Arrays.asList("/path1", "/path2", "/path3");
+}
+```
+
+如果不仅仅是登录校验，还需要鉴权，那也很简单：
+``` java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		// 遍历校验规则，依次鉴权 
+		Map<String, String> rules = getAuthRules();
+		for (String path : rules.keySet()) {
+			SaRouter.match(path, () -> StpUtil.checkPermission(rules.get(path)));
+		}
+	})).addPathPatterns("/**");
+}
+
+// 动态获取鉴权规则 
+public Map<String, String> getAuthRules() {
+	// key 代表要拦截的 path，value 代表需要校验的权限 
+	Map<String, String> authMap = new LinkedHashMap<>();
+	authMap.put("/user/**", "user");
+	authMap.put("/admin/**", "admin");
+	authMap.put("/article/**", "article");
+	// 更多规则 ... 
+	return authMap;
+}
+```
 
 
 ### Q：我不想让框架自动操作Cookie，怎么办？

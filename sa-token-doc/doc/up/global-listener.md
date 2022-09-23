@@ -153,7 +153,7 @@ public SaResult login() {
 
 ``` java
 @Component
-public class MySaTokenListener implements SaTokenListenerForSimple {
+public class MySaTokenListener extends SaTokenListenerForSimple {
 	/*
 	 * SaTokenListenerForSimple 对所有事件提供了空实现，通过继承此类，你只需重写一部分方法即可实现一个可用的侦听器。
 	 */
