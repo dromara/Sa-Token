@@ -50,8 +50,29 @@ public Map<String, String> getAuthRules() {
 ```
 
 
+--- 
 
+错误的写法：
 
+``` java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		StpUtil.checkLogin();
+	}))
+	.addPathPatterns("/**")
+	.excludePathPatterns(excludePaths());
+}
+
+// 动态获取哪些 path 可以忽略鉴权 
+public List<String> excludePaths() {
+	// 此处仅为示例，实际项目你可以写任意代码来查询这些path
+	return Arrays.asList("/path1", "/path2", "/path3");
+}
+```
+
+错误点：因为 lambda 表达式之外的代码只会在启动时执行一次，所以 `excludePaths()` 方法是无法做到动态化读取的，
+若要在项目运行时动态读写，必须把调用 `excludePaths()` 的时机放在 lambda 里。
 
 
 
