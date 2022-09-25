@@ -1,5 +1,7 @@
 # issue 提问模板
 
+在线提问链接：[Gitee issue](https://gitee.com/dromara/sa-token/issues)、[GitHub issue](https://github.com/dromara/sa-token/issues)
+
 > 请在新建 issue 时，尽量复制模板格式进行提交
 > 
 > 1. 提交之前率先参考 [Sa-Token 常见问题解答](https://sa-token.dev33.cn/doc/index.html#/more/common-questions) 以及善用 Gitee issues 搜索功能，查阅问题是否已有答案，已存在的 issue 就不要再重复提交了。
