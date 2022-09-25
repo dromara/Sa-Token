@@ -165,6 +165,18 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新。
 
 
+### Q：调用 `StpUtil.getExtra("name")` 报错：`this api is disabled`。
+`StpUtil.getExtra(key)` 是给 sa-token-jwt 插件提供的，不集成这个插件就不能调用这个API，如果是普通模式需要存储自定义参数，请在 SaSession 上存储
+
+``` java
+// 在登录时缓存参数
+StpUtil.getSession().set("name", "zhangsan");
+
+// 然后我们就可以在任意处获取这个参数 
+String name = StpUtil.getSession().getString("name");
+```
+
+
 ### Q：我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
 参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
 
@@ -262,6 +274,7 @@ SaRouter.match("/**").notMatch("/login", "/reg").check(r -> StpUtil.checkLogin()
 
 ### Q：路由拦截鉴权，可以做成动态的吗？
 参考：[把路由拦截鉴权动态化](/fun/dynamic-router-check)
+
 
 ### Q：我不想让框架自动操作Cookie，怎么办？
 在配置文件将`isReadCookie`值配置为`false`

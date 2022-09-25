@@ -1,4 +1,4 @@
-# 框架生态
+# 使用 Sa-Token 的开源项目 
 
 
 > 集成 Sa-Token 的开源案例收集，取自 [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)，定期同步。
@@ -12,7 +12,7 @@
 
 - [[ dcy-fast ]](https://gitee.com/dcy421/dcy-fast)：一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器。
 
-- [[ Helio开发脚手架 ]](https://gitee.com/uncarbon97)： 基于 `SpringBoot + Sa-Token + Mybatis-Plus` 的单体or微服务开发脚手架，带有配套后台管理前端模板及代码生成器
+- [[ Helio-Boot ]](https://gitee.com/uncarbon97/helio-boot)：基于 SpringBoot + Sa-Token + Mybatis-Plus 的单体开发脚手架，带有配套后台管理前端模板及代码生成器；拥有对应微服务版脚手架`Helio-Cloud`
 
 - [[ EasyAdmin ]](https://gitee.com/lakernote/easy-admin)：一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等
 
@@ -58,9 +58,13 @@
 
 - [[ dcy-fast-cloud ]](https://gitee.com/dcy421/dcy-fast-cloud)：一个基于 SpringCloudAlibaba + Sa-Token + dubbo2.7.8 + Seata + knife4j + Mybatis-Plus + MapStruct +  的后台管理系统，前端vue-element-admin，并且内置代码生成器+动态路由权限等功能
 
-- [[ fhs-framework ]](https://gitee.com/fhs-opensource/fhs-framework)：基于Springboot+Springcloud + Mybatis Plus + sa-token+ vue + elementui 的快速开发平台(低代码开发平台)，本框架永远免费，永久全开源
+- [[ fhs-framework ]](https://gitee.com/fhs-opensource/fhs-framework)：基于Springboot+Springcloud + Mybatis Plus + Sa-Token + Vue + ElementUI 的快速开发平台(低代码开发平台)，本框架永远免费，永久全开源
 
 - [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写 Pig 授权方式为 Sa-Token，其他代码不变。
+
+- [[ Helio-Cloud ]](https://gitee.com/uncarbon97/helio-cloud)：基于 SpringBoot + SpringCloud Alibaba + Sa-Token + Mybatis-Plus 的微服务开发脚手架，带有配套后台管理前端模板及代码生成器
+
+- [[ BudWk-V7 ]](https://gitee.com/budwk/budwk)：基于 NutzBoot + Sa-Token + Dubbo + Nacos注册&配置中心 的微服务开发脚手架(同时提供单应用版本)，带有配套后台管理前端模板及代码生成器
 
 
 
@@ -86,8 +90,3 @@
 
 - [[ cubic ]](https://gitee.com/dromara/cubic)：一站式问题定位平台，实时线程栈监控、线程池监控、动态arthas命令集、依赖分析等等等，助你快速定位问题。
 
-
-
---- 
-
-Sa-Token 在线文档：[https://sa-token.dev33.cn/](https://sa-token.dev33.cn/)
