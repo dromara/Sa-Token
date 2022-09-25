@@ -66,7 +66,7 @@ StpUtil.updateLastActivityToNow();
 两者的认证逻辑彼此独立，互不干扰，可以同时使用。
 
 ### StpUtil 类中哪些公开方法支持临时有效期自动续签? 
-> 间接调用过 StpUtil.updateLastActivityToNow() 方法
+> 直接或间接获取了当前用户id的方法 （间接调用过 StpLogic.getLoginId() 方法）
 
 | 支持自动续签的方法 |
 |---|
