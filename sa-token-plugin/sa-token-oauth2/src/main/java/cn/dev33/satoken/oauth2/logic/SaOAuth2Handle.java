@@ -213,7 +213,7 @@ public class SaOAuth2Handle {
 		// 校验参数
 		SaOAuth2Util.checkAccessTokenParam(clientId, clientSecret, accessToken);
 
-		// 获取新Token返回
+		// 回收 Access-Token
 		SaOAuth2Util.revokeAccessToken(accessToken);
 		return SaResult.ok();
 	}
