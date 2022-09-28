@@ -1,23 +1,35 @@
 package cn.dev33.satoken.solon.integration;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.strategy.SaStrategy;
+import org.noear.solon.core.handle.Action;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * sa-token基于路由的拦截式鉴权 
+ * sa-token 基于路由的拦截式鉴权（增加了注解的处理）
+ *
  * @author kong
+ * @since 1.9
+ * @author noear
+ * @since 1.10
  */
 public class SaTokenPathInterceptor implements Handler {
+	/**
+	 * 是否打开注解鉴权
+	 */
+	public boolean isAnnotation = true;
 
 	// ------------------------ 设置此过滤器 拦截 & 放行 的路由
 
@@ -156,10 +168,30 @@ public class SaTokenPathInterceptor implements Handler {
 	@Override
 	public void handle(Context ctx) throws Throwable {
 		try {
-			// 执行全局过滤器
+			//注处处理
+			Action action = ctx.action();
+
+			if(isAnnotation && action != null){
+				ctx.attrSet("_SaTokenPathInterceptor", "1");
+
+				// 获取此请求对应的 Method 处理函数
+				Method method = action.method().getMethod();
+
+				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
+				if(SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+					return;
+				}
+
+				// 注解校验
+				SaStrategy.me.checkMethodAnnotation.accept(method);
+			}else{
+				ctx.attrSet("_SaTokenPathInterceptor", "0");
+			}
+
+			//路径规则处理
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				beforeAuth.run(null);
-				auth.run(null);
+				beforeAuth.run(action);
+				auth.run(action);
 			});
 
 		} catch (StopMatchException e) {
