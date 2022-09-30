@@ -71,9 +71,10 @@ public class XPluginImp implements Plugin {
         });
 
         // 注入侦听器 Bean
-        EventBus.subscribe(SaTokenListener.class, bw->{
-        	SaTokenEventCenter.registerListener(bw);
+        context.subBean(SaTokenListener.class, sl->{
+            SaTokenEventCenter.registerListener(sl);
         });
+
 
         // 注入权限认证 Bean
         context.getWrapAsyn(StpInterface.class, bw->{

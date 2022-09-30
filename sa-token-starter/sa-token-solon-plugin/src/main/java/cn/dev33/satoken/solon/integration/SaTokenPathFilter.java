@@ -16,9 +16,14 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * sa-token 基于路由的过滤式鉴权( +SaTokenAnnotationInterceptor )
+ *
  * @author noear
  * @since 1.9
+ * @deprecated 1.10，改用 SaTokenPathInterceptor
+ * @see SaTokenPathInterceptor
  */
+@Deprecated
 public class SaTokenPathFilter implements Filter {
 
     // ------------------------ 设置此过滤器 拦截 & 放行 的路由
