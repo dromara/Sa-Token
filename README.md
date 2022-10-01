@@ -141,6 +141,8 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 
 - [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器。
 
+- [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + AntDesignVue3 + Vite + SpringBoot + Mp + HuTool + SaToken。
+
 - [[ RuoYi-Vue-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
 
 - [[ RuoYi-Cloud-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步
