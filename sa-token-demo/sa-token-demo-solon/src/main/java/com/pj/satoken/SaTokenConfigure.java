@@ -1,12 +1,14 @@
 package com.pj.satoken;
 
 
-import cn.dev33.satoken.solon.integration.SaTokenPathFilter;
+import org.noear.solon.Solon;
+import org.noear.solon.annotation.Bean;
+import org.noear.solon.annotation.Configuration;
+
 import com.pj.util.AjaxJson;
 
 import cn.dev33.satoken.context.SaHolder;
-import org.noear.solon.annotation.Bean;
-import org.noear.solon.annotation.Configuration;
+import cn.dev33.satoken.solon.integration.SaTokenPathInterceptor;
 
 
 /**
