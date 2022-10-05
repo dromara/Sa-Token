@@ -134,7 +134,7 @@ StpUtil.switchTo(10044);    // 将当前会话身份临时切换为其它账号
 
 
 ## 交流群
-QQ交流群：496757342 [点击加入](https://jq.qq.com/?_wv=1027&k=WNggbsFe)
+QQ交流群：614714762 [点击加入](https://jq.qq.com/?_wv=1027&k=F96A2mrl)
 
 微信交流群：
 
