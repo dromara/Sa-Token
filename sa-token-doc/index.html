@@ -7,9 +7,8 @@
 		<meta name="description" content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后台分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
 		<meta name="keywords" content="sa-token,sa-token框架,sa-token文档,java权限认证">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<link rel="shortcut icon" type="image/x-icon" href="doc/logo.png">
-		<link rel="stylesheet" href="./index.css">
-		<!-- <link rel="stylesheet" href="https://unpkg.zhimg.com/docsify@4.11.3/lib/themes/vue.css"> -->
+		<link rel="shortcut icon" type="image/x-icon" href="logo.png">
+		<link rel="stylesheet" href="static/index.css">
 	</head>
 	<body>
 		<!-- 总盒子 -->
@@ -18,9 +17,9 @@
 			<!-- ------------ 头部 ------------- -->
 			<header class="doc-header">
 				<div class="nav-left">
-					<a href="index.html">
+					<a href="./">
 						<div class="logo-box">
-							<img src="./doc/logo.png" title="logo" />
+							<img src="./logo.png" title="logo" />
 							<span class="logo-text">Sa-Token</span>
 							<!-- <h1 class="logo-text">Sa-Token</h1> -->
 							<!-- <sub>v1.31.0</sub> -->
@@ -29,11 +28,11 @@
 				</div>
 				<nav class="nav-right">
 					<a class="wzi" href="index.html">首页</a>
-					<a class="wzi" href="doc/index.html">文档</a>
-					<a class="p-none wzi" href="doc/index.html#/more/link">案例</a>
-					<a class="p-none wzi" href="doc/index.html#/more/blog">博客</a>
-					<a class="p-none wzi" href="doc/index.html#/more/sa-token-donate">赞助</a>
-					<a class="p-none wzi" href="doc/index.html#/sso/sso-pro">🔥 SSO商业版</a>
+					<a class="wzi" href="doc.html">文档</a>
+					<a class="p-none wzi" href="doc.html#/more/link">案例</a>
+					<a class="p-none wzi" href="doc.html#/more/blog">博客</a>
+					<a class="p-none wzi" href="doc.html#/more/sa-token-donate">赞助</a>
+					<a class="p-none wzi" href="doc.html#/sso/sso-pro">🔥 SSO商业版</a>
 					<div class="zk-box">
 						<a class="wzi" href="javascript:;">
 							<span>相关资源 </span>
@@ -42,13 +41,13 @@
 						<div class="zk-context">
 							<div>
 								<!-- <a href="#/more/sa-token-donate">❤️ &nbsp;赞助</a> -->
-								<a href="doc/index.html#/more/update-log">更新日志</a>
-								<a href="doc/index.html#/more/common-questions">常见报错</a>
-								<a href="doc/index.html#/more/tj-gzh">推荐公众号</a>
+								<a href="doc.html#/more/update-log">更新日志</a>
+								<a href="doc.html#/more/common-questions">常见报错</a>
+								<a href="doc.html#/more/tj-gzh">推荐公众号</a>
 								<div class="zk-fengexian"></div>
 								<!-- <a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a> -->
-								<a href="doc/index.html#/fun/sa-token-test">在线考试</a>
-								<a href="doc/index.html#/fun/issue-template">在线提问</a>
+								<a href="doc.html#/fun/sa-token-test">在线考试</a>
+								<a href="doc.html#/fun/issue-template">在线提问</a>
 								<a href="https://wj.qq.com/s2/10852322/0d8b/" target="_blank">需求提交</a>
 								<a href="https://wj.qq.com/s2/8475114/2f6a/" target="_blank">问卷调查</a>
 							</div>
@@ -77,8 +76,8 @@
 					<div class="btn-box">
 						<a class="abtn" href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
 						<a class="abtn" href="https://gitee.com/dromara/sa-token" target="_blank">码云</a>
-						<a class="abtn" href="doc/index.html#/more/join-group" target="_self">加入讨论群</a>
-						<a class="abtn doc-btn" href="doc/index.html" target="_self">开发文档</a>
+						<a class="abtn" href="doc.html#/more/join-group" target="_self">加入讨论群</a>
+						<a class="abtn doc-btn" href="doc.html" target="_self">开发文档</a>
 						<!-- <a href="https://gitee.com/dromara/sa-token" target="_blank">集成案例</a> -->
 					</div>
 					<h4 align="center" class="badge-box">
@@ -226,7 +225,7 @@
 					<div class="re-text">
 						<span>
 							如果您的开源项目也使用了 Sa-Token，您可以
-							<a href="doc/index.html#/more/link" target="_blank" style="text-decoration: none;">在此</a>
+							<a href="https://gitee.com/sa-token/awesome-sa-token" target="_blank" style="text-decoration: none;">在此</a>
 							提交
 						</span>
 					</div>
@@ -471,6 +470,9 @@
 						<a href="https://hippo4j.cn/" target="_blank">
 							<img src="https://oss.dev33.cn/sa-token/link/hippo4j.jpg" msg="强大的动态线程池框架，附带监控报警功能，支持 Tomcat、Jetty、Undertow、RocketMQ、Dubbo、RabbitMQ、Hystrix 消费线程池">
 						</a>
+						<a href="http://solon.noear.org/" target="_blank">
+							<img src="https://oss.dev33.cn/sa-token/link/solon.png" msg="一个更现代感的应用开发框架：更快、更小、更自由。">
+						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 				</div>
@@ -503,7 +505,7 @@
 						<ul class="list-unstyle">
 							<!-- <li>电话：<a href="tel:123;">123</a></li> -->
 							<!-- <li>QQ群 ：<a href="xxx" target="_blank">111</a></li> -->
-							<li>QQ群 ：<a href="doc/index.html#/more/join-group">点击加入</a></li>
+							<li>QQ群 ：<a href="doc.html#/more/join-group">点击加入</a></li>
 							<li>邮箱：<a href="javascript: alert('暂无');">暂无</a></li>
 							<li>联系：<a href="javascript: alert('暂无');">暂无</a></li>
 						</ul>
@@ -531,7 +533,7 @@
 				</style>
 				<div class="foot-box" id="foot">
 					<div class="s-width" style="text-align: center;">
-						Copyright ©2021 Sa-Token java权限认证 | sa-token.dev33.cn | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-2</a>
+						Copyright ©2022 Sa-Token java权限认证 | sa-token.dev33.cn | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-2</a>
 					</div>
 				</div>
 			</div>
@@ -578,8 +580,8 @@
 		</script>
 		
 		<!-- 悬浮效果 -->
-		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
-		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="static/jquery.min.js"></script>
+		<script src="static/layer-v3.1.1/layer.js"></script>
 		<script type="text/javascript">
 			// 鼠标悬浮在友情链接时，提示信息 
 			$(".com-box-you a img").hover(function(){

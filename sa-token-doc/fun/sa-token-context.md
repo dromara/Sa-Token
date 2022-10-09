@@ -20,7 +20,7 @@
 SaTokenContext只是一个接口，没有工作能力，这也就意味着 SaTokenContext 接口的实现是必须的。
 那么疑问来了，我们之前在 SpringBoot 中引用 Sa-Token 时为什么可以直接使用呢？
 
-其实原理很简单，`sa-token-spring-boot-starter`集成包中已经内置了`SaTokenContext`的实现：[SaTokenContextForSpring](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaTokenContextForSpring.java)，
+其实原理很简单，`sa-token-spring-boot-starter`集成包中已经内置了`SaTokenContext`的实现：[SaTokenContextForSpring](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaTokenContextForSpring.java)，
 并且根据 Spring 的自动注入特性，在项目启动时注入到 Sa-Token 中，做到“开箱即用”。
 
 那么如果我们使用不是 Spring 框架，是不是就必须得手动实现 `SaTokenContext` 接口？答案是肯定的，脱离Spring 环境后，我们就不能再使用`sa-token-spring-boot-starter`集成包了，
@@ -81,9 +81,9 @@ public interface SaTokenContext {
 ```
 
 如果你的 Web 框架不是基于 Servlet 规范，那么你就需要手动实现这三个 Model 接口，我们可以参考 `sa-token-servlet` 是怎样实现的：
-[SaRequestForServlet.java](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaRequestForServlet.java)、
-[SaResponseForServlet.java](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaResponseForServlet.java)、
-[SaStorageForServlet.java](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaStorageForServlet.java)。
+[SaRequestForServlet.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaRequestForServlet.java)、
+[SaResponseForServlet.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaResponseForServlet.java)、
+[SaStorageForServlet.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaStorageForServlet.java)。
 
 
 ### 3、实现 SaTokenContext 接口
@@ -132,7 +132,7 @@ public class SaTokenContextForSpring implements SaTokenContext {
 ```
 
 详细参考：
-[SaTokenContextForSpring.java](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaTokenContextForSpring.java)
+[SaTokenContextForSpring.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaTokenContextForSpring.java)
 
 
 ### 4、将自定义实现注入到 Sa-Token 框架中
@@ -157,8 +157,8 @@ public class Application {
 ```
 
 如果你使用的框架带有自动注入特性，那就更简单了，参考 Spring 集成包的 Bean 注入流程：
-[注册Bean](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaBeanRegister.java)、
-[注入Bean](https://gitee.com/dromara/sa-token/blob/dev/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaBeanInject.java)
+[注册Bean](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaBeanRegister.java)、
+[注入Bean](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaBeanInject.java)
 
 
 ### 5、启动项目

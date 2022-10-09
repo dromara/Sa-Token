@@ -4,10 +4,10 @@
 
 > 请在新建 issue 时，尽量复制模板格式进行提交
 > 
-> 1. 提交之前率先参考 [Sa-Token 常见问题解答](https://sa-token.dev33.cn/doc/index.html#/more/common-questions) 以及善用 Gitee issues 搜索功能，查阅问题是否已有答案，已存在的 issue 就不要再重复提交了。
+> 1. 提交之前率先参考 <a href="#/more/common-questions" target="_blank">Sa-Token 常见问题解答</a> 以及善用 Gitee issues 搜索功能，查阅问题是否已有答案，已存在的 issue 就不要再重复提交了。
 > 2. 问题已得到处理的 issue 请大家及时手动关闭，如果超过24小时没有追问，我们将默认提交者已找到解决方案，关闭issue。
 > 3. 有时候 issue 提交之后，没有得到及时回复，大家可以加入QQ群@管理员寻求帮助。
-> 4. 请大家新建 issue 时删除不必要的模板信息、精简语句、**做好代码排版**，对于不方便描述的业务场景，可参阅 [Sa-Token 名词解释](https://sa-token.dev33.cn/doc/index.html#/more/noun-intro) 方便组织语句，这样有助于减低大家的沟通成本。
+> 4. 请大家新建 issue 时删除不必要的模板信息、精简语句、**做好代码排版**，对于不方便描述的业务场景，可参阅 <a href="#/more/noun-intro" target="_blank">Sa-Token 名词解释</a> 方便组织语句，这样有助于减低大家的沟通成本。
 > 5. **代码截图要带上行号！报错信息要把异常堆栈截全！页面截图要把地址栏带上！Ajax请求要把请求地址、请求头、请求参数都截全！**
 
 

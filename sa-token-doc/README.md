@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="https://sa-token.dev33.cn/doc/logo.png" width="150" height="150">
+	<img alt="logo" src="https://sa-token.dev33.cn/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.31.0</h1>
 <h5 align="center">一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h5>

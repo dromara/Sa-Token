@@ -20,8 +20,8 @@ var myDocsifyPlugin = function(hook, vm) {
 	hook.afterEach(function(html) {
 		
 		// 功能 2，文章底部添加仓库地址  
-		var url = 'https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
-		var url2 = 'https://github.com/dromara/sa-token/tree/dev/sa-token-doc/doc/' + vm.route.file;
+		var url = 'https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/' + vm.route.file;
+		var url2 = 'https://github.com/dromara/sa-token/tree/dev/sa-token-doc/' + vm.route.file;
 		var footer = [
 			'<br/><br/><br/><br/><br/><br/><br/><hr/>',
 			'<footer>',

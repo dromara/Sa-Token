@@ -44,6 +44,6 @@ SaOAuth2Util.saveGrantScope(clientId, loginId, scope);
 SaOAuth2Util.getRefreshToken(refreshToken);
 ```
 
-详情请参考源码：[码云：SaOAuth2Util.java](https://gitee.com/dromara/sa-token/blob/dev/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/logic/SaOAuth2Util.java)
+详情请参考源码：[码云：SaOAuth2Util.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/logic/SaOAuth2Util.java)
 
 

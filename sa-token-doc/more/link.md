@@ -42,6 +42,11 @@
 
 - [[ chaos ]](https://gitee.com/qishanor/chaos)：一个基于 SpringBoot + Sa-Token + Mybatis-Plus的快速开发框架，前端vue-element-avue,内置代码生成器，代码最简洁，最佳学习实践方案。
 
+- [[ xzadmin ]](https://gitee.com/xiaozhizxj/xzadmin)：一个基于 Spring Boot+mybatis-plus+sotaken+Redis+Thymeleaf+hutool+easy-captcha+log4j的后台管理系统
+
+- [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + AntDesignVue3 + Vite + SpringBoot + Mp + HuTool + SaToken
+
+
 
 
 ### 微服务相关

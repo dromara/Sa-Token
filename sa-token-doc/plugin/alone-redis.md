@@ -65,7 +65,7 @@ spring:
 		timeout: 10s
 ```
 
-具体可参考示例：[码云：application.yml](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-alone-redis/src/main/resources/application.yml)
+具体可参考示例：[码云：application.yml](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redis/src/main/resources/application.yml)
 
 
 ### 3、测试
