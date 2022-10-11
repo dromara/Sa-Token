@@ -29,4 +29,7 @@ StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
 <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--kickout.gif">加载动态演示图</button>
 
 
+---
+<a class="dt-btn" href="https://www.wenjuan.ltd/s/MFNN7bK/" target="_blank">本章小练习：Sa-Token 基础 - 踢人下线，章节测试</a>
+
 

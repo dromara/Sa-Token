@@ -225,3 +225,8 @@ public void addInterceptors(InterceptorRegistry registry) {
 	).addPathPatterns("/**");
 }
 ```
+
+---
+<a class="dt-btn" href="https://www.wenjuan.ltd/s/rY7VFv/" target="_blank">本章小练习：Sa-Token 基础 - 路由拦截鉴权，章节测试</a>
+
+

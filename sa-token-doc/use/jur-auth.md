@@ -188,3 +188,6 @@ StpUtil.hasPermission("index.html");      // false
 前端的鉴权只是一个辅助功能，对于专业人员这些限制都是可以轻松绕过的，为保证服务器安全，无论前端是否进行了权限校验，后端接口都需要对会话请求再次进行权限校验！
 
 
+
+---
+<a class="dt-btn" href="https://www.wenjuan.ltd/s/ZfIjYr9/" target="_blank">本章小练习：Sa-Token 基础 - 权限认证，章节测试</a>

@@ -166,3 +166,8 @@ StpUtil.getAnonTokenSession();
 
 注意点：如果前端没有提交 Token ，或者提交的 Token 是一个无效 Token 的话，框架将不会根据此 Token 创建 `Token-Session` 对象，
 而是随机一个新的 Token 值来创建 `Token-Session` 对象，此 Token 值可以通过 `StpUtil.getTokenValue()` 获取到。
+
+
+---
+<a class="dt-btn" href="https://www.wenjuan.ltd/s/MNnUr2V/" target="_blank">本章小练习：Sa-Token 基础 - Session 会话，章节测试</a>
+

@@ -299,3 +299,9 @@ sa-token:
 **例3，auth-url 地址以 http 字符开头：**
 - 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`http://my-site.com/sso/auth2`。
 - 此时框架只以 auth-url 值为准，得到的 auth-url 值是：`http://my-site.com/sso/auth2`，其它三个 url 配置项同理。
+
+
+
+---
+<a class="dt-btn" href="https://www.wenjuan.ltd/s/nUfe2iU/" target="_blank">本章小练习：Sa-Token 基础 - 框架配置，章节测试</a>
+

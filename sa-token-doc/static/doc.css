@@ -240,3 +240,30 @@ body {
 	z-index: 10000;
 }
 
+
+/* 答题按钮 */
+#main .dt-btn{
+	background-color: #e7ecf3;
+	color: #385481;
+	display: inline-block;
+	border: 1px #d7dce3 solid !important;
+	border-radius: 1px;
+	/* border-bottom-width: 0px !important; */
+	
+	/* background-color: #f0f9eb;
+	color: #42b983;
+	display: inline-block;
+	border: 1px #13ce66 solid; */
+	
+	margin-top: 10px;
+	width: 100%;
+	padding: 8px 14px;
+	font-size: 14px;
+	
+	/* 背景 */
+	background-image: url(icon/dati.svg);
+	background-repeat: no-repeat;
+	background-size: 20px 20px;
+	background-position: 1em 50%;
+	text-indent: 2em;
+}
