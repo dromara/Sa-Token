@@ -22,7 +22,7 @@ Sa-Token 提供一种侦听器机制，通过注册侦听器，你可以订阅�
 
 ##### 2.1、新建实现类：
 
-新建`MySaTokenListener.java`，继承`SaTokenListener`接口，并添加上注解`@Component`，保证此类被`SpringBoot`扫描到：
+新建`MySaTokenListener.java`，实现`SaTokenListener`接口，并添加上注解`@Component`，保证此类被`SpringBoot`扫描到：
 
 ``` java
 /**
