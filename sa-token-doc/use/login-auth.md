@@ -1,4 +1,10 @@
 # 登录认证
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/LoginAuthController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 登录认证 —— [ sa-token-demo-case：com.pj.cases.LoginAuthController.java ]
+</a>
+
 --- 
 
 
@@ -16,7 +22,7 @@
 3. 用户后续的每次请求，都携带上这个 Token。
 4. 服务器根据 Token 判断此会话是否登录成功。
 
-所谓登录认证，指的就是服务器校验账号密码，为用户颁发 Token 会话凭证的过程，这个 Token 也是我们后续通过接口校验的关键所在。
+所谓登录认证，指的就是服务器校验账号密码，为用户颁发 Token 会话凭证的过程，这个 Token 也是我们后续判断会话是否登录的关键所在。
 
 
 <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--login-auth.gif">加载动态演示图</button>

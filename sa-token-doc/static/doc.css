@@ -242,7 +242,7 @@ body {
 
 
 /* 答题按钮 */
-#main .dt-btn{
+#main .dt-btn,#main .case-btn{
 	background-color: #e7ecf3;
 	color: #385481;
 	display: inline-block;
@@ -250,20 +250,24 @@ body {
 	border-radius: 1px;
 	/* border-bottom-width: 0px !important; */
 	
-	/* background-color: #f0f9eb;
-	color: #42b983;
-	display: inline-block;
-	border: 1px #13ce66 solid; */
-	
 	margin-top: 10px;
 	width: 100%;
 	padding: 8px 14px;
 	font-size: 14px;
+	transition: all 0.15s;
 	
 	/* 背景 */
 	background-image: url(icon/dati.svg);
 	background-repeat: no-repeat;
 	background-size: 20px 20px;
-	background-position: 1em 50%;
+	background-position: 1em 12px;
 	text-indent: 2em;
+}
+/* 代码示例按钮 */
+#main .case-btn{
+	background-color: #f4fdef;
+	color: #42b983;
+	border: 1px #c4e5b5 solid !important;
+	background-size: 18px 18px;
+	background-image: url(icon/code.svg);
 }

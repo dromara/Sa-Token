@@ -1,4 +1,10 @@
 # 权限认证
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/JurAuthController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 权限认证 —— [ sa-token-demo-case：com.pj.cases.JurAuthController.java ]
+</a>
+
 --- 
 
 
@@ -41,11 +47,11 @@ public class StpInterfaceImpl implements StpInterface {
 		// 本list仅做模拟，实际项目中要根据具体业务逻辑来查询权限
 		List<String> list = new ArrayList<String>();	
 		list.add("101");
-		list.add("user-add");
-		list.add("user-delete");
-		list.add("user-update");
-		list.add("user-get");
-		list.add("article-get");
+		list.add("user.add");
+		list.add("user.update");
+		list.add("user.get");
+		// list.add("user.delete");
+		list.add("art.*");
 		return list;
 	}
 
@@ -68,42 +74,42 @@ public class StpInterfaceImpl implements StpInterface {
 - loginId：账号id，即你在调用 `StpUtil.login(id)` 时写入的标识值。
 - loginType：账号体系标识，此处可以暂时忽略，在 [ 多账户认证 ] 章节下会对这个概念做详细的解释。
 
-可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
+可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
 
-> 注意: StpInterface 接口在需要鉴权时由框架自动调用, 开发者只需要配置好就可以使用下面的鉴权方法或后面的注解鉴权
+> 注意: StpInterface 接口在需要鉴权时由框架自动调用，开发者只需要配置好就可以使用下面的鉴权方法或后面的注解鉴权
 
 
-### 权限认证
+### 权限校验
 然后就可以用以下api来鉴权了
 
 ``` java	
 // 获取：当前账号所拥有的权限集合
 StpUtil.getPermissionList();
 
-// 判断：当前账号是否含有指定权限, 返回true或false
-StpUtil.hasPermission("user-update");		
+// 判断：当前账号是否含有指定权限, 返回 true 或 false
+StpUtil.hasPermission("user.add");		
 
 // 校验：当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
-StpUtil.checkPermission("user-update");		
+StpUtil.checkPermission("user.add");		
 
 // 校验：当前账号是否含有指定权限 [指定多个，必须全部验证通过]
-StpUtil.checkPermissionAnd("user-update", "user-delete");		
+StpUtil.checkPermissionAnd("user.add", "user.delete", "user.get");		
 
 // 校验：当前账号是否含有指定权限 [指定多个，只要其一验证通过即可]
-StpUtil.checkPermissionOr("user-update", "user-delete");	
+StpUtil.checkPermissionOr("user.add", "user.delete", "user.get");	
 ```
 
 扩展：`NotPermissionException` 对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 
-### 角色认证
+### 角色校验
 在Sa-Token中，角色和权限可以独立验证
 
 ``` java
 // 获取：当前账号所拥有的角色集合
 StpUtil.getRoleList();
 
-// 判断：当前账号是否拥有指定角色, 返回true或false
+// 判断：当前账号是否拥有指定角色, 返回 true 或 false
 StpUtil.hasRole("super-admin");		
 
 // 校验：当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException
@@ -137,22 +143,22 @@ public class GlobalExceptionHandler {
 }
 ```
 
-可参考：[码云：GlobalException.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/current/GlobalException.java)
+可参考：[码云：GlobalException.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/current/GlobalException.java)
 
 
 ### 权限通配符
-Sa-Token允许你根据通配符指定**泛权限**，例如当一个账号拥有`user*`的权限时，`user-add`、`user-delete`、`user-update`都将匹配通过
+Sa-Token允许你根据通配符指定**泛权限**，例如当一个账号拥有`art.*`的权限时，`art.add`、`art.delete`、`art.update`都将匹配通过
 
 ``` java
-// 当拥有 user* 权限时
-StpUtil.hasPermission("user-add");        // true
-StpUtil.hasPermission("user-update");     // true
-StpUtil.hasPermission("art-add");         // false
+// 当拥有 art.* 权限时
+StpUtil.hasPermission("art.add");        // true
+StpUtil.hasPermission("art.update");     // true
+StpUtil.hasPermission("goods.add");      // false
 
-// 当拥有 *-delete 权限时
-StpUtil.hasPermission("user-add");        // false
-StpUtil.hasPermission("user-delete");     // true
-StpUtil.hasPermission("art-delete");      // true
+// 当拥有 *.delete 权限时
+StpUtil.hasPermission("art.delete");      // true
+StpUtil.hasPermission("user.delete");     // true
+StpUtil.hasPermission("user.update");     // false
 
 // 当拥有 *.js 权限时
 StpUtil.hasPermission("index.js");        // true
@@ -174,9 +180,9 @@ StpUtil.hasPermission("index.html");      // false
 2. 前端将权限码集合保存在`localStorage`或其它全局状态管理对象中。
 3. 在需要权限控制的按钮上，使用 js 进行逻辑判断，例如在`Vue`框架中我们可以使用如下写法：
 ``` js
-<button v-if="arr.indexOf('user:delete') > -1">删除按钮</button>
+<button v-if="arr.indexOf('user.delete') > -1">删除按钮</button>
 ```
-其中：`arr`是当前用户拥有的权限码数组，`user:delete`是显示按钮需要拥有的权限码，`删除按钮`是用户拥有权限码才可以看到的内容。
+其中：`arr`是当前用户拥有的权限码数组，`user.delete`是显示按钮需要拥有的权限码，`删除按钮`是用户拥有权限码才可以看到的内容。
 
 
 注意：以上写法只为提供一个参考示例，不同框架有不同写法，大家可根据项目技术栈灵活封装进行调用。
