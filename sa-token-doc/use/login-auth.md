@@ -2,7 +2,7 @@
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/LoginAuthController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 登录认证 —— [ sa-token-demo-case：com.pj.cases.LoginAuthController.java ]
+	本章代码示例：Sa-Token 登录认证 —— [ com.pj.cases.LoginAuthController.java ]
 </a>
 
 --- 

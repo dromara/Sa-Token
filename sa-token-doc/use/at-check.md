@@ -1,4 +1,10 @@
 # 注解鉴权
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/AtCheckController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 注解鉴权 —— [ com.pj.cases.AtCheckController.java ]
+</a>
+
 --- 
 
 有同学表示：尽管使用代码鉴权非常方便，但是我仍希望把鉴权逻辑和业务逻辑分离开来，我可以使用注解鉴权吗？当然可以！<br>
@@ -103,12 +109,12 @@ mode有两种取值：
 
 
 ### 4、角色权限双重 “or校验”
-假设有以下业务场景：一个接口在具有权限 `user-add` 或角色 `admin` 时可以调通。怎么写？
+假设有以下业务场景：一个接口在具有权限 `user.add` 或角色 `admin` 时可以调通。怎么写？
 
 ``` java
-// 注解式鉴权：只要具有其中一个权限即可通过校验 
+// 角色权限双重 “or校验”：具备指定权限或者指定角色即可通过校验
 @RequestMapping("userAdd")
-@SaCheckPermission(value = "user-add", orRole = "admin")		
+@SaCheckPermission(value = "user.add", orRole = "admin")		
 public SaResult userAdd() {
 	return SaResult.data("用户信息");
 }

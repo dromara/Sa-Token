@@ -18,6 +18,7 @@ public class KickoutController {
 
 	/*
 	 * 前提：首先调用登录接口进行登录，代码在 com.pj.cases.LoginAuthController 中有详细解释，此处不再赘述 
+	 * 		---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
 	 */
 	
 	// 将指定账号强制注销   ---- http://localhost:8081/kickout/logout?userId=10001
@@ -48,6 +49,7 @@ public class KickoutController {
 	 */
 	
 	// 根据 Token 值踢人    ---- http://localhost:8081/kickout/kickoutByTokenValue?tokenValue=xxxx-xxxx-xxxx-xxxx已登录账号的token值
+	@RequestMapping("kickoutByTokenValue")
 	public SaResult kickoutByTokenValue(String tokenValue) {
 		
 		StpUtil.kickoutByTokenValue(tokenValue);
