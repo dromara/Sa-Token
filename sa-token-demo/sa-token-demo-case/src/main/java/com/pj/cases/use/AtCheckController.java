@@ -1,4 +1,4 @@
-package com.pj.cases;
+package com.pj.cases.use;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +21,7 @@ import cn.dev33.satoken.util.SaResult;
 public class AtCheckController {
 
 	/*
-	 * 前提1：首先调用登录接口进行登录，代码在 com.pj.cases.LoginAuthController 中有详细解释，此处不再赘述 
+	 * 前提1：首先调用登录接口进行登录，代码在 com.pj.cases.use.LoginAuthController 中有详细解释，此处不再赘述 
 	 * 		---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
 	 * 
 	 * 前提2：项目在配置类中注册拦截器 SaInterceptor ，代码在  com.pj.satoken.SaTokenConfigure

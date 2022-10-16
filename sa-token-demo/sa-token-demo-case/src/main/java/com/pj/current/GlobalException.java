@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
+import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -37,6 +38,13 @@ public class GlobalException {
 	public SaResult handlerException(NotRoleException e) {
 		e.printStackTrace(); 
 		return SaResult.error("缺少角色：" + e.getRole());
+	}
+
+	// 拦截：二级认证校验失败异常
+	@ExceptionHandler(NotSafeException.class)
+	public SaResult handlerException(NotSafeException e) {
+		e.printStackTrace(); 
+		return SaResult.error("二级认证校验失败");
 	}
 
 	// 拦截：其它所有异常

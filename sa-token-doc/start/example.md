@@ -26,31 +26,57 @@
 ### 3、设置配置文件
 你可以**零配置启动项目** ，但同时你也可以在 `application.yml` 中增加如下配置，定制性使用框架：
 
+<!------------------------------ tabs:start ------------------------------>
+
+<!------------- tab:application.yml 风格  ------------->
 ``` java
 server:
 	# 端口
     port: 8081
 	
-# Sa-Token配置
+############## Sa-Token 配置 ############## 
 sa-token: 
-	# token 名称 (同时也是cookie名称)
+	# token名称 (同时也是cookie名称)
 	token-name: satoken
-	# token 有效期，单位s 默认30天, -1代表永不过期 
+	# token有效期，单位s 默认30天, -1代表永不过期 
 	timeout: 2592000
-	# token 临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+	# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
 	activity-timeout: -1
 	# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
 	is-concurrent: true
 	# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
-	is-share: false
+	is-share: true
 	# token风格
 	token-style: uuid
 	# 是否输出操作日志 
 	is-log: false
 ```
 
-如果你习惯于 `application.properties` 类型配置文件，那也很好办:  <br> 
-百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
+<!------------- tab:application.properties 风格  ------------->
+``` java
+server:
+	# 端口
+    port: 8081
+	
+############## Sa-Token 配置 ############## 
+
+# token名称 (同时也是cookie名称)
+sa-token.token-name=satoken
+# token有效期，单位s 默认30天, -1代表永不过期 
+sa-token.timeout=2592000
+# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+sa-token.activity-timeout=-1
+# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+sa-token.is-concurrent=true
+# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+sa-token.is-share=true
+# token风格
+sa-token.token-style=uuid
+# 是否输出操作日志 
+sa-token.is-log=false
+```
+
+<!---------------------------- tabs:end ------------------------------>
 
 
 ### 4、创建启动类

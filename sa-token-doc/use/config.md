@@ -1,15 +1,17 @@
 # 框架配置
-你可以**零配置启动框架** <br>
-但同时你也可以通过配置，定制性使用框架，`Sa-Token`支持多种方式配置框架信息
 
+你可以**零配置启动框架**，但同时你也可以通过一定的参数配置，定制性使用框架，`Sa-Token`支持多种方式配置框架信息
 
-
-
+--- 
 
 ### 方式1、在 application.yml 配置
 
+<!------------------------------ tabs:start ------------------------------>
+
+<!------------- tab:application.yml 风格  ------------->
 ``` java
-# Sa-Token 配置
+############## Sa-Token 配置 ############## 
+############## 在线参考：https://sa-token.dev33.cn/doc.html#/use/config ############## 
 sa-token: 
 	# token名称 (同时也是cookie名称)
 	token-name: satoken
@@ -27,19 +29,42 @@ sa-token:
 	is-log: false
 ```
 
-如果你习惯于 `application.properties` 类型的配置文件，那也很好办: 百度： [springboot properties与yml 配置文件的区别](https://www.baidu.com/s?ie=UTF-8&wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB)
+<!------------- tab:application.properties 风格  ------------->
+``` java
+############## Sa-Token 配置 ############## 
+############## 在线参考：https://sa-token.dev33.cn/doc.html#/use/config ############## 
+
+# token名称 (同时也是cookie名称)
+sa-token.token-name=satoken
+# token有效期，单位s 默认30天, -1代表永不过期 
+sa-token.timeout=2592000
+# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+sa-token.activity-timeout=-1
+# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+sa-token.is-concurrent=true
+# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+sa-token.is-share=true
+# token风格
+sa-token.token-style=uuid
+# 是否输出操作日志 
+sa-token.is-log=false
+```
+
+<!---------------------------- tabs:end ------------------------------>
+
 
 
 ### 方式2、通过代码配置
-模式1：
+
+<!------------------------------ tabs:start ------------------------------>
+<!------------- tab:模式 1 ------------->
 ``` java 
 /**
  * Sa-Token代码方式进行配置
  */
 @Configuration
 public class SaTokenConfigure {
-
-	// 获取配置Bean (以代码的方式配置Sa-Token, 此配置会覆盖yml中的配置)
+	// 获取配置Bean (以代码的方式配置Sa-Token, 此配置会覆盖 application.yml 中的配置)
     @Bean
     @Primary
     public SaTokenConfig getSaTokenConfigPrimary() {
@@ -53,21 +78,36 @@ public class SaTokenConfigure {
 		config.setIsLog(false);                     // 是否输出操作日志 
 		return config;
 	}
-	
 }
 ```
-
-模式2：
+<!------------- tab:模式 2 ------------->
 ``` java
-// 以代码的方式配置Sa-Token-Config 
-@Autowired
-public void configSaToken(SaTokenConfig config) {
-	// config.setTokenName("satoken333");             // token名称 (同时也是cookie名称)
-	// ... 
+/**
+ * Sa-Token代码方式进行配置
+ */
+@Configuration
+public class SaTokenConfigure {
+	// 以代码的方式配置 SaTokenConfig 
+	// 此配置会与 application.yml 中的配置合并 （代码配置优先）
+	@Autowired
+	public void configSaToken(SaTokenConfig config) {
+		SaTokenConfig config = new SaTokenConfig();
+		config.setTokenName("satoken");             // token名称 (同时也是cookie名称)
+		config.setTimeout(30 * 24 * 60 * 60);       // token有效期，单位s 默认30天
+		config.setActivityTimeout(-1);              // token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+		config.setIsConcurrent(true);               // 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+		config.setTokenStyle("uuid");               // token风格 
+		config.setIsLog(false);                     // 是否输出操作日志 
+		return config;
+	}
 }
 ```
+<!---------------------------- tabs:end ------------------------------>
 
-PS：两者的区别在于：**`模式1会覆盖yml中的配置，模式2会与yml中的配置合并`**
+两者的区别在于：
+- 模式 1 会覆盖 application.yml 中的配置。
+- 模式 2 会与 application.yml 中的配置合并（代码配置优先）。
 
 
 --- 

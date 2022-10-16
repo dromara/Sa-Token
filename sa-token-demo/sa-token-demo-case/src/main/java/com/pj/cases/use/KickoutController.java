@@ -1,4 +1,4 @@
-package com.pj.cases;
+package com.pj.cases.use;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +17,7 @@ import cn.dev33.satoken.util.SaResult;
 public class KickoutController {
 
 	/*
-	 * 前提：首先调用登录接口进行登录，代码在 com.pj.cases.LoginAuthController 中有详细解释，此处不再赘述 
+	 * 前提：首先调用登录接口进行登录，代码在 com.pj.cases.use.LoginAuthController 中有详细解释，此处不再赘述 
 	 * 		---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
 	 */
 	

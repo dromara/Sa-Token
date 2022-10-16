@@ -58,14 +58,14 @@ public String add() {
 public SaResult deleteProject(String projectId) {
 	// 第1步，先检查当前会话是否已完成二级认证 
 	if(!StpUtil.isSafe()) {
-		return SaResult.error("请完成二级认证后再次访问接口");
+		return SaResult.error("仓库删除失败，请完成二级认证后再次访问接口");
 	}
-	
+
 	// 第2步，如果已完成二级认证，则开始执行业务逻辑
 	// ... 
-	
+
 	// 第3步，返回结果 
-	return SaResult.ok(); 
+	return SaResult.ok("仓库删除成功"); 
 }
 
 // 提供密码进行二级认证 
@@ -86,9 +86,16 @@ public SaResult openSafe(String password) {
 
 调用步骤：
 1. 前端调用 `deleteProject` 接口，尝试删除仓库。
-2. 后端校验会话尚未完成二级认证，返回： `请完成二级认证后再次访问接口`。
+2. 后端校验会话尚未完成二级认证，返回： `仓库删除失败，请完成二级认证后再次访问接口`。
 3. 前端将信息提示给用户，用户输入密码，调用 `openSafe` 接口。
 4. 后端比对用户输入的密码，完成二级认证，有效期为：120秒。
 5. 前端在 120 秒内再次调用 `deleteProject` 接口，尝试删除仓库。
-6. 后端校验会话已完成二级认证，仓库删除成功。
+6. 后端校验会话已完成二级认证，返回：`仓库删除成功`。
 
+
+---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SafeAuthController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 二级认证 —— [ com.pj.cases.up.SafeAuthController.java ]
+</a>

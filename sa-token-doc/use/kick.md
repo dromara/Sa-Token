@@ -1,14 +1,5 @@
 # 踢人下线
 
-<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/KickoutController.java"
-	target="_blank">
-	本章代码示例：Sa-Token 踢人下线 —— [ com.pj.cases.KickoutController.java ]
-</a>
-
---- 
-
-### 设计思路
-
 所谓踢人下线，核心操作就是找到指定 `loginId` 对应的 `Token`，并设置其失效。
 
 ![踢下线](https://oss.dev33.cn/sa-token/doc/kickout.png)
@@ -40,6 +31,11 @@ StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
 
 
 ---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/KickoutController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 踢人下线 —— [ com.pj.cases.use.KickoutController.java ]
+</a>
 <a class="dt-btn" href="https://www.wenjuan.ltd/s/MFNN7bK/" target="_blank">本章小练习：Sa-Token 基础 - 踢人下线，章节测试</a>
 
 

@@ -1,4 +1,5 @@
 # 路由拦截鉴权
+
 --- 
 
 假设我们有如下需求：
@@ -41,6 +42,12 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册 Sa-Token 拦截器，定义详细认证规则 
 		registry.addInterceptor(new SaInterceptor(handler -> {
+			// 指定一条 match 规则
+			SaRouter
+				.match("/**")	// 拦截的 path 列表，可以写多个 
+				.notMatch("/user/doLogin")		// 排除掉的 path 列表，可以写多个 
+				.check(r -> StpUtil.checkLogin());		// 要执行的校验动作，可以写完整的 lambda 表达式
+				
 			// 根据路由划分模块，不同模块不同鉴权 
 			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
 			SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
@@ -68,13 +75,13 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 		// 注册路由拦截器，自定义认证规则 
 		registry.addInterceptor(new SaInterceptor(handler -> {
 			
-			// 登录认证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
+			// 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 			SaRouter.match("/**", "/user/doLogin", r -> StpUtil.checkLogin());
 
-			// 角色认证 -- 拦截以 admin 开头的路由，必须具备 admin 角色或者 super-admin 角色才可以通过认证 
+			// 角色校验 -- 拦截以 admin 开头的路由，必须具备 admin 角色或者 super-admin 角色才可以通过认证 
 			SaRouter.match("/admin/**", r -> StpUtil.checkRoleOr("admin", "super-admin"));
 
-			// 权限认证 -- 不同模块认证不同权限 
+			// 权限校验 -- 不同模块校验不同权限 
 			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
 			SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
 			SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
@@ -227,6 +234,11 @@ public void addInterceptors(InterceptorRegistry registry) {
 ```
 
 ---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/SaTokenConfigure.java"
+	target="_blank">
+	本章代码示例：Sa-Token 路由拦截鉴权 —— [ com.pj.satoken.SaTokenConfigure.java ]
+</a>
 <a class="dt-btn" href="https://www.wenjuan.ltd/s/rY7VFv/" target="_blank">本章小练习：Sa-Token 基础 - 路由拦截鉴权，章节测试</a>
 
 

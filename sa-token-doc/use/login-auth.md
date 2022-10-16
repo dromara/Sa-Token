@@ -1,10 +1,5 @@
 # 登录认证
 
-<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/LoginAuthController.java"
-	target="_blank">
-	本章代码示例：Sa-Token 登录认证 —— [ com.pj.cases.LoginAuthController.java ]
-</a>
-
 --- 
 
 
@@ -175,5 +170,10 @@ public class LoginController {
 
 
 ---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/LoginAuthController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 登录认证 —— [ com.pj.cases.use.LoginAuthController.java ]
+</a>
 <a class="dt-btn" href="https://www.wenjuan.ltd/s/UZBZJvb2ej/" target="_blank">本章小练习：Sa-Token 基础 - 登录认证，章节测试</a>
 

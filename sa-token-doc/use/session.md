@@ -1,4 +1,5 @@
 # Session会话
+
 --- 
 
 ### Session是什么？
@@ -169,5 +170,10 @@ StpUtil.getAnonTokenSession();
 
 
 ---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/SaSessionController.java"
+	target="_blank">
+	本章代码示例：Sa-Token Session 会话 —— [ com.pj.cases.use.SaSessionController.java ]
+</a>
 <a class="dt-btn" href="https://www.wenjuan.ltd/s/MNnUr2V/" target="_blank">本章小练习：Sa-Token 基础 - Session 会话，章节测试</a>
 

@@ -1,4 +1,4 @@
-package com.pj.cases;
+package com.pj.cases.use;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
