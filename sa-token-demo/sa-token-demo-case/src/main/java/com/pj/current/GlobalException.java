@@ -3,6 +3,8 @@ package com.pj.current;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import cn.dev33.satoken.exception.DisableServiceException;
+import cn.dev33.satoken.exception.NotBasicAuthException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -45,6 +47,20 @@ public class GlobalException {
 	public SaResult handlerException(NotSafeException e) {
 		e.printStackTrace(); 
 		return SaResult.error("二级认证校验失败");
+	}
+
+	// 拦截：服务封禁异常 
+	@ExceptionHandler(DisableServiceException.class)
+	public SaResult handlerException(DisableServiceException e) {
+		e.printStackTrace(); 
+		return SaResult.error("当前账号 " + e.getService() + " 服务已被封禁 (level=" + e.getLevel() + ")：" + e.getDisableTime() + "秒后解封");
+	}
+
+	// 拦截：Http Basic 校验失败异常 
+	@ExceptionHandler(NotBasicAuthException.class)
+	public SaResult handlerException(NotBasicAuthException e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
 	}
 
 	// 拦截：其它所有异常

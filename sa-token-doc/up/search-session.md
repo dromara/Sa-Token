@@ -1,4 +1,4 @@
-# 会话治理
+# 会话查询
 
 尽管框架将大部分操作提供了简易的封装，但在一些特殊场景下，我们仍需要绕过框架，直达数据底层进行一些操作。
 
@@ -83,4 +83,14 @@ for (String sessionId : sessionIdList) {
 请根据业务实际水平合理调用API。
 
 
-> 如果需要实时获取当前登录人数或者需要在用户退出后自动触发某事件等, 建议采用websocket技术。
+> 如果需要实时获取当前登录人数或者需要在用户退出后自动触发某事件等，建议采用 WebSocket。
+
+
+--- 
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SearchSessionController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 会话查询  —— [ com.pj.cases.up.SearchSessionController.java ]
+</a>
+
+

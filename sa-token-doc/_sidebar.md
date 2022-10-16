@@ -26,7 +26,7 @@
 	- [同端互斥登录](/up/mutex-login) 
 	- [账号封禁](/up/disable) 
 	- [密码加密](/up/password-secure) 
-	- [会话治理](/up/search-session) 
+	- [会话查询](/up/search-session) 
 	- [Http Basic 认证](/up/basic-auth) 
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 

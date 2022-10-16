@@ -43,3 +43,10 @@ StpUtil.getLoginDevice();
 StpUtil.getTokenValueByLoginId(10001, "APP");	
 ```
 
+
+--- 
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/MutexLoginController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 同端互斥登录  —— [ com.pj.cases.up.MutexLoginController.java ]
+</a>
