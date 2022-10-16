@@ -102,3 +102,9 @@ uni.request({
 
 这其实是对`无Cookie模式`的另一种解决方案，有兴趣的同学可以百度了解一下，在此暂不赘述。
 
+---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/NotCookieController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 前后端分离样例 —— [ com.pj.cases.up.NotCookieController.java ]
+</a>
