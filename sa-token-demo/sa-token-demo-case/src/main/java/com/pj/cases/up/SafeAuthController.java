@@ -18,6 +18,7 @@ public class SafeAuthController {
 
 	/*
 	 * 前提：首先调用登录接口进行登录，代码在 com.pj.cases.use.LoginAuthController 中有详细解释，此处不再赘述 
+	 * 		---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
 	 * 
 	 * 测试步骤：
 		1、前端调用 deleteProject 接口，尝试删除仓库。    ---- http://localhost:8081/safe/deleteProject

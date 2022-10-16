@@ -57,3 +57,10 @@ System.out.println("------- [身份临时切换]调用结束...");
 ```
 
 
+
+--- 
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SwitchToController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 身份切换 —— [ com.pj.cases.up.SwitchToController.java ]
+</a>
