@@ -270,9 +270,9 @@ body {
 }
 /* 代码示例按钮 */
 #main .case-btn{
-	background-color: #f4fdef;
-	color: #42b983;
-	border: 1px #c4e5b5 solid !important;
+	background-color: #feedeb;
+	color: #dd4949;
+	border: 1px #decdcb solid !important;
 	background-size: 18px 18px;
 	background-image: url(icon/code.svg);
 }
@@ -298,3 +298,17 @@ body {
 	cursor: pointer;
 	border-radius: 1px;
 }
+
+/* -------------  details标签 ------------- */
+.main-box details{
+	border: 1px #c4e5b5 solid;
+}
+.main-box details summary{
+	padding: 11px 14px;
+	background-color: #f4fdef;
+	color: #01a252;
+	
+	cursor: pointer;
+}
+.main-box details p{padding: 0 14px;}
+
