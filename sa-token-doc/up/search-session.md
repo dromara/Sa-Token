@@ -83,7 +83,7 @@ for (String sessionId : sessionIdList) {
 请根据业务实际水平合理调用API。
 
 
-> 如果需要实时获取当前登录人数或者需要在用户退出后自动触发某事件等，建议采用 WebSocket。
+> 基础活动 Token 的统计方式会比实际情况略有延迟，如果需要精确统计实时在线用户信息，建议采用 WebSocket。
 
 
 --- 
