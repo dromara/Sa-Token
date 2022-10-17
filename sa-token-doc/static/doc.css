@@ -68,6 +68,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .zk-icon{display: inline-block; width: 0px; height: 0px; position: relative;top: 3px; margin-left: 4px;}
 .zk-icon{border-style: solid; border-width: 5px; border-color: #aaa transparent transparent transparent; }
 
+/* 版本选择按钮 */
+.select-version{background-color: transparent !important;}
+
 
 /* ------- 调整一下左侧树的字体样式 ------- */
 .main-box .sidebar{padding-top: 25px; margin-top: 60px;}
