@@ -16,9 +16,6 @@ SaSecureUtil.sha1("123456");
 
 // sha256加密 
 SaSecureUtil.sha256("123456");
-
-// md5加盐加密: md5(md5(str) + md5(salt)) 
-SaSecureUtil.md5BySalt("123456", "salt");
 ```
 
 
@@ -83,3 +80,10 @@ System.out.println("Base64解码后：" + text2);
 
 如需更多加密算法，可参考 [Hutool-crypto: 加密](https://hutool.cn/docs/#/crypto/%E6%A6%82%E8%BF%B0)
 
+
+--- 
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SecureController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 密码加密 —— [ com.pj.cases.up.SecureController.java ]
+</a>
