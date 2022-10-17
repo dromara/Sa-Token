@@ -20,7 +20,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* ------- 头部样式 ------- */
 .doc-header{position: fixed; top: 0; z-index: 1000; width: 100%; height: 60px; line-height: 60px;}
-.doc-header{background-color: hsla(0,0%,100%,0.97); box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
+.doc-header{/* background-color: hsla(0,0%,100%,0.97); */ background-color: rgba(255, 255, 255, 0.97); box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
 
 /* 左边导航 */
 .nav-left{display: inline-block; float: left;}
@@ -241,7 +241,7 @@ body {
 }
 
 
-/* 答题按钮 */
+/* -------------  答题按钮 ------------- */
 #main .dt-btn,#main .case-btn{
 	background-color: #e7ecf3;
 	color: #385481;
@@ -272,4 +272,26 @@ body {
 	border: 1px #c4e5b5 solid !important;
 	background-size: 18px 18px;
 	background-image: url(icon/code.svg);
+}
+
+
+/* -------------  背景色相关 ------------- */
+/* 侧边栏需要透明 */
+.sidebar-toggle{background-color: transparent !important;}
+.sidebar{background-color: transparent !important;}
+
+/* 变色的动画 */
+.doc-header,body{transition: all 0.5s !important;}
+
+/* 调色按钮 */
+.theme-btn{width: 25px; height: 25px; line-height: 60px; vertical-align: middle; position: relative; top: -1px;}
+.theme-box{width: 156px; text-align: left; line-height: 20px; margin-top: -20px;}
+.theme-box span{
+	display: inline-block;
+	width: 20px; 
+	height: 20px; 
+	margin: 1px 2px; 
+	border: 1px #ccc solid; 
+	cursor: pointer;
+	border-radius: 1px;
 }

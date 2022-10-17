@@ -27,6 +27,35 @@
 				<div class="sear-box p-none" tabindex="-1" >
 					<!-- 加载中…… -->
 				</div>
+				<div class="zk-box">
+					<a class="wzi" href="javascript:;">
+						<!-- <span>背景 </span> -->
+						<img class="theme-btn" src="static/icon/theme.svg">
+						<!-- <span class="zk-icon"></span> -->
+					</a>
+					<div class="zk-context theme-box">
+						<div>
+							<div style="height: 5px;"></div>
+							<span style="background-color: #FFFFFF;"></span>
+							<span style="background-color: #f5f5f5;"></span>
+							<span style="background-color: #F1FAFA;"></span>
+							<span style="background-color: #f5f5d5;"></span>
+							<span style="background-color: #d5f5f5;"></span>
+							
+							<span style="background-color: #f5e5f5;"></span>
+							<span style="background-color: #E8E8FF;"></span>
+							<span style="background-color: #f0f9eb;"></span>
+							<span style="background-color: #ebe5dd;"></span>
+							<span style="background-color: #e8f4ff;"></span>
+							
+							<!-- <span style="background-color: #F0DAD2;"></span> -->
+							<!-- <span style="background-color: #f5d5d5;"></span> -->
+							<!-- <span style="background-color: #FFFFE0;"></span> -->
+							<!-- <span style="background-color: #eeeeee;"></span> -->
+							<!-- <span style="background-color: #f5fafe;"></span> -->
+						</div>
+					</div>
+				</div>
 				<select class="p-none" onchange="location.href=this.value">
 					<option value="doc.html">最新版</option>
 					<option value="v/v1.30.0/doc/index.html">v1.30.0</option>
@@ -215,6 +244,66 @@
 				const newTips = '<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.dev33.cn/" target="_blank">https://sa-token.dev33.cn/</a></b>';
 				layer.alert(newTips);
 			}
+		</script>
+		
+		<!-- 修改背景颜色 -->
+		<script>
+			
+			// 绑定修改背景色的按钮事件
+			$('.theme-box span').click(function() {
+				let bgColor = this.style.backgroundColor;
+				setBg(bgColor);
+				localStorage.setItem('bg-color-value', bgColor)
+			})
+			// 读取上次记录
+			let bgColor = localStorage.getItem('bg-color-value');
+			if(bgColor) {
+				setBg(bgColor);
+			}
+			
+			// 设置背景颜色 
+			function setBg(bgColor) {
+				console.log('---- 背景颜色设定为：', bgColor);
+				
+				// -------- 设置 body 背景
+				document.body.style.backgroundColor = bgColor;
+				
+				// -------- 设置 header 头背景
+				// 如果是 16 进制，转 rgba
+				if(bgColor.indexOf('#') == 0) {
+					bgColor = hexToRgba(bgColor, 0.97);
+				}
+				// 如果是 rgb，转 rgba
+				else if(bgColor.match(/\,/g).length == 2) {
+					bgColor = bgColor.replace(')', ' ,0.97)');
+				}
+				
+				document.querySelector('.doc-header').style.backgroundColor = bgColor;
+			}
+			
+			// 16进制 转 rgba
+			function hexToRgba(str, a){
+				a = a || 1;
+
+				var reg = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
+				if(!reg.test(str)){return;}
+				let newStr = (str.toLowerCase()).replace(/\#/g,'')
+				let len = newStr.length;
+				if(len == 3){
+					let t = ''
+					for(var i=0;i<len;i++){
+						t += newStr.slice(i,i+1).concat(newStr.slice(i,i+1))
+					}
+					newStr = t
+				}
+				let arr = []; //将字符串分隔，两个两个的分隔
+				for(var i =0;i<6;i=i+2){
+					let s = newStr.slice(i,i+2)
+					arr.push(parseInt("0x" + s))
+				}
+				return 'rgb(' + arr.join(",")  + ', ' + a + ')';
+			}
+			
 		</script>
 	</body>
 </html>
