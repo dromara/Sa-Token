@@ -1,6 +1,8 @@
-package com.pj.satoken.at;
+package com.pj.satoken;
 
 import java.util.List;
+
+import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
@@ -10,9 +12,10 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
- * Sa-Token 权限认证工具类 (User版)
+ * Sa-Token 权限认证工具类 （User版）
  * @author kong 
  */
+@Component
 public class StpUserUtil {
 	
 	private StpUserUtil() {}
