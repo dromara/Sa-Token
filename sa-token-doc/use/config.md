@@ -343,5 +343,10 @@ sa-token:
 
 
 ---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/resources/application.yml"
+	target="_blank">
+	本章代码示例：Sa-Token 框架配置 —— [ application.yml ]
+</a>
 <a class="dt-btn" href="https://www.wenjuan.ltd/s/nUfe2iU/" target="_blank">本章小练习：Sa-Token 基础 - 框架配置，章节测试</a>
 
