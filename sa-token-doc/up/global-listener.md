@@ -197,3 +197,11 @@ SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
 ##### 3.4、疑问：一个项目可以注册多个侦听器吗？
 可以，多个侦听器间彼此独立，互不影响，按照注册顺序依次接受到事件通知。
 
+
+---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/MySaTokenListener.java"
+	target="_blank">
+	本章代码示例：Sa-Token 自定义侦听器  —— [ com.pj.satoken.MySaTokenListener.java ]
+</a>
+
