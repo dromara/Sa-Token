@@ -19,6 +19,8 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [xueshize](https://gitee.com/xueshize)		| ¥ 20.0		| 感谢您的开源项目！							| 2022-10-12 	|
+| [西东](https://gitee.com/noear_admin)			| ¥ 99.0		| 感谢您的开源项目！							| 2022-10-05 	|
 | [BlueRose](https://gitee.com/Bluerose_2)		| ¥ 20.0		| 感谢您的付出，项目非常棒！					| 2022-09-22 	|
 | [邱道长](https://gitee.com/qiudaozhang)		| ¥ 20.0		| 优秀的项目，赞								| 2022-09-09 	|
 | [jerrydo](https://gitee.com/jerrydo)			| ¥ 10.0		| 感谢您的开源项目！很强大！					| 2022-08-10 	|
