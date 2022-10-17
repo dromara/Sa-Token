@@ -75,7 +75,15 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		// 认证函数: 每次请求执行 
         		.setAuth(obj -> {
         			// System.out.println("---------- sa全局认证 " + SaHolder.getRequest().getRequestPath()); 
-        			
+
+                    // 权限校验 -- 不同模块认证不同权限 
+        			//		这里你可以写和拦截器鉴权同样的代码，不同点在于：
+        			// 		校验失败后不会进入全局异常组件，而是进入下面的 .setError 函数 
+                    SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
+                    SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
+                    SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
+                    SaRouter.match("/notice/**", r -> StpUtil.checkPermission("notice"));
+                    SaRouter.match("/comment/**", r -> StpUtil.checkPermission("comment"));
         		})
         		
         		// 异常处理函数：每次认证函数发生异常时执行此函数 
