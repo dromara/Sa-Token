@@ -52,7 +52,7 @@ public class StpUserUtil {
 ```
 4. 接下来就可以像调用`StpUtil.java`一样调用 `StpUserUtil.java`了，这两套账号认证的逻辑是完全隔离的。
 
-> 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/at/StpUserUtil.java)
+> 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpUserUtil.java)
 
 
 ### 5、在多账户模式下使用注解鉴权
@@ -126,7 +126,7 @@ public String info() {
 ```
 
 注：其它注解 `@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，
-完整示例参考：[码云：自定义注解](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-springboot/src/main/java/com/pj/satoken/at)。
+完整示例参考：[码云：自定义注解](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/at)。
 
 
 
