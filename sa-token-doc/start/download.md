@@ -184,8 +184,9 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 		├── sa-token-dialect-thymeleaf            // [插件] Sa-Token 标签方言（Thymeleaf版）
 		├── sa-token-jwt                          // [插件] Sa-Token 整合 jwt 登录认证
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
+		├── sa-token-demo-cases                   // [示例] Sa-Token 各模块示例
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
-		├── sa-token-demo-springboot-redis        // [示例] Sa-Token 整合 SpringBoot 
+		├── sa-token-demo-springboot-redis        // [示例] Sa-Token 整合 SpringBoot 整合 Redis 
 		├── sa-token-demo-webflux                 // [示例] Sa-Token 整合 WebFlux 
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 
 		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 

@@ -6,10 +6,10 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pj.util.AjaxJson;
 import com.pj.util.Ttime;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 
 /**
  * 压力测试 
@@ -23,7 +23,7 @@ public class StressTestController {
 	// 测试   浏览器访问： http://localhost:8081/s-test/login 
 	// 测试前，请先将 is-read-cookie 配置为 false
 	@RequestMapping("login")
-	public AjaxJson login() {
+	public SaResult login() {
 //			StpUtil.getTokenSession().logout();
 //			StpUtil.logoutByLoginId(10001);
 
@@ -55,7 +55,7 @@ public class StressTestController {
 			ss += list.get(i);
 		}
 		System.out.println("平均用时: " + ss / list.size());
-		return AjaxJson.getSuccess();
+		return SaResult.ok();
 	}
 	
 }

@@ -5,11 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.pj.util.AjaxJson;
-
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.util.SaResult;
 
 
 /**
@@ -48,7 +47,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		// 异常处理函数：每次认证函数发生异常时执行此函数 
         		.setError(e -> {
         			System.out.println("---------- sa全局异常 ");
-        			return AjaxJson.getError(e.getMessage());
+        			return SaResult.error(e.getMessage());
         		})
         		
         		// 前置函数：在每次认证函数之前执行
