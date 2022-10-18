@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token持久层接口 [Redis版 (使用JDK默认序列化方式)] 
+ * Sa-Token 持久层实现 [Redis存储、JDK默认序列化] 
  * 
  * @author kong
  *

@@ -140,10 +140,10 @@ session.logout();
 ``` java
 @PostMapping("/resetPoints")
 public void reset(HttpSession session) {
-	// 在HttpSession上写入一个值 
+	// 在 HttpSession 上写入一个值 
     session.setAttribute("name", 66);
-	// 在SaSession进行取值
-    System.out.println(StpUtil.getSession().getAttribute("name"));	// 输出null
+	// 在 SaSession 进行取值
+    System.out.println(StpUtil.getSession().get("name"));	// 输出null
 }
 ```
 **要点：**

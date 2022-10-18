@@ -1,18 +1,21 @@
 package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.util.SaFoxUtil;
-import com.alibaba.fastjson.JSON;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import com.alibaba.fastjson.JSON;
+
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token持久层接口 [Redis版 (使用JSON字符串进行序列化)]
@@ -44,6 +47,10 @@ public class SaTokenDaoRedisFastjson implements SaTokenDao {
 		if(this.isInit) {
 			return;
 		}
+
+		// 重写 SaSession 生成策略 
+		SaStrategy.me.createSession = (sessionId) -> new SaSessionForFastjsonCustomized(sessionId);
+		System.out.println("------------------ 执行了");
 		
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
@@ -155,7 +162,7 @@ public class SaTokenDaoRedisFastjson implements SaTokenDao {
 		if (obj == null) {
 			return null;
 		}
-		return JSON.parseObject(obj.toString(), SaSession.class);
+		return JSON.parseObject(obj.toString(), SaSessionForFastjsonCustomized.class);
 	}
 
 	/**

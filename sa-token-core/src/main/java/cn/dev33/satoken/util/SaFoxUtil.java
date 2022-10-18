@@ -208,6 +208,25 @@ public class SaFoxUtil {
 		// 正则匹配 
 		return Pattern.matches(patt.replaceAll("\\*", ".*"), str);
 	}
+
+	/**
+	 * 判断类型是否为8大包装类型 
+	 * @param cs / 
+	 * @return / 
+	 */
+	public static boolean isWrapperType(Class<?> cs) {
+		return cs == Integer.class || cs == Short.class ||  cs == Long.class ||  cs == Byte.class
+			|| cs == Float.class || cs == Double.class ||  cs == Boolean.class ||  cs == Character.class;
+	}
+	
+	/**
+	 * 判断类型是否为基础类型：8大基本数据类型、8大包装类、String 
+	 * @param cs / 
+	 * @return / 
+	 */
+	public static boolean isBasicType(Class<?> cs) {
+		return cs.isPrimitive() || isWrapperType(cs) || cs == String.class;
+	}
 	
 	/**
 	 * 将指定值转化为指定类型
@@ -241,6 +260,8 @@ public class SaFoxUtil {
 			obj3 = Double.valueOf(obj2);
 		} else if (cs.equals(boolean.class) || cs.equals(Boolean.class)) {
 			obj3 = Boolean.valueOf(obj2);
+		} else if (cs.equals(char.class) || cs.equals(Character.class)) {
+			obj3 = obj2.charAt(0);
 		} else {
 			obj3 = (T)obj;
 		}

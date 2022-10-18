@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -109,6 +110,34 @@ public class SaFoxUtilTest {
     }
 
     @Test
+    public void isWrapperType() {
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Integer.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Short.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Long.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Byte.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Float.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Double.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Boolean.class));
+    	Assertions.assertTrue(SaFoxUtil.isWrapperType(Character.class));
+    	
+    	Assertions.assertFalse(SaFoxUtil.isWrapperType(int.class));
+    	Assertions.assertFalse(SaFoxUtil.isWrapperType(long.class));
+    	Assertions.assertFalse(SaFoxUtil.isWrapperType(Object.class));
+	}
+
+    @Test
+    public void isBasicType() {
+    	Assertions.assertTrue(SaFoxUtil.isBasicType(int.class));
+    	Assertions.assertTrue(SaFoxUtil.isBasicType(Integer.class));
+    	Assertions.assertTrue(SaFoxUtil.isBasicType(long.class));
+    	Assertions.assertTrue(SaFoxUtil.isBasicType(Long.class));
+    	Assertions.assertTrue(SaFoxUtil.isBasicType(String.class));
+    	
+    	Assertions.assertFalse(SaFoxUtil.isBasicType(List.class));
+    	Assertions.assertFalse(SaFoxUtil.isBasicType(Map.class));
+	}
+	
+    @Test
     public void getValueByType() {
     	// 基础类型，转换 
     	Assertions.assertEquals(SaFoxUtil.getValueByType("1", int.class), 1);
@@ -125,6 +154,8 @@ public class SaFoxUtilTest {
     	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Double.class), 1.0);
     	Assertions.assertEquals(SaFoxUtil.getValueByType("1", boolean.class), false);
     	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Boolean.class), false);
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", char.class), '1');
+    	Assertions.assertEquals(SaFoxUtil.getValueByType("1", Character.class), '1');
     	Assertions.assertEquals(SaFoxUtil.getValueByType(1, String.class), "1");
 
     	// 复杂类型，还原 
