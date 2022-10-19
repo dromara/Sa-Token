@@ -188,6 +188,44 @@ public class StpUserUtil {
 }
 ```
 
+### 9、多账号体系混合鉴权
+QQ群中经常有小伙伴提问：在多账号体系下，怎么在 SaInterceptor 拦截器中给一个接口登录鉴权？
+
+其实这个问题，主要是靠你的业务需求来决定，以后台 Admin 账号和前台 User 账号为例：
+
+``` java
+// 注册 Sa-Token 拦截器
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		
+		// 如果这个接口，要求客户端登录了后台 Admin 账号才能访问：
+		SaRouter.match("/art/getInfo").check(r -> StpUtil.checkLogin());
+
+		// 如果这个接口，要求客户端登录了前台 User 账号才能访问：
+		SaRouter.match("/art/getInfo").check(r -> StpUserUtil.checkLogin());
+		
+		// 如果这个接口，要求客户端同时登录 Admin 和 User 账号，才能访问：
+		SaRouter.match("/art/getInfo").check(r -> {
+			StpUtil.checkLogin();
+			StpUserUtil.checkLogin();
+		});
+
+		// 如果这个接口，要求客户端登录 Admin 和 User 账号任意一个，就能访问：
+		SaRouter.match("/art/getInfo").check(r -> {
+			if(StpUtil.isLogin() == false && StpUserUtil.isLogin() == false) {
+				throw new SaTokenException("请登录后再访问接口");
+			}
+		});
+		
+	})).addPathPatterns("/**");
+}
+```
+
+
+
+
+
 ---
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpUserUtil.java"
