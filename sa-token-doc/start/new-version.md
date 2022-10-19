@@ -16,6 +16,8 @@ v1.31.0 正式版，可上生产：
 </dependency>
 ```
 
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
+
 --- 
 
 ### 最新版本

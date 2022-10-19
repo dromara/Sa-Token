@@ -21,8 +21,9 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-更多内测版本了解：[new-version.md](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
+更多内测版本了解：[Sa-Token最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
 
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
 
 ### 3、设置配置文件
 你可以**零配置启动项目** ，但同时你也可以在 `application.yml` 中增加如下配置，定制性使用框架：

@@ -150,8 +150,9 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 
 
 ## 测试版
-更多内测版本了解：[new-version.md](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
+更多内测版本了解：[Sa-Token 最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
 
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
 
 ## jar包下载
 [点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
