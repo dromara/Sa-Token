@@ -149,6 +149,10 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 注：JDK版本：`v1.8+`，SpringBoot：`建议2.0以上`
 
 
+## 测试版
+更多内测版本了解：[new-version.md](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
+
+
 ## jar包下载
 [点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
 

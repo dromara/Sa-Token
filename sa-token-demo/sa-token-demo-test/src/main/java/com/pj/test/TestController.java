@@ -22,7 +22,6 @@ public class TestController {
 		StpUtil.login(id);
 		return SaResult.ok("登录成功");
 	}
-
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")

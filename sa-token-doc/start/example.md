@@ -21,6 +21,7 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+更多内测版本了解：[new-version.md](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
 
 
 ### 3、设置配置文件

@@ -14,8 +14,10 @@ cd sa-token-demo-oauth2-client & call mvn clean & cd ..
 cd sa-token-demo-oauth2-server & call mvn clean & cd ..
 cd sa-token-demo-quick-login & call mvn clean & cd ..
 cd sa-token-demo-solon & call mvn clean & cd ..
+cd sa-token-demo-case & call mvn clean & cd ..
 cd sa-token-demo-springboot & call mvn clean & cd ..
 cd sa-token-demo-springboot-redis & call mvn clean & cd ..
+cd sa-token-demo-test & call mvn clean & cd ..
 cd sa-token-demo-sso1-client & call mvn clean & cd ..
 cd sa-token-demo-sso2-client & call mvn clean & cd ..
 cd sa-token-demo-sso3-client & call mvn clean & cd ..
