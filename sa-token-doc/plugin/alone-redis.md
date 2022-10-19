@@ -102,3 +102,10 @@ public class TestController {
 ![alone-redis](https://oss.dev33.cn/sa-token/doc/alone-redis.png 's-w')
 
 测试完毕！
+
+### 4、注意点
+目前 Sa-Token-Alone-Redis 仅对以下插件有 Redis 分离效果：
+- sa-token-dao-redis
+- sa-token-dao-redis-jackson
+- sa-token-dao-redis-fastjson
+- sa-token-dao-redis-fastjson2
