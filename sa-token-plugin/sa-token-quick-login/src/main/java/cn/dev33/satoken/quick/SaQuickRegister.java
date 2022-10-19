@@ -41,17 +41,22 @@ public class SaQuickRegister {
 	@Order(SaTokenConsts.ASSEMBLY_ORDER - 1)
 	public SaServletFilter getSaServletFilter() {
 		return new SaServletFilter()
-			// 拦截路由 & 放行路由
-			.addInclude(SaQuickManager.getConfig().getInclude().split(","))
-			.addExclude(SaQuickManager.getConfig().getExclude().split(","))
+			// 拦截路由 
+			.addInclude("/**")
+			// 排除掉登录相关接口，不需要鉴权的
 			.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**").
 			// 认证函数: 每次请求执行
-			setAuth(r -> {
-				// 未登录时直接转发到login.html页面 
-				if (SaQuickManager.getConfig().getAuth() && StpUtil.isLogin() == false) {
-					SaHolder.getRequest().forward("/saLogin");
-					SaRouter.back();
-				}
+			setAuth(obj -> {
+				SaRouter
+					.match(SaQuickManager.getConfig().getInclude().split(","))
+					.notMatch(SaQuickManager.getConfig().getExclude().split(","))
+					.check(r -> {
+						// 未登录时直接转发到login.html页面 
+						if (SaQuickManager.getConfig().getAuth() && StpUtil.isLogin() == false) {
+							SaHolder.getRequest().forward("/saLogin");
+							SaRouter.back();
+						}
+					});
 			}).
 	
 			// 异常处理函数：每次认证函数发生异常时执行此函数

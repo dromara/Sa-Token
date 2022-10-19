@@ -19,7 +19,7 @@ sa:
     # 指定拦截路径 
     # include: /**
     # 指定排除路径
-    # exclude: /sss,/fff
+    # exclude: /1.jpg
     # 将本地磁盘的某个路径作为静态资源开放 
     # dir: file:E:\static
     

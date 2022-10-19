@@ -21,7 +21,7 @@ public class TestController {
 				+ "<h1 style='text-align: center;'>资源页 （登录后才可进入本页面） </h1>"
 				+ "<hr/>"
 				+ "<p style='text-align: center;'> Sa-Token " + SaTokenConsts.VERSION_NO + " </p>";
-		return str;
+		return str; 
 	}
 	
 }
