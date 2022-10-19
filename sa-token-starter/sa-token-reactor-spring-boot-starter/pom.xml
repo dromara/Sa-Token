@@ -34,7 +34,7 @@
 	    <dependency>
 	    	<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>5.0.4.RELEASE</version>
+			<version>5.3.7</version>
 			<optional>true</optional>
 	    </dependency>
 		<!-- reactor-core -->
