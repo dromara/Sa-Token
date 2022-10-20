@@ -14,24 +14,39 @@
 
 首先，根据 [依赖引入说明](/micro/import-intro) 引入正确的依赖，以`[SpringCloud Gateway]`为例：
 
-``` xml
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
     <version>${sa.top.version}</version>
 </dependency>
-<!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+
+<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token 整合 Redis （使用 jackson 序列化方式）
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+```
+<!---------------------------- tabs:end ------------------------------>
+
+
 注：Redis包是必须的，因为我们需要和各个服务通过Redis来同步数据 
 
 ### 2、实现鉴权接口
@@ -78,7 +93,7 @@ public class SaTokenConfigure {
     public SaReactorFilter getSaReactorFilter() {
         return new SaReactorFilter()
 			// 拦截地址 
-			.addInclude("/**")
+			.addInclude("/**")    /* 拦截全部path */
 			// 开放地址 
 			.addExclude("/favicon.ico")
 			// 鉴权方法：每次访问进入 
@@ -92,7 +107,7 @@ public class SaTokenConfigure {
 				SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
 				SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
 				
-				// ... 
+				// 更多匹配 ...  */
 			})
 			// 异常处理方法：每次setAuth函数出现异常时进入 
 			.setError(e -> {

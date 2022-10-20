@@ -7,7 +7,9 @@
 ### 1、引入依赖 
 首先我们确保项目已经引入 Thymeleaf 依赖，然后在此基础上继续添加：
 
-``` xml
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- 在 thymeleaf 标签中使用 Sa-Token -->
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -15,6 +17,13 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// 在 thymeleaf 标签中使用 Sa-Token
+implementation 'cn.dev33:sa-token-dialect-thymeleaf:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 
 ### 2、注册标签方言对象 

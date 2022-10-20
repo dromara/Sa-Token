@@ -4,13 +4,24 @@
 
 Sa-Token 提供两种Token自动过期策略，分别是`timeout`与`activity-timeout`，配置方法如下：
 
-``` yml
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
     # Token 有效期，单位：秒，默认30天, -1代表永不过期 
     timeout: 2592000
     # Token 临时有效期 (指定时间内无操作就视为 Token 过期) 单位: 秒，-1代表不设限 
     activity-timeout: -1
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# Token 有效期，单位：秒，默认30天, -1代表永不过期 
+sa-token.timeout=2592000
+# Token 临时有效期 (指定时间内无操作就视为 Token 过期) 单位: 秒，-1代表不设限 
+sa-token.activity-timeout=-1
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 两者的区别，可以通过下面的例子体现：
 

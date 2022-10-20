@@ -105,42 +105,42 @@
 ## Gradle依赖
 <!-- tabs:start -->
 <!-- tab:SpringBoot环境 （ServletAPI）  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
 
 <!-- tab:WebFlux环境 （Reactor）  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
 
 <!-- tab:Solon 集成  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-solon-plugin:${sa.top.version}'
 ```
 
 <!-- tab:JFinal 集成  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-jfinal-plugin:${sa.top.version}'
 ```
 
 <!-- tab:Jboot 集成  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-jboot-plugin:${sa.top.version}'
 ```
 
 <!-- tab:Quarkus 集成  -->
-``` xml
+``` gradle
 implementation 'io.quarkiverse.satoken:quarkus-satoken-resteasy:1.30.0'
 ```
 
 <!-- tab:裸Servlet容器环境  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-servlet:${sa.top.version}'
 ```
 
 <!-- tab:其它  -->
-``` xml
+``` gradle
 implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 ```
 

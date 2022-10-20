@@ -7,25 +7,41 @@
 
 > **在微服务架构中使用Sa-Token时，网关和内部服务要分开引入Sa-Token依赖（不要直接在顶级父pom中引入Sa-Token）**
 
-总体来讲，我们需要关注的依赖就是两个：`sa-token-spring-boot-starter` 和 `sa-token-reactor-spring-boot-starter`，
+总体来讲，我们需要关注的依赖就是两个：`sa-token-spring-boot-starter` 和 `sa-token-reactor-spring-boot-starter`：
 
-``` xml
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-spring-boot-starter</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-spring-boot-starter</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
 
-``` xml
-<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
+```
+<!---------------------------- tabs:end ------------------------------>
 
 
 至于怎么分辨我们需要引入哪个呢？这个要看你使用的基础框架：
@@ -40,18 +56,29 @@
 注：切不可直接在一个项目里同时引入这两个依赖，否则会造成项目无法启动
 
 另外，我们需要引入Redis集成包，因为我们的网关和子服务主要通过Redis来同步数据 
-``` xml
-<!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 整合 Redis （使用 jackson 序列化方式）
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+```
+<!---------------------------- tabs:end ------------------------------>
+
 详细参考：[集成 Redis](/up/integ-redis)
 
 

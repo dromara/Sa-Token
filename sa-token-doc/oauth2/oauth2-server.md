@@ -13,6 +13,8 @@
 ### 2、引入依赖 
 创建SpringBoot项目 `sa-token-demo-oauth2-server`（不会的同学自行百度或参考仓库示例），添加pom依赖：
 
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
 ``` xml
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
@@ -28,6 +30,17 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token-OAuth2.0 模块
+implementation 'cn.dev33:sa-token-oauth2:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 
 ### 3、开放服务 
 1、新建 `SaOAuth2TemplateImpl` 

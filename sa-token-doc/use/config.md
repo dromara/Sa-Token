@@ -6,10 +6,10 @@
 
 ### 方式1、在 application.yml 配置
 
-<!------------------------------ tabs:start ------------------------------>
+<!---------------------------- tabs:start ---------------------------->
 
-<!------------- tab:application.yml 风格  ------------->
-``` java
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 ############## Sa-Token 配置 ############## 
 ############## 在线参考：https://sa-token.dev33.cn/doc.html#/use/config ############## 
 sa-token: 
@@ -29,8 +29,8 @@ sa-token:
 	is-log: false
 ```
 
-<!------------- tab:application.properties 风格  ------------->
-``` java
+<!------------- tab:properties 风格  ------------->
+``` properties
 ############## Sa-Token 配置 ############## 
 ############## 在线参考：https://sa-token.dev33.cn/doc.html#/use/config ############## 
 
@@ -50,7 +50,7 @@ sa-token.token-style=uuid
 sa-token.is-log=false
 ```
 
-<!---------------------------- tabs:end ------------------------------>
+<!---------------------------- tabs:end ---------------------------->
 
 
 
@@ -181,7 +181,10 @@ Client 端：
 
 
 配置示例：
-``` yml
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 # Sa-Token 配置
 sa-token: 
     # SSO-相关配置
@@ -189,6 +192,13 @@ sa-token:
         # SSO-Server端 单点登录授权地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# SSO-Server端 单点登录授权地址 
+sa-token.sso.auth-url=http://sa-sso-server.com:9000/sso/auth
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 
 
@@ -207,7 +217,9 @@ sa-token:
 | pastClientTokenTimeout	| long	| 7200		| `Past-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
 
 配置示例：
-``` yml
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 # Sa-Token 配置
 sa-token: 
     token-name: satoken-server
@@ -218,6 +230,18 @@ sa-token:
         is-password: true
         is-client: true
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# Sa-Token 配置 
+sa-token.token-name=satoken-server
+# OAuth2.0 配置 
+sa-token.oauth2.is-code=true
+sa-token.oauth2.is-implicit=true
+sa-token.oauth2.is-password=true
+sa-token.oauth2.is-client=true
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 ##### SaClientModel属性定义
 | 参数名称				| 类型		| 默认值	| 说明													|
@@ -300,30 +324,24 @@ sa-token:
 
 在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
 
-``` java
+``` yaml
 sa-token: 
     sso: 
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
-        # 使用Http请求校验ticket 
-        is-http: true
         # SSO-Server端 ticket校验地址 
         check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
         # 单点注销地址 
         slo-url: http://sa-sso-server.com:9000/sso/logout
-        # 接口调用秘钥 
-        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # SSO-Server端 查询userinfo地址 
         userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
 ```
 
 一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
-``` java
+``` yaml
 sa-token: 
     sso: 
         server-url: http://sa-sso-server.com:9000
-        is-http: true
-        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 
 只要你配置了 `server-url` 地址，Sa-Token 就可以自动拼接出其它四个地址：

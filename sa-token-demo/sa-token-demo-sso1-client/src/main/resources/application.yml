@@ -2,7 +2,7 @@
 server:
     port: 9001
 
-# sa-token配置 
+# Sa-Token 配置 
 sa-token: 
     # SSO-相关配置
     sso: 
@@ -11,7 +11,7 @@ sa-token:
         # SSO-Server端-单点注销地址
         slo-url: http://sso.stp.com:9000/sso/logout
     
-    # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 
         # Redis数据库索引
         database: 1

@@ -64,10 +64,19 @@ public class CustomSaTokenContextForSpring extends SaTokenContextForSpring {
 ### 方案二：直接在yml中配置当前项目的网络访问地址
 
 在 `application.yml` 中增加配置：
-``` yml
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
     # 配置当前项目的网络访问地址
     curr-domain: http://local.dev33.cn:8902/api
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 配置当前项目的网络访问地址
+sa-token.curr-domain=http://local.dev33.cn:8902/api
+```
+<!---------------------------- tabs:end ---------------------------->
 
 即可避免路由转发过程中丢失 uri 的问题 

@@ -106,7 +106,7 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .code-line-box {line-height: inherit !important; background-color: #191919; color: #aaa;font-weight: 400;font-size: 0.85em;text-align: center;}
 
 /* xml语言样式优化 */
-.lang-xml .token.comment{color: #CDAB53;}
+/* .lang-xml .token.comment{color: #CDAB53;} */
 .lang-xml .token.tag *{color: #db2d20;}
 .lang-xml .token.attr-value{color: #A6E22E;}
 
@@ -123,24 +123,23 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .lang-java .token.keyword{color: #db2d20;}
 .lang-java .token.namespace,.lang-java .token.namespace *{color: #01A252; opacity: 1;}
 .lang-java .token.class-name,.lang-java .cm-variable{color: #55b5db; opacity: 1;}
-.lang-java .token.comment{color: #CDAB53;}
+/* .lang-java .token.comment{color: #CDAB53;} */
 .lang-java .token.annotation.punctuation{color: #ddd;}
 .lang-java .token.punctuation{color: #ddd;}
 
-/* yml语言样式优化 */
-.main-box .lang-yml{color: #01A252 !important; opacity: 1;}
+/* cmd语言样式优化 */
+.main-box .lang-cmd{color: #01A252 !important; opacity: 1;}
 
-/* yml语言样式优化 */
+/* url语言样式优化 */
 .main-box .lang-url{color: #E96917 !important; opacity: 1;}
 
 /* js语言样式优化 */
 .main-box .lang-js{color: #01a252 !important;}
-.lang-js .token.comment{color: #CDAB53;}
+/* .lang-js .token.comment{color: #CDAB53;} */
 /* .lang-js .token.string{color: #fded02;} */
 .lang-js .token.string{color: #ddd;}
 .lang-js .token.punctuation{color: #ddd;}
 
-/* .gt-container{padding: 1.5em; padding-bottom: 100px;} */
 
 
 /* ------- markdown 内容样式优化 ------- */
@@ -162,8 +161,14 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .gzh-table td b{display: block; margin-bottom: 10px; }
 
 /* tab选项卡优化 */
+/* .docsify-tabs--classic{background-color: rgba(255, 255, 255, 0.2);} */
 .docsify-tabs__tab{outline: 0; cursor: pointer;}
 .docsify-tabs--classic .docsify-tabs__tab--active{box-shadow: 0 0 0;}
+/* tab卡片插件样式优化 */
+.main-box{
+	--docsifytabs-border-color: #ddd;
+	--docsifytabs-tab-color: #777;
+}
 
 
 /* 调整表格的响应式 */
@@ -208,6 +213,7 @@ body {
 #main .toc-box .toc-h2 a span{color: #34495e;}
 #main .toc-box a{border-color: rgba(0,0,0,0); transition: 0s;}
 #main .toc-box a span{color: inherit;}
+
 
 /* 加载图片的按钮 */
 .show-img{

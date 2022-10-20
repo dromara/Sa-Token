@@ -14,16 +14,26 @@
 
 
 ### 2、添加依赖
-在 `pom.xml` 中添加依赖：
+在项目中添加依赖：
 
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
+```
+<!---------------------------- tabs:end ------------------------------>
+
+
 
 
 ### 3、创建启动类
@@ -54,7 +64,7 @@ public class SaTokenConfigure {
     public SaReactorFilter getSaReactorFilter() {
         return new SaReactorFilter()
         		// 指定 [拦截路由]
-        		.addInclude("/**")
+        		.addInclude("/**")    /* 拦截所有path */
         		// 指定 [放行路由]
         		.addExclude("/favicon.ico")
         		// 指定[认证函数]: 每次请求执行 

@@ -23,44 +23,70 @@ Sa-Token提供两种解决方案：
 ##### 1、引入依赖
 
 在网关处引入的依赖为（此处以 SpringCloud Gateway 为例）：
-``` xml
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
     <version>${sa.top.version}</version>
 </dependency>
-<!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+
+<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token 整合 Redis （使用 jackson 序列化方式）
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+```
+<!---------------------------- tabs:end ------------------------------>
 
 在子服务引入的依赖为：
-``` xml
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-spring-boot-starter</artifactId>
     <version>${sa.top.version}</version>
 </dependency>
-<!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+
+<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token 整合 Redis （使用 jackson 序列化方式）
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+```
+<!---------------------------- tabs:end ------------------------------>
 
 ##### 2、网关处添加Id-Token
 

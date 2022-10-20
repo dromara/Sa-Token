@@ -11,16 +11,26 @@
 
 
 ### 2、添加依赖
-在 `pom.xml` 中添加依赖：
+在项目中添加依赖：
 
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 更多内测版本了解：[Sa-Token最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
 
 Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
@@ -28,10 +38,10 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev3
 ### 3、设置配置文件
 你可以**零配置启动项目** ，但同时你也可以在 `application.yml` 中增加如下配置，定制性使用框架：
 
-<!------------------------------ tabs:start ------------------------------>
+<!---------------------------- tabs:start ---------------------------->
 
 <!------------- tab:application.yml 风格  ------------->
-``` java
+``` yaml
 server:
 	# 端口
     port: 8081
@@ -55,7 +65,7 @@ sa-token:
 ```
 
 <!------------- tab:application.properties 风格  ------------->
-``` java
+``` properties
 server:
 	# 端口
     port: 8081
@@ -78,7 +88,7 @@ sa-token.token-style=uuid
 sa-token.is-log=false
 ```
 
-<!---------------------------- tabs:end ------------------------------>
+<!---------------------------- tabs:end ---------------------------->
 
 
 ### 4、创建启动类

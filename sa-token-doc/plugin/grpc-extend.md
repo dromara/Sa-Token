@@ -19,7 +19,9 @@
 ### 引入插件
 需要springboot环境，添加依赖（调用端和被调用端都需要引入）：
 
-``` xml
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 整合 grpc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -27,13 +29,28 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 整合 grpc
+implementation 'cn.dev33:sa-token-context-grpc:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 ---
 ### 开启id-token校验：
 直接在 `application.yml` 配置即可：
 
-``` yml
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
 	# 打开 RPC 调用鉴权 
 	check-id-token: true
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 打开 RPC 调用鉴权 
+sa-token.check-id-token=true
+```
+<!---------------------------- tabs:end ---------------------------->

@@ -21,7 +21,23 @@
 
 造成此漏洞的直接原因就是SSO-Server认证中心没有对 `redirect地址` 进行任何的限制，防范的方法也很简单，就是对`redirect参数`进行校验，如果其不在指定的URL列表中时，拒绝下放ticket 
 
-我们将其配置为一个具体的URL：`allow-url=http://sa-sso-client1.com:9001/sso/login`，再次访问上述连接：
+我们将其配置为一个具体的URL：
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token: 
+	sso: 
+        # 配置允许单点登录的 url 
+        allow-url: http://sa-sso-client1.com:9001/sso/login
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 配置允许单点登录的 url 
+sa-token.sso.allow-url=http://sa-sso-client1.com:9001/sso/login
+```
+<!---------------------------- tabs:end ---------------------------->
+
+再次访问上述链接：
 
 ![sso-feifa-rf](https://oss.dev33.cn/sa-token/doc/sso/sso-feifa-rf.png 's-w-sh')
 
