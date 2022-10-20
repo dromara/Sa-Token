@@ -66,9 +66,8 @@ sa-token:
 
 <!------------- tab:application.properties 风格  ------------->
 ``` properties
-server:
-	# 端口
-    port: 8081
+# 端口
+server.port=8081
 	
 ############## Sa-Token 配置 ############## 
 
