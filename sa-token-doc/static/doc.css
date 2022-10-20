@@ -140,6 +140,9 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .lang-js .token.string{color: #ddd;}
 .lang-js .token.punctuation{color: #ddd;}
 
+/* yaml 和 properties 语言优化 */
+.lang-yaml .token.punctuation{color: #eee;}
+.lang-properties .token.attr-name{color: #22a2c9;}
 
 
 /* ------- markdown 内容样式优化 ------- */
