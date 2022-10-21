@@ -64,7 +64,7 @@ public class SaSessionController {
 
 	// 复杂存取值   ---- http://localhost:8081/session/getModel
 	@RequestMapping("getModel")
-	public SaResult setValue() {
+	public SaResult getModel() {
 		// 实例化  
 		SysUser user = new SysUser();
 		user.setId(10001);

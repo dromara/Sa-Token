@@ -1,12 +1,19 @@
 package com.pj.model;
 
+import java.io.Serializable;
+
 /**
  * User 实体类 
  * 
  * @author kong
  * @since 2022-10-15
  */
-public class SysUser {
+public class SysUser implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2853125262828437774L;
 
 	public SysUser() {
 	}
