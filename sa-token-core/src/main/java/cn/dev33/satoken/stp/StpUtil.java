@@ -83,7 +83,16 @@ public class StpUtil {
 	public static void setTokenValue(String tokenValue, int cookieTimeout){
 		stpLogic.setTokenValue(tokenValue, cookieTimeout);
 	}
- 	
+
+ 	/**
+ 	 * 在当前会话写入当前TokenValue 
+ 	 * @param tokenValue token值 
+ 	 * @param loginModel 登录参数 
+ 	 */
+	public static void setTokenValue(String tokenValue, SaLoginModel loginModel){
+		stpLogic.setTokenValue(tokenValue, loginModel);
+	}
+
 	/**
 	 * 获取当前TokenValue
 	 * @return 当前tokenValue

@@ -46,6 +46,9 @@ public class SaTokenConfig implements Serializable {
 	/** 是否尝试从cookie里读取token */
 	private Boolean isReadCookie = true;
 
+	/** 是否在登录后将 Token 写入到响应头 */
+	private Boolean isWriteHeader = false;
+	
 	/** token风格(默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik) */
 	private String tokenStyle = "uuid";
 
@@ -237,6 +240,22 @@ public class SaTokenConfig implements Serializable {
 	 */
 	public SaTokenConfig setIsReadCookie(Boolean isReadCookie) {
 		this.isReadCookie = isReadCookie;
+		return this;
+	}
+
+	/**
+	 * @return 是否在登录后将 Token 写入到响应头
+	 */
+	public Boolean getIsWriteHeader() {
+		return isWriteHeader;
+	}
+
+	/**
+	 * @param isWriteHeader 是否在登录后将 Token 写入到响应头
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIsWriteHeader(Boolean isWriteHeader) {
+		this.isWriteHeader = isWriteHeader;
 		return this;
 	}
 
@@ -462,6 +481,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", isReadBody=" + isReadBody
 				+ ", isReadHeader=" + isReadHeader 
 				+ ", isReadCookie=" + isReadCookie
+				+ ", isWriteHeader=" + isWriteHeader
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
 				+ ", tokenSessionCheckLogin=" + tokenSessionCheckLogin

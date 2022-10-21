@@ -8,6 +8,11 @@ package cn.dev33.satoken.context.model;
 public interface SaResponse {
 
 	/**
+	 * 指定前端可以获取到哪些响应头时使用的参数名 
+	 */
+	public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+	
+	/**
 	 * 获取底层源对象 
 	 * @return see note 
 	 */

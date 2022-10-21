@@ -17,6 +17,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaCookie;
 import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
@@ -102,7 +103,7 @@ public class StpLogic {
  	 * @param tokenValue token值 
  	 */
 	public void setTokenValue(String tokenValue){
-		setTokenValue(tokenValue, getConfigOfCookieTimeout());
+		setTokenValue(tokenValue, new SaLoginModel().setTimeout(getConfig().getTimeout()));
 	}
 	
  	/**
@@ -111,17 +112,31 @@ public class StpLogic {
  	 * @param cookieTimeout Cookie存活时间(秒)
  	 */
 	public void setTokenValue(String tokenValue, int cookieTimeout){
+		setTokenValue(tokenValue, new SaLoginModel().setTimeout(cookieTimeout));
+	}
+
+ 	/**
+ 	 * 在当前会话写入当前TokenValue 
+ 	 * @param tokenValue token值 
+ 	 * @param loginModel 登录参数 
+ 	 */
+	public void setTokenValue(String tokenValue, SaLoginModel loginModel){
 		
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return;
 		}
 		
-		// 1. 将token保存到[存储器]里  
+		// 1. 将 Token 保存到 [存储器] 里  
 		setTokenValueToStorage(tokenValue);
 		
 		// 2. 将 Token 保存到 [Cookie] 里 
 		if (getConfig().getIsReadCookie()) {
-			setTokenValueToCookie(tokenValue, cookieTimeout);
+			setTokenValueToCookie(tokenValue, loginModel.getCookieTimeout());
+		}
+		
+		// 3. 将 Token 写入到响应头里 
+		if(loginModel.getIsWriteHeaderOrFalse()) {
+			setTokenValueToResponseHeader(tokenValue);
 		}
 	}
 
@@ -163,6 +178,17 @@ public class StpLogic {
 				.setSameSite(cfg.getSameSite())
 				;
 		SaHolder.getResponse().addCookie(cookie);
+	}
+
+ 	/**
+ 	 * 将 Token 写入到 [响应头] 里 
+ 	 * @param tokenValue token值 
+ 	 */
+	public void setTokenValueToResponseHeader(String tokenValue){
+		String tokenName = getTokenName();
+		SaResponse response = SaHolder.getResponse();
+		response.setHeader(tokenName, tokenValue);
+		response.addHeader(SaResponse.ACCESS_CONTROL_EXPOSE_HEADERS, tokenName);
 	}
  	
 	/**
@@ -292,7 +318,7 @@ public class StpLogic {
 		String token = createLoginSession(id, loginModel);
 
 		// 2、在当前客户端注入Token 
-		setTokenValue(token, loginModel.getCookieTimeout());
+		setTokenValue(token, loginModel);
 	}
 
 	/**
