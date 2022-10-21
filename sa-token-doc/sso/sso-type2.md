@@ -49,21 +49,30 @@
 
 #### 3.1、去除 SSO-Server 的 Cookie 作用域配置 
 在SSO模式一章节中我们打开了配置：
-
-``` yml
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
-	cookie:
-		# 配置Cookie作用域
-		domain: stp.com
+    cookie: 
+        # 配置 Cookie 作用域 
+        domain: stp.com 
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 配置 Cookie 作用域 
+sa-token.cookie.domain=stp.com
+```
+<!---------------------------- tabs:end ---------------------------->
 
-此为模式一专属配置，现在我们将其注释掉，并按照注释提示打开其他相应的注释 
+此为模式一专属配置，现在我们将其注释掉
 
 
 #### 3.2、创建 SSO-Client 端项目
-创建一个 SpringBoot 项目 `sa-token-demo-sso-client`，引入依赖：
-``` xml
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+创建一个 SpringBoot 项目 `sa-token-demo-sso2-client`，引入依赖：
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
@@ -94,6 +103,22 @@ sa-token:
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：https://sa-token.cc
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token 插件：整合SSO
+implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
+
+// Sa-Token 整合 Redis (使用 jackson 序列化方式)
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+
+// Sa-Token插件：权限缓存与业务缓存分离
+implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
 
 
 #### 3.3、创建 SSO-Client 端认证接口
@@ -134,31 +159,62 @@ public class SsoClientController {
 
 ##### 3.4、配置SSO认证中心地址 
 你需要在 `application.yml` 配置如下信息：
-``` yml
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 # 端口
 server:
     port: 9001
-	
+
 # sa-token配置 
 sa-token: 
-	# SSO-相关配置
-	sso: 
-		# SSO-Server端 统一认证地址 
-		auth-url: http://sa-sso-server.com:9000/sso/auth
+    # SSO-相关配置
+    sso: 
+        # SSO-Server端 统一认证地址 
+        auth-url: http://sa-sso-server.com:9000/sso/auth
         # 是否打开单点注销接口
         is-slo: true
-	
-	# 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
-	alone-redis: 
-		# Redis数据库索引 (默认为0)
-		database: 1
-		# Redis服务器地址
-		host: 127.0.0.1
-		# Redis服务器连接端口
-		port: 6379
-		# Redis服务器连接密码（默认为空）
-		password: 
+
+    # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    alone-redis: 
+        # Redis数据库索引 (默认为0)
+        database: 1
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        password: 
+        # 连接超时时间
+        timeout: 10s
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 端口
+server.port=9001
+
+######### Sa-Token 配置 #########
+# SSO-Server端 统一认证地址 
+sa-token.sso.auth-url=http://sa-sso-server.com:9000/sso/auth
+# 是否打开单点注销接口
+sa-token.sso.is-slo=true
+
+# 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+# Redis数据库索引
+sa-token.alone-redis.database=1
+# Redis服务器地址
+sa-token.alone-redis.host=127.0.0.1
+# Redis服务器连接端口
+sa-token.alone-redis.port=6379
+# Redis服务器连接密码（默认为空）
+sa-token.alone-redis.password=
+# 连接超时时间
+sa-token.alone-redis.timeout=10s
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 注意点：`sa-token.alone-redis` 的配置需要和SSO-Server端连接同一个Redis（database也要一样）
 
 #### 3.5、写启动类

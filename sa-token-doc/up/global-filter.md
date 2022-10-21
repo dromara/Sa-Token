@@ -23,7 +23,6 @@ Sa-Token同时提供过滤器和拦截器机制，不是为了让谁替代谁，
 ``` java
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
  */
 @Configuration
 public class SaTokenConfigure {
@@ -36,7 +35,7 @@ public class SaTokenConfigure {
         return new SaServletFilter()
 		
         		// 指定 拦截路由 与 放行路由
-        		.addInclude("/**").addExclude("/favicon.ico")
+        		.addInclude("/**").addExclude("/favicon.ico")    /* 排除掉 /favicon.ico */
 				
         		// 认证函数: 每次请求执行 
         		.setAuth(obj -> {
@@ -45,7 +44,7 @@ public class SaTokenConfigure {
 					// 登录认证 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
 					SaRouter.match("/**", "/user/doLogin", () -> StpUtil.checkLogin());
 					
-					// 更多拦截处理方式，请参考“路由拦截式鉴权”章节 
+					// 更多拦截处理方式，请参考“路由拦截式鉴权”章节 */
         		})
 				
         		// 异常处理函数：每次认证函数发生异常时执行此函数 
@@ -97,7 +96,6 @@ JSON 工具类可参考：[Hutool-Json](https://hutool.cn/docs/#/json/JSONUtil)
 ``` java
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
  */
 @Configuration
 public class SaTokenConfigure {

@@ -7,7 +7,9 @@
 ### 1、引入依赖 
 首先在项目已经引入 Sa-Token 的基础上，继续添加：
 
-``` xml
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 整合 jwt -->
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -15,15 +17,33 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-> 注意: sa-token-jwt 显式依赖 hutool-all 5.7.14 版本，意味着：你的项目中要么不引入 Hutool，要么引入版本 >= 5.7.14 的 Hutool 版本
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 整合 jwt
+implementation 'cn.dev33:sa-token-jwt:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
+> 注意: sa-token-jwt 显式依赖 hutool-jwt 5.7.14 版本，意味着：你的项目中要么不引入 Hutool，要么引入版本 >= 5.7.14 的 Hutool 版本
 
 ### 2、配置秘钥
 在 `application.yml` 配置文件中配置 jwt 生成秘钥：
-``` yml
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token:
 	# jwt秘钥 
 	jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# jwt秘钥 
+sa-token.jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk
+```
+<!---------------------------- tabs:end ---------------------------->
+
 注：为了安全起见请不要直接复制官网示例这个字符串（随便按几个字符就好了）
 
 

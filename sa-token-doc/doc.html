@@ -185,7 +185,13 @@
 		</script>
 		<script src="static/docsify.min.js"></script>
 		<script src="static/docsify-copy-code.min.js"></script>
-		<script src="static/prism-java.min.js"></script>
+		
+		<!-- 语言合集：https://cdn.jsdelivr.net/npm/prismjs@1/components/ -->
+		<script src="static/prism/prism-java.min.js"></script>
+		<script src="static/prism/prism-gradle.min.js"></script>
+		<script src="static/prism/prism-yaml.min.js"></script>
+		<script src="static/prism/prism-properties.min.js"></script>
+		
 		<!-- 搜索框 -->
 		<script src="static/search.min.js"></script>
 		<!-- 多 tab 切换 -->
@@ -232,7 +238,7 @@
 			var _hmt = _hmt || [];
 			(function() {
 				var hm = document.createElement("script");
-				hm.src = "https://hm.baidu.com/hm.js?77d7418dd845f98ba1cfee8596eeee3f";
+				hm.src = "https://hm.baidu.com/hm.js?35ad501304eae758ac6139a22a9830f5";
 				var s = document.getElementsByTagName("script")[0]; 
 				s.parentNode.insertBefore(hm, s);
 			})();
@@ -240,8 +246,8 @@
 		
 		<script type="text/javascript">
 			// 预览版提示 
-			if(location.host === 'rc.sa-token.dev33.cn') {
-				const newTips = '<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.dev33.cn/" target="_blank">https://sa-token.dev33.cn/</a></b>';
+			if(location.host === 'rc.sa-token.cc') {
+				const newTips = '<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.cc/" target="_blank">https://sa-token.cc/</a></b>';
 				layer.alert(newTips);
 			}
 		</script>

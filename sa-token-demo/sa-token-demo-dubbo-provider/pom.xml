@@ -16,7 +16,7 @@
 	<properties> 
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-		<sa-token-version>1.31.1.temp</sa-token-version>
+		<sa-token.version>1.31.1.temp</sa-token.version>
 	</properties>
 	
 	<dependencies>
@@ -31,14 +31,14 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
 		</dependency>
 		
 		<!-- Sa-Token整合 Redis (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
 		<dependency>
             <groupId>org.apache.commons</groupId>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-context-dubbo</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
 		</dependency>
 		
 	</dependencies>

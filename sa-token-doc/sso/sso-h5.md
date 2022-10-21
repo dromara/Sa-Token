@@ -118,12 +118,21 @@ public class H5Controller {
 
 复制上述地址，将其配置到 Client 端的 yml 配置文件中，例如：
 
-``` yml
-sa-token:
-    sso: 
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token: 
+	sso: 
 		# SSO-Server端 统一认证地址 
 	    auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# SSO-Server端 统一认证地址 
+sa-token.sso.auth-url=http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 然后我们启动项目 `sa-token-demo-sso-server` 与 `sa-token-demo-sso2-client`，按照之前的测试步骤访问：
 [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)，即可以前后端分离模式完成 SSO-Server 端的授权登录。

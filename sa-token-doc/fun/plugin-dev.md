@@ -96,8 +96,8 @@ SaTokenContext 是对接不同框架的上下文接口，注入流程和第二�
 
 | 插件						| 功能						| 状态			|
 | :--------					| :--------					| :--------		|
-| sa-token-solon-starter	| Sa-Token 与 Solon 的整合	| <font color="green" >已完成</font>			|
-| sa-token-jfinal-starter	| Sa-Token 与 JFinal 的整合	| 待开发			|
+| sa-token-solon-starter	| Sa-Token 与 Solon 的整合	| <font color="green" >已完成</font>		|
+| sa-token-jfinal-starter	| Sa-Token 与 JFinal 的整合	| <font color="green" >已完成</font>		|
 | sa-token-hasor-starter	| Sa-Token 与 Hasor 的整合	| 待开发			|
 
 ##### 标签方言：

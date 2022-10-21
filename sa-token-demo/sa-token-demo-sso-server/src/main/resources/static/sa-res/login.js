@@ -61,5 +61,5 @@ $('[name=name],[name=pwd]').bind('keypress', function(event){
 $("[name=name]").focus();
 
 // 打印信息 
-var str = "This page is provided by Sa-Token, Please refer to: " + "http://sa-token.dev33.cn/";
+var str = "This page is provided by Sa-Token, Please refer to: " + "https://sa-token.cc/";
 console.log(str);

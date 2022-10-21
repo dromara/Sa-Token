@@ -71,7 +71,9 @@ public interface SaTokenContext {
 
 先别着急动手，如果你的 Web 框架是基于 Servlet 规范开发的，那么 Sa-Token 已经为你封装好了三个 Model 接口的实现，你要做的就是引入 `sa-token-servlet`包即可：
 
-``` xml
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 权限认证（ServletAPI 集成包） -->
 <dependency>
     <groupId>cn.dev33</groupId>
@@ -79,6 +81,13 @@ public interface SaTokenContext {
     <version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证（ServletAPI 集成包）
+implementation 'cn.dev33:sa-token-servlet:${sa.top.version}'
+```
+<!---------------------------- tabs:end ------------------------------>
+
 
 如果你的 Web 框架不是基于 Servlet 规范，那么你就需要手动实现这三个 Model 接口，我们可以参考 `sa-token-servlet` 是怎样实现的：
 [SaRequestForServlet.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-servlet/src/main/java/cn/dev33/satoken/servlet/model/SaRequestForServlet.java)、

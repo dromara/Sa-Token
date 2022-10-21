@@ -1,23 +1,29 @@
-package cn.dev33.satoken.stp;
+package com.pj.satoken;
 
 import java.util.List;
+
+import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpLogic;
 
 /**
- * Sa-Token 权限认证工具类 
+ * Sa-Token 权限认证工具类 （User版）
  * @author kong 
  */
-public class StpUtil {
+@Component
+public class StpUserUtil {
 	
-	private StpUtil() {}
+	private StpUserUtil() {}
 	
 	/**
 	 * 账号类型标识 
 	 */
-	public static final String TYPE = "login";
+	public static final String TYPE = "user";
 	
 	/**
 	 * 底层的 StpLogic 对象  
@@ -83,16 +89,7 @@ public class StpUtil {
 	public static void setTokenValue(String tokenValue, int cookieTimeout){
 		stpLogic.setTokenValue(tokenValue, cookieTimeout);
 	}
-
- 	/**
- 	 * 在当前会话写入当前TokenValue 
- 	 * @param tokenValue token值 
- 	 * @param loginModel 登录参数 
- 	 */
-	public static void setTokenValue(String tokenValue, SaLoginModel loginModel){
-		stpLogic.setTokenValue(tokenValue, loginModel);
-	}
-
+ 	
 	/**
 	 * 获取当前TokenValue
 	 * @return 当前tokenValue

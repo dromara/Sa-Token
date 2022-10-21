@@ -6,14 +6,22 @@
 
 因此Sa-Token提供AOP插件，你只需在`pom.xml`里添加如下依赖，便可以在任意层级使用注解鉴权
 
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token整合SpringAOP实现注解鉴权 -->
+<!-- Sa-Token 整合 SpringAOP 实现注解鉴权 -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-aop</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 整合 SpringAOP 实现注解鉴权
+implementation 'cn.dev33:sa-token-spring-aop:${sa.top.version}'
+```
+<!---------------------------- tabs:end ------------------------------>
 
 
 #### 注意点：

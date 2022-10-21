@@ -146,14 +146,32 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 以上代码，当你未登录访问 `/user/doLogin` 时，会被第1条规则越过，然后被第2条拦下，校验登录，然后抛出异常：`NotLoginException：xxx`
 
 
+### Q：我在配置文件中加了一些关于 Sa-Token 的配置，但是没有生效。
+首先，有没有生效的最佳判断方式是，在main方法中加一个打印，看看打印出来的和你配置文件的一致吗：
+
+``` java
+@SpringBootApplication
+public class SaTokenApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(SaTokenApplication.class, args); 
+		System.out.println("\n启动成功：Sa-Token配置如下：" + SaManager.getConfig());
+	}
+}
+```
+
+如果不一致，请排查：
+- 可能1：项目中还存在代码配置，而代码配置会覆盖 `application.yml` 中配置，详细参考：[框架配置](/use/config)。
+- 可能2：你的配置文件名字错误，SpringBoot 项目正常情况下配置文件名称应该是：`application.yml` 或 `application.properties`。
+
+
 ### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
-可能1：你访问的这个接口，根本就没有鉴权的代码，所以可以安全的访问通过。
-可能2：可能是 Cookie 帮你自动提交了 Token，在浏览器或 Postman 中会自动维护Cookie模式，如不需要可以在配置文件：`is-read-cookie: false`，然后重启项目再测试一下。
+- 可能1：你访问的这个接口，根本就没有鉴权的代码，所以可以安全的访问通过。
+- 可能2：可能是 Cookie 帮你自动提交了 Token，在浏览器或 Postman 中会自动维护Cookie模式，如不需要可以在配置文件：`is-read-cookie: false`，然后重启项目再测试一下。
 
 
 ### Q：一个 User 对象存进 Session 后，再取出来时报错：无法从 User 类型转换成 User 类型？
-可能1：你的 User 类中途换了包名，导致存进去时和取出来时对不上，无法成功创建实例。
-可能2：你打开了代码热刷新模式，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决。
+- 可能1：你的 User 类中途换了包名，导致存进去时和取出来时对不上，无法成功创建实例。
+- 可能2：你打开了代码热刷新模式，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决。
 
 
 ### Q：我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？

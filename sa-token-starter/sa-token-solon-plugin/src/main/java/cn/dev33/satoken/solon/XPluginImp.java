@@ -3,7 +3,6 @@ package cn.dev33.satoken.solon;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
-import org.noear.solon.core.event.EventBus;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckBasic;
@@ -34,6 +33,7 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * @author noear
  * @since 1.4
  */
+@SuppressWarnings("deprecation")
 public class XPluginImp implements Plugin {
     
 	@Override

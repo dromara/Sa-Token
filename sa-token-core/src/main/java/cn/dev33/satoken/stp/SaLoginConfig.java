@@ -16,7 +16,7 @@ public class SaLoginConfig {
 
 	/**
 	 * @param device 此次登录的客户端设备类型 
-	 * @return SaLoginModel配置对象 
+	 * @return 登录参数 Model
 	 */
 	public static SaLoginModel setDevice(String device) {
 		return create().setDevice(device);
@@ -24,7 +24,7 @@ public class SaLoginConfig {
 
 	/**
 	 * @param isLastingCookie 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
-	 * @return 对象自身
+	 * @return 登录参数 Model
 	 */
 	public static SaLoginModel setIsLastingCookie(Boolean isLastingCookie) {
 		return create().setIsLastingCookie(isLastingCookie);
@@ -32,7 +32,7 @@ public class SaLoginConfig {
 
 	/**
 	 * @param timeout 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
-	 * @return 对象自身
+	 * @return 登录参数 Model
 	 */
 	public static SaLoginModel setTimeout(long timeout) {
 		return create().setTimeout(timeout);
@@ -40,7 +40,7 @@ public class SaLoginConfig {
 
 	/**
 	 * @param extraData 扩展信息（只在jwt模式下生效）
-	 * @return 对象自身
+	 * @return 登录参数 Model
 	 */
 	public static SaLoginModel setExtraData(Map<String, Object> extraData) {
 		return create().setExtraData(extraData);
@@ -48,7 +48,7 @@ public class SaLoginConfig {
 
 	/**
 	 * @param token 预定Token（预定本次登录生成的Token值）
-	 * @return 对象自身
+	 * @return 登录参数 Model
 	 */
 	public static SaLoginModel setToken(String token) {
 		return create().setToken(token);
@@ -58,10 +58,18 @@ public class SaLoginConfig {
 	 * 写入扩展数据（只在jwt模式下生效） 
 	 * @param key 键
 	 * @param value 值 
-	 * @return 对象自身 
+	 * @return 登录参数 Model
 	 */
 	public static SaLoginModel setExtra(String key, Object value) {
 		return create().setExtra(key, value);
+	}
+
+	/**
+	 * @param isWriteHeader 是否在登录后将 Token 写入到响应头
+	 * @return 登录参数 Model
+	 */
+	public static SaLoginModel setIsWriteHeader(Boolean isWriteHeader) {
+		return create().setIsWriteHeader(isWriteHeader);
 	}
 
 	/**

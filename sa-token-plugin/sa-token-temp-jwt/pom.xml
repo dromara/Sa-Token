@@ -27,13 +27,13 @@
         <dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
+			<version>${jjwt.version}</version>
         </dependency>
 		<!-- spring-boot-configuration -->
 		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>2.5.12</version>
+			<version>${springboot.version}</version>
 			<optional>true</optional>
 		</dependency> -->
 	</dependencies>

@@ -18,6 +18,8 @@ import org.springframework.data.redis.connection.lettuce.LettucePoolingClientCon
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.dao.SaTokenDaoRedis;
+import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson;
+import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2;
 import cn.dev33.satoken.dao.SaTokenDaoRedisJackson;
 
 /**
@@ -95,7 +97,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 			factory.afterPropertiesSet();
 			
 			// 3. 开始初始化 SaTokenDao 
-			// 如果是SaTokenDaoRedis
+			// 如果开发者引入的是：sa-token-dao-redis
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedis");
 				SaTokenDaoRedis dao = (SaTokenDaoRedis)saTokenDao;
@@ -104,10 +106,28 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				return;
 			} catch (ClassNotFoundException e) {
 			}
-			// 如果是SaTokenDaoRedisJackson
+			// 如果开发者引入的是：sa-token-dao-redis-jackson
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisJackson");
 				SaTokenDaoRedisJackson dao = (SaTokenDaoRedisJackson)saTokenDao;
+				dao.isInit = false;
+				dao.init(factory);
+				return;
+			} catch (ClassNotFoundException e) {
+			}
+			// 如果开发者引入的是：sa-token-dao-redis-fastjson
+			try {
+				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisFastjson");
+				SaTokenDaoRedisFastjson dao = (SaTokenDaoRedisFastjson)saTokenDao;
+				dao.isInit = false;
+				dao.init(factory);
+				return;
+			} catch (ClassNotFoundException e) {
+			}
+			// 如果开发者引入的是：sa-token-dao-redis-fastjson2
+			try {
+				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2");
+				SaTokenDaoRedisFastjson2 dao = (SaTokenDaoRedisFastjson2)saTokenDao;
 				dao.isInit = false;
 				dao.init(factory);
 				return;

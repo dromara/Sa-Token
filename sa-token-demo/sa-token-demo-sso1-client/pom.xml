@@ -14,9 +14,9 @@
 		<relativePath/>
 	</parent>
 	
-	<!-- 定义sa-token版本号 -->
+	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token-version>1.31.1.temp</sa-token-version>
+		<sa-token.version>1.31.1.temp</sa-token.version>
 	</properties>
 
 	<dependencies>
@@ -27,25 +27,25 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		
-		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
         
 		<!-- Sa-Token 插件：整合SSO -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-sso</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
         
 		<!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
         
 		<!-- 提供Redis连接池 -->
@@ -58,7 +58,7 @@
 		<dependency>
 		    <groupId>cn.dev33</groupId>
 		    <artifactId>sa-token-alone-redis</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
 		</dependency>
 		
 	</dependencies>

@@ -11,6 +11,7 @@
 - sa-token-dao-redis-jackson：Redis集成包，使用 jackson 序列化方式。
 - sa-token-dao-redisx：Redisx 集成包。 
 - sa-token-dao-redis-fastjson：Redis集成包，使用 fastjson 序列化方式。
+- sa-token-dao-redis-fastjson2：Redis集成包，使用 fastjson2 序列化方式。
 
 有关 Redis 集成，详细参考：[集成Redis](/up/integ-redis)，更多存储方式欢迎提交PR 
 

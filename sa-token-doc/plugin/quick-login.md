@@ -44,6 +44,9 @@ Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录
 首先我们需要创建一个SpringBoot的demo项目，比如：`sa-token-demo-quick-login`
 
 ##### 1、添加pom依赖
+
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
 ``` xml
 <!-- Sa-Token-Quick-Login 插件 -->
 <dependency>
@@ -52,6 +55,14 @@ Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token-Quick-Login 插件
+implementation 'cn.dev33:sa-token-quick-login:${sa.top.version}'
+```
+<!---------------------------- tabs:end ------------------------------>
+
+
 
 ##### 2、启动类
 ``` java
@@ -98,7 +109,11 @@ public class TestController {
 
 ### 可配置信息
 你可以在yml中添加如下配置 (所有配置都是可选的) 
-``` java
+
+<!---------------------------- tabs:start ---------------------------->
+
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 # Sa-Token-Quick-Login 配置
 sa: 
 	# 登录账号
@@ -116,8 +131,32 @@ sa:
     # 指定拦截路径 
     # include: /**
     # 指定排除路径
-    # exclude: /sss,/fff
+    # exclude: /1.jpg
 ```
+
+<!------------- tab:properties 风格  ------------->
+``` properties
+####### Sa-Token-Quick-Login 配置 #######
+# 登录账号
+sa.name=sa
+# 登录密码
+sa.pwd=123456
+# 是否自动随机生成账号密码 (此项为true时, name与pwd失效)
+sa.auto=false
+# 是否开启全局认证(关闭后将不再强行拦截) 
+sa.auth=true
+# 登录页标题
+sa.title=Sa-Token 登录
+# 是否显示底部版权信息 
+sa.copr=true
+# 指定拦截路径 
+# sa.include=/**
+# 指定排除路径
+# sa.exclude=/1.jpg
+```
+
+<!---------------------------- tabs:end ---------------------------->
+
 
 <br>
 

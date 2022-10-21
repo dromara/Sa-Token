@@ -41,12 +41,20 @@ OK，所有理论就绪，下面开始实战：
 ### 3、指定Cookie的作用域
 在`sso.stp.com`访问服务器，其Cookie也只能写入到`sso.stp.com`下，为了将Cookie写入到其父级域名`stp.com`下，我们需要更改 SSO-Server 端的 yml 配置：
 
-``` yml
-sa-token:
-    cookie:
-        # 配置Cookie作用域 
-        domain: stp.com
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token: 
+    cookie: 
+        # 配置 Cookie 作用域 
+        domain: stp.com 
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 配置 Cookie 作用域 
+sa-token.cookie.domain=stp.com
+```
+<!---------------------------- tabs:end ---------------------------->
 
 这个配置原本是被注释掉的，现在将其打开。另外我们格外需要注意：
 在SSO模式一测试完毕之后，一定要将这个配置再次注释掉，因为模式一与模式二三使用不同的授权流程，这行配置会影响到我们模式二和模式三的正常运行。 
@@ -62,12 +70,14 @@ sa-token:
 #### 4.1、引入依赖
 新建项目 sa-token-demo-sso1-client，并添加以下依赖：
 
-``` xml
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>${sa-token-version}</version>
+	<version>${sa.top.version}</version>
 </dependency>
 <!-- Sa-Token 插件：整合SSO -->
 <dependency>
@@ -80,7 +90,7 @@ sa-token:
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-dao-redis-jackson</artifactId>
-	<version>${sa-token-version}</version>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
 	<groupId>org.apache.commons</groupId>
@@ -91,9 +101,25 @@ sa-token:
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-alone-redis</artifactId>
-	<version>${sa-token-version}</version>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：https://sa-token.cc
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token 插件：整合SSO
+implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
+
+// Sa-Token 整合 Redis (使用 jackson 序列化方式)
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+
+// Sa-Token插件：权限缓存与业务缓存分离
+implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
 
 
 #### 4.2、新建 Controller 控制器
@@ -130,12 +156,14 @@ public class SsoClientController {
 
 #### 4.3、application.yml 配置 
 
-``` yml
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 # 端口
 server:
     port: 9001
 
-# sa-token配置 
+# Sa-Token 配置 
 sa-token: 
     # SSO-相关配置
     sso: 
@@ -144,7 +172,7 @@ sa-token:
         # SSO-Server端-单点注销地址
         slo-url: http://sso.stp.com:9000/sso/logout
     
-    # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 
         # Redis数据库索引
         database: 1
@@ -157,6 +185,32 @@ sa-token:
         # 连接超时时间
         timeout: 10s
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 端口
+server.port=9001
+
+######### Sa-Token 配置 #########
+
+# SSO-Server端-单点登录授权地址 
+sa-token.sso.auth-url=http://sso.stp.com:9000/sso/auth
+# SSO-Server端-单点注销地址
+sa-token.sso.slo-url=http://sso.stp.com:9000/sso/logout
+
+# 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+# Redis数据库索引
+sa-token.alone-redis.database=1
+# Redis服务器地址
+sa-token.alone-redis.host=127.0.0.1
+# Redis服务器连接端口
+sa-token.alone-redis.port=6379
+# Redis服务器连接密码（默认为空）
+sa-token.alone-redis.password=
+# 连接超时时间
+sa-token.alone-redis.timeout=10s
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 #### 4.4、启动类
 

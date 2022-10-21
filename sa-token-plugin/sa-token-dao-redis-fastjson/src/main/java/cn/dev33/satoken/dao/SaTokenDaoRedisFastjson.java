@@ -18,7 +18,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token持久层接口 [Redis版 (使用JSON字符串进行序列化)]
+ * Sa-Token 持久层实现 [Redis存储、fastjson序列化]
  * 
  * @author sikadai
  *

@@ -23,7 +23,7 @@ public class SaLoginModel {
 	/**
 	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
-	public Boolean isLastingCookie;
+	public Boolean isLastingCookie = true;
 
 	/**
 	 * 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
@@ -39,6 +39,9 @@ public class SaLoginModel {
 	 * 预定Token（预定本次登录生成的Token值）
 	 */
 	public String token;
+
+	/** 是否在登录后将 Token 写入到响应头 */
+	private Boolean isWriteHeader;
 	
 	
 	/**
@@ -58,9 +61,19 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 参考 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+	 * @return 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
 	public Boolean getIsLastingCookie() {
+		return isLastingCookie;
+	}
+
+	/**
+	 * @return 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+	 */
+	public Boolean getIsLastingCookieOrFalse() {
+		if(isLastingCookie == null) {
+			return false;
+		}
 		return isLastingCookie;
 	}
 
@@ -80,6 +93,16 @@ public class SaLoginModel {
 		return timeout;
 	}
 
+	/**
+	 * @return timeout 值 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	public Long getTimeoutOrGlobalConfig() {
+		if(timeout == null) {
+			timeout = SaManager.getConfig().getTimeout();
+		}
+		return timeout;
+	}
+	
 	/**
 	 * @param timeout 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 	 * @return 对象自身
@@ -121,13 +144,45 @@ public class SaLoginModel {
 		return this;
 	}
 
+	/**
+	 * @return 是否在登录后将 Token 写入到响应头
+	 */
+	public Boolean getIsWriteHeader() {
+		return isWriteHeader;
+	}
+
+	/**
+	 * @return 是否在登录后将 Token 写入到响应头 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	public Boolean getIsWriteHeaderOrGlobalConfig() {
+		if(isWriteHeader == null) {
+			isWriteHeader = SaManager.getConfig().getIsWriteHeader();
+		}
+		return isWriteHeader;
+	}
+
+	/**
+	 * @param isWriteHeader 是否在登录后将 Token 写入到响应头
+	 * @return 对象自身
+	 */
+	public SaLoginModel setIsWriteHeader(Boolean isWriteHeader) {
+		this.isWriteHeader = isWriteHeader;
+		return this;
+	}
+
 	/*
 	 * toString 
 	 */
 	@Override
 	public String toString() {
-		return "SaLoginModel [device=" + device + ", isLastingCookie=" + isLastingCookie + ", timeout=" + timeout
-				+ ", extraData=" + extraData + ", token=" + token + "]";
+		return "SaLoginModel ["
+				+ "device=" + device
+				+ ", isLastingCookie=" + isLastingCookie
+				+ ", timeout=" + timeout
+				+ ", extraData=" + extraData
+				+ ", token=" + token
+				+ ", isWriteHeader=" + isWriteHeader
+				+ "]";
 	}
 
 	// ------ 附加方法 
@@ -174,10 +229,10 @@ public class SaLoginModel {
 	 * @return Cookie时长
 	 */
 	public int getCookieTimeout() {
-		if(isLastingCookie == false) {
+		if(getIsLastingCookieOrFalse() == false) {
 			return -1;
 		}
-		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+		if(getTimeoutOrGlobalConfig() == SaTokenDao.NEVER_EXPIRE) {
 			return Integer.MAX_VALUE;
 		}
 		return (int)(long)timeout;
@@ -210,11 +265,14 @@ public class SaLoginModel {
 //		if(device == null) {
 //			device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 //		}
-		if(isLastingCookie == null) {
-			isLastingCookie = true;
-		}
+//		if(isLastingCookie == null) {
+//			isLastingCookie = true;
+//		}
 		if(timeout == null) {
 			timeout = config.getTimeout();
+		}
+		if(isWriteHeader == null) {
+			isWriteHeader = config.getIsWriteHeader();
 		}
 		return this;
 	}

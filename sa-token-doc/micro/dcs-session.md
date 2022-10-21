@@ -34,18 +34,27 @@
 
 集成依赖示例：
 
-``` xml
-<!-- Sa-Token 整合 Redis (使用jackson序列化方式) -->
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 <dependency>
-    <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-    <version>${sa.top.version}</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 整合 Redis （使用 jackson 序列化方式）
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+```
+<!---------------------------- tabs:end ------------------------------>
 
 详细参考：[集成 Redis](/up/integ-redis)
 

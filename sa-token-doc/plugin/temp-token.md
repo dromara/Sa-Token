@@ -59,6 +59,8 @@ SaTempUtil.deleteToken(token);
 
 **[sa-token-temp]** 模块允许以JWT作为逻辑内核完成工作，你只需要引入以下依赖，所有上层API保持不变
 
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Maven 方式 -------->
 ``` xml
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -66,6 +68,12 @@ SaTempUtil.deleteToken(token);
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+implementation 'cn.dev33:sa-token-temp-jwt:${sa.top.version}'
+```
+<!---------------------------- tabs:end ------------------------------>
+
 
 并在配置文件中配置上jwt秘钥 **`(必填!)`**
 ``` java

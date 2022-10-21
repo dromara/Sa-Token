@@ -9,8 +9,10 @@
 ### 1、添加依赖 
 创建 SpringBoot 项目 `sa-token-demo-sso-server`，引入依赖：
 
-``` xml
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
+<!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
@@ -48,6 +50,27 @@
 	 <version>3.1.1</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 权限认证，在线文档：https://sa-token.cc
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+
+// Sa-Token 插件：整合SSO
+implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
+
+// Sa-Token 整合 Redis (使用 jackson 序列化方式)
+implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
+
+// 视图引擎（在前后端不分离模式下提供视图支持）
+implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+// Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉）
+implementation 'com.ejlchina:okhttps:3.1.1'
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 
 除了 `sa-token-spring-boot-starter` 和 `sa-token-sso` 以外，其它包都是可选的：
 - 在 SSO 模式三时 Redis 相关包是可选的  
@@ -133,6 +156,10 @@ public class GlobalExceptionHandler {
 
 
 ### 3、application.yml配置
+
+<!---------------------------- tabs:start ---------------------------->
+
+<!------------- tab:yaml 风格  ------------->
 ``` yml
 # 端口
 server:
@@ -140,9 +167,9 @@ server:
 
 # Sa-Token 配置
 sa-token: 
-    # -------------- SSO-模式一相关配置  (非模式一不需要配置) 
+    # ------- SSO-模式一相关配置  (非模式一不需要配置) 
     # cookie: 
-        # 配置Cookie作用域 
+        # 配置 Cookie 作用域 
         # domain: stp.com 
         
     # ------- SSO-模式二相关配置 
@@ -154,7 +181,7 @@ sa-token:
         # 是否打开单点注销功能
         is-slo: true
         
-        # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开） -------
+        # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开）
         # 是否打开模式三 
         isHttp: true
         # 接口调用秘钥（用于SSO模式三的单点注销功能）
@@ -173,8 +200,46 @@ spring:
         # Redis服务器连接密码（默认为空）
         password: 
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 端口
+server.port=9000
 
-注意点：`allow-url`为了方便测试配置为`*`，线上生产环境一定要配置为详细URL地址 （之后的章节我们会详细阐述此配置项）
+################## Sa-Token 配置 ##################
+# ------- SSO-模式一相关配置  (非模式一不需要配置) 
+# 配置 Cookie 作用域 
+# sa-token.cookie.domain=stp.com
+
+# ------- SSO-模式二相关配置 
+# Ticket有效期 (单位: 秒)，默认五分钟 
+sa-token.sso.ticket-timeout=300
+# 所有允许的授权回调地址
+sa-token.sso.allow-url=*
+# 是否打开单点注销功能
+sa-token.sso.is-slo=true
+
+# ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开）
+# 是否打开模式三 
+sa-token.sso.isHttp=true
+# 接口调用秘钥（用于SSO模式三的单点注销功能）
+sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+
+# ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
+
+################## Redis配置 （SSO模式一和模式二使用Redis来同步会话） ##################
+# Redis数据库索引（默认为0）
+spring.redis.database=1
+# Redis服务器地址
+spring.redis.host=127.0.0.1
+# Redis服务器连接端口
+spring.redis.port=6379
+# Redis服务器连接密码（默认为空）
+spring.redis.password=
+```
+
+<!---------------------------- tabs:end ---------------------------->
+
+注意点：`sa-token.sso.allow-url`为了方便测试配置为`*`，线上生产环境一定要配置为详细URL地址 （之后的章节我们会详细阐述此配置项）
 
 
 ### 4、创建启动类

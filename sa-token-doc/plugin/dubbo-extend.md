@@ -25,7 +25,9 @@ RPC 模式的调用，可以让我们像调用本地方法一样完成服务通�
 
 在项目已经引入 Dubbo 的基础上，继续添加依赖（Consumer 端和 Provider 端都需要引入）：
 
-``` xml
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
+``` xml 
 <!-- Sa-Token 整合 Dubbo -->
 <dependency>
 	<groupId>cn.dev33</groupId>
@@ -33,6 +35,13 @@ RPC 模式的调用，可以让我们像调用本地方法一样完成服务通�
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Sa-Token 整合 Dubbo
+implementation 'cn.dev33:sa-token-context-dubbo:${sa.top.version}'
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 
 然后我们就可以愉快的做到以下事情：
@@ -64,11 +73,19 @@ RPC 模式的调用，可以让我们像调用本地方法一样完成服务通�
 
 直接在 `application.yml` 配置即可：
 
-``` yml
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
 	# 打开 RPC 调用鉴权 
 	check-id-token: true
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 打开 RPC 调用鉴权 
+sa-token.check-id-token=true
+```
+<!---------------------------- tabs:end ---------------------------->
 
 
 ##### 方式二、自建 Dubbo 过滤器校验

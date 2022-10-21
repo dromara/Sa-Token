@@ -16,7 +16,7 @@ public class SaCookieTest {
     @Test
     public void test() {
     	SaCookie cookie = new SaCookie("satoken", "xxxx-xxxx-xxxx-xxxx")
-    			.setDomain("https://sa-token.dev33.cn/")
+    			.setDomain("https://sa-token.cc/")
     			.setMaxAge(-1)
     			.setPath("/")
     			.setSameSite("Lax")
@@ -25,13 +25,13 @@ public class SaCookieTest {
 
     	Assertions.assertEquals(cookie.getName(), "satoken");
     	Assertions.assertEquals(cookie.getValue(), "xxxx-xxxx-xxxx-xxxx");
-    	Assertions.assertEquals(cookie.getDomain(), "https://sa-token.dev33.cn/");
+    	Assertions.assertEquals(cookie.getDomain(), "https://sa-token.cc/");
     	Assertions.assertEquals(cookie.getMaxAge(), -1);
     	Assertions.assertEquals(cookie.getPath(), "/");
     	Assertions.assertEquals(cookie.getSameSite(), "Lax");
     	Assertions.assertEquals(cookie.getHttpOnly(), true);
     	Assertions.assertEquals(cookie.getSecure(), true);
-    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.dev33.cn/; Path=/; Secure; HttpOnly; sameSite=Lax");
+    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.cc/; Path=/; Secure; HttpOnly; sameSite=Lax");
     	
     	Assertions.assertNotNull(cookie.toString());
     }

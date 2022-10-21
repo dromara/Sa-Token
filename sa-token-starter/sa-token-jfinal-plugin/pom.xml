@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jfinal</artifactId>
-            <version>4.9.17</version>
+            <version>${jfinal.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

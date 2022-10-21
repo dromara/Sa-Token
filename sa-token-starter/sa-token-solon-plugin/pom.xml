@@ -18,15 +18,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon</artifactId>
-            <version>1.10.4</version>
-        </dependency>
-
-        <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
             <version>${revision}</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon</artifactId>
+            <version>${solon.version}</version>
         </dependency>
 
     </dependencies>

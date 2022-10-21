@@ -13,11 +13,21 @@
 此时后端如果不做任何特殊处理，框架将会把`Bearer `视为token的一部分，无法正常读取token信息，导致鉴权失败。
 
 为此，我们需要在yml中添加如下配置：
-``` java
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
 	# token前缀
 	token-prefix: Bearer
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# token前缀
+sa-token.token-prefix: Bearer
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 此时 Sa-Token 便可在读取 Token 时裁剪掉 `Bearer`，成功获取`xxxx-xxxx-xxxx-xxxx`。
 

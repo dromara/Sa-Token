@@ -21,6 +21,9 @@
 ### 2、在Client 端更改 Ticket 校验方式
 
 #### 2.1、增加 pom.xml 配置 
+
+<!---------------------------- tabs:start ---------------------------->
+<!-------- tab:Maven 方式 -------->
 ``` xml
 <!-- Http请求工具 -->
 <dependency>
@@ -29,6 +32,14 @@
      <version>3.1.1</version>
 </dependency>
 ```
+<!-------- tab:Gradle 方式 -------->
+``` gradle
+// Http请求工具
+implementation 'com.ejlchina:okhttps:3.1.1'
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 > OkHttps是一个轻量级http请求工具，详情参考：[OkHttps](https://gitee.com/ejlchina-zhxu/okhttps)
 
 #### 2.2、配置 http 请求处理器 
@@ -48,14 +59,25 @@ private void configSso(SaSsoConfig sso) {
 ```
 
 #### 2.3、application.yml 新增配置
-``` yml
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
-	sso: 
+    sso: 
         # 打开模式三（使用Http请求校验ticket）
         is-http: true
-		# SSO-Server端 ticket校验地址 
-		check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
+        # SSO-Server端 ticket校验地址 
+        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 打开模式三（使用Http请求校验ticket）
+sa-token.sso.is-http=true
+# SSO-Server端 ticket校验地址 
+sa-token.sso.check-ticket-url=http://sa-sso-server.com:9000/sso/checkTicket
+```
+<!---------------------------- tabs:end ---------------------------->
 
 #### 2.4、启动项目测试
 重启项目，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
@@ -87,13 +109,23 @@ public Object userinfo(String loginId) {
 ```
 
 #### 3.2、在 Client 端调用此接口查询 userinfo
-首先在yml中配置接口地址 
-``` yml
+首先在 application.yml 中配置接口地址：
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
     sso: 
         # SSO-Server端 查询userinfo地址 
         userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# SSO-Server端 查询userinfo地址 
+sa-token.sso.userinfo-url=http://sa-sso-server.com:9000/sso/userinfo
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 
 然后在`SsoClientController`中新增接口 
 ``` java
@@ -181,7 +213,10 @@ public Object myFollowList() {
 #### 5.1、SSO-Client 端新增配置 
 
 在 `application.yml` 增加配置：`API调用秘钥` 和 `单点注销接口URL`。
-``` yml
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
 sa-token: 
 	sso: 
         # 打开单点注销功能 
@@ -191,6 +226,18 @@ sa-token:
 		# 接口调用秘钥 
 		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 打开单点注销功能 
+sa-token.sso.is-slo=true
+# 单点注销地址 
+sa-token.sso.slo-url=http://sa-sso-server.com:9000/sso/logout
+# 接口调用秘钥 
+sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 注意 secretkey 秘钥需要与SSO认证中心的一致 
 
 
