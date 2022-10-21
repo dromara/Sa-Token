@@ -94,6 +94,16 @@ public class SaLoginModel {
 	}
 
 	/**
+	 * @return timeout 值 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	public Long getTimeoutOrGlobalConfig() {
+		if(timeout == null) {
+			timeout = SaManager.getConfig().getTimeout();
+		}
+		return timeout;
+	}
+	
+	/**
 	 * @param timeout 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
 	 * @return 对象自身
 	 */
@@ -142,11 +152,11 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 是否在登录后将 Token 写入到响应头
+	 * @return 是否在登录后将 Token 写入到响应头 （如果此配置项尚未配置，则取全局配置的值）
 	 */
-	public Boolean getIsWriteHeaderOrFalse() {
+	public Boolean getIsWriteHeaderOrGlobalConfig() {
 		if(isWriteHeader == null) {
-			return false;
+			isWriteHeader = SaManager.getConfig().getIsWriteHeader();
 		}
 		return isWriteHeader;
 	}
@@ -222,8 +232,7 @@ public class SaLoginModel {
 		if(getIsLastingCookieOrFalse() == false) {
 			return -1;
 		}
-		initTimeout();
-		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+		if(getTimeoutOrGlobalConfig() == SaTokenDao.NEVER_EXPIRE) {
 			return Integer.MAX_VALUE;
 		}
 		return (int)(long)timeout;
@@ -237,15 +246,6 @@ public class SaLoginModel {
 			return SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 		}
 		return device;
-	}
-	
-	/**
-	 * 初始化 timeout 值 （如果尚未配置timeout，则取全局配置的值）
-	 */
-	public void initTimeout() {
-		if(timeout == null) {
-			timeout = SaManager.getConfig().getTimeout();
-		}
 	}
 	
 	/**

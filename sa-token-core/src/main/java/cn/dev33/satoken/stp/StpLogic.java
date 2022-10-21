@@ -135,7 +135,7 @@ public class StpLogic {
 		}
 		
 		// 3. 将 Token 写入到响应头里 
-		if(loginModel.getIsWriteHeaderOrFalse()) {
+		if(loginModel.getIsWriteHeaderOrGlobalConfig()) {
 			setTokenValueToResponseHeader(tokenValue);
 		}
 	}
