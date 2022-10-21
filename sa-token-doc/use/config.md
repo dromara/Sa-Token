@@ -10,8 +10,7 @@
 
 <!------------- tab:yaml 风格  ------------->
 ``` yaml
-############## Sa-Token 配置 ############## 
-############## 在线参考：https://sa-token.dev33.cn/doc.html#/use/config ############## 
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token: 
 	# token名称 (同时也是cookie名称)
 	token-name: satoken
@@ -31,8 +30,7 @@ sa-token:
 
 <!------------- tab:properties 风格  ------------->
 ``` properties
-############## Sa-Token 配置 ############## 
-############## 在线参考：https://sa-token.dev33.cn/doc.html#/use/config ############## 
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 
 # token名称 (同时也是cookie名称)
 sa-token.token-name=satoken

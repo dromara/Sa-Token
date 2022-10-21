@@ -1,6 +1,6 @@
 # Sa-Token 最新版本
 
-在线文档：[https://sa-token.dev33.cn/](https://sa-token.dev33.cn/)
+在线文档：[https://sa-token.cc/](https://sa-token.cc/)
 
 --- 
 
@@ -16,7 +16,7 @@ v1.31.0 正式版，可上生产：
 </dependency>
 ```
 
-Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
 --- 
 

@@ -16,7 +16,7 @@
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
@@ -25,15 +25,14 @@
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+// Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
 更多内测版本了解：[Sa-Token最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
-
-Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
 
 ### 3、设置配置文件
 你可以**零配置启动项目** ，但同时你也可以在 `application.yml` 中增加如下配置，定制性使用框架：
@@ -46,7 +45,7 @@ server:
 	# 端口
     port: 8081
 	
-############## Sa-Token 配置 ############## 
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token: 
 	# token名称 (同时也是cookie名称)
 	token-name: satoken
@@ -69,7 +68,7 @@ sa-token:
 # 端口
 server.port=8081
 	
-############## Sa-Token 配置 ############## 
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 
 # token名称 (同时也是cookie名称)
 sa-token.token-name=satoken

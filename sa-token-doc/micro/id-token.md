@@ -26,7 +26,7 @@ Sa-Token提供两种解决方案：
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
@@ -46,7 +46,7 @@ Sa-Token提供两种解决方案：
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 
 // Sa-Token 整合 Redis （使用 jackson 序列化方式）
@@ -59,7 +59,7 @@ implementation 'org.apache.commons:commons-pool2'
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-spring-boot-starter</artifactId>
@@ -79,7 +79,7 @@ implementation 'org.apache.commons:commons-pool2'
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+// Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 
 // Sa-Token 整合 Redis （使用 jackson 序列化方式）

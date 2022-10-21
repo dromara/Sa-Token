@@ -2,7 +2,7 @@
 server:
     port: 8081
         
-# sa-token配置
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token: 
     # token名称 (同时也是cookie名称)
     token-name: satoken

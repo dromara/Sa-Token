@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Sa-Token 配置类 Model 
  * <p>
- * 你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档: http://sa-token.dev33.cn/
+ * 你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档: https://sa-token.cc/
  * 
  * @author kong
  *

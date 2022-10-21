@@ -166,49 +166,49 @@ public class SaFoxUtilTest {
     @Test
     public void joinParam() {
     	// 参数为空时，返回原url
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", null), "https://sa-token.dev33.cn");
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", ""), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc", null), "https://sa-token.cc");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc", ""), "https://sa-token.cc");
     	// url为空时，视为空字符串 
     	Assertions.assertEquals(SaFoxUtil.joinParam(null, "id=1"), "?id=1");
     	Assertions.assertEquals(SaFoxUtil.joinParam("", "id=1"), "?id=1");
     	
     	// 各种情况的测试 
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", "id=1"), "https://sa-token.dev33.cn?id=1");
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?", "id=1"), "https://sa-token.dev33.cn?id=1");
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?name=zhang", "id=1"), "https://sa-token.dev33.cn?name=zhang&id=1");
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?name=zhang&", "id=1"), "https://sa-token.dev33.cn?name=zhang&id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc", "id=1"), "https://sa-token.cc?id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc?", "id=1"), "https://sa-token.cc?id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc?name=zhang", "id=1"), "https://sa-token.cc?name=zhang&id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc?name=zhang&", "id=1"), "https://sa-token.cc?name=zhang&id=1");
     	
     	// 重载方法测试 
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn?name=zhang&", "id", 1), "https://sa-token.dev33.cn?name=zhang&id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc?name=zhang&", "id", 1), "https://sa-token.cc?name=zhang&id=1");
     	// url或key为null时，不拼接 
     	Assertions.assertEquals(SaFoxUtil.joinParam(null, "id", 1), null);
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", null, 1), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc", null, 1), "https://sa-token.cc");
     	// value为null时，会拼接出一个null字符串 
-    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.dev33.cn", "id", null), "https://sa-token.dev33.cn?id=null");
+    	Assertions.assertEquals(SaFoxUtil.joinParam("https://sa-token.cc", "id", null), "https://sa-token.cc?id=null");
     }
 
     @Test
     public void joinSharpParam() {
     	// 参数为空时，返回原url
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", null), "https://sa-token.dev33.cn");
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", ""), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc", null), "https://sa-token.cc");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc", ""), "https://sa-token.cc");
     	// url为空时，视为空字符串 
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam(null, "id=1"), "#id=1");
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam("", "id=1"), "#id=1");
     	
     	// 各种情况的测试 
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", "id=1"), "https://sa-token.dev33.cn#id=1");
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#", "id=1"), "https://sa-token.dev33.cn#id=1");
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#name=zhang", "id=1"), "https://sa-token.dev33.cn#name=zhang&id=1");
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#name=zhang&", "id=1"), "https://sa-token.dev33.cn#name=zhang&id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc", "id=1"), "https://sa-token.cc#id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc#", "id=1"), "https://sa-token.cc#id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc#name=zhang", "id=1"), "https://sa-token.cc#name=zhang&id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc#name=zhang&", "id=1"), "https://sa-token.cc#name=zhang&id=1");
 
     	// 重载方法测试 
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn#name=zhang&", "id", 1), "https://sa-token.dev33.cn#name=zhang&id=1");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc#name=zhang&", "id", 1), "https://sa-token.cc#name=zhang&id=1");
     	// url或key为null时，不拼接 
     	Assertions.assertEquals(SaFoxUtil.joinSharpParam(null, "id", 1), null);
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", null, 1), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc", null, 1), "https://sa-token.cc");
     	// value为null时，会拼接出一个null字符串 
-    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.dev33.cn", "id", null), "https://sa-token.dev33.cn#id=null");
+    	Assertions.assertEquals(SaFoxUtil.joinSharpParam("https://sa-token.cc", "id", null), "https://sa-token.cc#id=null");
     }
 
     @Test
@@ -233,7 +233,7 @@ public class SaFoxUtilTest {
 
     @Test
     public void isUrl() {
-    	Assertions.assertTrue(SaFoxUtil.isUrl("https://sa-token.dev33.cn"));
+    	Assertions.assertTrue(SaFoxUtil.isUrl("https://sa-token.cc"));
     	Assertions.assertTrue(SaFoxUtil.isUrl("https://www.baidu.com/"));
 
     	Assertions.assertFalse(SaFoxUtil.isUrl(null));
@@ -246,8 +246,8 @@ public class SaFoxUtilTest {
 
     @Test
     public void encodeUrl() {
-    	Assertions.assertEquals(SaFoxUtil.encodeUrl("https://sa-token.dev33.cn"), "https%3A%2F%2Fsa-token.dev33.cn");
-    	Assertions.assertEquals(SaFoxUtil.decoderUrl("https%3A%2F%2Fsa-token.dev33.cn"), "https://sa-token.dev33.cn");
+    	Assertions.assertEquals(SaFoxUtil.encodeUrl("https://sa-token.cc"), "https%3A%2F%2Fsa-token.cc");
+    	Assertions.assertEquals(SaFoxUtil.decoderUrl("https%3A%2F%2Fsa-token.cc"), "https://sa-token.cc");
     }
     
     @Test

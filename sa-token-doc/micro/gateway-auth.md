@@ -17,7 +17,7 @@
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
@@ -37,7 +37,7 @@
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证（Reactor响应式集成），在线文档：http://sa-token.dev33.cn/
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 
 // Sa-Token 整合 Redis （使用 jackson 序列化方式）

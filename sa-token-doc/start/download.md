@@ -12,7 +12,7 @@
 <!------------- tab:SpringBoot环境 （ServletAPI）  ------------->
 如果你使用的框架基于 ServletAPI 构建（ SpringMVC、SpringBoot等 ），请引入此包
 ``` xml
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
@@ -23,7 +23,7 @@
 <!------------- tab:WebFlux环境 （Reactor）  ------------->
 注：如果你使用的框架基于 Reactor 模型构建（Netty、WebFlux、ShenYu、SC Gateway等），请引入此包
 ``` xml
-<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
@@ -34,7 +34,7 @@
 <!------------- tab:Solon 集成  ------------->
 参考：[Solon官网](https://solon.noear.org/)
 ``` xml
-<!-- Sa-Token 整合 Solon, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 整合 Solon, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-solon-plugin</artifactId>
@@ -45,7 +45,7 @@
 <!------------- tab:JFinal 集成  ------------->
 参考：[JFinal官网](https://jfinal.com/)
 ``` xml
-<!-- Sa-Token 整合 JFinal, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 整合 JFinal, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-jfinal-plugin</artifactId>
@@ -56,7 +56,7 @@
 <!------------- tab:Jboot 集成  ------------->
 参考：[Jboot官网](http://www.jboot.com.cn/)
 ``` xml
-<!-- Sa-Token 整合 Jboot, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 整合 Jboot, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-jboot-plugin</artifactId>
@@ -67,7 +67,7 @@
 <!------------- tab:Quarkus 集成  ------------->
 参考：[quarkus-sa-token](https://github.com/quarkiverse/quarkus-sa-token)
 ``` xml
-<!-- Sa-Token 整合 Quarkus, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 整合 Quarkus, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>io.quarkiverse.satoken</groupId>
 	<artifactId>quarkus-satoken-resteasy</artifactId>
@@ -78,7 +78,7 @@
 <!------------- tab:裸Servlet容器环境   ------------->
 注：如果你的项目没有使用Spring，但是Web框架是基于 ServletAPI 规范的，可以引入此包
 ``` xml
-<!-- Sa-Token 权限认证（ServletAPI规范）, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（ServletAPI规范）, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-servlet</artifactId>
@@ -90,7 +90,7 @@
 <!------------- tab:其它   ------------->
 注：如果你的项目既没有使用 SpringMVC、WebFlux，也不是基于 ServletAPI 规范，那么可以引入core核心包
 ``` xml
-<!-- Sa-Token 权限认证（core核心包）, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证（core核心包）, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-core</artifactId>
@@ -152,7 +152,7 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 ## 测试版
 更多内测版本了解：[Sa-Token 最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
 
-Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.dev33.cn/doc.html#/start/maven-pull)
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
 ## jar包下载
 [点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)

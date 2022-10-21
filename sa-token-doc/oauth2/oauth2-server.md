@@ -16,7 +16,7 @@
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 ``` xml
-<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
@@ -32,7 +32,7 @@
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证，在线文档：http://sa-token.dev33.cn/
+// Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 
 // Sa-Token-OAuth2.0 模块
@@ -154,7 +154,7 @@ public class SaOAuth2ServerApplication {
 
 1、由于暂未搭建Client端，我们可以使用Sa-Token官网作为重定向URL进行测试：
 ``` url
-http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-token.dev33.cn/&scope=userinfo
+http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=https://sa-token.cc&scope=userinfo
 ```
 
 2、由于首次访问，我们在OAuth-Server端暂未登录，会被转发到登录视图 

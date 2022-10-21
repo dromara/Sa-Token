@@ -31,7 +31,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		
-		<!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
