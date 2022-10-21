@@ -58,11 +58,12 @@ sa-token.is-log=false
 <!------------- tab:模式 1 ------------->
 ``` java 
 /**
- * Sa-Token代码方式进行配置
+ * Sa-Token 配置类
  */
 @Configuration
 public class SaTokenConfigure {
-	// 获取配置Bean (以代码的方式配置Sa-Token, 此配置会覆盖 application.yml 中的配置)
+	// Sa-Token 参数配置，参考文档：https://sa-token.cc
+	// 此配置会覆盖 application.yml 中的配置
     @Bean
     @Primary
     public SaTokenConfig getSaTokenConfigPrimary() {
@@ -81,11 +82,11 @@ public class SaTokenConfigure {
 <!------------- tab:模式 2 ------------->
 ``` java
 /**
- * Sa-Token代码方式进行配置
+ * Sa-Token 配置类
  */
 @Configuration
 public class SaTokenConfigure {
-	// 以代码的方式配置 SaTokenConfig 
+	// Sa-Token 参数配置，参考文档：https://sa-token.cc
 	// 此配置会与 application.yml 中的配置合并 （代码配置优先）
 	@Autowired
 	public void configSaToken(SaTokenConfig config) {
