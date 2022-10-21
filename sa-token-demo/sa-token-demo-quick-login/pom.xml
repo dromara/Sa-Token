@@ -14,9 +14,9 @@
 		<!-- <version>2.6.0</version> -->
 	</parent>
 	
-	<!-- 定义sa-token版本号 -->
+	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token-version>1.31.1.temp</sa-token-version>
+		<sa-token.version>1.31.1.temp</sa-token.version>
 	</properties>
 
 	<dependencies>
@@ -31,14 +31,14 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
         
         <!-- quick-login -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-quick-login</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
 		
 		<!-- @ConfigurationProperties -->

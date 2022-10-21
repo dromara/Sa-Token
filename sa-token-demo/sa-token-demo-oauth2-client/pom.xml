@@ -16,8 +16,8 @@
 	<properties> 
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-		<!-- 定义sa-token版本号 -->
-		<sa-token-version>1.31.1.temp</sa-token-version>
+		<!-- 定义 Sa-Token 版本号 -->
+		<sa-token.version>1.31.1.temp</sa-token.version>
 	</properties>
 	
 	<dependencies>
@@ -32,7 +32,7 @@
 		<dependency>
 		    <groupId>cn.dev33</groupId>
 		    <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
 		</dependency>
 
 		<!-- thymeleaf 视图引擎 -->

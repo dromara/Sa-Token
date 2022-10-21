@@ -24,7 +24,7 @@
         <dependency>
             <groupId>io.jboot</groupId>
             <artifactId>jboot</artifactId>
-            <version>3.14.4</version>
+            <version>${jboot.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

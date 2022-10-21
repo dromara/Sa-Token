@@ -17,16 +17,28 @@
 	<description>springboot integrate sa-token</description>
 
 	<dependencies>
+		<!-- sa-token-core -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-servlet</artifactId>
             <version>${revision}</version>
 		</dependency>
+		
+		<!-- spring-boot-starter-web (optional) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>2.5.12</version>
+			<version>${springboot.version}</version>
 		</dependency>
+		
+		<!-- config (optional) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<version>${springboot.version}</version>
+			<optional>true</optional>
+		</dependency>
+		
 		<!-- OAuth2.0 (optional) -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
@@ -34,19 +46,12 @@
             <version>${revision}</version>
 			<optional>true</optional>
 		</dependency>
+		
 		<!-- SSO (optional) -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-sso</artifactId>
             <version>${revision}</version>
-			<optional>true</optional>
-		</dependency>
-		
-		<!-- config -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>2.5.12</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>

@@ -7,9 +7,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	
-	<!-- 定义sa-token版本号 -->
+	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token-version>1.31.1.temp</sa-token-version>
+		<sa-token.version>1.31.1.temp</sa-token.version>
 	</properties>
 
 	<dependencies>
@@ -25,21 +25,21 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-solon-plugin</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency>
 		
 		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency> -->
 		
 		<!-- sa-token整合redis (使用jackson序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency> -->
         
 		<!-- 提供redis连接池 -->
@@ -52,7 +52,7 @@
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-aop</artifactId>
-            <version>${sa-token-version}</version>
+            <version>${sa-token.version}</version>
         </dependency> -->
 
 		<!-- hutool工具类，用来生成雪花算法唯一id -->

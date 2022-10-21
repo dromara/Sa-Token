@@ -41,6 +41,23 @@
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+		
+		<springboot.version>2.5.12</springboot.version>
+		<spring-web.version>5.0.4.RELEASE</spring-web.version>
+		<reactor-core.version>3.1.4.RELEASE</reactor-core.version>
+		<jackson-databind.version>2.12.6.1</jackson-databind.version>	
+		<servlet-api.version>3.1.0</servlet-api.version>
+		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+		<solon.version>1.10.4</solon.version>
+		<solon-test.version>1.9.1</solon-test.version>
+		<noear-redisx.version>1.4.3</noear-redisx.version>
+		<jfinal.version>4.9.17</jfinal.version>
+		<jboot.version>3.14.4</jboot.version>
+		<commons-pool2.version>2.5.0</commons-pool2.version>
+		<dubbo.version>2.7.15</dubbo.version>
+		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
+		<hutool-jwt.version>5.8.5</hutool-jwt.version>
+		<jjwt.version>0.9.1</jjwt.version>
 	</properties>
 
 	<!-- 仓库信息 -->
