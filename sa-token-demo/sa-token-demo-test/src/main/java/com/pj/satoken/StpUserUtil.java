@@ -1000,6 +1000,15 @@ public class StpUserUtil {
 	}
 
 	/**
+	 * 在当前会话 开启二级认证 
+	 * @param service 业务标识  
+	 * @param safeTime 维持时间 (单位: 秒) 
+	 */
+	public static void openSafe(String service, long safeTime) {
+		stpLogic.openSafe(service, safeTime);
+	}
+
+	/**
 	 * 当前会话 是否处于二级认证时间内 
 	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
 	 */
@@ -1008,10 +1017,37 @@ public class StpUserUtil {
 	}
 
 	/**
+	 * 当前会话 是否处于二级认证时间内 
+	 * @param service 业务标识  
+	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
+	 */
+	public static boolean isSafe(String service) {
+		return stpLogic.isSafe(service);
+	}
+
+	/**
+	 * 指定 Token 是否处于二级认证时间内 
+	 * @param tokenValue Token 值  
+	 * @param service 业务标识  
+	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
+	 */
+	public static boolean isSafe(String tokenValue, String service) {
+		return stpLogic.isSafe(tokenValue, service);
+	}
+
+	/**
 	 * 检查当前会话是否已通过二级认证，如未通过则抛出异常 
 	 */
 	public static void checkSafe() {
 		stpLogic.checkSafe();
+	}
+
+	/**
+	 * 检查当前会话是否已通过二级认证，如未通过则抛出异常 
+	 * @param service 业务标识  
+	 */
+	public static void checkSafe(String service) {
+		stpLogic.checkSafe(service);
 	}
 	
 	/**
@@ -1023,10 +1059,27 @@ public class StpUserUtil {
 	}
 
 	/**
+	 * 获取当前会话的二级认证剩余有效时间 (单位: 秒, 返回-2代表尚未通过二级认证)
+	 * @param service 业务标识  
+	 * @return 剩余有效时间
+	 */
+	public static long getSafeTime(String service) {
+		return stpLogic.getSafeTime(service);
+	}
+
+	/**
 	 * 在当前会话 结束二级认证 
 	 */
 	public static void closeSafe() {
 		stpLogic.closeSafe();
+	}
+
+	/**
+	 * 在当前会话 结束二级认证 
+	 * @param service 业务标识  
+	 */
+	public static void closeSafe(String service) {
+		stpLogic.closeSafe(service);
 	}
 
 }
