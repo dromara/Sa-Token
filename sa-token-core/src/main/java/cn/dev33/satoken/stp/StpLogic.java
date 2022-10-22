@@ -247,6 +247,18 @@ public class StpLogic {
 		// 5. 返回 
 		return tokenValue;
 	}
+
+	/**
+	 * 获取当前上下文的 TokenValue（如果获取不到则抛出异常）
+	 * @return / 
+	 */
+	public String getTokenValueNotNull(){
+		String tokenValue = getTokenValue();
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			throw new SaTokenException("未能读取到有效Token");
+		}
+		return tokenValue;
+	}
 	
 	/**
 	 * 获取当前会话的Token信息 
@@ -1676,7 +1688,7 @@ public class StpLogic {
 	 * @param at 注解对象 
 	 */
 	public void checkByAnnotation(SaCheckSafe at) {
-		this.checkSafe();
+		this.checkSafe(at.value());
 	}
 
 	/**
@@ -1993,8 +2005,19 @@ public class StpLogic {
 	 * @param safeTime 维持时间 (单位: 秒) 
 	 */
 	public void openSafe(long safeTime) {
-		long eff = System.currentTimeMillis() + safeTime * 1000;
-		getTokenSession().set(SaTokenConsts.SAFE_AUTH_SAVE_KEY, eff);
+		openSafe(SaTokenConsts.DEFAULT_SAFE_AUTH_SERVICE, safeTime);
+	}
+
+	/**
+	 * 在当前会话 开启二级认证 
+	 * @param service 业务标识  
+	 * @param safeTime 维持时间 (单位: 秒) 
+	 */
+	public void openSafe(String service, long safeTime) {
+		// 开启二级认证前必须处于登录状态 
+		checkLogin();
+		// 写入key 
+		getSaTokenDao().set(splicingKeySafe(getTokenValueNotNull(), service), SaTokenConsts.SAFE_AUTH_SAVE_VALUE, safeTime);
 	}
 
 	/**
@@ -2002,19 +2025,50 @@ public class StpLogic {
 	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
 	 */
 	public boolean isSafe() {
-		long eff = getTokenSession().get(SaTokenConsts.SAFE_AUTH_SAVE_KEY, 0L);
-		if(eff == 0 || eff < System.currentTimeMillis()) {
+		return isSafe(SaTokenConsts.DEFAULT_SAFE_AUTH_SERVICE);
+	}
+
+	/**
+	 * 当前会话 是否处于二级认证时间内 
+	 * @param service 业务标识  
+	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
+	 */
+	public boolean isSafe(String service) {
+		return isSafe(getTokenValue(), service);
+	}
+
+	/**
+	 * 指定 Token 是否处于二级认证时间内 
+	 * @param tokenValue Token 值  
+	 * @param service 业务标识  
+	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
+	 */
+	public boolean isSafe(String tokenValue, String service) {
+		// 如果 Token 为空，则直接视为未认证  
+		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return false;
 		}
-		return true;
+		
+		// 如果DB中可以查询出指定的键值，则代表已认证，否则视为未认证 
+		String value = getSaTokenDao().get(splicingKeySafe(tokenValue, service));
+		return !(SaFoxUtil.isEmpty(value));
 	}
 
 	/**
 	 * 检查当前会话是否已通过二级认证，如未通过则抛出异常 
 	 */
 	public void checkSafe() {
-		if (isSafe() == false) {
-			throw new NotSafeException();
+		checkSafe(SaTokenConsts.DEFAULT_SAFE_AUTH_SERVICE);
+	}
+
+	/**
+	 * 检查当前会话是否已通过二级认证，如未通过则抛出异常 
+	 * @param service 业务标识  
+	 */
+	public void checkSafe(String service) {
+		String tokenValue = getTokenValue();
+		if (isSafe(tokenValue, service) == false) {
+			throw new NotSafeException(loginType, tokenValue, service);
 		}
 	}
 	
@@ -2023,18 +2077,45 @@ public class StpLogic {
 	 * @return 剩余有效时间
 	 */
 	public long getSafeTime() {
-		long eff = getTokenSession().get(SaTokenConsts.SAFE_AUTH_SAVE_KEY, 0L);
-		if(eff == 0 || eff < System.currentTimeMillis()) {
+		return getSafeTime(SaTokenConsts.DEFAULT_SAFE_AUTH_SERVICE);
+	}
+
+	/**
+	 * 获取当前会话的二级认证剩余有效时间 (单位: 秒, 返回-2代表尚未通过二级认证)
+	 * @param service 业务标识  
+	 * @return 剩余有效时间
+	 */
+	public long getSafeTime(String service) {
+		// 如果上下文中没有 Token，则直接视为未认证 
+		String tokenValue = getTokenValue();
+		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return SaTokenDao.NOT_VALUE_EXPIRE;
 		}
-		return (eff - System.currentTimeMillis()) / 1000;
+		
+		// 从DB中查询这个key的剩余有效期 
+		return getSaTokenDao().getTimeout(splicingKeySafe(tokenValue, service));
 	}
 
 	/**
 	 * 在当前会话 结束二级认证 
 	 */
 	public void closeSafe() {
-		getTokenSession().delete(SaTokenConsts.SAFE_AUTH_SAVE_KEY);
+		closeSafe(SaTokenConsts.DEFAULT_SAFE_AUTH_SERVICE);
+	}
+
+	/**
+	 * 在当前会话 结束二级认证 
+	 * @param service 业务标识  
+	 */
+	public void closeSafe(String service) {
+		// 如果上下文中没有 Token，则无需任何操作 
+		String tokenValue = getTokenValue();
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			return;
+		}
+		
+		// 删除 key 
+		getSaTokenDao().delete(splicingKeySafe(tokenValue, service));
 	}
 
 	
@@ -2109,6 +2190,18 @@ public class StpLogic {
 	 */
 	public String splicingKeyDisable(Object loginId, String service) {
 		return getConfig().getTokenName() + ":" + loginType + ":disable:" + service + ":" + loginId;
+	}
+
+	/**  
+	 * 拼接key： 二级认证 
+	 * @param tokenValue 要认证的 Token 
+	 * @param service 要认证的业务标识 
+	 * @return key 
+	 */
+	public String splicingKeySafe(String tokenValue, String service) {
+		// 格式：<Token名称>:<账号类型>:<safe>:<业务标识>:<Token值>
+		// 形如：satoken:login:safe:important:gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__
+		return getConfig().getTokenName() + ":" + loginType + ":safe:" + service + ":" + tokenValue;
 	}
 
 	

@@ -46,7 +46,7 @@ public class GlobalException {
 	@ExceptionHandler(NotSafeException.class)
 	public SaResult handlerException(NotSafeException e) {
 		e.printStackTrace(); 
-		return SaResult.error("二级认证校验失败");
+		return SaResult.error("二级认证校验失败：" + e.getService());
 	}
 
 	// 拦截：服务封禁异常 

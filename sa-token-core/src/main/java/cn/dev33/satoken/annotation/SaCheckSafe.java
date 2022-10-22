@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import cn.dev33.satoken.util.SaTokenConsts;
+
 /**
  * 二级认证校验：必须二级认证之后才能进入该方法 
  * 
@@ -18,8 +20,14 @@ public @interface SaCheckSafe {
 
     /**
      * 多账号体系下所属的账号体系标识 
-     * @return see note 
+     * @return /
      */
 	String type() default "";
 
+	/**
+	 * 要校验的服务 
+	 * @return /
+	 */
+	String value() default SaTokenConsts.DEFAULT_SAFE_AUTH_SERVICE;
+	
 }
