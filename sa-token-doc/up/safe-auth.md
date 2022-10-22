@@ -34,21 +34,6 @@ StpUtil.closeSafe();
 ```
 
 
-### 使用注解进行二级认证
-在一个方法上使用 `@SaCheckSafe` 注解，可以在代码进入此方法之前进行一次二级认证
-``` java
-// 二级认证：必须二级认证之后才能进入该方法 
-@SaCheckSafe      
-@RequestMapping("add")
-public String add() {
-    return "用户增加";
-}
-```
-
-详细使用方法可参考：[注解鉴权](/use/at-check)，此处不再赘述
-
-
-
 ### 一个小示例
 
 一个完整的二级认证业务流程，应该大致如下：
@@ -91,6 +76,64 @@ public SaResult openSafe(String password) {
 4. 后端比对用户输入的密码，完成二级认证，有效期为：120秒。
 5. 前端在 120 秒内再次调用 `deleteProject` 接口，尝试删除仓库。
 6. 后端校验会话已完成二级认证，返回：`仓库删除成功`。
+
+
+### 指定业务标识进行二级认证
+
+如果项目有多条业务线都需要敏感操作验证，则 `StpUtil.openSafe()` 无法提供细粒度的认证操作，
+此时我们可以指定一个业务标识来分辨不同的业务线：
+
+``` java
+// 在当前会话 开启二级认证，业务标识为client，时间为600秒
+StpUtil.openSafe("client", 600); 
+
+// 获取：当前会话是否已完成指定业务的二级认证 
+StpUtil.isSafe("client"); 
+
+// 校验：当前会话是否已完成指定业务的二级认证 ，如未认证则抛出异常
+StpUtil.checkSafe("client"); 
+
+// 获取当前会话指定业务二级认证剩余有效时间 (单位: 秒, 返回-2代表尚未通过二级认证)
+StpUtil.getSafeTime("client"); 
+
+// 在当前会话 结束指定业务标识的二级认证
+StpUtil.closeSafe("client"); 
+```
+
+业务标识可以填写任意字符串，不同业务标识之间的认证互不影响，比如：
+``` java
+// 打开了业务标识为 client 的二级认证 
+StpUtil.openSafe("client"); 
+
+// 判断是否处于 shop 的二级认证，会返回 false 
+StpUtil.isSafe("shop");  // 返回 false 
+
+// 也不会通过校验，会抛出异常 
+StpUtil.checkSafe("shop"); 
+```
+
+
+
+### 使用注解进行二级认证
+在一个方法上使用 `@SaCheckSafe` 注解，可以在代码进入此方法之前进行一次二级认证
+``` java
+// 二级认证：必须二级认证之后才能进入该方法 
+@SaCheckSafe      
+@RequestMapping("add")
+public String add() {
+    return "用户增加";
+}
+
+// 指定业务类型，进行二级认证校验
+@SaCheckSafe("art")
+@RequestMapping("add2")
+public String add2() {
+    return "文章增加";
+}
+```
+
+详细使用方法可参考：[注解鉴权](/use/at-check)，此处不再赘述
+
 
 
 ---
