@@ -25,6 +25,7 @@ public class SaSessionController {
 
 	/*
 	 * 前提：首先调用登录接口进行登录，代码在 com.pj.cases.use.LoginAuthController 中有详细解释，此处不再赘述 
+	 * 		---- http://localhost:8081/acc/doLogin?name=zhang&pwd=123456
 	 */
 	
 	// 简单存取值   ---- http://localhost:8081/session/getValue

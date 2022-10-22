@@ -37,7 +37,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-		<revision>1.31.1.temp</revision>
+		<revision>1.31.2.temp</revision>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
