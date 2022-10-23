@@ -21,7 +21,6 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-servlet</artifactId>
-            <version>${revision}</version>
 		</dependency>
 		
 		<!-- spring-boot-starter-web (optional) -->
@@ -43,7 +42,6 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-oauth2</artifactId>
-            <version>${revision}</version>
 			<optional>true</optional>
 		</dependency>
 		
@@ -51,7 +49,6 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-sso</artifactId>
-            <version>${revision}</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
