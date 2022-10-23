@@ -162,6 +162,19 @@ public class SaTokenApplication {
 如果不一致，请排查：
 - 可能1：项目中还存在代码配置，而代码配置会覆盖 `application.yml` 中配置，详细参考：[框架配置](/use/config)。
 - 可能2：你的配置文件名字错误，SpringBoot 项目正常情况下配置文件名称应该是：`application.yml` 或 `application.properties`。
+- 可能3：可能是你的配置前缀不对，或者配置缩进不对：
+``` yaml
+# 错误示例，多加了 spring 前缀
+spring:
+	sa-token: 
+		token-name: xxx-token
+# 错误示例，缩进不对
+sa-token: 
+token-name: xxx-token
+# 正确的应该是以 sa-token 开头
+sa-token: 
+	token-name: xxx-token
+```
 
 
 ### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
@@ -172,6 +185,21 @@ public class SaTokenApplication {
 ### Q：一个 User 对象存进 Session 后，再取出来时报错：无法从 User 类型转换成 User 类型？
 - 可能1：你的 User 类中途换了包名，导致存进去时和取出来时对不上，无法成功创建实例。
 - 可能2：你打开了代码热刷新模式，先存进去的对象，热刷新后再取出，会报错，关闭热刷新即可解决。
+
+
+### Q：在 SaServletFilter 中调用 SpringMVCUtil.getRequest() 报错：非Web上下文无法获取Request？
+
+- 可能1：项目中有配置类继承了： `extends WebMvcConfigurationSupport`。
+- 可能2：项目中有配置类添加了注解： `@EnableWebMvc`。
+
+解决方案：不要加 `@EnableWebMvc`，不要 `extends WebMvcConfigurationSupport`，要 `implements WebMvcConfigurer`
+
+如果不是以上原因，可以加群提供复现demo。
+
+<!-- 目前能复现此问题的情况是：在项目中有配置类继承 `WebMvcConfigurationSupport` 时，再从 `SaServletFilter` 中调用
+ `SpringMVCUtil.getRequest()` 就会报错：`非Web上下文无法获取Request`。
+
+解决方案是将 `extends WebMvcConfigurationSupport` 改为 `implements WebMvcConfigurer`。 -->
 
 
 ### Q：我配置了 active-timeout 值，但是当我每次续签时 Redis 中的 ttl 并没有更新，是不是 bug 了？
