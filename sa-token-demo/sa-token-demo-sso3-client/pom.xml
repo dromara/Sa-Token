@@ -56,9 +56,9 @@
 		
 		<!-- Http请求工具 -->
 		<dependency>
-		     <groupId>com.ejlchina</groupId>
-		     <artifactId>okhttps</artifactId>
-		     <version>3.1.1</version>
+		    <groupId>com.dtflys.forest</groupId>
+		    <artifactId>forest-spring-boot-starter</artifactId>
+		    <version>1.5.26</version>
 		</dependency>
         
 		

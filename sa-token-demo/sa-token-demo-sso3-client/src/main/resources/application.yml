@@ -45,7 +45,9 @@ spring:
                 # 连接池中的最小空闲连接
                 min-idle: 0
         
-        
+forest: 
+    # 关闭 forest 请求日志打印
+    log-enabled: false
         
         
         

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ejlchina.okhttps.OkHttps;
+import com.dtflys.forest.Forest;
 
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoHandle;
@@ -46,8 +46,8 @@ public class SsoClientController {
 	private void configSso(SaSsoConfig sso) {
 		// 配置Http请求处理器 
 		sso.setSendHttp(url -> {
-			System.out.println("发起请求：" + url);
-			return OkHttps.sync(url).get().getBody().toString();
+			System.out.println("------ 发起请求：" + url);
+			return Forest.get(url).executeAsString();
 		});
 	}
 	

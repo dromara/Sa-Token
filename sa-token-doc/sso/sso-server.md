@@ -45,9 +45,9 @@
 
 <!-- Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉） -->
 <dependency>
-	 <groupId>com.ejlchina</groupId>
-	 <artifactId>okhttps</artifactId>
-	 <version>3.1.1</version>
+	<groupId>com.dtflys.forest</groupId>
+	<artifactId>forest-spring-boot-starter</artifactId>
+	<version>1.5.26</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
@@ -66,7 +66,7 @@ implementation 'org.apache.commons:commons-pool2'
 implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 // Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉）
-implementation 'com.ejlchina:okhttps:3.1.1'
+implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
@@ -125,8 +125,8 @@ public class SsoServerController {
 		sso.setSendHttp(url -> {
 			try {
 				// 发起 http 请求 
-				System.out.println("发起请求：" + url);
-				return OkHttps.sync(url).get().getBody().toString();
+				System.out.println("------ 发起请求：" + url);
+				return Forest.get(url).executeAsString();
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -199,6 +199,10 @@ spring:
         port: 6379
         # Redis服务器连接密码（默认为空）
         password: 
+		
+forest: 
+	# 关闭 forest 请求日志打印
+	log-enabled: false
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
@@ -225,7 +229,7 @@ sa-token.sso.isHttp=true
 sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 
 # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
-
+    
 ################## Redis配置 （SSO模式一和模式二使用Redis来同步会话） ##################
 # Redis数据库索引（默认为0）
 spring.redis.database=1
@@ -235,6 +239,9 @@ spring.redis.host=127.0.0.1
 spring.redis.port=6379
 # Redis服务器连接密码（默认为空）
 spring.redis.password=
+
+# 关闭 forest 请求日志打印
+forest.log-enabled: false
 ```
 
 <!---------------------------- tabs:end ---------------------------->

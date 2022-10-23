@@ -27,20 +27,20 @@
 ``` xml
 <!-- Http请求工具 -->
 <dependency>
-     <groupId>com.ejlchina</groupId>
-     <artifactId>okhttps</artifactId>
-     <version>3.1.1</version>
+	<groupId>com.dtflys.forest</groupId>
+	<artifactId>forest-spring-boot-starter</artifactId>
+	<version>1.5.26</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // Http请求工具
-implementation 'com.ejlchina:okhttps:3.1.1'
+implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
 
-> OkHttps是一个轻量级http请求工具，详情参考：[OkHttps](https://gitee.com/ejlchina-zhxu/okhttps)
+> Forest 是一个轻量级 http 请求工具，详情参考：[Forest](https://forest.dtflyx.com/)
 
 #### 2.2、配置 http 请求处理器 
 在SSO-Client端的 `SsoClientController` 中，新增以下配置
@@ -52,8 +52,8 @@ private void configSso(SaSsoConfig sso) {
 	
 	// 配置 Http 请求处理器
 	sso.setSendHttp(url -> {
-		System.out.println("发起请求：" + url);
-		return OkHttps.sync(url).get().getBody().toString();
+		System.out.println("------ 发起请求：" + url);
+		return Forest.get(url).executeAsString();
 	});
 }
 ```
@@ -69,6 +69,10 @@ sa-token:
         is-http: true
         # SSO-Server端 ticket校验地址 
         check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
+		
+forest: 
+	# 关闭 forest 请求日志打印
+	log-enabled: false
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
@@ -76,11 +80,21 @@ sa-token:
 sa-token.sso.is-http=true
 # SSO-Server端 ticket校验地址 
 sa-token.sso.check-ticket-url=http://sa-sso-server.com:9000/sso/checkTicket
+
+# 关闭 forest 请求日志打印
+forest.log-enabled: false
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+因为我们已经在控制台手动打印 url 请求日志了，所以此处 `forest.log-enabled=false` 关闭 Forest 框架自身的日志打印，这不是必须的，你可以将其打开。
+
+
 #### 2.4、启动项目测试
-重启项目，访问测试：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+重启项目，访问测试：
+- [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+- [http://sa-sso-client2.com:9001/](http://sa-sso-client2.com:9001/)
+- [http://sa-sso-client3.com:9001/](http://sa-sso-client3.com:9001/)
+
 > 注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰
 
 
