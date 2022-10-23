@@ -177,6 +177,27 @@ sa-token:
 ```
 
 
+### Q：我自定义了组件，但是好像没有生效？
+1、情况1是可能组件没有注入成功，排查方法为在 main 里打印这个组件，是否为自定义的class限定名：
+``` java
+@SpringBootApplication
+public class SaTokenApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(SaTokenApplication.class, args); 
+		System.out.println(SaManager.getStpInterface());  // 打印全局的 StpInterface 实现类 
+	}
+}
+```
+如果打印出的是你的自定义实现类，则证明注入成功，如果不是，则证明没有注入成功，请排查：
+- 自定义的组件实现类上是否加上了 `@Component` 注解，只有加上这个注解，组件才会被 Spring 自动实例化并注入。
+- 自定义的组件实现类是否在启动类的同目录或者子目录上，如果不在则无法被 springboot 启动时扫描，扫描不到也就无法注入。
+- 启动类上是否加了 `@ComponentScan` 注解，导致包扫描范围不正确，请将此注解删除或移动到其它配置类上。
+
+2、情况2是，这个组件注入成功了，但是还没到执行时机，比如 `StpInterface` 组件，只有在鉴权时才会触发，如果你的代码仅仅是登录校验，就不会执行到这个组件。
+
+
+
+
 ### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
 - 可能1：你访问的这个接口，根本就没有鉴权的代码，所以可以安全的访问通过。
 - 可能2：可能是 Cookie 帮你自动提交了 Token，在浏览器或 Postman 中会自动维护Cookie模式，如不需要可以在配置文件：`is-read-cookie: false`，然后重启项目再测试一下。
