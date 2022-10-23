@@ -30,12 +30,10 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-servlet</artifactId>
-            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>redis.clients</groupId>

@@ -21,25 +21,21 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis</artifactId>
-            <version>${revision}</version>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${revision}</version>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-fastjson</artifactId>
-            <version>${revision}</version>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-fastjson2</artifactId>
-            <version>${revision}</version>
 			<optional>true</optional>
         </dependency>
         <!-- redis pool -->

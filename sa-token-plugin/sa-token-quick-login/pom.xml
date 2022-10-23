@@ -21,7 +21,6 @@
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>${revision}</version>
         </dependency>
 		<!-- 视图引擎 -->
 		<dependency>
