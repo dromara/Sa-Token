@@ -157,8 +157,8 @@ public class SaFoxUtil {
 	 * 从集合里查询数据
 	 * 
 	 * @param list  数据集合
-	 * @param start 起始位置 (-1代表查询所有)
-	 * @param size  获取条数
+	 * @param start 起始位置
+	 * @param size  获取条数 (-1代表从start处一直取到末尾) 
 	 * @param sortType     排序类型（true=正序，false=反序）
 	 * 
 	 * @return 符合条件的新数据集合
@@ -168,13 +168,21 @@ public class SaFoxUtil {
 		if(sortType == false) {
 			Collections.reverse(list);
 		}
-		// 取指定段数据
+		// start 至少为0 
 		if (start < 0) {
-			return list;
+			start = 0;
 		}
-		int end = start + size;
+		// size为-1时，代表一直取到末尾，否则取到 start + size 
+		int end;
+		if(size == -1) {
+			end = list.size();
+		} else {
+			end = start + size;
+		}
+		// 取出的数据放到新集合中 
 		List<String> list2 = new ArrayList<String>();
 		for (int i = start; i < end; i++) {
+			// 如果已经取到list的末尾，则直接退出 
 			if (i >= list.size()) {
 				return list2;
 			}

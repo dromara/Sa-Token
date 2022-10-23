@@ -168,8 +168,8 @@ public interface SaTokenDao {
 	 * 搜索数据 
 	 * @param prefix 前缀 
 	 * @param keyword 关键字 
-	 * @param start 开始处索引 (-1代表查询所有)
-	 * @param size 获取数量 
+	 * @param start 开始处索引
+	 * @param size 获取数量  (-1代表从start处一直取到末尾) 
 	 * @param sortType 排序类型（true=正序，false=反序）
 	 * 
 	 * @return 查询到的数据集合 

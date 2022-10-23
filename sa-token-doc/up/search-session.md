@@ -23,8 +23,8 @@ StpUtil.searchTokenSessionId(String keyword, int start, int size, boolean sortTy
 
 #### 参数详解：
 - `keyword`: 查询关键字，只有包括这个字符串的 token 值才会被查询出来。
-- `start`: 数据开始处索引, 值为-1时代表一次性取出所有数据。
-- `size`: 要获取的数据条数。
+- `start`: 数据开始处索引。
+- `size`: 要获取的数据条数 （值为-1代表一直获取到末尾）。 
 - `sortType`: 排序方式（true=正序：先登录的在前，false=反序：后登录的在前）。
 
 简单样例：
@@ -58,7 +58,7 @@ sa-token:
 综上，若要遍历系统所有已登录的会话，代码将大致如下：
 ``` java
 // 获取所有已登录的会话id
-List<String> sessionIdList = StpUtil.searchSessionId("", -1, -1, false);
+List<String> sessionIdList = StpUtil.searchSessionId("", 0, -1, false);
 
 for (String sessionId : sessionIdList) {
 	
