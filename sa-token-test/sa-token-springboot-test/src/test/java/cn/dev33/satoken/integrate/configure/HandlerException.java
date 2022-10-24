@@ -4,12 +4,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.dev33.satoken.exception.DisableServiceException;
-import cn.dev33.satoken.exception.IdTokenInvalidException;
 import cn.dev33.satoken.exception.NotBasicAuthException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
 import cn.dev33.satoken.exception.NotSafeException;
+import cn.dev33.satoken.exception.SameTokenInvalidException;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -44,9 +44,9 @@ public class HandlerException {
 		return SaResult.error().setCode(901);
 	}
 
-	// id-token 校验失败，code=902
-	@ExceptionHandler(IdTokenInvalidException.class)
-	public SaResult handlerIdTokenInvalidException(IdTokenInvalidException e) {
+	// same-token 校验失败，code=902
+	@ExceptionHandler(SameTokenInvalidException.class)
+	public SaResult handlerSameTokenInvalidException(SameTokenInvalidException e) {
 		return SaResult.error().setCode(902);
 	}
 

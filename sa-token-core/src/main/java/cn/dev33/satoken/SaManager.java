@@ -13,6 +13,7 @@ import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
+import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
@@ -190,6 +191,24 @@ public class SaManager {
 			}
 		}
 		return saSignTemplate;
+	}
+
+	/**
+	 * Same-Token Bean 
+	 */
+	private volatile static SaSameTemplate saSameTemplate;
+	public static void setSaSameTemplate(SaSameTemplate saSameTemplate) {
+		SaManager.saSameTemplate = saSameTemplate;
+	}
+	public static SaSameTemplate getSaSameTemplate() {
+		if (saSameTemplate == null) {
+			synchronized (SaManager.class) {
+				if (saSameTemplate == null) {
+					setSaSameTemplate(new SaSameTemplate());
+				}
+			}
+		}
+		return saSameTemplate;
 	}
 	
 	/**

@@ -74,11 +74,6 @@ public class SaTokenConfig implements Serializable {
 	 * jwt秘钥 (只有集成 jwt 模块时此参数才会生效)   
 	 */
 	private String jwtSecretKey;
-	
-	/**
-	 * Id-Token的有效期 (单位: 秒)
-	 */
-	private long idTokenTimeout = 60 * 60 * 24;
 
 	/**
 	 * Http Basic 认证的账号和密码 
@@ -88,8 +83,14 @@ public class SaTokenConfig implements Serializable {
 	/** 配置当前项目的网络访问地址 */
 	private String currDomain;
 
-	/** 是否校验Id-Token（部分rpc插件有效） */
-	private Boolean checkIdToken = false;
+	/**
+	 * Same-Token 的有效期 (单位: 秒)
+	 */
+	private long sameTokenTimeout = 60 * 60 * 24;
+
+	/** 是否校验Same-Token（部分rpc插件有效） */
+	private Boolean checkSameToken = false;
+
 
 	/**
 	 * Cookie配置对象 
@@ -390,22 +391,6 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return Id-Token的有效期 (单位: 秒)
-	 */
-	public long getIdTokenTimeout() {
-		return idTokenTimeout;
-	}
-
-	/**
-	 * @param idTokenTimeout Id-Token的有效期 (单位: 秒)
-	 * @return 对象自身
-	 */
-	public SaTokenConfig setIdTokenTimeout(long idTokenTimeout) {
-		this.idTokenTimeout = idTokenTimeout;
-		return this;
-	}
-
-	/**
 	 * @return Http Basic 认证的账号和密码 
 	 */
 	public String getBasic() {
@@ -438,18 +423,34 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return 是否校验Id-Token（部分rpc插件有效）
+	 * @return Same-Token 的有效期 (单位: 秒)
 	 */
-	public Boolean getCheckIdToken() {
-		return checkIdToken;
+	public long getSameTokenTimeout() {
+		return sameTokenTimeout;
 	}
 
 	/**
-	 * @param checkIdToken 是否校验Id-Token（部分rpc插件有效）
-	 * @return 对象自身 
+	 * @param sameTokenTimeout Same-Token 的有效期 (单位: 秒)
+	 * @return 对象自身
 	 */
-	public SaTokenConfig setCheckIdToken(Boolean checkIdToken) {
-		this.checkIdToken = checkIdToken;
+	public SaTokenConfig setSameTokenTimeout(long sameTokenTimeout) {
+		this.sameTokenTimeout = sameTokenTimeout;
+		return this;
+	}
+
+	/**
+	 * @return 是否校验Same-Token（部分rpc插件有效）
+	 */
+	public Boolean getCheckSameToken() {
+		return checkSameToken;
+	}
+
+	/**
+	 * @param checkSameToken 是否校验Same-Token（部分rpc插件有效）
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setCheckSameToken(Boolean checkSameToken) {
+		this.checkSameToken = checkSameToken;
 		return this;
 	}
 	
@@ -490,10 +491,10 @@ public class SaTokenConfig implements Serializable {
 				+ ", isPrint=" + isPrint 
 				+ ", isLog=" + isLog 
 				+ ", jwtSecretKey=" + jwtSecretKey 
-				+ ", idTokenTimeout=" + idTokenTimeout 
 				+ ", basic=" + basic 
 				+ ", currDomain=" + currDomain 
-				+ ", checkIdToken=" + checkIdToken 
+				+ ", sameTokenTimeout=" + sameTokenTimeout
+				+ ", checkSameToken=" + checkSameToken 
 				+ ", cookie=" + cookie 
 				+ "]";
 	}
@@ -519,5 +520,44 @@ public class SaTokenConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getSameTokenTimeout() ，使用方式保持不变 </h1>
+	 * @return Id-Token的有效期 (单位: 秒)
+	 */
+	@Deprecated
+	public long getIdTokenTimeout() {
+		return sameTokenTimeout;
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setSameTokenTimeout() ，使用方式保持不变 </h1>
+	 * @param idTokenTimeout Id-Token的有效期 (单位: 秒)
+	 * @return 对象自身
+	 */
+	@Deprecated
+	public SaTokenConfig setIdTokenTimeout(long idTokenTimeout) {
+		this.sameTokenTimeout = idTokenTimeout;
+		return this;
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getCheckSameToken() ，使用方式保持不变 </h1>
+	 * @return 是否校验Id-Token（部分rpc插件有效）
+	 */
+	@Deprecated
+	public Boolean getCheckIdToken() {
+		return checkSameToken;
+	}
+
+	/**
+	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setCheckSameToken() ，使用方式保持不变 </h1>
+	 * @param checkIdToken 是否校验Id-Token（部分rpc插件有效）
+	 * @return 对象自身 
+	 */
+	@Deprecated
+	public SaTokenConfig setCheckIdToken(Boolean checkIdToken) {
+		this.checkSameToken = checkIdToken;
+		return this;
+	}
 
 }

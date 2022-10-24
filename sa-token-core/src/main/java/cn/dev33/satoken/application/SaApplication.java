@@ -63,7 +63,7 @@ public class SaApplication implements SaSetValueInterface {
 	public List<String> keys() {
 		// 查出来
 		String prefix = splicingDataKey("");
-		List<String> list = SaManager.getSaTokenDao().searchData(prefix, "", -1, 0, true);
+		List<String> list = SaManager.getSaTokenDao().searchData(prefix, "", 0, -1, true);
 		
 		// 裁减掉固定前缀 
 		int prefixLength = prefix.length();

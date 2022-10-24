@@ -6,11 +6,14 @@ import cn.dev33.satoken.exception.IdTokenInvalidException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
+ * <h1> 本类设计已过时，未来版本可能移除此类，请及时更换为 SaSameTemplate ，使用方式保持不变 </h1>
+ * 
  * Sa-Token-Id 身份凭证模块 
  * <p> 身份凭证的获取与校验，可用于微服务内部调用鉴权 
  * @author kong 
  *
  */
+@Deprecated
 public class SaIdTemplate {
 
 	/**

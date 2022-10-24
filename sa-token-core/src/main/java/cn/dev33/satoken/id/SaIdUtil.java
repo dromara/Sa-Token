@@ -1,10 +1,13 @@
 package cn.dev33.satoken.id;
 
 /**
+ * <h1> 本类设计已过时，未来版本可能移除此类，请及时更换为 SaSameUtil ，使用方式保持不变 </h1>
+ * 
  * Sa-Token-Id 身份凭证模块-工具类 
  * @author kong
  *
  */
+@Deprecated
 public class SaIdUtil {
 	
 	private SaIdUtil(){}

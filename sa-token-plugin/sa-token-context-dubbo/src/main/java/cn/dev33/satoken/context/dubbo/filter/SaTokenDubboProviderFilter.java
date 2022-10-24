@@ -9,7 +9,7 @@ import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcException;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 
 /**
  * 
@@ -25,13 +25,13 @@ public class SaTokenDubboProviderFilter implements Filter {
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
 		// RPC 调用鉴权 
-		if(SaManager.getConfig().getCheckIdToken()) {
-			String idToken = invocation.getAttachment(SaIdUtil.ID_TOKEN);
+		if(SaManager.getConfig().getCheckSameToken()) {
+			String idToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN);
 			// dubbo部分协议会将参数变为小写，详细参考：https://gitee.com/dromara/sa-token/issues/I4WXQG
 			if(idToken == null) {
-				idToken = invocation.getAttachment(SaIdUtil.ID_TOKEN.toLowerCase());
+				idToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN.toLowerCase());
 			}
-			SaIdUtil.checkToken(idToken);
+			SaSameUtil.checkToken(idToken);
 		}
 		
 		// 开始调用

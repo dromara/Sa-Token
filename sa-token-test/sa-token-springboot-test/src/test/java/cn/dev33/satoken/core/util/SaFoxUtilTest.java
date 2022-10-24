@@ -90,11 +90,11 @@ public class SaFoxUtilTest {
     	
     	
     	// 不做分页  
-    	List<String> list5 = SaFoxUtil.searchList(dataList, "", "", -1, 0, true);
+    	List<String> list5 = SaFoxUtil.searchList(dataList, "", "", 0, -1, true);
     	Assertions.assertEquals(list5.size(), dataList.size());
     	
     	// 反序排列 list6的第一个元素 == dataList最后一个元素 
-    	List<String> list6 = SaFoxUtil.searchList(dataList, "", "", -1, 0, false);
+    	List<String> list6 = SaFoxUtil.searchList(dataList, "", "", 0, -1, false);
     	Assertions.assertEquals(list6.get(0), dataList.get(dataList.size() - 1));
     }
 

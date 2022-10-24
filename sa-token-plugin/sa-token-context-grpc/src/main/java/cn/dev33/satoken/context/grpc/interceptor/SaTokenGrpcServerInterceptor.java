@@ -2,10 +2,15 @@ package cn.dev33.satoken.context.grpc.interceptor;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.grpc.constants.GrpcContextConstants;
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
-import io.grpc.*;
+import io.grpc.ForwardingServerCall;
+import io.grpc.Metadata;
+import io.grpc.ServerCall;
+import io.grpc.ServerCallHandler;
+import io.grpc.ServerInterceptor;
+import io.grpc.Status;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
 
 /**
@@ -19,9 +24,9 @@ public class SaTokenGrpcServerInterceptor implements ServerInterceptor {
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
         // RPC 调用鉴权
-        if (SaManager.getConfig().getCheckIdToken()) {
-            String idToken = headers.get(GrpcContextConstants.SA_ID_TOKEN);
-            SaIdUtil.checkToken(idToken);
+        if (SaManager.getConfig().getCheckSameToken()) {
+            String sameToken = headers.get(GrpcContextConstants.SA_SAME_TOKEN);
+            SaSameUtil.checkToken(sameToken);
         }
         String tokenFromClient = headers.get(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX);
         StpUtil.setTokenValue(tokenFromClient);

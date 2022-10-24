@@ -1,14 +1,23 @@
 package cn.dev33.satoken.context.grpc.interceptor;
 
+import org.springframework.core.Ordered;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.context.grpc.constants.GrpcContextConstants;
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
-import io.grpc.*;
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
+import io.grpc.ClientInterceptor;
+import io.grpc.ForwardingClientCall;
+import io.grpc.ForwardingClientCallListener;
+import io.grpc.Metadata;
+import io.grpc.MethodDescriptor;
+import io.grpc.Status;
 import net.devh.boot.grpc.client.interceptor.GrpcGlobalClientInterceptor;
-import org.springframework.core.Ordered;
 
 
 /**
@@ -26,9 +35,9 @@ public class SaTokenGrpcClientInterceptor implements ClientInterceptor, Ordered 
             @Override
             public void start(Listener<RespT> responseListener, Metadata headers) {
 
-                // 追加 Id-Token 参数
-                if (SaManager.getConfig().getCheckIdToken()) {
-                    headers.put(GrpcContextConstants.SA_ID_TOKEN, SaIdUtil.getToken());
+                // 追加 Same-Token 参数
+                if (SaManager.getConfig().getCheckSameToken()) {
+                    headers.put(GrpcContextConstants.SA_SAME_TOKEN, SaSameUtil.getToken());
                 }
 
                 // 调用前，传递会话Token

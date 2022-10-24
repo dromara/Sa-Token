@@ -60,9 +60,9 @@ implementation 'cn.dev33:sa-token-context-dubbo:${sa.top.version}'
 
 ### RPC调用鉴权
 
-在之前的 [Id-Token](/micro/id-token) 章节，我们演示了基于 Feign 的 RPC 调用鉴权，下面我们演示一下在 Dubbo 中如何集成 Id-Token 模块。
+在之前的 [Same-Token](/micro/same-token) 章节，我们演示了基于 Feign 的 RPC 调用鉴权，下面我们演示一下在 Dubbo 中如何集成 Same-Token 模块。
 
-其实思路和 Feign 模式一致，在 [ 调用端 ] 追加 Id-Token 参数，在 [ 被调用端 ] 校验这个 Id-Token 参数：
+其实思路和 Feign 模式一致，在 [ 调用端 ] 追加 Same-Token 参数，在 [ 被调用端 ] 校验这个 Same-Token 参数：
 
 - 校验通过：调用成功。
 - 校验不通过：通过失败，抛出异常。
@@ -78,18 +78,18 @@ implementation 'cn.dev33:sa-token-context-dubbo:${sa.top.version}'
 ``` yaml
 sa-token: 
 	# 打开 RPC 调用鉴权 
-	check-id-token: true
+	check-same-token: true
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # 打开 RPC 调用鉴权 
-sa-token.check-id-token=true
+sa-token.check-same-token=true
 ```
 <!---------------------------- tabs:end ---------------------------->
 
 
 ##### 方式二、自建 Dubbo 过滤器校验
-此方式略显繁琐，好处是除了Id-Token，我们还可以添加其它自定义参数 (attachment)。
+此方式略显繁琐，好处是除了Same-Token，我们还可以添加其它自定义参数 (attachment)。
 
 1、在 [ 调用端 ] 的 `\resources\META-INF\dubbo\` 目录新建 `org.apache.dubbo.rpc.Filter` 文件
 ``` html
@@ -105,7 +105,7 @@ import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 
 /**
  * Sa-Token 整合 Dubbo Consumer端过滤器 
@@ -116,8 +116,8 @@ public class DubboConsumerFilter implements Filter {
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
-		// 追加 Id-Token 参数 
-		RpcContext.getContext().setAttachment(SaIdUtil.ID_TOKEN, SaIdUtil.getToken());
+		// 追加 Same-Token 参数 
+		RpcContext.getContext().setAttachment(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken());
 		
 		// 如果有其他自定义附加数据，如租户
 		// RpcContext.getContext().setAttachment("tenantContext", tenantContext);
@@ -144,7 +144,7 @@ import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
-import cn.dev33.satoken.id.SaIdUtil;
+import cn.dev33.satoken.same.SaSameUtil;
 
 /**
  * Sa-Token 整合 Dubbo Provider端过滤器 
@@ -155,9 +155,9 @@ public class DubboProviderFilter implements Filter {
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
-		// 取出 Id-Token 进行校验 
-		String idToken = invocation.getAttachment(SaIdUtil.ID_TOKEN);
-		SaIdUtil.checkToken(idToken);
+		// 取出 Same-Token 进行校验 
+		String sameToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN);
+		SaSameUtil.checkToken(sameToken);
 		
 		// 取出其他自定义附加数据
 		// TenantContext tenantContext = invocation.getAttachment("tenantContext");
@@ -170,5 +170,5 @@ public class DubboProviderFilter implements Filter {
 ```
 
 
-然后我们就可以进行安全的 RPC 调用了，不带有 Id-Token 参数的调用都会抛出异常，无法调用成功。
+然后我们就可以进行安全的 RPC 调用了，不带有 Same-Token 参数的调用都会抛出异常，无法调用成功。
 

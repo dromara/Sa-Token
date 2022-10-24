@@ -8,7 +8,7 @@
 
 1. 在 [ 被调用端 ] 安全的调用 Sa-Token 相关 API。
 2. 在 [ 调用端 ] 登录的会话，其登录状态可以自动传递到 [ 被调用端 ] ；在 [ 被调用端 ] 登录的会话，其登录状态可以自动回传到 [ 调用端 ]
-3. id-token 安全校验
+3. Same-Token 安全校验
 
 ---
 和dubbo插件一样，具有以下限制：
@@ -38,7 +38,7 @@ implementation 'cn.dev33:sa-token-context-grpc:${sa.top.version}'
 
 
 ---
-### 开启id-token校验：
+### 开启 Same-Token 校验：
 直接在 `application.yml` 配置即可：
 
 <!---------------------------- tabs:start ---------------------------->
@@ -46,11 +46,11 @@ implementation 'cn.dev33:sa-token-context-grpc:${sa.top.version}'
 ``` yaml
 sa-token: 
 	# 打开 RPC 调用鉴权 
-	check-id-token: true
+	check-same-token: true
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # 打开 RPC 调用鉴权 
-sa-token.check-id-token=true
+sa-token.check-same-token=true
 ```
 <!---------------------------- tabs:end ---------------------------->

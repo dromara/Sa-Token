@@ -71,8 +71,8 @@ public class SaTokenConfigTest {
 		config.setJwtSecretKey("NgdfaXasARggr");
 		Assertions.assertEquals(config.getJwtSecretKey(), "NgdfaXasARggr");
 
-		config.setIdTokenTimeout(1004);
-		Assertions.assertEquals(config.getIdTokenTimeout(), 1004);
+		config.setSameTokenTimeout(1004);
+		Assertions.assertEquals(config.getSameTokenTimeout(), 1004);
 
 		config.setBasic("sa:123456");
 		Assertions.assertEquals(config.getBasic(), "sa:123456");
@@ -80,8 +80,8 @@ public class SaTokenConfigTest {
 		config.setCurrDomain("http://127.0.0.1:8084");
 		Assertions.assertEquals(config.getCurrDomain(), "http://127.0.0.1:8084");
 
-		config.setCheckIdToken(false);
-		Assertions.assertEquals(config.getCheckIdToken(), false);
+		config.setCheckSameToken(false);
+		Assertions.assertEquals(config.getCheckSameToken(), false);
 
 		SaCookieConfig scc = new SaCookieConfig();
 		config.setCookie(scc);

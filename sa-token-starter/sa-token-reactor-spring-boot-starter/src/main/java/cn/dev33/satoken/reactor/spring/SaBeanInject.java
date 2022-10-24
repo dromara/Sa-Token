@@ -18,6 +18,7 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
@@ -30,6 +31,7 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * @author kong
  *
  */
+@SuppressWarnings("deprecation")
 public class SaBeanInject {
 
 	/**
@@ -110,6 +112,16 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaIdTemplate(SaIdTemplate saIdTemplate) {
 		SaIdUtil.saIdTemplate = saIdTemplate;
+	}
+
+	/**
+	 * 注入 Same-Token 模块 Bean
+	 * 
+	 * @param saSameTemplate saSameTemplate对象 
+	 */
+	@Autowired(required = false)
+	public void setSaIdTemplate(SaSameTemplate saSameTemplate) {
+		SaManager.setSaSameTemplate(saSameTemplate);
 	}
 
 	/**

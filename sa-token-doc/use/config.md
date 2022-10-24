@@ -134,10 +134,10 @@ public class SaTokenConfigure {
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
 | jwtSecretKey			| String	| null		| jwt秘钥 （只有集成 `sa-token-temp-jwt` 模块时此参数才会生效），[参考：和 jwt 集成](/plugin/jwt-extend)	|
-| idTokenTimeout		| long		| 86400		| Id-Token的有效期 （单位: 秒），[参考：内部服务外网隔离](/micro/id-token)					|
+| sameTokenTimeout		| long		| 86400		| Same-Token的有效期 （单位: 秒），[参考：内部服务外网隔离](/micro/same-token)					|
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
 | currDomain			| String	| null		| 配置当前项目的网络访问地址													|
-| checkIdToken			| Boolean		| false		| 是否校验Id-Token（部分rpc插件有效）															|
+| checkSameToken			| Boolean		| false		| 是否校验Same-Token（部分rpc插件有效）															|
 | cookie				| Object	| new SaCookieConfig()	| Cookie配置对象															|
 
 Cookie相关配置：

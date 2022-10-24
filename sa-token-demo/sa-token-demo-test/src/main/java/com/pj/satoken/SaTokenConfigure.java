@@ -82,5 +82,5 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		})
         		;
     }
-    
+
 }

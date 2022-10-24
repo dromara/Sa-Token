@@ -21,6 +21,7 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.integration.SaTokenAnnotationInterceptor;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
@@ -94,6 +95,11 @@ public class XPluginImp implements Plugin {
         // Sa-Token-Id 身份凭证模块 Bean
         context.getWrapAsyn(SaIdTemplate.class, bw->{
             SaIdUtil.saIdTemplate = bw.raw();
+        });
+
+        // Sa-Token Same-Token 模块 Bean
+        context.getWrapAsyn(SaSameTemplate.class, bw->{
+            SaManager.setSaSignTemplate(bw.raw());
         });
 
         // Sa-Token Http Basic 认证模块 Bean

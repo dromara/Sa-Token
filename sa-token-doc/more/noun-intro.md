@@ -13,7 +13,7 @@ Sa-Token 无意发明任何晦涩概念提升逼格，但在处理 issue 、Q群
 - temp-token：指通过 `SaTempUtil.createToken()` 临时验证模块产生的Token，也称：临时Token。
 - Access-Token：在 OAuth2 模块产生的身份令牌，也称：访问令牌、资源令牌。
 - Refresh-Token：在 OAuth2 模块产生的刷新令牌，也称：刷新令牌。
-- Id-Token：在 SaIdUtil 模块生成的Token令牌，用于提供子服务外网隔离功能。
+- Same-Token：在 SaSameUtil 模块生成的Token令牌，用于提供子服务外网隔离功能。
 
 
 #### 两种过期时间：

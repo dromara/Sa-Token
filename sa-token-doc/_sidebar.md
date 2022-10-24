@@ -56,7 +56,7 @@
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)
 	- [网关统一鉴权](/micro/gateway-auth)
-	- [内部服务外网隔离](/micro/id-token)
+	- [内部服务外网隔离](/micro/same-token)
 	- [依赖引入说明](/micro/import-intro)
 
 - **插件**
