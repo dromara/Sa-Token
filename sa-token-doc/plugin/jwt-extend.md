@@ -143,6 +143,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzB
 | Session存储				| Redis中		| Redis中			| 无Session			|
 | 注销下线					| 前后端双清数据	| 前后端双清数据		| 前端清除数据		|
 | 踢人下线API				| 支持			| 不支持				| 不支持				|
+| 顶人下线API				| 支持			| 不支持				| 不支持				|
 | 登录认证					| 支持			| 支持				| 支持				|
 | 角色认证					| 支持			| 支持				| 支持				|
 | 权限认证					| 支持			| 支持				| 支持				|
