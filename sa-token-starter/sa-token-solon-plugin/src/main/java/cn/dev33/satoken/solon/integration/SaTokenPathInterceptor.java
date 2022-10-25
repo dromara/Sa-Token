@@ -18,10 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * sa-token 基于路由的拦截式鉴权（增加了注解的处理）
+ * sa-token 基于路由的拦截式鉴权（增加了注解的处理）；使用优先级要高些
  *
- * @author kong
- * @since 1.9
  * @author noear
  * @since 1.10
  */
@@ -172,8 +170,6 @@ public class SaTokenPathInterceptor implements Handler {
 			Action action = ctx.action();
 
 			if(isAnnotation && action != null){
-				ctx.attrSet("_SaTokenPathInterceptor", "1");
-
 				// 获取此请求对应的 Method 处理函数
 				Method method = action.method().getMethod();
 
@@ -184,8 +180,6 @@ public class SaTokenPathInterceptor implements Handler {
 
 				// 注解校验
 				SaStrategy.me.checkMethodAnnotation.accept(method);
-			}else{
-				ctx.attrSet("_SaTokenPathInterceptor", "0");
 			}
 
 			//路径规则处理
