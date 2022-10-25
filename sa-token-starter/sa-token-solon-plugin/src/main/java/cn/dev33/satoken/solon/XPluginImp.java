@@ -29,8 +29,8 @@ import cn.dev33.satoken.temp.SaTempInterface;
  */
 @SuppressWarnings("deprecation")
 public class XPluginImp implements Plugin {
-    
-	@Override
+
+    @Override
     public void start(AopContext context) {
         //集成初始化
 
@@ -41,72 +41,70 @@ public class XPluginImp implements Plugin {
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
 
-        context.getWrapAsyn(SaTokenConfig.class, bw -> {
-            SaManager.setConfig(bw.raw());
+        context.getBeanAsyn(SaTokenConfig.class, bean -> {
+            SaManager.setConfig(bean);
         });
 
 
         // 注入Dao Bean
-        context.getWrapAsyn(SaTokenDao.class, bw -> {
-            SaManager.setSaTokenDao(bw.raw());
+        context.getBeanAsyn(SaTokenDao.class, bean -> {
+            SaManager.setSaTokenDao(bean);
         });
 
         // 注入二级上下文 Bean
-        context.getWrapAsyn(SaTokenSecondContextCreator.class, bw->{
-            SaTokenSecondContextCreator raw = bw.raw();
-            SaManager.setSaTokenSecondContext(raw.create());
+        context.getBeanAsyn(SaTokenSecondContextCreator.class, bean -> {
+            SaManager.setSaTokenSecondContext(bean.create());
         });
 
         // 注入侦听器 Bean
-        context.subBean(SaTokenListener.class, sl->{
+        context.subBean(SaTokenListener.class, sl -> {
             SaTokenEventCenter.registerListener(sl);
         });
 
 
         // 注入权限认证 Bean
-        context.getWrapAsyn(StpInterface.class, bw->{
-            SaManager.setStpInterface(bw.raw());
+        context.getBeanAsyn(StpInterface.class, bean -> {
+            SaManager.setStpInterface(bean);
         });
 
         // 注入持久化 Bean
-        context.getWrapAsyn(SaTokenDao.class, bw->{
-            SaManager.setSaTokenDao(bw.raw());
+        context.getBeanAsyn(SaTokenDao.class, bean -> {
+            SaManager.setSaTokenDao(bean);
         });
 
         // 临时令牌验证模块 Bean
-        context.getWrapAsyn(SaTempInterface.class, bw->{
-            SaManager.setSaTemp(bw.raw());
+        context.getBeanAsyn(SaTempInterface.class, bean -> {
+            SaManager.setSaTemp(bean);
         });
 
         // Sa-Token-Id 身份凭证模块 Bean
-        context.getWrapAsyn(SaIdTemplate.class, bw->{
-            SaIdUtil.saIdTemplate = bw.raw();
+        context.getBeanAsyn(SaIdTemplate.class, bean -> {
+            SaIdUtil.saIdTemplate = bean;
         });
 
         // Sa-Token Same-Token 模块 Bean
-        context.getWrapAsyn(SaSameTemplate.class, bw->{
-            SaManager.setSaSignTemplate(bw.raw());
+        context.getBeanAsyn(SaSameTemplate.class, bean -> {
+            SaManager.setSaSameTemplate(bean);
         });
 
         // Sa-Token Http Basic 认证模块 Bean
-        context.getWrapAsyn(SaBasicTemplate.class, bw->{
-            SaBasicUtil.saBasicTemplate = bw.raw();
+        context.getBeanAsyn(SaBasicTemplate.class, bean -> {
+            SaBasicUtil.saBasicTemplate = bean;
         });
 
         // Sa-Token JSON 转换器 Bean
-        context.getWrapAsyn(SaJsonTemplate.class, bw->{
-            SaManager.setSaJsonTemplate(bw.raw());
+        context.getBeanAsyn(SaJsonTemplate.class, bean -> {
+            SaManager.setSaJsonTemplate(bean);
         });
 
         // Sa-Token 参数签名算法 Bean
-        context.getWrapAsyn(SaSignTemplate.class, bw->{
-            SaManager.setSaSignTemplate(bw.raw());
+        context.getBeanAsyn(SaSignTemplate.class, bean -> {
+            SaManager.setSaSignTemplate(bean);
         });
 
         // 自定义 StpLogic 对象
-        context.getWrapAsyn(StpLogic.class, bw->{
-            StpUtil.setStpLogic(bw.raw());
+        context.getBeanAsyn(StpLogic.class, bean -> {
+            StpUtil.setStpLogic(bean);
         });
     }
-	
 }
