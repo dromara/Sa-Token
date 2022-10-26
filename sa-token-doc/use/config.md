@@ -154,7 +154,7 @@ Cookie相关配置：
 
 ### 单点登录相关配置 
 
-Server 端：
+Server 端配置：
 
 | 参数名称		| 类型		| 默认值		| 说明																			|
 | :--------		| :--------	| :--------	| :--------																		|
@@ -165,19 +165,19 @@ Server 端：
 | secretkey		| String	| null		| 调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）								|
 
 
-Client 端：
+Client 端配置：
 
 | 参数名称		| 类型		| 默认值		| 说明											|
 | :--------		| :--------	| :--------	| :--------										|
-| authUrl		| String	| null		| 配置 Server 端单点登录授权地址					|
-| isSlo			| Boolean	| false		| 是否打开单点注销功能							|
-| isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
-| checkTicketUrl| String	| null		| 配置 Server 端的 `ticket` 校验地址							|
-| userinfoUrl	| String	| null		| 配置 Server 端查询 `userinfo` 地址									|
-| sloUrl		| String	| null		| 配置 Server 端单点注销地址										|
-| ssoLogoutCall	| String	| null		| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
-| secretkey		| String	| null		| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
-| serverUrl		| String	| null		| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，[详解](/use/config?id=配置项详解：serverUrl)		|
+| authUrl		| String	| /sso/auth			| 配置 Server 端单点登录授权地址					|
+| isSlo			| Boolean	| false				| 是否打开单点注销功能							|
+| isHttp		| Boolean	| false				| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
+| checkTicketUrl| String	| /sso/checkTicket	| 配置 Server 端的 `ticket` 校验地址							|
+| userinfoUrl	| String	| /sso/userinfo		| 配置 Server 端查询 `userinfo` 地址									|
+| sloUrl		| String	| /sso/signout		| 配置 Server 端单点注销地址										|
+| ssoLogoutCall	| String	| null			| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
+| secretkey		| String	| null			| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
+| serverUrl		| String	| null			| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，[详解](/use/config?id=配置项详解：serverUrl)		|
 
 
 配置示例：
@@ -332,7 +332,7 @@ sa-token:
         # SSO-Server端 ticket校验地址 
         check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
         # 单点注销地址 
-        slo-url: http://sa-sso-server.com:9000/sso/logout
+        slo-url: http://sa-sso-server.com:9000/sso/signout
         # SSO-Server端 查询userinfo地址 
         userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
 ```

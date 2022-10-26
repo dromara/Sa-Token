@@ -236,7 +236,7 @@ sa-token:
         # 打开单点注销功能 
         is-slo: true
 		# 单点注销地址 
-		slo-url: http://sa-sso-server.com:9000/sso/logout
+		slo-url: http://sa-sso-server.com:9000/sso/signout
 		# 接口调用秘钥 
 		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
@@ -245,7 +245,7 @@ sa-token:
 # 打开单点注销功能 
 sa-token.sso.is-slo=true
 # 单点注销地址 
-sa-token.sso.slo-url=http://sa-sso-server.com:9000/sso/logout
+sa-token.sso.slo-url=http://sa-sso-server.com:9000/sso/signout
 # 接口调用秘钥 
 sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```

@@ -95,7 +95,7 @@ public class SsoServerController {
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoHandle.serverRequest();
+		return SaSsoProcessor.instance.serverDister();
 	}
 	
 	/**

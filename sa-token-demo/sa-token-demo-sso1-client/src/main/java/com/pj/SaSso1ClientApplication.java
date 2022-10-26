@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class SaSsoClientApplication {
+public class SaSso1ClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SaSsoClientApplication.class, args);
+		SpringApplication.run(SaSso1ClientApplication.class, args);
 		System.out.println("\nSa-Token SSO模式一 Client端启动成功");
 	}
 	

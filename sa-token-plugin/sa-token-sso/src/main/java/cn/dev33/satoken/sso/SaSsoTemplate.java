@@ -11,9 +11,10 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.sso.SaSsoConsts.ParamName;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.exception.SaSsoExceptionCode;
+import cn.dev33.satoken.sso.name.ApiName;
+import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -26,17 +27,54 @@ import cn.dev33.satoken.util.SaResult;
  *
  */
 public class SaSsoTemplate {
+
+	// ---------------------- 全局配置 ---------------------- 
+
+	/**
+	 * 所有 API 名称 
+	 */
+	public ApiName apiName = new ApiName();
+	
+
+	/**
+	 * 所有参数名称 
+	 */
+	public ParamName paramName = new ParamName();
+
+	/**
+	 * @param paramName 替换 paramName 对象 
+	 * @return 对象自身
+	 */
+	public SaSsoTemplate setParamName(ParamName paramName) {
+		this.paramName = paramName;
+		return this;
+	}
 	
 	/**
-	 * 单点登录模块使用的 StpLogic 对象 
+	 * @param apiName 替换 apiName 对象 
+	 * @return 对象自身
 	 */
-	public StpLogic stpLogic;
-	public SaSsoTemplate(StpLogic stpLogic) {
-		this.stpLogic = stpLogic;
+	public SaSsoTemplate setApiName(ApiName apiName) {
+		this.apiName = apiName;
+		return this;
 	}
-	public SaSsoTemplate() {
-		this.stpLogic = StpUtil.stpLogic;
+
+	/**
+	 * 获取底层使用的会话对象 
+	 * @return /
+	 */
+	public StpLogic getStpLogic() {
+		return StpUtil.stpLogic;
 	}
+
+	/**
+	 * 获取底层使用的配置对象 
+	 * @return /
+	 */
+	public SaSsoConfig getSsoConfig() {
+		return SaSsoManager.getConfig();
+	}
+	
 	
 	// ---------------------- Ticket 操作 ---------------------- 
 	
@@ -205,7 +243,7 @@ public class SaSsoTemplate {
 		if(SaFoxUtil.isEmpty(loginId) || SaFoxUtil.isEmpty(sloCallbackUrl)) {
 			return;
 		}
-		SaSession session = stpLogic.getSessionByLoginId(loginId);
+		SaSession session = getStpLogic().getSessionByLoginId(loginId);
 		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, ()-> new HashSet<String>());
 		urlSet.add(sloCallbackUrl);
 		session.set(SaSsoConsts.SLO_CALLBACK_SET_KEY, urlSet);
@@ -218,7 +256,7 @@ public class SaSsoTemplate {
 	public void ssoLogout(Object loginId) {
 		
 		// 如果这个账号尚未登录，则无操作 
-		SaSession session = stpLogic.getSessionByLoginId(loginId, false);
+		SaSession session = getStpLogic().getSessionByLoginId(loginId, false);
 		if(session == null) {
 			return;
 		}
@@ -232,7 +270,7 @@ public class SaSsoTemplate {
 		}
 		
 		// step.2 Server端注销 
-		stpLogic.logout(loginId);
+		getStpLogic().logout(loginId);
 	}
 
 	/**
@@ -269,10 +307,10 @@ public class SaSsoTemplate {
 		 * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
 		 * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题 
 		 */
-		if(clientLoginUrl.indexOf(ParamName.back + "=" + back) == -1) {
-			clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, ParamName.back, back); 
+		if(clientLoginUrl.indexOf(paramName.back + "=" + back) == -1) {
+			clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back); 
 		}
-		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, ParamName.redirect, clientLoginUrl);
+		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, paramName.redirect, clientLoginUrl);
 		
 		// 返回 
 		return serverAuthUrl;
@@ -296,7 +334,7 @@ public class SaSsoTemplate {
 		String ticket = createTicket(loginId);
 		
 		// 构建 授权重定向地址 （Server端 根据此地址向 Client端 下放Ticket）
-		return SaFoxUtil.joinParam(encodeBackParam(redirect), ParamName.ticket, ticket);
+		return SaFoxUtil.joinParam(encodeBackParam(redirect), paramName.ticket, ticket);
 	}
 
 	/**
@@ -307,16 +345,16 @@ public class SaSsoTemplate {
 	public String encodeBackParam(String url) {
 		
 		// 获取back参数所在位置 
-		int index = url.indexOf("?" + ParamName.back + "=");
+		int index = url.indexOf("?" + paramName.back + "=");
 		if(index == -1) {
-			index = url.indexOf("&" + ParamName.back + "=");
+			index = url.indexOf("&" + paramName.back + "=");
 			if(index == -1) {
 				return url;
 			}
 		}
 		
 		// 开始编码 
-		int length = ParamName.back.length() + 2;
+		int length = paramName.back.length() + 2;
 		String back = url.substring(index + length);
 		back = SaFoxUtil.encodeUrl(back);
 		
@@ -347,11 +385,11 @@ public class SaSsoTemplate {
 		String url = SaSsoManager.getConfig().splicingCheckTicketUrl();
 		
 		// 拼接ticket参数 
-		url = SaFoxUtil.joinParam(url, ParamName.ticket, ticket);
+		url = SaFoxUtil.joinParam(url, paramName.ticket, ticket);
 		
 		// 拼接单点注销时的回调URL 
 		if(ssoLogoutCallUrl != null) {
-			url = SaFoxUtil.joinParam(url, ParamName.ssoLogoutCall, ssoLogoutCallUrl);
+			url = SaFoxUtil.joinParam(url, paramName.ssoLogoutCall, ssoLogoutCallUrl);
 		}
 		
 		// 返回 
@@ -437,9 +475,9 @@ public class SaSsoTemplate {
 	 */
 	public String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
 		Map<String, Object> map = new TreeMap<>();
-		map.put(ParamName.loginId, loginId);
-		map.put(ParamName.timestamp, timestamp);
-		map.put(ParamName.nonce, nonce);
+		map.put(paramName.loginId, loginId);
+		map.put(paramName.timestamp, timestamp);
+		map.put(paramName.nonce, nonce);
 		return SaManager.getSaSignTemplate().createSign(map, secretkey);
 	}
 
@@ -457,10 +495,10 @@ public class SaSsoTemplate {
 		String sign = getSign(loginId, timestamp, nonce, getSecretkey());
 		
 		// 追加到url 
-		url = SaFoxUtil.joinParam(url, ParamName.loginId, loginId);
-		url = SaFoxUtil.joinParam(url, ParamName.timestamp, timestamp);
-		url = SaFoxUtil.joinParam(url, ParamName.nonce, nonce);
-		url = SaFoxUtil.joinParam(url, ParamName.sign, sign);
+		url = SaFoxUtil.joinParam(url, paramName.loginId, loginId);
+		url = SaFoxUtil.joinParam(url, paramName.timestamp, timestamp);
+		url = SaFoxUtil.joinParam(url, paramName.nonce, nonce);
+		url = SaFoxUtil.joinParam(url, paramName.sign, sign);
 		return url;
 	}
 
@@ -471,10 +509,10 @@ public class SaSsoTemplate {
 	public void checkSign(SaRequest req) {
 
 		// 参数签名、账号id、时间戳、随机字符串
-		String sign = req.getParamNotNull(ParamName.sign);
-		String loginId = req.getParamNotNull(ParamName.loginId);
-		String timestamp = req.getParamNotNull(ParamName.timestamp);
-		String nonce = req.getParamNotNull(ParamName.nonce);
+		String sign = req.getParamNotNull(paramName.sign);
+		String loginId = req.getParamNotNull(paramName.loginId);
+		String timestamp = req.getParamNotNull(paramName.timestamp);
+		String nonce = req.getParamNotNull(paramName.nonce);
 		
 		// 校验时间戳 
 		checkTimestamp(Long.valueOf(timestamp));

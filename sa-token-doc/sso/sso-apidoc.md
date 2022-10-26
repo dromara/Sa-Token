@@ -83,7 +83,7 @@ http://{host}:{port}/sso/checkTicket
 
 ### 4、单点注销接口
 ``` url
-http://{host}:{port}/sso/logout         
+http://{host}:{port}/sso/signout
 ```
 
 此接口有两种调用方式
@@ -92,7 +92,7 @@ http://{host}:{port}/sso/logout
 例如：
 
 ``` url
-http://{host}:{port}/sso/logout?back=xxx
+http://{host}:{port}/sso/signout?back=xxx
 ```
 用户注销成功后将返回 back 地址 
 
@@ -109,7 +109,7 @@ http://{host}:{port}/sso/logout?back=xxx
 
 例如：
 ``` url
-http://{host}:{port}/sso/logout?loginId={value}&timestamp={value}&nonce={value}&sign={value}
+http://{host}:{port}/sso/signout?loginId={value}&timestamp={value}&nonce={value}&sign={value}
 ```
 
 将返回 json 数据结果，形如：

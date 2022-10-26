@@ -15,7 +15,7 @@ public class SsoServerController {
 	// SSO-Server端：处理所有SSO相关请求 
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoHandle.serverRequest();
+		return SaSsoProcessor.instance.serverDister();
 	}
 	
 	// ... 其它代码
@@ -25,8 +25,9 @@ public class SsoServerController {
 
 这种写法集成简单但却不够灵活。例如认证中心地址只能是：`http://{host}:{port}/sso/auth`，如果我们想要自定义其API地址，应该怎么做呢？
 
-我们可以打开SSO模块相关源码，有关 API 的设计都定义在：[SaSsoConsts.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-sso/src/main/java/cn/dev33/satoken/sso/SaSsoConsts.java)
-中，这些值从架构设计上来讲属于常量却并未使用 `final` 修饰，目的就是为了方便我们对其二次修改。
+打开SSO模块相关源码，有关 API 的设计都定义在：
+[ApiName.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-sso/src/main/java/cn/dev33/satoken/sso/name/ApiName.java)
+中，我们可以对其进行二次修改。
 
 例如，我们可以在 Main 方法启动类或者 SSO 配置方法中修改变量值：
 ``` java
@@ -34,7 +35,7 @@ public class SsoServerController {
 @Autowired
 private void configSso(SaSsoConfig sso) {
 	// 自定义API地址
-	SaSsoConsts.Api.ssoAuth = "/sso/auth2";
+	SaSsoUtil.ssoTemplate.apiName.ssoAuth = "/sso/auth2";
 	// ... 
 	
 	// SSO 相关配置
@@ -60,25 +61,25 @@ public class SsoServerController {
 	// SSO-Server：统一认证地址 
 	@RequestMapping("/sso/auth")
 	public Object ssoAuth() {
-		return SaSsoHandle.ssoAuth();
+		return SaSsoProcessor.instance.ssoAuth();
 	}
 
 	// SSO-Server：RestAPI 登录接口 
 	@RequestMapping("/sso/doLogin")
 	public Object ssoDoLogin() {
-		return SaSsoHandle.ssoDoLogin();
+		return SaSsoProcessor.instance.ssoDoLogin();
 	}
 
 	// SSO-Server：校验ticket 获取账号id 
 	@RequestMapping("/sso/checkTicket")
 	public Object ssoCheckTicket() {
-		return SaSsoHandle.ssoCheckTicket();
+		return SaSsoProcessor.instance.ssoCheckTicket();
 	}
 
 	// SSO-Server：单点注销 
-	@RequestMapping("/sso/logout")
-	public Object ssoLogout() {
-		return SaSsoHandle.ssoServerLogout();
+	@RequestMapping("/sso/signout")
+	public Object ssoSignout() {
+		return SaSsoProcessor.instance.ssoSignout();
 	}
 	
 	// ... 其它方法 

@@ -170,7 +170,7 @@ sa-token:
         # SSO-Server端-单点登录授权地址 
         auth-url: http://sso.stp.com:9000/sso/auth
         # SSO-Server端-单点注销地址
-        slo-url: http://sso.stp.com:9000/sso/logout
+        slo-url: http://sso.stp.com:9000/sso/signout
     
     # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 
@@ -195,7 +195,7 @@ server.port=9001
 # SSO-Server端-单点登录授权地址 
 sa-token.sso.auth-url=http://sso.stp.com:9000/sso/auth
 # SSO-Server端-单点注销地址
-sa-token.sso.slo-url=http://sso.stp.com:9000/sso/logout
+sa-token.sso.slo-url=http://sso.stp.com:9000/sso/signout
 
 # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
 # Redis数据库索引
@@ -219,9 +219,9 @@ sa-token.alone-redis.timeout=10s
  * SSO模式一，Client端 Demo 
  */
 @SpringBootApplication
-public class SaSsoClientApplication {
+public class SaSso1ClientApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SaSsoClientApplication.class, args);
+		SpringApplication.run(SaSso1ClientApplication.class, args);
 		System.out.println("\nSa-Token SSO模式一 Client端启动成功");
 	}
 }

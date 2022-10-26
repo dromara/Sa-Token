@@ -151,7 +151,7 @@ public class SsoClientController {
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoHandle.clientRequest();
+		return SaSsoProcessor.instance.clientDister();
 	}
 
 }
@@ -220,9 +220,9 @@ sa-token.alone-redis.timeout=10s
 #### 3.5、写启动类
 ``` java
 @SpringBootApplication
-public class SaSsoClientApplication {
+public class SaSso2ClientApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SaSsoClientApplication.class, args);
+		SpringApplication.run(SaSso2ClientApplication.class, args);
 		System.out.println("\nSa-Token-SSO Client端启动成功");
 	}
 }

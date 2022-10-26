@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dtflys.forest.Forest;
 
 import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.sso.SaSsoHandle;
+import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -38,7 +38,7 @@ public class SsoClientController {
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoHandle.clientRequest();
+		return SaSsoProcessor.instance.clientDister();
 	}
 
 	// 配置SSO相关参数 

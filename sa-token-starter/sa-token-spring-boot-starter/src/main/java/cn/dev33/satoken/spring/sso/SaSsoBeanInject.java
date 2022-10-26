@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoManager;
+import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.sso.SaSsoTemplate;
 import cn.dev33.satoken.sso.SaSsoUtil;
 
@@ -30,11 +31,12 @@ public class SaSsoBeanInject {
 	/**
 	 * 注入 Sa-Token-SSO 单点登录模块 Bean
 	 * 
-	 * @param saSsoTemplate saSsoTemplate对象 
+	 * @param ssoTemplate saSsoTemplate对象 
 	 */
 	@Autowired(required = false)
-	public void setSaSsoTemplate(SaSsoTemplate saSsoTemplate) {
-		SaSsoUtil.saSsoTemplate = saSsoTemplate;
+	public void setSaSsoTemplate(SaSsoTemplate ssoTemplate) {
+		SaSsoUtil.ssoTemplate = ssoTemplate;
+		SaSsoProcessor.instance.ssoTemplate = ssoTemplate;
 	}
 
 }

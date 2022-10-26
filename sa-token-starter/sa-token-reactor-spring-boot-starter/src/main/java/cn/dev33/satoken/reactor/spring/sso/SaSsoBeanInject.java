@@ -34,7 +34,7 @@ public class SaSsoBeanInject {
 	 */
 	@Autowired(required = false)
 	public void setSaSsoTemplate(SaSsoTemplate saSsoTemplate) {
-		SaSsoUtil.saSsoTemplate = saSsoTemplate;
+		SaSsoUtil.ssoTemplate = saSsoTemplate;
 	}
 
 }

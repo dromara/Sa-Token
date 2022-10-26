@@ -58,17 +58,17 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * 是否打开单点注销功能 
 	 */
-	// public Boolean isSlo = true;  // 同上 
+	// public Boolean isSlo = true;  // 同Server端 
 
 	/**
 	 * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
 	 */
-	// public Boolean isHttp = false;  // 同上 
+	// public Boolean isHttp = false;  // 同Server端
 
 	/**
 	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
 	 */
-	// public String secretkey;  // 同上 
+	// public String secretkey;  // 同Server端
 
 	/**
 	 * 配置 Server 端的 ticket 校验地址 
@@ -83,7 +83,7 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * 配置 Server 端单点注销地址 
 	 */
-	public String sloUrl = "/sso/logout";
+	public String sloUrl = "/sso/signout";
 
 	/**
 	 * 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
