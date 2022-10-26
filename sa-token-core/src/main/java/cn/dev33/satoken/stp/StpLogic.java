@@ -441,7 +441,8 @@ public class StpLogic {
  		
  		// 如果打开了 Cookie 模式，则把 Cookie 清除掉
  		if(getConfig().getIsReadCookie()){
- 			SaHolder.getResponse().deleteCookie(getTokenName());
+ 			SaCookieConfig cookie = getConfig().getCookie();
+ 			SaHolder.getResponse().deleteCookie(getTokenName(), cookie.getPath(), cookie.getDomain());
 		}
 
  		// 从当前 [Storage存储器] 里删除 Token

@@ -27,6 +27,16 @@ public interface SaResponse {
 	}
 
 	/**
+	 * 删除指定Cookie 
+	 * @param name Cookie名称
+	 * @param path Cookie 路径
+	 * @param domain Cookie 作用域
+	 */
+	public default void deleteCookie(String name, String path, String domain) {
+		addCookie(name, null, path, domain, 0);
+	}
+
+	/**
 	 * 写入指定Cookie
 	 * @param name     Cookie名称
 	 * @param value    Cookie值
