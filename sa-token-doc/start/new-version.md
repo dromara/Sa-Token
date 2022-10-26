@@ -63,6 +63,15 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 
 
 **2022-10-26：v1.31.3.temp 过渡版本，仅做学习测试，不推荐上生产：**
+``` xml
+<!-- Sa-Token 权限认证 -->
+<dependency>
+    <groupId>cn.dev33</groupId>
+    <artifactId>sa-token-spring-boot-starter</artifactId>
+    <version>1.31.3.temp</version>
+</dependency>
+```
+
 - 新增：二级认证模块新增指定业务标识能力。  **[重要]** 
 - 重构：重构会话查询参数作用：由`start=-1`时查询全部会话，改为 `start=0,size=-1` 时查询全部。 **[不向下兼容]** 
 - 重构：Sa-Token 依赖包集中在父pom管理。
