@@ -50,7 +50,7 @@
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-		<solon.version>1.10.4</solon.version>
+		<solon.version>1.10.9</solon.version>
 		<solon-test.version>1.9.1</solon-test.version>
 		<noear-redisx.version>1.4.3</noear-redisx.version>
 		<jfinal.version>4.9.17</jfinal.version>
