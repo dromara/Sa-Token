@@ -24,6 +24,7 @@ public class SaSsoProcessor {
 	 * 底层 SaSsoTemplate 对象 
 	 */
 	public SaSsoTemplate ssoTemplate = SaSsoUtil.ssoTemplate;
+
 	
 	// ----------- SSO-Server 端路由分发 ----------- 
 

@@ -1,5 +1,17 @@
 package cn.dev33.satoken.solon.integration;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.noear.solon.Solon;
+import org.noear.solon.core.handle.Action;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Filter;
+import org.noear.solon.core.handle.FilterChain;
+import org.noear.solon.core.handle.Handler;
+
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
@@ -8,13 +20,6 @@ import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.strategy.SaStrategy;
-import org.noear.solon.Solon;
-import org.noear.solon.core.handle.*;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * sa-token 基于路由的过滤式鉴权（增加了注解的处理）；使用优先级要低些

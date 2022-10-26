@@ -31,7 +31,7 @@ public class SsoServerController {
 	public Object ssoRequest() {
 		return SaSsoProcessor.instance.serverDister();
 	}
-	
+
 	// 配置SSO相关参数 
 	@Autowired
 	private void configSso(SaSsoConfig sso) {

@@ -34,7 +34,7 @@ public class ApiName {
 	
 	/**
 	 * 批量修改path，新增固定前缀 
-	 * @param prefix /
+	 * @param prefix 示例值：/sso-user、/sso-admin
 	 * @return 对象自身 
 	 */
 	public ApiName addPrefix(String prefix) {
@@ -51,7 +51,7 @@ public class ApiName {
 	
 	/**
 	 * 批量修改path，替换掉 /sso 固定前缀 
-	 * @param prefix /
+	 * @param prefix 示例值：/sso-user、/sso-admin
 	 * @return 对象自身 
 	 */
 	public ApiName replacePrefix(String prefix) {

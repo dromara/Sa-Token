@@ -35,7 +35,6 @@ public class SaSsoTemplate {
 	 */
 	public ApiName apiName = new ApiName();
 	
-
 	/**
 	 * 所有参数名称 
 	 */
