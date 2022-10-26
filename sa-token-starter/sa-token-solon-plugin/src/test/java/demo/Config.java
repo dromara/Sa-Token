@@ -11,7 +11,6 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * @author noear 2022/3/30 created
  */
-@SuppressWarnings("deprecation")
 @Configuration
 public class Config {
 
