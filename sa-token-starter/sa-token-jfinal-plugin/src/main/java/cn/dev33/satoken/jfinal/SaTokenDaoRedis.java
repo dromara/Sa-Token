@@ -27,9 +27,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 获取Value，如无返空
-     *
-     * @param key
-     * @return
      */
     @Override
     public String get(String key) {
@@ -43,10 +40,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 写入Value，并设定存活时间 (单位: 秒)
-     *
-     * @param key
-     * @param value
-     * @param timeout
      */
     @Override
     public void set(String key, String value, long timeout) {
@@ -67,9 +60,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 修改指定key-value键值对 (过期时间不变)
-     *
-     * @param key
-     * @param value
      */
     @Override
     public void update(String key, String value) {
@@ -83,8 +73,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 删除Value
-     *
-     * @param key
      */
     @Override
     public void delete(String key) {
@@ -98,9 +86,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 获取Value的剩余存活时间 (单位: 秒)
-     *
-     * @param key
-     * @return
      */
     @Override
     public long getTimeout(String key) {
@@ -114,9 +99,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 修改Value的剩余存活时间 (单位: 秒)
-     *
-     * @param key
-     * @param timeout
      */
     @Override
     public void updateTimeout(String key, long timeout) {
@@ -141,9 +123,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 获取Object，如无返空
-     *
-     * @param key
-     * @return
      */
     @Override
     public Object getObject(String key) {
@@ -157,10 +136,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 写入Object，并设定存活时间 (单位: 秒)
-     *
-     * @param key
-     * @param object
-     * @param timeout
      */
     @Override
     public void setObject(String key, Object object, long timeout) {
@@ -181,9 +156,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 更新Object (过期时间不变)
-     *
-     * @param key
-     * @param object
      */
     @Override
     public void updateObject(String key, Object object) {
@@ -197,8 +169,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 删除Object
-     *
-     * @param key
      */
     @Override
     public void deleteObject(String key) {
@@ -222,9 +192,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 修改Object的剩余存活时间 (单位: 秒)
-     *
-     * @param key
-     * @param timeout
      */
     @Override
     public void updateObjectTimeout(String key, long timeout) {
@@ -249,12 +216,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 
     /**
      * 搜索数据
-     *
-     * @param prefix
-     * @param keyword
-     * @param start
-     * @param size
-     * @return
      */
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {

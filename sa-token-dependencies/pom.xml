@@ -8,11 +8,11 @@
     <artifactId>sa-token-dependencies</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>Sa-Token Dependencies</name>
+    <name>sa-token-dependencies</name>
     <description>Sa-Token Dependencies</description>
 
     <properties>
-        <revision>1.31.2.temp</revision>
+        <revision>1.31.3.temp</revision>
 		
 		<!-- 统一定义依赖版本号 -->
 		<springboot.version>2.5.12</springboot.version>
@@ -340,4 +340,84 @@
         </dependencies>
     </dependencyManagement>
 
+	<!-- 父仓库 -->
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+		<relativePath/>
+	</parent>
+	
+	<!-- 项目构建 -->
+	<build>
+	   <plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.2</version>
+			<configuration>
+				<source>1.8</source>
+				<target>1.8</target>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+        
+        <!-- 统一版本号管理 -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>flatten-maven-plugin</artifactId>
+            <version>1.2.7</version>
+            <configuration>
+                <updatePomFile>true</updatePomFile>
+                <flattenMode>resolveCiFriendliesOnly</flattenMode>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>flatten</id>
+                    <phase>process-resources</phase>
+                    <goals>
+                        <goal>flatten</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>flatten.clean</id>
+                    <phase>clean</phase>
+                    <goals>
+                        <goal>clean</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        
+	   </plugins>
+	   <pluginManagement>
+		   	<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-enforcer-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>enforce</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+	   </pluginManagement>
+	</build>
+	
 </project>

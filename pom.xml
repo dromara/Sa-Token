@@ -38,7 +38,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-        <revision>1.31.2.temp</revision>
+        <revision>1.31.3.temp</revision>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
@@ -84,8 +84,6 @@
                 <type>pom</type>
                 <scope>import</scope>
 			</dependency>
-			
-			
 			
 		</dependencies>
 	</dependencyManagement>
