@@ -162,7 +162,7 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 
 - [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写 Pig 授权方式为 Sa-Token，其他代码不变。
 
-更对开源案例可参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
+更多开源案例可参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
 
 
 ## 友情链接
