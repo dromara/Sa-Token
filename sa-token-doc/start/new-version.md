@@ -62,8 +62,18 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 - 优化：优化版本号定义，父 pom.xml 统一定义依赖版本号，并升级部分依赖。
 
 
-
-
+**2022-10-26：v1.31.3.temp 过渡版本，仅做学习测试，不推荐上生产：**
+- 新增：二级认证模块新增指定业务标识能力。  **[重要]** 
+- 重构：重构会话查询参数作用：由`start=-1`时查询全部会话，改为 `start=0,size=-1` 时查询全部。 **[不向下兼容]** 
+- 重构：Sa-Token 依赖包集中在父pom管理。
+- 重构：SSO 示例项目 http 请求工具改为 Forest。
+- 重构：Id-Token 模块更名为 Same-Token。 **[不向下兼容]**
+- 新增：文档新增 SSO 平台中心模式示例，跳连接进入子系统。 **[重要]** 
+- 重构：SSO-Server 端单点注销地址修改 `/sso/logout` -> `/sso/signout`，避免与 SSO-Client 端同 path 的冲突。 **[不向下兼容]** 
+- 重构：重构SSO模块，静态式API改为实例式：SaSsoHandle -> SaSsoProcessor。 **[重要]** **[不向下兼容]** 
+- 新增：SSO模块文档新增单个项目同时搭建 sso-server 和 sso-client 的示例。 **[重要]** 
+- 新增：SSO模块文档新增一个项目同时搭建两个 sso-server 服务 的示例。 **[重要]** 
+- 新增：新增 sa-token-dependencies，统一定义依赖版本。
 
 
 
