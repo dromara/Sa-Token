@@ -27,7 +27,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-			<version>${springboot.version}</version>
 			<optional>true</optional>
         </dependency>
         
@@ -35,7 +34,6 @@
 	    <dependency>
 	    	<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring-web.version}</version>
 			<optional>true</optional>
 	    </dependency>
 	    
@@ -43,7 +41,6 @@
 	    <dependency>
 	    	<groupId>io.projectreactor</groupId>
 	    	<artifactId>reactor-core</artifactId>
-	   		<version>${reactor-core.version}</version>
 			<optional>true</optional>
 	    </dependency>
 	    
@@ -51,7 +48,6 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-      	  	<version>${jackson-databind.version}</version>	
 			<optional>true</optional>
 		</dependency>
 		
@@ -59,7 +55,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>${springboot.version}</version>
 			<optional>true</optional>
 		</dependency>
     

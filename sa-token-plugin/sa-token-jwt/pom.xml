@@ -26,7 +26,6 @@
         <dependency>
 		    <groupId>cn.hutool</groupId>
 		    <artifactId>hutool-jwt</artifactId>
-		    <version>${hutool-jwt.version}</version>
 		</dependency>
 	</dependencies>
 

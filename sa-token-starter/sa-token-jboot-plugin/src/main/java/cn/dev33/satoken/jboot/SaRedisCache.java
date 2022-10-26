@@ -18,7 +18,7 @@ import java.util.List;
  * sa 缓存处理
  */
 @JbootSpi("sacache")
-@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class SaRedisCache implements JbootCache {
     protected JbootRedisConfig config;
     protected JedisPool jedisPool;

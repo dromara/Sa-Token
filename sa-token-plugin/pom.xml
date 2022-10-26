@@ -18,12 +18,12 @@
 	
 	<!-- 所有子模块 -->
     <modules>
-        <module>sa-token-alone-redis</module>
         <module>sa-token-dao-redis</module>
         <module>sa-token-dao-redis-jackson</module>
         <module>sa-token-dao-redis-fastjson</module>
         <module>sa-token-dao-redis-fastjson2</module>
         <module>sa-token-dao-redisx</module>
+        <module>sa-token-alone-redis</module>
         <module>sa-token-dialect-thymeleaf</module>
        	<module>sa-token-sso</module>
        	<module>sa-token-oauth2</module>
@@ -40,7 +40,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>${springboot.version}</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>

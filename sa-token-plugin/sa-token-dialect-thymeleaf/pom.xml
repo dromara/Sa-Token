@@ -26,14 +26,12 @@
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
-			<version>${thymeleaf.version}</version>
 			<optional>true</optional>
 	    </dependency>
 		<!-- spring-boot-configuration -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>${springboot.version}</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>

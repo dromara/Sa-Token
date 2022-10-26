@@ -23,18 +23,16 @@
 			<artifactId>sa-token-servlet</artifactId>
 		</dependency>
 		
-		<!-- spring-boot-starter-web (optional) -->
+		<!-- spring-boot-starter-web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${springboot.version}</version>
 		</dependency>
 		
 		<!-- config (optional) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>${springboot.version}</version>
 			<optional>true</optional>
 		</dependency>
 		

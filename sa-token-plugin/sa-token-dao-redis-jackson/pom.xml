@@ -26,20 +26,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-			<version>${springboot.version}</version>
         </dependency>
 		<!-- jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-      	  	<version>${jackson-databind.version}</version>	
 			<optional>true</optional>
 		</dependency>
 		<!-- jackson-datatype-jsr310 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>${jackson-datatype-jsr310.version}</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>

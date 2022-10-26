@@ -26,13 +26,11 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>redisx</artifactId>
-            <version>${noear-redisx.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-test</artifactId>
-            <version>${solon-test.version}</version>
             <scope>test</scope>
         </dependency>
 	</dependencies>

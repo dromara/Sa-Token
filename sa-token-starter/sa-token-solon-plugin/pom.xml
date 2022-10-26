@@ -25,7 +25,6 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
-            <version>${solon.version}</version>
         </dependency>
 
     </dependencies>

@@ -26,15 +26,7 @@
         <dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>${jjwt.version}</version>
         </dependency>
-		<!-- spring-boot-configuration -->
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<version>${springboot.version}</version>
-			<optional>true</optional>
-		</dependency> -->
 	</dependencies>
 
 </project>
