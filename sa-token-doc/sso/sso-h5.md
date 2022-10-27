@@ -15,7 +15,7 @@
 public class H5Controller {
 
 	// 当前是否登录 
-	@RequestMapping("/isLogin")
+	@RequestMapping("/sso/isLogin")
 	public Object isLogin() {
 		return SaResult.data(StpUtil.isLogin());
 	}
@@ -76,7 +76,7 @@ public class H5Controller {
 				
 			// 查询当前会话是否登录 
 			$.ajax({
-				url: baseUrl + '/isLogin',
+				url: baseUrl + '/sso/isLogin',
 				type: "post", 
 				dataType: 'json',
 				headers: {

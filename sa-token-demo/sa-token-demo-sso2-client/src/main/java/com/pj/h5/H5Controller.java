@@ -19,7 +19,7 @@ import cn.dev33.satoken.util.SaResult;
 public class H5Controller {
 
 	// 当前是否登录 
-	@RequestMapping("/isLogin")
+	@RequestMapping("/sso/isLogin")
 	public Object isLogin() {
 		return SaResult.data(StpUtil.isLogin());
 	}
