@@ -68,7 +68,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-spring-boot-starter</artifactId>
-    <version>1.31.3.temp</version>
+    <version>v1.31.3.temp</version>
 </dependency>
 ```
 

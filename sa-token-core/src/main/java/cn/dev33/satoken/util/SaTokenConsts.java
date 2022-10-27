@@ -15,7 +15,7 @@ public class SaTokenConsts {
 	/**
 	 * Sa-Token 当前版本号 
 	 */
-	public static final String VERSION_NO = "v1.31.3.temp";
+	public static final String VERSION_NO = "v1.32.0";
 
 	/**
 	 * Sa-Token 开源地址 Gitee 
