@@ -142,31 +142,31 @@ public final class SaStrategy {
 		// 校验 @SaCheckLogin 注解 
 		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.me.getAnnotation.apply(target, SaCheckLogin.class);
 		if(checkLogin != null) {
-			SaManager.getStpLogic(checkLogin.type()).checkByAnnotation(checkLogin);
+			SaManager.getStpLogic(checkLogin.type(), false).checkByAnnotation(checkLogin);
 		}
 		
 		// 校验 @SaCheckRole 注解 
 		SaCheckRole checkRole = (SaCheckRole) SaStrategy.me.getAnnotation.apply(target, SaCheckRole.class);
 		if(checkRole != null) {
-			SaManager.getStpLogic(checkRole.type()).checkByAnnotation(checkRole);
+			SaManager.getStpLogic(checkRole.type(), false).checkByAnnotation(checkRole);
 		}
 		
 		// 校验 @SaCheckPermission 注解
 		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.me.getAnnotation.apply(target, SaCheckPermission.class);
 		if(checkPermission != null) {
-			SaManager.getStpLogic(checkPermission.type()).checkByAnnotation(checkPermission);
+			SaManager.getStpLogic(checkPermission.type(), false).checkByAnnotation(checkPermission);
 		}
 
 		// 校验 @SaCheckSafe 注解
 		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.me.getAnnotation.apply(target, SaCheckSafe.class);
 		if(checkSafe != null) {
-			SaManager.getStpLogic(checkSafe.type()).checkByAnnotation(checkSafe);
+			SaManager.getStpLogic(checkSafe.type(), false).checkByAnnotation(checkSafe);
 		}
 
 		// 校验 @SaCheckDisable 注解
 		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.me.getAnnotation.apply(target, SaCheckDisable.class);
 		if(checkDisable != null) {
-			SaManager.getStpLogic(checkDisable.type()).checkByAnnotation(checkDisable);
+			SaManager.getStpLogic(checkDisable.type(), false).checkByAnnotation(checkDisable);
 		}
 		
 		// 校验 @SaCheckBasic 注解

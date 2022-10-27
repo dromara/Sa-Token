@@ -16,7 +16,8 @@ SaManager.getSaTokenListener();        // 获取侦听器对象
 SaManager.getSaTemp();                 // 获取临时令牌认证模块对象 
 SaManager.getSaJsonTemplate();         // 获取 JSON 转换器 Bean
 SaManager.getSaSignTemplate();         // 获取参数签名 Bean 
-SaManager.getStpLogic("type");         // 获取指定账号类型的StpLogic对象 
+SaManager.getStpLogic("type");         // 获取指定账号类型的StpLogic对象，获取不到时自动创建并返回 
+SaManager.getStpLogic("type", false);  // 获取指定账号类型的StpLogic对象，获取不到时抛出异常 
 SaManager.putStpLogic(stpLogic);       // 向全局集合中 put 一个 StpLogic 
 ```
 

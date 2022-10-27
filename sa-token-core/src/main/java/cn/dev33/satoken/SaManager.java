@@ -1,6 +1,6 @@
 package cn.dev33.satoken;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -214,7 +214,7 @@ public class SaManager {
 	/**
 	 * StpLogic集合, 记录框架所有成功初始化的StpLogic 
 	 */
-	public static Map<String, StpLogic> stpLogicMap = new HashMap<String, StpLogic>();
+	public static Map<String, StpLogic> stpLogicMap = new LinkedHashMap<String, StpLogic>();
 	
 	/**
 	 * 向全局集合中 put 一个 StpLogic 
@@ -225,32 +225,56 @@ public class SaManager {
 	}
 
 	/**
-	 * 根据 LoginType 获取对应的StpLogic，如果不存在则抛出异常 
+	 * 根据 LoginType 获取对应的StpLogic，如果不存在则新建并返回 
 	 * @param loginType 对应的账号类型 
 	 * @return 对应的StpLogic
 	 */
 	public static StpLogic getStpLogic(String loginType) {
-		// 如果type为空则返回框架内置的 
+		return getStpLogic(loginType, true);
+	}
+	
+	/**
+	 * 根据 LoginType 获取对应的StpLogic，如果不存在，isCreate参数=是否自动创建并返回 
+	 * @param loginType 对应的账号类型 
+	 * @param isCreate 在 StpLogic 不存在时，true=新建并返回，false=抛出异常
+	 * @return 对应的StpLogic
+	 */
+	public static StpLogic getStpLogic(String loginType, boolean isCreate) {
+		// 如果type为空则返回框架默认内置的 
 		if(loginType == null || loginType.isEmpty()) {
 			return StpUtil.stpLogic;
 		}
 		
-		// 从 stpLogicMap 中获取 
+		// 从集合中获取 
 		StpLogic stpLogic = stpLogicMap.get(loginType);
 		if(stpLogic == null) {
-			/*
-			 * 此时有两种情况会造成 StpLogic == null 
-			 * 1. loginType拼写错误，请改正 （建议使用常量） 
-			 * 2. 自定义StpUtil尚未初始化（静态类中的属性至少一次调用后才会初始化），解决方法两种
-			 * 		(1) 从main方法里调用一次
-			 * 		(2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
-			 */
-			throw new SaTokenException("未能获取对应StpLogic，type="+ loginType);
+			
+			// isCreate=true时，自创建模式：自动创建并返回 
+			if(isCreate) {
+				synchronized (SaManager.class) {
+					stpLogic = stpLogicMap.get(loginType);
+					if(stpLogic == null) {
+						stpLogic = new StpLogic(loginType);
+						// 此处无需手动put，因为 StpLogic 构造方法中会自动put 
+						// putStpLogic(stpLogic); 
+					}
+				}
+			} 
+			// isCreate=false时，严格校验模式：抛出异常 
+			else {
+				/*
+				 * 此时有两种情况会造成 StpLogic == null 
+				 * 1. loginType拼写错误，请改正 （建议使用常量） 
+				 * 2. 自定义StpUtil尚未初始化（静态类中的属性至少一次调用后才会初始化），解决方法两种
+				 * 		(1) 从main方法里调用一次
+				 * 		(2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
+				 */
+				throw new SaTokenException("未能获取对应StpLogic，type="+ loginType);
+			}
 		}
 		
 		// 返回 
 		return stpLogic;
 	}
-	
 	
 }
