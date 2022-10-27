@@ -1,7 +1,21 @@
-# Vue 3 + Vite
+# sa-token-demo-sso-client-vue3
+Sa-Token SSO-Client 应用端（前后端分离版-Vue3）
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+在线文档：[https://sa-token.cc/](https://sa-token.cc/)
 
-## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+## 运行
+先安装依赖
+``` bat
+npm install --registry=https://registry.npm.taobao.org
+```
+
+运行
+``` bat
+npm run dev
+```
+
+打包
+``` bat
+npm run build
+```
