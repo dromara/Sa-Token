@@ -15,7 +15,7 @@
 	<name>sa-token-reactor-spring-boot-starter</name>
     <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
 	<description>springboot reactor integrate sa-token</description>
-
+	
 	<dependencies>
 		<!-- sa-token-core -->
 		<dependency>
@@ -34,7 +34,7 @@
 	    <dependency>
 	    	<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring-web.version}</version>
+			<version>5.3.7</version>
 			<optional>true</optional>
 	    </dependency>
 	    

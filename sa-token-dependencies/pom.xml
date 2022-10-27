@@ -16,7 +16,6 @@
 		
 		<!-- 统一定义依赖版本号 -->
 		<springboot.version>2.5.12</springboot.version>
-		<spring-web.version>5.3.7</spring-web.version>
 		<reactor-core.version>3.1.4.RELEASE</reactor-core.version>
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
@@ -104,11 +103,11 @@
 	        </dependency>
 			
 			<!-- test -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-test</artifactId>
 				<version>${springboot.version}</version>
-			</dependency>
+			</dependency> -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-configuration-processor</artifactId>

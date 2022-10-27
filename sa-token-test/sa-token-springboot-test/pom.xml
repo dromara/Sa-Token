@@ -20,7 +20,6 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-starter</artifactId>
-            <scope>test</scope>
         </dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
@@ -36,12 +35,10 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-servlet</artifactId>
-            <scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-core</artifactId>
-            <scope>test</scope>
 		</dependency>
 	</dependencies>
 
