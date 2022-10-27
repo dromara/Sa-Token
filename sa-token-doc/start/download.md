@@ -200,12 +200,14 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-demo-thymeleaf               // [示例] Sa-Token 集成 Thymeleaf 标签方言
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 登录认证 
 		├── sa-token-demo-sso-server              // [示例] Sa-Token 集成 SSO单点登录-Server认证中心
-		├── sa-token-demo-sso1-client             // [示例] Sa-Token 集成 SSO单点登录-模式一 应用端 
-		├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端
-		├── sa-token-demo-sso3-client             // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端
+		├── sa-token-demo-sso1-client             // [示例] Sa-Token 集成 SSO单点登录-模式一 应用端 (同域、同Redis)
+		├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端 (跨域、同Redis)
+		├── sa-token-demo-sso3-client             // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端 (跨域、跨Redis)
 		├── sa-token-demo-sso3-client-nosdk       // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端 (不使用sdk，纯手动对接)
 		├── sa-token-demo-sso-server-h5           // [示例] Sa-Token 集成 SSO单点登录-Server认证中心 (前后端分离)
-		├── sa-token-demo-sso-client-h5           // [示例] Sa-Token 集成 SSO单点登录-client应用端 (前后端分离)
+		├── sa-token-demo-sso-client-h5           // [示例] Sa-Token 集成 SSO单点登录-client应用端 (前后端分离-原生h5版本)
+		├── sa-token-demo-sso-server-vue2         // [示例] Sa-Token 集成 SSO单点登录-client应用端 (前后端分离-Vue2版本)
+		├── sa-token-demo-sso-client-vue3         // [示例] Sa-Token 集成 SSO单点登录-client应用端 (前后端分离-Vue3版本)
 		├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 		├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
 		├── sa-token-demo-websocket               // [示例] Sa-Token 集成 Web-Socket 鉴权示例
