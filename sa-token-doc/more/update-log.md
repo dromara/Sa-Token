@@ -1,5 +1,33 @@
 # 更新日志 
 
+### 2022-10-27 @v1.32.0
+- 修复：修复 sa-token-dao-redis-fastjson 插件多余序列化 `timeout` 字段的问题。
+- 修复：修复 sa-token-dao-redis-fastjson 插件 `session.getModel` 无法反序列化实体类的问题。
+- 修复：修复 `sa-token-quick-login` 插件指定拦截排除路由不生效的问题。
+- 修复：修复 `sa-token-alone-redis` + `sa-token-dao-redis-fastson` 时 Redis 无法分离的问题。
+- 修复：修复在配置了 cookie.path 后，注销时无法彻底清除 Cookie 的问题。
+- 升级：`SaFoxUtil.getValueByType()` 新增对 char 类型的转换。
+- 新增：新增 `sa-token-dao-redis-fastjson2` 插件。 **[重要]** 
+- 新增：新增全局配置 `is-write-header`，控制登录后是否将 Token 写入响应头。 **[重要]** 
+- 新增：二级认证模块新增指定业务标识能力。  **[重要]** 
+- 重构：Id-Token 模块更名为 Same-Token。 **[重要]** **[不向下兼容]**
+- 重构：重构会话查询参数作用：由`start=-1`时查询全部会话，改为 `start=0,size=-1` 时查询全部。 **[不向下兼容]** 
+- 重构：`SaManager.getStpLogic("type")` 默认当对应type不存在时不再抛出异常，而是自动创建并返回。
+- 重构：重构SSO模块，静态式API改为实例式：SaSsoHandle -> SaSsoProcessor。 **[重要]** **[不向下兼容]** 
+- 重构：SSO-Server 端单点注销地址修改 `/sso/logout` -> `/sso/signout`，避免与 SSO-Client 端同 path 的冲突。 **[不向下兼容]** 
+- 新增：文档新增 SSO 平台中心模式示例，跳连接进入子系统。 **[重要]** 
+- 新增：新增SSO前后端分离集成示例 vue2 & vue3 版本。  **[重要]** 
+- 重构：SSO 示例项目 http 请求工具改为 Forest。
+- 新增：SSO模块文档新增单个项目同时搭建 sso-server 和 sso-client 的示例。 **[重要]** 
+- 新增：SSO模块文档新增一个项目同时搭建两个 sso-server 服务 的示例。 **[重要]** 
+- 文档：在线文档新增代码示例。
+- 文档：在线文档增加全局调色功能。
+- 文档：[自定义 SaTokenContext 指南] 章节新增对三种模型的解释。
+- 文档：新增多账号体系混合鉴权代码示例。
+- 文档：文档增加 Gradle 依赖方式和 properties 风格配置。
+- 新增：新增 sa-token-dependencies，统一定义依赖版本。 **[重要]** 
+
+
 
 ### 2022-9-8 @v1.31.0
 - 文档：新增优秀开源案例展示。

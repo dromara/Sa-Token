@@ -34,6 +34,7 @@
 	    <dependency>
 	    	<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
+			<version>${spring-web.version}</version>
 			<optional>true</optional>
 	    </dependency>
 	    

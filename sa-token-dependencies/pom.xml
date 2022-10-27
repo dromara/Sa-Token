@@ -30,7 +30,7 @@
 		<commons-pool2.version>2.5.0</commons-pool2.version>
 		<dubbo.version>2.7.18</dubbo.version>
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
-		<hutool-jwt.version>5.8.5</hutool-jwt.version>
+		<hutool-jwt.version>5.8.9</hutool-jwt.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<fastjson.version>1.2.83</fastjson.version>
 		<fastjson2.version>2.0.15</fastjson2.version>
@@ -62,11 +62,11 @@
 	        </dependency>
 	        
 			<!-- spring-web -->
-		    <dependency>
+		    <!-- <dependency>
 		    	<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
-				<version>${spring-web.version}</version>
-		    </dependency>
+				<version>5.3.7</version>
+		    </dependency> -->
 		    
 			<!-- reactor-core -->
 		    <dependency>
@@ -103,6 +103,12 @@
 	            <version>${jfinal.version}</version>
 	        </dependency>
 			
+			<!-- test -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${springboot.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-configuration-processor</artifactId>
