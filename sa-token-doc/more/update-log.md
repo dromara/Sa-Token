@@ -1,6 +1,6 @@
 # 更新日志 
 
-### 2022-10-27 @v1.32.0
+### 2022-10-28 @v1.32.0
 - 修复：修复 sa-token-dao-redis-fastjson 插件多余序列化 `timeout` 字段的问题。
 - 修复：修复 sa-token-dao-redis-fastjson 插件 `session.getModel` 无法反序列化实体类的问题。
 - 修复：修复 `sa-token-quick-login` 插件指定拦截排除路由不生效的问题。
