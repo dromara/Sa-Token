@@ -285,6 +285,7 @@ body {
 	background-size: 18px 18px;
 	background-image: url(icon/code.svg);
 }
+#main .dt-btn{display: none;}
 
 
 /* -------------  背景色相关 ------------- */
