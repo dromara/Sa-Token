@@ -534,7 +534,7 @@
 				</style>
 				<div class="foot-box" id="foot">
 					<div class="s-width" style="text-align: center;">
-						Copyright ©2022 Sa-Token java权限认证 | sa-token.cc | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-2</a>
+						Copyright ©2022 Sa-Token java权限认证 | sa-token.cc | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-4</a>
 					</div>
 				</div>
 			</div>
@@ -612,45 +612,6 @@
 					content: content
 				});
 			})
-			
-			// set 一下 img 的宽度 
-			function setImgWidth(img) {
-				// 如果已经有了宽度参数，则不追加 
-				if(img.src.indexOf('?') > -1) {
-					return;
-				}
-				// console.log(img.getAttribute('nf'));
-				if(img.getAttribute('nf') != null) {
-					return;
-				}
-				// 如果不是oss上的图片 
-				if(img.src.indexOf('https://oss.dev33.cn') == -1 || img.src.endsWith('.svg')) {
-					return;
-				}
-				img.src = img.src + "?x-oss-process=image/resize,m_lfit,w_" + (img.width) + ",limit_0/auto-orient,0";
-			}
-			
-			// set 一遍 img 的尺寸，防止失真 
-			function f5ImgSize() {
-				$('.com-box-f .com-box a img').each(function() {
-					// console.log(this.src, this.width);
-					// 未加载完毕时，则等待其load之后再设置 
-					if(this.complete == false) {
-						this.onload = function() {
-							setImgWidth(this);
-						}
-						return;
-					}
-					// 追加宽度参数 
-					setImgWidth(this);
-				})
-			}
-			if(window.innerWidth > 1800) {
-				if(navigator.userAgent.indexOf('WebKit') > -1) {
-					// f5ImgSize();
-				}
-			}
-			
 			
 		</script>
 
