@@ -6,10 +6,9 @@
 
 ### 1、加入QQ交流群
 
+![QQ群](https://oss.dev33.cn/sa-token/qq-group-4.png ':size=180')
 
-![QQ群](https://oss.dev33.cn/sa-token/qq-group-2.png ':size=180')
-
-QQ交流群：614714762 [点击加入](https://jq.qq.com/?_wv=1027&k=F96A2mrl)
+QQ交流群：707350988 [点击加入](https://jq.qq.com/?_wv=1027&k=tqbzHT2D)
 
 ### 2、加入微信交流群：
 

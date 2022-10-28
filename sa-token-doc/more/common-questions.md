@@ -135,15 +135,49 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 - 可能2：你访问的接口可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。请确保你访问的 path 有对应的 Controller 承接！
 - 可能3：可能这里并没有拦截，但是又被其他地方拦截了。请先把这个拦截器给注释掉，看看还会不会拦截，如果依然拦截，那说明不是这个拦截器的锅，请仔细查看一下控制台抛出的堆栈信息，定位一下到底是哪行代码拦截住这个请求的。
 - 可能4：后端拦截的 path 未必是你前端访问的这个path，建议先打印一下 path 信息，看看和你预想的是否一致，再做分析。
-- 可能5：你写了多个匹配规则，请求只越过了第一个规则，被其它规则拦下了，例如以下代码：
 ``` java
+// 打印一下，看看后端接受到的path，是否和你前端访问时的一致，如果不一致，先找找原因为啥不一致 
+registry.addInterceptor(new SaInterceptor(handler -> {
+	System.out.println("前端访问的 path 是：" + SaHolder.getRequest().getRequestPath());
+	StpUtil.checkLogin();
+})).addPathPatterns("/**");
+```
+- 可能5：你的项目配置了 `context-path` 上下文地址，比如 `server.servlet.context-path=/shop`，注意这个地址是不需要加在拦截器上的：
+``` java
+// 这是错误示例，不需要把 context-path 上下文参数写在下面的 excludePathPatterns 地址上。
+registry.addInterceptor(new SaInterceptor(hadnle -> StpUtil.checkLogin()))
+			.addPathPatterns("/**").excludePathPatterns("/shop/user/login");
+// 这是正确示例，无论你的 context-path 上下文配置了什么样的值，下面的 excludePathPatterns 地址都不需要写上它
+registry.addInterceptor(new SaInterceptor(hadnle -> StpUtil.checkLogin()))
+			.addPathPatterns("/**").excludePathPatterns("/user/login");
+```
+- 可能6：你写了多个匹配规则，请求只越过了第一个规则，被其它规则拦下了，例如以下代码：
+``` java
+// 以下代码，当你未登录访问 `/user/doLogin` 时，会被第1条规则越过，然后被第2条拦下，校验登录，然后抛出异常：`NotLoginException：xxx`
 registry.addInterceptor(new SaInterceptor(handler -> {
 	SaRouter.match("/**").notMatch("/user/doLogin").check(r -> StpUtil.checkLogin());  // 第1个规则 
 	SaRouter.match("/**").notMatch("/article/getList").check(r -> StpUtil.checkLogin());  // 第2个规则 
 	SaRouter.match("/**").notMatch("/goods/getList").check(r -> StpUtil.checkLogin());  // 第3个规则 
 })).addPathPatterns("/**");
 ```
-以上代码，当你未登录访问 `/user/doLogin` 时，会被第1条规则越过，然后被第2条拦下，校验登录，然后抛出异常：`NotLoginException：xxx`
+- 可能7：你自定义的封装方法，并没有按照你的预想情况执行：
+``` java
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		// 调用自定义的 excludePaths() 方法获取数据排除鉴权  
+		SaRouter.match("/**").notMatch(excludePaths()).check(r -> StpUtil.checkLogin());
+	})).addPathPatterns("/**");
+}
+// 自定义查询排查鉴权的地址方法 
+public static List<String> excludePaths() {
+	List<String> list = ... // 从数据源查询...;
+	return list;
+}
+```
+如上方法， `excludePaths()` 可能并不会像你预想的一样正确执行返回相应的值，请在 `.notMatch()` 处 `一律先硬编码写固定死值来测试`，这时就有两种情况：
+	- 情况1：写固定死值时，代码能正常执行了，那说明你自定义的 `excludePaths()` 方法有问题，执行结果不正确。
+	- 情况2：写固定也不行，那说明不是 `excludePaths()` 的问题，那再从其它地方开始排查。
+
 
 
 ### Q：我在配置文件中加了一些关于 Sa-Token 的配置，但是没有生效。
@@ -273,6 +307,38 @@ Cannot deserialize value of type `java.lang.Long` from Array value (token `JsonT
 springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能出现此问题
 
 原因是redis里面有之前的 satoken 会话数据, 清空 Redis 即可
+
+
+
+### Q：我实现了 StpInterface 接口，但是在登录时没有进入我的实现类代码？
+不进入是正常现象， StpInterface 是鉴权接口，在执行鉴权代码时才会进入 StpInterface 实现类，登录认证时不会进入。
+
+
+### Q：启动时报错，找不到 xx 类 xx 方法：
+``` java
+Caused by: java.lang.ClassNotFoundException: cn.dev33.satoken.same.SaSameTemplate
+```
+
+一般找不到类，或者找不到方法，都是版本冲突了，使用 Sa-Token 时一定要注意**版本对齐**，意思是所有和 Sa-Token 相关的依赖都需要版本一致。
+
+比如说你如果一个依赖是 1.32.0，一个是 1.31.0，就会造成无法启动：
+
+``` xml
+<!-- 如下样例：一个是 `1.32.0`，一个是 `1.31.0`， 版本没对齐，就会造成项目无法启动 -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-spring-boot-starter</artifactId>
+	<version>1.32.0</version>
+</dependency>
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-core</artifactId>
+	<version>1.31.0</version>
+</dependency>
+```
+
+请仔细排查你的 pom.xml 文件，是否有 Sa-Token 依赖没对齐，**请不要肉眼检查，用全局搜索 "sa-token" 关键词来找**，如果是多模块或者微服务项目，就整个项目搜索。
+
 
 
 
