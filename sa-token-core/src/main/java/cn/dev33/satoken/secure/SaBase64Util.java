@@ -3,6 +3,9 @@ package cn.dev33.satoken.secure;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
+
 /**
  * Sa-Token Base64工具类
  * @author kong
@@ -40,7 +43,7 @@ public class SaBase64Util {
 		try {
 			return encoder.encodeToString(text.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12101);
 		}
 	}
 
@@ -53,7 +56,7 @@ public class SaBase64Util {
 		try {
 			return new String(decoder.decode(base64Text), "UTF-8"); 
 		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e); 
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12101);
 		}
 	}
 	

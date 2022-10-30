@@ -3,6 +3,7 @@ package cn.dev33.satoken.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.SaLoginModel;
 
@@ -37,7 +38,7 @@ public class SaTokenEventCenter {
 	 */
 	public static void setListenerList(List<SaTokenListener> listenerList) {
 		if(listenerList == null) {
-			throw new SaTokenException("重置的侦听器集合不可以为空");
+			throw new SaTokenException("重置的侦听器集合不可以为空").setCode(SaErrorCode.CODE_10031);
 		}
 		SaTokenEventCenter.listenerList = listenerList;
 	}
@@ -48,7 +49,7 @@ public class SaTokenEventCenter {
 	 */
 	public static void registerListener(SaTokenListener listener) {
 		if(listener == null) {
-			throw new SaTokenException("注册的侦听器不可以为空");
+			throw new SaTokenException("注册的侦听器不可以为空").setCode(SaErrorCode.CODE_10032);
 		}
 		listenerList.add(listener);
 	}
@@ -59,11 +60,11 @@ public class SaTokenEventCenter {
 	 */
 	public static void registerListenerList(List<SaTokenListener> listenerList) {
 		if(listenerList == null) {
-			throw new SaTokenException("注册的侦听器不可以为空");
+			throw new SaTokenException("注册的侦听器集合不可以为空").setCode(SaErrorCode.CODE_10031);
 		}
 		for (SaTokenListener listener : listenerList) {
 			if(listener == null) {
-				throw new SaTokenException("注册的侦听器不可以为空");
+				throw new SaTokenException("注册的侦听器不可以为空").setCode(SaErrorCode.CODE_10032);
 			}
 		}
 		SaTokenEventCenter.listenerList.addAll(listenerList);

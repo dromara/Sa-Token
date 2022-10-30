@@ -1,9 +1,10 @@
 package cn.dev33.satoken.context;
 
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.InvalidContextException;
 
 /**
  * Sa-Token 上下文处理器 [默认实现类]
@@ -26,14 +27,14 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 	/**
 	 * 默认的错误提示语 
 	 */
-	public static final String ERROR_MESSAGE = "未初始化任何有效上下文处理器";
+	public static final String ERROR_MESSAGE = "未能获取有效的上下文处理器";
 	
 	/**
 	 * 获取当前请求的 [Request] 对象
 	 */
 	@Override
 	public SaRequest getRequest() {
-		throw new SaTokenException(ERROR_MESSAGE);
+		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 	
 	/**
@@ -41,7 +42,7 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 	 */
 	@Override
 	public SaResponse getResponse() {
-		throw new SaTokenException(ERROR_MESSAGE);
+		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 	 */
 	@Override
 	public SaStorage getStorage() {
-		throw new SaTokenException(ERROR_MESSAGE);
+		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 	
 	/**
@@ -57,8 +58,7 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 	 */
 	@Override
 	public boolean matchPath(String pattern, String path) {
-		throw new SaTokenException(ERROR_MESSAGE);
+		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
-	
 }

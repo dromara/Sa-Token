@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
@@ -451,7 +452,7 @@ public class SaFoxUtil {
 		try {
 			return URLEncoder.encode(url, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12103);
 		}
 	}
 
@@ -464,7 +465,7 @@ public class SaFoxUtil {
 		try {
 			return URLDecoder.decode(url, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12104);
 		}
 	}
 	

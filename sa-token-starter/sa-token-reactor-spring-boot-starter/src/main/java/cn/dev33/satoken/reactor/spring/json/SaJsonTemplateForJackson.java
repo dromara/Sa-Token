@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cn.dev33.satoken.exception.SaJsonConvertException;
 import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.reactor.error.SaReactorSpringBootErrorCode;
 
 /**
  *  JSON 转换器， Jackson 版实现 
@@ -31,7 +32,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 		try {
 			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e);
+			throw new SaJsonConvertException(e).setCode(SaReactorSpringBootErrorCode.CODE_20203);
 		}
 	}
 	
@@ -45,7 +46,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			Map<String, Object> map = objectMapper.readValue(jsonStr, Map.class);
 			return map;
 		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e);
+			throw new SaJsonConvertException(e).setCode(SaReactorSpringBootErrorCode.CODE_20204);
 		}
 	}
 

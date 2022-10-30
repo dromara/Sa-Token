@@ -16,6 +16,7 @@ import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
+import cn.dev33.satoken.reactor.error.SaReactorSpringBootErrorCode;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
 import reactor.core.publisher.Mono;
@@ -108,7 +109,7 @@ public class SaReactorFilter implements WebFilter {
 	 * 异常处理函数：每次[认证函数]发生异常时执行此函数
 	 */
 	public SaFilterErrorStrategy error = e -> {
-		throw new SaTokenException(e);
+		throw new SaTokenException(e).setCode(SaReactorSpringBootErrorCode.CODE_20205);
 	};
 
 	/**

@@ -2,7 +2,8 @@ package cn.dev33.satoken.json;
 
 import java.util.Map;
 
-import cn.dev33.satoken.exception.ApiDisabledException;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.NotImplException;
 
 /**
  * JSON 相关操作接口 
@@ -19,7 +20,7 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	 */
 	@Override
 	public String toJsonString(Object obj) {
-		throw new ApiDisabledException(ERROR_MESSAGE);
+		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
 	}
 	
 	/**
@@ -27,7 +28,7 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	 */
 	@Override
 	public Map<String, Object> parseJsonToMap(String jsonStr) {
-		throw new ApiDisabledException(ERROR_MESSAGE);
+		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
 	};
 	
 }

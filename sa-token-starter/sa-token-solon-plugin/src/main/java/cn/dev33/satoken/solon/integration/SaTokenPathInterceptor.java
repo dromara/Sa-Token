@@ -7,6 +7,7 @@ import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.solon.error.SaSolonErrorCode;
 import cn.dev33.satoken.strategy.SaStrategy;
 import org.noear.solon.core.handle.Action;
 import org.noear.solon.core.handle.Context;
@@ -119,7 +120,7 @@ public class SaTokenPathInterceptor implements Handler {
 		if (e instanceof SaTokenException) {
 			throw (SaTokenException) e;
 		} else {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaSolonErrorCode.CODE_20301);
 		}
 	};
 

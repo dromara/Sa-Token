@@ -2,7 +2,8 @@ package cn.dev33.satoken.oauth2.model;
 
 import java.io.Serializable;
 
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -147,16 +148,16 @@ public class RequestAuthModel implements Serializable {
 	 */
 	public RequestAuthModel checkModel() {
 		if(SaFoxUtil.isEmpty(clientId)) {
-			throw new SaTokenException("无效client_id");
+			throw new SaOAuth2Exception("client_id 不可为空").setCode(SaOAuth2ErrorCode.CODE_30101);
 		}
 		if(SaFoxUtil.isEmpty(scope)) {
-			throw new SaTokenException("无效scope");
+			throw new SaOAuth2Exception("scope 不可为空").setCode(SaOAuth2ErrorCode.CODE_30102);
 		}
 		if(SaFoxUtil.isEmpty(redirectUri)) {
-			throw new SaTokenException("无效redirect_uri");
+			throw new SaOAuth2Exception("redirect_uri 不可为空").setCode(SaOAuth2ErrorCode.CODE_30103);
 		}
 		if(SaFoxUtil.isEmpty(String.valueOf(loginId))) {
-			throw new SaTokenException("无效LoginId");
+			throw new SaOAuth2Exception("LoginId 不可为空").setCode(SaOAuth2ErrorCode.CODE_30104);
 		}
 		return this;
 	}

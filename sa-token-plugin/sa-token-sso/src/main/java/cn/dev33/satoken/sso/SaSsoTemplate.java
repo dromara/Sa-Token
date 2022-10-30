@@ -11,8 +11,8 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
-import cn.dev33.satoken.sso.exception.SaSsoExceptionCode;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
@@ -211,7 +211,7 @@ public class SaSsoTemplate {
 		
 		// 1、是否是一个有效的url 
 		if(SaFoxUtil.isUrl(url) == false) {
-			throw new SaSsoException("无效redirect：" + url).setCode(SaSsoExceptionCode.CODE_20001);
+			throw new SaSsoException("无效redirect：" + url).setCode(SaSsoErrorCode.CODE_30001);
 		}
 		
 		// 2、截取掉?后面的部分 
@@ -223,7 +223,7 @@ public class SaSsoTemplate {
 		// 3、是否在[允许地址列表]之中 
 		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
 		if(SaStrategy.me.hasElement.apply(authUrlList, url) == false) {
-			throw new SaSsoException("非法redirect：" + url).setCode(SaSsoExceptionCode.CODE_20002);
+			throw new SaSsoException("非法redirect：" + url).setCode(SaSsoErrorCode.CODE_30002);
 		}
 		
 		// 校验通过 √ 
@@ -448,7 +448,7 @@ public class SaSsoTemplate {
 		// 默认从配置文件中返回 
 		String secretkey = SaSsoManager.getConfig().getSecretkey();
 		if(SaFoxUtil.isEmpty(secretkey)) {
-			throw new SaSsoException("请配置 secretkey 参数").setCode(SaSsoExceptionCode.CODE_20009);
+			throw new SaSsoException("请配置 secretkey 参数").setCode(SaSsoErrorCode.CODE_30009);
 		}
 		return secretkey;
 	}
@@ -460,7 +460,7 @@ public class SaSsoTemplate {
 	@Deprecated
 	public void checkSecretkey(String secretkey) {
 		 if(SaFoxUtil.isEmpty(secretkey) || secretkey.equals(getSecretkey()) == false) {
-			 throw new SaSsoException("无效秘钥：" + secretkey).setCode(SaSsoExceptionCode.CODE_20003);
+			 throw new SaSsoException("无效秘钥：" + secretkey).setCode(SaSsoErrorCode.CODE_30003);
 		 }
 	}
 	
@@ -519,7 +519,7 @@ public class SaSsoTemplate {
 		// 校验签名 
 		String calcSign = getSign(loginId, timestamp, nonce, getSecretkey());
 		if(calcSign.equals(sign) == false) {
-			throw new SaSsoException("签名无效：" + calcSign).setCode(SaSsoExceptionCode.CODE_20008);
+			throw new SaSsoException("签名无效：" + calcSign).setCode(SaSsoErrorCode.CODE_30008);
 		}
 	}
 
@@ -531,7 +531,7 @@ public class SaSsoTemplate {
 		long disparity = Math.abs(System.currentTimeMillis() - timestamp);
 		long allowDisparity = SaSsoManager.getConfig().getTimestampDisparity();
 		if(allowDisparity != -1 && disparity > allowDisparity) {
-			throw new SaSsoException("timestamp 超出允许的范围").setCode(SaSsoExceptionCode.CODE_20007);
+			throw new SaSsoException("timestamp 超出允许的范围").setCode(SaSsoErrorCode.CODE_30007);
 		}
 	}
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
@@ -40,7 +40,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 */
 	public String jwtSecretKey() {
 		String keyt = getConfig().getJwtSecretKey();
-		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
 	

@@ -1,5 +1,6 @@
 package cn.dev33.satoken.exception;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -19,7 +20,7 @@ public class SaTokenException extends RuntimeException {
 	/**
 	 * 异常细分状态码 
 	 */
-	private int code = SaExceptionCode.CODE_UNDEFINED;
+	private int code = SaErrorCode.CODE_UNDEFINED;
 
 	/**
 	 * 构建一个异常
@@ -93,8 +94,9 @@ public class SaTokenException extends RuntimeException {
 	 * 如果flag==true，则抛出message异常 
 	 * @param flag 标记
 	 * @param message 异常信息 
+	 * @param code 异常细分状态码 
 	 */
-	public static void throwBy(boolean flag, String message) {
+	public static void throwBy(boolean flag, String message, int code) {
 		if(flag) {
 			throw new SaTokenException(message);
 		}
@@ -104,10 +106,11 @@ public class SaTokenException extends RuntimeException {
 	 * 如果value==null或者isEmpty，则抛出message异常 
 	 * @param value 值 
 	 * @param message 异常信息 
+	 * @param code 异常细分状态码 
 	 */
-	public static void throwByNull(Object value, String message) {
+	public static void throwByNull(Object value, String message, int code) {
 		if(SaFoxUtil.isEmpty(value)) {
-			throw new SaTokenException(message);
+			throw new SaTokenException(message).setCode(code);
 		}
 	}
 	

@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
-import cn.dev33.satoken.jwt.exception.SaJwtExceptionCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
@@ -146,19 +146,19 @@ public class SaJwtTemplate {
     	try {
     		jwt = JWT.of(token);
 		} catch (JWTException e) {
-    		throw new SaJwtException("jwt 解析失败：" + token, e).setCode(SaJwtExceptionCode.CODE_40101);
+    		throw new SaJwtException("jwt 解析失败：" + token, e).setCode(SaJwtErrorCode.CODE_30201);
 		}
     	JSONObject payloads = jwt.getPayloads();
     	
     	// 校验 Token 签名 
     	boolean verify = jwt.setKey(keyt.getBytes()).verify();
     	if(verify == false) {
-    		throw new SaJwtException("jwt 签名无效：" + token).setCode(SaJwtExceptionCode.CODE_40102);
+    		throw new SaJwtException("jwt 签名无效：" + token).setCode(SaJwtErrorCode.CODE_30202);
     	};
 
     	// 校验 loginType 
     	if(Objects.equals(loginType, payloads.getStr(LOGIN_TYPE)) == false) {
-    		throw new SaJwtException("jwt loginType 无效：" + token).setCode(SaJwtExceptionCode.CODE_40103);
+    		throw new SaJwtException("jwt loginType 无效：" + token).setCode(SaJwtErrorCode.CODE_30203);
     	}
     	
     	// 校验 Token 有效期
@@ -166,7 +166,7 @@ public class SaJwtTemplate {
     		Long effTime = payloads.getLong(EFF, 0L);
         	if(effTime != NEVER_EXPIRE) {
         		if(effTime == null || effTime < System.currentTimeMillis()) {
-        			throw new SaJwtException("jwt 已过期：" + token).setCode(SaJwtExceptionCode.CODE_40104);
+        			throw new SaJwtException("jwt 已过期：" + token).setCode(SaJwtErrorCode.CODE_30204);
         		}
         	}
     	}

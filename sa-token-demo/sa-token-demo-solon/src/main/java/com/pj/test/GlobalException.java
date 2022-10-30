@@ -1,7 +1,8 @@
 package com.pj.test;
 
-import cn.dev33.satoken.exception.*;
 import com.pj.util.AjaxJson;
+
+import cn.dev33.satoken.exception.*;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventListener;

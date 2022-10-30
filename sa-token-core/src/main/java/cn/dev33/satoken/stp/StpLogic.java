@@ -20,6 +20,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.NotLoginException;
@@ -255,7 +256,7 @@ public class StpLogic {
 	public String getTokenValueNotNull(){
 		String tokenValue = getTokenValue();
 		if(SaFoxUtil.isEmpty(tokenValue)) {
-			throw new SaTokenException("未能读取到有效Token");
+			throw new SaTokenException("未能读取到有效Token").setCode(SaErrorCode.CODE_11001);
 		}
 		return tokenValue;
 	}
@@ -351,7 +352,7 @@ public class StpLogic {
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
 		
 		// ------ 前置检查
-		SaTokenException.throwByNull(id, "账号id不能为空");
+		SaTokenException.throwByNull(id, "账号id不能为空", SaErrorCode.CODE_11002);
 		
 		// ------ 1、初始化 loginModel 
 		SaTokenConfig config = getConfig();
@@ -677,24 +678,24 @@ public class StpLogic {
  		// 如果获取不到token，则抛出: 无token
  		String tokenValue = getTokenValue();
  		if(tokenValue == null) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.NOT_TOKEN);
+ 			throw NotLoginException.newInstance(loginType, NotLoginException.NOT_TOKEN).setCode(SaErrorCode.CODE_11011);
  		}
  		// 查找此token对应loginId, 如果找不到则抛出：无效token 
  		String loginId = getLoginIdNotHandle(tokenValue);
  		if(loginId == null) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.INVALID_TOKEN, tokenValue);
+ 			throw NotLoginException.newInstance(loginType, NotLoginException.INVALID_TOKEN, tokenValue).setCode(SaErrorCode.CODE_11012);
  		}
  		// 如果是已经过期，则抛出：已经过期 
  		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue);
+ 			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue).setCode(SaErrorCode.CODE_11013);
  		}
  		// 如果是已经被顶替下去了, 则抛出：已被顶下线 
  		if(loginId.equals(NotLoginException.BE_REPLACED)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.BE_REPLACED, tokenValue);
+ 			throw NotLoginException.newInstance(loginType, NotLoginException.BE_REPLACED, tokenValue).setCode(SaErrorCode.CODE_11014);
  		}
  		// 如果是已经被踢下线了, 则抛出：已被踢下线 
  		if(loginId.equals(NotLoginException.KICK_OUT)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.KICK_OUT, tokenValue);
+ 			throw NotLoginException.newInstance(loginType, NotLoginException.KICK_OUT, tokenValue).setCode(SaErrorCode.CODE_11015);
  		}
  		// 检查是否已经 [临时过期]
 	 	checkActivityTimeout(tokenValue);
@@ -817,7 +818,7 @@ public class StpLogic {
 	 * @return 对应的扩展数据 
 	 */
 	public Object getExtra(String key) {
-		throw new ApiDisabledException();
+		throw new ApiDisabledException().setCode(SaErrorCode.CODE_11031);
 	}
 
 	/**
@@ -827,7 +828,7 @@ public class StpLogic {
 	 * @return 对应的扩展数据
 	 */
 	public Object getExtra(String tokenValue, String key) {
-		throw new ApiDisabledException();
+		throw new ApiDisabledException().setCode(SaErrorCode.CODE_11031);
 	}
 
  	
@@ -853,7 +854,7 @@ public class StpLogic {
 	 * @param loginId 新的账号Id值
 	 */
 	public void updateTokenToIdMapping(String tokenValue, Object loginId) {
-		SaTokenException.throwBy(SaFoxUtil.isEmpty(loginId), "LoginId 不能为空");
+		SaTokenException.throwBy(SaFoxUtil.isEmpty(loginId), "LoginId 不能为空", SaErrorCode.CODE_11003);
 		getSaTokenDao().update(splicingKeyTokenValue(tokenValue), loginId.toString());
 	}
 	/**
@@ -1096,7 +1097,7 @@ public class StpLogic {
  		}
  		// -2 代表已过期，抛出异常 
  		if(timeout == SaTokenDao.NOT_VALUE_EXPIRE) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue);
+ 			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue).setCode(SaErrorCode.CODE_11016);
  		}
  		// --- 至此，验证已通过 
 
@@ -1353,7 +1354,7 @@ public class StpLogic {
  	 */
  	public void checkRole(String role) {
  		if(hasRole(role) == false) {
-			throw new NotRoleException(role, this.loginType);
+			throw new NotRoleException(role, this.loginType).setCode(SaErrorCode.CODE_11041);
 		}
  	}
 
@@ -1366,7 +1367,7 @@ public class StpLogic {
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
  			if(!hasElement(roleList, role)) {
- 				throw new NotRoleException(role, this.loginType);
+ 				throw new NotRoleException(role, this.loginType).setCode(SaErrorCode.CODE_11041);
  			}
  		}
  	}
@@ -1385,7 +1386,7 @@ public class StpLogic {
  			}
  		}
 		if(roleArray.length > 0) {
-	 		throw new NotRoleException(roleArray[0], this.loginType);
+	 		throw new NotRoleException(roleArray[0], this.loginType).setCode(SaErrorCode.CODE_11041);
 		}
  	}
 
@@ -1466,7 +1467,7 @@ public class StpLogic {
  	 */
  	public void checkPermission(String permission) {
  		if(hasPermission(permission) == false) {
-			throw new NotPermissionException(permission, this.loginType);
+			throw new NotPermissionException(permission, this.loginType).setCode(SaErrorCode.CODE_11051);
 		}
  	}
 
@@ -1479,7 +1480,7 @@ public class StpLogic {
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
  			if(!hasElement(permissionList, permission)) {
- 				throw new NotPermissionException(permission, this.loginType);	
+ 				throw new NotPermissionException(permission, this.loginType).setCode(SaErrorCode.CODE_11051);
  			}
  		}
  	}
@@ -1498,7 +1499,7 @@ public class StpLogic {
  			}
  		}
 		if(permissionArray.length > 0) {
-	 		throw new NotPermissionException(permissionArray[0], this.loginType);
+	 		throw new NotPermissionException(permissionArray[0], this.loginType).setCode(SaErrorCode.CODE_11051);
 		}
  	}
 
@@ -1808,10 +1809,10 @@ public class StpLogic {
 	public void untieDisable(Object loginId, String... services) {
 		// 空值检查 
 		if(SaFoxUtil.isEmpty(loginId)) {
-			throw new SaTokenException("请提供要解禁的账号");
+			throw new SaTokenException("请提供要解禁的账号").setCode(SaErrorCode.CODE_11062);
 		}
 		if(services == null || services.length == 0) {
-			throw new SaTokenException("请提供要解禁的服务");
+			throw new SaTokenException("请提供要解禁的服务").setCode(SaErrorCode.CODE_11063);
 		}
 				
 		for (String service : services) {
@@ -1846,13 +1847,13 @@ public class StpLogic {
 	public void disableLevel(Object loginId, String service, int level, long time) {
 		// 空值检查 
 		if(SaFoxUtil.isEmpty(loginId)) {
-			throw new SaTokenException("请提供要封禁的账号");
+			throw new SaTokenException("请提供要封禁的账号").setCode(SaErrorCode.CODE_11062);
 		}
 		if(SaFoxUtil.isEmpty(service)) {
-			throw new SaTokenException("请提供要封禁的服务");
+			throw new SaTokenException("请提供要封禁的服务").setCode(SaErrorCode.CODE_11063);
 		}
 		if(level < SaTokenConsts.MIN_DISABLE_LEVEL) {
-			throw new SaTokenException("封禁等级不可以小于最小值：" + SaTokenConsts.MIN_DISABLE_LEVEL);
+			throw new SaTokenException("封禁等级不可以小于最小值：" + SaTokenConsts.MIN_DISABLE_LEVEL).setCode(SaErrorCode.CODE_11064);
 		}
 
 		// 标注为已被封禁
@@ -1917,7 +1918,7 @@ public class StpLogic {
 		// s2. 检测被封禁的等级是否达到指定级别 
 		Integer disableLevel = SaFoxUtil.getValueByType(value, int.class);
 		if(disableLevel >= level) {
-			throw new DisableServiceException(loginType, loginId, service, disableLevel, level, getDisableTime(loginId, service));
+			throw new DisableServiceException(loginType, loginId, service, disableLevel, level, getDisableTime(loginId, service)).setCode(SaErrorCode.CODE_11061);
 		}
 	}
 
@@ -2069,7 +2070,7 @@ public class StpLogic {
 	public void checkSafe(String service) {
 		String tokenValue = getTokenValue();
 		if (isSafe(tokenValue, service) == false) {
-			throw new NotSafeException(loginType, tokenValue, service);
+			throw new NotSafeException(loginType, tokenValue, service).setCode(SaErrorCode.CODE_11071);
 		}
 	}
 	

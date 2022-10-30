@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.error.SaSpringBootErrorCode;
+import cn.dev33.satoken.exception.NotWebContextException;
 
 /**
  * SpringMVC相关操作  
@@ -25,7 +26,7 @@ public class SpringMVCUtil {
 	public static HttpServletRequest getRequest() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new SaTokenException("非Web上下文无法获取Request");
+			throw new NotWebContextException("非Web上下文无法获取Request").setCode(SaSpringBootErrorCode.CODE_20101);
 		}
 		return servletRequestAttributes.getRequest();
 	}
@@ -37,7 +38,7 @@ public class SpringMVCUtil {
 	public static HttpServletResponse getResponse() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new SaTokenException("非Web上下文无法获取Response");
+			throw new NotWebContextException("非Web上下文无法获取Response").setCode(SaSpringBootErrorCode.CODE_20101);
 		}
 		return servletRequestAttributes.getResponse();
 	}

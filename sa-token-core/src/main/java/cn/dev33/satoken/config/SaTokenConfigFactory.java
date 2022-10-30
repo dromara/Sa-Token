@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -15,7 +17,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 
  * 
  * @author kong
- *
+ * @since 2022-10-30
  */
 public class SaTokenConfigFactory {
 
@@ -69,7 +71,7 @@ public class SaTokenConfigFactory {
 				map.put(key, prop.getProperty(key));
 			}
 		} catch (IOException e) {
-			throw new RuntimeException("配置文件(" + propertiesPath + ")加载失败", e);
+			throw new SaTokenException("配置文件(" + propertiesPath + ")加载失败", e).setCode(SaErrorCode.CODE_10021);
 		}
 		return map;
 	}
@@ -110,7 +112,7 @@ public class SaTokenConfigFactory {
 				field.setAccessible(true);
 				field.set(obj, valueConvert);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				throw new RuntimeException("属性赋值出错：" + field.getName(), e);
+				throw new SaTokenException("属性赋值出错：" + field.getName(), e).setCode(SaErrorCode.CODE_10022);
 			}
 		}
 		return obj;

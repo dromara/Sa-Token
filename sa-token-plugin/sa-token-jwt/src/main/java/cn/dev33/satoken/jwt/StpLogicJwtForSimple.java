@@ -2,7 +2,8 @@ package cn.dev33.satoken.jwt;
 
 import java.util.Map;
 
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
+import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -34,7 +35,7 @@ public class StpLogicJwtForSimple extends StpLogic {
 	 */
 	public String jwtSecretKey() {
 		String keyt = getConfig().getJwtSecretKey();
-		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
 	

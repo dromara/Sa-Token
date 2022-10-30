@@ -3,6 +3,7 @@ package cn.dev33.satoken.router;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
@@ -37,11 +38,11 @@ public enum SaHttpMethod {
 	 */
 	public static SaHttpMethod toEnum(String method) {
 		if(method == null) {
-			throw new SaTokenException("无效Method：" + method);
+			throw new SaTokenException("无效Method：" + method).setCode(SaErrorCode.CODE_10321);
 		}
 		SaHttpMethod reqMethod = map.get(method.toUpperCase());
 		if(reqMethod == null) {
-			throw new SaTokenException("无效Method：" + method);
+			throw new SaTokenException("无效Method：" + method).setCode(SaErrorCode.CODE_10321);
 		}
 		return reqMethod;
 	}

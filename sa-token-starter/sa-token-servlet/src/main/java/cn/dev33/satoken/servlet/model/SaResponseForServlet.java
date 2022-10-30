@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 
 /**
  * Response for Servlet
@@ -70,7 +71,7 @@ public class SaResponseForServlet implements SaResponse {
 		try {
 			response.sendRedirect(url);
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaServletErrorCode.CODE_20002);
 		}
 		return null;
 	}

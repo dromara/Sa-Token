@@ -6,7 +6,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.sso.error.SaSsoErrorCode;
+import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -385,7 +386,7 @@ public class SaSsoConfig implements Serializable {
 	 * SSO-Client端：发送Http请求的处理函数 
 	 */
 	public Function<String, String> sendHttp = url -> {
-		throw new SaTokenException("请配置 Http 请求处理器");
+		throw new SaSsoException("请配置 Http 请求处理器").setCode(SaSsoErrorCode.CODE_30010);
 	};
 
 

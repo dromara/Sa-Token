@@ -5,6 +5,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Api;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.GrantType;
@@ -44,7 +45,7 @@ public class SaOAuth2Handle {
 			if(cfg.getIsCode() && (cm.isCode || cm.isAutoMode)) {
 				return authorize(req, res, cfg);
 			}
-			throw new SaOAuth2Exception("暂未开放的授权模式");
+			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
 		}
 		
 		// Code授权码 获取 Access-Token
@@ -78,7 +79,7 @@ public class SaOAuth2Handle {
 			if(cfg.getIsImplicit() && (cm.isImplicit || cm.isAutoMode)) {
 				return authorize(req, res, cfg);
 			}
-			throw new SaOAuth2Exception("暂未开放的授权模式");
+			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30132);
 		}
 
 		// 模式三：密码式
@@ -87,7 +88,7 @@ public class SaOAuth2Handle {
 			if(cfg.getIsPassword() && (cm.isPassword || cm.isAutoMode)) {
 				return password(req, res, cfg);
 			}
-			throw new SaOAuth2Exception("暂未开放的授权模式");
+			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30133);
 		}
 
 		// 模式四：凭证式
@@ -96,7 +97,7 @@ public class SaOAuth2Handle {
 			if(cfg.getIsClient() && (cm.isClient || cm.isAutoMode)) {
 				return clientToken(req, res, cfg);
 			}
-			throw new SaOAuth2Exception("暂未开放的授权模式");
+			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30134);
 		}
 
 		// 默认返回
@@ -148,7 +149,7 @@ public class SaOAuth2Handle {
 		}
 
 		// 默认返回
-		throw new SaOAuth2Exception("无效response_type: " + ra.responseType);
+		throw new SaOAuth2Exception("无效response_type: " + ra.responseType).setCode(SaOAuth2ErrorCode.CODE_30125);
 	}
 
 	/**

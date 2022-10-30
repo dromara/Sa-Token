@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -110,7 +111,7 @@ public class SaRequestForServlet implements SaRequest {
 			request.getRequestDispatcher(path).forward(request, response);
 			return null;
 		} catch (ServletException | IOException e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaServletErrorCode.CODE_20001);
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package cn.dev33.satoken.context.model;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -65,7 +66,7 @@ public interface SaRequest {
 	public default String getParamNotNull(String name) {
 		String paramValue = getParam(name);
 		if(SaFoxUtil.isEmpty(paramValue)) {
-			throw new SaTokenException("缺少参数：" + name);
+			throw new SaTokenException("缺少参数：" + name).setCode(SaErrorCode.CODE_12001);
 		}
 		return paramValue;
 	}
@@ -139,8 +140,6 @@ public interface SaRequest {
 	 * @param path 转发地址 
 	 * @return 任意值 
 	 */
-	public default Object forward(String path) {
-		throw new SaTokenException("No implementation");
-	}
+	public Object forward(String path);
 	
 }

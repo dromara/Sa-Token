@@ -1,6 +1,5 @@
 package cn.dev33.satoken.secure;
 
-import java.security.InvalidParameterException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -23,6 +22,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
@@ -70,7 +70,7 @@ public class SaSecureUtil {
 			}
 			return new String(strA);
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12111);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class SaSecureUtil {
 			}
 			return new String(chs);
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12112);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class SaSecureUtil {
 			
 			return builder.toString();
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12113);
 		}
 	}
 
@@ -164,7 +164,7 @@ public class SaSecureUtil {
             byte[] result = cipher.doFinal(byteContent);
             return encoder.encodeToString(result);
  		} catch (Exception e) {
- 			throw new SaTokenException(e);
+ 			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12114);
  		}
     }
 
@@ -181,7 +181,7 @@ public class SaSecureUtil {
            byte[] result = cipher.doFinal(decoder.decode(text));
            return new String(result, "utf-8");
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12115);
 		}
     }
 
@@ -220,15 +220,9 @@ public class SaSecureUtil {
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
 		KeyPair keyPair;
 
-		try {
-			keyPairGenerator.initialize(KEY_SIZE,
-					new SecureRandom(UUID.randomUUID().toString().replaceAll("-", "").getBytes()));
-			keyPair = keyPairGenerator.generateKeyPair();
-		} catch (InvalidParameterException e) {
-			throw e;
-		} catch (NullPointerException e) {
-			throw e;
-		}
+		keyPairGenerator.initialize(KEY_SIZE,
+				new SecureRandom(UUID.randomUUID().toString().replaceAll("-", "").getBytes()));
+		keyPair = keyPairGenerator.generateKeyPair();
 
 		RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
@@ -261,7 +255,7 @@ public class SaSecureUtil {
 			}
 			return stringBuffer.toString();
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12116);
 		}
 	}
 
@@ -286,7 +280,7 @@ public class SaSecureUtil {
 			}
 			return stringBuffer.toString();
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12117);
 		}
 	}
 
@@ -313,7 +307,7 @@ public class SaSecureUtil {
 			}
 			return stringBuffer.toString();
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12118);
 		}
 	}
 
@@ -339,7 +333,7 @@ public class SaSecureUtil {
 			}
 			return stringBuffer.toString();
 		} catch (Exception e) {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12119);
 		}
 	}
 

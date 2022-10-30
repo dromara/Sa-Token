@@ -2,6 +2,7 @@ package cn.dev33.satoken.same;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SameTokenInvalidException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -57,7 +58,7 @@ public class SaSameTemplate {
 	public void checkToken(String token) {
 		if(isValid(token) == false) {
 			token = (token == null ? "" : token);
-			throw new SameTokenInvalidException("无效Same-Token：" + token);
+			throw new SameTokenInvalidException("无效Same-Token：" + token).setCode(SaErrorCode.CODE_10301);
 		}
 	}
 

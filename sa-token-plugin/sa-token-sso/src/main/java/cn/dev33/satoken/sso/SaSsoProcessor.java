@@ -4,8 +4,8 @@ import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
+import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
-import cn.dev33.satoken.sso.exception.SaSsoExceptionCode;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
@@ -276,7 +276,7 @@ public class SaSsoProcessor {
 			
 			// ------- 2、如果 loginId 无值，说明 ticket 无效
 			if(SaFoxUtil.isEmpty(loginId)) {
-				throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoExceptionCode.CODE_20004);
+				throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoErrorCode.CODE_30004);
 			} else {
 				// 3、如果 loginId 有值，说明 ticket 有效，此时进行登录并重定向至back地址 
 				stpLogic.login(loginId); 
@@ -352,7 +352,7 @@ public class SaSsoProcessor {
 	        return ssoLogoutBack(req, res);
 		} else {
 			// 将 sso-server 回应的消息作为异常抛出 
-			throw new SaSsoException(result.getMsg()).setCode(SaSsoExceptionCode.CODE_20006);
+			throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30006);
 		}
 	}
 
@@ -446,7 +446,7 @@ public class SaSsoProcessor {
 				return result.getData();
 			} else {
 				// 将 sso-server 回应的消息作为异常抛出 
-				throw new SaSsoException(result.getMsg()).setCode(SaSsoExceptionCode.CODE_20005);
+				throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30005);
 			}
 		} else {
 			// q2、使用模式二：直连Redis校验ticket 

@@ -1,8 +1,10 @@
 package cn.dev33.satoken.temp.jwt;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.temp.SaTempInterface;
+import cn.dev33.satoken.temp.jwt.error.SaTempJwtErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -44,7 +46,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public void deleteToken(String token) {
-		throw new SaTokenException("jwt cannot delete token");
+		throw new ApiDisabledException("jwt cannot delete token").setCode(SaTempJwtErrorCode.CODE_30302);
 	}
 	
 	/**
@@ -55,7 +57,7 @@ public class SaTempForJwt implements SaTempInterface {
 	public String getJwtSecretKey() {
 		String jwtSecretKey = SaManager.getConfig().getJwtSecretKey();
 		if(SaFoxUtil.isEmpty(jwtSecretKey)) {
-			throw new SaTokenException("请配置：jwtSecretKey");
+			throw new SaTokenException("请配置：jwtSecretKey").setCode(SaTempJwtErrorCode.CODE_30301);
 		}
 		return jwtSecretKey;
 	}

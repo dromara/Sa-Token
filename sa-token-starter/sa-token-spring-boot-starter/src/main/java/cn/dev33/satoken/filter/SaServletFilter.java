@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 
 import org.springframework.core.annotation.Order;
 
+import cn.dev33.satoken.error.SaSpringBootErrorCode;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
@@ -108,7 +109,7 @@ public class SaServletFilter implements Filter {
 	 * 异常处理函数：每次[认证函数]发生异常时执行此函数
 	 */
 	public SaFilterErrorStrategy error = e -> {
-		throw new SaTokenException(e);
+		throw new SaTokenException(e).setCode(SaSpringBootErrorCode.CODE_20105);
 	};
 
 	/**

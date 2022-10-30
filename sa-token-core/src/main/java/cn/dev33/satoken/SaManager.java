@@ -10,6 +10,7 @@ import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.context.second.SaTokenSecondContext;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
@@ -269,7 +270,7 @@ public class SaManager {
 				 * 		(1) 从main方法里调用一次
 				 * 		(2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
 				 */
-				throw new SaTokenException("未能获取对应StpLogic，type="+ loginType);
+				throw new SaTokenException("未能获取对应StpLogic，type="+ loginType).setCode(SaErrorCode.CODE_10002);
 			}
 		}
 		

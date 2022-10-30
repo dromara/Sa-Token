@@ -26,10 +26,11 @@ public class SaOAuth2Exception extends SaTokenException {
 	 * 如果flag==true，则抛出message异常 
 	 * @param flag 标记
 	 * @param message 异常信息 
+	 * @param code 异常细分码 
 	 */
-	public static void throwBy(boolean flag, String message) {
+	public static void throwBy(boolean flag, String message, int code) {
 		if(flag) {
-			throw new SaOAuth2Exception(message);
+			throw new SaOAuth2Exception(message).setCode(code);
 		}
 	}
 	

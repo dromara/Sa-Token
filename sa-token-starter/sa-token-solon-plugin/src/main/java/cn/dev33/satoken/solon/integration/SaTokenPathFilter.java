@@ -19,6 +19,7 @@ import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.solon.error.SaSolonErrorCode;
 import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
@@ -123,7 +124,7 @@ public class SaTokenPathFilter implements Filter {
 		if (e instanceof SaTokenException) {
 			throw (SaTokenException) e;
 		} else {
-			throw new SaTokenException(e);
+			throw new SaTokenException(e).setCode(SaSolonErrorCode.CODE_20302);
 		}
 	};
 

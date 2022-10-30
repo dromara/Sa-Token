@@ -5,7 +5,7 @@ import java.util.Map;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.stp.SaLoginModel;
@@ -42,7 +42,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	public String jwtSecretKey() {
 		String keyt = getConfig().getJwtSecretKey();
-		SaTokenException.throwByNull(keyt, "请配置jwt秘钥");
+		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
 	
@@ -90,7 +90,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
-		SaTokenException.throwByNull(id, "账号id不能为空");
+		SaJwtException.throwByNull(id, "账号id不能为空", SaJwtErrorCode.CODE_30206);
 		
 		// ------ 1、初始化 loginModel 
 		loginModel.build(getConfig());

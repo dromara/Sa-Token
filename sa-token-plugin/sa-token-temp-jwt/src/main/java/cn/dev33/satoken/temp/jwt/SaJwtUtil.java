@@ -2,6 +2,7 @@ package cn.dev33.satoken.temp.jwt;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.temp.jwt.error.SaTempJwtErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -78,7 +79,7 @@ public class SaJwtUtil {
     	// 验证是否超时 
     	Long eff = claims.get(KEY_EFF, Long.class);
     	if((eff == null || eff < System.currentTimeMillis()) && eff != NEVER_EXPIRE) {
-    		throw new SaTokenException("Token已超时");
+    		throw new SaTokenException("Token已超时").setCode(SaTempJwtErrorCode.CODE_30303);
     	}
     	
         // 获取数据 

@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -233,10 +234,10 @@ public class SaCookie {
 		this.builde();
 		
 		if(SaFoxUtil.isEmpty(name)) {
-			throw new SaTokenException("name不能为空");
+			throw new SaTokenException("name不能为空").setCode(SaErrorCode.CODE_12002);
 		}
 		if(value != null && value.indexOf(";") > -1) {
-			throw new SaTokenException("无效Value：" + value);
+			throw new SaTokenException("无效Value：" + value).setCode(SaErrorCode.CODE_12003);
 		}
 
 		// Set-Cookie: name=value; Max-Age=100000; Expires=Tue, 05-Oct-2021 20:28:17 GMT; Domain=localhost; Path=/; Secure; HttpOnly; SameSite=Lax 
