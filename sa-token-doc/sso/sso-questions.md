@@ -26,9 +26,15 @@ SSO 集成常见问题整理
 可以：加个过滤器检测到未登录 自动跳转就行了，详细可以参照章节：[[何时引导用户去登录]](/sso/sso-custom-login) 给出的建议进行设计
 
 
-### 问：我参照文档的SSO模式二搭建，一直提示：Ticket无效，请问怎么回事？
-根据群友的反馈，出现此异常概率最大的原因是因为 `Client` 与 `Server` 没有连接同一个Redis，SSO模式二中两者必须连接同一个 Redis 才可以登录成功，
-如果您排查之后不是此原因，可以加入QQ群或者在issues反馈一下
+### 问：我参照文档搭建SSO-Client，一直提示：Ticket无效，请问怎么回事？
+如果使用的是模式二，出现此异常概率最大的原因是因为 `Client` 与 `Server` 没有连接同一个Redis，SSO模式二中两者必须连接同一个 Redis 才可以登录成功。
+
+你可能会问：我看配置文件明明是同一个啊？
+
+我的建议是：排查时不要仅凭肉眼判断，分别在你的 `Client` 与 `Server` 启动后调用 `SaManager.getSaTokenDao().set("name", "value", 100000);` 
+随便写入一个值，看看能不能根据你的预期写进同一个Redis里，如果能的话才能证明 `Client` 与 `Server` 连接的Reids 是同一个，再进行下一步排查。
+
+如果使用的是模式三，则排查是否有重复校验 ticket 的代码，一个 ticket 码只能使用一次，多次重复使用就会提示这个。
 
 
 ### 模式一或者模式二报错：Could not write JSON: No serializer found for class com.pj.sso.SysUser and no properties discovered to create BeanSerializer 
