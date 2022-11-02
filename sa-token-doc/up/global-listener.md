@@ -10,7 +10,7 @@ Sa-Token 提供一种侦听器机制，通过注册侦听器，你可以订阅�
 
 ![sa-token-listener](https://oss.dev33.cn/sa-token/doc/sa-token-listener.svg  's-w')
 
-框架默认内置了侦听器 `SaTokenListenerForConsolePrint` 实现：[代码参考](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/listener/SaTokenListenerForConsolePrint.java)
+框架默认内置了侦听器 `SaTokenListenerForLog` 实现：[代码参考](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/listener/SaTokenListenerForLog.java)
 ，功能是控制台 log 打印输出，你可以通过配置`sa-token.is-log=true`开启。
 
 要注册自定义的侦听器也非常简单：

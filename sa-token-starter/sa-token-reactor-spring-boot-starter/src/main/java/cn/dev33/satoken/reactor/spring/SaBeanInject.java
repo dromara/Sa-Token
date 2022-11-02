@@ -18,6 +18,8 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.log.input.SaLogInput;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
@@ -152,6 +154,26 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaSignTemplate(SaSignTemplate saSignTemplate) {
 		SaManager.setSaSignTemplate(saSignTemplate);
+	}
+
+	/**
+	 * 注入自定义的 日志输出 Bean 
+	 * 
+	 * @param log /
+	 */
+	@Autowired(required = false)
+	public void setLog(SaLog log) {
+		SaManager.setLog(log);
+	}
+
+	/**
+	 * 注入自定义的 日志接受 Bean 
+	 * 
+	 * @param logInput /
+	 */
+	@Autowired(required = false)
+	public void setLogInput(SaLogInput logInput) {
+		SaManager.setLogInput(logInput);
 	}
 	
 	/**

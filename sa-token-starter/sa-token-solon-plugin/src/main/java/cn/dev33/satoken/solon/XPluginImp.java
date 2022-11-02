@@ -15,6 +15,8 @@ import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
+import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.log.input.SaLogInput;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
@@ -102,9 +104,20 @@ public class XPluginImp implements Plugin {
             SaManager.setSaSignTemplate(bean);
         });
 
+        // Sa-Token 日志输出 Bean
+        context.getBeanAsyn(SaLog.class, bean -> {
+        	SaManager.setLog(bean);
+        });
+
+        // Sa-Token 日志接受 Bean
+        context.getBeanAsyn(SaLogInput.class, bean -> {
+        	SaManager.setLogInput(bean);
+        });
+
         // 自定义 StpLogic 对象
         context.getBeanAsyn(StpLogic.class, bean -> {
             StpUtil.setStpLogic(bean);
         });
     }
+    
 }
