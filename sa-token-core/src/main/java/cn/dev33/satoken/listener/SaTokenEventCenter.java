@@ -21,7 +21,7 @@ public class SaTokenEventCenter {
 	
 	static {
 		// 默认添加控制台日志侦听器 
-		listenerList.add(new SaTokenListenerForConsolePrint());
+		listenerList.add(new SaTokenListenerForLog());
 	}
 
 	/**
@@ -198,7 +198,32 @@ public class SaTokenEventCenter {
 			listener.doUntieDisable(loginType, loginId, service);
 		}
 	}
-	
+
+	/**
+	 * 每次打开二级认证时触发
+	 * @param loginType 账号类别
+	 * @param tokenValue token值
+	 * @param service 指定服务 
+	 * @param safeTime 认证时间，单位：秒 
+	 */
+	public static void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doOpenSafe(loginType, tokenValue, service, safeTime);
+		}
+	}
+
+	/**
+	 * 每次关闭二级认证时触发
+	 * @param loginType 账号类别
+	 * @param service 指定服务 
+	 * @param tokenValue token值
+	 */
+	public static void doCloseSafe(String loginType, String tokenValue, String service) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doCloseSafe(loginType, tokenValue, service);
+		}
+	}
+
 	/**
 	 * 每次创建Session时触发
 	 * @param id SessionId

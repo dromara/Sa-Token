@@ -31,6 +31,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 注册 Sa-Token 拦截器打开注解鉴权功能 
 		registry.addInterceptor(new SaInterceptor(handle -> {
+			// SaManager.getLog().debug("----- 请求path={}  提交token={}", SaHolder.getRequest().getRequestPath(), StpUtil.getTokenValue());
 			
 			// 指定一条 match 规则
             SaRouter
@@ -75,6 +76,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		// 认证函数: 每次请求执行 
         		.setAuth(obj -> {
         			// System.out.println("---------- sa全局认证 " + SaHolder.getRequest().getRequestPath()); 
+        			// SaManager.getLog().debug("----- 请求path={}  提交token={}", SaHolder.getRequest().getRequestPath(), StpUtil.getTokenValue());
 
                     // 权限校验 -- 不同模块认证不同权限 
         			//		这里你可以写和拦截器鉴权同样的代码，不同点在于：

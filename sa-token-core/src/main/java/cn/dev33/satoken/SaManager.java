@@ -14,6 +14,9 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
+import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.log.SaLogForConsole;
+import cn.dev33.satoken.log.input.SaLogInput;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
@@ -37,18 +40,27 @@ public class SaManager {
 	 */
 	public volatile static SaTokenConfig config;	
 	public static void setConfig(SaTokenConfig config) {
-		SaManager.config = config;
+		setConfigMethod(config);
+		
+		// 打印 banner 
 		if(config.getIsPrint()) {
 			SaFoxUtil.printSaToken();
 		}
+		
+		// ## 发送日志 
+		SaManager.getLogInput().registerConfig(config);
+		
 		// 调用一次StpUtil中的方法，保证其可以尽早的初始化 StpLogic 
 		StpUtil.getLoginType();
+	}
+	private static void setConfigMethod(SaTokenConfig config) {
+		SaManager.config = config;
 	}
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
 			synchronized (SaManager.class) {
 				if (config == null) {
-					setConfig(SaTokenConfigFactory.createConfig());
+					setConfigMethod(SaTokenConfigFactory.createConfig());
 				}
 			}
 		}
@@ -60,6 +72,10 @@ public class SaManager {
 	 */
 	private volatile static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
+		setSaTokenDaoMethod(saTokenDao);
+		SaManager.getLogInput().registerComponent("SaTokenDao", saTokenDao);
+	}
+	private static void setSaTokenDaoMethod(SaTokenDao saTokenDao) {
 		if((SaManager.saTokenDao instanceof SaTokenDaoDefaultImpl)) {
 			((SaTokenDaoDefaultImpl)SaManager.saTokenDao).endRefreshThread();
 		}
@@ -69,7 +85,7 @@ public class SaManager {
 		if (saTokenDao == null) {
 			synchronized (SaManager.class) {
 				if (saTokenDao == null) {
-					setSaTokenDao(new SaTokenDaoDefaultImpl());
+					setSaTokenDaoMethod(new SaTokenDaoDefaultImpl());
 				}
 			}
 		}
@@ -82,12 +98,13 @@ public class SaManager {
 	private volatile static StpInterface stpInterface;
 	public static void setStpInterface(StpInterface stpInterface) {
 		SaManager.stpInterface = stpInterface;
+		SaManager.getLogInput().registerComponent("StpInterface", stpInterface);
 	}
 	public static StpInterface getStpInterface() {
 		if (stpInterface == null) {
 			synchronized (SaManager.class) {
 				if (stpInterface == null) {
-					setStpInterface(new StpInterfaceDefaultImpl());
+					SaManager.stpInterface = new StpInterfaceDefaultImpl();
 				}
 			}
 		}
@@ -100,6 +117,7 @@ public class SaManager {
 	private volatile static SaTokenContext saTokenContext;
 	public static void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.saTokenContext = saTokenContext;
+		SaManager.getLogInput().registerComponent("SaTokenContext", saTokenContext);
 	}
 	public static SaTokenContext getSaTokenContext() {
 		return saTokenContext;
@@ -109,11 +127,12 @@ public class SaManager {
 	 * 二级Context 
 	 */
 	private volatile static SaTokenSecondContext saTokenSecondContext;
-	public static SaTokenSecondContext getSaTokenSecondContext() {
-		return saTokenSecondContext;
-	}
 	public static void setSaTokenSecondContext(SaTokenSecondContext saTokenSecondContext) {
 		SaManager.saTokenSecondContext = saTokenSecondContext;
+		SaManager.getLogInput().registerComponent("SaTokenSecondContext", saTokenSecondContext);
+	}
+	public static SaTokenSecondContext getSaTokenSecondContext() {
+		return saTokenSecondContext;
 	}
 	
 	/**
@@ -146,12 +165,13 @@ public class SaManager {
 	private volatile static SaTempInterface saTemp;
 	public static void setSaTemp(SaTempInterface saTemp) {
 		SaManager.saTemp = saTemp;
+		SaManager.getLogInput().registerComponent("SaTempInterface", saTemp);
 	}
 	public static SaTempInterface getSaTemp() {
 		if (saTemp == null) {
 			synchronized (SaManager.class) {
 				if (saTemp == null) {
-					setSaTemp(new SaTempDefaultImpl());
+					SaManager.saTemp = new SaTempDefaultImpl();
 				}
 			}
 		}
@@ -164,12 +184,13 @@ public class SaManager {
 	private volatile static SaJsonTemplate saJsonTemplate;
 	public static void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
 		SaManager.saJsonTemplate = saJsonTemplate;
+		SaManager.getLogInput().registerComponent("SaJsonTemplate", saJsonTemplate);
 	}
 	public static SaJsonTemplate getSaJsonTemplate() {
 		if (saJsonTemplate == null) {
 			synchronized (SaManager.class) {
 				if (saJsonTemplate == null) {
-					setSaJsonTemplate(new SaJsonTemplateDefaultImpl());
+					SaManager.saJsonTemplate = new SaJsonTemplateDefaultImpl();
 				}
 			}
 		}
@@ -182,12 +203,13 @@ public class SaManager {
 	private volatile static SaSignTemplate saSignTemplate;
 	public static void setSaSignTemplate(SaSignTemplate saSignTemplate) {
 		SaManager.saSignTemplate = saSignTemplate;
+		SaManager.getLogInput().registerComponent("SaSignTemplate", saSignTemplate);
 	}
 	public static SaSignTemplate getSaSignTemplate() {
 		if (saSignTemplate == null) {
 			synchronized (SaManager.class) {
 				if (saSignTemplate == null) {
-					setSaSignTemplate(new SaSignTemplateDefaultImpl());
+					SaManager.saSignTemplate = new SaSignTemplateDefaultImpl();
 				}
 			}
 		}
@@ -200,16 +222,48 @@ public class SaManager {
 	private volatile static SaSameTemplate saSameTemplate;
 	public static void setSaSameTemplate(SaSameTemplate saSameTemplate) {
 		SaManager.saSameTemplate = saSameTemplate;
+		SaManager.getLogInput().registerComponent("SaSameTemplate", saSameTemplate);
 	}
 	public static SaSameTemplate getSaSameTemplate() {
 		if (saSameTemplate == null) {
 			synchronized (SaManager.class) {
 				if (saSameTemplate == null) {
-					setSaSameTemplate(new SaSameTemplate());
+					SaManager.saSameTemplate = new SaSameTemplate();
 				}
 			}
 		}
 		return saSameTemplate;
+	}
+	
+	/**
+	 * 日志接收器 
+	 */
+	private volatile static SaLogInput logInput;
+	public static void setLogInput(SaLogInput logInput) {
+		SaManager.logInput = logInput;
+		SaManager.getLogInput().registerComponent("SaLogInput", logInput);
+	}
+	public static SaLogInput getLogInput() {
+		if (logInput == null) {
+			synchronized (SaManager.class) {
+				if (logInput == null) {
+					SaManager.logInput = new SaLogInput();
+				}
+			}
+		}
+		return logInput;
+	}
+	
+	/**
+	 * 日志输出器 
+	 */
+	public volatile static SaLog log = new SaLogForConsole();
+	public static void setLog(SaLog log) {
+		SaManager.log = log;
+		SaManager.getLogInput().registerComponent("SaLog", log);
+	}
+	public static SaLog getLog() {
+		return SaManager.log;
 	}
 	
 	/**

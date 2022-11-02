@@ -60,7 +60,24 @@ public interface SaTokenListener {
 	 * @param service 指定服务 
 	 */
 	public void doUntieDisable(String loginType, Object loginId, String service);
-	
+
+	/**
+	 * 每次打开二级认证时触发
+	 * @param loginType 账号类别
+	 * @param tokenValue token值
+	 * @param service 指定服务 
+	 * @param safeTime 认证时间，单位：秒 
+	 */
+	public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime);
+
+	/**
+	 * 每次关闭二级认证时触发
+	 * @param loginType 账号类别
+	 * @param tokenValue token值
+	 * @param service 指定服务 
+	 */
+	public void doCloseSafe(String loginType, String tokenValue, String service);
+
 	/**
 	 * 每次创建Session时触发
 	 * @param id SessionId

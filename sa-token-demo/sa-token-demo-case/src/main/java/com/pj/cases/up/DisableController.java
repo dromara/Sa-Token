@@ -22,6 +22,8 @@ public class DisableController {
 	 	2、注销登录    ---- http://localhost:8081/disable/logout
 	 	3、禁用账号    ---- http://localhost:8081/disable/disable?userId=10001
 	 	4、再次访问登录接口，登录失败    ---- http://localhost:8081/disable/login?userId=10001
+	 	5、解封账号    ---- http://localhost:8081/disable/untieDisable?userId=10001
+	 	6、再次访问登录接口，登录成功    ---- http://localhost:8081/disable/login?userId=10001
 	 */
 
 	// 会话登录接口  ---- http://localhost:8081/disable/login?userId=10001
@@ -41,7 +43,7 @@ public class DisableController {
 		return SaResult.ok("账号退出成功");
 	}
 
-	// 封禁指定账号  ---- http://localhost:8081/disable/disable
+	// 封禁指定账号  ---- http://localhost:8081/disable/disable?userId=10001
 	@RequestMapping("disable")
 	public SaResult disable(long userId) {
 		/*
@@ -51,6 +53,13 @@ public class DisableController {
 		 */
 		StpUtil.disable(userId, 86400);
 		return SaResult.ok("账号 " + userId + " 封禁成功");
+	}
+
+	// 解封指定账号  ---- http://localhost:8081/disable/untieDisable?userId=10001
+	@RequestMapping("untieDisable")
+	public SaResult untieDisable(long userId) {
+		StpUtil.untieDisable(userId);
+		return SaResult.ok("账号 " + userId + " 解封成功");
 	}
 
 }

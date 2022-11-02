@@ -41,6 +41,16 @@ public class SaTokenListenerForSimple implements SaTokenListener {
 	public void doUntieDisable(String loginType, Object loginId, String service) {
 		
 	}
+	
+	@Override
+	public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
+		
+	}
+
+	@Override
+	public void doCloseSafe(String loginType, String tokenValue, String service) {
+		
+	}
 
 	@Override
 	public void doCreateSession(String id) {
@@ -57,4 +67,5 @@ public class SaTokenListenerForSimple implements SaTokenListener {
 
 	}
 
+	
 }

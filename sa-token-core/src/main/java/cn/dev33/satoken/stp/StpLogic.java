@@ -375,7 +375,7 @@ public class StpLogic {
 		// 写入 [token-last-activity] 
 		setLastActivityToNow(tokenValue); 
 
-		// $$ 发布事件：账号xxx 登录成功 
+		// $$ 发布事件：账号 xxx 登录成功 
 		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
 
 		// 检查此账号会话数量是否超出最大值 
@@ -551,7 +551,7 @@ public class StpLogic {
  	 	
  	 	// $$ 发布事件：某某Token注销下线了 
  		SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
-
+ 		
 		// 4. 清理User-Session上的token签名 & 尝试注销User-Session 
  	 	SaSession session = getSessionByLoginId(loginId, false);
  	 	if(session != null) {
@@ -2018,8 +2018,13 @@ public class StpLogic {
 	public void openSafe(String service, long safeTime) {
 		// 开启二级认证前必须处于登录状态 
 		checkLogin();
+		
 		// 写入key 
-		getSaTokenDao().set(splicingKeySafe(getTokenValueNotNull(), service), SaTokenConsts.SAFE_AUTH_SAVE_VALUE, safeTime);
+		String tokenValue = getTokenValueNotNull();
+		getSaTokenDao().set(splicingKeySafe(tokenValue, service), SaTokenConsts.SAFE_AUTH_SAVE_VALUE, safeTime);
+		
+		// $$ 发布事件 
+		SaTokenEventCenter.doOpenSafe(loginType, tokenValue, service, safeTime);
 	}
 
 	/**
@@ -2118,6 +2123,9 @@ public class StpLogic {
 		
 		// 删除 key 
 		getSaTokenDao().delete(splicingKeySafe(tokenValue, service));
+		
+		// $$ 发布事件 
+		SaTokenEventCenter.doCloseSafe(loginType, tokenValue, service);
 	}
 
 	

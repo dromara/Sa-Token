@@ -67,6 +67,18 @@ public class MySaTokenListener implements SaTokenListener {
 		System.out.println("---------- 自定义侦听器实现 doUntieDisable");
 	}
 
+	/** 每次二级认证时触发 */
+	@Override
+	public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
+		System.out.println("---------- 自定义侦听器实现 doOpenSafe");
+	}
+
+	/** 每次退出二级认证时触发 */
+	@Override
+	public void doCloseSafe(String loginType, String tokenValue, String service) {
+		System.out.println("---------- 自定义侦听器实现 doCloseSafe");
+	}
+
 	/** 每次创建Session时触发 */
 	@Override
 	public void doCreateSession(String id) {

@@ -2,6 +2,8 @@ package cn.dev33.satoken.config;
 
 import java.io.Serializable;
 
+import cn.dev33.satoken.util.SaFoxUtil;
+
 /**
  * Sa-Token 配置类 Model 
  * <p>
@@ -69,6 +71,13 @@ public class SaTokenConfig implements Serializable {
 
 	/** 是否打印操作日志 */
 	private Boolean isLog = false;
+
+	/** 日志等级（trace、debug、info、warn、error、fatal） */
+	private String logLevel = "trace";
+
+	/** 日志等级 int 值（1=trace、2=debug、3=info、4=warn、5=error、6=fatal） */
+	private int logLevelInt = 1;
+
 
 	/**
 	 * jwt秘钥 (只有集成 jwt 模块时此参数才会生效)   
@@ -375,6 +384,40 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
+	 * @return 日志等级（trace、debug、info、warn、error、fatal）
+	 */
+	public String getLogLevel() {
+		return logLevel;
+	}
+
+	/**
+	 * @param logLevel 日志等级（trace、debug、info、warn、error、fatal）
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setLogLevel(String logLevel) {
+		this.logLevel = logLevel;
+		this.logLevelInt = SaFoxUtil.translateLogLevelToInt(logLevel);
+		return this;
+	}
+
+	/**
+	 * @return 日志等级 int 值（1=trace、2=debug、3=info、4=warn、5=error、6=fatal）
+	 */
+	public int getLogLevelInt() {
+		return logLevelInt;
+	}
+
+	/**
+	 * @param logLevelInt 日志等级 int 值（1=trace、2=debug、3=info、4=warn、5=error、6=fatal）
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setLogLeveInt(int logLevelInt) {
+		this.logLevelInt = logLevelInt;
+		this.logLevel = SaFoxUtil.translateLogLevelToString(logLevelInt);
+		return this;
+	}
+	
+	/**
 	 * @return jwt秘钥 (只有集成 jwt 模块时此参数才会生效)    
 	 */
 	public String getJwtSecretKey() {
@@ -490,6 +533,8 @@ public class SaTokenConfig implements Serializable {
 				+ ", tokenPrefix=" + tokenPrefix
 				+ ", isPrint=" + isPrint 
 				+ ", isLog=" + isLog 
+				+ ", logLevel=" + logLevel 
+				+ ", logLevelInt=" + logLevelInt
 				+ ", jwtSecretKey=" + jwtSecretKey 
 				+ ", basic=" + basic 
 				+ ", currDomain=" + currDomain 

@@ -4,9 +4,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -84,7 +87,16 @@ public class SaFoxUtil {
 	public static boolean isNotEmpty(Object str) {
 		return isEmpty(str) == false;
 	}
-	
+
+	/**
+	 * 指定数组是否为null或者空数组
+	 * @param array /
+	 * @return / 
+	 */
+	public static <T> boolean isEmpty(T[] array) {
+		return array == null || array.length == 0;
+	}
+
 	/**
 	 * 比较两个对象是否相等 
 	 * @param a 第一个对象 
@@ -121,7 +133,18 @@ public class SaFoxUtil {
 	public static String formatDate(ZonedDateTime zonedDateTime) {
 		return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 	}
-	
+
+	/**
+	 * 指定毫秒后的时间（格式化 ：yyyy-MM-dd HH:mm:ss）
+	 * @param ms 指定毫秒后
+	 * @return 格式化后的时间
+	 */
+	public static String formatAfterDate(long ms) {
+		Instant instant = Instant.ofEpochMilli(System.currentTimeMillis() + ms);
+		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault());
+		return formatDate(zonedDateTime);
+	}
+		
 	/**
 	 * 从集合里查询数据
 	 * 
@@ -552,7 +575,31 @@ public class SaFoxUtil {
     	return list;
     }
     
+    public static List<String> logLevelList = Arrays.asList("", "trace", "debug", "info", "warn", "error", "fatal");
     
-    
+    /**
+     * 将日志等级从 String 格式转化为 int 格式
+     * @param level /
+     * @return /
+     */
+    public static int translateLogLevelToInt(String level) {
+    	int levelInt = logLevelList.indexOf(level);
+    	if(levelInt <= 0 || levelInt >= logLevelList.size()) {
+    		levelInt = 1;
+    	}
+    	return levelInt;
+    }
+
+    /**
+     * 将日志等级从 String 格式转化为 int 格式
+     * @param level /
+     * @return /
+     */
+    public static String translateLogLevelToString(int level) {
+    	if(level <= 0 || level >= logLevelList.size()) {
+    		level = 1;
+    	}
+    	return logLevelList.get(level);
+    }
     
 }

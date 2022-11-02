@@ -36,6 +36,7 @@ public class StpUtil {
 	 * 重置 StpLogic 对象
 	 * <br> 1、更改此账户的 StpLogic 对象 
 	 * <br> 2、put 到全局 StpLogic 集合中 
+	 * <br> 3、发送日志 
 	 * 
 	 * @param newStpLogic / 
 	 */
@@ -46,6 +47,9 @@ public class StpUtil {
 		// 添加到全局 StpLogic 集合中
 		// 以便可以通过 SaManager.getStpLogic(type) 的方式来全局获取到这个 StpLogic 
 		SaManager.putStpLogic(newStpLogic);
+		
+		// ## 发送日志 
+		SaManager.getLogInput().replaceStpLogic(stpLogic);
 	}
 
 	/**

@@ -61,6 +61,13 @@ public class SafeAuthController {
 	    return SaResult.error("二级认证失败"); 
 	}
 
+	// 手动关闭二级认证    ---- http://localhost:8081/safe/closeSafe
+	@RequestMapping("closeSafe")
+	public SaResult closeSafe() {
+		StpUtil.closeSafe();
+	    return SaResult.ok();
+	}
+
 	
 	// ------------------ 指定业务类型进行二级认证 
 
