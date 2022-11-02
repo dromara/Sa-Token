@@ -255,10 +255,10 @@ public class SaCookie {
 			 }
 			 sb.append("; Expires=" + expires);
 		}
-		if(SaFoxUtil.isEmpty(domain) == false) {
+		if(!SaFoxUtil.isEmpty(domain)) {
 			sb.append("; Domain=" + domain);
 		}
-		if(SaFoxUtil.isEmpty(path) == false) {
+		if(!SaFoxUtil.isEmpty(path)) {
 			sb.append("; Path=" + path);
 		}
 		if(secure) {
@@ -267,8 +267,8 @@ public class SaCookie {
 		if(httpOnly) {
 			sb.append("; HttpOnly");
 		}
-		if(SaFoxUtil.isEmpty(sameSite) == false) {
-			sb.append("; sameSite=" + sameSite);
+		if(!SaFoxUtil.isEmpty(sameSite)) {
+			sb.append("; SameSite=" + sameSite);
 		}
 		
 		return sb.toString();
