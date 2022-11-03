@@ -34,7 +34,7 @@ public class XPluginImp implements Plugin {
     @Override
     public void start(AopContext context) {
         // Sa-Token 日志输出 Bean
-        context.subBeansOfType(SaLog.class, bean -> {
+        context.getBeanAsyn(SaLog.class, bean -> {
         	SaManager.setLog(bean);
         });
 
