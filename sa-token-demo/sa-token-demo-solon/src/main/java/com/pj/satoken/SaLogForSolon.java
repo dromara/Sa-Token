@@ -1,6 +1,5 @@
 package com.pj.satoken;
 
-import org.noear.solon.annotation.Component;
 import org.noear.solon.core.util.PrintUtil;
 
 import cn.dev33.satoken.SaManager;
@@ -10,12 +9,12 @@ import cn.dev33.satoken.log.SaLogForConsole;
 import cn.dev33.satoken.util.StrFormatter;
 
 /**
- * 将 Sa-Token log 信息转接到 Slf4j 
+ * 将 Sa-Token log 信息转接到 Solon  
  * 
  * @author kong
  * @since 2022-11-2
  */
-@Component
+//@Component
 public class SaLogForSolon extends SaLogForConsole implements SaLog {
 
 	/**
