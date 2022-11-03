@@ -16,7 +16,6 @@ import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
-import cn.dev33.satoken.log.input.SaLogInput;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
@@ -36,8 +35,10 @@ public class XPluginImp implements Plugin {
     public void start(AopContext context) {
         //集成初始化
 
-        // 注入上下文Bean
-        SaManager.setSaTokenContext(new SaContextForSolon());
+        // Sa-Token 日志输出 Bean
+        context.getBeanAsyn(SaLog.class, bean -> {
+        	SaManager.setLog(bean);
+        });
 
         //注入配置Bean
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
@@ -47,6 +48,8 @@ public class XPluginImp implements Plugin {
             SaManager.setConfig(bean);
         });
 
+        // 注入上下文Bean
+        SaManager.setSaTokenContext(new SaContextForSolon());
 
         // 注入Dao Bean
         context.getBeanAsyn(SaTokenDao.class, bean -> {
@@ -102,16 +105,6 @@ public class XPluginImp implements Plugin {
         // Sa-Token 参数签名算法 Bean
         context.getBeanAsyn(SaSignTemplate.class, bean -> {
             SaManager.setSaSignTemplate(bean);
-        });
-
-        // Sa-Token 日志输出 Bean
-        context.getBeanAsyn(SaLog.class, bean -> {
-        	SaManager.setLog(bean);
-        });
-
-        // Sa-Token 日志接受 Bean
-        context.getBeanAsyn(SaLogInput.class, bean -> {
-        	SaManager.setLogInput(bean);
         });
 
         // 自定义 StpLogic 对象

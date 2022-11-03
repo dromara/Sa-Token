@@ -1,6 +1,8 @@
 package cn.dev33.satoken.listener;
 
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpLogic;
 
 /**
  * Sa-Token 侦听器
@@ -98,5 +100,24 @@ public interface SaTokenListener {
 	 * @param timeout 续期时间 
 	 */
 	public void doRenewTimeout(String tokenValue,  Object loginId, long timeout);
-	
+
+	/**
+	 * 全局组件载入 
+	 * @param comtName 组件名称 
+	 * @param comtObj 组件对象 
+	 */
+	public default void doRegisterComponent(String comtName, Object comtObj) {}
+
+	/**
+	 * StpLogic 对象替换 
+	 * @param stpLogic / 
+	 */
+	public default void doSetStpLogic(StpLogic stpLogic) {}
+
+	/**
+	 * 载入全局配置 
+	 * @param stpLogic / 
+	 */
+	public default void doSetConfig(SaTokenConfig config) {}
+
 }

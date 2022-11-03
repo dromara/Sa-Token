@@ -1,7 +1,11 @@
 package cn.dev33.satoken.listener;
 
-import cn.dev33.satoken.SaManager;
+import static cn.dev33.satoken.SaManager.log;
+
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token 侦听器实现：Log 打印 
@@ -16,7 +20,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
-		SaManager.getLogInput().doLogin(loginType, loginId, tokenValue, loginModel);
+		log.info("账号 {} 登录成功 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -24,7 +28,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogout(String loginType, Object loginId, String tokenValue) {
-		SaManager.getLogInput().doLogout(loginType, loginId, tokenValue);
+		log.info("账号 {} 注销登录 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -32,7 +36,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doKickout(String loginType, Object loginId, String tokenValue) {
-		SaManager.getLogInput().doKickout(loginType, loginId, tokenValue);
+		log.info("账号 {} 被踢下线 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -40,7 +44,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doReplaced(String loginType, Object loginId, String tokenValue) {
-		SaManager.getLogInput().doReplaced(loginType, loginId, tokenValue);
+		log.info("账号 {} 被顶下线 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -48,7 +52,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doDisable(String loginType, Object loginId, String service, int level, long disableTime) {
-		SaManager.getLogInput().doDisable(loginType, loginId, service, level, disableTime);
+		log.info("账号 {} [{}服务] 被封禁 (loginType={}), 封禁等级={}, 解封时间为 {}", loginId, loginType, service, level, SaFoxUtil.formatAfterDate(disableTime * 1000));
 	}
 
 	/**
@@ -56,7 +60,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doUntieDisable(String loginType, Object loginId, String service) {
-		SaManager.getLogInput().doUntieDisable(loginType, loginId, service);
+		log.info("账号 {} [{}服务] 解封成功 (loginType={})", loginId, service, loginType);
 	}
 	
 	/**
@@ -64,7 +68,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
-		SaManager.getLogInput().doOpenSafe(loginType, tokenValue, service, safeTime);
+		log.info("Token 二级认证成功, 业务标识={}, 有效期={}秒, Token值={}", service, safeTime, tokenValue);
 	}
 
 	/**
@@ -72,7 +76,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doCloseSafe(String loginType, String tokenValue, String service) {
-		SaManager.getLogInput().doCloseSafe(loginType, tokenValue, service);
+		log.info("Token 二级认证关闭, 业务标识={}, Token值={}", service, tokenValue);
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doCreateSession(String id) {
-		SaManager.getLogInput().doCreateSession(id);
+		log.info("SaSession [{}] 创建成功", id);
 	}
 
 	/**
@@ -88,7 +92,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogoutSession(String id) {
-		SaManager.getLogInput().doLogoutSession(id);
+		log.info("SaSession [{}] 注销成功", id);
 	}
 
 	/**
@@ -96,8 +100,41 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
-		SaManager.getLogInput().doRenewTimeout(tokenValue, loginId, timeout);
+		log.info("Token 续期成功, {} 秒后到期, 帐号={}, Token值={} ", timeout, loginId, tokenValue);
 	}
 
-	
+
+	/**
+	 * 全局组件载入 
+	 * @param comtName 组件名称 
+	 * @param comtObj 组件对象 
+	 */
+	@Override
+	public void doRegisterComponent(String comtName, Object comtObj) {
+		String canonicalName = comtObj == null ? null : comtObj.getClass().getCanonicalName();
+		log.info("全局组件 {} 载入成功: {}", comtName, canonicalName);
+	}
+
+	/**
+	 * StpLogic 对象替换 
+	 * @param stpLogic / 
+	 */
+	@Override
+	public void doSetStpLogic(StpLogic stpLogic) {
+		if(stpLogic != null) {
+			log.info("会话组件 StpLogic(type={}) 重置成功: {}", stpLogic.getLoginType(), stpLogic.getClass());
+		}
+	}
+
+	/**
+	 * 载入全局配置 
+	 * @param stpLogic / 
+	 */
+	@Override
+	public void doSetConfig(SaTokenConfig config) {
+		if(config != null) {
+			log.info("全局配置 {} ", config);
+		}
+	}
+
 }

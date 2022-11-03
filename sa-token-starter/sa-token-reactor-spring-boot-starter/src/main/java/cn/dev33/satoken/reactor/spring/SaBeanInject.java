@@ -19,7 +19,6 @@ import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
-import cn.dev33.satoken.log.input.SaLogInput;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
@@ -37,15 +36,23 @@ import cn.dev33.satoken.temp.SaTempInterface;
 public class SaBeanInject {
 
 	/**
-	 * 注入配置Bean
+	 * 组件注入 
+	 * <p> 为确保 Log 组件正常打印，必须将 SaLog 和 SaTokenConfig 率先初始化 </p> 
 	 * 
 	 * @param saTokenConfig 配置对象
 	 */
-	@Autowired(required = false)
-	public void setConfig(SaTokenConfig saTokenConfig) {
-		SaManager.setConfig(saTokenConfig);
+	public SaBeanInject(
+			@Autowired(required = false) SaLog log, 
+			@Autowired(required = false) SaTokenConfig saTokenConfig
+			){
+		if(log != null) {
+			SaManager.setLog(log);
+		}
+		if(saTokenConfig != null) {
+			SaManager.setConfig(saTokenConfig);
+		}
 	}
-
+	
 	/**
 	 * 注入持久化Bean
 	 * 
@@ -156,26 +163,6 @@ public class SaBeanInject {
 		SaManager.setSaSignTemplate(saSignTemplate);
 	}
 
-	/**
-	 * 注入自定义的 日志输出 Bean 
-	 * 
-	 * @param log /
-	 */
-	@Autowired(required = false)
-	public void setLog(SaLog log) {
-		SaManager.setLog(log);
-	}
-
-	/**
-	 * 注入自定义的 日志接受 Bean 
-	 * 
-	 * @param logInput /
-	 */
-	@Autowired(required = false)
-	public void setLogInput(SaLogInput logInput) {
-		SaManager.setLogInput(logInput);
-	}
-	
 	/**
 	 * 注入自定义的 StpLogic 
 	 * @param stpLogic / 

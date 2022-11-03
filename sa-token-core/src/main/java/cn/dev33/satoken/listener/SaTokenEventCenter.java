@@ -3,9 +3,11 @@ package cn.dev33.satoken.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpLogic;
 
 /**
  * Sa-Token 事件中心 事件发布器
@@ -254,6 +256,38 @@ public class SaTokenEventCenter {
 	public static void doRenewTimeout(String tokenValue,  Object loginId, long timeout) {
 		for (SaTokenListener listener : listenerList) {
 			listener.doRenewTimeout(tokenValue, loginId, timeout);
+		}
+	}
+
+	
+	/**
+	 * 全局组件载入 
+	 * @param comtName 组件名称 
+	 * @param comtObj 组件对象 
+	 */
+	public static void doRegisterComponent(String comtName, Object comtObj) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doRegisterComponent(comtName, comtObj);
+		}
+	}
+
+	/**
+	 * StpLogic 对象替换 
+	 * @param stpLogic / 
+	 */
+	public static void doSetStpLogic(StpLogic stpLogic) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doSetStpLogic(stpLogic);
+		}
+	}
+
+	/**
+	 * 载入全局配置 
+	 * @param stpLogic / 
+	 */
+	public static void doSetConfig(SaTokenConfig config) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doSetConfig(config);
 		}
 	}
 

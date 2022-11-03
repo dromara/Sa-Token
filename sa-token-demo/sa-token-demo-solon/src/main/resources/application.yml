@@ -17,7 +17,7 @@ sa-token:
     # token风格
     token-style: uuid
     # 是否输出操作日志 
-    is-log: false
+    is-log: true
        
 solon: 
     # redis配置 

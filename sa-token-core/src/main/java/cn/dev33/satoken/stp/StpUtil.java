@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 
 /**
@@ -48,8 +49,8 @@ public class StpUtil {
 		// 以便可以通过 SaManager.getStpLogic(type) 的方式来全局获取到这个 StpLogic 
 		SaManager.putStpLogic(newStpLogic);
 		
-		// ## 发送日志 
-		SaManager.getLogInput().replaceStpLogic(stpLogic);
+		// $$ 全局事件  
+		SaTokenEventCenter.doSetStpLogic(stpLogic);
 	}
 
 	/**

@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.reactor.spring.json.SaJsonTemplateForJackson;
 
@@ -35,15 +34,7 @@ public class SaBeanRegister {
 	 */
 	@Bean
 	public SaTokenContext getSaTokenContext() {
-		return new SaTokenContextForThreadLocal() {
-			/**
-			 * 重写路由匹配方法
-			 */
-			@Override
-			public boolean matchPath(String pattern, String path) {
-				return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
-			}
-		};
+		return new SaTokenContextForSpringReactor();
 	}
 
 	/**
