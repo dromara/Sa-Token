@@ -33,13 +33,19 @@ public class XPluginImp implements Plugin {
 
     @Override
     public void start(AopContext context) {
-        //集成初始化
-
         // Sa-Token 日志输出 Bean
         context.getBeanAsyn(SaLog.class, bean -> {
         	SaManager.setLog(bean);
         });
 
+
+        //注入其它 Bean
+        context.beanOnloaded(c->{
+            beanInitDo(c);
+        });
+    }
+
+    private void beanInitDo(AopContext context){
         //注入配置Bean
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
