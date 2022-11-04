@@ -88,6 +88,7 @@
 	- [推荐公众号](/more/tj-gzh) 
 	- [加入讨论群](/more/join-group) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
+	- [需求提交](/more/demand-commit) 
 
 - **附录**
 	- [常见问题排查](/more/common-questions)  
