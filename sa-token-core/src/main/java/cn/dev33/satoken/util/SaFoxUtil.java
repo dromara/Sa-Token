@@ -542,7 +542,7 @@ public class SaFoxUtil {
     }
 
     /**
-     * Array 转 String，按照逗号切割 
+     * Array 转 String，按照逗号连接 
      * @param arr 数组 
      * @return 字符串 
      */
