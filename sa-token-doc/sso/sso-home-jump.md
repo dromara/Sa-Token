@@ -42,7 +42,7 @@ public class HomeController {
 	@RequestMapping("/home")
 	public Object index() {
 		// 如果未登录，则先去登录
-		if(StpUtil.isLogin()) {
+		if(!StpUtil.isLogin()) {
 			return SaHolder.getResponse().redirect("/sso/auth");
 		}
 		
