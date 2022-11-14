@@ -21,9 +21,8 @@
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-		<solon.version>1.10.9</solon.version>
-		<solon-test.version>1.9.1</solon-test.version>
-		<noear-redisx.version>1.4.3</noear-redisx.version>
+		<solon.version>1.10.13</solon.version>
+		<noear-redisx.version>1.4.4</noear-redisx.version>
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
@@ -154,7 +153,7 @@
 	        <dependency>
 	            <groupId>org.noear</groupId>
 	            <artifactId>solon-test</artifactId>
-	            <version>${solon-test.version}</version>
+	            <version>${solon.version}</version>
 	        </dependency>
 			
 	        <!-- redis pool -->
