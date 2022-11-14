@@ -34,7 +34,7 @@ public class XPluginImp implements Plugin {
     @Override
     public void start(AopContext context) {
         // Sa-Token 日志输出 Bean
-        context.getBeanAsyn(SaLog.class, bean -> {
+        context.getBeanAsync(SaLog.class, bean -> {
         	SaManager.setLog(bean);
         });
 
@@ -50,7 +50,7 @@ public class XPluginImp implements Plugin {
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         SaManager.setConfig(saTokenConfig);
 
-        context.getBeanAsyn(SaTokenConfig.class, bean -> {
+        context.getBeanAsync(SaTokenConfig.class, bean -> {
             SaManager.setConfig(bean);
         });
 
@@ -58,12 +58,12 @@ public class XPluginImp implements Plugin {
         SaManager.setSaTokenContext(new SaContextForSolon());
 
         // 注入Dao Bean
-        context.getBeanAsyn(SaTokenDao.class, bean -> {
+        context.getBeanAsync(SaTokenDao.class, bean -> {
             SaManager.setSaTokenDao(bean);
         });
 
         // 注入二级上下文 Bean
-        context.getBeanAsyn(SaTokenSecondContextCreator.class, bean -> {
+        context.getBeanAsync(SaTokenSecondContextCreator.class, bean -> {
             SaManager.setSaTokenSecondContext(bean.create());
         });
 
@@ -74,49 +74,48 @@ public class XPluginImp implements Plugin {
 
 
         // 注入权限认证 Bean
-        context.getBeanAsyn(StpInterface.class, bean -> {
+        context.getBeanAsync(StpInterface.class, bean -> {
             SaManager.setStpInterface(bean);
         });
 
         // 注入持久化 Bean
-        context.getBeanAsyn(SaTokenDao.class, bean -> {
+        context.getBeanAsync(SaTokenDao.class, bean -> {
             SaManager.setSaTokenDao(bean);
         });
 
         // 临时令牌验证模块 Bean
-        context.getBeanAsyn(SaTempInterface.class, bean -> {
+        context.getBeanAsync(SaTempInterface.class, bean -> {
             SaManager.setSaTemp(bean);
         });
 
         // Sa-Token-Id 身份凭证模块 Bean
-        context.getBeanAsyn(SaIdTemplate.class, bean -> {
+        context.getBeanAsync(SaIdTemplate.class, bean -> {
             SaIdUtil.saIdTemplate = bean;
         });
 
         // Sa-Token Same-Token 模块 Bean
-        context.getBeanAsyn(SaSameTemplate.class, bean -> {
+        context.getBeanAsync(SaSameTemplate.class, bean -> {
             SaManager.setSaSameTemplate(bean);
         });
 
         // Sa-Token Http Basic 认证模块 Bean
-        context.getBeanAsyn(SaBasicTemplate.class, bean -> {
+        context.getBeanAsync(SaBasicTemplate.class, bean -> {
             SaBasicUtil.saBasicTemplate = bean;
         });
 
         // Sa-Token JSON 转换器 Bean
-        context.getBeanAsyn(SaJsonTemplate.class, bean -> {
+        context.getBeanAsync(SaJsonTemplate.class, bean -> {
             SaManager.setSaJsonTemplate(bean);
         });
 
         // Sa-Token 参数签名算法 Bean
-        context.getBeanAsyn(SaSignTemplate.class, bean -> {
+        context.getBeanAsync(SaSignTemplate.class, bean -> {
             SaManager.setSaSignTemplate(bean);
         });
 
         // 自定义 StpLogic 对象
-        context.getBeanAsyn(StpLogic.class, bean -> {
+        context.getBeanAsync(StpLogic.class, bean -> {
             StpUtil.setStpLogic(bean);
         });
     }
-    
 }

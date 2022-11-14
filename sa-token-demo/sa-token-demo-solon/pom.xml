@@ -10,7 +10,7 @@
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
 		<sa-token.version>1.32.0</sa-token.version>
-		<solon.version>1.10.9</solon.version>
+		<solon.version>1.10.13</solon.version>
 	</properties>
 
 	<dependencies>
@@ -20,6 +20,12 @@
 			<groupId>org.noear</groupId>
 			<artifactId>solon-web</artifactId>
             <version>${solon.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon.logging</artifactId>
+			<version>${solon.version}</version>
 		</dependency>
 		
 		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
