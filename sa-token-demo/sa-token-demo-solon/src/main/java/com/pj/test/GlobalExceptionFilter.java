@@ -5,8 +5,9 @@ import com.pj.util.AjaxJson;
 import cn.dev33.satoken.exception.*;
 
 import org.noear.solon.annotation.Component;
-import org.noear.solon.core.event.EventListener;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Filter;
+import org.noear.solon.core.handle.FilterChain;
 
 
 /**
@@ -15,13 +16,12 @@ import org.noear.solon.core.handle.Context;
  * @author noear
  */
 @Component
-public class GlobalException implements EventListener<Throwable> {
-
+public class GlobalExceptionFilter implements Filter {
 	@Override
-	public void onEvent(Throwable e) {
-		Context c = Context.current();
-
-		if (c != null) {
+	public void doFilter(Context ctx, FilterChain chain) throws Throwable {
+		try {
+			chain.doFilter(ctx);
+		} catch (SaTokenException e) {
 			// 不同异常返回不同状态码
 			AjaxJson aj = null;
 			if (e instanceof NotLoginException) {    // 如果是未登录异常
@@ -40,7 +40,7 @@ public class GlobalException implements EventListener<Throwable> {
 				aj = AjaxJson.getError(e.getMessage());
 			}
 
-			c.result = aj;
+			ctx.render(aj);
 		}
 	}
 }
