@@ -42,8 +42,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		
         		// 认证函数: 每次请求执行 
         		.setAuth(obj -> {
-        			// System.out.println("---------- sa全局认证 " + SaHolder.getRequest().getRequestPath()); 
-        			
+        			// 输出 API 请求日志，方便调试代码 
+        			// SaManager.getLog().debug("----- 请求path={}  提交token={}", SaHolder.getRequest().getRequestPath(), StpUtil.getTokenValue());
+                   
         		})
         		
         		// 异常处理函数：每次认证函数发生异常时执行此函数 
