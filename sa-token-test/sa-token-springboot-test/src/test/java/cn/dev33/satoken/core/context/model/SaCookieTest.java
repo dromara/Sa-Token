@@ -31,7 +31,7 @@ public class SaCookieTest {
     	Assertions.assertEquals(cookie.getSameSite(), "Lax");
     	Assertions.assertEquals(cookie.getHttpOnly(), true);
     	Assertions.assertEquals(cookie.getSecure(), true);
-    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.cc/; Path=/; Secure; HttpOnly; sameSite=Lax");
+    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.cc/; Path=/; Secure; HttpOnly; SameSite=Lax");
     	
     	Assertions.assertNotNull(cookie.toString());
     }

@@ -86,8 +86,9 @@ public class SaFoxUtil {
 
 	/**
 	 * 指定数组是否为null或者空数组
+	 * @param <T> /
 	 * @param array /
-	 * @return / 
+	 * @return /
 	 */
 	public static <T> boolean isEmpty(T[] array) {
 		return array == null || array.length == 0;

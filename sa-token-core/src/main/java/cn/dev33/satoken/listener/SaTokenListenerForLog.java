@@ -128,7 +128,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 
 	/**
 	 * 载入全局配置 
-	 * @param stpLogic / 
+	 * @param config / 
 	 */
 	@Override
 	public void doSetConfig(SaTokenConfig config) {

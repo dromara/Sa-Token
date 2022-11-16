@@ -12,7 +12,7 @@
     <description>Sa-Token Dependencies</description>
 
     <properties>
-        <revision>1.32.0</revision>
+        <revision>1.33.0</revision>
 		
 		<!-- 统一定义依赖版本号 -->
 		<springboot.version>2.5.12</springboot.version>

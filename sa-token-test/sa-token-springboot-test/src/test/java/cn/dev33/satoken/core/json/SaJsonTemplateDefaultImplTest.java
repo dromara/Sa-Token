@@ -3,7 +3,7 @@ package cn.dev33.satoken.core.json;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import cn.dev33.satoken.exception.ApiDisabledException;
+import cn.dev33.satoken.exception.NotImplException;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.util.SoMap;
 
@@ -18,12 +18,12 @@ public class SaJsonTemplateDefaultImplTest {
     @Test
     public void testSaJsonTemplateDefaultImpl() {
     	SaJsonTemplateDefaultImpl saJsonTemplate = new SaJsonTemplateDefaultImpl();
-    	// API 禁用
-    	Assertions.assertThrows(ApiDisabledException.class, () -> {
+    	// 组件未实现
+    	Assertions.assertThrows(NotImplException.class, () -> {
     		saJsonTemplate.parseJsonToMap("{}");
     	});
-    	// API 禁用
-    	Assertions.assertThrows(ApiDisabledException.class, () -> {
+    	// 组件未实现
+    	Assertions.assertThrows(NotImplException.class, () -> {
     		saJsonTemplate.toJsonString(SoMap.getSoMap("name", "zhangsan"));
     	});
     }

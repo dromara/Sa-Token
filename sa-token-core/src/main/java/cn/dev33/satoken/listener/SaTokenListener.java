@@ -116,7 +116,7 @@ public interface SaTokenListener {
 
 	/**
 	 * 载入全局配置 
-	 * @param stpLogic / 
+	 * @param config / 
 	 */
 	public default void doSetConfig(SaTokenConfig config) {}
 

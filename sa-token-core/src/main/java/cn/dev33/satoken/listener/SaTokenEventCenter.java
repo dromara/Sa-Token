@@ -283,7 +283,7 @@ public class SaTokenEventCenter {
 
 	/**
 	 * 载入全局配置 
-	 * @param stpLogic / 
+	 * @param config / 
 	 */
 	public static void doSetConfig(SaTokenConfig config) {
 		for (SaTokenListener listener : listenerList) {

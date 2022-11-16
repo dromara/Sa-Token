@@ -1,5 +1,16 @@
 # 更新日志 
 
+
+### 2022-11-16 @v1.33.0
+- 重构：重构异常状态码机制。   **[重要]**
+- 重构：重构 sa-token-sso 模块异常码改为 300 开头，sa-token-jwt 异常码改为 302 开头。  **[不向下兼容]**
+- 新增：新增全局 Log 模块。   **[重要]**
+- 重构：`SaTokenListenerForConsolePrint` 改名 `SaTokenListenerForLog`。   **[不向下兼容]**
+- 修复：修复多线程下 `SaFoxUtil.getRandomString()` 随机数重复问题。
+- 文档：文档优化。
+
+
+
 ### 2022-10-28 @v1.32.0
 - 修复：修复 sa-token-dao-redis-fastjson 插件多余序列化 `timeout` 字段的问题。
 - 修复：修复 sa-token-dao-redis-fastjson 插件 `session.getModel` 无法反序列化实体类的问题。
