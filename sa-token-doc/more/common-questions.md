@@ -74,21 +74,13 @@
 - 可能1：这个账号被 `StpUtil.kickout(loginId)` 方法强制踢下线了。
 
 
-### Q：集成 Redis 后，明明 Redis 中有值，却还是提示无效Token？
-根据以往的处理经验，发生这种情况 90% 的概率是因为你找错了Redis，即：代码连接的Redis和你用管理工具看到的Redis并不是同一个。
-
-你可能会问：我看配置文件明明是同一个啊？
-
-我的回答是：别光看配置文件，不一定准确，在启动时直接执行 `SaManager.getSaTokenDao().set("name", "value", 100000);`，
-随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的话才能证明`代码连接的Reids` 和`你用管理工具看到的Redis` 是同一个，再进行下一步排查。
-
-
 ### Q：加了注解进行鉴权认证，不生效？
 1. 注解鉴权功能默认关闭，两种方式任选其一进行打开：注册注解拦截器、集成AOP模块，参考：[注解式鉴权](/use/at-check)
 2. 在Spring环境中, 如果同时配置了`WebMvcConfigurer`和`WebMvcConfigurationSupport`时, 也会导致拦截器失效.
    - **常见场景**: 很多项目中会在`WebMvcConfigurationSupport`中配置`addResourceHandlers`方法开放Swagger等相关静态资源映射, 同时基于Sa-Token添加了`WebMvcConfigurer`配置`addInterceptors`方法注册注解拦截器, 这样会导致注解拦截器失效. 
    - **解决方案**: `WebMvcConfigurer`和`WebMvcConfigurationSupport`只选一个配置, 建议统一通过实现`WebMvcConfigurer`接口进行配置.
 3. 如果以上步骤处理后仍然没有效果，加群说明一下复现步骤 
+
 
 
 ### Q：我加了拦截器鉴权，但是好像没有什么效果，请求没有被拦截住？
@@ -105,7 +97,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		System.out.println("--------- flag 1");
 		registry.addInterceptor(new SaInterceptor(handle -> {
-			System.out.println("--------- flag 2");
+			System.out.println("--------- flag 2，请求进入了拦截器，访问的 path 是：" + SaHolder.getRequest().getRequestPath());
 			StpUtil.checkLogin();  // 登录校验，只有会话登录后才能通过这句代码 
 		}))
 		.addPathPatterns("/user/**")
@@ -117,15 +109,18 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 在启动时 `flag 1` 被打印出来，才证明拦截器注册成功了，在访问请求时 `flag 2` 被打印出来，才证明请求进入了拦截器。
 
 如果拦截器没有注册成功，则：
-- 可能1：SpringBoot 版本较高（`>= 2.6.0`），请尝试在启动类加上 `@EnableWebMvc` 注解再重新启动。
-- 可能2：`SaTokenConfigure` 配置类不在启动类的同包或者子包下，导致没有被 SpringBoot 扫描到。
-- 可能3：`SaTokenConfigure` 配置类在启动类的同包或者子包下，但启动类上加了 `@ComponentScan("com.xxx")` 注解，导致包扫描范围不正确，请将此注解删除或移动到其它配置类上。
-- 可能4：项目属于 Maven 多模块项目，`SaTokenConfigure` 和启动类没有在一个模块，且启动类模块没有引入配置类的模块，导致加载不到。
+<!-- - 可能1：SpringBoot 版本较高（`>= 2.6.0`），请尝试在启动类加上 `@EnableWebMvc` 注解再重新启动。 -->
+- 可能1：`SaTokenConfigure` 配置类不在启动类的同包或者子包下，导致没有被 SpringBoot 扫描到。
+- 可能2：你的项目启动类上加了 `@ComponentScan("com.xxx")` 注解，导致包扫描范围不正确，请将此注解删除或移动到其它配置类上。
+- 可能3：项目属于 Maven 多模块项目，`SaTokenConfigure` 和启动类没有在一个模块，且启动类模块没有引入配置类的模块，导致加载不到。
 
 如果拦截器已经注册成功，但请求没有进入拦截器：
-- 可能1：你访问的 path，没有被 `.addPathPatterns("/user/**")` 拦截住。
-- 可能2：你访问的 path，被 `.excludePathPatterns("/xxx/xx")` 排除掉了。
-- 可能3：你访问的是另一个项目，请把当前项目停掉，看看你的请求还能不能访问成功。
+- 可能1：你访问的 path，没有被 `.addPathPatterns("/user/**")` 拦截住，或者被 `.excludePathPatterns("/xxx/xx")` 排除掉了。
+- 可能2：你访问的是另一个项目，请把当前项目停掉，看看你的请求还能不能访问成功。
+
+如果请求进入拦截器也成功了，那可能是：
+- 可能1：前端访问时提交了会话 Token，且这个 Token 是有效的，通过了拦截器的代码校验。
+- 可能2：你访问的 path，和你预期不符，仔细观察一下打印出来的 path 信息，和你的预期相符吗。
 
 注：以上的排查步骤，对过滤器不生效的情形一样适用。
 
@@ -133,16 +128,25 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ### Q：我使用拦截器鉴权时，明明排除了某个路径却仍然被拦截了？
 - 可能1：你的项目可能是跨域了，先把跨域问题解决掉，参考：[解决跨域问题](/fun/cors-filter)
 - 可能2：你访问的接口可能是404了，SpringBoot环境下如果访问接口404后，会被转发到`/error`，然后被再次拦截。请确保你访问的 path 有对应的 Controller 承接！
-- 可能3：可能这里并没有拦截，但是又被其他地方拦截了。请先把这个拦截器给注释掉，看看还会不会拦截，如果依然拦截，那说明不是这个拦截器的锅，请仔细查看一下控制台抛出的堆栈信息，定位一下到底是哪行代码拦截住这个请求的。
-- 可能4：后端拦截的 path 未必是你前端访问的这个path，建议先打印一下 path 信息，看看和你预想的是否一致，再做分析。
+- 可能3：可能拦截器这里并没有拦截，但是又被其他地方拦截了。请先把这个拦截器给注释掉，看看还会不会拦截，如果依然拦截，那说明不是这个拦截器的锅，请仔细查看一下控制台抛出的堆栈信息，定位一下到底是哪行代码拦截住这个请求的。
+- 可能4：后端拦截的 path 未必是你前端访问的这个path（特别是经过网关转发后的path可能会有变化），建议先打印一下 path 信息，看看和你预想的是否一致，再做分析。
 ``` java
-// 打印一下，看看后端接受到的path，是否和你前端访问时的一致，如果不一致，先找找原因为啥不一致 
-registry.addInterceptor(new SaInterceptor(handler -> {
-	System.out.println("前端访问的 path 是：" + SaHolder.getRequest().getRequestPath());
-	StpUtil.checkLogin();
-})).addPathPatterns("/**");
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		try {
+			System.out.println("-------- 前端访问path：" + SaHolder.getRequest().getRequestPath());
+			StpUtil.checkLogin();
+			System.out.println("-------- 此 path 校验成功：" + SaHolder.getRequest().getRequestPath());
+		} catch (Exception e) { 
+			System.out.println("-------- 此 path 校验失败：" + SaHolder.getRequest().getRequestPath());
+			throw e;
+		}
+	})).addPathPatterns("/**"); 
+}
 ```
-- 可能5：你的项目配置了 `context-path` 上下文地址，比如 `server.servlet.context-path=/shop`，注意这个地址是不需要加在拦截器上的：
+- 可能5：可能你只提交了一个请求，但是浏览器自动帮你提交了其它请求，举个例子：首次访问网站时，浏览器一般会自动提交 `/favicon.ico`，所以**你需要找出是哪个path被拦截了**，怎么找呢？用【可能4】的代码来测试找。
+- 可能6：你的项目配置了 `context-path` 上下文地址，比如 `server.servlet.context-path=/shop`，注意这个地址是不需要加在拦截器上的：
 ``` java
 // 这是错误示例，不需要把 context-path 上下文参数写在下面的 excludePathPatterns 地址上。
 registry.addInterceptor(new SaInterceptor(hadnle -> StpUtil.checkLogin()))
@@ -151,7 +155,7 @@ registry.addInterceptor(new SaInterceptor(hadnle -> StpUtil.checkLogin()))
 registry.addInterceptor(new SaInterceptor(hadnle -> StpUtil.checkLogin()))
 			.addPathPatterns("/**").excludePathPatterns("/user/login");
 ```
-- 可能6：你写了多个匹配规则，请求只越过了第一个规则，被其它规则拦下了，例如以下代码：
+- 可能7：你写了多个匹配规则，请求越过了第一个规则，但又被其它规则拦下来了，例如以下代码：
 ``` java
 // 以下代码，当你未登录访问 `/user/doLogin` 时，会被第1条规则越过，然后被第2条拦下，校验登录，然后抛出异常：`NotLoginException：xxx`
 registry.addInterceptor(new SaInterceptor(handler -> {
@@ -160,7 +164,7 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 	SaRouter.match("/**").notMatch("/goods/getList").check(r -> StpUtil.checkLogin());  // 第3个规则 
 })).addPathPatterns("/**");
 ```
-- 可能7：你自定义的封装方法，并没有按照你的预想情况执行：
+- 可能8：你自定义的封装方法，并没有按照你的预想情况执行：
 ``` java
 public void addInterceptors(InterceptorRegistry registry) {
 	registry.addInterceptor(new SaInterceptor(handle -> {
@@ -228,6 +232,48 @@ public class SaTokenApplication {
 - 启动类上是否加了 `@ComponentScan` 注解，导致包扫描范围不正确，请将此注解删除或移动到其它配置类上。
 
 2、情况2是，这个组件注入成功了，但是还没到执行时机，比如 `StpInterface` 组件，只有在鉴权时才会触发，如果你的代码仅仅是登录校验，就不会执行到这个组件。
+
+
+### Q：集成 Redis 后，明明 Redis 中有值，却还是提示无效Token？
+
+根据以往的处理经验，发生这种情况 90% 的概率是因为你找错了Redis，即：代码连接的Redis和你用管理工具看到的Redis并不是同一个。
+
+你可能会问：我看配置文件明明是同一个啊？
+
+我的回答是：别光看配置文件，不一定准确，在启动时直接执行 `SaManager.getSaTokenDao().set("name", "value", 100000);`，
+随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的话才能证明`代码连接的Reids` 和`你用管理工具看到的Redis` 是同一个，再进行下一步排查。
+
+
+### Q：报错：无效Same-Token：xxxxxxxxxxx
+与之类似的的报错还有：
+- SSO模式二时，报错：无效ticket：xxxxxxxxxx
+- OAuth2模块跨多个项目搭建Server时：报错无效 Access-Token：xxxxxx
+- 微服务做分布式 Session 认证时，报错：无效 Token：xxxxxxxxx
+- 等等等等.... 
+
+这些功能有个统一的特点，就是需要多个项目连接同一个 Redis 才能搭建成功，如果连接的不是同一个 Redis，就会导致 Token / ticket 无法互相认证。
+
+你可能会问：我看配置文件明明就是连接的同一个 Redis 啊？
+
+别急，和上一个问题一样，**不要凭借肉眼检查下定论**，在你的两个服务之间，分别使用以下代码测试一下：
+
+``` java
+@SpringBootApplication
+public class SspServerApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(SspServerApplication.class, args);
+		// 写值测试：注意一定要用下列方法测试，不要用自己封装的 RedisUtil 之类的测试 
+		SaManager.getSaTokenDao().set("name", "value", 100000); 
+	}
+}
+```
+
+如果都能根据你的预期写进同一个 Redis，那才能证明两个服务确实连接的是同一个 Redis。
+
+实际上，在交流群中提问这些问题的同学，90%的经过以上测试以后，都会发现两者连接的不是同一个 Reids，原因大多是：Redis配置没有生效、使用了 Alone-Redis 之类的……
+
+如果你是剩下的 10%，那么继续排查：两边的 sa-token 配置是否完全一致，比如 token-name 配置不一致，也会导致数据无法相互认证。最好是把所有 sa-token 相关的配置都复制过去，试验一下看看。
+
 
 
 
