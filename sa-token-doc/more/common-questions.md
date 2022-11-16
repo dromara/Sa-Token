@@ -259,9 +259,9 @@ public class SaTokenApplication {
 
 ``` java
 @SpringBootApplication
-public class SspServerApplication {
+public class SaTokenApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SspServerApplication.class, args);
+		SpringApplication.run(SaTokenApplication.class, args);
 		// 写值测试：注意一定要用下列方法测试，不要用自己封装的 RedisUtil 之类的测试 
 		SaManager.getSaTokenDao().set("name", "value", 100000); 
 	}
