@@ -48,7 +48,7 @@ public class XPluginImp implements Plugin {
     private void beanInitDo(AopContext context) {
         //注入配置Bean
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
-        if (saTokenConfig != null) {
+        if (saTokenConfig == null) {
             //如果没有，给个默认的
             saTokenConfig = new SaTokenConfig();
             saTokenConfig.setIsPrint(false);
