@@ -7,6 +7,7 @@
 - 新增：新增全局 Log 模块。   **[重要]**
 - 重构：`SaTokenListenerForConsolePrint` 改名 `SaTokenListenerForLog`。   **[不向下兼容]**
 - 修复：修复多线程下 `SaFoxUtil.getRandomString()` 随机数重复问题。
+- 修复：修复 sa-token-demo-sso3-client-nosdk 项目中单点注销 url 配置错误的问题
 - 文档：文档优化。
 
 
