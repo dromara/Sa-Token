@@ -40,7 +40,7 @@ public class SsoRequestUtil {
 	/**
 	 * 单点注销地址 
 	 */
-	public static String sloUrl = "http://sa-sso-server.com:9000/sso/logout";
+	public static String sloUrl = "http://sa-sso-server.com:9000/sso/signout";
 	
 	/**
 	 * 接口调用秘钥 
