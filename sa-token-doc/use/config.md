@@ -98,7 +98,6 @@ public class SaTokenConfigure {
 		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
 		config.setTokenStyle("uuid");               // token风格 
 		config.setIsLog(false);                     // 是否输出操作日志 
-		return config;
 	}
 }
 ```
