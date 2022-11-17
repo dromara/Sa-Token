@@ -39,6 +39,17 @@
 - 文档：文档增加 `Gradle` 依赖方式和 `properties` 风格配置。
 - 新增：新增 `sa-token-dependencies`，统一定义依赖版本。 **[重要]** 
 
+##### 已知问题：
+
+> 部分场景下 Token 重复问题，受影响版本 `=v1.32.0`
+> - 受影响模块：
+> 	- sa-token-core 切换了 Token 风格：tik、random-32、random-64、random-128，如果使用 默认uuid、simple-uuid 风格则不受影响。
+> 	- sa-token-core 使用了临时 Token 认证模块，如果集成了 sa-token-temp-jwt 则不受影响。
+> 	- sa-token-core 使用了 Same-Token 模块。
+> 	- sa-token-jwt 全模块
+> 	- sa-token-oauth2 全模块
+> 	- sa-token-sso 模式二和模式三
+
 
 
 ### 2022-9-8 @v1.31.0
