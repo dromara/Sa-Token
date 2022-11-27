@@ -39,7 +39,7 @@
 	<!-- 一些属性 -->
 	<properties>
         <revision>1.33.0</revision>
-        <jdk.version>1.8</jdk.version>
+        <java.version>1.8</java.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
 	</properties>
@@ -96,9 +96,9 @@
 			<artifactId>maven-compiler-plugin</artifactId>
 			<version>3.2</version>
 			<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-				<encoding>UTF-8</encoding>
+				<source>${java.version}</source>
+				<target>${java.version}</target>
+				<encoding>${project.build.sourceEncoding}</encoding>
 			</configuration>
 		</plugin>
         

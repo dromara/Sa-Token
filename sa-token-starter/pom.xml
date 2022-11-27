@@ -19,11 +19,12 @@
 	<!-- 所有子模块 -->
     <modules>
         <module>sa-token-servlet</module>
-        <module>sa-token-spring-boot-starter</module>
         <module>sa-token-reactor-spring-boot-starter</module>
         <module>sa-token-solon-plugin</module>
         <module>sa-token-jboot-plugin</module>
         <module>sa-token-jfinal-plugin</module>
+        <module>sa-token-jakarta-servlet</module>
+        <module>sa-token-spring-boot</module>
     </modules>
 
 </project>
