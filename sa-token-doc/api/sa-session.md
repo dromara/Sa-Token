@@ -6,7 +6,7 @@ SaSession-会话对象，专业数据缓存组件。
 
 ### 1、常量 
 ``` java
-SaSession.ROLE_LIST = "USER";   // 在 Session 上存储用户对象时建议使用的key 
+SaSession.USER = "USER";   // 在 Session 上存储用户对象时建议使用的key 
 SaSession.ROLE_LIST = "ROLE_LIST";   // 在 Session 上存储角色时建议使用的key 
 SaSession.PERMISSION_LIST = "PERMISSION_LIST";   // 在 Session 上存储权限时建议使用的key 
 ```
