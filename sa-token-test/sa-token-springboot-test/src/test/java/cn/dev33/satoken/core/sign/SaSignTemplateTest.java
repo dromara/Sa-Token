@@ -18,12 +18,12 @@ public class SaSignTemplateTest {
 
 	// 连接参数列表 
 	@Test
-	public void testJoinParams() {
+	public void testJoinParamsDictSort() {
 		SoMap map = SoMap.getSoMap()
 				.set("name", "zhang")
 				.set("age", 18)
 				.set("sex", "女");
-		String str = SaManager.getSaSignTemplate().joinParams(map);
+		String str = SaManager.getSaSignTemplate().joinParamsDictSort(map);
 
 		// 按照音序排列 
 		Assertions.assertEquals(str, "age=18&name=zhang&sex=女");

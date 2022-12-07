@@ -155,4 +155,15 @@ public interface SaErrorCode {
 	/** RSA 私钥解密异常 */
 	public static final int CODE_12119 = 12119;
 
+	// ------------ 
+
+	/** 参与参数签名的秘钥不可为空 */
+	public static final int CODE_12201 = 12201;
+
+	/** 给定的签名无效 */
+	public static final int CODE_12202 = 12202;
+
+	/** timestamp 超出允许的范围 */
+	public static final int CODE_12203 = 12203;
+
 }

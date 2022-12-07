@@ -95,6 +95,11 @@ public class SaTokenConsts {
 	 */
 	public static final String DEFAULT_SAFE_AUTH_SERVICE = "important"; 
 
+	/**
+	 * 常量key标记: 临时 Token 认证模块，默认的业务类型 
+	 */
+	public static final String DEFAULT_TEMP_TOKEN_SERVICE = "record"; 
+
 
 	// =================== token-style 相关 ===================  
 	

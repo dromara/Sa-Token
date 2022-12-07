@@ -103,6 +103,16 @@ public class SaFoxUtil {
 	public static boolean equals(Object a, Object b) {
         return (a == b) || (a != null && a.equals(b));
     }
+
+	/**
+	 * 比较两个对象是否不相等 
+	 * @param a 第一个对象 
+	 * @param b 第二个对象 
+	 * @return 两个对象是否不相等 
+	 */
+	public static boolean notEquals(Object a, Object b) {
+        return !equals(a, b);
+    }
 	
 	/**
 	 * 以当前时间戳和随机int数字拼接一个随机字符串

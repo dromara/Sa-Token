@@ -28,6 +28,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 * @param obj 对象 
 	 * @return 转换后的 json 字符串
 	 */
+	@Override
 	public String toJsonString(Object obj) {
 		try {
 			return objectMapper.writeValueAsString(obj);
