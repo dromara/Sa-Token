@@ -92,7 +92,7 @@ public class SaSsoProcessor {
 			return res.redirect(redirect);
 		} else {
 			// 方式2：带着ticket参数重定向回Client端 (mode=ticket)  
-			String redirectUrl = ssoTemplate.buildRedirectUrl(stpLogic.getLoginId(), req.getParam(paramName.redirect));
+			String redirectUrl = ssoTemplate.buildRedirectUrl(stpLogic.getLoginId(), req.getParam(paramName.client), req.getParam(paramName.redirect));
 			return res.redirect(redirectUrl);
 		}
 	}
@@ -120,11 +120,12 @@ public class SaSsoProcessor {
 		
 		// 获取参数 
 		SaRequest req = SaHolder.getRequest();
+		String client = req.getParam(paramName.client);
 		String ticket = req.getParamNotNull(paramName.ticket);
 		String sloCallback = req.getParam(paramName.ssoLogoutCall);
 		
 		// 校验ticket，获取 loginId 
-		Object loginId = ssoTemplate.checkTicket(ticket);
+		Object loginId = ssoTemplate.checkTicket(ticket, client);
 
 		// 注册此客户端的单点注销回调URL 
 		ssoTemplate.registerSloCallbackUrl(loginId, sloCallback);
@@ -344,7 +345,7 @@ public class SaSsoProcessor {
         SaResult result = ssoTemplate.request(url);
         
 		// 校验响应状态码 
-		if(result.getCode() == SaResult.CODE_SUCCESS) {
+		if(SaResult.CODE_SUCCESS == result.getCode()) {
 	        // 极端场景下，sso-server 中心的单点注销可能并不会通知到此 client 端，所以这里需要再补一刀
 	        if(stpLogic.isLogin()) {
 	        	stpLogic.logout();

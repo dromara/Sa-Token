@@ -37,5 +37,8 @@ public interface SaSsoErrorCode {
 
 	/** 本地系统没有配置 http 请求处理器 */
 	public static final int CODE_30010 = 30010;
+
+	/** 该 ticket 不属于当前 client */
+	public static final int CODE_30011 = 30011;
 	
 }

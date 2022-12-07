@@ -23,6 +23,9 @@ public class ParamName {
 	/** loginId参数名称 */
 	public String loginId = "loginId";
 
+	/** client参数名称 */
+	public String client = "client";
+
 	/** secretkey参数名称 */
 	public String secretkey = "secretkey";
 	

@@ -80,14 +80,15 @@ public class SaSsoTemplate {
 	/**
 	 * 根据 账号id 创建一个 Ticket码 
 	 * @param loginId 账号id 
+	 * @param client 客户端标识 
 	 * @return Ticket码 
 	 */
-	public String createTicket(Object loginId) {
+	public String createTicket(Object loginId, String client) {
 		// 创建 Ticket
 		String ticket = randomTicket(loginId);
 		
 		// 保存 Ticket
-		saveTicket(ticket, loginId);
+		saveTicket(ticket, loginId, client);
 		saveTicketIndex(ticket, loginId);
 		
 		// 返回 Ticket
@@ -98,10 +99,15 @@ public class SaSsoTemplate {
 	 * 保存 Ticket 
 	 * @param ticket ticket码
 	 * @param loginId 账号id 
+	 * @param client 客户端标识 
 	 */
-	public void saveTicket(String ticket, Object loginId) {
+	public void saveTicket(String ticket, Object loginId, String client) {
+		String value = String.valueOf(loginId);
+		if(SaFoxUtil.isNotEmpty(client)) {
+			value += "," + client;
+		}
 		long ticketTimeout = SaSsoManager.getConfig().getTicketTimeout();
-		SaManager.getSaTokenDao().set(splicingTicketSaveKey(ticket), String.valueOf(loginId), ticketTimeout); 
+		SaManager.getSaTokenDao().set(splicingTicketSaveKey(ticket), value, ticketTimeout); 
 	}
 	
 	/**
@@ -145,7 +151,13 @@ public class SaSsoTemplate {
 		if(SaFoxUtil.isEmpty(ticket)) {
 			return null;
 		}
-		return SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
+		String loginId = SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
+		// 如果是 "a,b" 的格式，则只取最前面的一项 
+		if(loginId != null && loginId.indexOf(",") > -1) {
+			String[] arr = loginId.split(",");
+			loginId = arr[0];
+		}
+		return loginId;
 	}
 
 	/**
@@ -172,16 +184,43 @@ public class SaSsoTemplate {
 	}
 
 	/**
-	 * 校验ticket码，获取账号id，如果此ticket是有效的，则立即删除 
+	 * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除 
 	 * @param ticket Ticket码
 	 * @return 账号id 
 	 */
 	public Object checkTicket(String ticket) {
-		Object loginId = getLoginId(ticket);
+		return checkTicket(ticket, getSsoConfig().getClient());
+	}
+	
+	/**
+	 * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除 
+	 * @param ticket Ticket码
+	 * @param client client 标识 
+	 * @return 账号id 
+	 */
+	public Object checkTicket(String ticket, String client) {
+		// 读取 loginId
+		String loginId = SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
+		
 		if(loginId != null) {
+			// 如果是 "a,b" 的格式，则只取最前面的一项 
+			if(loginId.indexOf(",") > -1) {
+				String[] arr = loginId.split(",");
+				loginId = arr[0];
+				
+				// 如果指定了 client 标识，则校验一下 client 标识是否一致 
+				if(SaFoxUtil.isNotEmpty(client) && SaFoxUtil.notEquals(client, arr[1])) {
+					throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket)
+						.setCode(SaSsoErrorCode.CODE_30011);
+				}
+			}
+			
+			// 删除 ticket 信息，使其只有一次性有效
 			deleteTicket(ticket);
 			deleteTicketIndex(loginId);
 		}
+		
+		// 
 		return loginId;
 	}
 	
@@ -296,6 +335,13 @@ public class SaSsoTemplate {
 		// 服务端认证地址 
 		String serverUrl = SaSsoManager.getConfig().splicingAuthUrl();
 		
+		// 拼接客户端标识 
+		String client = SaSsoManager.getConfig().getClient();
+		if(SaFoxUtil.isNotEmpty(client)) {
+			serverUrl = SaFoxUtil.joinParam(serverUrl, paramName.client, client); 
+		}
+		
+		
 		// 对back地址编码 
 		back = (back == null ? "" : back);
 		back = SaFoxUtil.encodeUrl(back);
@@ -318,10 +364,11 @@ public class SaSsoTemplate {
 	/**
 	 * 构建URL：Server端向Client下放ticke的地址 
 	 * @param loginId 账号id 
+	 * @param client 客户端标识 
 	 * @param redirect Client端提供的重定向地址 
 	 * @return see note 
 	 */
-	public String buildRedirectUrl(Object loginId, String redirect) {
+	public String buildRedirectUrl(Object loginId, String client, String redirect) {
 		
 		// 校验 重定向地址 是否合法 
 		checkRedirectUrl(redirect);
@@ -330,7 +377,7 @@ public class SaSsoTemplate {
 		deleteTicket(getTicketValue(loginId));
 		
 		// 创建 新Ticket
-		String ticket = createTicket(loginId);
+		String ticket = createTicket(loginId, client);
 		
 		// 构建 授权重定向地址 （Server端 根据此地址向 Client端 下放Ticket）
 		return SaFoxUtil.joinParam(encodeBackParam(redirect), paramName.ticket, ticket);
@@ -382,6 +429,12 @@ public class SaSsoTemplate {
 	public String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
 		// 裸地址 
 		String url = SaSsoManager.getConfig().splicingCheckTicketUrl();
+		
+		// 拼接 client 参数
+		String client = getSsoConfig().getClient();
+		if(SaFoxUtil.isNotEmpty(client)) {
+			url = SaFoxUtil.joinParam(url, paramName.client, client);
+		}
 		
 		// 拼接ticket参数 
 		url = SaFoxUtil.joinParam(url, paramName.ticket, ticket);

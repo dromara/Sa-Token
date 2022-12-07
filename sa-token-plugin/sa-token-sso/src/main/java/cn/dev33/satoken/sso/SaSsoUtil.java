@@ -21,10 +21,11 @@ public class SaSsoUtil {
 	/**
 	 * 根据 账号id 创建一个 Ticket码 
 	 * @param loginId 账号id 
+	 * @param client 客户端标识 
 	 * @return Ticket码 
 	 */
-	public static String createTicket(Object loginId) {
-		return ssoTemplate.createTicket(loginId);
+	public static String createTicket(Object loginId, String client) {
+		return ssoTemplate.createTicket(loginId, client);
 	}
 	
 	/**
@@ -64,12 +65,22 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 校验ticket码，获取账号id，如果此ticket是有效的，则立即删除 
+	 * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除 
 	 * @param ticket Ticket码
 	 * @return 账号id 
 	 */
 	public static Object checkTicket(String ticket) {
 		return ssoTemplate.checkTicket(ticket);
+	}
+	
+	/**
+	 * 校验ticket码，获取账号id，如果此ticket是有效的，则立即删除 
+	 * @param ticket Ticket码
+	 * @param client client 标识 
+	 * @return 账号id 
+	 */
+	public static Object checkTicket(String ticket, String client) {
+		return ssoTemplate.checkTicket(ticket, client);
 	}
 
 	/**
@@ -152,11 +163,12 @@ public class SaSsoUtil {
 	/**
 	 * 构建URL：Server端向Client下放ticke的地址 
 	 * @param loginId 账号id 
+	 * @param client 客户端标识 
 	 * @param redirect Client端提供的重定向地址 
 	 * @return see note 
 	 */
-	public static String buildRedirectUrl(Object loginId, String redirect) {
-		return ssoTemplate.buildRedirectUrl(loginId, redirect);
+	public static String buildRedirectUrl(Object loginId, String client, String redirect) {
+		return ssoTemplate.buildRedirectUrl(loginId, client, redirect);
 	}
 
 	/**

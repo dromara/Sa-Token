@@ -52,6 +52,11 @@ public class SaSsoConfig implements Serializable {
 	// ----------------- Client端相关配置 
 
 	/**
+	 * 当前 Client 名称标识，用于和 ticket 码的互相锁定 
+	 */
+	public String client;
+
+	/**
 	 * 配置 Server 端单点登录授权地址 
 	 */
 	public String authUrl = "/sso/auth";
@@ -97,6 +102,8 @@ public class SaSsoConfig implements Serializable {
 	public String serverUrl;
 
 	// ----------------- 其它 
+
+
 
 	/**
 	 * 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
@@ -186,6 +193,21 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return 当前 Client 名称标识，用于和 ticket 码的互相锁定 
+	 */
+	public String getClient() {
+		return client;
+	}
+
+	/**
+	 * @param client 当前 Client 名称标识，用于和 ticket 码的互相锁定 
+	 */
+	public SaSsoConfig setClient(String client) {
+		this.client = client;
+		return this;
+	}
+	
 	/**
 	 * @return 配置的 Server 端单点登录授权地址 
 	 */
@@ -306,6 +328,7 @@ public class SaSsoConfig implements Serializable {
 				+ ", isSlo=" + isSlo
 				+ ", isHttp=" + isHttp 
 				+ ", secretkey=" + secretkey 
+				+ ", client=" + client 
 				+ ", authUrl=" + authUrl 
 				+ ", checkTicketUrl=" + checkTicketUrl
 				+ ", userinfoUrl=" + userinfoUrl 
