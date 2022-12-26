@@ -21,7 +21,7 @@
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-		<solon.version>1.10.13</solon.version>
+		<solon.version>1.12.0</solon.version>
 		<noear-redisx.version>1.4.4</noear-redisx.version>
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
