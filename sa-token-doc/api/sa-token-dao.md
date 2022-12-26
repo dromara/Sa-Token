@@ -26,7 +26,7 @@ dao.updateTimeout(key, timeout);   // 修改Value的剩余存活时间 (单位: 
 ``` java
 dao.getObject(key);   // 获取Object，如无返空
 dao.setObject(key, value, timeout);   // 写入Object，并设定存活时间 (单位: 秒)
-dao.setObject(key, value);   // 更新Object (过期时间不变)
+dao.updateObject(key, value);   // 更新Object (过期时间不变)
 dao.deleteObject(key);   // 删除Object
 dao.getObjectTimeout(key);   // 获取Object的剩余存活时间 (单位: 秒) 
 dao.updateObjectTimeout(key, timeout);   // 修改Object的剩余存活时间 (单位: 秒) 
