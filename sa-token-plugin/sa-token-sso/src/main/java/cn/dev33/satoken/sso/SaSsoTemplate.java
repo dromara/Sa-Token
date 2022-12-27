@@ -203,16 +203,19 @@ public class SaSsoTemplate {
 		String loginId = SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
 		
 		if(loginId != null) {
-			// 如果是 "a,b" 的格式，则只取最前面的一项 
+
+			// 如果是 "a,b" 的格式，则解析出对应的 Client
+			String ticketClient = null;
 			if(loginId.indexOf(",") > -1) {
 				String[] arr = loginId.split(",");
 				loginId = arr[0];
-				
-				// 如果指定了 client 标识，则校验一下 client 标识是否一致 
-				if(SaFoxUtil.isNotEmpty(client) && SaFoxUtil.notEquals(client, arr[1])) {
-					throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket)
-						.setCode(SaSsoErrorCode.CODE_30011);
-				}
+				ticketClient = arr[1];
+			}
+			
+			// 如果指定了 client 标识，则校验一下 client 标识是否一致 
+			if(SaFoxUtil.isNotEmpty(client) && SaFoxUtil.notEquals(client, ticketClient)) {
+				throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket)
+					.setCode(SaSsoErrorCode.CODE_30011);
 			}
 			
 			// 删除 ticket 信息，使其只有一次性有效
