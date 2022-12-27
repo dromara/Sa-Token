@@ -506,13 +506,9 @@ public class StpLogic {
 			}
 		}
 		List<TokenSign> list = session.tokenSignListCopyByDevice(device);
-		// 遍历操作 
-		for (int i = 0; i < list.size(); i++) {
-			// 只操作前n条 
-			if(i >= list.size() - maxLoginCount) {
-				continue;
-			}
-			// 清理： token签名、token最后活跃时间 
+		// 遍历操作，只操作前n条
+		for (int i = 0; i < list.size() - maxLoginCount; i++) {
+			// 清理： token签名、token最后活跃时间
 			String tokenValue = list.get(i).getValue();
 			session.removeTokenSign(tokenValue); 
 			clearLastActivity(tokenValue); 	
