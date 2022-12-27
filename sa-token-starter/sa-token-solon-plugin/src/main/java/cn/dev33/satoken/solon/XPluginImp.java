@@ -69,8 +69,8 @@ public class XPluginImp implements Plugin {
             SaManager.setSaTokenSecondContext(bean.create());
         });
 
-        // 注入侦听器 Bean
-        context.subBean(SaTokenListener.class, sl -> {
+        // 注入侦听器 Bean （可以有多个）
+        context.subBeansOfType(SaTokenListener.class, sl -> {
             SaTokenEventCenter.registerListener(sl);
         });
 
@@ -115,8 +115,8 @@ public class XPluginImp implements Plugin {
             SaManager.setSaSignTemplate(bean);
         });
 
-        // 自定义 StpLogic 对象
-        context.getBeanAsync(StpLogic.class, bean -> {
+        // 自定义 StpLogic 对象（可以有多个）
+        context.subBeansOfType(StpLogic.class, bean -> {
             StpUtil.setStpLogic(bean);
         });
     }

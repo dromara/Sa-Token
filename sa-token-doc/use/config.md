@@ -90,7 +90,6 @@ public class SaTokenConfigure {
 	// 此配置会与 application.yml 中的配置合并 （代码配置优先）
 	@Autowired
 	public void configSaToken(SaTokenConfig config) {
-		SaTokenConfig config = new SaTokenConfig();
 		config.setTokenName("satoken");             // token名称 (同时也是cookie名称)
 		config.setTimeout(30 * 24 * 60 * 60);       // token有效期，单位s 默认30天
 		config.setActivityTimeout(-1);              // token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
