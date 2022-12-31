@@ -93,7 +93,7 @@ public class SaRequestForReactor implements SaRequest {
 	 */
 	@Override
 	public String getMethod() {
-		return request.getMethodValue();
+		return request.getMethod().name();
 	}
 
 	/**
