@@ -24,9 +24,10 @@
 		<module>sa-token-plugin</module>
 		<!-- <module>sa-token-test</module> -->
 		<!-- <module>sa-token-demo/sa-token-demo-solon</module> -->
-	</modules>
-	
-	<!-- 开源协议 apache 2.0 -->
+	    <!-- <module>sa-token-demo/sa-token-demo-sso-server-solon</module> -->
+</modules>
+
+<!-- 开源协议 apache 2.0 -->
 	<licenses>
 		<license>
 			<name>Apache 2</name>
