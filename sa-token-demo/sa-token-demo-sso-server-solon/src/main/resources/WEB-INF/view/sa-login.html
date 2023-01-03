@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Sa-SSO-Server 认证中心-登录</title>
+		<meta charset="utf-8">
+		<base th:href="@{/static}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="./sa-res/login.css">
+	</head>
+	<body>
+		<div class="view-box">
+			<div class="bg-1"></div>
+			<div class="bg-2"></div>
+			<div class="content-box">
+				<div class="login-box">
+					<div class="from-box">
+						<h2 class="from-title">Sa-SSO-Server 认证中心</h2>
+						<div class="from-item">
+							<input class="s-input" name="name" placeholder="请输入账号" />
+						</div>
+						<div class="from-item">
+							<input class="s-input" name="pwd" type="password" placeholder="请输入密码" />
+						</div>
+						<div class="from-item">
+							<button class="s-input s-btn login-btn">登录</button>
+						</div>
+						<div class="from-item reset-box">
+							<a href="javascript: location.reload();" >刷新</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 底部 版权 -->
+			<div style="position: absolute; bottom: 40px; width: 100%; text-align: center; color: #666;">
+				This page is provided by Sa-Token-SSO 
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="./sa-res/jquery.min.js"></script>
+		<script src="./sa-res/layer/layer.js"></script>
+		<script src="./sa-res/login.js"></script>
+		
+	</body>
+</html>
