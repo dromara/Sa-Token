@@ -32,6 +32,7 @@
 		<jjwt.version>0.9.1</jjwt.version>
 		<fastjson.version>1.2.83</fastjson.version>
 		<fastjson2.version>2.0.15</fastjson2.version>
+		<redisson.version>3.19.0</redisson.version>
     </properties>
 
     <dependencyManagement>
@@ -120,6 +121,13 @@
 	            <artifactId>spring-boot-starter-data-redis</artifactId>
 				<version>${springboot.version}</version>
 	        </dependency>
+
+			<!-- Redisson 相关操作API -->
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson-spring-boot-starter</artifactId>
+				<version>${redisson.version}</version>
+			</dependency>
 	        
 			<!-- jackson-datatype-jsr310 -->
 			<dependency>
@@ -181,6 +189,13 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-aop</artifactId>
+				<version>${springboot.version}</version>
+			</dependency>
+
+			<!-- spring-boot-starter-actuator -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-actuator</artifactId>
 				<version>${springboot.version}</version>
 			</dependency>
 			
