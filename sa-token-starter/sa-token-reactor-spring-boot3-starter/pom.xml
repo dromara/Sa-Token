@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-starter</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-reactor-spring-boot3-starter</name>
+    <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+	<description>springboot3 reactor integrate sa-token</description>
+	
+    <properties>
+		<springboot3.version>3.0.1</springboot3.version>
+    </properties>
+	
+	<dependencies>
+		<!-- spring-boot-starter (optional) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+			<optional>true</optional>
+        </dependency>
+        
+		<!-- spring-web (optional) -->
+	    <dependency>
+	    	<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<!--<version>5.3.7</version>-->
+			<optional>true</optional>
+	    </dependency>
+	    
+		<!-- reactor-core (optional) -->
+	    <dependency>
+	    	<groupId>io.projectreactor</groupId>
+	    	<artifactId>reactor-core</artifactId>
+			<optional>true</optional>
+	    </dependency>
+	    
+		<!-- jackson-databind (optional) -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- config -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+    
+		<!-- sa-token-core -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+        
+		<!-- sa-token-spring-boot-autoconfig -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
+        </dependency>
+        
+		<!-- <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-webflux</artifactId>
+			<version>${springboot.version}</version>
+		</dependency> -->
+	</dependencies>
+
+	<dependencyManagement>
+        <dependencies>
+			
+			<!-- spring-boot-starter -->
+	        <dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter</artifactId>
+				<version>${springboot3.version}</version>
+	        </dependency>
+			<!-- spring-boot-starter-web -->
+		    <dependency>
+		    	<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>6.0.0</version>
+		    </dependency>
+		    
+		    <dependency>
+		    	<groupId>io.projectreactor</groupId>
+		    	<artifactId>reactor-core</artifactId>
+				<version>3.5.1</version>
+		    </dependency>
+		    
+			<!-- jackson-databind (optional) -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>2.14.1</version>
+			</dependency>
+		
+			<!-- config (optional) -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-configuration-processor</artifactId>
+				<version>${springboot3.version}</version>
+			</dependency>
+			
+        </dependencies>
+    </dependencyManagement>
+
+</project>

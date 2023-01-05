@@ -1,8 +1,7 @@
 package cn.dev33.satoken.quick.web;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,8 +26,8 @@ public class SaQuickController {
 	 * @return see note
 	 */
 	@GetMapping("/saLogin")
-	public String saLogin(HttpServletRequest request) {
-		request.setAttribute("cfg", SaQuickManager.getConfig());
+	public String saLogin(Model model) {
+		model.addAttribute("cfg", SaQuickManager.getConfig());
 		return "sa-login.html";
 	}
 

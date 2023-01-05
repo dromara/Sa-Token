@@ -14,7 +14,7 @@
 
 	<name>sa-token-servlet</name>
     <artifactId>sa-token-servlet</artifactId>
-	<description>sa-token authentication by Sservlet API</description>
+	<description>sa-token authentication by Servlet API</description>
 
 	<dependencies>
 		<!-- sa-token-core -->

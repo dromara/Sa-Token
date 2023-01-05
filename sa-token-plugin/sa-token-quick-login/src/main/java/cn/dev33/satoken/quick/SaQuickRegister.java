@@ -28,18 +28,18 @@ public class SaQuickRegister {
 	 */
 	@Bean
 	@ConfigurationProperties(prefix = "sa")
-	public SaQuickConfig getSaQuickConfig() {
+	SaQuickConfig getSaQuickConfig() {
 		return new SaQuickConfig();
 	}
-	
+
 	/**
-	 * 注册 [sa-token全局过滤器] 
+	 * 注册 Sa-Token 全局过滤器 
 	 * 
-	 * @return see note
+	 * @return / 
 	 */
 	@Bean
 	@Order(SaTokenConsts.ASSEMBLY_ORDER - 1)
-	public SaServletFilter getSaServletFilter() {
+	SaServletFilter getSaServletFilterForQuickLogin() {
 		return new SaServletFilter()
 			// 拦截路由 
 			.addInclude("/**")

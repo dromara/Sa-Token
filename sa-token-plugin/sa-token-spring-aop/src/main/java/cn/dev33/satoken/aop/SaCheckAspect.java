@@ -70,7 +70,6 @@ public class SaCheckAspect {
 			SaStrategy.me.checkMethodAnnotation.accept(method);
 		}
 		
-
 		try {
 			// 执行原有逻辑
 			Object obj = joinPoint.proceed();

@@ -10,8 +10,6 @@ import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.id.SaIdTemplate;
-import cn.dev33.satoken.id.SaIdUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
@@ -28,7 +26,6 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * @author noear
  * @since 1.4
  */
-@SuppressWarnings("deprecation")
 public class XPluginImp implements Plugin {
 
     @Override
@@ -90,11 +87,6 @@ public class XPluginImp implements Plugin {
             SaManager.setSaTemp(bean);
         });
 
-        // Sa-Token-Id 身份凭证模块 Bean
-        context.getBeanAsync(SaIdTemplate.class, bean -> {
-            SaIdUtil.saIdTemplate = bean;
-        });
-
         // Sa-Token Same-Token 模块 Bean
         context.getBeanAsync(SaSameTemplate.class, bean -> {
             SaManager.setSaSameTemplate(bean);
@@ -120,4 +112,5 @@ public class XPluginImp implements Plugin {
             StpUtil.setStpLogic(bean);
         });
     }
+
 }

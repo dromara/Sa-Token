@@ -22,7 +22,7 @@ public class SaQuickInject {
 	 * 
 	 * @param saQuickConfig 配置对象
 	 */
-	@Autowired
+	@Autowired(required = false)
 	public void setSaQuickConfig(SaQuickConfig saQuickConfig) {
 		SaQuickManager.setConfig(saQuickConfig);
 	}

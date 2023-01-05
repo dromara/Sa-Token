@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.dev33</groupId>
@@ -15,11 +15,13 @@
         <revision>1.33.0</revision>
 		
 		<!-- 统一定义依赖版本号 -->
-		<springboot.version>2.5.12</springboot.version>
+		<springboot.version>2.5.14</springboot.version>
+		<springboot3.version>3.0.1</springboot3.version>
 		<reactor-core.version>3.1.4.RELEASE</reactor-core.version>
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
+		<jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
 		<solon.version>1.12.0</solon.version>
 		<noear-redisx.version>1.4.4</noear-redisx.version>
@@ -45,6 +47,13 @@
 				<version>${servlet-api.version}</version>
 			</dependency>
 			
+			<!-- Jakarta Servlet API -->
+			<dependency>
+				<groupId>jakarta.servlet</groupId>
+				<artifactId>jakarta.servlet-api</artifactId>
+				<version>${jakarta-servlet-api.version}</version>
+			</dependency>
+
 			<!-- spring-boot-starter-web -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -248,12 +257,27 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-jakarta-servlet</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-solon-plugin</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot-autoconfig</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-spring-boot-starter</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot3-starter</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<!-- endregion-->

@@ -11,6 +11,8 @@
 	<properties>
 		<sa-token.version>1.33.0</sa-token.version>
 		<solon.version>1.10.13</solon.version>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>

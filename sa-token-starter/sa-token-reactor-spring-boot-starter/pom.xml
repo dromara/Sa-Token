@@ -17,12 +17,6 @@
 	<description>springboot reactor integrate sa-token</description>
 	
 	<dependencies>
-		<!-- sa-token-core -->
-		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-core</artifactId>
-        </dependency>
-        
 		<!-- spring-boot-starter (optional) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,7 +28,6 @@
 	    <dependency>
 	    	<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>6.0.0</version>
 			<optional>true</optional>
 	    </dependency>
 	    
@@ -59,20 +52,18 @@
 			<optional>true</optional>
 		</dependency>
     
-		<!-- OAuth2.0 (optional) -->
+		<!-- sa-token-core -->
 		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-oauth2</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
-		<!-- SSO (optional) -->
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+        
+		<!-- sa-token-spring-boot-autoconfig -->
 		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-sso</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
+            <groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
+        </dependency>
+        
 		<!-- <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-webflux</artifactId>
@@ -80,6 +71,18 @@
 		</dependency> -->
 	</dependencies>
 
+
+	<dependencyManagement>
+        <dependencies>
+			
+		    <dependency>
+		    	<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>5.3.7</version>
+		    </dependency>
+		    
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>
