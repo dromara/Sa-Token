@@ -9,8 +9,7 @@ import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
@@ -21,6 +20,9 @@ import cn.dev33.satoken.dao.SaTokenDaoRedis;
 import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson;
 import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2;
 import cn.dev33.satoken.dao.SaTokenDaoRedisJackson;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 为 SaTokenDao 单独设置Redis连接信息 
@@ -59,14 +61,33 @@ public class SaAloneRedisInject implements EnvironmentAware{
 			
 			// 获取cfg对象 
 			RedisProperties cfg = Binder.get(environment).bind(ALONE_PREFIX, RedisProperties.class).get();
-			
-			// 1. Redis配置 
-			RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
-			redisConfig.setHostName(cfg.getHost());
-			redisConfig.setPort(cfg.getPort());
-			redisConfig.setDatabase(cfg.getDatabase());
-			redisConfig.setPassword(RedisPassword.of(cfg.getPassword())); 
-			
+
+			// 1. Redis配置
+			RedisConfiguration redisAloneConfig;
+			if (cfg.getCluster().getNodes().size() > 0) {
+				// 集群模式
+				RedisClusterConfiguration redisClusterConfig = new RedisClusterConfiguration();
+				redisClusterConfig.setUsername(cfg.getUsername());
+				redisClusterConfig.setPassword(cfg.getPassword());
+				RedisProperties.Cluster cluster = cfg.getCluster();
+				List<RedisNode> serverList = cluster.getNodes().stream().map(node -> {
+					String[] ipAndPort = node.split(":");
+					return new RedisNode(ipAndPort[0].trim(), Integer.parseInt(ipAndPort[1]));
+				}).collect(Collectors.toList());
+				redisClusterConfig.setClusterNodes(serverList);
+				redisClusterConfig.setMaxRedirects(cluster.getMaxRedirects());
+				redisAloneConfig = redisClusterConfig;
+			} else {
+				// 单体模式
+				RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
+				redisConfig.setHostName(cfg.getHost());
+				redisConfig.setPort(cfg.getPort());
+				redisConfig.setDatabase(cfg.getDatabase());
+				redisConfig.setPassword(RedisPassword.of(cfg.getPassword()));
+				redisConfig.setDatabase(cfg.getDatabase());
+				redisAloneConfig = redisConfig;
+			}
+
 			// 2. 连接池配置 
 			GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
 			// pool配置 
@@ -93,7 +114,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 			}
 			// 创建Factory对象 
 			LettuceClientConfiguration clientConfig = builder.poolConfig(poolConfig).build();
-			LettuceConnectionFactory factory = new LettuceConnectionFactory(redisConfig, clientConfig);
+			LettuceConnectionFactory factory = new LettuceConnectionFactory(redisAloneConfig, clientConfig);
 			factory.afterPropertiesSet();
 			
 			// 3. 开始初始化 SaTokenDao 
