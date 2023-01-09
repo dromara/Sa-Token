@@ -12,18 +12,19 @@ sa-token:
     token-style: uuid
     # 配置Sa-Token单独使用的Redis连接 
     alone-redis:
-        # Redis模式(默认单体)
-        # pattern: single
-        # Redis数据库索引（默认为0）
-        database: 2
-        # Redis服务器地址
-        host: 127.0.0.1
-        # Redis服务器连接端口
-        port: 6379
+        # 普通集群
+        pattern: cluster
+        # Redis服务器连接用户名（默认为空）
+        username:
         # Redis服务器连接密码（默认为空）
-        # password: 
+        password:
         # 连接超时时间（毫秒）
         timeout: 10s
+        cluster:
+            # Redis集群服务器节点地址
+            nodes: 127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002
+            # 最大重定向次数
+            maxRedirects: 2
         lettuce: 
             pool:
                 # 连接池最大连接数
