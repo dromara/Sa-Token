@@ -68,6 +68,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				redisConfig.setDatabase(cfg.getDatabase());
 				redisConfig.setPassword(RedisPassword.of(cfg.getPassword()));
 				redisConfig.setDatabase(cfg.getDatabase());
+				redisConfig.setUsername(cfg.getUsername());
 				redisAloneConfig = redisConfig;
 
 			} else if (pattern.equals("cluster")){
