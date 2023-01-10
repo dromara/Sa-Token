@@ -412,14 +412,10 @@ public class StpLogic {
 		if(isConcurrent) {
 			// 全局配置是否允许复用旧 Token 
 			if(getConfigOfIsShare()) {
-				// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须确保 is-share 配置项在 ExtraData 为空时才可以生效 
-				// 即：在 login 时提供了 Extra 数据后，即使配置了 is-share=true 也不能复用旧 Token，必须创建新 Token 
-				if(loginModel.isSetExtraData() == false) {
-					String tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
-					// 复用成功的话就直接返回，否则还是要继续新建Token 
-					if(SaFoxUtil.isNotEmpty(tokenValue)) {
-						return tokenValue;
-					}
+				String tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				// 复用成功的话就直接返回，否则还是要继续新建Token 
+				if(SaFoxUtil.isNotEmpty(tokenValue)) {
+					return tokenValue;
 				}
 			}
 		}

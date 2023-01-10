@@ -216,3 +216,23 @@ public void setSaJwtTemplate() {
 	});
 }
 ```
+
+
+### 9、注意点
+
+##### 1、使用 jwt-simple 模式后，is-share=false 恒等于 false。
+
+`is-share=true` 的意思是每次登录都产生一样的 token，这种策略和 [ 为每个 token 单独设定 setExtra 数据 ] 不兼容的，
+为保证正确设定 Extra 数据，当使用 `jwt-simple` 模式后，`is-share` 配置项 恒等于 `false`。
+
+
+##### 2、使用 jwt-mixin 模式后，is-concurrent 必须为 true。
+
+`is-concurrent=false` 代表每次登录都把旧登录顶下线，但是 jwt-mixin 模式登录的 token 并不会记录在持久库数据中，
+技术上来讲无法将其踢下线，所以此时顶人下线和踢人下线等 API 都属于不可用状态，所以此时 `is-concurrent` 配置项必须配置为 `true`。
+
+
+
+
+
+
