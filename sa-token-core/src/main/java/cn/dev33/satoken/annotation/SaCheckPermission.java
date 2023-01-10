@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 权限认证：必须具有指定权限才能进入该方法 
+ * 权限认证校验：必须具有指定权限才能进入该方法 
  * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
  * @author kong
  *

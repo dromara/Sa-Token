@@ -13,7 +13,7 @@ import cn.dev33.satoken.SaManager;
 @SpringBootApplication
 public class SaTokenAloneRedisClusterApplication {
 
-	public static void main(String[] args) throws ClassNotFoundException {
+	public static void main(String[] args) {
 		SpringApplication.run(SaTokenAloneRedisClusterApplication.class, args);
 		System.out.println("\n启动成功：Sa-Token配置如下：" + SaManager.getConfig());
 	}

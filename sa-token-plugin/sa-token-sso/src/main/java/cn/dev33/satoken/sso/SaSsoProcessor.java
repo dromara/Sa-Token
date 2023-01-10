@@ -319,7 +319,9 @@ public class SaSsoProcessor {
 		StpLogic stpLogic = ssoTemplate.getStpLogic();
 		
 		// 开始处理 
-		stpLogic.logout();
+		if(stpLogic.isLogin()) {
+			stpLogic.logout(stpLogic.getLoginId());
+		}
 		
 		// 返回
 		return ssoLogoutBack(req, res);
@@ -337,7 +339,7 @@ public class SaSsoProcessor {
 		
 		// 如果未登录，则无需注销 
         if(stpLogic.isLogin() == false) {
-            return SaResult.ok();
+        	return ssoLogoutBack(req, res);
         }
         
         // 调用 sso-server 认证中心单点注销API 
