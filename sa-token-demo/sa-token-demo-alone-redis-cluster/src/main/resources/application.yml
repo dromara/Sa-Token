@@ -13,7 +13,7 @@ sa-token:
     # 配置Sa-Token单独使用的Redis连接 
     alone-redis:
         # 普通集群
-        # pattern: cluster
+        pattern: cluster
         # Redis服务器连接用户名（默认为空）
         username:
         # Redis服务器连接密码（默认为空）
