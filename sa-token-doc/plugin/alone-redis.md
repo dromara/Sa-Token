@@ -118,6 +118,10 @@ spring.redis.timeout=10s
 
 具体可参考示例：[码云：application.yml](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redis/src/main/resources/application.yml)
 
+集群配置说明: alone-redis同样可以配置集群(cluster模式和sentinel模式), 且基础配置参数和spring redis集群配置别无二致
+
+集群配置示例可参考demo项目sa-token-demo-alone-redis-cluster
+
 
 ### 3、测试
 新建Controller测试一下 
