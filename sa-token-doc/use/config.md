@@ -173,9 +173,10 @@ Client 端配置：
 | checkTicketUrl| String	| /sso/checkTicket	| 配置 Server 端的 `ticket` 校验地址							|
 | userinfoUrl	| String	| /sso/userinfo		| 配置 Server 端查询 `userinfo` 地址									|
 | sloUrl		| String	| /sso/signout		| 配置 Server 端单点注销地址										|
-| ssoLogoutCall	| String	| null			| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
-| secretkey		| String	| null			| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
-| serverUrl		| String	| null			| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，[详解](/use/config?id=配置项详解：serverUrl)		|
+| ssoLogoutCall	| String	| null				| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
+| secretkey		| String	| null				| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
+| serverUrl		| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，[详解](/use/config?id=配置项详解：serverUrl)		|
+| client		| String	| ""				| 当前 Client 名称标识，用于和 ticket 码的互相锁定			|
 
 
 配置示例：

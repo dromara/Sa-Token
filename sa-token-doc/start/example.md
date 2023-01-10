@@ -30,6 +30,8 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+
 Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
 更多内测版本了解：[Sa-Token最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)

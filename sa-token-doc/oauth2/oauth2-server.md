@@ -57,7 +57,7 @@ public class SaOAuth2TemplateImpl extends SaOAuth2Template {
 		// 此为模拟数据，真实环境需要从数据库查询 
 		if("1001".equals(clientId)) {
 			return new SaClientModel()
-					.setClientId("10001")
+					.setClientId("1001")
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")
 					.setAllowUrl("*")
 					.setContractScope("userinfo")
