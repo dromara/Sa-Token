@@ -77,9 +77,9 @@ http://sa:123456@127.0.0.1:8081/test/test3
 
 --- 
 
-<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/DisableController.java"
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/HttpBasicController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 账号禁用  —— [ com.pj.cases.up.DisableController.java ]
+	本章代码示例：Sa-Token Http Basic 认证 —— [ com.pj.cases.up.HttpBasicController.java ]
 </a>
 
 
