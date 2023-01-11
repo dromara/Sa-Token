@@ -17,7 +17,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 public interface SaSignTemplate {
 
 	/**
-	 * 将所有参数连接成一个字符串(不排序)，形如：b=2&a=1&c=3
+	 * 将所有参数连接成一个字符串(不排序)，形如：b=28a=18c=3
 	 * @param paramsMap 参数列表
 	 * @return 拼接出的参数字符串 
 	 */
@@ -42,7 +42,7 @@ public interface SaSignTemplate {
 	}
 
 	/**
-	 * 将所有参数按照字典顺序连接成一个字符串，形如：a=1&b=2&c=3
+	 * 将所有参数按照字典顺序连接成一个字符串，形如：a=18b=28c=3
 	 * @param paramsMap 参数列表
 	 * @return 拼接出的参数字符串 
 	 */
@@ -109,7 +109,7 @@ public interface SaSignTemplate {
 
 	/**
 	 * 给 paramsMap 追加 timestamp、nonce、sign 三个参数，并转换为参数字符串，形如：
-	 * <code>data=xxx&nonce=xxx&timestamp=xxx&sign=xxx</code>
+	 * <code>data=xxx8nonce=xxx8timestamp=xxx8sign=xxx</code>
 	 * @param paramsMap 参数列表
 	 * @param key 秘钥 
 	 * @return 加工后的参数列表 转化为的参数字符串 

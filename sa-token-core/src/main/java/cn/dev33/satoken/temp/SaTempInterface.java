@@ -127,6 +127,7 @@ public interface SaTempInterface {
 	
 	/**  
 	 * 获取映射关系的持久化key 
+	 * @param service 服务标识
 	 * @param token token值
 	 * @return key
 	 */

@@ -19,7 +19,16 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
-| [laruui](https://gitee.com/laruui)			| ¥ 10.0		| 感谢您的开源项目！加油						| 2022-10-28 	|
+| [tsing](https://gitee.com/tsing666)			| ¥ 10.0		| 感谢您的开源项目！							| 2023-01-08 	|
+| [SWmachine](https://gitee.com/SWmachine)		| ¥ 10.0		| 您的开源很好用！							| 2023-01-07 	|
+| [Peter Z](https://gitee.com/zj1995)			| ¥ 10.0		| 感谢您的开源项目！							| 2022-12-26 	|
+| [ken](https://gitee.com/affction)				| ¥ 10.0		| 感谢您的开源项目！							| 2022-12-19 	|
+| [刘涛](https://gitee.com/doILike)				| ¥ 10.0		| 感谢您的开源项目！							| 2022-12-13 	|
+| [时间很快](https://gitee.com/frsimple)			| ¥ 50.0		| 感谢您的开源项目！							| 2022-11-29 	|
+| [ThatYear](https://gitee.com/wangmuqing)		| ¥ 20.0		| 感谢您的开源项目！							| 2022-11-24 	|
+| [IlovePea](https://gitee.com/IlovePea)		| ¥ 10.0		| 感谢您的开源项目！							| 2022-11-22 	|
+| [feel](https://gitee.com/xujiahuim)			| ¥ 10.0		| 感谢您的开源项目！							| 2022-11-17 	|
+| [laruui](https://gitee.com/laruui)			| ¥ 10.0		| 感谢您的开源项目！							| 2022-10-28 	|
 | [就眠儀式](https://gitee.com/Jmysy)			| ¥ 50.0		| 感谢您的开源项目！							| 2022-10-26 	|
 | [王文博](https://gitee.com/rl520)				| ¥ 20.0		| 感谢您的开源项目！							| 2022-10-24  	|
 | [feyong](https://gitee.com/feyong)			| ¥ 10.0		| 感谢您的开源项目！							| 2022-10-18 	|
