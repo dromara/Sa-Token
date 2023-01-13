@@ -7,11 +7,10 @@ import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.solon.error.SaSolonErrorCode;
 import cn.dev33.satoken.strategy.SaStrategy;
-import org.noear.solon.core.handle.Action;
-import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.Handler;
+import org.noear.solon.core.handle.*;
+import org.noear.solon.core.route.RouterInterceptor;
+import org.noear.solon.core.route.RouterInterceptorChain;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -19,13 +18,16 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * sa-token 基于路由的拦截式鉴权（增加了注解的处理）；使用优先级要高些
+ * sa-token 基于路由的过滤式鉴权（增加了注解的处理）；使用优先级要低些
+ *
+ * 对静态文件无处理效果
+ *
+ * order: -100 (SaTokenInterceptor 和 SaTokenFilter 二选一；不要同时用)
  *
  * @author noear
- * @since 1.10
+ * @since 1.12
  */
-@Deprecated
-public class SaTokenPathInterceptor implements Handler {
+public class SaTokenInterceptor implements RouterInterceptor {
 	/**
 	 * 是否打开注解鉴权
 	 */
@@ -49,7 +51,7 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param paths 路由
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor addInclude(String... paths) {
+	public SaTokenInterceptor addInclude(String... paths) {
 		includeList.addAll(Arrays.asList(paths));
 		return this;
 	}
@@ -60,7 +62,7 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param paths 路由
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor addExclude(String... paths) {
+	public SaTokenInterceptor addExclude(String... paths) {
 		excludeList.addAll(Arrays.asList(paths));
 		return this;
 	}
@@ -71,7 +73,7 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param pathList 路由集合
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor setIncludeList(List<String> pathList) {
+	public SaTokenInterceptor setIncludeList(List<String> pathList) {
 		includeList = pathList;
 		return this;
 	}
@@ -82,7 +84,7 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param pathList 路由集合
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor setExcludeList(List<String> pathList) {
+	public SaTokenInterceptor setExcludeList(List<String> pathList) {
 		excludeList = pathList;
 		return this;
 	}
@@ -121,7 +123,7 @@ public class SaTokenPathInterceptor implements Handler {
 		if (e instanceof SaTokenException) {
 			throw (SaTokenException) e;
 		} else {
-			throw new SaTokenException(e).setCode(SaSolonErrorCode.CODE_20301);
+			throw new SaTokenException(e);
 		}
 	};
 
@@ -137,7 +139,7 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param auth see note
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor setAuth(SaFilterAuthStrategy auth) {
+	public SaTokenInterceptor setAuth(SaFilterAuthStrategy auth) {
 		this.auth = auth;
 		return this;
 	}
@@ -148,7 +150,7 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param error see note
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor setError(SaFilterErrorStrategy error) {
+	public SaTokenInterceptor setError(SaFilterErrorStrategy error) {
 		this.error = error;
 		return this;
 	}
@@ -159,37 +161,38 @@ public class SaTokenPathInterceptor implements Handler {
 	 * @param beforeAuth see note
 	 * @return 对象自身
 	 */
-	public SaTokenPathInterceptor setBeforeAuth(SaFilterAuthStrategy beforeAuth) {
+	public SaTokenInterceptor setBeforeAuth(SaFilterAuthStrategy beforeAuth) {
 		this.beforeAuth = beforeAuth;
 		return this;
 	}
 
 
 	@Override
-	public void handle(Context ctx) throws Throwable {
+	public void doIntercept(Context ctx, Handler mainHandler, RouterInterceptorChain chain) throws Throwable {
 		try {
-			//注处处理
-			Action action = ctx.action();
+			//如果是静态文件，则不处理（静态文件，不在路由中）
+			if (mainHandler != null) {
+				Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
-			if(isAnnotation && action != null){
-				// 获取此请求对应的 Method 处理函数
-				Method method = action.method().getMethod();
+				if (isAnnotation && action != null) {
+					// 获取此请求对应的 Method 处理函数
+					Method method = action.method().getMethod();
 
-				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-				if(SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
-					return;
+					// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
+					if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+						return;
+					}
+
+					// 注解校验
+					SaStrategy.me.checkMethodAnnotation.accept(method);
 				}
 
-				// 注解校验
-				SaStrategy.me.checkMethodAnnotation.accept(method);
+				//路径规则处理
+				SaRouter.match(includeList).notMatch(excludeList).check(r -> {
+					beforeAuth.run(mainHandler);
+					auth.run(mainHandler);
+				});
 			}
-
-			//路径规则处理
-			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				beforeAuth.run(action);
-				auth.run(action);
-			});
-
 		} catch (StopMatchException e) {
 
 		} catch (SaTokenException e) {
@@ -202,10 +205,13 @@ public class SaTokenPathInterceptor implements Handler {
 			}
 
 			// 2. 写入输出流
-			if(result != null) {
+			if (result != null) {
 				ctx.render(result);
 			}
 			ctx.setHandled(true);
+			return;
 		}
+
+		chain.doIntercept(ctx, mainHandler);
 	}
 }
