@@ -28,6 +28,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
  * @author noear
  * @since 1.10
  */
+@Deprecated
 public class SaTokenPathFilter implements Filter {
 	/**
 	 * 是否打开注解鉴权

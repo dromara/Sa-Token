@@ -107,8 +107,8 @@ public class XPluginImp implements Plugin {
             SaManager.setSaSignTemplate(bean);
         });
 
-        // 自定义 StpLogic 对象（可以有多个）
-        context.subBeansOfType(StpLogic.class, bean -> {
+        // 自定义 StpLogic 对象 //容器层面只能有一个；要多个得自己在Util上处理
+        context.getBeanAsync(StpLogic.class, bean -> {
             StpUtil.setStpLogic(bean);
         });
     }
