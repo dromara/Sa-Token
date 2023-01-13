@@ -22,9 +22,9 @@ public class SaTokenConfigure {
 	/**
 	 * 注册 [sa-token全局过滤器]
 	 */
-	@Bean
-	public void tokenPathFilter() {
-		Solon.app().before(new SaTokenPathInterceptor()
+	@Bean(index = -100)
+	public SaTokenInterceptor tokenPathFilter() {
+		return new SaTokenInterceptor()
 
 				// 指定 [拦截路由] 与 [放行路由]
 				.addInclude("/**").addExclude("/favicon.ico")
@@ -55,7 +55,6 @@ public class SaTokenConfigure {
 							// 禁用浏览器内容嗅探
 							.setHeader("X-Content-Type-Options", "nosniff")
 					;
-				})
-		);
+				});
 	}
 }
