@@ -171,29 +171,26 @@ public class SaTokenFilter implements Filter { //之所以改名，为了跟 SaT
 		try {
 			//查找当前主处理
 			Handler mainHandler = Solon.app().router().matchMain(ctx);
+			Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
-			//如果是静态文件，则不处理（静态文件，不在路由中）
-			if (mainHandler != null) {
-				Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
+			//1.路径规则处理（包括了静态文件）
+			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
+				beforeAuth.run(mainHandler);
+				auth.run(mainHandler);
+			});
 
-				if (isAnnotation && action != null) {
-					// 获取此请求对应的 Method 处理函数
-					Method method = action.method().getMethod();
+			//2.验证注解处理
+			if (isAnnotation && action != null) {
+				// 获取此请求对应的 Method 处理函数
+				Method method = action.method().getMethod();
 
-					// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-					if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
-						return;
-					}
-
-					// 注解校验
-					SaStrategy.me.checkMethodAnnotation.accept(method);
+				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
+				if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+					return;
 				}
 
-				//路径规则处理
-				SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-					beforeAuth.run(mainHandler);
-					auth.run(mainHandler);
-				});
+				// 注解校验
+				SaStrategy.me.checkMethodAnnotation.accept(method);
 			}
 		} catch (StopMatchException e) {
 
