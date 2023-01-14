@@ -1,4 +1,6 @@
 
+sa-token-dao-redisx 是中立的扩展。可任何应用开发框架下使用（springboot, solon, jfinal 等..）
+
 ### 使用示例
 
 #### 1.配置
