@@ -9,6 +9,7 @@ sa-token-dao: #名字可以随意取
     server: "localhost:6379"
     password: 123456
     db: 1
+#   serializer: "org.noear.redisx.utils.SerializerJson" #指定自定义序列化实现（默认为 SerializerDefault）
 ```
 
 #### 2.代码
