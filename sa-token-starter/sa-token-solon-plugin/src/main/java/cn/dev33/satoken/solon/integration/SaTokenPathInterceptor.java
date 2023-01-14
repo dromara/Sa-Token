@@ -7,8 +7,8 @@ import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.solon.error.SaSolonErrorCode;
 import cn.dev33.satoken.strategy.SaStrategy;
+import org.noear.solon.annotation.Note;
 import org.noear.solon.core.handle.Action;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
@@ -24,6 +24,7 @@ import java.util.List;
  * @author noear
  * @since 1.10
  */
+@Note("推荐：由 SaTokenInterceptor 替代")
 @Deprecated
 public class SaTokenPathInterceptor implements Handler {
 	/**
@@ -121,7 +122,7 @@ public class SaTokenPathInterceptor implements Handler {
 		if (e instanceof SaTokenException) {
 			throw (SaTokenException) e;
 		} else {
-			throw new SaTokenException(e).setCode(SaSolonErrorCode.CODE_20301);
+			throw new SaTokenException(e);
 		}
 	};
 
@@ -168,9 +169,15 @@ public class SaTokenPathInterceptor implements Handler {
 	@Override
 	public void handle(Context ctx) throws Throwable {
 		try {
-			//注处处理
 			Action action = ctx.action();
 
+			//1.路径规则处理
+			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
+				beforeAuth.run(action);
+				auth.run(action);
+			});
+
+			//2.验证注解处理
 			if(isAnnotation && action != null){
 				// 获取此请求对应的 Method 处理函数
 				Method method = action.method().getMethod();
@@ -183,13 +190,6 @@ public class SaTokenPathInterceptor implements Handler {
 				// 注解校验
 				SaStrategy.me.checkMethodAnnotation.accept(method);
 			}
-
-			//路径规则处理
-			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				beforeAuth.run(action);
-				auth.run(action);
-			});
-
 		} catch (StopMatchException e) {
 
 		} catch (SaTokenException e) {
