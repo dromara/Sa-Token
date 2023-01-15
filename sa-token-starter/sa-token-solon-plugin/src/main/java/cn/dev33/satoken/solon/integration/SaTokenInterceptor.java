@@ -172,25 +172,17 @@ public class SaTokenInterceptor implements RouterInterceptor {
 		try {
 			Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
-			//1.路径规则处理
+			//先路径过滤下（包括了静态文件）
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				beforeAuth.run(mainHandler);
+				//1.执行前置处理（主要是一些跨域之类的）
+				if(beforeAuth != null) {
+					beforeAuth.run(mainHandler);
+				}
+				//2.执行注解处理
+				authAnno(action);
+				//3.执行规则处理
 				auth.run(mainHandler);
 			});
-
-			//2.验证注解处理
-			if (isAnnotation && action != null) {
-				// 获取此请求对应的 Method 处理函数
-				Method method = action.method().getMethod();
-
-				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-				if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
-					return;
-				}
-
-				// 注解校验
-				SaStrategy.me.checkMethodAnnotation.accept(method);
-			}
 
 		} catch (StopMatchException e) {
 
@@ -212,5 +204,21 @@ public class SaTokenInterceptor implements RouterInterceptor {
 		}
 
 		chain.doIntercept(ctx, mainHandler);
+	}
+
+	private void authAnno(Action action) {
+		//2.验证注解处理
+		if (isAnnotation && action != null) {
+			// 获取此请求对应的 Method 处理函数
+			Method method = action.method().getMethod();
+
+			// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
+			if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+				return;
+			}
+
+			// 注解校验
+			SaStrategy.me.checkMethodAnnotation.accept(method);
+		}
 	}
 }
