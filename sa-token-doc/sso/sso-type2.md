@@ -266,7 +266,7 @@ public class SaSso2ClientApplication {
 
 可以看出，除了在`Client1`端我们需要手动登录一次之外，在`Client2端`和`Client3端`都是可以无需再次认证，直接登录成功的。
 
-我们可以通过 F12控制台 Netword跟踪整个过程
+我们可以通过 F12控制台 Network 跟踪整个过程
 
 ![sso-genzong](https://oss.dev33.cn/sa-token/doc/sso/sso-genzong.png 's-w-sh')
 
