@@ -16,7 +16,7 @@ sa-token:
         # 所有允许的授权回调地址
         allow-url: "*"
         # 是否打开单点注销功能
-        is-slo: true
+        isSlo: true
         
         # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开） 
         # 是否打开模式三 
