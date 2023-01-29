@@ -16,13 +16,6 @@ import org.noear.solon.core.handle.ModelAndView;
  */
 @Configuration
 public class SsoConfig {
-    /**
-     * 构建 SaSsoConfig bean
-     * */
-    @Bean
-    public SaSsoConfig getSaSsoConfig(@Inject("${sa-token.sso}") SaSsoConfig ssoConfig) {
-        return ssoConfig;
-    }
 
     /**
      * 构建建 SaToken redis dao（如果不需要 redis；可以注释掉）
@@ -34,7 +27,7 @@ public class SsoConfig {
 
     // 配置SSO相关参数
     @Bean
-    public void configSso(SaSsoConfig sso) {
+    public void configSso(SaSsoConfig sso) { //SaSsoConfig 已自动构建
 
         // 配置：未登录时返回的View
         sso.setNotLoginView(() -> {
