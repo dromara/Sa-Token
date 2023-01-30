@@ -18,7 +18,7 @@ public class SaOAuth2AutoConfigure {
      * 获取 OAuth2配置Bean
      */
     @Bean
-    public SaOAuth2Config getConfig(@Inject("${sa-token.oauth2}") SaOAuth2Config oAuth2Config) {
+    public SaOAuth2Config getConfig(@Inject(value = "${sa-token.oauth2}",required = false) SaOAuth2Config oAuth2Config) {
         return oAuth2Config;
     }
 
