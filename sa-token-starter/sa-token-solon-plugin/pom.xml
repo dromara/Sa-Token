@@ -18,13 +18,27 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
-    
+
+        <!-- OAuth2.0 (optional) -->
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon</artifactId>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-oauth2</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- SSO (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sso</artifactId>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>

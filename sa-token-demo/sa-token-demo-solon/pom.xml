@@ -10,7 +10,7 @@
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
 		<sa-token.version>1.34.0</sa-token.version>
-		<solon.version>1.10.13</solon.version>
+		<solon.version>1.12.4</solon.version>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -40,28 +40,15 @@
 		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
 		<!-- <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis</artifactId>
+            <artifactId>sa-token-dao-redisx</artifactId>
             <version>${sa-token.version}</version>
         </dependency> -->
-		
-		<!-- sa-token整合redis (使用jackson序列化方式) -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis-jackson</artifactId>
-            <version>${sa-token.version}</version>
-        </dependency> -->
+
         
 		<!-- 提供redis连接池 -->
 		<!-- <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-        </dependency> -->
-        
-		<!-- sa-token整合SpringAOP实现注解鉴权 -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-aop</artifactId>
-            <version>${sa-token.version}</version>
         </dependency> -->
 
 		<!-- hutool工具类，用来生成雪花算法唯一id -->
