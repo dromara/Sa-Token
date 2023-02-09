@@ -6,15 +6,15 @@ import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.sso.SaSsoTemplate;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import org.noear.solon.annotation.Bean;
+import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
-import org.noear.solon.annotation.Init;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.core.AopContext;
 
 /**
  * @author noear
  * @since 2.0
  */
+@Condition(hasClass = SaSsoManager.class)
 @Configuration
 public class SaSsoAutoConfigure {
     /**
