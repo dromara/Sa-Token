@@ -42,21 +42,9 @@ public class XPluginImp implements Plugin {
         //注入其它 Bean
         context.beanOnloaded(c -> {
             beanInitDo(c);
-            ssoBeanInitDo(c);
-            oauth2BeanInitDo(c);
-        });
-    }
-
-    private void ssoBeanInitDo(AopContext context){
-        if (Utils.loadClass("cn.dev33.satoken.sso.SaSsoManager") != null) {
             context.beanMake(SaSsoAutoConfigure.class);
-        }
-    }
-
-    private void oauth2BeanInitDo(AopContext context){
-        if(Utils.loadClass("cn.dev33.satoken.oauth2.SaOAuth2Manager") != null){
             context.beanMake(SaOAuth2AutoConfigure.class);
-        }
+        });
     }
 
     private void beanInitDo(AopContext context) {

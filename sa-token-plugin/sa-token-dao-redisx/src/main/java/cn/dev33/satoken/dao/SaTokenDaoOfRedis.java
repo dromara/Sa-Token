@@ -1,7 +1,6 @@
 package cn.dev33.satoken.dao;
 
 import org.noear.redisx.RedisClient;
-import org.noear.solon.annotation.Note;
 
 import java.util.Properties;
 
@@ -11,7 +10,6 @@ import java.util.Properties;
  * @author noear
  * @since 1.6
  */
-@Note("更名为：SaTokenDaoOfRedisBase64")
 @Deprecated
 public class SaTokenDaoOfRedis extends SaTokenDaoOfRedisBase64 {
 
