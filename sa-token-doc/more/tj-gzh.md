@@ -8,6 +8,11 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=Mzg4Nzg2MjQzNg==&mid=2247484545&idx=1&sn=c6101effb31b639fe2699b56bcc090c7&send_time="/>
+			<b>小简聊开发</b>
+			<span>偶尔更新前后端技术文章，偶尔发布生活散文，更新随缘。浏览器搜索JanYork了解我更多。</span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=MzU2MTI4MjI0MQ==&mid=2247508620&idx=1&sn=500448fce310a6012aa58616c304dec2&send_time="/>
 			<b>Java笔记虾</b>
 			<span>专注于Java技术栈，推送 Spring全家桶，Dubbo等相关技术知识</span>
@@ -22,7 +27,6 @@
 			<b>TJ君</b>
 			<span>一个励志推荐10000款开源项目与免费工具的程序猿</span>
 		</td>
-        <td>-</td>
         <td>-</td>
     </tr>
     <tr>
