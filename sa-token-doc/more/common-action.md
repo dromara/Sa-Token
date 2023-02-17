@@ -45,7 +45,6 @@ SaFoxUtil.getRandomString(8);       // 生成指定长度的随机字符串
 SaFoxUtil.isEmpty(str);             // 指定字符串是否为null或者空字符串
 SaFoxUtil.isNotEmpty(str);          // 指定字符串是否不是null或者空字符串
 SaFoxUtil.equals(a, b);             // 比较两个对象是否相等 
-SaFoxUtil.equals(a, b);             // 比较两个对象是否相等 
 SaFoxUtil.getMarking28();           // 以当前时间戳和随机int数字拼接一个随机字符串
 SaFoxUtil.formatDate(date);         // 将日期格式化为yyyy-MM-dd HH:mm:ss字符串
 SaFoxUtil.searchList(dataList, prefix, keyword, start, size, sortType);             // 从集合里查询数据
