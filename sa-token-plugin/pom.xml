@@ -33,6 +33,7 @@
         <module>sa-token-temp-jwt</module>
         <module>sa-token-jwt</module>
         <module>sa-token-context-dubbo</module>
+        <module>sa-token-context-dubbo3</module>
         <module>sa-token-context-grpc</module>
     </modules>
 
