@@ -95,7 +95,6 @@ StpUtil.stpLogic.updateLastActivityToNow(tokenValue);
 | StpUtil.getLoginIdAsLong() |
 |---|
 | StpUtil.getSession() |
-| StpUtil.getSession() |
 | StpUtil.getTokenSession() |
 |---|
 | StpUtil.getRoleList() |
