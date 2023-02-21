@@ -14,7 +14,7 @@ import org.noear.solon.annotation.Inject;
  * @author noear
  * @since 2.0
  */
-@Condition(hasClass = SaSsoManager.class)
+@Condition(onClass = SaSsoManager.class)
 @Configuration
 public class SaSsoAutoConfigure {
     /**

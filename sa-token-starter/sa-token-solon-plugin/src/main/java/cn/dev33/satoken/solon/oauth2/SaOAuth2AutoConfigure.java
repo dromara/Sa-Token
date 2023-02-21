@@ -13,7 +13,7 @@ import org.noear.solon.annotation.Inject;
  * @author noear
  * @since 2.0
  */
-@Condition(hasClass = SaOAuth2Manager.class)
+@Condition(onClass = SaOAuth2Manager.class)
 @Configuration
 public class SaOAuth2AutoConfigure {
     /**
