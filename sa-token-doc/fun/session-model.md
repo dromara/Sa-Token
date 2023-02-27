@@ -80,6 +80,12 @@ session.set("name", "张三");
 
 只要两个自定义Session的Id一致，它们就是同一个Session 
 
+Custom-Session的会话有效期默认使用`SaManager.getConfig().getTimeout()`, 如果需要修改会话有效期, 可以在创建之后, 使用对象方法修改
+
+``` java
+session.updateTimeout(1000); // 参数说明和全局有效期保持一致
+```
+
 
 ### 4、Session模型结构图 
 
