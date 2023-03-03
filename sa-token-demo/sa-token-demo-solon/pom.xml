@@ -10,7 +10,7 @@
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
 		<sa-token.version>1.34.0</sa-token.version>
-		<solon.version>2.1.4</solon.version>
+		<solon.version>2.2.1</solon.version>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>

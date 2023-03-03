@@ -2,7 +2,9 @@ package com.pj;
 
 
 import org.noear.solon.Solon;
+import org.noear.solon.annotation.SolonMain;
 
+@SolonMain
 public class SaSsoServerApp {
 
 	public static void main(String[] args) {
