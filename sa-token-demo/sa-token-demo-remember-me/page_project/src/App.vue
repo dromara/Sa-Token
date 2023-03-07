@@ -85,7 +85,6 @@ export default {
       param[tokenName] = tokenValue
       this.axios.post('/back/user/state', this.$f(param))
       .then(res => {
-		debugger
         if (res.status === 200) {
           this.loginState = res.data.data
         } else {

@@ -8,7 +8,7 @@ import 'element-plus/dist/index.css' // 加载elementUI样式
 import zhCn from 'element-plus/es/locale/lang/zh-cn' // 引入中文本地化组件
 
 
-app = createApp(App)
+const app = createApp(App)
 
 // vue组件内通过 this.$f() 来调用
 app.config.globalProperties.$f = (params) => {
