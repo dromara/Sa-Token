@@ -27,6 +27,8 @@ implementation 'cn.dev33:sa-token-jwt:${sa.top.version}'
 
 > 注意: sa-token-jwt 显式依赖 hutool-jwt 5.7.14 版本，意味着：你的项目中要么不引入 Hutool，要么引入版本 >= 5.7.14 的 Hutool 版本
 
+> hutool 5.8.13 和 5.8.14 禁止使用, [关联issue](https://gitee.com/dromara/sa-token/issues/I6L429)
+
 ### 2、配置秘钥
 在 `application.yml` 配置文件中配置 jwt 生成秘钥：
 
