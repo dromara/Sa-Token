@@ -98,7 +98,7 @@ public class SaTokenException extends RuntimeException {
 	 */
 	public static void throwBy(boolean flag, String message, int code) {
 		if(flag) {
-			throw new SaTokenException(message);
+			throw new SaTokenException(message).setCode(code);
 		}
 	}
 
