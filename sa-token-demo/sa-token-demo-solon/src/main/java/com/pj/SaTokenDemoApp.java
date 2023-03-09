@@ -2,6 +2,7 @@ package com.pj;
 
 
 import org.noear.solon.Solon;
+import org.noear.solon.annotation.SolonMain;
 
 import cn.dev33.satoken.SaManager;
 
@@ -10,6 +11,7 @@ import cn.dev33.satoken.SaManager;
  * @author noear
  *
  */
+@SolonMain
 public class SaTokenDemoApp {
 
 	public static void main(String[] args) {
