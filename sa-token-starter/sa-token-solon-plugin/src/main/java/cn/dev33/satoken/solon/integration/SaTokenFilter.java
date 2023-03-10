@@ -180,9 +180,10 @@ public class SaTokenFilter implements Filter { //之所以改名，为了跟 SaT
 					beforeAuth.run(mainHandler);
 				}
 				//2.执行注解处理
-				authAnno(action);
-				//3.执行规则处理
-				auth.run(mainHandler);
+				if(authAnno(action)) {
+					//3.执行规则处理（如果没有被 @SaIgnore 忽略）
+					auth.run(mainHandler);
+				}
 			});
 		} catch (StopMatchException e) {
 
@@ -206,7 +207,7 @@ public class SaTokenFilter implements Filter { //之所以改名，为了跟 SaT
 		chain.doFilter(ctx);
 	}
 
-	private void authAnno(Action action) {
+	private boolean authAnno(Action action) {
 		//2.验证注解处理
 		if (isAnnotation && action != null) {
 			// 获取此请求对应的 Method 处理函数
@@ -214,11 +215,13 @@ public class SaTokenFilter implements Filter { //之所以改名，为了跟 SaT
 
 			// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
 			if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
-				return;
+				return false;
 			}
 
 			// 注解校验
 			SaStrategy.me.checkMethodAnnotation.accept(method);
 		}
+
+		return true;
 	}
 }
