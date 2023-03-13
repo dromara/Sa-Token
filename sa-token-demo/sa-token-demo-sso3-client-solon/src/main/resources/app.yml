@@ -1,0 +1,38 @@
+# 端口
+server:
+    port: 9001
+
+# sa-token配置 
+sa-token: 
+    # SSO-相关配置
+    sso: 
+        # SSO-Server端 统一认证地址 
+        auth-url: http://sa-sso-server.com:9000/sso/auth
+        # 使用Http请求校验ticket 
+        is-http: true
+        # SSO-Server端 ticket校验地址 
+        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
+        # 打开单点注销功能 
+        is-slo: true
+        # 单点注销地址 
+        slo-url: http://sa-sso-server.com:9000/sso/signout
+        # 接口调用秘钥 
+        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        # SSO-Server端 查询userinfo地址 
+        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
+
+
+# 配置 Sa-Token Dao（此处与SSO-Server端连接不同的Redis）
+sa-token-dao: #名字可以随意取
+    redis:
+        server: "localhost:6379"
+        password: 123456
+        db: 2
+        maxTotal: 200
+        
+forest: 
+    # 关闭 forest 请求日志打印
+    log-enabled: false
+        
+        
+        
