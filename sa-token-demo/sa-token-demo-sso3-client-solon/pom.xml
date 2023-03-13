@@ -40,6 +40,13 @@
             <artifactId>sa-token-sso</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
+
+		<!-- Sa-Token 整合 redisx -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-dao-redisx</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
 		
 		<!-- Http 请求工具 -->
 		<dependency>
