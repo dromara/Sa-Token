@@ -1,7 +1,7 @@
 package com.pj;
 
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.solon.dao.SaTokenDaoOfRedis;
+import cn.dev33.satoken.dao.SaTokenDaoOfRedis;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
