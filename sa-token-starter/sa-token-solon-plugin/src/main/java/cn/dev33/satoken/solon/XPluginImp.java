@@ -1,11 +1,5 @@
 package cn.dev33.satoken.solon;
 
-import cn.dev33.satoken.solon.oauth2.SaOAuth2AutoConfigure;
-import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
-import org.noear.solon.Solon;
-import org.noear.solon.core.AopContext;
-import org.noear.solon.core.Plugin;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.basic.SaBasicTemplate;
 import cn.dev33.satoken.basic.SaBasicUtil;
@@ -19,10 +13,15 @@ import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
+import cn.dev33.satoken.solon.oauth2.SaOAuth2AutoConfigure;
+import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
+import org.noear.solon.Solon;
+import org.noear.solon.core.AopContext;
+import org.noear.solon.core.Plugin;
 
 /**
  * @author noear

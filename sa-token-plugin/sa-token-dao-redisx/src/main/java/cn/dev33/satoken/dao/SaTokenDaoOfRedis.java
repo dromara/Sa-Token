@@ -10,7 +10,6 @@ import java.util.Properties;
  * @author noear
  * @since 1.6
  */
-@Deprecated
 public class SaTokenDaoOfRedis extends SaTokenDaoOfRedisBase64 {
 
     public SaTokenDaoOfRedis(Properties props) {
