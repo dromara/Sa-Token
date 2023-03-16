@@ -22,7 +22,7 @@ public class SaQuickController {
 
 	/**
 	 * 进入登录页面
-	 * @param request see note
+	 * @param model see note
 	 * @return see note
 	 */
 	@GetMapping("/saLogin")
