@@ -148,8 +148,6 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 
 ## 使用 Sa-Token 的开源项目 
 
-- [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器。
-
 - [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + AntDesignVue3 + Vite + SpringBoot + Mp + HuTool + SaToken。
 
 - [[ RuoYi-Vue-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
@@ -169,8 +167,6 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 - [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：轻量级 http 通信框架，API无比优雅，支持 WebSocket、Stomp 协议
 
 - [[ Bean Searcher ]](https://github.com/ejlchina/bean-searcher)：专注高级查询的只读 ORM，使一行代码实现复杂列表检索！
-
-- [[ Snowy ]](https://xiaonuo.vip/index#pricing)：小诺快速开发平台，同时拥有 Layui、Vue、SpringCloud 三个版本。
 
 - [[ Jpom ]](https://gitee.com/dromara/Jpom)：简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件。
 
