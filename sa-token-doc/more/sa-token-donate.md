@@ -19,6 +19,13 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [Java_小生](https://gitee.com/zhang_hanzhe)	| ¥ 10.0		| 感谢Sa-Token让我不用去B站肯几十个小时的教程，框架很优秀文档更优秀	| 2023-03-09 	|
+| 空空（微信打赏）								| ¥ 10.0		| 感谢您的开源项目！							| 2023-03-08 	|
+| [李一博](https://gitee.com/haust_lyb)			| ¥ 8.88		| 感谢您的开源项目！							| 2023-03-07 	|
+| [陈乾](https://gitee.com/qianpou)				| ¥ 50.0		| 感谢您的开源项目！							| 2023-03-07 	|
+| [陈乾](https://gitee.com/qianpou)				| ¥ 20.0		| 感谢您的开源项目！							| 2023-03-05 	|
+| [熊孩子](https://gitee.com/xhz1230)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-02-17 	|
+| [不问烟雨](https://gitee.com/xiaominfagui)		| ¥ 10.0		| 牛										| 2023-01-12 	|
 | [tsing](https://gitee.com/tsing666)			| ¥ 10.0		| 感谢您的开源项目！							| 2023-01-08 	|
 | [SWmachine](https://gitee.com/SWmachine)		| ¥ 10.0		| 您的开源很好用！							| 2023-01-07 	|
 | [Peter Z](https://gitee.com/zj1995)			| ¥ 10.0		| 感谢您的开源项目！							| 2022-12-26 	|
