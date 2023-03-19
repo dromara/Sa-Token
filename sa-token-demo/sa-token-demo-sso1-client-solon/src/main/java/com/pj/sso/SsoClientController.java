@@ -5,6 +5,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.annotation.Produces;
+import org.noear.solon.boot.web.MimeType;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Render;
 
@@ -15,7 +17,8 @@ import org.noear.solon.core.handle.Render;
 @Controller
 public class SsoClientController implements Render {
 
-	// SSO-Client端：首页 
+	// SSO-Client端：首页
+	@Produces(MimeType.TEXT_HTML_VALUE)
 	@Mapping("/")
 	public String index() {
 		String authUrl = SaSsoManager.getConfig().splicingAuthUrl();
