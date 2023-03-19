@@ -76,6 +76,25 @@ String text2 = SaBase64Util.decode(base64Text);
 System.out.println("Base64解码后：" + text2); 
 ```
 
+### BCrypt加密
+由它加密的文件可在所有支持的操作系统和处理器上进行转移
+
+它的口令必须是8至56个字符，并将在内部被转化为448位的密钥
+
+> 此类来自于https://github.com/jeremyh/jBCrypt/
+``` java
+// 使用方法
+String pw_hash = BCrypt.hashpw(plain_password, BCrypt.gensalt()); 
+
+// 使用checkpw方法检查被加密的字符串是否与原始字符串匹配：
+BCrypt.checkpw(candidate_password, stored_hash); 
+
+// gensalt方法提供了可选参数 (log_rounds) 来定义加盐多少，也决定了加密的复杂度:
+String strong_salt = BCrypt.gensalt(10);
+String stronger_salt = BCrypt.gensalt(12); 
+```
+
+
 <br>
 
 如需更多加密算法，可参考 [Hutool-crypto: 加密](https://hutool.cn/docs/#/crypto/%E6%A6%82%E8%BF%B0)
