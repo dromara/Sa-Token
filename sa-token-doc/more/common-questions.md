@@ -9,36 +9,60 @@
 
 ## 一、常见报错
 
-### Q：报错：非Web上下文无法获取Request？
-报错原因：Sa-Token 的部分 API 只能在 Web 上下文中调用，报这个错说明你调用 Sa-Token 的地方不在 Web 上下文中，请排查：
+### Q：报错：非Web上下文无法获取Request。
 
-1. 是否在 main 方法中调用了 Sa-Token 的API
-2. 是否在带有 `@Async` 注解的方法中调用了 Sa-Token 的API
-3. 是否在一些丢失web上下文的子线程中调用了 Sa-Token 的API，例如 `MyBatis-Plus` 的 `insertFill` 自动填充
-4. 是否在一些非 Http 协议的 RPC 框架中（例如 Dubbo）调用了 Sa-Token 的API 
-5. 是否在 SpringBoot 启动初始化的方法中调用了 Sa-Token 的API，例如`@PostConstruct`
+报错原因解析：
 
-解决方案：先获取你想要的值，再把这个值当做一个参数传递到这些方法中，而不是直接从方法内调用 Sa-Token 的API。
+Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUtil.getLoginId()` 获取当前用户Id，这个方法第一步需要先从前端提交的参数里获取 token 值，
+当你在 main 方法里调用这个 API 时，由于 main 方法本质上不是一个 Controller 请求，所以框架无法完成 *“从前端提交的参数里获取 token 值”* 这一步骤，框架就只能抛出异常。
+
+按照此标准，Sa-Token 的 API 可粗浅的分为两大类：
+- 必须在 Web 上下文中才能调用的 API，例如：`StpUtil.getLoginId()`、`StpUtil.getTokenValue()` 等等。
+- 无需 Web 上下文也能调用的 API，例如：`StpUtil.getLoginType()`、`SaManager.getConfig()` 等等。
+
+此处无法逐一列出到底哪些 API 属于 *“必须依赖 Web 上下文的 API”*，因为太多了，你只需要记住关键的一点：
+**当一个 API 执行的代码需要先从前端请求中获取一些数据时，这个 API 就属于 *“必须依赖 Web 上下文的 API”*。**
+
+如果你的代码报这个错，说明你在不是 Web 上下文中的地方，调用了 *“必须依赖 Web 上下文的 API”*，请排查：
+
+1. 是否在 main 方法中调用了 *“必须依赖 Web 上下文的 API”*。
+2. 是否在带有 `@Async` 注解的方法中调用了 *“必须依赖 Web 上下文的 API”*。
+3. 是否在一些丢失 web 上下文的子线程中调用了 *“必须依赖 Web 上下文的 API”*，例如 `MyBatis-Plus` 的 `insertFill` 自动填充。
+4. 是否在一些非 Http 协议的 RPC 框架中（例如 Dubbo）调用了 *“必须依赖 Web 上下文的 API”*。
+5. 是否在 SpringBoot 启动初始化的方法中调用了 *“必须依赖 Web 上下文的 API”*，例如 `@PostConstruct` 修饰的方法。
+6. 是否在定时任务中调用了 *“必须依赖 Web 上下文的 API”*。
 
 
-### Q：报错：未初始化任何有效上下文处理器？
-报错原因：Sa-Token底层不能确认最终运行的web容器，所以抽象了 `SaTokenContext` 接口，对接不同容器时需要注入不同的实现，通常这个注入工作都是框架自动完成的，
-你只需要按照文档开始部分集成相应的依赖即可
+### Q：报错：未能获取有效的上下文处理器。
 
-如果报了这个错误，说明框架没有注入正确的上下文实现，请排查：
+报错原因解析：
+
+在 sa-token-core 核心包中，Sa-Token 底层不能确认最终运行的 web 容器，所以抽象了 `SaTokenContext` 接口，对接不同容器时需要注入不同的实现，
+通常这个注入工作都是框架自动完成的，你只需要按照文档开始部分集成相应的依赖即可。例如：
+
+- 你要在 Springboot2.x 中使用 Sa-Token，就引入：`sa-token-spring-boot-starter`。
+- 你要在 Springboot3.x 中使用 Sa-Token，就引入：`sa-token-spring-boot3-starter`。
+- 你要在基于 webflux 架构的网关中使用 Sa-Token，就引入：`sa-token-reactor-spring-boot-starter`。
+- 你要在 Solon 中使用 Sa-Token，就引入：`sa-token-solon-plugin`。
+- 等等等等……
+
+如果你的代码报 *“未能获取有效的上下文处理器”* 这个错，大概率是因为你没有正确引入所需的包，导致框架没有注入正确的 `SaTokenContext` 上下文实现，请排查：
 
 1. 如果你的项目是微服务项目，请直接参考：[微服务-依赖引入说明](/micro/import-intro)，如果是单体项目，请往下看：
-2. 请判断你的项目是 SpringMVC 环境还是 WebFlux 环境
+2. 请判断你的项目是 SpringMVC 环境还是 WebFlux 环境：
 	- 如果是 SpringMVC 环境就引入 `sa-token-spring-boot-starter` 依赖，参考：[在SpringBoot环境集成](/start/example)
 	- 如果是 WebFlux 环境就引入 `sa-token-reactor-spring-boot-starter` 依赖，参考：[在WebFlux环境集成](/start/webflux-example)
-	- 引入错误的依赖会导致`SaTokenContext`初始化失败，抛出上述异常 
-	- 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖，如果引入了`spring-boot-starter-web`就是SpringMVC环境，如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。……什么？你说你两个都引入了？那你的项目能启动成功吗？
-3. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了全局过滤器，在 WebFlux 下这一步是必须的**。
-4. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
+3. 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖：
+	- 如果引入了`spring-boot-starter-web`就是 SpringMVC 环境。
+	- 如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。
+	- 什么？你说你两个都引入了？那你的项目能启动成功吗？
+4. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了 SaReactorFilter 全局过滤器，在 WebFlux 下这一步是必须的**，具体还是请参考上面的 [ 在WebFlux环境集成 ] 章节。
+5. 需要仔细注意，如果你使用的是 Springboot3.x 版本，就不要错误的引入 `sa-token-spring-boot-starter`，需要引入的是 `sa-token-spring-boot3-starter`，不然就会导致框架报错。
+6. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
 
 ### Q：报错：NotLoginException：xxx
 
-这个错是说明调用接口的人没有通过登录校验，请注意通常**异常提示语已经描述清楚了没有通过认证的具体原因：**
+这个错是说明调用接口的人没有通过登录校验，请注意：**通常情况下，异常提示语已经描述清楚了没有通过校验的具体原因：**
    
 **如果是：未能读取到有效Token**
 - 可能1：前端没有提交 Token（最好从前端f12控制台看看请求参数里有 token 吗）。
@@ -216,7 +240,7 @@ sa-token:
 
 
 ### Q：我自定义了组件，但是好像没有生效？
-1、情况1是可能组件没有注入成功，排查方法为在 main 里打印这个组件，是否为自定义的class限定名：
+1、可能组件没有注入成功，排查方法为在 main 里打印这个组件，是否为自定义的class限定名：
 ``` java
 @SpringBootApplication
 public class SaTokenApplication {
@@ -231,7 +255,7 @@ public class SaTokenApplication {
 - 自定义的组件实现类是否在启动类的同目录或者子目录上，如果不在则无法被 springboot 启动时扫描，扫描不到也就无法注入。
 - 启动类上是否加了 `@ComponentScan` 注解，导致包扫描范围不正确，请将此注解删除或移动到其它配置类上。
 
-2、情况2是，这个组件注入成功了，但是还没到执行时机，比如 `StpInterface` 组件，只有在鉴权时才会触发，如果你的代码仅仅是登录校验，就不会执行到这个组件。
+2、这个组件注入成功了，但是还没到执行时机，比如 `StpInterface` 组件，只有在鉴权时才会触发，如果你的代码仅仅是登录校验，就不会执行到这个组件。
 
 
 ### Q：集成 Redis 后，明明 Redis 中有值，却还是提示无效Token？
@@ -337,7 +361,9 @@ public class User implements Serializable {
     private String username;
     private String password;
 }
+```
 
+``` java
 User user = new User();
 user.setUserId(10000L);
 user.setUsername("oneName");
@@ -350,9 +376,9 @@ SerializationException: Could not read JSON:
 Cannot deserialize value of type `java.lang.Long` from Array value (token `JsonToken.START_ARRAY`)
 ```
 
-springboot 集成 satoken redis 后, 一旦 springboot 切换版本就有可能出现此问题
+Springboot 集成 Sa-Token Redis 后, 一旦 Springboot 切换版本就有可能出现此问题
 
-原因是redis里面有之前的 satoken 会话数据, 清空 Redis 即可
+原因是 Redis 里面有之前的 Sa-Token 会话数据, 清空 Redis 即可。
 
 
 
@@ -397,10 +423,35 @@ Caused by: java.lang.ClassNotFoundException: cn.dev33.satoken.same.SaSameTemplat
 ### Q：登录方法需要我自己实现吗？
 是的，不同于`shiro`等框架，`Sa-Token`不会在登录流程中强插一脚，开发者比对完用户的账号和密码之后，只需要调用`StpUtil.login(id)`通知一下框架即可
 
+``` java
+// 会话登录接口 
+@RequestMapping("doLogin")
+public SaResult doLogin(String name, String pwd) {
+    // 第一步：比对前端提交的账号名称、密码
+    if("zhang".equals(name) && "123456".equals(pwd)) {
+		
+        // 第二步：比对成功后，调用通知框架，xxx账号登录成功 
+        StpUtil.login(10001);
+        return SaResult.ok("登录成功");
+    }
+    return SaResult.error("登录失败");
+}
+```
 
 ### Q：框架抛出的权限不足异常，我想根据自定义提示信息，可以吗？
 可以，在全局异常拦截器里捕获`NotPermissionException`，可以通过`getPermission()`获取没有通过认证的权限码，可以据此自定义返回信息
 
+``` java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    // 全局 NotPermissionException 异常捕获 
+    @ExceptionHandler(NotPermissionException.class)
+    public SaResult handlerException(NotPermissionException e) {
+        e.printStackTrace();
+        return SaResult.error("缺少权限：" + e.getPermission());
+    }
+}
+```
 
 ### Q：我的项目权限模型不是RBAC模型，很复杂，可以集成吗？
 无论什么模型，只要能把一个用户具有的所有权限塞到一个List里返回给框架，就能集成
@@ -439,11 +490,11 @@ SaRouter.match("/**").notMatch("/login", "/reg").check(r -> StpUtil.checkLogin()
 `StpUtil.login()`只是为了给当前会话做个唯一标记，通常写入`UserId`即可，如果要存储User对象，可以使用`StpUtil.getSession()`获取Session对象进行存储。 
 
 
-### Q：前后台分离模式下和普通模式有何不同？
-主要是失去了`Cookie`无法自动化保存和提交`token秘钥`，可以参考章节：[前后台分离](/up/not-cookie)
+### Q：前后端分离模式下和普通模式有何不同？
+主要是失去了`Cookie`无法自动化保存和提交`token秘钥`，可以参考章节：[前后端分离](/up/not-cookie)
 
 
-### Q：前后台分离时，前端提交的 header 参数是叫 token 还是 satoken 还是 tokenName？
+### Q：前后端分离时，前端提交的 header 参数是叫 token 还是 satoken 还是 tokenName？
 默认是satoken，如果想换一个名字，更改一下配置文件的`tokenName`即可。
 
 
@@ -489,6 +540,11 @@ So：从鉴权粒度的角度来看，需要针对一个模块鉴权的时候，
 为了保证相关组件能够及时初始化，框架默认给过滤器注册的优先级为-100，如果你想更改优先级，直接在注册过滤器的方法上加上 `@Order(xxx)` 即可覆盖框架的默认配置
 
 
+### timeout 过期了，获取到的 NotLoginException 场景值是-2，按照文档说的应该是-3吧。是我理解的不对还是操作有误？
+你的理解是对的，但是框架现在只能做到返回-2，因为 token 过期后，就从 Redis 中消失了，框架没法分辨这个 token 是曾经有过然后过期的，还是从来就没有在Redis中存在过，
+所以只能统一抛出-2，这个行为也和具体使用的 SaTokenDao 有关联，例如集成 sa-token-jwt 插件后，框架就能分辨出来是 token 过期了，抛出-3。
+
+
 ### Q：还是有不明白到的地方?
-请在`gitee` 、 `github` 提交 `issues`，或者加入qq群交流（群链接在[首页](README?id=交流群)）
+请在`gitee` 、 `github` 提交 `issues`，或者加入qq群交流，[群链接](/more/join-group)
 

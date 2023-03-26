@@ -2,14 +2,14 @@
 
 ---
 
-如果我们已有的系统是前后端分离模式，我们显然不能为了接入SSO而改造系统的基础架构，官方仓库的示例采用的是前后端一体方案，要将其改造为前后台分离架构模式非常简单
+如果我们已有的系统是前后端分离模式，我们显然不能为了接入SSO而改造系统的基础架构，官方仓库的示例采用的是前后端一体方案，要将其改造为前后端分离架构模式非常简单
 
 以`sa-token-demo-sso2-client`为例：
 
 ### 1、新建`H5Controller`开放接口
 ``` java
 /**
- * 前后台分离架构下集成SSO所需的代码 
+ * 前后端分离架构下集成SSO所需的代码 
  */
 @RestController
 public class H5Controller {
@@ -105,8 +105,8 @@ public class H5Controller {
 先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如[HBuilderX](https://www.dcloud.io/hbuilderx.html)），测试流程与一体版一致 
 
 
-### 6、SSO-Server 端的前后台分离
-疑问：上述代码都是针对 Client 端进行拆分，如果我想在 SSO-Server 端也进行前后台分离改造，应该怎么做？
+### 6、SSO-Server 端的前后端分离
+疑问：上述代码都是针对 Client 端进行拆分，如果我想在 SSO-Server 端也进行前后端分离改造，应该怎么做？
 
 > 答：解决思路都是大同小异的，与Client一样，我们需要把原本在 “后端处理的授权重定向逻辑” 拿到前端来实现。
 

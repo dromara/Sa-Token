@@ -16,10 +16,10 @@
 	- [框架配置](/use/config) 
 
 - **深入**
-	- [集成Redis](/up/integ-redis)
-	- [前后台分离](/up/not-cookie) 
-	- [自定义Token风格](/up/token-style) 
-	- [自定义Token前缀](/up/token-prefix) 
+	- [集成 Redis](/up/integ-redis)
+	- [前后端分离](/up/not-cookie) 
+	- [自定义 Token 风格](/up/token-style) 
+	- [自定义 Token 前缀](/up/token-prefix) 
 	- [记住我模式](/up/remember-me)
 	- [二级认证](/up/safe-auth) 
 	- [模拟他人 & 身份切换](/up/mock-person) 
