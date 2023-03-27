@@ -1,6 +1,6 @@
 ---
 name: bug反馈
-about: 点击创建
+about: 当你明确框架存在 bug 时，选择这个模板提交
 title: ''
 labels: ''
 assignees: ''
