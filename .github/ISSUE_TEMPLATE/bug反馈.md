@@ -1,3 +1,12 @@
+---
+name: bug反馈
+about: 点击创建
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ### 使用版本:
 
 
