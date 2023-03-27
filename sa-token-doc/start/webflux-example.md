@@ -18,6 +18,7 @@
 
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` xml 
 <!-- Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc -->
 <dependency>
@@ -26,14 +27,16 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+
 <!-------- tab:Gradle 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` gradle
 // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ------------------------------>
 
-注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
+
 
 
 

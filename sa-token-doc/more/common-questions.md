@@ -352,6 +352,12 @@ String name = StpUtil.getSession().getString("name");
 参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
 
 
+### Q：前后端分离项目中，前端使用 vue，如果不打开 porxy 代理的话，调用 Sa-Token 登录不会将 token 自动注入到 Cookie 中，是因为跨域么？
+是。
+
+参考：[前后端分离](/up/not-cookie) 
+
+
 ### Q：集成redis后对象模型序列化异常
 假设执行如下代码:
 ``` java
@@ -540,7 +546,7 @@ So：从鉴权粒度的角度来看，需要针对一个模块鉴权的时候，
 为了保证相关组件能够及时初始化，框架默认给过滤器注册的优先级为-100，如果你想更改优先级，直接在注册过滤器的方法上加上 `@Order(xxx)` 即可覆盖框架的默认配置
 
 
-### timeout 过期了，获取到的 NotLoginException 场景值是-2，按照文档说的应该是-3吧。是我理解的不对还是操作有误？
+### Q：timeout 过期了，获取到的 NotLoginException 场景值是-2，按照文档说的应该是-3吧。是我理解的不对还是操作有误？
 你的理解是对的，但是框架现在只能做到返回-2，因为 token 过期后，就从 Redis 中消失了，框架没法分辨这个 token 是曾经有过然后过期的，还是从来就没有在Redis中存在过，
 所以只能统一抛出-2，这个行为也和具体使用的 SaTokenDao 有关联，例如集成 sa-token-jwt 插件后，框架就能分辨出来是 token 过期了，抛出-3。
 

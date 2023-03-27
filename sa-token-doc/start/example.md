@@ -13,10 +13,11 @@
 ### 2、添加依赖
 在项目中添加依赖：
 
-> 注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
-
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
+
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+
 ``` xml 
 <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
 <dependency>
@@ -25,7 +26,11 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+
 <!-------- tab:Gradle 方式 -------->
+
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+
 ``` gradle
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
