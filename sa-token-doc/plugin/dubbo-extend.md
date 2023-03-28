@@ -65,7 +65,7 @@ implementation 'cn.dev33:sa-token-context-dubbo:${sa.top.version}'
 其实思路和 Feign 模式一致，在 [ 调用端 ] 追加 Same-Token 参数，在 [ 被调用端 ] 校验这个 Same-Token 参数：
 
 - 校验通过：调用成功。
-- 校验不通过：通过失败，抛出异常。
+- 校验不通过：调用失败，抛出异常。
 
 我们有两种方式完成整合。
 
