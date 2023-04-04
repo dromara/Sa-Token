@@ -8,7 +8,7 @@ import io.vertx.ext.web.RoutingContext;
 /**
  * @author Enaium
  */
-public class SaContextHandler implements Handler<RoutingContext> {
+public class SaContext implements Handler<RoutingContext> {
   @Override
   public void handle(RoutingContext context) {
     SaManager.setSaTokenContext(new SaContextForVertx(context));

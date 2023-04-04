@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Enaium
  */
-public class SaHandler implements Handler<RoutingContext> {
+public class SaInterceptor implements Handler<RoutingContext> {
 
   // ------------------------ 设置此处理器 拦截 & 放行 的路由
 
@@ -37,7 +37,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param paths 路由
    * @return 对象自身
    */
-  public SaHandler addInclude(String... paths) {
+  public SaInterceptor addInclude(String... paths) {
     includeList.addAll(Arrays.asList(paths));
     return this;
   }
@@ -48,7 +48,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param paths 路由
    * @return 对象自身
    */
-  public SaHandler addExclude(String... paths) {
+  public SaInterceptor addExclude(String... paths) {
     excludeList.addAll(Arrays.asList(paths));
     return this;
   }
@@ -59,7 +59,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param pathList 路由集合
    * @return 对象自身
    */
-  public SaHandler setIncludeList(List<String> pathList) {
+  public SaInterceptor setIncludeList(List<String> pathList) {
     includeList = pathList;
     return this;
   }
@@ -70,7 +70,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param pathList 路由集合
    * @return 对象自身
    */
-  public SaHandler setExcludeList(List<String> pathList) {
+  public SaInterceptor setExcludeList(List<String> pathList) {
     excludeList = pathList;
     return this;
   }
@@ -121,7 +121,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param auth see note
    * @return 对象自身
    */
-  public SaHandler setAuth(SaFilterAuthStrategy auth) {
+  public SaInterceptor setAuth(SaFilterAuthStrategy auth) {
     this.auth = auth;
     return this;
   }
@@ -132,7 +132,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param error see note
    * @return 对象自身
    */
-  public SaHandler setError(SaFilterErrorStrategy error) {
+  public SaInterceptor setError(SaFilterErrorStrategy error) {
     this.error = error;
     return this;
   }
@@ -143,7 +143,7 @@ public class SaHandler implements Handler<RoutingContext> {
    * @param beforeAuth see note
    * @return 对象自身
    */
-  public SaHandler setBeforeAuth(SaFilterAuthStrategy beforeAuth) {
+  public SaInterceptor setBeforeAuth(SaFilterAuthStrategy beforeAuth) {
     this.beforeAuth = beforeAuth;
     return this;
   }
