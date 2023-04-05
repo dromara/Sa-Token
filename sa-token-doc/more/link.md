@@ -8,6 +8,8 @@
 
 ### 后台管理
 
+- [[ twelvet-fast ]](https://gitee.com/twelvet/twelvet-fast)：基于Spring Boot 3 JDK17的单体服务极速开发管理平台脚手架，先行体验最新技术栈。
+
 - [[ Sa-Plus ]](https://gitee.com/click33/sa-plus)：一个基于 SpringBoot 架构的快速开发框架，内置代码生成器。
 
 - [[ dcy-fast ]](https://gitee.com/dcy421/dcy-fast)：一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器。
@@ -16,7 +18,7 @@
 
 - [[ EasyAdmin ]](https://gitee.com/lakernote/easy-admin)：一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等
 
-- [[ RuoYi-Vue-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
+- [[ RuoYi-Vue-Plus ]](https://gitee.com/dromara/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
 
 - [[ SpringBoot_v2 ]](https://gitee.com/bdj/SpringBoot_v2)：SpringBoot_v2项目是努力打造springboot框架的极致细腻的脚手架。
 
@@ -52,12 +54,14 @@
 
 - [[ sa-admin-server ]](https://gitee.com/wlf213/sa-admin-server)：sa-admin-server是一个后台管理框架的服务端，核心技术：SpringBoot+SaToken+Quartz+Cache+Redis+Netty+MyBatisPlus; 亮点：RABC动态权限+零SQL+定时任务+缓存+在线IM; 前后端可分离也可一体部署，可选七牛云对象存储和本地存储两种方式。
 
+- [[ RuoYi-Vue-CMS ]](https://gitee.com/liweiyi/RuoYi-Vue-CMS)：RuoYi-Vue-CMS是前后端分离的内容管理系统，支持站群管理、多平台静态化、元数据模型扩展、多语言、全文检索，能轻松组织各种复杂内容形态。技术栈：SpringBoot3 + VUE2 + MybatisPlus + Sa-Token + xxl-job + Freemarker + ES + Redis + MySQL。
 
+- [[ springboot-multi-tenant-sa-token ]](https://gitee.com/willf/springboot-multi-tenant-sa-token)：轻量的多租户权限管理系统脚手架（SpringBoot，Sa-Token，mybatis-plus，Vue & Element）。
 
 
 ### 微服务相关
 
-- [[ RuoYi-Cloud-Plus ]](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba + Sa-Token + Dubbo + Mybatis-Plus + Xxl-Job 全方位升级 定期同步
+- [[ RuoYi-Cloud-Plus ]](https://gitee.com/dromara/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba + Sa-Token + Dubbo + Mybatis-Plus + Xxl-Job 全方位升级 定期同步
 
 - [[ Sp-Cloud ]](https://gitee.com/click33/sp-cloud)：Sa-Plus的微服务版本, 基于Spring-Cloud-Alibaba，微服务下使用Sa-Token的样例
 
@@ -100,5 +104,6 @@
 - [[ 拾壹博客 ]](https://gitee.com/quequnlong/shiyi-blog)：一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。
 
 - [[ cubic ]](https://gitee.com/dromara/cubic)：一站式问题定位平台，实时线程栈监控、线程池监控、动态arthas命令集、依赖分析等等等，助你快速定位问题。
+
 
 
