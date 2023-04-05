@@ -29,7 +29,7 @@ QQ交流群：707350988 [点击加入](https://jq.qq.com/?_wv=1027&k=tqbzHT2D)
 
 成为管理员的条件，以下任选其一即可：
 - 写过5篇以上有关 Sa-Token 的原创博客。
-- 有开源项目中集成了 Sa-Token，并在 [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token) 完成提交。
+- 有开源项目集成了 Sa-Token，并在 [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token) 完成提交。
 - 为 Sa-Token 开发过插件。
 
 职责：
