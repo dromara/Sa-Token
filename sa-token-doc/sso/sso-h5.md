@@ -9,7 +9,7 @@
 ### 1、新建`H5Controller`开放接口
 ``` java
 /**
- * 前后端分离架构下集成SSO所需的代码 
+ * 前后端分离架构下集成SSO所需的接口
  */
 @RestController
 public class H5Controller {
