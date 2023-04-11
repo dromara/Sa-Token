@@ -2180,8 +2180,8 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyJustCreatedSave() {
-//		return SaTokenConsts.JUST_CREATED_SAVE_KEY + loginType;
-		return SaTokenConsts.JUST_CREATED;
+		return SaTokenConsts.JUST_CREATED + loginType;
+//		return SaTokenConsts.JUST_CREATED;
 	}
 
 	/**  
