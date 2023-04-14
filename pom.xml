@@ -22,10 +22,11 @@
 		<module>sa-token-core</module>
 		<module>sa-token-starter</module>
 		<module>sa-token-plugin</module>
-		<!-- <module>sa-token-test</module> -->
-		<!-- <module>sa-token-demo/sa-token-demo-solon</module> -->
-	    <!-- <module>sa-token-demo/sa-token-demo-sso-server-solon</module> -->
-</modules>
+		<module>sa-token-demo/sa-token-demo-sso-server-solon</module>
+		<module>sa-token-demo/sa-token-demo-sso1-client-solon</module>
+		<module>sa-token-demo/sa-token-demo-sso2-client-solon</module>
+		<module>sa-token-demo/sa-token-demo-sso3-client-solon</module>
+	</modules>
 
 <!-- 开源协议 apache 2.0 -->
 	<licenses>
