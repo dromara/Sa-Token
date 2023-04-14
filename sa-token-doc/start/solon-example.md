@@ -1,4 +1,4 @@
-## Solon 集成 Sa-Token 示例
+# Solon 集成 Sa-Token 示例
 
 本篇介绍在 Solon 应用中如何集成 Sa-Token。
 
