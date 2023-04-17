@@ -319,5 +319,21 @@
 			}
 			
 		</script>
+		
+		<!-- 赞助页的展开和收缩 -->
+		<script>
+			// 展开
+			function expandZanZhu(){
+				$('.zk-btn--1').hide();
+				$('.zk-btn--2').show();
+				$('.zanzhu-box').height($('.zanzhu-box table').height());
+			}
+			// 折叠
+			function foldZanZhu(){
+				$('.zanzhu-box').height(500);
+				$('.zk-btn--2').hide();
+				$('.zk-btn--1').show();
+			}
+		</script>
 	</body>
 </html>

@@ -54,6 +54,11 @@ var myDocsifyPlugin = function(hook, vm) {
 		$('#main h2, #main h3, #main h4, #main h5, #main h6').each(function() {
 			$('.toc-box').append('<li class="toc-' + this.localName + '">' + this.innerHTML + '</li>');
 		});
+		
+		// 功能5，统计赞助人数
+		if($('.zanzhu-count').length && $('.zanzhu-box table').length) {
+			$('.zanzhu-count').html($('.zanzhu-box table tr').length);
+		}
 	});
 	
 	// 钩子函数：初始化并第一次加载完成数据后调用，没有参数。

@@ -187,9 +187,16 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 blockquote code {font-weight: 400;}
 
 /* 赞助列表 */
-.zanzhu-pre+table tr td:nth-child(2){color: red;}
-#main .zanzhu-pre+table tr td a{border-color: rgba(0,0,0,0); color: inherit;}
-#main .zanzhu-pre+table tr td a:hover{border-color: var(--a-hover-color); color: var(--a-hover-color);}
+.zanzhu-box table tr td:nth-child(2){color: red;}
+#main .zanzhu-box table tr td a{border-color: rgba(0,0,0,0); color: inherit;}
+#main .zanzhu-box table tr td a:hover{border-color: var(--a-hover-color); color: var(--a-hover-color);}
+
+/* 展开和收起 */
+#main .zanzhu-box{height: 500px; overflow-y: hidden; transition: all 1.5s;}
+#main .zanzhu-box table{display: table;}
+.zhankai-btn-box{margin-top: 10px;}
+.zk-btn--1,.zk-btn--2{cursor: pointer;}
+.zk-btn--2{display: none;}
 
 /* 角标位置修复 */
 .badge-box a:nth-child(-n+2) img{position: relative; top: 1px;}
