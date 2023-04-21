@@ -188,8 +188,8 @@ blockquote code {font-weight: 400;}
 
 /* 赞助列表 */
 .zanzhu-box table tr td:nth-child(2){color: red;}
-#main .zanzhu-box table tr td a{border-color: rgba(0,0,0,0); color: inherit;}
-#main .zanzhu-box table tr td a:hover{border-color: var(--a-hover-color); color: var(--a-hover-color);}
+#main .zanzhu-box table tr td:first-child a{border-color: rgba(0,0,0,0); color: inherit;}
+#main .zanzhu-box table tr td:first-child a:hover{border-color: var(--a-hover-color); color: var(--a-hover-color);}
 
 /* 展开和收起 */
 #main .zanzhu-box{height: 500px; overflow-y: hidden; transition: all 1.5s;}
