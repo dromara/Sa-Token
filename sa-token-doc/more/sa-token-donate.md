@@ -13,6 +13,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 ![gitee-zanzhu2.png](https://oss.dev33.cn/sa-token/doc/gitee-zanzhu2.png)
 
 
+
 **已捐赠列表：**
 
 <p class="zanzhu-pre"></p>
@@ -20,6 +21,12 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [bootx](https://gitee.com/bootx)				| ¥ 100.0		| [Bootx-Platform：支付收单、三方对接、后端基于 Spring Boot、Spring Cloud 应用脚手架](https://gitee.com/bootx/bootx-platform)	| 2023-04-18 	|
+| c（微信打赏）									| ¥ 100.0		| 感谢您的开源项目！							| 2023-04-17 	|
+| [hurumo](https://gitee.com/hurumo)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-17 	|
+| [李广龙](https://gitee.com/ak47-b)				| ¥ 20.0		| 跟大哥学习一辈子学不完						| 2023-04-14 	|
+| [Admin](https://gitee.com/jinan-jimeng-network_0)	| ¥ 20.0	| 感谢您的开源项目！							| 2023-04-12 	|
+| [王宁波](https://gitee.com/wang-ningbo)		| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-10 	|
 | F（微信打赏）									| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-09 	|
 | [zhou](https://gitee.com/mrzhou1)				| ¥ 50.0		| 感谢答疑									| 2023-03-29 	|
 | [Java_小生](https://gitee.com/zhang_hanzhe)	| ¥ 10.0		| 感谢Sa-Token让我不用去B站肯几十个小时的教程，框架很优秀文档更优秀	| 2023-03-09 	|
@@ -97,7 +104,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 | [songfazhun](https://gitee.com/fzsong)		| ¥ 10			| 感谢您的开源项目！							| 2021-10-28	|
 | [ithorns](https://gitee.com/ithorns)			| ¥ 10			| 感谢您的开源项目！							| 2021-10-25	|
 | [xiaoyan](https://gitee.com/l-yun)			| ¥ 200			| 节日快乐									| 2021-10-24	|
-| [apifox001](https://gitee.com/apifox001)		| ¥ 200			| 开源不易，Apifox（apifox.cn）和你们一起加油！	| 2021-10-15	|
+| [apifox001](https://gitee.com/apifox001)		| ¥ 200			| [Apifox：API 文档、API 调试、API Mock、API 自动化测试](https://apifox.com/)	| 2021-10-15	|
 | [永夜](https://gitee.com/cn-src)				| ¥ 20			| 感谢您的开源项目！							| 2021-09-18 	|
 | [苏永晓](https://gitee.com/suyongxiao)			| ¥ 10			| 感谢您的开源项目！							| 2021-09-01 	|
 | [xiaoyan](https://gitee.com/l-yun)			| ¥ 200			| 好的作者理应被认可							| 2021-08-24 	|
@@ -132,7 +139,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 Sa-Token 目前总计10+微信交流群（每个群人数400以上，总人数5000+），4个QQ交流群（2000人群和1000人群，总计人数6000+），大部分为 java 开发工程师，可有效推广您的产品。
 
-- 优先推广和程序员相关的互联网产品，比如：低代码开发平台、网课、开发软件、云服务器、开源项目等等，实体产品如键盘、显示器、耳机等等，如果是和程序员无关的产品，可酌情考虑是否推广。
+- 优先推广和程序员相关的互联网产品，比如：低代码开发平台、网课、开发软件、云服务器、个人博客等等，实体产品如键盘、显示器、耳机等等，如果是和程序员无关的产品，可酌情考虑是否推广。
 - 拒绝接受违反法律法规、以及灰色相关的产品推广，为避免不必要的麻烦，目前也拒绝推广IP代理、上网工具等等。
 - 为避免过多打扰群友，目前一天内至多在群里推广两次，超过次数的可顺延到第二天。
 
