@@ -419,6 +419,16 @@ Caused by: java.lang.ClassNotFoundException: cn.dev33.satoken.same.SaSameTemplat
 请仔细排查你的 pom.xml 文件，是否有 Sa-Token 依赖没对齐，**请不要肉眼检查，用全局搜索 "sa-token" 关键词来找**，如果是多模块或者微服务项目，就整个项目搜索。
 
 
+### Q：在多账号模式的注解鉴权时，报错：未能获取对应StpLogic，type=xxx
+
+报这个错说明对应 type 的 StpLogic 尚未初始化到全局 StpLogicMap 中，一般会有两种原因造成这种情况：
+1. 注解里的 loginType 拼写错误，请改正 （建议使用常量）。
+2. 自定义 StpUtil 尚未初始化（静态类中的属性至少一次调用后才会初始化），解决方法两种：
+	- (1) 从main方法里调用一次
+	- (2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
+
+
+
 
 
 
