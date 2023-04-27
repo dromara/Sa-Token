@@ -443,9 +443,9 @@ public class SaSsoProcessor {
 			// 发起请求 
 			String checkUrl = ssoTemplate.buildCheckTicketUrl(ticket, ssoLogoutCall);
 			SaResult result = ssoTemplate.request(checkUrl);
-			
+
 			// 校验 
-			if(result.getCode() == SaResult.CODE_SUCCESS) {
+			if(result.getCode() != null && result.getCode() == SaResult.CODE_SUCCESS) {
 				return result.getData();
 			} else {
 				// 将 sso-server 回应的消息作为异常抛出 
