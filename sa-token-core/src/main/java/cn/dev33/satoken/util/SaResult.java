@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 对Ajax请求返回Json格式数据的简易封装 <br>
+ * 对 Ajax 请求返回Json格式数据的简易封装 <br>
  * 所有预留字段：<br>
  * code=状态码 <br>
  * msg=描述信息 <br>
@@ -173,7 +173,14 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 				+ ", \"data\": " + transValue(this.getData()) 
 				+ "}";
 	}
-	
+
+	/**
+	 * 转换 value 值：
+	 * 	如果 value 值属于 String 类型，则在前后补上引号
+	 * 	如果 value 值属于其它类型，则原样返回
+	 * @param value
+	 * @return
+	 */
 	private String transValue(Object value) {
 		if(value instanceof String) {
 			return "\"" + value + "\"";
