@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckDisable;
@@ -867,12 +868,24 @@ public class StpLogic {
 	 * 获取指定key的Session, 如果Session尚未创建，isCreate=是否新建并返回
 	 * @param sessionId SessionId
 	 * @param isCreate 是否新建
+	 * @param appendOperation 如果这个 SaSession 是新建的，则要追加执行的动作
 	 * @return Session对象 
 	 */
-	public SaSession getSessionBySessionId(String sessionId, boolean isCreate) {
+	public SaSession getSessionBySessionId(String sessionId, boolean isCreate, Consumer<SaSession> appendOperation) {
+
+		// 先检查这个 SaSession 是否已经存在，如果不存在且 isCreate=true，则新建并返回
 		SaSession session = getSaTokenDao().getSession(sessionId);
+
 		if(session == null && isCreate) {
+			// 创建这个 SaSession
 			session = SaStrategy.me.createSession.apply(sessionId);
+
+			// 追加操作
+			if(appendOperation != null) {
+				appendOperation.accept(session);
+			}
+
+			// 将这个 SaSession 入库
 			getSaTokenDao().setSession(session, getConfig().getTimeout());
 		}
 		return session;
@@ -884,7 +897,7 @@ public class StpLogic {
 	 * @return Session对象 
 	 */
 	public SaSession getSessionBySessionId(String sessionId) {
-		return getSessionBySessionId(sessionId, false);
+		return getSessionBySessionId(sessionId, false, null);
 	}
 
 	/** 
@@ -894,7 +907,12 @@ public class StpLogic {
 	 * @return Session对象
 	 */
 	public SaSession getSessionByLoginId(Object loginId, boolean isCreate) {
-		return getSessionBySessionId(splicingKeySession(loginId), isCreate);
+		return getSessionBySessionId(splicingKeySession(loginId), isCreate, session -> {
+			// 设定这个 SaSession 的各种基础信息：类型、账号体系、账号id
+			session.setType(SaTokenConsts.SESSION_TYPE__ACCOUNT);
+			session.setLoginType(getLoginType());
+			session.setLoginId(loginId);
+		});
 	}
 
 	/** 
@@ -903,7 +921,7 @@ public class StpLogic {
 	 * @return Session对象 
 	 */
 	public SaSession getSessionByLoginId(Object loginId) {
-		return getSessionBySessionId(splicingKeySession(loginId), true);
+		return getSessionByLoginId(loginId, true);
 	}
 
 	/** 
@@ -933,7 +951,12 @@ public class StpLogic {
 	 * @return session对象
 	 */
 	public SaSession getTokenSessionByToken(String tokenValue, boolean isCreate) {
-		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate);
+		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, session -> {
+			// 设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
+			session.setType(SaTokenConsts.SESSION_TYPE__TOKEN);
+			session.setLoginType(getLoginType());
+			session.setToken(tokenValue);
+		});
 	}
 	
 	/** 
@@ -942,7 +965,7 @@ public class StpLogic {
 	 * @return Session对象  
 	 */
 	public SaSession getTokenSessionByToken(String tokenValue) {
-		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), true);
+		return getTokenSessionByToken(tokenValue, true);
 	}
 
 	/** 

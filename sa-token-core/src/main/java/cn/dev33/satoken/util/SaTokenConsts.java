@@ -10,7 +10,7 @@ public class SaTokenConsts {
 	private SaTokenConsts() {
 	}
 	
-	// =================== sa-token版本信息 ===================  
+	// ------------------ Sa-Token 版本信息
 	
 	/**
 	 * Sa-Token 当前版本号 
@@ -32,7 +32,7 @@ public class SaTokenConsts {
 	 */
 	public static final String DEV_DOC_URL = "https://sa-token.cc";
 	
-	// =================== 常量key标记 ===================  
+	// ------------------ 常量key标记
 	
 	/**
 	 * 常量key标记: 如果token为本次请求新创建的，则以此字符串为key存储在当前request中 
@@ -101,7 +101,7 @@ public class SaTokenConsts {
 	public static final String DEFAULT_TEMP_TOKEN_SERVICE = "record"; 
 
 
-	// =================== token-style 相关 ===================  
+	// ------------------ token-style 相关
 	
 	/**
 	 * Token风格: uuid 
@@ -131,10 +131,28 @@ public class SaTokenConsts {
 	/**
 	 * Token风格: tik风格 (2_14_16) 
 	 */
-	public static final String TOKEN_STYLE_TIK = "tik"; 
+	public static final String TOKEN_STYLE_TIK = "tik";
 
-	
-	// =================== 其它 ===================  
+
+	// ------------------ SaSession 的类型
+
+	/**
+	 * SaSession 的类型: Account-Session
+	 */
+	public static final String SESSION_TYPE__ACCOUNT = "Account-Session";
+
+	/**
+	 * SaSession 的类型: Token-Session
+	 */
+	public static final String SESSION_TYPE__TOKEN = "Token-Session";
+
+	/**
+	 * SaSession 的类型: Custom-Session
+	 */
+	public static final String SESSION_TYPE__CUSTOM = "Custom-Session";
+
+
+	// ------------------ 其它
 
 	/**
 	 * 连接Token前缀和Token值的字符 

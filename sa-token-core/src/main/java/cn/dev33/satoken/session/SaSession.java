@@ -29,28 +29,55 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 在 Session 上存储用户对象时建议使用的key 
+	 * 在 SaSession 上存储用户对象时建议使用的 key
 	 */
 	public static final String USER = "USER";
 
 	/**
-	 * 在 Session 上存储角色时建议使用的key 
+	 * 在 SaSession 上存储角色列表时建议使用的 key
 	 */
 	public static final String ROLE_LIST = "ROLE_LIST";
 
 	/**
-	 * 在 Session 上存储权限时建议使用的key 
+	 * 在 SaSession 上存储权限列表时建议使用的 key
 	 */
 	public static final String PERMISSION_LIST = "PERMISSION_LIST";
-	
-	/** 此 Session 的 id */
+
+	/**
+	 * 此 SaSession 的 id
+	 */
 	private String id;
 
-	/** 此 Session 的创建时间（时间戳） */
+	/**
+	 * 此 SaSession 的 类型
+	 */
+	private String type;
+
+	/**
+	 * 所属 loginType
+	 */
+	private String loginType;
+
+	/**
+	 * 所属 loginId （当此 SaSession 属于 Account-Session 时，此值有效）
+	 */
+	private Object loginId;
+
+	/**
+	 * 所属 Token （当此 SaSession 属于 Token-Session 时，此值有效）
+	 */
+	private String token;
+
+	/**
+	 * 此 SaSession 的创建时间（13位时间戳）
+	 */
 	private long createTime;
 
-	/** 此 Session 的所有挂载数据 */
+	/**
+	 * 所有挂载数据
+	 */
 	private final Map<String, Object> dataMap = new ConcurrentHashMap<>();
+
 
 	// ----------------------- 构建相关
 
@@ -77,16 +104,16 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 获取此 Session 的 id
-	 * @return 此 Session 的id
+	 * 获取：此 SaSession 的 id
+	 * @return /
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
-	 * 写入此 Session 的 id
-	 * @param id SessionId
+	 * 写入：此 SaSession 的 id
+	 * @param id /
 	 * @return 对象自身
 	 */
 	public SaSession setId(String id) {
@@ -95,16 +122,90 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 返回当前会话创建时间（时间戳）
-	 * @return 时间戳
+	 * 获取：此 SaSession 的 类型
+	 *
+	 * @return /
 	 */
-	public long getCreateTime() {
-		return createTime;
+	public String getType() {
+		return this.type;
 	}
 
 	/**
-	 * 写入此 Session 的创建时间（时间戳）
-	 * @param createTime 时间戳
+	 * 设置：此 SaSession 的 类型
+	 *
+	 * @param type /
+	 * @return 对象自身
+	 */
+	public SaSession setType(String type) {
+		this.type = type;
+		return this;
+	}
+
+	/**
+	 * 获取：所属 loginType
+	 * @return /
+	 */
+	public String getLoginType() {
+		return this.loginType;
+	}
+
+	/**
+	 * 设置：所属 loginType
+	 * @param loginType /
+	 * @return 对象自身
+	 */
+	public SaSession setLoginType(String loginType) {
+		this.loginType = loginType;
+		return this;
+	}
+
+	/**
+	 * 获取：所属 loginId （当此 SaSession 属于 Account-Session 时，此值有效）
+	 * @return /
+	 */
+	public Object getLoginId() {
+		return this.loginId;
+	}
+
+	/**
+	 * 设置：所属 loginId （当此 SaSession 属于 Account-Session 时，此值有效）
+	 * @param loginId /
+	 * @return 对象自身
+	 */
+	public SaSession setLoginId(Object loginId) {
+		this.loginId = loginId;
+		return this;
+	}
+
+	/**
+	 * 获取：所属 Token （当此 SaSession 属于 Token-Session 时，此值有效）
+	 * @return /
+	 */
+	public String getToken() {
+		return this.token;
+	}
+
+	/**
+	 * 设置：所属 Token （当此 SaSession 属于 Token-Session 时，此值有效）
+	 * @param token /
+	 * @return 对象自身
+	 */
+	public SaSession setToken(String token) {
+		this.token = token;
+		return this;
+	}
+
+	/**
+	 * 返回：当前 SaSession 的创建时间（13位时间戳）
+	 * @return /
+	 */
+	public long getCreateTime() {
+		return this.createTime;
+	}
+
+	/**
+	 * 写入：此 SaSession 的创建时间（13位时间戳）
+	 * @param createTime /
 	 * @return 对象自身
 	 */
 	public SaSession setCreateTime(long createTime) {
@@ -219,7 +320,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		}
 	}
 
-	
+
 	// ----------------------- 一些操作
 
 	/**
@@ -291,8 +392,9 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	protected long trans(long value) {
 		return value == SaTokenDao.NEVER_EXPIRE ? Long.MAX_VALUE : value;
 	}
-	
-	// ----------------------- 存取值 (类型转换) 
+
+
+	// ----------------------- 存取值 (类型转换)
 
 	// ---- 重写接口方法 
 	
@@ -346,19 +448,20 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		return this;
 	}
 
-	// ---- 其它方法 
+
+	// ----------------------- 其它方法
 
 	/**
-	 * 返回当前Session的所有key 
+	 * 返回当前 Session 挂载数据的所有 key
 	 *
-	 * @return 所有值的key列表
+	 * @return key 列表
 	 */
 	public Set<String> keys() {
 		return dataMap.keySet();
 	}
 	
 	/**
-	 * 清空所有值 
+	 * 清空所有挂载数据
 	 */
 	public void clear() {
 		dataMap.clear();
@@ -366,7 +469,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 获取数据挂载集合（如果更新map里的值，请调用session.update()方法避免产生脏数据 ）
+	 * 获取数据挂载集合（如果更新map里的值，请调用 session.update() 方法避免产生脏数据 ）
 	 *
 	 * @return 返回底层储存值的map对象
 	 */
@@ -375,7 +478,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 写入数据集合 (不改变底层对象，只将此dataMap所有数据进行替换) 
+	 * 写入数据集合 (不改变底层对象引用，只将此 dataMap 所有数据进行替换)
 	 * @param dataMap 数据集合 
 	 */
 	public void refreshDataMap(Map<String, Object> dataMap) {
