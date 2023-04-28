@@ -2,20 +2,28 @@
 
 
 ### 2023-1-11 @v1.34.0
+
+新增插件：
 - 新增：新增 `SpringBoot3.x` 集成插件，感谢 `@jry` 提供的参考思路。   **[重要]**
 - 新增：新增 `sa-token-dao-redisson-jackson` 插件，感谢 `@疯狂的狮子Li` 提交的pr。   **[重要]**
-- 新增：Alone-Redis 新增集群配置能力，感谢 `@appleOfGray` 提交的pr。   **[重要]**
+
+sa-token-core 核心包：
 - 升级：升级 Sign 签名模块，增加部分重载方法。
 - 重构：`SaSignTemplate#joinParams` 更名为 `joinParamsDictSort`。  **[不向下兼容]**
 - 升级：升级临时 Token 认证模块，可指定 service 参数。
 - 删除：彻底删除过期类 `SaAnnotationInterceptor` 和 `SaRouteInterceptor`。
+- 修复：修复源码注释和文档的部分不合适之处。
+
+sa-token-sso 单点登录：
 - 删除：SSO 模块移除过期类 `SaSsoHandle` 类。
 - 新增：SSO 模块增加 ticket 的 client 锁定功能，解决部分场景下的 ticket 劫持问题。  **[重要]**
 - 修复：修复 SSO 模式2，在 client 端配置 `is-share=false` 时无法单点注销的问题。
 - 修复：修复 SSO 模式3 部分场景下注销时无法正常回退页面的问题。
-- 修复：修复 OAuth2 模块示例 getClientModel 方法 clientId 写错的问题。
-- 重构：使用 jwt-simple 模式后 is-share 恒等于 false，无论是否有设定 `setExtra` 数据。
-- 修复：修复源码注释和文档的部分不合适之处。
+
+其它模块：
+- sa-token-oauth2：修复 OAuth2 模块示例 getClientModel 方法 clientId 写错的问题。
+- sa-token-alone-redis：新增：Alone-Redis 新增集群配置能力，感谢 `@appleOfGray` 提交的pr。   **[重要]**
+- sa-token-jwt：重构：使用 jwt-simple 模式后 is-share 恒等于 false，无论是否有设定 `setExtra` 数据。
 
 
 
