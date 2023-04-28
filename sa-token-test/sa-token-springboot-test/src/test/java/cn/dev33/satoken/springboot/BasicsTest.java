@@ -762,8 +762,8 @@ public class BasicsTest {
     			.setAuth(obj -> {})
     			.setBeforeAuth(obj -> {})
     			;
-    	Assertions.assertEquals(filter.getIncludeList().get(0), "/**");
-    	Assertions.assertEquals(filter.getExcludeList().get(0), "/favicon.ico");
+    	Assertions.assertEquals(filter.includeList.get(0), "/**");
+    	Assertions.assertEquals(filter.excludeList.get(0), "/favicon.ico");
     	// 以下功能无法测试
     	filter.init(null);
     	filter.doFilter(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse(), new MockFilterChain());

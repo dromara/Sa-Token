@@ -6,6 +6,13 @@
 	<artifactId>sa-token-demo-solon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<!-- Solon -->
+	<parent>
+		<groupId>org.noear</groupId>
+		<artifactId>solon-parent</artifactId>
+		<version>2.2.3</version>
+		<relativePath/>
+	</parent>
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
