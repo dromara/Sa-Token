@@ -951,16 +951,20 @@ public class StpLogic {
 	 * @return Session对象  
 	 */
 	public SaSession getTokenSession(boolean isCreate) {
-		// Token 为空的情况下直接返回 null
+
+		// 如果配置了：tokenSessionCheckLogin == true，则需要先校验当前是否登录
+		if(getConfig().getTokenSessionCheckLogin()) {
+			checkLogin();
+		}
+
+		// 如果前端没有提供 Token ，则直接返回 null
 		String tokenValue = getTokenValue();
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return null;
 		}
-		// 如果配置了需要校验登录状态，则验证一下
-		if(getConfig().getTokenSessionCheckLogin()) {
-			checkLogin();
-		}
-		// 获取 SaSession 数据
+
+		// 代码至此：tokenSessionCheckLogin 校验通过、且 Token 有值
+		// 现在根据前端提供的 Token 获取它对应的 Token-Session 对象（SaSession）
 		return getTokenSessionByToken(tokenValue, isCreate);
 	}
 
