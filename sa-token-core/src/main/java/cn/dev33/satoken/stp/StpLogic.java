@@ -1382,13 +1382,15 @@ public class StpLogic {
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleAnd(String... roleArray){
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
 		// 如果没有指定权限，那么直接跳过
 		if(roleArray == null || roleArray.length == 0) {
 			return;
 		}
 
 		// 开始校验
-		Object loginId = getLoginId();
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
  			if(!hasElement(roleList, role)) {
@@ -1402,13 +1404,15 @@ public class StpLogic {
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleOr(String... roleArray){
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
 		// 如果没有指定权限，那么直接跳过
 		if(roleArray == null || roleArray.length == 0) {
 			return;
 		}
 
 		// 开始校验
- 		Object loginId = getLoginId();
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
  			if(hasElement(roleList, role)) {
@@ -1507,13 +1511,15 @@ public class StpLogic {
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionAnd(String... permissionArray){
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
 		// 如果没有指定权限，那么直接跳过
 		if(permissionArray == null || permissionArray.length == 0) {
 			return;
 		}
 
 		// 开始校验
- 		Object loginId = getLoginId();
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
  			if(!hasElement(permissionList, permission)) {
@@ -1527,13 +1533,15 @@ public class StpLogic {
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionOr(String... permissionArray){
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
 		// 如果没有指定权限，那么直接跳过
 		if(permissionArray == null || permissionArray.length == 0) {
 			return;
 		}
 
 		// 开始校验
- 		Object loginId = getLoginId();
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
  			if(hasElement(permissionList, permission)) {
