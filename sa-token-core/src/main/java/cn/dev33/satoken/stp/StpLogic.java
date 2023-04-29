@@ -1382,7 +1382,13 @@ public class StpLogic {
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleAnd(String... roleArray){
- 		Object loginId = getLoginId();
+		// 如果没有指定权限，那么直接跳过
+		if(roleArray == null || roleArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
+		Object loginId = getLoginId();
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
  			if(!hasElement(roleList, role)) {
@@ -1396,6 +1402,12 @@ public class StpLogic {
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleOr(String... roleArray){
+		// 如果没有指定权限，那么直接跳过
+		if(roleArray == null || roleArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		Object loginId = getLoginId();
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
@@ -1404,9 +1416,9 @@ public class StpLogic {
  				return;		
  			}
  		}
-		if(roleArray.length > 0) {
-	 		throw new NotRoleException(roleArray[0], this.loginType).setCode(SaErrorCode.CODE_11041);
-		}
+
+		// 代码至此，说明一个都没通过，需要抛出无角色异常
+		throw new NotRoleException(roleArray[0], this.loginType).setCode(SaErrorCode.CODE_11041);
  	}
 
  	
@@ -1495,6 +1507,12 @@ public class StpLogic {
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionAnd(String... permissionArray){
+		// 如果没有指定权限，那么直接跳过
+		if(permissionArray == null || permissionArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		Object loginId = getLoginId();
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
@@ -1509,6 +1527,12 @@ public class StpLogic {
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionOr(String... permissionArray){
+		// 如果没有指定权限，那么直接跳过
+		if(permissionArray == null || permissionArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		Object loginId = getLoginId();
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
@@ -1517,9 +1541,9 @@ public class StpLogic {
  				return;		
  			}
  		}
-		if(permissionArray.length > 0) {
-	 		throw new NotPermissionException(permissionArray[0], this.loginType).setCode(SaErrorCode.CODE_11051);
-		}
+
+		// 代码至此，说明一个都没通过，需要抛出无权限异常
+		throw new NotPermissionException(permissionArray[0], this.loginType).setCode(SaErrorCode.CODE_11051);
  	}
 
  	
