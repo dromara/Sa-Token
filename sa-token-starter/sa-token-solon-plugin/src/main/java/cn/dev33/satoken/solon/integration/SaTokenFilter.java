@@ -124,11 +124,11 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 			Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
 			//先路径过滤下（包括了静态文件）
+			//1.执行前置处理（主要是一些跨域之类的）
+			if(beforeAuth != null) {
+				beforeAuth.run(mainHandler);
+			}
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				//1.执行前置处理（主要是一些跨域之类的）
-				if(beforeAuth != null) {
-					beforeAuth.run(mainHandler);
-				}
 				//2.执行注解处理
 				if(authAnno(action)) {
 					//3.执行规则处理（如果没有被 @SaIgnore 忽略）
