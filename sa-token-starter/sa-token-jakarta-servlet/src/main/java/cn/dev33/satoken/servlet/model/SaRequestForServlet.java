@@ -84,6 +84,7 @@ public class SaRequestForServlet implements SaRequest {
 	 * 返回当前请求的url，例：http://xxx.com/test
 	 * @return see note
 	 */
+	@Override
 	public String getUrl() {
 		String currDomain = SaManager.getConfig().getCurrDomain();
 		if(SaFoxUtil.isEmpty(currDomain) == false) {
