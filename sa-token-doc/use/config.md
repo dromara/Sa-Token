@@ -149,6 +149,31 @@ Cookie相关配置：
 | httpOnly		| Boolean	| false		| 是否禁止 js 操作 Cookie 	|
 | sameSite		| String	| Lax		| 第三方限制级别（Strict=完全禁止，Lax=部分允许，None=不限制）		|
 
+Cookie 配置示例：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token: 
+    # Cookie 相关配置 
+    cookie: 
+        domain: stp.com
+        path: /
+        secure: false
+		httpOnly: true
+		sameSite: Lax
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# Cookie 相关配置 
+sa-token.cookie.domain=stp.com
+sa-token.cookie.path=/
+sa-token.cookie.secure=false
+sa-token.cookie.httpOnly=true
+sa-token.cookie.sameSite=Lax
+```
+<!---------------------------- tabs:end ---------------------------->
 
 
 ### 单点登录相关配置 
