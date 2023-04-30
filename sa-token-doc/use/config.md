@@ -110,7 +110,7 @@ public class SaTokenConfigure {
 --- 
 ### 所有可配置项
 
-你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可
+**你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可**
 
 | 参数名称				| 类型		| 默认值		| 说明																				|
 | :--------				| :--------	| :--------	| :--------																			|
@@ -120,6 +120,7 @@ public class SaTokenConfigure {
 | isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 （为 true 时允许一起登录，为 false 时新登录挤掉旧登录）															|
 | isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token） 	|
 | maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`, `isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
+| maxTryTimes			| int		| 12		| 在每次创建 Token 时的最高循环次数，用于保证 Token 唯一性（-1=不循环重试，直接使用）			|
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHeader			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
 | isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token，此值为 false 后，`StpUtil.login(id)` 登录时也不会再往前端注入Cookie				|

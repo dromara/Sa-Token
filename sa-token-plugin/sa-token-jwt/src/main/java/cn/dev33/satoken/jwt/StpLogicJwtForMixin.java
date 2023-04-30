@@ -212,12 +212,21 @@ public class StpLogicJwtForMixin extends StpLogic {
 	// ------------------- Bean对象代理 -------------------  
 	
 	/**
-	 * 返回全局配置对象的isShare属性 
+	 * 返回全局配置对象的 isShare 属性
 	 * @return / 
 	 */
 	@Override
 	public boolean getConfigOfIsShare() {
 		return false;
 	}
-	
+
+	/**
+	 * 返回全局配置对象的 maxTryTimes 属性
+	 * @return /
+	 */
+	@Override
+	public int getConfigOfMaxTryTimes() {
+		return -1;
+	}
+
 }

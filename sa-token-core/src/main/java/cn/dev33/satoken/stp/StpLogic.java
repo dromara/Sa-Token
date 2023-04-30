@@ -351,7 +351,7 @@ public class StpLogic {
 	 * @return 返回会话令牌 
 	 */
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
-		
+
 		// ------ 前置检查
 		SaTokenException.throwByNull(id, "账号id不能为空", SaErrorCode.CODE_11002);
 		
@@ -395,7 +395,7 @@ public class StpLogic {
 	 * @return 返回 Token
 	 */
 	protected String distUsableToken(Object id, SaLoginModel loginModel) {
-		
+
 		// 获取全局配置
 		Boolean isConcurrent = getConfig().getIsConcurrent();
 		
