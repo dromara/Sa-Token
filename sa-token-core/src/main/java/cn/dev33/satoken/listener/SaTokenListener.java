@@ -103,10 +103,10 @@ public interface SaTokenListener {
 
 	/**
 	 * 全局组件载入 
-	 * @param comtName 组件名称 
-	 * @param comtObj 组件对象 
+	 * @param compName 组件名称
+	 * @param compObj 组件对象
 	 */
-	public default void doRegisterComponent(String comtName, Object comtObj) {}
+	public default void doRegisterComponent(String compName, Object compObj) {}
 
 	/**
 	 * StpLogic 对象替换 

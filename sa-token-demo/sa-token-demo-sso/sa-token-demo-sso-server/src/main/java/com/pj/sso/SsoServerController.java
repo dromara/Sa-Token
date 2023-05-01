@@ -1,16 +1,16 @@
 package com.pj.sso;
 
+import cn.dev33.satoken.config.SaSsoConfig;
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
+import com.dtflys.forest.Forest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.dtflys.forest.Forest;
-
-import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token-SSO Server端 Controller 
@@ -63,5 +63,23 @@ public class SsoServerController {
 			}
 		});
 	}
-	
+
+	// 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
+	@RequestMapping("/sso/getData")
+	public Object userinfo(String apiType, String loginId) {
+		System.out.println("---------------- 获取数据 ----------------");
+		System.out.println("apiType=" + apiType);
+		System.out.println("loginId=" + loginId);
+
+		// 校验签名：只有拥有正确秘钥发起的请求才能通过校验
+		SaSsoUtil.checkSign(SaHolder.getRequest());
+
+		// 自定义返回结果（模拟）
+		return SaResult.ok()
+				.set("id", loginId)
+				.set("name", "LinXiaoYu")
+				.set("sex", "女")
+				.set("age", 18);
+	}
+
 }

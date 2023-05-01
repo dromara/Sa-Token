@@ -18,9 +18,9 @@ sa-token:
         slo-url: http://sa-sso-server.com:9000/sso/signout
         # 接口调用秘钥 
         secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
-        # SSO-Server端 查询userinfo地址 
-        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
-        
+        # 查询数据地址
+        get-data-url: http://sa-sso-server.com:9000/sso/getData
+
 spring: 
     # 配置 Redis 连接 （此处与SSO-Server端连接不同的Redis）
     redis: 

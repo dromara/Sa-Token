@@ -4,6 +4,9 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Request 包装类
  * @author kong
@@ -70,8 +73,19 @@ public interface SaRequest {
 		}
 		return paramValue;
 	}
-	
-	
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数名称
+	 * @return 参数名称列表
+	 */
+	public List<String> getParamNames();
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数
+	 * @return 参数列表
+	 */
+	public Map<String, String> getParamMap();
+
 	/**
 	 * 在 [请求头] 里获取一个值 
 	 * @param name 键 

@@ -106,13 +106,13 @@ public class SaTokenListenerForLog implements SaTokenListener {
 
 	/**
 	 * 全局组件载入 
-	 * @param comtName 组件名称 
-	 * @param comtObj 组件对象 
+	 * @param compName 组件名称
+	 * @param compObj 组件对象
 	 */
 	@Override
-	public void doRegisterComponent(String comtName, Object comtObj) {
-		String canonicalName = comtObj == null ? null : comtObj.getClass().getCanonicalName();
-		log.info("全局组件 {} 载入成功: {}", comtName, canonicalName);
+	public void doRegisterComponent(String compName, Object compObj) {
+		String canonicalName = compObj == null ? null : compObj.getClass().getCanonicalName();
+		log.info("全局组件 {} 载入成功: {}", compName, canonicalName);
 	}
 
 	/**

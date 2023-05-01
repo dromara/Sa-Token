@@ -61,20 +61,20 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public String authUrl = "/sso/auth";
 
-	/**
-	 * 是否打开单点注销功能 
-	 */
-	// public Boolean isSlo = true;  // 同Server端 
+	// /**
+	// * 是否打开单点注销功能
+	// */
+	// public Boolean isSlo = true;  // 同Server端，不再重复声明
 
-	/**
-	 * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
-	 */
-	// public Boolean isHttp = false;  // 同Server端
+	// /**
+	//  * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
+	//  */
+	// public Boolean isHttp = false;  // 同Server端，不再重复声明
 
-	/**
-	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
-	 */
-	// public String secretkey;  // 同Server端
+	// /**
+	//  * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)
+	// */
+	// public String secretkey;  // 同Server端，不再重复声明
 
 	/**
 	 * 配置 Server 端的 ticket 校验地址 
@@ -82,10 +82,15 @@ public class SaSsoConfig implements Serializable {
 	public String checkTicketUrl = "/sso/checkTicket";
 
 	/**
+	 * 配置 Server 端查询数据 getData 地址
+	 */
+	public String getDataUrl = "/sso/getData";
+
+	/**
 	 * 配置 Server 端查询 userinfo 地址 
 	 */
 	public String userinfoUrl = "/sso/userinfo";
-	
+
 	/**
 	 * 配置 Server 端单点注销地址 
 	 */
@@ -97,7 +102,7 @@ public class SaSsoConfig implements Serializable {
 	public String ssoLogoutCall;
 
 	/**
-	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置 
+	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 */
 	public String serverUrl;
 
@@ -241,6 +246,22 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
+	 * @return Server 端查询数据 getData 地址
+	 */
+	public String getGetDataUrl() {
+		return getDataUrl;
+	}
+
+	/**
+	 * @param getDataUrl 配置 Server 端查询数据 getData 地址
+	 * @return 对象自身
+	 */
+	public SaSsoConfig setGetDataUrl(String getDataUrl) {
+		this.getDataUrl = getDataUrl;
+		return this;
+	}
+
+	/**
 	 * @return 配置的 Server 端查询 userinfo 地址 
 	 */
 	public String getUserinfoUrl() {
@@ -289,14 +310,14 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return 配置的 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置 
+	 * @return 配置的 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 */
 	public String getServerUrl() {
 		return serverUrl;
 	}
 
 	/**
-	 * @param serverUrl 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置 
+	 * @param serverUrl 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setServerUrl(String serverUrl) {
@@ -331,6 +352,7 @@ public class SaSsoConfig implements Serializable {
 				+ ", client=" + client 
 				+ ", authUrl=" + authUrl 
 				+ ", checkTicketUrl=" + checkTicketUrl
+				+ ", getDataUrl=" + getDataUrl
 				+ ", userinfoUrl=" + userinfoUrl 
 				+ ", sloUrl=" + sloUrl 
 				+ ", ssoLogoutCall=" + ssoLogoutCall 
@@ -354,6 +376,13 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public String splicingCheckTicketUrl() {
 		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getCheckTicketUrl());
+	}
+
+	/**
+	 * @return 获取拼接url：Server 端查询数据 getData 地址
+	 */
+	public String splicingGetDataUrl() {
+		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getGetDataUrl());
 	}
 
 	/**

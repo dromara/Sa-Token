@@ -1,7 +1,5 @@
 package cn.dev33.satoken.servlet.model;
 
-import java.io.IOException;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.exception.SaTokenException;
@@ -11,6 +9,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Request for Jakarta Servlet 
@@ -46,6 +47,36 @@ public class SaRequestForServlet implements SaRequest {
 	@Override
 	public String getParam(String name) {
 		return request.getParameter(name);
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数名称
+	 * @return 参数名称列表
+	 */
+	@Override
+	public List<String> getParamNames(){
+		Enumeration<String> parameterNames = request.getParameterNames();
+		List<String> list = new ArrayList<>();
+		while (parameterNames.hasMoreElements()) {
+			list.add(parameterNames.nextElement());
+		}
+		return list;
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数
+	 * @return 参数列表
+	 */
+	@Override
+	public Map<String, String> getParamMap(){
+		// 获取所有参数
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String> map = new LinkedHashMap<>(parameterMap.size());
+		for (String key : parameterMap.keySet()) {
+			String[] values = parameterMap.get(key);
+			map.put(key, values[0]);
+		}
+		return map;
 	}
 
 	/**

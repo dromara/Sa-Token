@@ -262,12 +262,12 @@ public class SaTokenEventCenter {
 	
 	/**
 	 * 全局组件载入 
-	 * @param comtName 组件名称 
-	 * @param comtObj 组件对象 
+	 * @param compName 组件名称
+	 * @param compObj 组件对象
 	 */
-	public static void doRegisterComponent(String comtName, Object comtObj) {
+	public static void doRegisterComponent(String compName, Object compObj) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doRegisterComponent(comtName, comtObj);
+			listener.doRegisterComponent(compName, compObj);
 		}
 	}
 

@@ -12,6 +12,11 @@ import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Request for Reactor 
  * @author kong
@@ -46,6 +51,25 @@ public class SaRequestForReactor implements SaRequest {
 	@Override
 	public String getParam(String name) {
 		return request.getQueryParams().getFirst(name);
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数名称
+	 * @return 参数名称列表
+	 */
+	@Override
+	public List<String> getParamNames(){
+		Set<String> names = request.getQueryParams().keySet();
+		return new ArrayList<>(names);
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数
+	 * @return 参数列表
+	 */
+	@Override
+	public Map<String, String> getParamMap(){
+		return request.getQueryParams().toSingleValueMap();
 	}
 
 	/**
