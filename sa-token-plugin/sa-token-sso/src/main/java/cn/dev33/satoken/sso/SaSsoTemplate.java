@@ -2,8 +2,8 @@ package cn.dev33.satoken.sso;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.name.ApiName;
@@ -68,8 +68,16 @@ public class SaSsoTemplate {
 	public SaSsoConfig getSsoConfig() {
 		return SaSsoManager.getConfig();
 	}
-	
-	
+
+	/**
+	 * 获取底层使用的 API 签名对象
+	 * @return /
+	 */
+	public SaSignTemplate getSignTemplate() {
+		return SaManager.getSaSignTemplate();
+	}
+
+
 	// ---------------------- Ticket 操作 ---------------------- 
 	
 	/**
@@ -300,7 +308,7 @@ public class SaSsoTemplate {
 		SaSsoConfig cfg = SaSsoManager.getConfig();
 		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, HashSet::new);
 		for (String url : urlSet) {
-			url = addSignParams(url, loginId);
+			url = joinLoginIdAndSign(url, loginId);
 			cfg.getSendHttp().apply(url);
 		}
 		
@@ -452,7 +460,7 @@ public class SaSsoTemplate {
 	 */
 	public String buildSloUrl(Object loginId) {
 		String url = SaSsoManager.getConfig().splicingSloUrl();
-		return addSignParams(url, loginId);
+		return joinLoginIdAndSign(url, loginId);
 	}
 
 	/**
@@ -480,32 +488,11 @@ public class SaSsoTemplate {
 		}
 
 		// 添加签名等参数，并序列化
-		return addSignParams(url, paramMap);
-	}
-
-	
-	// ------------------- 返回相应key ------------------- 
-
-	/** 
-	 * 拼接key：Ticket 查 账号Id 
-	 * @param ticket ticket值 
-	 * @return key
-	 */
-	public String splicingTicketSaveKey(String ticket) {
-		return SaManager.getConfig().getTokenName() + ":ticket:" + ticket;
-	}
-
-	/** 
-	 * 拼接key：账号Id 反查 Ticket 
-	 * @param id 账号id
-	 * @return key
-	 */
-	public String splicingTicketIndexKey(Object id) {
-		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
+		return joinParamMapAndSign(url, paramMap);
 	}
 
 
-	// ------------------- 请求相关 ------------------- 
+	// ------------------- 发起请求 -------------------
 
 	/**
 	 * 发出请求，并返回 SaResult 结果 
@@ -519,32 +506,19 @@ public class SaSsoTemplate {
 	}
 
 	/**
-	 * 获取：接口调用秘钥 
-	 * @return see note 
-	 */
-	public String getSecretkey() {
-		// 默认从配置文件中返回 
-		String secretkey = SaSsoManager.getConfig().getSecretkey();
-		if(SaFoxUtil.isEmpty(secretkey)) {
-			throw new SaSsoException("请配置 secretkey 参数").setCode(SaSsoErrorCode.CODE_30009);
-		}
-		return secretkey;
-	}
-
-	/**
 	 * 给 paramMap 追加 sign 等参数，并序列化为kv字符串，拼接到url后面
 	 * @param url 请求地址
 	 * @param paramMap 请求原始参数列表
 	 * @return 加工后的url
 	 */
-	public String addSignParams(String url, Map<String, Object> paramMap) {
-		// 追加：时间戳、随机字符串、参数签名
-		SaManager.getSaSignTemplate().addSignParams(paramMap, getSecretkey());
+	public String joinParamMapAndSign(String url, Map<String, Object> paramMap) {
+		// 在参数列表中追加：时间戳、随机字符串、参数签名
+		SaManager.getSaSignTemplate().addSignParams(paramMap);
 
-		// 序列化为kv字符串
+		// 将参数列表序列化为kv字符串
 		String signParams = SaManager.getSaSignTemplate().joinParams(paramMap);
 
-		// 拼接到一起
+		// 将kv字符串拼接到url后面
 		return SaFoxUtil.joinParam(url, signParams);
 	}
 
@@ -554,50 +528,35 @@ public class SaSsoTemplate {
 	 * @param loginId 账号id
 	 * @return 加工后的url
 	 */
-	public String addSignParams(String url, Object loginId) {
+	public String joinLoginIdAndSign(String url, Object loginId) {
 		Map<String, Object> paramMap = new LinkedHashMap<>();
 		paramMap.put(paramName.loginId, loginId);
-		return addSignParams(url, paramMap);
+		return joinParamMapAndSign(url, paramMap);
+	}
+
+
+	// ------------------- 返回相应key -------------------
+
+	/**
+	 * 拼接key：Ticket 查 账号Id
+	 * @param ticket ticket值
+	 * @return key
+	 */
+	public String splicingTicketSaveKey(String ticket) {
+		return SaManager.getConfig().getTokenName() + ":ticket:" + ticket;
 	}
 
 	/**
-	 * 校验签名
-	 * @param req request 
+	 * 拼接key：账号Id 反查 Ticket
+	 * @param id 账号id
+	 * @return key
 	 */
-	public void checkSign(SaRequest req) {
-		// 获取签名、时间戳、随机字符串
-		String sign = req.getParamNotNull(paramName.sign);
-		String timestamp = req.getParamNotNull(paramName.timestamp);
-		String nonce = req.getParamNotNull(paramName.nonce);
-
-		// 1、校验时间戳
-		SaManager.getSaSignTemplate().checkTimestamp(Long.parseLong(timestamp), SaSsoManager.getConfig().getTimestampDisparity());
-
-		// 2、校验随机字符串
-
-		// 3、校验签名
-		SaManager.getSaSignTemplate().checkSign(req.getParamMap(), getSecretkey(), sign);
+	public String splicingTicketIndexKey(Object id) {
+		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
 	}
 
 
 	// -------- 以下方法已废弃，仅为兼容旧版本而保留 --------
-
-	/**
-	 * 根据参数计算签名
-	 * @param loginId 账号id
-	 * @param timestamp 当前时间戳，13位
-	 * @param nonce 随机字符串
-	 * @param secretkey 账号id
-	 * @return 签名
-	 */
-	@Deprecated
-	public String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
-		Map<String, Object> map = new TreeMap<>();
-		map.put(paramName.loginId, loginId);
-		map.put(paramName.timestamp, timestamp);
-		map.put(paramName.nonce, nonce);
-		return SaManager.getSaSignTemplate().createSign(map, secretkey);
-	}
 
 	/**
 	 * 构建URL：Server端 账号资料查询地址
@@ -607,7 +566,7 @@ public class SaSsoTemplate {
 	@Deprecated
 	public String buildUserinfoUrl(Object loginId) {
 		String userinfoUrl = SaSsoManager.getConfig().splicingUserinfoUrl();
-		return addSignParams(userinfoUrl, loginId);
+		return joinLoginIdAndSign(userinfoUrl, loginId);
 	}
 
 	/**
@@ -618,7 +577,7 @@ public class SaSsoTemplate {
 	@Deprecated
 	public Object getUserinfo(Object loginId) {
 		String url = buildUserinfoUrl(loginId);
-		return SaSsoManager.getConfig().getSendHttp().apply(url);
+		return request(url);
 	}
 
 

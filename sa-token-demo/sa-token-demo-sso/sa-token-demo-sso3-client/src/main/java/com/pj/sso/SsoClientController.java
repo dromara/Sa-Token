@@ -1,21 +1,17 @@
 package com.pj.sso;
 
-import cn.dev33.satoken.context.SaHolder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.dtflys.forest.Forest;
-
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import com.dtflys.forest.Forest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,7 +61,7 @@ public class SsoClientController {
 		map.put("loginId", StpUtil.getLoginId());
 
 		// 发起请求
-		Object resData = SaSsoUtil.getData("/sso/getData", map);
+		Object resData = SaSsoUtil.getData(map);
 		System.out.println("sso-server 返回的信息：" + resData);
 		return resData;
 	}

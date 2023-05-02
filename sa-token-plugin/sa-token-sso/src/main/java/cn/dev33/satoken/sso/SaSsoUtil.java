@@ -1,6 +1,5 @@
 package cn.dev33.satoken.sso;
 
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.Map;
@@ -202,7 +201,7 @@ public class SaSsoUtil {
 	}
 
 	
-	// ------------------- 请求相关 ------------------- 
+	// ------------------- 发起请求 -------------------
 
 	/**
 	 * 发出请求，并返回 SaResult 结果 
@@ -219,8 +218,8 @@ public class SaSsoUtil {
 	 * @param paramMap 请求原始参数列表
 	 * @return 加工后的url
 	 */
-	public static String addSignParams(String url, Map<String, Object> paramMap) {
-		return ssoTemplate.addSignParams(url, paramMap);
+	public static String joinParamMapAndSign(String url, Map<String, Object> paramMap) {
+		return ssoTemplate.joinLoginIdAndSign(url, paramMap);
 	}
 
 	/**
@@ -229,32 +228,21 @@ public class SaSsoUtil {
 	 * @param loginId 账号id
 	 * @return 加工后的url
 	 */
-	public static String addSignParams(String url, Object loginId) {
-		return ssoTemplate.addSignParams(url, loginId);
-	}
-
-	/**
-	 * 校验签名
-	 * @param req request 
-	 */
-	public static void checkSign(SaRequest req) {
-		ssoTemplate.checkSign(req);
+	public static String joinLoginIdAndSign(String url, Object loginId) {
+		return ssoTemplate.joinLoginIdAndSign(url, loginId);
 	}
 
 
 	// -------- 以下方法已废弃，仅为兼容旧版本而保留 --------
 
 	/**
-	 * 根据参数计算签名
+	 * 构建URL：Server端 账号资料查询地址
 	 * @param loginId 账号id
-	 * @param timestamp 当前时间戳，13位
-	 * @param nonce 随机字符串
-	 * @param secretkey 账号id
-	 * @return 签名
+	 * @return Server端 账号资料查询地址
 	 */
 	@Deprecated
-	public static String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
-		return ssoTemplate.getSign(loginId, timestamp, nonce, secretkey);
+	public static String buildUserinfoUrl(Object loginId) {
+		return ssoTemplate.buildUserinfoUrl(loginId);
 	}
 
 	/**
@@ -265,16 +253,6 @@ public class SaSsoUtil {
 	@Deprecated
 	public static Object getUserinfo(Object loginId) {
 		return ssoTemplate.getUserinfo(loginId);
-	}
-
-	/**
-	 * 构建URL：Server端 账号资料查询地址
-	 * @param loginId 账号id
-	 * @return Server端 账号资料查询地址
-	 */
-	@Deprecated
-	public static String buildUserinfoUrl(Object loginId) {
-		return ssoTemplate.buildUserinfoUrl(loginId);
 	}
 
 }

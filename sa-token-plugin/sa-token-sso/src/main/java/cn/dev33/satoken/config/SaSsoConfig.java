@@ -43,11 +43,6 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public Boolean isHttp = false; 
 
-	/**
-	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
-	 */
-	public String secretkey;
-
 	
 	// ----------------- Client端相关配置 
 
@@ -105,17 +100,6 @@ public class SaSsoConfig implements Serializable {
 	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 */
 	public String serverUrl;
-
-	// ----------------- 其它 
-
-
-
-	/**
-	 * 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
-	 */
-	public long timestampDisparity = 1000  * 60 * 10;
-
-
 
 
 	/**
@@ -179,22 +163,6 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public SaSsoConfig setIsHttp(Boolean isHttp) {
 		this.isHttp = isHttp;
-		return this;
-	}
-
-	/**
-	 * @return 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)  
-	 */
-	public String getSecretkey() {
-		return secretkey;
-	}
-
-	/**
-	 * @param secretkey 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)  
-	 * @return 对象自身
-	 */
-	public SaSsoConfig setSecretkey(String secretkey) {
-		this.secretkey = secretkey;
 		return this;
 	}
 
@@ -325,30 +293,13 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
-	/**
-	 * @return 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
-	 */
-	public long getTimestampDisparity() {
-		return timestampDisparity;
-	}
-
-	/**
-	 * @param timestampDisparity 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
-	 * @return 对象自身 
-	 */
-	public SaSsoConfig setTimestampDisparity(long timestampDisparity) {
-		this.timestampDisparity = timestampDisparity;
-		return this;
-	}
-
 	@Override
 	public String toString() {
 		return "SaSsoConfig ["
 				+ "ticketTimeout=" + ticketTimeout 
 				+ ", allowUrl=" + allowUrl 
 				+ ", isSlo=" + isSlo
-				+ ", isHttp=" + isHttp 
-				+ ", secretkey=" + secretkey 
+				+ ", isHttp=" + isHttp
 				+ ", client=" + client 
 				+ ", authUrl=" + authUrl 
 				+ ", checkTicketUrl=" + checkTicketUrl
@@ -356,8 +307,7 @@ public class SaSsoConfig implements Serializable {
 				+ ", userinfoUrl=" + userinfoUrl 
 				+ ", sloUrl=" + sloUrl 
 				+ ", ssoLogoutCall=" + ssoLogoutCall 
-				+ ", serverUrl=" + serverUrl 
-				+ ", timestampDisparity=" + timestampDisparity 
+				+ ", serverUrl=" + serverUrl
 				+ "]";
 	}
 	

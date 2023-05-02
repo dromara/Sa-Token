@@ -1,8 +1,5 @@
 package cn.dev33.satoken;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
 import cn.dev33.satoken.context.SaTokenContext;
@@ -19,7 +16,6 @@ import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.log.SaLogForConsole;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
-import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
@@ -27,6 +23,9 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempDefaultImpl;
 import cn.dev33.satoken.temp.SaTempInterface;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 管理 Sa-Token 所有全局组件  
@@ -209,7 +208,7 @@ public class SaManager {
 		if (saSignTemplate == null) {
 			synchronized (SaManager.class) {
 				if (saSignTemplate == null) {
-					SaManager.saSignTemplate = new SaSignTemplateDefaultImpl();
+					SaManager.saSignTemplate = new SaSignTemplate();
 				}
 			}
 		}

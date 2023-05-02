@@ -2,8 +2,8 @@ package com.pj.sso;
 
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.sign.SaSignUtil;
 import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.dtflys.forest.Forest;
@@ -66,13 +66,13 @@ public class SsoServerController {
 
 	// 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
 	@RequestMapping("/sso/getData")
-	public Object userinfo(String apiType, String loginId) {
+	public Object getData(String apiType, String loginId) {
 		System.out.println("---------------- 获取数据 ----------------");
 		System.out.println("apiType=" + apiType);
 		System.out.println("loginId=" + loginId);
 
 		// 校验签名：只有拥有正确秘钥发起的请求才能通过校验
-		SaSsoUtil.checkSign(SaHolder.getRequest());
+		SaSignUtil.checkRequest(SaHolder.getRequest());
 
 		// 自定义返回结果（模拟）
 		return SaResult.ok()

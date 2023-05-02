@@ -115,13 +115,13 @@ forest.log-enabled: false
 ``` java
 // 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
 @RequestMapping("/sso/getData")
-public Object userinfo(String apiType, String loginId) {
+public Object getData(String apiType, String loginId) {
 	System.out.println("---------------- 获取数据 ----------------");
 	System.out.println("apiType=" + apiType);
 	System.out.println("loginId=" + loginId);
 
 	// 校验签名：只有拥有正确秘钥发起的请求才能通过校验
-	SaSsoUtil.checkSign(SaHolder.getRequest());
+	SaSignUtil.checkRequest(SaHolder.getRequest());
 
 	// 自定义返回结果（模拟）
 	return SaResult.ok()
@@ -232,7 +232,7 @@ public Object getFansList(Long loginId) {
 	System.out.println("---------------- 获取 loginId=" + loginId + " 的粉丝列表 ----------------");
 
 	// 校验签名：只有拥有正确秘钥发起的请求才能通过校验
-	SaSsoUtil.checkSign(SaHolder.getRequest());
+	SaSignUtil.checkRequest(SaHolder.getRequest());
 
 	// 查询数据 (此处仅做模拟)
 	List<Integer> list = Arrays.asList(10041, 10042, 10043, 10044);
@@ -284,12 +284,11 @@ sa-token:
 ``` yaml
 sa-token: 
 	sso: 
-        # 打开单点注销功能 
-        is-slo: true
 		# 单点注销地址 
 		slo-url: http://sa-sso-server.com:9000/sso/signout
-		# 接口调用秘钥 
-		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+    sign:
+        # API 接口调用秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
@@ -298,7 +297,7 @@ sa-token.sso.is-slo=true
 # 单点注销地址 
 sa-token.sso.slo-url=http://sa-sso-server.com:9000/sso/signout
 # 接口调用秘钥 
-sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 <!---------------------------- tabs:end ---------------------------->
 

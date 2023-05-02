@@ -184,6 +184,13 @@ public class SsoUserServerController {
 			public StpLogic getStpLogic() {
 				return StpUserUtil.stpLogic;
 			}
+            // 使用自定义的签名秘钥
+            SaSignConfig signConfig =  new SaSignConfig().setSecretKey("xxxx-新的秘钥-xxxx");
+            SaSignTemplate userSignTemplate = new SaSignTemplate().setSignConfig(signConfig);
+            @Override
+            public SaSignTemplate getSignTemplate() {
+                return userSignTemplate;
+            }
 		};
 		// 让这个SSO请求处理器，使用的路由前缀是 /sso-user，而不是原先的 /sso 
 		ssoUserTemplate.apiName.replacePrefix("/sso-user");

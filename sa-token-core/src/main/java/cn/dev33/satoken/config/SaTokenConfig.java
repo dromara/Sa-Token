@@ -1,8 +1,8 @@
 package cn.dev33.satoken.config;
 
-import java.io.Serializable;
-
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.io.Serializable;
 
 /**
  * Sa-Token 配置类 Model 
@@ -109,7 +109,12 @@ public class SaTokenConfig implements Serializable {
 	 * Cookie配置对象 
 	 */
 	public SaCookieConfig cookie = new SaCookieConfig();
-	
+
+	/**
+	 * API 签名配置对象
+	 */
+	public SaSignConfig sign = new SaSignConfig();
+
 
 	/**
 	 * @return token名称 (同时也是cookie名称)
@@ -532,7 +537,23 @@ public class SaTokenConfig implements Serializable {
 		this.cookie = cookie;
 		return this;
 	}
-	
+
+	/**
+	 * @return API 签名全局配置对象
+	 */
+	public SaSignConfig getSign() {
+		return sign;
+	}
+
+	/**
+	 * @param sign API 签名全局配置对象
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setSign(SaSignConfig sign) {
+		this.sign = sign;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "SaTokenConfig ["
@@ -561,7 +582,8 @@ public class SaTokenConfig implements Serializable {
 				+ ", currDomain=" + currDomain 
 				+ ", sameTokenTimeout=" + sameTokenTimeout
 				+ ", checkSameToken=" + checkSameToken 
-				+ ", cookie=" + cookie 
+				+ ", cookie=" + cookie
+				+ ", sign=" + sign
 				+ "]";
 	}
 
