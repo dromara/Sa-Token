@@ -123,11 +123,12 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 			Handler mainHandler = Solon.app().router().matchMain(ctx);
 			Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
-			//先路径过滤下（包括了静态文件）
 			//1.执行前置处理（主要是一些跨域之类的）
 			if(beforeAuth != null) {
 				beforeAuth.run(mainHandler);
 			}
+
+			//先路径过滤下（包括了静态文件）
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
 				//2.执行注解处理
 				if(authAnno(action)) {
