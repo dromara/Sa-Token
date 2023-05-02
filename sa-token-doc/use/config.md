@@ -345,7 +345,7 @@ sa-token.oauth2.is-client=true
 
 #### 配置项详解：serverUrl
 
-配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置。
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
 
 在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
 
@@ -358,8 +358,8 @@ sa-token:
         check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
         # 单点注销地址 
         slo-url: http://sa-sso-server.com:9000/sso/signout
-        # SSO-Server端 查询userinfo地址 
-        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
+        # SSO-Server端 查询数据地址 
+        get-data-url: http://sa-sso-server.com:9000/sso/getData
 ```
 
 一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
