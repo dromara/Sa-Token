@@ -201,7 +201,7 @@ Client 端配置：
 | sloUrl		| String	| /sso/signout		| 配置 Server 端单点注销地址										|
 | ssoLogoutCall	| String	| null				| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
 | secretkey		| String	| null				| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
-| serverUrl		| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，[详解](/use/config?id=配置项详解：serverUrl)		|
+| serverUrl		| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，参考：[详解](/sso/sso-questions?id=问：模式三配置一堆-xxx-url-，有办法简化一下吗？)	|
 | client		| String	| ""				| 当前 Client 名称标识，用于和 ticket 码的互相锁定			|
 
 
@@ -342,46 +342,6 @@ sa-token.oauth2.is-client=true
 - 此配置项为 false 时，代表使用SSO模式二：使用 Redis 校验 ticket 值、删除 Redis 数据做到单点注销、使用 Redis 同步 Userinfo 数据。
 - 此配置项为 true 时，代表使用SSO模式三：使用 Http 请求校验 ticket 值、使用 Http 请求做到单点注销、使用 Http 请求同步 Userinfo 数据。
 
-
-#### 配置项详解：serverUrl
-
-配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
-
-在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
-
-``` yaml
-sa-token: 
-    sso: 
-        # SSO-Server端 统一认证地址 
-        auth-url: http://sa-sso-server.com:9000/sso/auth
-        # SSO-Server端 ticket校验地址 
-        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
-        # 单点注销地址 
-        slo-url: http://sa-sso-server.com:9000/sso/signout
-        # SSO-Server端 查询数据地址 
-        get-data-url: http://sa-sso-server.com:9000/sso/getData
-```
-
-一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
-``` yaml
-sa-token: 
-    sso: 
-        server-url: http://sa-sso-server.com:9000
-```
-
-只要你配置了 `server-url` 地址，Sa-Token 就可以自动拼接出其它四个地址：
-
-**例1，使用 server-url 简化：**
-- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`。
-- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth`，其它三个 url 配置项同理。
-
-**例2，使用 server-url + auth-url 简化：**
-- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`/sso/auth2`。
-- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth2`，其它三个 url 配置项同理。
-
-**例3，auth-url 地址以 http 字符开头：**
-- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`http://my-site.com/sso/auth2`。
-- 此时框架只以 auth-url 值为准，得到的 auth-url 值是：`http://my-site.com/sso/auth2`，其它三个 url 配置项同理。
 
 
 

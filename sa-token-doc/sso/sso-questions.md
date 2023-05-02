@@ -50,15 +50,53 @@ public class SaSsoServerApplication {
 如果使用的是模式三，则排查是否有重复校验 ticket 的代码，一个 ticket 码只能使用一次，多次重复使用就会提示这个。
 
 
-### 模式一或者模式二报错：Could not write JSON: No serializer found for class com.pj.sso.SysUser and no properties discovered to create BeanSerializer 
+### 问：模式一或者模式二报错：Could not write JSON: No serializer found for class com.pj.sso.SysUser and no properties discovered to create BeanSerializer 
 
 一般是因为在 sso-server 端往 session 上写入了某个实体类（比如 User），而在 sso-client 端没有这个实体类，导致反序列化失败。
 
 解决方案：在 sso-client 也新建上这个类，而且包名需要与 sso-server 端的一致（直接从 sso-server 把实体类复制过来就好了）
 
 
-### 模式三配置一堆 xxx-url ，有办法简化一下吗？
-可以使用 `sa-token.sso.server-url` 配置项来简化，参考：[配置项详解：serverurl](/use/config?id=配置项详解：serverurl)
+### 问：模式三配置一堆 xxx-url ，有办法简化一下吗？
+可以使用 `sa-token.sso.server-url` 来简化：
+
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
+
+在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
+
+``` yaml
+sa-token: 
+    sso: 
+        # SSO-Server端 统一认证地址 
+        auth-url: http://sa-sso-server.com:9000/sso/auth
+        # SSO-Server端 ticket校验地址 
+        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
+        # 单点注销地址 
+        slo-url: http://sa-sso-server.com:9000/sso/signout
+        # SSO-Server端 查询数据地址 
+        get-data-url: http://sa-sso-server.com:9000/sso/getData
+```
+
+一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
+``` yaml
+sa-token: 
+    sso: 
+        server-url: http://sa-sso-server.com:9000
+```
+
+只要你配置了 `server-url` 地址，Sa-Token 就可以自动拼接出其它四个地址：
+
+**例1，使用 server-url 简化：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`。
+- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth`，其它三个 url 配置项同理。
+
+**例2，使用 server-url + auth-url 简化：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`/sso/auth2`。
+- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth2`，其它三个 url 配置项同理。
+
+**例3，auth-url 地址以 http 字符开头：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`http://my-site.com/sso/auth2`。
+- 此时框架只以 auth-url 值为准，得到的 auth-url 值是：`http://my-site.com/sso/auth2`，其它三个 url 配置项同理。
 
 
 ### 问：SSO模式二或模式三，第一个 client 登录成功之后再访问其它两个 client 不会自动登录，需要点一下登录按钮才会登录上？
