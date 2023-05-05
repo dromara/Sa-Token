@@ -351,7 +351,7 @@ public class StpLogic {
 	 * @return 返回会话令牌 
 	 */
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
-		
+
 		// ------ 前置检查
 		SaTokenException.throwByNull(id, "账号id不能为空", SaErrorCode.CODE_11002);
 		
@@ -395,7 +395,7 @@ public class StpLogic {
 	 * @return 返回 Token
 	 */
 	protected String distUsableToken(Object id, SaLoginModel loginModel) {
-		
+
 		// 获取全局配置
 		Boolean isConcurrent = getConfig().getIsConcurrent();
 		
@@ -421,8 +421,17 @@ public class StpLogic {
 			}
 		}
 		
-		// 如果代码走到此处，说明未能成功复用旧Token，需要新建Token 
-		return createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+		// 如果代码走到此处，说明未能成功复用旧Token，需要新建Token
+		return SaStrategy.me.generateUniqueToken.execute(
+				"token",
+				getConfigOfMaxTryTimes(),
+				() -> {
+					return createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+				},
+				tokenValue -> {
+					return getLoginIdNotHandle(tokenValue) == null;
+				}
+		);
 	}
 	
 	// --- 注销 
@@ -1036,7 +1045,17 @@ public class StpLogic {
 		 */
 		if(isCreate) {
 			// 随机创建一个 Token
-			tokenValue = createTokenValue(null, null, getConfig().getTimeout(), null);
+			tokenValue = SaStrategy.me.generateUniqueToken.execute(
+					"token",
+					getConfigOfMaxTryTimes(),
+					() -> {
+						return createTokenValue(null, null, getConfig().getTimeout(), null);
+					},
+					token -> {
+						return getTokenSessionByToken(token, false) == null;
+					}
+			);
+
 			// 写入 [最后操作时间]
 			setLastActivityToNow(tokenValue);
 			// 在当前上下文写入此 TokenValue
@@ -1382,7 +1401,15 @@ public class StpLogic {
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleAnd(String... roleArray){
- 		Object loginId = getLoginId();
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
+		// 如果没有指定权限，那么直接跳过
+		if(roleArray == null || roleArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
  			if(!hasElement(roleList, role)) {
@@ -1396,7 +1423,15 @@ public class StpLogic {
  	 * @param roleArray 角色标识数组
  	 */
  	public void checkRoleOr(String... roleArray){
- 		Object loginId = getLoginId();
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
+		// 如果没有指定权限，那么直接跳过
+		if(roleArray == null || roleArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		List<String> roleList = getRoleList(loginId);
  		for (String role : roleArray) {
  			if(hasElement(roleList, role)) {
@@ -1404,9 +1439,9 @@ public class StpLogic {
  				return;		
  			}
  		}
-		if(roleArray.length > 0) {
-	 		throw new NotRoleException(roleArray[0], this.loginType).setCode(SaErrorCode.CODE_11041);
-		}
+
+		// 代码至此，说明一个都没通过，需要抛出无角色异常
+		throw new NotRoleException(roleArray[0], this.loginType).setCode(SaErrorCode.CODE_11041);
  	}
 
  	
@@ -1495,7 +1530,15 @@ public class StpLogic {
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionAnd(String... permissionArray){
- 		Object loginId = getLoginId();
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
+		// 如果没有指定权限，那么直接跳过
+		if(permissionArray == null || permissionArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
  			if(!hasElement(permissionList, permission)) {
@@ -1509,7 +1552,15 @@ public class StpLogic {
  	 * @param permissionArray 权限码数组
  	 */
  	public void checkPermissionOr(String... permissionArray){
- 		Object loginId = getLoginId();
+		// 先获取当前是哪个账号id
+		Object loginId = getLoginId();
+
+		// 如果没有指定权限，那么直接跳过
+		if(permissionArray == null || permissionArray.length == 0) {
+			return;
+		}
+
+		// 开始校验
  		List<String> permissionList = getPermissionList(loginId);
  		for (String permission : permissionArray) {
  			if(hasElement(permissionList, permission)) {
@@ -1517,9 +1568,9 @@ public class StpLogic {
  				return;		
  			}
  		}
-		if(permissionArray.length > 0) {
-	 		throw new NotPermissionException(permissionArray[0], this.loginType).setCode(SaErrorCode.CODE_11051);
-		}
+
+		// 代码至此，说明一个都没通过，需要抛出无权限异常
+		throw new NotPermissionException(permissionArray[0], this.loginType).setCode(SaErrorCode.CODE_11051);
  	}
 
  	
@@ -2271,6 +2322,14 @@ public class StpLogic {
     		return Integer.MAX_VALUE;
     	}
 		return (int) timeout;
+	}
+
+	/**
+	 * 返回全局配置的 maxTryTimes 值，在每次创建 token 时，对其唯一性测试的最高次数（-1=不测试）
+	 * @return /
+	 */
+	public int getConfigOfMaxTryTimes() {
+		return getConfig().getMaxTryTimes();
 	}
 
 

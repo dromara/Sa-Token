@@ -91,8 +91,8 @@ public class SaTokenPathFilter implements SaFilter {
     public void doFilter(Controller ctx, FilterChain chain) throws Throwable {
         try {
             // 执行全局过滤器
+            beforeAuth.run(null);
             SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-                beforeAuth.run(null);
                 auth.run(null);
             });
 

@@ -43,11 +43,6 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public Boolean isHttp = false; 
 
-	/**
-	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
-	 */
-	public String secretkey;
-
 	
 	// ----------------- Client端相关配置 
 
@@ -61,20 +56,20 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public String authUrl = "/sso/auth";
 
-	/**
-	 * 是否打开单点注销功能 
-	 */
-	// public Boolean isSlo = true;  // 同Server端 
+	// /**
+	// * 是否打开单点注销功能
+	// */
+	// public Boolean isSlo = true;  // 同Server端，不再重复声明
 
-	/**
-	 * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
-	 */
-	// public Boolean isHttp = false;  // 同Server端
+	// /**
+	//  * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
+	//  */
+	// public Boolean isHttp = false;  // 同Server端，不再重复声明
 
-	/**
-	 * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验) 
-	 */
-	// public String secretkey;  // 同Server端
+	// /**
+	//  * 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)
+	// */
+	// public String secretkey;  // 同Server端，不再重复声明
 
 	/**
 	 * 配置 Server 端的 ticket 校验地址 
@@ -82,10 +77,15 @@ public class SaSsoConfig implements Serializable {
 	public String checkTicketUrl = "/sso/checkTicket";
 
 	/**
+	 * 配置 Server 端查询数据 getData 地址
+	 */
+	public String getDataUrl = "/sso/getData";
+
+	/**
 	 * 配置 Server 端查询 userinfo 地址 
 	 */
 	public String userinfoUrl = "/sso/userinfo";
-	
+
 	/**
 	 * 配置 Server 端单点注销地址 
 	 */
@@ -97,20 +97,9 @@ public class SaSsoConfig implements Serializable {
 	public String ssoLogoutCall;
 
 	/**
-	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置 
+	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 */
 	public String serverUrl;
-
-	// ----------------- 其它 
-
-
-
-	/**
-	 * 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
-	 */
-	public long timestampDisparity = 1000  * 60 * 10;
-
-
 
 
 	/**
@@ -178,22 +167,6 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)  
-	 */
-	public String getSecretkey() {
-		return secretkey;
-	}
-
-	/**
-	 * @param secretkey 接口调用秘钥 (用于SSO模式三单点注销的接口通信身份校验)  
-	 * @return 对象自身
-	 */
-	public SaSsoConfig setSecretkey(String secretkey) {
-		this.secretkey = secretkey;
-		return this;
-	}
-
-	/**
 	 * @return 当前 Client 名称标识，用于和 ticket 码的互相锁定 
 	 */
 	public String getClient() {
@@ -237,6 +210,22 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public SaSsoConfig setCheckTicketUrl(String checkTicketUrl) {
 		this.checkTicketUrl = checkTicketUrl;
+		return this;
+	}
+
+	/**
+	 * @return Server 端查询数据 getData 地址
+	 */
+	public String getGetDataUrl() {
+		return getDataUrl;
+	}
+
+	/**
+	 * @param getDataUrl 配置 Server 端查询数据 getData 地址
+	 * @return 对象自身
+	 */
+	public SaSsoConfig setGetDataUrl(String getDataUrl) {
+		this.getDataUrl = getDataUrl;
 		return this;
 	}
 
@@ -289,34 +278,18 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return 配置的 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置 
+	 * @return 配置的 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 */
 	public String getServerUrl() {
 		return serverUrl;
 	}
 
 	/**
-	 * @param serverUrl 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置 
+	 * @param serverUrl 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setServerUrl(String serverUrl) {
 		this.serverUrl = serverUrl;
-		return this;
-	}
-
-	/**
-	 * @return 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
-	 */
-	public long getTimestampDisparity() {
-		return timestampDisparity;
-	}
-
-	/**
-	 * @param timestampDisparity 接口调用时的时间戳允许的差距（单位：ms），-1代表不校验差距 
-	 * @return 对象自身 
-	 */
-	public SaSsoConfig setTimestampDisparity(long timestampDisparity) {
-		this.timestampDisparity = timestampDisparity;
 		return this;
 	}
 
@@ -326,16 +299,15 @@ public class SaSsoConfig implements Serializable {
 				+ "ticketTimeout=" + ticketTimeout 
 				+ ", allowUrl=" + allowUrl 
 				+ ", isSlo=" + isSlo
-				+ ", isHttp=" + isHttp 
-				+ ", secretkey=" + secretkey 
+				+ ", isHttp=" + isHttp
 				+ ", client=" + client 
 				+ ", authUrl=" + authUrl 
 				+ ", checkTicketUrl=" + checkTicketUrl
+				+ ", getDataUrl=" + getDataUrl
 				+ ", userinfoUrl=" + userinfoUrl 
 				+ ", sloUrl=" + sloUrl 
 				+ ", ssoLogoutCall=" + ssoLogoutCall 
-				+ ", serverUrl=" + serverUrl 
-				+ ", timestampDisparity=" + timestampDisparity 
+				+ ", serverUrl=" + serverUrl
 				+ "]";
 	}
 	
@@ -354,6 +326,13 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public String splicingCheckTicketUrl() {
 		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getCheckTicketUrl());
+	}
+
+	/**
+	 * @return 获取拼接url：Server 端查询数据 getData 地址
+	 */
+	public String splicingGetDataUrl() {
+		return SaFoxUtil.spliceTwoUrl(getServerUrl(), getGetDataUrl());
 	}
 
 	/**

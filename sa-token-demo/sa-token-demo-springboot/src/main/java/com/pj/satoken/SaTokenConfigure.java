@@ -41,7 +41,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		
         		// 认证函数: 每次请求执行 
         		.setAuth(obj -> {
-        			// System.out.println("---------- sa全局认证 " + SaHolder.getRequest().getRequestPath()); 
+        			// SaManager.getLog().debug("----- 请求path={}  提交token={}", SaHolder.getRequest().getRequestPath(), StpUtil.getTokenValue());
         			
         		})
         		
@@ -51,7 +51,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         			return AjaxJson.getError(e.getMessage());
         		})
         		
-        		// 前置函数：在每次认证函数之前执行
+        		// 前置函数：在每次认证函数之前执行（BeforeAuth 不受 includeList 与 excludeList 的限制，所有请求都会进入）
         		.setBeforeAuth(r -> {
         			// ---------- 设置一些安全响应头 ----------
         			SaHolder.getResponse()

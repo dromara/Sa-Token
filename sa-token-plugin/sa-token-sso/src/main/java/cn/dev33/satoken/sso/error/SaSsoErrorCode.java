@@ -40,5 +40,8 @@ public interface SaSsoErrorCode {
 
 	/** 该 ticket 不属于当前 client */
 	public static final int CODE_30011 = 30011;
-	
+
+	/** 当前缺少配置 server-url 地址 */
+	public static final int CODE_30012 = 30012;
+
 }

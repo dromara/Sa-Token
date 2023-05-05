@@ -1,8 +1,8 @@
 package cn.dev33.satoken.config;
 
-import java.io.Serializable;
-
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.io.Serializable;
 
 /**
  * Sa-Token 配置类 Model 
@@ -39,8 +39,12 @@ public class SaTokenConfig implements Serializable {
 	 */
 	private int maxLoginCount = 12;
 
+	/** 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用） */
+	private int maxTryTimes = 12;
+
 	/** 是否尝试从请求体里读取token */
 	private Boolean isReadBody = true;
+
 
 	/** 是否尝试从header里读取token */
 	private Boolean isReadHeader = true;
@@ -105,7 +109,12 @@ public class SaTokenConfig implements Serializable {
 	 * Cookie配置对象 
 	 */
 	public SaCookieConfig cookie = new SaCookieConfig();
-	
+
+	/**
+	 * API 签名配置对象
+	 */
+	public SaSignConfig sign = new SaSignConfig();
+
 
 	/**
 	 * @return token名称 (同时也是cookie名称)
@@ -202,6 +211,22 @@ public class SaTokenConfig implements Serializable {
 	 */
 	public SaTokenConfig setMaxLoginCount(int maxLoginCount) {
 		this.maxLoginCount = maxLoginCount;
+		return this;
+	}
+
+	/**
+	 * @return 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用）
+	 */
+	public int getMaxTryTimes() {
+		return maxTryTimes;
+	}
+
+	/**
+	 * @param maxTryTimes 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用）
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setMaxTryTimes(int maxTryTimes) {
+		this.maxTryTimes = maxTryTimes;
 		return this;
 	}
 
@@ -411,7 +436,7 @@ public class SaTokenConfig implements Serializable {
 	 * @param logLevelInt 日志等级 int 值（1=trace、2=debug、3=info、4=warn、5=error、6=fatal）
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setLogLeveInt(int logLevelInt) {
+	public SaTokenConfig setLogLevelInt(int logLevelInt) {
 		this.logLevelInt = logLevelInt;
 		this.logLevel = SaFoxUtil.translateLogLevelToString(logLevelInt);
 		return this;
@@ -512,7 +537,23 @@ public class SaTokenConfig implements Serializable {
 		this.cookie = cookie;
 		return this;
 	}
-	
+
+	/**
+	 * @return API 签名全局配置对象
+	 */
+	public SaSignConfig getSign() {
+		return sign;
+	}
+
+	/**
+	 * @param sign API 签名全局配置对象
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setSign(SaSignConfig sign) {
+		this.sign = sign;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "SaTokenConfig ["
@@ -521,7 +562,8 @@ public class SaTokenConfig implements Serializable {
 				+ ", activityTimeout=" + activityTimeout
 				+ ", isConcurrent=" + isConcurrent 
 				+ ", isShare=" + isShare 
-				+ ", maxLoginCount=" + maxLoginCount 
+				+ ", maxLoginCount=" + maxLoginCount
+				+ ", maxTryTimes=" + maxTryTimes
 				+ ", isReadBody=" + isReadBody
 				+ ", isReadHeader=" + isReadHeader 
 				+ ", isReadCookie=" + isReadCookie
@@ -540,69 +582,9 @@ public class SaTokenConfig implements Serializable {
 				+ ", currDomain=" + currDomain 
 				+ ", sameTokenTimeout=" + sameTokenTimeout
 				+ ", checkSameToken=" + checkSameToken 
-				+ ", cookie=" + cookie 
+				+ ", cookie=" + cookie
+				+ ", sign=" + sign
 				+ "]";
-	}
-
-	
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getIsReadHeader() ，使用方式保持不变 </h1>
-	 * @return 是否尝试从header里读取token
-	 */
-	@Deprecated
-	public Boolean getIsReadHead() {
-		return isReadHeader;
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setIsReadHeader() ，使用方式保持不变 </h1>
-	 * @param isReadHead 是否尝试从header里读取token
-	 * @return 对象自身
-	 */
-	@Deprecated
-	public SaTokenConfig setIsReadHead(Boolean isReadHead) {
-		this.isReadHeader = isReadHead;
-		return this;
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getSameTokenTimeout() ，使用方式保持不变 </h1>
-	 * @return Id-Token的有效期 (单位: 秒)
-	 */
-	@Deprecated
-	public long getIdTokenTimeout() {
-		return sameTokenTimeout;
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setSameTokenTimeout() ，使用方式保持不变 </h1>
-	 * @param idTokenTimeout Id-Token的有效期 (单位: 秒)
-	 * @return 对象自身
-	 */
-	@Deprecated
-	public SaTokenConfig setIdTokenTimeout(long idTokenTimeout) {
-		this.sameTokenTimeout = idTokenTimeout;
-		return this;
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 getCheckSameToken() ，使用方式保持不变 </h1>
-	 * @return 是否校验Id-Token（部分rpc插件有效）
-	 */
-	@Deprecated
-	public Boolean getCheckIdToken() {
-		return checkSameToken;
-	}
-
-	/**
-	 * <h1> 本函数设计已过时，未来版本可能移除此函数，请及时更换为 setCheckSameToken() ，使用方式保持不变 </h1>
-	 * @param checkIdToken 是否校验Id-Token（部分rpc插件有效）
-	 * @return 对象自身 
-	 */
-	@Deprecated
-	public SaTokenConfig setCheckIdToken(Boolean checkIdToken) {
-		this.checkSameToken = checkIdToken;
-		return this;
 	}
 
 }

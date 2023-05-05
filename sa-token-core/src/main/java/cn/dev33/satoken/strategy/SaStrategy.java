@@ -1,5 +1,14 @@
 package cn.dev33.satoken.strategy;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.*;
+import cn.dev33.satoken.basic.SaBasicUtil;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.fun.SaGenerateUniqueTokenFunction;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -8,18 +17,7 @@ import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.SaCheckBasic;
-import cn.dev33.satoken.annotation.SaCheckDisable;
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.annotation.SaCheckRole;
-import cn.dev33.satoken.annotation.SaCheckSafe;
-import cn.dev33.satoken.basic.SaBasicUtil;
-import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.util.SaFoxUtil;
-import cn.dev33.satoken.util.SaTokenConsts;
+import java.util.function.Supplier;
 
 /**
  * Sa-Token 策略对象 
@@ -47,9 +45,7 @@ public final class SaStrategy {
 	 */
 	public static final SaStrategy me = new SaStrategy();
 
-	// 
-	// 所有策略  
-	// 
+	// ----------------------- 所有策略
 	
 	/**
 	 * 创建 Token 的策略 
@@ -194,11 +190,38 @@ public final class SaStrategy {
 				me.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
 	};
 
+	/**
+	 * 生成唯一式 token 的算法
+	 * <p> 参数 [元素名称, 最大尝试次数, 创建 token 函数, 检查 token 函数]
+	 */
+	public SaGenerateUniqueTokenFunction generateUniqueToken = (elementName, maxTryTimes, createTokenFunction, checkTokenFunction) -> {
 
-	// 
-	// 重写策略 set连缀风格 
-	// 
-	
+		// 为方便叙述，以下代码注释均假设在处理生成 token 的场景，但实际上本方法也可能被用于生成 code、ticket 等
+
+		// 循环生成
+		for (int i = 1; ; i++) {
+			// 生成 token
+			String token = createTokenFunction.get();
+
+			// 如果 maxTryTimes == -1，表示不做唯一性验证，直接返回
+			if (maxTryTimes == -1) {
+				return token;
+			}
+
+			// 如果 token 在DB库查询不到数据，说明是个可用的全新 token，直接返回
+			if (checkTokenFunction.apply(token)) {
+				return token;
+			}
+
+			// 如果已经循环了 maxTryTimes 次，仍然没有创建出可用的 token，那么抛出异常
+			if (i >= maxTryTimes) {
+				throw new SaTokenException(elementName + " 生成失败，已尝试" + i + "次，生成算法过于简单或资源池已耗尽");
+			}
+		}
+	};
+
+
+	// ----------------------- 重写策略 set连缀风格
 
 	/**
 	 * 重写创建 Token 的策略 
@@ -276,5 +299,17 @@ public final class SaStrategy {
 		this.isAnnotationPresent = isAnnotationPresent;
 		return this;
 	}
-	
+
+	/**
+	 * 生成唯一式 token 的算法
+	 * <p> 参数 [元素名称, 最大尝试次数, 创建 token 函数, 检查 token 函数]
+	 *
+	 * @param generateUniqueToken /
+	 * @return 对象自身
+	 */
+	public SaStrategy setGenerateUniqueToken(SaGenerateUniqueTokenFunction generateUniqueToken) {
+		this.generateUniqueToken = generateUniqueToken;
+		return this;
+	}
+
 }

@@ -193,7 +193,7 @@ public class SaSsoProcessor {
 		String loginId = req.getParam(paramName.loginId);
 		
 		// step.1 校验签名 
-		ssoTemplate.checkSign(req);
+		ssoTemplate.getSignTemplate().checkRequest(req);
 		
 		// step.2 单点注销 
 		ssoTemplate.ssoLogout(loginId);
@@ -374,7 +374,7 @@ public class SaSsoProcessor {
 		String loginId = req.getParamNotNull(paramName.loginId);
 		
 		// 注销当前应用端会话
-		ssoTemplate.checkSign(req);
+		ssoTemplate.getSignTemplate().checkRequest(req);
 		stpLogic.logout(loginId);
 		
 		// 响应 

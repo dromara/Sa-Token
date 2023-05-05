@@ -428,6 +428,12 @@ Caused by: java.lang.ClassNotFoundException: cn.dev33.satoken.same.SaSameTemplat
 	- (2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
 
 
+### Q：使用拦截器鉴权，访问一个不存在的 path 时，springboot 会自动在控制台打印一下异常。
+可尝试添加以下配置解决：
+``` properties
+spring.resources.add-mappings=false
+spring.mvc.throw-exception-if-no-handler-found=true
+```
 
 
 
@@ -469,6 +475,30 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+
+### Q：在 SaInterceptor 中，注解鉴权总是先于路由拦截鉴权执行，能调整一下顺序吗？
+框架没有提供直接的 API，但你有以下两种方式可以做到这一点：
+- 方式1：将 SaInterceptor 里的代码复制出来一份，按照你的需求改一下，然后使用你这个自定义的拦截器，不再使用官方的。
+- 方式2：注册两次 SaInterceptor 拦截器，例如：
+
+``` java
+@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		// 路由拦截鉴权
+		registry.addInterceptor(new SaInterceptor(r -> {
+			// 路由拦截鉴权的代码 ...
+		}).isAnnotation(false)).addPathPatterns("/**");
+
+		// 打开注解鉴权
+		registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
+	}
+}
+```
+如上，第一个完成路由拦截鉴权功能，第二个完成注解鉴权功能。
+
 
 ### Q：我的项目权限模型不是RBAC模型，很复杂，可以集成吗？
 无论什么模型，只要能把一个用户具有的所有权限塞到一个List里返回给框架，就能集成

@@ -119,9 +119,9 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			// 写入全局上下文 (同步) 
 			SaReactorSyncHolder.setContext(exchange);
 			
-			// 执行全局过滤器 
+			// 执行全局过滤器
+			beforeAuth.run(null);
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				beforeAuth.run(null);
 				auth.run(null);
 			});
 			

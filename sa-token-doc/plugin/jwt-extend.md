@@ -234,6 +234,12 @@ public void setSaJwtTemplate() {
 技术上来讲无法将其踢下线，所以此时顶人下线和踢人下线等 API 都属于不可用状态，所以此时 `is-concurrent` 配置项必须配置为 `true`。
 
 
+##### 3、使用 jwt-mixin 模式后，max-try-times 恒等于 -1。
+
+为防止框架错误判断 token 唯一性，当使用 jwt-mixin 模式后，`max-try-times` 恒等于 -1。
+
+
+
 
 
 

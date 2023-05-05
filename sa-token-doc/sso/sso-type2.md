@@ -173,8 +173,6 @@ sa-token:
     sso: 
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
-        # 是否打开单点注销接口
-        is-slo: true
 
     # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 
@@ -197,8 +195,6 @@ server.port=9001
 ######### Sa-Token 配置 #########
 # SSO-Server端 统一认证地址 
 sa-token.sso.auth-url=http://sa-sso-server.com:9000/sso/auth
-# 是否打开单点注销接口
-sa-token.sso.is-slo=true
 
 # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
 # Redis数据库索引

@@ -51,7 +51,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         			return SaResult.error(e.getMessage());
         		})
         		
-        		// 前置函数：在每次认证函数之前执行
+        		// 前置函数：在每次认证函数之前执行（BeforeAuth 不受 includeList 与 excludeList 的限制，所有请求都会进入）
         		.setBeforeAuth(r -> {
         			// ---------- 设置一些安全响应头 ----------
         			SaHolder.getResponse()

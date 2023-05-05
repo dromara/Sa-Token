@@ -110,7 +110,7 @@ public class SaTokenConfigure {
 --- 
 ### 所有可配置项
 
-你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可
+**你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可**
 
 | 参数名称				| 类型		| 默认值		| 说明																				|
 | :--------				| :--------	| :--------	| :--------																			|
@@ -120,6 +120,7 @@ public class SaTokenConfigure {
 | isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 （为 true 时允许一起登录，为 false 时新登录挤掉旧登录）															|
 | isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token） 	|
 | maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`, `isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
+| maxTryTimes			| int		| 12		| 在每次创建 Token 时的最高循环次数，用于保证 Token 唯一性（-1=不循环重试，直接使用）			|
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHeader			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
 | isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token，此值为 false 后，`StpUtil.login(id)` 登录时也不会再往前端注入Cookie				|
@@ -148,6 +149,31 @@ Cookie相关配置：
 | httpOnly		| Boolean	| false		| 是否禁止 js 操作 Cookie 	|
 | sameSite		| String	| Lax		| 第三方限制级别（Strict=完全禁止，Lax=部分允许，None=不限制）		|
 
+Cookie 配置示例：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token: 
+    # Cookie 相关配置 
+    cookie: 
+        domain: stp.com
+        path: /
+        secure: false
+		httpOnly: true
+		sameSite: Lax
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# Cookie 相关配置 
+sa-token.cookie.domain=stp.com
+sa-token.cookie.path=/
+sa-token.cookie.secure=false
+sa-token.cookie.httpOnly=true
+sa-token.cookie.sameSite=Lax
+```
+<!---------------------------- tabs:end ---------------------------->
 
 
 ### 单点登录相关配置 
@@ -319,7 +345,7 @@ sa-token.oauth2.is-client=true
 
 #### 配置项详解：serverUrl
 
-配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、userinfoUrl、sloUrl 属性前面，用以简化各种 url 配置。
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
 
 在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
 
@@ -332,8 +358,8 @@ sa-token:
         check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
         # 单点注销地址 
         slo-url: http://sa-sso-server.com:9000/sso/signout
-        # SSO-Server端 查询userinfo地址 
-        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
+        # SSO-Server端 查询数据地址 
+        get-data-url: http://sa-sso-server.com:9000/sso/getData
 ```
 
 一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：

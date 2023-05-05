@@ -4,6 +4,9 @@ import org.apache.dubbo.rpc.RpcContext;
 
 import cn.dev33.satoken.context.model.SaRequest;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Request for Dubbo 
  * 
@@ -39,6 +42,24 @@ public class SaRequestForDubbo implements SaRequest {
 	@Override
 	public String getParam(String name) {
 		// 不传播 url 参数 
+		return null;
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数名称
+	 * @return 参数名称列表
+	 */
+	@Override
+	public List<String> getParamNames(){
+		return null;
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数
+	 * @return 参数列表
+	 */
+	@Override
+	public Map<String, String> getParamMap(){
 		return null;
 	}
 

@@ -57,6 +57,9 @@ public class SaSsoServerApplication {
 解决方案：在 sso-client 也新建上这个类，而且包名需要与 sso-server 端的一致（直接从 sso-server 把实体类复制过来就好了）
 
 
+### 模式三配置一堆 xxx-url ，有办法简化一下吗？
+可以使用 `sa-token.sso.server-url` 配置项来简化，参考：[配置项详解：serverurl](/use/config?id=配置项详解：serverurl)
+
 
 ### 问：SSO模式二或模式三，第一个 client 登录成功之后再访问其它两个 client 不会自动登录，需要点一下登录按钮才会登录上？
 答：这是正常现象，系统 1 登录成功之后，系统 2 与系统 3 需要点击登录按钮，才会登录成功。
@@ -184,6 +187,13 @@ public class SsoUserServerController {
 			public StpLogic getStpLogic() {
 				return StpUserUtil.stpLogic;
 			}
+            // 使用自定义的签名秘钥
+            SaSignConfig signConfig =  new SaSignConfig().setSecretKey("xxxx-新的秘钥-xxxx");
+            SaSignTemplate userSignTemplate = new SaSignTemplate().setSignConfig(signConfig);
+            @Override
+            public SaSignTemplate getSignTemplate() {
+                return userSignTemplate;
+            }
 		};
 		// 让这个SSO请求处理器，使用的路由前缀是 /sso-user，而不是原先的 /sso 
 		ssoUserTemplate.apiName.replacePrefix("/sso-user");

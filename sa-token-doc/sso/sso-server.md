@@ -178,14 +178,13 @@ sa-token:
         ticket-timeout: 300
         # 所有允许的授权回调地址
         allow-url: "*"
-        # 是否打开单点注销功能
-        is-slo: true
         
-        # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开）
+        # ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
         # 是否打开模式三 
-        isHttp: true
-        # 接口调用秘钥（用于SSO模式三的单点注销功能）
-        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        is-http: true
+    sign:
+        # API 接口调用秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
         
 spring: 
@@ -219,14 +218,12 @@ server.port=9000
 sa-token.sso.ticket-timeout=300
 # 所有允许的授权回调地址
 sa-token.sso.allow-url=*
-# 是否打开单点注销功能
-sa-token.sso.is-slo=true
 
-# ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开）
+# ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
 # 是否打开模式三 
-sa-token.sso.isHttp=true
-# 接口调用秘钥（用于SSO模式三的单点注销功能）
-sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+sa-token.sso.is-http=true
+# API 接口调用秘钥
+sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 
 # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
     

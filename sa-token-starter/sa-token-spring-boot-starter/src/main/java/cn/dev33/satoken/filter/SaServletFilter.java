@@ -111,9 +111,9 @@ public class SaServletFilter implements SaFilter, Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		try {
-			// 执行全局过滤器 
+			// 执行全局过滤器
+			beforeAuth.run(null);
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				beforeAuth.run(null);
 				auth.run(null);
 			});
 			

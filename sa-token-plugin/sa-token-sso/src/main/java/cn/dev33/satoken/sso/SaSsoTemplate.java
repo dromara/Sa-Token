@@ -1,16 +1,9 @@
 package cn.dev33.satoken.sso;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.name.ApiName;
@@ -20,6 +13,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
+
+import java.util.*;
 
 /**
  * Sa-Token-SSO 单点登录模块 
@@ -73,8 +68,16 @@ public class SaSsoTemplate {
 	public SaSsoConfig getSsoConfig() {
 		return SaSsoManager.getConfig();
 	}
-	
-	
+
+	/**
+	 * 获取底层使用的 API 签名对象
+	 * @return /
+	 */
+	public SaSignTemplate getSignTemplate() {
+		return SaManager.getSaSignTemplate();
+	}
+
+
 	// ---------------------- Ticket 操作 ---------------------- 
 	
 	/**
@@ -153,7 +156,7 @@ public class SaSsoTemplate {
 		}
 		String loginId = SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
 		// 如果是 "a,b" 的格式，则只取最前面的一项 
-		if(loginId != null && loginId.indexOf(",") > -1) {
+		if(loginId != null && loginId.contains(",")) {
 			String[] arr = loginId.split(",");
 			loginId = arr[0];
 		}
@@ -206,7 +209,7 @@ public class SaSsoTemplate {
 
 			// 如果是 "a,b" 的格式，则解析出对应的 Client
 			String ticketClient = null;
-			if(loginId.indexOf(",") > -1) {
+			if(loginId.contains(",")) {
 				String[] arr = loginId.split(",");
 				loginId = arr[0];
 				ticketClient = arr[1];
@@ -252,7 +255,7 @@ public class SaSsoTemplate {
 	public void checkRedirectUrl(String url) {
 		
 		// 1、是否是一个有效的url 
-		if(SaFoxUtil.isUrl(url) == false) {
+		if( ! SaFoxUtil.isUrl(url) ) {
 			throw new SaSsoException("无效redirect：" + url).setCode(SaSsoErrorCode.CODE_30001);
 		}
 		
@@ -264,12 +267,11 @@ public class SaSsoTemplate {
 		
 		// 3、是否在[允许地址列表]之中 
 		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
-		if(SaStrategy.me.hasElement.apply(authUrlList, url) == false) {
+		if( ! SaStrategy.me.hasElement.apply(authUrlList, url) ) {
 			throw new SaSsoException("非法redirect：" + url).setCode(SaSsoErrorCode.CODE_30002);
 		}
 		
-		// 校验通过 √ 
-		return;
+		// 校验通过 √
 	}
 	
 
@@ -285,7 +287,7 @@ public class SaSsoTemplate {
 			return;
 		}
 		SaSession session = getStpLogic().getSessionByLoginId(loginId);
-		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, ()-> new HashSet<String>());
+		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, HashSet::new);
 		urlSet.add(sloCallbackUrl);
 		session.set(SaSsoConsts.SLO_CALLBACK_SET_KEY, urlSet);
 	}
@@ -304,9 +306,9 @@ public class SaSsoTemplate {
 		
 		// step.1 遍历通知 Client 端注销会话 
 		SaSsoConfig cfg = SaSsoManager.getConfig();
-		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, () -> new HashSet<String>());
+		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, HashSet::new);
 		for (String url : urlSet) {
-			url = addSignParams(url, loginId);
+			url = joinLoginIdAndSign(url, loginId);
 			cfg.getSendHttp().apply(url);
 		}
 		
@@ -315,12 +317,23 @@ public class SaSsoTemplate {
 	}
 
 	/**
-	 * 获取：账号资料 
-	 * @param loginId 账号id
-	 * @return 账号资料  
+	 * 根据配置的 getData 地址，查询数据
+	 * @param paramMap 查询参数
+	 * @return 查询结果
 	 */
-	public Object getUserinfo(Object loginId) {
-		String url = buildUserinfoUrl(loginId);
+	public Object getData(Map<String, Object> paramMap) {
+		String getDataUrl = SaSsoManager.getConfig().splicingGetDataUrl();
+		return getData(getDataUrl, paramMap);
+	}
+
+	/**
+	 * 根据自定义 path 地址，查询数据 （此方法需要配置 sa-token.sso.server-url 地址）
+	 * @param path 自定义 path
+	 * @param paramMap 查询参数
+	 * @return 查询结果
+	 */
+	public Object getData(String path, Map<String, Object> paramMap) {
+		String url = buildCustomPathUrl(path, paramMap);
 		return SaSsoManager.getConfig().getSendHttp().apply(url);
 	}
 
@@ -355,17 +368,16 @@ public class SaSsoTemplate {
 		 * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
 		 * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题 
 		 */
-		if(clientLoginUrl.indexOf(paramName.back + "=" + back) == -1) {
+		if( ! clientLoginUrl.contains(paramName.back + "=" + back) ) {
 			clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back); 
 		}
-		String serverAuthUrl = SaFoxUtil.joinParam(serverUrl, paramName.redirect, clientLoginUrl);
-		
+
 		// 返回 
-		return serverAuthUrl;
+		return SaFoxUtil.joinParam(serverUrl, paramName.redirect, clientLoginUrl);
 	}
 	
 	/**
-	 * 构建URL：Server端向Client下放ticke的地址 
+	 * 构建URL：Server端向Client下放ticket的地址
 	 * @param loginId 账号id 
 	 * @param client 客户端标识 
 	 * @param redirect Client端提供的重定向地址 
@@ -413,16 +425,6 @@ public class SaSsoTemplate {
 	}
 
 	/**
-	 * 构建URL：Server端 账号资料查询地址 
-	 * @param loginId 账号id
-	 * @return Server端 账号资料查询地址 
-	 */
-	public String buildUserinfoUrl(Object loginId) {
-		String userinfoUrl = SaSsoManager.getConfig().splicingUserinfoUrl();
-		return addSignParams(userinfoUrl, loginId);
-	}
-
-	/**
 	 * 构建URL：校验ticket的URL 
 	 * <p> 在模式三下，Client端拿到Ticket后根据此地址向Server端发送请求，获取账号id 
 	 * @param ticket ticket码
@@ -458,32 +460,39 @@ public class SaSsoTemplate {
 	 */
 	public String buildSloUrl(Object loginId) {
 		String url = SaSsoManager.getConfig().splicingSloUrl();
-		return addSignParams(url, loginId);
+		return joinLoginIdAndSign(url, loginId);
 	}
 
-	
-	// ------------------- 返回相应key ------------------- 
-
-	/** 
-	 * 拼接key：Ticket 查 账号Id 
-	 * @param ticket ticket值 
-	 * @return key
+	/**
+	 * 构建URL：Server端 getData 地址，带签名等参数
+	 * @param paramMap 查询参数
+	 * @return /
 	 */
-	public String splicingTicketSaveKey(String ticket) {
-		return SaManager.getConfig().getTokenName() + ":ticket:" + ticket;
+	public String buildGetDataUrl(Map<String, Object> paramMap) {
+		String getDataUrl = SaSsoManager.getConfig().getGetDataUrl();
+		return buildCustomPathUrl(getDataUrl, paramMap);
 	}
 
-	/** 
-	 * 拼接key：账号Id 反查 Ticket 
-	 * @param id 账号id
-	 * @return key
+	/**
+	 * 构建URL：Server 端自定义 path 地址，带签名等参数 （此方法需要配置 sa-token.sso.server-url 地址）
+	 * @param paramMap 请求参数
+	 * @return /
 	 */
-	public String splicingTicketIndexKey(Object id) {
-		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
+	public String buildCustomPathUrl(String path, Map<String, Object> paramMap) {
+		// 如果path不是以 http 开头，那么就拼接上 serverUrl
+		String url = path;
+		if( ! url.startsWith("http") ) {
+			String serverUrl = SaSsoManager.getConfig().getServerUrl();
+			SaSsoException.throwByNull(serverUrl, "请先配置 sa-token.sso.server-url 地址", SaSsoErrorCode.CODE_30012);
+			url = SaFoxUtil.spliceTwoUrl(serverUrl, path);
+		}
+
+		// 添加签名等参数，并序列化
+		return joinParamMapAndSign(url, paramMap);
 	}
 
 
-	// ------------------- 请求相关 ------------------- 
+	// ------------------- 发起请求 -------------------
 
 	/**
 	 * 发出请求，并返回 SaResult 结果 
@@ -497,98 +506,79 @@ public class SaSsoTemplate {
 	}
 
 	/**
-	 * 获取：接口调用秘钥 
-	 * @return see note 
+	 * 给 paramMap 追加 sign 等参数，并序列化为kv字符串，拼接到url后面
+	 * @param url 请求地址
+	 * @param paramMap 请求原始参数列表
+	 * @return 加工后的url
 	 */
-	public String getSecretkey() {
-		// 默认从配置文件中返回 
-		String secretkey = SaSsoManager.getConfig().getSecretkey();
-		if(SaFoxUtil.isEmpty(secretkey)) {
-			throw new SaSsoException("请配置 secretkey 参数").setCode(SaSsoErrorCode.CODE_30009);
-		}
-		return secretkey;
+	public String joinParamMapAndSign(String url, Map<String, Object> paramMap) {
+		// 在参数列表中追加：时间戳、随机字符串、参数签名
+		SaManager.getSaSignTemplate().addSignParams(paramMap);
+
+		// 将参数列表序列化为kv字符串
+		String signParams = SaManager.getSaSignTemplate().joinParams(paramMap);
+
+		// 将kv字符串拼接到url后面
+		return SaFoxUtil.joinParam(url, signParams);
 	}
 
 	/**
-	 * 校验secretkey秘钥是否有效 （API已过期，请更改为更安全的 sign 式校验）
-	 * @param secretkey 秘钥 
+	 * 给 url 拼接 loginId 参数，并拼接 sign 等参数
+	 * @param url 链接
+	 * @param loginId 账号id
+	 * @return 加工后的url
+	 */
+	public String joinLoginIdAndSign(String url, Object loginId) {
+		Map<String, Object> paramMap = new LinkedHashMap<>();
+		paramMap.put(paramName.loginId, loginId);
+		return joinParamMapAndSign(url, paramMap);
+	}
+
+
+	// ------------------- 返回相应key -------------------
+
+	/**
+	 * 拼接key：Ticket 查 账号Id
+	 * @param ticket ticket值
+	 * @return key
+	 */
+	public String splicingTicketSaveKey(String ticket) {
+		return SaManager.getConfig().getTokenName() + ":ticket:" + ticket;
+	}
+
+	/**
+	 * 拼接key：账号Id 反查 Ticket
+	 * @param id 账号id
+	 * @return key
+	 */
+	public String splicingTicketIndexKey(Object id) {
+		return SaManager.getConfig().getTokenName() + ":id-ticket:" + id;
+	}
+
+
+	// -------- 以下方法已废弃，仅为兼容旧版本而保留 --------
+
+	/**
+	 * 构建URL：Server端 账号资料查询地址
+	 * @param loginId 账号id
+	 * @return Server端 账号资料查询地址
 	 */
 	@Deprecated
-	public void checkSecretkey(String secretkey) {
-		 if(SaFoxUtil.isEmpty(secretkey) || secretkey.equals(getSecretkey()) == false) {
-			 throw new SaSsoException("无效秘钥：" + secretkey).setCode(SaSsoErrorCode.CODE_30003);
-		 }
+	public String buildUserinfoUrl(Object loginId) {
+		String userinfoUrl = SaSsoManager.getConfig().splicingUserinfoUrl();
+		return joinLoginIdAndSign(userinfoUrl, loginId);
 	}
-	
+
 	/**
-	 * 根据参数计算签名 
+	 * 获取：账号资料
 	 * @param loginId 账号id
-	 * @param timestamp 当前时间戳，13位
-	 * @param nonce 随机字符串 
-	 * @param secretkey 账号id
-	 * @return 签名 
+	 * @return 账号资料
 	 */
-	public String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
-		Map<String, Object> map = new TreeMap<>();
-		map.put(paramName.loginId, loginId);
-		map.put(paramName.timestamp, timestamp);
-		map.put(paramName.nonce, nonce);
-		return SaManager.getSaSignTemplate().createSign(map, secretkey);
+	@Deprecated
+	public Object getUserinfo(Object loginId) {
+		String url = buildUserinfoUrl(loginId);
+		return request(url);
 	}
 
-	/**
-	 * 给 url 追加 sign 等参数 
-	 * @param url 连接
-	 * @param loginId 账号id 
-	 * @return 加工后的url 
-	 */
-	public String addSignParams(String url, Object loginId) {
-		
-		// 时间戳、随机字符串、参数签名
-		String timestamp = String.valueOf(System.currentTimeMillis());
-		String nonce = SaFoxUtil.getRandomString(20);
-		String sign = getSign(loginId, timestamp, nonce, getSecretkey());
-		
-		// 追加到url 
-		url = SaFoxUtil.joinParam(url, paramName.loginId, loginId);
-		url = SaFoxUtil.joinParam(url, paramName.timestamp, timestamp);
-		url = SaFoxUtil.joinParam(url, paramName.nonce, nonce);
-		url = SaFoxUtil.joinParam(url, paramName.sign, sign);
-		return url;
-	}
 
-	/**
-	 * 校验签名
-	 * @param req request 
-	 */
-	public void checkSign(SaRequest req) {
-
-		// 参数签名、账号id、时间戳、随机字符串
-		String sign = req.getParamNotNull(paramName.sign);
-		String loginId = req.getParamNotNull(paramName.loginId);
-		String timestamp = req.getParamNotNull(paramName.timestamp);
-		String nonce = req.getParamNotNull(paramName.nonce);
-		
-		// 校验时间戳 
-		checkTimestamp(Long.valueOf(timestamp));
-		
-		// 校验签名 
-		String calcSign = getSign(loginId, timestamp, nonce, getSecretkey());
-		if(calcSign.equals(sign) == false) {
-			throw new SaSsoException("签名无效：" + calcSign).setCode(SaSsoErrorCode.CODE_30008);
-		}
-	}
-
-	/**
-	 * 校验时间戳与当前时间的差距是否超出限制 
-	 * @param timestamp 时间戳 
-	 */
-	public void checkTimestamp(long timestamp) {
-		long disparity = Math.abs(System.currentTimeMillis() - timestamp);
-		long allowDisparity = SaSsoManager.getConfig().getTimestampDisparity();
-		if(allowDisparity != -1 && disparity > allowDisparity) {
-			throw new SaSsoException("timestamp 超出允许的范围").setCode(SaSsoErrorCode.CODE_30007);
-		}
-	}
-	
 }
