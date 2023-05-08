@@ -7,7 +7,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * 全局异常处理 
- * @author kong
+ * @author click33
  *
  */
 @RestControllerAdvice

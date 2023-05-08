@@ -13,7 +13,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * Sa-Token 注解鉴权示例 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-13
  */
 @RestController

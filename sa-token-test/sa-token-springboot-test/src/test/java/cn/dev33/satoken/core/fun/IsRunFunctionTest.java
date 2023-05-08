@@ -8,7 +8,7 @@ import cn.dev33.satoken.fun.IsRunFunction;
 /**
  * IsRunFunction 测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-2-9 16:11:10
  */
 public class IsRunFunctionTest {

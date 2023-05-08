@@ -3,11 +3,18 @@ package cn.dev33.satoken.stp;
 import java.util.Map;
 
 /**
- * 
- * 快速构建 调用 `StpUtil.login()` 时的 [配置参数 Model ]
- * 
- * @author kong
+ * 快速、简洁的构建：调用 `StpUtil.login()` 时的 [ 配置参数 SaLoginModel ]
  *
+ * <pre>
+ *     	// 例如：在登录时指定 token 有效期为七天，代码如下：
+ *     	StpUtil.login(10001, SaLoginConfig.setTimeout(60 * 60 * 24 * 7));
+ *
+ *     	// 上面的代码与下面的代码等价
+ *     	StpUtil.login(10001, new SaLoginModel().setTimeout(60 * 60 * 24 * 7));
+ * </pre>
+ * 
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaLoginConfig {
 	

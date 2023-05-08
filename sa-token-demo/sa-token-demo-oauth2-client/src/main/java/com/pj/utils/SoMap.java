@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Map< String, Object> 是最常用的一种Map类型，但是它写着麻烦 
  * <p>所以特封装此类，继承Map，进行一些扩展，可以让Map更灵活使用 
  * <p>最新：2020-12-10 新增部分构造方法
- * @author kong
+ * @author click33
  */
 public class SoMap extends LinkedHashMap<String, Object> {
 

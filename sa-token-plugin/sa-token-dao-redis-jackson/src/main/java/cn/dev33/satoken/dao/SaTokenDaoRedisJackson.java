@@ -34,7 +34,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 /**
  * Sa-Token 持久层实现 [Redis存储、Jackson序列化]
  * 
- * @author kong
+ * @author click33
  * 
  */
 @Component

@@ -18,7 +18,7 @@ import java.util.*;
 
 /**
  * Sa-Token-SSO 单点登录模块 
- * @author kong
+ * @author click33
  *
  */
 public class SaSsoTemplate {

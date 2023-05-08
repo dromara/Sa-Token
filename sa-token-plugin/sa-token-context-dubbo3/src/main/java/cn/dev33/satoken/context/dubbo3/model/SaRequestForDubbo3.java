@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Request for Dubbo3
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaRequestForDubbo3 implements SaRequest {

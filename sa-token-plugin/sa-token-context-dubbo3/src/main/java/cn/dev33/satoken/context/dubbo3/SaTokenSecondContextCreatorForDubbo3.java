@@ -7,7 +7,7 @@ import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 /**
  * Sa-Token 二级Context - 创建器 [Dubbo3版]
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaTokenSecondContextCreatorForDubbo3 implements SaTokenSecondContextCreator {

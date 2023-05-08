@@ -14,7 +14,7 @@ import cn.dev33.satoken.stp.StpLogic;
 
 /**
  * Sa-Token 权限认证工具类 （User版）
- * @author kong 
+ * @author click33 
  */
 @Component
 public class StpUserUtil {

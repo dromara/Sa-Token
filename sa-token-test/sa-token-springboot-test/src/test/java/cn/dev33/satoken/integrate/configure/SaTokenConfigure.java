@@ -9,7 +9,7 @@ import cn.dev33.satoken.interceptor.SaInterceptor;
 /**
  * Sa-Token 相关配置类
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-2
  */
 @Configuration

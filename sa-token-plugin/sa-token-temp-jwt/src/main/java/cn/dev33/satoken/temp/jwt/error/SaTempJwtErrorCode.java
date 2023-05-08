@@ -3,7 +3,7 @@ package cn.dev33.satoken.temp.jwt.error;
 /**
  * 定义 sa-token-temp-jwt 所有异常细分状态码 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-31
  */
 public class SaTempJwtErrorCode {

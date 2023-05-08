@@ -11,7 +11,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 /**
  * 自定义权限验证接口扩展 
  * 
- * @author kong
+ * @author click33
  *
  */
 @Component

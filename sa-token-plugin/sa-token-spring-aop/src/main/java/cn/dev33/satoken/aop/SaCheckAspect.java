@@ -17,7 +17,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 /**
  * sa-token 基于 Spring Aop 的注解鉴权
  * 
- * @author kong
+ * @author click33
  */
 @Aspect
 @Component

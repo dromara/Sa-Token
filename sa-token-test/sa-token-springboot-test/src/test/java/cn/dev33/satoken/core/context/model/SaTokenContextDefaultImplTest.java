@@ -9,7 +9,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 /**
  * 默认上下文测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-5
  */
 public class SaTokenContextDefaultImplTest {

@@ -3,7 +3,8 @@ package cn.dev33.satoken.exception;
 /**
  * 一个异常：代表会话未能通过二级认证校验 
  * 
- * @author kong
+ * @author click33
+ * @since <= 1.34.0
  */
 public class NotSafeException extends SaTokenException {
 

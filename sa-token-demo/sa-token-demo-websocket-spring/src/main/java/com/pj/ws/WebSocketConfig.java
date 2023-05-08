@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 /**
  * WebSocket 相关配置 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-2-11
  */
 @Configuration

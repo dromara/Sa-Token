@@ -4,7 +4,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * 生成唯一式 token 的方法签名
+ * 生成唯一式 token 的函数式接口，方便开发者进行 lambda 表达式风格调用
  *
  * @author click33
  * @since 2023/4/30
@@ -21,7 +21,7 @@ public interface SaGenerateUniqueTokenFunction {
      * @param checkTokenFunction 校验 token 是否唯一的函数（返回 true 表示唯一，可用）
      * @return 最终生成的唯一式 token
      */
-    public String execute(
+    String execute(
             String elementName,
             int maxTryTimes,
             Supplier<String> createTokenFunction,

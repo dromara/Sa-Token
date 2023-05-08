@@ -1,13 +1,13 @@
 package com.pj;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.filter.SaServletFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 /**
  * Sa-Token 测试  
- * @author kong
+ * @author click33
  *
  */
 @SpringBootApplication

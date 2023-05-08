@@ -3,7 +3,7 @@ package com.pj.util;
 
 /**
  * 用于测试用时
- * @author kong
+ * @author click33
  *
  */
 public class Ttime {

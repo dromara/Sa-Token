@@ -17,7 +17,7 @@ import com.pj.sso.util.MyHttpSessionHolder;
 
 /**
  * SSO Client端 Controller 
- * @author kong
+ * @author click33
  */
 @RestController
 public class SsoClientController {

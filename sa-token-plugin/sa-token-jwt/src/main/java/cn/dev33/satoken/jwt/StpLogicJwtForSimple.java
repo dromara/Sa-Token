@@ -9,7 +9,7 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * Sa-Token 整合 jwt -- Simple 简单模式 
- * @author kong
+ * @author click33
  *
  */
 public class StpLogicJwtForSimple extends StpLogic {

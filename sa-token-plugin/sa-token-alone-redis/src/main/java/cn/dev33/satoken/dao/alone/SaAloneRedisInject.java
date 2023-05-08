@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 /**
  * 为 SaTokenDao 单独设置Redis连接信息 
- * @author kong
+ * @author click33
  */
 @Configuration
 public class SaAloneRedisInject implements EnvironmentAware{

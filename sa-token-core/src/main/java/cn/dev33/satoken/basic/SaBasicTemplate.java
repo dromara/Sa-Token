@@ -8,19 +8,20 @@ import cn.dev33.satoken.secure.SaBase64Util;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token Http Basic 认证模块 
- * @author kong
+ * Sa-Token Http Basic 认证模块
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaBasicTemplate {
 	
 	/**
-	 * 默认的 Realm 名称 
+	 * 默认的 Realm 领域名称
 	 */
 	public static final String DEFAULT_REALM = "Sa-Token";
 
 	/**
-	 * 设置响应头，并抛出异常 
+	 * 在校验失败时，设置响应头，并抛出异常
 	 * @param realm 领域 
 	 */
 	public void throwNotBasicAuthException(String realm) {
@@ -34,7 +35,7 @@ public class SaBasicTemplate {
 	 */
 	public String getAuthorizationValue() {
 		
-		// 获取请求头 Authorization 参数 
+		// 获取前端提交的请求头 Authorization 参数
 		String authorization = SaHolder.getRequest().getHeader("Authorization");
 		
 		// 如果不是以 Basic 作为前缀，则视为无效 

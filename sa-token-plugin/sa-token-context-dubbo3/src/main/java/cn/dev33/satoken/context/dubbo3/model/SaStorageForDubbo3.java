@@ -6,7 +6,7 @@ import org.apache.dubbo.rpc.RpcContext;
 
 /**
  * Storage for Servlet 
- * @author kong
+ * @author click33
  *
  */
 public class SaStorageForDubbo3 implements SaStorage {

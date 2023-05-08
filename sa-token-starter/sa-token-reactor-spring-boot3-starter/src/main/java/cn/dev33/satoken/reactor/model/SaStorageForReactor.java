@@ -6,7 +6,7 @@ import cn.dev33.satoken.context.model.SaStorage;
 
 /**
  * Storage for Reactor 
- * @author kong
+ * @author click33
  *
  */
 public class SaStorageForReactor implements SaStorage {

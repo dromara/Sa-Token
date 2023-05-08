@@ -1,9 +1,10 @@
 package cn.dev33.satoken.basic;
 
 /**
- * Sa-Token Http Basic 认证 Util  
- * @author kong
+ * Sa-Token Http Basic 认证模块，Util 工具类
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaBasicUtil {
 
@@ -11,7 +12,7 @@ public class SaBasicUtil {
 	}
 	
 	/**
-	 * 底层 SaBasicTemplate 对象 
+	 * 底层使用的 SaBasicTemplate 对象
 	 */
 	public static SaBasicTemplate saBasicTemplate = new SaBasicTemplate();
 

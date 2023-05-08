@@ -19,7 +19,7 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * Sa-Token 多端登录测试 
  * 
- * @author kong 
+ * @author click33 
  *
  */
 @SpringBootTest(classes = StartUpApplication.class)

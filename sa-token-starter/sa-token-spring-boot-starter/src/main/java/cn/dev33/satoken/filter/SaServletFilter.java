@@ -23,7 +23,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * Servlet全局过滤器 
- * @author kong
+ * @author click33
  *
  */
 @Order(SaTokenConsts.ASSEMBLY_ORDER)

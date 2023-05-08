@@ -29,8 +29,8 @@ import cn.dev33.satoken.exception.SaTokenException;
 /**
  * Sa-Token 常见加密算法工具类
  *
- * @author kong
- *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaSecureUtil {
 

@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Model: Access-Token
- * @author kong
+ * @author click33
  *
  */
 public class AccessTokenModel implements Serializable {

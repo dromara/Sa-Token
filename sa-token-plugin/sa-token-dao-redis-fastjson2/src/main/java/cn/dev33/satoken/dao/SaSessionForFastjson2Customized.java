@@ -9,7 +9,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 /**
  * Fastjson 定制版 SaSession，重写类型转换API 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-19
  */
 public class SaSessionForFastjson2Customized extends SaSession {

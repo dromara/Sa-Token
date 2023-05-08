@@ -10,7 +10,7 @@ import org.apache.dubbo.rpc.*;
  * 
  * Sa-Token 整合 Dubbo3 Provider端过滤器
  * 
- * @author kong
+ * @author click33
  *
  */
 @Activate(group = {CommonConstants.PROVIDER}, order = -30000)

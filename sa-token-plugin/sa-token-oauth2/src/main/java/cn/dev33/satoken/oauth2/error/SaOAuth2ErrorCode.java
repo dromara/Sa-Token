@@ -3,7 +3,7 @@ package cn.dev33.satoken.oauth2.error;
 /**
  * 定义 sa-token-oauth2 所有异常细分状态码 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-10-31
  */
 public interface SaOAuth2ErrorCode {

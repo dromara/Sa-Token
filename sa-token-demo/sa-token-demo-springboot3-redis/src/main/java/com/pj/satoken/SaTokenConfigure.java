@@ -13,7 +13,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
+ * @author click33
  *
  */
 @Configuration

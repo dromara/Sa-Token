@@ -13,7 +13,7 @@ import cn.hutool.jwt.JWTException;
 
 /**
  * jwt 操作模板方法封装 
- * @author kong
+ * @author click33
  *
  */
 public class SaJwtTemplate {

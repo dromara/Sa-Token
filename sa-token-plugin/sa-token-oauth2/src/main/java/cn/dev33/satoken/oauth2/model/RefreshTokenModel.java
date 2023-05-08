@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Model: Refresh-Token 
- * @author kong
+ * @author click33
  *
  */
 public class RefreshTokenModel implements Serializable {

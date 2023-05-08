@@ -32,8 +32,8 @@ import java.util.function.Supplier;
 	});
  * </pre>
  * 
- * @author kong
- *
+ * @author click33
+ * @since <= 1.34.0
  */
 public final class SaStrategy {
 
@@ -49,37 +49,43 @@ public final class SaStrategy {
 	
 	/**
 	 * 创建 Token 的策略 
-	 * <p> 参数 [账号id, 账号类型] 
+	 * <p> 参数 [ 账号id, 账号类型 ]
 	 */
 	public BiFunction<Object, String, String> createToken = (loginId, loginType) -> {
 		// 根据配置的tokenStyle生成不同风格的token 
 		String tokenStyle = SaManager.getConfig().getTokenStyle();
-		// uuid 
-		if(SaTokenConsts.TOKEN_STYLE_UUID.equals(tokenStyle)) {
-			return UUID.randomUUID().toString();
+
+		switch (tokenStyle) {
+			// uuid
+			case SaTokenConsts.TOKEN_STYLE_UUID:
+				return UUID.randomUUID().toString();
+
+			// 简单uuid (不带下划线)
+			case SaTokenConsts.TOKEN_STYLE_SIMPLE_UUID:
+				return UUID.randomUUID().toString().replaceAll("-", "");
+
+			// 32位随机字符串
+			case SaTokenConsts.TOKEN_STYLE_RANDOM_32:
+				return SaFoxUtil.getRandomString(32);
+
+			// 64位随机字符串
+			case SaTokenConsts.TOKEN_STYLE_RANDOM_64:
+				return SaFoxUtil.getRandomString(64);
+
+			// 128位随机字符串
+			case SaTokenConsts.TOKEN_STYLE_RANDOM_128:
+				return SaFoxUtil.getRandomString(128);
+
+			// tik风格 (2_14_16)
+			case SaTokenConsts.TOKEN_STYLE_TIK:
+				return SaFoxUtil.getRandomString(2) + "_" + SaFoxUtil.getRandomString(14) + "_" + SaFoxUtil.getRandomString(16) + "__";
+
+			// 默认，还是uuid
+			default:
+				SaManager.getLog().warn("配置的 tokenStyle 值无效：{}，仅允许以下取值: " +
+						"uuid、simple-uuid、random-32、random-64、random-128、tik", tokenStyle);
+				return UUID.randomUUID().toString();
 		}
-		// 简单uuid (不带下划线)
-		if(SaTokenConsts.TOKEN_STYLE_SIMPLE_UUID.equals(tokenStyle)) {
-			return UUID.randomUUID().toString().replaceAll("-", "");
-		}
-		// 32位随机字符串
-		if(SaTokenConsts.TOKEN_STYLE_RANDOM_32.equals(tokenStyle)) {
-			return SaFoxUtil.getRandomString(32);
-		}
-		// 64位随机字符串
-		if(SaTokenConsts.TOKEN_STYLE_RANDOM_64.equals(tokenStyle)) {
-			return SaFoxUtil.getRandomString(64);
-		}
-		// 128位随机字符串
-		if(SaTokenConsts.TOKEN_STYLE_RANDOM_128.equals(tokenStyle)) {
-			return SaFoxUtil.getRandomString(128);
-		}
-		// tik风格 (2_14_16)
-		if(SaTokenConsts.TOKEN_STYLE_TIK.equals(tokenStyle)) {
-			return SaFoxUtil.getRandomString(2) + "_" + SaFoxUtil.getRandomString(14) + "_" + SaFoxUtil.getRandomString(16) + "__";
-		}
-		// 默认，还是uuid 
-		return UUID.randomUUID().toString();
 	};
 	
 	/**

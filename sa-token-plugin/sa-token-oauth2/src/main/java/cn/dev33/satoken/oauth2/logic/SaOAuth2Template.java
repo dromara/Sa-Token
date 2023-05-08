@@ -19,7 +19,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token-OAuth2 模块 代码实现
- * @author kong
+ * @author click33
  *
  */
 public class SaOAuth2Template {

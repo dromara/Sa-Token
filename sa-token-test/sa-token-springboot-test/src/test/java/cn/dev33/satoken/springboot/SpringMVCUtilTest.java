@@ -11,7 +11,7 @@ import cn.dev33.satoken.spring.SpringMVCUtil;
 /**
  * SpringMVCUtil 测试 
  * 
- * @author kong  
+ * @author click33  
  *
  */
 public class SpringMVCUtilTest {

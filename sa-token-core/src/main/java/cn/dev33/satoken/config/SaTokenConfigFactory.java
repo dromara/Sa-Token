@@ -13,10 +13,10 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token配置文件的构建工厂类
- * <p>
- * 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 
+ *
+ * <p> 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 </p>
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-30
  */
 public class SaTokenConfigFactory {
@@ -30,7 +30,7 @@ public class SaTokenConfigFactory {
 	public static String configPath = "sa-token.properties";
 
 	/**
-	 * 根据configPath路径获取配置信息 
+	 * 根据 configPath 路径获取配置信息
 	 * 
 	 * @return 一个SaTokenConfig对象
 	 */
@@ -42,7 +42,7 @@ public class SaTokenConfigFactory {
 	 * 根据指定路径路径获取配置信息 
 	 * 
 	 * @param path 配置文件路径 
-	 * @return 一个SaTokenConfig对象
+	 * @return 一个 SaTokenConfig 对象
 	 */
 	public static SaTokenConfig createConfig(String path) {
 		Map<String, String> map = readPropToMap(path);

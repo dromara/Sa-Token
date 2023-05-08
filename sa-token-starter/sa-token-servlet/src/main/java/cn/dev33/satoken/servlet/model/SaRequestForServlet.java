@@ -16,7 +16,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Request for Servlet 
- * @author kong
+ * @author click33
  *
  */
 public class SaRequestForServlet implements SaRequest {

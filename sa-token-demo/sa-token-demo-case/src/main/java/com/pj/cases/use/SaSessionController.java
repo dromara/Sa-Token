@@ -16,7 +16,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * Sa-Token Session会话示例 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-15
  */
 @RestController

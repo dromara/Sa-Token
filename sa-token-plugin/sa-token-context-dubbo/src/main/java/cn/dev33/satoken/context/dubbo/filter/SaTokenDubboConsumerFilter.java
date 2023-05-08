@@ -19,7 +19,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * 
  * Sa-Token 整合 Dubbo Consumer端过滤器 
  * 
- * @author kong
+ * @author click33
  *
  */
 @Activate(group = {CommonConstants.CONSUMER}, order = -30000)

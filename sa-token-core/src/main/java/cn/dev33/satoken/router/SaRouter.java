@@ -11,9 +11,20 @@ import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.fun.SaParamRetFunction;
 
 /**
- * 路由匹配操作工具类 
- * @author kong
+ * 路由匹配操作工具类
  *
+ * <p> 提供了一系列的路由匹配操作方法，一般用在全局拦截器、过滤器做路由拦截鉴权。 </p>
+ * <p> 简单示例： </p>
+ * <pre>
+ *    	// 指定一条 match 规则
+ *    	SaRouter
+ *    	   	.match("/**")    // 拦截的 path 列表，可以写多个
+ *   	   	.notMatch("/user/doLogin")        // 排除掉的 path 列表，可以写多个
+ *   	   	.check(r->StpUtil.checkLogin());        // 要执行的校验动作，可以写完整的 lambda 表达式
+ * </pre>
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaRouter {
 

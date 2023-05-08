@@ -10,7 +10,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * 测试注解用的Controller 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-2
  */
 @SaCheckLogin

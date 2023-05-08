@@ -27,7 +27,7 @@ import cn.dev33.satoken.temp.SaTempInterface;
 /**
  * 注入Sa-Token所需要的Bean 
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaBeanInject {

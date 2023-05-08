@@ -1,13 +1,14 @@
 package cn.dev33.satoken.util;
 
 /**
- * 字符串格式化工具
+ * 字符串格式化工具，将字符串中的 {} 按序替换为参数
  * <p>
  * 	本工具类 copy 自 Hutool：
  * 		https://github.com/dromara/hutool/blob/v5-master/hutool-core/src/main/java/cn/hutool/core/text/StrFormatter.java
  * </p>
  *
  * @author Looly
+ * @since <= 1.34.0
  */
 public class StrFormatter {
 

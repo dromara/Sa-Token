@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * Sa-Token-SSO Client端 Controller 
- * @author kong
+ * @author click33
  */
 @RestController
 public class SsoClientController {

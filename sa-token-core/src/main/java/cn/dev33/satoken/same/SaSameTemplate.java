@@ -11,7 +11,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * 
  * <p> 解决同源系统互相调用时的身份认证校验， 例如：微服务网关请求转发鉴权、微服务RPC调用鉴权 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-24
  */
 public class SaSameTemplate {

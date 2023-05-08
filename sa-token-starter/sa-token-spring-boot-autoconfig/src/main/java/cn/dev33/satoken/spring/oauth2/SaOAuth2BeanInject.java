@@ -11,7 +11,7 @@ import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
 /**
  * 注入 Sa-Token-OAuth2 所需要的Bean 
  * 
- * @author kong
+ * @author click33
  *
  */
 @ConditionalOnClass(SaOAuth2Manager.class)

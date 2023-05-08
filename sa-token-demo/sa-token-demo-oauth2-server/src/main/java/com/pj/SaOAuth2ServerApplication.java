@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 启动：Sa-OAuth2 Server端 
- * @author kong 
+ * @author click33 
  */
 @SpringBootApplication 
 public class SaOAuth2ServerApplication {

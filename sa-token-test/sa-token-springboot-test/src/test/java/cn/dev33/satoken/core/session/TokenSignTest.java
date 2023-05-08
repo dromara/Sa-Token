@@ -8,7 +8,7 @@ import cn.dev33.satoken.session.TokenSign;
 /**
  * TokenSign 相关测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-4
  */
 public class TokenSignTest {

@@ -8,7 +8,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * 为路由拦截鉴权准备的路示例 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-15
  */
 @RestController

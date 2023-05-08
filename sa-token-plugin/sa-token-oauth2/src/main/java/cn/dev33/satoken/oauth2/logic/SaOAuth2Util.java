@@ -10,7 +10,7 @@ import cn.dev33.satoken.oauth2.model.SaClientModel;
 
 /**
  * Sa-Token-OAuth2 模块 工具类 
- * @author kong
+ * @author click33
  * 
  */
 public class SaOAuth2Util {

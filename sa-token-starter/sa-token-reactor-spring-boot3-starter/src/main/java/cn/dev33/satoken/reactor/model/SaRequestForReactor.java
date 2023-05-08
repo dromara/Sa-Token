@@ -19,7 +19,7 @@ import java.util.Set;
 
 /**
  * Request for Reactor 
- * @author kong
+ * @author click33
  *
  */
 public class SaRequestForReactor implements SaRequest {

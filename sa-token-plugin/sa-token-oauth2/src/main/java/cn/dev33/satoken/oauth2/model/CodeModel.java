@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Model: 授权码 
- * @author kong
+ * @author click33
  *
  */
 public class CodeModel implements Serializable {

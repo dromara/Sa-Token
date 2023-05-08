@@ -14,7 +14,7 @@ import cn.dev33.satoken.exception.ApiDisabledException;
 /**
  * Sa-Token 上下文 [Dubbo版本] 
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaTokenSecondContextForDubbo implements SaTokenSecondContext {

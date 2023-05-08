@@ -6,8 +6,10 @@ import java.util.List;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * 一个异常：代表会话未能通过登录认证 
- * @author kong 
+ * 一个异常：代表会话未能通过登录认证校验
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class NotLoginException extends SaTokenException {
 	
@@ -26,23 +28,23 @@ public class NotLoginException extends SaTokenException {
 	
 	/** 表示未提供token */
 	public static final String NOT_TOKEN = "-1";
-	public static final String NOT_TOKEN_MESSAGE = "未能读取到有效Token";
+	public static final String NOT_TOKEN_MESSAGE = "未能读取到有效 token";
 	
 	/** 表示token无效 */
 	public static final String INVALID_TOKEN = "-2";
-	public static final String INVALID_TOKEN_MESSAGE = "Token无效";
+	public static final String INVALID_TOKEN_MESSAGE = "token 无效";
 	
 	/** 表示token已过期 */
 	public static final String TOKEN_TIMEOUT = "-3";
-	public static final String TOKEN_TIMEOUT_MESSAGE = "Token已过期";
+	public static final String TOKEN_TIMEOUT_MESSAGE = "token 已过期";
 	
 	/** 表示token已被顶下线 */
 	public static final String BE_REPLACED = "-4";
-	public static final String BE_REPLACED_MESSAGE = "Token已被顶下线";
+	public static final String BE_REPLACED_MESSAGE = "token 已被顶下线";
 	
 	/** 表示token已被踢下线 */
 	public static final String KICK_OUT = "-5";
-	public static final String KICK_OUT_MESSAGE = "Token已被踢下线";
+	public static final String KICK_OUT_MESSAGE = "token 已被踢下线";
 
 	/** 默认的提示语 */
 	public static final String DEFAULT_MESSAGE = "当前会话未登录";

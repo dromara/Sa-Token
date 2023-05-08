@@ -3,7 +3,7 @@ package cn.dev33.satoken.sso.name;
 /**
  * SSO 模块所有参数名称定义 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-25
  */
 public class ParamName {

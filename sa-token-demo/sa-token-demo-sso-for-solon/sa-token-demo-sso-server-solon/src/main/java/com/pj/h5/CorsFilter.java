@@ -8,7 +8,7 @@ import org.noear.solon.core.handle.FilterChain;
 
 /**
  * 跨域过滤器 
- * @author kong 
+ * @author click33 
  */
 @Component(index = -200)
 public class CorsFilter implements Filter {

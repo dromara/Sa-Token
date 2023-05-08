@@ -1,9 +1,10 @@
 package cn.dev33.satoken.context.model;
 
 /**
- * Response 包装类 
- * @author kong
+ * Response 响应对象 包装类
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public interface SaResponse {
 
@@ -13,8 +14,8 @@ public interface SaResponse {
 	public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 	
 	/**
-	 * 获取底层源对象 
-	 * @return see note 
+	 * 获取底层被包装的源对象
+	 * @return /
 	 */
 	public Object getSource();
 	

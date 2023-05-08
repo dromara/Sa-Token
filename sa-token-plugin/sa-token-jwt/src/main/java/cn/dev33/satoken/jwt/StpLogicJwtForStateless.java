@@ -16,7 +16,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token 整合 jwt -- Stateless 无状态模式 
- * @author kong
+ * @author click33
  *
  */
 public class StpLogicJwtForStateless extends StpLogic {

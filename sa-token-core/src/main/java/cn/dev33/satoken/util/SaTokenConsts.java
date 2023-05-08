@@ -1,9 +1,15 @@
 package cn.dev33.satoken.util;
 
 /**
- * Sa-Token常量类 
- * @author kong
+ * Sa-Token 常量类
  *
+ * <p>
+ *     一般的常量采用就近原则，定义在各自相应的模块中。
+ *     但有一些常量没有明确的归属模块，会在很多模块中使用到，比如版本号、开源地址等，属于全局性的础性常量，这些常量统一定义在此类中。
+ * </p>
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaTokenConsts {
 
@@ -32,71 +38,72 @@ public class SaTokenConsts {
 	 */
 	public static final String DEV_DOC_URL = "https://sa-token.cc";
 	
-	// ------------------ 常量key标记
+	
+	// ------------------ 常量 key 标记
 	
 	/**
-	 * 常量key标记: 如果token为本次请求新创建的，则以此字符串为key存储在当前request中 
+	 * 常量 key 标记: 如果 token 为本次请求新创建的，则以此字符串为 key 存储在当前请求 str 中
 	 */
 	public static final String JUST_CREATED = "JUST_CREATED_"; 	
 
 	/**
-	 * 常量key标记: 如果token为本次请求新创建的，则以此字符串为key存储在当前request中（不拼接前缀，纯Token）
+	 * 常量 key 标记: 如果 token 为本次请求新创建的，则以此字符串为 key 存储在当前 request 中（不拼接前缀，纯Token）
 	 */
 	public static final String JUST_CREATED_NOT_PREFIX = "JUST_CREATED_NOT_PREFIX_"; 	
 
 	/**
-	 * 常量key标记: 如果本次请求已经验证过[无操作过期], 则以此值存储在当前request中 
+	 * 常量 key 标记: 如果本次请求已经验证过 [ 临时过期 ] , 则以此值存储在当前 request 中
 	 */
 	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY_"; 	
 
 	/**
-	 * 常量key标记: 在登录时，默认使用的设备类型 
+	 * 常量 key 标记: 在登录时，默认使用的设备类型 
 	 */
 	public static final String DEFAULT_LOGIN_DEVICE = "default-device"; 
 
 	/**
-	 * 常量key标记: 在封禁账号时，默认封禁的服务类型 
+	 * 常量 key 标记: 在封禁账号时，默认封禁的服务类型 
 	 */
 	public static final String DEFAULT_DISABLE_SERVICE = "login"; 
 
 	/**
-	 * 常量key标记: 在封禁账号时，默认封禁的等级 
+	 * 常量 key 标记: 在封禁账号时，默认封禁的等级 
 	 */
 	public static final int DEFAULT_DISABLE_LEVEL = 1; 
 
 	/**
-	 * 常量key标记: 在封禁账号时，可使用的最小封禁级别 
+	 * 常量 key 标记: 在封禁账号时，可使用的最小封禁级别 
 	 */
 	public static final int MIN_DISABLE_LEVEL = 1; 
 
 	/**
-	 * 常量key标记: 账号封禁级别，表示未被封禁 
+	 * 常量 key 标记: 账号封禁级别，表示未被封禁 
 	 */
 	public static final int NOT_DISABLE_LEVEL = -2; 
 	
 	/**
-	 * 常量key标记: 在进行临时身份切换时使用的key 
+	 * 常量 key 标记: 在进行临时身份切换时使用的 key
 	 */
 	public static final String SWITCH_TO_SAVE_KEY = "SWITCH_TO_SAVE_KEY_"; 
 
 	/**
-	 * 常量key标记: 在进行Token二级验证时，使用的key 
+	 * 常量 key 标记: 在进行 Token 二级验证时，使用的 key
 	 */
 	@Deprecated
 	public static final String SAFE_AUTH_SAVE_KEY = "SAFE_AUTH_SAVE_KEY_"; 
 
 	/**
-	 * 常量key标记: 在进行 Token 二级验证时，写入的 value 值
+	 * 常量 key 标记: 在进行 Token 二级认证时，写入的 value 值
 	 */
 	public static final String SAFE_AUTH_SAVE_VALUE = "SAFE_AUTH_SAVE_VALUE"; 
 
 	/**
-	 * 常量key标记: 在进行 Token 二级验证时，默认的业务类型 
+	 * 常量 key 标记: 在进行 Token 二级验证时，默认的业务类型 
 	 */
 	public static final String DEFAULT_SAFE_AUTH_SERVICE = "important"; 
 
 	/**
-	 * 常量key标记: 临时 Token 认证模块，默认的业务类型 
+	 * 常量 key 标记: 临时 Token 认证模块，默认的业务类型 
 	 */
 	public static final String DEFAULT_TEMP_TOKEN_SERVICE = "record"; 
 
@@ -155,7 +162,7 @@ public class SaTokenConsts {
 	// ------------------ 其它
 
 	/**
-	 * 连接Token前缀和Token值的字符 
+	 * 连接 Token 前缀和 Token 值的字符
 	 */
 	public static final String TOKEN_CONNECTOR_CHAT  = " "; 
 	

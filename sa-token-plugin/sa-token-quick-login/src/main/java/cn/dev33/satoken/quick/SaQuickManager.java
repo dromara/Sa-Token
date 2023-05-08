@@ -5,7 +5,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * SaQuickManager 
- * @author kong
+ * @author click33
  *
  */
 public class SaQuickManager {

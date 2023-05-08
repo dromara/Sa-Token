@@ -1,9 +1,10 @@
 package cn.dev33.satoken.exception;
 
 /**
- * 一个异常：代表指定账号指定服务已被封禁 
+ * 一个异常：代表指定账号的指定服务已被封禁
  * 
- * @author kong
+ * @author click33
+ * @since <= 1.34.0
  */
 public class DisableServiceException extends SaTokenException {
 

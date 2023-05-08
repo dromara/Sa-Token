@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Sa-Token 整合 SpringBoot3 示例，整合redis  
- * @author kong
+ * @author click33
  *
  */
 @SpringBootApplication

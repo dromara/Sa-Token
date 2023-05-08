@@ -8,7 +8,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * 请求授权参数的Model
- * @author kong
+ * @author click33
  *
  */
 public class RequestAuthModel implements Serializable {

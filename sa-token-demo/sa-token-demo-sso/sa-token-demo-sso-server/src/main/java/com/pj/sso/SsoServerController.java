@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Sa-Token-SSO Server端 Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController

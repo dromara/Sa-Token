@@ -13,7 +13,7 @@ import org.noear.solon.core.handle.Render;
 
 /**
  * Sa-Token-SSO Client端 Controller 
- * @author kong
+ * @author click33
  */
 @Controller
 public class SsoClientController implements Render {

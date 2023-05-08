@@ -5,7 +5,7 @@ import cn.dev33.satoken.config.SaSsoConfig;
 /**
  * Sa-Token-SSO 模块 总控类
  *
- * @author kong
+ * @author click33
  *
  */
 public class SaSsoManager {

@@ -7,7 +7,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 /**
  * 一个异常：代表 jwt 相关错误  
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-31
  */
 public class SaJwtException extends SaTokenException {

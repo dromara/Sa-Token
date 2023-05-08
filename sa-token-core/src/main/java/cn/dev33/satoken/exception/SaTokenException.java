@@ -4,11 +4,12 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token框架内部逻辑发生错误抛出的异常 
- * (自定义此异常方便开发者在做全局异常处理时分辨异常类型)
- * 
- * @author kong
+ * Sa-Token 框架内部逻辑发生错误抛出的异常
  *
+ * <p> 框架其它异常均继承自此类，开发者可通过捕获此异常来捕获框架内部抛出的所有异常 </p>
+ * 
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaTokenException extends RuntimeException {
 

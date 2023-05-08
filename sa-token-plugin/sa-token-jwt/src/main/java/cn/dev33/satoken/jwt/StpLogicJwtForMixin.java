@@ -14,7 +14,7 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * Sa-Token 整合 jwt -- Mixin 混入模式  
- * @author kong
+ * @author click33
  *
  */
 public class StpLogicJwtForMixin extends StpLogic {

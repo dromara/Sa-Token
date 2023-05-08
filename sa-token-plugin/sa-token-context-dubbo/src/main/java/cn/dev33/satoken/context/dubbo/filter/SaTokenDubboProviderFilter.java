@@ -15,7 +15,7 @@ import cn.dev33.satoken.same.SaSameUtil;
  * 
  * Sa-Token 整合 Dubbo Provider端过滤器 
  * 
- * @author kong
+ * @author click33
  *
  */
 @Activate(group = {CommonConstants.PROVIDER}, order = -30000)

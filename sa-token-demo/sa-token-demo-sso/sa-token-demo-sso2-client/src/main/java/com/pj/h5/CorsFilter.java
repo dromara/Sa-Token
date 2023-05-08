@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 跨域过滤器
- * @author kong 
+ * @author click33 
  */
 @Component
 @Order(-200)

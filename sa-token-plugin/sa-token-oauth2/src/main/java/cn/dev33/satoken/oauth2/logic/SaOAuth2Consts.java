@@ -2,14 +2,14 @@ package cn.dev33.satoken.oauth2.logic;
 
 /**
  * Sa-Token-OAuth2 所有常量 
- * @author kong
+ * @author click33
  *
  */
 public class SaOAuth2Consts {
 
 	/**
 	 * 所有API接口 
-	 * @author kong 
+	 * @author click33 
 	 */
 	public static final class Api {
 		public static String authorize = "/oauth2/authorize";
@@ -23,7 +23,7 @@ public class SaOAuth2Consts {
 	
 	/**
 	 * 所有参数名称 
-	 * @author kong 
+	 * @author click33 
 	 */
 	public static final class Param {
 		public static String response_type = "response_type";

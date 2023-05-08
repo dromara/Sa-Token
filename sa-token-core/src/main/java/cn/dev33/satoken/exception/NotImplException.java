@@ -3,7 +3,7 @@ package cn.dev33.satoken.exception;
 /**
  * 一个异常：代表组件或方法未被提供有效的实现
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-30
  */
 public class NotImplException extends SaTokenException {

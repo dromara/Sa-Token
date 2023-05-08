@@ -11,7 +11,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 /**
  * 临时Token模块测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-1
  */
 public class SaTempTest {

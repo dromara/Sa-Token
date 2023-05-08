@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * SSO模式一，Client端 Demo 
- * @author kong
+ * @author click33
  *
  */
 @SpringBootApplication

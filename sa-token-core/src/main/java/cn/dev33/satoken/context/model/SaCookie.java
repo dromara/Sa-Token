@@ -10,9 +10,10 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Cookie Model
- * @author kong
+ * Cookie Model，代表一个 Cookie 应该具有的所有参数
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaCookie {
 

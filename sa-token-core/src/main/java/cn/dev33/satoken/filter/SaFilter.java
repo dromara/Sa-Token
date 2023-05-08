@@ -19,28 +19,28 @@ public interface SaFilter {
      * @param paths 路由
      * @return 对象自身
      */
-    public SaFilter addInclude(String... paths);
+    SaFilter addInclude(String... paths);
 
     /**
      * 添加 [ 放行路由 ]
      * @param paths 路由
      * @return 对象自身
      */
-    public SaFilter addExclude(String... paths);
+    SaFilter addExclude(String... paths);
 
     /**
      * 写入 [ 拦截路由 ] 集合
      * @param pathList 路由集合
      * @return 对象自身
      */
-    public SaFilter setIncludeList(List<String> pathList);
+    SaFilter setIncludeList(List<String> pathList);
 
     /**
      * 写入 [ 放行路由 ] 集合
      * @param pathList 路由集合
      * @return 对象自身
      */
-    public SaFilter setExcludeList(List<String> pathList);
+    SaFilter setExcludeList(List<String> pathList);
 
 
     // ------------------------ 钩子函数
@@ -50,14 +50,14 @@ public interface SaFilter {
      * @param auth see note
      * @return 对象自身
      */
-    public SaFilter setAuth(SaFilterAuthStrategy auth);
+    SaFilter setAuth(SaFilterAuthStrategy auth);
 
     /**
      * 写入[ 异常处理函数 ]：每次[ 认证函数 ]发生异常时执行此函数
      * @param error see note
      * @return 对象自身
      */
-    public SaFilter setError(SaFilterErrorStrategy error);
+    SaFilter setError(SaFilterErrorStrategy error);
 
     /**
      * 写入[ 前置函数 ]：在每次[ 认证函数 ]之前执行。
@@ -65,6 +65,6 @@ public interface SaFilter {
      * @param beforeAuth /
      * @return 对象自身
      */
-    public SaFilter setBeforeAuth(SaFilterAuthStrategy beforeAuth);
+    SaFilter setBeforeAuth(SaFilterAuthStrategy beforeAuth);
 
 }

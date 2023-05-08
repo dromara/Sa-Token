@@ -11,7 +11,7 @@ import cn.dev33.satoken.servlet.model.SaStorageForServlet;
 /**
  * Sa-Token 上下文处理器 [ SpringMVC版本实现 ] 
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaTokenContextForSpring implements SaTokenContext {

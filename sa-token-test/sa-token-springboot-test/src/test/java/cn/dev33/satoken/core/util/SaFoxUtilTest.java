@@ -16,7 +16,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 /**
  * SaFoxUtil 工具类测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-2-8 22:14:25
  */
 public class SaFoxUtilTest {

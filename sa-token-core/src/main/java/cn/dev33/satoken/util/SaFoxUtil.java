@@ -3,6 +3,7 @@ package cn.dev33.satoken.util;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 
+import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -18,8 +19,8 @@ import java.util.regex.Pattern;
 /**
  * Sa-Token 内部工具类
  *
- * @author kong
- *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaFoxUtil {
 
@@ -75,7 +76,7 @@ public class SaFoxUtil {
 	 * @return 是否为null或者空字符串
 	 */
 	public static boolean isNotEmpty(Object str) {
-		return isEmpty(str) == false;
+		return ! isEmpty(str);
 	}
 
 	/**
@@ -601,5 +602,40 @@ public class SaFoxUtil {
     	}
     	return logLevelList.get(level);
     }
+
+	/**
+	 * 判断当前系统是否可以打印彩色日志，判断准确率并非100%，但基本可以满足大部分场景
+	 * @return /
+	 */
+	public static boolean isCanColorLog() {
+
+		// 获取当前环境相关信息
+		Console console = System.console();
+		String term = System.getenv().get("TERM");
+
+		// 两者均为 null，一般是在 eclipse、idea 等 IDE 环境下运行的，此时可以打印彩色日志
+		if(console == null && term == null) {
+			return true;
+		}
+
+		// 两者均不为 null，一般是在 linux 环境下控制台运行的，此时可以打印彩色日志
+		if(console != null && term != null) {
+			return true;
+		}
+
+		// console 有值，term 为 null，一般是在 windows 的 cmd 控制台运行的，此时不可以打印彩色日志
+		if(console != null && term == null) {
+			return false;
+		}
+
+		// console 为 null，term 有值，一般是在 linux 的 nohup 命令运行的，此时不可以打印彩色日志
+		// 此时也有可能是在 windows 的 git bash 环境下运行的，此时可以打印彩色日志，但此场景无法和上述场景区分，所以统一不打印彩色日志
+		if(console == null && term != null) {
+			return false;
+		}
+
+		// 正常情况下，代码不会走到这里，但是方法又必须要有返回值，所以随便返回一个
+		return false;
+	}
 
 }

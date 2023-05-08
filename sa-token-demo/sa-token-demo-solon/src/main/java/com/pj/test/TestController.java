@@ -20,7 +20,7 @@ import org.noear.solon.annotation.Param;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  * @author noear
  */
 @Controller

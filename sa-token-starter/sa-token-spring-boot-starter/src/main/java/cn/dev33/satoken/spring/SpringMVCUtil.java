@@ -11,7 +11,7 @@ import cn.dev33.satoken.exception.NotWebContextException;
 
 /**
  * SpringMVC相关操作  
- * @author kong
+ * @author click33
  *
  */
 public class SpringMVCUtil {

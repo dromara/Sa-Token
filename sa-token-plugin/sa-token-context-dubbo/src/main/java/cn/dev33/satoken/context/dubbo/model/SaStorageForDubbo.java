@@ -7,7 +7,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * Storage for Servlet 
- * @author kong
+ * @author click33
  *
  */
 public class SaStorageForDubbo implements SaStorage {

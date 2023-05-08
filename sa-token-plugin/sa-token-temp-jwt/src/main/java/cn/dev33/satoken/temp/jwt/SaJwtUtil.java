@@ -10,7 +10,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * jwt操作工具类 
- * @author kong
+ * @author click33
  *
  */
 public class SaJwtUtil {

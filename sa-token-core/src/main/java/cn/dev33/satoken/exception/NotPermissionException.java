@@ -3,10 +3,10 @@ package cn.dev33.satoken.exception;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * 一个异常：代表会话未能通过权限认证 
+ * 一个异常：代表会话未能通过权限认证校验
  * 
- * @author kong
- *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class NotPermissionException extends SaTokenException {
 

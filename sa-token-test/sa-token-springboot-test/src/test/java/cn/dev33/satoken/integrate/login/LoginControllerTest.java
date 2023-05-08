@@ -21,7 +21,7 @@ import cn.dev33.satoken.util.SoMap;
 /**
  * Sa-Token 登录API测试 
  * 
- * @author kong 
+ * @author click33 
  *
  */
 @SpringBootTest(classes = StartUpApplication.class)

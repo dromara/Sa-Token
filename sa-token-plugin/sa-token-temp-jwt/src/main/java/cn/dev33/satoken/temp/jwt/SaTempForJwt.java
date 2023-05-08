@@ -9,7 +9,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token 临时令牌验证模块接口 JWT实现类 
- * @author kong
+ * @author click33
  *
  */
 public class SaTempForJwt implements SaTempInterface {

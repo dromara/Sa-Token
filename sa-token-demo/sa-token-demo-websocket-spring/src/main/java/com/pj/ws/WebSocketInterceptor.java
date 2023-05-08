@@ -12,7 +12,7 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * WebSocket 握手的前置拦截器 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-2-11
  */
 public class WebSocketInterceptor implements HandshakeInterceptor {

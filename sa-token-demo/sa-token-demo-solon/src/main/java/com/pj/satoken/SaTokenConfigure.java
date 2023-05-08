@@ -13,7 +13,7 @@ import cn.dev33.satoken.context.SaHolder;
 
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
+ * @author click33
  * @author noear
  */
 @Configuration

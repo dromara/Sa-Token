@@ -9,9 +9,15 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * 调用 `StpUtil.login()` 时的 [配置参数 Model ]
- * @author kong
+ * 在调用 `StpUtil.login()` 时的 配置参数 Model，决定登录的一些细节行为 <br>
  *
+ * <pre>
+ *     	// 例如：在登录时指定 token 有效期为七天，代码如下：
+ *     	StpUtil.login(10001, new SaLoginModel().setTimeout(60 * 60 * 24 * 7));
+ * </pre>
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaLoginModel {
 
@@ -185,8 +191,8 @@ public class SaLoginModel {
 				+ "]";
 	}
 
+
 	// ------ 附加方法 
-	
 
 	/**
 	 * 写入扩展数据（只在jwt模式下生效） 

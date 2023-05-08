@@ -1,9 +1,10 @@
 package cn.dev33.satoken.fun;
 
 /**
- * 设定一个函数，传入一个参数，并返回一个值，方便在Lambda表达式下的函数式编程
- * @author kong
+ * 单形参、有返回值的函数式接口，方便开发者进行 lambda 表达式风格调用
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @FunctionalInterface
 public interface SaParamRetFunction<T, R> {
@@ -13,6 +14,6 @@ public interface SaParamRetFunction<T, R> {
 	 * @param param 传入的参数 
 	 * @return 返回值 
 	 */
-	public R run(T param);
+	R run(T param);
 	
 }

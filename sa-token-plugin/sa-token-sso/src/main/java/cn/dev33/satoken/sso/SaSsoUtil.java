@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Sa-Token-SSO 单点登录模块 工具类 
- * @author kong
+ * @author click33
  *
  */
 public class SaSsoUtil {

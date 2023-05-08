@@ -9,7 +9,7 @@ import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 
 /**
  * 注册 Sa-Token-OAuth2 所需要的Bean 
- * @author kong
+ * @author click33
  *
  */
 @ConditionalOnClass(SaOAuth2Manager.class)

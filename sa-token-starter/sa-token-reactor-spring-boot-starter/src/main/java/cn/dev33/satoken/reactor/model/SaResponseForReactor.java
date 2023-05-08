@@ -9,7 +9,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 
 /**
  * Response for Reactor
- * @author kong
+ * @author click33
  *
  */
 public class SaResponseForReactor implements SaResponse {

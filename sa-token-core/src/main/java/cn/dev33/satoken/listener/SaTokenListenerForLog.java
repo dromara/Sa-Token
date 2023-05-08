@@ -8,9 +8,9 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 侦听器实现：Log 打印 
+ * Sa-Token 侦听器的一个实现：Log 打印
  * 
- * @author kong
+ * @author click33
  * @since 2022-11-2
  */
 public class SaTokenListenerForLog implements SaTokenListener {

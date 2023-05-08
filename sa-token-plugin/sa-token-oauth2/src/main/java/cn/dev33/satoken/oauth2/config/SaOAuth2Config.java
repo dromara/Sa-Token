@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 /**
  * Sa-Token-OAuth2 配置类 Model 
- * @author kong
+ * @author click33
  *
  */
 public class SaOAuth2Config implements Serializable {

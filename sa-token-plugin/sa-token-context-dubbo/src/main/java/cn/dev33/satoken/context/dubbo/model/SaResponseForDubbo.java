@@ -6,7 +6,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 
 /**
  * Response for Servlet
- * @author kong
+ * @author click33
  *
  */
 public class SaResponseForDubbo implements SaResponse {

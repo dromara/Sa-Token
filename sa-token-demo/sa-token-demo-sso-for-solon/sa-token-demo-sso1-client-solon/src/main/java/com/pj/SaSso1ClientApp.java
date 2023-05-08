@@ -6,7 +6,7 @@ import org.noear.solon.annotation.SolonMain;
 
 /**
  * SSO模式一，Client端 Demo 
- * @author kong
+ * @author click33
  *
  */
 @SolonMain

@@ -7,10 +7,11 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
 
 /**
- * Application Model，全局作用域的读取值对象 
- * <p> 在应用全局范围内: 存值、取值
+ * Application Model，全局作用域的读取值对象。
+ *
+ * <p> 在应用全局范围内: 存值、取值。数据在应用重启后失效，如果集成了 Redis，则在 Redis 重启后失效。
  * 
- * @author kong
+ * @author click33
  * @since: 2022-8-17
  */
 public class SaApplication implements SaSetValueInterface {
@@ -57,15 +58,15 @@ public class SaApplication implements SaSetValueInterface {
 	}
 
 	/**
-	 * 返回存入的所有 key 
+	 * 返回当前存入的所有 key
 	 * @return / 
 	 */
 	public List<String> keys() {
-		// 查出来
+		// 从缓存中查询出所有此前缀的 key
 		String prefix = splicingDataKey("");
 		List<String> list = SaManager.getSaTokenDao().searchData(prefix, "", 0, -1, true);
 		
-		// 裁减掉固定前缀 
+		// 裁减掉固定前缀，保留 key 名称，塞入新集合
 		int prefixLength = prefix.length();
 		List<String> list2 = new ArrayList<>();
 		if(list != null) {
@@ -79,7 +80,7 @@ public class SaApplication implements SaSetValueInterface {
 	}
 	
 	/**
-	 * 清空存入的所有 key 
+	 * 清空当前存入的所有 key
 	 */
 	public void clear() {
 		List<String> keys = keys();
@@ -89,7 +90,8 @@ public class SaApplication implements SaSetValueInterface {
 	}
 
 	/**  
-	 * 拼接key：变量存储时使用的key 
+	 * 拼接key：当存入一个变量时，应该使用的 key
+	 *
 	 * @param key 原始 key 
 	 * @return 拼接后的 key 值 
 	 */

@@ -1,8 +1,10 @@
 package cn.dev33.satoken.exception;
 
 /**
- * 一个异常：代表会话未能通过 Http Basic 认证 
- * @author kong
+ * 一个异常：代表会话未能通过 Http Basic 认证校验
+ *
+ * @author click33
+ * @since 2022-10-29
  */
 public class NotBasicAuthException extends SaTokenException {
 

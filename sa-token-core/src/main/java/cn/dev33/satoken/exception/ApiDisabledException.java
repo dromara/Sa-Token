@@ -1,8 +1,12 @@
 package cn.dev33.satoken.exception;
 
 /**
- * 一个异常：代表 API 已被禁用 
- * @author kong
+ * 一个异常：代表 API 已被禁用
+ *
+ * <p> 一般在 API 不合适调用的时候抛出，例如在集成 jwt 模块后调用数据持久化相关方法 </p>
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class ApiDisabledException extends SaTokenException {
 

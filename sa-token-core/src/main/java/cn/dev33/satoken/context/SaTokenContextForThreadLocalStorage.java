@@ -7,20 +7,22 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.InvalidContextException;
 
 /**
- * Sa-Token 上下文处理器 [ThreadLocal版本] ---- 对象存储器 
- * 
- * @author kong
+ * Sa-Token 上下文处理器 [ThreadLocal 版本] ---- 对象存储器
  *
+ * <p> 一般情况下你不需要直接操作此类，因为框架的 starter 集成包里已经封装了完整的上下文操作 </p>
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaTokenContextForThreadLocalStorage {
 	
 	/**
-	 * 基于 ThreadLocal 的 [Box存储器] 
+	 * 基于 ThreadLocal 的 [ Box 存储器 ]
 	 */
 	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<Box>();
 	
 	/**
-	 * 初始化 [Box存储器]
+	 * 初始化当前线程的 [ Box 存储器 ]
 	 * @param request {@link SaRequest}
 	 * @param response {@link SaResponse}
 	 * @param storage {@link SaStorage}
@@ -31,23 +33,23 @@ public class SaTokenContextForThreadLocalStorage {
 	};
 
 	/**
-	 * 清除 [Box存储器]
+	 * 清除当前线程的 [ Box 存储器 ]
 	 */
 	public static void clearBox() {
 		boxThreadLocal.remove();
 	};
 
 	/**
-	 * 获取 [Box存储器]
-	 * @return see note
+	 * 获取当前线程的 [ Box 存储器 ]
+	 * @return /
 	 */
 	public static Box getBox() {
 		return boxThreadLocal.get();
 	};
 	
 	/**
-	 * 获取 [Box存储器], 如果为空则抛出异常 
-	 * @return see note
+	 * 获取当前线程的 [ Box 存储器 ], 如果为空则抛出异常
+	 * @return /
 	 */
 	public static Box getBoxNotNull() {
 		Box box = boxThreadLocal.get();
@@ -58,27 +60,27 @@ public class SaTokenContextForThreadLocalStorage {
 	};
 
 	/**
-	 * 在 [Box存储器] 获取 [Request] 对象
+	 * 在当前线程的 SaRequest 包装对象
 	 * 
-	 * @return see note 
+	 * @return /
 	 */
 	public static SaRequest getRequest() {
 		return getBoxNotNull().getRequest();
 	}
 
 	/**
-	 * 在 [Box存储器] 获取 [Response] 对象
+	 * 在当前线程的 SaResponse 包装对象
 	 * 
-	 * @return see note 
+	 * @return /
 	 */
 	public static SaResponse getResponse() {
 		return getBoxNotNull().getResponse();
 	}
 
 	/**
-	 * 在 [Box存储器] 获取 [存储器] 对象 
+	 * 在当前线程的 SaStorage 存储器包装对象
 	 * 
-	 * @return see note 
+	 * @return /
 	 */
 	public static SaStorage getStorage() {
 		return getBoxNotNull().getStorage();
@@ -86,11 +88,13 @@ public class SaTokenContextForThreadLocalStorage {
 
 	
 	/**
-	 * 临时内部类，用于存储[request、response、storage]三个对象 
-	 * @author kong
+	 * Box 临时内部类，用于存储 [ SaRequest、SaResponse、SaStorage ] 三个包装对象
+	 *
+	 * @author click33
+	 * @since <= 1.34.0
 	 */
 	/**
-	 * @author kong
+	 * @author click33
 	 *
 	 */
 	public static class Box {

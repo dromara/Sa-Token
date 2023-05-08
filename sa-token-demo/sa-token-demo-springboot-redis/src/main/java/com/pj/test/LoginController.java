@@ -8,7 +8,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * 登录测试 
- * @author kong
+ * @author click33
  *
  */
 @RestController

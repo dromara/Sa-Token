@@ -13,7 +13,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token SSO 单点登录模块 配置类 Model 
- * @author kong
+ * @author click33
  *
  */
 public class SaSsoConfig implements Serializable {

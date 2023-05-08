@@ -5,9 +5,9 @@ import cn.dev33.satoken.stp.SaLoginModel;
 /**
  * Sa-Token 侦听器，默认空实现 
  * 
- * <p> 对所有事件方法提供空实现，方便开发者通过继承此类快速实现一个可用的侦听器 
+ * <p> 对所有事件方法提供空实现，方便开发者通过继承此类快速实现一个可用的侦听器 </p>
  * 
- * @author kong
+ * @author click33
  * @since: 2022-8-20
  */
 public class SaTokenListenerForSimple implements SaTokenListener {

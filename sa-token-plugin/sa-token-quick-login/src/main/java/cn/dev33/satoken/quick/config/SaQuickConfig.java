@@ -3,7 +3,7 @@ package cn.dev33.satoken.quick.config;
 /**
  * sa-quick 配置类 Model
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaQuickConfig {

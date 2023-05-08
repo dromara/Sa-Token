@@ -32,7 +32,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * C Controller 测试 
  * 
- * @author kong
+ * @author click33
  *
  */
 @SpringBootTest(classes = StartUpApplication.class)

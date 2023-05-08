@@ -7,7 +7,7 @@ import org.noear.solon.annotation.Mapping;
 
 /**
  * Sa-Token-SSO Server端 Controller 
- * @author kong
+ * @author click33
  *
  */
 @Controller

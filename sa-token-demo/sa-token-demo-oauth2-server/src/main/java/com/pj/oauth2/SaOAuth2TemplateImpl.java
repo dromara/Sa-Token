@@ -7,7 +7,7 @@ import cn.dev33.satoken.oauth2.model.SaClientModel;
 
 /**
  * Sa-Token OAuth2.0 整合实现 
- * @author kong
+ * @author click33
  */
 @Component
 public class SaOAuth2TemplateImpl extends SaOAuth2Template {

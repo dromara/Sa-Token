@@ -15,7 +15,7 @@ import java.util.*;
 
 /**
  * Request for Jakarta Servlet 
- * @author kong
+ * @author click33
  *
  */
 public class SaRequestForServlet implements SaRequest {

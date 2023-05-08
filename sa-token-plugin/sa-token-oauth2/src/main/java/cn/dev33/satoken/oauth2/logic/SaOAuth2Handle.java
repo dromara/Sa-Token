@@ -21,7 +21,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token-OAuth2 请求处理类封装
- * @author kong
+ * @author click33
  *
  */
 public class SaOAuth2Handle {

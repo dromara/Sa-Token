@@ -13,7 +13,7 @@ import org.apache.dubbo.rpc.RpcContext;
 /**
  * Sa-Token 上下文 [Dubbo3版本]
  * 
- * @author kong
+ * @author click33
  *
  */
 public class SaTokenSecondContextForDubbo3 implements SaTokenSecondContext {

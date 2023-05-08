@@ -14,7 +14,7 @@ import cn.dev33.satoken.interceptor.SaInterceptor;
 
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
+ * @author click33
  *
  */
 @Configuration

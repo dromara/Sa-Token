@@ -1,9 +1,10 @@
 package cn.dev33.satoken.annotation;
 
 /**
- * 注解鉴权的验证模式 
- * @author kong
+ * 注解鉴权的验证模式
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public enum SaMode {
 

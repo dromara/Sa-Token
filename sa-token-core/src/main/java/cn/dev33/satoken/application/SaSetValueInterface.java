@@ -3,9 +3,10 @@ package cn.dev33.satoken.application;
 import cn.dev33.satoken.fun.SaRetFunction;
 
 /**
- * 对写值的一组方法封装 
+ * 对写值的一组方法封装
+ * <p> 封装 SaStorage、SaSession、SaApplication 等存取值的一些固定方法，减少重复编码 </p>
  * 
- * @author kong
+ * @author click33
  * @since: 2022-8-17
  */
 public interface SaSetValueInterface extends SaGetValueInterface {

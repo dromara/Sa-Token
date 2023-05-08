@@ -9,7 +9,7 @@ import cn.dev33.satoken.context.SaHolder;
 /**
  * SaApplication 存取值测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-4
  */
 public class SaApplicationTest {

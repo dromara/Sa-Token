@@ -10,7 +10,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * same-token Controller 
  * 
- * @author kong
+ * @author click33
  *
  */
 @RestController

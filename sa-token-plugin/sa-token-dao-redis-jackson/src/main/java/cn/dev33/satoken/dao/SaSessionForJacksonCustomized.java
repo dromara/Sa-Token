@@ -7,7 +7,7 @@ import cn.dev33.satoken.session.SaSession;
 /**
  * Jackson定制版SaSession，忽略 timeout 等属性的序列化 
  *  
- * @author kong
+ * @author click33
  *
  */
 @JsonIgnoreProperties({"timeout"})

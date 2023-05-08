@@ -5,8 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Sa-Token整合SpringBoot 示例，整合redis  
- * @author kong
+ * Sa-Token整合SpringBoot 示例，整合redis
+ * @author click33
  *
  */
 @SpringBootApplication

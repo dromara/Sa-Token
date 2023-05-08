@@ -1,9 +1,10 @@
 package cn.dev33.satoken.exception;
 
 /**
- * 一个异常：代表停止路由匹配，进入Controller 
+ * 一个异常：代表停止路由匹配，进入 Controller （框架内部专属异常，一般情况下开发者无需关注）
  * 
- * @author kong
+ * @author click33
+ * @since <= 1.34.0
  */
 public class StopMatchException extends SaTokenException {
 

@@ -10,7 +10,7 @@ import cn.dev33.satoken.quick.web.SaQuickController;
 /**
  * Quick-Bean 注入
  * 
- * @author kong
+ * @author click33
  *
  */
 @Configuration

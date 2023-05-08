@@ -15,7 +15,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 /**
  * Quick-Bean 注册 
  * 
- * @author kong
+ * @author click33
  *
  */
 @Configuration

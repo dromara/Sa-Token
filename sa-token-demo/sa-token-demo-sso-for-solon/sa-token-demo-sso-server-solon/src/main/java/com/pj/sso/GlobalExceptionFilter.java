@@ -9,7 +9,7 @@ import org.noear.solon.core.handle.FilterChain;
 
 /**
  * 全局异常处理 
- * @author kong
+ * @author click33
  *
  */
 @Component

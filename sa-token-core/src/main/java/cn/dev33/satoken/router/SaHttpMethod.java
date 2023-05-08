@@ -11,8 +11,8 @@ import cn.dev33.satoken.exception.SaTokenException;
  * 
  * <p> 参考：Spring - HttpMethod 
  * 
- * @author kong 
- *
+ * @author click33
+ * @since <= 1.34.0
  */
 public enum SaHttpMethod {
 	
@@ -34,7 +34,7 @@ public enum SaHttpMethod {
 	/**
 	 * String 转 enum 
 	 * @param method 请求类型 
-	 * @return ReqMethod 对象 
+	 * @return SaHttpMethod 对象
 	 */
 	public static SaHttpMethod toEnum(String method) {
 		if(method == null) {
@@ -50,7 +50,7 @@ public enum SaHttpMethod {
 	/**
 	 * String[] 转 enum[]
 	 * @param methods 请求类型数组 
-	 * @return ReqMethod 对象 
+	 * @return SaHttpMethod 数组
 	 */
 	public static SaHttpMethod[] toEnumArray(String... methods) {
 		SaHttpMethod [] arr = new SaHttpMethod[methods.length];

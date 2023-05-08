@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Storage for Jakarta Servlet 
- * @author kong
+ * @author click33
  * 
  */
 public class SaStorageForServlet implements SaStorage {

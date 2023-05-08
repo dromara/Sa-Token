@@ -9,7 +9,7 @@ import cn.dev33.satoken.sso.SaSsoManager;
 
 /**
  * 注册 Sa-Token-SSO 所需要的Bean 
- * @author kong
+ * @author click33
  *
  */
 @ConditionalOnClass(SaSsoManager.class)

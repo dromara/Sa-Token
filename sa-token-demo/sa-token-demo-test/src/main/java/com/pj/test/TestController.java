@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController

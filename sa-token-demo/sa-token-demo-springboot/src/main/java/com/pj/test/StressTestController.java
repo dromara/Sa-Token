@@ -13,7 +13,7 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 压力测试 
- * @author kong
+ * @author click33
  *
  */
 @RestController

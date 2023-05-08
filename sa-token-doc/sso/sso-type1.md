@@ -127,7 +127,7 @@ implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
 ``` java
 /**
  * Sa-Token-SSO Client端 Controller 
- * @author kong
+ * @author click33
  */
 @RestController
 public class SsoClientController {

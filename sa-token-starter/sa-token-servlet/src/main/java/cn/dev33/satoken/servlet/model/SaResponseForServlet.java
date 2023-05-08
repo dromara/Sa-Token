@@ -8,7 +8,7 @@ import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 
 /**
  * Response for Servlet
- * @author kong
+ * @author click33
  *
  */
 public class SaResponseForServlet implements SaResponse {

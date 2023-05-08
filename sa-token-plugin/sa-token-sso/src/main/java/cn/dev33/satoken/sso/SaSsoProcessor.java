@@ -15,7 +15,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * SSO 请求处理器 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-25
  */
 public class SaSsoProcessor {

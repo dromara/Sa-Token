@@ -11,7 +11,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 /**
  * 封装 Sa-Token 标签方言处理器 
- * @author kong 
+ * @author click33 
  *
  */
 public class SaTokenTagProcessor extends AbstractAttributeTagProcessor {

@@ -6,7 +6,7 @@ import org.apache.dubbo.rpc.RpcContext;
 
 /**
  * Response for Servlet
- * @author kong
+ * @author click33
  *
  */
 public class SaResponseForDubbo3 implements SaResponse {

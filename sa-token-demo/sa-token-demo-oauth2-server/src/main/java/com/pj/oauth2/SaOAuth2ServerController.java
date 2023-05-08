@@ -19,7 +19,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-OAuth2 Server端 控制器
- * @author kong
+ * @author click33
  * 
  */
 @RestController

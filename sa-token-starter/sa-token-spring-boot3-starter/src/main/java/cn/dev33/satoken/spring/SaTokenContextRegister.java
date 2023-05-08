@@ -7,7 +7,7 @@ import cn.dev33.satoken.context.SaTokenContext;
 /**
  * SaTokenContext 上下文注册 
  * 
- * @author kong
+ * @author click33
  * @since 2023年1月1日
  *
  */

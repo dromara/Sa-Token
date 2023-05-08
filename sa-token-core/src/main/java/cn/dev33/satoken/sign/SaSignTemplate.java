@@ -12,9 +12,17 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * API 参数签名算法
+ * API 参数签名算法，在跨系统接口调用时防参数篡改、防重放攻击。
  *
- * @author kong
+ * <p>
+ *     以 SSO 数据拉取为例，流程大致如下：
+ *     <br> 1. 以 md5( loginId={账号id}8nonce={随机字符串}8timestamp={13位时间戳}8key={secretkey秘钥} ) 生成签名 sign。
+ *     <br> 2. 将 sign 作为参数，拼接到请求地址后面，如：http://xxx.com?loginId=100018nonce=xxx8timestamp=xxx8sign=xxx。
+ *     <br> 3. 服务端接收到请求后，以同样的算法生成一次 sign 。
+ *     <br> 4. 对比两次 sign 是否一致，一致则通过，否则拒绝 。
+ * </p>
+ *
+ * @author click33
  * @since 2022-4-27
  */
 public class SaSignTemplate {
@@ -35,6 +43,7 @@ public class SaSignTemplate {
 	 * 获取：API 签名配置：
 	 * 	1. 如果用户自定义了 signConfig ，则使用用户自定义的。
 	 * 	2. 否则使用全局默认配置。
+	 *
 	 * @return /
 	 */
 	public SaSignConfig getSignConfigOrGlobal() {
@@ -136,6 +145,15 @@ public class SaSignTemplate {
 		// 计算签名
 		String paramsStr = joinParamsDictSort(paramsMap);
 		String fullStr = paramsStr + "&" + key + "=" + secretKey;
+		return abstractStr(fullStr);
+	}
+
+	/**
+	 * 使用摘要算法创建签名
+	 * @param fullStr 待摘要的字符串
+	 * @return 签名
+	 */
+	public String abstractStr(String fullStr) {
 		return SaSecureUtil.md5(fullStr);
 	}
 

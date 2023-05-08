@@ -49,7 +49,7 @@ public class SaLogForSlf4j implements SaLog {
 	}
 	@Override
 	public void warn(String str, Object... args) {
-		log.trace(str, args);
+		log.warn(str, args);
 	}
 	@Override
 	public void error(String str, Object... args) {

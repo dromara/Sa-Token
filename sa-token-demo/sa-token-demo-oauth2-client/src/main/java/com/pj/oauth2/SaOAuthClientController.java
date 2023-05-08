@@ -15,7 +15,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-OAuth2 Client端 控制器 
- * @author kong 
+ * @author click33 
  */
 @RestController
 public class SaOAuthClientController {

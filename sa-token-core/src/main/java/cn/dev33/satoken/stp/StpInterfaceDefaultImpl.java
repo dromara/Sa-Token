@@ -6,9 +6,10 @@ import java.util.List;
 /**
  * 对 {@link StpInterface} 接口默认的实现类
  * <p>
- * 如果开发者没有实现StpInterface接口，则使用此默认实现
+ * 如果开发者没有实现 StpInterface 接口，则框架会使用此默认实现类，所有方法都返回空集合，即：用户不具有任何权限和角色。
  * 
- * @author kong
+ * @author click33
+ * @since <= 1.34.0
  */
 public class StpInterfaceDefaultImpl implements StpInterface {
 

@@ -21,7 +21,7 @@ import cn.hutool.jwt.JWT;
 /**
  * Sa-Token 整合 jwt：stateless 模式 测试 
  * 
- * @author kong 
+ * @author click33 
  *
  */
 @SpringBootTest(classes = StartUpApplication.class)

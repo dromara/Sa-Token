@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Response for Jakarta Servlet
- * @author kong
+ * @author click33
  *
  */
 public class SaResponseForServlet implements SaResponse {

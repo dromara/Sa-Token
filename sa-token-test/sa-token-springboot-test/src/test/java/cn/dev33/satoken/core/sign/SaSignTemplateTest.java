@@ -9,7 +9,7 @@ import cn.dev33.satoken.util.SoMap;
 /**
  * API 接口签名测试 
  * 
- * @author kong
+ * @author click33
  * @since: 2022-9-2
  */
 public class SaSignTemplateTest {

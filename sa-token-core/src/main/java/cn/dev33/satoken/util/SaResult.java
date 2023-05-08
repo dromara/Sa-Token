@@ -5,19 +5,24 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 对 Ajax 请求返回Json格式数据的简易封装 <br>
- * 所有预留字段：<br>
- * code=状态码 <br>
- * msg=描述信息 <br>
- * data=携带对象 <br>
- * 
- * @author kong
+ * 对请求接口返回 Json 格式数据的简易封装。
  *
+ * <p>
+ *     所有预留字段：<br>
+ * 		code = 状态码 <br>
+ * 		msg  = 描述信息 <br>
+ * 		data = 携带对象 <br>
+ * </p>
+ *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaResult extends LinkedHashMap<String, Object> implements Serializable{
 
-	private static final long serialVersionUID = 1L;	// 序列化版本号
-	
+	// 序列化版本号
+	private static final long serialVersionUID = 1L;
+
+	// 预定的状态码
 	public static final int CODE_SUCCESS = 200;		
 	public static final int CODE_ERROR = 500;		
 
@@ -132,7 +137,7 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	}
 	
 	
-	// ============================  构建  ================================== 
+	// ============================  静态方法快速构建  ==================================
 	
 	// 构建成功
 	public static SaResult ok() {
@@ -182,6 +187,9 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * @return
 	 */
 	private String transValue(Object value) {
+		if(value == null) {
+			return null;
+		}
 		if(value instanceof String) {
 			return "\"" + value + "\"";
 		}

@@ -10,7 +10,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * Sa-Token-SSO Client端 Controller 
- * @author kong
+ * @author click33
  */
 @RestController
 public class SsoClientController {

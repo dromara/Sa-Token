@@ -7,9 +7,10 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 
 /**
- * Sa-Token Base64工具类
- * @author kong
+ * Sa-Token Base64 工具类
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaBase64Util {
 

@@ -1,10 +1,10 @@
 package cn.dev33.satoken.fun;
 
 /**
- * 根据Boolean变量，决定是否执行一个函数
+ * lambda 表达式辅助封装：根据 Boolean 变量，决定是否执行一个函数
  * 
- * @author kong
- *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class IsRunFunction {
 

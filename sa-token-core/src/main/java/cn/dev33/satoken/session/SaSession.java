@@ -15,11 +15,20 @@ import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Session Model，会话作用域的读取值对象 
- * <p> 在一次会话范围内: 存值、取值
+ * Session Model，会话作用域的读取值对象
  *
- * @author kong
+ * <p> 在一次会话范围内: 存值、取值。数据在注销登录后失效。</p>
+ * <p>
+ *    在 Sa-Token 中，SaSession 分为三种，分别是：	<br>
+ *     	- Account-Session: 指的是框架为每个 账号id 分配的 SaSession。	<br>
+ * 		- Token-Session: 指的是框架为每个 token 分配的 SaSession。	<br>
+ * 		- Custom-Session: 指的是以一个 特定的值 作为SessionId，来分配的 SaSession。	<br>
+ * 	  <br>
+ * 	  注意：以上分类仅为框架设计层面的概念区分，实际上它们的数据存储格式都是一致的。
+ * </p>
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaSession implements SaSetValueInterface, Serializable {
 
