@@ -21,6 +21,9 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [BeckJin](https://gitee.com/beckjin666)		| ¥ 100.0		| [明道云-零代码开发平台，快速响应业务需求。从“IT背锅侠”，变成“IT英雄”。](https://mingdao.com?s=st)					| 2023-05-08 	|
+| [SummerHy](https://gitee.com/hurumo)			| ¥ 10.0		| 国产，就是棒，：）							| 2023-05-07 	|
+| [gdl](https://gitee.com/gdl97)				| ¥ 20.0		| 感谢您的开源项目！作者牛逼！					| 2023-04-29 	|
 | [bootx](https://gitee.com/bootx)				| ¥ 100.0		| [Bootx-Platform：支付收单、三方对接、后端基于 Spring Boot、Spring Cloud 应用脚手架](https://gitee.com/bootx/bootx-platform)	| 2023-04-18 	|
 | c（微信打赏）									| ¥ 100.0		| 感谢您的开源项目！							| 2023-04-17 	|
 | [hurumo](https://gitee.com/hurumo)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-17 	|
