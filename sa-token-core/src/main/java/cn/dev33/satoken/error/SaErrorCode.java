@@ -74,7 +74,7 @@ public interface SaErrorCode {
 	/** Token已被踢下线 */
 	int CODE_11015 = 11015;
 
-	/** Token已临时过期 */
+	/** Token已被冻结 */
 	int CODE_11016 = 11016;
 	
 	/** 在未集成 sa-token-jwt 插件时调用 getExtra() 抛出异常 */

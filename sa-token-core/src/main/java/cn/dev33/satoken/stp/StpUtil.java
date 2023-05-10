@@ -478,10 +478,10 @@ public class StpUtil {
 	}
 	
 
-	// ------------------- Activity-Timeout 临时有效期 验证相关 -------------------
+	// ------------------- Activity-Timeout token 最低活跃度 验证相关 -------------------
 
 	/**
-	 * 检查当前 token 是否已经[临时过期]，如果已经过期则抛出异常
+	 * 检查当前 token 是否已被冻结，如果是则抛出异常
 	 */
  	public static void checkActivityTimeout() {
  		stpLogic.checkActivityTimeout();
@@ -490,8 +490,8 @@ public class StpUtil {
 	/**
 	 * 续签当前 token：(将 [最后操作时间] 更新为当前时间戳)
 	 * <h2>
-	 * 		请注意: 即使 token 已经 [ 临时过期 ] 也可续签成功，
-	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否过期即可
+	 * 		请注意: 即使 token 已被冻结 也可续签成功，
+	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否冻结即可
 	 * </h2>
 	 */
  	public static void updateLastActivityToNow() {
@@ -529,7 +529,7 @@ public class StpUtil {
  	}
 
 	/**
-	 * 获取当前 token [ 临时过期 ] 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
+	 * 获取当前 token 剩余活跃有效期：当前 token 距离被冻结还剩多少时间（单位: 秒，返回 -1 代表永不冻结，-2 代表没有这个值或 token 已被冻结了）
 	 *
 	 * @return /
 	 */

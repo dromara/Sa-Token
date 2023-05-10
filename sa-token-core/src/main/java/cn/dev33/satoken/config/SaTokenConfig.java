@@ -19,12 +19,12 @@ public class SaTokenConfig implements Serializable {
 	/** token 名称 （同时也是： cookie 名称、提交 token 时参数的名称、存储 token 时的 key 前缀） */
 	private String tokenName = "satoken";
 
-	/** token 的长久有效期（单位:秒） 默认30天, -1代表永久 */
+	/** token 有效期（单位：秒） 默认30天，-1代表永久 */
 	private long timeout = 60 * 60 * 24 * 30;
 
 	/**
-	 * token 临时有效期 [ 指定时间内无操作就视为 token 过期 ] （单位: 秒）, 默认-1 代表不限制
-	 * （例如可以设置为 1800 代表 30 分钟内无操作就过期）
+	 * token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	 * （例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 */
 	private long activityTimeout = -1;
 
@@ -34,7 +34,7 @@ public class SaTokenConfig implements Serializable {
 	private Boolean isConcurrent = true;
 
 	/**
-	 * 在多人登录同一账号时，是否共用一个token （为true时所有登录共用一个token, 为false时每次登录新建一个token）
+	 * 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 	 */
 	private Boolean isShare = true;
 
@@ -171,14 +171,14 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return token 的长久有效期（单位:秒） 默认30天, -1代表永久
+	 * @return token 有效期（单位：秒） 默认30天，-1代表永久
 	 */
 	public long getTimeout() {
 		return timeout;
 	}
 
 	/**
-	 * @param timeout token 的长久有效期（单位:秒） 默认30天, -1代表永久
+	 * @param timeout token 有效期（单位：秒） 默认30天，-1代表永久
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setTimeout(long timeout) {
@@ -187,16 +187,16 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return token 临时有效期 [ 指定时间内无操作就视为 token 过期 ] （单位: 秒）, 默认-1 代表不限制
-	 * （例如可以设置为 1800 代表 30 分钟内无操作就过期）
+	 * @return token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	 * 							（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 */
 	public long getActivityTimeout() {
 		return activityTimeout;
 	}
 
 	/**
-	 * @param activityTimeout token 临时有效期 [ 指定时间内无操作就视为 token 过期 ] （单位: 秒）, 默认-1 代表不限制
-	 * 							（例如可以设置为 1800 代表 30 分钟内无操作就过期）
+	 * @param activityTimeout token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	 * 								（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setActivityTimeout(long activityTimeout) {

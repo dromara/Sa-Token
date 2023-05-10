@@ -12,17 +12,17 @@
 ``` yaml
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token: 
-	# token名称 (同时也是cookie名称)
+	# token 名称（同时也是 cookie 名称）
 	token-name: satoken
-	# token有效期，单位s 默认30天, -1代表永不过期 
+	# token 有效期（单位：秒），默认30天，-1代表永不过期 
 	timeout: 2592000
-	# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+	# token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 	activity-timeout: -1
-	# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+	# 是否允许同一账号多地同时登录（为 true 时允许一起登录，为 false 时新登录挤掉旧登录）
 	is-concurrent: true
-	# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+	# 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token）
 	is-share: true
-	# token风格
+	# token 风格
 	token-style: uuid
 	# 是否输出操作日志 
 	is-log: false
@@ -32,17 +32,17 @@ sa-token:
 ``` properties
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 
-# token名称 (同时也是cookie名称)
+# token名称（同时也是 cookie 名称）
 sa-token.token-name=satoken
-# token有效期，单位s 默认30天, -1代表永不过期 
+# token 有效期（单位：秒），默认30天，-1代表永不过期 
 sa-token.timeout=2592000
-# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
+# token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 sa-token.activity-timeout=-1
-# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+# 是否允许同一账号多地同时登录（为 true 时允许一起登录，为 false 时新登录挤掉旧登录）
 sa-token.is-concurrent=true
-# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+# 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token）
 sa-token.is-share=true
-# token风格
+# token 风格
 sa-token.token-style=uuid
 # 是否输出操作日志 
 sa-token.is-log=false
@@ -68,12 +68,12 @@ public class SaTokenConfigure {
     @Primary
     public SaTokenConfig getSaTokenConfigPrimary() {
 		SaTokenConfig config = new SaTokenConfig();
-		config.setTokenName("satoken");             // token名称 (同时也是cookie名称)
-		config.setTimeout(30 * 24 * 60 * 60);       // token有效期，单位s 默认30天
-		config.setActivityTimeout(-1);              // token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-		config.setIsConcurrent(true);               // 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
-		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
-		config.setTokenStyle("uuid");               // token风格 
+		config.setTokenName("satoken");             // token 名称（同时也是 cookie 名称）
+		config.setTimeout(30 * 24 * 60 * 60);       // token 有效期（单位：秒），默认30天，-1代表永不过期 
+		config.setActivityTimeout(-1);              // token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+		config.setIsConcurrent(true);               // 是否允许同一账号多地同时登录（为 true 时允许一起登录，为 false 时新登录挤掉旧登录）
+		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token）
+		config.setTokenStyle("uuid");               // token 风格
 		config.setIsLog(false);                     // 是否输出操作日志 
 		return config;
 	}
@@ -90,12 +90,12 @@ public class SaTokenConfigure {
 	// 此配置会与 application.yml 中的配置合并 （代码配置优先）
 	@Autowired
 	public void configSaToken(SaTokenConfig config) {
-		config.setTokenName("satoken");             // token名称 (同时也是cookie名称)
-		config.setTimeout(30 * 24 * 60 * 60);       // token有效期，单位s 默认30天
-		config.setActivityTimeout(-1);              // token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-		config.setIsConcurrent(true);               // 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
-		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
-		config.setTokenStyle("uuid");               // token风格 
+		config.setTokenName("satoken");             // token 名称（同时也是 cookie 名称）
+		config.setTimeout(30 * 24 * 60 * 60);       // token 有效期（单位：秒），默认30天，-1代表永不过期 
+		config.setActivityTimeout(-1);              // token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+		config.setIsConcurrent(true);               // 是否允许同一账号多地同时登录（为 true 时允许一起登录，为 false 时新登录挤掉旧登录）
+		config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token）
+		config.setTokenStyle("uuid");               // token 风格
 		config.setIsLog(false);                     // 是否输出操作日志 
 	}
 }
@@ -115,11 +115,11 @@ public class SaTokenConfigure {
 | 参数名称				| 类型		| 默认值		| 说明																				|
 | :--------				| :--------	| :--------	| :--------																			|
 | tokenName				| String	| satoken	| Token 名称 （同时也是 Cookie 名称、数据持久化前缀）													|
-| timeout				| long		| 2592000	| Token 有效期，单位/秒 默认30天，-1代表永久有效	[参考：token有效期详解](/fun/token-timeout)		|
-| activityTimeout		| long		| -1		| Token 临时有效期 （指定时间内无操作就视为token过期） 单位: 秒, 默认-1 代表不限制 （例如可以设置为1800代表30分钟内无操作就过期） 	[参考：token有效期详解](/fun/token-timeout)													|
+| timeout				| long		| 2592000	| Token 有效期（单位：秒），默认30天，-1代表永不过期 [参考：token有效期详解](/fun/token-timeout)		|
+| activityTimeout		| long		| -1		| Token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结（例如可以设置为1800代表30分钟内无操作就过期） 	[参考：token有效期详解](/fun/token-timeout)													|
 | isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 （为 true 时允许一起登录，为 false 时新登录挤掉旧登录）															|
-| isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token） 	|
-| maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`, `isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
+| isShare				| Boolean	| true		| 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token） 	|
+| maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`，`isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
 | maxTryTimes			| int		| 12		| 在每次创建 Token 时的最高循环次数，用于保证 Token 唯一性（-1=不循环重试，直接使用）			|
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHeader			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
@@ -128,7 +128,7 @@ public class SaTokenConfigure {
 | tokenStyle			| String	| uuid		| token风格， [参考：自定义Token风格](/up/token-style)										|
 | dataRefreshPeriod		| int		| 30		| 默认数据持久组件实现类中，每次清理过期数据间隔的时间 （单位: 秒） ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录），[详解](/use/config?id=配置项详解：tokenSessionCheckLogin)		|
-| autoRenew				| Boolean	| true		| 是否打开自动续签 （如果此值为true, 框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作），[参考：token有效期详解](/fun/token-timeout)		|
+| autoRenew				| Boolean	| true		| 是否打开自动续签 （如果此值为true，框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作），[参考：token有效期详解](/fun/token-timeout)		|
 | tokenPrefix			| String	| null		| token前缀，例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|

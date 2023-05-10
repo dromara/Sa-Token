@@ -491,7 +491,7 @@ public class StpLogic {
 		SaStorage storage = SaHolder.getStorage();
 		storage.delete(splicingKeyJustCreatedSave());
 
- 		// 4、清除当前上下文的 [ 临时有效期 check 标记 ]
+ 		// 4、清除当前上下文的 [ 活跃度校验 check 标记 ]
 		storage.delete(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY);
 
  		// 5、清除这个 token 的其它相关信息
@@ -809,7 +809,7 @@ public class StpLogic {
  		}
 
  		// 7、检查此 token 的最后活跃时间是否已经超过了 activity-timeout 的限制，
-		//    如果是则代表其已经临时过期，需要抛出：token 已过期
+		//    如果是则代表其已被冻结，需要抛出：token 已过期
 	 	checkActivityTimeout(tokenValue);
 
 		// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
@@ -868,7 +868,7 @@ public class StpLogic {
  			return null;
  		}
 
- 		// 4、如果根本获取不到这个 token 的最后活跃时间数据，则也视为其：已经临时过期，也返回 null
+ 		// 4、如果 token 已被冻结，也返回 null
  		if(getTokenActivityTimeoutByToken(tokenValue) == SaTokenDao.NOT_VALUE_EXPIRE) {
  			return null;
  		}
@@ -1239,7 +1239,7 @@ public class StpLogic {
 	}
 
 
-	// ------------------- Activity-Timeout 临时有效期 验证相关 -------------------
+	// ------------------- Activity-Timeout token 最低活跃度 验证相关 -------------------
 
 	/**
  	 * 写入指定 token 的 [ 最后活跃时间 ] 为当前时间戳
@@ -1247,7 +1247,8 @@ public class StpLogic {
  	 * @param tokenValue 指定token 
  	 */
  	protected void setLastActivityToNow(String tokenValue) {
- 		// 如果提供的 token 或者 全局配置了 [ 永不过期 ], 则立即返回，无需操作
+
+ 		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
  		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenActivityCheck() ) {
  			return;
  		}
@@ -1262,7 +1263,8 @@ public class StpLogic {
  	 * @param tokenValue 指定 token
  	 */
  	protected void clearLastActivity(String tokenValue) {
-		// 如果提供的 token 或者 全局配置了 [ 永不过期 ], 则立即返回，无需操作
+
+		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
 		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenActivityCheck() ) {
 			return;
 		}
@@ -1272,13 +1274,13 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 检查指定token 是否已经 [ 临时过期 ]，如果已经过期则抛出异常
+ 	 * 检查指定 token 是否已被冻结，如果是则抛出异常
 	 *
- 	 * @param tokenValue 指定token
+ 	 * @param tokenValue 指定 token
  	 */
  	public void checkActivityTimeout(String tokenValue) {
 
-		// 如果提供的 token 或者 全局配置了 [ 永不过期 ], 则立即返回，无需操作
+		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
 		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenActivityCheck() ) {
 			return;
 		}
@@ -1289,19 +1291,19 @@ public class StpLogic {
  			return;
  		}
 
- 		// ------------ 下面开始校验这个 token 是否已经 [ 临时过期 ]
+ 		// ------------ 下面开始校验这个 token 是否已被冻结
 
- 		// 1、获取这个 token 的临时剩余时间
+ 		// 1、获取这个 token 的剩余活跃有效期
  		long timeout = getTokenActivityTimeoutByToken(tokenValue);
 
-		// 2、值为 -1 代表此 token 已经被设置永不过期，无须继续验证
+		// 2、值为 -1 代表此 token 已经被设置永不冻结，无须继续验证
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
 			// 此句代码含义参考最下面
 			storage.set(SaTokenConsts.TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY, true);
 			return;
 		}
 
-		// 3、值为 -2 代表已临时过期，此时需要抛出异常
+		// 3、值为 -2 代表已被冻结，此时需要抛出异常
 		if(timeout == SaTokenDao.NOT_VALUE_EXPIRE) {
 			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue).setCode(SaErrorCode.CODE_11016);
 		}
@@ -1312,7 +1314,7 @@ public class StpLogic {
  	}
 
  	/**
- 	 * 检查当前 token 是否已经[临时过期]，如果已经过期则抛出异常
+ 	 * 检查当前 token 是否已被冻结，如果是则抛出异常
  	 */
  	public void checkActivityTimeout() {
  		checkActivityTimeout(getTokenValue());
@@ -1324,7 +1326,7 @@ public class StpLogic {
  	 * @param tokenValue 指定token 
  	 */
  	public void updateLastActivityToNow(String tokenValue) {
-		// 如果提供的 token 或者 全局配置了 [ 永不过期 ], 则立即返回，无需操作
+		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
 		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenActivityCheck() ) {
 			return;
 		}
@@ -1336,8 +1338,8 @@ public class StpLogic {
  	/**
  	 * 续签当前 token：(将 [最后操作时间] 更新为当前时间戳)
  	 * <h2>
-	 * 		请注意: 即使 token 已经 [ 临时过期 ] 也可续签成功，
- 	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否过期即可
+	 * 		请注意: 即使 token 已被冻结 也可续签成功，
+ 	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否冻结即可
 	 * </h2>
  	 */
  	public void updateLastActivityToNow() {
@@ -1405,7 +1407,7 @@ public class StpLogic {
  	}
 
  	/**
- 	 * 获取当前 token [ 临时过期 ] 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
+ 	 * 获取当前 token 剩余活跃有效期：当前 token 距离被冻结还剩多少时间（单位: 秒，返回 -1 代表永不冻结，-2 代表没有这个值或 token 已被冻结了）
 	 *
  	 * @return /
  	 */
@@ -1414,21 +1416,21 @@ public class StpLogic {
  	}
  	
  	/**
- 	 * 获取指定 token [ 临时过期 ] 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
+ 	 * 获取指定 token 剩余活跃有效期：这个 token 距离被冻结还剩多少时间（单位: 秒，返回 -1 代表永不冻结，-2 代表没有这个值或 token 已被冻结了）
 	 *
  	 * @param tokenValue 指定 token
  	 * @return /
  	 */
  	public long getTokenActivityTimeoutByToken(String tokenValue) {
 
+		// 如果全局配置了永不冻结, 则返回 -1
+		if( ! isOpenActivityCheck() ) {
+			return SaTokenDao.NEVER_EXPIRE;
+		}
+
  		// 如果提供的 token 为 null，则返回 -2
  		if(SaFoxUtil.isEmpty(tokenValue)) {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
- 		}
-
- 		// 如果全局配置了永不过期, 则返回 -1
- 		if( ! isOpenActivityCheck() ) {
- 			return SaTokenDao.NEVER_EXPIRE;
  		}
 
  		// ------ 开始查询
@@ -1448,12 +1450,12 @@ public class StpLogic {
  		long apartSecond = (System.currentTimeMillis() - lastActivityTime) / 1000;
 
  		// 4、校验这个时间差是否超过了允许的值
-		//    计算公式为: 允许的最大时间差 - 实际时间差，判断是否 < 0， 如果是则代表已经临时过期 ，返回-2
+		//    计算公式为: 允许的最大时间差 - 实际时间差，判断是否 < 0， 如果是则代表已经被冻结 ，返回-2
 		long timeout = getConfig().getActivityTimeout() - apartSecond;
  		if(timeout < 0) {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
  		} else {
-			// 否则代表没过期，返回剩余有效时间
+			// 否则代表没冻结，返回剩余有效时间
 			return timeout;
 		}
  	}
@@ -2587,7 +2589,7 @@ public class StpLogic {
 	}
 
  	/**
- 	 * 返回全局配置是否开启了Token 活跃校验
+ 	 * 返回全局配置是否开启了 Token 活跃度校验，返回 true 代表已打开，返回 false 代表不打开，此时永不冻结 token
 	 *
  	 * @return / 
  	 */
