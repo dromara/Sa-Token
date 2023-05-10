@@ -20,7 +20,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
-		log.info("账号 {} 登录成功 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 登录成功 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogout(String loginType, Object loginId, String tokenValue) {
-		log.info("账号 {} 注销登录 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 注销登录 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doKickout(String loginType, Object loginId, String tokenValue) {
-		log.info("账号 {} 被踢下线 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 被踢下线 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doReplaced(String loginType, Object loginId, String tokenValue) {
-		log.info("账号 {} 被顶下线 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 被顶下线 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
-		log.info("Token 二级认证成功, 业务标识={}, 有效期={}秒, Token值={}", service, safeTime, tokenValue);
+		log.info("token 二级认证成功, 业务标识={}, 有效期={}秒, Token值={}", service, safeTime, tokenValue);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doCloseSafe(String loginType, String tokenValue, String service) {
-		log.info("Token 二级认证关闭, 业务标识={}, Token值={}", service, tokenValue);
+		log.info("token 二级认证关闭, 业务标识={}, Token值={}", service, tokenValue);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
-		log.info("Token 续期成功, {} 秒后到期, 帐号={}, Token值={} ", timeout, loginId, tokenValue);
+		log.info("token 续期成功, {} 秒后到期, 帐号={}, token值={} ", timeout, loginId, tokenValue);
 	}
 
 
