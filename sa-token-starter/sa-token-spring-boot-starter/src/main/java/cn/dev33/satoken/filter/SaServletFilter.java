@@ -22,9 +22,13 @@ import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * Servlet全局过滤器 
- * @author click33
+ * Servlet 全局鉴权过滤器
+ * <p>
+ *     默认优先级为 -100，尽量保证在其它过滤器之前执行
+ * </p>
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaServletFilter implements SaFilter, Filter {

@@ -9,7 +9,7 @@
 
 ## 一、常见报错
 
-### Q：报错：非Web上下文无法获取Request。
+### Q：报错：非 web 上下文无法获取 HttpServletRequest。
 
 报错原因解析：
 
