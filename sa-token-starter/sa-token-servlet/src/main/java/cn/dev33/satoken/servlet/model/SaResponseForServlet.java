@@ -1,15 +1,16 @@
 package cn.dev33.satoken.servlet.model;
 
-import javax.servlet.http.HttpServletResponse;
-
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * Response for Servlet
- * @author click33
+ * 对 SaResponse 包装类的实现（Servlet 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaResponseForServlet implements SaResponse {
 

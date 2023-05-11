@@ -15,9 +15,10 @@ import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Request for Servlet 
- * @author click33
+ * 对 SaRequest 包装类的实现（Servlet 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaRequestForServlet implements SaRequest {
 

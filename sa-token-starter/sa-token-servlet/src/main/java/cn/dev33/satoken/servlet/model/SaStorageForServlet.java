@@ -1,13 +1,14 @@
 package cn.dev33.satoken.servlet.model;
 
-import javax.servlet.http.HttpServletRequest;
-
 import cn.dev33.satoken.context.model.SaStorage;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * Storage for Servlet 
- * @author click33
+ * 对 SaStorage 包装类的实现（Servlet 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaStorageForServlet implements SaStorage {
 
