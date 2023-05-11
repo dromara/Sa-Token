@@ -15,9 +15,10 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import java.util.*;
 
 /**
- * Request for Reactor 
- * @author click33
+ * 对 SaRequest 包装类的实现（Reactor 响应式编程版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaRequestForReactor implements SaRequest {
 

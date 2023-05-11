@@ -23,9 +23,13 @@ import cn.dev33.satoken.util.SaTokenConsts;
 import reactor.core.publisher.Mono;
 
 /**
- * Reactor全局过滤器 
- * @author click33
+ * Reactor 全局鉴权过滤器
+ * <p>
+ *     默认优先级为 -100，尽量保证在其它过滤器之前执行
+ * </p>
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaReactorFilter implements SaFilter, WebFilter {
@@ -132,6 +136,8 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
 			
 			// 2. 写入输出流
+			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
+			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
 			if(exchange.getResponse().getHeaders().getFirst("Content-Type") == null) {
 				exchange.getResponse().getHeaders().set("Content-Type", "text/plain; charset=utf-8");
 			}
