@@ -6,9 +6,10 @@ import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Response for Jakarta Servlet
- * @author click33
+ * 对 SaResponse 包装类的实现（Jakarta-Servlet 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaResponseForServlet implements SaResponse {
 

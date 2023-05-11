@@ -4,9 +4,10 @@ import cn.dev33.satoken.context.model.SaStorage;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * Storage for Jakarta Servlet 
+ * 对 SaStorage 包装类的实现（Jakarta-Servlet 版）
+ *
  * @author click33
- * 
+ * @since <= 1.34.0
  */
 public class SaStorageForServlet implements SaStorage {
 
