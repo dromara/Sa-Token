@@ -20,7 +20,7 @@ public interface SaTokenContext {
 	 * 
 	 * @return /
 	 */
-	public SaRequest getRequest();
+	SaRequest getRequest();
 
 	/**
 	 * 获取当前请求的 Response 包装对象
@@ -28,7 +28,7 @@ public interface SaTokenContext {
 	 * 
 	 * @return /
 	 */
-	public SaResponse getResponse();
+	SaResponse getResponse();
 
 	/**
 	 * 获取当前请求的 Storage 包装对象
@@ -36,7 +36,7 @@ public interface SaTokenContext {
 	 * 
 	 * @return /
 	 */
-	public SaStorage getStorage();
+	SaStorage getStorage();
 
 	/**
 	 * 判断：指定路由匹配符是否可以匹配成功指定路径
@@ -50,7 +50,7 @@ public interface SaTokenContext {
 	 * @param path 需要匹配的路径 
 	 * @return /
 	 */
-	public boolean matchPath(String pattern, String path);
+	boolean matchPath(String pattern, String path);
 
 	/**
 	 * 判断：在本次请求中，此上下文是否可用。
@@ -58,7 +58,7 @@ public interface SaTokenContext {
 	 *
 	 * @return / 
 	 */
-	public default boolean isValid() {
+	default boolean isValid() {
 		return false;
 	}
 	
