@@ -5,9 +5,10 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * Reactor上下文操作 [异步] 
- * @author click33
+ * Reactor 上下文操作（异步），持有当前请求的 ServerWebExchange 全局引用
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaReactorHolder {
 	

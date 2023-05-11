@@ -13,9 +13,10 @@ import cn.dev33.satoken.reactor.model.SaResponseForReactor;
 import cn.dev33.satoken.reactor.model.SaStorageForReactor;
 
 /**
- * Reactor上下文操作 [同步]
- * @author click33
+ * Reactor上下文操作（同步），持有当前请求的 ServerWebExchange 全局引用
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaReactorSyncHolder {
 	

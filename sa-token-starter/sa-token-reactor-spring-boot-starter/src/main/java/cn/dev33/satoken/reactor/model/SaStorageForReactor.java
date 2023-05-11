@@ -13,7 +13,7 @@ import cn.dev33.satoken.context.model.SaStorage;
 public class SaStorageForReactor implements SaStorage {
 
 	/**
-	 * 底层Request对象
+	 * 底层 ServerWebExchange 对象
 	 */
 	protected ServerWebExchange exchange;
 	
