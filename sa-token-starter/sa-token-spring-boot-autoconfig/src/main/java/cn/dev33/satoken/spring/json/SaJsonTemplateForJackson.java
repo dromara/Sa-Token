@@ -1,19 +1,18 @@
 package cn.dev33.satoken.spring.json;
 
-import java.util.Map;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import cn.dev33.satoken.error.SaSpringBootErrorCode;
 import cn.dev33.satoken.exception.SaJsonConvertException;
 import cn.dev33.satoken.json.SaJsonTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Map;
 
 /**
  *  JSON 转换器， Jackson 版实现 
  * 
  * @author click33
- * @since: 2022-4-26
+ * @since 2022-4-26
  */
 public class SaJsonTemplateForJackson implements SaJsonTemplate {
 
@@ -23,10 +22,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	public ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
-	 * 将任意对象转换为 json 字符串 
-	 * 
-	 * @param obj 对象 
-	 * @return 转换后的 json 字符串
+	 * 将任意对象转换为 json 字符串
 	 */
 	@Override
 	public String toJsonString(Object obj) {

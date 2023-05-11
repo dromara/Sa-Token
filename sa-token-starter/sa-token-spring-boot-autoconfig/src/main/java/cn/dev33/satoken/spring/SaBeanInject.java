@@ -25,10 +25,10 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
 
 /**
- * 注入Sa-Token所需要的Bean 
+ * 注入 Sa-Token 所需要的 Bean
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 public class SaBeanInject {
 
@@ -36,6 +36,7 @@ public class SaBeanInject {
 	 * 组件注入 
 	 * <p> 为确保 Log 组件正常打印，必须将 SaLog 和 SaTokenConfig 率先初始化 </p> 
 	 * 
+	 * @param log log 对象
 	 * @param saTokenConfig 配置对象
 	 */
 	public SaBeanInject(

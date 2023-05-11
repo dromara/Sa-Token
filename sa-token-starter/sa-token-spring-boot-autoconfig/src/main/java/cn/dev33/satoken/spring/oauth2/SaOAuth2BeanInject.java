@@ -9,16 +9,16 @@ import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
 
 /**
- * 注入 Sa-Token-OAuth2 所需要的Bean 
+ * 注入 Sa-Token-OAuth2 所需要的组件
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 @ConditionalOnClass(SaOAuth2Manager.class)
 public class SaOAuth2BeanInject {
 
 	/**
-	 * 注入OAuth2配置Bean 
+	 * 注入 OAuth2 配置对象
 	 * 
 	 * @param saOAuth2Config 配置对象 
 	 */
@@ -28,9 +28,9 @@ public class SaOAuth2BeanInject {
 	}
 
 	/**
-	 * 注入代码模板Bean 
+	 * 注入 OAuth2 模板代码类
 	 * 
-	 * @param saOAuth2Template 代码模板Bean 
+	 * @param saOAuth2Template 模板代码类
 	 */
 	@Autowired(required = false)
 	public void setSaOAuth2Interface(SaOAuth2Template saOAuth2Template) {

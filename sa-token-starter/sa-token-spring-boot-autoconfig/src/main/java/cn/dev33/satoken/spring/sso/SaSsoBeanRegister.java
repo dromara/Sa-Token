@@ -8,15 +8,16 @@ import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoManager;
 
 /**
- * 注册 Sa-Token-SSO 所需要的Bean 
- * @author click33
+ * 注册 Sa-Token-SSO 所需要的 Bean
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @ConditionalOnClass(SaSsoManager.class)
 public class SaSsoBeanRegister {
 
 	/**
-	 * 获取 SSO 配置Bean 
+	 * 获取 SSO 配置对象
 	 * @return 配置对象 
 	 */
 	@Bean

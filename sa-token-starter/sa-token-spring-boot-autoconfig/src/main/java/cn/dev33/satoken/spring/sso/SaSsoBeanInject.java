@@ -10,16 +10,16 @@ import cn.dev33.satoken.sso.SaSsoTemplate;
 import cn.dev33.satoken.sso.SaSsoUtil;
 
 /**
- * 注入 Sa-Token-SSO 所需要的Bean 
+ * 注入 Sa-Token-SSO 所需要的 Bean
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 @ConditionalOnClass(SaSsoManager.class)
 public class SaSsoBeanInject {
 
 	/**
-	 * 注入 Sa-Token-SSO 配置Bean 
+	 * 注入 Sa-Token-SSO 配置类
 	 * 
 	 * @param saSsoConfig 配置对象 
 	 */
@@ -29,9 +29,9 @@ public class SaSsoBeanInject {
 	}
 
 	/**
-	 * 注入 Sa-Token-SSO 单点登录模块 Bean
+	 * 注入 SSO 模板代码类
 	 * 
-	 * @param ssoTemplate saSsoTemplate对象 
+	 * @param ssoTemplate SaSsoTemplate 对象
 	 */
 	@Autowired(required = false)
 	public void setSaSsoTemplate(SaSsoTemplate ssoTemplate) {

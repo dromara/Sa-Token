@@ -4,9 +4,10 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 /**
- * 
- * @author click33
+ * 持有 PathMatcher 全局引用，方便快捷的调用 PathMatcher 相关方法
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaPathMatcherHolder {
 	
