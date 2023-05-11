@@ -21,9 +21,13 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
 /**
- * Servlet全局过滤器 
- * @author click33
+ * Servlet 全局鉴权过滤器
+ * <p>
+ *     默认优先级为 -100，尽量保证在其它过滤器之前执行
+ * </p>
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaServletFilter implements SaFilter, Filter {
@@ -122,7 +126,9 @@ public class SaServletFilter implements SaFilter, Filter {
 			// 1. 获取异常处理策略结果 
 			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
 			
-			// 2. 写入输出流 
+			// 2. 写入输出流
+			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
+			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
 			if(response.getContentType() == null) {
 				response.setContentType("text/plain; charset=utf-8"); 
 			}

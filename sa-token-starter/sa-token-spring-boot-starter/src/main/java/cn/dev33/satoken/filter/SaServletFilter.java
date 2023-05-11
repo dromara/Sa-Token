@@ -127,7 +127,9 @@ public class SaServletFilter implements SaFilter, Filter {
 			// 1. 获取异常处理策略结果 
 			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
 			
-			// 2. 写入输出流 
+			// 2. 写入输出流
+			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
+			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
 			if(response.getContentType() == null) {
 				response.setContentType("text/plain; charset=utf-8"); 
 			}
