@@ -5,7 +5,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 
 /**
- * 一个异常：代表 jwt 相关错误  
+ * 一个异常：代表 jwt 模块相关错误
  * 
  * @author click33
  * @since 2022-10-31

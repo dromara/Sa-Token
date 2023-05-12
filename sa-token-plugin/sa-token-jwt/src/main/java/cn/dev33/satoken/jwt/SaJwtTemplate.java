@@ -12,9 +12,10 @@ import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTException;
 
 /**
- * jwt 操作模板方法封装 
- * @author click33
+ * jwt 操作模板方法封装
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaJwtTemplate {
 	
@@ -57,6 +58,7 @@ public class SaJwtTemplate {
 
 	/**
 	 * 创建 jwt （简单方式）
+	 *
      * @param loginType 登录类型 
 	 * @param loginId 账号id 
 	 * @param extraData 扩展数据
@@ -69,6 +71,7 @@ public class SaJwtTemplate {
     	JWT jwt = JWT.create()
 				.setPayload(LOGIN_TYPE, loginType)
 			    .setPayload(LOGIN_ID, loginId)
+				// 塞入一个随机字符串，防止同账号下每次生成的 token 都一样的
 			    .setPayload(RN_STR, SaFoxUtil.getRandomString(32))
 				.addPayloads(extraData)
 			    ;
@@ -79,6 +82,7 @@ public class SaJwtTemplate {
 
 	/**
 	 * 创建 jwt （全参数方式）
+	 *
 	 * @param loginType 账号类型
 	 * @param loginId 账号id
 	 * @param device 设备类型
@@ -90,7 +94,9 @@ public class SaJwtTemplate {
 	public String createToken(String loginType, Object loginId, String device,
 									 long timeout, Map<String, Object> extraData, String keyt) {
 
-		// 计算有效期
+		// 计算 eff 有效期：
+		// 		如果 timeout 指定为 -1，那么 eff 也为 -1，代表永不过期
+		// 		如果 timeout 指定为一个具体的值，那么 eff 为 13 位时间戳，代表此 token 到期的时间
 		long effTime = timeout;
 		if(timeout != NEVER_EXPIRE) {
 			effTime = timeout * 1000 + System.currentTimeMillis();
@@ -102,6 +108,7 @@ public class SaJwtTemplate {
 				.setPayload(LOGIN_ID, loginId)
 				.setPayload(DEVICE, device)
 				.setPayload(EFF, effTime)
+				// 塞入一个随机字符串，防止同账号同一毫秒下每次生成的 token 都一样的
 			    .setPayload(RN_STR, SaFoxUtil.getRandomString(32))
 				.addPayloads(extraData);
 
@@ -110,7 +117,8 @@ public class SaJwtTemplate {
 	}
 
 	/**
-	 * 为 JWT 对象和 keyt 秘钥，生成 token 字符串 
+	 * 为 JWT 对象和 keyt 秘钥，生成 token 字符串
+	 *
 	 * @param jwt JWT构建对象
 	 * @param keyt 秘钥 
 	 * @return 根据 JWT 对象和 keyt 秘钥，生成的 token 字符串
@@ -122,7 +130,8 @@ public class SaJwtTemplate {
 	// ------ 解析 
 
     /**
-     * jwt 解析 
+     * jwt 解析
+	 *
      * @param token Jwt-Token值 
      * @param loginType 登录类型 
      * @param keyt 秘钥
@@ -132,7 +141,7 @@ public class SaJwtTemplate {
     public JWT parseToken(String token, String loginType, String keyt, boolean isCheckTimeout) {
 
     	// 秘钥不可以为空
-    	if(keyt == null) {
+    	if(SaFoxUtil.isEmpty(keyt)) {
     		throw new SaJwtException("请配置 jwt 秘钥");
     	}
 
@@ -142,7 +151,7 @@ public class SaJwtTemplate {
     	}
     	
     	// 解析 
-    	JWT jwt = null;
+    	JWT jwt;
     	try {
     		jwt = JWT.of(token);
 		} catch (JWTException e) {

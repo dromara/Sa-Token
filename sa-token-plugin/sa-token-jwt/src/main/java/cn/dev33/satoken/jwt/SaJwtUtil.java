@@ -6,9 +6,10 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 
 /**
- * jwt 操作工具类封装 
- * @author click33
+ * jwt 操作工具类封装
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaJwtUtil {
 	
