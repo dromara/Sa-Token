@@ -15,9 +15,14 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * sa-token 基于 Spring Aop 的注解鉴权
+ * Sa-Token 基于 Spring Aop 的注解鉴权
+ *
+ * <p>
+ *     注意：在打开 注解鉴权 时，AOP 模式与拦截器模式不可同时使用，否则会出现在 Controller 层重复鉴权两次的问题
+ * </p>
  * 
  * @author click33
+ * @since <= 1.34.0
  */
 @Aspect
 @Component
@@ -31,7 +36,7 @@ public class SaCheckAspect {
 	}
 
 	/**
-	 * 定义AOP签名 (切入所有使用sa-token鉴权注解的方法)
+	 * 定义AOP签名 (切入所有使用 Sa-Token 鉴权注解的方法)
 	 */
 	public static final String POINTCUT_SIGN = 
 			"@within(cn.dev33.satoken.annotation.SaCheckLogin) || @annotation(cn.dev33.satoken.annotation.SaCheckLogin) || "
