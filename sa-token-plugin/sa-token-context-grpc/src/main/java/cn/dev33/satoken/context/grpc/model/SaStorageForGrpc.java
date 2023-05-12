@@ -7,6 +7,7 @@ import cn.dev33.satoken.context.model.SaStorage;
  * Storage for grpc
  *
  * @author lym
+ * @since <= 1.34.0
  */
 public class SaStorageForGrpc implements SaStorage {
 
