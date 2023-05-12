@@ -16,7 +16,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 集成 Thymeleaf 标签方言 
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 public class SaTokenDialect extends AbstractProcessorDialect {
 	
@@ -33,7 +33,8 @@ public class SaTokenDialect extends AbstractProcessorDialect {
     }
     
     /**
-     * 构造方言对象，使用
+     * 构造方言对象，使用自定义参数
+	 *
      * @param name 方言名称
      * @param recedence 优先级 
      * @param stpLogic 使用的 StpLogic 对象 
