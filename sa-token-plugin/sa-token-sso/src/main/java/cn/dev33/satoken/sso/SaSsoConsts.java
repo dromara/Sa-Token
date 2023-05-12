@@ -1,9 +1,10 @@
 package cn.dev33.satoken.sso;
 
 /**
- * Sa-Token-SSO模块相关常量 
- * @author click33
+ * Sa-Token-SSO模块相关常量
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaSsoConsts {
 

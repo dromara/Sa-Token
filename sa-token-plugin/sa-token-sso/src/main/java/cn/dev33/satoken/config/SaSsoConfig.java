@@ -12,9 +12,10 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * Sa-Token SSO 单点登录模块 配置类 Model 
- * @author click33
+ * Sa-Token SSO 单点登录模块 配置类 Model
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaSsoConfig implements Serializable {
 

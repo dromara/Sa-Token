@@ -17,9 +17,10 @@ import cn.dev33.satoken.util.SaResult;
 import java.util.*;
 
 /**
- * Sa-Token-SSO 单点登录模块 
- * @author click33
+ * Sa-Token-SSO 单点登录模块
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaSsoTemplate {
 

@@ -5,9 +5,10 @@ import cn.dev33.satoken.util.SaResult;
 import java.util.Map;
 
 /**
- * Sa-Token-SSO 单点登录模块 工具类 
+ * Sa-Token-SSO 单点登录模块 工具类
+ * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 public class SaSsoUtil {
 
