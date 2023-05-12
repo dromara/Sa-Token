@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Request for Dubbo3
- * 
- * @author click33
+ * 对 SaRequest 包装类的实现（Dubbo3 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaRequestForDubbo3 implements SaRequest {
 

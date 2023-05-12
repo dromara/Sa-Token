@@ -7,11 +7,10 @@ import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 
 /**
- * 
- * Sa-Token 整合 Dubbo3 Provider端过滤器
- * 
- * @author click33
+ * Sa-Token 整合 Dubbo3 Provider端（被调用端）过滤器
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @Activate(group = {CommonConstants.PROVIDER}, order = -30000)
 public class SaTokenDubbo3ProviderFilter implements Filter {

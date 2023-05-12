@@ -5,9 +5,10 @@ import cn.dev33.satoken.context.model.SaResponse;
 import org.apache.dubbo.rpc.RpcContext;
 
 /**
- * Response for Servlet
- * @author click33
+ * 对 SaResponse 包装类的实现（Dubbo3 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaResponseForDubbo3 implements SaResponse {
 

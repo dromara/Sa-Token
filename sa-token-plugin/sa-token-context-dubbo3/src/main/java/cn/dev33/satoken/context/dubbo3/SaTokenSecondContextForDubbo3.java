@@ -11,10 +11,10 @@ import cn.dev33.satoken.exception.ApiDisabledException;
 import org.apache.dubbo.rpc.RpcContext;
 
 /**
- * Sa-Token 上下文 [Dubbo3版本]
+ * Sa-Token 二级上下文 [ Dubbo3版本 ]
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 public class SaTokenSecondContextForDubbo3 implements SaTokenSecondContext {
 
