@@ -13,13 +13,18 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
- * Quick-Bean 注册 
+ * Quick Login 相关 Bean 注册
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 @Configuration
 public class SaQuickRegister {
+
+	/**
+	 * 使用一个比较短的前缀，尽量提高 cmd 命令台启动时指定参数的便利性
+	 */
+	public static final String CONFIG_VERSION = "sa";
 
 	/**
 	 * 注册 Quick-Login 配置
@@ -27,7 +32,7 @@ public class SaQuickRegister {
 	 * @return see note
 	 */
 	@Bean
-	@ConfigurationProperties(prefix = "sa")
+	@ConfigurationProperties(prefix = CONFIG_VERSION)
 	SaQuickConfig getSaQuickConfig() {
 		return new SaQuickConfig();
 	}
@@ -41,10 +46,13 @@ public class SaQuickRegister {
 	@Order(SaTokenConsts.ASSEMBLY_ORDER - 1)
 	SaServletFilter getSaServletFilterForQuickLogin() {
 		return new SaServletFilter()
+
 			// 拦截路由 
 			.addInclude("/**")
+
 			// 排除掉登录相关接口，不需要鉴权的
 			.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**").
+
 			// 认证函数: 每次请求执行
 			setAuth(obj -> {
 				SaRouter

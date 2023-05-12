@@ -4,9 +4,10 @@ import cn.dev33.satoken.quick.config.SaQuickConfig;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * SaQuickManager 
- * @author click33
+ * SaQuickManager，持有 SaQuickConfig 配置对象全局引用
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaQuickManager {
 
@@ -16,7 +17,7 @@ public class SaQuickManager {
 	private static SaQuickConfig config;	
 	public static void setConfig(SaQuickConfig config) {
 		SaQuickManager.config = config;
-		// 如果配置了随机密码
+		// 如果配置了 auto=true，则随机生成账号名密码
 		if(config.getAuto()) {
 			config.setName(SaFoxUtil.getRandomString(8));
 			config.setPwd(SaFoxUtil.getRandomString(8));

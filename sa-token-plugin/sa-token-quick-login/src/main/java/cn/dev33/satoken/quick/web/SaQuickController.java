@@ -13,17 +13,18 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * 登录Controller
- * @author click33
+ * 登录Controller，处理登录相关请求
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 @Controller
 public class SaQuickController {
 
 	/**
 	 * 进入登录页面
-	 * @param model see note
-	 * @return see note
+	 * @param model /
+	 * @return /
 	 */
 	@GetMapping("/saLogin")
 	public String saLogin(Model model) {
@@ -46,7 +47,7 @@ public class SaQuickController {
 			return SaResult.get(500, "请输入账号和密码", null);
 		}
 		
-		// 密码校验 
+		// 密码校验：将前端提交的 name、pwd 与配置文件中的配置项进行比对
 		SaQuickConfig config = SaQuickManager.getConfig();
 		if(name.equals(config.getName()) && pwd.equals(config.getPwd())) {
 			StpUtil.login(config.getName());

@@ -4,11 +4,11 @@ package cn.dev33.satoken.quick.config;
  * sa-quick 配置类 Model
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 public class SaQuickConfig {
 
-	/** 是否开启全局认证 */
+	/** 是否开启全局登录校验，如果为 false，则不再拦截请求出现登录页 */
 	private Boolean auth = true;
 
 	/** 用户名 */
@@ -17,7 +17,7 @@ public class SaQuickConfig {
 	/** 密码 */
 	private String pwd = "123456";
 
-	/** 是否自动生成一个账号和密码 */
+	/** 是否自动生成一个账号和密码，此配置项为 true 后，name、pwd 字段将失效 */
 	private Boolean auto = false; 
 	
 	/** 登录页面的标题 */
