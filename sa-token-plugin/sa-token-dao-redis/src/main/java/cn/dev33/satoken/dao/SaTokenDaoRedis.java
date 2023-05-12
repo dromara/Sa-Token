@@ -16,32 +16,32 @@ import org.springframework.stereotype.Component;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 持久层实现 [Redis存储、JDK默认序列化] 
+ * Sa-Token 持久层实现 [ Redis存储、JDK默认序列化 ]
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 @Component
 public class SaTokenDaoRedis implements SaTokenDao {
 
 	/**
-	 * String专用 
+	 * String 读写专用
 	 */
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
-	 * Object专用 
+	 * Object 读写专用
 	 */
 	public RedisTemplate<String, Object> objectRedisTemplate;
 
 	/**
-	 * 标记：是否已初始化成功
+	 * 标记：当前 redis 连接信息是否已初始化成功
 	 */
 	public boolean isInit;
 	
 	@Autowired
 	public void init(RedisConnectionFactory connectionFactory) {
-		// 不重复初始化 
+		// 如果已经初始化成功了，就立刻退出，不重复初始化
 		if(this.isInit) {
 			return;
 		}
@@ -49,10 +49,12 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		JdkSerializationRedisSerializer valueSerializer = new JdkSerializationRedisSerializer();
+
 		// 构建StringRedisTemplate
 		StringRedisTemplate stringTemplate = new StringRedisTemplate();
 		stringTemplate.setConnectionFactory(connectionFactory);
 		stringTemplate.afterPropertiesSet();
+
 		// 构建RedisTemplate
 		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
 		template.setConnectionFactory(connectionFactory);
@@ -65,6 +67,8 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		// 开始初始化相关组件 
 		this.stringRedisTemplate = stringTemplate;
 		this.objectRedisTemplate = template;
+
+		// 打上标记，表示已经初始化成功，后续无需再重新初始化
 		this.isInit = true;
 	}
 	

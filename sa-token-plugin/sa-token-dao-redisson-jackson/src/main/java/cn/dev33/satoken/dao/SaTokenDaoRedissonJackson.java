@@ -34,10 +34,10 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 持久层实现 [Redisson客户端、Redis存储、Jackson序列化]
+ * Sa-Token 持久层实现  [ Redisson客户端、Redis存储、Jackson序列化 ]
  * 
  * @author 疯狂的狮子Li
- * 
+ * @since <= 1.34.0
  */
 @Component
 public class SaTokenDaoRedissonJackson implements SaTokenDao {
@@ -50,7 +50,14 @@ public class SaTokenDaoRedissonJackson implements SaTokenDao {
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
 	/**
-	 * ObjectMapper对象 (以public作用域暴露出此对象，方便开发者二次更改配置)
+	 * ObjectMapper 对象 (以 public 作用域暴露出此对象，方便开发者二次更改配置)
+	 *
+	 * <p> 例如：
+	 * 	<pre>
+	 *      SaTokenDaoRedisJackson redisJackson = (SaTokenDaoRedisJackson) SaManager.getSaTokenDao();
+	 *      redisJackson.objectMapper.xxx = xxx;
+	 * 	</pre>
+	 * </p>
 	 */
 	public ObjectMapper objectMapper;
 

@@ -18,21 +18,21 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 持久层实现 [Redis存储、fastjson2序列化]
+ * Sa-Token 持久层实现 [ Redis存储、fastjson2序列化 ]
  * 
  * @author sikadai
- *
+ * @since <= 1.34.0
  */
 @Component
 public class SaTokenDaoRedisFastjson2 implements SaTokenDao {
 
 	/**
-	 * String专用 
+	 * String 读写专用
 	 */
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
-	 * Object专用 
+	 * Object 读写专用
 	 */
 	public StringRedisTemplate objectRedisTemplate;
 
@@ -43,7 +43,7 @@ public class SaTokenDaoRedisFastjson2 implements SaTokenDao {
 	
 	@Autowired
 	public void init(RedisConnectionFactory connectionFactory) {
-		// 不重复初始化 
+		// 如果已经初始化成功了，就立刻退出，不重复初始化
 		if(this.isInit) {
 			return;
 		}
@@ -54,10 +54,12 @@ public class SaTokenDaoRedisFastjson2 implements SaTokenDao {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		StringRedisSerializer valueSerializer = new StringRedisSerializer();
+
 		// 构建StringRedisTemplate
 		StringRedisTemplate stringTemplate = new StringRedisTemplate();
 		stringTemplate.setConnectionFactory(connectionFactory);
 		stringTemplate.afterPropertiesSet();
+
 		// 构建RedisTemplate
 		StringRedisTemplate template = new StringRedisTemplate();
 		template.setConnectionFactory(connectionFactory);
@@ -70,6 +72,8 @@ public class SaTokenDaoRedisFastjson2 implements SaTokenDao {
 		// 开始初始化相关组件 
 		this.stringRedisTemplate = stringTemplate;
 		this.objectRedisTemplate = template;
+
+		// 打上标记，表示已经初始化成功，后续无需再重新初始化
 		this.isInit = true;
 	}
 	

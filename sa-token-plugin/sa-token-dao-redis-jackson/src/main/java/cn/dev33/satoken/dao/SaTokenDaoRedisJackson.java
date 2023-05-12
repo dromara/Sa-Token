@@ -32,10 +32,10 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 持久层实现 [Redis存储、Jackson序列化]
+ * Sa-Token 持久层实现 [ Redis存储、Jackson序列化 ]
  * 
  * @author click33
- * 
+ * @since <= 1.34.0
  */
 @Component
 public class SaTokenDaoRedisJackson implements SaTokenDao {
@@ -48,17 +48,24 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
 	/**
-	 * ObjectMapper对象 (以public作用域暴露出此对象，方便开发者二次更改配置)
+	 * ObjectMapper 对象 (以 public 作用域暴露出此对象，方便开发者二次更改配置)
+	 *
+	 * <p> 例如：
+	 * 	<pre>
+	 *      SaTokenDaoRedisJackson redisJackson = (SaTokenDaoRedisJackson) SaManager.getSaTokenDao();
+	 *      redisJackson.objectMapper.xxx = xxx;
+	 * 	</pre>
+	 * </p>
 	 */
 	public ObjectMapper objectMapper;
 	
 	/**
-	 * String专用
+	 * String 读写专用
 	 */
 	public StringRedisTemplate stringRedisTemplate;	
 
 	/**
-	 * Object专用 
+	 * Object 读写专用
 	 */
 	public RedisTemplate<String, Object> objectRedisTemplate;
 	
@@ -69,7 +76,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	
 	@Autowired
 	public void init(RedisConnectionFactory connectionFactory) {
-		// 不重复初始化 
+		// 如果已经初始化成功了，就立刻退出，不重复初始化
 		if(this.isInit) {
 			return;
 		}
@@ -77,26 +84,34 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
+
 		// 通过反射获取Mapper对象, 增加一些配置, 增强兼容性 
 		try {
 			Field field = GenericJackson2JsonRedisSerializer.class.getDeclaredField("mapper");
 			field.setAccessible(true);
 			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
 			this.objectMapper = objectMapper;
+
 			// 配置[忽略未知字段]
 			this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
 			// 配置[时间类型转换]
 			JavaTimeModule timeModule = new JavaTimeModule();
+
 			// LocalDateTime序列化与反序列化
 			timeModule.addSerializer(new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
 			timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+
 			// LocalDate序列化与反序列化
 			timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
 			timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+
 			// LocalTime序列化与反序列化
 			timeModule.addSerializer(new LocalTimeSerializer(TIME_FORMATTER));
 			timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+
 			this.objectMapper.registerModule(timeModule);
+
 			// 重写 SaSession 生成策略 
 			SaStrategy.me.createSession = (sessionId) -> new SaSessionForJacksonCustomized(sessionId);
 		} catch (Exception e) {
@@ -106,6 +121,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		StringRedisTemplate stringTemplate = new StringRedisTemplate();
 		stringTemplate.setConnectionFactory(connectionFactory);
 		stringTemplate.afterPropertiesSet();
+
 		// 构建RedisTemplate
 		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
 		template.setConnectionFactory(connectionFactory);
@@ -118,6 +134,8 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		// 开始初始化相关组件 
 		this.stringRedisTemplate = stringTemplate;
 		this.objectRedisTemplate = template;
+
+		// 打上标记，表示已经初始化成功，后续无需再重新初始化
 		this.isInit = true;
 	}
 	
