@@ -9,9 +9,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
- * jwt操作工具类 
- * @author click33
+ * jwt 相关操作工具类，封装一下
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaJwtUtil {
 	
@@ -29,7 +30,8 @@ public class SaJwtUtil {
 	public static final long NEVER_EXPIRE = SaTokenDao.NEVER_EXPIRE;
 	
 	/**
-	 * 根据指定值创建 jwt-token 
+	 * 根据指定值创建 jwt-token
+	 *
 	 * @param key 存储value使用的key 
 	 * @param value 要保存的值
 	 * @param timeout token有效期 (单位 秒)
@@ -37,17 +39,21 @@ public class SaJwtUtil {
 	 * @return jwt-token 
 	 */
     public static String createToken(String key, Object value, long timeout, String keyt) {
-    	// 计算eff有效期 
+    	// 计算eff有效期：
+		// 		如果 timeout 指定为 -1，那么 eff 也为 -1，代表永不过期
+		// 		如果 timeout 指定为一个具体的值，那么 eff 为 13 位时间戳，代表此数据到期的时间
     	long eff = timeout;
     	if(timeout != NEVER_EXPIRE) {
     		eff = timeout * 1000 + System.currentTimeMillis();
     	}
+
     	// 在这里你可以使用官方提供的claim方法构建载荷，也可以使用setPayload自定义载荷，但是两者不可一起使用 
         JwtBuilder builder = Jwts.builder()
         		// .setHeaderParam("typ", "JWT")
         		.claim(KEY_VALUE + key, value)
         		.claim(KEY_EFF, eff)
                 .signWith(SignatureAlgorithm.HS256, keyt.getBytes());
+
         // 生成jwt-token 
         return builder.compact();
     }
@@ -63,6 +69,7 @@ public class SaJwtUtil {
     	Claims claims = Jwts.parser()
         		.setSigningKey(keyt.getBytes())
         		.parseClaimsJws(jwtToken).getBody();
+
         // 返回 
         return claims;
     }
@@ -81,7 +88,7 @@ public class SaJwtUtil {
     	// 验证是否超时 
     	Long eff = claims.get(KEY_EFF, Long.class);
     	if((eff == null || eff < System.currentTimeMillis()) && eff != NEVER_EXPIRE) {
-    		throw new SaTokenException("Token已超时").setCode(SaTempJwtErrorCode.CODE_30303);
+    		throw new SaTokenException("token 已超时，无法解析：" + jwtToken).setCode(SaTempJwtErrorCode.CODE_30303);
     	}
     	
         // 获取数据 
@@ -98,7 +105,7 @@ public class SaJwtUtil {
     	// 取出数据 
     	Claims claims = parseToken(jwtToken, keyt);
     	
-    	// 如果给定的key不对
+    	// 如果给定的 key 不对
     	if(claims.get(KEY_VALUE + key) == null) {
     		return SaTokenDao.NOT_VALUE_EXPIRE;
     	}
