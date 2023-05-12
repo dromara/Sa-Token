@@ -1,14 +1,14 @@
 package cn.dev33.satoken.context.dubbo.model;
 
-import org.apache.dubbo.rpc.RpcContext;
-
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.util.SaTokenConsts;
+import org.apache.dubbo.rpc.RpcContext;
 
 /**
- * Storage for Servlet 
- * @author click33
+ * 对 SaStorage 包装类的实现（Dubbo 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaStorageForDubbo implements SaStorage {
 

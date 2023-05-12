@@ -1,17 +1,16 @@
 package cn.dev33.satoken.context.dubbo.model;
 
-import org.apache.dubbo.rpc.RpcContext;
-
 import cn.dev33.satoken.context.model.SaRequest;
+import org.apache.dubbo.rpc.RpcContext;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Request for Dubbo 
- * 
- * @author click33
+ * 对 SaRequest 包装类的实现（Dubbo 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaRequestForDubbo implements SaRequest {
 

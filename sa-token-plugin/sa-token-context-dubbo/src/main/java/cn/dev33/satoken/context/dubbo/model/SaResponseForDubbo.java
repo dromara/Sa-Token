@@ -1,13 +1,13 @@
 package cn.dev33.satoken.context.dubbo.model;
 
+import cn.dev33.satoken.context.model.SaResponse;
 import org.apache.dubbo.rpc.RpcContext;
 
-import cn.dev33.satoken.context.model.SaResponse;
-
 /**
- * Response for Servlet
- * @author click33
+ * 对 SaResponse 包装类的实现（Dubbo 版）
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaResponseForDubbo implements SaResponse {
 

@@ -12,11 +12,10 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.same.SaSameUtil;
 
 /**
- * 
- * Sa-Token 整合 Dubbo Provider端过滤器 
+ * Sa-Token 整合 Dubbo Provider端（被调用端）过滤器
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 @Activate(group = {CommonConstants.PROVIDER}, order = -30000)
 public class SaTokenDubboProviderFilter implements Filter {
@@ -27,7 +26,8 @@ public class SaTokenDubboProviderFilter implements Filter {
 		// RPC 调用鉴权 
 		if(SaManager.getConfig().getCheckSameToken()) {
 			String idToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN);
-			// dubbo部分协议会将参数变为小写，详细参考：https://gitee.com/dromara/sa-token/issues/I4WXQG
+
+			// dubbo部分协议会将参数变为小写，此处需要额外处理一下，详细参考：https://gitee.com/dromara/sa-token/issues/I4WXQG
 			if(idToken == null) {
 				idToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN.toLowerCase());
 			}
