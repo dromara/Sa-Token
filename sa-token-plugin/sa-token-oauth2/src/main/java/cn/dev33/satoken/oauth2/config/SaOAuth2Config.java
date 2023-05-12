@@ -7,9 +7,10 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 /**
- * Sa-Token-OAuth2 配置类 Model 
- * @author click33
+ * Sa-Token-OAuth2 配置类 Model
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaOAuth2Config implements Serializable {
 

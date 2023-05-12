@@ -6,6 +6,7 @@ import cn.dev33.satoken.exception.SaTokenException;
  * 一个异常：代表OAuth2认证流程错误 
  * 
  * @author click33
+ * @since <= 1.34.0
  */
 public class SaOAuth2Exception extends SaTokenException {
 

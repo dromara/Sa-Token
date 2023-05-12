@@ -1,9 +1,10 @@
 package cn.dev33.satoken.oauth2.logic;
 
 /**
- * Sa-Token-OAuth2 所有常量 
- * @author click33
+ * Sa-Token-OAuth2 所有常量
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaOAuth2Consts {
 

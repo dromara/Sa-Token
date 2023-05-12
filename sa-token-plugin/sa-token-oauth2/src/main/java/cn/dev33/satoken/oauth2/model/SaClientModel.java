@@ -6,9 +6,10 @@ import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 
 /**
- * Client应用信息 Model 
- * @author click33
+ * Client应用信息 Model
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class SaClientModel implements Serializable {
 

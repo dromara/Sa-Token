@@ -6,7 +6,7 @@ import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
  * Sa-Token-OAuth2 模块 总控类
  * 
  * @author click33
- *
+ * @since <= 1.34.0
  */
 public class SaOAuth2Manager {
 

@@ -6,8 +6,9 @@ import java.util.Map;
 
 /**
  * Model: Client-Token
- * @author click33
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class ClientTokenModel implements Serializable {
 

@@ -3,9 +3,10 @@ package cn.dev33.satoken.oauth2.model;
 import java.io.Serializable;
 
 /**
- * Model: Refresh-Token 
- * @author click33
+ * Model: Refresh-Token
  *
+ * @author click33
+ * @since <= 1.34.0
  */
 public class RefreshTokenModel implements Serializable {
 
