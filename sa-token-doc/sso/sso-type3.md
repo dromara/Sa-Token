@@ -115,7 +115,7 @@ forest.log-enabled: false
 ``` java
 // 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
 @RequestMapping("/sso/getData")
-public Object getData(String apiType, String loginId) {
+public SaResult getData(String apiType, String loginId) {
 	System.out.println("---------------- 获取数据 ----------------");
 	System.out.println("apiType=" + apiType);
 	System.out.println("loginId=" + loginId);
