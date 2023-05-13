@@ -511,6 +511,16 @@ public class StpUtil {
  	}
 
 	/**
+	 * 获取指定 token 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
+	 *
+	 * @param token 指定token
+	 * @return token剩余有效时间
+	 */
+	public static long getTokenTimeout(String token) {
+		return stpLogic.getTokenTimeout(token);
+	}
+
+	/**
 	 * 获取当前登录账号的 Account-Session 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
 	 *
 	 * @return token剩余有效时间

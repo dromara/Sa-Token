@@ -1355,10 +1355,20 @@ public class StpLogic {
  	 * @return token剩余有效时间
  	 */
  	public long getTokenTimeout() {
- 		return getSaTokenDao().getTimeout(splicingKeyTokenValue(getTokenValue()));
+ 		return getTokenTimeout(getTokenValue());
  	}
- 	
- 	/**
+
+	/**
+	 * 获取指定 token 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
+	 *
+	 * @param token 指定token
+	 * @return token剩余有效时间
+	 */
+	public long getTokenTimeout(String token) {
+		return getSaTokenDao().getTimeout(splicingKeyTokenValue(token));
+	}
+
+	/**
  	 * 获取指定账号 id 的 token 剩余有效时间（单位: 秒，返回 -1 代表永久有效，-2 代表没有这个值）
 	 *
  	 * @param loginId 指定loginId 
