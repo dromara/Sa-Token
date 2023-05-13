@@ -35,6 +35,7 @@
         <module>sa-token-context-dubbo</module>
         <module>sa-token-context-dubbo3</module>
         <module>sa-token-context-grpc</module>
+        <module>sa-token-context-vertx</module>
     </modules>
 
 	<dependencies>
