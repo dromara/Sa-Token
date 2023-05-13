@@ -12,35 +12,29 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-dao-redisx</name>
-    <artifactId>sa-token-dao-redisx</artifactId>
-	<description>sa-token integrate redis</description>
+	<name>sa-token-dubbo</name>
+    <artifactId>sa-token-dubbo</artifactId>
+	<description>sa-token-dubbo</description>
 
 	<dependencies>
-		<!-- sa-token-spring-boot-starter -->
+		<!-- sa-token-core -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>redisx</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>snack3</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        
+		<!-- dubbo -->
+	    <dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo</artifactId>
+		</dependency>
+	    
+		<!-- <dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-spring-boot-starter</artifactId>
+			<version>2.7.11</version>
+		</dependency> -->
+        
 	</dependencies>
-
-
 
 </project>

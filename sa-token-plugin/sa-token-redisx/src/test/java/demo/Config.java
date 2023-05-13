@@ -13,14 +13,14 @@ import org.noear.solon.annotation.Inject;
 @Configuration
 public class Config {
     @Bean
-    public void saTokenDaoInit(@Inject("${sa-token-dao.redis}") SaTokenDaoOfRedis saTokenDao) {
+    public void saTokenDaoInit(@Inject("${sa-token.redis}") SaTokenDaoOfRedis saTokenDao) {
         //手动操作，可适用于任何框架
         SaManager.setSaTokenDao(saTokenDao);
     }
 
 
     @Bean
-    public SaTokenDao saTokenDaoInit2(@Inject("${sa-token-dao.redis}") SaTokenDaoOfRedis saTokenDao) {
+    public SaTokenDao saTokenDaoInit2(@Inject("${sa-token.redis}") SaTokenDaoOfRedis saTokenDao) {
         //Solon 项目，可用此案
         return saTokenDao;
     }

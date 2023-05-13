@@ -10,9 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>sa-token-context-dubbo3</name>
-    <artifactId>sa-token-context-dubbo3</artifactId>
-    <description>sa-token-context-dubbo3</description>
+    <name>sa-token-dubbo3</name>
+    <artifactId>sa-token-dubbo3</artifactId>
+    <description>sa-token-dubbo3</description>
 
 
     <properties>

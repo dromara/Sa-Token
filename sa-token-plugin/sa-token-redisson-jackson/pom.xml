@@ -12,9 +12,9 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-dao-redis-jackson</name>
-    <artifactId>sa-token-dao-redis-jackson</artifactId>
-	<description>sa-token integrate redis (to jackson)</description>
+	<name>sa-token-redisson-jackson</name>
+    <artifactId>sa-token-redisson-jackson</artifactId>
+	<description>sa-token integrate redisson (to jackson)</description>
 
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->
@@ -22,11 +22,12 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
-		<!-- RedisTemplate 相关操作API -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+		<!-- Redisson 相关操作API -->
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson-spring-boot-starter</artifactId>
+		</dependency>
+
 		<!-- jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -39,6 +40,7 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 	</dependencies>
 
 

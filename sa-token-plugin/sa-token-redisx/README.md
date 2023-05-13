@@ -1,12 +1,12 @@
 
-sa-token-dao-redisx 是中立的扩展。可任何应用开发框架下使用（springboot, solon, jfinal 等..）
+sa-token-redisx 是中立的扩展。可任何应用开发框架下使用（springboot, solon, jfinal 等..）
 
 ### 使用示例
 
 #### 1.配置
 
 ```yaml
-sa-token-dao: #名字可以随意取
+sa-token: #名字可以随意取
   redis:
     server: "localhost:6379"
     password: 123456
@@ -22,7 +22,7 @@ sa-token-dao: #名字可以随意取
 @Configuration
 public class Config {
     @Bean
-    public SaTokenDao saTokenDaoInit(@Inject("${sa-token-dao.redis}") SaTokenDaoOfRedis saTokenDao) {
+    public SaTokenDao saTokenDaoInit(@Inject("${sa-token.redis}") SaTokenDaoOfRedis saTokenDao) {
         return saTokenDao;
     }
 }

@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
  * <p>
  *     使用方式：在引入 sa-token redis 集成相关包的前提下，继续引入当前依赖 <br> <br>
  *     注意事项：目前本依赖仅对以下插件有 Redis 分离效果： <br>
- *     sa-token-dao-redis  <br>
- *     sa-token-dao-redis-jackson  <br>
- *     sa-token-dao-redis-fastjson  <br>
- *     sa-token-dao-redis-fastjson2 <br>
+ *     sa-token-redis  <br>
+ *     sa-token-redis-jackson  <br>
+ *     sa-token-redis-fastjson  <br>
+ *     sa-token-redis-fastjson2 <br>
  * </p>
  *
  *
@@ -172,7 +172,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 			
 			// 3. 开始初始化 SaTokenDao ，此处需要依次判断开发者引入的是哪个 redis 库
 
-			// 如果开发者引入的是：sa-token-dao-redis
+			// 如果开发者引入的是：sa-token-redis
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedis");
 				SaTokenDaoRedis dao = (SaTokenDaoRedis)saTokenDao;
@@ -181,7 +181,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				return;
 			} catch (ClassNotFoundException e) {
 			}
-			// 如果开发者引入的是：sa-token-dao-redis-jackson
+			// 如果开发者引入的是：sa-token-redis-jackson
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisJackson");
 				SaTokenDaoRedisJackson dao = (SaTokenDaoRedisJackson)saTokenDao;
@@ -190,7 +190,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				return;
 			} catch (ClassNotFoundException e) {
 			}
-			// 如果开发者引入的是：sa-token-dao-redis-fastjson
+			// 如果开发者引入的是：sa-token-redis-fastjson
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisFastjson");
 				SaTokenDaoRedisFastjson dao = (SaTokenDaoRedisFastjson)saTokenDao;
@@ -199,7 +199,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				return;
 			} catch (ClassNotFoundException e) {
 			}
-			// 如果开发者引入的是：sa-token-dao-redis-fastjson2
+			// 如果开发者引入的是：sa-token-redis-fastjson2
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2");
 				SaTokenDaoRedisFastjson2 dao = (SaTokenDaoRedisFastjson2)saTokenDao;

@@ -3,38 +3,32 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	<parent>
+    
+    <parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-plugin</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+
     <packaging>jar</packaging>
 
-	<name>sa-token-context-dubbo</name>
-    <artifactId>sa-token-context-dubbo</artifactId>
-	<description>sa-token-context-dubbo</description>
+    <artifactId>sa-token-grpc</artifactId>
 
-	<dependencies>
-		<!-- sa-token-core -->
-		<dependency>
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
-        
-		<!-- dubbo -->
-	    <dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo</artifactId>
-		</dependency>
-	    
-		<!-- <dependency>
-			<groupId>org.apache.dubbo</groupId>
-			<artifactId>dubbo-spring-boot-starter</artifactId>
-			<version>2.7.11</version>
-		</dependency> -->
-        
-	</dependencies>
-
+    </dependencies>
 </project>
