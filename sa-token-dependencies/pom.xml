@@ -12,7 +12,7 @@
     <description>Sa-Token Dependencies</description>
 
     <properties>
-        <revision>1.34.0</revision>
+        <revision>1.34.1</revision>
 		
 		<!-- 统一定义依赖版本号 -->
 		<springboot.version>2.5.14</springboot.version>
@@ -29,7 +29,8 @@
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
-		<dubbo.version>2.7.18</dubbo.version>
+		<!--<dubbo.version>2.7.18</dubbo.version>-->
+		<dubbo.version>2.7.11</dubbo.version>
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
 		<hutool-jwt.version>5.8.9</hutool-jwt.version>
 		<jjwt.version>0.9.1</jjwt.version>
@@ -318,37 +319,37 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-context-dubbo</artifactId>
+				<artifactId>sa-token-dubbo</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-context-grpc</artifactId>
+				<artifactId>sa-token-grpc</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis</artifactId>
+				<artifactId>sa-token-redis</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis-fastjson</artifactId>
+				<artifactId>sa-token-redis-fastjson</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis-fastjson2</artifactId>
+				<artifactId>sa-token-redis-fastjson2</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis-jackson</artifactId>
+				<artifactId>sa-token-redis-jackson</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redisx</artifactId>
+				<artifactId>sa-token-redisx</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>

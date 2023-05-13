@@ -16,7 +16,7 @@ public class SaConfig {
      * 构建建 SaToken redis dao（如果不需要 redis；可以注释掉）
      * */
     @Bean
-    public SaTokenDao saTokenDaoInit(@Inject("${sa-token-dao.redis}") SaTokenDaoOfRedis saTokenDao) {
+    public SaTokenDao saTokenDaoInit(@Inject("${sa-token.redis}") SaTokenDaoOfRedis saTokenDao) {
         return saTokenDao;
     }
 }
