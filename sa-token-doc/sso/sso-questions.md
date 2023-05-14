@@ -153,7 +153,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 
 ### 问：如果 sso-client 端我没有集成 sa-token-sso，如何对接？
-需要手动调用 http 请求来对接 sso-server 开放的接口，参考示例：[sa-token-demo-sso3-client-nosdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso3-client-nosdk)
+需要手动调用 http 请求来对接 sso-server 开放的接口，参考示例：
+[sa-token-demo-sso3-client-nosdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client-nosdk)
 
 
 ### 问：如果 sso-client 端不是 java语言，可以对接吗？

@@ -2,7 +2,7 @@
 
 在开始SSO三种模式的对接之前，我们必须先搭建一个 SSO-Server 认证中心 
 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习，demo里有制作好的登录页面 
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习，demo里有制作好的登录页面 
 
 --- 
 
@@ -268,7 +268,7 @@ public class SaSsoServerApplication {
 
 可以看到这个页面目前非常简陋，这是因为我们以上的代码示例，主要目标是为了带大家从零搭建一个可用的SSO认证服务端，所以就对一些不太必要的步骤做了简化。
 
-大家可以下载运行一下官方仓库里的示例`/sa-token-demo/sa-token-demo-sso-server/`，里面有制作好的登录页面：
+大家可以下载运行一下官方仓库里的示例`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，里面有制作好的登录页面：
 
 ![sso-server-init-login2.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login2.png 's-w-sh')
 
