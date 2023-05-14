@@ -22,7 +22,12 @@ public class SaSsoConfig implements Serializable {
 	private static final long serialVersionUID = -6541180061782004705L;
 
 	
-	// ----------------- Server端相关配置 
+	// ----------------- Server端相关配置
+
+	/**
+	 * 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）
+	 */
+	public String mode = "";
 	
 	/**
 	 * Ticket有效期 (单位: 秒) 
@@ -46,6 +51,11 @@ public class SaSsoConfig implements Serializable {
 
 	
 	// ----------------- Client端相关配置 
+
+//	/**
+//	 * 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）
+//	 */
+//	public String mode = "";  // 同Server端，不再重复声明
 
 	/**
 	 * 当前 Client 名称标识，用于和 ticket 码的互相锁定 
@@ -102,6 +112,24 @@ public class SaSsoConfig implements Serializable {
 	 */
 	public String serverUrl;
 
+
+	/**
+	 * 获取 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）
+	 *
+	 * @return /
+	 */
+	public String getMode() {
+		return this.mode;
+	}
+
+	/**
+	 * 设置 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）
+	 *
+	 * @param mode /
+	 */
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
 
 	/**
 	 * @return Ticket有效期 (单位: 秒)  
@@ -297,7 +325,8 @@ public class SaSsoConfig implements Serializable {
 	@Override
 	public String toString() {
 		return "SaSsoConfig ["
-				+ "ticketTimeout=" + ticketTimeout 
+				+ "mode=" + mode
+				+ ", ticketTimeout=" + ticketTimeout
 				+ ", allowUrl=" + allowUrl 
 				+ ", isSlo=" + isSlo
 				+ ", isHttp=" + isHttp
@@ -457,5 +486,4 @@ public class SaSsoConfig implements Serializable {
 		return sendHttp;
 	}
 
-	
 }
