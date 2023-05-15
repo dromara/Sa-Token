@@ -37,7 +37,7 @@ public class SaTempUtil {
 	/**
 	 * 为指定 value 创建一个临时 Token
 	 * @param value 指定值
-	 * @param timeout 有效期，单位：秒，-1代表永久有效
+	 * @param timeout 有效期，单位：秒，-1 代表永久有效
 	 * @return 生成的token
 	 */
 	public static String createToken(Object value, long timeout) {
@@ -48,7 +48,7 @@ public class SaTempUtil {
 	 * 为指定 业务标识、指定 value 创建一个 Token
 	 * @param service 业务标识
 	 * @param value 指定值
-	 * @param timeout 有效期，单位：秒，-1代表永久有效
+	 * @param timeout 有效期，单位：秒，-1 代表永久有效
 	 * @return 生成的token
 	 */
 	public static String createToken(String service, Object value, long timeout) {

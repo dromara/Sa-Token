@@ -71,7 +71,7 @@ public class SaSameTemplate {
 	 * @param token / 
 	 */
 	public void checkToken(String token) {
-		if(isValid(token) == false) {
+		if( ! isValid(token)) {
 			token = (token == null ? "" : token);
 			throw new SameTokenInvalidException("无效Same-Token：" + token).setCode(SaErrorCode.CODE_10301);
 		}
@@ -92,7 +92,7 @@ public class SaSameTemplate {
 		
 		// 1. 先将当前 Same-Token 写入到 Past-Same-Token 中 
 		String sameToken = getTokenNh(); 
-		if(SaFoxUtil.isEmpty(sameToken) == false) {
+		if( ! SaFoxUtil.isEmpty(sameToken)) {
 			savePastToken(sameToken, getTokenTimeout());
 		}
 		

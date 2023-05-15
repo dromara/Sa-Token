@@ -22,8 +22,11 @@ import java.io.Serializable;
 /**
  * Sa-Token 配置类 Model
  *
- * <p> 你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档: https://sa-token.cc/ </p>
- * 
+ * <p>
+ *     你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档:
+ *     <a href="https://sa-token.cc">https://sa-token.cc</a>
+ * </p>
+ *
  * @author click33
  * @since <= 1.34.0
  */
@@ -34,7 +37,7 @@ public class SaTokenConfig implements Serializable {
 	/** token 名称 （同时也是： cookie 名称、提交 token 时参数的名称、存储 token 时的 key 前缀） */
 	private String tokenName = "satoken";
 
-	/** token 有效期（单位：秒） 默认30天，-1代表永久 */
+	/** token 有效期（单位：秒） 默认30天，-1 代表永久 */
 	private long timeout = 60 * 60 * 24 * 30;
 
 	/**
@@ -89,7 +92,7 @@ public class SaTokenConfig implements Serializable {
 	private String tokenStyle = "uuid";
 
 	/**
-	 * 默认 SaTokenDao 实现类中，每次清理过期数据间隔的时间（单位: 秒），默认值30秒，设置为-1代表不启动定时清理
+	 * 默认 SaTokenDao 实现类中，每次清理过期数据间隔的时间（单位: 秒），默认值30秒，设置为 -1 代表不启动定时清理
 	 */
 	private int dataRefreshPeriod = 30;
 
@@ -186,14 +189,14 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return token 有效期（单位：秒） 默认30天，-1代表永久
+	 * @return token 有效期（单位：秒） 默认30天，-1 代表永久
 	 */
 	public long getTimeout() {
 		return timeout;
 	}
 
 	/**
-	 * @param timeout token 有效期（单位：秒） 默认30天，-1代表永久
+	 * @param timeout token 有效期（单位：秒） 默认30天，-1 代表永久
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setTimeout(long timeout) {
@@ -364,14 +367,14 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return 默认 SaTokenDao 实现类中，每次清理过期数据间隔的时间（单位: 秒），默认值30秒，设置为-1代表不启动定时清理
+	 * @return 默认 SaTokenDao 实现类中，每次清理过期数据间隔的时间（单位: 秒），默认值30秒，设置为 -1 代表不启动定时清理
 	 */
 	public int getDataRefreshPeriod() {
 		return dataRefreshPeriod;
 	}
 
 	/**
-	 * @param dataRefreshPeriod 默认 SaTokenDao 实现类中，每次清理过期数据间隔的时间（单位: 秒），默认值30秒，设置为-1代表不启动定时清理
+	 * @param dataRefreshPeriod 默认 SaTokenDao 实现类中，每次清理过期数据间隔的时间（单位: 秒），默认值30秒，设置为 -1 代表不启动定时清理
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setDataRefreshPeriod(int dataRefreshPeriod) {

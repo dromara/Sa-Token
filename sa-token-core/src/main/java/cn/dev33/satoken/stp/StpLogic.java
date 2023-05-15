@@ -235,9 +235,9 @@ public class StpLogic {
 		
 		// 2. 如果打开了前缀模式，则裁剪掉它
 		String tokenPrefix = getConfig().getTokenPrefix();
-		if(SaFoxUtil.isEmpty(tokenPrefix) == false) {
+		if(SaFoxUtil.isNotEmpty(tokenPrefix)) {
 			// 如果 token 并没有按照指定的前缀开头，则视为未提供token
-			if(SaFoxUtil.isEmpty(tokenValue) || tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT) == false) {
+			if(SaFoxUtil.isEmpty(tokenValue) || ! tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
 				tokenValue = null;
 			} else {
 				// 裁剪掉前缀
@@ -443,7 +443,7 @@ public class StpLogic {
 		// 1、获取全局配置的 isConcurrent 参数
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
 		Boolean isConcurrent = getConfig().getIsConcurrent();
-		if(isConcurrent == false) {
+		if( ! isConcurrent) {
 			replaced(id, loginModel.getDevice());
 		}
 		
@@ -452,7 +452,7 @@ public class StpLogic {
 			return loginModel.getToken();
 		} 
 
-		// 3、只有在配置了 [ 允许一个账号多地同时登录 ] 时，才尝试复用旧 token，这样可以避免不必须的查询，节省开销
+		// 3、只有在配置了 [ 允许一个账号多地同时登录 ] 时，才尝试复用旧 token，这样可以避免不必要地查询，节省开销
 		if(isConcurrent) {
 
 			// 3.1、看看全局配置的 IsShare 参数，配置为 true 才是允许复用旧 token
@@ -1625,7 +1625,7 @@ public class StpLogic {
  	 * @param role 角色标识
  	 */
  	public void checkRole(String role) {
- 		if(hasRole(role) == false) {
+ 		if( ! hasRole(role)) {
 			throw new NotRoleException(role, this.loginType).setCode(SaErrorCode.CODE_11041);
 		}
  	}
@@ -1763,7 +1763,7 @@ public class StpLogic {
  	 * @param permission 权限码
  	 */
  	public void checkPermission(String permission) {
- 		if(hasPermission(permission) == false) {
+ 		if( ! hasPermission(permission)) {
 			throw new NotPermissionException(permission, this.loginType).setCode(SaErrorCode.CODE_11051);
 		}
  	}
@@ -2010,13 +2010,11 @@ public class StpLogic {
 			}
 		} catch (NotPermissionException e) {
 			// 权限认证校验未通过，再开始角色认证校验
-			if(at.orRole().length > 0) {
-				for (String role : at.orRole()) {
-					String[] rArr = SaFoxUtil.convertStringToArray(role);
-					// 某一项 role 认证通过，则可以提前退出了，代表通过
-					if(hasRoleAnd(rArr)) {
-						return;
-					}
+			for (String role : at.orRole()) {
+				String[] rArr = SaFoxUtil.convertStringToArray(role);
+				// 某一项 role 认证通过，则可以提前退出了，代表通过
+				if (hasRoleAnd(rArr)) {
+					return;
 				}
 			}
 			throw e;
@@ -2351,8 +2349,6 @@ public class StpLogic {
 		try {
 			switchTo(loginId);
 			function.run();
-		} catch (Exception e) {
-			throw e;
 		} finally {
 			endSwitch();
 		}
@@ -2439,7 +2435,7 @@ public class StpLogic {
 	 */
 	public void checkSafe(String service) {
 		String tokenValue = getTokenValue();
-		if (isSafe(tokenValue, service) == false) {
+		if ( ! isSafe(tokenValue, service)) {
 			throw new NotSafeException(loginType, tokenValue, service).setCode(SaErrorCode.CODE_11071);
 		}
 	}

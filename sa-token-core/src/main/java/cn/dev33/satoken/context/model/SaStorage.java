@@ -31,20 +31,20 @@ public interface SaStorage extends SaSetValueInterface {
 	 * 获取底层被包装的源对象
 	 * @return /
 	 */
-	public Object getSource();
+	Object getSource();
 
 	// ---- 实现接口存取值方法 
 
 	/** 取值 */
 	@Override
-	public Object get(String key);
+	Object get(String key);
 
 	/** 写值 */
 	@Override
-	public SaStorage set(String key, Object value);
+	SaStorage set(String key, Object value);
 
 	/** 删值 */
 	@Override
-	public SaStorage delete(String key);
+	SaStorage delete(String key);
 
 }

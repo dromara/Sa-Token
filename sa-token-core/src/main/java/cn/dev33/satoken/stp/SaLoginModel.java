@@ -240,17 +240,14 @@ public class SaLoginModel {
 	 * @return / 
 	 */
 	public boolean isSetExtraData() {
-		if(extraData == null || extraData.size() == 0) {
-			return false;
-		}
-		return true;
+		return extraData != null && extraData.size() != 0;
 	}
 
 	/**
 	 * @return Cookie时长
 	 */
 	public int getCookieTimeout() {
-		if(getIsLastingCookieOrFalse() == false) {
+		if( ! getIsLastingCookieOrFalse()) {
 			return -1;
 		}
 		if(getTimeoutOrGlobalConfig() == SaTokenDao.NEVER_EXPIRE) {

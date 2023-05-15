@@ -30,12 +30,12 @@ public class StpInterfaceDefaultImpl implements StpInterface {
 
 	@Override
 	public List<String> getPermissionList(Object loginId, String loginType) {
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 
 	@Override
 	public List<String> getRoleList(Object loginId, String loginType) {
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 
 }

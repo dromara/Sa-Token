@@ -53,7 +53,7 @@ public enum SaHttpMethod {
 	 */
 	public static SaHttpMethod toEnum(String method) {
 		if(method == null) {
-			throw new SaTokenException("无效Method：" + method).setCode(SaErrorCode.CODE_10321);
+			throw new SaTokenException("Method 不可以是 null").setCode(SaErrorCode.CODE_10321);
 		}
 		SaHttpMethod reqMethod = map.get(method.toUpperCase());
 		if(reqMethod == null) {

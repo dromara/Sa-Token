@@ -19,7 +19,6 @@ package cn.dev33.satoken.dao;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -218,9 +217,8 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	 * 清理所有已经过期的 key
 	 */
 	public void refreshDataMap() {
-		Iterator<String> keys = expireMap.keySet().iterator();
-		while (keys.hasNext()) {
-			clearKeyByTimeout(keys.next());
+		for (String s : expireMap.keySet()) {
+			clearKeyByTimeout(s);
 		}
 	}
 	
@@ -241,7 +239,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 				try {
 					try {
 						// 如果已经被标记为结束
-						if(refreshFlag == false) {
+						if( ! refreshFlag) {
 							return;
 						}
 						// 执行清理
@@ -254,7 +252,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 					if(dataRefreshPeriod <= 0) {
 						dataRefreshPeriod = 1;
 					}
-					Thread.sleep(dataRefreshPeriod * 1000);
+					Thread.sleep(dataRefreshPeriod * 1000L);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

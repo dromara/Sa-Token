@@ -15,15 +15,15 @@
  */
 package cn.dev33.satoken.secure;
 
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
@@ -32,14 +32,6 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.UUID;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.SaTokenException;
 
 /**
  * Sa-Token 常见加密算法工具类
@@ -55,12 +47,12 @@ public class SaSecureUtil {
 	/**
 	 * Base64编码
 	 */
-	private static Base64.Encoder encoder = Base64.getEncoder();
+	private static final Base64.Encoder encoder = Base64.getEncoder();
 
 	/**
 	 * Base64解码
 	 */
-	private static Base64.Decoder decoder = Base64.getDecoder();
+	private static final Base64.Decoder decoder = Base64.getDecoder();
 
 	// ----------------------- 摘要加密 -----------------------
 
@@ -133,8 +125,8 @@ public class SaSecureUtil {
 			byte[] bytes = messageDigest.digest();
 			StringBuilder builder = new StringBuilder();
 			String temp;
-			for (int i = 0; i < bytes.length; i++) {
-				temp = Integer.toHexString(bytes[i] & 0xFF);
+			for (byte aByte : bytes) {
+				temp = Integer.toHexString(aByte & 0xFF);
 				if (temp.length() == 1) {
 					builder.append("0");
 				}
@@ -205,8 +197,7 @@ public class SaSecureUtil {
      * 生成加密秘钥
      * @param password 秘钥
      * @return SecretKeySpec
-     * @throws NoSuchAlgorithmException
-     */
+	 */
     private static SecretKeySpec getSecretKey(final String password) throws NoSuchAlgorithmException {
         KeyGenerator kg = KeyGenerator.getInstance("AES");
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
@@ -243,7 +234,7 @@ public class SaSecureUtil {
 		RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
 
-		HashMap<String, String> map = new HashMap<String, String>(16);
+		HashMap<String, String> map = new HashMap<>(16);
 		map.put("private", encoder.encodeToString(rsaPrivateKey.getEncoded()));
 		map.put("public", encoder.encodeToString(rsaPublicKey.getEncoded()));
 		return map;
@@ -397,7 +388,7 @@ public class SaSecureUtil {
 		// 数据拆分后的组数，余数不为0时加1
 		int quotient = remainder != 0 ? bytes.length / splitLength + 1 : bytes.length / splitLength;
 		byte[][] arrays = new byte[quotient][];
-		byte[] array = null;
+		byte[] array;
 		for (int i = 0; i < quotient; i++) {
 			// 如果是最后一组（quotient-1）,同时余数不等于0，就将最后一组设置为remainder的长度
 			if (i == quotient - 1 && remainder != 0) {
@@ -415,10 +406,10 @@ public class SaSecureUtil {
 	/** 将字节数组转换成16进制字符串 */
 	private static String bytesToHexString(byte[] bytes) {
 
-		StringBuffer sb = new StringBuffer(bytes.length);
-		String temp = null;
-		for (int i = 0; i < bytes.length; i++) {
-			temp = Integer.toHexString(0xFF & bytes[i]);
+		StringBuilder sb = new StringBuilder(bytes.length);
+		String temp;
+		for (byte aByte : bytes) {
+			temp = Integer.toHexString(0xFF & aByte);
 			if (temp.length() < 2) {
 				sb.append(0);
 			}

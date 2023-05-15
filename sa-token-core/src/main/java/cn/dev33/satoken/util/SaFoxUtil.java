@@ -181,11 +181,9 @@ public class SaFoxUtil {
 			keyword = "";
 		}
 		// 挑选出所有符合条件的
-		List<String> list = new ArrayList<String>();
-		Iterator<String> keys = dataList.iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			if (key.startsWith(prefix) && key.indexOf(keyword) > -1) {
+		List<String> list = new ArrayList<>();
+		for (String key : dataList) {
+			if (key.startsWith(prefix) && key.contains(keyword)) {
 				list.add(key);
 			}
 		}
@@ -205,7 +203,7 @@ public class SaFoxUtil {
 	 */
 	public static List<String> searchList(List<String> list, int start, int size, boolean sortType) {
 		// 如果是反序的话
-		if(sortType == false) {
+		if( ! sortType) {
 			Collections.reverse(list);
 		}
 		// start 至少为0
@@ -220,7 +218,7 @@ public class SaFoxUtil {
 			end = start + size;
 		}
 		// 取出的数据放到新集合中
-		List<String> list2 = new ArrayList<String>();
+		List<String> list2 = new ArrayList<>();
 		for (int i = start; i < end; i++) {
 			// 如果已经取到list的末尾，则直接退出
 			if (i >= list.size()) {
@@ -250,7 +248,7 @@ public class SaFoxUtil {
 			return false;
 		}
 		// 如果表达式不带有*号，则只需简单equals即可 (这样可以使速度提升200倍左右)
-		if(patt.indexOf("*") == -1) {
+		if( ! patt.contains("*")) {
 			return patt.equals(str);
 		}
 		// 正则匹配
@@ -291,7 +289,7 @@ public class SaFoxUtil {
 		}
 		// 开始转换
 		String obj2 = String.valueOf(obj);
-		Object obj3 = null;
+		Object obj3;
 		if (cs.equals(String.class)) {
 			obj3 = obj2;
 		} else if (cs.equals(int.class) || cs.equals(Integer.class)) {
@@ -311,7 +309,7 @@ public class SaFoxUtil {
 		} else if (cs.equals(char.class) || cs.equals(Character.class)) {
 			obj3 = obj2.charAt(0);
 		} else {
-			obj3 = (T)obj;
+			obj3 = obj;
 		}
 		return (T)obj3;
 	}
@@ -319,12 +317,12 @@ public class SaFoxUtil {
 	/**
 	 * 在url上拼接上kv参数并返回
 	 * @param url url
-	 * @param parameStr 参数, 例如 id=1001
+	 * @param paramStr 参数, 例如 id=1001
 	 * @return 拼接后的url字符串
 	 */
-	public static String joinParam(String url, String parameStr) {
+	public static String joinParam(String url, String paramStr) {
 		// 如果参数为空, 直接返回
-		if(parameStr == null || parameStr.length() == 0) {
+		if(paramStr == null || paramStr.length() == 0) {
 			return url;
 		}
 		if(url == null) {
@@ -333,20 +331,20 @@ public class SaFoxUtil {
 		int index = url.lastIndexOf('?');
 		// ? 不存在
 		if(index == -1) {
-			return url + '?' + parameStr;
+			return url + '?' + paramStr;
 		}
 		// ? 是最后一位
 		if(index == url.length() - 1) {
-			return url + parameStr;
+			return url + paramStr;
 		}
 		// ? 是其中一位
-		if(index > -1 && index < url.length() - 1) {
+		if(index < url.length() - 1) {
 			String separatorChar = "&";
-			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
-			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
-				return url + separatorChar + parameStr;
+			// 如果最后一位是 不是&, 且 paramStr 第一位不是 &, 就赠送一个 &
+			if(url.lastIndexOf(separatorChar) != url.length() - 1 && paramStr.indexOf(separatorChar) != 0) {
+				return url + separatorChar + paramStr;
 			} else {
-				return url + parameStr;
+				return url + paramStr;
 			}
 		}
 		// 正常情况下, 代码不可能执行到此
@@ -371,12 +369,12 @@ public class SaFoxUtil {
 	/**
 	 * 在url上拼接锚参数
 	 * @param url url
-	 * @param parameStr 参数, 例如 id=1001
+	 * @param paramStr 参数, 例如 id=1001
 	 * @return 拼接后的url字符串
 	 */
-	public static String joinSharpParam(String url, String parameStr) {
+	public static String joinSharpParam(String url, String paramStr) {
 		// 如果参数为空, 直接返回
-		if(parameStr == null || parameStr.length() == 0) {
+		if(paramStr == null || paramStr.length() == 0) {
 			return url;
 		}
 		if(url == null) {
@@ -385,20 +383,20 @@ public class SaFoxUtil {
 		int index = url.lastIndexOf('#');
 		// ? 不存在
 		if(index == -1) {
-			return url + '#' + parameStr;
+			return url + '#' + paramStr;
 		}
 		// ? 是最后一位
 		if(index == url.length() - 1) {
-			return url + parameStr;
+			return url + paramStr;
 		}
 		// ? 是其中一位
-		if(index > -1 && index < url.length() - 1) {
+		if(index < url.length() - 1) {
 			String separatorChar = "&";
-			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
-			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
-				return url + separatorChar + parameStr;
+			// 如果最后一位是 不是&, 且 paramStr 第一位不是 &, 就赠送一个 &
+			if(url.lastIndexOf(separatorChar) != url.length() - 1 && paramStr.indexOf(separatorChar) != 0) {
+				return url + separatorChar + paramStr;
 			} else {
-				return url + parameStr;
+				return url + paramStr;
 			}
 		}
 		// 正常情况下, 代码不可能执行到此
@@ -455,14 +453,14 @@ public class SaFoxUtil {
 		if(arr == null) {
 			return "";
 		}
-		String str = "";
+		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < arr.length; i++) {
-			str += arr[i];
+			str.append(arr[i]);
 			if(i != arr.length - 1) {
-				str += ",";
+				str.append(",");
 			}
 		}
-		return str;
+		return str.toString();
 	}
 
 	/**
@@ -514,14 +512,14 @@ public class SaFoxUtil {
 	 * @return 分割后的字符串集合
 	 */
 	public static List<String> convertStringToList(String str) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		if(isEmpty(str)) {
 			return list;
 		}
 		String[] arr = str.split(",");
 		for (String s : arr) {
 			s = s.trim();
-			if(isEmpty(s) == false) {
+			if(!isEmpty(s)) {
 				list.add(s);
 			}
 		}
@@ -537,14 +535,14 @@ public class SaFoxUtil {
 		if(list == null || list.size() == 0) {
 			return "";
 		}
-		String str = "";
+		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			str += list.get(i);
+			str.append(list.get(i));
 			if(i != list.size() - 1) {
-				str += ",";
+				str.append(",");
 			}
 		}
-		return str;
+		return str.toString();
 	}
 
     /**
@@ -554,7 +552,7 @@ public class SaFoxUtil {
      */
     public static String[] convertStringToArray(String str) {
     	List<String> list = convertStringToList(str);
-    	return list.toArray(new String[list.size()]);
+    	return list.toArray(new String[0]);
     }
 
     /**
@@ -580,15 +578,11 @@ public class SaFoxUtil {
 
     /**
      * String数组转集合
-     * @param strs String数组
+     * @param str String数组
      * @return 集合
      */
-    public static List<String> toList(String... strs) {
-    	List<String> list = new ArrayList<>();
-    	for (String str : strs) {
-    		list.add(str);
-		}
-    	return list;
+    public static List<String> toList(String... str) {
+		return new ArrayList<>(Arrays.asList(str));
     }
 
     public static List<String> logLevelList = Arrays.asList("", "trace", "debug", "info", "warn", "error", "fatal");
@@ -622,6 +616,7 @@ public class SaFoxUtil {
 	 * 判断当前系统是否可以打印彩色日志，判断准确率并非100%，但基本可以满足大部分场景
 	 * @return /
 	 */
+	@SuppressWarnings("all")
 	public static boolean isCanColorLog() {
 
 		// 获取当前环境相关信息

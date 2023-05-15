@@ -38,32 +38,32 @@ public class DisableServiceException extends SaTokenException {
 	/**
 	 * 账号类型 
 	 */
-	private String loginType;
+	private final String loginType;
 
 	/**
 	 * 被封禁的账号id 
 	 */
-	private Object loginId;
+	private final Object loginId;
 
 	/**
 	 * 具体被封禁的服务 
 	 */
-	private String service;
+	private final String service;
 
 	/**
 	 * 具体被封禁的等级 
 	 */
-	private int level;
+	private final int level;
 
 	/**
 	 * 校验时要求低于的等级 
 	 */
-	private int limitLevel;
+	private final int limitLevel;
 	
 	/**
 	 * 封禁剩余时间，单位：秒 
 	 */
-	private long disableTime;
+	private final long disableTime;
 
 	/**
 	 * 获取：账号类型 

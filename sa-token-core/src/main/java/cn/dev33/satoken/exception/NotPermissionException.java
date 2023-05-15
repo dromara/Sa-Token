@@ -31,7 +31,7 @@ public class NotPermissionException extends SaTokenException {
 	private static final long serialVersionUID = 6806129545290130141L;
 
 	/** 权限码 */
-	private String permission;
+	private final String permission;
 
 	/**
 	 * @return 获得具体缺少的权限码
@@ -43,7 +43,7 @@ public class NotPermissionException extends SaTokenException {
 	/**
 	 * 账号类型
 	 */
-	private String loginType;
+	private final String loginType;
 
 	/**
 	 * 获得账号类型

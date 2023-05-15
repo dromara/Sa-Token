@@ -48,7 +48,7 @@ public class SaCookie {
     private String value;
 
     /**
-     * 有效时长 （单位：秒），-1代表为临时Cookie 浏览器关闭后自动删除
+     * 有效时长 （单位：秒），-1 代表为临时Cookie 浏览器关闭后自动删除
      */
     private int maxAge = -1;
 
@@ -129,14 +129,14 @@ public class SaCookie {
 	}
 
 	/**
-	 * @return 有效时长 （单位：秒），-1代表为临时Cookie 浏览器关闭后自动删除
+	 * @return 有效时长 （单位：秒），-1 代表为临时Cookie 浏览器关闭后自动删除
 	 */
 	public int getMaxAge() {
 		return maxAge;
 	}
 
 	/**
-	 * @param maxAge 有效时长 （单位：秒），-1代表为临时Cookie 浏览器关闭后自动删除
+	 * @param maxAge 有效时长 （单位：秒），-1 代表为临时Cookie 浏览器关闭后自动删除
 	 * @return 对象自身
 	 */
 	public SaCookie setMaxAge(int maxAge) {
@@ -236,7 +236,7 @@ public class SaCookie {
 	/**
 	 * 构建一下
 	 */
-	public void builde() {
+	public void builder() {
 		if(path == null) {
 			path = "/";
 		}
@@ -247,7 +247,7 @@ public class SaCookie {
 	 * @return /
 	 */
 	public String toHeaderValue() {
-		this.builde();
+		this.builder();
 
 		if(SaFoxUtil.isEmpty(name)) {
 			throw new SaTokenException("name不能为空").setCode(SaErrorCode.CODE_12002);

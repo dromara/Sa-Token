@@ -34,17 +34,17 @@ public class NotSafeException extends SaTokenException {
 	/**
 	 * 账号类型 
 	 */
-	private String loginType;
+	private final String loginType;
 
 	/**
 	 * 未通过校验的 Token 值 
 	 */
-	private Object tokenValue;
+	private final Object tokenValue;
 
 	/**
 	 * 未通过校验的服务 
 	 */
-	private String service;
+	private final String service;
 
 	/**
 	 * 获取：账号类型 

@@ -86,7 +86,7 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * @return data 
 	 */
 	public Object getData() {
-		return (Object)this.get("data");
+		return this.get("data");
 	}
 	
 	/**
@@ -198,8 +198,9 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * 转换 value 值：
 	 * 	如果 value 值属于 String 类型，则在前后补上引号
 	 * 	如果 value 值属于其它类型，则原样返回
-	 * @param value
-	 * @return
+	 *
+	 * @param value 具体要操作的值
+	 * @return 转换后的值
 	 */
 	private String transValue(Object value) {
 		if(value == null) {

@@ -28,6 +28,6 @@ public interface SaTokenSecondContextCreator {
 	 * 创建一个二级 Context 处理器
 	 * @return / 
 	 */
-	public SaTokenSecondContext create();
+	SaTokenSecondContext create();
 	
 }

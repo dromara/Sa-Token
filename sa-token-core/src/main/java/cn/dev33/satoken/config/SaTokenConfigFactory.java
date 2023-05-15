@@ -61,9 +61,9 @@ public class SaTokenConfigFactory {
 	 */
 	public static SaTokenConfig createConfig(String path) {
 		Map<String, String> map = readPropToMap(path);
-		if (map == null) {
+		// if (map == null) {
 			// throw new RuntimeException("找不到配置文件：" + configPath, null);
-		}
+		// }
 		return (SaTokenConfig) initPropByMap(map, new SaTokenConfig());
 	}
 
@@ -74,7 +74,7 @@ public class SaTokenConfigFactory {
 	 * @return 一个Map
 	 */
 	private static Map<String, String> readPropToMap(String propertiesPath) {
-		Map<String, String> map = new HashMap<String, String>(16);
+		Map<String, String> map = new HashMap<>(16);
 		try {
 			InputStream is = SaTokenConfigFactory.class.getClassLoader().getResourceAsStream(propertiesPath);
 			if (is == null) {
@@ -101,11 +101,11 @@ public class SaTokenConfigFactory {
 	private static Object initPropByMap(Map<String, String> map, Object obj) {
 
 		if (map == null) {
-			map = new HashMap<String, String>(16);
+			map = new HashMap<>(16);
 		}
 
 		// 1、取出类型
-		Class<?> cs = null;
+		Class<?> cs;
 		if (obj instanceof Class) {
 			// 如果是一个类型，则将obj=null，以便完成静态属性反射赋值
 			cs = (Class<?>) obj;

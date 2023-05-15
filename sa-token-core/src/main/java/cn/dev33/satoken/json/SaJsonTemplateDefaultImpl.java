@@ -40,6 +40,6 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	@Override
 	public Map<String, Object> parseJsonToMap(String jsonStr) {
 		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
-	};
+	}
 	
 }

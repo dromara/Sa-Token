@@ -453,7 +453,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 */
 	@Override
 	public SaSession setByNull(String key, Object value) {
-		if(has(key) == false) {
+		if( ! has(key)) {
 			dataMap.put(key, value);
 			update();
 		}

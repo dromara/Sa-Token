@@ -31,7 +31,7 @@ public class NotRoleException extends SaTokenException {
 	private static final long serialVersionUID = 8243974276159004739L;
 
 	/** 角色标识 */
-	private String role;
+	private final String role;
 
 	/**
 	 * @return 获得角色标识
@@ -43,7 +43,7 @@ public class NotRoleException extends SaTokenException {
 	/**
 	 * 账号类型
 	 */
-	private String loginType;
+	private final String loginType;
 
 	/**
 	 * 获得账号类型

@@ -160,7 +160,7 @@ public interface SaGetValueInterface {
 		
 		// 如果 obj 为 null，则直接返回默认值 
 		if(valueIsNull(value)) {
-			return (T)defaultValue;
+			return defaultValue;
 		}
 		
 		// 开始转换类型

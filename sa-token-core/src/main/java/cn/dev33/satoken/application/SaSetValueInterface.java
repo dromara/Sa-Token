@@ -34,14 +34,14 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @param value 值
 	 * @return 对象自身
 	 */
-	public abstract SaSetValueInterface set(String key, Object value);
+	SaSetValueInterface set(String key, Object value);
 	
 	/**
 	 * 删值 
 	 * @param key 要删除的key
 	 * @return 对象自身
 	 */
-	public abstract SaSetValueInterface delete(String key);
+	SaSetValueInterface delete(String key);
 
 	
 	// --------- 接口提供封装的方法 
@@ -55,7 +55,7 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @return 值 
 	 */
 	@SuppressWarnings("unchecked")
-	public default <T> T get(String key, SaRetFunction fun) {
+	default <T> T get(String key, SaRetFunction fun) {
 		Object value = get(key);
 		if(value == null) {
 			value = fun.run();
@@ -70,8 +70,8 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @param value 值
 	 * @return 对象自身
 	 */
-	public default SaSetValueInterface setByNull(String key, Object value) {
-		if(has(key) == false) {
+	default SaSetValueInterface setByNull(String key, Object value) {
+		if( ! has(key)) {
 			set(key, value);
 		}
 		return this;

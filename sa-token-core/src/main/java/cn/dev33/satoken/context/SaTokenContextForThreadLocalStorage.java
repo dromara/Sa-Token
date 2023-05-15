@@ -34,7 +34,7 @@ public class SaTokenContextForThreadLocalStorage {
 	/**
 	 * 基于 ThreadLocal 的 [ Box 存储器 ]
 	 */
-	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<Box>();
+	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<>();
 	
 	/**
 	 * 初始化当前线程的 [ Box 存储器 ]
@@ -45,14 +45,14 @@ public class SaTokenContextForThreadLocalStorage {
 	public static void setBox(SaRequest request, SaResponse response, SaStorage storage) {
 		Box bok = new Box(request, response, storage);
 		boxThreadLocal.set(bok);
-	};
+	}
 
 	/**
 	 * 清除当前线程的 [ Box 存储器 ]
 	 */
 	public static void clearBox() {
 		boxThreadLocal.remove();
-	};
+	}
 
 	/**
 	 * 获取当前线程的 [ Box 存储器 ]
@@ -60,7 +60,7 @@ public class SaTokenContextForThreadLocalStorage {
 	 */
 	public static Box getBox() {
 		return boxThreadLocal.get();
-	};
+	}
 	
 	/**
 	 * 获取当前线程的 [ Box 存储器 ], 如果为空则抛出异常
@@ -72,7 +72,7 @@ public class SaTokenContextForThreadLocalStorage {
 			throw new InvalidContextException("未能获取有效的上下文").setCode(SaErrorCode.CODE_10002);
 		}
 		return box;
-	};
+	}
 
 	/**
 	 * 在当前线程的 SaRequest 包装对象
@@ -107,10 +107,6 @@ public class SaTokenContextForThreadLocalStorage {
 	 *
 	 * @author click33
 	 * @since <= 1.34.0
-	 */
-	/**
-	 * @author click33
-	 *
 	 */
 	public static class Box {
 		

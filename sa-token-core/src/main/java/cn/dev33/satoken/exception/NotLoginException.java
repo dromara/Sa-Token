@@ -74,7 +74,7 @@ public class NotLoginException extends SaTokenException {
 	/**
 	 * 异常类型 
 	 */
-	private String type;
+	private final String type;
 	
 	/**
 	 * 获取异常类型 
@@ -88,7 +88,7 @@ public class NotLoginException extends SaTokenException {
 	/**
 	 * 账号类型 
 	 */
-	private String loginType;
+	private final String loginType;
 	
 	/** 
 	 * 获得账号类型 
@@ -129,7 +129,7 @@ public class NotLoginException extends SaTokenException {
 	 * @return 构建完毕的异常对象 
 	 */
 	public static NotLoginException newInstance(String loginType, String type, String token) {
-		String message = null;
+		String message;
 		if(NOT_TOKEN.equals(type)) {
 			message = NOT_TOKEN_MESSAGE;
 		}
@@ -148,7 +148,7 @@ public class NotLoginException extends SaTokenException {
 		else {
 			message = DEFAULT_MESSAGE;
 		}
-		if(SaFoxUtil.isEmpty(token) == false) {
+		if( ! SaFoxUtil.isEmpty(token)) {
 			message = message + "：" + token;
 		}
 		return new NotLoginException(message, loginType, type);

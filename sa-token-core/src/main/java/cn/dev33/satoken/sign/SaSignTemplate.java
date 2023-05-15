@@ -287,6 +287,7 @@ public class SaSignTemplate {
 	 * @param paramMap 待校验的请求参数集合
 	 * @return 是否合法
 	 */
+	@SuppressWarnings("all")
 	public boolean isValidParamMap(Map<String, String> paramMap) {
 		// 获取必须的三个参数
 		String timestampValue = paramMap.get(timestamp);

@@ -79,7 +79,7 @@ public class SaManager {
 
 	/**
 	 * 获取 Sa-Token 的全局配置信息
-	 * @return
+	 * @return 全局配置信息
 	 */
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
@@ -275,7 +275,7 @@ public class SaManager {
 	/**
 	 * StpLogic 集合, 记录框架所有成功初始化的 StpLogic
 	 */
-	public static Map<String, StpLogic> stpLogicMap = new LinkedHashMap<String, StpLogic>();
+	public static Map<String, StpLogic> stpLogicMap = new LinkedHashMap<>();
 	
 	/**
 	 * 向全局集合中 put 一个 StpLogic 
