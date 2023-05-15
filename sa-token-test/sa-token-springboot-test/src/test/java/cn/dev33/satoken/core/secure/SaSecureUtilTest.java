@@ -26,7 +26,7 @@ import cn.dev33.satoken.secure.SaSecureUtil;
  * SaSecureUtil 加密工具类 测试 
  * 
  * @author click33
- * @since: 2022-2-9
+ * @since 2022-2-9
  */
 public class SaSecureUtilTest {
 	

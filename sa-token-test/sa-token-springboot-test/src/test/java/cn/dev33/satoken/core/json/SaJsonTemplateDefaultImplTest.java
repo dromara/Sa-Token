@@ -26,7 +26,7 @@ import cn.dev33.satoken.util.SoMap;
  * json默认实现类测试 
  * 
  * @author click33
- * @since: 2022-9-1
+ * @since 2022-9-1
  */
 public class SaJsonTemplateDefaultImplTest {
 

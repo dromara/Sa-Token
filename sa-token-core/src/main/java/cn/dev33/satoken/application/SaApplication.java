@@ -27,7 +27,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
  * <p> 在应用全局范围内: 存值、取值。数据在应用重启后失效，如果集成了 Redis，则在 Redis 重启后失效。
  * 
  * @author click33
- * @since: 2022-8-17
+ * @since 2022-8-17
  */
 public class SaApplication implements SaSetValueInterface {
 

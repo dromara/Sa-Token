@@ -24,7 +24,7 @@ import cn.dev33.satoken.secure.SaBase64Util;
  * SaBase64Util 测试 
  * 
  * @author click33
- * @since: 2022-2-9
+ * @since 2022-2-9
  */
 public class SaBase64UtilTest {
 

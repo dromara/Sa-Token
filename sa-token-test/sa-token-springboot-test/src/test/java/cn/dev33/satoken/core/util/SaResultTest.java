@@ -27,7 +27,7 @@ import cn.dev33.satoken.util.SaResult;
  * SaResult 结果集 测试 
  * 
  * @author click33
- * @since: 2022-2-8 22:14:25
+ * @since 2022-2-8 22:14:25
  */
 public class SaResultTest {
 

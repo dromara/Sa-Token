@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * <b> 此种方式有性能问题，仅做demo示例，真实项目中请更换为其它方案记录用户会话数据 </b>
  * 
  * @author click33
- * @since: 2022-4-30
+ * @since 2022-4-30
  */
 @Component
 public class MyHttpSessionHolder implements HttpSessionListener {

@@ -25,7 +25,7 @@ import cn.dev33.satoken.context.SaHolder;
  * SaApplication 存取值测试 
  * 
  * @author click33
- * @since: 2022-9-4
+ * @since 2022-9-4
  */
 public class SaApplicationTest {
 

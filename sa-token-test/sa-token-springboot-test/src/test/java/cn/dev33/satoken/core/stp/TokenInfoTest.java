@@ -30,7 +30,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * Token 参数扩展 
  * 
  * @author click33
- * @since: 2022-9-5
+ * @since 2022-9-5
  */
 public class TokenInfoTest {
 

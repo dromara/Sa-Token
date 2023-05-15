@@ -31,7 +31,7 @@ import cn.dev33.satoken.session.TokenSign;
  * SaSession 测试 
  * 
  * @author click33
- * @since: 2022-2-9 
+ * @since 2022-2-9 
  */
 public class SaSessionTest {
 

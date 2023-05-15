@@ -22,7 +22,7 @@ import cn.dev33.satoken.fun.SaRetFunction;
  * <p> 封装 SaStorage、SaSession、SaApplication 等存取值的一些固定方法，减少重复编码 </p>
  * 
  * @author click33
- * @since: 2022-8-17
+ * @since 2022-8-17
  */
 public interface SaSetValueInterface extends SaGetValueInterface {
 

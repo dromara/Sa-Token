@@ -26,7 +26,7 @@ import cn.dev33.satoken.config.SaTokenConfigFactory;
  * 配置类测试 
  * 
  * @author click33
- * @since: 2022-9-4
+ * @since 2022-9-4
  */
 public class SaTokenConfigTest {
 
