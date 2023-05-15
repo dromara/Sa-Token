@@ -16,14 +16,14 @@ SysUser user = (SysUser) StpUtil.getSession().get("user");
 
 在 Sa-Token 中，Session 分为三种，分别是：
 
-- `User-Session`: 指的是框架为每个 账号id 分配的 Session 
+- `Account-Session`: 指的是框架为每个 账号id 分配的 Session 
 - `Token-Session`: 指的是框架为每个 token 分配的 Session  
 - `Custom-Session`: 指的是以一个 特定的值 作为SessionId，来分配的 Session 
 
-> 有关User-Session与Token-Session的详细区别，可参考：[Session模型详解](/fun/session-model)
+> 有关Account-Session与Token-Session的详细区别，可参考：[Session模型详解](/fun/session-model)
 
 
-### User-Session
+### Account-Session
 有关账号Session的API如下：
 ``` java
 // 获取当前账号id的Session (必须是登录后才能调用)

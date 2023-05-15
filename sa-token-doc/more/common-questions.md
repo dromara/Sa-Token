@@ -562,8 +562,8 @@ SaRouter.match("/**").notMatch("/login", "/reg").check(r -> StpUtil.checkLogin()
 
 
 ### Q：StpUtil.getSession()必须登录后才能调用吗？如果我想在用户未登录之前存储一些数据应该怎么办？
-`StpUtil.getSession()`获取的是`User-Session`，必须登录后才能使用，如果需要在未登录状态下也使用Session功能，请使用`Token-Session` <br>
-步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 
+`StpUtil.getSession()`获取的是`Account-Session`，必须登录后才能使用，如果需要在未登录状态下也使用Session功能，请使用`Token-Session` <br>
+步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 。或者直接调用 `StpUtil.getAnonTokenSession()` 获取匿名 Token-Session。
 
 
 ### Q：我只使用header来传输token，还需要打开Cookie模式吗？

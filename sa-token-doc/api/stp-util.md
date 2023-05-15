@@ -72,7 +72,7 @@ StpUtil.getExtra(token, key);   // 获取指定 Token 的扩展信息（此函�
 
 ### 5、Session 相关
 ``` java
-// User-Session 相关 
+// Account-Session 相关 
 StpUtil.getSession();   // 获取当前会话的Session，如果Session尚未创建，则新建并返回 
 StpUtil.getSession(true);   // 获取当前会话的Session, 如果Session尚未创建，isCreate=是否新建并返回
 StpUtil.getSessionByLoginId(10001);   // 获取指定账号id的Session，如果Session尚未创建，则新建并返回
@@ -97,7 +97,7 @@ StpUtil.updateLastActivityToNow();   // 续签当前token：(将 [最后操作�
 
 // 长久有效期
 StpUtil.getTokenTimeout();   // 获取当前登录者的 token 剩余有效时间 (单位: 秒)
-StpUtil.getSessionTimeout();   // 获取当前登录者的 User-Session 剩余有效时间 (单位: 秒)
+StpUtil.getSessionTimeout();   // 获取当前登录者的 Account-Session 剩余有效时间 (单位: 秒)
 StpUtil.getTokenSessionTimeout();   // 获取当前 Token-Session 剩余有效时间 (单位: 秒) 
 StpUtil.renewTimeout(timeout);   // 对当前 Token 的 timeout 值进行续期 
 StpUtil.renewTimeout(token, timeout);   // 对指定 Token 的 timeout 值进行续期 

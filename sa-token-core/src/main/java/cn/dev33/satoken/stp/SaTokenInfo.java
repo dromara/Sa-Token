@@ -13,7 +13,7 @@ package cn.dev33.satoken.stp;
  *         "loginId": "10001",               // 此token对应的LoginId，未登录时为null
  *         "loginType": "login",              // 账号类型标识
  *         "tokenTimeout": 2591977,          // token剩余有效期 (单位: 秒)
- *         "sessionTimeout": 2591977,        // User-Session剩余有效时间 (单位: 秒)
+ *         "sessionTimeout": 2591977,        // Account-Session剩余有效时间 (单位: 秒)
  *         "tokenSessionTimeout": -2,        // Token-Session剩余有效时间 (单位: 秒) (-2表示系统中不存在这个缓存)
  *         "tokenActivityTimeout": -1,       // token剩余无操作有效时间 (单位: 秒)
  *         "loginDevice": "default-device"   // 登录设备类型

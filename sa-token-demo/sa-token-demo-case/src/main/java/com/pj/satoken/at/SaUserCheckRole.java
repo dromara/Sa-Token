@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.pj.satoken.StpUserUtil;
 import org.springframework.core.annotation.AliasFor;
 
 import cn.dev33.satoken.annotation.SaCheckRole;

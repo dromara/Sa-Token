@@ -24,7 +24,7 @@ Sa-Token 无意发明任何晦涩概念提升逼格，但在处理 issue 、Q群
 
 
 #### 三种Session：
-- User-Session：框架为每个账号分配的 Session 对象，也称：账号Session。 
+- Account-Session：框架为每个账号分配的 Session 对象，也称：账号Session。 
 - Token-Session：框架为每个 Token 分配的 Session 对象，也称：令牌Session。 
 - Custom-Session：以一个特定的值作为SessionId，来分配的 Session 对象，也称：自定义Session。
 

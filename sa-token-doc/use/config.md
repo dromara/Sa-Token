@@ -297,7 +297,7 @@ sa-token.oauth2.is-client=true
 配置含义：同一账号最大登录数量。
 
 在配置 `isConcurrent=true`, `isShare=false` 时，Sa-Token 将允许同一账号并发登录，且每次登录都会产生一个新Token，
-这些 Token 都会以 `TokenSign` 的形式记录在其 `User-Session` 之上，这就造成一个问题：
+这些 Token 都会以 `TokenSign` 的形式记录在其 `Account-Session` 之上，这就造成一个问题：
 
 随着同一账号登录的次数越来越多，TokenSign 的列表也会越来越大，极端情况下，列表长度可能达到成百上千以上，严重拖慢数据处理速度，
 为此 Sa-Token 对这个 TokenSign 列表的大小设定一个上限值，也就是 `maxLoginCount`，默认值=12。
@@ -310,7 +310,7 @@ sa-token.oauth2.is-client=true
 
 在调用 `StpUtil.login(id)` 登录后，
 
-- 调用 `StpUtil.getSession()` 可以获取这个会话的 `User-Session` 对象。
+- 调用 `StpUtil.getSession()` 可以获取这个会话的 `Account-Session` 对象。
 - 调用 `StpUtil.getTokenSession()` 可以获取这个会话 `Token-Session` 对象。
 
 关于两种 Session 有何区别，可以参考这篇：[Session模型详解](/fun/session-model)，此处暂不赘述。

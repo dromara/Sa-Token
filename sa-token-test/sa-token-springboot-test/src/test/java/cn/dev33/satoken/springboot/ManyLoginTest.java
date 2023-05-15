@@ -99,7 +99,7 @@ public class ManyLoginTest {
     	// token1会被标记为：已被顶下线 
     	Assertions.assertEquals(dao.get("satoken:login:token:" + token1), "-4");
     	
-    	// User-Session里的 token1 签名会被移除 
+    	// Account-Session里的 token1 签名会被移除 
     	List<TokenSign> tokenSignList = StpUtil.getSessionByLoginId(10001).getTokenSignList();
     	for (TokenSign tokenSign : tokenSignList) {
     		Assertions.assertNotEquals(tokenSign.getValue(), token1);
@@ -128,7 +128,7 @@ public class ManyLoginTest {
     	Assertions.assertNull(dao.get("satoken:login:token:" + token2));
     	Assertions.assertNull(dao.get("satoken:login:token:" + token3));
     	
-    	// User-Session也应该被清除掉 
+    	// Account-Session也应该被清除掉 
     	Assertions.assertNull(StpUtil.getSessionByLoginId(10001, false));
     	Assertions.assertNull(dao.getSession("satoken:login:session:" + 10001));
     }
@@ -155,7 +155,7 @@ public class ManyLoginTest {
     	Assertions.assertEquals(dao.get("satoken:login:token:" + token2), "-5");
     	Assertions.assertEquals(dao.get("satoken:login:token:" + token3), "-5");
     	
-    	// User-Session也应该被清除掉 
+    	// Account-Session也应该被清除掉 
     	Assertions.assertNull(StpUtil.getSessionByLoginId(10001, false));
     	Assertions.assertNull(dao.getSession("satoken:login:session:" + 10001));
     }
