@@ -349,6 +349,11 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-redisson-jackson</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-redisx</artifactId>
 				<version>${revision}</version>
 			</dependency>
