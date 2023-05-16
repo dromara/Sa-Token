@@ -145,7 +145,8 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			});
 			
 		} catch (StopMatchException e) {
-			
+			// StopMatchException 异常代表：停止匹配，进入Controller
+
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
 			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
