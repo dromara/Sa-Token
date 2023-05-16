@@ -34,13 +34,13 @@ public class SaTokenTagProcessor extends AbstractAttributeTagProcessor {
 
     Function <String, Boolean> fun;
 
-    public SaTokenTagProcessor(final String dialectPrefix, String arrtName, Function <String, Boolean> fun) { 
+    public SaTokenTagProcessor(final String dialectPrefix, String attrName, Function <String, Boolean> fun) {
         super(
             TemplateMode.HTML, // This processor will apply only to HTML mode
             dialectPrefix,     // Prefix to be applied to name for matching
             null,              // No tag name: match any tag name
             false,             // No prefix to be applied to tag name
-            arrtName,         // Name of the attribute that will be matched
+            attrName,         // Name of the attribute that will be matched
             true,              // Apply dialect prefix to attribute name
             10000,        		// Precedence (inside dialect's own precedence)
             true);             // Remove the matched attribute afterwards
@@ -53,9 +53,9 @@ public class SaTokenTagProcessor extends AbstractAttributeTagProcessor {
             final AttributeName attributeName, final String attributeValue,
             final IElementTagStructureHandler structureHandler) {
     	// 执行表达式返回值为false，则删除这个标签 
-    	if(this.fun.apply(attributeValue) == false) {
+    	if( ! this.fun.apply(attributeValue)) {
     		structureHandler.removeElement();
-    	};
+    	}
     }
     
 }

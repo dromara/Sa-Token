@@ -51,12 +51,12 @@ public class SaTokenDialect extends AbstractProcessorDialect {
      * 构造方言对象，使用自定义参数
 	 *
      * @param name 方言名称
-     * @param recedence 优先级 
+     * @param precedence 优先级
      * @param stpLogic 使用的 StpLogic 对象 
      */
-    public SaTokenDialect(String name, int recedence, StpLogic stpLogic) {
+    public SaTokenDialect(String name, int precedence, StpLogic stpLogic) {
     	// 名称、前缀、优先级 
-        super(name, name, recedence);
+        super(name, name, precedence);
         this.stpLogic = stpLogic;
     }
     
@@ -65,24 +65,24 @@ public class SaTokenDialect extends AbstractProcessorDialect {
      */
     @Override
     public Set<IProcessor> getProcessors(String prefix) {
-    	return new HashSet<IProcessor>(Arrays.asList(
-    			// 登录判断 
-    			new SaTokenTagProcessor(prefix, "login", value -> stpLogic.isLogin()),
-    			new SaTokenTagProcessor(prefix, "notLogin", value -> stpLogic.isLogin() == false),
-    			
-    			// 角色判断 
-    			new SaTokenTagProcessor(prefix, "hasRole", value -> stpLogic.hasRole(value)),
-    			new SaTokenTagProcessor(prefix, "hasRoleOr", value -> stpLogic.hasRoleOr(toArray(value))),
-    			new SaTokenTagProcessor(prefix, "hasRoleAnd", value -> stpLogic.hasRoleAnd(toArray(value))),
-    			new SaTokenTagProcessor(prefix, "lackRole", value -> stpLogic.hasRole(value) == false),
-    			
-    			// 权限判断 
-    			new SaTokenTagProcessor(prefix, "hasPermission", value -> stpLogic.hasPermission(value)),
-    			new SaTokenTagProcessor(prefix, "hasPermissionOr", value -> stpLogic.hasPermissionOr(toArray(value))),
-    			new SaTokenTagProcessor(prefix, "hasPermissionAnd", value -> stpLogic.hasPermissionAnd(toArray(value))),
-    			new SaTokenTagProcessor(prefix, "lackPermission", value -> stpLogic.hasPermission(value) == false)
-    			
-    		));
+    	return new HashSet<>(Arrays.asList(
+				// 登录判断
+				new SaTokenTagProcessor(prefix, "login", value -> stpLogic.isLogin()),
+				new SaTokenTagProcessor(prefix, "notLogin", value -> ! stpLogic.isLogin()),
+
+				// 角色判断
+				new SaTokenTagProcessor(prefix, "hasRole", value -> stpLogic.hasRole(value)),
+				new SaTokenTagProcessor(prefix, "hasRoleOr", value -> stpLogic.hasRoleOr(toArray(value))),
+				new SaTokenTagProcessor(prefix, "hasRoleAnd", value -> stpLogic.hasRoleAnd(toArray(value))),
+				new SaTokenTagProcessor(prefix, "lackRole", value -> ! stpLogic.hasRole(value)),
+
+				// 权限判断
+				new SaTokenTagProcessor(prefix, "hasPermission", value -> stpLogic.hasPermission(value)),
+				new SaTokenTagProcessor(prefix, "hasPermissionOr", value -> stpLogic.hasPermissionOr(toArray(value))),
+				new SaTokenTagProcessor(prefix, "hasPermissionAnd", value -> stpLogic.hasPermissionAnd(toArray(value))),
+				new SaTokenTagProcessor(prefix, "lackPermission", value -> ! stpLogic.hasPermission(value))
+
+		));
     }
 
     /**
@@ -92,7 +92,7 @@ public class SaTokenDialect extends AbstractProcessorDialect {
      */
     public String[] toArray(String str) {
     	List<String> list = SaFoxUtil.convertStringToList(str);
-    	return list.toArray(new String[list.size()]);
+    	return list.toArray(new String[0]);
     }
     
 }
