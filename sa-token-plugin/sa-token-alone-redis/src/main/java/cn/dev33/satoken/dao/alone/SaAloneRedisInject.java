@@ -194,7 +194,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				dao.isInit = false;
 				dao.init(factory);
 				return;
-			} catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException ignored) {
 			}
 			// 如果开发者引入的是：sa-token-redis-jackson
 			try {
@@ -203,7 +203,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				dao.isInit = false;
 				dao.init(factory);
 				return;
-			} catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException ignored) {
 			}
 			// 如果开发者引入的是：sa-token-redis-fastjson
 			try {
@@ -212,7 +212,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				dao.isInit = false;
 				dao.init(factory);
 				return;
-			} catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException ignored) {
 			}
 			// 如果开发者引入的是：sa-token-redis-fastjson2
 			try {
@@ -221,7 +221,7 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				dao.isInit = false;
 				dao.init(factory);
 				return;
-			} catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException ignored) {
 			}
 
 			// 至此，说明开发者一个 redis 插件也没引入，或者引入的 redis 插件不在 sa-token-alone-redis 的支持范围内
