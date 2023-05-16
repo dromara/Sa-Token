@@ -173,7 +173,7 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
         Set<String> keys = redisBucket.keys(prefix + "*" + keyword + "*");
-        List<String> list = new ArrayList<String>(keys);
+        List<String> list = new ArrayList<>(keys);
         return SaFoxUtil.searchList(list, start, size, sortType);
     }
 }
