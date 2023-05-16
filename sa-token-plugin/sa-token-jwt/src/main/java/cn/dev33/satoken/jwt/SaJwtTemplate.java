@@ -176,12 +176,12 @@ public class SaJwtTemplate {
     	
     	// 校验 Token 签名 
     	boolean verify = jwt.setKey(keyt.getBytes()).verify();
-    	if(verify == false) {
+    	if( ! verify) {
     		throw new SaJwtException("jwt 签名无效：" + token).setCode(SaJwtErrorCode.CODE_30202);
-    	};
+    	}
 
     	// 校验 loginType 
-    	if(Objects.equals(loginType, payloads.getStr(LOGIN_TYPE)) == false) {
+    	if( ! Objects.equals(loginType, payloads.getStr(LOGIN_TYPE))) {
     		throw new SaJwtException("jwt loginType 无效：" + token).setCode(SaJwtErrorCode.CODE_30203);
     	}
     	
@@ -262,7 +262,7 @@ public class SaJwtTemplate {
     	}
     	
     	// 取出数据 
-    	JWT jwt = null;
+    	JWT jwt;
     	try {
     		jwt = JWT.of(token);
 		} catch (JWTException e) {
@@ -273,12 +273,12 @@ public class SaJwtTemplate {
     	
     	// 如果签名无效 
     	boolean verify = jwt.setKey(keyt.getBytes()).verify();
-    	if(verify == false) {
+    	if( ! verify) {
     		return NOT_VALUE_EXPIRE;
-    	};
+    	}
 
     	// 如果 loginType  无效 
-    	if(Objects.equals(loginType, payloads.getStr(LOGIN_TYPE)) == false) {
+    	if( ! Objects.equals(loginType, payloads.getStr(LOGIN_TYPE))) {
     		return NOT_VALUE_EXPIRE;
     	}
     	
