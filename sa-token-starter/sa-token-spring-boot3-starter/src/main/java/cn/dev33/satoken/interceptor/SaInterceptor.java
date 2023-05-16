@@ -88,6 +88,7 @@ public class SaInterceptor implements HandlerInterceptor {
 	 * 每次请求之前触发的方法 
 	 */
 	@Override
+	@SuppressWarnings("all")
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
