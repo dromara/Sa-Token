@@ -104,8 +104,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		try {
 			Field field = GenericJackson2JsonRedisSerializer.class.getDeclaredField("mapper");
 			field.setAccessible(true);
-			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
-			this.objectMapper = objectMapper;
+			this.objectMapper = (ObjectMapper) field.get(valueSerializer);
 
 			// 配置[忽略未知字段]
 			this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -138,7 +137,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		stringTemplate.afterPropertiesSet();
 
 		// 构建RedisTemplate
-		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(connectionFactory);
 		template.setKeySerializer(keySerializer);
 		template.setHashKeySerializer(keySerializer);
@@ -308,7 +307,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	@Override
 	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
 		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
-		List<String> list = new ArrayList<String>(keys);
+		List<String> list = new ArrayList<>(keys);
 		return SaFoxUtil.searchList(list, start, size, sortType);
 	}
 	
