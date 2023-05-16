@@ -104,8 +104,7 @@ public class SaTokenDaoRedissonJackson implements SaTokenDao {
 		try {
 			Field field = GenericJackson2JsonRedisSerializer.class.getDeclaredField("mapper");
 			field.setAccessible(true);
-			ObjectMapper objectMapper = (ObjectMapper) field.get(valueSerializer);
-			this.objectMapper = objectMapper;
+			this.objectMapper = (ObjectMapper) field.get(valueSerializer);
 			// 配置[忽略未知字段]
 			this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			// 配置[时间类型转换]
