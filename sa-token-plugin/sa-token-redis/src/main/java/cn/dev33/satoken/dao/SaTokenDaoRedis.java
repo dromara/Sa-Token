@@ -71,7 +71,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		stringTemplate.afterPropertiesSet();
 
 		// 构建RedisTemplate
-		RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(connectionFactory);
 		template.setKeySerializer(keySerializer);
 		template.setHashKeySerializer(keySerializer);
@@ -241,7 +241,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 	@Override
 	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
 		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
-		List<String> list = new ArrayList<String>(keys);
+		List<String> list = new ArrayList<>(keys);
 		return SaFoxUtil.searchList(list, start, size, sortType);
 	}
 	
