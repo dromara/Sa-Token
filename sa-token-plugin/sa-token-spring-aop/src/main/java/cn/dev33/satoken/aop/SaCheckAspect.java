@@ -89,14 +89,9 @@ public class SaCheckAspect {
 			// 注解鉴权 
 			SaStrategy.me.checkMethodAnnotation.accept(method);
 		}
-		
-		try {
-			// 执行原有逻辑
-			Object obj = joinPoint.proceed();
-			return obj;
-		} catch (Throwable e) {
-			throw e;
-		}
+
+		// 执行原有逻辑
+		return joinPoint.proceed();
 	}
 
 }
