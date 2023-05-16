@@ -22,14 +22,14 @@ import java.util.regex.Pattern;
 
 public class PathAnalyzer {
 
-    private static Map<String, PathAnalyzer> cached = new LinkedHashMap<>();
-    private Pattern pattern;
+    private static final Map<String, PathAnalyzer> cached = new LinkedHashMap<>();
+    private final Pattern pattern;
 
     public static PathAnalyzer get(String expr) {
-        PathAnalyzer pa = (PathAnalyzer)cached.get(expr);
+        PathAnalyzer pa = cached.get(expr);
         if (pa == null) {
             synchronized(expr.intern()) {
-                pa = (PathAnalyzer)cached.get(expr);
+                pa = cached.get(expr);
                 if (pa == null) {
                     pa = new PathAnalyzer(expr);
                     cached.put(expr, pa);
@@ -41,7 +41,7 @@ public class PathAnalyzer {
     }
 
     private PathAnalyzer(String expr) {
-        this.pattern = Pattern.compile(exprCompile(expr), 2);
+        this.pattern = Pattern.compile(exprCompile(expr), Pattern.CASE_INSENSITIVE);
     }
 
     public Matcher matcher(String uri) {
@@ -57,7 +57,7 @@ public class PathAnalyzer {
         p = p.replace("$", "\\$");
         p = p.replace("**", ".[]");
         p = p.replace("*", "[^/]*");
-        if (p.indexOf("{") >= 0) {
+        if (p.contains("{")) {
             if (p.indexOf("_}") > 0) {
                 p = p.replaceAll("\\{[^\\}]+?\\_\\}", "(.+?)");
             }

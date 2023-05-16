@@ -37,7 +37,7 @@ import java.util.List;
 public class SaRedisCache implements JbootCache {
     protected JbootRedisConfig config;
     protected JedisPool jedisPool;
-    private ThreadLocal<String> CACHE_NAME_PREFIX_TL = new ThreadLocal<>();
+    private final ThreadLocal<String> CACHE_NAME_PREFIX_TL = new ThreadLocal<>();
 
 	public SaRedisCache(JbootRedisConfig config) {
         this.config = config;
@@ -247,7 +247,7 @@ public class SaRedisCache implements JbootCache {
             return jedisPool.getResource();
         } catch (JedisConnectionException e) {
             throw new JbootIllegalConfigException("can not connect to redis host  " + config.getHost() + ":" + config.getPort() + " ," +
-                    " cause : " + e.toString(), e);
+                    " cause : " + e, e);
         }
     }
 
