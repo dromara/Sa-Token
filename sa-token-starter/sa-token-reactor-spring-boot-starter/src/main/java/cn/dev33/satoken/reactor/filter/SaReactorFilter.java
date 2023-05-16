@@ -15,19 +15,10 @@
  */
 package cn.dev33.satoken.reactor.filter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import cn.dev33.satoken.filter.SaFilter;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
@@ -35,7 +26,15 @@ import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.reactor.error.SaReactorSpringBootErrorCode;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Reactor 全局鉴权过滤器
@@ -145,7 +144,8 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			});
 			
 		} catch (StopMatchException e) {
-			
+			// StopMatchException 异常代表：停止匹配，进入Controller
+
 		} catch (Throwable e) {
 			// 1. 获取异常处理策略结果 
 			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));

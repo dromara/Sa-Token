@@ -121,7 +121,7 @@ public class SaRequestForReactor implements SaRequest {
 	 */
 	public String getUrl() {
 		String currDomain = SaManager.getConfig().getCurrDomain();
-		if(SaFoxUtil.isEmpty(currDomain) == false) {
+		if( ! SaFoxUtil.isEmpty(currDomain)) {
 			return currDomain + this.getRequestPath();
 		}
 		return request.getURI().toString();
