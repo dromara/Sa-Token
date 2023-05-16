@@ -15,19 +15,17 @@
  */
 package cn.dev33.satoken.interceptor;
 
-import java.lang.reflect.Method;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
-
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.strategy.SaStrategy;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 /**
  * Sa-Token 综合拦截器，提供注解鉴权和路由拦截鉴权能力 
@@ -89,9 +87,10 @@ public class SaInterceptor implements HandlerInterceptor {
 	 * 每次请求之前触发的方法 
 	 */
 	@Override
+	@SuppressWarnings("all")
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
+
 		try {
 
 			// 这里必须确保 handler 是 HandlerMethod 类型时，才能进行注解鉴权

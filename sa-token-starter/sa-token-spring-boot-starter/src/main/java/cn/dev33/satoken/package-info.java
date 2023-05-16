@@ -1,6 +1,3 @@
-/**
- * sa-token集成SpringBoot的各个组件 
- */
 /*
  * Copyright 2020-2099 sa-token.cc
  *
@@ -15,5 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/**
+ * Sa-Token 集成 SpringBoot 的各个组件 
  */
 package cn.dev33.satoken;
