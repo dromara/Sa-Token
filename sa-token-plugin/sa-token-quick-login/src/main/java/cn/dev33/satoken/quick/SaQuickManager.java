@@ -29,7 +29,7 @@ public class SaQuickManager {
 	/**
 	 * 配置文件 Bean 
 	 */
-	private static SaQuickConfig config;	
+	private static volatile SaQuickConfig config;
 	public static void setConfig(SaQuickConfig config) {
 		SaQuickManager.config = config;
 		// 如果配置了 auto=true，则随机生成账号名密码

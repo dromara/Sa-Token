@@ -75,7 +75,7 @@ public class SaQuickRegister {
 					.notMatch(SaQuickManager.getConfig().getExclude().split(","))
 					.check(r -> {
 						// 未登录时直接转发到login.html页面 
-						if (SaQuickManager.getConfig().getAuth() && StpUtil.isLogin() == false) {
+						if (SaQuickManager.getConfig().getAuth() && ! StpUtil.isLogin()) {
 							SaHolder.getRequest().forward("/saLogin");
 							SaRouter.back();
 						}
