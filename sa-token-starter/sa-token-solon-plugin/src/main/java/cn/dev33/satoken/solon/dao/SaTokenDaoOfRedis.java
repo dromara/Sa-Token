@@ -16,7 +16,6 @@
 package cn.dev33.satoken.solon.dao;
 
 import org.noear.redisx.RedisClient;
-import org.noear.solon.annotation.Note;
 
 import java.util.Properties;
 
@@ -35,4 +34,5 @@ public class SaTokenDaoOfRedis extends SaTokenDaoOfRedisBase64 {
     public SaTokenDaoOfRedis(RedisClient redisClient) {
         super(redisClient);
     }
+
 }

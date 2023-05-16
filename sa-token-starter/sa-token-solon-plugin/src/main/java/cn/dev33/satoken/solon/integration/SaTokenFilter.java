@@ -34,9 +34,9 @@ import java.util.List;
 
 /**
  * sa-token 基于路由的过滤式鉴权（增加了注解的处理）；使用优先级要低些
- *
+ * <p>
  * 对静态文件有处理效果
- *
+ * <p>
  * order: -100 (SaTokenInterceptor 和 SaTokenFilter 二选一；不要同时用)
  *
  * @author noear
@@ -152,6 +152,7 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 				}
 			});
 		} catch (StopMatchException e) {
+			// StopMatchException 异常代表：停止匹配，进入Controller
 
 		} catch (SaTokenException e) {
 			// 1. 获取异常处理策略结果

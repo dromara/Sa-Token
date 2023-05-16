@@ -24,9 +24,9 @@ package cn.dev33.satoken.solon.error;
 public interface SaSolonErrorCode {
 
 	/** 默认的拦截器异常处理函数 */
-	public static final int CODE_20301 = 20301;
+	int CODE_20301 = 20301;
 
 	/** 默认的 Filter 异常处理函数 */
-	public static final int CODE_20302 = 20302;
+	int CODE_20302 = 20302;
 
 }
