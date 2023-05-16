@@ -80,13 +80,10 @@ public class SaJwtUtil {
      * @return Claims对象 
      */
     public static Claims parseToken(String jwtToken, String keyt) {
-    	// 解析出载荷 
-    	Claims claims = Jwts.parser()
-        		.setSigningKey(keyt.getBytes())
-        		.parseClaimsJws(jwtToken).getBody();
-
-        // 返回 
-        return claims;
+    	// 解析出载荷
+        return Jwts.parser()
+				.setSigningKey(keyt.getBytes())
+				.parseClaimsJws(jwtToken).getBody();
     }
 
     /**

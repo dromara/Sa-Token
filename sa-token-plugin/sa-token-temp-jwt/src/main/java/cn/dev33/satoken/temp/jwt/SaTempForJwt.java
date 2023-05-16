@@ -35,8 +35,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public String createToken(String service, Object value, long timeout) {
-		String token = SaJwtUtil.createToken(service, value, timeout, getJwtSecretKey());
-		return token;
+		return SaJwtUtil.createToken(service, value, timeout, getJwtSecretKey());
 	}
 	
 	/**
@@ -44,8 +43,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public Object parseToken(String service, String token) {
-		Object value = SaJwtUtil.getValue(service, token, getJwtSecretKey());
-		return value;
+		return SaJwtUtil.getValue(service, token, getJwtSecretKey());
 	}
 	
 	/**
@@ -53,8 +51,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public long getTimeout(String service, String token) {
-		long timeout = SaJwtUtil.getTimeout(service, token, getJwtSecretKey());
-		return timeout;
+		return SaJwtUtil.getTimeout(service, token, getJwtSecretKey());
 	}
 
 	/**
