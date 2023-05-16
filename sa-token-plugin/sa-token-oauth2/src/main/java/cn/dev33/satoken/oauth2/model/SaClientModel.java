@@ -215,7 +215,6 @@ public class SaClientModel implements Serializable {
 	
 	/**
 	 * @return 此 Client 是否打开模式：凭证式（Client Credentials）
-	 * @return 对象自身 
 	 */
 	public Boolean getIsClient() {
 		return isClient;

@@ -116,7 +116,7 @@ public class AccessTokenModel implements Serializable {
 	 * @return 属性转Map
 	 */
 	public Map<String, Object> toLineMap() {
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("access_token", accessToken);
 		map.put("refresh_token", refreshToken);
 		map.put("expires_in", getExpiresIn());

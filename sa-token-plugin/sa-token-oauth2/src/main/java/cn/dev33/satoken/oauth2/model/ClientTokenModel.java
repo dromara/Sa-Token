@@ -84,7 +84,7 @@ public class ClientTokenModel implements Serializable {
 	 * @return 属性转Map 
 	 */
 	public Map<String, Object> toLineMap() {
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("client_token", clientToken);
 		map.put("expires_in", getExpiresIn());
 		map.put("client_id", clientId);

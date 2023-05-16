@@ -28,7 +28,7 @@ public class SaOAuth2Manager {
 	/**
 	 * OAuth2 配置 Bean 
 	 */
-	private static SaOAuth2Config config;
+	private static volatile SaOAuth2Config config;
 	public static SaOAuth2Config getConfig() {
 		if (config == null) {
 			// 初始化默认值
