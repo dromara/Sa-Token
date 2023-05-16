@@ -94,7 +94,7 @@ public class SaSsoProcessor {
 		
 		// ---------- 此处有两种情况分开处理：
 		// ---- 情况1：在SSO认证中心尚未登录，需要先去登录 
-		if(stpLogic.isLogin() == false) {
+		if( ! stpLogic.isLogin()) {
 			return cfg.getNotLoginView().get();
 		}
 		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
@@ -164,7 +164,7 @@ public class SaSsoProcessor {
 		ParamName paramName = ssoTemplate.paramName;
 		
 		// SSO-Server端：单点注销 [用户访问式]   (不带loginId参数) 
-		if(cfg.getIsSlo() && req.hasParam(paramName.loginId) == false) {
+		if(cfg.getIsSlo() && ! req.hasParam(paramName.loginId)) {
 			return ssoSignoutByUserVisit();
 		}
 		
@@ -310,7 +310,7 @@ public class SaSsoProcessor {
 		SaSsoConfig cfg = SaSsoManager.getConfig();
 		
 		// ---------- SSO-Client端：单点注销 [模式二]
-		if(cfg.getIsSlo() && cfg.getIsHttp() == false) {
+		if(cfg.getIsSlo() && ! cfg.getIsHttp()) {
 			return ssoLogoutType2();
 		}
 
@@ -353,7 +353,7 @@ public class SaSsoProcessor {
 		StpLogic stpLogic = ssoTemplate.getStpLogic();
 		
 		// 如果未登录，则无需注销 
-        if(stpLogic.isLogin() == false) {
+        if( ! stpLogic.isLogin()) {
         	return ssoLogoutBack(req, res);
         }
         
