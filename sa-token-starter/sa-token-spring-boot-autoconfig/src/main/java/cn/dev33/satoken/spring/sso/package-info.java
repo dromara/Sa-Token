@@ -1,6 +1,3 @@
-/**
- * Sa-Token-SSO 模块自动化配置（只有引入了 sa-token-sso 模块后，此包下的代码才会开始工作）
- */
 /*
  * Copyright 2020-2099 sa-token.cc
  *
@@ -15,5 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+/**
+ * Sa-Token-SSO 模块自动化配置（只有引入了 sa-token-sso 模块后，此包下的代码才会开始工作）
  */
 package cn.dev33.satoken.spring.sso;
