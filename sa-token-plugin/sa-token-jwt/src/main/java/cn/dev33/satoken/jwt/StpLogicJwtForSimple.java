@@ -81,12 +81,20 @@ public class StpLogicJwtForSimple extends StpLogic {
 		return SaJwtUtil.getPayloadsNotCheck(tokenValue, loginType, jwtSecretKey()).get(key);
 	}
 
-	
+
 	@Override
 	public boolean getConfigOfIsShare() {
 		// 为确保 jwt-simple 模式的 token Extra 数据生成不受旧token影响，这里必须让 is-share 恒为 false 
 		// 即：在使用 jwt-simple 模式后，即使配置了 is-share=true 也不能复用旧 Token，必须每次创建新 Token 
 		return false;
 	}
-	
+
+	/**
+	 * 重写返回：支持 extra 扩展参数
+	 */
+	@Override
+	public boolean isSupportExtra() {
+		return true;
+	}
+
 }

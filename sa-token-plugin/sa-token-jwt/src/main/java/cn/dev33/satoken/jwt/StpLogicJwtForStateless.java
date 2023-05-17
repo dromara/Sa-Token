@@ -15,8 +15,6 @@
  */
 package cn.dev33.satoken.jwt;
 
-import java.util.Map;
-
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
@@ -28,6 +26,8 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.util.Map;
 
 /**
  * Sa-Token 整合 jwt -- Stateless 无状态模式
@@ -106,17 +106,20 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
-		SaJwtException.throwByNull(id, "账号id不能为空", SaJwtErrorCode.CODE_30206);
-		
-		// ------ 1、初始化 loginModel 
+
+		// 1、先检查一下，传入的参数是否有效
+		checkLoginArgs(id, loginModel);
+
+		// 2、初始化 loginModel ，给一些参数补上默认值
 		loginModel.build(getConfig());
 		
-		// ------ 2、生成一个token  
+		// 3、生成一个token
 		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
 		
-		// $$ 发布事件：账号xxx 登录成功 
+		// 4、$$ 发布事件：账号xxx 登录成功
 		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
-		
+
+		// 5、返回
 		return tokenValue;
 	}
 
@@ -212,6 +215,13 @@ public class StpLogicJwtForStateless extends StpLogic {
 	public SaTokenDao getSaTokenDao() {
 		throw new ApiDisabledException();
 	}
-	
-	
+
+	/**
+	 * 重写返回：支持 extra 扩展参数
+	 */
+	@Override
+	public boolean isSupportExtra() {
+		return true;
+	}
+
 }

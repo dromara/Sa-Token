@@ -26,6 +26,7 @@ public class TestController {
 	@RequestMapping("test")
 	public SaResult test() {
 		System.out.println("------------进来了");
+		StpUtil.getExtra("name");
 		// 返回
 		return SaResult.data("");
 	}

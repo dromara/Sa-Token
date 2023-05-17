@@ -245,4 +245,12 @@ public class StpLogicJwtForMixin extends StpLogic {
 		return -1;
 	}
 
+	/**
+	 * 重写返回：支持 extra 扩展参数
+	 */
+	@Override
+	public boolean isSupportExtra() {
+		return true;
+	}
+
 }

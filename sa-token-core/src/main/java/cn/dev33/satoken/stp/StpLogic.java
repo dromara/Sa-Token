@@ -394,10 +394,8 @@ public class StpLogic {
 	 */
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
 
-		// 1、先检查一下，传入的账号id是否可用
-		if(SaFoxUtil.isEmpty(id)) {
-			throw new SaTokenException("账号 id 不能为空").setCode(SaErrorCode.CODE_11002);
-		}
+		// 1、先检查一下，传入的参数是否有效
+		checkLoginArgs(id, loginModel);
 		
 		// 2、初始化 loginModel ，给一些参数补上默认值
 		SaTokenConfig config = getConfig();
@@ -483,7 +481,36 @@ public class StpLogic {
 				}
 		);
 	}
-	
+
+	/**
+	 * 校验登录时的参数有效性，如果有问题会打印警告或抛出异常
+	 *
+	 * @param id 账号id
+	 * @param loginModel 此次登录的参数Model
+	 */
+	protected void checkLoginArgs(Object id, SaLoginModel loginModel) {
+
+		// 1、先检查一下，传入的账号id是否可用
+		if(SaFoxUtil.isEmpty(id)) {
+			throw new SaTokenException("loginId 不能为空").setCode(SaErrorCode.CODE_11002);
+		}
+
+		// 2、判断账号id是否为简单类型
+		if( ! SaFoxUtil.isBasicType(id.getClass())) {
+			SaManager.log.warn("loginId 应该为简单类型，例如：String | int | long，不推荐使用复杂类型：" + id.getClass());
+		}
+
+		// 3、判断当前 StpLogic 是否支持 extra 扩展参数
+		if( ! isSupportExtra()) {
+			// 如果不支持，开发者却传入了 extra 扩展参数，那么就打印警告信息
+			Map<String, Object> extraData = loginModel.getExtraData();
+			if(extraData != null && extraData.size() > 0) {
+				SaManager.log.warn("当前 StpLogic 不支持 extra 扩展参数模式，传入的 extra 数据将被忽略");
+			}
+		}
+
+	}
+
 	// --- 注销 
 	
 	/** 
@@ -959,7 +986,7 @@ public class StpLogic {
 	 * @return 对应的扩展数据 
 	 */
 	public Object getExtra(String key) {
-		throw new ApiDisabledException().setCode(SaErrorCode.CODE_11031);
+		throw new ApiDisabledException("只有在集成 sa-token-jwt 插件后才可以使用 extra 扩展参数").setCode(SaErrorCode.CODE_11031);
 	}
 
 	/**
@@ -970,7 +997,7 @@ public class StpLogic {
 	 * @return 对应的扩展数据
 	 */
 	public Object getExtra(String tokenValue, String key) {
-		throw new ApiDisabledException().setCode(SaErrorCode.CODE_11031);
+		throw new ApiDisabledException("只有在集成 sa-token-jwt 插件后才可以使用 extra 扩展参数").setCode(SaErrorCode.CODE_11031);
 	}
 
 	// ---- 其它操作
@@ -2640,7 +2667,6 @@ public class StpLogic {
 		return getConfig().getMaxTryTimes();
 	}
 
-
 	/**
 	 * 返回持久化对象
 	 *
@@ -2659,6 +2685,15 @@ public class StpLogic {
 	 */
 	public boolean hasElement(List<String> list, String element) {
 		return SaStrategy.me.hasElement.apply(list, element);
+	}
+
+	/**
+	 * 当前 StpLogic 对象是否支持 token 扩展参数
+	 *
+	 * @return /
+	 */
+	public boolean isSupportExtra() {
+		return false;
 	}
 
 }
