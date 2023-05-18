@@ -91,7 +91,10 @@ public interface SaErrorCode {
 
 	/** Token已被冻结 */
 	int CODE_11016 = 11016;
-	
+
+	/** 前端未按照指定的前缀提交 token */
+	int CODE_11017 = 11017;
+
 	/** 在未集成 sa-token-jwt 插件时调用 getExtra() 抛出异常 */
 	int CODE_11031 = 11031;
 

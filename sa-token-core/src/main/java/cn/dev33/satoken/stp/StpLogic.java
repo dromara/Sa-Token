@@ -41,6 +41,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import static cn.dev33.satoken.exception.NotLoginException.*;
+
+
 /**
  * Sa-Token 权限认证，逻辑实现类
  *
@@ -230,25 +233,48 @@ public class StpLogic {
 	 * @return 当前tokenValue
 	 */
 	public String getTokenValue(){
-		// 1. 获取
+		return getTokenValue(false);
+	}
+
+	/**
+	 * 获取当前请求的 token 值
+	 *
+	 * @param noPrefixThrowException 如果提交的 token 不带有指定的前缀，是否抛出异常
+	 * @return 当前tokenValue
+	 */
+	public String getTokenValue(boolean noPrefixThrowException){
+
+		// 1、获取前端提交的 token （包含前缀值）
 		String tokenValue = getTokenValueNotCut();
-		
-		// 2. 如果打开了前缀模式，则裁剪掉它
+
+		// 2、如果全局配置打开了前缀模式，则二次处理一下
 		String tokenPrefix = getConfig().getTokenPrefix();
 		if(SaFoxUtil.isNotEmpty(tokenPrefix)) {
-			// 如果 token 并没有按照指定的前缀开头，则视为未提供token
-			if(SaFoxUtil.isEmpty(tokenValue) || ! tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
+
+			// 情况2.1：如果提交的 token 为空，则转为 null
+			if(SaFoxUtil.isEmpty(tokenValue)) {
 				tokenValue = null;
-			} else {
-				// 裁剪掉前缀
+			}
+
+			// 情况2.2：如果 token 有值，但是并不是以指定的前缀开头
+			else if(! tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
+				if(noPrefixThrowException) {
+					throw NotLoginException.newInstance(loginType, NO_PREFIX, NO_PREFIX_MESSAGE + "，prefix=" + tokenPrefix, null).setCode(SaErrorCode.CODE_11017);
+				} else {
+					tokenValue = null;
+				}
+			}
+
+			// 情况2.3：代码至此，说明 token 有值，且是以指定的前缀开头的，现在裁剪掉前缀
+			else {
 				tokenValue = tokenValue.substring(tokenPrefix.length() + SaTokenConsts.TOKEN_CONNECTOR_CHAT.length());
 			}
 		}
-		
-		// 3. 返回 
+
+		// 3、返回
 		return tokenValue;
 	}
-	
+
 	/**
 	 * 获取当前请求的 token 值 （不裁剪前缀）
 	 *
@@ -290,9 +316,9 @@ public class StpLogic {
 	 * @return / 
 	 */
 	public String getTokenValueNotNull(){
-		String tokenValue = getTokenValue();
+		String tokenValue = getTokenValue(true);
 		if(SaFoxUtil.isEmpty(tokenValue)) {
-			throw new SaTokenException("未能读取到有效Token").setCode(SaErrorCode.CODE_11001);
+			throw NotLoginException.newInstance(loginType, NOT_TOKEN, NOT_TOKEN_MESSAGE, null).setCode(SaErrorCode.CODE_11001);
 		}
 		return tokenValue;
 	}
@@ -824,30 +850,30 @@ public class StpLogic {
 		}
 
  		// 2、如果前端没有提交 token，则抛出异常: 未能读取到有效 token
- 		String tokenValue = getTokenValue();
+ 		String tokenValue = getTokenValue(true);
  		if(SaFoxUtil.isEmpty(tokenValue)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.NOT_TOKEN).setCode(SaErrorCode.CODE_11011);
+			throw NotLoginException.newInstance(loginType, NOT_TOKEN, NOT_TOKEN_MESSAGE, null).setCode(SaErrorCode.CODE_11011);
  		}
 
  		// 3、查找此 token 对应的 loginId，如果找不到则抛出：token 无效
  		String loginId = getLoginIdNotHandle(tokenValue);
  		if(SaFoxUtil.isEmpty(loginId)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.INVALID_TOKEN, tokenValue).setCode(SaErrorCode.CODE_11012);
+			throw NotLoginException.newInstance(loginType, INVALID_TOKEN, INVALID_TOKEN_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11012);
  		}
 
  		// 4、如果这个 token 指向的是值是：过期标记，则抛出：token 已过期
  		if(loginId.equals(NotLoginException.TOKEN_TIMEOUT)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue).setCode(SaErrorCode.CODE_11013);
+			throw NotLoginException.newInstance(loginType, TOKEN_TIMEOUT, TOKEN_TIMEOUT_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11013);
  		}
 
  		// 5、如果这个 token 指向的是值是：被顶替标记，则抛出：token 已被顶下线
  		if(loginId.equals(NotLoginException.BE_REPLACED)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.BE_REPLACED, tokenValue).setCode(SaErrorCode.CODE_11014);
+			throw NotLoginException.newInstance(loginType, BE_REPLACED, BE_REPLACED_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11014);
  		}
 
  		// 6、如果这个 token 指向的是值是：被踢下线标记，则抛出：token 已被踢下线
  		if(loginId.equals(NotLoginException.KICK_OUT)) {
- 			throw NotLoginException.newInstance(loginType, NotLoginException.KICK_OUT, tokenValue).setCode(SaErrorCode.CODE_11015);
+			throw NotLoginException.newInstance(loginType, KICK_OUT, KICK_OUT_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11015);
  		}
 
  		// 7、检查此 token 的最后活跃时间是否已经超过了 activity-timeout 的限制，
@@ -1347,7 +1373,7 @@ public class StpLogic {
 
 		// 3、值为 -2 代表已被冻结，此时需要抛出异常
 		if(timeout == SaTokenDao.NOT_VALUE_EXPIRE) {
-			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_FREEZE, tokenValue).setCode(SaErrorCode.CODE_11016);
+			throw NotLoginException.newInstance(loginType, TOKEN_FREEZE, TOKEN_FREEZE_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11016);
 		}
  		// --- 至此，验证已通过 
 

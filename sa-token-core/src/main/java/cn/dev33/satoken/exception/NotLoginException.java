@@ -15,10 +15,10 @@
  */
 package cn.dev33.satoken.exception;
 
+import cn.dev33.satoken.util.SaFoxUtil;
+
 import java.util.Arrays;
 import java.util.List;
-
-import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * 一个异常：代表会话未能通过登录认证校验
@@ -65,6 +65,10 @@ public class NotLoginException extends SaTokenException {
 	public static final String TOKEN_FREEZE = "-6";
 	public static final String TOKEN_FREEZE_MESSAGE = "token 已被冻结";
 
+	/** 表示 未按照指定前缀提交 token */
+	public static final String NO_PREFIX = "-7";
+	public static final String NO_PREFIX_MESSAGE = "未按照指定前缀提交 token";
+
 	/** 默认的提示语 */
 	public static final String DEFAULT_MESSAGE = "当前会话未登录";
 	
@@ -72,7 +76,8 @@ public class NotLoginException extends SaTokenException {
 	/** 
 	 * 代表异常 token 的标志集合
 	 */
-	public static final List<String> ABNORMAL_LIST = Arrays.asList(NOT_TOKEN, INVALID_TOKEN, TOKEN_TIMEOUT, BE_REPLACED, KICK_OUT, TOKEN_FREEZE);
+	public static final List<String> ABNORMAL_LIST =
+			Arrays.asList(NOT_TOKEN, INVALID_TOKEN, TOKEN_TIMEOUT, BE_REPLACED, KICK_OUT, TOKEN_FREEZE, NO_PREFIX);
 	
 
 	/**
@@ -101,61 +106,29 @@ public class NotLoginException extends SaTokenException {
 	public String getLoginType() {
 		return loginType;
 	}
-	
-	
+
 	/**
-	 * 构造方法创建一个 
-	 * @param message 异常消息 
+	 * 构造方法创建一个
+	 * @param message 异常消息
 	 * @param loginType 账号类型
-	 * @param type 类型 
+	 * @param type 类型
 	 */
 	public NotLoginException(String message, String loginType, String type) {
-		super(message);	
+		super(message);
         this.loginType = loginType;
         this.type = type;
     }
-	
-	/**
-	 * 静态方法构建一个NotLoginException 
-	 * @param loginType 账号类型
-	 * @param type 账号类型 
-	 * @return 构建完毕的异常对象 
-	 */
-	public static NotLoginException newInstance(String loginType, String type) {
-		return newInstance(loginType, type, null);
-    }
 
 	/**
-	 * 静态方法构建一个NotLoginException 
+	 * 静态方法构建一个 NotLoginException
 	 * @param loginType 账号类型
-	 * @param type 账号类型 
-	 * @param token 引起异常的Token值 
-	 * @return 构建完毕的异常对象 
+	 * @param type 未登录场景值
+	 * @param message 异常描述信息
+	 * @param token 引起异常的 token 值，可不填，如果填了会拼接到异常描述信息后面
+	 * @return 构建完毕的异常对象
 	 */
-	public static NotLoginException newInstance(String loginType, String type, String token) {
-		String message;
-		if(NOT_TOKEN.equals(type)) {
-			message = NOT_TOKEN_MESSAGE;
-		}
-		else if(INVALID_TOKEN.equals(type)) {
-			message = INVALID_TOKEN_MESSAGE;
-		}
-		else if(TOKEN_TIMEOUT.equals(type)) {
-			message = TOKEN_TIMEOUT_MESSAGE;
-		}
-		else if(BE_REPLACED.equals(type)) {
-			message = BE_REPLACED_MESSAGE;
-		}
-		else if(KICK_OUT.equals(type)) {
-			message = KICK_OUT_MESSAGE;
-		}
-		else if(TOKEN_FREEZE.equals(type)) {
-			message = TOKEN_FREEZE_MESSAGE;
-		}
-		else {
-			message = DEFAULT_MESSAGE;
-		}
-		if( ! SaFoxUtil.isEmpty(token)) {
+	public static NotLoginException newInstance(String loginType, String type, String message, String token) {
+		if(SaFoxUtil.isNotEmpty(token)) {
 			message = message + "：" + token;
 		}
 		return new NotLoginException(message, loginType, type);
