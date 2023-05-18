@@ -328,8 +328,9 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * @param tokenValue token值
 	 * @param device 设备类型
 	 */
+	@Deprecated
 	public void addTokenSign(String tokenValue, String device) {
-		addTokenSign(new TokenSign(tokenValue, device));
+		addTokenSign(new TokenSign(tokenValue, device, null));
 	}
 
 	/**

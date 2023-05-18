@@ -43,6 +43,11 @@ public class TokenSign implements Serializable {
 	private String device;
 
 	/**
+	 * 此客户端登录的挂载数据
+	 */
+	private Object tag;
+
+	/**
 	 * 构建一个
 	 */
 	public TokenSign() {
@@ -53,10 +58,12 @@ public class TokenSign implements Serializable {
 	 *
 	 * @param value  Token 值
 	 * @param device 所属设备类型
+	 * @param tag 此客户端登录的挂载数据
 	 */
-	public TokenSign(String value, String device) {
+	public TokenSign(String value, String device, Object tag) {
 		this.value = value;
 		this.device = device;
+		this.tag = tag;
 	}
 
 	/**
@@ -95,10 +102,30 @@ public class TokenSign implements Serializable {
 		return this;
 	}
 
+	/**
+	 * 获取 此客户端登录的挂载数据
+	 *
+	 * @return /
+	 */
+	public Object getTag() {
+		return this.tag;
+	}
+
+	/**
+	 * 设置 此客户端登录的挂载数据
+	 *
+	 * @param tag /
+	 * @return 对象自身
+	 */
+	public TokenSign setTag(Object tag) {
+		this.tag = tag;
+		return this;
+	}
+
 	//
 	@Override
 	public String toString() {
-		return "TokenSign [value=" + value + ", device=" + device + "]";
+		return "TokenSign [value=" + value + ", device=" + device + ", tag=" + tag + "]";
 	}
 
 }

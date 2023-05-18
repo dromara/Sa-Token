@@ -95,6 +95,16 @@ public class SaLoginConfig {
 	}
 
 	/**
+	 * 设置 本次登录挂载到 TokenSign 的数据
+	 *
+	 * @param tokenSignTag /
+	 * @return 登录参数 Model
+	 */
+	public static SaLoginModel setTokenSignTag(Object tokenSignTag) {
+		return create().setTokenSignTag(tokenSignTag);
+	}
+
+	/**
 	 * 静态方法获取一个 SaLoginModel 对象
 	 * @return SaLoginModel 对象 
 	 */

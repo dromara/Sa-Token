@@ -435,7 +435,8 @@ public class StpLogic {
 		session.updateMinTimeout(loginModel.getTimeout());
 		
 		// 5、在 Account-Session 上记录本次登录的 token 签名
-		session.addTokenSign(tokenValue, loginModel.getDeviceOrDefault());
+		TokenSign tokenSign = new TokenSign(tokenValue, loginModel.getDeviceOrDefault(), loginModel.getTokenSignTag());
+		session.addTokenSign(tokenSign);
 
 		// 6、保存 token -> id 的映射关系，方便日后根据 token 找账号 id
 		saveTokenToIdMapping(tokenValue, id, loginModel.getTimeout());

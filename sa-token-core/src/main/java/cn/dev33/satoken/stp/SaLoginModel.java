@@ -63,8 +63,11 @@ public class SaLoginModel {
 
 	/** 是否在登录后将 Token 写入到响应头 */
 	private Boolean isWriteHeader;
-	
-	
+
+	/** 本次登录挂载到 TokenSign 的数据 */
+	private Object tokenSignTag;
+
+
 	/**
 	 * @return 此次登录的客户端设备类型
 	 */
@@ -191,6 +194,25 @@ public class SaLoginModel {
 		return this;
 	}
 
+	/**
+	 * 获取 本次登录挂载到 TokenSign 的数据
+	 *
+	 * @return tokenSignTag 本次登录挂载到 TokenSign 的数据
+	 */
+	public Object getTokenSignTag() {
+		return this.tokenSignTag;
+	}
+
+	/**
+	 * 设置 本次登录挂载到 TokenSign 的数据
+	 *
+	 * @param tokenSignTag 本次登录挂载到 TokenSign 的数据
+	 * @return 对象自身
+	 */
+	public SaLoginModel setTokenSignTag(Object tokenSignTag) {
+		this.tokenSignTag = tokenSignTag;
+		return this;
+	}
 	/*
 	 * toString 
 	 */
@@ -203,6 +225,7 @@ public class SaLoginModel {
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader
+				+ ", tokenSignTag=" + tokenSignTag
 				+ "]";
 	}
 
