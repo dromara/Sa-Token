@@ -466,7 +466,7 @@ public class SaFoxUtil {
 	/**
 	 * 验证URL的正则表达式
 	 */
-	public static final String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]";
+	public static String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]";
 
 	/**
 	 * 使用正则表达式判断一个字符串是否为URL
