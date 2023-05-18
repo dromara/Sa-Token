@@ -15,6 +15,7 @@
 | -4      | NotLoginException.BE_REPLACED	| 已读取到 token，但是 token 已被顶下线  |
 | -5      | NotLoginException.KICK_OUT		| 已读取到 token，但是 token 已被踢下线  |
 | -6      | NotLoginException.TOKEN_FREEZE	| 已读取到 token，但是 token 已被冻结  |
+| -7      | NotLoginException.NO_PREFIX		| 未按照指定前缀提交 token		  |
 
 
 
@@ -49,6 +50,9 @@ public SaResult handlerNotLoginException(NotLoginException nle)
 	}
 	else if(nle.getType().equals(NotLoginException.TOKEN_FREEZE)) {
 		message = "token 已被冻结";
+	}
+	else if(nle.getType().equals(NotLoginException.NO_PREFIX)) {
+		message = "未按照指定前缀提交 token";
 	}
 	else {
 		message = "当前会话未登录";
