@@ -41,34 +41,38 @@ public class NotLoginException extends SaTokenException {
 	 * 因为loginId刚取出的时候类型为String，为了避免两者相比较时不必要的类型转换带来的性能消耗，故在此直接将常量类型设计为String 
 	 */
 	
-	/** 表示未提供token */
+	/** 表示未能读取到有效 token */
 	public static final String NOT_TOKEN = "-1";
 	public static final String NOT_TOKEN_MESSAGE = "未能读取到有效 token";
 	
-	/** 表示token无效 */
+	/** 表示 token 无效 */
 	public static final String INVALID_TOKEN = "-2";
 	public static final String INVALID_TOKEN_MESSAGE = "token 无效";
 	
-	/** 表示token已过期 */
+	/** 表示 token 已过期 */
 	public static final String TOKEN_TIMEOUT = "-3";
 	public static final String TOKEN_TIMEOUT_MESSAGE = "token 已过期";
 	
-	/** 表示token已被顶下线 */
+	/** 表示 token 已被顶下线 */
 	public static final String BE_REPLACED = "-4";
 	public static final String BE_REPLACED_MESSAGE = "token 已被顶下线";
 	
-	/** 表示token已被踢下线 */
+	/** 表示 token 已被踢下线 */
 	public static final String KICK_OUT = "-5";
 	public static final String KICK_OUT_MESSAGE = "token 已被踢下线";
+
+	/** 表示 token 已被冻结 */
+	public static final String TOKEN_FREEZE = "-6";
+	public static final String TOKEN_FREEZE_MESSAGE = "token 已被冻结";
 
 	/** 默认的提示语 */
 	public static final String DEFAULT_MESSAGE = "当前会话未登录";
 	
 	
 	/** 
-	 * 代表异常token的标志集合 
+	 * 代表异常 token 的标志集合
 	 */
-	public static final List<String> ABNORMAL_LIST = Arrays.asList(NOT_TOKEN, INVALID_TOKEN, TOKEN_TIMEOUT, BE_REPLACED, KICK_OUT); 
+	public static final List<String> ABNORMAL_LIST = Arrays.asList(NOT_TOKEN, INVALID_TOKEN, TOKEN_TIMEOUT, BE_REPLACED, KICK_OUT, TOKEN_FREEZE);
 	
 
 	/**
@@ -144,6 +148,9 @@ public class NotLoginException extends SaTokenException {
 		}
 		else if(KICK_OUT.equals(type)) {
 			message = KICK_OUT_MESSAGE;
+		}
+		else if(TOKEN_FREEZE.equals(type)) {
+			message = TOKEN_FREEZE_MESSAGE;
 		}
 		else {
 			message = DEFAULT_MESSAGE;

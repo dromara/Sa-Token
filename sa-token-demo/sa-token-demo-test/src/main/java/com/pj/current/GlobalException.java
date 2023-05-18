@@ -21,8 +21,7 @@ public class GlobalException {
 
 	// 全局异常拦截（拦截项目中的所有异常）
 	@ExceptionHandler
-	public AjaxJson handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public AjaxJson handlerException(Exception e, HttpServletRequest request, HttpServletResponse response) {
 
 		// 打印堆栈，以供调试
 		System.out.println("全局异常---------------");

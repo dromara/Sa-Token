@@ -1,10 +1,9 @@
 package com.pj.test;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 登录测试 
@@ -30,6 +29,13 @@ public class LoginController {
 	@RequestMapping("isLogin")
 	public SaResult isLogin() {
 		return SaResult.ok("是否登录：" + StpUtil.isLogin());
+	}
+
+	// 校验登录  ---- http://localhost:8081/acc/checkLogin
+	@RequestMapping("checkLogin")
+	public SaResult checkLogin() {
+		StpUtil.checkLogin();
+		return SaResult.ok();
 	}
 
 	// 查询 Token 信息  ---- http://localhost:8081/acc/tokenInfo

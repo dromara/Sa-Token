@@ -7,13 +7,14 @@
 ## 何为场景值
 在前面的章节中，我们了解到，在会话未登录的情况下尝试获取`loginId`会使框架抛出`NotLoginException`异常，而同为未登录异常却有五种抛出场景的区分 
 
-| 场景值  | 对应常量  |  含义说明                         |
-|---     |---        |---                            |
-| -1      | NotLoginException.NOT_TOKEN  |  未能从请求中读取到token         |
-| -2      | NotLoginException.INVALID_TOKEN|  已读取到token，但是token无效  |
-| -3      | NotLoginException.TOKEN_TIMEOUT|  已读取到token，但是token已经过期  |
-| -4      | NotLoginException.BE_REPLACED| 已读取到token，但是token已被顶下线  |
-| -5      | NotLoginException.KICK_OUT| 已读取到token，但是token已被踢下线  |
+| 场景值   | 对应常量  |  含义说明                         |
+|---   	  |---        |---                            |
+| -1      | NotLoginException.NOT_TOKEN  	| 未能从请求中读取到有效 token         |
+| -2      | NotLoginException.INVALID_TOKEN	| 已读取到 token，但是 token 无效  |
+| -3      | NotLoginException.TOKEN_TIMEOUT	| 已读取到 token，但是 token 已经过期  |
+| -4      | NotLoginException.BE_REPLACED	| 已读取到 token，但是 token 已被顶下线  |
+| -5      | NotLoginException.KICK_OUT		| 已读取到 token，但是 token 已被踢下线  |
+| -6      | NotLoginException.TOKEN_FREEZE	| 已读取到 token，但是 token 已被冻结  |
 
 
 
@@ -32,19 +33,22 @@ public SaResult handlerNotLoginException(NotLoginException nle)
 	// 判断场景值，定制化异常信息 
 	String message = "";
 	if(nle.getType().equals(NotLoginException.NOT_TOKEN)) {
-		message = "未提供token";
+		message = "未能读取到有效 token";
 	}
 	else if(nle.getType().equals(NotLoginException.INVALID_TOKEN)) {
-		message = "token无效";
+		message = "token 无效";
 	}
 	else if(nle.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
-		message = "token已过期";
+		message = "token 已过期";
 	}
 	else if(nle.getType().equals(NotLoginException.BE_REPLACED)) {
-		message = "token已被顶下线";
+		message = "token 已被顶下线";
 	}
 	else if(nle.getType().equals(NotLoginException.KICK_OUT)) {
-		message = "token已被踢下线";
+		message = "token 已被踢下线";
+	}
+	else if(nle.getType().equals(NotLoginException.TOKEN_FREEZE)) {
+		message = "token 已被冻结";
 	}
 	else {
 		message = "当前会话未登录";

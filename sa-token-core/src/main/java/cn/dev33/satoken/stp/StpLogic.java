@@ -1347,7 +1347,7 @@ public class StpLogic {
 
 		// 3、值为 -2 代表已被冻结，此时需要抛出异常
 		if(timeout == SaTokenDao.NOT_VALUE_EXPIRE) {
-			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_TIMEOUT, tokenValue).setCode(SaErrorCode.CODE_11016);
+			throw NotLoginException.newInstance(loginType, NotLoginException.TOKEN_FREEZE, tokenValue).setCode(SaErrorCode.CODE_11016);
 		}
  		// --- 至此，验证已通过 
 
