@@ -112,8 +112,8 @@ public class SaSessionTest {
     	SaSession session = new SaSession("session-1002");
     	
     	// 添加 Token 签名 
-    	session.addTokenSign("xxxx-xxxx-xxxx-xxxx-1", "PC");
-    	session.addTokenSign("xxxx-xxxx-xxxx-xxxx-2", "APP");
+    	session.addTokenSign(new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "PC", null));
+    	session.addTokenSign(new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "APP", null));
 
     	// 查询 
     	Assertions.assertEquals(session.getTokenSignList().size(), 2);
@@ -130,9 +130,9 @@ public class SaSessionTest {
     	
     	// 重置整个签名列表 
     	List<TokenSign> list = Arrays.asList(
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "WEB"),
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "phone"),
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-3", "ipad")
+    			new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "WEB", null),
+    			new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "phone", null),
+    			new TokenSign("xxxx-xxxx-xxxx-xxxx-3", "ipad", null)
     			);
     	session.setTokenSignList(list);
     	Assertions.assertEquals(session.getTokenSignList().size(), 3);

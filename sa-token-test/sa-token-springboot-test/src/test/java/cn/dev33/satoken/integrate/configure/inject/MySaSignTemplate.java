@@ -15,11 +15,10 @@
  */
 package cn.dev33.satoken.integrate.configure.inject;
 
+import cn.dev33.satoken.sign.SaSignTemplate;
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
-
 @Component
-public class MySaSignTemplate extends SaSignTemplateDefaultImpl {
+public class MySaSignTemplate extends SaSignTemplate {
 	
 }

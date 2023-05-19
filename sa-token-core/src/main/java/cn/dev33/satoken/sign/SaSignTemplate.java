@@ -257,7 +257,7 @@ public class SaSignTemplate {
 		}
 
 		// 校验通过后，将此 nonce 保存在缓存中，保证下次校验无法通过
-		SaManager.getSaTokenDao().set(key, nonce, getSignConfigOrGlobal().getSaveNonceExpire());
+		SaManager.getSaTokenDao().set(key, nonce, getSignConfigOrGlobal().getSaveNonceExpire() * 2 + 2);
 	}
 
 	/**

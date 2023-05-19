@@ -15,11 +15,11 @@
  */
 package cn.dev33.satoken.core.sign;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaSignConfig;
+import cn.dev33.satoken.util.SoMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.util.SoMap;
 
 /**
  * API 接口签名测试 
@@ -51,11 +51,12 @@ public class SaSignTemplateTest {
 				.set("name", "zhang")
 				.set("age", 18)
 				.set("sex", "女");
-		String sign = SaManager.getSaSignTemplate().createSign(map, key);
+		SaManager.getSaSignTemplate().setSignConfig(new SaSignConfig().setSecretKey(key));
+		String sign = SaManager.getSaSignTemplate().createSign(map);
 		Assertions.assertEquals(sign, "6f5e844a53e74363c2f6b24f64c4f0ff");
 		
 		// 多次签名，结果一致  
-		String sign2 = SaManager.getSaSignTemplate().createSign(map, key);
+		String sign2 = SaManager.getSaSignTemplate().createSign(map);
 		Assertions.assertEquals(sign, sign2);
 	}
 	
