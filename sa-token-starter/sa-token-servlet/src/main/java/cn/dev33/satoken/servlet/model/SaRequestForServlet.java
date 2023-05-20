@@ -33,7 +33,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * 对 SaRequest 包装类的实现（Servlet 版）
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 public class SaRequestForServlet implements SaRequest {
 

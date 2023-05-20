@@ -26,7 +26,7 @@ import cn.dev33.satoken.quick.web.SaQuickController;
  * Quick-Bean 注入
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 @Configuration
 @Import({ SaQuickController.class, SaQuickRegister.class})

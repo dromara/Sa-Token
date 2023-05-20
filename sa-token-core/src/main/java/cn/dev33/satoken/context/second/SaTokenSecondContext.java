@@ -25,7 +25,7 @@ import cn.dev33.satoken.context.SaTokenContext;
  * @see SaTokenContext SaTokenContext 上下文处理器
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.28.0
  */
 public interface SaTokenSecondContext extends SaTokenContext {
 	

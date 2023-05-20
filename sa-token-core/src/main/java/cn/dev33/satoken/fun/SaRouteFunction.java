@@ -22,7 +22,7 @@ import cn.dev33.satoken.context.model.SaResponse;
  * 路由拦截器验证方法的函数式接口，方便开发者进行 lambda 表达式风格调用
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @FunctionalInterface
 public interface SaRouteFunction {

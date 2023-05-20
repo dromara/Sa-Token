@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * 对 SaStorage 包装类的实现（Servlet 版）
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 public class SaStorageForServlet implements SaStorage {
 

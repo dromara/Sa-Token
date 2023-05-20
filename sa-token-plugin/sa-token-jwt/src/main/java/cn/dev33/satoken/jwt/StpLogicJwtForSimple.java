@@ -26,7 +26,7 @@ import cn.dev33.satoken.stp.StpUtil;
  * Sa-Token 整合 jwt -- Simple 简单模式
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public class StpLogicJwtForSimple extends StpLogic {
 

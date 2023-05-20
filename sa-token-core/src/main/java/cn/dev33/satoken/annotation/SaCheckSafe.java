@@ -28,7 +28,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * <p> 可标注在方法、类上（效果等同于标注在此类的所有方法上）。
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.21.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })

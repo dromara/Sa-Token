@@ -24,7 +24,7 @@ import org.springframework.core.Ordered;
  * 处理请求前，创建上下文
  * 
  * @author lym
- * @since 2022/8/24 10:09
+ * @since 1.34.0
  */
 @GrpcGlobalServerInterceptor
 public class SaTokenContextGrpcServerInterceptor implements ServerInterceptor, Ordered {

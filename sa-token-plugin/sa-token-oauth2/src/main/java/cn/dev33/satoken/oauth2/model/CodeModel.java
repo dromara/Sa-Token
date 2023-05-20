@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Model: 授权码
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.23.0
  */
 public class CodeModel implements Serializable {
 

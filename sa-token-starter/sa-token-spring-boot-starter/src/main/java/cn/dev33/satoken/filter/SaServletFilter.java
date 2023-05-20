@@ -43,7 +43,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaServletFilter implements SaFilter, Filter {

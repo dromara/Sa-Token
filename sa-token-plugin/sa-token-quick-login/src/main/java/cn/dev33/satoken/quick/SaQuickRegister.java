@@ -31,7 +31,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * Quick Login 相关 Bean 注册
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 @Configuration
 public class SaQuickRegister {

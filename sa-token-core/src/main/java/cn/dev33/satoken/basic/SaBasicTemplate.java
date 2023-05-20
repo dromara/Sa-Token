@@ -26,7 +26,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token Http Basic 认证模块
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.26.0
  */
 public class SaBasicTemplate {
 	

@@ -23,7 +23,7 @@ import cn.dev33.satoken.context.SaTokenContext;
  * 注册 Sa-Token 框架所需要的 Bean
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaTokenContextRegister {
 

@@ -31,7 +31,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 集成 Thymeleaf 标签方言 
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.27.0
  */
 public class SaTokenDialect extends AbstractProcessorDialect {
 	

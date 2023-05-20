@@ -30,7 +30,7 @@ import cn.dev33.satoken.stp.StpLogic;
  * <p> 提供侦听器注册、事件发布能力 </p>
  * 
  * @author click33
- * @since 2022-8-19
+ * @since 1.31.0
  */
 public class SaTokenEventCenter {
 

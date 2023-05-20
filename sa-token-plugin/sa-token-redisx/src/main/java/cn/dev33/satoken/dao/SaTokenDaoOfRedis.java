@@ -23,7 +23,7 @@ import java.util.Properties;
  * SaTokenDao 的 redis 适配
  *
  * @author noear
- * @since 1.6
+ * @since 1.34.0
  */
 public class SaTokenDaoOfRedis extends SaTokenDaoOfRedisBase64 {
 

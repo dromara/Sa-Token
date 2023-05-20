@@ -39,7 +39,7 @@ import cn.dev33.satoken.fun.SaParamRetFunction;
  * </pre>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.27.0
  */
 public class SaRouter {
 

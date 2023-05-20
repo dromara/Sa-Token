@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
  * Sa-Token 综合拦截器，提供注解鉴权和路由拦截鉴权能力 
  * 
  * @author click33
- * @since 2022-8-21
+ * @since 1.31.0
  */
 public class SaInterceptor implements HandlerInterceptor {
 

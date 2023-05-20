@@ -19,7 +19,7 @@ package cn.dev33.satoken.config;
  * Sa-Token Cookie写入 相关配置
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.27.0
  */
 public class SaCookieConfig {
 

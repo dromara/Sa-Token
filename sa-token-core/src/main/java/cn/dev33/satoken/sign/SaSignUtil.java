@@ -24,7 +24,7 @@ import java.util.Map;
  * API 参数签名算法 - 工具类
  *
  * @author click33
- * @since 2022-4-27
+ * @since 1.34.0
  */
 public class SaSignUtil {
 

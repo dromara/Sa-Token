@@ -38,7 +38,7 @@ import java.util.TreeMap;
  * </p>
  *
  * @author click33
- * @since 2022-4-27
+ * @since 1.30.0
  */
 public class SaSignTemplate {
 

@@ -22,7 +22,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * SaQuickManager，持有 SaQuickConfig 配置对象全局引用
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 public class SaQuickManager {
 

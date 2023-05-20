@@ -37,7 +37,7 @@ import java.util.UUID;
  * Sa-Token 常见加密算法工具类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.14.0
  */
 public class SaSecureUtil {
 

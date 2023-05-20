@@ -30,7 +30,7 @@ import cn.dev33.satoken.same.SaSameUtil;
  * Sa-Token 整合 Dubbo Provider端（被调用端）过滤器
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @Activate(group = {CommonConstants.PROVIDER}, order = -30000)
 public class SaTokenDubboProviderFilter implements Filter {

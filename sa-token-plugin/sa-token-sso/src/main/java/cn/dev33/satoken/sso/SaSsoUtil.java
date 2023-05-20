@@ -23,7 +23,7 @@ import java.util.Map;
  * Sa-Token-SSO 单点登录模块 工具类
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public class SaSsoUtil {
 

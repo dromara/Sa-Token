@@ -28,7 +28,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.20.0
  */
 public interface SaTempInterface {
 

@@ -23,7 +23,7 @@ import cn.dev33.satoken.util.StrFormatter;
  * Sa-Token 日志实现类 [ 控制台打印 ]
  * 
  * @author click33
- * @since 2022-11-1
+ * @since 1.33.0
  */
 public class SaLogForConsole implements SaLog {
 

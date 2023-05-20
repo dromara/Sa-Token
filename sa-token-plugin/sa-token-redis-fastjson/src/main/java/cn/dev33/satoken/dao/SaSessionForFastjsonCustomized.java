@@ -25,7 +25,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Fastjson 定制版 SaSession，重写类型转换API、忽略 timeout 字段的序列化
  * 
  * @author click33
- * @since 2022-10-19
+ * @since 1.34.0
  */
 public class SaSessionForFastjsonCustomized extends SaSession {
 

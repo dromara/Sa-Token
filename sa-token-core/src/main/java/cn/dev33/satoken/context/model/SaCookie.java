@@ -28,7 +28,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Cookie Model，代表一个 Cookie 应该具有的所有参数
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.16.0
  */
 public class SaCookie {
 

@@ -19,7 +19,7 @@ package cn.dev33.satoken.exception;
  * 一个异常：代表 Same-Token 校验未通过
  * 
  * @author click33
- * @since 2022-10-24
+ * @since 1.32.0
  */
 public class SameTokenInvalidException extends SaTokenException {
 

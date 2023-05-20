@@ -43,7 +43,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class SaSession implements SaSetValueInterface, Serializable {
 

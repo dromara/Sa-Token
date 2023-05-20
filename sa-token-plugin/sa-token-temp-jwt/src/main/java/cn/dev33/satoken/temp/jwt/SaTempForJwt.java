@@ -26,7 +26,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 临时令牌验证模块接口 JWT实现类，提供以 JWT 为逻辑内核的临时 token 验证功能
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.20.0
  */
 public class SaTempForJwt implements SaTempInterface {
 	

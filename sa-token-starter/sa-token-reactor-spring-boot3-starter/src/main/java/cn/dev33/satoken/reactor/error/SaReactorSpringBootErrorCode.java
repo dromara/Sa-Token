@@ -19,7 +19,7 @@ package cn.dev33.satoken.reactor.error;
  * 定义 sa-token-reactor3-spring-boot-starter 所有异常细分状态码
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public interface SaReactorSpringBootErrorCode {
 	

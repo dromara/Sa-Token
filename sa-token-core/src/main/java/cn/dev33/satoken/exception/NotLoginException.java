@@ -24,7 +24,7 @@ import java.util.List;
  * 一个异常：代表会话未能通过登录认证校验
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class NotLoginException extends SaTokenException {
 	

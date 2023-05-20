@@ -22,7 +22,7 @@ import cn.dev33.satoken.context.model.SaResponse;
  * Response for grpc
  *
  * @author lym
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaResponseForGrpc implements SaResponse {
     /**

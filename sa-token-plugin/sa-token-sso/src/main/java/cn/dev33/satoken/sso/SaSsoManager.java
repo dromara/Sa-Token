@@ -21,7 +21,7 @@ import cn.dev33.satoken.config.SaSsoConfig;
  * Sa-Token-SSO 模块 总控类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public class SaSsoManager {
 

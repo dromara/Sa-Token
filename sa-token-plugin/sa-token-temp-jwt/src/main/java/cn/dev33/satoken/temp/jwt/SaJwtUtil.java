@@ -27,7 +27,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * jwt 相关操作工具类，封装一下
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.20.0
  */
 public class SaJwtUtil {
 	

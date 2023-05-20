@@ -19,7 +19,7 @@ package cn.dev33.satoken.context.model;
  * Response 响应对象 包装类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.16.0
  */
 public interface SaResponse {
 

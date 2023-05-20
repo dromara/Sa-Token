@@ -36,7 +36,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token-OAuth2 模块 代码实现
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.23.0
  */
 public class SaOAuth2Template {
 

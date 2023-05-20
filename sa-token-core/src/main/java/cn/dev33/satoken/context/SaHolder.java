@@ -25,7 +25,7 @@ import cn.dev33.satoken.context.model.SaStorage;
  * Sa-Token 上下文持有类，你可以通过此类快速获取当前环境下的 SaRequest、SaResponse、SaStorage、SaApplication 对象。
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.18.0
  */
 public class SaHolder {
 	

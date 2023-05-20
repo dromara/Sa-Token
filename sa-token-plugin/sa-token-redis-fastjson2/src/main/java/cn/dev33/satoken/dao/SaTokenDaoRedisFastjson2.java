@@ -36,7 +36,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 持久层实现 [ Redis存储、fastjson2序列化 ]
  * 
  * @author sikadai
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @Component
 public class SaTokenDaoRedisFastjson2 implements SaTokenDao {

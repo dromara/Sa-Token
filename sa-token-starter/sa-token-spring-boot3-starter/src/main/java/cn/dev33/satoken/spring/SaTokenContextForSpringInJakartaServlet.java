@@ -27,7 +27,7 @@ import cn.dev33.satoken.servlet.model.SaStorageForServlet;
  * Sa-Token 上下文处理器 [ SpringBoot3 Jakarta Servlet 版 ]，在 SpringBoot3 中使用 Sa-Token 时，必须注入此实现类，否则会出现上下文无效异常
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaTokenContextForSpringInJakartaServlet implements SaTokenContext {
 

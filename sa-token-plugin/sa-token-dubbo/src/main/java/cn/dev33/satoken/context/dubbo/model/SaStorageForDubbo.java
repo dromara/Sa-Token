@@ -23,7 +23,7 @@ import org.apache.dubbo.rpc.RpcContext;
  * 对 SaStorage 包装类的实现（Dubbo 版）
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaStorageForDubbo implements SaStorage {
 

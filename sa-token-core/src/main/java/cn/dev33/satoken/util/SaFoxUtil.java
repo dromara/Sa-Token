@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
  * Sa-Token 内部工具类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.18.0
  */
 public class SaFoxUtil {
 
