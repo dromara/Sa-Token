@@ -28,7 +28,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class SaTokenConfig implements Serializable {
 

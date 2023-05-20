@@ -50,7 +50,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 持久层实现 [ Redis存储、Jackson序列化 ]
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @Component
 public class SaTokenDaoRedisJackson implements SaTokenDao {

@@ -23,7 +23,7 @@ import java.util.Map;
  * Model: Client-Token
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.23.0
  */
 public class ClientTokenModel implements Serializable {
 

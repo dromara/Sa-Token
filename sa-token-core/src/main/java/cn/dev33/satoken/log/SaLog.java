@@ -19,7 +19,7 @@ package cn.dev33.satoken.log;
  * Sa-Token 日志输出接口
  * 
  * @author click33
- * @since 2022-11-1
+ * @since 1.33.0
  */
 public interface SaLog {
 

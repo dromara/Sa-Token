@@ -32,7 +32,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * <p> 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 </p>
  * 
  * @author click33
- * @since 2022-10-30
+ * @since 1.10.0
  */
 public class SaTokenConfigFactory {
 

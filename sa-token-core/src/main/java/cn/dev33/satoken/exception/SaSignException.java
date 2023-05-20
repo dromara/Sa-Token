@@ -21,7 +21,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * 一个异常：代表 API 参数签名校验失败
  * 
  * @author click33
- * @since 2023-5-3
+ * @since 1.34.0
  */
 public class SaSignException extends SaTokenException {
 

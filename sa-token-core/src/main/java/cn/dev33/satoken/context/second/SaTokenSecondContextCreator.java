@@ -19,7 +19,7 @@ package cn.dev33.satoken.context.second;
  * Sa-Token 二级Context - 创建器  
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.28.0
  */
 @FunctionalInterface
 public interface SaTokenSecondContextCreator {

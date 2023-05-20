@@ -26,7 +26,7 @@ import cn.dev33.satoken.context.model.SaResponse;
  * 对 SaResponse 包装类的实现（Reactor 响应式编程版）
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 public class SaResponseForReactor implements SaResponse {
 

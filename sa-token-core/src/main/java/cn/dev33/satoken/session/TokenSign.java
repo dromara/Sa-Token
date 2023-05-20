@@ -23,7 +23,7 @@ import java.io.Serializable;
  * <p> 挂在到 SaSession 上的 Token 签名，一般情况下，一个 TokenSign 代表一个登录的会话。</p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.8.0
  */
 public class TokenSign implements Serializable {
 

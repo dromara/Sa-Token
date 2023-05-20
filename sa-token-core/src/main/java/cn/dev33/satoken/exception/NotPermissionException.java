@@ -21,7 +21,7 @@ import cn.dev33.satoken.stp.StpUtil;
  * 一个异常：代表会话未能通过权限认证校验
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class NotPermissionException extends SaTokenException {
 

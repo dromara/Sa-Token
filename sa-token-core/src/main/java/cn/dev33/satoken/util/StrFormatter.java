@@ -23,7 +23,7 @@ package cn.dev33.satoken.util;
  * </p>
  *
  * @author Looly
- * @since <= 1.34.0
+ * @since 1.33.0
  */
 public class StrFormatter {
 
@@ -64,7 +64,7 @@ public class StrFormatter {
 	 * @param placeHolder 占位符，例如{}
 	 * @param argArray    参数列表
 	 * @return 结果
-	 * @since 5.7.14
+	 * @since 1.33.0
 	 */
 	public static String formatWith(String strPattern, String placeHolder, Object... argArray) {
 		if (SaFoxUtil.isEmpty(strPattern) || SaFoxUtil.isEmpty(placeHolder) || SaFoxUtil.isEmpty(argArray)) {

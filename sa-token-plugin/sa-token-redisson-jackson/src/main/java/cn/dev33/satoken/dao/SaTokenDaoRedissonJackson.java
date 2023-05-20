@@ -52,7 +52,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 持久层实现  [ Redisson客户端、Redis存储、Jackson序列化 ]
  * 
  * @author 疯狂的狮子Li
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @Component
 public class SaTokenDaoRedissonJackson implements SaTokenDao {

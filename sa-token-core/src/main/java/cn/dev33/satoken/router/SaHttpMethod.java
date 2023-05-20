@@ -27,7 +27,7 @@ import cn.dev33.satoken.exception.SaTokenException;
  * <p> 参考：Spring - HttpMethod 
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.27.0
  */
 public enum SaHttpMethod {
 	

@@ -29,7 +29,7 @@ import java.util.Map;
  * </pre>
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.29.0
  */
 public class SaLoginConfig {
 	

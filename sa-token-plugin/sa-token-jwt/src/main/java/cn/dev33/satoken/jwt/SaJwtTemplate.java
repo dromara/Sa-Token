@@ -30,7 +30,7 @@ import cn.hutool.jwt.JWTException;
  * jwt 操作模板方法封装
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.31.0
  */
 public class SaJwtTemplate {
 	

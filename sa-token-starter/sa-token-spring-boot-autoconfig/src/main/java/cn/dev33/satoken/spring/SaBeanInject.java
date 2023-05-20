@@ -43,7 +43,7 @@ import cn.dev33.satoken.temp.SaTempInterface;
  * 注入 Sa-Token 所需要的 Bean
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaBeanInject {
 

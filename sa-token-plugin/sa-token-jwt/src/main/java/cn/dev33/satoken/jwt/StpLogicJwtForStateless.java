@@ -33,7 +33,7 @@ import java.util.Map;
  * Sa-Token 整合 jwt -- Stateless 无状态模式
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public class StpLogicJwtForStateless extends StpLogic {
 

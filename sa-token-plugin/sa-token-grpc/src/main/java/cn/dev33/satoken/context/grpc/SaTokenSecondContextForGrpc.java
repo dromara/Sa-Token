@@ -29,7 +29,7 @@ import cn.dev33.satoken.exception.ApiDisabledException;
  * Sa-Token 上下文 [grpc版本]
  *
  * @author lym
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaTokenSecondContextForGrpc implements SaTokenSecondContext {
 

@@ -26,7 +26,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * Sa-Token 侦听器的一个实现：Log 打印
  * 
  * @author click33
- * @since 2022-11-2
+ * @since 1.33.0
  */
 public class SaTokenListenerForLog implements SaTokenListener {
 

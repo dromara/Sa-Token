@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
  * 注册 Sa-Token-OAuth2 所需要的Bean
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @ConditionalOnClass(SaOAuth2Manager.class)
 public class SaOAuth2BeanRegister {

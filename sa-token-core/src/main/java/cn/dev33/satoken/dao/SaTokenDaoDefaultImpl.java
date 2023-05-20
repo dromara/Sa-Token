@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Sa-Token 持久层接口，默认实现类（基于内存 Map，系统重启后数据丢失）
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class SaTokenDaoDefaultImpl implements SaTokenDao {
 

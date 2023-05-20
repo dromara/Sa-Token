@@ -25,7 +25,7 @@ import cn.dev33.satoken.stp.StpLogic;
  * <p> 你可以通过实现此接口在用户登录、退出等关键性操作时进行一些AOP切面操作 </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.17.0
  */
 public interface SaTokenListener {
 

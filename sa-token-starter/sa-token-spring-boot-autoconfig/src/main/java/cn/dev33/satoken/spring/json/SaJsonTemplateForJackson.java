@@ -27,7 +27,7 @@ import java.util.Map;
  *  JSON 转换器， Jackson 版实现 
  * 
  * @author click33
- * @since 2022-4-26
+ * @since 1.34.0
  */
 public class SaJsonTemplateForJackson implements SaJsonTemplate {
 

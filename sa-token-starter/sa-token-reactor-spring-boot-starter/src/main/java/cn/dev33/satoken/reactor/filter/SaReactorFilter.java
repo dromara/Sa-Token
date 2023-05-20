@@ -43,7 +43,7 @@ import java.util.List;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaReactorFilter implements SaFilter, WebFilter {

@@ -24,7 +24,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * <p> 框架其它异常均继承自此类，开发者可通过捕获此异常来捕获框架内部抛出的所有异常 </p>
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class SaTokenException extends RuntimeException {
 

@@ -26,7 +26,7 @@ import cn.dev33.satoken.exception.NotImplException;
  * <p> 如果代码断点走到了此默认实现类，说明框架没有注入有效的 JSON 转换器，需要开发者自行实现并注入 </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 

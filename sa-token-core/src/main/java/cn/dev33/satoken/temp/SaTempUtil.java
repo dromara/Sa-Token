@@ -25,7 +25,7 @@ import cn.dev33.satoken.SaManager;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.20.0
  */
 public class SaTempUtil {
 

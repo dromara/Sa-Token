@@ -28,7 +28,7 @@ import cn.dev33.satoken.exception.NotWebContextException;
  * SpringMVC 相关操作工具类，快速获取当前会话的 HttpServletRequest、HttpServletResponse 对象
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 public class SpringMVCUtil {
 	

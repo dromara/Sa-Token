@@ -19,7 +19,7 @@ package cn.dev33.satoken.exception;
  * 一个异常：代表框架未能获取有效的上下文
  * 
  * @author click33
- * @since 2022-10-29
+ * @since 1.33.0
  */
 public class InvalidContextException extends SaTokenException {
 

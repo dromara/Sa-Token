@@ -32,7 +32,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * </pre>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.13.2
  */
 public class SaLoginModel {
 

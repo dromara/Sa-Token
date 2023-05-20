@@ -19,7 +19,7 @@ package cn.dev33.satoken.error;
  * 定义所有异常细分状态码 
  * 
  * @author click33
- * @since 2022-10-30
+ * @since 1.33.0
  */
 public interface SaErrorCode {
 	

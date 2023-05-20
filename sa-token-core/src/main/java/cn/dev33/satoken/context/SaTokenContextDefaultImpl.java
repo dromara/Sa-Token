@@ -30,7 +30,7 @@ import cn.dev33.satoken.exception.InvalidContextException;
  * </p>
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.16.0
  */
 public class SaTokenContextDefaultImpl implements SaTokenContext {
 	

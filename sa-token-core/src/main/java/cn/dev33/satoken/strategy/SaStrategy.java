@@ -47,7 +47,7 @@ import java.util.function.Function;
  * </pre>
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.27.0
  */
 public final class SaStrategy {
 

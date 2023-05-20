@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * Sa-Token 二级Context - 创建器 [Grpc版]
  *
  * @author lym
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @Component
 public class SaTokenSecondContextCreatorForGrpc implements SaTokenSecondContextCreator {

@@ -19,7 +19,7 @@ package cn.dev33.satoken.exception;
  * 一个异常：代表 JSON 转换失败 
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public class SaJsonConvertException extends SaTokenException {
 

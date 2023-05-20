@@ -19,7 +19,7 @@ package cn.dev33.satoken.basic;
  * Sa-Token Http Basic 认证模块，Util 工具类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.26.0
  */
 public class SaBasicUtil {
 

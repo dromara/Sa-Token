@@ -26,7 +26,7 @@ import java.util.List;
  * Sa-Token 权限认证工具类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class StpUtil {
 	
