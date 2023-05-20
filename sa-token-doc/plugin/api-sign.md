@@ -47,7 +47,7 @@ public SaResult addMoney(long userId, long money) {
 ``` java
 long userId = 10001;
 long money = 1000;
-String res = HttpUtil.request("http://a.com/api/addMoney?userId=" + userId + "&money=" + money);
+String res = HttpUtil.request("http://b.com/api/addMoney?userId=" + userId + "&money=" + money);
 ```
 
 上述代码简单的完成了需求，但是很明显它有一个安全问题：
@@ -82,7 +82,7 @@ public SaResult addMoney(long userId, long money, String secretKey) {
 long userId = 10001;
 long money = 1000;
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
-String res = HttpUtil.request("http://a.com/api/addMoney?userId=" + userId + "&money=" + money + "&secretKey=" + secretKey);
+String res = HttpUtil.request("http://b.com/api/addMoney?userId=" + userId + "&money=" + money + "&secretKey=" + secretKey);
 ```
 
 现在，即使 B 系统的接口被暴露了，也不会被陌生人任意调用了，安全性得到了一定的保证，但是仍然存在一些问题：
@@ -103,10 +103,10 @@ long money = 1000;
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
 
 // 计算 sign 参数
-String sign = md5("userId=" + userId + "&money=" + money + "&key=" + secretKey);
+String sign = md5("money=" + money + "&userId=" + userId + "&key=" + secretKey);
 
 // 将 sign 拼接在请求地址后面
-String res = HttpUtil.request("http://a.com/api/addMoney?userId=" + userId + "&money=" + money + "&sign=" + sign);
+String res = HttpUtil.request("http://b.com/api/addMoney?userId=" + userId + "&money=" + money + "&sign=" + sign);
 ```
 
 **注意此处计算签名时，需要将所有参数按照字典顺序依次排列（key除外，挂在最后面）。**以下所有计算签名时同理，不再赘述。
@@ -120,7 +120,7 @@ String res = HttpUtil.request("http://a.com/api/addMoney?userId=" + userId + "&m
 public SaResult addMoney(long userId, long money, String sign) {
 
 	// 在 B 系统，使用同样的算法、同样的密钥，计算出 sign2，与传入的 sign 进行比对
-	String sign2 = md5("userId=" + userId + "&money=" + money + "&key=" + secretKey);
+	String sign2 = md5("money=" + money + "&userId=" + userId + "&key=" + secretKey);
 	if( ! sign2.equals(sign)) {
 		return SaResult.error("无效 sign，无法响应请求");
 	}
@@ -159,10 +159,10 @@ String nonce = SaFoxUtil.getRandomString(32); // 随机32位字符串
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
 
 // 计算 sign 参数
-String sign = md5("userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&key=" + secretKey);
+String sign = md5("money=" + money + "&nonce=" + nonce + "&userId=" + userId + "&key=" + secretKey);
 
 // 将 sign 拼接在请求地址后面
-String res = HttpUtil.request("http://a.com/api/addMoney?userId=" + userId + "&money=" + money + "nonce=" + nonce + "&sign=" + sign);
+String res = HttpUtil.request("http://b.com/api/addMoney?userId=" + userId + "&money=" + money + "nonce=" + nonce + "&sign=" + sign);
 ```
 
 然后在 B 系统接收请求时，也把 nonce 参数加进去生成 sign 字符串，进行比较：
@@ -178,7 +178,7 @@ public SaResult addMoney(long userId, long money, String nonce, String sign) {
 	}
 
 	// 2、验证签名
-	String sign2 = md5("userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&key=" + secretKey);
+	String sign2 = md5("money=" + money + "&nonce=" + nonce + "&userId=" + userId + "&key=" + secretKey);
 	if( ! sign2.equals(sign)) {
 		return SaResult.error("无效 sign，无法响应请求");
 	}
@@ -226,10 +226,10 @@ long timestamp = System.currentTimeMillis(); // 随机32位字符串
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
 
 // 计算 sign 参数
-String sign = md5("userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
+String sign = md5("money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&userId=" + userId + "&key=" + secretKey);
 
 // 将 sign 拼接在请求地址后面
-String res = HttpUtil.request("http://a.com/api/addMoney" +
+String res = HttpUtil.request("http://b.com/api/addMoney" +
 		"?userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&sign=" + sign);
 ```
 
@@ -333,10 +333,10 @@ long timestamp = System.currentTimeMillis(); // 当前时间戳
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
 
 // 计算 sign 参数
-String sign = md5("userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
+String sign = md5("money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&userId=" + userId + "&key=" + secretKey);
 
 // 将 sign 拼接在请求地址后面
-String res = HttpUtil.request("http://a.com/api/addMoney" +
+String res = HttpUtil.request("http://b.com/api/addMoney" +
 		"?userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&sign=" + sign);
 ```
 
@@ -360,7 +360,7 @@ public SaResult addMoney(long userId, long money, long timestamp, String nonce, 
 	}
 
 	// 3、验证签名
-	String sign2 = md5("userId=" + userId + "&money=" + money + "&nonce=" + nonce + "&key=" + secretKey);
+	String sign2 = md5("money=" + money + "&nonce=" + nonce + "&timestamp=" + timestamp + "&userId=" + userId + "&key=" + secretKey);
 	if( ! sign2.equals(sign)) {
 		return SaResult.error("无效 sign，无法响应请求");
 	}
@@ -423,7 +423,7 @@ sa-token:
 
 ``` java
 // 请求地址
-String url = "http://a.com/api/addMoney";
+String url = "http://b.com/api/addMoney";
 
 // 请求参数
 Map<String, Object> paramMap = new LinkedHashMap<>();
