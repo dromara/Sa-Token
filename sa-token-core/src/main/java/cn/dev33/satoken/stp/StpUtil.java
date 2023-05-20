@@ -40,7 +40,7 @@ public class StpUtil {
 	/**
 	 * 底层使用的 StpLogic 对象
 	 */
-	public static StpLogic stpLogic = SaManager.getStpLogic(TYPE);
+	public static StpLogic stpLogic = new StpLogic(TYPE);
 
 	/**
 	 * 获取当前 StpLogic 的账号类型
