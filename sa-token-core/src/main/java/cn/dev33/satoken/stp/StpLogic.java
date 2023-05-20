@@ -67,10 +67,7 @@ public class StpLogic {
 	 * @param loginType 账号类型标识
 	 */
 	public StpLogic(String loginType) {
-		this.loginType = loginType;
-
-		// 在 SaManager 中记录下此 StpLogic，以便后续根据 LoginType 进行查找此对象
-		SaManager.putStpLogic(this);
+		setLoginType(loginType);
 	}
 
 	/**
@@ -89,9 +86,16 @@ public class StpLogic {
 	 * @return 对象自身
 	 */
 	public StpLogic setLoginType(String loginType){
+
+		// 先清除此 StpLogic 在全局 SaManager 中的记录
+		if(SaFoxUtil.isNotEmpty(this.loginType)) {
+			SaManager.removeStpLogic(this.loginType);
+		}
+
+		// 赋值
 		this.loginType = loginType;
 
-		// 因为 loginType 变了，所以需要往 SaManager 中重新 put 一下
+		// 将新的 loginType -> StpLogic 映射关系 put 到 SaManager 全局集合中，以便后续根据 LoginType 进行查找此对象
 		SaManager.putStpLogic(this);
 
 		return this;

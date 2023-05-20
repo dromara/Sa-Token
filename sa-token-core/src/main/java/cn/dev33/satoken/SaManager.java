@@ -286,6 +286,13 @@ public class SaManager {
 	}
 
 	/**
+	 * 在全局集合中 移除 一个 StpLogic
+	 */
+	public static void removeStpLogic(String loginType) {
+		stpLogicMap.remove(loginType);
+	}
+
+	/**
 	 * 根据 LoginType 获取对应的StpLogic，如果不存在则新建并返回 
 	 * @param loginType 对应的账号类型 
 	 * @return 对应的StpLogic

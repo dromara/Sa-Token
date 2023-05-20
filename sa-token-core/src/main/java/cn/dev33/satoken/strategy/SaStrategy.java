@@ -21,6 +21,7 @@ import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaGenerateUniqueTokenFunction;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -240,6 +241,15 @@ public final class SaStrategy {
 		}
 	};
 
+	/**
+	 * 创建 StpLogic 的算法
+	 *
+	 * <p> 参数 [ 账号体系标识 ]
+	 */
+	public Function<String, StpLogic> createStpLogic = (loginType) -> {
+		return new StpLogic(loginType);
+	};
+
 
 	// ----------------------- 重写策略 set连缀风格
 
@@ -329,6 +339,19 @@ public final class SaStrategy {
 	 */
 	public SaStrategy setGenerateUniqueToken(SaGenerateUniqueTokenFunction generateUniqueToken) {
 		this.generateUniqueToken = generateUniqueToken;
+		return this;
+	}
+
+	/**
+	 * 创建 StpLogic 的算法
+	 *
+	 * <p> 参数 [ 账号体系标识 ]
+	 *
+	 * @param createStpLogic /
+	 * @return 对象自身
+	 */
+	public SaStrategy setCreateStpLogic(Function<String, StpLogic> createStpLogic) {
+		this.createStpLogic = createStpLogic;
 		return this;
 	}
 
