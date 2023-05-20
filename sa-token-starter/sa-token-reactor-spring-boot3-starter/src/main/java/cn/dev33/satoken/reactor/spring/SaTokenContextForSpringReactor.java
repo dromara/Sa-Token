@@ -22,7 +22,7 @@ import cn.dev33.satoken.spring.SaPathMatcherHolder;
  * Sa-Token 上下文处理器 [ Spring Reactor 版本实现 ] ，基于 SaTokenContextForThreadLocal 定制
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaTokenContextForSpringReactor extends SaTokenContextForThreadLocal {
 	

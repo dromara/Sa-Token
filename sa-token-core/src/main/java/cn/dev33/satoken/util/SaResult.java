@@ -30,7 +30,7 @@ import java.util.Map;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.22.0
  */
 public class SaResult extends LinkedHashMap<String, Object> implements Serializable{
 

@@ -24,7 +24,7 @@ import cn.hutool.jwt.JWT;
  * jwt 操作工具类封装
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.27.1
  */
 public class SaJwtUtil {
 	

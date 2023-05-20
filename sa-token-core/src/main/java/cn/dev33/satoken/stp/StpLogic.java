@@ -52,7 +52,7 @@ import static cn.dev33.satoken.exception.NotLoginException.*;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public class StpLogic {
 

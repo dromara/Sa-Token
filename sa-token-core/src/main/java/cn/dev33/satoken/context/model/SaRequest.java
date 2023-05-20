@@ -26,7 +26,7 @@ import java.util.Map;
  * Request 请求对象 包装类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.16.0
  */
 public interface SaRequest {
 	

@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * <h3> 请注意：此注解的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。 </h3>
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.31.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })

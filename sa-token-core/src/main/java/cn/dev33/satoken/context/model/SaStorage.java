@@ -23,7 +23,7 @@ import cn.dev33.satoken.application.SaSetValueInterface;
  * <p> 在一次请求范围内: 存值、取值。数据在请求结束后失效。
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.16.0
  */
 public interface SaStorage extends SaSetValueInterface {
 

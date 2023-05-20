@@ -23,7 +23,7 @@ import org.noear.snack.ONode;
  * Snack3 定制版 SaSession，重写类型转换API
  * 
  * @author noear
- * @since 1.12
+ * @since 1.34.0
  */
 public class SaSessionForJson extends SaSession {
 

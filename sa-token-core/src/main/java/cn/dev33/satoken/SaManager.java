@@ -46,7 +46,7 @@ import java.util.Map;
  * 管理 Sa-Token 所有全局组件，可通过此类快速获取、写入各种全局组件对象
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.18.0
  */
 public class SaManager {
 

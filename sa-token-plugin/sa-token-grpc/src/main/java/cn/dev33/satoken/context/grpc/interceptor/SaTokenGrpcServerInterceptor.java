@@ -32,7 +32,7 @@ import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
  * 鉴权，设置token
  * 
  * @author lym
- * @since 2022/8/25 11:33
+ * @since 1.34.0
  **/
 @GrpcGlobalServerInterceptor
 public class SaTokenGrpcServerInterceptor implements ServerInterceptor {

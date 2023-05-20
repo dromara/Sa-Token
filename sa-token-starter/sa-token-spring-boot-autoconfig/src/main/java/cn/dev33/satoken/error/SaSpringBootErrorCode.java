@@ -19,7 +19,7 @@ package cn.dev33.satoken.error;
  * 定义 sa-token-spring-boot-starter 所有异常细分状态码 
  * 
  * @author click33
- * @since 2022-10-30 
+ * @since 1.34.0
  */
 public interface SaSpringBootErrorCode {
 	

@@ -22,7 +22,7 @@ import java.util.Base64;
  * Sa-Token Base64 工具类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.14.0
  */
 public class SaBase64Util {
 

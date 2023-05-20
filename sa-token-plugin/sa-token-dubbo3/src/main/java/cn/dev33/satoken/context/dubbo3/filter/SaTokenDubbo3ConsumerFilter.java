@@ -28,7 +28,7 @@ import org.apache.dubbo.rpc.*;
  * Sa-Token 整合 Dubbo3 Consumer 端（调用端）过滤器
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @Activate(group = {CommonConstants.CONSUMER}, order = -30000)
 public class SaTokenDubbo3ConsumerFilter implements Filter {

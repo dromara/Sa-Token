@@ -31,7 +31,7 @@ import cn.dev33.satoken.util.SaResult;
  * 登录Controller，处理登录相关请求
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.19.0
  */
 @Controller
 public class SaQuickController {

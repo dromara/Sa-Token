@@ -21,7 +21,7 @@ import java.util.Map;
  * JSON 转换器 
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.30.0
  */
 public interface SaJsonTemplate {
 

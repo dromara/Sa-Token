@@ -19,7 +19,7 @@ package cn.dev33.satoken.config;
  * Sa-Token API 接口签名/验签 相关配置类
  *
  * @author click33
- * @since 2023/5/2
+ * @since 1.34.0
  */
 public class SaSignConfig {
 

@@ -39,7 +39,7 @@ import net.devh.boot.grpc.client.interceptor.GrpcGlobalClientInterceptor;
  * 客户端请求的时候，带上token
  * 
  * @author lym
- * @since 2022/8/24 15:45
+ * @since 1.34.0
  */
 @GrpcGlobalClientInterceptor
 public class SaTokenGrpcClientInterceptor implements ClientInterceptor, Ordered {

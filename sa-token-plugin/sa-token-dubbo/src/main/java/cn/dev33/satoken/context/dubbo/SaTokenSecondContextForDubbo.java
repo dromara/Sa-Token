@@ -30,7 +30,7 @@ import cn.dev33.satoken.exception.ApiDisabledException;
  * Sa-Token 二级上下文 [ Dubbo版本 ]
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 public class SaTokenSecondContextForDubbo implements SaTokenSecondContext {
 

@@ -26,7 +26,7 @@ import java.util.List;
  * </p>
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.10.0
  */
 public interface StpInterface {
 

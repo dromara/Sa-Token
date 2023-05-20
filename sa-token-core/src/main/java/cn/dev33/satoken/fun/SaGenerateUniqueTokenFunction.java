@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * 生成唯一式 token 的函数式接口，方便开发者进行 lambda 表达式风格调用
  *
  * @author click33
- * @since 2023/4/30
+ * @since 1.34.0
  */
 @FunctionalInterface
 public interface SaGenerateUniqueTokenFunction {

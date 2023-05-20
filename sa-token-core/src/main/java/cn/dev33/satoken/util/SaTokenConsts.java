@@ -24,7 +24,7 @@ package cn.dev33.satoken.util;
  * </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.8.0
  */
 public class SaTokenConsts {
 

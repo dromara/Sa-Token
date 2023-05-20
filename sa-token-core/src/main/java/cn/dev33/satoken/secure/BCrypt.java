@@ -44,7 +44,7 @@ import java.security.SecureRandom;
  * }
  *
  * @author Damien Miller
- * @since 4.1.1
+ * @since 1.29.0
  */
 @SuppressWarnings("all")
 public class BCrypt {

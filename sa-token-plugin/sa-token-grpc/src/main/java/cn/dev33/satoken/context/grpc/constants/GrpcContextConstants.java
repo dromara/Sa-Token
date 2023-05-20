@@ -23,7 +23,7 @@ import io.grpc.Metadata;
  * 常量 
  * 
  * @author lym
- * @since 2022/8/26 14:27
+ * @since 1.34.0
  */
 public class GrpcContextConstants {
     public static final Metadata.Key<String> SA_SAME_TOKEN =

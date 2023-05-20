@@ -28,7 +28,7 @@ import cn.dev33.satoken.sso.SaSsoUtil;
  * 注入 Sa-Token-SSO 所需要的 Bean
  * 
  * @author click33
- * @since <= 1.34.0
+ * @since 1.34.0
  */
 @ConditionalOnClass(SaSsoManager.class)
 public class SaSsoBeanInject {

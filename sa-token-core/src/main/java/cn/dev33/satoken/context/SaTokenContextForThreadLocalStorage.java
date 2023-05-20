@@ -27,7 +27,7 @@ import cn.dev33.satoken.exception.InvalidContextException;
  * <p> 一般情况下你不需要直接操作此类，因为框架的 starter 集成包里已经封装了完整的上下文操作 </p>
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.16.0
  */
 public class SaTokenContextForThreadLocalStorage {
 	
@@ -106,7 +106,7 @@ public class SaTokenContextForThreadLocalStorage {
 	 * Box 临时内部类，用于存储 [ SaRequest、SaResponse、SaStorage ] 三个包装对象
 	 *
 	 * @author click33
-	 * @since <= 1.34.0
+	 * @since 1.16.0
 	 */
 	public static class Box {
 		

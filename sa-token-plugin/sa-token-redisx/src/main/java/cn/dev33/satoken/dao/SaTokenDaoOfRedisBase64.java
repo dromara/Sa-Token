@@ -28,7 +28,7 @@ import java.util.Set;
  * SaTokenDao 的 redis 适配（可以完全精准还原所有序列化类型）
  *
  * @author noear
- * @since 1.6
+ * @since 1.34.0
  */
 public class SaTokenDaoOfRedisBase64 implements SaTokenDao {
     private final RedisBucket redisBucket;

@@ -27,7 +27,7 @@ import cn.dev33.satoken.oauth2.model.SaClientModel;
  * Sa-Token-OAuth2 模块 工具类
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.23.0
  */
 public class SaOAuth2Util {
 

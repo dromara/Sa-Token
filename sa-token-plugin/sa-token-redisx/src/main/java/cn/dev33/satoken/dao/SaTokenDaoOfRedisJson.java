@@ -31,7 +31,7 @@ import java.util.Set;
  * SaTokenDao 的 redis 适配（基于json序列化，不能完全精准还原所有类型）
  *
  * @author noear
- * @since 1.6
+ * @since 1.34.0
  */
 public class SaTokenDaoOfRedisJson implements SaTokenDao {
     private final RedisBucket redisBucket;
