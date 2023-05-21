@@ -35,6 +35,7 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.temp.SaTempDefaultImpl;
 import cn.dev33.satoken.temp.SaTempInterface;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -322,9 +323,7 @@ public class SaManager {
 				synchronized (SaManager.class) {
 					stpLogic = stpLogicMap.get(loginType);
 					if(stpLogic == null) {
-						stpLogic = new StpLogic(loginType);
-						// 此处无需手动put，因为 StpLogic 构造方法中会自动put 
-						// putStpLogic(stpLogic); 
+						stpLogic = SaStrategy.me.createStpLogic.apply(loginType);
 					}
 				}
 			} 
