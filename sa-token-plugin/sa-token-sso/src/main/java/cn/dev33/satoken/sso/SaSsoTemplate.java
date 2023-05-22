@@ -283,7 +283,7 @@ public class SaSsoTemplate {
 		
 		// 3、是否在[允许地址列表]之中 
 		List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(",")); 
-		if( ! SaStrategy.me.hasElement.apply(authUrlList, url) ) {
+		if( ! SaStrategy.instance.hasElement.apply(authUrlList, url) ) {
 			throw new SaSsoException("非法redirect：" + url).setCode(SaSsoErrorCode.CODE_30002);
 		}
 		

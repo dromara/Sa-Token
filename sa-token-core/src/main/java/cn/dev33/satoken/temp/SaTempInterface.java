@@ -54,7 +54,7 @@ public interface SaTempInterface {
 	default String createToken(String service, Object value, long timeout) {
 		
 		// 生成 token 
-		String token = SaStrategy.me.createToken.apply(null, null);
+		String token = SaStrategy.instance.createToken.apply(null, null);
 		
 		// 持久化映射关系 
 		String key = splicingKeyTempToken(service, token);

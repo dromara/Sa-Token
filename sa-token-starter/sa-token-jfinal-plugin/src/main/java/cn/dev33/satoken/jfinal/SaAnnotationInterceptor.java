@@ -25,7 +25,7 @@ import com.jfinal.aop.Invocation;
 public class SaAnnotationInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation invocation) {
-        SaStrategy.me.checkMethodAnnotation.accept((invocation.getMethod()));
+        SaStrategy.instance.checkMethodAnnotation.accept((invocation.getMethod()));
         invocation.invoke();
     }
 }

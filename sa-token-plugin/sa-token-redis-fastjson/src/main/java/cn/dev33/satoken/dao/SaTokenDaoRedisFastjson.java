@@ -64,7 +64,7 @@ public class SaTokenDaoRedisFastjson implements SaTokenDao {
 		}
 
 		// 重写 SaSession 生成策略 
-		SaStrategy.me.createSession = (sessionId) -> new SaSessionForFastjsonCustomized(sessionId);
+		SaStrategy.instance.createSession = (sessionId) -> new SaSessionForFastjsonCustomized(sessionId);
 		
 		// 指定相应的序列化方案 
 		StringRedisSerializer keySerializer = new StringRedisSerializer();

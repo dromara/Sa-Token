@@ -120,7 +120,7 @@ public class SaTokenDaoRedissonJackson implements SaTokenDao {
 			timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
 			this.objectMapper.registerModule(timeModule);
 			// 重写 SaSession 生成策略
-			SaStrategy.me.createSession = (sessionId) -> new SaSessionForJacksonCustomized(sessionId);
+			SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJacksonCustomized(sessionId);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}

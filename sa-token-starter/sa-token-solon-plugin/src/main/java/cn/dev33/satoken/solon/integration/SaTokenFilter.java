@@ -181,12 +181,12 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 			Method method = action.method().getMethod();
 
 			// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-			if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+			if (SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
 				return false;
 			}
 
 			// 注解校验
-			SaStrategy.me.checkMethodAnnotation.accept(method);
+			SaStrategy.instance.checkMethodAnnotation.accept(method);
 		}
 
 		return true;

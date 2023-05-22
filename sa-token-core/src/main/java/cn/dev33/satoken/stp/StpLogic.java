@@ -123,7 +123,7 @@ public class StpLogic {
 	 * @return 生成的tokenValue
 	 */
 	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
-		return SaStrategy.me.createToken.apply(loginId, loginType);
+		return SaStrategy.instance.createToken.apply(loginId, loginType);
 	}
 
  	/**
@@ -501,7 +501,7 @@ public class StpLogic {
 		}
 		
 		// 4、如果代码走到此处，说明未能成功复用旧 token，需要根据算法新建 token
-		return SaStrategy.me.generateUniqueToken.execute(
+		return SaStrategy.instance.generateUniqueToken.execute(
 				"token",
 				getConfigOfMaxTryTimes(),
 				() -> {
@@ -1096,7 +1096,7 @@ public class StpLogic {
 
 		if(session == null && isCreate) {
 			// 创建这个 SaSession
-			session = SaStrategy.me.createSession.apply(sessionId);
+			session = SaStrategy.instance.createSession.apply(sessionId);
 
 			// 追加操作
 			if(appendOperation != null) {
@@ -1268,7 +1268,7 @@ public class StpLogic {
 		 */
 		if(isCreate) {
 			// 随机创建一个 Token
-			tokenValue = SaStrategy.me.generateUniqueToken.execute(
+			tokenValue = SaStrategy.instance.generateUniqueToken.execute(
 					"token",
 					getConfigOfMaxTryTimes(),
 					() -> {
@@ -2099,8 +2099,8 @@ public class StpLogic {
 			this.checkDisableLevel(loginId, service, at.level());
 		}
 	}
-	
-	
+
+
 	// ------------------- 账号封禁 -------------------  
 
 	/**
@@ -2715,7 +2715,7 @@ public class StpLogic {
 	 * @return /
 	 */
 	public boolean hasElement(List<String> list, String element) {
-		return SaStrategy.me.hasElement.apply(list, element);
+		return SaStrategy.instance.hasElement.apply(list, element);
 	}
 
 	/**

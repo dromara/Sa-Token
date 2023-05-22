@@ -398,7 +398,7 @@ public class SaOAuth2Template {
 
 		// 3、是否在[允许地址列表]之中
 		List<String> allowList = SaFoxUtil.convertStringToList(checkClientModel(clientId).allowUrl);
-		if( ! SaStrategy.me.hasElement.apply(allowList, url)) {
+		if( ! SaStrategy.instance.hasElement.apply(allowList, url)) {
 			throw new SaOAuth2Exception("非法redirect_url：" + url).setCode(SaOAuth2ErrorCode.CODE_30114);
 		}
 	}

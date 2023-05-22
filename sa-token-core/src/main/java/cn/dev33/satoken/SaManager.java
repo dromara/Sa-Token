@@ -323,7 +323,7 @@ public class SaManager {
 				synchronized (SaManager.class) {
 					stpLogic = stpLogicMap.get(loginType);
 					if(stpLogic == null) {
-						stpLogic = SaStrategy.me.createStpLogic.apply(loginType);
+						stpLogic = SaStrategy.instance.createStpLogic.apply(loginType);
 					}
 				}
 			} 

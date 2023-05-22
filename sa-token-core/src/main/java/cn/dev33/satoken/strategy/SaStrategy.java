@@ -28,6 +28,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -58,7 +59,8 @@ public final class SaStrategy {
 	/**
 	 * 获取 SaStrategy 对象的单例引用 
 	 */
-	public static final SaStrategy me = new SaStrategy();
+	public static final SaStrategy instance = new SaStrategy();
+
 
 	// ----------------------- 所有策略
 	
@@ -145,10 +147,10 @@ public final class SaStrategy {
 	public Consumer<Method> checkMethodAnnotation = (method) -> {
 
 		// 先校验 Method 所属 Class 上的注解 
-		me.checkElementAnnotation.accept(method.getDeclaringClass());
+		instance.checkElementAnnotation.accept(method.getDeclaringClass());
 
 		// 再校验 Method 上的注解  
-		me.checkElementAnnotation.accept(method);
+		instance.checkElementAnnotation.accept(method);
 	};
 
 	/**
@@ -156,40 +158,134 @@ public final class SaStrategy {
 	 * <p> 参数 [element元素] 
 	 */
 	public Consumer<AnnotatedElement> checkElementAnnotation = (target) -> {
+
 		// 校验 @SaCheckLogin 注解 
-		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.me.getAnnotation.apply(target, SaCheckLogin.class);
+		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.instance.getAnnotation.apply(target, SaCheckLogin.class);
 		if(checkLogin != null) {
 			SaManager.getStpLogic(checkLogin.type(), false).checkByAnnotation(checkLogin);
 		}
 		
 		// 校验 @SaCheckRole 注解 
-		SaCheckRole checkRole = (SaCheckRole) SaStrategy.me.getAnnotation.apply(target, SaCheckRole.class);
+		SaCheckRole checkRole = (SaCheckRole) SaStrategy.instance.getAnnotation.apply(target, SaCheckRole.class);
 		if(checkRole != null) {
 			SaManager.getStpLogic(checkRole.type(), false).checkByAnnotation(checkRole);
 		}
 		
 		// 校验 @SaCheckPermission 注解
-		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.me.getAnnotation.apply(target, SaCheckPermission.class);
+		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.instance.getAnnotation.apply(target, SaCheckPermission.class);
 		if(checkPermission != null) {
 			SaManager.getStpLogic(checkPermission.type(), false).checkByAnnotation(checkPermission);
 		}
 
 		// 校验 @SaCheckSafe 注解
-		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.me.getAnnotation.apply(target, SaCheckSafe.class);
+		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.instance.getAnnotation.apply(target, SaCheckSafe.class);
 		if(checkSafe != null) {
 			SaManager.getStpLogic(checkSafe.type(), false).checkByAnnotation(checkSafe);
 		}
 
 		// 校验 @SaCheckDisable 注解
-		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.me.getAnnotation.apply(target, SaCheckDisable.class);
+		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.instance.getAnnotation.apply(target, SaCheckDisable.class);
 		if(checkDisable != null) {
 			SaManager.getStpLogic(checkDisable.type(), false).checkByAnnotation(checkDisable);
 		}
 		
 		// 校验 @SaCheckBasic 注解
-		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.me.getAnnotation.apply(target, SaCheckBasic.class);
+		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.instance.getAnnotation.apply(target, SaCheckBasic.class);
 		if(checkBasic != null) {
 			SaBasicUtil.check(checkBasic.realm(), checkBasic.account());
+		}
+
+		// 校验 @SaCheckOr 注解
+		SaCheckOr checkOr = (SaCheckOr) SaStrategy.instance.getAnnotation.apply(target, SaCheckOr.class);
+		if(checkOr != null) {
+			SaStrategy.instance.checkOrAnnotation.accept(checkOr);
+		}
+	};
+
+	/**
+	 * 对一个 @SaCheckOr 进行注解校验
+	 * <p> 参数 [SaCheckOr 注解的实例]
+	 */
+	public Consumer<SaCheckOr> checkOrAnnotation = (at) -> {
+
+		// 记录校验过程中所有的异常
+		List<SaTokenException> errorList = new ArrayList<>();
+
+		// 逐个开始校验 >>>
+
+		// 1、校验注解：@SaCheckLogin
+		SaCheckLogin[] checkLoginArray = at.login();
+		for (SaCheckLogin item : checkLoginArray) {
+			try {
+				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 2、校验注解：@SaCheckRole
+		SaCheckRole[] checkRoleArray = at.role();
+		for (SaCheckRole item : checkRoleArray) {
+			try {
+				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 3、校验注解：@SaCheckPermission
+		SaCheckPermission[] checkPermissionArray = at.permission();
+		for (SaCheckPermission item : checkPermissionArray) {
+			try {
+				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 4、校验注解：@SaCheckSafe
+		SaCheckSafe[] checkSafeArray = at.safe();
+		for (SaCheckSafe item : checkSafeArray) {
+			try {
+				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 5、校验注解：@SaCheckDisable
+		SaCheckDisable[] checkDisableArray = at.disable();
+		for (SaCheckDisable item : checkDisableArray) {
+			try {
+				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 6、校验注解：@SaCheckBasic
+		SaCheckBasic[] checkBasicArray = at.basic();
+		for (SaCheckBasic item : checkBasicArray) {
+			try {
+				SaBasicUtil.check(item.realm(), item.account());
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 如果执行到这里，有两种可能：
+		//		可能 1. SaCheckOr 注解上不包含任何注解校验，此时 errorList 里面一个异常都没有，我们直接跳过即可
+		//		可能 2. 所有注解校验都通过不了，此时 errorList 里面会有多个异常，我们随便抛出一个即可
+		if(errorList.size() == 0) {
+			// return;
+		} else {
+			throw errorList.get(0);
 		}
 	};
 
@@ -207,8 +303,8 @@ public final class SaStrategy {
 	 * <p> 参数 [Method, 注解] 
 	 */
 	public BiFunction<Method, Class<? extends Annotation>, Boolean> isAnnotationPresent = (method, annotationClass) -> {
-		return me.getAnnotation.apply(method, annotationClass) != null ||
-				me.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
+		return instance.getAnnotation.apply(method, annotationClass) != null ||
+				instance.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
 	};
 
 	/**
@@ -309,6 +405,18 @@ public final class SaStrategy {
 	}
 
 	/**
+	 * 对一个 @SaCheckOr 进行注解校验
+	 * <p> 参数 [SaCheckOr 注解的实例]
+	 *
+	 * @param checkOrAnnotation /
+	 * @return 对象自身
+	 */
+	public SaStrategy setCheckOrAnnotation(Consumer<SaCheckOr> checkOrAnnotation) {
+		this.checkOrAnnotation = checkOrAnnotation;
+		return this;
+	}
+
+	/**
 	 * 从元素上获取注解  
 	 * <p> 参数 [element元素，要获取的注解类型] 
 	 * @param getAnnotation / 
@@ -354,5 +462,13 @@ public final class SaStrategy {
 		this.createStpLogic = createStpLogic;
 		return this;
 	}
+
+	//
+
+	/**
+	 * 请更换为 instance
+	 */
+	@Deprecated
+	public static final SaStrategy me = instance;
 
 }

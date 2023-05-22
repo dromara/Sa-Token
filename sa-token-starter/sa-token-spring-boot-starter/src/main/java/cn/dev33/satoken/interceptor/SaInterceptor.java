@@ -100,13 +100,13 @@ public class SaInterceptor implements HandlerInterceptor {
 				Method method = ((HandlerMethod) handler).getMethod();
 
 				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-				if(SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+				if(SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
 					// 注意这里直接就退出整个鉴权了，最底部的 auth.run() 路由拦截鉴权也被跳出了
 					return true;
 				}
 
 				// 执行注解鉴权
-				SaStrategy.me.checkMethodAnnotation.accept(method);
+				SaStrategy.instance.checkMethodAnnotation.accept(method);
 			}
 			
 			// Auth 路由拦截鉴权校验
