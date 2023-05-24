@@ -1,7 +1,7 @@
 package com.pj.test;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import com.pj.satoken.StpUserUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class TestController {
 	// 测试登录  ---- http://localhost:8081/test/login
 	@RequestMapping("login")
 	public SaResult login(@RequestParam(defaultValue = "10001") long id) {
-		StpUserUtil.login(id);
+		StpUtil.login(id);
 		return SaResult.ok("登录成功");
 	}
 	
@@ -27,7 +27,7 @@ public class TestController {
 	public SaResult test() {
 		System.out.println("------------进来了");
 		// 返回
-		return SaResult.data("");
+		return SaResult.data(null);
 	}
 	
 	// 测试   浏览器访问： http://localhost:8081/test/test2

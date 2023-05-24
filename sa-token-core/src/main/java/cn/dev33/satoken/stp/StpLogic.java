@@ -521,17 +521,22 @@ public class StpLogic {
 	 */
 	protected void checkLoginArgs(Object id, SaLoginModel loginModel) {
 
-		// 1、先检查一下，传入的账号id是否可用
+		// 1、账号 id 不能为空
 		if(SaFoxUtil.isEmpty(id)) {
 			throw new SaTokenException("loginId 不能为空").setCode(SaErrorCode.CODE_11002);
 		}
 
-		// 2、判断账号id是否为简单类型
+		// 2、账号 id 不能是异常标记值
+		if(NotLoginException.ABNORMAL_LIST.contains(id.toString())) {
+			throw new SaTokenException("loginId 不能为以下值：" + NotLoginException.ABNORMAL_LIST);
+		}
+
+		// 3、账号 id 不能是简单类型
 		if( ! SaFoxUtil.isBasicType(id.getClass())) {
 			SaManager.log.warn("loginId 应该为简单类型，例如：String | int | long，不推荐使用复杂类型：" + id.getClass());
 		}
 
-		// 3、判断当前 StpLogic 是否支持 extra 扩展参数
+		// 4、判断当前 StpLogic 是否支持 extra 扩展参数
 		if( ! isSupportExtra()) {
 			// 如果不支持，开发者却传入了 extra 扩展参数，那么就打印警告信息
 			Map<String, Object> extraData = loginModel.getExtraData();
@@ -1040,8 +1045,8 @@ public class StpLogic {
 	 * @return / 
 	 */
 	public boolean isValidLoginId(Object loginId) {
-		// 判断标准：不为null，且不在异常标记项里面
-		return loginId != null && !NotLoginException.ABNORMAL_LIST.contains(loginId.toString());
+		// 判断标准：不为 null、空字符串，且不在异常标记项里面
+		return SaFoxUtil.isNotEmpty(loginId) && !NotLoginException.ABNORMAL_LIST.contains(loginId.toString());
 	}
 
 	/**
