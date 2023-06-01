@@ -1,5 +1,6 @@
 cn.dev33.satoken.spring.SaBeanRegister
 cn.dev33.satoken.spring.SaBeanInject
+cn.dev33.satoken.spring.SaDynamicRouterRegister
 cn.dev33.satoken.spring.sso.SaSsoBeanRegister
 cn.dev33.satoken.spring.sso.SaSsoBeanInject
 cn.dev33.satoken.spring.oauth2.SaOAuth2BeanRegister

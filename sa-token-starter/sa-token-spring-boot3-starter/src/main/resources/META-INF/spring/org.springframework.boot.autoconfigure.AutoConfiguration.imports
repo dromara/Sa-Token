@@ -1,1 +1,2 @@
 cn.dev33.satoken.spring.SaTokenContextRegister
+cn.dev33.satoken.spring.SaTokenInterceptorRegister

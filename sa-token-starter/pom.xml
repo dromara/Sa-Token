@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-   
+
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-parent</artifactId>
@@ -11,11 +11,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <packaging>pom</packaging>
-    
+
 	<name>sa-token-starter</name>
     <artifactId>sa-token-starter</artifactId>
 	<description>sa-token starters</description>
-	
+
 	<!-- 所有子模块 -->
     <modules>
         <module>sa-token-servlet</module>
@@ -28,6 +28,7 @@
         <module>sa-token-solon-plugin</module>
         <module>sa-token-jboot-plugin</module>
         <module>sa-token-jfinal-plugin</module>
+        <module>sa-token-spring-cloud-config-starter</module>
     </modules>
 
 </project>

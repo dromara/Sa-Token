@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-starter</artifactId>
@@ -22,26 +22,26 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<!-- config (optional) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 		<!-- sa-token-servlet -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-servlet</artifactId>
 		</dependency>
-		
+
 		<!-- sa-token-spring-boot-autoconfig -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 

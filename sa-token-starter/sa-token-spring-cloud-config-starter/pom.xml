@@ -12,22 +12,16 @@
   </parent>
   <packaging>jar</packaging>
 
-  <name>sa-token-spring-boot-autoconfig</name>
-  <artifactId>sa-token-spring-boot-autoconfig</artifactId>
-  <description>sa-token-spring-boot-autoconfig</description>
+  <name>sa-token-spring-cloud-config-starter</name>
+  <artifactId>sa-token-spring-cloud-config-starter</artifactId>
+  <description>springcloud integrate sa-token</description>
 
   <dependencies>
 
-    <!-- spring-boot-starter (optional) -->
+    <!-- spring-boot-starter-web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <optional>true</optional>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
     <!-- config (optional) -->
@@ -37,18 +31,27 @@
       <optional>true</optional>
     </dependency>
 
-    <!-- OAuth2.0 (optional) -->
+    <!-- sa-token-spring-boot-autoconfig -->
     <dependency>
       <groupId>cn.dev33</groupId>
-      <artifactId>sa-token-oauth2</artifactId>
-      <optional>true</optional>
+      <artifactId>sa-token-spring-boot-autoconfig</artifactId>
     </dependency>
 
-    <!-- SSO (optional) -->
+    <!--     https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-config-->
     <dependency>
-      <groupId>cn.dev33</groupId>
-      <artifactId>sa-token-sso</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-context</artifactId>
+      <version>2.2.8.RELEASE</version>
       <optional>true</optional>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>5.3.27</version>
+      <optional>true</optional>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
