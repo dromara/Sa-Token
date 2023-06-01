@@ -1,6 +1,7 @@
 package cn.dev33.satoken.config;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * 路由配置
@@ -15,7 +16,7 @@ public class SaRouterConfig implements Serializable {
   private static final long serialVersionUID = 6457701626541613685L;
 
   /**
-   * Enable
+   * 是否开启配置路由
    */
   private Boolean enable;
 
@@ -40,4 +41,11 @@ public class SaRouterConfig implements Serializable {
     this.rules = rules;
   }
 
+  @Override
+  public String toString() {
+    return "SaRouterConfig{" +
+        "enable=" + enable +
+        ", rules=" + Arrays.toString(rules) +
+        '}';
+  }
 }

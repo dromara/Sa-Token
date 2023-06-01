@@ -3,6 +3,11 @@ package cn.dev33.satoken.config;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ * 路由规则
+ *
+ * @author einsitang
+ */
 public class SaRouterRule implements Serializable {
 
 

@@ -2,8 +2,12 @@ package cn.dev33.satoken.config;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.List;
 
+/**
+ * 规则检查器
+ *
+ * @author einsitang
+ */
 public class SaRouterRuleCheck implements Serializable {
 
   private static final long serialVersionUID = 6002708589740924351L;
@@ -33,7 +37,7 @@ public class SaRouterRuleCheck implements Serializable {
    */
   private Boolean loginRequired = Boolean.TRUE;
 
-  public static SaRouterRuleCheck defaultChecker(){
+  public static SaRouterRuleCheck defaultChecker() {
     return new SaRouterRuleCheck();
   }
 
