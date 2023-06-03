@@ -18,7 +18,7 @@
 2. 用户跳转到子系统登录接口 `/sso/login`，并携带 `back参数` 记录初始页面URL。
 	- 形如：`http://{sso-client}/sso/login?back=xxx` 
 3. 子系统检测到此用户尚未登录，再次将其重定向至SSO认证中心，并携带`redirect参数`记录子系统的登录页URL。
-	- 形如：`http://{sso-server}/sso/auth?redirect=xxx?back=xxx` 
+	- 形如：`http://{sso-server}/sso/auth?redirect=xxx&back=xxx` 
 4. 用户进入了 SSO认证中心 的登录页面，开始登录。
 5. 用户 输入账号密码 并 登录成功，SSO认证中心再次将用户重定向至子系统的登录接口`/sso/login`，并携带`ticket码`参数。
 	- 形如：`http://{sso-client}/sso/login?back=xxx&ticket=xxxxxxxxx`
