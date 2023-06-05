@@ -38,7 +38,7 @@ public class Config extends JFinalConfig {
         SaTokenConfig saTokenConfig = new SaTokenConfig();
         saTokenConfig.setTokenStyle(SaTokenConsts.TOKEN_STYLE_SIMPLE_UUID);
         saTokenConfig.setTimeout(60*60*4);  //登录有效时间4小时
-        saTokenConfig.setActivityTimeout(30*60); //半小时无操作过期处理
+        saTokenConfig.setActiveTimeout(30*60); //半小时无操作就冻结 token 
         saTokenConfig.setIsShare(false);
         saTokenConfig.setTokenName("token");    //更改satoken的cookies名称
         SaCookieConfig saCookieConfig = new SaCookieConfig();

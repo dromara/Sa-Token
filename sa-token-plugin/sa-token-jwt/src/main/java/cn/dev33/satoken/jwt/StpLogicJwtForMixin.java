@@ -89,7 +89,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 		info.tokenTimeout = getTokenTimeout();
 		info.sessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.tokenSessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
-		info.tokenActivityTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
+		info.tokenActiveTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.loginDevice = getLoginDevice();
 		return info;
 	}

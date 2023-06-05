@@ -47,9 +47,14 @@ public class SaLoginModel {
 	public Boolean isLastingCookie = true;
 
 	/**
-	 * 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 * 指定此次登录 token 有效期，单位：秒 （如未指定，自动取全局配置的 timeout 值）
 	 */
 	public Long timeout;
+
+	/**
+	 * 指定此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
+	 */
+	private Long activeTimeout;
 
 	/**
 	 * 扩展信息（只在jwt模式下生效）
@@ -92,16 +97,6 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
-	 */
-	public Boolean getIsLastingCookieOrFalse() {
-		if(isLastingCookie == null) {
-			return false;
-		}
-		return isLastingCookie;
-	}
-
-	/**
 	 * @param isLastingCookie 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 * @return 对象自身
 	 */
@@ -111,28 +106,35 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 * @return 指定此次登录 token 有效期，单位：秒
 	 */
 	public Long getTimeout() {
 		return timeout;
 	}
 
 	/**
-	 * @return timeout 值 （如果此配置项尚未配置，则取全局配置的值）
-	 */
-	public Long getTimeoutOrGlobalConfig() {
-		if(timeout == null) {
-			timeout = SaManager.getConfig().getTimeout();
-		}
-		return timeout;
-	}
-	
-	/**
-	 * @param timeout 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的timeout值）
+	 * @param timeout 指定此次登录 token 有效期，单位：秒 （如未指定，自动取全局配置的 timeout 值）
 	 * @return 对象自身
 	 */
 	public SaLoginModel setTimeout(long timeout) {
 		this.timeout = timeout;
+		return this;
+	}
+
+	/**
+	 * @return 此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
+	 */
+	public Long getActiveTimeout() {
+		return activeTimeout;
+	}
+
+
+	/**
+	 * @param activeTimeout 指定此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
+	 * @return 对象自身
+	 */
+	public SaLoginModel setActiveTimeout(long activeTimeout) {
+		this.activeTimeout = activeTimeout;
 		return this;
 	}
 
@@ -176,16 +178,6 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return 是否在登录后将 Token 写入到响应头 （如果此配置项尚未配置，则取全局配置的值）
-	 */
-	public Boolean getIsWriteHeaderOrGlobalConfig() {
-		if(isWriteHeader == null) {
-			isWriteHeader = SaManager.getConfig().getIsWriteHeader();
-		}
-		return isWriteHeader;
-	}
-
-	/**
 	 * @param isWriteHeader 是否在登录后将 Token 写入到响应头
 	 * @return 对象自身
 	 */
@@ -213,6 +205,7 @@ public class SaLoginModel {
 		this.tokenSignTag = tokenSignTag;
 		return this;
 	}
+
 	/*
 	 * toString 
 	 */
@@ -222,6 +215,7 @@ public class SaLoginModel {
 				+ "device=" + device
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout
+				+ ", activeTimeout=" + activeTimeout
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader
@@ -231,6 +225,36 @@ public class SaLoginModel {
 
 
 	// ------ 附加方法 
+
+	/**
+	 * @return 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+	 */
+	public Boolean getIsLastingCookieOrFalse() {
+		if(isLastingCookie == null) {
+			return false;
+		}
+		return isLastingCookie;
+	}
+
+	/**
+	 * @return timeout 值 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	public Long getTimeoutOrGlobalConfig() {
+		if(timeout == null) {
+			timeout = SaManager.getConfig().getTimeout();
+		}
+		return timeout;
+	}
+
+	/**
+	 * @return 是否在登录后将 Token 写入到响应头 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	public Boolean getIsWriteHeaderOrGlobalConfig() {
+		if(isWriteHeader == null) {
+			isWriteHeader = SaManager.getConfig().getIsWriteHeader();
+		}
+		return isWriteHeader;
+	}
 
 	/**
 	 * 写入扩展数据（只在jwt模式下生效） 
@@ -288,7 +312,7 @@ public class SaLoginModel {
 		}
 		return device;
 	}
-	
+
 	/**
 	 * 构建对象，初始化默认值 
 	 * @return 对象自身

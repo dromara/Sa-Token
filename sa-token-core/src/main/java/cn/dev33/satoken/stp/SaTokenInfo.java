@@ -30,7 +30,7 @@ package cn.dev33.satoken.stp;
  *         "tokenTimeout": 2591977,          // token剩余有效期 (单位: 秒)
  *         "sessionTimeout": 2591977,        // Account-Session剩余有效时间 (单位: 秒)
  *         "tokenSessionTimeout": -2,        // Token-Session剩余有效时间 (单位: 秒) (-2表示系统中不存在这个缓存)
- *         "tokenActivityTimeout": -1,       // token剩余无操作有效时间 (单位: 秒)
+ *         "tokenActiveTimeout": -1,       // Token 距离被冻结还剩多少时间 (单位: 秒)
  *         "loginDevice": "default-device"   // 登录设备类型
  *     }
  *     </pre>
@@ -65,8 +65,8 @@ public class SaTokenInfo {
 	/** Token-Session 剩余有效时间（单位: 秒） */
 	public long tokenSessionTimeout;
 
-	/** token 剩余无操作有效时间（单位: 秒） */
-	public long tokenActivityTimeout;
+	/** token 距离被冻结还剩多少时间（单位: 秒） */
+	public long tokenActiveTimeout;
 
 	/** 登录设备类型 */
 	public String loginDevice;
@@ -189,17 +189,17 @@ public class SaTokenInfo {
 	}
 
 	/**
-	 * @return token 剩余无操作有效时间（单位: 秒）
+	 * @return token 距离被冻结还剩多少时间（单位: 秒）
 	 */
-	public long getTokenActivityTimeout() {
-		return tokenActivityTimeout;
+	public long getTokenActiveTimeout() {
+		return tokenActiveTimeout;
 	}
 
 	/**
-	 * @param tokenActivityTimeout token 剩余无操作有效时间（单位: 秒）
+	 * @param tokenActiveTimeout token 距离被冻结还剩多少时间（单位: 秒）
 	 */
-	public void setTokenActivityTimeout(long tokenActivityTimeout) {
-		this.tokenActivityTimeout = tokenActivityTimeout;
+	public void setTokenActiveTimeout(long tokenActiveTimeout) {
+		this.tokenActiveTimeout = tokenActiveTimeout;
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class SaTokenInfo {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
 				+ ", loginId=" + loginId + ", loginType=" + loginType + ", tokenTimeout=" + tokenTimeout
 				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
-				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + ", tag=" + tag
+				+ ", tokenActiveTimeout=" + tokenActiveTimeout + ", loginDevice=" + loginDevice + ", tag=" + tag
 				+ "]";
 	}
 

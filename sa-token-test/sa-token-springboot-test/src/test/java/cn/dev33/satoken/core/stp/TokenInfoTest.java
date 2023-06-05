@@ -45,7 +45,7 @@ public class TokenInfoTest {
 		info.setTokenTimeout(1800);
 		info.setSessionTimeout(120);
 		info.setTokenSessionTimeout(1800);
-		info.setTokenActivityTimeout(120);
+		info.setTokenActiveTimeout(120);
 		info.setLoginDevice("PC");
 		info.setTag("xxx");
 
@@ -57,7 +57,7 @@ public class TokenInfoTest {
 		Assertions.assertEquals(info.getTokenTimeout(), 1800);
 		Assertions.assertEquals(info.getSessionTimeout(), 120);
 		Assertions.assertEquals(info.getTokenSessionTimeout(), 1800);
-		Assertions.assertEquals(info.getTokenActivityTimeout(), 120);
+		Assertions.assertEquals(info.getTokenActiveTimeout(), 120);
 		Assertions.assertEquals(info.getLoginDevice(), "PC");
 		Assertions.assertEquals(info.getTag(), "xxx");
 		

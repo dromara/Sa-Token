@@ -75,7 +75,7 @@ public class BasicsTest {
 	@BeforeAll
     public static void beforeClass() {
     	System.out.println("\n\n------------------------ 基础测试 star ...");
-    	SaManager.getConfig().setActivityTimeout(180);
+    	SaManager.getConfig().setActiveTimeout(180);
     }
 
 	// 结束 
@@ -710,20 +710,20 @@ public class BasicsTest {
     	Assertions.assertEquals(tokenSession.get("code"), "123456");
     }
 
-    // 测试，临时过期 
+    // 测试，token 最低活跃频率  
     @Test
-    public void testActivityTimeout() {
+    public void testActiveTimeout() {
     	// 登录 
     	StpUtil.login(10001);
     	Assertions.assertNotNull(StpUtil.getTokenValue());
     	
     	// 默认跟随全局 timeout 
-    	StpUtil.updateLastActivityToNow();
-    	long activityTimeout = StpUtil.getTokenActivityTimeout();
-    	Assertions.assertTrue(activityTimeout <=180 || activityTimeout >=179);
+    	StpUtil.updateLastActiveToNow();
+    	long activeTimeout = StpUtil.getTokenActiveTimeout();
+    	Assertions.assertTrue(activeTimeout <=180 || activeTimeout >=179);
     	
     	// 不会抛出异常 
-    	Assertions.assertDoesNotThrow(() -> StpUtil.checkActivityTimeout());
+    	Assertions.assertDoesNotThrow(() -> StpUtil.checkActiveTimeout());
     }
 
     // 测试，上下文 API 

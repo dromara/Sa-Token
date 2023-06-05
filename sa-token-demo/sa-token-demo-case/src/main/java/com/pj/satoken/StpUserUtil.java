@@ -7,17 +7,15 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * Sa-Token 权限认证工具类 (User版)
+ * Sa-Token 权限认证工具类 (User 版)
  *
  * @author click33
- * @since <= 1.34.0
+ * @since 1.0.0
  */
-@Component
 public class StpUserUtil {
 
 	private StpUserUtil() {}
@@ -25,7 +23,7 @@ public class StpUserUtil {
 	/**
 	 * 多账号体系下的类型标识
 	 */
-	public static final String TYPE = "user";
+	public static final String TYPE = "login";
 
 	/**
 	 * 底层使用的 StpLogic 对象
@@ -483,24 +481,24 @@ public class StpUserUtil {
 	}
 
 
-	// ------------------- Activity-Timeout token 最低活跃度 验证相关 -------------------
-
-	/**
-	 * 检查当前 token 是否已被冻结，如果是则抛出异常
-	 */
-	public static void checkActivityTimeout() {
-		stpLogic.checkActivityTimeout();
-	}
+	// ------------------- Active-Timeout token 最低活跃度 验证相关 -------------------
 
 	/**
 	 * 续签当前 token：(将 [最后操作时间] 更新为当前时间戳)
 	 * <h2>
 	 * 		请注意: 即使 token 已被冻结 也可续签成功，
-	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否冻结即可
+	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActiveTimeout() 强制检查是否冻结即可
 	 * </h2>
 	 */
-	public static void updateLastActivityToNow() {
-		stpLogic.updateLastActivityToNow();
+	public static void updateLastActiveToNow() {
+		stpLogic.updateLastActiveToNow();
+	}
+
+	/**
+	 * 检查当前 token 是否已被冻结，如果是则抛出异常
+	 */
+	public static void checkActiveTimeout() {
+		stpLogic.checkActiveTimeout();
 	}
 
 
@@ -548,8 +546,8 @@ public class StpUserUtil {
 	 *
 	 * @return /
 	 */
-	public static long getTokenActivityTimeout() {
-		return stpLogic.getTokenActivityTimeout();
+	public static long getTokenActiveTimeout() {
+		return stpLogic.getTokenActiveTimeout();
 	}
 
 	/**

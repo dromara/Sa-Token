@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  *
  * <p> 可标注在方法、类上（效果等同于标注在此类的所有方法上）
  *
- * @author kong
+ * @author click33
  * @since 1.10.0
  */
 @Retention(RetentionPolicy.RUNTIME)

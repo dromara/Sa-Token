@@ -61,6 +61,14 @@ public class SaLoginConfig {
 	}
 
 	/**
+	 * @param activeTimeout 指定此次登录 token 最低活跃频率，单位：秒（如未指定，自动取全局配置的 activeTimeout 值）
+	 * @return 对象自身
+	 */
+	public static SaLoginModel setActiveTimeout(long activeTimeout) {
+		return create().setActiveTimeout(activeTimeout);
+	}
+
+	/**
 	 * @param extraData 扩展信息（只在jwt模式下生效）
 	 * @return 登录参数 Model
 	 */

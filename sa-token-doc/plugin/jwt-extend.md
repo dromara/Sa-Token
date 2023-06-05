@@ -150,7 +150,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzB
 | 角色认证					| 支持			| 支持				| 支持				|
 | 权限认证					| 支持			| 支持				| 支持				|
 | timeout 有效期				| 支持			| 支持				| 支持				|
-| activity-timeout 有效期	| 支持			| 支持				| 不支持				|
+| active-timeout 有效期		| 支持			| 支持				| 不支持				|
 | id反查Token				| 支持			| 支持				| 不支持				|
 | 会话管理					| 支持			| 部分支持			| 不支持				|
 | 注解鉴权					| 支持			| 支持				| 支持				|

@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.config;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
@@ -37,14 +38,19 @@ public class SaTokenConfig implements Serializable {
 	/** token 名称 （同时也是： cookie 名称、提交 token 时参数的名称、存储 token 时的 key 前缀） */
 	private String tokenName = "satoken";
 
-	/** token 有效期（单位：秒） 默认30天，-1 代表永久 */
+	/** token 有效期（单位：秒） 默认30天，-1 代表永久有效 */
 	private long timeout = 60 * 60 * 24 * 30;
 
 	/**
 	 * token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 	 * （例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 */
-	private long activityTimeout = -1;
+	private long activeTimeout = -1;
+
+	/**
+	 * 是否启用动态 activeTimeout 功能，如不需要请设置为 false，节省缓存请求次数
+	 */
+	private Boolean dynamicActiveTimeout = false;
 
 	/**
 	 * 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
@@ -102,7 +108,7 @@ public class SaTokenConfig implements Serializable {
 	private Boolean tokenSessionCheckLogin = true;
 
 	/**
-	 * 是否打开自动续签 activityTimeout （如果此值为 true, 框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
+	 * 是否打开自动续签 activeTimeout （如果此值为 true, 框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
 	 */
 	private Boolean autoRenew = true;
 
@@ -189,14 +195,14 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return token 有效期（单位：秒） 默认30天，-1 代表永久
+	 * @return token 有效期（单位：秒） 默认30天，-1 代表永久有效
 	 */
 	public long getTimeout() {
 		return timeout;
 	}
 
 	/**
-	 * @param timeout token 有效期（单位：秒） 默认30天，-1 代表永久
+	 * @param timeout token 有效期（单位：秒） 默认30天，-1 代表永久有效
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setTimeout(long timeout) {
@@ -208,17 +214,33 @@ public class SaTokenConfig implements Serializable {
 	 * @return token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 	 * 							（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 */
-	public long getActivityTimeout() {
-		return activityTimeout;
+	public long getActiveTimeout() {
+		return activeTimeout;
 	}
 
 	/**
-	 * @param activityTimeout token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	 * @param activeTimeout token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 	 * 								（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setActivityTimeout(long activityTimeout) {
-		this.activityTimeout = activityTimeout;
+	public SaTokenConfig setActiveTimeout(long activeTimeout) {
+		this.activeTimeout = activeTimeout;
+		return this;
+	}
+
+	/**
+	 * @return 是否启用动态 activeTimeout 功能，如不需要请设置为 false，节省缓存请求次数
+	 */
+	public Boolean getDynamicActiveTimeout() {
+		return dynamicActiveTimeout;
+	}
+
+	/**
+	 * @param dynamicActiveTimeout 是否启用动态 activeTimeout 功能，如不需要请设置为 false，节省缓存请求次数
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setDynamicActiveTimeout(Boolean dynamicActiveTimeout) {
+		this.dynamicActiveTimeout = dynamicActiveTimeout;
 		return this;
 	}
 
@@ -399,14 +421,14 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return 是否打开自动续签 activityTimeout （如果此值为 true, 框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
+	 * @return 是否打开自动续签 activeTimeout （如果此值为 true, 框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
 	 */
 	public Boolean getAutoRenew() {
 		return autoRenew;
 	}
 
 	/**
-	 * @param autoRenew 是否打开自动续签 activityTimeout （如果此值为 true, 框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
+	 * @param autoRenew 是否打开自动续签 activeTimeout （如果此值为 true, 框架会在每次直接或间接调用 getLoginId() 时进行一次过期检查与续签操作）
 	 * @return 对象自身
 	 */
 	public SaTokenConfig setAutoRenew(Boolean autoRenew) {
@@ -633,7 +655,8 @@ public class SaTokenConfig implements Serializable {
 		return "SaTokenConfig ["
 				+ "tokenName=" + tokenName 
 				+ ", timeout=" + timeout 
-				+ ", activityTimeout=" + activityTimeout
+				+ ", activeTimeout=" + activeTimeout
+				+ ", dynamicActiveTimeout=" + dynamicActiveTimeout
 				+ ", isConcurrent=" + isConcurrent 
 				+ ", isShare=" + isShare 
 				+ ", maxLoginCount=" + maxLoginCount
@@ -661,5 +684,30 @@ public class SaTokenConfig implements Serializable {
 				+ ", sign=" + sign
 				+ "]";
 	}
+
+	/**
+	 * 请更改为 getActiveTimeout()
+	 * @return token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	 * 							（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
+	 */
+	@Deprecated
+	public long getActivityTimeout() {
+		System.err.println("配置项已过期，请更换：sa-token.activity-timeout -> sa-token.active-timeout");
+		return activeTimeout;
+	}
+
+	/**
+	 * 请更改为 setActiveTimeout()
+	 * @param activityTimeout token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	 * 								（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
+	 * @return 对象自身
+	 */
+	@Deprecated
+	public SaTokenConfig setActivityTimeout(long activityTimeout) {
+		System.err.println("配置项已过期，请更换：sa-token.activity-timeout -> sa-token.active-timeout");
+		this.activeTimeout = activityTimeout;
+		return this;
+	}
+
 
 }

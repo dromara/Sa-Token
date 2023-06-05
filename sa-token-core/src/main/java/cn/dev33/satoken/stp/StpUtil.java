@@ -26,7 +26,7 @@ import java.util.List;
  * Sa-Token 权限认证工具类
  *
  * @author click33
- * @since 1.10.0
+ * @since 1.0.0
  */
 public class StpUtil {
 	
@@ -493,26 +493,26 @@ public class StpUtil {
 	}
 	
 
-	// ------------------- Activity-Timeout token 最低活跃度 验证相关 -------------------
-
-	/**
-	 * 检查当前 token 是否已被冻结，如果是则抛出异常
-	 */
- 	public static void checkActivityTimeout() {
- 		stpLogic.checkActivityTimeout();
- 	}
+	// ------------------- Active-Timeout token 最低活跃度 验证相关 -------------------
 
 	/**
 	 * 续签当前 token：(将 [最后操作时间] 更新为当前时间戳)
 	 * <h2>
 	 * 		请注意: 即使 token 已被冻结 也可续签成功，
-	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActivityTimeout() 强制检查是否冻结即可
+	 * 		如果此场景下需要提示续签失败，可在此之前调用 checkActiveTimeout() 强制检查是否冻结即可
 	 * </h2>
 	 */
- 	public static void updateLastActivityToNow() {
- 		stpLogic.updateLastActivityToNow();
+	public static void updateLastActiveToNow() {
+		stpLogic.updateLastActiveToNow();
+	}
+
+	/**
+	 * 检查当前 token 是否已被冻结，如果是则抛出异常
+	 */
+ 	public static void checkActiveTimeout() {
+ 		stpLogic.checkActiveTimeout();
  	}
- 	
+
 
 	// ------------------- 过期时间相关 -------------------  
 
@@ -558,8 +558,8 @@ public class StpUtil {
 	 *
 	 * @return /
 	 */
- 	public static long getTokenActivityTimeout() {
- 		return stpLogic.getTokenActivityTimeout();
+ 	public static long getTokenActiveTimeout() {
+ 		return stpLogic.getTokenActiveTimeout();
  	}
 
 	/**

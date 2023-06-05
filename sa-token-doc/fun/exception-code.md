@@ -79,7 +79,7 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 | 11013		| Token已过期							|
 | 11014		| Token已被顶下线						|
 | 11015		| Token已被踢下线						|
-| 11016		| Token已临时过期						|
+| 11016		| Token已被冻结						|
 | 11031		| 在未集成 sa-token-jwt 插件时调用 getExtra() 抛出异常					|
 | 11041		| 缺少指定的角色							|
 | 11051		| 缺少指定的权限							|

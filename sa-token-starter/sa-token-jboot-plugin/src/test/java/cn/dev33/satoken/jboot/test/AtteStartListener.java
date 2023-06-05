@@ -39,7 +39,7 @@ public class AtteStartListener implements JbootAppListener {
         SaTokenConfig saTokenConfig = new SaTokenConfig();
         saTokenConfig.setTokenStyle(SaTokenConsts.TOKEN_STYLE_SIMPLE_UUID);
         saTokenConfig.setTimeout(60*60*4);  //登录有效时间4小时
-        saTokenConfig.setActivityTimeout(30*60); //半小时无操作过期处理
+        saTokenConfig.setActiveTimeout(30*60); //半小时无操作就冻结 token 
         saTokenConfig.setIsShare(false);
         saTokenConfig.setTokenName("token");    //更换satoken的名称
         saTokenConfig.setCookie(new SaCookieConfig().setHttpOnly(true));    //开启cookies的httponly属性

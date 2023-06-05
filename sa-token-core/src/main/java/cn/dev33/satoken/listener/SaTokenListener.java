@@ -110,7 +110,7 @@ public interface SaTokenListener {
 	void doLogoutSession(String id);
 
 	/**
-	 * 每次 Token 续期时触发（注意：是 timeout 续期，而不是 activity-timeout 续期）
+	 * 每次 Token 续期时触发（注意：是 timeout 续期，而不是 active-timeout 续期）
 	 * 
 	 * @param tokenValue token 值 
 	 * @param loginId 账号id 

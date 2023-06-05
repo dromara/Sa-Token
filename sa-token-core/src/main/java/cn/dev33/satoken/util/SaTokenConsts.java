@@ -67,9 +67,9 @@ public class SaTokenConsts {
 	public static final String JUST_CREATED_NOT_PREFIX = "JUST_CREATED_NOT_PREFIX_"; 	
 
 	/**
-	 * 常量 key 标记: 如果本次请求已经验证过 [ 临时过期 ] , 则以此值存储在当前 request 中
+	 * 常量 key 标记: 如果本次请求已经验证过 activeTimeout, 则以此 key 在 storage 中做一个标记
 	 */
-	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY_"; 	
+	public static final String TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY = "TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY_";
 
 	/**
 	 * 常量 key 标记: 在登录时，默认使用的设备类型 
@@ -193,6 +193,13 @@ public class SaTokenConsts {
 	 * 请更换为 JUST_CREATED  
 	 */
 	@Deprecated
-	public static final String JUST_CREATED_SAVE_KEY = JUST_CREATED; 	
-	
+	public static final String JUST_CREATED_SAVE_KEY = JUST_CREATED;
+
+	/**
+	 * 请更换为 TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY
+	 */
+	@Deprecated
+	public static final String TOKEN_ACTIVITY_TIMEOUT_CHECKED_KEY = TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY;
+
+
 }

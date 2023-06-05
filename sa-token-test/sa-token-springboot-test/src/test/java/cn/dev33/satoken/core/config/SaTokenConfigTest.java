@@ -41,8 +41,8 @@ public class SaTokenConfigTest {
 		config.setTimeout(100204);
 		Assertions.assertEquals(config.getTimeout(), 100204);
 		
-		config.setActivityTimeout(1804);
-		Assertions.assertEquals(config.getActivityTimeout(), 1804);
+		config.setActiveTimeout(1804);
+		Assertions.assertEquals(config.getActiveTimeout(), 1804);
 
 		config.setIsConcurrent(false);
 		Assertions.assertEquals(config.getIsConcurrent(), false);
@@ -111,7 +111,7 @@ public class SaTokenConfigTest {
 		SaTokenConfig config = SaTokenConfigFactory.createConfig("sa-token2.properties");
 		Assertions.assertEquals(config.getTokenName(), "use-token");
 		Assertions.assertEquals(config.getTimeout(), 9000);
-		Assertions.assertEquals(config.getActivityTimeout(), 240);
+		Assertions.assertEquals(config.getActiveTimeout(), 240);
 		Assertions.assertEquals(config.getIsConcurrent(), false);
 		Assertions.assertEquals(config.getIsShare(), false);
 		Assertions.assertEquals(config.getIsLog(), true);
