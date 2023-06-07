@@ -29,21 +29,20 @@ import cn.dev33.satoken.util.SaTokenConsts;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 /**
- * Sa-Token 策略对象 
+ * Sa-Token 策略对象
  * <p>
  * 此类统一定义框架内的一些关键性逻辑算法，方便开发者进行按需重写，例：
  * </p>
  * <pre>
-	// SaStrategy全局单例，所有方法都用以下形式重写 
-	SaStrategy.instance.setCreateToken((loginId, loginType) -》 {
-		// 自定义Token生成的算法 
-		return "xxxx";
-	});
+ // SaStrategy全局单例，所有方法都用以下形式重写
+ SaStrategy.instance.setCreateToken((loginId, loginType) -》 {
+ // 自定义Token生成的算法
+ return "xxxx";
+ });
  * </pre>
- * 
+ *
  * @author click33
  * @since 1.27.0
  */
@@ -53,18 +52,18 @@ public final class SaStrategy {
 	}
 
 	/**
-	 * 获取 SaStrategy 对象的单例引用 
+	 * 获取 SaStrategy 对象的单例引用
 	 */
 	public static final SaStrategy instance = new SaStrategy();
 
 
 	// ----------------------- 所有策略
-	
+
 	/**
 	 * 创建 Token 的策略
 	 */
 	public SaCreateTokenFunction createToken = (loginId, loginType) -> {
-		// 根据配置的tokenStyle生成不同风格的token 
+		// 根据配置的tokenStyle生成不同风格的token
 		String tokenStyle = SaManager.getConfig().getTokenStyle();
 
 		switch (tokenStyle) {
@@ -99,7 +98,7 @@ public final class SaStrategy {
 				return UUID.randomUUID().toString();
 		}
 	};
-	
+
 	/**
 	 * 创建 Session 的策略
 	 */
@@ -117,19 +116,19 @@ public final class SaStrategy {
 			return false;
 		}
 
-		// 先尝试一下简单匹配，如果可以匹配成功则无需继续模糊匹配 
+		// 先尝试一下简单匹配，如果可以匹配成功则无需继续模糊匹配
 		if (list.contains(element)) {
 			return true;
 		}
-		
-		// 开始模糊匹配 
+
+		// 开始模糊匹配
 		for (String patt : list) {
 			if(SaFoxUtil.vagueMatch(patt, element)) {
 				return true;
 			}
 		}
-		
-		// 走出for循环说明没有一个元素可以匹配成功 
+
+		// 走出for循环说明没有一个元素可以匹配成功
 		return false;
 	};
 
@@ -138,10 +137,10 @@ public final class SaStrategy {
 	 */
 	public SaCheckMethodAnnotationFunction checkMethodAnnotation = (method) -> {
 
-		// 先校验 Method 所属 Class 上的注解 
+		// 先校验 Method 所属 Class 上的注解
 		instance.checkElementAnnotation.accept(method.getDeclaringClass());
 
-		// 再校验 Method 上的注解  
+		// 再校验 Method 上的注解
 		instance.checkElementAnnotation.accept(method);
 	};
 
@@ -150,18 +149,18 @@ public final class SaStrategy {
 	 */
 	public SaCheckElementAnnotationFunction checkElementAnnotation = (element) -> {
 
-		// 校验 @SaCheckLogin 注解 
+		// 校验 @SaCheckLogin 注解
 		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.instance.getAnnotation.apply(element, SaCheckLogin.class);
 		if(checkLogin != null) {
 			SaManager.getStpLogic(checkLogin.type(), false).checkByAnnotation(checkLogin);
 		}
-		
-		// 校验 @SaCheckRole 注解 
+
+		// 校验 @SaCheckRole 注解
 		SaCheckRole checkRole = (SaCheckRole) SaStrategy.instance.getAnnotation.apply(element, SaCheckRole.class);
 		if(checkRole != null) {
 			SaManager.getStpLogic(checkRole.type(), false).checkByAnnotation(checkRole);
 		}
-		
+
 		// 校验 @SaCheckPermission 注解
 		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.instance.getAnnotation.apply(element, SaCheckPermission.class);
 		if(checkPermission != null) {
@@ -179,7 +178,7 @@ public final class SaStrategy {
 		if(checkDisable != null) {
 			SaManager.getStpLogic(checkDisable.type(), false).checkByAnnotation(checkDisable);
 		}
-		
+
 		// 校验 @SaCheckBasic 注解
 		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.instance.getAnnotation.apply(element, SaCheckBasic.class);
 		if(checkBasic != null) {
@@ -283,7 +282,7 @@ public final class SaStrategy {
 	 * 从元素上获取注解
 	 */
 	public SaGetAnnotationFunction getAnnotation = (element, annotationClass)->{
-		// 默认使用jdk的注解处理器 
+		// 默认使用jdk的注解处理器
 		return element.getAnnotation(annotationClass);
 	};
 
@@ -337,7 +336,7 @@ public final class SaStrategy {
 	/**
 	 * 重写创建 Token 的策略
 	 *
-	 * @param createToken / 
+	 * @param createToken /
 	 * @return /
 	 */
 	public SaStrategy setCreateToken(SaCreateTokenFunction createToken) {
@@ -348,7 +347,7 @@ public final class SaStrategy {
 	/**
 	 * 重写创建 Session 的策略
 	 *
-	 * @param createSession / 
+	 * @param createSession /
 	 * @return /
 	 */
 	public SaStrategy setCreateSession(SaCreateSessionFunction createSession) {
@@ -381,7 +380,7 @@ public final class SaStrategy {
 	/**
 	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现）
 	 *
-	 * @param checkElementAnnotation / 
+	 * @param checkElementAnnotation /
 	 * @return /
 	 */
 	public SaStrategy setCheckElementAnnotation(SaCheckElementAnnotationFunction checkElementAnnotation) {
@@ -404,7 +403,7 @@ public final class SaStrategy {
 	/**
 	 * 从元素上获取注解
 	 *
-	 * @param getAnnotation / 
+	 * @param getAnnotation /
 	 * @return /
 	 */
 	public SaStrategy setGetAnnotation(SaGetAnnotationFunction getAnnotation) {
@@ -415,7 +414,7 @@ public final class SaStrategy {
 	/**
 	 * 判断一个 Method 或其所属 Class 是否包含指定注解
 	 *
-	 * @param isAnnotationPresent / 
+	 * @param isAnnotationPresent /
 	 * @return /
 	 */
 	public SaStrategy setIsAnnotationPresent(SaIsAnnotationPresentFunction isAnnotationPresent) {

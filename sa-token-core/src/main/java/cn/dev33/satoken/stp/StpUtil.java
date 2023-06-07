@@ -19,7 +19,9 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.TokenSign;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -312,6 +314,15 @@ public class StpUtil {
 	 */
 	public static boolean isLogin() {
 		return stpLogic.isLogin();
+	}
+
+	/**
+	 * 判断指定账号是否已经登录
+	 *
+	 * @return 已登录返回 true，未登录返回 false
+	 */
+	public static boolean isLogin(Object loginId) {
+		return stpLogic.isLogin(loginId);
 	}
 
 	/**
@@ -812,6 +823,17 @@ public class StpUtil {
 	 */
 	public static List<String> getTokenValueListByLoginId(Object loginId, String device) {
 		return stpLogic.getTokenValueListByLoginId(loginId, device);
+	}
+
+	/**
+	 * 获取指定账号 id 指定设备类型端的 tokenSign 集合
+	 *
+	 * @param loginId 账号id
+	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @return 此 loginId 的所有登录 tokenSign
+	 */
+	public static List<TokenSign> getTokenSignListByLoginId(Object loginId, String device) {
+		return stpLogic.getTokenSignListByLoginId(loginId, device);
 	}
 
 	/**

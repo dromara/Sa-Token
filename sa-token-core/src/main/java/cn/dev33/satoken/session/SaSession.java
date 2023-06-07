@@ -15,19 +15,15 @@
  */
 package cn.dev33.satoken.session;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.application.SaSetValueInterface;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.io.Serializable;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Session Model，会话作用域的读取值对象
@@ -277,19 +273,38 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * @param device 设备类型，填 null 代表不限设备类型  
 	 * @return token签名列表
 	 */
-	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+	public List<TokenSign> getTokenSignListByDevice(String device) {
 		// 返回全部
 		if(device == null) {
 			return tokenSignListCopy();
 		}
-		// 返回筛选后的 
+		// 返回筛选后的
+		List<TokenSign> tokenSignList = tokenSignListCopy();
 		List<TokenSign> list = new ArrayList<>();
-		for (TokenSign tokenSign : tokenSignListCopy()) {
+		for (TokenSign tokenSign : tokenSignList) {
 			if(SaFoxUtil.equals(tokenSign.getDevice(), device)) {
 				list.add(tokenSign);
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * 获取当前 Session 上的所有 token 列表
+	 *
+	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @return 此 loginId 的所有登录 token
+	 */
+	public List<String> getTokenValueListByDevice(String device) {
+		// 遍历解析，按照设备类型进行筛选
+		List<TokenSign> tokenSignList = tokenSignListCopy();
+		List<String> tokenValueList = new ArrayList<>();
+		for (TokenSign tokenSign : tokenSignList) {
+			if(device == null || tokenSign.getDevice().equals(device)) {
+				tokenValueList.add(tokenSign.getValue());
+			}
+		}
+		return tokenValueList;
 	}
 
 	/**
@@ -313,13 +328,18 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * @param tokenSign Token 签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
-		// 如果已经存在于列表中，则无需再次添加 
-		if(getTokenSign(tokenSign.getValue()) != null) {
-			return;
+		// 根据 tokenValue 值查重，如果不存在，则添加
+		TokenSign oldTokenSign = getTokenSign(tokenSign.getValue());
+		if(oldTokenSign == null) {
+			tokenSignList.add(tokenSign);
+			update();
+		} else {
+			// 如果存在，则更新
+			oldTokenSign.setValue(tokenSign.getValue());
+			oldTokenSign.setDevice(tokenSign.getDevice());
+			oldTokenSign.setTag(tokenSign.getTag());
+			update();
 		}
-		// 添加并更新
-		tokenSignList.add(tokenSign);
-		update();
 	}
 
 	/**
@@ -510,6 +530,20 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		this.dataMap.clear();
 		this.dataMap.putAll(dataMap);
 		this.update();
+	}
+
+	//
+
+
+	/**
+	 * 请更换为：getTokenSignListByDevice(device)
+	 *
+	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @return token签名列表
+	 */
+	@Deprecated
+	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+		return getTokenSignListByDevice(device);
 	}
 
 }

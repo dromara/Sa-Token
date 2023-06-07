@@ -36,7 +36,6 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaValue2Box;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -490,8 +489,8 @@ public class StpLogic {
 			// 3.1、看看全局配置的 IsShare 参数，配置为 true 才是允许复用旧 token
 			if(getConfigOfIsShare()) {
 
-				// 根据账号id + 设备标识，尝试获取旧的 token
-				String tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				// 根据账号id，尝试获取旧的 token
+				String tokenValue = getTokenValueByLoginId(id, null);
 
 				// 如果有值，那就直接复用
 				if(SaFoxUtil.isNotEmpty(tokenValue)) {
@@ -605,7 +604,7 @@ public class StpLogic {
 		if(session != null) {
 
 			// 2、遍历此账号所有从这个 device 设备上登录的客户端，清除相关数据
-			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
+			for (TokenSign tokenSign: session.getTokenSignListByDevice(device)) {
 
 				// 2.1、获取此客户端的 token 值
 				String tokenValue = tokenSign.getValue();
@@ -652,7 +651,7 @@ public class StpLogic {
 		}
 
 		// 2、获取这个账号指定设备类型下的所有登录客户端
-		List<TokenSign> list = session.tokenSignListCopyByDevice(device);
+		List<TokenSign> list = session.getTokenSignListByDevice(device);
 
 		// 3、按照登录时间倒叙，超过 maxLoginCount 数量的，全部注销掉
 		for (int i = 0; i < list.size() - maxLoginCount; i++) {
@@ -741,7 +740,7 @@ public class StpLogic {
 		if(session != null) {
 
 			// 2、遍历此账号所有从这个 device 设备上登录的客户端，清除相关数据
-			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
+			for (TokenSign tokenSign: session.getTokenSignListByDevice(device)) {
 
 				// 2.1、获取此客户端的 token 值
 				String tokenValue = tokenSign.getValue();
@@ -817,7 +816,7 @@ public class StpLogic {
 		if(session != null) {
 
 			// 2、遍历此账号所有从这个 device 设备上登录的客户端，清除相关数据
-			for (TokenSign tokenSign: session.tokenSignListCopyByDevice(device)) {
+			for (TokenSign tokenSign: session.getTokenSignListByDevice(device)) {
 
 				// 2.1、获取此客户端的 token 值
 				String tokenValue = tokenSign.getValue();
@@ -858,8 +857,18 @@ public class StpLogic {
 		// 		2、并且不在异常项集合里（此项在 getLoginIdDefaultNull() 方法里完成判断）
  		return getLoginIdDefaultNull() != null;
  	}
- 	
- 	/** 
+
+	/**
+	 * 判断指定账号是否已经登录
+	 *
+	 * @return 已登录返回 true，未登录返回 false
+	 */
+	public boolean isLogin(Object loginId) {
+		// 判断条件：能否根据 loginId 查询到对应的 tokenSign 值
+		return getTokenSignListByLoginId(loginId, null).size() > 0;
+	}
+
+	/**
  	 * 检验当前会话是否已经登录，如未登录，则抛出异常 
  	 */
  	public void checkLogin() {
@@ -1989,17 +1998,28 @@ public class StpLogic {
 			return Collections.emptyList();
 		}
 
-		// 遍历解析，按照设备类型进行筛选
-		List<TokenSign> tokenSignList = session.tokenSignListCopy();
-		List<String> tokenValueList = new ArrayList<>();
-		for (TokenSign tokenSign : tokenSignList) {
-			if(device == null || tokenSign.getDevice().equals(device)) {
-				tokenValueList.add(tokenSign.getValue());
-			}
-		}
-		return tokenValueList;
+		// 按照设备类型进行筛选
+		return session.getTokenValueListByDevice(device);
 	}
-	
+
+	/**
+	 * 获取指定账号 id 指定设备类型端的 tokenSign 集合
+	 *
+	 * @param loginId 账号id
+	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @return 此 loginId 的所有登录 token
+	 */
+	public List<TokenSign> getTokenSignListByLoginId(Object loginId, String device) {
+		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session == null) {
+			return Collections.emptyList();
+		}
+
+		// 按照设备类型进行筛选
+		return session.getTokenSignListByDevice(device);
+	}
+
 	/**
 	 * 返回当前会话的登录设备类型
 	 *
