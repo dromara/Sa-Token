@@ -21,7 +21,7 @@ SaStrategy 的每一个函数都可以单独重写，以 “自定义Token生成
 
 ``` java
 // 重写 Token 生成策略 
-SaStrategy.me.createToken = (loginId, loginType) -> {
+SaStrategy.instance.createToken = (loginId, loginType) -> {
 	return SaFoxUtil.getRandomString(60);    // 随机60位长度字符串
 };
 ```

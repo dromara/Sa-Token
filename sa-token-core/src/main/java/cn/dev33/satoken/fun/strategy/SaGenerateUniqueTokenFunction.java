@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.fun;
+package cn.dev33.satoken.fun.strategy;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -21,8 +21,11 @@ import java.util.function.Supplier;
 /**
  * 生成唯一式 token 的函数式接口，方便开发者进行 lambda 表达式风格调用
  *
+ * <p>  参数：元素名称, 最大尝试次数, 创建 token 函数, 检查 token 函数 </p>
+ * <p>  返回：生成的token  </p>
+ *
  * @author click33
- * @since 1.34.0
+ * @since 1.35.0
  */
 @FunctionalInterface
 public interface SaGenerateUniqueTokenFunction {

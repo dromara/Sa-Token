@@ -19,20 +19,16 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.fun.SaGenerateUniqueTokenFunction;
+import cn.dev33.satoken.fun.strategy.SaGenerateUniqueTokenFunction;
+import cn.dev33.satoken.fun.strategy.*;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -42,7 +38,7 @@ import java.util.function.Function;
  * </p>
  * <pre>
 	// SaStrategy全局单例，所有方法都用以下形式重写 
-	SaStrategy.me.setCreateToken((loginId, loginType) -》 {
+	SaStrategy.instance.setCreateToken((loginId, loginType) -》 {
 		// 自定义Token生成的算法 
 		return "xxxx";
 	});
@@ -65,10 +61,9 @@ public final class SaStrategy {
 	// ----------------------- 所有策略
 	
 	/**
-	 * 创建 Token 的策略 
-	 * <p> 参数 [ 账号id, 账号类型 ]
+	 * 创建 Token 的策略
 	 */
-	public BiFunction<Object, String, String> createToken = (loginId, loginType) -> {
+	public SaCreateTokenFunction createToken = (loginId, loginType) -> {
 		// 根据配置的tokenStyle生成不同风格的token 
 		String tokenStyle = SaManager.getConfig().getTokenStyle();
 
@@ -106,18 +101,16 @@ public final class SaStrategy {
 	};
 	
 	/**
-	 * 创建 Session 的策略 
-	 * <p> 参数 [SessionId] 
+	 * 创建 Session 的策略
 	 */
-	public Function<String, SaSession> createSession = (sessionId) -> {
+	public SaCreateSessionFunction createSession = (sessionId) -> {
 		return new SaSession(sessionId);
 	};
 
 	/**
-	 * 判断：集合中是否包含指定元素（模糊匹配） 
-	 * <p> 参数 [集合, 元素] 
+	 * 判断：集合中是否包含指定元素（模糊匹配）
 	 */
-	public BiFunction<List<String>, String, Boolean> hasElement = (list, element) -> {
+	public SaHasElementFunction hasElement = (list, element) -> {
 
 		// 空集合直接返回false
 		if(list == null || list.size() == 0) {
@@ -141,10 +134,9 @@ public final class SaStrategy {
 	};
 
 	/**
-	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现） 
-	 * <p> 参数 [Method句柄] 
+	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现）
 	 */
-	public Consumer<Method> checkMethodAnnotation = (method) -> {
+	public SaCheckMethodAnnotationFunction checkMethodAnnotation = (method) -> {
 
 		// 先校验 Method 所属 Class 上的注解 
 		instance.checkElementAnnotation.accept(method.getDeclaringClass());
@@ -154,49 +146,48 @@ public final class SaStrategy {
 	};
 
 	/**
-	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现） 
-	 * <p> 参数 [element元素] 
+	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现）
 	 */
-	public Consumer<AnnotatedElement> checkElementAnnotation = (target) -> {
+	public SaCheckElementAnnotationFunction checkElementAnnotation = (element) -> {
 
 		// 校验 @SaCheckLogin 注解 
-		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.instance.getAnnotation.apply(target, SaCheckLogin.class);
+		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.instance.getAnnotation.apply(element, SaCheckLogin.class);
 		if(checkLogin != null) {
 			SaManager.getStpLogic(checkLogin.type(), false).checkByAnnotation(checkLogin);
 		}
 		
 		// 校验 @SaCheckRole 注解 
-		SaCheckRole checkRole = (SaCheckRole) SaStrategy.instance.getAnnotation.apply(target, SaCheckRole.class);
+		SaCheckRole checkRole = (SaCheckRole) SaStrategy.instance.getAnnotation.apply(element, SaCheckRole.class);
 		if(checkRole != null) {
 			SaManager.getStpLogic(checkRole.type(), false).checkByAnnotation(checkRole);
 		}
 		
 		// 校验 @SaCheckPermission 注解
-		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.instance.getAnnotation.apply(target, SaCheckPermission.class);
+		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.instance.getAnnotation.apply(element, SaCheckPermission.class);
 		if(checkPermission != null) {
 			SaManager.getStpLogic(checkPermission.type(), false).checkByAnnotation(checkPermission);
 		}
 
 		// 校验 @SaCheckSafe 注解
-		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.instance.getAnnotation.apply(target, SaCheckSafe.class);
+		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.instance.getAnnotation.apply(element, SaCheckSafe.class);
 		if(checkSafe != null) {
 			SaManager.getStpLogic(checkSafe.type(), false).checkByAnnotation(checkSafe);
 		}
 
 		// 校验 @SaCheckDisable 注解
-		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.instance.getAnnotation.apply(target, SaCheckDisable.class);
+		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.instance.getAnnotation.apply(element, SaCheckDisable.class);
 		if(checkDisable != null) {
 			SaManager.getStpLogic(checkDisable.type(), false).checkByAnnotation(checkDisable);
 		}
 		
 		// 校验 @SaCheckBasic 注解
-		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.instance.getAnnotation.apply(target, SaCheckBasic.class);
+		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.instance.getAnnotation.apply(element, SaCheckBasic.class);
 		if(checkBasic != null) {
 			SaBasicUtil.check(checkBasic.realm(), checkBasic.account());
 		}
 
 		// 校验 @SaCheckOr 注解
-		SaCheckOr checkOr = (SaCheckOr) SaStrategy.instance.getAnnotation.apply(target, SaCheckOr.class);
+		SaCheckOr checkOr = (SaCheckOr) SaStrategy.instance.getAnnotation.apply(element, SaCheckOr.class);
 		if(checkOr != null) {
 			SaStrategy.instance.checkOrAnnotation.accept(checkOr);
 		}
@@ -204,9 +195,8 @@ public final class SaStrategy {
 
 	/**
 	 * 对一个 @SaCheckOr 进行注解校验
-	 * <p> 参数 [SaCheckOr 注解的实例]
 	 */
-	public Consumer<SaCheckOr> checkOrAnnotation = (at) -> {
+	public SaCheckOrAnnotationFunction checkOrAnnotation = (at) -> {
 
 		// 记录校验过程中所有的异常
 		List<SaTokenException> errorList = new ArrayList<>();
@@ -290,26 +280,23 @@ public final class SaStrategy {
 	};
 
 	/**
-	 * 从元素上获取注解  
-	 * <p> 参数 [element元素，要获取的注解类型] 
+	 * 从元素上获取注解
 	 */
-	public BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation = (element, annotationClass)->{
+	public SaGetAnnotationFunction getAnnotation = (element, annotationClass)->{
 		// 默认使用jdk的注解处理器 
 		return element.getAnnotation(annotationClass);
 	};
 
 	/**
-	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
-	 * <p> 参数 [Method, 注解] 
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解
 	 */
-	public BiFunction<Method, Class<? extends Annotation>, Boolean> isAnnotationPresent = (method, annotationClass) -> {
+	public SaIsAnnotationPresentFunction isAnnotationPresent = (method, annotationClass) -> {
 		return instance.getAnnotation.apply(method, annotationClass) != null ||
 				instance.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
 	};
 
 	/**
 	 * 生成唯一式 token 的算法
-	 * <p> 参数 [元素名称, 最大尝试次数, 创建 token 函数, 检查 token 函数]
 	 */
 	public SaGenerateUniqueTokenFunction generateUniqueToken = (elementName, maxTryTimes, createTokenFunction, checkTokenFunction) -> {
 
@@ -339,10 +326,8 @@ public final class SaStrategy {
 
 	/**
 	 * 创建 StpLogic 的算法
-	 *
-	 * <p> 参数 [ 账号体系标识 ]
 	 */
-	public Function<String, StpLogic> createStpLogic = (loginType) -> {
+	public SaCreateStpLogicFunction createStpLogic = (loginType) -> {
 		return new StpLogic(loginType);
 	};
 
@@ -350,56 +335,56 @@ public final class SaStrategy {
 	// ----------------------- 重写策略 set连缀风格
 
 	/**
-	 * 重写创建 Token 的策略 
-	 * <p> 参数 [账号id, 账号类型] 
+	 * 重写创建 Token 的策略
+	 *
 	 * @param createToken / 
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setCreateToken(BiFunction<Object, String, String> createToken) {
+	public SaStrategy setCreateToken(SaCreateTokenFunction createToken) {
 		this.createToken = createToken;
 		return this;
 	}
 
 	/**
-	 * 重写创建 Session 的策略 
-	 * <p> 参数 [SessionId] 
+	 * 重写创建 Session 的策略
+	 *
 	 * @param createSession / 
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setCreateSession(Function<String, SaSession> createSession) {
+	public SaStrategy setCreateSession(SaCreateSessionFunction createSession) {
 		this.createSession = createSession;
 		return this;
 	}
 
 	/**
-	 * 判断：集合中是否包含指定元素（模糊匹配） 
-	 * <p> 参数 [集合, 元素] 
+	 * 判断：集合中是否包含指定元素（模糊匹配）
+	 *
 	 * @param hasElement /
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setHasElement(BiFunction<List<String>, String, Boolean> hasElement) {
+	public SaStrategy setHasElement(SaHasElementFunction hasElement) {
 		this.hasElement = hasElement;
 		return this;
 	}
 
 	/**
-	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现） 
-	 * <p> 参数 [Method句柄] 
+	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现）
+	 *
 	 * @param checkMethodAnnotation /
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setCheckMethodAnnotation(Consumer<Method> checkMethodAnnotation) {
+	public SaStrategy setCheckMethodAnnotation(SaCheckMethodAnnotationFunction checkMethodAnnotation) {
 		this.checkMethodAnnotation = checkMethodAnnotation;
 		return this;
 	}
 
 	/**
-	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现） 
-	 * <p> 参数 [element元素] 
+	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现）
+	 *
 	 * @param checkElementAnnotation / 
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setCheckElementAnnotation(Consumer<AnnotatedElement> checkElementAnnotation) {
+	public SaStrategy setCheckElementAnnotation(SaCheckElementAnnotationFunction checkElementAnnotation) {
 		this.checkElementAnnotation = checkElementAnnotation;
 		return this;
 	}
@@ -409,41 +394,40 @@ public final class SaStrategy {
 	 * <p> 参数 [SaCheckOr 注解的实例]
 	 *
 	 * @param checkOrAnnotation /
-	 * @return 对象自身
+	 * @return /
 	 */
-	public SaStrategy setCheckOrAnnotation(Consumer<SaCheckOr> checkOrAnnotation) {
+	public SaStrategy setCheckOrAnnotation(SaCheckOrAnnotationFunction checkOrAnnotation) {
 		this.checkOrAnnotation = checkOrAnnotation;
 		return this;
 	}
 
 	/**
-	 * 从元素上获取注解  
-	 * <p> 参数 [element元素，要获取的注解类型] 
+	 * 从元素上获取注解
+	 *
 	 * @param getAnnotation / 
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setGetAnnotation(BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> getAnnotation) {
+	public SaStrategy setGetAnnotation(SaGetAnnotationFunction getAnnotation) {
 		this.getAnnotation = getAnnotation;
 		return this;
 	}
 
 	/**
-	 * 判断一个 Method 或其所属 Class 是否包含指定注解 
-	 * <p> 参数 [Method, 注解] 
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解
+	 *
 	 * @param isAnnotationPresent / 
-	 * @return 对象自身 
+	 * @return /
 	 */
-	public SaStrategy setIsAnnotationPresent(BiFunction<Method, Class<? extends Annotation>, Boolean> isAnnotationPresent) {
+	public SaStrategy setIsAnnotationPresent(SaIsAnnotationPresentFunction isAnnotationPresent) {
 		this.isAnnotationPresent = isAnnotationPresent;
 		return this;
 	}
 
 	/**
 	 * 生成唯一式 token 的算法
-	 * <p> 参数 [元素名称, 最大尝试次数, 创建 token 函数, 检查 token 函数]
 	 *
 	 * @param generateUniqueToken /
-	 * @return 对象自身
+	 * @return /
 	 */
 	public SaStrategy setGenerateUniqueToken(SaGenerateUniqueTokenFunction generateUniqueToken) {
 		this.generateUniqueToken = generateUniqueToken;
@@ -453,12 +437,10 @@ public final class SaStrategy {
 	/**
 	 * 创建 StpLogic 的算法
 	 *
-	 * <p> 参数 [ 账号体系标识 ]
-	 *
 	 * @param createStpLogic /
-	 * @return 对象自身
+	 * @return /
 	 */
-	public SaStrategy setCreateStpLogic(Function<String, StpLogic> createStpLogic) {
+	public SaStrategy setCreateStpLogic(SaCreateStpLogicFunction createStpLogic) {
 		this.createStpLogic = createStpLogic;
 		return this;
 	}
