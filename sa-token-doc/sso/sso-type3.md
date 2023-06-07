@@ -14,7 +14,7 @@
 
 所以模式三的主要目标：也就是在 模式二的基础上 解决上述 三个难题 
 
-> 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso3-client/` 
+> 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client/` 
 > [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)，如遇难点可参考示例 
 
 
