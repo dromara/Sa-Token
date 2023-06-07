@@ -201,7 +201,7 @@ public class SaValue2Box {
      *     System.out.println(new SaValue2Box(1, 2));     // 1,2
      *     System.out.println(new SaValue2Box(null, null));   // null
      *     System.out.println(new SaValue2Box(1, null));   // 1
-     *     System.out.println(new SaValue2Box(null, 2));  // 2
+     *     System.out.println(new SaValue2Box(null, 2));  // ,2
      * </pre>
      * @return /
      */

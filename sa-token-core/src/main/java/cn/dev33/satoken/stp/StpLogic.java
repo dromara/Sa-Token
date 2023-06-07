@@ -614,7 +614,9 @@ public class StpLogic {
 				session.removeTokenSign(tokenValue);
 
 				// 2.3、清除这个 token 的最后活跃时间记录
-				clearLastActive(tokenValue);
+				if(isOpenCheckActiveTimeout()) {
+					clearLastActive(tokenValue);
+				}
 
 		 		// 2.4、清除 token -> id 的映射关系
 				deleteTokenToIdMapping(tokenValue);
@@ -662,7 +664,9 @@ public class StpLogic {
 			session.removeTokenSign(tokenValue);
 
 			// 3.3、清除这个 token 的最后活跃时间记录
-			clearLastActive(tokenValue);
+			if(isOpenCheckActiveTimeout()) {
+				clearLastActive(tokenValue);
+			}
 
 	 		// 3.4、清除 token -> id 的映射关系
 			deleteTokenToIdMapping(tokenValue);
@@ -685,7 +689,9 @@ public class StpLogic {
 	 */
 	public void logoutByTokenValue(String tokenValue) {
 		// 1、清除这个 token 的最后活跃时间记录
-		clearLastActive(tokenValue);
+		if(isOpenCheckActiveTimeout()) {
+			clearLastActive(tokenValue);
+		}
 		
 		// 2、清除这个 token 的 Token-Session 对象
 		deleteTokenSession(tokenValue);
@@ -744,7 +750,9 @@ public class StpLogic {
 				session.removeTokenSign(tokenValue);
 
 				// 2.3、清除这个 token 的最后活跃时间记录
-				clearLastActive(tokenValue);
+				if(isOpenCheckActiveTimeout()) {
+					clearLastActive(tokenValue);
+				}
 
 				// 2.4、将此 token 标记为：已被踢下线
 				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
@@ -769,7 +777,9 @@ public class StpLogic {
 	 */
 	public void kickoutByTokenValue(String tokenValue) {
 		// 1、清除这个 token 的最后活跃时间记录
-		clearLastActive(tokenValue);
+		if(isOpenCheckActiveTimeout()) {
+			clearLastActive(tokenValue);
+		}
 		
 		// 2、此处不需要清除它的 Token-Session 对象
 		// deleteTokenSession(tokenValue);
@@ -816,7 +826,9 @@ public class StpLogic {
 				session.removeTokenSign(tokenValue);
 
 				// 2.3、清除这个 token 的最后活跃时间记录
-				clearLastActive(tokenValue);
+				if(isOpenCheckActiveTimeout()) {
+					clearLastActive(tokenValue);
+				}
 
 				// 2.4、将此 token 标记为：已被顶下线
 				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
@@ -894,16 +906,17 @@ public class StpLogic {
 			throw NotLoginException.newInstance(loginType, KICK_OUT, KICK_OUT_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11015);
  		}
 
- 		// 7、检查此 token 的最后活跃时间是否已经超过了 active-timeout 的限制，
-		//    如果是则代表其已被冻结，需要抛出：token 已过期
-	 	checkActiveTimeout(tokenValue);
+		// 7、检查此 token 的最后活跃时间是否已经超过了 active-timeout 的限制，如果是则代表其已被冻结，需要抛出：token 已被冻结
+		if(isOpenCheckActiveTimeout()) {
+			checkActiveTimeout(tokenValue);
 
-		// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
+			// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
 
- 		// 8、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
- 		if(isOpenCheckActiveTimeout() && getConfig().getAutoRenew()) {
- 	 		updateLastActiveToNow(tokenValue);
- 		}
+			// 8、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
+			if(getConfig().getAutoRenew()) {
+				updateLastActiveToNow(tokenValue);
+			}
+		}
 
  		// 9、返回 loginId
  		return loginId;
@@ -1345,7 +1358,7 @@ public class StpLogic {
 		}
 		// activeTimeout 变量无需赋值默认值，因为当缓存中没有这个值时，会自动使用全局配置的值
 
- 		// 将[ 最后活跃时间 ] 标记为当前时间戳
+ 		// 将此 token 的 [ 最后活跃时间 ] 标记为当前时间戳
 		String key = splicingKeyLastActiveTime(tokenValue);
 		String value = String.valueOf(System.currentTimeMillis());
 		if(config.getDynamicActiveTimeout() && activeTimeout != null) {
@@ -1360,13 +1373,6 @@ public class StpLogic {
 	 * @param tokenValue 指定token
 	 */
 	public void updateLastActiveToNow(String tokenValue) {
-		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
-		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenCheckActiveTimeout() ) {
-			return;
-		}
-
-
-		// 将这个 token 的 [ 最后活跃时间 ] 更新为当前时间戳
 		String key = splicingKeyLastActiveTime(tokenValue);
 		String value = new SaValue2Box(System.currentTimeMillis(), getTokenUseActiveTimeout(tokenValue)).toString();
 		getSaTokenDao().update(key, value);
@@ -1389,15 +1395,7 @@ public class StpLogic {
  	 * @param tokenValue 指定 token
  	 */
  	protected void clearLastActive(String tokenValue) {
-
-		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
-		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenCheckActiveTimeout() ) {
-			return;
-		}
-
- 		// 删除 [ 最后活跃时间 ]
-		String key = splicingKeyLastActiveTime(tokenValue);
- 		getSaTokenDao().delete(key);
+ 		getSaTokenDao().delete(splicingKeyLastActiveTime(tokenValue));
  	}
  	
  	/**
@@ -1407,13 +1405,7 @@ public class StpLogic {
  	 */
  	public void checkActiveTimeout(String tokenValue) {
 
-		// 如果提供的 token 无效，或者配置没有打开 token 活跃度校验, 则立即返回，无需操作
-		if(SaFoxUtil.isEmpty(tokenValue) || ! isOpenCheckActiveTimeout() ) {
-			return;
-		}
-
-		// 下面开始校验这个 token 是否已被冻结
-		// 		storage.get(key, () -> {}) 可以避免一次请求多次校验，造成不必要的性能消耗
+		// storage.get(key, () -> {}) 可以避免一次请求多次校验，造成不必要的性能消耗
  		SaStorage storage = SaHolder.getStorage();
 		storage.get(SaTokenConsts.TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY, () -> {
 
@@ -1449,11 +1441,16 @@ public class StpLogic {
 	 * @return /
 	 */
 	public Long getTokenUseActiveTimeout(String tokenValue) {
+		// 在未启用动态 activeTimeout 功能时，直接返回 null
+		if( ! getConfig().getDynamicActiveTimeout()) {
+			return null;
+		}
+
 		// 先取出这个 token 的最后活跃时间值
 		String key = splicingKeyLastActiveTime(tokenValue);
 		String value = getSaTokenDao().get(key);
 
-		// 先获取缓存库里的值，获取不到则使用全局配置
+		// 解析，无值的情况下返回 null
 		SaValue2Box box = new SaValue2Box(value);
 		return box.getValue2AsLong(null);
 	}
