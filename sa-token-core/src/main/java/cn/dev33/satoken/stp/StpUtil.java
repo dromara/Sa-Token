@@ -21,7 +21,6 @@ import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

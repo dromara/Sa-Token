@@ -1617,13 +1617,12 @@ public class StpLogic {
  		String key = splicingKeyLastActiveTime(tokenValue);
  		String lastActiveTimeString = getSaTokenDao().get(key);
 
-
  		// 2、如果查不到，返回-2
  		if(lastActiveTimeString == null) {
  			return SaTokenDao.NOT_VALUE_EXPIRE;
  		}
 
- 		// 3、计算最后活跃时间 距离 此时此刻 的时间差
+		// 3、计算最后活跃时间 距离 此时此刻 的时间差
 		//    计算公式为: (当前时间 - 最后活跃时间) / 1000
 		SaValue2Box box = new SaValue2Box(lastActiveTimeString);
  		long lastActiveTime = box.getValue1AsLong();
@@ -1631,6 +1630,10 @@ public class StpLogic {
  		long timeDiff = (System.currentTimeMillis() - lastActiveTime) / 1000;
 		// 该 token 允许的时间差
 		long allowTimeDiff = getTokenUseActiveTimeoutOrGlobalConfig(tokenValue);
+		if(allowTimeDiff == SaTokenDao.NEVER_EXPIRE) {
+			// 如果允许的时间差为 -1 ，则代表永不冻结，此处需要立即返回 -1 ，无需后续计算
+			return SaTokenDao.NEVER_EXPIRE;
+		}
 
  		// 4、校验这个时间差是否超过了允许的值
 		//    计算公式为: 允许的最大时间差 - 实际时间差，判断是否 < 0， 如果是则代表已经被冻结 ，返回-2
@@ -2783,7 +2786,8 @@ public class StpLogic {
  	 * @return / 
  	 */
  	public boolean isOpenCheckActiveTimeout() {
- 		return getConfigOrGlobal().getActiveTimeout() != SaTokenDao.NEVER_EXPIRE;
+		SaTokenConfig cfg = getConfigOrGlobal();
+		return cfg.getActiveTimeout() != SaTokenDao.NEVER_EXPIRE || cfg.getDynamicActiveTimeout();
  	}
 
     /**
