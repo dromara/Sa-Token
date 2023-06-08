@@ -50,7 +50,7 @@ public class StpLogicJwtForSimple extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		String keyt = getConfig().getJwtSecretKey();
+		String keyt = getConfigOrGlobal().getJwtSecretKey();
 		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}

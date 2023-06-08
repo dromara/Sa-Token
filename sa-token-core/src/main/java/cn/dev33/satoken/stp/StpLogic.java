@@ -60,7 +60,7 @@ public class StpLogic {
 	 * 账号类型标识，多账号体系时（一个系统多套用户表）用此值区分具体要校验的是哪套用户，比如：login、user、admin
 	 */
 	public String loginType;
-	
+
 	/**
 	 * 初始化 StpLogic, 并指定账号类型
 	 *
@@ -100,8 +100,44 @@ public class StpLogic {
 
 		return this;
 	}
-	
-	
+
+	private SaTokenConfig config;
+
+	/**
+	 * 写入当前 StpLogic 单独使用的配置对象
+	 *
+	 * @param config 配置对象
+	 * @return 对象自身
+	 */
+	public StpLogic setConfig(SaTokenConfig config) {
+		this.config = config;
+		return this;
+	}
+
+	/**
+	 * 返回当前 StpLogic 使用的配置对象，如果当前 StpLogic 没有配置，则返回 null
+	 *
+	 * @return /
+	 */
+	public SaTokenConfig getConfig() {
+		return config;
+	}
+
+	/**
+	 * 返回当前 StpLogic 使用的配置对象，如果当前 StpLogic 没有配置，则返回全局配置对象
+	 *
+	 * @return /
+	 */
+	public SaTokenConfig getConfigOrGlobal() {
+		SaTokenConfig cfg = getConfig();
+		if(cfg != null) {
+			return cfg;
+		}
+		return SaManager.getConfig();
+	}
+
+
+
 	// ------------------- 获取 token 相关 -------------------
 	
 	/**
@@ -132,7 +168,7 @@ public class StpLogic {
  	 * @param tokenValue token 值
  	 */
 	public void setTokenValue(String tokenValue){
-		setTokenValue(tokenValue, new SaLoginModel().setTimeout(getConfig().getTimeout()));
+		setTokenValue(tokenValue, new SaLoginModel().setTimeout(getConfigOrGlobal().getTimeout()));
 	}
 	
  	/**
@@ -162,7 +198,7 @@ public class StpLogic {
 		setTokenValueToStorage(tokenValue);
 		
 		// 2. 将 token 写入到当前会话的 Cookie 里
-		if (getConfig().getIsReadCookie()) {
+		if (getConfigOrGlobal().getIsReadCookie()) {
 			setTokenValueToCookie(tokenValue, loginModel.getCookieTimeout());
 		}
 		
@@ -184,7 +220,7 @@ public class StpLogic {
 		// 2、保存 token
 		//	- 如果没有配置前缀模式，直接保存
 		// 	- 如果配置了前缀模式，则拼接上前缀保存
-		String tokenPrefix = getConfig().getTokenPrefix();
+		String tokenPrefix = getConfigOrGlobal().getTokenPrefix();
 		if( SaFoxUtil.isEmpty(tokenPrefix) ) {
 			storage.set(splicingKeyJustCreatedSave(), tokenValue);
 		} else {
@@ -202,7 +238,7 @@ public class StpLogic {
  	 * @param cookieTimeout Cookie存活时间（单位：秒，填-1代表为内存Cookie，浏览器关闭后消失）
  	 */
 	public void setTokenValueToCookie(String tokenValue, int cookieTimeout){
-		SaCookieConfig cfg = getConfig().getCookie();
+		SaCookieConfig cfg = getConfigOrGlobal().getCookie();
 		SaCookie cookie = new SaCookie()
 				.setName(getTokenName())
 				.setValue(tokenValue)
@@ -252,7 +288,7 @@ public class StpLogic {
 		String tokenValue = getTokenValueNotCut();
 
 		// 2、如果全局配置打开了前缀模式，则二次处理一下
-		String tokenPrefix = getConfig().getTokenPrefix();
+		String tokenPrefix = getConfigOrGlobal().getTokenPrefix();
 		if(SaFoxUtil.isNotEmpty(tokenPrefix)) {
 
 			// 情况2.1：如果提交的 token 为空，则转为 null
@@ -289,7 +325,7 @@ public class StpLogic {
 		// 获取相应对象
 		SaStorage storage = SaHolder.getStorage();
 		SaRequest request = SaHolder.getRequest();
-		SaTokenConfig config = getConfig();
+		SaTokenConfig config = getConfigOrGlobal();
 		String keyTokenName = getTokenName();
 		String tokenValue = null;
 		
@@ -428,7 +464,7 @@ public class StpLogic {
 		checkLoginArgs(id, loginModel);
 		
 		// 2、初始化 loginModel ，给一些参数补上默认值
-		SaTokenConfig config = getConfig();
+		SaTokenConfig config = getConfigOrGlobal();
 		loginModel.build(config);
 
 		// 3、给这个账号分配一个可用的 token
@@ -473,7 +509,7 @@ public class StpLogic {
 
 		// 1、获取全局配置的 isConcurrent 参数
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
-		Boolean isConcurrent = getConfig().getIsConcurrent();
+		Boolean isConcurrent = getConfigOrGlobal().getIsConcurrent();
 		if( ! isConcurrent) {
 			replaced(id, loginModel.getDevice());
 		}
@@ -548,7 +584,7 @@ public class StpLogic {
 		}
 
 		// 5、如果全局配置未启动动态 activeTimeout 功能，但是此次登录却传入了 activeTimeout 参数，那么就打印警告信息
-		if( ! getConfig().getDynamicActiveTimeout() && loginModel.getActiveTimeout() != null) {
+		if( ! getConfigOrGlobal().getDynamicActiveTimeout() && loginModel.getActiveTimeout() != null) {
 			SaManager.log.warn("当前全局配置未开启动态 activeTimeout 功能，传入的 activeTimeout 参数将被忽略");
 		}
 
@@ -567,8 +603,8 @@ public class StpLogic {
  		}
  		
  		// 2、如果打开了 Cookie 模式，则先把 Cookie 数据清除掉
- 		if(getConfig().getIsReadCookie()){
- 			SaCookieConfig cookie = getConfig().getCookie();
+ 		if(getConfigOrGlobal().getIsReadCookie()){
+ 			SaCookieConfig cookie = getConfigOrGlobal().getCookie();
  			SaHolder.getResponse().deleteCookie(getTokenName(), cookie.getPath(), cookie.getDomain());
 		}
 
@@ -922,7 +958,7 @@ public class StpLogic {
 			// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
 
 			// 8、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
-			if(getConfig().getAutoRenew()) {
+			if(getConfigOrGlobal().getAutoRenew()) {
 				updateLastActiveToNow(tokenValue);
 			}
 		}
@@ -1139,7 +1175,7 @@ public class StpLogic {
 			}
 
 			// 将这个 SaSession 入库
-			getSaTokenDao().setSession(session, getConfig().getTimeout());
+			getSaTokenDao().setSession(session, getConfigOrGlobal().getTimeout());
 		}
 		return session;
 	}
@@ -1239,7 +1275,7 @@ public class StpLogic {
 	public SaSession getTokenSession(boolean isCreate) {
 
 		// 1、如果配置了：tokenSessionCheckLogin == true，则需要先校验当前是否登录，未登录情况下不允许拿到 Token-Session
-		if(getConfig().getTokenSessionCheckLogin()) {
+		if(getConfigOrGlobal().getTokenSessionCheckLogin()) {
 			checkLogin();
 		}
 
@@ -1307,7 +1343,7 @@ public class StpLogic {
 					"token",
 					getConfigOfMaxTryTimes(),
 					() -> {
-						return createTokenValue(null, null, getConfig().getTimeout(), null);
+						return createTokenValue(null, null, getConfigOrGlobal().getTimeout(), null);
 					},
 					token -> {
 						return getTokenSessionByToken(token, false) == null;
@@ -1361,7 +1397,7 @@ public class StpLogic {
  	protected void setLastActiveToNow(String tokenValue, Long activeTimeout, Long timeout) {
 
 		// 如果提供的 timeout 为null，则使用全局配置的 timeout 值
-		SaTokenConfig config = getConfig();
+		SaTokenConfig config = getConfigOrGlobal();
 		if(timeout == null) {
 			timeout = config.getTimeout();
 		}
@@ -1451,7 +1487,7 @@ public class StpLogic {
 	 */
 	public Long getTokenUseActiveTimeout(String tokenValue) {
 		// 在未启用动态 activeTimeout 功能时，直接返回 null
-		if( ! getConfig().getDynamicActiveTimeout()) {
+		if( ! getConfigOrGlobal().getDynamicActiveTimeout()) {
 			return null;
 		}
 
@@ -1473,7 +1509,7 @@ public class StpLogic {
 	public long getTokenUseActiveTimeoutOrGlobalConfig(String tokenValue) {
 		Long activeTimeout = getTokenUseActiveTimeout(tokenValue);
 		if(activeTimeout == null) {
-			return getConfig().getActiveTimeout();
+			return getConfigOrGlobal().getActiveTimeout();
 		}
 		return activeTimeout;
 	}
@@ -1618,7 +1654,7 @@ public class StpLogic {
  		renewTimeout(tokenValue, timeout);
  		
  		// 2、续期客户端 Cookie 有效期
- 		if(getConfig().getIsReadCookie()) {
+ 		if(getConfigOrGlobal().getIsReadCookie()) {
 			// 如果 timeout = -1，代表永久，但是一般浏览器不支持永久 Cookie，所以此处设置为 int 最大值
 			// 如果 timeout 大于 int 最大值，会造成数据溢出，所以也要将其设置为 int 最大值
 			if(timeout == SaTokenDao.NEVER_EXPIRE || timeout > Integer.MAX_VALUE) {
@@ -2634,7 +2670,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyTokenName() {
- 		return getConfig().getTokenName();
+ 		return getConfigOrGlobal().getTokenName();
  	}
 	
 	/**  
@@ -2644,7 +2680,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyTokenValue(String tokenValue) {
-		return getConfig().getTokenName() + ":" + loginType + ":token:" + tokenValue;
+		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":token:" + tokenValue;
 	}
 	
 	/** 
@@ -2654,7 +2690,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeySession(Object loginId) {
-		return getConfig().getTokenName() + ":" + loginType + ":session:" + loginId;
+		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":session:" + loginId;
 	}
 	
 	/**  
@@ -2664,7 +2700,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyTokenSession(String tokenValue) {
-		return getConfig().getTokenName() + ":" + loginType + ":token-session:" + tokenValue;
+		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":token-session:" + tokenValue;
 	}
 	
 	/** 
@@ -2674,7 +2710,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyLastActiveTime(String tokenValue) {
-		return getConfig().getTokenName() + ":" + loginType + ":last-active:" + tokenValue;
+		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":last-active:" + tokenValue;
 	}
 
 	/**
@@ -2704,7 +2740,7 @@ public class StpLogic {
 	 * @return key 
 	 */
 	public String splicingKeyDisable(Object loginId, String service) {
-		return getConfig().getTokenName() + ":" + loginType + ":disable:" + service + ":" + loginId;
+		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":disable:" + service + ":" + loginId;
 	}
 
 	/**  
@@ -2717,20 +2753,19 @@ public class StpLogic {
 	public String splicingKeySafe(String tokenValue, String service) {
 		// 格式：<Token名称>:<账号类型>:<safe>:<业务标识>:<Token值>
 		// 形如：satoken:login:safe:important:gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__
-		return getConfig().getTokenName() + ":" + loginType + ":safe:" + service + ":" + tokenValue;
+		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":safe:" + service + ":" + tokenValue;
 	}
 
 	
 	// ------------------- Bean 对象、字段代理 -------------------
-	
+
 	/**
-	 * 返回全局配置对象
+	 * 返回当前 StpLogic 使用的持久化对象
 	 *
-	 * @return / 
+	 * @return /
 	 */
-	public SaTokenConfig getConfig() {
-		// 为什么再次代理一层? 为某些业务场景下需要 [ 不同StpLogic不同配置 ] 提供便利
-		return SaManager.getConfig();
+	public SaTokenDao getSaTokenDao() {
+		return SaManager.getSaTokenDao();
 	}
 
 	/**
@@ -2739,7 +2774,7 @@ public class StpLogic {
 	 * @return / 
 	 */
 	public boolean getConfigOfIsShare() {
-		return getConfig().getIsShare();
+		return getConfigOrGlobal().getIsShare();
 	}
 
  	/**
@@ -2748,7 +2783,7 @@ public class StpLogic {
  	 * @return / 
  	 */
  	public boolean isOpenCheckActiveTimeout() {
- 		return getConfig().getActiveTimeout() != SaTokenDao.NEVER_EXPIRE;
+ 		return getConfigOrGlobal().getActiveTimeout() != SaTokenDao.NEVER_EXPIRE;
  	}
 
     /**
@@ -2757,7 +2792,7 @@ public class StpLogic {
      * @return Cookie 应该保存的时长
      */
     public int getConfigOfCookieTimeout() {
-    	long timeout = getConfig().getTimeout();
+    	long timeout = getConfigOrGlobal().getTimeout();
     	if(timeout == SaTokenDao.NEVER_EXPIRE) {
     		return Integer.MAX_VALUE;
     	}
@@ -2770,18 +2805,9 @@ public class StpLogic {
 	 * @return /
 	 */
 	public int getConfigOfMaxTryTimes() {
-		return getConfig().getMaxTryTimes();
+		return getConfigOrGlobal().getMaxTryTimes();
 	}
 
-	/**
-	 * 返回持久化对象
-	 *
-	 * @return / 
-	 */
-	public SaTokenDao getSaTokenDao() {
-		return SaManager.getSaTokenDao();
-	}
-	
 	/**
 	 * 判断：集合中是否包含指定元素（模糊匹配）
 	 *

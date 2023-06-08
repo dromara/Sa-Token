@@ -57,7 +57,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		String keyt = getConfig().getJwtSecretKey();
+		String keyt = getConfigOrGlobal().getJwtSecretKey();
 		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
@@ -111,7 +111,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 		checkLoginArgs(id, loginModel);
 
 		// 2、初始化 loginModel ，给一些参数补上默认值
-		loginModel.build(getConfig());
+		loginModel.build(getConfigOrGlobal());
 		
 		// 3、生成一个token
 		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
@@ -151,7 +151,7 @@ public class StpLogicJwtForStateless extends StpLogic {
  		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
  		
  		// 如果打开了Cookie模式，则把cookie清除掉 
- 		if(getConfig().getIsReadCookie()){
+ 		if(getConfigOrGlobal().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}

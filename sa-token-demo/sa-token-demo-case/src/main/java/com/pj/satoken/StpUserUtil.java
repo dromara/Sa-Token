@@ -23,7 +23,7 @@ public class StpUserUtil {
 	/**
 	 * 多账号体系下的类型标识
 	 */
-	public static final String TYPE = "login";
+	public static final String TYPE = "user";
 
 	/**
 	 * 底层使用的 StpLogic 对象

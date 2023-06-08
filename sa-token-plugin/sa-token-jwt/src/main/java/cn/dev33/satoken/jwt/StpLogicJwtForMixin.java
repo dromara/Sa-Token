@@ -55,7 +55,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		String keyt = getConfig().getJwtSecretKey();
+		String keyt = getConfigOrGlobal().getJwtSecretKey();
 		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
@@ -120,7 +120,7 @@ public class StpLogicJwtForMixin extends StpLogic {
  		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
  		
  		// 如果打开了Cookie模式，则把cookie清除掉 
- 		if(getConfig().getIsReadCookie()){
+ 		if(getConfigOrGlobal().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}

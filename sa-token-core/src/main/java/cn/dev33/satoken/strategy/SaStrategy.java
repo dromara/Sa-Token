@@ -19,7 +19,6 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.fun.strategy.SaGenerateUniqueTokenFunction;
 import cn.dev33.satoken.fun.strategy.*;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
@@ -64,7 +63,7 @@ public final class SaStrategy {
 	 */
 	public SaCreateTokenFunction createToken = (loginId, loginType) -> {
 		// 根据配置的tokenStyle生成不同风格的token
-		String tokenStyle = SaManager.getConfig().getTokenStyle();
+		String tokenStyle = SaManager.getStpLogic(loginType).getConfigOrGlobal().getTokenStyle();
 
 		switch (tokenStyle) {
 			// uuid
