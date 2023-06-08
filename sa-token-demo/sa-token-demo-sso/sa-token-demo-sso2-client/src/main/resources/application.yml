@@ -5,7 +5,7 @@ server:
 # sa-token配置 
 sa-token: 
     # SSO-相关配置
-    sso: 
+    sso:
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html

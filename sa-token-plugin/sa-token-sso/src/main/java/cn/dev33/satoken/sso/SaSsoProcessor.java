@@ -141,16 +141,15 @@ public class SaSsoProcessor {
 		
 		// 校验ticket，获取 loginId 
 		Object loginId = ssoTemplate.checkTicket(ticket, client);
+		if(SaFoxUtil.isEmpty(loginId)) {
+			return SaResult.error("无效ticket：" + ticket);
+		}
 
 		// 注册此客户端的单点注销回调URL 
 		ssoTemplate.registerSloCallbackUrl(loginId, sloCallback);
 		
-		// 给 client 端响应结果 
-		if(SaFoxUtil.isEmpty(loginId)) {
-			return SaResult.error("无效ticket：" + ticket);
-		} else {
-			return SaResult.data(loginId);
-		}
+		// 给 client 端响应结果
+		return SaResult.data(loginId);
 	}
 
 	/**
