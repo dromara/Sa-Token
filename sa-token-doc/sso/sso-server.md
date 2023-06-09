@@ -261,7 +261,7 @@ public class SaSsoServerApplication {
 
 ![sso-server-start](https://oss.dev33.cn/sa-token/doc/sso/sso-server-start.png 's-w-sh')
 
-访问统一授权地址：
+访问统一授权地址(仅测试SSO Server部署是否成功访问localhost,测试SSO模式一到模式三建议按照对应文档的域名进行配置并访问)：
 - [http://localhost:9000/sso/auth](http://localhost:9000/sso/auth)
 
 ![sso-server-init-login.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login.png 's-w-sh')
