@@ -5,7 +5,7 @@ server:
 # sa-token配置 
 sa-token: 
     # SSO-相关配置
-    sso: 
+    sso:
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
         # 使用 Http 请求校验ticket (模式三)

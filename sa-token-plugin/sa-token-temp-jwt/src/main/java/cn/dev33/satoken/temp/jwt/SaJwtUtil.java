@@ -108,17 +108,18 @@ public class SaJwtUtil {
     }
 
     /**
-     * 从一个 jwt-token 解析出载荷, 并取出其剩余有效期 
+     * 从一个 jwt-token 解析出载荷, 并取出其剩余有效期
+	 * @param service 指定的服务类型
      * @param jwtToken JwtToken值 
      * @param keyt 秘钥
      * @return 值 
      */
-    public static long getTimeout(String key, String jwtToken, String keyt) {
+    public static long getTimeout(String service, String jwtToken, String keyt) {
     	// 取出数据 
     	Claims claims = parseToken(jwtToken, keyt);
     	
-    	// 如果给定的 key 不对
-    	if(claims.get(KEY_VALUE + key) == null) {
+    	// 如果给定的 service 不对
+    	if(claims.get(KEY_VALUE + service) == null) {
     		return SaTokenDao.NOT_VALUE_EXPIRE;
     	}
     	
