@@ -15,9 +15,6 @@
  */
 package cn.dev33.satoken.jwt;
 
-import java.util.Map;
-import java.util.Objects;
-
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
@@ -25,6 +22,11 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTException;
+import cn.hutool.jwt.signers.JWTSigner;
+import cn.hutool.jwt.signers.JWTSignerUtil;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * jwt 操作模板方法封装
@@ -139,9 +141,19 @@ public class SaJwtTemplate {
 	 * @return 根据 JWT 对象和 keyt 秘钥，生成的 token 字符串
 	 */
 	public String generateToken (JWT jwt, String keyt) {
-		return jwt.setKey(keyt.getBytes()).sign();
+		return jwt.setKey(keyt.getBytes()).setSigner(createSigner(keyt)).sign();
 	}
-	
+
+	/**
+	 * 返回 jwt 使用的签名算法
+	 *
+	 * @param keyt 秘钥
+	 * @return /
+	 */
+	public JWTSigner createSigner (String keyt) {
+		return JWTSignerUtil.hs256(keyt.getBytes());
+	}
+
 	// ------ 解析 
 
     /**
@@ -174,8 +186,8 @@ public class SaJwtTemplate {
 		}
     	JSONObject payloads = jwt.getPayloads();
     	
-    	// 校验 Token 签名 
-    	boolean verify = jwt.setKey(keyt.getBytes()).verify();
+    	// 校验 Token 签名
+		boolean verify = jwt.setKey(keyt.getBytes()).setSigner(createSigner(keyt)).verify();
     	if( ! verify) {
     		throw new SaJwtException("jwt 签名无效：" + token).setCode(SaJwtErrorCode.CODE_30202);
     	}
