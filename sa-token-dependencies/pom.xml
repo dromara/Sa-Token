@@ -243,157 +243,16 @@
 				<artifactId>jjwt</artifactId>
 				<version>${jjwt.version}</version>
 	        </dependency>
-			
-			
-			
-			<!-- ****************** Sa-Token 自身依赖 ****************** -->
+
+			<!-- sa-token 自身依赖 -->
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-core</artifactId>
+				<artifactId>sa-token-bom</artifactId>
 				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
-			
-			<!-- region sa-token-starter -->
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jboot-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jfinal-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-servlet</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jakarta-servlet</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-solon-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot-autoconfig</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot3-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<!-- endregion-->
-			
-			<!-- region sa-token-plugin -->
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-alone-redis</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dubbo</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-grpc</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-redis</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-redis-fastjson</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-redis-fastjson2</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-redis-jackson</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-redisson-jackson</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-redisx</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dialect-thymeleaf</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jwt</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-oauth2</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-quick-login</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-aop</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-sso</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-temp-jwt</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<!-- endregion-->
-			
+
         </dependencies>
     </dependencyManagement>
 

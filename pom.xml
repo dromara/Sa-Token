@@ -19,12 +19,13 @@
 	<!-- 所有模块 -->
 	<modules>
 		<module>sa-token-dependencies</module>
+		<module>sa-token-bom</module>
 		<module>sa-token-core</module>
 		<module>sa-token-starter</module>
 		<module>sa-token-plugin</module>
 	</modules>
 
-<!-- 开源协议 apache 2.0 -->
+	<!-- 开源协议 apache 2.0 -->
 	<licenses>
 		<license>
 			<name>Apache 2</name>
