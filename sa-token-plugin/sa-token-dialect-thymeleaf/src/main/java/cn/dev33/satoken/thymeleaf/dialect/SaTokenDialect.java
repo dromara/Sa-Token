@@ -72,14 +72,16 @@ public class SaTokenDialect extends AbstractProcessorDialect {
 
 				// 角色判断
 				new SaTokenTagProcessor(prefix, "hasRole", value -> stpLogic.hasRole(value)),
-				new SaTokenTagProcessor(prefix, "hasRoleOr", value -> stpLogic.hasRoleOr(toArray(value))),
 				new SaTokenTagProcessor(prefix, "hasRoleAnd", value -> stpLogic.hasRoleAnd(toArray(value))),
+				new SaTokenTagProcessor(prefix, "hasRoleOr", value -> stpLogic.hasRoleOr(toArray(value))),
+				new SaTokenTagProcessor(prefix, "notRole", value -> ! stpLogic.hasRole(value)),
 				new SaTokenTagProcessor(prefix, "lackRole", value -> ! stpLogic.hasRole(value)),
 
 				// 权限判断
 				new SaTokenTagProcessor(prefix, "hasPermission", value -> stpLogic.hasPermission(value)),
-				new SaTokenTagProcessor(prefix, "hasPermissionOr", value -> stpLogic.hasPermissionOr(toArray(value))),
 				new SaTokenTagProcessor(prefix, "hasPermissionAnd", value -> stpLogic.hasPermissionAnd(toArray(value))),
+				new SaTokenTagProcessor(prefix, "hasPermissionOr", value -> stpLogic.hasPermissionOr(toArray(value))),
+				new SaTokenTagProcessor(prefix, "notPermission", value -> ! stpLogic.hasPermission(value)),
 				new SaTokenTagProcessor(prefix, "lackPermission", value -> ! stpLogic.hasPermission(value))
 
 		));
