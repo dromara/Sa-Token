@@ -8,8 +8,6 @@ cd sa-token-demo
 cd sa-token-demo-alone-redis & call mvn clean & cd ..
 cd sa-token-demo-alone-redis-cluster & call mvn clean & cd ..
 cd sa-token-demo-case & call mvn clean & cd ..
-cd sa-token-demo-dubbo-consumer & call mvn clean & cd ..
-cd sa-token-demo-dubbo-provider & call mvn clean & cd ..
 cd sa-token-demo-grpc & call mvn clean & cd ..
 cd sa-token-demo-jwt & call mvn clean & cd ..
 cd sa-token-demo-oauth2-client & call mvn clean & cd ..
@@ -47,6 +45,13 @@ cd ..
 cd sa-token-demo-oauth2
 cd sa-token-demo-oauth2-client & call mvn clean & cd ..
 cd sa-token-demo-oauth2-server & call mvn clean & cd ..
+cd ..
+
+cd sa-token-demo-dubbo
+cd sa-token-demo-dubbo-consumer & call mvn clean & cd ..
+cd sa-token-demo-dubbo-provider & call mvn clean & cd ..
+cd sa-token-demo-dubbo3-consumer & call mvn clean & cd ..
+cd sa-token-demo-dubbo3-provider & call mvn clean & cd ..
 cd ..
 
 cd sa-token-demo-remember-me

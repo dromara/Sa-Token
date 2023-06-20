@@ -219,8 +219,6 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-demo-websocket               // [示例] Sa-Token 集成 Web-Socket 鉴权示例
 		├── sa-token-demo-websocket-spring        // [示例] Sa-Token 集成 Web-Socket（Spring封装版） 鉴权示例
 		├── sa-token-demo-thymeleaf               // [示例] Sa-Token 集成 Thymeleaf 标签方言
-		├── sa-token-demo-dubbo-consumer          // [示例] Sa-Token 集成 dubbo 鉴权，消费端（调用端）
-		├── sa-token-demo-dubbo-provider          // [示例] Sa-Token 集成 dubbo 鉴权，生产端（被调用端）
 		├── sa-token-demo-sso                     // [示例] Sa-Token 集成 SSO 单点登录
 			├── sa-token-demo-sso-server              // [示例] Sa-Token 集成 SSO单点登录-Server认证中心
 			├── sa-token-demo-sso1-client             // [示例] Sa-Token 集成 SSO单点登录-模式一 应用端 (同域、同Redis)
@@ -239,6 +237,11 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-demo-oauth2                  // [示例] Sa-Token 集成 OAuth2.0
 			├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 			├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)
+		├── sa-token-demo-dubbo                   // [示例] Sa-Token 集成 dubbo
+			├── sa-token-demo-dubbo-consumer          // [示例] Sa-Token 集成 dubbo 鉴权，消费端（调用端）
+			├── sa-token-demo-dubbo-provider          // [示例] Sa-Token 集成 dubbo 鉴权，生产端（被调用端）
+			├── sa-token-demo-dubbo3-consumer         // [示例] Sa-Token 集成 dubbo3 鉴权，消费端（调用端）
+			├── sa-token-demo-dubbo3-provider         // [示例] Sa-Token 集成 dubbo3 鉴权，生产端（被调用端）
 		├── sa-token-demo-remember-me             // [示例] Sa-Token 实现 [ 记住我 ] 模式
 			├── page_project                          // [示例] Sa-Token 实现 [ 记住我 ] 模式、前端页面
 			├── server_project                        // [示例] Sa-Token 实现 [ 记住我 ] 模式、后端接口
