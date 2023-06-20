@@ -29,8 +29,7 @@
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
-		<!--<dubbo.version>2.7.18</dubbo.version>-->
-		<dubbo.version>2.7.11</dubbo.version>
+    <dubbo.version>2.7.21</dubbo.version>
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
 		<hutool-jwt.version>5.8.9</hutool-jwt.version>
 		<jjwt.version>0.9.1</jjwt.version>
