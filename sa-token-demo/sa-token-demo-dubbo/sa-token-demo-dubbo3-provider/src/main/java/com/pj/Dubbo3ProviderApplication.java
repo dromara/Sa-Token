@@ -5,18 +5,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Dubbo 服务消费端 
+ * Dubbo3 服务提供端
  * 
  * @author click33
  *
  */
 @EnableDubbo
 @SpringBootApplication
-public class ConsumerApplication {
+public class Dubbo3ProviderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConsumerApplication.class, args);
-		System.out.println("ConsumerApplication 启动成功");
+		SpringApplication.run(Dubbo3ProviderApplication.class, args);
+		System.out.println("Dubbo3ProviderApplication 启动成功");
 	}
-
+	
 }
