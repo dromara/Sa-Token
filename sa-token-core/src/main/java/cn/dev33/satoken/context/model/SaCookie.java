@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.context.model;
 
 import java.time.Instant;
@@ -10,9 +25,10 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Cookie Model
- * @author kong
+ * Cookie Model，代表一个 Cookie 应该具有的所有参数
  *
+ * @author click33
+ * @since 1.16.0
  */
 public class SaCookie {
 
@@ -32,7 +48,7 @@ public class SaCookie {
     private String value;
 
     /**
-     * 有效时长 （单位：秒），-1代表为临时Cookie 浏览器关闭后自动删除
+     * 有效时长 （单位：秒），-1 代表为临时Cookie 浏览器关闭后自动删除
      */
     private int maxAge = -1;
 
@@ -113,14 +129,14 @@ public class SaCookie {
 	}
 
 	/**
-	 * @return 有效时长 （单位：秒），-1代表为临时Cookie 浏览器关闭后自动删除
+	 * @return 有效时长 （单位：秒），-1 代表为临时Cookie 浏览器关闭后自动删除
 	 */
 	public int getMaxAge() {
 		return maxAge;
 	}
 
 	/**
-	 * @param maxAge 有效时长 （单位：秒），-1代表为临时Cookie 浏览器关闭后自动删除
+	 * @param maxAge 有效时长 （单位：秒），-1 代表为临时Cookie 浏览器关闭后自动删除
 	 * @return 对象自身
 	 */
 	public SaCookie setMaxAge(int maxAge) {
@@ -220,7 +236,7 @@ public class SaCookie {
 	/**
 	 * 构建一下
 	 */
-	public void builde() {
+	public void builder() {
 		if(path == null) {
 			path = "/";
 		}
@@ -231,7 +247,7 @@ public class SaCookie {
 	 * @return /
 	 */
 	public String toHeaderValue() {
-		this.builde();
+		this.builder();
 
 		if(SaFoxUtil.isEmpty(name)) {
 			throw new SaTokenException("name不能为空").setCode(SaErrorCode.CODE_12002);

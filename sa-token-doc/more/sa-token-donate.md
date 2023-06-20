@@ -13,12 +13,36 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 ![gitee-zanzhu2.png](https://oss.dev33.cn/sa-token/doc/gitee-zanzhu2.png)
 
 
-#### 已捐赠列表：
+
+**已捐赠列表：**
 
 <p class="zanzhu-pre"></p>
+<div class="zanzhu-box zanzhu-box-fold">
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [javahuang](https://gitee.com/javahrp)		| ¥ 200.0		| [SurveyKing：功能最强大的调查问卷系统和考试系统，开源](https://gitee.com/surveyking/surveyking)					| 2023-06-08 	|
+| [dyjgitdyjgit](https://gitee.com/qtinfogit)	| ¥ 20.0		| 感谢您的开源项目！							| 2023-05-22 	|
+| 砰嚓嚓（QQ打赏）								| ¥ 20.0		| 一点打赏不成敬意							| 2023-05-15 	|
+| [xc_Moving](https://gitee.com/fireZhang)		| ¥ 20.0		| 感谢您的开源项目！感谢SA-token帮我度过项目的难关		| 2023-05-11 	|
+| [BeckJin](https://gitee.com/beckjin666)		| ¥ 100.0		| [明道云-零代码开发平台，快速响应业务需求。从“IT背锅侠”，变成“IT英雄”。](https://mingdao.com?s=st)					| 2023-05-08 	|
+| [SummerHy](https://gitee.com/hurumo)			| ¥ 10.0		| 国产，就是棒，：）							| 2023-05-07 	|
+| [gdl](https://gitee.com/gdl97)				| ¥ 20.0		| 感谢您的开源项目！作者牛逼！					| 2023-04-29 	|
+| [bootx](https://gitee.com/bootx)				| ¥ 100.0		| [Bootx-Platform：支付收单、三方对接、后端基于 Spring Boot、Spring Cloud 应用脚手架](https://gitee.com/bootx/bootx-platform)	| 2023-04-18 	|
+| c（微信打赏）									| ¥ 100.0		| 感谢您的开源项目！							| 2023-04-17 	|
+| [hurumo](https://gitee.com/hurumo)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-17 	|
+| [李广龙](https://gitee.com/ak47-b)				| ¥ 20.0		| 跟大哥学习一辈子学不完						| 2023-04-14 	|
+| [Admin](https://gitee.com/jinan-jimeng-network_0)	| ¥ 20.0	| 感谢您的开源项目！							| 2023-04-12 	|
+| [王宁波](https://gitee.com/wang-ningbo)		| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-10 	|
+| F（微信打赏）									| ¥ 20.0		| 感谢您的开源项目！							| 2023-04-09 	|
+| [zhou](https://gitee.com/mrzhou1)				| ¥ 50.0		| 感谢答疑									| 2023-03-29 	|
+| [Java_小生](https://gitee.com/zhang_hanzhe)	| ¥ 10.0		| 感谢Sa-Token让我不用去B站肯几十个小时的教程，框架很优秀文档更优秀	| 2023-03-09 	|
+| 空空（微信打赏）								| ¥ 10.0		| 感谢您的开源项目！							| 2023-03-08 	|
+| [李一博](https://gitee.com/haust_lyb)			| ¥ 8.88		| 感谢您的开源项目！							| 2023-03-07 	|
+| [陈乾](https://gitee.com/qianpou)				| ¥ 50.0		| 感谢您的开源项目！							| 2023-03-07 	|
+| [陈乾](https://gitee.com/qianpou)				| ¥ 20.0		| 感谢您的开源项目！							| 2023-03-05 	|
+| [熊孩子](https://gitee.com/xhz1230)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-02-17 	|
+| [不问烟雨](https://gitee.com/xiaominfagui)		| ¥ 10.0		| 牛										| 2023-01-12 	|
 | [tsing](https://gitee.com/tsing666)			| ¥ 10.0		| 感谢您的开源项目！							| 2023-01-08 	|
 | [SWmachine](https://gitee.com/SWmachine)		| ¥ 10.0		| 您的开源很好用！							| 2023-01-07 	|
 | [Peter Z](https://gitee.com/zj1995)			| ¥ 10.0		| 感谢您的开源项目！							| 2022-12-26 	|
@@ -87,7 +111,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 | [songfazhun](https://gitee.com/fzsong)		| ¥ 10			| 感谢您的开源项目！							| 2021-10-28	|
 | [ithorns](https://gitee.com/ithorns)			| ¥ 10			| 感谢您的开源项目！							| 2021-10-25	|
 | [xiaoyan](https://gitee.com/l-yun)			| ¥ 200			| 节日快乐									| 2021-10-24	|
-| [apifox001](https://gitee.com/apifox001)		| ¥ 200			| 开源不易，Apifox（apifox.cn）和你们一起加油！	| 2021-10-15	|
+| [apifox001](https://gitee.com/apifox001)		| ¥ 200			| [Apifox：API 文档、API 调试、API Mock、API 自动化测试](https://apifox.com/)	| 2021-10-15	|
 | [永夜](https://gitee.com/cn-src)				| ¥ 20			| 感谢您的开源项目！							| 2021-09-18 	|
 | [苏永晓](https://gitee.com/suyongxiao)			| ¥ 10			| 感谢您的开源项目！							| 2021-09-01 	|
 | [xiaoyan](https://gitee.com/l-yun)			| ¥ 200			| 好的作者理应被认可							| 2021-08-24 	|
@@ -103,8 +127,38 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 | [知知](https://gitee.com/double_zhi)			| ¥ 10			| 感谢您的开源项目！							| 2020-12-15 	|
 | [省长](https://gitee.com/click33)				| ¥ 10			| java中最好用的权限认证框架！				| 2020-12-15 	|
 
+</div>
+
+<div class="zhankai-btn-box">
+共 <span class="zanzhu-count">0</span> 位用户赞助，
+<a href="javascript: expandZanZhu();" class="zk-btn--1"> 点击展开 ↓</a>
+<a href="javascript: foldZanZhu();" class="zk-btn--2"> 点击收起 ↑ </a>
+</div>
+
+
 感谢每一位小伙伴的热心支持 ❤️ ❤️ ❤️ ！
 
 
 
+### 商业赞助
 
+一次性赞助 100 元或以上，可帮助您的产品在 Sa-Token 交流群艾特全体成员推广一次。
+
+Sa-Token 目前总计10+微信交流群（每个群人数400以上，总人数5000+），4个QQ交流群（2000人群和1000人群，总计人数6000+），大部分为 java 开发工程师，可有效推广您的产品。
+
+- 优先推广和程序员相关的互联网产品，比如：低代码开发平台、网课、开发软件、云服务器、个人博客等等，实体产品如键盘、显示器、耳机等等，如果是和程序员无关的产品，可酌情考虑是否推广。
+- 拒绝接受违反法律法规、以及灰色相关的产品推广，为避免不必要的麻烦，目前也拒绝推广IP代理、上网工具等等。
+- 为避免过多打扰群友，目前一天内至多在群里推广两次，超过次数的可顺延到第二天。
+
+有意见合作者可直接在 gitee 发起赞赏后，将您的产品信息发至 [ sa-pro 小助手 ] ，加好友链接点 [这里](http://sa-pro.dev33.cn/)，点击后往下拉有二维码，添加时请备注：Sa-Token 商业赞助。
+
+注：在群发消息时，我们会明确对群友声明，此条消息为赞助商的产品，属于硬广信息。如您介意这一点，我们将暂时无法与您合作。
+
+群发消息类似于以下：
+``` txt
+感谢 xx 老板对 Sa-Token 的商业赞助，以下是老板的产品，大家感兴趣的可以关注一下：
+xxx 商品名称
+链接：https://xxx.com/xxx 
+```
+
+> 目前不接受 Sa-Token 官网文档插入广告推广，只接受一次性商业赞助推广。

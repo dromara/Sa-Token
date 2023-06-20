@@ -2,14 +2,14 @@
 
 ---
 
-如果我们已有的系统是前后端分离模式，我们显然不能为了接入SSO而改造系统的基础架构，官方仓库的示例采用的是前后端一体方案，要将其改造为前后台分离架构模式非常简单
+如果我们已有的系统是前后端分离模式，我们显然不能为了接入SSO而改造系统的基础架构，官方仓库的示例采用的是前后端一体方案，要将其改造为前后端分离架构模式非常简单
 
 以`sa-token-demo-sso2-client`为例：
 
 ### 1、新建`H5Controller`开放接口
 ``` java
 /**
- * 前后台分离架构下集成SSO所需的代码 
+ * 前后端分离架构下集成SSO所需的接口
  */
 @RestController
 public class H5Controller {
@@ -49,7 +49,7 @@ public class H5Controller {
 ```
 
 ### 2、增加跨域过滤器`CorsFilter.java`
-源码详见：[CorsFilter.java](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso2-client/src/main/java/com/pj/h5/CorsFilter.java)，
+源码详见：[CorsFilter.java](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client/src/main/java/com/pj/h5/CorsFilter.java)，
 将其复制到项目中即可 
 
 ### 3、新建前端项目 
@@ -97,7 +97,7 @@ public class H5Controller {
 ```
 
 ### 4、添加登录处理文件`sso-login.html`
-源码详见：[sso-login.html](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso-client-h5/sso-login.html)，
+源码详见：[sso-login.html](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-client-h5/sso-login.html)，
 将其复制到项目中即可，与`index.html`一样放在根目录下 
 
 
@@ -105,14 +105,14 @@ public class H5Controller {
 先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如[HBuilderX](https://www.dcloud.io/hbuilderx.html)），测试流程与一体版一致 
 
 
-### 6、SSO-Server 端的前后台分离
-疑问：上述代码都是针对 Client 端进行拆分，如果我想在 SSO-Server 端也进行前后台分离改造，应该怎么做？
+### 6、SSO-Server 端的前后端分离
+疑问：上述代码都是针对 Client 端进行拆分，如果我想在 SSO-Server 端也进行前后端分离改造，应该怎么做？
 
 > 答：解决思路都是大同小异的，与Client一样，我们需要把原本在 “后端处理的授权重定向逻辑” 拿到前端来实现。
 
 由于集成代码与 Client 端类似，这里暂不贴详细代码，我们可以下载官方仓库，里面有搭建好的demo
 
-使用前端ide导入项目 `/sa-token-demo/sa-token-demo-sso-server-h5`，浏览器访问 `sso-auth.html` 页面：
+使用前端ide导入项目 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server-h5`，浏览器访问 `sso-auth.html` 页面：
 
 ![sso-type2-server-h5-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type2-server-h5-auth.png 's-w-sh')
 

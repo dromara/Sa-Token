@@ -7,7 +7,7 @@ import cn.dev33.satoken.SaManager;
 
 /**
  * Sa-Token整合SpringBoot 示例，整合redis  
- * @author kong
+ * @author click33
  *
  */
 @SpringBootApplication

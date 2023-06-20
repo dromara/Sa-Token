@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Sa-Token</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="description" content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后台分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
+		<meta name="description" content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后端分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
 		<meta name="keywords" content="sa-token,sa-token框架,sa-token文档,java权限认证">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="shortcut icon" type="image/x-icon" href="logo.png">
@@ -18,7 +18,7 @@
 					<div class="logo-box">
 						<img src="logo.png" title="logo" />
 						<h1 class="logo-text">Sa-Token</h1>
-						<sub>v1.34.0</sub>
+						<sub>v1.34.1</sub>
 					</div>
 				</a>
 			</div>
@@ -99,6 +99,7 @@
 				<a class="p-none wzi" href="#/more/link">案例</a>
 				<a class="p-none wzi" href="#/more/demand-commit">需求提交</a>
 				<!-- <a class="p-none wzi" href="#/more/blog">博客</a> -->
+				<a class="p-none wzi" href="#/more/join-group">加入讨论群</a>
 				<a class="p-none wzi" href="#/more/sa-token-donate">赞助</a>
 				<a class="p-none wzi" href="#/sso/sso-pro">🔥 SSO商业版</a>
 				<div class="zk-box">
@@ -151,7 +152,7 @@
 		<!--  -->
 		<script src="./static/docsify-plugin.js"></script>
 		<script>
-			var saTokenTopVersion = '1.34.0';	// Sa-Token最新版本 
+			var saTokenTopVersion = '1.34.1';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
 			name += '<b style="font-size: 28px; vertical-align: middle;">Sa-Token</b> <sub>v' + saTokenTopVersion + '</sub>';
 			window.$docsify = {
@@ -317,6 +318,22 @@
 				return 'rgb(' + arr.join(",")  + ', ' + a + ')';
 			}
 			
+		</script>
+		
+		<!-- 赞助页的展开和收缩 -->
+		<script>
+			// 展开
+			function expandZanZhu(){
+				$('.zk-btn--1').hide();
+				$('.zk-btn--2').show();
+				$('.zanzhu-box').height($('.zanzhu-box table').height());
+			}
+			// 折叠
+			function foldZanZhu(){
+				$('.zanzhu-box').height(500);
+				$('.zk-btn--2').hide();
+				$('.zk-btn--1').show();
+			}
 		</script>
 	</body>
 </html>

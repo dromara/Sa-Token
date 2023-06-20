@@ -12,7 +12,7 @@
     <description>Sa-Token Dependencies</description>
 
     <properties>
-        <revision>1.34.0</revision>
+        <revision>1.34.1</revision>
 		
 		<!-- 统一定义依赖版本号 -->
 		<springboot.version>2.5.14</springboot.version>
@@ -23,13 +23,13 @@
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-		<solon.version>1.12.4</solon.version>
-		<noear-redisx.version>1.4.5</noear-redisx.version>
-		<noear-snack3.version>3.2.50</noear-snack3.version>
+		<solon.version>2.2.3</solon.version>
+		<noear-redisx.version>1.4.7</noear-redisx.version>
+		<noear-snack3.version>3.2.65</noear-snack3.version>
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
-		<dubbo.version>2.7.21</dubbo.version>
+    <dubbo.version>2.7.21</dubbo.version>
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
 		<hutool-jwt.version>5.8.9</hutool-jwt.version>
 		<jjwt.version>0.9.1</jjwt.version>
@@ -242,152 +242,16 @@
 				<artifactId>jjwt</artifactId>
 				<version>${jjwt.version}</version>
 	        </dependency>
-			
-			
-			
-			<!-- ****************** Sa-Token 自身依赖 ****************** -->
+
+			<!-- sa-token 自身依赖 -->
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-core</artifactId>
+				<artifactId>sa-token-bom</artifactId>
 				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
-			
-			<!-- region sa-token-starter -->
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jboot-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jfinal-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-servlet</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jakarta-servlet</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-solon-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot-autoconfig</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot3-starter</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<!-- endregion-->
-			
-			<!-- region sa-token-plugin -->
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-plugin</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-alone-redis</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-context-dubbo</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-context-grpc</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis-fastjson</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis-fastjson2</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redis-jackson</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dao-redisx</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-dialect-thymeleaf</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-jwt</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-oauth2</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-quick-login</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-aop</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-sso</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-temp-jwt</artifactId>
-				<version>${revision}</version>
-			</dependency>
-			<!-- endregion-->
-			
+
         </dependencies>
     </dependencyManagement>
 

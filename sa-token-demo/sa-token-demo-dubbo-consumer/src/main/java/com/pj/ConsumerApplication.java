@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Dubbo 服务消费端 
  * 
- * @author kong
+ * @author click33
  *
  */
 @EnableDubbo

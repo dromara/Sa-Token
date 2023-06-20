@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.listener;
 
 import java.util.ArrayList;
@@ -11,9 +26,11 @@ import cn.dev33.satoken.stp.StpLogic;
 
 /**
  * Sa-Token 事件中心 事件发布器
+ *
+ * <p> 提供侦听器注册、事件发布能力 </p>
  * 
- * @author kong
- * @since: 2022-8-19
+ * @author click33
+ * @since 1.31.0
  */
 public class SaTokenEventCenter {
 
@@ -127,7 +144,7 @@ public class SaTokenEventCenter {
 	// --------- 事件发布 
 	
 	/**
-	 * 每次登录时触发 
+	 * 事件发布：xx 账号登录
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue 本次登录产生的 token 值 
@@ -140,7 +157,7 @@ public class SaTokenEventCenter {
 	}
 			
 	/**
-	 * 每次注销时触发 
+	 * 事件发布：xx 账号注销
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue token值
@@ -152,7 +169,7 @@ public class SaTokenEventCenter {
 	}
 	
 	/**
-	 * 每次被踢下线时触发 
+	 * 事件发布：xx 账号被踢下线
 	 * @param loginType 账号类别 
 	 * @param loginId 账号id 
 	 * @param tokenValue token值 
@@ -164,7 +181,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次被顶下线时触发
+	 * 事件发布：xx 账号被顶下线
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue token值
@@ -176,7 +193,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次被封禁时触发
+	 * 事件发布：xx 账号被封禁
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param service 指定服务 
@@ -190,7 +207,7 @@ public class SaTokenEventCenter {
 	}
 	
 	/**
-	 * 每次被解封时触发
+	 * 事件发布：xx 账号被解封
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param service 指定服务 
@@ -202,7 +219,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次打开二级认证时触发
+	 * 事件发布：xx 账号完成二级认证
 	 * @param loginType 账号类别
 	 * @param tokenValue token值
 	 * @param service 指定服务 
@@ -215,7 +232,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次关闭二级认证时触发
+	 * 事件发布：xx 账号关闭二级认证
 	 * @param loginType 账号类别
 	 * @param service 指定服务 
 	 * @param tokenValue token值
@@ -227,7 +244,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次创建Session时触发
+	 * 事件发布：创建了一个新的 SaSession
 	 * @param id SessionId
 	 */
 	public static void doCreateSession(String id) {
@@ -237,7 +254,7 @@ public class SaTokenEventCenter {
 	}
 	
 	/**
-	 * 每次注销Session时触发
+	 * 事件发布：一个 SaSession 注销了
 	 * @param id SessionId
 	 */
 	public static void doLogoutSession(String id) {
@@ -247,7 +264,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 每次Token续期时触发
+	 * 事件发布：指定 Token 续期成功
 	 * 
 	 * @param tokenValue token 值 
 	 * @param loginId 账号id 
@@ -259,20 +276,19 @@ public class SaTokenEventCenter {
 		}
 	}
 
-	
 	/**
-	 * 全局组件载入 
-	 * @param comtName 组件名称 
-	 * @param comtObj 组件对象 
+	 * 事件发布：有新的全局组件载入到框架中
+	 * @param compName 组件名称
+	 * @param compObj 组件对象
 	 */
-	public static void doRegisterComponent(String comtName, Object comtObj) {
+	public static void doRegisterComponent(String compName, Object compObj) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doRegisterComponent(comtName, comtObj);
+			listener.doRegisterComponent(compName, compObj);
 		}
 	}
 
 	/**
-	 * StpLogic 对象替换 
+	 * 事件发布：有新的 StpLogic 载入到框架中
 	 * @param stpLogic / 
 	 */
 	public static void doSetStpLogic(StpLogic stpLogic) {
@@ -282,7 +298,7 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 载入全局配置 
+	 * 事件发布：有新的全局配置载入到框架中
 	 * @param config / 
 	 */
 	public static void doSetConfig(SaTokenConfig config) {

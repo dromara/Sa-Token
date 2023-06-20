@@ -11,8 +11,8 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 /**
  * 处理 WebSocket 连接 
  * 
- * @author kong
- * @since: 2022-2-11
+ * @author click33
+ * @since 2022-2-11
  */
 public class MyWebSocketHandler extends TextWebSocketHandler {
 

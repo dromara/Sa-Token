@@ -72,7 +72,7 @@ public class SaTokenConfigure {
 </p>
 <p>
 	不具有角色 admin 才能显示：
-	<span sa:lackRole="admin">value</span>
+	<span sa:notRole="admin">value</span>
 </p>
 ```
 
@@ -92,7 +92,7 @@ public class SaTokenConfigure {
 </p>
 <p>
 	不具有权限 user-add 才能显示：
-	<span sa:lackPermission="user-add">value</span>
+	<span sa:notPermission="user-add">value</span>
 </p>
 ```
 

@@ -3,7 +3,7 @@ package com.pj.model;
 /**
  * User 实体类 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-15
  */
 public class SysUser {

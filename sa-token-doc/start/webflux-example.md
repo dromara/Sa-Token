@@ -1,7 +1,7 @@
 # Spring WebFlux 集成 Sa-Token 示例
 
 **Reactor** 是一种非阻塞的响应式模型，本篇将以 **WebFlux** 为例，展示 Sa-Token 与 Reactor 响应式模型框架相整合的示例，
-**你可以用同样方式去对接其它 Reactor 模型框架（Netty、ShenYu、SpringCloud Gateway等）**
+**你可以用同样方式去对接其它 Reactor 模型框架（例如 SpringCloud Gateway）**
 
 整合示例在官方仓库的`/sa-token-demo/sa-token-demo-webflux`文件夹下，如遇到难点可结合源码进行测试学习
 
@@ -18,6 +18,7 @@
 
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` xml 
 <!-- Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc -->
 <dependency>
@@ -26,14 +27,16 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+
 <!-------- tab:Gradle 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` gradle
 // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ------------------------------>
 
-注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
+
 
 
 

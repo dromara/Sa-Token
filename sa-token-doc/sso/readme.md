@@ -11,7 +11,7 @@
 
 单点登录——就是为了解决这个问题而生！
 
-简而言之，单点登录可以做到：**`在多个互相信任的系统中，用户只需登录一次，就可以访问所有系统。`**
+简而言之，单点登录可以做到： **`在多个互相信任的系统中，用户只需登录一次，就可以访问所有系统。`**
 
 
 ### 架构选型
@@ -19,9 +19,9 @@ Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO �
 
 | 系统架构					| 采用模式	| 简介					|  文档链接	|
 | :--------					| :--------	| :--------				| :--------	|
-| 前端同域 + 后端同 Redis		| 模式一		| 共享 Cookie 同步会话	| [文档](/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client)	|
-| 前端不同域 + 后端同 Redis	| 模式二		| URL重定向传播会话 		| [文档](/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client)	|
-| 前端不同域 + 后端不同 Redis	| 模式三		| Http请求获取会话		| [文档](/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client)	|
+| 前端同域 + 后端同 Redis		| 模式一		| 共享 Cookie 同步会话	| [文档](/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client)	|
+| 前端不同域 + 后端同 Redis	| 模式二		| URL重定向传播会话 		| [文档](/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client)	|
+| 前端不同域 + 后端不同 Redis	| 模式三		| Http请求获取会话		| [文档](/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)	|
 
 
 1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`。
@@ -38,4 +38,10 @@ Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO �
 6. 高可定制：Sa-Token-SSO模块对代码架构侵入性极低，结合Sa-Token本身的路由拦截特性，你可以非常轻松的定制化开发。
 
 
+### 学习注意点
+1. sa-token-sso 虽然是个单独的插件，但其本质仍是对 Sa-Token 本身各个功能的组合使用，所以先熟练掌握 Sa-Token 可有效降低 SSO 章节的学习压力。
+2. 相比单体系统的会话管理，SSO 登录与注销的整体链路较长，出现 bug 时调试步骤也更复杂，因此建议先通过 demo 打通各个技术细节，再正式集成到项目中。
+3. 文档对 跨Redis、跨域、前后端分离 等常见场景提供直接可用的示例，但真实项目往往是多种特殊场景交叉组合存在，每个项目各不相同。
+所以文档无法依次列出所有技术点交叉组合的 demo 示例，文档会更注重解释清楚每一种特殊场景的特殊点所在，以及其解决原理，
+所以推荐大家细心阅读相关段落，以便在真实项目中可以做到灵活组合、举一反三。
 

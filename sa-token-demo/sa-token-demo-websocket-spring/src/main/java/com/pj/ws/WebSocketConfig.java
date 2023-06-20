@@ -8,8 +8,8 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 /**
  * WebSocket 相关配置 
  * 
- * @author kong
- * @since: 2022-2-11
+ * @author click33
+ * @since 2022-2-11
  */
 @Configuration
 @EnableWebSocket

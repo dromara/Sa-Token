@@ -12,7 +12,7 @@ import cn.dev33.satoken.thymeleaf.dialect.SaTokenDialect;
 
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
+ * @author click33
  *
  */
 @Configuration

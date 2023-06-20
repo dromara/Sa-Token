@@ -1,15 +1,16 @@
 package com.pj;
 
 
-import org.noear.solon.Solon;
-
 import cn.dev33.satoken.SaManager;
+import org.noear.solon.Solon;
+import org.noear.solon.annotation.SolonMain;
 
 /**
  * sa-token整合 solon 示例
  * @author noear
  *
  */
+@SolonMain
 public class SaTokenDemoApp {
 
 	public static void main(String[] args) {

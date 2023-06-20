@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ =============================================================================
+  ~
+  ~   Copyright (c) 2011-2018, The THYMELEAF team (http://www.thymeleaf.org)
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  ~
+  ~ =============================================================================
+  -->
+
+<dialect
+        xmlns="http://www.thymeleaf.org/extras/dialect"
+        prefix="sa"
+        namespace-uri="http://www.thymeleaf.org/extras/sa-token"
+        class="cn.dev33.satoken.thymeleaf.dialect.SaTokenDialect">
+
+    <!-- 登录判断 -->
+    <attribute-processor name="login">
+        <documentation> <![CDATA[ 登录之后才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="notLogin">
+        <documentation> <![CDATA[ 不登录才能显示元素 ]]> </documentation>
+    </attribute-processor>
+
+    <!-- 角色判断 -->
+    <attribute-processor name="hasRole">
+        <documentation> <![CDATA[ 具有指定角色才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="hasRoleAnd">
+        <documentation> <![CDATA[ 同时具备多个角色才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="hasRoleOr">
+        <documentation> <![CDATA[ 只要具有其中一个角色就能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="notRole">
+        <documentation> <![CDATA[ 不具有指定角色才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="lackRole">
+        <documentation> <![CDATA[ 不具有指定角色才能显示元素（未来版本可能废弃，建议更换为 notRole） ]]> </documentation>
+    </attribute-processor>
+
+    <!-- 权限判断 -->
+    <attribute-processor name="hasPermission">
+        <documentation> <![CDATA[ 具有指定权限才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="hasPermissionAnd">
+        <documentation> <![CDATA[ 同时具备多个权限才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="hasPermissionOr">
+        <documentation> <![CDATA[ 只要具有其中一个权限就能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="notPermission">
+        <documentation> <![CDATA[ 不具有指定权限才能显示元素 ]]> </documentation>
+    </attribute-processor>
+    <attribute-processor name="lackPermission">
+        <documentation> <![CDATA[ 不具有指定权限才能显示元素（未来版本可能废弃，建议更换为 notPermission） ]]> </documentation>
+    </attribute-processor>
+
+</dialect>

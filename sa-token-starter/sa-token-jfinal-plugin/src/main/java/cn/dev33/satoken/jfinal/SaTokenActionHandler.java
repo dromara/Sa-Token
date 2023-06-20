@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.jfinal;
 
 import com.jfinal.aop.Invocation;
@@ -117,7 +132,7 @@ public class SaTokenActionHandler extends ActionHandler {
     /**
      * 抽取出该方法是为了缩短 handle 方法中的代码量，确保获得 JIT 优化，
      * 方法长度超过 8000 个字节码时，将不会被 JIT 编译成二进制码
-     *
+     * <p>
      * 通过开启 java 的 -XX:+PrintCompilation 启动参数得知，handle(...)
      * 方法(73 行代码)已被 JIT 优化，优化后的字节码长度为 593 个字节，相当于
      * 每行代码产生 8.123 个字节

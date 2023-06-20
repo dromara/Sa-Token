@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.solon.integration;
 
 import cn.dev33.satoken.annotation.SaIgnore;
@@ -19,9 +34,9 @@ import java.util.List;
 
 /**
  * sa-token 基于路由的过滤式鉴权（增加了注解的处理）；使用优先级要低些
- *
+ * <p>
  * 对静态文件无处理效果
- *
+ * <p>
  * order: -100 (SaTokenInterceptor 和 SaTokenFilter 二选一；不要同时用)
  *
  * @author noear
@@ -172,19 +187,21 @@ public class SaTokenInterceptor implements RouterInterceptor {
 		try {
 			Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
-			//先路径过滤下（包括了静态文件）
-			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				//1.执行前置处理（主要是一些跨域之类的）
-				if(beforeAuth != null) {
-					beforeAuth.run(mainHandler);
-				}
-				//2.执行注解处理
-				authAnno(action);
-				//3.执行规则处理
-				auth.run(mainHandler);
-			});
+			//1.执行前置处理（主要是一些跨域之类的）
+			if(beforeAuth != null) {
+				beforeAuth.run(mainHandler);
+			}
 
+			//先路径过滤下（不包括静态文件）
+			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
+				//2.执行注解处理
+				if(authAnno(action)) {
+					//3.执行规则处理（如果没有被 @SaIgnore 忽略）
+					auth.run(mainHandler);
+				}
+			});
 		} catch (StopMatchException e) {
+			// StopMatchException 异常代表：停止匹配，进入Controller
 
 		} catch (SaTokenException e) {
 			// 1. 获取异常处理策略结果
@@ -206,19 +223,21 @@ public class SaTokenInterceptor implements RouterInterceptor {
 		chain.doIntercept(ctx, mainHandler);
 	}
 
-	private void authAnno(Action action) {
+	private boolean authAnno(Action action) {
 		//2.验证注解处理
 		if (isAnnotation && action != null) {
 			// 获取此请求对应的 Method 处理函数
 			Method method = action.method().getMethod();
 
 			// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-			if (SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
-				return;
+			if (SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
+				return false;
 			}
 
 			// 注解校验
-			SaStrategy.me.checkMethodAnnotation.accept(method);
+			SaStrategy.instance.checkMethodAnnotation.accept(method);
 		}
+
+		return true;
 	}
 }

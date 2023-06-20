@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.config;
 
 import java.io.IOException;
@@ -13,11 +28,11 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token配置文件的构建工厂类
- * <p>
- * 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 
+ *
+ * <p> 用于手动读取配置文件初始化 SaTokenConfig 对象，只有在非IOC环境下你才会用到此类 </p>
  * 
- * @author kong
- * @since 2022-10-30
+ * @author click33
+ * @since 1.10.0
  */
 public class SaTokenConfigFactory {
 
@@ -30,7 +45,7 @@ public class SaTokenConfigFactory {
 	public static String configPath = "sa-token.properties";
 
 	/**
-	 * 根据configPath路径获取配置信息 
+	 * 根据 configPath 路径获取配置信息
 	 * 
 	 * @return 一个SaTokenConfig对象
 	 */
@@ -42,13 +57,13 @@ public class SaTokenConfigFactory {
 	 * 根据指定路径路径获取配置信息 
 	 * 
 	 * @param path 配置文件路径 
-	 * @return 一个SaTokenConfig对象
+	 * @return 一个 SaTokenConfig 对象
 	 */
 	public static SaTokenConfig createConfig(String path) {
 		Map<String, String> map = readPropToMap(path);
-		if (map == null) {
+		// if (map == null) {
 			// throw new RuntimeException("找不到配置文件：" + configPath, null);
-		}
+		// }
 		return (SaTokenConfig) initPropByMap(map, new SaTokenConfig());
 	}
 
@@ -59,7 +74,7 @@ public class SaTokenConfigFactory {
 	 * @return 一个Map
 	 */
 	private static Map<String, String> readPropToMap(String propertiesPath) {
-		Map<String, String> map = new HashMap<String, String>(16);
+		Map<String, String> map = new HashMap<>(16);
 		try {
 			InputStream is = SaTokenConfigFactory.class.getClassLoader().getResourceAsStream(propertiesPath);
 			if (is == null) {
@@ -86,11 +101,11 @@ public class SaTokenConfigFactory {
 	private static Object initPropByMap(Map<String, String> map, Object obj) {
 
 		if (map == null) {
-			map = new HashMap<String, String>(16);
+			map = new HashMap<>(16);
 		}
 
 		// 1、取出类型
-		Class<?> cs = null;
+		Class<?> cs;
 		if (obj instanceof Class) {
 			// 如果是一个类型，则将obj=null，以便完成静态属性反射赋值
 			cs = (Class<?>) obj;

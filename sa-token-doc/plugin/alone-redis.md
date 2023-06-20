@@ -15,7 +15,6 @@ Sa-Token默认的Redis集成方式会把权限数据和业务缓存放在一起�
 
 
 ### 1、首先引入Alone-Redis依赖 
-
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 ``` xml 
@@ -32,6 +31,10 @@ Sa-Token默认的Redis集成方式会把权限数据和业务缓存放在一起�
 implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
+
+> 对应spring-boot-starter-parent版本必须大于等于2.4.0
+
+> 如果必须使用2.4.0以下版本, 则须将SaToken降级到1.33.0版本及以下(无法使用aloneRedis的集群功能)
 
 
 ### 2、然后在application.yml中增加配置

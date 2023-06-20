@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.basic;
 
 import cn.dev33.satoken.SaManager;
@@ -8,19 +23,20 @@ import cn.dev33.satoken.secure.SaBase64Util;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token Http Basic 认证模块 
- * @author kong
+ * Sa-Token Http Basic 认证模块
  *
+ * @author click33
+ * @since 1.26.0
  */
 public class SaBasicTemplate {
 	
 	/**
-	 * 默认的 Realm 名称 
+	 * 默认的 Realm 领域名称
 	 */
 	public static final String DEFAULT_REALM = "Sa-Token";
 
 	/**
-	 * 设置响应头，并抛出异常 
+	 * 在校验失败时，设置响应头，并抛出异常
 	 * @param realm 领域 
 	 */
 	public void throwNotBasicAuthException(String realm) {
@@ -34,11 +50,11 @@ public class SaBasicTemplate {
 	 */
 	public String getAuthorizationValue() {
 		
-		// 获取请求头 Authorization 参数 
+		// 获取前端提交的请求头 Authorization 参数
 		String authorization = SaHolder.getRequest().getHeader("Authorization");
 		
 		// 如果不是以 Basic 作为前缀，则视为无效 
-		if(authorization == null || authorization.startsWith("Basic ") == false) {
+		if(authorization == null || ! authorization.startsWith("Basic ")) {
 			return null;
 		}
 		
@@ -71,7 +87,7 @@ public class SaBasicTemplate {
 			account = SaManager.getConfig().getBasic();
 		}
 		String authorization = getAuthorizationValue();
-		if(SaFoxUtil.isEmpty(authorization) || authorization.equals(account) == false) {
+		if(SaFoxUtil.isEmpty(authorization) || ! authorization.equals(account)) {
 			throwNotBasicAuthException(realm);
 		}
 	}

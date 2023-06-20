@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.springboot;
 
 import java.io.IOException;
@@ -60,7 +75,7 @@ public class BasicsTest {
 	@BeforeAll
     public static void beforeClass() {
     	System.out.println("\n\n------------------------ 基础测试 star ...");
-    	SaManager.getConfig().setActivityTimeout(180);
+    	SaManager.getConfig().setActiveTimeout(180);
     }
 
 	// 结束 
@@ -695,20 +710,20 @@ public class BasicsTest {
     	Assertions.assertEquals(tokenSession.get("code"), "123456");
     }
 
-    // 测试，临时过期 
+    // 测试，token 最低活跃频率  
     @Test
-    public void testActivityTimeout() {
+    public void testActiveTimeout() {
     	// 登录 
     	StpUtil.login(10001);
     	Assertions.assertNotNull(StpUtil.getTokenValue());
     	
     	// 默认跟随全局 timeout 
-    	StpUtil.updateLastActivityToNow();
-    	long activityTimeout = StpUtil.getTokenActivityTimeout();
-    	Assertions.assertTrue(activityTimeout <=180 || activityTimeout >=179);
+    	StpUtil.updateLastActiveToNow();
+    	long activeTimeout = StpUtil.getTokenActiveTimeout();
+    	Assertions.assertTrue(activeTimeout <=180 || activeTimeout >=179);
     	
     	// 不会抛出异常 
-    	Assertions.assertDoesNotThrow(() -> StpUtil.checkActivityTimeout());
+    	Assertions.assertDoesNotThrow(() -> StpUtil.checkActiveTimeout());
     }
 
     // 测试，上下文 API 
@@ -762,8 +777,8 @@ public class BasicsTest {
     			.setAuth(obj -> {})
     			.setBeforeAuth(obj -> {})
     			;
-    	Assertions.assertEquals(filter.getIncludeList().get(0), "/**");
-    	Assertions.assertEquals(filter.getExcludeList().get(0), "/favicon.ico");
+    	Assertions.assertEquals(filter.includeList.get(0), "/**");
+    	Assertions.assertEquals(filter.excludeList.get(0), "/favicon.ico");
     	// 以下功能无法测试
     	filter.init(null);
     	filter.doFilter(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse(), new MockFilterChain());

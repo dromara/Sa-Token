@@ -1,22 +1,20 @@
 package com.pj.test;
 
-import java.util.Date;
-
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pj.util.AjaxJson;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pj.util.AjaxJson;
-
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.stp.SaTokenInfo;
-import cn.dev33.satoken.stp.StpUtil;
+import java.util.Date;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController
@@ -30,8 +28,8 @@ public class TestJwtController {
 		System.out.println("当前会话的token：" + StpUtil.getTokenValue());
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
-		
-		StpUtil.login(id);			// 在当前会话登录此账号 	
+
+		StpUtil.login(id);			// 在当前会话登录此账号
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());

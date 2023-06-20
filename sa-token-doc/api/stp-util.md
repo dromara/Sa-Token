@@ -72,7 +72,7 @@ StpUtil.getExtra(token, key);   // 获取指定 Token 的扩展信息（此函�
 
 ### 5、Session 相关
 ``` java
-// User-Session 相关 
+// Account-Session 相关 
 StpUtil.getSession();   // 获取当前会话的Session，如果Session尚未创建，则新建并返回 
 StpUtil.getSession(true);   // 获取当前会话的Session, 如果Session尚未创建，isCreate=是否新建并返回
 StpUtil.getSessionByLoginId(10001);   // 获取指定账号id的Session，如果Session尚未创建，则新建并返回
@@ -90,14 +90,14 @@ StpUtil.getSessionBySessionId("xxxx-xxxx-xxxx");   // 获取指定key的Session,
 
 ### 6、Token有效期相关
 ``` java
-// 临时有效期
-StpUtil.getTokenActivityTimeout();   // 获取当前 token [临时过期] 剩余有效时间 (单位: 秒)
-StpUtil.checkActivityTimeout();   // 检查当前token 是否已经[临时过期]，如果已经过期则抛出异常  
-StpUtil.updateLastActivityToNow();   // 续签当前token：(将 [最后操作时间] 更新为当前时间戳)   
+// Token 最低活跃频率
+StpUtil.getTokenActiveTimeout();   // 获取当前 token 距离被冻结还剩多少时间 (单位: 秒)
+StpUtil.checkActiveTimeout();   // 检查当前token 是否已经被冻结，如果是则抛出异常  
+StpUtil.updateLastActiveToNow();   // 续签当前token：(将 [最后操作时间] 更新为当前时间戳)   
 
-// 长久有效期
+// Token 有效期
 StpUtil.getTokenTimeout();   // 获取当前登录者的 token 剩余有效时间 (单位: 秒)
-StpUtil.getSessionTimeout();   // 获取当前登录者的 User-Session 剩余有效时间 (单位: 秒)
+StpUtil.getSessionTimeout();   // 获取当前登录者的 Account-Session 剩余有效时间 (单位: 秒)
 StpUtil.getTokenSessionTimeout();   // 获取当前 Token-Session 剩余有效时间 (单位: 秒) 
 StpUtil.renewTimeout(timeout);   // 对当前 Token 的 timeout 值进行续期 
 StpUtil.renewTimeout(token, timeout);   // 对指定 Token 的 timeout 值进行续期 

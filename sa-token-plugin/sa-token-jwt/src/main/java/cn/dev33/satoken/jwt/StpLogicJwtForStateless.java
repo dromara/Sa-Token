@@ -1,6 +1,19 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.jwt;
-
-import java.util.Map;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -14,10 +27,13 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.Map;
+
 /**
- * Sa-Token 整合 jwt -- Stateless 无状态模式 
- * @author kong
- *
+ * Sa-Token 整合 jwt -- Stateless 无状态模式
+ * 
+ * @author click33
+ * @since 1.30.0
  */
 public class StpLogicJwtForStateless extends StpLogic {
 
@@ -41,7 +57,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		String keyt = getConfig().getJwtSecretKey();
+		String keyt = getConfigOrGlobal().getJwtSecretKey();
 		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
@@ -75,7 +91,7 @@ public class StpLogicJwtForStateless extends StpLogic {
 		info.tokenTimeout = getTokenTimeout();
 		info.sessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.tokenSessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
-		info.tokenActivityTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
+		info.tokenActiveTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.loginDevice = getLoginDevice();
 		return info;
 	}
@@ -90,17 +106,20 @@ public class StpLogicJwtForStateless extends StpLogic {
 	 */
 	@Override
 	public String createLoginSession(Object id, SaLoginModel loginModel) {
-		SaJwtException.throwByNull(id, "账号id不能为空", SaJwtErrorCode.CODE_30206);
+
+		// 1、先检查一下，传入的参数是否有效
+		checkLoginArgs(id, loginModel);
+
+		// 2、初始化 loginModel ，给一些参数补上默认值
+		loginModel.build(getConfigOrGlobal());
 		
-		// ------ 1、初始化 loginModel 
-		loginModel.build(getConfig());
-		
-		// ------ 2、生成一个token  
+		// 3、生成一个token
 		String tokenValue = createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
 		
-		// $$ 发布事件：账号xxx 登录成功 
+		// 4、$$ 发布事件：账号xxx 登录成功
 		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
-		
+
+		// 5、返回
 		return tokenValue;
 	}
 
@@ -132,7 +151,7 @@ public class StpLogicJwtForStateless extends StpLogic {
  		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
  		
  		// 如果打开了Cookie模式，则把cookie清除掉 
- 		if(getConfig().getIsReadCookie()){
+ 		if(getConfigOrGlobal().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}
@@ -196,6 +215,13 @@ public class StpLogicJwtForStateless extends StpLogic {
 	public SaTokenDao getSaTokenDao() {
 		throw new ApiDisabledException();
 	}
-	
-	
+
+	/**
+	 * 重写返回：支持 extra 扩展参数
+	 */
+	@Override
+	public boolean isSupportExtra() {
+		return true;
+	}
+
 }

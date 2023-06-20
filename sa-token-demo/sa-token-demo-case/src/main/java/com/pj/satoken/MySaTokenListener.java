@@ -6,7 +6,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 /**
  * Sa-Token 自定义侦听器的实现 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-17
  */
 //@Component	// 打开此注解，让 SpringBoot 扫描到组件，即可完成自定义侦听器的注入 

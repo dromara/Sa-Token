@@ -11,7 +11,7 @@ import cn.dev33.satoken.quick.SaQuickManager;
 
 /**
  * springboot启动之后 
- * @author kong
+ * @author click33
  *
  */
 @Component

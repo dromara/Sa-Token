@@ -175,8 +175,8 @@ stop() 与 back() 函数的区别在于：
 // 进入 free 独立作用域 
 SaRouter.match("/**").free(r -> {
 	SaRouter.match("/a/**").check(/* --- */);
-	SaRouter.match("/a/**").check(/* --- */).stop();
-	SaRouter.match("/a/**").check(/* --- */);
+	SaRouter.match("/b/**").check(/* --- */).stop();
+	SaRouter.match("/c/**").check(/* --- */);
 });
 // 执行 stop() 函数跳出 free 后继续执行下面的 match 匹配 
 SaRouter.match("/**").check(/* --- */);

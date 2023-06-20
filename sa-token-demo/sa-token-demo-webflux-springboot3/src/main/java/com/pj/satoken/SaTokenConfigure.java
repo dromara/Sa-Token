@@ -9,7 +9,7 @@ import cn.dev33.satoken.reactor.filter.SaReactorFilter;
 
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
+ * @author click33
  *
  */
 @Configuration

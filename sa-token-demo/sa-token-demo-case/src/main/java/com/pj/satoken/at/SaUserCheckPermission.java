@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.pj.satoken.StpUserUtil;
 import org.springframework.core.annotation.AliasFor;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
@@ -13,7 +14,7 @@ import cn.dev33.satoken.annotation.SaMode;
 /**
  * 权限认证(User版)：必须具有指定权限才能进入该方法 
  * <p> 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
- * @author kong
+ * @author click33
  *
  */
 @SaCheckPermission(type = StpUserUtil.TYPE)

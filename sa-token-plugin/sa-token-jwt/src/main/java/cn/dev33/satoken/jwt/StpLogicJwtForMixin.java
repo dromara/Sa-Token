@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.jwt;
 
 import java.util.List;
@@ -13,9 +28,10 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
- * Sa-Token 整合 jwt -- Mixin 混入模式  
- * @author kong
+ * Sa-Token 整合 jwt -- Mixin 混入模式
  *
+ * @author click33
+ * @since 1.30.0
  */
 public class StpLogicJwtForMixin extends StpLogic {
 
@@ -39,7 +55,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * @return / 
 	 */
 	public String jwtSecretKey() {
-		String keyt = getConfig().getJwtSecretKey();
+		String keyt = getConfigOrGlobal().getJwtSecretKey();
 		SaJwtException.throwByNull(keyt, "请配置jwt秘钥", SaJwtErrorCode.CODE_30205);
 		return keyt;
 	}
@@ -73,7 +89,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 		info.tokenTimeout = getTokenTimeout();
 		info.sessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.tokenSessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
-		info.tokenActivityTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
+		info.tokenActiveTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.loginDevice = getLoginDevice();
 		return info;
 	}
@@ -104,7 +120,7 @@ public class StpLogicJwtForMixin extends StpLogic {
  		SaHolder.getStorage().delete(splicingKeyJustCreatedSave());
  		
  		// 如果打开了Cookie模式，则把cookie清除掉 
- 		if(getConfig().getIsReadCookie()){
+ 		if(getConfigOrGlobal().getIsReadCookie()){
  			SaHolder.getResponse().deleteCookie(getTokenName());
 		}
 	}
@@ -212,12 +228,29 @@ public class StpLogicJwtForMixin extends StpLogic {
 	// ------------------- Bean对象代理 -------------------  
 	
 	/**
-	 * 返回全局配置对象的isShare属性 
+	 * 返回全局配置对象的 isShare 属性
 	 * @return / 
 	 */
 	@Override
 	public boolean getConfigOfIsShare() {
 		return false;
 	}
-	
+
+	/**
+	 * 返回全局配置对象的 maxTryTimes 属性
+	 * @return /
+	 */
+	@Override
+	public int getConfigOfMaxTryTimes() {
+		return -1;
+	}
+
+	/**
+	 * 重写返回：支持 extra 扩展参数
+	 */
+	@Override
+	public boolean isSupportExtra() {
+		return true;
+	}
+
 }

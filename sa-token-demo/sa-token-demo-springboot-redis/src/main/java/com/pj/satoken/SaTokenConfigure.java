@@ -1,19 +1,18 @@
 package com.pj.satoken;
 
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.filter.SaServletFilter;
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.util.SaResult;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.filter.SaServletFilter;
-import cn.dev33.satoken.interceptor.SaInterceptor;
-import cn.dev33.satoken.util.SaResult;
-
 
 /**
  * [Sa-Token 权限认证] 配置类 
- * @author kong
+ * @author click33
  *
  */
 @Configuration
@@ -24,7 +23,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		// 注册 Sa-Token 拦截器打开注解鉴权功能 
+		// 注册 Sa-Token 拦截器打开注解鉴权功能
 		registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
 	}
 	
@@ -40,7 +39,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		
         		// 认证函数: 每次请求执行 
         		.setAuth(obj -> {
-        			// System.out.println("---------- sa全局认证 " + SaHolder.getRequest().getRequestPath()); 
+        			// SaManager.getLog().debug("----- 请求path={}  提交token={}", SaHolder.getRequest().getRequestPath(), StpUtil.getTokenValue());
         			
         		})
         		
@@ -50,7 +49,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         			return SaResult.error(e.getMessage());
         		})
         		
-        		// 前置函数：在每次认证函数之前执行
+        		// 前置函数：在每次认证函数之前执行 （BeforeAuth不受 includeList 与 excludeList 的限制，所有请求都会进入）
         		.setBeforeAuth(r -> {
         			// ---------- 设置一些安全响应头 ----------
         			SaHolder.getResponse()

@@ -1,13 +1,12 @@
 package com.pj;
 
+import cn.dev33.satoken.SaManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import cn.dev33.satoken.SaManager;
-
 /**
- * Sa-Token整合SpringBoot 示例，整合redis  
- * @author kong
+ * Sa-Token整合SpringBoot 示例，整合redis
+ * @author click33
  *
  */
 @SpringBootApplication

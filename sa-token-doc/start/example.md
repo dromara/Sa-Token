@@ -15,6 +15,9 @@
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
+
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+
 ``` xml 
 <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
 <dependency>
@@ -23,14 +26,17 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+
 <!-------- tab:Gradle 方式 -------->
+
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+
 ``` gradle
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 
 Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
@@ -49,20 +55,20 @@ server:
 	
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token: 
-	# token名称 (同时也是cookie名称)
+	# token 名称（同时也是 cookie 名称）
 	token-name: satoken
-	# token有效期，单位s 默认30天, -1代表永不过期 
+    # token 有效期（单位：秒） 默认30天，-1 代表永久有效
 	timeout: 2592000
-	# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-	activity-timeout: -1
-	# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+    # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+	active-timeout: -1
+    # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
 	is-concurrent: true
-	# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+    # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 	is-share: true
-	# token风格
+    # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
 	token-style: uuid
-	# 是否输出操作日志 
-	is-log: false
+    # 是否输出操作日志 
+	is-log: true
 ```
 
 <!------------- tab:application.properties 风格  ------------->
@@ -72,20 +78,20 @@ server.port=8081
 	
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 
-# token名称 (同时也是cookie名称)
+# token 名称（同时也是 cookie 名称）
 sa-token.token-name=satoken
-# token有效期，单位s 默认30天, -1代表永不过期 
+# token 有效期（单位：秒） 默认30天，-1 代表永久有效
 sa-token.timeout=2592000
-# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-sa-token.activity-timeout=-1
-# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) 
+# token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+sa-token.active-timeout=-1
+# 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
 sa-token.is-concurrent=true
-# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+# 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 sa-token.is-share=true
-# token风格
+# token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
 sa-token.token-style=uuid
 # 是否输出操作日志 
-sa-token.is-log=false
+sa-token.is-log=true
 ```
 
 <!---------------------------- tabs:end ---------------------------->

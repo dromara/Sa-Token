@@ -48,7 +48,13 @@ Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml
-<!-- Sa-Token-Quick-Login 插件 -->
+<!-- Sa-Token 启动依赖 -->
+<dependency>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-spring-boot-starter</artifactId>
+        <version>${sa.top.version}</version>
+</dependency>
+<!-- Sa-Token-Quick-Login 插件依赖 -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-quick-login</artifactId>
@@ -57,6 +63,8 @@ Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
+// Sa-Token 启动依赖
+implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 // Sa-Token-Quick-Login 插件
 implementation 'cn.dev33:sa-token-quick-login:${sa.top.version}'
 ```

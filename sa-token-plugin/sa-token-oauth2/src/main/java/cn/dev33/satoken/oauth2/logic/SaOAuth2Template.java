@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.oauth2.logic;
 
 import java.util.List;
@@ -19,8 +34,9 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token-OAuth2 模块 代码实现
- * @author kong
  *
+ * @author click33
+ * @since 1.23.0
  */
 public class SaOAuth2Template {
 
@@ -96,7 +112,7 @@ public class SaOAuth2Template {
 		AccessTokenModel at = checkAccessToken(accessToken);
 		List<String> scopeList = SaFoxUtil.convertStringToList(at.scope);
 		for (String scope : scopes) {
-			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Access-Token 不具备 Scope：" + scope, SaOAuth2ErrorCode.CODE_30108);
+			SaOAuth2Exception.throwBy( ! scopeList.contains(scope), "该 Access-Token 不具备 Scope：" + scope, SaOAuth2ErrorCode.CODE_30108);
 		}
 	}
 	/**
@@ -111,7 +127,7 @@ public class SaOAuth2Template {
 		ClientTokenModel ct = checkClientToken(clientToken);
 		List<String> scopeList = SaFoxUtil.convertStringToList(ct.scope);
 		for (String scope : scopes) {
-			SaOAuth2Exception.throwBy(scopeList.contains(scope) == false, "该 Client-Token 不具备 Scope：" + scope, SaOAuth2ErrorCode.CODE_30109);
+			SaOAuth2Exception.throwBy( ! scopeList.contains(scope), "该 Client-Token 不具备 Scope：" + scope, SaOAuth2ErrorCode.CODE_30109);
 		}
 	}
 
@@ -297,7 +313,7 @@ public class SaOAuth2Template {
 	 */
 	public String buildRedirectUri(String redirectUri, String code, String state) {
 		String url = SaFoxUtil.joinParam(redirectUri, Param.code, code);
-		if(SaFoxUtil.isEmpty(state) == false) {
+		if( ! SaFoxUtil.isEmpty(state)) {
 			url = SaFoxUtil.joinParam(url, Param.state, state);
 		}
 		return url;
@@ -311,7 +327,7 @@ public class SaOAuth2Template {
 	 */
 	public String buildImplicitRedirectUri(String redirectUri, String token, String state) {
 		String url = SaFoxUtil.joinSharpParam(redirectUri, Param.token, token);
-		if(SaFoxUtil.isEmpty(state) == false) {
+		if( ! SaFoxUtil.isEmpty(state)) {
 			url = SaFoxUtil.joinSharpParam(url, Param.state, state);
 		}
 		return url;
@@ -359,7 +375,7 @@ public class SaOAuth2Template {
 	public void checkContract(String clientId, String scope) {
 		List<String> clientScopeList = SaFoxUtil.convertStringToList(checkClientModel(clientId).contractScope);
 		List<String> scopelist = SaFoxUtil.convertStringToList(scope);
-		if(clientScopeList.containsAll(scopelist) == false) {
+		if( ! clientScopeList.containsAll(scopelist)) {
 			throw new SaOAuth2Exception("请求的Scope暂未签约").setCode(SaOAuth2ErrorCode.CODE_30112);
 		}
 	}
@@ -370,7 +386,7 @@ public class SaOAuth2Template {
 	 */
 	public void checkRightUrl(String clientId, String url) {
 		// 1、是否是一个有效的url
-		if(SaFoxUtil.isUrl(url) == false) {
+		if( ! SaFoxUtil.isUrl(url)) {
 			throw new SaOAuth2Exception("无效redirect_url：" + url).setCode(SaOAuth2ErrorCode.CODE_30113);
 		}
 
@@ -382,7 +398,7 @@ public class SaOAuth2Template {
 
 		// 3、是否在[允许地址列表]之中
 		List<String> allowList = SaFoxUtil.convertStringToList(checkClientModel(clientId).allowUrl);
-		if(SaStrategy.me.hasElement.apply(allowList, url) == false) {
+		if( ! SaStrategy.instance.hasElement.apply(allowList, url)) {
 			throw new SaOAuth2Exception("非法redirect_url：" + url).setCode(SaOAuth2ErrorCode.CODE_30114);
 		}
 	}
@@ -394,7 +410,7 @@ public class SaOAuth2Template {
 	 */
 	public SaClientModel checkClientSecret(String clientId, String clientSecret) {
 		SaClientModel cm = checkClientModel(clientId);
-		SaOAuth2Exception.throwBy(cm.clientSecret == null || cm.clientSecret.equals(clientSecret) == false, 
+		SaOAuth2Exception.throwBy(cm.clientSecret == null || ! cm.clientSecret.equals(clientSecret),
 				"无效client_secret: " + clientSecret, SaOAuth2ErrorCode.CODE_30115);
 		return cm;
 	}
@@ -411,7 +427,7 @@ public class SaOAuth2Template {
 		// 再校验 是否签约 
 		List<String> clientScopeList = SaFoxUtil.convertStringToList(cm.contractScope);
 		List<String> scopelist = SaFoxUtil.convertStringToList(scopes);
-		if(clientScopeList.containsAll(scopelist) == false) {
+		if( ! clientScopeList.containsAll(scopelist)) {
 			throw new SaOAuth2Exception("请求的Scope暂未签约").setCode(SaOAuth2ErrorCode.CODE_30116);
 		}
 		// 返回数据
@@ -432,18 +448,18 @@ public class SaOAuth2Template {
 		SaOAuth2Exception.throwBy(cm == null, "无效code: " + code, SaOAuth2ErrorCode.CODE_30117);
 
 		// 校验：ClientId是否一致
-		SaOAuth2Exception.throwBy(cm.clientId.equals(clientId) == false, "无效client_id: " + clientId, SaOAuth2ErrorCode.CODE_30118);
+		SaOAuth2Exception.throwBy( ! cm.clientId.equals(clientId), "无效client_id: " + clientId, SaOAuth2ErrorCode.CODE_30118);
 
 		// 校验：Secret是否正确
 		String dbSecret = checkClientModel(clientId).clientSecret;
-		SaOAuth2Exception.throwBy(dbSecret == null || dbSecret.equals(clientSecret) == false, "无效client_secret: " + clientSecret, SaOAuth2ErrorCode.CODE_30119);
+		SaOAuth2Exception.throwBy(dbSecret == null || ! dbSecret.equals(clientSecret), "无效client_secret: " + clientSecret, SaOAuth2ErrorCode.CODE_30119);
 
 		// 如果提供了redirectUri，则校验其是否与请求Code时提供的一致
-		if(SaFoxUtil.isEmpty(redirectUri) == false) {
-			SaOAuth2Exception.throwBy(redirectUri.equals(cm.redirectUri) == false, "无效redirect_uri: " + redirectUri, SaOAuth2ErrorCode.CODE_30120);
+		if( ! SaFoxUtil.isEmpty(redirectUri)) {
+			SaOAuth2Exception.throwBy( ! redirectUri.equals(cm.redirectUri), "无效redirect_uri: " + redirectUri, SaOAuth2ErrorCode.CODE_30120);
 		}
 
-		// 返回CodeMdoel
+		// 返回CodeModel
 		return cm;
 	}
 	/**
@@ -460,11 +476,11 @@ public class SaOAuth2Template {
 		SaOAuth2Exception.throwBy(rt == null, "无效refresh_token: " + refreshToken, SaOAuth2ErrorCode.CODE_30121);
 
 		// 校验：ClientId是否一致
-		SaOAuth2Exception.throwBy(rt.clientId.equals(clientId) == false, "无效client_id: " + clientId, SaOAuth2ErrorCode.CODE_30122);
+		SaOAuth2Exception.throwBy( ! rt.clientId.equals(clientId), "无效client_id: " + clientId, SaOAuth2ErrorCode.CODE_30122);
 
 		// 校验：Secret是否正确
 		String dbSecret = checkClientModel(clientId).clientSecret;
-		SaOAuth2Exception.throwBy(dbSecret == null || dbSecret.equals(clientSecret) == false, "无效client_secret: " + clientSecret, SaOAuth2ErrorCode.CODE_30123);
+		SaOAuth2Exception.throwBy(dbSecret == null || ! dbSecret.equals(clientSecret), "无效client_secret: " + clientSecret, SaOAuth2ErrorCode.CODE_30123);
 
 		// 返回Refresh-Token
 		return rt;
@@ -478,7 +494,7 @@ public class SaOAuth2Template {
 	 */
 	public AccessTokenModel checkAccessTokenParam(String clientId, String clientSecret, String accessToken) {
 		AccessTokenModel at = checkAccessToken(accessToken);
-		SaOAuth2Exception.throwBy(at.clientId.equals(clientId) == false, "无效client_id：" + clientId, SaOAuth2ErrorCode.CODE_30124);
+		SaOAuth2Exception.throwBy( ! at.clientId.equals(clientId), "无效client_id：" + clientId, SaOAuth2ErrorCode.CODE_30124);
 		checkClientSecret(clientId, clientSecret);
 		return at;
 	}
@@ -641,7 +657,7 @@ public class SaOAuth2Template {
 		if(ct == null) {
 			return;
 		}
-		Long ttl = ct.getExpiresIn();
+		long ttl = ct.getExpiresIn();
 		SaClientModel cm = checkClientModel(ct.clientId);
 		if (cm.getPastClientTokenTimeout() != -1) {
 			ttl = cm.getPastClientTokenTimeout();
@@ -655,7 +671,7 @@ public class SaOAuth2Template {
 	 * @param scope 权限列表(多个逗号隔开)
 	 */
 	public void saveGrantScope(String clientId, Object loginId, String scope) {
-		if(SaFoxUtil.isEmpty(scope) == false) {
+		if( ! SaFoxUtil.isEmpty(scope)) {
 			long ttl = checkClientModel(clientId).getAccessTokenTimeout();
 			SaManager.getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), scope, ttl);
 		}
@@ -950,7 +966,7 @@ public class SaOAuth2Template {
 	 * @return key
 	 */
 	public String splicingClientTokenIndexKey(String clientId) {
-		return SaManager.getConfig().getTokenName() + ":oauth2:client-token-indedx:" + clientId;
+		return SaManager.getConfig().getTokenName() + ":oauth2:client-token-index:" + clientId;
 	}
 	/**
 	 * 拼接key：Past-Token 索引
@@ -958,7 +974,7 @@ public class SaOAuth2Template {
 	 * @return key
 	 */
 	public String splicingPastTokenIndexKey(String clientId) {
-		return SaManager.getConfig().getTokenName() + ":oauth2:past-token-indedx:" + clientId;
+		return SaManager.getConfig().getTokenName() + ":oauth2:past-token-index:" + clientId;
 	}
 	/**
 	 * 拼接key：用户授权记录

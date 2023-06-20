@@ -20,6 +20,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -39,6 +40,18 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-sso</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snack3</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>redisx</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

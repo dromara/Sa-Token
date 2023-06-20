@@ -1,14 +1,29 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.quick.config;
 
 /**
  * sa-quick 配置类 Model
  * 
- * @author kong
- *
+ * @author click33
+ * @since 1.19.0
  */
 public class SaQuickConfig {
 
-	/** 是否开启全局认证 */
+	/** 是否开启全局登录校验，如果为 false，则不再拦截请求出现登录页 */
 	private Boolean auth = true;
 
 	/** 用户名 */
@@ -17,7 +32,7 @@ public class SaQuickConfig {
 	/** 密码 */
 	private String pwd = "123456";
 
-	/** 是否自动生成一个账号和密码 */
+	/** 是否自动生成一个账号和密码，此配置项为 true 后，name、pwd 字段将失效 */
 	private Boolean auto = false; 
 	
 	/** 登录页面的标题 */

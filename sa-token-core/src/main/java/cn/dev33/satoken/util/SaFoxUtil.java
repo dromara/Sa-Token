@@ -1,5 +1,24 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.util;
 
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
+
+import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -8,24 +27,15 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
-
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.SaTokenException;
 
 /**
  * Sa-Token 内部工具类
  *
- * @author kong
- *
+ * @author click33
+ * @since 1.18.0
  */
 public class SaFoxUtil {
 
@@ -81,7 +91,7 @@ public class SaFoxUtil {
 	 * @return 是否为null或者空字符串
 	 */
 	public static boolean isNotEmpty(Object str) {
-		return isEmpty(str) == false;
+		return ! isEmpty(str);
 	}
 
 	/**
@@ -171,11 +181,9 @@ public class SaFoxUtil {
 			keyword = "";
 		}
 		// 挑选出所有符合条件的
-		List<String> list = new ArrayList<String>();
-		Iterator<String> keys = dataList.iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			if (key.startsWith(prefix) && key.indexOf(keyword) > -1) {
+		List<String> list = new ArrayList<>();
+		for (String key : dataList) {
+			if (key.startsWith(prefix) && key.contains(keyword)) {
 				list.add(key);
 			}
 		}
@@ -195,7 +203,7 @@ public class SaFoxUtil {
 	 */
 	public static List<String> searchList(List<String> list, int start, int size, boolean sortType) {
 		// 如果是反序的话
-		if(sortType == false) {
+		if( ! sortType) {
 			Collections.reverse(list);
 		}
 		// start 至少为0
@@ -210,7 +218,7 @@ public class SaFoxUtil {
 			end = start + size;
 		}
 		// 取出的数据放到新集合中
-		List<String> list2 = new ArrayList<String>();
+		List<String> list2 = new ArrayList<>();
 		for (int i = start; i < end; i++) {
 			// 如果已经取到list的末尾，则直接退出
 			if (i >= list.size()) {
@@ -240,7 +248,7 @@ public class SaFoxUtil {
 			return false;
 		}
 		// 如果表达式不带有*号，则只需简单equals即可 (这样可以使速度提升200倍左右)
-		if(patt.indexOf("*") == -1) {
+		if( ! patt.contains("*")) {
 			return patt.equals(str);
 		}
 		// 正则匹配
@@ -281,7 +289,7 @@ public class SaFoxUtil {
 		}
 		// 开始转换
 		String obj2 = String.valueOf(obj);
-		Object obj3 = null;
+		Object obj3;
 		if (cs.equals(String.class)) {
 			obj3 = obj2;
 		} else if (cs.equals(int.class) || cs.equals(Integer.class)) {
@@ -301,7 +309,7 @@ public class SaFoxUtil {
 		} else if (cs.equals(char.class) || cs.equals(Character.class)) {
 			obj3 = obj2.charAt(0);
 		} else {
-			obj3 = (T)obj;
+			obj3 = obj;
 		}
 		return (T)obj3;
 	}
@@ -309,12 +317,12 @@ public class SaFoxUtil {
 	/**
 	 * 在url上拼接上kv参数并返回
 	 * @param url url
-	 * @param parameStr 参数, 例如 id=1001
+	 * @param paramStr 参数, 例如 id=1001
 	 * @return 拼接后的url字符串
 	 */
-	public static String joinParam(String url, String parameStr) {
+	public static String joinParam(String url, String paramStr) {
 		// 如果参数为空, 直接返回
-		if(parameStr == null || parameStr.length() == 0) {
+		if(paramStr == null || paramStr.length() == 0) {
 			return url;
 		}
 		if(url == null) {
@@ -323,20 +331,20 @@ public class SaFoxUtil {
 		int index = url.lastIndexOf('?');
 		// ? 不存在
 		if(index == -1) {
-			return url + '?' + parameStr;
+			return url + '?' + paramStr;
 		}
 		// ? 是最后一位
 		if(index == url.length() - 1) {
-			return url + parameStr;
+			return url + paramStr;
 		}
 		// ? 是其中一位
-		if(index > -1 && index < url.length() - 1) {
+		if(index < url.length() - 1) {
 			String separatorChar = "&";
-			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
-			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
-				return url + separatorChar + parameStr;
+			// 如果最后一位是 不是&, 且 paramStr 第一位不是 &, 就赠送一个 &
+			if(url.lastIndexOf(separatorChar) != url.length() - 1 && paramStr.indexOf(separatorChar) != 0) {
+				return url + separatorChar + paramStr;
 			} else {
-				return url + parameStr;
+				return url + paramStr;
 			}
 		}
 		// 正常情况下, 代码不可能执行到此
@@ -361,12 +369,12 @@ public class SaFoxUtil {
 	/**
 	 * 在url上拼接锚参数
 	 * @param url url
-	 * @param parameStr 参数, 例如 id=1001
+	 * @param paramStr 参数, 例如 id=1001
 	 * @return 拼接后的url字符串
 	 */
-	public static String joinSharpParam(String url, String parameStr) {
+	public static String joinSharpParam(String url, String paramStr) {
 		// 如果参数为空, 直接返回
-		if(parameStr == null || parameStr.length() == 0) {
+		if(paramStr == null || paramStr.length() == 0) {
 			return url;
 		}
 		if(url == null) {
@@ -375,20 +383,20 @@ public class SaFoxUtil {
 		int index = url.lastIndexOf('#');
 		// ? 不存在
 		if(index == -1) {
-			return url + '#' + parameStr;
+			return url + '#' + paramStr;
 		}
 		// ? 是最后一位
 		if(index == url.length() - 1) {
-			return url + parameStr;
+			return url + paramStr;
 		}
 		// ? 是其中一位
-		if(index > -1 && index < url.length() - 1) {
+		if(index < url.length() - 1) {
 			String separatorChar = "&";
-			// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
-			if(url.lastIndexOf(separatorChar) != url.length() - 1 && parameStr.indexOf(separatorChar) != 0) {
-				return url + separatorChar + parameStr;
+			// 如果最后一位是 不是&, 且 paramStr 第一位不是 &, 就赠送一个 &
+			if(url.lastIndexOf(separatorChar) != url.length() - 1 && paramStr.indexOf(separatorChar) != 0) {
+				return url + separatorChar + paramStr;
 			} else {
-				return url + parameStr;
+				return url + paramStr;
 			}
 		}
 		// 正常情况下, 代码不可能执行到此
@@ -445,20 +453,20 @@ public class SaFoxUtil {
 		if(arr == null) {
 			return "";
 		}
-		String str = "";
+		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < arr.length; i++) {
-			str += arr[i];
+			str.append(arr[i]);
 			if(i != arr.length - 1) {
-				str += ",";
+				str.append(",");
 			}
 		}
-		return str;
+		return str.toString();
 	}
 
 	/**
 	 * 验证URL的正则表达式
 	 */
-	public static final String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]";
+	public static String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]";
 
 	/**
 	 * 使用正则表达式判断一个字符串是否为URL
@@ -504,14 +512,14 @@ public class SaFoxUtil {
 	 * @return 分割后的字符串集合
 	 */
 	public static List<String> convertStringToList(String str) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		if(isEmpty(str)) {
 			return list;
 		}
 		String[] arr = str.split(",");
 		for (String s : arr) {
 			s = s.trim();
-			if(isEmpty(s) == false) {
+			if(!isEmpty(s)) {
 				list.add(s);
 			}
 		}
@@ -527,14 +535,14 @@ public class SaFoxUtil {
 		if(list == null || list.size() == 0) {
 			return "";
 		}
-		String str = "";
+		StringBuilder str = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			str += list.get(i);
+			str.append(list.get(i));
 			if(i != list.size() - 1) {
-				str += ",";
+				str.append(",");
 			}
 		}
-		return str;
+		return str.toString();
 	}
 
     /**
@@ -544,7 +552,7 @@ public class SaFoxUtil {
      */
     public static String[] convertStringToArray(String str) {
     	List<String> list = convertStringToList(str);
-    	return list.toArray(new String[list.size()]);
+    	return list.toArray(new String[0]);
     }
 
     /**
@@ -570,15 +578,11 @@ public class SaFoxUtil {
 
     /**
      * String数组转集合
-     * @param strs String数组
+     * @param str String数组
      * @return 集合
      */
-    public static List<String> toList(String... strs) {
-    	List<String> list = new ArrayList<>();
-    	for (String str : strs) {
-    		list.add(str);
-		}
-    	return list;
+    public static List<String> toList(String... str) {
+		return new ArrayList<>(Arrays.asList(str));
     }
 
     public static List<String> logLevelList = Arrays.asList("", "trace", "debug", "info", "warn", "error", "fatal");
@@ -607,5 +611,41 @@ public class SaFoxUtil {
     	}
     	return logLevelList.get(level);
     }
+
+	/**
+	 * 判断当前系统是否可以打印彩色日志，判断准确率并非100%，但基本可以满足大部分场景
+	 * @return /
+	 */
+	@SuppressWarnings("all")
+	public static boolean isCanColorLog() {
+
+		// 获取当前环境相关信息
+		Console console = System.console();
+		String term = System.getenv().get("TERM");
+
+		// 两者均为 null，一般是在 eclipse、idea 等 IDE 环境下运行的，此时可以打印彩色日志
+		if(console == null && term == null) {
+			return true;
+		}
+
+		// 两者均不为 null，一般是在 linux 环境下控制台运行的，此时可以打印彩色日志
+		if(console != null && term != null) {
+			return true;
+		}
+
+		// console 有值，term 为 null，一般是在 windows 的 cmd 控制台运行的，此时不可以打印彩色日志
+		if(console != null && term == null) {
+			return false;
+		}
+
+		// console 为 null，term 有值，一般是在 linux 的 nohup 命令运行的，此时不可以打印彩色日志
+		// 此时也有可能是在 windows 的 git bash 环境下运行的，此时可以打印彩色日志，但此场景无法和上述场景区分，所以统一不打印彩色日志
+		if(console == null && term != null) {
+			return false;
+		}
+
+		// 正常情况下，代码不会走到这里，但是方法又必须要有返回值，所以随便返回一个
+		return false;
+	}
 
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.core.session;
 
 import java.util.Arrays;
@@ -15,8 +30,8 @@ import cn.dev33.satoken.session.TokenSign;
 /**
  * SaSession 测试 
  * 
- * @author kong
- * @since: 2022-2-9 
+ * @author click33
+ * @since 2022-2-9 
  */
 public class SaSessionTest {
 
@@ -97,8 +112,8 @@ public class SaSessionTest {
     	SaSession session = new SaSession("session-1002");
     	
     	// 添加 Token 签名 
-    	session.addTokenSign("xxxx-xxxx-xxxx-xxxx-1", "PC");
-    	session.addTokenSign("xxxx-xxxx-xxxx-xxxx-2", "APP");
+    	session.addTokenSign(new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "PC", null));
+    	session.addTokenSign(new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "APP", null));
 
     	// 查询 
     	Assertions.assertEquals(session.getTokenSignList().size(), 2);
@@ -115,9 +130,9 @@ public class SaSessionTest {
     	
     	// 重置整个签名列表 
     	List<TokenSign> list = Arrays.asList(
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "WEB"),
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "phone"),
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-3", "ipad")
+    			new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "WEB", null),
+    			new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "phone", null),
+    			new TokenSign("xxxx-xxxx-xxxx-xxxx-3", "ipad", null)
     			);
     	session.setTokenSignList(list);
     	Assertions.assertEquals(session.getTokenSignList().size(), 3);

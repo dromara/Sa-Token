@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.quick.web;
 
 import org.springframework.stereotype.Controller;
@@ -13,17 +28,18 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * 登录Controller
- * @author kong
+ * 登录Controller，处理登录相关请求
  *
+ * @author click33
+ * @since 1.19.0
  */
 @Controller
 public class SaQuickController {
 
 	/**
 	 * 进入登录页面
-	 * @param request see note
-	 * @return see note
+	 * @param model /
+	 * @return /
 	 */
 	@GetMapping("/saLogin")
 	public String saLogin(Model model) {
@@ -46,7 +62,7 @@ public class SaQuickController {
 			return SaResult.get(500, "请输入账号和密码", null);
 		}
 		
-		// 密码校验 
+		// 密码校验：将前端提交的 name、pwd 与配置文件中的配置项进行比对
 		SaQuickConfig config = SaQuickManager.getConfig();
 		if(name.equals(config.getName()) && pwd.equals(config.getPwd())) {
 			StpUtil.login(config.getName());

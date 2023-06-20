@@ -25,7 +25,9 @@ implementation 'cn.dev33:sa-token-jwt:${sa.top.version}'
 <!---------------------------- tabs:end ---------------------------->
 
 
-> 注意: sa-token-jwt 显式依赖 hutool-jwt 5.7.14 版本，意味着：你的项目中要么不引入 Hutool，要么引入版本 >= 5.7.14 的 Hutool 版本
+> 1. 注意: sa-token-jwt 显式依赖 hutool-jwt 5.7.14 版本，保险起见：你的项目中要么不引入 hutool，要么引入版本 >= 5.7.14 的 hutool 版本。
+> 2. hutool 5.8.13 和 5.8.14 版本下会出现类型转换问题，[关联issue](https://gitee.com/dromara/sa-token/issues/I6L429)。
+
 
 ### 2、配置秘钥
 在 `application.yml` 配置文件中配置 jwt 生成秘钥：
@@ -139,8 +141,8 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzB
 | 功能点						| Simple 简单模式		| Mixin 混入模式			| Stateless 无状态模式	|
 | :--------					| :--------		| :--------			| :--------			|
 | Token风格					| jwt风格		| jwt风格			| jwt风格			|
-| 登录数据存储				| Redis中		| Token中			| Token中			|
-| Session存储				| Redis中		| Redis中			| 无Session			|
+| 登录数据存储				| Redis中存储		| Token中存储			| Token中存储			|
+| Session存储				| Redis中存储		| Redis中存储			| 无Session			|
 | 注销下线					| 前后端双清数据	| 前后端双清数据		| 前端清除数据		|
 | 踢人下线API				| 支持			| 不支持				| 不支持				|
 | 顶人下线API				| 支持			| 不支持				| 不支持				|
@@ -148,7 +150,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzB
 | 角色认证					| 支持			| 支持				| 支持				|
 | 权限认证					| 支持			| 支持				| 支持				|
 | timeout 有效期				| 支持			| 支持				| 支持				|
-| activity-timeout 有效期	| 支持			| 支持				| 不支持				|
+| active-timeout 有效期		| 支持			| 支持				| 不支持				|
 | id反查Token				| 支持			| 支持				| 不支持				|
 | 会话管理					| 支持			| 部分支持			| 不支持				|
 | 注解鉴权					| 支持			| 支持				| 支持				|
@@ -230,6 +232,12 @@ public void setSaJwtTemplate() {
 
 `is-concurrent=false` 代表每次登录都把旧登录顶下线，但是 jwt-mixin 模式登录的 token 并不会记录在持久库数据中，
 技术上来讲无法将其踢下线，所以此时顶人下线和踢人下线等 API 都属于不可用状态，所以此时 `is-concurrent` 配置项必须配置为 `true`。
+
+
+##### 3、使用 jwt-mixin 模式后，max-try-times 恒等于 -1。
+
+为防止框架错误判断 token 唯一性，当使用 jwt-mixin 模式后，`max-try-times` 恒等于 -1。
+
 
 
 

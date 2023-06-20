@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.core.config;
 
 import org.junit.jupiter.api.Assertions;
@@ -10,8 +25,8 @@ import cn.dev33.satoken.config.SaTokenConfigFactory;
 /**
  * 配置类测试 
  * 
- * @author kong
- * @since: 2022-9-4
+ * @author click33
+ * @since 2022-9-4
  */
 public class SaTokenConfigTest {
 
@@ -26,8 +41,8 @@ public class SaTokenConfigTest {
 		config.setTimeout(100204);
 		Assertions.assertEquals(config.getTimeout(), 100204);
 		
-		config.setActivityTimeout(1804);
-		Assertions.assertEquals(config.getActivityTimeout(), 1804);
+		config.setActiveTimeout(1804);
+		Assertions.assertEquals(config.getActiveTimeout(), 1804);
 
 		config.setIsConcurrent(false);
 		Assertions.assertEquals(config.getIsConcurrent(), false);
@@ -96,7 +111,7 @@ public class SaTokenConfigTest {
 		SaTokenConfig config = SaTokenConfigFactory.createConfig("sa-token2.properties");
 		Assertions.assertEquals(config.getTokenName(), "use-token");
 		Assertions.assertEquals(config.getTimeout(), 9000);
-		Assertions.assertEquals(config.getActivityTimeout(), 240);
+		Assertions.assertEquals(config.getActiveTimeout(), 240);
 		Assertions.assertEquals(config.getIsConcurrent(), false);
 		Assertions.assertEquals(config.getIsShare(), false);
 		Assertions.assertEquals(config.getIsLog(), true);

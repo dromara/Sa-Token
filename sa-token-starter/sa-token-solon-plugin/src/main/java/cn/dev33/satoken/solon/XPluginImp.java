@@ -1,11 +1,19 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.solon;
-
-import cn.dev33.satoken.solon.oauth2.SaOAuth2AutoConfigure;
-import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
-import org.noear.solon.Solon;
-import org.noear.solon.Utils;
-import org.noear.solon.core.AopContext;
-import org.noear.solon.core.Plugin;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.basic.SaBasicTemplate;
@@ -20,10 +28,15 @@ import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
+import cn.dev33.satoken.solon.oauth2.SaOAuth2AutoConfigure;
+import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
+import org.noear.solon.Solon;
+import org.noear.solon.core.AopContext;
+import org.noear.solon.core.Plugin;
 
 /**
  * @author noear
@@ -40,23 +53,11 @@ public class XPluginImp implements Plugin {
 
 
         //注入其它 Bean
-        context.beanOnloaded(c -> {
-            beanInitDo(c);
-            ssoBeanInitDo(c);
-            oauth2BeanInitDo(c);
-        });
-    }
-
-    private void ssoBeanInitDo(AopContext context){
-        if (Utils.loadClass("cn.dev33.satoken.sso.SaSsoManager") != null) {
+        context.lifecycle(-99, () -> {
+            beanInitDo(context);
             context.beanMake(SaSsoAutoConfigure.class);
-        }
-    }
-
-    private void oauth2BeanInitDo(AopContext context){
-        if(Utils.loadClass("cn.dev33.satoken.oauth2.SaOAuth2Manager") != null){
             context.beanMake(SaOAuth2AutoConfigure.class);
-        }
+        });
     }
 
     private void beanInitDo(AopContext context) {

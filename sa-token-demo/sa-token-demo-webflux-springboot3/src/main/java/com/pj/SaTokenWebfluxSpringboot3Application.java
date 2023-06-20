@@ -8,7 +8,7 @@ import cn.dev33.satoken.SaManager;
 /**
  * Sa-Token整合webflux 示例 (springboot3)
  * 
- * @author kong
+ * @author click33
  * @since 2023年1月3日
  *
  */

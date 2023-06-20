@@ -10,7 +10,8 @@ public class SaTokenThymeleafDemoApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SaTokenThymeleafDemoApplication.class, args); 
-		System.out.println("\n启动成功：sa-token配置如下：" + SaManager.getConfig());
+		System.out.println("\n启动成功，Sa-Token 配置如下：" + SaManager.getConfig());
+		System.out.println("\n测试访问：http://localhost:8081/");
 	}
 	
 }

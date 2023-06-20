@@ -45,7 +45,6 @@ SaFoxUtil.getRandomString(8);       // 生成指定长度的随机字符串
 SaFoxUtil.isEmpty(str);             // 指定字符串是否为null或者空字符串
 SaFoxUtil.isNotEmpty(str);          // 指定字符串是否不是null或者空字符串
 SaFoxUtil.equals(a, b);             // 比较两个对象是否相等 
-SaFoxUtil.equals(a, b);             // 比较两个对象是否相等 
 SaFoxUtil.getMarking28();           // 以当前时间戳和随机int数字拼接一个随机字符串
 SaFoxUtil.formatDate(date);         // 将日期格式化为yyyy-MM-dd HH:mm:ss字符串
 SaFoxUtil.searchList(dataList, prefix, keyword, start, size, sortType);             // 从集合里查询数据
@@ -74,18 +73,20 @@ SaFoxUtil.toList(... strs);    // String 数组转集合
 
 1、首先在项目根目录，创建一个配置文件：`sa-token.properties`
 
-``` java
-# token名称 (同时也是cookie名称)
+``` properties
+# token 名称 (同时也是 cookie 名称)
 tokenName=satoken
-# token有效期，单位s 默认30天, -1代表永不过期 
+# token 有效期（单位：秒） 默认30天，-1 代表永久有效
 timeout=2592000
-# token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
-activityTimeout=-1
-# 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录) =-1
+# token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+activeTimeout=-1
+# 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
 isConcurrent=true
-# 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token) 
+# 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 isShare=true
-# token风格
+# token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+tokenStyle=uuid
+# 是否输出操作日志 
 isLog=false
 ```
 

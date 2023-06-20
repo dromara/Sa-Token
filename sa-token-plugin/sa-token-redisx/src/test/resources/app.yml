@@ -1,0 +1,10 @@
+
+
+
+
+sa-token: #名字可以随意取
+  redis:
+    server: "localhost:6379"
+    password: 123456
+    db: 1
+    maxTotal: 200

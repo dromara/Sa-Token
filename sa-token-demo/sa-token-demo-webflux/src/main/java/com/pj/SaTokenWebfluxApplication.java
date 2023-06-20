@@ -7,7 +7,7 @@ import cn.dev33.satoken.SaManager;
 
 /**
  * Sa-Token整合webflux 示例 
- * @author kong
+ * @author click33
  *
  */
 @SpringBootApplication

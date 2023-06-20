@@ -1,12 +1,28 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.application;
 
 import cn.dev33.satoken.fun.SaRetFunction;
 
 /**
- * 对写值的一组方法封装 
+ * 对写值的一组方法封装
+ * <p> 封装 SaStorage、SaSession、SaApplication 等存取值的一些固定方法，减少重复编码 </p>
  * 
- * @author kong
- * @since: 2022-8-17
+ * @author click33
+ * @since 1.31.0
  */
 public interface SaSetValueInterface extends SaGetValueInterface {
 
@@ -18,14 +34,14 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @param value 值
 	 * @return 对象自身
 	 */
-	public abstract SaSetValueInterface set(String key, Object value);
+	SaSetValueInterface set(String key, Object value);
 	
 	/**
 	 * 删值 
 	 * @param key 要删除的key
 	 * @return 对象自身
 	 */
-	public abstract SaSetValueInterface delete(String key);
+	SaSetValueInterface delete(String key);
 
 	
 	// --------- 接口提供封装的方法 
@@ -39,7 +55,7 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @return 值 
 	 */
 	@SuppressWarnings("unchecked")
-	public default <T> T get(String key, SaRetFunction fun) {
+	default <T> T get(String key, SaRetFunction fun) {
 		Object value = get(key);
 		if(value == null) {
 			value = fun.run();
@@ -54,8 +70,8 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @param value 值
 	 * @return 对象自身
 	 */
-	public default SaSetValueInterface setByNull(String key, Object value) {
-		if(has(key) == false) {
+	default SaSetValueInterface setByNull(String key, Object value) {
+		if( ! has(key)) {
 			set(key, value);
 		}
 		return this;
