@@ -126,8 +126,25 @@ public class SaTokenConfigure{
 ```
 
 
+### 5、代码提示
 
+如果想在写标签属性时增加代码提示：
 
+![thymeleaf-code-tips.png](https://oss.dev33.cn/sa-token/doc/thymeleaf-code-tips.png 's-w')
+
+只需在头部声明增加上对应的命名空间即可：
+
+``` html
+<!DOCTYPE html>
+<html lang="zh" xmlns:sa="http://www.thymeleaf.org/extras/sa-token">
+	<head>
+		<!-- 代码 -->
+	</head>
+	<body>
+		<!-- 代码 -->
+	</body>
+</html>
+```
 
 
 
