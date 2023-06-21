@@ -1,14 +1,13 @@
 package com.pj.satoken;
 
+import cn.dev33.satoken.log.SaLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cn.dev33.satoken.log.SaLog;
 
 /**
  * 将 Sa-Token log 信息转接到 Slf4j 
  * 
- * @author kong
+ * @author click33
  * @since 2022-11-2
  */
 //@Component
@@ -33,7 +32,7 @@ public class SaLogForSlf4j implements SaLog {
 
 	@Override
 	public void warn(String str, Object... args) {
-		log.trace(str, args);
+		log.warn(str, args);
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class SaTokenConfigure {
 </p>
 <p>
 	不具有角色 admin 才能显示：
-	<span sa:lackRole="admin">value</span>
+	<span sa:notRole="admin">value</span>
 </p>
 ```
 
@@ -92,7 +92,7 @@ public class SaTokenConfigure {
 </p>
 <p>
 	不具有权限 user-add 才能显示：
-	<span sa:lackPermission="user-add">value</span>
+	<span sa:notPermission="user-add">value</span>
 </p>
 ```
 
@@ -126,8 +126,25 @@ public class SaTokenConfigure{
 ```
 
 
+### 5、代码提示
 
+如果想在写标签属性时增加代码提示：
 
+![thymeleaf-code-tips.png](https://oss.dev33.cn/sa-token/doc/thymeleaf-code-tips.png 's-w')
+
+只需在头部声明增加上对应的命名空间即可：
+
+``` html
+<!DOCTYPE html>
+<html lang="zh" xmlns:sa="http://www.thymeleaf.org/extras/sa-token">
+	<head>
+		<!-- 代码 -->
+	</head>
+	<body>
+		<!-- 代码 -->
+	</body>
+</html>
+```
 
 
 

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.interceptor;
 
 import java.lang.reflect.Method;
@@ -16,8 +31,8 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Sa-Token 综合拦截器，提供注解鉴权和路由拦截鉴权能力 
  * 
- * @author kong
- * @since: 2022-8-21
+ * @author click33
+ * @since 1.34.0
  */
 public class SaInterceptor implements HandlerInterceptor {
 
@@ -73,32 +88,38 @@ public class SaInterceptor implements HandlerInterceptor {
 	 * 每次请求之前触发的方法 
 	 */
 	@Override
+	@SuppressWarnings("all")
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
 		try {
 
+			// 这里必须确保 handler 是 HandlerMethod 类型时，才能进行注解鉴权
 			if(isAnnotation && handler instanceof HandlerMethod) {
 				
 				// 获取此请求对应的 Method 处理函数 
 				Method method = ((HandlerMethod) handler).getMethod();
 
 				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权 
-				if(SaStrategy.me.isAnnotationPresent.apply(method, SaIgnore.class)) {
+				if(SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
+					// 注意这里直接就退出整个鉴权了，最底部的 auth.run() 路由拦截鉴权也被跳出了
 					return true;
 				}
 
 				// 注解校验 
-				SaStrategy.me.checkMethodAnnotation.accept(method);
+				SaStrategy.instance.checkMethodAnnotation.accept(method);
 			}
 			
 			// Auth 校验  
 			auth.run(handler);
 			
 		} catch (StopMatchException e) {
-			// 停止匹配，进入Controller 
+			// StopMatchException 异常代表：停止匹配，进入Controller
+
 		} catch (BackResultException e) {
-			// 停止匹配，向前端输出结果 
+			// BackResultException 异常代表：停止匹配，向前端输出结果
+			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 back 前自行设置 Content-Type 为 application/json
+			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
 			if(response.getContentType() == null) {
 				response.setContentType("text/plain; charset=utf-8"); 
 			}

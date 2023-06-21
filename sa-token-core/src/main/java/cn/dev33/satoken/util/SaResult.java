@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.util;
 
 import java.io.Serializable;
@@ -5,19 +20,24 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 对Ajax请求返回Json格式数据的简易封装 <br>
- * 所有预留字段：<br>
- * code=状态码 <br>
- * msg=描述信息 <br>
- * data=携带对象 <br>
- * 
- * @author kong
+ * 对请求接口返回 Json 格式数据的简易封装。
  *
+ * <p>
+ *     所有预留字段：<br>
+ * 		code = 状态码 <br>
+ * 		msg  = 描述信息 <br>
+ * 		data = 携带对象 <br>
+ * </p>
+ *
+ * @author click33
+ * @since 1.22.0
  */
 public class SaResult extends LinkedHashMap<String, Object> implements Serializable{
 
-	private static final long serialVersionUID = 1L;	// 序列化版本号
-	
+	// 序列化版本号
+	private static final long serialVersionUID = 1L;
+
+	// 预定的状态码
 	public static final int CODE_SUCCESS = 200;		
 	public static final int CODE_ERROR = 500;		
 
@@ -66,7 +86,7 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * @return data 
 	 */
 	public Object getData() {
-		return (Object)this.get("data");
+		return this.get("data");
 	}
 	
 	/**
@@ -132,7 +152,7 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	}
 	
 	
-	// ============================  构建  ================================== 
+	// ============================  静态方法快速构建  ==================================
 	
 	// 构建成功
 	public static SaResult ok() {
@@ -173,8 +193,19 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 				+ ", \"data\": " + transValue(this.getData()) 
 				+ "}";
 	}
-	
+
+	/**
+	 * 转换 value 值：
+	 * 	如果 value 值属于 String 类型，则在前后补上引号
+	 * 	如果 value 值属于其它类型，则原样返回
+	 *
+	 * @param value 具体要操作的值
+	 * @return 转换后的值
+	 */
 	private String transValue(Object value) {
+		if(value == null) {
+			return null;
+		}
 		if(value instanceof String) {
 			return "\"" + value + "\"";
 		}

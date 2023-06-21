@@ -1,12 +1,29 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.sso;
 
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.util.SaResult;
 
+import java.util.Map;
+
 /**
- * Sa-Token-SSO 单点登录模块 工具类 
- * @author kong
- *
+ * Sa-Token-SSO 单点登录模块 工具类
+ * 
+ * @author click33
+ * @since 1.30.0
  */
 public class SaSsoUtil {
 
@@ -139,12 +156,22 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 获取：账号资料 
-	 * @param loginId 账号id
-	 * @return 账号资料 
+	 * 获取：查询数据
+	 * @param paramMap 查询参数
+	 * @return 查询结果
 	 */
-	public static Object getUserinfo(Object loginId) {
-		return ssoTemplate.getUserinfo(loginId);
+	public static Object getData(Map<String, Object> paramMap) {
+		return ssoTemplate.getData(paramMap);
+	}
+
+	/**
+	 * 根据自定义 path 查询数据 （此方法需要配置 sa-token.sso.server-url 地址）
+	 * @param path 自定义 path
+	 * @param paramMap 查询参数
+	 * @return 查询结果
+	 */
+	public static Object getData(String path, Map<String, Object> paramMap) {
+		return ssoTemplate.getData(path, paramMap);
 	}
 
 
@@ -161,7 +188,7 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 构建URL：Server端向Client下放ticke的地址 
+	 * 构建URL：Server端向Client下放ticket的地址
 	 * @param loginId 账号id 
 	 * @param client 客户端标识 
 	 * @param redirect Client端提供的重定向地址 
@@ -172,16 +199,25 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 构建URL：Server端 账号资料查询地址 
-	 * @param loginId 账号id
-	 * @return Server端 账号资料查询地址 
+	 * 构建URL：Server端 getData 地址，带签名等参数
+	 * @param paramMap 查询参数
+	 * @return /
 	 */
-	public static String buildUserinfoUrl(Object loginId) {
-		return ssoTemplate.buildUserinfoUrl(loginId);
+	public static String buildGetDataUrl(Map<String, Object> paramMap) {
+		return ssoTemplate.buildGetDataUrl(paramMap);
 	}
+
+	/**
+	 * 构建URL：Server 端自定义 path 地址，带签名等参数 （此方法需要配置 sa-token.sso.server-url 地址）
+	 * @param paramMap 请求参数
+	 * @return /
+	 */
+	public static String buildCustomPathUrl(String path, Map<String, Object> paramMap) {
+		return ssoTemplate.buildCustomPathUrl(path, paramMap);
+	}
+
 	
-	
-	// ------------------- 请求相关 ------------------- 
+	// ------------------- 发起请求 -------------------
 
 	/**
 	 * 发出请求，并返回 SaResult 结果 
@@ -193,50 +229,46 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 校验secretkey秘钥是否有效 （API已过期，请更改为更安全的 sign 式校验）
-	 * @param secretkey 秘钥 
+	 * 给 paramMap 追加 sign 等参数，并序列化为kv字符串，拼接到url后面
+	 * @param url 请求地址
+	 * @param paramMap 请求原始参数列表
+	 * @return 加工后的url
+	 */
+	public static String joinParamMapAndSign(String url, Map<String, Object> paramMap) {
+		return ssoTemplate.joinLoginIdAndSign(url, paramMap);
+	}
+
+	/**
+	 * 给 url 拼接 loginId 参数，并拼接 sign 等参数
+	 * @param url 链接
+	 * @param loginId 账号id
+	 * @return 加工后的url
+	 */
+	public static String joinLoginIdAndSign(String url, Object loginId) {
+		return ssoTemplate.joinLoginIdAndSign(url, loginId);
+	}
+
+
+	// -------- 以下方法已废弃，仅为兼容旧版本而保留 --------
+
+	/**
+	 * 构建URL：Server端 账号资料查询地址
+	 * @param loginId 账号id
+	 * @return Server端 账号资料查询地址
 	 */
 	@Deprecated
-	public static void checkSecretkey(String secretkey) {
-		ssoTemplate.checkSecretkey(secretkey);
+	public static String buildUserinfoUrl(Object loginId) {
+		return ssoTemplate.buildUserinfoUrl(loginId);
 	}
 
 	/**
-	 * 根据参数计算签名 
+	 * 获取：账号资料
 	 * @param loginId 账号id
-	 * @param timestamp 当前时间戳，13位
-	 * @param nonce 随机字符串 
-	 * @param secretkey 账号id
-	 * @return 签名 
+	 * @return 账号资料
 	 */
-	public static String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
-		return ssoTemplate.getSign(loginId, timestamp, nonce, secretkey);
+	@Deprecated
+	public static Object getUserinfo(Object loginId) {
+		return ssoTemplate.getUserinfo(loginId);
 	}
 
-	/**
-	 * 给 url 追加 sign 等参数 
-	 * @param url 连接
-	 * @param loginId 账号id 
-	 * @return 加工后的url 
-	 */
-	public static String addSignParams(String url, Object loginId) {
-		return ssoTemplate.addSignParams(url, loginId);
-	}
-
-	/**
-	 * 校验签名
-	 * @param req request 
-	 */
-	public static void checkSign(SaRequest req) {
-		ssoTemplate.checkSign(req);
-	}
-
-	/**
-	 * 校验时间戳与当前时间的差距是否超出限制 
-	 * @param timestamp 时间戳 
-	 */
-	public static void checkTimestamp(long timestamp) {
-		ssoTemplate.checkTimestamp(timestamp);
-	}
-	
 }

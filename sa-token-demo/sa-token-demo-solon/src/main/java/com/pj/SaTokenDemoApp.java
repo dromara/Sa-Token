@@ -1,10 +1,9 @@
 package com.pj;
 
 
+import cn.dev33.satoken.SaManager;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.SolonMain;
-
-import cn.dev33.satoken.SaManager;
 
 /**
  * sa-token整合 solon 示例

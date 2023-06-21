@@ -1,9 +1,25 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.exception;
 
 /**
  * 一个异常：代表会话未能通过二级认证校验 
  * 
- * @author kong
+ * @author click33
+ * @since 1.21.0
  */
 public class NotSafeException extends SaTokenException {
 
@@ -18,17 +34,17 @@ public class NotSafeException extends SaTokenException {
 	/**
 	 * 账号类型 
 	 */
-	private String loginType;
+	private final String loginType;
 
 	/**
 	 * 未通过校验的 Token 值 
 	 */
-	private Object tokenValue;
+	private final Object tokenValue;
 
 	/**
 	 * 未通过校验的服务 
 	 */
-	private String service;
+	private final String service;
 
 	/**
 	 * 获取：账号类型 

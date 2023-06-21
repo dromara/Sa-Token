@@ -1,14 +1,30 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.exception;
 
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token框架内部逻辑发生错误抛出的异常 
- * (自定义此异常方便开发者在做全局异常处理时分辨异常类型)
- * 
- * @author kong
+ * Sa-Token 框架内部逻辑发生错误抛出的异常
  *
+ * <p> 框架其它异常均继承自此类，开发者可通过捕获此异常来捕获框架内部抛出的所有异常 </p>
+ * 
+ * @author click33
+ * @since 1.10.0
  */
 public class SaTokenException extends RuntimeException {
 

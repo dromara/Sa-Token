@@ -45,7 +45,7 @@
 
 ### 3、搭建 Client 端项目 
 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso2-client/`，如遇到难点可结合源码进行测试学习
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client/`，如遇到难点可结合源码进行测试学习
 
 #### 3.1、去除 SSO-Server 的 Cookie 作用域配置 
 在SSO模式一章节中我们打开了配置：
@@ -173,8 +173,6 @@ sa-token:
     sso: 
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
-        # 是否打开单点注销接口
-        is-slo: true
 
     # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 
@@ -197,8 +195,6 @@ server.port=9001
 ######### Sa-Token 配置 #########
 # SSO-Server端 统一认证地址 
 sa-token.sso.auth-url=http://sa-sso-server.com:9000/sso/auth
-# 是否打开单点注销接口
-sa-token.sso.is-slo=true
 
 # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
 # Redis数据库索引

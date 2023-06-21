@@ -1,172 +1,205 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.stp;
 
 /**
- * Token信息Model: 用来描述一个Token的常用参数
- * 
- * @author kong
+ * Token 信息 Model: 用来描述一个 Token 的常见参数。
  *
+ * <p>
+ *     例如：<br>
+ *     <pre>
+ *     {
+ *         "tokenName": "satoken",           // token名称
+ *         "tokenValue": "e67b99f1-3d7a-4a8d-bb2f-e888a0805633",      // token值
+ *         "isLogin": true,                  // 此token是否已经登录
+ *         "loginId": "10001",               // 此token对应的LoginId，未登录时为null
+ *         "loginType": "login",              // 账号类型标识
+ *         "tokenTimeout": 2591977,          // token剩余有效期 (单位: 秒)
+ *         "sessionTimeout": 2591977,        // Account-Session剩余有效时间 (单位: 秒)
+ *         "tokenSessionTimeout": -2,        // Token-Session剩余有效时间 (单位: 秒) (-2表示系统中不存在这个缓存)
+ *         "tokenActiveTimeout": -1,       // Token 距离被冻结还剩多少时间 (单位: 秒)
+ *         "loginDevice": "default-device"   // 登录设备类型
+ *     }
+ *     </pre>
+ * </p>
+ * 
+ * @author click33
+ * @since 1.10.0
  */
 public class SaTokenInfo {
 
-	/** token名称 */
+	/** token 名称 */
 	public String tokenName;
 
-	/** token值 */
+	/** token 值 */
 	public String tokenValue;
 
-	/** 此token是否已经登录 */
+	/** 此 token 是否已经登录 */
 	public Boolean isLogin;
 
-	/** 此token对应的LoginId，未登录时为null */
+	/** 此 token 对应的 LoginId，未登录时为 null */
 	public Object loginId;
 
-	/** 账号类型 */
+	/** 多账号体系下的账号类型 */
 	public String loginType;
 
-	/** token剩余有效期 (单位: 秒) */
+	/** token 剩余有效期（单位: 秒） */
 	public long tokenTimeout;
 
-	/** User-Session剩余有效时间 (单位: 秒) */
+	/** Account-Session 剩余有效时间（单位: 秒） */
 	public long sessionTimeout;
 
-	/** Token-Session剩余有效时间 (单位: 秒) */
+	/** Token-Session 剩余有效时间（单位: 秒） */
 	public long tokenSessionTimeout;
 
-	/** token剩余无操作有效时间 (单位: 秒) */
-	public long tokenActivityTimeout;
+	/** token 距离被冻结还剩多少时间（单位: 秒） */
+	public long tokenActiveTimeout;
 
 	/** 登录设备类型 */
 	public String loginDevice;
 
-	/** 自定义数据 */
+	/** 自定义数据（暂无意义，留作扩展） */
 	public String tag;
 	
 
 
 	/**
-	 * @return token名称 
+	 * @return token 名称
 	 */
 	public String getTokenName() {
 		return tokenName;
 	}
 
 	/**
-	 * @param tokenName token名称 
+	 * @param tokenName token 名称
 	 */
 	public void setTokenName(String tokenName) {
 		this.tokenName = tokenName;
 	}
 
 	/**
-	 * @return token值 
+	 * @return token 值
 	 */
 	public String getTokenValue() {
 		return tokenValue;
 	}
 
 	/**
-	 * @param tokenValue token值 
+	 * @param tokenValue token 值
 	 */
 	public void setTokenValue(String tokenValue) {
 		this.tokenValue = tokenValue;
 	}
 
 	/**
-	 * @return 此token是否已经登录 
+	 * @return 此 token 是否已经登录
 	 */
 	public Boolean getIsLogin() {
 		return isLogin;
 	}
 
 	/**
-	 * @param isLogin 此token是否已经登录 
+	 * @param isLogin 此 token 是否已经登录
 	 */
 	public void setIsLogin(Boolean isLogin) {
 		this.isLogin = isLogin;
 	}
 
 	/**
-	 * @return 此token对应的LoginId，未登录时为null 
+	 * @return 此 token 对应的LoginId，未登录时为null
 	 */
 	public Object getLoginId() {
 		return loginId;
 	}
 
 	/**
-	 * @param loginId 此token对应的LoginId，未登录时为null 
+	 * @param loginId 此 token 对应的LoginId，未登录时为null
 	 */
 	public void setLoginId(Object loginId) {
 		this.loginId = loginId;
 	}
 
 	/**
-	 * @return 账号类型
+	 * @return 多账号体系下的账号类型
 	 */
 	public String getLoginType() {
 		return loginType;
 	}
 
 	/**
-	 * @param loginType 账号类型
+	 * @param loginType 多账号体系下的账号类型
 	 */
 	public void setLoginType(String loginType) {
 		this.loginType = loginType;
 	}
 
 	/**
-	 * @return token剩余有效期 (单位: 秒) 
+	 * @return token 剩余有效期（单位: 秒）
 	 */
 	public long getTokenTimeout() {
 		return tokenTimeout;
 	}
 
 	/**
-	 * @param tokenTimeout token剩余有效期 (单位: 秒) 
+	 * @param tokenTimeout token剩余有效期（单位: 秒）
 	 */
 	public void setTokenTimeout(long tokenTimeout) {
 		this.tokenTimeout = tokenTimeout;
 	}
 
 	/**
-	 * @return User-Session剩余有效时间 (单位: 秒) 
+	 * @return Account-Session 剩余有效时间（单位: 秒）
 	 */
 	public long getSessionTimeout() {
 		return sessionTimeout;
 	}
 
 	/**
-	 * @param sessionTimeout User-Session剩余有效时间 (单位: 秒) 
+	 * @param sessionTimeout Account-Session剩余有效时间（单位: 秒）
 	 */
 	public void setSessionTimeout(long sessionTimeout) {
 		this.sessionTimeout = sessionTimeout;
 	}
 
 	/**
-	 * @return Token-Session剩余有效时间 (单位: 秒) 
+	 * @return Token-Session剩余有效时间（单位: 秒）
 	 */
 	public long getTokenSessionTimeout() {
 		return tokenSessionTimeout;
 	}
 
 	/**
-	 * @param tokenSessionTimeout Token-Session剩余有效时间 (单位: 秒) 
+	 * @param tokenSessionTimeout Token-Session剩余有效时间（单位: 秒）
 	 */
 	public void setTokenSessionTimeout(long tokenSessionTimeout) {
 		this.tokenSessionTimeout = tokenSessionTimeout;
 	}
 
 	/**
-	 * @return token剩余无操作有效时间 (单位: 秒)
+	 * @return token 距离被冻结还剩多少时间（单位: 秒）
 	 */
-	public long getTokenActivityTimeout() {
-		return tokenActivityTimeout;
+	public long getTokenActiveTimeout() {
+		return tokenActiveTimeout;
 	}
 
 	/**
-	 * @param tokenActivityTimeout token剩余无操作有效时间 (单位: 秒)
+	 * @param tokenActiveTimeout token 距离被冻结还剩多少时间（单位: 秒）
 	 */
-	public void setTokenActivityTimeout(long tokenActivityTimeout) {
-		this.tokenActivityTimeout = tokenActivityTimeout;
+	public void setTokenActiveTimeout(long tokenActiveTimeout) {
+		this.tokenActiveTimeout = tokenActiveTimeout;
 	}
 
 	/**
@@ -184,14 +217,14 @@ public class SaTokenInfo {
 	}
 
 	/**
-	 * @return 自定义数据
+	 * @return 自定义数据（暂无意义，留作扩展）
 	 */
 	public String getTag() {
 		return tag;
 	}
 
 	/**
-	 * @param tag 自定义数据
+	 * @param tag 自定义数据（暂无意义，留作扩展）
 	 */
 	public void setTag(String tag) {
 		this.tag = tag;
@@ -205,10 +238,8 @@ public class SaTokenInfo {
 		return "SaTokenInfo [tokenName=" + tokenName + ", tokenValue=" + tokenValue + ", isLogin=" + isLogin
 				+ ", loginId=" + loginId + ", loginType=" + loginType + ", tokenTimeout=" + tokenTimeout
 				+ ", sessionTimeout=" + sessionTimeout + ", tokenSessionTimeout=" + tokenSessionTimeout
-				+ ", tokenActivityTimeout=" + tokenActivityTimeout + ", loginDevice=" + loginDevice + ", tag=" + tag
+				+ ", tokenActiveTimeout=" + tokenActiveTimeout + ", loginDevice=" + loginDevice + ", tag=" + tag
 				+ "]";
 	}
-	
-	
 
 }

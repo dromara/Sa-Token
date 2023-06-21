@@ -2,7 +2,7 @@
 
 在开始SSO三种模式的对接之前，我们必须先搭建一个 SSO-Server 认证中心 
 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习，demo里有制作好的登录页面 
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习，demo里有制作好的登录页面 
 
 --- 
 
@@ -178,14 +178,13 @@ sa-token:
         ticket-timeout: 300
         # 所有允许的授权回调地址
         allow-url: "*"
-        # 是否打开单点注销功能
-        is-slo: true
         
-        # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开）
+        # ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
         # 是否打开模式三 
-        isHttp: true
-        # 接口调用秘钥（用于SSO模式三的单点注销功能）
-        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        is-http: true
+    sign:
+        # API 接口调用秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
         
 spring: 
@@ -219,14 +218,12 @@ server.port=9000
 sa-token.sso.ticket-timeout=300
 # 所有允许的授权回调地址
 sa-token.sso.allow-url=*
-# 是否打开单点注销功能
-sa-token.sso.is-slo=true
 
-# ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开）
+# ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
 # 是否打开模式三 
-sa-token.sso.isHttp=true
-# 接口调用秘钥（用于SSO模式三的单点注销功能）
-sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+sa-token.sso.is-http=true
+# API 接口调用秘钥
+sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 
 # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
     
@@ -264,14 +261,14 @@ public class SaSsoServerApplication {
 
 ![sso-server-start](https://oss.dev33.cn/sa-token/doc/sso/sso-server-start.png 's-w-sh')
 
-访问统一授权地址：
+访问统一授权地址(仅测试SSO Server部署是否成功访问localhost,测试SSO模式一到模式三建议按照对应文档的域名进行配置并访问)：
 - [http://localhost:9000/sso/auth](http://localhost:9000/sso/auth)
 
 ![sso-server-init-login.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login.png 's-w-sh')
 
 可以看到这个页面目前非常简陋，这是因为我们以上的代码示例，主要目标是为了带大家从零搭建一个可用的SSO认证服务端，所以就对一些不太必要的步骤做了简化。
 
-大家可以下载运行一下官方仓库里的示例`/sa-token-demo/sa-token-demo-sso-server/`，里面有制作好的登录页面：
+大家可以下载运行一下官方仓库里的示例`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，里面有制作好的登录页面：
 
 ![sso-server-init-login2.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login2.png 's-w-sh')
 

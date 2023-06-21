@@ -1,32 +1,46 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.dao;
 
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * Sa-Token持久层接口 [默认实现类, 基于内存Map] 
- * @author kong
+ * Sa-Token 持久层接口，默认实现类（基于内存 Map，系统重启后数据丢失）
  *
+ * @author click33
+ * @since 1.10.0
  */
 public class SaTokenDaoDefaultImpl implements SaTokenDao {
-	
 
 	/**
-	 * 数据集合 
+	 * 存储数据的集合
 	 */
-	public Map<String, Object> dataMap = new ConcurrentHashMap<String, Object>();
+	public Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
 	/**
-	 * 过期时间集合 (单位: 毫秒) , 记录所有key的到期时间 [注意不是剩余存活时间] 
+	 * 存储数据过期时间的集合（单位: 毫秒）, 记录所有 key 的到期时间 （注意存储的是到期时间，不是剩余存活时间）
 	 */
-	public Map<String, Long> expireMap = new ConcurrentHashMap<String, Long>();
-	
+	public Map<String, Long> expireMap = new ConcurrentHashMap<>();
+
 	/**
 	 * 构造函数
 	 */
@@ -121,17 +135,30 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	
 	// ------------------------ Session 读写操作 
 	// 使用接口默认实现 
-	
 
-	// ------------------------ 过期时间相关操作 
+
+	// --------- 会话管理
+
+	@Override
+	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
+		return SaFoxUtil.searchList(expireMap.keySet(), prefix, keyword, start, size, sortType);
+	}
+
+
+	// ------------------------ 以下是一个定时缓存的简单实现，采用：惰性检查 + 异步循环扫描
+
+	// --------- 过期时间相关操作
 
 	/**
-	 * 如果指定key已经过期，则立即清除它 
-	 * @param key 指定key 
+	 * 如果指定的 key 已经过期，则立即清除它
+	 * @param key 指定 key
 	 */
 	void clearKeyByTimeout(String key) {
 		Long expirationTime = expireMap.get(key);
-		// 清除条件：如果不为空 && 不是[永不过期] && 已经超过过期时间 
+		// 清除条件：
+		// 		1、数据存在。
+		// 		2、不是 [ 永不过期 ]。
+		// 		3、已经超过过期时间。
 		if(expirationTime != null && expirationTime != SaTokenDao.NEVER_EXPIRE && expirationTime < System.currentTimeMillis()) {
 			dataMap.remove(key);
 			expireMap.remove(key);
@@ -139,23 +166,32 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	}
 
 	/**
-	 * 获取指定key的剩余存活时间 (单位：秒)
+	 * 获取指定 key 的剩余存活时间 （单位：秒）
+	 * @param key 指定 key
+	 * @return 这个 key 的剩余存活时间
 	 */
 	long getKeyTimeout(String key) {
-		// 先检查是否已经过期
+		// 由于数据过期检测属于惰性扫描，很可能此时这个 key 已经是过期状态了，所以这里需要先检查一下
 		clearKeyByTimeout(key);
-		// 获取过期时间 
+
+		// 获取这个 key 的过期时间
 		Long expire = expireMap.get(key);
-		// 如果根本没有这个值 
+
+		// 如果 expire 数据不存在，说明框架没有存储这个 key，此时返回 NOT_VALUE_EXPIRE
 		if(expire == null) {
 			return SaTokenDao.NOT_VALUE_EXPIRE;
 		}
-		// 如果被标注为永不过期 
+
+		// 如果 expire 被标注为永不过期，则返回 NEVER_EXPIRE
 		if(expire == SaTokenDao.NEVER_EXPIRE) {
 			return SaTokenDao.NEVER_EXPIRE;
 		}
-		// ---- 计算剩余时间并返回 
+
+		// ---- 代码至此，说明这个 key 是有过期时间的，且未过期，那么：
+
+		// 计算剩余时间并返回 （过期时间戳 - 当前时间戳） / 1000 转秒
 		long timeout = (expire - System.currentTimeMillis()) / 1000;
+
 		// 小于零时，视为不存在 
 		if(timeout < 0) {
 			dataMap.remove(key);
@@ -164,12 +200,11 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		}
 		return timeout;
 	}
-	
-	
-	// --------------------- 定时清理过期数据  
+
+	// --------- 定时清理过期数据
 	
 	/**
-	 * 执行数据清理的线程
+	 * 执行数据清理的线程引用
 	 */
 	public Thread refreshThread;
 	
@@ -177,27 +212,26 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	 * 是否继续执行数据清理的线程标记
 	 */
 	public volatile boolean refreshFlag;
-	
 
 	/**
-	 * 清理所有已经过期的key 
+	 * 清理所有已经过期的 key
 	 */
 	public void refreshDataMap() {
-		Iterator<String> keys = expireMap.keySet().iterator();
-		while (keys.hasNext()) {
-			clearKeyByTimeout(keys.next());
+		for (String s : expireMap.keySet()) {
+			clearKeyByTimeout(s);
 		}
 	}
 	
 	/**
-	 * 初始化定时任务 
+	 * 初始化定时任务，定时清理过期数据
 	 */
 	public void initRefreshThread() {
 
-		// 如果配置了<=0的值，则不启动定时清理
+		// 如果开发者配置了 <=0 的值，则不启动定时清理
 		if(SaManager.getConfig().getDataRefreshPeriod() <= 0) {
 			return;
 		}
+
 		// 启动定时刷新
 		this.refreshFlag = true;
 		this.refreshThread = new Thread(() -> {
@@ -205,7 +239,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 				try {
 					try {
 						// 如果已经被标记为结束
-						if(refreshFlag == false) {
+						if( ! refreshFlag) {
 							return;
 						}
 						// 执行清理
@@ -218,7 +252,7 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 					if(dataRefreshPeriod <= 0) {
 						dataRefreshPeriod = 1;
 					}
-					Thread.sleep(dataRefreshPeriod * 1000);
+					Thread.sleep(dataRefreshPeriod * 1000L);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -228,27 +262,10 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	}
 	
 	/**
-	 * 结束定时任务
+	 * 结束定时任务，不再定时清理过期数据
 	 */
 	public void endRefreshThread() {
 		this.refreshFlag = false;
 	}
 
-
-	
-
-	// --------------------- 会话管理 
-	
-	@Override
-	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
-		return SaFoxUtil.searchList(expireMap.keySet(), prefix, keyword, start, size, sortType);
-	}
-
-
-	
-
-
-	
-	
-	
 }

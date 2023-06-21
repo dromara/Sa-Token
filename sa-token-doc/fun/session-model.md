@@ -2,7 +2,7 @@
 
 --- 
 
-### 1、User-Session 
+### 1、Account-Session 
 
 提起Session，你脑海中最先浮现的可能就是 JSP 中的 HttpSession，它的工作原理可以大致总结为：
 
@@ -24,17 +24,17 @@ Sa-Token Session可以理解为 HttpSession 的升级版：
 3. Sa-Token支持Cookie、Header、body三个途径提交Token，而不是仅限于Cookie 
 4. 由于不强依赖Cookie，所以只要将Token存储到不同的地方，便可以做到一个客户端同时登录多个账号 
 
-这种为账号id分配的Session，我们给它起一个合适的名字：`User-Session`，你可以通过如下方式操作它：
+这种为账号id分配的Session，我们给它起一个合适的名字：`Account-Session`，你可以通过如下方式操作它：
 ``` java
-// 获取当前会话的 User-Session 
+// 获取当前会话的 Account-Session 
 SaSession session = StpUtil.getSession();
 
-// 从 User-Session 中读取、写入数据 
+// 从 Account-Session 中读取、写入数据 
 session.get("name");
 session.set("name", "张三");
 ```
 
-使用`User-Session`在不同端同步数据是非常方便的，因为只要 PC 和 APP 登录的账号id一致，它们对应的都是同一个Session，
+使用`Account-Session`在不同端同步数据是非常方便的，因为只要 PC 和 APP 登录的账号id一致，它们对应的都是同一个Session，
 举个应用场景：在PC端点赞的帖子列表，在APP端的点赞记录里也要同步显示出来
 
 
@@ -44,13 +44,13 @@ session.set("name", "张三");
 
 > 指定客户端超过两小时无操作就自动下线，如果两小时内有操作，就再续期两小时，直到新的两小时无操作 
 
-那么这种请求访问记录应该存储在哪里呢？放在 User-Session 里吗？
+那么这种请求访问记录应该存储在哪里呢？放在 Account-Session 里吗？
 
-可别忘了，PC端和APP端可是共享的同一个 User-Session ，如果把数据放在这里，
+可别忘了，PC端和APP端可是共享的同一个 Account-Session ，如果把数据放在这里，
 那就意味着，即使用户在PC端一直无操作，只要手机上用户还在不间断的操作，那PC端也不会过期！
 
 解决这个问题的关键在于，虽然两个设备登录的是同一账号，但是两个它们得到的token是不一样的，
-Sa-Token针对会话登录，不仅为账号id分配了`User-Session`，同时还为每个token分配了不同的`Token-Session`
+Sa-Token针对会话登录，不仅为账号id分配了`Account-Session`，同时还为每个token分配了不同的`Token-Session`
 
 不同的设备端，哪怕登录了同一账号，只要它们得到的token不一致，它们对应的 `Token-Session` 就不一致，这就为我们不同端的独立数据读写提供了支持：
 
@@ -91,7 +91,7 @@ session.updateTimeout(1000); // 参数说明和全局有效期保持一致
 
 三种Session创建时机：
 
-- `User-Session`: 指的是框架为每个 账号id 分配的 Session 
+- `Account-Session`: 指的是框架为每个 账号id 分配的 Session 
 - `Token-Session`: 指的是框架为每个 token 分配的 Session  
 - `Custom-Session`: 指的是以一个 特定的值 作为SessionId，来分配的 Session 
 
@@ -101,7 +101,7 @@ session.updateTimeout(1000); // 参数说明和全局有效期保持一致
 ![session-model](https://oss.dev33.cn/sa-token/doc/session-model3.png 's-w')
 
 简而言之：
-- `User-Session`  以UserId为主，只要token指向的UserId一致，那么对应的Session对象就一致
+- `Account-Session`  以账号 id 为主，只要 token 指向的账号 id 一致，那么对应的Session对象就一致
 - `Token-Session` 以token为主，只要token不同，那么对应的Session对象就不同
 - `Custom-Session` 以特定的key为主，不同key对应不同的Session对象，同样的key指向同一个Session对象 
 

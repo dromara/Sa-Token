@@ -1,0 +1,58 @@
+# 端口
+server:
+    port: 9000
+
+# Sa-Token 配置
+sa-token: 
+    # ------- SSO-模式一相关配置  (非模式一不需要配置) 
+    # cookie:
+         # 配置 Cookie 作用域 
+         # domain: stp.com
+        
+    # ------- SSO-模式二相关配置 
+    sso: 
+        # Ticket有效期 (单位: 秒)，默认五分钟 
+        ticket-timeout: 300
+        # 所有允许的授权回调地址
+        allow-url: "*"
+
+        # ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
+        # 是否打开模式三 
+        is-http: true
+    sign:
+        # API 接口调用秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+
+        # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
+        
+spring: 
+    # Redis配置 （SSO模式一和模式二使用Redis来同步会话）
+    redis:
+        # Redis数据库索引（默认为0）
+        database: 1
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        password: 
+        # 连接超时时间
+        timeout: 10s
+        lettuce:
+            pool:
+                # 连接池最大连接数
+                max-active: 200
+                # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                max-wait: -1ms
+                # 连接池中的最大空闲连接
+                max-idle: 10
+                # 连接池中的最小空闲连接
+                min-idle: 0
+        
+forest: 
+    # 关闭 forest 请求日志打印
+    log-enabled: false
+    
+    
+    
+        

@@ -9,7 +9,7 @@
 
 ## 一、常见报错
 
-### Q：报错：非Web上下文无法获取Request。
+### Q：报错：非 web 上下文无法获取 HttpServletRequest。
 
 报错原因解析：
 
@@ -88,7 +88,7 @@ Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUti
 - 可能9：可能是多账号鉴权的关系，在多账号模式下，如果是 `StpUserUtil.login()` 颁发的token，你从 `StpUtil.checkLogin()` 进行校验，永远都是无效token，因为账号体系没对上。
 
 **如果是：Token已过期：6ad93254-b286-4ec9-9997-4430b0341ca0**
-- 可能1：前端提交的 token 临时过期（activity-timeout超时了，比如配置了 activity-timeout=120，但是超过了120秒没有访问接口）。
+- 可能1：前端提交的 token 已被冻结（active-timeout超时了，比如配置了 active-timeout=120，但是超过了120秒没有访问接口）。
 - 可能2：集成jwt，而且使用的是 Mixin 或 Stateless 模式，而且token过期了（timeout超时了）。
 
 **如果是：Token已被顶下线：6ad93254-b286-4ec9-9997-4430b0341ca0**
@@ -419,6 +419,22 @@ Caused by: java.lang.ClassNotFoundException: cn.dev33.satoken.same.SaSameTemplat
 请仔细排查你的 pom.xml 文件，是否有 Sa-Token 依赖没对齐，**请不要肉眼检查，用全局搜索 "sa-token" 关键词来找**，如果是多模块或者微服务项目，就整个项目搜索。
 
 
+### Q：在多账号模式的注解鉴权时，报错：未能获取对应StpLogic，type=xxx
+
+报这个错说明对应 type 的 StpLogic 尚未初始化到全局 StpLogicMap 中，一般会有两种原因造成这种情况：
+1. 注解里的 loginType 拼写错误，请改正 （建议使用常量）。
+2. 自定义 StpUtil 尚未初始化（静态类中的属性至少一次调用后才会初始化），解决方法两种：
+	- (1) 从main方法里调用一次
+	- (2) 在自定义StpUtil类加上类似 @Component 的注解让容器启动时扫描到自动初始化 
+
+
+### Q：使用拦截器鉴权，访问一个不存在的 path 时，springboot 会自动在控制台打印一下异常。
+可尝试添加以下配置解决：
+``` properties
+spring.resources.add-mappings=false
+spring.mvc.throw-exception-if-no-handler-found=true
+```
+
 
 
 
@@ -459,6 +475,30 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+
+### Q：在 SaInterceptor 中，注解鉴权总是先于路由拦截鉴权执行，能调整一下顺序吗？
+框架没有提供直接的 API，但你有以下两种方式可以做到这一点：
+- 方式1：将 SaInterceptor 里的代码复制出来一份，按照你的需求改一下，然后使用你这个自定义的拦截器，不再使用官方的。
+- 方式2：注册两次 SaInterceptor 拦截器，例如：
+
+``` java
+@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		// 路由拦截鉴权
+		registry.addInterceptor(new SaInterceptor(r -> {
+			// 路由拦截鉴权的代码 ...
+		}).isAnnotation(false)).addPathPatterns("/**");
+
+		// 打开注解鉴权
+		registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
+	}
+}
+```
+如上，第一个完成路由拦截鉴权功能，第二个完成注解鉴权功能。
+
 
 ### Q：我的项目权限模型不是RBAC模型，很复杂，可以集成吗？
 无论什么模型，只要能把一个用户具有的所有权限塞到一个List里返回给框架，就能集成
@@ -522,8 +562,8 @@ SaRouter.match("/**").notMatch("/login", "/reg").check(r -> StpUtil.checkLogin()
 
 
 ### Q：StpUtil.getSession()必须登录后才能调用吗？如果我想在用户未登录之前存储一些数据应该怎么办？
-`StpUtil.getSession()`获取的是`User-Session`，必须登录后才能使用，如果需要在未登录状态下也使用Session功能，请使用`Token-Session` <br>
-步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 
+`StpUtil.getSession()`获取的是`Account-Session`，必须登录后才能使用，如果需要在未登录状态下也使用Session功能，请使用`Token-Session` <br>
+步骤：先在配置文件里将`tokenSessionCheckLogin`配置为`false`，然后通过`StpUtil.getTokenSession()`获取Session 。或者直接调用 `StpUtil.getAnonTokenSession()` 获取匿名 Token-Session。
 
 
 ### Q：我只使用header来传输token，还需要打开Cookie模式吗？

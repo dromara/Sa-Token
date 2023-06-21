@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.oauth2.model;
 
 import java.io.Serializable;
@@ -6,9 +21,10 @@ import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 
 /**
- * Client应用信息 Model 
- * @author kong
+ * Client应用信息 Model
  *
+ * @author click33
+ * @since 1.23.0
  */
 public class SaClientModel implements Serializable {
 
@@ -199,7 +215,6 @@ public class SaClientModel implements Serializable {
 	
 	/**
 	 * @return 此 Client 是否打开模式：凭证式（Client Credentials）
-	 * @return 对象自身 
 	 */
 	public Boolean getIsClient() {
 		return isClient;

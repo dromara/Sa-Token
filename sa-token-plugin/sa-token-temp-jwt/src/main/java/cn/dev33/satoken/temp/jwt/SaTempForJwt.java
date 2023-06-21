@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.temp.jwt;
 
 import cn.dev33.satoken.SaManager;
@@ -8,9 +23,10 @@ import cn.dev33.satoken.temp.jwt.error.SaTempJwtErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 临时令牌验证模块接口 JWT实现类 
- * @author kong
+ * Sa-Token 临时令牌验证模块接口 JWT实现类，提供以 JWT 为逻辑内核的临时 token 验证功能
  *
+ * @author click33
+ * @since 1.20.0
  */
 public class SaTempForJwt implements SaTempInterface {
 	
@@ -19,8 +35,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public String createToken(String service, Object value, long timeout) {
-		String token = SaJwtUtil.createToken(service, value, timeout, getJwtSecretKey());
-		return token;
+		return SaJwtUtil.createToken(service, value, timeout, getJwtSecretKey());
 	}
 	
 	/**
@@ -28,8 +43,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public Object parseToken(String service, String token) {
-		Object value = SaJwtUtil.getValue(service, token, getJwtSecretKey());
-		return value;
+		return SaJwtUtil.getValue(service, token, getJwtSecretKey());
 	}
 	
 	/**
@@ -37,8 +51,7 @@ public class SaTempForJwt implements SaTempInterface {
 	 */
 	@Override
 	public long getTimeout(String service, String token) {
-		long timeout = SaJwtUtil.getTimeout(service, token, getJwtSecretKey());
-		return timeout;
+		return SaJwtUtil.getTimeout(service, token, getJwtSecretKey());
 	}
 
 	/**

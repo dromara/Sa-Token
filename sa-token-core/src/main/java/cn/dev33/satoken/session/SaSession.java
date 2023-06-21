@@ -1,12 +1,19 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.session;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.application.SaSetValueInterface;
@@ -14,12 +21,25 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.io.Serializable;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * Session Model，会话作用域的读取值对象 
- * <p> 在一次会话范围内: 存值、取值
+ * Session Model，会话作用域的读取值对象
  *
- * @author kong
+ * <p> 在一次会话范围内: 存值、取值。数据在注销登录后失效。</p>
+ * <p>
+ *    在 Sa-Token 中，SaSession 分为三种，分别是：	<br>
+ *     	- Account-Session: 指的是框架为每个 账号id 分配的 SaSession。	<br>
+ * 		- Token-Session: 指的是框架为每个 token 分配的 SaSession。	<br>
+ * 		- Custom-Session: 指的是以一个 特定的值 作为SessionId，来分配的 SaSession。	<br>
+ * 	  <br>
+ * 	  注意：以上分类仅为框架设计层面的概念区分，实际上它们的数据存储格式都是一致的。
+ * </p>
  *
+ * @author click33
+ * @since 1.10.0
  */
 public class SaSession implements SaSetValueInterface, Serializable {
 
@@ -29,28 +49,55 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 在 Session 上存储用户对象时建议使用的key 
+	 * 在 SaSession 上存储用户对象时建议使用的 key
 	 */
 	public static final String USER = "USER";
 
 	/**
-	 * 在 Session 上存储角色时建议使用的key 
+	 * 在 SaSession 上存储角色列表时建议使用的 key
 	 */
 	public static final String ROLE_LIST = "ROLE_LIST";
 
 	/**
-	 * 在 Session 上存储权限时建议使用的key 
+	 * 在 SaSession 上存储权限列表时建议使用的 key
 	 */
 	public static final String PERMISSION_LIST = "PERMISSION_LIST";
-	
-	/** 此 Session 的 id */
+
+	/**
+	 * 此 SaSession 的 id
+	 */
 	private String id;
 
-	/** 此 Session 的创建时间（时间戳） */
+	/**
+	 * 此 SaSession 的 类型
+	 */
+	private String type;
+
+	/**
+	 * 所属 loginType
+	 */
+	private String loginType;
+
+	/**
+	 * 所属 loginId （当此 SaSession 属于 Account-Session 时，此值有效）
+	 */
+	private Object loginId;
+
+	/**
+	 * 所属 Token （当此 SaSession 属于 Token-Session 时，此值有效）
+	 */
+	private String token;
+
+	/**
+	 * 此 SaSession 的创建时间（13位时间戳）
+	 */
 	private long createTime;
 
-	/** 此 Session 的所有挂载数据 */
+	/**
+	 * 所有挂载数据
+	 */
 	private final Map<String, Object> dataMap = new ConcurrentHashMap<>();
+
 
 	// ----------------------- 构建相关
 
@@ -77,16 +124,16 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 获取此 Session 的 id
-	 * @return 此 Session 的id
+	 * 获取：此 SaSession 的 id
+	 * @return /
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
-	 * 写入此 Session 的 id
-	 * @param id SessionId
+	 * 写入：此 SaSession 的 id
+	 * @param id /
 	 * @return 对象自身
 	 */
 	public SaSession setId(String id) {
@@ -95,16 +142,90 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 返回当前会话创建时间（时间戳）
-	 * @return 时间戳
+	 * 获取：此 SaSession 的 类型
+	 *
+	 * @return /
 	 */
-	public long getCreateTime() {
-		return createTime;
+	public String getType() {
+		return this.type;
 	}
 
 	/**
-	 * 写入此 Session 的创建时间（时间戳）
-	 * @param createTime 时间戳
+	 * 设置：此 SaSession 的 类型
+	 *
+	 * @param type /
+	 * @return 对象自身
+	 */
+	public SaSession setType(String type) {
+		this.type = type;
+		return this;
+	}
+
+	/**
+	 * 获取：所属 loginType
+	 * @return /
+	 */
+	public String getLoginType() {
+		return this.loginType;
+	}
+
+	/**
+	 * 设置：所属 loginType
+	 * @param loginType /
+	 * @return 对象自身
+	 */
+	public SaSession setLoginType(String loginType) {
+		this.loginType = loginType;
+		return this;
+	}
+
+	/**
+	 * 获取：所属 loginId （当此 SaSession 属于 Account-Session 时，此值有效）
+	 * @return /
+	 */
+	public Object getLoginId() {
+		return this.loginId;
+	}
+
+	/**
+	 * 设置：所属 loginId （当此 SaSession 属于 Account-Session 时，此值有效）
+	 * @param loginId /
+	 * @return 对象自身
+	 */
+	public SaSession setLoginId(Object loginId) {
+		this.loginId = loginId;
+		return this;
+	}
+
+	/**
+	 * 获取：所属 Token （当此 SaSession 属于 Token-Session 时，此值有效）
+	 * @return /
+	 */
+	public String getToken() {
+		return this.token;
+	}
+
+	/**
+	 * 设置：所属 Token （当此 SaSession 属于 Token-Session 时，此值有效）
+	 * @param token /
+	 * @return 对象自身
+	 */
+	public SaSession setToken(String token) {
+		this.token = token;
+		return this;
+	}
+
+	/**
+	 * 返回：当前 SaSession 的创建时间（13位时间戳）
+	 * @return /
+	 */
+	public long getCreateTime() {
+		return this.createTime;
+	}
+
+	/**
+	 * 写入：此 SaSession 的创建时间（13位时间戳）
+	 * @param createTime /
 	 * @return 对象自身
 	 */
 	public SaSession setCreateTime(long createTime) {
@@ -152,19 +273,38 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * @param device 设备类型，填 null 代表不限设备类型  
 	 * @return token签名列表
 	 */
-	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+	public List<TokenSign> getTokenSignListByDevice(String device) {
 		// 返回全部
 		if(device == null) {
 			return tokenSignListCopy();
 		}
-		// 返回筛选后的 
+		// 返回筛选后的
+		List<TokenSign> tokenSignList = tokenSignListCopy();
 		List<TokenSign> list = new ArrayList<>();
-		for (TokenSign tokenSign : tokenSignListCopy()) {
+		for (TokenSign tokenSign : tokenSignList) {
 			if(SaFoxUtil.equals(tokenSign.getDevice(), device)) {
 				list.add(tokenSign);
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * 获取当前 Session 上的所有 token 列表
+	 *
+	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @return 此 loginId 的所有登录 token
+	 */
+	public List<String> getTokenValueListByDevice(String device) {
+		// 遍历解析，按照设备类型进行筛选
+		List<TokenSign> tokenSignList = tokenSignListCopy();
+		List<String> tokenValueList = new ArrayList<>();
+		for (TokenSign tokenSign : tokenSignList) {
+			if(device == null || tokenSign.getDevice().equals(device)) {
+				tokenValueList.add(tokenSign.getValue());
+			}
+		}
+		return tokenValueList;
 	}
 
 	/**
@@ -188,13 +328,18 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * @param tokenSign Token 签名
 	 */
 	public void addTokenSign(TokenSign tokenSign) {
-		// 如果已经存在于列表中，则无需再次添加 
-		if(getTokenSign(tokenSign.getValue()) != null) {
-			return;
+		// 根据 tokenValue 值查重，如果不存在，则添加
+		TokenSign oldTokenSign = getTokenSign(tokenSign.getValue());
+		if(oldTokenSign == null) {
+			tokenSignList.add(tokenSign);
+			update();
+		} else {
+			// 如果存在，则更新
+			oldTokenSign.setValue(tokenSign.getValue());
+			oldTokenSign.setDevice(tokenSign.getDevice());
+			oldTokenSign.setTag(tokenSign.getTag());
+			update();
 		}
-		// 添加并更新
-		tokenSignList.add(tokenSign);
-		update();
 	}
 
 	/**
@@ -203,8 +348,9 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * @param tokenValue token值
 	 * @param device 设备类型
 	 */
+	@Deprecated
 	public void addTokenSign(String tokenValue, String device) {
-		addTokenSign(new TokenSign(tokenValue, device));
+		addTokenSign(new TokenSign(tokenValue, device, null));
 	}
 
 	/**
@@ -219,7 +365,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		}
 	}
 
-	
+
 	// ----------------------- 一些操作
 
 	/**
@@ -291,8 +437,9 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	protected long trans(long value) {
 		return value == SaTokenDao.NEVER_EXPIRE ? Long.MAX_VALUE : value;
 	}
-	
-	// ----------------------- 存取值 (类型转换) 
+
+
+	// ----------------------- 存取值 (类型转换)
 
 	// ---- 重写接口方法 
 	
@@ -327,7 +474,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 */
 	@Override
 	public SaSession setByNull(String key, Object value) {
-		if(has(key) == false) {
+		if( ! has(key)) {
 			dataMap.put(key, value);
 			update();
 		}
@@ -346,19 +493,20 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		return this;
 	}
 
-	// ---- 其它方法 
+
+	// ----------------------- 其它方法
 
 	/**
-	 * 返回当前Session的所有key 
+	 * 返回当前 Session 挂载数据的所有 key
 	 *
-	 * @return 所有值的key列表
+	 * @return key 列表
 	 */
 	public Set<String> keys() {
 		return dataMap.keySet();
 	}
 	
 	/**
-	 * 清空所有值 
+	 * 清空所有挂载数据
 	 */
 	public void clear() {
 		dataMap.clear();
@@ -366,7 +514,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 获取数据挂载集合（如果更新map里的值，请调用session.update()方法避免产生脏数据 ）
+	 * 获取数据挂载集合（如果更新map里的值，请调用 session.update() 方法避免产生脏数据 ）
 	 *
 	 * @return 返回底层储存值的map对象
 	 */
@@ -375,13 +523,27 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 写入数据集合 (不改变底层对象，只将此dataMap所有数据进行替换) 
+	 * 写入数据集合 (不改变底层对象引用，只将此 dataMap 所有数据进行替换)
 	 * @param dataMap 数据集合 
 	 */
 	public void refreshDataMap(Map<String, Object> dataMap) {
 		this.dataMap.clear();
 		this.dataMap.putAll(dataMap);
 		this.update();
+	}
+
+	//
+
+
+	/**
+	 * 请更换为：getTokenSignListByDevice(device)
+	 *
+	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @return token签名列表
+	 */
+	@Deprecated
+	public List<TokenSign> tokenSignListCopyByDevice(String device) {
+		return getTokenSignListByDevice(device);
 	}
 
 }

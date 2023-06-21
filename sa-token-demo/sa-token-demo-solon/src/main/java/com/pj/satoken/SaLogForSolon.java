@@ -11,7 +11,7 @@ import cn.dev33.satoken.util.StrFormatter;
 /**
  * 将 Sa-Token log 信息转接到 Solon  
  * 
- * @author kong
+ * @author click33
  * @since 2022-11-2
  */
 //@Component

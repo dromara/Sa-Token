@@ -50,11 +50,86 @@ public class SaSsoServerApplication {
 如果使用的是模式三，则排查是否有重复校验 ticket 的代码，一个 ticket 码只能使用一次，多次重复使用就会提示这个。
 
 
-### 模式一或者模式二报错：Could not write JSON: No serializer found for class com.pj.sso.SysUser and no properties discovered to create BeanSerializer 
+### 问：模式一或者模式二报错：Could not write JSON: No serializer found for class com.pj.sso.SysUser and no properties discovered to create BeanSerializer 
 
 一般是因为在 sso-server 端往 session 上写入了某个实体类（比如 User），而在 sso-client 端没有这个实体类，导致反序列化失败。
 
 解决方案：在 sso-client 也新建上这个类，而且包名需要与 sso-server 端的一致（直接从 sso-server 把实体类复制过来就好了）
+
+
+### 问：模式三配置一堆 xxx-url ，有办法简化一下吗？
+可以使用 `sa-token.sso.server-url` 来简化：
+
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
+
+在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
+
+``` yaml
+sa-token: 
+    sso: 
+        # SSO-Server端 统一认证地址 
+        auth-url: http://sa-sso-server.com:9000/sso/auth
+        # SSO-Server端 ticket校验地址 
+        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
+        # 单点注销地址 
+        slo-url: http://sa-sso-server.com:9000/sso/signout
+        # SSO-Server端 查询数据地址 
+        get-data-url: http://sa-sso-server.com:9000/sso/getData
+```
+
+一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
+``` yaml
+sa-token: 
+    sso: 
+        server-url: http://sa-sso-server.com:9000
+```
+
+只要你配置了 `server-url` 地址，Sa-Token 就可以自动拼接出其它四个地址：
+
+**例1，使用 server-url 简化：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`。
+- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth`，其它三个 url 配置项同理。
+
+**例2，使用 server-url + auth-url 简化：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`/sso/auth2`。
+- 框架拼接出的 auth-url 值就是：`http://sa-sso-server.com:9000/sso/auth2`，其它三个 url 配置项同理。
+
+**例3，auth-url 地址以 http 字符开头：**
+- 你配置的 server-url 值是：`http://sa-sso-server.com:9000`，auth-url 是：`http://my-site.com/sso/auth2`。
+- 此时框架只以 auth-url 值为准，得到的 auth-url 值是：`http://my-site.com/sso/auth2`，其它三个 url 配置项同理。
+
+
+### 问：我接手了一个项目，里面集成了 Sa-Token SSO ，请问怎么快速分辨它用的模式几？
+
+**方法一：看代码注释。**
+
+如果开发这个项目的人没有写清楚注释那就 gg 了。
+
+**方法二，根据配置项来分析，例如：**
+
+- 先看配置项 `sa-token.cookie.domain`，如果此配置项有值，一般是在使用模式一开发，否则就是模式二或者模式三。
+- 再看配置项 `sa-token.sso.is-http` ，如果有值且为 true，一般是在使用模式三，否则就是模式二。
+
+**方法三，根据配置项 `sa-token.sso.mode` 的提示来判断**
+
+`sa-token.sso.mode` 是框架预留的约定型配置项，此配置项不对代码逻辑产生任何影响，只为系统做一个标记，标注此系统用到了SSO的哪个模式。
+
+例如你可以将其配置为 `sa-token.sso.mode=client-2`，代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
+
+需要注意，这个配置项不是必须的，你不写也不会对代码造成任何影响，只有在你需要为系统做一个明确的标记时才需要去配置它，方便后人阅读代码时快速分析使用的模式。
+
+例如我们可以使用以下约定：
+
+- `sa-token.sso.mode=client-2`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
+- `sa-token.sso.mode=client-2,h5`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接，并且是前后端分离模式。
+- `sa-token.sso.mode=server-123`：代表当前系统为 sso-server 端，同时开放了 SSO 模式一、模式二、模式三。
+- `sa-token.sso.mode=server-2,client-2`：代表当前系统既是 sso-server 端，又是 sso-clent 端，使用模式二来对接。
+- 等等等等...
+
+此配置项可以是任意字符串，你也可以自己整理一套合适的表达规则。
+
+
+
 
 
 
@@ -112,7 +187,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 
 ### 问：如果 sso-client 端我没有集成 sa-token-sso，如何对接？
-需要手动调用 http 请求来对接 sso-server 开放的接口，参考示例：[sa-token-demo-sso3-client-nosdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso3-client-nosdk)
+需要手动调用 http 请求来对接 sso-server 开放的接口，参考示例：
+[sa-token-demo-sso3-client-nosdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client-nosdk)
 
 
 ### 问：如果 sso-client 端不是 java语言，可以对接吗？
@@ -184,6 +260,13 @@ public class SsoUserServerController {
 			public StpLogic getStpLogic() {
 				return StpUserUtil.stpLogic;
 			}
+            // 使用自定义的签名秘钥
+            SaSignConfig signConfig =  new SaSignConfig().setSecretKey("xxxx-新的秘钥-xxxx");
+            SaSignTemplate userSignTemplate = new SaSignTemplate().setSignConfig(signConfig);
+            @Override
+            public SaSignTemplate getSignTemplate() {
+                return userSignTemplate;
+            }
 		};
 		// 让这个SSO请求处理器，使用的路由前缀是 /sso-user，而不是原先的 /sso 
 		ssoUserTemplate.apiName.replacePrefix("/sso-user");

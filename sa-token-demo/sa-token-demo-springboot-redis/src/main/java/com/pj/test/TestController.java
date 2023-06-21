@@ -7,7 +7,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController
@@ -17,7 +17,7 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public SaResult test() {
-		System.out.println("------------进来了"); 
+		System.out.println("------------进来了");
 		return SaResult.ok();
 	}
 	

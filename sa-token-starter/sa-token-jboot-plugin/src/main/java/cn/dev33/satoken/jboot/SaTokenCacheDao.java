@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.jboot;
 
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -19,19 +34,19 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 使用Jboot的缓存方法存取Token数据
  */
-@SuppressWarnings({"deprecation", "unchecked", "rawtypes"})
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class SaTokenCacheDao implements SaTokenDao {
 
     protected SaRedisCache saRedisCache;
     protected JbootSerializer serializer;
 
-    private Map<String, SaRedisCache> saRedisMap = new ConcurrentHashMap();
+    private final Map<String, SaRedisCache> saRedisMap = new ConcurrentHashMap();
 
     /**
      * 使用默认redis配置
      */
     public SaTokenCacheDao() {
-        JbootRedisConfig config = (JbootRedisConfig) Jboot.config(JbootRedisConfig.class);
+        JbootRedisConfig config = Jboot.config(JbootRedisConfig.class);
         this.saRedisCache = new SaRedisCache(config);
         this.serializer = new SaJdkSerializer();
     }
@@ -42,21 +57,19 @@ public class SaTokenCacheDao implements SaTokenDao {
      * @param cacheName 使用的缓存配置名，默认为 default
      */
     public SaTokenCacheDao(String cacheName) {
-        SaRedisCache saCache = (SaRedisCache) this.saRedisMap.get(cacheName);
+        SaRedisCache saCache = this.saRedisMap.get(cacheName);
         if (saCache == null) {
             synchronized (this) {
-                saCache = (SaRedisCache) this.saRedisMap.get(cacheName);
+                saCache = this.saRedisMap.get(cacheName);
                 if (saCache == null) {
                     Map<String, JbootRedisConfig> configModels = ConfigUtil.getConfigModels(JbootRedisConfig.class);
                     if (!configModels.containsKey(cacheName)) {
                         throw new JbootIllegalConfigException("Please config \"jboot.redis." + cacheName + ".host\" in your jboot.properties.");
                     }
 
-                    JbootRedisConfig jbootRedisConfig = (JbootRedisConfig) configModels.get(cacheName);
+                    JbootRedisConfig jbootRedisConfig = configModels.get(cacheName);
                     saCache = new SaRedisCache(jbootRedisConfig);
-                    if (saCache != null) {
-                        this.saRedisMap.put(cacheName, saCache);
-                    }
+                    this.saRedisMap.put(cacheName, saCache);
                 }
             }
         }
@@ -256,7 +269,7 @@ public class SaTokenCacheDao implements SaTokenDao {
         Jedis jedis = saRedisCache.getJedis();
         try {
             Set<String> keys = jedis.keys(prefix + "*" + keyword + "*");
-            List<String> list = new ArrayList<String>(keys);
+            List<String> list = new ArrayList<>(keys);
             return SaFoxUtil.searchList(list, start, size, sortType);
         } finally {
             saRedisCache.returnResource(jedis);

@@ -20,22 +20,22 @@
 		<!-- Sa-Token Redis Dependency -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis</artifactId>
+            <artifactId>sa-token-redis</artifactId>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis-jackson</artifactId>
+            <artifactId>sa-token-redis-jackson</artifactId>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis-fastjson</artifactId>
+            <artifactId>sa-token-redis-fastjson</artifactId>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis-fastjson2</artifactId>
+            <artifactId>sa-token-redis-fastjson2</artifactId>
 			<optional>true</optional>
         </dependency>
         <!-- redis pool -->

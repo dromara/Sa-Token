@@ -7,7 +7,7 @@ import cn.dev33.satoken.SaManager;
 
 /**
  * Sa-Token 整合 WebSocket 鉴权示例 
- * @author kong
+ * @author click33
  *
  */
 @SpringBootApplication

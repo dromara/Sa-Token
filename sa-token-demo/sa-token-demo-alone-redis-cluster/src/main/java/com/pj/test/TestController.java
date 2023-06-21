@@ -10,7 +10,7 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController

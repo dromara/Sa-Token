@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.context;
 
 import cn.dev33.satoken.context.model.SaRequest;
@@ -7,20 +22,22 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.InvalidContextException;
 
 /**
- * Sa-Token 上下文处理器 [ThreadLocal版本] ---- 对象存储器 
- * 
- * @author kong
+ * Sa-Token 上下文处理器 [ThreadLocal 版本] ---- 对象存储器
  *
+ * <p> 一般情况下你不需要直接操作此类，因为框架的 starter 集成包里已经封装了完整的上下文操作 </p>
+ *
+ * @author click33
+ * @since 1.16.0
  */
 public class SaTokenContextForThreadLocalStorage {
 	
 	/**
-	 * 基于 ThreadLocal 的 [Box存储器] 
+	 * 基于 ThreadLocal 的 [ Box 存储器 ]
 	 */
-	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<Box>();
+	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<>();
 	
 	/**
-	 * 初始化 [Box存储器]
+	 * 初始化当前线程的 [ Box 存储器 ]
 	 * @param request {@link SaRequest}
 	 * @param response {@link SaResponse}
 	 * @param storage {@link SaStorage}
@@ -28,26 +45,26 @@ public class SaTokenContextForThreadLocalStorage {
 	public static void setBox(SaRequest request, SaResponse response, SaStorage storage) {
 		Box bok = new Box(request, response, storage);
 		boxThreadLocal.set(bok);
-	};
+	}
 
 	/**
-	 * 清除 [Box存储器]
+	 * 清除当前线程的 [ Box 存储器 ]
 	 */
 	public static void clearBox() {
 		boxThreadLocal.remove();
-	};
+	}
 
 	/**
-	 * 获取 [Box存储器]
-	 * @return see note
+	 * 获取当前线程的 [ Box 存储器 ]
+	 * @return /
 	 */
 	public static Box getBox() {
 		return boxThreadLocal.get();
-	};
+	}
 	
 	/**
-	 * 获取 [Box存储器], 如果为空则抛出异常 
-	 * @return see note
+	 * 获取当前线程的 [ Box 存储器 ], 如果为空则抛出异常
+	 * @return /
 	 */
 	public static Box getBoxNotNull() {
 		Box box = boxThreadLocal.get();
@@ -55,30 +72,30 @@ public class SaTokenContextForThreadLocalStorage {
 			throw new InvalidContextException("未能获取有效的上下文").setCode(SaErrorCode.CODE_10002);
 		}
 		return box;
-	};
+	}
 
 	/**
-	 * 在 [Box存储器] 获取 [Request] 对象
+	 * 在当前线程的 SaRequest 包装对象
 	 * 
-	 * @return see note 
+	 * @return /
 	 */
 	public static SaRequest getRequest() {
 		return getBoxNotNull().getRequest();
 	}
 
 	/**
-	 * 在 [Box存储器] 获取 [Response] 对象
+	 * 在当前线程的 SaResponse 包装对象
 	 * 
-	 * @return see note 
+	 * @return /
 	 */
 	public static SaResponse getResponse() {
 		return getBoxNotNull().getResponse();
 	}
 
 	/**
-	 * 在 [Box存储器] 获取 [存储器] 对象 
+	 * 在当前线程的 SaStorage 存储器包装对象
 	 * 
-	 * @return see note 
+	 * @return /
 	 */
 	public static SaStorage getStorage() {
 		return getBoxNotNull().getStorage();
@@ -86,12 +103,10 @@ public class SaTokenContextForThreadLocalStorage {
 
 	
 	/**
-	 * 临时内部类，用于存储[request、response、storage]三个对象 
-	 * @author kong
-	 */
-	/**
-	 * @author kong
+	 * Box 临时内部类，用于存储 [ SaRequest、SaResponse、SaStorage ] 三个包装对象
 	 *
+	 * @author click33
+	 * @since 1.16.0
 	 */
 	public static class Box {
 		

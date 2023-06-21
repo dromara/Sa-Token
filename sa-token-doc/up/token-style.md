@@ -51,7 +51,7 @@ public class SaTokenConfigure {
     @Autowired
     public void rewriteSaStrategy() {
     	// 重写 Token 生成策略 
-    	SaStrategy.me.createToken = (loginId, loginType) -> {
+    	SaStrategy.instance.createToken = (loginId, loginType) -> {
     		return SaFoxUtil.getRandomString(60);	// 随机60位长度字符串
     	};
     }

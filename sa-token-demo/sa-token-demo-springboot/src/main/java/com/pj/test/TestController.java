@@ -22,7 +22,7 @@ import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController
@@ -160,8 +160,8 @@ public class TestController {
 	public AjaxJson atCheck() {
 		System.out.println("======================= 进入方法，测试注解鉴权接口 ========================= ");
 		System.out.println("只有通过注解鉴权，才能进入此方法");
-//		StpUtil.checkActivityTimeout();
-//		StpUtil.updateLastActivityToNow();
+//		StpUtil.checkActiveTimeout();
+//		StpUtil.updateLastActiveToNow();
 		return AjaxJson.getSuccess();
 	}
 	
@@ -175,8 +175,8 @@ public class TestController {
 	// [活动时间] 续签： http://localhost:8081/test/rene
 	@RequestMapping("rene")
 	public AjaxJson rene() {
-		StpUtil.checkActivityTimeout();
-		StpUtil.updateLastActivityToNow();
+		StpUtil.checkActiveTimeout();
+		StpUtil.updateLastActiveToNow();
 		return AjaxJson.getSuccess("续签成功");
 	}
 	

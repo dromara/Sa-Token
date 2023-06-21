@@ -13,7 +13,7 @@ import cn.dev33.satoken.util.SaResult;
 
 /**
  * 处理 404  
- * @author kong 
+ * @author click33 
  */
 @RestController
 public class NotFoundHandle implements ErrorController {

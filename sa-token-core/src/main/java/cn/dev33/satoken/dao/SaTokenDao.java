@@ -1,163 +1,187 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.dao;
-
-import java.util.List;
 
 import cn.dev33.satoken.session.SaSession;
 
+import java.util.List;
+
 /**
- * Sa-Token持久层接口 
- * @author kong 
+ * Sa-Token 持久层接口
+ *
+ * <p>
+ *     此接口的不同实现类可将数据存储至不同位置，如：内存Map、Redis 等等。
+ *     如果你要自定义数据存储策略，也需通过实现此接口来完成。
+ * </p>
+ *
+ * @author click33
+ * @since 1.10.0
  */
 public interface SaTokenDao {
 
-	/** 常量，表示一个key永不过期 (在一个key被标注为永远不过期时返回此值) */ 
-	public static final long NEVER_EXPIRE = -1;
+	/** 常量，表示一个 key 永不过期 （在一个 key 被标注为永远不过期时返回此值） */
+	long NEVER_EXPIRE = -1;
 	
-	/** 常量，表示系统中不存在这个缓存 (在对不存在的key获取剩余存活时间时返回此值) */ 
-	public static final long NOT_VALUE_EXPIRE = -2;
+	/** 常量，表示系统中不存在这个缓存（在对不存在的 key 获取剩余存活时间时返回此值） */
+	long NOT_VALUE_EXPIRE = -2;
 
 	
 	// --------------------- 字符串读写 ---------------------
 	
 	/**
-	 * 获取Value，如无返空 
+	 * 获取 value，如无返空
+	 *
 	 * @param key 键名称 
 	 * @return value
 	 */
-	public String get(String key);
+	String get(String key);
 
 	/**
-	 * 写入Value，并设定存活时间 (单位: 秒)
+	 * 写入 value，并设定存活时间（单位: 秒）
+	 *
 	 * @param key 键名称 
 	 * @param value 值 
-	 * @param timeout 过期时间(值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储)
+	 * @param timeout 数据有效期（值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储）
 	 */
-	public void set(String key, String value, long timeout);
+	void set(String key, String value, long timeout);
 
 	/**
-	 * 更新Value (过期时间不变) 
+	 * 更新 value （过期时间不变）
 	 * @param key 键名称 
 	 * @param value 值 
 	 */
-	public void update(String key, String value);
+	void update(String key, String value);
 
 	/**
-	 * 删除Value 
+	 * 删除 value
 	 * @param key 键名称 
 	 */
-	public void delete(String key);
+	void delete(String key);
 	
 	/**
-	 * 获取Value的剩余存活时间 (单位: 秒) 
-	 * @param key 指定key 
-	 * @return 这个key的剩余存活时间 
+	 * 获取 value 的剩余存活时间（单位: 秒）
+	 * @param key 指定 key
+	 * @return 这个 key 的剩余存活时间
 	 */
-	public long getTimeout(String key);
+	long getTimeout(String key);
 	
 	/**
-	 * 修改Value的剩余存活时间 (单位: 秒) 
-	 * @param key 指定key
-	 * @param timeout 过期时间 
+	 * 修改 value 的剩余存活时间（单位: 秒）
+	 * @param key 指定 key
+	 * @param timeout 过期时间（单位: 秒）
 	 */
-	public void updateTimeout(String key, long timeout);
+	void updateTimeout(String key, long timeout);
 
 	
 	// --------------------- 对象读写 ---------------------
 
 	/**
-	 * 获取Object，如无返空 
+	 * 获取 Object，如无返空
 	 * @param key 键名称 
 	 * @return object
 	 */
-	public Object getObject(String key);
+	Object getObject(String key);
 
 	/**
-	 * 写入Object，并设定存活时间 (单位: 秒)
+	 * 写入 Object，并设定存活时间 （单位: 秒）
 	 * @param key 键名称 
 	 * @param object 值 
-	 * @param timeout 存活时间 (值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储)
+	 * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储）
 	 */
-	public void setObject(String key, Object object, long timeout);
+	void setObject(String key, Object object, long timeout);
 
 	/**
-	 * 更新Object (过期时间不变) 
+	 * 更新 Object （过期时间不变）
 	 * @param key 键名称 
 	 * @param object 值 
 	 */
-	public void updateObject(String key, Object object);
+	void updateObject(String key, Object object);
 
 	/**
-	 * 删除Object 
+	 * 删除 Object
 	 * @param key 键名称 
 	 */
-	public void deleteObject(String key);
+	void deleteObject(String key);
 	
 	/**
-	 * 获取Object的剩余存活时间 (单位: 秒)
-	 * @param key 指定key 
-	 * @return 这个key的剩余存活时间 
+	 * 获取 Object 的剩余存活时间 （单位: 秒）
+	 * @param key 指定 key
+	 * @return 这个 key 的剩余存活时间
 	 */
-	public long getObjectTimeout(String key);
+	long getObjectTimeout(String key);
 	
 	/**
-	 * 修改Object的剩余存活时间 (单位: 秒)
-	 * @param key 指定key
-	 * @param timeout 过期时间 
+	 * 修改 Object 的剩余存活时间（单位: 秒）
+	 * @param key 指定 key
+	 * @param timeout 剩余存活时间
 	 */
-	public void updateObjectTimeout(String key, long timeout);
+	void updateObjectTimeout(String key, long timeout);
 
 	
-	// --------------------- Session读写 ---------------------
+	// --------------------- SaSession 读写 （默认复用 Object 读写方法） ---------------------
 
 	/**
-	 * 获取Session，如无返空 
+	 * 获取 SaSession，如无返空
 	 * @param sessionId sessionId
 	 * @return SaSession
 	 */
-	public default SaSession getSession(String sessionId) {
+	default SaSession getSession(String sessionId) {
 		return (SaSession)getObject(sessionId);
 	}
 
 	/**
-	 * 写入Session，并设定存活时间 (单位: 秒) 
-	 * @param session 要保存的Session对象
-	 * @param timeout 过期时间 (单位: 秒)
+	 * 写入 SaSession，并设定存活时间（单位: 秒）
+	 * @param session 要保存的 SaSession 对象
+	 * @param timeout 过期时间（单位: 秒）
 	 */
-	public default void setSession(SaSession session, long timeout) {
+	default void setSession(SaSession session, long timeout) {
 		setObject(session.getId(), session, timeout);
 	}
 
 	/**
-	 * 更新Session
-	 * @param session 要更新的session对象
+	 * 更新 SaSession
+	 * @param session 要更新的 SaSession 对象
 	 */
-	public default void updateSession(SaSession session) {
+	default void updateSession(SaSession session) {
 		updateObject(session.getId(), session);
 	}
 	
 	/**
-	 * 删除Session
+	 * 删除 SaSession
 	 * @param sessionId sessionId
 	 */
-	public default void deleteSession(String sessionId) {
+	default void deleteSession(String sessionId) {
 		deleteObject(sessionId);
 	}
 
 	/**
-	 * 获取Session剩余存活时间 (单位: 秒) 
-	 * @param sessionId 指定Session 
-	 * @return 这个Session的剩余存活时间 
+	 * 获取 SaSession 剩余存活时间（单位: 秒）
+	 * @param sessionId 指定 SaSession
+	 * @return 这个 SaSession 的剩余存活时间
 	 */
-	public default long getSessionTimeout(String sessionId) {
+	default long getSessionTimeout(String sessionId) {
 		return getObjectTimeout(sessionId);
 	}
 	
 	/**
-	 * 修改Session剩余存活时间 (单位: 秒) 
-	 * @param sessionId 指定Session 
-	 * @param timeout 过期时间 
+	 * 修改 SaSession 剩余存活时间（单位: 秒）
+	 * @param sessionId 指定 SaSession
+	 * @param timeout 剩余存活时间
 	 */
-	public default void updateSessionTimeout(String sessionId, long timeout) {
+	default void updateSessionTimeout(String sessionId, long timeout) {
 		updateObjectTimeout(sessionId, timeout);
 	}
 	
@@ -169,12 +193,12 @@ public interface SaTokenDao {
 	 * @param prefix 前缀 
 	 * @param keyword 关键字 
 	 * @param start 开始处索引
-	 * @param size 获取数量  (-1代表从start处一直取到末尾) 
+	 * @param size 获取数量  (-1代表从 start 处一直取到末尾)
 	 * @param sortType 排序类型（true=正序，false=反序）
 	 * 
 	 * @return 查询到的数据集合 
 	 */
-	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType);
+	List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType);
 	
 	
 }

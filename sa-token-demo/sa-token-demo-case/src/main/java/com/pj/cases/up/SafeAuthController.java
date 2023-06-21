@@ -9,7 +9,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * Sa-Token 二级认证示例 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-16 
  */
 @RestController

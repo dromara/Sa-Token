@@ -64,7 +64,7 @@ sa-token.cookie.domain=stp.com
 
 ### 4、搭建 Client 端项目 
 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso1-client/`，如遇到难点可结合源码进行测试学习。
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client/`，如遇到难点可结合源码进行测试学习。
 
 
 #### 4.1、引入依赖
@@ -127,7 +127,7 @@ implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
 ``` java
 /**
  * Sa-Token-SSO Client端 Controller 
- * @author kong
+ * @author click33
  */
 @RestController
 public class SsoClientController {

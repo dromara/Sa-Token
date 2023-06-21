@@ -31,14 +31,14 @@ RPC 模式的调用，可以让我们像调用本地方法一样完成服务通�
 <!-- Sa-Token 整合 Dubbo -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-context-dubbo</artifactId>
+	<artifactId>sa-token-dubbo</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // Sa-Token 整合 Dubbo
-implementation 'cn.dev33:sa-token-context-dubbo:${sa.top.version}'
+implementation 'cn.dev33:sa-token-dubbo:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 

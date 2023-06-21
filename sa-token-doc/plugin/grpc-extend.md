@@ -25,14 +25,14 @@
 <!-- Sa-Token 整合 grpc -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-context-grpc</artifactId>
+	<artifactId>sa-token-grpc</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // Sa-Token 整合 grpc
-implementation 'cn.dev33:sa-token-context-grpc:${sa.top.version}'
+implementation 'cn.dev33:sa-token-grpc:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 

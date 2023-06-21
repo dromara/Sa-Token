@@ -10,7 +10,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * Sa-Token 登录认证示例 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-13
  */
 @RestController
@@ -111,8 +111,8 @@ public class LoginAuthController {
 		System.out.println("当前登录账号的类型：" + info.getLoginType());
 		System.out.println("当前登录客户端的设备类型：" + info.getLoginDevice());
 		System.out.println("当前 Token 的剩余有效期：" + info.getTokenTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
-		System.out.println("当前 Token 的剩余临时有效期：" + info.getTokenActivityTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
-		System.out.println("当前 User-Session 的剩余有效期" + info.getSessionTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
+		System.out.println("当前 Token 距离被冻结还剩：" + info.getTokenActiveTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
+		System.out.println("当前 Account-Session 的剩余有效期" + info.getSessionTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
 		System.out.println("当前 Token-Session 的剩余有效期" + info.getTokenSessionTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
 		
 		// 返回给前端 

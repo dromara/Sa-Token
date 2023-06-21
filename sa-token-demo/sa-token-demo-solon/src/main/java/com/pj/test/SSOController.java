@@ -10,7 +10,7 @@ import org.noear.solon.annotation.Param;
 
 /**
  * 测试: 同域单点登录
- * @author kong
+ * @author click33
  * @author noear
  */
 @Controller

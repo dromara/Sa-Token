@@ -7,7 +7,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * 测试专用Controller 
- * @author kong
+ * @author click33
  *
  */
 @RestController

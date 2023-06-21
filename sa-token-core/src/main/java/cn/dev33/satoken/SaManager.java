@@ -1,7 +1,19 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
@@ -19,24 +31,28 @@ import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.log.SaLogForConsole;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
-import cn.dev33.satoken.sign.SaSignTemplateDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.temp.SaTempDefaultImpl;
 import cn.dev33.satoken.temp.SaTempInterface;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
- * 管理 Sa-Token 所有全局组件  
- * @author kong
+ * 管理 Sa-Token 所有全局组件，可通过此类快速获取、写入各种全局组件对象
  *
+ * @author click33
+ * @since 1.18.0
  */
 public class SaManager {
 
 	/**
-	 * 配置文件 Bean 
+	 * 全局配置对象
 	 */
 	public volatile static SaTokenConfig config;	
 	public static void setConfig(SaTokenConfig config) {
@@ -46,16 +62,26 @@ public class SaManager {
 		if(config !=null && config.getIsPrint()) {
 			SaFoxUtil.printSaToken();
 		}
-		
+
+		// 如果此 config 对象没有配置 isColorLog 的值，则框架为它自动判断一下
+		if(config != null && config.getIsLog() != null && config.getIsLog() && config.getIsColorLog() == null) {
+			config.setIsColorLog(SaFoxUtil.isCanColorLog());
+		}
+
 		// $$ 全局事件 
 		SaTokenEventCenter.doSetConfig(config);
 		
-		// 调用一次StpUtil中的方法，保证其可以尽早的初始化 StpLogic 
+		// 调用一次 StpUtil 中的方法，保证其可以尽早的初始化 StpLogic
 		StpUtil.getLoginType();
 	}
 	private static void setConfigMethod(SaTokenConfig config) {
 		SaManager.config = config;
 	}
+
+	/**
+	 * 获取 Sa-Token 的全局配置信息
+	 * @return 全局配置信息
+	 */
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
 			synchronized (SaManager.class) {
@@ -68,7 +94,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 持久化 Bean 
+	 * 持久化组件
 	 */
 	private volatile static SaTokenDao saTokenDao;
 	public static void setSaTokenDao(SaTokenDao saTokenDao) {
@@ -93,7 +119,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 权限认证 Bean 
+	 * 权限数据源组件
 	 */
 	private volatile static StpInterface stpInterface;
 	public static void setStpInterface(StpInterface stpInterface) {
@@ -112,7 +138,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 上下文Context Bean  
+	 * 一级上下文 SaTokenContextContext
 	 */
 	private volatile static SaTokenContext saTokenContext;
 	public static void setSaTokenContext(SaTokenContext saTokenContext) {
@@ -124,7 +150,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 二级Context 
+	 * 二级上下文 SaTokenSecondContext
 	 */
 	private volatile static SaTokenSecondContext saTokenSecondContext;
 	public static void setSaTokenSecondContext(SaTokenSecondContext saTokenSecondContext) {
@@ -136,7 +162,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 获取一个可用的SaTokenContext 
+	 * 获取一个可用的 SaTokenContext （按照一级上下文、二级上下文、默认上下文的顺序来判断）
 	 * @return / 
 	 */
 	public static SaTokenContext getSaTokenContextOrSecond() {
@@ -160,7 +186,7 @@ public class SaManager {
 	}
 
 	/**
-	 * 临时令牌验证模块 Bean  
+	 * 临时 token 认证模块
 	 */
 	private volatile static SaTempInterface saTemp;
 	public static void setSaTemp(SaTempInterface saTemp) {
@@ -179,7 +205,7 @@ public class SaManager {
 	}
 
 	/**
-	 * JSON 转换器 Bean 
+	 * JSON 转换器
 	 */
 	private volatile static SaJsonTemplate saJsonTemplate;
 	public static void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
@@ -198,7 +224,7 @@ public class SaManager {
 	}
 
 	/**
-	 * 参数签名 Bean 
+	 * API 参数签名
 	 */
 	private volatile static SaSignTemplate saSignTemplate;
 	public static void setSaSignTemplate(SaSignTemplate saSignTemplate) {
@@ -209,7 +235,7 @@ public class SaManager {
 		if (saSignTemplate == null) {
 			synchronized (SaManager.class) {
 				if (saSignTemplate == null) {
-					SaManager.saSignTemplate = new SaSignTemplateDefaultImpl();
+					SaManager.saSignTemplate = new SaSignTemplate();
 				}
 			}
 		}
@@ -217,7 +243,7 @@ public class SaManager {
 	}
 
 	/**
-	 * Same-Token Bean 
+	 * Same-Token 同源系统认证模块
 	 */
 	private volatile static SaSameTemplate saSameTemplate;
 	public static void setSaSameTemplate(SaSameTemplate saSameTemplate) {
@@ -248,9 +274,9 @@ public class SaManager {
 	}
 	
 	/**
-	 * StpLogic集合, 记录框架所有成功初始化的StpLogic 
+	 * StpLogic 集合, 记录框架所有成功初始化的 StpLogic
 	 */
-	public static Map<String, StpLogic> stpLogicMap = new LinkedHashMap<String, StpLogic>();
+	public static Map<String, StpLogic> stpLogicMap = new LinkedHashMap<>();
 	
 	/**
 	 * 向全局集合中 put 一个 StpLogic 
@@ -258,6 +284,13 @@ public class SaManager {
 	 */
 	public static void putStpLogic(StpLogic stpLogic) {
 		stpLogicMap.put(stpLogic.getLoginType(), stpLogic);
+	}
+
+	/**
+	 * 在全局集合中 移除 一个 StpLogic
+	 */
+	public static void removeStpLogic(String loginType) {
+		stpLogicMap.remove(loginType);
 	}
 
 	/**
@@ -270,7 +303,7 @@ public class SaManager {
 	}
 	
 	/**
-	 * 根据 LoginType 获取对应的StpLogic，如果不存在，isCreate参数=是否自动创建并返回 
+	 * 根据 LoginType 获取对应的StpLogic，如果不存在，isCreate = 是否自动创建并返回
 	 * @param loginType 对应的账号类型 
 	 * @param isCreate 在 StpLogic 不存在时，true=新建并返回，false=抛出异常
 	 * @return 对应的StpLogic
@@ -290,9 +323,7 @@ public class SaManager {
 				synchronized (SaManager.class) {
 					stpLogic = stpLogicMap.get(loginType);
 					if(stpLogic == null) {
-						stpLogic = new StpLogic(loginType);
-						// 此处无需手动put，因为 StpLogic 构造方法中会自动put 
-						// putStpLogic(stpLogic); 
+						stpLogic = SaStrategy.instance.createStpLogic.apply(loginType);
 					}
 				}
 			} 

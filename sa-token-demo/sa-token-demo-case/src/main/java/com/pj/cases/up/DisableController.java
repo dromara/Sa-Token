@@ -9,7 +9,7 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * Sa-Token 账号封禁示例 
  * 
- * @author kong
+ * @author click33
  * @since 2022-10-17 
  */
 @RestController

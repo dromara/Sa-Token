@@ -26,7 +26,7 @@ public class GlobalException {
 
 		// 打印堆栈，以供调试
 		System.out.println("全局异常---------------");
-		e.printStackTrace(); 
+		e.printStackTrace();
 
 		// 不同异常返回不同状态码 
 		AjaxJson aj = null;

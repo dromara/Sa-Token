@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.listener;
 
 import static cn.dev33.satoken.SaManager.log;
@@ -8,10 +23,10 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Sa-Token 侦听器实现：Log 打印 
+ * Sa-Token 侦听器的一个实现：Log 打印
  * 
- * @author kong
- * @since 2022-11-2
+ * @author click33
+ * @since 1.33.0
  */
 public class SaTokenListenerForLog implements SaTokenListener {
 
@@ -20,7 +35,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
-		log.info("账号 {} 登录成功 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 登录成功 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -28,7 +43,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doLogout(String loginType, Object loginId, String tokenValue) {
-		log.info("账号 {} 注销登录 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 注销登录 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -36,7 +51,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doKickout(String loginType, Object loginId, String tokenValue) {
-		log.info("账号 {} 被踢下线 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 被踢下线 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -44,7 +59,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doReplaced(String loginType, Object loginId, String tokenValue) {
-		log.info("账号 {} 被顶下线 (loginType={}), 会话凭证Token={}", loginId, loginType, tokenValue);
+		log.info("账号 {} 被顶下线 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 
 	/**
@@ -68,7 +83,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doOpenSafe(String loginType, String tokenValue, String service, long safeTime) {
-		log.info("Token 二级认证成功, 业务标识={}, 有效期={}秒, Token值={}", service, safeTime, tokenValue);
+		log.info("token 二级认证成功, 业务标识={}, 有效期={}秒, Token值={}", service, safeTime, tokenValue);
 	}
 
 	/**
@@ -76,7 +91,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doCloseSafe(String loginType, String tokenValue, String service) {
-		log.info("Token 二级认证关闭, 业务标识={}, Token值={}", service, tokenValue);
+		log.info("token 二级认证关闭, 业务标识={}, Token值={}", service, tokenValue);
 	}
 
 	/**
@@ -100,19 +115,19 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
-		log.info("Token 续期成功, {} 秒后到期, 帐号={}, Token值={} ", timeout, loginId, tokenValue);
+		log.info("token 续期成功, {} 秒后到期, 帐号={}, token值={} ", timeout, loginId, tokenValue);
 	}
 
 
 	/**
 	 * 全局组件载入 
-	 * @param comtName 组件名称 
-	 * @param comtObj 组件对象 
+	 * @param compName 组件名称
+	 * @param compObj 组件对象
 	 */
 	@Override
-	public void doRegisterComponent(String comtName, Object comtObj) {
-		String canonicalName = comtObj == null ? null : comtObj.getClass().getCanonicalName();
-		log.info("全局组件 {} 载入成功: {}", comtName, canonicalName);
+	public void doRegisterComponent(String compName, Object compObj) {
+		String canonicalName = compObj == null ? null : compObj.getClass().getCanonicalName();
+		log.info("全局组件 {} 载入成功: {}", compName, canonicalName);
 	}
 
 	/**

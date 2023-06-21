@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.sso;
 
 import cn.dev33.satoken.config.SaSsoConfig;
@@ -15,8 +30,8 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * SSO 请求处理器 
  * 
- * @author kong
- * @since 2022-10-25
+ * @author click33
+ * @since 1.32.0
  */
 public class SaSsoProcessor {
 
@@ -79,7 +94,7 @@ public class SaSsoProcessor {
 		
 		// ---------- 此处有两种情况分开处理：
 		// ---- 情况1：在SSO认证中心尚未登录，需要先去登录 
-		if(stpLogic.isLogin() == false) {
+		if( ! stpLogic.isLogin()) {
 			return cfg.getNotLoginView().get();
 		}
 		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
@@ -126,16 +141,15 @@ public class SaSsoProcessor {
 		
 		// 校验ticket，获取 loginId 
 		Object loginId = ssoTemplate.checkTicket(ticket, client);
+		if(SaFoxUtil.isEmpty(loginId)) {
+			return SaResult.error("无效ticket：" + ticket);
+		}
 
 		// 注册此客户端的单点注销回调URL 
 		ssoTemplate.registerSloCallbackUrl(loginId, sloCallback);
 		
-		// 给 client 端响应结果 
-		if(SaFoxUtil.isEmpty(loginId)) {
-			return SaResult.error("无效ticket：" + ticket);
-		} else {
-			return SaResult.data(loginId);
-		}
+		// 给 client 端响应结果
+		return SaResult.data(loginId);
 	}
 
 	/**
@@ -149,7 +163,7 @@ public class SaSsoProcessor {
 		ParamName paramName = ssoTemplate.paramName;
 		
 		// SSO-Server端：单点注销 [用户访问式]   (不带loginId参数) 
-		if(cfg.getIsSlo() && req.hasParam(paramName.loginId) == false) {
+		if(cfg.getIsSlo() && ! req.hasParam(paramName.loginId)) {
 			return ssoSignoutByUserVisit();
 		}
 		
@@ -193,7 +207,7 @@ public class SaSsoProcessor {
 		String loginId = req.getParam(paramName.loginId);
 		
 		// step.1 校验签名 
-		ssoTemplate.checkSign(req);
+		ssoTemplate.getSignTemplate().checkRequest(req);
 		
 		// step.2 单点注销 
 		ssoTemplate.ssoLogout(loginId);
@@ -295,7 +309,7 @@ public class SaSsoProcessor {
 		SaSsoConfig cfg = SaSsoManager.getConfig();
 		
 		// ---------- SSO-Client端：单点注销 [模式二]
-		if(cfg.getIsSlo() && cfg.getIsHttp() == false) {
+		if(cfg.getIsSlo() && ! cfg.getIsHttp()) {
 			return ssoLogoutType2();
 		}
 
@@ -338,7 +352,7 @@ public class SaSsoProcessor {
 		StpLogic stpLogic = ssoTemplate.getStpLogic();
 		
 		// 如果未登录，则无需注销 
-        if(stpLogic.isLogin() == false) {
+        if( ! stpLogic.isLogin()) {
         	return ssoLogoutBack(req, res);
         }
         
@@ -374,7 +388,7 @@ public class SaSsoProcessor {
 		String loginId = req.getParamNotNull(paramName.loginId);
 		
 		// 注销当前应用端会话
-		ssoTemplate.checkSign(req);
+		ssoTemplate.getSignTemplate().checkRequest(req);
 		stpLogic.logout(loginId);
 		
 		// 响应 
@@ -443,9 +457,9 @@ public class SaSsoProcessor {
 			// 发起请求 
 			String checkUrl = ssoTemplate.buildCheckTicketUrl(ticket, ssoLogoutCall);
 			SaResult result = ssoTemplate.request(checkUrl);
-			
+
 			// 校验 
-			if(result.getCode() == SaResult.CODE_SUCCESS) {
+			if(result.getCode() != null && result.getCode() == SaResult.CODE_SUCCESS) {
 				return result.getData();
 			} else {
 				// 将 sso-server 回应的消息作为异常抛出 

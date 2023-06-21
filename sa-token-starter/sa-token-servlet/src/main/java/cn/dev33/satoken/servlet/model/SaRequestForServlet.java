@@ -1,6 +1,22 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.servlet.model;
 
 import java.io.IOException;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -14,9 +30,10 @@ import cn.dev33.satoken.servlet.error.SaServletErrorCode;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * Request for Servlet 
- * @author kong
+ * 对 SaRequest 包装类的实现（Servlet 版）
  *
+ * @author click33
+ * @since 1.19.0
  */
 public class SaRequestForServlet implements SaRequest {
 
@@ -47,6 +64,36 @@ public class SaRequestForServlet implements SaRequest {
 	@Override
 	public String getParam(String name) {
 		return request.getParameter(name);
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数名称
+	 * @return 参数名称列表
+	 */
+	@Override
+	public List<String> getParamNames(){
+		Enumeration<String> parameterNames = request.getParameterNames();
+		List<String> list = new ArrayList<>();
+		while (parameterNames.hasMoreElements()) {
+			list.add(parameterNames.nextElement());
+		}
+		return list;
+	}
+
+	/**
+	 * 获取 [请求体] 里提交的所有参数
+	 * @return 参数列表
+	 */
+	@Override
+	public Map<String, String> getParamMap(){
+		// 获取所有参数
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String> map = new LinkedHashMap<>(parameterMap.size());
+		for (String key : parameterMap.keySet()) {
+			String[] values = parameterMap.get(key);
+			map.put(key, values[0]);
+		}
+		return map;
 	}
 
 	/**
@@ -87,7 +134,7 @@ public class SaRequestForServlet implements SaRequest {
 	 */
 	public String getUrl() {
 		String currDomain = SaManager.getConfig().getCurrDomain();
-		if(SaFoxUtil.isEmpty(currDomain) == false) {
+		if( ! SaFoxUtil.isEmpty(currDomain)) {
 			return currDomain + this.getRequestPath();
 		}
 		return request.getRequestURL().toString();

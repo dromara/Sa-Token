@@ -14,8 +14,8 @@
 
 所以模式三的主要目标：也就是在 模式二的基础上 解决上述 三个难题 
 
-> 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso3-client/` 
-> [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso3-client)，如遇难点可参考示例 
+> 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client/` 
+> [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)，如遇难点可参考示例 
 
 
 ### 2、在Client 端更改 Ticket 校验方式
@@ -98,109 +98,160 @@ forest.log-enabled: false
 > 注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰
 
 
-### 3、获取 Userinfo 
-除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的同步。
+### 3、获取 UserInfo 
+除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的拉取。
 
-在模式二中我们只需要将需要同步的资料放到 SaSession 即可，但是在模式三中两端不再连接同一个Redis，这时候我们需要通过http接口来同步信息：
+在模式二中我们只需要将需要同步的资料放到 SaSession 即可，但是在模式三中两端不再连接同一个 Redis，这时候我们需要通过 http 接口来同步信息。
 
-#### 3.1、在 Server 端自定义接口，查询用户资料
+在旧版本`（<= v1.34.0）` 框架提供的方案是配置 getUserinfo 接口地址，从 client 调用拉取数据，该方案有以下缺点：
+- 每次调用只能传递固定 loginId 一个参数，不方便。
+- 只能拉取 userinfo 数据，不通用。
+- 如果还需要拉取其它业务数据，需要再自定义一个接口，比较麻烦。
+
+为此，我们设计了更通用、灵活的 getData 接口，解决上述三个难题。
+
+#### 3.1、首先在 Server 端开放一个查询数据的接口
+
 ``` java
-// 自定义接口：获取userinfo 
-@RequestMapping("/sso/userinfo")
-public Object userinfo(String loginId) {
-	System.out.println("---------------- 获取userinfo --------");
-	
-	// 校验签名，防止敏感信息外泄  
-	SaSsoUtil.checkSign(SaHolder.getRequest());
+// 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
+@RequestMapping("/sso/getData")
+public SaResult getData(String apiType, String loginId) {
+	System.out.println("---------------- 获取数据 ----------------");
+	System.out.println("apiType=" + apiType);
+	System.out.println("loginId=" + loginId);
+
+	// 校验签名：只有拥有正确秘钥发起的请求才能通过校验
+	SaSignUtil.checkRequest(SaHolder.getRequest());
 
 	// 自定义返回结果（模拟）
 	return SaResult.ok()
 			.set("id", loginId)
-			.set("name", "linxiaoyu")
+			.set("name", "LinXiaoYu")
 			.set("sex", "女")
 			.set("age", 18);
 }
 ```
 
-#### 3.2、在 Client 端调用此接口查询 userinfo
+#### 3.2、在 Client 端调用此接口查询数据
+
 首先在 application.yml 中配置接口地址：
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
 ``` yaml
 sa-token: 
     sso: 
-        # SSO-Server端 查询userinfo地址 
-        userinfo-url: http://sa-sso-server.com:9000/sso/userinfo
+        # sso-server 端拉取数据地址 
+        get-data-url: http://sa-sso-server.com:9000/sso/getData
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
-# SSO-Server端 查询userinfo地址 
-sa-token.sso.userinfo-url=http://sa-sso-server.com:9000/sso/userinfo
+# sso-server 端拉取数据地址 
+sa-token.sso.get-data-url=http://sa-sso-server.com:9000/sso/getData
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-
-
-然后在`SsoClientController`中新增接口 
+然后在 `SsoClientController` 中新增接口 
 ``` java
 // 查询我的账号信息 
-@RequestMapping("/sso/myinfo")
-public Object myinfo() {
-	Object userinfo = SaSsoUtil.getUserinfo(StpUtil.getLoginId());
-	System.out.println("--------info：" + userinfo);
-	return userinfo;
+@RequestMapping("/sso/myInfo")
+public Object myInfo() {
+	// 组织请求参数
+	Map<String, Object> map = new HashMap<>();
+	map.put("apiType", "userinfo");
+	map.put("loginId", StpUtil.getLoginId());
+
+	// 发起请求
+	Object resData = SaSsoUtil.getData(map);
+	System.out.println("sso-server 返回的信息：" + resData);
+	return resData;
 }
 ```
 
 #### 3.3、访问测试
-访问测试：[http://sa-sso-client1.com:9001/sso/myinfo](http://sa-sso-client1.com:9001/sso/myinfo)
+访问测试：[http://sa-sso-client1.com:9001/sso/myInfo](http://sa-sso-client1.com:9001/sso/myInfo)
 
 
 ### 4、自定义接口通信
 
-群里有小伙伴提问：`SaSsoUtil.getUserinfo` 提供的参数太少，只有一个 loginId，无法满足业务需求怎么办？
+上述示例展示在 client 端向 server 拉取 userinfo 数据的步骤，如果你还需要拉取其它业务的数据，稍加改造示例便可以实现。
 
-答：SaSsoUtil.getUserinfo只是为了避免你在项目中硬编码认证中心 url 而提供的简易封装，如果这个API无法满足你的业务需求，
-你完全可以在 Server 端自定义一些接口然后从 Client 端使用 http 工具调用即可。
+#### 4.1、方式一，使用 apiType 参数来区分业务
 
-以下是一个简单的示例：
+我们可以约定好，使用 apiType 来区分不同的业务，例如：
+- 当 `apiType=userinfo` 时：代表拉取用户资料。
+- 当 `apiType=followList` 时：代表拉取用户的关注列表。
+- 当 `apiType=fansList` 时：代表拉取用户的粉丝列表。
 
-#### 4.1、先在 sso-server 端自定义一个接口
-``` java
-// 获取指定用户的关注列表 
-@RequestMapping("/sso/getFollowList")
-public Object ssoRequest(Long loginId) {
+此时，我们便可以通过在 client 端传入不同的 apiType 参数，来区分不同的业务。
 
-	// 校验签名，签名不通过直接抛出异常 
-	SaSsoUtil.checkSign(SaHolder.getRequest());
-
-	// 查询数据 (此处仅做模拟)
-	List<Integer> list = Arrays.asList(10041, 10042, 10043, 10044);
-	
-	// 返回 
-	return list;
-}
-```
-
-
-#### 4.2、然后在 sso-client 端调用这个接口 
 ``` java
 // 查询我的账号信息 
 @RequestMapping("/sso/myFollowList")
 public Object myFollowList() {
-	// 组织url，加上签名参数 
-	String url = SaSsoUtil.addSignParams("http://sa-sso-server.com:9000/sso/getFollowList", StpUtil.getLoginId());
-	
-	// 调用，并返回 SaResult 结果 
-	SaResult res = SaSsoUtil.request(url);
-	
-	// 返回给前端 
-	return res;
+	// 组织请求参数
+	Map<String, Object> map = new HashMap<>();
+	map.put("apiType", "followList");  // 关键代码，代表本次我要拉取关注列表
+	map.put("loginId", StpUtil.getLoginId());
+
+	// 发起请求
+	Object resData = SaSsoUtil.getData(map);
+	System.out.println("sso-server 返回的信息：" + resData);
+	return resData;
 }
 ```
 
+然后在 server 端我们通过不同的 apiType 值，返回不同的信息即可。
+
+
+#### 4.2、方式二：直接在调用接口时传入一个自定义 path 
+
+我们可以 client 端，调用 `SaSsoUtil.getData` 方法时，传入一个自定义 path，例如：
+
+``` java
+// 查询我的账号信息 
+@RequestMapping("/sso/myFansList")
+public Object myFansList() {
+	// 组织请求参数
+	Map<String, Object> map = new HashMap<>();
+	// map.put("apiType", "userinfo");   // 此时已经不需要 apiType 参数了 
+	map.put("loginId", StpUtil.getLoginId());
+
+	// 发起请求 （传入自定义的 path 地址）
+	Object resData = SaSsoUtil.getData("/sso/getFansList", map);
+	System.out.println("sso-server 返回的信息：" + resData);
+	return resData;
+}
+```
+
+同时，我们需要在 server 端开放这个自定义的 `/sso/getFansList` 接口：
+
+``` java
+// 获取指定用户的粉丝列表
+@RequestMapping("/sso/getFansList")
+public Object getFansList(Long loginId) {
+	System.out.println("---------------- 获取 loginId=" + loginId + " 的粉丝列表 ----------------");
+
+	// 校验签名：只有拥有正确秘钥发起的请求才能通过校验
+	SaSignUtil.checkRequest(SaHolder.getRequest());
+
+	// 查询数据 (此处仅做模拟)
+	List<Integer> list = Arrays.asList(10041, 10042, 10043, 10044);
+
+	// 返回
+	return list;
+}
+```
+
+**注意：使用此方案时，需要在 client 端配置 `sa-token.sso.server-url` 地址，例如：**
+``` yaml
+sa-token: 
+    sso: 
+		# sso-server 端主机地址
+        server-url: http://sa-sso-server.com:9000
+```
+
 #### 4.3、访问测试
-访问测试：[http://sa-sso-client1.com:9001/sso/myFollowList](http://sa-sso-client1.com:9001/sso/myFollowList)
+访问测试：[http://sa-sso-client1.com:9001/sso/myFansList](http://sa-sso-client1.com:9001/sso/myFansList)
 
 
 
@@ -233,12 +284,11 @@ public Object myFollowList() {
 ``` yaml
 sa-token: 
 	sso: 
-        # 打开单点注销功能 
-        is-slo: true
 		# 单点注销地址 
 		slo-url: http://sa-sso-server.com:9000/sso/signout
-		# 接口调用秘钥 
-		secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+    sign:
+        # API 接口调用秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
@@ -247,7 +297,7 @@ sa-token.sso.is-slo=true
 # 单点注销地址 
 sa-token.sso.slo-url=http://sa-sso-server.com:9000/sso/signout
 # 接口调用秘钥 
-sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 <!---------------------------- tabs:end ---------------------------->
 

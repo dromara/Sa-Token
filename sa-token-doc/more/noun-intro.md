@@ -18,13 +18,13 @@ Sa-Token 无意发明任何晦涩概念提升逼格，但在处理 issue 、Q群
 
 #### 两种过期时间：
 - timeout：会话 Token 的长久有效期。
-- activity-timeout：会话的临时有效期。
+- active-timeout：会话 Token 的最低活跃频率。
 
 两者的差别详见：[Token有效期详解](/fun/token-timeout)
 
 
 #### 三种Session：
-- User-Session：框架为每个账号分配的 Session 对象，也称：账号Session。 
+- Account-Session：框架为每个账号分配的 Session 对象，也称：账号Session。 
 - Token-Session：框架为每个 Token 分配的 Session 对象，也称：令牌Session。 
 - Custom-Session：以一个特定的值作为SessionId，来分配的 Session 对象，也称：自定义Session。
 

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cn.dev33.satoken.core.stp;
 
 import java.util.HashMap;
@@ -14,8 +29,8 @@ import cn.dev33.satoken.util.SaTokenConsts;
 /**
  * Token 参数扩展 
  * 
- * @author kong
- * @since: 2022-9-5
+ * @author click33
+ * @since 2022-9-5
  */
 public class TokenInfoTest {
 
@@ -30,7 +45,7 @@ public class TokenInfoTest {
 		info.setTokenTimeout(1800);
 		info.setSessionTimeout(120);
 		info.setTokenSessionTimeout(1800);
-		info.setTokenActivityTimeout(120);
+		info.setTokenActiveTimeout(120);
 		info.setLoginDevice("PC");
 		info.setTag("xxx");
 
@@ -42,7 +57,7 @@ public class TokenInfoTest {
 		Assertions.assertEquals(info.getTokenTimeout(), 1800);
 		Assertions.assertEquals(info.getSessionTimeout(), 120);
 		Assertions.assertEquals(info.getTokenSessionTimeout(), 1800);
-		Assertions.assertEquals(info.getTokenActivityTimeout(), 120);
+		Assertions.assertEquals(info.getTokenActiveTimeout(), 120);
 		Assertions.assertEquals(info.getLoginDevice(), "PC");
 		Assertions.assertEquals(info.getTag(), "xxx");
 		

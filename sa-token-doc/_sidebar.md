@@ -72,6 +72,7 @@
 	- [和 jwt 集成](/plugin/jwt-extend)
 	- [和 Dubbo 集成](/plugin/dubbo-extend)
 	- [和 gRPC 集成](/plugin/grpc-extend)
+	- [API 接口参数签名](/plugin/api-sign)
 	- [Sa-Token 插件开发指南](/fun/plugin-dev)
 	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
 
@@ -108,7 +109,7 @@
 	- [解决反向代理 uri 丢失的问题](/fun/curr-domain)
 	- [解决跨域问题](/fun/cors-filter)
 	- [技术选型：SSO 与 OAuth2 对比](/fun/sso-vs-oauth2)
-	- [框架源码所有技术栈](/fun/tech-stack)
+	<!-- - [框架源码所有技术栈](/fun/tech-stack) -->
 	- [issue 提问模板](/fun/issue-template)
 	- [为Sa-Token贡献代码](/fun/git-pr)
 	- [Sa-Token开源大事记](/fun/timeline)

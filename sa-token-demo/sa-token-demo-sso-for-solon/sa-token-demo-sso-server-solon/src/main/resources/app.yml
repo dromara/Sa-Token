@@ -1,0 +1,41 @@
+# 端口
+server:
+    port: 9000
+
+# Sa-Token 配置
+sa-token: 
+    # ------- SSO-模式一相关配置  (非模式一不需要配置) 
+    # cookie:
+         # 配置 Cookie 作用域 
+         # domain: stp.com
+        
+    # ------- SSO-模式二相关配置 
+    sso: 
+        # Ticket有效期 (单位: 秒)，默认五分钟 
+        ticket-timeout: 300
+        # 所有允许的授权回调地址
+        allow-url: "*"
+        # 是否打开单点注销功能
+        isSlo: true
+        
+        # ------- SSO-模式三相关配置 （下面的配置在SSO模式三并且 is-slo=true 时打开） 
+        # 是否打开模式三 
+        isHttp: true
+        # 接口调用秘钥（用于SSO模式三的单点注销功能）
+        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
+
+sa-token: #名字可以随意取
+    redis:
+        server: "localhost:6379"
+        password: 123456
+        db: 1
+        maxTotal: 200
+        
+forest: 
+    # 关闭 forest 请求日志打印
+    log-enabled: false
+    
+    
+    
+        
