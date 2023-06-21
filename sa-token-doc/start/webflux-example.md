@@ -48,7 +48,7 @@ implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 public class SaTokenDemoApplication {
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(SaTokenDemoApplication.class, args);
-		System.out.println("启动成功：Sa-Token配置如下：" + SaManager.getConfig());
+		System.out.println("启动成功，Sa-Token 配置如下：" + SaManager.getConfig());
 	}
 }
 ```

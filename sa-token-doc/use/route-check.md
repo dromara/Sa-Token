@@ -7,12 +7,12 @@
 
 我们怎么实现呢？给每个接口加上鉴权注解？手写全局拦截器？似乎都不是非常方便。
 
-在这个需求中我们真正需要的是一种基于路由拦截的鉴权模式, 那么在Sa-Token怎么实现路由拦截鉴权呢？
+在这个需求中我们真正需要的是一种基于路由拦截的鉴权模式，那么在Sa-Token怎么实现路由拦截鉴权呢？
 
 
 
 ### 1、注册 Sa-Token 路由拦截器
-以`SpringBoot2.0`为例, 新建配置类`SaTokenConfigure.java`
+以`SpringBoot2.0`为例，新建配置类`SaTokenConfigure.java`
 ``` java 
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {

@@ -3,7 +3,7 @@
 --- 
 
 
-### 设计思路
+### 1、设计思路
 
 对于一些登录之后才能访问的接口（例如：查询我的账号资料），我们通常的做法是增加一层接口校验：
 
@@ -23,7 +23,7 @@
 <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--login-auth.gif">加载动态演示图</button>
 
 
-### 登录与注销
+### 2、登录与注销
 根据以上思路，我们需要一个会话登录的函数：
 
 ``` java
@@ -33,13 +33,14 @@ StpUtil.login(Object id);
 
 只此一句代码，便可以使会话登录成功，实际上，Sa-Token 在背后做了大量的工作，包括但不限于：
 
-1. 检查此账号是否之前已有登录
-2. 为账号生成 `Token` 凭证与 `Session` 会话
-3. 通知全局侦听器，xx 账号登录成功
-4. 将 `Token` 注入到请求上下文
-5. 等等其它工作……
+1. 检查此账号是否之前已有登录；
+2. 为账号生成 `Token` 凭证与 `Session` 会话；
+3. 记录 Token 活跃时间；
+4. 通知全局侦听器，xx 账号登录成功；
+5. 将 `Token` 注入到请求上下文；
+6. 等等其它工作……
 
-你暂时不需要完整的了解整个登录过程，你只需要记住关键一点：`Sa-Token 为这个账号创建了一个Token凭证，且通过 Cookie 上下文返回给了前端`。
+你暂时不需要完整了解整个登录过程，你只需要记住关键一点：`Sa-Token 为这个账号创建了一个Token凭证，且通过 Cookie 上下文返回给了前端`。
 
 所以一般情况下，我们的登录接口代码，会大致类似如下：
 
@@ -57,13 +58,13 @@ public SaResult doLogin(String name, String pwd) {
 }
 ```
 
-如果你对以上代码阅读没有压力，你可能会注意到略显奇怪的一点：此处仅仅做了会话登录，但并没有主动向前端返回 Token 信息。
-是因为不需要吗？严格来讲是需要的，只不过 `StpUtil.login(id)` 方法利用了 Cookie 自动注入的特性，省略了你手写返回 Token 的代码。
+如果你对以上代码阅读没有压力，你可能会注意到略显奇怪的一点：此处仅仅做了会话登录，但并没有主动向前端返回 token 信息。
+是因为不需要吗？严格来讲是需要的，只不过 `StpUtil.login(id)` 方法利用了 Cookie 自动注入的特性，省略了你手写返回 token 的代码。
 
 如果你对 Cookie 功能还不太了解，也不用担心，我们会在之后的 [ 前后端分离 ] 章节中详细的阐述 Cookie 功能，现在你只需要了解最基本的两点：
 
-- Cookie 可以从后端控制往浏览器中写入 Token 值。
-- Cookie 会在前端每次发起请求时自动提交 Token 值。
+- Cookie 可以从后端控制往浏览器中写入 token 值。
+- Cookie 会在前端每次发起请求时自动提交 token 值。
 
 因此，在 Cookie 功能的加持下，我们可以仅靠 `StpUtil.login(id)` 一句代码就完成登录认证。
 
@@ -81,10 +82,10 @@ StpUtil.checkLogin();
 ```
 
 异常 `NotLoginException` 代表当前会话暂未登录，可能的原因有很多：
-前端没有提交 Token、前端提交的 Token 是无效的、前端提交的 Token 已经过期 …… 等等，可参照此篇：[未登录场景值](/fun/not-login-scene)，了解如何获取未登录的场景值。
+前端没有提交 token、前端提交的 token 是无效的、前端提交的 token 已经过期 …… 等等，可参照此篇：[未登录场景值](/fun/not-login-scene)，了解如何获取未登录的场景值。
 
 
-### 会话查询
+### 3、会话查询
 ``` java
 // 获取当前会话账号id, 如果未登录，则抛出异常：`NotLoginException`
 StpUtil.getLoginId();
@@ -96,7 +97,7 @@ StpUtil.getLoginIdAsLong();      // 获取当前会话账号id, 并转化为`lon
 
 // ---------- 指定未登录情形下返回的默认值 ----------
 
-// 获取当前会话账号id, 如果未登录，则返回null 
+// 获取当前会话账号id, 如果未登录，则返回 null 
 StpUtil.getLoginIdDefaultNull();
 
 // 获取当前会话账号id, 如果未登录，则返回默认值 （`defaultValue`可以为任意类型）
@@ -104,29 +105,29 @@ StpUtil.getLoginId(T defaultValue);
 ```
 
 
-### Token 查询
+### 4、token 查询
 ``` java
-// 获取当前会话的token值
+// 获取当前会话的 token 值
 StpUtil.getTokenValue();
 
-// 获取当前`StpLogic`的token名称
+// 获取当前`StpLogic`的 token 名称
 StpUtil.getTokenName();
 
-// 获取指定token对应的账号id，如果未登录，则返回 null
+// 获取指定 token 对应的账号id，如果未登录，则返回 null
 StpUtil.getLoginIdByToken(String tokenValue);
 
 // 获取当前会话剩余有效期（单位：s，返回-1代表永久有效）
 StpUtil.getTokenTimeout();
 
-// 获取当前会话的token信息参数
+// 获取当前会话的 token 信息参数
 StpUtil.getTokenInfo();
 ```
 
 有关`TokenInfo`参数详解，请参考：[TokenInfo参数详解](/fun/token-info)	
 
 
-### 来个小测试，加深一下理解
-新建 `LoginController`，复制以下代码
+### 5、来个小测试，加深一下理解
+新建 `LoginController`，复制或手动敲出以下代码
 ``` java
 /**
  * 登录测试 

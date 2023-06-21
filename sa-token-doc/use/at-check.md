@@ -100,8 +100,8 @@ public SaResult atJurOr() {
 ```
 
 mode有两种取值：
-- `SaMode.AND`, 标注一组权限，会话必须全部具有才可通过校验。
-- `SaMode.OR`, 标注一组权限，会话只要具有其一即可通过校验。
+- `SaMode.AND`，标注一组权限，会话必须全部具有才可通过校验。
+- `SaMode.OR`，标注一组权限，会话只要具有其一即可通过校验。
 
 
 ### 4、角色权限双重 “or校验”
@@ -116,7 +116,7 @@ public SaResult userAdd() {
 }
 ```
 
-orRole 字段代表权限认证未通过时的次要选择，两者只要其一认证成功即可通过校验，其有三种写法：
+orRole 字段代表权限校验未通过时的次要选择，两者只要其一校验成功即可进入请求方法，其有三种写法：
 - 写法一：`orRole = "admin"`，代表需要拥有角色 admin 。
 - 写法二：`orRole = {"admin", "manager", "staff"}`，代表具有三个角色其一即可。
 - 写法三：`orRole = {"admin, manager, staff"}`，代表必须同时具有三个角色。

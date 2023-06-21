@@ -16,7 +16,7 @@
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 
-注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+注：如果你使用的是 SpringBoot 3.x，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 
 ``` xml 
 <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
@@ -29,7 +29,7 @@
 
 <!-------- tab:Gradle 方式 -------->
 
-注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+注：如果你使用的是 SpringBoot 3.x，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 
 ``` gradle
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
@@ -105,7 +105,7 @@ sa-token.is-log=true
 public class SaTokenDemoApplication {
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(SaTokenDemoApplication.class, args);
-		System.out.println("启动成功：Sa-Token配置如下：" + SaManager.getConfig());
+		System.out.println("启动成功，Sa-Token 配置如下：" + SaManager.getConfig());
 	}
 }
 ```
@@ -149,8 +149,8 @@ public class UserController {
 -->
 
 
-### 详细了解
-通过这个示例，你已经对 Sa-Token 有了初步的了解，那么现在开始详细了解一下它都有哪些吧：[登录认证](/use/login-auth) 
+### 出发
+通过这个示例，你已经对 Sa-Token 有了初步的了解。那么，坐稳扶好，让我们开始吧：[登录认证](/use/login-auth) 
 
 
 

@@ -2,15 +2,15 @@
 
 --- 
 
-### Session是什么？
+### 1、Session是什么？
 
-Session是会话中专业的数据缓存组件，通过 Session 我们可以很方便的缓存一些高频读写数据，提高程序性能，例如：
+Session 是会话中专业的数据缓存组件，通过 Session 我们可以很方便的缓存一些高频读写数据，提高程序性能，例如：
 
 ``` java
-// 在登录时缓存user对象 
+// 在登录时缓存 user 对象 
 StpUtil.getSession().set("user", user);
 
-// 然后我们就可以在任意处使用这个user对象
+// 然后我们就可以在任意处使用这个 user 对象
 SysUser user = (SysUser) StpUtil.getSession().get("user");
 ```
 
@@ -20,31 +20,31 @@ SysUser user = (SysUser) StpUtil.getSession().get("user");
 - `Token-Session`: 指的是框架为每个 token 分配的 Session  
 - `Custom-Session`: 指的是以一个 特定的值 作为SessionId，来分配的 Session 
 
-> 有关Account-Session与Token-Session的详细区别，可参考：[Session模型详解](/fun/session-model)
+> 有关 Account-Session 与 Token-Session 的详细区别，可参考：[Session模型详解](/fun/session-model)
 
 
 ### Account-Session
-有关账号Session的API如下：
+有关 账号-Session 的 API 如下：
 ``` java
-// 获取当前账号id的Session (必须是登录后才能调用)
+// 获取当前账号 id 的 Account-Session (必须是登录后才能调用)
 StpUtil.getSession();
 
-// 获取当前账号id的Session, 并决定在Session尚未创建时，是否新建并返回
+// 获取当前账号 id 的 Account-Session, 并决定在 Session 尚未创建时，是否新建并返回
 StpUtil.getSession(true);
 
-// 获取账号id为10001的Session
+// 获取账号 id 为 10001 的 Account-Session
 StpUtil.getSessionByLoginId(10001);
 
-// 获取账号id为10001的Session, 并决定在Session尚未创建时，是否新建并返回
+// 获取账号 id 为 10001 的 Account-Session, 并决定在 Session 尚未创建时，是否新建并返回
 StpUtil.getSessionByLoginId(10001, true);
 
-// 获取SessionId为xxxx-xxxx的Session, 在Session尚未创建时, 返回null 
+// 获取 SessionId 为 xxxx-xxxx 的 Account-Session, 在 Session 尚未创建时, 返回 null 
 StpUtil.getSessionBySessionId("xxxx-xxxx");
 ```
 
 
 ### Token-Session
-有关令牌Session的API如下：
+有关 令牌-Session 的 API 如下：
 ``` java
 // 获取当前 Token 的 Token-Session 对象
 StpUtil.getTokenSession();
@@ -54,9 +54,9 @@ StpUtil.getTokenSessionByToken(token);
 ```
 
 
-### 自定义Session
-自定义Session指的是以一个`特定的值`作为SessionId来分配的`Session`, 借助自定义Session，你可以为系统中的任意元素分配相应的session<br>
-例如以商品id作为key为每个商品分配一个Session，以便于缓存和商品相关的数据，其相关API如下：
+### Custom-Session
+自定义 Session 指的是以一个`特定的值`作为 SessionId 来分配的`Session`, 借助自定义Session，你可以为系统中的任意元素分配相应的session<br>
+例如以商品 id 作为 key 为每个商品分配一个Session，以便于缓存和商品相关的数据，其相关API如下：
 ``` java
 // 查询指定key的Session是否存在
 SaSessionCustomUtil.isExists("goods-10001");
@@ -73,6 +73,8 @@ SaSessionCustomUtil.deleteSessionById("goods-10001");
 
 
 ### 在 Session 上存取值
+
+以上三种 Session 均为框架设计概念上的区分，实际上在获取它们时，返回的都是 SaSession 对象，你可以使用以下 API 在 SaSession 对象上存取值：
 
 ``` java
 // 写值 
@@ -101,7 +103,7 @@ session.getFloat("result");    // 取值 (转float类型)
 session.getModel("key", Student.class);     // 取值 (指定转换类型)
 session.getModel("key", Student.class, <defaultValue>);  // 取值 (指定转换类型, 并指定值为Null时返回的默认值)
 
-// 是否含有某个key (返回true或false)
+// 是否含有某个key (返回 true 或 false)
 session.has("key"); 
 
 // 删值 
@@ -135,8 +137,8 @@ session.logout();
 ```
 
 
-### Session环境隔离说明
-有同学经常会把 `SaSession` 与 `HttpSession` 进行混淆，例如：
+### 避免与 HttpSession 混淆使用
+经常有同学会把 `SaSession` 与 `HttpSession` 进行混淆，例如：
 ``` java
 @PostMapping("/resetPoints")
 public void reset(HttpSession session) {
