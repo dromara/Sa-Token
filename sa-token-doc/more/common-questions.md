@@ -350,7 +350,7 @@ String name = StpUtil.getSession().getString("name");
 
 
 ### Q：我加了 Sa-Token 的全局过滤器，浏览器报错跨域了怎么办？
-参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794)
+参考：[https://juejin.cn/post/7247376558367981627](https://juejin.cn/post/7247376558367981627)
 
 
 ### Q：前后端分离项目中，前端使用 vue，如果不打开 porxy 代理的话，调用 Sa-Token 登录不会将 token 自动注入到 Cookie 中，是因为跨域么？

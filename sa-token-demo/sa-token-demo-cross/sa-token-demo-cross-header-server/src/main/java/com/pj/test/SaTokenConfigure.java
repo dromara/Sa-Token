@@ -52,10 +52,11 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         			.setHeader("Access-Control-Allow-Origin", "*")
         			// 允许所有请求方式
         			.setHeader("Access-Control-Allow-Methods", "*")
-        			// 有效时间
-        			.setHeader("Access-Control-Max-Age", "3600")
         			// 允许的header参数
-        			.setHeader("Access-Control-Allow-Headers", "*");
+        			.setHeader("Access-Control-Allow-Headers", "*")
+					// 有效时间
+        			.setHeader("Access-Control-Max-Age", "3600")
+					;
         			
         			// 如果是预检请求，则立即返回到前端 
         			SaRouter.match(SaHttpMethod.OPTIONS)
