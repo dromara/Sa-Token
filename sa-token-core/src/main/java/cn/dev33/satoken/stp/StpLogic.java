@@ -604,8 +604,19 @@ public class StpLogic {
  		
  		// 2、如果打开了 Cookie 模式，则先把 Cookie 数据清除掉
  		if(getConfigOrGlobal().getIsReadCookie()){
- 			SaCookieConfig cookie = getConfigOrGlobal().getCookie();
- 			SaHolder.getResponse().deleteCookie(getTokenName(), cookie.getPath(), cookie.getDomain());
+ 			SaCookieConfig cfg = getConfigOrGlobal().getCookie();
+			SaCookie cookie = new SaCookie()
+					.setName(getTokenName())
+					.setValue(null)
+					// 有效期指定为0，做到以增代删
+					.setMaxAge(0)
+					.setDomain(cfg.getDomain())
+					.setPath(cfg.getPath())
+					.setSecure(cfg.getSecure())
+					.setHttpOnly(cfg.getHttpOnly())
+					.setSameSite(cfg.getSameSite())
+					;
+ 			SaHolder.getResponse().addCookie(cookie);
 		}
 
  		// 3、然后从当前 Storage 存储器里删除 Token
