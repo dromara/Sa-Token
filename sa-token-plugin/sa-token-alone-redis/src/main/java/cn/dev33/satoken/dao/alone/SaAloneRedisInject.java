@@ -95,13 +95,23 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				redisConfig.setDatabase(cfg.getDatabase());
 				redisConfig.setPassword(RedisPassword.of(cfg.getPassword()));
 				redisConfig.setDatabase(cfg.getDatabase());
-				redisConfig.setUsername(cfg.getUsername());
+				// 低版本没有 username 属性，捕获异常给个提示即可，无需退出程序
+				try {
+					redisConfig.setUsername(cfg.getUsername());
+				} catch (NoSuchMethodError e){
+					System.err.println(e.getMessage());
+				}
 				redisAloneConfig = redisConfig;
 
 			} else if (pattern.equals("cluster")){
 				// 普通集群模式
 				RedisClusterConfiguration redisClusterConfig = new RedisClusterConfiguration();
-				redisClusterConfig.setUsername(cfg.getUsername());
+				// 低版本没有 username 属性，捕获异常给个提示即可，无需退出程序
+				try {
+					redisClusterConfig.setUsername(cfg.getUsername());
+				} catch (NoSuchMethodError e){
+					System.err.println(e.getMessage());
+				}
 				redisClusterConfig.setPassword(RedisPassword.of(cfg.getPassword()));
 
 				RedisProperties.Cluster cluster = cfg.getCluster();
@@ -117,7 +127,12 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				// 哨兵集群模式
 				RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration();
 				redisSentinelConfiguration.setDatabase(cfg.getDatabase());
-				redisSentinelConfiguration.setUsername(cfg.getUsername());
+				// 低版本没有 username 属性，捕获异常给个提示即可，无需退出程序
+				try {
+					redisSentinelConfiguration.setUsername(cfg.getUsername());
+				} catch (NoSuchMethodError e){
+					System.err.println(e.getMessage());
+				}
 				redisSentinelConfiguration.setPassword(RedisPassword.of(cfg.getPassword()));
 
 				RedisProperties.Sentinel sentinel = cfg.getSentinel();
@@ -134,7 +149,12 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				// socket 连接单体 Redis
 				RedisSocketConfiguration redisSocketConfiguration = new RedisSocketConfiguration();
 				redisSocketConfiguration.setDatabase(cfg.getDatabase());
-				redisSocketConfiguration.setUsername(cfg.getUsername());
+				// 低版本没有 username 属性，捕获异常给个提示即可，无需退出程序
+				try {
+					redisSocketConfiguration.setUsername(cfg.getUsername());
+				} catch (NoSuchMethodError e){
+					System.err.println(e.getMessage());
+				}
 				redisSocketConfiguration.setPassword(RedisPassword.of(cfg.getPassword()));
 				String socket = environment.getProperty(ALONE_PREFIX + ".socket", "");
 				redisSocketConfiguration.setSocket(socket);
@@ -147,7 +167,12 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				int port = cfg.getPort();
 				RedisStaticMasterReplicaConfiguration redisStaticMasterReplicaConfiguration = new RedisStaticMasterReplicaConfiguration(hostName, port);
 				redisStaticMasterReplicaConfiguration.setDatabase(cfg.getDatabase());
-				redisStaticMasterReplicaConfiguration.setUsername(cfg.getUsername());
+				// 低版本没有 username 属性，捕获异常给个提示即可，无需退出程序
+				try {
+					redisStaticMasterReplicaConfiguration.setUsername(cfg.getUsername());
+				} catch (NoSuchMethodError e){
+					System.err.println(e.getMessage());
+				}
 				redisStaticMasterReplicaConfiguration.setPassword(RedisPassword.of(cfg.getPassword()));
 
 				redisAloneConfig = redisStaticMasterReplicaConfiguration;
