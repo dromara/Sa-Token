@@ -525,8 +525,8 @@ public class StpLogic {
 			// 3.1、看看全局配置的 IsShare 参数，配置为 true 才是允许复用旧 token
 			if(getConfigOfIsShare()) {
 
-				// 根据账号id，尝试获取旧的 token
-				String tokenValue = getTokenValueByLoginId(id, null);
+				// 根据 账号id + 设备类型，尝试获取旧的 token
+				String tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
 
 				// 如果有值，那就直接复用
 				if(SaFoxUtil.isNotEmpty(tokenValue)) {
