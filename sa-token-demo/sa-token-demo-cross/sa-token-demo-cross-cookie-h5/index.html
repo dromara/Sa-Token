@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title> Sa-Token 跨域测试 - Cookie 版，h5 页面 </title>
+	</head>
+	<body>
+		<div style="text-align: center; padding-top: 200px;">
+			 <h2> Sa-Token 跨域测试 - Cookie 版，h5 页面 </h2>
+			 <p>当前是否登录：<b class="is-login"></b></p>
+			 <p>
+			   <a href="javascript: doLogin();">登录</a>&nbsp;&nbsp;
+			   <a href="javascript: doLogout();">注销</a>
+			 </p> 
+		</div>
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="./method-util.js"></script>
+		<script type="text/javascript">
+		
+			// 查询当前会话是否登录
+			function isLogin() {
+				ajax('/acc/isLogin', {}, function (res) {
+					$('.is-login').html(res.data + '');
+				})
+			}
+			isLogin();
+				
+			// 去登录 
+			function doLogin() {
+				const param = {
+					name: "zhang",
+					pwd: "123456"
+				}
+				ajax('/acc/doLogin', param, function (res) {
+					if(res.code === 200) {
+						// 浏览器会自动在 cookie 中保存 token 
+						localStorage.satoken = res.token; 
+						$('.is-login').html('true');
+						alert('登录成功');
+					} else {
+						alert(res.msg);
+					}
+				})
+			}
+			
+			// 去注销 
+			function doLogout() {
+				ajax('/acc/logout', {}, function (res) {
+					if(res.code === 200) {
+						// 浏览器会自动清除 cookie 中的 token 
+						$('.is-login').html('false');
+						alert('注销成功');
+					} else {
+						alert(res.msg);
+					}
+				})
+			}
+				
+			
+		</script>
+	</body>
+</html>

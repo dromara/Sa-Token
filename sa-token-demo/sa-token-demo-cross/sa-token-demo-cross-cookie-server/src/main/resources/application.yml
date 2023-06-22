@@ -1,0 +1,11 @@
+# 端口
+server:
+    port: 8081
+        
+sa-token:
+    is-log: true
+    cookie:
+        # 指明当前为 https 安全连接
+        secure: true
+        # 指明第三方 Cookie 限制级别为：不限制
+        sameSite: None

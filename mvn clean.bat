@@ -47,6 +47,11 @@ cd sa-token-demo-oauth2-client & call mvn clean & cd ..
 cd sa-token-demo-oauth2-server & call mvn clean & cd ..
 cd ..
 
+cd sa-token-demo-cross
+cd sa-token-demo-cross-header-server & call mvn clean & cd ..
+cd sa-token-demo-cross-cookie-server & call mvn clean & cd ..
+cd ..
+
 cd sa-token-demo-dubbo
 cd sa-token-demo-dubbo-consumer & call mvn clean & cd ..
 cd sa-token-demo-dubbo-provider & call mvn clean & cd ..

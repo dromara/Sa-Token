@@ -1,0 +1,6 @@
+# 端口
+server:
+    port: 8081
+        
+sa-token:
+    is-log: true
