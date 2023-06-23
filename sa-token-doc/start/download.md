@@ -251,7 +251,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 			├── sa-token-demo-dubbo3-provider         // [示例] Sa-Token 集成 dubbo3 鉴权，生产端（被调用端）
 		├── sa-token-demo-remember-me             // [示例] Sa-Token 实现 [ 记住我 ] 模式
 			├── page_project                          // [示例] Sa-Token 实现 [ 记住我 ] 模式、前端页面
-			├── server_project                        // [示例] Sa-Token 实现 [ 记住我 ] 模式、后端接口
+			├── sa-token-demo-remember-me-server      // [示例] Sa-Token 实现 [ 记住我 ] 模式、后端接口
 		├── sa-token-demo-grpc                    // [示例] Sa-Token 集成 grpc 鉴权
 			├── client                                // [示例] Sa-Token 集成 grpc 鉴权，client 端
 			├── server                                // [示例] Sa-Token 集成 grpc 鉴权，server 端

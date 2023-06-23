@@ -24,7 +24,7 @@ import java.util.function.BiFunction;
  * <p>  返回：token 值  </p>
  *
  * @author click33
- * @since 1.35.0
+ * @since 1.35.0.RC
  */
 @FunctionalInterface
 public interface SaCreateTokenFunction extends BiFunction<Object, String, String> {

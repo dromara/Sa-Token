@@ -10,11 +10,8 @@ cd sa-token-demo-alone-redis-cluster & call mvn clean & cd ..
 cd sa-token-demo-case & call mvn clean & cd ..
 cd sa-token-demo-grpc & call mvn clean & cd ..
 cd sa-token-demo-jwt & call mvn clean & cd ..
-cd sa-token-demo-oauth2-client & call mvn clean & cd ..
-cd sa-token-demo-oauth2-server & call mvn clean & cd ..
 cd sa-token-demo-quick-login & call mvn clean & cd ..
 cd sa-token-demo-solon & call mvn clean & cd ..
-cd sa-token-demo-case & call mvn clean & cd ..
 cd sa-token-demo-springboot & call mvn clean & cd ..
 cd sa-token-demo-springboot3-redis & call mvn clean & cd ..
 cd sa-token-demo-springboot-redis & call mvn clean & cd ..
@@ -60,7 +57,7 @@ cd sa-token-demo-dubbo3-provider & call mvn clean & cd ..
 cd ..
 
 cd sa-token-demo-remember-me
-cd server_project & call mvn clean & cd ..
+cd sa-token-demo-remember-me-server & call mvn clean & cd ..
 cd ..
 
 
