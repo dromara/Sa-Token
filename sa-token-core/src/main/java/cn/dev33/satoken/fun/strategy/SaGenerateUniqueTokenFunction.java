@@ -25,7 +25,7 @@ import java.util.function.Supplier;
  * <p>  返回：生成的token  </p>
  *
  * @author click33
- * @since 1.35.0.RC
+ * @since 1.35.0
  */
 @FunctionalInterface
 public interface SaGenerateUniqueTokenFunction {

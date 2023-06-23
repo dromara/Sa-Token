@@ -26,7 +26,7 @@ import java.util.function.Function;
  * <p>  返回：创建好的 StpLogic 对象  </p>
  *
  * @author click33
- * @since 1.35.0.RC
+ * @since 1.35.0
  */
 @FunctionalInterface
 public interface SaCreateStpLogicFunction extends Function<String, StpLogic> {

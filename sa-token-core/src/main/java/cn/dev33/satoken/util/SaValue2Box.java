@@ -20,7 +20,7 @@ package cn.dev33.satoken.util;
  * 封装两个值的容器，方便取值、写值等操作，value1 和 value2 用逗号隔开，形如：123,abc
  *
  * @author click33
- * @since 1.35.0.RC
+ * @since 1.35.0
  */
 public class SaValue2Box {
 

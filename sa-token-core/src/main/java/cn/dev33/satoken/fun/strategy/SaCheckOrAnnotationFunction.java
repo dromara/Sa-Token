@@ -26,7 +26,7 @@ import java.util.function.Consumer;
  * <p>  返回：无  </p>
  *
  * @author click33
- * @since 1.35.0.RC
+ * @since 1.35.0
  */
 @FunctionalInterface
 public interface SaCheckOrAnnotationFunction extends Consumer<SaCheckOr> {

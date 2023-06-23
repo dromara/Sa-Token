@@ -26,7 +26,7 @@ import java.util.function.Function;
  * <p>  返回：SaSession对象  </p>
  *
  * @author click33
- * @since 1.35.0.RC
+ * @since 1.35.0
  */
 @FunctionalInterface
 public interface SaCreateSessionFunction extends Function<String, SaSession> {

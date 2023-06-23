@@ -25,7 +25,7 @@ import java.util.function.BiFunction;
  * <p>  返回：是否包含  </p>
  *
  * @author click33
- * @since 1.35.0.RC
+ * @since 1.35.0
  */
 @FunctionalInterface
 public interface SaHasElementFunction extends BiFunction<List<String>, String, Boolean> {
