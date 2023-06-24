@@ -7,12 +7,12 @@
 框架已提供的集成包包括：
 
 - 默认方式：储存在内存中，位于core核心包。
-- sa-token-dao-redis：Redis集成包，使用 jdk 默认序列化方式。
-- sa-token-dao-redis-jackson：Redis集成包，使用 jackson 序列化方式。
-- sa-token-dao-redisx：Redisx 集成包。 
-- sa-token-dao-redis-fastjson：Redis集成包，使用 fastjson 序列化方式。
-- sa-token-dao-redis-fastjson2：Redis集成包，使用 fastjson2 序列化方式。
-- sa-token-dao-redisson-jackson：Redis集成包，Redisson客户端使用，jackson 序列化方式。
+- sa-token-redis：Redis集成包，使用 jdk 默认序列化方式。
+- sa-token-redis-jackson：Redis集成包，使用 jackson 序列化方式。
+- sa-token-redisx：Redisx 集成包。 
+- sa-token-redis-fastjson：Redis集成包，使用 fastjson 序列化方式。
+- sa-token-redis-fastjson2：Redis集成包，使用 fastjson2 序列化方式。
+- sa-token-redisson-jackson：Redis集成包，Redisson客户端使用，jackson 序列化方式。
 
 有关 Redis 集成，详细参考：[集成Redis](/up/integ-redis)，更多存储方式欢迎提交PR 
 

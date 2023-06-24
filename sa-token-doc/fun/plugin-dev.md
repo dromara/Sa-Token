@@ -114,8 +114,8 @@ SaTokenContext 是对接不同框架的上下文接口，注入流程和第二�
 
 | 插件							| 功能							| 状态			|
 | :--------						| :--------						| :--------		|
-| sa-token-dao-redis			| Sa-Token 与 Redis 的整合		| <font color="green" >已完成</font>			|
-| sa-token-dao-memcached		| Sa-Token 与 memcached 的整合	| 待开发			|
+| sa-token-redis			| Sa-Token 与 Redis 的整合		| <font color="green" >已完成</font>			|
+| sa-token-memcached		| Sa-Token 与 memcached 的整合	| 待开发			|
 
 ##### 其它：
 任何你认为有价值的功能代码，都可以扩展为插件。

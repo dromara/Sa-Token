@@ -32,10 +32,6 @@ implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-> 对应spring-boot-starter-parent版本必须大于等于2.4.0
-
-> 如果必须使用2.4.0以下版本, 则须将SaToken降级到1.33.0版本及以下(无法使用aloneRedis的集群功能)
-
 
 ### 2、然后在application.yml中增加配置
 
@@ -163,7 +159,7 @@ public class TestController {
 
 ### 4、注意点
 目前 Sa-Token-Alone-Redis 仅对以下插件有 Redis 分离效果：
-- sa-token-dao-redis
-- sa-token-dao-redis-jackson
-- sa-token-dao-redis-fastjson
-- sa-token-dao-redis-fastjson2
+- sa-token-redis
+- sa-token-redis-jackson
+- sa-token-redis-fastjson
+- sa-token-redis-fastjson2

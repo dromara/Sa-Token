@@ -89,7 +89,7 @@ sa-token.cookie.domain=stp.com
 <!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-jackson</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
@@ -113,7 +113,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
 
 // Sa-Token 整合 Redis (使用 jackson 序列化方式)
-implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 
 // Sa-Token插件：权限缓存与业务缓存分离
@@ -257,7 +257,7 @@ public class SaSso1ClientApplication {
 
 ### 6、跨域模式下的解决方案 
 
-如上，我们使用简单的步骤实现了同域下的单点登录，聪明如你😏，马上想到了这种模式有着一个不小的限制：
+如上，我们使用简单的步骤实现了同域下的单点登录，聪明如你??，马上想到了这种模式有着一个不小的限制：
 
 > 所有子系统的域名，必须同属一个父级域名
 

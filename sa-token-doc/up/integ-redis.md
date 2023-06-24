@@ -21,14 +21,14 @@ Sa-Token 默认将数据保存在内存中，此模式读写速度最快，且�
 <!-- Sa-Token 整合 Redis （使用 jdk 默认序列化方式） -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dao-redis</artifactId>
+	<artifactId>sa-token-redis</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // Sa-Token 整合 Redis （使用 jdk 默认序列化方式）
-implementation 'cn.dev33:sa-token-dao-redis:${sa.top.version}'
+implementation 'cn.dev33:sa-token-redis:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ------------------------------>
 
@@ -43,14 +43,14 @@ implementation 'cn.dev33:sa-token-dao-redis:${sa.top.version}'
 <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-jackson</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // Sa-Token 整合 Redis （使用 jackson 序列化方式）
-implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ------------------------------>
 

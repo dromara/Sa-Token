@@ -13,7 +13,7 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 <!-- Sa-Token整合redis (使用jdk默认序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dao-redis</artifactId>
+	<artifactId>sa-token-redis</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
@@ -25,7 +25,7 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 <!-- Sa-Token整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-jackson</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```

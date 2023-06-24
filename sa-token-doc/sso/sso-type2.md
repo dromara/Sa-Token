@@ -88,7 +88,7 @@ sa-token.cookie.domain=stp.com
 <!-- Sa-Token 整合redis (使用jackson序列化方式) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dao-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-jackson</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
@@ -112,7 +112,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
 
 // Sa-Token 整合 Redis (使用 jackson 序列化方式)
-implementation 'cn.dev33:sa-token-dao-redis-jackson:${sa.top.version}'
+implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 
 // Sa-Token插件：权限缓存与业务缓存分离
