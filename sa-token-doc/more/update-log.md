@@ -62,7 +62,7 @@
 	- `sa-token-dao-redis-jackson` -> `sa-token-redis-jackson`。
 	- `sa-token-dao-redis-fastjson` -> `sa-token-redis-fastjson`。
 	- `sa-token-dao-redis-fastjson2` -> `sa-token-redis-fastjson2`。
-	- `sa-token-dao-redisson-jackson` -> `sa-token-redis-jackson`。
+	- `sa-token-dao-redisson-jackson` -> `sa-token-redisson-jackson`。
 	- `sa-token-dao-redisx` -> `sa-token-redisx`。
 	- `sa-token-context-dubbo` -> `sa-token-dubbo`。
 	- `sa-token-context-dubbo3` -> `sa-token-dubbo3`。
