@@ -132,6 +132,9 @@ public class SaTokenConfigure {
 | tokenPrefix			| String	| null		| token前缀，例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
+| logLevel				| String	| trace		| 日志等级（trace、debug、info、warn、error、fatal），此值与 logLevelInt 联动				|
+| logLevelInt			| int		| 1			| 日志等级 int 值（1=trace、2=debug、3=info、4=warn、5=error、6=fatal），此值与 logLevel 联动		|
+| isColorLog			| Boolean	| null		| 是否打印彩色日志，true=打印彩色日志，false=打印黑白日志，null=框架根据运行终端自行判断是否打印彩色日志 		|
 | jwtSecretKey			| String	| null		| jwt秘钥 （只有集成 `sa-token-temp-jwt` 模块时此参数才会生效），[参考：和 jwt 集成](/plugin/jwt-extend)	|
 | sameTokenTimeout		| long		| 86400		| Same-Token的有效期 （单位: 秒），[参考：内部服务外网隔离](/micro/same-token)					|
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
