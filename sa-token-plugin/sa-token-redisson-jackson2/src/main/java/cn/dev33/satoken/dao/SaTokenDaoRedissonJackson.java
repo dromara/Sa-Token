@@ -71,7 +71,7 @@ public class SaTokenDaoRedissonJackson implements SaTokenDao {
 	 * 	</pre>
 	 * </p>
 	 */
-	public ObjectMapper objectMapper;
+	public final ObjectMapper objectMapper;
 
 	/**
 	 * 序列化方式
