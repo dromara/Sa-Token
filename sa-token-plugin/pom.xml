@@ -23,6 +23,7 @@
         <module>sa-token-redis-fastjson</module>
         <module>sa-token-redis-fastjson2</module>
         <module>sa-token-redisson-jackson</module>
+        <module>sa-token-redisson-jackson2</module>
         <module>sa-token-redisx</module>
         <module>sa-token-alone-redis</module>
         <module>sa-token-dialect-thymeleaf</module>
