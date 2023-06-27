@@ -84,35 +84,29 @@ public class SaTokenDaoRedissonJackson implements SaTokenDao {
 	public final RedissonClient redissonClient;
 
 	public SaTokenDaoRedissonJackson(RedissonClient redissonClient) {
+		this.objectMapper = new ObjectMapper();
 
-		// 通过反射获取Mapper对象, 增加一些配置, 增强兼容性
-		try {
-			this.objectMapper = new ObjectMapper();
+		this.objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 
+		// 配置[忽略未知字段]
+		this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-			this.objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+		// 配置[时间类型转换]
+		JavaTimeModule timeModule = new JavaTimeModule();
+		// LocalDateTime序列化与反序列化
+		timeModule.addSerializer(new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
+		timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+		// LocalDate序列化与反序列化
+		timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
+		timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+		// LocalTime序列化与反序列化
+		timeModule.addSerializer(new LocalTimeSerializer(TIME_FORMATTER));
+		timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+		this.objectMapper.registerModule(timeModule);
 
-			// 配置[忽略未知字段]
-			this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		// 重写 SaSession 生成策略
+		SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJacksonCustomized(sessionId);
 
-
-			// 配置[时间类型转换]
-			JavaTimeModule timeModule = new JavaTimeModule();
-			// LocalDateTime序列化与反序列化
-			timeModule.addSerializer(new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
-			timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
-			// LocalDate序列化与反序列化
-			timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
-			timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
-			// LocalTime序列化与反序列化
-			timeModule.addSerializer(new LocalTimeSerializer(TIME_FORMATTER));
-			timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
-			this.objectMapper.registerModule(timeModule);
-			// 重写 SaSession 生成策略
-			SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJacksonCustomized(sessionId);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
 
 		// 开始初始化相关组件
 		this.codec = new JsonJacksonCodec(objectMapper);
