@@ -3,7 +3,7 @@ server:
     port: 8081
 
 # sa-token 配置
-sa-token: 
+sa-token:
     # token 名称 (同时也是 cookie 名称)
     token-name: satoken
     # token 有效期（单位：秒） 默认30天，-1 代表永久有效
@@ -16,17 +16,17 @@ sa-token:
     is-share: true
     # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
     token-style: uuid
-    # 是否输出操作日志 
+    # 是否输出操作日志
     is-log: true
 
 
-sa-token-dao: #名字可以随意取
-    redis:
-        server: "localhost:6379"
-        password: 123456
-        db: 1
-        maxTotal: 200
         
+sa-token-dao:
+    config: |
+        singleServerConfig:
+          password: "123456"
+          address: "redis://localhost:6379"
+          database: 0
         
         
         
