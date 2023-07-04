@@ -2,8 +2,9 @@ package com.pj.satoken;
 
 
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.dao.SaTokenDaoOfRedis;
+import cn.dev33.satoken.dao.SaTokenDaoRedissonJackson;
 import cn.dev33.satoken.solon.integration.SaTokenInterceptor;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 
@@ -11,6 +12,8 @@ import com.pj.util.AjaxJson;
 
 import cn.dev33.satoken.context.SaHolder;
 import org.noear.solon.annotation.Inject;
+import org.redisson.api.RedissonClient;
+import org.redisson.solon.RedissonSupplier;
 
 
 /**
@@ -59,9 +62,20 @@ public class SaTokenConfigure {
 					;
 				});
 	}
-//如果需要 redis dao，加这段代表
-//	@Bean
-//	public SaTokenDao saTokenDaoInit(@Inject("${sa-token-dao.redis}") SaTokenDaoOfRedis saTokenDao) {
-//		return saTokenDao;
-//	}
+
+	/**
+	 * 构造 RedissonClient
+	 * */
+	@Bean
+	public RedissonClient saTokenDaoInit(@Inject("${sa-token-dao}") RedissonSupplier supplier) {
+		return supplier.get();
+	}
+
+	/**
+	 * 构建  SaTokenDao
+	 * */
+	@Bean
+	public SaTokenDao saTokenDaoInit(RedissonClient redissonClient) {
+		return new SaTokenDaoRedissonJackson(redissonClient);
+	}
 }
