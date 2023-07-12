@@ -569,7 +569,7 @@ public class StpLogic {
 			throw new SaTokenException("loginId 不能为以下值：" + NotLoginException.ABNORMAL_LIST);
 		}
 
-		// 3、账号 id 不能是简单类型
+		// 3、账号 id 不能是复杂类型
 		if( ! SaFoxUtil.isBasicType(id.getClass())) {
 			SaManager.log.warn("loginId 应该为简单类型，例如：String | int | long，不推荐使用复杂类型：" + id.getClass());
 		}
