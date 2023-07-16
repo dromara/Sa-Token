@@ -1,12 +1,14 @@
 # 使用 Sa-Token 的开源项目 
 
 
-> 集成 Sa-Token 的开源案例收集，取自 [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)，定期同步。
+> 集成 Sa-Token 的开源案例收集，取自 [Awesome-Sa-Token](https://gitee.com/sa-tokens/awesome-sa-token)，定期同步。
 
 ---
 
 
 ### 后台管理
+
+- [[ srppms ]](https://gitee.com/cai-bin00/srppms)：基于SpringBoot+Vue+sa-token前后端分离的科研项目管理平台。
 
 - [[ twelvet-fast ]](https://gitee.com/twelvet/twelvet-fast)：基于Spring Boot 3 JDK17的单体服务极速开发管理平台脚手架，先行体验最新技术栈。
 
@@ -58,6 +60,12 @@
 
 - [[ springboot-multi-tenant-sa-token ]](https://gitee.com/willf/springboot-multi-tenant-sa-token)：轻量的多租户权限管理系统脚手架（SpringBoot，Sa-Token，mybatis-plus，Vue & Element）。
 
+- [[ solon_angis_beetlsql ]](https://gitee.com/smartcity/solon_angis_beetlsql)：并元国产开发平台 solon、sa-token、beetlsql、smart-http
+
+- [[ zeta-kotlin ]](https://gitee.com/xia5800/zeta-kotlin)：zeta-kotlin是使用kotlin语言基于spring boot、mybatis-plus、sa-token等框架开发的项目脚手架。
+
+- [[ nebula-swagger-demo ]](https://gitee.com/flgitee/nebula-swagger-demo)：springboot+nebula 集成knife4j案例
+
 
 ### 微服务相关
 
@@ -69,8 +77,6 @@
 
 - [[ falser-cloud ]](https://gitee.com/falser/falser-cloud): 基于 SpringCloud Alibaba + SpringCloud gateway + SpringBoot + Sa-Token + vue-admin-template + Nacos + Rabbit MQ + Redis 的一个后台管理系统，前后端分离，权限管理，菜单管理，数据字典，停车场系统管理等功能
 
-- [[ Huanxing-mall ]](https://gitee.com/lijiaxing_boy/huanxing-mall)：HuanXing 商城基于SpringCloud 2021 & Alibaba  + Sa-token，前端基于 Vue3 +Element plus 的微服务商城 
-
 - [[ dcy-fast-cloud ]](https://gitee.com/dcy421/dcy-fast-cloud)：一个基于 SpringCloudAlibaba + Sa-Token + dubbo2.7.8 + Seata + knife4j + Mybatis-Plus + MapStruct +  的后台管理系统，前端vue-element-admin，并且内置代码生成器+动态路由权限等功能
 
 - [[ fhs-framework ]](https://gitee.com/fhs-opensource/fhs-framework)：基于Springboot+Springcloud + Mybatis Plus + Sa-Token + Vue + ElementUI 的快速开发平台(低代码开发平台)，本框架永远免费，永久全开源
@@ -80,6 +86,30 @@
 - [[ Helio-Cloud ]](https://gitee.com/uncarbon97/helio-cloud)：基于 SpringBoot + SpringCloud Alibaba + Sa-Token + Mybatis-Plus 的微服务开发脚手架，带有配套后台管理前端模板及代码生成器
 
 - [[ BudWk-V7 ]](https://gitee.com/budwk/budwk)：基于 NutzBoot + Sa-Token + Dubbo + Nacos注册&配置中心 的微服务开发脚手架(同时提供单应用版本)，带有配套后台管理前端模板及代码生成器
+
+- [[ xr-satoken-cloud ]](https://gitee.com/fzhxfw/xr-satoken-cloud)：一款基于SaToken轻量级Java权限认证框架构建的微服务后台开发脚手架，基于SpringCloud + SpringCloudAlibaba + Nacos + SaToken + Mybatis等技术搭建，内置RBAC权限管理，代码生成器，文件分片速传等，本项目完全开源免费，定期提交代码到dev开发分支，由个人开发者业余时间维护升级。
+
+- [[ CloudEon ]](https://gitee.com/dromara/CloudEon)：一款基于kubernetes的开源大数据平台，旨在为用户提供一种简单、高效、可扩展的大数据解决方案。
+
+- [[ quick-boot ]](https://github.com/csx-bill/quick-boot)：一款基于 Spring Cloud 2022 、Spring Boot 3、AMIS 和 APIJSON 的低代码系统。
+
+
+### 商城
+
+- [[ litemall-plus ]](https://gitee.com/ysling-org/litemall-plus)：微信小程序SaaS商城系统，可支持多小程序同时运行。
+
+- [[ mall4j ]](https://gitee.com/gz-yami/mall4j)：基于Spring Boot 3 JDK17的一个商城手脚架。
+
+- [[ Huanxing-mall ]](https://gitee.com/lijiaxing_boy/huanxing-mall)：HuanXing 商城基于SpringCloud 2021 & Alibaba  + Sa-token，前端基于 Vue3 +Element plus 的微服务商城 
+
+
+### 博客
+
+- [[ jthink ]](https://gitee.com/wtsoftware/jthink)： 一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统
+
+- [[ 拾壹博客 ]](https://gitee.com/quequnlong/shiyi-blog)：一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。
+
+- [[ June 12 ]](https://gitee.com/hanshaung/ants)：June 12 是一个纯开源免费的资讯/博客类网站，基于Spring Boot + Sa-Token + Vue开发。
 
 
 
@@ -93,17 +123,10 @@
 
 ### 其它
 
-- [[ jthink ]](https://gitee.com/wtsoftware/jthink)： 一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统
-
-- [[ Sa-Token-Study ]](https://gitee.com/click33/sa-token-study)：以demo示例的方式讲解 Sa-Token 源码涉及到的技术点，连载中……
+- [[ Sa-Token-Study ]](https://gitee.com/sa-tokens/sa-token-study)：以demo示例的方式讲解 Sa-Token 源码涉及到的技术点，连载中……
 
 - [[ SpringMvc+Sa-Token ]](https://gitee.com/SRD_01/spring-mvc-sa-token): Jsp+SpringMVC+SSO+Sa-Token+Redis | Spring MVC 集成 SaToken Demo 项目
 
 - [[ iot-kit ]](https://gitee.com/iotkit-open-source/iotkit-parent)：一个轻量级低门槛的物联网平台，包含了多协议设备接入、规则引擎、第三方平台接入、智能家居小程序等模块的项目，基于SpringBoot架构并集成了Sa-Token的OAuth2认证。
 
-- [[ 拾壹博客 ]](https://gitee.com/quequnlong/shiyi-blog)：一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。
-
 - [[ cubic ]](https://gitee.com/dromara/cubic)：一站式问题定位平台，实时线程栈监控、线程池监控、动态arthas命令集、依赖分析等等等，助你快速定位问题。
-
-
-
