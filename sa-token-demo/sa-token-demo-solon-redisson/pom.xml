@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-demo-solon</artifactId>
+	<artifactId>sa-token-demo-solon-redisson</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<!-- Solon -->
@@ -33,6 +33,11 @@
 			<groupId>org.noear</groupId>
 			<artifactId>solon.logging.simple</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>redisson-solon-plugin</artifactId>
+		</dependency>
 		
 		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
 		<dependency>
@@ -44,9 +49,10 @@
 		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redisx</artifactId>
+            <artifactId>sa-token-redisson-jackson2</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
+
 
 		<!-- hutool工具类，用来生成雪花算法唯一id -->
 		<!-- <dependency>

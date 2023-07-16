@@ -74,10 +74,6 @@ public class SaAloneRedisInject implements EnvironmentAware{
 			if(saTokenDao == null || saTokenDao instanceof SaTokenDaoDefaultImpl) {
 				return;
 			}
-			// 如果配置文件不包含相关配置，则不进行任何操作 
-			if(environment.getProperty(ALONE_PREFIX + ".host") == null) {
-				return;
-			}
 			
 			// ------------------- 开始注入 
 			
