@@ -1,5 +1,7 @@
 # Sa-Token 插件开发指南 
 
+> 注：为 Sa-Token 提交插件请在 sa-token-three-plugin 仓库进行：[点击跳转](https://gitee.com/sa-tokens/sa-token-three-plugin)
+
 --- 
 
 插件，从字面意思理解就是可拔插的组件，作用是在不改变 Sa-Token 现有架构的情况下，替换或扩展一部分底层代码逻辑。
