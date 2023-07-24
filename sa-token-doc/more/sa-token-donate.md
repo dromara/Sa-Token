@@ -21,6 +21,9 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [mikeinshanghai](https://gitee.com/mikeinshanghai)| ¥ 50.0	| Sa-Token, MeterSphere共成长，共辉煌！		| 2023-07-14 	|
+| [Dear胜哥](https://gitee.com/DearShengGe)		| ¥ 10.0		| 有幸在摸鱼时间认真看完了全文档，感觉很是不错。开源不易，望作者继续扩展该框架功能！	| 2023-06-30 	|
+| [SP](https://gitee.com/LSP1999)				| ¥ 10.0		| 就是需要这种简单上手的项目					| 2023-06-15 	|
 | [javahuang](https://gitee.com/javahrp)		| ¥ 200.0		| [SurveyKing：功能最强大的调查问卷系统和考试系统，开源](https://gitee.com/surveyking/surveyking)					| 2023-06-08 	|
 | [dyjgitdyjgit](https://gitee.com/qtinfogit)	| ¥ 20.0		| 感谢您的开源项目！							| 2023-05-22 	|
 | 砰嚓嚓（QQ打赏）								| ¥ 20.0		| 一点打赏不成敬意							| 2023-05-15 	|
