@@ -252,7 +252,7 @@ public class SaFoxUtil {
 			return patt.equals(str);
 		}
 		// 正则匹配
-		return Pattern.matches(patt.replaceAll("\\*", ".*"), str);
+		return Pattern.matches(patt.replace(".*", "\\..*"), str);
 	}
 
 	/**
