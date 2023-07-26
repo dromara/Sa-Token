@@ -152,6 +152,7 @@
 		
 		<!--  -->
 		<script src="./static/docsify-plugin.js"></script>
+		<script src="./static/is-star-plugin.js"></script>
 		<script>
 			var saTokenTopVersion = '1.35.0.RC';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
@@ -187,7 +188,7 @@
 					tabHeadings: true       // 用标题+粗体来定制选项卡
 				},
 				// 自定义插件 
-				plugins: [myDocsifyPlugin],
+				plugins: [myDocsifyPlugin, window.isStarPlugin],
 			}
 		</script>
 		<script src="static/docsify.min.js"></script>
