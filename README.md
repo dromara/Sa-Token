@@ -180,7 +180,7 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 
 
 ## 交流群
-QQ交流群：707350988 [点击加入](https://jq.qq.com/?_wv=1027&k=tqbzHT2D)
+QQ交流群：837325627 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=06nXEBf5OTX8teyzH96aunWN4zPVR6CA)
 
 微信交流群：
 

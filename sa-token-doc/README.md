@@ -136,18 +136,6 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 
 ## 交流群
-QQ交流群：707350988 [点击加入](https://jq.qq.com/?_wv=1027&k=tqbzHT2D)
+加入 Sa-Token 框架 QQ、微信讨论群：[点击加入](/more/join-group.md)
 
-微信交流群：
 
-![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
-
-（扫码添加微信，备注：sa-token，邀您加入群聊）
-
-<br>
-
-加入群聊的好处：
-- 第一时间收到框架更新通知。
-- 第一时间收到框架 bug 通知。
-- 第一时间收到新增开源案例通知。
-- 和众多大佬一起互相 (huá shuǐ) 交流 (mō yú)。
