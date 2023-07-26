@@ -961,7 +961,7 @@ public class SaOAuth2Template {
 		return SaManager.getConfig().getTokenName() + ":oauth2:client-token:" + clientToken;
 	}
 	/**
-	 * 拼接key：Past-Token 索引
+	 * 拼接key：Client-Token 索引
 	 * @param clientId clientId
 	 * @return key
 	 */
