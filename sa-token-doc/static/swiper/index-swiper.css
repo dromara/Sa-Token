@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* ry盒子 总区域 */
+.ry-kuai{
+	padding-left: 0;
+	padding-right: 0;
+}
+/* ry盒子 灰色区域 */
+.ry-box{
+	padding-top: 70px;
+	padding-bottom: 170px;
+	background-color: #eee;
+	position: relative;
+	overflow: hidden;
+}
+
+/* 轮播图容器 */
+.ry-box .swiper {
+	width: 100%;
+	height: 100%;
+}
+.ry-box .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	width: 600px;
+	height: 400px;
+	/* cursor: pointer; */
+}
+
+.ry-box .swiper-slide img {
+	height: 100%;
+	box-shadow: 0 0 20px #ccc;
+	transition: box-shadow 0.2s;
+}
+.ry-box .swiper-slide img:hover{
+	box-shadow: 0 0 40px #999;
+}
+.ry-box .swiper-slide p{
+	display: inline-block;
+	font-size: 16px;
+	margin-top: 30px;
+	color: #666;
+}
+
+
+/* 分页器样式 */
+.ry-box .swiper-pagination{bottom: -140px;}
+.ry-box .swiper-pagination .swiper-pagination-bullet{width: 18px; height: 18px; line-height: 18px; color: #FFF; font-size: 12px;}
+
+/* 图片放大动画 */
+.ry-box .swiper-slide img{
+	transition: 300ms;
+	transform: scale(0.8);
+}
+.ry-box .swiper-slide-active img,
+.ry-box .swiper-slide-duplicate-active img{
+  transform: scale(1);
+}
+
+/* 阴影 */
+/* .ry-img-yinying{
+	width: 50%; height: 10px; border-radius: 50%; 
+	background-color: rgba(0, 0, 0, 0.8);
+	box-shadow: 0 0 50px #333;
+	margin: auto;
+} */

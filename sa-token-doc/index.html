@@ -4,16 +4,20 @@
 		<meta charset="UTF-8">
 		<title>Sa-Token</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="description" content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后端分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
+		<meta name="description"
+			content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后端分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
 		<meta name="keywords" content="sa-token,sa-token框架,sa-token文档,java权限认证">
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="viewport"
+			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="shortcut icon" type="image/x-icon" href="logo.png">
 		<link rel="stylesheet" href="static/index.css">
+		<link rel="stylesheet" href="static/swiper/swiper-bundle.min.css">
+		<link rel="stylesheet" href="static/swiper/index-swiper.css">
 	</head>
 	<body>
 		<!-- 总盒子 -->
-		<div class="z-div" style="">		
-		
+		<div class="z-div" style="">
+
 			<!-- ------------ 头部 ------------- -->
 			<header class="doc-header">
 				<div class="nav-left">
@@ -41,13 +45,13 @@
 								<span style="background-color: #F1FAFA;"></span>
 								<span style="background-color: #f5f5d5;"></span>
 								<span style="background-color: #d5f5f5;"></span>
-								
+
 								<span style="background-color: #f5e5f5;"></span>
 								<span style="background-color: #E8E8FF;"></span>
 								<span style="background-color: #f0f9eb;"></span>
 								<span style="background-color: #ebe5dd;"></span>
 								<span style="background-color: #e8f4ff;"></span>
-								
+
 								<!-- <span style="background-color: #F0DAD2;"></span> -->
 								<!-- <span style="background-color: #f5d5d5;"></span> -->
 								<!-- <span style="background-color: #FFFFE0;"></span> -->
@@ -86,19 +90,21 @@
 						</div>
 					</div>
 					<!-- github小章鱼图标 -->
-					<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github"
-						style="position: fixed; right: -16px; padding-left: 0px;">
+					<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner"
+						aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0px;">
 						<svg viewBox="0 0 250 250" aria-hidden="true">
 							<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-							<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
-							 fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
-							<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
-							 fill="currentColor" class="octo-body"></path>
+							<path
+								d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+								fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+							<path
+								d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+								fill="currentColor" class="octo-body"></path>
 						</svg>
 					</a>
 				</nav>
 			</header>
-			
+
 			<!-- ------------ 海报部分 ------------- -->
 			<div class="main-box">
 				<div class="content-box">
@@ -113,17 +119,24 @@
 						<!-- <a href="https://gitee.com/dromara/sa-token" target="_blank">集成案例</a> -->
 					</div>
 					<h4 align="center" class="badge-box">
-						<a href="https://gitee.com/dromara/sa-token/stargazers"><img class="lazy" data-original="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
-						<a href="https://gitee.com/dromara/sa-token/members"><img class="lazy" data-original="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
-						<a href="https://github.com/dromara/sa-token/stargazers"><img class="lazy" data-original="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
-						<a href="https://github.com/dromara/sa-token/network/members"><img class="lazy" data-original="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
-						<a href="https://github.com/dromara/sa-token/watchers"><img class="lazy" data-original="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
-						<a href="https://github.com/dromara/sa-token/issues"><img class="lazy" data-original="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
-						<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img class="lazy" data-original="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
+						<a href="https://gitee.com/dromara/sa-token/stargazers"><img class="lazy"
+								data-original="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
+						<a href="https://gitee.com/dromara/sa-token/members"><img class="lazy"
+								data-original="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
+						<a href="https://github.com/dromara/sa-token/stargazers"><img class="lazy"
+								data-original="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/network/members"><img class="lazy"
+								data-original="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/watchers"><img class="lazy"
+								data-original="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/issues"><img class="lazy"
+								data-original="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img class="lazy"
+								data-original="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 					</h4>
 				</div>
 			</div>
-			
+
 			<!-- ------------ 支持特性 ------------- -->
 			<div>
 				<div class="feature-z s-width">
@@ -170,18 +183,55 @@
 						<span>有了Sa-Token，你所有的权限认证问题，都不再是问题！</span>
 						<a href="https://oss.dev33.cn/sa-token/art/sa-token-js4.png" target="_blank">点击查看功能结构图</a>
 					</div>
-					<div style=" margin: 40px 14px 0; padding: 20px 0 10px; background-color: #f4f5f7;">
-						<h3 style="padding: 5px 0 20px; color: #333;">Sa-Token 官方公众号，及时接收框架更新通知、技术文章</h3>
-						<img class="lazy gzh-qr" data-original="https://oss.dev33.cn/sa-token/lykj-gzh.jpg" style="width: 150px; cursor: pointer;">
+				</div>
+			</div>
+
+			<!-- ------------ 曾获荣誉 ------------- -->
+			<div>
+				<div class="feature-z ry-kuai">
+					<div class="s-fenge"></div>
+					<h2 class="s-title">曾获荣誉</h2>
+					<div class="ry-box">
+						<div class="swiper mySwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img src="https://oss.dev33.cn/sa-token/awards/gpv.jpg?x-oss-process=style/st" /> <br>
+									<p>GVP - Gitee 最有价值开源项目</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="https://oss.dev33.cn/sa-token/awards/osc-2021.jpg?x-oss-process=style/st"/> <br>
+									<p>OSCHINA 2021 人气指数 TOP 30 开源项目</p>
+								</div>
+								<div class="swiper-slide" style="width: 350px;">
+									<img src="https://oss.dev33.cn/sa-token/awards/osc-2022.jpg?x-oss-process=style/st" /> <br>
+									<p>OSCHINA 2022 年度最火热中国开源项目社区</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="https://oss.dev33.cn/sa-token/awards/kexin.jpg?x-oss-process=style/st" /> <br>
+									<p>可信开源社区共同体预备成员</p>
+								</div>
+								<!-- <div class="swiper-slide" style="width: 750px;">
+									<img src="https://oss.dev33.cn/sa-token/awards/gitee-star-10k.png" /> <br>
+									<p>Gitee stars 超 10k+</p>
+								</div>
+								<div class="swiper-slide" style="width: 750px;">
+									<img src="https://oss.dev33.cn/sa-token/awards/github-star-10k.png" /> <br>
+									<p>GitHub stars 超 10k+</p>
+								</div> -->
+							</div>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+							<div class="swiper-pagination"></div>
+						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- ------------ 开源案例 ------------- -->
 			<div>
 				<div class="feature-z s-width">
-					<div class="s-fenge"></div>
-					<h2 class="s-title">优秀开源集成案例</h2>
+					<!-- <div class="s-fenge"></div> -->
+					<h2 class="s-title" style="margin-top: 40px;">优秀开源集成案例</h2>
 					<div class="feature-box s-case-box">
 						<!-- Snowy  6.1K -->
 						<div class="s-case">
@@ -195,7 +245,8 @@
 						<!-- RuoYi-Vue-Plus  5.9k -->
 						<div class="s-case">
 							<a href="https://gitee.com/dromara/RuoYi-Vue-Plus" target="_blank" class="s-case-link">
-								<img class="lazy" data-original="https://oss.dev33.cn/sa-token/case/case--ruoyi-vue-plus.png">
+								<img class="lazy"
+									data-original="https://oss.dev33.cn/sa-token/case/case--ruoyi-vue-plus.png">
 							</a>
 							<h3 class="s-case-title">RuoYi-Vue-Plus</h3>
 							<span class="s-author"> 疯狂的狮子Li </span>
@@ -204,7 +255,8 @@
 						<!-- SpringBoot_v2  5.5k -->
 						<div class="s-case">
 							<a href="https://gitee.com/bdj/SpringBoot_v2" target="_blank" class="s-case-link">
-								<img class="lazy" data-original="https://oss.dev33.cn/sa-token/case/case--springboot_v2.png">
+								<img class="lazy"
+									data-original="https://oss.dev33.cn/sa-token/case/case--springboot_v2.png">
 							</a>
 							<h3 class="s-case-title">SpringBoot_v2</h3>
 							<span class="s-author">开源oschina</span>
@@ -213,7 +265,8 @@
 						<!-- RuoYi-Cloud-Plus  2.4K -->
 						<div class="s-case">
 							<a href="https://gitee.com/dromara/RuoYi-Cloud-Plus" target="_blank" class="s-case-link">
-								<img class="lazy" data-original="https://oss.dev33.cn/sa-token/case/case--ruoyi-cloud-plus.png">
+								<img class="lazy"
+									data-original="https://oss.dev33.cn/sa-token/case/case--ruoyi-cloud-plus.png">
 							</a>
 							<h3 class="s-case-title">RuoYi-Cloud-Plus</h3>
 							<span class="s-author"> 疯狂的狮子Li </span>
@@ -231,7 +284,8 @@
 						<!-- EasyAdmin  996 -->
 						<div class="s-case">
 							<a href="https://gitee.com/lakernote/easy-admin" target="_blank" class="s-case-link">
-								<img class="lazy" data-original="https://oss.dev33.cn/sa-token/case/case--easy-admin.png">
+								<img class="lazy"
+									data-original="https://oss.dev33.cn/sa-token/case/case--easy-admin.png">
 							</a>
 							<h3 class="s-case-title">EasyAdmin</h3>
 							<span class="s-author"> laker </span>
@@ -241,14 +295,20 @@
 					<div class="re-text">
 						<span>
 							如果您的开源项目也使用了 Sa-Token，您可以
-							<a href="https://gitee.com/sa-token/awesome-sa-token" target="_blank" style="text-decoration: none;">在此</a>
+							<a href="https://gitee.com/sa-token/awesome-sa-token" target="_blank"
+								style="text-decoration: none;">在此</a>
 							提交
 						</span>
 					</div>
+					
+					<div style=" margin: 40px 14px 0; padding: 20px 0 10px; background-color: #f4f5f7;">
+						<h3 style="padding: 5px 0 20px; color: #333;">Sa-Token 官方公众号，及时接收框架更新通知、技术文章</h3>
+						<img class="lazy gzh-qr" data-original="https://oss.dev33.cn/sa-token/lykj-gzh.jpg" style="width: 150px; cursor: pointer;">
+					</div>
 				</div>
 			</div>
-			
-			
+
+
 			<!-- ------------ 使用公司 ------------- -->
 			<div>
 				<div class="com-box-f s-width">
@@ -316,7 +376,8 @@
 						<a href="javascript:;" title="辽宁薪达网络科技有限公司">
 							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/taipingyangcanyin.png">
 						</a>
-						<a href="https://www.pactera.com/?renqun_youhua=2483561&bd_vid=9062916023494825120" target="_blank" title="中电文思海辉">
+						<a href="https://www.pactera.com/?renqun_youhua=2483561&bd_vid=9062916023494825120"
+							target="_blank" title="中电文思海辉">
 							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/zhongdianwensi-logo.png">
 						</a>
 						<a href="https://tisiqikeji.com/" target="_blank" title="吉林省体思奇健康科技有限公司">
@@ -365,14 +426,15 @@
 					<div style="height: 10px; clear: both;"></div>
 					<p>
 						（如果您的企业也使用了 Sa-Token，您可以
-						<a href="https://gitee.com/dromara/sa-token/issues/I3EV1M" target="_blank" style="text-decoration: none;">在此</a>
+						<a href="https://gitee.com/dromara/sa-token/issues/I3EV1M" target="_blank"
+							style="text-decoration: none;">在此</a>
 						提交）
 					</p>
 				</div>
 				<div style="height: 60px;"></div>
 			</div>
-			
-			
+
+
 			<!-- ------------ Dromara 成员项目 ------------- -->
 			<div>
 				<div class="com-box-f s-width">
@@ -383,131 +445,174 @@
 					</h2>
 					<div class="com-box com-box-you">
 						<a href="https://gitee.com/dromara/TLog" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/tlog.png" msg="一个轻量级的分布式日志标记追踪神器，10分钟即可接入，自动对日志打标签完成微服务的链路追踪">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/tlog.png"
+								msg="一个轻量级的分布式日志标记追踪神器，10分钟即可接入，自动对日志打标签完成微服务的链路追踪">
 						</a>
 						<a href="https://gitee.com/dromara/liteFlow" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/liteflow.png" msg="轻量，快速，稳定，可编排的组件式流程引擎">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/liteflow.png"
+								msg="轻量，快速，稳定，可编排的组件式流程引擎">
 						</a>
 						<a href="https://hutool.cn/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hutool.jpg" msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hutool.jpg"
+								msg="🍬小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
 						</a>
 						<a href="https://sa-token.cc/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/sa-token.png" msg="一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/sa-token.png"
+								msg="一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！">
 						</a>
 						<a href="https://gitee.com/dromara/hmily" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hmily.png" msg="高性能一站式分布式事务解决方案。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hmily.png"
+								msg="高性能一站式分布式事务解决方案。">
 						</a>
 						<a href="https://gitee.com/dromara/Raincat" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/raincat.png" msg="强一致性分布式事务解决方案。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/raincat.png"
+								msg="强一致性分布式事务解决方案。">
 						</a>
 						<a href="https://gitee.com/dromara/myth" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/myth.png" msg="可靠消息分布式事务解决方案。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/myth.png"
+								msg="可靠消息分布式事务解决方案。">
 						</a>
 						<a href="https://cubic.jiagoujishu.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/cubic.png" msg="一站式问题定位平台，以agent的方式无侵入接入应用，完整集成arthas功能模块，致力于应用级监控，帮助开发人员快速定位问题">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/cubic.png"
+								msg="一站式问题定位平台，以agent的方式无侵入接入应用，完整集成arthas功能模块，致力于应用级监控，帮助开发人员快速定位问题">
 						</a>
 						<a href="https://maxkey.top/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/maxkey.png" msg="业界领先的身份管理和认证产品">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/maxkey.png"
+								msg="业界领先的身份管理和认证产品">
 						</a>
 						<a href="http://forest.dtflyx.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/forest-logo.png" msg="Forest能够帮助您使用更简单的方式编写Java的HTTP客户端" nf>
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/forest-logo.png"
+								msg="Forest能够帮助您使用更简单的方式编写Java的HTTP客户端" nf>
 						</a>
 						<a href="https://jpom.top/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/jpom.png" msg="一款简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/jpom.png"
+								msg="一款简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件">
 						</a>
 						<a href="https://su.usthe.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/sureness.png" msg="面向 REST API 的高性能认证鉴权框架">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/sureness.png"
+								msg="面向 REST API 的高性能认证鉴权框架">
 						</a>
 						<a href="https://easy-es.cn/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/easy-es2.png" msg="🚀傻瓜级ElasticSearch搜索引擎ORM框架">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/easy-es2.png"
+								msg="🚀傻瓜级ElasticSearch搜索引擎ORM框架">
 						</a>
 						<a href="https://gitee.com/dromara/northstar" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/northstar_logo.png" msg="Northstar盈富量化交易平台">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/northstar_logo.png"
+								msg="Northstar盈富量化交易平台">
 						</a>
 						<a href="https://hertzbeat.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hertzbeat-brand.svg" msg="易用友好的云监控系统">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hertzbeat-brand.svg"
+								msg="易用友好的云监控系统">
 						</a>
 						<a href="https://dromara.gitee.io/fast-request/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/fast-request.gif" msg="Idea 版 Postman，为简化调试API而生">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/fast-request.gif"
+								msg="Idea 版 Postman，为简化调试API而生">
 						</a>
 						<a href="https://www.jeesuite.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/mendmix.png" msg="开源分布式云原生架构一站式解决方案">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/mendmix.png"
+								msg="开源分布式云原生架构一站式解决方案">
 						</a>
 						<a href="https://gitee.com/dromara/koalas-rpc" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/koalas-rpc2.png" msg="企业生产级百亿日PV高可用可拓展的RPC框架。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/koalas-rpc2.png"
+								msg="企业生产级百亿日PV高可用可拓展的RPC框架。">
 						</a>
 						<a href="https://async.sizegang.cn/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/gobrs-async.png" msg="🔥 配置极简功能强大的异步任务动态编排框架">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/gobrs-async.png"
+								msg="🔥 配置极简功能强大的异步任务动态编排框架">
 						</a>
 						<a href="https://dynamictp.cn/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dynamic-tp.png" msg="🔥🔥🔥 基于配置中心的轻量级动态可监控线程池">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dynamic-tp.png"
+								msg="🔥🔥🔥 基于配置中心的轻量级动态可监控线程池">
 						</a>
 						<a href="https://www.x-easypdf.cn" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/x-easypdf.png" msg="一个用搭积木的方式构建pdf的框架（基于pdfbox）">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/x-easypdf.png"
+								msg="一个用搭积木的方式构建pdf的框架（基于pdfbox）">
 						</a>
 						<a href="http://dromara.gitee.io/image-combiner" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/image-combiner.png" msg="一个专门用于图片合成的工具，没有很复杂的功能，简单实用，却不失强大">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/image-combiner.png"
+								msg="一个专门用于图片合成的工具，没有很复杂的功能，简单实用，却不失强大">
 						</a>
 						<a href="https://www.herodotus.cn/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dante-cloud2.png" msg="Dante-Cloud 是一款企业级微服务架构和服务能力开发平台。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dante-cloud2.png"
+								msg="Dante-Cloud 是一款企业级微服务架构和服务能力开发平台。">
 						</a>
 						<a href="http://www.mtruning.club" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/go-view.png" msg="低代码数据可视化开发平台">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/go-view.png"
+								msg="低代码数据可视化开发平台">
 						</a>
 						<a href="https://tangyh.top/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/lamp-cloud.png" msg="微服务中后台快速开发平台，支持租户(SaaS)模式、非租户模式">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/lamp-cloud.png"
+								msg="微服务中后台快速开发平台，支持租户(SaaS)模式、非租户模式">
 						</a>
 						<a href="https://www.redisfront.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/redis-front.png" msg="RedisFront 是一款开源免费的跨平台 Redis 桌面客户端工具, 支持单机模式, 集群模式, 哨兵模式以及 SSH 隧道连接, 可轻松管理Redis缓存数据.">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/redis-front.png"
+								msg="RedisFront 是一款开源免费的跨平台 Redis 桌面客户端工具, 支持单机模式, 集群模式, 哨兵模式以及 SSH 隧道连接, 可轻松管理Redis缓存数据.">
 						</a>
 						<a href="https://www.yuque.com/u34495/mivcfg" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/electron-egg.png" msg="一个入门简单、跨平台、企业级桌面软件开发框架">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/electron-egg.png"
+								msg="一个入门简单、跨平台、企业级桌面软件开发框架">
 						</a>
 						<a href="https://gitee.com/dromara/open-capacity-platform" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/open-capacity-platform.jpg" msg="简称ocp是基于Spring Cloud的企业级微服务框架(用户权限管理，配置中心管理，应用管理，....)">
+							<img class="lazy"
+								data-original="https://oss.dev33.cn/sa-token/link/open-capacity-platform.jpg"
+								msg="简称ocp是基于Spring Cloud的企业级微服务框架(用户权限管理，配置中心管理，应用管理，....)">
 						</a>
 						<a href="http://easy-trans.fhs-opensource.top/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/easy_trans.png" msg="Easy-Trans 一个注解搞定数据翻译,减少30%SQL代码量">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/easy_trans.png"
+								msg="Easy-Trans 一个注解搞定数据翻译,减少30%SQL代码量">
 						</a>
 						<a href="https://gitee.com/dromara/neutrino-proxy" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/neutrino-proxy.svg" msg="一款基于 Netty 的、开源的内网穿透神器。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/neutrino-proxy.svg"
+								msg="一款基于 Netty 的、开源的内网穿透神器。">
 						</a>
 						<a href="https://chatgpt.cn.obiscr.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/chatgpt.png" msg="一个支持在 JetBrains 系列 IDE 上运行的 ChatGPT 的插件。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/chatgpt.png"
+								msg="一个支持在 JetBrains 系列 IDE 上运行的 ChatGPT 的插件。">
 						</a>
 						<a href="https://gitee.com/dromara/zyplayer-doc" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/zyplayer-doc.png" msg="zyplayer-doc是一款适合团队和个人使用的WIKI文档管理工具，同时还包含数据库文档、Api接口文档。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/zyplayer-doc.png"
+								msg="zyplayer-doc是一款适合团队和个人使用的WIKI文档管理工具，同时还包含数据库文档、Api接口文档。">
 						</a>
 						<a href="https://gitee.com/dromara/payment-spring-boot" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/payment-spring-boot.png" msg="最全最好用的微信支付V3 Spring Boot 组件。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/payment-spring-boot.png"
+								msg="最全最好用的微信支付V3 Spring Boot 组件。">
 						</a>
 						<a href="https://www.j2eefast.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/j2eefast.png" msg="J2eeFAST 是一个致力于中小企业 Java EE 企业级快速开发平台,我们永久开源!">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/j2eefast.png"
+								msg="J2eeFAST 是一个致力于中小企业 Java EE 企业级快速开发平台,我们永久开源!">
 						</a>
 						<a href="https://gitee.com/dromara/data-compare" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dataCompare.png" msg="数据库比对工具：hive 表数据比对，mysql、Doris 数据比对，实现自动化配置进行数据比对，避免频繁写sql 进行处理，低代码(Low-Code) 平台">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dataCompare.png"
+								msg="数据库比对工具：hive 表数据比对，mysql、Doris 数据比对，实现自动化配置进行数据比对，避免频繁写sql 进行处理，低代码(Low-Code) 平台">
 						</a>
 						<a href="https://gitee.com/dromara/open-giteye-api" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/open-giteye-api.svg" msg="giteye.net 是专为开源作者设计的数据图表服务工具类站点，提供了包括 Star 趋势图、贡献者列表、Gitee指数等数据图表服务。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/open-giteye-api.svg"
+								msg="giteye.net 是专为开源作者设计的数据图表服务工具类站点，提供了包括 Star 趋势图、贡献者列表、Gitee指数等数据图表服务。">
 						</a>
 						<a href="https://gitee.com/dromara/RuoYi-Vue-Plus" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/RuoYi-Vue-Plus.png" msg="后台管理系统 重写 RuoYi-Vue 所有功能 集成 Sa-Token + Mybatis-Plus + Jackson + Xxl-Job + SpringDoc + Hutool + OSS 定期同步">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/RuoYi-Vue-Plus.png"
+								msg="后台管理系统 重写 RuoYi-Vue 所有功能 集成 Sa-Token + Mybatis-Plus + Jackson + Xxl-Job + SpringDoc + Hutool + OSS 定期同步">
 						</a>
 						<a href="https://gitee.com/dromara/RuoYi-Cloud-Plus" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/RuoYi-Cloud-Plus.png" msg="微服务管理系统 重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/RuoYi-Cloud-Plus.png"
+								msg="微服务管理系统 重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步">
 						</a>
 						<a href="https://gitee.com/dromara/stream-query" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/stream-query.png" msg="允许完全摆脱 Mapper 的 mybatis-plus 体验！封装 stream 和 lambda 操作进行数据返回处理。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/stream-query.png"
+								msg="允许完全摆脱 Mapper 的 mybatis-plus 体验！封装 stream 和 lambda 操作进行数据返回处理。">
 						</a>
 						<a href="https://wind.kim/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/sms4j.png" msg="短信聚合工具，让发送短信变的更简单。">
-						</a> 
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/sms4j.png"
+								msg="短信聚合工具，让发送短信变的更简单。">
+						</a>
 						<a href="https://cloudeon.top/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/cloudeon.png" msg="简化kubernetes上大数据集群的运维管理">
-						</a> 
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/cloudeon.png"
+								msg="简化kubernetes上大数据集群的运维管理">
+						</a>
 						<a href="https://dromara.org/zh/projects/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dromara.png" msg="让每一位开源爱好者，体会到开源的快乐。">
-						</a> 
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dromara.png"
+								msg="让每一位开源爱好者，体会到开源的快乐。">
+						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 					<p>
@@ -515,12 +620,13 @@
 					</p>
 					<div style=" margin: 40px 14px 0; padding: 20px 0 10px; background-color: #f4f5f7;">
 						<h3 style="padding: 0px 0 10px; ">Dromara 知识星球</h3>
-						<img class="lazy" data-original="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg" style="width: 300px;">
+						<img class="lazy" data-original="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg"
+							style="width: 300px;">
 					</div>
 				</div>
 				<div style="height: 30px;"></div>
 			</div>
-			
+
 			<!-- ------------ 友情链接 ------------- -->
 			<div>
 				<div class="com-box-f s-width">
@@ -529,42 +635,52 @@
 					<h2 class="s-title">友情链接</h2>
 					<div class="com-box com-box-you">
 						<a href="https://okhttps.ejlchina.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/okhttps.png" msg="如艺术一般优雅，像 1、2、3 一样简单，前后端通用，轻量却强大的 HTTP 客户端（同时支持 WebSocket 以及 Stomp 协议）">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/okhttps.png"
+								msg="如艺术一般优雅，像 1、2、3 一样简单，前后端通用，轻量却强大的 HTTP 客户端（同时支持 WebSocket 以及 Stomp 协议）">
 						</a>
 						<a href="https://searcher.ejlchina.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/bean-searcher.png" msg="轻量级关系数据库条件检索引擎，使一行代码实现复杂列表检索成为可能！">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/bean-searcher.png"
+								msg="轻量级关系数据库条件检索引擎，使一行代码实现复杂列表检索成为可能！">
 						</a>
 						<a href="https://xiaonuo.vip/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/xiaonuo2.png" msg="通用型后台权限管理框架，紧随潮流、开箱即用, 同时拥有Vue、Layui、SpringCloud三个版本">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/xiaonuo2.png"
+								msg="通用型后台权限管理框架，紧随潮流、开箱即用, 同时拥有Vue、Layui、SpringCloud三个版本">
 						</a>
 						<a href="http://www.pearadmin.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/pear-admin.png" msg="致 力 于 让 Web 开 发 变 得 简 单 优 雅">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/pear-admin.png"
+								msg="致 力 于 让 Web 开 发 变 得 简 单 优 雅">
 						</a>
 						<a href="http://www.layui-vue.com/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/layui-vue.png" msg="layui - vue（谐音：类 UI) 是 一 套 Vue 3.0 的 桌 面 端 组 件 库.">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/layui-vue.png"
+								msg="layui - vue（谐音：类 UI) 是 一 套 Vue 3.0 的 桌 面 端 组 件 库.">
 						</a>
 						<a href="https://shenyu.apache.org/zh/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/shenyu.svg" msg="一个异步的，高性能的，跨语言的，响应式的 API 网关。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/shenyu.svg"
+								msg="一个异步的，高性能的，跨语言的，响应式的 API 网关。">
 						</a>
 						<a href="https://dwz.cn/L9hCwepg" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/yungouos.png" msg="官方直连支付系统解决方案，支持个人、个体户、企业全渠道签约。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/yungouos.png"
+								msg="官方直连支付系统解决方案，支持个人、个体户、企业全渠道签约。">
 						</a>
 						<a href="https://hippo4j.cn/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hippo4j.jpg" msg="强大的动态线程池框架，附带监控报警功能，支持 Tomcat、Jetty、Undertow、RocketMQ、Dubbo、RabbitMQ、Hystrix 消费线程池">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/hippo4j.jpg"
+								msg="强大的动态线程池框架，附带监控报警功能，支持 Tomcat、Jetty、Undertow、RocketMQ、Dubbo、RabbitMQ、Hystrix 消费线程池">
 						</a>
 						<a href="http://solon.noear.org/" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/solon.png" msg="一个更现代感的应用开发框架：更快、更小、更自由。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/solon.png"
+								msg="一个更现代感的应用开发框架：更快、更小、更自由。">
 						</a>
 						<a href="https://gitee.com/gz-yami/mall4j" target="_blank">
-							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/mall4j.png" msg="一个基于Spring Boot 3 JDK17的商城系统。">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/mall4j.png"
+								msg="一个基于Spring Boot 3 JDK17的商城系统。">
 						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 				</div>
 				<div style="height: 60px;"></div>
 			</div>
-			
-			
+
+
 			<!-- ------------ 底部 连接 ------------- -->
 			<div id="footer">
 				<div id="s-footer" class="mao-link"></div>
@@ -573,7 +689,8 @@
 						<h3>特别鸣谢</h3>
 						<ul class="list-unstyle">
 							<li><a href="https://dromara.org/zh/projects/" target="_blank">Dromara社区</a></li>
-							<li><a href="https://gitee.com/Apache-ShenYu/incubator-shenyu" target="_blank">ShenYu 网关</a></li>
+							<li><a href="https://gitee.com/Apache-ShenYu/incubator-shenyu" target="_blank">ShenYu 网关</a>
+							</li>
 							<li><a href="https://gitee.com/dromara/TLog" target="_blank">TLog 分布式日志</a></li>
 						</ul>
 					</div>
@@ -604,30 +721,35 @@
 					<div class="ss-box">
 						<h3 class="last" style="text-align: left; float: none; padding-left: 0px;">Sa-Token 公众号</h3>
 						<div class="media-img padding-small-top" style="text-align: left;">
-							<img class="dro-qr" src="https://oss.dev33.cn/sa-token/lykj-gzh.jpg" width="100" height="100" />
+							<img class="dro-qr" src="https://oss.dev33.cn/sa-token/lykj-gzh.jpg" width="100"
+								height="100" />
 						</div>
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- -------------- 底部 版权 -------------- -->
 			<div>
 				<meta charset="UTF-8">
 				<style type="text/css">
-					
+
 				</style>
 				<div class="foot-box" id="foot">
 					<div class="s-width" style="text-align: center;">
-						Copyright ©2022 Sa-Token java权限认证 | sa-token.cc | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-4</a>
+						Copyright ©2022 Sa-Token java权限认证 | sa-token.cc | <a href="https://beian.miit.gov.cn/"
+							target="_blank">鲁ICP备18046274号-4</a>
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 		<!-- UI逐渐显现 -->
 		<style type="text/css">
-			body{opacity: 0.01; transition: opacity 0.5s;}
+			body {
+				opacity: 0.01;
+				transition: opacity 0.5s;
+			}
 		</style>
 		<script type="text/javascript">
 			setTimeout(function() {
@@ -651,7 +773,8 @@
 		</script>
 		<!-- 友盟统计 -->
 		<div style="height: 0px; overflow: hidden;">
-			<script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1279646043&web_id=1279646043"></script>
+			<script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1279646043&web_id=1279646043">
+			</script>
 		</div>
 		<!-- 百度统计 -->
 		<script>
@@ -659,22 +782,25 @@
 			(function() {
 				var hm = document.createElement("script");
 				hm.src = "https://hm.baidu.com/hm.js?35ad501304eae758ac6139a22a9830f5";
-				var s = document.getElementsByTagName("script")[0]; 
+				var s = document.getElementsByTagName("script")[0];
 				s.parentNode.insertBefore(hm, s);
 			})();
 		</script>
-		
+
 		<!-- 悬浮效果 -->
 		<script src="static/jquery.min.js"></script>
 		<script src="static/layer-v3.1.1/layer.js"></script>
 		<script type="text/javascript">
 			// 鼠标悬浮在友情链接时，提示信息 
-			$(".com-box-you a img").hover(function(){
-				var msg = $(this).attr("msg") ;
-				if(msg) {
-					window.msgLayer = layer.tips(msg, $(this), {tips: 1, time: 0});
+			$(".com-box-you a img").hover(function() {
+				var msg = $(this).attr("msg");
+				if (msg) {
+					window.msgLayer = layer.tips(msg, $(this), {
+						tips: 1,
+						time: 0
+					});
 				}
-			},function(){
+			}, function() {
 				var index = window.msgLayer;
 				setTimeout(function() {
 					layer.close(index);
@@ -684,9 +810,9 @@
 			$('.wx-qr,.dro-qr,.gzh-qr').click(function() {
 				var w = '300px';
 				var h = 'auto';
-				var content = '<div style="height: 100%; overflow: hidden !important;">' + 
-							'<img src="' + this.src + ' " style="width: 100%; height: 100%;" />' + 
-						 '</div>';
+				var content = '<div style="height: 100%; overflow: hidden !important;">' +
+					'<img src="' + this.src + ' " style="width: 100%; height: 100%;" />' +
+					'</div>';
 				layer.open({
 					type: 1,
 					title: false,
@@ -696,12 +822,14 @@
 					content: content
 				});
 			})
-			
 		</script>
+
+		<!-- 初始化轮播图 -->
+		<script src="static/swiper/swiper-bundle.min.js"></script>
+		<script src="static/swiper/index-swiper.js"></script>
 
 		<!-- 修改背景颜色 -->
 		<script>
-			
 			// 绑定修改背景色的按钮事件
 			$('.theme-box span').click(function() {
 				let bgColor = this.style.backgroundColor;
@@ -710,84 +838,83 @@
 			})
 			// 读取上次记录
 			let bgColor = localStorage.getItem('bg-color-value');
-			if(bgColor) {
+			if (bgColor) {
 				setBg(bgColor);
 			}
-			
+
 			// 设置背景颜色 
 			function setBg(bgColor) {
 				console.log('---- 背景颜色设定为：', bgColor);
-				
+
 				// -------- 设置 body 背景
 				document.body.style.backgroundColor = bgColor;
-				
+
 				// -------- 设置 header 头背景
 				// 如果是 16 进制，转 rgba
-				if(bgColor.indexOf('#') == 0) {
+				if (bgColor.indexOf('#') == 0) {
 					bgColor = hexToRgba(bgColor, 0.97);
 				}
 				// 如果是 rgb，转 rgba
-				else if(bgColor.match(/\,/g).length == 2) {
+				else if (bgColor.match(/\,/g).length == 2) {
 					bgColor = bgColor.replace(')', ' ,0.97)');
 				}
-				
+
 				document.querySelector('.doc-header').style.backgroundColor = bgColor;
 			}
-			
+
 			// 16进制 转 rgba
-			function hexToRgba(str, a){
+			function hexToRgba(str, a) {
 				a = a || 1;
-		
+
 				var reg = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
-				if(!reg.test(str)){return;}
-				let newStr = (str.toLowerCase()).replace(/\#/g,'')
+				if (!reg.test(str)) {
+					return;
+				}
+				let newStr = (str.toLowerCase()).replace(/\#/g, '')
 				let len = newStr.length;
-				if(len == 3){
+				if (len == 3) {
 					let t = ''
-					for(var i=0;i<len;i++){
-						t += newStr.slice(i,i+1).concat(newStr.slice(i,i+1))
+					for (var i = 0; i < len; i++) {
+						t += newStr.slice(i, i + 1).concat(newStr.slice(i, i + 1))
 					}
 					newStr = t
 				}
 				let arr = []; //将字符串分隔，两个两个的分隔
-				for(var i =0;i<6;i=i+2){
-					let s = newStr.slice(i,i+2)
+				for (var i = 0; i < 6; i = i + 2) {
+					let s = newStr.slice(i, i + 2)
 					arr.push(parseInt("0x" + s))
 				}
-				return 'rgb(' + arr.join(",")  + ', ' + a + ')';
+				return 'rgb(' + arr.join(",") + ', ' + a + ')';
 			}
-			
 		</script>
-		
+
 		<!-- 图片懒加载 -->
 		<script src="static/jquery.lazyload-1.9.3.js"></script>
 		<script>
 			$(function() {
 				$("img.lazy").lazyload({
-					effect: "fadeIn",  // 动画，show=显示，fadeIn=淡入，slideDown=下拉
-					effectspeed: 1200,  // 动画持续时间
+					effect: "fadeIn", // 动画，show=显示，fadeIn=淡入，slideDown=下拉
+					effectspeed: 1200, // 动画持续时间
 					skip_invisible: true, // 不加载隐藏的图像
 					// threshold: -180,  // 提前加载：距离屏幕多少px时就显示出来
 					// event: 'click',  // 事件触发时才加载，scroll=滑动，click=点击，mouseover=鼠标划过，sporty=运动的
 					// 未加载时的占位图，此为3x3透明小图片
-					placeholder:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAhdEVYdENyZWF0aW9uIFRpbWUAMjAyMTowMToyMiAyMjoxNDoxM63SwyUAAAANSURBVBhXYyAGMDAAAAAnAAF2ypRxAAAAAElFTkSuQmCC",
-					load: function(){
+					placeholder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAhdEVYdENyZWF0aW9uIFRpbWUAMjAyMTowMToyMiAyMjoxNDoxM63SwyUAAAANSURBVBhXYyAGMDAAAAAnAAF2ypRxAAAAAElFTkSuQmCC",
+					load: function() {
 						console.log('lazy img: ' + this.src);
 					}
 				});
 			})
-			// $(window).bind("load", function() {   
-			//   // var timeout = setTimeout(function() {$("img.lazy").trigger("sporty")}, 5000);   
-			// });  
 		</script>
-
+		
+		<!-- 预览版提示 -->
 		<script type="text/javascript">
-			// 预览版提示 
-			if(location.host === 'rc.sa-token.cc') {
-				const newTips = '<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.cc/" target="_blank">https://sa-token.cc/</a></b>';
+			if (location.host === 'rc.sa-token.cc') {
+				const newTips =
+					'<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.cc/" target="_blank">https://sa-token.cc/</a></b>';
 				layer.alert(newTips);
 			}
 		</script>
-
+		
 	</body>
 </html>
