@@ -8,7 +8,7 @@
 
 ![QQ群](https://oss.dev33.cn/sa-token/qq-group-4.png ':size=180')
 
-QQ交流群：707350988 [点击加入](https://jq.qq.com/?_wv=1027&k=tqbzHT2D)
+QQ交流群：707350988 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=98NOhX0Q3a2hcv3eURcnYMBuZUZrlHUH&authKey=td3pmX3BnYNr%2FCRkEDwE5FgGARk29D9HAMwL0bAfK7tqN8XN93jccnEanyZl18mM&noverify=0&group_code=837325627)
 
 ### 2、加入微信交流群：
 
