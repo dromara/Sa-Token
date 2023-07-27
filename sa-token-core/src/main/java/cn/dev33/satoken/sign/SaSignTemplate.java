@@ -317,7 +317,7 @@ public class SaSignTemplate {
 
 		// 三个参数必须全部非空
 		SaSignException.throwByNull(timestampValue, "缺少 timestamp 字段");
-		SaSignException.throwByNull(nonceValue, "缺少 nonce 字段");
+		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
 		SaSignException.throwByNull(signValue, "缺少 sign 字段");
 
 		// 依次校验三个参数
