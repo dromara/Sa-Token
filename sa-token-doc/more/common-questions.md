@@ -438,20 +438,20 @@ spring.mvc.throw-exception-if-no-handler-found=true
 
 
 
-### Q：开启了懒加载后，启动报“未能获取有效的上下文处理器”
-开启了`lazy-initialization=true`后，启动报异常 `InvalidContextException`: 未能获取有效的上下文处理器, 配置如下:
+### Q：开启了全局懒加载后，能启动项目，但是访问接口报“未能获取有效的上下文处理器”
+开启了全局懒加载后，能启动项目，但是访问接口报异常 `InvalidContextException`: 未能获取有效的上下文处理器, 配置如下：
 ``` yaml
 spring:
   main:
     lazy-initialization: true
 ```
-原因是sa-token自动配置入口类SaTokenContextRegister被延迟加载了，只需要手动指定懒加载排除掉SaTokenContextRegister就可以了,实现代码如下:
-```java
+原因是 Sa-Token 自动配置入口类 SaBeanInject 被延迟加载了，只需要手动指定懒加载排除掉 SaBeanInject 就可以了,实现代码如下:
+``` java
 @Configuration
 class MyConfiguration {
     @Bean
     LazyInitializationExcludeFilter integrationLazyInitExcludeFilter() {
-        return LazyInitializationExcludeFilter.forBeanTypes(SaTokenContextRegister.class);
+        return LazyInitializationExcludeFilter.forBeanTypes(SaBeanInject.class);
     }
 }
 ```
