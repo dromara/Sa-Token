@@ -294,9 +294,9 @@ public class SaSignTemplate {
 		String nonceValue = paramMap.get(nonce);
 		String signValue = paramMap.get(sign);
 
-		// 三个参数必须全部非空
+		// 参数非空校验
 		SaSignException.throwByNull(timestampValue, "缺少 timestamp 字段");
-		SaSignException.throwByNull(nonceValue, "缺少 nonce 字段");
+		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
 		SaSignException.throwByNull(signValue, "缺少 sign 字段");
 
 		// 三个值的校验必须全部通过
@@ -315,7 +315,7 @@ public class SaSignTemplate {
 		String nonceValue = paramMap.get(nonce);
 		String signValue = paramMap.get(sign);
 
-		// 三个参数必须全部非空
+		// 参数非空校验
 		SaSignException.throwByNull(timestampValue, "缺少 timestamp 字段");
 		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
 		SaSignException.throwByNull(signValue, "缺少 sign 字段");
