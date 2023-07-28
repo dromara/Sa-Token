@@ -17,7 +17,7 @@ function initSwiper () {
 			delay: 3000,
 		},
 		// slide 间距 
-		spaceBetween: 30,
+		spaceBetween: 80,
 		// 点击 slide 时，过渡到这个 slide 
 		slideToClickedSlide: true,
 		// 切换效果 slide=普通位移、fade=淡入、cube=方块、coverflow=3d流、flip=3d翻转、cards=卡片式、creative=创意性

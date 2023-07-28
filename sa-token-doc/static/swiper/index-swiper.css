@@ -23,9 +23,12 @@
 .ry-box .swiper-slide {
 	text-align: center;
 	font-size: 18px;
-	width: 600px;
-	height: 400px;
+	width: 750px;
+	height: 500px;
 	/* cursor: pointer; */
+}
+.ry-box .swiper-slide-tx1{
+	width: 450px;
 }
 
 .ry-box .swiper-slide img {
@@ -40,7 +43,7 @@
 	display: inline-block;
 	font-size: 16px;
 	margin-top: 30px;
-	color: #666;
+	color: #222;
 }
 
 
