@@ -33,7 +33,7 @@ var myDocsifyPlugin = function(hook, vm) {
 		return html + footer;
 	});
 	
-	// 每钩子函数：次路由切换时数据全部加载完成后调用，没有参数。
+	// 钩子函数：每次路由切换时数据全部加载完成后调用，没有参数。
 	hook.doneEach(function() {
 		
 		// 功能3，给代码盒子，添加行数样式 
@@ -59,6 +59,31 @@ var myDocsifyPlugin = function(hook, vm) {
 		if($('.zanzhu-count').length && $('.zanzhu-box table').length) {
 			$('.zanzhu-count').html($('.zanzhu-box table tr').length);
 		}
+		
+		// 功能6：标题下面的广告 
+		if(vm.route.path !== '/' && $(window).width() >= 800) {
+			var ad = `<p class="top-ad-box">
+				<span class="ad-tips">推广信息：</span>
+				<span class="ad-tips ad-close">关闭</span>
+				<a href="http://sa-pro.dev33.cn?from=satop" target="_blank">
+					<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-x.png" />
+				</a>
+			</p>`;
+				
+			// 没有下划线就先补个下划线
+			// if($('#main h1').next().prop('tagName') !== 'HR') {
+			// 	$('#main h1').after('<hr/>');
+			// }
+			// 添加广告
+			$('#main h1').after(ad);
+			// 添加关闭事件
+			$('.top-ad-box .ad-close').click(function(){
+				console.log(123);
+				// $('.top-ad-box').slideUp(); // 折叠收起
+				$(".top-ad-box").fadeOut(1000); // 淡出效果
+			})
+		}
+		
 	});
 	
 	// 钩子函数：初始化并第一次加载完成数据后调用，没有参数。

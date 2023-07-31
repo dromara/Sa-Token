@@ -329,3 +329,13 @@ body {
 }
 .main-box details p{padding: 0 14px;}
 
+/* 顶部广告 */
+#main .top-ad-box{padding: 0.5em 1em; font-size: 12px; margin-bottom: 30px; background-color: rgba(0, 0, 0, 0.04);}
+#main .top-ad-box a{border-bottom: 0px;}
+#main .top-ad-box a:hover{border-bottom: 0px;}
+#main .top-ad-box a img{border: 0px #ddd solid; width: 100%; /* max-height: 80px; */
+ border-radius: 2px; transition: all 0.2s;}
+#main .top-ad-box a img:hover{box-shadow: 0 0 20px #ddd;}
+.ad-tips{color: #aaa;}
+.ad-close{float: right;}
+.ad-close:hover{cursor: pointer; text-decoration: underline; color: red;}
