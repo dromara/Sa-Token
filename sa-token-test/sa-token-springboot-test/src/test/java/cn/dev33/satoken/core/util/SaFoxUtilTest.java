@@ -113,16 +113,65 @@ public class SaFoxUtilTest {
     	Assertions.assertEquals(list6.get(0), dataList.get(dataList.size() - 1));
     }
 
-    @Test
-    public void vagueMatch() {
-    	Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello"));
-    	Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello world"));
-    	Assertions.assertFalse(SaFoxUtil.vagueMatch("hello*", "he"));
-    	Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello*"));
-    	Assertions.assertTrue(SaFoxUtil.vagueMatch(null, null));
-    	Assertions.assertFalse(SaFoxUtil.vagueMatch(null, "hello"));
-    	Assertions.assertFalse(SaFoxUtil.vagueMatch("hello*", null));
-    }
+	@Test
+	public void vagueMatch() {
+		// 不模糊
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("hello", "hello"));
+
+		// 正常模糊
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello world"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("hello*", "hello*"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("hello*", "he"));
+
+		// 带 -
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user-*", "user-"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user-*", "user-add"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user-*", "user-*"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user-*", "user"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user-*-add-*", "user-xx-add-1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user-*-add-*", "user-add-1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user-*", "usermgt-list"));
+
+		// 带 /
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user/*", "user/"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user/*", "user/add"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user/*", "user/*"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user/*", "user"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user/*/add/*", "user/xx/add/1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user/*/add/*", "user/add/1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user/*", "usermgt/list"));
+
+		// 带 :
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user:*", "user:"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user:*", "user:add"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user:*", "user:*"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user:*", "user"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user:*:add:*", "user:xx:add:1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user:*:add:*", "user:add:1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user:*", "usermgt:list"));
+
+		// 带 .
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user.*", "user."));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user.*", "user.add"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user.*", "user.*"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user.*", "user"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("user.*.add.*", "user.xx.add.1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user.*.add.*", "user.add.1"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("user.*", "usermgt.list"));
+
+		// 极端情况
+		Assertions.assertTrue(SaFoxUtil.vagueMatch(null, null));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch(null, "hello"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("hello*", null));
+
+		// url 匹配
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("*", "http://sa-sso-client1.com:9001/sso/login"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("http://sa-sso-client1.com:9001/*", "http://sa-sso-client1.com:9001/sso/login"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("http://sa-sso-client1.com:9001/*", "http://sa-sso-client1.com:9001/sso/login?name=1"));
+		Assertions.assertTrue(SaFoxUtil.vagueMatch("http://sa-sso-client1.com:9001/*", "http://sa-sso-client1.com:9001/sso/login?name=1&age=2"));
+		Assertions.assertFalse(SaFoxUtil.vagueMatch("http://sa-sso-client1.com:9001/*", "http://sa-sso-client1.com:9002"));
+	}
 
     @Test
     public void isWrapperType() {
