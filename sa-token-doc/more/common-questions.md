@@ -301,6 +301,16 @@ public class SaTokenApplication {
 
 
 
+### Q：我把 token 有效期设置为 30 天，但是总感觉不到 30 天的时候 token 就无效了，怎么回事？
+- 可能1：你没有为 sa-token 集成 Redis，框架默认将会话数据保存在内存中，项目重启后数据会消失。
+- 可能2：你为 sa-token 集成了 Redis，但是 Redis 重启了，导致会话消失。
+- 可能3：你配置了 `is-concurrent=false`，不允许同一账号多端登录，有别人登录了这个账号把你顶下去了。
+- 可能4：你配置了 `is-concurrent=true`，但是`is-share=false`，同一账号每次登录产生不同的 token，默认最高可以同时登录12个客户端，超过将自动注销最原先的会话。
+- 可能5：你的这个账号，别人也登录了，别人调用了注销方法，把你这边的也注销了。`StpUtil.logout()` 为单 token 注销，`StpUtil.logout(10001)` 为账号所有 token 注销。
+- 可能6：你虽然 `sa-token.timeout` 配置了 30 天，但是 `sa-token.active-timeout` 配置了较短的值，超过这个时间无操作，token 就过期了。
+- 可能7：你换了浏览器，或者换了电脑，或者清空了浏览器最近缓存记录，自然而然需要重新登录。
+- 可能8：你中途改了项目配置，比如改了 `sa-token.token-name` 配置项的值，会导致会话保存的 key 发生改变，效果等同于手动清空了 Redis 数据，需要重新登录。
+
 
 
 ### Q：有时候我不加 Token 也可以通过鉴权，请问是怎么回事？
@@ -456,6 +466,7 @@ class MyConfiguration {
 }
 ```
 [经验来源](https://gitee.com/dromara/sa-token/issues/I7EXIU)
+
 
 
 <!-- ---------------------------- 常见疑问 ----------------------------- -->
