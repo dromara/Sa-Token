@@ -994,12 +994,11 @@ public class StpLogic {
 		if(loginId == null) {
 			return defaultValue;
 		}
-        // 3、不为 null，则开始尝试类型转换
-        if (defaultValue != null) {
-            return (T) SaFoxUtil.getValueByType(loginId, defaultValue.getClass());
-        } else {
-            return (T) SaFoxUtil.getValueByType(loginId, Object.class);
+        // 3、loginId 不为 null，则开始尝试类型转换
+        if (defaultValue == null) {
+			return null;
         }
+		return (T) SaFoxUtil.getValueByType(loginId, defaultValue.getClass());
  	}
  	
  	/** 
