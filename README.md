@@ -18,9 +18,9 @@
 ## 前言：
 - [在线文档：https://sa-token.cc](https://sa-token.cc)
 
-- 注：学习测试请拉取 master 分支，dev 为正在开发的分支，有很多特性并不稳定。
+- 注：学习测试请拉取 master 分支，dev 是开发分支，有很多特性并不稳定（在项目根目录执行 `git checkout master`）。
 
-- 开源不易，点个 star 鼓励一下吧！
+-  开源不易，点个 star 鼓励一下吧！
 
 
 ## Sa-Token 介绍
