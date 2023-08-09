@@ -103,15 +103,18 @@ function getCode() {
 function confirmStar() {
 	
 	// 弹窗提示文字 
-	let tipStr = "<p><b>嗨，同学，来支持一下 Sa-Token 吧，为项目点个 star ！</b></p>";
-	tipStr += "<div>仅需两步即可完成：<br>" + 
-				'<div>1、打开 Sa-Token <a href="https://gitee.com/dromara/sa-token" target="_blank">开源仓库主页</a>，在右上角点个 star 。</div>' + 
-				'<div>2、点击下方 [ 同意授权检测 ] 按钮，同意 Sa-Token 获取 API 权限进行检测。<a href="javascript:authDetails();" style="text-decoration: none;">？</a></div>' + 
-				"</div>";
-	tipStr += "<p><b>本章节文档将在 star 后正常开放展示</b></p>";
-	tipStr = '<div>' + tipStr + '</div>'
+	const tipStr = `
+		<div>
+			<p><b>嗨，同学，来支持一下 Sa-Token 吧，为项目点个 star ！</b></p>
+			<div>仅需两步即可完成：<br>
+				<div>1、打开 Sa-Token <a href="https://gitee.com/dromara/sa-token" target="_blank">开源仓库主页</a>，在右上角点个 star 。</div>
+				<div>2、点击下方 [ 同意授权检测 ] 按钮，同意 Sa-Token 获取 API 权限进行检测。<a href="javascript:authDetails();" style="text-decoration: none;">？</a></div>
+			</div>
+			<p><b>本章节文档将在 star 后正常开放展示</b></p>
+		</div>
+		`;
 	
-	layer.confirm(tipStr, {
+	const index = layer.confirm(tipStr, {
 			title: '提示', 
 			btn: ['同意授权检测'], 
 			// btn: ['同意授权检测', '暂时不要，我先看看文档'], 
@@ -126,6 +129,17 @@ function confirmStar() {
 			goAuth();
 		}
 	);
+	const closeLayer = 
+	`	
+		<!-- 
+			↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓
+			 在 f12 控制台 执行一下：
+				 localStorage.isStarRepo = new Date().getTime()
+			 即可取消弹窗 ，执行完刷新一下页面
+			↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑  ↑
+		-->
+	`;
+	$('#layui-layer' + index).prepend(closeLayer)
 }
 
 
