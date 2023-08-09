@@ -339,3 +339,17 @@ body {
 .ad-tips{color: #aaa;}
 .ad-close{float: right;}
 .ad-close:hover{cursor: pointer; text-decoration: underline; color: red;}
+
+
+/* 帮助按钮 */
+.help-btn{transition: all 0.2s;}
+.help-btn:hover{box-shadow: 0 0 30px #aaa !important;}
+.xiaozhushou-intro p{line-height: 16px;}
+
+/* 按钮发光动画 */
+.help-btn{animation: helpbtnanimation 3s infinite;}
+@keyframes helpbtnanimation{
+    0%{box-shadow: 0 0 1px #42B983;}
+    50%{box-shadow: 0 0 20px #42B983;}
+    100%{box-shadow: 0 0 20px #FFF;}
+}

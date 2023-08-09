@@ -136,9 +136,19 @@
 		<div class="main-box">
 			<div id="app">加载中...</div>
 		</div>
+		
+		<!-- 万维广告div -->
 		<div style="position: fixed; right: 0; bottom: 0; z-index: 10000; border: 0px #aaa solid;">
 			<div class="wwads-cn wwads-vertical" data-id="88" style="max-width:150px"></div>
 		</div>
+		
+		<!-- 小助手div -->
+		<div class="p-none" style="position: fixed; right: 40px; bottom: 330px; z-index: 10000; border: 0px #aaa solid;">
+			<div class="help-btn" style="width: 60px; height: 60px; text-align: center; border-radius: 50%; background-color: #42b983; cursor: pointer;">
+				<span style="font-size: 18px; color: #FFF; line-height: 60px;">Help</span>
+			</div>
+		</div>
+		
 		
 		<!-- UI逐渐显现 -->
 		<style type="text/css">
@@ -257,6 +267,30 @@
 				const newTips = '<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.cc/" target="_blank">https://sa-token.cc/</a></b>';
 				layer.alert(newTips);
 			}
+		</script>
+		
+		<!-- 小助手提示 -->
+		<script>
+			$('.help-btn').click(function(){
+				var str = `
+					<div class="xiaozhushou-intro">
+						<p>1、你在使用 Sa-Token 时遇到任何技术难题，可以向 < sa-token 小助手 > 求助咨询。</p>
+						<p>2、该小助手不属于商业运营，求助咨询完全免费。</p>
+						<p>3、目前该小助手属于试运营阶段，每天只能提供大约 1 小时的求助时间。</p>
+						<p>4、根据运营效果反馈，我们日后可能会提高求助时间，但也可能关闭此功能。</p>
+						<p>5、该小助手由企业微信提供平台支持，感谢企业微信。</p>
+						<p style="margin-top: 30px;">打开方式：</p>
+						<p>1、如果你是使用 PC 端企业微信，请点此链接：<a href="https://work.weixin.qq.com/kfid/kfcdd45c432fee9655f" target="_blank">https://work.weixin.qq.com/kfid/kfcdd45c432fee9655f</a></p>
+						<p>2、如果你是使用手机端微信，请扫码：</p>
+						<p><img src="https://oss.dev33.cn/sa-token/sa-token-xiaozhushou.jpg" width="200px"></p>
+					</div>
+				`;
+				layer.alert(str, {
+					title: '技术求助', 
+					area: '550px', 
+					offset: '10%',
+				})
+			})
 		</script>
 		
 		<!-- 修改背景颜色 -->

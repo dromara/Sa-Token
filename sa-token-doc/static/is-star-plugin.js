@@ -13,10 +13,6 @@ var isStarPlugin = function(hook, vm) {
 	
 	// 钩子函数：每次路由切换时，解析内容之后执行 
 	hook.afterEach(function(html) {
-		// changePage++;
-		// if(changePage % 15 === 0) {
-		// 	isStarRepo();
-		// }
 		return html;
 	});
 	
@@ -204,13 +200,13 @@ function getAccessToken(code) {
 		},
 		error: function(e) {
 			console.log('请求错误 ', e);
-			// 如果请求地址有错，则暂停一天 
+			// 如果请求地址有错，可能是服务器宕机了，暂停一天检测
 			if(e.status === 0 || e.status === 502) {
 				return layer.alert(JSON.stringify(e), {closeBtn: false}, function(){
-					// 一天内不再检查，否则
+					// 一天内不再检查 
 					const ygTime = allowDisparity - (1000 * 60 * 60 * 24);
 					localStorage.isStarRepo = new Date().getTime() - ygTime;
-					// 刷新url，去掉 code 参数 
+					// 刷新 url，去掉 code 参数 
 					location.href = location.href.replace("?code=" + code, '');
 				});
 			}
@@ -227,11 +223,6 @@ function getAccessToken(code) {
 				url = url.replace("&code=" + code, '');
 				location.href = url;
 			});
-			// 一天内不再检查，否则
-			// const ygTime = allowDisparity - (1000 * 60 * 60 * 24);
-			// localStorage.isStarRepo = new Date().getTime() - ygTime;
-			// // 刷新url，去掉 code 参数 
-			// location.href = location.href.replace("?code=" + code, '');
 		}
 	})
 }
