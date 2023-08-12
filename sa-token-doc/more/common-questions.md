@@ -71,6 +71,7 @@ Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUti
 - 可能4：前端提交了 Token，但是 Token前缀 不对，可参考：[自定义 Token 前缀](/up/token-prefix)
 - 可能5：你的项目属于前后端分离架构，此时浏览器默认不自动提交 Cookie，参考：[前后端分离](/up/not-cookie) 
 - 可能6：你使用了 Nginx 反向代理，而且配置了 自定义Token名称，而且自定义的名称还带有下划线（比如 shop_token），而且还是你的项目还是从 Header头提交Token的，此时 Nginx 默认会吞掉你的下划线参数，可参考：[nginx做转发时，带下划线的header参数丢失](https://blog.csdn.net/zfw_666666/article/details/124420828)
+- 可能7：可能是跨域了，导致前端提交不上 token，看看前端浏览器有没有跨域的报错。
 
 **如果是：Token无效：6ad93254-b286-4ec9-9997-4430b0341ca0**
 - 可能1：前端提交的 token 是乱填的，或者从别的项目拷过来的，或者多个项目一起开发时彼此的 Token 串项目了。
