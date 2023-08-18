@@ -174,6 +174,8 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 
 - [[ hippo4j ]](https://gitee.com/agentart/hippo4j)：强大的动态线程池框架，附带监控报警功能。
 
+- [[ hertzbeat ]](https://gitee.com/dromara/hertzbeat)：易用友好的开源实时监控告警系统，无需Agent，高性能集群，强大自定义监控能力。
+
 
 ## 知识星球
 <img src="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg" width="300px" />
