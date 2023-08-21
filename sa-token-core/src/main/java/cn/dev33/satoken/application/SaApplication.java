@@ -34,7 +34,7 @@ public class SaApplication implements SaSetValueInterface {
 	/**
 	 * 默认实例 
 	 */
-	public final static SaApplication defaultInstance = new SaApplication();
+	public static SaApplication defaultInstance = new SaApplication();
 
 	// ---- 实现接口存取值方法 
 

@@ -42,7 +42,7 @@ public class SaTokenConfigFactory {
 	/**
 	 * 配置文件地址 
 	 */
-	public final static String configPath = "sa-token.properties";
+	public static String configPath = "sa-token.properties";
 
 	/**
 	 * 根据 configPath 路径获取配置信息
