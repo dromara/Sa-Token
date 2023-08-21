@@ -91,20 +91,8 @@ public class SaSecureUtil {
 	public static String sha1(String str) {
 		try {
 			str = (str == null ? "" : str);
-			MessageDigest md = MessageDigest.getInstance("SHA1");
-			byte[] b = str.getBytes();
-			md.update(b);
-			byte[] b2 = md.digest();
-			int len = b2.length;
-			String strA = "0123456789abcdef";
-			char[] ch = strA.toCharArray();
-			char[] chs = new char[len * 2];
-			for (int i = 0, k = 0; i < len; i++) {
-				byte b3 = b2[i];
-				chs[k++] = ch[b3 >>> 4 & 0xf];
-				chs[k++] = ch[b3 & 0xf];
-			}
-			return new String(chs);
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
+			return getShaHexString(str, messageDigest);
 		} catch (Exception e) {
 			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12112);
 		}
@@ -120,23 +108,65 @@ public class SaSecureUtil {
 		try {
 			str = (str == null ? "" : str);
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-			messageDigest.update(str.getBytes(StandardCharsets.UTF_8));
-
-			byte[] bytes = messageDigest.digest();
-			StringBuilder builder = new StringBuilder();
-			String temp;
-			for (byte aByte : bytes) {
-				temp = Integer.toHexString(aByte & 0xFF);
-				if (temp.length() == 1) {
-					builder.append("0");
-				}
-				builder.append(temp);
-			}
-
-			return builder.toString();
+			return getShaHexString(str, messageDigest);
 		} catch (Exception e) {
 			throw new SaTokenException(e).setCode(SaErrorCode.CODE_12113);
 		}
+	}
+
+	/**
+	 * sha384加密
+	 *
+	 * @param str 指定字符串
+	 * @return 加密后的字符串
+	 */
+	public static String sha384(String str) {
+		try {
+			str = (str == null ? "" : str);
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-384");
+			return getShaHexString(str, messageDigest);
+		} catch (Exception e) {
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_121131);
+		}
+	}
+
+	/**
+	 * sha512加密
+	 *
+	 * @param str 指定字符串
+	 * @return 加密后的字符串
+	 */
+	public static String sha512(String str) {
+		try {
+			str = (str == null ? "" : str);
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+			return getShaHexString(str, messageDigest);
+		} catch (Exception e) {
+			throw new SaTokenException(e).setCode(SaErrorCode.CODE_121132);
+		}
+	}
+
+	/**
+	 * sha (Secure Hash Algorithm)加密 公共方法
+	 *
+	 * @param str 指定字符串
+	 * @param messageDigest 消息摘要
+	 * @return 加密后的字符串
+	 */
+	private static String getShaHexString(String str, MessageDigest messageDigest) {
+		messageDigest.update(str.getBytes(StandardCharsets.UTF_8));
+		byte[] bytes = messageDigest.digest();
+		StringBuilder builder = new StringBuilder();
+		String temp;
+		for (byte aByte : bytes) {
+			temp = Integer.toHexString(aByte & 0xFF); // 获取无符号整数十六进制字符串
+			if (temp.length() == 1) {
+				builder.append("0"); // 确保每个字节都用两个字符表示
+			}
+			builder.append(temp);
+		}
+
+		return builder.toString();
 	}
 
 	/**
@@ -149,6 +179,15 @@ public class SaSecureUtil {
 		return md5(md5(str) + md5(salt));
 	}
 
+	/**
+	 * sha256加盐加密: sha256(sha256(str) + sha256(salt))
+	 * @param str 字符串
+	 * @param salt 盐
+	 * @return 加密后的字符串
+	 */
+	public static String sha256BySalt(String str, String salt) {
+		return sha256(sha256(str) + sha256(salt));
+	}
 
 	// ----------------------- 对称加密 AES -----------------------
 
