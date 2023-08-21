@@ -34,12 +34,12 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	/**
 	 * 存储数据的集合
 	 */
-	public Map<String, Object> dataMap = new ConcurrentHashMap<>();
+	public final Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
 	/**
 	 * 存储数据过期时间的集合（单位: 毫秒）, 记录所有 key 的到期时间 （注意存储的是到期时间，不是剩余存活时间）
 	 */
-	public Map<String, Long> expireMap = new ConcurrentHashMap<>();
+	public final Map<String, Long> expireMap = new ConcurrentHashMap<>();
 
 	/**
 	 * 构造函数

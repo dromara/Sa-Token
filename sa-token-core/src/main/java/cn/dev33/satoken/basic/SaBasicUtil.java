@@ -29,7 +29,7 @@ public class SaBasicUtil {
 	/**
 	 * 底层使用的 SaBasicTemplate 对象
 	 */
-	public static SaBasicTemplate saBasicTemplate = new SaBasicTemplate();
+	public final static SaBasicTemplate saBasicTemplate = new SaBasicTemplate();
 
 	/**
 	 * 获取浏览器提交的 Basic 参数 （裁剪掉前缀并解码）

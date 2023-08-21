@@ -34,7 +34,7 @@ public class SaTokenContextForThreadLocalStorage {
 	/**
 	 * 基于 ThreadLocal 的 [ Box 存储器 ]
 	 */
-	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<>();
+	public static final ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<>();
 	
 	/**
 	 * 初始化当前线程的 [ Box 存储器 ]
