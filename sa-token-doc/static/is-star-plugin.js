@@ -3,9 +3,6 @@
 // 声明 docsify 插件
 var isStarPlugin = function(hook, vm) {
 	
-	// 切换文档的次数，每隔固定次数检测一下 
-	let changePage = -1;
-	
 	// 钩子函数：解析之前执行
 	hook.beforeEach(function(content) {
 		return content;
