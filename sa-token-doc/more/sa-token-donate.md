@@ -21,6 +21,7 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [Meteor](https://gitee.com/meteoroc)			| ¥ 2.5			| 感谢您的开源项目！							| 2023-08-23 	|
 | [刘斌](https://gitee.com/xuanfather)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-08-17 	|
 | [快快乐乐小码农](https://gitee.com/happy-little-farmer)	| ¥ 1.0	| 感谢您的开源项目！							| 2023-08-17 	|
 | [失败女神](https://gitee.com/failedgoddess)	| ¥ 50.0		| 感谢您的开源项目！							| 2023-08-03 	|
