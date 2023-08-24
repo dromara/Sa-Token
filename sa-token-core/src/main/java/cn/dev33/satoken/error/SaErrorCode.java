@@ -154,6 +154,12 @@ public interface SaErrorCode {
 	/** sha256 加密异常 */
 	int CODE_12113 = 12113;
 
+	/** sha384 加密异常 */
+	int CODE_121131 = 121131;
+
+	/** sha512 加密异常 */
+	int CODE_121132 = 121132;
+
 	/** AES 加密异常 */
 	int CODE_12114 = 12114;
 
