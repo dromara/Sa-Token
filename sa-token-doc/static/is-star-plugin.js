@@ -34,7 +34,7 @@ const docDomain = 'sa-token.cc';
 // const docDomain = '127.0.0.1:8848';
 		
 // 检查成功后，多少天不再检查 
-const allowDisparity = 1000 * 60 * 60 * 24 * 30;
+const allowDisparity = 1000 * 60 * 60 * 24 * 30 * 3;
 // const allowDisparity = 1000 * 10;
 
 
@@ -126,6 +126,8 @@ function confirmStar() {
 			goAuth();
 		}
 	);
+	
+	// 源码注释提示 
 	const closeLayer = 
 	`	
 		<!-- 

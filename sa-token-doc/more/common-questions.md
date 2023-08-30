@@ -623,6 +623,39 @@ So：从鉴权粒度的角度来看，需要针对一个模块鉴权的时候，
 所以只能统一抛出-2，这个行为也和具体使用的 SaTokenDao 有关联，例如集成 sa-token-jwt 插件后，框架就能分辨出来是 token 过期了，抛出-3。
 
 
+### Q：Sa-Token 是否提供类似 RefreshToken 的概念，与 AccessToken 相互配合刷新令牌鉴权。
+关于长短 token，Sa-Token 没有提供直接的 API 支持，但是你可以利用 “临时 token 认证模块” 轻易的达到这一点：
+
+1. 把 `sa-token.timeout` 的值配置小一点，然后把 `StpUtil.login(10001)` 生成的 token 作为短 token ，用来鉴权。
+2. 用 “临时 token 认证模块” 生成长 token， `String refreshToken = SaTempUtil.createToken(10001, 2592000);`。
+3. 把这两个 token 一起返回到前端。
+4. 你再开个接口，可以让前端通过长 token，刷新短 token，参考代码：
+
+``` java
+@RequestMapping("/refreshToken")
+public SaResult refreshToken(String refreshToken) {
+	// 1、验证
+	Object userId = SaTempUtil.parseToken(refreshToken);
+	if(userId == null) {
+		return SaResult.error("无效 refreshToken");
+	}
+
+	// 2、为其生成新的短 token
+	String accessToken = StpUtil.createLoginSession(userId);
+
+	// 3、返回
+	return SaResult.data(accessToken);
+}
+```
+
+
+### Q：怎么改变请求返回的 http 状态码？
+``` java
+SaHolder.getResponse().setStatus(401)
+```
+
+
+
 ### Q：还是有不明白到的地方?
 请在`gitee` 、 `github` 提交 `issues`，或者加入qq群交流，[群链接](/more/join-group)
 

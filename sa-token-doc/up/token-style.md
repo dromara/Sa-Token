@@ -63,4 +63,5 @@ public class SaTokenConfigure {
 gfuPSwZsnUhwgz08GTCH4wOgasWtc3odP4HLwXJ7NDGOximTvT4OlW19zeLH
 ```
 
+!> **更改了 token 生成策略但是不生效？**<br> 把 Redis 中的旧数据清除掉再试试
 
