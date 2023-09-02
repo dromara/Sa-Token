@@ -186,7 +186,8 @@ QQ交流群：837325627 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k
 
 微信交流群：
 
-![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230')
+<img src="https://oss.dev33.cn/sa-token/qr/wx-qr-m-400k.png" width="230px" title="微信群" />
+<!-- ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230') -->
 
 (扫码添加微信，备注：sa-token，邀您加入群聊)
 
