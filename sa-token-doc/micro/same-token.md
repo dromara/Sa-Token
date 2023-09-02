@@ -10,7 +10,7 @@
 1. 物理隔离：子服务部署在指定的内网环境中，只有网关对外网开放 
 2. 逻辑隔离：子服务与网关同时暴露在外网，但是子服务会有一个权限拦截层保证只接受网关发送来的请求，绕过网关直接访问子服务会被提示：无效请求 
 
-这种鉴权需求牵扯到两个环节：**`网关转发鉴权`**、**`服务内部调用鉴权`**
+这种鉴权需求牵扯到两个环节： **`网关转发鉴权`** 、 **`服务间内部调用鉴权`**
 
 Sa-Token提供两种解决方案：
 1. 使用 OAuth2.0 模式的凭证式，将 Client-Token 用作各个服务的身份凭证进行权限校验
@@ -25,6 +25,7 @@ Sa-Token提供两种解决方案：
 在网关处引入的依赖为（此处以 SpringCloud Gateway 为例）：
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` xml 
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
 <dependency>
@@ -45,6 +46,7 @@ Sa-Token提供两种解决方案：
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` gradle
 // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
@@ -55,9 +57,10 @@ implementation 'org.apache.commons:commons-pool2'
 ```
 <!---------------------------- tabs:end ------------------------------>
 
-在子服务引入的依赖为：
+在下游子服务引入的依赖为：
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 ``` xml 
 <!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
@@ -78,6 +81,7 @@ implementation 'org.apache.commons:commons-pool2'
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 ``` gradle
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
@@ -146,7 +150,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 > 如果通过网关转发，可以正常访问，直接访问子服务会提示：`无效Same-Token：xxx`
 
 
-### 三、服务内部调用鉴权 
+### 三、服务间内部调用鉴权 
 
 有时候我们需要在一个服务调用另一个服务的接口，这也是需要添加`Same-Token`作为身份凭证的
 
