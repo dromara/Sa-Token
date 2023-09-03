@@ -49,7 +49,7 @@ function isStarRepo(vm) {
 	// 判断是否在主域名下
 	if(location.host !== docDomain) {
 		console.log('非主域名，不检测...');
-		// return;
+		return;
 	}
 	
 	// 判断是否近期已经判断过了
