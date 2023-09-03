@@ -49,7 +49,7 @@ function isStarRepo(vm) {
 	// 判断是否在主域名下
 	if(location.host !== docDomain) {
 		console.log('非主域名，不检测...');
-		return;
+		// return;
 	}
 	
 	// 判断是否近期已经判断过了
@@ -107,7 +107,8 @@ function confirmStar() {
 				<div>1、打开 Sa-Token <a href="https://gitee.com/dromara/sa-token" target="_blank">开源仓库主页</a>，在右上角点个 star 。</div>
 				<div>2、点击下方 [ 同意授权检测 ] 按钮，同意 Sa-Token 获取 API 权限进行检测。<a href="javascript:authDetails();" style="text-decoration: none;">？</a></div>
 			</div>
-			<p><b>本章节文档将在 star 后正常开放展示</b></p>
+			<p><b>本章节文档将在 star 后正常开放展示。</b></p>
+			<p style="color: green;">开源不易，希望您不吝支持，激励开源项目走的更加长远 😇😇😇</p>
 		</div>
 		`;
 	
@@ -115,7 +116,7 @@ function confirmStar() {
 			title: '提示', 
 			btn: ['同意授权检测'], 
 			// btn: ['同意授权检测', '暂时不要，我先看看文档'], 
-			area: '450px', 
+			area: '460px', 
 			offset: '25%',
 			closeBtn: false
 		}, 
