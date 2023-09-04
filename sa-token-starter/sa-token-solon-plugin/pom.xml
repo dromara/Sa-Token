@@ -42,15 +42,36 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- redisx + snack3 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>redisx</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
             <scope>provided</scope>
         </dependency>
 
+        <!-- redisson + jackson  -->
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>redisx</artifactId>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- jackson-datatype-jsr310 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
             <scope>provided</scope>
         </dependency>
 

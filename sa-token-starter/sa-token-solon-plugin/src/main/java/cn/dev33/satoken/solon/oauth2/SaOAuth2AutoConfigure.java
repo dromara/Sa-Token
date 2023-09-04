@@ -23,39 +23,36 @@ import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.AppContext;
+import org.noear.solon.core.bean.InitializingBean;
 
 /**
  * @author noear
  * @since 2.0
  */
+
 @Condition(onClass = SaOAuth2Manager.class)
 @Configuration
-public class SaOAuth2AutoConfigure {
+public class SaOAuth2AutoConfigure implements InitializingBean {
+    @Inject
+    private AppContext appContext;
+
+    @Override
+    public void afterInjection() throws Throwable {
+        appContext.subBeansOfType(SaOAuth2Template.class, bean -> {
+            SaOAuth2Util.saOAuth2Template = bean;
+        });
+
+        appContext.subBeansOfType(SaOAuth2Config.class, bean -> {
+            SaOAuth2Manager.setConfig(bean);
+        });
+    }
+
     /**
      * 获取 OAuth2配置Bean
      */
     @Bean
     public SaOAuth2Config getConfig(@Inject(value = "${sa-token.oauth2}", required = false) SaOAuth2Config oAuth2Config) {
         return oAuth2Config;
-    }
-
-    /**
-     * 注入OAuth2配置Bean
-     *
-     * @param saOAuth2Config 配置对象
-     */
-    @Bean
-    public void setSaOAuth2Config(@Inject(required = false) SaOAuth2Config saOAuth2Config) {
-        SaOAuth2Manager.setConfig(saOAuth2Config);
-    }
-
-    /**
-     * 注入代码模板Bean
-     *
-     * @param saOAuth2Template 代码模板Bean
-     */
-    @Bean
-    public void setSaOAuth2Interface(@Inject(required = false) SaOAuth2Template saOAuth2Template) {
-        SaOAuth2Util.saOAuth2Template = saOAuth2Template;
     }
 }
