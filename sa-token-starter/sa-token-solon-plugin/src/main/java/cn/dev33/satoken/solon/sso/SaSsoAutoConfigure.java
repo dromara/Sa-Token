@@ -24,40 +24,37 @@ import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.AppContext;
+import org.noear.solon.core.bean.InitializingBean;
 
 /**
  * @author noear
  * @since 2.0
  */
+
 @Condition(onClass = SaSsoManager.class)
 @Configuration
-public class SaSsoAutoConfigure {
+public class SaSsoAutoConfigure implements InitializingBean {
+    @Inject
+    private AppContext appContext;
+
+    @Override
+    public void afterInjection() throws Throwable {
+        appContext.subBeansOfType(SaSsoTemplate.class, bean->{
+            SaSsoUtil.ssoTemplate = bean;
+            SaSsoProcessor.instance.ssoTemplate = bean;
+        });
+
+        appContext.subBeansOfType(SaSsoConfig.class, bean->{
+            SaSsoManager.setConfig(bean);
+        });
+    }
+
     /**
      * 获取 SSO 配置Bean
      * */
     @Bean
     public SaSsoConfig getConfig(@Inject(value = "${sa-token.sso}",required = false) SaSsoConfig ssoConfig) {
         return ssoConfig;
-    }
-
-    /**
-     * 注入 Sa-Token-SSO 配置Bean
-     *
-     * @param saSsoConfig 配置对象
-     */
-    @Bean
-    public void setSaSsoConfig(@Inject(required = false) SaSsoConfig saSsoConfig) {
-        SaSsoManager.setConfig(saSsoConfig);
-    }
-
-    /**
-     * 注入 Sa-Token-SSO 单点登录模块 Bean
-     *
-     * @param ssoTemplate saSsoTemplate对象
-     */
-    @Bean
-    public void setSaSsoTemplate(@Inject(required = false) SaSsoTemplate ssoTemplate) {
-        SaSsoUtil.ssoTemplate = ssoTemplate;
-        SaSsoProcessor.instance.ssoTemplate = ssoTemplate;
     }
 }
