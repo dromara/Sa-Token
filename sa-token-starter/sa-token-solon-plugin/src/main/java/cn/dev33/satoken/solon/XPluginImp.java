@@ -35,7 +35,7 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.noear.solon.Solon;
-import org.noear.solon.core.AopContext;
+import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 
 /**
@@ -45,7 +45,7 @@ import org.noear.solon.core.Plugin;
 public class XPluginImp implements Plugin {
 
     @Override
-    public void start(AopContext context) {
+    public void start(AppContext context) {
         // Sa-Token 日志输出 Bean
         context.getBeanAsync(SaLog.class, bean -> {
             SaManager.setLog(bean);
@@ -60,7 +60,7 @@ public class XPluginImp implements Plugin {
         });
     }
 
-    private void beanInitDo(AopContext context) {
+    private void beanInitDo(AppContext context) {
         // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
