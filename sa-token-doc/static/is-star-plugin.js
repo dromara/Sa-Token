@@ -27,7 +27,7 @@ var isStarPlugin = function(hook, vm) {
 
 // 应用参数 
 const client_id = '0cc618beb08db99bff50e500e38c2144d95ada9abb51c00c44592726ecd583f4';
-const client_secret = '2574c2aac8ce2142e34752dc5957dddcb30bc68df5c61de64251a3a6b11a51e5';
+const client_secret = 'xxx';
 const redirect_uri = 'https://sa-token.cc/doc.html';
 const docDomain = 'sa-token.cc';
 // const redirect_uri = 'http://127.0.0.1:8848/sa-token-doc/doc.html';
@@ -48,7 +48,7 @@ function isStarRepo(vm) {
 	
 	// 判断是否在主域名下
 	if(location.host !== docDomain) {
-		console.log('非主域名，不检测...');
+		console.log('not domain, no check...');
 		return;
 	}
 	
@@ -70,7 +70,7 @@ function isStarRepo(vm) {
 	}
 	
 	// 白名单路由不判断
-	const whiteList = ['/', '/more/link', '/more/demand-commit', '/more/join-group', '/more/sa-token-donate', 
+	const whiteList = ['/a', '/more/link', '/more/demand-commit', '/more/join-group', '/more/sa-token-donate', 
 			'/sso/sso-pro', '/more/update-log', '/more/common-questions', '/fun/sa-token-test', '/fun/issue-template'];
 	if(whiteList.indexOf(vm.route.path) >= 0 && getParam('code') === null) {
 		console.log('white route ...');

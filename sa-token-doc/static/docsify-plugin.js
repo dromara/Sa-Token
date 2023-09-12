@@ -74,13 +74,36 @@ var myDocsifyPlugin = function(hook, vm) {
 			// if($('#main h1').next().prop('tagName') !== 'HR') {
 			// 	$('#main h1').after('<hr/>');
 			// }
+			
+			// 如果一周内用户点击过关闭广告，则不再展现
+			let allowJg = 1000 * 60 * 60 * 24 * 7;
+			// allowJg = 1000 * 10;
+			try{
+				const closeAdTime = localStorage.closeAdTime;
+				if(closeAdTime) {
+					// 点击广告关闭的时间，和当前时间的差距
+					const closeAdJg = new Date().getTime() - parseInt(closeAdTime);
+					
+					// 差距小于七天，不再展示 
+					if(closeAdJg < allowJg) {
+						console.log('not show ad ...');
+						return;
+					}
+				}
+			}catch(e){
+				console.error(e);
+			}
+			
+			
 			// 添加广告
 			$('#main h1').after(ad);
 			// 添加关闭事件
 			$('.top-ad-box .ad-close').click(function(){
-				console.log(123);
+				console.log('关闭广告');
 				// $('.top-ad-box').slideUp(); // 折叠收起
 				$(".top-ad-box").fadeOut(1000); // 淡出效果
+				layer.msg('一周内不再展现此信息')
+				localStorage.closeAdTime = new Date().getTime();
 			})
 		}
 		
