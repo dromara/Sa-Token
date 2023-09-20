@@ -16,7 +16,7 @@
 package cn.dev33.satoken.reactor.spring;
 
 import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
-import cn.dev33.satoken.spring.SaPathMatcherHolder;
+import cn.dev33.satoken.spring.SaPathPatternParserUtil;
 
 /**
  * Sa-Token 上下文处理器 [ Spring Reactor 版本实现 ] ，基于 SaTokenContextForThreadLocal 定制
@@ -31,7 +31,7 @@ public class SaTokenContextForSpringReactor extends SaTokenContextForThreadLocal
 	 */
 	@Override
 	public boolean matchPath(String pattern, String path) {
-		return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
+		return SaPathPatternParserUtil.match(pattern, path);
 	}
 	
 }
