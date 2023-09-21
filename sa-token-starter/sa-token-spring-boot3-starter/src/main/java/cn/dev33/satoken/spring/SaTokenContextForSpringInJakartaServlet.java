@@ -60,7 +60,7 @@ public class SaTokenContextForSpringInJakartaServlet implements SaTokenContext {
 	 */
 	@Override
 	public boolean matchPath(String pattern, String path) {
-		return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
+		return SaPathPatternParserUtil.match(pattern, path);
 	}
 
 	/**
