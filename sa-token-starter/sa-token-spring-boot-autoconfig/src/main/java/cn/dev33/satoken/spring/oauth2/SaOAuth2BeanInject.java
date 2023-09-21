@@ -23,6 +23,11 @@ import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
 
+/*
+	小提示：如果你在 idea 中运行源码时出现异常：java: 程序包cn.dev33.satoken.oauth2不存在。
+			在项目根目录进入 cmd，执行 mvn package 即可解决
+ */
+
 /**
  * 注入 Sa-Token-OAuth2 所需要的组件
  * 

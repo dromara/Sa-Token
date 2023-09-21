@@ -17,7 +17,7 @@
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token.version>1.35.0.RC</sa-token.version>
+		<sa-token.version>1.36.0</sa-token.version>
 		<java.run.main.class>com.pj.SaTokenApplication</java.run.main.class>
 	</properties>
 
@@ -72,7 +72,7 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 	</dependencies>
 
 	<!-- 构建配置 -->
