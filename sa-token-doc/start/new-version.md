@@ -5,14 +5,14 @@
 --- 
 
 ### 正式版本 
-v1.35.0.RC 正式版，可上生产：
+v1.36.0 正式版，可上生产：
 
 ``` xml
 <!-- Sa-Token 权限认证 -->
 <dependency>
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-spring-boot-starter</artifactId>
-    <version>1.35.0.RC</version>
+    <version>1.36.0</version>
 </dependency>
 ```
 
