@@ -199,6 +199,13 @@ public interface SaTokenDao {
 	 * @return 查询到的数据集合 
 	 */
 	List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType);
-	
-	
+
+
+	// --------------------- 实例相关 ---------------------
+
+	/**
+	 * 当 SaManager.saTokenDao 变更时，调用该方法
+	 */
+	default void onChange() {
+	}
 }
