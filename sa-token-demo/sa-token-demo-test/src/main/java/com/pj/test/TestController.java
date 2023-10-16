@@ -1,5 +1,7 @@
 package com.pj.test;
 
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -38,6 +40,15 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test2
 	@RequestMapping("test2")
 	public SaResult test2() {
+		return SaResult.ok();
+	}
+
+	// 测试   浏览器访问： http://localhost:8081/test/getRequestPath
+	@RequestMapping("getRequestPath")
+	public SaResult getRequestPath() {
+		System.out.println("------------ 测试访问路径获取 ");
+		System.out.println("SpringMVCUtil.getRequest().getRequestURI()  " + SpringMVCUtil.getRequest().getRequestURI());
+		System.out.println("SaHolder.getRequest().getRequestPath()  " + SaHolder.getRequest().getRequestPath());
 		return SaResult.ok();
 	}
 

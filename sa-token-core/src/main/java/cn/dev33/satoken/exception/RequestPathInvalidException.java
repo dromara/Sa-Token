@@ -13,38 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.spring;
-
-import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.filter.SaPathCheckFilterForServlet;
-import org.springframework.context.annotation.Bean;
+package cn.dev33.satoken.exception;
 
 /**
- * 注册 Sa-Token 框架所需要的 Bean
- *
+ * 一个异常：代表请求 path 无效或非法
+ * 
  * @author click33
- * @since 1.34.0
+ * @since 1.37.0
  */
-public class SaTokenContextRegister {
+public class RequestPathInvalidException extends SaTokenException {
 
 	/**
-	 * 获取上下文处理器组件 (Spring版)
-	 * 
-	 * @return /
+	 * 序列化版本号
 	 */
-	@Bean
-	public SaTokenContext getSaTokenContextForSpring() {
-		return new SaTokenContextForSpring();
+	private static final long serialVersionUID = 8243974276159004739L;
+
+	/** 具体无效的 path */
+	private final String path;
+
+	/**
+	 * @return 具体无效的 path
+	 */
+	public String getPath() {
+		return path;
 	}
 
-	/**
-	 * 请求 path 校验过滤器
-	 *
-	 * @return /
-	 */
-	@Bean
-	public SaPathCheckFilterForServlet saPathCheckFilterForServlet() {
-		return new SaPathCheckFilterForServlet();
+	public RequestPathInvalidException(String message, String path) {
+		super(message);
+		this.path = path;
 	}
 
 }

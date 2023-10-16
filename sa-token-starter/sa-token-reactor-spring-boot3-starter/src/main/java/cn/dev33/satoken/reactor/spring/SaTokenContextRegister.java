@@ -15,9 +15,9 @@
  */
 package cn.dev33.satoken.reactor.spring;
 
-import org.springframework.context.annotation.Bean;
-
 import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.reactor.filter.SaPathCheckFilterForReactor;
+import org.springframework.context.annotation.Bean;
 
 /**
  * 注册 Sa-Token 所需要的 Bean
@@ -35,6 +35,16 @@ public class SaTokenContextRegister {
 	@Bean
 	public SaTokenContext getSaTokenContextForSpringReactor() {
 		return new SaTokenContextForSpringReactor();
+	}
+
+	/**
+	 * 请求 path 校验过滤器
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaPathCheckFilterForReactor saPathCheckFilterForReactor() {
+		return new SaPathCheckFilterForReactor();
 	}
 
 }

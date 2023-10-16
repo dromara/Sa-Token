@@ -15,19 +15,19 @@
  */
 package cn.dev33.satoken.servlet.model;
 
-import java.io.IOException;
-import java.util.*;
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.ApplicationInfo;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.servlet.error.SaServletErrorCode;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.servlet.error.SaServletErrorCode;
-import cn.dev33.satoken.util.SaFoxUtil;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * 对 SaRequest 包装类的实现（Servlet 版）
@@ -41,15 +41,15 @@ public class SaRequestForServlet implements SaRequest {
 	 * 底层Request对象
 	 */
 	protected HttpServletRequest request;
-	
+
 	/**
 	 * 实例化
-	 * @param request request对象 
+	 * @param request request对象
 	 */
 	public SaRequestForServlet(HttpServletRequest request) {
 		this.request = request;
 	}
-	
+
 	/**
 	 * 获取底层源对象 
 	 */
@@ -125,7 +125,7 @@ public class SaRequestForServlet implements SaRequest {
 	 */
 	@Override
 	public String getRequestPath() {
-		return request.getServletPath();
+		return ApplicationInfo.cutPathPrefix(request.getRequestURI());
 	}
 
 	/**

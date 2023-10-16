@@ -15,25 +15,19 @@
  */
 package cn.dev33.satoken.filter;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.core.annotation.Order;
-
 import cn.dev33.satoken.error.SaSpringBootErrorCode;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
+import org.springframework.core.annotation.Order;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Servlet 全局鉴权过滤器
@@ -146,7 +140,7 @@ public class SaServletFilter implements SaFilter, Filter {
 			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
 			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
 			if(response.getContentType() == null) {
-				response.setContentType("text/plain; charset=utf-8"); 
+				response.setContentType(SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
 			}
 			response.getWriter().print(result);
 			return;

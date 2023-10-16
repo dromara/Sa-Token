@@ -153,8 +153,8 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			// 2. 写入输出流
 			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
 			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
-			if(exchange.getResponse().getHeaders().getFirst("Content-Type") == null) {
-				exchange.getResponse().getHeaders().set("Content-Type", "text/plain; charset=utf-8");
+			if(exchange.getResponse().getHeaders().getFirst(SaTokenConsts.CONTENT_TYPE_KEY) == null) {
+				exchange.getResponse().getHeaders().set(SaTokenConsts.CONTENT_TYPE_KEY, SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
 			}
 			return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(result.getBytes())));
 			

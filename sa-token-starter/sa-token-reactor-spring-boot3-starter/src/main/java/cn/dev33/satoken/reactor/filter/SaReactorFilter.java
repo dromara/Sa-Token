@@ -15,19 +15,10 @@
  */
 package cn.dev33.satoken.reactor.filter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import cn.dev33.satoken.filter.SaFilter;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
@@ -35,7 +26,15 @@ import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.reactor.error.SaReactorSpringBootErrorCode;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Reactor 全局鉴权过滤器
@@ -154,8 +153,8 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			// 2. 写入输出流
 			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
 			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
-			if(exchange.getResponse().getHeaders().getFirst("Content-Type") == null) {
-				exchange.getResponse().getHeaders().set("Content-Type", "text/plain; charset=utf-8");
+			if(exchange.getResponse().getHeaders().getFirst(SaTokenConsts.CONTENT_TYPE_KEY) == null) {
+				exchange.getResponse().getHeaders().set(SaTokenConsts.CONTENT_TYPE_KEY, SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
 			}
 			return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(result.getBytes())));
 			

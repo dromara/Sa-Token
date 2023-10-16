@@ -16,6 +16,7 @@
 package cn.dev33.satoken.servlet.model;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.ApplicationInfo;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.servlet.error.SaServletErrorCode;
@@ -124,7 +125,7 @@ public class SaRequestForServlet implements SaRequest {
 	 */
 	@Override
 	public String getRequestPath() {
-		return request.getServletPath();
+		return ApplicationInfo.cutPathPrefix(request.getRequestURI());
 	}
 
 	/**

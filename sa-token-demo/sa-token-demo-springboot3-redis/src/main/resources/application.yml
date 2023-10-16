@@ -19,7 +19,7 @@ sa-token:
     # 是否输出操作日志 
     is-log: true
 
-spring: 
+spring:
     data: 
         # redis配置 
         redis:

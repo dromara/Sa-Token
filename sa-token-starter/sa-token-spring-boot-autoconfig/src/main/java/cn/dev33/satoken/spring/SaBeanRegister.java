@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.spring;
 
+import cn.dev33.satoken.spring.context.path.ApplicationContextPathLoading;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -50,5 +51,14 @@ public class SaBeanRegister {
 	public SaJsonTemplate getSaJsonTemplateForJackson() {
 		return new SaJsonTemplateForJackson();
 	}
-	
+
+	/**
+	 * 应用上下文路径加载器
+	 * @return /
+	 */
+	@Bean
+	public ApplicationContextPathLoading getApplicationContextPathLoading() {
+		return new ApplicationContextPathLoading();
+	}
+
 }

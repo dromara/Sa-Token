@@ -17,6 +17,7 @@ package cn.dev33.satoken.reactor.model;
 
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.ApplicationInfo;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
@@ -112,7 +113,7 @@ public class SaRequestForReactor implements SaRequest {
 	 */
 	@Override
 	public String getRequestPath() {
-		return request.getURI().getPath();
+		return ApplicationInfo.cutPathPrefix(request.getPath().toString());
 	}
 
 	/**

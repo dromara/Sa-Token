@@ -23,5 +23,5 @@ public class NotFoundHandle implements ErrorController {
 		response.setStatus(200);
         return SaResult.get(404, "not found", null);
     }
-	
+
 }

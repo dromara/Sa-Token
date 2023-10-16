@@ -16,16 +16,16 @@
 package cn.dev33.satoken.reactor.model;
 
 
-import org.springframework.http.HttpCookie;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilterChain;
-
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.application.ApplicationInfo;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.util.SaFoxUtil;
+import org.springframework.http.HttpCookie;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class SaRequestForReactor implements SaRequest {
 	 */
 	@Override
 	public String getRequestPath() {
-		return request.getURI().getPath();
+		return ApplicationInfo.cutPathPrefix(request.getPath().toString());
 	}
 
 	/**
