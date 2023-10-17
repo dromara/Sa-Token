@@ -1175,6 +1175,11 @@ public class StpLogic {
 	 */
 	public SaSession getSessionBySessionId(String sessionId, boolean isCreate, Consumer<SaSession> appendOperation) {
 
+		// 如果提供的 sessionId 为 null，则直接返回 null
+		if(SaFoxUtil.isEmpty(sessionId)) {
+			return null;
+		}
+
 		// 先检查这个 SaSession 是否已经存在，如果不存在且 isCreate=true，则新建并返回
 		SaSession session = getSaTokenDao().getSession(sessionId);
 
@@ -1725,11 +1730,7 @@ public class StpLogic {
 	 * @return /
 	 */
 	public List<String> getRoleList() {
-		try {
-			return getRoleList(getLoginId());
-		} catch (NotLoginException e) {
-			return SaFoxUtil.emptyList();
-		}
+		return getRoleList(getLoginId());
 	}
  	
 	/**
@@ -1773,7 +1774,7 @@ public class StpLogic {
  		try {
 			checkRoleAnd(roleArray);
 			return true;
-		} catch (NotLoginException | NotRoleException e) {
+		} catch (NotRoleException e) {
 			return false;
 		}
  	}
@@ -1788,7 +1789,7 @@ public class StpLogic {
  		try {
 			checkRoleOr(roleArray);
 			return true;
-		} catch (NotLoginException | NotRoleException e) {
+		} catch (NotRoleException e) {
 			return false;
 		}
  	}
@@ -1863,11 +1864,7 @@ public class StpLogic {
 	 * @return / 
 	 */
 	public List<String> getPermissionList() {
-		try {
-			return getPermissionList(getLoginId());
-		} catch (NotLoginException e) {
-			return SaFoxUtil.emptyList();
-		}
+		return getPermissionList(getLoginId());
 	}
 
 	/**
@@ -1911,7 +1908,7 @@ public class StpLogic {
  		try {
 			checkPermissionAnd(permissionArray);
 			return true;
-		} catch (NotLoginException | NotPermissionException e) {
+		} catch (NotPermissionException e) {
 			return false;
 		}
  	}
@@ -1926,7 +1923,7 @@ public class StpLogic {
  		try {
 			checkPermissionOr(permissionArray);
 			return true;
-		} catch (NotLoginException | NotPermissionException e) {
+		} catch (NotPermissionException e) {
 			return false;
 		}
  	}
