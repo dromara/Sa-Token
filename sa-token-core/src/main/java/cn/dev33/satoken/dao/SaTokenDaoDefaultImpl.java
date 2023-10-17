@@ -260,12 +260,12 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		});
 		this.refreshThread.start();
 	}
-	
+
 	/**
 	 * 结束定时任务，不再定时清理过期数据
 	 */
-	public void endRefreshThread() {
+	@Override
+	public void onChange() {
 		this.refreshFlag = false;
 	}
-
 }
