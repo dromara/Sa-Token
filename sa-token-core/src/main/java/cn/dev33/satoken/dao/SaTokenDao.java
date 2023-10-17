@@ -201,11 +201,18 @@ public interface SaTokenDao {
 	List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType);
 
 
-	// --------------------- 实例相关 ---------------------
+	// --------------------- 生命周期 ---------------------
 
 	/**
-	 * 当 SaManager.saTokenDao 变更时，调用该方法
+	 * 当此 SaTokenDao 实例被装载时触发
 	 */
-	default void onChange() {
+	default void init() {
 	}
+
+	/**
+	 * 当此 SaTokenDao 实例被卸载时触发
+	 */
+	default void destroy() {
+	}
+
 }

@@ -103,9 +103,12 @@ public class SaManager {
 	}
 	private static void setSaTokenDaoMethod(SaTokenDao saTokenDao) {
 		if (SaManager.saTokenDao != null) {
-			SaManager.saTokenDao.onChange();
+			SaManager.saTokenDao.destroy();
 		}
 		SaManager.saTokenDao = saTokenDao;
+		if (SaManager.saTokenDao != null) {
+			SaManager.saTokenDao.init();
+		}
 	}
 	public static SaTokenDao getSaTokenDao() {
 		if (saTokenDao == null) {

@@ -40,14 +40,6 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 	 * 存储数据过期时间的集合（单位: 毫秒）, 记录所有 key 的到期时间 （注意存储的是到期时间，不是剩余存活时间）
 	 */
 	public Map<String, Long> expireMap = new ConcurrentHashMap<>();
-
-	/**
-	 * 构造函数
-	 */
-	public SaTokenDaoDefaultImpl() {
-		initRefreshThread();
-	}
-	
 	
 	// ------------------------ String 读写操作 
 	
@@ -261,11 +253,20 @@ public class SaTokenDaoDefaultImpl implements SaTokenDao {
 		this.refreshThread.start();
 	}
 
+
 	/**
-	 * 结束定时任务，不再定时清理过期数据
+	 * 组件被安装时，开始刷新数据线程
 	 */
 	@Override
-	public void onChange() {
+	public void init() {
+		initRefreshThread();
+	}
+
+	/**
+	 * 组件被卸载时，结束定时任务，不再定时清理过期数据
+	 */
+	@Override
+	public void destroy() {
 		this.refreshFlag = false;
 	}
 }
