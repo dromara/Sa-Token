@@ -470,6 +470,60 @@ class MyConfiguration {
 [经验来源](https://gitee.com/dromara/sa-token/issues/I7EXIU)
 
 
+### Q：SpringBoot 3.x 路由拦截鉴权报错：No more pattern data allowed after {*...} or ** pattern element
+
+
+报错原因：SpringBoot3.x 版本默认将路由匹配机制由 `ant_path_matcher` 改为了 `path_pattern_parser` 模式，
+而此模式有一个规则，就是写路由匹配符的时候，不允许 `**` 之后再出现内容。例如：`/admin/**/info` 就是不允许的。
+
+如果你的项目报了这个错，说明你写的路由匹配符出现了上述问题，有三种解决方案：
+1. 等待 SpringMVC 官方增强 `path_pattern_parser` 模式能力，使之可以支持 `**` 之后再出现内容。
+2. 在写路由匹配规则时，避免使 `**` 之后再出现内容。
+3. 将项目的路由匹配机制改为 `ant_path_matcher`。
+
+先改项目的：
+``` yml
+spring:
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher
+```
+
+再改 Sa-Token 的：
+``` java
+/**
+ * 自定义 SaTokenContext 实现类，重写 matchPath 方法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
+ */
+@Primary
+@Component
+public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForSpringInJakartaServlet {
+
+    @Override
+    public boolean matchPath(String pattern, String path) {
+        return SaPatternsRequestConditionHolder.match(pattern, path);
+    }
+
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- ---------------------------- 常见疑问 ----------------------------- -->
 
