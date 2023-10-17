@@ -16,7 +16,7 @@
 package cn.dev33.satoken.reactor.spring;
 
 import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
-import cn.dev33.satoken.spring.SaPathPatternParserUtil;
+import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
 
 /**
  * Sa-Token 上下文处理器 [ Spring Reactor 版本实现 ] ，基于 SaTokenContextForThreadLocal 定制

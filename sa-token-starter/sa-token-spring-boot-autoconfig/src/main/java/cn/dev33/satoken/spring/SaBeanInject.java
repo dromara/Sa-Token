@@ -17,6 +17,7 @@ package cn.dev33.satoken.spring;
 
 import java.util.List;
 
+import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.PathMatcher;

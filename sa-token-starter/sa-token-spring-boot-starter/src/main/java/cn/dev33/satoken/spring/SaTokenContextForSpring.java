@@ -22,6 +22,7 @@ import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
 import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.servlet.model.SaStorageForServlet;
+import cn.dev33.satoken.spring.pathmatch.SaPatternsRequestConditionHolder;
 
 /**
  * Sa-Token 上下文处理器 [ SpringMVC版本实现 ]。在 SpringMVC、SpringBoot 中使用 Sa-Token 时，必须注入此实现类，否则会出现上下文无效异常
