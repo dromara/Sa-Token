@@ -74,9 +74,12 @@ public class SaTokenActionHandler extends ActionHandler {
             // Controller controller = action.getControllerClass().newInstance();
             controller = controllerFactory.getController(action.getControllerClass());
             CPI._init_(controller, action, request, response, urlPara[0]);
-            //加入SaToken上下文处理
+            if (resolveJson && controller.isJsonRequest()) {
+                // 注入 JsonRequest 包装对象接管 request
+                controller.setHttpServletRequest(jsonRequestFactory.apply(controller.getRawData(), controller.getRequest()));
+            }
+             //加入SaToken上下文处理
             SaControllerContext.hold(controller);
-
             if (devMode) {
                 if (actionReporter.isReportAfterInvocation(request)) {
                     new Invocation(action, controller).invoke();
