@@ -15,13 +15,22 @@
  */
 package cn.dev33.satoken.springboot;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.*;
+import cn.dev33.satoken.filter.SaServletFilter;
+import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.spring.SpringMVCUtil;
+import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
+import cn.dev33.satoken.stp.SaLoginConfig;
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
+import cn.dev33.satoken.util.SoMap;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,28 +40,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.util.PathMatcher;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.exception.DisableServiceException;
-import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.exception.NotPermissionException;
-import cn.dev33.satoken.exception.NotRoleException;
-import cn.dev33.satoken.exception.NotSafeException;
-import cn.dev33.satoken.exception.SaJsonConvertException;
-import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.filter.SaServletFilter;
-import cn.dev33.satoken.json.SaJsonTemplate;
-import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.spring.SaPathMatcherHolder;
-import cn.dev33.satoken.spring.SpringMVCUtil;
-import cn.dev33.satoken.stp.SaLoginConfig;
-import cn.dev33.satoken.stp.SaLoginModel;
-import cn.dev33.satoken.stp.StpLogic;
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaTokenConsts;
-import cn.dev33.satoken.util.SoMap;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Sa-Token 基础API测试 

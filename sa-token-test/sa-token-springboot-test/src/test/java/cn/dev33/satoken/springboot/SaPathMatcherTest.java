@@ -15,9 +15,9 @@
  */
 package cn.dev33.satoken.springboot;
 
-import cn.dev33.satoken.spring.SaPathMatcherHolder;
-import cn.dev33.satoken.spring.SaPathPatternParserUtil;
-import cn.dev33.satoken.spring.SaPatternsRequestConditionHolder;
+import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
+import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
+import cn.dev33.satoken.spring.pathmatch.SaPatternsRequestConditionHolder;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
