@@ -102,7 +102,7 @@ public class SaTokenDaoOfRedisBase64 implements SaTokenDao {
      */
     @Override
     public Object getObject(String key) {
-        return redisBucket.getAndDeserialize(key);
+        return redisBucket.getAndDeserialize(key, Object.class);
     }
 
     /**
@@ -157,7 +157,7 @@ public class SaTokenDaoOfRedisBase64 implements SaTokenDao {
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
         Set<String> keys = redisBucket.keys(prefix + "*" + keyword + "*");
-        List<String> list = new ArrayList<>(keys);
+        List<String> list = new ArrayList<String>(keys);
         return SaFoxUtil.searchList(list, start, size, sortType);
     }
 }
