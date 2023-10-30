@@ -21,6 +21,18 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 | 赞助人											| 赞助金额		| 留言										| 时间			|
 | :--------										| :--------		| :--------									| :--------		|
+| [时间很快](https://gitee.com/frsimple)			| ¥ 220.0		| 感谢您的开源项目！							| 2023-10-27 	|
+| [立秋](https://gitee.com/code_wh)				| ¥ 2.5			| 感谢您的开源项目！							| 2023-10-27 	|
+| [PotatoLoofah](https://gitee.com/PotatoLoofah)	| ¥ 10.0	| 感谢您的开源项目！							| 2023-10-27 	|
+| [ly-chn](https://gitee.com/ly-chn)			| ¥ 99.0		| 一定的资金支持有助于开源项目走的更加长远		| 2023-10-17 	|
+| [yangs2w](https://gitee.com/yangs2w)			| ¥ 10.0		| 感谢您的开源项目！							| 2023-10-10 	|
+| [lee](https://gitee.com/cngeeklee)			| ¥ 10.0		| 真正的轻量级权限安全框架，希望继续更新		| 2023-10-06 	|
+| [yang](https://gitee.com/hansdm)				| ¥ 10.0		| 感谢您的开源项目！							| 2023-09-27 	|
+| [明道云](https://gitee.com/lunan-yn)			| ¥ 200.0		| 明道云2023年伙伴大会，[报名链接](https://www.mingdao.com/event/mpc/2023)		| 2023-09-25 	|
+| [shenlicao](https://gitee.com/shenlicao)		| ¥ 10.0		| 感谢您的开源项目！							| 2023-09-15 	|
+| [lostyue](https://gitee.com/lostyue)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-09-14 	|
+| [huni](https://gitee.com/simin_sizi)			| ¥ 10.0		| 感谢您的开源项目！							| 2023-09-11 	|
+| [T_T](https://gitee.com/wm26hua)				| ¥ 20.0		| 感谢您的开源项目！							| 2023-09-07 	|
 | [Meteor](https://gitee.com/meteoroc)			| ¥ 2.5			| 感谢您的开源项目！							| 2023-08-23 	|
 | [刘斌](https://gitee.com/xuanfather)			| ¥ 20.0		| 感谢您的开源项目！							| 2023-08-17 	|
 | [快快乐乐小码农](https://gitee.com/happy-little-farmer)	| ¥ 1.0	| 感谢您的开源项目！							| 2023-08-17 	|
