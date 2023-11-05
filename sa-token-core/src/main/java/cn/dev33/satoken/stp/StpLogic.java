@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.net.URLEncoder;
 
 import static cn.dev33.satoken.exception.NotLoginException.*;
 
@@ -290,14 +291,16 @@ public class StpLogic {
 		// 2、如果全局配置打开了前缀模式，则二次处理一下
 		String tokenPrefix = getConfigOrGlobal().getTokenPrefix();
 		if(SaFoxUtil.isNotEmpty(tokenPrefix)) {
-
+			// 处理连接符url编码的情况
+			String enChat = URLEncoder.encode(SaTokenConsts.TOKEN_CONNECTOR_CHAT, "UTF-8");
+			
 			// 情况2.1：如果提交的 token 为空，则转为 null
 			if(SaFoxUtil.isEmpty(tokenValue)) {
 				tokenValue = null;
 			}
 
 			// 情况2.2：如果 token 有值，但是并不是以指定的前缀开头
-			else if(! tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT)) {
+			else if(! (tokenValue.startsWith(tokenPrefix + SaTokenConsts.TOKEN_CONNECTOR_CHAT) || tokenValue.startsWith(tokenPrefix + enChat)) ) {
 				if(noPrefixThrowException) {
 					throw NotLoginException.newInstance(loginType, NO_PREFIX, NO_PREFIX_MESSAGE + "，prefix=" + tokenPrefix, null).setCode(SaErrorCode.CODE_11017);
 				} else {
