@@ -15,7 +15,7 @@ var isStarPlugin = function(hook, vm) {
 	
 	// 钩子函数：每次路由切换时数据全部加载完成后调用，没有参数。
 	hook.doneEach(function() {
-		isStarRepo(vm);
+		//isStarRepo(vm);
 	});
 	
 	// 钩子函数：初始化并第一次加载完成数据后调用，没有参数。
