@@ -26,7 +26,7 @@ import java.util.List;
  * @author click33
  * @since 1.10.0
  */
-public class StpInterfaceDefaultImpl implements StpInterface {
+public class StpInterfaceDefaultImpl implements StpInterface<Object> {
 
 	@Override
 	public List<String> getPermissionList(Object loginId, String loginType) {

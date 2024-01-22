@@ -28,7 +28,7 @@ import java.util.List;
  * @author click33
  * @since 1.10.0
  */
-public interface StpInterface {
+public interface StpInterface<T> {
 
 	/**
 	 * 返回指定账号id所拥有的权限码集合 
@@ -37,7 +37,7 @@ public interface StpInterface {
 	 * @param loginType 账号类型
 	 * @return 该账号id具有的权限码集合
 	 */
-	List<String> getPermissionList(Object loginId, String loginType);
+	List<String> getPermissionList(T loginId, String loginType);
 
 	/**
 	 * 返回指定账号id所拥有的角色标识集合 
@@ -46,6 +46,6 @@ public interface StpInterface {
 	 * @param loginType 账号类型
 	 * @return 该账号id具有的角色标识集合
 	 */
-	List<String> getRoleList(Object loginId, String loginType);
+	List<String> getRoleList(T loginId, String loginType);
 
 }
