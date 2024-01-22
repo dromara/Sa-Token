@@ -1,16 +1,16 @@
 # 端口
 server:
-    port: 8081
+    port: 12341
 
 # Sa-Token配置
-sa-token: 
+sa-token:
     # Token名称 (同时也是cookie名称)
     token-name: satoken
-    # Token有效期，单位s 默认30天, -1代表永不过期 
+    # Token有效期，单位s 默认30天, -1代表永不过期
     timeout: 2592000
     # Token风格
     token-style: uuid
-    # 配置Sa-Token单独使用的Redis连接 
+    # 配置Sa-Token单独使用的Redis连接
     alone-redis:
         # Redis模式(默认单体)
         # pattern: single
@@ -21,10 +21,10 @@ sa-token:
         # Redis服务器连接端口
         port: 6379
         # Redis服务器连接密码（默认为空）
-        # password: 
+        # password:
         # 连接超时时间（毫秒）
         timeout: 10s
-        lettuce: 
+        lettuce:
             pool:
                 # 连接池最大连接数
                 max-active: 200
@@ -34,10 +34,10 @@ sa-token:
                 max-idle: 10
                 # 连接池中的最小空闲连接
                 min-idle: 0
-        
-spring: 
-    # 配置业务使用的Redis连接 
-    redis: 
+
+spring:
+    # 配置业务使用的Redis连接
+    redis:
         # Redis数据库索引（默认为0）
         database: 0
         # Redis服务器地址
@@ -45,10 +45,10 @@ spring:
         # Redis服务器连接端口
         port: 6379
         # Redis服务器连接密码（默认为空）
-        password: 
+        password:
         # 连接超时时间（毫秒）
         timeout: 10s
-        lettuce: 
+        lettuce:
             pool:
                 # 连接池最大连接数
                 max-active: 200
@@ -58,8 +58,7 @@ spring:
                 max-idle: 10
                 # 连接池中的最小空闲连接
                 min-idle: 0
-        
-        
-        
-        
-        
+
+
+
+
