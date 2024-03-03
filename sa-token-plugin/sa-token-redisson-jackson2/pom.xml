@@ -16,33 +16,45 @@
     <artifactId>sa-token-redisson-jackson2</artifactId>
 	<description>sa-token integrate redisson (to jackson)</description>
 
+	<!-- parent 里的版本适合与 springboot2 兼容；其它更新的框架里版本容易冲突 -->
+	<properties>
+		<redisson.version>3.23.5</redisson.version>
+		<jackson.version>2.15.2</jackson.version>
+	</properties>
+
 	<dependencies>
-		<!-- sa-token-spring-boot-starter -->
+		<!-- sa-token-core -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
+			<scope>provided</scope>
         </dependency>
+
 		<!-- Redisson 相关操作API -->
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.yaml</groupId>
+					<artifactId>snakeyaml</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<optional>true</optional>
+			<version>${jackson.version}</version>
 		</dependency>
+
 		<!-- jackson-datatype-jsr310 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
-			<optional>true</optional>
+			<version>${jackson.version}</version>
 		</dependency>
 
 	</dependencies>
-
-
-
 </project>
