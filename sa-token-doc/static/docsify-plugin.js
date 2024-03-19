@@ -56,8 +56,16 @@ var myDocsifyPlugin = function(hook, vm) {
 		});
 		
 		// 功能5，统计赞助人数
-		if($('.zanzhu-count').length && $('.zanzhu-box table').length) {
-			$('.zanzhu-count').html($('.zanzhu-box table tr').length);
+		// if($('.zanzhu-count').length && $('.zanzhu-box table').length) {
+		// 	$('.zanzhu-count').html($('.zanzhu-box table tr').length);
+		// }
+		
+		// 功能5，渲染赞助数据 
+		if($('.zanzhu-table').length) {
+			// $('.zanzhu-count').html($('.zanzhu-box table tr').length);
+			// console.log(123);
+			renderDonateTable();
+			onZanzhuSortClick();
 		}
 		
 		// 功能6：标题下面的广告 

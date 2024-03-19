@@ -55,7 +55,7 @@ function getCopyDonateListByMoneySort() {
 	})
 	return arr;
 }
-console.log(getCopyDonateListByMoneySort());
+// console.log(getCopyDonateListByMoneySort());
 
 
 // 赞助配置 
@@ -123,7 +123,7 @@ function renderDonateTable2() {
 		renderDonateTable();
 	}, 300);
 }
-renderDonateTable();
+// renderDonateTable();
 
 // 上一页
 function prevPageRDT(){
@@ -142,18 +142,20 @@ function nextPageRDT(){
 	renderDonateTable2();
 }
 
-// 切换排序
-$('.zanzhu-sort-btn').click(function(){
-	// 切换 class
-	$('.zz-sort-native').removeClass('zz-sort-native');
-	$(this).addClass('zz-sort-native');
-	
-	// 切换数据 
-	zzCfg.curr = 1;  // 重置为第1页 
-	zzCfg.sort = parseInt($(this).attr('sort-value'));
-	renderDonateTable2();
-})
-
+// 绑定事件：切换排序
+function onZanzhuSortClick(){
+	$('.zanzhu-sort-btn').click(function(){
+		// 切换 class
+		$('.zz-sort-native').removeClass('zz-sort-native');
+		$(this).addClass('zz-sort-native');
+		
+		// 切换数据 
+		zzCfg.curr = 1;  // 重置为第1页 
+		zzCfg.sort = parseInt($(this).attr('sort-value'));
+		renderDonateTable2();
+	})
+}
+onZanzhuSortClick();
 
 // 读取 sa-token-donate 页数据为 json 
 function readDataToJson() {

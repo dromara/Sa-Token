@@ -187,12 +187,13 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 blockquote code {font-weight: 400;}
 
 /* 赞助列表 */
+.zanzhu-box{margin-top: -10px;}
 .zanzhu-box table tr td:nth-child(2){color: red;}
 #main .zanzhu-box table tr td:first-child a{border-color: rgba(0,0,0,0); color: inherit;}
 #main .zanzhu-box table tr td:first-child a:hover{border-color: var(--a-hover-color); color: var(--a-hover-color);}
 
 /* 展开和收起 */
-#main .zanzhu-box{height: 500px; overflow-y: hidden; transition: all 1.5s;}
+#main .zanzhu-box{/* height: 500px; */ overflow-y: hidden; transition: all 1.5s;}
 #main .zanzhu-box table{display: table;}
 .zhankai-btn-box{margin-top: 10px;}
 .zk-btn--1,.zk-btn--2{cursor: pointer;}
@@ -353,3 +354,21 @@ body {
     50%{box-shadow: 0 0 20px #42B983;}
     100%{box-shadow: 0 0 20px #FFF;}
 }
+
+/* ********** 赞助者名单 ******** */
+.zanzhu-table{text-align: left;}
+/* 赞助排序盒子 */
+.zanzhu-sort-box{font-size: 14px; margin-bottom: 10px;}
+.zanzhu-sort-box .zanzhu-sort-btn{text-decoration: none; color: #999; cursor: pointer;}
+.zanzhu-sort-box .zanzhu-sort-btn:hover{text-decoration: underline; color: #557;}
+.zanzhu-sort-box .zanzhu-sort-btn.zz-sort-native{text-decoration: underline; color: #557;}
+/* 底部按钮盒子 */
+.zz-btn-box{color: #666; font-size: 14px;}
+.zz-btn-box button{padding: 5px 10px; cursor: pointer; border: 1px #ccc solid; color: #999; background-color: #FFF;}
+.zz-btn-box button:hover{box-shadow: 0 0 10px #ddd;}
+
+
+/* ajax加载时的转圈圈样式 */
+.ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}
+.ajax-layer-load.layui-layer-dialog .layui-layer-content{padding: 10px 20px 10px 40px; color: #FFF;}
+.ajax-layer-load.layui-layer-dialog .layui-layer-content .layui-layer-ico{width: 20px; height: 20px; background-size: 20px 20px; top: 12px; }

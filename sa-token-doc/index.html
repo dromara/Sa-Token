@@ -271,6 +271,12 @@
 								<span class="zz-pageInfo">第 1/1 页</span>
 								<button onclick="nextPageRDT()"> > </button>
 							</div>
+							<div style="height: 30px;"></div>
+							<p>
+								（如果您也有赞助 Sa-Token 的想法，可以参考：
+								<a href="doc.html#/more/sa-token-donate" style="color: #999;">赞助名单</a>
+								）
+							</p>
 						</div>
 					</div>
 				</div>
@@ -894,8 +900,12 @@
 		<script src="static/jquery.min.js"></script>
 		<script src="static/layer-v3.1.1/layer.js"></script>
 		<script src="static/donate/donate-list.js"></script>
-		<script src="static/index.js"></script>
+		<script src="static/donate/donate-fun.js"></script>
 		<script type="text/javascript">
+			
+			// 渲染赞助者清单 
+			renderDonateTable();
+			
 			// 鼠标悬浮在友情链接时，提示信息 
 			$(".com-box-you a img").hover(function() {
 				var msg = $(this).attr("msg");

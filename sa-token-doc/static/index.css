@@ -139,8 +139,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 
 /* -------- 赞助者名单 --------- */
-.zanzhu-box{}
-.zanzhu-table{width: 100%; margin-top: 20px; /* border-color: #fff; */ font-size: 14px; text-align: left; color: #333;}
+.zanzhu-box{font-size: 14px;}
+.zanzhu-table{width: 100%; margin-top: 20px; /* border-color: #fff; */ text-align: left; color: #333;}
 .zanzhu-table th,.zanzhu-table td{padding: 5px 10px;}
 .zanzhu-table tr:nth-child(even){background: #F8F8F8;}
 .zanzhu-table .zanzhu-money{color: red;}
