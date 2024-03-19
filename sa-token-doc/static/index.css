@@ -138,6 +138,26 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 }
 
 
+/* -------- 赞助者名单 --------- */
+.zanzhu-box{}
+.zanzhu-table{width: 100%; margin-top: 20px; /* border-color: #fff; */ font-size: 14px; text-align: left; color: #333;}
+.zanzhu-table th,.zanzhu-table td{padding: 5px 10px;}
+.zanzhu-table tr:nth-child(even){background: #F8F8F8;}
+.zanzhu-table .zanzhu-money{color: red;}
+.zanzhu-table .zanzhu-name a{text-decoration: none; color: #333;}
+.zanzhu-table .zanzhu-name a:hover{text-decoration: underline; color: blue;}
+/* 赞助排序盒子 */
+.zanzhu-sort-box{font-size: 14px; margin-top: -10px;}
+.zanzhu-sort-box .zanzhu-sort-btn{text-decoration: none; color: #999; cursor: pointer;}
+.zanzhu-sort-box .zanzhu-sort-btn:hover{text-decoration: underline; color: #55a;}
+.zanzhu-sort-box .zanzhu-sort-btn.zz-sort-native{text-decoration: underline; color: #55a;}
+/* 底部按钮盒子 */
+.zz-btn-box{text-align: center; margin-top: 20px; font-size: 14px;}
+.zz-btn-box button{padding: 5px 10px; cursor: pointer; border: 1px #ccc solid; color: #999;}
+.zz-btn-box button:hover{box-shadow: 0 0 10px #ddd;}
+
+
+
 /* -------- 使用公司 --------- */
 .com-box-f{padding: 1em 1em; padding-bottom: 30px; text-align: center;}
 .com-box-f h2{font-size: 30px; color: #000; font-weight: 400;}
@@ -258,3 +278,10 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 	border-radius: 1px;
 	box-sizing: border-box;
 }
+
+
+
+/* ajax加载时的转圈圈样式 */
+.ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}
+.ajax-layer-load.layui-layer-dialog .layui-layer-content{padding: 10px 20px 10px 40px; color: #FFF;}
+.ajax-layer-load.layui-layer-dialog .layui-layer-content .layui-layer-ico{width: 20px; height: 20px; background-size: 20px 20px; top: 12px; }

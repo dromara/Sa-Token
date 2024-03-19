@@ -235,11 +235,54 @@
 				</div>
 			</div>
 
+
+			<!-- ------------ 赞助者名单 ------------- -->
+			<div style="margin-top: -30px;">
+				<div class="feature-z">
+					<h2 class="s-title">赞助者名单（感谢！感谢！感谢！）</h2>
+					<div class="">
+						<div class="zanzhu-box s-width">
+							<div class="zanzhu-sort-box">
+								<span class="zanzhu-sort-btn zz-sort-native" sort-value="1">日期排序</span>
+								<span> | </span>
+								<span class="zanzhu-sort-btn" sort-value="2">赞助额排序</span>
+							</div>
+							<table class="zanzhu-table" cellspacing="0" border="1" bordercolor="e9e9e9">
+								<thead>
+									<tr>
+										<th>赞助人</th>
+										<th>赞助金额</th>
+										<th>留言</th>
+										<th>时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- <tr>
+										<td>时间很快</td>
+										<td>赞助金额</td>
+										<td>感谢您的开源项目！</td>
+										<td>2023-10-27</td>
+									</tr> -->
+								</tbody>
+							</table>
+							<!-- 一些按钮 -->
+							<div class="zz-btn-box">
+								<button onclick="prevPageRDT()"> < </button>
+								<span class="zz-pageInfo">第 1/1 页</span>
+								<button onclick="nextPageRDT()"> > </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
 			<!-- ------------ 开源案例 ------------- -->
 			<div>
 				<div class="feature-z s-width">
-					<!-- <div class="s-fenge"></div> -->
-					<h2 class="s-title" style="margin-top: 40px;">优秀开源集成案例</h2>
+					<div class="s-fenge"></div>
+					<h2 class="s-title" style="margin-top: 80px;">优秀开源集成案例</h2>
 					<div class="feature-box s-case-box">
 						<!-- Snowy  6.1K -->
 						<div class="s-case">
@@ -315,6 +358,7 @@
 					</div>
 				</div>
 			</div>
+
 
 
 			<!-- ------------ 使用公司 ------------- -->
@@ -849,6 +893,8 @@
 		<!-- 悬浮效果 -->
 		<script src="static/jquery.min.js"></script>
 		<script src="static/layer-v3.1.1/layer.js"></script>
+		<script src="static/donate/donate-list.js"></script>
+		<script src="static/index.js"></script>
 		<script type="text/javascript">
 			// 鼠标悬浮在友情链接时，提示信息 
 			$(".com-box-you a img").hover(function() {
