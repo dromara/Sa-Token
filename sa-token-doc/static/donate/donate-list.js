@@ -820,6 +820,13 @@ var donateList = [
 		"date": "2023-08-23"
 	},
 	{
+		"name": "上下求索（微信打赏）",
+		"link": "",
+		"money": 12,
+		"msg": "明天请你吃个早餐吧",
+		"date": "2023-08-31"
+	},
+	{
 		"name": "T_T",
 		"link": "https://gitee.com/wm26hua",
 		"money": 20,
@@ -874,6 +881,13 @@ var donateList = [
 		"money": 10,
 		"msg": "感谢您的开源项目！",
 		"date": "2023-10-10"
+	},
+	{
+		"name": "老马（微信打赏）",
+		"link": "",
+		"money": 99,
+		"msg": "我使用过的开源项目，作者我都给过红包了。请收下",
+		"date": "2023-10-16"
 	},
 	{
 		"name": "ly-chn",
