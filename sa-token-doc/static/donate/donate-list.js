@@ -1004,4 +1004,68 @@ var donateList = [
 		"date": "2024-03-15"
 	},
 	
+	
+	{
+		"name": "Jacky",
+		"link": "https://gitee.com/jackywjj",
+		"money": 50.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "yuluo",
+		"link": "https://gitee.com/hlzha",
+		"money": 10.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "ai稞",
+		"link": "https://gitee.com/bbpla",
+		"money": 300.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "Smile丶掩饰",
+		"link": "https://gitee.com/smile_gjy",
+		"money": 50.0,
+		"msg": "感谢您的开源项目！加油！",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "小雪纷飞",
+		"link": "https://gitee.com/wujiangwu",
+		"money": 10.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "dengyuanke",
+		"link": "https://gitee.com/dengyuanke",
+		"money": 10.0,
+		"msg": "感谢",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "Brath",
+		"link": "https://gitee.com/Guoqing-Li",
+		"money": 230.0,
+		"msg": '<a href="https://www.brath.cn" target="_blank">感谢SaToken开源！荔知AI是一款优秀的AI网站，地址：https://www.brath.cn</a>',
+		"date": "2024-03-20"
+	},
+	{
+		"name": "厉军",
+		"link": "https://gitee.com/shlijun",
+		"money": 10.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-20"
+	},
+	{
+		"name": "Blue",
+		"link": "https://gitee.com/my-blue",
+		"money": 10.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-20"
+	},
 ]
