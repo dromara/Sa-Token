@@ -1216,6 +1216,9 @@ public class StpLogic {
 	 * @return SaSession 对象
 	 */
 	public SaSession getSessionByLoginId(Object loginId, boolean isCreate) {
+		if(SaFoxUtil.isEmpty(loginId)) {
+			throw new SaTokenException("Account-Session 获取失败：loginId 不能为空");
+		}
 		return getSessionBySessionId(splicingKeySession(loginId), isCreate, session -> {
 			// 这里是该 Account-Session 首次创建时才会被执行的方法：
 			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、账号id
@@ -1265,6 +1268,9 @@ public class StpLogic {
 	 * @return session对象
 	 */
 	public SaSession getTokenSessionByToken(String tokenValue, boolean isCreate) {
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			throw new SaTokenException("Token-Session 获取失败：token 不能为空");
+		}
 		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, session -> {
 			// 这里是该 Token-Session 首次创建时才会被执行的方法：
 			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
