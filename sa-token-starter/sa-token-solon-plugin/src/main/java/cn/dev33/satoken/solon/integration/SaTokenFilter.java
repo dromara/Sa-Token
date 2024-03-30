@@ -86,6 +86,23 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 		return this;
 	}
 
+	/**
+	 * 获取 [拦截路由] 集合
+	 *
+	 * @return see note
+	 */
+	public List<String> getIncludeList() {
+		return includeList;
+	}
+
+	/**
+	 * 获取 [放行路由] 集合
+	 *
+	 * @return see note
+	 */
+	public List<String> getExcludeList() {
+		return excludeList;
+	}
 
 	// ------------------------ 钩子函数
 

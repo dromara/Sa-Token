@@ -19,6 +19,7 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
@@ -43,7 +44,7 @@ import java.util.List;
  * @author noear
  * @since 1.12
  */
-public class SaTokenInterceptor implements RouterInterceptor {
+public class SaTokenInterceptor implements SaFilter, RouterInterceptor {
 	/**
 	 * 是否打开注解鉴权
 	 */
