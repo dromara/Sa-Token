@@ -24,7 +24,7 @@ sa-token:
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # token前缀
-sa-token.token-prefix: Bearer
+sa-token.token-prefix=Bearer
 ```
 <!---------------------------- tabs:end ---------------------------->
 
