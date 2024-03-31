@@ -101,7 +101,7 @@ public class SaTokenDaoOfRedisBase64 implements SaTokenDao {
      */
     @Override
     public Object getObject(String key) {
-        return redisBucket.getAndDeserialize(key, Object.class);
+        return redisBucket.getAndDeserialize(key);
     }
 
     /**
