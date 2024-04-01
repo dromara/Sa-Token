@@ -141,7 +141,7 @@ public class SaJwtTemplate {
 	 * @return 根据 JWT 对象和 keyt 秘钥，生成的 token 字符串
 	 */
 	public String generateToken (JWT jwt, String keyt) {
-		return jwt.setKey(keyt.getBytes()).setSigner(createSigner(keyt)).sign();
+		return jwt.setSigner(createSigner(keyt)).sign();
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class SaJwtTemplate {
     	JSONObject payloads = jwt.getPayloads();
     	
     	// 校验 Token 签名
-		boolean verify = jwt.setKey(keyt.getBytes()).setSigner(createSigner(keyt)).verify();
+		boolean verify = jwt.setSigner(createSigner(keyt)).verify();
     	if( ! verify) {
     		throw new SaJwtException("jwt 签名无效：" + token).setCode(SaJwtErrorCode.CODE_30202);
     	}
@@ -284,7 +284,7 @@ public class SaJwtTemplate {
     	JSONObject payloads = jwt.getPayloads();
     	
     	// 如果签名无效 
-    	boolean verify = jwt.setKey(keyt.getBytes()).verify();
+    	boolean verify = jwt.setSigner(createSigner(keyt)).verify();
     	if( ! verify) {
     		return NOT_VALUE_EXPIRE;
     	}
