@@ -11,7 +11,7 @@
 |---   	  |---        |---                            |
 | -1      | NotLoginException.NOT_TOKEN  	| 未能从请求中读取到有效 token         |
 | -2      | NotLoginException.INVALID_TOKEN	| 已读取到 token，但是 token 无效  |
-| -3      | NotLoginException.TOKEN_TIMEOUT	| 已读取到 token，但是 token 已经过期 (tips：[Token有效期详解](/fun/token-timeout)) |
+| -3      | NotLoginException.TOKEN_TIMEOUT	| 已读取到 token，但是 token 已经过期 ([详](/fun/token-timeout)) |
 | -4      | NotLoginException.BE_REPLACED	| 已读取到 token，但是 token 已被顶下线  |
 | -5      | NotLoginException.KICK_OUT		| 已读取到 token，但是 token 已被踢下线  |
 | -6      | NotLoginException.TOKEN_FREEZE	| 已读取到 token，但是 token 已被冻结  |

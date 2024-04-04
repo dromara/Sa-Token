@@ -311,8 +311,9 @@ public class SsoUserServerController {
 
 <details>
 <summary>还有其它问题？</summary>
-	
+<p>
 可以加群反馈一下，比较典型的问题我们解决之后都会提交到此页面方便大家快速排查
+</p>
 </details>
 
 
