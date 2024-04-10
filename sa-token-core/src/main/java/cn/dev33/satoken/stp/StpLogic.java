@@ -1756,7 +1756,11 @@ public class StpLogic {
  	 * @return / 
  	 */
  	public boolean hasRole(String role) {
- 		return hasElement(getRoleList(), role);
+		try {
+			return hasRole(getLoginId(), role);
+		} catch (NotLoginException e) {
+			return false;
+		}
  	}
 
  	/** 
@@ -1780,7 +1784,7 @@ public class StpLogic {
  		try {
 			checkRoleAnd(roleArray);
 			return true;
-		} catch (NotRoleException e) {
+		} catch (NotLoginException | NotRoleException e) {
 			return false;
 		}
  	}
@@ -1795,7 +1799,7 @@ public class StpLogic {
  		try {
 			checkRoleOr(roleArray);
 			return true;
-		} catch (NotRoleException e) {
+		} catch (NotLoginException | NotRoleException e) {
 			return false;
 		}
  	}
@@ -1806,7 +1810,7 @@ public class StpLogic {
  	 * @param role 角色标识
  	 */
  	public void checkRole(String role) {
- 		if( ! hasRole(role)) {
+ 		if( ! hasRole(getLoginId(), role)) {
 			throw new NotRoleException(role, this.loginType).setCode(SaErrorCode.CODE_11041);
 		}
  	}
@@ -1890,7 +1894,11 @@ public class StpLogic {
  	 * @return 是否含有指定权限
  	 */
  	public boolean hasPermission(String permission) {
- 		return hasElement(getPermissionList(), permission);
+		try {
+			return hasPermission(getLoginId(), permission);
+		} catch (NotLoginException e) {
+			return false;
+		}
  	}
 
  	/** 
@@ -1914,7 +1922,7 @@ public class StpLogic {
  		try {
 			checkPermissionAnd(permissionArray);
 			return true;
-		} catch (NotPermissionException e) {
+		} catch (NotLoginException | NotPermissionException e) {
 			return false;
 		}
  	}
@@ -1929,7 +1937,7 @@ public class StpLogic {
  		try {
 			checkPermissionOr(permissionArray);
 			return true;
-		} catch (NotPermissionException e) {
+		} catch (NotLoginException | NotPermissionException e) {
 			return false;
 		}
  	}
@@ -1940,7 +1948,7 @@ public class StpLogic {
  	 * @param permission 权限码
  	 */
  	public void checkPermission(String permission) {
- 		if( ! hasPermission(permission)) {
+ 		if( ! hasPermission(getLoginId(), permission)) {
 			throw new NotPermissionException(permission, this.loginType).setCode(SaErrorCode.CODE_11051);
 		}
  	}
