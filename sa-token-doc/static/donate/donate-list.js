@@ -1075,4 +1075,32 @@ var donateList = [
 		"msg": "一直在使用satoken，感谢你的付出",
 		"date": "2024-03-20"
 	},
+	{
+		"name": "cy42",
+		"link": "https://gitee.com/third-party-framework",
+		"money": 50.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-03-26"
+	},
+	{
+		"name": "YaeMivo（微信打赏）",
+		"link": "",
+		"money": 20.0,
+		"msg": "祝越做越好",
+		"date": "2024-03-29"
+	},
+	{
+		"name": "炮孩子",
+		"link": "https://gitee.com/paohaizi",
+		"money": 10.0,
+		"msg": "拳打Apach shiro，脚踢 Spring Security。",
+		"date": "2024-03-30"
+	},
+	{
+		"name": "孤独的造梦者	",
+		"link": "https://gitee.com/dpxz",
+		"money": 10.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-04-01"
+	},
 ]
