@@ -292,8 +292,6 @@ sa-token:
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
-# 打开单点注销功能 
-sa-token.sso.is-slo=true
 # 单点注销地址 
 sa-token.sso.slo-url=http://sa-sso-server.com:9000/sso/signout
 # 接口调用秘钥 
