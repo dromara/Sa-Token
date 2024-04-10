@@ -166,8 +166,8 @@ public class Application {
 ```
 
 如果你使用的框架带有自动注入特性，那就更简单了，参考 Spring 集成包的 Bean 注入流程：
-[注册Bean](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaBeanRegister.java)、
-[注入Bean](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaBeanInject.java)
+[注册Bean](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-starter/src/main/java/cn/dev33/satoken/spring/SaTokenContextRegister.java)、
+[注入Bean](https://gitee.com/dromara/sa-token/blob/master/sa-token-starter/sa-token-spring-boot-autoconfig/src/main/java/cn/dev33/satoken/spring/SaBeanInject.java)
 
 
 ### 5、启动项目
