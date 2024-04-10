@@ -232,11 +232,11 @@ public class SaSso2ClientApplication {
 
 ![sso-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index.png 's-w-sh')
 
-(2) 首次打开，提示当前未登录，我们点击**`登录`** 按钮，页面会被重定向到登录中心
+(2) 首次打开，提示当前未登录，我们点击 **`登录`** 按钮，页面会被重定向到登录中心
 
 ![sso-server-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-auth.png 's-w-sh')
 
-(3) SSO-Server提示我们在认证中心尚未登录，我们点击 **`doLogin登录`**按钮进行模拟登录
+(3) SSO-Server提示我们在认证中心尚未登录，我们点击 **`doLogin登录`** 按钮进行模拟登录
 
 ![sso-server-dologin.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-dologin.png 's-w-sh')
 
@@ -250,7 +250,7 @@ public class SaSso2ClientApplication {
 
 ![sso-client2-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client2-index.png 's-w-sh')
 
-(7) 提示未登录，我们点击**`登录`**按钮，会直接提示登录成功
+(7) 提示未登录，我们点击 **`登录`** 按钮，会直接提示登录成功
 
 ![sso-client2-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client2-index-ok.png 's-w-sh')
 
