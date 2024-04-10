@@ -26,6 +26,8 @@ import org.thymeleaf.processor.IProcessor;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
+import org.thymeleaf.standard.processor.StandardXmlNsTagProcessor;
+import org.thymeleaf.templatemode.TemplateMode;
 
 /**
  * Sa-Token 集成 Thymeleaf 标签方言 
@@ -82,7 +84,10 @@ public class SaTokenDialect extends AbstractProcessorDialect {
 				new SaTokenTagProcessor(prefix, "hasPermissionAnd", value -> stpLogic.hasPermissionAnd(toArray(value))),
 				new SaTokenTagProcessor(prefix, "hasPermissionOr", value -> stpLogic.hasPermissionOr(toArray(value))),
 				new SaTokenTagProcessor(prefix, "notPermission", value -> ! stpLogic.hasPermission(value)),
-				new SaTokenTagProcessor(prefix, "lackPermission", value -> ! stpLogic.hasPermission(value))
+				new SaTokenTagProcessor(prefix, "lackPermission", value -> ! stpLogic.hasPermission(value)),
+
+				// 移除<html>标签命名空间
+				new StandardXmlNsTagProcessor(TemplateMode.HTML,prefix)
 
 		));
     }
