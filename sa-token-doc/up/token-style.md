@@ -48,7 +48,7 @@ public class SaTokenConfigure {
     /**
      * 重写 Sa-Token 框架内部算法策略 
      */
-    @Autowired
+    @PostConstruct
     public void rewriteSaStrategy() {
     	// 重写 Token 生成策略 
     	SaStrategy.instance.createToken = (loginId, loginType) -> {

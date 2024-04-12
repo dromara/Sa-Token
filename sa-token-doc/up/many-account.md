@@ -89,7 +89,7 @@ public String info() {
 ``` java
 @Configuration
 public class SaTokenConfigure {
-    @Autowired
+    @PostConstruct
     public void rewriteSaStrategy() {
     	// 重写Sa-Token的注解处理器，增加注解合并功能 
 		SaStrategy.instance.getAnnotation = (element, annotationClass) -> {
@@ -167,7 +167,7 @@ public class StpUserUtil {
 @Configuration
 public class SaTokenConfigure {
 	
-	@Autowired
+	@PostConstruct
 	public void setSaTokenConfig() {
 		// 设定 StpUtil 使用的 SaTokenConfig 配置参数对象
 		SaTokenConfig config1 = new SaTokenConfig();

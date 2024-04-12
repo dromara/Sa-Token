@@ -191,7 +191,7 @@ sa-token-jwt 插件默认只为 `StpUtil` 注入 `StpLogicJwtFoxXxx` 实现，�
 /**
  * 为 StpUserUtil 注入 StpLogicJwt 实现 
  */
-@Autowired
+@PostConstruct
 public void setUserStpLogic() {
 	StpUserUtil.setStpLogic(new StpLogicJwtForSimple(StpUserUtil.TYPE));
 }
@@ -207,7 +207,7 @@ public void setUserStpLogic() {
 /**
  * 自定义 SaJwtUtil 生成 token 的算法 
  */
-@Autowired
+@PostConstruct
 public void setSaJwtTemplate() {
 	SaJwtUtil.setSaJwtTemplate(new SaJwtTemplate() {
 		@Override
