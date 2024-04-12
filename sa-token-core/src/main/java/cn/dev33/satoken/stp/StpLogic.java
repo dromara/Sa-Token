@@ -1147,7 +1147,7 @@ public class StpLogic {
 	 */
 	public void updateTokenToIdMapping(String tokenValue, Object loginId) {
 		// 先判断一下，是否传入了空值
-		SaTokenException.throwBy(SaFoxUtil.isEmpty(loginId), "loginId 不能为空", SaErrorCode.CODE_11003);
+		SaTokenException.notTrue(SaFoxUtil.isEmpty(loginId), "loginId 不能为空", SaErrorCode.CODE_11003);
 
 		// 更新缓存中的 token 指向
 		getSaTokenDao().update(splicingKeyTokenValue(tokenValue), loginId.toString());

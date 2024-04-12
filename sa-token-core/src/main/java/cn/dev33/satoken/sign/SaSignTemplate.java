@@ -148,7 +148,7 @@ public class SaSignTemplate {
 	 */
 	public String createSign(Map<String, ?> paramsMap) {
 		String secretKey = getSecretKey();
-		SaSignException.throwByNull(secretKey, "参与参数签名的秘钥不可为空", SaErrorCode.CODE_12201);
+		SaSignException.notEmpty(secretKey, "参与参数签名的秘钥不可为空", SaErrorCode.CODE_12201);
 
 		// 如果调用者不小心传入了 sign 参数，则此处需要将 sign 参数排除在外
 		if(paramsMap.containsKey(sign)) {
@@ -295,9 +295,9 @@ public class SaSignTemplate {
 		String signValue = paramMap.get(sign);
 
 		// 参数非空校验
-		SaSignException.throwByNull(timestampValue, "缺少 timestamp 字段");
+		SaSignException.notEmpty(timestampValue, "缺少 timestamp 字段");
 		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
-		SaSignException.throwByNull(signValue, "缺少 sign 字段");
+		SaSignException.notEmpty(signValue, "缺少 sign 字段");
 
 		// 三个值的校验必须全部通过
 		return isValidTimestamp(Long.parseLong(timestampValue))
@@ -316,9 +316,9 @@ public class SaSignTemplate {
 		String signValue = paramMap.get(sign);
 
 		// 参数非空校验
-		SaSignException.throwByNull(timestampValue, "缺少 timestamp 字段");
+		SaSignException.notEmpty(timestampValue, "缺少 timestamp 字段");
 		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
-		SaSignException.throwByNull(signValue, "缺少 sign 字段");
+		SaSignException.notEmpty(signValue, "缺少 sign 字段");
 
 		// 依次校验三个参数
 		checkTimestamp(Long.parseLong(timestampValue));

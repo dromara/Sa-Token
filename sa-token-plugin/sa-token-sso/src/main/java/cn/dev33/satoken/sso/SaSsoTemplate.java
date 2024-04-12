@@ -524,7 +524,7 @@ public class SaSsoTemplate {
 		String url = path;
 		if( ! url.startsWith("http") ) {
 			String serverUrl = SaSsoManager.getConfig().getServerUrl();
-			SaSsoException.throwByNull(serverUrl, "请先配置 sa-token.sso.server-url 地址", SaSsoErrorCode.CODE_30012);
+			SaSsoException.notEmpty(serverUrl, "请先配置 sa-token.sso.server-url 地址", SaSsoErrorCode.CODE_30012);
 			url = SaFoxUtil.spliceTwoUrl(serverUrl, path);
 		}
 
