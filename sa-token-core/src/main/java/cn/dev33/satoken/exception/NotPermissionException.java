@@ -64,13 +64,4 @@ public class NotPermissionException extends SaTokenException {
 		this.loginType = loginType;
 	}
 
-	/**
-	 * <h1> 警告：自 v1.30+ 版本起，获取异常权限码由 getCode() 更改为 getPermission()，请及时更换！ </h1> 
-	 * @return 获得权限码
-	 */
-	@Deprecated
-	public int getCode() {
-		return super.getCode();
-	}
-
 }

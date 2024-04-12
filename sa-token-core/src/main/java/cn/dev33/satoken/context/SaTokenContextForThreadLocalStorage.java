@@ -19,7 +19,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.InvalidContextException;
+import cn.dev33.satoken.exception.SaTokenContextException;
 
 /**
  * Sa-Token 上下文处理器 [ThreadLocal 版本] ---- 对象存储器
@@ -69,7 +69,7 @@ public class SaTokenContextForThreadLocalStorage {
 	public static Box getBoxNotNull() {
 		Box box = boxThreadLocal.get();
 		if(box ==  null) {
-			throw new InvalidContextException("未能获取有效的上下文").setCode(SaErrorCode.CODE_10002);
+			throw new SaTokenContextException("未能获取有效的上下文").setCode(SaErrorCode.CODE_10002);
 		}
 		return box;
 	}

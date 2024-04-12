@@ -19,7 +19,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.InvalidContextException;
+import cn.dev33.satoken.exception.SaTokenContextException;
 
 /**
  * Sa-Token 上下文处理器 [ 默认实现类 ]
@@ -46,22 +46,22 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 
 	@Override
 	public SaRequest getRequest() {
-		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
 	@Override
 	public SaResponse getResponse() {
-		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
 	@Override
 	public SaStorage getStorage() {
-		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
 	@Override
 	public boolean matchPath(String pattern, String path) {
-		throw new InvalidContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
 }

@@ -15,13 +15,15 @@
  */
 package cn.dev33.satoken.exception;
 
+import java.io.Serializable;
+
 /**
  * 一个异常：代表框架未能获取有效的上下文
  * 
  * @author click33
  * @since 1.33.0
  */
-public class InvalidContextException extends SaTokenException {
+public class SaTokenContextException extends InvalidContextException implements Serializable {
 
 	/**
 	 * 序列化版本号
@@ -32,7 +34,7 @@ public class InvalidContextException extends SaTokenException {
 	 * 一个异常：代表框架未能获取有效的上下文
 	 * @param message 异常描述 
 	 */
-	public InvalidContextException(String message) {
+	public SaTokenContextException(String message) {
 		super(message);
 	}
 
