@@ -15,13 +15,13 @@
  */
 package cn.dev33.satoken.spring;
 
-import cn.dev33.satoken.spring.context.path.ApplicationContextPathLoading;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
+import cn.dev33.satoken.spring.context.path.ApplicationContextPathLoading;
 import cn.dev33.satoken.spring.json.SaJsonTemplateForJackson;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 /**
  * 注册Sa-Token所需要的Bean 
@@ -49,7 +49,16 @@ public class SaBeanRegister {
 	 */
 	@Bean
 	public SaJsonTemplate getSaJsonTemplateForJackson() {
-		return new SaJsonTemplateForJackson();
+		try {
+			// 部分开发者会在 springboot 项目中排除 jackson 依赖，所以这里做一个判断：
+			// 	1、如果项目中存在 jackson 依赖，则使用 jackson 的 json 转换器
+			// 	2、如果项目中不存在 jackson 依赖，则使用默认的 json 转换器
+			// 	to：防止因为 jackson 依赖问题导致项目无法启动
+			Class.forName("com.fasterxml.jackson.databind.ObjectMapper");
+			return new SaJsonTemplateForJackson();
+		} catch (ClassNotFoundException e) {
+			return new SaJsonTemplateDefaultImpl();
+		}
 	}
 
 	/**
