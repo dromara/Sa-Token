@@ -118,7 +118,10 @@ public interface SaErrorCode {
 
 	/** 二级认证校验未通过 */
 	int CODE_11071 = 11071;
-	
+
+	/** 获取 SaSession 时提供的 SessionId 为空 */
+	int CODE_11072 = 11072;
+
 
 	// ------------ 
 	

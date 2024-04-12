@@ -1177,7 +1177,7 @@ public class StpLogic {
 
 		// 如果提供的 sessionId 为 null，则直接返回 null
 		if(SaFoxUtil.isEmpty(sessionId)) {
-			return null;
+			throw new SaTokenException("SessionId 不能为空").setCode(SaErrorCode.CODE_11072);
 		}
 
 		// 先检查这个 SaSession 是否已经存在，如果不存在且 isCreate=true，则新建并返回
