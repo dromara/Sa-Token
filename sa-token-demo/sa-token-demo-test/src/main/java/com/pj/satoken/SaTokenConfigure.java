@@ -49,6 +49,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		// 异常处理函数：每次认证函数发生异常时执行此函数 
         		.setError(e -> {
         			System.out.println("---------- sa全局异常 ");
+					e.printStackTrace();
         			return SaResult.error(e.getMessage());
         		})
         		
