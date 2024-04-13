@@ -18,6 +18,7 @@ cd sa-token-demo-springboot-redis & call mvn clean & cd ..
 cd sa-token-demo-springboot-redisson & call mvn clean & cd ..
 cd sa-token-demo-test & call mvn clean & cd ..
 cd sa-token-demo-thymeleaf & call mvn clean & cd ..
+cd sa-token-demo-beetl & call mvn clean & cd ..
 cd sa-token-demo-webflux & call mvn clean & cd ..
 cd sa-token-demo-webflux-springboot3 & call mvn clean & cd ..
 cd sa-token-demo-websocket & call mvn clean & cd ..
@@ -44,10 +45,10 @@ cd sa-token-demo-oauth2-client & call mvn clean & cd ..
 cd sa-token-demo-oauth2-server & call mvn clean & cd ..
 cd ..
 
-cd sa-token-demo-cross
-cd sa-token-demo-cross-header-server & call mvn clean & cd ..
-cd sa-token-demo-cross-cookie-server & call mvn clean & cd ..
-cd ..
+:: cd sa-token-demo-cross
+:: cd sa-token-demo-cross-header-server & call mvn clean & cd ..
+:: cd sa-token-demo-cross-cookie-server & call mvn clean & cd ..
+:: cd ..
 
 cd sa-token-demo-dubbo
 cd sa-token-demo-dubbo-consumer & call mvn clean & cd ..

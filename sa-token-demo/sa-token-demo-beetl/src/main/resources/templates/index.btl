@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Sa-Token 集成 Beetl 示例</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	</head>
+	<body>
+		<div class="view-box" style="padding: 30px;">
+			<h2>Sa-Token 集成 Beetl —— 测试页面</h2>
+			<p>当前是否登录：${stp.isLogin()}</p>
+			<p>
+				<span>操作：</span>
+				<a href="login" target="_blank">登录</a>
+				<a href="logout" target="_blank">注销</a>
+			</p>
+
+			<p>
+				登录之后才能显示：
+				<% if(stp.isLogin()){ %>
+					value
+				<%}%>
+			</p>
+			<p>
+				不登录才能显示：
+				<% if(!stp.isLogin()){ %>
+					value
+				<%}%>
+			</p>
+
+			<p>具有角色 admin 才能显示：<% if(stp.hasRole("admin")){ %> value <% } %></p>
+			<p>同时具备多个角色才能显示：<% if(stp.hasRoleAnd("admin", "ceo", "cto")){ %> value <% } %></p>
+			<p>只要具有其中一个角色就能显示：<% if(stp.hasRoleOr("admin", "ceo", "cto")){ %> value <% } %></p>
+			<p>不具有角色 admin 才能显示：<% if(!stp.hasRole("admin")){ %> value <% } %></p>
+
+			<p>具有权限 user-add 才能显示：<% if(stp.hasPermission("user-add")){ %> value <% } %></p>
+			<p>同时具备多个权限才能显示：<% if(stp.hasPermissionAnd("user-add", "user-delete", "user-get")){ %> value <% } %></p>
+			<p>只要具有其中一个权限就能显示：<% if(stp.hasPermissionOr("user-add", "user-delete", "user-get")){ %> value <% } %></p>
+			<p>不具有权限 user-add 才能显示：<% if(!stp.hasPermission("user-add")){ %> value <% } %></p>
+
+			<% if(stp.isLogin()){ %>
+				<p>
+					从SaSession中取值：${stp.getSession()["name"]} <br>
+					或：${stp.getSession().name}
+				</p>
+			<%}%>
+
+		</div>
+	</body>
+</html>
