@@ -219,6 +219,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-demo-websocket               // [示例] Sa-Token 集成 Web-Socket 鉴权示例
 		├── sa-token-demo-websocket-spring        // [示例] Sa-Token 集成 Web-Socket（Spring封装版） 鉴权示例
 		├── sa-token-demo-thymeleaf               // [示例] Sa-Token 集成 Thymeleaf 标签方言
+		├── sa-token-demo-beetl                   // [示例] Sa-Token 集成 beetl 示例
 		├── sa-token-demo-sso                     // [示例] Sa-Token 集成 SSO 单点登录
 			├── sa-token-demo-sso-server              // [示例] Sa-Token 集成 SSO单点登录-Server认证中心
 			├── sa-token-demo-sso1-client             // [示例] Sa-Token 集成 SSO单点登录-模式一 应用端 (同域、同Redis)
