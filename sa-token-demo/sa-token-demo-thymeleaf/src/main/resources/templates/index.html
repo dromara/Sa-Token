@@ -8,6 +8,7 @@
 	<body>
 		<div class="view-box" style="padding: 30px;">
 			<h2>Sa-Token 集成 Thymeleaf 标签方言 —— 测试页面</h2>
+			<p>当前是否登录：<span th:text="${stp.isLogin()}"></span></p>
 			<p>
 				<a href="login" target="_blank">登录</a>
 				<a href="logout" target="_blank">注销</a>
