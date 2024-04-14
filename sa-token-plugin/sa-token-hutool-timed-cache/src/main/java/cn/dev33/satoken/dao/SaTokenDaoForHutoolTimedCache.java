@@ -38,7 +38,7 @@ public class SaTokenDaoForHutoolTimedCache implements SaTokenDao {
 	 * 底层缓存对象：
 	 * 参数填1000，代表默认ttl为1000毫秒，实际上此参数意义不大，因为后续每个值都会单独设置自己的ttl值
 	 */
-	TimedCache<String, Object> timedCache = CacheUtil.newTimedCache(1000);
+	public TimedCache<String, Object> timedCache = CacheUtil.newTimedCache(1000);
 
 
 	// ------------------------ String 读写操作
