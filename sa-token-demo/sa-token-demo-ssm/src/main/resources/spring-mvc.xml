@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+        	http://www.springframework.org/schema/beans/spring-beans.xsd
+        	http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context.xsd
+        	http://www.springframework.org/schema/mvc
+        	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+    <bean id="mappingJackson2HttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>text/json;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 添加扫描注解，此包下 -->
+    <context:component-scan base-package="com.pj.controller,com.pj.current" />
+    <mvc:annotation-driven/>
+
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+
+        <!-- 注解鉴权拦截器 -->
+        <!-- 想要使用注解鉴权，需要打开这个 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="cn.dev33.satoken.interceptor.SaInterceptor" />
+        </mvc:interceptor>
+
+        <!-- 路由鉴权拦截器 -->
+        <!--
+            注意：这里的 [路由拦截鉴权] 和上面的 [注解鉴权拦截器] 只能打开一个，
+            因为 SaInterceptor 自带注解鉴权效果，如果两个都打开了，会导致一个注解被拦截校验两次
+         -->
+        <!--<mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.pj.satoken.SaInterceptorImpl" />
+        </mvc:interceptor>-->
+
+    </mvc:interceptors>
+
+    <!-- 配置视图解析器 -->
+    <!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+</beans>

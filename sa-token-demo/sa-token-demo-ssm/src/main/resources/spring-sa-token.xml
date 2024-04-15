@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation=
+			   "http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- Spring 集成 Sa-Token 时需要的所有 Bean -->
+	<bean id="saTokenBeanInjection" class="com.pj.satoken.SaTokenBeanInjection">
+		<constructor-arg ref="saLog"/>
+		<constructor-arg ref="saTokenConfig"/>
+		<constructor-arg ref="redisConnectionFactory"/>
+		<!-- 项目路由前缀，至关重要的一个属性，想要使用路由拦截鉴权必须把这个属性配置对 -->
+		<constructor-arg value="/sa_token_demo_ssm_war"/>
+	</bean>
+
+	<!--Sa-Token 日志输出对象 -->
+	<bean id="saLog" class="cn.dev33.satoken.log.SaLogForConsole" />
+
+	<!--Sa-Token 配置-->
+	<bean id="saTokenConfig" class="cn.dev33.satoken.config.SaTokenConfig">
+		<!-- token 名称（同时也是 cookie 名称） -->
+		<property name="tokenName" value="satoken" />
+		<!-- token 有效期（单位：秒） 默认30天，-1 代表永久有效 -->
+		<property name="timeout" value="2592000" />
+		<!-- token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结 -->
+		<property name="activeTimeout" value="-1" />
+		<!-- 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录） -->
+		<property name="isConcurrent" value="false" />
+		<!-- 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token） -->
+		<property name="isShare" value="true" />
+		<!-- token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）-->
+		<property name="tokenStyle" value="uuid" />
+		<!-- 是否输出操作日志 -->
+		<property name="isLog" value="true"/>
+	</bean>
+
+	<!-- 导入了 spring-redis.xml 才能使用里面的配置对象 -->
+	<import resource="spring-redis.xml" />
+
+</beans>
