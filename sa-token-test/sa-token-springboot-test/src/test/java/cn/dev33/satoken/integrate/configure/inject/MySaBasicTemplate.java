@@ -17,9 +17,9 @@ package cn.dev33.satoken.integrate.configure.inject;
 
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.basic.SaBasicTemplate;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
 
 @Component
-public class MySaBasicTemplate extends SaBasicTemplate {
+public class MySaBasicTemplate extends SaHttpBasicTemplate {
 	
 }

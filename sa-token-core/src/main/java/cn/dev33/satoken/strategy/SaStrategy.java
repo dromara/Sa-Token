@@ -17,7 +17,7 @@ package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.*;
-import cn.dev33.satoken.basic.SaBasicUtil;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.strategy.*;
@@ -180,13 +180,13 @@ public final class SaStrategy {
 			SaManager.getStpLogic(checkDisable.type(), false).checkByAnnotation(checkDisable);
 		}
 
-		// 校验 @SaCheckBasic 注解
-		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.instance.getAnnotation.apply(element, SaCheckBasic.class);
-		if(checkBasic != null) {
-			SaBasicUtil.check(checkBasic.realm(), checkBasic.account());
+		// 校验 @SaCheckHttpBasic 注解
+		SaCheckHttpBasic checkHttpBasic = (SaCheckHttpBasic) SaStrategy.instance.getAnnotation.apply(element, SaCheckHttpBasic.class);
+		if(checkHttpBasic != null) {
+			SaHttpBasicUtil.check(checkHttpBasic.realm(), checkHttpBasic.account());
 		}
 
-		// 校验 @SaCheckBasic 注解
+		// 校验 @SaCheckHttpDigest 注解
 		SaCheckHttpDigest checkHttpDigest = (SaCheckHttpDigest) SaStrategy.instance.getAnnotation.apply(element, SaCheckHttpDigest.class);
 		if(checkHttpDigest != null) {
 			SaHttpDigestUtil.checkByAnnotation(checkHttpDigest);
@@ -265,10 +265,10 @@ public final class SaStrategy {
 		}
 
 		// 6、校验注解：@SaCheckBasic
-		SaCheckBasic[] checkBasicArray = at.basic();
-		for (SaCheckBasic item : checkBasicArray) {
+		SaCheckHttpBasic[] checkBasicArray = at.basic();
+		for (SaCheckHttpBasic item : checkBasicArray) {
 			try {
-				SaBasicUtil.check(item.realm(), item.account());
+				SaHttpBasicUtil.check(item.realm(), item.account());
 				return;
 			} catch (SaTokenException e) {
 				errorList.add(e);

@@ -13,41 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.basic;
+package cn.dev33.satoken.httpauth.basic;
 
 /**
- * <h2> 已更换至包：cn.dev33.satoken.httpauth.basic </h2>
- * <h2> 已更换名称：SaHttpBasicUtil </h2>
- *
  * Sa-Token Http Basic 认证模块，Util 工具类
  *
  * @author click33
  * @since 1.26.0
  */
-@Deprecated
-public class SaBasicUtil {
+public class SaHttpBasicUtil {
 
-	private SaBasicUtil() {
+	private SaHttpBasicUtil() {
 	}
 	
 	/**
 	 * 底层使用的 SaBasicTemplate 对象
 	 */
-	public static SaBasicTemplate saBasicTemplate = new SaBasicTemplate();
+	public static SaHttpBasicTemplate saHttpBasicTemplate = new SaHttpBasicTemplate();
 
 	/**
 	 * 获取浏览器提交的 Basic 参数 （裁剪掉前缀并解码）
 	 * @return 值
 	 */
 	public static String getAuthorizationValue() {
-		return saBasicTemplate.getAuthorizationValue();
+		return saHttpBasicTemplate.getAuthorizationValue();
 	}
 	
 	/**
 	 * 对当前会话进行 Basic 校验（使用全局配置的账号密码），校验不通过则抛出异常  
 	 */
 	public static void check() {
-		saBasicTemplate.check();
+		saHttpBasicTemplate.check();
 	}
 
 	/**
@@ -55,7 +51,7 @@ public class SaBasicUtil {
 	 * @param account 账号（格式为 user:password）
 	 */
 	public static void check(String account) {
-		saBasicTemplate.check(account);
+		saHttpBasicTemplate.check(account);
 	}
 
 	/**
@@ -64,7 +60,7 @@ public class SaBasicUtil {
 	 * @param account 账号（格式为 user:password）
 	 */
 	public static void check(String realm, String account) {
-		saBasicTemplate.check(realm, account);
+		saHttpBasicTemplate.check(realm, account);
 	}
 
 }

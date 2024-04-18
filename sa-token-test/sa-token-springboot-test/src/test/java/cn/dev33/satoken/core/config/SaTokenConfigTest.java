@@ -89,8 +89,8 @@ public class SaTokenConfigTest {
 		config.setSameTokenTimeout(1004);
 		Assertions.assertEquals(config.getSameTokenTimeout(), 1004);
 
-		config.setBasic("sa:123456");
-		Assertions.assertEquals(config.getBasic(), "sa:123456");
+		config.setHttpBasic("sa:123456");
+		Assertions.assertEquals(config.getHttpBasic(), "sa:123456");
 
 		config.setCurrDomain("http://127.0.0.1:8084");
 		Assertions.assertEquals(config.getCurrDomain(), "http://127.0.0.1:8084");

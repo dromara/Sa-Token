@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.basic;
+package cn.dev33.satoken.httpauth.basic;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
@@ -23,16 +23,12 @@ import cn.dev33.satoken.secure.SaBase64Util;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * <h2> 已更换至包：cn.dev33.satoken.httpauth.basic </h2>
- * <h2> 已更换名称：SaHttpBasicTemplate </h2>
- *
  * Sa-Token Http Basic 认证模块
  *
  * @author click33
  * @since 1.26.0
  */
-@Deprecated
-public class SaBasicTemplate {
+public class SaHttpBasicTemplate {
 	
 	/**
 	 * 默认的 Realm 领域名称
@@ -70,7 +66,7 @@ public class SaBasicTemplate {
 	 * 对当前会话进行 Basic 校验（使用全局配置的账号密码），校验不通过则抛出异常  
 	 */
 	public void check() {
-		check(DEFAULT_REALM, SaManager.getConfig().getBasic());
+		check(DEFAULT_REALM, SaManager.getConfig().getHttpBasic());
 	}
 
 	/**
@@ -88,7 +84,7 @@ public class SaBasicTemplate {
 	 */
 	public void check(String realm, String account) {
 		if(SaFoxUtil.isEmpty(account)) {
-			account = SaManager.getConfig().getBasic();
+			account = SaManager.getConfig().getHttpBasic();
 		}
 		String authorization = getAuthorizationValue();
 		if(SaFoxUtil.isEmpty(authorization) || ! authorization.equals(account)) {

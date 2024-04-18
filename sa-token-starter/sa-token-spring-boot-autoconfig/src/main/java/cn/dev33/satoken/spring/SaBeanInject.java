@@ -23,8 +23,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.PathMatcher;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.basic.SaBasicTemplate;
-import cn.dev33.satoken.basic.SaBasicUtil;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
@@ -143,8 +143,8 @@ public class SaBeanInject {
 	 * @param saBasicTemplate saBasicTemplate对象 
 	 */
 	@Autowired(required = false)
-	public void setSaBasicTemplate(SaBasicTemplate saBasicTemplate) {
-		SaBasicUtil.saBasicTemplate = saBasicTemplate;
+	public void setSaBasicTemplate(SaHttpBasicTemplate saBasicTemplate) {
+		SaHttpBasicUtil.saHttpBasicTemplate = saBasicTemplate;
 	}
 	
 	/**

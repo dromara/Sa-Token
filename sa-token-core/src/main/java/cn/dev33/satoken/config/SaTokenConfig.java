@@ -15,7 +15,6 @@
  */
 package cn.dev33.satoken.config;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
@@ -150,7 +149,7 @@ public class SaTokenConfig implements Serializable {
 	/**
 	 * Http Basic 认证的默认账号和密码，冒号隔开，例如：sa:123456
 	 */
-	private String basic = "";
+	private String httpBasic = "";
 
 	/**
 	 * Http Digest 认证的默认账号和密码，冒号隔开，例如：sa:123456
@@ -560,18 +559,18 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return Http Basic 认证的默认账号和密码 
+	 * @return Http Basic 认证的默认账号和密码，冒号隔开，例如：sa:123456
 	 */
-	public String getBasic() {
-		return basic;
+	public String getHttpBasic() {
+		return httpBasic;
 	}
 
 	/**
-	 * @param basic Http Basic 认证的默认账号和密码 
+	 * @param httpBasic Http Basic 认证的默认账号和密码，冒号隔开，例如：sa:123456
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setBasic(String basic) {
-		this.basic = basic;
+	public SaTokenConfig setHttpBasic(String httpBasic) {
+		this.httpBasic = httpBasic;
 		return this;
 	}
 
@@ -697,7 +696,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", logLevelInt=" + logLevelInt
 				+ ", isColorLog=" + isColorLog
 				+ ", jwtSecretKey=" + jwtSecretKey 
-				+ ", basic=" + basic
+				+ ", httpBasic=" + httpBasic
 				+ ", httpDigest=" + httpDigest
 				+ ", currDomain=" + currDomain 
 				+ ", sameTokenTimeout=" + sameTokenTimeout
@@ -707,8 +706,12 @@ public class SaTokenConfig implements Serializable {
 				+ "]";
 	}
 
+
+
+	// ------------------- 过期方法 -------------------
+
 	/**
-	 * 请更改为 getActiveTimeout()
+	 * <h2> 请更改为 getActiveTimeout() </h2>
 	 * @return token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 	 * 							（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 */
@@ -719,7 +722,7 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * 请更改为 setActiveTimeout()
+	 * <h2> 请更改为 setActiveTimeout() </h2>
 	 * @param activityTimeout token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
 	 * 								（例如可以设置为 1800 代表 30 分钟内无操作就冻结）
 	 * @return 对象自身
@@ -731,5 +734,24 @@ public class SaTokenConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * <h2> 请更改为 getHttpBasic() </h2>
+	 * @return Http Basic 认证的默认账号和密码
+	 */
+	@Deprecated
+	public String getBasic() {
+		return httpBasic;
+	}
+
+	/**
+	 * <h2> 请更改为 setHttpBasic() </h2>
+	 * @param basic Http Basic 认证的默认账号和密码
+	 * @return 对象自身
+	 */
+	@Deprecated
+	public SaTokenConfig setBasic(String basic) {
+		this.httpBasic = basic;
+		return this;
+	}
 
 }

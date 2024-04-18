@@ -18,7 +18,7 @@ package cn.dev33.satoken.integrate.more;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.dev33.satoken.basic.SaBasicUtil;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -57,7 +57,7 @@ public class MoreController {
 	// Http Basic 认证 
     @RequestMapping("basicAuth")
     public SaResult basicAuth() {
-    	SaBasicUtil.check("sa:123456");
+    	SaHttpBasicUtil.check("sa:123456");
     	return SaResult.ok();
     }
     

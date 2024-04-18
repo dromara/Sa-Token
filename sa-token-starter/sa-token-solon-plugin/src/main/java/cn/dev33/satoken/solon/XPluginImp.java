@@ -16,8 +16,8 @@
 package cn.dev33.satoken.solon;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.basic.SaBasicTemplate;
-import cn.dev33.satoken.basic.SaBasicUtil;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -111,8 +111,8 @@ public class XPluginImp implements Plugin {
         });
 
         // Sa-Token Http Basic 认证模块 Bean
-        context.getBeanAsync(SaBasicTemplate.class, bean -> {
-            SaBasicUtil.saBasicTemplate = bean;
+        context.getBeanAsync(SaHttpBasicTemplate.class, bean -> {
+            SaHttpBasicUtil.saHttpBasicTemplate = bean;
         });
 
         // Sa-Token JSON 转换器 Bean

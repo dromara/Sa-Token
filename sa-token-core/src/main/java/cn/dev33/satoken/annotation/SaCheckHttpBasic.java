@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.annotation;
 
-import cn.dev33.satoken.basic.SaBasicTemplate;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -32,13 +32,13 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
-public @interface SaCheckBasic {
+public @interface SaCheckHttpBasic {
 
     /**
      * 领域 
      * @return /
      */
-    String realm() default SaBasicTemplate.DEFAULT_REALM;
+    String realm() default SaHttpBasicTemplate.DEFAULT_REALM;
 
     /**
      * 需要校验的账号密码，格式形如 sa:123456 
