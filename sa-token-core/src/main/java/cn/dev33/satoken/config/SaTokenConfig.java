@@ -148,9 +148,14 @@ public class SaTokenConfig implements Serializable {
 	private String jwtSecretKey;
 
 	/**
-	 * Http Basic 认证的默认账号和密码 
+	 * Http Basic 认证的默认账号和密码，冒号隔开，例如：sa:123456
 	 */
 	private String basic = "";
+
+	/**
+	 * Http Digest 认证的默认账号和密码，冒号隔开，例如：sa:123456
+	 */
+	private String httpDigest = "";
 
 	/**
 	 * 配置当前项目的网络访问地址
@@ -571,6 +576,22 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
+	 * @return Http Digest 认证的默认账号和密码，冒号隔开，例如：sa:123456
+	 */
+	public String getHttpDigest() {
+		return httpDigest;
+	}
+
+	/**
+	 * @param httpDigest Http Digest 认证的默认账号和密码，冒号隔开，例如：sa:123456
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setHttpDigest(String httpDigest) {
+		this.httpDigest = httpDigest;
+		return this;
+	}
+
+	/**
 	 * @return 配置当前项目的网络访问地址
 	 */
 	public String getCurrDomain() {
@@ -676,7 +697,8 @@ public class SaTokenConfig implements Serializable {
 				+ ", logLevelInt=" + logLevelInt
 				+ ", isColorLog=" + isColorLog
 				+ ", jwtSecretKey=" + jwtSecretKey 
-				+ ", basic=" + basic 
+				+ ", basic=" + basic
+				+ ", httpDigest=" + httpDigest
 				+ ", currDomain=" + currDomain 
 				+ ", sameTokenTimeout=" + sameTokenTimeout
 				+ ", checkSameToken=" + checkSameToken 

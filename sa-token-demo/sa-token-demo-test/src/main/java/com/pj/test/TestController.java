@@ -1,5 +1,6 @@
 package com.pj.test;
 
+import cn.dev33.satoken.annotation.SaCheckHttpDigest;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.stp.SaLoginConfig;
@@ -50,6 +51,15 @@ public class TestController {
 		System.out.println("SpringMVCUtil.getRequest().getRequestURI()  " + SpringMVCUtil.getRequest().getRequestURI());
 		System.out.println("SaHolder.getRequest().getRequestPath()  " + SaHolder.getRequest().getRequestPath());
 		return SaResult.ok();
+	}
+
+	// 测试 Http Digest 认证   浏览器访问： http://localhost:8081/test/testDigest
+	@SaCheckHttpDigest("sa:123456")
+	@RequestMapping("testDigest")
+	public SaResult testDigest() {
+		// SaHttpDigestUtil.check("sa", "123456");
+		// 返回
+		return SaResult.data(null);
 	}
 
 }

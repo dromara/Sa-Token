@@ -21,6 +21,7 @@ import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.strategy.*;
+import cn.dev33.satoken.httpauth.digest.SaHttpDigestUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -183,6 +184,12 @@ public final class SaStrategy {
 		SaCheckBasic checkBasic = (SaCheckBasic) SaStrategy.instance.getAnnotation.apply(element, SaCheckBasic.class);
 		if(checkBasic != null) {
 			SaBasicUtil.check(checkBasic.realm(), checkBasic.account());
+		}
+
+		// 校验 @SaCheckBasic 注解
+		SaCheckHttpDigest checkHttpDigest = (SaCheckHttpDigest) SaStrategy.instance.getAnnotation.apply(element, SaCheckHttpDigest.class);
+		if(checkHttpDigest != null) {
+			SaHttpDigestUtil.checkByAnnotation(checkHttpDigest);
 		}
 
 		// 校验 @SaCheckOr 注解

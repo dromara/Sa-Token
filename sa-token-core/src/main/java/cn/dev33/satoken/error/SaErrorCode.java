@@ -60,6 +60,9 @@ public interface SaErrorCode {
 	/** 表示未能通过 Http Basic 认证校验 */
 	int CODE_10311 = 10311;
 
+	/** 表示未能通过 Http Digest 认证校验 */
+	int CODE_10312 = 10312;
+
 	/** 提供的 HttpMethod 是无效的 */
 	int CODE_10321 = 10321;
 

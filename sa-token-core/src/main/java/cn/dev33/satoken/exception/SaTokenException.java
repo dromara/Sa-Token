@@ -105,7 +105,16 @@ public class SaTokenException extends RuntimeException {
 		this.code = code;
 		return this;
 	}
-	
+
+	/**
+	 * 断言 flag 不为 true，否则抛出 message 异常
+	 * @param flag 标记
+	 * @param message 异常信息
+	 */
+	public static void notTrue(boolean flag, String message) {
+		notTrue(flag, message, SaErrorCode.CODE_UNDEFINED);
+	}
+
 	/**
 	 * 断言 flag 不为 true，否则抛出 message 异常
 	 * @param flag 标记
@@ -116,6 +125,15 @@ public class SaTokenException extends RuntimeException {
 		if(flag) {
 			throw new SaTokenException(message).setCode(code);
 		}
+	}
+
+	/**
+	 * 断言 value 不为空，否则抛出 message 异常
+	 * @param value 值
+	 * @param message 异常信息
+	 */
+	public static void notEmpty(Object value, String message) {
+		notEmpty(value, message, SaErrorCode.CODE_UNDEFINED);
 	}
 
 	/**
