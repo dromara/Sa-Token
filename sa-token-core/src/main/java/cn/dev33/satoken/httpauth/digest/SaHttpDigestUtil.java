@@ -43,17 +43,7 @@ public class SaHttpDigestUtil {
 	 * @return 值
 	 */
 	public static String getAuthorizationValue() {
-
-		// 获取前端提交的请求头 Authorization 参数
-		String authorization = SaHolder.getRequest().getHeader("Authorization");
-
-		// 如果不是以 Digest 作为前缀，则视为无效
-		if(authorization == null || ! authorization.startsWith("Digest ")) {
-			return null;
-		}
-
-		// 裁剪前缀并解码
-		return authorization.substring(7);
+		return saHttpDigestTemplate.getAuthorizationValue();
 	}
 
 	/**
@@ -61,52 +51,7 @@ public class SaHttpDigestUtil {
 	 * @return /
 	 */
 	public static SaHttpDigestModel getAuthorizationValueToModel() {
-
-		// 先获取字符串值
-		String authorization = getAuthorizationValue();
-		if(authorization == null) {
-			//            throw new SaTokenException("请求头中未携带 Digest 认证参数");
-			return null;
-		}
-
-		// 根据逗号分割，解析为 Map
-		Map<String, String> map = new LinkedHashMap<>();
-		String[] arr = authorization.split(",");
-		for (String s : arr) {
-			String[] kv = s.split("=");
-			if (kv.length == 2) {
-				map.put(kv[0].trim(), kv[1].trim().replace("\"", ""));
-			}
-		}
-
-        /*
-            参考样例：
-                username=sa,
-                realm=Sa-Token,
-                nonce=dcd98b7102dd2f0e8b11d0f600bfb0c093,
-                uri=/test/testDigest,
-                response=a32023c128e142163dd4856a2f511c70,
-                opaque=5ccc069c403ebaf9f0171e9517f40e41,
-                qop=auth,
-                nc=00000002,
-                cnonce=f3ca6bfc0b2f59c4
-         */
-
-		// 转化为 Model
-		SaHttpDigestModel model = new SaHttpDigestModel();
-		model.username = map.get("username");
-		model.realm = map.get("realm");
-		model.nonce = map.get("nonce");
-		model.uri = map.get("uri");
-		model.method = SaHolder.getRequest().getMethod();
-		model.qop = map.get("qop");
-		model.nc = map.get("nc");
-		model.cnonce = map.get("cnonce");
-		model.opaque = map.get("opaque");
-		model.response = map.get("response");
-
-		//
-		return model;
+		return saHttpDigestTemplate.getAuthorizationValueToModel();
 	}
 
 	// ---------- 校验 ----------
