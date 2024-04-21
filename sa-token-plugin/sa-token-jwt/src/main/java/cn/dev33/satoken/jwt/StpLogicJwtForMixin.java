@@ -21,6 +21,7 @@ import java.util.Map;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.stp.SaTokenInfo;
@@ -105,6 +106,10 @@ public class StpLogicJwtForMixin extends StpLogic {
 			Object loginId = SaJwtUtil.getLoginId(tokenValue, loginType, jwtSecretKey());
 			return String.valueOf(loginId);
 		} catch (SaJwtException e) {
+			// CODE == 30204 时，代表token已过期，此时返回-3，以便外层更精确的显示异常信息
+			if(e.getCode() == SaJwtErrorCode.CODE_30204) {
+				return NotLoginException.TOKEN_TIMEOUT;
+			}
 			return null;
 		}
 	}
