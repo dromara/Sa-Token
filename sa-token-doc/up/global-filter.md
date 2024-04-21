@@ -90,6 +90,33 @@ public class SaTokenConfigure {
 JSON 工具类可参考：[Hutool-Json](https://hutool.cn/docs/#/json/JSONUtil)
 
 
+### 自定义过滤器执行顺序
+
+SaServletFilter 默认执行顺序为 `-100`，如果你要自定义过滤器的执行顺序，可以使用 `FilterRegistrationBean` 注册，参考：
+
+``` java
+/**
+ * 注册 [Sa-Token 全局过滤器]
+ */
+@Bean
+public FilterRegistrationBean<SaServletFilter> getSaServletFilter() {
+	FilterRegistrationBean<SaServletFilter> frBean = new FilterRegistrationBean<>();
+	frBean.setFilter(
+			new SaServletFilter()
+				.addInclude("/**")
+				.setAuth(obj -> {
+					// ....
+				})
+				// 等等，其它代码 ... 
+	);
+	frBean.setOrder(100);  // 更改顺序为 -101
+	return frBean;
+}
+```
+
+在 SpringBoot 中， Order 值越小，执行时机越靠前。
+
+
 ### 在 WebFlux 中注册过滤器
 `Spring WebFlux`中不提供拦截器机制，因此若你的项目需要路由鉴权功能，过滤器是你唯一的选择，在`Spring WebFlux`注册过滤器的流程与上述流程几乎完全一致，
 除了您需要将过滤器名称由`SaServletFilter`更换为`SaReactorFilter`以外，其它所有步骤均可参考以上示例。
