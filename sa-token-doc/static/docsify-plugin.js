@@ -72,7 +72,7 @@ var myDocsifyPlugin = function(hook, vm) {
 		if(vm.route.path !== '/' && $(window).width() >= 800) {
 			var ad = `<p class="top-ad-box">
 				<span class="ad-tips">推广信息：</span>
-				<span class="ad-tips ad-close">关闭</span>
+				<span class="ad-tips ad-close">关闭（一周内不再显示）</span>
 				<a href="http://sa-pro.dev33.cn?from=satop" target="_blank">
 					<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-x.png" />
 				</a>
@@ -109,9 +109,11 @@ var myDocsifyPlugin = function(hook, vm) {
 			$('.top-ad-box .ad-close').click(function(){
 				console.log('关闭广告');
 				// $('.top-ad-box').slideUp(); // 折叠收起
-				$(".top-ad-box").fadeOut(1000); // 淡出效果
-				layer.msg('一周内不再展现此信息')
-				localStorage.closeAdTime = new Date().getTime();
+				layer.confirm('关闭后，一周内不再展现此信息', function(){
+					$(".top-ad-box").fadeOut(1000); // 淡出效果
+					layer.msg('关闭成功');
+					localStorage.closeAdTime = new Date().getTime();
+				})
 			})
 		}
 		
