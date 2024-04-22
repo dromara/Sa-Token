@@ -16,12 +16,10 @@
 package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
-import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
 
@@ -854,6 +852,15 @@ public class StpUtil {
 	 */
 	public static String getLoginDeviceByToken(String tokenValue) {
 		return stpLogic.getLoginDeviceByToken(tokenValue);
+	}
+
+	/**
+	 * 获取当前 token 的最后活跃时间（13位时间戳），如果不存在则返回 -2
+	 *
+	 * @return /
+	 */
+	public static long getTokenLastActiveTime() {
+		return stpLogic.getTokenLastActiveTime();
 	}
 
 

@@ -1538,6 +1538,40 @@ public class StpLogic {
 		return activeTimeout;
 	}
 
+	/**
+	 * 获取指定 token 的最后活跃时间（13位时间戳），如果不存在则返回 -2
+	 *
+	 * @param tokenValue 指定token
+	 * @return /
+	 */
+	public long getTokenLastActiveTime(String tokenValue) {
+		// 1、如果提供的 token 为 null，则返回 -2
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			return SaTokenDao.NOT_VALUE_EXPIRE;
+		}
+
+		// 2、获取这个 token 的最后活跃时间，13位时间戳
+		String key = splicingKeyLastActiveTime(tokenValue);
+		String lastActiveTimeString = getSaTokenDao().get(key);
+
+		// 3、查不到，返回-2
+		if(lastActiveTimeString == null) {
+			return SaTokenDao.NOT_VALUE_EXPIRE;
+		}
+
+		// 4、根据逗号切割字符串
+		return new SaValue2Box(lastActiveTimeString).getValue1AsLong();
+	}
+
+	/**
+	 * 获取当前 token 的最后活跃时间（13位时间戳），如果不存在则返回 -2
+	 *
+	 * @return /
+	 */
+	public long getTokenLastActiveTime() {
+		return getTokenLastActiveTime(getTokenValue());
+	}
+
 
 	// ------------------- 过期时间相关 -------------------
 
@@ -1630,26 +1664,14 @@ public class StpLogic {
 			return SaTokenDao.NEVER_EXPIRE;
 		}
 
- 		// 如果提供的 token 为 null，则返回 -2
- 		if(SaFoxUtil.isEmpty(tokenValue)) {
- 			return SaTokenDao.NOT_VALUE_EXPIRE;
- 		}
-
  		// ------ 开始查询
 
- 		// 1、先获取这个 token 的最后活跃时间，13位时间戳
- 		String key = splicingKeyLastActiveTime(tokenValue);
- 		String lastActiveTimeString = getSaTokenDao().get(key);
+ 		// 先获取这个 token 的最后活跃时间，13位时间戳
+ 		long lastActiveTime = getTokenLastActiveTime(tokenValue);
+		if(lastActiveTime == SaTokenDao.NOT_VALUE_EXPIRE) {
+			return SaTokenDao.NOT_VALUE_EXPIRE;
+		}
 
- 		// 2、如果查不到，返回-2
- 		if(lastActiveTimeString == null) {
- 			return SaTokenDao.NOT_VALUE_EXPIRE;
- 		}
-
-		// 3、计算最后活跃时间 距离 此时此刻 的时间差
-		//    计算公式为: (当前时间 - 最后活跃时间) / 1000
-		SaValue2Box box = new SaValue2Box(lastActiveTimeString);
- 		long lastActiveTime = box.getValue1AsLong();
 		// 实际时间差
  		long timeDiff = (System.currentTimeMillis() - lastActiveTime) / 1000;
 		// 该 token 允许的时间差
@@ -1659,7 +1681,7 @@ public class StpLogic {
 			return SaTokenDao.NEVER_EXPIRE;
 		}
 
- 		// 4、校验这个时间差是否超过了允许的值
+ 		// 校验这个时间差是否超过了允许的值
 		//    计算公式为: 允许的最大时间差 - 实际时间差，判断是否 < 0， 如果是则代表已经被冻结 ，返回-2
 		long activeTimeout = allowTimeDiff - timeDiff;
  		if(activeTimeout < 0) {
