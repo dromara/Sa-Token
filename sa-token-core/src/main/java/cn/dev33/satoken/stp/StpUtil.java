@@ -16,10 +16,12 @@
 package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
 
@@ -844,7 +846,18 @@ public class StpUtil {
 		return stpLogic.getLoginDevice(); 
 	}
 
-	
+	/**
+	 * 返回指定 token 会话的登录设备类型
+	 *
+	 * @param tokenValue 指定token
+	 * @return 当前令牌的登录设备类型
+	 */
+	public static String getLoginDeviceByToken(String tokenValue) {
+		return stpLogic.getLoginDeviceByToken(tokenValue);
+	}
+
+
+
 	// ------------------- 会话管理 -------------------  
 
 	/**

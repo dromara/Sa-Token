@@ -2089,19 +2089,32 @@ public class StpLogic {
 	 * @return 当前令牌的登录设备类型
 	 */
 	public String getLoginDevice() {
-		// 1、如果前端没有提交 token，直接返回 null
-		String tokenValue = getTokenValue();
-		if(tokenValue == null) {
+		return getLoginDeviceByToken(getTokenValue());
+	}
+
+	/**
+	 * 返回指定 token 会话的登录设备类型
+	 *
+	 * @param tokenValue 指定token
+	 * @return 当前令牌的登录设备类型
+	 */
+	public String getLoginDeviceByToken(String tokenValue) {
+		// 1、如果 token 为 null，直接提前返回
+		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return null;
 		}
 
-		// 2、如果当前会话还未登录，直接返回 null
-		if(!isLogin()) {
+		// 2、获取此 token 对应的 loginId，如果为null，或者此token已被冻结，直接返回null
+		Object loginId = getLoginIdNotHandle(tokenValue);
+		if( ! isValidLoginId(loginId)) {
+			return null;
+		}
+		if(getTokenActiveTimeoutByToken(tokenValue) == SaTokenDao.NOT_VALUE_EXPIRE ) {
 			return null;
 		}
 
-		// 3、获取当前账号的 Account-Session
-		SaSession session = getSessionByLoginId(getLoginIdDefaultNull(), false);
+		// 3、获取这个账号的 Account-Session
+		SaSession session = getSessionByLoginId(loginId, false);
 
 		// 4、为 null 说明尚未登录，当然也就不存在什么设备类型，直接返回 null
 		if(session == null) {
@@ -2119,7 +2132,7 @@ public class StpLogic {
 		// 6、没有找到，还是返回 null
 		return null;
 	}
-	
+
 
 	// ------------------- 会话管理 -------------------  
 
