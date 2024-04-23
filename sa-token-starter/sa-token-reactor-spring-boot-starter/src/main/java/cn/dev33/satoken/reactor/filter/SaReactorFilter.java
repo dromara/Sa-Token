@@ -48,6 +48,13 @@ import java.util.List;
 @Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaReactorFilter implements SaFilter, WebFilter {
 
+	/*
+	 * 三种 Filter ：
+	 * 	WebFilter：		Spring WebFlux 的过滤器，用于拦截 Web 请求
+	 * 	GlobalFilter：	Spring Cloud Gateway 的全局过滤器，用于拦截 Gateway 请求
+	 * 	GatewayFilter：	Spring Cloud Gateway 的局部过滤器，用于拦截 Gateway 请求
+	 */
+
 	// ------------------------ 设置此过滤器 拦截 & 放行 的路由 
 
 	/**
