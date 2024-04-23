@@ -471,7 +471,7 @@ public class StpLogic {
 		String tokenValue = distUsableToken(id, loginModel);
 		
 		// 4、获取此账号的 Account-Session , 续期
-		SaSession session = getSessionByLoginId(id, true);
+		SaSession session = getSessionByLoginId(id, true, loginModel.getTimeoutOrGlobalConfig());
 		session.updateMinTimeout(loginModel.getTimeout());
 		
 		// 5、在 Account-Session 上记录本次登录的 token 签名
@@ -1170,10 +1170,11 @@ public class StpLogic {
 	 *
 	 * @param sessionId SessionId
 	 * @param isCreate 是否新建
-	 * @param appendOperation 如果这个 SaSession 是新建的，则要追加执行的动作
+	 * @param timeout 如果这个 SaSession 是新建的，则使用此值作为过期值（单位：秒），可填 null，代表使用全局 timeout 值
+	 * @param appendOperation 如果这个 SaSession 是新建的，则要追加执行的动作，可填 null，代表无追加动作
 	 * @return Session对象 
 	 */
-	public SaSession getSessionBySessionId(String sessionId, boolean isCreate, Consumer<SaSession> appendOperation) {
+	public SaSession getSessionBySessionId(String sessionId, boolean isCreate, Long timeout, Consumer<SaSession> appendOperation) {
 
 		// 如果提供的 sessionId 为 null，则直接返回 null
 		if(SaFoxUtil.isEmpty(sessionId)) {
@@ -1192,8 +1193,19 @@ public class StpLogic {
 				appendOperation.accept(session);
 			}
 
+			// 如果未提供 timeout，则根据相应规则设定默认的 timeout
+			if(timeout == null) {
+				// 如果是 Token-Session，则使用对用 token 的有效期，使 token 和 token-session 保持相同ttl，同步失效
+				if(SaTokenConsts.SESSION_TYPE__TOKEN.equals(session.getType())) {
+					timeout = getTokenTimeout(session.getToken());
+				} else {
+					// 否则使用全局配置的 timeout
+					timeout = getConfigOrGlobal().getTimeout();
+				}
+			}
+
 			// 将这个 SaSession 入库
-			getSaTokenDao().setSession(session, getConfigOrGlobal().getTimeout());
+			getSaTokenDao().setSession(session, timeout);
 		}
 		return session;
 	}
@@ -1205,7 +1217,28 @@ public class StpLogic {
 	 * @return Session对象 
 	 */
 	public SaSession getSessionBySessionId(String sessionId) {
-		return getSessionBySessionId(sessionId, false, null);
+		return getSessionBySessionId(sessionId, false, null, null);
+	}
+
+	/**
+	 * 获取指定账号 id 的 Account-Session, 如果该 SaSession 尚未创建，isCreate=是否新建并返回
+	 *
+	 * @param loginId 账号id
+	 * @param isCreate 是否新建
+	 * @param timeout 如果这个 SaSession 是新建的，则使用此值作为过期值（单位：秒），可填 null，代表使用全局 timeout 值
+	 * @return SaSession 对象
+	 */
+	public SaSession getSessionByLoginId(Object loginId, boolean isCreate, Long timeout) {
+		if(SaFoxUtil.isEmpty(loginId)) {
+			throw new SaTokenException("Account-Session 获取失败：loginId 不能为空");
+		}
+		return getSessionBySessionId(splicingKeySession(loginId), isCreate, timeout, session -> {
+			// 这里是该 Account-Session 首次创建时才会被执行的方法：
+			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、账号id
+			session.setType(SaTokenConsts.SESSION_TYPE__ACCOUNT);
+			session.setLoginType(getLoginType());
+			session.setLoginId(loginId);
+		});
 	}
 
 	/** 
@@ -1216,16 +1249,7 @@ public class StpLogic {
 	 * @return SaSession 对象
 	 */
 	public SaSession getSessionByLoginId(Object loginId, boolean isCreate) {
-		if(SaFoxUtil.isEmpty(loginId)) {
-			throw new SaTokenException("Account-Session 获取失败：loginId 不能为空");
-		}
-		return getSessionBySessionId(splicingKeySession(loginId), isCreate, session -> {
-			// 这里是该 Account-Session 首次创建时才会被执行的方法：
-			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、账号id
-			session.setType(SaTokenConsts.SESSION_TYPE__ACCOUNT);
-			session.setLoginType(getLoginType());
-			session.setLoginId(loginId);
-		});
+		return getSessionByLoginId(loginId, isCreate, null);
 	}
 
 	/** 
@@ -1235,7 +1259,7 @@ public class StpLogic {
 	 * @return SaSession 对象
 	 */
 	public SaSession getSessionByLoginId(Object loginId) {
-		return getSessionByLoginId(loginId, true);
+		return getSessionByLoginId(loginId, true, null);
 	}
 
 	/** 
@@ -1271,7 +1295,8 @@ public class StpLogic {
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			throw new SaTokenException("Token-Session 获取失败：token 不能为空");
 		}
-		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, session -> {
+		// todo 待优化
+		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, null, session -> {
 			// 这里是该 Token-Session 首次创建时才会被执行的方法：
 			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
 			session.setType(SaTokenConsts.SESSION_TYPE__TOKEN);
