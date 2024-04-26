@@ -140,7 +140,8 @@ public class SaSsoProcessor {
 		String sloCallback = req.getParam(paramName.ssoLogoutCall);
 
 		// 2、校验签名
-		ssoTemplate.getSignTemplate().checkRequest(req);
+		ssoTemplate.getSignTemplate().checkRequest(req,
+				paramName.client, paramName.ticket, paramName.ssoLogoutCall);
 
 		// 3、校验ticket，获取 loginId
 		Object loginId = ssoTemplate.checkTicket(ticket, client);
@@ -210,7 +211,7 @@ public class SaSsoProcessor {
 		String loginId = req.getParam(paramName.loginId);
 		
 		// step.1 校验签名 
-		ssoTemplate.getSignTemplate().checkRequest(req);
+		ssoTemplate.getSignTemplate().checkRequest(req, paramName.loginId);
 		
 		// step.2 单点注销 
 		ssoTemplate.ssoLogout(loginId);
@@ -390,8 +391,10 @@ public class SaSsoProcessor {
 		// 获取参数 
 		String loginId = req.getParamNotNull(paramName.loginId);
 		
+		// 校验参数签名
+		ssoTemplate.getSignTemplate().checkRequest(req, paramName.loginId);
+
 		// 注销当前应用端会话
-		ssoTemplate.getSignTemplate().checkRequest(req);
 		stpLogic.logout(loginId);
 		
 		// 响应 
