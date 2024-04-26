@@ -473,25 +473,31 @@ public class SaSsoTemplate {
 	 * @return 构建完毕的URL 
 	 */
 	public String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
-		// 裸地址 
-		String url = SaSsoManager.getConfig().splicingCheckTicketUrl();
 		
+		// s1：先收集应该增加的参数：client、ticket、ssoLogoutCall
+		Map<String, Object> paramMap = new TreeMap<>();
+
 		// 拼接 client 参数
 		String client = getSsoConfig().getClient();
 		if(SaFoxUtil.isNotEmpty(client)) {
-			url = SaFoxUtil.joinParam(url, paramName.client, client);
+			paramMap.put(paramName.client, client);
 		}
-		
-		// 拼接ticket参数 
-		url = SaFoxUtil.joinParam(url, paramName.ticket, ticket);
-		
-		// 拼接单点注销时的回调URL 
+
+		// 拼接 ticket 参数
+		paramMap.put(paramName.ticket, ticket);
+
+		// 拼接单点注销时的回调 URL
 		if(ssoLogoutCallUrl != null) {
-			url = SaFoxUtil.joinParam(url, paramName.ssoLogoutCall, ssoLogoutCallUrl);
+			paramMap.put(paramName.ssoLogoutCall, ssoLogoutCallUrl);
 		}
-		
+
+		// s2：构建 url 地址
+		String url = SaSsoManager.getConfig().splicingCheckTicketUrl();
+		String paramStr = getSignTemplate().addSignParamsAndJoin(paramMap);
+		String finalUrl = SaFoxUtil.joinParam(url, paramStr);
+
 		// 返回 
-		return url;
+		return finalUrl;
 	}
 
 	/**

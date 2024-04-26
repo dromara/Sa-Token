@@ -133,22 +133,25 @@ public class SaSsoProcessor {
 	public Object ssoCheckTicket() {
 		ParamName paramName = ssoTemplate.paramName;
 		
-		// 获取参数 
+		// 1、获取参数
 		SaRequest req = SaHolder.getRequest();
 		String client = req.getParam(paramName.client);
 		String ticket = req.getParamNotNull(paramName.ticket);
 		String sloCallback = req.getParam(paramName.ssoLogoutCall);
-		
-		// 校验ticket，获取 loginId 
+
+		// 2、校验签名
+		ssoTemplate.getSignTemplate().checkRequest(req);
+
+		// 3、校验ticket，获取 loginId
 		Object loginId = ssoTemplate.checkTicket(ticket, client);
 		if(SaFoxUtil.isEmpty(loginId)) {
 			return SaResult.error("无效ticket：" + ticket);
 		}
 
-		// 注册此客户端的单点注销回调URL 
+		// 4、注册此客户端的单点注销回调URL
 		ssoTemplate.registerSloCallbackUrl(loginId, sloCallback);
 		
-		// 给 client 端响应结果
+		// 5、给 client 端响应结果
 		return SaResult.data(loginId);
 	}
 
@@ -454,8 +457,10 @@ public class SaSsoProcessor {
 				}
 			}
 			
-			// 发起请求 
+			// 构建请求URL
 			String checkUrl = ssoTemplate.buildCheckTicketUrl(ticket, ssoLogoutCall);
+
+			// 发起请求
 			SaResult result = ssoTemplate.request(checkUrl);
 
 			// 校验 
