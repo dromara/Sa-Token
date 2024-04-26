@@ -332,20 +332,52 @@ public class SaSignTemplate {
 	/**
 	 * 判断：一个请求中的 nonce、timestamp、sign 是否均为合法的
 	 * @param request 待校验的请求对象
+	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 * @return 是否合法
 	 */
-	public boolean isValidRequest(SaRequest request) {
-		return isValidParamMap(request.getParamMap());
+	public boolean isValidRequest(SaRequest request, String... paramNames) {
+		if(paramNames.length == 0) {
+			return isValidParamMap(request.getParamMap());
+		} else {
+			return isValidParamMap(takeRequestParam(request, paramNames));
+		}
 	}
 
 	/**
 	 * 校验：一个请求的 nonce、timestamp、sign 是否均为合法的，如果不合法，则抛出对应的异常
+	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 * @param request 待校验的请求对象
 	 */
-	public void checkRequest(SaRequest request) {
-		checkParamMap(request.getParamMap());
+	public void checkRequest(SaRequest request, String... paramNames) {
+		if (paramNames.length == 0) {
+			checkParamMap(request.getParamMap());
+		} else {
+			checkParamMap(takeRequestParam(request, paramNames));
+		}
 	}
 
+	/**
+	 * 从请求中提取指定的参数
+	 * @param request 请求对象
+	 * @param paramNames 指定的参数名称，不可为空，如果传入空数组则代表只拿 timestamp、nonce、sign 三个参数
+	 * @return 提取出的参数
+	 */
+	public Map<String, String> takeRequestParam(SaRequest request, String [] paramNames) {
+		Map<String, String> paramMap = new TreeMap<>();
+
+		// 此三个参数是必须获取的
+		paramMap.put(timestamp, request.getParam(timestamp));
+		paramMap.put(nonce, request.getParam(nonce));
+		paramMap.put(sign, request.getParam(sign));
+
+		// 获取指定的参数
+		for (String paramName : paramNames) {
+			paramMap.put(paramName, request.getParam(paramName));
+		}
+
+		// 返回
+		return paramMap;
+    }
 
 	// ------------------- 返回相应key -------------------
 
