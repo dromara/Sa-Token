@@ -36,14 +36,14 @@ public class SaSsoConfig implements Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 
-	
+
 	// ----------------- Server端相关配置
 
 	/**
 	 * 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）
 	 */
 	public String mode = "";
-	
+
 	/**
 	 * Ticket有效期 (单位: 秒) 
 	 */
@@ -62,9 +62,9 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo） 
 	 */
-	public Boolean isHttp = false; 
+	public Boolean isHttp = false;
 
-	
+
 	// ----------------- Client端相关配置 
 
 //	/**
@@ -126,6 +126,11 @@ public class SaSsoConfig implements Serializable {
 	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
 	 */
 	public String serverUrl;
+
+	/**
+	 * 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
+	 */
+	public Boolean isCheckSign = true;
 
 
 	/**
@@ -337,6 +342,25 @@ public class SaSsoConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * 获取 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
+	 *
+	 * @return isCheckSign 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
+	 */
+	public Boolean getIsCheckSign() {
+		return this.isCheckSign;
+	}
+
+	/**
+	 * 设置 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
+	 *
+	 * @param isCheckSign 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
+	 */
+	public SaSsoConfig setIsCheckSign(Boolean isCheckSign) {
+		this.isCheckSign = isCheckSign;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "SaSsoConfig ["
@@ -353,6 +377,7 @@ public class SaSsoConfig implements Serializable {
 				+ ", sloUrl=" + sloUrl 
 				+ ", ssoLogoutCall=" + ssoLogoutCall 
 				+ ", serverUrl=" + serverUrl
+				+ ", isCheckSign=" + isCheckSign
 				+ "]";
 	}
 	
@@ -412,7 +437,7 @@ public class SaSsoConfig implements Serializable {
 	 * SSO-Server端：未登录时返回的View 
 	 */
 	public Supplier<Object> notLoginView = () -> {
-		return "当前会话在SSO-Server认证中心尚未登录";
+		return "当前会话在SSO-Server认证中心尚未登录（当前未配置登录视图）";
 	};
 
 	/**
@@ -438,7 +463,7 @@ public class SaSsoConfig implements Serializable {
 
 
 	/**
-	 * @param notLoginView SSO-Server端：未登录时返回的View 
+	 * @param notLoginView SSO-Server端：未登录时返回的View
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setNotLoginView(Supplier<Object> notLoginView) {
