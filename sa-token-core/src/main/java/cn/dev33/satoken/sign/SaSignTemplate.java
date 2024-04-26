@@ -295,13 +295,14 @@ public class SaSignTemplate {
 		String signValue = paramMap.get(sign);
 
 		// 参数非空校验
-		SaSignException.notEmpty(timestampValue, "缺少 timestamp 字段");
-		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
-		SaSignException.notEmpty(signValue, "缺少 sign 字段");
+		// 配置isCheckNonce=false时，可以不传 nonce
+		if(SaFoxUtil.isEmpty(timestampValue) || SaFoxUtil.isEmpty(signValue)) {
+			return false;
+		}
 
 		// 三个值的校验必须全部通过
 		return isValidTimestamp(Long.parseLong(timestampValue))
-				&& (getSignConfigOrGlobal().getIsCheckNonce() ? isValidNonce(nonceValue) : true)
+				&& isValidNonce(nonceValue)
 				&& isValidSign(paramMap, signValue);
 	}
 
@@ -317,14 +318,12 @@ public class SaSignTemplate {
 
 		// 参数非空校验
 		SaSignException.notEmpty(timestampValue, "缺少 timestamp 字段");
-		// SaSignException.throwByNull(nonceValue, "缺少 nonce 字段"); // 配置isCheckNonce=false时，可以不传 nonce
+		SaSignException.notEmpty(nonceValue, "缺少 nonce 字段");
 		SaSignException.notEmpty(signValue, "缺少 sign 字段");
 
 		// 依次校验三个参数
 		checkTimestamp(Long.parseLong(timestampValue));
-		if(getSignConfigOrGlobal().getIsCheckNonce()) {
-			checkNonce(nonceValue);
-		}
+		checkNonce(nonceValue);
 		checkSign(paramMap, signValue);
 
 		// 通过 √

@@ -36,11 +36,6 @@ public class SaSignConfig {
      */
     private long timestampDisparity = 1000  * 60 * 15;
 
-    /**
-     * 是否校验 nonce 随机字符串
-     */
-    private Boolean isCheckNonce = true;
-
 
     /**
      * 获取 API 调用签名秘钥
@@ -89,26 +84,6 @@ public class SaSignConfig {
     }
 
     /**
-     * 获取 是否校验 nonce 随机字符串
-     *
-     * @return /
-     */
-    public Boolean getIsCheckNonce() {
-        return this.isCheckNonce;
-    }
-
-    /**
-     * 设置 是否校验 nonce 随机字符串
-     *
-     * @param isCheckNonce /
-     * @return 对象自身
-     */
-    public SaSignConfig setIsCheckNonce(Boolean isCheckNonce) {
-        this.isCheckNonce = isCheckNonce;
-        return this;
-    }
-
-    /**
      * 计算保存 nonce 时应该使用的 ttl，单位：秒
      * @return /
      */
@@ -128,8 +103,18 @@ public class SaSignConfig {
         return "SaSignConfig ["
                 + "secretKey=" + secretKey
                 + ", timestampDisparity=" + timestampDisparity
-                + ", isCheckNonce=" + isCheckNonce
                 + "]";
+    }
+
+    /**
+     * 设置：是否校验 nonce 随机字符串
+     * <h2> isCheckNonce 方案已废弃，不再提供此配置项 </h2>
+     *
+     * @param isCheckNonce /
+     */
+    @Deprecated
+    public void setIsCheckNonce(Boolean isCheckNonce) {
+        System.err.println("--------- isCheckNonce 方案已废弃，不再提供此配置项 ---------");
     }
 
 }
