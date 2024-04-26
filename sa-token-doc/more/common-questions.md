@@ -481,7 +481,7 @@ class MyConfiguration {
 2. 在写路由匹配规则时，避免使 `**` 之后再出现内容。
 3. 将项目的路由匹配机制改为 `ant_path_matcher`。
 
-先改项目的：
+步骤1：先改项目的：
 ``` yml
 spring:
     mvc:
@@ -489,7 +489,7 @@ spring:
             matching-strategy: ant_path_matcher
 ```
 
-再改 Sa-Token 的：
+步骤2：再改 Sa-Token 的：
 ``` java
 /**
  * 自定义 SaTokenContext 实现类，重写 matchPath 方法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
@@ -506,9 +506,32 @@ public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForS
 }
 ```
 
+**注意点：**
 
+SpringBoot2.x 的 `WebFlux`或 `SC Gateway` 项目，按照上述步骤改造，可能会报错 
 
+``` html
+java.lang.NoClassDefFoundError: org/springframework/web/servlet/mvc/condition/PatternsRequestCondition
+```
 
+只需要将“步骤2”中的代码 `return SaPatternsRequestConditionHolder.match(pattern, path);` 
+更换为 `return SaPathMatcherHolder.getPathMatcher().match(pattern, path);` 即可，例如：
+
+``` java
+/**
+ * 自定义 SaTokenContext 实现类，重写 matchPath 方法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
+ */
+@Primary
+@Component
+public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForSpringReactor {
+
+    @Override
+    public boolean matchPath(String pattern, String path) {
+        return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
+    }
+
+}
+```
 
 
 
