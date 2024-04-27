@@ -41,6 +41,14 @@ public class SaSsoManager {
 	}
 	public static void setConfig(SaSsoConfig config) {
 		SaSsoManager.config = config;
+		// 如果配置了 is-check-sign=false，则打印一条警告日志
+		if ( ! config.getIsCheckSign()) {
+			System.err.println("-----------------------------------------------------------------------------");
+			System.err.println("警告信息：");
+			System.err.println("当前配置项 sa-token.sso.is-check-sign=false 代表跳过 SSO 参数签名校验");
+			System.err.println("此模式仅为方便本地调试使用，生产环境下请务必配置为 true （配置项默认为true）");
+			System.err.println("-----------------------------------------------------------------------------");
+		}
 	}
 
 }

@@ -143,6 +143,8 @@ public class SaSsoProcessor {
 		if(ssoTemplate.getSsoConfig().getIsCheckSign()) {
 			ssoTemplate.getSignTemplate().checkRequest(req,
 					paramName.client, paramName.ticket, paramName.ssoLogoutCall);
+		} else {
+			ssoTemplate.printNoCheckSignWarning();
 		}
 
 		// 3、校验ticket，获取 loginId
@@ -215,6 +217,8 @@ public class SaSsoProcessor {
 		// step.1 校验签名
 		if(ssoTemplate.getSsoConfig().getIsCheckSign()) {
 			ssoTemplate.getSignTemplate().checkRequest(req, paramName.loginId);
+		} else {
+			ssoTemplate.printNoCheckSignWarning();
 		}
 		
 		// step.2 单点注销 
@@ -398,6 +402,8 @@ public class SaSsoProcessor {
 		// 校验参数签名
 		if(ssoTemplate.getSsoConfig().getIsCheckSign()) {
 			ssoTemplate.getSignTemplate().checkRequest(req, paramName.loginId);
+		} else {
+			ssoTemplate.printNoCheckSignWarning();
 		}
 
 		// 注销当前应用端会话

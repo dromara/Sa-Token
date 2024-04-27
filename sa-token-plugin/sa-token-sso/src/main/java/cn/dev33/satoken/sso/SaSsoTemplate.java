@@ -612,6 +612,13 @@ public class SaSsoTemplate {
 	}
 
 
+	// 在 sa-token.sso.is-check-sign=false 时，输出警告信息
+	public void printNoCheckSignWarning() {
+		System.err.println("警告信息：当前配置项 sa-token.sso.is-check-sign=false 已跳过参数签名校验，" +
+				"此模式仅为方便本地调试使用，生产环境下请务必配置为 true （配置项默认为true）");
+	}
+
+
 	// -------- 以下方法已废弃，仅为兼容旧版本而保留 --------
 
 	/**
