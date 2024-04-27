@@ -175,6 +175,7 @@ public class SaSecureUtil {
 	 * @param salt 盐
 	 * @return 加密后的字符串
 	 */
+	@Deprecated
 	public static String md5BySalt(String str, String salt) {
 		return md5(md5(str) + md5(salt));
 	}
@@ -185,6 +186,7 @@ public class SaSecureUtil {
 	 * @param salt 盐
 	 * @return 加密后的字符串
 	 */
+	@Deprecated
 	public static String sha256BySalt(String str, String salt) {
 		return sha256(sha256(str) + sha256(salt));
 	}
@@ -261,6 +263,7 @@ public class SaSecureUtil {
 	 * @return Map对象 (private=私钥, public=公钥)
 	 * @throws Exception 异常
 	 */
+	@Deprecated
 	public static HashMap<String, String> rsaGenerateKeyPair() throws Exception {
 
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
@@ -285,6 +288,7 @@ public class SaSecureUtil {
 	 * @param content 内容
 	 * @return 加密后内容
 	 */
+	@Deprecated
 	public static String rsaEncryptByPublic(String publicKeyString, String content) {
 		try {
 			// 获得公钥对象
@@ -311,6 +315,7 @@ public class SaSecureUtil {
 	 * @param content 内容
 	 * @return 加密后内容
 	 */
+	@Deprecated
 	public static String rsaEncryptByPrivate(String privateKeyString, String content) {
 		try {
 			PrivateKey privateKey = getPrivateKeyFromString(privateKeyString);
@@ -336,6 +341,7 @@ public class SaSecureUtil {
 	 * @param content 已加密内容
 	 * @return 解密后内容
 	 */
+	@Deprecated
 	public static String rsaDecryptByPublic(String publicKeyString, String content) {
 
 		try {
@@ -363,6 +369,7 @@ public class SaSecureUtil {
 	 * @param content 已加密内容
 	 * @return 解密后内容
 	 */
+	@Deprecated
 	public static String rsaDecryptByPrivate(String privateKeyString, String content) {
 		try {
 			PrivateKey privateKey = getPrivateKeyFromString(privateKeyString);
