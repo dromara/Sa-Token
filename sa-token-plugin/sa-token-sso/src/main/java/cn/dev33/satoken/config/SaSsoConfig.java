@@ -125,7 +125,7 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
 	 */
-	public String ssoLogoutCall;
+	public String currSsoLogoutCall;
 
 	/**
 	 * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
@@ -334,16 +334,16 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * @return 配置当前 Client 端的单点注销回调URL （为空时自动获取）
 	 */
-	public String getSsoLogoutCall() {
-		return ssoLogoutCall;
+	public String getCurrSsoLogoutCall() {
+		return currSsoLogoutCall;
 	}
 
 	/**
-	 * @param ssoLogoutCall 配置当前 Client 端的单点注销回调URL （为空时自动获取）
+	 * @param currSsoLogoutCall 配置当前 Client 端的单点注销回调URL （为空时自动获取）
 	 * @return 对象自身
 	 */
-	public SaSsoConfig setSsoLogoutCall(String ssoLogoutCall) {
-		this.ssoLogoutCall = ssoLogoutCall;
+	public SaSsoConfig setCurrSsoLogoutCall(String currSsoLogoutCall) {
+		this.currSsoLogoutCall = currSsoLogoutCall;
 		return this;
 	}
 
@@ -397,7 +397,7 @@ public class SaSsoConfig implements Serializable {
 				+ ", userinfoUrl=" + userinfoUrl 
 				+ ", sloUrl=" + sloUrl
 				+ ", currSsoLogin=" + currSsoLogin
-				+ ", ssoLogoutCall=" + ssoLogoutCall 
+				+ ", currSsoLogoutCall=" + currSsoLogoutCall
 				+ ", serverUrl=" + serverUrl
 				+ ", isCheckSign=" + isCheckSign
 				+ "]";
@@ -564,6 +564,22 @@ public class SaSsoConfig implements Serializable {
 	@Deprecated
 	public Function<String, String> getSendHttp() {
 		return sendHttp;
+	}
+
+	/**
+	 * @return 配置当前 Client 端的单点注销回调URL （为空时自动获取）
+	 */
+	public String getSsoLogoutCall() {
+		return currSsoLogoutCall;
+	}
+
+	/**
+	 * @param ssoLogoutCall 配置当前 Client 端的单点注销回调URL （为空时自动获取）
+	 * @return 对象自身
+	 */
+	public SaSsoConfig setSsoLogoutCall(String ssoLogoutCall) {
+		this.currSsoLogoutCall = ssoLogoutCall;
+		return this;
 	}
 
 }

@@ -469,8 +469,8 @@ public class SaSsoProcessor {
 			String ssoLogoutCall = null; 
 			if(cfg.getIsSlo()) {
 				// 如果配置了回调地址，就使用配置的值：
-				if(SaFoxUtil.isNotEmpty(cfg.getSsoLogoutCall())) {
-					ssoLogoutCall = cfg.getSsoLogoutCall();
+				if(SaFoxUtil.isNotEmpty(cfg.getCurrSsoLogoutCall())) {
+					ssoLogoutCall = cfg.getCurrSsoLogoutCall();
 				}
 				// 如果提供了当前 uri，则根据此值来计算：
 				else if(SaFoxUtil.isNotEmpty(currUri)) {
