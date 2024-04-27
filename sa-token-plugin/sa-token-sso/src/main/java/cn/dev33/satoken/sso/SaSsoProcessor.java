@@ -290,7 +290,16 @@ public class SaSsoProcessor {
 		 * 情况2：ticket有值，说明此请求从SSO认证中心重定向而来，需要根据ticket进行登录 
 		 */
 		if(ticket == null) {
-			String serverAuthUrl = ssoTemplate.buildServerAuthUrl(SaHolder.getRequest().getUrl(), back);
+			// 获取当前项目的 sso 登录地址
+			// 全局配置了就是用全局的，否则使用当前请求的地址
+			String currSsoLoginUrl;
+			if(SaFoxUtil.isNotEmpty(cfg.getCurrSsoLogin())) {
+				currSsoLoginUrl = cfg.getCurrSsoLogin();
+			} else {
+				currSsoLoginUrl = SaHolder.getRequest().getUrl();
+			}
+			// 构建url
+			String serverAuthUrl = ssoTemplate.buildServerAuthUrl(currSsoLoginUrl, back);
 			return res.redirect(serverAuthUrl);
 		} else {
 			// ------- 1、校验ticket，获取 loginId 

@@ -118,6 +118,11 @@ public class SaSsoConfig implements Serializable {
 	public String sloUrl = "/sso/signout";
 
 	/**
+	 * 配置当前 Client 端的登录地址（为空时自动获取）
+	 */
+	public String currSsoLogin;
+
+	/**
 	 * 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
 	 */
 	public String ssoLogoutCall;
@@ -311,14 +316,30 @@ public class SaSsoConfig implements Serializable {
 	}
 
 	/**
-	 * @return 配置当前 Client 端的单点注销回调URL （为空时自动获取） 
+	 * @return 配置当前 Client 端的登录地址（为空时自动获取）
+	 */
+	public String getCurrSsoLogin() {
+		return currSsoLogin;
+	}
+
+	/**
+	 * @param currSsoLogin 配置当前 Client 端的登录地址（为空时自动获取）
+	 * @return 对象自身
+	 */
+	public SaSsoConfig setCurrSsoLogin(String currSsoLogin) {
+		this.currSsoLogin = currSsoLogin;
+		return this;
+	}
+
+	/**
+	 * @return 配置当前 Client 端的单点注销回调URL （为空时自动获取）
 	 */
 	public String getSsoLogoutCall() {
 		return ssoLogoutCall;
 	}
 
 	/**
-	 * @param ssoLogoutCall 配置当前 Client 端的单点注销回调URL （为空时自动获取）  
+	 * @param ssoLogoutCall 配置当前 Client 端的单点注销回调URL （为空时自动获取）
 	 * @return 对象自身
 	 */
 	public SaSsoConfig setSsoLogoutCall(String ssoLogoutCall) {
@@ -374,7 +395,8 @@ public class SaSsoConfig implements Serializable {
 				+ ", checkTicketUrl=" + checkTicketUrl
 				+ ", getDataUrl=" + getDataUrl
 				+ ", userinfoUrl=" + userinfoUrl 
-				+ ", sloUrl=" + sloUrl 
+				+ ", sloUrl=" + sloUrl
+				+ ", currSsoLogin=" + currSsoLogin
 				+ ", ssoLogoutCall=" + ssoLogoutCall 
 				+ ", serverUrl=" + serverUrl
 				+ ", isCheckSign=" + isCheckSign
