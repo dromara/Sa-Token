@@ -434,14 +434,14 @@ public class SaSsoConfig implements Serializable {
 	
 
 	/**
-	 * SSO-Server端：未登录时返回的View 
+	 * SSO-Server端：未登录时返回的View
 	 */
 	public Supplier<Object> notLoginView = () -> {
 		return "当前会话在SSO-Server认证中心尚未登录（当前未配置登录视图）";
 	};
 
 	/**
-	 * SSO-Server端：登录函数 
+	 * SSO-Server端：登录函数
 	 */
 	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> {
 		return SaResult.error();
@@ -450,78 +450,96 @@ public class SaSsoConfig implements Serializable {
 	/**
 	 * SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
 	 * <p> 参数：loginId, back
-	 * <p> 返回值：返回给前端的值 
+	 * <p> 返回值：返回给前端的值
 	 */
 	public BiFunction<Object, String, Object> ticketResultHandle = null;
 
 	/**
-	 * SSO-Client端：发送Http请求的处理函数 
+	 * SSO-Client端：发送Http请求的处理函数
 	 */
 	public Function<String, String> sendHttp = url -> {
 		throw new SaSsoException("请配置 Http 请求处理器").setCode(SaSsoErrorCode.CODE_30010);
 	};
 
 
+	// -------------------- 废弃方法 --------------------
+
 	/**
+	 * <h2> 属性为 public，请直接访问 </h2>
 	 * @param notLoginView SSO-Server端：未登录时返回的View
 	 * @return 对象自身
 	 */
+	@Deprecated
 	public SaSsoConfig setNotLoginView(Supplier<Object> notLoginView) {
 		this.notLoginView = notLoginView;
 		return this;
 	}
 
 	/**
+	 * <h2> 属性为 public，请直接访问 </h2>
 	 * @return 函数 SSO-Server端：未登录时返回的View
 	 */
+	@Deprecated
 	public Supplier<Object> getNotLoginView() {
 		return notLoginView;
 	}
 
 	/**
-	 * @param doLoginHandle SSO-Server端：登录函数 
+	 * <h2> 属性为 public，请直接访问 </h2>
+	 * @param doLoginHandle SSO-Server端：登录函数
 	 * @return 对象自身
 	 */
+	@Deprecated
 	public SaSsoConfig setDoLoginHandle(BiFunction<String, String, Object> doLoginHandle) {
 		this.doLoginHandle = doLoginHandle;
 		return this;
 	}
 
 	/**
+	 * <h2> 属性为 public，请直接访问 </h2>
 	 * @return 函数 SSO-Server端：登录函数
 	 */
+	@Deprecated
 	public BiFunction<String, String, Object> getDoLoginHandle() {
 		return doLoginHandle;
 	}
 
 	/**
+	 * <h2> 属性为 public，请直接访问 </h2>
 	 * @param ticketResultHandle SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
 	 * @return 对象自身
 	 */
+	@Deprecated
 	public SaSsoConfig setTicketResultHandle(BiFunction<Object, String, Object> ticketResultHandle) {
 		this.ticketResultHandle = ticketResultHandle;
 		return this;
 	}
 
 	/**
+	 * <h2> 属性为 public，请直接访问 </h2>
 	 * @return 函数 SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
 	 */
+	@Deprecated
 	public BiFunction<Object, String, Object> getTicketResultHandle() {
 		return ticketResultHandle;
 	}
 
 	/**
-	 * @param sendHttp SSO-Client端：发送Http请求的处理函数 
-	 * @return 对象自身 
+	 * <h2> 属性为 public，请直接访问 </h2>
+	 * @param sendHttp SSO-Client端：发送Http请求的处理函数
+	 * @return 对象自身
 	 */
+	@Deprecated
 	public SaSsoConfig setSendHttp(Function<String, String> sendHttp) {
 		this.sendHttp = sendHttp;
 		return this;
 	}
 
 	/**
+	 * <h2> 属性为 public，请直接访问 </h2>
 	 * @return 函数 SSO-Client端：发送Http请求的处理函数
 	 */
+	@Deprecated
 	public Function<String, String> getSendHttp() {
 		return sendHttp;
 	}

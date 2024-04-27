@@ -95,7 +95,7 @@ public class SaSsoProcessor {
 		// ---------- 此处有两种情况分开处理：
 		// ---- 情况1：在SSO认证中心尚未登录，需要先去登录 
 		if( ! stpLogic.isLogin()) {
-			return cfg.getNotLoginView().get();
+			return cfg.notLoginView.get();
 		}
 		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
 		String mode = req.getParam(paramName.mode, "");
@@ -123,7 +123,7 @@ public class SaSsoProcessor {
 		ParamName paramName = ssoTemplate.paramName;
 		
 		// 处理 
-		return cfg.getDoLoginHandle().apply(req.getParam(paramName.name), req.getParam(paramName.pwd));
+		return cfg.doLoginHandle.apply(req.getParam(paramName.name), req.getParam(paramName.pwd));
 	}
 
 	/**
@@ -297,8 +297,8 @@ public class SaSsoProcessor {
 			Object loginId = checkTicket(ticket, apiName.ssoLogin);
 			
 			// Be: 如果开发者自定义了处理逻辑 
-			if(cfg.getTicketResultHandle() != null) {
-				return cfg.getTicketResultHandle().apply(loginId, back);
+			if(cfg.ticketResultHandle != null) {
+				return cfg.ticketResultHandle.apply(loginId, back);
 			}
 			
 			// ------- 2、如果 loginId 无值，说明 ticket 无效

@@ -51,10 +51,10 @@ private void configSso(SaSsoConfig sso) {
 	// ... 其他代码
 	
 	// 配置 Http 请求处理器
-	sso.setSendHttp(url -> {
+	sso.sendHttp = url -> {
 		System.out.println("------ 发起请求：" + url);
 		return Forest.get(url).executeAsString();
-	});
+	};
 }
 ```
 

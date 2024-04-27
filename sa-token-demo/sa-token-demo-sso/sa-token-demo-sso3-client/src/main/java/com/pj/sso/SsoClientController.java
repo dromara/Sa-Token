@@ -46,10 +46,10 @@ public class SsoClientController {
 	@Autowired
 	private void configSso(SaSsoConfig sso) {
 		// 配置Http请求处理器 
-		sso.setSendHttp(url -> {
+		sso.sendHttp = url -> {
 			System.out.println("------ 发起请求：" + url);
 			return Forest.get(url).executeAsString();
-		});
+		};
 	}
 	
 	// 查询我的账号信息 

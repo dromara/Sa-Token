@@ -350,7 +350,7 @@ public class SaSsoTemplate {
 		Set<String> urlSet = session.get(SaSsoConsts.SLO_CALLBACK_SET_KEY, HashSet::new);
 		for (String url : urlSet) {
 			url = joinLoginIdAndSign(url, loginId);
-			cfg.getSendHttp().apply(url);
+			cfg.sendHttp.apply(url);
 		}
 		
 		// step.2 Server端注销 
@@ -375,7 +375,7 @@ public class SaSsoTemplate {
 	 */
 	public Object getData(String path, Map<String, Object> paramMap) {
 		String url = buildCustomPathUrl(path, paramMap);
-		return SaSsoManager.getConfig().getSendHttp().apply(url);
+		return SaSsoManager.getConfig().sendHttp.apply(url);
 	}
 
 	
@@ -547,7 +547,7 @@ public class SaSsoTemplate {
 	 * @return 返回的结果 
 	 */
 	public SaResult request(String url) {
-		String body = SaSsoManager.getConfig().getSendHttp().apply(url);
+		String body = SaSsoManager.getConfig().sendHttp.apply(url);
 		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(body);
 		return new SaResult(map);
 	}

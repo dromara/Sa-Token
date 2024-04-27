@@ -37,22 +37,22 @@ public class SsoServerController {
 	private void configSso(SaSsoConfig sso) {
 		
 		// 配置：未登录时返回的View 
-		sso.setNotLoginView(() -> {
+		sso.notLoginView = () -> {
 			return new ModelAndView("sa-login.html");
-		});
+		};
 		
 		// 配置：登录处理函数 
-		sso.setDoLoginHandle((name, pwd) -> {
+		sso.doLoginHandle = (name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
 				return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
 			}
 			return SaResult.error("登录失败！");
-		});
+		};
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
-		sso.setSendHttp(url -> {
+		sso.sendHttp = url -> {
 			try {
 				// 发起 http 请求 
 				System.out.println("------ 发起请求：" + url);
@@ -61,7 +61,7 @@ public class SsoServerController {
 				e.printStackTrace();
 				return null;
 			}
-		});
+		};
 	}
 
 	// 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
