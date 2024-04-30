@@ -10,7 +10,7 @@ sa-token:
          # domain: stp.com
         
     # ------- SSO-模式二相关配置 
-    sso: 
+    sso-server:
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
         # 所有允许的授权回调地址
@@ -22,7 +22,8 @@ sa-token:
         # 是否打开模式三 
         isHttp: true
         # 接口调用秘钥（用于SSO模式三的单点注销功能）
-        secretkey: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+    sign:
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
 
 sa-token: #名字可以随意取

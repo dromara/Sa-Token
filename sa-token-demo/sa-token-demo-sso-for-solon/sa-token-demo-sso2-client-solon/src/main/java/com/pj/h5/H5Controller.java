@@ -1,7 +1,7 @@
 package com.pj.h5;
 
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.template.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.noear.solon.annotation.Controller;
@@ -34,7 +34,7 @@ public class H5Controller implements Render {
 	// 根据ticket进行登录 
 	@Mapping("/sso/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = SaSsoProcessor.instance.checkTicket(ticket, "/sso/doLoginByTicket");
+		Object loginId = SaSsoClientProcessor.instance.checkTicketByMode2Or3(ticket, "/sso/doLoginByTicket");
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());

@@ -1,10 +1,9 @@
 package com.pj.sso;
 
-import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoManager;
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoTemplate;
-import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.sso.config.SaSsoClientConfig;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
@@ -25,7 +24,7 @@ public class SaSsoAutoConfigure {
      * 获取 SSO 配置Bean
      * */
     @Bean
-    public SaSsoConfig getConfig(@Inject(value = "${sa-token.sso}",required = false) SaSsoConfig ssoConfig) {
+    public SaSsoClientConfig getConfig(@Inject(value = "${sa-token.sso-client}",required = false) SaSsoClientConfig ssoConfig) {
         return ssoConfig;
     }
 
@@ -35,18 +34,17 @@ public class SaSsoAutoConfigure {
      * @param saSsoConfig 配置对象
      */
     @Bean
-    public void setSaSsoConfig(@Inject(required = false) SaSsoConfig saSsoConfig) {
-        SaSsoManager.setConfig(saSsoConfig);
+    public void setSaSsoConfig(@Inject(required = false) SaSsoClientConfig saSsoConfig) {
+        SaSsoManager.setClientConfig(saSsoConfig);
     }
 
     /**
      * 注入 Sa-Token-SSO 单点登录模块 Bean
      *
-     * @param ssoTemplate saSsoTemplate对象
+     * @param ssoClientTemplate ssoClientTemplate对象
      */
     @Bean
-    public void setSaSsoTemplate(@Inject(required = false) SaSsoTemplate ssoTemplate) {
-        SaSsoUtil.ssoTemplate = ssoTemplate;
-        SaSsoProcessor.instance.ssoTemplate = ssoTemplate;
+    public void setSaSsoClientTemplate(@Inject(required = false) SaSsoClientTemplate ssoClientTemplate) {
+        SaSsoClientProcessor.instance.ssoClientTemplate = ssoClientTemplate;
     }
 }

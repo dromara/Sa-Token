@@ -1,8 +1,8 @@
 package com.pj.sso;
 
-import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoOfRedis;
+import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.dtflys.forest.Forest;
@@ -27,15 +27,15 @@ public class SsoConfig {
 
     // 配置SSO相关参数
     @Bean
-    public void configSso(SaSsoConfig sso) { //SaSsoConfig 已自动构建
+    public void configSso(SaSsoServerConfig ssoServer) { //SaSsoConfig 已自动构建
 
         // 配置：未登录时返回的View
-        sso.notLoginView = () -> {
+        ssoServer.notLoginView = () -> {
             return new ModelAndView("sa-login.html");
         };
 
         // 配置：登录处理函数
-        sso.doLoginHandle = (name, pwd) -> {
+        ssoServer.doLoginHandle = (name, pwd) -> {
             // 此处仅做模拟登录，真实环境应该查询数据进行登录
             if("sa".equals(name) && "123456".equals(pwd)) {
                 StpUtil.login(10001);
@@ -45,7 +45,7 @@ public class SsoConfig {
         };
 
         // 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉）
-        sso.sendHttp = url -> {
+        ssoServer.sendHttp = url -> {
             try {
                 // 发起 http 请求
                 System.out.println("------ 发起请求：" + url);

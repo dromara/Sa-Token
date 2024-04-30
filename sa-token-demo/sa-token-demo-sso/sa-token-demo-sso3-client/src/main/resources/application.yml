@@ -4,18 +4,13 @@ server:
 
 # sa-token配置 
 sa-token: 
-    # SSO-相关配置
-    sso:
-        # SSO-Server端 统一认证地址 
-        auth-url: http://sa-sso-server.com:9000/sso/auth
+    # sso-client 相关配置
+    sso-client:
+        # sso-server 端主机地址
+        server-url: http://sa-sso-server.com:9000
         # 使用 Http 请求校验ticket (模式三)
         is-http: true
-        # SSO-Server端 ticket校验地址 
-        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
-        # 单点注销地址 
-        slo-url: http://sa-sso-server.com:9000/sso/signout
-        # 查询数据地址
-        get-data-url: http://sa-sso-server.com:9000/sso/getData
+
     sign:
         # API 接口调用秘钥
         secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor

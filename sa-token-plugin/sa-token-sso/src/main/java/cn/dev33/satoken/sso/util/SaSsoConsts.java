@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.sso;
+package cn.dev33.satoken.sso.util;
 
 /**
  * Sa-Token-SSO模块相关常量
@@ -24,7 +24,11 @@ package cn.dev33.satoken.sso;
 public class SaSsoConsts {
 
 	/** Client端单点注销回调URL的Set集合，存储在Session中使用的key */
+	@Deprecated
 	public static final String SLO_CALLBACK_SET_KEY = "SLO_CALLBACK_SET_KEY_";
+
+	/** Client 端 Model 信息的 List 集合，存储在 SaSession 中使用的key */
+	public static final String SSO_CLIENT_MODEL_LIST_KEY_ = "SSO_CLIENT_MODEL_LIST_KEY_";
 
 	/** 表示OK的返回结果 */
 	public static final String OK = "ok";

@@ -15,17 +15,18 @@
  */
 package cn.dev33.satoken.spring.sso;
 
+import cn.dev33.satoken.sso.SaSsoManager;
+import cn.dev33.satoken.sso.config.SaSsoClientConfig;
+import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
+import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
+import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 
-import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.sso.SaSsoManager;
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoTemplate;
-import cn.dev33.satoken.sso.SaSsoUtil;
-
 /**
- * 注入 Sa-Token-SSO 所需要的 Bean
+ * 注入 Sa-Token SSO 所需要的 Bean
  * 
  * @author click33
  * @since 1.34.0
@@ -34,24 +35,43 @@ import cn.dev33.satoken.sso.SaSsoUtil;
 public class SaSsoBeanInject {
 
 	/**
-	 * 注入 Sa-Token-SSO 配置类
+	 * 注入 Sa-Token SSO Server 端 配置类
 	 * 
-	 * @param saSsoConfig 配置对象 
+	 * @param serverConfig 配置对象
 	 */
 	@Autowired(required = false)
-	public void setSaOAuth2Config(SaSsoConfig saSsoConfig) {
-		SaSsoManager.setConfig(saSsoConfig);
+	public void setSaSsoServerConfig(SaSsoServerConfig serverConfig) {
+		SaSsoManager.setServerConfig(serverConfig);
 	}
 
 	/**
-	 * 注入 SSO 模板代码类
-	 * 
-	 * @param ssoTemplate SaSsoTemplate 对象
+	 * 注入 Sa-Token SSO Client 端 配置类
+	 *
+	 * @param clientConfig 配置对象
 	 */
 	@Autowired(required = false)
-	public void setSaSsoTemplate(SaSsoTemplate ssoTemplate) {
-		SaSsoUtil.ssoTemplate = ssoTemplate;
-		SaSsoProcessor.instance.ssoTemplate = ssoTemplate;
+	public void setSaSsoClientConfig(SaSsoClientConfig clientConfig) {
+		SaSsoManager.setClientConfig(clientConfig);
+	}
+
+	/**
+	 * 注入 SSO 模板代码类 (Server 端)
+	 *
+	 * @param ssoServerTemplate /
+	 */
+	@Autowired(required = false)
+	public void setSaSsoServerTemplate(SaSsoServerTemplate ssoServerTemplate) {
+		SaSsoServerProcessor.instance.ssoServerTemplate = ssoServerTemplate;
+	}
+
+	/**
+	 * 注入 SSO 模板代码类 (Client 端)
+	 *
+	 * @param ssoClientTemplate /
+	 */
+	@Autowired(required = false)
+	public void setSaSsoClientTemplate(SaSsoClientTemplate ssoClientTemplate) {
+		SaSsoClientProcessor.instance.ssoClientTemplate = ssoClientTemplate;
 	}
 
 }

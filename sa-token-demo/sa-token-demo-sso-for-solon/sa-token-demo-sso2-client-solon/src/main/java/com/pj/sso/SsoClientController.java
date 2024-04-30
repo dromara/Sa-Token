@@ -1,7 +1,7 @@
 package com.pj.sso;
 
 
-import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.noear.solon.annotation.Controller;
@@ -37,7 +37,7 @@ public class SsoClientController implements Render {
 	 */
 	@Mapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.clientDister();
+		return SaSsoClientProcessor.instance.dister();
 	}
 
 	// 全局异常拦截并转换

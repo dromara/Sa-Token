@@ -5,12 +5,11 @@ server:
 # sa-token配置 
 sa-token: 
     # SSO-相关配置
-    sso:
+    sso-client:
         # SSO-Server端 统一认证地址 
-        auth-url: http://sa-sso-server.com:9000/sso/auth
+        server-url: http://sa-sso-server.com:9000
+        # 前后端分离时用这个
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
-        # 是否打开单点注销接口
-        is-slo: true
     
     # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 

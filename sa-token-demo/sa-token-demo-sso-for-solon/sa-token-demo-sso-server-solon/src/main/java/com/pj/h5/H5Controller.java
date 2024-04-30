@@ -1,8 +1,8 @@
 package com.pj.h5;
 
 
-import cn.dev33.satoken.sso.SaSsoConsts;
-import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.sso.util.SaSsoConsts;
+import cn.dev33.satoken.sso.template.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;

@@ -15,15 +15,15 @@
  */
 package cn.dev33.satoken.spring.sso;
 
+import cn.dev33.satoken.sso.SaSsoManager;
+import cn.dev33.satoken.sso.config.SaSsoClientConfig;
+import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.sso.SaSsoManager;
-
 /**
- * 注册 Sa-Token-SSO 所需要的 Bean
+ * 注册 Sa-Token SSO 所需要的 Bean
  *
  * @author click33
  * @since 1.34.0
@@ -32,13 +32,23 @@ import cn.dev33.satoken.sso.SaSsoManager;
 public class SaSsoBeanRegister {
 
 	/**
-	 * 获取 SSO 配置对象
-	 * @return 配置对象 
+	 * 获取 SSO Server 端 配置对象
+	 * @return 配置对象
 	 */
 	@Bean
-	@ConfigurationProperties(prefix = "sa-token.sso")
-	public SaSsoConfig getSaSsoConfig() {
-		return new SaSsoConfig();
+	@ConfigurationProperties(prefix = "sa-token.sso-server")
+	public SaSsoServerConfig getSaSsoServerConfig() {
+		return new SaSsoServerConfig();
 	}
-	
+
+	/**
+	 * 获取 SSO Client 端 配置对象
+	 * @return 配置对象
+	 */
+	@Bean
+	@ConfigurationProperties(prefix = "sa-token.sso-client")
+	public SaSsoClientConfig getSaSsoClientConfig() {
+		return new SaSsoClientConfig();
+	}
+
 }

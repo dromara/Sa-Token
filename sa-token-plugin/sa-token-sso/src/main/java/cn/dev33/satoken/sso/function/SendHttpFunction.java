@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.integrate.configure.inject;
+package cn.dev33.satoken.sso.function;
 
-import org.springframework.stereotype.Component;
-
-import cn.dev33.satoken.sso.template.SaSsoTemplate;
+import java.util.function.Function;
 
 /**
- * 自定义 Sa-SSO 模板方法 
- * 
+ * 函数式接口：发送Http请求的处理函数
+ *
+ * <p>  参数：要请求的url  </p>
+ * <p>  返回：请求结果  </p>
+ *
  * @author click33
- * @since 2022-9-5
+ * @since 1.38.0
  */
-@Component
-public class MySaSsoTemplate extends SaSsoTemplate {
+@FunctionalInterface
+public interface SendHttpFunction extends Function<String, String> {
 
 }

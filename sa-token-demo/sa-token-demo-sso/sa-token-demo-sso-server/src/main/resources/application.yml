@@ -10,7 +10,7 @@ sa-token:
          # domain: stp.com
         
     # ------- SSO-模式二相关配置 
-    sso: 
+    sso-server:
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
         # 所有允许的授权回调地址

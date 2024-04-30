@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.integrate.configure.inject;
+package cn.dev33.satoken.sso.function;
 
-import org.springframework.stereotype.Component;
-
-import cn.dev33.satoken.sso.template.SaSsoTemplate;
+import java.util.function.BiFunction;
 
 /**
- * 自定义 Sa-SSO 模板方法 
- * 
+ * 函数式接口：SSO-Client端：自定义校验Ticket返回值的处理逻辑 （每次从认证中心获取校验Ticket的结果后调用）
+ *
+ * <p>  参数：loginId, back  </p>
+ * <p>  返回：返回给前端的值  </p>
+ *
  * @author click33
- * @since 2022-9-5
+ * @since 1.38.0
  */
-@Component
-public class MySaSsoTemplate extends SaSsoTemplate {
+@FunctionalInterface
+public interface TicketResultHandleFunction extends BiFunction<Object, String, Object> {
 
 }

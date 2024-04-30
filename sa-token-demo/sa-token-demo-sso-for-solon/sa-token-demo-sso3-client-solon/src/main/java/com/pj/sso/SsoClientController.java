@@ -1,7 +1,7 @@
 package com.pj.sso;
 
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.template.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.noear.solon.annotation.Controller;
@@ -10,6 +10,9 @@ import org.noear.solon.annotation.Produces;
 import org.noear.solon.boot.web.MimeType;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Render;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Sa-Token-SSO Client端 Controller 
@@ -37,15 +40,21 @@ public class SsoClientController implements Render {
 	 */
 	@Mapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.clientDister();
+		return SaSsoClientProcessor.instance.dister();
 	}
 	
 	// 查询我的账号信息 
-	@Mapping("/sso/myinfo")
-	public Object myinfo() {
-		Object userinfo = SaSsoUtil.getUserinfo(StpUtil.getLoginId());
-		System.out.println("--------info：" + userinfo);
-		return userinfo;
+	@Mapping("/sso/myInfo")
+	public Object myInfo() {
+		// 组织请求参数
+		Map<String, Object> map = new HashMap<>();
+		map.put("apiType", "userinfo");
+		map.put("loginId", StpUtil.getLoginId());
+
+		// 发起请求
+		Object resData = SaSsoUtil.getData(map);
+		System.out.println("sso-server 返回的信息：" + resData);
+		return resData;
 	}
 
 	// 全局异常拦截并转换

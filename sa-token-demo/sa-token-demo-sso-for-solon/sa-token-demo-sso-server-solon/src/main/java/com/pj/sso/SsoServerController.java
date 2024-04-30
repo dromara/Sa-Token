@@ -1,7 +1,7 @@
 package com.pj.sso;
 
 
-import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 
@@ -22,6 +22,6 @@ public class SsoServerController {
 	 */
 	@Mapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.serverDister();
+		return SaSsoServerProcessor.instance.dister();
 	}
 }

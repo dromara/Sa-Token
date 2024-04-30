@@ -1,8 +1,8 @@
 package com.pj.sso;
 
-import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.sso.config.SaSsoClientConfig;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.template.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.dtflys.forest.Forest;
@@ -39,16 +39,18 @@ public class SsoClientController {
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.clientDister();
+		return SaSsoClientProcessor.instance.dister();
 	}
 
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSso(SaSsoConfig sso) {
+	private void configSso(SaSsoClientConfig ssoClient) {
 		// 配置Http请求处理器 
-		sso.sendHttp = url -> {
+		ssoClient.sendHttp = url -> {
 			System.out.println("------ 发起请求：" + url);
-			return Forest.get(url).executeAsString();
+			String resStr = Forest.get(url).executeAsString();
+			System.out.println("------ 请求结果：" + resStr);
+			return resStr;
 		};
 	}
 	

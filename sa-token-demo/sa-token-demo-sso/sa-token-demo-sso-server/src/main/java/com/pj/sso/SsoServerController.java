@@ -1,9 +1,9 @@
 package com.pj.sso;
 
-import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sign.SaSignUtil;
-import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.dtflys.forest.Forest;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class SsoServerController {
 
-	/*
+	/**
 	 * SSO-Server端：处理所有SSO相关请求 
 	 * 		http://{host}:{port}/sso/auth			-- 单点登录授权地址，接受参数：redirect=授权重定向地址 
 	 * 		http://{host}:{port}/sso/doLogin		-- 账号密码登录接口，接受参数：name、pwd 
@@ -29,20 +29,20 @@ public class SsoServerController {
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.serverDister();
+		return SaSsoServerProcessor.instance.dister();
 	}
 
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSso(SaSsoConfig sso) {
+	private void configSso(SaSsoServerConfig ssoServer) {
 		
 		// 配置：未登录时返回的View 
-		sso.notLoginView = () -> {
+		ssoServer.notLoginView = () -> {
 			return new ModelAndView("sa-login.html");
 		};
 		
 		// 配置：登录处理函数 
-		sso.doLoginHandle = (name, pwd) -> {
+		ssoServer.doLoginHandle = (name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
@@ -52,11 +52,12 @@ public class SsoServerController {
 		};
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
-		sso.sendHttp = url -> {
+		ssoServer.sendHttp = url -> {
 			try {
-				// 发起 http 请求 
 				System.out.println("------ 发起请求：" + url);
-				return Forest.get(url).executeAsString();
+				String resStr = Forest.get(url).executeAsString();
+				System.out.println("------ 请求结果：" + resStr);
+				return resStr;
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
