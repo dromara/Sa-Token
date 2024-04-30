@@ -42,6 +42,8 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         return SaSsoManager.getClientConfig();
     }
 
+
+
     // ------------------- SSO 模式三相关 -------------------
 
     /**

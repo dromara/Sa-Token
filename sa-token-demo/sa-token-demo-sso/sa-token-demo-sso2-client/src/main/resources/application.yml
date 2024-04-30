@@ -1,9 +1,11 @@
 # 端口
 server:
-    port: 9001
+    port: 9002
 
 # sa-token配置 
-sa-token: 
+sa-token:
+    # 每次登录时，产生不同的token
+    is-share: false
     # SSO-相关配置
     sso-client:
         # SSO-Server端 统一认证地址 

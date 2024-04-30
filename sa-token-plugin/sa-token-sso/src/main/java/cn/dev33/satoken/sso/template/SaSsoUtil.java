@@ -144,7 +144,7 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 指定账号单点注销 
+	 * 指定账号单点注销 (以Server方发起)
 	 * @param loginId 指定账号 
 	 */
 	public static void ssoLogout(Object loginId) {

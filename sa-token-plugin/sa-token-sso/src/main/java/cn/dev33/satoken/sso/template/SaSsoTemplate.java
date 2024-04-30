@@ -21,9 +21,6 @@ import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
-
-import java.util.Map;
 
 /**
  * Sa-Token SSO 模板方法类 （公共端）
@@ -80,6 +77,5 @@ public class SaSsoTemplate {
 		// 框架默认只返回全局 SaSignTemplate，client 参数留作开发者扩展
 		return SaManager.getSaSignTemplate();
 	}
-
 
 }

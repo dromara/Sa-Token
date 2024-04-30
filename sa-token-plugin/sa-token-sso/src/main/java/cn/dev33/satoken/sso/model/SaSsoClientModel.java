@@ -16,6 +16,8 @@
 package cn.dev33.satoken.sso.model;
 
 
+import cn.dev33.satoken.sso.util.SaSsoConsts;
+
 /**
  * Sa-Token SSO Model
  *
@@ -23,6 +25,11 @@ package cn.dev33.satoken.sso.model;
  * @since 1.38.0
  */
 public class SaSsoClientModel {
+
+    /*
+     * 只能记录模式三登录的 client 信息，模式一和模式二的信息即使记录上，也无法完成单点注销操作，遂不记录
+     * 所以：mode、tokenValue 字段，仅留作扩展，暂时无用
+     */
 
     /**
      * 此 client 登录模式（1=模式一，2=模式二，3=模式三）
@@ -34,15 +41,15 @@ public class SaSsoClientModel {
      */
     public String client;
 
-    /**
-     * 此次登录 token 值
-     */
-    public String tokenValue;
+//    /**
+//     * 此次登录 token 值
+//     */
+//    public String tokenValue;
 
     /**
      * 单点注销回调url
      */
-    public String ssoLogoutCall;
+    public String sloCallbackUrl;
 
     /**
      * 此 client 注册信息的时间，13位时间戳
@@ -57,10 +64,15 @@ public class SaSsoClientModel {
     public SaSsoClientModel() {
     }
 
-    public SaSsoClientModel(String client, String ssoLogoutCall) {
+    /**
+     * 模式三构建
+     */
+    public SaSsoClientModel(String client, String sloCallbackUrl, int index) {
+        this.mode = SaSsoConsts.SSO_MODE_3;
         this.client = client;
-        this.ssoLogoutCall = ssoLogoutCall;
+        this.sloCallbackUrl = sloCallbackUrl;
         this.regTime = System.currentTimeMillis();
+        this.index = index;
     }
 
 
@@ -104,43 +116,43 @@ public class SaSsoClientModel {
         return this;
     }
 
-    /**
-     * 获取 此次登录 token 值
-     *
-     * @return tokenValue 此次登录 token 值
-     */
-    public String getTokenValue() {
-        return this.tokenValue;
-    }
-
-    /**
-     * 设置 此次登录 token 值
-     *
-     * @param tokenValue 此次登录 token 值
-     * @return /
-     */
-    public SaSsoClientModel setTokenValue(String tokenValue) {
-        this.tokenValue = tokenValue;
-        return this;
-    }
+//    /**
+//     * 获取 此次登录 token 值
+//     *
+//     * @return tokenValue 此次登录 token 值
+//     */
+//    public String getTokenValue() {
+//        return this.tokenValue;
+//    }
+//
+//    /**
+//     * 设置 此次登录 token 值
+//     *
+//     * @param tokenValue 此次登录 token 值
+//     * @return /
+//     */
+//    public SaSsoClientModel setTokenValue(String tokenValue) {
+//        this.tokenValue = tokenValue;
+//        return this;
+//    }
 
     /**
      * 获取 单点注销回调url
      *
      * @return ssoLogoutCall 单点注销回调url
      */
-    public String getSsoLogoutCall() {
-        return this.ssoLogoutCall;
+    public String getSloCallbackUrl() {
+        return this.sloCallbackUrl;
     }
 
     /**
      * 设置 单点注销回调url
      *
-     * @param ssoLogoutCall 单点注销回调url
+     * @param sloCallbackUrl 单点注销回调url
      * @return /
      */
-    public SaSsoClientModel setSsoLogoutCall(String ssoLogoutCall) {
-        this.ssoLogoutCall = ssoLogoutCall;
+    public SaSsoClientModel setSloCallbackUrl(String sloCallbackUrl) {
+        this.sloCallbackUrl = sloCallbackUrl;
         return this;
     }
 
@@ -189,8 +201,8 @@ public class SaSsoClientModel {
         return "SaSsoClientModel{" +
                 "mode=" + mode +
                 ", client='" + client + '\'' +
-                ", tokenValue='" + tokenValue + '\'' +
-                ", ssoLogoutCall='" + ssoLogoutCall + '\'' +
+//                ", tokenValue='" + tokenValue + '\'' +
+                ", sloCallbackUrl='" + sloCallbackUrl + '\'' +
                 ", regTime=" + regTime +
                 ", index=" + index +
                 '}';

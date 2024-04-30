@@ -1,6 +1,6 @@
 # 端口
 server:
-    port: 9001
+    port: 9003
 
 # sa-token配置 
 sa-token: 

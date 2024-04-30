@@ -17,12 +17,12 @@ package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.model.SaSsoClientModel;
+import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -266,44 +266,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
 
-
-    // ------------------- SSO 模式三相关 -------------------
-
-    /**
-     * 为指定账号id注册单点注销回调URL
-     * @param loginId 账号id
-     * @param client 指定客户端标识，可为null
-     * @param sloCallbackUrl 单点注销时的回调URL
-     */
-    public void registerSloCallbackUrl(Object loginId, String client, String sloCallbackUrl) {
-        // 如果提供的参数是空值，则直接返回，不进行任何操作
-        if(SaFoxUtil.isEmpty(loginId) || SaFoxUtil.isEmpty(sloCallbackUrl)) {
-            return;
-        }
-
-        SaSession session = getStpLogic().getSessionByLoginId(loginId);
-
-        // 取出原来的
-        List<SaSsoClientModel> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
-
-        // 将 新登录client 加入到集合中
-        SaSsoClientModel scm = new SaSsoClientModel();
-        scm.mode = 3;
-        scm.client = client;
-        scm.ssoLogoutCall = sloCallbackUrl;
-        scm.regTime = System.currentTimeMillis();
-        scm.index = calcNextIndex(scmList);
-        scmList.add(scm);
-
-        // 如果登录的client数量超过了限制，则将最早的一个登录进行清退
-        if(scmList.size() > getServerConfig().getMaxRegClient()) {
-            SaSsoClientModel removeScm = scmList.remove(0);
-            notifyClientLogout(loginId, removeScm, true);
-        }
-
-        // 存入持久库
-        session.set(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, scmList);
-    }
+    // ------------------- SSO -------------------
 
     /**
      * 指定账号单点注销
@@ -328,59 +291,11 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
     /**
-     * 通知指定账号的指定客户端注销
-     * @param loginId 指定账号
-     * @param scm 客户端信息对象
-     * @param autoLogout 是否为超过 maxRegClient 的自动注销
-     */
-    public void notifyClientLogout(Object loginId, SaSsoClientModel scm, boolean autoLogout) {
-
-        // 如果给个null值，不进行任何操作
-        if(scm == null) {
-            return;
-        }
-
-        // 如果是模式二登录的
-        if(scm.mode == SaSsoConsts.SSO_MODE_2) {
-            // 获取登录 token
-            String tokenValue = scm.tokenValue;
-            if(SaFoxUtil.isEmpty(tokenValue)) {
-                return;
-            }
-
-            // 注销此 token
-            getStpLogic().logoutByTokenValue(scm.tokenValue);
-        }
-
-        // 如果是模式三登录的
-        else if(scm.mode != SaSsoConsts.SSO_MODE_3) {
-            // url
-            String sloCallUrl = scm.getSsoLogoutCall();
-            if(SaFoxUtil.isEmpty(sloCallUrl)) {
-                return;
-            }
-
-            // 参数
-            Map<String, Object> paramsMap = new TreeMap<>();
-            paramsMap.put(paramName.client, scm.getClient());
-            paramsMap.put(paramName.loginId, loginId);
-            paramsMap.put(paramName.autoLogout, autoLogout);
-            String signParamsStr = getSignTemplate(scm.getClient()).addSignParamsAndJoin(paramsMap);
-
-            // 拼接
-            String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
-
-            // 发起请求
-            getServerConfig().sendHttp.apply(finalUrl);
-        }
-    }
-
-    /**
      * 计算下一个 index 值
      * @param scmList /
      * @return /
      */
-    private int calcNextIndex(List<SaSsoClientModel> scmList) {
+    public int calcNextIndex(List<SaSsoClientModel> scmList) {
         // 如果目前还没有任何登录记录，则直接返回0
         if(scmList == null || scmList.isEmpty()) {
             return 0;
@@ -394,7 +309,79 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         }
 
         // 否则返回最大值+1
-        return maxIndex++;
+        maxIndex++;
+        return maxIndex;
+    }
+
+    /**
+     * 为指定账号id注册单点注销回调信息（模式三）
+     * @param loginId 账号id
+     * @param client 指定客户端标识，可为null
+     * @param sloCallbackUrl 单点注销时的回调URL
+     */
+    public void registerSloCallbackUrl(Object loginId, String client, String sloCallbackUrl) {
+        // 如果提供的参数是空值，则直接返回，不进行任何操作
+        if(SaFoxUtil.isEmpty(loginId)) {
+            return;
+        }
+
+        SaSession session = getStpLogic().getSessionByLoginId(loginId);
+
+        // 取出原来的
+        List<SaSsoClientModel> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
+
+        // 将 新登录client 加入到集合中
+        SaSsoClientModel scm = new SaSsoClientModel(client, sloCallbackUrl, calcNextIndex(scmList));
+        scmList.add(scm);
+
+        // 如果登录的client数量超过了限制，则从最早的一个登录开始清退
+        int maxRegClient = getServerConfig().maxRegClient;
+        if(maxRegClient != -1)  {
+            for (;;) {
+                if(scmList.size() > maxRegClient) {
+                    SaSsoClientModel removeScm = scmList.remove(0);
+                    notifyClientLogout(loginId, removeScm, true);
+                } else {
+                    break;
+                }
+            }
+        }
+
+        // 存入持久库
+        session.set(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, scmList);
+    }
+
+    /**
+     * 通知指定账号的指定客户端注销
+     * @param loginId 指定账号
+     * @param scm 客户端信息对象
+     * @param autoLogout 是否为超过 maxRegClient 的自动注销
+     */
+    public void notifyClientLogout(Object loginId, SaSsoClientModel scm, boolean autoLogout) {
+
+        // 如果给个null值，不进行任何操作
+        if(scm == null || scm.mode != SaSsoConsts.SSO_MODE_3) {
+            return;
+        }
+
+        // url
+        String sloCallUrl = scm.getSloCallbackUrl();
+        if(SaFoxUtil.isEmpty(sloCallUrl)) {
+            return;
+        }
+
+        // 参数
+        Map<String, Object> paramsMap = new TreeMap<>();
+        paramsMap.put(paramName.client, scm.getClient());
+        paramsMap.put(paramName.loginId, loginId);
+        paramsMap.put(paramName.autoLogout, autoLogout);
+        String signParamsStr = getSignTemplate(scm.getClient()).addSignParamsAndJoin(paramsMap);
+
+        // 拼接
+        String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
+
+        // 发起请求
+        getServerConfig().sendHttp.apply(finalUrl);
     }
 
     // ---------------------- 构建URL ----------------------

@@ -227,10 +227,13 @@ public class SaSsoClientProcessor {
 
 		// 获取参数
 		String loginId = req.getParamNotNull(paramName.loginId);
+		// String client = req.getParam(paramName.client);
+		// String autoLogout = req.getParam(paramName.autoLogout);
 
 		// 校验参数签名
 		if(ssoConfig.getIsCheckSign()) {
-			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).checkRequest(req, paramName.loginId);
+			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).
+					checkRequest(req, paramName.loginId, paramName.client, paramName.autoLogout);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
@@ -289,7 +292,11 @@ public class SaSsoClientProcessor {
 			}
 		} else {
 			// q2、使用模式二：直连Redis校验ticket
-			// return ssoClientTemplate.checkTicket(ticket);
+			// 		注意此处调用了 SaSsoServerProcessor 处理器里的方法，
+			// 		这意味着如果你的 sso-server 端重写了 SaSsoServerProcessor 里的部分方法，
+			// 		而在当前 sso-client 没有按照相应格式重写 SaSsoClientProcessor 里的方法，
+			// 		可能会导致调用失败（注意是可能，而非一定），
+			// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
 			return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, cfg.getClient());
 		}
 	}
