@@ -65,6 +65,11 @@ public class SaSsoServerConfig implements Serializable {
     public Boolean isHttp = false;
 
     /**
+     * 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
+     */
+    public int maxRegClient = 32;
+
+    /**
      * 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
      */
     public Boolean isCheckSign = true;
@@ -155,6 +160,22 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
+     * @return maxLoginClient 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
+     */
+    public int getMaxRegClient() {
+        return maxRegClient;
+    }
+
+    /**
+     * @param maxRegClient 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
+     * @return 对象自身
+     */
+    public SaSsoServerConfig setMaxRegClient(int maxRegClient) {
+        this.maxRegClient = maxRegClient;
+        return this;
+    }
+
+    /**
      * 获取 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
      *
      * @return isCheckSign 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
@@ -191,6 +212,7 @@ public class SaSsoServerConfig implements Serializable {
                 + ", allowUrl=" + allowUrl
                 + ", isSlo=" + isSlo
                 + ", isHttp=" + isHttp
+                + ", maxRegClient=" + maxRegClient
                 + ", isCheckSign=" + isCheckSign
                 + "]";
     }

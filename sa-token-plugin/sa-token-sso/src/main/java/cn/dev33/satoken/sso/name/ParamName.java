@@ -47,6 +47,9 @@ public class ParamName {
 	/** Client端单点注销时-回调URL 参数名称 */
 	public String ssoLogoutCall = "ssoLogoutCall";
 
+	/** 是否为超过 maxRegClient 的自动注销 */
+	public String autoLogout = "autoLogout";
+
 	public String name = "name";
 	public String pwd = "pwd";
 	

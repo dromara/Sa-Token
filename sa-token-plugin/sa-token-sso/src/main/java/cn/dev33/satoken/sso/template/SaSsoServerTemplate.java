@@ -283,13 +283,25 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
 
         SaSession session = getStpLogic().getSessionByLoginId(loginId);
 
-        // 取
+        // 取出原来的
         List<SaSsoClientModel> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
 
-        // 加
-        scmList.add(new SaSsoClientModel(client, sloCallbackUrl));
+        // 将 新登录client 加入到集合中
+        SaSsoClientModel scm = new SaSsoClientModel();
+        scm.mode = 3;
+        scm.client = client;
+        scm.ssoLogoutCall = sloCallbackUrl;
+        scm.regTime = System.currentTimeMillis();
+        scm.index = calcNextIndex(scmList);
+        scmList.add(scm);
 
-        // 存
+        // 如果登录的client数量超过了限制，则将最早的一个登录进行清退
+        if(scmList.size() > getServerConfig().getMaxRegClient()) {
+            SaSsoClientModel removeScm = scmList.remove(0);
+            notifyClientLogout(loginId, removeScm, true);
+        }
+
+        // 存入持久库
         session.set(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, scmList);
     }
 
@@ -305,31 +317,85 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             return;
         }
 
-        SaSsoServerConfig ssoConfig = getServerConfig();
-
         // step.1 遍历通知 Client 端注销会话
         List<SaSsoClientModel> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
         scmList.forEach(scm -> {
-            // url
-            String sloCallUrl = scm.getSsoLogoutCall();
-
-            // 参数
-            Map<String, Object> paramsMap = new TreeMap<>();
-            paramsMap.put(paramName.client, scm.getClient());
-            paramsMap.put(paramName.loginId, loginId);
-            String signParamsStr = getSignTemplate(scm.getClient()).addSignParamsAndJoin(paramsMap);
-
-            // 拼接
-            String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
-
-            // 发起请求
-            ssoConfig.sendHttp.apply(finalUrl);
+            notifyClientLogout(loginId, scm, false);
         });
 
         // step.2 Server端注销
         getStpLogic().logout(loginId);
     }
 
+    /**
+     * 通知指定账号的指定客户端注销
+     * @param loginId 指定账号
+     * @param scm 客户端信息对象
+     * @param autoLogout 是否为超过 maxRegClient 的自动注销
+     */
+    public void notifyClientLogout(Object loginId, SaSsoClientModel scm, boolean autoLogout) {
+
+        // 如果给个null值，不进行任何操作
+        if(scm == null) {
+            return;
+        }
+
+        // 如果是模式二登录的
+        if(scm.mode == SaSsoConsts.SSO_MODE_2) {
+            // 获取登录 token
+            String tokenValue = scm.tokenValue;
+            if(SaFoxUtil.isEmpty(tokenValue)) {
+                return;
+            }
+
+            // 注销此 token
+            getStpLogic().logoutByTokenValue(scm.tokenValue);
+        }
+
+        // 如果是模式三登录的
+        else if(scm.mode != SaSsoConsts.SSO_MODE_3) {
+            // url
+            String sloCallUrl = scm.getSsoLogoutCall();
+            if(SaFoxUtil.isEmpty(sloCallUrl)) {
+                return;
+            }
+
+            // 参数
+            Map<String, Object> paramsMap = new TreeMap<>();
+            paramsMap.put(paramName.client, scm.getClient());
+            paramsMap.put(paramName.loginId, loginId);
+            paramsMap.put(paramName.autoLogout, autoLogout);
+            String signParamsStr = getSignTemplate(scm.getClient()).addSignParamsAndJoin(paramsMap);
+
+            // 拼接
+            String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
+
+            // 发起请求
+            getServerConfig().sendHttp.apply(finalUrl);
+        }
+    }
+
+    /**
+     * 计算下一个 index 值
+     * @param scmList /
+     * @return /
+     */
+    private int calcNextIndex(List<SaSsoClientModel> scmList) {
+        // 如果目前还没有任何登录记录，则直接返回0
+        if(scmList == null || scmList.isEmpty()) {
+            return 0;
+        }
+        // 获取目前最大的index值
+        int maxIndex = scmList.get(scmList.size() - 1).index;
+
+        // 如果已经是 int 最大值了，则直接返回0
+        if(maxIndex == Integer.MAX_VALUE) {
+            return 0;
+        }
+
+        // 否则返回最大值+1
+        return maxIndex++;
+    }
 
     // ---------------------- 构建URL ----------------------
 

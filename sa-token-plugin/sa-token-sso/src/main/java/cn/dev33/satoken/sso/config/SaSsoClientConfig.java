@@ -316,7 +316,7 @@ public class SaSsoClientConfig implements Serializable {
 
     @Override
     public String toString() {
-        return "SaSsoConfig ["
+        return "SaSsoClientConfig ["
                 + "mode=" + mode
                 + ", client=" + client
                 + ", serverUrl=" + serverUrl
