@@ -148,14 +148,10 @@ public class SaSsoClientProcessor {
 		// 获取对象
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
 
-		// ---------- SSO-Client端：单点注销 [模式二]
+		// 无论登录时选择的是模式二还是模式三
+		//  在注销时都应该按照模式三的方法，通过 http 请求调用 sso-server 的单点注销接口来做到全端下线
 		if(cfg.getIsSlo() && ! cfg.getIsHttp()) {
-			return ssoLogoutType2();
-		}
-
-		// ---------- SSO-Client端：单点注销 [模式三]
-		if(cfg.getIsSlo() && cfg.getIsHttp()) {
-			return ssoLogoutType3();
+			return ssoLogoutByMode3();
 		}
 
 		// 默认返回
@@ -166,7 +162,7 @@ public class SaSsoClientProcessor {
 	 * SSO-Client端：单点注销 [模式二]
 	 * @return 处理结果
 	 */
-	public Object ssoLogoutType2() {
+	public Object ssoLogoutByMode2() {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
@@ -185,7 +181,7 @@ public class SaSsoClientProcessor {
 	 * SSO-Client端：单点注销 [模式三]
 	 * @return 处理结果
 	 */
-	public Object ssoLogoutType3() {
+	public Object ssoLogoutByMode3() {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();

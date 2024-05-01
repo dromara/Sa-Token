@@ -22,6 +22,7 @@ http://{host}:{port}/sso/auth
 | :--------		| :--------	| :--------															|
 | redirect		| 是		| 登录成功后的重定向地址，一般填写 location.href（从哪来回哪去）							|
 | mode			| 否		| 授权模式，取值 [simple, ticket]，simple=登录后直接重定向，ticket=带着ticket参数重定向，默认值为ticket			|
+| client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则校验 ticket 时也必须时这个 client 才可以校验成功			|
 
 访问接口后有两种情况：
 - 情况一：当前会话在 SSO 认证中心未登录，会进入登录页开始登录。
@@ -40,7 +41,7 @@ http://{host}:{port}/sso/doLogin
 | name			| 是		| 用户名  |
 | pwd			| 是		| 密码	 |
 
-此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 `sso.setDoLoginHandle` 函数中，此函数的返回值即是此接口的响应值。
+此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 `ssoServer.doLoginHandle` 函数中，此函数的返回值即是此接口的响应值。
 
 另外需要注意：此接口并非只能携带 name、pwd 参数，因为你可以在方法里通过 `SaHolder.getRequest().getParam("xxx")` 来获取前端提交的其它参数。 
 
@@ -58,6 +59,7 @@ http://{host}:{port}/sso/checkTicket
 | :--------		| :--------	| :--------												|
 | ticket		| 是		| 在步骤 1 中授权重定向时的 ticket 参数 						|
 | ssoLogoutCall	| 否		| 单点注销时的回调通知地址，只在SSO模式三单点注销时需要携带此参数|
+| client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则必须填写的和 `/sso/auth` 登录时填写的一致才可以校验成功			|
 
 返回值场景：
 - 校验成功时：
@@ -106,6 +108,7 @@ http://{host}:{port}/sso/signout?back=xxx
 | timestamp		| 是		| 当前时间戳，13位									|
 | nonce			| 是		| 随机字符串										|
 | sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`							|
+| client		| 否		| 客户端标识，可不填，一般在帮助 “sso-server 端不同client不同秘钥” 的场景下找到对应秘钥时，才填写		|
 
 例如：
 ``` url
@@ -198,7 +201,8 @@ http://{host}:{port}/sso/logoutCall
 | loginId		| 是		| 要注销的账号 id			 					|
 | timestamp		| 是		| 当前时间戳，13位								|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`							|
+| client		| 否		| 客户端标识，如果你在登录时向 sso-server 端传递了 client 值，那么在此处 sso-server 也会给你回传过来，否则此参数无值		|
+| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )` 如果 client 参数有值，则client也要参与签名，放在 loginId 参数签名（字典顺序）|
 
 返回数据：
 

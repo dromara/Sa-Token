@@ -223,7 +223,7 @@ public class SaSsoServerProcessor {
 
 		// step.1 校验签名
 		if(ssoServerTemplate.getServerConfig().getIsCheckSign()) {
-			ssoServerTemplate.getSignTemplate(client).checkRequest(req, paramName.loginId);
+			ssoServerTemplate.getSignTemplate(client).checkRequest(req, paramName.client, paramName.loginId);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}

@@ -90,21 +90,21 @@ implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'
 @RestController
 public class SsoServerController {
 
-	/*
+	/**
 	 * SSO-Server端：处理所有SSO相关请求 (下面的章节我们会详细列出开放的接口) 
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.serverDister();
+		return SaSsoServerProcessor.instance.dister();
 	}
 	
 	/**
 	 * 配置SSO相关参数 
 	 */
 	@Autowired
-	private void configSso(SaSsoConfig sso) {
+	private void configSso(SaSsoServerConfig ssoServer) {
 		// 配置：未登录时返回的View 
-		sso.notLoginView = () -> {
+		ssoServer.notLoginView = () -> {
 			String msg = "当前会话在SSO-Server端尚未登录，请先访问"
 					+ "<a href='/sso/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
 					+ "进行登录之后，刷新页面开始授权";
@@ -112,7 +112,7 @@ public class SsoServerController {
 		};
 		
 		// 配置：登录处理函数 
-		sso.doLoginHandle = (name, pwd) -> {
+		ssoServer.doLoginHandle = (name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
@@ -122,11 +122,12 @@ public class SsoServerController {
 		};
 		
 		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
-		sso.sendHttp = url -> {
+		ssoServer.sendHttp = url -> {
 			try {
-				// 发起 http 请求 
 				System.out.println("------ 发起请求：" + url);
-				return Forest.get(url).executeAsString();
+				String resStr = Forest.get(url).executeAsString();
+				System.out.println("------ 请求结果：" + resStr);
+				return resStr;
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -138,8 +139,8 @@ public class SsoServerController {
 ```
 
 注意：
-- 在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
-- 在 `setSendHttp` 函数中，使用 `try-catch` 是为了提高整个注销流程的容错性，避免在一些极端情况下注销失败（例如：某个 Client 端上线之后又下线，导致 http 请求无法调用成功，从而阻断了整个注销流程）
+- 在`doLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
+- 在 `sendHttp` 函数中，使用 `try-catch` 是为了提高整个注销流程的容错性，避免在一些极端情况下注销失败（例如：某个 Client 端上线之后又下线，导致 http 请求无法调用成功，从而阻断了整个注销流程）
 
 全局异常处理：
 ``` java
@@ -173,7 +174,7 @@ sa-token:
         # domain: stp.com 
         
     # ------- SSO-模式二相关配置 
-    sso: 
+    sso-server: 
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
         # 所有允许的授权回调地址
@@ -215,13 +216,13 @@ server.port=9000
 
 # ------- SSO-模式二相关配置 
 # Ticket有效期 (单位: 秒)，默认五分钟 
-sa-token.sso.ticket-timeout=300
+sa-token.sso-server.ticket-timeout=300
 # 所有允许的授权回调地址
-sa-token.sso.allow-url=*
+sa-token.sso-server.allow-url=*
 
 # ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
 # 是否打开模式三 
-sa-token.sso.is-http=true
+sa-token.sso-server.is-http=true
 # API 接口调用秘钥
 sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 
@@ -243,7 +244,7 @@ forest.log-enabled: false
 
 <!---------------------------- tabs:end ---------------------------->
 
-注意点：`sa-token.sso.allow-url`为了方便测试配置为`*`，线上生产环境一定要配置为详细URL地址 （之后的章节我们会详细阐述此配置项）
+注意点：`sa-token.sso-server.allow-url`为了方便测试配置为`*`，线上生产环境一定要配置为详细URL地址 （之后的章节我们会详细阐述此配置项）
 
 
 ### 4、创建启动类
@@ -252,7 +253,11 @@ forest.log-enabled: false
 public class SaSsoServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SaSsoServerApplication.class, args);
-		System.out.println("\n------ Sa-Token-SSO 认证中心启动成功");
+
+		System.out.println();
+		System.out.println("---------------------- Sa-Token SSO 统一认证中心启动成功 ----------------------");
+		System.out.println("配置信息：" + SaSsoManager.getServerConfig());
+		System.out.println();
 	}
 }
 ```
@@ -261,7 +266,7 @@ public class SaSsoServerApplication {
 
 ![sso-server-start](https://oss.dev33.cn/sa-token/doc/sso/sso-server-start.png 's-w-sh')
 
-访问统一授权地址(仅测试SSO Server部署是否成功访问localhost,测试SSO模式一到模式三建议按照对应文档的域名进行配置并访问)：
+访问统一授权地址（仅测试 SSO-Server 是否部署成功，暂时还不需要点击登录）：
 - [http://localhost:9000/sso/auth](http://localhost:9000/sso/auth)
 
 ![sso-server-init-login.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-init-login.png 's-w-sh')
