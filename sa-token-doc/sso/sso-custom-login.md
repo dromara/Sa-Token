@@ -81,16 +81,16 @@ if(res.code == 401) {
 
 ``` java
 // 配置：未登录时返回的View 
-sso.setNotLoginView(() -> {
+sso.notLoginView = () -> {
 	return new ModelAndView("xxx.html");
-})
+}
 ```
 
 
 ### 3、如何自定义登录API的接口地址？
 根据需求点选择解决方案：
 
-#### 3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？
+#### 3.1、如果只是想在 doLoginHandle 函数里获取除 name、pwd 以外的参数？
 ``` java
 // 在任意代码处获取前端提交的参数 
 String xxx = SaHolder.getRequest().getParam("xxx");

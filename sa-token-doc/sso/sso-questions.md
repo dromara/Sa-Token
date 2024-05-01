@@ -212,19 +212,23 @@ public class SsoController {
 	// 处理 SSO-Server 端所有请求 
 	@RequestMapping({"/sso/auth", "/sso/doLogin", "/sso/checkTicket", "/sso/signout"})
 	public Object ssoServerRequest() {
-		return SaSsoProcessor.instance.serverDister();
+		return SaSsoServerProcessor.instance.dister();
 	}
 	
 	// 处理 SSO-Client 端所有请求 
 	@RequestMapping({"/sso/login", "/sso/logout", "/sso/logoutCall"})
 	public Object ssoClientRequest() {
-		return SaSsoProcessor.instance.clientDister();
+		return SaSsoClientProcessor.instance.dister();
 	}
 	
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSso(SaSsoConfig sso) {
-		// SSO配置代码，参考文档前几章 ... 
+	private void configSsoServer(SaSsoServerConfig ssoServer) {
+		// SSO Server 配置代码，参考文档前几章 ... 
+	}
+	@Autowired
+	private void configSsoClient(SaSsoClientConfig ssoClient) {
+		// SSO Client 配置代码，参考文档前几章 ... 
 	}
 	
 }
@@ -248,58 +252,58 @@ public class SsoController {
 @RestController
 public class SsoUserServerController {
 
-	/**
-	 * 新建一个 SaSsoProcessor 请求处理器 
-	 */
-	public static SaSsoProcessor ssoUserProcessor = new SaSsoProcessor();
-	static {
-		// 自定义一个 SaSsoTemplate 对象
-		SaSsoTemplate ssoUserTemplate = new SaSsoTemplate() {
-			// 使用的会话对象 是自定义的 StpUserUtil 
-			@Override
-			public StpLogic getStpLogic() {
-				return StpUserUtil.stpLogic;
-			}
+    /**
+     * 新建一个 SaSsoServerProcessor 请求处理器
+     */
+    public static SaSsoServerProcessor ssoUserServerProcessor = new SaSsoServerProcessor();
+    static {
+        // 自定义一个 SaSsoTemplate 对象
+        SaSsoServerTemplate ssoUserTemplate = new SaSsoServerTemplate() {
+            // 使用的会话对象 是自定义的 StpUserUtil
+            @Override
+            public StpLogic getStpLogic() {
+                return StpUserUtil.stpLogic;
+            }
             // 使用自定义的签名秘钥
             SaSignConfig signConfig =  new SaSignConfig().setSecretKey("xxxx-新的秘钥-xxxx");
             SaSignTemplate userSignTemplate = new SaSignTemplate().setSignConfig(signConfig);
             @Override
-            public SaSignTemplate getSignTemplate() {
+            public SaSignTemplate getSignTemplate(String client) {
                 return userSignTemplate;
             }
-		};
-		// 让这个SSO请求处理器，使用的路由前缀是 /sso-user，而不是原先的 /sso 
-		ssoUserTemplate.apiName.replacePrefix("/sso-user");
-		
-		// 给这个 SSO 请求处理器使用自定义的 SaSsoTemplate 对象 
-		ssoUserProcessor.ssoTemplate = ssoUserTemplate;
-	}
+        };
+        // 让这个SSO请求处理器，使用的路由前缀是 /sso-user，而不是原先的 /sso
+        ssoUserTemplate.apiName.replacePrefix("/sso-user");
 
-	/*
-	 * 第二套 sso-server 服务：处理所有SSO相关请求 
-	 * 		http://{host}:{port}/sso-user/auth			-- 单点登录授权地址，接受参数：redirect=授权重定向地址 
-	 * 		http://{host}:{port}/sso-user/doLogin		-- 账号密码登录接口，接受参数：name、pwd 
-	 * 		http://{host}:{port}/sso-user/checkTicket	-- Ticket校验接口（isHttp=true时打开），接受参数：ticket=ticket码、ssoLogoutCall=单点注销回调地址 [可选] 
-	 * 		http://{host}:{port}/sso-user/signout		-- 单点注销地址（isSlo=true时打开），接受参数：loginId=账号id、secretkey=接口调用秘钥 
-	 */
-	@RequestMapping("/sso-user/*")
-	public Object ssoUserRequest() {
-		return ssoUserProcessor.serverDister();
-	}
+        // 给这个 SSO 请求处理器使用自定义的 SaSsoTemplate 对象
+        ssoUserServerProcessor.ssoServerTemplate = ssoUserTemplate;
+    }
 
-	// 自定义 doLogin 方法 */
-	// 注意点：
-	// 		1、第2套 sso-server 对应的 RestApi 登录接口也应该更换为 /sso-user/doLogin，而不是原先的 /sso/doLogin 
-	// 		2、在这里，登录函数要使用自定义的 StpUserUtil.login()，而不是原先的 StpUtil.login() 
-	@RequestMapping("/sso-user/doLogin")
-	public Object ssoUserRequest(String name, String pwd) {
-		if("sa".equals(name) && "123456".equals(pwd)) {
-			StpUserUtil.login(10001);
-			return SaResult.ok("登录成功！").setData(StpUserUtil.getTokenValue());
-		}
-		return SaResult.error("登录失败！");
-	}
-	
+    /*
+     * 第二套 sso-server 服务：处理所有SSO相关请求
+     * 		http://{host}:{port}/sso-user/auth			-- 单点登录授权地址，接受参数：redirect=授权重定向地址
+     * 		http://{host}:{port}/sso-user/doLogin		-- 账号密码登录接口，接受参数：name、pwd
+     * 		http://{host}:{port}/sso-user/checkTicket	-- Ticket校验接口（isHttp=true时打开），接受参数：ticket=ticket码、ssoLogoutCall=单点注销回调地址 [可选]
+     * 		http://{host}:{port}/sso-user/signout		-- 单点注销地址（isSlo=true时打开），接受参数：loginId=账号id、secretkey=接口调用秘钥
+     */
+    @RequestMapping("/sso-user/*")
+    public Object ssoUserRequest() {
+        return ssoUserServerProcessor.dister();
+    }
+
+    // 自定义 doLogin 方法 */
+    // 注意点：
+    // 		1、第2套 sso-server 对应的 RestApi 登录接口也应该更换为 /sso-user/doLogin，而不是原先的 /sso/doLogin
+    // 		2、在这里，登录函数要使用自定义的 StpUserUtil.login()，而不是原先的 StpUtil.login()
+    @RequestMapping("/sso-user/doLogin")
+    public Object ssoUserRequest(String name, String pwd) {
+        if("sa".equals(name) && "123456".equals(pwd)) {
+            StpUserUtil.login(10001);
+            return SaResult.ok("登录成功！").setData(StpUserUtil.getTokenValue());
+        }
+        return SaResult.error("登录失败！");
+    }
+
 }
 ```
 

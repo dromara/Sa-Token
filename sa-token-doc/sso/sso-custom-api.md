@@ -15,7 +15,7 @@ public class SsoServerController {
 	// SSO-Server端：处理所有SSO相关请求 
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
-		return SaSsoProcessor.instance.serverDister();
+		return SaSsoServerProcessor.instance.dister();
 	}
 	
 	// ... 其它代码
@@ -33,13 +33,13 @@ public class SsoServerController {
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaSsoConfig sso) {
+private void configSso(SaSsoServerConfig ssoServer) {
 	// 自定义API地址
-	SaSsoUtil.ssoTemplate.apiName.ssoAuth = "/sso/auth2";
+	SaSsoServerProcessor.instance.ssoServerTemplate.apiName.ssoAuth = "/sso/auth2";
 	// ... 
 	
 	// SSO 相关配置
-	sso.setXxx ... ;
+	ssoServer.xxx ... ;
 }
 ```
 
@@ -61,25 +61,25 @@ public class SsoServerController {
 	// SSO-Server：统一认证地址 
 	@RequestMapping("/sso/auth")
 	public Object ssoAuth() {
-		return SaSsoProcessor.instance.ssoAuth();
+		return SaSsoServerProcessor.instance.ssoAuth();
 	}
 
 	// SSO-Server：RestAPI 登录接口 
 	@RequestMapping("/sso/doLogin")
 	public Object ssoDoLogin() {
-		return SaSsoProcessor.instance.ssoDoLogin();
+		return SaSsoServerProcessor.instance.ssoDoLogin();
 	}
 
 	// SSO-Server：校验ticket 获取账号id 
 	@RequestMapping("/sso/checkTicket")
 	public Object ssoCheckTicket() {
-		return SaSsoProcessor.instance.ssoCheckTicket();
+		return SaSsoServerProcessor.instance.ssoCheckTicket();
 	}
 
 	// SSO-Server：单点注销 
 	@RequestMapping("/sso/signout")
 	public Object ssoSignout() {
-		return SaSsoProcessor.instance.ssoSignout();
+		return SaSsoServerProcessor.instance.ssoSignout();
 	}
 	
 	// ... 其它方法 

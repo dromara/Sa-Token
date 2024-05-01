@@ -75,7 +75,7 @@ public Object ssoRequest() {
 	if(req.isPath("/sso/auth") && req.hasParam("redirect") == false && StpUtil.isLogin()) {
 		return SaHolder.getResponse().redirect("/home");
 	}
-	return SaSsoProcessor.instance.serverDister();
+	return SaSsoServerProcessor.instance.serverDister();
 }
 ```
 
