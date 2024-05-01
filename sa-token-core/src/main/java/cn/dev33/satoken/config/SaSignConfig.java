@@ -37,6 +37,17 @@ public class SaSignConfig {
     private long timestampDisparity = 1000  * 60 * 15;
 
 
+    public SaSignConfig() {
+    }
+
+    /**
+     * 构造函数
+     * @param secretKey 秘钥
+     */
+    public SaSignConfig(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
     /**
      * 获取 API 调用签名秘钥
      *

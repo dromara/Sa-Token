@@ -3,7 +3,7 @@ server:
     port: 9032
 
 # sa-token配置 
-sa-token: 
+sa-token:
     # sso-client 相关配置
     sso-client:
         # client 标识

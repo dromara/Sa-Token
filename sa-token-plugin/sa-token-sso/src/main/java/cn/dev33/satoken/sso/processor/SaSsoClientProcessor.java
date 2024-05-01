@@ -150,7 +150,7 @@ public class SaSsoClientProcessor {
 
 		// 无论登录时选择的是模式二还是模式三
 		//  在注销时都应该按照模式三的方法，通过 http 请求调用 sso-server 的单点注销接口来做到全端下线
-		if(cfg.getIsSlo() && ! cfg.getIsHttp()) {
+		if(cfg.getIsSlo()) {
 			return ssoLogoutByMode3();
 		}
 

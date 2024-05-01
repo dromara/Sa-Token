@@ -3,7 +3,7 @@ server:
     port: 9000
 
 # Sa-Token 配置
-sa-token: 
+sa-token:
     # ------- SSO-模式一相关配置  (非模式一不需要配置) 
     # cookie:
          # 配置 Cookie 作用域 

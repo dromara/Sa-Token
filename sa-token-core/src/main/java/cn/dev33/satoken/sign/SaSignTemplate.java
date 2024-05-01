@@ -26,6 +26,8 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static cn.dev33.satoken.SaManager.log;
+
 /**
  * API 参数签名算法，在跨系统接口调用时防参数篡改、防重放攻击。
  *
@@ -41,6 +43,17 @@ import java.util.TreeMap;
  * @since 1.30.0
  */
 public class SaSignTemplate {
+
+	public SaSignTemplate() {
+	}
+
+	/**
+	 * 构造函数
+	 * @param signConfig 签名参数配置对象
+	 */
+	public SaSignTemplate(SaSignConfig signConfig) {
+		this.signConfig = signConfig;
+	}
 
 	// ----------- 签名配置
 
@@ -160,7 +173,14 @@ public class SaSignTemplate {
 		// 计算签名
 		String paramsStr = joinParamsDictSort(paramsMap);
 		String fullStr = paramsStr + "&" + key + "=" + secretKey;
-		return abstractStr(fullStr);
+		String signStr = abstractStr(fullStr);
+
+		// 输入日志，方便调试
+		log.debug("fullStr：{}", fullStr);
+		log.debug("signStr：{}", signStr);
+
+		// 返回
+		return signStr;
 	}
 
 	/**

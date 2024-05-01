@@ -363,6 +363,9 @@ forest:
 ``` properties
 # 接口调用秘钥 
 sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+
+# 关闭 forest 请求日志打印
+forest.log-enabled=false
 ```
 <!---------------------------- tabs:end ---------------------------->
 

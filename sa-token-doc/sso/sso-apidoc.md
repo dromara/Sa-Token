@@ -201,8 +201,10 @@ http://{host}:{port}/sso/logoutCall
 | loginId		| 是		| 要注销的账号 id			 					|
 | timestamp		| 是		| 当前时间戳，13位								|
 | nonce			| 是		| 随机字符串										|
-| client		| 否		| 客户端标识，如果你在登录时向 sso-server 端传递了 client 值，那么在此处 sso-server 也会给你回传过来，否则此参数无值		|
-| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )` 如果 client 参数有值，则client也要参与签名，放在 loginId 参数签名（字典顺序）|
+| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )` |
+| client		| 否		| 客户端标识，如果你在登录时向 sso-server 端传递了 client 值，那么在此处 sso-server 也会给你回传过来，否则此参数无值。如果此参数有值，则此参数也要参与签名，放在 loginId 参数前面（字典顺序）		|
+| autoLogout	| 否		| 是否为“登录client超过最大数量”引起的自动注销（true=超限系统自动注销，false=用户主动发起注销）。如果此参数有值，则此参数也要参与签名，放在 client 参数前面（字典顺序）		|
+
 
 返回数据：
 
