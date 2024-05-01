@@ -78,7 +78,6 @@ public class SsoRequestUtil {
 	}
 	// 单点注销回调时构建签名
 	public static String getSignByLogoutCall(Object loginId, String autoLogout, String timestamp, String nonce) {
-		System.out.println("autoLogout=" + autoLogout + "loginId=" + loginId + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
 		return md5("autoLogout=" + autoLogout + "&loginId=" + loginId + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
 	}
 	// 校验ticket 时构建签名
