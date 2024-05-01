@@ -29,7 +29,7 @@ public class SsoClientController {
 					"<p>当前会话登录账号：" + session.getAttribute("userId") + "</p>" + 
 					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a>" + 
 					" <a href='/sso/logout?back=' +  + encodeURIComponent(location.href);>注销</a>" + 
-					" <a href='/sso/myinfo' target=\"_blank\">获取资料</a></p>";
+					" <a href='/sso/myInfo' target=\"_blank\">获取资料</a></p>";
 		return str;
 	}
 
@@ -62,8 +62,16 @@ public class SsoClientController {
 				ssoLogoutCall = request.getRequestURL().toString().replace("/sso/login", "/sso/logoutCall"); 
 			}
 			
-			// 校验 ticket 
-			String checkUrl = SsoRequestUtil.checkTicketUrl + "?ticket=" + ticket + "&ssoLogoutCall=" + ssoLogoutCall;
+			// 校验 ticket
+			String timestamp = String.valueOf(System.currentTimeMillis());	// 时间戳
+			String nonce = SsoRequestUtil.getRandomString(20);		// 随机字符串
+			String sign = SsoRequestUtil.getSignByTicket(ticket, ssoLogoutCall, timestamp, nonce);	// 参数签名
+			String checkUrl = SsoRequestUtil.checkTicketUrl +
+					"?timestamp=" + timestamp +
+					"&nonce=" + nonce +
+					"&sign=" + sign +
+					"&ticket=" + ticket +
+					"&ssoLogoutCall=" + ssoLogoutCall;
 			AjaxJson result = SsoRequestUtil.request(checkUrl);
 			
 			// 200 代表校验成功 
@@ -97,7 +105,7 @@ public class SsoClientController {
         Object loginId = session.getAttribute("userId");  // 账号id 
 		String timestamp = String.valueOf(System.currentTimeMillis());	// 时间戳 
 		String nonce = SsoRequestUtil.getRandomString(20);		// 随机字符串
-		String sign = SsoRequestUtil.getSign(loginId, timestamp, nonce, SsoRequestUtil.secretkey);	// 参数签名
+		String sign = SsoRequestUtil.getSign(loginId, timestamp, nonce);	// 参数签名
 		
         String url = SsoRequestUtil.sloUrl + 
         		"?loginId=" + loginId +
@@ -123,12 +131,13 @@ public class SsoClientController {
 	
 	// SSO-Client端：单点注销回调地址
 	@RequestMapping("/sso/logoutCall")
-	public Object ssoLogoutCall(String loginId, String timestamp, String nonce, String sign) {
+	public Object ssoLogoutCall(String loginId, String autoLogout, String timestamp, String nonce, String sign) {
 		
 		// 校验签名 
-		String calcSign = SsoRequestUtil.getSign(loginId, timestamp, nonce, SsoRequestUtil.secretkey);
+		String calcSign = SsoRequestUtil.getSignByLogoutCall(loginId, autoLogout, timestamp, nonce);
 		if(calcSign.equals(sign) == false) {
-			return AjaxJson.getError("无效签名，拒绝应答");
+			System.out.println("无效签名，拒绝应答：" + sign);
+			return AjaxJson.getError("无效签名，拒绝应答" + sign);
 		}
 		
 		// 注销这个账号id 
@@ -143,8 +152,8 @@ public class SsoClientController {
 	}
 
 	// 查询我的账号信息 (调用此接口的前提是 sso-server 端开放了 /sso/userinfo 路由)
-	@RequestMapping("/sso/myinfo")
-	public Object myinfo(HttpSession session) {
+	@RequestMapping("/sso/myInfo")
+	public Object myInfo(HttpSession session) {
 		// 如果尚未登录 
 		if(session.getAttribute("userId") == null) {
 			return "尚未登录，无法获取";
@@ -154,9 +163,9 @@ public class SsoClientController {
         Object loginId = session.getAttribute("userId");  // 账号id 
 		String timestamp = String.valueOf(System.currentTimeMillis());	// 时间戳 
 		String nonce = SsoRequestUtil.getRandomString(20);		// 随机字符串
-		String sign = SsoRequestUtil.getSign(loginId, timestamp, nonce, SsoRequestUtil.secretkey);	// 参数签名
+		String sign = SsoRequestUtil.getSign(loginId, timestamp, nonce);	// 参数签名
 		
-        String url = SsoRequestUtil.userinfoUrl + 
+        String url = SsoRequestUtil.getDataUrl +
         		"?loginId=" + loginId +
         		"&timestamp=" + timestamp +
         		"&nonce=" + nonce +

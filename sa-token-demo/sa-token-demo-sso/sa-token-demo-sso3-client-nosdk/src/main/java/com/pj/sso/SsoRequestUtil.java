@@ -1,13 +1,13 @@
 package com.pj.sso;
 
+import com.dtflys.forest.Forest;
+import com.pj.sso.util.AjaxJson;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Random;
-
-import com.dtflys.forest.Forest;
-import com.pj.sso.util.AjaxJson;
 
 /**
  * 封装一些 sso 共用方法 
@@ -18,39 +18,40 @@ import com.pj.sso.util.AjaxJson;
 public class SsoRequestUtil {
 
 	/**
+	 * SSO-Server端主机地址
+	 */
+	public static String serverUrl = "http://sa-sso-server.com:9000";
+
+	/**
 	 * SSO-Server端 统一认证地址 
 	 */
-	public static String authUrl = "http://sa-sso-server.com:9000/sso/auth";
-	
-	/**
-	 * 使用 Http 请求校验ticket 
-	 */
-//	public static boolean isHttp = true;
-	
+	public static String authUrl = serverUrl + "/sso/auth";
+
 	/**
 	 * SSO-Server端 ticket校验地址 
 	 */
-	public static String checkTicketUrl = "http://sa-sso-server.com:9000/sso/checkTicket";
-	
-	/**
-	 * 打开单点注销功能 
-	 */
-	public static boolean isSlo = true;
-	
+	public static String checkTicketUrl = serverUrl + "/sso/checkTicket";
+
 	/**
 	 * 单点注销地址 
 	 */
-	public static String sloUrl = "http://sa-sso-server.com:9000/sso/signout";
-	
+	public static String sloUrl = serverUrl + "/sso/signout";
+
+	/**
+	 * SSO-Server端 查询userinfo地址
+	 */
+	public static String getDataUrl = serverUrl + "/sso/getData";
+
+	/**
+	 * 打开单点注销功能
+	 */
+	public static boolean isSlo = true;
+
 	/**
 	 * 接口调用秘钥 
 	 */
-	public static String secretkey = "kQwIOrYvnXmSDkwEiFngrKidMcdrgKor";
-	
-	/**
-	 * SSO-Server端 查询userinfo地址 
-	 */
-	public static String userinfoUrl = "http://sa-sso-server.com:9000/sso/userinfo";
+	public static String secretKey = "kQwIOrYvnXmSDkwEiFngrKidMcdrgKor";
+
 	
 	
 	// -------------------------- 工具方法 
@@ -69,12 +70,20 @@ public class SsoRequestUtil {
 	 * 根据参数计算签名 
 	 * @param loginId 账号id
 	 * @param timestamp 当前时间戳，13位
-	 * @param nonce 随机字符串 
-	 * @param secretkey 账号id
+	 * @param nonce 随机字符串
 	 * @return 签名 
 	 */
-	public static String getSign(Object loginId, String timestamp, String nonce, String secretkey) {
-		return md5("loginId=" + loginId + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretkey);
+	public static String getSign(Object loginId, String timestamp, String nonce) {
+		return md5("loginId=" + loginId + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
+	}
+	// 单点注销回调时构建签名
+	public static String getSignByLogoutCall(Object loginId, String autoLogout, String timestamp, String nonce) {
+		System.out.println("autoLogout=" + autoLogout + "loginId=" + loginId + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
+		return md5("autoLogout=" + autoLogout + "&loginId=" + loginId + "&nonce=" + nonce + "&timestamp=" + timestamp + "&key=" + secretKey);
+	}
+	// 校验ticket 时构建签名
+	public static String getSignByTicket(String ticket, String ssoLogoutCall, String timestamp, String nonce) {
+		return md5("nonce=" + nonce + "&ssoLogoutCall=" + ssoLogoutCall + "&ticket=" + ticket + "&timestamp=" + timestamp + "&key=" + secretKey);
 	}
 
 	/**
