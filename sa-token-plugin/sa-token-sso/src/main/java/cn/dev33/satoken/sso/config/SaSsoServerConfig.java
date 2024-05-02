@@ -55,6 +55,11 @@ public class SaSsoServerConfig implements Serializable {
     public String allowUrl = "*";
 
     /**
+     * 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
+     */
+    public String homeRoute;
+
+    /**
      * 是否打开单点注销功能
      */
     public Boolean isSlo = true;
@@ -124,6 +129,22 @@ public class SaSsoServerConfig implements Serializable {
      */
     public SaSsoServerConfig setAllowUrl(String allowUrl) {
         this.allowUrl = allowUrl;
+        return this;
+    }
+
+    /**
+     * @return 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
+     */
+    public String getHomeRoute() {
+        return homeRoute;
+    }
+
+    /**
+     * @param homeRoute 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
+     * @return 对象自身
+     */
+    public SaSsoServerConfig setHomeRoute(String homeRoute) {
+        this.homeRoute = homeRoute;
         return this;
     }
 
@@ -210,6 +231,7 @@ public class SaSsoServerConfig implements Serializable {
                 + "mode=" + mode
                 + ", ticketTimeout=" + ticketTimeout
                 + ", allowUrl=" + allowUrl
+                + ", homeRoute=" + homeRoute
                 + ", isSlo=" + isSlo
                 + ", isHttp=" + isHttp
                 + ", maxRegClient=" + maxRegClient

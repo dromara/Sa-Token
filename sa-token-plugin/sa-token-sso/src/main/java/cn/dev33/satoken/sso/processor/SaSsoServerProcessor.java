@@ -106,10 +106,18 @@ public class SaSsoServerProcessor {
 		}
 		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
 		String mode = req.getParam(paramName.mode, "");
+		String redirect = req.getParam(paramName.redirect);
 
 		// 方式1：直接重定向回Client端 (mode=simple)
 		if(mode.equals(SaSsoConsts.MODE_SIMPLE)) {
-			String redirect = req.getParam(paramName.redirect);
+
+			// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
+			if(SaFoxUtil.isEmpty(redirect)) {
+				if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
+					throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
+				}
+				return res.redirect(cfg.getHomeRoute());
+			}
 			ssoServerTemplate.checkRedirectUrl(redirect);
 			return res.redirect(redirect);
 		} else {
@@ -121,9 +129,16 @@ public class SaSsoServerProcessor {
 				throw new SaSsoException("无效 client 标识：" + client).setCode(SaSsoErrorCode.CODE_30013);
 			}
 
-			// 开始重定向
-			String redirectUrl = ssoServerTemplate.buildRedirectUrl(
-					stpLogic.getLoginId(), client, req.getParam(paramName.redirect));
+			// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
+			if(SaFoxUtil.isEmpty(redirect)) {
+				if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
+					throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
+				}
+				return res.redirect(cfg.getHomeRoute());
+			}
+
+			// 构建并跳转
+			String redirectUrl = ssoServerTemplate.buildRedirectUrl(stpLogic.getLoginId(), client, redirect);
 			return res.redirect(redirectUrl);
 		}
 	}
