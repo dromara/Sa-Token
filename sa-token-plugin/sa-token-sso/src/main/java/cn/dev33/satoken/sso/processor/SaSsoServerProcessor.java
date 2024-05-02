@@ -20,6 +20,8 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.error.SaSsoErrorCode;
+import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
@@ -112,8 +114,16 @@ public class SaSsoServerProcessor {
 			return res.redirect(redirect);
 		} else {
 			// 方式2：带着ticket参数重定向回Client端 (mode=ticket)
+
+			// 校验提供的client是否为非法字符
+			String client = req.getParam(paramName.client);
+			if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+				throw new SaSsoException("无效 client 标识：" + client).setCode(SaSsoErrorCode.CODE_30013);
+			}
+
+			// 开始重定向
 			String redirectUrl = ssoServerTemplate.buildRedirectUrl(
-					stpLogic.getLoginId(), req.getParam(paramName.client), req.getParam(paramName.redirect));
+					stpLogic.getLoginId(), client, req.getParam(paramName.redirect));
 			return res.redirect(redirectUrl);
 		}
 	}
@@ -145,7 +155,12 @@ public class SaSsoServerProcessor {
 		String ticket = req.getParamNotNull(paramName.ticket);
 		String sloCallback = req.getParam(paramName.ssoLogoutCall);
 
-		// 2、校验签名
+		// 2、校验提供的client是否为非法字符
+		if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+			return SaResult.error("无效 client 标识：" + client);
+		}
+
+		// 3、校验签名
 		if(ssoServerTemplate.getServerConfig().getIsCheckSign()) {
 			ssoServerTemplate.getSignTemplate(client).checkRequest(req,
 					paramName.client, paramName.ticket, paramName.ssoLogoutCall);
@@ -153,16 +168,16 @@ public class SaSsoServerProcessor {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
 
-		// 3、校验ticket，获取 loginId
+		// 4、校验ticket，获取 loginId
 		Object loginId = ssoServerTemplate.checkTicket(ticket, client);
 		if(SaFoxUtil.isEmpty(loginId)) {
 			return SaResult.error("无效ticket：" + ticket);
 		}
 
-		// 4、注册此客户端的单点注销回调URL
+		// 5、注册此客户端的单点注销回调URL
 		ssoServerTemplate.registerSloCallbackUrl(loginId, client, sloCallback);
 
-		// 5、给 client 端响应结果
+		// 6、给 client 端响应结果
 		return SaResult.data(loginId);
 	}
 

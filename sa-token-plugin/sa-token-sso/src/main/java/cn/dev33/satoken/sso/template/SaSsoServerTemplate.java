@@ -187,7 +187,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @return 账号id
      */
     public Object checkTicket(String ticket) {
-        return checkTicket(ticket, null);
+        return checkTicket(ticket, SaSsoConsts.CLIENT_WILDCARD);
     }
 
     /**
@@ -205,10 +205,17 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             // 解析出这个 ticket 关联的 Client
             String ticketClient = getTicketToClient(ticket);
 
-            // 如果指定了 client 标识，则校验一下 client 标识是否一致
-            if(SaFoxUtil.isNotEmpty(client) && SaFoxUtil.notEquals(client, ticketClient)) {
-                throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket)
-                        .setCode(SaSsoErrorCode.CODE_30011);
+            // 校验 client 参数是否正确，即：创建 ticket 的 client 和当前校验 ticket 的 client 是否一致
+            if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+                // 如果提供的是通配符，直接越过 client 校验
+            } else if (SaFoxUtil.isEmpty(client) && SaFoxUtil.isEmpty(ticketClient)) {
+                // 如果提供的和期望的两者均为空，则通过校验
+            } else {
+                // 开始详细比对
+                if(SaFoxUtil.notEquals(client, ticketClient)) {
+                    throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket)
+                            .setCode(SaSsoErrorCode.CODE_30011);
+                }
             }
 
             // 删除 ticket 信息，使其只有一次性有效

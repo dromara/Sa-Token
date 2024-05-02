@@ -59,4 +59,7 @@ public interface SaSsoErrorCode {
 	/** 当前缺少配置 server-url 地址 */
 	int CODE_30012 = 30012;
 
+	/** 提供的 client 参数值无效 */
+	int CODE_30013 = 30013;
+
 }

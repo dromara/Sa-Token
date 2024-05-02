@@ -45,11 +45,16 @@ public class SaSsoConsts {
 	/** 表示请求没有得到任何有效处理 {msg: "not handle"} */
 	public static final String NOT_HANDLE = "{\"msg\": \"not handle\"}";
 
+	/** client 身份，* 代表通配，可以解析出所有 client 的 ticket */
+	public static final String CLIENT_WILDCARD = "*";
+
 	/** SSO 模式1 */
 	public static final int SSO_MODE_1 = 1;
 	/** SSO 模式2 */
 	public static final int SSO_MODE_2 = 2;
 	/** SSO 模式3 */
 	public static final int SSO_MODE_3 = 3;
+
+
 
 }
