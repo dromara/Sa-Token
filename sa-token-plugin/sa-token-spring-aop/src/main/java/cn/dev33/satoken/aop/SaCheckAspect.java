@@ -59,7 +59,9 @@ public class SaCheckAspect {
 			+ "@within(cn.dev33.satoken.annotation.SaCheckPermission) || @annotation(cn.dev33.satoken.annotation.SaCheckPermission) || "
 			+ "@within(cn.dev33.satoken.annotation.SaCheckSafe) || @annotation(cn.dev33.satoken.annotation.SaCheckSafe) || "
 			+ "@within(cn.dev33.satoken.annotation.SaCheckDisable) || @annotation(cn.dev33.satoken.annotation.SaCheckDisable) || "
-			+ "@within(cn.dev33.satoken.annotation.SaCheckBasic) || @annotation(cn.dev33.satoken.annotation.SaCheckBasic)";
+			+ "@within(cn.dev33.satoken.annotation.SaCheckHttpDigest) || @annotation(cn.dev33.satoken.annotation.SaCheckHttpDigest) || "
+			+ "@within(cn.dev33.satoken.annotation.SaCheckOr) || @annotation(cn.dev33.satoken.annotation.SaCheckOr) || "
+			+ "@within(cn.dev33.satoken.annotation.SaCheckHttpBasic) || @annotation(cn.dev33.satoken.annotation.SaCheckHttpBasic)";
 
 	/**
 	 * 声明AOP签名
