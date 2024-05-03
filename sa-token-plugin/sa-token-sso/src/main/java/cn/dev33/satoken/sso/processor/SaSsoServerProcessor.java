@@ -139,6 +139,11 @@ public class SaSsoServerProcessor {
 
 			// 构建并跳转
 			String redirectUrl = ssoServerTemplate.buildRedirectUrl(stpLogic.getLoginId(), client, redirect);
+			// 构建成功，说明 redirect 地址合法，此时需要更新一下该账号的Session有效期
+			if(cfg.getAutoRenewTimeout()) {
+				stpLogic.renewTimeout(stpLogic.getConfigOrGlobal().getTimeout());
+			}
+			// 跳转
 			return res.redirect(redirectUrl);
 		}
 	}

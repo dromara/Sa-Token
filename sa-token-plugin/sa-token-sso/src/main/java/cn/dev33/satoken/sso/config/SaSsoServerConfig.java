@@ -70,6 +70,11 @@ public class SaSsoServerConfig implements Serializable {
     public Boolean isHttp = false;
 
     /**
+     * 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）
+     */
+    public Boolean autoRenewTimeout = false;
+
+    /**
      * 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
      */
     public int maxRegClient = 32;
@@ -181,6 +186,22 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
+     * @return 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）
+     */
+    public Boolean getAutoRenewTimeout() {
+        return autoRenewTimeout;
+    }
+
+    /**
+     * @param autoRenewTimeout 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）
+     * @return 对象自身
+     */
+    public SaSsoServerConfig setAutoRenewTimeout(Boolean autoRenewTimeout) {
+        this.autoRenewTimeout = autoRenewTimeout;
+        return this;
+    }
+
+    /**
      * @return maxLoginClient 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
      */
     public int getMaxRegClient() {
@@ -234,6 +255,7 @@ public class SaSsoServerConfig implements Serializable {
                 + ", homeRoute=" + homeRoute
                 + ", isSlo=" + isSlo
                 + ", isHttp=" + isHttp
+                + ", autoRenewTimeout=" + autoRenewTimeout
                 + ", maxRegClient=" + maxRegClient
                 + ", isCheckSign=" + isCheckSign
                 + "]";

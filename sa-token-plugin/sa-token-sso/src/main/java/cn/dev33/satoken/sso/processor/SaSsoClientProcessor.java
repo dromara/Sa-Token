@@ -285,7 +285,7 @@ public class SaSsoClientProcessor {
 				// 取出 Session 剩余有效期
 				Long remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
 				if(remainSessionTimeout == null) {
-					remainSessionTimeout = ssoClientTemplate.getStpLogic().getConfig().getTimeout();
+					remainSessionTimeout = ssoClientTemplate.getStpLogic().getConfigOrGlobal().getTimeout();
 				}
 				// 构建返回
 				return new CheckTicketResult(loginId, remainSessionTimeout);
