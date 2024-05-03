@@ -193,7 +193,9 @@ public class SaSsoServerProcessor {
 		ssoServerTemplate.registerSloCallbackUrl(loginId, client, sloCallback);
 
 		// 6、给 client 端响应结果
-		return SaResult.data(loginId);
+		long remainSessionTimeout = ssoServerTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
+		return SaResult.data(loginId)
+				.set(paramName.remainSessionTimeout, remainSessionTimeout);
 	}
 
 	/**

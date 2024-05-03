@@ -57,4 +57,7 @@ public class ParamName {
 	public String nonce = "nonce";
 	public String sign = "sign";
 
+	/** Session 剩余有效期 参数名称 */
+	public String remainSessionTimeout = "remainSessionTimeout";
+
 }

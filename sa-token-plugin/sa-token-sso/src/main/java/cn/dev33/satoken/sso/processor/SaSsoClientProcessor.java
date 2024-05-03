@@ -121,22 +121,17 @@ public class SaSsoClientProcessor {
 			String serverAuthUrl = ssoClientTemplate.buildServerAuthUrl(currSsoLoginUrl, back);
 			return res.redirect(serverAuthUrl);
 		} else {
-			// ------- 1、校验ticket，获取 loginId
-			Object loginId = checkTicketByMode2Or3(ticket, apiName.ssoLogin);
+			// 1、校验ticket，获取 loginId
+			CheckTicketResult ctr = checkTicketByMode2Or3(ticket, apiName.ssoLogin);
 
-			// Be: 如果开发者自定义了处理逻辑
+			// 2、如果开发者自定义了ticket结果值处理函数，则使用自定义的函数
 			if(cfg.ticketResultHandle != null) {
-				return cfg.ticketResultHandle.apply(loginId, back);
+				return cfg.ticketResultHandle.apply(ctr, back);
 			}
 
-			// ------- 2、如果 loginId 无值，说明 ticket 无效
-			if(SaFoxUtil.isEmpty(loginId)) {
-				throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoErrorCode.CODE_30004);
-			} else {
-				// 3、如果 loginId 有值，说明 ticket 有效，此时进行登录并重定向至back地址
-				stpLogic.login(loginId);
-				return res.redirect(back);
-			}
+			// 3、登录并重定向至back地址
+			stpLogic.login(ctr.loginId, ctr.remainSessionTimeout);
+			return res.redirect(back);
 		}
 	}
 
@@ -244,14 +239,15 @@ public class SaSsoClientProcessor {
 	// 工具方法
 
 	/**
-	 * 封装：校验ticket，取出loginId
+	 * 封装：校验ticket，取出loginId，如果 ticket 无效则抛出异常
 	 * @param ticket ticket码
 	 * @param currUri 当前路由的uri，用于计算单点注销回调地址
 	 * @return loginId
 	 */
-	public Object checkTicketByMode2Or3(String ticket, String currUri) {
+	public CheckTicketResult checkTicketByMode2Or3(String ticket, String currUri) {
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
 		ApiName apiName = ssoClientTemplate.apiName;
+		ParamName paramName = ssoClientTemplate.paramName;
 
 		// --------- 两种模式
 		if(cfg.getIsHttp()) {
@@ -281,7 +277,18 @@ public class SaSsoClientProcessor {
 
 			// 校验
 			if(result.getCode() != null && result.getCode() == SaResult.CODE_SUCCESS) {
-				return result.getData();
+				// 取出 loginId
+				Object loginId = result.getData();
+				if(SaFoxUtil.isEmpty(loginId)) {
+					throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoErrorCode.CODE_30004);
+				}
+				// 取出 Session 剩余有效期
+				Long remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
+				if(remainSessionTimeout == null) {
+					remainSessionTimeout = ssoClientTemplate.getStpLogic().getConfig().getTimeout();
+				}
+				// 构建返回
+				return new CheckTicketResult(loginId, remainSessionTimeout);
 			} else {
 				// 将 sso-server 回应的消息作为异常抛出
 				throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30005);
@@ -293,7 +300,16 @@ public class SaSsoClientProcessor {
 			// 		而在当前 sso-client 没有按照相应格式重写 SaSsoClientProcessor 里的方法，
 			// 		可能会导致调用失败（注意是可能，而非一定），
 			// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
-			return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, cfg.getClient());
+
+			// 取出 loginId
+			Object loginId = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, cfg.getClient());
+			if(SaFoxUtil.isEmpty(loginId)) {
+				throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoErrorCode.CODE_30004);
+			}
+			// 取出 Session 剩余有效期
+			long remainSessionTimeout = ssoClientTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
+			// 构建返回
+			return new CheckTicketResult(loginId, remainSessionTimeout);
 		}
 	}
 
@@ -305,6 +321,23 @@ public class SaSsoClientProcessor {
 	 */
 	public Object ssoLogoutBack(SaRequest req, SaResponse res) {
 		return SaSsoProcessorHelper.ssoLogoutBack(req, res, ssoClientTemplate.paramName);
+	}
+
+
+	public static class CheckTicketResult {
+		public Object loginId;
+		public long remainSessionTimeout;
+		public CheckTicketResult(Object loginId, long remainSessionTimeout) {
+			this.loginId = loginId;
+			this.remainSessionTimeout = remainSessionTimeout;
+		}
+		@Override
+		public String toString() {
+			return "CheckTicketResult{" +
+					"loginId=" + loginId +
+					", remainSessionTimeout=" + remainSessionTimeout +
+					'}';
+		}
 	}
 
 }

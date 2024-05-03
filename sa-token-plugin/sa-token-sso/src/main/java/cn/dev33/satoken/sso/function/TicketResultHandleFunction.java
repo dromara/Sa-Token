@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sso.function;
 
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+
 import java.util.function.BiFunction;
 
 /**
@@ -27,6 +29,6 @@ import java.util.function.BiFunction;
  * @since 1.38.0
  */
 @FunctionalInterface
-public interface TicketResultHandleFunction extends BiFunction<Object, String, Object> {
+public interface TicketResultHandleFunction extends BiFunction<SaSsoClientProcessor.CheckTicketResult, String, Object> {
 
 }

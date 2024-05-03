@@ -16,6 +16,7 @@
 package cn.dev33.satoken.sso.exception;
 
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 
 /**
@@ -57,12 +58,38 @@ public class SaSsoException extends SaTokenException {
 		super.setCode(code);
 		return this;
 	}
-	
+
+
 	/**
-	 * 如果flag==true，则抛出message异常 
+	 * 断言 flag 不为 true，否则抛出 message 异常
 	 * @param flag 标记
-	 * @param message 异常信息 
+	 * @param message 异常信息
+	 * @param code 异常细分状态码
 	 */
+	public static void notTrue(boolean flag, String message, int code) {
+		if(flag) {
+			throw new SaSsoException(message).setCode(code);
+		}
+	}
+
+	/**
+	 * 断言 value 不为空，否则抛出 message 异常
+	 * @param value 值
+	 * @param message 异常信息
+	 * @param code 异常细分状态码
+	 */
+	public static void notEmpty(Object value, String message, int code) {
+		if(SaFoxUtil.isEmpty(value)) {
+			throw new SaSsoException(message).setCode(code);
+		}
+	}
+
+	/**
+	 * 如果flag==true，则抛出message异常
+	 * @param flag 标记
+	 * @param message 异常信息
+	 */
+	@Deprecated
 	public static void throwBy(boolean flag, String message) {
 		if(flag) {
 			throw new SaSsoException(message);
