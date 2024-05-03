@@ -1095,5 +1095,31 @@
 			}
 		</script>
 		
+		<script>
+			// 逐字打印效果
+			var tcStr = '一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！';
+			var con = $('.sub-title');
+			var index = 1;
+			var length = tcStr.length;
+			var tId = null;
+			 
+			function start(){
+				con.text(tcStr.charAt(0));
+
+				tId = setInterval(function(){
+					con.append(tcStr.charAt(index));
+					if(index++ === length){
+						clearInterval(tId);
+						index = 1;
+						setTimeout(function(){
+							start()
+						}, 2000)
+					}
+				}, 90);
+			}
+			start();
+
+		</script>
+		
 	</body>
 </html>
