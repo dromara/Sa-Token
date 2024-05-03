@@ -13,6 +13,10 @@
 		<link rel="stylesheet" href="static/index.css">
 		<link rel="stylesheet" href="static/swiper/swiper-bundle.min.css">
 		<link rel="stylesheet" href="static/swiper/index-swiper.css">
+		<style>
+			.gb-cursor {display: inline-block;width: 2px;height: 22px;position: relative;top: 4px;left: -4px;background-color: black;animation: blink 0.7s infinite alternate;}
+			@keyframes blink { from {opacity: 0;} to {opacity: 1;} }
+		</style>
 	</head>
 	<body>
 		<!-- 总盒子 -->
@@ -110,7 +114,10 @@
 				<div class="content-box">
 					<!-- <div class="fenge"></div> -->
 					<h1>Sa-Token<small>v1.37.0</small></h1>
-					<div class="sub-title">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</div>
+					<div class="sub-title">
+						<span class="sub-title-nr">一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！</span>
+						<div class="gb-cursor">&nbsp;</div>
+					</div>
 					<div class="btn-box">
 						<a class="abtn" href="https://gitee.com/dromara/sa-token" target="_blank">Gitee</a>
 						<a class="abtn" href="https://github.com/dromara/sa-token" target="_blank">GitHub</a>
@@ -1098,7 +1105,7 @@
 		<script>
 			// 逐字打印效果
 			var tcStr = '一个轻量级 java 权限认证框架，让鉴权变得简单、优雅！';
-			var con = $('.sub-title');
+			var con = $('.sub-title .sub-title-nr');
 			var index = 1;
 			var length = tcStr.length;
 			var tId = null;
@@ -1113,7 +1120,7 @@
 						index = 1;
 						setTimeout(function(){
 							start()
-						}, 2000)
+						}, 3000)
 					}
 				}, 90);
 			}
