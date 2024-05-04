@@ -93,6 +93,7 @@
 	- [加入讨论群](/more/join-group) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 	- [需求提交](/more/demand-commit) 
+	- [问卷调查](/more/wenjuan) 
 
 - **附录**
 	- [常见问题排查](/more/common-questions)  
