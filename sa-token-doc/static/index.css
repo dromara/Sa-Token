@@ -50,6 +50,9 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* .content-box p{line-height: 30px; padding: 0px 1em;} */
 /* 角标位置修复 */
 .badge-box a:nth-child(-n+2) img{position: relative; top: 1px;}
+/* 模拟副标题的光标闪烁 */
+.gb-cursor {display: inline-block;width: 2px;height: 22px;position: relative;top: 4px;left: -4px;background-color: black;animation: blink 0.7s infinite alternate;}
+@keyframes blink { from {opacity: 0;} to {opacity: 1;} }
 
 /* .main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg);} */
 .main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg3.png); background-size: 120% 100%;}
@@ -171,6 +174,12 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* -------- 友情链接 --------- */
 .com-box-you a{flex: 0 0 14.5%; line-height: 60px; height: 60px; margin: 10px;}
 .com-box-you a img{min-width: 60%; max-width: 85%; vertical-align: middle; max-height: 100%;}
+
+/* -------- Dromara 成员项目 --------- */
+.table-show-pj{border: 1px #ddd solid; border-width: 1px 0 0 1px ;}
+.table-show-pj a{flex: 0 0 16.5%; border: 1px #ddd solid; margin: 0; padding: 7px 0; overflow: hidden;}
+.table-show-pj a{border-width: 0 1px 1px 0px;}
+.table-show-pj a img{min-width: 60%; max-width: 70%; }
 
 /* -------- 底部 - 连接 --------- */
 #footer{background-color: #181818;}
