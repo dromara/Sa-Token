@@ -930,7 +930,7 @@ var donateList = [
 		"name": "MetaLowCode",
 		"link": "https://gitee.com/meta_low_code_admin",
 		"money": 220.0,
-		"msg": "可能是最适合Java程序员的低代码平台 -- 美乐低代码 https://melecode.com/",
+		"msg": '<a href="https://melecode.com/" target="_blank">可能是最适合Java程序员的低代码平台 -- 美乐低代码 https://melecode.com/</a>',
 		"date": "2023-11-23"
 	},
 	{
@@ -951,7 +951,7 @@ var donateList = [
 		"name": "Justin Chia",
 		"link": "https://gitee.com/justin-chia",
 		"money": 218.0,
-		"msg": "可以二开的国产低代码表单 https://vform666.com/",
+		"msg": '<a href="https://vform666.com/" target="_blank">可以二开的国产低代码表单 https://vform666.com/</a>',
 		"date": "2023-12-05"
 	},
 	{
