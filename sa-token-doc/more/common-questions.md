@@ -534,7 +534,35 @@ public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForS
 ```
 
 
+### Q：Webflux 环境集成，或者 SpringCloud Gateway 环境集成后，过滤器里路由拦截鉴权报错：`java.lang.NoSuchFieldError: defaultInstance`
 
+``` java
+java.lang.NoSuchFieldError: defaultInstance
+	at cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil.match(SaPathPatternParserUtil.java:40)
+	at cn.dev33.satoken.reactor.spring.SaTokenContextForSpringReactor.matchPath(SaTokenContextForSpringReactor.java:34)
+	at cn.dev33.satoken.router.SaRouter.isMatch(SaRouter.java:58)
+	at cn.dev33.satoken.router.SaRouter.isMatch(SaRouter.java:72)
+	... 
+```
+
+原因：SpringBoot 版本用的太低了，导致一些类不存在。
+
+- 方案一：升级项目的 SpringBoot 版本至 `2.3.x` 以上
+- 方案二：像上面的问题解决方案一样，重写一下相关类：
+
+``` java
+/**
+ * 自定义 SaTokenContext 实现类，重写 matchPath 方法，将 PathPatternParser.defaultInstance 改为 SaPathMatcherHolder.getPathMatcher()
+ */
+@Primary
+@Component
+public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForSpringReactor {
+    @Override
+    public boolean matchPath(String pattern, String path) {
+        return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
+    }
+}
+```
 
 
 
