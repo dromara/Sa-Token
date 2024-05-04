@@ -166,6 +166,7 @@
 		<!--  -->
 		<script src="./static/docsify-plugin.js?v=6"></script>
 		<script src="./static/is-star-plugin.js?v=6"></script>
+		<script src="./static/is-fill-in-wj-plugin.js?v=6"></script>
 		<script>
 			var saTokenTopVersion = '1.37.0';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
@@ -201,7 +202,7 @@
 					tabHeadings: true       // 用标题+粗体来定制选项卡
 				},
 				// 自定义插件 
-				plugins: [myDocsifyPlugin, window.isStarPlugin],
+				plugins: [myDocsifyPlugin, window.isStarPlugin, window.isFillInWjPlugin],
 			}
 		</script>
 		<script src="static/docsify.min.js"></script>
@@ -388,5 +389,6 @@
 				$('.zk-btn--1').show();
 			}
 		</script>
+		
 	</body>
 </html>
