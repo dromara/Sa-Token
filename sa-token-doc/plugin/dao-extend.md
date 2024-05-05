@@ -14,6 +14,7 @@
 - sa-token-redis-fastjson2：Redis集成包，使用 fastjson2 序列化方式。
 - sa-token-redisson-jackson：Redis集成包，Redisson客户端使用，jackson 序列化方式。
 - sa-token-redisson-jackson2：通用 redisson 集成方案 （spring, solon, jfinal 等都可用）。
+- sa-token-hutool-timed-cache：集成 hutool 框架的 Timed-Cache 缓存方案（基于内存）。
 
 有关 Redis 集成，详细参考：[集成Redis](/up/integ-redis)，更多存储方式欢迎提交PR 
 
