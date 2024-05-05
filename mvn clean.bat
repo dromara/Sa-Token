@@ -26,6 +26,7 @@ cd sa-token-demo-websocket-spring & call mvn clean & cd ..
 cd sa-token-demo-bom-import & call mvn clean & cd ..
 
 cd sa-token-demo-hutool-timed-cache & call mvn clean & cd ..
+cd sa-token-demo-ssm & call mvn clean & cd ..
 
 
 
@@ -34,6 +35,7 @@ cd sa-token-demo-sso-server & call mvn clean & cd ..
 cd sa-token-demo-sso1-client & call mvn clean & cd ..
 cd sa-token-demo-sso2-client & call mvn clean & cd ..
 cd sa-token-demo-sso3-client & call mvn clean & cd ..
+cd sa-token-demo-sso3-client-test2 & call mvn clean & cd ..
 cd sa-token-demo-sso3-client-nosdk & call mvn clean & cd ..
 cd ..
 
