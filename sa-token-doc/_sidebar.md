@@ -29,7 +29,7 @@
 	- [账号封禁](/up/disable) 
 	- [密码加密](/up/password-secure) 
 	- [会话查询](/up/search-session) 
-	- [Http Basic 认证](/up/basic-auth) 
+	- [Http Basic/Digest 认证](/up/basic-auth) 
 	- [全局侦听器](/up/global-listener) 
 	- [全局过滤器](/up/global-filter) 
 	- [多账号认证](/up/many-account) 

@@ -14,7 +14,7 @@ Http Basic 是 http 协议中最基础的认证方式，其有两个特点：
 ``` java
 @RequestMapping("test3")
 public SaResult test3() {
-    SaBasicUtil.check("sa:123456");
+    SaHttpBasicUtil.check("sa:123456");
 	// ... 其它代码
 	return SaResult.ok();
 }
@@ -44,14 +44,14 @@ public class GlobalExceptionHandler {
 
 ### 2、其它启用方式 
 ``` java
-// 对当前会话进行 Basic 校验，账号密码为 yml 配置的值（例如：sa-token.basic=sa:123456）
-SaBasicUtil.check();
+// 对当前会话进行 Http Basic 校验，账号密码为 yml 配置的值（例如：sa-token.http-basic=sa:123456）
+SaHttpBasicUtil.check();
 
-// 对当前会话进行 Basic 校验，账号密码为：`sa / 123456`
-SaBasicUtil.check("sa:123456");
+// 对当前会话进行 Http Basic 校验，账号密码为：`sa / 123456`
+SaHttpBasicUtil.check("sa:123456");
 
-// 以注解方式启用 Basic 校验
-@SaCheckBasic(account = "sa:123456")
+// 以注解方式启用 Http Basic 校验
+@SaCheckHttpBasic(account = "sa:123456")
 @RequestMapping("test3")
 public SaResult test3() {
 	return SaResult.ok();
@@ -63,7 +63,7 @@ public SaServletFilter getSaServletFilter() {
 	return new SaServletFilter()
 			.addInclude("/**").addExclude("/favicon.ico")
 			.setAuth(obj -> {
-				SaRouter.match("/test/**", () -> SaBasicUtil.check("sa:123456"));
+				SaRouter.match("/test/**", () -> SaHttpBasicUtil.check("sa:123456"));
 			});
 }
 ```
@@ -73,6 +73,41 @@ public SaServletFilter getSaServletFilter() {
 ``` url
 http://sa:123456@127.0.0.1:8081/test/test3
 ```
+
+
+### 4、Http Digest 认证 
+
+Http Digest 认证是 Http Basic 认证的升级版，Http Digest 在提交请求时不会使用明文方式传输认证信息，而是使用一定的规则加密后提交。
+不过对于开发者来讲，开启 Http Digest 认证校验的流程与 Http Basic 认证基本是一致的。
+
+``` java
+// 测试 Http Digest 认证   浏览器访问： http://localhost:8081/test/testDigest
+@RequestMapping("testDigest")
+public SaResult testDigest() {
+	SaHttpDigestUtil.check("sa", "123456");
+	return SaResult.ok();
+}
+
+// 使用注解方式开启 Http Digest 认证
+@SaCheckHttpDigest("sa:123456")
+@RequestMapping("testDigest2")
+public SaResult testDigest() {
+	return SaResult.ok();
+}
+
+
+// 对当前会话进行 Http Digest 校验，账号密码为 yml 配置的值（例如：sa-token.http-digest=sa:123456）
+SaHttpDigestUtil.check();
+```
+
+与上面的 Http Basic 认证一致，在访问这个路由时，浏览器会强制弹出一个表单，客户端输入正确的账号密码后即可通过校验。
+
+同样的，Http Digest 也支持在浏览器访问接口时直接使用 @ 符号拼接账号密码信息，使客户端直接通过校验。
+
+``` url
+http://sa:123456@127.0.0.1:8081/test/testDigest
+```
+
 
 
 --- 
