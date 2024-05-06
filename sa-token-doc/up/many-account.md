@@ -232,5 +232,5 @@ public void addInterceptors(InterceptorRegistry registry) {
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpUserUtil.java"
 	target="_blank">
-	本章代码示例：Sa-Token 多账号体系认证 —— [ com.pj.satoken.StpUserUtil.java ]
+	本章代码示例：Sa-Token 多账号体系认证 —— [ StpUserUtil.java ]
 </a>

@@ -18,7 +18,7 @@
 					<div class="logo-box">
 						<img src="logo.png" title="logo" />
 						<h1 class="logo-text">Sa-Token</h1>
-						<sub>v1.37.0</sub>
+						<sub>v1.38.0</sub>
 					</div>
 				</a>
 			</div>
@@ -28,6 +28,7 @@
 				</div>
 				<select class="select-version p-none" onchange="location.href=this.value">
 					<option value="doc.html">最新版</option>
+					<option value="v/v1.37.0/doc.html">v1.37.0</option>
 					<option value="v/v1.36.0/doc.html">v1.36.0</option>
 					<option value="v/v1.35.0/doc.html">v1.35.0</option>
 					<option value="v/v1.34.0/doc.html">v1.34.0</option>
@@ -168,7 +169,7 @@
 		<script src="./static/is-star-plugin.js?v=6"></script>
 		<script src="./static/is-fill-in-wj-plugin.js?v=6"></script>
 		<script>
-			var saTokenTopVersion = '1.37.0';	// Sa-Token最新版本 
+			var saTokenTopVersion = '1.38.0';	// Sa-Token最新版本 
 			var name = '<img style="width: 60px; height: 60px; vertical-align: middle;" src="logo.png" alt="logo" /> ';
 			name += '<b style="font-size: 28px; vertical-align: middle;">Sa-Token</b> <sub>v' + saTokenTopVersion + '</sub>';
 			window.$docsify = {
@@ -292,11 +293,12 @@
 						<p>1、如果你是使用 PC 端微信，请点此链接：<a href="https://work.weixin.qq.com/kfid/kfcdd45c432fee9655f" target="_blank">https://work.weixin.qq.com/kfid/kfcdd45c432fee9655f</a></p>
 						<p>2、如果你是使用手机端微信，请扫码：</p>
 						<p><img src="https://oss.dev33.cn/sa-token/sa-token-xiaozhushou.jpg" width="200px"></p>
+						<p>如果您的问题已解决，我们希望您能够花费一点时间将解决方案发布在：<a href="https://gitee.com/dromara/sa-token/issues/I9I9CY" target="_blank">踩坑记录征集</a>，帮助以后遇到同样问题的开发者快速排查，感激不尽！</p>
 					</div>
 				`;
 				layer.alert(str, {
 					title: '技术求助', 
-					area: '550px', 
+					area: '650px', 
 					offset: '10%',
 				})
 			})
@@ -304,7 +306,7 @@
 				// 给个小提示
 				const index = layer.tips('框架技术支持，点此求助', '.help-tips', {
 					tips: [1, '#000'] ,//还可配置颜色
-					time: 5000,
+					// time: 5000,
 				});
 				// 改为 fixed 定位，否则它会随着滚动条移动，样式就跑偏了
 				$('#layui-layer' + index).css('position', 'fixed');

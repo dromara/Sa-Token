@@ -140,5 +140,5 @@ public String add2() {
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SafeAuthController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 二级认证 —— [ com.pj.cases.up.SafeAuthController.java ]
+	本章代码示例：Sa-Token 二级认证 —— [ SafeAuthController.java ]
 </a>

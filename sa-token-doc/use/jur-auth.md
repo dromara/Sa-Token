@@ -196,6 +196,6 @@ StpUtil.hasPermission("index.html");      // false
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/JurAuthController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 权限认证 —— [ com.pj.cases.use.JurAuthController.java ]
+	本章代码示例：Sa-Token 权限认证 —— [ JurAuthController.java ]
 </a>
 <a class="dt-btn" href="https://www.wenjuan.ltd/s/ZfIjYr9/" target="_blank">本章小练习：Sa-Token 基础 - 权限认证，章节测试</a>

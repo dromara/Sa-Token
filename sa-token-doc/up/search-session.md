@@ -90,7 +90,7 @@ for (String sessionId : sessionIdList) {
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SearchSessionController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 会话查询  —— [ com.pj.cases.up.SearchSessionController.java ]
+	本章代码示例：Sa-Token 会话查询  —— [ SearchSessionController.java ]
 </a>
 
 

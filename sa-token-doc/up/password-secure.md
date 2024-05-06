@@ -104,5 +104,5 @@ String stronger_salt = BCrypt.gensalt(12);
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/SecureController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 密码加密 —— [ com.pj.cases.up.SecureController.java ]
+	本章代码示例：Sa-Token 密码加密 —— [ SecureController.java ]
 </a>

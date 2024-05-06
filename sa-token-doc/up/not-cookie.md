@@ -106,5 +106,5 @@ uni.request({
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/up/NotCookieController.java"
 	target="_blank">
-	本章代码示例：Sa-Token 前后端分离样例 —— [ com.pj.cases.up.NotCookieController.java ]
+	本章代码示例：Sa-Token 前后端分离样例 —— [ NotCookieController.java ]
 </a>
