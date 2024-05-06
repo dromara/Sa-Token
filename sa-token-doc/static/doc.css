@@ -367,6 +367,8 @@ body {
 .zz-btn-box button{padding: 5px 10px; cursor: pointer; border: 1px #ccc solid; color: #999; background-color: #FFF;}
 .zz-btn-box button:hover{box-shadow: 0 0 10px #ddd;}
 
+.syzz-show-btn{border: 1px #ccc solid; padding: 5px 10px; background-color: #FFF; color: #666; cursor: pointer;}
+.syzz-show-btn:hover{box-shadow: 0 0 10px #ddd;}
 
 /* ajax加载时的转圈圈样式 */
 .ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}

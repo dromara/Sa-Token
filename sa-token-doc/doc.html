@@ -392,5 +392,36 @@
 			}
 		</script>
 		
+		<!-- 赞助效果图展示 -->
+		<script>
+			function showSyzz(){
+				layer.photos({
+					photos: {
+						title: '',
+						id: new Date().getTime(),
+						start: 0,
+						data: [
+							{
+								pid: 1,
+								alt: 'gitee 开源项目推广，日增 star 74',
+								src: 'https://oss.dev33.cn/sa-token/more/syzz-xg-1.png',
+							},
+							{
+								pid: 2,
+								alt: 'gitee 开源项目推广，日增 star 247',
+								src: 'https://oss.dev33.cn/sa-token/more/syzz-xg-2.png',
+							},
+							{
+								pid: 3,
+								alt: '某互联网公司线下活动，报名邀请',
+								src: 'https://oss.dev33.cn/sa-token/more/syzz-xg-3.png',
+							}
+						]
+					}
+					,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+				});	
+			}
+		</script>
+		
 	</body>
 </html>
