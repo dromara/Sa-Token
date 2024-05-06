@@ -65,11 +65,6 @@ public class SaSsoClientConfig implements Serializable {
     public String getDataUrl = "/sso/getData";
 
     /**
-     * 单独配置 Server 端查询 userinfo 地址
-     */
-    public String userinfoUrl = "/sso/userinfo";
-
-    /**
      * 单独配置 Server 端单点注销地址
      */
     public String sloUrl = "/sso/signout";
@@ -90,7 +85,7 @@ public class SaSsoClientConfig implements Serializable {
     public Boolean isSlo = true;
 
     /**
-     * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
+     * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、拉取数据getData）
      */
     public Boolean isHttp = false;
 
@@ -137,14 +132,14 @@ public class SaSsoClientConfig implements Serializable {
     }
 
     /**
-     * @return isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
+     * @return isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、拉取数据getData）
      */
     public Boolean getIsHttp() {
         return isHttp;
     }
 
     /**
-     * @param isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
+     * @param isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、拉取数据getData）
      * @return 对象自身
      */
     public SaSsoClientConfig setIsHttp(Boolean isHttp) {
@@ -212,22 +207,6 @@ public class SaSsoClientConfig implements Serializable {
      */
     public SaSsoClientConfig setGetDataUrl(String getDataUrl) {
         this.getDataUrl = getDataUrl;
-        return this;
-    }
-
-    /**
-     * @return 配置的 Server 端查询 userinfo 地址
-     */
-    public String getUserinfoUrl() {
-        return userinfoUrl;
-    }
-
-    /**
-     * @param userinfoUrl 配置 Server 端查询 userinfo 地址
-     * @return 对象自身
-     */
-    public SaSsoClientConfig setUserinfoUrl(String userinfoUrl) {
-        this.userinfoUrl = userinfoUrl;
         return this;
     }
 
@@ -323,7 +302,6 @@ public class SaSsoClientConfig implements Serializable {
                 + ", authUrl=" + authUrl
                 + ", checkTicketUrl=" + checkTicketUrl
                 + ", getDataUrl=" + getDataUrl
-                + ", userinfoUrl=" + userinfoUrl
                 + ", sloUrl=" + sloUrl
                 + ", currSsoLogin=" + currSsoLogin
                 + ", currSsoLogoutCall=" + currSsoLogoutCall
@@ -354,13 +332,6 @@ public class SaSsoClientConfig implements Serializable {
      */
     public String splicingGetDataUrl() {
         return SaFoxUtil.spliceTwoUrl(getServerUrl(), getGetDataUrl());
-    }
-
-    /**
-     * @return 获取拼接url：Server 端查询 userinfo 地址
-     */
-    public String splicingUserinfoUrl() {
-        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getUserinfoUrl());
     }
 
     /**
