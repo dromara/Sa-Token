@@ -94,6 +94,7 @@ StpUtil.getSessionBySessionId("xxxx-xxxx-xxxx");   // 获取指定key的Session,
 ``` java
 // Token 最低活跃频率
 StpUtil.getTokenActiveTimeout();   // 获取当前 token 距离被冻结还剩多少时间 (单位: 秒)
+StpUtil.getTokenLastActiveTime();  // 获取当前 token 最后活跃时间
 StpUtil.checkActiveTimeout();   // 检查当前token 是否已经被冻结，如果是则抛出异常  
 StpUtil.updateLastActiveToNow();   // 续签当前token：(将 [最后操作时间] 更新为当前时间戳)   
 

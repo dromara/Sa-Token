@@ -176,8 +176,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .com-box-you a img{min-width: 60%; max-width: 85%; vertical-align: middle; max-height: 100%;}
 
 /* -------- Dromara 成员项目 --------- */
-.table-show-pj{border: 1px #ddd solid; border-width: 1px 0 0 1px ;}
-.table-show-pj a{flex: 0 0 16.5%; border: 1px #ddd solid; margin: 0; padding: 7px 0; overflow: hidden;}
+.table-show-pj{border: 1px #d5d5d5 solid; border-width: 1px 0 0 1px ;}
+.table-show-pj a{flex: 0 0 16.5%; border: 1px #d5d5d5 solid; margin: 0; padding: 7px 0; overflow: hidden;}
 .table-show-pj a{border-width: 0 1px 1px 0px;}
 .table-show-pj a img{min-width: 60%; max-width: 70%; }
 

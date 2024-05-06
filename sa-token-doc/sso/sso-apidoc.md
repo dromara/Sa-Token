@@ -22,7 +22,7 @@ http://{host}:{port}/sso/auth
 | :--------		| :--------	| :--------															|
 | redirect		| 是		| 登录成功后的重定向地址，一般填写 location.href（从哪来回哪去）							|
 | mode			| 否		| 授权模式，取值 [simple, ticket]，simple=登录后直接重定向，ticket=带着ticket参数重定向，默认值为ticket			|
-| client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则校验 ticket 时也必须时这个 client 才可以校验成功			|
+| client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则校验 ticket 时也必须是这个 client 才可以校验成功			|
 
 访问接口后有两种情况：
 - 情况一：当前会话在 SSO 认证中心未登录，会进入登录页开始登录。
@@ -60,6 +60,9 @@ http://{host}:{port}/sso/checkTicket
 | ticket		| 是		| 在步骤 1 中授权重定向时的 ticket 参数 						|
 | ssoLogoutCall	| 否		| 单点注销时的回调通知地址，只在SSO模式三单点注销时需要携带此参数|
 | client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则必须填写的和 `/sso/auth` 登录时填写的一致才可以校验成功			|
+| timestamp		| 是		| 当前时间戳，13位									|
+| nonce			| 是		| 随机字符串										|
+| sign			| 是		| 签名，生成算法：`md5( [client={client值}&]nonce={随机字符串}&[ssoLogoutCall={单点注销回调地址}&]ticket={ticket值}&timestamp={13位时间戳}&key={secretkey秘钥} )`	 注：[]内容代表可选 				|
 
 返回值场景：
 - 校验成功时：
@@ -68,7 +71,8 @@ http://{host}:{port}/sso/checkTicket
 {
     "code": 200,
     "msg": "ok",
-    "data": "10001"	// 此 ticket 指向的 loginId
+    "data": "10001",	// 此 ticket 指向的 loginId
+	"remainSessionTimeout": 7200, // 此账号在 sso-server 端的会话剩余有效期（单位：s）
 }
 ```
 

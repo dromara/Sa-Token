@@ -4,7 +4,9 @@
 
 --- 
 
-### 方式1、在 application.yml 配置
+### 1、配置方式
+
+##### 方式1、在 application.yml 配置
 
 <!---------------------------- tabs:start ---------------------------->
 
@@ -52,7 +54,7 @@ sa-token.is-log=true
 
 
 
-### 方式2、通过代码配置
+##### 方式2、通过代码配置
 
 <!------------------------------ tabs:start ------------------------------>
 <!------------- tab:模式 1 ------------->
@@ -108,7 +110,7 @@ public class SaTokenConfigure {
 
 
 --- 
-### 所有可配置项
+### 2、核心包所有可配置项
 
 **你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可**
 
@@ -141,7 +143,8 @@ public class SaTokenConfigure {
 | basic					| String	| ""		| Http Basic 认证的账号和密码 [参考：Http Basic 认证](/up/basic-auth)						|
 | currDomain			| String	| null		| 配置当前项目的网络访问地址													|
 | checkSameToken			| Boolean		| false		| 是否校验Same-Token（部分rpc插件有效）															|
-| cookie				| Object	| new SaCookieConfig()	| Cookie配置对象															|
+| cookie				| Object	| new SaCookieConfig()	| Cookie 配置对象															|
+| sign					| Object	| new SaSignConfig()	| API 签名配置对象															|
 
 Cookie相关配置：
 
@@ -179,35 +182,90 @@ sa-token.cookie.sameSite=Lax
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+Sign 参数签名相关配置：
 
-### 单点登录相关配置 
+| 参数名称				| 类型		| 默认值		| 说明																	|
+| :--------				| :--------	| :--------	| :--------																|
+| secretKey				| String	| null		| API 调用签名秘钥														|
+| timestampDisparity	| long		| 900000		| 接口调用时的时间戳允许的差距（单位：ms），-1 代表不校验差距，默认15分钟		|
 
-Server 端配置：
+示例：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token: 
+    # 参数签名配置 
+    sign: 
+		# API 接口调用签名秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# API 接口调用签名秘钥
+sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
+
+
+### 3、单点登录相关配置 
+
+**SSO-Server 端配置：**
 
 | 参数名称		| 类型		| 默认值		| 说明																			|
 | :--------		| :--------	| :--------	| :--------																		|
+| mode			| String	| 			| 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）			|
 | ticketTimeout	| long		| 300		| ticket 有效期 （单位: 秒）														|
 | allowUrl		| String	| *			| 所有允许的授权回调地址，多个用逗号隔开（不在此列表中的URL将禁止下放ticket），参考：[SSO整合：配置域名校验](/sso/sso-check-domain)	|
+| homeRoute		| String	|  			| 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由			|
 | isSlo			| Boolean	| false		| 是否打开单点注销功能															|
 | isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
-| secretkey		| String	| null		| 调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）								|
+| autoRenewTimeout	| Bolean	| false	| 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）			|
+| maxRegClient	| int		| 32		| 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出			|
+| isCheckSign	| Boolean	| true		| 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）		|
 
+配置示例：
 
-Client 端配置：
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token:
+    # SSO 单点登录服务端配置 
+    sso-server:
+        # Ticket有效期 (单位: 秒)，默认五分钟 
+        ticket-timeout: 300
+        # 所有允许的授权回调地址
+        allow-url: "*"
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# Ticket有效期 (单位: 秒)，默认五分钟 
+sa-token.sso-server.ticket-timeout=300
+# 所有允许的授权回调地址
+sa-token.sso-server.allow-url="*"
+```
+<!---------------------------- tabs:end ---------------------------->
+
+**SSO-Client 端配置：**
 
 | 参数名称		| 类型		| 默认值		| 说明											|
 | :--------		| :--------	| :--------	| :--------										|
-| authUrl		| String	| /sso/auth			| 配置 Server 端单点登录授权地址					|
-| isSlo			| Boolean	| false				| 是否打开单点注销功能							|
-| isHttp		| Boolean	| false				| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
-| checkTicketUrl| String	| /sso/checkTicket	| 配置 Server 端的 `ticket` 校验地址							|
-| userinfoUrl	| String	| /sso/userinfo		| 配置 Server 端查询 `userinfo` 地址									|
-| sloUrl		| String	| /sso/signout		| 配置 Server 端单点注销地址										|
-| ssoLogoutCall	| String	| null				| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
-| secretkey		| String	| null				| 接口调用秘钥 （用于SSO模式三单点注销的接口通信身份校验）		|
-| serverUrl		| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，参考：[详解](/sso/sso-questions?id=问：模式三配置一堆-xxx-url-，有办法简化一下吗？)	|
+| mode			| String	| 					| 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）			|
 | client		| String	| ""				| 当前 Client 名称标识，用于和 ticket 码的互相锁定			|
-
+| serverUrl		| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，参考：[详解](/sso/sso-questions?id=问：模式三配置一堆-xxx-url-，有办法简化一下吗？)	|
+| authUrl		| String	| /sso/auth			| 配置 Server 端单点登录授权地址					|
+| checkTicketUrl| String	| /sso/checkTicket	| 配置 Server 端的 `ticket` 校验地址							|
+| getDataUrl	| String	| /sso/getData		| 配置 Server 端的 拉取数据 地址									|
+| sloUrl		| String	| /sso/signout		| 配置 Server 端单点注销地址										|
+| currSsoLogin	| String	| null				| 配置当前 Client 端的登录地址（为空时自动获取）	|
+| currSsoLogoutCall	| String	| null			| 配置当前 Client 端的单点注销回调URL （为空时自动获取）	|
+| isSlo			| Boolean	| true				| 是否打开单点注销功能							|
+| isHttp		| Boolean	| false				| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、拉取数据getData），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
+| isCheckSign	| Boolean	| true		| 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）		|
 
 配置示例：
 
@@ -217,21 +275,25 @@ Client 端配置：
 # Sa-Token 配置
 sa-token: 
     # SSO-相关配置
-    sso: 
-        # SSO-Server端 单点登录授权地址 
-        auth-url: http://sa-sso-server.com:9000/sso/auth
+    sso-client: 
+        # sso-server 端主机地址
+        server-url: http://sa-sso-server.com:9000
+        # 是否打开单点注销功能 
+        is-slo: true
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
-# SSO-Server端 单点登录授权地址 
-sa-token.sso.auth-url=http://sa-sso-server.com:9000/sso/auth
+# sso-server 端主机地址
+sa-token.sso-client.server-url=http://sa-sso-server.com:9000
+# 是否打开单点注销功能 
+sa-token.sso-client.is-slo=true
 ```
 <!---------------------------- tabs:end ---------------------------->
 
 
 
 
-### OAuth2.0相关配置 
+### 4、OAuth2.0相关配置 
 | 参数名称				| 类型		| 默认值	| 说明																		|
 | :--------				| :--------	| :--------	| :--------																	|
 | isCode				| Boolean	| true		| 是否打开模式：授权码（`Authorization Code`）								|
@@ -292,7 +354,7 @@ sa-token.oauth2.is-client=true
 
 
 
-### 部分配置项详解
+### 5、部分配置项详解
 
 对部分配置项做一下详解 
 
