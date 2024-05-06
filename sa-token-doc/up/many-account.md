@@ -50,12 +50,72 @@ public class StpUserUtil {
 
 }
 ```
-4. 接下来就可以像调用`StpUtil.java`一样调用 `StpUserUtil.java`了，这两套账号认证的逻辑是完全隔离的。
 
-> 成品样例参考：[码云 StpUserUtil.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpUserUtil.java)
+成品样例参考：[码云 StpUserUtil.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpUserUtil.java)
+
+4、接下来就可以像调用`StpUtil.java`一样调用 `StpUserUtil.java`了，这两套账号认证的逻辑是完全隔离的。例如：
+
+``` java
+// 凡是在 StpUtil 上有的方法，都可以在 StpUserUtil 上调用 
+StpUserUtil.login(10001);    // 在当前会话以10001账号进行登录 
+StpUserUtil.checkLogin();    // 校验当前账号是否以 User 身份进行登录 
+StpUserUtil.getSession();    // 获取当前 User 账号的 Access-Session 对象 
+StpUserUtil.checkPermission('xx');    // 校验当前登录的 user 账号是否具有 xx 权限 
+// ...
+```
 
 
-### 5、在多账户模式下使用注解鉴权
+### 5、Kit模式 
+如果你觉得 “复制代码” 的方式繁琐不够优雅，这里还有另一种方案：建立一个 `StpKit.java` 门面类，声明所有的 `StpLogic` 引用：
+``` java
+/**
+ * StpLogic 门面类，管理项目中所有的 StpLogic 账号体系
+ */
+public class StpKit {
+
+    /**
+     * 默认原生会话对象
+     */
+    public static final StpLogic DEFAULT = StpUtil.stpLogic;
+
+    /**
+     * Admin 会话对象，管理 Admin 表所有账号的登录、权限认证
+     */
+    public static final StpLogic ADMIN = new StpLogic("admin");
+
+    /**
+     * User 会话对象，管理 User 表所有账号的登录、权限认证
+     */
+    public static final StpLogic USER = new StpLogic("user");
+
+    /**
+     * XX 会话对象，（项目中有多少套账号表，就声明几个 StpLogic 会话对象）
+     */
+    public static final StpLogic XXX = new StpLogic("xx");
+
+}
+```
+
+在需要登录、权限认证的地方：
+``` java
+// 在当前会话进行 Admin 账号登录
+StpKit.ADMIN.login(10001);
+
+// 在当前会话进行 User 账号登录
+StpKit.USER.login(10001);
+
+// 检测当前会话是否以 Admin 账号登录，并具有 article:add 权限
+StpKit.ADMIN.checkPermission("article:add");
+
+// 检测当前会话是否以 User 账号登录，并通过了二级认证
+StpKit.USER.checkSafe();
+
+// 获取当前 User 会话的 Session 对象，并进行写值操作 
+StpKit.USER.getSession().set("name", "zhang");
+```
+
+
+### 6、在多账户模式下使用注解鉴权
 框架默认的注解鉴权 如`@SaCheckLogin` 只针对原生`StpUtil`进行鉴权。
 
 例如，我们在一个方法上加上`@SaCheckLogin`注解，这个注解只会放行通过`StpUtil.login(id)`进行登录的会话，
@@ -74,9 +134,8 @@ public String info() {
 
 注：`@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，亦可根据type属性指定其校验的账号体系，此属性默认为`""`，代表使用原生`StpUtil`账号体系。
 
-> 使用注解必须[添加注解拦截器](/use/at-check)
 
-### 6、使用注解合并简化代码
+### 7、使用注解合并简化代码
 交流群里有同学反应，虽然可以根据 `@SaCheckLogin(type = "user")` 指定账号类型，但几十上百个注解都加上这个的话，还是有些繁琐，代码也不够优雅，有么有更简单的解决方案？
 
 我们期待一种`[注解继承/合并]`的能力，即：自定义一个注解，标注上`@SaCheckLogin(type = "user")`，
@@ -130,14 +189,14 @@ public String info() {
 
 
 
-
-### 7、同端多登陆 
+### 8、同端多登陆 
 假设我们不仅需要在后台同时集成两套账号，我们还需要在一个客户端同时登陆两套账号（业务场景举例：一个APP中可以同时登陆商家账号和用户账号）。
 
-如果我们不做任何特殊处理的话，在客户端会发生`token覆盖`，新登录的token会覆盖掉旧登录的token从而导致旧登录失效。
+如果我们不做任何特殊处理的话，在客户端会发生`token覆盖`，新登录的 token 会覆盖掉旧登录的 token 从而导致旧登录失效。
 
-那么如何解决这个问题？<br>
-很简单，我们只要更改一下 `StpUserUtil` 的 `TokenName` 即可，参考示例如下：
+具体表现大致为：在一个浏览器登录商家账号后，再登录用户账号，然后商家账号的登录态就会自动失效。
+
+那么如何解决这个问题？很简单，我们只要更改一下 `StpUserUtil` 的 `TokenName` 即可，参考示例如下：
 
 ``` java
 public class StpUserUtil {
@@ -157,10 +216,10 @@ public class StpUserUtil {
 }
 ```
 
-再次调用 `StpUserUtil.login(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`。
+再次调用 `StpUserUtil.login(10001)` 进行登录授权时，token的名称将不再是 `satoken`，而是我们重写后的 `satoken-user`，这样就不会再客户端发生 token 的相互覆盖了。
 
 
-### 8、不同体系不同 SaTokenConfig 配置
+### 9、不同体系不同 SaTokenConfig 配置
 如果自定义的 StpUserUtil 需要使用不同 SaTokenConfig 对象, 也很简单，参考示例如下：
 
 ``` java
@@ -190,7 +249,8 @@ public class SaTokenConfigure {
 
 ```
 
-### 9、多账号体系混合鉴权
+
+### 10、多账号体系混合鉴权
 QQ群中经常有小伙伴提问：在多账号体系下，怎么在 SaInterceptor 拦截器中给一个接口登录鉴权？
 
 其实这个问题，主要是靠你的业务需求来决定，以后台 Admin 账号和前台 User 账号为例：
