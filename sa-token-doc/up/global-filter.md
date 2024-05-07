@@ -109,7 +109,7 @@ public FilterRegistrationBean<SaServletFilter> getSaServletFilter() {
 				})
 				// 等等，其它代码 ... 
 	);
-	frBean.setOrder(100);  // 更改顺序为 -101
+	frBean.setOrder(-101);  // 更改顺序为 -101
 	return frBean;
 }
 ```
