@@ -1097,10 +1097,17 @@ var donateList = [
 		"date": "2024-03-30"
 	},
 	{
-		"name": "孤独的造梦者	",
+		"name": "孤独的造梦者",
 		"link": "https://gitee.com/dpxz",
 		"money": 10.0,
 		"msg": "感谢您的开源项目！",
 		"date": "2024-04-01"
+	},
+	{
+		"name": "HiSin",
+		"link": "https://gitee.com/HisinLx",
+		"money": 20.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-05-07"
 	},
 ]
