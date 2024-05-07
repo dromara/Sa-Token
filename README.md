@@ -12,20 +12,20 @@
 	<a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
+<!-- <p align="center">学习测试请拉取 master 分支，dev 是在开发分支 (在根目录执行 `git checkout master`)</p> -->
+<p align="center"><a href="https://sa-token.cc" target="_blank">在线文档：https://sa-token.cc</a></p>
+
 
 ---
 
-## 前言：
-- [在线文档：https://sa-token.cc](https://sa-token.cc)
+### Sa-Token 介绍
 
-- 注：学习测试请拉取 master 分支，dev 是开发分支，有很多特性并不稳定（在项目根目录执行 `git checkout master`）。
-
--  开源不易，点个 star 鼓励一下吧！
+Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
 
-## Sa-Token 介绍
 
-**Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：登录认证、权限认证、单点登录、OAuth2.0、分布式Session会话、微服务网关鉴权 等一系列权限相关问题。
+<details>
+<summary><b>简单示例展示：（点击展开 / 折叠）</b></summary>
 
 Sa-Token 旨在以简单、优雅的方式完成系统的权限认证部分，以登录认证为例，你只需要：
 
@@ -79,62 +79,72 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 
 当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
 
+</details>
 
 
-## Sa-Token 功能模块一览
+<details>
+<summary> <b>核心模块一览：（点击展开 / 折叠）</b> </summary>
 
-Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
+- **登录认证** —— 单端登录、多端登录、同端互斥登录、七天内免登录。
+- **权限认证** —— 权限认证、角色认证、会话二级认证。
+- **Session会话** —— 全端共享Session、单端独享Session、自定义Session。
+- **踢人下线** —— 根据账号id踢人下线、根据Token值踢人下线。
+- **账号封禁** —— 登录封禁、按照业务分类封禁、按照处罚阶梯封禁。 
+- **持久层扩展** —— 可集成Redis、Memcached等专业缓存中间件，重启数据不丢失。
+- **分布式会话** —— 提供jwt集成、共享数据中心两种分布式会话方案。
+- **微服务网关鉴权** —— 适配Gateway、ShenYu、Zuul等常见网关的路由拦截认证。
+- **单点登录** —— 内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以搞定。
+- **OAuth2.0认证** —— 轻松搭建 OAuth2.0 服务，支持openid模式 。
+- **二级认证** —— 在已登录的基础上再次认证，保证安全性。 
+- **Http Basic认证** —— 一行代码接入 Http Basic、Digest 认证。
+- **独立Redis** —— 将权限缓存与业务缓存分离。
+- **临时Token认证** —— 解决短时间的 Token 授权问题。
+- **模拟他人账号** —— 实时操作任意用户状态数据。
+- **临时身份切换** —— 将会话身份临时切换为其它账号。
+- **前后台分离** —— APP、小程序等不支持Cookie的终端。
+- **同端互斥登录** —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录。
+- **多账号认证体系** —— 比如一个商城项目的user表和admin表分开鉴权。
+- **Token风格定制** —— 内置六种Token风格，还可：自定义Token生成策略、自定义Token前缀。
+- **注解式鉴权** —— 优雅的将鉴权与业务代码分离。
+- **路由拦截式鉴权** —— 根据路由拦截鉴权，可适配restful模式。
+- **自动续签** —— 提供两种Token过期策略，灵活搭配使用，还可自动续签。
+- **会话治理** —— 提供方便灵活的会话查询接口。
+- **记住我模式** —— 适配[记住我]模式，重启浏览器免验证。
+- **密码加密** —— 提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密。
+- **全局侦听器** —— 在用户登陆、注销、被踢下线等关键性操作时进行一些AOP操作。
+- **开箱即用** —— 提供SpringMVC、WebFlux、Solon 等常见web框架集成包，方便开箱即用。
 
-- **登录认证** —— 单端登录、多端登录、同端互斥登录、七天内免登录
-- **权限认证** —— 权限认证、角色认证、会话二级认证
-- **Session会话** —— 全端共享Session、单端独享Session、自定义Session 
-- **踢人下线** —— 根据账号id踢人下线、根据Token值踢人下线
-- **账号封禁** —— 登录封禁、按照业务分类封禁、按照处罚阶梯封禁 
-- **持久层扩展** —— 可集成Redis、Memcached等专业缓存中间件，重启数据不丢失
-- **分布式会话** —— 提供jwt集成、共享数据中心两种分布式会话方案
-- **微服务网关鉴权** —— 适配Gateway、ShenYu、Zuul等常见网关的路由拦截认证
-- **单点登录** —— 内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以搞定
-- **OAuth2.0认证** —— 轻松搭建 OAuth2.0 服务，支持openid模式 
-- **二级认证** —— 在已登录的基础上再次认证，保证安全性 
-- **Basic认证** —— 一行代码接入 Http Basic 认证 
-- **独立Redis** —— 将权限缓存与业务缓存分离 
-- **临时Token认证** —— 解决短时间的Token授权问题
-- **模拟他人账号** —— 实时操作任意用户状态数据
-- **临时身份切换** —— 将会话身份临时切换为其它账号
-- **前后台分离** —— APP、小程序等不支持Cookie的终端
-- **同端互斥登录** —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录
-- **多账号认证体系** —— 比如一个商城项目的user表和admin表分开鉴权
-- **Token风格定制** —— 内置六种Token风格，还可：自定义Token生成策略、自定义Token前缀
-- **注解式鉴权** —— 优雅的将鉴权与业务代码分离
-- **路由拦截式鉴权** —— 根据路由拦截鉴权，可适配restful模式
-- **自动续签** —— 提供两种Token过期策略，灵活搭配使用，还可自动续签
-- **会话治理** —— 提供方便灵活的会话查询接口
-- **记住我模式** —— 适配[记住我]模式，重启浏览器免验证
-- **密码加密** —— 提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密 
-- **全局侦听器** —— 在用户登陆、注销、被踢下线等关键性操作时进行一些AOP操作
-- **开箱即用** —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用
+</details>
 
-功能结构图：
 
 ![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png)
 
 
-## Sa-Token-SSO 单点登录
-Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO 接入问题：
+### SSO 单点登录
+Sa-Token SSO 分为三种模式，解决同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离……等不同架构下的 SSO 接入问题：
 
 | 系统架构						| 采用模式	| 简介						|  文档链接	|
 | :--------						| :--------	| :--------					| :--------	|
-| 前端同域 + 后端同 Redis		| 模式一		| 共享Cookie同步会话			| [文档](https://sa-token.cc/doc.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client)	|
+| 前端同域 + 后端同 Redis			| 模式一		| 共享Cookie同步会话			| [文档](https://sa-token.cc/doc.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client)	|
 | 前端不同域 + 后端同 Redis		| 模式二		| URL重定向传播会话 			| [文档](https://sa-token.cc/doc.html#/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client)	|
-| 前端不同域 + 后端 不同Redis	| 模式三		| Http请求获取会话			| [文档](https://sa-token.cc/doc.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client)	|
+| 前端不同域 + 后端 不同Redis		| 模式三		| Http请求获取会话			| [文档](https://sa-token.cc/doc.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client)	|
 
 
 1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`
-2. 后端同Redis：就是指多个系统可以连接同一个Redis。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳：[Alone独立Redis插件](https://sa-token.cc/doc.html#/plugin/alone-redis)
-3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）
+2. 后端同Redis：就是指多个系统可以连接同一个Redis。（此处并非要所有项目数据都放在一个Redis中，Sa-Token提供 **`[权限缓存与业务缓存分离]`** 的解决方案）
+3. 如果既无法做到前端同域，也无法做到后端同Redis，可以走模式三，Http请求校验 ticket 获取会话。
+4. 提供 NoSdk 模式示例，不使用 Sa-Token 的系统也可以对接。
+5. 提供 sso-server 接口文档，不使用 java 语言的系统也可以对接。
+6. 提供前后端分离整合方案：无论是 sso-server 还是 sso-client 的前后端分离都可以整合。
+7. 提供安全校验：域名校验、ticket校验、参数签名校验，有效防 ticket 劫持，防请求重放等攻击。
+8. 参数防丢：笔者曾试验多个SSO框架，均有参数丢失情况，比如登录前是：`http://a.com?id=1&name=2`，登录成功后就变成了：`http://a.com?id=1`，Sa-Token-SSO 内有专门算法保证了参数不丢失，登录成功后精准原路返回。
+9. 提供用户数据迁移方案的建议：开发前统一迁移、运行时实时数据同步、根据关键字段匹配、根据 center_id 字段匹配。
+10. 提供直接可运行的 demo 示例，帮助你快速熟悉 SSO 大致登录流程。
 
-## Sa-Token-OAuth2 授权认证
-Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求 
+
+
+### OAuth2 授权认证
+Sa-Token-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求 
 
 | 授权模式						| 简介						|
 | :--------						| :--------					|
@@ -146,50 +156,34 @@ Sa-OAuth2 模块分为四种授权模式，解决不同场景下的授权需求
 详细参考文档：[https://sa-token.cc/doc.html#/oauth2/readme](https://sa-token.cc/doc.html#/oauth2/readme)
 
 
-## 使用 Sa-Token 的开源项目 
+### 开源集成案例
 
 - [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + AntDesignVue3 + Vite + SpringBoot + Mp + HuTool + SaToken。
-
 - [[ RuoYi-Vue-Plus ]](https://gitee.com/dromara/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
-
 - [[ RuoYi-Cloud-Plus ]](https://gitee.com/dromara/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步
-
 - [[ EasyAdmin ]](https://gitee.com/lakernote/easy-admin)：一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等
-
 - [[ YC-Framework ]](http://framework.youcongtech.com/)：致力于打造一款优秀的分布式微服务解决方案。
-
 - [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写 Pig 授权方式为 Sa-Token，其他代码不变。
 
-更多开源案例可参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
+还有更多优秀开源案例无法逐一展示，请参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
 
 
-## 友情链接
+### 友情链接
 - [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：轻量级 http 通信框架，API无比优雅，支持 WebSocket、Stomp 协议
-
 - [[ Bean Searcher ]](https://github.com/ejlchina/bean-searcher)：专注高级查询的只读 ORM，使一行代码实现复杂列表检索！
-
 - [[ Jpom ]](https://gitee.com/dromara/Jpom)：简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件。
-
 - [[ TLog ]](https://gitee.com/dromara/TLog)：一个轻量级的分布式日志标记追踪神器。
-
 - [[ hippo4j ]](https://gitee.com/agentart/hippo4j)：强大的动态线程池框架，附带监控报警功能。
-
 - [[ hertzbeat ]](https://gitee.com/dromara/hertzbeat)：易用友好的开源实时监控告警系统，无需Agent，高性能集群，强大自定义监控能力。
-
 - [[ Solon ]](https://gitee.com/noear/solon)：一个更现代感的应用开发框架：更快、更小、更自由。
 
 
-## 知识星球
-<img src="https://oss.dev33.cn/sa-token/dromara-xingqiu--sa-token.jpg" width="300px" />
-
-
-## 交流群
+### 交流群
 QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)
 
 微信交流群：
 
 <img src="https://oss.dev33.cn/sa-token/qr/wx-qr-m-400k.png" width="230px" title="微信群" />
-<!-- ![微信群](https://dev33-test.oss-cn-beijing.aliyuncs.com/sa-token/i-wx-qr.png ':size=230') -->
 
 (扫码添加微信，备注：sa-token，邀您加入群聊)
 
