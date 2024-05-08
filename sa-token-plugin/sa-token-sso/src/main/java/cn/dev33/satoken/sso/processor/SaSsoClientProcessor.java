@@ -22,6 +22,7 @@ import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.model.SaCheckTicketResult;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
@@ -122,11 +123,11 @@ public class SaSsoClientProcessor {
 			return res.redirect(serverAuthUrl);
 		} else {
 			// 1、校验ticket，获取 loginId
-			CheckTicketResult ctr = checkTicketByMode2Or3(ticket, apiName.ssoLogin);
+			SaCheckTicketResult ctr = checkTicketByMode2Or3(ticket, apiName.ssoLogin);
 
 			// 2、如果开发者自定义了ticket结果值处理函数，则使用自定义的函数
 			if(cfg.ticketResultHandle != null) {
-				return cfg.ticketResultHandle.apply(ctr, back);
+				return cfg.ticketResultHandle.run(ctr, back);
 			}
 
 			// 3、登录并重定向至back地址
@@ -244,7 +245,7 @@ public class SaSsoClientProcessor {
 	 * @param currUri 当前路由的uri，用于计算单点注销回调地址
 	 * @return loginId
 	 */
-	public CheckTicketResult checkTicketByMode2Or3(String ticket, String currUri) {
+	public SaCheckTicketResult checkTicketByMode2Or3(String ticket, String currUri) {
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
 		ApiName apiName = ssoClientTemplate.apiName;
 		ParamName paramName = ssoClientTemplate.paramName;
@@ -288,7 +289,7 @@ public class SaSsoClientProcessor {
 					remainSessionTimeout = ssoClientTemplate.getStpLogic().getConfigOrGlobal().getTimeout();
 				}
 				// 构建返回
-				return new CheckTicketResult(loginId, remainSessionTimeout);
+				return new SaCheckTicketResult(loginId, remainSessionTimeout, result);
 			} else {
 				// 将 sso-server 回应的消息作为异常抛出
 				throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30005);
@@ -309,7 +310,7 @@ public class SaSsoClientProcessor {
 			// 取出 Session 剩余有效期
 			long remainSessionTimeout = ssoClientTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
 			// 构建返回
-			return new CheckTicketResult(loginId, remainSessionTimeout);
+			return new SaCheckTicketResult(loginId, remainSessionTimeout, null);
 		}
 	}
 
@@ -324,20 +325,5 @@ public class SaSsoClientProcessor {
 	}
 
 
-	public static class CheckTicketResult {
-		public Object loginId;
-		public long remainSessionTimeout;
-		public CheckTicketResult(Object loginId, long remainSessionTimeout) {
-			this.loginId = loginId;
-			this.remainSessionTimeout = remainSessionTimeout;
-		}
-		@Override
-		public String toString() {
-			return "CheckTicketResult{" +
-					"loginId=" + loginId +
-					", remainSessionTimeout=" + remainSessionTimeout +
-					'}';
-		}
-	}
 
 }

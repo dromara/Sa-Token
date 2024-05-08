@@ -15,20 +15,20 @@
  */
 package cn.dev33.satoken.sso.function;
 
-import cn.dev33.satoken.sso.model.SaCheckTicketResult;
+import cn.dev33.satoken.util.SaResult;
+
+import java.util.function.BiFunction;
 
 /**
- * 函数式接口：SSO-Client端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
+ * 函数式接口：SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
  *
- * <p>  参数：loginId, back  </p>
- * <p>  返回：返回给前端的值  </p>
+ * <p>  参数：loginId, SaResult 响应参数对象  </p>
+ * <p>  返回：SaResult 响应参数对象  </p>
  *
  * @author click33
  * @since 1.38.0
  */
 @FunctionalInterface
-public interface TicketResultHandleFunction {
-
-    Object run(SaCheckTicketResult ctr, String back);
+public interface CheckTicketAppendDataFunction extends BiFunction<Object, SaResult, SaResult> {
 
 }

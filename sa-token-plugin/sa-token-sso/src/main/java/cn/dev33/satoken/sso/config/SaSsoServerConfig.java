@@ -18,6 +18,7 @@ package cn.dev33.satoken.sso.config;
 
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.function.CheckTicketAppendDataFunction;
 import cn.dev33.satoken.sso.function.DoLoginHandleFunction;
 import cn.dev33.satoken.sso.function.NotLoginViewFunction;
 import cn.dev33.satoken.sso.function.SendHttpFunction;
@@ -277,6 +278,13 @@ public class SaSsoServerConfig implements Serializable {
      */
     public DoLoginHandleFunction doLoginHandle = (name, pwd) -> {
         return SaResult.error();
+    };
+
+    /**
+     * SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+     */
+    public CheckTicketAppendDataFunction checkTicketAppendData = (loginId, result) -> {
+        return result;
     };
 
     /**

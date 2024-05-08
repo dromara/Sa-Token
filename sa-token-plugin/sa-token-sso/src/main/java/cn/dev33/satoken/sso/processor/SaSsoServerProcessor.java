@@ -171,6 +171,7 @@ public class SaSsoServerProcessor {
 
 		// 1、获取参数
 		SaRequest req = SaHolder.getRequest();
+		SaSsoServerConfig ssoServerConfig = ssoServerTemplate.getServerConfig();
 		String client = req.getParam(paramName.client);
 		String ticket = req.getParamNotNull(paramName.ticket);
 		String sloCallback = req.getParam(paramName.ssoLogoutCall);
@@ -181,7 +182,7 @@ public class SaSsoServerProcessor {
 		}
 
 		// 3、校验签名
-		if(ssoServerTemplate.getServerConfig().getIsCheckSign()) {
+		if(ssoServerConfig.getIsCheckSign()) {
 			ssoServerTemplate.getSignTemplate(client).checkRequest(req,
 					paramName.client, paramName.ticket, paramName.ssoLogoutCall);
 		} else {
@@ -199,8 +200,9 @@ public class SaSsoServerProcessor {
 
 		// 6、给 client 端响应结果
 		long remainSessionTimeout = ssoServerTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
-		return SaResult.data(loginId)
-				.set(paramName.remainSessionTimeout, remainSessionTimeout);
+		SaResult result = SaResult.data(loginId).set(paramName.remainSessionTimeout, remainSessionTimeout);
+		result = ssoServerConfig.checkTicketAppendData.apply(loginId, result);
+		return result;
 	}
 
 	/**
