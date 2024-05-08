@@ -47,6 +47,7 @@
 	- [前后端分离下的整合方案](/sso/sso-h5)
 	- [平台中心跳转模式](/sso/sso-home-jump)
 	- [不同 Client 不同秘钥](/sso/sso-diff-key)
+	- [用户数据同步 / 迁移](/sso/user-data-sync)
 	- [常见问题总结](/sso/sso-questions)
 	- [Sa-Sso-Pro：单点登录商业版](/sso/sso-pro)
 

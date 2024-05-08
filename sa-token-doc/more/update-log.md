@@ -31,6 +31,8 @@
 	- 重构：匿名 client 将不再能解析出所有应用的 ticket。**[不向下兼容]**
 	- 新增：新增 homeRoute 配置项：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由。
 	- 优化：优化登录有效期策略，SSO Client 端登录时将延续 SSO Server 端的会话剩余有效期。
+	- 新增：新增 `checkTicketAppendData` 策略函数，用于在校验 ticket 后，给 sso-client 端追加返回信息。
+	- 新增：SSO章节文档新增用户数据同步/迁移方案的建议。
 - 新增插件/示例：
 	- 新增：新增插件 sa-token-hutool-timed-cache，用于整合 Hutool 缓存插件 TimedCache。 **[重要]**
 	- 新增：新增 SSM 架构整合 Sa-Token 简单示例。 	**[重要]**
