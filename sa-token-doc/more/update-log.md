@@ -33,6 +33,8 @@
 	- 优化：优化登录有效期策略，SSO Client 端登录时将延续 SSO Server 端的会话剩余有效期。
 	- 新增：新增 `checkTicketAppendData` 策略函数，用于在校验 ticket 后，给 sso-client 端追加返回信息。
 	- 新增：SSO章节文档新增用户数据同步/迁移方案的建议。
+	- 修复：修复利用@字符可以绕过域名允许列表校验的漏洞。
+	- 修复：禁止 allow-url 配置项 * 符号出现在中间位置，因为这有可能导致校验被绕过。
 - 新增插件/示例：
 	- 新增：新增插件 sa-token-hutool-timed-cache，用于整合 Hutool 缓存插件 TimedCache。 **[重要]**
 	- 新增：新增 SSM 架构整合 Sa-Token 简单示例。 	**[重要]**
