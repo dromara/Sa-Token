@@ -263,7 +263,25 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             url = url.substring(0, qIndex);
         }
 
-        // 3、是否在[允许地址列表]之中
+        // 3、不允许出现@字符
+        // 为什么不允许出现 @ 字符呢，因为这有可能导致 redirect 参数绕过 AllowUrl 列表的校验
+        // 举个例子 配置文件：
+        //      sa-token.sso-server.allow-url=http://sa-sso-client1.com*
+        // 开发者原意是为了允许 sa-sso-client1.com 下的所有地址都可以下放ticket
+        // 但是如果攻击者精心构建一个url：
+        //      http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com@sa-token.cc
+        // 那么这个url就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址：
+        //      https://sa-token.cc/?ticket=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
+        // 造成了ticket 参数劫持
+        // 所以此处需要禁止在 url 中出现 @ 字符
+        // 这么一刀切的做法，可能会导致一些特殊的正常url也无法通过校验，例如：
+        //      http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com:9003/@getInfo
+        // 但是为了安全起见，这么做还是有必要的
+        if(url.contains("@")) {
+            throw new SaSsoException("无效redirect（不允许出现@字符）：" + url).setCode(SaSsoErrorCode.CODE_30001);
+        }
+
+        // 4、判断是否在[允许地址列表]之中
         List<String> authUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(","));
         if( ! SaStrategy.instance.hasElement.apply(authUrlList, url) ) {
             throw new SaSsoException("非法redirect：" + url).setCode(SaSsoErrorCode.CODE_30002);
