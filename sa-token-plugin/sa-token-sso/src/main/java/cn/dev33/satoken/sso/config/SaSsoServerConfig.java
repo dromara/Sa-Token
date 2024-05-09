@@ -22,10 +22,12 @@ import cn.dev33.satoken.sso.function.CheckTicketAppendDataFunction;
 import cn.dev33.satoken.sso.function.DoLoginHandleFunction;
 import cn.dev33.satoken.sso.function.NotLoginViewFunction;
 import cn.dev33.satoken.sso.function.SendHttpFunction;
+import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Sa-Token SSO 单点登录模块 配置类 （Server端）
@@ -134,6 +136,11 @@ public class SaSsoServerConfig implements Serializable {
      * @return 对象自身
      */
     public SaSsoServerConfig setAllowUrl(String allowUrl) {
+        // 提前校验一下配置的 allowUrl 是否合法，让开发者尽早发现错误
+        if(SaFoxUtil.isNotEmpty(allowUrl)) {
+            List<String> allowUrlList = SaFoxUtil.convertStringToList(allowUrl);
+            SaSsoServerTemplate.checkAllowUrlListStaticMethod(allowUrlList);
+        }
         this.allowUrl = allowUrl;
         return this;
     }
@@ -243,7 +250,7 @@ public class SaSsoServerConfig implements Serializable {
      * @return 对象自身
      */
     public SaSsoServerConfig setAllow(String ...url) {
-        this.allowUrl = SaFoxUtil.arrayJoin(url);
+        this.setAllowUrl(SaFoxUtil.arrayJoin(url));
         return this;
     }
 

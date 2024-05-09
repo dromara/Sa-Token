@@ -65,4 +65,7 @@ public interface SaSsoErrorCode {
 	/** 在 /sso/auth 既没有指定 redirect 参数，也没有配置 homeRoute 路由 */
 	int CODE_30014 = 30014;
 
+	/** 无效的 allow-url 配置 */
+	int CODE_30015 = 30015;
+
 }
