@@ -334,15 +334,15 @@ public class StpLogic {
 			tokenValue = String.valueOf(storage.get(splicingKeyJustCreatedSave()));
 		}
 		// 2. 再尝试从 请求体 里面读取
-		if(tokenValue == null && config.getIsReadBody()){
+		if(SaFoxUtil.isEmpty(tokenValue) && config.getIsReadBody()){
 			tokenValue = request.getParam(keyTokenName);
 		}
 		// 3. 再尝试从 header 头里读取
-		if(tokenValue == null && config.getIsReadHeader()){
+		if(SaFoxUtil.isEmpty(tokenValue) && config.getIsReadHeader()){
 			tokenValue = request.getHeader(keyTokenName);
 		}
 		// 4. 最后尝试从 cookie 里读取
-		if(tokenValue == null && config.getIsReadCookie()){
+		if(SaFoxUtil.isEmpty(tokenValue) && config.getIsReadCookie()){
 			tokenValue = request.getCookieValue(keyTokenName);
 		}
 		
