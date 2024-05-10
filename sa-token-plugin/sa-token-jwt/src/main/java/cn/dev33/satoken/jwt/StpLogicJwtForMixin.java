@@ -22,11 +22,15 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * Sa-Token 整合 jwt -- Mixin 混入模式
@@ -211,13 +215,37 @@ public class StpLogicJwtForMixin extends StpLogic {
  	// ------------------- 过期时间相关 -------------------  
 
  	/**
- 	 * 获取当前登录者的 token 剩余有效时间 (单位: 秒)
+ 	 * 获取指定 token 剩余有效时间 (单位: 秒)
  	 */
 	@Override
- 	public long getTokenTimeout() {
- 		return SaJwtUtil.getTimeout(getTokenValue(), loginType, jwtSecretKey());
+ 	public long getTokenTimeout(String tokenValue) {
+ 		return SaJwtUtil.getTimeout(tokenValue, loginType, jwtSecretKey());
  	}
- 	
+
+
+	// ------------------- Token-Session 相关 -------------------
+
+	/**
+	 * 获取指定 token 的 Token-Session，如果该 SaSession 尚未创建，isCreate代表是否新建并返回
+	 *
+	 * @param tokenValue token值
+	 * @param isCreate 是否新建
+	 * @return session对象
+	 */
+	public SaSession getTokenSessionByToken(String tokenValue, boolean isCreate) {
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			throw new SaTokenException("Token-Session 获取失败：token 不能为空");
+		}
+		long timeout = getTokenTimeout(tokenValue);
+		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, timeout, session -> {
+			// 这里是该 Token-Session 首次创建时才会被执行的方法：
+			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
+			session.setType(SaTokenConsts.SESSION_TYPE__TOKEN);
+			session.setLoginType(getLoginType());
+			session.setToken(tokenValue);
+		});
+	}
+
 
 	// ------------------- 会话管理 -------------------  
 

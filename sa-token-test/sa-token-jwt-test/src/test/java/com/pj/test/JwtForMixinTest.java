@@ -193,7 +193,7 @@ public class JwtForMixinTest {
     	SaSession session = dao.getSession("satoken:login:token-session:" + token);
     	Assertions.assertNull(session);
     	
-    	// 调用一次就存在了 
+    	// 调用一次就存在了
     	StpUtil.getTokenSession();
     	Assertions.assertNotNull(StpUtil.stpLogic.getTokenSession(false));
     	SaSession session2 = dao.getSession("satoken:login:token-session:" + token);

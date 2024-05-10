@@ -181,10 +181,10 @@ public class StpLogicJwtForStateless extends StpLogic {
  	// ------------------- 过期时间相关 -------------------  
 
  	/**
- 	 * 获取当前登录者的 token 剩余有效时间 (单位: 秒)
+ 	 * 获取指定 token 剩余有效时间 (单位: 秒)
  	 */
 	@Override
- 	public long getTokenTimeout() {
+ 	public long getTokenTimeout(String tokenValue) {
  		return SaJwtUtil.getTimeout(getTokenValue(), loginType, jwtSecretKey());
  	}
  	
