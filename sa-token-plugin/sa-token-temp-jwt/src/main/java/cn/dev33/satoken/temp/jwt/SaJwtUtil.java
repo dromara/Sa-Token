@@ -99,7 +99,7 @@ public class SaJwtUtil {
     	
     	// 验证是否超时 
     	Long eff = claims.get(KEY_EFF, Long.class);
-    	if((eff == null || eff < System.currentTimeMillis()) && eff != NEVER_EXPIRE) {
+    	if(eff == null || (eff < System.currentTimeMillis() && eff != NEVER_EXPIRE)) {
     		throw new SaTokenException("token 已超时，无法解析：" + jwtToken).setCode(SaTempJwtErrorCode.CODE_30303);
     	}
     	
