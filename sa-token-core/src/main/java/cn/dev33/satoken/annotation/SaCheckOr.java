@@ -61,11 +61,18 @@ public @interface SaCheckOr {
     SaCheckSafe[] safe() default {};
 
     /**
-     * 设定 @SaCheckBasic，参考 {@link SaCheckHttpBasic}
+     * 设定 @SaCheckHttpBasic，参考 {@link SaCheckHttpBasic}
      *
      * @return /
      */
-    SaCheckHttpBasic[] basic() default {};
+    SaCheckHttpBasic[] httpBasic() default {};
+
+    /**
+     * 设定 @SaCheckBasic，参考 {@link SaCheckHttpDigest}
+     *
+     * @return /
+     */
+    SaCheckHttpDigest[] httpDigest() default {};
 
     /**
      * 设定 @SaCheckDisable，参考 {@link SaCheckDisable}

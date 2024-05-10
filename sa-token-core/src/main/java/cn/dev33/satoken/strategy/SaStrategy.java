@@ -17,10 +17,10 @@ package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.*;
-import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.strategy.*;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.httpauth.digest.SaHttpDigestUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
@@ -265,10 +265,21 @@ public final class SaStrategy {
 		}
 
 		// 6、校验注解：@SaCheckBasic
-		SaCheckHttpBasic[] checkBasicArray = at.basic();
-		for (SaCheckHttpBasic item : checkBasicArray) {
+		SaCheckHttpBasic[] checkHttpBasicArray = at.httpBasic();
+		for (SaCheckHttpBasic item : checkHttpBasicArray) {
 			try {
 				SaHttpBasicUtil.check(item.realm(), item.account());
+				return;
+			} catch (SaTokenException e) {
+				errorList.add(e);
+			}
+		}
+
+		// 7、校验注解：@SaCheckDigest
+		SaCheckHttpDigest[] checkHttpDigestArray = at.httpDigest();
+		for (SaCheckHttpDigest item : checkHttpDigestArray) {
+			try {
+				SaHttpDigestUtil.checkByAnnotation(item);
 				return;
 			} catch (SaTokenException e) {
 				errorList.add(e);
