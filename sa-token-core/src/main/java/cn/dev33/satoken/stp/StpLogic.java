@@ -994,12 +994,12 @@ public class StpLogic {
 		if(loginId == null) {
 			return defaultValue;
 		}
-        // 3、loginId 不为 null，则开始尝试类型转换
-        if (defaultValue == null) {
-			return null;
-        }
+		// 3、loginId 不为 null，则开始尝试类型转换
+		if(defaultValue == null) {
+			return (T) loginId;
+		}
 		return (T) SaFoxUtil.getValueByType(loginId, defaultValue.getClass());
- 	}
+	}
  	
  	/** 
 	 * 获取当前会话账号id, 如果未登录，则返回null
