@@ -6,6 +6,7 @@ SSO 集成常见问题整理
 
 --- 
 
+
 ### 问：在模式一与模式二中，Client端 必须通过 Alone-Redis 插件来访问 Redis 吗？
 答：不必须，只是推荐，权限缓存与业务缓存分离后会减少 `SSO-Redis` 的访问压力，且可以避免多个 `Client端` 的缓存读写冲突。
 
@@ -184,6 +185,27 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 
 更多登录姿势可以参考 [[何时引导用户去登录]](/sso/sso-custom-login) 给出的建议进行设计。
+
+
+
+### 问：sa-token.sso-server.allow-url 配置项可以做成从数据库读取的吗？
+可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getAllowUrl` 方法即可：
+``` java
+/**
+ * 重写 SaSsoServerTemplate 部分方法，增强功能 
+ */
+@Component
+public class CustomSaSsoServerTemplate extends SaSsoServerTemplate {
+	
+	// 重写 [获取授权回调地址] 方法，改为从数据库中读取 
+	@Override
+	public String getAllowUrl() {
+		String allowUrl = ""; // 改为从数据库读取 
+		return allowUrl;
+	}
+
+}
+```
 
 
 ### 问：如果 sso-client 端我没有集成 sa-token-sso，如何对接？
