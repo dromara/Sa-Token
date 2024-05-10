@@ -11,7 +11,8 @@
 - `@SaCheckRole("admin")`: 角色校验 —— 必须具有指定角色标识才能进入该方法。
 - `@SaCheckPermission("user:add")`: 权限校验 —— 必须具有指定权限才能进入该方法。
 - `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法。
-- `@SaCheckBasic`: HttpBasic校验 —— 只有通过 Basic 认证后才能进入该方法。
+- `@SaCheckHttpBasic`: HttpBasic校验 —— 只有通过 HttpBasic 认证后才能进入该方法。
+- `@SaCheckHttpDigest`: HttpDigest校验 —— 只有通过 HttpDigest 认证后才能进入该方法。
 - `@SaIgnore`：忽略校验 —— 表示被修饰的方法或类无需进行注解鉴权和路由拦截器鉴权。
 - `@SaCheckDisable("comment")`：账号服务封禁校验 —— 校验当前账号指定服务是否被封禁。
 
@@ -70,8 +71,15 @@ public String add() {
 	return "用户增加";
 }
 
-// Http Basic 校验：只有通过 Basic 认证后才能进入该方法 
-@SaCheckBasic(account = "sa:123456")
+// Http Basic 校验：只有通过 Http Basic 认证后才能进入该方法 
+@SaCheckHttpBasic(account = "sa:123456")
+@RequestMapping("add")
+public String add() {
+	return "用户增加";
+}
+
+// Http Digest 校验：只有通过 Http Digest 认证后才能进入该方法 
+@SaCheckHttpDigest(value = "sa:123456")
 @RequestMapping("add")
 public String add() {
 	return "用户增加";
@@ -162,7 +170,7 @@ public class TestController {
 		role = @SaCheckRole("admin"),
 		permission = @SaCheckPermission("user.add"),
 		safe = @SaCheckSafe("update-password"),
-		basic = @SaCheckBasic(account = "sa:123456"),
+		httpBasic = @SaCheckHttpBasic(account = "sa:123456"),
 		disable = @SaCheckDisable("submit-orders")
 )
 @RequestMapping("test")
