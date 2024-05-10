@@ -2672,7 +2672,13 @@ public class StpLogic {
 			return false;
 		}
 		
-		// 2、如果缓存中可以查询出指定的键值，则代表已认证，否则视为未认证
+		// 2、如果此 token 不处于登录状态，也将其视为未认证
+		Object loginId = getLoginIdNotHandle(tokenValue);
+		if( ! isValidLoginId(loginId) ) {
+			return false;
+		}
+
+		// 3、如果缓存中可以查询出指定的键值，则代表已认证，否则视为未认证
 		String value = getSaTokenDao().get(splicingKeySafe(tokenValue, service));
 		return !(SaFoxUtil.isEmpty(value));
 	}
@@ -2690,8 +2696,14 @@ public class StpLogic {
 	 * @param service 业务标识  
 	 */
 	public void checkSafe(String service) {
+		// 1、必须先通过登录校验
+		checkLogin();
+
+		// 2、再进行二级认证校验
+		// 		如果缓存中可以查询出指定的键值，则代表已认证，否则视为未认证
 		String tokenValue = getTokenValue();
-		if ( ! isSafe(tokenValue, service)) {
+		String value = getSaTokenDao().get(splicingKeySafe(tokenValue, service));
+		if(SaFoxUtil.isEmpty(value)) {
 			throw new NotSafeException(loginType, tokenValue, service).setCode(SaErrorCode.CODE_11071);
 		}
 	}
