@@ -1295,7 +1295,6 @@ public class StpLogic {
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			throw new SaTokenException("Token-Session 获取失败：token 不能为空");
 		}
-		// todo 待优化
 		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, null, session -> {
 			// 这里是该 Token-Session 首次创建时才会被执行的方法：
 			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
@@ -1408,7 +1407,14 @@ public class StpLogic {
 			setTokenValue(tokenValue);
 
 			// 返回其 Token-Session 对象
-			return getTokenSessionByToken(tokenValue, isCreate);
+			final String finalTokenValue = tokenValue;
+			return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, getConfigOrGlobal().getTimeout(), session -> {
+				// 这里是该 Anon-Token-Session 首次创建时才会被执行的方法：
+				// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
+				session.setType(SaTokenConsts.SESSION_TYPE__TOKEN);
+				session.setLoginType(getLoginType());
+				session.setToken(finalTokenValue);
+			});
 		}
 		else {
 			return null;
