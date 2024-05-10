@@ -20,6 +20,7 @@
 	- 重构：将部分加密算法设置为过期。
 	- 重构：优化 token 读取策略，空字符串将视为没有提交token。
 	- 修复：sa-token-bom 补全缺失依赖。
+	- 优化：二级认证校验之前必须先通过登录认证校验。
 - sa-token-sso：
 	- 优化：SSO 模式三，API 调用签名校验时，限定参与签名的参数列表，更安全。
 	- 新增：新增 autoRenewTimeout 配置项：是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）
