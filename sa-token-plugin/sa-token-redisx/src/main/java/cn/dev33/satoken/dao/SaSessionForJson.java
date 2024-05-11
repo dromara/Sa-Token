@@ -19,12 +19,14 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.snack.ONode;
 
+//todo: 不能删；为保持与旧的序列化兼容
 /**
  * Snack3 定制版 SaSession，重写类型转换API
  * 
  * @author noear
  * @since 1.34.0
  */
+@Deprecated
 public class SaSessionForJson extends SaSession {
 
 	private static final long serialVersionUID = -7600983549653130681L;
