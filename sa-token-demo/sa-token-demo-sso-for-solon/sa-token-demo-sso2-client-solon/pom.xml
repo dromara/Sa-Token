@@ -47,6 +47,13 @@
 			<artifactId>sa-token-redisx</artifactId>
 			<version>${sa-token.version}</version>
 		</dependency>
+
+		<!-- Http 请求工具 -->
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>forest-solon-plugin</artifactId>
+		</dependency>
+
 	</dependencies>
 	
 	

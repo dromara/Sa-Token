@@ -44,12 +44,13 @@ public class SsoConfig {
             return SaResult.error("登录失败！");
         };
 
-        // 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉）
+        // 配置 Http 请求处理器
         ssoServer.sendHttp = url -> {
             try {
-                // 发起 http 请求
                 System.out.println("------ 发起请求：" + url);
-                return Forest.get(url).executeAsString();
+                String resStr = Forest.get(url).executeAsString();
+                System.out.println("------ 请求结果：" + resStr);
+                return resStr;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;

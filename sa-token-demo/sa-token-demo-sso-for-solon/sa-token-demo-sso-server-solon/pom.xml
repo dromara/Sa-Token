@@ -17,6 +17,7 @@
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
 		<sa-token.version>1.38.0</sa-token.version>
+		<solon.version>2.7.0</solon.version>
 	</properties>
 
 	<dependencies>
@@ -48,7 +49,7 @@
 			<artifactId>sa-token-redisx</artifactId>
 			<version>${sa-token.version}</version>
 		</dependency>
-        
+
 		<!-- 视图引擎（在前后端不分离模式下提供视图支持） -->
 		<dependency>
 			<groupId>org.noear</groupId>

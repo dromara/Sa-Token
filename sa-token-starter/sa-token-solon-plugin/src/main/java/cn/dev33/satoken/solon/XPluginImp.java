@@ -21,12 +21,15 @@ import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.httpauth.digest.SaHttpDigestTemplate;
+import cn.dev33.satoken.httpauth.digest.SaHttpDigestUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
+import cn.dev33.satoken.solon.json.SaJsonTemplateForSnack3;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
 import cn.dev33.satoken.solon.oauth2.SaOAuth2AutoConfigure;
 import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
@@ -64,6 +67,9 @@ public class XPluginImp implements Plugin {
         // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
+        // 注入JSON解析器Bean
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForSnack3());
+
         //注入配置Bean
         SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
         if (saTokenConfig != null) {
@@ -88,7 +94,6 @@ public class XPluginImp implements Plugin {
         context.subBeansOfType(SaTokenListener.class, sl -> {
             SaTokenEventCenter.registerListener(sl);
         });
-
 
         // 注入权限认证 Bean
         context.getBeanAsync(StpInterface.class, bean -> {
@@ -115,6 +120,11 @@ public class XPluginImp implements Plugin {
             SaHttpBasicUtil.saHttpBasicTemplate = bean;
         });
 
+        // Sa-Token Http Digest 认证模块 Bean
+        context.getBeanAsync(SaHttpDigestTemplate.class, bean -> {
+            SaHttpDigestUtil.saHttpDigestTemplate = bean;
+        });
+
         // Sa-Token JSON 转换器 Bean
         context.getBeanAsync(SaJsonTemplate.class, bean -> {
             SaManager.setSaJsonTemplate(bean);
@@ -129,5 +139,6 @@ public class XPluginImp implements Plugin {
         context.getBeanAsync(StpLogic.class, bean -> {
             StpUtil.setStpLogic(bean);
         });
+
     }
 }

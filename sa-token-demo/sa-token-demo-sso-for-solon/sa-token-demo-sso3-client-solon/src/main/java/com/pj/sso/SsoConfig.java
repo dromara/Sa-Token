@@ -16,7 +16,9 @@ public class SsoConfig {
         // 配置Http请求处理器
         ssoClient.sendHttp = url -> {
             System.out.println("------ 发起请求：" + url);
-            return Forest.get(url).executeAsString();
+            String resStr = Forest.get(url).executeAsString();
+            System.out.println("------ 请求结果：" + resStr);
+            return resStr;
         };
     }
 }

@@ -6,17 +6,20 @@ server:
 sa-token: 
     # SSO-相关配置
     sso-client:
-        # SSO-Server端 统一认证地址 
-        auth-url: http://sa-sso-server.com:9000/sso/auth
+        # SSO-Server端 主机地址
+        server-url: http://sa-sso-server.com:9000
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
         # 是否打开单点注销接口
         is-slo: true
+    sign:
+        # API 接口调用秘钥
+        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
     
 # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
 sa-token.dao: #名字可以随意取
     redis:
         server: "localhost:6379"
-        password: 123456
+#        password: 123456
         db: 1
         maxTotal: 200
         
