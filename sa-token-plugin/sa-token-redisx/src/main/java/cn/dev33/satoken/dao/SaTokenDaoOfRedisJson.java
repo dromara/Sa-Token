@@ -44,7 +44,7 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
         redisBucket = redisClient.getBucket();
 
         // 重写 SaSession 生成策略
-        SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJson(sessionId);
+        //SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJson(sessionId);
 
     }
 
