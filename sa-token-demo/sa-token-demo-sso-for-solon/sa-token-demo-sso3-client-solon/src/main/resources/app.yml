@@ -1,6 +1,6 @@
 # 端口
 server:
-    port: 9001
+    port: 9003
 
 # sa-token配置 
 sa-token: 
@@ -23,7 +23,7 @@ sa-token:
 
 
 # 配置 Sa-Token Dao（此处与SSO-Server端连接不同的Redis）
-sa-token: #名字可以随意取
+sa-token.dao: #名字可以随意取
     redis:
         server: "localhost:6379"
         password: 123456

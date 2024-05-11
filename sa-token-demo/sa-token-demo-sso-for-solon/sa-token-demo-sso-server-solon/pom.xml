@@ -10,14 +10,13 @@
 	<parent>
 		<groupId>org.noear</groupId>
 		<artifactId>solon-parent</artifactId>
-		<version>2.4.0</version>
+		<version>2.7.0</version>
 		<relativePath/>
 	</parent>
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
 		<sa-token.version>1.38.0</sa-token.version>
-		<solon.version>2.2.3</solon.version>
 	</properties>
 
 	<dependencies>
