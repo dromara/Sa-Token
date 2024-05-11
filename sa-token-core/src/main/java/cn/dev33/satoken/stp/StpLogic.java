@@ -1198,6 +1198,9 @@ public class StpLogic {
 				// 如果是 Token-Session，则使用对用 token 的有效期，使 token 和 token-session 保持相同ttl，同步失效
 				if(SaTokenConsts.SESSION_TYPE__TOKEN.equals(session.getType())) {
 					timeout = getTokenTimeout(session.getToken());
+					if(timeout == SaTokenDao.NOT_VALUE_EXPIRE) {
+						timeout = getConfigOrGlobal().getTimeout();
+					}
 				} else {
 					// 否则使用全局配置的 timeout
 					timeout = getConfigOrGlobal().getTimeout();
