@@ -49,15 +49,6 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
 
     }
 
-    @Override
-    public SaSession getSession(String sessionId) {
-        Object obj = getObject(sessionId);
-        if (obj == null) {
-            return null;
-        }
-        return ONode.deserialize(obj.toString(), SaSessionForJson.class);
-    }
-
 
     /**
      * 获取Value，如无返空
@@ -118,7 +109,8 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
      */
     @Override
     public Object getObject(String key) {
-        return get(key);
+        String value = get(key);
+        return ONode.deserialize(value);
     }
 
     /**
