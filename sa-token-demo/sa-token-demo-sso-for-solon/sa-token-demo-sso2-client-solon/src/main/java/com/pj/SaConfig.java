@@ -16,7 +16,7 @@ public class SaConfig {
      * 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
      * */
     @Bean
-    public SaTokenDao saTokenDaoInit(@Inject("${sa-token.redis}") SaTokenDaoOfRedis saTokenDao) {
+    public SaTokenDao saTokenDaoInit(@Inject("${sa-token.dao.redis}") SaTokenDaoOfRedis saTokenDao) {
         return saTokenDao;
     }
 }

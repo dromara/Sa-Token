@@ -26,7 +26,7 @@ sa-token:
         secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
 
-sa-token: #名字可以随意取
+sa-token.dao: #名字可以随意取
     redis:
         server: "localhost:6379"
         password: 123456
