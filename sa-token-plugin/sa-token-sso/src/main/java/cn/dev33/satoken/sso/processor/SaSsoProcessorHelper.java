@@ -47,6 +47,7 @@ public class SaSsoProcessorHelper {
 		String back = req.getParam(paramName.back);
 		if(SaFoxUtil.isNotEmpty(back)) {
 			if(back.equals(SaSsoConsts.SELF)) {
+				res.setHeader("Content-Type", "text/html; charset=utf-8");
 				return "<script>if(document.referrer != location.href){ location.replace(document.referrer || '/'); }</script>";
 			}
 			return res.redirect(back);

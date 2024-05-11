@@ -11,7 +11,7 @@ public class SaSso3ClientApp {
 		Solon.start(SaSso3ClientApp.class, args);
 
 		System.out.println();
-		System.out.println("---------------------- Sa-Token SSO 模式三 Client 端启动成功 ----------------------");
+		System.out.println("---------------------- Solon Sa-Token SSO 模式三 Client 端启动成功 ----------------------");
 		System.out.println("配置信息：" + SaSsoManager.getClientConfig());
 		System.out.println("测试访问应用端一: http://sa-sso-client1.com:9003");
 		System.out.println("测试访问应用端二: http://sa-sso-client2.com:9003");
