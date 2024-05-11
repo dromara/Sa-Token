@@ -18,13 +18,17 @@ package cn.dev33.satoken.sso.model;
 
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 
+import java.io.Serializable;
+
 /**
  * Sa-Token SSO Model
  *
  * @author click33
  * @since 1.38.0
  */
-public class SaSsoClientModel {
+public class SaSsoClientModel implements Serializable {
+
+    private static final long serialVersionUID = 1406115065849845073L;
 
     /*
      * 只能记录模式三登录的 client 信息，模式一和模式二的信息即使记录上，也无法完成单点注销操作，遂不记录

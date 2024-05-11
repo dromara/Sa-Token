@@ -17,13 +17,17 @@ package cn.dev33.satoken.sso.model;
 
 import cn.dev33.satoken.util.SaResult;
 
+import java.io.Serializable;
+
 /**
  * 校验 ticket 返回 loginId 等结果的参数封装
  *
  * @author click33
  * @since 1.38.0
  */
-public class SaCheckTicketResult {
+public class SaCheckTicketResult implements Serializable {
+
+    private static final long serialVersionUID = 1406115065849845073L;
 
     /** 账号id */
     public Object loginId;
