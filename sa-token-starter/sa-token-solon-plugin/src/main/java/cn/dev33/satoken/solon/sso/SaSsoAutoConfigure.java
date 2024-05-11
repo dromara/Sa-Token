@@ -36,39 +36,37 @@ import org.noear.solon.core.bean.InitializingBean;
 
 @Condition(onClass = SaSsoManager.class)
 @Configuration
-public class SaSsoAutoConfigure implements InitializingBean {
-    @Inject
-    private AppContext appContext;
-
-    @Override
-    public void afterInjection() throws Throwable {
-        appContext.subBeansOfType(SaSsoServerTemplate.class, bean->{
+public class SaSsoAutoConfigure {
+    @Bean
+    public void init(AppContext appContext) throws Throwable {
+        appContext.subBeansOfType(SaSsoServerTemplate.class, bean -> {
             SaSsoServerProcessor.instance.ssoServerTemplate = bean;
         });
-        appContext.subBeansOfType(SaSsoClientTemplate.class, bean->{
+        appContext.subBeansOfType(SaSsoClientTemplate.class, bean -> {
             SaSsoClientProcessor.instance.ssoClientTemplate = bean;
         });
 
-        appContext.subBeansOfType(SaSsoServerConfig.class, bean->{
+        appContext.subBeansOfType(SaSsoServerConfig.class, bean -> {
             SaSsoManager.setServerConfig(bean);
         });
-        appContext.subBeansOfType(SaSsoClientConfig.class, bean->{
+        appContext.subBeansOfType(SaSsoClientConfig.class, bean -> {
             SaSsoManager.setClientConfig(bean);
         });
     }
 
     /**
      * 获取 SSO Server 配置Bean
-     * */
+     */
     @Bean
-    public SaSsoServerConfig getConfig(@Inject(value = "${sa-token.sso-server}",required = false) SaSsoServerConfig ssoConfig) {
+    public SaSsoServerConfig getConfig(@Inject(value = "${sa-token.sso-server}", required = false) SaSsoServerConfig ssoConfig) {
         return ssoConfig;
     }
+
     /**
      * 获取 SSO Client 配置Bean
-     * */
+     */
     @Bean
-    public SaSsoClientConfig getClientConfig(@Inject(value = "${sa-token.sso-client}",required = false) SaSsoClientConfig ssoConfig) {
+    public SaSsoClientConfig getClientConfig(@Inject(value = "${sa-token.sso-client}", required = false) SaSsoClientConfig ssoConfig) {
         return ssoConfig;
     }
 }

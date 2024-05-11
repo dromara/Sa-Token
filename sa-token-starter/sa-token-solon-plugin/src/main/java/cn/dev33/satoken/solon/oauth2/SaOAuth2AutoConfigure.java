@@ -24,7 +24,6 @@ import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.AppContext;
-import org.noear.solon.core.bean.InitializingBean;
 
 /**
  * @author noear
@@ -33,12 +32,9 @@ import org.noear.solon.core.bean.InitializingBean;
 
 @Condition(onClass = SaOAuth2Manager.class)
 @Configuration
-public class SaOAuth2AutoConfigure implements InitializingBean {
-    @Inject
-    private AppContext appContext;
-
-    @Override
-    public void afterInjection() throws Throwable {
+public class SaOAuth2AutoConfigure {
+    @Bean
+    public void init(AppContext appContext) throws Throwable {
         appContext.subBeansOfType(SaOAuth2Template.class, bean -> {
             SaOAuth2Util.saOAuth2Template = bean;
         });
