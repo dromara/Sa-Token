@@ -1296,7 +1296,7 @@ public class StpLogic {
 	 */
 	public SaSession getTokenSessionByToken(String tokenValue, boolean isCreate) {
 		if(SaFoxUtil.isEmpty(tokenValue)) {
-			throw new SaTokenException("Token-Session 获取失败：token 不能为空");
+			throw new SaTokenException("Token-Session 获取失败：token 为空").setCode(SaErrorCode.CODE_11073);
 		}
 		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, null, session -> {
 			// 这里是该 Token-Session 首次创建时才会被执行的方法：
@@ -1333,7 +1333,7 @@ public class StpLogic {
 		// 2、如果前端根本没有提供 Token ，则直接返回 null
 		String tokenValue = getTokenValue();
 		if(SaFoxUtil.isEmpty(tokenValue)) {
-			return null;
+			throw new SaTokenException("Token-Session 获取失败：token 为空").setCode(SaErrorCode.CODE_11073);
 		}
 
 		// 3、代码至此：tokenSessionCheckLogin 校验通过、且 Token 有值

@@ -125,6 +125,9 @@ public interface SaErrorCode {
 	/** 获取 SaSession 时提供的 SessionId 为空 */
 	int CODE_11072 = 11072;
 
+	/** 获取 Token-Session 时提供的 token 为空 */
+	int CODE_11073 = 11073;
+
 
 	// ------------ 
 	
