@@ -190,6 +190,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-redis-fastjson               // [插件] Sa-Token 整合 Redis (使用 fastjson 序列化方式)
 		├── sa-token-redis-fastjson2              // [插件] Sa-Token 整合 Redis (使用 fastjson2 序列化方式)
 		├── sa-token-redisson-jackson             // [插件] Sa-Token 整合 Redisson (使用 jackson 序列化方式)
+		├── sa-token-hutool-timed-cache           // [插件] Sa-Token 整合 集成 hutool 框架的 Timed-Cache 缓存方案（基于内存）
 		├── sa-token-alone-redis                  // [插件] Sa-Token 独立 Redis 插件，实现 [ 权限缓存与业务缓存分离 ]
 		├── sa-token-redisx                       // [插件] Sa-Token 整合 Redis (中立 redisx)
 		├── sa-token-dubbo                        // [插件] Sa-Token 整合 dubbo 状态传递、rpc 鉴权
