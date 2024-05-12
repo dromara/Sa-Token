@@ -34,7 +34,7 @@ public class H5Controller implements Render {
 	// 根据ticket进行登录 
 	@Mapping("/sso/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
-		Object loginId = SaSsoClientProcessor.instance.checkTicketByMode2Or3(ticket, "/sso/doLoginByTicket");
+		Object loginId = SaSsoClientProcessor.instance.checkTicket(ticket, "/sso/doLoginByTicket");
 		if(loginId != null) {
 			StpUtil.login(loginId);
 			return SaResult.data(StpUtil.getTokenValue());

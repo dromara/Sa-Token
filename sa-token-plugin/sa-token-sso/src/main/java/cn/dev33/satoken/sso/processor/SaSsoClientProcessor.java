@@ -123,7 +123,7 @@ public class SaSsoClientProcessor {
 			return res.redirect(serverAuthUrl);
 		} else {
 			// 1、校验ticket，获取 loginId
-			SaCheckTicketResult ctr = checkTicketByMode2Or3(ticket, apiName.ssoLogin);
+			SaCheckTicketResult ctr = checkTicket(ticket, apiName.ssoLogin);
 
 			// 2、如果开发者自定义了ticket结果值处理函数，则使用自定义的函数
 			if(cfg.ticketResultHandle != null) {
@@ -193,7 +193,7 @@ public class SaSsoClientProcessor {
 		SaResult result = ssoClientTemplate.request(url);
 
 		// 校验响应状态码
-		if(SaResult.CODE_SUCCESS == result.getCode()) {
+		if(result.getCode() != null && SaResult.CODE_SUCCESS == result.getCode()) {
 			// 极端场景下，sso-server 中心的单点注销可能并不会通知到此 client 端，所以这里需要再补一刀
 			if(stpLogic.isLogin()) {
 				stpLogic.logout();
@@ -240,12 +240,12 @@ public class SaSsoClientProcessor {
 	// 工具方法
 
 	/**
-	 * 封装：校验ticket，取出loginId，如果 ticket 无效则抛出异常
+	 * 封装：校验ticket，取出loginId，如果 ticket 无效则抛出异常 （适用于模式二或模式三）
 	 * @param ticket ticket码
-	 * @param currUri 当前路由的uri，用于计算单点注销回调地址
+	 * @param currUri 当前路由的uri，用于计算单点注销回调地址 （如果是使用模式二，可以填写null）
 	 * @return loginId
 	 */
-	public SaCheckTicketResult checkTicketByMode2Or3(String ticket, String currUri) {
+	public SaCheckTicketResult checkTicket(String ticket, String currUri) {
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
 		ApiName apiName = ssoClientTemplate.apiName;
 		ParamName paramName = ssoClientTemplate.paramName;

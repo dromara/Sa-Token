@@ -220,8 +220,8 @@ public class SaSsoServerProcessor {
 			return ssoSignoutByUserVisit();
 		}
 
-		// SSO-Server端：单点注销 [Client调用式]  (带loginId参数 & isHttp=true)
-		if(cfg.getIsHttp() && cfg.getIsSlo() && req.hasParam(paramName.loginId)) {
+		// SSO-Server端：单点注销 [Client调用式]  (带loginId参数)
+		if(cfg.getIsSlo() && req.hasParam(paramName.loginId)) {
 			return ssoSignoutByClientHttp();
 		}
 
