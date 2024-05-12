@@ -10,9 +10,13 @@
 
 QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)
 
+<!-- QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0) -->
+
 ### 2、加入微信交流群：
 
 ![微信群](https://oss.dev33.cn/sa-token/wx-qr-300.png ':size=180')
+
+<!-- ![微信群](https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png ':size=175') -->
 
 （扫码添加微信，备注：sa，邀您加入群聊）
 
@@ -25,17 +29,28 @@ QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k
 - 和众多大佬一起互相 (huá shuǐ) 交流 (mō yú)。
 
 
-### 3、招 QQ 群管理员：
+### 3、内部群：
 
-成为管理员的条件，以下任选其一即可：
+为感谢对 Sa-Token 生态做出贡献的同学，我们特创建了内部群：【Sa-Token 生态共享与合作】
+
+加入群聊条件，以下满足其一即可：
 - 写过5篇以上有关 Sa-Token 的原创博客。
-- 有开源项目集成了 Sa-Token，并在 [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token) 完成提交。
 - 为 Sa-Token 开发过插件。
+- 有开源项目集成了 Sa-Token，并在 [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token) 完成提交。
+- 有为 Sa-Token 录制过教程视频，发表在公共平台（总时长>30分钟，且播放量>2000）。
+- 其它一些您认为有对 Sa-Token 生态做出贡献的行为，可以直接联系我们，经内部投票评审通过即可加入（不要害羞，大胆联系我们哦 😊 ）
 
-职责：
-- 维护Q群秩序、踢除与技术无关的广告、撤回不合适的信息等。
-- 能够一定程度上帮助群成员解决 Sa-Token 相关提问（不强制要求，有时间看见了答一下即可，平时可忙自己的事情）。
-- 成为管理员后可加入 Sa-Token 管理员专属内部群，更及时的获知 Sa-Token 下一步更新计划。
+加入群聊的好处：
+
+- 更及时的获知 Sa-Token 下一步更新计划。
+- 在 Sa-Token 遇到的任何疑问都可以当面与作者沟通，可协助解决问题。
+- 可提出未来版本更新需求，将具有更高的优先级进行评审与开发。
+
+QQ群聊号码：939849926 
+
+注：此为专属内部群聊，不满足上述条件的同学请勿过分申请打扰，谢谢合作。满足条件者可以在申请加入时备注上您的项目名称
+（例如：xx开源项目作者集成了 sa-token，申请加入群聊），如果字数太多无法写完，也可在开源交流群里@管理员协助交流。
+
 
 
 

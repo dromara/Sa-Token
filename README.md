@@ -190,9 +190,13 @@ Sa-Token-OAuth2 模块分为四种授权模式，解决不同场景下的授权�
 ### 交流群
 QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)
 
+<!-- QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0) -->
+
 微信交流群：
 
 <img src="https://oss.dev33.cn/sa-token/qr/wx-qr-m-400k.png" width="230px" title="微信群" />
+
+<!-- <img src="https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png" width="230px" title="微信群" /> -->
 
 (扫码添加微信，备注：sa-token，邀您加入群聊)
 

@@ -1,6 +1,6 @@
 # 更新日志 
 
-### v1.38.0 @2023-10-18
+### v1.38.0 @2024-5-12
 - sa-token-core：
 	- 修复：修复 `StpUtil.getSessionByLoginId(xx)` 参数为 null 时创建无效 `SaSession` 的 bug。
 	- 优化：在 `SpringBoot 3.x` 版本下错误的引入依赖时将得到启动失败的提示。 （感谢`Uncarbon`提交的pr）
