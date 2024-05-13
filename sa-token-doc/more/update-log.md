@@ -48,7 +48,7 @@
 	- 新增过滤器执行顺序更改示例。
 - 其它：
 	- 优化：将跨域处理demo拆分为独立仓库。
-	- 优化：解决 springboot 集成 sa-token 后排除 jsckson 依赖无法成功启动的问题。
+	- 优化：解决 springboot 集成 sa-token 后排除 jackson 依赖无法成功启动的问题。
 	- 优化：解决 `sa-token-jwt` 模块重复设置 keyt 秘钥问题。（感谢`KonBAI`提交的pr）
 	- 优化：jwt模式 token 过期后，抛出的异常描述是 token 已过期，而不再是 token 无效。
 	- 修复：补齐 `sa-token-spring-aop` 模块中遗漏监听的注解。
