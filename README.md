@@ -194,9 +194,9 @@ QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0)
 
 微信交流群：
 
-<img src="https://oss.dev33.cn/sa-token/qr/wx-qr-m-400k.png" width="230px" title="微信群" />
+<!-- <img src="https://oss.dev33.cn/sa-token/qr/wx-qr-m-400k.png" width="230px" title="微信群" /> -->
 
-<!-- <img src="https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png" width="230px" title="微信群" /> -->
+<img src="https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png" width="230px" title="微信群" />
 
 (扫码添加微信，备注：sa-token，邀您加入群聊)
 
