@@ -221,7 +221,7 @@ sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 | ticketTimeout	| long		| 300		| ticket 有效期 （单位: 秒）														|
 | allowUrl		| String	| *			| 所有允许的授权回调地址，多个用逗号隔开（不在此列表中的URL将禁止下放ticket），参考：[SSO整合：配置域名校验](/sso/sso-check-domain)	|
 | homeRoute		| String	|  			| 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由			|
-| isSlo			| Boolean	| false		| 是否打开单点注销功能															|
+| isSlo			| Boolean	| true		| 是否打开单点注销功能															|
 | isHttp		| Boolean	| false		| 是否打开模式三（此值为 true 时将使用 http 请求：校验 ticket 值、单点注销、获取 userinfo），参考：[详解](/use/config?id=配置项详解：isHttp) 	|
 | autoRenewTimeout	| Bolean	| false	| 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）			|
 | maxRegClient	| int		| 32		| 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出			|
