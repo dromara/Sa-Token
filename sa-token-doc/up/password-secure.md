@@ -34,10 +34,24 @@ System.out.println("AES加密后：" + ciphertext);
 String text2 = SaSecureUtil.aesDecrypt(key, ciphertext);
 System.out.println("AES解密后：" + text2);
 ```
+附：内部密钥生成策略，方便其他开发语言对接
+```java
+    private static SecretKeySpec getSecretKey(final String password) throws NoSuchAlgorithmException {
+        KeyGenerator kg = KeyGenerator.getInstance("AES");
+        //获取SHA1PRNG伪随机数生成器
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        //将实际密码作为为伪随机数生成器的种子
+        random.setSeed(password.getBytes());
+        //利用伪随机数生成器生成128位的密钥，能确保解密时生成的密钥的一致性
+        kg.init(128, random);
+        SecretKey secretKey = kg.generateKey();
+        return new SecretKeySpec(secretKey.getEncoded(), "AES");
+    }
+```
 
 
 ### 非对称加密
-RSA加密
+~~RSA加密(已过时)~~
 ``` java
 // 定义私钥和公钥 
 String privateKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAO+wmt01pwm9lHMdq7A8gkEigk0XKMfjv+4IjAFhWCSiTeP7dtlnceFJbkWxvbc7Qo3fCOpwmfcskwUc3VSgyiJkNJDs9ivPbvlt8IU2bZ+PBDxYxSCJFrgouVOpAr8ar/b6gNuYTi1vt3FkGtSjACFb002/68RKUTye8/tdcVilAgMBAAECgYA1COmrSqTUJeuD8Su9ChZ0HROhxR8T45PjMmbwIz7ilDsR1+E7R4VOKPZKW4Kz2VvnklMhtJqMs4MwXWunvxAaUFzQTTg2Fu/WU8Y9ha14OaWZABfChMZlpkmpJW9arKmI22ZuxCEsFGxghTiJQ3tK8npj5IZq5vk+6mFHQ6aJAQJBAPghz91Dpuj+0bOUfOUmzi22obWCBncAD/0CqCLnJlpfOoa9bOcXSusGuSPuKy5KiGyblHMgKI6bq7gcM2DWrGUCQQD3SkOcmia2s/6i7DUEzMKaB0bkkX4Ela/xrfV+A3GzTPv9bIBamu0VIHznuiZbeNeyw7sVo4/GTItq/zn2QJdBAkEA8xHsVoyXTVeShaDIWJKTFyT5dJ1TR++/udKIcuiNIap34tZdgGPI+EM1yoTduBM7YWlnGwA9urW0mj7F9e9WIQJAFjxqSfmeg40512KP/ed/lCQVXtYqU7U2BfBTg8pBfhLtEcOg4wTNTroGITwe2NjL5HovJ2n2sqkNXEio6Ji0QQJAFLW1Kt80qypMqot+mHhS+0KfdOpaKeMWMSR4Ij5VfE63WzETEeWAMQESxzhavN1WOTb3/p6icgcVbgPQBaWhGg==";
