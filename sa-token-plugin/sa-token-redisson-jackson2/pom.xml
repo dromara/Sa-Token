@@ -18,8 +18,8 @@
 
 	<!-- parent 里的版本适合与 springboot2 兼容；其它更新的框架里版本容易冲突 -->
 	<properties>
-		<redisson.version>3.23.5</redisson.version>
-		<jackson.version>2.15.2</jackson.version>
+		<redisson.version>3.27.2</redisson.version>
+		<jackson.version>2.17.0</jackson.version>
 	</properties>
 
 	<dependencies>
@@ -34,6 +34,7 @@
 		<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson</artifactId>
+			<version>${redisson.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.yaml</groupId>
