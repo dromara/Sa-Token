@@ -34,6 +34,13 @@
 // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
+
+<!-------- tab:Gradle (Kotlin) 方式 -------->
+注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
+``` gradle
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
+implementation("cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}")
+```
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -43,6 +50,8 @@ implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ### 3、创建启动类
 在项目中新建包 `com.pj` ，在此包内新建主类 `SaTokenDemoApplication.java`，输入以下代码：
 
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Java -------->
 ``` java
 @SpringBootApplication
 public class SaTokenDemoApplication {
@@ -53,8 +62,24 @@ public class SaTokenDemoApplication {
 }
 ```
 
+<!-------- tab:Kotlin -------->
+```kotlin
+@SpringBootApplication
+class SaTokenDemoApplication
+
+fun main(args: Array<String>) {
+    runApplication<SaTokenDemoApplication>(*args)
+    println(SaManager.getConfig())
+}
+```
+<!---------------------------- tabs:end ------------------------------>
+
+
 ### 4、创建全局过滤器
 新建`SaTokenConfigure.java`，注册 Sa-Token 的全局过滤器
+
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Java -------->
 ``` java
 /**
  * [Sa-Token 权限认证] 全局配置类 
@@ -85,10 +110,41 @@ public class SaTokenConfigure {
     }
 }
 ```
+
+<!-------- tab:Kotlin -------->
+```kotlin
+@Configuration
+class SaTokenConfigure {
+    /**
+     * 注册 [Sa-Token全局过滤器]
+     */
+    @Bean
+    fun saReactorFilter(): SaReactorFilter = SaReactorFilter()
+        // 指定 [拦截路由]（此处为拦截所有path）
+        .addInclude("/**")
+        // 指定 [放行路由]
+        .addExclude("/favicon.ico")
+        // 指定[认证函数]: 每次请求执行
+        .setAuth {
+            println("---------- sa全局认证")
+            // SaRouter.match("/test/test", SaFunction { StpUtil.checkLogin() })
+        }
+        // 指定[异常处理函数]：每次[认证函数]发生异常时执行此函数
+        .setError { e: Throwable ->
+            println("---------- sa全局异常 ")
+            SaResult.error(e.message)
+        }
+}
+```
+<!---------------------------- tabs:end ------------------------------>
+
 你只需要按照此格式复制代码即可，有关过滤器的详细用法，会在之后的章节详细介绍。
 
 
 ### 5、创建测试Controller
+
+<!---------------------------- tabs:start ------------------------------>
+<!-------- tab:Java -------->
 ``` java
 @RestController
 @RequestMapping("/user/")
@@ -114,6 +170,27 @@ public class UserController {
 }
 ```
 
+<!-------- tab:Kotlin -------->
+```kotlin
+@RestController
+@RequestMapping("/user/")
+class UserController {
+    
+    @RequestMapping("doLogin")
+    fun doLogin(username: String, password: String) =
+        // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
+        if ("zhang" == username && "123456" == password) {
+            StpUtil.login(10001)
+            "登录成功"
+        } else "登录失败"
+    
+    @RequestMapping("isLogin")
+    fun isLogin() = "当前会话是否登录：" + StpUtil.isLogin()
+    
+}
+```
+
+<!---------------------------- tabs:end ------------------------------>
 ### 6、运行
 启动代码，从浏览器依次访问上述测试接口：
 
