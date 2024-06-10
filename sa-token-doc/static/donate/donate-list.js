@@ -1110,4 +1110,18 @@ var donateList = [
 		"msg": "感谢您的开源项目！",
 		"date": "2024-05-07"
 	},
+	{
+		"name": "INS6",
+		"link": "https://gitee.com/feiyuchuixue",
+		"money": 188.0,
+		"msg": '<a href="https://szadmin.cn/" target="_blank">感谢Sa-Token开源！Sz-Admin一个轻量化RBAC开源框架。</a>',
+		"date": "2024-06-05"
+	},
+	{
+		"name": "Zongyy",
+		"link": "https://gitee.com/zongyY11",
+		"money": 10.0,
+		"msg": "感谢您的开源项目！",
+		"date": "2024-06-05"
+	},
 ]
