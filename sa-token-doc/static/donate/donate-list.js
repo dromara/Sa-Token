@@ -1131,4 +1131,25 @@ var donateList = [
 		"msg": '感谢开源, 欢迎下载：驰骋低代码BPM <a href="https://gitee.com/opencc/JFlow" target="_blank">https://gitee.com/opencc/JFlow</a>',
 		"date": "2024-06-11"
 	},
+	{
+		"name": "flydongdong",
+		"link": "https://gitee.com/flydongdong",
+		"money": 10.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-06-18"
+	},
+	{
+		"name": "驰骋BPM",
+		"link": "https://gitee.com/chichengsoft",
+		"money": 100.0,
+		"msg": '感谢开源, 欢迎下载：驰骋低代码BPM <a href="https://gitee.com/opencc/JFlow" target="_blank">https://gitee.com/opencc/JFlow</a>',
+		"date": "2024-06-20"
+	},
+	{
+		"name": "Mall4j商城系统",
+		"link": "https://gitee.com/gz-yami_admin",
+		"money": 218.0,
+		"msg": '感谢开源！Mall4j商城系统： <a href="https://gitee.com/gz-yami/mall4j" target="_blank">https://gitee.com/gz-yami/mall4j</a>',
+		"date": "2024-06-21"
+	},
 ]
