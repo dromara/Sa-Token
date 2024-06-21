@@ -1142,7 +1142,7 @@ var donateList = [
 		"name": "驰骋BPM",
 		"link": "https://gitee.com/chichengsoft",
 		"money": 100.0,
-		"msg": '感谢开源, 欢迎下载：驰骋低代码BPM <a href="https://gitee.com/opencc/JFlow" target="_blank">https://gitee.com/opencc/JFlow</a>',
+		"msg": '感谢您的开源项目！欢迎了解驰骋BPM低代码. <a href="https://gitee.com/opencc/JFlow" target="_blank">https://gitee.com/opencc/JFlow</a>',
 		"date": "2024-06-20"
 	},
 	{
