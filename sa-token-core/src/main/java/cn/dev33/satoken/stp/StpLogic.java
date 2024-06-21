@@ -157,7 +157,7 @@ public class StpLogic {
     public List<SaLoginInfo> getLoginInfoList(Object loginId) {
         ArrayList<SaLoginInfo> loginInfoList = new ArrayList<>();
         //获取session
-        SaSession session = this.getSessionByLoginId(false);
+        SaSession session = this.getSessionByLoginId(loginId,false);
         if (session == null) {
             return loginInfoList;
         }
