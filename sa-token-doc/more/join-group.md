@@ -15,9 +15,9 @@ QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0)
 
 ### 2、加入微信交流群：
 
-![微信群](https://oss.dev33.cn/sa-token/wx-qr-300.png ':size=180')
+<!-- ![微信群](https://oss.dev33.cn/sa-token/wx-qr-300.png ':size=180') -->
 
-<!-- ![微信群](https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png ':size=175') -->
+![微信群](https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png ':size=175')
 
 （扫码添加微信，备注：sa，邀您加入群聊）
 

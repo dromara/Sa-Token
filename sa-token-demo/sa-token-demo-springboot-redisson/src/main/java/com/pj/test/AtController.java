@@ -1,14 +1,9 @@
 package com.pj.test;
 
+import cn.dev33.satoken.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.dev33.satoken.annotation.SaCheckBasic;
-import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.annotation.SaCheckRole;
-import cn.dev33.satoken.annotation.SaCheckSafe;
-import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -71,7 +66,7 @@ public class AtController {
 	}
 	
 	// 通过Basic认证后才可以进入  ---- http://localhost:8081/at/checkBasic 
-	@SaCheckBasic(account = "sa:123456")
+	@SaCheckHttpBasic(account = "sa:123456")
 	@RequestMapping("checkBasic")
 	public SaResult checkBasic() {
 		return SaResult.ok();

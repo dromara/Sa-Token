@@ -33,7 +33,7 @@ sa-token:
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # 配置允许单点登录的 url 
-sa-token.sso.allow-url=http://sa-sso-client1.com:9001/sso/login
+sa-token.sso-server.allow-url=http://sa-sso-client1.com:9001/sso/login
 ```
 <!---------------------------- tabs:end ---------------------------->
 

@@ -65,7 +65,7 @@ public class AtController {
 	}
 	
 	// 通过Basic认证后才可以进入  ---- http://localhost:8080/sa_token_demo_ssm_war/at/checkBasic
-	@SaCheckBasic(account = "sa:123456")
+	@SaCheckHttpBasic(account = "sa:123456")
 	@RequestMapping("checkBasic")
 	public SaResult checkBasic() {
 		return SaResult.ok();
