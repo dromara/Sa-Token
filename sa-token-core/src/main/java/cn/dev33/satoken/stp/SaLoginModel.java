@@ -15,13 +15,13 @@
  */
 package cn.dev33.satoken.stp;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 在调用 `StpUtil.login()` 时的 配置参数 Model，决定登录的一些细节行为 <br>
@@ -298,6 +298,9 @@ public class SaLoginModel {
 			return -1;
 		}
 		if(getTimeoutOrGlobalConfig() == SaTokenDao.NEVER_EXPIRE) {
+			return Integer.MAX_VALUE;
+		}
+		if (timeout > Integer.MAX_VALUE) {
 			return Integer.MAX_VALUE;
 		}
 		return (int)(long)timeout;
