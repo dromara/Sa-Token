@@ -1152,4 +1152,18 @@ var donateList = [
 		"msg": '感谢开源！Mall4j商城系统： <a href="https://gitee.com/gz-yami/mall4j" target="_blank">https://gitee.com/gz-yami/mall4j</a>',
 		"date": "2024-06-21"
 	},
+	{
+		"name": "FlyFlow",
+		"link": "https://gitee.com/junyue",
+		"money": 200.0,
+		"msg": '感谢开源！FlyFlow工作流： <a href="https://gitee.com/junyue/flyflow" target="_blank">https://gitee.com/junyue/flyflow</a>',
+		"date": "2024-06-25"
+	},
+	{
+		"name": "immortal",
+		"link": "https://gitee.com/immortal-wang",
+		"money": 10.0,
+		"msg": '感谢您的开源项目，内部项目鉴权框架参考了您的部分设计思想（用户会话和令牌会话）。',
+		"date": "2024-07-20"
+	},
 ]
