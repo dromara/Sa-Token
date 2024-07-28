@@ -45,6 +45,7 @@
 
 ### 3、搭建 Client 端项目 
 
+> [!TIP| label:demo | style:callout] 
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client/`，如遇到难点可结合源码进行测试学习
 
 #### 3.1、去除 SSO-Server 的 Cookie 作用域配置 

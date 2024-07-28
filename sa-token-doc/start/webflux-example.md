@@ -5,7 +5,10 @@
 
 整合示例在官方仓库的`/sa-token-demo/sa-token-demo-webflux`文件夹下，如遇到难点可结合源码进行测试学习
 
-!> WebFlux 常用于微服务网关架构中，如果您的应用基于单体架构且非 Reactor 模型，可以先跳过本章 
+
+> [!WARNING| label:小提示 ] 
+> WebFlux 常用于微服务网关架构中，如果您的应用基于单体架构且非 Reactor 模型，可以先跳过本章  
+
 
 ---
 

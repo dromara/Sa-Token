@@ -2,8 +2,7 @@
 
 在线提问链接：[Gitee issue](https://gitee.com/dromara/sa-token/issues)、[GitHub issue](https://github.com/dromara/sa-token/issues)
 
-> 请在新建 issue 时，尽量复制模板格式进行提交
-> 
+> [!TIP| label:请在新建 issue 时，尽量复制模板格式进行提交] 
 > 1. 提交之前率先参考 <a href="#/more/common-questions" target="_blank">Sa-Token 常见问题解答</a> 以及善用 Gitee issues 搜索功能，查阅问题是否已有答案，已存在的 issue 就不要再重复提交了。
 > 2. 问题已得到处理的 issue 请大家及时手动关闭，如果超过24小时没有追问，我们将默认提交者已找到解决方案，关闭issue。
 > 3. 有时候 issue 提交之后，没有得到及时回复，大家可以加入QQ群@管理员寻求帮助。

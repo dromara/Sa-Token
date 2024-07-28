@@ -3,6 +3,7 @@
 --- 
 
 假设我们有如下需求：
+> [!INFO| label:需求场景] 
 > 项目中所有接口均需要登录认证，只有 “登录接口” 本身对外开放
 
 我们怎么实现呢？给每个接口加上鉴权注解？手写全局拦截器？似乎都不是非常方便。
@@ -28,7 +29,8 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 ```
 以上代码，我们注册了一个基于 `StpUtil.checkLogin()` 的登录校验拦截器，并且排除了`/user/doLogin`接口用来开放登录（除了`/user/doLogin`以外的所有接口都需要登录才能访问）。
 
-!> `SaInterceptor` 是新版本提供的拦截器，点此 [查看旧版本代码迁移示例](https://blog.csdn.net/shengzhang_/article/details/126458949)。
+> [!WARNING| label:版本升级] 
+> `SaInterceptor` 是新版本提供的拦截器，点此 [查看旧版本代码迁移示例](https://blog.csdn.net/shengzhang_/article/details/126458949)。
 
 ### 2、校验函数详解  
 自定义认证规则：`new SaInterceptor(handle -> StpUtil.checkLogin())` 是最简单的写法，代表只进行登录校验功能。
@@ -215,7 +217,10 @@ public SaResult getList() {
 
 请求将会跳过拦截器的校验，直接进入 Controller 的方法中。
 
-**注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。**
+> [!WARNING| label:注意点] 
+> 注解 `@SaIgnore` 的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。
+
+
 
 
 ### 7、关闭注解校验

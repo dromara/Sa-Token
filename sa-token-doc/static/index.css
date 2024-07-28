@@ -23,13 +23,13 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .logo-box .logo-text {display: inline-block; margin: 0; padding: 0; padding-left: 5px; vertical-align: middle; font-size: 22px;/* font-weight: 700; */}
 
 /* 右边导航 */
-.doc-header .nav-right{margin: 0;  float: right; line-height: 60px; padding-right: 4em; white-space: nowrap; font-size: 15px; }
-.doc-header .nav-right>*{padding: 0px; margin: 0 14px;}
+.doc-header .nav-right{margin: 0;  float: right; line-height: 60px; padding-right: 4em; white-space: nowrap; }
+.doc-header .nav-right>*{padding: 0px; margin: 0 9px;}
 .doc-header .nav-right>*:last-child{position: relative; z-index: 1002; }
 
 .nav-right a{color: #34495E; text-decoration: none; transition: all 0.2s;}
 .nav-right a:hover{color: #42B983;}
-.doc-header .nav-right .wzi{font-size: 15px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
+.doc-header .nav-right .wzi{font-size: 14px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
 .doc-header .nav-right .wzi:hover{border-bottom: 2px #42B983 solid;}
 
 /* 小章鱼 */

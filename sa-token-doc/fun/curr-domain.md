@@ -58,7 +58,8 @@ public class CustomSaTokenContextForSpring extends SaTokenContextForSpring {
 
 其它逻辑保持不变，框架即可正确获取 uri 地址
 
-!> 注意：步骤一与步骤二需要同步存在，否则可能有前端假传 header 参数造成安全问题 
+> [!ATTENTION| label:风险警告] 
+> 注意：步骤一与步骤二需要同步存在，否则可能有前端假传 header 参数造成安全问题 
 
 
 ### 方案二：直接在yml中配置当前项目的网络访问地址

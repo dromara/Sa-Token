@@ -20,6 +20,7 @@ SysUser user = (SysUser) StpUtil.getSession().get("user");
 - `Token-Session`: 指的是框架为每个 token 分配的 Session  
 - `Custom-Session`: 指的是以一个 特定的值 作为SessionId，来分配的 Session 
 
+> [!TIP| style:callout] 
 > 有关 Account-Session 与 Token-Session 的详细区别，可参考：[Session模型详解](/fun/session-model)
 
 

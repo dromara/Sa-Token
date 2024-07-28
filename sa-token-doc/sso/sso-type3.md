@@ -2,6 +2,7 @@
 
 如果既无法做到前端同域，也无法做到后端同Redis，那么可以使用模式三完成单点登录 
 
+> [!WARNING| label:小提示] 
 > 阅读本篇之前请务必先熟读SSO模式二！因为模式三仅仅属于模式二的一个特殊场景，熟读模式二有助于您快速理解本章内容
 
 
@@ -14,6 +15,7 @@
 
 所以模式三的主要目标：也就是在 模式二的基础上 解决上述 三个难题 
 
+> [!TIP| label:demo | style:callout] 
 > 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client/` 
 > [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)，如遇难点可参考示例 
 
@@ -43,6 +45,7 @@ sa-token.sso-client.is-http=true
 - [http://sa-sso-client2.com:9001/](http://sa-sso-client2.com:9001/)
 - [http://sa-sso-client3.com:9001/](http://sa-sso-client3.com:9001/)
 
+> [!WARNING| label:小提示] 
 > 注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰
 
 

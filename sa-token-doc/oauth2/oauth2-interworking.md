@@ -51,11 +51,11 @@ StpUtil.login(uid, SaLoginConfig.setToken(access_token));
 ```
 
 
-### 注意点
-数据互通，让前端与后端的交互更加方便，一个 token 即可访问所有接口，但也一定程度上失去了OAuth2的 “不同 Client 不同权限” 的设计意义，
-同时也默认每个 Client 都拥有了账号的会话权限（access_token 与 satoken 为同一个）。
-
-应该根据自己的架构合理分析是否应该整合数据互通。
+> [!WARNING| label:注意点] 
+> 数据互通，让前端与后端的交互更加方便，一个 token 即可访问所有接口，但也一定程度上失去了OAuth2的 “不同 Client 不同权限” 的设计意义，
+> 同时也默认每个 Client 都拥有了账号的会话权限（access_token 与 satoken 为同一个）。
+> 
+> 应该根据自己的架构合理分析是否应该整合数据互通。
 
 
 

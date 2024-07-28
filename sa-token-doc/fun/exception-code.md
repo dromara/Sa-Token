@@ -53,8 +53,6 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 
 ### 异常细分状态码-参照表
 
-!> 部分插件因异常抛出点较少，暂未做状态码细分处理
-
 #### sa-token-code 核心包
 
 | code码值	| 含义									|
@@ -214,6 +212,9 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 | 30302		| jwt 模式不可以删除 Token				|
 | 30303		| Token已超时							|
 
+
+> [!WARNING| label:注意] 
+> 部分插件因异常抛出点较少，暂未做状态码细分处理
 
 
 

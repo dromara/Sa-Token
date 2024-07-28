@@ -32,9 +32,8 @@ sa-token.token-prefix=Bearer
 此时 Sa-Token 便可在读取 Token 时裁剪掉 `Bearer`，成功获取`xxxx-xxxx-xxxx-xxxx`。
 
 
-### 注意点
-
-1. Token前缀  与 Token值 之间必须有一个空格。
-2. 一旦配置了 Token前缀，则前端提交 `Token` 时，必须带有前缀，否则会导致框架无法读取 Token。
-3. 由于`Cookie`中无法存储空格字符，也就意味配置 Token 前缀后，Cookie 鉴权方式将会失效，此时只能将 Token 提交到`header`里进行传输。
+> [!WARNING| label:注意点] 
+> 1. Token前缀  与 Token值 之间必须有一个空格。
+> 2. 一旦配置了 Token前缀，则前端提交 `Token` 时，必须带有前缀，否则会导致框架无法读取 Token。
+> 3. 由于`Cookie`中无法存储空格字符，所以配置 Token 前缀后，Cookie 模式将会失效，此时只能将 Token 提交到`header`里进行传输。
 

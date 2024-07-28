@@ -151,21 +151,53 @@
 		</a> -->
 		
 		<div class="main-box">
+			<!-- 内容区 -->
 			<div id="app">加载中...</div>
+			
+			<!-- 右边盒子 -->
+			<div class="doc-right-bj-box">
+				<div class="doc-right-bj-box-title">目录</div>
+				<div class="doc-right-more-item">
+					
+					<!-- ad盒子 -->
+					<div class="ad-box">
+						
+						<div class="ad-title">
+							<span class="ad-tips">推广信息：</span>
+							<span class="ad-tips ad-close">关闭</span>
+						</div>
+						
+						<!-- ssp -->
+						<div class="top-ad-box" style="margin-bottom: 12px;">
+							<a href="http://sa-pro.dev33.cn?from=satop" target="_blank">
+								<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-s3.png" />
+							</a>
+						</div>
+						
+						<!-- 万维广告div -->
+						<div class="wwads-cn wwads-horizontal" data-id="88" style="min-height: 0px; border: 1px #eee solid; margin-bottom: 12px;"></div>
+						
+					</div>
+					
+					<!-- help 按钮 -->
+					<div class="help-btn">技术求助</div>
+					
+				</div>
+			</div>
 		</div>
 		
 		<!-- 万维广告div -->
-		<div style="position: fixed; right: 0; bottom: 0; z-index: 10000; border: 0px #aaa solid;">
+		<!-- <div style="position: fixed; right: 0; bottom: 0; z-index: 10000; border: 0px #aaa solid;">
 			<div class="wwads-cn wwads-vertical" data-id="88" style="max-width:150px"></div>
-		</div>
+		</div> -->
 		
 		<!-- 小助手div -->
-		<div class="p-none help-btn-box" style="position: fixed; right: 40px; bottom: 330px; z-index: 10000; border: 0px #aaa solid;">
+		<!-- <div class="p-none help-btn-box" style="position: fixed; right: 40px; bottom: 330px; z-index: 10000; border: 0px #aaa solid;">
 			<div class="help-tips" style="position: relative; left: -30px; top: -10px;"></div>
 			<div class="help-btn" style="width: 60px; height: 60px; text-align: center; border-radius: 50%; background-color: #42b983; cursor: pointer;">
 				<span style="font-size: 18px; color: #FFF; line-height: 60px;">Help</span>
 			</div>
-		</div>
+		</div> -->
 		
 		
 		<!-- UI逐渐显现 -->
@@ -177,6 +209,10 @@
 				document.body.style.opacity = 1;
 			}, 1);
 		</script>
+		
+		<!-- jqeury -->
+		<script src="static/jquery.min.js"></script>
+		<script src="static/layer-v3.1.1/layer.js"></script>
 		
 		<!--  -->
 		<script src="./static/docsify-plugin.js?v=7"></script>
@@ -216,6 +252,28 @@
 					tabComments: true,      // 用注释来标注选项卡标题，例如：<!-- tab:SpringBoot  -->
 					tabHeadings: true       // 用标题+粗体来定制选项卡
 				},
+				// 阅读进度
+				progress: {
+					position: "top",
+					color: "var(--theme-color,#42b983)",
+					height: "3px",
+				},
+				// 信息提示框
+				'flexible-alerts': {
+					style: 'flat',  // 默认风格 callout=浅色，flat=深色 
+					note: {
+						label: {}
+					},
+					tip: {
+						label: {},
+					},
+					warning: {
+						label: {}
+					},
+					attention: {
+						label: {}
+					},
+				},
 				// 自定义插件 
 				plugins: [myDocsifyPlugin, window.isStarPlugin, window.isFillInWjPlugin],
 			}
@@ -229,32 +287,69 @@
 		<script src="static/prism/prism-yaml.min.js"></script>
 		<script src="static/prism/prism-properties.min.js"></script>
 		
+		<!-- 文档阅读进度条 -->
+		<!-- <script src="static/docsify-plugins/progress.update.js"></script> -->
+		
+		<!-- 右上角次级导航栏 -->
+		<script src="static/docsify-plugins/sub-nav-draw.js"></script>
+		
 		<!-- 搜索框 -->
 		<script src="static/search.min.js"></script>
 		<!-- 多 tab 切换 -->
 		<script src="static/docsify-tabs.min.js"></script>
 		<!-- img点击放大 -->
 		<script src="static/zoom-image.min.js"></script>
+		<!-- 好看的提示框 -->
+		<script src="static/docsify-plugins/docsify-plugin-flexible-alerts.min-1.1.1.js"></script>
 
 		<!-- sidebar折叠 -->
-		<!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
-		<script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script> -->
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
+		<script src="https://cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script> -->
 
-		<!-- jqeury -->
-		<script src="static/jquery.min.js"></script>
-		<script src="static/layer-v3.1.1/layer.js"></script>
 		
 		<!-- 渲染赞助数据 -->
 		<script src="static/donate/donate-list.js"></script>
 		<script src="static/donate/donate-fun.js"></script>
 		
+		<!-- 广告盒子 -->
 		<script>
-			if(window.jQuery === undefined || window.Docsify === undefined) {
-				var str = 'CDN 加载失败，请打开备用地址：<a href="index-backup.html' + location.hash + '" target="_blank">index-backup.html</a>';
-				document.querySelector('#app').innerHTML = str;
-			}
+			(function(){
+				// 功能6：标题下面的广告
+				if($(window).width() >= 800) {
+					// 如果一天内用户点击过关闭广告，则不再展现
+					let allowJg = 1000 * 60 * 60 * 24 * 1;
+					// allowJg = 1000 * 10;
+					try{
+						const closeAdTime = localStorage.closeAdTime;
+						if(closeAdTime) {
+							// 点击广告关闭的时间，和当前时间的差距
+							const closeAdJg = new Date().getTime() - parseInt(closeAdTime);
+							
+							// 差距小于1天，不再展示 
+							if(closeAdJg < allowJg) {
+								console.log('not show ad ...');
+								$('.ad-box').remove();
+								return;
+							}
+						}
+					}catch(e){
+						console.error(e);
+					}
+					
+					// 添加关闭事件
+					$('.ad-close').click(function(){
+						console.log('关闭广告');
+						// $('.top-ad-box').slideUp(); // 折叠收起
+						layer.confirm('关闭后，一天内不再展现此信息', function(){
+							$(".ad-box").fadeOut(1000); // 淡出效果
+							layer.msg('关闭成功');
+							localStorage.closeAdTime = new Date().getTime();
+						})
+					})
+				}
+			})();
 		</script>
-
+		
 		<!-- 搜索引擎自动提交 -->
 		<script>
 			(function() {
@@ -316,17 +411,19 @@
 					offset: '10%',
 				})
 			})
-			try{
-				// 给个小提示
-				const index = layer.tips('框架技术支持，点此求助', '.help-tips', {
-					tips: [1, '#000'] ,//还可配置颜色
-					// time: 5000,
-				});
-				// 改为 fixed 定位，否则它会随着滚动条移动，样式就跑偏了
-				$('#layui-layer' + index).css('position', 'fixed');
-			}catch(e){
-				console.error(e);
-			}
+			// setTimeout(function(){
+			// 	try{
+			// 		// 给个小提示
+			// 		const index = layer.tips('框架技术支持，点此求助', '.help-btn', {
+			// 			tips: [1, '#000'] ,//还可配置颜色
+			// 			// time: 5000,
+			// 		});
+			// 		// 改为 fixed 定位，否则它会随着滚动条移动，样式就跑偏了
+			// 		$('#layui-layer' + index).css('position', 'fixed');
+			// 	}catch(e){
+			// 		console.error(e);
+			// 	}
+			// }, 500)
 
 		</script>
 		
