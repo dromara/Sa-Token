@@ -19,6 +19,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTException;
@@ -181,7 +182,7 @@ public class SaJwtTemplate {
     	JWT jwt;
     	try {
     		jwt = JWT.of(token);
-		} catch (JWTException e) {
+		} catch (JWTException | JSONException e) {
     		throw new SaJwtException("jwt 解析失败：" + token, e).setCode(SaJwtErrorCode.CODE_30201);
 		}
     	JSONObject payloads = jwt.getPayloads();
