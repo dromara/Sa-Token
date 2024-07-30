@@ -30,7 +30,8 @@ function subNavDraw(hook, vm) {
 		
 		// 修改高度 
 		const $dom = $('.app-sub-sidebar');
-		$('.doc-right-more-item').css({ top: ($dom.height() + 80) + 'px' })
+		console.log($dom, $dom.height());
+		$('.doc-right-more-item').css({ top: (($dom.height() ?? 0) + 80) + 'px' })
 		
 		// 重新定位 active-rep 对应的菜单 
 		positioningVmActiveRep(vm);
