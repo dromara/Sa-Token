@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.logic;
 
+import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
@@ -32,6 +33,7 @@ import cn.dev33.satoken.oauth2.model.CodeModel;
 import cn.dev33.satoken.oauth2.model.RequestAuthModel;
 import cn.dev33.satoken.oauth2.model.SaClientModel;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -177,9 +179,20 @@ public class SaOAuth2Handle {
 	 */
 	public static Object token(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
 		// 获取参数
+		String authorizationValue = SaBasicUtil.getAuthorizationValue();
+		String clientId;
+		String clientSecret;
+		// gitlab回调token接口时,按照的是标准的oauth2协议的basic请求头,basic中会包含client_id和client_secret的信息
+		if(SaFoxUtil.isEmpty(authorizationValue)){
+			clientId = req.getParamNotNull(Param.client_id);
+			clientSecret = req.getParamNotNull(Param.client_secret);
+		} else {
+			String[] clientIdAndSecret = authorizationValue.split(":");
+			clientId = clientIdAndSecret[0];
+			clientSecret = clientIdAndSecret[1];
+		}
+
 		String code = req.getParamNotNull(Param.code);
-		String clientId = req.getParamNotNull(Param.client_id);
-		String clientSecret = req.getParamNotNull(Param.client_secret);
 		String redirectUri = req.getParam(Param.redirect_uri);
 
 		// 校验参数
