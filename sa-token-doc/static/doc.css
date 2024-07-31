@@ -409,14 +409,27 @@ body {
 
 /* -------------  details标签 ------------- */
 .main-box details{
-	border: 1px #c4e5b5 solid;
+	border: 1px #42B983 solid;
+	background-color: #f4fdef;
+	overflow: hidden;
+	max-height: 44px;
+	/* transition: all 1s; */
+}
+.main-box details[open]{ /* max-height: 1000px; */ overflow: auto; animation: slideDown 0.4s linear both;}
+@keyframes slideDown {
+    0% { max-height: 44px; overflow: hidden; }
+    99% { max-height: 1000px; overflow: hidden; }
+    100% { max-height: 1000px; overflow: auto; }
 }
 .main-box details summary{
 	padding: 11px 14px;
 	background-color: #f4fdef;
 	color: #01a252;
-	
 	cursor: pointer;
+}
+.main-box details pre{
+	margin-left: 1em;
+	margin-right: 14px;
 }
 .main-box details p{padding: 0 14px;}
 
