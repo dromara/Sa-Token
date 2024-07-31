@@ -83,6 +83,17 @@ public SaResult getData(String apiType, String loginId) {
 }
 ```
 
+> [!WARNING| label:小提示] 
+> 如果配置了 “不同 client 不同秘钥” 模式，则需要将上述的： <br>
+> &emsp;&emsp;SaSignUtil.checkRequest(SaHolder.getRequest());  <br>
+> 
+> 改为以下方式： <br>
+> &emsp;&emsp;String client = SaHolder.getRequest().getHeader("client"); <br>
+> &emsp;&emsp;SaSsoServerProcessor.instance.ssoServerTemplate.getSignTemplate(client).checkRequest(SaHolder.getRequest()); <br>
+> 
+> 如果没有配置 “不同 client 不同秘钥” 模式，则请忽略本条提示。
+
+
 #### 3.2、在 Client 端调用此接口查询数据
 
 在 `SsoClientController` 中新增接口 
