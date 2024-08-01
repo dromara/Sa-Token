@@ -89,7 +89,7 @@ public class SaOAuth2Template {
 	 */
 	public ClientTokenModel checkClientToken(String clientToken) {
 		ClientTokenModel ct = getClientToken(clientToken);
-		SaOAuth2Exception.throwBy(ct == null, "无效：client_token" + ct, SaOAuth2ErrorCode.CODE_30107);
+		SaOAuth2Exception.throwBy(ct == null, "无效：client_token" + clientToken, SaOAuth2ErrorCode.CODE_30107);
 		return ct;
 	}
 	/**
