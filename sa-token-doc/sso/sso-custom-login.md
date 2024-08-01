@@ -138,7 +138,7 @@ sa-token.sso-client.client=sso-client-shop
 <!---------------------------- tabs:end ---------------------------->
 
 
-然后在 `sso-server` 的 `configSso` 方法里 `notLoginView` 函数中根据 client 值，返回不同的登录视图
+然后在 `sso-server` 里为每个系统开发不同的登录页，并在 `configSso` 方法里 `notLoginView` 函数中根据 client 值，返回不同的登录视图：
 
 ``` java
 // 配置SSO相关参数 
