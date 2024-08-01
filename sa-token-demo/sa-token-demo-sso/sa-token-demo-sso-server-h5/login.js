@@ -50,7 +50,7 @@ var pData = {
 sa.ajax("/sso/getRedirectUrl", pData, function(res) {
 	if(res.code == 200) {
 		// 已登录，并且redirect地址有效，开始跳转  
-		location.href = decodeURIComponent(res.data);
+		location.href = res.data;
 	} else if(res.code == 401) {
 		console.log('未登录');
 	} else {

@@ -28,13 +28,14 @@ public class H5Controller {
 		if(StpUtil.isLogin() == false) {
 			return SaResult.code(401);
 		}
-		// 已登录情况下，构建 redirectUrl 
+		// 已登录情况下，构建 redirectUrl
+		redirect = SaFoxUtil.decoderUrl(redirect);
 		if(SaSsoConsts.MODE_SIMPLE.equals(mode)) {
 			// 模式一 
-			SaSsoUtil.checkRedirectUrl(SaFoxUtil.decoderUrl(redirect));
+			SaSsoUtil.checkRedirectUrl(redirect);
 			return SaResult.data(redirect);
 		} else {
-			// 模式二或模式三 
+			// 模式二或模式三
 			String redirectUrl = SaSsoUtil.buildRedirectUrl(StpUtil.getLoginId(), client, redirect);
 			return SaResult.data(redirectUrl);
 		}
