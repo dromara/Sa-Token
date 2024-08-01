@@ -1,18 +1,12 @@
 package com.pj.h5;
 
-import java.io.IOException;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 跨域过滤器 
@@ -46,7 +40,6 @@ public class CorsFilter implements Filter {
 			return;
 		}
 
-		// System.out.println("*********************************过滤器被使用**************************");
 		chain.doFilter(req, res);
 	}
 
