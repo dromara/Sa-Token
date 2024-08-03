@@ -108,6 +108,7 @@
 	- [TokenInfo参数详解](/fun/token-info)
 	- [异常细分状态码](/fun/exception-code)
 	- [数据结构](/fun/data-structure)
+	- [自定义注解](/fun/custom-annotations)
 	- [参考：把权限放在缓存里](/fun/jur-cache)
 	- [参考：把路由拦截鉴权动态化](/fun/dynamic-router-check)
 	- [解决反向代理 uri 丢失的问题](/fun/curr-domain)

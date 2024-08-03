@@ -21,7 +21,7 @@ package cn.dev33.satoken.exception;
  * @author click33
  * @since 1.26.0
  */
-public class NotBasicAuthException extends SaTokenException {
+public class NotHttpBasicAuthException extends SaTokenException {
 
 	/**
 	 * 序列化版本号
@@ -34,7 +34,7 @@ public class NotBasicAuthException extends SaTokenException {
 	/**
 	 * 一个异常：代表会话未通过 Http Basic 认证 
 	 */
-	public NotBasicAuthException() {
+	public NotHttpBasicAuthException() {
 		super(BE_MESSAGE);
 	}
 

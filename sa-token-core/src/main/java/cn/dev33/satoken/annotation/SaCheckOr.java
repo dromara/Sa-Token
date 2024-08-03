@@ -40,18 +40,18 @@ public @interface SaCheckOr {
     SaCheckLogin[] login() default {};
 
     /**
-     * 设定 @SaCheckPermission，参考 {@link SaCheckPermission}
-     *
-     * @return /
-     */
-    SaCheckPermission[] permission() default {};
-
-    /**
      * 设定 @SaCheckRole，参考 {@link SaCheckRole}
      *
      * @return /
      */
     SaCheckRole[] role() default {};
+
+    /**
+     * 设定 @SaCheckPermission，参考 {@link SaCheckPermission}
+     *
+     * @return /
+     */
+    SaCheckPermission[] permission() default {};
 
     /**
      * 设定 @SaCheckSafe，参考 {@link SaCheckSafe}

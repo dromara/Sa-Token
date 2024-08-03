@@ -184,8 +184,11 @@ public String info() {
 }
 ```
 
-注：其它注解 `@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理，
-完整示例参考：[码云：自定义注解](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/at)。
+注：其它注解 `@SaCheckRole("xxx")`、`@SaCheckPermission("xxx")`同理， 完整示例参考 Gitee 代码：
+[注解合并](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/merge_annotation)。
+
+> [!TIP| label:自定义注解方案] 
+> 除了注解合并方案，这里还有一份自定义注解方案，参考：[自定义注解](/fun/custom-annotations)
 
 
 
