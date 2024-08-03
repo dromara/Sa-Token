@@ -15,10 +15,10 @@
  */
 package cn.dev33.satoken.oauth2.logic;
 
-import cn.dev33.satoken.basic.SaBasicUtil;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
@@ -27,11 +27,7 @@ import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Api;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.ResponseType;
-import cn.dev33.satoken.oauth2.model.AccessTokenModel;
-import cn.dev33.satoken.oauth2.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.model.CodeModel;
-import cn.dev33.satoken.oauth2.model.RequestAuthModel;
-import cn.dev33.satoken.oauth2.model.SaClientModel;
+import cn.dev33.satoken.oauth2.model.*;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -179,7 +175,7 @@ public class SaOAuth2Handle {
 	 */
 	public static Object token(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
 		// 获取参数
-		String authorizationValue = SaBasicUtil.getAuthorizationValue();
+		String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
 		String clientId;
 		String clientSecret;
 		// gitlab回调token接口时,按照的是标准的oauth2协议的basic请求头,basic中会包含client_id和client_secret的信息

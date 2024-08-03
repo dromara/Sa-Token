@@ -19,6 +19,7 @@ import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.annotation.handler.*;
 import cn.dev33.satoken.fun.strategy.SaCheckMethodAnnotationFunction;
 import cn.dev33.satoken.fun.strategy.SaGetAnnotationFunction;
+import cn.dev33.satoken.fun.strategy.SaIsAnnotationPresentFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 
 import java.lang.annotation.Annotation;
@@ -119,6 +120,14 @@ public final class SaAnnotationStrategy {
 	public SaGetAnnotationFunction getAnnotation = (element, annotationClass)->{
 		// 默认使用jdk的注解处理器
 		return element.getAnnotation(annotationClass);
+	};
+
+	/**
+	 * 判断一个 Method 或其所属 Class 是否包含指定注解
+	 */
+	public SaIsAnnotationPresentFunction isAnnotationPresent = (method, annotationClass) -> {
+		return instance.getAnnotation.apply(method, annotationClass) != null ||
+				instance.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
 	};
 
 }
