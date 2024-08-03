@@ -16,7 +16,7 @@
 package cn.dev33.satoken.annotation.handler;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 所有注解处理器的父接口
@@ -35,18 +35,18 @@ public interface SaAnnotationAbstractHandler<T extends Annotation> {
     /**
      * 所需要执行的校验方法
      * @param at 注解对象
-     * @param element 被标注的注解的元素引用（类或方法）
+     * @param method 被标注的注解的方法引用
      */
     @SuppressWarnings("unchecked")
-    default void check(Annotation at, AnnotatedElement element) {
-        checkMethod((T) at, element);
+    default void check(Annotation at, Method method) {
+        checkMethod((T) at, method);
     }
 
     /**
      * 所需要执行的校验方法（转换类型后）
      * @param at 注解对象
-     * @param element 被标注的注解的元素引用（类或方法）
+     * @param method 被标注的注解的方法引用
      */
-    void checkMethod(T at, AnnotatedElement element);
+    void checkMethod(T at, Method method);
 
 }

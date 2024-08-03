@@ -6,7 +6,7 @@ import com.pj.satoken.StpUserUtil;
 import com.pj.satoken.custom_annotation.SaUserCheckRole;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 SaUserCheckRole 的处理器
@@ -22,7 +22,7 @@ public class SaUserCheckRoleHandler implements SaAnnotationAbstractHandler<SaUse
     }
 
     @Override
-    public void checkMethod(SaUserCheckRole at, AnnotatedElement element) {
+    public void checkMethod(SaUserCheckRole at, Method method) {
         SaCheckRoleHandler._checkMethod(StpUserUtil.TYPE, at.value(), at.mode());
     }
 

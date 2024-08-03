@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckSafe;
 import cn.dev33.satoken.stp.StpLogic;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 SaCheckSafe 的处理器
@@ -35,7 +35,7 @@ public class SaCheckSafeHandler implements SaAnnotationAbstractHandler<SaCheckSa
     }
 
     @Override
-    public void checkMethod(SaCheckSafe at, AnnotatedElement element) {
+    public void checkMethod(SaCheckSafe at, Method method) {
         _checkMethod(at.type(), at.value());
     }
 

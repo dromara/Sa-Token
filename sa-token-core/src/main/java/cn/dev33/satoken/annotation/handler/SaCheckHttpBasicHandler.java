@@ -18,7 +18,7 @@ package cn.dev33.satoken.annotation.handler;
 import cn.dev33.satoken.annotation.SaCheckHttpBasic;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 SaCheckHttpBasic 的处理器
@@ -34,7 +34,7 @@ public class SaCheckHttpBasicHandler implements SaAnnotationAbstractHandler<SaCh
     }
 
     @Override
-    public void checkMethod(SaCheckHttpBasic at, AnnotatedElement element) {
+    public void checkMethod(SaCheckHttpBasic at, Method method) {
         _checkMethod(at.realm(), at.account());
     }
 

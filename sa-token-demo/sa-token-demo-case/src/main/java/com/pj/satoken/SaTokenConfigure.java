@@ -6,7 +6,6 @@ import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
-import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -118,9 +117,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @PostConstruct
     public void rewriteSaStrategy() {
     	// 重写Sa-Token的注解处理器，增加注解合并功能 
-//    	SaAnnotationStrategy.instance.getAnnotation = (element, annotationClass) -> {
-//    		return AnnotatedElementUtils.getMergedAnnotation(element, annotationClass);
-//    	};
+    	SaAnnotationStrategy.instance.getAnnotation = (element, annotationClass) -> {
+    		return AnnotatedElementUtils.getMergedAnnotation(element, annotationClass);
+    	};
     }
     
 }

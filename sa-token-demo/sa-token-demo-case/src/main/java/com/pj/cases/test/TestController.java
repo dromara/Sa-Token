@@ -1,7 +1,6 @@
 package com.pj.cases.test;
 
 import cn.dev33.satoken.util.SaResult;
-import com.pj.satoken.custom_annotation.CheckAccount;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +15,6 @@ public class TestController {
 
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
-	@CheckAccount(name = "sa", pwd = "123456")
 	public SaResult test() {
 		System.out.println("------------进来了");
 		return SaResult.ok(); 

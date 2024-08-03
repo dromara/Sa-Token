@@ -20,7 +20,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,8 +39,8 @@ public class SaCheckOrHandler implements SaAnnotationAbstractHandler<SaCheckOr> 
     }
 
     @Override
-    public void checkMethod(SaCheckOr at, AnnotatedElement element) {
-        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), element);
+    public void checkMethod(SaCheckOr at, Method method) {
+        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), method);
     }
 
     public static void _checkMethod(
@@ -51,7 +51,7 @@ public class SaCheckOrHandler implements SaAnnotationAbstractHandler<SaCheckOr> 
             SaCheckHttpBasic[] httpBasic,
             SaCheckHttpDigest[] httpDigest,
             SaCheckDisable[] disable,
-            AnnotatedElement element
+            Method method
     ) {
         // 先把所有注解塞到一个 list 里
         List<Annotation> annotationList = new ArrayList<>();
@@ -72,7 +72,7 @@ public class SaCheckOrHandler implements SaAnnotationAbstractHandler<SaCheckOr> 
         List<SaTokenException> errorList = new ArrayList<>();
         for (Annotation item : annotationList) {
             try {
-                SaAnnotationStrategy.instance.annotationHandlerMap.get(item.annotationType()).check(item, element);
+                SaAnnotationStrategy.instance.annotationHandlerMap.get(item.annotationType()).check(item, method);
                 // 只要有一个校验通过，就可以直接返回了
                 return;
             } catch (SaTokenException e) {

@@ -6,7 +6,7 @@ import com.pj.satoken.StpUserUtil;
 import com.pj.satoken.custom_annotation.SaUserCheckLogin;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 SaUserCheckLogin 的处理器
@@ -22,7 +22,7 @@ public class SaUserCheckLoginHandler implements SaAnnotationAbstractHandler<SaUs
     }
 
     @Override
-    public void checkMethod(SaUserCheckLogin at, AnnotatedElement element) {
+    public void checkMethod(SaUserCheckLogin at, Method method) {
         SaCheckLoginHandler._checkMethod(StpUserUtil.TYPE);
     }
 

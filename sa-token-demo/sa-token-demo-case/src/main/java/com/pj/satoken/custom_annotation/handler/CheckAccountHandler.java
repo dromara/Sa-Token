@@ -6,7 +6,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 import com.pj.satoken.custom_annotation.CheckAccount;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 CheckAccount 的处理器
@@ -25,7 +25,7 @@ public class CheckAccountHandler implements SaAnnotationAbstractHandler<CheckAcc
 
     // 每次请求校验注解时，会执行的方法
     @Override
-    public void checkMethod(CheckAccount at, AnnotatedElement element) {
+    public void checkMethod(CheckAccount at, Method method) {
         // 获取前端请求提交的参数
         String name = SaHolder.getRequest().getParamNotNull("name");
         String pwd = SaHolder.getRequest().getParamNotNull("pwd");

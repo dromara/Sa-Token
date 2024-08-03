@@ -102,7 +102,7 @@ public final class SaAnnotationStrategy {
 			// 先校验 Method 所属 Class 上的注解
 			Annotation classTakeAnnotation = instance.getAnnotation.apply(method.getDeclaringClass(), (Class<Annotation>)entry.getKey());
 			if(classTakeAnnotation != null) {
-				entry.getValue().check(classTakeAnnotation, method.getDeclaringClass());
+				entry.getValue().check(classTakeAnnotation, method);
 			}
 
 			// 再校验 Method 上的注解

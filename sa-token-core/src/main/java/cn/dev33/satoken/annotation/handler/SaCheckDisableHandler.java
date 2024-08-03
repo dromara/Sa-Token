@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckDisable;
 import cn.dev33.satoken.stp.StpLogic;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 SaCheckDisable 的处理器
@@ -35,7 +35,7 @@ public class SaCheckDisableHandler implements SaAnnotationAbstractHandler<SaChec
     }
 
     @Override
-    public void checkMethod(SaCheckDisable at, AnnotatedElement element) {
+    public void checkMethod(SaCheckDisable at, Method method) {
         _checkMethod(at.type(), at.value(), at.level());
     }
 

@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpLogic;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 /**
  * 注解 SaCheckLogin 的处理器
@@ -35,7 +35,7 @@ public class SaCheckLoginHandler implements SaAnnotationAbstractHandler<SaCheckL
     }
 
     @Override
-    public void checkMethod(SaCheckLogin at, AnnotatedElement element) {
+    public void checkMethod(SaCheckLogin at, Method method) {
         _checkMethod(at.type());
     }
 
