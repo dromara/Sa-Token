@@ -115,6 +115,7 @@
 	- [解决跨域问题](/fun/cors-filter)
 	- [技术选型：SSO 与 OAuth2 对比](/fun/sso-vs-oauth2)
 	<!-- - [框架源码所有技术栈](/fun/tech-stack) -->
+	- [从 Shiro、SpringSecurity、JWT 迁移](/fun/auth-framework-function-test)
 	- [issue 提问模板](/fun/issue-template)
 	- [为Sa-Token贡献代码](/fun/git-pr)
 	- [Sa-Token开源大事记](/fun/timeline)
