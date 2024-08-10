@@ -52,6 +52,17 @@
 ```
 SpringBoot 项目下一般不用特别指定 SpringSecurity 版本号
 
+<!------------- tab:JWT ------------->
+``` xml
+<!-- Hutool 工具类框架，其中包含 jwt 实现 -->
+<dependency>
+	<groupId>cn.hutool</groupId>
+	<artifactId>hutool-all</artifactId>
+	<version>5.8.29</version>
+</dependency>
+```
+
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -338,6 +349,52 @@ public class LoginController {
 
 ```
 
+<!------------- tab:JWT ------------->
+
+测试 Controller 
+``` java
+@RestController
+@RequestMapping("/acc/")
+public class LoginController {
+
+	@Autowired
+	SysUserDao sysUserDao;
+
+	// 测试登录 
+	@RequestMapping("doLogin")
+	public AjaxJson doLogin(String username, String password) {
+		// 校验
+		SysUser user = sysUserDao.findByUsername(username);
+		if(user == null) {
+			return AjaxJson.getError("用户不存在");
+		}
+		if(!user.getPassword().equals(password)) {
+			return AjaxJson.getError("密码错误");
+		}
+		// 登录
+		String token = JwtUtil.createToken(user.getId(), user, 60 * 60 * 2);
+		return AjaxJson.getSuccess("登录成功").set("token", token);
+	}
+
+	// 查询登录状态 
+	@RequestMapping("isLogin")
+	public AjaxJson isLogin(HttpServletRequest request) {
+		try{
+			String token = request.getHeader("token");
+			JWT jwt = JwtUtil.parseToken(token);
+			return AjaxJson.getSuccess("已登录")
+					.set("id", jwt.getPayload("userId"))
+					.set("user", jwt.getPayload("user"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return AjaxJson.getError("未登录");
+		}
+	}
+
+}
+```
+
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -387,6 +444,9 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
 	return httpSecurity.build();
 }
 ```
+
+<!------------- tab:JWT ------------->
+JWT 无法注销已经颁发的 token 。
 
 <!---------------------------- tabs:end ------------------------------>
 
@@ -492,6 +552,26 @@ public AjaxJson doLogin(String username, String password, HttpServletRequest req
 ```
 
 
+<!------------- tab:JWT ------------->
+测试 Controller 
+``` java 
+@RequestMapping("doLogin")
+public AjaxJson doLogin(String username, String password) {
+	// 校验
+	SysUser user = sysUserDao.findByUsername(username);
+	if(user == null) {
+		return AjaxJson.getError("用户不存在");
+	}
+	String salt = "abc";
+	if(!user.getPassword().equals(SecureUtil.md5(salt + password))) {
+		return AjaxJson.getError("密码错误");
+	}
+	// 登录
+	String token = JwtUtil.createToken(user.getId(), user, 60 * 60 * 2);
+	return AjaxJson.getSuccess("登录成功").set("token", token);
+}
+```
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -539,6 +619,22 @@ public AjaxJson getCurrUser() {
 }
 ```
 
+<!------------- tab:JWT ------------->
+``` java
+// 从上下文获取当前登录 User 信息 
+@RequestMapping("getCurrUser")
+public AjaxJson getCurrUser(HttpServletRequest request) {
+	try{
+		String token = request.getHeader("token");
+		JWT jwt = JwtUtil.parseToken(token);
+		SysUser sysUser = jwt.getPayloads().get("user", SysUser.class);
+		return AjaxJson.getSuccessData(sysUser);
+	} catch (Exception e) {
+		e.printStackTrace();
+		return AjaxJson.getError("未登录");
+	}
+}
+```
 
 <!---------------------------- tabs:end ------------------------------>
 
@@ -593,6 +689,8 @@ public AjaxJson testSession(HttpServletRequest request) {
 }
 ```
 
+<!------------- tab:JWT ------------->
+无
 
 
 <!---------------------------- tabs:end ------------------------------>
@@ -781,6 +879,10 @@ public class JurController {
 
 }
 ```
+
+<!------------- tab:JWT ------------->
+无
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -914,6 +1016,9 @@ public class AtCheckController {
 }
 ```
 
+<!------------- tab:JWT ------------->
+无
+
 
 <!---------------------------- tabs:end ------------------------------>
 
@@ -979,6 +1084,9 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
 	return httpSecurity.build();
 }
 ```
+
+<!------------- tab:JWT ------------->
+无
 
 <!---------------------------- tabs:end ------------------------------>
 
@@ -1103,6 +1211,25 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
 	});
 
 	return httpSecurity.build();
+}
+```
+
+<!------------- tab:JWT ------------->
+使用 `try-catch` 捕获，或定义全局异常处理
+``` java
+@RestControllerAdvice
+public class GlobalException {
+	// 全局异常拦截（拦截项目中的所有异常）
+	@ExceptionHandler
+	public AjaxJson handlerException(Exception e, HttpServletRequest request, HttpServletResponse response) {
+
+		// 打印堆栈，以供调试
+		System.out.println("全局异常---------------");
+		e.printStackTrace();
+
+		// 返回给前端
+		return AjaxJson.getError(e.getMessage());
+	}
 }
 ```
 
@@ -1343,6 +1470,8 @@ public class HomeController {
 </html>
 ```
 
+<!------------- tab:JWT ------------->
+无
 
 
 <!---------------------------- tabs:end ------------------------------>
@@ -1475,6 +1604,10 @@ if(localStorage.token) {
 
 <!------------- tab:SpringSecurity ------------->
 见下方 “集成 Redis” 部分，同时做到：集成 Redis + 前后端分离。
+
+
+<!------------- tab:JWT ------------->
+`JWT` 不依赖 `Cookie` 保存/传输 token，因此无需特殊定制即可原生支持前后端分离模式。
 
 
 <!---------------------------- tabs:end ------------------------------>
@@ -1805,6 +1938,8 @@ public class HttpSessionConfigure {
 ```
 
 
+<!------------- tab:JWT ------------->
+无
 
 <!---------------------------- tabs:end ------------------------------>
 
