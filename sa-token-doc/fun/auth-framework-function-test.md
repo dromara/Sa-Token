@@ -17,8 +17,46 @@
 --- 
 
 
+### 依赖引入
 
-### 登录 & 注销 & 查询会话状态
+<!------------------------------ tabs:start ------------------------------>
+<!------------- tab:Sa-Token ------------->
+
+``` xml
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-spring-boot3-starter</artifactId>
+	<version>1.38.0</version>
+</dependency>
+```
+
+<!------------- tab:Shiro ------------->
+``` xml
+<!-- Shiro 安全控制 -->
+<dependency>
+	<groupId>org.apache.shiro</groupId>
+	<artifactId>shiro-spring-boot-web-starter</artifactId>
+	<version>1.13.0</version>
+</dependency>
+```
+
+<!------------- tab:SpringSecurity ------------->
+``` xml
+<!-- SpringSecurity -->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+	<version>3.3.2</version>
+</dependency>
+```
+SpringBoot 项目下一般不用特别指定 SpringSecurity 版本号
+
+<!---------------------------- tabs:end ------------------------------>
+
+
+
+### 会话登录 & 会话状态查询
 
 <!------------------------------ tabs:start ------------------------------>
 <!------------- tab:Sa-Token ------------->
@@ -32,7 +70,7 @@ public class LoginController {
 	@Autowired
 	SysUserDao sysUserDao;
 		
-	// 测试登录  ---- http://localhost:8081/acc/doLogin?username=zhang&password=123456
+	// 测试登录 
 	@RequestMapping("doLogin")
 	public AjaxJson doLogin(String username, String password) {
 		// 校验
@@ -49,20 +87,13 @@ public class LoginController {
 		return AjaxJson.getSuccess("登录成功");
 	}
 	
-	// 查询登录状态  ---- http://localhost:8081/acc/isLogin
+	// 查询登录状态 
 	@RequestMapping("isLogin")
 	public AjaxJson isLogin() {
 		if(StpUtil.isLogin()) {
 			return AjaxJson.getSuccess("已登录，账号id：" + StpUtil.getLoginId());
 		}
 		return AjaxJson.getError("未登录");
-	}
-
-	// 测试注销  ---- http://localhost:8081/acc/logout
-	@RequestMapping("logout")
-	public AjaxJson logout() {
-		StpUtil.logout();
-		return AjaxJson.getSuccess("注销成功");
 	}
 
 }
@@ -157,13 +188,203 @@ public class LoginController {
 		return AjaxJson.getError("未登录");
 	}
 
-	// 测试注销  ---- http://localhost:8082/acc/logout
-	@RequestMapping("logout")
-	public AjaxJson logout() {
-		SecurityUtils.getSubject().logout();
-		return AjaxJson.getSuccess("注销成功");
+}
+```
+
+<!------------- tab:SpringSecurity ------------->
+
+定义 SpringSecurity 配置类
+``` java
+@Configuration
+public class SpringSecurityConfigure {
+
+    /**
+     * Spring Security的核心过滤器链配置
+     */
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        // 定义安全请求拦截规则
+        httpSecurity.authorizeHttpRequests(router -> {
+            router
+                    // 放行接口
+                    .requestMatchers("/acc/doLogin", "/acc/isLogin").permitAll()
+
+					// 所有请求都需要认证
+                    .anyRequest().authenticated(); 
+                    ;
+                });
+
+        // 默认的表单登录
+        httpSecurity.formLogin(withDefaults());
+
+        // 是否启用 csrf 防御
+        httpSecurity.csrf( csrf -> csrf.disable() );
+
+        // 一些安全相关的全局响应头
+        httpSecurity.headers(httpSecurityHeadersConfigurer -> {
+            httpSecurityHeadersConfigurer.cacheControl(HeadersConfigurer.CacheControlConfig::disable);
+            httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
+        });
+		
+        return httpSecurity.build();
+    }
+
+    /**
+     * Spring Security 认证管理器
+     */
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+}
+```
+
+定义 SpringSecurity UserDetails 管理器
+``` java
+/**
+ * 自定义 SpringSecurity UserDetails 管理器
+ *
+ * @author click33
+ * @since 2024/8/8
+ */
+@Component
+public class CustomUserDetailsManager implements UserDetailsManager {
+
+    @Autowired
+    SysUserDao sysUserDao;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        SysUser sysUser = sysUserDao.findByUsername(username);
+        if(sysUser == null){
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        return User.withUsername(sysUser.getUsername())
+                .password("{noop}" + sysUser.getPassword())
+                .build();
+    }
+
+    @Override
+    public void createUser(UserDetails user) {
+
+    }
+
+    @Override
+    public void updateUser(UserDetails user) {
+
+    }
+
+    @Override
+    public void deleteUser(String username) {
+
+    }
+
+    @Override
+    public void changePassword(String oldPassword, String newPassword) {
+
+    }
+
+    @Override
+    public boolean userExists(String username) {
+        return false;
+    }
+
+}
+```
+
+测试 Controller 
+
+``` java
+@RestController
+@RequestMapping("/acc/")
+public class LoginController {
+
+	@Autowired
+	AuthenticationManager authenticationManager;
+
+	@Autowired
+	SysUserDao sysUserDao;
+
+	// 测试登录  ---- http://localhost:8083/acc/doLogin?username=zhang&password=123456
+	@RequestMapping("doLogin")
+	public AjaxJson doLogin(String username, String password, HttpServletRequest request) {
+		try {
+			// 验证账号密码
+			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+			usernamePasswordAuthenticationToken.setDetails(sysUserDao.findByUsername(username));
+			Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+			// 存入上下文
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+			// 返回
+			return AjaxJson.getSuccess("登录成功!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return AjaxJson.getError(e.getMessage());
+		}
 	}
 
+	// 查询登录状态  ---- http://localhost:8083/acc/isLogin
+	@RequestMapping("isLogin")
+	public AjaxJson isLogin() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return AjaxJson.getSuccess("是否登录：" + !(authentication instanceof AnonymousAuthenticationToken))
+				.set("principal", authentication.getPrincipal())
+				.set("details", authentication.getDetails());
+	}
+
+}
+
+```
+
+<!---------------------------- tabs:end ------------------------------>
+
+
+
+### 会话注销
+
+<!------------------------------ tabs:start ------------------------------>
+<!------------- tab:Sa-Token ------------->
+
+``` java 
+@RequestMapping("logout")
+public AjaxJson logout() {
+	StpUtil.logout();
+	return AjaxJson.getSuccess("注销成功");
+}
+```
+
+<!------------- tab:Shiro ------------->
+
+``` java
+@RequestMapping("logout")
+public AjaxJson logout() {
+	SecurityUtils.getSubject().logout();
+	return AjaxJson.getSuccess("注销成功");
+}
+```
+
+<!------------- tab:SpringSecurity ------------->
+``` java
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	
+	// 其它配置 ...
+	
+	// 注销相关配置
+	httpSecurity.logout(logout -> {
+		logout.logoutUrl("/acc/logout");
+		logout.logoutSuccessHandler((request, response, authentication) -> {
+			response.setStatus(200);
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json; charset=utf-8");
+			String jsonStr = new ObjectMapper().writeValueAsString(AjaxJson.getSuccess("注销成功!"));
+			response.getWriter().write(jsonStr);
+		});
+	});
+
+	return httpSecurity.build();
 }
 ```
 
@@ -171,7 +392,7 @@ public class LoginController {
 
 
 
-### 账号密码登录（加盐 MD5）
+### 账号密码登录（MD5 加 salt）
 
 <!------------------------------ tabs:start ------------------------------>
 <!------------- tab:Sa-Token ------------->
@@ -233,6 +454,44 @@ protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) 
 
 登录代码照旧 
 
+<!------------- tab:SpringSecurity ------------->
+
+CustomUserDetailsManager 的 loadUserByUsername 指定 MD5 算法
+
+``` java
+@Override
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	SysUser sysUser = sysUserDao.findByUsername(username);
+	if(sysUser == null){
+		throw new UsernameNotFoundException("用户不存在");
+	}
+	return User.withUsername(sysUser.getUsername())
+			.password("{MD5}" + sysUser.getPassword())
+			.build();
+}
+```
+
+登录时指定 salt 
+
+``` java
+@RequestMapping("doLogin")
+public AjaxJson doLogin(String username, String password, HttpServletRequest request) {
+	try {
+		// 验证账号密码
+		String salt = "abc";
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, salt + password);
+		// 其它代码照旧 ... 
+		
+		// 返回
+		return AjaxJson.getSuccess("登录成功!");
+	} catch (Exception e) {
+		e.printStackTrace();
+		return AjaxJson.getError(e.getMessage());
+	}
+}
+```
+
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -264,15 +523,32 @@ public AjaxJson getCurrUser() {
 }
 ```
 
+<!------------- tab:SpringSecurity ------------->
+``` java
+// 从上下文获取当前登录 User 信息 
+@RequestMapping("getCurrUser")
+public AjaxJson getCurrUser() {
+	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	if(!(authentication instanceof AnonymousAuthenticationToken)) {
+		SysUser sysUser = (SysUser)authentication.getDetails();
+		return AjaxJson.getSuccess()
+						.set("id", sysUser.getId())
+						.set("user", sysUser);
+	}
+	return AjaxJson.getError("未登录");
+}
+```
+
+
 <!---------------------------- tabs:end ------------------------------>
 
 
 
-### 从 session 上存取值
+### 从会话上下文上存取值
 <!------------------------------ tabs:start ------------------------------>
 <!------------- tab:Sa-Token ------------->
 ``` java
-// 测试从 session 上存取值 
+// 测试从从会话上下文存取值 
 @RequestMapping("testSession")
 public AjaxJson test() {
 	SaSession session = StpUtil.getSession();
@@ -288,7 +564,7 @@ public AjaxJson test() {
 <!------------- tab:Shiro ------------->
 
 ``` java
-// 测试从 session 上存取值 
+// 测试从从会话上下文存取值
 @RequestMapping("testSession")
 public AjaxJson test() {
 	Subject subject = SecurityUtils.getSubject();
@@ -301,6 +577,23 @@ public AjaxJson test() {
 	return AjaxJson.getSuccess();
 }
 ```
+
+<!------------- tab:SpringSecurity ------------->
+
+``` java
+// 测试从从会话上下文存取值
+@RequestMapping("testSession")
+public AjaxJson testSession(HttpServletRequest request) {
+	HttpSession session = request.getSession();
+
+	System.out.println("从 session 上取值：" + session.getAttribute("name"));
+	session.setAttribute("name", "zhang");
+	System.out.println("从 session 上取值：" + session.getAttribute("name"));
+	return AjaxJson.getSuccess();
+}
+```
+
+
 
 <!---------------------------- tabs:end ------------------------------>
 
@@ -345,9 +638,9 @@ public class JurController {
 	@RequestMapping("assertRole")
 	public AjaxJson assertRole() {
 		// is 模式，返回 true 或 false
-		System.out.println("单个权限判断：" + StpUtil.hasRole("admin"));
-		System.out.println("多个权限判断(and)：" + StpUtil.hasRoleAnd("admin", "dev-admin"));
-		System.out.println("多个权限判断(or)：" + StpUtil.hasRoleOr("admin", "dev-admin"));
+		System.out.println("单个角色判断：" + StpUtil.hasRole("admin"));
+		System.out.println("多个角色判断(and)：" + StpUtil.hasRoleAnd("admin", "dev-admin"));
+		System.out.println("多个角色判断(or)：" + StpUtil.hasRoleOr("admin", "dev-admin"));
 
 		// check 模式，无角色时抛出异常
 		StpUtil.checkRole("admin");  // 单个 check
@@ -405,9 +698,9 @@ public class JurController {
 		Subject subject = SecurityUtils.getSubject();
 
 		// is 模式，返回 true 或 false
-		System.out.println("单个权限判断：" + subject.hasRole("admin"));
-		System.out.println("多个权限判断(and)：" + subject.hasAllRoles(Arrays.asList("admin", "dev-admin")));
-		System.out.println("多个权限判断(or)：" + (subject.hasRole("admin") || subject.hasRole("dev-admin")));
+		System.out.println("单个角色判断：" + subject.hasRole("admin"));
+		System.out.println("多个角色判断(and)：" + subject.hasAllRoles(Arrays.asList("admin", "dev-admin")));
+		System.out.println("多个角色判断(or)：" + (subject.hasRole("admin") || subject.hasRole("dev-admin")));
 
 		// check 模式，无角色时抛出异常
 		subject.checkRole("admin");  // 单个 check
@@ -436,6 +729,58 @@ public class JurController {
 }
 ```
 
+<!------------- tab:SpringSecurity ------------->
+
+CustomUserDetailsManager 的 loadUserByUsername 里返回用户的 角色 或 权限 信息
+``` java
+@Override
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	SysUser sysUser = sysUserDao.findByUsername(username);
+	if(sysUser == null){
+		throw new UsernameNotFoundException("用户不存在");
+	}
+
+    // 不可以同时返回 roles 和 authorities，因为会相互覆盖，SpringSecurity 源码有bug
+	return User.withUsername(sysUser.getUsername())
+			.password("{noop}" + sysUser.getPassword())
+			// .roles("admin", "super-admin", "ceo")
+			.authorities("user:add", "user:delete", "user:update")
+			.build();
+}
+```
+
+测试 Controller 
+``` java
+@RestController
+@RequestMapping("/jur/")
+public class JurController {
+
+	// 角色判断  
+	@RequestMapping("assertRole")
+	public AjaxJson assertRole() {
+		SecurityExpressionRoot securityExpressionRoot = new SecurityExpressionRoot(SecurityContextHolder.getContext().getAuthentication()) {};
+
+		System.out.println("单个角色判断：" + securityExpressionRoot.hasRole("admin"));
+		System.out.println("多个角色判断(and)：" + (securityExpressionRoot.hasRole("admin") && securityExpressionRoot.hasRole("dev-admin")));
+		System.out.println("多个角色判断(or)：" + securityExpressionRoot.hasAnyRole("admin", "dev-admin"));
+
+		return AjaxJson.getSuccess();
+	}
+
+	// 权限判断 
+	@RequestMapping("assertPermission")
+	public AjaxJson assertPermission() {
+		SecurityExpressionRoot securityExpressionRoot = new SecurityExpressionRoot(SecurityContextHolder.getContext().getAuthentication()) {};
+
+		System.out.println("单个权限判断：" + securityExpressionRoot.hasAuthority("user:add"));
+		System.out.println("多个权限判断(and)：" + (securityExpressionRoot.hasAuthority("user:add") && securityExpressionRoot.hasAuthority("user:delete2")));
+		System.out.println("多个权限判断(or)：" + securityExpressionRoot.hasAnyAuthority("user:add", "user:delete2"));
+
+		return AjaxJson.getSuccess();
+	}
+
+}
+```
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -528,6 +873,48 @@ public class AtCheckController {
 }
 ```
 
+<!------------- tab:SpringSecurity ------------->
+
+`SpringSecurityConfigure` 配置类加上 `@EnableMethodSecurity` 注解
+``` java
+@Configuration
+@EnableMethodSecurity
+public class SpringSecurityConfigure {
+	// ...
+}
+```
+
+测试 Controller 
+``` java
+@RestController
+@RequestMapping("/at-check/")
+public class AtCheckController {
+
+    // 登录校验  
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("checkLogin")
+    public AjaxJson checkLogin() {
+        return AjaxJson.getSuccess();
+    }
+
+    // 角色校验  
+    @PreAuthorize("hasRole('admin')")
+    @RequestMapping("checkRole")
+    public AjaxJson checkRole() {
+        return AjaxJson.getSuccess();
+    }
+
+    // 权限校验 
+    @PreAuthorize("hasAuthority('user:add')")
+    @RequestMapping("checkPermission")
+    public AjaxJson checkPermission() {
+        return AjaxJson.getSuccess();
+    }
+
+}
+```
+
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -550,7 +937,58 @@ public void addInterceptors(InterceptorRegistry registry) {
 }
 ```
 
-鉴权未通过时处理方案 
+<!------------- tab:Shiro ------------->
+
+过滤器配置 
+``` java
+@Bean
+public ShiroFilterFactoryBean shiroFilterFactoryBean() {
+	ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+	bean.setSecurityManager(securityManager());
+
+	// 路由拦截鉴权
+	Map<String,String> filterMap = new LinkedHashMap<>();
+	filterMap.put("/route-check/getInfo", "anon"); // 不拦截
+	filterMap.put("/route-check/getInfo2", "authc"); // 需要登录
+	filterMap.put("/route-check/getInfo3", "perms[admin2]"); // 需要角色
+	filterMap.put("/route-check/getInfo4", "perms[user:add3]"); // 需要权限
+	bean.setFilterChainDefinitionMap(filterMap);
+	bean.setLoginUrl("/401");  // 未登录时跳转的 url
+	bean.setUnauthorizedUrl("/403");  // 未授权时跳转的 url
+
+	return bean;
+}
+```
+
+<!------------- tab:SpringSecurity ------------->
+SpringSecurityConfigure 配置 
+
+``` java
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	// 定义安全请求拦截规则
+	httpSecurity.authorizeHttpRequests(router -> {
+		router
+			.requestMatchers("/route-check/getInfo1").permitAll()    // 不拦截
+			.requestMatchers("/route-check/getInfo2").authenticated()    // 需要登录
+			.requestMatchers("/route-check/getInfo3").hasRole("admin")    // 需要 admin 角色
+			.requestMatchers("/route-check/getInfo4").hasAuthority("user:add")    // 需要 user:add 权限
+			.anyRequest().permitAll(); // 所有请求都放行
+		});
+
+	return httpSecurity.build();
+}
+```
+
+<!---------------------------- tabs:end ------------------------------>
+
+
+
+### 鉴权未通过的处理方案
+<!------------------------------ tabs:start ------------------------------>
+<!------------- tab:Sa-Token ------------->
+
+定义全局异常处理类 
 ``` java
 @RestControllerAdvice
 public class GlobalException {
@@ -580,15 +1018,9 @@ public class GlobalException {
 @Bean
 public ShiroFilterFactoryBean shiroFilterFactoryBean() {
 	ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-	bean.setSecurityManager(securityManager());
-
-	// 路由拦截鉴权
-	Map<String,String> filterMap = new LinkedHashMap<>();
-	filterMap.put("/route-check/getInfo", "anon"); // 不拦截
-	filterMap.put("/route-check/getInfo2", "authc"); // 需要登录
-	filterMap.put("/route-check/getInfo3", "perms[admin2]"); // 需要角色
-	filterMap.put("/route-check/getInfo4", "perms[user:add3]"); // 需要权限
-	bean.setFilterChainDefinitionMap(filterMap);
+	
+	// ... 
+	
 	bean.setLoginUrl("/401");  // 未登录时跳转的 url
 	bean.setUnauthorizedUrl("/403");  // 未授权时跳转的 url
 
@@ -596,7 +1028,7 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
 }
 ```
 
-鉴权未通过时处理方案 
+定义路由 
 ``` java
 @RestController
 public class ShiroErrorController {
@@ -616,6 +1048,66 @@ public class ShiroErrorController {
 }
 ```
 
+<!------------- tab:SpringSecurity ------------->
+
+实现 `AccessDeniedHandler`, `AuthenticationEntryPoint` 接口
+
+``` java
+@Component
+public class CustomAccessDeniedHandler implements AccessDeniedHandler, AuthenticationEntryPoint, Serializable {
+
+    // 未登录异常
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        //验证为未登陆状态会进入此方法，认证错误
+        response.setStatus(401);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter printWriter = response.getWriter();
+        String body = "请先进行登录";
+        printWriter.write(body);
+        printWriter.flush();
+    }
+
+    // 权限不足
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
+        // 登陆状态下，权限不足执行该方法
+        response.setStatus(200);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter printWriter = response.getWriter();
+        String body = "权限不足";
+        printWriter.write(body);
+        printWriter.flush();
+    }
+}
+```
+
+注入 `SecurityFilterChain`
+
+``` java
+// 未登录处理逻辑、权限不足处理逻辑
+@Autowired
+private CustomAccessDeniedHandler accessDeniedHandler;
+
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	
+	// 异常处理
+	httpSecurity.exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
+		// 权限不足处理方案
+		httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(accessDeniedHandler);
+		// 未登录 处理逻辑
+		httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(accessDeniedHandler);
+	});
+
+	return httpSecurity.build();
+}
+```
+
+
+
 <!---------------------------- tabs:end ------------------------------>
 
 
@@ -625,7 +1117,7 @@ public class ShiroErrorController {
 <!------------------------------ tabs:start ------------------------------>
 <!------------- tab:Sa-Token ------------->
 
-pom.xml 依赖 
+`pom.xml` 依赖 
 ``` xml
 <!-- 在 thymeleaf 标签中使用 Sa-Token -->
 <dependency>
@@ -635,7 +1127,7 @@ pom.xml 依赖
 </dependency>
 ```
 
-SaTokenConfigure 增加配置 Sa-Token 标签方言对象 
+`SaTokenConfigure` 增加配置 `Sa-Token` 标签方言对象 
 
 ``` java
 // Sa-Token 标签方言 (Thymeleaf版)
@@ -645,7 +1137,7 @@ public SaTokenDialect getSaTokenDialect() {
 }
 ```
 
-新建 ThymeleafConfigure 注入全局变量
+新建 `ThymeleafConfigure` 注入全局变量
 ``` java
 @Configuration
 public class ThymeleafConfigure {
@@ -657,7 +1149,7 @@ public class ThymeleafConfigure {
 }
 ```
 
-新建 Controller 
+新建 `Controller` 
 ``` java
 @Controller
 public class HomeController {
@@ -669,7 +1161,7 @@ public class HomeController {
 }
 ```
 	
-新建 templates/index.html
+新建 `templates/index.html`
 ``` html
 <!DOCTYPE html>
 <html lang="zh" xmlns:sa="http://www.thymeleaf.org/extras/sa-token">
@@ -713,7 +1205,7 @@ public class HomeController {
 
 <!------------- tab:Shiro ------------->
 
-pom.xml 依赖 
+`pom.xml` 依赖 
 ``` xml
 <!-- Shiro 整合 Thymeleaf 依赖 -->
 <dependency>
@@ -723,7 +1215,7 @@ pom.xml 依赖
 </dependency>
 ```
 
-ShiroConfigure 增加配置 Shiro 方言对象 
+`ShiroConfigure` 增加配置 `Shiro` 方言对象 
 ``` java
 @Bean
 public ShiroDialect shiroDialect() {
@@ -731,7 +1223,7 @@ public ShiroDialect shiroDialect() {
 }
 ```
 
-新建 Controller 
+新建 `Controller` 
 ``` java
 @Controller
 public class HomeController {
@@ -744,7 +1236,7 @@ public class HomeController {
 }
 ```
 
-新建 templates/index.html
+新建 `templates/index.html`
 
 ``` html
 <!DOCTYPE html>
@@ -783,6 +1275,75 @@ public class HomeController {
 </body>
 </html>
 ```
+
+<!------------- tab:SpringSecurity ------------->
+
+`pom.xml` 引入依赖 
+``` xml
+<!-- SpringSecurity 整合 Thymeleaf 依赖 -->
+<dependency>
+	<groupId>org.thymeleaf.extras</groupId>
+	<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+	<version>3.1.2.RELEASE</version>
+</dependency>
+```
+		
+新建 `Controller` 
+``` java
+@RestController
+public class HomeController {
+    // 首页  
+    @RequestMapping("/")
+    public Object index(HttpServletRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        request.setAttribute("isLogin", !(authentication instanceof AnonymousAuthenticationToken));
+        return new ModelAndView("index.html");
+    }
+}
+```
+
+新建 `templates/index.html`
+
+``` html
+<!DOCTYPE html>
+<html lang="zh" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>Shiro 集成 Thymeleaf 标签方言</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+<div class="view-box" style="padding: 30px;">
+    <h2>Shiro 集成 Thymeleaf 标签方言 —— 测试页面</h2>
+    <p>当前是否登录：<span th:text="${isLogin}"></span></p>
+
+    <p>
+        <a href="/acc/doLogin?username=zhang&password=123456" target="_blank">登录</a>
+        <a href="/acc/logout" target="_blank">注销</a>
+    </p>
+    <p>登录之后才能显示：<span sec:authorize="isAuthenticated()">value</span></p>
+    <p>不登录才能显示：<span sec:authorize="!isAuthenticated()" >value</span></p>
+
+    <p>具有角色 admin 才能显示：<span sec:authorize="hasRole('admin')">value</span></p>
+    <p>同时具备多个角色才能显示：<span sec:authorize="hasRole('admin') && hasRole('ceo') && hasRole('cto')">value</span></p>
+    <p>只要具有其中一个角色就能显示：<span sec:authorize="hasAnyRole('admin', 'ceo', 'cto')">value</span></p>
+    <p>不具有角色 admin 才能显示：<span sec:authorize="!hasRole('admin')">value</span></p>
+
+    <p>具有权限 user-add 才能显示：<span sec:authorize="hasAuthority('user-add')">value</span></p>
+    <p>同时具备多个权限才能显示：<span sec:authorize="hasAuthority('user-add') && hasAuthority('user-delete') && hasAuthority('user-get')">value</span></p>
+    <p>只要具有其中一个权限就能显示：<span sec:authorize="hasAnyAuthority('user-add', 'user-delete', 'user-get')">value</span></p>
+    <p>不具有权限 user-add 才能显示：<span sec:authorize="!hasAuthority('user-add')">value</span></p>
+
+    <p sec:authorize="isAuthenticated()">
+        当前登录账号：<span sec:authentication="details"></span>
+    </p>
+
+</div>
+</body>
+</html>
+```
+
+
 
 <!---------------------------- tabs:end ------------------------------>
 
@@ -910,6 +1471,10 @@ if(localStorage.token) {
 }
 // 后续提交请求...
 ```
+
+
+<!------------- tab:SpringSecurity ------------->
+见下方 “集成 Redis” 部分，同时做到：集成 Redis + 前后端分离。
 
 
 <!---------------------------- tabs:end ------------------------------>
@@ -1092,6 +1657,154 @@ public class SysUser implements Serializable {
 ```
 
 其它代码照旧 
+
+
+<!------------- tab:SpringSecurity ------------->
+
+（结合上部分，同时做到集成 Redis + 前后端分离）
+
+1、`pom.xml` 引入依赖 
+``` xml
+<!-- HttpSession 存储到 Redis -->
+<dependency>
+	<groupId>org.springframework.session</groupId>
+	<artifactId>spring-session-data-redis</artifactId>
+</dependency>
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
+
+2、`yml` 增加配置
+``` yml
+spring:
+    session:
+        store-type: redis
+        timeout: 8H
+        redis:
+            namespace: spring:session
+
+    data:
+        # redis配置
+        redis:
+            # Redis数据库索引（默认为0）
+            database: 3
+            # Redis服务器地址
+            host: 127.0.0.1
+            # Redis服务器连接端口
+            port: 6379
+            # Redis服务器连接密码（默认为空）
+            password:
+            # 连接超时时间
+            timeout: 10s
+            lettuce:
+                pool:
+                    # 连接池最大连接数
+                    max-active: 200
+                    # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                    max-wait: -1ms
+                    # 连接池中的最大空闲连接
+                    max-idle: 10
+                    # 连接池中的最小空闲连接
+                    min-idle: 0
+```
+
+3、在 `CustomAccessDeniedHandler` 自定义认证异常处理类中，返回 `json` 格式数据
+
+``` java
+@Component
+public class CustomAccessDeniedHandler implements AccessDeniedHandler, AuthenticationEntryPoint, Serializable {
+
+    // 未登录异常
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        //验证为未登陆状态会进入此方法，认证错误
+        response.setStatus(401);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter printWriter = response.getWriter();
+        String body = new ObjectMapper().writeValueAsString(AjaxJson.get(401, "请先进行登录"));
+        printWriter.write(body);
+        printWriter.flush();
+    }
+
+    // 权限不足
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
+        // 登陆状态下，权限不足执行该方法
+        response.setStatus(200);
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        PrintWriter printWriter = response.getWriter();
+        String body = new ObjectMapper().writeValueAsString(AjaxJson.get(403, "权限不足"));
+        printWriter.write(body);
+        printWriter.flush();
+    }
+    
+}
+```
+
+4、别忘了注入到 `SecurityFilterChain` 过滤器链 
+``` java
+ // 异常处理
+httpSecurity.exceptionHandling(httpSecurityExceptionHandlingConfigurer -> {
+	// 权限不足处理方案
+	httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(accessDeniedHandler);
+	// 未登录 处理逻辑
+	httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(accessDeniedHandler);
+});
+```
+
+5、在登录时，返回对应 token 信息
+``` java
+// 测试登录 
+@RequestMapping("doLogin")
+public AjaxJson doLogin(String username, String password, HttpServletRequest request) {
+	try {
+		// 验证账号密码
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+		usernamePasswordAuthenticationToken.setDetails(sysUserDao.findByUsername(username));
+		Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+		// 存入上下文
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+		// 返回
+		String token = request.getSession().getId();
+		return AjaxJson.getSuccess("登录成功!").set("token", token);
+	} catch (Exception e) {
+		e.printStackTrace();
+		return AjaxJson.getError(e.getMessage());
+	}
+}
+```
+
+6、前端改造
+- 1、在登录请求时，将返回的 token 保存到本地 `localStorage.setItem('token', res.token)`。
+- 2、在后续每次请求中，读取本地保存的 token 塞到请求 header 中
+
+``` js
+const header = {};
+if(localStorage.token) {
+	header.token = localStorage.token;
+}
+// 后续提交请求...
+```
+
+7、新建 `HttpSessionConfigure` 配置重写 `HttpSessionId` 读取策略，改为从 `header` 头读取 `token` 参数作为 `SessionId`
+``` java
+@Configuration
+public class HttpSessionConfigure {
+    // HttpSession 读取策略，从 header 头读取 token 参数作为 session id
+    @Bean
+    public HeaderHttpSessionIdResolver httpSessionStrategy() {
+        System.out.println("----------------- 自定义 HttpSession Id 读取方式");
+        return new HeaderHttpSessionIdResolver("token");
+    }
+}
+```
+
+
 
 <!---------------------------- tabs:end ------------------------------>
 
