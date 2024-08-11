@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.integrate.configure.inject;
-
-import org.springframework.stereotype.Component;
-
-import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
+package cn.dev33.satoken.oauth2.dataloader;
 
 /**
- * 自定义 Sa-OAuth2 模板方法 
- * 
+ * Sa-Token OAuth2 数据加载器 默认实现类
+ *
  * @author click33
- * @since 2022-9-5
+ * @since 1.39.0
  */
-@Component
-public class MySaOAuth2Template extends SaOAuth2Template {
+public class SaOAuth2DataLoaderDefaultImpl implements SaOAuth2DataLoader{
+
+    // be empty of
 
 }

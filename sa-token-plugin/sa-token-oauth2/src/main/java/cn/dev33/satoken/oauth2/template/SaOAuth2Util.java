@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.logic;
+package cn.dev33.satoken.oauth2.template;
 
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.oauth2.model.AccessTokenModel;
-import cn.dev33.satoken.oauth2.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.model.CodeModel;
-import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
-import cn.dev33.satoken.oauth2.model.RequestAuthModel;
-import cn.dev33.satoken.oauth2.model.SaClientModel;
+import cn.dev33.satoken.oauth2.model.*;
+import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
 /**
  * Sa-Token-OAuth2 模块 工具类
@@ -30,12 +26,6 @@ import cn.dev33.satoken.oauth2.model.SaClientModel;
  * @since 1.23.0
  */
 public class SaOAuth2Util {
-
-	/**
-	 * 模板代码对象 
-	 */
-	public static SaOAuth2Template saOAuth2Template = new SaOAuth2Template();
-
 	
 	// ------------------- 资源校验API  
 	
@@ -45,7 +35,7 @@ public class SaOAuth2Util {
 	 * @return ClientModel 
 	 */
 	public static SaClientModel checkClientModel(String clientId) {
-		return saOAuth2Template.checkClientModel(clientId);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkClientModel(clientId);
 	}
 	
 	/**
@@ -54,7 +44,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static AccessTokenModel checkAccessToken(String accessToken) {
-		return saOAuth2Template.checkAccessToken(accessToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkAccessToken(accessToken);
 	}
 	
 	/**
@@ -63,7 +53,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static ClientTokenModel checkClientToken(String clientToken) {
-		return saOAuth2Template.checkClientToken(clientToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkClientToken(clientToken);
 	}
 	
 	/**
@@ -72,7 +62,7 @@ public class SaOAuth2Util {
 	 * @return LoginId 
 	 */
 	public static Object getLoginIdByAccessToken(String accessToken) {
-		return saOAuth2Template.getLoginIdByAccessToken(accessToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.getLoginIdByAccessToken(accessToken);
 	}
 	
 	/**
@@ -81,7 +71,7 @@ public class SaOAuth2Util {
 	 * @param scopes 需要校验的权限列表 
 	 */
 	public static void checkScope(String accessToken, String... scopes) {
-		saOAuth2Template.checkScope(accessToken, scopes);
+		SaOAuth2ServerProcessor.instance.oauth2Template.checkScope(accessToken, scopes);
 	}
 	
 	/**
@@ -90,7 +80,7 @@ public class SaOAuth2Util {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public static void checkClientTokenScope(String clientToken, String... scopes) {
-		saOAuth2Template.checkClientTokenScope(clientToken, scopes);
+		SaOAuth2ServerProcessor.instance.oauth2Template.checkClientTokenScope(clientToken, scopes);
 	}
 
 	// ------------------- generate 构建数据 
@@ -102,7 +92,7 @@ public class SaOAuth2Util {
 	 * @return RequestAuthModel对象 
 	 */
 	public static RequestAuthModel generateRequestAuth(SaRequest req, Object loginId) {
-		return saOAuth2Template.generateRequestAuth(req, loginId);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.generateRequestAuth(req, loginId);
 	}
 	
 	/**
@@ -111,7 +101,7 @@ public class SaOAuth2Util {
 	 * @return 授权码Model
 	 */
 	public static CodeModel generateCode(RequestAuthModel ra) {
-		return saOAuth2Template.generateCode(ra);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.generateCode(ra);
 	}
 	
 	/**
@@ -120,7 +110,7 @@ public class SaOAuth2Util {
 	 * @return AccessToken Model
 	 */
 	public static AccessTokenModel generateAccessToken(String code) {
-		return saOAuth2Template.generateAccessToken(code);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.generateAccessToken(code);
 	}
 
 	/**
@@ -129,7 +119,7 @@ public class SaOAuth2Util {
 	 * @return 新的 Access-Token 
 	 */
 	public static AccessTokenModel refreshAccessToken(String refreshToken) {
-		return saOAuth2Template.refreshAccessToken(refreshToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.refreshAccessToken(refreshToken);
 	}
 
 	/**
@@ -139,7 +129,7 @@ public class SaOAuth2Util {
 	 * @return Access-Token Model 
 	 */
 	public static AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt) {
-		return saOAuth2Template.generateAccessToken(ra, isCreateRt);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.generateAccessToken(ra, isCreateRt);
 	}
 	
 	/**
@@ -149,7 +139,7 @@ public class SaOAuth2Util {
 	 * @return Client-Token Model 
 	 */
 	public static ClientTokenModel generateClientToken(String clientId, String scope) {
-		return saOAuth2Template.generateClientToken(clientId, scope);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.generateClientToken(clientId, scope);
 	}
 	
 	/**
@@ -160,7 +150,7 @@ public class SaOAuth2Util {
 	 * @return 构建完毕的URL 
 	 */
 	public static String buildRedirectUri(String redirectUri, String code, String state) {
-		return saOAuth2Template.buildRedirectUri(redirectUri, code, state);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.buildRedirectUri(redirectUri, code, state);
 	}
 
 	/**
@@ -171,7 +161,7 @@ public class SaOAuth2Util {
 	 * @return 构建完毕的URL 
 	 */
 	public static String buildImplicitRedirectUri(String redirectUri, String token, String state) {
-		return saOAuth2Template.buildImplicitRedirectUri(redirectUri, token, state);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.buildImplicitRedirectUri(redirectUri, token, state);
 	}
 	
 	/**
@@ -179,7 +169,7 @@ public class SaOAuth2Util {
 	 * @param accessToken Access-Token值 
 	 */
 	public static void revokeAccessToken(String accessToken) {
-		saOAuth2Template.revokeAccessToken(accessToken);
+		SaOAuth2ServerProcessor.instance.oauth2Template.revokeAccessToken(accessToken);
 	}
 	
 	// ------------------- 数据校验 
@@ -192,7 +182,7 @@ public class SaOAuth2Util {
 	 * @return 是否已经授权
 	 */
 	public static boolean isGrant(Object loginId, String clientId, String scope) {
-		return saOAuth2Template.isGrant(loginId, clientId, scope);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.isGrant(loginId, clientId, scope);
 	}
 	
 	/**
@@ -201,7 +191,7 @@ public class SaOAuth2Util {
 	 * @param scope 权限(多个用逗号隔开) 
 	 */
 	public static void checkContract(String clientId, String scope) {
-		saOAuth2Template.checkContract(clientId, scope);
+		SaOAuth2ServerProcessor.instance.oauth2Template.checkContract(clientId, scope);
 	}
 	
 	/**
@@ -210,7 +200,7 @@ public class SaOAuth2Util {
 	 * @param url 指定url
 	 */
 	public static void checkRightUrl(String clientId, String url) {
-		saOAuth2Template.checkRightUrl(clientId, url);
+		SaOAuth2ServerProcessor.instance.oauth2Template.checkRightUrl(clientId, url);
 	}
 	
 	/**
@@ -220,7 +210,7 @@ public class SaOAuth2Util {
 	 * @return SaClientModel对象 
 	 */
 	public static SaClientModel checkClientSecret(String clientId, String clientSecret) {
-		return saOAuth2Template.checkClientSecret(clientId, clientSecret);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkClientSecret(clientId, clientSecret);
 	}
 	
 	/**
@@ -231,7 +221,7 @@ public class SaOAuth2Util {
 	 * @return SaClientModel对象
 	 */
 	public static SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, String scopes) {
-		return saOAuth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
 	}
 	
 	/**
@@ -243,7 +233,7 @@ public class SaOAuth2Util {
 	 * @return CodeModel对象 
 	 */
 	public static CodeModel checkGainTokenParam(String code, String clientId, String clientSecret, String redirectUri) {
-		return saOAuth2Template.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
 	}
 
 	/**
@@ -254,7 +244,7 @@ public class SaOAuth2Util {
 	 * @return CodeModel对象 
 	 */
 	public static RefreshTokenModel checkRefreshTokenParam(String clientId, String clientSecret, String refreshToken) {
-		return saOAuth2Template.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
 	}
 	
 	/**
@@ -265,7 +255,7 @@ public class SaOAuth2Util {
 	 * @return SaClientModel对象 
 	 */
 	public static AccessTokenModel checkAccessTokenParam(String clientId, String clientSecret, String accessToken) {
-		return saOAuth2Template.checkAccessTokenParam(clientId, clientSecret, accessToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.checkAccessTokenParam(clientId, clientSecret, accessToken);
 	}
 	
 	// ------------------- save 数据 
@@ -277,7 +267,7 @@ public class SaOAuth2Util {
 	 * @param scope 权限列表(多个逗号隔开) 
 	 */
 	public static void saveGrantScope(String clientId, Object loginId, String scope) {
-		saOAuth2Template.saveGrantScope(clientId, loginId, scope);
+		SaOAuth2ServerProcessor.instance.oauth2Template.saveGrantScope(clientId, loginId, scope);
 	}
 	
 	
@@ -289,7 +279,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static CodeModel getCode(String code) {
-		return saOAuth2Template.getCode(code);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.getCode(code);
 	}
 
 	/**
@@ -298,7 +288,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static AccessTokenModel getAccessToken(String accessToken) {
-		return saOAuth2Template.getAccessToken(accessToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.getAccessToken(accessToken);
 	}
 	
 	/**
@@ -307,7 +297,7 @@ public class SaOAuth2Util {
 	 * @return . 
 	 */
 	public static RefreshTokenModel getRefreshToken(String refreshToken) {
-		return saOAuth2Template.getRefreshToken(refreshToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.getRefreshToken(refreshToken);
 	}
 	
 	/**
@@ -316,7 +306,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static ClientTokenModel getClientToken(String clientToken) {
-		return saOAuth2Template.getClientToken(clientToken);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.getClientToken(clientToken);
 	}
 	
 	/**
@@ -326,7 +316,7 @@ public class SaOAuth2Util {
 	 * @return 权限 
 	 */
 	public static String getGrantScope(String clientId, Object loginId) {
-		return saOAuth2Template.getGrantScope(clientId, loginId);
+		return SaOAuth2ServerProcessor.instance.oauth2Template.getGrantScope(clientId, loginId);
 	}
 
 }

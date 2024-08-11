@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.logic;
-
-import java.util.List;
+package cn.dev33.satoken.oauth2.template;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Consts.Param;
-import cn.dev33.satoken.oauth2.model.AccessTokenModel;
-import cn.dev33.satoken.oauth2.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.model.CodeModel;
-import cn.dev33.satoken.oauth2.model.RefreshTokenModel;
-import cn.dev33.satoken.oauth2.model.RequestAuthModel;
-import cn.dev33.satoken.oauth2.model.SaClientModel;
+import cn.dev33.satoken.oauth2.model.*;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.util.List;
 
 /**
  * Sa-Token-OAuth2 模块 代码实现
@@ -40,15 +35,17 @@ import cn.dev33.satoken.util.SaFoxUtil;
  */
 public class SaOAuth2Template {
 
-	// ------------------- 获取数据 (开发者必须重写的函数)
+	// ------------------- 数据加载
+
 	/**
 	 * 根据id获取Client信息
 	 * @param clientId 应用id
 	 * @return ClientModel
 	 */
 	public SaClientModel getClientModel(String clientId) {
-		return null;
+		return SaOAuth2Manager.getDataLoader().getClientModel(clientId);
 	}
+
 	/**
 	 * 根据ClientId 和 LoginId 获取openid
 	 * @param clientId 应用id
@@ -56,7 +53,7 @@ public class SaOAuth2Template {
 	 * @return 此账号在此Client下的openid
 	 */
 	public String getOpenid(String clientId, Object loginId) {
-		return null;
+		return SaOAuth2Manager.getDataLoader().getOpenid(clientId, loginId);
 	}
 
 	// ------------------- 资源校验API
