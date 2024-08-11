@@ -30,6 +30,7 @@ import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.model.*;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -141,12 +142,12 @@ public class SaOAuth2ServerProcessor {
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// 1、如果尚未登录, 则先去登录
-		if( ! StpUtil.isLogin()) {
+		if( ! getStpLogic().isLogin()) {
 			return cfg.getNotLoginView().get();
 		}
 
 		// 2、构建请求Model
-		RequestAuthModel ra = oauth2Template.generateRequestAuth(req, StpUtil.getLoginId());
+		RequestAuthModel ra = oauth2Template.generateRequestAuth(req, getStpLogic().getLoginId());
 
 		// 3、校验：重定向域名是否合法
 		oauth2Template.checkRightUrl(ra.clientId, ra.redirectUri);
@@ -286,7 +287,7 @@ public class SaOAuth2ServerProcessor {
 
 		String clientId = req.getParamNotNull(Param.client_id);
 		String scope = req.getParamNotNull(Param.scope);
-		Object loginId = StpUtil.getLoginId();
+		Object loginId = getStpLogic().getLoginId();
 		oauth2Template.saveGrantScope(clientId, loginId, scope);
 		return SaResult.ok();
 	}
@@ -298,7 +299,6 @@ public class SaOAuth2ServerProcessor {
 	public Object password() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// 1、获取请求参数
@@ -312,18 +312,18 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkClientSecretAndScope(clientId, clientSecret, scope);
 
 		// 3、防止因前端误传token造成逻辑干扰
-		// SaHolder.getStorage().set(StpUtil.stpLogic.splicingKeyJustCreatedSave(), "no-token");
+		// SaHolder.getStorage().set(getStpLogic().stpLogic.splicingKeyJustCreatedSave(), "no-token");
 
 		// 3、调用API 开始登录，如果没能成功登录，则直接退出
 		Object retObj = cfg.getDoLoginHandle().apply(username, password);
-		if( ! StpUtil.isLogin()) {
+		if( ! getStpLogic().isLogin()) {
 			return retObj;
 		}
 
 		// 4、构建 ra对象
 		RequestAuthModel ra = new RequestAuthModel();
 		ra.clientId = clientId;
-		ra.loginId = StpUtil.getLoginId();
+		ra.loginId = getStpLogic().getLoginId();
 		ra.scope = scope;
 
 		// 5、生成 Access-Token
@@ -369,5 +369,14 @@ public class SaOAuth2ServerProcessor {
 		String clientId = SaHolder.getRequest().getParam(Param.client_id);
 		return oauth2Template.checkClientModel(clientId);
 	}
-	
+
+	/**
+	 * 获取底层使用的会话对象
+	 *
+	 * @return /
+	 */
+	public StpLogic getStpLogic() {
+		return StpUtil.stpLogic;
+	}
+
 }
