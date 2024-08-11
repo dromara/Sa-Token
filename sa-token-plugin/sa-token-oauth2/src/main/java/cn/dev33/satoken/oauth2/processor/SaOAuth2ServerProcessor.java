@@ -21,14 +21,14 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
-import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
-import cn.dev33.satoken.oauth2.model.*;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Api;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.ResponseType;
+import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.model.*;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -69,41 +69,41 @@ public class SaOAuth2ServerProcessor {
 		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code)) {
 			SaClientModel cm = currClientModel();
 			if(cfg.getIsCode() && (cm.isCode || cm.isAutoMode)) {
-				return authorize(req, res, cfg);
+				return authorize();
 			}
 			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
 		}
 		
 		// Code授权码 获取 Access-Token
 		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.authorization_code)) {
-			return token(req, res, cfg);
+			return token();
 		}
 
 		// Refresh-Token 刷新 Access-Token
 		if(req.isPath(Api.refresh) && req.isParam(Param.grant_type, GrantType.refresh_token)) {
-			return refreshToken(req);
+			return refreshToken();
 		}
 
 		// 回收 Access-Token
 		if(req.isPath(Api.revoke)) {
-			return revokeToken(req);
+			return revokeToken();
 		}
 
 		// doLogin 登录接口
 		if(req.isPath(Api.doLogin)) {
-			return doLogin(req, res, cfg);
+			return doLogin();
 		}
 
 		// doConfirm 确认授权接口
 		if(req.isPath(Api.doConfirm)) {
-			return doConfirm(req);
+			return doConfirm();
 		}
 
 		// 模式二：隐藏式
 		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token)) {
 			SaClientModel cm = currClientModel();
 			if(cfg.getIsImplicit() && (cm.isImplicit || cm.isAutoMode)) {
-				return authorize(req, res, cfg);
+				return authorize();
 			}
 			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30132);
 		}
@@ -112,7 +112,7 @@ public class SaOAuth2ServerProcessor {
 		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password)) {
 			SaClientModel cm = currClientModel();
 			if(cfg.getIsPassword() && (cm.isPassword || cm.isAutoMode)) {
-				return password(req, res, cfg);
+				return password();
 			}
 			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30133);
 		}
@@ -121,7 +121,7 @@ public class SaOAuth2ServerProcessor {
 		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials)) {
 			SaClientModel cm = currClientModel();
 			if(cfg.getIsClient() && (cm.isClient || cm.isAutoMode)) {
-				return clientToken(req, res, cfg);
+				return clientToken();
 			}
 			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30134);
 		}
@@ -132,13 +132,14 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * 模式一：Code授权码 / 模式二：隐藏式
-	 * @param req 请求对象
-	 * @param res 响应对象
-	 * @param cfg 配置对象
 	 * @return 处理结果
 	 */
-	public Object authorize(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
-		
+	public Object authorize() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+
 		// 1、如果尚未登录, 则先去登录
 		if( ! StpUtil.isLogin()) {
 			return cfg.getNotLoginView().get();
@@ -180,12 +181,14 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * Code授权码 获取 Access-Token
-	 * @param req 请求对象
-	 * @param res 响应对象
-	 * @param cfg 配置对象
 	 * @return 处理结果
 	 */
-	public Object token(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+	public Object token() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+
 		// 获取参数
 		String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
 		String clientId;
@@ -215,10 +218,12 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * Refresh-Token 刷新 Access-Token
-	 * @param req 请求对象
 	 * @return 处理结果
 	 */
-	public Object refreshToken(SaRequest req) {
+	public Object refreshToken() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+
 		// 获取参数
 		String clientId = req.getParamNotNull(Param.client_id);
 		String clientSecret = req.getParamNotNull(Param.client_secret);
@@ -234,10 +239,12 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * 回收 Access-Token
-	 * @param req 请求对象
 	 * @return 处理结果
 	 */
-	public Object revokeToken(SaRequest req) {
+	public Object revokeToken() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+
 		// 获取参数
 		String clientId = req.getParamNotNull(Param.client_id);
 		String clientSecret = req.getParamNotNull(Param.client_secret);
@@ -258,21 +265,25 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * doLogin 登录接口
-	 * @param req 请求对象
-	 * @param res 响应对象
-	 * @param cfg 配置对象
 	 * @return 处理结果
 	 */
-	public Object doLogin(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+	public Object doLogin() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+
 		return cfg.getDoLoginHandle().apply(req.getParamNotNull(Param.name), req.getParamNotNull(Param.pwd));
 	}
 
 	/**
 	 * doConfirm 确认授权接口
-	 * @param req 请求对象
 	 * @return 处理结果
 	 */
-	public Object doConfirm(SaRequest req) {
+	public Object doConfirm() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+
 		String clientId = req.getParamNotNull(Param.client_id);
 		String scope = req.getParamNotNull(Param.scope);
 		Object loginId = StpUtil.getLoginId();
@@ -282,12 +293,13 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * 模式三：密码式
-	 * @param req 请求对象
-	 * @param res 响应对象
-	 * @param cfg 配置对象
 	 * @return 处理结果
 	 */
-	public Object password(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+	public Object password() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// 1、获取请求参数
 		String username = req.getParamNotNull(Param.username);
@@ -323,12 +335,13 @@ public class SaOAuth2ServerProcessor {
 
 	/**
 	 * 模式四：凭证式
-	 * @param req 请求对象
-	 * @param res 响应对象
-	 * @param cfg 配置对象
 	 * @return 处理结果
 	 */
-	public Object clientToken(SaRequest req, SaResponse res, SaOAuth2Config cfg) {
+	public Object clientToken() {
+		// 获取变量
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// 获取参数
 		String clientId = req.getParamNotNull(Param.client_id);
