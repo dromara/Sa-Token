@@ -13,39 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.dataloader;
-
-import cn.dev33.satoken.oauth2.model.SaClientModel;
+package cn.dev33.satoken.oauth2.data.loader;
 
 /**
- * Sa-Token OAuth2 数据加载器
+ * Sa-Token OAuth2 数据加载器 默认实现类
  *
  * @author click33
  * @since 1.39.0
  */
-public interface SaOAuth2DataLoader {
+public class SaOAuth2DataLoaderDefaultImpl implements SaOAuth2DataLoader{
 
-    /**
-     * 根据 id 获取 Client 信息
-     *
-     * @param clientId 应用id
-     * @return ClientModel
-     */
-    default SaClientModel getClientModel(String clientId) {
-        return null;
-    }
-
-    /**
-     * 根据ClientId 和 LoginId 获取openid
-     *
-     * @param clientId 应用id
-     * @param loginId 账号id
-     * @return 此账号在此Client下的openid
-     */
-    default String getOpenid(String clientId, Object loginId) {
-        return null;
-    }
-
-
+    // be empty of
 
 }

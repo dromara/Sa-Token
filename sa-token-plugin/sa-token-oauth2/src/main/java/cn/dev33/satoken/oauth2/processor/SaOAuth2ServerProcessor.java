@@ -61,7 +61,6 @@ public class SaOAuth2ServerProcessor {
 
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// ------------------ 路由分发 ------------------
@@ -187,14 +186,13 @@ public class SaOAuth2ServerProcessor {
 	public Object token() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// 获取参数
 		String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
 		String clientId;
 		String clientSecret;
-		// gitlab回调token接口时,按照的是标准的oauth2协议的basic请求头,basic中会包含client_id和client_secret的信息
+
+		// gitlab 回调 token 接口时,按照的是标准的oauth2协议的basic请求头,basic中会包含client_id和client_secret的信息
 		if(SaFoxUtil.isEmpty(authorizationValue)){
 			clientId = req.getParamNotNull(Param.client_id);
 			clientSecret = req.getParamNotNull(Param.client_secret);
@@ -211,10 +209,10 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
 
 		// 构建 Access-Token
-		AccessTokenModel token = oauth2Template.generateAccessToken(code);
+		AccessTokenModel accessTokenModel = oauth2Template.generateAccessToken(code);
 
 		// 返回
-		return SaResult.data(token.toLineMap());
+		return SaOAuth2Manager.getDataResolver().buildTokenReturnValue(accessTokenModel);
 	}
 
 	/**
@@ -233,9 +231,11 @@ public class SaOAuth2ServerProcessor {
 		// 校验参数
 		oauth2Template.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
 
-		// 获取新Token返回
-		Object data = oauth2Template.refreshAccessToken(refreshToken).toLineMap();
-		return SaResult.data(data);
+		// 获取新 Access-Token
+		AccessTokenModel accessTokenModel = oauth2Template.refreshAccessToken(refreshToken);
+
+		// 返回
+		return SaOAuth2Manager.getDataResolver().buildRefreshTokenReturnValue(accessTokenModel);
 	}
 
 	/**
@@ -261,7 +261,9 @@ public class SaOAuth2ServerProcessor {
 
 		// 回收 Access-Token
 		oauth2Template.revokeAccessToken(accessToken);
-		return SaResult.ok();
+
+		// 返回
+		return SaOAuth2Manager.getDataResolver().buildRevokeTokenReturnValue();
 	}
 
 	/**
@@ -271,7 +273,6 @@ public class SaOAuth2ServerProcessor {
 	public Object doLogin() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		return cfg.getDoLoginHandle().apply(req.getParamNotNull(Param.name), req.getParamNotNull(Param.pwd));
@@ -330,7 +331,7 @@ public class SaOAuth2ServerProcessor {
 		AccessTokenModel at = oauth2Template.generateAccessToken(ra, true);
 
 		// 6、返回 Access-Token
-		return SaResult.data(at.toLineMap());
+		return SaOAuth2Manager.getDataResolver().buildPasswordReturnValue(at);
 	}
 
 	/**
@@ -340,8 +341,6 @@ public class SaOAuth2ServerProcessor {
 	public Object clientToken() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// 获取参数
 		String clientId = req.getParamNotNull(Param.client_id);
@@ -354,11 +353,11 @@ public class SaOAuth2ServerProcessor {
 		// 校验 ClientSecret
 		oauth2Template.checkClientSecret(clientId, clientSecret);
 
-		// 返回 Client-Token
+		// 生成
 		ClientTokenModel ct = oauth2Template.generateClientToken(clientId, scope);
 
-		// 返回 Client-Token
-		return SaResult.data(ct.toLineMap());
+		// 返回
+		return SaOAuth2Manager.getDataResolver().buildClientTokenReturnValue(ct);
 	}
 
 	/**

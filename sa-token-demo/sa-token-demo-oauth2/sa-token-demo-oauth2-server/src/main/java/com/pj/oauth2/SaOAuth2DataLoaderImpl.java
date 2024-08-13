@@ -1,6 +1,6 @@
 package com.pj.oauth2;
 
-import cn.dev33.satoken.oauth2.dataloader.SaOAuth2DataLoader;
+import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.model.SaClientModel;
 import org.springframework.stereotype.Component;
 

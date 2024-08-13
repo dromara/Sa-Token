@@ -16,8 +16,10 @@
 package cn.dev33.satoken.oauth2;
 
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.dataloader.SaOAuth2DataLoader;
-import cn.dev33.satoken.oauth2.dataloader.SaOAuth2DataLoaderDefaultImpl;
+import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
+import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoaderDefaultImpl;
+import cn.dev33.satoken.oauth2.data.resolver.SaOAuth2DataResolver;
+import cn.dev33.satoken.oauth2.data.resolver.SaOAuth2DataResolverDefaultImpl;
 
 /**
  * Sa-Token-OAuth2 模块 总控类
@@ -62,6 +64,24 @@ public class SaOAuth2Manager {
 	}
 	public static void setDataLoader(SaOAuth2DataLoader dataLoader) {
 		SaOAuth2Manager.dataLoader = dataLoader;
+	}
+
+	/**
+	 * OAuth2 数据解析器 Bean
+	 */
+	private static volatile SaOAuth2DataResolver dataResolver;
+	public static SaOAuth2DataResolver getDataResolver() {
+		if (dataResolver == null) {
+			synchronized (SaOAuth2Manager.class) {
+				if (dataResolver == null) {
+					setDataResolver(new SaOAuth2DataResolverDefaultImpl());
+				}
+			}
+		}
+		return dataResolver;
+	}
+	public static void setDataResolver(SaOAuth2DataResolver dataResolver) {
+		SaOAuth2Manager.dataResolver = dataResolver;
 	}
 
 }

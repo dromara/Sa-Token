@@ -77,7 +77,22 @@ public class SaOAuth2Consts {
 		public static String client_credentials = "client_credentials";
 		public static String implicit = "implicit";
 	}
-	
+
+	/**
+	 * 所有 token 类型
+	 */
+	public static final class TokenType {
+		// 全小写
+		public static String basic = "basic";
+		public static String digest = "digest";
+		public static String bearer = "bearer";
+
+		// 首字母大写
+		public static String Basic = "Basic";
+		public static String Digest = "Digest";
+		public static String Bearer = "Bearer";
+	}
+
 	/** 表示OK的返回结果 */
 	public static final String OK = "ok";
 

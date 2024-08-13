@@ -17,7 +17,7 @@ package cn.dev33.satoken.spring.oauth2;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.dataloader.SaOAuth2DataLoader;
+import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import org.springframework.beans.factory.annotation.Autowired;

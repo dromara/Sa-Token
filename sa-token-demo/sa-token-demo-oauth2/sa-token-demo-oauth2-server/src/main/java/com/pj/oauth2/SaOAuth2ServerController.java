@@ -80,12 +80,13 @@ public class SaOAuth2ServerController {
 		
 		// 模拟账号信息 （真实环境需要查询数据库获取信息）
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		map.put("userId", "10008");
 		map.put("nickname", "shengzhang_");
 		map.put("avatar", "http://xxx.com/1.jpg");
 		map.put("age", "18");
 		map.put("sex", "男");
 		map.put("address", "山东省 青岛市 城阳区");
-		return SaResult.data(map);
+		return SaResult.ok().setMap(map);
 	}
 	
 }

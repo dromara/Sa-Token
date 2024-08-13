@@ -1,17 +1,15 @@
 package com.pj.oauth2;
 
-import javax.servlet.http.HttpServletRequest;
-
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
+import com.ejlchina.okhttps.OkHttps;
+import com.pj.utils.SoMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ejlchina.okhttps.OkHttps;
-import com.pj.utils.SoMap;
-
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Sa-OAuth2 Client端 控制器 
@@ -21,9 +19,9 @@ import cn.dev33.satoken.util.SaResult;
 public class SaOAuthClientController {
 
 	// 相关参数配置 
-	private String clientId = "1001";								// 应用id 
-	private String clientSecret = "aaaa-bbbb-cccc-dddd-eeee";		// 应用秘钥 
-	private String serverUrl = "http://sa-oauth-server.com:8001";	// 服务端接口 
+	private final String clientId = "1001";								// 应用id
+	private final String clientSecret = "aaaa-bbbb-cccc-dddd-eeee";		// 应用秘钥
+	private final String serverUrl = "http://sa-oauth-server.com:8001";	// 服务端接口
 	
 	// 进入首页 
 	@RequestMapping("/")
@@ -52,14 +50,13 @@ public class SaOAuthClientController {
 			return SaResult.error(so.getString("msg"));
 		}
 
-		// 根据openid获取其对应的userId  
-		SoMap data = so.getMap("data");
-		long uid = getUserIdByOpenid(data.getString("openid"));
-		data.set("uid", uid);
+		// 根据openid获取其对应的userId
+		long uid = getUserIdByOpenid(so.getString("openid"));
+		so.set("uid", uid);
 		
 		// 返回相关参数 
 		StpUtil.login(uid);
-		return SaResult.data(data);
+		return SaResult.data(so);
 	}
 	
 	// 根据 Refresh-Token 去刷新 Access-Token 
@@ -82,9 +79,8 @@ public class SaOAuthClientController {
 			return SaResult.error(so.getString("msg"));
 		}
 
-		// 返回相关参数 (data=新的Access-Token )
-		SoMap data = so.getMap("data");
-		return SaResult.data(data);
+		// 返回相关参数
+		return SaResult.data(so);
 	}
 	
 	// 模式三：密码式-授权登录
@@ -108,14 +104,13 @@ public class SaOAuthClientController {
 			return SaResult.error(so.getString("msg"));
 		}
 
-		// 根据openid获取其对应的userId  
-		SoMap data = so.getMap("data");
-		long uid = getUserIdByOpenid(data.getString("openid"));
-		data.set("uid", uid);
+		// 根据openid获取其对应的userId
+		long uid = getUserIdByOpenid(so.getString("openid"));
+		so.set("uid", uid);
 		
 		// 返回相关参数 
 		StpUtil.login(uid);
-		return SaResult.data(data);
+		return SaResult.data(so);
 	}
 	
 	// 模式四：获取应用的 Client-Token 
@@ -137,9 +132,8 @@ public class SaOAuthClientController {
 			return SaResult.error(so.getString("msg"));
 		}
 
-		// 返回相关参数 (data=新的Client-Token ) 
-		SoMap data = so.getMap("data");
-		return SaResult.data(data);
+		// 返回相关参数
+		return SaResult.data(so);
 	}
 	
 	// 注销登录 
@@ -166,9 +160,8 @@ public class SaOAuthClientController {
 			return SaResult.error(so.getString("msg"));
 		}
 
-		// 返回相关参数 (data=获取到的资源 ) 
-		SoMap data = so.getMap("data");
-		return SaResult.data(data);
+		// 返回相关参数 (data=获取到的资源 )
+		return SaResult.data(so);
 	}
 	
 	// 全局异常拦截 
