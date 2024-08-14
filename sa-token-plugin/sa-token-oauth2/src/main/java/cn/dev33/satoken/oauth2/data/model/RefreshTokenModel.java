@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Model: Refresh-Token
@@ -45,7 +46,7 @@ public class RefreshTokenModel implements Serializable {
 	/**
 	 * 授权范围
 	 */
-	public String scope;
+	public List<String> scopes;
 
 	/**
 	 * 对应账号id 
@@ -57,10 +58,64 @@ public class RefreshTokenModel implements Serializable {
 	 */
 	public String openid;
 
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public RefreshTokenModel setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+		return this;
+	}
+
+	public long getExpiresTime() {
+		return expiresTime;
+	}
+
+	public RefreshTokenModel setExpiresTime(long expiresTime) {
+		this.expiresTime = expiresTime;
+		return this;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public RefreshTokenModel setClientId(String clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public List<String> getScopes() {
+		return scopes;
+	}
+
+	public RefreshTokenModel setScopes(List<String> scopes) {
+		this.scopes = scopes;
+		return this;
+	}
+
+	public Object getLoginId() {
+		return loginId;
+	}
+
+	public RefreshTokenModel setLoginId(Object loginId) {
+		this.loginId = loginId;
+		return this;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public RefreshTokenModel setOpenid(String openid) {
+		this.openid = openid;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "RefreshTokenModel [refreshToken=" + refreshToken + ", expiresTime=" + expiresTime
-				+ ", clientId=" + clientId + ", scope=" + scope + ", loginId=" + loginId + ", openid=" + openid + "]";
+				+ ", clientId=" + clientId + ", scopes=" + scopes + ", loginId=" + loginId + ", openid=" + openid + "]";
 	}
 
 	/**

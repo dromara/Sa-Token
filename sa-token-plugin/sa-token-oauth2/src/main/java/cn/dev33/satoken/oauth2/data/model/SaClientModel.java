@@ -15,10 +15,11 @@
  */
 package cn.dev33.satoken.oauth2.data.model;
 
-import java.io.Serializable;
-
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Client应用信息 Model
@@ -43,7 +44,7 @@ public class SaClientModel implements Serializable {
 	/**
 	 * 应用签约的所有权限, 多个用逗号隔开 
 	 */
-	public String contractScope;
+	public List<String> contractScopes;
 	
 	/**
 	 * 应用允许授权的所有URL, 多个用逗号隔开 
@@ -93,11 +94,11 @@ public class SaClientModel implements Serializable {
 		this.clientTokenTimeout = config.getClientTokenTimeout();
 		this.pastClientTokenTimeout = config.getPastClientTokenTimeout();
 	}
-	public SaClientModel(String clientId, String clientSecret, String contractScope, String allowUrl) {
+	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, String allowUrl) {
 		super();
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
-		this.contractScope = contractScope;
+		this.contractScopes = contractScopes;
 		this.allowUrl = allowUrl;
 	}
 
@@ -134,18 +135,18 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @return 应用签约的所有权限, 多个用逗号隔开
+	 * @return 应用签约的所有权限
 	 */
-	public String getContractScope() {
-		return contractScope;
+	public List<String> getContractScopes() {
+		return contractScopes;
 	}
 
 	/**
-	 * @param contractScope 应用签约的所有权限, 多个用逗号隔开
+	 * @param contractScopes 应用签约的所有权限, 多个用逗号隔开
 	 * @return 对象自身 
 	 */
-	public SaClientModel setContractScope(String contractScope) {
-		this.contractScope = contractScope;
+	public SaClientModel setContractScopes(List<String> contractScopes) {
+		this.contractScopes = contractScopes;
 		return this;
 	}
 
@@ -329,8 +330,8 @@ public class SaClientModel implements Serializable {
 	// 
 	@Override
 	public String toString() {
-		return "SaClientModel [clientId=" + clientId + ", clientSecret=" + clientSecret + ", contractScope="
-				+ contractScope + ", allowUrl=" + allowUrl + ", isCode=" + isCode + ", isImplicit=" + isImplicit
+		return "SaClientModel [clientId=" + clientId + ", clientSecret=" + clientSecret + ", contractScopes="
+				+ contractScopes + ", allowUrl=" + allowUrl + ", isCode=" + isCode + ", isImplicit=" + isImplicit
 				+ ", isPassword=" + isPassword + ", isClient=" + isClient + ", isAutoMode=" + isAutoMode
 				+ ", isNewRefresh=" + isNewRefresh + ", accessTokenTimeout=" + accessTokenTimeout
 				+ ", refreshTokenTimeout=" + refreshTokenTimeout + ", clientTokenTimeout=" + clientTokenTimeout

@@ -5,6 +5,8 @@ import cn.dev33.satoken.oauth2.data.model.SaClientModel;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 /**
  * Sa-Token OAuth2：自定义数据加载器
  *
@@ -22,7 +24,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 					.setClientId("1001")
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")
 					.setAllowUrl("*")
-					.setContractScope("userinfo")
+					.setContractScopes(Arrays.asList("userinfo"))
 					.setIsAutoMode(true);
 		}
 		return null;

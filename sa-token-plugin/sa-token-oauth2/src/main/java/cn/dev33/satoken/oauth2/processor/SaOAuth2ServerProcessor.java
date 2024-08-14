@@ -35,6 +35,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
+import java.util.List;
+
 /**
  * Sa-Token OAuth2 请求处理器
  *
@@ -142,7 +144,7 @@ public class SaOAuth2ServerProcessor {
 
 		// 1、如果尚未登录, 则先去登录
 		if( ! getStpLogic().isLogin()) {
-			return cfg.getNotLoginView().get();
+			return cfg.notLoginView.get();
 		}
 
 		// 2、构建请求Model
@@ -152,12 +154,12 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkRightUrl(ra.clientId, ra.redirectUri);
 
 		// 4、校验：此次申请的Scope，该Client是否已经签约
-		oauth2Template.checkContract(ra.clientId, ra.scope);
+		oauth2Template.checkContract(ra.clientId, ra.scopes);
 
 		// 5、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
-		boolean isGrant = oauth2Template.isGrant(ra.loginId, ra.clientId, ra.scope);
+		boolean isGrant = oauth2Template.isGrant(ra.loginId, ra.clientId, ra.scopes);
 		if( ! isGrant) {
-			return cfg.getConfirmView().apply(ra.clientId, ra.scope);
+			return cfg.confirmView.apply(ra.clientId, ra.scopes);
 		}
 
 		// 6、判断授权类型
@@ -275,7 +277,7 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
-		return cfg.getDoLoginHandle().apply(req.getParamNotNull(Param.name), req.getParamNotNull(Param.pwd));
+		return cfg.doLoginHandle.apply(req.getParamNotNull(Param.name), req.getParamNotNull(Param.pwd));
 	}
 
 	/**
@@ -288,8 +290,9 @@ public class SaOAuth2ServerProcessor {
 
 		String clientId = req.getParamNotNull(Param.client_id);
 		String scope = req.getParamNotNull(Param.scope);
+		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 		Object loginId = getStpLogic().getLoginId();
-		oauth2Template.saveGrantScope(clientId, loginId, scope);
+		oauth2Template.saveGrantScope(clientId, loginId, scopes);
 		return SaResult.ok();
 	}
 
@@ -308,15 +311,16 @@ public class SaOAuth2ServerProcessor {
 		String clientId = req.getParamNotNull(Param.client_id);
 		String clientSecret = req.getParamNotNull(Param.client_secret);
 		String scope = req.getParam(Param.scope, "");
+		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 
 		// 2、校验 ClientScope 和 scope 
-		oauth2Template.checkClientSecretAndScope(clientId, clientSecret, scope);
+		oauth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
 
 		// 3、防止因前端误传token造成逻辑干扰
 		// SaHolder.getStorage().set(getStpLogic().stpLogic.splicingKeyJustCreatedSave(), "no-token");
 
 		// 3、调用API 开始登录，如果没能成功登录，则直接退出
-		Object retObj = cfg.getDoLoginHandle().apply(username, password);
+		Object retObj = cfg.doLoginHandle.apply(username, password);
 		if( ! getStpLogic().isLogin()) {
 			return retObj;
 		}
@@ -325,7 +329,7 @@ public class SaOAuth2ServerProcessor {
 		RequestAuthModel ra = new RequestAuthModel();
 		ra.clientId = clientId;
 		ra.loginId = getStpLogic().getLoginId();
-		ra.scope = scope;
+		ra.scopes = scopes;
 
 		// 5、生成 Access-Token
 		AccessTokenModel at = oauth2Template.generateAccessToken(ra, true);
@@ -345,16 +349,17 @@ public class SaOAuth2ServerProcessor {
 		// 获取参数
 		String clientId = req.getParamNotNull(Param.client_id);
 		String clientSecret = req.getParamNotNull(Param.client_secret);
-		String scope = req.getParam(Param.scope);
+		String scope = req.getParam(Param.scope, "");
+		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 
 		//校验 ClientScope
-		oauth2Template.checkContract(clientId, scope);
+		oauth2Template.checkContract(clientId, scopes);
 
 		// 校验 ClientSecret
 		oauth2Template.checkClientSecret(clientId, clientSecret);
 
 		// 生成
-		ClientTokenModel ct = oauth2Template.generateClientToken(clientId, scope);
+		ClientTokenModel ct = oauth2Template.generateClientToken(clientId, scopes);
 
 		// 返回
 		return SaOAuth2Manager.getDataResolver().buildClientTokenReturnValue(ct);

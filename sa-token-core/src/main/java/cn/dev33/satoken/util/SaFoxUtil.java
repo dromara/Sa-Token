@@ -29,7 +29,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
 /**
  * Sa-Token 内部工具类
@@ -563,7 +562,7 @@ public class SaFoxUtil {
 	 * @return 字符串
 	 */
 	public static String convertListToString(List<?> list) {
-		if(list == null || list.size() == 0) {
+		if(list == null || list.isEmpty()) {
 			return "";
 		}
 		StringBuilder str = new StringBuilder();

@@ -15,11 +15,12 @@
  */
 package cn.dev33.satoken.oauth2.config;
 
+import cn.dev33.satoken.oauth2.function.SaOAuth2ConfirmViewFunction;
+import cn.dev33.satoken.oauth2.function.SaOAuth2DoLoginHandleFunction;
+import cn.dev33.satoken.oauth2.function.SaOAuth2NotLoginViewFunction;
 import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
 
 /**
  * Sa-Token-OAuth2 配置类 Model
@@ -218,65 +219,17 @@ public class SaOAuth2Config implements Serializable {
 	/**
 	 * OAuth-Server端：未登录时返回的View 
 	 */
-	public Supplier<Object> notLoginView = () -> "当前会话在OAuth-Server认证中心尚未登录";
+	public SaOAuth2NotLoginViewFunction notLoginView = () -> "当前会话在OAuth-Server认证中心尚未登录";
 
 	/**
 	 * OAuth-Server端：确认授权时返回的View 
 	 */
-	public BiFunction<String, String, Object> confirmView = (clientId, scope) -> "本次操作需要用户授权";
+	public SaOAuth2ConfirmViewFunction confirmView = (clientId, scopes) -> "本次操作需要用户授权";
 
 	/**
 	 * OAuth-Server端：登录函数 
 	 */
-	public BiFunction<String, String, Object> doLoginHandle = (name, pwd) -> SaResult.error();
-
-	/**
-	 * @param notLoginView OAuth-Server端：未登录时返回的View 
-	 * @return 对象自身
-	 */
-	public SaOAuth2Config setNotLoginView(Supplier<Object> notLoginView) {
-		this.notLoginView = notLoginView;
-		return this;
-	}
-
-	/**
-	 * @return 函数 OAuth-Server端：未登录时返回的View
-	 */
-	public Supplier<Object> getNotLoginView() {
-		return notLoginView;
-	}
-
-	/**
-	 * @param confirmView OAuth-Server端：确认授权时返回的View 
-	 * @return 对象自身
-	 */
-	public SaOAuth2Config setConfirmView(BiFunction<String, String, Object> confirmView) {
-		this.confirmView = confirmView;
-		return this;
-	}
-
-	/**
-	 * @return 函数 OAuth-Server端：确认授权时返回的View
-	 */
-	public BiFunction<String, String, Object> getConfirmView() {
-		return confirmView;
-	}
-
-	/**
-	 * @param doLoginHandle OAuth-Server端：登录函数 
-	 * @return 对象自身
-	 */
-	public SaOAuth2Config setDoLoginHandle(BiFunction<String, String, Object> doLoginHandle) {
-		this.doLoginHandle = doLoginHandle;
-		return this;
-	}
-
-	/**
-	 * @return 函数 OAuth-Server端：登录函数
-	 */
-	public BiFunction<String, String, Object> getDoLoginHandle() {
-		return doLoginHandle;
-	}
+	public SaOAuth2DoLoginHandleFunction doLoginHandle = (name, pwd) -> SaResult.error();
 
 	@Override
 	public String toString() {

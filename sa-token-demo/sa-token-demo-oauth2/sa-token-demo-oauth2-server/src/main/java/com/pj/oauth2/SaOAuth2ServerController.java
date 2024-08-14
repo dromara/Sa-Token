@@ -34,27 +34,25 @@ public class SaOAuth2ServerController {
 	// Sa-OAuth2 定制化配置 
 	@Autowired
 	public void setSaOAuth2Config(SaOAuth2Config cfg) {
-		cfg.
-			// 未登录的视图 
-			setNotLoginView(()->{
-				return new ModelAndView("login.html");	
-			}).
+		// 未登录的视图
+		cfg.notLoginView = ()->{
+			return new ModelAndView("login.html");
+		};
 			// 登录处理函数 
-			setDoLoginHandle((name, pwd) -> {
-				if("sa".equals(name) && "123456".equals(pwd)) {
-					StpUtil.login(10001);
-					return SaResult.ok();
-				}
-				return SaResult.error("账号名或密码错误");
-			}).
+		cfg.doLoginHandle = (name, pwd) -> {
+			if("sa".equals(name) && "123456".equals(pwd)) {
+				StpUtil.login(10001);
+				return SaResult.ok();
+			}
+			return SaResult.error("账号名或密码错误");
+		};
 			// 授权确认视图 
-			setConfirmView((clientId, scope)->{
-				Map<String, Object> map = new HashMap<>();
-				map.put("clientId", clientId);
-				map.put("scope", scope);
-				return new ModelAndView("confirm.html", map); 
-			})
-			;
+		cfg.confirmView = (clientId, scope)->{
+			Map<String, Object> map = new HashMap<>();
+			map.put("clientId", clientId);
+			map.put("scope", scope);
+			return new ModelAndView("confirm.html", map);
+		};
 	}
 
 	// 全局异常拦截  

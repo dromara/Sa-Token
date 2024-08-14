@@ -17,6 +17,7 @@ package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,7 +48,7 @@ public class ClientTokenModel implements Serializable {
 	/**
 	 * 授权范围
 	 */
-	public String scope;  
+	public List<String> scopes;
 
 	public ClientTokenModel() {}
 	
@@ -55,19 +56,19 @@ public class ClientTokenModel implements Serializable {
 	 * 构建一个 
 	 * @param accessToken accessToken
 	 * @param clientId 应用id 
-	 * @param scope 请求授权范围 
+	 * @param scopes 请求授权范围
 	 */
-	public ClientTokenModel(String accessToken, String clientId, String scope) {
+	public ClientTokenModel(String accessToken, String clientId, List<String> scopes) {
 		super();
 		this.clientToken = accessToken;
 		this.clientId = clientId;
-		this.scope = scope;
+		this.scopes = scopes;
 	}
 	
 	@Override
 	public String toString() {
 		return "ClientTokenModel [clientToken=" + clientToken + ", expiresTime=" + expiresTime + ", clientId="
-				+ clientId + ", scope=" + scope + "]";
+				+ clientId + ", scopes=" + scopes + "]";
 	}
 	
 	/**
@@ -80,15 +81,16 @@ public class ClientTokenModel implements Serializable {
 	}
 	
 	/**
-	 * 将所有属性转换为下划线形式的Map 
-	 * @return 属性转Map 
+	 * 将所有属性转换为下划线形式的Map
+	 * @return 属性转Map
 	 */
+	@Deprecated
 	public Map<String, Object> toLineMap() {
 		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("client_token", clientToken);
 		map.put("expires_in", getExpiresIn());
 		map.put("client_id", clientId);
-		map.put("scope", scope);	
+		map.put("scopes", scopes);
 		return map;
 	}
 	

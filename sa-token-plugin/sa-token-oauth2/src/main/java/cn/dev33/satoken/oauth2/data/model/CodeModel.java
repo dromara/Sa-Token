@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Model: 授权码
@@ -40,7 +41,7 @@ public class CodeModel implements Serializable {
 	/**
 	 * 授权范围
 	 */
-	public String scope;
+	public List<String> scopes;
 
 	/**
 	 * 对应账号id 
@@ -62,93 +63,67 @@ public class CodeModel implements Serializable {
 	 * 构建一个 
 	 * @param code 授权码 
 	 * @param clientId 应用id 
-	 * @param scope 请求授权范围 
+	 * @param scopes 请求授权范围
 	 * @param loginId 对应的账号id 
 	 * @param redirectUri 重定向地址 
 	 */
-	public CodeModel(String code, String clientId, String scope, Object loginId, String redirectUri) {
+	public CodeModel(String code, String clientId, List<String> scopes, Object loginId, String redirectUri) {
 		super();
 		this.code = code;
 		this.clientId = clientId;
-		this.scope = scope;
+		this.scopes = scopes;
 		this.loginId = loginId;
 		this.redirectUri = redirectUri;
 	}
 
-	
-	/**
-	 * @return code
-	 */
 	public String getCode() {
 		return code;
 	}
 
-	/**
-	 * @param code 要设置的 code
-	 */
-	public void setCode(String code) {
+	public CodeModel setCode(String code) {
 		this.code = code;
+		return this;
 	}
 
-	/**
-	 * @return clientId
-	 */
 	public String getClientId() {
 		return clientId;
 	}
 
-	/**
-	 * @param clientId 要设置的 clientId
-	 */
-	public void setClientId(String clientId) {
+	public CodeModel setClientId(String clientId) {
 		this.clientId = clientId;
+		return this;
 	}
 
-	/**
-	 * @return scope
-	 */
-	public String getScope() {
-		return scope;
+	public List<String> getScopes() {
+		return scopes;
 	}
 
-	/**
-	 * @param scope 要设置的 scope
-	 */
-	public void setScope(String scope) {
-		this.scope = scope;
+	public CodeModel setScopes(List<String> scopes) {
+		this.scopes = scopes;
+		return this;
 	}
 
-	/**
-	 * @return loginId
-	 */
 	public Object getLoginId() {
 		return loginId;
 	}
 
-	/**
-	 * @param loginId 要设置的 loginId
-	 */
-	public void setLoginId(Object loginId) {
+	public CodeModel setLoginId(Object loginId) {
 		this.loginId = loginId;
+		return this;
 	}
-	
-	/**
-	 * @return redirectUri
-	 */
+
 	public String getRedirectUri() {
 		return redirectUri;
 	}
-	
-	/**
-	 * @param redirectUri 要设置的 redirectUri
-	 */
-	public void setRedirectUri(String redirectUri) {
+
+	public CodeModel setRedirectUri(String redirectUri) {
 		this.redirectUri = redirectUri;
+		return this;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "CodeModel [code=" + code + ", clientId=" + clientId + ", scope=" + scope + ", loginId=" + loginId
+		return "CodeModel [code=" + code + ", clientId=" + clientId + ", scopes=" + scopes + ", loginId=" + loginId
 				+ ", redirectUri=" + redirectUri + "]";
 	}
 	

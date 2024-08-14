@@ -25,6 +25,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -107,7 +108,7 @@ public class SaOAuth2Template {
 			return;
 		}
 		AccessTokenModel at = checkAccessToken(accessToken);
-		List<String> scopeList = SaFoxUtil.convertStringToList(at.scope);
+		List<String> scopeList = at.scopes;
 		for (String scope : scopes) {
 			SaOAuth2Exception.throwBy( ! scopeList.contains(scope), "该 Access-Token 不具备 Scope：" + scope, SaOAuth2ErrorCode.CODE_30108);
 		}
@@ -122,7 +123,7 @@ public class SaOAuth2Template {
 			return;
 		}
 		ClientTokenModel ct = checkClientToken(clientToken);
-		List<String> scopeList = SaFoxUtil.convertStringToList(ct.scope);
+		List<String> scopeList = ct.scopes;
 		for (String scope : scopes) {
 			SaOAuth2Exception.throwBy( ! scopeList.contains(scope), "该 Client-Token 不具备 Scope：" + scope, SaOAuth2ErrorCode.CODE_30109);
 		}
@@ -141,7 +142,9 @@ public class SaOAuth2Template {
 		ra.responseType = req.getParamNotNull(Param.response_type);
 		ra.redirectUri = req.getParamNotNull(Param.redirect_uri);
 		ra.state = req.getParam(Param.state);
-		ra.scope = req.getParam(Param.scope, "");
+		// 数据解析
+		String scope = req.getParam(Param.scope, "");
+		ra.scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 		ra.loginId = loginId;
 		return ra;
 	}
@@ -156,8 +159,8 @@ public class SaOAuth2Template {
 		deleteCode(getCodeValue(ra.clientId, ra.loginId));
 
 		// 生成新Code
-		String code = randomCode(ra.clientId, ra.loginId, ra.scope);
-		CodeModel cm = new CodeModel(code, ra.clientId, ra.scope, ra.loginId, ra.redirectUri);
+		String code = randomCode(ra.clientId, ra.loginId, ra.scopes);
+		CodeModel cm = new CodeModel(code, ra.clientId, ra.scopes, ra.loginId, ra.redirectUri);
 
 		// 保存新Code
 		saveCode(cm);
@@ -250,8 +253,8 @@ public class SaOAuth2Template {
 		}
 
 		// 2、生成 新Access-Token
-		String newAtValue = randomAccessToken(ra.clientId, ra.loginId, ra.scope);
-		AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scope);
+		String newAtValue = randomAccessToken(ra.clientId, ra.loginId, ra.scopes);
+		AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
 		at.openid = getOpenid(ra.clientId, ra.loginId);
 		at.expiresTime = System.currentTimeMillis() + (checkClientModel(ra.clientId).getAccessTokenTimeout() * 1000);
 
@@ -272,10 +275,10 @@ public class SaOAuth2Template {
 	/**
 	 * 构建Model：Client-Token
 	 * @param clientId 应用id
-	 * @param scope 授权范围
+	 * @param scopes 授权范围
 	 * @return Client-Token Model
 	 */
-	public ClientTokenModel generateClientToken(String clientId, String scope) {
+	public ClientTokenModel generateClientToken(String clientId, List<String> scopes) {
 		// 1、删掉旧 Past-Token
 		deleteClientToken(getPastTokenValue(clientId));
 
@@ -291,7 +294,7 @@ public class SaOAuth2Template {
 		}
 
 		// 3、生成新Client-Token
-		ClientTokenModel ct = new ClientTokenModel(randomClientToken(clientId, scope), clientId, scope);
+		ClientTokenModel ct = new ClientTokenModel(randomClientToken(clientId, scopes), clientId, scopes);
 		ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
 
 		// 3、保存新Client-Token 
@@ -356,23 +359,21 @@ public class SaOAuth2Template {
 	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope
 	 * @param loginId 账号id
 	 * @param clientId 应用id
-	 * @param scope 权限
+	 * @param scopes 权限
 	 * @return 是否已经授权
 	 */
-	public boolean isGrant(Object loginId, String clientId, String scope) {
-		List<String> grantScopeList = SaFoxUtil.convertStringToList(getGrantScope(clientId, loginId));
-		List<String> scopeList = SaFoxUtil.convertStringToList(scope);
-		return scopeList.size() == 0 || grantScopeList.containsAll(scopeList);
+	public boolean isGrant(Object loginId, String clientId, List<String> scopes) {
+		List<String> grantScopeList = getGrantScope(clientId, loginId);
+        return scopes.isEmpty() || new HashSet<>(grantScopeList).containsAll(scopes);
 	}
 	/**
 	 * 校验：该Client是否签约了指定的Scope
 	 * @param clientId 应用id
-	 * @param scope 权限(多个用逗号隔开)
+	 * @param scopes 权限(多个用逗号隔开)
 	 */
-	public void checkContract(String clientId, String scope) {
-		List<String> clientScopeList = SaFoxUtil.convertStringToList(checkClientModel(clientId).contractScope);
-		List<String> scopelist = SaFoxUtil.convertStringToList(scope);
-		if( ! clientScopeList.containsAll(scopelist)) {
+	public void checkContract(String clientId, List<String> scopes) {
+		List<String> clientScopeList = checkClientModel(clientId).contractScopes;
+        if( ! new HashSet<>(clientScopeList).containsAll(scopes)) {
 			throw new SaOAuth2Exception("请求的Scope暂未签约").setCode(SaOAuth2ErrorCode.CODE_30112);
 		}
 	}
@@ -394,7 +395,8 @@ public class SaOAuth2Template {
 		}
 
 		// 3、是否在[允许地址列表]之中
-		List<String> allowList = SaFoxUtil.convertStringToList(checkClientModel(clientId).allowUrl);
+		SaClientModel clientModel = checkClientModel(clientId);
+		List<String> allowList = SaOAuth2Manager.getDataConverter().convertAllowUrlStringToList(clientModel.allowUrl);
 		if( ! SaStrategy.instance.hasElement.apply(allowList, url)) {
 			throw new SaOAuth2Exception("非法redirect_url：" + url).setCode(SaOAuth2ErrorCode.CODE_30114);
 		}
@@ -415,16 +417,15 @@ public class SaOAuth2Template {
 	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes 
 	 * @param clientId 应用id
 	 * @param clientSecret 秘钥
-	 * @param scopes 权限（多个用逗号隔开）
+	 * @param scopes 权限
 	 * @return SaClientModel对象
 	 */
-	public SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, String scopes) {
+	public SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, List<String> scopes) {
 		// 先校验 clientSecret
 		SaClientModel cm = checkClientSecret(clientId, clientSecret);
 		// 再校验 是否签约 
-		List<String> clientScopeList = SaFoxUtil.convertStringToList(cm.contractScope);
-		List<String> scopelist = SaFoxUtil.convertStringToList(scopes);
-		if( ! clientScopeList.containsAll(scopelist)) {
+		List<String> clientScopeList = cm.contractScopes;
+        if( ! new HashSet<>(clientScopeList).containsAll(scopes)) {
 			throw new SaOAuth2Exception("请求的Scope暂未签约").setCode(SaOAuth2ErrorCode.CODE_30116);
 		}
 		// 返回数据
@@ -504,11 +505,11 @@ public class SaOAuth2Template {
 	 */
 	public AccessTokenModel convertCodeToAccessToken(CodeModel cm) {
 		AccessTokenModel at = new AccessTokenModel();
-		at.accessToken = randomAccessToken(cm.clientId, cm.loginId, cm.scope);
+		at.accessToken = randomAccessToken(cm.clientId, cm.loginId, cm.scopes);
 		// at.refreshToken = randomRefreshToken(cm.clientId, cm.loginId, cm.scope);
 		at.clientId = cm.clientId;
 		at.loginId = cm.loginId;
-		at.scope = cm.scope;
+		at.scopes = cm.scopes;
 		at.openid = getOpenid(cm.clientId, cm.loginId);
 		at.expiresTime = System.currentTimeMillis() + (checkClientModel(cm.clientId).getAccessTokenTimeout() * 1000);
 		// at.refreshExpiresTime = System.currentTimeMillis() + (checkClientModel(cm.clientId).getRefreshTokenTimeout() * 1000);
@@ -521,10 +522,10 @@ public class SaOAuth2Template {
 	 */
 	public RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at) {
 		RefreshTokenModel rt = new RefreshTokenModel();
-		rt.refreshToken = randomRefreshToken(at.clientId, at.loginId, at.scope);
+		rt.refreshToken = randomRefreshToken(at.clientId, at.loginId, at.scopes);
 		rt.clientId = at.clientId;
 		rt.loginId = at.loginId;
-		rt.scope = at.scope;
+		rt.scopes = at.scopes;
 		rt.openid = at.openid;
 		rt.expiresTime = System.currentTimeMillis() + (checkClientModel(at.clientId).getRefreshTokenTimeout() * 1000);
 		// 改变at属性
@@ -539,11 +540,11 @@ public class SaOAuth2Template {
 	 */
 	public AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt) {
 		AccessTokenModel at = new AccessTokenModel();
-		at.accessToken = randomAccessToken(rt.clientId, rt.loginId, rt.scope);
+		at.accessToken = randomAccessToken(rt.clientId, rt.loginId, rt.scopes);
 		at.refreshToken = rt.refreshToken;
 		at.clientId = rt.clientId;
 		at.loginId = rt.loginId;
-		at.scope = rt.scope;
+		at.scopes = rt.scopes;
 		at.openid = rt.openid;
 		at.expiresTime = System.currentTimeMillis() + (checkClientModel(rt.clientId).getAccessTokenTimeout() * 1000);
 		at.refreshExpiresTime = rt.expiresTime;
@@ -556,10 +557,10 @@ public class SaOAuth2Template {
 	 */
 	public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt) {
 		RefreshTokenModel newRt = new RefreshTokenModel();
-		newRt.refreshToken = randomRefreshToken(rt.clientId, rt.loginId, rt.scope);
+		newRt.refreshToken = randomRefreshToken(rt.clientId, rt.loginId, rt.scopes);
 		newRt.expiresTime = System.currentTimeMillis() + (checkClientModel(rt.clientId).getRefreshTokenTimeout() * 1000);
 		newRt.clientId = rt.clientId;
-		newRt.scope = rt.scope;
+		newRt.scopes = rt.scopes;
 		newRt.loginId = rt.loginId;
 		newRt.openid = rt.openid;
 		return newRt;
@@ -665,12 +666,13 @@ public class SaOAuth2Template {
 	 * 持久化：用户授权记录
 	 * @param clientId 应用id
 	 * @param loginId 账号id
-	 * @param scope 权限列表(多个逗号隔开)
+	 * @param scopes 权限列表
 	 */
-	public void saveGrantScope(String clientId, Object loginId, String scope) {
-		if( ! SaFoxUtil.isEmpty(scope)) {
+	public void saveGrantScope(String clientId, Object loginId, List<String> scopes) {
+		if( ! SaFoxUtil.isEmpty(scopes)) {
 			long ttl = checkClientModel(clientId).getAccessTokenTimeout();
-			SaManager.getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), scope, ttl);
+			String value = SaOAuth2Manager.getDataConverter().convertScopeListToString(scopes);
+			SaManager.getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), value, ttl);
 		}
 	}
 
@@ -768,8 +770,9 @@ public class SaOAuth2Template {
 	 * @param loginId 账号id
 	 * @return 权限
 	 */
-	public String getGrantScope(String clientId, Object loginId) {
-		return SaManager.getSaTokenDao().get(splicingGrantScopeKey(clientId, loginId));
+	public List<String> getGrantScope(String clientId, Object loginId) {
+		String value = SaManager.getSaTokenDao().get(splicingGrantScopeKey(clientId, loginId));
+		return SaOAuth2Manager.getDataConverter().convertScopeStringToList(value);
 	}
 
 	// ------------------- delete数据
@@ -861,39 +864,39 @@ public class SaOAuth2Template {
 	 * 随机一个 Code
 	 * @param clientId 应用id
 	 * @param loginId 账号id
-	 * @param scope 权限
+	 * @param scopes 权限
 	 * @return Code
 	 */
-	public String randomCode(String clientId, Object loginId, String scope) {
+	public String randomCode(String clientId, Object loginId, List<String> scopes) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	/**
 	 * 随机一个 Access-Token
 	 * @param clientId 应用id
 	 * @param loginId 账号id
-	 * @param scope 权限
+	 * @param scopes 权限
 	 * @return Access-Token
 	 */
-	public String randomAccessToken(String clientId, Object loginId, String scope) {
+	public String randomAccessToken(String clientId, Object loginId, List<String> scopes) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	/**
 	 * 随机一个 Refresh-Token
 	 * @param clientId 应用id
 	 * @param loginId 账号id
-	 * @param scope 权限
+	 * @param scopes 权限
 	 * @return Refresh-Token
 	 */
-	public String randomRefreshToken(String clientId, Object loginId, String scope) {
+	public String randomRefreshToken(String clientId, Object loginId, List<String> scopes) {
 		return SaFoxUtil.getRandomString(60);
 	}
 	/**
 	 * 随机一个 Client-Token
 	 * @param clientId 应用id
-	 * @param scope 权限
+	 * @param scopes 权限
 	 * @return Client-Token
 	 */
-	public String randomClientToken(String clientId, String scope) {
+	public String randomClientToken(String clientId, List<String> scopes) {
 		return SaFoxUtil.getRandomString(60);
 	}
 

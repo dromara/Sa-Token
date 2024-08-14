@@ -17,6 +17,7 @@ package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,31 +68,106 @@ public class AccessTokenModel implements Serializable {
 	/**
 	 * 授权范围
 	 */
-	public String scope;  
+	public List<String> scopes;
 
 	public AccessTokenModel() {}
+
 	/**
 	 * 构建一个 
 	 * @param accessToken accessToken
 	 * @param clientId 应用id 
-	 * @param scope 请求授权范围 
+	 * @param scopes 请求授权范围
 	 * @param loginId 对应的账号id 
 	 */
-	public AccessTokenModel(String accessToken, String clientId, Object loginId, String scope) {
+	public AccessTokenModel(String accessToken, String clientId, Object loginId, List<String> scopes) {
 		super();
 		this.accessToken = accessToken;
 		this.clientId = clientId;
 		this.loginId = loginId;
-		this.scope = scope;
+		this.scopes = scopes;
 	}
-	
+
+
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public AccessTokenModel setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+		return this;
+	}
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public AccessTokenModel setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+		return this;
+	}
+
+	public long getExpiresTime() {
+		return expiresTime;
+	}
+
+	public AccessTokenModel setExpiresTime(long expiresTime) {
+		this.expiresTime = expiresTime;
+		return this;
+	}
+
+	public long getRefreshExpiresTime() {
+		return refreshExpiresTime;
+	}
+
+	public AccessTokenModel setRefreshExpiresTime(long refreshExpiresTime) {
+		this.refreshExpiresTime = refreshExpiresTime;
+		return this;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public AccessTokenModel setClientId(String clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public Object getLoginId() {
+		return loginId;
+	}
+
+	public AccessTokenModel setLoginId(Object loginId) {
+		this.loginId = loginId;
+		return this;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public AccessTokenModel setOpenid(String openid) {
+		this.openid = openid;
+		return this;
+	}
+
+	public List<String> getScopes() {
+		return scopes;
+	}
+
+	public AccessTokenModel setScopes(List<String> scopes) {
+		this.scopes = scopes;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "AccessTokenModel [accessToken=" + accessToken + ", refreshToken=" + refreshToken
 				+ ", accessTokenTimeout=" + expiresTime + ", refreshTokenTimeout=" + refreshExpiresTime
-				+ ", clientId=" + clientId + ", scope=" + scope + ", openid=" + openid + "]";
+				+ ", clientId=" + clientId + ", scopes=" + scopes + ", openid=" + openid + "]";
 	}
 
+	// 追加只读属性
 
 	/**
 	 * 获取：此 Access-Token 的剩余有效期（秒）
@@ -115,6 +191,7 @@ public class AccessTokenModel implements Serializable {
 	 * 将所有属性转换为下划线形式的Map 
 	 * @return 属性转Map
 	 */
+	@Deprecated
 	public Map<String, Object> toLineMap() {
 		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("access_token", accessToken);
@@ -122,7 +199,7 @@ public class AccessTokenModel implements Serializable {
 		map.put("expires_in", getExpiresIn());
 		map.put("refresh_expires_in", getRefreshExpiresIn());
 		map.put("client_id", clientId);
-		map.put("scope", scope);
+		map.put("scopes", scopes);
 		map.put("openid", openid);
 		return map;
 	}

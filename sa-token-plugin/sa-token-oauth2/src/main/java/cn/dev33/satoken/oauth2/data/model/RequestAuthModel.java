@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
@@ -39,7 +40,7 @@ public class RequestAuthModel implements Serializable {
 	/**
 	 * 授权范围
 	 */
-	public String scope;
+	public List<String> scopes;
 	
 	/**
 	 * 对应的账号id 
@@ -79,18 +80,18 @@ public class RequestAuthModel implements Serializable {
 	}
 
 	/**
-	 * @return scope
+	 * @return scopes
 	 */
-	public String getScope() {
-		return scope;
+	public List<String> getScopes() {
+		return scopes;
 	}
 
 	/**
-	 * @param scope 要设置的 scope
+	 * @param scopes 要设置的 scopes
 	 * @return 对象自身
 	 */
-	public RequestAuthModel setScope(String scope) {
-		this.scope = scope;
+	public RequestAuthModel setScopes(List<String> scopes) {
+		this.scopes = scopes;
 		return this;
 	}
 
@@ -166,7 +167,7 @@ public class RequestAuthModel implements Serializable {
 		if(SaFoxUtil.isEmpty(clientId)) {
 			throw new SaOAuth2Exception("client_id 不可为空").setCode(SaOAuth2ErrorCode.CODE_30101);
 		}
-		if(SaFoxUtil.isEmpty(scope)) {
+		if(SaFoxUtil.isEmpty(scopes)) {
 			throw new SaOAuth2Exception("scope 不可为空").setCode(SaOAuth2ErrorCode.CODE_30102);
 		}
 		if(SaFoxUtil.isEmpty(redirectUri)) {

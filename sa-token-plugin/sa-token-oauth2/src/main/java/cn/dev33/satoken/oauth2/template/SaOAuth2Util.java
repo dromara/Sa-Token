@@ -19,6 +19,8 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.data.model.*;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
+import java.util.List;
+
 /**
  * Sa-Token-OAuth2 模块 工具类
  *
@@ -135,11 +137,11 @@ public class SaOAuth2Util {
 	/**
 	 * 构建Model：Client-Token 
 	 * @param clientId 应用id 
-	 * @param scope 授权范围 
+	 * @param scopes 授权范围
 	 * @return Client-Token Model 
 	 */
-	public static ClientTokenModel generateClientToken(String clientId, String scope) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.generateClientToken(clientId, scope);
+	public static ClientTokenModel generateClientToken(String clientId, List<String> scopes) {
+		return SaOAuth2ServerProcessor.instance.oauth2Template.generateClientToken(clientId, scopes);
 	}
 	
 	/**
@@ -178,20 +180,20 @@ public class SaOAuth2Util {
 	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope 
 	 * @param loginId 账号id 
 	 * @param clientId 应用id 
-	 * @param scope 权限 
+	 * @param scopes 权限
 	 * @return 是否已经授权
 	 */
-	public static boolean isGrant(Object loginId, String clientId, String scope) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.isGrant(loginId, clientId, scope);
+	public static boolean isGrant(Object loginId, String clientId, List<String> scopes) {
+		return SaOAuth2ServerProcessor.instance.oauth2Template.isGrant(loginId, clientId, scopes);
 	}
 	
 	/**
 	 * 校验：该Client是否签约了指定的Scope 
 	 * @param clientId 应用id
-	 * @param scope 权限(多个用逗号隔开) 
+	 * @param scopes 权限(多个用逗号隔开)
 	 */
-	public static void checkContract(String clientId, String scope) {
-		SaOAuth2ServerProcessor.instance.oauth2Template.checkContract(clientId, scope);
+	public static void checkContract(String clientId, List<String> scopes) {
+		SaOAuth2ServerProcessor.instance.oauth2Template.checkContract(clientId, scopes);
 	}
 	
 	/**
@@ -217,10 +219,10 @@ public class SaOAuth2Util {
 	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes 
 	 * @param clientId 应用id
 	 * @param clientSecret 秘钥
-	 * @param scopes 权限（多个用逗号隔开）
+	 * @param scopes 权限
 	 * @return SaClientModel对象
 	 */
-	public static SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, String scopes) {
+	public static SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, List<String> scopes) {
 		return SaOAuth2ServerProcessor.instance.oauth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
 	}
 	
@@ -264,10 +266,10 @@ public class SaOAuth2Util {
 	 * 持久化：用户授权记录 
 	 * @param clientId 应用id 
 	 * @param loginId 账号id 
-	 * @param scope 权限列表(多个逗号隔开) 
+	 * @param scopes 权限列表
 	 */
-	public static void saveGrantScope(String clientId, Object loginId, String scope) {
-		SaOAuth2ServerProcessor.instance.oauth2Template.saveGrantScope(clientId, loginId, scope);
+	public static void saveGrantScope(String clientId, Object loginId, List<String> scopes) {
+		SaOAuth2ServerProcessor.instance.oauth2Template.saveGrantScope(clientId, loginId, scopes);
 	}
 	
 	
@@ -315,7 +317,7 @@ public class SaOAuth2Util {
 	 * @param loginId 账号id 
 	 * @return 权限 
 	 */
-	public static String getGrantScope(String clientId, Object loginId) {
+	public static List<String> getGrantScope(String clientId, Object loginId) {
 		return SaOAuth2ServerProcessor.instance.oauth2Template.getGrantScope(clientId, loginId);
 	}
 

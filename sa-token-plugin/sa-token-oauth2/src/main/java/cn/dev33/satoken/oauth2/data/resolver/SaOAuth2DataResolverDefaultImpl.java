@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.data.resolver;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
@@ -44,7 +45,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         map.put("expires_in", at.getExpiresIn());
         map.put("refresh_expires_in", at.getRefreshExpiresIn());
         map.put("client_id", at.clientId);
-        map.put("scope", at.scope);
+        map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(at.scopes));
         map.put("openid", at.openid);
         return SaResult.ok().setMap(map);
     }
@@ -59,7 +60,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         map.put("access_token", ct.clientToken); // 兼容 OAuth2 协议
         map.put("expires_in", ct.getExpiresIn());
         map.put("client_id", ct.clientId);
-        map.put("scope", ct.scope);
+        map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(ct.scopes));
         return SaResult.ok().setMap(map);
     }
 
