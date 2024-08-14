@@ -13,29 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.exception;
+package cn.dev33.satoken.aop;
+
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 
 /**
- * 一个异常：代表会话未能通过 Http Basic 认证校验
+ * Sa-Token 注解方法 Advisor AOP环绕切入
  *
  * @author click33
- * @since 1.26.0
+ * @since 1.39.0
  */
-public class NotBasicAuthException extends SaTokenException {
-
-	/**
-	 * 序列化版本号
-	 */
-	private static final long serialVersionUID = 6806129545290130144L;
-	
-	/** 异常提示语 */
-	public static final String BE_MESSAGE = "no basic auth";
-
-	/**
-	 * 一个异常：代表会话未通过 Http Basic 认证 
-	 */
-	public NotBasicAuthException() {
-		super(BE_MESSAGE);
-	}
+public class SaAroundAnnotationPointcutAdvisor extends DefaultPointcutAdvisor {
 
 }

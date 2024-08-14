@@ -16,11 +16,12 @@
 package cn.dev33.satoken.solon;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
-import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
+import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.httpauth.digest.SaHttpDigestTemplate;
 import cn.dev33.satoken.httpauth.digest.SaHttpDigestUtil;
 import cn.dev33.satoken.json.SaJsonTemplate;
@@ -36,6 +37,7 @@ import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
@@ -93,6 +95,11 @@ public class XPluginImp implements Plugin {
         // 注入侦听器 Bean （可以有多个）
         context.subBeansOfType(SaTokenListener.class, sl -> {
             SaTokenEventCenter.registerListener(sl);
+        });
+
+        // 注入自定义注解处理器 Bean （可以有多个）
+        context.subBeansOfType(SaAnnotationAbstractHandler.class, sl -> {
+            SaAnnotationStrategy.instance.registerAnnotationHandler(sl);
         });
 
         // 注入权限认证 Bean

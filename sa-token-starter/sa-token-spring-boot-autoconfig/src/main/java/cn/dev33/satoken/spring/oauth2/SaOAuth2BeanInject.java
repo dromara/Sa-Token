@@ -15,18 +15,18 @@
  */
 package cn.dev33.satoken.spring.oauth2;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.dataloader.SaOAuth2DataLoader;
+import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 
-import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
 
-/*
-	小提示：如果你在 idea 中运行源码时出现异常：java: 程序包cn.dev33.satoken.oauth2不存在。
-			在项目根目录进入 cmd，执行 mvn package 即可解决
- */
+// 小提示：如果你在 idea 中运行源码时出现异常：java: 程序包cn.dev33.satoken.oauth2不存在。
+// 在项目根目录进入 cmd，执行 mvn package 即可解决
+
 
 /**
  * 注入 Sa-Token-OAuth2 所需要的组件
@@ -54,7 +54,17 @@ public class SaOAuth2BeanInject {
 	 */
 	@Autowired(required = false)
 	public void setSaOAuth2Interface(SaOAuth2Template saOAuth2Template) {
-		SaOAuth2Util.saOAuth2Template = saOAuth2Template;
+		SaOAuth2ServerProcessor.instance.oauth2Template = saOAuth2Template;
 	}
-	
+
+	/**
+	 * 注入 OAuth2 数据加载器
+	 *
+	 * @param dataLoader /
+	 */
+	@Autowired(required = false)
+	public void setSaOAuth2Interface(SaOAuth2DataLoader dataLoader) {
+		SaOAuth2Manager.setDataLoader(dataLoader);
+	}
+
 }

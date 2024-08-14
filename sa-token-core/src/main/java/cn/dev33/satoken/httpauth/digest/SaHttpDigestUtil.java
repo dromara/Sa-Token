@@ -90,11 +90,16 @@ public class SaHttpDigestUtil {
 		saHttpDigestTemplate.check();
 	}
 
+
+
+	// ----------------- 过期方法 -----------------
+
 	/**
 	 * 根据注解 ( @SaCheckHttpDigest ) 鉴权
 	 *
 	 * @param at 注解对象
 	 */
+	@Deprecated
 	public static void checkByAnnotation(SaCheckHttpDigest at) {
 		saHttpDigestTemplate.checkByAnnotation(at);
 	}

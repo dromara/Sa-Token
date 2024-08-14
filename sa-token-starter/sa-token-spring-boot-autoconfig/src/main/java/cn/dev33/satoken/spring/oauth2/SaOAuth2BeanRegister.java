@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Bean;
 public class SaOAuth2BeanRegister {
 
 	/**
-	 * 获取 OAuth2 配置对象
+	 * 获取 OAuth2 配置 Bean
 	 *
 	 * @return 配置对象 
 	 */
@@ -40,5 +40,5 @@ public class SaOAuth2BeanRegister {
 	public SaOAuth2Config getSaOAuth2Config() {
 		return new SaOAuth2Config();
 	}
-	
+
 }

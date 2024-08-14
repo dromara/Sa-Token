@@ -1,15 +1,14 @@
-package com.pj.satoken.at;
+package com.pj.satoken.merge_annotation;
+
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaMode;
+import com.pj.satoken.StpUserUtil;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import com.pj.satoken.StpUserUtil;
-import org.springframework.core.annotation.AliasFor;
-
-import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.annotation.SaMode;
 
 /**
  * 权限认证(User版)：必须具有指定权限才能进入该方法 
@@ -35,5 +34,23 @@ public @interface SaUserCheckPermission {
 	 */
 	@AliasFor(annotation = SaCheckPermission.class)
 	SaMode mode() default SaMode.AND;
-	
+
+	/**
+	 * 在权限校验不通过时的次要选择，两者只要其一校验成功即可通过校验
+	 *
+	 * <p>
+	 * 	例1：@SaCheckPermission(value="user-add", orRole="admin")，
+	 * 	代表本次请求只要具有 user-add权限 或 admin角色 其一即可通过校验。
+	 * </p>
+	 *
+	 * <p>
+	 * 	例2： orRole = {"admin", "manager", "staff"}，具有三个角色其一即可。 <br>
+	 * 	例3： orRole = {"admin, manager, staff"}，必须三个角色同时具备。
+	 * </p>
+	 *
+	 * @return /
+	 */
+	@AliasFor(annotation = SaCheckPermission.class)
+	String[] orRole() default {};
+
 }

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.logic;
+package cn.dev33.satoken.oauth2.consts;
 
 /**
- * Sa-Token-OAuth2 所有常量
+ * Sa-Token OAuth2 所有常量
  *
  * @author click33
  * @since 1.23.0

@@ -16,6 +16,7 @@
 package cn.dev33.satoken.spring;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
@@ -34,6 +35,7 @@ import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -119,6 +121,18 @@ public class SaBeanInject {
 	}
 
 	/**
+	 * 注入自定义注解处理器
+	 *
+	 * @param handlerList 自定义注解处理器集合
+	 */
+	@Autowired(required = false)
+	public void setSaAnnotationHandler(List<SaAnnotationAbstractHandler<?>> handlerList) {
+		for (SaAnnotationAbstractHandler<?> handler : handlerList) {
+			SaAnnotationStrategy.instance.registerAnnotationHandler(handler);
+		}
+	}
+
+	/**
 	 * 注入临时令牌验证模块 Bean
 	 * 
 	 * @param saTemp saTemp对象 
@@ -149,12 +163,12 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入 Sa-Token Digest Basic 认证模块
+	 * 注入 Sa-Token Http Digest 认证模块
 	 *
 	 * @param saHttpDigestTemplate saHttpDigestTemplate 对象
 	 */
 	@Autowired(required = false)
-	public void setSaHttpBasicTemplate(SaHttpDigestTemplate saHttpDigestTemplate) {
+	public void setSaHttpDigestTemplate(SaHttpDigestTemplate saHttpDigestTemplate) {
 		SaHttpDigestUtil.saHttpDigestTemplate = saHttpDigestTemplate;
 	}
 

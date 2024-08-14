@@ -8,6 +8,11 @@
 <table class="gzh-table" style="text-align: center;">
     <tr>
         <td>
+			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000005&size=102&__biz=Mzg2Mzg0NjEwOA==&mid=2247485024&idx=1&sn=11883396c1844fd2c4bd208c299bb075&send_time="/>
+			<b>Java大飞哥</b>
+			<span>专注软件开发、技术架构设计、源码分享、JAVA技术。</span>
+		</td>
+        <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=Mzg4Nzg2MjQzNg==&mid=2247484545&idx=1&sn=c6101effb31b639fe2699b56bcc090c7&send_time="/>
 			<b>小简聊开发</b>
 			<span>偶尔更新前后端技术文章，偶尔发布生活散文，更新随缘。浏览器搜索JanYork了解我更多。</span>
@@ -27,7 +32,6 @@
 			<b>TJ君</b>
 			<span>一个励志推荐10000款开源项目与免费工具的程序猿</span>
 		</td>
-        <td>-</td>
     </tr>
     <tr>
         <td>
@@ -137,7 +141,7 @@
 			<span>推荐热门开源软件，介绍新开源项目，报导开源资讯！</span>
 		</td>
     </tr>
-    <!-- <tr>
+    <tr>
         <td>
 			<img src="https://mp.weixin.qq.com/mp/qrcode?scene=10000004&size=102&__biz=MzUzNTY2NjAzMg==&mid=2247484321&idx=1&sn=52e7e5e0dc03437e94908b6a67985500&send_time="/>
 			<b>Dromara开源组织</b>
@@ -220,10 +224,10 @@
 			<b>HelloGitHub</b>
 			<span>分享 GitHub 上有趣、入门级的开源项目。</span>
 		</td>
-	</tr> -->
+	</tr>
 </table>
 
 <br>
 
-感谢以上公众号对 Sa-Token 项目的推荐，如果您也是java公众号运营者，欢迎 [相互推荐](/more/tj-gzh-hz)
+感谢以上公众号对 Sa-Token 项目的推荐<!-- ，如果您也是java公众号运营者，欢迎 [相互推荐](/more/tj-gzh-hz) -->
 

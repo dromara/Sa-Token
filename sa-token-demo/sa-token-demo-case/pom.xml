@@ -51,7 +51,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-        
+
 		<!-- @ConfigurationProperties -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

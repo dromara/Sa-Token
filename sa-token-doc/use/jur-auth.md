@@ -71,7 +71,7 @@ public class StpInterfaceImpl implements StpInterface {
 
 可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
 
-> 有同学会产生疑问：我实现了此接口，但是程序启动时好像并没有执行，是不是我写错了？
+> [!TIP| label:有同学会产生疑问：我实现了此接口，但是程序启动时好像并没有执行，是不是我写错了？] 
 > 答：不执行是正常现象，程序启动时不会执行这个接口的方法，在每次调用鉴权代码时，才会执行到此。
 
 
@@ -162,7 +162,8 @@ StpUtil.hasPermission("index.css");       // false
 StpUtil.hasPermission("index.html");      // false
 ```
 
-!> 上帝权限：当一个账号拥有 `"*"` 权限时，他可以验证通过任何权限码 （角色认证同理）
+> [!WARNING| label:上帝权限] 
+> 当一个账号拥有 `"*"` 权限时，他可以验证通过任何权限码 （角色认证同理）
 
 
 ### 7、如何把权限精确到按钮级？
@@ -176,19 +177,18 @@ StpUtil.hasPermission("index.html");      // false
 2. 前端将权限码集合保存在`localStorage`或其它全局状态管理对象中。
 3. 在需要权限控制的按钮上，使用 js 进行逻辑判断，例如在`Vue`框架中我们可以使用如下写法：
 ``` js
+// `arr`是当前用户拥有的权限码数组
+// `user.delete`是显示按钮需要拥有的权限码
+// `删除按钮`是用户拥有权限码才可以看到的内容。
 <button v-if="arr.indexOf('user.delete') > -1">删除按钮</button>
 ```
-其中：`arr`是当前用户拥有的权限码数组，`user.delete`是显示按钮需要拥有的权限码，`删除按钮`是用户拥有权限码才可以看到的内容。
+
+以上写法只为提供一个参考示例，不同框架有不同写法，大家可根据项目技术栈灵活封装进行调用。
 
 
-注意：以上写法只为提供一个参考示例，不同框架有不同写法，大家可根据项目技术栈灵活封装进行调用。
-
-
-### 8、前端有了鉴权后端还需要鉴权吗？
-**需要！**
-
-前端的鉴权只是一个辅助功能，对于专业人员这些限制都是可以轻松绕过的，
-为保证服务器安全，**无论前端是否进行了权限校验，后端接口都需要对会话请求再次进行权限校验！**
+> [!ATTENTION| label:前端有了鉴权后端还需要鉴权吗？] 
+> **需要！** <br>
+> 前端的鉴权只是一个辅助功能，对于专业人员这些限制都是可以轻松绕过的，为保证服务器安全：**无论前端是否进行了权限校验，后端接口都需要对会话请求再次进行权限校验！**
 
 
 

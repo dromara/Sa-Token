@@ -5,6 +5,19 @@
 
 --- 
 
+
+- [[ 公众号 ] 集成sa-token前后端分离部署配置corsFliter解决跨域失效的真正原因](https://mp.weixin.qq.com/s/bSS4vmKlKM7ov_CUkjxkBg) （2024-07-08）
+
+- [[ 公众号 ] sa-token前后端分离解决跨域的正确姿势](https://mp.weixin.qq.com/s/96WbWL28T5_-xzyCfJ7Stg) （2024-07-06）
+
+- [[ 公众号 ] 集成sa-token实现登录和RBAC权限控制](https://mp.weixin.qq.com/s/SREjXoyL9s1JfddQnU38yA) （2024-04-16）
+
+- [[ CSDN ] springboot整合Sa-Token实现登录认证和权限校验（万字长文）](https://blog.csdn.net/2301_78646673/article/details/136008153) （2024-03-31）
+
+- [[ CSDN ]【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-11-01）
+
+- [[ CSDN ]【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-11-01）
+
 - [[ CSDN ] 【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-08-09）
 
 - [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 31 - Sa-Token（五）登录验证拦截器之 Token 有效期及其续签（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/126071871) （2022-07-30）

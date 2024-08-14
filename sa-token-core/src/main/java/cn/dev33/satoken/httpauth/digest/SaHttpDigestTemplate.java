@@ -263,11 +263,16 @@ public class SaHttpDigestTemplate {
         check(arr[0], arr[1]);
     }
 
+
+
+    // ----------------- 过期方法 -----------------
+
     /**
      * 根据注解 ( @SaCheckHttpDigest ) 鉴权
      *
      * @param at 注解对象
      */
+    @Deprecated
     public void checkByAnnotation(SaCheckHttpDigest at) {
 
         // 如果配置了 value，则以 value 优先

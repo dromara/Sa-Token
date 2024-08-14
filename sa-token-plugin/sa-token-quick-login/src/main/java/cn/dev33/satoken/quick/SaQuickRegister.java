@@ -15,17 +15,17 @@
  */
 package cn.dev33.satoken.quick;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.quick.config.SaQuickConfig;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * Quick Login 相关 Bean 注册
@@ -66,13 +66,13 @@ public class SaQuickRegister {
 			.addInclude("/**")
 
 			// 排除掉登录相关接口，不需要鉴权的
-			.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**").
+			.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**")
 
 			// 认证函数: 每次请求执行
-			setAuth(obj -> {
+			.setAuth(obj -> {
 				SaRouter
-					.match(SaQuickManager.getConfig().getInclude().split(","))
-					.notMatch(SaQuickManager.getConfig().getExclude().split(","))
+					.match(SaFoxUtil.convertStringToList(SaQuickManager.getConfig().getInclude()))
+					.notMatch(SaFoxUtil.convertStringToList(SaQuickManager.getConfig().getExclude()))
 					.check(r -> {
 						// 未登录时直接转发到login.html页面 
 						if (SaQuickManager.getConfig().getAuth() && ! StpUtil.isLogin()) {

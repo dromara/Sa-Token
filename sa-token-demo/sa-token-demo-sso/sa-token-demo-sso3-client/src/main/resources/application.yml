@@ -6,8 +6,6 @@ server:
 sa-token:
     # sso-client 相关配置
     sso-client:
-        # client 标识
-        client: sso-client3
         # sso-server 端主机地址
         server-url: http://sa-sso-server.com:9000
         # 使用 Http 请求校验ticket (模式三)

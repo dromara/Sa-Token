@@ -17,8 +17,8 @@ package cn.dev33.satoken.solon.oauth2;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Util;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;

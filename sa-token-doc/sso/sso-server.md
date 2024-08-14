@@ -2,6 +2,7 @@
 
 在开始SSO三种模式的对接之前，我们必须先搭建一个 SSO-Server 认证中心 
 
+> [!TIP| label:demo | style:callout] 
 > 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习，demo里有制作好的登录页面 
 
 --- 
@@ -71,13 +72,14 @@ implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'
 <!---------------------------- tabs:end ---------------------------->
 
 
-
-除了 `sa-token-spring-boot-starter` 和 `sa-token-sso` 以外，其它包都是可选的：
-- 在 SSO 模式三时 Redis 相关包是可选的  
-- 在前后端分离模式下可以删除 thymeleaf 相关包
-- 在不需要 SSO 模式三单点注销的情况下可以删除 http 工具包 
-
-建议先完整测试三种模式之后再对pom依赖进行酌情删减。
+> [!NOTE| label:引包简化] 
+> 除了 `sa-token-spring-boot-starter` 和 `sa-token-sso` 以外，其它包都是可选的：
+> 
+> - 在 SSO 模式三时 Redis 相关包是可选的  
+> - 在前后端分离模式下可以删除 thymeleaf 相关包
+> - 在不需要 SSO 模式三单点注销的情况下可以删除 http 工具包 
+> 
+> 建议先完整测试三种模式之后再对pom依赖进行酌情删减。
 
 
 ### 2、开放认证接口  

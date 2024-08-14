@@ -1,21 +1,20 @@
 package com.pj.oauth2;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Util;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Handle;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Sa-OAuth2 Server端 控制器
@@ -29,7 +28,7 @@ public class SaOAuth2ServerController {
 	@RequestMapping("/oauth2/*")
 	public Object request() {
 		System.out.println("------- 进入请求: " + SaHolder.getRequest().getUrl());
-		return SaOAuth2Handle.serverRequest();
+		return SaOAuth2ServerProcessor.instance.dister();
 	}
 	
 	// Sa-OAuth2 定制化配置 

@@ -29,6 +29,6 @@ import java.util.function.BiFunction;
  * @since 1.35.0
  */
 @FunctionalInterface
-public interface SaGetAnnotationFunction extends BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> {
+public interface SaGetAnnotationFunction extends BiFunction<AnnotatedElement, Class<? extends Annotation>, Annotation> {
 
 }
