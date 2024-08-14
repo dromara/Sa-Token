@@ -11,7 +11,8 @@
 <!-- QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)
  -->
  
-QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0)
+<!-- QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0) -->
+QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE) 
 
 ### 2、加入微信交流群：
 
