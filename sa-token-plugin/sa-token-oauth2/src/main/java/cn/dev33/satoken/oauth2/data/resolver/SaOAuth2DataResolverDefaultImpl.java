@@ -16,8 +16,8 @@
 package cn.dev33.satoken.oauth2.data.resolver;
 
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
-import cn.dev33.satoken.oauth2.model.AccessTokenModel;
-import cn.dev33.satoken.oauth2.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.LinkedHashMap;

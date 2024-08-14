@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.model;
+package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
 

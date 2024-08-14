@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.data.loader;
 
-import cn.dev33.satoken.oauth2.model.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.SaClientModel;
 
 /**
  * Sa-Token OAuth2 数据加载器

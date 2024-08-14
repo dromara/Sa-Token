@@ -1,7 +1,8 @@
 package com.pj.oauth2;
 
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
-import cn.dev33.satoken.oauth2.model.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.SaClientModel;
+import cn.dev33.satoken.secure.SaSecureUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,7 +32,9 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 	@Override
 	public String getOpenid(String clientId, Object loginId) {
 		// 此为模拟数据，真实环境需要从数据库查询 
-		return "gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__";
+//		return "gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__";
+		String prefix = "grSwoIN0MC1ewxHXvfCW3BothWDZMMtx";
+		return SaSecureUtil.md5(prefix + "_" + clientId + "_" + loginId);
 	}
 
 }

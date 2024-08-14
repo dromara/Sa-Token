@@ -16,7 +16,7 @@
 package cn.dev33.satoken.oauth2.template;
 
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.oauth2.model.*;
+import cn.dev33.satoken.oauth2.data.model.*;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
 /**
