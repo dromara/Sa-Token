@@ -185,6 +185,7 @@ Sa-Token-OAuth2 模块分为四种授权模式，解决不同场景下的授权�
 - [[ hippo4j ]](https://gitee.com/agentart/hippo4j)：强大的动态线程池框架，附带监控报警功能。
 - [[ hertzbeat ]](https://gitee.com/dromara/hertzbeat)：易用友好的开源实时监控告警系统，无需Agent，高性能集群，强大自定义监控能力。
 - [[ Solon ]](https://gitee.com/noear/solon)：一个更现代感的应用开发框架：更快、更小、更自由。
+- [[ Chat2DB ]](https://github.com/chat2db/Chat2DB)：一个AI驱动的数据库管理和BI工具，支持Mysql、pg、Oracle、Redis等22种数据库的管理。
 
 
 
