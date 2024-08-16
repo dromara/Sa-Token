@@ -223,7 +223,7 @@ public SaResult addMoney(long userId, long money, String nonce, String sign) {
 long userId = 10001;
 long money = 1000;
 String nonce = SaFoxUtil.getRandomString(32); // 随机32位字符串
-long timestamp = System.currentTimeMillis(); // 随机32位字符串
+long timestamp = System.currentTimeMillis(); // 系统当前时间戳 
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
 
 // 计算 sign 参数
