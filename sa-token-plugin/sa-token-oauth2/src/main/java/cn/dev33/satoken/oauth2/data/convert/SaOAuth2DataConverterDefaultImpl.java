@@ -60,5 +60,6 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         }
         return SaFoxUtil.convertStringToList(allowUrl);
     }
+
 }
 

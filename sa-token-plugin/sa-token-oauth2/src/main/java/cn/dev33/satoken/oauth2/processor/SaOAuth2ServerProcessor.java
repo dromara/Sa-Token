@@ -18,7 +18,6 @@ package cn.dev33.satoken.oauth2.processor;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
@@ -27,12 +26,12 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.ResponseType;
 import cn.dev33.satoken.oauth2.data.model.*;
+import cn.dev33.satoken.oauth2.data.model.other.ClientIdAndSecretModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.List;
@@ -190,20 +189,9 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 
 		// 获取参数
-		String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
-		String clientId;
-		String clientSecret;
-
-		// gitlab 回调 token 接口时,按照的是标准的oauth2协议的basic请求头,basic中会包含client_id和client_secret的信息
-		if(SaFoxUtil.isEmpty(authorizationValue)){
-			clientId = req.getParamNotNull(Param.client_id);
-			clientSecret = req.getParamNotNull(Param.client_secret);
-		} else {
-			String[] clientIdAndSecret = authorizationValue.split(":");
-			clientId = clientIdAndSecret[0];
-			clientSecret = clientIdAndSecret[1];
-		}
-
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
+		String clientId = clientIdAndSecret.clientId;
+		String clientSecret = clientIdAndSecret.clientSecret;
 		String code = req.getParamNotNull(Param.code);
 		String redirectUri = req.getParam(Param.redirect_uri);
 
@@ -226,8 +214,10 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 
 		// 获取参数
-		String clientId = req.getParamNotNull(Param.client_id);
-		String clientSecret = req.getParamNotNull(Param.client_secret);
+
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
+		String clientId = clientIdAndSecret.clientId;
+		String clientSecret = clientIdAndSecret.clientSecret;
 		String refreshToken = req.getParamNotNull(Param.refresh_token);
 
 		// 校验参数
@@ -249,8 +239,9 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 
 		// 获取参数
-		String clientId = req.getParamNotNull(Param.client_id);
-		String clientSecret = req.getParamNotNull(Param.client_secret);
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
+		String clientId = clientIdAndSecret.clientId;
+		String clientSecret = clientIdAndSecret.clientSecret;
 		String accessToken = req.getParamNotNull(Param.access_token);
 
 		// 如果 Access-Token 不存在，直接返回
@@ -308,8 +299,9 @@ public class SaOAuth2ServerProcessor {
 		// 1、获取请求参数
 		String username = req.getParamNotNull(Param.username);
 		String password = req.getParamNotNull(Param.password);
-		String clientId = req.getParamNotNull(Param.client_id);
-		String clientSecret = req.getParamNotNull(Param.client_secret);
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
+		String clientId = clientIdAndSecret.clientId;
+		String clientSecret = clientIdAndSecret.clientSecret;
 		String scope = req.getParam(Param.scope, "");
 		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 
@@ -347,8 +339,9 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 
 		// 获取参数
-		String clientId = req.getParamNotNull(Param.client_id);
-		String clientSecret = req.getParamNotNull(Param.client_secret);
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
+		String clientId = clientIdAndSecret.clientId;
+		String clientSecret = clientIdAndSecret.clientSecret;
 		String scope = req.getParam(Param.scope, "");
 		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 
@@ -370,8 +363,8 @@ public class SaOAuth2ServerProcessor {
 	 * @return / 
 	 */
 	public SaClientModel currClientModel() {
-		String clientId = SaHolder.getRequest().getParam(Param.client_id);
-		return oauth2Template.checkClientModel(clientId);
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(SaHolder.getRequest());
+		return oauth2Template.checkClientModel(clientIdAndSecret.clientId);
 	}
 
 	/**

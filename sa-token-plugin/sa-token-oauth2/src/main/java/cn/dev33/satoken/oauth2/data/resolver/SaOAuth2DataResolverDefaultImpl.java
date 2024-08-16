@@ -15,10 +15,16 @@
  */
 package cn.dev33.satoken.oauth2.data.resolver;
 
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.data.model.other.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.LinkedHashMap;
@@ -33,6 +39,37 @@ import java.util.Map;
  * @since 1.39.0
  */
 public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
+
+
+    /**
+     * 数据读取：从请求对象中读取 ClientId、Secret，如果获取不到则抛出异常
+     *
+     * @param request /
+     * @return /
+     */
+    @Override
+    public ClientIdAndSecretModel readClientIdAndSecret(SaRequest request) {
+        // 优先从请求参数中获取
+        String clientId = request.getParam(SaOAuth2Consts.Param.client_id);
+        String clientSecret = request.getParam(SaOAuth2Consts.Param.client_secret);
+        if(SaFoxUtil.isNotEmpty(clientId)) {
+            return new ClientIdAndSecretModel(clientId, clientSecret);
+        }
+
+        // 如果请求参数中没有提供 client_id 参数，则尝试从 base auth 中获取
+        String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
+        if(SaFoxUtil.isNotEmpty(authorizationValue)) {
+            String[] arr = authorizationValue.split(":");
+            clientId = arr[0];
+            if(arr.length > 1) {
+                clientSecret = arr[1];
+            }
+            return new ClientIdAndSecretModel(clientId, clientSecret);
+        }
+
+        // 如果都没有提供，则抛出异常
+        throw new SaOAuth2Exception("请提供 client 信息");
+    }
 
     /**
      * 构建返回值: 获取 token
