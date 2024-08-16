@@ -394,13 +394,83 @@ public class SaOAuth2Template {
 			url = url.substring(0, qIndex);
 		}
 
-		// 3、是否在[允许地址列表]之中
+		// 3、不允许出现@字符
+		if(url.contains("@")) {
+			//  为什么不允许出现 @ 字符呢，因为这有可能导致 redirect_url 参数绕过 AllowUrl 列表的校验
+			//
+			//  举个例子 SaClientModel 配置：
+			//       allow-url=http://sa-oauth-client.com*
+			//
+			//  开发者原意是为了允许 sa-oauth-client.com 下的所有地址都可以下放 code
+			//
+			//  但是如果攻击者精心构建一个url：
+			// 	     http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com@sa-token.cc
+			//
+			//  那么这个url就会绕过 allow-url 的校验，code 被下发到了第三方服务器地址：
+			//       http://sa-token.cc/?code=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
+			//
+			//  造成了 code 参数劫持
+			//  所以此处需要禁止在 url 中出现 @ 字符
+			//
+			//  这么一刀切的做法，可能会导致一些特殊的正常url也无法通过校验，例如：
+			//       http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com/@getInfo
+			//
+			//  但是为了安全起见，这么做还是有必要的
+			throw new SaOAuth2Exception("无效 redirect_url（不允许出现@字符）：" + url);
+		}
+
+		// 4、是否在[允许地址列表]之中
 		SaClientModel clientModel = checkClientModel(clientId);
 		List<String> allowList = SaOAuth2Manager.getDataConverter().convertAllowUrlStringToList(clientModel.allowUrl);
+		checkAllowUrlList(allowList);
 		if( ! SaStrategy.instance.hasElement.apply(allowList, url)) {
-			throw new SaOAuth2Exception("非法redirect_url：" + url).setCode(SaOAuth2ErrorCode.CODE_30114);
+			throw new SaOAuth2Exception("非法 redirect_url: " + url).setCode(SaOAuth2ErrorCode.CODE_30114);
 		}
 	}
+
+	/**
+	 * 校验配置的 AllowUrl 是否合规，如果不合规则抛出异常
+	 * @param allowUrlList 待校验的 allow-url 地址列表
+	 */
+	public void checkAllowUrlList(List<String> allowUrlList){
+		checkAllowUrlListStaticMethod(allowUrlList);
+	}
+
+	/**
+	 * 校验配置的 AllowUrl 是否合规，如果不合规则抛出异常
+	 * @param allowUrlList 待校验的 allow-url 地址列表
+	 */
+	public static void checkAllowUrlListStaticMethod(List<String> allowUrlList){
+		for (String url : allowUrlList) {
+			int index = url.indexOf("*");
+			// 如果配置了 * 字符，则必须出现在最后一位，否则属于无效配置项
+			if(index != -1 && index != url.length() - 1) {
+				//  为什么不允许 * 字符出现在中间位置呢，因为这有可能导致 redirect 参数绕过 allow-url 列表的校验
+				//
+				//  举个例子 SaClientModel 配置：
+				//      allow-url=http://*.sa-oauth-client.com/
+				//
+				//  开发者原意是为了允许 sa-oauth-client.com 下的所有子域名都可以下放 ticket
+				//      例如：http://shop.sa-oauth-client.com/
+				//
+				//  但是如果攻击者精心构建一个url：
+				//       http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-token.cc/a.sa-oauth-client.com/
+				//
+				//  那么这个 url 就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址：
+				//       http://sa-token.cc/a.sa-oauth-client.com/?code=v2KKMUFK7dDsMMzXLQ3aWGsyGUjrA0dBB2jeOWrpCnC8b5ScmXXQSv20mIwPK7Cx
+				//
+				//  造成了 ticket 参数劫持
+				//  所以此处需要禁止 allow-url 配置项的中间位置出现 * 字符（出现在末尾是没有问题的）
+				//
+				//  这么一刀切的做法，可能会导致正常场景下的子域名url也无法通过校验，例如：
+				//       http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://shop.sa-oauth2-client.com/
+				//
+				//  但是为了安全起见，这么做还是有必要的
+				throw new SaOAuth2Exception("无效的 allow-url 配置（*通配符只允许出现在最后一位）：" + url);
+			}
+		}
+	}
+
 	/**
 	 * 校验：clientId 与 clientSecret 是否正确
 	 * @param clientId 应用id
