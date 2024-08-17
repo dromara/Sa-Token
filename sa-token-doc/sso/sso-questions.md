@@ -58,6 +58,32 @@ public class SaSsoServerApplication {
 解决方案：在 sso-client 也新建上这个类，而且包名需要与 sso-server 端的一致（直接从 sso-server 把实体类复制过来就好了）
 
 
+
+### 在测试模式一时，出现一些难以理解的现象 
+
+测试模式一时，三种异常现象：
+
+1、在 sso-client 端点击登录，可以成功跳转到 sso-server 端，登录后可以跳回 sso-client 端，但显示 sso-client 端未登录	
+- 原因：sso-server 后端没有配置 sa-token.cookie.domain 值。
+
+2、在 sso-client 端点击登录，可以成功跳转到 sso-server 端，登录页面刷新一下，并没有跳转回 sso-client 端，依然提示让你登录
+- 可能1：sso-server 后端配置了错误的 sa-token.cookie.domain 值。	
+- 可能2：sso-server 后端没有打开 sa-token.is-read-cookie 值。（测试模式二三时发生这种现象，有时候也是因为这个）
+
+3、在 sso-client 端点击登录，页面只是闪了一下，肉眼没有观察到页面跳转，页面也没有显示登录上。
+
+原因：sso-server 的页面存储了不带 . 的有效 Cookie，为什么会这样：常常是因为测试模式二三后，没有清除redis记录或者浏览器记录，直接再开始测试模式一，
+模式二三登录成功后遗留的有效cookie，影响了模式一的行为逻辑。
+
+解决方案：
+- 1、手动清空 redis里的所有数据，
+- 2、或者手动清空 sso-server 域名下的所有 Cookie 
+- 3、换一个新的干净浏览器来测试。
+	
+	
+
+
+
 ### 问：模式三配置一堆 xxx-url ，有办法简化一下吗？
 可以使用 `sa-token.sso.server-url` 来简化：
 
