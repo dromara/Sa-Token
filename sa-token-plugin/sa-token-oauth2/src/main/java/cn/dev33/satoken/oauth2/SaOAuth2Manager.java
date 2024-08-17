@@ -16,6 +16,8 @@
 package cn.dev33.satoken.oauth2;
 
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
+import cn.dev33.satoken.oauth2.dao.SaOAuth2DaoDefaultImpl;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverterDefaultImpl;
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
@@ -102,6 +104,24 @@ public class SaOAuth2Manager {
 	}
 	public static void setDataConverter(SaOAuth2DataConverter dataConverter) {
 		SaOAuth2Manager.dataConverter = dataConverter;
+	}
+
+	/**
+	 * OAuth2 数据持久 Bean
+	 */
+	private static volatile SaOAuth2Dao dao;
+	public static SaOAuth2Dao getDao() {
+		if (dao == null) {
+			synchronized (SaOAuth2Manager.class) {
+				if (dao == null) {
+					setDao(new SaOAuth2DaoDefaultImpl());
+				}
+			}
+		}
+		return dao;
+	}
+	public static void setDao(SaOAuth2Dao dao) {
+		SaOAuth2Manager.dao = dao;
 	}
 
 }

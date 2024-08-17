@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.template;
 
 import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.data.model.*;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
@@ -281,7 +282,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static CodeModel getCode(String code) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.getCode(code);
+		return SaOAuth2Manager.getDao().getCode(code);
 	}
 
 	/**
@@ -290,7 +291,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static AccessTokenModel getAccessToken(String accessToken) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.getAccessToken(accessToken);
+		return SaOAuth2Manager.getDao().getAccessToken(accessToken);
 	}
 	
 	/**
@@ -299,7 +300,7 @@ public class SaOAuth2Util {
 	 * @return . 
 	 */
 	public static RefreshTokenModel getRefreshToken(String refreshToken) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.getRefreshToken(refreshToken);
+		return SaOAuth2Manager.getDao().getRefreshToken(refreshToken);
 	}
 	
 	/**
@@ -308,7 +309,7 @@ public class SaOAuth2Util {
 	 * @return .
 	 */
 	public static ClientTokenModel getClientToken(String clientToken) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.getClientToken(clientToken);
+		return SaOAuth2Manager.getDao().getClientToken(clientToken);
 	}
 	
 	/**
@@ -318,7 +319,7 @@ public class SaOAuth2Util {
 	 * @return 权限 
 	 */
 	public static List<String> getGrantScope(String clientId, Object loginId) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.getGrantScope(clientId, loginId);
+		return SaOAuth2Manager.getDao().getGrantScope(clientId, loginId);
 	}
 
 }
