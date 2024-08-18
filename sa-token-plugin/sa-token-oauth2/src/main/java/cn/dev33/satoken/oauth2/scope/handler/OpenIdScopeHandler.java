@@ -17,10 +17,11 @@ package cn.dev33.satoken.oauth2.scope.handler;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 
 /**
- * 所有OAuth2 权限处理器的父接口
+ * OpenId 权限处理器
  *
  * @author click33
  * @since 1.39.0
@@ -34,12 +35,15 @@ public class OpenIdScopeHandler implements SaOAuth2ScopeAbstractHandler {
         return CommonScope.OPENID;
     }
 
-    /**
-     * 所需要执行的方法
-     */
-    public void work(AccessTokenModel at) {
+    @Override
+    public void workAccessToken(AccessTokenModel at) {
         System.out.println("追加 openid " + at.accessToken);
         at.openid = SaOAuth2Manager.getDataLoader().getOpenid(at.clientId, at.loginId);
+    }
+
+    @Override
+    public void workClientToken(ClientTokenModel ct) {
+
     }
 
 }

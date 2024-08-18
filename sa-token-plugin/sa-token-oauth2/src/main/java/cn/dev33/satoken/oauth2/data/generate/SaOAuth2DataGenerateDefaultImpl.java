@@ -82,10 +82,10 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 3、生成token
         AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm);
-        SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
         RefreshTokenModel rt = dataConverter.convertAccessTokenToRefreshToken(at);
         at.refreshToken = rt.refreshToken;
         at.refreshExpiresTime = rt.expiresTime;
+        SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
 
         // 4、保存token
         dao.saveAccessToken(at);
@@ -205,10 +205,11 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
             dao.saveClientToken(oldCt);
         }
 
-        // 3、生成新Client-Token
+        // 3、生成新 Client-Token
         String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientId, scopes);
         ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientId, scopes);
         ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
+        SaOAuth2Strategy.instance.workClientTokenByScope.accept(ct);
 
         // 3、保存新Client-Token
         dao.saveClientToken(ct);

@@ -79,18 +79,29 @@ public final class SaOAuth2Strategy {
 	/**
 	 * 根据 scope 信息对一个 AccessTokenModel 进行加工处理
 	 */
-	public SaScopeWorkFunction workAccessTokenByScope = (at) -> {
-		System.out.println("增强：" + at.accessToken);
-		System.out.println("权限：" + at.scopes);
-		// 遍历所有的权限处理器，如果此 AccessToken 具有这些权限，则开始加工
+	public SaOAuth2ScopeWorkAccessTokenFunction workAccessTokenByScope = (at) -> {
 		if(at.scopes != null && !at.scopes.isEmpty()) {
-			for (Map.Entry<String, SaOAuth2ScopeAbstractHandler> entry: scopeHandlerMap.entrySet()) {
-				if(at.scopes.contains(entry.getKey())) {
-					entry.getValue().work(at);
+			for (String scope : at.scopes) {
+				SaOAuth2ScopeAbstractHandler handler = scopeHandlerMap.get(scope);
+				if(handler != null) {
+					handler.workAccessToken(at);
 				}
 			}
 		}
+	};
 
+	/**
+	 * 根据 scope 信息对一个 ClientTokenModel 进行加工处理
+	 */
+	public SaOAuth2ScopeWorkClientTokenFunction workClientTokenByScope = (ct) -> {
+		if(ct.scopes != null && !ct.scopes.isEmpty()) {
+			for (String scope : ct.scopes) {
+				SaOAuth2ScopeAbstractHandler handler = scopeHandlerMap.get(scope);
+				if(handler != null) {
+					handler.workClientToken(ct);
+				}
+			}
+		}
 	};
 
 	/**

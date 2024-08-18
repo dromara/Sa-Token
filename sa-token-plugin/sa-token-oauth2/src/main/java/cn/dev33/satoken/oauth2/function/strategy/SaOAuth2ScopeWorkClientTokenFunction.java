@@ -15,20 +15,20 @@
  */
 package cn.dev33.satoken.oauth2.function.strategy;
 
-import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 
 import java.util.function.Consumer;
 
 /**
- * 函数式接口：AccessTokenModel 加工
+ * 函数式接口：ClientTokenModel 加工
  *
- * <p>  参数：AccessTokenModel </p>
+ * <p>  参数：ClientTokenModel </p>
  * <p>  返回：无  </p>
  *
  * @author click33
- * @since 1.35.0
+ * @since 1.39.0
  */
 @FunctionalInterface
-public interface SaScopeWorkFunction extends Consumer<AccessTokenModel> {
+public interface SaOAuth2ScopeWorkClientTokenFunction extends Consumer<ClientTokenModel> {
 
 }

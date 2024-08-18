@@ -13,38 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.scope.handler;
+package cn.dev33.satoken.oauth2.function.strategy;
 
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
-import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
+
+import java.util.function.Consumer;
 
 /**
- * 所有 OAuth2 权限处理器的父接口
+ * 函数式接口：AccessTokenModel 加工
+ *
+ * <p>  参数：AccessTokenModel </p>
+ * <p>  返回：无  </p>
  *
  * @author click33
  * @since 1.39.0
  */
-public interface SaOAuth2ScopeAbstractHandler {
-
-    /**
-     * 获取所要处理的权限
-     *
-     * @return /
-     */
-    String getHandlerScope();
-
-    /**
-     * 当构建的 AccessToken 具有此权限时，所需要执行的方法
-     *
-     * @param at /
-     */
-    void workAccessToken(AccessTokenModel at);
-
-    /**
-     * 当构建的 ClientToken 具有此权限时，所需要执行的方法
-     *
-     * @param ct /
-     */
-    void workClientToken(ClientTokenModel ct);
+@FunctionalInterface
+public interface SaOAuth2ScopeWorkAccessTokenFunction extends Consumer<AccessTokenModel> {
 
 }
