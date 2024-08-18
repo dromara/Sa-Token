@@ -18,8 +18,7 @@ package cn.dev33.satoken.oauth2.data.generate;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
-import cn.dev33.satoken.oauth2.data.model.RequestAuthModel;
-import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 
 import java.util.List;
 
@@ -30,8 +29,6 @@ import java.util.List;
  * @since 1.39.0
  */
 public interface SaOAuth2DataGenerate {
-
-    // ------------------- generate 构建数据
 
     /**
      * 构建Model：Code授权码

@@ -15,11 +15,10 @@
  */
 package cn.dev33.satoken.oauth2.template;
 
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.model.*;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -119,25 +118,6 @@ public class SaOAuth2Template {
 		}
 	}
 
-	// ------------------- generate 构建数据
-	/**
-	 * 构建Model：请求Model
-	 * @param req SaRequest对象
-	 * @param loginId 账号id
-	 * @return RequestAuthModel对象
-	 */
-	public RequestAuthModel generateRequestAuth(SaRequest req, Object loginId) {
-		RequestAuthModel ra = new RequestAuthModel();
-		ra.clientId = req.getParamNotNull(Param.client_id);
-		ra.responseType = req.getParamNotNull(Param.response_type);
-		ra.redirectUri = req.getParamNotNull(Param.redirect_uri);
-		ra.state = req.getParam(Param.state);
-		// 数据解析
-		String scope = req.getParam(Param.scope, "");
-		ra.scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
-		ra.loginId = loginId;
-		return ra;
-	}
 
 	// ------------------- check 数据校验
 	/**

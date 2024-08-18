@@ -93,6 +93,15 @@ public class SaOAuth2Consts {
 		public static String Bearer = "Bearer";
 	}
 
+	/**
+	 * 扩展字段
+	 */
+	public static final class ExtraField {
+		public static String openid = "openid";
+		public static String userid = "userid";
+		public static String id_token = "id_token";
+	}
+
 	/** 表示OK的返回结果 */
 	public static final String OK = "ok";
 

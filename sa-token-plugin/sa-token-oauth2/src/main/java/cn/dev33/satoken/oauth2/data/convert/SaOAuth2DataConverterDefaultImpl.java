@@ -19,11 +19,12 @@ import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
-import cn.dev33.satoken.oauth2.data.model.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -79,6 +80,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         at.scopes = cm.scopes;
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
+        at.extraData = new LinkedHashMap<>();
         return at;
     }
 
@@ -94,10 +96,10 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         rt.clientId = at.clientId;
         rt.loginId = at.loginId;
         rt.scopes = at.scopes;
-        rt.openid = at.openid;
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(at.clientId);
         rt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
-        // 改变at属性
+        rt.extraData = new LinkedHashMap<>(at.extraData);
+        // 改变 at 属性
         at.refreshToken = rt.refreshToken;
         at.refreshExpiresTime = rt.expiresTime;
         return rt;
@@ -116,7 +118,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         at.clientId = rt.clientId;
         at.loginId = rt.loginId;
         at.scopes = rt.scopes;
-        at.openid = rt.openid;
+        at.extraData = new LinkedHashMap<>(rt.extraData);
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
         at.refreshExpiresTime = rt.expiresTime;
@@ -137,7 +139,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         newRt.clientId = rt.clientId;
         newRt.scopes = rt.scopes;
         newRt.loginId = rt.loginId;
-        newRt.openid = rt.openid;
+        newRt.extraData = new LinkedHashMap<>(rt.extraData);
         return newRt;
     }
 

@@ -15,27 +15,26 @@
  */
 package cn.dev33.satoken.oauth2.scope.handler;
 
-import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 
 /**
- * OpenId 权限处理器：在 AccessToken 扩展参数中追加 openid 字段
+ * UserId 权限处理器：在 AccessToken 扩展参数中追加 userid 字段
  *
  * @author click33
  * @since 1.39.0
  */
-public class OpenIdScopeHandler implements SaOAuth2ScopeAbstractHandler {
+public class UserIdScopeHandler implements SaOAuth2ScopeAbstractHandler {
 
     public String getHandlerScope() {
-        return CommonScope.OPENID;
+        return CommonScope.USERID;
     }
 
     @Override
     public void workAccessToken(AccessTokenModel at) {
-        at.extraData.put(SaOAuth2Consts.ExtraField.openid, SaOAuth2Manager.getDataLoader().getOpenid(at.clientId, at.loginId));
+        at.extraData.put(SaOAuth2Consts.ExtraField.userid, at.loginId);
     }
 
     @Override

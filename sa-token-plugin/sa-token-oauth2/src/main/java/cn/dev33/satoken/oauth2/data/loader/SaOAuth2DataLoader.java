@@ -15,11 +15,8 @@
  */
 package cn.dev33.satoken.oauth2.data.loader;
 
-import cn.dev33.satoken.oauth2.data.model.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
-import cn.dev33.satoken.util.SaFoxUtil;
-
-import java.util.List;
 
 /**
  * Sa-Token OAuth2 数据加载器

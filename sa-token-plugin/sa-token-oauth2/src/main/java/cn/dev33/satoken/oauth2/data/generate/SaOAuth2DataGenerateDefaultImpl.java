@@ -20,6 +20,8 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
 import cn.dev33.satoken.oauth2.data.model.*;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
@@ -34,7 +36,6 @@ import java.util.List;
  * @since 1.39.0
  */
 public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
-    // ------------------- generate 构建数据
 
     /**
      * 构建Model：Code授权码
@@ -161,7 +162,8 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         // 2、生成 新Access-Token
         String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
         AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
-        at.openid = SaOAuth2Manager.getDataLoader().getOpenid(ra.clientId, ra.loginId);
+        // TODO 此处的 openid 应该怎么加载？
+        // at.openid = SaOAuth2Manager.getDataLoader().getOpenid(ra.clientId, ra.loginId);
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(ra.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
 

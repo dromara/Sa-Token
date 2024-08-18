@@ -16,7 +16,6 @@
 package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +49,57 @@ public class ClientTokenModel implements Serializable {
 	 */
 	public List<String> scopes;
 
+	/**
+	 * 扩展数据
+	 */
+	public Map<String, Object> extraData;
+
+
+	public String getClientToken() {
+		return clientToken;
+	}
+
+	public ClientTokenModel setClientToken(String clientToken) {
+		this.clientToken = clientToken;
+		return this;
+	}
+
+	public long getExpiresTime() {
+		return expiresTime;
+	}
+
+	public ClientTokenModel setExpiresTime(long expiresTime) {
+		this.expiresTime = expiresTime;
+		return this;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public ClientTokenModel setClientId(String clientId) {
+		this.clientId = clientId;
+		return this;
+	}
+
+	public List<String> getScopes() {
+		return scopes;
+	}
+
+	public ClientTokenModel setScopes(List<String> scopes) {
+		this.scopes = scopes;
+		return this;
+	}
+
+	public Map<String, Object> getExtraData() {
+		return extraData;
+	}
+
+	public ClientTokenModel setExtraData(Map<String, Object> extraData) {
+		this.extraData = extraData;
+		return this;
+	}
+
 	public ClientTokenModel() {}
 	
 	/**
@@ -64,35 +114,25 @@ public class ClientTokenModel implements Serializable {
 		this.clientId = clientId;
 		this.scopes = scopes;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ClientTokenModel [clientToken=" + clientToken + ", expiresTime=" + expiresTime + ", clientId="
-				+ clientId + ", scopes=" + scopes + "]";
+		return "ClientTokenModel{" +
+				"clientToken='" + clientToken + '\'' +
+				", expiresTime=" + expiresTime +
+				", clientId='" + clientId + '\'' +
+				", scopes=" + scopes +
+				", extraData=" + extraData +
+				'}';
 	}
-	
+
 	/**
 	 * 获取：此 Client-Token 的剩余有效期（秒）
-	 * @return see note 
+	 * @return /
 	 */
 	public long getExpiresIn() {
 		long s = (expiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
-	
-	/**
-	 * 将所有属性转换为下划线形式的Map
-	 * @return 属性转Map
-	 */
-	@Deprecated
-	public Map<String, Object> toLineMap() {
-		Map<String, Object> map = new LinkedHashMap<>();
-		map.put("client_token", clientToken);
-		map.put("expires_in", getExpiresIn());
-		map.put("client_id", clientId);
-		map.put("scopes", scopes);
-		return map;
-	}
-	
-	
+
 }

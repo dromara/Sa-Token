@@ -15,9 +15,12 @@
  */
 package cn.dev33.satoken.oauth2.template;
 
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.data.model.*;
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
 import java.util.List;
@@ -86,17 +89,6 @@ public class SaOAuth2Util {
 		SaOAuth2ServerProcessor.instance.oauth2Template.checkClientTokenScope(clientToken, scopes);
 	}
 
-	// ------------------- generate 构建数据 
-	
-	/**
-	 * 构建Model：请求Model  
-	 * @param req SaRequest对象 
-	 * @param loginId 账号id 
-	 * @return RequestAuthModel对象 
-	 */
-	public static RequestAuthModel generateRequestAuth(SaRequest req, Object loginId) {
-		return SaOAuth2ServerProcessor.instance.oauth2Template.generateRequestAuth(req, loginId);
-	}
 
 	// ------------------- 数据校验 
 	

@@ -16,8 +16,6 @@
 package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,16 +58,18 @@ public class AccessTokenModel implements Serializable {
 	 * 账号id 
 	 */
 	public Object loginId;
-	
-	/**
-	 * 开放账号id 
-	 */
-	public String openid;
 
 	/**
 	 * 授权范围
 	 */
 	public List<String> scopes;
+
+	/**
+	 * 扩展数据
+	 */
+	public Map<String, Object> extraData;
+
+
 
 	public AccessTokenModel() {}
 
@@ -143,15 +143,6 @@ public class AccessTokenModel implements Serializable {
 		return this;
 	}
 
-	public String getOpenid() {
-		return openid;
-	}
-
-	public AccessTokenModel setOpenid(String openid) {
-		this.openid = openid;
-		return this;
-	}
-
 	public List<String> getScopes() {
 		return scopes;
 	}
@@ -161,18 +152,27 @@ public class AccessTokenModel implements Serializable {
 		return this;
 	}
 
+	public Map<String, Object> getExtraData() {
+		return extraData;
+	}
+
+	public AccessTokenModel setExtraData(Map<String, Object> extraData) {
+		this.extraData = extraData;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "AccessTokenModel [accessToken=" + accessToken + ", refreshToken=" + refreshToken
 				+ ", accessTokenTimeout=" + expiresTime + ", refreshTokenTimeout=" + refreshExpiresTime
-				+ ", clientId=" + clientId + ", scopes=" + scopes + ", openid=" + openid + "]";
+				+ ", clientId=" + clientId + ", scopes=" + scopes + ", extraData=" + extraData + "]";
 	}
 
 	// 追加只读属性
 
 	/**
 	 * 获取：此 Access-Token 的剩余有效期（秒）
-	 * @return see note 
+	 * @return /
 	 */
 	public long getExpiresIn() {
 		long s = (expiresTime - System.currentTimeMillis()) / 1000;
@@ -181,28 +181,11 @@ public class AccessTokenModel implements Serializable {
 
 	/**
 	 * 获取：此 Refresh-Token 的剩余有效期（秒）
-	 * @return see note 
+	 * @return /
 	 */
 	public long getRefreshExpiresIn() {
 		long s = (refreshExpiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
-	
-	/**
-	 * 将所有属性转换为下划线形式的Map 
-	 * @return 属性转Map
-	 */
-	@Deprecated
-	public Map<String, Object> toLineMap() {
-		Map<String, Object> map = new LinkedHashMap<>();
-		map.put("access_token", accessToken);
-		map.put("refresh_token", refreshToken);
-		map.put("expires_in", getExpiresIn());
-		map.put("refresh_expires_in", getRefreshExpiresIn());
-		map.put("client_id", clientId);
-		map.put("scopes", scopes);
-		map.put("openid", openid);
-		return map;
-	}
-	
+
 }

@@ -26,8 +26,12 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.ResponseType;
 import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
-import cn.dev33.satoken.oauth2.data.model.*;
-import cn.dev33.satoken.oauth2.data.model.other.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
@@ -148,8 +152,8 @@ public class SaOAuth2ServerProcessor {
 			return cfg.notLoginView.get();
 		}
 
-		// 2、构建请求Model
-		RequestAuthModel ra = oauth2Template.generateRequestAuth(req, getStpLogic().getLoginId());
+		// 2、构建请求 Model
+		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, getStpLogic().getLoginId());
 
 		// 3、校验：重定向域名是否合法
 		oauth2Template.checkRightUrl(ra.clientId, ra.redirectUri);

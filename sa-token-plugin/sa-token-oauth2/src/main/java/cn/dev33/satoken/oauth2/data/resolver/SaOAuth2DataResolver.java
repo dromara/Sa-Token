@@ -18,7 +18,8 @@ package cn.dev33.satoken.oauth2.data.resolver;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.data.model.other.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
+import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.Map;
@@ -40,6 +41,14 @@ public interface SaOAuth2DataResolver {
      * @return /
      */
     ClientIdAndSecretModel readClientIdAndSecret(SaRequest request);
+
+    /**
+     * 数据读取：从请求对象中构建 RequestAuthModel
+     * @param req SaRequest对象
+     * @param loginId 账号id
+     * @return RequestAuthModel对象
+     */
+    RequestAuthModel readRequestAuthModel(SaRequest req, Object loginId);
 
 
     /**

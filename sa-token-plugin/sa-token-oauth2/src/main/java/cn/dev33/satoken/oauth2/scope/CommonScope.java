@@ -32,9 +32,9 @@ public final class CommonScope {
     public static final String OPENID = "openid";
 
     /**
-     * 获取用户信息
+     * 获取 userid
      */
-    public static final String USERINFO = "userinfo";
+    public static final String USERID = "userid";
 
     /**
      * 获取 id_token

@@ -22,7 +22,8 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.data.model.other.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
+import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -39,7 +40,6 @@ import java.util.Map;
  * @since 1.39.0
  */
 public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
-
 
     /**
      * 数据读取：从请求对象中读取 ClientId、Secret，如果获取不到则抛出异常
@@ -72,6 +72,24 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     }
 
     /**
+     * 数据读取：从请求对象中构建 RequestAuthModel
+     */
+    @Override
+    public RequestAuthModel readRequestAuthModel(SaRequest req, Object loginId) {
+        RequestAuthModel ra = new RequestAuthModel();
+        ra.clientId = req.getParamNotNull(SaOAuth2Consts.Param.client_id);
+        ra.responseType = req.getParamNotNull(SaOAuth2Consts.Param.response_type);
+        ra.redirectUri = req.getParamNotNull(SaOAuth2Consts.Param.redirect_uri);
+        ra.state = req.getParam(SaOAuth2Consts.Param.state);
+        // 数据解析
+        String scope = req.getParam(SaOAuth2Consts.Param.scope, "");
+        ra.scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
+        ra.loginId = loginId;
+        return ra;
+    }
+
+
+    /**
      * 构建返回值: 获取 token
      */
     @Override
@@ -84,7 +102,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         map.put("refresh_expires_in", at.getRefreshExpiresIn());
         map.put("client_id", at.clientId);
         map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(at.scopes));
-        map.put("openid", at.openid);
+        map.putAll(at.extraData);
         return SaResult.ok().setMap(map);
     }
 
@@ -99,9 +117,9 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         map.put("expires_in", ct.getExpiresIn());
         map.put("client_id", ct.clientId);
         map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(ct.scopes));
+        map.putAll(ct.extraData);
         return SaResult.ok().setMap(map);
     }
-
 
 }
 

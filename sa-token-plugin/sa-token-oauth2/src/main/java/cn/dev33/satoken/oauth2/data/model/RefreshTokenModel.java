@@ -17,6 +17,7 @@ package cn.dev33.satoken.oauth2.data.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Model: Refresh-Token
@@ -42,11 +43,6 @@ public class RefreshTokenModel implements Serializable {
 	 * 应用id 
 	 */
 	public String clientId;
-	
-	/**
-	 * 授权范围
-	 */
-	public List<String> scopes;
 
 	/**
 	 * 对应账号id 
@@ -54,9 +50,15 @@ public class RefreshTokenModel implements Serializable {
 	public Object loginId;
 
 	/**
-	 * 对应账号id 
+	 * 授权范围
 	 */
-	public String openid;
+	public List<String> scopes;
+
+	/**
+	 * 扩展数据
+	 */
+	public Map<String, Object> extraData;
+
 
 	public String getRefreshToken() {
 		return refreshToken;
@@ -103,24 +105,24 @@ public class RefreshTokenModel implements Serializable {
 		return this;
 	}
 
-	public String getOpenid() {
-		return openid;
+	public Map<String, Object> getExtraData() {
+		return extraData;
 	}
 
-	public RefreshTokenModel setOpenid(String openid) {
-		this.openid = openid;
+	public RefreshTokenModel setExtraData(Map<String, Object> extraData) {
+		this.extraData = extraData;
 		return this;
 	}
 
 	@Override
 	public String toString() {
 		return "RefreshTokenModel [refreshToken=" + refreshToken + ", expiresTime=" + expiresTime
-				+ ", clientId=" + clientId + ", scopes=" + scopes + ", loginId=" + loginId + ", openid=" + openid + "]";
+				+ ", clientId=" + clientId + ", loginId=" + loginId + ", scopes=" + scopes + ", extraData=" + extraData + "]";
 	}
 
 	/**
 	 * 获取：此 Refresh-Token 的剩余有效期（秒）
-	 * @return see note 
+	 * @return /
 	 */
 	public long getExpiresIn() {
 		long s = (expiresTime - System.currentTimeMillis()) / 1000;

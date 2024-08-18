@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.oauth2.data.model;
+package cn.dev33.satoken.oauth2.data.model.request;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,7 +23,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
- * 请求授权参数的Model
+ * 请求授权参数的 Model
  *
  * @author click33
  * @since 1.23.0

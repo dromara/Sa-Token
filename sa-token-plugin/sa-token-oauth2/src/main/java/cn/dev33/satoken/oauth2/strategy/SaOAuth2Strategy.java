@@ -18,8 +18,10 @@ package cn.dev33.satoken.oauth2.strategy;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.oauth2.function.strategy.*;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
+import cn.dev33.satoken.oauth2.scope.handler.OidcScopeHandler;
 import cn.dev33.satoken.oauth2.scope.handler.OpenIdScopeHandler;
 import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeAbstractHandler;
+import cn.dev33.satoken.oauth2.scope.handler.UserIdScopeHandler;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.LinkedHashMap;
@@ -54,6 +56,8 @@ public final class SaOAuth2Strategy {
 	 */
 	public void registerDefaultScopeHandler() {
 		scopeHandlerMap.put(CommonScope.OPENID, new OpenIdScopeHandler());
+		scopeHandlerMap.put(CommonScope.USERID, new UserIdScopeHandler());
+		scopeHandlerMap.put(CommonScope.OIDC, new OidcScopeHandler());
 	}
 
 	/**
