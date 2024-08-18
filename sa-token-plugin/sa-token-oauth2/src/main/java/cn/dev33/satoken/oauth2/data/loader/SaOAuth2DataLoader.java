@@ -66,49 +66,5 @@ public interface SaOAuth2DataLoader {
     }
 
 
-    // ------------------- 创建对应 token 的算法
-
-    /**
-     * 随机一个 Code
-     * @param clientId 应用id
-     * @param loginId 账号id
-     * @param scopes 权限
-     * @return Code
-     */
-    default String randomCode(String clientId, Object loginId, List<String> scopes) {
-        return SaFoxUtil.getRandomString(60);
-    }
-
-    /**
-     * 随机一个 Access-Token
-     * @param clientId 应用id
-     * @param loginId 账号id
-     * @param scopes 权限
-     * @return Access-Token
-     */
-    default String randomAccessToken(String clientId, Object loginId, List<String> scopes) {
-        return SaFoxUtil.getRandomString(60);
-    }
-
-    /**
-     * 随机一个 Refresh-Token
-     * @param clientId 应用id
-     * @param loginId 账号id
-     * @param scopes 权限
-     * @return Refresh-Token
-     */
-    default String randomRefreshToken(String clientId, Object loginId, List<String> scopes) {
-        return SaFoxUtil.getRandomString(60);
-    }
-
-    /**
-     * 随机一个 Client-Token
-     * @param clientId 应用id
-     * @param scopes 权限
-     * @return Client-Token
-     */
-    default String randomClientToken(String clientId, List<String> scopes) {
-        return SaFoxUtil.getRandomString(60);
-    }
 
 }

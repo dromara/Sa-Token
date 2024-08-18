@@ -19,6 +19,7 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RequestAuthModel;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
 
@@ -92,5 +93,7 @@ public interface SaOAuth2DataGenerate {
      * @param accessToken Access-Token值
      */
     public void revokeAccessToken(String accessToken);
+
+
 
 }

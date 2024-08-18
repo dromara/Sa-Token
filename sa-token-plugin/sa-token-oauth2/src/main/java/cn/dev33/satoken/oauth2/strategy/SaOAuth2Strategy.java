@@ -16,10 +16,11 @@
 package cn.dev33.satoken.oauth2.strategy;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.oauth2.function.strategy.SaScopeWorkFunction;
+import cn.dev33.satoken.oauth2.function.strategy.*;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.scope.handler.OpenIdScopeHandler;
 import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeAbstractHandler;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,8 +42,7 @@ public final class SaOAuth2Strategy {
 	 */
 	public static final SaOAuth2Strategy instance = new SaOAuth2Strategy();
 
-
-	// ----------------------- 所有策略
+	// 权限处理器
 
 	/**
 	 * 权限处理器集合
@@ -63,7 +63,7 @@ public final class SaOAuth2Strategy {
 		scopeHandlerMap.put(handler.getHandlerScope(), handler);
 		// TODO 优化日志输出
 		SaManager.getLog().info("新增权限处理器：" + handler.getHandlerScope());
-//		SaTokenEventCenter.doRegisterAnnotationHandler(handler);
+		//		SaTokenEventCenter.doRegisterAnnotationHandler(handler);
 	}
 
 	/**
@@ -72,6 +72,9 @@ public final class SaOAuth2Strategy {
 	public void removeScopeHandler(String scope) {
 		scopeHandlerMap.remove(scope);
 	}
+
+
+	// ----------------------- 所有策略
 
 	/**
 	 * 根据 scope 信息对一个 AccessTokenModel 进行加工处理
@@ -90,5 +93,32 @@ public final class SaOAuth2Strategy {
 
 	};
 
+	/**
+	 * 创建一个 code value
+	 */
+	public SaOAuth2CreateCodeValueFunction createCodeValue = (clientId, loginId, scopes) -> {
+		return SaFoxUtil.getRandomString(60);
+	};
+
+	/**
+	 * 创建一个 AccessToken value
+	 */
+	public SaOAuth2CreateAccessTokenValueFunction createAccessToken = (clientId, loginId, scopes) -> {
+		return SaFoxUtil.getRandomString(60);
+	};
+
+	/**
+	 * 创建一个 RefreshToken value
+	 */
+	public SaOAuth2CreateRefreshTokenValueFunction createRefreshToken = (clientId, loginId, scopes) -> {
+		return SaFoxUtil.getRandomString(60);
+	};
+
+	/**
+	 * 创建一个 ClientToken value
+	 */
+	public SaOAuth2CreateClientTokenValueFunction createClientToken = (clientId, scopes) -> {
+		return SaFoxUtil.getRandomString(60);
+	};
 
 }

@@ -54,13 +54,13 @@ public class ClientTokenModel implements Serializable {
 	
 	/**
 	 * 构建一个 
-	 * @param accessToken accessToken
+	 * @param clientToken clientToken
 	 * @param clientId 应用id 
 	 * @param scopes 请求授权范围
 	 */
-	public ClientTokenModel(String accessToken, String clientId, List<String> scopes) {
+	public ClientTokenModel(String clientToken, String clientId, List<String> scopes) {
 		super();
-		this.clientToken = accessToken;
+		this.clientToken = clientToken;
 		this.clientId = clientId;
 		this.scopes = scopes;
 	}

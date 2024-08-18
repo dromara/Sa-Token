@@ -20,6 +20,7 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.SaClientModel;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.Collections;
@@ -72,7 +73,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     @Override
     public AccessTokenModel convertCodeToAccessToken(CodeModel cm) {
         AccessTokenModel at = new AccessTokenModel();
-        at.accessToken = SaOAuth2Manager.getDataLoader().randomAccessToken(cm.clientId, cm.loginId, cm.scopes);
+        at.accessToken = SaOAuth2Strategy.instance.createAccessToken.execute(cm.clientId, cm.loginId, cm.scopes);
         at.clientId = cm.clientId;
         at.loginId = cm.loginId;
         at.scopes = cm.scopes;
@@ -89,7 +90,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     @Override
     public RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at) {
         RefreshTokenModel rt = new RefreshTokenModel();
-        rt.refreshToken = SaOAuth2Manager.getDataLoader().randomRefreshToken(at.clientId, at.loginId, at.scopes);
+        rt.refreshToken = SaOAuth2Strategy.instance.createRefreshToken.execute(at.clientId, at.loginId, at.scopes);
         rt.clientId = at.clientId;
         rt.loginId = at.loginId;
         rt.scopes = at.scopes;
@@ -110,7 +111,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     @Override
     public AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt) {
         AccessTokenModel at = new AccessTokenModel();
-        at.accessToken = SaOAuth2Manager.getDataLoader().randomAccessToken(rt.clientId, rt.loginId, rt.scopes);
+        at.accessToken = SaOAuth2Strategy.instance.createAccessToken.execute(rt.clientId, rt.loginId, rt.scopes);
         at.refreshToken = rt.refreshToken;
         at.clientId = rt.clientId;
         at.loginId = rt.loginId;
@@ -130,7 +131,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     @Override
     public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt) {
         RefreshTokenModel newRt = new RefreshTokenModel();
-        newRt.refreshToken = SaOAuth2Manager.getDataLoader().randomRefreshToken(rt.clientId, rt.loginId, rt.scopes);
+        newRt.refreshToken = SaOAuth2Strategy.instance.createRefreshToken.execute(rt.clientId, rt.loginId, rt.scopes);
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
         newRt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
         newRt.clientId = rt.clientId;

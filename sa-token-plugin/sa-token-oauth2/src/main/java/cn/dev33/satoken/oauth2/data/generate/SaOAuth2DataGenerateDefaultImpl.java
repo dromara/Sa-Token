@@ -50,7 +50,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         dao.deleteCode(dao.getCodeValue(ra.clientId, ra.loginId));
 
         // 生成新Code
-        String codeValue = SaOAuth2Manager.getDataLoader().randomCode(ra.clientId, ra.loginId, ra.scopes);
+        String codeValue = SaOAuth2Strategy.instance.createCodeValue.execute(ra.clientId, ra.loginId, ra.scopes);
         CodeModel cm = new CodeModel(codeValue, ra.clientId, ra.scopes, ra.loginId, ra.redirectUri);
 
         // 保存新Code
@@ -159,7 +159,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         }
 
         // 2、生成 新Access-Token
-        String newAtValue = SaOAuth2Manager.getDataLoader().randomAccessToken(ra.clientId, ra.loginId, ra.scopes);
+        String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
         AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
         at.openid = SaOAuth2Manager.getDataLoader().getOpenid(ra.clientId, ra.loginId);
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(ra.clientId);
@@ -206,7 +206,8 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         }
 
         // 3、生成新Client-Token
-        ClientTokenModel ct = new ClientTokenModel(SaOAuth2Manager.getDataLoader().randomClientToken(clientId, scopes), clientId, scopes);
+        String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientId, scopes);
+        ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientId, scopes);
         ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
 
         // 3、保存新Client-Token
