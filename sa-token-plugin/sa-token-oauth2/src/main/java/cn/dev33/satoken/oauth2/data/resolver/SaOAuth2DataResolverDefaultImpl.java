@@ -74,6 +74,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     /**
      * 构建返回值: 获取 token
      */
+    @Override
     public Map<String, Object> buildTokenReturnValue(AccessTokenModel at) {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("token_type", TokenType.bearer);

@@ -164,15 +164,15 @@ public class SaOAuth2ServerProcessor {
 		// 6、判断授权类型
 		// 如果是 授权码式，则：开始重定向授权，下放code
 		if(ResponseType.code.equals(ra.responseType)) {
-			CodeModel codeModel = oauth2Template.generateCode(ra);
-			String redirectUri = oauth2Template.buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
+			CodeModel codeModel = SaOAuth2Manager.getDataGenerate().generateCode(ra);
+			String redirectUri = SaOAuth2Manager.getDataGenerate().buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
 			return res.redirect(redirectUri);
 		}
 		
 		// 如果是 隐藏式，则：开始重定向授权，下放 token
 		if(ResponseType.token.equals(ra.responseType)) {
-			AccessTokenModel at = oauth2Template.generateAccessToken(ra, false);
-			String redirectUri = oauth2Template.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
+			AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, false);
+			String redirectUri = SaOAuth2Manager.getDataGenerate().buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
 			return res.redirect(redirectUri);
 		}
 
@@ -199,7 +199,7 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
 
 		// 构建 Access-Token
-		AccessTokenModel accessTokenModel = oauth2Template.generateAccessToken(code);
+		AccessTokenModel accessTokenModel = SaOAuth2Manager.getDataGenerate().generateAccessToken(code);
 
 		// 返回
 		return SaOAuth2Manager.getDataResolver().buildTokenReturnValue(accessTokenModel);
@@ -224,7 +224,7 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
 
 		// 获取新 Access-Token
-		AccessTokenModel accessTokenModel = oauth2Template.refreshAccessToken(refreshToken);
+		AccessTokenModel accessTokenModel = SaOAuth2Manager.getDataGenerate().refreshAccessToken(refreshToken);
 
 		// 返回
 		return SaOAuth2Manager.getDataResolver().buildRefreshTokenReturnValue(accessTokenModel);
@@ -253,7 +253,7 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkAccessTokenParam(clientId, clientSecret, accessToken);
 
 		// 回收 Access-Token
-		oauth2Template.revokeAccessToken(accessToken);
+		SaOAuth2Manager.getDataGenerate().revokeAccessToken(accessToken);
 
 		// 返回
 		return SaOAuth2Manager.getDataResolver().buildRevokeTokenReturnValue();
@@ -324,7 +324,7 @@ public class SaOAuth2ServerProcessor {
 		ra.scopes = scopes;
 
 		// 5、生成 Access-Token
-		AccessTokenModel at = oauth2Template.generateAccessToken(ra, true);
+		AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, true);
 
 		// 6、返回 Access-Token
 		return SaOAuth2Manager.getDataResolver().buildPasswordReturnValue(at);
@@ -352,7 +352,7 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkClientSecret(clientId, clientSecret);
 
 		// 生成
-		ClientTokenModel ct = oauth2Template.generateClientToken(clientId, scopes);
+		ClientTokenModel ct = SaOAuth2Manager.getDataGenerate().generateClientToken(clientId, scopes);
 
 		// 返回
 		return SaOAuth2Manager.getDataResolver().buildClientTokenReturnValue(ct);

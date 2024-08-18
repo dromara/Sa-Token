@@ -15,6 +15,10 @@
  */
 package cn.dev33.satoken.oauth2.data.convert;
 
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
+
 import java.util.List;
 
 /**
@@ -45,5 +49,34 @@ public interface SaOAuth2DataConverter {
      * @return /
      */
     List<String> convertAllowUrlStringToList(String allowUrl);
+
+
+    /**
+     * 将 Code 转换为 Access-Token
+     * @param cm CodeModel对象
+     * @return AccessToken对象
+     */
+    AccessTokenModel convertCodeToAccessToken(CodeModel cm);
+
+    /**
+     * 将 Access-Token 转换为 Refresh-Token
+     * @param at /
+     * @return /
+     */
+    RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at);
+
+    /**
+     * 将 Refresh-Token 转换为 Access-Token
+     * @param rt /
+     * @return /
+     */
+    AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt);
+
+    /**
+     * 根据 Refresh-Token 创建一个新的 Refresh-Token
+     * @param rt /
+     * @return /
+     */
+    RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt);
 
 }

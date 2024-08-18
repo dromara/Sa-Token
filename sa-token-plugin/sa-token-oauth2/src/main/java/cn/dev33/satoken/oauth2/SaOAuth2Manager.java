@@ -20,6 +20,8 @@ import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2DaoDefaultImpl;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverterDefaultImpl;
+import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
+import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerateDefaultImpl;
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoaderDefaultImpl;
 import cn.dev33.satoken.oauth2.data.resolver.SaOAuth2DataResolver;
@@ -89,7 +91,7 @@ public class SaOAuth2Manager {
 	}
 
 	/**
-	 * OAuth2 数据格式转换器
+	 * OAuth2 数据格式转换器 Bean
 	 */
 	private static volatile SaOAuth2DataConverter dataConverter;
 	public static SaOAuth2DataConverter getDataConverter() {
@@ -104,6 +106,24 @@ public class SaOAuth2Manager {
 	}
 	public static void setDataConverter(SaOAuth2DataConverter dataConverter) {
 		SaOAuth2Manager.dataConverter = dataConverter;
+	}
+
+	/**
+	 * OAuth2 数据构建器 Bean
+	 */
+	private static volatile SaOAuth2DataGenerate dataGenerate;
+	public static SaOAuth2DataGenerate getDataGenerate() {
+		if (dataGenerate == null) {
+			synchronized (SaOAuth2Manager.class) {
+				if (dataGenerate == null) {
+					setDataGenerate(new SaOAuth2DataGenerateDefaultImpl());
+				}
+			}
+		}
+		return dataGenerate;
+	}
+	public static void setDataGenerate(SaOAuth2DataGenerate dataGenerate) {
+		SaOAuth2Manager.dataGenerate = dataGenerate;
 	}
 
 	/**

@@ -15,6 +15,11 @@
  */
 package cn.dev33.satoken.oauth2.data.convert;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
+import cn.dev33.satoken.oauth2.data.model.SaClientModel;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.Collections;
@@ -59,6 +64,83 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
             return Collections.emptyList();
         }
         return SaFoxUtil.convertStringToList(allowUrl);
+    }
+
+    /**
+     * 将 Code 转换为 Access-Token
+     */
+    @Override
+    public AccessTokenModel convertCodeToAccessToken(CodeModel cm) {
+        AccessTokenModel at = new AccessTokenModel();
+        at.accessToken = SaOAuth2Manager.getDataLoader().randomAccessToken(cm.clientId, cm.loginId, cm.scopes);
+        // at.refreshToken = randomRefreshToken(cm.clientId, cm.loginId, cm.scope);
+        at.clientId = cm.clientId;
+        at.loginId = cm.loginId;
+        at.scopes = cm.scopes;
+        at.openid = SaOAuth2Manager.getDataLoader().getOpenid(cm.clientId, cm.loginId);
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
+        at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
+        // at.refreshExpiresTime = System.currentTimeMillis() + (checkClientModel(cm.clientId).getRefreshTokenTimeout() * 1000);
+        return at;
+    }
+
+    /**
+     * 将 Access-Token 转换为 Refresh-Token
+     * @param at .
+     * @return .
+     */
+    @Override
+    public RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at) {
+        RefreshTokenModel rt = new RefreshTokenModel();
+        rt.refreshToken = SaOAuth2Manager.getDataLoader().randomRefreshToken(at.clientId, at.loginId, at.scopes);
+        rt.clientId = at.clientId;
+        rt.loginId = at.loginId;
+        rt.scopes = at.scopes;
+        rt.openid = at.openid;
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(at.clientId);
+        rt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
+        // 改变at属性
+        at.refreshToken = rt.refreshToken;
+        at.refreshExpiresTime = rt.expiresTime;
+        return rt;
+    }
+
+    /**
+     * 将 Refresh-Token 转换为 Access-Token
+     * @param rt .
+     * @return .
+     */
+    @Override
+    public AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt) {
+        AccessTokenModel at = new AccessTokenModel();
+        at.accessToken = SaOAuth2Manager.getDataLoader().randomAccessToken(rt.clientId, rt.loginId, rt.scopes);
+        at.refreshToken = rt.refreshToken;
+        at.clientId = rt.clientId;
+        at.loginId = rt.loginId;
+        at.scopes = rt.scopes;
+        at.openid = rt.openid;
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
+        at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
+        at.refreshExpiresTime = rt.expiresTime;
+        return at;
+    }
+
+    /**
+     * 根据 Refresh-Token 创建一个新的 Refresh-Token
+     * @param rt .
+     * @return .
+     */
+    @Override
+    public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt) {
+        RefreshTokenModel newRt = new RefreshTokenModel();
+        newRt.refreshToken = SaOAuth2Manager.getDataLoader().randomRefreshToken(rt.clientId, rt.loginId, rt.scopes);
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
+        newRt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
+        newRt.clientId = rt.clientId;
+        newRt.scopes = rt.scopes;
+        newRt.loginId = rt.loginId;
+        newRt.openid = rt.openid;
+        return newRt;
     }
 
 }
