@@ -17,7 +17,10 @@ package cn.dev33.satoken.oauth2.template;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
-import cn.dev33.satoken.oauth2.data.model.*;
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
@@ -187,9 +190,8 @@ public class SaOAuth2Template {
 
 		// 4、是否在[允许地址列表]之中
 		SaClientModel clientModel = checkClientModel(clientId);
-		List<String> allowList = SaOAuth2Manager.getDataConverter().convertAllowUrlStringToList(clientModel.allowUrl);
-		checkAllowUrlList(allowList);
-		if( ! SaStrategy.instance.hasElement.apply(allowList, url)) {
+		checkAllowUrlList(clientModel.allowUrls);
+		if( ! SaStrategy.instance.hasElement.apply(clientModel.allowUrls, url)) {
 			throw new SaOAuth2Exception("非法 redirect_url: " + url).setCode(SaOAuth2ErrorCode.CODE_30114);
 		}
 	}

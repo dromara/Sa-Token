@@ -19,6 +19,8 @@ import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,14 +44,14 @@ public class SaClientModel implements Serializable {
 	public String clientSecret;
 
 	/**
-	 * 应用签约的所有权限, 多个用逗号隔开 
+	 * 应用签约的所有权限
 	 */
 	public List<String> contractScopes;
 	
 	/**
-	 * 应用允许授权的所有URL, 多个用逗号隔开 
+	 * 应用允许授权的所有URL
 	 */
-	public String allowUrl;
+	public List<String> allowUrls;
 	
 	/** 此 Client 是否打开模式：授权码（Authorization Code） */
 	public Boolean isCode = false;
@@ -94,12 +96,12 @@ public class SaClientModel implements Serializable {
 		this.clientTokenTimeout = config.getClientTokenTimeout();
 		this.pastClientTokenTimeout = config.getPastClientTokenTimeout();
 	}
-	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, String allowUrl) {
+	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowUrls) {
 		super();
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.contractScopes = contractScopes;
-		this.allowUrl = allowUrl;
+		this.allowUrls = allowUrls;
 	}
 
 	/**
@@ -142,7 +144,7 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @param contractScopes 应用签约的所有权限, 多个用逗号隔开
+	 * @param contractScopes 应用签约的所有权限
 	 * @return 对象自身 
 	 */
 	public SaClientModel setContractScopes(List<String> contractScopes) {
@@ -151,18 +153,18 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @return 应用允许授权的所有URL, 多个用逗号隔开
+	 * @return 应用允许授权的所有URL
 	 */
-	public String getAllowUrl() {
-		return allowUrl;
+	public List<String> getAllowUrls() {
+		return allowUrls;
 	}
 
 	/**
-	 * @param allowUrl 应用允许授权的所有URL, 多个用逗号隔开
+	 * @param allowUrls 应用允许授权的所有URL
 	 * @return 对象自身 
 	 */
-	public SaClientModel setAllowUrl(String allowUrl) {
-		this.allowUrl = allowUrl;
+	public SaClientModel setAllowUrls(List<String> allowUrls) {
+		this.allowUrls = allowUrls;
 		return this;
 	}
 
@@ -327,16 +329,54 @@ public class SaClientModel implements Serializable {
 		return this;
 	}
 	
-	// 
+	//
+
 	@Override
 	public String toString() {
-		return "SaClientModel [clientId=" + clientId + ", clientSecret=" + clientSecret + ", contractScopes="
-				+ contractScopes + ", allowUrl=" + allowUrl + ", isCode=" + isCode + ", isImplicit=" + isImplicit
-				+ ", isPassword=" + isPassword + ", isClient=" + isClient + ", isAutoMode=" + isAutoMode
-				+ ", isNewRefresh=" + isNewRefresh + ", accessTokenTimeout=" + accessTokenTimeout
-				+ ", refreshTokenTimeout=" + refreshTokenTimeout + ", clientTokenTimeout=" + clientTokenTimeout
-				+ ", pastClientTokenTimeout=" + pastClientTokenTimeout + "]";
+		return "SaClientModel{" +
+				"clientId='" + clientId + '\'' +
+				", clientSecret='" + clientSecret + '\'' +
+				", contractScopes=" + contractScopes +
+				", allowUrls=" + allowUrls +
+				", isCode=" + isCode +
+				", isImplicit=" + isImplicit +
+				", isPassword=" + isPassword +
+				", isClient=" + isClient +
+				", isAutoMode=" + isAutoMode +
+				", isNewRefresh=" + isNewRefresh +
+				", accessTokenTimeout=" + accessTokenTimeout +
+				", refreshTokenTimeout=" + refreshTokenTimeout +
+				", clientTokenTimeout=" + clientTokenTimeout +
+				", pastClientTokenTimeout=" + pastClientTokenTimeout +
+				'}';
 	}
-	
-	
+
+
+	// 追加方法
+
+	/**
+	 * @param scopes 添加应用签约的所有权限
+	 * @return 对象自身
+	 */
+	public SaClientModel addContractScopes(String... scopes) {
+		if(this.contractScopes == null) {
+			this.contractScopes = new ArrayList<>();
+		}
+		this.contractScopes.addAll(Arrays.asList(scopes));
+		return this;
+	}
+
+	/**
+	 * @param urls 添加应用签约的所有权限
+	 * @return 对象自身
+	 */
+	public SaClientModel addAllowUrls(String... urls) {
+		if(this.allowUrls == null) {
+			this.allowUrls = new ArrayList<>();
+		}
+		this.allowUrls.addAll(Arrays.asList(urls));
+		return this;
+	}
+
+
 }
