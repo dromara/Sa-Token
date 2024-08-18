@@ -47,16 +47,6 @@ public class SaOAuth2Template {
 		return SaOAuth2Manager.getDataLoader().getClientModel(clientId);
 	}
 
-	/**
-	 * 根据ClientId 和 LoginId 获取openid
-	 * @param clientId 应用id
-	 * @param loginId 账号id
-	 * @return 此账号在此Client下的openid
-	 */
-	public String getOpenid(String clientId, Object loginId) {
-		return SaOAuth2Manager.getDataLoader().getOpenid(clientId, loginId);
-	}
-
 	// ------------------- 资源校验API
 	/**
 	 * 根据id获取Client信息, 如果Client为空，则抛出异常

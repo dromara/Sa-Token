@@ -25,6 +25,7 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Api;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.ResponseType;
+import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
 import cn.dev33.satoken.oauth2.data.model.*;
 import cn.dev33.satoken.oauth2.data.model.other.ClientIdAndSecretModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
@@ -140,6 +141,7 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
 
 		// 1、如果尚未登录, 则先去登录
 		if( ! getStpLogic().isLogin()) {
@@ -161,18 +163,19 @@ public class SaOAuth2ServerProcessor {
 			return cfg.confirmView.apply(ra.clientId, ra.scopes);
 		}
 
+
 		// 6、判断授权类型
 		// 如果是 授权码式，则：开始重定向授权，下放code
 		if(ResponseType.code.equals(ra.responseType)) {
-			CodeModel codeModel = SaOAuth2Manager.getDataGenerate().generateCode(ra);
-			String redirectUri = SaOAuth2Manager.getDataGenerate().buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
+			CodeModel codeModel = dataGenerate.generateCode(ra);
+			String redirectUri = dataGenerate.buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
 			return res.redirect(redirectUri);
 		}
 		
 		// 如果是 隐藏式，则：开始重定向授权，下放 token
 		if(ResponseType.token.equals(ra.responseType)) {
-			AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, false);
-			String redirectUri = SaOAuth2Manager.getDataGenerate().buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
+			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false);
+			String redirectUri = dataGenerate.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
 			return res.redirect(redirectUri);
 		}
 

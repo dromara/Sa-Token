@@ -73,14 +73,11 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     public AccessTokenModel convertCodeToAccessToken(CodeModel cm) {
         AccessTokenModel at = new AccessTokenModel();
         at.accessToken = SaOAuth2Manager.getDataLoader().randomAccessToken(cm.clientId, cm.loginId, cm.scopes);
-        // at.refreshToken = randomRefreshToken(cm.clientId, cm.loginId, cm.scope);
         at.clientId = cm.clientId;
         at.loginId = cm.loginId;
         at.scopes = cm.scopes;
-        at.openid = SaOAuth2Manager.getDataLoader().getOpenid(cm.clientId, cm.loginId);
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
-        // at.refreshExpiresTime = System.currentTimeMillis() + (checkClientModel(cm.clientId).getRefreshTokenTimeout() * 1000);
         return at;
     }
 

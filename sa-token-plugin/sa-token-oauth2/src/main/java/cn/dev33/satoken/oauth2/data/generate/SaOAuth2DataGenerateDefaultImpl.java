@@ -18,9 +18,11 @@ package cn.dev33.satoken.oauth2.data.generate;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
+import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
 import cn.dev33.satoken.oauth2.data.model.*;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
@@ -68,6 +70,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     public AccessTokenModel generateAccessToken(String code) {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
+        SaOAuth2DataConverter dataConverter = SaOAuth2Manager.getDataConverter();
 
         // 1、先校验
         CodeModel cm = dao.getCode(code);
@@ -78,8 +81,9 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         dao.deleteRefreshToken(dao.getRefreshTokenValue(cm.clientId, cm.loginId));
 
         // 3、生成token
-        AccessTokenModel at = SaOAuth2Manager.getDataConverter().convertCodeToAccessToken(cm);
-        RefreshTokenModel rt = SaOAuth2Manager.getDataConverter().convertAccessTokenToRefreshToken(at);
+        AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm);
+        SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
+        RefreshTokenModel rt = dataConverter.convertAccessTokenToRefreshToken(at);
         at.refreshToken = rt.refreshToken;
         at.refreshExpiresTime = rt.expiresTime;
 

@@ -24,7 +24,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 					.setClientId("1001")
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")
 					.setAllowUrl("*")
-					.setContractScopes(Arrays.asList("userinfo"))
+					.setContractScopes(Arrays.asList("userinfo", "openid"))
 					.setIsAutoMode(true);
 		}
 		return null;
