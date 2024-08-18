@@ -2,7 +2,6 @@ package com.pj.oauth2;
 
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
-import cn.dev33.satoken.secure.SaSecureUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 					.setClientId("1001")
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")
 					.setAllowUrl("*")
-					.setContractScopes(Arrays.asList("userinfo", "openid"))
+					.setContractScopes(Arrays.asList("openid", "userid", "userinfo"))
 					.setIsAutoMode(true);
 		}
 		return null;
@@ -33,10 +32,8 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 	// 根据ClientId 和 LoginId 获取openid 
 	@Override
 	public String getOpenid(String clientId, Object loginId) {
-		// 此为模拟数据，真实环境需要从数据库查询 
-//		return "gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__";
-		String prefix = "grSwoIN0MC1ewxHXvfCW3BothWDZMMtx";
-		return SaSecureUtil.md5(prefix + "_" + clientId + "_" + loginId);
+		// 此处使用框架默认算法生成 openid，真实环境建议改为从数据库查询
+		return SaOAuth2DataLoader.super.getOpenid(clientId, loginId);
 	}
 
 }

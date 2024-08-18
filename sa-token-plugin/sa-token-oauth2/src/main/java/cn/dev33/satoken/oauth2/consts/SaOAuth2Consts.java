@@ -102,6 +102,10 @@ public class SaOAuth2Consts {
 		public static String id_token = "id_token";
 	}
 
+
+	/** 默认 openid 生成算法中使用的前缀 */
+	public static final String OPENID_DEFAULT_DIGEST_PREFIX = "openid_default_digest_prefix";
+
 	/** 表示OK的返回结果 */
 	public static final String OK = "ok";
 

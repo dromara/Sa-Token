@@ -15,8 +15,10 @@
  */
 package cn.dev33.satoken.oauth2.data.loader;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.secure.SaSecureUtil;
 
 /**
  * Sa-Token OAuth2 数据加载器
@@ -37,18 +39,6 @@ public interface SaOAuth2DataLoader {
     }
 
     /**
-     * 根据ClientId 和 LoginId 获取openid
-     *
-     * @param clientId 应用id
-     * @param loginId 账号id
-     * @return 此账号在此Client下的openid
-     */
-    default String getOpenid(String clientId, Object loginId) {
-        return null;
-    }
-
-
-    /**
      * 根据 id 获取 Client 信息，不允许为 null
      *
      * @param clientId 应用id
@@ -62,6 +52,15 @@ public interface SaOAuth2DataLoader {
         return clientModel;
     }
 
-
+    /**
+     * 根据ClientId 和 LoginId 获取openid
+     *
+     * @param clientId 应用id
+     * @param loginId 账号id
+     * @return 此账号在此Client下的openid
+     */
+    default String getOpenid(String clientId, Object loginId) {
+        return SaSecureUtil.md5(SaOAuth2Manager.getConfig().getOpenidDigestPrefix() + "_" + clientId + "_" + loginId);
+    }
 
 }

@@ -45,14 +45,14 @@
 			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/">
 				<button>点我开始授权登录（静默授权）</button> 
 			</a>
-			<span class="ps">当请求链接不包含scope权限时，将无需用户手动确认，做到静默授权，当然此时我们也只能获取openid</span>
+			<span class="ps">当请求链接不包含 scope 权限，或请求的 scope 近期已授权时，将无需用户手动确认，做到静默授权</span>
 			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/</code>
 			
-			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo">
+			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=openid,userid,userinfo">
 				<button>授权登录（显式授权）</button> 
 			</a>
-			<span class="ps">当请求链接包含具体的scope权限时，将需要用户手动确认，此时我们除了openid以外还可以获取更多的资源</span>
-			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo</code>
+			<span class="ps">当请求链接包含具体的 scope 权限时，将需要用户手动确认，此时 OAuth-Server 会返回更多的数据</span>
+			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=openid,userid,userinfo</code>
 			
 			<button onclick="refreshToken()">刷新令牌</button> 
 			<span class="ps">我们可以拿着 Refresh-Token 去刷新我们的 Access-Token，每次刷新后旧Token将作废</span>

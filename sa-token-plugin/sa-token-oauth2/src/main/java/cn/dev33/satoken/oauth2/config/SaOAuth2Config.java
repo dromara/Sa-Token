@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.config;
 
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.function.SaOAuth2ConfirmViewFunction;
 import cn.dev33.satoken.oauth2.function.SaOAuth2DoLoginHandleFunction;
 import cn.dev33.satoken.oauth2.function.SaOAuth2NotLoginViewFunction;
@@ -59,8 +60,12 @@ public class SaOAuth2Config implements Serializable {
 	/** Client-Token 保存的时间(单位：秒) 默认两个小时 */
 	public long clientTokenTimeout = 60 * 60 * 2;
 
-	/** Past-Client-Token 保存的时间(单位：秒) 默认为 -1，代表延续 Client-Token有效期 */
+	/** Past-Client-Token 保存的时间(单位：秒) 默认为 -1，代表延续 Client-Token 有效期 */
 	public long pastClientTokenTimeout = -1;
+
+	/** 默认 openid 生成算法中使用的摘要前缀 */
+	public String openidDigestPrefix = SaOAuth2Consts.OPENID_DEFAULT_DIGEST_PREFIX;
+
 
 
 	/**
@@ -213,13 +218,29 @@ public class SaOAuth2Config implements Serializable {
 		return this;
 	}
 
+	/**
+	 * @return openidDigestPrefix
+	 */
+	public String getOpenidDigestPrefix() {
+		return openidDigestPrefix;
+	}
+
+	/**
+	 * @param openidDigestPrefix 要设置的 openidDigestPrefix
+	 * @return 对象自身
+	 */
+	public SaOAuth2Config setOpenidMd5Prefix(String openidDigestPrefix) {
+		this.openidDigestPrefix = openidDigestPrefix;
+		return this;
+	}
+
 	
 	// -------------------- SaOAuth2Handle 所有回调函数 -------------------- 
 	
 	/**
 	 * OAuth-Server端：未登录时返回的View 
 	 */
-	public SaOAuth2NotLoginViewFunction notLoginView = () -> "当前会话在OAuth-Server认证中心尚未登录";
+	public SaOAuth2NotLoginViewFunction notLoginView = () -> "当前会话在 OAuth-Server 认证中心尚未登录";
 
 	/**
 	 * OAuth-Server端：确认授权时返回的View 
@@ -234,9 +255,14 @@ public class SaOAuth2Config implements Serializable {
 	@Override
 	public String toString() {
 		return "SaOAuth2Config [isCode=" + isCode + ", isImplicit=" + isImplicit + ", isPassword=" + isPassword
-				+ ", isClient=" + isClient + ", isNewRefresh=" + isNewRefresh + ", codeTimeout=" + codeTimeout
-				+ ", accessTokenTimeout=" + accessTokenTimeout + ", refreshTokenTimeout=" + refreshTokenTimeout
-				+ ", clientTokenTimeout=" + clientTokenTimeout + ", pastClientTokenTimeout=" + pastClientTokenTimeout
+				+ ", isClient=" + isClient
+				+ ", isNewRefresh=" + isNewRefresh
+				+ ", codeTimeout=" + codeTimeout
+				+ ", accessTokenTimeout=" + accessTokenTimeout
+				+ ", refreshTokenTimeout=" + refreshTokenTimeout
+				+ ", clientTokenTimeout=" + clientTokenTimeout
+				+ ", pastClientTokenTimeout=" + pastClientTokenTimeout
+				+ ", openidDigestPrefix=" + openidDigestPrefix
 				+"]";
 	}
 	
