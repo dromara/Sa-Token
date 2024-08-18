@@ -37,13 +37,13 @@ public class SaOAuth2Config implements Serializable {
 	public Boolean isCode = true;
 
 	/** 是否打开模式：隐藏式（Implicit） */
-	public Boolean isImplicit = false;
+	public Boolean isImplicit = true;
 
 	/** 是否打开模式：密码式（Password） */
-	public Boolean isPassword = false;
+	public Boolean isPassword = true;
 
 	/** 是否打开模式：凭证式（Client Credentials） */
-	public Boolean isClient = false;
+	public Boolean isClient = true;
 
 	/** 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token */
 	public Boolean isNewRefresh = false;
