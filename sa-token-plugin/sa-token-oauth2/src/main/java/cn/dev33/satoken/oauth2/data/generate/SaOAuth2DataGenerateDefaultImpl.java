@@ -19,14 +19,18 @@ import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
-import cn.dev33.satoken.oauth2.data.model.*;
-import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
+import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
+import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -211,6 +215,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientId, scopes);
         ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientId, scopes);
         ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
+        ct.extraData = new LinkedHashMap<>();
         SaOAuth2Strategy.instance.workClientTokenByScope.accept(ct);
 
         // 3、保存新Client-Token

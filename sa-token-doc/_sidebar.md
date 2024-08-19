@@ -37,7 +37,7 @@
 - **单点登录**
 	- [单点登录简述](/sso/readme)
 	- [搭建统一认证中心：SSO-Server](/sso/sso-server)
-	- [SSO-Server 认证中心开放接口](/sso/sso-apidoc)
+	- [SSO-Server 认证中心开放 API 接口](/sso/sso-apidoc)
 	- [SSO模式一 共享Cookie同步会话](/sso/sso-type1)
 	- [SSO模式二 URL重定向传播会话](/sso/sso-type2)
 	- [SSO模式三 Http请求获取会话](/sso/sso-type3)
@@ -54,9 +54,18 @@
 - **OAuth2.0**
 	- [OAuth2.0简述](/oauth2/readme)
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
-	- [OAuth2-Server端-API列表](/oauth2/oauth2-api)
-	- [OAuth2-二次开发说明](/oauth2/oauth2-dev)
+	- [OAuth2-Server端开放 API 接口](/oauth2/oauth2-apidoc)
+	- [配置 client 域名校验 ](/oauth2/oauth2-check-domain)
+	- [定制化登录页面与授权页面](/oauth2/oauth2-custom-login)
+	- [拆分式路由](/oauth2/3)
+	- [前后端分离模式整合方案](/oauth2/4)
+	- [平台中心模式开发](/oauth2/5)
+	- [自定义 Scope 权限以处理器](/oauth2/6)
+	- [为 Scope 划分等级](/oauth2/7)
 	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
+	- [OAuth2 代码 API 参考](/oauth2/oauth2-dev)
+	- [常见问题说明](/oauth2/8)
+	- <!-- jwt风格token、使用注解校验权限、OAuth2整个流程参考、state参数详解 -->
 
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)

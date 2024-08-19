@@ -42,33 +42,33 @@
 			<h3>模式一：授权码（Authorization Code）</h3>
 			<p class="pst">授权码：OAuth2.0标准授权流程，先 (重定向) 获取Code授权码，再 (Rest API) 获取 Access-Token 和 Openid </p> 
 			
-			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/">
+			<a href="http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/">
 				<button>点我开始授权登录（静默授权）</button> 
 			</a>
 			<span class="ps">当请求链接不包含 scope 权限，或请求的 scope 近期已授权时，将无需用户手动确认，做到静默授权</span>
-			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/</code>
 			
-			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=openid,userid,userinfo">
+			<a href="http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=openid,userid,userinfo">
 				<button>授权登录（显式授权）</button> 
 			</a>
 			<span class="ps">当请求链接包含具体的 scope 权限时，将需要用户手动确认，此时 OAuth-Server 会返回更多的数据</span>
-			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=openid,userid,userinfo</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=openid,userid,userinfo</code>
 			
 			<button onclick="refreshToken()">刷新令牌</button> 
 			<span class="ps">我们可以拿着 Refresh-Token 去刷新我们的 Access-Token，每次刷新后旧Token将作废</span>
-			<code>http://sa-oauth-server.com:8001/oauth2/refresh?grant_type=refresh_token&client_id={value}&client_secret={value}&refresh_token={value}</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/refresh?grant_type=refresh_token&client_id={value}&client_secret={value}&refresh_token={value}</code>
 			
 			<button onclick="getUserinfo()">获取账号信息</button> 
 			<span class="ps">使用 Access-Token 置换资源: 获取账号昵称、头像、性别等信息 (Access-Token具备userinfo权限时才可以获取成功) </span>
-			<code>http://sa-oauth-server.com:8001/oauth2/userinfo?access_token={value}</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/userinfo?access_token={value}</code>
 			
 			<br>
 			<h3>模式二：隐藏式（Implicit）</h3>
-			<a href="http://sa-oauth-server.com:8001/oauth2/authorize?response_type=token&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo">
+			<a href="http://sa-oauth-server.com:8000/oauth2/authorize?response_type=token&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo">
 				<button>隐藏式</button> 
 			</a>
 			<span class="ps">越过授权码的步骤，直接返回token到前端页面（ 格式：http//:domain.com#token=xxxx-xxxx ）</span>
-			<code>http://sa-oauth-server.com:8001/oauth2/authorize?response_type=token&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/authorize?response_type=token&client_id=1001&redirect_uri=http://sa-oauth-client.com:8002/&scope=userinfo</code>
 			
 			<br>
 			<h3>模式三：密码式（Password）</h3>
@@ -76,7 +76,7 @@
 			账号：<input name="username">
 			密码：<input name="password">
 			<button onclick="passwordLogin()">登录</button> 
-			<code>http://sa-oauth-server.com:8001/oauth2/token?grant_type=password&client_id={value}&client_secret={value}&username={value}&password={value}</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/token?grant_type=password&client_id={value}&client_secret={value}&username={value}&password={value}</code>
 			
 			<br>
 			<h3>模式四：凭证式（Client Credentials）</h3>
@@ -87,7 +87,7 @@
 				保证了服务的高可用</p>
 				
 			<button onclick="getClientToken()">获取应用Client-Token</button> 
-			<code>http://sa-oauth-server.com:8001/oauth2/client_token?grant_type=client_credentials&client_id={value}&client_secret={value}</code>
+			<code>http://sa-oauth-server.com:8000/oauth2/client_token?grant_type=client_credentials&client_id={value}&client_secret={value}</code>
 			
 			<br><br>
 			<span>更多资料请参考 Sa-Token 官方文档地址：</span>

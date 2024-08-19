@@ -33,12 +33,13 @@ public class SaOAuth2ServerController {
 	
 	// Sa-OAuth2 定制化配置 
 	@Autowired
-	public void setSaOAuth2Config(SaOAuth2Config cfg) {
+	public void configOAuth2Server(SaOAuth2Config cfg) {
 		// 未登录的视图
 		cfg.notLoginView = ()->{
 			return new ModelAndView("login.html");
 		};
-			// 登录处理函数 
+
+		// 登录处理函数
 		cfg.doLoginHandle = (name, pwd) -> {
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
@@ -46,11 +47,12 @@ public class SaOAuth2ServerController {
 			}
 			return SaResult.error("账号名或密码错误");
 		};
-			// 授权确认视图 
-		cfg.confirmView = (clientId, scope)->{
+
+		// 授权确认视图
+		cfg.confirmView = (clientId, scopes)->{
 			Map<String, Object> map = new HashMap<>();
 			map.put("clientId", clientId);
-			map.put("scope", scope);
+			map.put("scope", scopes);
 			return new ModelAndView("confirm.html", map);
 		};
 	}

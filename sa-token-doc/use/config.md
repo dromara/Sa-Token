@@ -297,9 +297,9 @@ sa-token.sso-client.is-slo=true
 | 参数名称				| 类型		| 默认值	| 说明																		|
 | :--------				| :--------	| :--------	| :--------																	|
 | isCode				| Boolean	| true		| 是否打开模式：授权码（`Authorization Code`）								|
-| isImplicit			| Boolean	| false		| 是否打开模式：隐藏式（`Implicit`）											|
-| isPassword			| Boolean	| false		| 是否打开模式：密码式（`Password`）											|
-| isClient				| Boolean	| false		| 是否打开模式：凭证式（`Client Credentials`）								|
+| isImplicit			| Boolean	| true		| 是否打开模式：隐藏式（`Implicit`）											|
+| isPassword			| Boolean	| true		| 是否打开模式：密码式（`Password`）											|
+| isClient				| Boolean	| true		| 是否打开模式：凭证式（`Client Credentials`）								|
 | isNewRefresh			| Boolean	| false		| 是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token	|
 | codeTimeout			| long		| 300		| Code授权码 保存的时间（单位：秒） 默认五分钟									|
 | accessTokenTimeout	| long		| 7200		| `Access-Token` 保存的时间（单位：秒）默认两个小时								|
