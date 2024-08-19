@@ -87,10 +87,10 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 3、生成token
         AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm);
+        SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
         RefreshTokenModel rt = dataConverter.convertAccessTokenToRefreshToken(at);
         at.refreshToken = rt.refreshToken;
         at.refreshExpiresTime = rt.expiresTime;
-        SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
 
         // 4、保存token
         dao.saveAccessToken(at);
@@ -166,14 +166,20 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         // 2、生成 新Access-Token
         String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
         AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
-        // TODO 此处的 openid 应该怎么加载？
-        // at.openid = SaOAuth2Manager.getDataLoader().getOpenid(ra.clientId, ra.loginId);
+
+        // 3、根据权限构建额外参数
+        at.extraData = new LinkedHashMap<>();
+        SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
+
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(ra.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
 
         // 3、生成&保存 Refresh-Token
         if(isCreateRt) {
             RefreshTokenModel rt = SaOAuth2Manager.getDataConverter().convertAccessTokenToRefreshToken(at);
+            at.refreshToken = rt.refreshToken;
+            at.refreshExpiresTime = rt.expiresTime;
+
             dao.saveRefreshToken(rt);
             dao.saveRefreshTokenIndex(rt);
         }

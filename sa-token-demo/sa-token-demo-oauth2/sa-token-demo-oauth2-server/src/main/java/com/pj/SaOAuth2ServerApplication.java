@@ -1,5 +1,6 @@
 package com.pj;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,7 +13,8 @@ public class SaOAuth2ServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaOAuth2ServerApplication.class, args);
-		System.out.println("\nSa-Token-OAuth Server端启动成功");
+		System.out.println("\nSa-Token-OAuth Server端启动成功，配置如下：");
+		System.out.println(SaOAuth2Manager.getConfig());
 	}
 	
 }

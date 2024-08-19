@@ -54,23 +54,23 @@ public class SaClientModel implements Serializable {
 	public List<String> allowUrls;
 	
 	/** 此 Client 是否打开模式：授权码（Authorization Code） */
-	public Boolean isCode = false;
+	public Boolean enableCode = false;
 
 	/** 此 Client 是否打开模式：隐藏式（Implicit） */
-	public Boolean isImplicit = false;
+	public Boolean enableImplicit = false;
 
 	/** 此 Client 是否打开模式：密码式（Password） */
-	public Boolean isPassword = false;
+	public Boolean enablePassword = false;
 
 	/** 此 Client 是否打开模式：凭证式（Client Credentials） */
-	public Boolean isClient = false;
+	public Boolean enableClient = false;
 
-	/** 
-	 * 是否自动判断此 Client 开放的授权模式 
-	 * <br> 此值为true时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠全局设置
-	 * <br> 此值为false时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠局部配置+全局配置 
-	 */
-	public Boolean isAutoMode = true;
+//	/**
+//	 * 是否自动判断此 Client 开放的授权模式
+//	 * <br> 此值为true时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠全局设置
+//	 * <br> 此值为false时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠局部配置+全局配置
+//	 */
+//	public Boolean isAutoMode = true;
 
 	/** 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
 	public Boolean isNewRefresh;
@@ -171,83 +171,83 @@ public class SaClientModel implements Serializable {
 	/**
 	 * @return 此 Client 是否打开模式：授权码（Authorization Code）
 	 */
-	public Boolean getIsCode() {
-		return isCode;
+	public Boolean getEnableCode() {
+		return enableCode;
 	}
 	
 	/**
-	 * @param isCode 此 Client 是否打开模式：授权码（Authorization Code）
+	 * @param enableCode 此 Client 是否打开模式：授权码（Authorization Code）
 	 * @return 对象自身 
 	 */
-	public SaClientModel setIsCode(Boolean isCode) {
-		this.isCode = isCode;
+	public SaClientModel setEnableCode(Boolean enableCode) {
+		this.enableCode = enableCode;
 		return this;
 	}
 	
 	/**
 	 * @return 此 Client 是否打开模式：隐藏式（Implicit）
 	 */
-	public Boolean getIsImplicit() {
-		return isImplicit;
+	public Boolean getEnableImplicit() {
+		return enableImplicit;
 	}
 	
 	/**
-	 * @param isImplicit 此 Client 是否打开模式：隐藏式（Implicit）
+	 * @param enableImplicit 此 Client 是否打开模式：隐藏式（Implicit）
 	 * @return 对象自身 
 	 */
-	public SaClientModel setIsImplicit(Boolean isImplicit) {
-		this.isImplicit = isImplicit;
+	public SaClientModel setEnableImplicit(Boolean enableImplicit) {
+		this.enableImplicit = enableImplicit;
 		return this;
 	}
 	
 	/**
 	 * @return 此 Client 是否打开模式：密码式（Password）
 	 */
-	public Boolean getIsPassword() {
-		return isPassword;
+	public Boolean getEnablePassword() {
+		return enablePassword;
 	}
 	
 	/**
-	 * @param isPassword 此 Client 是否打开模式：密码式（Password）
+	 * @param enablePassword 此 Client 是否打开模式：密码式（Password）
 	 * @return 对象自身 
 	 */
-	public SaClientModel setIsPassword(Boolean isPassword) {
-		this.isPassword = isPassword;
+	public SaClientModel setEnablePassword(Boolean enablePassword) {
+		this.enablePassword = enablePassword;
 		return this;
 	}
 	
 	/**
 	 * @return 此 Client 是否打开模式：凭证式（Client Credentials）
 	 */
-	public Boolean getIsClient() {
-		return isClient;
+	public Boolean getEnableClient() {
+		return enableClient;
 	}
 	
 	/**
-	 * @param isClient 此 Client 是否打开模式：凭证式（Client Credentials）
+	 * @param enableClient 此 Client 是否打开模式：凭证式（Client Credentials）
 	 * @return 对象自身 
 	 */
-	public SaClientModel setIsClient(Boolean isClient) {
-		this.isClient = isClient;
+	public SaClientModel setEnableClient(Boolean enableClient) {
+		this.enableClient = enableClient;
 		return this;
 	}
-
-	/**
-	 * @return 是否自动判断此 Client 开放的授权模式
-	 */
-	public Boolean getIsAutoMode() {
-		return isAutoMode;
-	}
-	
-	/**
-	 * @param isAutoMode 是否自动判断此 Client 开放的授权模式
-	 * @return 对象自身 
-	 */
-	public SaClientModel setIsAutoMode(Boolean isAutoMode) {
-		this.isAutoMode = isAutoMode;
-		return this;
-	}
-	
+//
+//	/**
+//	 * @return 是否自动判断此 Client 开放的授权模式
+//	 */
+//	public Boolean getIsAutoMode() {
+//		return isAutoMode;
+//	}
+//
+//	/**
+//	 * @param isAutoMode 是否自动判断此 Client 开放的授权模式
+//	 * @return 对象自身
+//	 */
+//	public SaClientModel setIsAutoMode(Boolean isAutoMode) {
+//		this.isAutoMode = isAutoMode;
+//		return this;
+//	}
+//
 	
 	/**
 	 * @return 此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
@@ -338,11 +338,11 @@ public class SaClientModel implements Serializable {
 				", clientSecret='" + clientSecret + '\'' +
 				", contractScopes=" + contractScopes +
 				", allowUrls=" + allowUrls +
-				", isCode=" + isCode +
-				", isImplicit=" + isImplicit +
-				", isPassword=" + isPassword +
-				", isClient=" + isClient +
-				", isAutoMode=" + isAutoMode +
+				", isCode=" + enableCode +
+				", isImplicit=" + enableImplicit +
+				", isPassword=" + enablePassword +
+				", isClient=" + enableClient +
+//				", isAutoMode=" + isAutoMode +
 				", isNewRefresh=" + isNewRefresh +
 				", accessTokenTimeout=" + accessTokenTimeout +
 				", refreshTokenTimeout=" + refreshTokenTimeout +

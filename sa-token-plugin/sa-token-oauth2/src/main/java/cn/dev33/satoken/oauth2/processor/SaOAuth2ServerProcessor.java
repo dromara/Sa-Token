@@ -71,28 +71,24 @@ public class SaOAuth2ServerProcessor {
 
 		// ------------------ 路由分发 ------------------
 
-		// 模式一：Code授权码
-		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.code)) {
-			SaClientModel cm = currClientModel();
-			if(cfg.getIsCode() && (cm.isCode || cm.isAutoMode)) {
-				return authorize();
-			}
-			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
+		// 模式一：Code授权码 || 模式二：隐藏式
+		if(req.isPath(Api.authorize)) {
+			return authorize();
 		}
-		
-		// Code授权码 获取 Access-Token
-		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.authorization_code)) {
-			return token();
+
+		// Code 换 Access-Token || 模式三：密码式
+		if(req.isPath(Api.token)) {
+			return tokenOrPassword();
 		}
 
 		// Refresh-Token 刷新 Access-Token
-		if(req.isPath(Api.refresh) && req.isParam(Param.grant_type, GrantType.refresh_token)) {
-			return refreshToken();
+		if(req.isPath(Api.refresh)) {
+			return refresh();
 		}
 
 		// 回收 Access-Token
 		if(req.isPath(Api.revoke)) {
-			return revokeToken();
+			return revoke();
 		}
 
 		// doLogin 登录接口
@@ -105,31 +101,9 @@ public class SaOAuth2ServerProcessor {
 			return doConfirm();
 		}
 
-		// 模式二：隐藏式
-		if(req.isPath(Api.authorize) && req.isParam(Param.response_type, ResponseType.token)) {
-			SaClientModel cm = currClientModel();
-			if(cfg.getIsImplicit() && (cm.isImplicit || cm.isAutoMode)) {
-				return authorize();
-			}
-			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30132);
-		}
-
-		// 模式三：密码式
-		if(req.isPath(Api.token) && req.isParam(Param.grant_type, GrantType.password)) {
-			SaClientModel cm = currClientModel();
-			if(cfg.getIsPassword() && (cm.isPassword || cm.isAutoMode)) {
-				return password();
-			}
-			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30133);
-		}
-
 		// 模式四：凭证式
-		if(req.isPath(Api.client_token) && req.isParam(Param.grant_type, GrantType.client_credentials)) {
-			SaClientModel cm = currClientModel();
-			if(cfg.getIsClient() && (cm.isClient || cm.isAutoMode)) {
-				return clientToken();
-			}
-			throw new SaOAuth2Exception("暂未开放的授权模式").setCode(SaOAuth2ErrorCode.CODE_30134);
+		if(req.isPath(Api.client_token)) {
+			return clientToken();
 		}
 
 		// 默认返回
@@ -141,42 +115,67 @@ public class SaOAuth2ServerProcessor {
 	 * @return 处理结果
 	 */
 	public Object authorize() {
+
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
+		String responseType = req.getParamNotNull(Param.response_type);
 
-		// 1、如果尚未登录, 则先去登录
+		// 1、先判断是否开启了指定的授权模式
+		// 		模式一：Code授权码
+		if(responseType.equals(ResponseType.code)) {
+			if(!cfg.enableCode) {
+				throwErrorSystemNotEnableModel();
+			}
+			if(!currClientModel().enableCode) {
+				throwErrorClientNotEnableModel();
+			}
+		}
+		// 		模式二：隐藏式
+		else if(responseType.equals(ResponseType.token)) {
+			if(!cfg.enableImplicit) {
+				throwErrorSystemNotEnableModel();
+			}
+			if(!currClientModel().enableImplicit) {
+				throwErrorClientNotEnableModel();
+			}
+		}
+		// 		其它
+		else {
+			throw new SaOAuth2Exception("无效 response_type: " + req.getParam(Param.response_type)).setCode(SaOAuth2ErrorCode.CODE_30125);
+		}
+
+		// 2、如果尚未登录, 则先去登录
 		if( ! getStpLogic().isLogin()) {
 			return cfg.notLoginView.get();
 		}
 
-		// 2、构建请求 Model
+		// 3、构建请求 Model
 		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, getStpLogic().getLoginId());
 
-		// 3、校验：重定向域名是否合法
+		// 4、校验：重定向域名是否合法
 		oauth2Template.checkRightUrl(ra.clientId, ra.redirectUri);
 
-		// 4、校验：此次申请的Scope，该Client是否已经签约
+		// 5、校验：此次申请的Scope，该Client是否已经签约
 		oauth2Template.checkContract(ra.clientId, ra.scopes);
 
-		// 5、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
+		// 6、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
 		boolean isGrant = oauth2Template.isGrant(ra.loginId, ra.clientId, ra.scopes);
 		if( ! isGrant) {
 			return cfg.confirmView.apply(ra.clientId, ra.scopes);
 		}
 
-
-		// 6、判断授权类型
-		// 如果是 授权码式，则：开始重定向授权，下放code
+		// 7、判断授权类型，重定向到不同地址
+		// 		如果是 授权码式，则：开始重定向授权，下放code
 		if(ResponseType.code.equals(ra.responseType)) {
 			CodeModel codeModel = dataGenerate.generateCode(ra);
 			String redirectUri = dataGenerate.buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
 			return res.redirect(redirectUri);
 		}
 		
-		// 如果是 隐藏式，则：开始重定向授权，下放 token
+		// 		如果是 隐藏式，则：开始重定向授权，下放 token
 		if(ResponseType.token.equals(ra.responseType)) {
 			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false);
 			String redirectUri = dataGenerate.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
@@ -185,6 +184,34 @@ public class SaOAuth2ServerProcessor {
 
 		// 默认返回
 		throw new SaOAuth2Exception("无效response_type: " + ra.responseType).setCode(SaOAuth2ErrorCode.CODE_30125);
+	}
+
+	/**
+	 * Code 换 Access-Token || 模式三：密码式
+	 * @return 处理结果
+	 */
+	public Object tokenOrPassword() {
+
+		String grantType = SaHolder.getRequest().getParamNotNull(Param.grant_type);
+
+		// Code 换 Access-Token
+		if(grantType.equals(GrantType.authorization_code)) {
+			return token();
+		}
+
+		// 模式三：密码式
+		if(grantType.equals(GrantType.password)) {
+			SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+			if(!cfg.enablePassword) {
+				throwErrorSystemNotEnableModel();
+			}
+			if(!currClientModel().enablePassword) {
+				throwErrorClientNotEnableModel();
+			}
+			return password();
+		}
+
+		throw new SaOAuth2Exception("无效 grant_type：" + grantType);
 	}
 
 	/**
@@ -216,9 +243,13 @@ public class SaOAuth2ServerProcessor {
 	 * Refresh-Token 刷新 Access-Token
 	 * @return 处理结果
 	 */
-	public Object refreshToken() {
+	public Object refresh() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
+		String grantType = req.getParamNotNull(Param.grant_type);
+		if(!grantType.equals(GrantType.refresh_token)) {
+			throw new SaOAuth2Exception("无效 grant_type：" + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
+		}
 
 		// 获取参数
 
@@ -241,7 +272,7 @@ public class SaOAuth2ServerProcessor {
 	 * 回收 Access-Token
 	 * @return 处理结果
 	 */
-	public Object revokeToken() {
+	public Object revoke() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 
@@ -344,6 +375,18 @@ public class SaOAuth2ServerProcessor {
 	public Object clientToken() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
+		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+
+		String grantType = req.getParamNotNull(Param.grant_type);
+		if(!grantType.equals(GrantType.client_credentials)) {
+			throw new SaOAuth2Exception("无效 grant_type：" + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
+		}
+		if(!cfg.enableClient) {
+			throwErrorSystemNotEnableModel();
+		}
+		if(!currClientModel().enableClient) {
+			throwErrorClientNotEnableModel();
+		}
 
 		// 获取参数
 		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
@@ -381,6 +424,20 @@ public class SaOAuth2ServerProcessor {
 	 */
 	public StpLogic getStpLogic() {
 		return StpUtil.stpLogic;
+	}
+
+	/**
+	 * 系统未开放此授权模式时抛出异常
+	 */
+	public void throwErrorSystemNotEnableModel() {
+		throw new SaOAuth2Exception("系统暂未开放此授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
+	}
+
+	/**
+	 * 应用未开放此授权模式时抛出异常
+	 */
+	public void throwErrorClientNotEnableModel() {
+		throw new SaOAuth2Exception("应用暂未开放此授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
 	}
 
 }

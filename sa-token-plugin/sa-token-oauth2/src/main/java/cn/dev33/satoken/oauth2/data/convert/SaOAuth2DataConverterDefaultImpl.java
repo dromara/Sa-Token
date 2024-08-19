@@ -100,8 +100,8 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         rt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
         rt.extraData = new LinkedHashMap<>(at.extraData);
         // 改变 at 属性
-        at.refreshToken = rt.refreshToken;
-        at.refreshExpiresTime = rt.expiresTime;
+//        at.refreshToken = rt.refreshToken;
+//        at.refreshExpiresTime = rt.expiresTime;
         return rt;
     }
 

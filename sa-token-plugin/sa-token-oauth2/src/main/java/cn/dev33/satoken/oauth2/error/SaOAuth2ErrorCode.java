@@ -98,6 +98,9 @@ public interface SaOAuth2ErrorCode {
 	/** 无效response_type */
 	int CODE_30125 = 30125;
 
+	/** 无效grant_type */
+	int CODE_30126 = 30126;
+
 	/** 暂未开放授权码模式 */
 	int CODE_30131 = 30131;
 	

@@ -57,7 +57,7 @@
 	- [OAuth2-Server端开放 API 接口](/oauth2/oauth2-apidoc)
 	- [配置 client 域名校验 ](/oauth2/oauth2-check-domain)
 	- [定制化登录页面与授权页面](/oauth2/oauth2-custom-login)
-	- [拆分式路由](/oauth2/3)
+	- [自定义 API 路由 ](/oauth2/oauth2-custom-api)
 	- [前后端分离模式整合方案](/oauth2/4)
 	- [平台中心模式开发](/oauth2/5)
 	- [自定义 Scope 权限以处理器](/oauth2/6)

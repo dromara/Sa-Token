@@ -34,16 +34,16 @@ public class SaOAuth2Config implements Serializable {
 	private static final long serialVersionUID = -6541180061782004705L;
 
 	/** 是否打开模式：授权码（Authorization Code） */
-	public Boolean isCode = true;
+	public Boolean enableCode = true;
 
 	/** 是否打开模式：隐藏式（Implicit） */
-	public Boolean isImplicit = true;
+	public Boolean enableImplicit = true;
 
 	/** 是否打开模式：密码式（Password） */
-	public Boolean isPassword = true;
+	public Boolean enablePassword = true;
 
 	/** 是否打开模式：凭证式（Client Credentials） */
-	public Boolean isClient = true;
+	public Boolean enableClient = true;
 
 	/** 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token */
 	public Boolean isNewRefresh = false;
@@ -69,59 +69,59 @@ public class SaOAuth2Config implements Serializable {
 
 
 	/**
-	 * @return isCode
+	 * @return enableCode
 	 */
-	public Boolean getIsCode() {
-		return isCode;
+	public Boolean getEnableCode() {
+		return enableCode;
 	}
 
 	/**
-	 * @param isCode 要设置的 isCode
+	 * @param enableCode 要设置的 enableCode
 	 */
-	public void setIsCode(Boolean isCode) {
-		this.isCode = isCode;
+	public void setEnableCode(Boolean enableCode) {
+		this.enableCode = enableCode;
 	}
 
 	/**
-	 * @return isImplicit
+	 * @return enableImplicit
 	 */
-	public Boolean getIsImplicit() {
-		return isImplicit;
+	public Boolean getEnableImplicit() {
+		return enableImplicit;
 	}
 
 	/**
-	 * @param isImplicit 要设置的 isImplicit
+	 * @param enableImplicit 要设置的 enableImplicit
 	 */
-	public void setIsImplicit(Boolean isImplicit) {
-		this.isImplicit = isImplicit;
+	public void setEnableImplicit(Boolean enableImplicit) {
+		this.enableImplicit = enableImplicit;
 	}
 
 	/**
-	 * @return isPassword
+	 * @return enablePassword
 	 */
-	public Boolean getIsPassword() {
-		return isPassword;
+	public Boolean getEnablePassword() {
+		return enablePassword;
 	}
 
 	/**
-	 * @param isPassword 要设置的 isPassword
+	 * @param enablePassword 要设置的 enablePassword
 	 */
-	public void setIsPassword(Boolean isPassword) {
-		this.isPassword = isPassword;
+	public void setEnablePassword(Boolean enablePassword) {
+		this.enablePassword = enablePassword;
 	}
 
 	/**
-	 * @return isClient
+	 * @return enableClient
 	 */
-	public Boolean getIsClient() {
-		return isClient;
+	public Boolean getEnableClient() {
+		return enableClient;
 	}
 
 	/**
-	 * @param isClient 要设置的 isClient
+	 * @param enableClient 要设置的 enableClient
 	 */
-	public void setIsClient(Boolean isClient) {
-		this.isClient = isClient;
+	public void setEnableClient(Boolean enableClient) {
+		this.enableClient = enableClient;
 	}
 
 	/**
@@ -254,8 +254,11 @@ public class SaOAuth2Config implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SaOAuth2Config [isCode=" + isCode + ", isImplicit=" + isImplicit + ", isPassword=" + isPassword
-				+ ", isClient=" + isClient
+		return "SaOAuth2Config [" +
+				"enableCode=" + enableCode
+				+ ", enableImplicit=" + enableImplicit
+				+ ", enablePassword=" + enablePassword
+				+ ", enableClient=" + enableClient
 				+ ", isNewRefresh=" + isNewRefresh
 				+ ", codeTimeout=" + codeTimeout
 				+ ", accessTokenTimeout=" + accessTokenTimeout

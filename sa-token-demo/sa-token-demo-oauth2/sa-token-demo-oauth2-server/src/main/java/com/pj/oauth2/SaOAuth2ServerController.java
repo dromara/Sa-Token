@@ -7,7 +7,6 @@ import cn.dev33.satoken.oauth2.template.SaOAuth2Util;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,20 +16,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Sa-OAuth2 Server端 控制器
+ * Sa-Token-OAuth2 Server端 Controller
+ *
  * @author click33
- * 
  */
 @RestController
 public class SaOAuth2ServerController {
 
-	// 处理所有OAuth相关请求 
+	// OAuth2-Server 端：处理所有OAuth相关请求
 	@RequestMapping("/oauth2/*")
 	public Object request() {
 		System.out.println("------- 进入请求: " + SaHolder.getRequest().getUrl());
 		return SaOAuth2ServerProcessor.instance.dister();
 	}
-	
+
 	// Sa-OAuth2 定制化配置 
 	@Autowired
 	public void configOAuth2Server(SaOAuth2Config cfg) {
@@ -57,13 +56,6 @@ public class SaOAuth2ServerController {
 		};
 	}
 
-	// 全局异常拦截  
-	@ExceptionHandler
-	public SaResult handlerException(Exception e) {
-		e.printStackTrace(); 
-		return SaResult.error(e.getMessage());
-	}
-	
 	
 	// ---------- 开放相关资源接口： Client端根据 Access-Token ，置换相关资源 ------------ 
 	

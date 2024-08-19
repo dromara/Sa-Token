@@ -113,7 +113,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     public Map<String, Object> buildClientTokenReturnValue(ClientTokenModel ct) {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("client_token", ct.clientToken);
-        map.put("access_token", ct.clientToken); // 兼容 OAuth2 协议
+        // map.put("access_token", ct.clientToken); // 兼容 OAuth2 协议
         map.put("expires_in", ct.getExpiresIn());
         map.put("client_id", ct.clientId);
         map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(ct.scopes));
