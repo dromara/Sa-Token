@@ -24,7 +24,7 @@ import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
  * @author click33
  * @since 1.39.0
  */
-public interface SaOAuth2ScopeAbstractHandler {
+public interface SaOAuth2ScopeHandlerInterface {
 
     /**
      * 获取所要处理的权限

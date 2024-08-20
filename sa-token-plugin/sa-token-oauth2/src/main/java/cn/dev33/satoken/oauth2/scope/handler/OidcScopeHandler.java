@@ -25,7 +25,7 @@ import cn.dev33.satoken.oauth2.scope.CommonScope;
  * @author click33
  * @since 1.39.0
  */
-public class OidcScopeHandler implements SaOAuth2ScopeAbstractHandler {
+public class OidcScopeHandler implements SaOAuth2ScopeHandlerInterface {
 
     public String getHandlerScope() {
         return CommonScope.OIDC;

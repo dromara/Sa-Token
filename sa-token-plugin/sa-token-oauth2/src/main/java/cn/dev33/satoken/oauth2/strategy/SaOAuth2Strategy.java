@@ -20,7 +20,7 @@ import cn.dev33.satoken.oauth2.function.strategy.*;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.scope.handler.OidcScopeHandler;
 import cn.dev33.satoken.oauth2.scope.handler.OpenIdScopeHandler;
-import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeAbstractHandler;
+import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeHandlerInterface;
 import cn.dev33.satoken.oauth2.scope.handler.UserIdScopeHandler;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -49,7 +49,7 @@ public final class SaOAuth2Strategy {
 	/**
 	 * 权限处理器集合
 	 */
-	public Map<String, SaOAuth2ScopeAbstractHandler> scopeHandlerMap = new LinkedHashMap<>();
+	public Map<String, SaOAuth2ScopeHandlerInterface> scopeHandlerMap = new LinkedHashMap<>();
 
 	/**
 	 * 注册所有默认的权限处理器
@@ -63,7 +63,7 @@ public final class SaOAuth2Strategy {
 	/**
 	 * 注册一个权限处理器
 	 */
-	public void registerScopeHandler(SaOAuth2ScopeAbstractHandler handler) {
+	public void registerScopeHandler(SaOAuth2ScopeHandlerInterface handler) {
 		scopeHandlerMap.put(handler.getHandlerScope(), handler);
 		// TODO 优化日志输出
 		SaManager.getLog().info("新增权限处理器：" + handler.getHandlerScope());
@@ -86,7 +86,7 @@ public final class SaOAuth2Strategy {
 	public SaOAuth2ScopeWorkAccessTokenFunction workAccessTokenByScope = (at) -> {
 		if(at.scopes != null && !at.scopes.isEmpty()) {
 			for (String scope : at.scopes) {
-				SaOAuth2ScopeAbstractHandler handler = scopeHandlerMap.get(scope);
+				SaOAuth2ScopeHandlerInterface handler = scopeHandlerMap.get(scope);
 				if(handler != null) {
 					handler.workAccessToken(at);
 				}
@@ -100,7 +100,7 @@ public final class SaOAuth2Strategy {
 	public SaOAuth2ScopeWorkClientTokenFunction workClientTokenByScope = (ct) -> {
 		if(ct.scopes != null && !ct.scopes.isEmpty()) {
 			for (String scope : ct.scopes) {
-				SaOAuth2ScopeAbstractHandler handler = scopeHandlerMap.get(scope);
+				SaOAuth2ScopeHandlerInterface handler = scopeHandlerMap.get(scope);
 				if(handler != null) {
 					handler.workClientToken(ct);
 				}
