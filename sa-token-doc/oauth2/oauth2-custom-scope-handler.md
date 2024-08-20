@@ -175,4 +175,47 @@ http://sa-oauth-server.com:8000/oauth2/token
 拿到 userinfo。
 
 #### 总结
-相比于自定义接口模式，自定义权限处理器模式可以少一次网络请求，提前拿到 `userinfo` 信息。
+相比于自定义接口模式，自定义权限处理器模式可以少一次网络请求，让 oauth2-client 端提前拿到 `userinfo` 信息。
+
+
+
+### 4、最终权限处理器
+当一个自定义权限处理器，监听的 scope 字符串为 `_FINALLY_WORK_SCOPE` 时，则代表这个权限处理器为“最终权限处理器”。
+
+最终权限处理器会永远在所有权限处理器工作完成之后执行一次，即使 oauth2-client 端没有申请任何 scope，最终权限处理器也会固定执行。
+
+示例：
+``` java
+/**
+ * 最终权限处理器：在所有权限处理器工作完成之后，执行此权限处理器
+ */
+@Component
+public class FinallyWorkScopeHandler implements SaOAuth2ScopeHandlerInterface {
+
+    @Override
+    public String getHandlerScope() {
+        return SaOAuth2Consts._FINALLY_WORK_SCOPE;
+    }
+
+    @Override
+    public void workAccessToken(AccessTokenModel at) {
+        // 在所有权限处理器工作完成之后，执行此处方法加工 AccessToken
+        // System.out.println(123);
+    }
+
+    @Override
+    public void workClientToken(ClientTokenModel ct) {
+        // System.out.println(456);
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+

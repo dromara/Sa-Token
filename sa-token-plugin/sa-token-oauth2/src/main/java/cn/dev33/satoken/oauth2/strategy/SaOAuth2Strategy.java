@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.function.strategy.*;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.scope.handler.OidcScopeHandler;
@@ -92,6 +93,10 @@ public final class SaOAuth2Strategy {
 				}
 			}
 		}
+		SaOAuth2ScopeHandlerInterface finallyWorkScopeHandler = scopeHandlerMap.get(SaOAuth2Consts._FINALLY_WORK_SCOPE);
+		if(finallyWorkScopeHandler != null) {
+			finallyWorkScopeHandler.workAccessToken(at);
+		}
 	};
 
 	/**
@@ -105,6 +110,10 @@ public final class SaOAuth2Strategy {
 					handler.workClientToken(ct);
 				}
 			}
+		}
+		SaOAuth2ScopeHandlerInterface finallyWorkScopeHandler = scopeHandlerMap.get(SaOAuth2Consts._FINALLY_WORK_SCOPE);
+		if(finallyWorkScopeHandler != null) {
+			finallyWorkScopeHandler.workClientToken(ct);
 		}
 	};
 

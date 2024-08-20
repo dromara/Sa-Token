@@ -111,5 +111,10 @@ public class SaOAuth2Consts {
 
 	/** 表示请求没有得到任何有效处理 {msg: "not handle"} */
 	public static final String NOT_HANDLE = "{\"msg\": \"not handle\"}";
-	
+
+	/**
+	 * 最终权限处理器标识符：在所有权限处理器执行之后，执行此 scope 标识符代表的权限处理器
+	 */
+	public static final String _FINALLY_WORK_SCOPE = "_FINALLY_WORK_SCOPE";
+
 }
