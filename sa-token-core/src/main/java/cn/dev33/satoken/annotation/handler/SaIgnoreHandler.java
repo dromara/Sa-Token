@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaIgnoreHandler implements SaAnnotationAbstractHandler<SaIgnore> {
+public class SaIgnoreHandler implements SaAnnotationHandlerInterface<SaIgnore> {
 
     @Override
     public Class<SaIgnore> getHandlerAnnotationClass() {

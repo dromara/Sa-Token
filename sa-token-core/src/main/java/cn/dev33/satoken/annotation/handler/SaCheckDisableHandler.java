@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckDisableHandler implements SaAnnotationAbstractHandler<SaCheckDisable> {
+public class SaCheckDisableHandler implements SaAnnotationHandlerInterface<SaCheckDisable> {
 
     @Override
     public Class<SaCheckDisable> getHandlerAnnotationClass() {

@@ -49,7 +49,7 @@ public final class SaAnnotationStrategy {
 	/**
 	 * 注解处理器集合
 	 */
-	public Map<Class<?>, SaAnnotationAbstractHandler<?>> annotationHandlerMap = new LinkedHashMap<>();
+	public Map<Class<?>, SaAnnotationHandlerInterface<?>> annotationHandlerMap = new LinkedHashMap<>();
 
 	/**
 	 * 注册所有默认的注解处理器
@@ -69,7 +69,7 @@ public final class SaAnnotationStrategy {
 	/**
 	 * 注册一个注解处理器
 	 */
-	public void registerAnnotationHandler(SaAnnotationAbstractHandler<?> handler) {
+	public void registerAnnotationHandler(SaAnnotationHandlerInterface<?> handler) {
 		annotationHandlerMap.put(handler.getHandlerAnnotationClass(), handler);
 		SaTokenEventCenter.doRegisterAnnotationHandler(handler);
 	}
@@ -77,8 +77,8 @@ public final class SaAnnotationStrategy {
 	/**
 	 * 注册一个注解处理器，到首位
 	 */
-	public void registerAnnotationHandlerToFirst(SaAnnotationAbstractHandler<?> handler) {
-		Map<Class<?>, SaAnnotationAbstractHandler<?>> newMap = new LinkedHashMap<>();
+	public void registerAnnotationHandlerToFirst(SaAnnotationHandlerInterface<?> handler) {
+		Map<Class<?>, SaAnnotationHandlerInterface<?>> newMap = new LinkedHashMap<>();
 		newMap.put(handler.getHandlerAnnotationClass(), handler);
 		newMap.putAll(annotationHandlerMap);
 		this.annotationHandlerMap = newMap;
@@ -98,7 +98,7 @@ public final class SaAnnotationStrategy {
 	@SuppressWarnings("unchecked")
 	public SaCheckMethodAnnotationFunction checkMethodAnnotation = (method) -> {
 		// 遍历所有的注解处理器，检查此 method 是否具有这些指定的注解
-		for (Map.Entry<Class<?>, SaAnnotationAbstractHandler<?>> entry: annotationHandlerMap.entrySet()) {
+		for (Map.Entry<Class<?>, SaAnnotationHandlerInterface<?>> entry: annotationHandlerMap.entrySet()) {
 
 			// 先校验 Method 所属 Class 上的注解
 			Annotation classTakeAnnotation = instance.getAnnotation.apply(method.getDeclaringClass(), (Class<Annotation>)entry.getKey());

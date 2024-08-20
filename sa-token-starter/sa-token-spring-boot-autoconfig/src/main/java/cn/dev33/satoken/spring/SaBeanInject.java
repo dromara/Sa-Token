@@ -16,7 +16,7 @@
 package cn.dev33.satoken.spring;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
@@ -126,8 +126,8 @@ public class SaBeanInject {
 	 * @param handlerList 自定义注解处理器集合
 	 */
 	@Autowired(required = false)
-	public void setSaAnnotationHandler(List<SaAnnotationAbstractHandler<?>> handlerList) {
-		for (SaAnnotationAbstractHandler<?> handler : handlerList) {
+	public void setSaAnnotationHandler(List<SaAnnotationHandlerInterface<?>> handlerList) {
+		for (SaAnnotationHandlerInterface<?> handler : handlerList) {
 			SaAnnotationStrategy.instance.registerAnnotationHandler(handler);
 		}
 	}

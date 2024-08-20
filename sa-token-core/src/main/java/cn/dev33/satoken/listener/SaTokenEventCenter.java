@@ -18,7 +18,7 @@ package cn.dev33.satoken.listener;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
@@ -292,7 +292,7 @@ public class SaTokenEventCenter {
 	 * 事件发布：有新的注解处理器载入到框架中
 	 * @param handler 注解处理器
 	 */
-	public static void doRegisterAnnotationHandler(SaAnnotationAbstractHandler<?> handler) {
+	public static void doRegisterAnnotationHandler(SaAnnotationHandlerInterface<?> handler) {
 		for (SaTokenListener listener : listenerList) {
 			listener.doRegisterAnnotationHandler(handler);
 		}

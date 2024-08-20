@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckHttpDigestHandler implements SaAnnotationAbstractHandler<SaCheckHttpDigest> {
+public class SaCheckHttpDigestHandler implements SaAnnotationHandlerInterface<SaCheckHttpDigest> {
 
     @Override
     public Class<SaCheckHttpDigest> getHandlerAnnotationClass() {

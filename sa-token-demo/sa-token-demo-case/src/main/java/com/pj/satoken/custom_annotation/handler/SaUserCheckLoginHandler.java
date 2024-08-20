@@ -1,6 +1,6 @@
 package com.pj.satoken.custom_annotation.handler;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.annotation.handler.SaCheckLoginHandler;
 import com.pj.satoken.StpUserUtil;
 import com.pj.satoken.custom_annotation.SaUserCheckLogin;
@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  * @author click33
  */
 @Component
-public class SaUserCheckLoginHandler implements SaAnnotationAbstractHandler<SaUserCheckLogin> {
+public class SaUserCheckLoginHandler implements SaAnnotationHandlerInterface<SaUserCheckLogin> {
 
     @Override
     public Class<SaUserCheckLogin> getHandlerAnnotationClass() {

@@ -16,7 +16,7 @@
 package cn.dev33.satoken.solon;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -98,7 +98,7 @@ public class XPluginImp implements Plugin {
         });
 
         // 注入自定义注解处理器 Bean （可以有多个）
-        context.subBeansOfType(SaAnnotationAbstractHandler.class, sl -> {
+        context.subBeansOfType(SaAnnotationHandlerInterface.class, sl -> {
             SaAnnotationStrategy.instance.registerAnnotationHandler(sl);
         });
 

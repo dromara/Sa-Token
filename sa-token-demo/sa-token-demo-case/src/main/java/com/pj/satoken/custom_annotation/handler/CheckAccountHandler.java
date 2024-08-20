@@ -1,6 +1,6 @@
 package com.pj.satoken.custom_annotation.handler;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.SaTokenException;
 import com.pj.satoken.custom_annotation.CheckAccount;
@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
  *
  */
 @Component
-public class CheckAccountHandler implements SaAnnotationAbstractHandler<CheckAccount> {
+public class CheckAccountHandler implements SaAnnotationHandlerInterface<CheckAccount> {
 
     // 指定这个处理器要处理哪个注解
     @Override

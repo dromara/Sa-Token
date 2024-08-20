@@ -1,6 +1,6 @@
 package cn.dev33.satoken.aop;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +30,7 @@ public class SaAopPointcutAdvisorBeanRegister {
     public static SaAroundAnnotationPointcutAdvisor saAroundAnnoAdvisor;
 
     @Bean
-    public SaAroundAnnotationPointcutAdvisor saAroundAnnotationHandlePointcutAdvisor (List<SaAnnotationAbstractHandler<?>> handlerList) {
+    public SaAroundAnnotationPointcutAdvisor saAroundAnnotationHandlePointcutAdvisor (List<SaAnnotationHandlerInterface<?>> handlerList) {
         SaAroundAnnotationPointcutAdvisor advisor = new SaAroundAnnotationPointcutAdvisor();
 
         // 定义切入规则
@@ -52,14 +52,14 @@ public class SaAopPointcutAdvisorBeanRegister {
      * @param appendHandlerList 追加的 SaAnnotationAbstractHandler 处理器
      * @return /
      */
-    public static String calcExpression(List<SaAnnotationAbstractHandler<?>> appendHandlerList) {
+    public static String calcExpression(List<SaAnnotationHandlerInterface<?>> appendHandlerList) {
 
         // 框架内置的
         List<Class<?>> list = new ArrayList<>(SaAnnotationStrategy.instance.annotationHandlerMap.keySet());
 
         // 额外追加的
         if(appendHandlerList != null) {
-            for (SaAnnotationAbstractHandler<?> handler : appendHandlerList) {
+            for (SaAnnotationHandlerInterface<?> handler : appendHandlerList) {
                 Class<?> cls = handler.getHandlerAnnotationClass();
                 if(!list.contains(cls)) {
                     list.add(handler.getHandlerAnnotationClass());

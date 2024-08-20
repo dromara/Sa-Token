@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckPermissionHandler implements SaAnnotationAbstractHandler<SaCheckPermission> {
+public class SaCheckPermissionHandler implements SaAnnotationHandlerInterface<SaCheckPermission> {
 
     @Override
     public Class<SaCheckPermission> getHandlerAnnotationClass() {

@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public interface SaAnnotationAbstractHandler<T extends Annotation> {
+public interface SaAnnotationHandlerInterface<T extends Annotation> {
 
     /**
      * 获取所要处理的注解类型

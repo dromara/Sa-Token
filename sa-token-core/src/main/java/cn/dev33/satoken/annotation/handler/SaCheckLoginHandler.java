@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckLoginHandler implements SaAnnotationAbstractHandler<SaCheckLogin> {
+public class SaCheckLoginHandler implements SaAnnotationHandlerInterface<SaCheckLogin> {
 
     @Override
     public Class<SaCheckLogin> getHandlerAnnotationClass() {

@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.listener;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationAbstractHandler;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpLogic;
@@ -130,7 +130,7 @@ public interface SaTokenListener {
 	 * 注册了自定义注解处理器
 	 * @param handler 注解处理器
 	 */
-	default void doRegisterAnnotationHandler(SaAnnotationAbstractHandler<?> handler) {}
+	default void doRegisterAnnotationHandler(SaAnnotationHandlerInterface<?> handler) {}
 
 	/**
 	 * StpLogic 对象替换 

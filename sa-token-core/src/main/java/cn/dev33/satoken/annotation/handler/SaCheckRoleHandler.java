@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckRoleHandler implements SaAnnotationAbstractHandler<SaCheckRole> {
+public class SaCheckRoleHandler implements SaAnnotationHandlerInterface<SaCheckRole> {
 
     @Override
     public Class<SaCheckRole> getHandlerAnnotationClass() {

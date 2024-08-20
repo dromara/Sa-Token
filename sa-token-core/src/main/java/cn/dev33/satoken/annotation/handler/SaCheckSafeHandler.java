@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckSafeHandler implements SaAnnotationAbstractHandler<SaCheckSafe> {
+public class SaCheckSafeHandler implements SaAnnotationHandlerInterface<SaCheckSafe> {
 
     @Override
     public Class<SaCheckSafe> getHandlerAnnotationClass() {

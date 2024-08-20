@@ -31,7 +31,7 @@ import java.util.List;
  * @author click33
  * @since 2024/8/2
  */
-public class SaCheckOrHandler implements SaAnnotationAbstractHandler<SaCheckOr> {
+public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr> {
 
     @Override
     public Class<SaCheckOr> getHandlerAnnotationClass() {
