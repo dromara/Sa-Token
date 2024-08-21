@@ -66,7 +66,11 @@ public class SaOAuth2Config implements Serializable {
 	/** 默认 openid 生成算法中使用的摘要前缀 */
 	public String openidDigestPrefix = SaOAuth2Consts.OPENID_DEFAULT_DIGEST_PREFIX;
 
+	/** 指定高级权限，多个用逗号隔开 */
+	public String higherScope;
 
+	/** 指定低级权限，多个用逗号隔开 */
+	public String lowerScope;
 
 	/**
 	 * @return enableCode
@@ -77,9 +81,11 @@ public class SaOAuth2Config implements Serializable {
 
 	/**
 	 * @param enableCode 要设置的 enableCode
+	 * @return /
 	 */
-	public void setEnableCode(Boolean enableCode) {
+	public SaOAuth2Config setEnableCode(Boolean enableCode) {
 		this.enableCode = enableCode;
+		return this;
 	}
 
 	/**
@@ -91,9 +97,11 @@ public class SaOAuth2Config implements Serializable {
 
 	/**
 	 * @param enableImplicit 要设置的 enableImplicit
+	 * @return /
 	 */
-	public void setEnableImplicit(Boolean enableImplicit) {
+	public SaOAuth2Config setEnableImplicit(Boolean enableImplicit) {
 		this.enableImplicit = enableImplicit;
+		return this;
 	}
 
 	/**
@@ -106,8 +114,9 @@ public class SaOAuth2Config implements Serializable {
 	/**
 	 * @param enablePassword 要设置的 enablePassword
 	 */
-	public void setEnablePassword(Boolean enablePassword) {
+	public SaOAuth2Config setEnablePassword(Boolean enablePassword) {
 		this.enablePassword = enablePassword;
+		return this;
 	}
 
 	/**
@@ -119,9 +128,11 @@ public class SaOAuth2Config implements Serializable {
 
 	/**
 	 * @param enableClient 要设置的 enableClient
+	 * @return /
 	 */
-	public void setEnableClient(Boolean enableClient) {
+	public SaOAuth2Config setEnableClient(Boolean enableClient) {
 		this.enableClient = enableClient;
+		return this;
 	}
 
 	/**
@@ -133,9 +144,11 @@ public class SaOAuth2Config implements Serializable {
 
 	/**
 	 * @param isNewRefresh 要设置的 isNewRefresh
+	 * @return /
 	 */
-	public void setIsNewRefresh(Boolean isNewRefresh) {
+	public SaOAuth2Config setIsNewRefresh(Boolean isNewRefresh) {
 		this.isNewRefresh = isNewRefresh;
+		return this;
 	}
 
 	/**
@@ -229,13 +242,53 @@ public class SaOAuth2Config implements Serializable {
 	 * @param openidDigestPrefix 要设置的 openidDigestPrefix
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setOpenidMd5Prefix(String openidDigestPrefix) {
+	public SaOAuth2Config setOpenidDigestPrefix(String openidDigestPrefix) {
 		this.openidDigestPrefix = openidDigestPrefix;
 		return this;
 	}
 
-	
-	// -------------------- SaOAuth2Handle 所有回调函数 -------------------- 
+	/**
+	 * 获取 指定高级权限，多个用逗号隔开
+	 *
+	 * @return higherScope 指定高级权限，多个用逗号隔开
+	 */
+	public String getHigherScope() {
+		return this.higherScope;
+	}
+
+	/**
+	 * 设置 指定高级权限，多个用逗号隔开
+	 *
+	 * @param higherScope 指定高级权限，多个用逗号隔开
+	 * @return /
+	 */
+	public SaOAuth2Config setHigherScope(String higherScope) {
+		this.higherScope = higherScope;
+		return this;
+	}
+
+	/**
+	 * 获取 指定低级权限，多个用逗号隔开
+	 *
+	 * @return lowerScope 指定低级权限，多个用逗号隔开
+	 */
+	public String getLowerScope() {
+		return this.lowerScope;
+	}
+
+	/**
+	 * 设置 指定低级权限，多个用逗号隔开
+	 *
+	 * @param lowerScope 指定低级权限，多个用逗号隔开
+	 * @return /
+	 */
+	public SaOAuth2Config setLowerScope(String lowerScope) {
+		this.lowerScope = lowerScope;
+		return this;
+	}
+
+
+	// -------------------- SaOAuth2Handle 所有回调函数 --------------------
 	
 	/**
 	 * OAuth-Server端：未登录时返回的View 
@@ -254,19 +307,20 @@ public class SaOAuth2Config implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SaOAuth2Config [" +
-				"enableCode=" + enableCode
-				+ ", enableImplicit=" + enableImplicit
-				+ ", enablePassword=" + enablePassword
-				+ ", enableClient=" + enableClient
-				+ ", isNewRefresh=" + isNewRefresh
-				+ ", codeTimeout=" + codeTimeout
-				+ ", accessTokenTimeout=" + accessTokenTimeout
-				+ ", refreshTokenTimeout=" + refreshTokenTimeout
-				+ ", clientTokenTimeout=" + clientTokenTimeout
-				+ ", pastClientTokenTimeout=" + pastClientTokenTimeout
-				+ ", openidDigestPrefix=" + openidDigestPrefix
-				+"]";
+		return "SaOAuth2Config{" +
+				"enableCode=" + enableCode +
+				", enableImplicit=" + enableImplicit +
+				", enablePassword=" + enablePassword +
+				", enableClient=" + enableClient +
+				", isNewRefresh=" + isNewRefresh +
+				", codeTimeout=" + codeTimeout +
+				", accessTokenTimeout=" + accessTokenTimeout +
+				", refreshTokenTimeout=" + refreshTokenTimeout +
+				", clientTokenTimeout=" + clientTokenTimeout +
+				", pastClientTokenTimeout=" + pastClientTokenTimeout +
+				", openidDigestPrefix='" + openidDigestPrefix +
+				", higherScope='" + higherScope +
+				", lowerScope='" + lowerScope +
+				'}';
 	}
-	
 }

@@ -112,5 +112,8 @@ public interface SaOAuth2ErrorCode {
 	
 	/** 暂未开放凭证式模式 */
 	int CODE_30134 = 30134;
-	
+
+	/** 无效的请求 Method */
+	int CODE_30141 = 30141;
+
 }

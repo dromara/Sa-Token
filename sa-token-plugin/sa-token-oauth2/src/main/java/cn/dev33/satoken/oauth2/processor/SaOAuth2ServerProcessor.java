@@ -35,6 +35,7 @@ import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
+import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -124,28 +125,7 @@ public class SaOAuth2ServerProcessor {
 		String responseType = req.getParamNotNull(Param.response_type);
 
 		// 1、先判断是否开启了指定的授权模式
-		// 		模式一：Code授权码
-		if(responseType.equals(ResponseType.code)) {
-			if(!cfg.enableCode) {
-				throwErrorSystemNotEnableModel();
-			}
-			if(!currClientModel().enableCode) {
-				throwErrorClientNotEnableModel();
-			}
-		}
-		// 		模式二：隐藏式
-		else if(responseType.equals(ResponseType.token)) {
-			if(!cfg.enableImplicit) {
-				throwErrorSystemNotEnableModel();
-			}
-			if(!currClientModel().enableImplicit) {
-				throwErrorClientNotEnableModel();
-			}
-		}
-		// 		其它
-		else {
-			throw new SaOAuth2Exception("无效 response_type: " + req.getParam(Param.response_type)).setCode(SaOAuth2ErrorCode.CODE_30125);
-		}
+		checkAuthorizeResponseType(responseType, req, cfg);
 
 		// 2、如果尚未登录, 则先去登录
 		if( ! getStpLogic().isLogin()) {
@@ -162,8 +142,8 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkContract(ra.clientId, ra.scopes);
 
 		// 6、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
-		boolean isGrant = oauth2Template.isGrant(ra.loginId, ra.clientId, ra.scopes);
-		if( ! isGrant) {
+		boolean isNeedCarefulConfirm = oauth2Template.isNeedCarefulConfirm(ra.loginId, ra.clientId, ra.scopes);
+		if(isNeedCarefulConfirm) {
 			return cfg.confirmView.apply(ra.clientId, ra.scopes);
 		}
 
@@ -306,7 +286,7 @@ public class SaOAuth2ServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
-		return cfg.doLoginHandle.apply(req.getParamNotNull(Param.name), req.getParamNotNull(Param.pwd));
+		return cfg.doLoginHandle.apply(req.getParam(Param.name), req.getParam(Param.pwd));
 	}
 
 	/**
@@ -316,13 +296,51 @@ public class SaOAuth2ServerProcessor {
 	public Object doConfirm() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-
 		String clientId = req.getParamNotNull(Param.client_id);
+		Object loginId = getStpLogic().getLoginId();
 		String scope = req.getParamNotNull(Param.scope);
 		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
-		Object loginId = getStpLogic().getLoginId();
+		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
+
+		// 此请求只允许 POST 方式
+		if(!req.isMethod(SaHttpMethod.POST)) {
+			throw new SaOAuth2Exception("无效请求方式：" + req.getMethod()).setCode(SaOAuth2ErrorCode.CODE_30141);
+		}
+
+		// 确认授权
 		oauth2Template.saveGrantScope(clientId, loginId, scopes);
-		return SaResult.ok();
+
+		// 判断所需的返回结果模式
+		boolean buildRedirectUri = req.isParam(Param.build_redirect_uri, "true");
+
+		// -------- 情况1：只返回确认结果即可
+		if( ! buildRedirectUri ) {
+			oauth2Template.saveGrantScope(clientId, loginId, scopes);
+			return SaResult.ok();
+		}
+
+		// -------- 情况2：需要返回最终的 redirect_uri 地址
+
+		// s3、构建请求 Model
+		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, loginId);
+
+		// 7、判断授权类型，构建不同的重定向地址
+		// 		如果是 授权码式，则：开始重定向授权，下放code
+		if(ResponseType.code.equals(ra.responseType)) {
+			CodeModel codeModel = dataGenerate.generateCode(ra);
+			String redirectUri = dataGenerate.buildRedirectUri(ra.redirectUri, codeModel.code, ra.state);
+			return SaResult.ok().set(Param.redirect_uri, redirectUri);
+		}
+
+		// 		如果是 隐藏式，则：开始重定向授权，下放 token
+		if(ResponseType.token.equals(ra.responseType)) {
+			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false);
+			String redirectUri = dataGenerate.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
+			return SaResult.ok().set(Param.redirect_uri, redirectUri);
+		}
+
+		// 默认返回
+		throw new SaOAuth2Exception("无效response_type: " + ra.responseType).setCode(SaOAuth2ErrorCode.CODE_30125);
 	}
 
 	/**
@@ -408,6 +426,9 @@ public class SaOAuth2ServerProcessor {
 		return SaOAuth2Manager.getDataResolver().buildClientTokenReturnValue(ct);
 	}
 
+
+	// ----------- 代码块封装 --------------
+
 	/**
 	 * 根据当前请求提交的 client_id 参数获取 SaClientModel 对象 
 	 * @return / 
@@ -415,6 +436,34 @@ public class SaOAuth2ServerProcessor {
 	public SaClientModel currClientModel() {
 		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(SaHolder.getRequest());
 		return oauth2Template.checkClientModel(clientIdAndSecret.clientId);
+	}
+
+	/**
+	 * 校验 authorize 路由的 ResponseType 参数
+	 */
+	public void checkAuthorizeResponseType(String responseType, SaRequest req, SaOAuth2Config cfg) {
+		// 模式一：Code授权码
+		if(responseType.equals(ResponseType.code)) {
+			if(!cfg.enableCode) {
+				throwErrorSystemNotEnableModel();
+			}
+			if(!currClientModel().enableCode) {
+				throwErrorClientNotEnableModel();
+			}
+		}
+		// 模式二：隐藏式
+		else if(responseType.equals(ResponseType.token)) {
+			if(!cfg.enableImplicit) {
+				throwErrorSystemNotEnableModel();
+			}
+			if(!currClientModel().enableImplicit) {
+				throwErrorClientNotEnableModel();
+			}
+		}
+		// 其它
+		else {
+			throw new SaOAuth2Exception("无效 response_type: " + req.getParam(Param.response_type)).setCode(SaOAuth2ErrorCode.CODE_30125);
+		}
 	}
 
 	/**

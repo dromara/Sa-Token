@@ -15,6 +15,10 @@ sa-token:
         enable-password: true
         # 是否全局开启客户端模式
         enable-client: true
+        # 定义哪些 scope 是高级权限，多个用逗号隔开
+        # higher-scope: openid,userid
+        # 定义哪些 scope 是低级权限，多个用逗号隔开
+        # lower-scope: userinfo
 
 spring: 
     # redis配置 

@@ -139,7 +139,7 @@ http://sa-oauth-server.com:8000/oauth2/authorize
 
 
 #### 3、code 换 access_token
-3、访问上述链接后，得到 `code` 授权码，然后我们拿着 `code` 换 `access_token`
+访问上述链接后，得到 `code` 授权码，然后我们拿着 `code` 换 `access_token`
 ``` url
 http://sa-oauth-server.com:8000/oauth2/token
     ?grant_type=authorization_code

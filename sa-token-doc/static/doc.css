@@ -413,13 +413,14 @@ body {
 	background-color: #f4fdef;
 	overflow: hidden;
 	max-height: 44px;
+	margin-bottom: 1em;
 	/* transition: all 1s; */
 }
-.main-box details[open]{ /* max-height: 1000px; */ overflow: auto; animation: slideDown 0.4s linear both;}
+.main-box details[open]{ /* max-height: 1000px; */ overflow: auto; animation: slideDown 0.6s linear both;}
 @keyframes slideDown {
     0% { max-height: 44px; overflow: hidden; }
-    99% { max-height: 1000px; overflow: hidden; }
-    100% { max-height: 1000px; overflow: auto; }
+    99% { max-height: 1500px; overflow: hidden; }
+    100% { max-height: 1500px; overflow: auto; }
 }
 .main-box details summary{
 	padding: 11px 14px;
@@ -429,8 +430,9 @@ body {
 }
 .main-box details pre{
 	margin-left: 1em;
-	margin-right: 14px;
+	margin-right: 1em;
 }
+.main-box details table{margin-left: 1em !important; margin-right: 1em; width: auto;}
 .main-box details p{padding: 0 14px;}
 
 /* 广告盒子 */

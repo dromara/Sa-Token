@@ -123,6 +123,7 @@ public class SaOAuth2Template {
 
 
 	// ------------------- check 数据校验
+
 	/**
 	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope
 	 * @param loginId 账号id
@@ -135,6 +136,39 @@ public class SaOAuth2Template {
 		List<String> grantScopeList = dao.getGrantScope(clientId, loginId);
         return scopes.isEmpty() || new HashSet<>(grantScopeList).containsAll(scopes);
 	}
+
+	/**
+	 * 判断：指定 loginId 在指定 Client 请求指定 Scope 时，是否需要手动确认授权
+	 * @param loginId 账号id
+	 * @param clientId 应用id
+	 * @param scopes 权限
+	 * @return 是否已经授权
+	 */
+	public boolean isNeedCarefulConfirm(Object loginId, String clientId, List<String> scopes) {
+		// 如果请求的权限为空，则不需要确认
+		if(scopes == null || scopes.isEmpty()) {
+			return false;
+		}
+
+		// 如果包含高级权限，则必须手动确认授权
+		List<String> higherScopeList = getHigherScopeList();
+		if(SaFoxUtil.list1ContainList2AnyElement(scopes, higherScopeList)) {
+			return true;
+		}
+
+		// 如果包含低级权限，则先将低级权限剔除掉
+		List<String> lowerScopeList = getLowerScopeList();
+		scopes = SaFoxUtil.list1RemoveByList2(scopes, lowerScopeList);
+
+		// 如果剔除后的权限为空，则不需要确认
+		if(scopes.isEmpty()) {
+			return false;
+		}
+
+		// 根据近期授权记录，判断是否需要确认
+		return !isGrant(loginId, clientId, scopes);
+	}
+
 	/**
 	 * 校验：该Client是否签约了指定的Scope
 	 * @param clientId 应用id
@@ -360,6 +394,24 @@ public class SaOAuth2Template {
 	 */
 	public void saveGrantScope(String clientId, Object loginId, List<String> scopes) {
 		SaOAuth2Manager.getDao().saveGrantScope(clientId, loginId, scopes);
+	}
+
+	/**
+	 * 获取高级权限列表
+	 * @return /
+	 */
+	public List<String> getHigherScopeList() {
+		String higherScope = SaOAuth2Manager.getConfig().getHigherScope();
+		return SaOAuth2Manager.getDataConverter().convertScopeStringToList(higherScope);
+	}
+
+	/**
+	 * 获取低级权限列表
+	 * @return /
+	 */
+	public List<String> getLowerScopeList() {
+		String lowerScope = SaOAuth2Manager.getConfig().getLowerScope();
+		return SaOAuth2Manager.getDataConverter().convertScopeStringToList(lowerScope);
 	}
 
 

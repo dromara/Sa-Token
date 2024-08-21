@@ -43,6 +43,82 @@ redirect_uri?code={code}&state={state}
 4. 每次授权产生新 `Code` 码，会导致旧 `Code` 码立即作废，即使旧 `Code` 码尚未使用。
 
 
+<details>
+<summary>RestAPI 登录接口：/oauth2/doLogin</summary>
+
+如果用户在 OAuth-Server 端尚未登录，则会被阻塞在登录界面，开始登录，需要在页面上调用`/oauth2/doLogin`完成登录（此接口非 OAuth2 标准协议接口）
+
+``` url
+http://{host}:{port}/oauth2/doLogin
+	?name={name}
+	&pwd={pwd}
+```
+参数详解：
+
+| 参数			| 是否必填	| 说明													|
+| :--------		| :--------	| :--------												|
+| name			| 否		| 账号													|
+| pwd			| 否		| 密码													|
+
+访问此接口将进入自定义的 `cfg.doLoginHandle` 函数开始登录，你只要在此函数内调用 `StpUtil.login(xxx)` 即代表登录成功。
+
+另外需要注意：此接口并非只能携带 `name`、`pwd` 参数，因为你可以在方法里通过 `SaHolder.getRequest().getParam("xxx")` 来获取前端提交的其它参数。
+
+</details>
+
+
+<details>
+<summary>RestAPI 确认授权接口：/oauth2/doConfirm</summary>
+
+如果 oauth-client 端申请的 scope 在 OAuth-Server 端需要用户手动确认授权，则会被阻塞在授权界面，
+需要在页面上调用`/oauth2/doConfirm`完成授权（此接口非 OAuth2 标准协议接口）
+
+``` url
+http://{host}:{port}/oauth2/doConfirm
+    ?client={value}
+    &scope={value}
+    &build_redirect_uri={true|false}
+    &response_type={value}
+    &redirect_uri={value}
+    &state={value}
+```
+参数详解：
+
+| 参数					| 是否必填	| 说明													|
+| :--------				| :--------	| :--------												|
+| client_id				| 是		| 应用 id												|
+| scope					| 是		| 具体确认的权限，多个用逗号(或空格)隔开					|
+| build_redirect_uri	| 否		| 是否立即构建 `redirect_uri` 授权地址，取值：true | false		|
+| response_type			| 否		| 取 url 上的 `response_type` 参数来提交					|
+| redirect_uri			| 否		| 取 url 上的 `redirect_uri` 参数来提交					|
+| state					| 否		| 取 url 上的 `state` 参数来提交							|
+
+此接口有两种调用方式，一种只提供 `client_id`、`scope` 两个参数，此时返回结果代表是否确认授权成功：
+``` js
+{
+    code: 200, 
+    msg: 'ok', 
+    data: null,
+}
+```
+
+一种是指定 `build_redirect_uri: true`，并同时提供 `client_id`、`scope`、`response_type`、`redirect_uri`、`state` 全部参数，
+此时返回结果包括最终的 code 授权地址：
+``` js
+{
+    code: 200, 
+    msg: 'ok', 
+    data: null,
+	redirect_uri: 'http://sa-oauth-client.com:8002/?code=n12TTc1M9REfJVqKm0wewDz0tNZDBhE1A90irOJmxD0zb92pdhUK8NghJfuC'
+}
+```
+
+前端在 ajax 回调函数中直接使用 `location.href=res.redirect_uri` 跳转即可，无需再重复访问 `/oauth2/authorize` 接口。
+
+</details>
+
+
+
 ### 1.2、根据授权码获取 Access-Token
 获得 `Code` 码后，我们可以通过以下接口，获取到用户的 `Access-Token`、`Refresh-Token` 等信息。
 
@@ -138,7 +214,7 @@ http://{host}:{port}/oauth2/revoke
 
 
 ### 1.5、根据 Access-Token 获取相应用户的账号信息  
-注：此接口为官方仓库模拟接口，正式项目中大家可以根据此样例，自定义需要的接口及参数 
+注：此接口非 OAuth2 标准协议接口，为官方仓库 demo 模拟接口，正式项目中大家可以根据此样例，自定义需要的接口及参数 
 
 ``` url
 http://{host}:{port}/oauth2/userinfo?access_token={access_token}

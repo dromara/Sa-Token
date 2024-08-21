@@ -57,7 +57,7 @@ public class SaOAuth2ServerController {
 		};
 	}
 
-	
+
 	// ---------- 开放相关资源接口： Client端根据 Access-Token ，置换相关资源 ------------ 
 	
 	// 获取 userinfo 信息：昵称、头像、性别等等

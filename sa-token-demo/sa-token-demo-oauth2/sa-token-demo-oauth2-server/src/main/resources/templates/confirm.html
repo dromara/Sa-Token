@@ -33,20 +33,31 @@
 				console.log('-----------');
 				$.ajax({
 					url: '/oauth2/doConfirm',
+					method: "POST",
 					data: {
 						client_id: getParam('client_id'),
-						scope: getParam('scope')
+						scope: getParam('scope'),
+						// 以下四个参数必须一起出现
+						build_redirect_uri: true,
+						response_type: getParam('response_type'),
+						redirect_uri: getParam('redirect_uri'),
+						state: getParam('state'),
 					},
 					dataType: 'json',
 					success: function(res) {
-						if(res.code == 200) {
+						console.log('res：', res);
+						if(res.code === 200) {
 							layer.msg('授权成功！');
 							setTimeout(function() {
-								location.reload(true);
+								if (res.redirect_uri) {
+									location.href = res.redirect_uri;
+								} else {
+									location.reload();
+								}
 							}, 800);
 						} else {
 							// 重定向至授权失败URL 
-							layer.alert('授权失败！');
+							layer.alert('授权失败:' + res.msg);
 						}
 					},
 					error: function(e) {

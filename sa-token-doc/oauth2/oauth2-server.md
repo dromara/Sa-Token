@@ -119,10 +119,16 @@ public class SaOAuth2ServerController {
 		// 配置：确认授权时返回的 view 
 		cfg.confirmView = (clientId, scopes) -> {
 			String scopeStr = SaFoxUtil.convertListToString(scopes);
-			String msg = "<p>应用 " + clientId + " 请求授权：" + scopeStr + "</p>"
-					+ "<p>请确认：<a href='/oauth2/doConfirm?client_id=" + clientId + "&scope=" + scopeStr + "' target='_blank'> 确认授权 </a></p>"
-					+ "<p>确认之后刷新页面</p>";
-			return msg;
+			String yesCode =
+					"fetch('/oauth2/doConfirm?client_id=" + clientId + "&scope=" + scopeStr + "', {method: 'POST'})" +
+					".then(res => res.json())" +
+					".then(res => location.reload())";
+			String res = "<p>应用 " + clientId + " 请求授权：" + scopeStr + "，是否同意？</p>"
+					+ "<p>" +
+					"		<button onclick=\"" + yesCode + "\">同意</button>" +
+					"		<button onclick='history.back()'>拒绝</button>" +
+					"</p>";
+			return res;
 		};
 	}
 

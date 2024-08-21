@@ -17,6 +17,7 @@ package cn.dev33.satoken.context.model;
 
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
@@ -156,7 +157,25 @@ public interface SaRequest {
 	 * @return /
 	 */
 	String getMethod();
-	
+
+	/**
+	 * 返回当前请求 Method 是否为指定值
+	 * @param method method
+	 * @return /
+	 */
+	default boolean isMethod(String method) {
+		return getMethod().equals(method);
+	}
+
+	/**
+	 * 返回当前请求 Method 是否为指定值
+	 * @param method method
+	 * @return /
+	 */
+	default boolean isMethod(SaHttpMethod method) {
+		return getMethod().equals(method.name());
+	}
+
 	/**
 	 * 判断此请求是否为 Ajax 异步请求
 	 * @return /

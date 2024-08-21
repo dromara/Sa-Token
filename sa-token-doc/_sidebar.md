@@ -59,13 +59,14 @@
 	- [定制化登录页面与授权页面](/oauth2/oauth2-custom-login)
 	- [自定义 API 路由 ](/oauth2/oauth2-custom-api)
 	- [自定义 Scope 权限以处理器](/oauth2/oauth2-custom-scope-handler)
-	- [为 Scope 划分等级](/oauth2/7)
-	<!-- - [前后端分离模式整合方案](/oauth2/4) -->
-	- [平台中心模式开发](/oauth2/5)
+	- [为 Scope 划分等级](/oauth2/oauth2-scope-level)
+	- [自定义 grant_type](/oauth2/oauth2-custom-grant_type)
 	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
 	- [OAuth2 代码 API 参考](/oauth2/oauth2-dev)
 	- [常见问题说明](/oauth2/8)
-	- <!-- jwt风格token、使用注解校验权限、OAuth2整个流程参考、state参数详解 -->
+	<!-- - [前后端分离模式整合方案](/oauth2/4) -->
+	<!-- - [平台中心模式开发](/oauth2/5) -->
+	- <!-- jwt风格token、使用注解校验权限、state参数详解 -->
 
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)

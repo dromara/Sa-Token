@@ -678,4 +678,63 @@ public class SaFoxUtil {
 		return false;
 	}
 
+	/**
+	 * list1 是否完全包含 list2 中所有元素
+	 * @param list1 集合1
+	 * @param list2 集合2
+	 * @return /
+	 */
+	public static boolean list1ContainList2AllElement(List<String> list1, List<String> list2){
+		if(list2 == null || list2.isEmpty()) {
+			return true;
+		}
+		if(list1 == null || list1.isEmpty()) {
+			return false;
+		}
+		for (String str : list2) {
+			if(!list1.contains(str)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * list1 是否包含 list2 中任意一个元素
+	 * @param list1 集合1
+	 * @param list2 集合2
+	 * @return /
+	 */
+	public static boolean list1ContainList2AnyElement(List<String> list1, List<String> list2){
+		if(list1 == null || list1.isEmpty() || list2 == null || list2.isEmpty()) {
+			return false;
+		}
+		for (String str : list2) {
+			if(list1.contains(str)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 从 list1 中剔除 list2 所包含的元素 （克隆副本操作，不影响 list1）
+	 * @param list1 集合1
+	 * @param list2 集合2
+	 * @return /
+	 */
+	public static List<String> list1RemoveByList2(List<String> list1, List<String> list2){
+		if(list1 == null) {
+			return null;
+		}
+		if(list1.isEmpty() || list2 == null || list2.isEmpty()) {
+			return new ArrayList<>(list1);
+		}
+		List<String> listX = new ArrayList<>(list1);
+		for (String str : list2) {
+			listX.remove(str);
+		}
+		return listX;
+	}
+
 }
