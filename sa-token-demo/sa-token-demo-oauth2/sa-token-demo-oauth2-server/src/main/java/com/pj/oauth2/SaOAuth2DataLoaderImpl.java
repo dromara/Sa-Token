@@ -1,5 +1,6 @@
 package com.pj.oauth2;
 
+import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import org.springframework.stereotype.Component;
@@ -22,10 +23,14 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")    // client 秘钥
 					.addAllowUrls("*")    // 所有允许授权的 url
 					.addContractScopes("openid", "userid", "userinfo")    // 所有签约的权限
-					.setEnableCode(true)    	// 是否开启授权码模式
-					.setEnableImplicit(true)    // 是否开启隐式模式
-					.setEnablePassword(true)    // 是否开启密码模式
-					.setEnableClient(true)    	// 是否开启客户端模式
+					.addAllowGrantTypes(	 // 所有允许的授权模式
+							GrantType.authorization_code, // 授权码式
+							GrantType.implicit,  // 隐式式
+							GrantType.refresh_token,  // 刷新令牌
+							GrantType.password,  // 密码式
+							GrantType.client_credentials,  // 客户端模式
+							"phone_code"  // 自定义授权模式 手机号验证码登录
+					)
 			;
 		}
 		return null;

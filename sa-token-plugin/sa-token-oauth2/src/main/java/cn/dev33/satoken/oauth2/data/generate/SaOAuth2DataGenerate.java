@@ -35,21 +35,21 @@ public interface SaOAuth2DataGenerate {
      * @param ra 请求参数Model
      * @return 授权码Model
      */
-    public CodeModel generateCode(RequestAuthModel ra);
+    CodeModel generateCode(RequestAuthModel ra);
 
     /**
      * 构建Model：Access-Token
      * @param code 授权码Model
      * @return AccessToken Model
      */
-    public AccessTokenModel generateAccessToken(String code);
+    AccessTokenModel generateAccessToken(String code);
 
     /**
      * 刷新Model：根据 Refresh-Token 生成一个新的 Access-Token
      * @param refreshToken Refresh-Token值
      * @return 新的 Access-Token
      */
-    public AccessTokenModel refreshAccessToken(String refreshToken);
+    AccessTokenModel refreshAccessToken(String refreshToken);
 
     /**
      * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式)
@@ -57,7 +57,7 @@ public interface SaOAuth2DataGenerate {
      * @param isCreateRt 是否生成对应的Refresh-Token
      * @return Access-Token Model
      */
-    public AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt);
+    AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt);
 
     /**
      * 构建Model：Client-Token
@@ -65,7 +65,7 @@ public interface SaOAuth2DataGenerate {
      * @param scopes 授权范围
      * @return Client-Token Model
      */
-    public ClientTokenModel generateClientToken(String clientId, List<String> scopes);
+    ClientTokenModel generateClientToken(String clientId, List<String> scopes);
 
     /**
      * 构建URL：下放Code URL (Authorization Code 授权码)
@@ -74,7 +74,7 @@ public interface SaOAuth2DataGenerate {
      * @param state state参数
      * @return 构建完毕的URL
      */
-    public String buildRedirectUri(String redirectUri, String code, String state);
+    String buildRedirectUri(String redirectUri, String code, String state);
 
     /**
      * 构建URL：下放Access-Token URL （implicit 隐藏式）
@@ -83,14 +83,12 @@ public interface SaOAuth2DataGenerate {
      * @param state state参数
      * @return 构建完毕的URL
      */
-    public String buildImplicitRedirectUri(String redirectUri, String token, String state);
+    String buildImplicitRedirectUri(String redirectUri, String token, String state);
 
     /**
      * 回收 Access-Token
      * @param accessToken Access-Token值
      */
-    public void revokeAccessToken(String accessToken);
-
-
+    void revokeAccessToken(String accessToken);
 
 }

@@ -26,6 +26,9 @@ import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoaderDefaultImpl;
 import cn.dev33.satoken.oauth2.data.resolver.SaOAuth2DataResolver;
 import cn.dev33.satoken.oauth2.data.resolver.SaOAuth2DataResolverDefaultImpl;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * Sa-Token-OAuth2 模块 总控类
@@ -142,6 +145,42 @@ public class SaOAuth2Manager {
 	}
 	public static void setDao(SaOAuth2Dao dao) {
 		SaOAuth2Manager.dao = dao;
+	}
+
+	/**
+	 * OAuth2 模板方法 Bean
+	 */
+	private static volatile SaOAuth2Template template;
+	public static SaOAuth2Template getTemplate() {
+		if (template == null) {
+			synchronized (SaOAuth2Manager.class) {
+				if (template == null) {
+					setTemplate(new SaOAuth2Template());
+				}
+			}
+		}
+		return template;
+	}
+	public static void setTemplate(SaOAuth2Template template) {
+		SaOAuth2Manager.template = template;
+	}
+
+	/**
+	 * OAuth2 StpLogic
+	 */
+	private static volatile StpLogic stpLogic;
+	public static StpLogic getStpLogic() {
+		if (stpLogic == null) {
+			synchronized (SaOAuth2Manager.class) {
+				if (stpLogic == null) {
+					setStpLogic(StpUtil.stpLogic);
+				}
+			}
+		}
+		return stpLogic;
+	}
+	public static void setStpLogic(StpLogic stpLogic) {
+		SaOAuth2Manager.stpLogic = stpLogic;
 	}
 
 }

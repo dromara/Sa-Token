@@ -76,6 +76,17 @@ public class SaFoxUtil {
 	}
 
 	/**
+	 * 生成指定区间的 int 值
+	 *
+	 * @param min 最小值（包括）
+	 * @param max 最大值（包括）
+	 * @return /
+	 */
+	public static int getRandomNumber(int min, int max) {
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
+	}
+
+	/**
 	 * 指定元素是否为null或者空字符串
 	 * @param str 指定元素
 	 * @return 是否为null或者空字符串

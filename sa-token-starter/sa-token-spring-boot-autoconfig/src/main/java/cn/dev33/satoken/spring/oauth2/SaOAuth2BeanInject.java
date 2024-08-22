@@ -22,6 +22,7 @@ import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
 import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
 import cn.dev33.satoken.oauth2.data.loader.SaOAuth2DataLoader;
 import cn.dev33.satoken.oauth2.data.resolver.SaOAuth2DataResolver;
+import cn.dev33.satoken.oauth2.granttype.handler.SaOAuth2GrantTypeHandlerInterface;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeHandlerInterface;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
@@ -62,7 +63,17 @@ public class SaOAuth2BeanInject {
 	 */
 	@Autowired(required = false)
 	public void setSaOAuth2Template(SaOAuth2Template saOAuth2Template) {
-		SaOAuth2ServerProcessor.instance.oauth2Template = saOAuth2Template;
+		SaOAuth2Manager.setTemplate(saOAuth2Template);
+	}
+
+	/**
+	 * 注入 OAuth2 请求处理器
+	 *
+	 * @param serverProcessor 请求处理器
+	 */
+	@Autowired(required = false)
+	public void setSaOAuth2Template(SaOAuth2ServerProcessor serverProcessor) {
+		SaOAuth2ServerProcessor.instance = serverProcessor;
 	}
 
 	/**
@@ -124,6 +135,18 @@ public class SaOAuth2BeanInject {
 	public void setSaOAuth2ScopeHandler(List<SaOAuth2ScopeHandlerInterface> handlerList) {
 		for (SaOAuth2ScopeHandlerInterface handler : handlerList) {
 			SaOAuth2Strategy.instance.registerScopeHandler(handler);
+		}
+	}
+
+	/**
+	 * 注入自定义 grant_type 处理器
+	 *
+	 * @param handlerList 自定义 grant_type 处理器集合
+	 */
+	@Autowired(required = false)
+	public void setSaOAuth2GrantTypeHandlerInterface(List<SaOAuth2GrantTypeHandlerInterface> handlerList) {
+		for (SaOAuth2GrantTypeHandlerInterface handler : handlerList) {
+			SaOAuth2Strategy.instance.registerGrantTypeHandler(handler);
 		}
 	}
 

@@ -52,25 +52,11 @@ public class SaClientModel implements Serializable {
 	 * 应用允许授权的所有URL
 	 */
 	public List<String> allowUrls;
-	
-	/** 此 Client 是否打开模式：授权码（Authorization Code） */
-	public Boolean enableCode = false;
 
-	/** 此 Client 是否打开模式：隐藏式（Implicit） */
-	public Boolean enableImplicit = false;
-
-	/** 此 Client 是否打开模式：密码式（Password） */
-	public Boolean enablePassword = false;
-
-	/** 此 Client 是否打开模式：凭证式（Client Credentials） */
-	public Boolean enableClient = false;
-
-//	/**
-//	 * 是否自动判断此 Client 开放的授权模式
-//	 * <br> 此值为true时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠全局设置
-//	 * <br> 此值为false时：四种模式（isCode、isImplicit、isPassword、isClient）是否生效，依靠局部配置+全局配置
-//	 */
-//	public Boolean isAutoMode = true;
+	/**
+	 * 应用允许的所有 grant_type
+	 */
+	public List<String> allowGrantTypes = new ArrayList<>();
 
 	/** 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
 	public Boolean isNewRefresh;
@@ -169,86 +155,22 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @return 此 Client 是否打开模式：授权码（Authorization Code）
+	 * @return 应用允许的所有 grant_type
 	 */
-	public Boolean getEnableCode() {
-		return enableCode;
+	public List<String> getAllowGrantTypes() {
+		return allowGrantTypes;
 	}
-	
+
 	/**
-	 * @param enableCode 此 Client 是否打开模式：授权码（Authorization Code）
-	 * @return 对象自身 
+	 * 应用允许的所有 grant_type
+	 * @param allowGrantTypes /
+	 * @return /
 	 */
-	public SaClientModel setEnableCode(Boolean enableCode) {
-		this.enableCode = enableCode;
+	public SaClientModel setAllowGrantTypes(List<String> allowGrantTypes) {
+		this.allowGrantTypes = allowGrantTypes;
 		return this;
 	}
-	
-	/**
-	 * @return 此 Client 是否打开模式：隐藏式（Implicit）
-	 */
-	public Boolean getEnableImplicit() {
-		return enableImplicit;
-	}
-	
-	/**
-	 * @param enableImplicit 此 Client 是否打开模式：隐藏式（Implicit）
-	 * @return 对象自身 
-	 */
-	public SaClientModel setEnableImplicit(Boolean enableImplicit) {
-		this.enableImplicit = enableImplicit;
-		return this;
-	}
-	
-	/**
-	 * @return 此 Client 是否打开模式：密码式（Password）
-	 */
-	public Boolean getEnablePassword() {
-		return enablePassword;
-	}
-	
-	/**
-	 * @param enablePassword 此 Client 是否打开模式：密码式（Password）
-	 * @return 对象自身 
-	 */
-	public SaClientModel setEnablePassword(Boolean enablePassword) {
-		this.enablePassword = enablePassword;
-		return this;
-	}
-	
-	/**
-	 * @return 此 Client 是否打开模式：凭证式（Client Credentials）
-	 */
-	public Boolean getEnableClient() {
-		return enableClient;
-	}
-	
-	/**
-	 * @param enableClient 此 Client 是否打开模式：凭证式（Client Credentials）
-	 * @return 对象自身 
-	 */
-	public SaClientModel setEnableClient(Boolean enableClient) {
-		this.enableClient = enableClient;
-		return this;
-	}
-//
-//	/**
-//	 * @return 是否自动判断此 Client 开放的授权模式
-//	 */
-//	public Boolean getIsAutoMode() {
-//		return isAutoMode;
-//	}
-//
-//	/**
-//	 * @param isAutoMode 是否自动判断此 Client 开放的授权模式
-//	 * @return 对象自身
-//	 */
-//	public SaClientModel setIsAutoMode(Boolean isAutoMode) {
-//		this.isAutoMode = isAutoMode;
-//		return this;
-//	}
-//
-	
+
 	/**
 	 * @return 此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
 	 */
@@ -338,11 +260,7 @@ public class SaClientModel implements Serializable {
 				", clientSecret='" + clientSecret + '\'' +
 				", contractScopes=" + contractScopes +
 				", allowUrls=" + allowUrls +
-				", isCode=" + enableCode +
-				", isImplicit=" + enableImplicit +
-				", isPassword=" + enablePassword +
-				", isClient=" + enableClient +
-//				", isAutoMode=" + isAutoMode +
+				", allowGrantTypes=" + allowGrantTypes +
 				", isNewRefresh=" + isNewRefresh +
 				", accessTokenTimeout=" + accessTokenTimeout +
 				", refreshTokenTimeout=" + refreshTokenTimeout +
@@ -367,7 +285,7 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @param urls 添加应用签约的所有权限
+	 * @param urls 添加应用允许授权的所有URL
 	 * @return 对象自身
 	 */
 	public SaClientModel addAllowUrls(String... urls) {
@@ -375,6 +293,18 @@ public class SaClientModel implements Serializable {
 			this.allowUrls = new ArrayList<>();
 		}
 		this.allowUrls.addAll(Arrays.asList(urls));
+		return this;
+	}
+
+	/**
+	 * @param grantTypes 应用允许的所有 grant_type
+	 * @return 对象自身
+	 */
+	public SaClientModel addAllowGrantTypes(String... grantTypes) {
+		if(this.allowGrantTypes == null) {
+			this.allowGrantTypes = new ArrayList<>();
+		}
+		this.allowGrantTypes.addAll(Arrays.asList(grantTypes));
 		return this;
 	}
 

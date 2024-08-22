@@ -1,4 +1,4 @@
-package com.pj.oauth2;
+package com.pj.oauth2.custom;
 
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;

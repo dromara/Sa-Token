@@ -69,17 +69,6 @@ public class SaOAuth2Consts {
 	}
 
 	/**
-	 * 所有授权类型 
-	 */
-	public static final class GrantType {
-		public static String authorization_code = "authorization_code";
-		public static String refresh_token = "refresh_token";
-		public static String password = "password";
-		public static String client_credentials = "client_credentials";
-		public static String implicit = "implicit";
-	}
-
-	/**
 	 * 所有 token 类型
 	 */
 	public static final class TokenType {

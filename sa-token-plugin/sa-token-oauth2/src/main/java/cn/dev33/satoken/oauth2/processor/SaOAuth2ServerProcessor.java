@@ -20,9 +20,9 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Api;
-import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.ResponseType;
 import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
@@ -34,10 +34,9 @@ import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
 import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.router.SaHttpMethod;
-import cn.dev33.satoken.stp.StpLogic;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.List;
@@ -56,11 +55,6 @@ public class SaOAuth2ServerProcessor {
 	public static SaOAuth2ServerProcessor instance = new SaOAuth2ServerProcessor();
 
 	/**
-	 * 底层 SaOAuth2Template 对象
-	 */
-	public SaOAuth2Template oauth2Template =  new SaOAuth2Template();
-
-	/**
 	 * 处理 Server 端请求， 路由分发
 	 * @return 处理结果
 	 */
@@ -68,7 +62,6 @@ public class SaOAuth2ServerProcessor {
 
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 
 		// ------------------ 路由分发 ------------------
 
@@ -79,7 +72,7 @@ public class SaOAuth2ServerProcessor {
 
 		// Code 换 Access-Token || 模式三：密码式
 		if(req.isPath(Api.token)) {
-			return tokenOrPassword();
+			return token();
 		}
 
 		// Refresh-Token 刷新 Access-Token
@@ -122,18 +115,19 @@ public class SaOAuth2ServerProcessor {
 		SaResponse res = SaHolder.getResponse();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
 		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
+		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 		String responseType = req.getParamNotNull(Param.response_type);
 
 		// 1、先判断是否开启了指定的授权模式
 		checkAuthorizeResponseType(responseType, req, cfg);
 
 		// 2、如果尚未登录, 则先去登录
-		if( ! getStpLogic().isLogin()) {
+		if( ! SaOAuth2Manager.getStpLogic().isLogin()) {
 			return cfg.notLoginView.get();
 		}
 
 		// 3、构建请求 Model
-		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, getStpLogic().getLoginId());
+		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, SaOAuth2Manager.getStpLogic().getLoginId());
 
 		// 4、校验：重定向域名是否合法
 		oauth2Template.checkRightUrl(ra.clientId, ra.redirectUri);
@@ -167,55 +161,11 @@ public class SaOAuth2ServerProcessor {
 	}
 
 	/**
-	 * Code 换 Access-Token || 模式三：密码式
-	 * @return 处理结果
-	 */
-	public Object tokenOrPassword() {
-
-		String grantType = SaHolder.getRequest().getParamNotNull(Param.grant_type);
-
-		// Code 换 Access-Token
-		if(grantType.equals(GrantType.authorization_code)) {
-			return token();
-		}
-
-		// 模式三：密码式
-		if(grantType.equals(GrantType.password)) {
-			SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
-			if(!cfg.enablePassword) {
-				throwErrorSystemNotEnableModel();
-			}
-			if(!currClientModel().enablePassword) {
-				throwErrorClientNotEnableModel();
-			}
-			return password();
-		}
-
-		throw new SaOAuth2Exception("无效 grant_type：" + grantType);
-	}
-
-	/**
-	 * Code授权码 获取 Access-Token
+	 * Code 换 Access-Token / 模式三：密码式 / 自定义 grant_type
 	 * @return 处理结果
 	 */
 	public Object token() {
-		// 获取变量
-		SaRequest req = SaHolder.getRequest();
-
-		// 获取参数
-		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
-		String clientId = clientIdAndSecret.clientId;
-		String clientSecret = clientIdAndSecret.clientSecret;
-		String code = req.getParamNotNull(Param.code);
-		String redirectUri = req.getParam(Param.redirect_uri);
-
-		// 校验参数
-		oauth2Template.checkGainTokenParam(code, clientId, clientSecret, redirectUri);
-
-		// 构建 Access-Token
-		AccessTokenModel accessTokenModel = SaOAuth2Manager.getDataGenerate().generateAccessToken(code);
-
-		// 返回
+		AccessTokenModel accessTokenModel = SaOAuth2Strategy.instance.grantTypeAuth.apply(SaHolder.getRequest());
 		return SaOAuth2Manager.getDataResolver().buildTokenReturnValue(accessTokenModel);
 	}
 
@@ -224,27 +174,10 @@ public class SaOAuth2ServerProcessor {
 	 * @return 处理结果
 	 */
 	public Object refresh() {
-		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 		String grantType = req.getParamNotNull(Param.grant_type);
-		if(!grantType.equals(GrantType.refresh_token)) {
-			throw new SaOAuth2Exception("无效 grant_type：" + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
-		}
-
-		// 获取参数
-
-		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
-		String clientId = clientIdAndSecret.clientId;
-		String clientSecret = clientIdAndSecret.clientSecret;
-		String refreshToken = req.getParamNotNull(Param.refresh_token);
-
-		// 校验参数
-		oauth2Template.checkRefreshTokenParam(clientId, clientSecret, refreshToken);
-
-		// 获取新 Access-Token
-		AccessTokenModel accessTokenModel = SaOAuth2Manager.getDataGenerate().refreshAccessToken(refreshToken);
-
-		// 返回
+		SaOAuth2Exception.throwBy(!grantType.equals(GrantType.refresh_token), "无效 grant_type：" + grantType, SaOAuth2ErrorCode.CODE_30126);
+		AccessTokenModel accessTokenModel = SaOAuth2Strategy.instance.grantTypeAuth.apply(req);
 		return SaOAuth2Manager.getDataResolver().buildRefreshTokenReturnValue(accessTokenModel);
 	}
 
@@ -254,6 +187,7 @@ public class SaOAuth2ServerProcessor {
 	 */
 	public Object revoke() {
 		// 获取变量
+		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 		SaRequest req = SaHolder.getRequest();
 
 		// 获取参数
@@ -297,10 +231,11 @@ public class SaOAuth2ServerProcessor {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 		String clientId = req.getParamNotNull(Param.client_id);
-		Object loginId = getStpLogic().getLoginId();
+		Object loginId = SaOAuth2Manager.getStpLogic().getLoginId();
 		String scope = req.getParamNotNull(Param.scope);
 		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
+		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 
 		// 此请求只允许 POST 方式
 		if(!req.isMethod(SaHttpMethod.POST)) {
@@ -344,49 +279,6 @@ public class SaOAuth2ServerProcessor {
 	}
 
 	/**
-	 * 模式三：密码式
-	 * @return 处理结果
-	 */
-	public Object password() {
-		// 获取变量
-		SaRequest req = SaHolder.getRequest();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
-
-		// 1、获取请求参数
-		String username = req.getParamNotNull(Param.username);
-		String password = req.getParamNotNull(Param.password);
-		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
-		String clientId = clientIdAndSecret.clientId;
-		String clientSecret = clientIdAndSecret.clientSecret;
-		String scope = req.getParam(Param.scope, "");
-		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
-
-		// 2、校验 ClientScope 和 scope 
-		oauth2Template.checkClientSecretAndScope(clientId, clientSecret, scopes);
-
-		// 3、防止因前端误传token造成逻辑干扰
-		// SaHolder.getStorage().set(getStpLogic().stpLogic.splicingKeyJustCreatedSave(), "no-token");
-
-		// 3、调用API 开始登录，如果没能成功登录，则直接退出
-		Object retObj = cfg.doLoginHandle.apply(username, password);
-		if( ! getStpLogic().isLogin()) {
-			return retObj;
-		}
-
-		// 4、构建 ra对象
-		RequestAuthModel ra = new RequestAuthModel();
-		ra.clientId = clientId;
-		ra.loginId = getStpLogic().getLoginId();
-		ra.scopes = scopes;
-
-		// 5、生成 Access-Token
-		AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, true);
-
-		// 6、返回 Access-Token
-		return SaOAuth2Manager.getDataResolver().buildPasswordReturnValue(at);
-	}
-
-	/**
 	 * 模式四：凭证式
 	 * @return 处理结果
 	 */
@@ -394,6 +286,7 @@ public class SaOAuth2ServerProcessor {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 
 		String grantType = req.getParamNotNull(Param.grant_type);
 		if(!grantType.equals(GrantType.client_credentials)) {
@@ -402,7 +295,7 @@ public class SaOAuth2ServerProcessor {
 		if(!cfg.enableClient) {
 			throwErrorSystemNotEnableModel();
 		}
-		if(!currClientModel().enableClient) {
+		if(!currClientModel().getAllowGrantTypes().contains(GrantType.client_credentials)) {
 			throwErrorClientNotEnableModel();
 		}
 
@@ -434,6 +327,7 @@ public class SaOAuth2ServerProcessor {
 	 * @return / 
 	 */
 	public SaClientModel currClientModel() {
+		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(SaHolder.getRequest());
 		return oauth2Template.checkClientModel(clientIdAndSecret.clientId);
 	}
@@ -447,7 +341,7 @@ public class SaOAuth2ServerProcessor {
 			if(!cfg.enableCode) {
 				throwErrorSystemNotEnableModel();
 			}
-			if(!currClientModel().enableCode) {
+			if(!currClientModel().getAllowGrantTypes().contains(GrantType.authorization_code)) {
 				throwErrorClientNotEnableModel();
 			}
 		}
@@ -456,7 +350,7 @@ public class SaOAuth2ServerProcessor {
 			if(!cfg.enableImplicit) {
 				throwErrorSystemNotEnableModel();
 			}
-			if(!currClientModel().enableImplicit) {
+			if(!currClientModel().getAllowGrantTypes().contains(GrantType.implicit)) {
 				throwErrorClientNotEnableModel();
 			}
 		}
@@ -464,15 +358,6 @@ public class SaOAuth2ServerProcessor {
 		else {
 			throw new SaOAuth2Exception("无效 response_type: " + req.getParam(Param.response_type)).setCode(SaOAuth2ErrorCode.CODE_30125);
 		}
-	}
-
-	/**
-	 * 获取底层使用的会话对象
-	 *
-	 * @return /
-	 */
-	public StpLogic getStpLogic() {
-		return StpUtil.stpLogic;
 	}
 
 	/**
