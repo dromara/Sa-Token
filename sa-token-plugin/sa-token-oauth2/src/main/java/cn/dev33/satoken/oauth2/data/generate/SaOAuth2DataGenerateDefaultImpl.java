@@ -166,6 +166,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         // 2、生成 新Access-Token
         String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
         AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
+        at.tokenType = SaOAuth2Consts.TokenType.bearer;
 
         // 3、根据权限构建额外参数
         at.extraData = new LinkedHashMap<>();
@@ -220,6 +221,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         // 3、生成新 Client-Token
         String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientId, scopes);
         ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientId, scopes);
+        ct.tokenType = SaOAuth2Consts.TokenType.bearer;
         ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
         ct.extraData = new LinkedHashMap<>();
         SaOAuth2Strategy.instance.workClientTokenByScope.accept(ct);

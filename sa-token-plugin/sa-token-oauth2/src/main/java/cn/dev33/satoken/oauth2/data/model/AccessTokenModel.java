@@ -65,6 +65,11 @@ public class AccessTokenModel implements Serializable {
 	public List<String> scopes;
 
 	/**
+	 * Token 类型
+	 */
+	public String tokenType;
+
+	/**
 	 * 扩展数据
 	 */
 	public Map<String, Object> extraData;
@@ -152,6 +157,15 @@ public class AccessTokenModel implements Serializable {
 		return this;
 	}
 
+	public String getTokenType() {
+		return tokenType;
+	}
+
+	public AccessTokenModel setTokenType(String tokenType) {
+		this.tokenType = tokenType;
+		return this;
+	}
+
 	public Map<String, Object> getExtraData() {
 		return extraData;
 	}
@@ -163,9 +177,17 @@ public class AccessTokenModel implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AccessTokenModel [accessToken=" + accessToken + ", refreshToken=" + refreshToken
-				+ ", accessTokenTimeout=" + expiresTime + ", refreshTokenTimeout=" + refreshExpiresTime
-				+ ", clientId=" + clientId + ", scopes=" + scopes + ", extraData=" + extraData + "]";
+		return "AccessTokenModel{" +
+				"accessToken='" + accessToken + '\'' +
+				", refreshToken='" + refreshToken + '\'' +
+				", expiresTime=" + expiresTime +
+				", refreshExpiresTime=" + refreshExpiresTime +
+				", clientId='" + clientId + '\'' +
+				", loginId=" + loginId +
+				", scopes=" + scopes +
+				", tokenType='" + tokenType + '\'' +
+				", extraData=" + extraData +
+				'}';
 	}
 
 	// 追加只读属性

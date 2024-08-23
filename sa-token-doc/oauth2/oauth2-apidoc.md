@@ -233,6 +233,11 @@ http://{host}:{port}/oauth2/userinfo?access_token={access_token}
 }
 ```
 
+除了直接在 url 中以 query 参数方式提交 `access_token`，你也可以在 `Authorization` 请求头以 `Bearer Token` 方式提交：
+``` js
+header['Authorization'] = 'Bearer access_token';
+```
+
 
 ## 2、模式二：隐藏式（Implicit）
 

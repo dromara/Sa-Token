@@ -303,8 +303,7 @@ public class SaOAuth2ServerProcessor {
 		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
 		String clientId = clientIdAndSecret.clientId;
 		String clientSecret = clientIdAndSecret.clientSecret;
-		String scope = req.getParam(Param.scope, "");
-		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
+		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(req.getParam(Param.scope));
 
 		//校验 ClientScope
 		oauth2Template.checkContract(clientId, scopes);

@@ -50,6 +50,11 @@ public class ClientTokenModel implements Serializable {
 	public List<String> scopes;
 
 	/**
+	 * Token 类型
+	 */
+	public String tokenType;
+
+	/**
 	 * 扩展数据
 	 */
 	public Map<String, Object> extraData;
@@ -91,6 +96,15 @@ public class ClientTokenModel implements Serializable {
 		return this;
 	}
 
+	public String getTokenType() {
+		return tokenType;
+	}
+
+	public ClientTokenModel setTokenType(String tokenType) {
+		this.tokenType = tokenType;
+		return this;
+	}
+
 	public Map<String, Object> getExtraData() {
 		return extraData;
 	}
@@ -118,10 +132,11 @@ public class ClientTokenModel implements Serializable {
 	@Override
 	public String toString() {
 		return "ClientTokenModel{" +
-				"clientToken='" + clientToken + '\'' +
+				"clientToken='" + clientToken +
 				", expiresTime=" + expiresTime +
-				", clientId='" + clientId + '\'' +
+				", clientId='" + clientId +
 				", scopes=" + scopes +
+				", tokenType=" + tokenType +
 				", extraData=" + extraData +
 				'}';
 	}

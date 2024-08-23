@@ -122,7 +122,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     @Override
     public Map<String, Object> buildTokenReturnValue(AccessTokenModel at) {
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("token_type", TokenType.bearer);
+        map.put("token_type", at.tokenType);
         map.put("access_token", at.accessToken);
         map.put("refresh_token", at.refreshToken);
         map.put("expires_in", at.getExpiresIn());
@@ -139,6 +139,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     @Override
     public Map<String, Object> buildClientTokenReturnValue(ClientTokenModel ct) {
         Map<String, Object> map = new LinkedHashMap<>();
+        map.put("token_type", ct.tokenType);
         map.put("client_token", ct.clientToken);
         // map.put("access_token", ct.clientToken); // 兼容 OAuth2 协议
         map.put("expires_in", ct.getExpiresIn());

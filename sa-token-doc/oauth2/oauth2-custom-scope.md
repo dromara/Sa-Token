@@ -20,8 +20,9 @@ sa-token-oauth2 提供两种模式，让 access_token 可以得到更多信息�
 ``` java
 // 获取 userinfo 信息：昵称、头像、性别等等
 @RequestMapping("/oauth2/userinfo")
-public SaResult userinfo(@RequestParam("access_token") String accessToken) {
+public SaResult userinfo() {
 	// 获取 Access-Token 对应的账号id
+	String accessToken = SaOAuth2Manager.getDataResolver().readAccessToken(SaHolder.getRequest());
 	Object loginId = SaOAuth2Util.getLoginIdByAccessToken(accessToken);
 	System.out.println("-------- 此Access-Token对应的账号id: " + loginId);
 	
