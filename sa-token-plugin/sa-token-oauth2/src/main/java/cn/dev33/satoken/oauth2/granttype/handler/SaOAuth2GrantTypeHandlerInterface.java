@@ -41,6 +41,6 @@ public interface SaOAuth2GrantTypeHandlerInterface {
      * @param req /
      * @return /
      */
-    AccessTokenModel getAccessTokenModel(SaRequest req, String clientId, List<String> scopes);
+    AccessTokenModel getAccessToken(SaRequest req, String clientId, List<String> scopes);
 
 }

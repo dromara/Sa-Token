@@ -23,11 +23,22 @@
 	<version>${sa.top.version}</version>
 </dependency>
 
-<!-- Sa-Token-OAuth2.0 模块 -->
+<!-- Sa-Token OAuth2.0 模块 -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-oauth2</artifactId>
 	<version>${sa.top.version}</version>
+</dependency>
+
+<!-- Sa-Token 整合 Redis (可选) -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-redis-jackson</artifactId>
+	<version>${sa-token.version}</version>
+</dependency>
+<dependency>
+	<groupId>org.apache.commons</groupId>
+	<artifactId>commons-pool2</artifactId>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
@@ -35,11 +46,16 @@
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 
-// Sa-Token-OAuth2.0 模块
+// Sa-Token OAuth2.0 模块
 implementation 'cn.dev33:sa-token-oauth2:${sa.top.version}'
+
+// Sa-Token 整合 Redis (可选)
+implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
+implementation 'org.apache.commons:commons-pool2'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+注：Redis 相关依赖是非必须的，如果集成了 redis，可以让你更细致的观察到 sa-token-oauth2 的底层数据格式。
 
 
 ### 3、开放服务 
@@ -60,9 +76,16 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 			return new SaClientModel()
 					.setClientId("1001")    // client id
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")    // client 秘钥
-					.addAllowUrls("*")    // 所有允许授权的 url
+					.addAllowRedirectUris("*")    // 所有允许授权的 url
 					.addContractScopes("openid", "userid", "userinfo")    // 所有签约的权限
-					.setIsAutoMode(true);    // 是否自动判断开放的授权模式 
+					.addAllowGrantTypes(	 // 所有允许的授权模式
+							GrantType.authorization_code, // 授权码式
+							GrantType.implicit,  // 隐式式
+							GrantType.refresh_token,  // 刷新令牌
+							GrantType.password,  // 密码式
+							GrantType.client_credentials  // 客户端模式
+					)
+			;
 		}
 		return null;
 	}
@@ -83,24 +106,24 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 2、新建`SaOAuth2ServerController`
 ``` java
 /**
- * Sa-OAuth2 Server端 控制器 
+ * Sa-Token OAuth2 Server端 控制器 
  */
 @RestController
 public class SaOAuth2ServerController {
 
-	// 处理所有OAuth相关请求 
+	// OAuth2-Server 端：处理所有 OAuth2 相关请求
 	@RequestMapping("/oauth2/*")
 	public Object request() {
 		System.out.println("------- 进入请求: " + SaHolder.getRequest().getUrl());
-		return SaOAuth2Handle.serverRequest();
+		return SaOAuth2ServerProcessor.instance.dister();
 	}
-	
-	// Sa-OAuth2 定制化配置 
+
+	// Sa-Token OAuth2 定制化配置 
 	@Autowired
-	public void setSaOAuth2Config(SaOAuth2Config cfg) {
+	public void setSaOAuth2Config(SaOAuth2Config oauth2Server) {
 		
 		// 配置：未登录时返回的View 
-		cfg.notLoginView = () -> {
+		oauth2Server.notLoginView = () -> {
 			String msg = "当前会话在OAuth-Server端尚未登录，请先访问"
 						+ "<a href='/oauth2/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
 						+ "进行登录之后，刷新页面开始授权";
@@ -108,7 +131,7 @@ public class SaOAuth2ServerController {
 		};
 		
 		// 配置：登录处理函数 
-		cfg.doLoginHandle = (name, pwd) -> {
+		oauth2Server.doLoginHandle = (name, pwd) -> {
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
 				return SaResult.ok();
@@ -117,7 +140,7 @@ public class SaOAuth2ServerController {
 		};
 		
 		// 配置：确认授权时返回的 view 
-		cfg.confirmView = (clientId, scopes) -> {
+		oauth2Server.confirmView = (clientId, scopes) -> {
 			String scopeStr = SaFoxUtil.convertListToString(scopes);
 			String yesCode =
 					"fetch('/oauth2/doConfirm?client_id=" + clientId + "&scope=" + scopeStr + "', {method: 'POST'})" +
@@ -132,16 +155,9 @@ public class SaOAuth2ServerController {
 		};
 	}
 
-	// 全局异常拦截  
-	@ExceptionHandler
-	public SaResult handlerException(Exception e) {
-		e.printStackTrace(); 
-		return SaResult.error(e.getMessage());
-	}
-	
 }
 ```
-注意：在`setDoLoginHandle`函数里如果要获取name, pwd以外的参数，可通过`SaHolder.getRequest().getParam("xxx")`来获取 
+注意：在 `doLoginHandle` 函数里如果要获取 name, pwd 以外的参数，可通过 `SaHolder.getRequest().getParam("xxx")` 来获取。
 
 3、全局异常处理
 ``` java
@@ -164,7 +180,8 @@ public class GlobalExceptionHandler {
 public class SaOAuth2ServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SaOAuth2ServerApplication.class, args);
-		System.out.println("\nSa-Token-OAuth Server 端启动成功");
+		System.out.println("\nSa-Token-OAuth2 Server 端启动成功");
+		System.out.println(SaOAuth2Manager.getConfig());
 	}
 }
 ```
@@ -173,7 +190,7 @@ public class SaOAuth2ServerApplication {
 
 ### 4、访问测试 
 
-1、由于暂未搭建Client端，我们可以使用Sa-Token官网作为重定向URL进行测试：
+1、由于暂未搭建Client端，我们可以使用 Sa-Token 官网作为重定向URL进行测试：
 ``` url
 http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=https://sa-token.cc&scope=openid
 ```
@@ -185,7 +202,7 @@ http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=10
 3、点击doLogin进行登录之后刷新页面，会提示我们确认授权
 ![sa-oauth2-server-scope](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-server-scope.png 's-w-sh')
 
-4、点击确认授权之后刷新页面，我们会被重定向至 redirect_uri 页面，并携带了code参数 
+4、点击同意授权之后，我们会被重定向至 redirect_uri 页面，并携带了code参数 
 
 ![sa-oauth2-server-code](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-server-code.png 's-w-sh')
 
@@ -194,7 +211,7 @@ http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=10
 http://sa-oauth-server.com:8000/oauth2/token?grant_type=authorization_code&client_id=1001&client_secret=aaaa-bbbb-cccc-dddd-eeee&code={code}
 ```
 
-将得到 `Access-Token`、`Refresh-Token`、`openid`等授权信息 
+将得到 `Access-Token`、`Refresh-Token`、`openid`等授权信息：
 
 ``` js
 {

@@ -40,7 +40,7 @@ public class RefreshTokenGrantTypeHandler implements SaOAuth2GrantTypeHandlerInt
     }
 
     @Override
-    public AccessTokenModel getAccessTokenModel(SaRequest req, String clientId, List<String> scopes) {
+    public AccessTokenModel getAccessToken(SaRequest req, String clientId, List<String> scopes) {
         // 获取参数
         String refreshToken = req.getParamNotNull(SaOAuth2Consts.Param.refresh_token);
 

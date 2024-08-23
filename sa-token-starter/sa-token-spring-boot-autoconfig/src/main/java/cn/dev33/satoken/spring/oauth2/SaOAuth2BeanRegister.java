@@ -16,7 +16,7 @@
 package cn.dev33.satoken.spring.oauth2;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -36,9 +36,9 @@ public class SaOAuth2BeanRegister {
 	 * @return 配置对象 
 	 */
 	@Bean
-	@ConfigurationProperties(prefix = "sa-token.oauth2")
-	public SaOAuth2Config getSaOAuth2Config() {
-		return new SaOAuth2Config();
+	@ConfigurationProperties(prefix = "sa-token.oauth2-server")
+	public SaOAuth2ServerConfig getSaOAuth2Config() {
+		return new SaOAuth2ServerConfig();
 	}
 
 }

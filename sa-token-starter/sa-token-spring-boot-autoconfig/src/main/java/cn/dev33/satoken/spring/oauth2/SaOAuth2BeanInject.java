@@ -16,7 +16,7 @@
 package cn.dev33.satoken.spring.oauth2;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
 import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
@@ -52,7 +52,7 @@ public class SaOAuth2BeanInject {
 	 * @param saOAuth2Config 配置对象 
 	 */
 	@Autowired(required = false)
-	public void setSaOAuth2Config(SaOAuth2Config saOAuth2Config) {
+	public void setSaOAuth2Config(SaOAuth2ServerConfig saOAuth2Config) {
 		SaOAuth2Manager.setConfig(saOAuth2Config);
 	}
 

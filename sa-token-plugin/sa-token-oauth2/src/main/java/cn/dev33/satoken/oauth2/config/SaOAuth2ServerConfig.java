@@ -24,17 +24,17 @@ import cn.dev33.satoken.util.SaResult;
 import java.io.Serializable;
 
 /**
- * Sa-Token-OAuth2 配置类 Model
+ * Sa-Token OAuth2 Server 端 配置类 Model
  *
  * @author click33
  * @since 1.19.0
  */
-public class SaOAuth2Config implements Serializable {
+public class SaOAuth2ServerConfig implements Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 
 	/** 是否打开模式：授权码（Authorization Code） */
-	public Boolean enableCode = true;
+	public Boolean enableAuthorizationCode = true;
 
 	/** 是否打开模式：隐藏式（Implicit） */
 	public Boolean enableImplicit = true;
@@ -43,7 +43,7 @@ public class SaOAuth2Config implements Serializable {
 	public Boolean enablePassword = true;
 
 	/** 是否打开模式：凭证式（Client Credentials） */
-	public Boolean enableClient = true;
+	public Boolean enableClientCredentials = true;
 
 	/** 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token */
 	public Boolean isNewRefresh = false;
@@ -75,16 +75,16 @@ public class SaOAuth2Config implements Serializable {
 	/**
 	 * @return enableCode
 	 */
-	public Boolean getEnableCode() {
-		return enableCode;
+	public Boolean getEnableAuthorizationCode() {
+		return enableAuthorizationCode;
 	}
 
 	/**
-	 * @param enableCode 要设置的 enableCode
+	 * @param enableAuthorizationCode 要设置的 enableAuthorizationCode
 	 * @return /
 	 */
-	public SaOAuth2Config setEnableCode(Boolean enableCode) {
-		this.enableCode = enableCode;
+	public SaOAuth2ServerConfig setEnableAuthorizationCode(Boolean enableAuthorizationCode) {
+		this.enableAuthorizationCode = enableAuthorizationCode;
 		return this;
 	}
 
@@ -99,7 +99,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param enableImplicit 要设置的 enableImplicit
 	 * @return /
 	 */
-	public SaOAuth2Config setEnableImplicit(Boolean enableImplicit) {
+	public SaOAuth2ServerConfig setEnableImplicit(Boolean enableImplicit) {
 		this.enableImplicit = enableImplicit;
 		return this;
 	}
@@ -114,24 +114,24 @@ public class SaOAuth2Config implements Serializable {
 	/**
 	 * @param enablePassword 要设置的 enablePassword
 	 */
-	public SaOAuth2Config setEnablePassword(Boolean enablePassword) {
+	public SaOAuth2ServerConfig setEnablePassword(Boolean enablePassword) {
 		this.enablePassword = enablePassword;
 		return this;
 	}
 
 	/**
-	 * @return enableClient
+	 * @return enableClientCredentials
 	 */
-	public Boolean getEnableClient() {
-		return enableClient;
+	public Boolean getEnableClientCredentials() {
+		return enableClientCredentials;
 	}
 
 	/**
-	 * @param enableClient 要设置的 enableClient
+	 * @param enableClientCredentials 要设置的 enableClientCredentials
 	 * @return /
 	 */
-	public SaOAuth2Config setEnableClient(Boolean enableClient) {
-		this.enableClient = enableClient;
+	public SaOAuth2ServerConfig setEnableClientCredentials(Boolean enableClientCredentials) {
+		this.enableClientCredentials = enableClientCredentials;
 		return this;
 	}
 
@@ -146,7 +146,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param isNewRefresh 要设置的 isNewRefresh
 	 * @return /
 	 */
-	public SaOAuth2Config setIsNewRefresh(Boolean isNewRefresh) {
+	public SaOAuth2ServerConfig setIsNewRefresh(Boolean isNewRefresh) {
 		this.isNewRefresh = isNewRefresh;
 		return this;
 	}
@@ -162,7 +162,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param codeTimeout 要设置的 codeTimeout
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setCodeTimeout(long codeTimeout) {
+	public SaOAuth2ServerConfig setCodeTimeout(long codeTimeout) {
 		this.codeTimeout = codeTimeout;
 		return this;
 	}
@@ -178,7 +178,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param accessTokenTimeout 要设置的 accessTokenTimeout
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setAccessTokenTimeout(long accessTokenTimeout) {
+	public SaOAuth2ServerConfig setAccessTokenTimeout(long accessTokenTimeout) {
 		this.accessTokenTimeout = accessTokenTimeout;
 		return this;
 	}
@@ -194,7 +194,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param refreshTokenTimeout 要设置的 refreshTokenTimeout
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setRefreshTokenTimeout(long refreshTokenTimeout) {
+	public SaOAuth2ServerConfig setRefreshTokenTimeout(long refreshTokenTimeout) {
 		this.refreshTokenTimeout = refreshTokenTimeout;
 		return this;
 	}
@@ -210,7 +210,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param clientTokenTimeout 要设置的 clientTokenTimeout
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setClientTokenTimeout(long clientTokenTimeout) {
+	public SaOAuth2ServerConfig setClientTokenTimeout(long clientTokenTimeout) {
 		this.clientTokenTimeout = clientTokenTimeout;
 		return this;
 	}
@@ -226,7 +226,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param pastClientTokenTimeout 要设置的 pastClientTokenTimeout
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setPastClientTokenTimeout(long pastClientTokenTimeout) {
+	public SaOAuth2ServerConfig setPastClientTokenTimeout(long pastClientTokenTimeout) {
 		this.pastClientTokenTimeout = pastClientTokenTimeout;
 		return this;
 	}
@@ -242,7 +242,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param openidDigestPrefix 要设置的 openidDigestPrefix
 	 * @return 对象自身
 	 */
-	public SaOAuth2Config setOpenidDigestPrefix(String openidDigestPrefix) {
+	public SaOAuth2ServerConfig setOpenidDigestPrefix(String openidDigestPrefix) {
 		this.openidDigestPrefix = openidDigestPrefix;
 		return this;
 	}
@@ -262,7 +262,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param higherScope 指定高级权限，多个用逗号隔开
 	 * @return /
 	 */
-	public SaOAuth2Config setHigherScope(String higherScope) {
+	public SaOAuth2ServerConfig setHigherScope(String higherScope) {
 		this.higherScope = higherScope;
 		return this;
 	}
@@ -282,7 +282,7 @@ public class SaOAuth2Config implements Serializable {
 	 * @param lowerScope 指定低级权限，多个用逗号隔开
 	 * @return /
 	 */
-	public SaOAuth2Config setLowerScope(String lowerScope) {
+	public SaOAuth2ServerConfig setLowerScope(String lowerScope) {
 		this.lowerScope = lowerScope;
 		return this;
 	}
@@ -307,11 +307,11 @@ public class SaOAuth2Config implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SaOAuth2Config{" +
-				"enableCode=" + enableCode +
+		return "SaOAuth2ServerConfig{" +
+				"enableAuthorizationCode=" + enableAuthorizationCode +
 				", enableImplicit=" + enableImplicit +
 				", enablePassword=" + enablePassword +
-				", enableClient=" + enableClient +
+				", enableClientCredentials=" + enableClientCredentials +
 				", isNewRefresh=" + isNewRefresh +
 				", codeTimeout=" + codeTimeout +
 				", accessTokenTimeout=" + accessTokenTimeout +

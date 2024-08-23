@@ -12,7 +12,7 @@
 @RestController
 public class SaOAuth2ServerController {
 
-	// OAuth2-Server 端：处理所有 OAuth 相关请求 
+	// OAuth2-Server 端：处理所有 OAuth2 相关请求 
 	@RequestMapping("/oauth2/*")
 	public Object request() {
 		return SaOAuth2ServerProcessor.instance.dister();
@@ -33,7 +33,7 @@ public class SaOAuth2ServerController {
 ``` java
 // 配置 OAuth2 相关参数 
 @Autowired
-private void configOAuth2Server(SaOAuth2Config cfg) {
+private void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 	// 自定义API地址
 	SaOAuth2Consts.Api.authorize = "/oauth2/authorize2";
 	// ... 
@@ -76,7 +76,7 @@ public class SaOAuth2ServerController {
 	// Code 换 Access-Token || 模式三：密码式
 	@RequestMapping("/oauth2/token")
 	public Object token() {
-		return SaOAuth2ServerProcessor.instance.tokenOrPassword();
+		return SaOAuth2ServerProcessor.instance.token();
 	}
 
 	// Refresh-Token 刷新 Access-Token

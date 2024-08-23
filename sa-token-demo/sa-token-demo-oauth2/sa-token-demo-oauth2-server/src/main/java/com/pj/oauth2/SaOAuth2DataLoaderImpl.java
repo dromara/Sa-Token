@@ -21,7 +21,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 			return new SaClientModel()
 					.setClientId("1001")    // client id
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")    // client 秘钥
-					.addAllowUrls("*")    // 所有允许授权的 url
+					.addAllowRedirectUris("*")    // 所有允许授权的 url
 					.addContractScopes("openid", "userid", "userinfo")    // 所有签约的权限
 					.addAllowGrantTypes(	 // 所有允许的授权模式
 							GrantType.authorization_code, // 授权码式

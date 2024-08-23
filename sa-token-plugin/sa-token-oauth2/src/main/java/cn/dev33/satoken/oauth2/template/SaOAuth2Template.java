@@ -224,8 +224,8 @@ public class SaOAuth2Template {
 
 		// 4、是否在[允许地址列表]之中
 		SaClientModel clientModel = checkClientModel(clientId);
-		checkAllowUrlList(clientModel.allowUrls);
-		if( ! SaStrategy.instance.hasElement.apply(clientModel.allowUrls, url)) {
+		checkAllowUrlList(clientModel.allowRedirectUris);
+		if( ! SaStrategy.instance.hasElement.apply(clientModel.allowRedirectUris, url)) {
 			throw new SaOAuth2Exception("非法 redirect_url: " + url).setCode(SaOAuth2ErrorCode.CODE_30114);
 		}
 	}

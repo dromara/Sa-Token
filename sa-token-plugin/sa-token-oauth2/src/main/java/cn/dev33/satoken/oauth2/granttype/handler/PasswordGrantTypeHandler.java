@@ -40,7 +40,7 @@ public class PasswordGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterfa
     }
 
     @Override
-    public AccessTokenModel getAccessTokenModel(SaRequest req, String clientId, List<String> scopes) {
+    public AccessTokenModel getAccessToken(SaRequest req, String clientId, List<String> scopes) {
 
         // 1、获取请求参数
         String username = req.getParamNotNull(SaOAuth2Consts.Param.username);

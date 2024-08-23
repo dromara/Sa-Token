@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.oauth2;
 
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2DaoDefaultImpl;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
@@ -41,19 +41,19 @@ public class SaOAuth2Manager {
 	/**
 	 * OAuth2 配置 Bean 
 	 */
-	private static volatile SaOAuth2Config config;
-	public static SaOAuth2Config getConfig() {
+	private static volatile SaOAuth2ServerConfig config;
+	public static SaOAuth2ServerConfig getConfig() {
 		if (config == null) {
 			// 初始化默认值
 			synchronized (SaOAuth2Manager.class) {
 				if (config == null) {
-					setConfig(new SaOAuth2Config());
+					setConfig(new SaOAuth2ServerConfig());
 				}
 			}
 		}
 		return config;
 	}
-	public static void setConfig(SaOAuth2Config config) {
+	public static void setConfig(SaOAuth2ServerConfig config) {
 		SaOAuth2Manager.config = config;
 	}
 

@@ -23,7 +23,7 @@ import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     @Override
     public List<String> convertScopeStringToList(String scopeString) {
         if(SaFoxUtil.isEmpty(scopeString)) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
         // 兼容以下三种分隔符：空格、逗号、%20
         scopeString = scopeString.replaceAll(" ", ",");
@@ -63,7 +63,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     @Override
     public List<String> convertAllowUrlStringToList(String allowUrl) {
         if(SaFoxUtil.isEmpty(allowUrl)) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
         return SaFoxUtil.convertStringToList(allowUrl);
     }

@@ -26,8 +26,9 @@ public class PhoneCodeGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterf
     }
 
     @Override
-    public AccessTokenModel getAccessTokenModel(SaRequest req, String clientId, List<String> scopes) {
+    public AccessTokenModel getAccessToken(SaRequest req, String clientId, List<String> scopes) {
 
+        // 获取前端提交的参数
         String phone = req.getParamNotNull("phone");
         String code = req.getParamNotNull("code");
         String realCode = SaManager.getSaTokenDao().get("phone_code:" + phone);

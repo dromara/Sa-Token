@@ -19,7 +19,7 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Api;
@@ -113,7 +113,7 @@ public class SaOAuth2ServerProcessor {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getConfig();
 		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
 		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 		String responseType = req.getParamNotNull(Param.response_type);
@@ -218,7 +218,7 @@ public class SaOAuth2ServerProcessor {
 	public Object doLogin() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getConfig();
 
 		return cfg.doLoginHandle.apply(req.getParam(Param.name), req.getParam(Param.pwd));
 	}
@@ -285,14 +285,14 @@ public class SaOAuth2ServerProcessor {
 	public Object clientToken() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaOAuth2Config cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getConfig();
 		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 
 		String grantType = req.getParamNotNull(Param.grant_type);
 		if(!grantType.equals(GrantType.client_credentials)) {
 			throw new SaOAuth2Exception("无效 grant_type：" + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
 		}
-		if(!cfg.enableClient) {
+		if(!cfg.enableClientCredentials) {
 			throwErrorSystemNotEnableModel();
 		}
 		if(!currClientModel().getAllowGrantTypes().contains(GrantType.client_credentials)) {
@@ -335,10 +335,10 @@ public class SaOAuth2ServerProcessor {
 	/**
 	 * 校验 authorize 路由的 ResponseType 参数
 	 */
-	public void checkAuthorizeResponseType(String responseType, SaRequest req, SaOAuth2Config cfg) {
+	public void checkAuthorizeResponseType(String responseType, SaRequest req, SaOAuth2ServerConfig cfg) {
 		// 模式一：Code授权码
 		if(responseType.equals(ResponseType.code)) {
-			if(!cfg.enableCode) {
+			if(!cfg.enableAuthorizationCode) {
 				throwErrorSystemNotEnableModel();
 			}
 			if(!currClientModel().getAllowGrantTypes().contains(GrantType.authorization_code)) {

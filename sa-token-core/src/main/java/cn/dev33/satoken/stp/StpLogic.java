@@ -36,6 +36,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaValue2Box;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -2114,7 +2115,7 @@ public class StpLogic {
 		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		// 按照设备类型进行筛选
@@ -2132,7 +2133,7 @@ public class StpLogic {
 		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		// 按照设备类型进行筛选

@@ -294,18 +294,21 @@ sa-token.sso-client.is-slo=true
 
 
 ### 4、OAuth2.0相关配置 
-| 参数名称				| 类型		| 默认值	| 说明																		|
-| :--------				| :--------	| :--------	| :--------																	|
-| isCode				| Boolean	| true		| 是否打开模式：授权码（`Authorization Code`）								|
-| isImplicit			| Boolean	| true		| 是否打开模式：隐藏式（`Implicit`）											|
-| isPassword			| Boolean	| true		| 是否打开模式：密码式（`Password`）											|
-| isClient				| Boolean	| true		| 是否打开模式：凭证式（`Client Credentials`）								|
-| isNewRefresh			| Boolean	| false		| 是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token	|
-| codeTimeout			| long		| 300		| Code授权码 保存的时间（单位：秒） 默认五分钟									|
-| accessTokenTimeout	| long		| 7200		| `Access-Token` 保存的时间（单位：秒）默认两个小时								|
-| refreshTokenTimeout	| long		| 2592000	| `Refresh-Token` 保存的时间（单位：秒） 默认30 天								|
-| clientTokenTimeout	| long		| 7200		| `Client-Token` 保存的时间（单位：秒） 默认两个小时								|
-| pastClientTokenTimeout	| long	| 7200		| `Past-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
+| 参数名称					| 类型		| 默认值	| 说明																		|
+| :--------					| :--------	| :--------	| :--------																	|
+| enableAuthorizationCode	| Boolean	| true		| 是否打开模式：授权码（`Authorization Code`）								|
+| enableImplicit			| Boolean	| true		| 是否打开模式：隐藏式（`Implicit`）											|
+| enablePassword			| Boolean	| true		| 是否打开模式：密码式（`Password`）											|
+| enableClientCredentials	| Boolean	| true		| 是否打开模式：凭证式（`Client Credentials`）								|
+| isNewRefresh				| Boolean	| false		| 是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 `Refresh-Token`	|
+| codeTimeout				| long		| 300		| Code授权码 保存的时间（单位：秒） 默认五分钟									|
+| accessTokenTimeout		| long		| 7200		| `Access-Token` 保存的时间（单位：秒）默认两个小时								|
+| refreshTokenTimeout		| long		| 2592000	| `Refresh-Token` 保存的时间（单位：秒） 默认30 天								|
+| clientTokenTimeout		| long		| 7200		| `Client-Token` 保存的时间（单位：秒） 默认两个小时								|
+| pastClientTokenTimeout	| long		| 7200		| `Past-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
+| openidDigestPrefix		| String	| openid_default_digest_prefix		| 默认 openid 生成算法中使用的摘要前缀				 	|
+| higherScope				| String	| 		| 指定高级权限，多个用逗号隔开				 	|
+| lowerScope				| String	| 		| 指定低级权限，多个用逗号隔开				 	|
 
 配置示例：
 <!---------------------------- tabs:start ---------------------------->
@@ -313,44 +316,40 @@ sa-token.sso-client.is-slo=true
 ``` yaml
 # Sa-Token 配置
 sa-token: 
-    token-name: satoken-server
+    token-name: sa-token-oauth2-server
     # OAuth2.0 配置 
-    oauth2: 
-        is-code: true
-        is-implicit: true
-        is-password: true
-        is-client: true
+    oauth2-server: 
+        enable-authorization-code: true
+        enable-implicit: true
+        enable-password: true
+        enable-client-credentials: true
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # Sa-Token 配置 
-sa-token.token-name=satoken-server
+sa-token.token-name=sa-token-oauth2-server
 # OAuth2.0 配置 
-sa-token.oauth2.is-code=true
-sa-token.oauth2.is-implicit=true
-sa-token.oauth2.is-password=true
-sa-token.oauth2.is-client=true
+sa-token.oauth2-server.enable-authorization-code=true
+sa-token.oauth2-server.enable-implicit=true
+sa-token.oauth2-server.enable-password=true
+sa-token.oauth2-server.enable-client-credentials=true
 ```
 <!---------------------------- tabs:end ---------------------------->
 
 
 ##### SaClientModel属性定义
-| 参数名称				| 类型		| 默认值	| 说明													|
-| :--------				| :--------	| :--------	| :--------											|
-| clientId				| String	| null		| 应用id，应该全局唯一								|
-| clientSecret			| String	| null		| 应用秘钥											|
-| contractScope			| String	| null		| 应用签约的所有权限, 多个用逗号隔开					|
-| allowUrl				| String	| null		| 应用允许授权的所有URL, 多个用逗号隔开 （可以使用 `*` 号通配符）			|
-| isCode				| Boolean	| false		| 单独配置此 Client 是否打开模式：授权码（`Authorization Code`）		|
-| isImplicit			| Boolean	| false		| 单独配置此 Client 是否打开模式：隐藏式（`Implicit`）		|
-| isPassword			| Boolean	| false		| 单独配置此 Client 是否打开模式：密码式（`Password`）		|
-| isClient				| Boolean	| false		| 单独配置此 Client 是否打开模式：凭证式（`Client Credentials`）		|
-| isAutoMode			| Boolean	| true		| 是否自动判断此 Client 开放的授权模式。 参考：[详解](/use/config?id=配置项详解：isAutoMode)  |
-| isNewRefresh			| Boolean	| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
-| accessTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
-| refreshTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
-| clientTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
-| pastClientTokenTimeout	| long	| 取全局配置		| 单独配置此Client：`Past-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| 参数名称				| 类型			| 默认值	| 说明													|
+| :--------				| :--------		| :--------	| :--------											|
+| clientId				| String		| null		| 应用id，应该全局唯一								|
+| clientSecret			| String		| null		| 应用秘钥											|
+| contractScopes		| List<String>	| null		| 应用签约的所有权限 									|
+| allowUrls				| List<String>	| null		| 应用允许授权的所有URL（可以使用 `*` 号通配符）			|
+| allowGrantTypes		| List<String>	| new ArrayList<>()	| 应用允许的所有 `grant_type`							|
+| isNewRefresh			| Boolean		| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
+| accessTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
+| refreshTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| clientTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| pastClientTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Past-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
 
 
 
@@ -392,14 +391,14 @@ sa-token.oauth2.is-client=true
 
 但是 —— 有的场景下我们又确实需要在登录之前就使用 Token-Session 对象，这时候就把配置项 `tokenSessionCheckLogin` 值改为 `false` 即可。
 
-
+<!-- 
 #### 配置项详解：isAutoMode
 
 配置含义：是否自动判断此 Client 开放的授权模式。
 
 - 此值为 true 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠全局设置；
 - 此值为 false 时：四种模式（`isCode、isImplicit、isPassword、isClient`）是否生效，依靠局部配置+全局配置（两个都为 true 时才打开） 
-
+ -->
 
 #### 配置项详解：isHttp
 

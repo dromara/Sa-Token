@@ -10,9 +10,9 @@
 
 ``` java
 @Autowired
-public void configOAuth2Server(SaOAuth2Config cfg) {
+public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 	// 配置：未登录时返回的View 
-	cfg.notLoginView = ()->{
+	oauth2Server.notLoginView = ()->{
 		return new ModelAndView("xxx.html");
 	};
 }
@@ -64,9 +64,9 @@ public SaResult ss(String name, String pwd) {
 
 ``` java
 @Autowired
-public void configOAuth2Server(SaOAuth2Config cfg) {
+public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 	// 配置：授权确认视图 
-	cfg.confirmView = (clientId, scopes)->{
+	oauth2Server.confirmView = (clientId, scopes)->{
 		Map<String, Object> map = new HashMap<>();
 		map.put("clientId", clientId);
 		map.put("scope", scopes);

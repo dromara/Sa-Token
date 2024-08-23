@@ -13,7 +13,7 @@ public class SaOAuth2ServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SaOAuth2ServerApplication.class, args);
-		System.out.println("\nSa-Token-OAuth Server端启动成功，配置如下：");
+		System.out.println("\nSa-Token-OAuth2 Server端启动成功，配置如下：");
 		System.out.println(SaOAuth2Manager.getConfig());
 	}
 	

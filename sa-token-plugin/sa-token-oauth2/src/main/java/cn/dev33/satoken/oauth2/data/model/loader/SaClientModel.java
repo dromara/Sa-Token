@@ -16,7 +16,7 @@
 package cn.dev33.satoken.oauth2.data.model.loader;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,9 +49,9 @@ public class SaClientModel implements Serializable {
 	public List<String> contractScopes;
 	
 	/**
-	 * 应用允许授权的所有URL
+	 * 应用允许授权的所有 redirect_uri
 	 */
-	public List<String> allowUrls;
+	public List<String> allowRedirectUris;
 
 	/**
 	 * 应用允许的所有 grant_type
@@ -75,19 +75,19 @@ public class SaClientModel implements Serializable {
 
 	
 	public SaClientModel() {
-		SaOAuth2Config config = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig config = SaOAuth2Manager.getConfig();
 		this.isNewRefresh = config.getIsNewRefresh();
 		this.accessTokenTimeout = config.getAccessTokenTimeout();
 		this.refreshTokenTimeout = config.getRefreshTokenTimeout();
 		this.clientTokenTimeout = config.getClientTokenTimeout();
 		this.pastClientTokenTimeout = config.getPastClientTokenTimeout();
 	}
-	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowUrls) {
+	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowRedirectUris) {
 		super();
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.contractScopes = contractScopes;
-		this.allowUrls = allowUrls;
+		this.allowRedirectUris = allowRedirectUris;
 	}
 
 	/**
@@ -139,18 +139,18 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @return 应用允许授权的所有URL
+	 * @return 应用允许授权的所有 redirect_uri
 	 */
-	public List<String> getAllowUrls() {
-		return allowUrls;
+	public List<String> getAllowRedirectUris() {
+		return allowRedirectUris;
 	}
 
 	/**
-	 * @param allowUrls 应用允许授权的所有URL
+	 * @param allowRedirectUris 应用允许授权的所有 redirect_uri
 	 * @return 对象自身 
 	 */
-	public SaClientModel setAllowUrls(List<String> allowUrls) {
-		this.allowUrls = allowUrls;
+	public SaClientModel setAllowRedirectUris(List<String> allowRedirectUris) {
+		this.allowRedirectUris = allowRedirectUris;
 		return this;
 	}
 
@@ -259,7 +259,7 @@ public class SaClientModel implements Serializable {
 				"clientId='" + clientId + '\'' +
 				", clientSecret='" + clientSecret + '\'' +
 				", contractScopes=" + contractScopes +
-				", allowUrls=" + allowUrls +
+				", allowRedirectUris=" + allowRedirectUris +
 				", allowGrantTypes=" + allowGrantTypes +
 				", isNewRefresh=" + isNewRefresh +
 				", accessTokenTimeout=" + accessTokenTimeout +
@@ -285,14 +285,14 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @param urls 添加应用允许授权的所有URL
+	 * @param redirectUris 添加应用允许授权的所有 redirect_uri
 	 * @return 对象自身
 	 */
-	public SaClientModel addAllowUrls(String... urls) {
-		if(this.allowUrls == null) {
-			this.allowUrls = new ArrayList<>();
+	public SaClientModel addAllowRedirectUris(String... redirectUris) {
+		if(this.allowRedirectUris == null) {
+			this.allowRedirectUris = new ArrayList<>();
 		}
-		this.allowUrls.addAll(Arrays.asList(urls));
+		this.allowRedirectUris.addAll(Arrays.asList(redirectUris));
 		return this;
 	}
 

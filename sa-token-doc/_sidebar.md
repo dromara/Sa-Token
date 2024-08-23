@@ -58,7 +58,7 @@
 	- [配置 client 域名校验 ](/oauth2/oauth2-check-domain)
 	- [定制化登录页面与授权页面](/oauth2/oauth2-custom-login)
 	- [自定义 API 路由 ](/oauth2/oauth2-custom-api)
-	- [自定义 Scope 权限以处理器](/oauth2/oauth2-custom-scope-handler)
+	- [自定义 Scope 权限以处理器](/oauth2/oauth2-custom-scope)
 	- [为 Scope 划分等级](/oauth2/oauth2-scope-level)
 	- [自定义 grant_type](/oauth2/oauth2-custom-grant_type)
 	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)

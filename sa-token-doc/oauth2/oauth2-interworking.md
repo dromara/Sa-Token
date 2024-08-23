@@ -1,4 +1,4 @@
-# Sa-Token-OAuth2 与登录会话实现数据互通
+# OAuth2 与登录会话实现数据互通
 
 --- 
 
@@ -16,29 +16,35 @@
 
 ### OAuth2-Server 端数据互通
 
-很简单，你只需要在 `SaOAuth2TemplateImpl` 实现类中继续重写 Access-Token 的生成策略：
+很简单，你只需要在 `configOAuth2Server` 中重写 Access-Token 的生成策略：
 
 ``` java
-@Component
-public class SaOAuth2TemplateImpl extends SaOAuth2Template {
+// Sa-Token OAuth2 定制化配置 
+@Autowired
+public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
+	// 其它配置 ...
 	
-	// ... 其它代码 
+	// 重写 AccessToken 创建策略，返回会话令牌
+	SaOAuth2Strategy.instance.createAccessToken = (clientId, loginId, scopes) -> {
+		System.out.println("----返回会话令牌");
+		return StpUtil.createLoginSession(loginId);
+	};
 
-	// 重写 Access-Token 生成策略：复用登录会话的Token 
-	@Override
-	public String randomAccessToken(String clientId, Object loginId, String scope) {
-		String tokenValue = StpUtil.createLoginSession(loginId);
-		return tokenValue;
-	}
-	
 }
 ```
 
 重启项目，然后在 OAuth2 模块授权登录，现在生成的 `access_token` ，可以用来访问 `satoken` 的会话接口了。
 
 
+> [!WARNING| label:注意点] 
+> 数据互通，让前端与后端的交互更加方便，一个 token 即可访问所有接口，但也一定程度上失去了OAuth2的 “不同 Client 不同权限” 的设计意义，
+> 同时也默认每个 Client 都拥有了账号的会话权限（access_token 与 satoken 为同一个）。
+> 
+> 应该根据自己的架构合理分析是否应该整合数据互通。
+
+
 ### OAuth2-Client 数据互通
-除了Server端，Client端也可以打通 `access_token` 与 `satoken` 会话。做法是在 Client 端拿到 `access_token` 后进行登录时，使用 SaLoginModel 预定登录生成的 Token 值 
+除了Server端，Client端也可以打通 `access_token` 与 `satoken` 会话。做法是在 Client 端拿到 `access_token` 后进行登录时，使用 `SaLoginModel` 预定登录生成的 Token 值 
 
 ``` java
 // 1. 获取到access_token
@@ -49,13 +55,6 @@ StpUtil.login(uid, SaLoginConfig.setToken(access_token));
 
 // 3. 其它代码...
 ```
-
-
-> [!WARNING| label:注意点] 
-> 数据互通，让前端与后端的交互更加方便，一个 token 即可访问所有接口，但也一定程度上失去了OAuth2的 “不同 Client 不同权限” 的设计意义，
-> 同时也默认每个 Client 都拥有了账号的会话权限（access_token 与 satoken 为同一个）。
-> 
-> 应该根据自己的架构合理分析是否应该整合数据互通。
 
 
 

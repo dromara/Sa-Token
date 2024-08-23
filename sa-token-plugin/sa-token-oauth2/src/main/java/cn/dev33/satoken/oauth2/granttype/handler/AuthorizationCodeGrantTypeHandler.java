@@ -38,7 +38,7 @@ public class AuthorizationCodeGrantTypeHandler implements SaOAuth2GrantTypeHandl
     }
 
     @Override
-    public AccessTokenModel getAccessTokenModel(SaRequest req, String clientId, List<String> scopes) {
+    public AccessTokenModel getAccessToken(SaRequest req, String clientId, List<String> scopes) {
         // 获取参数
         ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
 //        String clientId = clientIdAndSecret.clientId;

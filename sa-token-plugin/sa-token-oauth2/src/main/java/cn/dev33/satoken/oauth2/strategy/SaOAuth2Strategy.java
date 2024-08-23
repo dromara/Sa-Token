@@ -17,7 +17,7 @@ package cn.dev33.satoken.oauth2.strategy;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
@@ -170,8 +170,8 @@ public final class SaOAuth2Strategy {
 		}
 
 		// 看看全局是否开启了此 grantType
-		SaOAuth2Config config = SaOAuth2Manager.getConfig();
-		if(grantType.equals(GrantType.authorization_code) && !config.getEnableCode() ) {
+		SaOAuth2ServerConfig config = SaOAuth2Manager.getConfig();
+		if(grantType.equals(GrantType.authorization_code) && !config.getEnableAuthorizationCode() ) {
 			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType);
 		}
 		if(grantType.equals(GrantType.password) && !config.getEnablePassword() ) {
@@ -189,7 +189,7 @@ public final class SaOAuth2Strategy {
 		}
 
 		// 调用 处理器
-		return grantTypeHandler.getAccessTokenModel(req, clientIdAndSecretModel.getClientId(), scopes);
+		return grantTypeHandler.getAccessToken(req, clientIdAndSecretModel.getClientId(), scopes);
 	};
 
 

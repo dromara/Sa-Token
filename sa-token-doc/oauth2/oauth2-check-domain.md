@@ -14,7 +14,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 		if("1001".equals(clientId)) {
 			return new SaClientModel()
 					// ...
-					.addAllowUrls("*")    // 所有允许授权的 url
+					.addAllowRedirectUris("*")    // 所有允许授权的 url
 					// ...
 		}
 		return null;
@@ -23,7 +23,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 }
 ```
 
-配置项 `AllowUrls` 意为配置此 `Client` 端所有允许的授权地址，不在此配置项中的 URL 将无法下发 `code` 授权码。
+配置项 `AllowRedirectUris` 意为配置此 `Client` 端所有允许的授权地址，不在此配置项中的 URL 将无法下发 `code` 授权码。
 
 为了方便测试，上述代码将其配置为`*`，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被 `code` 劫持的风险。
 
@@ -40,7 +40,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 
 ### 2、防范方法
 
-造成此漏洞的直接原因就是我们对此 client 配置了过于宽泛的 `AllowUrls` 允许授权地址，防范的方法也很简单，就是缩小 `AllowUrls` 授权范围。
+造成此漏洞的直接原因就是我们对此 client 配置了过于宽泛的 `AllowRedirectUris` 允许授权地址，防范的方法也很简单，就是缩小 `AllowRedirectUris` 授权范围。
 
 我们将其配置为一个具体的URL：
 
@@ -53,7 +53,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 		if("1001".equals(clientId)) {
 			return new SaClientModel()
 					// ...
-					.addAllowUrls("http://sa-oauth-client.com:8002/")    // 所有允许授权的 url
+					.addAllowRedirectUris("http://sa-oauth-client.com:8002/")    // 所有允许授权的 url
 					// ...
 		}
 		return null;
@@ -66,7 +66,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 
 ![oauth2-feifa-rf](https://oss.dev33.cn/sa-token/doc/oauth2-new/oauth2-feifa-rf.png 's-w-sh')
 
-域名没有通过校验，拒绝授权！
+URL 没有通过校验，拒绝授权！
 
 
 ### 3、配置安全性参考表
@@ -81,10 +81,18 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 ### 4、其它规则
 
 1、AllowUrls 配置的地址不允许出现 `@` 字符。
+
+- 反例：`http://user@sa-token.cc`
+- 反例：`http://sa-oauth-client.com@sa-token.cc`
+
 *详见源码：[SaOAuth2Template.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Template.java) 
 `checkRightUrl` 方法。*
 
 2、AllowUrls 配置的地址 `*` 通配符只允许出现在字符串末尾，不允许出现在字符串中间位置。
+
+- 反例：`http*://sa-oauth-client.com/`
+- 反例：`http://*.sa-oauth-client.com/`
+
 *详见源码： [SaOAuth2Template.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Template.java) 
 `checkAllowUrlListStaticMethod` 方法。*
 
