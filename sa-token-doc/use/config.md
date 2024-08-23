@@ -309,6 +309,8 @@ sa-token.sso-client.is-slo=true
 | openidDigestPrefix		| String	| openid_default_digest_prefix		| 默认 openid 生成算法中使用的摘要前缀				 	|
 | higherScope				| String	| 		| 指定高级权限，多个用逗号隔开				 	|
 | lowerScope				| String	| 		| 指定低级权限，多个用逗号隔开				 	|
+| mode4ReturnAccessToken	| Boolean	| false	| 模式4是否返回 AccessToken 字段，用于兼容OAuth2标准协议			 	|
+| oidc		| SaOAuth2OidcConfig	| new SaOAuth2OidcConfig()	| OIDC 相关配置			 	|
 
 配置示例：
 <!---------------------------- tabs:start ---------------------------->
@@ -335,6 +337,31 @@ sa-token.oauth2-server.enable-password=true
 sa-token.oauth2-server.enable-client-credentials=true
 ```
 <!---------------------------- tabs:end ---------------------------->
+
+
+##### OIDC 相关配置
+| 参数名称					| 类型		| 默认值	| 说明																			|
+| :--------					| :--------	| :--------	| :--------																	|
+| iss						| String	| 			| iss 值，如不配置则自动计算													|
+| idTokenTimeout			| long		| 600		| idToken 有效期（单位秒） 默认十分钟											|
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token: 
+    oauth2-server: 
+		oidc: 
+			iss: xxx
+			idTokenTimeout: 600
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+sa-token.oauth2-server.oidc.iss=xxx
+sa-token.oauth2-server.oidc.idTokenTimeout=600
+```
+<!---------------------------- tabs:end ---------------------------->
+
 
 
 ##### SaClientModel属性定义

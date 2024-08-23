@@ -72,6 +72,9 @@ public class SaOAuth2ServerConfig implements Serializable {
 	/** 指定低级权限，多个用逗号隔开 */
 	public String lowerScope;
 
+	/** 模式4是否返回 AccessToken 字段 */
+	public Boolean mode4ReturnAccessToken = false;
+
 	/**
 	 * oidc 相关配置
 	 */
@@ -293,6 +296,21 @@ public class SaOAuth2ServerConfig implements Serializable {
 	}
 
 	/**
+	 * @return mode4ReturnAccessToken
+	 */
+	public Boolean getMode4ReturnAccessToken() {
+		return mode4ReturnAccessToken;
+	}
+
+	/**
+	 * @param mode4ReturnAccessToken 要设置的 mode4ReturnAccessToken
+	 */
+	public SaOAuth2ServerConfig setMode4ReturnAccessToken(Boolean mode4ReturnAccessToken) {
+		this.mode4ReturnAccessToken = mode4ReturnAccessToken;
+		return this;
+	}
+
+	/**
 	 * 获取 oidc 相关配置
 	 *
 	 * @return oidc 相关配置
@@ -346,6 +364,7 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", openidDigestPrefix='" + openidDigestPrefix +
 				", higherScope='" + higherScope +
 				", lowerScope='" + lowerScope +
+				", mode4ReturnAccessToken='" + mode4ReturnAccessToken +
 				", oidc='" + oidc +
 				'}';
 	}
