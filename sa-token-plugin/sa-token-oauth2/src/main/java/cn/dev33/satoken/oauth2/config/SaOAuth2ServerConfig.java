@@ -73,6 +73,11 @@ public class SaOAuth2ServerConfig implements Serializable {
 	public String lowerScope;
 
 	/**
+	 * oidc 相关配置
+	 */
+	SaOAuth2OidcConfig oidc = new SaOAuth2OidcConfig();
+
+	/**
 	 * @return enableCode
 	 */
 	public Boolean getEnableAuthorizationCode() {
@@ -287,6 +292,26 @@ public class SaOAuth2ServerConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * 获取 oidc 相关配置
+	 *
+	 * @return oidc 相关配置
+	 */
+	public SaOAuth2OidcConfig getOidc() {
+		return this.oidc;
+	}
+
+	/**
+	 * 设置 oidc 相关配置
+	 *
+	 * @param oidc /
+	 * @return /
+	 */
+	public SaOAuth2ServerConfig setOidc(SaOAuth2OidcConfig oidc) {
+		this.oidc = oidc;
+		return this;
+	}
+
 
 	// -------------------- SaOAuth2Handle 所有回调函数 --------------------
 	
@@ -321,6 +346,7 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", openidDigestPrefix='" + openidDigestPrefix +
 				", higherScope='" + higherScope +
 				", lowerScope='" + lowerScope +
+				", oidc='" + oidc +
 				'}';
 	}
 }

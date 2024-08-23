@@ -41,20 +41,20 @@ public class SaOAuth2Manager {
 	/**
 	 * OAuth2 配置 Bean 
 	 */
-	private static volatile SaOAuth2ServerConfig config;
-	public static SaOAuth2ServerConfig getConfig() {
-		if (config == null) {
+	private static volatile SaOAuth2ServerConfig serverConfig;
+	public static SaOAuth2ServerConfig getServerConfig() {
+		if (serverConfig == null) {
 			// 初始化默认值
 			synchronized (SaOAuth2Manager.class) {
-				if (config == null) {
-					setConfig(new SaOAuth2ServerConfig());
+				if (serverConfig == null) {
+					setServerConfig(new SaOAuth2ServerConfig());
 				}
 			}
 		}
-		return config;
+		return serverConfig;
 	}
-	public static void setConfig(SaOAuth2ServerConfig config) {
-		SaOAuth2Manager.config = config;
+	public static void setServerConfig(SaOAuth2ServerConfig serverConfig) {
+		SaOAuth2Manager.serverConfig = serverConfig;
 	}
 
 	/**

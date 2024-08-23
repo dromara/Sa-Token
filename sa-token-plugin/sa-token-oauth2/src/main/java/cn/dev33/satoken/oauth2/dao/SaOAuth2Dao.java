@@ -45,7 +45,7 @@ public interface SaOAuth2Dao {
 		if(c == null) {
 			return;
 		}
-		getSaTokenDao().setObject(splicingCodeSaveKey(c.code), c, SaOAuth2Manager.getConfig().getCodeTimeout());
+		getSaTokenDao().setObject(splicingCodeSaveKey(c.code), c, SaOAuth2Manager.getServerConfig().getCodeTimeout());
 	}
 
 	/**
@@ -56,7 +56,7 @@ public interface SaOAuth2Dao {
 		if(c == null) {
 			return;
 		}
-		getSaTokenDao().set(splicingCodeIndexKey(c.clientId, c.loginId), c.code, SaOAuth2Manager.getConfig().getCodeTimeout());
+		getSaTokenDao().set(splicingCodeIndexKey(c.clientId, c.loginId), c.code, SaOAuth2Manager.getServerConfig().getCodeTimeout());
 	}
 
 	/**
@@ -151,7 +151,7 @@ public interface SaOAuth2Dao {
 	default void saveGrantScope(String clientId, Object loginId, List<String> scopes) {
 		if( ! SaFoxUtil.isEmpty(scopes)) {
 			// TODO ttl 计算规则优化
-			long ttl = SaOAuth2Manager.getConfig().getAccessTokenTimeout();
+			long ttl = SaOAuth2Manager.getServerConfig().getAccessTokenTimeout();
 			// long ttl = checkClientModel(clientId).getAccessTokenTimeout();
 			String value = SaOAuth2Manager.getDataConverter().convertScopeListToString(scopes);
 			getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), value, ttl);

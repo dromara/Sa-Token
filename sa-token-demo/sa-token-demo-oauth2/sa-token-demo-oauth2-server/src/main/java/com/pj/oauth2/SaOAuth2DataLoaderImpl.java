@@ -22,7 +22,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 					.setClientId("1001")    // client id
 					.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")    // client 秘钥
 					.addAllowRedirectUris("*")    // 所有允许授权的 url
-					.addContractScopes("openid", "userid", "userinfo")    // 所有签约的权限
+					.addContractScopes("openid", "userid", "userinfo", "oidc")    // 所有签约的权限
 					.addAllowGrantTypes(	 // 所有允许的授权模式
 							GrantType.authorization_code, // 授权码式
 							GrantType.implicit,  // 隐式式

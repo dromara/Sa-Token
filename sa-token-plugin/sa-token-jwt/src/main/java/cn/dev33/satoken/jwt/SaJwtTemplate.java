@@ -309,4 +309,24 @@ public class SaJwtTemplate {
         return (effTime - System.currentTimeMillis()) / 1000;
     }
 
+
+
+	// -------------- 其它方法
+
+	/**
+	 * 创建 jwt （Map 参数方式）
+	 *
+	 * @param map 扩展数据
+	 * @param keyt 秘钥
+	 * @return jwt-token
+	 */
+	public String createToken(Map<String, Object> map, String keyt) {
+		// 创建
+		JWT jwt = JWT.create().addPayloads(map);
+
+		// 返回
+		return generateToken(jwt, keyt);
+	}
+
+
 }

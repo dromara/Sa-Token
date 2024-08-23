@@ -22,6 +22,12 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
+        <!-- sa-token-jwt 签发 OIDC id_token 令牌 -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-jwt</artifactId>
+            <optional>true</optional>
+        </dependency>
 	</dependencies>
 
 

@@ -170,7 +170,7 @@ public final class SaOAuth2Strategy {
 		}
 
 		// 看看全局是否开启了此 grantType
-		SaOAuth2ServerConfig config = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
 		if(grantType.equals(GrantType.authorization_code) && !config.getEnableAuthorizationCode() ) {
 			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType);
 		}

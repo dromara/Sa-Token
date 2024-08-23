@@ -75,7 +75,7 @@ public class SaClientModel implements Serializable {
 
 	
 	public SaClientModel() {
-		SaOAuth2ServerConfig config = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
 		this.isNewRefresh = config.getIsNewRefresh();
 		this.accessTokenTimeout = config.getAccessTokenTimeout();
 		this.refreshTokenTimeout = config.getRefreshTokenTimeout();

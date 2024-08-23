@@ -53,7 +53,7 @@ public class SaOAuth2BeanInject {
 	 */
 	@Autowired(required = false)
 	public void setSaOAuth2Config(SaOAuth2ServerConfig saOAuth2Config) {
-		SaOAuth2Manager.setConfig(saOAuth2Config);
+		SaOAuth2Manager.setServerConfig(saOAuth2Config);
 	}
 
 	/**

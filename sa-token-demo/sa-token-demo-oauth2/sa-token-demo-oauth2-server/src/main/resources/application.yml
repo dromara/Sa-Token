@@ -7,6 +7,8 @@ sa-token:
     token-name: sa-token-oauth2-server
     # 是否打印操作日志
     is-log: true
+    # jwt 秘钥
+    jwt-secret-key: saxsaxsaxsax
     # OAuth2.0 配置 
     oauth2-server:
         # 是否全局开启授权码模式

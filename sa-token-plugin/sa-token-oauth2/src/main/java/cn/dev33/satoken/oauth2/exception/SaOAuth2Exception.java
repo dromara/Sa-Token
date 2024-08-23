@@ -29,7 +29,15 @@ public class SaOAuth2Exception extends SaTokenException {
 	 * 序列化版本号
 	 */
 	private static final long serialVersionUID = 6806129545290130114L;
-	
+
+	/**
+	 * 一个异常：代表OAuth2认证流程错误
+	 * @param cause 根异常原因
+	 */
+	public SaOAuth2Exception(Throwable cause) {
+		super(cause);
+	}
+
 	/**
 	 * 一个异常：代表OAuth2认证流程错误 
 	 * @param message 异常描述 

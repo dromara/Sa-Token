@@ -113,7 +113,7 @@ public class SaOAuth2ServerProcessor {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getServerConfig();
 		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
 		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 		String responseType = req.getParamNotNull(Param.response_type);
@@ -218,7 +218,7 @@ public class SaOAuth2ServerProcessor {
 	public Object doLogin() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getServerConfig();
 
 		return cfg.doLoginHandle.apply(req.getParam(Param.name), req.getParam(Param.pwd));
 	}
@@ -285,7 +285,7 @@ public class SaOAuth2ServerProcessor {
 	public Object clientToken() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getConfig();
+		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getServerConfig();
 		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 
 		String grantType = req.getParamNotNull(Param.grant_type);

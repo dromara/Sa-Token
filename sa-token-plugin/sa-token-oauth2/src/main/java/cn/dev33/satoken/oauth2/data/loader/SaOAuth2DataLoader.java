@@ -60,7 +60,7 @@ public interface SaOAuth2DataLoader {
      * @return 此账号在此Client下的openid
      */
     default String getOpenid(String clientId, Object loginId) {
-        return SaSecureUtil.md5(SaOAuth2Manager.getConfig().getOpenidDigestPrefix() + "_" + clientId + "_" + loginId);
+        return SaSecureUtil.md5(SaOAuth2Manager.getServerConfig().getOpenidDigestPrefix() + "_" + clientId + "_" + loginId);
     }
 
 }

@@ -70,7 +70,7 @@ public class PasswordGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterfa
      * @param password /
      */
     public void loginByUsernamePassword(String username, String password) {
-        SaOAuth2Manager.getConfig().doLoginHandle.apply(username, password);
+        SaOAuth2Manager.getServerConfig().doLoginHandle.apply(username, password);
     }
 
 }

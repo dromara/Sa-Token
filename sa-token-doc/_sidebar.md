@@ -61,6 +61,7 @@
 	- [自定义 Scope 权限以处理器](/oauth2/oauth2-custom-scope)
 	- [为 Scope 划分等级](/oauth2/oauth2-scope-level)
 	- [自定义 grant_type](/oauth2/oauth2-custom-grant_type)
+	- [开启 OIDC 协议](/oauth2/oauth2-oidc)
 	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
 	- [OAuth2 代码 API 参考](/oauth2/oauth2-dev)
 	<!-- - [常见问题说明](/oauth2/8) -->
