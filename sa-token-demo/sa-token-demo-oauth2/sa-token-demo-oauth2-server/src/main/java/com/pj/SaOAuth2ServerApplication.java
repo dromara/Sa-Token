@@ -5,10 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 启动：Sa-OAuth2 Server端 
- * @author click33 
+ * 启动：Sa-OAuth2 Server端
+ * @author click33
  */
-@SpringBootApplication 
+@SpringBootApplication
 public class SaOAuth2ServerApplication {
 
 	public static void main(String[] args) {

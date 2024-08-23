@@ -130,11 +130,15 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         map.put("client_id", at.clientId);
         map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(at.scopes));
         map.putAll(at.extraData);
-        return SaResult.ok().setMap(map);
+        SaResult result = SaResult.ok().setMap(map);
+        if(SaOAuth2Manager.getServerConfig().hideStatusField) {
+            result.removeDefaultFields();
+        }
+        return result;
     }
 
     /**
-     * 构建返回值: password 模式认证 获取 token
+     * 构建返回值: 凭证式 模式认证 获取 token
      */
     @Override
     public Map<String, Object> buildClientTokenReturnValue(ClientTokenModel ct) {
@@ -149,7 +153,12 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         map.put("client_id", ct.clientId);
         map.put("scope", SaOAuth2Manager.getDataConverter().convertScopeListToString(ct.scopes));
         map.putAll(ct.extraData);
-        return SaResult.ok().setMap(map);
+
+        SaResult result = SaResult.ok().setMap(map);
+        if(SaOAuth2Manager.getServerConfig().hideStatusField) {
+            result.removeDefaultFields();
+        }
+        return result;
     }
 
 }

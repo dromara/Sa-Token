@@ -75,6 +75,10 @@ public class SaOAuth2ServerConfig implements Serializable {
 	/** 模式4是否返回 AccessToken 字段 */
 	public Boolean mode4ReturnAccessToken = false;
 
+	/** 是否在返回值中隐藏默认的状态字段 (code、msg、data) */
+	public Boolean hideStatusField = false;
+
+
 	/**
 	 * oidc 相关配置
 	 */
@@ -311,6 +315,21 @@ public class SaOAuth2ServerConfig implements Serializable {
 	}
 
 	/**
+	 * @return hideStatusField
+	 */
+	public Boolean getHideStatusField() {
+		return hideStatusField;
+	}
+
+	/**
+	 * @param hideStatusField 要设置的 hideStatusField
+	 */
+	public SaOAuth2ServerConfig setHideStatusField(Boolean hideStatusField) {
+		this.hideStatusField = hideStatusField;
+		return this;
+	}
+
+	/**
 	 * 获取 oidc 相关配置
 	 *
 	 * @return oidc 相关配置
@@ -365,6 +384,7 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", higherScope='" + higherScope +
 				", lowerScope='" + lowerScope +
 				", mode4ReturnAccessToken='" + mode4ReturnAccessToken +
+				", hideStatusField='" + hideStatusField +
 				", oidc='" + oidc +
 				'}';
 	}
