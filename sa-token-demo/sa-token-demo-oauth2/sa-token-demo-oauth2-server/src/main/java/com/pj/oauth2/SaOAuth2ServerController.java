@@ -1,6 +1,7 @@
 package com.pj.oauth2;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Util;
@@ -8,7 +9,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -63,8 +63,9 @@ public class SaOAuth2ServerController {
 	
 	// 获取 userinfo 信息：昵称、头像、性别等等
 	@RequestMapping("/oauth2/userinfo")
-	public SaResult userinfo(@RequestParam("access_token") String accessToken) {
+	public SaResult userinfo() {
 		// 获取 Access-Token 对应的账号id
+		String accessToken = SaOAuth2Manager.getDataResolver().readAccessToken(SaHolder.getRequest());
 		Object loginId = SaOAuth2Util.getLoginIdByAccessToken(accessToken);
 		System.out.println("-------- 此Access-Token对应的账号id: " + loginId);
 		

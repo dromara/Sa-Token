@@ -40,8 +40,9 @@
 
 2. oauth2-client 第三方公司端
 	1. 第三方公司登录 oauth-server 数据前台申请端，申请注册应用，拿到 `clientId`、`clientSecret` 等数据。
-	2. 在自己系统通过 `clientId`、`clientSecret` 等参数对接 oauth2-server 授权端，拿到 `access_token`。
-	3. 通过 `access_token` 调用 oauth2-server 资源端接口，拿到对应资源数据。
+	2. 根据自己的业务选择对应的 scope 申请签约，等待平台端审核通过。
+	3. 在自己系统通过 `clientId`、`clientSecret` 等参数对接 oauth2-server 授权端，拿到 `access_token`。
+	4. 通过 `access_token` 调用 oauth2-server 资源端接口，拿到对应资源数据。
 
 3. 用户端操作
 	1. 打开第三方公司开发的网站或APP等程序。

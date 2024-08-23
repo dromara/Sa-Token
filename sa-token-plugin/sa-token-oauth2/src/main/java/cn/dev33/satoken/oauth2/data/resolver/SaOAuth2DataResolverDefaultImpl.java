@@ -22,8 +22,8 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -56,7 +56,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
             return new ClientIdAndSecretModel(clientId, clientSecret);
         }
 
-        // 如果请求参数中没有提供 client_id 参数，则尝试从 base auth 中获取
+        // 如果请求参数中没有提供 client_id 参数，则尝试从 Authorization 中获取
         String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
         if(SaFoxUtil.isNotEmpty(authorizationValue)) {
             String[] arr = authorizationValue.split(":");
@@ -69,6 +69,33 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
 
         // 如果都没有提供，则抛出异常
         throw new SaOAuth2Exception("请提供 client 信息");
+    }
+
+    /**
+     * 数据读取：从请求对象中读取 AccessToken
+     */
+    @Override
+    public String readAccessToken(SaRequest request) {
+        // 优先从请求参数中获取
+        String accessToken = request.getParam(SaOAuth2Consts.Param.access_token);
+        if(SaFoxUtil.isNotEmpty(accessToken)) {
+            return accessToken;
+        }
+
+        // 如果请求参数中没有提供 access_token 参数，则尝试从 Authorization 中获取
+        String authorizationValue = request.getHeader(SaOAuth2Consts.Param.Authorization);
+        if(SaFoxUtil.isEmpty(authorizationValue)) {
+            return null;
+        }
+
+        // 判断前缀，裁剪
+        String prefix = TokenType.Bearer + " ";
+        if(authorizationValue.startsWith(prefix)) {
+            return authorizationValue.substring(prefix.length());
+        }
+
+        // 前缀不符合，返回 null
+        return null;
     }
 
     /**

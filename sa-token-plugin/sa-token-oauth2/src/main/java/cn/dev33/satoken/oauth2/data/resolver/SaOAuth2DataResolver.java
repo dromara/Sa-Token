@@ -18,8 +18,8 @@ package cn.dev33.satoken.oauth2.data.resolver;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.Map;
@@ -41,6 +41,14 @@ public interface SaOAuth2DataResolver {
      * @return /
      */
     ClientIdAndSecretModel readClientIdAndSecret(SaRequest request);
+
+    /**
+     * 数据读取：从请求对象中读取 AccessToken
+     *
+     * @param request /
+     * @return /
+     */
+    String readAccessToken(SaRequest request);
 
     /**
      * 数据读取：从请求对象中构建 RequestAuthModel
@@ -76,20 +84,9 @@ public interface SaOAuth2DataResolver {
     }
 
     /**
-     * 构建返回值: password 模式认证 获取 token
-     * @param at token信息
-     * @return /
-     */
-    default Map<String, Object> buildPasswordReturnValue(AccessTokenModel at) {
-        return buildTokenReturnValue(at);
-    }
-
-    /**
      * 构建返回值: 凭证式 模式认证 获取 token
      * @param ct token信息
      */
     Map<String, Object> buildClientTokenReturnValue(ClientTokenModel ct);
-
-
 
 }
