@@ -374,6 +374,47 @@ public class SaOAuth2Template {
 	}
 
 
+	/**
+	 * 回收指定的 ClientToken
+	 *
+	 * @param clientToken /
+	 */
+	public void revokeClientToken(String clientToken) {
+		SaOAuth2Dao dao = SaOAuth2Manager.getDao();
+		ClientTokenModel ctModel = dao.getClientToken(clientToken);
+		if(ctModel == null) {
+			return;
+		}
+		// 删 ct、索引
+		dao.deleteClientToken(clientToken);
+		dao.deleteClientTokenIndex(ctModel.clientId);
+	}
+
+	/**
+	 * 回收指定的 ClientToken，根据索引： clientId
+	 *
+	 * @param clientId /
+	 */
+	public void revokeClientTokenByIndex(String clientId) {
+		SaOAuth2Dao dao = SaOAuth2Manager.getDao();
+
+		// 删 clientToken
+		String clientToken = dao.getClientTokenValue(clientId);
+		if(clientToken != null) {
+			dao.deleteClientToken(clientToken);
+			dao.deleteClientTokenIndex(clientId);
+		}
+
+		// 删 pastToken
+		String pastToken = dao.getPastTokenValue(clientId);
+		if(pastToken != null) {
+			dao.deletePastToken(pastToken);
+			dao.deletePastTokenIndex(clientId);
+		}
+
+	}
+
+
 
 	// ------------------- 包装其它 bean 的方法
 

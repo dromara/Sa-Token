@@ -21,7 +21,6 @@ import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
-import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
 import java.util.List;
 
@@ -175,7 +174,25 @@ public class SaOAuth2Util {
 	public static AccessTokenModel checkAccessTokenParam(String clientId, String clientSecret, String accessToken) {
 		return SaOAuth2Manager.getTemplate().checkAccessTokenParam(clientId, clientSecret, accessToken);
 	}
-	
+
+	/**
+	 * 回收指定的 ClientToken
+	 *
+	 * @param clientToken /
+	 */
+	public static void revokeClientToken(String clientToken) {
+		SaOAuth2Manager.getTemplate().revokeClientToken(clientToken);
+	}
+
+	/**
+	 * 回收指定的 ClientToken，根据索引：clientId
+	 *
+	 * @param clientId /
+	 */
+	public static void revokeClientTokenByIndex(String clientId) {
+		SaOAuth2Manager.getTemplate().revokeClientTokenByIndex(clientId);
+	}
+
 	// ------------------- save 数据 
 	
 	/**

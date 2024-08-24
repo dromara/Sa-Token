@@ -237,6 +237,15 @@ public interface SaOAuth2Dao {
 	}
 
 	/**
+	 * 删除：Past-Token
+	 * @param pastToken 值
+	 */
+	default void deletePastToken(String pastToken) {
+		// 其实就是删除 ClientToken
+		deleteClientToken(pastToken);
+	}
+
+	/**
 	 * 删除：Past-Token索引
 	 * @param clientId 应用id
 	 */
