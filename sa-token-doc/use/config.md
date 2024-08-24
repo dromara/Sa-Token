@@ -310,6 +310,7 @@ sa-token.sso-client.is-slo=true
 | higherScope				| String	| 		| 指定高级权限，多个用逗号隔开				 	|
 | lowerScope				| String	| 		| 指定低级权限，多个用逗号隔开				 	|
 | mode4ReturnAccessToken	| Boolean	| false	| 模式4是否返回 AccessToken 字段，用于兼容OAuth2标准协议			 	|
+| hideStatusField			| Boolean	| false	| 是否在返回值中隐藏默认的状态字段 (code、msg、data)			 	|
 | oidc		| SaOAuth2OidcConfig	| new SaOAuth2OidcConfig()	| OIDC 相关配置			 	|
 
 配置示例：
