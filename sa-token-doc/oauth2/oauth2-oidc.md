@@ -47,6 +47,25 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 }
 ```
 
+3、在 `application.yml` 配置文件中配置 jwt 生成秘钥：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token:
+	# jwt秘钥 
+	jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# jwt秘钥 
+sa-token.jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk
+```
+<!---------------------------- tabs:end ---------------------------->
+
+注：为了安全起见请不要直接复制官网示例这个字符串（随便按几个字符就好了）
+
+
 
 ### 2、测试
 

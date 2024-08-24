@@ -215,6 +215,16 @@ public class StpUserUtil {
 		return stpLogic.createLoginSession(id, loginModel);
 	}
 
+	/**
+	 * 获取指定账号 id 的登录会话数据，如果获取不到则创建并返回
+	 *
+	 * @param id 账号id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌
+	 */
+	public static String getOrCreateLoginSession(Object id) {
+		return stpLogic.getOrCreateLoginSession(id);
+	}
+
 	// --- 注销
 
 	/**

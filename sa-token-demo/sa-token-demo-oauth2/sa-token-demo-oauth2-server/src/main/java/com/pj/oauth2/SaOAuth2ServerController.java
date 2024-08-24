@@ -4,6 +4,7 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Util;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -54,6 +55,12 @@ public class SaOAuth2ServerController {
 			map.put("clientId", clientId);
 			map.put("scope", scopes);
 			return new ModelAndView("confirm.html", map);
+		};
+
+		// 重写 AccessToken 创建策略，返回会话令牌
+		SaOAuth2Strategy.instance.createAccessToken = (clientId, loginId, scopes) -> {
+			System.out.println("----返回会话令牌");
+			return StpUtil.getOrCreateLoginSession(loginId);
 		};
 
 	}

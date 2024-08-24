@@ -37,7 +37,6 @@ import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaValue2Box;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -589,6 +588,20 @@ public class StpLogic {
 			SaManager.log.warn("当前全局配置未开启动态 activeTimeout 功能，传入的 activeTimeout 参数将被忽略");
 		}
 
+	}
+
+	/**
+	 * 获取指定账号 id 的登录会话数据，如果获取不到则创建并返回
+	 *
+	 * @param id 账号id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌
+	 */
+	public String getOrCreateLoginSession(Object id) {
+		String tokenValue = getTokenValueByLoginId(id);
+		if(tokenValue == null) {
+			tokenValue = createLoginSession(id, new SaLoginModel());
+		}
+		return tokenValue;
 	}
 
 	// --- 注销 

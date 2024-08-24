@@ -27,7 +27,7 @@ public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 	// 重写 AccessToken 创建策略，返回会话令牌
 	SaOAuth2Strategy.instance.createAccessToken = (clientId, loginId, scopes) -> {
 		System.out.println("----返回会话令牌");
-		return StpUtil.createLoginSession(loginId);
+		return StpUtil.getOrCreateLoginSession(loginId);
 	};
 
 }
