@@ -245,6 +245,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     public String buildRedirectUri(String redirectUri, String code, String state) {
         String url = SaFoxUtil.joinParam(redirectUri, SaOAuth2Consts.Param.code, code);
         if( ! SaFoxUtil.isEmpty(state)) {
+            checkState(state);
             url = SaFoxUtil.joinParam(url, SaOAuth2Consts.Param.state, state);
         }
         return url;
@@ -261,6 +262,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     public String buildImplicitRedirectUri(String redirectUri, String token, String state) {
         String url = SaFoxUtil.joinSharpParam(redirectUri, SaOAuth2Consts.Param.token, token);
         if( ! SaFoxUtil.isEmpty(state)) {
+            checkState(state);
             url = SaFoxUtil.joinSharpParam(url, SaOAuth2Consts.Param.state, state);
         }
         return url;
@@ -289,6 +291,19 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         String refreshToken = dao.getRefreshTokenValue(at.clientId, at.loginId);
         dao.deleteRefreshToken(refreshToken);
         dao.deleteRefreshTokenIndex(at.clientId, at.loginId);
+    }
+
+    /**
+     * 检查 state 是否被重复使用
+     * @param state /
+     */
+    @Override
+    public void checkState(String state) {
+        String value = SaOAuth2Manager.getDao().getState(state);
+        if(SaFoxUtil.isNotEmpty(value)) {
+            throw new SaOAuth2Exception("多次请求的 state 不可重复: " + state);
+        }
+        SaOAuth2Manager.getDao().saveState(state);
     }
 
 }

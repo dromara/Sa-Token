@@ -91,4 +91,10 @@ public interface SaOAuth2DataGenerate {
      */
     void revokeAccessToken(String accessToken);
 
+    /**
+     * 检查 state 是否被重复使用
+     * @param state /
+     */
+    void checkState(String state);
+
 }

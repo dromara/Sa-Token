@@ -158,6 +158,17 @@ public interface SaOAuth2Dao {
 		}
 	}
 
+	/**
+	 * 持久化：state
+	 * @param state /
+	 */
+	default void saveState(String state) {
+		if( ! SaFoxUtil.isEmpty(state)) {
+			long ttl = SaOAuth2Manager.getServerConfig().getCodeTimeout();
+			getSaTokenDao().set(splicingStateSaveKey(state), state, ttl);
+		}
+	}
+
 
 	// ------------------- delete数据
 
@@ -260,6 +271,14 @@ public interface SaOAuth2Dao {
 	 */
 	default void deleteGrantScope(String clientId, Object loginId) {
 		getSaTokenDao().delete(splicingGrantScopeKey(clientId, loginId));
+	}
+
+	/**
+	 * 删除：state记录
+	 * @param state /
+	 */
+	default void deleteGrantScope(String state) {
+		getSaTokenDao().delete(splicingStateSaveKey(state));
 	}
 
 
@@ -372,6 +391,18 @@ public interface SaOAuth2Dao {
 		return SaOAuth2Manager.getDataConverter().convertScopeStringToList(value);
 	}
 
+	/**
+	 * 获取：state
+	 * @param state /
+	 * @return /
+	 */
+	default String getState(String state) {
+		if(SaFoxUtil.isEmpty(state)) {
+			return null;
+		}
+		return getSaTokenDao().get(splicingStateSaveKey(state));
+	}
+
 
 	// ------------------- 拼接key
 
@@ -467,6 +498,15 @@ public interface SaOAuth2Dao {
 	 */
 	default String splicingGrantScopeKey(String clientId, Object loginId) {
 		return getSaTokenConfig().getTokenName() + ":oauth2:grant-scope:" + clientId + ":" + loginId;
+	}
+
+	/**
+	 * 拼接key：state 参数持久化
+	 * @param state /
+	 * @return key
+	 */
+	default String splicingStateSaveKey(String state) {
+		return getSaTokenConfig().getTokenName() + ":oauth2:state:" + state;
 	}
 
 

@@ -30,8 +30,6 @@ OAuth2 集成常见问题整理
 
 
 
-
-
 ### 问：Sa-Token-OAuth2 怎么集成多账号模式？
 
 在 `configOAuth2Server` 里指定 oauth2 模块使用的 `StpLogic` 对象即可： 
@@ -46,3 +44,16 @@ public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 	SaOAuth2Manager.setStpLogic(StpUserUtil.stpLogic);
 }
 ```
+
+
+
+
+### 问：授权码流程中 state 参数是干吗用的？
+
+state 参数用于验证授权码流程的发起端和接受端是否为同一个客户端，以防止OAuth-Server账号伪装攻击。
+
+授权流程发起端必须保证：
+- state 参数必须足够随机，不可被预测。
+- state 参数与授权码流程发起客户端 一 一 对 应，授权流程发起时创建的 state 必须与接受时返回的 state 值一致。
+- 安全起见，一个 state 参数只允许使用一次。
+
