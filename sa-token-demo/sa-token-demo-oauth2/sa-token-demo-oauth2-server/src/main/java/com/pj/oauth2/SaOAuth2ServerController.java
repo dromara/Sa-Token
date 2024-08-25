@@ -77,7 +77,7 @@ public class SaOAuth2ServerController {
 		System.out.println("-------- 此Access-Token对应的账号id: " + loginId);
 
 		// 校验 Access-Token 是否具有权限: userinfo
-		SaOAuth2Util.checkScope(accessToken, "userinfo");
+		SaOAuth2Util.checkAccessTokenScope(accessToken, "userinfo");
 
 		// 模拟账号信息 （真实环境需要查询数据库获取信息）
 		Map<String, Object> map = new LinkedHashMap<>();
