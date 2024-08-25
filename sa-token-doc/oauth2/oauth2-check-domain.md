@@ -86,7 +86,7 @@ URL 没有通过校验，拒绝授权！
 - 反例：`http://sa-oauth-client.com@sa-token.cc`
 
 *详见源码：[SaOAuth2Template.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Template.java) 
-`checkRightUrl` 方法。*
+`checkRedirectUri` 方法。*
 
 2、AllowUrls 配置的地址 `*` 通配符只允许出现在字符串末尾，不允许出现在字符串中间位置。
 

@@ -44,12 +44,11 @@ public interface SaOAuth2DataConverter {
     String convertScopeListToString(List<String> scopeList);
 
     /**
-     * 转换 AllowUrl 数据格式：String -> List
-     * @param allowUrl /
+     * 转换 redirect_uri 数据格式：String -> List
+     * @param redirectUris /
      * @return /
      */
-    List<String> convertAllowUrlStringToList(String allowUrl);
-
+    List<String> convertRedirectUriStringToList(String redirectUris);
 
     /**
      * 将 Code 转换为 Access-Token

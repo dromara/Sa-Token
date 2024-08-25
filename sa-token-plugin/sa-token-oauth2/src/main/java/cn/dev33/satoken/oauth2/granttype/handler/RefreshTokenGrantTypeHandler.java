@@ -22,7 +22,8 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
-import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientModelException;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2RefreshTokenException;
 
 import java.util.List;
 
@@ -46,10 +47,10 @@ public class RefreshTokenGrantTypeHandler implements SaOAuth2GrantTypeHandlerInt
 
         // 校验：Refresh-Token 是否存在
         RefreshTokenModel rt = SaOAuth2Manager.getDao().getRefreshToken(refreshToken);
-        SaOAuth2Exception.throwBy(rt == null, "无效refresh_token: " + refreshToken, SaOAuth2ErrorCode.CODE_30121);
+        SaOAuth2RefreshTokenException.throwBy(rt == null, "无效refresh_token: " + refreshToken, refreshToken, SaOAuth2ErrorCode.CODE_30111);
 
         // 校验：Refresh-Token 代表的 ClientId 与提供的 ClientId 是否一致
-        SaOAuth2Exception.throwBy( ! rt.clientId.equals(clientId), "无效client_id: " + clientId, SaOAuth2ErrorCode.CODE_30122);
+        SaOAuth2ClientModelException.throwBy( ! rt.clientId.equals(clientId), "无效client_id: " + clientId, clientId, SaOAuth2ErrorCode.CODE_30122);
 
         // 获取新 Access-Token
         AccessTokenModel accessTokenModel = SaOAuth2Manager.getDataGenerate().refreshAccessToken(refreshToken);

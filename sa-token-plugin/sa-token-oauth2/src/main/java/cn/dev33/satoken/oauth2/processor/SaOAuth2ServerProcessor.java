@@ -157,7 +157,7 @@ public class SaOAuth2ServerProcessor {
 		}
 
 		// 默认返回
-		throw new SaOAuth2Exception("无效response_type: " + ra.responseType).setCode(SaOAuth2ErrorCode.CODE_30125);
+		throw new SaOAuth2Exception("无效 response_type: " + ra.responseType).setCode(SaOAuth2ErrorCode.CODE_30125);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class SaOAuth2ServerProcessor {
 	 */
 	public Object token() {
 		AccessTokenModel accessTokenModel = SaOAuth2Strategy.instance.grantTypeAuth.apply(SaHolder.getRequest());
-		return SaOAuth2Manager.getDataResolver().buildTokenReturnValue(accessTokenModel);
+		return SaOAuth2Manager.getDataResolver().buildAccessTokenReturnValue(accessTokenModel);
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class SaOAuth2ServerProcessor {
 
 		// 此请求只允许 POST 方式
 		if(!req.isMethod(SaHttpMethod.POST)) {
-			throw new SaOAuth2Exception("无效请求方式：" + req.getMethod()).setCode(SaOAuth2ErrorCode.CODE_30141);
+			throw new SaOAuth2Exception("无效请求方式：" + req.getMethod()).setCode(SaOAuth2ErrorCode.CODE_30151);
 		}
 
 		// 确认授权
@@ -366,7 +366,7 @@ public class SaOAuth2ServerProcessor {
 		}
 		// 其它
 		else {
-			throw new SaOAuth2Exception("无效 response_type: " + req.getParam(Param.response_type)).setCode(SaOAuth2ErrorCode.CODE_30125);
+			throw new SaOAuth2Exception("无效 response_type: " + responseType).setCode(SaOAuth2ErrorCode.CODE_30125);
 		}
 	}
 
@@ -374,14 +374,14 @@ public class SaOAuth2ServerProcessor {
 	 * 系统未开放此授权模式时抛出异常
 	 */
 	public void throwErrorSystemNotEnableModel() {
-		throw new SaOAuth2Exception("系统暂未开放此授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
+		throw new SaOAuth2Exception("系统暂未开放此授权模式").setCode(SaOAuth2ErrorCode.CODE_30141);
 	}
 
 	/**
 	 * 应用未开放此授权模式时抛出异常
 	 */
 	public void throwErrorClientNotEnableModel() {
-		throw new SaOAuth2Exception("应用暂未开放此授权模式").setCode(SaOAuth2ErrorCode.CODE_30131);
+		throw new SaOAuth2Exception("应用暂未开放此授权模式").setCode(SaOAuth2ErrorCode.CODE_30142);
 	}
 
 }

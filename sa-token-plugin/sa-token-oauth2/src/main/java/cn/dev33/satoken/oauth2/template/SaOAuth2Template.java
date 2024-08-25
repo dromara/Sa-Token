@@ -72,8 +72,11 @@ public class SaOAuth2Template {
 	 */
 	public SaClientModel checkClientSecret(String clientId, String clientSecret) {
 		SaClientModel cm = checkClientModel(clientId);
-		SaOAuth2ClientModelException.throwBy(cm.clientSecret == null || ! cm.clientSecret.equals(clientSecret), "无效client_secret: " + clientSecret,
-				clientId, SaOAuth2ErrorCode.CODE_30115);
+		if(cm.clientSecret == null || ! cm.clientSecret.equals(clientSecret)) {
+			throw new SaOAuth2ClientModelException("无效 client_secret: " + clientSecret)
+					.setClientId(clientId)
+					.setCode(SaOAuth2ErrorCode.CODE_30115);
+		}
 		return cm;
 	}
 
@@ -146,7 +149,7 @@ public class SaOAuth2Template {
 	public void checkRedirectUri(String clientId, String url) {
 		// 1、是否是一个有效的url
 		if( ! SaFoxUtil.isUrl(url)) {
-			throw new SaOAuth2ClientModelException("无效redirect_url：" + url)
+			throw new SaOAuth2ClientModelException("无效 redirect_url：" + url)
 					.setClientId(clientId)
 					.setCode(SaOAuth2ErrorCode.CODE_30113);
 		}
@@ -180,7 +183,8 @@ public class SaOAuth2Template {
 			//
 			//  但是为了安全起见，这么做还是有必要的
 			throw new SaOAuth2ClientModelException("无效 redirect_url（不允许出现@字符）：" + url)
-					.setClientId(clientId);
+					.setClientId(clientId)
+					.setCode(SaOAuth2ErrorCode.CODE_30113);
 		}
 
 		// 4、是否在[允许地址列表]之中
@@ -231,7 +235,8 @@ public class SaOAuth2Template {
 				//       http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://shop.sa-oauth2-client.com/
 				//
 				//  但是为了安全起见，这么做还是有必要的
-				throw new SaOAuth2Exception("无效的 allow-url 配置（*通配符只允许出现在最后一位）：" + url);
+				throw new SaOAuth2Exception("无效的 allow-url 配置（*通配符只允许出现在最后一位）：" + url)
+						.setCode(SaOAuth2ErrorCode.CODE_30114);
 			}
 		}
 	}
@@ -299,18 +304,18 @@ public class SaOAuth2Template {
 
 		// 校验：Code是否存在
 		CodeModel cm = dao.getCode(code);
-		SaOAuth2Exception.throwBy(cm == null, "无效 code: " + code, SaOAuth2ErrorCode.CODE_30117);
+		SaOAuth2AuthorizationCodeException.throwBy(cm == null, "无效 code: " + code, code, SaOAuth2ErrorCode.CODE_30110);
 
 		// 校验：ClientId是否一致
-		SaOAuth2Exception.throwBy( ! cm.clientId.equals(clientId), "无效 client_id: " + clientId, SaOAuth2ErrorCode.CODE_30118);
+		SaOAuth2ClientModelException.throwBy( ! cm.clientId.equals(clientId), "无效 client_id: " + clientId, clientId, SaOAuth2ErrorCode.CODE_30105);
 
 		// 校验：Secret是否正确
 		String dbSecret = checkClientModel(clientId).clientSecret;
-		SaOAuth2Exception.throwBy(dbSecret == null || ! dbSecret.equals(clientSecret), "无效 client_secret: " + clientSecret, SaOAuth2ErrorCode.CODE_30119);
+		SaOAuth2ClientModelException.throwBy(dbSecret == null || ! dbSecret.equals(clientSecret), "无效 client_secret: " + clientSecret, clientId, SaOAuth2ErrorCode.CODE_30115);
 
 		// 如果提供了redirectUri，则校验其是否与请求Code时提供的一致
 		if( ! SaFoxUtil.isEmpty(redirectUri)) {
-			SaOAuth2Exception.throwBy( ! redirectUri.equals(cm.redirectUri), "无效 redirect_uri: " + redirectUri, SaOAuth2ErrorCode.CODE_30120);
+			SaOAuth2ClientModelException.throwBy( ! redirectUri.equals(cm.redirectUri), "无效 redirect_uri: " + redirectUri, clientId, SaOAuth2ErrorCode.CODE_30120);
 		}
 
 		// 返回CodeModel
@@ -330,15 +335,15 @@ public class SaOAuth2Template {
 
 		// 校验：Refresh-Token是否存在
 		RefreshTokenModel rt = dao.getRefreshToken(refreshToken);
-		SaOAuth2RefreshTokenException.throwBy(rt == null, "无效 refresh_token: " + refreshToken, refreshToken, SaOAuth2ErrorCode.CODE_30121);
+		SaOAuth2RefreshTokenException.throwBy(rt == null, "无效 refresh_token: " + refreshToken, refreshToken, SaOAuth2ErrorCode.CODE_30111);
 
 		// 校验：ClientId是否一致
 		SaOAuth2ClientModelException.throwBy( ! rt.clientId.equals(clientId), "无效 client_id: " + clientId, clientId, SaOAuth2ErrorCode.CODE_30122);
 
 		// 校验：Secret是否正确
 		String dbSecret = checkClientModel(clientId).clientSecret;
-		SaOAuth2ClientModelException.throwBy(dbSecret == null || ! dbSecret.equals(clientSecret), "无效client_secret: " + clientSecret,
-				clientId, SaOAuth2ErrorCode.CODE_30123);
+		SaOAuth2ClientModelException.throwBy(dbSecret == null || ! dbSecret.equals(clientSecret), "无效 client_secret: " + clientSecret,
+				clientId, SaOAuth2ErrorCode.CODE_30115);
 
 		// 返回 Refresh-Token
 		return rt;
@@ -353,7 +358,7 @@ public class SaOAuth2Template {
 	 */
 	public AccessTokenModel checkAccessTokenParam(String clientId, String clientSecret, String accessToken) {
 		AccessTokenModel at = checkAccessToken(accessToken);
-		SaOAuth2ClientModelException.throwBy( ! at.clientId.equals(clientId), "无效 client_id：" + clientId, clientId, SaOAuth2ErrorCode.CODE_30124);
+		SaOAuth2ClientModelException.throwBy( ! at.clientId.equals(clientId), "无效 client_id：" + clientId, clientId, SaOAuth2ErrorCode.CODE_30122);
 		checkClientSecret(clientId, clientSecret);
 		return at;
 	}

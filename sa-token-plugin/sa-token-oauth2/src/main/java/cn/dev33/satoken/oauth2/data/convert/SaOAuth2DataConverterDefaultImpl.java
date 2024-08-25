@@ -59,14 +59,14 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     }
 
     /**
-     * 转换 AllowUrl 数据格式：String -> List
+     * 转换 redirect_uri 数据格式：String -> List
      */
     @Override
-    public List<String> convertAllowUrlStringToList(String allowUrl) {
-        if(SaFoxUtil.isEmpty(allowUrl)) {
+    public List<String> convertRedirectUriStringToList(String redirectUris) {
+        if(SaFoxUtil.isEmpty(redirectUris)) {
             return new ArrayList<>();
         }
-        return SaFoxUtil.convertStringToList(allowUrl);
+        return SaFoxUtil.convertStringToList(redirectUris);
     }
 
     /**

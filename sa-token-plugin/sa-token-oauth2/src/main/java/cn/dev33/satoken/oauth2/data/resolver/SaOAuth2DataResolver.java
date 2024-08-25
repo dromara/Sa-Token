@@ -72,7 +72,7 @@ public interface SaOAuth2DataResolver {
      * @param at token信息
      * @return /
      */
-    Map<String, Object> buildTokenReturnValue(AccessTokenModel at);
+    Map<String, Object> buildAccessTokenReturnValue(AccessTokenModel at);
 
     /**
      * 构建返回值: RefreshToken 刷新 Access-Token
@@ -80,7 +80,7 @@ public interface SaOAuth2DataResolver {
      * @return /
      */
     default Map<String, Object> buildRefreshTokenReturnValue(AccessTokenModel at) {
-        return buildTokenReturnValue(at);
+        return buildAccessTokenReturnValue(at);
     }
 
     /**

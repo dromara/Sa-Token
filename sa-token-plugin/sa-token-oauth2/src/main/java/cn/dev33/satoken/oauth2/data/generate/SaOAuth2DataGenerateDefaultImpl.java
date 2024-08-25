@@ -26,7 +26,9 @@ import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2AuthorizationCodeException;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2RefreshTokenException;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -79,7 +81,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 1、先校验
         CodeModel cm = dao.getCode(code);
-        SaOAuth2Exception.throwBy(cm == null, "无效code", SaOAuth2ErrorCode.CODE_30110);
+        SaOAuth2AuthorizationCodeException.throwBy(cm == null, "无效 code: " + code, code, SaOAuth2ErrorCode.CODE_30110);
 
         // 2、删除旧Token
         dao.deleteAccessToken(dao.getAccessTokenValue(cm.clientId, cm.loginId));
@@ -118,7 +120,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 获取 Refresh-Token 信息
         RefreshTokenModel rt = dao.getRefreshToken(refreshToken);
-        SaOAuth2Exception.throwBy(rt == null, "无效refresh_token: " + refreshToken, SaOAuth2ErrorCode.CODE_30111);
+        SaOAuth2RefreshTokenException.throwBy(rt == null, "无效 refresh_token: " + refreshToken, refreshToken, SaOAuth2ErrorCode.CODE_30111);
 
         // 如果配置了[每次刷新产生新的Refresh-Token]
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
@@ -276,7 +278,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     public void checkState(String state) {
         String value = SaOAuth2Manager.getDao().getState(state);
         if(SaFoxUtil.isNotEmpty(value)) {
-            throw new SaOAuth2Exception("多次请求的 state 不可重复: " + state);
+            throw new SaOAuth2Exception("多次请求的 state 不可重复: " + state).setCode(SaOAuth2ErrorCode.CODE_30127);
         }
         SaOAuth2Manager.getDao().saveState(state);
     }

@@ -22,6 +22,7 @@ import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
+import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.function.strategy.*;
 import cn.dev33.satoken.oauth2.granttype.handler.AuthorizationCodeGrantTypeHandler;
@@ -162,16 +163,16 @@ public final class SaOAuth2Strategy {
 		String grantType = req.getParamNotNull(SaOAuth2Consts.Param.grant_type);
 		SaOAuth2GrantTypeHandlerInterface grantTypeHandler = grantTypeHandlerMap.get(grantType);
 		if(grantTypeHandler == null) {
-			throw new RuntimeException("无效 grant_type: " + grantType);
+			throw new SaOAuth2Exception("无效 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
 		}
 
 		// 看看全局是否开启了此 grantType
 		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
 		if(grantType.equals(GrantType.authorization_code) && !config.getEnableAuthorizationCode() ) {
-			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType);
+			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
 		}
 		if(grantType.equals(GrantType.password) && !config.getEnablePassword() ) {
-			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType);
+			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
 		}
 
 		// 校验 clientSecret 和 scope
@@ -181,7 +182,7 @@ public final class SaOAuth2Strategy {
 
 		// 检测应用是否开启此 grantType
 		if(!clientModel.getAllowGrantTypes().contains(grantType)) {
-			throw new SaOAuth2Exception("应用未开放的 grant_type: " + grantType);
+			throw new SaOAuth2Exception("应用未开放的 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30141);
 		}
 
 		// 调用 处理器

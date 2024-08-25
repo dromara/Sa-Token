@@ -56,19 +56,19 @@
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
 	- [OAuth2-Server端开放 API 接口](/oauth2/oauth2-apidoc)
 	- [配置 client 域名校验 ](/oauth2/oauth2-check-domain)
-	- [定制化登录页面与授权页面](/oauth2/oauth2-custom-login)
-	- [自定义 API 路由 ](/oauth2/oauth2-custom-api)
-	- [自定义 Scope 权限以处理器](/oauth2/oauth2-custom-scope)
+	- [自定义 Scope 权限及处理器](/oauth2/oauth2-custom-scope)
 	- [为 Scope 划分等级](/oauth2/oauth2-scope-level)
 	- [自定义 grant_type](/oauth2/oauth2-custom-grant_type)
+	- [定制化登录页面与授权页面](/oauth2/oauth2-custom-login)
+	- [自定义 API 路由 ](/oauth2/oauth2-custom-api)
 	- [开启 OIDC 协议](/oauth2/oauth2-oidc)
-	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
 	- [使用注解校验 Access-Token](/oauth2/oauth2-at-check)
+	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
 	- [OAuth2 代码 API 参考](/oauth2/oauth2-dev)
 	- [常见问题总结](/oauth2/oauth2-questions)
 	<!-- - [前后端分离模式整合方案](/oauth2/4) -->
 	<!-- - [平台中心模式开发](/oauth2/5) -->
-	- <!-- jwt风格token、使用注解校验权限、state参数详解 -->
+	<!-- - [jwt 风格 token](/oauth2/6) -->
 
 - **微服务**
 	- [分布式Session会话](/micro/dcs-session)

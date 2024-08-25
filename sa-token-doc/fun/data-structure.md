@@ -311,9 +311,9 @@ clientId 反查 Client-Token
 {tokenName}:oauth2:client-token-index:{clientId}
 ```
 
-Past-Token 次级应用令牌索引
+Lower-Client-Token 次级应用令牌索引
 ``` js
-{tokenName}:oauth2:past-token-index:{clientId}
+{tokenName}:oauth2:lower-client-token-index:{clientId}
 ```
 
 ### 3.5、用户授权记录
