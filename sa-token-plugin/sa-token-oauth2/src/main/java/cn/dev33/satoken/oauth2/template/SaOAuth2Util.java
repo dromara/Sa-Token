@@ -318,12 +318,12 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收 PastToken，根据索引： clientId
+	 * 回收 Lower-Client-Token，根据索引： clientId
 	 *
 	 * @param clientId /
 	 */
-	public static void revokePastTokenByIndex(String clientId) {
-		SaOAuth2Manager.getTemplate().revokePastTokenByIndex(clientId);
+	public static void revokeLowerClientTokenByIndex(String clientId) {
+		SaOAuth2Manager.getTemplate().revokeLowerClientTokenByIndex(clientId);
 	}
 
 }

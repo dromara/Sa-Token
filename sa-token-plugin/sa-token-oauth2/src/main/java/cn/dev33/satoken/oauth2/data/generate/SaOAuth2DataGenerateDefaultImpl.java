@@ -204,17 +204,17 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
-        // 1、删掉旧 Past-Token
-        dao.deleteClientToken(dao.getPastTokenValue(clientId));
+        // 1、删掉旧 Lower-Client-Token
+        dao.deleteClientToken(dao.getLowerClientTokenValue(clientId));
 
-        // 2、将旧Client-Token 标记为新 Past-Token
+        // 2、将旧Client-Token 标记为新 Lower-Client-Token
         ClientTokenModel oldCt = dao.getClientToken(dao.getClientTokenValue(clientId));
-        dao.savePastTokenIndex(oldCt);
+        dao.saveLowerClientTokenIndex(oldCt);
 
-        // 2.5、如果配置了 PastClientToken 的 ttl ，则需要更新一下
+        // 2.5、如果配置了 Lower-Client-Token 的 ttl ，则需要更新一下
         SaClientModel cm = SaOAuth2Manager.getDataLoader().getClientModelNotNull(clientId);
-        if(oldCt != null && cm.getPastClientTokenTimeout() != -1) {
-            oldCt.expiresTime = System.currentTimeMillis() + (cm.getPastClientTokenTimeout() * 1000);
+        if(oldCt != null && cm.getLowerClientTokenTimeout() != -1) {
+            oldCt.expiresTime = System.currentTimeMillis() + (cm.getLowerClientTokenTimeout() * 1000);
             dao.saveClientToken(oldCt);
         }
 

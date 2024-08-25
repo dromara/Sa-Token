@@ -23,9 +23,12 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
+
+import static cn.dev33.satoken.oauth2.template.SaOAuth2Util.checkClientModel;
 
 /**
  * Sa-Token OAuth2 数据持久层
@@ -126,20 +129,20 @@ public interface SaOAuth2Dao {
 	}
 
 	/**
-	 * 持久化：Past-Token-索引
+	 * 持久化：Lower-Client-Token 索引
 	 * @param ct /
 	 */
-	default void savePastTokenIndex(ClientTokenModel ct) {
+	default void saveLowerClientTokenIndex(ClientTokenModel ct) {
 		if(ct == null) {
 			return;
 		}
 		long ttl = ct.getExpiresIn();
-		// TODO PastToken ttl 是否有必要单独配置个字段？
-//		SaClientModel cm = checkClientModel(ct.clientId);
-//		if (cm.getPastClientTokenTimeout() != -1) {
-//			ttl = cm.getPastClientTokenTimeout();
-//		}
-		getSaTokenDao().set(splicingPastTokenIndexKey(ct.clientId), ct.clientToken, ttl);
+		// 如果此 client 单独配置了 Lower-Client-Token 的 TTL，则使用单独配置
+		SaClientModel cm = checkClientModel(ct.clientId);
+		if (cm.getLowerClientTokenTimeout() != -1) {
+			ttl = cm.getLowerClientTokenTimeout();
+		}
+		getSaTokenDao().set(splicingLowerClientTokenIndexKey(ct.clientId), ct.clientToken, ttl);
 	}
 
 	/**
@@ -248,20 +251,20 @@ public interface SaOAuth2Dao {
 	}
 
 	/**
-	 * 删除：Past-Token
-	 * @param pastToken 值
+	 * 删除：Lower-Client-Token
+	 * @param lowerClientToken 值
 	 */
-	default void deletePastToken(String pastToken) {
+	default void deleteLowerClientToken(String lowerClientToken) {
 		// 其实就是删除 ClientToken
-		deleteClientToken(pastToken);
+		deleteClientToken(lowerClientToken);
 	}
 
 	/**
-	 * 删除：Past-Token索引
+	 * 删除：Lower-Client-Token索引
 	 * @param clientId 应用id
 	 */
-	default void deletePastTokenIndex(String clientId) {
-		getSaTokenDao().delete(splicingPastTokenIndexKey(clientId));
+	default void deleteLowerClientTokenIndex(String clientId) {
+		getSaTokenDao().delete(splicingLowerClientTokenIndexKey(clientId));
 	}
 
 	/**
@@ -372,12 +375,12 @@ public interface SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取：Past-Token Value
+	 * 获取：Lower-Client-Token Value
 	 * @param clientId 应用id
 	 * @return .
 	 */
-	default String getPastTokenValue(String clientId) {
-		return getSaTokenDao().get(splicingPastTokenIndexKey(clientId));
+	default String getLowerClientTokenValue(String clientId) {
+		return getSaTokenDao().get(splicingLowerClientTokenIndexKey(clientId));
 	}
 
 	/**
@@ -482,12 +485,12 @@ public interface SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：Past-Token 索引
+	 * 拼接key：Lower-Client-Token 索引
 	 * @param clientId clientId
 	 * @return key
 	 */
-	default String splicingPastTokenIndexKey(String clientId) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:past-token-index:" + clientId;
+	default String splicingLowerClientTokenIndexKey(String clientId) {
+		return getSaTokenConfig().getTokenName() + ":oauth2:lower-client-token-index:" + clientId;
 	}
 
 	/**

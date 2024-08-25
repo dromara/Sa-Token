@@ -82,7 +82,7 @@
 			<h3>模式四：凭证式（Client Credentials）</h3>
 			<p class="pst">以上三种模式获取的都是用户的 Access-Token，代表用户对第三方应用的授权，在OAuth2.0中还有一种针对 Client级别的授权，
 				即：Client-Token，代表应用自身的资源授权</p>
-			<p class="pst">Client-Token具有延迟作废特性，即：在每次获取最新Client-Token的时候，旧Client-Token不会立即过期，而是作为Past-Token再次
+			<p class="pst">Client-Token具有延迟作废特性，即：在每次获取最新Client-Token的时候，旧Client-Token不会立即过期，而是作为Lower-Client-Token再次
 				储存起来，资源请求方只要携带其中之一便可通过Token校验，这种特性保证了在大量并发请求时不会出现“新旧Token交替造成的授权失效”，
 				保证了服务的高可用</p>
 				

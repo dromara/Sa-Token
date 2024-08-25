@@ -628,17 +628,17 @@ public class SaOAuth2Template {
 	}
 
 	/**
-	 * 回收 PastToken，根据索引： clientId
+	 * 回收 Lower-Client-Token，根据索引： clientId
 	 *
 	 * @param clientId /
 	 */
-	public void revokePastTokenByIndex(String clientId) {
+	public void revokeLowerClientTokenByIndex(String clientId) {
 		SaOAuth2Dao dao = SaOAuth2Manager.getDao();
-		// 删 pastToken
-		String pastToken = dao.getPastTokenValue(clientId);
-		if(pastToken != null) {
-			dao.deletePastToken(pastToken);
-			dao.deletePastTokenIndex(clientId);
+		// 删 Lower-Client-Token
+		String lowerClientToken = dao.getLowerClientTokenValue(clientId);
+		if(lowerClientToken != null) {
+			dao.deleteLowerClientToken(lowerClientToken);
+			dao.deleteLowerClientTokenIndex(clientId);
 		}
 	}
 

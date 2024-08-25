@@ -70,8 +70,8 @@ public class SaClientModel implements Serializable {
 	/** 单独配置此Client：Client-Token 保存的时间(单位秒) [默认取全局配置] */
 	public long clientTokenTimeout;
 
-	/** 单独配置此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置] */
-	public long pastClientTokenTimeout;
+	/** 单独配置此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置] */
+	public long lowerClientTokenTimeout;
 
 	
 	public SaClientModel() {
@@ -80,7 +80,7 @@ public class SaClientModel implements Serializable {
 		this.accessTokenTimeout = config.getAccessTokenTimeout();
 		this.refreshTokenTimeout = config.getRefreshTokenTimeout();
 		this.clientTokenTimeout = config.getClientTokenTimeout();
-		this.pastClientTokenTimeout = config.getPastClientTokenTimeout();
+		this.lowerClientTokenTimeout = config.getLowerClientTokenTimeout();
 	}
 	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowRedirectUris) {
 		super();
@@ -236,18 +236,18 @@ public class SaClientModel implements Serializable {
 	}
 	
 	/**
-	 * @return 此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置]
+	 * @return 此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置]
 	 */
-	public long getPastClientTokenTimeout() {
-		return pastClientTokenTimeout;
+	public long getLowerClientTokenTimeout() {
+		return lowerClientTokenTimeout;
 	}
 	
 	/**
-	 * @param pastClientTokenTimeout 单独配置此Client：Past-Client-Token 保存的时间(单位：秒) [默认取全局配置]
+	 * @param lowerClientTokenTimeout 单独配置此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置]
 	 * @return 对象自身 
 	 */
-	public SaClientModel setPastClientTokenTimeout(long pastClientTokenTimeout) {
-		this.pastClientTokenTimeout = pastClientTokenTimeout;
+	public SaClientModel setLowerClientTokenTimeout(long lowerClientTokenTimeout) {
+		this.lowerClientTokenTimeout = lowerClientTokenTimeout;
 		return this;
 	}
 	
@@ -265,7 +265,7 @@ public class SaClientModel implements Serializable {
 				", accessTokenTimeout=" + accessTokenTimeout +
 				", refreshTokenTimeout=" + refreshTokenTimeout +
 				", clientTokenTimeout=" + clientTokenTimeout +
-				", pastClientTokenTimeout=" + pastClientTokenTimeout +
+				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
 				'}';
 	}
 

@@ -60,8 +60,8 @@ public class SaOAuth2ServerConfig implements Serializable {
 	/** Client-Token 保存的时间(单位：秒) 默认两个小时 */
 	public long clientTokenTimeout = 60 * 60 * 2;
 
-	/** Past-Client-Token 保存的时间(单位：秒) 默认为 -1，代表延续 Client-Token 有效期 */
-	public long pastClientTokenTimeout = -1;
+	/** Lower-Client-Token 保存的时间(单位：秒) 默认为 -1，代表延续 Client-Token 有效期 */
+	public long lowerClientTokenTimeout = -1;
 
 	/** 默认 openid 生成算法中使用的摘要前缀 */
 	public String openidDigestPrefix = SaOAuth2Consts.OPENID_DEFAULT_DIGEST_PREFIX;
@@ -228,18 +228,18 @@ public class SaOAuth2ServerConfig implements Serializable {
 	}
 
 	/**
-	 * @return pastClientTokenTimeout
+	 * @return lowerClientTokenTimeout
 	 */
-	public long getPastClientTokenTimeout() {
-		return pastClientTokenTimeout;
+	public long getLowerClientTokenTimeout() {
+		return lowerClientTokenTimeout;
 	}
 
 	/**
-	 * @param pastClientTokenTimeout 要设置的 pastClientTokenTimeout
+	 * @param lowerClientTokenTimeout 要设置的 lowerClientTokenTimeout
 	 * @return 对象自身
 	 */
-	public SaOAuth2ServerConfig setPastClientTokenTimeout(long pastClientTokenTimeout) {
-		this.pastClientTokenTimeout = pastClientTokenTimeout;
+	public SaOAuth2ServerConfig setLowerClientTokenTimeout(long lowerClientTokenTimeout) {
+		this.lowerClientTokenTimeout = lowerClientTokenTimeout;
 		return this;
 	}
 
@@ -379,7 +379,7 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", accessTokenTimeout=" + accessTokenTimeout +
 				", refreshTokenTimeout=" + refreshTokenTimeout +
 				", clientTokenTimeout=" + clientTokenTimeout +
-				", pastClientTokenTimeout=" + pastClientTokenTimeout +
+				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
 				", openidDigestPrefix='" + openidDigestPrefix +
 				", higherScope='" + higherScope +
 				", lowerScope='" + lowerScope +
