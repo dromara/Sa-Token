@@ -18,120 +18,52 @@ package cn.dev33.satoken.oauth2.template;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
-import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 
 import java.util.List;
 
 /**
- * Sa-Token-OAuth2 模块 工具类
+ * Sa-Token OAuth2 模块 工具类
  *
  * @author click33
  * @since 1.23.0
  */
 public class SaOAuth2Util {
-	
-	// ------------------- 资源校验API  
-	
+
+	// ----------------- ClientModel 相关 -----------------
+
 	/**
-	 * 根据id获取Client信息, 如果Client为空，则抛出异常 
-	 * @param clientId 应用id
-	 * @return ClientModel 
+	 * 获取 ClientModel，根据 clientId
+	 *
+	 * @param clientId /
+	 * @return /
+	 */
+	public static SaClientModel getClientModel(String clientId) {
+		return SaOAuth2Manager.getTemplate().getClientModel(clientId);
+	}
+
+	/**
+	 * 校验 clientId 信息并返回 ClientModel，如果找不到对应 Client 信息则抛出异常
+	 * @param clientId /
+	 * @return /
 	 */
 	public static SaClientModel checkClientModel(String clientId) {
 		return SaOAuth2Manager.getTemplate().checkClientModel(clientId);
 	}
-	
-	/**
-	 * 获取 Access-Token，如果AccessToken为空则抛出异常 
-	 * @param accessToken . 
-	 * @return .
-	 */
-	public static AccessTokenModel checkAccessToken(String accessToken) {
-		return SaOAuth2Manager.getTemplate().checkAccessToken(accessToken);
-	}
-	
-	/**
-	 * 获取 Client-Token，如果ClientToken为空则抛出异常 
-	 * @param clientToken . 
-	 * @return .
-	 */
-	public static ClientTokenModel checkClientToken(String clientToken) {
-		return SaOAuth2Manager.getTemplate().checkClientToken(clientToken);
-	}
-	
-	/**
-	 * 获取 Access-Token 所代表的LoginId 
-	 * @param accessToken Access-Token 
-	 * @return LoginId 
-	 */
-	public static Object getLoginIdByAccessToken(String accessToken) {
-		return SaOAuth2Manager.getTemplate().getLoginIdByAccessToken(accessToken);
-	}
-	
-	/**
-	 * 校验：指定 Access-Token 是否具有指定 Scope  
-	 * @param accessToken Access-Token
-	 * @param scopes 需要校验的权限列表 
-	 */
-	public static void checkScope(String accessToken, String... scopes) {
-		SaOAuth2Manager.getTemplate().checkScope(accessToken, scopes);
-	}
-	
-	/**
-	 * 校验：指定 Client-Token 是否具有指定 Scope
-	 * @param clientToken Client-Token
-	 * @param scopes 需要校验的权限列表
-	 */
-	public static void checkClientTokenScope(String clientToken, String... scopes) {
-		SaOAuth2Manager.getTemplate().checkClientTokenScope(clientToken, scopes);
-	}
 
-
-	// ------------------- 数据校验 
-	
-	/**
-	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope 
-	 * @param loginId 账号id 
-	 * @param clientId 应用id 
-	 * @param scopes 权限
-	 * @return 是否已经授权
-	 */
-	public static boolean isGrant(Object loginId, String clientId, List<String> scopes) {
-		return SaOAuth2Manager.getTemplate().isGrant(loginId, clientId, scopes);
-	}
-	
-	/**
-	 * 校验：该Client是否签约了指定的Scope 
-	 * @param clientId 应用id
-	 * @param scopes 权限(多个用逗号隔开)
-	 */
-	public static void checkContract(String clientId, List<String> scopes) {
-		SaOAuth2Manager.getTemplate().checkContract(clientId, scopes);
-	}
-	
-	/**
-	 * 校验：该Client使用指定url作为回调地址，是否合法 
-	 * @param clientId 应用id 
-	 * @param url 指定url
-	 */
-	public static void checkRightUrl(String clientId, String url) {
-		SaOAuth2Manager.getTemplate().checkRightUrl(clientId, url);
-	}
-	
 	/**
 	 * 校验：clientId 与 clientSecret 是否正确
-	 * @param clientId 应用id 
-	 * @param clientSecret 秘钥 
-	 * @return SaClientModel对象 
+	 * @param clientId 应用id
+	 * @param clientSecret 秘钥
+	 * @return SaClientModel对象
 	 */
 	public static SaClientModel checkClientSecret(String clientId, String clientSecret) {
 		return SaOAuth2Manager.getTemplate().checkClientSecret(clientId, clientSecret);
 	}
-	
+
 	/**
-	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes 
+	 * 校验：clientId 与 clientSecret 是否正确，并且是否签约了指定 scopes
 	 * @param clientId 应用id
 	 * @param clientSecret 秘钥
 	 * @param scopes 权限
@@ -140,43 +72,235 @@ public class SaOAuth2Util {
 	public static SaClientModel checkClientSecretAndScope(String clientId, String clientSecret, List<String> scopes) {
 		return SaOAuth2Manager.getTemplate().checkClientSecretAndScope(clientId, clientSecret, scopes);
 	}
-	
+
 	/**
-	 * 校验：使用 code 获取 token 时提供的参数校验 
-	 * @param code 授权码
-	 * @param clientId 应用id 
-	 * @param clientSecret 秘钥 
-	 * @param redirectUri 重定向地址 
-	 * @return CodeModel对象 
+	 * 判断：该 Client 是否签约了指定的 Scope，返回 true 或 false
+	 * @param clientId 应用id
+	 * @param scopes 权限
+	 * @return /
 	 */
-	public static CodeModel checkGainTokenParam(String code, String clientId, String clientSecret, String redirectUri) {
-		return SaOAuth2Manager.getTemplate().checkGainTokenParam(code, clientId, clientSecret, redirectUri);
+	public static boolean isContractScope(String clientId, List<String> scopes) {
+		return SaOAuth2Manager.getTemplate().isContractScope(clientId, scopes);
 	}
 
 	/**
-	 * 校验：使用 Refresh-Token 刷新 Access-Token 时提供的参数校验 
-	 * @param clientId 应用id 
-	 * @param clientSecret 秘钥 
-	 * @param refreshToken Refresh-Token
-	 * @return CodeModel对象 
+	 * 校验：该 Client 是否签约了指定的 Scope，如果没有则抛出异常
+	 * @param clientId 应用id
+	 * @param scopes 权限列表
+	 * @return /
 	 */
-	public static RefreshTokenModel checkRefreshTokenParam(String clientId, String clientSecret, String refreshToken) {
-		return SaOAuth2Manager.getTemplate().checkRefreshTokenParam(clientId, clientSecret, refreshToken);
-	}
-	
-	/**
-	 * 校验：Access-Token、clientId、clientSecret 三者是否匹配成功 
-	 * @param clientId 应用id 
-	 * @param clientSecret 秘钥 
-	 * @param accessToken Access-Token 
-	 * @return SaClientModel对象 
-	 */
-	public static AccessTokenModel checkAccessTokenParam(String clientId, String clientSecret, String accessToken) {
-		return SaOAuth2Manager.getTemplate().checkAccessTokenParam(clientId, clientSecret, accessToken);
+	public static SaClientModel checkContractScope(String clientId, List<String> scopes) {
+		return SaOAuth2Manager.getTemplate().checkContractScope(clientId, scopes);
 	}
 
 	/**
-	 * 回收指定的 ClientToken
+	 * 校验：该 Client 是否签约了指定的 Scope，如果没有则抛出异常
+	 * @param cm 应用
+	 * @param scopes 权限列表
+	 * @return /
+	 */
+	public static SaClientModel checkContractScope(SaClientModel cm, List<String> scopes) {
+		return SaOAuth2Manager.getTemplate().checkContractScope(cm, scopes);
+	}
+
+	// --------- redirect_uri 相关
+
+	/**
+	 * 校验：该 Client 使用指定 url 作为回调地址，是否合法
+	 * @param clientId 应用id
+	 * @param url 指定url
+	 */
+	public static void checkRedirectUri(String clientId, String url) {
+		SaOAuth2Manager.getTemplate().checkRedirectUri(clientId, url);
+	}
+
+	// --------- 授权相关
+
+	/**
+	 * 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope
+	 * @param loginId 账号id
+	 * @param clientId 应用id
+	 * @param scopes 权限
+	 * @return 是否已经授权
+	 */
+	public static boolean isGrantScope(Object loginId, String clientId, List<String> scopes) {
+		return SaOAuth2Manager.getTemplate().isGrantScope(loginId, clientId, scopes);
+	}
+
+
+	// ----------------- Access-Token 相关 -----------------
+
+	/**
+	 * 获取 AccessTokenModel，无效的 AccessToken 会返回 null
+	 * @param accessToken /
+	 * @return /
+	 */
+	public static AccessTokenModel getAccessToken(String accessToken) {
+		return SaOAuth2Manager.getTemplate().getAccessToken(accessToken);
+	}
+
+	/**
+	 * 校验 Access-Token，成功返回 AccessTokenModel，失败则抛出异常
+	 * @param accessToken /
+	 * @return /
+	 */
+	public static AccessTokenModel checkAccessToken(String accessToken) {
+		return SaOAuth2Manager.getTemplate().checkAccessToken(accessToken);
+	}
+
+	/**
+	 * 获取 Access-Token，根据索引： clientId、loginId
+	 * @param clientId /
+	 * @param loginId /
+	 * @return /
+	 */
+	public static String getAccessTokenValue(String clientId, Object loginId) {
+		return SaOAuth2Manager.getTemplate().getAccessTokenValue(clientId, loginId);
+	}
+
+	/**
+	 * 判断：指定 Access-Token 是否具有指定 Scope 列表，返回 true 或 false
+	 * @param accessToken Access-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public static boolean hasAccessTokenScope(String accessToken, String... scopes) {
+		return SaOAuth2Manager.getTemplate().hasAccessTokenScope(accessToken, scopes);
+	}
+
+	/**
+	 * 校验：指定 Access-Token 是否具有指定 Scope 列表，如果不具备则抛出异常
+	 * @param accessToken Access-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public static void checkAccessTokenScope(String accessToken, String... scopes) {
+		SaOAuth2Manager.getTemplate().checkAccessTokenScope(accessToken, scopes);
+	}
+
+	/**
+	 * 获取 Access-Token 所代表的LoginId
+	 * @param accessToken Access-Token
+	 * @return LoginId
+	 */
+	public static Object getLoginIdByAccessToken(String accessToken) {
+		return SaOAuth2Manager.getTemplate().getLoginIdByAccessToken(accessToken);
+	}
+
+	/**
+	 * 获取 Access-Token 所代表的 clientId
+	 * @param accessToken Access-Token
+	 * @return LoginId
+	 */
+	public static Object getClientIdByAccessToken(String accessToken) {
+		return SaOAuth2Manager.getTemplate().getClientIdByAccessToken(accessToken);
+	}
+
+	/**
+	 * 回收 Access-Token
+	 * @param accessToken Access-Token值
+	 */
+	public static void revokeAccessToken(String accessToken) {
+		SaOAuth2Manager.getTemplate().revokeAccessToken(accessToken);
+	}
+
+	/**
+	 * 回收 Access-Token，根据索引： clientId、loginId
+	 * @param clientId /
+	 * @param loginId /
+	 */
+	public static void revokeAccessTokenByIndex(String clientId, Object loginId) {
+		SaOAuth2Manager.getTemplate().revokeAccessTokenByIndex(clientId, loginId);
+	}
+
+
+	// ----------------- Refresh-Token 相关 -----------------
+
+	/**
+	 * 获取 RefreshTokenModel，无效的 RefreshToken 会返回 null
+	 * @param refreshToken /
+	 * @return /
+	 */
+	public static RefreshTokenModel getRefreshToken(String refreshToken) {
+		return SaOAuth2Manager.getTemplate().getRefreshToken(refreshToken);
+	}
+
+	/**
+	 * 校验 Refresh-Token，成功返回 RefreshTokenModel，失败则抛出异常
+	 * @param refreshToken /
+	 * @return /
+	 */
+	public static RefreshTokenModel checkRefreshToken(String refreshToken) {
+		return SaOAuth2Manager.getTemplate().checkRefreshToken(refreshToken);
+	}
+
+	/**
+	 * 获取 Refresh-Token，根据索引： clientId、loginId
+	 * @param clientId /
+	 * @param loginId /
+	 * @return /
+	 */
+	public static String getRefreshTokenValue(String clientId, Object loginId) {
+		return SaOAuth2Manager.getTemplate().getRefreshTokenValue(clientId, loginId);
+	}
+
+	/**
+	 * 根据 RefreshToken 刷新出一个 AccessToken
+	 * @param refreshToken /
+	 * @return /
+	 */
+	public static AccessTokenModel refreshAccessToken(String refreshToken) {
+		return SaOAuth2Manager.getTemplate().refreshAccessToken(refreshToken);
+	}
+
+
+	// ----------------- Client-Token 相关 -----------------
+
+	/**
+	 * 获取 ClientTokenModel，无效的 ClientToken 会返回 null
+	 * @param clientToken /
+	 * @return /
+	 */
+	public static ClientTokenModel getClientToken(String clientToken) {
+		return SaOAuth2Manager.getTemplate().getClientToken(clientToken);
+	}
+
+	/**
+	 * 校验 Client-Token，成功返回 ClientTokenModel，失败则抛出异常
+	 * @param clientToken /
+	 * @return /
+	 */
+	public static ClientTokenModel checkClientToken(String clientToken) {
+		return SaOAuth2Manager.getTemplate().checkClientToken(clientToken);
+	}
+
+	/**
+	 * 获取 ClientToken，根据索引： clientId
+	 * @param clientId /
+	 * @return /
+	 */
+	public static String getClientTokenValue(String clientId) {
+		return SaOAuth2Manager.getTemplate().getClientTokenValue(clientId);
+	}
+
+	/**
+	 * 判断：指定 Client-Token 是否具有指定 Scope 列表，返回 true 或 false
+	 * @param clientToken Client-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public static boolean hasClientTokenScope(String clientToken, String... scopes) {
+		return SaOAuth2Manager.getTemplate().hasClientTokenScope(clientToken, scopes);
+	}
+
+	/**
+	 * 校验：指定 Client-Token 是否具有指定 Scope 列表，如果不具备则抛出异常
+	 * @param clientToken Client-Token
+	 * @param scopes 需要校验的权限列表
+	 */
+	public static void checkClientTokenScope(String clientToken, String... scopes) {
+		SaOAuth2Manager.getTemplate().checkClientTokenScope(clientToken, scopes);
+	}
+
+	/**
+	 * 回收 ClientToken
 	 *
 	 * @param clientToken /
 	 */
@@ -185,7 +309,7 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收指定的 ClientToken，根据索引：clientId
+	 * 回收 ClientToken，根据索引： clientId
 	 *
 	 * @param clientId /
 	 */
@@ -193,65 +317,13 @@ public class SaOAuth2Util {
 		SaOAuth2Manager.getTemplate().revokeClientTokenByIndex(clientId);
 	}
 
-	// ------------------- save 数据 
-	
 	/**
-	 * 持久化：用户授权记录 
-	 * @param clientId 应用id 
-	 * @param loginId 账号id 
-	 * @param scopes 权限列表
+	 * 回收 PastToken，根据索引： clientId
+	 *
+	 * @param clientId /
 	 */
-	public static void saveGrantScope(String clientId, Object loginId, List<String> scopes) {
-		SaOAuth2Manager.getTemplate().saveGrantScope(clientId, loginId, scopes);
-	}
-	
-	
-	// ------------------- get 数据
-	
-	/**
-	 * 获取：Code Model  
-	 * @param code .
-	 * @return .
-	 */
-	public static CodeModel getCode(String code) {
-		return SaOAuth2Manager.getDao().getCode(code);
-	}
-
-	/**
-	 * 获取：Access-Token Model 
-	 * @param accessToken . 
-	 * @return .
-	 */
-	public static AccessTokenModel getAccessToken(String accessToken) {
-		return SaOAuth2Manager.getDao().getAccessToken(accessToken);
-	}
-	
-	/**
-	 * 获取：Refresh-Token Model 
-	 * @param refreshToken . 
-	 * @return . 
-	 */
-	public static RefreshTokenModel getRefreshToken(String refreshToken) {
-		return SaOAuth2Manager.getDao().getRefreshToken(refreshToken);
-	}
-	
-	/**
-	 * 获取：Client-Token Model 
-	 * @param clientToken . 
-	 * @return .
-	 */
-	public static ClientTokenModel getClientToken(String clientToken) {
-		return SaOAuth2Manager.getDao().getClientToken(clientToken);
-	}
-	
-	/**
-	 * 获取：用户授权记录 
-	 * @param clientId 应用id 
-	 * @param loginId 账号id 
-	 * @return 权限 
-	 */
-	public static List<String> getGrantScope(String clientId, Object loginId) {
-		return SaOAuth2Manager.getDao().getGrantScope(clientId, loginId);
+	public static void revokePastTokenByIndex(String clientId) {
+		SaOAuth2Manager.getTemplate().revokePastTokenByIndex(clientId);
 	}
 
 }

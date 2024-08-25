@@ -17,7 +17,8 @@ package cn.dev33.satoken.oauth2.data.loader;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
-import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
+import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientModelException;
 import cn.dev33.satoken.secure.SaSecureUtil;
 
 /**
@@ -47,7 +48,9 @@ public interface SaOAuth2DataLoader {
     default SaClientModel getClientModelNotNull(String clientId) {
         SaClientModel clientModel = getClientModel(clientId);
         if(clientModel == null) {
-            throw new SaOAuth2Exception("未找到对应的 Client 信息");
+            throw new SaOAuth2ClientModelException("无效 client_id: " + clientId)
+                    .setClientId(clientId)
+                    .setCode(SaOAuth2ErrorCode.CODE_30105);
         }
         return clientModel;
     }

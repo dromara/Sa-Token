@@ -126,7 +126,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
             // 删除旧 Refresh-Token
             dao.deleteRefreshToken(rt.refreshToken);
 
-            // 创建并保持新的 Refresh-Token
+            // 创建并保存新的 Refresh-Token
             rt = SaOAuth2Manager.getDataConverter().convertRefreshTokenToRefreshToken(rt);
             dao.saveRefreshToken(rt);
             dao.saveRefreshTokenIndex(rt);
@@ -266,31 +266,6 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
             url = SaFoxUtil.joinSharpParam(url, SaOAuth2Consts.Param.state, state);
         }
         return url;
-    }
-
-    /**
-     * 回收 Access-Token
-     * @param accessToken Access-Token值
-     */
-    @Override
-    public void revokeAccessToken(String accessToken) {
-
-        SaOAuth2Dao dao = SaOAuth2Manager.getDao();
-
-        // 如果查不到任何东西, 直接返回
-        AccessTokenModel at = dao.getAccessToken(accessToken);
-        if(at == null) {
-            return;
-        }
-
-        // 删除 Access-Token
-        dao.deleteAccessToken(accessToken);
-        dao.deleteAccessTokenIndex(at.clientId, at.loginId);
-
-        // 删除对应的 Refresh-Token
-        String refreshToken = dao.getRefreshTokenValue(at.clientId, at.loginId);
-        dao.deleteRefreshToken(refreshToken);
-        dao.deleteRefreshTokenIndex(at.clientId, at.loginId);
     }
 
     /**

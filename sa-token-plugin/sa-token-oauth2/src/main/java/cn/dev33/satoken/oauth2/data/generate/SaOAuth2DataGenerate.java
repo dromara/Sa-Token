@@ -86,12 +86,6 @@ public interface SaOAuth2DataGenerate {
     String buildImplicitRedirectUri(String redirectUri, String token, String state);
 
     /**
-     * 回收 Access-Token
-     * @param accessToken Access-Token值
-     */
-    void revokeAccessToken(String accessToken);
-
-    /**
      * 检查 state 是否被重复使用
      * @param state /
      */

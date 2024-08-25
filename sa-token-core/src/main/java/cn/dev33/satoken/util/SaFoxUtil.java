@@ -106,12 +106,33 @@ public class SaFoxUtil {
 
 	/**
 	 * 指定数组是否为null或者空数组
+	 * <h3> 该方法已过时，建议使用 isEmptyArray 方法 </h3>
 	 * @param <T> /
 	 * @param array /
 	 * @return /
 	 */
+	@Deprecated
 	public static <T> boolean isEmpty(T[] array) {
+		return isEmptyArray(array);
+	}
+
+	/**
+	 * 指定数组是否为null或者空数组
+	 * @param <T> /
+	 * @param array /
+	 * @return /
+	 */
+	public static <T> boolean isEmptyArray(T[] array) {
 		return array == null || array.length == 0;
+	}
+
+	/**
+	 * 指定集合是否为null或者空数组
+	 * @param list /
+	 * @return /
+	 */
+	public static boolean isEmptyList(List<?> list) {
+		return list == null || list.isEmpty();
 	}
 
 	/**
@@ -625,6 +646,15 @@ public class SaFoxUtil {
     public static List<String> toList(String... str) {
 		return new ArrayList<>(Arrays.asList(str));
     }
+
+	/**
+	 * String 集合转数组
+	 * @param list 集合
+	 * @return 数组
+	 */
+	public static String[] toArray(List<String> list) {
+		return list.toArray(new String[0]);
+	}
 
     public static List<String> logLevelList = Arrays.asList("", "trace", "debug", "info", "warn", "error", "fatal");
 

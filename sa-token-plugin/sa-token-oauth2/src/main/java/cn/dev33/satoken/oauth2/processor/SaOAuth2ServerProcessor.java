@@ -37,6 +37,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.router.SaHttpMethod;
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.List;
@@ -130,10 +131,10 @@ public class SaOAuth2ServerProcessor {
 		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, SaOAuth2Manager.getStpLogic().getLoginId());
 
 		// 4、校验：重定向域名是否合法
-		oauth2Template.checkRightUrl(ra.clientId, ra.redirectUri);
+		oauth2Template.checkRedirectUri(ra.clientId, ra.redirectUri);
 
 		// 5、校验：此次申请的Scope，该Client是否已经签约
-		oauth2Template.checkContract(ra.clientId, ra.scopes);
+		oauth2Template.checkContractScope(ra.clientId, ra.scopes);
 
 		// 6、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
 		boolean isNeedCarefulConfirm = oauth2Template.isNeedCarefulConfirm(ra.loginId, ra.clientId, ra.scopes);
@@ -205,7 +206,7 @@ public class SaOAuth2ServerProcessor {
 		oauth2Template.checkAccessTokenParam(clientId, clientSecret, accessToken);
 
 		// 回收 Access-Token
-		SaOAuth2Manager.getDataGenerate().revokeAccessToken(accessToken);
+		oauth2Template.revokeAccessToken(accessToken);
 
 		// 返回
 		return SaOAuth2Manager.getDataResolver().buildRevokeTokenReturnValue();
@@ -306,7 +307,7 @@ public class SaOAuth2ServerProcessor {
 		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(req.getParam(Param.scope));
 
 		//校验 ClientScope
-		oauth2Template.checkContract(clientId, scopes);
+		oauth2Template.checkContractScope(clientId, scopes);
 
 		// 校验 ClientSecret
 		oauth2Template.checkClientSecret(clientId, clientSecret);

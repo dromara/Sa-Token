@@ -75,10 +75,10 @@ public class SaOAuth2ServerController {
 		String accessToken = SaOAuth2Manager.getDataResolver().readAccessToken(SaHolder.getRequest());
 		Object loginId = SaOAuth2Util.getLoginIdByAccessToken(accessToken);
 		System.out.println("-------- 此Access-Token对应的账号id: " + loginId);
-		
+
 		// 校验 Access-Token 是否具有权限: userinfo
 		SaOAuth2Util.checkScope(accessToken, "userinfo");
-		
+
 		// 模拟账号信息 （真实环境需要查询数据库获取信息）
 		Map<String, Object> map = new LinkedHashMap<>();
 		// map.put("userId", loginId);  一般原则下，oauth2-server 不能把 userId 返回给 oauth2-client

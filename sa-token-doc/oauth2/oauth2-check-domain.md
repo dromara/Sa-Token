@@ -94,7 +94,7 @@ URL 没有通过校验，拒绝授权！
 - 反例：`http://*.sa-oauth-client.com/`
 
 *详见源码： [SaOAuth2Template.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Template.java) 
-`checkAllowUrlListStaticMethod` 方法。*
+`checkRedirectUriListNormalStaticMethod` 方法。*
 
 参考：[github/issue/529](https://github.com/dromara/Sa-Token/issues/529)
 感谢这位 `@m4ra7h0n` 用户反馈的漏洞。
