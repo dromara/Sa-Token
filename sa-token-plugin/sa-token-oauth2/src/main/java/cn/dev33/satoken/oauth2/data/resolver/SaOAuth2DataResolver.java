@@ -51,6 +51,14 @@ public interface SaOAuth2DataResolver {
     String readAccessToken(SaRequest request);
 
     /**
+     * 数据读取：从请求对象中读取 ClientToken
+     *
+     * @param request /
+     * @return /
+     */
+    String readClientToken(SaRequest request);
+
+    /**
      * 数据读取：从请求对象中构建 RequestAuthModel
      * @param req SaRequest对象
      * @param loginId 账号id

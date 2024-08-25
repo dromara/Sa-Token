@@ -37,7 +37,6 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.router.SaHttpMethod;
-import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.List;
@@ -330,6 +329,17 @@ public class SaOAuth2ServerProcessor {
 		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(SaHolder.getRequest());
 		return oauth2Template.checkClientModel(clientIdAndSecret.clientId);
+	}
+
+	/**
+	 * 校验当前请求中提交的 clientId 和 clientSecret 是否正确，如果正确则返回 SaClientModel 对象
+	 *
+	 * @return /
+	 */
+	public SaClientModel checkCurrClientSecret() {
+		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
+		ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(SaHolder.getRequest());
+		return oauth2Template.checkClientSecret(clientIdAndSecret.clientId, clientIdAndSecret.clientSecret);
 	}
 
 	/**

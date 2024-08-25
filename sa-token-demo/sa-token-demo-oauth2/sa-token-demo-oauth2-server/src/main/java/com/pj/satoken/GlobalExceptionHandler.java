@@ -1,4 +1,4 @@
-package com.pj.current;
+package com.pj.satoken;
 
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;

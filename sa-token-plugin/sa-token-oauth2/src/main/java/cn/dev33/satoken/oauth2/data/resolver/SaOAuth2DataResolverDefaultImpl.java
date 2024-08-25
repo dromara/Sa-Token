@@ -99,6 +99,33 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     }
 
     /**
+     * 数据读取：从请求对象中读取 ClientToken
+     */
+    @Override
+    public String readClientToken(SaRequest request) {
+        // 优先从请求参数中获取
+        String clientToken = request.getParam(SaOAuth2Consts.Param.client_token);
+        if(SaFoxUtil.isNotEmpty(clientToken)) {
+            return clientToken;
+        }
+
+        // 如果请求参数中没有提供 client_token 参数，则尝试从 Authorization 中获取
+        String authorizationValue = request.getHeader(SaOAuth2Consts.Param.Authorization);
+        if(SaFoxUtil.isEmpty(authorizationValue)) {
+            return null;
+        }
+
+        // 判断前缀，裁剪
+        String prefix = TokenType.Bearer + " ";
+        if(authorizationValue.startsWith(prefix)) {
+            return authorizationValue.substring(prefix.length());
+        }
+
+        // 前缀不符合，返回 null
+        return null;
+    }
+
+    /**
      * 数据读取：从请求对象中构建 RequestAuthModel
      */
     @Override

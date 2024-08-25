@@ -415,12 +415,12 @@ public class SaOAuth2Template {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public void checkAccessTokenScope(String accessToken, String... scopes) {
+		AccessTokenModel at = checkAccessToken(accessToken);
 		if(SaFoxUtil.isEmptyArray(scopes)) {
 			return;
 		}
-		ClientTokenModel ct = checkClientToken(accessToken);
 		for (String scope : scopes) {
-			if(! ct.scopes.contains(scope)) {
+			if(! at.scopes.contains(scope)) {
 				throw new SaOAuth2AccessTokenScopeException("该 access_token 不具备 scope：" + scope)
 						.setAccessToken(accessToken)
 						.setScope(scope)
@@ -461,11 +461,6 @@ public class SaOAuth2Template {
 		SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 		dao.deleteAccessToken(accessToken);
 		dao.deleteAccessTokenIndex(at.clientId, at.loginId);
-
-		// 删对应的 rt、索引
-//		String rtValue = dao.getRefreshTokenValue(at.clientId, at.loginId);
-//		dao.deleteRefreshToken(rtValue);
-//		dao.deleteRefreshTokenIndex(at.clientId, at.loginId);
 	}
 
 	/**
@@ -586,10 +581,10 @@ public class SaOAuth2Template {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public void checkClientTokenScope(String clientToken, String... scopes) {
+		ClientTokenModel ct = checkClientToken(clientToken);
 		if(SaFoxUtil.isEmptyArray(scopes)) {
 			return;
 		}
-		ClientTokenModel ct = checkClientToken(clientToken);
 		for (String scope : scopes) {
 			if(! ct.scopes.contains(scope)) {
 				throw new SaOAuth2ClientTokenScopeException("该 client_token 不具备 scope：" + scope)

@@ -52,6 +52,7 @@ public class SaOAuth2Consts {
 		public static String token = "token";
 		public static String access_token = "access_token";
 		public static String refresh_token = "refresh_token";
+		public static String client_token = "client_token";
 		public static String grant_type = "grant_type";
 		public static String username = "username";
 		public static String password = "password";

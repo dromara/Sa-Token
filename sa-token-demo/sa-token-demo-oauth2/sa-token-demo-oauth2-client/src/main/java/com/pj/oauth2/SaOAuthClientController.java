@@ -24,7 +24,7 @@ public class SaOAuthClientController {
 	private final String clientId = "1001";								// 应用id
 	private final String clientSecret = "aaaa-bbbb-cccc-dddd-eeee";		// 应用秘钥
 	private final String serverUrl = "http://sa-oauth-server.com:8000";	// 服务端接口
-	
+
 	// 进入首页 
 	@RequestMapping("/")
 	public Object index(HttpServletRequest request) {

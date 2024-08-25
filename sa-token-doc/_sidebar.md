@@ -63,6 +63,7 @@
 	- [自定义 grant_type](/oauth2/oauth2-custom-grant_type)
 	- [开启 OIDC 协议](/oauth2/oauth2-oidc)
 	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
+	- [使用注解校验 Access-Token](/oauth2/oauth2-at-check)
 	- [OAuth2 代码 API 参考](/oauth2/oauth2-dev)
 	- [常见问题总结](/oauth2/oauth2-questions)
 	<!-- - [前后端分离模式整合方案](/oauth2/4) -->
