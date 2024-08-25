@@ -19,7 +19,7 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.snack.ONode;
 
-//todo: 不能删；为保持与旧的序列化兼容
+// 不能删；为保持与旧的序列化兼容
 /**
  * Snack3 定制版 SaSession，重写类型转换API
  * 

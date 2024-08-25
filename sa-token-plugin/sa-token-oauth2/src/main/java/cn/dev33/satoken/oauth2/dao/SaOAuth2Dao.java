@@ -153,9 +153,7 @@ public interface SaOAuth2Dao {
 	 */
 	default void saveGrantScope(String clientId, Object loginId, List<String> scopes) {
 		if( ! SaFoxUtil.isEmpty(scopes)) {
-			// TODO ttl 计算规则优化
-			long ttl = SaOAuth2Manager.getServerConfig().getAccessTokenTimeout();
-			// long ttl = checkClientModel(clientId).getAccessTokenTimeout();
+			long ttl = checkClientModel(clientId).getAccessTokenTimeout();
 			String value = SaOAuth2Manager.getDataConverter().convertScopeListToString(scopes);
 			getSaTokenDao().set(splicingGrantScopeKey(clientId, loginId), value, ttl);
 		}

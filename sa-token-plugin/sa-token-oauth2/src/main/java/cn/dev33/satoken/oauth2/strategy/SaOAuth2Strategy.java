@@ -78,9 +78,7 @@ public final class SaOAuth2Strategy {
 	 */
 	public void registerScopeHandler(SaOAuth2ScopeHandlerInterface handler) {
 		scopeHandlerMap.put(handler.getHandlerScope(), handler);
-		// TODO 优化日志输出
-		SaManager.getLog().info("新增权限处理器：" + handler.getHandlerScope());
-		//		SaTokenEventCenter.doRegisterAnnotationHandler(handler);
+		SaManager.getLog().info("自定义 SCOPE [{}] (处理器: {})", handler.getHandlerScope(), handler.getClass().getCanonicalName());
 	}
 
 	/**
@@ -147,9 +145,7 @@ public final class SaOAuth2Strategy {
 	 */
 	public void registerGrantTypeHandler(SaOAuth2GrantTypeHandlerInterface handler) {
 		grantTypeHandlerMap.put(handler.getHandlerGrantType(), handler);
-		// TODO 优化日志输出
-		SaManager.getLog().info("新增GrantType处理器：" + handler.getHandlerGrantType());
-		//		SaTokenEventCenter.doRegisterAnnotationHandler(handler);
+		SaManager.getLog().info("自定义 GRANT_TYPE [{}] (处理器: {})", handler.getHandlerGrantType(), handler.getClass().getCanonicalName());
 	}
 
 	/**

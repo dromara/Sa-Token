@@ -25,7 +25,7 @@ SSO 集成常见问题整理
 - sso-server 端的单点注销地址：`http://{host}:{port}/sso/signout`；
 - sso-client 端的注销地址：`http://{host}:{port}/sso/logout`；
 
-都需要在配置文件配置：`sa-token.sso.is-slo=true`后，才会打开。
+都需要在配置文件配置：`sa-token.sso-server.is-slo=true`(client端为 `sa-token.sso-client.is-slo=true` )后，才会打开。
 
 
 ### 问：我参照文档搭建SSO-Client，一直提示：Ticket无效，请问怎么回事？
@@ -85,7 +85,7 @@ public class SaSsoServerApplication {
 
 
 ### 问：模式三配置一堆 xxx-url ，有办法简化一下吗？
-可以使用 `sa-token.sso.server-url` 来简化：
+可以使用 `sa-token.sso-client.server-url` 来简化：
 
 配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
 
@@ -93,7 +93,7 @@ public class SaSsoServerApplication {
 
 ``` yaml
 sa-token: 
-    sso: 
+    sso-client: 
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
         # SSO-Server端 ticket校验地址 
@@ -107,7 +107,7 @@ sa-token:
 一堆 xxx-url 配置比较繁琐，且含有大量重复字符，现在我们可以将其简化为：
 ``` yaml
 sa-token: 
-    sso: 
+    sso-client: 
         server-url: http://sa-sso-server.com:9000
 ```
 
@@ -135,22 +135,22 @@ sa-token:
 **方法二，根据配置项来分析，例如：**
 
 - 先看配置项 `sa-token.cookie.domain`，如果此配置项有值，一般是在使用模式一开发，否则就是模式二或者模式三。
-- 再看配置项 `sa-token.sso.is-http` ，如果有值且为 true，一般是在使用模式三，否则就是模式二。
+- 再看配置项 `sa-token.sso-client.is-http` ，如果有值且为 true，一般是在使用模式三，否则就是模式二。
 
-**方法三，根据配置项 `sa-token.sso.mode` 的提示来判断**
+**方法三，根据配置项 `sa-token.sso-client.mode` 的提示来判断**
 
-`sa-token.sso.mode` 是框架预留的约定型配置项，此配置项不对代码逻辑产生任何影响，只为系统做一个标记，标注此系统用到了SSO的哪个模式。
+`sa-token.sso-client.mode` 是框架预留的约定型配置项，此配置项不对代码逻辑产生任何影响，只为系统做一个标记，标注此系统用到了SSO的哪个模式。
 
-例如你可以将其配置为 `sa-token.sso.mode=client-2`，代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
+例如你可以将其配置为 `sa-token.sso-client.mode=client-2`，代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
 
 需要注意，这个配置项不是必须的，你不写也不会对代码造成任何影响，只有在你需要为系统做一个明确的标记时才需要去配置它，方便后人阅读代码时快速分析使用的模式。
 
 例如我们可以使用以下约定：
 
-- `sa-token.sso.mode=client-2`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
-- `sa-token.sso.mode=client-2,h5`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接，并且是前后端分离模式。
-- `sa-token.sso.mode=server-123`：代表当前系统为 sso-server 端，同时开放了 SSO 模式一、模式二、模式三。
-- `sa-token.sso.mode=server-2,client-2`：代表当前系统既是 sso-server 端，又是 sso-clent 端，使用模式二来对接。
+- `sa-token.sso-client.mode=client-2`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
+- `sa-token.sso-client.mode=client-2,h5`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接，并且是前后端分离模式。
+- `sa-token.sso-server.mode=server-123`：代表当前系统为 sso-server 端，同时开放了 SSO 模式一、模式二、模式三。
+- `sa-token.sso-server.mode=server-2,client-2`：代表当前系统既是 sso-server 端，又是 sso-clent 端，使用模式二来对接。
 - 等等等等...
 
 此配置项可以是任意字符串，你也可以自己整理一套合适的表达规则。
