@@ -55,6 +55,7 @@
 	- [OAuth2.0简述](/oauth2/readme)
 	- [OAuth2-Server搭建](/oauth2/oauth2-server)
 	- [OAuth2-Server端开放 API 接口](/oauth2/oauth2-apidoc)
+	- [自定义数据加载器](/oauth2/oauth2-data-loader)
 	- [配置 client 域名校验 ](/oauth2/oauth2-check-domain)
 	- [自定义 Scope 权限及处理器](/oauth2/oauth2-custom-scope)
 	- [为 Scope 划分等级](/oauth2/oauth2-scope-level)

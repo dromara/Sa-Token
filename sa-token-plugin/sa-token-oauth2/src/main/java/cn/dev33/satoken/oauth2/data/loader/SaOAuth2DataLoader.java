@@ -36,7 +36,8 @@ public interface SaOAuth2DataLoader {
      * @return ClientModel
      */
     default SaClientModel getClientModel(String clientId) {
-        return null;
+        // 默认从内存配置中读取数据
+        return SaOAuth2Manager.getServerConfig().getClients().get(clientId);
     }
 
     /**

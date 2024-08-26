@@ -16,12 +16,15 @@
 package cn.dev33.satoken.oauth2.config;
 
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.function.SaOAuth2ConfirmViewFunction;
 import cn.dev33.satoken.oauth2.function.SaOAuth2DoLoginHandleFunction;
 import cn.dev33.satoken.oauth2.function.SaOAuth2NotLoginViewFunction;
 import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Sa-Token OAuth2 Server 端 配置类 Model
@@ -78,11 +81,13 @@ public class SaOAuth2ServerConfig implements Serializable {
 	/** 是否在返回值中隐藏默认的状态字段 (code、msg、data) */
 	public Boolean hideStatusField = false;
 
-
 	/**
 	 * oidc 相关配置
 	 */
 	SaOAuth2OidcConfig oidc = new SaOAuth2OidcConfig();
+
+	/** client 列表 */
+	public Map<String, SaClientModel> clients = new LinkedHashMap<>();
 
 	/**
 	 * @return enableCode
@@ -349,6 +354,23 @@ public class SaOAuth2ServerConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * 获取 client 列表
+	 * @return /
+	 */
+	public Map<String, SaClientModel> getClients() {
+		return clients;
+	}
+
+	/**
+	 * 写入 client 列表
+	 * @return /
+	 */
+	public SaOAuth2ServerConfig setClients(Map<String, SaClientModel> clients) {
+		this.clients = clients;
+		return this;
+	}
+
 
 	// -------------------- SaOAuth2Handle 所有回调函数 --------------------
 	
@@ -388,4 +410,19 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", oidc='" + oidc +
 				'}';
 	}
+
+
+	/**
+	 * 注册 client
+	 * @return /
+	 */
+	public SaOAuth2ServerConfig addClient(SaClientModel client) {
+		if(this.clients == null) {
+			this.clients = new LinkedHashMap<>();
+		}
+		this.clients.put(client.getClientId(), client);
+		return this;
+	}
+
+
 }

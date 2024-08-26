@@ -59,6 +59,7 @@ implementation 'org.apache.commons:commons-pool2'
 
 
 ### 3、开放服务 
+<!-- 
 1、自定义数据加载器：新建 `SaOAuth2DataLoaderImpl` 实现 `SaOAuth2DataLoader` 接口。
 
 ``` java
@@ -98,12 +99,12 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 	}
 
 }
-```
+``` 
 
 你可以在 [框架配置](/use/config?id=SaClientModel属性定义) 了解有关 `SaClientModel` 对象所有属性的详细定义
+-->
 
-
-2、新建`SaOAuth2ServerController`
+1、新建`SaOAuth2ServerController`
 ``` java
 /**
  * Sa-Token OAuth2 Server端 控制器 
@@ -121,6 +122,25 @@ public class SaOAuth2ServerController {
 	// Sa-Token OAuth2 定制化配置 
 	@Autowired
 	public void setSaOAuth2Config(SaOAuth2Config oauth2Server) {
+		
+		// 添加 client 信息 
+		oauth2Server.addClient(
+			new SaClientModel()
+				.setClientId("1001")    // client id
+				.setClientSecret("aaaa-bbbb-cccc-dddd-eeee")    // client 秘钥
+				.addAllowRedirectUris("*")    // 所有允许授权的 url
+				.addContractScopes("openid", "userid", "userinfo")    // 所有签约的权限
+				.addAllowGrantTypes(	 // 所有允许的授权模式
+						GrantType.authorization_code, // 授权码式
+						GrantType.implicit,  // 隐式式
+						GrantType.refresh_token,  // 刷新令牌
+						GrantType.password,  // 密码式
+						GrantType.client_credentials,  // 客户端模式
+				)
+		);
+		
+		// 可以添加更多 client 信息，只要保持 clientId 唯一就行了
+		// oauth2Server.addClient(...)
 		
 		// 配置：未登录时返回的View 
 		oauth2Server.notLoginView = () -> {
@@ -154,12 +174,15 @@ public class SaOAuth2ServerController {
 			return res;
 		};
 	}
-
+	
 }
 ```
-注意：在 `doLoginHandle` 函数里如果要获取 name, pwd 以外的参数，可通过 `SaHolder.getRequest().getParam("xxx")` 来获取。
+注意：
+- 在 `doLoginHandle` 函数里如果要获取 name, pwd 以外的参数，可通过 `SaHolder.getRequest().getParam("xxx")` 来获取。
+- 你可以在 [框架配置](/use/config?id=SaClientModel属性定义) 了解有关 `SaClientModel` 对象所有属性的详细定义。
 
-3、全局异常处理
+
+2、全局异常处理
 ``` java
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -171,7 +194,7 @@ public class GlobalExceptionHandler {
 }
 ```
 
-4、创建启动类：
+3、创建启动类：
 ``` java
 /**
  * 启动：Sa-OAuth2 Server端 
