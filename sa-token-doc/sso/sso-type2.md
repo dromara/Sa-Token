@@ -137,10 +137,11 @@ public class SsoClientController {
 	// 首页 
 	@RequestMapping("/")
 	public String index() {
+		String solUrl = SaSsoManager.getClientConfig().splicingSloUrl();
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " + 
-					"<a href='/sso/logout?back=self'>注销</a></p>";
+					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " +
+					"<a href=\"javascript:location.href='" + solUrl + "?back=' + encodeURIComponent(location.href);\">注销</a> </p>";
 		return str;
 	}
 	
@@ -295,122 +296,8 @@ public class SaSso2ClientApplication {
  -->
  
  
-### 5、无刷单点注销
 
-有了单点登录，就必然伴随着单点注销（一处注销，全端下线）
-
-如果你的所有 client 都是基于 SSO 模式二来对接的，那么单点注销其实很简单：
-
-``` java
-// 在 `sa-token.is-share=true` 的情况下，调用此代码即可单点注销：
-StpUtil.logout();
-
-// 在 `sa-token.is-share=false` 的情况下，调用此代码即可单点注销：
-StpUtil.logout(StpUtil.getLoginId());
-```
-
-你可能会比较疑惑，这不就是个普通的会话注销API吗，为什么会有单点注销的效果？
-
-因为模式二需要各个 sso-client 和 sso-server 连接同一个 redis，即使登录再多的 client，本质上对应的仍是同一个会话，因此可以做到任意一处调用注销，全端一起下线的效果。
-
-而如果你的各个 client 架构各不相同，有的是模式二对接，有的是模式三对接，则需要麻烦一点才能做到单点注销。
-
-这里的“麻烦”指两处：1、框架内部逻辑麻烦；2、开发者集成麻烦。
-
-框架内部的麻烦 sa-token-sso 已经封装完毕，无需过多关注，而开发者的麻烦步骤也不是很多：
-
-
-#### 5.1、增加 pom.xml 配置 
-
-<!---------------------------- tabs:start ---------------------------->
-<!-------- tab:Maven 方式 -------->
-``` xml
-<!-- Http请求工具 -->
-<dependency>
-	<groupId>com.dtflys.forest</groupId>
-	<artifactId>forest-spring-boot-starter</artifactId>
-	<version>1.5.26</version>
-</dependency>
-```
-<!-------- tab:Gradle 方式 -------->
-``` gradle
-// Http请求工具
-implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'
-```
-<!---------------------------- tabs:end ---------------------------->
-
-Forest 是一个轻量级 http 请求工具，详情参考：[Forest](https://forest.dtflyx.com/)
-
-因为我们已经在控制台手动打印 url 请求日志了，所以此处 `forest.log-enabled=false` 关闭 Forest 框架自身的日志打印，这不是必须的，你可以将其打开。
-
-
-#### 5.2、SSO-Client 端新增配置：API调用秘钥
-
-在 `application.yml` 增加：
-
-<!---------------------------- tabs:start ---------------------------->
-<!------------- tab:yaml 风格  ------------->
-``` yaml
-sa-token: 
-    sign:
-        # API 接口调用秘钥
-        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
-		
-forest: 
-	# 关闭 forest 请求日志打印
-	log-enabled: false
-```
-<!------------- tab:properties 风格  ------------->
-``` properties
-# 接口调用秘钥 
-sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
-
-# 关闭 forest 请求日志打印
-forest.log-enabled=false
-```
-<!---------------------------- tabs:end ---------------------------->
-
-注意 secretkey 秘钥需要与SSO认证中心的一致 
-
-#### 5.3、SSO-Client 配置 http 请求处理器
-``` java
-// 配置SSO相关参数
-@Autowired
-private void configSso(SaSsoClientConfig ssoClient) {
-	// 配置Http请求处理器
-	ssoClient.sendHttp = url -> {
-		System.out.println("------ 发起请求：" + url);
-		String resStr = Forest.get(url).executeAsString();
-		System.out.println("------ 请求结果：" + resStr);
-		return resStr;
-	};
-}
-```
-
-#### 5.3、启动测试 
-重启项目，依次登录三个 client：
-- [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
-- [http://sa-sso-client2.com:9001/](http://sa-sso-client2.com:9001/)
-- [http://sa-sso-client3.com:9001/](http://sa-sso-client3.com:9001/)
-
-![sso-type3-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-client-index.png 's-w-sh')
-
-在任意一个 client 里，点击 **`[注销]`** 按钮，即可单点注销成功（打开另外两个client，刷新一下页面，登录态丢失）。
-
-<!-- ![sso-type3-slo.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo.png 's-w-sh') -->
-
-![sso-type3-slo-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo-index.png 's-w-sh')
-
-PS：这里我们为了方便演示，使用的是超链接跳页面的形式，正式项目中使用 Ajax 调用接口即可做到无刷单点登录退出。
-
-例如，我们使用 [Apifox 接口测试工具](https://www.apifox.cn/) 可以做到同样的效果：
-
-![sso-slo-apifox.png](https://oss.dev33.cn/sa-token/doc/sso/sso-slo-apifox.png 's-w-sh')
-
-测试完毕！
-
-
-### 6、跨 Redis 的单点登录
+### 5、跨 Redis 的单点登录
 以上流程解决了跨域模式下的单点登录，但是后端仍然采用了共享Redis来同步会话，如果我们的架构设计中Client端与Server端无法共享Redis，又该怎么完成单点登录？
 
 这就要采用模式三了，且往下看：[SSO模式三：Http请求获取会话](/sso/sso-type3)
