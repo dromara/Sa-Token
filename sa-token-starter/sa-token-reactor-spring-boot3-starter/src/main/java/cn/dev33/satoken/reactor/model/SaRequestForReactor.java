@@ -101,11 +101,49 @@ public class SaRequestForReactor implements SaRequest {
 	 */
 	@Override
 	public String getCookieValue(String name) {
+		return getCookieLastValue(name);
+	}
+
+	/**
+	 * 在 [ Cookie作用域 ] 里获取一个值 (第一个此名称的)
+	 */
+	@Override
+	public String getCookieFirstValue(String name){
 		HttpCookie cookie = request.getCookies().getFirst(name);
 		if(cookie == null) {
 			return null;
 		}
 		return cookie.getValue();
+	}
+
+	/**
+	 * 在 [ Cookie作用域 ] 里获取一个值 (最后一个此名称的)
+	 * @param name 键
+	 * @return 值
+	 */
+	@Override
+	public String getCookieLastValue(String name){
+		String value = null;
+		String cookieStr = getHeader("Cookie");
+		if(SaFoxUtil.isNotEmpty(cookieStr)) {
+			String[] cookieItems = cookieStr.split(";");
+			for (String item : cookieItems) {
+				String[] kv = item.split("=");
+				if (kv.length == 2) {
+					if (kv[0].trim().equals(name)) {
+						value = kv[1].trim();
+					}
+				}
+			}
+		}
+		return value;
+
+		// 此种写法无法获取到最后一个 Cookie，WebFlux 底层代码应该是有bug，前端提交多个同名Cookie时只能解析出第一个来
+		//		List<HttpCookie> cookies = request.getCookies().get(name);
+		//		if(cookies.isEmpty()) {
+		//			return null;
+		//		}
+		//		return cookies.get(cookies.size() - 1).getValue();
 	}
 
 	/**

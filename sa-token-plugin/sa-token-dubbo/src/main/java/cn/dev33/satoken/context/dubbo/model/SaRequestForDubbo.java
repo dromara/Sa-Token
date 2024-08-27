@@ -96,6 +96,26 @@ public class SaRequestForDubbo implements SaRequest {
 	}
 
 	/**
+	 * 在 [ Cookie作用域 ] 里获取一个值 (第一个此名称的)
+	 */
+	@Override
+	public String getCookieFirstValue(String name){
+		// 不传播 cookie 参数
+		return null;
+	}
+
+	/**
+	 * 在 [ Cookie作用域 ] 里获取一个值 (最后一个此名称的)
+	 * @param name 键
+	 * @return 值
+	 */
+	@Override
+	public String getCookieLastValue(String name){
+		// 不传播 cookie 参数
+		return null;
+	}
+
+	/**
 	 * 返回当前请求path (不包括上下文名称)  
 	 */
 	@Override
