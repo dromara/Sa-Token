@@ -121,7 +121,7 @@ public class SaOAuth2ServerController {
 
 	// Sa-Token OAuth2 定制化配置 
 	@Autowired
-	public void setSaOAuth2Config(SaOAuth2Config oauth2Server) {
+	public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 		
 		// 添加 client 信息 
 		oauth2Server.addClient(
@@ -135,7 +135,7 @@ public class SaOAuth2ServerController {
 						GrantType.implicit,  // 隐式式
 						GrantType.refresh_token,  // 刷新令牌
 						GrantType.password,  // 密码式
-						GrantType.client_credentials,  // 客户端模式
+						GrantType.client_credentials  // 客户端模式
 				)
 		);
 		
@@ -203,8 +203,8 @@ public class GlobalExceptionHandler {
 public class SaOAuth2ServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SaOAuth2ServerApplication.class, args);
-		System.out.println("\nSa-Token-OAuth2 Server 端启动成功");
-		System.out.println(SaOAuth2Manager.getConfig());
+		System.out.println("\nSa-Token-OAuth2 Server端启动成功，配置如下：");
+		System.out.println(SaOAuth2Manager.getServerConfig());
 	}
 }
 ```

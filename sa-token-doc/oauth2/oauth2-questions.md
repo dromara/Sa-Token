@@ -14,7 +14,7 @@ OAuth2 集成常见问题整理
 - 统一认证登录地址是：`http://{host}:{port}/oauth2/authorize`。
 - 而你访问的却是：`http://{host}:{port}/oauth2/authorize2`。
 
-地址写错了，框架就不会处理这个请求，会直接返回 `{"msg": "not handle"}`，所有开放地址可参考：[SSO 开放接口](/oauth2/oauth2-apidoc)
+地址写错了，框架就不会处理这个请求，会直接返回 `{"msg": "not handle"}`，所有开放地址可参考：[OAuth2 开放接口](/oauth2/oauth2-apidoc)
 
 如果仔细检查地址后没有写错，却依然返回了这个信息，那有可能是对应的接口没有打开，比如说：
 

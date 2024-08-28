@@ -1166,4 +1166,41 @@ var donateList = [
 		"msg": '感谢您的开源项目，内部项目鉴权框架参考了您的部分设计思想（用户会话和令牌会话）。',
 		"date": "2024-07-20"
 	},
+	{
+		"name": "张磊",
+		"link": "https://gitee.com/zl18282425038",
+		"money": 1.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-08-03"
+	},
+	{
+		"name": "老黄H",
+		"link": "https://gitee.com/lao-huang-h",
+		"money": 1.0,
+		"msg": '感谢您的开源项目我是王攀',
+		"date": "2024-08-04"
+	},
+	{
+		"name": "Chat2DB",
+		"link": "https://gitee.com/jipengfei001",
+		"money": 10.0,
+		"msg": 'https://github.com/chat2db/Chat2DB/ 数据库客户端',
+		"date": "2024-08-05"
+	},
+	
+	{
+		"name": "gentleman",
+		"link": "https://gitee.com/guoweiweigege",
+		"money": 10.0,
+		"msg": '设计简单 功能多且强大 我杜伟坤为你代言',
+		"date": "2024-08-09"
+	},
+	{
+		"name": "june",
+		"link": "https://gitee.com/june_home",
+		"money": 50.0,
+		"msg": '非常方便简单易用，感谢您的开源项目！',
+		"date": "2024-08-14"
+	},
+	
 ]
