@@ -151,7 +151,7 @@ public class SaTokenConfigure {
     @PostConstruct
     public void rewriteSaStrategy() {
     	// 重写Sa-Token的注解处理器，增加注解合并功能 
-		SaStrategy.instance.getAnnotation = (element, annotationClass) -> {
+		SaAnnotationStrategy.instance.getAnnotation = (element, annotationClass) -> {
 			return AnnotatedElementUtils.getMergedAnnotation(element, annotationClass); 
 		};
     }
