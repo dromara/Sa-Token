@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<!-- 定义 Sa-Token 版本号 -->
-		<sa-token.version>1.38.0</sa-token.version>
+		<sa-token.version>1.39.0</sa-token.version>
 	</properties>
 	
 	<dependencies>
@@ -58,13 +58,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
-		<!-- 热刷新 -->
+
+		<!-- sa-token-jwt 签发 OIDC id_token 令牌 -->
 		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jwt</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
+		<!-- 热刷新 -->
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency>-->
         
 		<!-- ConfigurationProperties -->
         <dependency>

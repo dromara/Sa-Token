@@ -15,6 +15,7 @@ sa-token api-sign 模块将帮你轻松解决以上难题。*（此插件是内�
 
 假设我们有如下业务需求：
 
+> [!NOTE| label:业务场景] 
 > 用户在 A 系统参与活动成功后，活动奖励以余额的形式下发到 B 系统。
 
 
@@ -222,7 +223,7 @@ public SaResult addMoney(long userId, long money, String nonce, String sign) {
 long userId = 10001;
 long money = 1000;
 String nonce = SaFoxUtil.getRandomString(32); // 随机32位字符串
-long timestamp = System.currentTimeMillis(); // 随机32位字符串
+long timestamp = System.currentTimeMillis(); // 系统当前时间戳 
 String secretKey = "xxxxxxxxxxxxxxxxxxxx";
 
 // 计算 sign 参数

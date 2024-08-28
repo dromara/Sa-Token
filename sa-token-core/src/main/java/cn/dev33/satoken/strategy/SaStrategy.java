@@ -16,19 +16,14 @@
 package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.strategy.*;
-import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
-import cn.dev33.satoken.httpauth.digest.SaHttpDigestUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -131,185 +126,6 @@ public final class SaStrategy {
 
 		// 走出for循环说明没有一个元素可以匹配成功
 		return false;
-	};
-
-	/**
-	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现）
-	 */
-	public SaCheckMethodAnnotationFunction checkMethodAnnotation = (method) -> {
-
-		// 先校验 Method 所属 Class 上的注解
-		instance.checkElementAnnotation.accept(method.getDeclaringClass());
-
-		// 再校验 Method 上的注解
-		instance.checkElementAnnotation.accept(method);
-	};
-
-	/**
-	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现）
-	 */
-	public SaCheckElementAnnotationFunction checkElementAnnotation = (element) -> {
-
-		// 校验 @SaCheckLogin 注解
-		SaCheckLogin checkLogin = (SaCheckLogin) SaStrategy.instance.getAnnotation.apply(element, SaCheckLogin.class);
-		if(checkLogin != null) {
-			SaManager.getStpLogic(checkLogin.type(), false).checkByAnnotation(checkLogin);
-		}
-
-		// 校验 @SaCheckRole 注解
-		SaCheckRole checkRole = (SaCheckRole) SaStrategy.instance.getAnnotation.apply(element, SaCheckRole.class);
-		if(checkRole != null) {
-			SaManager.getStpLogic(checkRole.type(), false).checkByAnnotation(checkRole);
-		}
-
-		// 校验 @SaCheckPermission 注解
-		SaCheckPermission checkPermission = (SaCheckPermission) SaStrategy.instance.getAnnotation.apply(element, SaCheckPermission.class);
-		if(checkPermission != null) {
-			SaManager.getStpLogic(checkPermission.type(), false).checkByAnnotation(checkPermission);
-		}
-
-		// 校验 @SaCheckSafe 注解
-		SaCheckSafe checkSafe = (SaCheckSafe) SaStrategy.instance.getAnnotation.apply(element, SaCheckSafe.class);
-		if(checkSafe != null) {
-			SaManager.getStpLogic(checkSafe.type(), false).checkByAnnotation(checkSafe);
-		}
-
-		// 校验 @SaCheckDisable 注解
-		SaCheckDisable checkDisable = (SaCheckDisable) SaStrategy.instance.getAnnotation.apply(element, SaCheckDisable.class);
-		if(checkDisable != null) {
-			SaManager.getStpLogic(checkDisable.type(), false).checkByAnnotation(checkDisable);
-		}
-
-		// 校验 @SaCheckHttpBasic 注解
-		SaCheckHttpBasic checkHttpBasic = (SaCheckHttpBasic) SaStrategy.instance.getAnnotation.apply(element, SaCheckHttpBasic.class);
-		if(checkHttpBasic != null) {
-			SaHttpBasicUtil.check(checkHttpBasic.realm(), checkHttpBasic.account());
-		}
-
-		// 校验 @SaCheckHttpDigest 注解
-		SaCheckHttpDigest checkHttpDigest = (SaCheckHttpDigest) SaStrategy.instance.getAnnotation.apply(element, SaCheckHttpDigest.class);
-		if(checkHttpDigest != null) {
-			SaHttpDigestUtil.checkByAnnotation(checkHttpDigest);
-		}
-
-		// 校验 @SaCheckOr 注解
-		SaCheckOr checkOr = (SaCheckOr) SaStrategy.instance.getAnnotation.apply(element, SaCheckOr.class);
-		if(checkOr != null) {
-			SaStrategy.instance.checkOrAnnotation.accept(checkOr);
-		}
-	};
-
-	/**
-	 * 对一个 @SaCheckOr 进行注解校验
-	 */
-	public SaCheckOrAnnotationFunction checkOrAnnotation = (at) -> {
-
-		// 记录校验过程中所有的异常
-		List<SaTokenException> errorList = new ArrayList<>();
-
-		// 逐个开始校验 >>>
-
-		// 1、校验注解：@SaCheckLogin
-		SaCheckLogin[] checkLoginArray = at.login();
-		for (SaCheckLogin item : checkLoginArray) {
-			try {
-				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 2、校验注解：@SaCheckRole
-		SaCheckRole[] checkRoleArray = at.role();
-		for (SaCheckRole item : checkRoleArray) {
-			try {
-				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 3、校验注解：@SaCheckPermission
-		SaCheckPermission[] checkPermissionArray = at.permission();
-		for (SaCheckPermission item : checkPermissionArray) {
-			try {
-				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 4、校验注解：@SaCheckSafe
-		SaCheckSafe[] checkSafeArray = at.safe();
-		for (SaCheckSafe item : checkSafeArray) {
-			try {
-				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 5、校验注解：@SaCheckDisable
-		SaCheckDisable[] checkDisableArray = at.disable();
-		for (SaCheckDisable item : checkDisableArray) {
-			try {
-				SaManager.getStpLogic(item.type(), false).checkByAnnotation(item);
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 6、校验注解：@SaCheckBasic
-		SaCheckHttpBasic[] checkHttpBasicArray = at.httpBasic();
-		for (SaCheckHttpBasic item : checkHttpBasicArray) {
-			try {
-				SaHttpBasicUtil.check(item.realm(), item.account());
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 7、校验注解：@SaCheckDigest
-		SaCheckHttpDigest[] checkHttpDigestArray = at.httpDigest();
-		for (SaCheckHttpDigest item : checkHttpDigestArray) {
-			try {
-				SaHttpDigestUtil.checkByAnnotation(item);
-				return;
-			} catch (SaTokenException e) {
-				errorList.add(e);
-			}
-		}
-
-		// 如果执行到这里，有两种可能：
-		//		可能 1. SaCheckOr 注解上不包含任何注解校验，此时 errorList 里面一个异常都没有，我们直接跳过即可
-		//		可能 2. 所有注解校验都通过不了，此时 errorList 里面会有多个异常，我们随便抛出一个即可
-		if(errorList.size() == 0) {
-			// return;
-		} else {
-			throw errorList.get(0);
-		}
-	};
-
-	/**
-	 * 从元素上获取注解
-	 */
-	public SaGetAnnotationFunction getAnnotation = (element, annotationClass)->{
-		// 默认使用jdk的注解处理器
-		return element.getAnnotation(annotationClass);
-	};
-
-	/**
-	 * 判断一个 Method 或其所属 Class 是否包含指定注解
-	 */
-	public SaIsAnnotationPresentFunction isAnnotationPresent = (method, annotationClass) -> {
-		return instance.getAnnotation.apply(method, annotationClass) != null ||
-				instance.getAnnotation.apply(method.getDeclaringClass(), annotationClass) != null;
 	};
 
 	/**
@@ -424,62 +240,6 @@ public final class SaStrategy {
 	 */
 	public SaStrategy setHasElement(SaHasElementFunction hasElement) {
 		this.hasElement = hasElement;
-		return this;
-	}
-
-	/**
-	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现）
-	 *
-	 * @param checkMethodAnnotation /
-	 * @return /
-	 */
-	public SaStrategy setCheckMethodAnnotation(SaCheckMethodAnnotationFunction checkMethodAnnotation) {
-		this.checkMethodAnnotation = checkMethodAnnotation;
-		return this;
-	}
-
-	/**
-	 * 对一个 [元素] 对象进行注解校验 （注解鉴权内部实现）
-	 *
-	 * @param checkElementAnnotation /
-	 * @return /
-	 */
-	public SaStrategy setCheckElementAnnotation(SaCheckElementAnnotationFunction checkElementAnnotation) {
-		this.checkElementAnnotation = checkElementAnnotation;
-		return this;
-	}
-
-	/**
-	 * 对一个 @SaCheckOr 进行注解校验
-	 * <p> 参数 [SaCheckOr 注解的实例]
-	 *
-	 * @param checkOrAnnotation /
-	 * @return /
-	 */
-	public SaStrategy setCheckOrAnnotation(SaCheckOrAnnotationFunction checkOrAnnotation) {
-		this.checkOrAnnotation = checkOrAnnotation;
-		return this;
-	}
-
-	/**
-	 * 从元素上获取注解
-	 *
-	 * @param getAnnotation /
-	 * @return /
-	 */
-	public SaStrategy setGetAnnotation(SaGetAnnotationFunction getAnnotation) {
-		this.getAnnotation = getAnnotation;
-		return this;
-	}
-
-	/**
-	 * 判断一个 Method 或其所属 Class 是否包含指定注解
-	 *
-	 * @param isAnnotationPresent /
-	 * @return /
-	 */
-	public SaStrategy setIsAnnotationPresent(SaIsAnnotationPresentFunction isAnnotationPresent) {
-		this.isAnnotationPresent = isAnnotationPresent;
 		return this;
 	}
 

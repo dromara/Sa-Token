@@ -53,8 +53,6 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 
 ### 异常细分状态码-参照表
 
-!> 部分插件因异常抛出点较少，暂未做状态码细分处理
-
 #### sa-token-code 核心包
 
 | code码值	| 含义									|
@@ -162,37 +160,32 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 
 
 #### sa-token-oauth2 相关：
-| code码值	| 含义												|
-| :--------	| :--------											|
-| 30101		| client_id 不可为空					|
-| 30102		| scope 不可为空					|
+| code码值	| 含义									|
+| :--------	| :--------								|
+| 30101		| client_id 不可为空						|
+| 30102		| scope 不可为空							|
 | 30103		| redirect_uri 不可为空					|
-| 30104		| LoginId 不可为空					|
-| 30105		| 无效client_id					|
-| 30106		| 无效access_token					|
-| 30107		| 无效 client_token					|
-| 30108		| Access-Token 不具备指定的 Scope					|
-| 30109		| Client-Token 不具备指定的 Scope					|
-| 30110		| 无效 code 码					|
-| 30111		| 无效 Refresh-Token					|
-| 30112		| 请求的Scope暂未签约					|
-| 30113		| 无效redirect_url					|
-| 30114		| 非法redirect_url					|
-| 30115		| 无效client_secret					|
-| 30116		| 请求的Scope暂未签约					|
-| 30117		| 无效code					|
-| 30118		| 无效client_id					|
-| 30119		| 无效client_secret					|
-| 30120		| 无效redirect_uri					|
-| 30121		| 无效refresh_token					|
-| 30122		| 无效client_id					|
-| 30123		| 无效client_secret					|
-| 30124		| 无效client_id					|
-| 30125		| 无效response_type					|
-| 30131		| 暂未开放授权码模式					|
-| 30132		| 暂未开放隐藏式模式					|
-| 30133		| 暂未开放密码式模式					|
-| 30134		| 暂未开放凭证式模式					|
+| 30104		| LoginId 不可为空						|
+| 30105		| 无效 client_id							|
+| 30106		| 无效 access_token						|
+| 30107		| 无效 client_token						|
+| 30108		| Access-Token 不具备指定的 Scope		|
+| 30109		| Client-Token 不具备指定的 Scope		|
+| 30110		| 无效 code 码							|
+| 30111		| 无效 Refresh-Token						|
+| 30112		| 请求的 Scope 暂未签约					|
+| 30113		| 无效 redirect_url						|
+| 30114		| 非法 redirect_url						|
+| 30115		| 无效 client_secret						|
+| 30120		| redirect_uri 不一致					|
+| 30122		| client_id	不一致						|
+| 30125		| 无效 response_type						|
+| 30126		| 无效 grant_type						|
+| 30127		| 无效 state								|
+| 30141		| 系统暂未开放的授权模式					|
+| 30142		| 应用暂未开放的授权模式					|
+| 30151		| 无效的请求 Method						|
+| 30191		| 其它异常								|
 
 
 #### sa-token-jwt 插件相关：
@@ -214,6 +207,9 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 | 30302		| jwt 模式不可以删除 Token				|
 | 30303		| Token已超时							|
 
+
+> [!WARNING| label:注意] 
+> 部分插件因异常抛出点较少，暂未做状态码细分处理
 
 
 

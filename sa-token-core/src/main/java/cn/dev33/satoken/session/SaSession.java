@@ -96,7 +96,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	/**
 	 * 所有挂载数据
 	 */
-	private final Map<String, Object> dataMap = new ConcurrentHashMap<>();
+	private Map<String, Object> dataMap = new ConcurrentHashMap<>();
 
 
 	// ----------------------- 构建相关
@@ -523,13 +523,25 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
+	 * 设置数据挂载集合 (改变底层对象引用，将 dataMap 整个对象替换)
+	 * @param dataMap 数据集合
+	 *
+	 * @return 对象自身
+	 */
+	public SaSession setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
+		return this;
+	}
+
+	/**
 	 * 写入数据集合 (不改变底层对象引用，只将此 dataMap 所有数据进行替换)
 	 * @param dataMap 数据集合 
 	 */
-	public void refreshDataMap(Map<String, Object> dataMap) {
+	public SaSession refreshDataMap(Map<String, Object> dataMap) {
 		this.dataMap.clear();
 		this.dataMap.putAll(dataMap);
 		this.update();
+		return this;
 	}
 
 	//

@@ -4,6 +4,7 @@
 
 整合示例在官方仓库的 `/sa-token-demo/sa-token-demo-solon` 文件夹下，如遇到难点可结合源码进行学习测试。
 
+> [!tip| label:Solon 是什么？] 
 > Solon 是一个高效的国产应用开发框架：更快、更小、更简单。
 > 
 > - 启动快 5 ～ 10 倍；
@@ -13,7 +14,6 @@
 > - 同时支持 jdk8、jdk11、jdk17、jdk20。
 > 
 > 详情可参考：[https://solon.noear.org/](https://solon.noear.org/)
-
 
 ---
 
@@ -45,7 +45,7 @@ implementation 'cn.dev33:sa-token-solon-plugin:${sa.top.version}'
 
 
 
-Maven依赖一直无法加载成功？[参考解决方案](/doc.html#/start/maven-pull)
+Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
 更多内测版本了解：[Sa-Token最新版本](https://gitee.com/dromara/sa-token/blob/dev/sa-token-doc/start/new-version.md)
 

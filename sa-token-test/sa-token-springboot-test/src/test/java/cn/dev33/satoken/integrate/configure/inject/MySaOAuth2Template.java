@@ -17,7 +17,7 @@ package cn.dev33.satoken.integrate.configure.inject;
 
 import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 
 /**
  * 自定义 Sa-OAuth2 模板方法 

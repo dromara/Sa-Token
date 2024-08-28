@@ -300,6 +300,9 @@ public class SaLoginModel {
 		if(getTimeoutOrGlobalConfig() == SaTokenDao.NEVER_EXPIRE) {
 			return Integer.MAX_VALUE;
 		}
+		if (timeout > Integer.MAX_VALUE) {
+			return Integer.MAX_VALUE;
+		}
 		return (int)(long)timeout;
 	}
 

@@ -15,11 +15,10 @@
  */
 package cn.dev33.satoken.interceptor;
 
-import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaParamFunction;
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -95,18 +94,8 @@ public class SaInterceptor implements HandlerInterceptor {
 
 			// 这里必须确保 handler 是 HandlerMethod 类型时，才能进行注解鉴权
 			if(isAnnotation && handler instanceof HandlerMethod) {
-				
-				// 获取此请求对应的 Method 处理函数 
 				Method method = ((HandlerMethod) handler).getMethod();
-
-				// 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-				if(SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
-					// 注意这里直接就退出整个鉴权了，最底部的 auth.run() 路由拦截鉴权也被跳出了
-					return true;
-				}
-
-				// 执行注解鉴权
-				SaStrategy.instance.checkMethodAnnotation.accept(method);
+				SaAnnotationStrategy.instance.checkMethodAnnotation.accept(method);
 			}
 			
 			// Auth 路由拦截鉴权校验

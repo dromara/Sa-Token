@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.dev33.satoken.exception.DisableServiceException;
-import cn.dev33.satoken.exception.NotBasicAuthException;
+import cn.dev33.satoken.exception.NotHttpBasicAuthException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
@@ -66,8 +66,8 @@ public class HandlerException {
 	}
 
 	// Http Basic 校验失败，code=903
-	@ExceptionHandler(NotBasicAuthException.class)
-	public SaResult handlerNotBasicAuthException(NotBasicAuthException e) {
+	@ExceptionHandler(NotHttpBasicAuthException.class)
+	public SaResult handlerNotBasicAuthException(NotHttpBasicAuthException e) {
 		return SaResult.error().setCode(903);
 	}
 

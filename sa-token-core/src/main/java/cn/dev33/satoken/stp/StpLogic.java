@@ -36,7 +36,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SaValue2Box;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -588,6 +588,20 @@ public class StpLogic {
 			SaManager.log.warn("当前全局配置未开启动态 activeTimeout 功能，传入的 activeTimeout 参数将被忽略");
 		}
 
+	}
+
+	/**
+	 * 获取指定账号 id 的登录会话数据，如果获取不到则创建并返回
+	 *
+	 * @param id 账号id，建议的类型：（long | int | String）
+	 * @return 返回会话令牌
+	 */
+	public String getOrCreateLoginSession(Object id) {
+		String tokenValue = getTokenValueByLoginId(id);
+		if(tokenValue == null) {
+			tokenValue = createLoginSession(id, new SaLoginModel());
+		}
+		return tokenValue;
 	}
 
 	// --- 注销 
@@ -2114,7 +2128,7 @@ public class StpLogic {
 		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		// 按照设备类型进行筛选
@@ -2132,7 +2146,7 @@ public class StpLogic {
 		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
-			return Collections.emptyList();
+			return new ArrayList<>();
 		}
 
 		// 按照设备类型进行筛选
@@ -2232,79 +2246,6 @@ public class StpLogic {
 	 */
 	public List<String> searchTokenSessionId(String keyword, int start, int size, boolean sortType) {
 		return getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size, sortType);
-	}
-	
-
-	// ------------------- 注解鉴权 -------------------  
-
-	/**
-	 * 根据注解 ( @SaCheckLogin ) 鉴权
-	 *
-	 * @param at 注解对象 
-	 */
-	public void checkByAnnotation(SaCheckLogin at) {
-		this.checkLogin();
-	}
-
-	/**
-	 * 根据注解 ( @SaCheckRole ) 鉴权
-	 *
-	 * @param at 注解对象 
-	 */
-	public void checkByAnnotation(SaCheckRole at) {
-		String[] roleArray = at.value();
-		if(at.mode() == SaMode.AND) {
-			this.checkRoleAnd(roleArray);	
-		} else {
-			this.checkRoleOr(roleArray);	
-		}
-	}
-	
-	/**
-	 * 根据注解 ( @SaCheckPermission ) 鉴权
-	 *
-	 * @param at 注解对象 
-	 */
-	public void checkByAnnotation(SaCheckPermission at) {
-		String[] permissionArray = at.value();
-		try {
-			if(at.mode() == SaMode.AND) {
-				this.checkPermissionAnd(permissionArray);	
-			} else {
-				this.checkPermissionOr(permissionArray);	
-			}
-		} catch (NotPermissionException e) {
-			// 权限认证校验未通过，再开始角色认证校验
-			for (String role : at.orRole()) {
-				String[] rArr = SaFoxUtil.convertStringToArray(role);
-				// 某一项 role 认证通过，则可以提前退出了，代表通过
-				if (hasRoleAnd(rArr)) {
-					return;
-				}
-			}
-			throw e;
-		}
-	}
-
-	/**
-	 * 根据注解 ( @SaCheckSafe ) 鉴权
-	 *
-	 * @param at 注解对象 
-	 */
-	public void checkByAnnotation(SaCheckSafe at) {
-		this.checkSafe(at.value());
-	}
-
-	/**
-	 * 根据注解 ( @SaCheckDisable ) 鉴权
-	 *
-	 * @param at 注解对象
-	 */
-	public void checkByAnnotation(SaCheckDisable at) {
-		Object loginId = getLoginId();
-		for (String service : at.value()) {
-			this.checkDisableLevel(loginId, service, at.level());
-		}
 	}
 
 
@@ -2936,5 +2877,85 @@ public class StpLogic {
 	public boolean isSupportExtra() {
 		return false;
 	}
+
+
+
+	// ------------------- 过期方法 -------------------
+
+	/**
+	 * 根据注解 ( @SaCheckLogin ) 鉴权
+	 *
+	 * @param at 注解对象
+	 */
+	@Deprecated
+	public void checkByAnnotation(SaCheckLogin at) {
+		this.checkLogin();
+	}
+
+	/**
+	 * 根据注解 ( @SaCheckRole ) 鉴权
+	 *
+	 * @param at 注解对象
+	 */
+	@Deprecated
+	public void checkByAnnotation(SaCheckRole at) {
+		String[] roleArray = at.value();
+		if(at.mode() == SaMode.AND) {
+			this.checkRoleAnd(roleArray);
+		} else {
+			this.checkRoleOr(roleArray);
+		}
+	}
+
+	/**
+	 * 根据注解 ( @SaCheckPermission ) 鉴权
+	 *
+	 * @param at 注解对象
+	 */
+	@Deprecated
+	public void checkByAnnotation(SaCheckPermission at) {
+		String[] permissionArray = at.value();
+		try {
+			if(at.mode() == SaMode.AND) {
+				this.checkPermissionAnd(permissionArray);
+			} else {
+				this.checkPermissionOr(permissionArray);
+			}
+		} catch (NotPermissionException e) {
+			// 权限认证校验未通过，再开始角色认证校验
+			for (String role : at.orRole()) {
+				String[] rArr = SaFoxUtil.convertStringToArray(role);
+				// 某一项 role 认证通过，则可以提前退出了，代表通过
+				if (hasRoleAnd(rArr)) {
+					return;
+				}
+			}
+			throw e;
+		}
+	}
+
+	/**
+	 * 根据注解 ( @SaCheckSafe ) 鉴权
+	 *
+	 * @param at 注解对象
+	 */
+	@Deprecated
+	public void checkByAnnotation(SaCheckSafe at) {
+		this.checkSafe(at.value());
+	}
+
+	/**
+	 * 根据注解 ( @SaCheckDisable ) 鉴权
+	 *
+	 * @param at 注解对象
+	 */
+	@Deprecated
+	public void checkByAnnotation(SaCheckDisable at) {
+		Object loginId = getLoginId();
+		for (String service : at.value()) {
+			this.checkDisableLevel(loginId, service, at.level());
+		}
+	}
+
 
 }

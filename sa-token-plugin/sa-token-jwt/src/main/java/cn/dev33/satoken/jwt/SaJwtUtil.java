@@ -15,10 +15,10 @@
  */
 package cn.dev33.satoken.jwt;
 
-import java.util.Map;
-
 import cn.hutool.json.JSONObject;
 import cn.hutool.jwt.JWT;
+
+import java.util.Map;
 
 /**
  * jwt 操作工具类封装
@@ -195,4 +195,17 @@ public class SaJwtUtil {
     	return saJwtTemplate.getTimeout(token, loginType, keyt);
     }
 
+
+	// -------------- 其它方法
+
+	/**
+	 * 创建 jwt （Map 参数方式）
+	 *
+	 * @param map 扩展数据
+	 * @param keyt 秘钥
+	 * @return jwt-token
+	 */
+	public static String createToken(Map<String, Object> map, String keyt) {
+		return saJwtTemplate.createToken(map, keyt);
+	}
 }

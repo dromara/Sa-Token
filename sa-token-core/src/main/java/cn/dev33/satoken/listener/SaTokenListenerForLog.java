@@ -15,12 +15,13 @@
  */
 package cn.dev33.satoken.listener;
 
-import static cn.dev33.satoken.SaManager.log;
-
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import static cn.dev33.satoken.SaManager.log;
 
 /**
  * Sa-Token 侦听器的一个实现：Log 打印
@@ -128,6 +129,17 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	public void doRegisterComponent(String compName, Object compObj) {
 		String canonicalName = compObj == null ? null : compObj.getClass().getCanonicalName();
 		log.info("全局组件 {} 载入成功: {}", compName, canonicalName);
+	}
+
+	/**
+	 * 注册了自定义注解处理器
+	 * @param handler 注解处理器
+	 */
+	@Override
+	public void doRegisterAnnotationHandler(SaAnnotationHandlerInterface<?> handler) {
+		if(handler != null) {
+			log.info("注解扩展 @{} (处理器: {})", handler.getHandlerAnnotationClass().getSimpleName(), handler.getClass().getCanonicalName());
+		}
 	}
 
 	/**

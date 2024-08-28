@@ -29,7 +29,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 
 /**
  * Sa-Token 内部工具类
@@ -77,6 +76,17 @@ public class SaFoxUtil {
 	}
 
 	/**
+	 * 生成指定区间的 int 值
+	 *
+	 * @param min 最小值（包括）
+	 * @param max 最大值（包括）
+	 * @return /
+	 */
+	public static int getRandomNumber(int min, int max) {
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
+	}
+
+	/**
 	 * 指定元素是否为null或者空字符串
 	 * @param str 指定元素
 	 * @return 是否为null或者空字符串
@@ -96,12 +106,33 @@ public class SaFoxUtil {
 
 	/**
 	 * 指定数组是否为null或者空数组
+	 * <h3> 该方法已过时，建议使用 isEmptyArray 方法 </h3>
 	 * @param <T> /
 	 * @param array /
 	 * @return /
 	 */
+	@Deprecated
 	public static <T> boolean isEmpty(T[] array) {
+		return isEmptyArray(array);
+	}
+
+	/**
+	 * 指定数组是否为null或者空数组
+	 * @param <T> /
+	 * @param array /
+	 * @return /
+	 */
+	public static <T> boolean isEmptyArray(T[] array) {
 		return array == null || array.length == 0;
+	}
+
+	/**
+	 * 指定集合是否为null或者空数组
+	 * @param list /
+	 * @return /
+	 */
+	public static boolean isEmptyList(List<?> list) {
+		return list == null || list.isEmpty();
 	}
 
 	/**
@@ -563,7 +594,7 @@ public class SaFoxUtil {
 	 * @return 字符串
 	 */
 	public static String convertListToString(List<?> list) {
-		if(list == null || list.size() == 0) {
+		if(list == null || list.isEmpty()) {
 			return "";
 		}
 		StringBuilder str = new StringBuilder();
@@ -615,6 +646,15 @@ public class SaFoxUtil {
     public static List<String> toList(String... str) {
 		return new ArrayList<>(Arrays.asList(str));
     }
+
+	/**
+	 * String 集合转数组
+	 * @param list 集合
+	 * @return 数组
+	 */
+	public static String[] toArray(List<String> list) {
+		return list.toArray(new String[0]);
+	}
 
     public static List<String> logLevelList = Arrays.asList("", "trace", "debug", "info", "warn", "error", "fatal");
 
@@ -677,6 +717,65 @@ public class SaFoxUtil {
 
 		// 正常情况下，代码不会走到这里，但是方法又必须要有返回值，所以随便返回一个
 		return false;
+	}
+
+	/**
+	 * list1 是否完全包含 list2 中所有元素
+	 * @param list1 集合1
+	 * @param list2 集合2
+	 * @return /
+	 */
+	public static boolean list1ContainList2AllElement(List<String> list1, List<String> list2){
+		if(list2 == null || list2.isEmpty()) {
+			return true;
+		}
+		if(list1 == null || list1.isEmpty()) {
+			return false;
+		}
+		for (String str : list2) {
+			if(!list1.contains(str)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * list1 是否包含 list2 中任意一个元素
+	 * @param list1 集合1
+	 * @param list2 集合2
+	 * @return /
+	 */
+	public static boolean list1ContainList2AnyElement(List<String> list1, List<String> list2){
+		if(list1 == null || list1.isEmpty() || list2 == null || list2.isEmpty()) {
+			return false;
+		}
+		for (String str : list2) {
+			if(list1.contains(str)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 从 list1 中剔除 list2 所包含的元素 （克隆副本操作，不影响 list1）
+	 * @param list1 集合1
+	 * @param list2 集合2
+	 * @return /
+	 */
+	public static List<String> list1RemoveByList2(List<String> list1, List<String> list2){
+		if(list1 == null) {
+			return null;
+		}
+		if(list1.isEmpty() || list2 == null || list2.isEmpty()) {
+			return new ArrayList<>(list1);
+		}
+		List<String> listX = new ArrayList<>(list1);
+		for (String str : list2) {
+			listX.remove(str);
+		}
+		return listX;
 	}
 
 }

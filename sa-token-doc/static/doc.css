@@ -5,17 +5,101 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 #main h2 {font-size: 1.6rem;}
 #main h3 {font-size: 1.25rem;}
 
-.main-box .markdown-section{ padding: 38px 20px; max-width: 70%; margin-left: 12%;}
+.main-box .markdown-section{ /* padding: 38px 20px; */ max-width: 100%; /* margin-left: 12%; */}
 .main-box .markdown-section h4{font-size: 1rem;}
+
+
+
+/* ------- 多设备适配 start ------- */
+.sub-nav-draw-box{ display: none; }
+body{
+	--doc-left-width: 300px;
+	--doc-context-width: 1000px;
+	--doc-right-width: 300px;
+}
+
+/* 大于 1100px，就显示左中右结构 */
+@media screen and (min-width: 1100px) {
+	.doc-right-bj-box{ display: block; }
+	.main-box .content{left: 0;}
+	.main-box .markdown-section{width: var(--doc-context-width); padding: 38px 20px; border: 0px green solid;}
+	.main-box .doc-right-bj-box{left: calc(50% + (var(--doc-context-width) / 2) + 10px);}
+	.main-box .sidebar-nav>ul>li>ul>li>.app-sub-sidebar{ 
+		position: fixed;
+		top: 120px;
+		left: calc(50% + (var(--doc-context-width) / 2) + 10px);
+		width: var(--doc-right-width) !important;
+		border: 0px #000 solid;
+		line-height: 1.4em;
+		width: calc(300px - 25px);
+		max-height: 50vh;
+		overflow: auto;
+	}
+	.main-box .sidebar{width: var(--doc-left-width);}
+	.main-box .sidebar-nav>ul>li>ul>li>.app-sub-sidebar::-webkit-scrollbar{ width: 0px; }
+	.main-box .sidebar-nav>ul>li>ul>li>.app-sub-sidebar li.active a{ color: #42B983; }
+	.main-box .sidebar-nav>ul>li>ul>li>.app-sub-sidebar li a{ font-size: 12px; color: #888; }
+	/* .main-box .app-sub-sidebar{display: none;} */
+}
+/* 小于 1100px时 */
+@media screen and (max-width: 1100px) {
+	.doc-right-bj-box{ display: none; }
+}
+
+
+
+/* 大于 1600px */
+@media screen and (min-width: 1600px) {
+	body{
+		--doc-left-width: 300px;
+		--doc-context-width: 1000px;
+		--doc-right-width: 300px;
+	}
+}
+/* 小于 1100px - 1600px 之间 */
+@media screen and (max-width: 1600px) {
+	body{
+		--doc-left-width: 200px;
+		--doc-context-width: calc( 100vw - 400px - 50px);
+		--doc-right-width: calc(200px - 20px);
+	}
+}
+/* 小于 1100px时 */
+@media screen and (max-width: 1100px) {
+	.doc-right-bj-box{ display: none; }
+}
+/* 小于 800px时 */
+/* @media screen and (max-width: 800px) {
+	.doc-right-bj-box{ display: none; }
+} */
+
 
 /* 媒体查询 */
 @media screen and (max-width: 800px) {
 	.nav-left .logo-box .logo-text,
 	.nav-left .logo-box sub{display: none;}
-	.main-box .markdown-section{max-width: 1000px; margin-left: auto; margin-top: 40px;}
+	/* .main-box .markdown-section{max-width: 1000px; margin-left: auto; margin-top: 40px;} */
 }
 /* 手机端不显示广告，和一些其它东西 */
 @media (max-width: 576px) {.wwads-cn,.p-none{display:none!important}} 
+
+/* ------- 多设备适配 end ------- */
+
+
+/* 右侧盒子 */
+.doc-right-bj-box{
+	width: var(--doc-right-width);
+	padding: 10px;
+	position: fixed;
+	margin-top: 10px;
+	top: 60px;
+	border: 0px #000 solid;
+	font-size: 12px;
+}
+.doc-right-bj-box-title{ font-size: 14px; color: #888; padding-bottom: 8px; border-bottom: 1px #aaa solid; }
+.doc-right-more-item{ position: absolute; border: 0px #000 solid; color: #000; width: 100%;}
+
+
 
 
 /* ------- 头部样式 ------- */
@@ -30,14 +114,14 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .logo-box sub{margin-left: 5px; color: #666;}
 
 /* 右边导航 */
-.doc-header .nav-right{margin: 0;  float: right; padding-right: 4em; font-size: 15px;}
-.doc-header .nav-right>*{padding: 0px; margin: 0 15px;}
+.doc-header .nav-right{margin: 0;  float: right; padding-right: 3em; margin-right: 20px !important;}
+.doc-header .nav-right>*{padding: 0px; margin: 0 10px;}
 .doc-header .nav-right>*:last-child{position: relative; z-index: 1002;}
 .doc-header .nav-right>select{border-color: #999; color: #666; outline: 0; cursor: pointer; transition: all 0.2s; background-color: #FFF; border-width: 1px; outline: 0;}
 .doc-header .nav-right>select:hover{box-shadow: 0 0 10px #aaa;}
 
 .github-corner{z-index: 1001 !important;}
-.doc-header .nav-right .wzi{font-size: 15px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
+.doc-header .nav-right .wzi{font-size: 14px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
 .doc-header .nav-right .wzi:hover{border-bottom: 2px var(--a-color) solid;}
 
 .nav-right a{color: #34495E;}
@@ -74,10 +158,11 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 
 /* ------- 调整一下左侧树的字体样式 ------- */
 .main-box .sidebar{padding-top: 25px; margin-top: 60px;}
-.sidebar .sidebar-nav>ul>li>p{font-size: 1.2em; margin-top: 10px;}
-.sidebar .sidebar-nav>ul>li> strong{font-size: 1.2em; margin-top: 10px;}
+.sidebar .sidebar-nav>ul>li>p{/* font-size: 1.2em; */ margin-top: 10px;}
+.sidebar .sidebar-nav>ul>li> strong{/* font-size: 1.2em; */ margin-top: 10px;}
 /* .sidebar ul li a{color: #222;} */
-.sidebar .sidebar-nav>ul>li>ul>li>a{/* color: #222; */font-size: 16px; /* font-weight: 700; */}
+.sidebar .sidebar-nav>ul>li>ul>li>a{/* color: #222; */font-size: 14px; /* font-weight: 700; */}
+.main-box .sidebar-nav ul li{margin-top: 0; margin-bottom: 0;}
 .main-box .sidebar ul li a{color: #00323c;}
 
 /* 做到悬浮出现下划线的效果 */
@@ -89,10 +174,15 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .main-box .sidebar li.active>a{border: 0px;}
 .main-box .sidebar li.active>a:after{content: ''; position: absolute; height: 30px; right: 0; border-right: 3px #42b983 solid;} */
 
+.sidebar .sidebar-nav>ul>li>ul>li.active-rep>a{ color: #42B983; font-weight: 700; }
+
+
 
 /* .main-box .sidebar .app-sub-sidebar li:before{float: none;} */
 
 /* ============== code代码样式优化 ================ */
+
+.main-box .markdown-section code, .main-box .markdown-section pre{background-color: rgba(0, 0, 0, 0.04);}
 
 /* 背景变黑 */
 .main-box [data-lang]{padding: 0px !important; border-radius: 2px;overflow-x: auto; overflow-y: hidden;}
@@ -319,41 +409,57 @@ body {
 
 /* -------------  details标签 ------------- */
 .main-box details{
-	border: 1px #c4e5b5 solid;
+	border: 1px #42B983 solid;
+	background-color: #f4fdef;
+	overflow: hidden;
+	max-height: 44px;
+	margin-bottom: 1em;
+	/* transition: all 1s; */
+}
+.main-box details[open]{ /* max-height: 1000px; */ overflow: auto; animation: slideDown 0.6s linear both;}
+@keyframes slideDown {
+    0% { max-height: 44px; overflow: hidden; }
+    99% { max-height: 1500px; overflow: hidden; }
+    100% { max-height: 1500px; overflow: auto; }
 }
 .main-box details summary{
 	padding: 11px 14px;
 	background-color: #f4fdef;
 	color: #01a252;
-	
 	cursor: pointer;
 }
+.main-box details pre{
+	margin-left: 1em;
+	margin-right: 1em;
+}
+.main-box details table{margin-left: 1em !important; margin-right: 1em; width: auto;}
 .main-box details p{padding: 0 14px;}
 
-/* 顶部广告 */
-#main .top-ad-box{padding: 0.5em 1em; font-size: 12px; margin-bottom: 30px; background-color: rgba(0, 0, 0, 0.04);}
-#main .top-ad-box a{border-bottom: 0px;}
-#main .top-ad-box a:hover{border-bottom: 0px;}
-#main .top-ad-box a img{border: 0px #ddd solid; width: 100%; /* max-height: 80px; */
- border-radius: 2px; transition: all 0.2s;}
-#main .top-ad-box a img:hover{box-shadow: 0 0 20px #ddd;}
-.ad-tips{color: #aaa;}
+/* 广告盒子 */
+.ad-title{ font-size: 14px; color: #aaa; padding-bottom: 8px; margin-bottom: 14px; border-bottom: 1px #aaa solid; }
+.ad-tips{margin-bottom: 5px;}
 .ad-close{float: right;}
 .ad-close:hover{cursor: pointer; text-decoration: underline; color: red;}
 
+.main-box .top-ad-box{font-size: 12px;}
+.main-box .top-ad-box a{border-bottom: 0px;}
+.main-box .top-ad-box a:hover{border-bottom: 0px;}
+.main-box .top-ad-box a img{border: 0px #ddd solid; width: 100%; /* max-height: 80px; */ border-radius: 2px; transition: all 0.2s;}
+.main-box .top-ad-box a img:hover{box-shadow: 0 0 20px #ddd;}
+
 
 /* 帮助按钮 */
-.help-btn{transition: all 0.2s;}
-.help-btn:hover{box-shadow: 0 0 30px #aaa !important;}
+.help-btn{transition: all 0.5s; text-align: center; border: 1px #42b983 solid; background-color: rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 13px; color: #42b983; line-height: 40px;}
+.help-btn:hover{box-shadow: 0 0 20px #D1EEE1 !important;}
 .xiaozhushou-intro p{line-height: 16px;}
 
 /* 按钮发光动画 */
-.help-btn{animation: helpbtnanimation 3s infinite;}
+/* .help-btn{animation: helpbtnanimation 3s infinite;}
 @keyframes helpbtnanimation{
     0%{box-shadow: 0 0 1px #42B983;}
     50%{box-shadow: 0 0 20px #42B983;}
     100%{box-shadow: 0 0 20px #FFF;}
-}
+} */
 
 /* ********** 赞助者名单 ******** */
 .zanzhu-table{text-align: left;}
@@ -374,3 +480,18 @@ body {
 .ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}
 .ajax-layer-load.layui-layer-dialog .layui-layer-content{padding: 10px 20px 10px 40px; color: #FFF;}
 .ajax-layer-load.layui-layer-dialog .layui-layer-content .layui-layer-ico{width: 20px; height: 20px; background-size: 20px 20px; top: 12px; }
+
+
+/* 万维广告 */
+.wwads-cn{margin-top: 0px !important;}
+.wwads-cn>a>img{width: 80px !important;}
+
+/* 提示框 */
+.main-box .alert{ border-radius: 0px !important; }
+/* .main-box .alert ul,.main-box .alert ol{ margin-top: -5px; margin-bottom: -10px; } */
+.main-box .alert.tip .title .icon.icon-tip{
+	background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%2301354d' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E");
+}
+.main-box .alert.flat.note{background-color: #E8F4FF;}
+.main-box .alert.flat.tip{background-color: #F0F9EB;}
+.main-box .alert.flat.warning{background-color: #FDF6EC;}

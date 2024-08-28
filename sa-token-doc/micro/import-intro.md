@@ -5,6 +5,7 @@
 
 虽然在 [开始] 章节已经说明了依赖引入规则，但是交流群里不少小伙伴提出bug解决到最后发现都是因为依赖引入错误导致的，此处再次重点强调一下：
 
+> [!TIP| style:callout] 
 > **在微服务架构中使用Sa-Token时，网关和内部服务要分开引入Sa-Token依赖（不要直接在顶级父pom中引入Sa-Token）**
 
 总体来讲，我们需要关注的依赖就是两个：`sa-token-spring-boot-starter` 和 `sa-token-reactor-spring-boot-starter`：

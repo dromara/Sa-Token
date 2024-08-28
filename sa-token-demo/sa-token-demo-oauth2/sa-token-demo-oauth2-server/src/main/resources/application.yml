@@ -1,19 +1,31 @@
-server: 
-    port: 8001
+server:
+    port: 8000
 
 # sa-token配置
-sa-token: 
-    # token名称 (同时也是cookie名称)
-    token-name: satoken-server
-    # OAuth2.0 配置 
-    oauth2: 
-        is-code: true
-        is-implicit: true
-        is-password: true
-        is-client: true
-    
-spring: 
-    # redis配置 
+sa-token:
+    # token名称 (同时也是 Cookie 名称)
+    token-name: satoken
+    # 是否打印操作日志
+    is-log: true
+    # jwt 秘钥
+    jwt-secret-key: saxsaxsaxsax
+    # OAuth2.0 配置
+    oauth2-server:
+        # 是否全局开启授权码模式
+        enable-authorization-code: true
+        # 是否全局开启 Implicit 模式
+        enable-implicit: true
+        # 是否全局开启密码模式
+        enable-password: true
+        # 是否全局开启客户端模式
+        enable-client-credentials: true
+        # 定义哪些 scope 是高级权限，多个用逗号隔开
+        # higher-scope: openid,userid
+        # 定义哪些 scope 是低级权限，多个用逗号隔开
+        # lower-scope: userinfo
+
+spring:
+    # redis配置
     redis:
         # Redis数据库索引（默认为0）
         database: 1
@@ -22,7 +34,7 @@ spring:
         # Redis服务器连接端口
         port: 6379
         # Redis服务器连接密码（默认为空）
-        # password: 
+        # password:
         # 连接超时时间（毫秒）
         timeout: 1000ms
         lettuce:
@@ -35,6 +47,5 @@ spring:
                 max-idle: 10
                 # 连接池中的最小空闲连接
                 min-idle: 0
-        
-        
-        
+
+

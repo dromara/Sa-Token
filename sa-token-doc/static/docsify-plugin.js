@@ -69,53 +69,55 @@ var myDocsifyPlugin = function(hook, vm) {
 		}
 		
 		// 功能6：标题下面的广告 
-		if(vm.route.path !== '/' && $(window).width() >= 800) {
-			var ad = `<p class="top-ad-box">
-				<span class="ad-tips">推广信息：</span>
-				<span class="ad-tips ad-close">关闭（一周内不再显示）</span>
-				<a href="http://sa-pro.dev33.cn?from=satop" target="_blank">
-					<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-x.png" />
-				</a>
-			</p>`;
+		// if(vm.route.path !== '/' && $(window).width() >= 800) {
+		// 	var ad = `<p class="top-ad-box">
+		// 		<span class="ad-tips">推广信息：</span>
+		// 		<span class="ad-tips ad-close">关闭</span>
+		// 		<a href="http://sa-pro.dev33.cn?from=satop" target="_blank">
+		// 			<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-s3.png" />
+		// 		</a>
+		// 	</p>`;
 				
-			// 没有下划线就先补个下划线
-			// if($('#main h1').next().prop('tagName') !== 'HR') {
-			// 	$('#main h1').after('<hr/>');
-			// }
+		// 	// 没有下划线就先补个下划线
+		// 	// if($('#main h1').next().prop('tagName') !== 'HR') {
+		// 	// 	$('#main h1').after('<hr/>');
+		// 	// }
 			
-			// 如果一周内用户点击过关闭广告，则不再展现
-			let allowJg = 1000 * 60 * 60 * 24 * 7;
-			// allowJg = 1000 * 10;
-			try{
-				const closeAdTime = localStorage.closeAdTime;
-				if(closeAdTime) {
-					// 点击广告关闭的时间，和当前时间的差距
-					const closeAdJg = new Date().getTime() - parseInt(closeAdTime);
+		// 	// 如果一周内用户点击过关闭广告，则不再展现
+		// 	let allowJg = 1000 * 60 * 60 * 24 * 7;
+		// 	// allowJg = 1000 * 10;
+		// 	try{
+		// 		const closeAdTime = localStorage.closeAdTime;
+		// 		if(closeAdTime) {
+		// 			// 点击广告关闭的时间，和当前时间的差距
+		// 			const closeAdJg = new Date().getTime() - parseInt(closeAdTime);
 					
-					// 差距小于七天，不再展示 
-					if(closeAdJg < allowJg) {
-						console.log('not show ad ...');
-						return;
-					}
-				}
-			}catch(e){
-				console.error(e);
-			}
+		// 			// 差距小于七天，不再展示 
+		// 			if(closeAdJg < allowJg) {
+		// 				console.log('not show ad ...');
+		// 				return;
+		// 			}
+		// 		}
+		// 	}catch(e){
+		// 		console.error(e);
+		// 	}
 			
 			
-			// 添加广告
-			$('#main h1').after(ad);
-			// 添加关闭事件
-			$('.top-ad-box .ad-close').click(function(){
-				console.log('关闭广告');
-				// $('.top-ad-box').slideUp(); // 折叠收起
-				layer.confirm('关闭后，一周内不再展现此信息', function(){
-					$(".top-ad-box").fadeOut(1000); // 淡出效果
-					layer.msg('关闭成功');
-					localStorage.closeAdTime = new Date().getTime();
-				})
-			})
-		}
+		// 	// 添加广告
+		// 	// $('#main h1').after(ad);
+		// 	$('.ssp-ad-box').append(ad)
+			
+		// 	// 添加关闭事件
+		// 	$('.top-ad-box .ad-close').click(function(){
+		// 		console.log('关闭广告');
+		// 		// $('.top-ad-box').slideUp(); // 折叠收起
+		// 		layer.confirm('关闭后，一周内不再展现此信息', function(){
+		// 			$(".top-ad-box").fadeOut(1000); // 淡出效果
+		// 			layer.msg('关闭成功');
+		// 			localStorage.closeAdTime = new Date().getTime();
+		// 		})
+		// 	})
+		// }
 		
 	});
 	

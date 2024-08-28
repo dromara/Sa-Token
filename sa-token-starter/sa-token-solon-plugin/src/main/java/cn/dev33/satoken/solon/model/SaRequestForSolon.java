@@ -68,8 +68,39 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
-    public String getCookieValue(String s) {
-        return ctx.cookie(s);
+    public String getCookieValue(String name) {
+        return getCookieLastValue(name);
+    }
+
+    /**
+     * 在 [ Cookie作用域 ] 里获取一个值 (第一个此名称的)
+     */
+    @Override
+    public String getCookieFirstValue(String name){
+        return ctx.cookie(name);
+    }
+
+    /**
+     * 在 [ Cookie作用域 ] 里获取一个值 (最后一个此名称的)
+     * @param name 键
+     * @return 值
+     */
+    @Override
+    public String getCookieLastValue(String name){
+        String value = null;
+        String cookieStr = ctx.header("Cookie");
+        if(SaFoxUtil.isNotEmpty(cookieStr)) {
+            String[] cookieItems = cookieStr.split(";");
+            for (String item : cookieItems) {
+                String[] kv = item.split("=");
+                if (kv.length == 2) {
+                    if (kv[0].trim().equals(name)) {
+                        value = kv[1].trim();
+                    }
+                }
+            }
+        }
+        return value;
     }
 
     @Override

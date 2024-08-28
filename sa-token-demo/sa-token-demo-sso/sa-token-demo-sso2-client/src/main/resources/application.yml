@@ -8,7 +8,7 @@ sa-token:
     sso-client:
         # SSO-Server 端主机地址
         server-url: http://sa-sso-server.com:9000
-        # 前后端分离时用这个
+        # 前后端分离时打开这个
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
     sign:
         # API 接口调用秘钥

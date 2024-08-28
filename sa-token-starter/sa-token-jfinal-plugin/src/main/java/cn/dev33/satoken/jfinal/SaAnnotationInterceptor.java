@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.jfinal;
 
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 
@@ -25,7 +25,7 @@ import com.jfinal.aop.Invocation;
 public class SaAnnotationInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation invocation) {
-        SaStrategy.instance.checkMethodAnnotation.accept((invocation.getMethod()));
+        SaAnnotationStrategy.instance.checkMethodAnnotation.accept((invocation.getMethod()));
         invocation.invoke();
     }
 }

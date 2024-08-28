@@ -109,6 +109,14 @@ public class SaRequestForServlet implements SaRequest {
 	 */
 	@Override
 	public String getCookieValue(String name) {
+		return getCookieLastValue(name);
+	}
+
+	/**
+	 * 在 [ Cookie作用域 ] 里获取一个值 (第一个此名称的)
+	 */
+	@Override
+	public String getCookieFirstValue(String name){
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -118,6 +126,25 @@ public class SaRequestForServlet implements SaRequest {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 在 [ Cookie作用域 ] 里获取一个值 (最后一个此名称的)
+	 * @param name 键
+	 * @return 值
+	 */
+	@Override
+	public String getCookieLastValue(String name){
+		String value = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie != null && name.equals(cookie.getName())) {
+					value = cookie.getValue();
+				}
+			}
+		}
+		return value;
 	}
 
 	/**

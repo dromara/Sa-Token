@@ -35,10 +35,10 @@ public interface SaOAuth2ErrorCode {
 	/** LoginId 不可为空 */
 	int CODE_30104 = 30104;
 
-	/** 无效client_id */
+	/** 无效 client_id */
 	int CODE_30105 = 30105;
 
-	/** 无效access_token */
+	/** 无效 access_token */
 	int CODE_30106 = 30106;
 
 	/** 无效 client_token */
@@ -50,53 +50,38 @@ public interface SaOAuth2ErrorCode {
 	/** Client-Token 不具备指定的 Scope */
 	int CODE_30109 = 30109;
 
-	/** 无效 code 码 */
+	/** 无效 Code 码 */
 	int CODE_30110 = 30110;
 
 	/** 无效 Refresh-Token */
 	int CODE_30111 = 30111;
 
-	/** 请求的Scope暂未签约 */
+	/** 请求的 Scope 暂未签约 */
 	int CODE_30112 = 30112;
 
-	/** 无效redirect_url */
+	/** 无效 redirect_url */
 	int CODE_30113 = 30113;
 
-	/** 非法redirect_url */
+	/** 非法 redirect_url */
 	int CODE_30114 = 30114;
 	
 	/** 无效client_secret */
 	int CODE_30115 = 30115;
 
-	/** 请求的Scope暂未签约 */
-	int CODE_30116 = 30116;
-
-	/** 无效code */
-	int CODE_30117 = 30117;
-
-	/** 无效client_id */
-	int CODE_30118 = 30118;
-
-	/** 无效client_secret */
-	int CODE_30119 = 30119;
-
-	/** 无效redirect_uri */
+	/** redirect_uri 不一致 */
 	int CODE_30120 = 30120;
 
-	/** 无效refresh_token */
-	int CODE_30121 = 30121;
-
-	/** 无效client_id */
+	/** client_id 不一致 */
 	int CODE_30122 = 30122;
 
-	/** 无效client_secret */
-	int CODE_30123 = 30123;
-
-	/** 无效client_id */
-	int CODE_30124 = 30124;
-
-	/** 无效response_type */
+	/** 无效 response_type */
 	int CODE_30125 = 30125;
+
+	/** 无效 grant_type */
+	int CODE_30126 = 30126;
+
+	/** 无效 state */
+	int CODE_30127 = 30127;
 
 	/** 暂未开放授权码模式 */
 	int CODE_30131 = 30131;
@@ -109,5 +94,17 @@ public interface SaOAuth2ErrorCode {
 	
 	/** 暂未开放凭证式模式 */
 	int CODE_30134 = 30134;
-	
+
+	/** 系统暂未开放的授权模式 */
+	int CODE_30141 = 30141;
+
+	/** 应用暂未开放的授权模式 */
+	int CODE_30142 = 30142;
+
+	/** 无效的请求 Method */
+	int CODE_30151 = 30151;
+
+	/** 其它异常 */
+	int CODE_30191 = 30191;
+
 }

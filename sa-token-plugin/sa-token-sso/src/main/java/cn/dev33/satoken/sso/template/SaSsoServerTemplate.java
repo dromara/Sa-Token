@@ -276,7 +276,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             //       http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com@sa-token.cc
             //
             //  那么这个url就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址：
-            //       https://sa-token.cc/?ticket=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
+            //       http://sa-token.cc/?ticket=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
             //
             //  造成了ticket 参数劫持
             //  所以此处需要禁止在 url 中出现 @ 字符
@@ -327,7 +327,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
                 //       http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-token.cc/a.sa-sso-client1.com/sso/login
                 //
                 //  那么这个 url 就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址：
-                //       https://sa-token.cc/a.sa-sso-client1.com/sso/login?ticket=v2KKMUFK7dDsMMzXLQ3aWGsyGUjrA0dBB2jeOWrpCnC8b5ScmXXQSv20mIwPK7Cx
+                //       http://sa-token.cc/a.sa-sso-client1.com/sso/login?ticket=v2KKMUFK7dDsMMzXLQ3aWGsyGUjrA0dBB2jeOWrpCnC8b5ScmXXQSv20mIwPK7Cx
                 //
                 //  造成了 ticket 参数劫持
                 //  所以此处需要禁止 allow-url 配置项的中间位置出现 * 字符（出现在末尾是没有问题的）

@@ -83,6 +83,7 @@ for (String sessionId : sessionIdList) {
 请根据业务实际水平合理调用API。
 
 
+> [!WARNING| label:注意] 
 > 基于活动 Token 的统计方式会比实际情况略有延迟，如果需要精确统计实时在线用户信息建议采用 WebSocket。
 
 

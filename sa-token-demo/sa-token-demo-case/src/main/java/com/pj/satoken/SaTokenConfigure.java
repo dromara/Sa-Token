@@ -5,7 +5,7 @@ import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,14 +32,14 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 		// 注册 Sa-Token 拦截器打开注解鉴权功能 
 		registry.addInterceptor(new SaInterceptor(handle -> {
 			// SaManager.getLog().debug("----- 请求path={}  提交token={}", SaHolder.getRequest().getRequestPath(), StpUtil.getTokenValue());
-			
+
 			// 指定一条 match 规则
             SaRouter
-                .match("/user/**")    // 拦截的 path 列表，可以写多个 
-                .notMatch("/user/doLogin", "/user/doLogin2")     // 排除掉的 path 列表，可以写多个 
-                .check(r -> StpUtil.checkLogin());        // 要执行的校验动作，可以写完整的 lambda 表达式 
+                .match("/user/**")    // 拦截的 path 列表，可以写多个
+                .notMatch("/user/doLogin", "/user/doLogin2")     // 排除掉的 path 列表，可以写多个
+                .check(r -> StpUtil.checkLogin());        // 要执行的校验动作，可以写完整的 lambda 表达式
 
-            // 权限校验 -- 不同模块认证不同权限 
+            // 权限校验 -- 不同模块认证不同权限
             SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
             SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
             SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
@@ -49,16 +49,16 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 			// 甚至你可以随意的写一个打印语句
 			SaRouter.match("/router/print", r -> System.out.println("----啦啦啦----"));
 
-			// 写一个完整的 lambda 
+			// 写一个完整的 lambda
 			SaRouter.match("/router/print2", r -> {
 				System.out.println("----啦啦啦2----");
-				// ... 其它代码 
+				// ... 其它代码
 			});
-			
+
 			/*
-			 * 相关路由都定义在 com.pj.cases.use.RouterCheckController 中 
+			 * 相关路由都定义在 com.pj.cases.use.RouterCheckController 中
 			 */
-			
+
 		})).addPathPatterns("/**");
 		
 	}
@@ -117,7 +117,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @PostConstruct
     public void rewriteSaStrategy() {
     	// 重写Sa-Token的注解处理器，增加注解合并功能 
-    	SaStrategy.instance.getAnnotation = (element, annotationClass) -> {
+    	SaAnnotationStrategy.instance.getAnnotation = (element, annotationClass) -> {
     		return AnnotatedElementUtils.getMergedAnnotation(element, annotationClass);
     	};
     }

@@ -18,7 +18,7 @@ package cn.dev33.satoken.httpauth.basic;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.NotBasicAuthException;
+import cn.dev33.satoken.exception.NotHttpBasicAuthException;
 import cn.dev33.satoken.secure.SaBase64Util;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -41,7 +41,7 @@ public class SaHttpBasicTemplate {
 	 */
 	public void throwNotBasicAuthException(String realm) {
 		SaHolder.getResponse().setStatus(401).setHeader("WWW-Authenticate", "Basic Realm=" + realm);
-		throw new NotBasicAuthException().setCode(SaErrorCode.CODE_10311);
+		throw new NotHttpBasicAuthException().setCode(SaErrorCode.CODE_10311);
 	}
 
 	/**

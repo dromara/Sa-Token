@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.util;
 
+import cn.dev33.satoken.SaManager;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -150,7 +152,42 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 		}
 		return this;
 	}
-	
+
+	/**
+	 * 写入一个 json 字符串, 连缀风格
+	 * @param jsonString json 字符串
+	 * @return 对象自身
+	 */
+	public SaResult setJsonString(String jsonString) {
+		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(jsonString);
+		return setMap(map);
+	}
+
+	/**
+	 * 移除默认属性（code、msg、data）, 连缀风格
+	 * @return 对象自身
+	 */
+	public SaResult removeDefaultFields() {
+		this.remove("code");
+		this.remove("msg");
+		this.remove("data");
+		return this;
+	}
+
+	/**
+	 * 移除非默认属性（code、msg、data）, 连缀风格
+	 * @return 对象自身
+	 */
+	public SaResult removeNonDefaultFields() {
+		for (String key : this.keySet()) {
+			if("code".equals(key) || "msg".equals(key) || "data".equals(key)) {
+				continue;
+			}
+			this.remove(key);
+		}
+		return this;
+	}
+
 	
 	// ============================  静态方法快速构建  ==================================
 	
@@ -180,7 +217,11 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	public static SaResult get(int code, String msg, Object data) {
 		return new SaResult(code, msg, data);
 	}
-	
+
+	// 构建一个空的
+	public static SaResult empty() {
+		return new SaResult();
+	}
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

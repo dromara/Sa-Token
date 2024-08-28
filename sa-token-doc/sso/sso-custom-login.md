@@ -114,3 +114,57 @@ public SaResult ss(String name, String pwd) {
 
 答：直接在前端更改点击按钮时 Ajax 的请求地址即可 
 
+
+### 4、不同 client 不同登录页
+
+如果你的不同应用覆盖的用户群体差异极大，此时你可能想针对不同的应用跳转到不同的登录页，让每个应用的用户在登录时能够看到当前应用的专属信息，怎么做呢？
+
+首先，你需要在每个 sso-client 端配置上不同的 client 标识：
+
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token:
+    sso-client:
+        # 当前 client 标识
+        client: sso-client-shop
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 当前 client 标识
+sa-token.sso-client.client=sso-client-shop
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
+然后在 `sso-server` 里为每个系统开发不同的登录页，并在 `configSso` 方法里 `notLoginView` 函数中根据 client 值，返回不同的登录视图：
+
+``` java
+// 配置SSO相关参数 
+@Autowired
+private void configSso(SaSsoServerConfig ssoServer) {
+	
+	// 配置：未登录时返回的View 
+	ssoServer.notLoginView = () -> {
+
+		String client = SaHolder.getRequest().getParam("client");
+		if("sso-client-shop".equals(client)) {
+			return new ModelAndView("sa-shop-login.html");
+		}
+		if("sso-client-video".equals(client)) {
+			return new ModelAndView("sa-video-login.html");
+		}
+		// 更多 ... 
+		
+		// 都不匹配，返回一个默认的 
+		return new ModelAndView("sa-login.html");
+	};
+	
+	// ... 
+	
+}
+```
+
+
+

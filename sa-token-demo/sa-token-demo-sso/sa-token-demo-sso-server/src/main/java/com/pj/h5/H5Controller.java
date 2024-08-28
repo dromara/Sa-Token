@@ -23,18 +23,19 @@ public class H5Controller {
 	 * 获取 redirectUrl 
 	 */
 	@RequestMapping("/sso/getRedirectUrl")
-	private Object getRedirectUrl(String redirect, String mode, String client) {
+	public SaResult getRedirectUrl(String redirect, String mode, String client) {
 		// 未登录情况下，返回 code=401 
 		if(StpUtil.isLogin() == false) {
 			return SaResult.code(401);
 		}
-		// 已登录情况下，构建 redirectUrl 
+		// 已登录情况下，构建 redirectUrl
+		redirect = SaFoxUtil.decoderUrl(redirect);
 		if(SaSsoConsts.MODE_SIMPLE.equals(mode)) {
 			// 模式一 
-			SaSsoUtil.checkRedirectUrl(SaFoxUtil.decoderUrl(redirect));
+			SaSsoUtil.checkRedirectUrl(redirect);
 			return SaResult.data(redirect);
 		} else {
-			// 模式二或模式三 
+			// 模式二或模式三
 			String redirectUrl = SaSsoUtil.buildRedirectUrl(StpUtil.getLoginId(), client, redirect);
 			return SaResult.data(redirectUrl);
 		}

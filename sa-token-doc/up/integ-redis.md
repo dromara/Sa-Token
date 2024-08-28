@@ -73,7 +73,7 @@ implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 整合 Redis （使用 jackson 序列化方式）
+// 提供Redis连接池
 implementation 'org.apache.commons:commons-pool2'
 ```
 <!---------------------------- tabs:end ------------------------------>
