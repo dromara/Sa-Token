@@ -17,7 +17,7 @@
     </parent>
 
     <properties>
-        <sa-token.version>1.38.0</sa-token.version>
+        <sa-token.version>1.39.0</sa-token.version>
     </properties>
 
     <dependencies>
