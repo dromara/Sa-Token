@@ -107,8 +107,8 @@ SaOAuth2Util.revokeClientToken(clientToken);
 // 回收 ClientToken，根据索引： clientId
 SaOAuth2Util.revokeClientTokenByIndex(clientId);
 
-// 回收 PastToken，根据索引： clientId
-SaOAuth2Util.revokePastTokenByIndex(clientId);
+// 回收 Lower-ClientToken，根据索引： clientId
+SaOAuth2Util.revokeLowerClientTokenByIndex(clientId);
 ```
 
 --- 

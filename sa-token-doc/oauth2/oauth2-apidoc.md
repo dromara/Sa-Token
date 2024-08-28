@@ -342,6 +342,6 @@ http://{host}:{port}/oauth2/client_token
 }
 ```
 
-注：`Client-Token`具有延迟作废特性，即：在每次获取最新`Client-Token`的时候，旧`Client-Token`不会立即过期，而是作为`Past-Token`再次储存起来，
+注：`Client-Token`具有延迟作废特性，即：在每次获取最新`Client-Token`的时候，旧`Client-Token`不会立即过期，而是作为`Lower-Client-Token`再次储存起来，
 资源请求方只要携带其中之一便可通过Token校验，这种特性保证了在大量并发请求时不会出现“新旧Token交替造成的授权失效”， 保证了服务的高可用。
 
