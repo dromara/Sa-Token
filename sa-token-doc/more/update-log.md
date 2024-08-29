@@ -4,6 +4,7 @@
 - 核心：
 	- 升级：重构注解鉴权底层，支持自定义鉴权注解了。  **[重要]**
 	- 修复：修复前端提交同名 `Cookie` 时的框架错读现象。
+	- 更名：`NotBasicAuthException` -> `NotHttpBasicAuthException`。
 - 插件：
 	- 修复：修复 `sa-token-quick-login` 插件无法正常拦截的问题。
 - SSO：
