@@ -453,6 +453,9 @@ body {
 .help-btn:hover{box-shadow: 0 0 20px #D1EEE1 !important;}
 .xiaozhushou-intro p{line-height: 16px;}
 
+/* ew-wa */
+.ew-wa{ margin-top: 14px; line-height: 18px; color: #aaa; }
+
 /* 按钮发光动画 */
 /* .help-btn{animation: helpbtnanimation 3s infinite;}
 @keyframes helpbtnanimation{

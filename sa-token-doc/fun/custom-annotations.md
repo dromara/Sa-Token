@@ -37,14 +37,14 @@ public @interface CheckAccount {
 
 #### 1.2、第二步，创建注解处理器 
 
-实现 `SaAnnotationAbstractHandler` 接口，指定泛型为刚才自定义的注解 
+实现 `SaAnnotationHandlerInterface` 接口，指定泛型为刚才自定义的注解 
 
 ``` java
 /**
  * 注解 CheckAccount 的处理器
  */
 @Component
-public class CheckAccountHandler implements SaAnnotationAbstractHandler<CheckAccount> {
+public class CheckAccountHandler implements SaAnnotationHandlerInterface<CheckAccount> {
 
     // 指定这个处理器要处理哪个注解
     @Override
@@ -156,7 +156,7 @@ public @interface SaUserCheckLogin {
  * 注解 SaUserCheckLogin 的处理器
  */
 @Component
-public class SaUserCheckLoginHandler implements SaAnnotationAbstractHandler<SaUserCheckLogin> {
+public class SaUserCheckLoginHandler implements SaAnnotationHandlerInterface<SaUserCheckLogin> {
 
     @Override
     public Class<SaUserCheckLogin> getHandlerAnnotationClass() {
