@@ -169,10 +169,11 @@ Sa-Token-OAuth2 模块分为四种授权模式，解决不同场景下的授权�
 
 - [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + AntDesignVue3 + Vite + SpringBoot + Mp + HuTool + SaToken。
 - [[ RuoYi-Vue-Plus ]](https://gitee.com/dromara/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步
-- [[ RuoYi-Cloud-Plus ]](https://gitee.com/dromara/RuoYi-Cloud-Plus)：重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步
+- [[Smart-Admin]](https://gitee.com/lab1024/smart-admin)：SmartAdmin国内首个以「高质量代码」为核心，「简洁、高效、安全」中后台快速开发平台；
+- [[ 灯灯 ]](https://gitee.com/dromara/lamp-cloud)： 专注于多租户解决方案的微服务中后台快速开发平台。租户模式支持独立数据库(DATASOURCE模式)、共享数据架构(COLUMN模式) 和 非租户模式(NONE模式)✨
 - [[ EasyAdmin ]](https://gitee.com/lakernote/easy-admin)：一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等
-- [[ YC-Framework ]](http://framework.youcongtech.com/)：致力于打造一款优秀的分布式微服务解决方案。
-- [[ Pig-Satoken ]](https://gitee.com/wchenyang/cloud-satoken)：重写 Pig 授权方式为 Sa-Token，其他代码不变。
+- [[ sa-admin-server ]](https://gitee.com/wlf213/sa-admin-server)： 基于 sa-admin-ui 的后台管理开发脚手架。
+
 
 还有更多优秀开源案例无法逐一展示，请参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
 
