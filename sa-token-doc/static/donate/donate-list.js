@@ -1202,5 +1202,12 @@ var donateList = [
 		"msg": '非常方便简单易用，感谢您的开源项目！',
 		"date": "2024-08-14"
 	},
+	{
+		"name": "kaka",
+		"link": "https://gitee.com/blueair",
+		"money": 10.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-08-30"
+	},
 	
 ]
