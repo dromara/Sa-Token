@@ -136,6 +136,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         ra.responseType = req.getParamNotNull(Param.response_type);
         ra.redirectUri = req.getParamNotNull(Param.redirect_uri);
         ra.state = req.getParam(Param.state);
+        ra.nonce = req.getParam(Param.nonce);
         ra.scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(req.getParam(Param.scope));
         ra.loginId = loginId;
         return ra;

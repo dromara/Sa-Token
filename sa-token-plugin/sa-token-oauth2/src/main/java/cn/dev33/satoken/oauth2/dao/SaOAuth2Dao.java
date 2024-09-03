@@ -170,6 +170,17 @@ public interface SaOAuth2Dao {
 		}
 	}
 
+	/**
+	 * 持久化：nonce-索引
+	 * @param c .
+	 */
+	default void saveCodeNonceIndex(CodeModel c) {
+		if(c == null || SaFoxUtil.isEmpty(c.nonce)) {
+			return;
+		}
+		getSaTokenDao().set(splicingCodeNonceIndexSaveKey(c.code), c.nonce, SaOAuth2Manager.getServerConfig().getCodeTimeout());
+	}
+
 
 	// ------------------- delete数据
 
@@ -404,6 +415,18 @@ public interface SaOAuth2Dao {
 		return getSaTokenDao().get(splicingStateSaveKey(state));
 	}
 
+	/**
+	 * 获取：nonce
+	 * @param code /
+	 * @return /
+	 */
+	default String getNonce(String code) {
+		if(SaFoxUtil.isEmpty(code)) {
+			return null;
+		}
+		return getSaTokenDao().get(splicingCodeNonceIndexSaveKey(code));
+	}
+
 
 	// ------------------- 拼接key
 
@@ -508,6 +531,15 @@ public interface SaOAuth2Dao {
 	 */
 	default String splicingStateSaveKey(String state) {
 		return getSaTokenConfig().getTokenName() + ":oauth2:state:" + state;
+	}
+
+	/**
+	 * 拼接key：code-nonce 索引 参数持久化
+	 * @param code 授权码
+	 * @return key
+	 */
+	default String splicingCodeNonceIndexSaveKey(String code) {
+		return getSaTokenConfig().getTokenName() + ":oauth2:code-nonce-index:" + code;
 	}
 
 
