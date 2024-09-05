@@ -60,6 +60,7 @@ public class SaOAuth2Consts {
 		public static String pwd = "pwd";
 		public static String build_redirect_uri = "build_redirect_uri";
 		public static String Authorization = "Authorization";
+		public static String nonce = "nonce";
 	}
 
 	/**

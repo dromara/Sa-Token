@@ -22,6 +22,8 @@ import cn.dev33.satoken.jwt.SaJwtUtil;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
+import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.oidc.IdTokenModel;
@@ -104,7 +106,12 @@ public class OidcScopeHandler implements SaOAuth2ScopeHandlerInterface {
      * @return /
      */
     public String getNonce() {
-        String nonce = SaHolder.getRequest().getParam("nonce");
+        String nonce = SaHolder.getRequest().getParam(SaOAuth2Consts.Param.nonce);
+        if(SaFoxUtil.isEmpty(nonce)) {
+            //通过code查找nonce
+            //为了避免其它handler可能会用到nonce,任由其自然过期，只取用不删除
+            nonce = SaOAuth2Manager.getDao().getNonce(SaHolder.getRequest().getParam(SaOAuth2Consts.Param.code));
+        }
         if(SaFoxUtil.isEmpty(nonce)) {
             nonce = SaFoxUtil.getRandomString(32);
         }
