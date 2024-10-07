@@ -40,13 +40,15 @@ public class Config {
 
     @Bean
     public void saTokenPathInterceptor2() {
-        Solon.app().before((ctx) -> {
+        Solon.app().routerInterceptor((ctx, mainHandler, chain) -> {
             SaRouter.match("/**", StpUtil::checkLogin);
             // 根据路由划分模块，不同模块不同鉴权
             SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
             SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
             SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
             SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
+
+            chain.doIntercept(ctx, mainHandler);
         });
     }
 }
