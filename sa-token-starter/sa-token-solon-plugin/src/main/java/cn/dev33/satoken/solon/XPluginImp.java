@@ -51,21 +51,9 @@ public class XPluginImp implements Plugin {
 
     @Override
     public void start(AppContext context) {
-        // Sa-Token 日志输出 Bean
-        context.getBeanAsync(SaLog.class, bean -> {
-            SaManager.setLog(bean);
-        });
+        context.beanMake(SaSsoAutoConfigure.class);
+        context.beanMake(SaOAuth2AutoConfigure.class);
 
-
-        //注入其它 Bean
-        context.lifecycle(-99, () -> {
-            beanInitDo(context);
-            context.beanMake(SaSsoAutoConfigure.class);
-            context.beanMake(SaOAuth2AutoConfigure.class);
-        });
-    }
-
-    private void beanInitDo(AppContext context) {
         // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
@@ -78,6 +66,12 @@ public class XPluginImp implements Plugin {
             SaManager.setConfig(saTokenConfig);
         }
 
+        // Sa-Token 日志输出 Bean
+        context.getBeanAsync(SaLog.class, bean -> {
+            SaManager.setLog(bean);
+        });
+
+        //注入 SaTokenConfig
         context.getBeanAsync(SaTokenConfig.class, bean -> {
             SaManager.setConfig(bean);
         });
@@ -146,6 +140,5 @@ public class XPluginImp implements Plugin {
         context.getBeanAsync(StpLogic.class, bean -> {
             StpUtil.setStpLogic(bean);
         });
-
     }
 }

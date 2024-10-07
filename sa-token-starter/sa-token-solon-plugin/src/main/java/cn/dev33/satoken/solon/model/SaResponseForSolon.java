@@ -48,9 +48,10 @@ public class SaResponseForSolon implements SaResponse {
 	}
 
 	/**
-	 * 在响应头里添加一个值 
-	 * @param name 名字
-	 * @param value 值 
+	 * 在响应头里添加一个值
+	 *
+	 * @param name  名字
+	 * @param value 值
 	 * @return 对象自身
 	 */
 	public SaResponse addHeader(String name, String value) {

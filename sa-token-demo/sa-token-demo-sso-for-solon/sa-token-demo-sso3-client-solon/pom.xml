@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>org.noear</groupId>
 		<artifactId>solon-parent</artifactId>
-		<version>2.9.2</version>
+		<version>3.0.1</version>
 		<relativePath/>
 	</parent>
 	
