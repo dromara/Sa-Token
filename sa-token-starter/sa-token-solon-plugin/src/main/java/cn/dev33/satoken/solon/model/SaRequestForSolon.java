@@ -33,7 +33,7 @@ public class SaRequestForSolon implements SaRequest {
 
     protected Context ctx;
 
-    public SaRequestForSolon(){
+    public SaRequestForSolon() {
         ctx = Context.current();
     }
 
@@ -48,18 +48,18 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
-    public List<String> getParamNames(){
-        Set<String> names = ctx.paramMap().keySet();
-        return new ArrayList<>(names);
+    public List<String> getParamNames() {
+        return new ArrayList<>(ctx.paramNames());
     }
 
     /**
      * 获取 [请求体] 里提交的所有参数
+     *
      * @return 参数列表
      */
     @Override
-    public Map<String, String> getParamMap(){
-        return ctx.paramMap();
+    public Map<String, String> getParamMap() {
+        return ctx.paramMap().toValueMap();
     }
 
     @Override
@@ -76,31 +76,19 @@ public class SaRequestForSolon implements SaRequest {
      * 在 [ Cookie作用域 ] 里获取一个值 (第一个此名称的)
      */
     @Override
-    public String getCookieFirstValue(String name){
+    public String getCookieFirstValue(String name) {
         return ctx.cookie(name);
     }
 
     /**
      * 在 [ Cookie作用域 ] 里获取一个值 (最后一个此名称的)
+     *
      * @param name 键
      * @return 值
      */
     @Override
-    public String getCookieLastValue(String name){
-        String value = null;
-        String cookieStr = ctx.header("Cookie");
-        if(SaFoxUtil.isNotEmpty(cookieStr)) {
-            String[] cookieItems = cookieStr.split(";");
-            for (String item : cookieItems) {
-                String[] kv = item.split("=");
-                if (kv.length == 2) {
-                    if (kv[0].trim().equals(name)) {
-                        value = kv[1].trim();
-                    }
-                }
-            }
-        }
-        return value;
+    public String getCookieLastValue(String name) {
+        return ctx.cookieMap().holder(name).getLastValue();
     }
 
     @Override
@@ -111,7 +99,7 @@ public class SaRequestForSolon implements SaRequest {
     @Override
     public String getUrl() {
         String currDomain = SaManager.getConfig().getCurrDomain();
-        if( ! SaFoxUtil.isEmpty(currDomain)) {
+        if (!SaFoxUtil.isEmpty(currDomain)) {
             return currDomain + this.getRequestPath();
         }
         return ctx.url();
@@ -127,5 +115,4 @@ public class SaRequestForSolon implements SaRequest {
         ctx.forward(path);
         return null;
     }
-
 }
