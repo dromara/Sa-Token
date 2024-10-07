@@ -71,13 +71,8 @@ public class SaRequestForServlet implements SaRequest {
 	 * @return 参数名称列表
 	 */
 	@Override
-	public List<String> getParamNames(){
-		Enumeration<String> parameterNames = request.getParameterNames();
-		List<String> list = new ArrayList<>();
-		while (parameterNames.hasMoreElements()) {
-			list.add(parameterNames.nextElement());
-		}
-		return list;
+	public Collection<String> getParamNames(){
+		return Collections.list(request.getParameterNames());
 	}
 
 	/**

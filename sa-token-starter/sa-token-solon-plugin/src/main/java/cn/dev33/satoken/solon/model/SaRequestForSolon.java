@@ -20,10 +20,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.solon.core.handle.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author noear
@@ -48,8 +45,8 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
-    public List<String> getParamNames() {
-        return new ArrayList<>(ctx.paramNames());
+    public Collection<String> getParamNames() {
+        return ctx.paramNames();
     }
 
     /**

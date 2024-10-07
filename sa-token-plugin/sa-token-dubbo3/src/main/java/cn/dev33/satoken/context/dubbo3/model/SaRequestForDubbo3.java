@@ -18,6 +18,7 @@ package cn.dev33.satoken.context.dubbo3.model;
 import cn.dev33.satoken.context.model.SaRequest;
 import org.apache.dubbo.rpc.RpcContext;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class SaRequestForDubbo3 implements SaRequest {
 	 * @return 参数名称列表
 	 */
 	@Override
-	public List<String> getParamNames(){
+	public Collection<String> getParamNames(){
 		return null;
 	}
 

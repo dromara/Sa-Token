@@ -20,6 +20,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.util.SaFoxUtil;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public interface SaRequest {
 	 * 获取 [ 请求体 ] 里提交的所有参数名称
 	 * @return 参数名称列表
 	 */
-	List<String> getParamNames();
+	Collection<String> getParamNames();
 
 	/**
 	 * 获取 [ 请求体 ] 里提交的所有参数
