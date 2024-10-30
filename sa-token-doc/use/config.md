@@ -305,7 +305,7 @@ sa-token.sso-client.is-slo=true
 | accessTokenTimeout		| long		| 7200		| `Access-Token` 保存的时间（单位：秒）默认两个小时								|
 | refreshTokenTimeout		| long		| 2592000	| `Refresh-Token` 保存的时间（单位：秒） 默认30 天								|
 | clientTokenTimeout		| long		| 7200		| `Client-Token` 保存的时间（单位：秒） 默认两个小时								|
-| pastClientTokenTimeout	| long		| 7200		| `Past-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
+| lowerClientTokenTimeout	| long		| 7200		| `Lower-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
 | openidDigestPrefix		| String	| openid_default_digest_prefix		| 默认 openid 生成算法中使用的摘要前缀				 	|
 | higherScope				| String	| 		| 指定高级权限，多个用逗号隔开				 	|
 | lowerScope				| String	| 		| 指定低级权限，多个用逗号隔开				 	|
@@ -371,13 +371,13 @@ sa-token.oauth2-server.oidc.idTokenTimeout=600
 | clientId				| String		| null		| 应用id，应该全局唯一								|
 | clientSecret			| String		| null		| 应用秘钥											|
 | contractScopes		| List<String>	| null		| 应用签约的所有权限 									|
-| allowUrls				| List<String>	| null		| 应用允许授权的所有URL（可以使用 `*` 号通配符）			|
+| allowRedirectUris		| List<String>	| null		| 应用允许授权的所有URL（可以使用 `*` 号通配符）			|
 | allowGrantTypes		| List<String>	| new ArrayList<>()	| 应用允许的所有 `grant_type`							|
 | isNewRefresh			| Boolean		| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
 | accessTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
 | refreshTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
 | clientTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
-| pastClientTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Past-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+|lowerClientTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Lower-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
 
 
 

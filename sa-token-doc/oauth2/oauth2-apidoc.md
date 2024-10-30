@@ -75,7 +75,7 @@ http://{host}:{port}/oauth2/doLogin
 
 ``` url
 http://{host}:{port}/oauth2/doConfirm
-    ?client={value}
+    ?client_id={value}
     &scope={value}
     &build_redirect_uri={true|false}
     &response_type={value}
