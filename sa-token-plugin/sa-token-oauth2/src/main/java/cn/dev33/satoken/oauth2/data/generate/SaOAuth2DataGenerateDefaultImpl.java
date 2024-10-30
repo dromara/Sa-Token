@@ -31,6 +31,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2RefreshTokenException;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaResult;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -58,11 +59,14 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 生成新Code
         String codeValue = SaOAuth2Strategy.instance.createCodeValue.execute(ra.clientId, ra.loginId, ra.scopes);
-        CodeModel cm = new CodeModel(codeValue, ra.clientId, ra.scopes, ra.loginId, ra.redirectUri);
+        CodeModel cm = new CodeModel(codeValue, ra.clientId, ra.scopes, ra.loginId, ra.redirectUri, ra.getNonce());
 
         // 保存新Code
         dao.saveCode(cm);
         dao.saveCodeIndex(cm);
+
+        // 保存code-nonce
+        dao.saveCodeNonceIndex(cm);
 
         // 返回
         return cm;

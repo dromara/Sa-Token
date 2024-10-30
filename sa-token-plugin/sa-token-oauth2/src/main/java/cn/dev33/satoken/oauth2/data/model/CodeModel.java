@@ -52,6 +52,11 @@ public class CodeModel implements Serializable {
 	 * 重定向的地址 
 	 */
 	public String redirectUri;
+
+	/**
+	 * 随机数
+	 */
+	public String nonce;
 	
 	/**
 	 * 构建一个 
@@ -67,13 +72,14 @@ public class CodeModel implements Serializable {
 	 * @param loginId 对应的账号id 
 	 * @param redirectUri 重定向地址 
 	 */
-	public CodeModel(String code, String clientId, List<String> scopes, Object loginId, String redirectUri) {
+	public CodeModel(String code, String clientId, List<String> scopes, Object loginId, String redirectUri, String nonce) {
 		super();
 		this.code = code;
 		this.clientId = clientId;
 		this.scopes = scopes;
 		this.loginId = loginId;
 		this.redirectUri = redirectUri;
+		this.nonce = nonce;
 	}
 
 	public String getCode() {
@@ -121,10 +127,19 @@ public class CodeModel implements Serializable {
 		return this;
 	}
 
+	public String getNonce() {
+		return nonce;
+	}
+
+	public CodeModel setNonce(String nonce) {
+		this.nonce = nonce;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "CodeModel [code=" + code + ", clientId=" + clientId + ", scopes=" + scopes + ", loginId=" + loginId
-				+ ", redirectUri=" + redirectUri + "]";
+				+ ", redirectUri=" + redirectUri + ", nonce=" + nonce + " ]";
 	}
 	
 }

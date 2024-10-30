@@ -62,6 +62,11 @@ public class RequestAuthModel implements Serializable {
 	 */
 	public String state;
 
+	/**
+	 * 随机数
+	 */
+	public String nonce;
+
 	
 	/**
 	 * @return clientId
@@ -158,7 +163,23 @@ public class RequestAuthModel implements Serializable {
 		this.state = state;
 		return this;
 	}
-	
+
+	/**
+	 * @return nonce
+	 */
+	public String getNonce() {
+		return nonce;
+	}
+
+	/**
+	 * @param nonce 要设置的随机数
+	 * @return 对象自身
+	 */
+	public RequestAuthModel setNonce(String nonce) {
+		this.nonce = nonce;
+		return this;
+	}
+
 	/**
 	 * 检查此Model参数是否有效  
 	 * @return 对象自身
