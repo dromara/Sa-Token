@@ -77,6 +77,15 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
     50%{box-shadow: 0 0 20px #42B983;}
     100%{box-shadow: 0 0 20px #FFF;}
 }
+
+/* 其它平台链接 */
+.qt-pt-box{margin-top: 40px;}
+.qt-pt-box a{text-decoration: none; margin-right: 20px;}
+.qt-pt-box a img{/* width: 130px; */ height: 40px; transition: all 0.2s;}
+.qt-pt-box a img:hover{transform: scale(1.1, 1.1);}
+/* .img-gitcode{width: 140px;} */
+
+
 /* 微信二维码 */
 .wx-qr-box{margin-top: 50px;}
 .qr-item{display: inline-block;}

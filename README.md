@@ -193,7 +193,7 @@ Sa-Token-OAuth2 模块分为四种授权模式，解决不同场景下的授权�
 ### 代码托管
 - Gitee：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - GitHub：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
-- GitCode：[https://gitcode.com/click33/sa-token](https://gitcode.com/click33/sa-token)
+- GitCode：[https://gitcode.com/dromara/sa-token](https://gitcode.com/dromara/sa-token)
 
 
 
