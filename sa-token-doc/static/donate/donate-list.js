@@ -1209,5 +1209,68 @@ var donateList = [
 		"msg": '感谢您的开源项目！',
 		"date": "2024-08-30"
 	},
+	{
+		"name": "有锦",
+		"link": "https://gitee.com/mushi00",
+		"money": 1.0,
+		"msg": '好厉害的项目啊 我郭威虽然没什么钱但是我郭威还是捐赠一下我郭威真的很认可这个项目，我郭威太崇拜了',
+		"date": "2024-09-03"
+	},
+	{
+		"name": "zhangboyang",
+		"link": "https://gitee.com/zhangboyangos",
+		"money": 10.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-09-04"
+	},
+	{
+		"name": "读钓",
+		"link": "https://gitee.com/songyinyin",
+		"money": 50.0,
+		"msg": '感谢您的开源项目！致敬用爱发电',
+		"date": "2024-09-14"
+	},
+	{
+		"name": "sswiki",
+		"link": "https://gitee.com/sswiki",
+		"money": 50.0,
+		"msg": '感谢开源！私有化部署的企业知识库：<a href="https://doc.zyplayer.com" target="_blank">https://doc.zyplayer.com</a>',
+		"date": "2024-09-24"
+	},
+	{
+		"name": "坚持就是胜利",
+		"link": "https://gitee.com/insistppp",
+		"money": 1.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-09-27"
+	},
+	{
+		"name": "StrawberryerBlue",
+		"link": "https://gitee.com/strawberryerblue",
+		"money": 50.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-10-14"
+	},
+	{
+		"name": "qing",
+		"link": "https://gitee.com/haomao1",
+		"money": 20.0,
+		"msg": '非常好用，感谢您的开源项目！',
+		"date": "2024-10-15"
+	},
+	{
+		"name": "厉飞雨",
+		"link": "https://gitee.com/david666a",
+		"money": 58.0,
+		"msg": '感谢道友，深有启发。',
+		"date": "2024-10-16"
+	},
+	{
+		"name": "李嘉辉",
+		"link": "https://gitee.com/lee_kiahwee",
+		"money": 10.0,
+		"msg": '感谢道友，深有启发。',
+		"date": "2024-10-17"
+	},
 	
 ]
