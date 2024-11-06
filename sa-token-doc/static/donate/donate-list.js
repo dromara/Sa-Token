@@ -1269,8 +1269,22 @@ var donateList = [
 		"name": "李嘉辉",
 		"link": "https://gitee.com/lee_kiahwee",
 		"money": 10.0,
-		"msg": '感谢道友，深有启发。',
+		"msg": '感谢您的开源项目！',
 		"date": "2024-10-17"
+	},
+	{
+		"name": "不问烟雨",
+		"link": "https://gitee.com/xiaominfagui",
+		"money": 20.0,
+		"msg": '加油',
+		"date": "2024-11-04"
+	},
+	{
+		"name": "zonglinjiang",
+		"link": "https://gitee.com/jiang-zonglin0427",
+		"money": 5.0,
+		"msg": '已经在至少两个商业项目里面使用了 ，非常好用，感谢作者的开源精神',
+		"date": "2024-11-05"
 	},
 	
 ]
