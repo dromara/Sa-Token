@@ -443,7 +443,7 @@ Caused by: java.lang.ClassNotFoundException: cn.dev33.satoken.same.SaSameTemplat
 ### Q：使用拦截器鉴权，访问一个不存在的 path 时，springboot 会自动在控制台打印一下异常。
 可尝试添加以下配置解决：
 ``` properties
-spring.resources.add-mappings=false
+spring.web.resources.add-mappings=false
 spring.mvc.throw-exception-if-no-handler-found=true
 ```
 
