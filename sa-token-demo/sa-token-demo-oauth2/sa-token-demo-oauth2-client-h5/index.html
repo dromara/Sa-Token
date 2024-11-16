@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Sa-Token-OAuth2 Client 端 - 测试页</title>
+		<style type="text/css">
+			body{background-color: #F0F9EB;}
+			*{margin: 0px; padding: 0px;}
+			.login-box{max-width: 1000px; margin: 30px auto; padding: 1em;}
+			/* 全局配置盒子 */
+			.in-cfg-box{line-height: 30px; padding-top: 10px;}
+			.in-cfg-box .in-cfg-div{display: flex;}
+			.in-cfg-box .in-cfg-div>span{width: 280px;}
+			.in-cfg-box .in-cfg-div>input{flex: 1;}
+			
+			.login-box textarea{width: calc(100% - 1em); padding: 0.5em; min-height: 4em; box-sizing: border-box;}
+			.login-box button{padding: 5px 15px; margin-top: 5px; margin-bottom: 5px; cursor: pointer; }
+			.login-box select{ height: 30px; cursor: pointer; }
+			
+			.login-box h4{margin-top: 20px;}
+			
+			.btn-box{margin-top: 10px; margin-bottom: 15px;}
+			.btn-box a{margin-right: 10px;}
+			.btn-box a:hover{text-decoration:underline !important;}
+			.login-box input{line-height: 25px; margin-bottom: 10px; padding-left: 5px;}
+			.login-box a{text-decoration: none;}
+			.pst{color: #666; margin-top: 15px;}
+			.ps{color: #666; margin-bottom: 5px;}
+			
+			.oauth2-server-urls-box{ padding: 0.5em 0; padding-bottom: 0; margin-bottom: 0.5em; background-color: #ddd;}
+			.oauth2-server-urls-box .in-cfg-div>span{text-indent: 0.5em;}
+			
+			/* loading框样式 */
+			.ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}
+			.ajax-layer-load.layui-layer-dialog .layui-layer-content{padding: 10px 20px 10px 40px; color: #FFF;}
+			.ajax-layer-load.layui-layer-dialog .layui-layer-content .layui-layer-ico{width: 20px; height: 20px; background-size: 20px 20px; top: 12px; }
+			
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>Sa-Token-OAuth2 Client 端 测试页 </h2> 
+			<p class="pst">注：为方便测试，此处将应用秘钥等敏感信息采用前端填写式，真实项目应该改为后端配置。</p> 
+			<br><hr><br>
+			<h3>配置信息</h3>
+			<div class="in-cfg-box">
+				<div class="in-cfg-div"><span>OAuth2 Server 主机地址：</span><input class="in-cfg" name="oauth2_server_url" /></div>
+				<div class="oauth2-server-urls-box">
+					<div class="in-cfg-div"><span>OAuth2 Server 授权页地址：</span><input class="in-cfg" name="oauth2_server_auth_url" /></div>
+					<div class="in-cfg-div"><span>OAuth2 Server 获取 token 地址：</span><input class="in-cfg" name="oauth2_server_token_url" /></div>
+					<div class="in-cfg-div"><span>OAuth2 Server 刷新 token 地址：</span><input class="in-cfg" name="oauth2_server_refresh_token_url" /></div>
+					<div class="in-cfg-div"><span>OAuth2 Server 获取 userinfo 地址：</span><input class="in-cfg" name="oauth2_server_userinfo_url" /></div>
+					<div class="in-cfg-div" style="margin-top: -5px;">&nbsp;<button onclick="autoSplicingUrl();">根据主机 URL 一键拼接授权页等地址</button></div>
+				</div>
+				<div class="in-cfg-div"><span>Client Id：</span><input class="in-cfg" name="client_id" /></div>
+				<div class="in-cfg-div"><span>Client Secret：</span><input class="in-cfg" name="client_secret" /></div>
+				<div class="in-cfg-div"><span>重定向授权地址：</span><input class="in-cfg" name="redirect_uri" /></div>
+				<div class="in-cfg-div"><span>请求 Scope (多个用逗号/空格隔开)：</span><input class="in-cfg" name="scope" /></div>
+			</div>
+			<div class="btn-box">
+				<button onclick="clearLocalCfg()">清空配置</button>
+				<button onclick="clearLocalCfg(); readLocalCfg();">恢复默认配置</button>
+				<button onclick="autoFillGiteeUrl();">一键填写 Gitee 参数样例</button>
+				<button onclick="autoFillSaSsoMaxUrl();">一键填写 Sa-Sso-Max 参数样例</button>
+				<a href="javascript: location.href = location.href.split('?')[0].split('#')[0];">回到首页</a>
+			</div>
+			
+			<hr><br>
+			<h3>模式一：授权码（Authorization Code）</h3>
+			<p class="pst">授权码：OAuth2.0标准授权流程，先 (重定向) 获取Code授权码，再 (Rest API) 获取 Access-Token 和 Openid 等信息</p> 
+			
+			<h4>1、获取授权码</h4>
+			<button onclick="buildAuthorizationCodeUrl()">构建授权地址</button>
+			<textarea class="auth-code-url"></textarea>
+			<button onclick="jumpAuthCodeUrl()">→ 访问上述授权地址</button> <br>
+			<span>从 URL 上读取到的 code 为：<span class="show-url-code" style="color: green;"></span></span> 
+			
+			<h4>2、获取 Access-Token </h4>
+			<button onclick="buildCodeTakeTokenUrl()">构建 code 换 Access-Token 接口地址</button>
+			<textarea class="code-take-token-url"></textarea>
+			<button onclick="ajaxCodeToAccessToken()">→ 请求上述地址，获取 Access-Token 数据</button> 请求结果显示如下：
+			<textarea class="code-take-token-result"></textarea> 
+			
+			<h4>3、刷新 Access-Token </h4>
+			<button onclick="buildRefreshTokenUrl()">构建刷新 Access-Token 接口地址 </button>
+			请先填写 Refresh-Token 值：<input name="refresh-token-input" style="width: 500px;">
+			<textarea class="refresh-token-url"></textarea>
+			<p class="ps">我们可以拿着 Refresh-Token 去刷新我们的 Access-Token，每次刷新后旧Token将作废</p>
+			<button onclick="ajaxRefreshToken()">→ 请求上述地址，刷新 Access-Token </button> 请求结果显示如下：
+			<textarea class="refresh-token-result"></textarea> 
+			
+			<h4>4、获取 Userinfo </h4>
+			<button onclick="buildUserinfoUrl()">构建刷新 Userinfo 接口地址 </button>
+			请先填写 Access-Token 值：<input name="access-token-input" style="width: 500px;">
+			<textarea class="userinfo-url"></textarea>
+			<p class="ps">使用 Access-Token 置换资源: 获取账号昵称、头像、性别等信息 (Access-Token具备userinfo权限时才可以获取成功) </p>
+			<button onclick="ajaxUserinfoUrl()">→ 请求上述地址，获取 Userinfo 信息 </button> 
+			（
+			请求 Method：
+			<select name="userinfo-ajax-method">
+				<option value="GET">GET</option>
+				<option value="POST">POST</option>
+				<option value="PUT">PUT</option>
+				<option value="DELETE">DELETE</option>
+				<option value="HEAD">HEAD</option>
+				<option value="OPTIONS">OPTIONS</option>
+			</select>
+			）
+			请求结果显示如下：
+			<textarea class="userinfo-result"></textarea>
+			
+			<h4>5、回收 Access-Token </h4>
+			<button onclick="buildRevokeTokenUrl()">构建回收 Access-Token 接口地址 </button>
+			<!-- 请先填写 Access-Token 值：<input name="access-token-input" style="width: 500px;"> -->
+			<textarea class="revoke-token-url"></textarea>
+			<p class="ps">回收后，该 Access-Token 将无法再使用（点击上面的 Userinfo 接口试一试）</p>
+			<button onclick="ajaxRevokeTokenUrl()">→ 请求上述地址，回收 Access-Token </button> 请求结果显示如下：
+			<textarea class="revoke-token-result"></textarea>
+			
+			
+			<br><br>
+			<h3>模式二：隐藏式（Implicit）</h3>
+			<p class="pst">越过授权码的步骤，直接返回token到前端页面（ 格式：http//:domain.com#token=xxxx-xxxx ）</p>
+			
+			<button onclick="buildImplicitUrl()">构建授权地址</button>
+			<textarea class="implicit-url"></textarea>
+			<button onclick="jumpImplicitUrl()">→ 访问上述授权地址</button> <br>
+			<span>从 URL 上读取到的 Access-Token 为：<span class="show-url-access-token" style="color: green;"></span></span> 
+			
+			
+			<br><br>
+			<h3>模式三：密码式（Password）</h3>
+			<p class="pst">注解在 OAuth2-Client 端，输入用户名和密码获取 Access-Token，此模式只适用于高度信任的客户端</p>
+			
+			<button onclick="buildPasswordUrl()">构建授权地址</button>
+			&emsp;账号：<input class="in-cfg" name="username">
+			&emsp;密码：<input class="in-cfg" name="password">
+			<textarea class="password-url"></textarea>
+			<button onclick="ajaxPasswordUrl()">→ 请求上述地址，获取 Access-Token 数据</button> 请求结果显示如下：
+			<textarea class="password-result"></textarea> 
+			
+			<br><br>
+			<h3>模式四：凭证式（Client Credentials）</h3>
+			<p class="pst">以上三种模式获取的都是用户的 Access-Token，代表用户对第三方应用的授权，在OAuth2.0中还有一种针对 Client级别的授权，
+				即：Client-Token，代表应用自身的资源授权</p>
+			
+			<button onclick="buildClientTokenUrl()">构建 Client-Token 授权地址</button>
+			<textarea class="client-token-url"></textarea>
+			<button onclick="ajaxClientTokenUrl()">→ 请求上述地址，获取 Access-Token 数据</button> 请求结果显示如下：
+			<textarea class="client-token-result"></textarea> 
+			
+			
+			<br><br>
+			<span>更多资料请参考 Sa-Token 官方文档地址：</span>
+			<a href="https://sa-token.cc/">https://sa-token.cc/</a>
+			
+			<div style="height: 200px;"></div>
+		</div>
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script>window.jQuery || alert('当前页面CDN服务商已宕机，请将所有js包更换为本地依赖')</script>
+		<!-- 配置缓存读取 -->
+		<script>
+			// 缓存前缀 
+			var prefix = "IN_CFG_";
+			function getLocalCfg(key) {
+				return localStorage.getItem(prefix + key);
+			}
+			function setLocalCfg(key, value) {
+				localStorage.setItem(prefix + key, value);
+			}
+			
+			// 全局配置变动时，存储到本地 
+			$('.in-cfg').bind('input propertychange', function(){
+				var name = $(this).attr('name');
+				var value = $(this).val();
+				setLocalCfg(name, value);
+			})
+			
+			// 默认配置 
+			var defaultCfg = {
+				oauth2_server_url: 'http://sa-oauth-server.com:8000',  // OAuth2 服务端主机地址 
+				oauth2_server_auth_url: 'http://sa-oauth-server.com:8000/oauth2/authorize', // OAuth2 授权页地址 
+				oauth2_server_token_url: 'http://sa-oauth-server.com:8000/oauth2/token', // OAuth2 获取 token 地址 
+				oauth2_server_refresh_token_url: 'http://sa-oauth-server.com:8000/oauth2/refresh', // OAuth2 刷新 token 地址 
+				oauth2_server_userinfo_url: 'http://sa-oauth-server.com:8000/oauth2/userinfo', // OAuth2 获取 userinfo 地址 
+				client_id: '1001',
+				client_secret: 'aaaa-bbbb-cccc-dddd-eeee',
+				redirect_uri: location.href.split('?')[0].split('#')[0],
+				scope: 'userinfo,userid,openid,oidc',
+				username: 'sa',
+				password: '123456'
+			}
+			
+			// 打开页面时，加载本地缓存数据，本地缓存无数据时加载默认配置 
+			function readLocalCfg() {
+				$('.in-cfg').each(function(){
+					var name = $(this).attr('name');
+					var value = getLocalCfg(name) || defaultCfg[name];
+					$(this).val(value);
+				})
+			}
+			readLocalCfg();
+			
+			// 清空配置 
+			function clearLocalCfg() {
+				$('.in-cfg').each(function(){
+					$(this).val('');
+					setLocalCfg($(this).attr('name'), '');
+				})
+			}
+			
+			// 将所有配置保存到本地缓存 
+			function saveAllCfgToLocal() {
+				$('.in-cfg').each(function(){
+					setLocalCfg($(this).attr('name'), $(this).val());
+				})
+			}
+			
+			// 根据主机 URL 一键拼接授权页等地址  
+			function autoSplicingUrl() {
+				var oauth2_server_url = $('[name=oauth2_server_url]').val();
+				if(!oauth2_server_url) {
+					return layer.alert('请先配置 OAuth2 Server 主机地址！')
+				}
+				$('[name=oauth2_server_auth_url]').val(oauth2_server_url + '/oauth2/authorize');
+				$('[name=oauth2_server_token_url]').val(oauth2_server_url + '/oauth2/token');
+				$('[name=oauth2_server_refresh_token_url]').val(oauth2_server_url + '/oauth2/refresh');
+				$('[name=oauth2_server_userinfo_url]').val(oauth2_server_url + '/oauth2/userinfo');
+				saveAllCfgToLocal();
+				layer.msg('已自动拼接：OAuth2 Server 授权页地址、获取 token 地址、刷新 token 地址、获取 userinfo 地址');
+			}
+			
+			// 一键填写 Gitee 参数样例
+			function autoFillGiteeUrl() {
+				$('[name=oauth2_server_url]').val('https://gitee.com')
+				$('[name=oauth2_server_auth_url]').val('https://gitee.com/oauth/authorize');
+				$('[name=oauth2_server_token_url]').val('https://gitee.com/oauth/token');
+				$('[name=oauth2_server_refresh_token_url]').val('https://gitee.com/oauth/token');
+				$('[name=oauth2_server_userinfo_url]').val('https://gitee.com/api/v5/user');
+				$('[name=client_id]').val('<待填写>');
+				$('[name=client_secret]').val('<待填写>');
+				$('[name=redirect_uri]').val(defaultCfg.redirect_uri);
+				$('[name=scope]').val('user_info');
+				saveAllCfgToLocal();
+				layer.msg('填写成功');
+			}
+			
+			// 一键填写 Sa-Sso-Max 参数样例，参考：http://sa-pro.dev33.cn/
+			function autoFillSaSsoMaxUrl() {
+				$('[name=oauth2_server_url]').val('http://sspx-server.dev33.cn')
+				$('[name=oauth2_server_auth_url]').val('http://sspx-center.dev33.cn/oauth2/authorize');
+				$('[name=oauth2_server_token_url]').val('http://sspx-server.dev33.cn/oauth2/token');
+				$('[name=oauth2_server_refresh_token_url]').val('http://sspx-server.dev33.cn/oauth2/refresh');
+				$('[name=oauth2_server_userinfo_url]').val('http://sspx-server.dev33.cn/oauth2/userinfo');
+				$('[name=client_id]').val('100001');
+				$('[name=client_secret]').val('CQ0Nf1LmaYq7Ads8EdmKMtEnZmTVIicAEl2trBi0zVKufmOVY5G5Tu2epfu4');
+				$('[name=redirect_uri]').val(defaultCfg.redirect_uri);
+				$('[name=scope]').val('userinfo,openid,unionid');
+				saveAllCfgToLocal();
+				layer.msg('填写成功');
+			}
+			
+		</script>
+		<!-- 工具方法 -->
+		<script>
+			// 从url中查询到指定名称的参数值 
+			function getParam(name, defaultValue){
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+			
+			// 从url中查询到指定名称的锚参数值 
+			function getSharpParam(name, defaultValue){
+				var query = window.location.hash.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+				
+			var sa = {};
+			
+			// 打开loading
+			sa.loading = function(msg) {
+				if(window.layer) {
+					layer.closeAll();	// 开始前先把所有弹窗关了
+					layer.msg(msg, {icon: 16, shade: 0.3, time: 1000 * 20, skin: 'ajax-layer-load' });
+				}
+			};
+			
+			// 隐藏loading
+			sa.hideLoading = function() {
+				if(window.layer) {
+					layer.closeAll();
+				}
+			};
+			
+			// 封装一下Ajax
+			sa.ajax = function(url, data, successFn, cfg) {
+				cfg = cfg || {};
+				sa.loading("正在努力加载...");
+				setTimeout(function() {
+					$.ajax({
+						url: url,
+						type: cfg.method || "post",
+						data: data,
+						dataType: 'json',
+						headers: {
+							'X-Requested-With': 'XMLHttpRequest',
+							'satoken': localStorage.getItem('satoken')
+						},
+						success: function(res){
+							console.log('返回数据：', res);
+							sa.hideLoading();
+							successFn(res);
+						},
+						error: function(xhr, type, errorThrown){
+							sa.hideLoading();
+							if(xhr.status == 0){
+								return layer.alert('无法连接到服务器，请检查网络');
+							}
+							return layer.alert("异常：" + JSON.stringify(xhr));
+						}
+					});
+				}, 400);
+			}
+			
+			
+			// 从url中查询到指定名称的参数值
+			function getParam(name, defaultValue){
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i=0;i<vars.length;i++) {
+					var pair = vars[i].split("=");
+					if(pair[0] == name){return pair[1];}
+				}
+				return(defaultValue == undefined ? null : defaultValue);
+			}
+
+			// 监听 textarea 内容变化时，高度随之变化 
+			$('textarea').keyup(function(){
+				var textarea = this;
+				textarea.style.height = 'auto'; // 去除之前的高度限制 
+				textarea.style.height = textarea.scrollHeight + 14 + 'px'; 
+			})
+			
+			// 重设指定 textarea 的高度
+			function resizeTextarea(selected){
+				$(selected).each(function(){
+					var textarea = this;
+					textarea.style.height = 'auto'; // 去除之前的高度限制 
+					textarea.style.height = textarea.scrollHeight + 14 + 'px'; 
+				})
+			}
+			
+			// 重设所有 textarea 的高度 
+			function resizeAllTextarea(){
+				$('textarea').each(function(){
+					var textarea = this;
+					textarea.style.height = 'auto'; // 去除之前的高度限制 
+					textarea.style.height = textarea.scrollHeight + 14 + 'px'; 
+				})
+			}
+
+
+			
+		</script>
+		
+		<script type="text/javascript">
+			
+			// --------------------- 模式一 ---------------------
+			
+			// 构建授权码地址 
+			function buildAuthorizationCodeUrl() {
+				var url = $('[name=oauth2_server_auth_url]').val()
+					+ '?response_type=code'
+					+ '&client_id=' + $('[name=client_id]').val()
+					+ '&redirect_uri=' + $('[name=redirect_uri]').val()
+					+ '&scope=' + $('[name=scope]').val()
+				$('.auth-code-url').val(url);
+				resizeTextarea('.auth-code-url');
+			}
+			
+			// 跳转到授权码授权地址 
+			function jumpAuthCodeUrl() {
+				var url = $('.auth-code-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				location.href = url;
+			}
+			
+			// 默认尝试读取一下 code 
+			var code = getParam('code');
+			if(code) {
+				$('.show-url-code').text(code);
+			}
+			
+			// 构建 code 换 token 地址 
+			function buildCodeTakeTokenUrl() {
+				var code = getParam('code');
+				if(!code) {
+					return layer.msg('未能获取到 code 参数，请先点击上方的授权地址获取 code ');
+				}
+				// var url = $('[name=oauth2_server_url]').val() + '/oauth2/token'
+				var url = $('[name=oauth2_server_token_url]').val()
+					+ '?grant_type=authorization_code'
+					+ '&client_id=' + $('[name=client_id]').val()
+					+ '&client_secret=' + $('[name=client_secret]').val()
+					+ '&redirect_uri=' + $('[name=redirect_uri]').val()
+					+ '&code=' + code
+				$('.code-take-token-url').val(url);
+				resizeTextarea('.code-take-token-url');
+			}
+			
+			// code 换 Access-Token
+			function ajaxCodeToAccessToken() {
+				var url = $('.code-take-token-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				sa.ajax(url, {}, function(res){
+					if(res.access_token) {
+						$('[name=access-token-input]').val(res.access_token);
+					}
+					if(res.refresh_token) {
+						$('[name=refresh-token-input]').val(res.refresh_token);
+					}
+					var jsonStr = JSON.stringify(res, null, '\t');
+					$('.code-take-token-result').val(jsonStr);
+					resizeTextarea('.code-take-token-result');
+				})
+			}
+			
+			// --------- 刷新令牌
+			
+			// 构建 Tefresh-Token 刷新 Access-Token 地址 
+			function buildRefreshTokenUrl() {
+				var refresh_token = $('[name=refresh-token-input]').val();
+				if(!refresh_token) {
+					return layer.msg('未能获取到 refresh_token 参数，请先点击上方的授权地址获取 refresh_token ');
+				}
+				// var url = $('[name=oauth2_server_url]').val() + '/oauth2/refresh'
+				var url = $('[name=oauth2_server_refresh_token_url]').val()
+					+ '?grant_type=refresh_token'
+					+ '&client_id=' + $('[name=client_id]').val()
+					+ '&client_secret=' + $('[name=client_secret]').val()
+					+ '&refresh_token=' + refresh_token
+				$('.refresh-token-url').val(url);
+				resizeTextarea('.refresh-token-url');
+			}
+			
+			// 使用 Tefresh-Token 刷新 Access-Token
+			function ajaxRefreshToken() {
+				var url = $('.refresh-token-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				sa.ajax(url, {}, function(res){
+					if(res.access_token) {
+						$('[name=access-token-input]').val(res.access_token);
+					}
+					if(res.refresh_token) {
+						$('[name=refresh-token-input]').val(res.refresh_token);
+					}
+					var jsonStr = JSON.stringify(res, null, '\t');
+					$('.refresh-token-result').val(jsonStr);
+					resizeTextarea('.refresh-token-result');
+				})
+			}
+			
+			// --------- 用户资料
+			
+			// 构建 Access-Token 获取 Userinfo 地址
+			function buildUserinfoUrl() {
+				var access_token = $('[name=access-token-input]').val();
+				if(!access_token) {
+					return layer.msg('未能获取到 access_token 参数，请先点击上方的授权地址获取 access_token ');
+				}
+				// var url = $('[name=oauth2_server_url]').val() + '/oauth2/userinfo'
+				var url = $('[name=oauth2_server_userinfo_url]').val()
+					+ '?access_token=' + access_token
+				$('.userinfo-url').val(url);
+				resizeTextarea('.userinfo-url');
+			}
+			
+			// 使用 Access-Token 获取 Userinfo
+			function ajaxUserinfoUrl() {
+				var url = $('.userinfo-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				var method = $('[name=userinfo-ajax-method]').val();
+				sa.ajax(url, {}, function(res){
+					var jsonStr = JSON.stringify(res, null, '\t');
+					$('.userinfo-result').val(jsonStr);
+					resizeTextarea('.userinfo-result');
+				}, {method: method})
+			}
+			
+			// --------- 回收令牌
+			
+			// 构建回收 Access-Token 地址
+			function buildRevokeTokenUrl() {
+				var access_token = $('[name=access-token-input]').val();
+				if(!access_token) {
+					return layer.msg('未能获取到 access_token 参数，请先点击上方的授权地址获取 access_token ');
+				}
+				var url = $('[name=oauth2_server_url]').val() + '/oauth2/revoke'
+					+ '?client_id=' + $('[name=client_id]').val()
+					+ '&client_secret=' + $('[name=client_secret]').val()
+					+ '&access_token=' + access_token
+				$('.revoke-token-url').val(url);
+				resizeTextarea('.revoke-token-url');
+			}
+			
+			// 回收 Access-Token  
+			function ajaxRevokeTokenUrl() {
+				var url = $('.revoke-token-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				sa.ajax(url, {}, function(res){
+					var jsonStr = JSON.stringify(res, null, '\t');
+					$('.revoke-token-result').val(jsonStr);
+					resizeTextarea('.revoke-token-result');
+				})
+			}
+			
+			
+			// --------------------- 模式二 ---------------------
+			
+			// 构建隐藏式 Implicit 地址 
+			function buildImplicitUrl() {
+				var url = $('[name=oauth2_server_auth_url]').val()
+					+ '?response_type=token'
+					+ '&client_id=' + $('[name=client_id]').val()
+					+ '&redirect_uri=' + $('[name=redirect_uri]').val()
+					+ '&scope=' + $('[name=scope]').val()
+				$('.implicit-url').val(url);
+				resizeTextarea('.implicit-url');
+			}
+			
+			// 跳转到 Implicit 授权地址 
+			function jumpImplicitUrl() {
+				var url = $('.implicit-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				location.href = url;
+			}
+			
+			// 默认尝试读取一下 Access-Token 
+			var accessToken = getSharpParam('token');
+			if(accessToken) {
+				$('.show-url-access-token').text(accessToken);
+				$('[name=access-token-input]').val(accessToken);
+			}
+			
+			
+			// --------------------- 模式三 ---------------------
+			
+			// 构建密码 Password 授权地址 
+			function buildPasswordUrl() {
+				var url = $('[name=oauth2_server_url]').val() + '/oauth2/token'
+					+ '?grant_type=password'
+					+ '&client_id=' + $('[name=client_id]').val()
+					+ '&client_secret=' + $('[name=client_secret]').val()
+					+ '&username=' + $('[name=username]').val()
+					+ '&password=' + $('[name=password]').val()
+					+ '&scope=' + $('[name=scope]').val()
+				$('.password-url').val(url);
+				resizeTextarea('.password-url');
+			}
+			
+			// 请求密码式 Password 授权地址 
+			function ajaxPasswordUrl() {
+				var url = $('.password-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				sa.ajax(url, {}, function(res){
+					if(res.access_token) {
+						$('[name=access-token-input]').val(res.access_token);
+					}
+					if(res.refresh_token) {
+						$('[name=refresh-token-input]').val(res.refresh_token);
+					}
+					var jsonStr = JSON.stringify(res, null, '\t');
+					$('.password-result').val(jsonStr);
+					resizeTextarea('.password-result');
+				})
+			}
+			
+			
+			// --------------------- 模式四 ---------------------
+			
+			// 构建密码 Client-Token 授权地址 
+			function buildClientTokenUrl() {
+				var url = $('[name=oauth2_server_url]').val() + '/oauth2/client_token'
+					+ '?grant_type=client_credentials'
+					+ '&client_id=' + $('[name=client_id]').val()
+					+ '&client_secret=' + $('[name=client_secret]').val()
+					+ '&scope=' + $('[name=scope]').val()
+				$('.client-token-url').val(url);
+				resizeTextarea('.client-token-url');
+			}
+			
+			// 请求 Client-Token 授权地址 
+			function ajaxClientTokenUrl() {
+				var url = $('.client-token-url').val();
+				if(!url) {
+					return layer.msg('请先构建地址');
+				}
+				sa.ajax(url, {}, function(res){
+					var jsonStr = JSON.stringify(res, null, '\t');
+					$('.client-token-result').val(jsonStr);
+					resizeTextarea('.client-token-result');
+				})
+			}
+			
+			
+		</script>
+	</body>
+</html>
