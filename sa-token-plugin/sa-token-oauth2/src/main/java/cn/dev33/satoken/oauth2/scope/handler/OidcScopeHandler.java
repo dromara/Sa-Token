@@ -88,6 +88,14 @@ public class OidcScopeHandler implements SaOAuth2ScopeHandlerInterface {
      * @return /
      */
     public String getIss() {
+        // 如果开发者配置了 iss，则使用开发者配置的 iss
+        String cfgIss = SaOAuth2Manager.getServerConfig().getOidc().getIss();
+        if(SaFoxUtil.isNotEmpty(cfgIss)) {
+            return cfgIss;
+        }
+        // 否则根据请求的 url 计算 iss
+        //      例如请求 url 为： http://localhost:8081/abc/xyz?name=张三
+        //      则计算的 iss 为： http://localhost:8081
         String urlString = SaHolder.getRequest().getUrl();
         try {
             URL url = new URL(urlString);
