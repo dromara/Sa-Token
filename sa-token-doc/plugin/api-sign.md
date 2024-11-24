@@ -1,5 +1,9 @@
 # API 接口参数签名
 
+<p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV17oeKeZEHo/" target="_blank">
+	观看本节视频讲解（B站：抓蛙师）
+</a></p>
+
 在涉及跨系统接口调用时，我们容易碰到以下安全问题：
 
 - 请求身份被伪造。
