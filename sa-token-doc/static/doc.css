@@ -386,7 +386,7 @@ body {
 #main .case-btn,#main .case-btn-video{ 
 	background-color: #ECF5FF; 
 	color: #1979DA; 
-	border: 1px #1D7CF0 solid !important;
+	border: 1px #49A9DA solid !important;
 	background-image: url(icon/video.svg);
 }
 #main .dt-btn{display: none;}
