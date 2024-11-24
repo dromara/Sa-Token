@@ -289,7 +289,7 @@ public interface SaOAuth2Dao {
 	 * 删除：state记录
 	 * @param state /
 	 */
-	default void deleteGrantScope(String state) {
+	default void deleteState(String state) {
 		getSaTokenDao().delete(splicingStateSaveKey(state));
 	}
 
