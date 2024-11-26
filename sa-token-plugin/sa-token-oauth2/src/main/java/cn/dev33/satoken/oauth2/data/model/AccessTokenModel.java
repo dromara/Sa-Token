@@ -70,6 +70,11 @@ public class AccessTokenModel implements Serializable {
 	public String tokenType;
 
 	/**
+	 * 授权类型
+	 */
+	public String grantType;
+
+	/**
 	 * 扩展数据
 	 */
 	public Map<String, Object> extraData;
@@ -172,6 +177,15 @@ public class AccessTokenModel implements Serializable {
 		return this;
 	}
 
+	public String getGrantType() {
+		return grantType;
+	}
+
+	public AccessTokenModel setGrantType(String grantType) {
+		this.grantType = grantType;
+		return this;
+	}
+
 	public Map<String, Object> getExtraData() {
 		return extraData;
 	}
@@ -193,14 +207,15 @@ public class AccessTokenModel implements Serializable {
 	@Override
 	public String toString() {
 		return "AccessTokenModel{" +
-				"accessToken='" + accessToken + '\'' +
-				", refreshToken='" + refreshToken + '\'' +
+				"accessToken='" + accessToken +
+				", refreshToken='" + refreshToken +
 				", expiresTime=" + expiresTime +
 				", refreshExpiresTime=" + refreshExpiresTime +
-				", clientId='" + clientId + '\'' +
+				", clientId='" + clientId +
 				", loginId=" + loginId +
 				", scopes=" + scopes +
-				", tokenType='" + tokenType + '\'' +
+				", tokenType='" + tokenType +
+				", grantType='" + grantType +
 				", extraData=" + extraData +
 				", createTime=" + createTime +
 				'}';

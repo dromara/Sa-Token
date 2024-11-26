@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.data.generate;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
@@ -31,10 +32,10 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2RefreshTokenException;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
-import cn.dev33.satoken.util.SaResult;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Sa-Token OAuth2 数据构建器，默认实现类
@@ -74,7 +75,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
     /**
      * 构建Model：Access-Token
-     * @param code 授权码Model
+     * @param code 授权码
      * @return AccessToken Model
      */
     @Override
@@ -156,10 +157,12 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
      * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式)
      * @param ra 请求参数Model
      * @param isCreateRt 是否生成对应的Refresh-Token
+     * @param appendWork 对生成的 AccessTokenModel 进行追加操作
+     *
      * @return Access-Token Model
      */
     @Override
-    public AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt) {
+    public AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt, Consumer<AccessTokenModel> appendWork) {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
@@ -173,6 +176,9 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
         AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
         at.tokenType = SaOAuth2Consts.TokenType.bearer;
+        if(appendWork != null) {
+            appendWork.accept(at);
+        }
 
         // 3、根据权限构建额外参数
         at.extraData = new LinkedHashMap<>();
@@ -229,6 +235,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientId, scopes);
         ct.tokenType = SaOAuth2Consts.TokenType.bearer;
         ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
+        ct.grantType = GrantType.client_credentials;
         ct.extraData = new LinkedHashMap<>();
         SaOAuth2Strategy.instance.workClientTokenByScope.accept(ct);
 

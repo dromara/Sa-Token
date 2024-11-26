@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.data.convert;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
@@ -80,6 +81,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         at.loginId = cm.loginId;
         at.scopes = cm.scopes;
         at.tokenType = SaOAuth2Consts.TokenType.bearer;
+        at.grantType = GrantType.authorization_code;
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
         at.extraData = new LinkedHashMap<>();
@@ -121,6 +123,7 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         at.loginId = rt.loginId;
         at.scopes = rt.scopes;
         at.tokenType = SaOAuth2Consts.TokenType.bearer;
+        at.grantType = GrantType.refresh_token;
         at.extraData = new LinkedHashMap<>(rt.extraData);
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
         at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);

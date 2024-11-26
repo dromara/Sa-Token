@@ -83,7 +83,7 @@ public class PhoneCodeGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterf
         ra.scopes = scopes;
 
         // 5、生成 Access-Token
-        AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, true);
+        AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, true, atm -> atm.grantType = "phone_code");
         return at;
     }
 }

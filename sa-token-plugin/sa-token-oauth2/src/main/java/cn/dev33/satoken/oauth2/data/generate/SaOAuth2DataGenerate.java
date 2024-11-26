@@ -21,6 +21,7 @@ import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Sa-Token OAuth2 数据构建器，负责相关 Model 数据构建
@@ -55,9 +56,10 @@ public interface SaOAuth2DataGenerate {
      * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式)
      * @param ra 请求参数Model
      * @param isCreateRt 是否生成对应的Refresh-Token
+     * @param appendWork 对生成的 AccessTokenModel 进行追加操作
      * @return Access-Token Model
      */
-    AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt);
+    AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt, Consumer<AccessTokenModel> appendWork);
 
     /**
      * 构建Model：Client-Token

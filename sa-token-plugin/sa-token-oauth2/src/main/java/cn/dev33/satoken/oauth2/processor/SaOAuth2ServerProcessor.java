@@ -151,7 +151,7 @@ public class SaOAuth2ServerProcessor {
 		
 		// 		如果是 隐藏式，则：开始重定向授权，下放 token
 		if(ResponseType.token.equals(ra.responseType)) {
-			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false);
+			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false, null);
 			String redirectUri = dataGenerate.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
 			return res.redirect(redirectUri);
 		}
@@ -269,7 +269,7 @@ public class SaOAuth2ServerProcessor {
 
 		// 		如果是 隐藏式，则：开始重定向授权，下放 token
 		if(ResponseType.token.equals(ra.responseType)) {
-			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false);
+			AccessTokenModel at = dataGenerate.generateAccessToken(ra, false, null);
 			String redirectUri = dataGenerate.buildImplicitRedirectUri(ra.redirectUri, at.accessToken, ra.state);
 			return SaResult.ok().set(Param.redirect_uri, redirectUri);
 		}

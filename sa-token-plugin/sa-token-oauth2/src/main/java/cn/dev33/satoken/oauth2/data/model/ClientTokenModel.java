@@ -55,6 +55,11 @@ public class ClientTokenModel implements Serializable {
 	public String tokenType;
 
 	/**
+	 * 授权类型
+	 */
+	public String grantType;
+
+	/**
 	 * 扩展数据
 	 */
 	public Map<String, Object> extraData;
@@ -126,6 +131,15 @@ public class ClientTokenModel implements Serializable {
 		return this;
 	}
 
+	public String getGrantType() {
+		return grantType;
+	}
+
+	public ClientTokenModel setGrantType(String grantType) {
+		this.grantType = grantType;
+		return this;
+	}
+
 	public Map<String, Object> getExtraData() {
 		return extraData;
 	}
@@ -152,6 +166,7 @@ public class ClientTokenModel implements Serializable {
 				", clientId='" + clientId +
 				", scopes=" + scopes +
 				", tokenType=" + tokenType +
+				", grantType=" + grantType +
 				", extraData=" + extraData +
 				", createTime=" + createTime +
 				'}';
