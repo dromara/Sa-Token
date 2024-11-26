@@ -522,6 +522,38 @@ public class SaOAuth2Template {
 	}
 
 	/**
+	 * 回收 Refresh-Token
+	 * @param refreshToken Refresh-Token 值
+	 */
+	public void revokeRefreshToken(String refreshToken) {
+		RefreshTokenModel rt = getRefreshToken(refreshToken);
+		if(rt == null) {
+			return;
+		}
+
+		// 删 rt、索引
+		SaOAuth2Dao dao = SaOAuth2Manager.getDao();
+		dao.deleteRefreshToken(refreshToken);
+		dao.deleteRefreshTokenIndex(rt.clientId, rt.loginId);
+	}
+
+	/**
+	 * 回收 Refresh-Token，根据索引： clientId、loginId
+	 * @param clientId /
+	 * @param loginId /
+	 */
+	public void revokeRefreshTokenByIndex(String clientId, Object loginId) {
+		SaOAuth2Dao dao = SaOAuth2Manager.getDao();
+
+		// 删 rt、删索引
+		String refreshToken = getRefreshTokenValue(clientId, loginId);
+		if(refreshToken != null) {
+			dao.deleteRefreshToken(refreshToken);
+			dao.deleteRefreshTokenIndex(clientId, loginId);
+		}
+	}
+
+	/**
 	 * 根据 RefreshToken 刷新出一个 AccessToken
 	 * @param refreshToken /
 	 * @return /

@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.template;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
@@ -240,6 +241,23 @@ public class SaOAuth2Util {
 	 */
 	public static String getRefreshTokenValue(String clientId, Object loginId) {
 		return SaOAuth2Manager.getTemplate().getRefreshTokenValue(clientId, loginId);
+	}
+
+	/**
+	 * 回收 Refresh-Token
+	 * @param refreshToken Refresh-Token 值
+	 */
+	public static void revokeRefreshToken(String refreshToken) {
+		SaOAuth2Manager.getTemplate().revokeRefreshToken(refreshToken);
+	}
+
+	/**
+	 * 回收 Refresh-Token，根据索引： clientId、loginId
+	 * @param clientId /
+	 * @param loginId /
+	 */
+	public static void revokeRefreshTokenByIndex(String clientId, Object loginId) {
+		SaOAuth2Manager.getTemplate().revokeRefreshTokenByIndex(clientId, loginId);
 	}
 
 	/**
