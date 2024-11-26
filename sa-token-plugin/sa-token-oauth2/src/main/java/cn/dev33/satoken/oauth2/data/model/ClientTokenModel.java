@@ -59,6 +59,27 @@ public class ClientTokenModel implements Serializable {
 	 */
 	public Map<String, Object> extraData;
 
+	/**
+	 * 创建时间，13位时间戳
+	 */
+	public long createTime;
+
+	public ClientTokenModel(){
+		this.createTime = System.currentTimeMillis();
+	}
+
+	/**
+	 * 构建一个 ClientTokenModel
+	 * @param clientToken clientToken
+	 * @param clientId 应用id
+	 * @param scopes 请求授权范围
+	 */
+	public ClientTokenModel(String clientToken, String clientId, List<String> scopes) {
+		this();
+		this.clientToken = clientToken;
+		this.clientId = clientId;
+		this.scopes = scopes;
+	}
 
 	public String getClientToken() {
 		return clientToken;
@@ -114,19 +135,13 @@ public class ClientTokenModel implements Serializable {
 		return this;
 	}
 
-	public ClientTokenModel() {}
-	
-	/**
-	 * 构建一个 
-	 * @param clientToken clientToken
-	 * @param clientId 应用id 
-	 * @param scopes 请求授权范围
-	 */
-	public ClientTokenModel(String clientToken, String clientId, List<String> scopes) {
-		super();
-		this.clientToken = clientToken;
-		this.clientId = clientId;
-		this.scopes = scopes;
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public ClientTokenModel setCreateTime(long createTime) {
+		this.createTime = createTime;
+		return this;
 	}
 
 	@Override
@@ -138,6 +153,7 @@ public class ClientTokenModel implements Serializable {
 				", scopes=" + scopes +
 				", tokenType=" + tokenType +
 				", extraData=" + extraData +
+				", createTime=" + createTime +
 				'}';
 	}
 

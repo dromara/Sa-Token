@@ -59,6 +59,15 @@ public class RefreshTokenModel implements Serializable {
 	 */
 	public Map<String, Object> extraData;
 
+	/**
+	 * 创建时间，13位时间戳
+	 */
+	public long createTime;
+
+	public RefreshTokenModel() {
+		this.createTime = System.currentTimeMillis();
+	}
+
 
 	public String getRefreshToken() {
 		return refreshToken;
@@ -114,10 +123,26 @@ public class RefreshTokenModel implements Serializable {
 		return this;
 	}
 
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public RefreshTokenModel setCreateTime(long createTime) {
+		this.createTime = createTime;
+		return this;
+	}
+
 	@Override
 	public String toString() {
-		return "RefreshTokenModel [refreshToken=" + refreshToken + ", expiresTime=" + expiresTime
-				+ ", clientId=" + clientId + ", loginId=" + loginId + ", scopes=" + scopes + ", extraData=" + extraData + "]";
+		return "RefreshTokenModel [" +
+				"refreshToken=" + refreshToken +
+				", expiresTime=" + expiresTime +
+				", clientId=" + clientId +
+				", loginId=" + loginId +
+				", scopes=" + scopes +
+				", extraData=" + extraData +
+				", createTime=" + createTime +
+				"]";
 	}
 
 	/**

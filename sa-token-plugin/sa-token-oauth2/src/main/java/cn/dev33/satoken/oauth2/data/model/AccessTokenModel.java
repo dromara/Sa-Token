@@ -74,9 +74,15 @@ public class AccessTokenModel implements Serializable {
 	 */
 	public Map<String, Object> extraData;
 
+	/**
+	 * 创建时间，13位时间戳
+	 */
+	public long createTime;
 
 
-	public AccessTokenModel() {}
+	public AccessTokenModel() {
+		this.createTime = System.currentTimeMillis();
+	}
 
 	/**
 	 * 构建一个 
@@ -86,7 +92,7 @@ public class AccessTokenModel implements Serializable {
 	 * @param loginId 对应的账号id 
 	 */
 	public AccessTokenModel(String accessToken, String clientId, Object loginId, List<String> scopes) {
-		super();
+		this();
 		this.accessToken = accessToken;
 		this.clientId = clientId;
 		this.loginId = loginId;
@@ -175,6 +181,15 @@ public class AccessTokenModel implements Serializable {
 		return this;
 	}
 
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public AccessTokenModel setCreateTime(long createTime) {
+		this.createTime = createTime;
+		return this;
+	}
+
 	@Override
 	public String toString() {
 		return "AccessTokenModel{" +
@@ -187,6 +202,7 @@ public class AccessTokenModel implements Serializable {
 				", scopes=" + scopes +
 				", tokenType='" + tokenType + '\'' +
 				", extraData=" + extraData +
+				", createTime=" + createTime +
 				'}';
 	}
 
