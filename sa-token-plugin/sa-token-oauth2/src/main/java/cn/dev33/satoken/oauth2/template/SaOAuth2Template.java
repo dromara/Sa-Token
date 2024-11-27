@@ -364,6 +364,43 @@ public class SaOAuth2Template {
 	}
 
 
+	// ----------------- Code 相关 -----------------
+
+	/**
+	 * 获取 CodeModel，无效的 code 会返回 null
+	 * @param code /
+	 * @return /
+	 */
+	public CodeModel getCode(String code) {
+		return SaOAuth2Manager.getDao().getCode(code);
+	}
+
+	/**
+	 * 校验 Code，成功返回 CodeModel，失败则抛出异常
+	 * @param code /
+	 * @return /
+	 */
+	public CodeModel checkCode(String code) {
+		CodeModel cm = SaOAuth2Manager.getDao().getCode(code);
+		if(cm == null) {
+			throw new SaOAuth2AuthorizationCodeException("无效 code: " + code)
+					.setAuthorizationCode(code)
+					.setCode(SaOAuth2ErrorCode.CODE_30110);
+		}
+		return cm;
+	}
+
+	/**
+	 * 获取 Code，根据索引： clientId、loginId
+	 * @param clientId /
+	 * @param loginId /
+	 * @return /
+	 */
+	public String getCodeValue(String clientId, Object loginId) {
+		return SaOAuth2Manager.getDao().getCodeValue(clientId, loginId);
+	}
+
+
 	// ----------------- Access-Token 相关 -----------------
 
 	/**
