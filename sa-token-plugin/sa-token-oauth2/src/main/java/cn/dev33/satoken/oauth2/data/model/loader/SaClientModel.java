@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Client应用信息 Model
+ * Client 应用信息 Model
  *
  * @author click33
  * @since 1.23.0
@@ -57,6 +57,11 @@ public class SaClientModel implements Serializable {
 	 * 应用允许的所有 grant_type
 	 */
 	public List<String> allowGrantTypes = new ArrayList<>();
+
+	/**
+	 * 主体id
+	 */
+	public String subjectId;
 
 	/** 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
 	public Boolean isNewRefresh;
@@ -172,6 +177,25 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
+	 * 获取 主体id
+	 *
+	 * @return subjectId 主体id
+	 */
+	public String getSubjectId() {
+		return this.subjectId;
+	}
+
+	/**
+	 * 设置 主体id
+	 *
+	 * @param subjectId 主体id
+	 */
+	public SaClientModel setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+		return this;
+	}
+
+	/**
 	 * @return 此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
 	 */
 	public Boolean getIsNewRefresh() {
@@ -261,6 +285,7 @@ public class SaClientModel implements Serializable {
 				", contractScopes=" + contractScopes +
 				", allowRedirectUris=" + allowRedirectUris +
 				", allowGrantTypes=" + allowGrantTypes +
+				", subjectId=" + subjectId +
 				", isNewRefresh=" + isNewRefresh +
 				", accessTokenTimeout=" + accessTokenTimeout +
 				", refreshTokenTimeout=" + refreshTokenTimeout +

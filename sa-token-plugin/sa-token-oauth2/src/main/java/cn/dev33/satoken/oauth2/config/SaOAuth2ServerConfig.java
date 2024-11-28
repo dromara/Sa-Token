@@ -69,6 +69,9 @@ public class SaOAuth2ServerConfig implements Serializable {
 	/** 默认 openid 生成算法中使用的摘要前缀 */
 	public String openidDigestPrefix = SaOAuth2Consts.OPENID_DEFAULT_DIGEST_PREFIX;
 
+	/** 默认 unionid 生成算法中使用的摘要前缀 */
+	public String unionidDigestPrefix = SaOAuth2Consts.UNIONID_DEFAULT_DIGEST_PREFIX;
+
 	/** 指定高级权限，多个用逗号隔开 */
 	public String higherScope;
 
@@ -265,6 +268,22 @@ public class SaOAuth2ServerConfig implements Serializable {
 	}
 
 	/**
+	 * @return unionidDigestPrefix
+	 */
+	public String getUnionidDigestPrefix() {
+		return unionidDigestPrefix;
+	}
+
+	/**
+	 * @param unionidDigestPrefix 要设置的 unionidDigestPrefix
+	 * @return 对象自身
+	 */
+	public SaOAuth2ServerConfig setUnionidDigestPrefix(String unionidDigestPrefix) {
+		this.unionidDigestPrefix = unionidDigestPrefix;
+		return this;
+	}
+
+	/**
 	 * 获取 指定高级权限，多个用逗号隔开
 	 *
 	 * @return higherScope 指定高级权限，多个用逗号隔开
@@ -403,6 +422,7 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", clientTokenTimeout=" + clientTokenTimeout +
 				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
 				", openidDigestPrefix='" + openidDigestPrefix +
+				", unionidDigestPrefix='" + unionidDigestPrefix +
 				", higherScope='" + higherScope +
 				", lowerScope='" + lowerScope +
 				", mode4ReturnAccessToken='" + mode4ReturnAccessToken +

@@ -32,6 +32,11 @@ public final class CommonScope {
     public static final String OPENID = "openid";
 
     /**
+     * 获取 unionid
+     */
+    public static final String UNIONID = "unionid";
+
+    /**
      * 获取 userid
      */
     public static final String USERID = "userid";

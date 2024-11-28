@@ -90,6 +90,7 @@ public class SaOAuth2Consts {
 	 * 扩展字段
 	 */
 	public static final class ExtraField {
+		public static String unionid = "unionid";
 		public static String openid = "openid";
 		public static String userid = "userid";
 		public static String id_token = "id_token";
@@ -98,6 +99,9 @@ public class SaOAuth2Consts {
 
 	/** 默认 openid 生成算法中使用的前缀 */
 	public static final String OPENID_DEFAULT_DIGEST_PREFIX = "openid_default_digest_prefix";
+
+	/** 默认 unionid 生成算法中使用的前缀 */
+	public static final String UNIONID_DEFAULT_DIGEST_PREFIX = "unionid_default_digest_prefix";
 
 	/** 表示OK的返回结果 */
 	public static final String OK = "ok";

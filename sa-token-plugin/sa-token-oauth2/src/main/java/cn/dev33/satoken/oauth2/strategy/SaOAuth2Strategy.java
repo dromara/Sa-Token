@@ -30,10 +30,7 @@ import cn.dev33.satoken.oauth2.granttype.handler.PasswordGrantTypeHandler;
 import cn.dev33.satoken.oauth2.granttype.handler.RefreshTokenGrantTypeHandler;
 import cn.dev33.satoken.oauth2.granttype.handler.SaOAuth2GrantTypeHandlerInterface;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
-import cn.dev33.satoken.oauth2.scope.handler.OidcScopeHandler;
-import cn.dev33.satoken.oauth2.scope.handler.OpenIdScopeHandler;
-import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeHandlerInterface;
-import cn.dev33.satoken.oauth2.scope.handler.UserIdScopeHandler;
+import cn.dev33.satoken.oauth2.scope.handler.*;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.LinkedHashMap;
@@ -70,6 +67,7 @@ public final class SaOAuth2Strategy {
 	 */
 	public void registerDefaultScopeHandler() {
 		scopeHandlerMap.put(CommonScope.OPENID, new OpenIdScopeHandler());
+		scopeHandlerMap.put(CommonScope.UNIONID, new UnionIdScopeHandler());
 		scopeHandlerMap.put(CommonScope.USERID, new UserIdScopeHandler());
 		scopeHandlerMap.put(CommonScope.OIDC, new OidcScopeHandler());
 	}
