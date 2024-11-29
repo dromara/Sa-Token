@@ -31,7 +31,7 @@ public class SaClientMockDao {
                 .setSubjectId("1000001")   // 主体 id (可选)
                 .addAllowGrantTypes(     // 所有允许的授权模式
                         GrantType.authorization_code, // 授权码式
-                        GrantType.implicit,  // 隐式式
+                        GrantType.implicit,  // 隐藏式
                         GrantType.refresh_token,  // 刷新令牌
                         GrantType.password,  // 密码式
                         GrantType.client_credentials,  // 客户端模式
