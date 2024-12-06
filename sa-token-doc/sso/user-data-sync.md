@@ -217,7 +217,8 @@ private void configSso(SaSsoClientConfig ssoClient) {
 		}
 
 		// 进行登录
-		StpUtil.login(user.getId(), ctr.remainSessionTimeout);
+		//     注意此处需要使用 centerId 进行登录，否则该账号将无法正常完成单点注销功能 
+		StpUtil.login(centerId, ctr.remainSessionTimeout);
 		StpUtil.getSession().set("user", user);
 
 		// 一切工作完毕，重定向回 back 页面
