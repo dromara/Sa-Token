@@ -68,11 +68,11 @@ public interface SaOAuth2DataLoader {
     }
 
     /**
-     * 根据 SubjectId 和 LoginId 获取 unionid
+     * 根据 subjectId 和 loginId 获取 unionid
      *
      * @param subjectId 应用主体id
      * @param loginId 账号id
-     * @return 此账号在此Client下的openid
+     * @return 此账号在此主体 Client 下的 unionid
      */
     default String getUnionid(String subjectId, Object loginId) {
         return SaSecureUtil.md5(SaOAuth2Manager.getServerConfig().getUnionidDigestPrefix() + "_" + subjectId + "_" + loginId);
