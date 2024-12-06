@@ -383,7 +383,7 @@ body {
 	background-size: 18px 18px;
 	background-image: url(icon/code.svg);
 }
-#main .case-btn,#main .case-btn-video{ 
+#main .case-btn.case-btn-video{ 
 	background-color: #ECF5FF; 
 	color: #1979DA; 
 	border: 1px #49A9DA solid !important;
