@@ -151,8 +151,12 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 	@Override
 	public void doFilter(Context ctx, FilterChain chain) throws Throwable {
 		try {
-			//查找当前主处理
-			Handler mainHandler = Solon.app().router().matchMain(ctx);
+			//查找当前主处理（在网关内用时，可直接获取缓存）
+			Handler mainHandler = ctx.mainHandler();
+			if (mainHandler == null) {
+				mainHandler = Solon.app().router().matchMain(ctx);
+			}
+
 			if (mainHandler instanceof Gateway) {
 				//支持网关处理
 				Gateway gateway = (Gateway) mainHandler;
