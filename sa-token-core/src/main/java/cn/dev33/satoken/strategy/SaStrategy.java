@@ -16,7 +16,6 @@
 package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.exception.RequestPathInvalidException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.strategy.*;
 import cn.dev33.satoken.session.SaSession;
@@ -163,49 +162,6 @@ public final class SaStrategy {
 	public SaCreateStpLogicFunction createStpLogic = (loginType) -> {
 		return new StpLogic(loginType);
 	};
-
-	/**
-	 * 请求 path 不允许出现的字符
-	 */
-	public static String[] INVALID_CHARACTER = {
-			"//", "\\",
-			"%2e", "%2E",	// .
-			"%2f", "%2F",	// /
-			"%5c", "%5C",	// \
-			"%25"	// 空格
-	};
-
-	/**
-	 * 校验请求 path 的算法
-	 */
-	public SaCheckRequestPathFunction checkRequestPath = (requestPath, extArg1, extArg2) -> {
-
-		// 不允许为null
-		if(requestPath == null) {
-			throw new RequestPathInvalidException("非法请求：null", null);
-		}
-		// 不允许包含非法字符
-		for (String item : INVALID_CHARACTER) {
-			if (requestPath.contains(item)) {
-				throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
-			}
-		}
-		// 不允许出现跨目录
-		if(requestPath.contains("/.") || requestPath.contains("\\.")) {
-			throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
-		}
-	};
-
-
-	/**
-	 * 当请求 path 校验不通过时处理方案的算法，自定义示例：
-	 * <pre>
-	 * 		SaStrategy.instance.requestPathInvalidHandle = (e, extArg1, extArg2) -> {
-	 * 			// 自定义处理逻辑 ...
-	 *      };
-	 * </pre>
-	 */
-	public SaRequestPathInvalidHandleFunction requestPathInvalidHandle = null;
 
 
 	// ----------------------- 重写策略 set连缀风格

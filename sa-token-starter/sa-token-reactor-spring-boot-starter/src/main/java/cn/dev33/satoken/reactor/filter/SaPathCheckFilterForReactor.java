@@ -16,7 +16,7 @@
 package cn.dev33.satoken.reactor.filter;
 
 import cn.dev33.satoken.exception.RequestPathInvalidException;
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.strategy.SaFirewallStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.server.ServerWebExchange;
@@ -38,13 +38,13 @@ public class SaPathCheckFilterForReactor implements WebFilter {
 
 		// 校验本次请求 path 是否合法
 		try {
-			SaStrategy.instance.checkRequestPath.run(exchange.getRequest().getPath().toString(), exchange, null);
+			SaFirewallStrategy.instance.checkRequestPath.run(exchange.getRequest().getPath().toString(), exchange, null);
 		} catch (RequestPathInvalidException e) {
-			if(SaStrategy.instance.requestPathInvalidHandle == null) {
+			if(SaFirewallStrategy.instance.requestPathInvalidHandle == null) {
 				exchange.getResponse().getHeaders().set(SaTokenConsts.CONTENT_TYPE_KEY, SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
 				return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(e.getMessage().getBytes())));
 			} else {
-				SaStrategy.instance.requestPathInvalidHandle.run(e, exchange, null);
+				SaFirewallStrategy.instance.requestPathInvalidHandle.run(e, exchange, null);
 			}
 			return Mono.empty();
 		}

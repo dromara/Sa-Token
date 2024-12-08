@@ -16,7 +16,7 @@
 package cn.dev33.satoken.filter;
 
 import cn.dev33.satoken.exception.RequestPathInvalidException;
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.strategy.SaFirewallStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,14 +39,14 @@ public class SaPathCheckFilterForJakartaServlet implements Filter {
 		// 校验本次请求 path 是否合法
 		try {
 			HttpServletRequest req = (HttpServletRequest) request;
-			SaStrategy.instance.checkRequestPath.run(req.getRequestURI(), request, response);
+			SaFirewallStrategy.instance.checkRequestPath.run(req.getRequestURI(), request, response);
 		} catch (RequestPathInvalidException e) {
-			if(SaStrategy.instance.requestPathInvalidHandle == null) {
+			if(SaFirewallStrategy.instance.requestPathInvalidHandle == null) {
 				response.setContentType("text/plain; charset=utf-8");
 				response.getWriter().print(e.getMessage());
 				response.getWriter().flush();
             } else {
-				SaStrategy.instance.requestPathInvalidHandle.run(e, request, response);
+				SaFirewallStrategy.instance.requestPathInvalidHandle.run(e, request, response);
             }
             return;
         }
