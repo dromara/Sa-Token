@@ -45,6 +45,7 @@
 	- [定制化登录页面](/sso/sso-custom-login)
 	- [自定义API路由](/sso/sso-custom-api)
 	- [前后端分离下的整合方案](/sso/sso-h5)
+	- [NoSdk 模式与非 java 项目](/sso/sso-nosdk)
 	- [平台中心跳转模式](/sso/sso-home-jump)
 	- [不同 Client 不同秘钥](/sso/sso-diff-key)
 	- [用户数据同步 / 迁移](/sso/user-data-sync)
