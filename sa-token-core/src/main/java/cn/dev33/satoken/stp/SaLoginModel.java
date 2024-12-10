@@ -15,13 +15,13 @@
  */
 package cn.dev33.satoken.stp;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaTokenConsts;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 在调用 `StpUtil.login()` 时的 配置参数 Model，决定登录的一些细节行为 <br>
@@ -237,26 +237,6 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return timeout 值 （如果此配置项尚未配置，则取全局配置的值）
-	 */
-	public Long getTimeoutOrGlobalConfig() {
-		if(timeout == null) {
-			timeout = SaManager.getConfig().getTimeout();
-		}
-		return timeout;
-	}
-
-	/**
-	 * @return 是否在登录后将 Token 写入到响应头 （如果此配置项尚未配置，则取全局配置的值）
-	 */
-	public Boolean getIsWriteHeaderOrGlobalConfig() {
-		if(isWriteHeader == null) {
-			isWriteHeader = SaManager.getConfig().getIsWriteHeader();
-		}
-		return isWriteHeader;
-	}
-
-	/**
 	 * 写入扩展数据（只在jwt模式下生效） 
 	 * @param key 键
 	 * @param value 值 
@@ -297,13 +277,11 @@ public class SaLoginModel {
 		if( ! getIsLastingCookieOrFalse()) {
 			return -1;
 		}
-		if(getTimeoutOrGlobalConfig() == SaTokenDao.NEVER_EXPIRE) {
+		long _timeout = getTimeout();
+		if(_timeout == SaTokenDao.NEVER_EXPIRE || _timeout > Integer.MAX_VALUE) {
 			return Integer.MAX_VALUE;
 		}
-		if (timeout > Integer.MAX_VALUE) {
-			return Integer.MAX_VALUE;
-		}
-		return (int)(long)timeout;
+		return (int)_timeout;
 	}
 
 	/**
@@ -351,6 +329,33 @@ public class SaLoginModel {
 	 */
 	public static SaLoginModel create() {
 		return new SaLoginModel();
+	}
+
+
+	// ---------------- 过期方法
+
+	/**
+	 * 请改为 getTimeout
+	 * @return timeout 值 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	@Deprecated
+	public Long getTimeoutOrGlobalConfig() {
+		if(timeout == null) {
+			timeout = SaManager.getConfig().getTimeout();
+		}
+		return timeout;
+	}
+
+	/**
+	 * 请改为 getIsWriteHeader
+	 * @return 是否在登录后将 Token 写入到响应头 （如果此配置项尚未配置，则取全局配置的值）
+	 */
+	@Deprecated
+	public Boolean getIsWriteHeaderOrGlobalConfig() {
+		if(isWriteHeader == null) {
+			isWriteHeader = SaManager.getConfig().getIsWriteHeader();
+		}
+		return isWriteHeader;
 	}
 
 }

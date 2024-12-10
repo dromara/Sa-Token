@@ -203,7 +203,7 @@ public class StpLogic {
 		}
 		
 		// 3. 将 token 写入到当前请求的响应头中
-		if(loginModel.getIsWriteHeaderOrGlobalConfig()) {
+		if(loginModel.getIsWriteHeader()) {
 			setTokenValueToResponseHeader(tokenValue);
 		}
 	}
@@ -471,7 +471,7 @@ public class StpLogic {
 		String tokenValue = distUsableToken(id, loginModel);
 		
 		// 4、获取此账号的 Account-Session , 续期
-		SaSession session = getSessionByLoginId(id, true, loginModel.getTimeoutOrGlobalConfig());
+		SaSession session = getSessionByLoginId(id, true, loginModel.getTimeout());
 		session.updateMinTimeout(loginModel.getTimeout());
 		
 		// 5、在 Account-Session 上记录本次登录的 token 签名
@@ -483,7 +483,7 @@ public class StpLogic {
 
 		// 7、写入这个 token 的最后活跃时间 token-last-active
 		if(isOpenCheckActiveTimeout()) {
-			setLastActiveToNow(tokenValue, loginModel.getActiveTimeout(), loginModel.getTimeoutOrGlobalConfig());
+			setLastActiveToNow(tokenValue, loginModel.getActiveTimeout(), loginModel.getTimeout());
 		}
 
 		// 8、如果该 token 对应的 Token-Session 已经存在，则需要给其续期
