@@ -486,15 +486,21 @@ public class StpLogic {
 			setLastActiveToNow(tokenValue, loginModel.getActiveTimeout(), loginModel.getTimeoutOrGlobalConfig());
 		}
 
-		// 8、$$ 发布全局事件：账号 xxx 登录成功
+		// 8、如果该 token 对应的 Token-Session 已经存在，则需要给其续期
+		SaSession tokenSession = getTokenSessionByToken(tokenValue, false);
+		if(tokenSession != null) {
+			tokenSession.updateMinTimeout(loginModel.getTimeout());
+		}
+
+		// 9、$$ 发布全局事件：账号 xxx 登录成功
 		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
 
-		// 9、检查此账号会话数量是否超出最大值，如果超过，则按照登录时间顺序，把最开始登录的给注销掉
+		// 10、检查此账号会话数量是否超出最大值，如果超过，则按照登录时间顺序，把最开始登录的给注销掉
 		if(config.getMaxLoginCount() != -1) {
 			logoutByMaxLoginCount(id, session, null, config.getMaxLoginCount());
 		}
 		
-		// 10、一切处理完毕，返回会话凭证 token
+		// 11、一切处理完毕，返回会话凭证 token
 		return tokenValue;
 	}
 

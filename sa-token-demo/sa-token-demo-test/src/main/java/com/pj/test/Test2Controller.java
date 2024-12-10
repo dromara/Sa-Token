@@ -1,5 +1,6 @@
 package com.pj.test;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Test2Controller {
 
-	// 测试登录  ---- http://localhost:8081/.test
-	@RequestMapping("/.test")
+	// 测试登录  ---- http://localhost:8081/test
+	@RequestMapping("/test")
 	public SaResult test2() {
-		System.out.println("--- 进来了");
-		return SaResult.ok("登录成功");
+
+		StpUtil.login(30003);
+		System.out.println(StpUtil.getSession().getTimeout());
+		System.out.println(StpUtil.getStpLogic().getTokenSession(false));
+
+		return SaResult.ok();
 	}
 
 }
