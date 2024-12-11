@@ -982,16 +982,23 @@ public class StpLogic {
 			throw NotLoginException.newInstance(loginType, KICK_OUT, KICK_OUT_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11015);
  		}
 
-		// 7、检查此 token 的最后活跃时间是否已经超过了 active-timeout 的限制，如果是则代表其已被冻结，需要抛出：token 已被冻结
+		// 7、token 活跃频率检查
 		if(isOpenCheckActiveTimeout()) {
-			checkActiveTimeout(tokenValue);
+			// storage.get(key, () -> {}) 可以避免一次请求多次校验，造成不必要的性能消耗
+			SaHolder.getStorage().get(SaTokenConsts.TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY, () -> {
 
-			// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
+				// 7.1、检查此 token 的最后活跃时间是否已经超过了 active-timeout 的限制，如果是则代表其已被冻结，需要抛出：token 已被冻结
+				checkActiveTimeout(tokenValue);
 
-			// 8、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
-			if(getConfigOrGlobal().getAutoRenew()) {
-				updateLastActiveToNow(tokenValue);
-			}
+				// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
+
+				// 7.2、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
+				if(getConfigOrGlobal().getAutoRenew()) {
+					updateLastActiveToNow(tokenValue);
+				}
+
+				return true;
+			});
 		}
 
  		// 9、返回 loginId
@@ -1528,26 +1535,18 @@ public class StpLogic {
  	 */
  	public void checkActiveTimeout(String tokenValue) {
 
-		// storage.get(key, () -> {}) 可以避免一次请求多次校验，造成不必要的性能消耗
- 		SaStorage storage = SaHolder.getStorage();
-		storage.get(SaTokenConsts.TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY, () -> {
+		// 1、获取这个 token 的剩余活跃有效期
+		long activeTimeout = getTokenActiveTimeoutByToken(tokenValue);
 
-			// 1、获取这个 token 的剩余活跃有效期
-			long activeTimeout = getTokenActiveTimeoutByToken(tokenValue);
+		// 2、值为 -1 代表此 token 已经被设置永不冻结，无须继续验证
+		if(activeTimeout == SaTokenDao.NEVER_EXPIRE) {
+			return;
+		}
 
-			// 2、值为 -1 代表此 token 已经被设置永不冻结，无须继续验证
-			if(activeTimeout == SaTokenDao.NEVER_EXPIRE) {
-				return true;
-			}
-
-			// 3、值为 -2 代表已被冻结，此时需要抛出异常
-			if(activeTimeout == SaTokenDao.NOT_VALUE_EXPIRE) {
-				throw NotLoginException.newInstance(loginType, TOKEN_FREEZE, TOKEN_FREEZE_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11016);
-			}
-
-			// --- 验证通过
-			return true;
-		});
+		// 3、值为 -2 代表已被冻结，此时需要抛出异常
+		if(activeTimeout == SaTokenDao.NOT_VALUE_EXPIRE) {
+			throw NotLoginException.newInstance(loginType, TOKEN_FREEZE, TOKEN_FREEZE_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11016);
+		}
  	}
 
  	/**
