@@ -114,6 +114,45 @@ public class CustomSaSsoServerTemplate extends SaSsoServerTemplate {
 }
 ```
 
-至此完成，其它代码一切照旧。
+至此完成。
+
+
+### 3、其它注意点
+
+有同学反馈，集成 “不同 SSO Client 配置不同秘钥” 模式后，客户端发起调用 `/sso/getData` 调用时会报如下错误：
+
+``` 
+无效签名：5a7fc42836deba12d96527d43c1301ea
+```
+
+或者：
+```
+参与参数签名的秘钥不可为空
+```
+
+这大概率是因为在 sso-server 端的 `/sso/getData` 接口在校验签名时忘了加 client 参数导致的，修改为如下代码即可：
+
+``` java
+// 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）
+@RequestMapping("/sso/getData")
+public SaResult getData(String apiType, String loginId) {
+    System.out.println("---------------- 获取数据 ----------------");
+    System.out.println("apiType=" + apiType);
+    System.out.println("loginId=" + loginId);
+
+    // ↓↓↓ 重点代码 ↓↓↓
+    // 校验签名：只有拥有正确秘钥发起的请求才能通过校验  
+    String client = SaHolder.getRequest().getHeader("client");
+    SaSsoServerProcessor.instance.ssoServerTemplate.getSignTemplate(client).checkRequest(SaHolder.getRequest());
+    // ↑↑↑ 重点代码 ↑↑↑
+
+    // 自定义返回结果（模拟）
+    return SaResult.ok()
+            .set("id", loginId)
+            .set("name", "LinXiaoYu")
+            .set("sex", "女")
+            .set("age", 18);
+}
+```
 
 
