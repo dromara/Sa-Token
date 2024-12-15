@@ -133,6 +133,9 @@ spring.redis.lettuce.pool.min-idle=0
 <!---------------------------- tabs:end ------------------------------>
 
 
+> [!WARNING| label:小提示 ] 
+> 如果你使用的是 SpringBoot3.x 版本，则需要将前缀 `spring.redis` 改为 `spring.data.redis`。
+
 
 
 **3. 集成 Redis 后，是我额外手动保存数据，还是框架自动保存？** <br>
