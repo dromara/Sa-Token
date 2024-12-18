@@ -443,15 +443,15 @@ public class SaFoxUtil {
 			url = "";
 		}
 		int index = url.lastIndexOf('#');
-		// ? 不存在
+		// # 不存在
 		if(index == -1) {
 			return url + '#' + paramStr;
 		}
-		// ? 是最后一位
+		// # 是最后一位
 		if(index == url.length() - 1) {
 			return url + paramStr;
 		}
-		// ? 是其中一位
+		// # 是其中一位
 		if(index < url.length() - 1) {
 			String separatorChar = "&";
 			// 如果最后一位是 不是&, 且 paramStr 第一位不是 &, 就赠送一个 &
