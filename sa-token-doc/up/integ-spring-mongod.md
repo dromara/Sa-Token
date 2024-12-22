@@ -17,7 +17,7 @@
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 整合 Redis （使用 jdk 默认序列化方式） -->
+<!-- 引入 spring data mongodb -->
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-mongodb</artifactId>
