@@ -11,7 +11,7 @@
 # sa-token 配置
 sa-token: 
     # OAuth2.0 配置 
-    oauth2:
+    oauth2-server:
         # 定义哪些 scope 是高级权限，多个用逗号隔开
         higher-scope: openid,userid
         # 定义哪些 scope 是低级权限，多个用逗号隔开
@@ -20,15 +20,15 @@ sa-token:
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # 定义哪些 scope 是高级权限，多个用逗号隔开
-sa-token.oauth2.higher-scope=openid,userid
+sa-token.oauth2-server.higher-scope=openid,userid
 # 定义哪些 scope 是低级权限，多个用逗号隔开
-sa-token.oauth2.lower-scope=userinfo
+sa-token.oauth2-server.lower-scope=userinfo
 ```
 <!---------------------------- tabs:end ---------------------------->
 
 如上所示：
-- 通过 `sa-token.oauth2.higher-scope` 配置项指定的 `scope` 将变成 **高级权限**。
-- 通过 `sa-token.oauth2.lower-scope` 配置项指定的 `scope` 将变成 **低级权限**。
+- 通过 `sa-token.oauth2-server.higher-scope` 配置项指定的 `scope` 将变成 **高级权限**。
+- 通过 `sa-token.oauth2-server.lower-scope` 配置项指定的 `scope` 将变成 **低级权限**。
 - 其它未指定的 `scope` 将默认为 **一般权限**。
 
 不同的权限等级其差异主要表现在：oauth2-client 授权时是否需要用户手动确认授权。
