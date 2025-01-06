@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>Sa-OAuth2-Server 认证中心（前后端分离版）</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="./login.css">
+	</head>
+	<body>
+		<div class="view-box">
+			<div class="bg-1"></div>
+			
+			<!-- 
+				将页面分为三块区域：
+					- 未登录时显示区域2：登录框。
+					- 已登录但请求的 scope 尚未手动确认授权，显示区域3：确认授权框。
+					- 默认显示区域1：提示文字。
+			 -->
+			
+			<!-- 区域1：默认显示 -->
+			<div class="content-box region-default">
+				<div class="login-box">
+					<div class="message-box">
+						加载中...
+					</div>
+				</div>
+			</div>
+			
+			<!-- 区域2：登录框 -->
+			<div class="content-box region-login">
+				<div class="login-box">
+					<div class="from-box">
+						<h2 class="from-title">Sa-OAuth2-Server 认证中心（前后端分离版）</h2>
+						<div class="from-item">
+							<input class="s-input" name="name" placeholder="请输入账号" />
+						</div>
+						<div class="from-item">
+							<input class="s-input" name="pwd" type="password" placeholder="请输入密码" />
+						</div>
+						<div class="from-item">
+							<button class="s-input s-btn login-btn" onclick="doLogin()">登录</button>
+						</div>
+						<div class="from-item reset-box">
+							<a href="javascript: location.reload();" >刷新</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 区域3：确认授权框 -->
+			<div class="content-box region-confirm">
+				<div class="login-box">
+					<div class="from-box">
+						<h2 class="from-title">Sa-OAuth2-Server 认证中心（前后端分离版）</h2><br>
+						<div>
+							<div><b>应用ID：</b><span class="show-clientId"></span></div>
+							<div><b>请求授权：</b><span class="show-scope"></span></div>
+							<br><br><div>------------- 是否同意授权 -------------</div><br>
+							<div>
+								<button class="confirm-btn" onclick="yes()">同意</button>
+								<button class="confirm-btn" onclick="no()">拒绝</button>
+							</div>
+							<div style="height: 10px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 底部 版权 -->
+			<div style="position: absolute; bottom: 40px; width: 100%; text-align: center; color: #666;">
+				This page is provided by Sa-Token-OAuth2  
+			</div>
+		</div>
+
+		<!-- scripts -->
+		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="./login.js"></script>
+		
+	</body>
+</html>

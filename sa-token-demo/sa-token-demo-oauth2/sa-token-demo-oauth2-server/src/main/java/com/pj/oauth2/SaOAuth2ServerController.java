@@ -40,7 +40,7 @@ public class SaOAuth2ServerController {
 		oauth2Server.doLoginHandle = (name, pwd) -> {
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
-				return SaResult.ok();
+				return SaResult.ok().set("satoken", StpUtil.getTokenValue());
 			}
 			return SaResult.error("账号名或密码错误");
 		};
