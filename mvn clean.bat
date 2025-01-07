@@ -24,6 +24,7 @@ cd sa-token-demo-springboot-redisson & call mvn clean & cd ..
 cd sa-token-demo-ssm & call mvn clean & cd ..
 cd sa-token-demo-test & call mvn clean & cd ..
 cd sa-token-demo-thymeleaf & call mvn clean & cd ..
+cd sa-token-demo-freemarker & call mvn clean & cd ..
 cd sa-token-demo-webflux & call mvn clean & cd ..
 cd sa-token-demo-webflux-springboot3 & call mvn clean & cd ..
 cd sa-token-demo-websocket & call mvn clean & cd ..

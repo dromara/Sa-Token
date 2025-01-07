@@ -1,0 +1,16 @@
+# 端口
+server:
+    port: 8081
+
+spring:
+    # Freemarker 相关配置
+    freemarker:
+        # 指定模板文件的目录
+        template-loader-path: classpath:/templates
+        # 指定Freemarker模板文件的后缀名
+        suffix: .ftl
+        # 关闭模板缓存，方便测试
+        cache: false
+        # 检查模板更新延迟时间，设置为0表示立即检查，如果时间大于0会有缓存不方便进行模板测试
+        settings:
+            template_update_delay: 0

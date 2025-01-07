@@ -1,12 +1,11 @@
 package com.pj.test;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
 
 /**
  * 测试 Controller
@@ -19,7 +18,7 @@ public class TestController {
 	// 首页 
 	@RequestMapping("/")
 	public Object index() {
-		return new ModelAndView("index.html");
+		return new ModelAndView("index");
 	}
 	
 	// 登录 

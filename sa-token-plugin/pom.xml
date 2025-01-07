@@ -28,6 +28,7 @@
         <module>sa-token-alone-redis</module>
         <module>sa-token-hutool-timed-cache</module>
         <module>sa-token-dialect-thymeleaf</module>
+        <module>sa-token-freemarker</module>
        	<module>sa-token-sso</module>
        	<module>sa-token-oauth2</module>
         <module>sa-token-quick-login</module>
