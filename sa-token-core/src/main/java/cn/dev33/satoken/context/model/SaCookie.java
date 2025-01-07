@@ -15,14 +15,16 @@
  */
 package cn.dev33.satoken.context.model;
 
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.util.SaFoxUtil;
+
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.util.SaFoxUtil;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Cookie Model，代表一个 Cookie 应该具有的所有参数
@@ -76,6 +78,13 @@ public class SaCookie {
      * 第三方限制级别（Strict=完全禁止，Lax=部分允许，None=不限制）
      */
 	private String sameSite;
+
+	// Cookie 属性参考文章：https://blog.csdn.net/fengbin2005/article/details/136544226
+
+	/**
+	 * 额外扩展属性
+	 */
+	private Map<String, String> extraAttrs = new LinkedHashMap<>();
 
 
 	/**
@@ -224,13 +233,73 @@ public class SaCookie {
 		return this;
 	}
 
+	/**
+	 * @return 获取额外扩展属性
+	 */
+	public Map<String, String> getExtraAttrs() {
+		return extraAttrs;
+	}
+
+	/**
+	 * 写入额外扩展属性
+	 * @param extraAttrs /
+	 * @return 对象自身
+	 */
+	public SaCookie setExtraAttrs(Map<String, String> extraAttrs) {
+		this.extraAttrs = extraAttrs;
+		return this;
+	}
+
+	/**
+	 * 追加扩展属性
+	 * @param name /
+	 * @param value /
+	 * @return 对象自身
+	 */
+	public SaCookie addExtraAttr(String name, String value) {
+		if (extraAttrs == null) {
+			extraAttrs = new LinkedHashMap<>();
+		}
+		this.extraAttrs.put(name, value);
+		return this;
+	}
+
+	/**
+	 * 追加扩展属性
+	 * @param name /
+	 * @return 对象自身
+	 */
+	public SaCookie addExtraAttr(String name) {
+		return this.addExtraAttr(name, null);
+	}
+
+	/**
+	 * 移除指定扩展属性
+	 * @param name /
+	 * @return 对象自身
+	 */
+	public SaCookie removeExtraAttr(String name) {
+		if(extraAttrs != null) {
+			this.extraAttrs.remove(name);
+		}
+		return this;
+	}
+
 
 	// toString
 	@Override
 	public String toString() {
-		return "SaCookie [name=" + name + ", value=" + value + ", maxAge=" + maxAge  + ", domain=" + domain + ", path=" + path
-				+ ", secure=" + secure + ", httpOnly=" + httpOnly + ", sameSite="
-				+ sameSite + "]";
+		return "SaCookie [" +
+				"name=" + name +
+				", value=" + value +
+				", maxAge=" + maxAge  +
+				", domain=" + domain +
+				", path=" + path
+				+ ", secure=" + secure +
+				", httpOnly=" + httpOnly +
+				", sameSite=" + sameSite +
+				", extraAttrs=" + extraAttrs +
+				"]";
 	}
 
 	/**
@@ -256,6 +325,7 @@ public class SaCookie {
 			throw new SaTokenException("无效Value：" + value).setCode(SaErrorCode.CODE_12003);
 		}
 
+		// example：
 		// Set-Cookie: name=value; Max-Age=100000; Expires=Tue, 05-Oct-2021 20:28:17 GMT; Domain=localhost; Path=/; Secure; HttpOnly; SameSite=Lax
 
 		StringBuilder sb = new StringBuilder();
@@ -285,6 +355,17 @@ public class SaCookie {
 		}
 		if(!SaFoxUtil.isEmpty(sameSite)) {
 			sb.append("; SameSite=").append(sameSite);
+		}
+
+		// 扩展属性
+		if(extraAttrs != null) {
+			extraAttrs.forEach((k, v) -> {
+				if(SaFoxUtil.isEmpty(v)) {
+					sb.append("; ").append(k);
+				} else {
+					sb.append("; ").append(k).append("=").append(v);
+				}
+			});
 		}
 
 		return sb.toString();

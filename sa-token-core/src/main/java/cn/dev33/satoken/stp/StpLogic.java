@@ -248,6 +248,7 @@ public class StpLogic {
 				.setSecure(cfg.getSecure())
 				.setHttpOnly(cfg.getHttpOnly())
 				.setSameSite(cfg.getSameSite())
+				.setExtraAttrs(cfg.getExtraAttrs())
 				;
 		SaHolder.getResponse().addCookie(cookie);
 	}

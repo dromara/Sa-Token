@@ -15,6 +15,9 @@
  */
 package cn.dev33.satoken.config;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Sa-Token Cookie写入 相关配置
  *
@@ -53,6 +56,12 @@ public class SaCookieConfig {
      * 第三方限制级别（Strict=完全禁止，Lax=部分允许，None=不限制）
      */
 	private String sameSite;
+
+	/**
+	 * 额外扩展属性
+	 */
+	private Map<String, String> extraAttrs = new LinkedHashMap<>();
+
 
 	/**
 	 * 获取：Cookie 作用域
@@ -140,11 +149,69 @@ public class SaCookieConfig {
 		return this;
 	}
 
+	/**
+	 * @return 获取额外扩展属性
+	 */
+	public Map<String, String> getExtraAttrs() {
+		return extraAttrs;
+	}
+
+	/**
+	 * 写入额外扩展属性
+	 * @param extraAttrs /
+	 * @return 对象自身
+	 */
+	public SaCookieConfig setExtraAttrs(Map<String, String> extraAttrs) {
+		this.extraAttrs = extraAttrs;
+		return this;
+	}
+
+	/**
+	 * 追加扩展属性
+	 * @param name /
+	 * @param value /
+	 * @return 对象自身
+	 */
+	public SaCookieConfig addExtraAttr(String name, String value) {
+		if (extraAttrs == null) {
+			extraAttrs = new LinkedHashMap<>();
+		}
+		this.extraAttrs.put(name, value);
+		return this;
+	}
+
+	/**
+	 * 追加扩展属性
+	 * @param name /
+	 * @return 对象自身
+	 */
+	public SaCookieConfig addExtraAttr(String name) {
+		return this.addExtraAttr(name, null);
+	}
+
+	/**
+	 * 移除指定扩展属性
+	 * @param name /
+	 * @return 对象自身
+	 */
+	public SaCookieConfig removeExtraAttr(String name) {
+		if(extraAttrs != null) {
+			this.extraAttrs.remove(name);
+		}
+		return this;
+	}
+
 	// toString 
 	@Override
 	public String toString() {
-		return "SaCookieConfig [domain=" + domain + ", path=" + path + ", secure=" + secure + ", httpOnly=" + httpOnly
-				+ ", sameSite=" + sameSite + "]";
+		return "SaCookieConfig [" +
+				"domain=" + domain +
+				", path=" + path +
+				", secure=" + secure +
+				", httpOnly=" + httpOnly +
+				", sameSite=" + sameSite +
+				", extraAttrs=" + extraAttrs +
+				"]";
 	}
 	
 }
