@@ -81,10 +81,28 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 /* 其它平台链接 */
 .qt-pt-box{margin-top: 40px;}
 .qt-pt-box a{text-decoration: none; margin-right: 20px;}
-.qt-pt-box a img{/* width: 130px; */ height: 40px; transition: all 0.2s !important;}
+.qt-pt-box>a img{height: 40px;}
+.qt-pt-box a img{/* width: 130px; */ /* height: 40px; */ transition: all 0.2s !important;}
 .qt-pt-box a img:hover{transform: scale(1.1, 1.1);}
 /* .img-gitcode{width: 140px;} */
 
+/* 多媒体平台 */
+.qt-pt-box .dmt-link{ }
+.qt-pt-box .dmt-img{width: 40px; height: 40px; }
+.qt-pt-box .dmt-tips{ vertical-align: 100%; color: #888; font-size: 12px; margin-left: 5px; }
+.dmt-detail h4{padding-top: 10px; padding-bottom: 20px;}
+/* 悬浮时展开 */
+.dmt-link{display: inline-block; position: relative;}
+.dmt-detail{position: absolute; transform: translate(-300px, 0px); background-color: #FFF; overflow: hidden; display: none; transition: all 0.2s;}
+.dmt-link:hover .dmt-detail{display: block; }
+.dmt-detail{padding: 30px; padding-top: 15px; border: 1px #ccc solid;}
+.dmt-item-box{display: flex; width: 600px;}
+.dmt-detail .dmt-item{width: 200px; flex: 1; text-align: center; cursor: pointer;}
+.dmt-item .dmt-qr-img{ max-width: 180px; }
+.dmt-item .dmt-logo-img{ max-width: 180px; max-height: 50px; margin-top: 10px;}
+.dmt-item-douyin,.dmt-item-wxsph{ margin-top: 15px; }
+.dmt-item-bilibili .dmt-logo-img{margin-top: 20px;}
+.dmt-item-wxsph .dmt-logo-img{margin-top: 15px;}
 
 /* 微信二维码 */
 .wx-qr-box{margin-top: 50px;}
