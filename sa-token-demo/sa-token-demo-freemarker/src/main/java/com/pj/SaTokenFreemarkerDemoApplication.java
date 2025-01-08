@@ -4,6 +4,9 @@ import cn.dev33.satoken.SaManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * 参考链接：https://blog.csdn.net/m0_64210833/article/details/135994864
+ */
 @SpringBootApplication
 public class SaTokenFreemarkerDemoApplication {
 	

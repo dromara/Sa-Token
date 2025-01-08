@@ -33,6 +33,12 @@ import java.util.function.Function;
  */
 public class SaTokenTemplateDirectiveModel implements TemplateDirectiveModel {
 
+    /*
+     * 参考资料：
+     *  - https://blog.csdn.net/m0_64210833/article/details/135994864
+     *  - https://blog.csdn.net/qq_35752835/article/details/111321893
+     */
+
     /**
      * 使用标签指令模板时，指定值的属性名
      */
