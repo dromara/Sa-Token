@@ -1300,4 +1300,48 @@ var donateList = [
 		"msg": '小小心意，群主请受纳',
 		"date": "2024-11-19"
 	},
+	{
+		"name": "cunyun",
+		"link": "https://gitee.com/cunyun",
+		"money": 1.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-11-27"
+	},
+	{
+		"name": "guwq",
+		"link": "https://gitee.com/guweiqiang2016",
+		"money": 10.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2024-12-05"
+	},
+	{
+		"name": "kingkick",
+		"link": "https://gitee.com/kingkick",
+		"money": 10.0,
+		"msg": '文档真好！学习到不止是 Sa-Token 框架本身，更是绝大多数场景下权限设计的最佳实践。',
+		"date": "2024-12-12"
+	},
+	{
+		"name": "JavaBean",
+		"link": "https://gitee.com/DearShengGe",
+		"money": 6.6,
+		"msg": '跟着Sa的文档一点点理解仿佛有位老师在带领着一步步去学，尤其是SSO单点登录部分！好东西不能被埋没！',
+		"date": "2024-12-19"
+	},
+	{
+		"name": "焱枫",
+		"link": "https://gitee.com/dellibrunaway",
+		"money": 10.0,
+		"msg": '开心快乐每一天',
+		"date": "2024-12-20"
+	},
+	{
+		"name": "dmyi",
+		"link": "https://gitee.com/dmyi",
+		"money": 20.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2025-01-03"
+	},
+	
+	
 ]
