@@ -1342,6 +1342,13 @@ var donateList = [
 		"msg": '感谢您的开源项目！',
 		"date": "2025-01-03"
 	},
+	{
+		"name": "费雷",
+		"link": "https://gitee.com/feileier",
+		"money": 20.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2025-01-09"
+	},
 	
 	
 ]
