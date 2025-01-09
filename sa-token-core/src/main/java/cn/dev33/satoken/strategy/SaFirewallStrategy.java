@@ -53,11 +53,13 @@ public final class SaFirewallStrategy {
 	 * 请求 path 不允许出现的字符
 	 */
 	public String[] INVALID_CHARACTER = {
-			"//", "\\",
+			"//",           // //
+			"\\",			// \
 			"%2e", "%2E",	// .
 			"%2f", "%2F",	// /
 			"%5c", "%5C",	// \
-			"%25"	// 空格
+			";", "%3b", "%3B",	// ;    // 参考资料：https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA
+			"%25"			// 空格
 	};
 
 	/**
