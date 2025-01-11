@@ -15,10 +15,12 @@
  */
 package cn.dev33.satoken.stp;
 
+import cn.dev33.satoken.model.wrapperInfo.SaDisableWrapperInfo;
+
 import java.util.List;
 
 /**
- * 权限数据加载源接口
+ * 权限数据源加载接口
  *
  * <p>
  *     在使用权限校验 API 之前，你必须实现此接口，告诉框架哪些用户拥有哪些权限。<br>
@@ -47,5 +49,16 @@ public interface StpInterface {
 	 * @return 该账号id具有的角色标识集合
 	 */
 	List<String> getRoleList(Object loginId, String loginType);
+
+	/**
+	 * 返回指定账号 id 是否被封禁
+	 *
+	 * @param loginId  账号id
+	 * @param service 业务标识符
+	 * @return 描述该账号是否封禁的包装信息对象
+	 */
+	default SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+		return SaDisableWrapperInfo.createNotDisabled();
+	}
 
 }

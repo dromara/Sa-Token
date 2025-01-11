@@ -29,6 +29,7 @@ import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
+import cn.dev33.satoken.model.wrapperInfo.SaDisableWrapperInfo;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -2413,8 +2414,8 @@ public class StpLogic {
 		if(SaFoxUtil.isEmpty(service)) {
 			throw new SaTokenException("请提供要封禁的服务").setCode(SaErrorCode.CODE_11063);
 		}
-		if(level < SaTokenConsts.MIN_DISABLE_LEVEL) {
-			throw new SaTokenException("封禁等级不可以小于最小值：" + SaTokenConsts.MIN_DISABLE_LEVEL).setCode(SaErrorCode.CODE_11064);
+		if(level < SaTokenConsts.MIN_DISABLE_LEVEL && level != 0) {
+			throw new SaTokenException("封禁等级不可以小于最小值：" + SaTokenConsts.MIN_DISABLE_LEVEL + " (0除外)").setCode(SaErrorCode.CODE_11064);
 		}
 
 		// 打上封禁标记
@@ -2473,13 +2474,12 @@ public class StpLogic {
 	 */
 	public void checkDisableLevel(Object loginId, String service, int level) {
 		// 1、先前置检查一下这个账号是否被封禁了
-		String value = getSaTokenDao().get(splicingKeyDisable(loginId, service));
-		if(SaFoxUtil.isEmpty(value)) {
+		int disableLevel = getDisableLevel(loginId, service);
+		if(disableLevel == SaTokenConsts.NOT_DISABLE_LEVEL) {
 			return;
 		}
 
 		// 2、再判断被封禁的等级是否达到了指定级别
-		Integer disableLevel = SaFoxUtil.getValueByType(value, int.class);
 		if(disableLevel >= level) {
 			throw new DisableServiceException(loginType, loginId, service, disableLevel, level, getDisableTime(loginId, service))
 					.setCode(SaErrorCode.CODE_11061);
@@ -2504,14 +2504,22 @@ public class StpLogic {
 	 * @return / 
 	 */
 	public int getDisableLevel(Object loginId, String service) {
-		// 1、判断是否被封禁了，如果尚未被封禁，返回-2
+		// 1、先从缓存中查询数据，缓存中有值，以缓存值优先
 		String value = getSaTokenDao().get(splicingKeyDisable(loginId, service));
-		if(SaFoxUtil.isEmpty(value)) {
-			return SaTokenConsts.NOT_DISABLE_LEVEL;
+		if(SaFoxUtil.isNotEmpty(value)) {
+			return SaFoxUtil.getValueByType(value, int.class);
 		}
 
-		// 2、转为 int 类型返回
-		return SaFoxUtil.getValueByType(value, int.class);
+		// 2、如果缓存中无数据，则从"数据加载器"中再次查询
+		SaDisableWrapperInfo disableWrapperInfo = SaManager.getStpInterface().isDisabled(loginId, service);
+
+		// 如果返回值 disableTime 有效，则代表返回结果需要写入缓存
+		if(disableWrapperInfo.disableTime == SaTokenDao.NEVER_EXPIRE || disableWrapperInfo.disableTime > 0) {
+			disableLevel(loginId, service, disableWrapperInfo.disableLevel, disableWrapperInfo.disableTime);
+		}
+
+		// 返回查询结果
+		return disableWrapperInfo.disableLevel;
 	}
 
 	
