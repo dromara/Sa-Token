@@ -231,6 +231,70 @@ public SaResult send() {
 ```
 
 
+### 5、封禁信息持久化
+
+Sa-Token 默认将封禁信息储存在缓存中，缓存中的数据是“临时性的”、“易丢失的”，而在大多数系统的设计中，需要将封禁数据持久化到数据库中。
+
+要使封禁信息持久化，你只需要在调用 Sa-Token 的封禁 API 后，再继续调用插入数据库的代码即可，形如：
+
+``` java
+// 在 Sa-Token 框架中封禁指定账号
+StpUtil.disable(10001, 86400); 
+
+// 更改数据库中此人信息 (举例代码)
+userMapper.disableUser(10001);
+```
+
+这样即可保证封禁数据同步插入到缓存和数据库中，但是还有一个问题，如果我们的程序或缓存中间件重启了，导致缓存数据丢失，
+那再调用 `StpUtil.checkDisable(10001)` 代码将没有效果，无法约束到此用户。
+
+比较次的解决方案是在程序启动时，读取数据库中所有封禁信息同步到缓存中去，但是如果封禁记录较多这样将会严重拖慢程序启动时间。
+
+Sa-Token 提供一种方案，可以在你调用 `StpUtil.checkDisable(10001)` 校验封禁时才会触发查询数据库 10001 账号到底有没有被封禁。
+你只需要实现 `StpInterface` 的 `isDisabled` 方法即可，例：
+
+``` java
+@Component
+public class StpInterfaceImpl implements StpInterface {
+
+	/**
+	 * 返回指定账号 id 是否被封禁
+	 *
+	 * @param loginId  账号id
+	 * @param service 业务标识符
+	 * @return 描述该账号是否封禁的包装信息对象
+	 */
+	public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+		// 查库操作 ...  (此处仅做示例代码)
+		return SaDisableWrapperInfo.createDisabled(86400, 1);
+	}
+
+}
+```
+
+该方法返回一个 `SaDisableWrapperInfo` 实例对象，用来描述指定账号是否已被封禁，一般有以下几种写法：
+``` java
+// 标准写法：new 对象返回，参数为：是否被封禁、封禁时间(秒)、封禁等级
+public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+	return new SaDisableWrapperInfo(true, 86400, 1);
+}
+
+// 快捷写法：被封禁，解封倒计时86400秒，封禁等级1
+public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+	return SaDisableWrapperInfo.createDisabled(86400, 1);
+}
+
+// 快捷写法：未被封禁 
+public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+	return SaDisableWrapperInfo.createNotDisabled();
+}
+
+// 快捷写法：未被封禁，且将查询结果保存到缓存中，ttl为86400，改时间内不再重复进入 isDisabled 方法 
+public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+	return SaDisableWrapperInfo.createNotDisabled(86400);
+}
+```
+
 
 --- 
 
