@@ -6,6 +6,10 @@
 --- 
 
 
+
+
+- [[ 公众号 ] sa-token之@SaIgnore注解失效的真正原因及正确姿势](https://mp.weixin.qq.com/s/c6eckHp2M4oz2x3Hea6pGg) （2025-1-15）
+
 - [[ 公众号 ] 集成sa-token前后端分离部署配置corsFliter解决跨域失效的真正原因](https://mp.weixin.qq.com/s/bSS4vmKlKM7ov_CUkjxkBg) （2024-07-08）
 
 - [[ 公众号 ] sa-token前后端分离解决跨域的正确姿势](https://mp.weixin.qq.com/s/96WbWL28T5_-xzyCfJ7Stg) （2024-07-06）
