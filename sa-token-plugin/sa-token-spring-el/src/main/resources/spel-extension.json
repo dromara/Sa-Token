@@ -1,0 +1,15 @@
+{
+  "cn.dev33.satoken.annotation.SaCheckEL@value": {
+    "method": {
+      "parameters": true,
+      "parametersPrefix": [
+        "p",
+        "a"
+      ]
+    },
+    "fields": {
+      "root": "cn.dev33.satoken.aop.SaCheckELRootMap",
+      "stp": "cn.dev33.satoken.stp.StpLogic"
+    }
+  }
+}

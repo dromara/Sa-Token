@@ -120,6 +120,15 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     	SaAnnotationStrategy.instance.getAnnotation = (element, annotationClass) -> {
     		return AnnotatedElementUtils.getMergedAnnotation(element, annotationClass);
     	};
+
+		// 重写 SaCheckELRootMap 扩展函数，增加注解鉴权 EL 表达式可使用的根对象
+		SaAnnotationStrategy.instance.checkELRootMapExtendFunction = rootMap -> {
+			System.out.println("--------- 执行 SaCheckELRootMap 增强，目前已包含的的跟对象包括：" + rootMap.keySet());
+			// 新增 stpUser 根对象，使之可以在表达式中通过 stpUser.checkLogin() 方式进行多账号体系鉴权
+			rootMap.put("stpUser", StpUserUtil.getStpLogic());
+		};
     }
-    
+
+
+
 }

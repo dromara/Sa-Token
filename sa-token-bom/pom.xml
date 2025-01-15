@@ -181,6 +181,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-el</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-sso</artifactId>
                 <version>${revision}</version>
             </dependency>
