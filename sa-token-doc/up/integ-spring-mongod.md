@@ -1,9 +1,9 @@
 # Sa-Token 集成 MongoDB 
 --- 
 
-官方已经有了[集成 Redis](/up/integ-redis)的教程，此章介绍如何通过扩展`SaTokenDao`接口来实现MongodDB的集成。
+此章介绍如何通过扩展 `SaTokenDao` 接口来实现 MongodDB 的集成。
 
-[示例代码sa-token-mongodb-demo](https://gitee.com/lilihao/sa-token-mongodb-demo)
+[示例代码：sa-token-mongodb-demo](https://gitee.com/lilihao/sa-token-mongodb-demo)
 
 先决条件：
 1. Spring Boot 3

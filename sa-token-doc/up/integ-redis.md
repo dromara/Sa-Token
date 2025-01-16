@@ -145,7 +145,11 @@ spring.redis.lettuce.pool.min-idle=0
 Sa-Token-Redis 集成包的版本尽量与 Sa-Token-Starter 集成包的版本一致，否则可能出现兼容性问题。
 
 
-<br><br>
-更多框架的集成方案正在更新中...
+<!-- <br><br>
+更多框架的集成方案正在更新中... -->
 
+
+### 扩展：集成 MongoDB 
+
+由 `@lilihao` 提供的 MongoDB 集成示例，参考：[集成 Spring MongodDB](/up/integ-spring-mongod)
 

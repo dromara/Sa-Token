@@ -19,7 +19,6 @@
 
 - **深入**
 	- [集成 Redis](/up/integ-redis)
-	- [集成 Spring MongodDB](/up/integ-spring-mongod)
 	- [前后端分离](/up/not-cookie) 
 	- [自定义 Token 风格](/up/token-style) 
 	- [自定义 Token 前缀](/up/token-prefix) 
