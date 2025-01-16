@@ -1356,6 +1356,13 @@ var donateList = [
 		"msg": '感谢您的开源项目！',
 		"date": "2025-01-10"
 	},
+	{
+		"name": "阡陌兮",
+		"link": "https://gitee.com/i_kang",
+		"money": 9.9,
+		"msg": '感谢您的开源项目！',
+		"date": "2025-01-16"
+	},
 	
 	
 ]
