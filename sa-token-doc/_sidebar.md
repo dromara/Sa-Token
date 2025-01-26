@@ -132,6 +132,8 @@
 	- [解决反向代理 uri 丢失的问题](/fun/curr-domain)
 	- [解决跨域问题](/fun/cors-filter)
 	- [技术选型：SSO 与 OAuth2 对比](/fun/sso-vs-oauth2)
+	- [集成 MongoDB 参考一](/up/integ-spring-mongod-1)
+	- [集成 MongoDB 参考二](/up/integ-spring-mongod-2)
 	<!-- - [框架源码所有技术栈](/fun/tech-stack) -->
 	- [从 Shiro、SpringSecurity、JWT 迁移](/fun/auth-framework-function-test)
 	- [issue 提问模板](/fun/issue-template)

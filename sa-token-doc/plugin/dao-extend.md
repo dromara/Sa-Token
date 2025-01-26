@@ -19,10 +19,10 @@
 有关 Redis 集成，详细参考：[集成Redis](/up/integ-redis)，更多存储方式欢迎提交PR 
 
 
-**扩展：**
+**扩展：集成 MongoDB**
 
-由 `@lilihao` 提供的 MongoDB 集成示例，参考：[集成 Spring MongodDB](/up/integ-spring-mongod)
-
+- [集成 MongoDB 参考一](/up/integ-spring-mongod-1)
+- [集成 MongoDB 参考二](/up/integ-spring-mongod-2)
 
 
 
