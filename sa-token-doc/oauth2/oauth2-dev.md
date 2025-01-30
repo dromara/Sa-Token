@@ -36,6 +36,19 @@ SaOAuth2Util.isGrantScope(loginId, clientId, scopes);
 ```
 
 
+### Code 相关
+``` java
+// 获取 CodeModel，无效的 code 会返回 null
+SaOAuth2Util.getCode(code);
+
+// 校验 Code，成功返回 CodeModel，失败则抛出异常
+SaOAuth2Util.checkCode(code);
+
+// 获取 Code，根据索引： clientId、loginId
+SaOAuth2Util.getCodeValue(clientId, loginId);
+```
+
+
 ### Access-Token 相关
 ``` java
 // 获取 AccessTokenModel，无效的 AccessToken 会返回 null

@@ -230,18 +230,37 @@ clientId + loginId 反查 code
 
 ``` js
 {
-  "@class": "cn.dev33.satoken.oauth2.model.AccessTokenModel",    // java class 信息
-  "accessToken": "CqRVp2HrgyklE0BXYWszskGJWAGY7xhGu9Zaco4zJECzGYagCCFWj0jOlHoU",    // 资源令牌值
-  "refreshToken": "EAubykIqRLwbvvi0wfZqnWxoC1bLhPguIfTqX3S1aoTe6pCLKsV9jU3OEI8U",    // 刷新令牌值
-  "expiresTime": 1722422031510,    // 资源令牌到期时间
-  "refreshExpiresTime": 1725006831511,    // 刷新令牌到期时间
+  "@class": "cn.dev33.satoken.oauth2.data.model.AccessTokenModel",    // java class 信息
+  "accessToken": "Pu3t55dJIgvkmVoHz50FqaVQOJ6Flggjr2eHTiS74Ooai8e3nNyYPq78K80P",    // 资源令牌值
+  "refreshToken": "baGyl6PHK304tPojnpxd1SpW12oJcOGv7gFaDAAkjLWbJG1J1WLUIGobsw7m",    // 刷新令牌值
+  "expiresTime": 1738280553695,    // 资源令牌到期时间
+  "refreshExpiresTime": 1740865353760,    // 刷新令牌到期时间
   "clientId": "1001",    // 对应的应用id
   "loginId": "10001",    // 对应的loginId
-  "openid": "gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__",    // 对应的 openid
-  "scope": "",    // 所具有的权限列表，多个用逗号隔开
-  "expiresIn": 7199,    // 资源令牌剩余有效时间，单位秒
-  "refreshExpiresIn": 2592000    // 刷新令牌剩余有效时间，单位秒
+  "scopes": [   // 所具有的权限列表 
+    "java.util.ArrayList",
+    [
+      "userinfo",
+      "userid",
+      "openid",
+      "unionid",
+      "oidc"
+    ]
+  ],
+  "tokenType": "bearer",   // tokenType 
+  "grantType": "authorization_code",   // 授权方式 
+  "extraData": {   // 扩展数据  
+    "@class": "java.util.LinkedHashMap",
+    "userid": "10001",
+    "openid": "ded91dc189a437dd1bac2274be167d50",
+    "unionid": "11d48faa74c4e5f19355ccc53c1c5c7a",
+    "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vc2Etb2F1dGgtc2VydmVyLmNvbTo4MDAwIiwic3ViIjoiMTAwMDEiLCJhdWQiOiIxMDAxIiwiZXhwIjoxNzM4MjczOTUzLCJpYXQiOjE3MzgyNzMzNTMsImF1dGhfdGltZSI6MTczODI3MzM0Miwibm9uY2UiOiJZQTlPQjJzYkpGanZkUlFjN0E3V1pnTUFhTDFVRjE5OSIsImF6cCI6IjEwMDEifQ.pvoj6CR7tdhOblvYJoGUfvam9egSiL5Uw3tflLLMb5g"
+  },
+  "createTime": 1738273353694,   // 创建时间   
+  "expiresIn": 7199    // 资源令牌剩余有效时间，单位秒
+  "refreshExpiresIn": 2592000,    // 刷新令牌剩余有效时间，单位秒
 }
+
 ```
 
 </details>
@@ -264,13 +283,29 @@ clientId + loginId 反查 Access-Token
 
 ``` js
 {
-  "@class": "cn.dev33.satoken.oauth2.model.RefreshTokenModel",    // java class 信息
-  "refreshToken": "EAubykIqRLwbvvi0wfZqnWxoC1bLhPguIfTqX3S1aoTe6pCLKsV9jU3OEI8U",    // 刷新令牌值
-  "expiresTime": 1725006831511,   // 刷新令牌到期时间
+  "@class": "cn.dev33.satoken.oauth2.data.model.RefreshTokenModel",    // java class 信息
+  "refreshToken": "baGyl6PHK304tPojnpxd1SpW12oJcOGv7gFaDAAkjLWbJG1J1WLUIGobsw7m",    // 刷新令牌值
+  "expiresTime": 1740865353760,   // 刷新令牌到期时间
   "clientId": "1001",    // 对应的应用id
-  "scope": "",    // 所具有的权限列表，多个用逗号隔开
   "loginId": "10001",    // 对应的loginId
-  "openid": "gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__",    // 对应的 openid
+  "scopes": [    // 所具有的权限列表 
+    "java.util.ArrayList",
+    [
+      "userinfo",
+      "userid",
+      "openid",
+      "unionid",
+      "oidc"
+    ]
+  ],
+  "extraData": {   // 扩展数据  
+    "@class": "java.util.LinkedHashMap",
+    "userid": "10001",
+    "openid": "ded91dc189a437dd1bac2274be167d50",
+    "unionid": "11d48faa74c4e5f19355ccc53c1c5c7a",
+    "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vc2Etb2F1dGgtc2VydmVyLmNvbTo4MDAwIiwic3ViIjoiMTAwMDEiLCJhdWQiOiIxMDAxIiwiZXhwIjoxNzM4MjczOTUzLCJpYXQiOjE3MzgyNzMzNTMsImF1dGhfdGltZSI6MTczODI3MzM0Miwibm9uY2UiOiJZQTlPQjJzYkpGanZkUlFjN0E3V1pnTUFhTDFVRjE5OSIsImF6cCI6IjEwMDEifQ.pvoj6CR7tdhOblvYJoGUfvam9egSiL5Uw3tflLLMb5g"
+  },
+  "createTime": 1738273353760,   // 创建时间   
   "expiresIn": 2591999    // 刷新令牌剩余有效时间，单位秒
 }
 ```
@@ -295,12 +330,27 @@ clientId + loginId 反查 Refresh-Token
 
 ``` js
 {
-  "@class": "cn.dev33.satoken.oauth2.model.ClientTokenModel",    // java class 信息
-  "clientToken": "fWQjBKxprSslmYFLbzen0oa95rOvqnqYKZW3sD8mzamNbabG8b6MPKPP5uCu",    // 应用令牌值 
-  "expiresTime": 1722425237153,    // 应用令牌到期时间
+  "@class": "cn.dev33.satoken.oauth2.data.model.ClientTokenModel",    // java class 信息
+  "clientToken": "lIpS3fKEACKMFauEWVpR7Zmzh7SoFetPVuB9aDzISnqzHKu8R3OwpWFy5nLv",    // 应用令牌值 
+  "expiresTime": 1738280930646,    // 应用令牌到期时间
   "clientId": "1001",    // 对应的应用id
-  "scope": null,    // 所具有的权限列表，多个用逗号隔开
-  "expiresIn": 7200    // 应用令牌剩余有效时间，单位秒
+  "scopes": [    // 所具有的权限列表 
+    "java.util.ArrayList",
+    [
+      "userinfo",
+      "userid",
+      "openid",
+      "unionid",
+      "oidc"
+    ]
+  ],
+  "tokenType": "bearer",   // tokenType   
+  "grantType": "client_credentials",   // 授权类型    
+  "extraData": {   // 扩展数据
+    "@class": "java.util.LinkedHashMap"
+  },
+  "createTime": 1738273730646,   // 创建时间   
+  "expiresIn": 7199    // 应用令牌剩余有效时间，单位秒
 }
 ```
 

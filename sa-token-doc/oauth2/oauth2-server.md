@@ -257,7 +257,7 @@ http://sa-oauth-server.com:8000/oauth2/token?grant_type=authorization_code&clien
 测试完毕
 
 
-### 5、运行官方示例 
+### 5、运行官方示例
 以上代码只是简单模拟了一下OAuth2.0的授权流程，现在，我们运行一下官方示例，里面有制作好的UI界面
 
 - OAuth2-Server端： `/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-server/` [源码链接](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-server) <br/>
@@ -268,5 +268,21 @@ http://sa-oauth-server.com:8000/oauth2/token?grant_type=authorization_code&clien
 ![sa-oauth2-client-index](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-client-index.png 's-w-sh')
 
 如图，可以针对OAuth2.0四种模式进行详细测试 
+
+
+
+### 6、OAuth2 前端测试页
+
+OAuth2 前端测试页： 
+`/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-client-h5/` 
+[源码链接](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-client-h5) <br/>
+
+此示例允许你在前端自由配置 OAuth-Client 端所需的各个参数，方便对 OAuth2 四种模式的测试。
+
+![sa-oauth2-client-index](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-client-test-h5-page.png 's-w-sh')
+
+<p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV13LSMYzEmE/" target="_blank">
+	参考视频：OAuth2 四种模式 前端测试页
+</a></p>
 
 

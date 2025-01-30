@@ -1,5 +1,8 @@
 # OpenId 与 UnionId
 
+<p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV1oz6AY5ERJ/" target="_blank">
+	参考视频：OAuth2 授权流程中的 clientId、openId、unionId、userId 都是干嘛的？
+</a></p>
 
 
 ### 1、OpenId 
@@ -181,8 +184,6 @@ unionid 算法要求与 openid 基本一致，可参考上述 openid 算法要�
 | clientid     	| 第三方公司在 oauth2-server 开放平台申请的应用，其唯一标识			|
 | openid       	| 用户在某个应用下的唯一标识										|
 | unionid      	| 用户在某一组应用下的唯一标识	（按照主体id分组）					|
-
-
 
 
 

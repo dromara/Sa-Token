@@ -155,6 +155,8 @@ Cookie相关配置：
 | secure		| Boolean	| false		| 是否只在 https 协议下有效												|
 | httpOnly		| Boolean	| false		| 是否禁止 js 操作 Cookie 	|
 | sameSite		| String	| Lax		| 第三方限制级别（Strict=完全禁止，Lax=部分允许，None=不限制）		|
+| extraAttrs	| String	| new LinkedHashMap()		| 额外扩展属性		|
+
 
 Cookie 配置示例：
 
@@ -165,20 +167,37 @@ Cookie 配置示例：
 sa-token: 
     # Cookie 相关配置 
     cookie: 
+		# 基础属性 
         domain: stp.com
         path: /
         secure: false
 		httpOnly: true
 		sameSite: Lax
+        # 额外扩展属性
+        extraAttrs:
+            # Cookie 优先级
+            Priority: Medium
+            # Cookie 独立分区
+            Partitioned: ""
+            # 可以是任意键值对
+            # abc: def
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # Cookie 相关配置 
+# ---- 基础属性
 sa-token.cookie.domain=stp.com
 sa-token.cookie.path=/
 sa-token.cookie.secure=false
 sa-token.cookie.httpOnly=true
 sa-token.cookie.sameSite=Lax
+# ---- 额外扩展属性
+# Cookie 优先级
+sa-token.cookie.extraAttrs.Priority=Medium
+# Cookie 独立分区
+sa-token.cookie.extraAttrs.Partitioned=""
+# 可以是任意键值对
+# sa-token.cookie.extraAttrs.abc=def
 ```
 <!---------------------------- tabs:end ---------------------------->
 
