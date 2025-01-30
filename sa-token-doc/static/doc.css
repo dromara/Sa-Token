@@ -485,6 +485,10 @@ body {
 .syzz-show-btn{border: 1px #ccc solid; padding: 5px 10px; background-color: #FFF; color: #666; cursor: pointer;}
 .syzz-show-btn:hover{box-shadow: 0 0 10px #ddd;}
 
+/* ********** 团队成员名单 ******** */
+.markdown-section .team-table{ display: table; text-align: left; }
+.team-table img{ width: 45px; height: 45px; }
+
 /* ajax加载时的转圈圈样式 */
 .ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}
 .ajax-layer-load.layui-layer-dialog .layui-layer-content{padding: 10px 20px 10px 40px; color: #FFF;}

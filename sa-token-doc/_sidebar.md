@@ -139,6 +139,7 @@
 	- [issue 提问模板](/fun/issue-template)
 	- [为Sa-Token贡献代码](/fun/git-pr)
 	- [Sa-Token开源大事记](/fun/timeline)
+	- [团队成员](/fun/team)
 	- [Sa-Token框架掌握度--在线考试](/fun/sa-token-test)
 	
 
