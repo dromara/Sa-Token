@@ -42,17 +42,17 @@ public final class SaFirewallStrategy {
 	/**
 	 * 请求 path 黑名单
 	 */
-	public String[] BLACK_PATHS = {};
+	public String[] blackPaths = {};
 
 	/**
 	 * 请求 path 白名单
 	 */
-	public String[] WHITE_PATHS = {};
+	public String[] whitePaths = {};
 
 	/**
 	 * 请求 path 不允许出现的字符
 	 */
-	public String[] INVALID_CHARACTER = {
+	public String[] invalidCharacter = {
 			"//",           // //
 			"\\",			// \
 			"%2e", "%2E",	// .
@@ -67,14 +67,14 @@ public final class SaFirewallStrategy {
 	 */
 	public SaCheckRequestPathFunction checkRequestPath = (requestPath, extArg1, extArg2) -> {
 		// 1、如果在白名单里，则直接放行
-		for (String item : WHITE_PATHS) {
+		for (String item : whitePaths) {
 			if (requestPath.equals(item)) {
 				return;
 			}
 		}
 
 		// 2、如果在黑名单里，则抛出异常
-		for (String item : BLACK_PATHS) {
+		for (String item : blackPaths) {
 			if (requestPath.equals(item)) {
 				throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
 			}
@@ -87,7 +87,7 @@ public final class SaFirewallStrategy {
 			throw new RequestPathInvalidException("非法请求：null", null);
 		}
 		// 不允许包含非法字符
-		for (String item : INVALID_CHARACTER) {
+		for (String item : invalidCharacter) {
 			if (requestPath.contains(item)) {
 				throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
 			}
