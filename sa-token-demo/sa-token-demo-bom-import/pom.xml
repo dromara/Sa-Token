@@ -16,7 +16,7 @@
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token.version>1.39.0</sa-token.version>
+		<sa-token.version>1.40.0</sa-token.version>
 	</properties>
 
 	<dependencies>
@@ -73,7 +73,7 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-bom</artifactId>
-				<version>1.39.0</version>
+				<version>1.40.0</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

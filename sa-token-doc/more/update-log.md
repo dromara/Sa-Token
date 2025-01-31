@@ -1,5 +1,48 @@
 # 更新日志 
 
+
+### v1.40.0 @2025-2-1
+- core: 
+	- 新增：新增 `Cookie` 自定义属性支持。  fix: [#693](https://github.com/dromara/Sa-Token/issues/693)   **[重要]** 
+	- 修复：新增对分号字符的 path 路径校验。   参考：[Sa-Token对url过滤不全存在的风险点](https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA)   **[漏洞修复]** 
+	- 新增：`SaFirewallStrategy` 防火墙策略：请求 path 黑名单校验、非法字符校验、白名单放行。
+	- 修复: 修复部分场景下登录后已存在的 `token-session` 没有被续期的问题。  fix: [#IA8U1O](https://gitee.com/dromara/sa-token/issues/IA8U1O)
+	- 优化：优化 `active-timeout` 的检查与续期操作，同一请求内只会检查与续期一次。
+	- 修复：`SaFoxUtil.joinSharpParam` 方法中不正确的注释。
+	- 新增：封禁模块新增支持实时从数据库查询数据。
+- SSO：
+	- 优化：SSO 示例代码的跨域处理由原生方式改为 Sa-Token 过滤器模式。
+	- 新增：文档新增 “SSO整合 - NoSdk 模式与非 java 项目” 章节。
+	- 新增：“不同 SSO Client 配置不同秘钥” 章节增加部分异常的处理方案提示，fix: [#IAFZXL](https://gitee.com/dromara/sa-token/issues/IAFZXL)
+	- 删除：sso demo 示例中部分不必要的代码内容。
+- OAuth2：
+	- 新增：OAuth2 Client 前端测试页。   **[重要]**
+	- 新增：`UnionId` 联合id 实现。   **[重要]** 
+	- 新增：`oauth2-server` 端前后台分离示例与文档。    **[重要]**
+	- 新增：`OIDC` 模式 `nonce` 随机数响应校验。 merge: [pr311](https://gitee.com/dromara/sa-token/pulls/311)
+	- 修复：错误方法名 `deleteGrantScope(String state)` -> `deleteState(String state)`。
+	- 修复：全局配置项 `sa-token.oauth2-server.oidc.iss` 无效的问题。
+	- 新增：回收 Refresh-Token 方法: `revokeRefreshToken`、`revokeRefreshTokenByIndex`。
+	- 新增：为 `CodeModel`、`AccessTokenModel`、`RefreshTokenModel`、`ClientTokenModel` 添加 `createTime` 字段，以记录该数据的创建时间。
+	- 新增：为 Access-Token、Client-Token 添加 `grantType` 字段，以记录该数据的授权类型。
+	- 新增：`SaOAuth2Util.getCode` 等方法，以更方便的获取、校验授权码。
+- 插件：
+	- 新增：新增 `sa-token-freemarker` 插件，整合 `Freemarker` 视图引擎。 fix: [#651](https://github.com/dromara/sa-token/issues/651)   **[重要]**
+	- 新增：新增 `sa-token-spring-el` 插件，用于支持 SpEL 表达式注解鉴权。 fix: [#IB3GBB](https://gitee.com/dromara/sa-token/issues/IB3GBB)、fix: [#IAIXSL](https://gitee.com/dromara/sa-token/issues/IAIXSL)、fix: [#I9P24F](https://gitee.com/dromara/sa-token/issues/I9P24F)   **[重要]**
+- 文档：
+	- 新增：新增 `MongoDB` 集成示例。 感谢 `@lilihao` 提供的示例。 merge: [pr322](https://gitee.com/dromara/sa-token/pulls/322)   **[重要]**
+	- 新增：“fox说技术” 视频教程链接。
+	- 新增：“API接口参数签名”章节 视频讲解链接（B站抓蛙师）。
+	- 优化：文档首页首屏增加需求提交按钮。
+	- 其它：补全赞助者名单、`Dromara` 项目链接等信息。
+	- 新增：`SpringBoot3.x` 版本配置 Redis 注意事项。fix: [#688](https://github.com/dromara/Sa-Token/issues/688)
+	- 新增：`gitcode` g-star badge 展示。
+	- 修复：`OAuth2` 滞后的配置信息示例。
+	- 新增：新增视频账号链接。
+	- 新增：新增团队成员展示。
+
+
+
 ### v1.39.0 @2024-8-28
 - 核心：
 	- 升级：重构注解鉴权底层，支持自定义鉴权注解了。  **[重要]**
@@ -42,6 +85,7 @@
 	- 新增：新增不同 `client` 不同登录页说明。
 	- 优化：优化文档 [将权限数据放在缓存里] 示例。
 	- 新增：新增 从 Shiro、SpringSecurity、JWT 迁移 示例。  **[重要]**
+
 
 
 ### v1.38.0 @2024-5-12

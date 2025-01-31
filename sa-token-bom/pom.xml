@@ -13,7 +13,7 @@
     <url>https://github.com/dromara/sa-token</url>
 
     <properties>
-        <revision>1.39.0</revision>
+        <revision>1.40.0</revision>
     </properties>
 
     <dependencyManagement>
