@@ -4,8 +4,8 @@
 ### v1.40.0 @2025-2-1
 - core: 
 	- 新增：新增 `Cookie` 自定义属性支持。  fix: [#693](https://github.com/dromara/Sa-Token/issues/693)   **[重要]** 
+	- 新增：`SaFirewallStrategy` 防火墙策略：请求 path 黑名单校验、非法字符校验、白名单放行。  **[重要]** 
 	- 修复：新增对分号字符的 path 路径校验。   参考：[Sa-Token对url过滤不全存在的风险点](https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA)   **[漏洞修复]** 
-	- 新增：`SaFirewallStrategy` 防火墙策略：请求 path 黑名单校验、非法字符校验、白名单放行。
 	- 修复: 修复部分场景下登录后已存在的 `token-session` 没有被续期的问题。  fix: [#IA8U1O](https://gitee.com/dromara/sa-token/issues/IA8U1O)
 	- 优化：优化 `active-timeout` 的检查与续期操作，同一请求内只会检查与续期一次。
 	- 修复：`SaFoxUtil.joinSharpParam` 方法中不正确的注释。
