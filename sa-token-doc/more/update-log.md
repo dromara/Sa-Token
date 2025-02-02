@@ -18,7 +18,7 @@
 - OAuth2：
 	- 新增：OAuth2 Client 前端测试页。   **[重要]**
 	- 新增：`UnionId` 联合id 实现。   **[重要]** 
-	- 新增：`oauth2-server` 端前后台分离示例与文档。    **[重要]**
+	- 新增：`oauth2-server` 端前后台分离示例与文档。 fix: [#I9DQGA](https://gitee.com/dromara/sa-token/issues/I9DQGA)、[#I9W2RU](https://gitee.com/dromara/sa-token/issues/I9W2RU)    **[重要]**
 	- 新增：`OIDC` 模式 `nonce` 随机数响应校验。 merge: [pr311](https://gitee.com/dromara/sa-token/pulls/311)
 	- 修复：错误方法名 `deleteGrantScope(String state)` -> `deleteState(String state)`。
 	- 修复：全局配置项 `sa-token.oauth2-server.oidc.iss` 无效的问题。
@@ -30,7 +30,7 @@
 	- 新增：新增 `sa-token-freemarker` 插件，整合 `Freemarker` 视图引擎。 fix: [#651](https://github.com/dromara/sa-token/issues/651)   **[重要]**
 	- 新增：新增 `sa-token-spring-el` 插件，用于支持 SpEL 表达式注解鉴权。 fix: [#IB3GBB](https://gitee.com/dromara/sa-token/issues/IB3GBB)、fix: [#IAIXSL](https://gitee.com/dromara/sa-token/issues/IAIXSL)、fix: [#I9P24F](https://gitee.com/dromara/sa-token/issues/I9P24F)   **[重要]**
 - 文档：
-	- 新增：新增 `MongoDB` 集成示例。 感谢 `@lilihao` 提供的示例。 merge: [pr322](https://gitee.com/dromara/sa-token/pulls/322)   **[重要]**
+	- 新增：新增 `MongoDB` 集成示例。 感谢 `@lilihao` 提供的示例。 merge: [pr322](https://gitee.com/dromara/sa-token/pulls/322)、[pr667](https://github.com/dromara/Sa-Token/pull/667)   **[重要]**
 	- 新增：“fox说技术” 视频教程链接。
 	- 新增：“API接口参数签名”章节 视频讲解链接（B站抓蛙师）。
 	- 优化：文档首页首屏增加需求提交按钮。
