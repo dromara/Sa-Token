@@ -41,6 +41,9 @@
 	- 新增：新增视频账号链接。
 	- 新增：新增团队成员展示。
 
+更新导读：[视频](https://www.bilibili.com/video/BV1uNATeeEvg/)、[文字版](https://juejin.cn/post/7467969744307306505)
+
+
 
 
 ### v1.39.0 @2024-8-28
