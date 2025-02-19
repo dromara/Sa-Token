@@ -33,7 +33,9 @@ public class TestController {
 	@RequestMapping("test")
 	public SaResult test() {
 		System.out.println("------------进来了 " + SaFoxUtil.formatDate(new Date()));
-		StpUtil.getLoginId();
+//		StpUtil.getLoginId();
+//		StpUtil.getAnonTokenSession();
+		StpUtil.setTokenValue("xxx");
 		// 返回
 		return SaResult.data(null);
 	}
