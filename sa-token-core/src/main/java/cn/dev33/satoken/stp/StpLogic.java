@@ -190,7 +190,7 @@ public class StpLogic {
  	 */
 	public void setTokenValue(String tokenValue, SaLoginModel loginModel){
 
-		// 先判断一下，如果提供 token 为空，则不执行任何动作 .
+		// 先判断一下，如果提供 token 为空，则不执行任何动作 ..
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return;
 		}
