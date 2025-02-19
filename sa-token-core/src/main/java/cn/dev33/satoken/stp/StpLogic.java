@@ -194,7 +194,10 @@ public class StpLogic {
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return;
 		}
-		
+
+		// 构建一下
+		loginModel.build(getConfigOrGlobal());
+
 		// 1、将 token 写入到当前请求的 Storage 存储器里
 		setTokenValueToStorage(tokenValue);
 		
