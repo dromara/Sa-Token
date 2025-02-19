@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.model.wrapperInfo;
 
+import cn.dev33.satoken.util.SaTokenConsts;
+
 /**
  * 返回值包装类：描述一个账号是否已被封禁等信息
  *
@@ -66,7 +68,7 @@ public class SaDisableWrapperInfo {
      * @return /
      */
     public static SaDisableWrapperInfo createNotDisabled() {
-        return new SaDisableWrapperInfo(false, 0, 0);
+        return new SaDisableWrapperInfo(false, 0, SaTokenConsts.NOT_DISABLE_LEVEL);
     }
 
     /**
@@ -75,7 +77,7 @@ public class SaDisableWrapperInfo {
      * @return /
      */
     public static SaDisableWrapperInfo createNotDisabled(long cacheTime) {
-        return new SaDisableWrapperInfo(false, cacheTime, 0);
+        return new SaDisableWrapperInfo(false, cacheTime, SaTokenConsts.NOT_DISABLE_LEVEL);
     }
 
     @Override
