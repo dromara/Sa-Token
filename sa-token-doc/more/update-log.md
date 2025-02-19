@@ -2,6 +2,8 @@
 
 
 ### v1.40.0 @2025-2-1
+更新导读：[视频](https://www.bilibili.com/video/BV1uNATeeEvg/)、[文字版](https://juejin.cn/post/7467969744307306505)
+
 - core: 
 	- 新增：新增 `Cookie` 自定义属性支持。  fix: [#693](https://github.com/dromara/Sa-Token/issues/693)   **[重要]** 
 	- 新增：`SaFirewallStrategy` 防火墙策略：请求 path 黑名单校验、非法字符校验、白名单放行。  **[重要]** 
@@ -40,8 +42,6 @@
 	- 修复：`OAuth2` 滞后的配置信息示例。
 	- 新增：新增视频账号链接。
 	- 新增：新增团队成员展示。
-
-更新导读：[视频](https://www.bilibili.com/video/BV1uNATeeEvg/)、[文字版](https://juejin.cn/post/7467969744307306505)
 
 
 
