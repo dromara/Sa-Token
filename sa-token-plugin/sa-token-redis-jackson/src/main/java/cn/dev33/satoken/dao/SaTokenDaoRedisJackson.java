@@ -15,24 +15,8 @@
  */
 package cn.dev33.satoken.dao;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
-
+import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.util.SaFoxUtil;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -42,9 +26,23 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.stereotype.Component;
 
-import cn.dev33.satoken.strategy.SaStrategy;
-import cn.dev33.satoken.util.SaFoxUtil;
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Sa-Token 持久层实现 [ Redis存储、Jackson序列化 ]
@@ -224,80 +222,6 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 			return;
 		}
 		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
-	}
-	
-	
-
-	/**
-	 * 获取Object，如无返空 
-	 */
-	@Override
-	public Object getObject(String key) {
-		return objectRedisTemplate.opsForValue().get(key);
-	}
-
-	/**
-	 * 写入Object，并设定存活时间 (单位: 秒) 
-	 */
-	@Override
-	public void setObject(String key, Object object, long timeout) {
-		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
-			return;
-		}
-		// 判断是否为永不过期 
-		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			objectRedisTemplate.opsForValue().set(key, object);
-		} else {
-			objectRedisTemplate.opsForValue().set(key, object, timeout, TimeUnit.SECONDS);
-		}
-	}
-
-	/**
-	 * 更新Object (过期时间不变) 
-	 */
-	@Override
-	public void updateObject(String key, Object object) {
-		long expire = getObjectTimeout(key);
-		// -2 = 无此键 
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return;
-		}
-		this.setObject(key, object, expire);
-	}
-
-	/**
-	 * 删除Object 
-	 */
-	@Override
-	public void deleteObject(String key) {
-		objectRedisTemplate.delete(key);
-	}
-
-	/**
-	 * 获取Object的剩余存活时间 (单位: 秒)
-	 */
-	@Override
-	public long getObjectTimeout(String key) {
-		return objectRedisTemplate.getExpire(key);
-	}
-
-	/**
-	 * 修改Object的剩余存活时间 (单位: 秒)
-	 */
-	@Override
-	public void updateObjectTimeout(String key, long timeout) {
-		// 判断是否想要设置为永久
-		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			long expire = getObjectTimeout(key);
-			if(expire == SaTokenDao.NEVER_EXPIRE) {
-				// 如果其已经被设置为永久，则不作任何处理 
-			} else {
-				// 如果尚未被设置为永久，那么再次set一次
-				this.setObject(key, this.getObject(key), timeout);
-			}
-			return;
-		}
-		objectRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
 	

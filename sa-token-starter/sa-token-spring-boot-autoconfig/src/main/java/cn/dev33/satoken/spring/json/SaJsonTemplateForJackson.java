@@ -18,6 +18,7 @@ package cn.dev33.satoken.spring.json;
 import cn.dev33.satoken.error.SaSpringBootErrorCode;
 import cn.dev33.satoken.exception.SaJsonConvertException;
 import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.util.SaFoxUtil;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -81,6 +82,9 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 */
 	@Override
 	public Object jsonToObject(String jsonStr) {
+		if(SaFoxUtil.isEmpty(jsonStr)) {
+			return null;
+		}
 		try {
 			Object value = objectMapper.readValue(jsonStr, Object.class);
 			return value;
@@ -94,6 +98,9 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 */
 	@Override
 	public Map<String, Object> jsonToMap(String jsonStr) {
+		if(SaFoxUtil.isEmpty(jsonStr)) {
+			return null;
+		}
 		try {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map = objectMapper.readValue(jsonStr, Map.class);

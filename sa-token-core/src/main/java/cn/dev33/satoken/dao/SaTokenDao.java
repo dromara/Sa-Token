@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.dao;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.session.SaSession;
 
 import java.util.List;
@@ -90,45 +91,62 @@ public interface SaTokenDao {
 
 	/**
 	 * 获取 Object，如无返空
-	 * @param key 键名称 
+	 *
+	 * @param key 键名称
 	 * @return object
 	 */
-	Object getObject(String key);
+	default Object getObject(String key) {
+		String jsonString = get(key);
+		return SaManager.getSaJsonTemplate().jsonToObject(jsonString);
+	}
 
 	/**
 	 * 写入 Object，并设定存活时间 （单位: 秒）
-	 * @param key 键名称 
-	 * @param object 值 
+	 *
+	 * @param key     键名称
+	 * @param object  值
 	 * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储）
 	 */
-	void setObject(String key, Object object, long timeout);
+	default void setObject(String key, Object object, long timeout) {
+		String jsonString = SaManager.getSaJsonTemplate().objectToJson(object);
+		set(key, jsonString, timeout);
+	}
 
 	/**
 	 * 更新 Object （过期时间不变）
 	 * @param key 键名称 
 	 * @param object 值 
 	 */
-	void updateObject(String key, Object object);
+	default void updateObject(String key, Object object) {
+		String jsonString = SaManager.getSaJsonTemplate().objectToJson(object);
+		update(key, jsonString);
+	}
 
 	/**
 	 * 删除 Object
 	 * @param key 键名称 
 	 */
-	void deleteObject(String key);
+	default void deleteObject(String key) {
+		delete(key);
+	}
 	
 	/**
 	 * 获取 Object 的剩余存活时间 （单位: 秒）
 	 * @param key 指定 key
 	 * @return 这个 key 的剩余存活时间
 	 */
-	long getObjectTimeout(String key);
+	default long getObjectTimeout(String key) {
+		return getTimeout(key);
+	}
 	
 	/**
 	 * 修改 Object 的剩余存活时间（单位: 秒）
 	 * @param key 指定 key
 	 * @param timeout 剩余存活时间
 	 */
-	void updateObjectTimeout(String key, long timeout);
+	default void updateObjectTimeout(String key, long timeout) {
+		updateTimeout(key, timeout);
+	}
 
 	
 	// --------------------- SaSession 读写 （默认复用 Object 读写方法） ---------------------
