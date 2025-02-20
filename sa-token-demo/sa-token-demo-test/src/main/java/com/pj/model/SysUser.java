@@ -35,6 +35,11 @@ public class SysUser {
 	private int age;
 
 	/**
+	 * 用户角色
+	 */
+	private SysRole role;
+
+	/**
 	 * @return id
 	 */
 	public long getId() {
@@ -76,9 +81,23 @@ public class SysUser {
 		this.age = age;
 	}
 
+	public SysRole getRole() {
+		return role;
+	}
+
+	public SysUser setRole(SysRole role) {
+		this.role = role;
+		return this;
+	}
+
 	@Override
 	public String toString() {
-		return "SysUser [id=" + id + ", name=" + name + ", age=" + age + "]";
+		return "SysUser{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", age=" + age +
+				", role=" + role +
+				'}';
 	}
-	
+
 }

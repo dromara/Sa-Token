@@ -15,10 +15,10 @@
  */
 package cn.dev33.satoken.json;
 
-import java.util.Map;
-
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.NotImplException;
+
+import java.util.Map;
 
 /**
  * JSON 转换器，默认实现类
@@ -33,12 +33,17 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	public static final String ERROR_MESSAGE = "未实现具体的 json 转换器";
 
 	@Override
-	public String toJsonString(Object obj) {
+	public String objectToJson(Object obj) {
 		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
 	}
 
 	@Override
-	public Map<String, Object> parseJsonToMap(String jsonStr) {
+	public Object jsonToObject(String jsonStr) {
+		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
+	}
+
+	@Override
+	public Map<String, Object> jsonToMap(String jsonStr) {
 		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
 	}
 	

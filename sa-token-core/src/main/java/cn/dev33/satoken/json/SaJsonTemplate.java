@@ -26,18 +26,27 @@ import java.util.Map;
 public interface SaJsonTemplate {
 
 	/**
-	 * 将任意对象序列化为 json 字符串
+	 * 序列化：对象 -> json 字符串
 	 *
-	 * @param obj 对象
-	 * @return 转换后的 json 字符串
+	 * @param obj /
+	 * @return /
 	 */
-	String toJsonString(Object obj);
+	String objectToJson(Object obj);
 
 	/**
-	 * 解析 json 字符串为 map 对象
-	 * @param jsonStr json 字符串
-	 * @return map 对象
+	 * 反序列化：json 字符串 → 对象
+	 *
+	 * @param jsonStr /
+	 * @return /
 	 */
-	Map<String, Object> parseJsonToMap(String jsonStr);
+	Object jsonToObject(String jsonStr);
+
+	/**
+	 * 反序列化：json 字符串 → Map
+	 *
+	 * @param jsonStr /
+	 * @return /
+	 */
+	Map<String, Object> jsonToMap(String jsonStr);
 	
 }

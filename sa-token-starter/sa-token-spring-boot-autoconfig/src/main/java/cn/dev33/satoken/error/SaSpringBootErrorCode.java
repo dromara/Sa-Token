@@ -32,6 +32,9 @@ public interface SaSpringBootErrorCode {
 	/** JSON 字符串转 Map 失败 */
 	int CODE_20104 = 20104;
 
+	/** JSON 字符串转 Object 失败 */
+	int CODE_20106 = 20106;
+
 	/** 默认的 Filter 异常处理函数 */
 	int CODE_20105 = 20105;
 

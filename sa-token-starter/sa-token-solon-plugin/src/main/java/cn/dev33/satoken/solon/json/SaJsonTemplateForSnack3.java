@@ -25,13 +25,38 @@ import java.util.Map;
  * @since 2.0
  */
 public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
+
+    /**
+     * 序列化：对象 -> json 字符串
+     *
+     * @param obj /
+     * @return /
+     */
     @Override
-    public String toJsonString(Object o) {
-        return ONode.stringify(o);
+    public String objectToJson(Object obj) {
+        return ONode.stringify(obj);
     }
 
+    /**
+     * 反序列化：json 字符串 → 对象
+     *
+     * @param jsonStr /
+     * @return /
+     */
     @Override
-    public Map<String, Object> parseJsonToMap(String s) {
-        return ONode.deserialize(s, Map.class);
+    public Object jsonToObject(String jsonStr) {
+        return ONode.deserialize(jsonStr);
     }
+
+    /**
+     * 反序列化：json 字符串 → Map
+     *
+     * @param jsonStr /
+     * @return /
+     */
+    @Override
+    public Map<String, Object> jsonToMap(String jsonStr) {
+        return ONode.deserialize(jsonStr, Map.class);
+    }
+
 }

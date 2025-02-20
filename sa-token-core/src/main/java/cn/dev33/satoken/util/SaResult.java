@@ -159,7 +159,7 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * @return 对象自身
 	 */
 	public SaResult setJsonString(String jsonString) {
-		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(jsonString);
+		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(jsonString);
 		return setMap(map);
 	}
 
