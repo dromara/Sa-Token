@@ -18,6 +18,8 @@
 	
 	<!-- 所有子模块 -->
     <modules>
+        <module>sa-token-jackson</module>
+
         <module>sa-token-redis</module>
         <module>sa-token-redis-jackson</module>
         <module>sa-token-redis-fastjson</module>

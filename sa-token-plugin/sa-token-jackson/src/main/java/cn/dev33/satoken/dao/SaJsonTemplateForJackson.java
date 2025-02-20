@@ -13,28 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.spring.json;
+package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.error.SaSpringBootErrorCode;
 import cn.dev33.satoken.exception.SaJsonConvertException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 /**
- *  JSON 转换器， Jackson 版实现 
+ * JSON 转换器， Jackson 版实现
  * 
  * @author click33
  * @since 1.34.0
  */
 public class SaJsonTemplateForJackson implements SaJsonTemplate {
+
+	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	public static final String DATE_PATTERN = "yyyy-MM-dd";
+	public static final String TIME_PATTERN = "HH:mm:ss";
+	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
+	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
+	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
 	/**
 	 * 底层 Mapper 对象 
@@ -63,6 +81,25 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 		// 2、使空 bean 在序列化时也能记录类型信息，而不是只序列化成 {}
 		objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
+		// 3、配置 [ 忽略未知字段 ]
+		this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+		// 4、配置 [ 时间类型转换 ]
+		JavaTimeModule timeModule = new JavaTimeModule();
+		// 		LocalDateTime序列化与反序列化
+		timeModule.addSerializer(new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
+		timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+		// 		LocalDate序列化与反序列化
+		timeModule.addSerializer(new LocalDateSerializer(DATE_FORMATTER));
+		timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+		// 		LocalTime序列化与反序列化
+		timeModule.addSerializer(new LocalTimeSerializer(TIME_FORMATTER));
+		timeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+		//
+		this.objectMapper.registerModule(timeModule);
+
+
+
 	}
 
 	/**
@@ -73,7 +110,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 		try {
 			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e).setCode(SaSpringBootErrorCode.CODE_20103);
+			throw new SaJsonConvertException(e);
 		}
 	}
 
@@ -89,7 +126,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			Object value = objectMapper.readValue(jsonStr, Object.class);
 			return value;
 		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e).setCode(SaSpringBootErrorCode.CODE_20106);
+			throw new SaJsonConvertException(e);
 		}
 	}
 
@@ -106,7 +143,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			Map<String, Object> map = objectMapper.readValue(jsonStr, Map.class);
 			return map;
 		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e).setCode(SaSpringBootErrorCode.CODE_20104);
+			throw new SaJsonConvertException(e);
 		}
 	}
 

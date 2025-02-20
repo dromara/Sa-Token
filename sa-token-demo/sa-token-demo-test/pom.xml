@@ -53,7 +53,14 @@
             <artifactId>sa-token-redis</artifactId>
             <version>${sa-token.version}</version>
         </dependency> -->
-		
+
+		<!-- Sa-Token整合 Redis (使用jackson序列化方式) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jackson</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
 		<!-- Sa-Token整合 Redis (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
