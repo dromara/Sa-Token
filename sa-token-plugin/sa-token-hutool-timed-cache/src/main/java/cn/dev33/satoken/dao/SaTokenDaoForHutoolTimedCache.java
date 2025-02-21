@@ -17,6 +17,7 @@ package cn.dev33.satoken.dao;
 
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.dao.auto.SaTokenDaoByStringFollowObject;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.CacheObj;
@@ -31,7 +32,7 @@ import java.util.List;
  * @author click33
  * @since 1.38.0
  */
-public class SaTokenDaoForHutoolTimedCache implements SaTokenDao {
+public class SaTokenDaoForHutoolTimedCache implements SaTokenDaoByStringFollowObject {
 
 	//
 	/**
@@ -39,39 +40,6 @@ public class SaTokenDaoForHutoolTimedCache implements SaTokenDao {
 	 * 参数填1000，代表默认ttl为1000毫秒，实际上此参数意义不大，因为后续每个值都会单独设置自己的ttl值
 	 */
 	public TimedCache<String, Object> timedCache = CacheUtil.newTimedCache(1000);
-
-
-	// ------------------------ String 读写操作
-
-	@Override
-	public String get(String key) {
-		return (String) getObject(key);
-	}
-
-	@Override
-	public void set(String key, String value, long timeout) {
-		setObject(key, value, timeout);
-	}
-
-	@Override
-	public void update(String key, String value) {
-		updateObject(key, value);
-	}
-
-	@Override
-	public void delete(String key) {
-		deleteObject(key);
-	}
-
-	@Override
-	public long getTimeout(String key) {
-		return getObjectTimeout(key);
-	}
-
-	@Override
-	public void updateTimeout(String key, long timeout) {
-		updateObjectTimeout(key, timeout);
-	}
 
 
 	// ------------------------ Object 读写操作

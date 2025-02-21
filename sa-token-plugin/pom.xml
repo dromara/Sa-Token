@@ -24,12 +24,12 @@
         <module>sa-token-redis-jackson</module>
         <module>sa-token-fastjson</module>
         <module>sa-token-fastjson2</module>
+        <module>sa-token-hutool-timed-cache</module>
 
         <module>sa-token-redisson-jackson</module>
         <module>sa-token-redisson-jackson2</module>
         <module>sa-token-redisx</module>
         <module>sa-token-alone-redis</module>
-        <module>sa-token-hutool-timed-cache</module>
         <module>sa-token-dialect-thymeleaf</module>
         <module>sa-token-freemarker</module>
        	<module>sa-token-sso</module>

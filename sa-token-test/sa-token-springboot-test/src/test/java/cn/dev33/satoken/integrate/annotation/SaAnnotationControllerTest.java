@@ -163,7 +163,7 @@ public class SaAnnotationControllerTest {
         	
     		// 转 Map 
     		String content = mvcResult.getResponse().getContentAsString();
-    		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(content);
+    		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(content);
     		
     		// 转 SaResult 对象 
     		return new SaResult().setMap(map);

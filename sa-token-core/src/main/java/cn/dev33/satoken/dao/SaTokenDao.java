@@ -15,7 +15,6 @@
  */
 package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.session.SaSession;
 
 import java.util.List;
@@ -95,10 +94,7 @@ public interface SaTokenDao {
 	 * @param key 键名称
 	 * @return object
 	 */
-	default Object getObject(String key) {
-		String jsonString = get(key);
-		return SaManager.getSaJsonTemplate().jsonToObject(jsonString);
-	}
+	Object getObject(String key);
 
 	/**
 	 * 写入 Object，并设定存活时间 （单位: 秒）
@@ -107,46 +103,34 @@ public interface SaTokenDao {
 	 * @param object  值
 	 * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储）
 	 */
-	default void setObject(String key, Object object, long timeout) {
-		String jsonString = SaManager.getSaJsonTemplate().objectToJson(object);
-		set(key, jsonString, timeout);
-	}
+	void setObject(String key, Object object, long timeout);
 
 	/**
 	 * 更新 Object （过期时间不变）
 	 * @param key 键名称 
 	 * @param object 值 
 	 */
-	default void updateObject(String key, Object object) {
-		String jsonString = SaManager.getSaJsonTemplate().objectToJson(object);
-		update(key, jsonString);
-	}
+	void updateObject(String key, Object object);
 
 	/**
 	 * 删除 Object
 	 * @param key 键名称 
 	 */
-	default void deleteObject(String key) {
-		delete(key);
-	}
+	void deleteObject(String key);
 	
 	/**
 	 * 获取 Object 的剩余存活时间 （单位: 秒）
 	 * @param key 指定 key
 	 * @return 这个 key 的剩余存活时间
 	 */
-	default long getObjectTimeout(String key) {
-		return getTimeout(key);
-	}
+	long getObjectTimeout(String key);
 	
 	/**
 	 * 修改 Object 的剩余存活时间（单位: 秒）
 	 * @param key 指定 key
 	 * @param timeout 剩余存活时间
 	 */
-	default void updateObjectTimeout(String key, long timeout) {
-		updateTimeout(key, timeout);
-	}
+	void updateObjectTimeout(String key, long timeout);
 
 	
 	// --------------------- SaSession 读写 （默认复用 Object 读写方法） ---------------------
@@ -156,52 +140,40 @@ public interface SaTokenDao {
 	 * @param sessionId sessionId
 	 * @return SaSession
 	 */
-	default SaSession getSession(String sessionId) {
-		return (SaSession)getObject(sessionId);
-	}
+	SaSession getSession(String sessionId);
 
 	/**
 	 * 写入 SaSession，并设定存活时间（单位: 秒）
 	 * @param session 要保存的 SaSession 对象
 	 * @param timeout 过期时间（单位: 秒）
 	 */
-	default void setSession(SaSession session, long timeout) {
-		setObject(session.getId(), session, timeout);
-	}
+	void setSession(SaSession session, long timeout);
 
 	/**
 	 * 更新 SaSession
 	 * @param session 要更新的 SaSession 对象
 	 */
-	default void updateSession(SaSession session) {
-		updateObject(session.getId(), session);
-	}
+	void updateSession(SaSession session);
 	
 	/**
 	 * 删除 SaSession
 	 * @param sessionId sessionId
 	 */
-	default void deleteSession(String sessionId) {
-		deleteObject(sessionId);
-	}
+	void deleteSession(String sessionId);
 
 	/**
 	 * 获取 SaSession 剩余存活时间（单位: 秒）
 	 * @param sessionId 指定 SaSession
 	 * @return 这个 SaSession 的剩余存活时间
 	 */
-	default long getSessionTimeout(String sessionId) {
-		return getObjectTimeout(sessionId);
-	}
+	long getSessionTimeout(String sessionId);
 	
 	/**
 	 * 修改 SaSession 剩余存活时间（单位: 秒）
 	 * @param sessionId 指定 SaSession
 	 * @param timeout 剩余存活时间
 	 */
-	default void updateSessionTimeout(String sessionId, long timeout) {
-		updateObjectTimeout(sessionId, timeout);
-	}
+	void updateSessionTimeout(String sessionId, long timeout);
 	
 	
 	// --------------------- 会话管理 ---------------------

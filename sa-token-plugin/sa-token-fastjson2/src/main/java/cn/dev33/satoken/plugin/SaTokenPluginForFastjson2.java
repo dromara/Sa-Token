@@ -16,26 +16,27 @@
 package cn.dev33.satoken.plugin;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.json.SaJsonTemplateForFastjson;
-import cn.dev33.satoken.session.SaSessionForFastjsonCustomized;
+import cn.dev33.satoken.json.SaJsonTemplateForFastjson2;
+import cn.dev33.satoken.session.SaSessionForFastjson2Customized;
 import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
- * SaToken 插件安装：JSON 转换器 - Fastjson 版
+ * SaToken 插件安装：JSON 转换器 - Fastjson2 版
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaTokenPluginFastjson implements SaTokenPlugin {
+public class SaTokenPluginForFastjson2 implements SaTokenPlugin {
 
     @Override
     public void setup() {
 
-        // 设置JSON转换器：Fastjson 版
-        SaManager.setSaJsonTemplate(new SaJsonTemplateForFastjson());
+        // 设置 JSON 转换器：Fastjson2 版
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForFastjson2());
 
         // 重写 SaSession 生成策略
-        SaStrategy.instance.createSession = SaSessionForFastjsonCustomized::new;
+        SaStrategy.instance.createSession = SaSessionForFastjson2Customized::new;
+
 
     }
 

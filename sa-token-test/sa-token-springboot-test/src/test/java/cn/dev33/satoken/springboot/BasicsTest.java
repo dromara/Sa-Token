@@ -743,18 +743,18 @@ public class BasicsTest {
     	
     	// map 转 json 
     	SoMap map = SoMap.getSoMap("name", "zhangsan");
-    	String jsonString = saJsonTemplate.toJsonString(map);
+    	String jsonString = saJsonTemplate.objectToJson(map);
     	Assertions.assertEquals(jsonString, "{\"name\":\"zhangsan\"}");
     	
     	// 抛异常 
-    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.toJsonString(new Object()));
+    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.objectToJson(new Object()));
     	
     	// json 转 map 
-    	Map<String, Object> map2 = saJsonTemplate.parseJsonToMap("{\"name\":\"zhangsan\"}");
+    	Map<String, Object> map2 = saJsonTemplate.jsonToMap("{\"name\":\"zhangsan\"}");
     	Assertions.assertEquals(map2.get("name"), "zhangsan");
     	
     	// 抛异常 
-    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.parseJsonToMap(""));
+    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.jsonToMap(""));
     }
 
     // 测试过滤器、拦截器 基础API 

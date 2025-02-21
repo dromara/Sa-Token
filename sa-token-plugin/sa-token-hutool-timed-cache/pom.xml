@@ -17,19 +17,14 @@
 	<description>sa-token integrate hutool-TimedCache</description>
 
 	<dependencies>
-		<!-- sa-token-spring-boot-starter -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
-        <!-- Hutool Cache  -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-cache</artifactId>
-            <version>5.8.27</version>
         </dependency>
     </dependencies>
-
-
 
 </project>

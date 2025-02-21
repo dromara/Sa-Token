@@ -16,27 +16,20 @@
 package cn.dev33.satoken.plugin;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.json.SaJsonTemplateForFastjson2;
-import cn.dev33.satoken.session.SaSessionForFastjson2Customized;
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.dao.SaTokenDaoForHutoolTimedCache;
 
 /**
- * SaToken 插件安装：JSON 转换器 - Fastjson2 版
+ * SaToken 插件安装：DAO 扩展 - Hutool-TimedCache 版
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaTokenPluginFastjson2 implements SaTokenPlugin {
+public class SaTokenPluginForHutoolCache implements SaTokenPlugin {
 
     @Override
     public void setup() {
 
-        // 设置 JSON 转换器：Fastjson2 版
-        SaManager.setSaJsonTemplate(new SaJsonTemplateForFastjson2());
-
-        // 重写 SaSession 生成策略
-        SaStrategy.instance.createSession = SaSessionForFastjson2Customized::new;
-
+        SaManager.setSaTokenDao(new SaTokenDaoForHutoolTimedCache());
 
     }
 

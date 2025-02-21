@@ -96,7 +96,7 @@ public class MoreControllerTest {
 	
 		// 转 Map 
 		String content = mvcResult.getResponse().getContentAsString();
-		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(content);
+		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(content);
 		// 转 SaResult 对象 
 		SaResult res = new SaResult().setMap(map);
 		Assertions.assertEquals(res.getCode(), 903);
@@ -117,7 +117,7 @@ public class MoreControllerTest {
     	
 		// 转 Map 
 		String content2 = mvcResult2.getResponse().getContentAsString();
-		Map<String, Object> map2 = SaManager.getSaJsonTemplate().parseJsonToMap(content2);
+		Map<String, Object> map2 = SaManager.getSaJsonTemplate().jsonToMap(content2);
 		// 转 SaResult 对象 
 		SaResult res2 = new SaResult().setMap(map2);
 		Assertions.assertEquals(res2.getCode(), 200);
@@ -139,7 +139,7 @@ public class MoreControllerTest {
         	
     		// 转 Map 
     		String content = mvcResult.getResponse().getContentAsString();
-    		Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(content);
+    		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(content);
     		
     		// 转 SaResult 对象 
     		return new SaResult().setMap(map);

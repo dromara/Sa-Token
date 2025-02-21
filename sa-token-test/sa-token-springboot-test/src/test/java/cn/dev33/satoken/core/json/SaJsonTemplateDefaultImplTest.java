@@ -15,12 +15,11 @@
  */
 package cn.dev33.satoken.core.json;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import cn.dev33.satoken.exception.NotImplException;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.util.SoMap;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * json默认实现类测试 
@@ -35,11 +34,11 @@ public class SaJsonTemplateDefaultImplTest {
     	SaJsonTemplateDefaultImpl saJsonTemplate = new SaJsonTemplateDefaultImpl();
     	// 组件未实现
     	Assertions.assertThrows(NotImplException.class, () -> {
-    		saJsonTemplate.parseJsonToMap("{}");
+    		saJsonTemplate.jsonToMap("{}");
     	});
     	// 组件未实现
     	Assertions.assertThrows(NotImplException.class, () -> {
-    		saJsonTemplate.toJsonString(SoMap.getSoMap("name", "zhangsan"));
+    		saJsonTemplate.objectToJson(SoMap.getSoMap("name", "zhangsan"));
     	});
     }
 

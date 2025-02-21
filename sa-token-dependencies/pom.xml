@@ -37,6 +37,7 @@
 		<fastjson.version>1.2.83</fastjson.version>
 		<fastjson2.version>2.0.15</fastjson2.version>
 		<redisson.version>3.19.0</redisson.version>
+		<hutool-cache.version>5.8.36</hutool-cache.version>
     </properties>
 
     <dependencyManagement>
@@ -256,6 +257,13 @@
 				<artifactId>jjwt</artifactId>
 				<version>${jjwt.version}</version>
 	        </dependency>
+
+			<!-- Hutool Cache  -->
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-cache</artifactId>
+				<version>${hutool-cache.version}</version>
+			</dependency>
 
 			<!-- sa-token 自身依赖 -->
 			<dependency>
