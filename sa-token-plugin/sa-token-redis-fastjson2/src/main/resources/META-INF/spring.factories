@@ -1,1 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2

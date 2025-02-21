@@ -25,17 +25,17 @@
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-jackson</artifactId>
+            <artifactId>sa-token-jackson</artifactId>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-fastjson</artifactId>
+            <artifactId>sa-token-fastjson</artifactId>
 			<optional>true</optional>
         </dependency>
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-fastjson2</artifactId>
+            <artifactId>sa-token-fastjson2</artifactId>
 			<optional>true</optional>
         </dependency>
         <!-- redis pool -->
