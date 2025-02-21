@@ -998,7 +998,7 @@ public class StpLogic {
 				// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
 
 				// 7.2、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
-				if(getConfigOrGlobal().getAutoRenew()) {
+				if(SaStrategy.instance.autoRenew.apply(this)) {
 					updateLastActiveToNow(tokenValue);
 				}
 
