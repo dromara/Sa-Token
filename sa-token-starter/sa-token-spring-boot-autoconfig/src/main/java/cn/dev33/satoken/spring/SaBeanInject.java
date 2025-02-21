@@ -29,6 +29,7 @@ import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.plugin.SaTokenPluginLoader;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
@@ -68,6 +69,8 @@ public class SaBeanInject {
 		if(saTokenConfig != null) {
 			SaManager.setConfig(saTokenConfig);
 		}
+		// 初始化 Sa-Token SPI 插件
+		SaTokenPluginLoader.init();
 	}
 	
 	/**

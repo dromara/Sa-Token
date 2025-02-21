@@ -12,9 +12,9 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-redis</name>
-    <artifactId>sa-token-redis</artifactId>
-	<description>sa-token integrate redis</description>
+	<name>sa-token-redis-template</name>
+    <artifactId>sa-token-redis-template</artifactId>
+	<description>sa-token integrate RedisTemplate</description>
 
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->

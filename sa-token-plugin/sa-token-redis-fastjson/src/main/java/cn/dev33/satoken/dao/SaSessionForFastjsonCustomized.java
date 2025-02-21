@@ -84,8 +84,8 @@ public class SaSessionForFastjsonCustomized extends SaSession {
 	 */
 	@Override
 	@JSONField(serialize = false)
-	public long getTimeout() {
-		return super.getTimeout();
+	public long timeout() {
+		return super.timeout();
 	}
 	
 }

@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.plugin;
 
+import cn.dev33.satoken.SaManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -27,12 +29,32 @@ import java.util.ServiceLoader;
  */
 public class SaTokenPluginLoader {
 
+	/**
+	 * 是否已经加载过插件
+	 */
+	public static boolean isLoader = false;
+
+	/**
+	 * 所有插件的集合
+	 */
 	public static List<SaTokenPlugin> pluginList;
 
 	/**
-	 * 初始化插件
+	 * 初始化加载所有插件（多次调用只会执行一次）
 	 */
 	public static void init() {
+		if(isLoader) {
+			return;
+		}
+		loaderPlugins();
+		isLoader = true;
+	}
+
+	/**
+	 * 根据 SPI 机制加载所有插件
+	 */
+	public static void loaderPlugins() {
+		SaManager.getLog().info("SPI 插件加载开始 ...");
 		List<SaTokenPlugin> list = new ArrayList<>();
 		ServiceLoader<SaTokenPlugin> plugins = ServiceLoader.load(SaTokenPlugin.class);
 		for (SaTokenPlugin plugin : plugins) {
@@ -40,6 +62,7 @@ public class SaTokenPluginLoader {
 			list.add(plugin);
 		}
 		pluginList = list;
+		SaManager.getLog().info("SPI 插件加载结束 ...");
 	}
 
 }

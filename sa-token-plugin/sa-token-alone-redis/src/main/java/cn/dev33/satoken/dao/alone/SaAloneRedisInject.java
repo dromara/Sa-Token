@@ -15,7 +15,11 @@
  */
 package cn.dev33.satoken.dao.alone;
 
-import cn.dev33.satoken.dao.*;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
+import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson;
+import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2;
+import cn.dev33.satoken.dao.impl.SaTokenDaoForRedisTemplate;
 import cn.dev33.satoken.exception.SaTokenException;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,22 +214,22 @@ public class SaAloneRedisInject implements EnvironmentAware{
 
 			// 如果开发者引入的是：sa-token-redis
 			try {
-				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedis");
-				SaTokenDaoRedis dao = (SaTokenDaoRedis)saTokenDao;
+				Class.forName("cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate");
+				SaTokenDaoForRedisTemplate dao = (SaTokenDaoForRedisTemplate)saTokenDao;
 				dao.isInit = false;
 				dao.init(factory);
 				return;
 			} catch (ClassNotFoundException ignored) {
 			}
-			// 如果开发者引入的是：sa-token-redis-jackson
-			try {
-				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisJackson");
-				SaTokenDaoRedisJackson dao = (SaTokenDaoRedisJackson)saTokenDao;
-				dao.isInit = false;
-				dao.init(factory);
-				return;
-			} catch (ClassNotFoundException ignored) {
-			}
+			// TODO: 如果开发者引入的是：sa-token-redis-jdk-serializer
+//			try {
+//				Class.forName("cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate");
+//				SaTokenDaoRedisJackson dao = (SaTokenDaoRedisJackson)saTokenDao;
+//				dao.isInit = false;
+//				dao.init(factory);
+//				return;
+//			} catch (ClassNotFoundException ignored) {
+//			}
 			// 如果开发者引入的是：sa-token-redis-fastjson
 			try {
 				Class.forName("cn.dev33.satoken.dao.SaTokenDaoRedisFastjson");

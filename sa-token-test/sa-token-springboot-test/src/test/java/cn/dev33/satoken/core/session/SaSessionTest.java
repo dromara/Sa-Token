@@ -94,16 +94,16 @@ public class SaSessionTest {
     	SaSession session = new SaSession("session-1005");
     	SaManager.getSaTokenDao().setSession(session, 20000);
     	session.updateMaxTimeout(100);
-    	Assertions.assertTrue(session.getTimeout() <= 100);
-    	System.out.println(session.getTimeout());
+    	Assertions.assertTrue(session.timeout() <= 100);
+    	System.out.println(session.timeout());
     	// 仍然是 <=100 
     	session.updateMaxTimeout(1000);
-    	Assertions.assertTrue(session.getTimeout() <= 100);
-    	System.out.println(session.getTimeout());
+    	Assertions.assertTrue(session.timeout() <= 100);
+    	System.out.println(session.timeout());
     	// Min 修改 
     	session.updateMinTimeout(-1);
-    	System.out.println(session.getTimeout());
-    	Assertions.assertTrue(session.getTimeout() == -1);
+    	System.out.println(session.timeout());
+    	Assertions.assertTrue(session.timeout() == -1);
     }
     
     // 测试token 签名 

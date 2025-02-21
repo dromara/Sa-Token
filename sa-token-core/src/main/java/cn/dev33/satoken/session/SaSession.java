@@ -393,7 +393,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 * 获取此Session的剩余存活时间 (单位: 秒) 
 	 * @return 此Session的剩余存活时间 (单位: 秒)
 	 */
-	public long getTimeout() {
+	public long timeout() {
 		return SaManager.getSaTokenDao().getSessionTimeout(this.id);
 	}
 	
@@ -411,7 +411,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 */
 	public void updateMinTimeout(long minTimeout) {
 		long min = trans(minTimeout);
-		long curr = trans(getTimeout());
+		long curr = trans(timeout());
 		if(curr < min) {
 			updateTimeout(minTimeout);
 		}
@@ -423,7 +423,7 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 */
 	public void updateMaxTimeout(long maxTimeout) {
 		long max = trans(maxTimeout);
-		long curr = trans(getTimeout());
+		long curr = trans(timeout());
 		if(curr > max) {
 			updateTimeout(maxTimeout);
 		}

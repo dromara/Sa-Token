@@ -18,7 +18,7 @@ public class Test2Controller {
 	public SaResult test2() {
 
 		StpUtil.login(30003);
-		System.out.println(StpUtil.getSession().getTimeout());
+		System.out.println(StpUtil.getSession().timeout());
 		System.out.println(StpUtil.getStpLogic().getTokenSession(false));
 
 		return SaResult.ok();

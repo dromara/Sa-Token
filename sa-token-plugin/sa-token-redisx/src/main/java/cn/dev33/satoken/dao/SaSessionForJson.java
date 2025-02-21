@@ -82,8 +82,8 @@ public class SaSessionForJson extends SaSession {
 	 * 忽略 timeout 字段的序列化
 	 */
 	@Override
-	public long getTimeout() {
-		return super.getTimeout();
+	public long timeout() {
+		return super.timeout();
 	}
 	
 }

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.dao;
+package cn.dev33.satoken.dao.impl;
 
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -28,21 +28,18 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Sa-Token 持久层实现 [ Redis存储、Jackson序列化 ]
+ * Sa-Token 持久层实现 [ Redis 存储 ] (可用环境: SpringBoot2、SpringBoot3)
  * 
  * @author click33
  * @since 1.34.0
  */
 @Component
-public class SaTokenDaoRedisJackson implements SaTokenDao {
+public class SaTokenDaoForRedisTemplate implements SaTokenDao {
+
+	public StringRedisTemplate stringRedisTemplate;
 
 	/**
-	 * String 读写专用
-	 */
-	public StringRedisTemplate stringRedisTemplate;	
-
-	/**
-	 * 标记：是否已初始化成功
+	 * 标记：当前 redis 连接信息是否已初始化成功
 	 */
 	public boolean isInit;
 	
@@ -59,9 +56,6 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		stringTemplate.afterPropertiesSet();
 		this.stringRedisTemplate = stringTemplate;
 
-		// 重写 SaSession 生成策略
-		SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJacksonCustomized(sessionId);
-
 		// 打上标记，表示已经初始化成功，后续无需再重新初始化
 		this.isInit = true;
 	}
@@ -76,7 +70,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 写入Value，并设定存活时间 (单位: 秒) 
+	 * 写入Value，并设定存活时间 (单位: 秒)
 	 */
 	@Override
 	public void set(String key, String value, long timeout) {
@@ -92,7 +86,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 	}
 
 	/**
-	 * 修修改指定key-value键值对 (过期时间不变) 
+	 * 修改指定key-value键值对 (过期时间不变) 
 	 */
 	@Override
 	public void update(String key, String value) {
@@ -139,6 +133,7 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
+
 	
 	/**
 	 * 搜索数据 
@@ -149,5 +144,6 @@ public class SaTokenDaoRedisJackson implements SaTokenDao {
 		List<String> list = new ArrayList<>(keys);
 		return SaFoxUtil.searchList(list, start, size, sortType);
 	}
+	
 	
 }

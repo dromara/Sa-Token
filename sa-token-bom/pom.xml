@@ -111,7 +111,7 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-redis</artifactId>
+                <artifactId>sa-token-redis-template</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -192,6 +192,16 @@
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-temp-jwt</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-jackson</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-redis-template-jdk-serializer</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- endregion-->

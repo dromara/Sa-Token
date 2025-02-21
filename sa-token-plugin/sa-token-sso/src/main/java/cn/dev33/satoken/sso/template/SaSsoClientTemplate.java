@@ -201,7 +201,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
      */
     public SaResult request(String url) {
         String body = getClientConfig().sendHttp.apply(url);
-        Map<String, Object> map = SaManager.getSaJsonTemplate().parseJsonToMap(body);
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
         return new SaResult(map);
     }
 

@@ -12,19 +12,23 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-redis-jackson</name>
-    <artifactId>sa-token-redis-jackson</artifactId>
-	<description>sa-token integrate redis (to jackson)</description>
+	<name>sa-token-redis-jdk-serializer</name>
+    <artifactId>sa-token-redis-template-jdk-serializer</artifactId>
+	<description>sa-token integrate RedisTemplate （jdk-serializer）</description>
 
 	<dependencies>
+		<!-- sa-token-spring-boot-starter -->
 		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jackson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-redis-template</artifactId>
-		</dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+		<!-- RedisTemplate 相关操作API -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
 	</dependencies>
+
+
 
 </project>

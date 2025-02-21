@@ -20,7 +20,7 @@
 		<!-- Sa-Token Redis Dependency -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis</artifactId>
+            <artifactId>sa-token-redis-template</artifactId>
 			<optional>true</optional>
         </dependency>
 		<dependency>
