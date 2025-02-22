@@ -31,6 +31,7 @@
         <module>sa-token-jwt</module>
         <module>sa-token-sso</module>
         <module>sa-token-oauth2</module>
+        <module>sa-token-redisson</module>
 
         <!-- SpringBoot 环境插件 -->
         <module>sa-token-redis-template</module>
@@ -41,12 +42,11 @@
         <module>sa-token-spring-el</module>
         <module>sa-token-grpc</module>
         <module>sa-token-quick-login</module>
-        <module>sa-token-redisson</module>
+        <module>sa-token-redisson-spring-boot-starter</module>
 
         <!-- Solon 环境插件 -->
         <module>sa-token-redisx</module>
 
-        <module>sa-token-redisson-jackson2</module>
     </modules>
 
 	<dependencies>

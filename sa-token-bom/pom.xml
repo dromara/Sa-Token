@@ -136,12 +136,12 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-redisson</artifactId>
+                <artifactId>sa-token-redisson-spring-boot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-redisson-jackson2</artifactId>
+                <artifactId>sa-token-redisson</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

@@ -12,33 +12,31 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-redisson-jackson2</name>
-    <artifactId>sa-token-redisson</artifactId>
+	<name>sa-token-redisson-jackson</name>
+    <artifactId>sa-token-redisson-spring-boot-starter</artifactId>
 	<description>sa-token integrate redisson (to jackson)</description>
 
-	<!-- parent 里的版本适合与 springboot2 兼容；其它更新的框架里版本容易冲突 -->
-	<!--<properties>
-		<redisson.version>3.27.2</redisson.version>
-	</properties>-->
-
 	<dependencies>
-		<!-- sa-token-core -->
+		<!-- sa-token-spring-boot-starter -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
 
+		<!-- sa-token-redisson -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redisson</artifactId>
+		</dependency>
+
 		<!-- Redisson 相关操作API -->
 		<dependency>
 			<groupId>org.redisson</groupId>
-			<artifactId>redisson</artifactId>
-			<!--<exclusions>
-				<exclusion>
-					<groupId>org.yaml</groupId>
-					<artifactId>snakeyaml</artifactId>
-				</exclusion>
-			</exclusions>-->
+			<artifactId>redisson-spring-boot-starter</artifactId>
 		</dependency>
 
 	</dependencies>
+
+
+
 </project>

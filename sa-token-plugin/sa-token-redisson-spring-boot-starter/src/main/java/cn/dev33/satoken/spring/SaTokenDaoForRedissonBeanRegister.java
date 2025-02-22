@@ -13,35 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.dao;
+package cn.dev33.satoken.spring;
 
-import cn.dev33.satoken.session.SaSession;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.SaTokenDaoForRedisson;
+import org.redisson.api.RedissonClient;
+import org.springframework.context.annotation.Bean;
 
 /**
- * Jackson定制版SaSession，忽略 timeout 等属性的序列化 
- *  
+ * 注册 SaTokenDaoForRedisson Bean
+ *
  * @author click33
  * @since 1.34.0
  */
-@JsonIgnoreProperties({"timeout"})
-public class SaSessionForJacksonCustomized extends SaSession {
+public class SaTokenDaoForRedissonBeanRegister {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7600983549653130681L;
-
-	public SaSessionForJacksonCustomized() {
-		super();
-	}
-
-	/**
-	 * 构建一个Session对象
-	 * @param id Session的id
-	 */
-	public SaSessionForJacksonCustomized(String id) {
-		super(id);
+	@Bean
+	public SaTokenDao getSaTokenDaoForRedisson(RedissonClient redissonClient) {
+		return new SaTokenDaoForRedisson(redissonClient);
 	}
 
 }

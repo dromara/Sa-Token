@@ -16,6 +16,7 @@
 package cn.dev33.satoken.solon.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.redisx.RedisClient;
 import org.noear.redisx.plus.RedisBucket;
@@ -31,7 +32,7 @@ import java.util.Set;
  * @author noear
  * @since 1.6
  */
-public class SaTokenDaoOfRedisBase64 implements SaTokenDao {
+public class SaTokenDaoOfRedisBase64 implements SaTokenDaoBySessionFollowObject {
     private final RedisBucket redisBucket;
 
     public SaTokenDaoOfRedisBase64(Properties props) {

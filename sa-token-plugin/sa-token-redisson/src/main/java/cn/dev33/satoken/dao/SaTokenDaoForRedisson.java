@@ -21,8 +21,6 @@ import org.redisson.api.RBatch;
 import org.redisson.api.RBucket;
 import org.redisson.api.RBucketAsync;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.List;
@@ -33,31 +31,18 @@ import java.util.stream.Stream;
  * Sa-Token 持久层实现  [ Redisson客户端、Redis存储、Jackson序列化 ]
  * 
  * @author 疯狂的狮子Li
+ * @author noear
  * @since 1.34.0
  */
-@Component
 public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowStringUseJsonSerializer {
 
 	/**
 	 * redisson 客户端
 	 */
-	public RedissonClient redissonClient;
-	
-	/**
-	 * 标记：是否已初始化成功
-	 */
-	public boolean isInit;
-	
-	@Autowired
-	public void init(RedissonClient redissonClient) {
-		// 不重复初始化 
-		if(this.isInit) {
-			return;
-		}
+	public final RedissonClient redissonClient;
 
-		// 开始初始化相关组件
+	public SaTokenDaoForRedisson(RedissonClient redissonClient) {
 		this.redissonClient = redissonClient;
-		this.isInit = true;
 	}
 	
 	
@@ -152,5 +137,4 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowStringUseJ
 		List<String> list = stream.collect(Collectors.toList());
 		return SaFoxUtil.searchList(list, start, size, sortType);
 	}
-	
 }
