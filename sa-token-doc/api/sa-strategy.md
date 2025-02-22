@@ -65,6 +65,15 @@ public BiFunction<AnnotatedElement, Class<? extends Annotation> , Annotation> ge
 public BiFunction<String, String, String> spliceTwoUrl = (url1, url2) -> {
 	return xxx;
 };
+
+/**
+ * 是否自动续期，每次续期前都会执行，可以加入动态判断逻辑
+ * <p> 参数 当前 stpLogic 实例对象
+ * <p> 返回 true 自动续期 false 不自动续期
+ */
+public Function<StpLogic, Boolean> autoRenew = (stpLogic) -> {
+	return stpLogic.getConfigOrGlobal().getAutoRenew();
+};
 ```
 
 

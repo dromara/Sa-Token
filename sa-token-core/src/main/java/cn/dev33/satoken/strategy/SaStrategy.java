@@ -157,6 +157,13 @@ public final class SaStrategy {
 	};
 
 	/**
+     * 是否自动续期
+     */
+    public SaAutoRenewFunction autoRenew = (stpLogic) -> {
+        return stpLogic.getConfigOrGlobal().getAutoRenew();
+    };
+
+	/**
 	 * 创建 StpLogic 的算法
 	 */
 	public SaCreateStpLogicFunction createStpLogic = (loginType) -> {
@@ -220,6 +227,17 @@ public final class SaStrategy {
 		this.createStpLogic = createStpLogic;
 		return this;
 	}
+
+	/**
+     * 是否自动续期
+     *
+     * @param autoRenew /
+     * @return /
+     */
+    public SaStrategy setAutoRenew(SaAutoRenewFunction autoRenew) {
+        this.autoRenew = autoRenew;
+        return this;
+    }
 
 	//
 
