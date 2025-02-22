@@ -156,7 +156,7 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-dialect-thymeleaf</artifactId>
+                <artifactId>sa-token-thymeleaf</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

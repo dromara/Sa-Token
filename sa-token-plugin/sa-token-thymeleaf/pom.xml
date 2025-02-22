@@ -13,8 +13,8 @@
     <packaging>jar</packaging>
 
 	<name>sa-token-dialect-thymeleaf</name>
-    <artifactId>sa-token-dialect-thymeleaf</artifactId>
-	<description>sa-token-dialect-thymeleaf</description>
+    <artifactId>sa-token-thymeleaf</artifactId>
+	<description>sa-token-thymeleaf</description>
 
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->
