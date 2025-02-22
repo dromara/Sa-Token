@@ -28,6 +28,7 @@
         <module>sa-token-dubbo</module>
         <module>sa-token-dubbo3</module>
         <module>sa-token-temp-jwt</module>
+        <module>sa-token-jwt</module>
 
         <!-- SpringBoot 环境插件 -->
         <module>sa-token-redis-template</module>
@@ -36,6 +37,8 @@
         <module>sa-token-alone-redis</module>
         <module>sa-token-spring-aop</module>
         <module>sa-token-spring-el</module>
+        <module>sa-token-grpc</module>
+        <module>sa-token-quick-login</module>
 
 
         <module>sa-token-redisson-jackson</module>
@@ -43,9 +46,6 @@
         <module>sa-token-redisx</module>
        	<module>sa-token-sso</module>
        	<module>sa-token-oauth2</module>
-        <module>sa-token-quick-login</module>
-        <module>sa-token-jwt</module>
-        <module>sa-token-grpc</module>
     </modules>
 
 	<dependencies>
