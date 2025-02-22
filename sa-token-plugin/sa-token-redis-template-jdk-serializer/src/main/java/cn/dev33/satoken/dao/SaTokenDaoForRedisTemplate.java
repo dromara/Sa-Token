@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Sa-Token 持久层实现 [ RedisTemplate 存储 ] (可用环境: SpringBoot2、SpringBoot3)
- * <br> copy by: sa-token-redis-template 插件 
+ * <br> copy by: sa-token-redis-template 插件
  * 
  * @author click33
  * @since 1.34.0

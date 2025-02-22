@@ -24,20 +24,10 @@
 			<optional>true</optional>
         </dependency>
 		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-jackson</artifactId>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-template-jdk-serializer</artifactId>
 			<optional>true</optional>
-        </dependency>
-		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-fastjson</artifactId>
-			<optional>true</optional>
-        </dependency>
-		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-fastjson2</artifactId>
-			<optional>true</optional>
-        </dependency>
+		</dependency>
         <!-- redis pool -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
