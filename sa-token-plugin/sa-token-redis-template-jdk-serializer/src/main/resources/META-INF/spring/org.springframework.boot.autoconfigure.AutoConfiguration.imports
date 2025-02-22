@@ -1,1 +1,1 @@
-cn.dev33.satoken.dao.SaTokenDaoRedis
+cn.dev33.satoken.dao.SaTokenDaoForRedisTemplateUseJdkSerializer

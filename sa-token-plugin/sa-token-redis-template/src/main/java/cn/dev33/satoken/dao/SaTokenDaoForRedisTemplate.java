@@ -15,39 +15,26 @@
  */
 package cn.dev33.satoken.dao;
 
+import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowStringUseJsonSerializer;
+import cn.dev33.satoken.util.SaFoxUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
-
-import cn.dev33.satoken.util.SaFoxUtil;
-
 /**
- * Sa-Token 持久层实现 [ Redis存储、JDK默认序列化 ]
+ * Sa-Token 持久层实现 [ Redis 存储 ] (可用环境: SpringBoot2、SpringBoot3)
  * 
  * @author click33
  * @since 1.34.0
  */
-@Component
-public class SaTokenDaoRedis implements SaTokenDao {
+public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStringUseJsonSerializer {
 
-	/**
-	 * String 读写专用
-	 */
-	public StringRedisTemplate stringRedisTemplate;	
-
-	/**
-	 * Object 读写专用
-	 */
-	public RedisTemplate<String, Object> objectRedisTemplate;
+	public StringRedisTemplate stringRedisTemplate;
 
 	/**
 	 * 标记：当前 redis 连接信息是否已初始化成功
@@ -60,34 +47,24 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		if(this.isInit) {
 			return;
 		}
-				
-		// 指定相应的序列化方案 
-		StringRedisSerializer keySerializer = new StringRedisSerializer();
-		JdkSerializationRedisSerializer valueSerializer = new JdkSerializationRedisSerializer();
 
 		// 构建StringRedisTemplate
 		StringRedisTemplate stringTemplate = new StringRedisTemplate();
 		stringTemplate.setConnectionFactory(connectionFactory);
 		stringTemplate.afterPropertiesSet();
-
-		// 构建RedisTemplate
-		RedisTemplate<String, Object> template = new RedisTemplate<>();
-		template.setConnectionFactory(connectionFactory);
-		template.setKeySerializer(keySerializer);
-		template.setHashKeySerializer(keySerializer);
-		template.setValueSerializer(valueSerializer);
-		template.setHashValueSerializer(valueSerializer);
-		template.afterPropertiesSet();
-
-		// 开始初始化相关组件 
 		this.stringRedisTemplate = stringTemplate;
-		this.objectRedisTemplate = template;
+
+		initMore(connectionFactory);
 
 		// 打上标记，表示已经初始化成功，后续无需再重新初始化
 		this.isInit = true;
 	}
-	
-	
+
+	protected void initMore(RedisConnectionFactory connectionFactory) {
+
+	}
+
+
 	/**
 	 * 获取Value，如无返空 
 	 */
@@ -158,79 +135,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 			return;
 		}
 		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
-	}
-	
-	
-	/**
-	 * 获取Object，如无返空 
-	 */
-	@Override
-	public Object getObject(String key) {
-		return objectRedisTemplate.opsForValue().get(key);
-	}
-
-	/**
-	 * 写入Object，并设定存活时间 (单位: 秒) 
-	 */
-	@Override
-	public void setObject(String key, Object object, long timeout) {
-		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
-			return;
-		}
-		// 判断是否为永不过期 
-		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			objectRedisTemplate.opsForValue().set(key, object);
-		} else {
-			objectRedisTemplate.opsForValue().set(key, object, timeout, TimeUnit.SECONDS);
-		}
-	}
-
-	/**
-	 * 更新Object (过期时间不变) 
-	 */
-	@Override
-	public void updateObject(String key, Object object) {
-		long expire = getObjectTimeout(key);
-		// -2 = 无此键 
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return;
-		}
-		this.setObject(key, object, expire);
-	}
-
-	/**
-	 * 删除Object 
-	 */
-	@Override
-	public void deleteObject(String key) {
-		objectRedisTemplate.delete(key);
-	}
-
-	/**
-	 * 获取Object的剩余存活时间 (单位: 秒)
-	 */
-	@Override
-	public long getObjectTimeout(String key) {
-		return objectRedisTemplate.getExpire(key);
-	}
-
-	/**
-	 * 修改Object的剩余存活时间 (单位: 秒)
-	 */
-	@Override
-	public void updateObjectTimeout(String key, long timeout) {
-		// 判断是否想要设置为永久
-		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			long expire = getObjectTimeout(key);
-			if(expire == SaTokenDao.NEVER_EXPIRE) {
-				// 如果其已经被设置为永久，则不作任何处理 
-			} else {
-				// 如果尚未被设置为永久，那么再次set一次
-				this.setObject(key, this.getObject(key), timeout);
-			}
-			return;
-		}
-		objectRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
 

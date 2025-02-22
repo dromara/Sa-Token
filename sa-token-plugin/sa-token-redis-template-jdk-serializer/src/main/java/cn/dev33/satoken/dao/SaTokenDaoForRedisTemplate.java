@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.dao.impl;
+package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowStringUseJsonSerializer;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +27,12 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Sa-Token 持久层实现 [ Redis 存储 ] (可用环境: SpringBoot2、SpringBoot3)
+ * Sa-Token 持久层实现 [ RedisTemplate 存储 ] (可用环境: SpringBoot2、SpringBoot3)
+ * <br> copy by: sa-token-redis-template 插件 
  * 
  * @author click33
  * @since 1.34.0
  */
-@Component
 public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStringUseJsonSerializer {
 
 	public StringRedisTemplate stringRedisTemplate;
@@ -57,11 +55,17 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 		stringTemplate.afterPropertiesSet();
 		this.stringRedisTemplate = stringTemplate;
 
+		initMore(connectionFactory);
+
 		// 打上标记，表示已经初始化成功，后续无需再重新初始化
 		this.isInit = true;
 	}
-	
-	
+
+	protected void initMore(RedisConnectionFactory connectionFactory) {
+
+	}
+
+
 	/**
 	 * 获取Value，如无返空 
 	 */

@@ -19,7 +19,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson;
 import cn.dev33.satoken.dao.SaTokenDaoRedisFastjson2;
-import cn.dev33.satoken.dao.impl.SaTokenDaoForRedisTemplate;
+import cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate;
 import cn.dev33.satoken.exception.SaTokenException;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
