@@ -16,19 +16,19 @@
 package cn.dev33.satoken.plugin;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.json.SaJsonTemplateForJackson;
+import cn.dev33.satoken.temp.jwt.SaTempForJwt;
 
 /**
- * SaToken 插件安装：JSON 转换器 (jackjson 版)
+ * SaToken 插件安装：临时 token 生成器 - Jwt 版
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaTokenPluginForJackson implements SaTokenPlugin {
+public class SaTokenPluginForTempForJwt implements SaTokenPlugin {
 
     @Override
     public void setup() {
-        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
+        SaManager.setSaTemp(new SaTempForJwt());
     }
 
 }

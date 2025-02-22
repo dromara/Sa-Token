@@ -25,6 +25,9 @@
         <module>sa-token-hutool-timed-cache</module>
         <module>sa-token-thymeleaf</module>
         <module>sa-token-freemarker</module>
+        <module>sa-token-dubbo</module>
+        <module>sa-token-dubbo3</module>
+        <module>sa-token-temp-jwt</module>
 
         <!-- SpringBoot 环境插件 -->
         <module>sa-token-redis-template</module>
@@ -41,10 +44,7 @@
        	<module>sa-token-sso</module>
        	<module>sa-token-oauth2</module>
         <module>sa-token-quick-login</module>
-        <module>sa-token-temp-jwt</module>
         <module>sa-token-jwt</module>
-        <module>sa-token-dubbo</module>
-        <module>sa-token-dubbo3</module>
         <module>sa-token-grpc</module>
     </modules>
 
