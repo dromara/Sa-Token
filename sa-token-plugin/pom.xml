@@ -41,11 +41,11 @@
         <module>sa-token-spring-el</module>
         <module>sa-token-grpc</module>
         <module>sa-token-quick-login</module>
+        <module>sa-token-redisson</module>
 
         <!-- Solon 环境插件 -->
         <module>sa-token-redisx</module>
 
-        <module>sa-token-redisson-jackson</module>
         <module>sa-token-redisson-jackson2</module>
     </modules>
 

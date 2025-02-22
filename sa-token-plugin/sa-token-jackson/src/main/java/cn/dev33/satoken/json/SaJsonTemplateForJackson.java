@@ -106,7 +106,11 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 */
 	@Override
 	public String objectToJson(Object obj) {
+		if(SaFoxUtil.isEmpty(obj)) {
+			return null;
+		}
 		try {
+			System.out.println("序列化的啥：" + objectMapper.writeValueAsString(obj));
 			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			throw new SaJsonConvertException(e);

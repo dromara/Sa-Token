@@ -42,9 +42,14 @@
 		<!-- Sa-Token整合 Redisson (使用jackson序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redisson-jackson</artifactId>
+            <artifactId>sa-token-redisson</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jackson</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
         
 		<!-- 无需提供Redis连接池 Redisson使用Netty管理 -->
 <!--		<dependency>-->

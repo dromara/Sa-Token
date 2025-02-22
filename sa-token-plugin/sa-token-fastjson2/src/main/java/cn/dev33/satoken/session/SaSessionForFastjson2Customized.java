@@ -30,6 +30,13 @@ public class SaSessionForFastjson2Customized extends SaSession {
 
 	/**
 	 * 构建一个 SaSession 对象
+	 */
+	public SaSessionForFastjson2Customized() {
+		super();
+	}
+
+	/**
+	 * 构建一个 SaSession 对象
 	 * @param id Session 的 id
 	 */
 	public SaSessionForFastjson2Customized(String id) {
