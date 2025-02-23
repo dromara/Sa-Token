@@ -16,6 +16,7 @@
 package cn.dev33.satoken.serializer.impl;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
 
 /**
@@ -34,6 +35,16 @@ public class SaSerializerTemplateForJson implements SaSerializerTemplate {
 	@Override
 	public Object stringToObject(String str) {
 		return SaManager.getSaJsonTemplate().jsonToObject(str);
+	}
+
+	@Override
+	public byte[] objectToBytes(Object obj) {
+		throw new ApiDisabledException("json 序列化器不支持 Object -> byte[]");
+	}
+
+	@Override
+	public Object bytesToObject(byte[] bytes) {
+		throw new ApiDisabledException("json 序列化器不支持 byte[] -> Object");
 	}
 
 }

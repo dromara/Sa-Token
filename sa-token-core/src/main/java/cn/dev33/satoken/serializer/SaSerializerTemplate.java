@@ -39,4 +39,20 @@ public interface SaSerializerTemplate {
 	 */
 	Object stringToObject(String str);
 
+	/**
+	 * 序列化：对象 -> 字节数组
+	 *
+	 * @param obj /
+	 * @return /
+	 */
+	byte[] objectToBytes(Object obj);
+
+	/**
+	 * 反序列化：字节数组 → 对象
+	 *
+	 * @param bytes /
+	 * @return /
+	 */
+	Object bytesToObject(byte[] bytes);
+
 }

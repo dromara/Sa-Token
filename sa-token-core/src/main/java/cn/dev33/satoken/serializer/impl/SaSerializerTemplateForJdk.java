@@ -30,6 +30,24 @@ public interface SaSerializerTemplateForJdk extends SaSerializerTemplate {
 
 	@Override
 	default String objectToString(Object obj) {
+		byte[] bytes = objectToBytes(obj);
+		if (bytes == null) {
+			return null;
+		}
+		return bytesToString(bytes);
+    }
+
+	@Override
+	default Object stringToObject(String str) {
+		if(str == null) {
+			return null;
+		}
+		byte[] bytes = stringToBytes(str);
+		return bytesToObject(bytes);
+    }
+
+	@Override
+	default byte[] objectToBytes(Object obj) {
 		if (obj == null) {
 			return null;
 		}
@@ -38,28 +56,26 @@ public interface SaSerializerTemplateForJdk extends SaSerializerTemplate {
 			ObjectOutputStream oos = new ObjectOutputStream(baos)
 		) {
 			oos.writeObject(obj);
-			byte[] bytes = baos.toByteArray();
-			return bytesToString(bytes);
+			return baos.toByteArray();
 		} catch (IOException e) {
-            throw new SaTokenException(e);
-        }
-    }
+			throw new SaTokenException(e);
+		}
+	}
 
 	@Override
-	default Object stringToObject(String str) {
-		if(str == null) {
+	default Object bytesToObject(byte[] bytes) {
+		if(bytes == null) {
 			return null;
 		}
-		byte[] data = stringToBytes(str);
 		try (
-			ByteArrayInputStream bais = new ByteArrayInputStream(data);
+			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 			ObjectInputStream ois = new ObjectInputStream(bais)
 		) {
 			return ois.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-            throw new SaTokenException(e);
-        }
-    }
+			throw new SaTokenException(e);
+		}
+	}
 
 	/**
 	 * byte[] 转换为 String
