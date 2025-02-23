@@ -29,6 +29,7 @@ import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.same.SaSameTemplate;
+import cn.dev33.satoken.serializer.SaSerializerTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.solon.json.SaJsonTemplateForSnack3;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
@@ -129,6 +130,11 @@ public class XPluginImp implements Plugin {
         // Sa-Token JSON 转换器 Bean
         context.getBeanAsync(SaJsonTemplate.class, bean -> {
             SaManager.setSaJsonTemplate(bean);
+        });
+
+        // Sa-Token 序列化器 Bean
+        context.getBeanAsync(SaSerializerTemplate.class, bean -> {
+            SaManager.setSaSerializerTemplate(bean);
         });
 
         // Sa-Token 参数签名算法 Bean

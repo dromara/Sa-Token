@@ -30,6 +30,8 @@ import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.log.SaLogForConsole;
 import cn.dev33.satoken.same.SaSameTemplate;
+import cn.dev33.satoken.serializer.SaSerializerTemplate;
+import cn.dev33.satoken.serializer.SaSerializerTemplateDefaultImpl;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
@@ -224,6 +226,25 @@ public class SaManager {
 			}
 		}
 		return saJsonTemplate;
+	}
+
+	/**
+	 * 序列化器
+	 */
+	private volatile static SaSerializerTemplate saSerializerTemplate;
+	public static void setSaSerializerTemplate(SaSerializerTemplate saSerializerTemplate) {
+		SaManager.saSerializerTemplate = saSerializerTemplate;
+		SaTokenEventCenter.doRegisterComponent("SaSerializerTemplate", saSerializerTemplate);
+	}
+	public static SaSerializerTemplate getSaSerializerTemplate() {
+		if (saSerializerTemplate == null) {
+			synchronized (SaManager.class) {
+				if (saSerializerTemplate == null) {
+					SaManager.saSerializerTemplate = new SaSerializerTemplateDefaultImpl();
+				}
+			}
+		}
+		return saSerializerTemplate;
 	}
 
 	/**

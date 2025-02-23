@@ -31,6 +31,7 @@ import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.plugin.SaTokenPluginLoader;
 import cn.dev33.satoken.same.SaSameTemplate;
+import cn.dev33.satoken.serializer.SaSerializerTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import cn.dev33.satoken.stp.StpInterface;
@@ -183,6 +184,16 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
 		SaManager.setSaJsonTemplate(saJsonTemplate);
+	}
+
+	/**
+	 * 注入自定义的序列化器 Bean
+	 *
+	 * @param saSerializerTemplate 序列化器
+	 */
+	@Autowired(required = false)
+	public void setSaSerializerTemplate(SaSerializerTemplate saSerializerTemplate) {
+		SaManager.setSaSerializerTemplate(saSerializerTemplate);
 	}
 
 	/**
