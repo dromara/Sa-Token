@@ -16,6 +16,7 @@
 package cn.dev33.satoken.jboot;
 
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.util.SaFoxUtil;
 import io.jboot.Jboot;
@@ -35,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 使用Jboot的缓存方法存取Token数据
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class SaTokenCacheDao implements SaTokenDao {
+public class SaTokenCacheDao implements SaTokenDaoBySessionFollowObject {
 
     protected SaRedisCache saRedisCache;
     protected JbootSerializer serializer;
@@ -236,32 +237,32 @@ public class SaTokenCacheDao implements SaTokenDao {
 
     @Override
     public SaSession getSession(String sessionId) {
-        return SaTokenDao.super.getSession(sessionId);
+        return SaTokenDaoBySessionFollowObject.super.getSession(sessionId);
     }
 
     @Override
     public void setSession(SaSession session, long timeout) {
-        SaTokenDao.super.setSession(session, timeout);
+        SaTokenDaoBySessionFollowObject.super.setSession(session, timeout);
     }
 
     @Override
     public void updateSession(SaSession session) {
-        SaTokenDao.super.updateSession(session);
+        SaTokenDaoBySessionFollowObject.super.updateSession(session);
     }
 
     @Override
     public void deleteSession(String sessionId) {
-        SaTokenDao.super.deleteSession(sessionId);
+        SaTokenDaoBySessionFollowObject.super.deleteSession(sessionId);
     }
 
     @Override
     public long getSessionTimeout(String sessionId) {
-        return SaTokenDao.super.getSessionTimeout(sessionId);
+        return SaTokenDaoBySessionFollowObject.super.getSessionTimeout(sessionId);
     }
 
     @Override
     public void updateSessionTimeout(String sessionId, long timeout) {
-        SaTokenDao.super.updateSessionTimeout(sessionId, timeout);
+        SaTokenDaoBySessionFollowObject.super.updateSessionTimeout(sessionId, timeout);
     }
 
     @Override

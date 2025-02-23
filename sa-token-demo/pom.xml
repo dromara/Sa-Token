@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- 所有子模块 -->
+	<modules>
+		<module>sa-token-demo-alone-redis</module>
+		<module>sa-token-demo-alone-redis-cluster</module>
+		<module>sa-token-demo-beetl</module>
+		<module>sa-token-demo-bom-import</module>
+		<module>sa-token-demo-case</module>
+		<module>sa-token-demo-dubbo/sa-token-demo-dubbo-provider</module>
+		<module>sa-token-demo-dubbo/sa-token-demo-dubbo-consumer</module>
+		<module>sa-token-demo-dubbo/sa-token-demo-dubbo3-provider</module>
+		<module>sa-token-demo-dubbo/sa-token-demo-dubbo3-consumer</module>
+		<module>sa-token-demo-freemarker</module>
+		<module>sa-token-demo-grpc</module>
+		<module>sa-token-demo-hutool-timed-cache</module>
+		<module>sa-token-demo-jwt</module>
+		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-server</module>
+		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-client</module>
+		<module>sa-token-demo-quick-login</module>
+		<module>sa-token-demo-remember-me/sa-token-demo-remember-me-server</module>
+		<module>sa-token-demo-solon</module>
+		<module>sa-token-demo-solon-redisson</module>
+		<module>sa-token-demo-springboot</module>
+		<module>sa-token-demo-springboot3-redis</module>
+		<module>sa-token-demo-springboot-redis</module>
+		<module>sa-token-demo-springboot-redisson</module>
+		<module>sa-token-demo-ssm</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso-server</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso1-client</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso2-client</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso3-client</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso3-client-test2</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso3-client-nosdk</module>
+		<module>sa-token-demo-sso-for-solon/sa-token-demo-sso-server-solon</module>
+		<module>sa-token-demo-sso-for-solon/sa-token-demo-sso1-client-solon</module>
+		<module>sa-token-demo-sso-for-solon/sa-token-demo-sso2-client-solon</module>
+		<module>sa-token-demo-sso-for-solon/sa-token-demo-sso3-client-solon</module>
+		<module>sa-token-demo-test</module>
+		<module>sa-token-demo-thymeleaf</module>
+		<module>sa-token-demo-webflux</module>
+		<module>sa-token-demo-webflux-springboot3</module>
+		<module>sa-token-demo-websocket</module>
+		<module>sa-token-demo-webflux-springboot3</module>
+
+	</modules>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</project>

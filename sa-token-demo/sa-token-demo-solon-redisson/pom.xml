@@ -49,7 +49,7 @@
 		<!-- sa-token整合redis (使用jdk默认序列化方式) -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redisson-jackson2</artifactId>
+            <artifactId>sa-token-redisson</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
 

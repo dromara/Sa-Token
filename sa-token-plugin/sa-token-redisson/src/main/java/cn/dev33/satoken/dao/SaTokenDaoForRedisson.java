@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Sa-Token 持久层实现  [ Redisson客户端、Redis存储、Jackson序列化 ]
+ * Sa-Token 持久层实现  [ Redisson客户端、Redis存储 ]
  * 
  * @author 疯狂的狮子Li
  * @author noear

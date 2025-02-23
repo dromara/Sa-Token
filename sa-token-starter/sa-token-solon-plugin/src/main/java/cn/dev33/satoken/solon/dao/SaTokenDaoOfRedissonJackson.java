@@ -16,6 +16,7 @@
 package cn.dev33.satoken.solon.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -51,7 +52,7 @@ import java.util.stream.Stream;
  * @author noear
  * @since 1.34.0
  */
-public class SaTokenDaoOfRedissonJackson implements SaTokenDao {
+public class SaTokenDaoOfRedissonJackson implements SaTokenDaoBySessionFollowObject {
 
 	public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
