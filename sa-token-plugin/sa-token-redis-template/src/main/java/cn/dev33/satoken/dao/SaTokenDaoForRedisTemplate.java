@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowStringUseJsonSerializer;
+import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @author click33
  * @since 1.34.0
  */
-public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStringUseJsonSerializer {
+public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowString {
 
 	public StringRedisTemplate stringRedisTemplate;
 

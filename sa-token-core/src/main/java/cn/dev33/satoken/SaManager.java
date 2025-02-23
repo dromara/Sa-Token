@@ -31,7 +31,7 @@ import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.log.SaLogForConsole;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
-import cn.dev33.satoken.serializer.SaSerializerTemplateDefaultImpl;
+import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJson;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
@@ -240,7 +240,7 @@ public class SaManager {
 		if (saSerializerTemplate == null) {
 			synchronized (SaManager.class) {
 				if (saSerializerTemplate == null) {
-					SaManager.saSerializerTemplate = new SaSerializerTemplateDefaultImpl();
+					SaManager.saSerializerTemplate = new SaSerializerTemplateForJson();
 				}
 			}
 		}

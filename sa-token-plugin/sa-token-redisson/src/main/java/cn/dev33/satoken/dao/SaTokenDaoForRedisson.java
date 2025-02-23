@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowStringUseJsonSerializer;
+import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.redisson.api.RBatch;
 import org.redisson.api.RBucket;
@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  * @author noear
  * @since 1.34.0
  */
-public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowStringUseJsonSerializer {
+public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString {
 
 	/**
 	 * redisson 客户端

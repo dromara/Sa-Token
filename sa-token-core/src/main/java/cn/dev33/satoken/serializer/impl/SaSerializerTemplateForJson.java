@@ -13,17 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.serializer;
+package cn.dev33.satoken.serializer.impl;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.serializer.SaSerializerTemplate;
 
 /**
- * 序列化器，默认实现类 (使用 json 转换器)
+ * 序列化器: 使用 json 转换器
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaSerializerTemplateDefaultImpl implements SaSerializerTemplate {
+public class SaSerializerTemplateForJson implements SaSerializerTemplate {
 
 	@Override
 	public String objectToString(Object obj) {

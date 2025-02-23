@@ -50,7 +50,7 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 		template.setValueSerializer(valueSerializer);
 		template.setHashValueSerializer(valueSerializer);
 		template.afterPropertiesSet();
-
+		this.objectRedisTemplate = template;
 	}
 
 	

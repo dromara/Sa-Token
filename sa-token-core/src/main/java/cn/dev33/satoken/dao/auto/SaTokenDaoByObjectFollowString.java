@@ -18,12 +18,12 @@ package cn.dev33.satoken.dao.auto;
 import cn.dev33.satoken.SaManager;
 
 /**
- * SaTokenDao 次级实现，以 JSON 序列化方式实现 Object 读写相关操作
+ * SaTokenDao 次级实现，Object 读写跟随 String 读写
  *
  * @author click33
  * @since 1.41.0
  */
-public interface SaTokenDaoByObjectFollowStringUseJsonSerializer extends SaTokenDaoBySessionFollowObject {
+public interface SaTokenDaoByObjectFollowString extends SaTokenDaoBySessionFollowObject {
 
 	// --------------------- Object 读写 ---------------------
 
@@ -36,7 +36,7 @@ public interface SaTokenDaoByObjectFollowStringUseJsonSerializer extends SaToken
 	@Override
 	default Object getObject(String key) {
 		String jsonString = get(key);
-		return SaManager.getSaJsonTemplate().jsonToObject(jsonString);
+		return SaManager.getSaSerializerTemplate().stringToObject(jsonString);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public interface SaTokenDaoByObjectFollowStringUseJsonSerializer extends SaToken
 	 */
 	@Override
 	default void setObject(String key, Object object, long timeout) {
-		String jsonString = SaManager.getSaJsonTemplate().objectToJson(object);
+		String jsonString = SaManager.getSaSerializerTemplate().objectToString(object);
 		set(key, jsonString, timeout);
 	}
 
@@ -59,7 +59,7 @@ public interface SaTokenDaoByObjectFollowStringUseJsonSerializer extends SaToken
 	 */
 	@Override
 	default void updateObject(String key, Object object) {
-		String jsonString = SaManager.getSaJsonTemplate().objectToJson(object);
+		String jsonString = SaManager.getSaSerializerTemplate().objectToString(object);
 		update(key, jsonString);
 	}
 
