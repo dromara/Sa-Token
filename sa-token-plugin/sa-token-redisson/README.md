@@ -10,7 +10,7 @@
 <dependencies>
     <dependency>
         <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-redisson-jackson2</artifactId>
+        <artifactId>sa-token-redisson</artifactId>
         <version>${sa-token.version}</version>
     </dependency>
     <dependency>
@@ -65,7 +65,7 @@ public class SaTokenConfigure {
 <dependencies>
     <dependency>
         <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-redisson-jackson2</artifactId>
+        <artifactId>sa-token-redisson</artifactId>
         <version>${sa-token.version}</version>
     </dependency>
     <dependency>

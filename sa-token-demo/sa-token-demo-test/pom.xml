@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
-			<version>5.8.16</version>
+			<version>5.8.36</version>
 		</dependency>
 
 		<!-- Sa-Token 整合  Redis (使用jdk默认序列化方式) -->
@@ -54,12 +54,12 @@
             <version>${sa-token.version}</version>
         </dependency> -->
 
-		<!-- Sa-Token整合 Redis (使用jackson序列化方式) -->
+		<!-- Sa-Token整合 Redis -->
 		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-jackson</artifactId>
-            <version>${sa-token.version}</version>
-        </dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-template</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
         
 		<!-- 提供Redis连接池 -->
 		<dependency>

@@ -42,7 +42,13 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
+		<!-- jackson 序列化、redis集成、SSO、OAuth2 等模块要用到 -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jackson</artifactId>
+		</dependency>
+
 		<!-- OAuth2.0 (optional) -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
