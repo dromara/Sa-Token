@@ -15,20 +15,34 @@
  */
 package cn.dev33.satoken.plugin;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.dubbo3.SaTokenSecondContextForDubbo3;
+import cn.dev33.satoken.fun.hooks.SaTokenPluginHookFunction;
 
 /**
- * SaToken 插件安装：二级上下文 (dubbo3 版)
+ * Sa-Token 插件 Hook Model
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaTokenPluginForDubbo3 implements SaTokenPlugin {
+public class SaTokenPluginHookModel<T extends SaTokenPlugin> {
 
-    @Override
-    public void install() {
-        SaManager.setSaTokenSecondContext(new SaTokenSecondContextForDubbo3());
-    }
+	/**
+	 * 监听插件类型
+	 */
+	public Class<T> listenerClass;
+
+	/**
+	 * 执行的方法
+	 */
+	public SaTokenPluginHookFunction<T> executeFunction;
+
+	/**
+	 * 构造函数
+	 * @param listenerClass /
+	 * @param executeFunction /
+	 */
+	public SaTokenPluginHookModel(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+		this.listenerClass = listenerClass;
+		this.executeFunction = executeFunction;
+	}
 
 }

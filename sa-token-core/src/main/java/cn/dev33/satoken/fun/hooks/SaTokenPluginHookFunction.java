@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.plugin;
+package cn.dev33.satoken.fun.hooks;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.dubbo3.SaTokenSecondContextForDubbo3;
+import cn.dev33.satoken.plugin.SaTokenPlugin;
 
 /**
- * SaToken 插件安装：二级上下文 (dubbo3 版)
+ * SaTokenPlugin 钩子函数
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaTokenPluginForDubbo3 implements SaTokenPlugin {
+@FunctionalInterface
+public interface SaTokenPluginHookFunction<T extends SaTokenPlugin> {
 
-    @Override
-    public void install() {
-        SaManager.setSaTokenSecondContext(new SaTokenSecondContextForDubbo3());
-    }
-
+    /**
+     * 执行的方法
+     * @param plugin 插件实例
+     */
+    void execute(SaTokenPlugin plugin);
 }

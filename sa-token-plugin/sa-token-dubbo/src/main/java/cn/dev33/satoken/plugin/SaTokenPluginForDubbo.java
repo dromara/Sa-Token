@@ -27,7 +27,7 @@ import cn.dev33.satoken.context.dubbo.SaTokenSecondContextForDubbo;
 public class SaTokenPluginForDubbo implements SaTokenPlugin {
 
     @Override
-    public void setup() {
+    public void install() {
         SaManager.setSaTokenSecondContext(new SaTokenSecondContextForDubbo());
     }
 

@@ -3,6 +3,8 @@ package com.pj.satoken;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.plugin.SaTokenPluginForJackson;
+import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaResult;
@@ -83,5 +85,25 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         		})
         		;
     }
+
+	/**
+	 * 注册 [Sa-Token 全局过滤器]
+	 */
+	@Bean
+	public SaTokenPluginHolder getSaTokenPluginHolder() {
+		System.out.println("自定义逻辑");
+		SaTokenPluginHolder.instance.onBeforeInstall(SaTokenPluginForJackson.class, plugin -> {
+			System.out.println("自定义逻辑前置");
+		});
+
+		SaTokenPluginHolder.instance.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
+			System.out.println("自定义逻辑后");
+		});
+		SaTokenPluginHolder.instance.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
+			System.out.println("自定义逻辑后置2");
+		});
+
+		return SaTokenPluginHolder.instance;
+	}
 
 }

@@ -27,7 +27,7 @@ import cn.dev33.satoken.dao.SaTokenDaoForHutoolTimedCache;
 public class SaTokenPluginForHutoolCache implements SaTokenPlugin {
 
     @Override
-    public void setup() {
+    public void install() {
 
         SaManager.setSaTokenDao(new SaTokenDaoForHutoolTimedCache());
 

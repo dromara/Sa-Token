@@ -27,7 +27,7 @@ import cn.dev33.satoken.temp.jwt.SaTempForJwt;
 public class SaTokenPluginForTempForJwt implements SaTokenPlugin {
 
     @Override
-    public void setup() {
+    public void install() {
         SaManager.setSaTemp(new SaTempForJwt());
     }
 

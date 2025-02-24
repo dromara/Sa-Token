@@ -27,7 +27,7 @@ import cn.dev33.satoken.json.SaJsonTemplateForJackson;
 public class SaTokenPluginForJackson implements SaTokenPlugin {
 
     @Override
-    public void setup() {
+    public void install() {
         SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
     }
 

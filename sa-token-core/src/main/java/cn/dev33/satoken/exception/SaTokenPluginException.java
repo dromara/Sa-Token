@@ -13,22 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.plugin;
-
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.dubbo3.SaTokenSecondContextForDubbo3;
+package cn.dev33.satoken.exception;
 
 /**
- * SaToken 插件安装：二级上下文 (dubbo3 版)
+ * 一个异常：代表插件安装过程中出现异常
  *
  * @author click33
- * @since 1.41.0
+ * @since 1.28.0
  */
-public class SaTokenPluginForDubbo3 implements SaTokenPlugin {
+public class SaTokenPluginException extends SaTokenException {
 
-    @Override
-    public void install() {
-        SaManager.setSaTokenSecondContext(new SaTokenSecondContextForDubbo3());
-    }
+	/**
+	 * 序列化版本号
+	 */
+	private static final long serialVersionUID = 6806129545290130131L;
+
+	/**
+	 * 一个异常：代表插件安装过程中出现异常
+	 * @param message 异常描述
+	 */
+	public SaTokenPluginException(String message) {
+		super(message);
+	}
+
+	/**
+	 * 一个异常：代表插件安装过程中出现异常
+	 *
+	 * @param cause 异常对象
+	 */
+	public SaTokenPluginException(Throwable cause) {
+		super(cause);
+	}
 
 }

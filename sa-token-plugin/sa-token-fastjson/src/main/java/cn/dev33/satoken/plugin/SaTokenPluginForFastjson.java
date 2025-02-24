@@ -29,7 +29,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
 public class SaTokenPluginForFastjson implements SaTokenPlugin {
 
     @Override
-    public void setup() {
+    public void install() {
 
         // 设置JSON转换器：Fastjson 版
         SaManager.setSaJsonTemplate(new SaJsonTemplateForFastjson());

@@ -26,6 +26,13 @@ public interface SaTokenPlugin {
 	/**
 	 * 安装插件
 	 */
-	void setup();
+	void install();
+
+	/**
+	 * 卸载插件
+	 */
+	default void destroy(){
+
+	}
 
 }

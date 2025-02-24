@@ -16,6 +16,7 @@
 package cn.dev33.satoken.jfinal;
 
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject;
 import cn.dev33.satoken.util.SaFoxUtil;
 import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class SaTokenDaoRedis implements SaTokenDao {
+public class SaTokenDaoRedis implements SaTokenDaoBySessionFollowObject {
 
     protected Cache redis;
     protected ISerializer serializer;
