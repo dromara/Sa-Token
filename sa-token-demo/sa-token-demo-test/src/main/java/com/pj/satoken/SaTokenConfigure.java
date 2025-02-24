@@ -91,19 +91,22 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	 */
 	@Bean
 	public SaTokenPluginHolder getSaTokenPluginHolder() {
-		System.out.println("自定义逻辑");
-		SaTokenPluginHolder.instance.onBeforeInstall(SaTokenPluginForJackson.class, plugin -> {
-			System.out.println("自定义逻辑前置");
-		});
+		System.out.println("自定义插件安装钩子函数...");
 
-		SaTokenPluginHolder.instance.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
-			System.out.println("自定义逻辑后");
-		});
-		SaTokenPluginHolder.instance.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
-			System.out.println("自定义逻辑后置2");
-		});
+		return SaTokenPluginHolder.instance
+				.onBeforeInstall(SaTokenPluginForJackson.class, plugin -> {
+					System.out.println("SaTokenPluginForJackson 插件安装前置钩子...");
+				})
 
-		return SaTokenPluginHolder.instance;
+				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
+					System.out.println("SaTokenPluginForJackson 插件安装后置钩子...");
+				})
+
+				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
+					System.out.println("SaTokenPluginForJackson 插件安装后置钩子2...");
+				})
+				
+				;
 	}
 
 }

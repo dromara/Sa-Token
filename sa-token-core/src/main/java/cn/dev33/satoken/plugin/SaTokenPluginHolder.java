@@ -138,7 +138,7 @@ public class SaTokenPluginHolder {
 	 * 安装指定插件
 	 * @param plugin /
 	 */
-	public synchronized void installPlugin(SaTokenPlugin plugin) {
+	public synchronized SaTokenPluginHolder installPlugin(SaTokenPlugin plugin) {
 
 		// 插件为空，拒绝安装
 		if (plugin == null) {
@@ -161,16 +161,19 @@ public class SaTokenPluginHolder {
 
 		// 添加到插件集合
 		pluginList.add(plugin);
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
 	}
 
 	/**
 	 * 安装指定插件，根据插件类型
 	 * @param pluginClass /
 	 */
-	public synchronized<T extends SaTokenPlugin> void installPlugin(Class<T> pluginClass) {
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder installPlugin(Class<T> pluginClass) {
 		try {
 			T plugin = pluginClass.getDeclaredConstructor().newInstance();
-			installPlugin(plugin);
+			return installPlugin(plugin);
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 			throw new SaTokenPluginException(e);
 		}
@@ -192,7 +195,7 @@ public class SaTokenPluginHolder {
 	 * @param executeFunction /
 	 * @param <T> /
 	 */
-	public synchronized<T extends SaTokenPlugin> void onBeforeInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onBeforeInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
 		// 如果指定的插件已经安装完毕，则不再允许注册前置钩子函数
 		if(isInstalledPlugin(listenerClass)) {
 			throw new SaTokenPluginException("插件 [ " + listenerClass.getCanonicalName() + " ] 已安装完毕，不允许再注册前置钩子函数");
@@ -200,6 +203,9 @@ public class SaTokenPluginHolder {
 
 		// 堆积到钩子函数集合
 		beforeInstallHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
 	}
 
 	/**
@@ -208,15 +214,18 @@ public class SaTokenPluginHolder {
 	 * @param executeFunction /
 	 * @param <T> /
 	 */
-	public synchronized<T extends SaTokenPlugin> void onAfterInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onAfterInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
 		// 如果指定的插件已经安装完毕，则立即执行该钩子函数
 		if(isInstalledPlugin(listenerClass)) {
 			executeFunction.execute(getPlugin(listenerClass));
-			return;
+			return this;
 		}
 
 		// 堆积到钩子函数集合
 		afterInstallHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
 	}
 
 
@@ -226,7 +235,7 @@ public class SaTokenPluginHolder {
 	 * 卸载指定插件
 	 * @param plugin /
 	 */
-	public synchronized void destroyPlugin(SaTokenPlugin plugin) {
+	public synchronized SaTokenPluginHolder destroyPlugin(SaTokenPlugin plugin) {
 
 		// 插件为空，拒绝卸载
 		if (plugin == null) {
@@ -246,14 +255,17 @@ public class SaTokenPluginHolder {
 
 		// 执行该插件的 destroy 后置钩子
 		_consumeHooks(afterDestroyHooks, plugin.getClass());
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
 	}
 
 	/**
 	 * 卸载指定插件，根据插件类型
 	 * @param pluginClass /
 	 */
-	public synchronized<T extends SaTokenPlugin> void destroyPlugin(Class<T> pluginClass) {
-		destroyPlugin(getPlugin(pluginClass));
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder destroyPlugin(Class<T> pluginClass) {
+		return destroyPlugin(getPlugin(pluginClass));
 	}
 
 	/**
@@ -272,8 +284,11 @@ public class SaTokenPluginHolder {
 	 * @param executeFunction /
 	 * @param <T> /
 	 */
-	public synchronized<T extends SaTokenPlugin> void onBeforeDestroy(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onBeforeDestroy(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
 		beforeDestroyHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
 	}
 
 	/**
@@ -282,8 +297,11 @@ public class SaTokenPluginHolder {
 	 * @param executeFunction /
 	 * @param <T> /
 	 */
-	public synchronized<T extends SaTokenPlugin> void onAfterDestroy(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onAfterDestroy(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
 		afterDestroyHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
 	}
 
 
