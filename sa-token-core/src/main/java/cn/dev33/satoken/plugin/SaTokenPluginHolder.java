@@ -165,24 +165,27 @@ public class SaTokenPluginHolder {
 	}
 
 	/**
-	 * 消费指定集合的钩子函数
+	 * 消费指定集合的钩子函数，返回消费的数量
 	 * @param pluginClass /
 	 * @param hooks /
 	 * @param <T> /
 	 */
-	protected synchronized <T extends SaTokenPlugin> void _consumeHooks(List<SaTokenPluginHookModel<? extends SaTokenPlugin>> hooks, Class<T> pluginClass) {
+	protected synchronized <T extends SaTokenPlugin> int _consumeHooks(List<SaTokenPluginHookModel<? extends SaTokenPlugin>> hooks, Class<T> pluginClass) {
+		int consumeCount = 0;
 		for (int i = 0; i < hooks.size(); i++) {
 			SaTokenPluginHookModel<? extends SaTokenPlugin> model = hooks.get(i);
 			if(model.listenerClass.equals(pluginClass)) {
 				model.executeFunction.execute(getPlugin(pluginClass));
 				hooks.remove(i);
 				i--;
+				consumeCount++;
 			}
 		}
+		return consumeCount;
 	}
 
 
-	// ------------------- 插件 Install -------------------
+	// ------------------- 插件 Install 与 Destroy -------------------
 
 	/**
 	 * 安装指定插件
@@ -204,7 +207,10 @@ public class SaTokenPluginHolder {
 		_consumeHooks(beforeInstallHooks, plugin.getClass());
 
 		// 插件安装
-		plugin.install();
+		int consumeCount = _consumeHooks(installHooks, plugin.getClass());
+		if (consumeCount == 0) {
+			plugin.install();
+		}
 
 		// 执行该插件的 install 后置钩子
 		_consumeHooks(afterInstallHooks, plugin.getClass());
@@ -230,58 +236,6 @@ public class SaTokenPluginHolder {
 	}
 
 	/**
-	 * 插件 [ Install 前置钩子 ] 集合
-	 */
-	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> beforeInstallHooks = new ArrayList<>();
-
-	/**
-	 * 插件 [ Install 后置钩子 ] 集合
-	 */
-	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> afterInstallHooks = new ArrayList<>();
-
-	/**
-	 * 注册指定插件的 [ Install 前置钩子 ]，同插件支持多次注册，如果插件已经安装完毕，则抛出异常
-	 * @param listenerClass /
-	 * @param executeFunction /
-	 * @param <T> /
-	 */
-	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onBeforeInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
-		// 如果指定的插件已经安装完毕，则不再允许注册前置钩子函数
-		if(isInstalledPlugin(listenerClass)) {
-			throw new SaTokenPluginException("插件 [ " + listenerClass.getCanonicalName() + " ] 已安装完毕，不允许再注册前置钩子函数");
-		}
-
-		// 堆积到钩子函数集合
-		beforeInstallHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
-
-		// 返回对象自身，支持连缀风格调用
-		return this;
-	}
-
-	/**
-	 * 注册指定插件的 [ Install 后置钩子 ]，同插件支持多次注册，如果插件已经安装完毕，则立即执行该钩子函数
-	 * @param listenerClass /
-	 * @param executeFunction /
-	 * @param <T> /
-	 */
-	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onAfterInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
-		// 如果指定的插件已经安装完毕，则立即执行该钩子函数
-		if(isInstalledPlugin(listenerClass)) {
-			executeFunction.execute(getPlugin(listenerClass));
-			return this;
-		}
-
-		// 堆积到钩子函数集合
-		afterInstallHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
-
-		// 返回对象自身，支持连缀风格调用
-		return this;
-	}
-
-
-	// ------------------- 插件 Destroy -------------------
-
-	/**
 	 * 卸载指定插件
 	 * @param plugin /
 	 */
@@ -301,7 +255,10 @@ public class SaTokenPluginHolder {
 		_consumeHooks(beforeDestroyHooks, plugin.getClass());
 
 		// 插件卸载
-		plugin.destroy();
+		int consumeCount = _consumeHooks(destroyHooks, plugin.getClass());
+		if (consumeCount == 0) {
+			plugin.destroy();
+		}
 
 		// 执行该插件的 destroy 后置钩子
 		_consumeHooks(afterDestroyHooks, plugin.getClass());
@@ -318,6 +275,90 @@ public class SaTokenPluginHolder {
 		return destroyPlugin(getPlugin(pluginClass));
 	}
 
+
+	// ------------------- 插件 Install 钩子 -------------------
+
+	/**
+	 * 插件 [ Install 钩子 ] 集合
+	 */
+	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> installHooks = new ArrayList<>();
+
+	/**
+	 * 插件 [ Install 前置钩子 ] 集合
+	 */
+	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> beforeInstallHooks = new ArrayList<>();
+
+	/**
+	 * 插件 [ Install 后置钩子 ] 集合
+	 */
+	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> afterInstallHooks = new ArrayList<>();
+
+	/**
+	 * 注册指定插件的 [ Install 钩子 ]，1、同插件支持多次注册。2、如果插件已经安装完毕，则抛出异常。3、注册 Install 钩子的插件默认安装行为将不再执行
+	 * @param listenerClass /
+	 * @param executeFunction /
+	 * @param <T> /
+	 */
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+		// 如果指定的插件已经安装完毕，则不再允许注册前置钩子函数
+		if(isInstalledPlugin(listenerClass)) {
+			throw new SaTokenPluginException("插件 [ " + listenerClass.getCanonicalName() + " ] 已安装完毕，不允许再注册 Install 钩子函数");
+		}
+
+		// 堆积到钩子函数集合
+		installHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
+	}
+
+	/**
+	 * 注册指定插件的 [ Install 前置钩子 ]，1、同插件支持多次注册。2、如果插件已经安装完毕，则抛出异常
+	 * @param listenerClass /
+	 * @param executeFunction /
+	 * @param <T> /
+	 */
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onBeforeInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+		// 如果指定的插件已经安装完毕，则不再允许注册前置钩子函数
+		if(isInstalledPlugin(listenerClass)) {
+			throw new SaTokenPluginException("插件 [ " + listenerClass.getCanonicalName() + " ] 已安装完毕，不允许再注册 Install 前置钩子函数");
+		}
+
+		// 堆积到钩子函数集合
+		beforeInstallHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
+	}
+
+	/**
+	 * 注册指定插件的 [ Install 后置钩子 ]，1、同插件支持多次注册。2、如果插件已经安装完毕，则立即执行该钩子函数
+	 * @param listenerClass /
+	 * @param executeFunction /
+	 * @param <T> /
+	 */
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onAfterInstall(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+		// 如果指定的插件已经安装完毕，则立即执行该钩子函数
+		if(isInstalledPlugin(listenerClass)) {
+			executeFunction.execute(getPlugin(listenerClass));
+			return this;
+		}
+
+		// 堆积到钩子函数集合
+		afterInstallHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
+	}
+
+
+	// ------------------- 插件 Destroy 钩子 -------------------
+
+	/**
+	 * 插件 [ Destroy 钩子 ] 集合
+	 */
+	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> destroyHooks = new ArrayList<>();
+
 	/**
 	 * 插件 [ Destroy 前置钩子 ] 集合
 	 */
@@ -327,6 +368,19 @@ public class SaTokenPluginHolder {
 	 * 插件 [ Destroy 后置钩子 ] 集合
 	 */
 	private final List<SaTokenPluginHookModel<? extends SaTokenPlugin>> afterDestroyHooks = new ArrayList<>();
+
+	/**
+	 * 注册指定插件的 [ Destroy 钩子 ]，1、同插件支持多次注册。2、注册 Destroy 钩子的插件默认卸载行为将不再执行
+	 * @param listenerClass /
+	 * @param executeFunction /
+	 * @param <T> /
+	 */
+	public synchronized<T extends SaTokenPlugin> SaTokenPluginHolder onDestroy(Class<T> listenerClass, SaTokenPluginHookFunction<T> executeFunction) {
+		destroyHooks.add(new SaTokenPluginHookModel<T>(listenerClass, executeFunction));
+
+		// 返回对象自身，支持连缀风格调用
+		return this;
+	}
 
 	/**
 	 * 注册指定插件的 [ Destroy 前置钩子 ]，同插件支持多次注册
@@ -353,7 +407,5 @@ public class SaTokenPluginHolder {
 		// 返回对象自身，支持连缀风格调用
 		return this;
 	}
-
-
 
 }
