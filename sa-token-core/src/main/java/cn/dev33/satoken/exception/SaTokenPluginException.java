@@ -45,4 +45,14 @@ public class SaTokenPluginException extends SaTokenException {
 		super(cause);
 	}
 
+	/**
+	 * 一个异常：代表插件安装过程中出现异常
+	 *
+	 * @param message 异常描述
+	 * @param cause 异常对象
+	 */
+	public SaTokenPluginException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

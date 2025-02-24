@@ -105,7 +105,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
 					System.out.println("SaTokenPluginForJackson 插件安装后置钩子2...");
 				})
-				
+
 				;
 	}
 

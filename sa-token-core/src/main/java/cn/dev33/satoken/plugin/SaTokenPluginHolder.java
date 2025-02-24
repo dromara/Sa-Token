@@ -19,10 +19,14 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.exception.SaTokenPluginException;
 import cn.dev33.satoken.fun.hooks.SaTokenPluginHookFunction;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
-import java.util.ServiceLoader;
 
 /**
  * Sa-Token 插件管理器，管理所有插件的加载与卸载
@@ -38,12 +42,17 @@ public class SaTokenPluginHolder {
 	public static SaTokenPluginHolder instance = new SaTokenPluginHolder();
 
 
-	// ------------------- 插件初始化相关 -------------------
+	// ------------------- 插件管理器初始化相关 -------------------
 
 	/**
 	 * 是否已经加载过插件
 	 */
 	public boolean isLoader = false;
+
+	/**
+	 * SPI 文件所在目录名称
+	 */
+	public String spiDir = "satoken";
 
 	/**
 	 * 初始化加载所有插件（多次调用只会执行一次）
@@ -58,15 +67,56 @@ public class SaTokenPluginHolder {
 
 	/**
 	 * 根据 SPI 机制加载所有插件
+	 * <p>
+	 *    加载所有 jar 下 /META-INF/satoken/ 目录下 cn.dev33.satoken.plugin.SaTokenPlugin 文件指定的实现类
+	 * </p>
 	 */
 	public synchronized void loaderPlugins() {
 		SaManager.getLog().info("SPI 插件加载开始 ...");
-		ServiceLoader<SaTokenPlugin> plugins = ServiceLoader.load(SaTokenPlugin.class);
+		List<SaTokenPlugin> plugins = _loaderPluginsBySpi(SaTokenPlugin.class, spiDir);
 		for (SaTokenPlugin plugin : plugins) {
 			installPlugin(plugin);
 		}
 		SaManager.getLog().info("SPI 插件加载结束 ...");
 	}
+
+	/**
+	 * 自定义 SPI 读取策略 （无状态函数）
+	 * @param serviceInterface SPI 接口
+	 * @param dirName 目录名称
+	 * @return /
+	 * @param <T> /
+	 */
+	protected <T> List<T> _loaderPluginsBySpi(Class<T> serviceInterface, String dirName) {
+		String path = "META-INF/" + dirName + "/" + serviceInterface.getName();
+		List<T> providers = new ArrayList<>();
+		try {
+			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			Enumeration<URL> resources = classLoader.getResources(path);
+			while (resources.hasMoreElements()) {
+				URL url = resources.nextElement();
+				try (InputStream is = url.openStream()) {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+					String line;
+					while ((line = reader.readLine()) != null) {
+						line = line.trim();
+						// 忽略空行和注释行
+						if (!line.isEmpty() && !line.startsWith("#")) {
+							Class<?> clazz = Class.forName(line, true, classLoader);
+							T instance = serviceInterface.cast(clazz.getDeclaredConstructor().newInstance());
+							providers.add(instance);
+						}
+					}
+				} catch (Exception e) {
+					throw new SaTokenPluginException("SPI 插件加载失败: " + e.getMessage(), e);
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("SPI 插件加载失败: " + e.getMessage(), e);
+		}
+		return providers;
+	}
+
 
 
 	// ------------------- 插件管理 -------------------
