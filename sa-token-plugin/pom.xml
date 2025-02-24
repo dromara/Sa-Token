@@ -32,6 +32,7 @@
         <module>sa-token-sso</module>
         <module>sa-token-oauth2</module>
         <module>sa-token-redisson</module>
+        <module>sa-token-serializer-features</module>
 
         <!-- SpringBoot 环境插件 -->
         <module>sa-token-redis-template</module>
