@@ -43,7 +43,7 @@ import org.noear.solon.annotation.*;
 import java.util.List;
 
 /**
- * 注入 Sa-Token 所需要的 Bean //todo: 再去插件添加：context.beanMake(SaBeanInject.class);
+ * 注入 Sa-Token 所需要的 Bean
  * 
  * @author click33
  * @since 1.34.0
@@ -52,22 +52,22 @@ import java.util.List;
 public class SaBeanInject {
 
 	/**
-	 * 组件注入 
-	 * <p> 为确保 Log 组件正常打印，必须将 SaLog 和 SaTokenConfig 率先初始化 </p> 
-	 * 
-	 * @param log log 对象
+	 * 组件注入
+	 * <p> 为确保 Log 组件正常打印，必须将 SaLog 和 SaTokenConfig 率先初始化 </p>
+	 *
+	 * @param log           log 对象
 	 * @param saTokenConfig 配置对象
 	 */
 	public SaBeanInject(
 			@Inject(required = false) SaLog log,
 			@Inject(required = false) SaTokenConfig saTokenConfig,
 			@Inject(required = false) SaTokenPluginHolder pluginHolder
-			){
-		if(log != null) {
+	) {
+		if (log != null) {
 			SaManager.setLog(log);
 		}
 
-		if(saTokenConfig != null) {
+		if (saTokenConfig != null) {
 			SaManager.setConfig(saTokenConfig);
 		}
 
@@ -78,11 +78,11 @@ public class SaBeanInject {
 		pluginHolder.init();
 		SaTokenPluginHolder.instance = pluginHolder;
 	}
-	
+
 	/**
 	 * 注入持久化Bean
-	 * 
-	 * @param saTokenDao SaTokenDao对象 
+	 *
+	 * @param saTokenDao SaTokenDao对象
 	 */
 	@Condition(onBean = SaTokenDao.class)
 	@Bean
@@ -92,8 +92,8 @@ public class SaBeanInject {
 
 	/**
 	 * 注入权限认证Bean
-	 * 
-	 * @param stpInterface StpInterface对象 
+	 *
+	 * @param stpInterface StpInterface对象
 	 */
 	@Condition(onBean = StpInterface.class)
 	@Bean
@@ -103,8 +103,8 @@ public class SaBeanInject {
 
 	/**
 	 * 注入上下文Bean
-	 * 
-	 * @param saTokenContext SaTokenContext对象 
+	 *
+	 * @param saTokenContext SaTokenContext对象
 	 */
 	@Condition(onBean = SaTokenContext.class)
 	@Bean
@@ -114,8 +114,8 @@ public class SaBeanInject {
 
 	/**
 	 * 注入二级上下文Bean
-	 * 
-	 * @param saTokenSecondContextCreator 二级上下文创建器 
+	 *
+	 * @param saTokenSecondContextCreator 二级上下文创建器
 	 */
 	@Condition(onBean = SaTokenSecondContextCreator.class)
 	@Bean
@@ -125,8 +125,8 @@ public class SaBeanInject {
 
 	/**
 	 * 注入侦听器Bean
-	 * 
-	 * @param listenerList 侦听器集合 
+	 *
+	 * @param listenerList 侦听器集合
 	 */
 	@Bean
 	public void setSaTokenListener(List<SaTokenListener> listenerList) {
@@ -147,8 +147,8 @@ public class SaBeanInject {
 
 	/**
 	 * 注入临时令牌验证模块 Bean
-	 * 
-	 * @param saTemp saTemp对象 
+	 *
+	 * @param saTemp saTemp对象
 	 */
 	@Condition(onBean = SaTempInterface.class)
 	@Bean
@@ -158,8 +158,8 @@ public class SaBeanInject {
 
 	/**
 	 * 注入 Same-Token 模块 Bean
-	 * 
-	 * @param saSameTemplate saSameTemplate对象 
+	 *
+	 * @param saSameTemplate saSameTemplate对象
 	 */
 	@Condition(onBean = SaSameTemplate.class)
 	@Bean
@@ -168,9 +168,9 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入 Sa-Token Http Basic 认证模块 
-	 * 
-	 * @param saBasicTemplate saBasicTemplate对象 
+	 * 注入 Sa-Token Http Basic 认证模块
+	 *
+	 * @param saBasicTemplate saBasicTemplate对象
 	 */
 	@Condition(onBean = SaHttpBasicTemplate.class)
 	@Bean
@@ -190,9 +190,9 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入自定义的 JSON 转换器 Bean 
-	 * 
-	 * @param saJsonTemplate JSON 转换器 
+	 * 注入自定义的 JSON 转换器 Bean
+	 *
+	 * @param saJsonTemplate JSON 转换器
 	 */
 	@Condition(onBean = SaJsonTemplate.class)
 	@Bean
@@ -212,9 +212,9 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入自定义的 参数签名 Bean 
-	 * 
-	 * @param saSignTemplate 参数签名 Bean 
+	 * 注入自定义的 参数签名 Bean
+	 *
+	 * @param saSignTemplate 参数签名 Bean
 	 */
 	@Condition(onBean = SaSignTemplate.class)
 	@Bean
@@ -223,24 +223,13 @@ public class SaBeanInject {
 	}
 
 	/**
-	 * 注入自定义的 StpLogic 
-	 * @param stpLogic / 
+	 * 注入自定义的 StpLogic
+	 *
+	 * @param stpLogic /
 	 */
 	@Condition(onBean = StpLogic.class)
 	@Bean
 	public void setStpLogic(StpLogic stpLogic) {
 		StpUtil.setStpLogic(stpLogic);
 	}
-	
-	/**
-	 * 利用自动注入特性，获取Spring框架内部使用的路由匹配器
-	 * 
-	 * @param pathMatcher 要设置的 pathMatcher
-	 */
-//	@Condition(onBean = StpLogic.class) //SaPathMatcherHolder 这个类可能是新的未刷到（后面补上）
-//	@Bean
-//	public void setPathMatcher(PathMatcher pathMatcher) {
-//		SaPathMatcherHolder.setPathMatcher(pathMatcher);
-//	}
-
 }
