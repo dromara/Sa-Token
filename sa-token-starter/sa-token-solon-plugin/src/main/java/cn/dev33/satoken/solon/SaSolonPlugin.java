@@ -19,7 +19,8 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.solon.json.SaJsonTemplateForSnack3;
 import cn.dev33.satoken.solon.model.SaContextForSolon;
 import cn.dev33.satoken.solon.oauth2.SaOAuth2AutoConfigure;
-import cn.dev33.satoken.solon.sso.SaSsoAutoConfigure;
+import cn.dev33.satoken.solon.sso.SaSsoBeanInject;
+import cn.dev33.satoken.solon.sso.SaSsoBeanRegister;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 
@@ -42,7 +43,8 @@ public class SaSolonPlugin implements Plugin {
         context.beanMake(SaBeanInject.class);
 
         //sa-sso
-        context.beanMake(SaSsoAutoConfigure.class);
+        context.beanMake(SaSsoBeanRegister.class);
+        context.beanMake(SaSsoBeanInject.class);
 
         //sa-oauth2
         context.beanMake(SaOAuth2AutoConfigure.class);
