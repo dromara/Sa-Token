@@ -17,9 +17,10 @@ package cn.dev33.satoken.session;
 
 import cn.dev33.satoken.util.SaFoxUtil;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 
 /**
- * Fastjson2 定制版 SaSession，重写类型转换API、忽略 timeout 字段的序列化
+ * Fastjson2 定制版 SaSession，重写类型转换API
  * 
  * @author click33
  * @since 1.34.0
@@ -48,35 +49,25 @@ public class SaSessionForFastjson2Customized extends SaSession {
 	 * @param <T> 泛型
 	 * @param key key 
 	 * @param cs 指定转换类型 
-	 * @return 值 
+	 * @return 值
 	 */
 	@Override
 	public <T> T getModel(String key, Class<T> cs) {
-		if(SaFoxUtil.isBasicType(cs)) {
-			return SaFoxUtil.getValueByType(get(key), cs);
-		}
-		return JSON.parseObject(getString(key), cs);
-	}
-
-	/**
-	 * 取值 (指定转换类型, 并指定值为Null时返回的默认值)
-	 * @param <T> 泛型
-	 * @param key key 
-	 * @param cs 指定转换类型 
-	 * @param defaultValue 值为Null时返回的默认值
-	 * @return 值 
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T> T getModel(String key, Class<T> cs, Object defaultValue) {
+		// 如果是想取出为基础类型
 		Object value = get(key);
-		if(valueIsNull(value)) {
-			return (T)defaultValue;
-		}
 		if(SaFoxUtil.isBasicType(cs)) {
-			return SaFoxUtil.getValueByType(get(key), cs);
+			return SaFoxUtil.getValueByType(value, cs);
 		}
-		return JSON.parseObject(getString(key), cs);
+		// 为空提前返回
+		if(valueIsNull(value)) {
+			return null;
+		}
+		// 如果是 JSONObject 类型直接转，否则先转为 String 再转
+		if(value instanceof JSONObject) {
+			JSONObject jo = (JSONObject) value;
+			return jo.to(cs);
+		} else {
+			return JSON.parseObject(value.toString(), cs);
+		}
 	}
-
 }

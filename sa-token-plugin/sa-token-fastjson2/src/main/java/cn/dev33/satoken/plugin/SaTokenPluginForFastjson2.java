@@ -37,6 +37,8 @@ public class SaTokenPluginForFastjson2 implements SaTokenPlugin {
         // 重写 SaSession 生成策略
         SaStrategy.instance.createSession = SaSessionForFastjson2Customized::new;
 
+        // 指定 SaSession 类型
+        SaStrategy.instance.sessionClassType = SaSessionForFastjson2Customized.class;
 
     }
 

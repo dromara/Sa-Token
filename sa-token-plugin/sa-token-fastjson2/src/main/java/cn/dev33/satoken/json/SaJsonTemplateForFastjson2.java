@@ -16,13 +16,10 @@
 package cn.dev33.satoken.json;
 
 
-import cn.dev33.satoken.session.SaSessionForFastjson2Customized;
 import com.alibaba.fastjson2.JSON;
 
-import java.util.Map;
-
 /**
- * JSON 转换器， Fastjson 版实现
+ * JSON 转换器， Fastjson2 版实现
  * 
  * @author click33
  * @since 1.34.0
@@ -41,17 +38,8 @@ public class SaJsonTemplateForFastjson2 implements SaJsonTemplate {
 	 * 反序列化：json 字符串 → 对象
 	 */
 	@Override
-	public Object jsonToObject(String jsonStr) {
-		// TODO: 此处待更改，需要让其自动识别类型
-		return JSON.parseObject(jsonStr, SaSessionForFastjson2Customized.class);
-	}
-
-	/**
-	 * 反序列化：json 字符串 → Map
-	 */
-	@Override
-	public Map<String, Object> jsonToMap(String jsonStr) {
-		return JSON.parseObject(jsonStr, Map.class);
+	public <T>T jsonToObject(String jsonStr, Class<T> type) {
+		return JSON.parseObject(jsonStr, type);
 	}
 
 }
