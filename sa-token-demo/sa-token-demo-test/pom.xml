@@ -62,7 +62,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-serializer-features</artifactId>
+			<artifactId>sa-token-fastjson</artifactId>
 			<version>${sa-token.version}</version>
 		</dependency>
         

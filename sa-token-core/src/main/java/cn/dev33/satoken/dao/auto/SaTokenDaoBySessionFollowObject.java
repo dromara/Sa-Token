@@ -17,6 +17,7 @@ package cn.dev33.satoken.dao.auto;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
  * SaTokenDao 次级实现：SaSession 读写跟随 Object 读写
@@ -34,7 +35,7 @@ public interface SaTokenDaoBySessionFollowObject extends SaTokenDao {
 	 * @return SaSession
 	 */
 	default SaSession getSession(String sessionId) {
-		return (SaSession)getObject(sessionId);
+		return getObject(sessionId, SaStrategy.instance.sessionClassType);
 	}
 
 	/**

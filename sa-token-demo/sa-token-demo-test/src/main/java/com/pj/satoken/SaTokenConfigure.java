@@ -94,17 +94,17 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 		System.out.println("自定义插件安装钩子函数...");
 
 		return SaTokenPluginHolder.instance
-				.onBeforeInstall(SaTokenPluginForJackson.class, plugin -> {
-					System.out.println("SaTokenPluginForJackson 插件安装前置钩子...");
-				})
-
-				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
-					System.out.println("SaTokenPluginForJackson 插件安装后置钩子...");
-				})
-
-				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
-					System.out.println("SaTokenPluginForJackson 插件安装后置钩子2...");
-				})
+//				.onBeforeInstall(SaTokenPluginForJackson.class, plugin -> {
+//					System.out.println("SaTokenPluginForJackson 插件安装前置钩子...");
+//				})
+//
+//				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
+//					System.out.println("SaTokenPluginForJackson 插件安装后置钩子...");
+//				})
+//
+//				.onAfterInstall(SaTokenPluginForJackson.class, plugin -> {
+//					System.out.println("SaTokenPluginForJackson 插件安装后置钩子2...");
+//				})
 
 //				.onInstall(SaTokenPluginForJackson.class, plugin -> {
 //					System.out.println("注册 install 钩子函数后，插件的默认安装行为将不再执行 ...");

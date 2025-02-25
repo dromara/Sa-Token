@@ -40,6 +40,17 @@ public interface SaTokenDaoByObjectFollowString extends SaTokenDaoBySessionFollo
 	}
 
 	/**
+	 * 获取 Object (指定反序列化类型)，如无返空
+	 *
+	 * @param key 键名称
+	 * @return object
+	 */
+	default  <T> T getObject(String key, Class<T> classType) {
+		String jsonString = get(key);
+		return SaManager.getSaSerializerTemplate().stringToObject(jsonString, classType);
+	}
+
+	/**
 	 * 写入 Object，并设定存活时间 （单位: 秒）
 	 *
 	 * @param key     键名称

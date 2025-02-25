@@ -120,11 +120,8 @@ public interface SaGetValueInterface {
 	 */
 	@SuppressWarnings("unchecked")
 	default <T> T getModel(String key, Class<T> cs, Object defaultValue) {
-		Object value = get(key);
-		if(valueIsNull(value)) {
-			return (T)defaultValue;
-		}
-		return SaFoxUtil.getValueByType(value, cs);
+		T model = getModel(key, cs);
+		return valueIsNull(model) ? (T)defaultValue : model;
 	}
 
 	/**

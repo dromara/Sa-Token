@@ -36,7 +36,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
 /**
  * JSON 转换器， Jackson 版实现
@@ -110,7 +109,6 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			return null;
 		}
 		try {
-			System.out.println("序列化的啥：" + objectMapper.writeValueAsString(obj));
 			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			throw new SaJsonConvertException(e);
@@ -121,30 +119,12 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 * 反序列化：json 字符串 → 对象
 	 */
 	@Override
-	public Object jsonToObject(String jsonStr) {
+	public <T> T jsonToObject(String jsonStr, Class<T> type) {
 		if(SaFoxUtil.isEmpty(jsonStr)) {
 			return null;
 		}
 		try {
-			Object value = objectMapper.readValue(jsonStr, Object.class);
-			return value;
-		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e);
-		}
-	}
-
-	/**
-	 * 反序列化：json 字符串 → Map
-	 */
-	@Override
-	public Map<String, Object> jsonToMap(String jsonStr) {
-		if(SaFoxUtil.isEmpty(jsonStr)) {
-			return null;
-		}
-		try {
-			@SuppressWarnings("unchecked")
-			Map<String, Object> map = objectMapper.readValue(jsonStr, Map.class);
-			return map;
+            return objectMapper.readValue(jsonStr, type);
 		} catch (JsonProcessingException e) {
 			throw new SaJsonConvertException(e);
 		}

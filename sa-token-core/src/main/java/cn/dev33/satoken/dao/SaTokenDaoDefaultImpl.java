@@ -40,6 +40,12 @@ public class SaTokenDaoDefaultImpl implements SaTokenDaoByStringFollowObject {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public <T> T getObject(String key, Class<T> classType){
+		return (T) getObject(key);
+	}
+
+	@Override
 	public void setObject(String key, Object object, long timeout) {
 		timedCache.setObject(key, object, timeout);
 	}

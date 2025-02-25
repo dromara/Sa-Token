@@ -18,8 +18,6 @@ package cn.dev33.satoken.solon.json;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import org.noear.snack.ONode;
 
-import java.util.Map;
-
 /**
  * @author noear
  * @since 2.0
@@ -39,6 +37,14 @@ public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
 
     /**
      * 反序列化：json 字符串 → 对象
+     */
+    @Override
+    public <T> T jsonToObject(String jsonStr, Class<T> type) {
+        return ONode.deserialize(jsonStr, type);
+    }
+
+    /**
+     * 反序列化：json 字符串 → 对象
      *
      * @param jsonStr /
      * @return /
@@ -46,17 +52,6 @@ public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
     @Override
     public Object jsonToObject(String jsonStr) {
         return ONode.deserialize(jsonStr);
-    }
-
-    /**
-     * 反序列化：json 字符串 → Map
-     *
-     * @param jsonStr /
-     * @return /
-     */
-    @Override
-    public Map<String, Object> jsonToMap(String jsonStr) {
-        return ONode.deserialize(jsonStr, Map.class);
     }
 
 }

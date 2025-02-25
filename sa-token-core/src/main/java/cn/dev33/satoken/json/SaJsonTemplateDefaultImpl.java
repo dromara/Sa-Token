@@ -43,6 +43,11 @@ public class SaJsonTemplateDefaultImpl implements SaJsonTemplate {
 	}
 
 	@Override
+	public <T> T jsonToObject(String jsonStr, Class<T> type) {
+		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
+	}
+
+	@Override
 	public Map<String, Object> jsonToMap(String jsonStr) {
 		throw new NotImplException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10003);
 	}

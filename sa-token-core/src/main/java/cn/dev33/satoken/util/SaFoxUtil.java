@@ -20,6 +20,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 
 import java.io.Console;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -375,6 +376,36 @@ public class SaFoxUtil {
 		}
 		return (T)obj3;
 	}
+
+	/**
+	 * 将 Map 转化为 Object
+	 * @param map /
+	 * @param clazz /
+	 * @return /
+	 * @param <T> /
+	 */
+	public static <T> T mapToObject(Map<String, Object> map, Class<T> clazz) {
+		if(map == null) {
+			return null;
+		}
+		if(clazz == Map.class) {
+			return (T) map;
+		}
+		try {
+			T obj = clazz.getDeclaredConstructor().newInstance();
+			for (Field field : clazz.getDeclaredFields()) {
+				String fieldName = field.getName();
+				if (map.containsKey(fieldName)) {
+					field.setAccessible(true);
+					field.set(obj, map.get(fieldName));
+				}
+			}
+			return obj;
+		} catch (Exception e) {
+			throw new RuntimeException("转换失败: " + e.getMessage(), e);
+		}
+	}
+
 
 	/**
 	 * 在url上拼接上kv参数并返回

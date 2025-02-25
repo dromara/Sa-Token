@@ -37,9 +37,21 @@ public interface SaJsonTemplate {
 	 * 反序列化：json 字符串 → 对象
 	 *
 	 * @param jsonStr /
+	 * @param type /
+	 * @return /
+	 * @param <T> /
+	 */
+	<T>T jsonToObject(String jsonStr, Class<T> type);
+
+	/**
+	 * 反序列化：json 字符串 → 对象 (自动判断类型)
+	 *
+	 * @param jsonStr /
 	 * @return /
 	 */
-	Object jsonToObject(String jsonStr);
+	default Object jsonToObject(String jsonStr) {
+		return jsonToObject(jsonStr, Object.class);
+	};
 
 	/**
 	 * 反序列化：json 字符串 → Map
@@ -47,6 +59,8 @@ public interface SaJsonTemplate {
 	 * @param jsonStr /
 	 * @return /
 	 */
-	Map<String, Object> jsonToMap(String jsonStr);
+	default Map<String, Object> jsonToMap(String jsonStr) {
+		return jsonToObject(jsonStr, Map.class);
+	};
 	
 }

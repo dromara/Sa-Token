@@ -38,6 +38,11 @@ public class SaSerializerTemplateForJson implements SaSerializerTemplate {
 	}
 
 	@Override
+	public <T>T stringToObject(String str, Class<T> type) {
+		return SaManager.getSaJsonTemplate().jsonToObject(str, type);
+	}
+
+	@Override
 	public byte[] objectToBytes(Object obj) {
 		throw new ApiDisabledException("json 序列化器不支持 Object -> byte[]");
 	}

@@ -102,6 +102,11 @@ public final class SaStrategy {
 	};
 
 	/**
+	 * 反序列化 SaSession 时默认指定的类型
+	 */
+	public volatile Class<? extends SaSession> sessionClassType = SaSession.class;
+
+	/**
 	 * 判断：集合中是否包含指定元素（模糊匹配）
 	 */
 	public SaHasElementFunction hasElement = (list, element) -> {

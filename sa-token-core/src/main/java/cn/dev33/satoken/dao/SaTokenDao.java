@@ -97,6 +97,14 @@ public interface SaTokenDao {
 	Object getObject(String key);
 
 	/**
+	 * 获取 Object (指定反序列化类型)，如无返空
+	 *
+	 * @param key 键名称
+	 * @return object
+	 */
+	<T> T getObject(String key, Class<T> classType);
+
+	/**
 	 * 写入 Object，并设定存活时间 （单位: 秒）
 	 *
 	 * @param key     键名称

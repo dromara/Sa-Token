@@ -40,6 +40,21 @@ public interface SaSerializerTemplate {
 	Object stringToObject(String str);
 
 	/**
+	 * 反序列化：字符串 → 对象 (指定类型)
+	 * <p>
+	 *     此方法目前仅为 json 序列化实现类 在 反序列化对象 传递类型信息
+	 * </p>
+	 *
+	 * @param str /
+	 * @return /
+	 */
+	@SuppressWarnings("unchecked")
+	default <T> T stringToObject(String str, Class<T> type) {
+        return (T)stringToObject(str);
+    };
+
+
+	/**
 	 * 序列化：对象 -> 字节数组
 	 *
 	 * @param obj /
