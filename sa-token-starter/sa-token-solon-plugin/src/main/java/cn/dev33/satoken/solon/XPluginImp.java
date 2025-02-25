@@ -55,6 +55,8 @@ public class XPluginImp implements Plugin {
         context.beanMake(SaSsoAutoConfigure.class);
         context.beanMake(SaOAuth2AutoConfigure.class);
 
+        //context.beanMake(SaBeanInject.class); //暂进未启用
+
         // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
