@@ -36,36 +36,37 @@ import org.noear.solon.core.AppContext;
 @Condition(onClass = SaSsoManager.class)
 @Configuration
 public class SaSsoAutoConfigure {
+    @Condition(onBean = SaSsoServerTemplate.class)
     @Bean
-    public void init(AppContext appContext) throws Throwable {
-        appContext.subBeansOfType(SaSsoServerTemplate.class, bean -> {
-            SaSsoServerProcessor.instance.ssoServerTemplate = bean;
-        });
-        appContext.subBeansOfType(SaSsoClientTemplate.class, bean -> {
-            SaSsoClientProcessor.instance.ssoClientTemplate = bean;
-        });
+    public void serverTemplate(SaSsoServerTemplate bean) {
+        SaSsoServerProcessor.instance.ssoServerTemplate = bean;
+    }
 
-        appContext.subBeansOfType(SaSsoServerConfig.class, bean -> {
-            SaSsoManager.setServerConfig(bean);
-        });
-        appContext.subBeansOfType(SaSsoClientConfig.class, bean -> {
-            SaSsoManager.setClientConfig(bean);
-        });
+    @Condition(onBean = SaSsoClientTemplate.class)
+    @Bean
+    public void clientTemplate(SaSsoClientTemplate bean) {
+        SaSsoClientProcessor.instance.ssoClientTemplate = bean;
     }
 
     /**
      * 获取 SSO Server 配置Bean
      */
     @Bean
-    public SaSsoServerConfig getConfig(@Inject(value = "${sa-token.sso-server}", required = false) SaSsoServerConfig ssoConfig) {
-        return ssoConfig;
+    public SaSsoServerConfig getServerConfig(@Inject(value = "${sa-token.sso-server}", required = false) SaSsoServerConfig serverConfig) {
+        if (serverConfig != null) {
+            SaSsoManager.setServerConfig(serverConfig);
+        }
+        return serverConfig;
     }
 
     /**
      * 获取 SSO Client 配置Bean
      */
     @Bean
-    public SaSsoClientConfig getClientConfig(@Inject(value = "${sa-token.sso-client}", required = false) SaSsoClientConfig ssoConfig) {
-        return ssoConfig;
+    public SaSsoClientConfig getClientConfig(@Inject(value = "${sa-token.sso-client}", required = false) SaSsoClientConfig clientConfig) {
+        if (clientConfig != null) {
+            SaSsoManager.setClientConfig(clientConfig);
+        }
+        return clientConfig;
     }
 }

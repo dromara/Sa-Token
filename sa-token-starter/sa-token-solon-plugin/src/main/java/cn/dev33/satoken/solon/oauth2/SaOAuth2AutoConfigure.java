@@ -32,22 +32,21 @@ import org.noear.solon.core.AppContext;
 @Condition(onClass = SaOAuth2Manager.class)
 @Configuration
 public class SaOAuth2AutoConfigure {
+    @Condition(onBean = SaOAuth2Template.class)
     @Bean
-    public void init(AppContext appContext) throws Throwable {
-        appContext.subBeansOfType(SaOAuth2Template.class, bean -> {
-            SaOAuth2Manager.setTemplate(bean);
-        });
-
-        appContext.subBeansOfType(SaOAuth2ServerConfig.class, bean -> {
-            SaOAuth2Manager.setServerConfig(bean);
-        });
+    public void template(SaOAuth2Template bean) throws Throwable {
+        SaOAuth2Manager.setTemplate(bean);
     }
 
     /**
      * 获取 OAuth2配置Bean
      */
     @Bean
-    public SaOAuth2ServerConfig getConfig(@Inject(value = "${sa-token.oauth2-server}", required = false) SaOAuth2ServerConfig oAuth2Config) {
-        return oAuth2Config;
+    public SaOAuth2ServerConfig getConfig(@Inject(value = "${sa-token.oauth2-server}", required = false) SaOAuth2ServerConfig serverConfig) {
+        if (serverConfig != null) {
+            SaOAuth2Manager.setServerConfig(serverConfig);
+        }
+
+        return serverConfig;
     }
 }
