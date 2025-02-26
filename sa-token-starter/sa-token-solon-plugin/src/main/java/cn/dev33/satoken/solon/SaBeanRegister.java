@@ -16,9 +16,12 @@
 package cn.dev33.satoken.solon;
 
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.solon.integration.SaFirewallCheckFilterForSolon;
+import cn.dev33.satoken.util.SaTokenConsts;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.handle.Filter;
 
 /**
  * 注册Sa-Token所需要的Bean 
@@ -28,6 +31,7 @@ import org.noear.solon.annotation.Inject;
  */
 @Configuration
 public class SaBeanRegister {
+
 	/**
 	 * 获取配置Bean
 	 *
@@ -41,4 +45,15 @@ public class SaBeanRegister {
 			return config;
 		}
 	}
+
+	/**
+	 * 防火墙校验过滤器
+	 *
+	 * @return /
+	 */
+	@Bean(index = SaTokenConsts.FIREWALL_CHECK_FILTER_ORDER)
+	public Filter saFirewallCheckFilterForSolon() {
+		return new SaFirewallCheckFilterForSolon();
+	}
+
 }

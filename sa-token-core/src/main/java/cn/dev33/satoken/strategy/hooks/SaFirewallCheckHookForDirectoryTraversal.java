@@ -20,30 +20,17 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 
 /**
- * 防火墙策略校验钩子函数：危险字符校验
+ * 防火墙策略校验钩子函数：目录遍历符检测
  *
  * @author click33
  * @since 1.41.0
  */
-public class SaFirewallCheckHookForDangerCharacter implements SaFirewallCheckHook {
+public class SaFirewallCheckHookForDirectoryTraversal implements SaFirewallCheckHook {
 
     /**
      * 默认实例
      */
-    public static SaFirewallCheckHookForDangerCharacter instance = new SaFirewallCheckHookForDangerCharacter();
-
-    /**
-     * 请求 path 不允许出现的危险字符
-     */
-    public String[] dangerCharacter = {
-            "//",           // //
-            "\\",			// \
-            "%2e", "%2E",	// .
-            "%2f", "%2F",	// /
-            "%5c", "%5C",	// \
-            ";", "%3b", "%3B",	// ;    // 参考资料：https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA
-            "%25"			// 空格
-    };
+    public static SaFirewallCheckHookForDirectoryTraversal instance = new SaFirewallCheckHookForDirectoryTraversal();
 
     /**
      * 执行的方法
@@ -55,10 +42,8 @@ public class SaFirewallCheckHookForDangerCharacter implements SaFirewallCheckHoo
     @Override
     public void execute(SaRequest req, SaResponse res, Object extArg) {
         String requestPath = req.getRequestPath();
-        for (String item : dangerCharacter) {
-            if (requestPath.contains(item)) {
-                throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
-            }
+        if(requestPath.contains("/.") || requestPath.contains("\\.")) {
+            throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
         }
     }
 

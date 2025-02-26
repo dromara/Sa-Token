@@ -38,7 +38,10 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.temp.SaTempInterface;
-import org.noear.solon.annotation.*;
+import org.noear.solon.annotation.Bean;
+import org.noear.solon.annotation.Condition;
+import org.noear.solon.annotation.Configuration;
+import org.noear.solon.annotation.Inject;
 
 import java.util.List;
 
@@ -232,4 +235,5 @@ public class SaBeanInject {
 	public void setStpLogic(StpLogic stpLogic) {
 		StpUtil.setStpLogic(stpLogic);
 	}
+
 }

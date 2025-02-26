@@ -18,10 +18,7 @@ package cn.dev33.satoken.strategy;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.strategy.SaFirewallCheckFailHandleFunction;
 import cn.dev33.satoken.fun.strategy.SaFirewallCheckFunction;
-import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
-import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHookForBlackList;
-import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHookForDangerCharacter;
-import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHookForWhiteList;
+import cn.dev33.satoken.strategy.hooks.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +45,7 @@ public final class SaFirewallStrategy {
 		checkHooks.add(SaFirewallCheckHookForWhiteList.instance);
 		checkHooks.add(SaFirewallCheckHookForBlackList.instance);
 		checkHooks.add(SaFirewallCheckHookForDangerCharacter.instance);
+		checkHooks.add(SaFirewallCheckHookForDirectoryTraversal.instance);
 	}
 
 	// 注册一个防火墙校验 hook
