@@ -16,7 +16,7 @@
 package cn.dev33.satoken.spring;
 
 import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.filter.SaPathCheckFilterForJakartaServlet;
+import cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -43,8 +43,8 @@ public class SaTokenContextRegister {
 	 * @return /
 	 */
 	@Bean
-	public SaPathCheckFilterForJakartaServlet saPathCheckFilterForJakartaServlet() {
-		return new SaPathCheckFilterForJakartaServlet();
+	public SaFirewallCheckFilterForJakartaServlet saFirewallCheckFilterForJakartaServlet() {
+		return new SaFirewallCheckFilterForJakartaServlet();
 	}
 
 }

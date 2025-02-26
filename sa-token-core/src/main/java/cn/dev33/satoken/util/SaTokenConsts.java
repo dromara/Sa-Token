@@ -187,9 +187,9 @@ public class SaTokenConsts {
 	public static final int ASSEMBLY_ORDER = -100;
 
 	/**
-	 * 请求 path 校验过滤器的注册顺序
+	 * 防火墙校验过滤器的注册顺序
 	 */
-	public static final int PATH_CHECK_FILTER_ORDER = -1000;
+	public static final int FIREWALL_CHECK_FILTER_ORDER = -1000;
 
 	/**
 	 * Content-Type  key

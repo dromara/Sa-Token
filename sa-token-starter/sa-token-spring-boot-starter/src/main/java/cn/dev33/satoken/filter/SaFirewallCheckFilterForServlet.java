@@ -29,12 +29,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 防火墙校验过滤器
+ * 防火墙校验过滤器 (基于 Servlet)
  *
  * @author click33
  * @since 1.37.0
  */
-@Order(SaTokenConsts.PATH_CHECK_FILTER_ORDER)
+@Order(SaTokenConsts.FIREWALL_CHECK_FILTER_ORDER)
 public class SaFirewallCheckFilterForServlet implements Filter {
 
 	@Override

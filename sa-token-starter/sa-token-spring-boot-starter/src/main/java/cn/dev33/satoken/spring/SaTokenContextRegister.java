@@ -43,7 +43,7 @@ public class SaTokenContextRegister {
 	 * @return /
 	 */
 	@Bean
-	public SaFirewallCheckFilterForServlet saPathCheckFilterForServlet() {
+	public SaFirewallCheckFilterForServlet saFirewallCheckFilterForServlet() {
 		return new SaFirewallCheckFilterForServlet();
 	}
 

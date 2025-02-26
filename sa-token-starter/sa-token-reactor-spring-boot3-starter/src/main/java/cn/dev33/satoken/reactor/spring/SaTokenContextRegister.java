@@ -16,7 +16,7 @@
 package cn.dev33.satoken.reactor.spring;
 
 import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.reactor.filter.SaPathCheckFilterForReactor;
+import cn.dev33.satoken.reactor.filter.SaFirewallCheckFilterForReactor;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -43,8 +43,8 @@ public class SaTokenContextRegister {
 	 * @return /
 	 */
 	@Bean
-	public SaPathCheckFilterForReactor saPathCheckFilterForReactor() {
-		return new SaPathCheckFilterForReactor();
+	public SaFirewallCheckFilterForReactor saFirewallCheckFilterForReactor() {
+		return new SaFirewallCheckFilterForReactor();
 	}
 
 }
