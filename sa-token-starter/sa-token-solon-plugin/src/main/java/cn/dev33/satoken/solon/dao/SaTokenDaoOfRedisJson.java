@@ -111,6 +111,12 @@ public class SaTokenDaoOfRedisJson implements SaTokenDaoBySessionFollowObject {
         return ONode.deserialize(value);
     }
 
+    @Override
+    public <T> T getObject(String key, Class<T> classType) {
+        String value = get(key);
+        return ONode.deserialize(value, classType);
+    }
+
     /**
      * 写入Object，并设定存活时间 (单位: 秒)
      */

@@ -206,6 +206,12 @@ public class SaTokenDaoOfRedissonJackson implements SaTokenDaoBySessionFollowObj
 		return rBucket.get();
 	}
 
+	@Override
+	public <T> T getObject(String key, Class<T> classType) {
+		// TODO 待实现
+		return null;
+	}
+
 	/**
 	 * 写入Object，并设定存活时间 (单位: 秒) 
 	 */

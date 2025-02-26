@@ -106,6 +106,11 @@ public class SaTokenDaoOfRedisBase64 implements SaTokenDaoBySessionFollowObject 
         return redisBucket.getAndDeserialize(key);
     }
 
+    @Override
+    public <T> T getObject(String key, Class<T> classType) {
+        return redisBucket.getAndDeserialize(key, classType);
+    }
+
     /**
      * 写入Object，并设定存活时间 (单位: 秒)
      */
