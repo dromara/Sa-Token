@@ -15,9 +15,16 @@
  */
 package cn.dev33.satoken.strategy;
 
-import cn.dev33.satoken.exception.RequestPathInvalidException;
-import cn.dev33.satoken.fun.strategy.SaCheckRequestPathFunction;
-import cn.dev33.satoken.fun.strategy.SaRequestPathInvalidHandleFunction;
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.strategy.SaFirewallCheckFailHandleFunction;
+import cn.dev33.satoken.fun.strategy.SaFirewallCheckFunction;
+import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
+import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHookForBlackList;
+import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHookForDangerCharacter;
+import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHookForWhiteList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Sa-Token 防火墙策略
@@ -27,9 +34,6 @@ import cn.dev33.satoken.fun.strategy.SaRequestPathInvalidHandleFunction;
  */
 public final class SaFirewallStrategy {
 
-	private SaFirewallStrategy() {
-	}
-
 	/**
 	 * 全局单例引用
 	 */
@@ -38,76 +42,38 @@ public final class SaFirewallStrategy {
 
 	// ----------------------- 所有策略
 
+	public List<SaFirewallCheckHook> checkHooks = new ArrayList<>();
+
+	private SaFirewallStrategy() {
+		checkHooks.add(SaFirewallCheckHookForWhiteList.instance);
+		checkHooks.add(SaFirewallCheckHookForBlackList.instance);
+		checkHooks.add(SaFirewallCheckHookForDangerCharacter.instance);
+	}
+
+	// 注册一个防火墙校验 hook
+	public void registerCheckHook(SaFirewallCheckHook checkHook) {
+		SaManager.getLog().info("防火墙校验 hook 注册成功: " + checkHook.getClass());
+		checkHooks.add(checkHook);
+	}
 
 	/**
-	 * 请求 path 黑名单
+	 * 防火墙校验函数
 	 */
-	public String[] blackPaths = {};
-
-	/**
-	 * 请求 path 白名单
-	 */
-	public String[] whitePaths = {};
-
-	/**
-	 * 请求 path 不允许出现的字符
-	 */
-	public String[] invalidCharacter = {
-			"//",           // //
-			"\\",			// \
-			"%2e", "%2E",	// .
-			"%2f", "%2F",	// /
-			"%5c", "%5C",	// \
-			";", "%3b", "%3B",	// ;    // 参考资料：https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA
-			"%25"			// 空格
+	public SaFirewallCheckFunction check = (req, res, extArg) -> {
+		for (SaFirewallCheckHook checkHook : checkHooks) {
+			checkHook.execute(req, res, extArg);
+		}
 	};
 
 	/**
-	 * 校验请求 path 的算法
-	 */
-	public SaCheckRequestPathFunction checkRequestPath = (requestPath, extArg1, extArg2) -> {
-		// 1、如果在白名单里，则直接放行
-		for (String item : whitePaths) {
-			if (requestPath.equals(item)) {
-				return;
-			}
-		}
-
-		// 2、如果在黑名单里，则抛出异常
-		for (String item : blackPaths) {
-			if (requestPath.equals(item)) {
-				throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
-			}
-		}
-
-		// 3、检查是否包含非法字符
-
-		// 不允许为null
-		if(requestPath == null) {
-			throw new RequestPathInvalidException("非法请求：null", null);
-		}
-		// 不允许包含非法字符
-		for (String item : invalidCharacter) {
-			if (requestPath.contains(item)) {
-				throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
-			}
-		}
-		// 不允许出现跨目录字符
-		if(requestPath.contains("/.") || requestPath.contains("\\.")) {
-			throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
-		}
-	};
-
-
-	/**
-	 * 当请求 path 校验不通过时处理方案的算法，自定义示例：
+	 * 当请求 path 校验不通过时地处理方案，自定义示例：
 	 * <pre>
-	 * 		SaFirewallStrategy.instance.requestPathInvalidHandle = (e, extArg1, extArg2) -> {
+	 * 		SaFirewallStrategy.instance.checkFailHandle = (e, req, res, extArg) -> {
 	 * 			// 自定义处理逻辑 ...
 	 *      };
 	 * </pre>
 	 */
-	public SaRequestPathInvalidHandleFunction requestPathInvalidHandle = null;
+	public SaFirewallCheckFailHandleFunction checkFailHandle = null;
 
 
 }

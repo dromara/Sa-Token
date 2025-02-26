@@ -38,13 +38,13 @@ public class SaPathCheckFilterForReactor implements WebFilter {
 
 		// 校验本次请求 path 是否合法
 		try {
-			SaFirewallStrategy.instance.checkRequestPath.run(exchange.getRequest().getPath().toString(), exchange, null);
+			SaFirewallStrategy.instance.check.run(exchange.getRequest().getPath().toString(), exchange, null);
 		} catch (RequestPathInvalidException e) {
-			if(SaFirewallStrategy.instance.requestPathInvalidHandle == null) {
+			if(SaFirewallStrategy.instance.checkFailHandle == null) {
 				exchange.getResponse().getHeaders().set(SaTokenConsts.CONTENT_TYPE_KEY, SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
 				return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(e.getMessage().getBytes())));
 			} else {
-				SaFirewallStrategy.instance.requestPathInvalidHandle.run(e, exchange, null);
+				SaFirewallStrategy.instance.checkFailHandle.run(e, exchange, null);
 			}
 			return Mono.empty();
 		}

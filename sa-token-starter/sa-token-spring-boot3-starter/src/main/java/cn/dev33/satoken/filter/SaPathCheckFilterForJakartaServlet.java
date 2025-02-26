@@ -39,14 +39,14 @@ public class SaPathCheckFilterForJakartaServlet implements Filter {
 		// 校验本次请求 path 是否合法
 		try {
 			HttpServletRequest req = (HttpServletRequest) request;
-			SaFirewallStrategy.instance.checkRequestPath.run(req.getRequestURI(), request, response);
+			SaFirewallStrategy.instance.check.run(req.getRequestURI(), request, response);
 		} catch (RequestPathInvalidException e) {
-			if(SaFirewallStrategy.instance.requestPathInvalidHandle == null) {
+			if(SaFirewallStrategy.instance.checkFailHandle == null) {
 				response.setContentType("text/plain; charset=utf-8");
 				response.getWriter().print(e.getMessage());
 				response.getWriter().flush();
             } else {
-				SaFirewallStrategy.instance.requestPathInvalidHandle.run(e, request, response);
+				SaFirewallStrategy.instance.checkFailHandle.run(e, request, response);
             }
             return;
         }

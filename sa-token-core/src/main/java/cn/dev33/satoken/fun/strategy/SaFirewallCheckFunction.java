@@ -13,34 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.exception;
+package cn.dev33.satoken.fun.strategy;
+
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 
 /**
- * 一个异常：代表请求 path 无效或非法
- * 
+ * 函数式接口：防火墙校验函数
+ *
  * @author click33
  * @since 1.37.0
  */
-public class RequestPathInvalidException extends FirewallCheckException {
+@FunctionalInterface
+public interface SaFirewallCheckFunction {
 
-	/**
-	 * 序列化版本号
-	 */
-	private static final long serialVersionUID = 8243974276159004739L;
-
-	/** 具体无效的 path */
-	private final String path;
-
-	/**
-	 * @return 具体无效的 path
-	 */
-	public String getPath() {
-		return path;
-	}
-
-	public RequestPathInvalidException(String message, String path) {
-		super(message);
-		this.path = path;
-	}
+    /**
+     * 执行函数
+     *
+     * @param req 请求对象
+     * @param res 响应对象
+     * @param extArg 预留扩展参数
+     */
+    void execute(SaRequest req, SaResponse res, Object extArg);
 
 }

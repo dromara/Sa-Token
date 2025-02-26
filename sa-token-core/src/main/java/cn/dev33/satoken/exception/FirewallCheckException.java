@@ -13,27 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.fun.strategy;
-
-import cn.dev33.satoken.exception.RequestPathInvalidException;
+package cn.dev33.satoken.exception;
 
 /**
- * 函数式接口：校验请求 path 的算法
- *
- * <p>  如果属于无效请求 path，则抛出异常 RequestPathInvalidException  </p>
- *
+ * 一个异常：代表防火墙检验未通过
+ * 
  * @author click33
- * @since 1.37.0
+ * @since 1.41.0
  */
-@FunctionalInterface
-public interface SaCheckRequestPathFunction {
+public class FirewallCheckException extends SaTokenException {
 
-    /**
-     * 执行函数
-     * @param path 请求 path
-     * @param extArg1 扩展参数1
-     * @param extArg2 扩展参数2
-     */
-    void run(String path, Object extArg1, Object extArg2);
+	/**
+	 * 序列化版本号
+	 */
+	private static final long serialVersionUID = 8243974276159004739L;
+
+	public FirewallCheckException(String message) {
+		super(message);
+	}
+
+	public FirewallCheckException(Throwable e) {
+		super(e);
+	}
+
+	public FirewallCheckException(String message, Throwable e) {
+		super(message, e);
+	}
 
 }

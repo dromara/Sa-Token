@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.fun.strategy;
+package cn.dev33.satoken.strategy.hooks;
 
-import cn.dev33.satoken.exception.RequestPathInvalidException;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 
 /**
- * 函数式接口：当请求 path 校验不通过时处理方案的算法
+ * 防火墙策略校验钩子函数 - 接口
  *
  * @author click33
- * @since 1.37.0
+ * @since 1.41.0
  */
 @FunctionalInterface
-public interface SaRequestPathInvalidHandleFunction {
+public interface SaFirewallCheckHook {
 
     /**
-     * 执行函数
-     * @param e 请求 path 无效的异常对象
-     * @param extArg1 扩展参数1
-     * @param extArg2 扩展参数2
+     * 执行的方法
+     *
+     * @param req 请求对象
+     * @param res 响应对象
+     * @param extArg 预留扩展参数
      */
-    void run(RequestPathInvalidException e, Object extArg1, Object extArg2);
+    void execute(SaRequest req, SaResponse res, Object extArg);
 
 }
