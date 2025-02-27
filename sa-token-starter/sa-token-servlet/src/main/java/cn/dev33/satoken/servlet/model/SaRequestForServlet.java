@@ -27,7 +27,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 对 SaRequest 包装类的实现（Servlet 版）
@@ -168,6 +171,14 @@ public class SaRequestForServlet implements SaRequest {
 	@Override
 	public String getMethod() {
 		return request.getMethod();
+	}
+
+	/**
+	 * 查询请求 host
+	 */
+	@Override
+	public String getHost() {
+		return request.getServerName();
 	}
 
 	/**

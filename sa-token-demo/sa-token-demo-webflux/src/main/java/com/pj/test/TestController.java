@@ -1,16 +1,14 @@
 package com.pj.test;
 
-import java.time.Duration;
-
+import cn.dev33.satoken.reactor.context.SaReactorHolder;
+import cn.dev33.satoken.stp.StpUtil;
+import com.pj.util.AjaxJson;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.pj.util.AjaxJson;
-
-import cn.dev33.satoken.reactor.context.SaReactorHolder;
-import cn.dev33.satoken.stp.StpUtil;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 /**
  * 测试专用Controller 

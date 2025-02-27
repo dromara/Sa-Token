@@ -21,7 +21,6 @@ import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -190,6 +189,12 @@ public interface SaRequest {
 	default boolean isMethod(SaHttpMethod method) {
 		return getMethod().equals(method.name());
 	}
+
+	/**
+	 * 查询请求 host
+	 * @return /
+	 */
+	String getHost();
 
 	/**
 	 * 判断此请求是否为 Ajax 异步请求

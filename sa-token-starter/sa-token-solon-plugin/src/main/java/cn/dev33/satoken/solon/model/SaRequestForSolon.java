@@ -20,7 +20,8 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.solon.core.handle.Context;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author noear
@@ -105,6 +106,11 @@ public class SaRequestForSolon implements SaRequest {
     @Override
     public String getMethod() {
         return ctx.method();
+    }
+
+    @Override
+    public String getHost() {
+        return ctx.uri().getHost();
     }
 
     @Override

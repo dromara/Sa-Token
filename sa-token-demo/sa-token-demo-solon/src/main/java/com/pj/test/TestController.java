@@ -3,6 +3,7 @@ package com.pj.test;
 import java.util.Date;
 import java.util.List;
 
+import cn.dev33.satoken.context.SaHolder;
 import com.pj.util.AjaxJson;
 import com.pj.util.Ttime;
 
@@ -245,6 +246,7 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test2
 	@Mapping("test2")
 	public AjaxJson test2() {
+		System.out.println(SaHolder.getRequest().getHost());
 		return AjaxJson.getSuccess();
 	}
 

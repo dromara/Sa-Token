@@ -46,6 +46,7 @@ public final class SaFirewallStrategy {
 		checkHooks.add(SaFirewallCheckHookForBlackList.instance);
 		checkHooks.add(SaFirewallCheckHookForDangerCharacter.instance);
 		checkHooks.add(SaFirewallCheckHookForDirectoryTraversal.instance);
+		checkHooks.add(SaFirewallCheckHookForHost.instance);
 	}
 
 	// 注册一个防火墙校验 hook

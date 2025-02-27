@@ -27,7 +27,8 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 对 SaRequest 包装类的实现（Reactor 响应式编程版）
@@ -168,6 +169,14 @@ public class SaRequestForReactor implements SaRequest {
 	@Override
 	public String getMethod() {
 		return request.getMethod().name();
+	}
+
+	/**
+	 * 查询请求 host
+	 */
+	@Override
+	public String getHost() {
+		return request.getURI().getHost();
 	}
 
 	/**

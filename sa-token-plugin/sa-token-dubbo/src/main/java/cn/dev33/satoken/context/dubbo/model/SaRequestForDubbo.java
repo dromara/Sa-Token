@@ -143,6 +143,11 @@ public class SaRequestForDubbo implements SaRequest {
 		return null;
 	}
 
+	@Override
+	public String getHost() {
+		return null;
+	}
+
 	/**
 	 * 转发请求 
 	 */
