@@ -42,9 +42,76 @@ public class SaFirewallCheckHookForDirectoryTraversal implements SaFirewallCheck
     @Override
     public void execute(SaRequest req, SaResponse res, Object extArg) {
         String requestPath = req.getRequestPath();
-        if(requestPath.contains("/.") || requestPath.contains("\\.")) {
+        if(!isPathValid(requestPath)) {
             throw new RequestPathInvalidException("非法请求：" + requestPath, requestPath);
         }
     }
+
+    /**
+     * 检查路径是否有效
+     * @param path /
+     * @return /
+     */
+    public static boolean isPathValid(String path) {
+        if (path == null || path.isEmpty()) {
+            return false;
+        }
+
+        // 必须以 '/' 开头
+        if (path.charAt(0) != '/') {
+            return false;
+        }
+
+        // 特殊处理根路径 "/"
+        if (path.equals("/")) {
+            return true;
+        }
+
+        String[] components = path.split("/");
+        for (int i = 0; i < components.length; i++) {
+            String component = components[i];
+
+            // 处理空组件
+            if (component.isEmpty()) {
+                if (i == 0) {
+                    // 允许路径以 "/" 开头（第一个组件为空）
+                    continue;
+                } else {
+                    // 其他位置的空组件（如中间或末尾的 "//"）非法
+                    return false;
+                }
+            }
+
+            // 检查是否包含 "." 或 ".." 组件
+            if (component.equals(".") || component.equals("..")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 测试
+//    public static void main(String[] args) {
+//        test("/user/info", true);      // 合法
+//        test("/user/info/.", false);   // 末尾包含 /.
+//        test("/user/info/..", false);  // 末尾包含 /..
+//        test("/user/info/./get", false); // 中间包含 /./
+//        test("/user/info/../get", false); // 中间包含 /../
+//        test("/user/info/.js", true);  // 合法后缀
+//        test("/.abcdef", true);         // 合法隐藏文件
+//        test("//user", false);          // 多余斜杠
+//        test("/user//info", false);     // 中间多余斜杠
+//        test("/", true);               // 根目录合法
+//        test("user/../info", false);    // 不以 / 开头
+//        test("a/b/c/..", false);       // 不以 / 开头
+//        test("test/.", false);          // 不以 / 开头
+//        test("", true);                // 空路径非法
+//    }
+//
+//    private static void test(String path, boolean expected) {
+//        boolean result = isPathValid(path);
+//        System.out.printf("Path: %-20s Expected: %-5s Actual: %-5s %s%n",
+//                path, expected, result, (result == expected) ? "✓" : "✗");
+//    }
 
 }
