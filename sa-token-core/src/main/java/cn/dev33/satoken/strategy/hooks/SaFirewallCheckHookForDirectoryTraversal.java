@@ -20,7 +20,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 
 /**
- * 防火墙策略校验钩子函数：目录遍历符检测
+ * 防火墙策略校验钩子函数：请求 path 目录遍历符检测
  *
  * @author click33
  * @since 1.41.0

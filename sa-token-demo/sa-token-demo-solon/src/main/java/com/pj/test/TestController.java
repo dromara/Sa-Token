@@ -1,12 +1,5 @@
 package com.pj.test;
 
-import java.util.Date;
-import java.util.List;
-
-import cn.dev33.satoken.context.SaHolder;
-import com.pj.util.AjaxJson;
-import com.pj.util.Ttime;
-
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
@@ -14,10 +7,15 @@ import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.session.SaSessionCustomUtil;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import com.pj.util.AjaxJson;
+import com.pj.util.Ttime;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Param;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 测试专用Controller 
@@ -246,7 +244,6 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test2
 	@Mapping("test2")
 	public AjaxJson test2() {
-		System.out.println(SaHolder.getRequest().getHost());
 		return AjaxJson.getSuccess();
 	}
 

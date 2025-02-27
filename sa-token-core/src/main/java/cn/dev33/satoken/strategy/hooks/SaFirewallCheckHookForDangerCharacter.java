@@ -20,7 +20,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 
 /**
- * 防火墙策略校验钩子函数：危险字符校验
+ * 防火墙策略校验钩子函数：请求 path 危险字符校验
  *
  * @author click33
  * @since 1.41.0
@@ -44,6 +44,14 @@ public class SaFirewallCheckHookForDangerCharacter implements SaFirewallCheckHoo
             ";", "%3b", "%3B",	// ;    // 参考资料：https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA
             "%25"			// 空格
     };
+
+    /**
+     * 重载配置
+     * @param character 危险字符列表
+     */
+    public void resetConfig(String... character) {
+        this.dangerCharacter = character;
+    }
 
     /**
      * 执行的方法

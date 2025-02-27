@@ -20,7 +20,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.StopMatchException;
 
 /**
- * 防火墙策略校验钩子函数：白名单放行
+ * 防火墙策略校验钩子函数：请求 path 白名单放行
  *
  * @author click33
  * @since 1.41.0
@@ -36,6 +36,14 @@ public class SaFirewallCheckHookForWhiteList implements SaFirewallCheckHook {
      * 请求 path 白名单
      */
     public String[] whitePaths = {};
+
+    /**
+     * 重载配置
+     * @param paths 白名单 path 列表
+     */
+    public void resetConfig(String... paths) {
+        this.whitePaths = paths;
+    }
 
     /**
      * 执行的方法

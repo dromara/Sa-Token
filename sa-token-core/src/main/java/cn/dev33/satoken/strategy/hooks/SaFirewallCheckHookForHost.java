@@ -38,9 +38,9 @@ public class SaFirewallCheckHookForHost implements SaFirewallCheckHook {
     public static SaFirewallCheckHookForHost instance = new SaFirewallCheckHookForHost();
 
     /**
-     * 是否校验 host
+     * 是否校验 host，默认关闭
      */
-    public Boolean isCheckHost = false;
+    public boolean isCheckHost = false;
 
     /**
      * 允许的 host 列表，允许通配符
@@ -48,12 +48,13 @@ public class SaFirewallCheckHookForHost implements SaFirewallCheckHook {
     public List<String> allowHosts = new ArrayList<>();
 
     /**
-     * 配置
+     * 重载配置
      * @param isCheckHost 是否校验 host
-     * @param allowHosts 允许的 host 列表
+     * @param allowHosts 允许的 host 列表 (先清空原来的，再添加上新的)
      */
-    public void config(Boolean isCheckHost, String... allowHosts) {
+    public void resetConfig(boolean isCheckHost, String... allowHosts) {
         this.isCheckHost = isCheckHost;
+        this.allowHosts.clear();
         this.allowHosts.addAll(Arrays.asList(allowHosts));
     }
 

@@ -20,7 +20,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 
 /**
- * 防火墙策略校验钩子函数：黑名单校验
+ * 防火墙策略校验钩子函数：请求 path 黑名单校验
  *
  * @author click33
  * @since 1.41.0
@@ -36,6 +36,14 @@ public class SaFirewallCheckHookForBlackList implements SaFirewallCheckHook {
      * 请求 path 黑名单
      */
     public String[] blackPaths = {};
+
+    /**
+     * 重载配置
+     * @param paths 黑名单 path 列表
+     */
+    public void resetConfig(String... paths) {
+        this.blackPaths = paths;
+    }
 
     /**
      * 执行的方法
