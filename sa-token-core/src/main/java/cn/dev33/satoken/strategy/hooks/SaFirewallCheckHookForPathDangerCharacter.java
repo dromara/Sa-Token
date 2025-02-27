@@ -42,7 +42,12 @@ public class SaFirewallCheckHookForPathDangerCharacter implements SaFirewallChec
             "%2f", "%2F",	// /
             "%5c", "%5C",	// \
             ";", "%3b", "%3B",	// ;    // 参考资料：https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA
-            "%25"			// 空格
+            "%25",			// 空格
+            "\0", "%00",	// 空字符
+            "\n", "%0a", "%0A",	// 换行符
+            "\r", "%0d", "%0D",	// 回车符
+            "\u2028",     // 行分隔符
+            "\u2029"    // 段分隔符
     };
 
     /**

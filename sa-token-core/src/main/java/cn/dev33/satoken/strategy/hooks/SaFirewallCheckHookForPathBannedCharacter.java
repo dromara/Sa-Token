@@ -34,6 +34,21 @@ public class SaFirewallCheckHookForPathBannedCharacter implements SaFirewallChec
     public static SaFirewallCheckHookForPathBannedCharacter instance = new SaFirewallCheckHookForPathBannedCharacter();
 
     /**
+     * 是否严格禁止出现百分号字符 % （默认：否）
+     */
+    public boolean bannedPercentage = false;
+
+
+    /**
+     * 重载配置
+     * @param bannedPercentage 是否严格禁止出现百分号字符 % （默认：否）
+     */
+    public void resetConfig(boolean bannedPercentage) {
+        this.bannedPercentage = bannedPercentage;
+    }
+
+
+    /**
      * 执行的方法
      *
      * @param req 请求对象
@@ -47,7 +62,9 @@ public class SaFirewallCheckHookForPathBannedCharacter implements SaFirewallChec
         if(SaFoxUtil.hasNonPrintableASCII(requestPath)) {
             throw new RequestPathInvalidException("请求 path 包含禁止字符：" + requestPath, requestPath);
         }
-
+        if(bannedPercentage && requestPath.contains("%")) {
+            throw new RequestPathInvalidException("请求 path 包含禁止字符 %：" + requestPath, requestPath);
+        }
     }
 
 }
