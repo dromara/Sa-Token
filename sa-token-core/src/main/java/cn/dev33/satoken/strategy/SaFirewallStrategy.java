@@ -45,6 +45,7 @@ public final class SaFirewallStrategy {
 		checkHooks.add(SaFirewallCheckHookForWhitePath.instance);
 		checkHooks.add(SaFirewallCheckHookForBlackPath.instance);
 		checkHooks.add(SaFirewallCheckHookForPathDangerCharacter.instance);
+		checkHooks.add(SaFirewallCheckHookForPathBannedCharacter.instance);
 		checkHooks.add(SaFirewallCheckHookForDirectoryTraversal.instance);
 		checkHooks.add(SaFirewallCheckHookForHost.instance);
 		checkHooks.add(SaFirewallCheckHookForHttpMethod.instance);
@@ -52,7 +53,10 @@ public final class SaFirewallStrategy {
 		checkHooks.add(SaFirewallCheckHookForParameter.instance);
 	}
 
-	// 注册一个防火墙校验 hook
+	/**
+	 * 注册一个防火墙校验 hook
+	 * @param checkHook /
+	 */
 	public void registerCheckHook(SaFirewallCheckHook checkHook) {
 		SaManager.getLog().info("防火墙校验 hook 注册成功: " + checkHook.getClass());
 		checkHooks.add(checkHook);

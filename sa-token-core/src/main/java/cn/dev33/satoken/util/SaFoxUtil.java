@@ -809,4 +809,24 @@ public class SaFoxUtil {
 		return listX;
 	}
 
+	/**
+	 * 检查字符串是否包含非可打印 ASCII 字符
+	 * @param str /
+	 * @return /
+	 */
+	public static boolean hasNonPrintableASCII(String str) {
+		if (str == null) {
+			return false;
+		}
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			// ASCII 范围检查：0-31 或 127
+			if ((c <= 31) || (c == 127)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 }

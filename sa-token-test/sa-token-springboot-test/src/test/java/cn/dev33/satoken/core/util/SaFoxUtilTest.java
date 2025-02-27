@@ -15,6 +15,10 @@
  */
 package cn.dev33.satoken.core.util;
 
+import cn.dev33.satoken.util.SaFoxUtil;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -22,11 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * SaFoxUtil 工具类测试 
@@ -400,5 +399,13 @@ public class SaFoxUtilTest {
     	Assertions.assertEquals(list.get(1), "b");
     	Assertions.assertEquals(list.get(2), "c");
     }
+
+	@Test
+	public void hasNonPrintableASCII() {
+		Assertions.assertFalse(SaFoxUtil.hasNonPrintableASCII("Hello World!"));
+		Assertions.assertTrue(SaFoxUtil.hasNonPrintableASCII("Hello\u0007World"));
+		Assertions.assertTrue(SaFoxUtil.hasNonPrintableASCII("Hello\tWorld"));
+		Assertions.assertTrue(SaFoxUtil.hasNonPrintableASCII("Hello\nWorld"));
+	}
 
 }
