@@ -25,12 +25,12 @@ import cn.dev33.satoken.exception.RequestPathInvalidException;
  * @author click33
  * @since 1.41.0
  */
-public class SaFirewallCheckHookForBlackList implements SaFirewallCheckHook {
+public class SaFirewallCheckHookForBlackPath implements SaFirewallCheckHook {
 
     /**
      * 默认实例
      */
-    public static SaFirewallCheckHookForBlackList instance = new SaFirewallCheckHookForBlackList();
+    public static SaFirewallCheckHookForBlackPath instance = new SaFirewallCheckHookForBlackPath();
 
     /**
      * 请求 path 黑名单

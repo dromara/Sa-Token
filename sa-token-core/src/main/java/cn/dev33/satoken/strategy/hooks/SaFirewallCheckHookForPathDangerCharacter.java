@@ -25,12 +25,12 @@ import cn.dev33.satoken.exception.RequestPathInvalidException;
  * @author click33
  * @since 1.41.0
  */
-public class SaFirewallCheckHookForDangerCharacter implements SaFirewallCheckHook {
+public class SaFirewallCheckHookForPathDangerCharacter implements SaFirewallCheckHook {
 
     /**
      * 默认实例
      */
-    public static SaFirewallCheckHookForDangerCharacter instance = new SaFirewallCheckHookForDangerCharacter();
+    public static SaFirewallCheckHookForPathDangerCharacter instance = new SaFirewallCheckHookForPathDangerCharacter();
 
     /**
      * 请求 path 不允许出现的危险字符

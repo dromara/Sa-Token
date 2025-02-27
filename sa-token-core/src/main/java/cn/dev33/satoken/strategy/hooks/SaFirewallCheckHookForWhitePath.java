@@ -25,12 +25,12 @@ import cn.dev33.satoken.exception.StopMatchException;
  * @author click33
  * @since 1.41.0
  */
-public class SaFirewallCheckHookForWhiteList implements SaFirewallCheckHook {
+public class SaFirewallCheckHookForWhitePath implements SaFirewallCheckHook {
 
     /**
      * 默认实例
      */
-    public static SaFirewallCheckHookForWhiteList instance = new SaFirewallCheckHookForWhiteList();
+    public static SaFirewallCheckHookForWhitePath instance = new SaFirewallCheckHookForWhitePath();
 
     /**
      * 请求 path 白名单

@@ -42,12 +42,14 @@ public final class SaFirewallStrategy {
 	public List<SaFirewallCheckHook> checkHooks = new ArrayList<>();
 
 	private SaFirewallStrategy() {
-		checkHooks.add(SaFirewallCheckHookForWhiteList.instance);
-		checkHooks.add(SaFirewallCheckHookForBlackList.instance);
-		checkHooks.add(SaFirewallCheckHookForDangerCharacter.instance);
+		checkHooks.add(SaFirewallCheckHookForWhitePath.instance);
+		checkHooks.add(SaFirewallCheckHookForBlackPath.instance);
+		checkHooks.add(SaFirewallCheckHookForPathDangerCharacter.instance);
 		checkHooks.add(SaFirewallCheckHookForDirectoryTraversal.instance);
 		checkHooks.add(SaFirewallCheckHookForHost.instance);
 		checkHooks.add(SaFirewallCheckHookForHttpMethod.instance);
+		checkHooks.add(SaFirewallCheckHookForHeader.instance);
+		checkHooks.add(SaFirewallCheckHookForParameter.instance);
 	}
 
 	// 注册一个防火墙校验 hook
