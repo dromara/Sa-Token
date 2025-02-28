@@ -326,6 +326,7 @@ sa-token.sso-client.is-slo=true
 | clientTokenTimeout		| long		| 7200		| `Client-Token` 保存的时间（单位：秒） 默认两个小时								|
 | lowerClientTokenTimeout	| long		| 7200		| `Lower-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
 | openidDigestPrefix		| String	| openid_default_digest_prefix		| 默认 openid 生成算法中使用的摘要前缀				 	|
+| unionidDigestPrefix		| String	| unionid_default_digest_prefix		| 默认 unionid 生成算法中使用的摘要前缀				 	|
 | higherScope				| String	| 		| 指定高级权限，多个用逗号隔开				 	|
 | lowerScope				| String	| 		| 指定低级权限，多个用逗号隔开				 	|
 | mode4ReturnAccessToken	| Boolean	| false	| 模式4是否返回 AccessToken 字段，用于兼容OAuth2标准协议			 	|
