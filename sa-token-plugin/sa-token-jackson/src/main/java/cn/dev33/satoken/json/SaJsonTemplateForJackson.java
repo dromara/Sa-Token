@@ -36,6 +36,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 /**
  * JSON 转换器， Jackson 版实现
@@ -53,7 +54,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
 	/**
-	 * 底层 Mapper 对象 
+	 * 底层 Mapper 对象
 	 */
 	public ObjectMapper objectMapper = new ObjectMapper();
 
@@ -96,8 +97,6 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 		//
 		this.objectMapper.registerModule(timeModule);
 
-
-
 	}
 
 	/**
@@ -109,6 +108,9 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			return null;
 		}
 		try {
+			if(obj instanceof Map) {
+				return mapObjectMapper.writeValueAsString(obj);
+			}
 			return objectMapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			throw new SaJsonConvertException(e);
@@ -124,10 +126,43 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			return null;
 		}
 		try {
+			System.out.println("type是什么 " + type);
             return objectMapper.readValue(jsonStr, type);
 		} catch (JsonProcessingException e) {
 			throw new SaJsonConvertException(e);
 		}
 	}
 
+	/*
+	 * 由于构造方法中的如下代码：
+	 * 		ObjectMapper.DefaultTyping.NON_FINAL,
+	 * 导致 objectMapper 对所有非 final 类型的反序列化均要求提供 @class 信息。
+	 *
+	 * 例如：
+	 * 		一个简单的字符串 {"name": "zhangsan"} 将无法反序列化为 Map 对象，因为这个字符串上没有提供 @class 信息。
+	 *
+	 * 尝试诸多方案，均未能解决此问题。
+	 *
+	 * 因此，以下代码将为 Map 的反序列化提供一个独立干净的 mapObjectMapper 对象，保证其不受构造方法中关于类型配置的影响。
+	 *
+	 */
+
+	/**
+	 * 处理 Map 的序列化与反序列化
+	 */
+	public ObjectMapper mapObjectMapper = new ObjectMapper();
+
+	/**
+	 * 将 json 字符串解析为 Map
+	 */
+	@Override
+	public Map<String, Object> jsonToMap(String jsonStr) {
+		try {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> map = mapObjectMapper.readValue(jsonStr, Map.class);
+			return map;
+		} catch (JsonProcessingException e) {
+			throw new SaJsonConvertException(e);
+		}
+	}
 }
