@@ -15,14 +15,7 @@
  */
 package cn.dev33.satoken.spring.oauth2;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.annotation.SaCheckAccessToken;
-import cn.dev33.satoken.oauth2.annotation.SaCheckClientIdSecret;
-import cn.dev33.satoken.oauth2.annotation.SaCheckClientToken;
-import cn.dev33.satoken.oauth2.annotation.handler.SaCheckAccessTokenHandler;
-import cn.dev33.satoken.oauth2.annotation.handler.SaCheckClientIdSecretHandler;
-import cn.dev33.satoken.oauth2.annotation.handler.SaCheckClientTokenHandler;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -47,32 +40,5 @@ public class SaOAuth2BeanRegister {
 	public SaOAuth2ServerConfig getSaOAuth2Config() {
 		return new SaOAuth2ServerConfig();
 	}
-
-	// 自定义注解处理器
-	@Bean
-	public SaAnnotationHandlerInterface<SaCheckAccessToken> getSaCheckAccessTokenHandler() {
-		return new SaCheckAccessTokenHandler();
-	}
-	@Bean
-	public SaAnnotationHandlerInterface<SaCheckClientToken> getSaCheckClientTokenHandler() {
-		return new SaCheckClientTokenHandler();
-	}
-	@Bean
-	public SaAnnotationHandlerInterface<SaCheckClientIdSecret> getSaCheckClientIdSecretHandler() {
-		return new SaCheckClientIdSecretHandler();
-	}
-
-	/*
-	 // 这种写法有问题，当项目还有自定义的注解处理器时，项目中的自定义注解处理器将会覆盖掉此处 List 中的注解处理器
-//	@Bean
-//	public List<SaAnnotationHandlerInterface<?>> getXxx() {
-//		return Arrays.asList(
-//				new SaCheckAccessTokenHandler(),
-//				new SaCheckClientTokenHandler(),
-//				new SaCheckClientSecretHandler()
-//		);
-//	}
-
-	 */
 
 }
