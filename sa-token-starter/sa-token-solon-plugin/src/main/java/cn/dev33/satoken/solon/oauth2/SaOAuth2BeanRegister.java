@@ -15,14 +15,7 @@
  */
 package cn.dev33.satoken.solon.oauth2;
 
-import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.annotation.SaCheckAccessToken;
-import cn.dev33.satoken.oauth2.annotation.SaCheckClientIdSecret;
-import cn.dev33.satoken.oauth2.annotation.SaCheckClientToken;
-import cn.dev33.satoken.oauth2.annotation.handler.SaCheckAccessTokenHandler;
-import cn.dev33.satoken.oauth2.annotation.handler.SaCheckClientIdSecretHandler;
-import cn.dev33.satoken.oauth2.annotation.handler.SaCheckClientTokenHandler;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
@@ -53,19 +46,4 @@ public class SaOAuth2BeanRegister {
 		}
 	}
 
-	// 自定义注解处理器
-	@Bean
-	public SaAnnotationHandlerInterface<SaCheckAccessToken> getSaCheckAccessTokenHandler() {
-		return new SaCheckAccessTokenHandler();
-	}
-
-	@Bean
-	public SaAnnotationHandlerInterface<SaCheckClientToken> getSaCheckClientTokenHandler() {
-		return new SaCheckClientTokenHandler();
-	}
-
-	@Bean
-	public SaAnnotationHandlerInterface<SaCheckClientIdSecret> getSaCheckClientIdSecretHandler() {
-		return new SaCheckClientIdSecretHandler();
-	}
 }
