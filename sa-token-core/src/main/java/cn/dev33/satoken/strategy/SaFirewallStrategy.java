@@ -36,12 +36,13 @@ public final class SaFirewallStrategy {
 	 */
 	public static final SaFirewallStrategy instance = new SaFirewallStrategy();
 
-
-	// ----------------------- 所有策略
-
+	/**
+	 * 防火墙校验钩子函数集合
+	 */
 	public List<SaFirewallCheckHook> checkHooks = new ArrayList<>();
 
 	private SaFirewallStrategy() {
+		// 初始化默认的防火墙校验钩子函数集合
 		checkHooks.add(SaFirewallCheckHookForWhitePath.instance);
 		checkHooks.add(SaFirewallCheckHookForBlackPath.instance);
 		checkHooks.add(SaFirewallCheckHookForPathDangerCharacter.instance);
@@ -57,9 +58,23 @@ public final class SaFirewallStrategy {
 	 * 注册一个防火墙校验 hook
 	 * @param checkHook /
 	 */
-	public void registerCheckHook(SaFirewallCheckHook checkHook) {
+	public void registerHook(SaFirewallCheckHook checkHook) {
 		SaManager.getLog().info("防火墙校验 hook 注册成功: " + checkHook.getClass());
 		checkHooks.add(checkHook);
+	}
+
+	/**
+	 * 移除指定类型的防火墙校验 hook
+	 * @param hookClass /
+	 */
+	public void removeHook(Class<? extends SaFirewallCheckHook> hookClass) {
+		for (SaFirewallCheckHook hook : checkHooks) {
+			if (hook.getClass().equals(hookClass)) {
+				checkHooks.remove(hook);
+				SaManager.getLog().info("防火墙校验 hook 移除成功: " + hookClass);
+				return;
+			}
+		}
 	}
 
 	/**

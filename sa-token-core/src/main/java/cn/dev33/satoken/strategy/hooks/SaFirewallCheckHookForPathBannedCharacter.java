@@ -38,7 +38,6 @@ public class SaFirewallCheckHookForPathBannedCharacter implements SaFirewallChec
      */
     public boolean bannedPercentage = false;
 
-
     /**
      * 重载配置
      * @param bannedPercentage 是否严格禁止出现百分号字符 % （默认：否）
@@ -46,7 +45,6 @@ public class SaFirewallCheckHookForPathBannedCharacter implements SaFirewallChec
     public void resetConfig(boolean bannedPercentage) {
         this.bannedPercentage = bannedPercentage;
     }
-
 
     /**
      * 执行的方法
