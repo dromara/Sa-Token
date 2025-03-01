@@ -15,16 +15,14 @@
  */
 package cn.dev33.satoken.core.stp;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import cn.dev33.satoken.stp.SaLoginConfig;
 import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.util.SaTokenConsts;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Token 参数扩展 
@@ -66,15 +64,15 @@ public class TokenInfoTest {
 
 	@Test
 	public void testLoginParameter() {
-		Assertions.assertEquals(SaLoginConfig.setDevice("PC").getDevice(), "PC");
-		Assertions.assertEquals(SaLoginConfig.setIsLastingCookie(false).getIsLastingCookie(), false);
-		Assertions.assertEquals(SaLoginConfig.setTimeout(1600).getTimeout(), 1600);
-		Assertions.assertEquals(SaLoginConfig.setToken("token-xxx").getToken(), "token-xxx");
-		Assertions.assertEquals(SaLoginConfig.setExtra("age", 18).getExtra("age"), 18);
+		Assertions.assertEquals(new SaLoginParameter().setDevice("PC").getDevice(), "PC");
+		Assertions.assertEquals(new SaLoginParameter().setIsLastingCookie(false).getIsLastingCookie(), false);
+		Assertions.assertEquals(new SaLoginParameter().setTimeout(1600).getTimeout(), 1600);
+		Assertions.assertEquals(new SaLoginParameter().setToken("token-xxx").getToken(), "token-xxx");
+		Assertions.assertEquals(new SaLoginParameter().setExtra("age", 18).getExtra("age"), 18);
 		
 		Map<String, Object> extraData = new HashMap<>();
 		extraData.put("age", 20);
-		SaLoginParameter lm = SaLoginConfig.setExtraData(extraData);
+		SaLoginParameter lm = new SaLoginParameter().setExtraData(extraData);
 		Assertions.assertEquals(lm.getExtraData(), extraData);
 		Assertions.assertEquals(lm.getExtra("age"), 20);
 		Assertions.assertTrue(lm.isSetExtraData());
@@ -84,7 +82,6 @@ public class TokenInfoTest {
 		SaLoginParameter loginParameter = SaLoginParameter
 				.create()
 				.setTimeout(-1);
-		loginParameter.build();
 		Assertions.assertEquals(loginParameter.getCookieTimeout(), Integer.MAX_VALUE);
 		Assertions.assertEquals(loginParameter.getDeviceOrDefault(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);
 	}

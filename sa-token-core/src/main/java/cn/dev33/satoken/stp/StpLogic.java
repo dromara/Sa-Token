@@ -547,7 +547,7 @@ public class StpLogic {
 		// 4、如果代码走到此处，说明未能成功复用旧 token，需要根据算法新建 token
 		return SaStrategy.instance.generateUniqueToken.execute(
 				"token",
-				loginParameter.getMaxTryTimes(),
+				getConfigOfMaxTryTimes(loginParameter),
 				() -> {
 					return createTokenValue(id, loginParameter.getDevice(), loginParameter.getTimeout(), loginParameter.getExtraData());
 				},
@@ -1418,7 +1418,7 @@ public class StpLogic {
 			// 随机创建一个 Token
 			tokenValue = SaStrategy.instance.generateUniqueToken.execute(
 					"token",
-					getConfigOfMaxTryTimes(),
+					getConfigOfMaxTryTimes(createSaLoginParameter()),
 					() -> {
 						return createTokenValue(null, null, getConfigOrGlobal().getTimeout(), null);
 					},
@@ -2863,10 +2863,11 @@ public class StpLogic {
 	/**
 	 * 返回全局配置的 maxTryTimes 值，在每次创建 token 时，对其唯一性测试的最高次数（-1=不测试）
 	 *
+	 * @param loginParameter /
 	 * @return /
 	 */
-	public int getConfigOfMaxTryTimes() {
-		return getConfigOrGlobal().getMaxTryTimes();
+	public int getConfigOfMaxTryTimes(SaLoginParameter loginParameter) {
+		return loginParameter.getMaxTryTimes();
 	}
 
 	/**

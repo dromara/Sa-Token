@@ -15,9 +15,6 @@
  */
 package cn.dev33.satoken.jwt;
 
-import java.util.List;
-import java.util.Map;
-
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
@@ -26,11 +23,15 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Sa-Token 整合 jwt -- Mixin 混入模式
@@ -274,7 +275,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * @return /
 	 */
 	@Override
-	public int getConfigOfMaxTryTimes() {
+	public int getConfigOfMaxTryTimes(SaLoginParameter loginParameter) {
 		return -1;
 	}
 
