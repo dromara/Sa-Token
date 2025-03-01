@@ -87,6 +87,11 @@ public class SaTokenConfig implements Serializable {
 	private Boolean isReadCookie = true;
 
 	/**
+	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+	 */
+	private Boolean isLastingCookie = true;
+
+	/**
 	 * 是否在登录后将 token 写入到响应头
 	 */
 	private Boolean isWriteHeader = false;
@@ -357,6 +362,26 @@ public class SaTokenConfig implements Serializable {
 	 */
 	public SaTokenConfig setIsReadCookie(Boolean isReadCookie) {
 		this.isReadCookie = isReadCookie;
+		return this;
+	}
+
+	/**
+	 * 获取 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+	 *
+	 * @return isLastingCookie /
+	 */
+	public Boolean getIsLastingCookie() {
+		return this.isLastingCookie;
+	}
+
+	/**
+	 * 设置 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
+	 *
+	 * @param isLastingCookie /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIsLastingCookie(Boolean isLastingCookie) {
+		this.isLastingCookie = isLastingCookie;
 		return this;
 	}
 
@@ -684,6 +709,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", isReadBody=" + isReadBody
 				+ ", isReadHeader=" + isReadHeader 
 				+ ", isReadCookie=" + isReadCookie
+				+ ", isLastingCookie=" + isLastingCookie
 				+ ", isWriteHeader=" + isWriteHeader
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
