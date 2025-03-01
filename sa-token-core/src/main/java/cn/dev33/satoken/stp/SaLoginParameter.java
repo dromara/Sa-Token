@@ -36,11 +36,6 @@ import java.util.Map;
  */
 public class SaLoginParameter {
 
-//	/**
-//	 * 该对象是否已构造完毕
-//	 */
-//	public boolean isBuild = false;
-
 	// --------- 单独参数
 
 	/**

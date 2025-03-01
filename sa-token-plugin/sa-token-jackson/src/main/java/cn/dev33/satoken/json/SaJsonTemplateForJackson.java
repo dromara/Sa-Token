@@ -126,7 +126,6 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			return null;
 		}
 		try {
-			System.out.println("type是什么 " + type);
             return objectMapper.readValue(jsonStr, type);
 		} catch (JsonProcessingException e) {
 			throw new SaJsonConvertException(e);
