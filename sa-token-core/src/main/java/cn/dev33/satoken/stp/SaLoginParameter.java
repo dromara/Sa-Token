@@ -77,6 +77,11 @@ public class SaLoginParameter {
 	private Long activeTimeout;
 
 	/**
+	 * 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+	 */
+	private Boolean isConcurrent;
+
+	/**
 	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
 	public Boolean isLastingCookie;
@@ -104,8 +109,9 @@ public class SaLoginParameter {
 	 */
 	public SaLoginParameter setDefaultValues(SaTokenConfig config) {
 		this.device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
-		this.isLastingCookie = config.getIsLastingCookie();
 		this.timeout = config.getTimeout();
+		this.isConcurrent = config.getIsConcurrent();
+		this.isLastingCookie = config.getIsLastingCookie();
 		this.isWriteHeader = config.getIsWriteHeader();
 		return this;
 	}
@@ -240,13 +246,28 @@ public class SaLoginParameter {
 		return activeTimeout;
 	}
 
-
 	/**
 	 * @param activeTimeout 指定此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
 	 * @return 对象自身
 	 */
 	public SaLoginParameter setActiveTimeout(long activeTimeout) {
 		this.activeTimeout = activeTimeout;
+		return this;
+	}
+
+	/**
+	 * @return 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+	 */
+	public Boolean getIsConcurrent() {
+		return isConcurrent;
+	}
+
+	/**
+	 * @param isConcurrent 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setIsConcurrent(Boolean isConcurrent) {
+		this.isConcurrent = isConcurrent;
 		return this;
 	}
 

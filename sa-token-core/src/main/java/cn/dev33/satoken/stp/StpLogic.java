@@ -515,8 +515,7 @@ public class StpLogic {
 
 		// 1、获取全局配置的 isConcurrent 参数
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
-		Boolean isConcurrent = getConfigOrGlobal().getIsConcurrent();
-		if( ! isConcurrent) {
+		if( ! loginParameter.getIsConcurrent()) {
 			// TODO 此处应该加一个配置决定是只顶掉当前设备类型，还是所有类型
 			replaced(id, loginParameter.getDevice());
 		}
@@ -527,7 +526,7 @@ public class StpLogic {
 		} 
 
 		// 3、只有在配置了 [ 允许一个账号多地同时登录 ] 时，才尝试复用旧 token，这样可以避免不必要地查询，节省开销
-		if(isConcurrent) {
+		if(loginParameter.getIsConcurrent()) {
 
 			// 3.1、看看全局配置的 IsShare 参数，配置为 true 才是允许复用旧 token
 			if(getConfigOfIsShare()) {
