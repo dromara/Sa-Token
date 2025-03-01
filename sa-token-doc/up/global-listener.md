@@ -33,7 +33,7 @@ public class MySaTokenListener implements SaTokenListener {
 
 	/** 每次登录时触发 */
 	@Override
-	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		System.out.println("---------- 自定义侦听器实现 doLogin");
 	}
 
@@ -171,7 +171,7 @@ public class MySaTokenListener extends SaTokenListenerForSimple {
 	 */
 	/** 每次登录时触发 */
 	@Override
-	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		System.out.println("---------- 自定义侦听器实现 doLogin");
 	}
 }
@@ -182,7 +182,7 @@ public class MySaTokenListener extends SaTokenListenerForSimple {
 // 登录时触发 
 SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
 	@Override
-	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		System.out.println("---------------- doLogin");
 	}
 });
@@ -195,7 +195,7 @@ SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
 // 登录时触发 
 SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
 	@Override
-	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		try {
 			// 不安全代码需要写在 try-catch 里 
 			// ......  

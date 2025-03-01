@@ -44,7 +44,7 @@ public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 
 
 ### OAuth2-Client 数据互通
-除了Server端，Client端也可以打通 `access_token` 与 `satoken` 会话。做法是在 Client 端拿到 `access_token` 后进行登录时，使用 `SaLoginModel` 预定登录生成的 Token 值 
+除了Server端，Client端也可以打通 `access_token` 与 `satoken` 会话。做法是在 Client 端拿到 `access_token` 后进行登录时，使用 `SaLoginParameter` 预定登录生成的 Token 值 
 
 ``` java
 // 1. 获取到access_token

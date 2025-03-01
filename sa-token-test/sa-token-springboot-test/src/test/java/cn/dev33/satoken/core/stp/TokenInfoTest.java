@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import cn.dev33.satoken.stp.SaLoginConfig;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -65,7 +65,7 @@ public class TokenInfoTest {
 	}
 
 	@Test
-	public void testLoginModel() {
+	public void testLoginParameter() {
 		Assertions.assertEquals(SaLoginConfig.setDevice("PC").getDevice(), "PC");
 		Assertions.assertEquals(SaLoginConfig.setIsLastingCookie(false).getIsLastingCookie(), false);
 		Assertions.assertEquals(SaLoginConfig.setTimeout(1600).getTimeout(), 1600);
@@ -74,19 +74,19 @@ public class TokenInfoTest {
 		
 		Map<String, Object> extraData = new HashMap<>();
 		extraData.put("age", 20);
-		SaLoginModel lm = SaLoginConfig.setExtraData(extraData);
+		SaLoginParameter lm = SaLoginConfig.setExtraData(extraData);
 		Assertions.assertEquals(lm.getExtraData(), extraData);
 		Assertions.assertEquals(lm.getExtra("age"), 20);
 		Assertions.assertTrue(lm.isSetExtraData());
 		Assertions.assertNotNull(lm.toString());
 		
 		// 计算 CookieTimeout 
-		SaLoginModel loginModel = SaLoginModel
+		SaLoginParameter loginParameter = SaLoginParameter
 				.create()
 				.setTimeout(-1);
-		loginModel.build();
-		Assertions.assertEquals(loginModel.getCookieTimeout(), Integer.MAX_VALUE);
-		Assertions.assertEquals(loginModel.getDeviceOrDefault(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+		loginParameter.build();
+		Assertions.assertEquals(loginParameter.getCookieTimeout(), Integer.MAX_VALUE);
+		Assertions.assertEquals(loginParameter.getDeviceOrDefault(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);
 	}
 	
 }

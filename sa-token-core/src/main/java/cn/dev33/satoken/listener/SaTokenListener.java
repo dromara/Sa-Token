@@ -17,7 +17,7 @@ package cn.dev33.satoken.listener;
 
 import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
@@ -35,9 +35,9 @@ public interface SaTokenListener {
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue 本次登录产生的 token 值 
-	 * @param loginModel 登录参数
+	 * @param loginParameter 登录参数
 	 */
-	void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel);
+	void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter);
 			
 	/**
 	 * 每次注销时触发 

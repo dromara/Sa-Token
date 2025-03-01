@@ -26,7 +26,7 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import cn.dev33.satoken.stp.SaLoginConfig;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -646,7 +646,7 @@ public class BasicsTest {
     @Test
     public void testDoLoginBySetToken() {
     	// 预定 Token 登录 
-    	StpUtil.login(10001, new SaLoginModel().setToken("qwer-qwer-qwer-qwer"));
+    	StpUtil.login(10001, new SaLoginParameter().setToken("qwer-qwer-qwer-qwer"));
     	Assertions.assertEquals(StpUtil.getTokenValue(), "qwer-qwer-qwer-qwer");
 
     	// 注销后，应该清除Token 
@@ -663,7 +663,7 @@ public class BasicsTest {
     	Assertions.assertNull(StpUtil.getTokenValue());
 
     	// 无上下文注入的登录
-    	String token = StpUtil.createLoginSession(10001, new SaLoginModel());
+    	String token = StpUtil.createLoginSession(10001, new SaLoginParameter());
     	Assertions.assertNull(StpUtil.getTokenValue());
     	
     	// 手动写入

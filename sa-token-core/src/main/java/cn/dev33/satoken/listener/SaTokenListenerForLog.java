@@ -17,7 +17,7 @@ package cn.dev33.satoken.listener;
 
 import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -35,7 +35,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 * 每次登录时触发 
 	 */
 	@Override
-	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		log.info("账号 {} 登录成功 (loginType={}), 会话凭证 token={}", loginId, loginType, tokenValue);
 	}
 

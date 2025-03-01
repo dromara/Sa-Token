@@ -3,7 +3,7 @@ package com.pj.test;
 import cn.dev33.satoken.annotation.SaCheckHttpDigest;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.spring.SpringMVCUtil;
-import cn.dev33.satoken.stp.SaLoginConfig;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -26,7 +26,7 @@ public class TestController {
 	// 测试登录  ---- http://localhost:8081/test/login
 	@RequestMapping("login")
 	public SaResult login(@RequestParam(defaultValue = "10001") long id) {
-		StpUtil.login(id, SaLoginConfig.setActiveTimeout(-1));
+		StpUtil.login(id, new SaLoginParameter().setActiveTimeout(-1));
 		return SaResult.ok("登录成功");
 	}
 

@@ -169,7 +169,7 @@ public class StpLogic {
  	 * @param tokenValue token 值
  	 */
 	public void setTokenValue(String tokenValue){
-		setTokenValue(tokenValue, new SaLoginModel().setTimeout(getConfigOrGlobal().getTimeout()));
+		setTokenValue(tokenValue, createSaLoginParameter().setTimeout(getConfigOrGlobal().getTimeout()));
 	}
 	
  	/**
@@ -179,35 +179,32 @@ public class StpLogic {
  	 * @param cookieTimeout Cookie存活时间(秒)
  	 */
 	public void setTokenValue(String tokenValue, int cookieTimeout){
-		setTokenValue(tokenValue, new SaLoginModel().setTimeout(cookieTimeout));
+		setTokenValue(tokenValue, createSaLoginParameter().setTimeout(cookieTimeout));
 	}
 
  	/**
  	 * 在当前会话写入指定 token 值
 	 *
  	 * @param tokenValue token 值
- 	 * @param loginModel 登录参数 
+ 	 * @param loginParameter 登录参数 
  	 */
-	public void setTokenValue(String tokenValue, SaLoginModel loginModel){
+	public void setTokenValue(String tokenValue, SaLoginParameter loginParameter){
 
 		// 先判断一下，如果提供 token 为空，则不执行任何动作
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return;
 		}
 
-		// 构建一下
-		loginModel.build(getConfigOrGlobal());
-
 		// 1、将 token 写入到当前请求的 Storage 存储器里
 		setTokenValueToStorage(tokenValue);
 		
 		// 2. 将 token 写入到当前会话的 Cookie 里
 		if (getConfigOrGlobal().getIsReadCookie()) {
-			setTokenValueToCookie(tokenValue, loginModel.getCookieTimeout());
+			setTokenValueToCookie(tokenValue, loginParameter.getCookieTimeout());
 		}
 		
 		// 3. 将 token 写入到当前请求的响应头中
-		if(loginModel.getIsWriteHeader()) {
+		if(loginParameter.getIsWriteHeader()) {
 			setTokenValueToResponseHeader(tokenValue);
 		}
 	}
@@ -399,7 +396,7 @@ public class StpLogic {
 	 * @param id 账号id，建议的类型：（long | int | String）
 	 */
 	public void login(Object id) {
-		login(id, new SaLoginModel());
+		login(id, createSaLoginParameter());
 	}
 
 	/**
@@ -409,7 +406,7 @@ public class StpLogic {
 	 * @param device 设备类型 
 	 */
 	public void login(Object id, String device) {
-		login(id, new SaLoginModel().setDevice(device));
+		login(id, createSaLoginParameter().setDevice(device));
 	}
 
 	/**
@@ -419,7 +416,7 @@ public class StpLogic {
 	 * @param isLastingCookie 是否为持久Cookie，值为 true 时记住我，值为 false 时关闭浏览器需要重新登录
 	 */
 	public void login(Object id, boolean isLastingCookie) {
-		login(id, new SaLoginModel().setIsLastingCookie(isLastingCookie));
+		login(id, createSaLoginParameter().setIsLastingCookie(isLastingCookie));
 	}
 
 	/**
@@ -429,21 +426,21 @@ public class StpLogic {
 	 * @param timeout 此次登录 token 的有效期, 单位:秒
 	 */
 	public void login(Object id, long timeout) {
-		login(id, new SaLoginModel().setTimeout(timeout));
+		login(id, createSaLoginParameter().setTimeout(timeout));
 	}
 
 	/**
 	 * 会话登录，并指定所有登录参数 Model
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
+	 * @param loginParameter 此次登录的参数Model 
 	 */
-	public void login(Object id, SaLoginModel loginModel) {
+	public void login(Object id, SaLoginParameter loginParameter) {
 		// 1、创建会话 
-		String token = createLoginSession(id, loginModel);
+		String token = createLoginSession(id, loginParameter);
 
 		// 2、在当前客户端注入 token
-		setTokenValue(token, loginModel);
+		setTokenValue(token, loginParameter);
 	}
 
 	/**
@@ -453,59 +450,57 @@ public class StpLogic {
 	 * @return 返回会话令牌 
 	 */
 	public String createLoginSession(Object id) {
-		return createLoginSession(id, new SaLoginModel());
+		return createLoginSession(id, createSaLoginParameter());
 	}
 	
 	/**
 	 * 创建指定账号 id 的登录会话数据
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
+	 * @param loginParameter 此次登录的参数Model 
 	 * @return 返回会话令牌 
 	 */
-	public String createLoginSession(Object id, SaLoginModel loginModel) {
+	public String createLoginSession(Object id, SaLoginParameter loginParameter) {
+
+		SaTokenConfig config = getConfigOrGlobal();
 
 		// 1、先检查一下，传入的参数是否有效
-		checkLoginArgs(id, loginModel);
-		
-		// 2、初始化 loginModel ，给一些参数补上默认值
-		SaTokenConfig config = getConfigOrGlobal();
-		loginModel.build(config);
+		checkLoginArgs(id, loginParameter);
 
-		// 3、给这个账号分配一个可用的 token
-		String tokenValue = distUsableToken(id, loginModel);
+		// 2、给这个账号分配一个可用的 token
+		String tokenValue = distUsableToken(id, loginParameter);
 		
-		// 4、获取此账号的 Account-Session , 续期
-		SaSession session = getSessionByLoginId(id, true, loginModel.getTimeout());
-		session.updateMinTimeout(loginModel.getTimeout());
+		// 3、获取此账号的 Account-Session , 续期
+		SaSession session = getSessionByLoginId(id, true, loginParameter.getTimeout());
+		session.updateMinTimeout(loginParameter.getTimeout());
 		
-		// 5、在 Account-Session 上记录本次登录的 token 签名
-		TokenSign tokenSign = new TokenSign(tokenValue, loginModel.getDeviceOrDefault(), loginModel.getTokenSignTag());
+		// 4、在 Account-Session 上记录本次登录的 token 签名
+		TokenSign tokenSign = new TokenSign(tokenValue, loginParameter.getDevice(), loginParameter.getTokenSignTag());
 		session.addTokenSign(tokenSign);
 
-		// 6、保存 token -> id 的映射关系，方便日后根据 token 找账号 id
-		saveTokenToIdMapping(tokenValue, id, loginModel.getTimeout());
+		// 5、保存 token -> id 的映射关系，方便日后根据 token 找账号 id
+		saveTokenToIdMapping(tokenValue, id, loginParameter.getTimeout());
 
-		// 7、写入这个 token 的最后活跃时间 token-last-active
+		// 6、写入这个 token 的最后活跃时间 token-last-active
 		if(isOpenCheckActiveTimeout()) {
-			setLastActiveToNow(tokenValue, loginModel.getActiveTimeout(), loginModel.getTimeout());
+			setLastActiveToNow(tokenValue, loginParameter.getActiveTimeout(), loginParameter.getTimeout());
 		}
 
-		// 8、如果该 token 对应的 Token-Session 已经存在，则需要给其续期
+		// 7、如果该 token 对应的 Token-Session 已经存在，则需要给其续期
 		SaSession tokenSession = getTokenSessionByToken(tokenValue, false);
 		if(tokenSession != null) {
-			tokenSession.updateMinTimeout(loginModel.getTimeout());
+			tokenSession.updateMinTimeout(loginParameter.getTimeout());
 		}
 
-		// 9、$$ 发布全局事件：账号 xxx 登录成功
-		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginModel);
+		// 8、$$ 发布全局事件：账号 xxx 登录成功
+		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginParameter);
 
-		// 10、检查此账号会话数量是否超出最大值，如果超过，则按照登录时间顺序，把最开始登录的给注销掉
+		// 9、检查此账号会话数量是否超出最大值，如果超过，则按照登录时间顺序，把最开始登录的给注销掉
 		if(config.getMaxLoginCount() != -1) {
 			logoutByMaxLoginCount(id, session, null, config.getMaxLoginCount());
 		}
 		
-		// 11、一切处理完毕，返回会话凭证 token
+		// 10、一切处理完毕，返回会话凭证 token
 		return tokenValue;
 	}
 
@@ -513,21 +508,22 @@ public class StpLogic {
 	 * 为指定账号 id 的登录操作，分配一个可用的 token
 	 *
 	 * @param id 账号id 
-	 * @param loginModel 此次登录的参数Model 
+	 * @param loginParameter 此次登录的参数Model 
 	 * @return 返回 token
 	 */
-	protected String distUsableToken(Object id, SaLoginModel loginModel) {
+	protected String distUsableToken(Object id, SaLoginParameter loginParameter) {
 
 		// 1、获取全局配置的 isConcurrent 参数
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
 		Boolean isConcurrent = getConfigOrGlobal().getIsConcurrent();
 		if( ! isConcurrent) {
-			replaced(id, loginModel.getDevice());
+			// TODO 此处应该加一个配置决定是只顶掉当前设备类型，还是所有类型
+			replaced(id, loginParameter.getDevice());
 		}
 		
 		// 2、如果调用者预定了要生成的 token，则直接返回这个预定的值，框架无需再操心了
-		if(SaFoxUtil.isNotEmpty(loginModel.getToken())) {
-			return loginModel.getToken();
+		if(SaFoxUtil.isNotEmpty(loginParameter.getToken())) {
+			return loginParameter.getToken();
 		} 
 
 		// 3、只有在配置了 [ 允许一个账号多地同时登录 ] 时，才尝试复用旧 token，这样可以避免不必要地查询，节省开销
@@ -537,7 +533,7 @@ public class StpLogic {
 			if(getConfigOfIsShare()) {
 
 				// 根据 账号id + 设备类型，尝试获取旧的 token
-				String tokenValue = getTokenValueByLoginId(id, loginModel.getDeviceOrDefault());
+				String tokenValue = getTokenValueByLoginId(id, loginParameter.getDevice());
 
 				// 如果有值，那就直接复用
 				if(SaFoxUtil.isNotEmpty(tokenValue)) {
@@ -554,7 +550,7 @@ public class StpLogic {
 				"token",
 				getConfigOfMaxTryTimes(),
 				() -> {
-					return createTokenValue(id, loginModel.getDeviceOrDefault(), loginModel.getTimeout(), loginModel.getExtraData());
+					return createTokenValue(id, loginParameter.getDevice(), loginParameter.getTimeout(), loginParameter.getExtraData());
 				},
 				tokenValue -> {
 					return getLoginIdNotHandle(tokenValue) == null;
@@ -566,9 +562,9 @@ public class StpLogic {
 	 * 校验登录时的参数有效性，如果有问题会打印警告或抛出异常
 	 *
 	 * @param id 账号id
-	 * @param loginModel 此次登录的参数Model
+	 * @param loginParameter 此次登录的参数Model
 	 */
-	protected void checkLoginArgs(Object id, SaLoginModel loginModel) {
+	protected void checkLoginArgs(Object id, SaLoginParameter loginParameter) {
 
 		// 1、账号 id 不能为空
 		if(SaFoxUtil.isEmpty(id)) {
@@ -588,14 +584,13 @@ public class StpLogic {
 		// 4、判断当前 StpLogic 是否支持 extra 扩展参数
 		if( ! isSupportExtra()) {
 			// 如果不支持，开发者却传入了 extra 扩展参数，那么就打印警告信息
-			Map<String, Object> extraData = loginModel.getExtraData();
-			if(extraData != null && extraData.size() > 0) {
+			if(loginParameter.isSetExtraData()) {
 				SaManager.log.warn("当前 StpLogic 不支持 extra 扩展参数模式，传入的 extra 参数将被忽略");
 			}
 		}
 
 		// 5、如果全局配置未启动动态 activeTimeout 功能，但是此次登录却传入了 activeTimeout 参数，那么就打印警告信息
-		if( ! getConfigOrGlobal().getDynamicActiveTimeout() && loginModel.getActiveTimeout() != null) {
+		if( ! getConfigOrGlobal().getDynamicActiveTimeout() && loginParameter.getActiveTimeout() != null) {
 			SaManager.log.warn("当前全局配置未开启动态 activeTimeout 功能，传入的 activeTimeout 参数将被忽略");
 		}
 
@@ -610,7 +605,7 @@ public class StpLogic {
 	public String getOrCreateLoginSession(Object id) {
 		String tokenValue = getTokenValueByLoginId(id);
 		if(tokenValue == null) {
-			tokenValue = createLoginSession(id, new SaLoginModel());
+			tokenValue = createLoginSession(id, createSaLoginParameter());
 		}
 		return tokenValue;
 	}
@@ -2114,7 +2109,7 @@ public class StpLogic {
 	 */
 	public String getTokenValueByLoginId(Object loginId, String device) {
 		List<String> tokenValueList = getTokenValueListByLoginId(loginId, device);
-		return tokenValueList.size() == 0 ? null : tokenValueList.get(tokenValueList.size() - 1);
+		return tokenValueList.isEmpty() ? null : tokenValueList.get(tokenValueList.size() - 1);
 	}
 	
  	/** 
@@ -2893,6 +2888,15 @@ public class StpLogic {
 	 */
 	public boolean isSupportExtra() {
 		return false;
+	}
+
+	/**
+	 * 根据当前配置对象创建一个 SaLoginParameter 对象
+	 *
+	 * @return /
+	 */
+	public SaLoginParameter createSaLoginParameter() {
+		return new SaLoginParameter(getConfigOrGlobal());
 	}
 
 

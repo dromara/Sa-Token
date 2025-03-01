@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.listener;
 
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 
 /**
  * Sa-Token 侦听器，默认空实现 
@@ -28,7 +28,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 public class SaTokenListenerForSimple implements SaTokenListener {
 
 	@Override
-	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		
 	}
 

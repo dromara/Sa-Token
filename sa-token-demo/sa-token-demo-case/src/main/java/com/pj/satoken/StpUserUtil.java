@@ -5,7 +5,7 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.TokenSign;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import org.springframework.stereotype.Component;
@@ -107,10 +107,10 @@ public class StpUserUtil {
 	 * 在当前会话写入指定 token 值
 	 *
 	 * @param tokenValue token 值
-	 * @param loginModel 登录参数
+	 * @param loginParameter 登录参数
 	 */
-	public static void setTokenValue(String tokenValue, SaLoginModel loginModel){
-		stpLogic.setTokenValue(tokenValue, loginModel);
+	public static void setTokenValue(String tokenValue, SaLoginParameter loginParameter){
+		stpLogic.setTokenValue(tokenValue, loginParameter);
 	}
 
 	/**
@@ -188,10 +188,10 @@ public class StpUserUtil {
 	 * 会话登录，并指定所有登录参数 Model
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model
+	 * @param loginParameter 此次登录的参数Model
 	 */
-	public static void login(Object id, SaLoginModel loginModel) {
-		stpLogic.login(id, loginModel);
+	public static void login(Object id, SaLoginParameter loginParameter) {
+		stpLogic.login(id, loginParameter);
 	}
 
 	/**
@@ -208,11 +208,11 @@ public class StpUserUtil {
 	 * 创建指定账号 id 的登录会话数据
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model
+	 * @param loginParameter 此次登录的参数Model
 	 * @return 返回会话令牌
 	 */
-	public static String createLoginSession(Object id, SaLoginModel loginModel) {
-		return stpLogic.createLoginSession(id, loginModel);
+	public static String createLoginSession(Object id, SaLoginParameter loginParameter) {
+		return stpLogic.createLoginSession(id, loginParameter);
 	}
 
 	/**

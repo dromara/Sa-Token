@@ -23,15 +23,15 @@ StpUtil.getTokenInfo();   // 获取当前 Token 的详细参数。
 StpUtil.login(10001);   // 会话登录
 StpUtil.login(10001, "APP");   // 会话登录，并指定设备类型
 StpUtil.login(10001, true);   // 会话登录，并指定是否 [记住我]
-StpUtil.login(10001, loginModel);   // 会话登录，并指定所有登录参数Model
+StpUtil.login(10001, loginParameter);   // 会话登录，并指定所有登录参数Model
 StpUtil.createLoginSession(10001);   // 创建指定账号id的登录会话，此方法不会将 Token 注入到上下文 
-StpUtil.createLoginSession(10001, loginModel);   // 创建指定账号id的登录会话，此方法不会将 Token 注入到上下文 
+StpUtil.createLoginSession(10001, loginParameter);   // 创建指定账号id的登录会话，此方法不会将 Token 注入到上下文 
 ```
 
-SaLoginModel 配置示例：
+SaLoginParameter 配置示例：
 ``` java
-// SaLoginModel 配置登录相关参数  
-StpUtil.login(10001, new SaLoginModel()
+// SaLoginParameter 配置登录相关参数  
+StpUtil.login(10001, new SaLoginParameter()
             .setDevice("PC")                // 此次登录的客户端设备类型, 用于[同端互斥登录]时指定此次登录的设备类型
             .setIsLastingCookie(true)        // 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
             .setTimeout(60 * 60 * 24 * 7)    // 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的 timeout 值）

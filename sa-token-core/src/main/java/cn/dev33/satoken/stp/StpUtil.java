@@ -117,10 +117,10 @@ public class StpUtil {
 	 * 在当前会话写入指定 token 值
 	 *
 	 * @param tokenValue token 值
-	 * @param loginModel 登录参数
+	 * @param loginParameter 登录参数
 	 */
-	public static void setTokenValue(String tokenValue, SaLoginModel loginModel){
-		stpLogic.setTokenValue(tokenValue, loginModel);
+	public static void setTokenValue(String tokenValue, SaLoginParameter loginParameter){
+		stpLogic.setTokenValue(tokenValue, loginParameter);
 	}
 
 	/**
@@ -198,10 +198,10 @@ public class StpUtil {
 	 * 会话登录，并指定所有登录参数 Model
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model
+	 * @param loginParameter 此次登录的参数Model
 	 */
-	public static void login(Object id, SaLoginModel loginModel) {
-		stpLogic.login(id, loginModel);
+	public static void login(Object id, SaLoginParameter loginParameter) {
+		stpLogic.login(id, loginParameter);
 	}
 
 	/**
@@ -218,11 +218,11 @@ public class StpUtil {
 	 * 创建指定账号 id 的登录会话数据
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param loginModel 此次登录的参数Model 
+	 * @param loginParameter 此次登录的参数Model 
 	 * @return 返回会话令牌
 	 */
-	public static String createLoginSession(Object id, SaLoginModel loginModel) {
-		return stpLogic.createLoginSession(id, loginModel);
+	public static String createLoginSession(Object id, SaLoginParameter loginParameter) {
+		return stpLogic.createLoginSession(id, loginParameter);
 	}
 
 	/**
@@ -1258,6 +1258,18 @@ public class StpUtil {
 	 */
 	public static void closeSafe(String service) {
 		stpLogic.closeSafe(service);
+	}
+
+
+	// ------------------- Bean 对象、字段代理 -------------------
+
+	/**
+	 * 根据当前配置对象创建一个 SaLoginParameter 对象
+	 *
+	 * @return /
+	 */
+	public static SaLoginParameter createSaLoginParameter() {
+		return stpLogic.createSaLoginParameter();
 	}
 
 }

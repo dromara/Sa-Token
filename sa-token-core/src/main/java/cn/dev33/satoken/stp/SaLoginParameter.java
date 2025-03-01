@@ -28,13 +28,18 @@ import java.util.Map;
  *
  * <pre>
  *     	// 例如：在登录时指定 token 有效期为七天，代码如下：
- *     	StpUtil.login(10001, new SaLoginModel().setTimeout(60 * 60 * 24 * 7));
+ *     	StpUtil.login(10001, new SaLoginParameter().setTimeout(60 * 60 * 24 * 7));
  * </pre>
  *
  * @author click33
  * @since 1.13.2
  */
-public class SaLoginModel {
+public class SaLoginParameter {
+
+//	/**
+//	 * 该对象是否已构造完毕
+//	 */
+//	public boolean isBuild = false;
 
 	// --------- 单独参数
 
@@ -82,7 +87,30 @@ public class SaLoginModel {
 	private Boolean isWriteHeader;
 
 
-	// ------ 附加方法 
+	// ------ 附加方法
+
+	public SaLoginParameter() {
+		this(SaManager.getConfig());
+	}
+	public SaLoginParameter(SaTokenConfig config) {
+		setDefaultValues(config);
+	}
+
+	/**
+	 * 根据 SaTokenConfig 对象初始化默认值
+	 *
+	 * @param config 使用的配置对象
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setDefaultValues(SaTokenConfig config) {
+		this.device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
+		this.isLastingCookie = config.getIsLastingCookie();
+		this.timeout = config.getTimeout();
+		this.isWriteHeader = config.getIsWriteHeader();
+		return this;
+	}
+
+
 
 	/**
 	 * 写入扩展数据（只在jwt模式下生效） 
@@ -90,7 +118,7 @@ public class SaLoginModel {
 	 * @param value 值 
 	 * @return 对象自身 
 	 */
-	public SaLoginModel setExtra(String key, Object value) {
+	public SaLoginParameter setExtra(String key, Object value) {
 		if(this.extraData == null) {
 			this.extraData = new LinkedHashMap<>();
 		}
@@ -119,7 +147,8 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * @return Cookie时长
+	 * 计算 Cookie 时长
+	 * @return /
 	 */
 	public int getCookieTimeout() {
 		if( ! getIsLastingCookie()) {
@@ -143,40 +172,11 @@ public class SaLoginModel {
 	}
 
 	/**
-	 * 构建对象，初始化默认值 
-	 * @return 对象自身
+	 * 静态方法获取一个 SaLoginParameter 对象
+	 * @return SaLoginParameter 对象
 	 */
-	public SaLoginModel build() {
-		return build(SaManager.getConfig());
-	}
-	
-	/**
-	 * 构建对象，初始化默认值 
-	 * @param config 配置对象 
-	 * @return 对象自身
-	 */
-	public SaLoginModel build(SaTokenConfig config) {
-//		if(device == null) {
-//			device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
-//		}
-		if(isLastingCookie == null) {
-			isLastingCookie = config.getIsLastingCookie();
-		}
-		if(timeout == null) {
-			timeout = config.getTimeout();
-		}
-		if(isWriteHeader == null) {
-			isWriteHeader = config.getIsWriteHeader();
-		}
-		return this;
-	}
-	
-	/**
-	 * 静态方法获取一个 SaLoginModel 对象
-	 * @return SaLoginModel 对象 
-	 */
-	public static SaLoginModel create() {
-		return new SaLoginModel();
+	public static SaLoginParameter create() {
+		return new SaLoginParameter(SaManager.getConfig());
 	}
 
 
@@ -196,7 +196,7 @@ public class SaLoginModel {
 	 * @param device 此次登录的客户端设备类型
 	 * @return 对象自身
 	 */
-	public SaLoginModel setDevice(String device) {
+	public SaLoginParameter setDevice(String device) {
 		this.device = device;
 		return this;
 	}
@@ -212,7 +212,7 @@ public class SaLoginModel {
 	 * @param isLastingCookie 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 * @return 对象自身
 	 */
-	public SaLoginModel setIsLastingCookie(Boolean isLastingCookie) {
+	public SaLoginParameter setIsLastingCookie(Boolean isLastingCookie) {
 		this.isLastingCookie = isLastingCookie;
 		return this;
 	}
@@ -228,7 +228,7 @@ public class SaLoginModel {
 	 * @param timeout 指定此次登录 token 有效期，单位：秒 （如未指定，自动取全局配置的 timeout 值）
 	 * @return 对象自身
 	 */
-	public SaLoginModel setTimeout(long timeout) {
+	public SaLoginParameter setTimeout(long timeout) {
 		this.timeout = timeout;
 		return this;
 	}
@@ -245,7 +245,7 @@ public class SaLoginModel {
 	 * @param activeTimeout 指定此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
 	 * @return 对象自身
 	 */
-	public SaLoginModel setActiveTimeout(long activeTimeout) {
+	public SaLoginParameter setActiveTimeout(long activeTimeout) {
 		this.activeTimeout = activeTimeout;
 		return this;
 	}
@@ -261,7 +261,7 @@ public class SaLoginModel {
 	 * @param extraData 扩展信息（只在jwt模式下生效）
 	 * @return 对象自身
 	 */
-	public SaLoginModel setExtraData(Map<String, Object> extraData) {
+	public SaLoginParameter setExtraData(Map<String, Object> extraData) {
 		this.extraData = extraData;
 		return this;
 	}
@@ -277,7 +277,7 @@ public class SaLoginModel {
 	 * @param token 预定Token（预定本次登录生成的Token值）
 	 * @return 对象自身
 	 */
-	public SaLoginModel setToken(String token) {
+	public SaLoginParameter setToken(String token) {
 		this.token = token;
 		return this;
 	}
@@ -293,7 +293,7 @@ public class SaLoginModel {
 	 * @param isWriteHeader 是否在登录后将 Token 写入到响应头
 	 * @return 对象自身
 	 */
-	public SaLoginModel setIsWriteHeader(Boolean isWriteHeader) {
+	public SaLoginParameter setIsWriteHeader(Boolean isWriteHeader) {
 		this.isWriteHeader = isWriteHeader;
 		return this;
 	}
@@ -313,7 +313,7 @@ public class SaLoginModel {
 	 * @param tokenSignTag 本次登录挂载到 TokenSign 的数据
 	 * @return 对象自身
 	 */
-	public SaLoginModel setTokenSignTag(Object tokenSignTag) {
+	public SaLoginParameter setTokenSignTag(Object tokenSignTag) {
 		this.tokenSignTag = tokenSignTag;
 		return this;
 	}
@@ -323,7 +323,7 @@ public class SaLoginModel {
 	 */
 	@Override
 	public String toString() {
-		return "SaLoginModel ["
+		return "SaLoginParameter ["
 				+ "device=" + device
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout

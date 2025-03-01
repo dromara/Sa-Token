@@ -22,7 +22,7 @@ import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
@@ -149,11 +149,11 @@ public class SaTokenEventCenter {
 	 * @param loginType 账号类别
 	 * @param loginId 账号id
 	 * @param tokenValue 本次登录产生的 token 值 
-	 * @param loginModel 登录参数
+	 * @param loginParameter 登录参数
 	 */
-	public static void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+	public static void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doLogin(loginType, loginId, tokenValue, loginModel);
+			listener.doLogin(loginType, loginId, tokenValue, loginParameter);
 		}
 	}
 			

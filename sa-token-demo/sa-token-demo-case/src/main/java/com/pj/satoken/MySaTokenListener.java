@@ -1,7 +1,7 @@
 package com.pj.satoken;
 
 import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.SaLoginParameter;
 
 /**
  * Sa-Token 自定义侦听器的实现 
@@ -14,7 +14,7 @@ public class MySaTokenListener implements SaTokenListener {
 
     /** 每次登录时触发 */
     @Override
-    public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginModel loginModel) {
+    public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
         System.out.println("---------- 自定义侦听器实现 doLogin");
     }
 
