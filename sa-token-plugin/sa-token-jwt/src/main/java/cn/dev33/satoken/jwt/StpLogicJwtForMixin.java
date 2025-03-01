@@ -265,7 +265,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * @return / 
 	 */
 	@Override
-	public boolean getConfigOfIsShare() {
+	public boolean isSupportShareToken() {
 		return false;
 	}
 

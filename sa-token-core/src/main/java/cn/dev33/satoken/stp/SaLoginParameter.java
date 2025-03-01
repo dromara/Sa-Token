@@ -82,6 +82,11 @@ public class SaLoginParameter {
 	private Boolean isConcurrent;
 
 	/**
+	 * 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+	 */
+	private Boolean isShare = true;
+
+	/**
 	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
 	public Boolean isLastingCookie;
@@ -111,6 +116,7 @@ public class SaLoginParameter {
 		this.device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 		this.timeout = config.getTimeout();
 		this.isConcurrent = config.getIsConcurrent();
+		this.isShare = config.getIsShare();
 		this.isLastingCookie = config.getIsLastingCookie();
 		this.isWriteHeader = config.getIsWriteHeader();
 		return this;
@@ -272,6 +278,22 @@ public class SaLoginParameter {
 	}
 
 	/**
+	 * @return 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个token, 为 false 时每次登录新建一个 token）
+	 */
+	public Boolean getIsShare() {
+		return isShare;
+	}
+
+	/**
+	 * @param isShare 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个token, 为 false 时每次登录新建一个 token）
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setIsShare(Boolean isShare) {
+		this.isShare = isShare;
+		return this;
+	}
+
+	/**
 	 * @return 扩展信息（只在jwt模式下生效）
 	 */
 	public Map<String, Object> getExtraData() {
@@ -349,6 +371,8 @@ public class SaLoginParameter {
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout
 				+ ", activeTimeout=" + activeTimeout
+				+ ", isConcurrent=" + isConcurrent
+				+ ", isShare=" + isShare
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader

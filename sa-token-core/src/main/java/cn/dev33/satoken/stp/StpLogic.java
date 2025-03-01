@@ -528,8 +528,8 @@ public class StpLogic {
 		// 3、只有在配置了 [ 允许一个账号多地同时登录 ] 时，才尝试复用旧 token，这样可以避免不必要地查询，节省开销
 		if(loginParameter.getIsConcurrent()) {
 
-			// 3.1、看看全局配置的 IsShare 参数，配置为 true 才是允许复用旧 token
-			if(getConfigOfIsShare()) {
+			// 3.1、如果配置了允许复用旧 token
+			if(isSupportShareToken() && loginParameter.getIsShare()) {
 
 				// 根据 账号id + 设备类型，尝试获取旧的 token
 				String tokenValue = getTokenValueByLoginId(id, loginParameter.getDevice());
@@ -2829,11 +2829,11 @@ public class StpLogic {
 	}
 
 	/**
-	 * 返回全局配置对象的 isShare 属性
+	 * 返回当前 StpLogic 是否支持共享 token 策略
 	 *
-	 * @return / 
+	 * @return /
 	 */
-	public boolean getConfigOfIsShare() {
+	public boolean isSupportShareToken() {
 		return getConfigOrGlobal().getIsShare();
 	}
 

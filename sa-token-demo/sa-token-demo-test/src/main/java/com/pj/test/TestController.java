@@ -26,7 +26,10 @@ public class TestController {
 	// 测试登录  ---- http://localhost:8081/test/login
 	@RequestMapping("login")
 	public SaResult login(@RequestParam(defaultValue = "10001") long id) {
-		StpUtil.login(id, new SaLoginParameter().setIsConcurrent(true));
+		StpUtil.login(id, new SaLoginParameter()
+				.setIsConcurrent(true)
+				.setIsShare(false)
+		);
 		return SaResult.ok("登录成功");
 	}
 
