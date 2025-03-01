@@ -29,6 +29,7 @@ public class TestController {
 		StpUtil.login(id, new SaLoginParameter()
 				.setIsConcurrent(true)
 				.setIsShare(false)
+				.setMaxLoginCount(4)
 		);
 		return SaResult.ok("登录成功");
 	}

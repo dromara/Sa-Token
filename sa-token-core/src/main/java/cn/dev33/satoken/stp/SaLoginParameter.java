@@ -46,17 +46,17 @@ public class SaLoginParameter {
 	/**
 	 * 此次登录的客户端设备类型 
 	 */
-	public String device;
+	private String device;
 
 	/**
 	 * 扩展信息（只在 jwt 模式下生效）
 	 */
-	public Map<String, Object> extraData;
+	private Map<String, Object> extraData;
 
 	/**
 	 * 预定Token（预定本次登录生成的Token值）
 	 */
-	public String token;
+	private String token;
 
 	/**
 	 * 本次登录挂载到 TokenSign 的数据
@@ -69,7 +69,7 @@ public class SaLoginParameter {
 	/**
 	 * 指定此次登录 token 有效期，单位：秒 （如未指定，自动取全局配置的 timeout 值）
 	 */
-	public Long timeout;
+	private Long timeout;
 
 	/**
 	 * 指定此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
@@ -87,9 +87,14 @@ public class SaLoginParameter {
 	private Boolean isShare = true;
 
 	/**
+	 * 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置项才有意义）
+	 */
+	private int maxLoginCount = 12;
+
+	/**
 	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
-	public Boolean isLastingCookie;
+	private Boolean isLastingCookie;
 
 	/**
 	 * 是否在登录后将 Token 写入到响应头
@@ -294,6 +299,22 @@ public class SaLoginParameter {
 	}
 
 	/**
+	 * @return 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置项才有意义）
+	 */
+	public int getMaxLoginCount() {
+		return maxLoginCount;
+	}
+
+	/**
+	 * @param maxLoginCount 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置项才有意义）
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setMaxLoginCount(int maxLoginCount) {
+		this.maxLoginCount = maxLoginCount;
+		return this;
+	}
+
+	/**
 	 * @return 扩展信息（只在jwt模式下生效）
 	 */
 	public Map<String, Object> getExtraData() {
@@ -373,6 +394,7 @@ public class SaLoginParameter {
 				+ ", activeTimeout=" + activeTimeout
 				+ ", isConcurrent=" + isConcurrent
 				+ ", isShare=" + isShare
+				+ ", maxLoginCount=" + maxLoginCount
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader
