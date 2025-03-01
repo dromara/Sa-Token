@@ -84,12 +84,17 @@ public class SaLoginParameter {
 	/**
 	 * 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 	 */
-	private Boolean isShare = true;
+	private Boolean isShare;
 
 	/**
 	 * 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置项才有意义）
 	 */
-	private int maxLoginCount = 12;
+	private int maxLoginCount;
+
+	/**
+	 * 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用）
+	 */
+	private int maxTryTimes;
 
 	/**
 	 * 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
@@ -122,6 +127,8 @@ public class SaLoginParameter {
 		this.timeout = config.getTimeout();
 		this.isConcurrent = config.getIsConcurrent();
 		this.isShare = config.getIsShare();
+		this.maxLoginCount = config.getMaxLoginCount();
+		this.maxTryTimes = config.getMaxTryTimes();
 		this.isLastingCookie = config.getIsLastingCookie();
 		this.isWriteHeader = config.getIsWriteHeader();
 		return this;
@@ -315,6 +322,22 @@ public class SaLoginParameter {
 	}
 
 	/**
+	 * @return 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用）
+	 */
+	public int getMaxTryTimes() {
+		return maxTryTimes;
+	}
+
+	/**
+	 * @param maxTryTimes 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用）
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setMaxTryTimes(int maxTryTimes) {
+		this.maxTryTimes = maxTryTimes;
+		return this;
+	}
+
+	/**
 	 * @return 扩展信息（只在jwt模式下生效）
 	 */
 	public Map<String, Object> getExtraData() {
@@ -395,6 +418,7 @@ public class SaLoginParameter {
 				+ ", isConcurrent=" + isConcurrent
 				+ ", isShare=" + isShare
 				+ ", maxLoginCount=" + maxLoginCount
+				+ ", maxTryTimes=" + maxTryTimes
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader

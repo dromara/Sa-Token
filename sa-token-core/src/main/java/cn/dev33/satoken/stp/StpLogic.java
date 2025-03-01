@@ -547,7 +547,7 @@ public class StpLogic {
 		// 4、如果代码走到此处，说明未能成功复用旧 token，需要根据算法新建 token
 		return SaStrategy.instance.generateUniqueToken.execute(
 				"token",
-				getConfigOfMaxTryTimes(),
+				loginParameter.getMaxTryTimes(),
 				() -> {
 					return createTokenValue(id, loginParameter.getDevice(), loginParameter.getTimeout(), loginParameter.getExtraData());
 				},

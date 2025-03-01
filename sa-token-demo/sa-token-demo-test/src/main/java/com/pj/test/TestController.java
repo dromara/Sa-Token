@@ -30,6 +30,7 @@ public class TestController {
 				.setIsConcurrent(true)
 				.setIsShare(false)
 				.setMaxLoginCount(4)
+				.setMaxTryTimes(12)
 		);
 		return SaResult.ok("登录成功");
 	}
