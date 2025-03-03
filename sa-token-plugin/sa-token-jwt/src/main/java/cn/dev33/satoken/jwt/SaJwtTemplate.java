@@ -50,7 +50,7 @@ public class SaJwtTemplate {
 	/**
 	 * key：登录设备类型
 	 */
-	public static final String DEVICE = "device"; 
+	public static final String DEVICE_TYPE = "deviceType";
 	
 	/**
 	 * key：有效截止期 (时间戳) 
@@ -103,13 +103,13 @@ public class SaJwtTemplate {
 	 *
 	 * @param loginType 账号类型
 	 * @param loginId 账号id
-	 * @param device 设备类型
+	 * @param deviceType 设备类型
 	 * @param timeout token有效期 (单位 秒)
 	 * @param extraData 扩展数据
 	 * @param keyt 秘钥
 	 * @return jwt-token
 	 */
-	public String createToken(String loginType, Object loginId, String device,
+	public String createToken(String loginType, Object loginId, String deviceType,
 									 long timeout, Map<String, Object> extraData, String keyt) {
 
 		// 计算 eff 有效期：
@@ -124,7 +124,7 @@ public class SaJwtTemplate {
 		JWT jwt = JWT.create()
 				.setPayload(LOGIN_TYPE, loginType)
 				.setPayload(LOGIN_ID, loginId)
-				.setPayload(DEVICE, device)
+				.setPayload(DEVICE_TYPE, deviceType)
 				.setPayload(EFF, effTime)
 				// 塞入一个随机字符串，防止同账号同一毫秒下每次生成的 token 都一样的
 			    .setPayload(RN_STR, SaFoxUtil.getRandomString(32))

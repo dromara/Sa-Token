@@ -818,7 +818,7 @@ public class StpUserUtil {
 	 * @return 当前令牌的登录设备类型
 	 */
 	public static String getLoginDevice() {
-		return stpLogic.getLoginDevice();
+		return stpLogic.getLoginDeviceType();
 	}
 
 

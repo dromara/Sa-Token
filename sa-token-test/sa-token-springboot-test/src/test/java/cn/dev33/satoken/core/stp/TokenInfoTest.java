@@ -44,7 +44,7 @@ public class TokenInfoTest {
 		info.setSessionTimeout(120);
 		info.setTokenSessionTimeout(1800);
 		info.setTokenActiveTimeout(120);
-		info.setLoginDevice("PC");
+		info.setLoginDeviceType("PC");
 		info.setTag("xxx");
 
 		Assertions.assertEquals(info.getTokenName(), "satoken");
@@ -56,7 +56,7 @@ public class TokenInfoTest {
 		Assertions.assertEquals(info.getSessionTimeout(), 120);
 		Assertions.assertEquals(info.getTokenSessionTimeout(), 1800);
 		Assertions.assertEquals(info.getTokenActiveTimeout(), 120);
-		Assertions.assertEquals(info.getLoginDevice(), "PC");
+		Assertions.assertEquals(info.getLoginDeviceType(), "PC");
 		Assertions.assertEquals(info.getTag(), "xxx");
 		
 		Assertions.assertNotNull(info.toString());
@@ -64,7 +64,7 @@ public class TokenInfoTest {
 
 	@Test
 	public void testLoginParameter() {
-		Assertions.assertEquals(new SaLoginParameter().setDevice("PC").getDevice(), "PC");
+		Assertions.assertEquals(new SaLoginParameter().setDeviceType("PC").getDeviceType(), "PC");
 		Assertions.assertEquals(new SaLoginParameter().setIsLastingCookie(false).getIsLastingCookie(), false);
 		Assertions.assertEquals(new SaLoginParameter().setTimeout(1600).getTimeout(), 1600);
 		Assertions.assertEquals(new SaLoginParameter().setToken("token-xxx").getToken(), "token-xxx");

@@ -68,7 +68,7 @@ public class JwtForSimpleTest {
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
     	Assertions.assertNotNull(session);
     	Assertions.assertEquals(session.getId(), "satoken:login:session:" + 10001);
-    	Assertions.assertTrue(session.getTokenSignList().size() >= 1);
+    	Assertions.assertTrue(session.getTerminalList().size() >= 1);
     }
 
     // 测试：getExtra 

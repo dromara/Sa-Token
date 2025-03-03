@@ -76,8 +76,8 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * 创建一个TokenValue 
 	 */
 	@Override
-	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
-		return SaJwtUtil.createToken(loginType, loginId, device, timeout, extraData, jwtSecretKey());
+	public String createTokenValue(Object loginId, String deviceType, long timeout, Map<String, Object> extraData) {
+		return SaJwtUtil.createToken(loginType, loginId, deviceType, timeout, extraData, jwtSecretKey());
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 		info.sessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.tokenSessionTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
 		info.tokenActiveTimeout = SaTokenDao.NOT_VALUE_EXPIRE;
-		info.loginDevice = getLoginDevice();
+		info.loginDeviceType = getLoginDeviceType();
 		return info;
 	}
 	
@@ -139,7 +139,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * [禁用] 会话注销，根据账号id 和 设备类型
 	 */
 	@Override
-	public void logout(Object loginId, String device) {
+	public void logout(Object loginId, String deviceType) {
 		throw new ApiDisabledException(); 
 	}
 	
@@ -155,7 +155,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * [禁用] 踢人下线，根据账号id 和 设备类型 
 	 */
 	@Override
-	public void kickout(Object loginId, String device) {
+	public void kickout(Object loginId, String deviceType) {
 		throw new ApiDisabledException(); 
 	}
 
@@ -171,7 +171,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	 * [禁用] 顶人下线，根据账号id 和 设备类型 
 	 */
 	@Override
-	public void replaced(Object loginId, String device) {
+	public void replaced(Object loginId, String deviceType) {
 		throw new ApiDisabledException(); 
 	}
 

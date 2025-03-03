@@ -65,7 +65,7 @@ public class SaJwtUtil {
 	/**
 	 * key：登录设备类型
 	 */
-	public static final String DEVICE = SaJwtTemplate.DEVICE; 
+	public static final String DEVICE_TYPE = SaJwtTemplate.DEVICE_TYPE;
 	
 	/**
 	 * key：有效截止期 (时间戳) 
@@ -105,15 +105,15 @@ public class SaJwtUtil {
 	 * 创建 jwt （全参数方式）
 	 * @param loginType 账号类型
 	 * @param loginId 账号id
-	 * @param device 设备类型
+	 * @param deviceType 设备类型
 	 * @param timeout token有效期 (单位 秒)
 	 * @param extraData 扩展数据
 	 * @param keyt 秘钥
 	 * @return jwt-token
 	 */
-	public static String createToken(String loginType, Object loginId, String device,
+	public static String createToken(String loginType, Object loginId, String deviceType,
 									 long timeout, Map<String, Object> extraData, String keyt) {
-		return saJwtTemplate.createToken(loginType, loginId, device, timeout, extraData, keyt);
+		return saJwtTemplate.createToken(loginType, loginId, deviceType, timeout, extraData, keyt);
 	}
 
 	/**

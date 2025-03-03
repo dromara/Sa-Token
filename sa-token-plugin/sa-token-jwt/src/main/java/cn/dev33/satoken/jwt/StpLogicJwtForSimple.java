@@ -61,7 +61,7 @@ public class StpLogicJwtForSimple extends StpLogic {
 	 * 创建一个TokenValue
 	 */
 	@Override
- 	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+ 	public String createTokenValue(Object loginId, String deviceType, long timeout, Map<String, Object> extraData) {
  		return SaJwtUtil.createToken(loginType, loginId, extraData, jwtSecretKey());
 	}
 

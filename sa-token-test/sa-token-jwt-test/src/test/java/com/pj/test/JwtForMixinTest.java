@@ -65,7 +65,7 @@ public class JwtForMixinTest {
     	JWT jwt = JWT.of(token);
     	JSONObject payloads = jwt.getPayloads();
     	Assertions.assertEquals(payloads.getStr(SaJwtUtil.LOGIN_ID), "10001"); // 账号 
-    	Assertions.assertEquals(payloads.getStr(SaJwtUtil.DEVICE), SaTokenConsts.DEFAULT_LOGIN_DEVICE);  // 登录设备类型
+    	Assertions.assertEquals(payloads.getStr(SaJwtUtil.DEVICE_TYPE), SaTokenConsts.DEFAULT_LOGIN_DEVICE);  // 登录设备类型
     	Assertions.assertEquals(payloads.getStr(SaJwtUtil.LOGIN_TYPE), StpUtil.TYPE);  // 账号类型 
     	
     	// db数据 验证  
@@ -75,7 +75,7 @@ public class JwtForMixinTest {
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
     	Assertions.assertNotNull(session);
     	Assertions.assertEquals(session.getId(), "satoken:login:session:" + 10001);
-    	Assertions.assertTrue(session.getTokenSignList().size() >= 1);
+    	Assertions.assertTrue(session.getTerminalList().size() >= 1);
     }
     
     // 测试：注销 

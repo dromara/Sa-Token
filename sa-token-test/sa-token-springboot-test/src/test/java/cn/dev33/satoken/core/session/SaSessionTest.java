@@ -15,17 +15,16 @@
  */
 package cn.dev33.satoken.core.session;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.SaTerminalInfo;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.session.TokenSign;
 
 /**
  * SaSession 测试 
@@ -112,33 +111,33 @@ public class SaSessionTest {
     	SaSession session = new SaSession("session-1002");
     	
     	// 添加 Token 签名 
-    	session.addTokenSign(new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "PC", null));
-    	session.addTokenSign(new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "APP", null));
+    	session.addTerminal(new SaTerminalInfo(1, "xxxx-xxxx-xxxx-xxxx-1", "PC", null));
+    	session.addTerminal(new SaTerminalInfo(2, "xxxx-xxxx-xxxx-xxxx-2", "APP", null));
 
     	// 查询 
-    	Assertions.assertEquals(session.getTokenSignList().size(), 2);
-    	Assertions.assertEquals(session.getTokenSign("xxxx-xxxx-xxxx-xxxx-1").getDevice(), "PC");
-    	Assertions.assertEquals(session.getTokenSign("xxxx-xxxx-xxxx-xxxx-2").getDevice(), "APP");
+    	Assertions.assertEquals(session.getTerminalList().size(), 2);
+    	Assertions.assertEquals(session.getTerminal("xxxx-xxxx-xxxx-xxxx-1").getDeviceType(), "PC");
+    	Assertions.assertEquals(session.getTerminal("xxxx-xxxx-xxxx-xxxx-2").getDeviceType(), "APP");
 
     	// 删除一个 
-    	session.removeTokenSign("xxxx-xxxx-xxxx-xxxx-1");
-    	Assertions.assertEquals(session.getTokenSignList().size(), 1);
+    	session.removeTerminal("xxxx-xxxx-xxxx-xxxx-1");
+    	Assertions.assertEquals(session.getTerminalList().size(), 1);
 
     	// 删除一个不存在的，则不影响 TokenSign 列表
-    	session.removeTokenSign("xxxx-xxxx-xxxx-xxxx-999");
-    	Assertions.assertEquals(session.getTokenSignList().size(), 1);
+    	session.removeTerminal("xxxx-xxxx-xxxx-xxxx-999");
+    	Assertions.assertEquals(session.getTerminalList().size(), 1);
     	
     	// 重置整个签名列表 
-    	List<TokenSign> list = Arrays.asList(
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-1", "WEB", null),
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-2", "phone", null),
-    			new TokenSign("xxxx-xxxx-xxxx-xxxx-3", "ipad", null)
+    	List<SaTerminalInfo> list = Arrays.asList(
+    			new SaTerminalInfo(1, "xxxx-xxxx-xxxx-xxxx-1", "WEB", null),
+    			new SaTerminalInfo(2, "xxxx-xxxx-xxxx-xxxx-2", "phone", null),
+    			new SaTerminalInfo(3, "xxxx-xxxx-xxxx-xxxx-3", "ipad", null)
     			);
-    	session.setTokenSignList(list);
-    	Assertions.assertEquals(session.getTokenSignList().size(), 3);
-    	Assertions.assertEquals(session.getTokenSign("xxxx-xxxx-xxxx-xxxx-1").getDevice(), "WEB");
-    	Assertions.assertEquals(session.getTokenSign("xxxx-xxxx-xxxx-xxxx-2").getDevice(), "phone");
-    	Assertions.assertEquals(session.getTokenSign("xxxx-xxxx-xxxx-xxxx-3").getDevice(), "ipad");
+    	session.setTerminalList(list);
+    	Assertions.assertEquals(session.getTerminalList().size(), 3);
+    	Assertions.assertEquals(session.getTerminal("xxxx-xxxx-xxxx-xxxx-1").getDeviceType(), "WEB");
+    	Assertions.assertEquals(session.getTerminal("xxxx-xxxx-xxxx-xxxx-2").getDeviceType(), "phone");
+    	Assertions.assertEquals(session.getTerminal("xxxx-xxxx-xxxx-xxxx-3").getDeviceType(), "ipad");
     }
     
     // 测试重置 DataMap

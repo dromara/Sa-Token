@@ -15,8 +15,12 @@
  */
 package cn.dev33.satoken.springboot;
 
-import java.util.List;
-
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.session.SaTerminalInfo;
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,12 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.session.TokenSign;
-import cn.dev33.satoken.stp.StpLogic;
-import cn.dev33.satoken.stp.StpUtil;
+import java.util.List;
 
 /**
  * Sa-Token 多端登录测试 
@@ -115,9 +114,9 @@ public class ManyLoginTest {
     	Assertions.assertEquals(dao.get("satoken:login:token:" + token1), "-4");
     	
     	// Account-Session里的 token1 签名会被移除 
-    	List<TokenSign> tokenSignList = StpUtil.getSessionByLoginId(10001).getTokenSignList();
-    	for (TokenSign tokenSign : tokenSignList) {
-    		Assertions.assertNotEquals(tokenSign.getValue(), token1);
+    	List<SaTerminalInfo> tokenSignList = StpUtil.getSessionByLoginId(10001).getTerminalList();
+    	for (SaTerminalInfo terminal : tokenSignList) {
+    		Assertions.assertNotEquals(terminal.getTokenValue(), token1);
 		}
     }
     

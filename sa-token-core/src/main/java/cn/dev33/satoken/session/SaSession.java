@@ -234,135 +234,131 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 
-	// ----------------------- TokenSign 相关
+	// ----------------------- SaTerminalInfo 相关
 
 	/**
-	 * 此 Session 绑定的 Token 签名列表 
+	 * 登录终端信息列表
 	 */
-	private List<TokenSign> tokenSignList = new Vector<>();
+	private List<SaTerminalInfo> terminalList = new Vector<>();
 
 	/**
-	 * 写入此 Session 绑定的 Token 签名列表 
-	 * @param tokenSignList Token 签名列表
+	 * 写入登录终端信息列表
+	 * @param terminalList /
 	 */
-	public void setTokenSignList(List<TokenSign> tokenSignList) {
-		this.tokenSignList = tokenSignList;
+	public void setTerminalList(List<SaTerminalInfo> terminalList) {
+		this.terminalList = terminalList;
 	}
 
 	/**
-	 * 获取此 Session 绑定的 Token 签名列表 
+	 * 获取登录终端信息列表
 	 *
-	 * @return Token 签名列表
+	 * @return /
 	 */
-	public List<TokenSign> getTokenSignList() {
-		return tokenSignList;
+	public List<SaTerminalInfo> getTerminalList() {
+		return terminalList;
 	}
 
 	/**
-	 * 获取 Token 签名列表 的拷贝副本
+	 * 获取 登录终端信息列表 (拷贝副本)
 	 *
-	 * @return token签名列表
+	 * @return /
 	 */
-	public List<TokenSign> tokenSignListCopy() {
-		return new ArrayList<>(tokenSignList);
+	public List<SaTerminalInfo> terminalListCopy() {
+		return new ArrayList<>(terminalList);
 	}
 
 	/**
-	 * 返回 Token 签名列表 的拷贝副本，根据 device 筛选 
+	 * 获取 登录终端信息列表 (拷贝副本)，根据 deviceType 筛选
 	 *
-	 * @param device 设备类型，填 null 代表不限设备类型  
-	 * @return token签名列表
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
+	 * @return /
 	 */
-	public List<TokenSign> getTokenSignListByDevice(String device) {
+	public List<SaTerminalInfo> getTerminalListByDeviceType(String deviceType) {
 		// 返回全部
-		if(device == null) {
-			return tokenSignListCopy();
+		if(deviceType == null) {
+			return terminalListCopy();
 		}
 		// 返回筛选后的
-		List<TokenSign> tokenSignList = tokenSignListCopy();
-		List<TokenSign> list = new ArrayList<>();
-		for (TokenSign tokenSign : tokenSignList) {
-			if(SaFoxUtil.equals(tokenSign.getDevice(), device)) {
-				list.add(tokenSign);
+		List<SaTerminalInfo> copyList = terminalListCopy();
+		List<SaTerminalInfo> newList = new ArrayList<>();
+		for (SaTerminalInfo terminal : copyList) {
+			if(SaFoxUtil.equals(terminal.getDeviceType(), deviceType)) {
+				newList.add(terminal);
 			}
 		}
-		return list;
+		return newList;
 	}
 
 	/**
-	 * 获取当前 Session 上的所有 token 列表
+	 * 获取 登录终端 token 列表
 	 *
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return 此 loginId 的所有登录 token
 	 */
-	public List<String> getTokenValueListByDevice(String device) {
-		// 遍历解析，按照设备类型进行筛选
-		List<TokenSign> tokenSignList = tokenSignListCopy();
+	public List<String> getTokenValueListByDeviceType(String deviceType) {
 		List<String> tokenValueList = new ArrayList<>();
-		for (TokenSign tokenSign : tokenSignList) {
-			if(device == null || tokenSign.getDevice().equals(device)) {
-				tokenValueList.add(tokenSign.getValue());
-			}
+		for (SaTerminalInfo terminal : getTerminalListByDeviceType(deviceType)) {
+			tokenValueList.add(terminal.getTokenValue());
 		}
 		return tokenValueList;
 	}
 
 	/**
-	 * 查找一个 Token 签名
+	 * 查找一个终端信息，根据 tokenValue
 	 *
-	 * @param tokenValue token值
-	 * @return 查找到的 TokenSign
+	 * @param tokenValue /
+	 * @return /
 	 */
-	public TokenSign getTokenSign(String tokenValue) {
-		for (TokenSign tokenSign : tokenSignListCopy()) {
-			if (SaFoxUtil.equals(tokenSign.getValue(), tokenValue)) {
-				return tokenSign;
+	public SaTerminalInfo getTerminal(String tokenValue) {
+		for (SaTerminalInfo terminal : terminalListCopy()) {
+			if (SaFoxUtil.equals(terminal.getTokenValue(), tokenValue)) {
+				return terminal;
 			}
 		}
 		return null;
 	}
 
 	/**
-	 * 添加一个 Token 签名
+	 * 添加一个终端信息
 	 *
-	 * @param tokenSign Token 签名
+	 * @param terminalInfo /
 	 */
-	public void addTokenSign(TokenSign tokenSign) {
-		// 根据 tokenValue 值查重，如果不存在，则添加
-		TokenSign oldTokenSign = getTokenSign(tokenSign.getValue());
-		if(oldTokenSign == null) {
-			tokenSignList.add(tokenSign);
-			update();
-		} else {
-			// 如果存在，则更新
-			oldTokenSign.setValue(tokenSign.getValue());
-			oldTokenSign.setDevice(tokenSign.getDevice());
-			oldTokenSign.setTag(tokenSign.getTag());
-			update();
+	public void addTerminal(SaTerminalInfo terminalInfo) {
+		// 根据 tokenValue 值查重，如果存在旧的，则先删除
+		SaTerminalInfo oldTerminal = getTerminal(terminalInfo.getTokenValue());
+		if(oldTerminal != null) {
+			terminalList.remove(oldTerminal);
 		}
+		// 然后添加新的
+		terminalList.add(terminalInfo);
+		update();
 	}
 
 	/**
-	 * 添加一个 Token 签名
-	 *
-	 * @param tokenValue token值
-	 * @param device 设备类型
-	 */
-	@Deprecated
-	public void addTokenSign(String tokenValue, String device) {
-		addTokenSign(new TokenSign(tokenValue, device, null));
-	}
-
-	/**
-	 * 移除一个 Token 签名
+	 * 移除一个终端信息
 	 *
 	 * @param tokenValue token值 
 	 */
-	public void removeTokenSign(String tokenValue) {
-		TokenSign tokenSign = getTokenSign(tokenValue);
-		if (tokenSignList.remove(tokenSign)) {
+	public void removeTerminal(String tokenValue) {
+		SaTerminalInfo terminalInfo = getTerminal(tokenValue);
+		if (terminalList.remove(terminalInfo)) {
 			update();
 		}
+	}
+
+	/**
+	 * 获取最大的终端索引值，如无返0
+	 * @return /
+	 */
+	public int maxTerminalIndex() {
+		int max = 0;
+		for (SaTerminalInfo terminal : terminalListCopy()) {
+			int index = terminal.getIndex();
+			if (index > max) {
+				max = index;
+			}
+		}
+		return max;
 	}
 
 
@@ -382,9 +378,9 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		SaTokenEventCenter.doLogoutSession(id);
 	}
 
-	/** 当Session上的tokenSign数量为零时，注销会话 */
-	public void logoutByTokenSignCountToZero() {
-		if (tokenSignList.size() == 0) {
+	/** 当 Session 上的 SaTerminalInfo 数量为零时，注销会话 */
+	public void logoutByTerminalCountToZero() {
+		if (terminalList.isEmpty()) {
 			logout();
 		}
 	}
@@ -545,17 +541,5 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	//
-
-
-	/**
-	 * 请更换为：getTokenSignListByDevice(device)
-	 *
-	 * @param device 设备类型，填 null 代表不限设备类型
-	 * @return token签名列表
-	 */
-	@Deprecated
-	public List<TokenSign> tokenSignListCopyByDevice(String device) {
-		return getTokenSignListByDevice(device);
-	}
 
 }

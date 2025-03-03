@@ -46,7 +46,7 @@ public class SaLoginConfig {
 	 * @return 登录参数 Model
 	 */
 	public static SaLoginParameter setDevice(String device) {
-		return create().setDevice(device);
+		return create().setDeviceType(device);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class SaLoginConfig {
 	 * @return 登录参数 Model
 	 */
 	public static SaLoginParameter setTokenSignTag(Object tokenSignTag) {
-		return create().setTokenSignTag(tokenSignTag);
+		return create().setTerminalTag(tokenSignTag);
 	}
 
 	/**

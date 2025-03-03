@@ -41,7 +41,12 @@ public class SaLoginParameter {
 	/**
 	 * 此次登录的客户端设备类型 
 	 */
-	private String device;
+	private String deviceType;
+
+	/**
+	 * 此次登录的客户端设备id
+	 */
+	private String deviceId;
 
 	/**
 	 * 扩展信息（只在 jwt 模式下生效）
@@ -54,9 +59,9 @@ public class SaLoginParameter {
 	private String token;
 
 	/**
-	 * 本次登录挂载到 TokenSign 的数据
+	 * 本次登录挂载到 SaTerminalInfo 的自定义数据
 	 */
-	private Object tokenSignTag;
+	private Object terminalTag;
 
 
 	// --------- 覆盖性参数
@@ -118,7 +123,7 @@ public class SaLoginParameter {
 	 * @return 对象自身
 	 */
 	public SaLoginParameter setDefaultValues(SaTokenConfig config) {
-		this.device = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
+		this.deviceType = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 		this.timeout = config.getTimeout();
 		this.isConcurrent = config.getIsConcurrent();
 		this.isShare = config.getIsShare();
@@ -184,10 +189,10 @@ public class SaLoginParameter {
 	 * @return 获取device参数，如果为null，则返回默认值
 	 */
 	public String getDeviceOrDefault() {
-		if(device == null) {
+		if(deviceType == null) {
 			return SaTokenConsts.DEFAULT_LOGIN_DEVICE;
 		}
-		return device;
+		return deviceType;
 	}
 
 	/**
@@ -207,16 +212,35 @@ public class SaLoginParameter {
 	/**
 	 * @return 此次登录的客户端设备类型
 	 */
-	public String getDevice() {
-		return device;
+	public String getDeviceType() {
+		return deviceType;
 	}
 
 	/**
-	 * @param device 此次登录的客户端设备类型
+	 * @param deviceType 此次登录的客户端设备类型
 	 * @return 对象自身
 	 */
-	public SaLoginParameter setDevice(String device) {
-		this.device = device;
+	public SaLoginParameter setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+		return this;
+	}
+
+	/**
+	 * 获取 此次登录的客户端设备id
+	 *
+	 * @return deviceId 此次登录的客户端设备id
+	 */
+	public String getDeviceId() {
+		return this.deviceId;
+	}
+
+	/**
+	 * 设置 此次登录的客户端设备id
+	 *
+	 * @param deviceId 此次登录的客户端设备id
+	 */
+	public SaLoginParameter setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 		return this;
 	}
 
@@ -381,22 +405,22 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 获取 本次登录挂载到 TokenSign 的数据
+	 * 获取 本次登录挂载到 SaTerminalInfo 的自定义数据
 	 *
-	 * @return tokenSignTag 本次登录挂载到 TokenSign 的数据
+	 * @return 本次登录挂载到 SaTerminalInfo 的自定义数据
 	 */
-	public Object getTokenSignTag() {
-		return this.tokenSignTag;
+	public Object getTerminalTag() {
+		return this.terminalTag;
 	}
 
 	/**
-	 * 设置 本次登录挂载到 TokenSign 的数据
+	 * 设置 本次登录挂载到 SaTerminalInfo 的自定义数据
 	 *
-	 * @param tokenSignTag 本次登录挂载到 TokenSign 的数据
+	 * @param terminalTag 本次登录挂载到 SaTerminalInfo 的自定义数据
 	 * @return 对象自身
 	 */
-	public SaLoginParameter setTokenSignTag(Object tokenSignTag) {
-		this.tokenSignTag = tokenSignTag;
+	public SaLoginParameter setTerminalTag(Object terminalTag) {
+		this.terminalTag = terminalTag;
 		return this;
 	}
 
@@ -406,7 +430,8 @@ public class SaLoginParameter {
 	@Override
 	public String toString() {
 		return "SaLoginParameter ["
-				+ "device=" + device
+				+ "deviceType=" + deviceType
+				+ ", deviceId=" + deviceId
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout
 				+ ", activeTimeout=" + activeTimeout
@@ -417,10 +442,31 @@ public class SaLoginParameter {
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader
-				+ ", tokenSignTag=" + tokenSignTag
+				+ ", terminalTag=" + terminalTag
 				+ "]";
 	}
 
 
+
+
+	/**
+	 * <h2> 请更换为 getDeviceType </h2>
+	 * @return 此次登录的客户端设备类型
+	 */
+	@Deprecated
+	public String getDevice() {
+		return deviceType;
+	}
+
+	/**
+	 * <h2> 请更换为 setDeviceType </h2>
+	 * @param device 此次登录的客户端设备类型
+	 * @return 对象自身
+	 */
+	@Deprecated
+	public SaLoginParameter setDevice(String device) {
+		this.deviceType = device;
+		return this;
+	}
 
 }

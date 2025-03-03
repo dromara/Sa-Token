@@ -109,7 +109,7 @@ public class LoginAuthController {
 		System.out.println("当前是否登录：" + info.getIsLogin());
 		System.out.println("当前登录的账号id：" + info.getLoginId());
 		System.out.println("当前登录账号的类型：" + info.getLoginType());
-		System.out.println("当前登录客户端的设备类型：" + info.getLoginDevice());
+		System.out.println("当前登录客户端的设备类型：" + info.getLoginDeviceType());
 		System.out.println("当前 Token 的剩余有效期：" + info.getTokenTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
 		System.out.println("当前 Token 距离被冻结还剩：" + info.getTokenActiveTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在
 		System.out.println("当前 Account-Session 的剩余有效期" + info.getSessionTimeout()); // 单位：秒，-1代表永久有效，-2代表值不存在

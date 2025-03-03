@@ -16,7 +16,6 @@
 package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
@@ -25,13 +24,13 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.model.wrapperInfo.SaDisableWrapperInfo;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.session.TokenSign;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -154,12 +153,12 @@ public class StpLogic {
 	 * 为指定账号创建一个 token （只是把 token 创建出来，并不持久化存储）
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型
+	 * @param deviceType 设备类型
 	 * @param timeout 过期时间
 	 * @param extraData 扩展信息
 	 * @return 生成的tokenValue
 	 */
-	public String createTokenValue(Object loginId, String device, long timeout, Map<String, Object> extraData) {
+	public String createTokenValue(Object loginId, String deviceType, long timeout, Map<String, Object> extraData) {
 		return SaStrategy.instance.createToken.apply(loginId, loginType);
 	}
 
@@ -381,7 +380,7 @@ public class StpLogic {
 		info.sessionTimeout = getSessionTimeout();
 		info.tokenSessionTimeout = getTokenSessionTimeout();
 		info.tokenActiveTimeout = getTokenActiveTimeout();
-		info.loginDevice = getLoginDevice();
+		info.loginDeviceType = getLoginDeviceType();
 		return info;
 	}
 	
@@ -403,10 +402,10 @@ public class StpLogic {
 	 * 会话登录，并指定登录设备类型
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param device 设备类型 
+	 * @param deviceType 设备类型
 	 */
-	public void login(Object id, String device) {
-		login(id, createSaLoginParameter().setDevice(device));
+	public void login(Object id, String deviceType) {
+		login(id, createSaLoginParameter().setDeviceType(deviceType));
 	}
 
 	/**
@@ -462,8 +461,6 @@ public class StpLogic {
 	 */
 	public String createLoginSession(Object id, SaLoginParameter loginParameter) {
 
-		SaTokenConfig config = getConfigOrGlobal();
-
 		// 1、先检查一下，传入的参数是否有效
 		checkLoginArgs(id, loginParameter);
 
@@ -474,9 +471,15 @@ public class StpLogic {
 		SaSession session = getSessionByLoginId(id, true, loginParameter.getTimeout());
 		session.updateMinTimeout(loginParameter.getTimeout());
 		
-		// 4、在 Account-Session 上记录本次登录的 token 签名
-		TokenSign tokenSign = new TokenSign(tokenValue, loginParameter.getDevice(), loginParameter.getTokenSignTag());
-		session.addTokenSign(tokenSign);
+		// 4、在 Account-Session 上记录本次登录的终端信息
+		SaTerminalInfo terminalInfo = new SaTerminalInfo()
+				.setIndex(session.maxTerminalIndex() + 1)
+				.setDeviceType(loginParameter.getDeviceType())
+				.setDeviceId(loginParameter.getDeviceId())
+				.setTokenValue(tokenValue)
+				.setTag(loginParameter.getTerminalTag())
+				.setCreateTime(System.currentTimeMillis());
+		session.addTerminal(terminalInfo);
 
 		// 5、保存 token -> id 的映射关系，方便日后根据 token 找账号 id
 		saveTokenToIdMapping(tokenValue, id, loginParameter.getTimeout());
@@ -517,7 +520,7 @@ public class StpLogic {
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
 		if( ! loginParameter.getIsConcurrent()) {
 			// TODO 此处应该加一个配置决定是只顶掉当前设备类型，还是所有类型
-			replaced(id, loginParameter.getDevice());
+			replaced(id, loginParameter.getDeviceType());
 		}
 		
 		// 2、如果调用者预定了要生成的 token，则直接返回这个预定的值，框架无需再操心了
@@ -532,7 +535,7 @@ public class StpLogic {
 			if(isSupportShareToken() && loginParameter.getIsShare()) {
 
 				// 根据 账号id + 设备类型，尝试获取旧的 token
-				String tokenValue = getTokenValueByLoginId(id, loginParameter.getDevice());
+				String tokenValue = getTokenValueByLoginId(id, loginParameter.getDeviceType());
 
 				// 如果有值，那就直接复用
 				if(SaFoxUtil.isNotEmpty(tokenValue)) {
@@ -549,7 +552,7 @@ public class StpLogic {
 				"token",
 				getConfigOfMaxTryTimes(loginParameter),
 				() -> {
-					return createTokenValue(id, loginParameter.getDevice(), loginParameter.getTimeout(), loginParameter.getExtraData());
+					return createTokenValue(id, loginParameter.getDeviceType(), loginParameter.getTimeout(), loginParameter.getExtraData());
 				},
 				tokenValue -> {
 					return getLoginIdNotHandle(tokenValue) == null;
@@ -662,21 +665,21 @@ public class StpLogic {
 	 * 会话注销，根据账号id 和 设备类型
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备类型 (填 null 代表注销该账号的所有设备类型)
+	 * @param deviceType 设备类型 (填 null 代表注销该账号的所有设备类型)
 	 */
-	public void logout(Object loginId, String device) {
+	public void logout(Object loginId, String deviceType) {
 		// 1、获取此账号的 Account-Session，上面记录了此账号的所有登录客户端数据
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session != null) {
 
-			// 2、遍历此账号所有从这个 device 设备上登录的客户端，清除相关数据
-			for (TokenSign tokenSign: session.getTokenSignListByDevice(device)) {
+			// 2、遍历此账号所有从这个 deviceType 设备类型上登录的客户端，清除相关数据
+			for (SaTerminalInfo terminal: session.getTerminalListByDeviceType(deviceType)) {
 
 				// 2.1、获取此客户端的 token 值
-				String tokenValue = tokenSign.getValue();
+				String tokenValue = terminal.getTokenValue();
 
-				// 2.2、从 Account-Session 上清除 token 签名
-				session.removeTokenSign(tokenValue);
+				// 2.2、从 Account-Session 上清除此设备信息
+				session.removeTerminal(tokenValue);
 
 				// 2.3、清除这个 token 的最后活跃时间记录
 				if(isOpenCheckActiveTimeout()) {
@@ -694,7 +697,7 @@ public class StpLogic {
 			}
 
 			// 3、如果代码走到这里的时候，此账号已经没有客户端在登录了，则直接注销掉这个 Account-Session
-			session.logoutByTokenSignCountToZero();
+			session.logoutByTerminalCountToZero();
 		}
 	}
 	
@@ -703,10 +706,10 @@ public class StpLogic {
 	 * 
 	 * @param loginId 账号id 
 	 * @param session 此账号的 Account-Session 对象，可填写 null，框架将自动获取
-	 * @param device 设备类型（填 null 代表注销此账号所有设备类型的登录）
+	 * @param deviceType 设备类型（填 null 代表注销此账号所有设备类型的登录）
 	 * @param maxLoginCount 最大登录数量，超过此数量的将被注销
 	 */
-	public void logoutByMaxLoginCount(Object loginId, SaSession session, String device, int maxLoginCount) {
+	public void logoutByMaxLoginCount(Object loginId, SaSession session, String deviceType, int maxLoginCount) {
 
 		// 1、如果调用者提供的  Account-Session 对象为空，则我们先手动获取一下
 		if(session == null) {
@@ -717,16 +720,16 @@ public class StpLogic {
 		}
 
 		// 2、获取这个账号指定设备类型下的所有登录客户端
-		List<TokenSign> list = session.getTokenSignListByDevice(device);
+		List<SaTerminalInfo> list = session.getTerminalListByDeviceType(deviceType);
 
 		// 3、按照登录时间倒叙，超过 maxLoginCount 数量的，全部注销掉
 		for (int i = 0; i < list.size() - maxLoginCount; i++) {
 
 			// 3.1、获取此客户端的 token 值
-			String tokenValue = list.get(i).getValue();
+			String tokenValue = list.get(i).getTokenValue();
 
-			// 3.2、从 Account-Session 上清除 token 签名
-			session.removeTokenSign(tokenValue);
+			// 3.2、从 Account-Session 上清除 terminal 信息
+			session.removeTerminal(tokenValue);
 
 			// 3.3、清除这个 token 的最后活跃时间记录
 			if(isOpenCheckActiveTimeout()) {
@@ -744,7 +747,7 @@ public class StpLogic {
 		}
 
 		// 4、如果代码走到这里的时候，此账号已经没有客户端在登录了，则直接注销掉这个 Account-Session
-		session.logoutByTokenSignCountToZero();
+		session.logoutByTerminalCountToZero();
 	}
 	
 	/**
@@ -775,11 +778,11 @@ public class StpLogic {
  	 	// 5、$$ 发布事件：某某账号的某某 token 注销下线了
  		SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
  		
-		// 6、清理这个账号的 Account-Session 上的 token 签名，并且尝试注销掉 Account-Session
+		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
  	 	SaSession session = getSessionByLoginId(loginId, false);
  	 	if(session != null) {
- 	 	 	session.removeTokenSign(tokenValue); 
- 			session.logoutByTokenSignCountToZero();
+ 	 	 	session.removeTerminal(tokenValue);
+ 			session.logoutByTerminalCountToZero();
  	 	}
 	}
 	
@@ -798,21 +801,21 @@ public class StpLogic {
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备类型 (填 null 代表踢出该账号的所有设备类型)
+	 * @param deviceType 设备类型 (填 null 代表踢出该账号的所有设备类型)
 	 */
-	public void kickout(Object loginId, String device) {
+	public void kickout(Object loginId, String deviceType) {
 		// 1、获取此账号的 Account-Session，上面记录了此账号的所有登录客户端数据
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session != null) {
 
-			// 2、遍历此账号所有从这个 device 设备上登录的客户端，清除相关数据
-			for (TokenSign tokenSign: session.getTokenSignListByDevice(device)) {
+			// 2、遍历此账号所有从这个 deviceType 设备上登录的客户端，清除相关数据
+			for (SaTerminalInfo terminal: session.getTerminalListByDeviceType(deviceType)) {
 
 				// 2.1、获取此客户端的 token 值
-				String tokenValue = tokenSign.getValue();
+				String tokenValue = terminal.getTokenValue();
 
-				// 2.2、从 Account-Session 上清除 token 签名
-				session.removeTokenSign(tokenValue);
+				// 2.2、从 Account-Session 上清除 terminal 信息
+				session.removeTerminal(tokenValue);
 
 				// 2.3、清除这个 token 的最后活跃时间记录
 				if(isOpenCheckActiveTimeout()) {
@@ -830,7 +833,7 @@ public class StpLogic {
 			}
 
 			// 3、如果代码走到这里的时候，此账号已经没有客户端在登录了，则直接注销掉这个 Account-Session
-			session.logoutByTokenSignCountToZero();
+			session.logoutByTerminalCountToZero();
 		}
 	}
 
@@ -861,11 +864,11 @@ public class StpLogic {
  	 	// 5、$$. 发布事件：某某 token 被踢下线了
  		SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
 
-		// 6、清理这个账号的 Account-Session 上的 token 签名，并且尝试注销掉 Account-Session
+		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
  	 	SaSession session = getSessionByLoginId(loginId, false);
  	 	if(session != null) {
- 	 	 	session.removeTokenSign(tokenValue); 
- 			session.logoutByTokenSignCountToZero();
+ 	 	 	session.removeTerminal(tokenValue);
+ 			session.logoutByTerminalCountToZero();
  	 	}
 	}
 	
@@ -874,21 +877,21 @@ public class StpLogic {
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
 	 * 
 	 * @param loginId 账号id 
-	 * @param device 设备类型 （填 null 代表顶替该账号的所有设备类型）
+	 * @param deviceType 设备类型 （填 null 代表顶替该账号的所有设备类型）
 	 */
-	public void replaced(Object loginId, String device) {
+	public void replaced(Object loginId, String deviceType) {
 		// 1、获取此账号的 Account-Session，上面记录了此账号的所有登录客户端数据
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session != null) {
 
-			// 2、遍历此账号所有从这个 device 设备上登录的客户端，清除相关数据
-			for (TokenSign tokenSign: session.getTokenSignListByDevice(device)) {
+			// 2、遍历此账号所有从这个 deviceType 设备上登录的客户端，清除相关数据
+			for (SaTerminalInfo ter: session.getTerminalListByDeviceType(deviceType)) {
 
 				// 2.1、获取此客户端的 token 值
-				String tokenValue = tokenSign.getValue();
+				String tokenValue = ter.getTokenValue();
 
-				// 2.2、从 Account-Session 上清除 token 签名
-				session.removeTokenSign(tokenValue);
+				// 2.2、从 Account-Session 上清除 terminal 信息
+				session.removeTerminal(tokenValue);
 
 				// 2.3、清除这个 token 的最后活跃时间记录
 				if(isOpenCheckActiveTimeout()) {
@@ -906,7 +909,7 @@ public class StpLogic {
 			}
 
 			// 3、因为调用顶替下线时，一般都是在新客户端正在登录，所以此处不需要清除该账号的 Account-Session
-			// session.logoutByTokenSignCountToZero();
+			// session.logoutByTerminalCountToZero();
 		}
 	}
 	
@@ -930,8 +933,8 @@ public class StpLogic {
 	 * @return 已登录返回 true，未登录返回 false
 	 */
 	public boolean isLogin(Object loginId) {
-		// 判断条件：能否根据 loginId 查询到对应的 tokenSign 值
-		return getTokenSignListByLoginId(loginId, null).size() > 0;
+		// 判断条件：能否根据 loginId 查询到对应的 terminal 值
+		return !getTerminalListByLoginId(loginId, null).isEmpty();
 	}
 
 	/**
@@ -2103,11 +2106,11 @@ public class StpLogic {
 	 * </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return token值 
 	 */
-	public String getTokenValueByLoginId(Object loginId, String device) {
-		List<String> tokenValueList = getTokenValueListByLoginId(loginId, device);
+	public String getTokenValueByLoginId(Object loginId, String deviceType) {
+		List<String> tokenValueList = getTokenValueListByLoginId(loginId, deviceType);
 		return tokenValueList.isEmpty() ? null : tokenValueList.get(tokenValueList.size() - 1);
 	}
 	
@@ -2125,10 +2128,10 @@ public class StpLogic {
 	 * 获取指定账号 id 指定设备类型端的 token 集合
 	 *
 	 * @param loginId 账号id 
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return 此 loginId 的所有登录 token
  	 */
-	public List<String> getTokenValueListByLoginId(Object loginId, String device) {
+	public List<String> getTokenValueListByLoginId(Object loginId, String deviceType) {
 		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
@@ -2136,17 +2139,17 @@ public class StpLogic {
 		}
 
 		// 按照设备类型进行筛选
-		return session.getTokenValueListByDevice(device);
+		return session.getTokenValueListByDeviceType(deviceType);
 	}
 
 	/**
-	 * 获取指定账号 id 指定设备类型端的 tokenSign 集合
+	 * 获取指定账号 id 指定设备类型端的 Terminal 集合
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return 此 loginId 的所有登录 token
 	 */
-	public List<TokenSign> getTokenSignListByLoginId(Object loginId, String device) {
+	public List<SaTerminalInfo> getTerminalListByLoginId(Object loginId, String deviceType) {
 		// 如果该账号的 Account-Session 为 null，说明此账号尚没有客户端在登录，此时返回空集合
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session == null) {
@@ -2154,7 +2157,7 @@ public class StpLogic {
 		}
 
 		// 按照设备类型进行筛选
-		return session.getTokenSignListByDevice(device);
+		return session.getTerminalListByDeviceType(deviceType);
 	}
 
 	/**
@@ -2162,8 +2165,8 @@ public class StpLogic {
 	 *
 	 * @return 当前令牌的登录设备类型
 	 */
-	public String getLoginDevice() {
-		return getLoginDeviceByToken(getTokenValue());
+	public String getLoginDeviceType() {
+		return getLoginDeviceTypeByToken(getTokenValue());
 	}
 
 	/**
@@ -2172,7 +2175,7 @@ public class StpLogic {
 	 * @param tokenValue 指定token
 	 * @return 当前令牌的登录设备类型
 	 */
-	public String getLoginDeviceByToken(String tokenValue) {
+	public String getLoginDeviceTypeByToken(String tokenValue) {
 		// 1、如果 token 为 null，直接提前返回
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return null;
@@ -2196,10 +2199,10 @@ public class StpLogic {
 		}
 
 		// 5、遍历 Account-Session 上的客户端 token 列表，寻找当前 token 对应的设备类型
-		List<TokenSign> tokenSignList = session.tokenSignListCopy();
-		for (TokenSign tokenSign : tokenSignList) {
-			if(tokenSign.getValue().equals(tokenValue)) {
-				return tokenSign.getDevice();
+		List<SaTerminalInfo> terminalList = session.terminalListCopy();
+		for (SaTerminalInfo terminal : terminalList) {
+			if(terminal.getTokenValue().equals(tokenValue)) {
+				return terminal.getDeviceType();
 			}
 		}
 
@@ -2904,79 +2907,26 @@ public class StpLogic {
 	// ------------------- 过期方法 -------------------
 
 	/**
-	 * 根据注解 ( @SaCheckLogin ) 鉴权
+	 * <h2>请更换为 getLoginDeviceType </h2>
+	 * 返回当前会话的登录设备类型
 	 *
-	 * @param at 注解对象
+	 * @return 当前令牌的登录设备类型
 	 */
 	@Deprecated
-	public void checkByAnnotation(SaCheckLogin at) {
-		this.checkLogin();
+	public String getLoginDevice() {
+		return getLoginDeviceType();
 	}
 
 	/**
-	 * 根据注解 ( @SaCheckRole ) 鉴权
+	 * <h2>请更换为 getLoginDeviceTypeByToken </h2>
+	 * 返回指定 token 会话的登录设备类型
 	 *
-	 * @param at 注解对象
+	 * @param tokenValue 指定token
+	 * @return 当前令牌的登录设备类型
 	 */
 	@Deprecated
-	public void checkByAnnotation(SaCheckRole at) {
-		String[] roleArray = at.value();
-		if(at.mode() == SaMode.AND) {
-			this.checkRoleAnd(roleArray);
-		} else {
-			this.checkRoleOr(roleArray);
-		}
+	public String getLoginDeviceByToken(String tokenValue) {
+		return getLoginDeviceTypeByToken(tokenValue);
 	}
-
-	/**
-	 * 根据注解 ( @SaCheckPermission ) 鉴权
-	 *
-	 * @param at 注解对象
-	 */
-	@Deprecated
-	public void checkByAnnotation(SaCheckPermission at) {
-		String[] permissionArray = at.value();
-		try {
-			if(at.mode() == SaMode.AND) {
-				this.checkPermissionAnd(permissionArray);
-			} else {
-				this.checkPermissionOr(permissionArray);
-			}
-		} catch (NotPermissionException e) {
-			// 权限认证校验未通过，再开始角色认证校验
-			for (String role : at.orRole()) {
-				String[] rArr = SaFoxUtil.convertStringToArray(role);
-				// 某一项 role 认证通过，则可以提前退出了，代表通过
-				if (hasRoleAnd(rArr)) {
-					return;
-				}
-			}
-			throw e;
-		}
-	}
-
-	/**
-	 * 根据注解 ( @SaCheckSafe ) 鉴权
-	 *
-	 * @param at 注解对象
-	 */
-	@Deprecated
-	public void checkByAnnotation(SaCheckSafe at) {
-		this.checkSafe(at.value());
-	}
-
-	/**
-	 * 根据注解 ( @SaCheckDisable ) 鉴权
-	 *
-	 * @param at 注解对象
-	 */
-	@Deprecated
-	public void checkByAnnotation(SaCheckDisable at) {
-		Object loginId = getLoginId();
-		for (String service : at.value()) {
-			this.checkDisableLevel(loginId, service, at.level());
-		}
-	}
-
 
 }

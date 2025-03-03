@@ -4,21 +4,19 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.session.TokenSign;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * Sa-Token 权限认证工具类（User版）
+ * Sa-Token 权限认证工具类 (User 版)
  *
  * @author click33
  * @since 1.0.0
  */
-@Component
 public class StpUserUtil {
 
 	private StpUserUtil() {}
@@ -158,10 +156,10 @@ public class StpUserUtil {
 	 * 会话登录，并指定登录设备类型
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param device 设备类型
+	 * @param deviceType 设备类型
 	 */
-	public static void login(Object id, String device) {
-		stpLogic.login(id, device);
+	public static void login(Object id, String deviceType) {
+		stpLogic.login(id, deviceType);
 	}
 
 	/**
@@ -247,10 +245,10 @@ public class StpUserUtil {
 	 * 会话注销，根据账号id 和 设备类型
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型 (填 null 代表注销该账号的所有设备类型)
+	 * @param deviceType 设备类型 (填 null 代表注销该账号的所有设备类型)
 	 */
-	public static void logout(Object loginId, String device) {
-		stpLogic.logout(loginId, device);
+	public static void logout(Object loginId, String deviceType) {
+		stpLogic.logout(loginId, deviceType);
 	}
 
 	/**
@@ -277,10 +275,10 @@ public class StpUserUtil {
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型 (填 null 代表踢出该账号的所有设备类型)
+	 * @param deviceType 设备类型 (填 null 代表踢出该账号的所有设备类型)
 	 */
-	public static void kickout(Object loginId, String device) {
-		stpLogic.kickout(loginId, device);
+	public static void kickout(Object loginId, String deviceType) {
+		stpLogic.kickout(loginId, deviceType);
 	}
 
 	/**
@@ -298,10 +296,10 @@ public class StpUserUtil {
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型 （填 null 代表顶替该账号的所有设备类型）
+	 * @param deviceType 设备类型 （填 null 代表顶替该账号的所有设备类型）
 	 */
-	public static void replaced(Object loginId, String device) {
-		stpLogic.replaced(loginId, device);
+	public static void replaced(Object loginId, String deviceType) {
+		stpLogic.replaced(loginId, deviceType);
 	}
 
 	// 会话查询
@@ -796,11 +794,11 @@ public class StpUserUtil {
 	 * </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return token值
 	 */
-	public static String getTokenValueByLoginId(Object loginId, String device) {
-		return stpLogic.getTokenValueByLoginId(loginId, device);
+	public static String getTokenValueByLoginId(Object loginId, String deviceType) {
+		return stpLogic.getTokenValueByLoginId(loginId, deviceType);
 	}
 
 	/**
@@ -817,22 +815,22 @@ public class StpUserUtil {
 	 * 获取指定账号 id 指定设备类型端的 token 集合
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return 此 loginId 的所有登录 token
 	 */
-	public static List<String> getTokenValueListByLoginId(Object loginId, String device) {
-		return stpLogic.getTokenValueListByLoginId(loginId, device);
+	public static List<String> getTokenValueListByLoginId(Object loginId, String deviceType) {
+		return stpLogic.getTokenValueListByLoginId(loginId, deviceType);
 	}
 
 	/**
-	 * 获取指定账号 id 指定设备类型端的 tokenSign 集合
+	 * 获取指定账号 id 指定设备类型端的 SaTerminalInfo 集合
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
-	 * @return 此 loginId 的所有登录 tokenSign
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
+	 * @return /
 	 */
-	public static List<TokenSign> getTokenSignListByLoginId(Object loginId, String device) {
-		return stpLogic.getTokenSignListByLoginId(loginId, device);
+	public static List<SaTerminalInfo> getTerminalListByLoginId(Object loginId, String deviceType) {
+		return stpLogic.getTerminalListByLoginId(loginId, deviceType);
 	}
 
 	/**
@@ -840,8 +838,8 @@ public class StpUserUtil {
 	 *
 	 * @return 当前令牌的登录设备类型
 	 */
-	public static String getLoginDevice() {
-		return stpLogic.getLoginDevice();
+	public static String getLoginDeviceType() {
+		return stpLogic.getLoginDeviceType();
 	}
 
 	/**
@@ -850,8 +848,8 @@ public class StpUserUtil {
 	 * @param tokenValue 指定token
 	 * @return 当前令牌的登录设备类型
 	 */
-	public static String getLoginDeviceByToken(String tokenValue) {
-		return stpLogic.getLoginDeviceByToken(tokenValue);
+	public static String getLoginDeviceTypeByToken(String tokenValue) {
+		return stpLogic.getLoginDeviceTypeByToken(tokenValue);
 	}
 
 	/**
@@ -1244,10 +1242,48 @@ public class StpUserUtil {
 	/**
 	 * 在当前会话 结束指定业务标识的二级认证
 	 *
-	 * @param service 业务标识  
+	 * @param service 业务标识
 	 */
 	public static void closeSafe(String service) {
 		stpLogic.closeSafe(service);
+	}
+
+
+	// ------------------- Bean 对象、字段代理 -------------------
+
+	/**
+	 * 根据当前配置对象创建一个 SaLoginParameter 对象
+	 *
+	 * @return /
+	 */
+	public static SaLoginParameter createSaLoginParameter() {
+		return stpLogic.createSaLoginParameter();
+	}
+
+
+	// ------------------- 过期方法 -------------------
+
+	/**
+	 * <h2>请更换为 getLoginDeviceType </h2>
+	 * 返回当前会话的登录设备类型
+	 *
+	 * @return 当前令牌的登录设备类型
+	 */
+	@Deprecated
+	public static String getLoginDevice() {
+		return stpLogic.getLoginDevice();
+	}
+
+	/**
+	 * <h2>请更换为 getLoginDeviceTypeByToken </h2>
+	 * 返回指定 token 会话的登录设备类型
+	 *
+	 * @param tokenValue 指定token
+	 * @return 当前令牌的登录设备类型
+	 */
+	@Deprecated
+	public static String getLoginDeviceByToken(String tokenValue) {
+		return stpLogic.getLoginDeviceByToken(tokenValue);
 	}
 
 }
