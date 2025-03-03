@@ -15,11 +15,10 @@
  */
 package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject;
+import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.redisx.RedisClient;
 import org.noear.redisx.plus.RedisBucket;
-import org.noear.snack.ONode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +30,17 @@ import java.util.Set;
  *
  * @author noear
  * @since 1.34.0
+ * @since 1.41.0
  */
-public class SaTokenDaoOfRedisJson implements SaTokenDaoBySessionFollowObject {
+public class SaTokenDaoForRedisx implements SaTokenDaoByObjectFollowString {
     private final RedisBucket redisBucket;
 
-    public SaTokenDaoOfRedisJson(Properties props) {
+    public SaTokenDaoForRedisx(Properties props) {
         this(new RedisClient(props));
     }
 
-    public SaTokenDaoOfRedisJson(RedisClient redisClient) {
+    public SaTokenDaoForRedisx(RedisClient redisClient) {
         redisBucket = redisClient.getBucket();
-
-        // 重写 SaSession 生成策略
-        //SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJson(sessionId);
-
     }
 
     /**
@@ -60,7 +56,14 @@ public class SaTokenDaoOfRedisJson implements SaTokenDaoBySessionFollowObject {
      */
     @Override
     public void set(String key, String value, long timeout) {
-        if (timeout > 0 || timeout == SaTokenDao.NEVER_EXPIRE) {
+        if (timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE) {
+            return;
+        }
+
+        // 判断是否为永不过期
+        if (timeout == SaTokenDao.NEVER_EXPIRE) {
+            redisBucket.store(key, value);
+        } else {
             redisBucket.store(key, value, (int) timeout);
         }
     }
@@ -71,6 +74,11 @@ public class SaTokenDaoOfRedisJson implements SaTokenDaoBySessionFollowObject {
     @Override
     public void update(String key, String value) {
         long expire = getTimeout(key);
+        // -2 = 无此键
+        if (expire == SaTokenDao.NOT_VALUE_EXPIRE) {
+            return;
+        }
+
         this.set(key, value, expire);
     }
 
@@ -95,73 +103,21 @@ public class SaTokenDaoOfRedisJson implements SaTokenDaoBySessionFollowObject {
      */
     @Override
     public void updateTimeout(String key, long timeout) {
-        if (redisBucket.exists(key)) {
-            redisBucket.delay(key, (int) timeout);
+        // 判断是否想要设置为永久
+        if (timeout == SaTokenDao.NEVER_EXPIRE) {
+            long expire = getTimeout(key);
+            if (expire == SaTokenDao.NEVER_EXPIRE) {
+                // 如果其已经被设置为永久，则不作任何处理
+            } else {
+                // 如果尚未被设置为永久，那么再次set一次
+                this.set(key, this.get(key), timeout);
+            }
+            return;
         }
+
+
+        redisBucket.delay(key, (int) timeout);
     }
-
-
-    /**
-     * 获取Object，如无返空
-     */
-    @Override
-    public Object getObject(String key) {
-        String value = get(key);
-        return ONode.deserialize(value);
-    }
-
-    @Override
-    public <T> T getObject(String key, Class<T> classType) {
-        String value = get(key);
-        return ONode.deserialize(value, classType);
-    }
-
-    /**
-     * 写入Object，并设定存活时间 (单位: 秒)
-     */
-    @Override
-    public void setObject(String key, Object object, long timeout) {
-        if (timeout > 0 || timeout == SaTokenDao.NEVER_EXPIRE) {
-            String value = ONode.serialize(object);
-            set(key, value, timeout);
-        }
-    }
-
-    /**
-     * 更新Object (过期时间不变)
-     */
-    @Override
-    public void updateObject(String key, Object object) {
-        long expire = getObjectTimeout(key);
-        this.setObject(key, object, expire);
-    }
-
-    /**
-     * 删除Object
-     */
-    @Override
-    public void deleteObject(String key) {
-        redisBucket.remove(key);
-    }
-
-    /**
-     * 获取Object的剩余存活时间 (单位: 秒)
-     */
-    @Override
-    public long getObjectTimeout(String key) {
-        return redisBucket.ttl(key);
-    }
-
-    /**
-     * 修改Object的剩余存活时间 (单位: 秒)
-     */
-    @Override
-    public void updateObjectTimeout(String key, long timeout) {
-        if (redisBucket.exists(key)) {
-            redisBucket.delay(key, (int) timeout);
-        }
-    }
-
 
     /**
      * 搜索数据
