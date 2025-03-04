@@ -13,26 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.solon.dao;
+package cn.dev33.satoken.json;
 
-import org.noear.redisx.RedisClient;
-
-import java.util.Properties;
+import org.noear.snack.ONode;
 
 /**
- * SaTokenDao 的 redis 适配
- *
+ * JSON 转换器， Snack3 版实现
+ * 
+ * @author click33
  * @author noear
- * @since 1.6
+ * @since 1.41.0
  */
-public class SaTokenDaoOfRedis extends SaTokenDaoOfRedisBase64 {
+public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
 
-    public SaTokenDaoOfRedis(Properties props) {
-        super(props);
-    }
+	/**
+	 * 序列化：对象 -> json 字符串
+	 */
+	@Override
+	public String objectToJson(Object obj) {
+		return ONode.stringify(obj);
+	}
 
-    public SaTokenDaoOfRedis(RedisClient redisClient) {
-        super(redisClient);
-    }
-
+	/**
+	 * 反序列化：json 字符串 → 对象
+	 */
+	@Override
+	public <T> T jsonToObject(String jsonStr, Class<T> type) {
+		return ONode.deserialize(jsonStr, type);
+	}
 }

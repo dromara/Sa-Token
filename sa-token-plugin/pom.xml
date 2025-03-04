@@ -22,6 +22,7 @@
         <module>sa-token-jackson</module>
         <module>sa-token-fastjson</module>
         <module>sa-token-fastjson2</module>
+        <module>sa-token-snack3</module>
         <module>sa-token-hutool-timed-cache</module>
         <module>sa-token-thymeleaf</module>
         <module>sa-token-freemarker</module>
@@ -32,6 +33,7 @@
         <module>sa-token-sso</module>
         <module>sa-token-oauth2</module>
         <module>sa-token-redisson</module>
+        <module>sa-token-redisx</module>
         <module>sa-token-serializer-features</module>
 
         <!-- SpringBoot 环境插件 -->
@@ -44,10 +46,6 @@
         <module>sa-token-grpc</module>
         <module>sa-token-quick-login</module>
         <module>sa-token-redisson-spring-boot-starter</module>
-
-        <!-- Solon 环境插件 -->
-        <module>sa-token-redisx</module>
-
     </modules>
 
 	<dependencies>
