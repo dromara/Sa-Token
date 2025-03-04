@@ -32,7 +32,7 @@ public class SaTokenPluginForSnack3 implements SaTokenPlugin {
     @Override
     public void install() {
 
-        // 设置JSON转换器：Fastjson 版
+        // 设置JSON转换器：Snack3 版
         SaManager.setSaJsonTemplate(new SaJsonTemplateForSnack3());
 
         // 重写 SaSession 生成策略
