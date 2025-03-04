@@ -59,9 +59,9 @@ public class SaLoginParameter {
 	private String token;
 
 	/**
-	 * 本次登录挂载到 SaTerminalInfo 的自定义数据
+	 * 本次登录挂载到 SaTerminalInfo 的自定义扩展数据
 	 */
-	private Object terminalTag;
+	private Map<String, Object> terminalExtraData;
 
 
 	// --------- 覆盖性参数
@@ -134,13 +134,11 @@ public class SaLoginParameter {
 		return this;
 	}
 
-
-
 	/**
-	 * 写入扩展数据（只在jwt模式下生效） 
+	 * 写入扩展数据（只在jwt模式下生效）
 	 * @param key 键
-	 * @param value 值 
-	 * @return 对象自身 
+	 * @param value 值
+	 * @return 对象自身
 	 */
 	public SaLoginParameter setExtra(String key, Object value) {
 		if(this.extraData == null) {
@@ -151,9 +149,9 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 获取扩展数据（只在jwt模式下生效） 
+	 * 获取扩展数据（只在jwt模式下生效）
 	 * @param key 键
-	 * @return 扩展数据的值 
+	 * @return 扩展数据的值
 	 */
 	public Object getExtra(String key) {
 		if(this.extraData == null) {
@@ -163,11 +161,45 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 判断是否设置了扩展数据 
-	 * @return / 
+	 * 判断是否设置了扩展数据（只在jwt模式下生效）
+	 * @return /
 	 */
 	public boolean isSetExtraData() {
 		return extraData != null && !extraData.isEmpty();
+	}
+
+	/**
+	 * 写入本次登录挂载到 SaTerminalInfo 的自定义扩展数据
+	 * @param key 键
+	 * @param value 值 
+	 * @return 对象自身 
+	 */
+	public SaLoginParameter setTerminalExtra(String key, Object value) {
+		if(this.terminalExtraData == null) {
+			this.terminalExtraData = new LinkedHashMap<>();
+		}
+		this.terminalExtraData.put(key, value);
+		return this;
+	}
+
+	/**
+	 * 获取本次登录挂载到 SaTerminalInfo 的自定义扩展数据
+	 * @param key 键
+	 * @return 扩展数据的值 
+	 */
+	public Object getTerminalExtra(String key) {
+		if(this.terminalExtraData == null) {
+			return null;
+		}
+		return this.terminalExtraData.get(key);
+	}
+
+	/**
+	 * 判断是否设置了本次登录挂载到 SaTerminalInfo 的自定义扩展数据
+	 * @return / 
+	 */
+	public boolean isSetTerminalExtraData() {
+		return terminalExtraData != null && !terminalExtraData.isEmpty();
 	}
 
 	/**
@@ -203,8 +235,6 @@ public class SaLoginParameter {
 		return new SaLoginParameter(SaManager.getConfig());
 	}
 
-
-	// ---------------- 过期方法
 
 
 	// ---------------- get set
@@ -405,22 +435,22 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 获取 本次登录挂载到 SaTerminalInfo 的自定义数据
+	 * 获取 本次登录挂载到 SaTerminalInfo 的自定义扩展数据
 	 *
-	 * @return 本次登录挂载到 SaTerminalInfo 的自定义数据
+	 * @return /
 	 */
-	public Object getTerminalTag() {
-		return this.terminalTag;
+	public Map<String, Object> getTerminalExtraData() {
+		return this.terminalExtraData;
 	}
 
 	/**
-	 * 设置 本次登录挂载到 SaTerminalInfo 的自定义数据
+	 * 设置 本次登录挂载到 SaTerminalInfo 的自定义扩展数据
 	 *
-	 * @param terminalTag 本次登录挂载到 SaTerminalInfo 的自定义数据
+	 * @param terminalExtraData /
 	 * @return 对象自身
 	 */
-	public SaLoginParameter setTerminalTag(Object terminalTag) {
-		this.terminalTag = terminalTag;
+	public SaLoginParameter setTerminalExtraData(Map<String, Object> terminalExtraData) {
+		this.terminalExtraData = terminalExtraData;
 		return this;
 	}
 
@@ -442,7 +472,7 @@ public class SaLoginParameter {
 				+ ", extraData=" + extraData
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader
-				+ ", terminalTag=" + terminalTag
+				+ ", terminalTag=" + terminalExtraData
 				+ "]";
 	}
 

@@ -31,6 +31,10 @@ public class TestController {
 				.setIsShare(false)
 				.setMaxLoginCount(4)
 				.setMaxTryTimes(12)
+				.setTerminalExtra("deviceSimpleTitle", "XiaoMi 15 Ultra")
+				.setTerminalExtra("loginAddress", "浙江省杭州市西湖区")
+				.setTerminalExtra("loginIp", "127.0.0.1")
+				.setTerminalExtra("loginTime", SaFoxUtil.formatDate(new Date()))
 		);
 		return SaResult.ok("登录成功");
 	}

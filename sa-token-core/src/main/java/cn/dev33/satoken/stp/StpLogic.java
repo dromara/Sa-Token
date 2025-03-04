@@ -477,7 +477,7 @@ public class StpLogic {
 				.setDeviceType(loginParameter.getDeviceType())
 				.setDeviceId(loginParameter.getDeviceId())
 				.setTokenValue(tokenValue)
-				.setTag(loginParameter.getTerminalTag())
+				.setExtraData(loginParameter.getTerminalExtraData())
 				.setCreateTime(System.currentTimeMillis());
 		session.addTerminal(terminalInfo);
 

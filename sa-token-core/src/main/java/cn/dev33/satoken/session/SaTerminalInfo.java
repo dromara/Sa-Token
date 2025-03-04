@@ -16,6 +16,8 @@
 package cn.dev33.satoken.session;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 登录设备终端信息 Model
@@ -51,9 +53,9 @@ public class SaTerminalInfo implements Serializable {
 	private String deviceId;
 
 	/**
-	 * 此次登录的自定义挂载数据
+	 * 此次登录的自定义扩展数据 (只允许在登录前设定，登录后不建议更改)
 	 */
-	private Object tag;
+	private Map<String, Object> extraData;
 
 	/**
 	 * 创建时间
@@ -72,15 +74,55 @@ public class SaTerminalInfo implements Serializable {
 	 * @param index 		登录会话索引值 (该账号第几个登录的设备)
 	 * @param tokenValue  	Token 值
 	 * @param deviceType 	所属设备类型
-	 * @param tag 			此客户端登录的挂载数据
+	 * @param extraData 			此客户端登录的挂载数据
 	 */
-	public SaTerminalInfo(int index, String tokenValue, String deviceType, Object tag) {
+	public SaTerminalInfo(int index, String tokenValue, String deviceType, Map<String, Object> extraData) {
 		this.index = index;
 		this.tokenValue = tokenValue;
 		this.deviceType = deviceType;
-		this.tag = tag;
+		this.extraData = extraData;
 		this.createTime = System.currentTimeMillis();
 	}
+
+	// 扩展方法
+
+	/**
+	 * 此次登录的自定义扩展数据 (只允许在登录前设定，登录后不建议更改)
+	 * @param key 键
+	 * @param value 值
+	 * @return 对象自身
+	 */
+	public SaTerminalInfo setExtra(String key, Object value) {
+		if(this.extraData == null) {
+			this.extraData = new LinkedHashMap<>();
+		}
+		this.extraData.put(key, value);
+		return this;
+	}
+
+	/**
+	 * 此次登录的自定义扩展数据
+	 * @param key 键
+	 * @return 扩展数据的值
+	 */
+	public Object getExtra(String key) {
+		if(this.extraData == null) {
+			return null;
+		}
+		return this.extraData.get(key);
+	}
+
+	/**
+	 * 判断是否设置了扩展数据
+	 * @return /
+	 */
+	public boolean isSetExtraData() {
+		return extraData != null && !extraData.isEmpty();
+	}
+
+
+
+	// -------------------- get/set --------------------
 
 	/**
 	 * 获取 登录会话索引值 (该账号第几个登录的设备)
@@ -163,18 +205,18 @@ public class SaTerminalInfo implements Serializable {
 	 *
 	 * @return /
 	 */
-	public Object getTag() {
-		return this.tag;
+	public Map<String, Object> getExtraData() {
+		return this.extraData;
 	}
 
 	/**
 	 * 设置 此客户端登录的挂载数据
 	 *
-	 * @param tag /
+	 * @param extraData /
 	 * @return 对象自身
 	 */
-	public SaTerminalInfo setTag(Object tag) {
-		this.tag = tag;
+	public SaTerminalInfo setExtraData(Map<String, Object> extraData) {
+		this.extraData = extraData;
 		return this;
 	}
 
@@ -206,7 +248,7 @@ public class SaTerminalInfo implements Serializable {
 				", tokenValue=" + tokenValue +
 				", deviceType=" + deviceType +
 				", deviceId=" + deviceId +
-				", tag=" + tag +
+				", extraData=" + extraData +
 				", createTime=" + createTime +
 				"]";
 	}

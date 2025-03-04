@@ -113,8 +113,8 @@ public class SaLoginConfig {
 	 * @param tokenSignTag /
 	 * @return 登录参数 Model
 	 */
-	public static SaLoginParameter setTokenSignTag(Object tokenSignTag) {
-		return create().setTerminalTag(tokenSignTag);
+	public static SaLoginParameter setTokenSignTag(Map<String, Object> tokenSignTag) {
+		return create().setTerminalExtraData(tokenSignTag);
 	}
 
 	/**
