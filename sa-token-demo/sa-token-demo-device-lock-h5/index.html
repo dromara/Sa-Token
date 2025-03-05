@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>设备锁测试-首页</title>
+	</head>
+	<body>
+		<h2>设备锁测试-首页</h2>
+		<p>当前是否登录：<b class="is-login"></b></p>
+		<p>
+			<a href="login.html">登录</a> &nbsp;
+			<a href="javascript: doLogout(); ">注销</a>
+			<!-- <a href="javascript: doLogout(); ">注销</a>&nbsp;<span style="color: #888;">(需要重新验证设备)</span>&nbsp;
+			<a href="javascript: doLogout2(); ">注销2</a>&nbsp;<span style="color: #888;">(不需要重新验证设备)</span>&nbsp; -->
+		</p>
+		<script src="common.js"></script>
+		<script type="text/javascript">
+		
+			// 查询当前会话是否登录 
+			function isLogin(){
+				ajax('/acc/isLogin', {}, function(res) {
+					document.querySelector('.is-login').innerHTML = res.data;
+				})
+			}
+			isLogin();
+		
+			
+			// 注销
+			function doLogout(){
+				ajax('/acc/logout', {}, function(res) {
+					isLogin();
+				})
+			}
+		
+			// 注销2
+			function doLogout2(){
+				localStorage.removeItem('satoken');
+				isLogin();
+			}
+				
+		</script>
+	</body>
+</html>

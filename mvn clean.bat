@@ -11,6 +11,7 @@ cd sa-token-demo-alone-redis-cluster & call mvn clean & cd ..
 cd sa-token-demo-beetl & call mvn clean & cd ..
 cd sa-token-demo-bom-import & call mvn clean & cd ..
 cd sa-token-demo-case & call mvn clean & cd ..
+cd sa-token-demo-device-lock & call mvn clean & cd ..
 cd sa-token-demo-grpc & call mvn clean & cd ..
 cd sa-token-demo-hutool-timed-cache & call mvn clean & cd ..
 cd sa-token-demo-jwt & call mvn clean & cd ..

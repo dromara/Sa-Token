@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>设备锁测试-登录页</title>
+		<style type="text/css">
+		
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>设备锁测试-登录页</h2>
+			<div>用户：<input name="name" type="text"></div>
+			<div>密码：<input name="pwd" type="password"></div>
+			<div><button onclick="doLogin()">登录</button></div>
+		</div>
+		<script src="common.js"></script>
+		<script type="text/javascript">
+		
+			// 登录方法 
+			function doLogin() {
+				const data = {
+					name: document.querySelector('[name=name]').value,
+					pwd: document.querySelector('[name=pwd]').value,
+					deviceId: getLocalDeviceId()
+				}
+				ajax('/acc/doLogin', data, function(res) {
+					console.log(res);
+					if(res.code == 200) {
+						alert('登录成功！');
+						localStorage.setItem('satoken', res.token);
+						location.href = 'index.html';
+					} 
+					// 触发设备锁校验，需要进一步去认证 
+					else if(res.code == 421) {
+						location.href = 'device-lock-auth.html';
+					}
+					
+				})
+				
+			}
+			
+		</script>
+		<script type="text/javascript">
+		</script>
+	</body>
+</html>

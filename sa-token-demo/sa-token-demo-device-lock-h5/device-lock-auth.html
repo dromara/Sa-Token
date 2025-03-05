@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>设备锁测试-认证页</title>
+		<style type="text/css">
+		
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<h2>设备锁测试-认证页</h2>
+			<div style="color: red;">您正在一台新设备上登录此账号，需要进行身份验证</div>
+			<div>您绑定的手机号为：<b class="phone"></b></div>
+			<div>
+				验证码：<input name="ck" >
+				<button class="send-code" onclick="sendCode()">发送验证码</button>
+			</div>
+			<div><button onclick="checkCode()">确认</button></div>
+		</div>
+		<script src="common.js"></script>
+		<script type="text/javascript">
+			
+			// 获取手机号数据  
+			function getPhone() {
+				ajax('/acc/getPhone', { deviceId: getLocalDeviceId() }, function(res) {
+					if(res.code == 200) {
+						document.querySelector('.phone').innerHTML = res.data;
+					} else {
+						alert('失败：' + res.msg);
+					}
+				})
+			}
+			getPhone();
+			
+			// 发送验证码
+			function sendCode(){
+				ajax('/acc/sendCode', { deviceId: getLocalDeviceId() }, function(res) {
+					if(res.code == 200) {
+						alert('验证码发送成功，请注意接收');
+						document.querySelector('.send-code').disabled = true;
+					} 
+					// 触发设备锁校验，需要进一步去认证 
+					else {
+						alert('失败：' + res.msg);
+					}
+				})
+			}
+					
+			// 校验验证码 
+			function checkCode(){
+				ajax('/acc/checkCode', { deviceId: getLocalDeviceId(), code: document.querySelector('[name=ck]').value }, function(res) {
+					if(res.code == 200) {
+						alert('验证成功！');
+						localStorage.setItem('satoken', res.token);
+						location.href = 'index.html';
+					} 
+					// 触发设备锁校验，需要进一步去认证 
+					else {
+						alert('失败：' + res.msg);
+					}
+				})
+			}
+							
+		</script>
+		<script type="text/javascript">
+		</script>
+	</body>
+</html>
