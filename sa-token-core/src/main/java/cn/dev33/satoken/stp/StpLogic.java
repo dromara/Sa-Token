@@ -24,13 +24,13 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.*;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.model.wrapperInfo.SaDisableWrapperInfo;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -2208,6 +2208,22 @@ public class StpLogic {
 
 		// 6、没有找到，还是返回 null
 		return null;
+	}
+
+	/**
+	 * 判断对于指定 loginId 来讲，指定设备 id 是否为可信任设备
+	 * @param deviceId /
+	 * @return /
+	 */
+	public boolean isTrustDeviceId(Object userId, String deviceId) {
+		// 先查询此账号的 Account-Session，如果连 Account-Session 都没有，那么此账号尚未登录，直接返回 false
+		SaSession session = getSessionByLoginId(userId, false);
+		if(session == null) {
+			return false;
+		}
+
+		// 判断
+		return session.isTrustDeviceId(deviceId);
 	}
 
 

@@ -361,6 +361,23 @@ public class SaSession implements SaSetValueInterface, Serializable {
 		return max;
 	}
 
+	/**
+	 * 判断指定设备 id 是否为可信任设备
+	 * @param deviceId /
+	 * @return /
+	 */
+	public boolean isTrustDeviceId(String deviceId) {
+		if(SaFoxUtil.isEmpty(deviceId)) {
+			return false;
+		}
+		for (SaTerminalInfo terminal : terminalListCopy()) {
+			if (SaFoxUtil.equals(terminal.getDeviceId(), deviceId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 	// ----------------------- 一些操作
 

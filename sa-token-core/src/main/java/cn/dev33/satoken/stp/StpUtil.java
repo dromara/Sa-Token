@@ -16,10 +16,10 @@
 package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.SaTerminalInfo;
 
 import java.util.List;
 
@@ -871,6 +871,15 @@ public class StpUtil {
 	 */
 	public static long getTokenLastActiveTime() {
 		return stpLogic.getTokenLastActiveTime();
+	}
+
+	/**
+	 * 判断对于指定 loginId 来讲，指定设备 id 是否为可信任设备
+	 * @param deviceId /
+	 * @return /
+	 */
+	public static boolean isTrustDeviceId(Object userId, String deviceId) {
+		return stpLogic.isTrustDeviceId(userId, deviceId);
 	}
 
 
