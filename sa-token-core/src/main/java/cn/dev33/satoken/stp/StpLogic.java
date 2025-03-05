@@ -2143,7 +2143,17 @@ public class StpLogic {
 	}
 
 	/**
-	 * 获取指定账号 id 指定设备类型端的 Terminal 集合
+	 * 获取指定账号 id 已登录设备信息集合
+	 *
+	 * @param loginId 账号id
+	 * @return 此 loginId 的所有登录 token
+	 */
+	public List<SaTerminalInfo> getTerminalListByLoginId(Object loginId) {
+		return getTerminalListByLoginId(loginId, null);
+	}
+
+	/**
+	 * 获取指定账号 id 指定设备类型端的已登录设备信息集合
 	 *
 	 * @param loginId 账号id
 	 * @param deviceType 设备类型，填 null 代表不限设备类型
