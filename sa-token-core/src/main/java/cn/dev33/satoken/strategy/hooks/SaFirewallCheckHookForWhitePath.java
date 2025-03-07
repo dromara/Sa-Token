@@ -19,6 +19,10 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.StopMatchException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 防火墙策略校验钩子函数：请求 path 白名单放行
  *
@@ -35,14 +39,15 @@ public class SaFirewallCheckHookForWhitePath implements SaFirewallCheckHook {
     /**
      * 请求 path 白名单
      */
-    public String[] whitePaths = {};
+    public List<String> whitePaths = new ArrayList<>();
 
     /**
      * 重载配置
      * @param paths 白名单 path 列表
      */
     public void resetConfig(String... paths) {
-        this.whitePaths = paths;
+        this.whitePaths.clear();
+        this.whitePaths.addAll(Arrays.asList(paths));
     }
 
     /**

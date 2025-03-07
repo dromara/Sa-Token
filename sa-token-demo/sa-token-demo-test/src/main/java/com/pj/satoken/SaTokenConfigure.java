@@ -3,7 +3,6 @@ package com.pj.satoken;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaInterceptor;
-import cn.dev33.satoken.plugin.SaTokenPluginForJackson;
 import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;

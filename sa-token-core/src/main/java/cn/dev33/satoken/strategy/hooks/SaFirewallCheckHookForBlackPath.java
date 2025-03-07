@@ -19,6 +19,10 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 防火墙策略校验钩子函数：请求 path 黑名单校验
  *
@@ -35,14 +39,15 @@ public class SaFirewallCheckHookForBlackPath implements SaFirewallCheckHook {
     /**
      * 请求 path 黑名单
      */
-    public String[] blackPaths = {};
+    public List<String> blackPaths = new ArrayList<>();
 
     /**
      * 重载配置
      * @param paths 黑名单 path 列表
      */
     public void resetConfig(String... paths) {
-        this.blackPaths = paths;
+        this.blackPaths.clear();
+        this.blackPaths.addAll(Arrays.asList(paths));
     }
 
     /**
