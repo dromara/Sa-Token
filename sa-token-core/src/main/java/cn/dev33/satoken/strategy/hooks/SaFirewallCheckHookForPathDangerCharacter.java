@@ -19,6 +19,10 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.exception.RequestPathInvalidException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 防火墙策略校验钩子函数：请求 path 危险字符校验
  *
@@ -35,7 +39,7 @@ public class SaFirewallCheckHookForPathDangerCharacter implements SaFirewallChec
     /**
      * 请求 path 不允许出现的危险字符
      */
-    public String[] dangerCharacter = {
+    public List<String> dangerCharacter = new ArrayList<>(Arrays.asList(
             "//",           // //
             "\\",			// \
             "%2e", "%2E",	// .
@@ -48,14 +52,14 @@ public class SaFirewallCheckHookForPathDangerCharacter implements SaFirewallChec
             "\r", "%0d", "%0D",	// 回车符
             "\u2028",     // 行分隔符
             "\u2029"    // 段分隔符
-    };
+    ));
 
     /**
      * 重载配置
      * @param character 危险字符列表
      */
     public void resetConfig(String... character) {
-        this.dangerCharacter = character;
+        this.dangerCharacter = Arrays.asList(character);
     }
 
     /**
