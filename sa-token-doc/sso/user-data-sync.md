@@ -231,5 +231,12 @@ private void configSso(SaSsoClientConfig ssoClient) {
 至此完毕。
 
 
-
-
+> [!INFO| label:提问：按照方案三，一个用户登录过程中，sso-server 和 sso-client 对这个用户账号的完整处理步骤是怎样的？] 
+> 1. 用户进入 sso-client 登录页面，点击上面的 [ 使用 xx 认证中心快捷登录 ] 按钮，浏览器跳转至 sso-server 认证中心。
+> 2. 如果用户在 sso-server 有账号，则直接登录，如果没有，则注册账号并登录。
+> 3. sso-server 重定向回 sso-client 端，并携带 ticket 参数。
+> 4. sso-client 获取 ticket 参数，并解析出 center_id 值。
+> 5. 根据 center_id 从 user 表查数据：
+> 	- 5.1 查的到，证明有账号，直接登录。
+> 	- 5.2 查不到，证明无账号，程序自动给他添加一条 user 账号，并登录。
+> 6. 登录完成。
