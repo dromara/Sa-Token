@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * TokenSign 相关测试 
+ * SaTerminalInfo 相关测试 
  * 
  * @author click33
  * @since 2022-9-4
@@ -30,14 +30,14 @@ public class SaTerminalInfoTest {
 	// 测试 
 	@Test
 	public void testSaTerminalInfo() {
-		SaTerminalInfo tokenSign = new SaTerminalInfo();
-		tokenSign.setDeviceType("PC");
-		tokenSign.setTokenValue("ttt-value");
+		SaTerminalInfo terminal = new SaTerminalInfo();
+		terminal.setDeviceType("PC");
+		terminal.setTokenValue("ttt-value");
 		
-		Assertions.assertEquals(tokenSign.getDeviceType(), "PC");
-		Assertions.assertEquals(tokenSign.getTokenValue(), "ttt-value");
+		Assertions.assertEquals(terminal.getDeviceType(), "PC");
+		Assertions.assertEquals(terminal.getTokenValue(), "ttt-value");
 
-		Assertions.assertNotNull(tokenSign.toString());
+		Assertions.assertNotNull(terminal.toString());
 	}
 	
 }

@@ -2,11 +2,13 @@ package com.pj.satoken;
 
 import cn.dev33.satoken.application.ApplicationInfo;
 import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.dao.SaTokenDaoRedisJackson;
+import cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate;
+import cn.dev33.satoken.json.SaJsonTemplateForJackson;
 import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.spring.SaBeanInject;
 import cn.dev33.satoken.spring.SaTokenContextForSpring;
-import cn.dev33.satoken.spring.json.SaJsonTemplateForJackson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 
 /**
@@ -19,13 +21,14 @@ public class SaTokenBeanInjection {
     public SaTokenBeanInjection(
             SaLog log,
             SaTokenConfig config,
+            @Autowired(required = false) SaTokenPluginHolder pluginHolder,
             RedisConnectionFactory connectionFactory,
             String routePrefix
     ) {
         System.out.println("---------------- 手动注入 Sa-Token 所需要的组件 start ----------------");
 
         // 日志组件、配置信息
-        SaBeanInject inject = new SaBeanInject(log, config);
+        SaBeanInject inject = new SaBeanInject(log, config, pluginHolder);
 
         // 基于 Spring 的上下文处理器
         inject.setSaTokenContext(new SaTokenContextForSpring());
@@ -34,9 +37,9 @@ public class SaTokenBeanInjection {
         inject.setSaJsonTemplate(new SaJsonTemplateForJackson());
 
         // 基于 Jackson 序列化的 Redis 持久化组件
-        SaTokenDaoRedisJackson saTokenDaoRedisJackson = new SaTokenDaoRedisJackson();
-        saTokenDaoRedisJackson.init(connectionFactory);
-        inject.setSaTokenDao(saTokenDaoRedisJackson);
+        SaTokenDaoForRedisTemplate saTokenDaoForRedisTemplate = new SaTokenDaoForRedisTemplate();
+        saTokenDaoForRedisTemplate.init(connectionFactory);
+        inject.setSaTokenDao(saTokenDaoForRedisTemplate);
 
         // 权限和角色数据
         inject.setStpInterface(new StpInterfaceImpl());

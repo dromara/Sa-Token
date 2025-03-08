@@ -107,7 +107,7 @@ public class SaSessionTest {
     
     // 测试token 签名 
     @Test
-    public void testTokenSign() {
+    public void testSaTerminalInfo() {
     	SaSession session = new SaSession("session-1002");
     	
     	// 添加 Token 签名 
@@ -123,7 +123,7 @@ public class SaSessionTest {
     	session.removeTerminal("xxxx-xxxx-xxxx-xxxx-1");
     	Assertions.assertEquals(session.getTerminalList().size(), 1);
 
-    	// 删除一个不存在的，则不影响 TokenSign 列表
+    	// 删除一个不存在的，则不影响 SaTerminalInfo 列表
     	session.removeTerminal("xxxx-xxxx-xxxx-xxxx-999");
     	Assertions.assertEquals(session.getTerminalList().size(), 1);
     	

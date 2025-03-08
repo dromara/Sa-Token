@@ -150,6 +150,11 @@ public class SaTokenDaoRedis implements SaTokenDaoBySessionFollowObject {
         }
     }
 
+    @Override
+    public <T> T getObject(String key, Class<T> classType) {
+        return (T) getObject(key);
+    }
+
     /**
      * 写入Object，并设定存活时间 (单位: 秒)
      */

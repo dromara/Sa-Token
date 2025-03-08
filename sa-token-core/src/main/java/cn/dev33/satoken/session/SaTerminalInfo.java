@@ -243,17 +243,15 @@ public class SaTerminalInfo implements Serializable {
 	//
 	@Override
 	public String toString() {
-		return "TokenSign [" +
+		return "SaTerminalInfo [" +
 				"index=" + index +
-				", tokenValue=" + tokenValue +
-				", deviceType=" + deviceType +
-				", deviceId=" + deviceId +
+				", tokenValue='" + tokenValue +
+				", deviceType='" + deviceType +
+				", deviceId='" + deviceId +
 				", extraData=" + extraData +
 				", createTime=" + createTime +
-				"]";
+				']';
 	}
-
-
 
 	/*
 	 * Expand in the future:

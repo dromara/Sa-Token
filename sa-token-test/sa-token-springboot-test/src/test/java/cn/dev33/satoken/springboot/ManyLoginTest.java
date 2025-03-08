@@ -114,8 +114,8 @@ public class ManyLoginTest {
     	Assertions.assertEquals(dao.get("satoken:login:token:" + token1), "-4");
     	
     	// Account-Session里的 token1 签名会被移除 
-    	List<SaTerminalInfo> tokenSignList = StpUtil.getSessionByLoginId(10001).getTerminalList();
-    	for (SaTerminalInfo terminal : tokenSignList) {
+    	List<SaTerminalInfo> terminalList = StpUtil.getSessionByLoginId(10001).getTerminalList();
+    	for (SaTerminalInfo terminal : terminalList) {
     		Assertions.assertNotEquals(terminal.getTokenValue(), token1);
 		}
     }

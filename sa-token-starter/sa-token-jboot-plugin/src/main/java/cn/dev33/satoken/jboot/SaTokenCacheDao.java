@@ -168,6 +168,11 @@ public class SaTokenCacheDao implements SaTokenDaoBySessionFollowObject {
     }
 
     @Override
+    public <T> T getObject(String key, Class<T> classType) {
+        return (T) getObject(key);
+    }
+
+    @Override
     public void setObject(String key, Object object, long timeout) {
         if (timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE) {
             return;

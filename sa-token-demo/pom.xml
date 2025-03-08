@@ -20,7 +20,7 @@
 		<module>sa-token-demo-dubbo/sa-token-demo-dubbo3-provider</module>
 		<module>sa-token-demo-dubbo/sa-token-demo-dubbo3-consumer</module>
 		<module>sa-token-demo-freemarker</module>
-		<module>sa-token-demo-grpc</module>
+<!--		<module>sa-token-demo-grpc</module>-->
 		<module>sa-token-demo-hutool-timed-cache</module>
 		<module>sa-token-demo-jwt</module>
 		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-server</module>
