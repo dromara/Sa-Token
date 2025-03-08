@@ -18,7 +18,7 @@ package cn.dev33.satoken.dao.auto;
 import cn.dev33.satoken.SaManager;
 
 /**
- * SaTokenDao 次级实现，Object 读写跟随 String 读写
+ * SaTokenDao 次级实现，Object 读写跟随 String 读写 (推荐中间件型缓存实现 implements 此接口)
  *
  * @author click33
  * @since 1.41.0
