@@ -13,51 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.dao.map;
+package cn.dev33.satoken.dao.timedcache;
 
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Map 包装类
+ * Map 包装类 (ConcurrentHashMap 版)
  *
  * @author click33
  * @since 1.41.0
  */
-public interface SaMapPackage<V> {
+public class SaMapPackageForConcurrentHashMap<V> implements SaMapPackage<V> {
 
-	/**
-	 * 获取底层被包装的源对象
-	 *
-	 * @return /
-	 */
-	Object getSource();
+	private final ConcurrentHashMap<String, V> map = new ConcurrentHashMap<String, V>();
 
+	@Override
+	public Object getSource() {
+		return map;
+	}
 
-	/**
-	 * 读
-	 *
-	 * @param key /
-	 * @return /
-	 */
-	V get(String key);
+	@Override
+	public V get(String key) {
+		return map.get(key);
+	}
 
-	/**
-	 * 写
-	 *
-	 * @param key /
-	 * @param value /
-	 */
-	void put(String key, V value);
+	@Override
+	public void put(String key, V value) {
+		map.put(key, value);
+	}
 
-	/**
-	 * 删
-	 * @param key /
-	 */
-	void remove(String key);
+	@Override
+	public void remove(String key) {
+		map.remove(key);
+	}
 
-	/**
-	 * 所有 key
-	 */
-	Set<String> keySet();
+	@Override
+	public Set<String> keySet() {
+		return map.keySet();
+	}
 
 }

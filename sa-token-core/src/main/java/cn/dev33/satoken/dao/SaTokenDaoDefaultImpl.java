@@ -17,7 +17,7 @@ package cn.dev33.satoken.dao;
 
 
 import cn.dev33.satoken.dao.auto.SaTokenDaoByStringFollowObject;
-import cn.dev33.satoken.dao.map.SaMapPackageForConcurrentHashMap;
+import cn.dev33.satoken.dao.timedcache.SaMapPackageForConcurrentHashMap;
 import cn.dev33.satoken.dao.timedcache.SaTimedCache;
 import cn.dev33.satoken.util.SaFoxUtil;
 

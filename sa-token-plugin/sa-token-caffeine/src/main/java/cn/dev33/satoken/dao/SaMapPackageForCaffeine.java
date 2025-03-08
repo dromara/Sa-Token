@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.dao;
 
-import cn.dev33.satoken.dao.map.SaMapPackage;
+import cn.dev33.satoken.dao.timedcache.SaMapPackage;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 

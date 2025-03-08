@@ -18,7 +18,6 @@ package cn.dev33.satoken.dao.timedcache;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.dao.map.SaMapPackage;
 
 import java.util.Set;
 
