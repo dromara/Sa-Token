@@ -92,6 +92,7 @@ StpUtil.getAnonTokenSession();   // 获取当前匿名 Token-Session （可在�
 
 // 其它
 StpUtil.getSessionBySessionId("xxxx-xxxx-xxxx");   // 获取指定key的Session, 如果Session尚未创建，则返回 null
+StpUtil.isTrustDeviceId(123456, "xxxxxxxxxxxxxxxxxxxxxxxx");   // 判断对于指定 loginId 来讲，指定设备 id 是否为可信任设备
 ```
 
 
@@ -146,8 +147,10 @@ StpUtil.getTokenValueByLoginId(10001);   // 获取指定账号id的tokenValue
 StpUtil.getTokenValueByLoginId(10001, "PC");   // 获取指定账号id指定设备类型端的tokenValue
 StpUtil.getTokenValueListByLoginId(10001);   // 获取指定账号id的tokenValue集合 
 StpUtil.getTokenValueListByLoginId(10001, "APP");   // 获取指定账号id指定设备类型端的tokenValue 集合 
+StpUtil.getTerminalListByLoginId(10001);   // 获取指定账号 id 已登录设备信息集合
+StpUtil.getTerminalListByLoginId(10001, "PC");   // 获取指定账号 id 指定设备类型端的已登录设备信息集合
 StpUtil.getLoginDevice();   // 返回当前会话的登录设备类型
-StpUtil.getLoginDeviceByToken(xxx);   // // 返回任意 token 的登录设备类型
+StpUtil.getLoginDeviceByToken(xxx);   // 返回任意 token 的登录设备类型
 ```
 
 

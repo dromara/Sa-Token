@@ -31,6 +31,7 @@ session.getTerminal(tokenValue);   // 查找一个终端信息，根据 tokenVal
 session.addTerminal(terminal);   // 添加一个终端信息
 session.removeTerminal(tokenValue);   // 移除一个终端信息
 session.maxTerminalIndex();   // 获取最大的终端索引值，如无返0
+session.isTrustDeviceId("xxxxxxxxxxxxxxxxxxxxxxxx");   // 判断指定设备 id 是否为可信任设备
 ```
 
 
