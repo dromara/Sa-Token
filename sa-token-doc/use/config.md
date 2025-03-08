@@ -127,6 +127,7 @@ public class SaTokenConfigure {
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHeader			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
 | isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token，此值为 false 后，`StpUtil.login(id)` 登录时也不会再往前端注入Cookie				|
+| isLastingCookie		| Boolean	| true		| 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）						|
 | isWriteHeader			| Boolean	| false		| 是否在登录后将 Token 写入到响应头							|
 | tokenStyle			| String	| uuid		| token风格， [参考：自定义Token风格](/up/token-style)										|
 | dataRefreshPeriod		| int		| 30		| 默认数据持久组件实现类中，每次清理过期数据间隔的时间 （单位: 秒） ，默认值30秒，设置为-1代表不启动定时清理 		|
