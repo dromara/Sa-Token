@@ -586,7 +586,7 @@ public class StpLogic {
 		// 4、判断当前 StpLogic 是否支持 extra 扩展参数
 		if( ! isSupportExtra()) {
 			// 如果不支持，开发者却传入了 extra 扩展参数，那么就打印警告信息
-			if(loginParameter.isSetExtraData()) {
+			if(loginParameter.haveExtraData()) {
 				SaManager.log.warn("当前 StpLogic 不支持 extra 扩展参数模式，传入的 extra 参数将被忽略");
 			}
 		}

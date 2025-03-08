@@ -164,7 +164,7 @@ public class SaLoginParameter {
 	 * 判断是否设置了扩展数据（只在jwt模式下生效）
 	 * @return /
 	 */
-	public boolean isSetExtraData() {
+	public boolean haveExtraData() {
 		return extraData != null && !extraData.isEmpty();
 	}
 
@@ -198,7 +198,7 @@ public class SaLoginParameter {
 	 * 判断是否设置了本次登录挂载到 SaTerminalInfo 的自定义扩展数据
 	 * @return / 
 	 */
-	public boolean isSetTerminalExtraData() {
+	public boolean haveTerminalExtraData() {
 		return terminalExtraData != null && !terminalExtraData.isEmpty();
 	}
 

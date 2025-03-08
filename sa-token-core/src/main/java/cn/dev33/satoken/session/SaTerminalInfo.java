@@ -116,7 +116,7 @@ public class SaTerminalInfo implements Serializable {
 	 * 判断是否设置了扩展数据
 	 * @return /
 	 */
-	public boolean isSetExtraData() {
+	public boolean haveExtraData() {
 		return extraData != null && !extraData.isEmpty();
 	}
 

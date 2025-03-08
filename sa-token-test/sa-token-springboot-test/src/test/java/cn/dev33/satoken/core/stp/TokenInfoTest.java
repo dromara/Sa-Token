@@ -75,7 +75,7 @@ public class TokenInfoTest {
 		SaLoginParameter lm = new SaLoginParameter().setExtraData(extraData);
 		Assertions.assertEquals(lm.getExtraData(), extraData);
 		Assertions.assertEquals(lm.getExtra("age"), 20);
-		Assertions.assertTrue(lm.isSetExtraData());
+		Assertions.assertTrue(lm.haveExtraData());
 		Assertions.assertNotNull(lm.toString());
 		
 		// 计算 CookieTimeout 
