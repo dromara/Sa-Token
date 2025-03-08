@@ -17,27 +17,26 @@ package cn.dev33.satoken.dao;
 
 
 import cn.dev33.satoken.dao.auto.SaTokenDaoByStringFollowObject;
-import cn.dev33.satoken.dao.map.SaMapPackageForConcurrentHashMap;
 import cn.dev33.satoken.dao.timedcache.SaTimedCache;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.List;
 
 /**
- * Sa-Token 持久层接口，默认实现类，基于 SaTimedCache - ConcurrentHashMap （内存缓存，系统重启后数据丢失）
+ * Sa-Token 持久层实现，基于 SaTimedCache - Caffeine （内存缓存，系统重启后数据丢失）
  *
  * @author click33
- * @since 1.10.0
+ * @since 1.41.0
  */
-public class SaTokenDaoDefaultImpl implements SaTokenDaoByStringFollowObject {
+public class SaTokenDaoForCaffeine implements SaTokenDaoByStringFollowObject {
 
 	public SaTimedCache timedCache = new SaTimedCache(
-			new SaMapPackageForConcurrentHashMap<>(),
-			new SaMapPackageForConcurrentHashMap<>()
+			new SaMapPackageForCaffeine<>(),
+			new SaMapPackageForCaffeine<>()
 	);
-	
-	// ------------------------ Object 读写操作 
-	
+
+	// ------------------------ Object 读写操作
+
 	@Override
 	public Object getObject(String key) {
 		return timedCache.getObject(key);

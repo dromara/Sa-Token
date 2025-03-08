@@ -38,6 +38,7 @@
 		<fastjson2.version>2.0.15</fastjson2.version>
 		<redisson.version>3.45.0</redisson.version>
 		<hutool-cache.version>5.8.36</hutool-cache.version>
+		<caffeine.version>3.2.0</caffeine.version>
     </properties>
 
     <dependencyManagement>
@@ -263,6 +264,13 @@
 				<groupId>cn.hutool</groupId>
 				<artifactId>hutool-cache</artifactId>
 				<version>${hutool-cache.version}</version>
+			</dependency>
+
+			<!-- Caffeine -->
+			<dependency>
+				<groupId>com.github.ben-manes.caffeine</groupId>
+				<artifactId>caffeine</artifactId>
+				<version>${caffeine.version}</version>
 			</dependency>
 
 			<!-- sa-token 自身依赖 -->

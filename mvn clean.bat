@@ -14,6 +14,7 @@ cd sa-token-demo-case & call mvn clean & cd ..
 cd sa-token-demo-device-lock & call mvn clean & cd ..
 cd sa-token-demo-grpc & call mvn clean & cd ..
 cd sa-token-demo-hutool-timed-cache & call mvn clean & cd ..
+cd sa-token-demo-caffeine & call mvn clean & cd ..
 cd sa-token-demo-jwt & call mvn clean & cd ..
 cd sa-token-demo-quick-login & call mvn clean & cd ..
 cd sa-token-demo-solon & call mvn clean & cd ..

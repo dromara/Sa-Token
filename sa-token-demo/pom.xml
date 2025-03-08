@@ -13,6 +13,7 @@
 		<module>sa-token-demo-alone-redis-cluster</module>
 		<module>sa-token-demo-beetl</module>
 		<module>sa-token-demo-bom-import</module>
+		<module>sa-token-demo-caffeine</module>
 		<module>sa-token-demo-case</module>
 		<module>sa-token-demo-device-lock</module>
 		<module>sa-token-demo-dubbo/sa-token-demo-dubbo-provider</module>

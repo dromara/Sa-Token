@@ -18,9 +18,9 @@ package cn.dev33.satoken.dao.timedcache;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.map.SaMapPackage;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 
 /**
  * 一个定时缓存的简单实现，采用：惰性检查 + 异步循环扫描
@@ -33,12 +33,17 @@ public class SaTimedCache {
 	/**
 	 * 存储数据的集合
 	 */
-	public Map<String, Object> dataMap = new ConcurrentHashMap<>();
+	public SaMapPackage<Object> dataMap;
 
 	/**
 	 * 存储数据过期时间的集合（单位: 毫秒）, 记录所有 key 的到期时间 （注意存储的是到期时间，不是剩余存活时间）
 	 */
-	public Map<String, Long> expireMap = new ConcurrentHashMap<>();
+	public SaMapPackage<Long> expireMap;
+
+	public SaTimedCache(SaMapPackage<Object> dataMap, SaMapPackage<Long> expireMap) {
+		this.dataMap = dataMap;
+		this.expireMap = expireMap;
+	}
 
 	
 	// ------------------------ 基础 API 读写操作
@@ -74,6 +79,10 @@ public class SaTimedCache {
 
 	public void updateObjectTimeout(String key, long timeout) {
 		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+	}
+
+	public Set<String> keySet() {
+		return dataMap.keySet();
 	}
 
 

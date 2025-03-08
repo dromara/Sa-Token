@@ -191,6 +191,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-fastjson2                    // [插件] Sa-Token 整合 Fastjson (json序列化插件) 
 		├── sa-token-snack3                       // [插件] Sa-Token 整合 Snack3 (json序列化插件) 
 		├── sa-token-hutool-timed-cache           // [插件] Sa-Token 整合 Hutool 缓存组件 Timed-Cache（基于内存） (数据缓存插件) 
+		├── sa-token-caffeine                     // [插件] Sa-Token 整合 Caffeine 缓存组件（基于内存） (数据缓存插件) 
 		├── sa-token-thymeleaf                    // [插件] Sa-Token 整合 Thymeleaf (自定义标签方言) 
 		├── sa-token-freemarker                   // [插件] Sa-Token 整合 Freemarker (自定义标签方言) 
 		├── sa-token-dubbo                        // [插件] Sa-Token 整合 Dubbo (RPC 调用鉴权、状态传递) 
@@ -228,6 +229,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 			├── client                                // [示例] Sa-Token 集成 grpc 鉴权，client 端
 			├── server                                // [示例] Sa-Token 集成 grpc 鉴权，server 端
 		├── sa-token-demo-hutool-timed-cache      // [示例] Sa-Token 集成 hutool timed-cache
+		├── sa-token-demo-caffeine                // [示例] Sa-Token 集成 Caffeine
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 登录认证 
 		├── sa-token-demo-oauth2                  // [示例] Sa-Token 集成 OAuth2.0
 			├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)

@@ -24,6 +24,7 @@
         <module>sa-token-fastjson2</module>
         <module>sa-token-snack3</module>
         <module>sa-token-hutool-timed-cache</module>
+        <module>sa-token-caffeine</module>
         <module>sa-token-thymeleaf</module>
         <module>sa-token-freemarker</module>
         <module>sa-token-dubbo</module>
