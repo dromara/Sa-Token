@@ -69,7 +69,7 @@ public class SaLoginParameter {
 	/**
 	 * 指定此次登录 token 有效期，单位：秒 （如未指定，自动取全局配置的 timeout 值）
 	 */
-	private Long timeout;
+	private long timeout;
 
 	/**
 	 * 指定此次登录 token 最低活跃频率，单位：秒（如未指定，则使用全局配置的 activeTimeout 值）
@@ -293,7 +293,7 @@ public class SaLoginParameter {
 	/**
 	 * @return 指定此次登录 token 有效期，单位：秒
 	 */
-	public Long getTimeout() {
+	public long getTimeout() {
 		return timeout;
 	}
 

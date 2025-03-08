@@ -13,15 +13,15 @@ Sa-Token 内置防火墙组件 `SaFirewallStrategy`，用于拦截一些可能�
 - `SaFirewallCheckHookForWhitePath`：请求 path 白名单放行。
 - `SaFirewallCheckHookForBlackPath`：请求 path 黑名单校验。
 - `SaFirewallCheckHookForPathDangerCharacter`：请求 path 危险字符校。
-- `SaFirewallCheckHookForPathBannedCharacter`：请求 path 禁止字符校验
-- `SaFirewallCheckHookForDirectoryTraversal`：请求 path 目录遍历符检测
+- `SaFirewallCheckHookForPathBannedCharacter`：请求 path 禁止字符校验。
+- `SaFirewallCheckHookForDirectoryTraversal`：请求 path 目录遍历符检测。
 - `SaFirewallCheckHookForHost`：Host 检测。
 - `SaFirewallCheckHookForHttpMethod`：请求 Method 检测。
 - `SaFirewallCheckHookForHeader`：请求头检测。
 - `SaFirewallCheckHookForParameter`：请求参数检测。
 
 
-### 默认 hook 配置：
+### 1、默认 hook 配置：
 
 假设我们想要增加请求 path 黑名单，可以使用如下代码：
 
@@ -45,7 +45,7 @@ public class SaTokenConfigure {
 除了 `SaFirewallCheckHookForBlackPath` 以外，其它所有 hook 均可通过此方式重载配置，在此暂不冗余演示。
 
 
-### 注册新的 hook 规则：
+### 2、注册新的 hook 规则：
 你可以使用如下代码注册新的 hook 规则：
 
 ``` java
@@ -68,7 +68,7 @@ SaFirewallStrategy.instance.removeHook(SaFirewallCheckHookForHost.class);
 ```
 
 
-### 指定异常处理：
+### 3、指定异常处理：
 
 被防火墙拦截的请求不会做出格式化响应，因为通常这些请求为非正常业务请求，只需阻断即可，无需前端依照响应做出页面提示。
 
