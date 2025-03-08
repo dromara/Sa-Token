@@ -110,14 +110,24 @@ value 格式
     "name": "张三"    // 此 session 挂载数据 详情
 	// 更多值 ...
   },
-  "tokenSignList": [    // 客户端 token 信息列表（Account-Session才会有值）
+  "terminalList": [		// 已登录终端信息列表（Account-Session才会有值）
     "java.util.Vector",
     [
       {
-        "@class": "cn.dev33.satoken.session.TokenSign",
-        "value": "06d1f12b-614e-4c00-8d8e-c07fef5f4aa9",    // 客户端 token 值
-        "device": "default-device",     // 登录设备
-        "tag": null    // 挂载自定义值 
+        "@class": "cn.dev33.satoken.session.SaTerminalInfo",
+        "index": 1,
+        "tokenValue": "2551663f-bb98-47d7-9af3-e2e6a28dadce",   // 客户端 token 值
+        "deviceType": "default-device",  // 登录设备类型 
+        "deviceId": "xxxxxxxxx",  // 登录设备id 
+        "extraData": {
+			// 扩展信息列表 （手动自定义值）
+			"@class": "java.util.LinkedHashMap",
+			"deviceSimpleTitle": "XiaoMi 15 Ultra",
+			"loginAddress": "浙江省杭州市西湖区",
+			"loginIp": "127.0.0.1",
+			"loginTime": "2025-03-08 15:00:02"
+        },
+        "createTime": 1741406340845 // 登录时间 
       }
     ]
   ]

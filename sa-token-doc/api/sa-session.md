@@ -21,16 +21,16 @@ session.setCreateTime(createTime);   // 写入此 Session 的创建时间（时�
 ```
 
 
-### 3、TokenSign 相关 
+### 3、SaTerminalInfo 相关 
 ``` java
-session.setTokenSignList(tokenSignList);   // 写入此 Session 绑定的 Token 签名列表 
-session.getTokenSignList();   // 获取此 Session 绑定的 Token 签名列表 
-session.tokenSignListCopy();   // 获取 Token 签名列表 的拷贝副本
-session.tokenSignListCopyByDevice(device);   // 返回 Token 签名列表 的拷贝副本，根据 device 筛选 
-session.getTokenSign(tokenValue);   // 查找一个 Token 签名
-session.addTokenSign(tokenSign);   // 添加一个 Token 签名
-session.addTokenSign(tokenValue, device);   // 添加一个 Token 签名
-session.removeTokenSign(tokenValue);   // 移除一个 Token 签名
+session.setTerminalList(terminalList);   // 写入登录终端信息列表
+session.getTerminalList();   // 获取登录终端信息列表
+session.terminalListCopy();   // 获取 登录终端信息列表 (拷贝副本)
+session.getTerminalListByDeviceType(deviceType);   // 获取 登录终端信息列表 (拷贝副本)，根据 deviceType 筛选
+session.getTerminal(tokenValue);   // 查找一个终端信息，根据 tokenValue
+session.addTerminal(terminal);   // 添加一个终端信息
+session.removeTerminal(tokenValue);   // 移除一个终端信息
+session.maxTerminalIndex();   // 获取最大的终端索引值，如无返0
 ```
 
 
@@ -38,7 +38,7 @@ session.removeTokenSign(tokenValue);   // 移除一个 Token 签名
 ``` java
 session.update();   // 更新Session（从持久库更新刷新一下）
 session.logout();   // 注销Session (从持久库删除)
-session.logoutByTokenSignCountToZero();   // 当Session上的tokenSign数量为零时，注销会话 
+session.logoutByTerminalCountToZero();   // 当 Session 上的 SaTerminalInfo 数量为零时，注销会话 
 session.getTimeout();   // 获取此Session的剩余存活时间 (单位: 秒)
 session.updateTimeout(timeout);   // 修改此Session的剩余存活时间
 session.updateMinTimeout(minTimeout);   // 修改此Session的最小剩余存活时间 (只有在 Session 的过期时间低于指定的 minTimeout 时才会进行修改)

@@ -65,9 +65,9 @@ for (String sessionId : sessionIdList) {
 	// 根据会话id，查询对应的 SaSession 对象，此处一个 SaSession 对象即代表一个登录的账号 
 	SaSession session = StpUtil.getSessionBySessionId(sessionId);
 	
-	// 查询这个账号都在哪些设备登录了，依据上面的示例，账号A 的 tokenSign 数量是 3，账号B 的 tokenSign 数量是 2 
-	List<TokenSign> tokenSignList = session.getTokenSignList();
-	System.out.println("会话id：" + sessionId + "，共在 " + tokenSignList.size() + " 设备登录");
+	// 查询这个账号都在哪些设备登录了，依据上面的示例，账号A 的 SaTerminalInfo 数量是 3，账号B 的 SaTerminalInfo 数量是 2 
+	List<SaTerminalInfo> terminalList = session.terminalListCopy();
+	System.out.println("会话id：" + sessionId + "，共在 " + terminalList.size() + " 设备登录");
 }
 ```
 

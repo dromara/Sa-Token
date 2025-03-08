@@ -410,10 +410,10 @@ sa-token.oauth2-server.oidc.idTokenTimeout=600
 配置含义：同一账号最大登录数量。
 
 在配置 `isConcurrent=true`, `isShare=false` 时，Sa-Token 将允许同一账号并发登录，且每次登录都会产生一个新Token，
-这些 Token 都会以 `TokenSign` 的形式记录在其 `Account-Session` 之上，这就造成一个问题：
+这些 Token 都会以 `SaTerminalInfo` 的形式记录在其 `Account-Session` 之上，这就造成一个问题：
 
-随着同一账号登录的次数越来越多，TokenSign 的列表也会越来越大，极端情况下，列表长度可能达到成百上千以上，严重拖慢数据处理速度，
-为此 Sa-Token 对这个 TokenSign 列表的大小设定一个上限值，也就是 `maxLoginCount`，默认值=12。
+随着同一账号登录的次数越来越多，SaTerminalInfo 的列表也会越来越大，极端情况下，列表长度可能达到成百上千以上，严重拖慢数据处理速度，
+为此 Sa-Token 对这个 SaTerminalInfo 列表的大小设定一个上限值，也就是 `maxLoginCount`，默认值=12。
 
 假设一个账号的登录数量超过 `maxLoginCount` 后，将会主动注销第一个登录的会话（先进先出），以此保证队列中的有效会话数量始终 `<= maxLoginCount` 值。
 
