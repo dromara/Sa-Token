@@ -367,8 +367,8 @@ public class SaSignTemplate {
 
 	/**
 	 * 校验：一个请求的 nonce、timestamp、sign 是否均为合法的，如果不合法，则抛出对应的异常
-	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 * @param request 待校验的请求对象
+	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 */
 	public void checkRequest(SaRequest request, String... paramNames) {
 		if (paramNames.length == 0) {

@@ -160,18 +160,20 @@ public class SaSignUtil {
 	/**
 	 * 判断：一个请求中的 nonce、timestamp、sign 是否均为合法的
 	 * @param request 待校验的请求对象
+	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 * @return 是否合法
 	 */
-	public static boolean isValidRequest(SaRequest request) {
-		return SaManager.getSaSignTemplate().isValidRequest(request);
+	public static boolean isValidRequest(SaRequest request, String... paramNames) {
+		return SaManager.getSaSignTemplate().isValidRequest(request, paramNames);
 	}
 
 	/**
 	 * 校验：一个请求的 nonce、timestamp、sign 是否均为合法的，如果不合法，则抛出对应的异常
 	 * @param request 待校验的请求对象
+	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 */
-	public static void checkRequest(SaRequest request) {
-		SaManager.getSaSignTemplate().checkRequest(request);
+	public static void checkRequest(SaRequest request, String... paramNames) {
+		SaManager.getSaSignTemplate().checkRequest(request, paramNames);
 	}
 
 }

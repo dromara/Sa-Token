@@ -7,7 +7,6 @@ import cn.dev33.satoken.stp.SaLoginParameter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
-import com.pj.model.SysUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,11 +45,11 @@ public class TestController {
 //		StpUtil.getLoginId();
 //		StpUtil.getAnonTokenSession();
 //		StpUtil.setTokenValue("xxx");
-		StpUtil.getSession().set("name", "zhang");
-		StpUtil.getSession().set("age", 18);
-		SysUser user = new SysUser(10001, "lisi", 22);
-		StpUtil.getSession().set("user", user);
-		StpUtil.getTokenSession().set("user", user);
+//		StpUtil.getSession().set("name", "zhang");
+//		StpUtil.getSession().set("age", 18);
+//		SysUser user = new SysUser(10001, "lisi", 22);
+//		StpUtil.getSession().set("user", user);
+//		StpUtil.getTokenSession().set("user", user);
 
 		// 返回
 		return SaResult.data(null);
