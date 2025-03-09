@@ -119,7 +119,7 @@ public class SaSignUtil {
 	}
 
 	/**
-	 * 判断：给定的参数 + 秘钥 生成的签名是否为有效签名
+	 * 判断：给定的参数 生成的签名是否为有效签名
 	 * @param paramsMap 参数列表
 	 * @param sign 待验证的签名
 	 * @return 签名是否有效
@@ -129,7 +129,7 @@ public class SaSignUtil {
 	}
 
 	/**
-	 * 校验：给定的参数 + 秘钥 生成的签名是否为有效签名，如果签名无效则抛出异常
+	 * 校验：给定的参数 生成的签名是否为有效签名，如果签名无效则抛出异常
 	 * @param paramsMap 参数列表
 	 * @param sign 待验证的签名
 	 */
@@ -153,6 +153,9 @@ public class SaSignUtil {
 	public static void checkParamMap(Map<String, String> paramMap) {
 		SaManager.getSaSignTemplate().checkParamMap(paramMap);
 	}
+
+
+	// ----------- Web 请求相关 封装
 
 	/**
 	 * 判断：一个请求中的 nonce、timestamp、sign 是否均为合法的

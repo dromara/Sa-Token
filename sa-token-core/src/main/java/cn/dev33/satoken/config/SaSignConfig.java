@@ -15,6 +15,10 @@
  */
 package cn.dev33.satoken.config;
 
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.fun.SaParamRetFunction;
+import cn.dev33.satoken.secure.SaSecureUtil;
+
 /**
  * Sa-Token API 接口签名/验签 相关配置类
  *
@@ -36,6 +40,10 @@ public class SaSignConfig {
      */
     private long timestampDisparity = 1000  * 60 * 15;
 
+    /**
+     * 对 fullStr 的摘要算法
+     */
+    private String digestAlgo = "md5";
 
     public SaSignConfig() {
     }
@@ -47,6 +55,70 @@ public class SaSignConfig {
     public SaSignConfig(String secretKey) {
         this.secretKey = secretKey;
     }
+
+
+    // -------------- 扩展方法
+
+    /**
+     * 计算保存 nonce 时应该使用的 ttl，单位：秒
+     * @return /
+     */
+    public long getSaveNonceExpire() {
+        // 如果 timestampDisparity >= 0，则 nonceTtl 的值等于 timestampDisparity 的值，单位转秒
+        if(timestampDisparity >= 0) {
+            return timestampDisparity / 1000;
+        }
+        // 否则，nonceTtl 的值为 24 小时
+        else {
+            return 60 * 60 * 24;
+        }
+    }
+
+
+    // -------------- 策略函数
+
+    /**
+     * 对 fullStr 的摘要算法函数
+     */
+    public SaParamRetFunction<String, String> digestMethod = (fullStr) -> {
+        // md5
+        if(digestAlgo.equalsIgnoreCase("md5")) {
+            return SaSecureUtil.md5(fullStr);
+        }
+        // sha1
+        if(digestAlgo.equalsIgnoreCase("sha1")) {
+            return SaSecureUtil.sha1(fullStr);
+        }
+        // sha256
+        if(digestAlgo.equalsIgnoreCase("sha256")) {
+            return SaSecureUtil.sha256(fullStr);
+        }
+        // sha384
+        if(digestAlgo.equalsIgnoreCase("sha384")) {
+            return SaSecureUtil.sha384(fullStr);
+        }
+        // sha512
+        if(digestAlgo.equalsIgnoreCase("sha512")) {
+            return SaSecureUtil.sha512(fullStr);
+        }
+        // 未知
+        throw new SaTokenException("不支持的摘要算法：" + digestAlgo + "，你可以自定义摘要算法函数实现");
+    };
+
+    /**
+     * 设置: 对 fullStr 的摘要算法函数
+     *
+     * @param digestMethod /
+     * @return 对象自身
+     */
+    public SaSignConfig setDigestMethod(SaParamRetFunction<String, String> digestMethod) {
+        this.digestMethod = digestMethod;
+        return this;
+    }
+
+
+
+    // -------------- get/set
 
     /**
      * 获取 API 调用签名秘钥
@@ -95,18 +167,22 @@ public class SaSignConfig {
     }
 
     /**
-     * 计算保存 nonce 时应该使用的 ttl，单位：秒
+     * 获取 对 fullStr 的摘要算法
+     *
+     * @return digestAlgo 对 fullStr 的摘要算法
+     */
+    public String getDigestAlgo() {
+        return this.digestAlgo;
+    }
+
+    /**
+     * 设置 对 fullStr 的摘要算法
+     * @param digestAlgo /
      * @return /
      */
-    public long getSaveNonceExpire() {
-        // 如果 timestampDisparity >= 0，则 nonceTtl 的值等于 timestampDisparity 的值，单位转秒
-        if(timestampDisparity >= 0) {
-            return timestampDisparity / 1000;
-        }
-        // 否则，nonceTtl 的值为 24 小时
-        else {
-            return 60 * 60 * 24;
-        }
+    public SaSignConfig setDigestAlgo(String digestAlgo) {
+        this.digestAlgo = digestAlgo;
+        return this;
     }
 
     @Override
@@ -115,17 +191,6 @@ public class SaSignConfig {
                 + "secretKey=" + secretKey
                 + ", timestampDisparity=" + timestampDisparity
                 + "]";
-    }
-
-    /**
-     * 设置：是否校验 nonce 随机字符串
-     * <h2> isCheckNonce 方案已废弃，不再提供此配置项 </h2>
-     *
-     * @param isCheckNonce /
-     */
-    @Deprecated
-    public void setIsCheckNonce(Boolean isCheckNonce) {
-        System.err.println("--------- isCheckNonce 方案已废弃，不再提供此配置项 ---------");
     }
 
 }

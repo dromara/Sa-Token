@@ -20,7 +20,6 @@ import cn.dev33.satoken.config.SaSignConfig;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaSignException;
-import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.Map;
@@ -173,7 +172,7 @@ public class SaSignTemplate {
 		// 计算签名
 		String paramsStr = joinParamsDictSort(paramsMap);
 		String fullStr = paramsStr + "&" + key + "=" + secretKey;
-		String signStr = abstractStr(fullStr);
+		String signStr = digestFullStr(fullStr);
 
 		// 输入日志，方便调试
 		log.debug("fullStr：{}", fullStr);
@@ -188,8 +187,8 @@ public class SaSignTemplate {
 	 * @param fullStr 待摘要的字符串
 	 * @return 签名
 	 */
-	public String abstractStr(String fullStr) {
-		return SaSecureUtil.md5(fullStr);
+	public String digestFullStr(String fullStr) {
+		return getSignConfigOrGlobal().digestMethod.run(fullStr);
 	}
 
 	/**
@@ -281,7 +280,7 @@ public class SaSignTemplate {
 	}
 
 	/**
-	 * 判断：给定的参数 + 秘钥 生成的签名是否为有效签名
+	 * 判断：给定的参数 生成的签名是否为有效签名
 	 * @param paramsMap 参数列表
 	 * @param sign 待验证的签名
 	 * @return 签名是否有效
@@ -292,7 +291,7 @@ public class SaSignTemplate {
 	}
 
 	/**
-	 * 校验：给定的参数 + 秘钥 生成的签名是否为有效签名，如果签名无效则抛出异常
+	 * 校验：给定的参数 生成的签名是否为有效签名，如果签名无效则抛出异常
 	 * @param paramsMap 参数列表
 	 * @param sign 待验证的签名
 	 */
@@ -349,6 +348,9 @@ public class SaSignTemplate {
 		// 通过 √
 	}
 
+
+	// ----------- Web 请求相关 封装
+
 	/**
 	 * 判断：一个请求中的 nonce、timestamp、sign 是否均为合法的
 	 * @param request 待校验的请求对象
@@ -382,7 +384,7 @@ public class SaSignTemplate {
 	 * @param paramNames 指定的参数名称，不可为空，如果传入空数组则代表只拿 timestamp、nonce、sign 三个参数
 	 * @return 提取出的参数
 	 */
-	public Map<String, String> takeRequestParam(SaRequest request, String [] paramNames) {
+	protected Map<String, String> takeRequestParam(SaRequest request, String [] paramNames) {
 		Map<String, String> paramMap = new TreeMap<>();
 
 		// 此三个参数是必须获取的

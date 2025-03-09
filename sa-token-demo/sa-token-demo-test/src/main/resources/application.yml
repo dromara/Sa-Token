@@ -18,6 +18,9 @@ sa-token:
     token-style: uuid
     # 是否输出操作日志 
     is-log: true
+    sign:
+        # token签名密钥
+        secret-key: abc123
 
 spring:
     # redis配置 
