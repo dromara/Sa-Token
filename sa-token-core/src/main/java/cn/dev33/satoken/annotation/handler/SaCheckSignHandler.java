@@ -17,7 +17,8 @@ package cn.dev33.satoken.annotation.handler;
 
 import cn.dev33.satoken.annotation.SaCheckSign;
 import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.sign.SaSignUtil;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.sign.SaSignMany;
 
 import java.lang.reflect.Method;
 
@@ -36,11 +37,17 @@ public class SaCheckSignHandler implements SaAnnotationHandlerInterface<SaCheckS
 
     @Override
     public void checkMethod(SaCheckSign at, Method method) {
-        _checkMethod(at.verifyParams());
+        _checkMethod(at.appid(), at.verifyParams());
     }
 
-    public static void _checkMethod(String[] params) {
-        SaSignUtil.checkRequest(SaHolder.getRequest(), params);
+    public static void _checkMethod(String appid, String[] verifyParams) {
+        SaRequest req = SaHolder.getRequest();
+        // 如果 appid 为 #{} 格式，则从请求参数中获取
+        if(appid.startsWith("#{") && appid.endsWith("}")) {
+            String reqParamName = appid.substring(2, appid.length() - 1);
+            appid = req.getParam(reqParamName);
+        }
+        SaSignMany.getSignTemplate(appid).checkRequest(req, verifyParams);
     }
 
 }

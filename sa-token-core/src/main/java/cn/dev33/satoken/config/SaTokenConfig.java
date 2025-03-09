@@ -18,6 +18,8 @@ package cn.dev33.satoken.config;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Sa-Token 配置类 Model
@@ -185,6 +187,11 @@ public class SaTokenConfig implements Serializable {
 	 * API 签名配置对象
 	 */
 	public SaSignConfig sign = new SaSignConfig();
+
+	/**
+	 * API 签名配置 多实例
+	 */
+	public Map<String, SaSignConfig> signMany = new LinkedHashMap<>();
 
 
 	/**
@@ -695,6 +702,25 @@ public class SaTokenConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * 获取 API 签名配置 多实例
+	 *
+	 * @return /
+	 */
+	public Map<String, SaSignConfig> getSignMany() {
+		return this.signMany;
+	}
+
+	/**
+	 * 设置 API 签名配置 多实例
+	 *
+	 * @param signMany /
+	 * @return /
+	 */
+	public SaTokenConfig setSignMany(Map<String, SaSignConfig> signMany) {
+		this.signMany = signMany;
+		return this;
+	}
 	@Override
 	public String toString() {
 		return "SaTokenConfig ["
@@ -729,6 +755,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", checkSameToken=" + checkSameToken 
 				+ ", cookie=" + cookie
 				+ ", sign=" + sign
+				+ ", signMany=" + signMany
 				+ "]";
 	}
 

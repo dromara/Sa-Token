@@ -198,4 +198,7 @@ public interface SaErrorCode {
 	/** timestamp 超出允许的范围 */
 	int CODE_12203 = 12203;
 
+	/** 未找到对应 appid 的 SaSignConfig */
+	int CODE_12211 = 12211;
+
 }

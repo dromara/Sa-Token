@@ -21,6 +21,9 @@ sa-token:
     sign:
         # token签名密钥
         secret-key: abc123
+    sign-many:
+        10001:
+            secret-key: 123456
 
 spring:
     # redis配置 

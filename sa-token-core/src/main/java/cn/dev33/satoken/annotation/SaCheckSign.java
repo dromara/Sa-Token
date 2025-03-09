@@ -33,6 +33,14 @@ import java.lang.annotation.Target;
 public @interface SaCheckSign {
 
 	/**
+	 * 多实例下的 appid 值，用于区分不同的实例，如不填写则代表使用全局默认实例 <br/>
+	 * 允许以 #{} 的形式指定为请求参数，如：#{appid}
+	 *
+	 * @return /
+	 */
+	String appid() default "";
+
+	/**
 	 * 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 *
 	 * @return /
