@@ -23,6 +23,18 @@
 
 Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
+要在 SpringBoot 项目中使用 Sa-Token，你只需要在 pom.xml 中引入依赖：
+
+``` xml
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-spring-boot-starter</artifactId>
+	<version>1.40.0</version>
+</dependency>
+```
+
+除了 SpringBoot2、Sa-Token 还为 SpringBoot3、Solon、JFinal 等常见 Web 框架提供集成包，做到真正的开箱即用。
 
 
 <details>
