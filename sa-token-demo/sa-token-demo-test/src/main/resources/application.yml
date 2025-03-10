@@ -13,17 +13,11 @@ sa-token:
     # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
     is-concurrent: true
     # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
-    is-share: true
+    is-share: false
     # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
     token-style: uuid
     # 是否输出操作日志 
     is-log: true
-    sign:
-        # token签名密钥
-        secret-key: abc123
-    sign-many:
-        10001:
-            secret-key: 123456
 
 spring:
     # redis配置 
@@ -35,7 +29,7 @@ spring:
         # Redis服务器连接端口
         port: 6379
         # Redis服务器连接密码（默认为空）
-        password: 
+        password:
         # 连接超时时间
         timeout: 10s
         lettuce:

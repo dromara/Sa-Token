@@ -64,7 +64,7 @@ sa-token:
     # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
 	is-concurrent: true
     # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
-	is-share: true
+	is-share: false
     # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
 	token-style: uuid
     # 是否输出操作日志 
@@ -87,7 +87,7 @@ sa-token.active-timeout=-1
 # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
 sa-token.is-concurrent=true
 # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
-sa-token.is-share=true
+sa-token.is-share=false
 # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
 sa-token.token-style=uuid
 # 是否输出操作日志 

@@ -262,7 +262,7 @@ public class StpLogicJwtForMixin extends StpLogic {
 	// ------------------- Bean对象代理 -------------------  
 	
 	/**
-	 * 返回全局配置对象的 isShare 属性
+	 * 返回当前 StpLogic 是否支持 isShare 
 	 * @return / 
 	 */
 	@Override

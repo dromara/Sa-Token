@@ -41,7 +41,7 @@ public class TestController {
 
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
-	@SaCheckSign(appid = "#{appid}", verifyParams = {"name", "age"})
+	@SaCheckSign(verifyParams = {"name", "age"})
 	public SaResult test() {
 		System.out.println("------------进来了 " + SaFoxUtil.formatDate(new Date()));
 //		StpUtil.getLoginId();

@@ -61,7 +61,7 @@ public class SaTokenConfig implements Serializable {
 	/**
 	 * 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 	 */
-	private Boolean isShare = true;
+	private Boolean isShare = false;
 
 	/**
 	 * 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置项才有意义）
