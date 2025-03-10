@@ -457,7 +457,7 @@ body {
 /* 帮助按钮 */
 .help-btn{transition: all 0.5s; text-align: center; border: 1px #42b983 solid; background-color: rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 13px; color: #42b983; line-height: 40px;}
 .help-btn:hover{box-shadow: 0 0 20px #D1EEE1 !important;}
-.xiaozhushou-intro p{line-height: 16px;}
+.xiaozhushou-intro p{line-height: 14px;}
 
 /* ew-wa */
 .ew-wa{ margin-top: 14px; line-height: 18px; color: #aaa; }

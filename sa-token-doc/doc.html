@@ -188,8 +188,7 @@
 					</div>
 					
 					<!-- help 按钮 -->
-					<div class="help-btn">技术求助</div>
-					
+					<div class="help-btn">❤️ 技术求助</div>
 					<!-- ew-wa -->
 					<div class="ew-wa">
 						<p>如果 Sa-Token 帮助到了你，希望你可以向同事、朋友推荐了解本框架，这对我们非常重要，感谢支持！ <!-- 🤗 --> </p>
@@ -406,6 +405,13 @@
 			$('.help-btn').click(function(){
 				var str = `
 					<div class="xiaozhushou-intro">
+						<h2>报错了？搞不懂？别急、莫慌</h2>
+						<div style="margin-top: 20px; color: green;">
+							<p>👉 你的问题可能很多人都碰到过了！这有一份高频报错速查文档：<a href="doc.html#/more/common-questions" onclick="layer.closeAll()">常见问题排查</a></p>
+							<p>👉 几乎每个功能点都有对应的最简示例 Demo，或许可以给你一份参考：<a href="https://gitee.com/dromara/sa-token/tree/master/sa-token-demo" target="_blank" >sa-token-demo</a></p>
+							<p>👉 复杂功能玩不转？来看看这些优秀开源案例是怎么集成 Sa-Token 的：<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank" >awesome-sa-token</a></p>
+						</div>
+						<div style="margin-top: 20px; color: red;">上述方案没有解决你的问题？那你可以来“麻烦”一下我们的小助手了：</div>
 						<p>1、你在使用 Sa-Token 时遇到任何技术难题，可以向 < sa-token 小助手 > 求助咨询。</p>
 						<p>2、该小助手不属于商业运营，求助咨询完全免费。</p>
 						<p>3、目前该小助手属于试运营阶段，每天只能提供大约 1 小时的求助时间。</p>
@@ -416,13 +422,13 @@
 						<p>1、如果你是使用 PC 端微信，请点此链接：<a href="https://work.weixin.qq.com/kfid/kfcdd45c432fee9655f" target="_blank">https://work.weixin.qq.com/kfid/kfcdd45c432fee9655f</a></p>
 						<p>2、如果你是使用手机端微信，请扫码：</p>
 						<p><img src="https://oss.dev33.cn/sa-token/sa-token-xiaozhushou.jpg" width="200px"></p>
-						<p>如果您的问题已解决，我们希望您能够花费一点时间将解决方案发布在：<a href="https://gitee.com/dromara/sa-token/issues/I9I9CY" target="_blank">踩坑记录征集</a>，帮助以后遇到同样问题的开发者快速排查，感激不尽！</p>
+						<p>如果您的问题已解决，我们希望您能够花费一点时间将解决方案发布在：<a href="https://gitee.com/dromara/sa-token/issues/I9I9CY" target="_blank">踩坑记录征集</a>，帮助以后遇到同样问题的开发者快速排查，感激不尽！🌹🌹🌹</p>
 					</div>
 				`;
 				layer.alert(str, {
 					title: '技术求助', 
-					area: '650px', 
-					offset: '10%',
+					area: '680px', 
+					offset: '7%',
 				})
 			})
 			// setTimeout(function(){
