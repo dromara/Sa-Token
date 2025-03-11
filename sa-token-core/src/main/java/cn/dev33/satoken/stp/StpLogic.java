@@ -901,14 +901,15 @@ public class StpLogic {
 				// 2.4、将此 token 标记为：已被顶下线
 				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
 
-				// 2.5、此处不需要清除它的 Token-Session 对象
-				// deleteTokenSession(tokenValue);
+				// 2.5、清除 Token-Session 对象
+				deleteTokenSession(tokenValue);
 
 				// 2.6、$$ 发布事件：xx 账号的 xx 客户端注销了
 				SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
 			}
 
 			// 3、因为调用顶替下线时，一般都是在新客户端正在登录，所以此处不需要清除该账号的 Account-Session
+			//   如果此处清除了 Account-Session，将可能导致 Account-Session 被注销后又立刻创建出来，造成不必要的性能浪费
 			// session.logoutByTerminalCountToZero();
 		}
 	}
