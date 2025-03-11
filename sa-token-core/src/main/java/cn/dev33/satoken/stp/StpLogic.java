@@ -825,8 +825,8 @@ public class StpLogic {
 				// 2.4、将此 token 标记为：已被踢下线
 				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
 
-				// 2.5、此处不需要清除它的 Token-Session 对象
-				// deleteTokenSession(tokenValue);
+				// 2.5、清除 Token-Session
+				deleteTokenSession(tokenValue);
 
 				// 2.6、$$ 发布事件：xx 账号的 xx 客户端被踢下线了
 				SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
