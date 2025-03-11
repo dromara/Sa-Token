@@ -849,8 +849,8 @@ public class StpLogic {
 			clearLastActive(tokenValue);
 		}
 		
-		// 2、此处不需要清除它的 Token-Session 对象
-		// deleteTokenSession(tokenValue);
+		// 2、清除 Token-Session
+		deleteTokenSession(tokenValue);
 
 		// 3、判断一下：如果此 token 映射的是一个无效 loginId，则此处立即返回，不需要再往下处理了
  		String loginId = getLoginIdNotHandle(tokenValue);
