@@ -1,7 +1,7 @@
 package com.pj.satoken;
 
 import cn.dev33.satoken.listener.SaTokenListener;
-import cn.dev33.satoken.stp.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 
 /**
  * Sa-Token 自定义侦听器的实现 

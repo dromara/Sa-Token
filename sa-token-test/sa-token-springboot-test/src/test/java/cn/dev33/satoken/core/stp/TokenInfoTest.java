@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.core.stp;
 
-import cn.dev33.satoken.stp.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.junit.jupiter.api.Assertions;
@@ -83,7 +83,7 @@ public class TokenInfoTest {
 				.create()
 				.setTimeout(-1);
 		Assertions.assertEquals(loginParameter.getCookieTimeout(), Integer.MAX_VALUE);
-		Assertions.assertEquals(loginParameter.getDeviceOrDefault(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+		Assertions.assertEquals(loginParameter.getDeviceTypeOrDefault(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);
 	}
 	
 }

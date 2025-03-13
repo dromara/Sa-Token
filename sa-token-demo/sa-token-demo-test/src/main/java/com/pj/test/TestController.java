@@ -4,7 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckHttpDigest;
 import cn.dev33.satoken.annotation.SaCheckSign;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.spring.SpringMVCUtil;
-import cn.dev33.satoken.stp.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;

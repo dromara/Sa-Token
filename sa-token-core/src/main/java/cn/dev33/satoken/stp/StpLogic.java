@@ -31,6 +31,11 @@ import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.model.wrapperInfo.SaDisableWrapperInfo;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaTerminalInfo;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
+import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
+import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedMode;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -473,7 +478,6 @@ public class StpLogic {
 		
 		// 4、在 Account-Session 上记录本次登录的终端信息
 		SaTerminalInfo terminalInfo = new SaTerminalInfo()
-				.setIndex(session.maxTerminalIndex() + 1)
 				.setDeviceType(loginParameter.getDeviceType())
 				.setDeviceId(loginParameter.getDeviceId())
 				.setTokenValue(tokenValue)
@@ -500,7 +504,7 @@ public class StpLogic {
 
 		// 9、检查此账号会话数量是否超出最大值，如果超过，则按照登录时间顺序，把最开始登录的给注销掉
 		if(loginParameter.getMaxLoginCount() != -1) {
-			logoutByMaxLoginCount(id, session, null, loginParameter.getMaxLoginCount());
+			logoutByMaxLoginCount(id, session, null, loginParameter.getMaxLoginCount(), loginParameter.getOverflowLogoutMode());
 		}
 		
 		// 10、一切处理完毕，返回会话凭证 token
@@ -519,8 +523,12 @@ public class StpLogic {
 		// 1、获取全局配置的 isConcurrent 参数
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
 		if( ! loginParameter.getIsConcurrent()) {
-			// TODO 此处应该加一个配置决定是只顶掉当前设备类型，还是所有类型
-			replaced(id, loginParameter.getDeviceType());
+			if(loginParameter.getReplacedMode() == SaReplacedMode.CURR_DEVICE_TYPE) {
+				replaced(id, loginParameter.getDeviceTypeOrDefault());
+			}
+			if(loginParameter.getReplacedMode() == SaReplacedMode.ALL_DEVICE_TYPE) {
+				replaced(id, createSaLogoutParameter());
+			}
 		}
 		
 		// 2、如果调用者预定了要生成的 token，则直接返回这个预定的值，框架无需再操心了
@@ -612,12 +620,19 @@ public class StpLogic {
 		return tokenValue;
 	}
 
-	// --- 注销 
-	
-	/** 
+	// --- 注销 (根据 token)
+
+	/**
 	 * 在当前客户端会话注销
 	 */
 	public void logout() {
+		logout(createSaLogoutParameter());
+	}
+
+	/** 
+	 * 在当前客户端会话注销，根据注销参数
+	 */
+	public void logout(SaLogoutParameter logoutParameter) {
 		// 1、如果本次请求连 Token 都没有提交，那么它本身也不属于登录状态，此时无需执行任何操作
 		String tokenValue = getTokenValue();
  		if(SaFoxUtil.isEmpty(tokenValue)) {
@@ -649,67 +664,338 @@ public class StpLogic {
 		storage.delete(SaTokenConsts.TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY);
 
  		// 5、清除这个 token 的其它相关信息
- 		logoutByTokenValue(tokenValue);
+		if(logoutParameter.getRange() == SaLogoutRange.TOKEN) {
+			logoutByTokenValue(tokenValue, logoutParameter);
+		} else {
+			Object loginId = getLoginIdByTokenNotThinkFreeze(tokenValue);
+			if(loginId != null) {
+				if(!logoutParameter.getIsKeepFreezeOps() && isFreeze(tokenValue)) {
+					return;
+				}
+				logout(loginId, logoutParameter);
+			}
+		}
 	}
 
 	/**
-	 * 会话注销，根据账号id 
+	 * 注销下线，根据指定 token
 	 * 
-	 * @param loginId 账号id 
+	 * @param tokenValue 指定 token
+	 */
+	public void logoutByTokenValue(String tokenValue) {
+		logoutByTokenValue(tokenValue, createSaLogoutParameter());
+	}
+
+	/**
+	 * 注销下线，根据指定 token、注销参数
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter /
+	 */
+	public void logoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		_logoutByTokenValue(tokenValue, logoutParameter.setMode(SaLogoutMode.LOGOUT));
+	}
+
+	/**
+	 * 踢人下线，根据指定 token
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 * 
+	 * @param tokenValue 指定 token
+	 */
+	public void kickoutByTokenValue(String tokenValue) {
+		kickoutByTokenValue(tokenValue, createSaLogoutParameter());
+	}
+
+	/**
+	 * 踢人下线，根据指定 token、注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter 注销参数
+	 */
+	public void kickoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		_logoutByTokenValue(tokenValue, logoutParameter.setMode(SaLogoutMode.KICKOUT));
+	}
+
+	/**
+	 * 顶人下线，根据指定 token
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public void replacedByTokenValue(String tokenValue) {
+		replacedByTokenValue(tokenValue, createSaLogoutParameter());
+	}
+
+	/**
+	 * 顶人下线，根据指定 token、注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter /
+	 */
+	public void replacedByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		_logoutByTokenValue(tokenValue, logoutParameter.setMode(SaLogoutMode.REPLACED));
+	}
+
+	/**
+	 * [work] 注销下线，根据指定 token 、注销参数
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter 注销参数
+	 */
+	public void _logoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+
+		// 1、判断一下：如果此 token 映射的是一个无效 loginId，则此处立即返回，不需要再往下处理了
+		// 		如果不提前截止，则后续的操作可能会写入意外数据
+		Object loginId = getLoginIdByTokenNotThinkFreeze(tokenValue);
+		if( SaFoxUtil.isEmpty(loginId) ) {
+			return;
+		}
+		if(!logoutParameter.getIsKeepFreezeOps() && isFreeze(tokenValue)) {
+			return;
+		}
+
+		// 2、清除这个 token 的最后活跃时间记录
+		if(isOpenCheckActiveTimeout()) {
+			clearLastActive(tokenValue);
+		}
+
+		// 3、清除 Token-Session
+		if( ! logoutParameter.getIsKeepTokenSession()) {
+			deleteTokenSession(tokenValue);
+		}
+
+		// 4、清理或更改 Token 映射
+		// 5、发布事件通知
+		// 		SaLogoutMode.LOGOUT：注销下线
+		if(logoutParameter.getMode() == SaLogoutMode.LOGOUT) {
+			deleteTokenToIdMapping(tokenValue);
+			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
+		}
+		// 		SaLogoutMode.LOGOUT：踢人下线
+		if(logoutParameter.getMode() == SaLogoutMode.KICKOUT) {
+			updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
+			SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
+		}
+		//		SaLogoutMode.REPLACED：顶人下线
+		if(logoutParameter.getMode() == SaLogoutMode.REPLACED) {
+			updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
+			SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
+		}
+
+		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session != null) {
+			session.removeTerminal(tokenValue);
+			session.logoutByTerminalCountToZero();
+		}
+	}
+
+	// --- 注销 (根据 loginId)
+
+	/**
+	 * 会话注销，根据账号id
+	 *
+	 * @param loginId 账号id
 	 */
 	public void logout(Object loginId) {
-		logout(loginId, null);
+		logout(loginId, createSaLogoutParameter());
 	}
 
 	/**
 	 * 会话注销，根据账号id 和 设备类型
-	 * 
-	 * @param loginId 账号id 
+	 *
+	 * @param loginId 账号id
 	 * @param deviceType 设备类型 (填 null 代表注销该账号的所有设备类型)
 	 */
 	public void logout(Object loginId, String deviceType) {
+		logout(loginId, createSaLogoutParameter().setDeviceType(deviceType));
+	}
+
+	/**
+	 * 会话注销，根据账号id 和 注销参数
+	 *
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
+	 */
+	public void logout(Object loginId, SaLogoutParameter logoutParameter) {
+		_logout(loginId, logoutParameter.setMode(SaLogoutMode.LOGOUT));
+	}
+
+	/**
+	 * 踢人下线，根据账号id
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param loginId 账号id
+	 */
+	public void kickout(Object loginId) {
+		kickout(loginId, createSaLogoutParameter());
+	}
+
+	/**
+	 * 踢人下线，根据账号id 和 设备类型
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param loginId 账号id
+	 * @param deviceType 设备类型 (填 null 代表踢出该账号的所有设备类型)
+	 */
+	public void kickout(Object loginId, String deviceType) {
+		kickout(loginId, createSaLogoutParameter().setDeviceType(deviceType));
+	}
+
+	/**
+	 * 踢人下线，根据账号id 和 注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
+	 */
+	public void kickout(Object loginId, SaLogoutParameter logoutParameter) {
+		_logout(loginId, logoutParameter.setMode(SaLogoutMode.KICKOUT));
+	}
+
+	/**
+	 * 顶人下线，根据账号id
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 * 
+	 * @param loginId 账号id
+	 */
+	public void replaced(Object loginId) {
+		replaced(loginId, createSaLogoutParameter());
+	}
+
+	/**
+	 * 顶人下线，根据账号id 和 设备类型
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param loginId 账号id
+	 * @param deviceType 设备类型 （填 null 代表顶替该账号的所有设备类型）
+	 */
+	public void replaced(Object loginId, String deviceType) {
+		replaced(loginId, createSaLogoutParameter().setDeviceType(deviceType));
+	}
+
+	/**
+	 * 顶人下线，根据账号id 和 注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
+	 */
+	public void replaced(Object loginId, SaLogoutParameter logoutParameter) {
+		_logout(loginId, logoutParameter.setMode(SaLogoutMode.REPLACED));
+	}
+
+	/**
+	 * [work] 会话注销，根据账号id 和 注销参数
+	 *
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
+	 */
+	public void _logout(Object loginId, SaLogoutParameter logoutParameter) {
 		// 1、获取此账号的 Account-Session，上面记录了此账号的所有登录客户端数据
 		SaSession session = getSessionByLoginId(loginId, false);
 		if(session != null) {
 
-			// 2、遍历此账号所有从这个 deviceType 设备类型上登录的客户端，清除相关数据
-			for (SaTerminalInfo terminal: session.getTerminalListByDeviceType(deviceType)) {
-
-				// 2.1、获取此客户端的 token 值
-				String tokenValue = terminal.getTokenValue();
-
-				// 2.2、从 Account-Session 上清除此设备信息
-				session.removeTerminal(tokenValue);
-
-				// 2.3、清除这个 token 的最后活跃时间记录
-				if(isOpenCheckActiveTimeout()) {
-					clearLastActive(tokenValue);
-				}
-
-		 		// 2.4、清除 token -> id 的映射关系
-				deleteTokenToIdMapping(tokenValue);
-
-				// 2.5、清除这个 token 的 Token-Session 对象
-				deleteTokenSession(tokenValue);
-
-				// 2.6、$$ 发布事件：xx 账号的 xx 客户端注销了
-				SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
+			// 2、遍历此 SaTerminalInfo 客户端列表，清除相关数据
+			List<SaTerminalInfo> terminalList = session.getTerminalListByDeviceType(logoutParameter.getDeviceType());
+			for (SaTerminalInfo terminal: terminalList) {
+				_removeTerminal(session, terminal, logoutParameter);
 			}
 
 			// 3、如果代码走到这里的时候，此账号已经没有客户端在登录了，则直接注销掉这个 Account-Session
-			session.logoutByTerminalCountToZero();
+			if(logoutParameter.getMode() == SaLogoutMode.REPLACED) {
+				// 因为调用顶替下线时，一般都是在新客户端正在登录，所以此种情况不需要清除该账号的 Account-Session
+				// 如果清除了 Account-Session，将可能导致 Account-Session 被注销后又立刻创建出来，造成不必要的性能浪费
+			} else {
+				session.logoutByTerminalCountToZero();
+			}
 		}
 	}
-	
+
+	// --- 注销 (会话管理辅助方法)
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (注销下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public void removeTerminalByLogout(SaSession session, SaTerminalInfo terminal) {
+		_removeTerminal(session, terminal, createSaLogoutParameter().setMode(SaLogoutMode.LOGOUT));
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (踢人下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public void removeTerminalByKickout(SaSession session, SaTerminalInfo terminal) {
+		_removeTerminal(session, terminal, createSaLogoutParameter().setMode(SaLogoutMode.KICKOUT));
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (顶人下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public void removeTerminalByReplaced(SaSession session, SaTerminalInfo terminal) {
+		_removeTerminal(session, terminal, createSaLogoutParameter().setMode(SaLogoutMode.REPLACED));
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (内部方法，仅为减少重复代码，外部调用意义不大)
+	 * @param session Account-Session
+	 * @param terminal 设备信息
+	 * @param logoutParameter 注销参数
+	 */
+	public void _removeTerminal(SaSession session, SaTerminalInfo terminal, SaLogoutParameter logoutParameter) {
+
+		Object loginId = session.getLoginId();
+		String tokenValue = terminal.getTokenValue();
+
+		// 1、从 Account-Session 上清除此设备信息
+		session.removeTerminal(tokenValue);
+
+		// 2、清除这个 token 的最后活跃时间记录
+		if(isOpenCheckActiveTimeout()) {
+			clearLastActive(tokenValue);
+		}
+
+		// 3、清除这个 token 的 Token-Session 对象
+		if( ! logoutParameter.getIsKeepTokenSession()) {
+			deleteTokenSession(tokenValue);
+		}
+
+		// 4、清理或更改 Token 映射
+		// 5、发布事件通知
+		// 		SaLogoutMode.LOGOUT：注销下线
+		if(logoutParameter.getMode() == SaLogoutMode.LOGOUT) {
+			deleteTokenToIdMapping(tokenValue);
+			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
+		}
+		// 		SaLogoutMode.LOGOUT：踢人下线
+		if(logoutParameter.getMode() == SaLogoutMode.KICKOUT) {
+			updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
+			SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
+		}
+		//		SaLogoutMode.REPLACED：顶人下线
+		if(logoutParameter.getMode() == SaLogoutMode.REPLACED) {
+			updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
+			SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
+		}
+	}
+
 	/**
 	 * 如果指定账号 id、设备类型的登录客户端已经超过了指定数量，则按照登录时间顺序，把最开始登录的给注销掉
-	 * 
-	 * @param loginId 账号id 
+	 *
+	 * @param loginId 账号id
 	 * @param session 此账号的 Account-Session 对象，可填写 null，框架将自动获取
 	 * @param deviceType 设备类型（填 null 代表注销此账号所有设备类型的登录）
 	 * @param maxLoginCount 最大登录数量，超过此数量的将被注销
+	 * @param logoutMode 超出的客户端将以何种方式被注销
 	 */
-	public void logoutByMaxLoginCount(Object loginId, SaSession session, String deviceType, int maxLoginCount) {
+	public void logoutByMaxLoginCount(Object loginId, SaSession session, String deviceType, int maxLoginCount, SaLogoutMode logoutMode) {
 
 		// 1、如果调用者提供的  Account-Session 对象为空，则我们先手动获取一下
 		if(session == null) {
@@ -724,196 +1010,14 @@ public class StpLogic {
 
 		// 3、按照登录时间倒叙，超过 maxLoginCount 数量的，全部注销掉
 		for (int i = 0; i < list.size() - maxLoginCount; i++) {
-
-			// 3.1、获取此客户端的 token 值
-			String tokenValue = list.get(i).getTokenValue();
-
-			// 3.2、从 Account-Session 上清除 terminal 信息
-			session.removeTerminal(tokenValue);
-
-			// 3.3、清除这个 token 的最后活跃时间记录
-			if(isOpenCheckActiveTimeout()) {
-				clearLastActive(tokenValue);
-			}
-
-	 		// 3.4、清除 token -> id 的映射关系
-			deleteTokenToIdMapping(tokenValue);
-
-			// 3.5、清除这个 token 的 Token-Session 对象
-			deleteTokenSession(tokenValue);
-
-			// 3.6、$$ 发布事件：xx 账号的 xx 客户端注销了
-			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
+			_removeTerminal(session, list.get(i), createSaLogoutParameter().setMode(logoutMode));
 		}
 
 		// 4、如果代码走到这里的时候，此账号已经没有客户端在登录了，则直接注销掉这个 Account-Session
 		session.logoutByTerminalCountToZero();
 	}
-	
-	/**
-	 * 会话注销，根据指定 Token 
-	 * 
-	 * @param tokenValue 指定 token
-	 */
-	public void logoutByTokenValue(String tokenValue) {
-		// 1、清除这个 token 的最后活跃时间记录
-		if(isOpenCheckActiveTimeout()) {
-			clearLastActive(tokenValue);
-		}
-		
-		// 2、清除这个 token 的 Token-Session 对象
-		deleteTokenSession(tokenValue);
 
-		// 3、清除 token -> id 的映射关系
- 		String loginId = getLoginIdNotHandle(tokenValue);
- 		if(loginId != null) {
- 			deleteTokenToIdMapping(tokenValue);
- 		}
 
-		// 4、判断一下：如果此 token 映射的是一个无效 loginId，则此处立即返回，不需要再往下处理了
- 	 	if( ! isValidLoginId(loginId) ) {
- 			return;
- 		}
- 	 	
- 	 	// 5、$$ 发布事件：某某账号的某某 token 注销下线了
- 		SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
- 		
-		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
- 	 	SaSession session = getSessionByLoginId(loginId, false);
- 	 	if(session != null) {
- 	 	 	session.removeTerminal(tokenValue);
- 			session.logoutByTerminalCountToZero();
- 	 	}
-	}
-	
-	/**
-	 * 踢人下线，根据账号id 
-	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
-	 * 
-	 * @param loginId 账号id 
-	 */
-	public void kickout(Object loginId) {
-		kickout(loginId, null);
-	}
-	
-	/**
-	 * 踢人下线，根据账号id 和 设备类型 
-	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
-	 * 
-	 * @param loginId 账号id 
-	 * @param deviceType 设备类型 (填 null 代表踢出该账号的所有设备类型)
-	 */
-	public void kickout(Object loginId, String deviceType) {
-		// 1、获取此账号的 Account-Session，上面记录了此账号的所有登录客户端数据
-		SaSession session = getSessionByLoginId(loginId, false);
-		if(session != null) {
-
-			// 2、遍历此账号所有从这个 deviceType 设备上登录的客户端，清除相关数据
-			for (SaTerminalInfo terminal: session.getTerminalListByDeviceType(deviceType)) {
-
-				// 2.1、获取此客户端的 token 值
-				String tokenValue = terminal.getTokenValue();
-
-				// 2.2、从 Account-Session 上清除 terminal 信息
-				session.removeTerminal(tokenValue);
-
-				// 2.3、清除这个 token 的最后活跃时间记录
-				if(isOpenCheckActiveTimeout()) {
-					clearLastActive(tokenValue);
-				}
-
-				// 2.4、将此 token 标记为：已被踢下线
-				updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-
-				// 2.5、清除 Token-Session
-				deleteTokenSession(tokenValue);
-
-				// 2.6、$$ 发布事件：xx 账号的 xx 客户端被踢下线了
-				SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
-			}
-
-			// 3、如果代码走到这里的时候，此账号已经没有客户端在登录了，则直接注销掉这个 Account-Session
-			session.logoutByTerminalCountToZero();
-		}
-	}
-
-	/**
-	 * 踢人下线，根据指定 token
-	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
-	 * 
-	 * @param tokenValue 指定 token
-	 */
-	public void kickoutByTokenValue(String tokenValue) {
-		// 1、清除这个 token 的最后活跃时间记录
-		if(isOpenCheckActiveTimeout()) {
-			clearLastActive(tokenValue);
-		}
-		
-		// 2、清除 Token-Session
-		deleteTokenSession(tokenValue);
-
-		// 3、判断一下：如果此 token 映射的是一个无效 loginId，则此处立即返回，不需要再往下处理了
- 		String loginId = getLoginIdNotHandle(tokenValue);
- 	 	if( ! isValidLoginId(loginId) ) {
- 			return;
- 		}
- 	 	
- 		// 4、将此 token 标记为：已被踢下线
- 	 	updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-		
- 	 	// 5、$$. 发布事件：某某 token 被踢下线了
- 		SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
-
-		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
- 	 	SaSession session = getSessionByLoginId(loginId, false);
- 	 	if(session != null) {
- 	 	 	session.removeTerminal(tokenValue);
- 			session.logoutByTerminalCountToZero();
- 	 	}
-	}
-	
-	/**
-	 * 顶人下线，根据账号id 和 设备类型 
-	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
-	 * 
-	 * @param loginId 账号id 
-	 * @param deviceType 设备类型 （填 null 代表顶替该账号的所有设备类型）
-	 */
-	public void replaced(Object loginId, String deviceType) {
-		// 1、获取此账号的 Account-Session，上面记录了此账号的所有登录客户端数据
-		SaSession session = getSessionByLoginId(loginId, false);
-		if(session != null) {
-
-			// 2、遍历此账号所有从这个 deviceType 设备上登录的客户端，清除相关数据
-			for (SaTerminalInfo ter: session.getTerminalListByDeviceType(deviceType)) {
-
-				// 2.1、获取此客户端的 token 值
-				String tokenValue = ter.getTokenValue();
-
-				// 2.2、从 Account-Session 上清除 terminal 信息
-				session.removeTerminal(tokenValue);
-
-				// 2.3、清除这个 token 的最后活跃时间记录
-				if(isOpenCheckActiveTimeout()) {
-					clearLastActive(tokenValue);
-				}
-
-				// 2.4、将此 token 标记为：已被顶下线
-				updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
-
-				// 2.5、清除 Token-Session 对象
-				deleteTokenSession(tokenValue);
-
-				// 2.6、$$ 发布事件：xx 账号的 xx 客户端注销了
-				SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
-			}
-
-			// 3、因为调用顶替下线时，一般都是在新客户端正在登录，所以此处不需要清除该账号的 Account-Session
-			//   如果此处清除了 Account-Session，将可能导致 Account-Session 被注销后又立刻创建出来，造成不必要的性能浪费
-			// session.logoutByTerminalCountToZero();
-		}
-	}
-	
 	// ---- 会话查询 
 	
  	/** 
@@ -1092,27 +1196,48 @@ public class StpLogic {
  	}
  	
  	/** 
- 	 * 获取指定 token 对应的账号id，如果未登录，则返回 null
+ 	 * 获取指定 token 对应的账号id，如果 token 无效或 token 处于被踢、被顶、被冻结等状态，则返回 null
 	 *
  	 * @param tokenValue token
  	 * @return 账号id
  	 */
  	public Object getLoginIdByToken(String tokenValue) {
 
- 		// 1、如果提供的 token 为空，则直接返回 null
- 		if(SaFoxUtil.isEmpty(tokenValue)) {
- 	 		return null;
- 		}
+ 		Object loginId = getLoginIdByTokenNotThinkFreeze(tokenValue);
 
-		// 2、查找此 token 对应的 loginId，如果找不到或找的到但属于无效值，则返回 null
- 		String loginId = getLoginIdNotHandle(tokenValue);
- 		if( ! isValidLoginId(loginId) ) {
- 			return null;
- 		}
+ 		if( SaFoxUtil.isNotEmpty(loginId) ) {
+			// 如果 token 已被冻结，也返回 null
+			long activeTimeout = getTokenActiveTimeoutByToken(tokenValue);
+			if(activeTimeout == SaTokenDao.NOT_VALUE_EXPIRE) {
+				return null;
+			}
+		}
 
- 		// 3、返回
  		return loginId;
  	}
+
+	/**
+	 * 获取指定 token 对应的账号id，如果 token 无效或 token 处于被踢、被顶等状态 (不考虑被冻结)，则返回 null
+	 *
+	 * @param tokenValue token
+	 * @return 账号id
+	 */
+	public Object getLoginIdByTokenNotThinkFreeze(String tokenValue) {
+
+		// 1、如果提供的 token 为空，则直接返回 null
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			return null;
+		}
+
+		// 2、查找此 token 对应的 loginId，如果找不到或找的到但属于无效值，则返回 null
+		String loginId = getLoginIdNotHandle(tokenValue);
+		if( ! isValidLoginId(loginId) ) {
+			return null;
+		}
+
+		// 3、返回
+		return loginId;
+	}
 
  	 /**
  	  * 获取指定 token 对应的账号id （不做任何特殊处理）
@@ -1530,24 +1655,36 @@ public class StpLogic {
  	protected void clearLastActive(String tokenValue) {
  		getSaTokenDao().delete(splicingKeyLastActiveTime(tokenValue));
  	}
- 	
- 	/**
+
+	/**
+	 * 判断指定 token 是否已被冻结
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public boolean isFreeze(String tokenValue) {
+
+		// 1、获取这个 token 的剩余活跃有效期
+		long activeTimeout = getTokenActiveTimeoutByToken(tokenValue);
+
+		// 2、值为 -1 代表此 token 已经被设置永不冻结
+		if(activeTimeout == SaTokenDao.NEVER_EXPIRE) {
+			return false;
+		}
+
+		// 3、值为 -2 代表已被冻结
+		if(activeTimeout == SaTokenDao.NOT_VALUE_EXPIRE) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
  	 * 检查指定 token 是否已被冻结，如果是则抛出异常
 	 *
  	 * @param tokenValue 指定 token
  	 */
  	public void checkActiveTimeout(String tokenValue) {
-
-		// 1、获取这个 token 的剩余活跃有效期
-		long activeTimeout = getTokenActiveTimeoutByToken(tokenValue);
-
-		// 2、值为 -1 代表此 token 已经被设置永不冻结，无须继续验证
-		if(activeTimeout == SaTokenDao.NEVER_EXPIRE) {
-			return;
-		}
-
-		// 3、值为 -2 代表已被冻结，此时需要抛出异常
-		if(activeTimeout == SaTokenDao.NOT_VALUE_EXPIRE) {
+		if (isFreeze(tokenValue)) {
 			throw NotLoginException.newInstance(loginType, TOKEN_FREEZE, TOKEN_FREEZE_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11016);
 		}
  	}
@@ -2927,6 +3064,15 @@ public class StpLogic {
 	 */
 	public SaLoginParameter createSaLoginParameter() {
 		return new SaLoginParameter(getConfigOrGlobal());
+	}
+
+	/**
+	 * 根据当前配置对象创建一个 SaLogoutParameter 对象
+	 *
+	 * @return /
+	 */
+	public SaLogoutParameter createSaLogoutParameter() {
+		return new SaLogoutParameter(getConfigOrGlobal());
 	}
 
 

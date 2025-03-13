@@ -1,6 +1,6 @@
 package com.pj.test;
 
-import cn.dev33.satoken.stp.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.pj.util.DeviceLockCheckUtil;

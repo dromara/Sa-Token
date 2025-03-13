@@ -16,6 +16,7 @@
 package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 
 import java.util.Map;
 

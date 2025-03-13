@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.stp;
+package cn.dev33.satoken.stp.parameter;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedMode;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 在调用 `StpUtil.login()` 时的 配置参数 Model，决定登录的一些细节行为 <br>
+ * 在调用 `StpUtil.login()` 时的 配置参数对象，决定登录的一些细节行为 <br>
  *
  * <pre>
  *     	// 例如：在登录时指定 token 有效期为七天，代码如下：
@@ -47,6 +49,16 @@ public class SaLoginParameter {
 	 * 此次登录的客户端设备id
 	 */
 	private String deviceId;
+
+	/**
+	 * 顶人下线的范围
+	 */
+	private SaReplacedMode replacedMode = SaReplacedMode.CURR_DEVICE_TYPE;
+
+	/**
+	 * 溢出 maxLoginCount 的客户端，将以何种方式注销下线
+	 */
+	private SaLogoutMode overflowLogoutMode = SaLogoutMode.LOGOUT;
 
 	/**
 	 * 扩展信息（只在 jwt 模式下生效）
@@ -123,7 +135,7 @@ public class SaLoginParameter {
 	 * @return 对象自身
 	 */
 	public SaLoginParameter setDefaultValues(SaTokenConfig config) {
-		this.deviceType = SaTokenConsts.DEFAULT_LOGIN_DEVICE;
+		this.deviceType = SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE;
 		this.timeout = config.getTimeout();
 		this.isConcurrent = config.getIsConcurrent();
 		this.isShare = config.getIsShare();
@@ -220,9 +232,9 @@ public class SaLoginParameter {
 	/**
 	 * @return 获取device参数，如果为null，则返回默认值
 	 */
-	public String getDeviceOrDefault() {
+	public String getDeviceTypeOrDefault() {
 		if(deviceType == null) {
-			return SaTokenConsts.DEFAULT_LOGIN_DEVICE;
+			return SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE;
 		}
 		return deviceType;
 	}
@@ -274,6 +286,45 @@ public class SaLoginParameter {
 		return this;
 	}
 
+	/**
+	 * 获取 顶人下线的范围
+	 *
+	 * @return replacedMode 顶人下线的范围
+	 */
+	public SaReplacedMode getReplacedMode() {
+		return this.replacedMode;
+	}
+
+	/**
+	 * 设置 顶人下线的范围
+	 *
+	 * @param replacedMode /
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setReplacedMode(SaReplacedMode replacedMode) {
+		this.replacedMode = replacedMode;
+		return this;
+	}
+
+	/**
+	 * 获取 溢出 maxLoginCount 的客户端，将以何种方式注销下线
+	 *
+	 * @return overflowLogoutMode /
+	 */
+	public SaLogoutMode getOverflowLogoutMode() {
+		return this.overflowLogoutMode;
+	}
+
+	/**
+	 * 设置 溢出 maxLoginCount 的客户端，将以何种方式注销下线
+	 *
+	 * @param overflowLogoutMode /
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setOverflowLogoutMode(SaLogoutMode overflowLogoutMode) {
+		this.overflowLogoutMode = overflowLogoutMode;
+		return this;
+	}
 	/**
 	 * @return 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */
@@ -462,6 +513,8 @@ public class SaLoginParameter {
 		return "SaLoginParameter ["
 				+ "deviceType=" + deviceType
 				+ ", deviceId=" + deviceId
+				+ ", replacedMode=" + replacedMode
+				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout
 				+ ", activeTimeout=" + activeTimeout

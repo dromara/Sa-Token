@@ -54,7 +54,7 @@ public class JwtForSimpleTest {
     	Assertions.assertTrue(StpUtil.isLogin());	
     	Assertions.assertNotNull(token);	// token不为null
     	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型
+    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);	// 登录设备类型
 
     	// token 验证 
     	JWT jwt = JWT.of(token);

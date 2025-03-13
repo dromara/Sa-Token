@@ -13,18 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.stp;
-
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+package cn.dev33.satoken.stp.parameter.enums;
 
 /**
- * <h2> 请更改为 SaLoginParameter </h2>
- * 在调用 `StpUtil.login()` 时的 配置参数 Model，决定登录的一些细节行为 <br>
+ * 顶人下线的范围
  *
  * @author click33
- * @since 1.13.2
+ * @since 1.41.0
  */
-@Deprecated
-public class SaLoginModel extends SaLoginParameter {
+public enum SaReplacedMode {
+
+	/**
+	 * 当前指定的设备类型端
+	 */
+	CURR_DEVICE_TYPE,
+
+	/**
+	 * 所有设备类型端
+	 */
+	ALL_DEVICE_TYPE
 
 }

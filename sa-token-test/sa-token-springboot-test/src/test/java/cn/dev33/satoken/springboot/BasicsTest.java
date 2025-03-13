@@ -26,7 +26,7 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import cn.dev33.satoken.stp.SaLoginConfig;
-import cn.dev33.satoken.stp.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -102,11 +102,11 @@ public class BasicsTest {
     	Assertions.assertNotNull(token);
     	Assertions.assertEquals(token, StpUtil.getTokenValueNotCut());
     	Assertions.assertEquals(token, StpUtil.getTokenValueByLoginId(10001));
-    	Assertions.assertEquals(token, StpUtil.getTokenValueByLoginId(10001, SaTokenConsts.DEFAULT_LOGIN_DEVICE));
+    	Assertions.assertEquals(token, StpUtil.getTokenValueByLoginId(10001, SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE));
     	
     	// token 队列 
     	List<String> tokenList = StpUtil.getTokenValueListByLoginId(10001);
-    	List<String> tokenList2 = StpUtil.getTokenValueListByLoginId(10001, SaTokenConsts.DEFAULT_LOGIN_DEVICE);
+    	List<String> tokenList2 = StpUtil.getTokenValueListByLoginId(10001, SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);
     	Assertions.assertEquals(token, tokenList.get(tokenList.size() - 1));
     	Assertions.assertEquals(token, tokenList2.get(tokenList.size() - 1));
     	
@@ -119,7 +119,7 @@ public class BasicsTest {
     	Assertions.assertEquals(StpUtil.getLoginIdAsString(), "10001");	// loginId=10001 
     	Assertions.assertEquals(StpUtil.getLoginId(), "10001");	// loginId=10001 
     	Assertions.assertEquals(StpUtil.getLoginIdDefaultNull(), "10001");	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型 
+    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);	// 登录设备类型
     	
     	// db数据 验证  
     	// token存在 

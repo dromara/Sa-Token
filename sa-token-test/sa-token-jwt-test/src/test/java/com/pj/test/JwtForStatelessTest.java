@@ -55,13 +55,13 @@ public class JwtForStatelessTest {
     	Assertions.assertTrue(StpUtil.isLogin());	
     	Assertions.assertNotNull(token);	// token不为null
     	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE);	// 登录设备类型 
+    	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);	// 登录设备类型
 
     	// token 验证 
     	JWT jwt = JWT.of(token);
     	JSONObject payloads = jwt.getPayloads();
     	Assertions.assertEquals(payloads.getStr(SaJwtUtil.LOGIN_ID), "10001"); // 账号 
-    	Assertions.assertEquals(payloads.getStr(SaJwtUtil.DEVICE_TYPE), SaTokenConsts.DEFAULT_LOGIN_DEVICE);  // 登录设备类型
+    	Assertions.assertEquals(payloads.getStr(SaJwtUtil.DEVICE_TYPE), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);  // 登录设备类型
     	Assertions.assertEquals(payloads.getStr(SaJwtUtil.LOGIN_TYPE), StpUtil.TYPE);  // 账号类型 
     	
     	// 时间 

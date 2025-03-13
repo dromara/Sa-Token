@@ -74,7 +74,7 @@ public class SaTokenConsts {
 	/**
 	 * 常量 key 标记: 在登录时，默认使用的设备类型 
 	 */
-	public static final String DEFAULT_LOGIN_DEVICE = "default-device"; 
+	public static final String DEFAULT_LOGIN_DEVICE_TYPE = "DEF";
 
 	/**
 	 * 常量 key 标记: 在封禁账号时，默认封禁的服务类型 

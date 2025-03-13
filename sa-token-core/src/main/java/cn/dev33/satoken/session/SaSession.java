@@ -89,6 +89,11 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	private String token;
 
 	/**
+	 * 当前账号历史总计登录设备数量 （当此 SaSession 属于 Account-Session 时，此值有效）
+	 */
+	private int historyTerminalCount;
+
+	/**
 	 * 此 SaSession 的创建时间（13位时间戳）
 	 */
 	private long createTime;
@@ -330,6 +335,8 @@ public class SaSession implements SaSetValueInterface, Serializable {
 			terminalList.remove(oldTerminal);
 		}
 		// 然后添加新的
+		this.historyTerminalCount++;
+		terminalInfo.setIndex(this.historyTerminalCount);
 		terminalList.add(terminalInfo);
 		update();
 	}
@@ -347,19 +354,23 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	}
 
 	/**
-	 * 获取最大的终端索引值，如无返0
+	 * 获取 当前账号历史总计登录设备数量 （当此 SaSession 属于 Account-Session 时，此值有效）
+	 *
 	 * @return /
 	 */
-	public int maxTerminalIndex() {
-		int max = 0;
-		for (SaTerminalInfo terminal : terminalListCopy()) {
-			int index = terminal.getIndex();
-			if (index > max) {
-				max = index;
-			}
-		}
-		return max;
+	public int getHistoryTerminalCount() {
+		return this.historyTerminalCount;
 	}
+
+	/**
+	 * 设置 当前账号历史总计登录设备数量 （当此 SaSession 属于 Account-Session 时，此值有效）
+	 *
+	 * @param historyTerminalCount /
+	 */
+	public void setHistoryTerminalCount(int historyTerminalCount) {
+		this.historyTerminalCount = historyTerminalCount;
+	}
+
 
 	/**
 	 * 判断指定设备 id 是否为可信任设备

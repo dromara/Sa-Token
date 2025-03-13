@@ -20,6 +20,8 @@ import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaTerminalInfo;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 
 import java.util.List;
 
@@ -235,7 +237,7 @@ public class StpUtil {
 		return stpLogic.getOrCreateLoginSession(id);
 	}
 
-	// --- 注销 
+	// --- 注销 (根据 token)
 
 	/**
 	 * 在当前客户端会话注销
@@ -245,7 +247,77 @@ public class StpUtil {
 	}
 
 	/**
-	 * 会话注销，根据账号id 
+	 * 在当前客户端会话注销，根据注销参数
+	 */
+	public static void logout(SaLogoutParameter logoutParameter) {
+		stpLogic.logout(logoutParameter);
+	}
+
+	/**
+	 * 注销下线，根据指定 token
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public static void logoutByTokenValue(String tokenValue) {
+		stpLogic.logoutByTokenValue(tokenValue);
+	}
+
+	/**
+	 * 注销下线，根据指定 token、注销参数
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter /
+	 */
+	public static void logoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		stpLogic.logoutByTokenValue(tokenValue, logoutParameter);
+	}
+
+	/**
+	 * 踢人下线，根据指定 token
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public static void kickoutByTokenValue(String tokenValue) {
+		stpLogic.kickoutByTokenValue(tokenValue);
+	}
+
+	/**
+	 * 踢人下线，根据指定 token、注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter 注销参数
+	 */
+	public static void kickoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		stpLogic.kickoutByTokenValue(tokenValue, logoutParameter);
+	}
+
+	/**
+	 * 顶人下线，根据指定 token
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public static void replacedByTokenValue(String tokenValue) {
+		stpLogic.replacedByTokenValue(tokenValue);
+	}
+
+	/**
+	 * 顶人下线，根据指定 token、注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter /
+	 */
+	public static void replacedByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		stpLogic.replacedByTokenValue(tokenValue, logoutParameter);
+	}
+
+	// --- 注销 (根据 loginId)
+
+	/**
+	 * 会话注销，根据账号id
 	 *
 	 * @param loginId 账号id
 	 */
@@ -256,7 +328,7 @@ public class StpUtil {
 	/**
 	 * 会话注销，根据账号id 和 设备类型
 	 *
-	 * @param loginId 账号id 
+	 * @param loginId 账号id
 	 * @param deviceType 设备类型 (填 null 代表注销该账号的所有设备类型)
 	 */
 	public static void logout(Object loginId, String deviceType) {
@@ -264,19 +336,20 @@ public class StpUtil {
 	}
 
 	/**
-	 * 会话注销，根据指定 Token 
+	 * 会话注销，根据账号id 和 注销参数
 	 *
-	 * @param tokenValue 指定 token
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
 	 */
-	public static void logoutByTokenValue(String tokenValue) {
-		stpLogic.logoutByTokenValue(tokenValue);
+	public static void logout(Object loginId, SaLogoutParameter logoutParameter) {
+		stpLogic.logout(loginId, logoutParameter);
 	}
 
 	/**
-	 * 踢人下线，根据账号id 
+	 * 踢人下线，根据账号id
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
 	 *
-	 * @param loginId 账号id 
+	 * @param loginId 账号id
 	 */
 	public static void kickout(Object loginId) {
 		stpLogic.kickout(loginId);
@@ -294,13 +367,24 @@ public class StpUtil {
 	}
 
 	/**
-	 * 踢人下线，根据指定 token
+	 * 踢人下线，根据账号id 和 注销参数
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
 	 *
-	 * @param tokenValue 指定 token
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
 	 */
-	public static void kickoutByTokenValue(String tokenValue) {
-		stpLogic.kickoutByTokenValue(tokenValue);
+	public static void kickout(Object loginId, SaLogoutParameter logoutParameter) {
+		stpLogic.kickout(loginId, logoutParameter);
+	}
+
+	/**
+	 * 顶人下线，根据账号id
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param loginId 账号id
+	 */
+	public static void replaced(Object loginId) {
+		stpLogic.replaced(loginId);
 	}
 
 	/**
@@ -313,6 +397,47 @@ public class StpUtil {
 	public static void replaced(Object loginId, String deviceType) {
 		stpLogic.replaced(loginId, deviceType);
 	}
+
+	/**
+	 * 顶人下线，根据账号id 和 注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
+	 */
+	public static void replaced(Object loginId, SaLogoutParameter logoutParameter) {
+		stpLogic.replaced(loginId, logoutParameter);
+	}
+
+	// --- 注销 (会话管理辅助方法)
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (注销下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public static void removeTerminalByLogout(SaSession session, SaTerminalInfo terminal) {
+		stpLogic.removeTerminalByLogout(session, terminal);
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (踢人下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public static void removeTerminalByKickout(SaSession session, SaTerminalInfo terminal) {
+		stpLogic.removeTerminalByKickout(session, terminal);
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (顶人下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public static void removeTerminalByReplaced(SaSession session, SaTerminalInfo terminal) {
+		stpLogic.removeTerminalByReplaced(session, terminal);
+	}
+
 
 	// 会话查询
 
@@ -398,7 +523,7 @@ public class StpUtil {
 	}
 
 	/**
-	 * 获取指定 token 对应的账号id，如果未登录，则返回 null
+	 * 获取指定 token 对应的账号id，如果 token 无效或 token 处于被踢、被顶、被冻结等状态，则返回 null
 	 *
 	 * @param tokenValue token
 	 * @return 账号id
@@ -406,6 +531,16 @@ public class StpUtil {
  	public static Object getLoginIdByToken(String tokenValue) {
  		return stpLogic.getLoginIdByToken(tokenValue);
  	}
+
+	/**
+	 * 获取指定 token 对应的账号id，如果 token 无效或 token 处于被踢、被顶等状态 (不考虑被冻结)，则返回 null
+	 *
+	 * @param tokenValue token
+	 * @return 账号id
+	 */
+	public Object getLoginIdByTokenNotThinkFreeze(String tokenValue) {
+		return stpLogic.getLoginIdByTokenNotThinkFreeze(tokenValue);
+	}
 
 	/**
 	 * 获取当前 Token 的扩展信息（此函数只在jwt模式下生效）
