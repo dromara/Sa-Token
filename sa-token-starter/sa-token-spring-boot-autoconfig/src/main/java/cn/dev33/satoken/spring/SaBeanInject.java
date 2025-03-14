@@ -38,6 +38,8 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
+import cn.dev33.satoken.strategy.SaFirewallStrategy;
+import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -229,6 +231,18 @@ public class SaBeanInject {
 	@Qualifier("mvcPathMatcher")
 	public void setPathMatcher(PathMatcher pathMatcher) {
 		SaPathMatcherHolder.setPathMatcher(pathMatcher);
+	}
+
+	/**
+	 * 注入自定义防火墙校验 hook 集合
+	 *
+	 * @param hooks /
+	 */
+	@Autowired(required = false)
+	public void setSaFirewallCheckHooks(List<SaFirewallCheckHook> hooks) {
+		for (SaFirewallCheckHook hook : hooks) {
+			SaFirewallStrategy.instance.registerHook(hook);
+		}
 	}
 
 }
