@@ -15,17 +15,17 @@
  */
 package cn.dev33.satoken.quick.web;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import cn.dev33.satoken.quick.SaQuickManager;
 import cn.dev33.satoken.quick.config.SaQuickConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 登录Controller，处理登录相关请求
@@ -55,7 +55,7 @@ public class SaQuickController {
 	 */
 	@PostMapping("/doLogin")
 	@ResponseBody
-	public SaResult doLogin(String name, String pwd) {
+	public SaResult doLogin(@RequestParam("name") String name, @RequestParam("pwd") String pwd) {
 		
 		// 参数完整性校验
 		if(SaFoxUtil.isEmpty(name) || SaFoxUtil.isEmpty(pwd)) {

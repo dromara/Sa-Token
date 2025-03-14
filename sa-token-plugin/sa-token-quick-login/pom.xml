@@ -19,10 +19,15 @@
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->
 		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot-starter</artifactId>
-            <optional>true</optional>
-        </dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-starter</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot3-starter</artifactId>
+			<optional>true</optional>
+		</dependency>
         
 		<!-- 视图引擎 -->
 		<dependency>

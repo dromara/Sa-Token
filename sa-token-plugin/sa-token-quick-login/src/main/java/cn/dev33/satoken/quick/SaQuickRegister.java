@@ -48,44 +48,45 @@ public class SaQuickRegister {
 	 */
 	@Bean
 	@ConfigurationProperties(prefix = CONFIG_VERSION)
-	SaQuickConfig getSaQuickConfig() {
+	public SaQuickConfig getSaQuickConfig() {
 		return new SaQuickConfig();
 	}
 
+
 	/**
-	 * 注册 Sa-Token 全局过滤器 
-	 * 
-	 * @return / 
+	 * 注册 Sa-Token 全局过滤器
+	 *
+	 * @return /
 	 */
 	@Bean
 	@Order(SaTokenConsts.ASSEMBLY_ORDER - 1)
 	SaServletFilter getSaServletFilterForQuickLogin() {
 		return new SaServletFilter()
 
-			// 拦截路由 
-			.addInclude("/**")
+				// 拦截路由
+				.addInclude("/**")
 
-			// 排除掉登录相关接口，不需要鉴权的
-			.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**")
+				// 排除掉登录相关接口，不需要鉴权的
+				.addExclude("/favicon.ico", "/saLogin", "/doLogin", "/sa-res/**")
 
-			// 认证函数: 每次请求执行
-			.setAuth(obj -> {
-				SaRouter
-					.match(SaFoxUtil.convertStringToList(SaQuickManager.getConfig().getInclude()))
-					.notMatch(SaFoxUtil.convertStringToList(SaQuickManager.getConfig().getExclude()))
-					.check(r -> {
-						// 未登录时直接转发到login.html页面 
-						if (SaQuickManager.getConfig().getAuth() && ! StpUtil.isLogin()) {
-							SaHolder.getRequest().forward("/saLogin");
-							SaRouter.back();
-						}
-					});
-			}).
-	
-			// 异常处理函数：每次认证函数发生异常时执行此函数
-			setError(e -> {
-				return e.getMessage();
-			});
+				// 认证函数: 每次请求执行
+				.setAuth(obj -> {
+					SaRouter
+							.match(SaFoxUtil.convertStringToList(SaQuickManager.getConfig().getInclude()))
+							.notMatch(SaFoxUtil.convertStringToList(SaQuickManager.getConfig().getExclude()))
+							.check(r -> {
+								// 未登录时直接转发到login.html页面
+								if (SaQuickManager.getConfig().getAuth() && ! StpUtil.isLogin()) {
+									SaHolder.getRequest().forward("/saLogin");
+									SaRouter.back();
+								}
+							});
+				}).
+
+				// 异常处理函数：每次认证函数发生异常时执行此函数
+				setError(e -> {
+					return e.getMessage();
+				});
 	}
 
 }

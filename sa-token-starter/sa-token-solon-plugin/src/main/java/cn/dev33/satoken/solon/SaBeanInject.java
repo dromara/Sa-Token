@@ -37,6 +37,8 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
+import cn.dev33.satoken.strategy.SaFirewallStrategy;
+import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
@@ -234,6 +236,18 @@ public class SaBeanInject {
 	@Bean
 	public void setStpLogic(StpLogic stpLogic) {
 		StpUtil.setStpLogic(stpLogic);
+	}
+
+	/**
+	 * 注入自定义防火墙校验 hook 集合
+	 *
+	 * @param hooks /
+	 */
+	@Bean
+	public void setSaFirewallCheckHooks(List<SaFirewallCheckHook> hooks) {
+		for (SaFirewallCheckHook hook : hooks) {
+			SaFirewallStrategy.instance.registerHook(hook);
+		}
 	}
 
 }

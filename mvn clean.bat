@@ -17,6 +17,7 @@ cd sa-token-demo-hutool-timed-cache & call mvn clean & cd ..
 cd sa-token-demo-caffeine & call mvn clean & cd ..
 cd sa-token-demo-jwt & call mvn clean & cd ..
 cd sa-token-demo-quick-login & call mvn clean & cd ..
+cd sa-token-demo-quick-login-sb3 & call mvn clean & cd ..
 cd sa-token-demo-solon & call mvn clean & cd ..
 cd sa-token-demo-solon-redisson & call mvn clean & cd ..
 cd sa-token-demo-springboot & call mvn clean & cd ..

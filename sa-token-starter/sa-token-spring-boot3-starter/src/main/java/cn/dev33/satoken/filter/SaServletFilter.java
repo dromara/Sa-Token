@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Servlet 全局鉴权过滤器
+ * Jakarta-Servlet 全局鉴权过滤器
  * <p>
  *     默认优先级为 -100，尽量保证在其它过滤器之前执行
  * </p>

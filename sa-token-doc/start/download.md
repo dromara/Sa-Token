@@ -237,6 +237,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 			├── sa-token-demo-oauth2-server           // [示例] Sa-Token 集成 OAuth2.0 (服务端)
 			├── sa-token-demo-oauth2-server-h5        // [示例] Sa-Token 集成 OAuth2.0 (服务端 - 前后台分离示例)
 		├── sa-token-demo-quick-login             // [示例] Sa-Token 集成 quick-login 模块 
+		├── sa-token-demo-quick-login-sb3         // [示例] Sa-Token 集成 quick-login 模块 (SpringBoot3)
 		├── sa-token-demo-remember-me             // [示例] Sa-Token 实现 [ 记住我 ] 模式
 			├── page_project                          // [示例] Sa-Token 实现 [ 记住我 ] 模式、前端页面
 			├── sa-token-demo-remember-me-server      // [示例] Sa-Token 实现 [ 记住我 ] 模式、后端接口

@@ -27,6 +27,7 @@
 		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-server</module>
 		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-client</module>
 		<module>sa-token-demo-quick-login</module>
+		<module>sa-token-demo-quick-login-sb3</module>
 		<module>sa-token-demo-remember-me/sa-token-demo-remember-me-server</module>
 		<module>sa-token-demo-solon</module>
 		<module>sa-token-demo-solon-redisson</module>
