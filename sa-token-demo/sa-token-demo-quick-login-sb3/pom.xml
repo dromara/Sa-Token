@@ -11,6 +11,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.3</version>
+		<relativePath/>
 	</parent>
 	
 	<!-- 定义 Sa-Token 版本号 -->
