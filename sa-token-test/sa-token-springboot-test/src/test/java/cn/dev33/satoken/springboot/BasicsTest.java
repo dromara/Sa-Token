@@ -26,9 +26,9 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import cn.dev33.satoken.stp.SaLoginConfig;
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.util.SaTokenConsts;
 import cn.dev33.satoken.util.SoMap;
 import org.junit.jupiter.api.AfterAll;
@@ -253,14 +253,15 @@ public class BasicsTest {
     // 测试：根据token强制注销 
     @Test
     public void testLogoutByToken() {
+		StpUtil.logout(10001);
     	
-    	// 先登录上 
-    	StpUtil.login(10001); 
+    	// 先登录上
+		StpUtil.login(10001);
     	Assertions.assertTrue(StpUtil.isLogin());	
     	String token = StpUtil.getTokenValue();
     	
     	// 根据token注销 
-    	StpUtil.logoutByTokenValue(token); 
+    	StpUtil.logoutByTokenValue(token);
     	Assertions.assertFalse(StpUtil.isLogin()); 
     	
     	// token 应该被清除

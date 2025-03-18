@@ -23,10 +23,11 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.jwt.error.SaJwtErrorCode;
 import cn.dev33.satoken.jwt.exception.SaJwtException;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -136,34 +137,20 @@ public class StpLogicJwtForMixin extends StpLogic {
 	}
 
 	/**
-	 * [禁用] 会话注销，根据账号id 和 设备类型
+	 * [work] 注销下线
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter 注销参数
 	 */
-	@Override
-	public void logout(Object loginId, String deviceType) {
-		throw new ApiDisabledException(); 
-	}
-	
-	/**
-	 * [禁用] 会话注销，根据指定 Token 
-	 */
-	@Override
-	public void logoutByTokenValue(String tokenValue) {
-		throw new ApiDisabledException(); 
+	public void _logoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		throw new ApiDisabledException();
 	}
 
 	/**
-	 * [禁用] 踢人下线，根据账号id 和 设备类型 
+	 * [禁用] 会话注销
 	 */
 	@Override
-	public void kickout(Object loginId, String deviceType) {
-		throw new ApiDisabledException(); 
-	}
-
-	/**
-	 * [禁用] 踢人下线，根据指定 Token 
-	 */
-	@Override
-	public void kickoutByTokenValue(String tokenValue) { 
+	public void _logout(Object loginId, SaLogoutParameter logoutParameter) {
 		throw new ApiDisabledException(); 
 	}
 

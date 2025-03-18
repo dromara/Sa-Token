@@ -57,7 +57,7 @@ public class ManyLoginTest {
     // 测试：并发登录、共享token、同端 
     @Test
     public void login() {
-    	SaManager.setConfig(new SaTokenConfig());
+    	SaManager.setConfig(new SaTokenConfig().setIsShare(true));
     	
     	StpUtil.login(10001);
     	String token1 = StpUtil.getTokenValue();
