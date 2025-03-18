@@ -43,7 +43,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- jackson 序列化、redis集成、SSO、OAuth2 等模块要用到 -->
+		<!-- jackson 序列化、redis集成、SSO、OAuth2 等模块要用到，比较重要所以内置集成 -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-jackson</artifactId>

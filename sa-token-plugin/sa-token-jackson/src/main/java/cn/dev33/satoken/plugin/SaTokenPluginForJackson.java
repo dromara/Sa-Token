@@ -16,6 +16,7 @@
 package cn.dev33.satoken.plugin;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.json.SaJsonTemplateForJackson;
 
 /**
@@ -28,7 +29,10 @@ public class SaTokenPluginForJackson implements SaTokenPlugin {
 
     @Override
     public void install() {
-        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
+        // 只有在未提供自定义的 json 解析器时才会生效，给于其较弱的优先级
+        if(SaManager.getSaJsonTemplate().getClass() == SaJsonTemplateDefaultImpl.class){
+            SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
+        }
     }
 
 }
