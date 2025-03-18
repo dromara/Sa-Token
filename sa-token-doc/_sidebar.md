@@ -86,7 +86,7 @@
 	- [临时Token认证](/plugin/temp-token)
 	- [Quick-Login快速登录插件](/plugin/quick-login)
 	- [Alone独立Redis插件](/plugin/alone-redis)
-	- [持久层扩展](/plugin/dao-extend)
+	- [缓存层扩展](/plugin/dao-extend)
 	- [和 Thymeleaf 集成](/plugin/thymeleaf-extend)
 	- [和 Freemarker 集成](/plugin/freemarker-extend)
 	- [注解鉴权 SpEL 表达式](/plugin/spel-at)
