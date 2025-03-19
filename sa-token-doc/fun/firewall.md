@@ -68,7 +68,21 @@ SaFirewallStrategy.instance.removeHook(SaFirewallCheckHookForHost.class);
 ```
 
 
-### 3、指定异常处理：
+### 3、利用自动注入特性注册 hook
+如果你的项目属于 IOC 环境（例如 SpringBoot 项目），还可以这样注册 hook：
+``` java
+// 自定义防火墙校验 hook 
+@Component
+public class SaFirewallCheckHookForXxx implements SaFirewallCheckHook {
+    @Override
+    public void execute(SaRequest req, SaResponse res, Object extArg) {
+        System.out.println("----------- 自定义防火墙校验 hook ");
+    }
+}
+```
+
+
+### 4、指定异常处理：
 
 被防火墙拦截的请求不会做出格式化响应，因为通常这些请求为非正常业务请求，只需阻断即可，无需前端依照响应做出页面提示。
 
