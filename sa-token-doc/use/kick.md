@@ -30,6 +30,15 @@ StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
 <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--kickout.gif">加载动态演示图</button>
 
 
+### 3、顶人下线
+“顶人下线” 操作发生在框架登录时顶退旧登录设备，属于框架内部操作，一般情形下你不会调用到此 API：
+``` java
+StpUtil.replaced(10001);                    // 将指定账号顶下线 
+StpUtil.replaced(10001, "PC");              // 将指定账号指定端顶下线
+StpUtil.replacedByTokenValue("token");      // 将指定 Token 顶下线
+```
+
+
 ---
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/KickoutController.java"
