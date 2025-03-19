@@ -18,6 +18,7 @@ package cn.dev33.satoken.session;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.application.SaSetValueInterface;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.fun.SaTwoParamFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -369,6 +370,17 @@ public class SaSession implements SaSetValueInterface, Serializable {
 	 */
 	public void setHistoryTerminalCount(int historyTerminalCount) {
 		this.historyTerminalCount = historyTerminalCount;
+	}
+
+	/**
+	 * 遍历 terminalList 列表，执行特定函数
+	 *
+	 * @param function 需要执行的函数
+	 */
+	public void forEachTerminalList(SaTwoParamFunction<SaSession, SaTerminalInfo> function) {
+		for (SaTerminalInfo terminalInfo: terminalListCopy()) {
+			function.run(this, terminalInfo);
+		}
 	}
 
 

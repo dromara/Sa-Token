@@ -70,3 +70,30 @@ StpUtil.logout(10001, new SaLogoutParameter()
 以上大部分参数在未指定时将使用全局配置作为默认值。
 
 
+### 3、遍历登录终端详细操作
+
+如果你的 登录策略 或 注销策略 非常复杂，凭借上述参数无法组合出你的业务场景，你可以手动遍历一个账号的已登录终端信息列表，手动决定某个设备是否下线，例如：
+
+``` java
+// 测试 
+@RequestMapping("logout")
+public SaResult logout() {
+	
+	// 遍历账号 10001 已登录终端列表，进行详细操作
+	StpUtil.forEachTerminalList(10001, (session, ter) -> {
+		// 根据登录顺序，奇数的保留，偶数的下线
+		if(ter.getIndex() % 2 == 0) {
+			StpUtil.removeTerminalByLogout(session, ter);   // 注销下线方式 移除这个登录客户端
+			// StpUtil.removeTerminalByKickout(session, ter);  // 踢人下线方式 移除这个登录客户端
+			// StpUtil.removeTerminalByReplaced(session, ter);  // 顶人下线方式 移除这个登录客户端
+		}
+	});
+	
+	return SaResult.ok();
+}
+```
+
+
+
+
+

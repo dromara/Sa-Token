@@ -17,6 +17,7 @@ package cn.dev33.satoken.stp;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.fun.SaTwoParamFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaTerminalInfo;
@@ -988,6 +989,16 @@ public class StpUtil {
 	 */
 	public static List<SaTerminalInfo> getTerminalListByLoginId(Object loginId, String deviceType) {
 		return stpLogic.getTerminalListByLoginId(loginId, deviceType);
+	}
+
+	/**
+	 * 获取指定账号 id 已登录设备信息集合，执行特定函数
+	 *
+	 * @param loginId 账号id
+	 * @param function 需要执行的函数
+	 */
+	public static void forEachTerminalList(Object loginId, SaTwoParamFunction<SaSession, SaTerminalInfo> function) {
+		stpLogic.forEachTerminalList(loginId, function);
 	}
 
 	/**
