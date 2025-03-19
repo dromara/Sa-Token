@@ -270,6 +270,8 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-demo-webflux-springboot3     // [示例] Sa-Token 整合 WebFlux （SpringBoot3）
 		├── sa-token-demo-websocket               // [示例] Sa-Token 集成 Web-Socket 鉴权示例
 		├── sa-token-demo-websocket-spring        // [示例] Sa-Token 集成 Web-Socket（Spring封装版） 鉴权示例
+		├── pom.xml                               // 示例 pom 文件，用于帮助在 idea 中一键导入所有 demo 
+		
 	├── sa-token-test                         // [测试] Sa-Token 单元测试合集
 		├── sa-token-springboot-test              // [测试] Sa-Token SpringBoot 整合测试
 		├── sa-token-jwt-test                     // [测试] Sa-Token jwt 整合测试
