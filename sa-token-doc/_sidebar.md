@@ -24,7 +24,7 @@
 	- [自定义 Token 前缀](/up/token-prefix) 
 	- [同端互斥登录](/up/mutex-login) 
 	- [记住我模式](/up/remember-me)
-	- [登录参数](/up/login-parameter) 
+	- [登录参数 & 注销参数](/up/login-parameter) 
 	- [二级认证](/up/safe-auth) 
 	- [模拟他人 & 身份切换](/up/mock-person) 
 	- [账号封禁](/up/disable) 

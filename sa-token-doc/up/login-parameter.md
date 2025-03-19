@@ -1,5 +1,7 @@
 # 登录参数
 
+### 1、登录参数
+
 在之前的章节我们提到，通过 `StpUtil.login(xxx)` 可以完成指定账号登录，同时你可以指定第二个参数来扩展登录信息，比如：
 
 ``` java
@@ -10,7 +12,7 @@ StpUtil.login(10001, "PC");
 StpUtil.login(10001, false);
 ```
 
-除了以上内容，第二个参数你还可以指定一个 `SaLoginParameter`，来详细控制登录的多个细节，例如：
+除了以上内容，第二个参数你还可以指定一个 `SaLoginParameter` 对象，来详细控制登录的多个细节，例如：
 
 ``` java
 StpUtil.login(10001, new SaLoginParameter()
@@ -27,9 +29,44 @@ StpUtil.login(10001, new SaLoginParameter()
 		.setToken("xxxx-xxxx-xxxx-xxxx") // 预定此次登录的生成的Token 
 		.setIsWriteHeader(false)         // 是否在登录后将 Token 写入到响应头
 		.setTerminalExtra("key", "value")// 本次登录挂载到 SaTerminalInfo 的自定义扩展数据
+		.setReplacedRange(SaReplacedRange.CURR_DEVICE_TYPE) // 顶人下线的范围: CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端
+		.setOverflowLogoutMode(SaLogoutMode.LOGOUT)         // 溢出 maxLoginCount 的客户端，将以何种方式注销下线: LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线
 );
 ```
 
 以上大部分参数在未指定时将使用全局配置作为默认值。
+
+
+
+### 2、注销参数
+
+同样的，在调用注销时，也可以指定一些参数决定注销的细节行为：
+
+``` java
+// 当前客户端注销 
+StpUtil.logout(new SaLogoutParameter()
+		// 注销范围： TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话
+		// 此参数只在调用 StpUtil.logout(new SaLogoutParameter()) 时有效
+		.setRange(SaLogoutRange.TOKEN)   
+);
+
+// 指定 token 注销
+StpUtil.logoutByTokenValue("xxxxxxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()
+		// 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)（默认 false）
+		// 此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token", new SaLogoutParameter()) 时有效
+		.setIsKeepFreezeOps(false)  
+		// 是否保留此 token 的 Token-Session 对象（默认 false）
+		.setIsKeepTokenSession(true)  
+);
+
+// 指定 loginId 注销
+StpUtil.logout(10001, new SaLogoutParameter()
+		.setDeviceType("PC")  // 设置注销的设备类型 (如果不指定，则默认注销所有客户端)
+		.setIsKeepTokenSession(true)  // 是否保留对应 token 的 Token-Session 对象（默认 false）
+		.setMode(SaLogoutMode.REPLACED)  // 设置注销模式：LOGOUT=注销登录、KICKOUT=踢人下线，REPLACED=顶人下线（默认LOGOUT）
+);
+```
+
+
 
 
