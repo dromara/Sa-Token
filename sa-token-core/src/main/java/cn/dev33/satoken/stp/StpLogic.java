@@ -35,7 +35,7 @@ import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
-import cn.dev33.satoken.stp.parameter.enums.SaReplacedMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -523,10 +523,10 @@ public class StpLogic {
 		// 1、获取全局配置的 isConcurrent 参数
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
 		if( ! loginParameter.getIsConcurrent()) {
-			if(loginParameter.getReplacedMode() == SaReplacedMode.CURR_DEVICE_TYPE) {
+			if(loginParameter.getReplacedRange() == SaReplacedRange.CURR_DEVICE_TYPE) {
 				replaced(id, loginParameter.getDeviceTypeOrDefault());
 			}
-			if(loginParameter.getReplacedMode() == SaReplacedMode.ALL_DEVICE_TYPE) {
+			if(loginParameter.getReplacedRange() == SaReplacedRange.ALL_DEVICE_TYPE) {
 				replaced(id, createSaLogoutParameter());
 			}
 		}

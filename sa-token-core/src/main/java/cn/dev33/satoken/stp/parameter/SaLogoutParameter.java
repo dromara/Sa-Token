@@ -40,6 +40,7 @@ public class SaLogoutParameter {
 
 	/**
 	 * 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
+	 * (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("xxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()) 时有效)
 	 */
 	private Boolean isKeepFreezeOps = false;
 
@@ -109,6 +110,7 @@ public class SaLogoutParameter {
 
 	/**
 	 * 获取 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
+	 * (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("xxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()) 时有效)
 	 *
 	 * @return /
 	 */
@@ -118,6 +120,7 @@ public class SaLogoutParameter {
 
 	/**
 	 * 设置 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
+	 * (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("xxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()) 时有效)
 	 *
 	 * @param isKeepFreezeOps /
 	 * @return 对象自身

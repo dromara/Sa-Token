@@ -21,7 +21,7 @@ package cn.dev33.satoken.stp.parameter.enums;
  * @author click33
  * @since 1.41.0
  */
-public enum SaReplacedMode {
+public enum SaReplacedRange {
 
 	/**
 	 * 当前指定的设备类型端

@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
-import cn.dev33.satoken.stp.parameter.enums.SaReplacedMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaTokenConsts;
 
 import java.util.LinkedHashMap;
@@ -53,7 +53,7 @@ public class SaLoginParameter {
 	/**
 	 * 顶人下线的范围
 	 */
-	private SaReplacedMode replacedMode = SaReplacedMode.CURR_DEVICE_TYPE;
+	private SaReplacedRange replacedRange = SaReplacedRange.CURR_DEVICE_TYPE;
 
 	/**
 	 * 溢出 maxLoginCount 的客户端，将以何种方式注销下线
@@ -291,18 +291,18 @@ public class SaLoginParameter {
 	 *
 	 * @return replacedMode 顶人下线的范围
 	 */
-	public SaReplacedMode getReplacedMode() {
-		return this.replacedMode;
+	public SaReplacedRange getReplacedRange() {
+		return this.replacedRange;
 	}
 
 	/**
 	 * 设置 顶人下线的范围
 	 *
-	 * @param replacedMode /
+	 * @param replacedRange /
 	 * @return 对象自身
 	 */
-	public SaLoginParameter setReplacedMode(SaReplacedMode replacedMode) {
-		this.replacedMode = replacedMode;
+	public SaLoginParameter setReplacedRange(SaReplacedRange replacedRange) {
+		this.replacedRange = replacedRange;
 		return this;
 	}
 
@@ -513,7 +513,7 @@ public class SaLoginParameter {
 		return "SaLoginParameter ["
 				+ "deviceType=" + deviceType
 				+ ", deviceId=" + deviceId
-				+ ", replacedMode=" + replacedMode
+				+ ", replacedRange=" + replacedRange
 				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout
