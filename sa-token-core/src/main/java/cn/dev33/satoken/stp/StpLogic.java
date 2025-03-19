@@ -2388,7 +2388,7 @@ public class StpLogic {
 	 * @return token集合
 	 */
 	public List<String> searchTokenValue(String keyword, int start, int size, boolean sortType) {
-		return getSaTokenDao().searchData(splicingKeyTokenValue(""), keyword, start, size, sortType);
+		return getSaTokenDao().searchData(splicingKeyTokenValue(""), (keyword == null ? "" : keyword), start, size, sortType);
 	}
 	
 	/**
@@ -2402,7 +2402,7 @@ public class StpLogic {
 	 * @return sessionId集合
 	 */
 	public List<String> searchSessionId(String keyword, int start, int size, boolean sortType) {
-		return getSaTokenDao().searchData(splicingKeySession(""), keyword, start, size, sortType);
+		return getSaTokenDao().searchData(splicingKeySession(""), (keyword == null ? "" : keyword), start, size, sortType);
 	}
 
 	/**
@@ -2416,7 +2416,7 @@ public class StpLogic {
 	 * @return sessionId集合
 	 */
 	public List<String> searchTokenSessionId(String keyword, int start, int size, boolean sortType) {
-		return getSaTokenDao().searchData(splicingKeyTokenSession(""), keyword, start, size, sortType);
+		return getSaTokenDao().searchData(splicingKeyTokenSession(""), (keyword == null ? "" : keyword), start, size, sortType);
 	}
 
 
