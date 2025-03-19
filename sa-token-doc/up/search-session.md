@@ -1,22 +1,58 @@
 # 会话查询
 
-尽管框架将大部分操作提供了简易的封装，但在一些特殊场景下，我们仍需要绕过框架，直达数据底层进行一些操作。
-
-Sa-Token提供以下API助你直接操作会话列表：
-
-
 --- 
 
-## 具体API
+### 1、单账号会话查询
+
+使用 `StpUtil.getTerminalListByLoginId( loginId )` 可获取指定账号已登录终端列表信息，例如：
+
+``` java
+public static void main(String[] args) {
+	System.out.println("账号 10001 登录设备信息：");
+	List<SaTerminalInfo> terminalList = StpUtil.getTerminalListByLoginId(10001);
+	for (SaTerminalInfo ter : terminalList) {
+		System.out.println("登录index=" + ter.getIndex() + ", 设备type=" + ter.getDeviceType() + ", token=" + ter.getTokenValue() + ", 登录time=" + ter.getCreateTime());
+	}
+}
+```
+
+控制台打印结果：
+
+``` txt
+账号 10001 登录设备信息：
+登录index=1, 设备type=PC, token=a8fbb46f-e043-459a-a875-0a2874911be8, 登录time=1742354951192
+登录index=2, 设备type=APP, token=882b6c9c-bdf9-4e8f-a42b-6e17d2fe0e34, 登录time=1742354960950
+登录index=3, 设备type=WEB, token=dacac78c-0983-4819-ab8b-07e7603597fc, 登录time=1742354962848
+```
+
+一个 `SaTerminalInfo` 对象代表一个终端信息，其有如下字段：
+
+``` java
+terminal.getIndex();   // 登录会话索引值 (该账号第几个登录的设备)
+terminal.getDeviceType();   // 所属设备类型，例如：PC、WEB、HD、MOBILE、APP
+terminal.getTokenValue();   // 此次登录的token值
+terminal.getCreateTime();   // 登录时间, 13位时间戳
+terminal.getDeviceId();   // 设备id, 设备唯一标识
+terminal.getExtra("key");  // 此次登录的额外自定义参数 
+```
+
+`Extra` 自定义参数可以在登录时通过如下方式指定: 
+``` java
+StpUtil.login(10001, new SaLoginParameter().setTerminalExtra("key", "value"));
+```
+
+
+
+### 2、全部会话检索 
 
 ``` java
 // 查询所有已登录的 Token
 StpUtil.searchTokenValue(String keyword, int start, int size, boolean sortType);
 
-// 查询所有账号 Session 会话
+// 查询所有 Account-Session 会话
 StpUtil.searchSessionId(String keyword, int start, int size, boolean sortType);
 
-// 查询所有令牌 Session 会话
+// 查询所有 Token-Session 会话
 StpUtil.searchTokenSessionId(String keyword, int start, int size, boolean sortType);
 ```
 
@@ -36,7 +72,7 @@ for (String token : tokenList) {
 }
 ```
 
-#### 深入：`StpUtil.searchTokenValue` 和 `StpUtil.searchSessionId` 有哪些区别？
+#### 深入：`StpUtil.searchTokenValue` 和 `StpUtil.searchSessionId` 的区别？
 
 - StpUtil.searchTokenValue 查询的是登录产生的所有 Token。 
 - StpUtil.searchSessionId 查询的是所有已登录账号会话id。 
@@ -84,7 +120,7 @@ for (String sessionId : sessionIdList) {
 
 
 > [!WARNING| label:注意] 
-> 基于活动 Token 的统计方式会比实际情况略有延迟，如果需要精确统计实时在线用户信息建议采用 WebSocket。
+> 基于活跃 Token 的统计方式会比实际情况略有延迟，如果需要精确统计实时在线用户信息需要采用 WebSocket。
 
 
 --- 

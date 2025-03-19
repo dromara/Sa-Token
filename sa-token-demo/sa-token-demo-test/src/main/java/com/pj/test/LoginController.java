@@ -1,10 +1,13 @@
 package com.pj.test;
 
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 登录测试 
@@ -45,7 +48,19 @@ public class LoginController {
 	public SaResult tokenInfo() {
 		return SaResult.data(StpUtil.getTokenInfo());
 	}
-	
+
+	// 查询账号登录设备信息  ---- http://localhost:8081/acc/terminalInfo
+	@RequestMapping("terminalInfo")
+	public SaResult terminalInfo() {
+		System.out.println("账号 10001 登录设备信息：");
+		List<SaTerminalInfo> terminalList = StpUtil.getTerminalListByLoginId(10001);
+		for (SaTerminalInfo ter : terminalList) {
+			System.out.println("登录index=" + ter.getIndex() + ", 设备type=" + ter.getDeviceType() + ", token=" + ter.getTokenValue() + ", 登录time=" + ter.getCreateTime());
+		}
+		return SaResult.data(terminalList);
+	}
+
+
 	// 测试注销  ---- http://localhost:8081/acc/logout
 	@RequestMapping("logout")
 	public SaResult logout() {
