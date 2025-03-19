@@ -16,7 +16,7 @@ token信息Model: 用来描述一个token的常用参数
 		"sessionTimeout": 2591977,        // Account-Session剩余有效时间 (单位: 秒)
 		"tokenSessionTimeout": -2,        // Token-Session剩余有效时间 (单位: 秒) (-2表示系统中不存在这个缓存)
 		"tokenActiveTimeout": -1,         // token 距离被冻结还剩的时间 (单位: 秒)
-		"loginDevice": "default-device"   // 登录设备类型 
+		"loginDevice": "DEF"   // 登录设备类型 
 	},
 }
 ```

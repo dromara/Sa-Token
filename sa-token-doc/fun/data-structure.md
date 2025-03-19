@@ -117,7 +117,7 @@ value 格式
         "@class": "cn.dev33.satoken.session.SaTerminalInfo",
         "index": 1,
         "tokenValue": "2551663f-bb98-47d7-9af3-e2e6a28dadce",   // 客户端 token 值
-        "deviceType": "default-device",  // 登录设备类型 
+        "deviceType": "DEF",  // 登录设备类型 
         "deviceId": "xxxxxxxxx",  // 登录设备id 
         "extraData": {
 			// 扩展信息列表 （手动自定义值）
