@@ -15,9 +15,6 @@
  */
 package cn.dev33.satoken.plugin;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.serializer.SaSerializerForBase64UseTianGan;
-
 /**
  * SaToken 插件安装：自定义序列化器
  *
@@ -28,7 +25,8 @@ public class SaTokenPluginForSerializerFeatures implements SaTokenPlugin {
 
     @Override
     public void install() {
-        SaManager.setSaSerializerTemplate(new SaSerializerForBase64UseTianGan());
+        // 默认不注册，需要开发者手动注册去选择
+        // SaManager.setSaSerializerTemplate(new SaSerializerForBase64UseTianGan());
     }
 
 }
