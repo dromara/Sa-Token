@@ -54,7 +54,7 @@
             <version>${sa-token.version}</version>
         </dependency> -->
 
-		<!-- Sa-Token整合 Redis -->
+		<!-- Sa-Token 整合 RedisTemplate -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-redis-template</artifactId>

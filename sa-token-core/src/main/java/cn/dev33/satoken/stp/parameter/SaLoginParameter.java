@@ -51,16 +51,6 @@ public class SaLoginParameter {
 	private String deviceId;
 
 	/**
-	 * 顶人下线的范围
-	 */
-	private SaReplacedRange replacedRange = SaReplacedRange.CURR_DEVICE_TYPE;
-
-	/**
-	 * 溢出 maxLoginCount 的客户端，将以何种方式注销下线
-	 */
-	private SaLogoutMode overflowLogoutMode = SaLogoutMode.LOGOUT;
-
-	/**
 	 * 扩展信息（只在 jwt 模式下生效）
 	 */
 	private Map<String, Object> extraData;
@@ -118,6 +108,16 @@ public class SaLoginParameter {
 	 */
 	private Boolean isWriteHeader;
 
+	/**
+	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
+	 */
+	private SaReplacedRange replacedRange;
+
+	/**
+	 * 溢出 maxLoginCount 的客户端，将以何种方式注销下线 (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)
+	 */
+	private SaLogoutMode overflowLogoutMode;
+
 
 	// ------ 附加方法
 
@@ -143,6 +143,8 @@ public class SaLoginParameter {
 		this.maxTryTimes = config.getMaxTryTimes();
 		this.isLastingCookie = config.getIsLastingCookie();
 		this.isWriteHeader = config.getIsWriteHeader();
+		this.replacedRange = config.getReplacedRange();
+		this.overflowLogoutMode = config.getOverflowLogoutMode();
 		return this;
 	}
 
@@ -287,7 +289,7 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 获取 顶人下线的范围
+	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
 	 *
 	 * @return replacedMode 顶人下线的范围
 	 */
@@ -296,7 +298,7 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 设置 顶人下线的范围
+	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
 	 *
 	 * @param replacedRange /
 	 * @return 对象自身
@@ -307,7 +309,7 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 获取 溢出 maxLoginCount 的客户端，将以何种方式注销下线
+	 * 获取 溢出 maxLoginCount 的客户端，将以何种方式注销下线 (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)
 	 *
 	 * @return overflowLogoutMode /
 	 */
@@ -316,7 +318,7 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * 设置 溢出 maxLoginCount 的客户端，将以何种方式注销下线
+	 * 设置 溢出 maxLoginCount 的客户端，将以何种方式注销下线 (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)
 	 *
 	 * @param overflowLogoutMode /
 	 * @return 对象自身
@@ -325,6 +327,7 @@ public class SaLoginParameter {
 		this.overflowLogoutMode = overflowLogoutMode;
 		return this;
 	}
+
 	/**
 	 * @return 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）
 	 */

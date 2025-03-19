@@ -46,14 +46,14 @@ StpUtil.login(10001, new SaLoginParameter()
 // 当前客户端注销 
 StpUtil.logout(new SaLogoutParameter()
 		// 注销范围： TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话
-		// 此参数只在调用 StpUtil.logout(new SaLogoutParameter()) 时有效
+		// 此参数只在调用 StpUtil.logout() 时有效
 		.setRange(SaLogoutRange.TOKEN)   
 );
 
 // 指定 token 注销
 StpUtil.logoutByTokenValue("xxxxxxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()
 		// 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)（默认 false）
-		// 此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token", new SaLogoutParameter()) 时有效
+		// 此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效
 		.setIsKeepFreezeOps(false)  
 		// 是否保留此 token 的 Token-Session 对象（默认 false）
 		.setIsKeepTokenSession(true)  
@@ -67,6 +67,6 @@ StpUtil.logout(10001, new SaLogoutParameter()
 );
 ```
 
-
+以上大部分参数在未指定时将使用全局配置作为默认值。
 
 

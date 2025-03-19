@@ -4,8 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckHttpDigest;
 import cn.dev33.satoken.annotation.SaCheckSign;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.spring.SpringMVCUtil;
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +36,7 @@ public class TestController {
 				.setTerminalExtra("loginIp", "127.0.0.1")
 				.setTerminalExtra("loginTime", SaFoxUtil.formatDate(new Date()))
 		);
+		StpUtil.getTokenSession();
 		return SaResult.ok("登录成功");
 	}
 
@@ -78,6 +79,13 @@ public class TestController {
 	public SaResult testDigest() {
 		// SaHttpDigestUtil.check("sa", "123456");
 		// 返回
+		return SaResult.data(null);
+	}
+
+	// 测试注销   浏览器访问： http://localhost:8081/test/logout
+	@RequestMapping("logout")
+	public SaResult logout() {
+		StpUtil.logout();
 		return SaResult.data(null);
 	}
 

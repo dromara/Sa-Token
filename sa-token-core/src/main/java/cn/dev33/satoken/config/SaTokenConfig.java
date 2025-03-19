@@ -15,6 +15,9 @@
  */
 package cn.dev33.satoken.config;
 
+import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
+import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
@@ -64,9 +67,19 @@ public class SaTokenConfig implements Serializable {
 	private Boolean isShare = false;
 
 	/**
+	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
+	 */
+	private SaReplacedRange replacedRange = SaReplacedRange.CURR_DEVICE_TYPE;
+
+	/**
 	 * 同一账号最大登录数量，-1代表不限 （只有在 isConcurrent=true, isShare=false 时此配置项才有意义）
 	 */
 	private int maxLoginCount = 12;
+
+	/**
+	 * 溢出 maxLoginCount 的客户端，将以何种方式注销下线 (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)
+	 */
+	private SaLogoutMode overflowLogoutMode = SaLogoutMode.LOGOUT;
 
 	/**
 	 * 在每次创建 token 时的最高循环次数，用于保证 token 唯一性（-1=不循环尝试，直接使用）
@@ -97,6 +110,23 @@ public class SaTokenConfig implements Serializable {
 	 * 是否在登录后将 token 写入到响应头
 	 */
 	private Boolean isWriteHeader = false;
+
+	/**
+	 * 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话)
+	 * <br/> (此参数只在调用 StpUtil.logout() 时有效)
+	 */
+	private SaLogoutRange logoutRange = SaLogoutRange.TOKEN;
+
+	/**
+	 * 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
+	 * <br/> (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效)
+	 */
+	private Boolean isLogoutKeepFreezeOps = false;
+
+	/**
+	 * 在注销 token 后，是否保留其对应的 Token-Session
+	 */
+	private Boolean isLogoutKeepTokenSession = false;
 
 	/**
 	 * token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
@@ -669,7 +699,107 @@ public class SaTokenConfig implements Serializable {
 		this.checkSameToken = checkSameToken;
 		return this;
 	}
-	
+
+	/**
+	 * 获取 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端 ALL_DEVICE_TYPE=所有设备类型端)
+	 *
+	 * @return /
+	 */
+	public SaReplacedRange getReplacedRange() {
+		return this.replacedRange;
+	}
+
+	/**
+	 * 设置 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端 ALL_DEVICE_TYPE=所有设备类型端)
+	 *
+	 * @param replacedRange /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setReplacedRange(SaReplacedRange replacedRange) {
+		this.replacedRange = replacedRange;
+		return this;
+	}
+
+	/**
+	 * 获取 溢出 maxLoginCount 的客户端，将以何种方式注销下线 (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)
+	 *
+	 * @return /
+	 */
+	public SaLogoutMode getOverflowLogoutMode() {
+		return this.overflowLogoutMode;
+	}
+
+	/**
+	 * 设置 溢出 maxLoginCount 的客户端，将以何种方式注销下线 (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)
+	 *
+	 * @param overflowLogoutMode /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setOverflowLogoutMode(SaLogoutMode overflowLogoutMode) {
+		this.overflowLogoutMode = overflowLogoutMode;
+		return this;
+	}
+
+	/**
+	 * 获取 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话)  <br> (此参数只在调用 StpUtil.logout() 时有效)
+	 *
+	 * @return /
+	 */
+	public SaLogoutRange getLogoutRange() {
+		return this.logoutRange;
+	}
+
+	/**
+	 * 设置 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话)  <br> (此参数只在调用 StpUtil.logout() 时有效)
+	 *
+	 * @param logoutRange /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setLogoutRange(SaLogoutRange logoutRange) {
+		this.logoutRange = logoutRange;
+		return this;
+	}
+
+	/**
+	 * 获取 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)  <br> (此参数只在调用 StpUtil.[logoutkickoutreplaced]ByTokenValue("token") 时有效)
+	 *
+	 * @return isLogoutKeepFreezeOps /
+	 */
+	public Boolean getIsLogoutKeepFreezeOps() {
+		return this.isLogoutKeepFreezeOps;
+	}
+
+	/**
+	 * 设置 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)  <br> (此参数只在调用 StpUtil.[logoutkickoutreplaced]ByTokenValue("token") 时有效)
+	 *
+	 * @param isLogoutKeepFreezeOps /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIsLogoutKeepFreezeOps(Boolean isLogoutKeepFreezeOps) {
+		this.isLogoutKeepFreezeOps = isLogoutKeepFreezeOps;
+		return this;
+	}
+
+	/**
+	 * 获取 在注销 token 后，是否保留其对应的 Token-Session
+	 *
+	 * @return isLogoutKeepTokenSession /
+	 */
+	public Boolean getIsLogoutKeepTokenSession() {
+		return this.isLogoutKeepTokenSession;
+	}
+
+	/**
+	 * 设置 在注销 token 后，是否保留其对应的 Token-Session
+	 *
+	 * @param isLogoutKeepTokenSession /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setIsLogoutKeepTokenSession(Boolean isLogoutKeepTokenSession) {
+		this.isLogoutKeepTokenSession = isLogoutKeepTokenSession;
+		return this;
+	}
+
 	/**
 	 * @return Cookie 全局配置对象
 	 */
@@ -721,6 +851,8 @@ public class SaTokenConfig implements Serializable {
 		this.signMany = signMany;
 		return this;
 	}
+
+
 	@Override
 	public String toString() {
 		return "SaTokenConfig ["
@@ -728,15 +860,20 @@ public class SaTokenConfig implements Serializable {
 				+ ", timeout=" + timeout 
 				+ ", activeTimeout=" + activeTimeout
 				+ ", dynamicActiveTimeout=" + dynamicActiveTimeout
-				+ ", isConcurrent=" + isConcurrent 
-				+ ", isShare=" + isShare 
+				+ ", isConcurrent=" + isConcurrent
+				+ ", isShare=" + isShare
+				+ ", replacedRange=" + replacedRange
 				+ ", maxLoginCount=" + maxLoginCount
+				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", maxTryTimes=" + maxTryTimes
 				+ ", isReadBody=" + isReadBody
 				+ ", isReadHeader=" + isReadHeader 
 				+ ", isReadCookie=" + isReadCookie
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", isWriteHeader=" + isWriteHeader
+				+ ", logoutRange=" + logoutRange
+				+ ", isLogoutKeepFreezeOps=" + isLogoutKeepFreezeOps
+				+ ", isLogoutKeepTokenSession=" + isLogoutKeepTokenSession
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
 				+ ", tokenSessionCheckLogin=" + tokenSessionCheckLogin

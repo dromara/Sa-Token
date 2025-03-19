@@ -33,31 +33,37 @@ import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
  */
 public class SaLogoutParameter {
 
-	/**
-	 * 是否保留 Token-Session
-	 */
-	private Boolean isKeepTokenSession = false;
+	// --------- 单独参数
 
 	/**
-	 * 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
-	 * (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("xxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()) 时有效)
-	 */
-	private Boolean isKeepFreezeOps = false;
-
-	/**
-	 * 设备类型 (如果不指定，则默认注销所有客户端)
+	 * 需要注销的设备类型 (如果不指定，则默认注销所有客户端)
 	 */
 	private String deviceType;
 
 	/**
-	 * 注销类型
+	 * 注销类型 (LOGOUT=注销下线、KICKOUT=踢人下线，REPLACED=顶人下线)
 	 */
 	private SaLogoutMode mode = SaLogoutMode.LOGOUT;
 
+
+	// --------- 覆盖性参数
+
 	/**
-	 * 注销范围 (此参数只在调用 StpUtil.logout(new SaLogoutParameter()) 时有效)
+	 * 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话)
+	 * <br/> (此参数只在调用 StpUtil.logout() 时有效)
 	 */
-	private SaLogoutRange range = SaLogoutRange.TOKEN;
+	private SaLogoutRange range;
+
+	/**
+	 * 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
+	 * <br/> (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效)
+	 */
+	private Boolean isKeepFreezeOps;
+
+	/**
+	 * 在注销 token 后，是否保留其对应的 Token-Session
+	 */
+	private Boolean isKeepTokenSession;
 
 
 	// ------ 附加方法
@@ -76,6 +82,9 @@ public class SaLogoutParameter {
 	 * @return 对象自身
 	 */
 	public SaLogoutParameter setDefaultValues(SaTokenConfig config) {
+		this.range = config.getLogoutRange();
+		this.isKeepFreezeOps = config.getIsLogoutKeepFreezeOps();
+		this.isKeepTokenSession = config.getIsLogoutKeepTokenSession();
 		return this;
 	}
 
@@ -92,14 +101,14 @@ public class SaLogoutParameter {
 	// ---------------- get set
 
 	/**
-	 * @return 是否保留 Token-Session
+	 * @return 在注销 token 后，是否保留其对应的 Token-Session
 	 */
 	public Boolean getIsKeepTokenSession() {
 		return isKeepTokenSession;
 	}
 
 	/**
-	 * @param isKeepTokenSession 是否保留 Token-Session
+	 * @param isKeepTokenSession 在注销 token 后，是否保留其对应的 Token-Session
 	 *
 	 * @return 对象自身
 	 */
@@ -110,7 +119,7 @@ public class SaLogoutParameter {
 
 	/**
 	 * 获取 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
-	 * (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("xxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()) 时有效)
+	 * <br/> (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效)
 	 *
 	 * @return /
 	 */
@@ -120,7 +129,7 @@ public class SaLogoutParameter {
 
 	/**
 	 * 设置 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)
-	 * (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("xxxxxxxxxxxxxxxxxxx", new SaLogoutParameter()) 时有效)
+	 * <br/> (此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效)
 	 *
 	 * @param isKeepFreezeOps /
 	 * @return 对象自身
@@ -129,8 +138,9 @@ public class SaLogoutParameter {
 		this.isKeepFreezeOps = isKeepFreezeOps;
 		return this;
 	}
+
 	/**
-	 * 获取 设备类型 (如果不指定，则默认注销所有客户端)
+	 * 需要注销的设备类型 (如果不指定，则默认注销所有客户端)
 	 *
 	 * @return deviceType /
 	 */
@@ -139,7 +149,7 @@ public class SaLogoutParameter {
 	}
 
 	/**
-	 * 设置 设备类型 (如果不指定，则默认注销所有客户端)
+	 * 需要注销的设备类型 (如果不指定，则默认注销所有客户端)
 	 *
 	 * @param deviceType /
 	 * @return /
@@ -150,7 +160,7 @@ public class SaLogoutParameter {
 	}
 
 	/**
-	 * 获取 注销类型
+	 * 注销类型 (LOGOUT=注销下线、KICKOUT=踢人下线，REPLACED=顶人下线)
 	 *
 	 * @return logoutMode 注销类型
 	 */
@@ -159,7 +169,7 @@ public class SaLogoutParameter {
 	}
 
 	/**
-	 * 设置 注销类型
+	 * 注销类型 (LOGOUT=注销下线、KICKOUT=踢人下线，REPLACED=顶人下线)
 	 *
 	 * @param mode 注销类型
 	 * @return /
@@ -170,7 +180,8 @@ public class SaLogoutParameter {
 	}
 
 	/**
-	 * 获取 注销范围 (此参数只在调用 StpUtil.logout(new SaLogoutParameter()) 时有效)
+	 * 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话)
+	 * <br/> (此参数只在调用 StpUtil.logout() 时有效)
 	 *
 	 * @return /
 	 */
@@ -179,7 +190,8 @@ public class SaLogoutParameter {
 	}
 
 	/**
-	 * 设置 注销范围 (此参数只在调用 StpUtil.logout(new SaLogoutParameter()) 时有效)
+	 * 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话)
+	 * <br/> (此参数只在调用 StpUtil.logout() 时有效)
 	 *
 	 * @param range /
 	 * @return /

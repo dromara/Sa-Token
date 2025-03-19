@@ -122,13 +122,18 @@ public class SaTokenConfigure {
 | dynamicActiveTimeout	| Boolean	| false		| 是否启用动态 activeTimeout 功能，如不需要请设置为 false，节省缓存请求次数	|
 | isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 （为 true 时允许一起登录，为 false 时新登录挤掉旧登录）															|
 | isShare				| Boolean	| false		| 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token，login 时提供了 Extra 数据后，即使配置了为 true 也不能复用旧 Token，必须创建新 Token） 	|
+| replacedRange	| SaReplacedRange	| CURR_DEVICE_TYPE		| 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端) |
 | maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`，`isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
+| overflowLogoutMode	| SaLogoutMode	| LOGOUT	| 溢出 maxLoginCount 的客户端，将以何种方式注销下线   (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)			|
 | maxTryTimes			| int		| 12		| 在每次创建 Token 时的最高循环次数，用于保证 Token 唯一性（-1=不循环重试，直接使用）			|
 | isReadBody			| Boolean	| true		| 是否尝试从 请求体 里读取 Token														|
 | isReadHeader			| Boolean	| true		| 是否尝试从 header 里读取 Token														|
 | isReadCookie			| Boolean	| true		| 是否尝试从 cookie 里读取 Token，此值为 false 后，`StpUtil.login(id)` 登录时也不会再往前端注入Cookie				|
 | isLastingCookie		| Boolean	| true		| 是否为持久Cookie（临时Cookie在浏览器关闭时会自动删除，持久Cookie在重新打开后依然存在）						|
 | isWriteHeader			| Boolean	| false		| 是否在登录后将 Token 写入到响应头							|
+| logoutRange		| SaLogoutRange	| TOKEN		| 注销范围 (TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话) (此参数只在调用 StpUtil.logout() 时有效)						|
+| isLogoutKeepFreezeOps		| Boolean	| false	| 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)	(此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效)			|
+| isLogoutKeepTokenSession	| Boolean	| false	| 在注销 token 后，是否保留其对应的 Token-Session					|
 | tokenStyle			| String	| uuid		| token风格， [参考：自定义Token风格](/up/token-style)										|
 | dataRefreshPeriod		| int		| 30		| 默认数据持久组件实现类中，每次清理过期数据间隔的时间 （单位: 秒） ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录），[详解](/use/config?id=配置项详解：tokenSessionCheckLogin)		|
