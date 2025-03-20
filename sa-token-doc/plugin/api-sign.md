@@ -478,13 +478,112 @@ public SaResult addMoney(long userId, long money) {
 }
 ```
 
-完。
+
+### 10、使用注解校验签名
+
+`@SaCheckSign` 注解用于为一个接口提供签名校验，用于替代 `SaSignUtil.checkRequest(SaHolder.getRequest())`，示例如下：
+
+``` java
+// 校验全部参数：效果等同于  SaSignUtil.checkRequest(SaHolder.getRequest())
+@SaCheckSign
+@RequestMapping("test1")
+public SaResult test1() {
+	// code ...
+	return SaResult.ok();
+}
+
+// 指定参与签名的参数有哪些：效果等同于 SaSignUtil.checkRequest(SaHolder.getRequest(), "id", "name");
+@SaCheckSign(verifyParams = {"id", "name"})
+@RequestMapping("test2")
+public SaResult test2() {
+	// code ...
+	return SaResult.ok();
+}
+
+// 指定: 在多应用模式下，使用的 appid，详情见下
+@SaCheckSign(appid = "xm-shop")
+@RequestMapping("test3")
+public SaResult test3() {
+	// code ...
+	return SaResult.ok();
+}
+```
 
 
+### 11、多应用模式
+
+有时候我们可能需要同时与多个应用对接，每个应用都需要使用不同的秘钥：
+
+首先在配置文件配置多个应用信息：
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token: 
+    # API 签名配置 多应用模式
+    sign-many:
+        # 应用1
+        xm-shop:
+            secret-key: 0123456789abcdefg
+            digest-algo: md5
+        # 应用2
+        xm-forum:
+            secret-key: 0123456789hijklmnopq
+            digest-algo: sha256
+        # 应用3
+        xm-video:
+            secret-key: 12341234aaaaccccdddd
+            digest-algo: sha512
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# API 签名配置 多应用模式
+# 应用1
+sa-token.sign-many.xm-shop.secret-key=0123456789abcdefg
+sa-token.sign-many.xm-shop.digest-algo=md5
+# 应用2
+sa-token.sign-many.xm-forum.secret-key=0123456789hijklmnopq
+sa-token.sign-many.xm-forum.digest-algo=sha256
+# 应用3
+sa-token.sign-many.xm-video.secret-key=12341234aaaaccccdddd
+sa-token.sign-many.xm-video.digest-algo=sha512
+```
+<!------------- tab:代码风格示例  ------------->
+``` java
+@Autowired
+public void configSaToken(SaTokenConfig config) {
+    // API 签名配置 多应用模式
+	// 应用1
+	config.getSignMany().put("xm-shop", new SaSignConfig()
+			.setSecretKey("0123456789abcdefg")   // 秘钥
+			.setDigestAlgo("md5")   // 签名算法
+	);
+	// 应用2
+	config.getSignMany().put("xm-forum", new SaSignConfig()
+			.setSecretKey("0123456789hijklmnopq")
+			.setDigestAlgo("sha256")
+	);
+	// 应用3
+	config.getSignMany().put("xm-video", new SaSignConfig()
+			.setSecretKey("12341234aaaaccccdddd")
+			// 自定义签名算法示例
+			.setDigestMethod(fullStr -> {
+				return SaSecureUtil.sha384(fullStr);
+			})
+	);
+}
+```
+<!---------------------------- tabs:end ---------------------------->
 
 
+然后在签名时通过指定 appid 的方式获取对应的 SignTemplate 进行操作：
 
+``` java
+// 创建签名示例
+String paramStr = SaSignMany.getSignTemplate("xm-shop").addSignParamsAndJoin(paramMap);
 
+// 校验签名示例
+SaSignMany.getSignTemplate("xm-shop").checkRequest(SaHolder.getRequest());
+```
 
 
 

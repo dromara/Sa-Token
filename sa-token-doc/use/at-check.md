@@ -13,8 +13,9 @@
 - `@SaCheckSafe`: 二级认证校验 —— 必须二级认证之后才能进入该方法。
 - `@SaCheckHttpBasic`: HttpBasic校验 —— 只有通过 HttpBasic 认证后才能进入该方法。
 - `@SaCheckHttpDigest`: HttpDigest校验 —— 只有通过 HttpDigest 认证后才能进入该方法。
-- `@SaIgnore`：忽略校验 —— 表示被修饰的方法或类无需进行注解鉴权和路由拦截器鉴权。
 - `@SaCheckDisable("comment")`：账号服务封禁校验 —— 校验当前账号指定服务是否被封禁。
+- `@SaCheckSign`：API 签名校验 —— 用于跨系统的 API 签名参数校验。
+- `@SaIgnore`：忽略校验 —— 表示被修饰的方法或类无需进行注解鉴权和路由拦截器鉴权。
 
 Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态<br>
 因此，为了使用注解鉴权，**你必须手动将 Sa-Token 的全局拦截器注册到你项目中**
