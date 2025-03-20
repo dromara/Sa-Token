@@ -212,7 +212,8 @@ Sign 参数签名相关配置：
 | 参数名称				| 类型		| 默认值		| 说明																	|
 | :--------				| :--------	| :--------	| :--------																|
 | secretKey				| String	| null		| API 调用签名秘钥														|
-| timestampDisparity	| long		| 900000		| 接口调用时的时间戳允许的差距（单位：ms），-1 代表不校验差距，默认15分钟		|
+| timestampDisparity	| long		| 900000	| 接口调用时的时间戳允许的差距（单位：ms），-1 代表不校验差距，默认15分钟		|
+| digestAlgo			| String	| md5		| 对 fullStr 的摘要算法					|
 
 示例：
 
