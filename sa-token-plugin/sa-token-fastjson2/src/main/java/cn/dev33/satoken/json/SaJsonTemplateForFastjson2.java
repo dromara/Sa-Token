@@ -16,6 +16,7 @@
 package cn.dev33.satoken.json;
 
 
+import cn.dev33.satoken.util.SaFoxUtil;
 import com.alibaba.fastjson2.JSON;
 
 /**
@@ -31,6 +32,9 @@ public class SaJsonTemplateForFastjson2 implements SaJsonTemplate {
 	 */
 	@Override
 	public String objectToJson(Object obj) {
+		if(SaFoxUtil.isEmpty(obj)) {
+			return null;
+		}
 		return JSON.toJSONString(obj);
 	}
 
@@ -39,6 +43,9 @@ public class SaJsonTemplateForFastjson2 implements SaJsonTemplate {
 	 */
 	@Override
 	public <T>T jsonToObject(String jsonStr, Class<T> type) {
+		if(SaFoxUtil.isEmpty(jsonStr)) {
+			return null;
+		}
 		return JSON.parseObject(jsonStr, type);
 	}
 

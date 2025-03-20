@@ -156,6 +156,9 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	 */
 	@Override
 	public Map<String, Object> jsonToMap(String jsonStr) {
+		if(SaFoxUtil.isEmpty(jsonStr)) {
+			return null;
+		}
 		try {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map = mapObjectMapper.readValue(jsonStr, Map.class);

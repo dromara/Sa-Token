@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.json;
 
+import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.snack.ONode;
 
 /**
@@ -31,6 +32,9 @@ public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
 	 */
 	@Override
 	public String objectToJson(Object obj) {
+		if(SaFoxUtil.isEmpty(obj)) {
+			return null;
+		}
 		return ONode.stringify(obj);
 	}
 
@@ -39,6 +43,9 @@ public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
 	 */
 	@Override
 	public <T> T jsonToObject(String jsonStr, Class<T> type) {
+		if(SaFoxUtil.isEmpty(jsonStr)) {
+			return null;
+		}
 		return ONode.deserialize(jsonStr, type);
 	}
 }
