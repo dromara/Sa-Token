@@ -29,6 +29,7 @@ import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.plugin.SaTokenPlugin;
 import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
@@ -247,6 +248,18 @@ public class SaBeanInject {
 	public void setSaFirewallCheckHooks(List<SaFirewallCheckHook> hooks) {
 		for (SaFirewallCheckHook hook : hooks) {
 			SaFirewallStrategy.instance.registerHook(hook);
+		}
+	}
+
+	/**
+	 * 注入自定义插件集合
+	 *
+	 * @param plugins /
+	 */
+	@Bean
+	public void setSaTokenPluginList(List<SaTokenPlugin> plugins) {
+		for (SaTokenPlugin plugin : plugins) {
+			SaTokenPluginHolder.instance.installPlugin(plugin);
 		}
 	}
 
