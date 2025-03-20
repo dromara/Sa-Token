@@ -130,7 +130,7 @@ public class SaJsonTemplateTest {
     }
 
     // 测试 Map 的转换
-    public void testMap() {
+    private void testMap() {
 
         // test   Map -> Json
         Map<String, Object> map = new HashMap<>();
@@ -147,11 +147,11 @@ public class SaJsonTemplateTest {
     }
 
     // 测试 Null 值
-    public void testNull() {
-        Assertions.assertEquals(null, SaManager.getSaJsonTemplate().objectToJson(null) );
-        Assertions.assertEquals(null, SaManager.getSaJsonTemplate().jsonToObject(null, SysUser.class) );
-        Assertions.assertEquals(null, SaManager.getSaJsonTemplate().jsonToObject(null) );
-        Assertions.assertEquals(null, SaManager.getSaJsonTemplate().jsonToMap(null) );
+    private void testNull() {
+        Assertions.assertNull(SaManager.getSaJsonTemplate().objectToJson(null));
+        Assertions.assertNull(SaManager.getSaJsonTemplate().jsonToObject(null, SysUser.class));
+        Assertions.assertNull(SaManager.getSaJsonTemplate().jsonToObject(null));
+        Assertions.assertNull(SaManager.getSaJsonTemplate().jsonToMap(null));
     }
 
 }
