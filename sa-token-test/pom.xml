@@ -25,6 +25,7 @@
         <!-- <module>sa-token-springboot-integrate-test</module> -->
         <module>sa-token-jwt-test</module>
 		<module>sa-token-json-test</module>
+		<module>sa-token-serializer-test</module>
     </modules>
 
 	<dependencies>
