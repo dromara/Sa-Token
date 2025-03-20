@@ -1,4 +1,4 @@
-# 自定义序列化插件
+# 序列化插件扩展包
 --- 
 
 引入此插件可以为 Sa-Token 提供一些有意思的序列化方案。（娱乐向，不建议上生产）
@@ -34,7 +34,7 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-tiangan.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-tiangan.png?x-oss-process=style/st 's-w')
+![sa-custom-serializer-tiangan.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-tiangan.png 's-w')
 
 
 #### 2、SaSerializerForBase64UsePeriodicTable
@@ -50,7 +50,7 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-yszqb.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-yszqb.png?x-oss-process=style/st 's-w')
+![sa-custom-serializer-yszqb.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-yszqb.png 's-w')
 
 
 
@@ -67,7 +67,7 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-tsfh.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-tsfh.png?x-oss-process=style/st 's-w')
+![sa-custom-serializer-tsfh.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-tsfh.png 's-w')
 
 
 #### 4、SaSerializerForBase64UseEmoji
@@ -83,9 +83,9 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-emoji.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-emoji.png?x-oss-process=style/st 's-w')
+![sa-custom-serializer-emoji.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-emoji.png 's-w')
 
-![sa-custom-serializer-emoji2.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-emoji2.png?x-oss-process=style/st 's-w')
+![sa-custom-serializer-emoji2.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-emoji2.png 's-w')
 
 
 
