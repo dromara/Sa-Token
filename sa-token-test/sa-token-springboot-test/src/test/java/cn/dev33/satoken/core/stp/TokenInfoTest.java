@@ -83,7 +83,7 @@ public class TokenInfoTest {
 				.create()
 				.setTimeout(-1);
 		Assertions.assertEquals(loginParameter.getCookieTimeout(), Integer.MAX_VALUE);
-		Assertions.assertEquals(loginParameter.getDeviceTypeOrDefault(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);
+		Assertions.assertEquals(loginParameter.getDeviceType(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);
 	}
 	
 }

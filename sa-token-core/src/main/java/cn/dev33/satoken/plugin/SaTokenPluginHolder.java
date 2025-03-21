@@ -72,12 +72,12 @@ public class SaTokenPluginHolder {
 	 * </p>
 	 */
 	public synchronized void loaderPlugins() {
-		SaManager.getLog().info("SPI 插件加载开始 ...");
+		SaManager.getLog().info("SPI plugin loading start ...");
 		List<SaTokenPlugin> plugins = _loaderPluginsBySpi(SaTokenPlugin.class, spiDir);
 		for (SaTokenPlugin plugin : plugins) {
 			installPlugin(plugin);
 		}
-		SaManager.getLog().info("SPI 插件加载结束 ...");
+		SaManager.getLog().info("SPI plugin loading end ...");
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class SaTokenPluginHolder {
 				}
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("SPI 插件加载失败: " + e.getMessage(), e);
+			throw new SaTokenPluginException("SPI 插件加载失败: " + e.getMessage(), e);
 		}
 		return providers;
 	}

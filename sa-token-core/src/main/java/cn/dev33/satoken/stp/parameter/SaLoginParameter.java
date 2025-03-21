@@ -232,16 +232,6 @@ public class SaLoginParameter {
 	}
 
 	/**
-	 * @return 获取device参数，如果为null，则返回默认值
-	 */
-	public String getDeviceTypeOrDefault() {
-		if(deviceType == null) {
-			return SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE;
-		}
-		return deviceType;
-	}
-
-	/**
 	 * 静态方法获取一个 SaLoginParameter 对象
 	 * @return SaLoginParameter 对象
 	 */

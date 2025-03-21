@@ -1,6 +1,66 @@
 # 更新日志 
 
 
+### v1.41.0 @2025-3-21
+- core: 
+	- 修复：修复 `StpUtil.setTokenValue("xxx")`、`loginParameter.getIsWriteHeader()` 空指针的问题。 fix: [#IBKSM0](https://gitee.com/dromara/sa-token/issues/IBKSM0)
+	- 修复：将 `SaDisableWrapperInfo.createNotDisabled()` 默认返回值封禁等级改为 -2，以保证向之前版本兼容。
+	- 新增：新增基于 SPI 的插件体系。   **[重要]** 
+	- 重构：JSON 转换器模块。   **[重要]** 
+	- 新增：新增 serializer 序列化模块，控制 `Object` 与 `String` 的序列化方式。   **[重要]** 
+	- 重构：重构防火墙模块，增加 hooks 机制。   **[重要]** 
+	- 新增：防火墙新增：请求 path 禁止字符校验、Host 检测、请求 Method 检测、请求头检测、请求参数检测。重构目录遍历符检测算法。
+	- 重构：重构 `SaTokenDao` 模块，将序列化与存储操作分离。   **[重要]**
+	- 重构：重构 `SaTokenDao` 默认实现类，优化底层设计。
+	- 新增：`isLastingCookie` 配置项支持在全局配置中定义了。
+	- 重构：`SaLoginModel` -> `SaLoginParameter`。    **[不向下兼容]** 
+	- 重构：`TokenSign` -> `SaTerminalInfo`。    **[不向下兼容]** 
+	- 新增：`SaTerminalInfo` 新增 `extraData` 自定义扩展数据设置。
+	- 新增：`SaLoginParameter` 支持配置 `isConcurrent`、`isShare`、`maxLoginCount`、`maxTryTimes`。
+	- 新增：新增 `SaLogoutParameter`，用于控制注销会话时的各种细节。  **[重要]**
+	- 新增：新增 `StpLogic#isTrustDeviceId` 方法，用于判断指定设备是否为可信任设备。
+	- 新增：新增 `StpUtil.getTerminalListByLoginId(loginId)`、`StpUtil.forEachTerminalList(loginId)` 方法，以更方便的实现单账号会话管理。
+	- 升级：API 参数签名配置支持自定义摘要算法。
+	- 新增：新增 `@SaCheckSign` 注解鉴权，用于 API 签名参数校验。
+	- 新增：API 参数签名模块新增多应用模式。 fix: [#IAK2BI](https://gitee.com/dromara/sa-token/issues/IAK2BI), [#I9SPI1](https://gitee.com/dromara/sa-token/issues/I9SPI1), [#IAC0P9](https://gitee.com/dromara/sa-token/issues/IAC0P9)   **[重要]**
+	- 重构：全局配置 `is-share` 默认值改为 false。    **[不向下兼容]** 
+	- 重构：踢人下线、顶人下线默认将删除对应的 token-session 对象。
+	- 优化：优化注销会话相关 API。
+	- 重构：登录默认设备类型值改为 DEF。   **[不向下兼容]** 
+	- 重构：`BCrypt` 标注为 `@Deprecated`。
+	- 新增：`sa-token-quick-login` 支持 `SpringBoot3` 项目。 fix: [#IAFQNE](https://gitee.com/dromara/sa-token/issues/IAFQNE)、[#673](https://github.com/dromara/Sa-Token/issues/673)
+	- 新增：`SaTokenConfig` 新增 `replacedRange`、`overflowLogoutMode`、`logoutRange`、`isLogoutKeepFreezeOps`、``isLogoutKeepTokenSession`` 配置项。
+- OAuth2：
+	- 重构：重构 sa-token-oauth2 插件，使注解鉴权处理器的注册过程改为 SPI 插件加载。
+- 插件：
+	- 新增：`sa-token-serializer-features` 插件，用于实现各种形式的自定义字符集序列化方案。
+	- 新增：`sa-token-fastjson` 插件。
+	- 新增：`sa-token-fastjson2` 插件。
+	- 新增：`sa-token-snack3` 插件。
+	- 新增：`sa-token-caffeine` 插件。
+- 单元测试：
+	- 新增：`sa-token-json-test` json 模块单元测试。
+	- 新增：`sa-token-serializer-test` 序列化模块单元测试。
+- 文档：
+	- 新增：QA “多个项目共用同一个 redis，怎么防止冲突？” 
+	- 优化：补全 OAuth2 模块遗漏的相关配置项。
+	- 优化：优化 OAuth2 简述章节描述文档。
+	- 优化：完善 “SSO 用户数据同步 / 迁移” 章节文档。
+	- 修正：补全项目目录结构介绍文档。
+	- 新增：文档新增 “登录参数 & 注销参数” 章节。
+	- 优化：优化“技术求助”按钮的提示文字。
+	- 新增：新增 `preview-doc.bat` 文件，一键启动文档预览。
+	- 完善：完善 Redis 集成文档。
+	- 新增：新增单账号会话查询的操作示例。
+	- 新增：新增顶人下线 API 介绍。
+	- 新增：新增 自定义序列化插件 章节。
+- 其它：
+	- 新增：新增 `sa-token-demo/pom.xml` 以便在 idea 中一键导入所有 demo 项目。
+	- 删除：删除不必要的 `.gitignore` 文件
+	- 重构：重构 `sa-token-solon-plugin` 插件。
+	- 新增：新增设备锁登录示例。
+
+
 ### v1.40.0 @2025-2-1
 更新导读：[视频](https://www.bilibili.com/video/BV1uNATeeEvg/)、[文字版](https://juejin.cn/post/7467969744307306505)
 

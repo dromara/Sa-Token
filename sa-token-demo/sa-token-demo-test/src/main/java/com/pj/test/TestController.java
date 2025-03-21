@@ -32,7 +32,7 @@ public class TestController {
 		StpUtil.login(id, new SaLoginParameter()
 				.setIsConcurrent(true)
 				.setIsShare(false)
-						.setDeviceType(dt)
+//						.setDeviceType(dt)
 				.setMaxLoginCount(4)
 				.setMaxTryTimes(12)
 				.setTerminalExtra("deviceSimpleTitle", "XiaoMi 15 Ultra")

@@ -16,7 +16,7 @@
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token.version>1.40.0</sa-token.version>
+		<sa-token.version>1.41.0</sa-token.version>
 	</properties>
 
 	<dependencies>
@@ -47,7 +47,7 @@
         <!-- 在 thymeleaf 标签中使用 Sa-Token -->
         <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dialect-thymeleaf</artifactId>
+            <artifactId>sa-token-thymeleaf</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
 		

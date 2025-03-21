@@ -755,7 +755,7 @@ public class BasicsTest {
     	Assertions.assertEquals(map2.get("name"), "zhangsan");
     	
     	// 抛异常 
-    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.jsonToMap(""));
+    	Assertions.assertThrows(SaJsonConvertException.class, () -> saJsonTemplate.jsonToMap("x"));
     }
 
     // 测试过滤器、拦截器 基础API 

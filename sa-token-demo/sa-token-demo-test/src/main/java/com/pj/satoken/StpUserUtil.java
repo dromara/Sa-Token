@@ -2,16 +2,19 @@ package com.pj.satoken;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.fun.SaTwoParamFunction;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 
 import java.util.List;
 
 /**
- * Sa-Token 权限认证工具类 (User 版)
+ * 【User账号体系】Sa-Token 权限认证工具类
  *
  * @author click33
  * @since 1.0.0
@@ -155,10 +158,10 @@ public class StpUserUtil {
 	 * 会话登录，并指定登录设备类型
 	 *
 	 * @param id 账号id，建议的类型：（long | int | String）
-	 * @param device 设备类型
+	 * @param deviceType 设备类型
 	 */
-	public static void login(Object id, String device) {
-		stpLogic.login(id, device);
+	public static void login(Object id, String deviceType) {
+		stpLogic.login(id, deviceType);
 	}
 
 	/**
@@ -222,7 +225,7 @@ public class StpUserUtil {
 		return stpLogic.getOrCreateLoginSession(id);
 	}
 
-	// --- 注销
+	// --- 注销 (根据 token)
 
 	/**
 	 * 在当前客户端会话注销
@@ -230,6 +233,76 @@ public class StpUserUtil {
 	public static void logout() {
 		stpLogic.logout();
 	}
+
+	/**
+	 * 在当前客户端会话注销，根据注销参数
+	 */
+	public static void logout(SaLogoutParameter logoutParameter) {
+		stpLogic.logout(logoutParameter);
+	}
+
+	/**
+	 * 注销下线，根据指定 token
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public static void logoutByTokenValue(String tokenValue) {
+		stpLogic.logoutByTokenValue(tokenValue);
+	}
+
+	/**
+	 * 注销下线，根据指定 token、注销参数
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter /
+	 */
+	public static void logoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		stpLogic.logoutByTokenValue(tokenValue, logoutParameter);
+	}
+
+	/**
+	 * 踢人下线，根据指定 token
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public static void kickoutByTokenValue(String tokenValue) {
+		stpLogic.kickoutByTokenValue(tokenValue);
+	}
+
+	/**
+	 * 踢人下线，根据指定 token、注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter 注销参数
+	 */
+	public static void kickoutByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		stpLogic.kickoutByTokenValue(tokenValue, logoutParameter);
+	}
+
+	/**
+	 * 顶人下线，根据指定 token
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public static void replacedByTokenValue(String tokenValue) {
+		stpLogic.replacedByTokenValue(tokenValue);
+	}
+
+	/**
+	 * 顶人下线，根据指定 token、注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param tokenValue 指定 token
+	 * @param logoutParameter /
+	 */
+	public static void replacedByTokenValue(String tokenValue, SaLogoutParameter logoutParameter) {
+		stpLogic.replacedByTokenValue(tokenValue, logoutParameter);
+	}
+
+	// --- 注销 (根据 loginId)
 
 	/**
 	 * 会话注销，根据账号id
@@ -244,19 +317,20 @@ public class StpUserUtil {
 	 * 会话注销，根据账号id 和 设备类型
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型 (填 null 代表注销该账号的所有设备类型)
+	 * @param deviceType 设备类型 (填 null 代表注销该账号的所有设备类型)
 	 */
-	public static void logout(Object loginId, String device) {
-		stpLogic.logout(loginId, device);
+	public static void logout(Object loginId, String deviceType) {
+		stpLogic.logout(loginId, deviceType);
 	}
 
 	/**
-	 * 会话注销，根据指定 Token
+	 * 会话注销，根据账号id 和 注销参数
 	 *
-	 * @param tokenValue 指定 token
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
 	 */
-	public static void logoutByTokenValue(String tokenValue) {
-		stpLogic.logoutByTokenValue(tokenValue);
+	public static void logout(Object loginId, SaLogoutParameter logoutParameter) {
+		stpLogic.logout(loginId, logoutParameter);
 	}
 
 	/**
@@ -274,20 +348,31 @@ public class StpUserUtil {
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型 (填 null 代表踢出该账号的所有设备类型)
+	 * @param deviceType 设备类型 (填 null 代表踢出该账号的所有设备类型)
 	 */
-	public static void kickout(Object loginId, String device) {
-		stpLogic.kickout(loginId, device);
+	public static void kickout(Object loginId, String deviceType) {
+		stpLogic.kickout(loginId, deviceType);
 	}
 
 	/**
-	 * 踢人下线，根据指定 token
+	 * 踢人下线，根据账号id 和 注销参数
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-5 </p>
 	 *
-	 * @param tokenValue 指定 token
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
 	 */
-	public static void kickoutByTokenValue(String tokenValue) {
-		stpLogic.kickoutByTokenValue(tokenValue);
+	public static void kickout(Object loginId, SaLogoutParameter logoutParameter) {
+		stpLogic.kickout(loginId, logoutParameter);
+	}
+
+	/**
+	 * 顶人下线，根据账号id
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param loginId 账号id
+	 */
+	public static void replaced(Object loginId) {
+		stpLogic.replaced(loginId);
 	}
 
 	/**
@@ -295,11 +380,52 @@ public class StpUserUtil {
 	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型 （填 null 代表顶替该账号的所有设备类型）
+	 * @param deviceType 设备类型 （填 null 代表顶替该账号的所有设备类型）
 	 */
-	public static void replaced(Object loginId, String device) {
-		stpLogic.replaced(loginId, device);
+	public static void replaced(Object loginId, String deviceType) {
+		stpLogic.replaced(loginId, deviceType);
 	}
+
+	/**
+	 * 顶人下线，根据账号id 和 注销参数
+	 * <p> 当对方再次访问系统时，会抛出 NotLoginException 异常，场景值=-4 </p>
+	 *
+	 * @param loginId 账号id
+	 * @param logoutParameter 注销参数
+	 */
+	public static void replaced(Object loginId, SaLogoutParameter logoutParameter) {
+		stpLogic.replaced(loginId, logoutParameter);
+	}
+
+	// --- 注销 (会话管理辅助方法)
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (注销下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public static void removeTerminalByLogout(SaSession session, SaTerminalInfo terminal) {
+		stpLogic.removeTerminalByLogout(session, terminal);
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (踢人下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public static void removeTerminalByKickout(SaSession session, SaTerminalInfo terminal) {
+		stpLogic.removeTerminalByKickout(session, terminal);
+	}
+
+	/**
+	 * 在 Account-Session 上移除 Terminal 信息 (顶人下线方式)
+	 * @param session /
+	 * @param terminal /
+	 */
+	public static void removeTerminalByReplaced(SaSession session, SaTerminalInfo terminal) {
+		stpLogic.removeTerminalByReplaced(session, terminal);
+	}
+
 
 	// 会话查询
 
@@ -310,6 +436,15 @@ public class StpUserUtil {
 	 */
 	public static boolean isLogin() {
 		return stpLogic.isLogin();
+	}
+
+	/**
+	 * 判断指定账号是否已经登录
+	 *
+	 * @return 已登录返回 true，未登录返回 false
+	 */
+	public static boolean isLogin(Object loginId) {
+		return stpLogic.isLogin(loginId);
 	}
 
 	/**
@@ -376,13 +511,23 @@ public class StpUserUtil {
 	}
 
 	/**
-	 * 获取指定 token 对应的账号id，如果未登录，则返回 null
+	 * 获取指定 token 对应的账号id，如果 token 无效或 token 处于被踢、被顶、被冻结等状态，则返回 null
 	 *
 	 * @param tokenValue token
 	 * @return 账号id
 	 */
 	public static Object getLoginIdByToken(String tokenValue) {
 		return stpLogic.getLoginIdByToken(tokenValue);
+	}
+
+	/**
+	 * 获取指定 token 对应的账号id，如果 token 无效或 token 处于被踢、被顶等状态 (不考虑被冻结)，则返回 null
+	 *
+	 * @param tokenValue token
+	 * @return 账号id
+	 */
+	public Object getLoginIdByTokenNotThinkFreeze(String tokenValue) {
+		return stpLogic.getLoginIdByTokenNotThinkFreeze(tokenValue);
 	}
 
 	/**
@@ -784,11 +929,11 @@ public class StpUserUtil {
 	 * </p>
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return token值
 	 */
-	public static String getTokenValueByLoginId(Object loginId, String device) {
-		return stpLogic.getTokenValueByLoginId(loginId, device);
+	public static String getTokenValueByLoginId(Object loginId, String deviceType) {
+		return stpLogic.getTokenValueByLoginId(loginId, deviceType);
 	}
 
 	/**
@@ -805,11 +950,42 @@ public class StpUserUtil {
 	 * 获取指定账号 id 指定设备类型端的 token 集合
 	 *
 	 * @param loginId 账号id
-	 * @param device 设备类型，填 null 代表不限设备类型
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
 	 * @return 此 loginId 的所有登录 token
 	 */
-	public static List<String> getTokenValueListByLoginId(Object loginId, String device) {
-		return stpLogic.getTokenValueListByLoginId(loginId, device);
+	public static List<String> getTokenValueListByLoginId(Object loginId, String deviceType) {
+		return stpLogic.getTokenValueListByLoginId(loginId, deviceType);
+	}
+
+	/**
+	 * 获取指定账号 id 已登录设备信息集合
+	 *
+	 * @param loginId 账号id
+	 * @return 此 loginId 的所有登录 token
+	 */
+	public static List<SaTerminalInfo> getTerminalListByLoginId(Object loginId) {
+		return stpLogic.getTerminalListByLoginId(loginId);
+	}
+
+	/**
+	 * 获取指定账号 id 指定设备类型端的已登录设备信息集合
+	 *
+	 * @param loginId 账号id
+	 * @param deviceType 设备类型，填 null 代表不限设备类型
+	 * @return /
+	 */
+	public static List<SaTerminalInfo> getTerminalListByLoginId(Object loginId, String deviceType) {
+		return stpLogic.getTerminalListByLoginId(loginId, deviceType);
+	}
+
+	/**
+	 * 获取指定账号 id 已登录设备信息集合，执行特定函数
+	 *
+	 * @param loginId 账号id
+	 * @param function 需要执行的函数
+	 */
+	public static void forEachTerminalList(Object loginId, SaTwoParamFunction<SaSession, SaTerminalInfo> function) {
+		stpLogic.forEachTerminalList(loginId, function);
 	}
 
 	/**
@@ -817,9 +993,38 @@ public class StpUserUtil {
 	 *
 	 * @return 当前令牌的登录设备类型
 	 */
-	public static String getLoginDevice() {
+	public static String getLoginDeviceType() {
 		return stpLogic.getLoginDeviceType();
 	}
+
+	/**
+	 * 返回指定 token 会话的登录设备类型
+	 *
+	 * @param tokenValue 指定token
+	 * @return 当前令牌的登录设备类型
+	 */
+	public static String getLoginDeviceTypeByToken(String tokenValue) {
+		return stpLogic.getLoginDeviceTypeByToken(tokenValue);
+	}
+
+	/**
+	 * 获取当前 token 的最后活跃时间（13位时间戳），如果不存在则返回 -2
+	 *
+	 * @return /
+	 */
+	public static long getTokenLastActiveTime() {
+		return stpLogic.getTokenLastActiveTime();
+	}
+
+	/**
+	 * 判断对于指定 loginId 来讲，指定设备 id 是否为可信任设备
+	 * @param deviceId /
+	 * @return /
+	 */
+	public static boolean isTrustDeviceId(Object userId, String deviceId) {
+		return stpLogic.isTrustDeviceId(userId, deviceId);
+	}
+
 
 
 	// ------------------- 会话管理 -------------------
@@ -1201,10 +1406,48 @@ public class StpUserUtil {
 	/**
 	 * 在当前会话 结束指定业务标识的二级认证
 	 *
-	 * @param service 业务标识  
+	 * @param service 业务标识
 	 */
 	public static void closeSafe(String service) {
 		stpLogic.closeSafe(service);
+	}
+
+
+	// ------------------- Bean 对象、字段代理 -------------------
+
+	/**
+	 * 根据当前配置对象创建一个 SaLoginParameter 对象
+	 *
+	 * @return /
+	 */
+	public static SaLoginParameter createSaLoginParameter() {
+		return stpLogic.createSaLoginParameter();
+	}
+
+
+	// ------------------- 过期方法 -------------------
+
+	/**
+	 * <h2>请更换为 getLoginDeviceType </h2>
+	 * 返回当前会话的登录设备类型
+	 *
+	 * @return 当前令牌的登录设备类型
+	 */
+	@Deprecated
+	public static String getLoginDevice() {
+		return stpLogic.getLoginDevice();
+	}
+
+	/**
+	 * <h2>请更换为 getLoginDeviceTypeByToken </h2>
+	 * 返回指定 token 会话的登录设备类型
+	 *
+	 * @param tokenValue 指定token
+	 * @return 当前令牌的登录设备类型
+	 */
+	@Deprecated
+	public static String getLoginDeviceByToken(String tokenValue) {
+		return stpLogic.getLoginDeviceByToken(tokenValue);
 	}
 
 }

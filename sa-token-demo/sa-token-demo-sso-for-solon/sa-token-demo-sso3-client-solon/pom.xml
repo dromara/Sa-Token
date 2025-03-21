@@ -16,15 +16,20 @@
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token.version>1.40.0</sa-token.version>
+		<sa-token.version>1.41.0</sa-token.version>
 	</properties>
 
 	<dependencies>
 
 		<!-- Solon 依赖 -->
+<!--		<dependency>-->
+<!--			<groupId>org.noear</groupId>-->
+<!--			<artifactId>solon-api</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.noear</groupId>
-			<artifactId>solon-api</artifactId>
+			<artifactId>solon-web</artifactId>
+			<version>${solon.version}</version>
 		</dependency>
 
 		<!-- Http 请求工具 -->

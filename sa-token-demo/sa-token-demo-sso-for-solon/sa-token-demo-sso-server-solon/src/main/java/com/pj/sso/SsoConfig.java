@@ -1,7 +1,7 @@
 package com.pj.sso;
 
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.dao.SaTokenDaoOfRedis;
+import cn.dev33.satoken.dao.SaTokenDaoForRedisx;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -21,7 +21,7 @@ public class SsoConfig {
      * 构建建 SaToken redis dao（如果不需要 redis；可以注释掉）
      * */
     @Bean
-    public SaTokenDao saTokenDaoInit(@Inject("${sa-token.dao.redis}") SaTokenDaoOfRedis saTokenDao) {
+    public SaTokenDao saTokenDaoInit(@Inject("${sa-token.dao.redis}") SaTokenDaoForRedisx saTokenDao) {
         return saTokenDao;
     }
 

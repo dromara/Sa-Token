@@ -3,6 +3,7 @@ package com.pj.test;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pj.util.AjaxJson;
@@ -29,15 +30,15 @@ public class TestJwtController {
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginIdDefaultNull());
 
-		StpUtil.login(id);			// 在当前会话登录此账号
+		StpUtil.login(id, new SaLoginParameter().setExtra("name", "张三"));			// 在当前会话登录此账号
 		System.out.println("登录成功");
 		System.out.println("当前是否登录：" + StpUtil.isLogin());
 		System.out.println("当前登录账号：" + StpUtil.getLoginId());
 //		System.out.println("当前登录账号并转为int：" + StpUtil.getLoginIdAsInt());
-		System.out.println("当前登录设备：" + StpUtil.getLoginDevice());
+		System.out.println("当前登录设备：" + StpUtil.getLoginDeviceType());
 //		System.out.println("当前token信息：" + StpUtil.getTokenInfo());	
 		
-		return AjaxJson.getSuccess();
+		return AjaxJson.getSuccess().setData(StpUtil.getTokenValue());
 	}
 	
 	// 打印当前token信息， 浏览器访问： http://localhost:8081/test/tokenInfo

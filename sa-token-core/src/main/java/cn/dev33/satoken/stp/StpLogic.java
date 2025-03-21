@@ -525,7 +525,7 @@ public class StpLogic {
 		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
 		if( ! loginParameter.getIsConcurrent()) {
 			if(loginParameter.getReplacedRange() == SaReplacedRange.CURR_DEVICE_TYPE) {
-				replaced(id, loginParameter.getDeviceTypeOrDefault());
+				replaced(id, loginParameter.getDeviceType());
 			}
 			if(loginParameter.getReplacedRange() == SaReplacedRange.ALL_DEVICE_TYPE) {
 				replaced(id, createSaLogoutParameter());
