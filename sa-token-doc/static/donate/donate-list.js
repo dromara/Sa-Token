@@ -1370,6 +1370,18 @@ var donateList = [
 		"msg": '感谢您的开源项目！',
 		"date": "2025-01-22"
 	},
-	
-	
+	{
+		"name": "shalixiaohu",
+		"link": "https://gitee.com/jiaruozhi",
+		"money": 10.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2025-02-06"
+	},
+	{
+		"name": "林佳奇",
+		"link": "https://gitee.com/ljq1307",
+		"money": 20.0,
+		"msg": '感谢您的开源项目！',
+		"date": "2025-02-15"
+	},
 ]
