@@ -13,14 +13,14 @@
 <!-- 在 thymeleaf 标签中使用 Sa-Token -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-dialect-thymeleaf</artifactId>
+	<artifactId>sa-token-thymeleaf</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // 在 thymeleaf 标签中使用 Sa-Token
-implementation 'cn.dev33:sa-token-dialect-thymeleaf:${sa.top.version}'
+implementation 'cn.dev33:sa-token-thymeleaf:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
