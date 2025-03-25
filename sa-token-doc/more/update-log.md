@@ -2,6 +2,8 @@
 
 
 ### v1.41.0 @2025-3-21
+更新导读：[视频](https://www.bilibili.com/video/BV1aNo4YCEM1/)、[文字版](https://juejin.cn/post/7484191942358499368)
+
 - core: 
 	- 修复：修复 `StpUtil.setTokenValue("xxx")`、`loginParameter.getIsWriteHeader()` 空指针的问题。 fix: [#IBKSM0](https://gitee.com/dromara/sa-token/issues/IBKSM0)
 	- 修复：将 `SaDisableWrapperInfo.createNotDisabled()` 默认返回值封禁等级改为 -2，以保证向之前版本兼容。
