@@ -130,7 +130,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 框架默认的 `unionid` 生成算法为：
 
 ``` java
-md5(prefix + "_" + clientId + "_" + loginId);
+md5(prefix + "_" + unionid + "_" + loginId);
 ```
 
 其中的 prefix 前缀默认值为：`unionid_default_digest_prefix`，你可以通过以下方式配置：
