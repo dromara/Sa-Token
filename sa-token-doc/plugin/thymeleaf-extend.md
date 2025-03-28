@@ -24,7 +24,7 @@ implementation 'cn.dev33:sa-token-thymeleaf:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-
+123
 
 ### 2、注册标签方言对象 
 在 SaTokenConfigure 配置类中注册 Bean 
