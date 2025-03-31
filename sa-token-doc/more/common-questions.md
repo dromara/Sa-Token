@@ -565,9 +565,34 @@ public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForS
 ```
 
 
+### Q：过低的 SpringBoot 版本引入 Sa-Token 后报错
 
+在低于 2.2.0 时 (不包含2.2.0本身) 的 SpringBoot 项目中引入 Sa-Token 后，项目启动时会报错：
 
+``` txt
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cn.dev33.satoken.spring.SaBeanInject': Bean instantiation via constructor failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [cn.dev33.satoken.spring.SaBeanInject]: Constructor threw exception; nested exception is java.lang.NoClassDefFoundError: com/fasterxml/jackson/databind/jsontype/PolymorphicTypeValidator
+```
 
+这是由于缺少 jackson 相关依赖导致的，可以手动添加以下依赖来解决：
+
+``` xml
+<!-- SpringBoot 版本过低时，需要追加的包 (低于 2.2.0 时，不包含 2.2.0 本身) -->
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-core</artifactId>
+	<version>2.17.3</version>
+</dependency>
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-annotations</artifactId>
+	<version>2.17.3</version>
+</dependency>
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-databind</artifactId>
+	<version>2.17.3</version>
+</dependency>
+```
 
 
 

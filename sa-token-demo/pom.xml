@@ -33,6 +33,7 @@
 		<module>sa-token-demo-solon-redisson</module>
 		<module>sa-token-demo-springboot</module>
 		<module>sa-token-demo-springboot3-redis</module>
+		<module>sa-token-demo-springboot-low-version</module>
 		<module>sa-token-demo-springboot-redis</module>
 		<module>sa-token-demo-springboot-redisson</module>
 		<module>sa-token-demo-ssm</module>
