@@ -9,9 +9,9 @@
 ### 1、问题分析
 我们先来分析一下，当后端不使用共享 Redis 时，会对架构产生哪些影响：
 
-1. Client 端无法直连 Redis 校验 ticket，取出账号id。
-2. Client 端无法与 Server 端共用一套会话，需要自行维护子会话。
-3. 由于不是一套会话，所以无法“一次注销，全端下线”，需要额外编写代码完成单点注销（其实此处的“额外编写代码”已在SSO模式二“无刷单点注销”部分介绍完毕）。
+1. sso-client 端无法直连 Redis 校验 ticket，取出账号id。
+2. sso-client 端无法与 sso-server 端共用一套会话，需要自行维护子会话。
+3. 由于不是一套会话，所以无法“一次注销，全端下线”，需要额外编写代码完成单点注销。
 
 所以模式三的主要目标：也就是在 模式二的基础上 解决上述 三个难题 
 
@@ -261,12 +261,15 @@ public Object getFansList(Long loginId) {
 
 此处简单介绍一下 SSO 模式三的单点注销链路过程：
 
-1. Client 端在校验 ticket 时，将注销回调地址发送到 Server 端。
-2. Server 端将此 Client 的注销回调回调信息存储到 List 集合。
-3. Client 端向 Server 端发送单点注销请求。
-4. Server 端遍历Set集合，逐个通知 Client 端下线。
-5. Server 端注销下线。
-6. 单点注销完成。
+1. sso-client 端在校验 ticket 时(调用 `http://{sso-server}/sso/checkTicket` 时)，将注销回调地址 `http://{sso-client}/sso/logoutCall` 发送到 Server 端。
+2. sso-server 端将此 sso-client 的注销回调地址以 List 集合的形式存储在该账号 Access-Session 的 dataMap。
+3. sso-client 的前端向 sso-client 的后端发起单点注销请求。(调用 `http://{sso-client}/sso/logout`)
+4. sso-client 的后端向 sso-server 的后端发送单点注销请求。(调用 `http://{sso-server}/sso/signout`)
+5. sso-server 端遍历该账号 Access-Session 存储的注销回调地址集合，逐个通知 sso-client 端下线。(`http://{sso-client}/sso/logoutCall`)
+6. sso-server 端注销下线。
+7. sso-server 后端响应 sso-client 后端：注销完成。
+7. sso-client 后端响应 sso-client 前端：注销完成。
+8. 整体完成。
 
 
 <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso3-logout.gif">加载动态演示图</button>
