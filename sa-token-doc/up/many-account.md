@@ -288,6 +288,32 @@ public void addInterceptors(InterceptorRegistry registry) {
 ```
 
 
+### 11、在一个接口里获取是哪个体系的账号正在登录
+
+可以分别用两个体系的 isLogin() 方法去判断，哪个返回 true 就代表正在登录哪个体系
+
+``` java
+@RequestMapping("test")
+public SaResult test2() {
+	
+	String loginType = "";
+	
+	if(StpUtil.isLogin()) {
+		loginType = StpUtil.getLoginType();
+	}
+	if(StpUserUtil.isLogin()) {
+		loginType = StpUserUtil.getLoginType();
+	}
+	
+	System.out.println("当前登录的 loginType：" + loginType);
+
+	return SaResult.ok();
+}
+```
+
+请注意此处可能出现的两种边际情况：
+- 两个 if 均返回 false：代表客户端在两个账号体系都没有登录。
+- 两个 if 均返回 true：代表客户端在两个账号体系都登录了。
 
 
 
