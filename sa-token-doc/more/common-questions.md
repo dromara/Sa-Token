@@ -802,6 +802,11 @@ SaHolder.getResponse().setStatus(401)
 ```
 
 
+
+### Q：Sa-Token 集成 Redis 如何集群？
+以 `sa-token-redis-template` 为例：Sa-Token 底层使用的是 RedisTemplate 对象来操作数据的，也就是说，你只要给 RedisTemplate 配置上集群模式，Sa-Token 自动就是集群模式了。
+
+
 ### Q：多个项目共用同一个 redis，怎么防止冲突？
 
 首先，如无特殊需求，建议多个项目不要共用同一个 redis，如果非要共用，有以下方式避免数据冲突：
