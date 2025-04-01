@@ -1094,25 +1094,11 @@ public class StpLogic {
 		}
 
 		// 7、token 活跃频率检查
-		if(isOpenCheckActiveTimeout()) {
-			// storage.get(key, () -> {}) 可以避免一次请求多次校验，造成不必要的性能消耗
-			SaHolder.getStorage().get(SaTokenConsts.TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY, () -> {
+		checkActiveTimeoutByConfig(tokenValue);
 
-				// 7.1、检查此 token 的最后活跃时间是否已经超过了 active-timeout 的限制，如果是则代表其已被冻结，需要抛出：token 已被冻结
-				checkActiveTimeout(tokenValue);
+		// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
 
-				// ------ 至此，loginId 已经是一个合法的值，代表当前会话是一个正常的登录状态了
-
-				// 7.2、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
-				if(SaStrategy.instance.autoRenew.apply(this)) {
-					updateLastActiveToNow(tokenValue);
-				}
-
-				return true;
-			});
-		}
-
-		// 9、返回 loginId
+		// 8、返回 loginId
 		return loginId;
 	}
 
@@ -1277,14 +1263,24 @@ public class StpLogic {
 	// ---- 其它操作
 
 	/**
-	 * 判断一个 loginId 是否是有效的
+	 * 判断一个 loginId 是否是有效的 (判断标准：不为 null、空字符串，且不在异常标记项里面)
 	 *
 	 * @param loginId 账号id
 	 * @return /
 	 */
 	public boolean isValidLoginId(Object loginId) {
-		// 判断标准：不为 null、空字符串，且不在异常标记项里面
 		return SaFoxUtil.isNotEmpty(loginId) && !NotLoginException.ABNORMAL_LIST.contains(loginId.toString());
+	}
+
+	/**
+	 * 判断一个 token 是否是有效的 (判断标准：使用此 token 查询到的 loginId 不为 Empty )
+	 *
+	 * @param tokenValue /
+	 * @return /
+	 */
+	public boolean isValidToken(String tokenValue) {
+		Object loginId = getLoginIdByToken(tokenValue);
+		return SaFoxUtil.isNotEmpty(loginId);
 	}
 
 	/**
@@ -1454,10 +1450,32 @@ public class StpLogic {
 	 * @return session对象
 	 */
 	public SaSession getTokenSessionByToken(String tokenValue, boolean isCreate) {
+		// 1、token 为空，不允许创建
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			throw new SaTokenException("Token-Session 获取失败：token 为空").setCode(SaErrorCode.CODE_11073);
 		}
-		return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, null, session -> {
+
+		// 2、如果能查询到旧记录，则直接返回
+		String sessionId = splicingKeyTokenSession(tokenValue);
+		SaSession tokenSession = getSaTokenDao().getSession(sessionId);
+		if(tokenSession != null) {
+			return tokenSession;
+		}
+		// 以下是查不到的情况
+
+		// 3、指定了不需要创建，返回 null
+		if( ! isCreate) {
+			return null;
+		}
+		// 以下是需要创建的情况
+
+		// 4、检查一下这个 token 是否为有效 token，无效 token 不允许创建
+		if(getConfigOrGlobal().getTokenSessionCheckLogin() && ! isValidToken(tokenValue)) {
+			throw new SaTokenException("Token-Session 获取失败，token 无效: " + tokenValue).setCode(SaErrorCode.CODE_11074);
+		}
+
+		// 5、创建 Token-Session 并返回
+		return getSessionBySessionId(sessionId, true, null, session -> {
 			// 这里是该 Token-Session 首次创建时才会被执行的方法：
 			// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
 			session.setType(SaTokenConsts.SESSION_TYPE__TOKEN);
@@ -1483,20 +1501,8 @@ public class StpLogic {
 	 * @return Session对象
 	 */
 	public SaSession getTokenSession(boolean isCreate) {
-
-		// 1、如果配置了：tokenSessionCheckLogin == true，则需要先校验当前是否登录，未登录情况下不允许拿到 Token-Session
-		if(getConfigOrGlobal().getTokenSessionCheckLogin()) {
-			checkLogin();
-		}
-
-		// 2、如果前端根本没有提供 Token ，则直接返回 null
 		String tokenValue = getTokenValue();
-		if(SaFoxUtil.isEmpty(tokenValue)) {
-			throw new SaTokenException("Token-Session 获取失败：token 为空").setCode(SaErrorCode.CODE_11073);
-		}
-
-		// 3、代码至此：tokenSessionCheckLogin 校验通过、且 Token 有值
-		//    现在根据前端提供的 Token 获取它对应的 Token-Session 对象（SaSession）
+		checkActiveTimeoutByConfig(tokenValue);
 		return getTokenSessionByToken(tokenValue, isCreate);
 	}
 
@@ -1680,6 +1686,29 @@ public class StpLogic {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 根据全局配置决定是否校验指定 token 的活跃度
+	 *
+	 * @param tokenValue 指定 token
+	 */
+	public void checkActiveTimeoutByConfig(String tokenValue) {
+		if(isOpenCheckActiveTimeout()) {
+			// storage.get(key, () -> {}) 可以避免一次请求多次校验，造成不必要的性能消耗
+			SaHolder.getStorage().get(SaTokenConsts.TOKEN_ACTIVE_TIMEOUT_CHECKED_KEY, () -> {
+
+				// 1、检查此 token 的最后活跃时间是否已经超过了 active-timeout 的限制，如果是则代表其已被冻结，需要抛出：token 已被冻结
+				checkActiveTimeout(tokenValue);
+
+				// 2、如果配置了自动续签功能, 则: 更新这个 token 的最后活跃时间 （注意此处的续签是在续 active-timeout，而非 timeout）
+				if(SaStrategy.instance.autoRenew.apply(this)) {
+					updateLastActiveToNow(tokenValue);
+				}
+
+				return true;
+			});
+		}
 	}
 
 	/**

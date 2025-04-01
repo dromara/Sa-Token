@@ -48,7 +48,7 @@ sa-token.active-timeout=-1
 
 
 ### 关于active-timeout的续签
-如果`active-timeout`配置了大于零的值，Sa-Token 会在登录时开始计时，在每次直接或间接调用`getLoginId()`时进行一次冻结检查与续签操作。
+如果`active-timeout`配置了大于零的值，Sa-Token 会在登录时开始计时，在每次直接或间接调用`getLoginId()`、`getTokenSession()`时进行一次冻结检查与续签操作。
 此时会有两种情况：
 1. 一种是会话无操作时间太长，Token已经被冻结，此时框架会抛出`NotLoginException`异常(场景值=-3)，
 2. 另一种则是会话在`active-timeout`有效期内通过检查，此时Token可以成功续签 
@@ -85,8 +85,8 @@ StpUtil.stpLogic.updateLastActiveToNow(tokenValue);
 两者的认证逻辑彼此独立，互不干扰，可以同时使用。
 
 
-### StpUtil 类中哪些公开方法支持自动续签 active-timeout? 
-> 直接或间接获取了当前用户id的方法 （间接调用过 StpLogic.getLoginId() 方法）
+### StpUtil 类中哪些方法支持自动续签 active-timeout? 
+> 直接或间接调用过 `getLoginId()`、`getTokenSession()` 的方法
 
 | 包括但不限于这些： |
 |---|

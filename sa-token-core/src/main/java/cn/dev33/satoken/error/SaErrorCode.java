@@ -128,6 +128,9 @@ public interface SaErrorCode {
 	/** 获取 Token-Session 时提供的 token 为空 */
 	int CODE_11073 = 11073;
 
+	/** 获取 Token-Session 时提供的 token 为无效 token */
+	int CODE_11074 = 11074;
+
 
 	// ------------ 
 	

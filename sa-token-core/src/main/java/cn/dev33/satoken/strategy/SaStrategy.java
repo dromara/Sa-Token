@@ -162,7 +162,7 @@ public final class SaStrategy {
 	};
 
 	/**
-     * 是否自动续期
+     * 是否自动续期 active-timeout
      */
     public SaAutoRenewFunction autoRenew = (stpLogic) -> {
         return stpLogic.getConfigOrGlobal().getAutoRenew();
