@@ -351,6 +351,9 @@ public class StpLogic {
 		// 4. 最后尝试从 cookie 里读取
 		if(SaFoxUtil.isEmpty(tokenValue) && config.getIsReadCookie()){
 			tokenValue = request.getCookieValue(keyTokenName);
+			if(SaFoxUtil.isNotEmpty(tokenValue) && config.getCookieAutoFillPrefix()) {
+				tokenValue = config.getTokenPrefix() + SaTokenConsts.TOKEN_CONNECTOR_CHAT + tokenValue;
+			}
 		}
 
 		// 5. 至此，不管有没有读取到，都不再尝试了，直接返回

@@ -154,6 +154,11 @@ public class SaTokenConfig implements Serializable {
 	private String tokenPrefix;
 
 	/**
+	 * cookie 模式是否自动填充 token 前缀
+	 */
+	private Boolean cookieAutoFillPrefix = false;
+
+	/**
 	 * 是否在初始化配置时在控制台打印版本字符画
 	 */
 	private Boolean isPrint = true;
@@ -517,7 +522,23 @@ public class SaTokenConfig implements Serializable {
 		this.tokenPrefix = tokenPrefix;
 		return this;
 	}
-	
+
+	/**
+	 * @return cookie 模式是否自动填充 token 前缀
+	 */
+	public Boolean getCookieAutoFillPrefix() {
+		return cookieAutoFillPrefix;
+	}
+
+	/**
+	 * @param cookieAutoFillPrefix cookie 模式是否自动填充 token 前缀
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setCookieAutoFillPrefix(Boolean cookieAutoFillPrefix) {
+		this.cookieAutoFillPrefix = cookieAutoFillPrefix;
+		return this;
+	}
+
 	/**
 	 * @return 是否在初始化配置时在控制台打印版本字符画
 	 */
@@ -877,8 +898,9 @@ public class SaTokenConfig implements Serializable {
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
 				+ ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
-				+ ", autoRenew=" + autoRenew 
+				+ ", autoRenew=" + autoRenew
 				+ ", tokenPrefix=" + tokenPrefix
+				+ ", cookieAutoFillPrefix=" + cookieAutoFillPrefix
 				+ ", isPrint=" + isPrint 
 				+ ", isLog=" + isLog 
 				+ ", logLevel=" + logLevel 
