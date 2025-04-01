@@ -780,6 +780,22 @@ public SaResult refreshToken(String refreshToken) {
 ```
 
 
+### Q：前后端一体项目下，在拦截未登录进入登录页面时，如何登录完成后原路返回？
+可以在拦截跳转登录页面时，把原 url 作为 back 参数挂载到登录页后方，登录完成后读取 back 参数并跳转
+``` java
+@RestControllerAdvice
+public class GlobalException {
+	// 未登录异常拦截 
+	@ExceptionHandler(NotLoginException.class)
+	public Object handlerException(NotLoginException e) {
+		e.printStackTrace();
+		return SaHolder.getResponse().redirect("/login?back=" + SaHolder.getRequest().getUrl());
+	}
+}
+```
+
+
+
 ### Q：怎么改变请求返回的 http 状态码？
 ``` java
 SaHolder.getResponse().setStatus(401)
