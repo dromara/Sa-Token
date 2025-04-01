@@ -118,6 +118,11 @@ public class SaLoginParameter {
 	 */
 	private SaLogoutMode overflowLogoutMode;
 
+	/**
+	 * 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
+	 */
+	private Boolean rightNowCreateTokenSession;
+
 
 	// ------ 附加方法
 
@@ -145,6 +150,7 @@ public class SaLoginParameter {
 		this.isWriteHeader = config.getIsWriteHeader();
 		this.replacedRange = config.getReplacedRange();
 		this.overflowLogoutMode = config.getOverflowLogoutMode();
+		this.rightNowCreateTokenSession = config.getRightNowCreateTokenSession();
 		return this;
 	}
 
@@ -498,6 +504,26 @@ public class SaLoginParameter {
 		return this;
 	}
 
+	/**
+	 * 获取 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
+	 *
+	 * @return /
+	 */
+	public Boolean getRightNowCreateTokenSession() {
+		return this.rightNowCreateTokenSession;
+	}
+
+	/**
+	 * 设置 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
+	 *
+	 * @param rightNowCreateTokenSession /
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setRightNowCreateTokenSession(Boolean rightNowCreateTokenSession) {
+		this.rightNowCreateTokenSession = rightNowCreateTokenSession;
+		return this;
+	}
+
 	/*
 	 * toString
 	 */
@@ -519,6 +545,7 @@ public class SaLoginParameter {
 				+ ", token=" + token
 				+ ", isWriteHeader=" + isWriteHeader
 				+ ", terminalTag=" + terminalExtraData
+				+ ", rightNowCreateTokenSession=" + rightNowCreateTokenSession
 				+ "]";
 	}
 

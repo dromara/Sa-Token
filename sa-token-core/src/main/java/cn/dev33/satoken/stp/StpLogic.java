@@ -498,7 +498,7 @@ public class StpLogic {
 		}
 
 		// 7、如果该 token 对应的 Token-Session 已经存在，则需要给其续期
-		SaSession tokenSession = getTokenSessionByToken(tokenValue, false);
+		SaSession tokenSession = getTokenSessionByToken(tokenValue, loginParameter.getRightNowCreateTokenSession());
 		if(tokenSession != null) {
 			tokenSession.updateMinTimeout(loginParameter.getTimeout());
 		}

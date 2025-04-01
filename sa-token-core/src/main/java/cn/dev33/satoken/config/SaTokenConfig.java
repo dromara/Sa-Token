@@ -129,6 +129,11 @@ public class SaTokenConfig implements Serializable {
 	private Boolean isLogoutKeepTokenSession = false;
 
 	/**
+	 * 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
+	 */
+	private Boolean rightNowCreateTokenSession = false;
+
+	/**
 	 * token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
 	 */
 	private String tokenStyle = "uuid";
@@ -822,6 +827,26 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
+	 * 获取 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
+	 *
+	 * @return /
+	 */
+	public Boolean getRightNowCreateTokenSession() {
+		return this.rightNowCreateTokenSession;
+	}
+
+	/**
+	 * 设置 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
+	 *
+	 * @param rightNowCreateTokenSession /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setRightNowCreateTokenSession(Boolean rightNowCreateTokenSession) {
+		this.rightNowCreateTokenSession = rightNowCreateTokenSession;
+		return this;
+	}
+
+	/**
 	 * @return Cookie 全局配置对象
 	 */
 	public SaCookieConfig getCookie() {
@@ -895,6 +920,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", logoutRange=" + logoutRange
 				+ ", isLogoutKeepFreezeOps=" + isLogoutKeepFreezeOps
 				+ ", isLogoutKeepTokenSession=" + isLogoutKeepTokenSession
+				+ ", rightNowCreateTokenSession=" + rightNowCreateTokenSession
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
 				+ ", tokenSessionCheckLogin=" + tokenSessionCheckLogin

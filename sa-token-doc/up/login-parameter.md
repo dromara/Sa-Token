@@ -31,6 +31,7 @@ StpUtil.login(10001, new SaLoginParameter()
 		.setTerminalExtra("key", "value")// 本次登录挂载到 SaTerminalInfo 的自定义扩展数据
 		.setReplacedRange(SaReplacedRange.CURR_DEVICE_TYPE) // 顶人下线的范围: CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端
 		.setOverflowLogoutMode(SaLogoutMode.LOGOUT)         // 溢出 maxLoginCount 的客户端，将以何种方式注销下线: LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线
+		.setRightNowCreateTokenSession(true)                // 是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
 );
 ```
 
