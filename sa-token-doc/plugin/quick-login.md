@@ -114,6 +114,12 @@ public class TestController {
 
 ![登录](https://oss.dev33.cn/sa-token/doc/sa-quick-login-index.png 's-w')
 
+也可以通过 Http Basic 的方式直接进行认证 (一般需要在专门的 API 测试工具下才能正常测试，浏览器会自动忽略@之前的信息)
+
+``` url
+http://sa:123456@localhost:8081/
+```
+
 
 ### 可配置信息
 你可以在yml中添加如下配置 (所有配置都是可选的) 

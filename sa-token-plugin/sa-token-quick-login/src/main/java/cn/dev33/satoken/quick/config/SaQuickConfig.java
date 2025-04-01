@@ -15,6 +15,11 @@
  */
 package cn.dev33.satoken.quick.config;
 
+import cn.dev33.satoken.quick.function.DoLoginHandleFunction;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaResult;
+
 /**
  * sa-quick 配置类 Model
  * 
@@ -110,8 +115,27 @@ public class SaQuickConfig {
 	public void setExclude(String exclude) {
 		this.exclude = exclude;
 	}
-	
-	
+
+	/**
+	 * 登录处理函数
+	 */
+	public DoLoginHandleFunction doLoginHandle = (name, pwd) -> {
+
+		// 参数完整性校验
+		if(SaFoxUtil.isEmpty(name) || SaFoxUtil.isEmpty(pwd)) {
+			return SaResult.get(500, "请输入账号和密码", null);
+		}
+
+		// 密码校验：将前端提交的 name、pwd 与配置文件中的配置项进行比对
+		if(name.equals(this.getName()) && pwd.equals(this.getPwd())) {
+			StpUtil.login(this.getName());
+			return SaResult.data(StpUtil.getTokenInfo());
+		} else {
+			return SaResult.error("账号或密码输入错误");
+		}
+	};
+
+
 	@Override
 	public String toString() {
 		return "SaQuickConfig{" +

@@ -16,9 +16,6 @@
 package cn.dev33.satoken.quick.web;
 
 import cn.dev33.satoken.quick.SaQuickManager;
-import cn.dev33.satoken.quick.config.SaQuickConfig;
-import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,21 +53,7 @@ public class SaQuickController {
 	@PostMapping("/doLogin")
 	@ResponseBody
 	public SaResult doLogin(@RequestParam("name") String name, @RequestParam("pwd") String pwd) {
-		
-		// 参数完整性校验
-		if(SaFoxUtil.isEmpty(name) || SaFoxUtil.isEmpty(pwd)) {
-			return SaResult.get(500, "请输入账号和密码", null);
-		}
-		
-		// 密码校验：将前端提交的 name、pwd 与配置文件中的配置项进行比对
-		SaQuickConfig config = SaQuickManager.getConfig();
-		if(name.equals(config.getName()) && pwd.equals(config.getPwd())) {
-			StpUtil.login(config.getName());
-			return SaResult.get(200, "ok", StpUtil.getTokenInfo());
-		} else {
-			// 校验失败 
-			return SaResult.get(500, "账号或密码输入错误", null);
-		}
+		return SaQuickManager.getConfig().doLoginHandle.apply(name, pwd);
 	}
 	
 }

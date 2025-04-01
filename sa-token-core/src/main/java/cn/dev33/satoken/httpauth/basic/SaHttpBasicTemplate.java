@@ -45,7 +45,7 @@ public class SaHttpBasicTemplate {
 	}
 
 	/**
-	 * 获取浏览器提交的 Basic 参数 （裁剪掉前缀并解码）
+	 * 获取浏览器提交的 Http Basic 参数 （裁剪掉前缀并解码）
 	 * @return 值
 	 */
 	public String getAuthorizationValue() {
@@ -61,7 +61,19 @@ public class SaHttpBasicTemplate {
 		// 裁剪前缀并解码 
 		return SaBase64Util.decode(authorization.substring(6));
 	}
-	
+
+	/**
+	 * 获取 Http Basic 账号密码对象
+	 * @return /
+	 */
+	public SaHttpBasicAccount getHttpBasicAccount() {
+		String authorizationValue = getAuthorizationValue();
+		if(authorizationValue == null) {
+			return null;
+		}
+		return new SaHttpBasicAccount(authorizationValue);
+	}
+
 	/**
 	 * 对当前会话进行 Basic 校验（使用全局配置的账号密码），校验不通过则抛出异常  
 	 */
