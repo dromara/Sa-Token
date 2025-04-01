@@ -16,8 +16,10 @@
 package cn.dev33.satoken.stp.parameter;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -123,6 +125,11 @@ public class SaLoginParameter {
 	 */
 	private Boolean rightNowCreateTokenSession;
 
+	/**
+	 * Cookie 配置对象
+	 */
+	public SaCookieConfig cookie = new SaCookieConfig();
+
 
 	// ------ 附加方法
 
@@ -151,6 +158,17 @@ public class SaLoginParameter {
 		this.replacedRange = config.getReplacedRange();
 		this.overflowLogoutMode = config.getOverflowLogoutMode();
 		this.rightNowCreateTokenSession = config.getRightNowCreateTokenSession();
+
+		this.setupCookieConfig(cookie -> {
+			SaCookieConfig gCookie = config.getCookie();
+			cookie.setDomain(gCookie.getDomain());
+			cookie.setPath(gCookie.getPath());
+			cookie.setSecure(gCookie.getSecure());
+			cookie.setHttpOnly(gCookie.getHttpOnly());
+			cookie.setSameSite(gCookie.getSameSite());
+			cookie.setExtraAttrs(new LinkedHashMap<>(gCookie.getExtraAttrs()));
+		});
+
 		return this;
 	}
 
@@ -243,6 +261,16 @@ public class SaLoginParameter {
 	 */
 	public static SaLoginParameter create() {
 		return new SaLoginParameter(SaManager.getConfig());
+	}
+
+	/**
+	 * 设置 Cookie 配置项
+	 * @param fun /
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setupCookieConfig(SaParamFunction<SaCookieConfig> fun) {
+		fun.run(this.cookie);
+		return this;
 	}
 
 
@@ -524,6 +552,22 @@ public class SaLoginParameter {
 		return this;
 	}
 
+	/**
+	 * @return Cookie 配置对象
+	 */
+	public SaCookieConfig getCookie() {
+		return cookie;
+	}
+
+	/**
+	 * @param cookie Cookie 配置对象
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setCookie(SaCookieConfig cookie) {
+		this.cookie = cookie;
+		return this;
+	}
+
 	/*
 	 * toString
 	 */
@@ -546,6 +590,7 @@ public class SaLoginParameter {
 				+ ", isWriteHeader=" + isWriteHeader
 				+ ", terminalTag=" + terminalExtraData
 				+ ", rightNowCreateTokenSession=" + rightNowCreateTokenSession
+				+ ", cookie=" + cookie
 				+ "]";
 	}
 

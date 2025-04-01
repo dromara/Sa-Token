@@ -174,7 +174,7 @@ public class StpLogic {
 	 * @param tokenValue token 值
 	 */
 	public void setTokenValue(String tokenValue){
-		setTokenValue(tokenValue, createSaLoginParameter().setTimeout(getConfigOrGlobal().getTimeout()));
+		setTokenValue(tokenValue, createSaLoginParameter());
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class StpLogic {
 
 		// 2. 将 token 写入到当前会话的 Cookie 里
 		if (getConfigOrGlobal().getIsReadCookie()) {
-			setTokenValueToCookie(tokenValue, loginParameter.getCookieTimeout());
+			setTokenValueToCookie(tokenValue, loginParameter.getCookie(), loginParameter.getCookieTimeout());
 		}
 
 		// 3. 将 token 写入到当前请求的响应头中
@@ -244,17 +244,30 @@ public class StpLogic {
 	 * @param cookieTimeout Cookie存活时间（单位：秒，填-1代表为内存Cookie，浏览器关闭后消失）
 	 */
 	public void setTokenValueToCookie(String tokenValue, int cookieTimeout){
-		SaCookieConfig cfg = getConfigOrGlobal().getCookie();
+		setTokenValueToCookie(tokenValue, null, cookieTimeout);
+	}
+
+	/**
+	 * 将 token 写入到当前会话的 Cookie 里
+	 *
+	 * @param tokenValue token 值
+	 * @param cookieConfig Cookie 配置项
+	 * @param cookieTimeout Cookie存活时间（单位：秒，填-1代表为内存Cookie，浏览器关闭后消失）
+	 */
+	public void setTokenValueToCookie(String tokenValue, SaCookieConfig cookieConfig, int cookieTimeout){
+		if(cookieConfig == null) {
+			cookieConfig = getConfigOrGlobal().getCookie();
+		}
 		SaCookie cookie = new SaCookie()
 				.setName(getTokenName())
 				.setValue(tokenValue)
 				.setMaxAge(cookieTimeout)
-				.setDomain(cfg.getDomain())
-				.setPath(cfg.getPath())
-				.setSecure(cfg.getSecure())
-				.setHttpOnly(cfg.getHttpOnly())
-				.setSameSite(cfg.getSameSite())
-				.setExtraAttrs(cfg.getExtraAttrs())
+				.setDomain(cookieConfig.getDomain())
+				.setPath(cookieConfig.getPath())
+				.setSecure(cookieConfig.getSecure())
+				.setHttpOnly(cookieConfig.getHttpOnly())
+				.setSameSite(cookieConfig.getSameSite())
+				.setExtraAttrs(cookieConfig.getExtraAttrs())
 				;
 		SaHolder.getResponse().addCookie(cookie);
 	}
