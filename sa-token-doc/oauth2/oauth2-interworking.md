@@ -51,7 +51,7 @@ public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 String access_token = ...
 
 // 2. 登录时预定生成的token 
-StpUtil.login(uid, SaLoginConfig.setToken(access_token));
+StpUtil.login(uid, new SaLoginParameter().setToken(access_token));
 
 // 3. 其它代码...
 ```

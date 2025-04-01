@@ -168,10 +168,10 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzB
 
 ``` java
 // 登录10001账号，并为生成的 Token 追加扩展参数name
-StpUtil.login(10001, SaLoginConfig.setExtra("name", "zhangsan"));
+StpUtil.login(10001, new SaLoginParameter().setExtra("name", "zhangsan"));
 
 // 连缀写法追加多个
-StpUtil.login(10001, SaLoginConfig
+StpUtil.login(10001, new SaLoginParameter()
 				.setExtra("name", "zhangsan")
 				.setExtra("age", 18)
 				.setExtra("role", "超级管理员"));
