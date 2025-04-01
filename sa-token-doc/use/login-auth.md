@@ -177,7 +177,7 @@ public class LoginController {
 }
 ```
 
-
+ 
 ---
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/LoginAuthController.java"
