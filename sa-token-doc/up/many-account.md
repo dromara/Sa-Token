@@ -316,6 +316,22 @@ public SaResult test2() {
 - 两个 if 均返回 true：代表客户端在两个账号体系都登录了。
 
 
+### 12、注意点：运行时不可更改 LoginType
+在 Q群 解决问题时，发现有些同学会写出类似下列形式的代码：
+
+``` java
+StpUtil.login(10001);
+StpUtil.getStpLogic().setLoginType("user");
+StpUtil.getSession().set("name", "zhangsan");
+```
+
+这是一种错误写法：LoginType 不可在运行时更改，只能在项目启动时指定。一旦项目启动成功后再修改 LoginType ，就会造成线程安全问题和严重的逻辑问题。
+
+
+
+
+
+
 
 ---
 
