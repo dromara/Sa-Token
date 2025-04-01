@@ -69,6 +69,10 @@ public SaResult doLogin(String name, String pwd) {
 > - Cookie 会在前端每次发起请求时自动提交 token 值。
 > 
 > 因此，在 Cookie 功能的加持下，我们可以仅靠 `StpUtil.login(id)` 一句代码就完成登录认证。
+> 
+> 在浏览器打开 f12 控制台，即可看到被注入的 Cookie 值：
+> 
+> <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/use/sa-login-cookie-pre.png">加载演示图</button>
 
 
 
