@@ -786,7 +786,6 @@ SaHolder.getResponse().setStatus(401)
 ```
 
 
-
 ### Q：多个项目共用同一个 redis，怎么防止冲突？
 
 首先，如无特殊需求，建议多个项目不要共用同一个 redis，如果非要共用，有以下方式避免数据冲突：
@@ -794,6 +793,13 @@ SaHolder.getResponse().setStatus(401)
 - 方式 1：使用不同的 db 索引，Redis 默认提供 16 个 database 容器，每个项目配置不同的 db 索引即可。
 - 方式 2：给项目配置不同的 `sa-token.token-name` 值，此配置项默认为 `satoken`，是框架在 Redis 存储数据时使用的统一前缀。
 - 方式 3：使用 `sa-token-three-redis-jackson-add-prefix` 插件，参考：[sa-token-three-plugin](https://gitee.com/sa-tokens/sa-token-three-plugin)。
+
+
+
+### Q：文档是否能下载？是否有离线版？
+文档已完整开源，请访问 Sa-Token 官方仓库，根目录下的 sa-token-doc 文件夹就是文档。
+
+
 
 
 ### Q：还是有不明白到的地方?
