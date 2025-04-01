@@ -816,6 +816,39 @@ SaHolder.getResponse().setStatus(401)
 - 方式 3：使用 `sa-token-three-redis-jackson-add-prefix` 插件，参考：[sa-token-three-plugin](https://gitee.com/sa-tokens/sa-token-three-plugin)。
 
 
+### Q：如何自定义框架读取 token 的方式？
+**方式一：通过 StpUtil.getStpLogic().setTokenValueToStorage("abcdefgxxxxxxxx") 自定义 token 值**
+
+如果你可以在框架读取 token 之前写一些代码，那么你可以通过如下代码自定义当前请求的 token 值：
+``` java
+@RequestMapping("/test")
+public SaResult test() {
+	System.out.println(StpUtil.getTokenValue()); // 此时读取到的是前端提交的: cebcc930-c0f5-4009-8eb0-1b6aee63b4aa
+	StpUtil.getStpLogic().setTokenValueToStorage("abcdefgxxxxxxxx");
+	System.out.println(StpUtil.getTokenValue()); // 此时读取到的是我们自定义的: abcdefgxxxxxxxx
+	return SaResult.ok();
+}
+```
+
+**方式二：重写 StpLogic 读取 token 的方法**
+
+``` java
+@Component
+public class MyStpLogic extends StpLogic {
+    public MyStpLogic() {
+        super("login");
+    }
+	// 自定义 token 读取方式，例如此处改为读取请求头为 my-token 的值 
+    @Override
+    public String getTokenValue() {
+        String token = SaHolder.getRequest().getHeader("my-token");
+        return token;
+    }
+}
+```
+
+
+
 
 ### Q：文档是否能下载？是否有离线版？
 文档已完整开源，请访问 Sa-Token 官方仓库，根目录下的 sa-token-doc 文件夹就是文档。
