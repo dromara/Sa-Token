@@ -18,7 +18,7 @@ package cn.dev33.satoken.sso.function;
 import java.util.function.BiFunction;
 
 /**
- * 函数式接口：SSO-Server端：未登录时返回的View
+ * 函数式接口：SSO-Server端：登录处理函数
  *
  * <p>  参数：账号、密码  </p>
  * <p>  返回：登录结果  </p>
