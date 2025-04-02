@@ -1592,7 +1592,7 @@ public class StpLogic {
 			return getSessionBySessionId(splicingKeyTokenSession(tokenValue), isCreate, getConfigOrGlobal().getTimeout(), session -> {
 				// 这里是该 Anon-Token-Session 首次创建时才会被执行的方法：
 				// 		设定这个 SaSession 的各种基础信息：类型、账号体系、Token 值
-				session.setType(SaTokenConsts.SESSION_TYPE__TOKEN);
+				session.setType(SaTokenConsts.SESSION_TYPE__ANON);
 				session.setLoginType(getLoginType());
 				session.setToken(finalTokenValue);
 			});
@@ -1960,31 +1960,40 @@ public class StpLogic {
 	 */
 	public void renewTimeout(String tokenValue, long timeout) {
 
-		// 1、如果 token 指向的 loginId 为空，或者属于异常项时，不进行任何操作
+		// 1、如果 token 指向的 loginId 为空，或者属于异常项时，不进行续期操作
 		Object loginId = getLoginIdByToken(tokenValue);
 		if(loginId == null) {
 			return;
 		}
 
-		// 2、续期此 token 本身的有效期 （改 ttl）
+		// 2、检查 token 合法性
+		SaSession session = getSessionByLoginId(loginId);
+		if(session == null) {
+			throw new SaTokenException("未能查询到对应 Access-Session 会话，无法续期");
+		}
+		if(session.getTerminal(tokenValue) == null) {
+			throw new SaTokenException("未能查询到对应终端信息，无法续期");
+		}
+
+		// 3、续期此 token 本身的有效期 （改 ttl）
 		SaTokenDao dao = getSaTokenDao();
 		dao.updateTimeout(splicingKeyTokenValue(tokenValue), timeout);
 
-		// 3、续期此 token 的 Token-Session 有效期
+		// 4、续期此 token 的 Token-Session 有效期
 		SaSession tokenSession = getTokenSessionByToken(tokenValue, false);
 		if(tokenSession != null) {
 			tokenSession.updateTimeout(timeout);
 		}
 
-		// 4、续期此 token 指向的账号的 Account-Session 有效期
-		getSessionByLoginId(loginId).updateMinTimeout(timeout);
+		// 5、续期此 token 指向的账号的 Account-Session 有效期
+		session.updateMinTimeout(timeout);
 
-		// 5、更新此 token 的最后活跃时间
+		// 6、更新此 token 的最后活跃时间
 		if(isOpenCheckActiveTimeout()) {
 			dao.updateTimeout(splicingKeyLastActiveTime(tokenValue), timeout);
 		}
 
-		// 6、$$ 发布事件：某某 token 被续期了
+		// 7、$$ 发布事件：某某 token 被续期了
 		SaTokenEventCenter.doRenewTimeout(tokenValue, loginId, timeout);
 	}
 

@@ -169,6 +169,11 @@ public class SaTokenConsts {
 	public static final String SESSION_TYPE__TOKEN = "Token-Session";
 
 	/**
+	 * SaSession 的类型: Anon-Token-Session
+	 */
+	public static final String SESSION_TYPE__ANON = "Anon-Token-Session";
+
+	/**
 	 * SaSession 的类型: Custom-Session
 	 */
 	public static final String SESSION_TYPE__CUSTOM = "Custom-Session";
