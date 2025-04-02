@@ -37,6 +37,8 @@ OK，所有理论就绪，下面开始实战：
 
 其中：`sso.stp.com`为统一认证中心地址，当用户在其它 Client 端发起登录请求时，均将其重定向至认证中心，待到登录成功之后再原路返回到 Client 端。
 
+[Some Name](../include/include-qa.md#hostsInvalid ':include')
+
 
 ### 3、指定Cookie的作用域
 在`sso.stp.com`访问服务器，其Cookie也只能写入到`sso.stp.com`下，为了将Cookie写入到其父级域名`stp.com`下，我们需要更改 SSO-Server 端的 yml 配置：
