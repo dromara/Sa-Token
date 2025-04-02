@@ -76,6 +76,22 @@ String text2 = SaBase64Util.decode(base64Text);
 System.out.println("Base64解码后：" + text2); 
 ```
 
+
+### Base32编码与解码
+``` java
+// 文本
+String text = "Sa-Token 一个轻量级java权限认证框架";
+
+// 使用Base32编码
+String base32Text = SaBase32Util.encode(text);
+System.out.println("Base32编码后：" + base32Text);
+
+// 使用Base32解码
+String text2 = SaBase32Util.decode(base32Text);
+System.out.println("Base32解码后：" + text2); 
+```
+
+
 ### BCrypt加密
 由它加密的文件可在所有支持的操作系统和处理器上进行转移
 
