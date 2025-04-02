@@ -32,6 +32,7 @@ import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.plugin.SaTokenPlugin;
 import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.same.SaSameTemplate;
+import cn.dev33.satoken.secure.totp.SaTotpTemplate;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
@@ -226,6 +227,17 @@ public class SaBeanInject {
 	@Bean
 	public void setSaSignTemplate(SaSignTemplate saSignTemplate) {
 		SaManager.setSaSignTemplate(saSignTemplate);
+	}
+
+	/**
+	 * 注入自定义的 TOTP 算法 Bean
+	 *
+	 * @param totpTemplate TOTP 算法类
+	 */
+	@Condition(onBean = SaTotpTemplate.class)
+	@Bean
+	public void setSaTotpTemplate(SaTotpTemplate totpTemplate) {
+		SaManager.setSaTotpTemplate(totpTemplate);
 	}
 
 	/**

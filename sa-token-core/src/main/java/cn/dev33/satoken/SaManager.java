@@ -30,6 +30,7 @@ import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.log.SaLog;
 import cn.dev33.satoken.log.SaLogForConsole;
 import cn.dev33.satoken.same.SaSameTemplate;
+import cn.dev33.satoken.secure.totp.SaTotpTemplate;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJson;
 import cn.dev33.satoken.sign.SaSignTemplate;
@@ -296,7 +297,26 @@ public class SaManager {
 	public static SaLog getLog() {
 		return SaManager.log;
 	}
-	
+
+	/**
+	 * TOTP 算法类，支持 生成/验证 动态一次性密码
+	 */
+	private volatile static SaTotpTemplate totpTemplate;
+	public static void setSaTotpTemplate(SaTotpTemplate totpTemplate) {
+		SaManager.totpTemplate = totpTemplate;
+		SaTokenEventCenter.doRegisterComponent("SaTotpTemplate", totpTemplate);
+	}
+	public static SaTotpTemplate getSaTotpTemplate() {
+		if (totpTemplate == null) {
+			synchronized (SaManager.class) {
+				if (totpTemplate == null) {
+					SaManager.totpTemplate = new SaTotpTemplate();
+				}
+			}
+		}
+		return totpTemplate;
+	}
+
 	/**
 	 * StpLogic 集合, 记录框架所有成功初始化的 StpLogic
 	 */
