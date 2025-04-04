@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
  * Sa-Token Base32 工具类
  *
  * @author click33
- * @since 1.41.0
+ * @since 1.42.0
  */
 public class SaBase32Util {
 

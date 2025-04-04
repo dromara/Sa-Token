@@ -214,6 +214,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
 		├── sa-token-demo-alone-redis-cluster     // [示例] Sa-Token 集成 alone-redis 模块、集群模式
+		├── sa-token-demo-apikey                  // [示例] Sa-Token API Key 模块示例
 		├── sa-token-demo-beetl                   // [示例] Sa-Token 集成 beetl 示例
 		├── sa-token-demo-bom-import              // [示例] Sa-Token bom 包导入示例 
 		├── sa-token-demo-case                    // [示例] Sa-Token 各模块示例

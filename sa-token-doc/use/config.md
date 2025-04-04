@@ -112,7 +112,9 @@ public class SaTokenConfigure {
 --- 
 ### 2、核心包所有可配置项
 
-**你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可**
+#### 2.1、核心模块配置
+
+你不必立刻掌握整个表格，只需要在用到某个功能时再详细查阅它即可
 
 | 参数名称				| 类型		| 默认值		| 说明																				|
 | :--------				| :--------	| :--------	| :--------																			|
@@ -154,7 +156,7 @@ public class SaTokenConfigure {
 | cookie				| Object	| new SaCookieConfig()	| Cookie 配置对象															|
 | sign					| Object	| new SaSignConfig()	| API 签名配置对象															|
 
-Cookie相关配置：
+#### 2.2、Cookie相关配置：
 
 | 参数名称		| 类型		| 默认值		| 说明																			|
 | :--------		| :--------	| :--------	| :--------																		|
@@ -166,7 +168,7 @@ Cookie相关配置：
 | extraAttrs	| String	| new LinkedHashMap()		| 额外扩展属性		|
 
 
-Cookie 配置示例：
+Cookie 配置示例:
 
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
@@ -209,7 +211,8 @@ sa-token.cookie.extraAttrs.Partitioned=""
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-Sign 参数签名相关配置：
+
+#### 2.3、Sign 参数签名相关配置
 
 | 参数名称				| 类型		| 默认值		| 说明																	|
 | :--------				| :--------	| :--------	| :--------																|
@@ -235,6 +238,45 @@ sa-token:
 sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 ```
 <!---------------------------- tabs:end ---------------------------->
+
+
+
+#### 2.4、API Key 相关配置
+
+| 参数名称				| 类型		| 默认值		| 说明																	|
+| :--------				| :--------	| :--------	| :--------																|
+| prefix				| String	| AK-		| API Key 前缀												|
+| timeout				| long		| 2592000	| API Key 有效期，-1=永久有效，默认30天 （修改此配置项不会影响到已创建的 API Key）	|
+| isRecordIndex			| String	| true		| 框架是否记录索引信息					|
+
+示例：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token:
+    # API Key 相关配置
+    api-key:
+        # API Key 前缀
+        prefix: AK-
+        # API Key 有效期，-1=永久有效，默认30天 （修改此配置项不会影响到已创建的 API Key）
+        timeout: 2592000
+        # 框架是否记录索引信息
+        is-record-index: true
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# API Key 前缀
+sa-token.pi-key.prefix=AK-
+# API Key 有效期，-1=永久有效，默认30天 （修改此配置项不会影响到已创建的 API Key）
+sa-token.pi-key.timeout=2592000
+# 框架是否记录索引信息
+sa-token.pi-key.is-record-index=true
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
 
 
 

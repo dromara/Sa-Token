@@ -30,7 +30,7 @@ import java.time.Instant;
  * TOTP 算法类，支持 生成/验证 动态一次性密码
  *
  * @author click33
- * @since 1.41.0
+ * @since 1.42.0
  */
 public class SaTotpTemplate {
 

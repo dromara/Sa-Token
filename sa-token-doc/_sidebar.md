@@ -95,6 +95,7 @@
 	- [和 Dubbo 集成](/plugin/dubbo-extend)
 	- [和 gRPC 集成](/plugin/grpc-extend)
 	- [API 接口参数签名](/plugin/api-sign)
+	- [API Key 接口调用秘钥](/plugin/api-key)
 	- [Sa-Token 插件开发指南](/fun/plugin-dev)
 	- [自定义 SaTokenContext 指南](/fun/sa-token-context)
 

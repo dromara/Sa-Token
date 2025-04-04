@@ -21,7 +21,7 @@ import cn.dev33.satoken.SaManager;
  * TOTP 工具类，支持 生成/验证 动态一次性密码
  *
  * @author click33
- * @since 1.41.0
+ * @since 1.42.0
  */
 public class SaTotpUtil {
 

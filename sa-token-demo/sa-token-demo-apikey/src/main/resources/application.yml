@@ -1,0 +1,43 @@
+# 端口
+server:
+    port: 8081
+
+
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+sa-token:
+    # token 名称 (同时也是 cookie 名称)
+    token-name: satoken
+    # 开启日志信息
+    is-log: true
+    # API Key 相关配置
+    api-key:
+        # API Key 前缀
+        prefix: AK-
+        # API Key 有效期，-1=永久有效，默认30天 （修改此配置项不会影响到已创建的 API Key）
+        timeout: 2592000
+        # 框架是否记录索引信息
+        is-record-index: true
+
+spring:
+    # redis配置
+    redis:
+        # Redis数据库索引（默认为0）
+        database: 0
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        password:
+        # 连接超时时间
+        timeout: 10s
+        lettuce:
+            pool:
+                # 连接池最大连接数
+                max-active: 200
+                # 连接池最大阻塞等待时间（使用负值表示没有限制）
+                max-wait: -1ms
+                # 连接池中的最大空闲连接
+                max-idle: 10
+                # 连接池中的最小空闲连接
+                min-idle: 0

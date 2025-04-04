@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+		body{background-color: #EFF6FF;}
+		td{padding: 5px 10px;}
+		button{cursor: pointer;}
+		table{margin-top: 10px; width: 100%;}
+		[name=title]{width: 100px;}
+		.change-tr{background-color: #F5E5F5  ;}
+		.remark{margin-left: 10px; color: #999;}
+    </style>
+</head>
+<body>
+    <div style="width: 1200px; margin: auto;">
+        <h1>Sa-Token - API Key 测试页</h1>
+        <h2>登录</h2>
+        <div>当前登录人：<b class="curr-uid" style="color: green"></b></div>
+        <span>输入账号 id 登录：</span>
+        <input name="loginId" />
+        <button onclick="doLogin()">登录</button>
+        <button onclick="doLogout()()">注销</button>
+
+        <h2>API Key 列表</h2>
+		<button onclick="createApiKey()">+ 创建 API Key</button>
+        <table cellspacing="0" border="1">
+            <tr>
+                <th>名称</th>
+                <th style="width: 435px;">API Key</th>
+                <th>权限(多个用逗号隔开)</th>
+                <th style="width: 190px;">过期时间</th>
+                <th style="width: 80px;">是否生效</th>
+                <th style="width: 170px;">操作</th>
+            </tr>
+            <tbody class="ak-tbody">
+                <!-- <tr class="ak-xxxx">
+                    <td><input name="title" value="xx" /></td>
+                    <td>AK-EG9BKM4bel7OqRoixNvSQ1a6DYusNfEXDjPr</td>
+					<td><input name="scopes" value="aaa" /></td>
+					<td><input name="expiresTime" value="2020-02-02 01:50:20" type="datetime-local" /></td>
+					<td>
+						<label><input name="isValid" checked type="checkbox" />生效</label>
+					</td>
+					<td>
+						<button onclick="updateApiKey('xxx')">修改</button>
+						<button onclick="useApiKey('xxx')">使用</button>
+						<button onclick="deleteApiKey('xxx')">删除</button>
+					</td>
+                </tr> -->
+            </tbody>
+        </table>
+		
+        <h2>调用 API</h2>
+        <div style="line-height: 30px;">
+			<span>使用的 API Key：</span>
+			<input name="api-key" style="width: 600px;"/> <br>
+			<button onclick="callAPI('/akRes1')">调用接口 1 </button> <span class="remark">需要正确的 API Key</span> <br>
+			<button onclick="callAPI('/akRes2')">调用接口 2 </button> <span class="remark">需要具备 Scope: userinfo</span> <br>
+			<button onclick="callAPI('/akRes3')">调用接口 3 </button> <span class="remark">需要具备 Scope: userinfo,chat (需要全部具备)</span> <br>
+			<button onclick="callAPI('/akRes4')">调用接口 4 </button> <span class="remark">需要具备 Scope: userinfo,chat (具备其一即可)</span> <br>
+		</div>
+		
+		<div style="height: 200px;"></div>
+		
+    </div>
+    <script src="common.js"></script>
+    <script>
+        // 登录
+        function doLogin() {
+            var loginId = document.querySelector("[name=loginId]").value;
+            if (loginId === "") {
+                return alert("请输入账号 id");
+            }
+            ajax("/login", {id: loginId}, function (res) {
+                localStorage.setItem("satoken", res.satoken);
+                showMsg('登录成功');
+				setTimeout(function(){
+					location.reload();
+				}, 1000);
+            })
+        }
+        // 查询当前登录人
+        function getLoginInfo() {
+            ajax("/getLoginId", {}, function (res) {
+				document.querySelector(".curr-uid").innerHTML = res.data;
+				document.querySelector('[name=loginId]').value = res.data;
+				myApiKeyList();
+            }, function(){
+				document.querySelector(".curr-uid").innerHTML = '未登录';
+				document.querySelector('[name=loginId]').value = '10001';
+			})
+        }
+        getLoginInfo();
+        // 注销登录 
+        function doLogout() {
+            ajax("/logout", {}, function (res) {
+                showMsg('注销成功');
+				setTimeout(function(){
+					location.reload();
+				}, 1000)
+            })
+        }
+    </script>
+	<script>
+		// 渲染一个 API Key 对象到表格 
+		function renderApiKey(ak) {
+			const trDom = `
+				<tr class="ak-${ak.apiKey}">
+					<td><input name="title" value="${ak.title}" oninput="changeTr('${ak.apiKey}')"/></td>
+					<td>${ak.apiKey}</td>
+					<td><input name="scopes" value="${ak.scopes.join(',')}" oninput="changeTr('${ak.apiKey}')" /></td>
+					<td><input name="expiresTime" value="${formatDateTime(ak.expiresTime)}" type="datetime-local" oninput="changeTr('${ak.apiKey}')"/></td>
+					<td>
+						<label><input name="isValid" ${ak.isValid ? 'checked' : ''} type="checkbox" oninput="changeTr('${ak.apiKey}')"/>生效</label>
+					</td>
+					<td>
+						<button onclick="updateApiKey('${ak.apiKey}')">修改</button>
+						<button onclick="useApiKey('${ak.apiKey}')">使用</button>
+						<button onclick="deleteApiKey('${ak.apiKey}')">删除</button>
+					</td>
+				</tr>
+			`;
+			document.querySelector('.ak-tbody').innerHTML = document.querySelector('.ak-tbody').innerHTML + trDom;
+		}
+		
+        // 查询当前所有 API Key
+        function myApiKeyList() {
+            ajax("/myApiKeyList", {}, function (res) {
+                res.data.forEach(function(item){
+					renderApiKey(item);
+				})
+            })
+        }
+		// 创建 ApiKey
+		function createApiKey() {
+			if(document.querySelector(".curr-uid").innerHTML === '未登录') {
+				return alert('请先登录');
+			}
+			ajax("/createApiKey", {}, function (res) {
+			    renderApiKey(res.data);
+                showMsg('创建成功');
+			})
+		}
+		// 使用 
+		function useApiKey(apiKey){
+			document.querySelector('[name=api-key]').value = apiKey;
+			showMsg('已填充至输入框，请调用接口');
+		}
+		// 修改 
+		function updateApiKey(apiKey) {
+			const tr = document.querySelector(".ak-" + apiKey);
+			const data = {
+				apiKey: apiKey,
+				title: tr.querySelector('[name=title]').value,
+				scopes: tr.querySelector('[name=scopes]').value,
+				expiresTime: new Date(tr.querySelector('[name=expiresTime]').value).getTime(),
+				isValid: tr.querySelector('[name=isValid]').checked,
+			}
+			ajax("/updateApiKey", data, function (res) {
+                showMsg('修改成功');
+				tr.classList.remove('change-tr');
+			})
+		}
+		// 删除 
+		function deleteApiKey(apiKey) {
+			ajax("/deleteApiKey", {apiKey: apiKey}, function (res) {
+                showMsg('删除成功');
+				const tr = document.querySelector(".ak-" + apiKey);
+				tr.remove();
+			})
+		}
+		
+		// 指定行的输入框变动 
+		function changeTr(apiKey) {
+			const tr = document.querySelector(".ak-" + apiKey);
+			tr.classList.add('change-tr');
+		}
+		
+	</script>
+	<script>
+		
+		// 调用指定接口
+		function callAPI(apiPath) {
+			const apiKey = document.querySelector('[name=api-key]').value;
+			if(!apiKey) {
+				return showMsg('请先填写 API Key')
+			}
+			ajax(apiPath, {apikey: apiKey}, function (res) {
+			    showMsg(res.msg);
+			})
+		}
+		
+	</script>
+</body>
+</html>

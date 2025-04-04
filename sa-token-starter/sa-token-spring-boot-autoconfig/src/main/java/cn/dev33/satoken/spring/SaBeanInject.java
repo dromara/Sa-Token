@@ -17,6 +17,8 @@ package cn.dev33.satoken.spring;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
+import cn.dev33.satoken.apikey.SaApiKeyTemplate;
+import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoader;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
@@ -213,6 +215,26 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaSignTemplate(SaSignTemplate saSignTemplate) {
 		SaManager.setSaSignTemplate(saSignTemplate);
+	}
+
+	/**
+	 * 注入自定义的 ApiKey 模块 Bean
+	 *
+	 * @param apiKeyTemplate /
+	 */
+	@Autowired(required = false)
+	public void setSaApiKeyTemplate(SaApiKeyTemplate apiKeyTemplate) {
+		SaManager.setSaApiKeyTemplate(apiKeyTemplate);
+	}
+
+	/**
+	 * 注入自定义的 ApiKey 数据加载器 Bean
+	 *
+	 * @param apiKeyDataLoader /
+	 */
+	@Autowired(required = false)
+	public void setSaApiKeyDataLoader(SaApiKeyDataLoader apiKeyDataLoader) {
+		SaManager.setSaApiKeyDataLoader(apiKeyDataLoader);
 	}
 
 	/**

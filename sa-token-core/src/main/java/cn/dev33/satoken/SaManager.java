@@ -15,6 +15,9 @@
  */
 package cn.dev33.satoken;
 
+import cn.dev33.satoken.apikey.SaApiKeyTemplate;
+import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoader;
+import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoaderDefaultImpl;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
 import cn.dev33.satoken.context.SaTokenContext;
@@ -316,6 +319,47 @@ public class SaManager {
 		}
 		return totpTemplate;
 	}
+
+	/**
+	 * ApiKey 数据加载器
+	 */
+	private volatile static SaApiKeyDataLoader apiKeyDataLoader;
+	public static void setSaApiKeyDataLoader(SaApiKeyDataLoader apiKeyDataLoader) {
+		SaManager.apiKeyDataLoader = apiKeyDataLoader;
+		SaTokenEventCenter.doRegisterComponent("SaApiKeyDataLoader", apiKeyDataLoader);
+	}
+	public static SaApiKeyDataLoader getSaApiKeyDataLoader() {
+		if (apiKeyDataLoader == null) {
+			synchronized (SaManager.class) {
+				if (apiKeyDataLoader == null) {
+					SaManager.apiKeyDataLoader = new SaApiKeyDataLoaderDefaultImpl();
+				}
+			}
+		}
+		return apiKeyDataLoader;
+	}
+
+	/**
+	 * ApiKey 操作类
+	 */
+	private volatile static SaApiKeyTemplate apiKeyTemplate;
+	public static void setSaApiKeyTemplate(SaApiKeyTemplate apiKeyTemplate) {
+		SaManager.apiKeyTemplate = apiKeyTemplate;
+		SaTokenEventCenter.doRegisterComponent("SaApiKeyTemplate", apiKeyTemplate);
+	}
+	public static SaApiKeyTemplate getSaApiKeyTemplate() {
+		if (apiKeyTemplate == null) {
+			synchronized (SaManager.class) {
+				if (apiKeyTemplate == null) {
+					SaManager.apiKeyTemplate = new SaApiKeyTemplate();
+				}
+			}
+		}
+		return apiKeyTemplate;
+	}
+
+
+	// ------------------- StpLogic 相关 -------------------
 
 	/**
 	 * StpLogic 集合, 记录框架所有成功初始化的 StpLogic

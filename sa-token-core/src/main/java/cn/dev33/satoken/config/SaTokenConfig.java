@@ -233,6 +233,10 @@ public class SaTokenConfig implements Serializable {
 	 */
 	public Map<String, SaSignConfig> signMany = new LinkedHashMap<>();
 
+	/**
+	 * API Key 相关配置
+	 */
+	public SaApiKeyConfig apiKey = new SaApiKeyConfig();
 
 	/**
 	 * @return token 名称 （同时也是： cookie 名称、提交 token 时参数的名称、存储 token 时的 key 前缀）
@@ -898,6 +902,26 @@ public class SaTokenConfig implements Serializable {
 		return this;
 	}
 
+	/**
+	 * API Key 相关配置
+	 *
+	 * @return /
+	 */
+	public SaApiKeyConfig getApiKey() {
+		return this.apiKey;
+	}
+
+	/**
+	 * 设置 API Key 相关配置
+	 *
+	 * @param apiKey /
+	 * @return /
+	 */
+	public SaTokenConfig setApiKey(SaApiKeyConfig apiKey) {
+		this.apiKey = apiKey;
+		return this;
+	}
+
 
 	@Override
 	public String toString() {
@@ -941,6 +965,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", cookie=" + cookie
 				+ ", sign=" + sign
 				+ ", signMany=" + signMany
+				+ ", apiKey=" + apiKey
 				+ "]";
 	}
 
