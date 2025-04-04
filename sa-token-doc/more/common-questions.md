@@ -816,6 +816,56 @@ SaHolder.getResponse().setStatus(401)
 - 方式 3：使用 `sa-token-three-redis-jackson-add-prefix` 插件，参考：[sa-token-three-plugin](https://gitee.com/sa-tokens/sa-token-three-plugin)。
 
 
+### Q：如何防止 CSRF 攻击？
+CSRF 攻击的核心在于利用浏览器自动提交 Cookie 的特性，代替用户发送自己不想发送的请求。
+
+**方案一：关闭 Cookie模式。**
+
+在配置文件里配置 `sa-token.is-read-cookie=false` 关闭 Cookie 读取模式，采用 localStorage 存储 token + header 头提交，即可避免 CSRF 攻击。
+
+**方案二：增加 csrf-token 验证**
+
+如果项目必须采用 Cookie 模式验证，可以在请求中增加 csrf-token 验证的环节：
+
+1、在登录时，生成一个 `csrf_token` 返回到前端：
+``` java
+// 测试登录 
+@RequestMapping("/login")
+public SaResult login() {
+	StpUtil.login(10001);
+	String csrfToken = StpUtil.getSession().get("csrf_token", () -> SaFoxUtil.getRandomString(60));
+	return SaResult.ok().set("csrf_token", csrfToken);
+}
+```
+
+2、前端将 csrf_token 存储在 localStorage 中（注意一定要存储在 localStorage 而非 Cookie 中，存储在 Cookie 中还是可能会被浏览器自动提交）
+``` java
+localStorage.setItem('csrf_token', csrf_token);
+```
+每次请求将 csrf_token 塞到 Header 中。
+
+3、在需要防止 CSRF 攻击的接口验证 csrf_token：
+``` java
+@RequestMapping("/test")
+public SaResult test() {
+
+	// 先验证 csrfToken 
+	String csrfToken = SaHolder.getRequest().getHeader("csrf_token");
+	if (csrfToken == null || ! csrfToken.equals(StpUtil.getSession().get("csrf_token")) ) {
+		throw new SaTokenException("csrf_token 不匹配");
+	}
+
+	// 通过后再处理具体业务
+	// ...
+
+	return SaResult.ok();
+}
+```
+
+也可以将验证代码写到全局拦截器中，为所有接口提供校验。
+
+
+
 ### Q：如何自定义框架读取 token 的方式？
 **方式一：通过 StpUtil.getStpLogic().setTokenValueToStorage("abcdefgxxxxxxxx") 自定义 token 值**
 
