@@ -332,6 +332,25 @@ public class SaTokenApplication {
 
 解决方案：不要加 `@EnableWebMvc`，不要 `extends WebMvcConfigurationSupport`，要 `implements WebMvcConfigurer`
 
+如果一定要 `extends WebMvcConfigurationSupport` ，可以通过手动注册 Spring 上下文初始化过滤器试试：
+
+``` java
+@Configuration
+public class SaTokenConfigure extends WebMvcConfigurationSupport {
+
+	// Spring 上下文初始化过滤器 可能由于各种原因没有被注册到，这里手动帮忙注册一下 
+	@Bean
+	@ConditionalOnMissingBean({ RequestContextListener.class, RequestContextFilter.class })
+	@ConditionalOnMissingFilterBean(RequestContextFilter.class)
+	public static RequestContextFilter requestContextFilter() {
+		System.out.println("--------------------------- 注册了"); // 加个打印语句或者断点确保这里注册到了
+		return new OrderedRequestContextFilter();
+	}
+	
+}
+```
+
+
 如果不是以上原因，可以加群提供复现demo。
 
 <!-- 目前能复现此问题的情况是：在项目中有配置类继承 `WebMvcConfigurationSupport` 时，再从 `SaServletFilter` 中调用
