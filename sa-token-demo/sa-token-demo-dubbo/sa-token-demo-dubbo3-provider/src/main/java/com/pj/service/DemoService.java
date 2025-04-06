@@ -1,4 +1,4 @@
-package com.pj.more;
+package com.pj.service;
 
 public interface DemoService {
 	

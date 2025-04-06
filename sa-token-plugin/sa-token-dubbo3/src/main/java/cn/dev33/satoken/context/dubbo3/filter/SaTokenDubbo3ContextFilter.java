@@ -16,39 +16,29 @@
 package cn.dev33.satoken.context.dubbo3.filter;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.same.SaSameUtil;
+import cn.dev33.satoken.context.dubbo3.util.SaDubbo3ContextUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
-import org.apache.dubbo.rpc.Filter;
-import org.apache.dubbo.rpc.Invocation;
-import org.apache.dubbo.rpc.Invoker;
-import org.apache.dubbo.rpc.Result;
+import org.apache.dubbo.rpc.*;
 
 /**
- * Sa-Token 整合 Dubbo3 Provider端（被调用端）过滤器
- *
+ * Sa-Token 整合 Dubbo3 上下文初始化过滤器
+ * 
  * @author click33
- * @since 1.34.0
+ * @since 1.42.0
  */
-@Activate(group = {CommonConstants.PROVIDER}, order = SaTokenConsts.RPC_PERMISSION_FILTER_ORDER)
-public class SaTokenDubbo3ProviderFilter implements Filter {
+@Activate(group = {CommonConstants.PROVIDER}, order = SaTokenConsts.RPC_CONTEXT_FILTER_ORDER)
+public class SaTokenDubbo3ContextFilter implements Filter {
 
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) {
-		
-		// RPC 调用鉴权 
-		if(SaManager.getConfig().getCheckSameToken()) {
-			String idToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN);
-			// dubbo部分协议会将参数变为小写，详细参考：https://gitee.com/dromara/sa-token/issues/I4WXQG
-			if(idToken == null) {
-				idToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN.toLowerCase());
-			}
-			SaSameUtil.checkToken(idToken);
+		try {
+			SaDubbo3ContextUtil.setContext(RpcContext.getServiceContext());
+			return invoker.invoke(invocation);
+		} finally {
+			SaManager.getSaTokenContext().clearContext();
 		}
-		
-		// 开始调用
-		return invoker.invoke(invocation);
 	}
 
 }

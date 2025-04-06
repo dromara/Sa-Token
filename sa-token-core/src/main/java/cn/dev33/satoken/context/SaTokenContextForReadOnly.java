@@ -13,23 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.context.dubbo3;
+package cn.dev33.satoken.context;
 
-
-import cn.dev33.satoken.context.second.SaTokenSecondContext;
-import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
+import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 
 /**
- * Sa-Token 二级上下文 - 创建器 [Dubbo3版]
+ * Sa-Token 上下文处理器次级实现：只读上下文
  * 
  * @author click33
- * @since 1.34.0
+ * @since 1.42.0
  */
-public class SaTokenSecondContextCreatorForDubbo3 implements SaTokenSecondContextCreator {
+public interface SaTokenContextForReadOnly extends SaTokenContext {
 
 	@Override
-	public SaTokenSecondContext create() {
-		return new SaTokenSecondContextForDubbo3();
+	default void setContext(SaRequest req, SaResponse res, SaStorage stg) {
+
+	}
+
+	@Override
+	default void clearContext() {
+
+	}
+
+	@Override
+	default SaTokenContextModelBox getModelBox() {
+		return null;
 	}
 
 }

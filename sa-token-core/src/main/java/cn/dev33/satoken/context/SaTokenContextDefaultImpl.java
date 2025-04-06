@@ -18,6 +18,7 @@ package cn.dev33.satoken.context;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenContextException;
 
@@ -43,6 +44,26 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 	 * 错误提示语
 	 */
 	public static final String ERROR_MESSAGE = "未能获取有效的上下文处理器";
+
+	@Override
+	public void setContext(SaRequest req, SaResponse res, SaStorage stg) {
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+	}
+
+	@Override
+	public void clearContext() {
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+	}
+
+	@Override
+	public boolean isValid() {
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+	}
+
+	@Override
+	public SaTokenContextModelBox getModelBox() {
+		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
+	}
 
 	@Override
 	public SaRequest getRequest() {

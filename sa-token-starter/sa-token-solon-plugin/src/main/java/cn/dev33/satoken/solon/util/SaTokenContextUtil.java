@@ -15,11 +15,11 @@
  */
 package cn.dev33.satoken.solon.util;
 
-import cn.dev33.satoken.context.SaTokenContextForThreadLocalStorage;
-import cn.dev33.satoken.context.SaTokenContextForThreadLocalStorage.Box;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.solon.model.SaRequestForSolon;
 import cn.dev33.satoken.solon.model.SaResponseForSolon;
@@ -41,14 +41,14 @@ public class SaTokenContextUtil {
 		SaRequest req = new SaRequestForSolon(ctx);
 		SaResponse res = new SaResponseForSolon(ctx);
 		SaStorage stg = new SaStorageForSolon(ctx);
-		SaTokenContextForThreadLocalStorage.setBox(req, res, stg);
+		SaManager.getSaTokenContext().setContext(req, res, stg);
 	}
 
 	/**
 	 * 清除当前上下文
 	 */
 	public static void clearContext() {
-		SaTokenContextForThreadLocalStorage.clearBox();
+		SaManager.getSaTokenContext().clearContext();
 	}
 
 	/**
@@ -66,11 +66,11 @@ public class SaTokenContextUtil {
 	}
 
 	/**
-	 * 获取当前 Box
+	 * 获取当前 ModelBox
 	 * @return /
 	 */
-	public static Box getBox() {
-		return SaTokenContextForThreadLocalStorage.getBoxNotNull();
+	public static SaTokenContextModelBox getModelBox() {
+		return SaManager.getSaTokenContext().getModelBox();
 	}
 
 	/**
@@ -78,8 +78,7 @@ public class SaTokenContextUtil {
 	 * @return /
 	 */
 	public static Context getContext() {
-		Box box = SaTokenContextForThreadLocalStorage.getBoxNotNull();
-		return (Context) box.getStorage().getSource();
+		return (Context) getModelBox().getStorage().getSource();
 	}
 
 }

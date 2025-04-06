@@ -13,43 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.context.grpc;
+package cn.dev33.satoken.context.grpc.util;
 
-import cn.dev33.satoken.context.grpc.context.SaTokenGrpcContext;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.grpc.model.SaRequestForGrpc;
 import cn.dev33.satoken.context.grpc.model.SaResponseForGrpc;
 import cn.dev33.satoken.context.grpc.model.SaStorageForGrpc;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
-import cn.dev33.satoken.context.second.SaTokenSecondContext;
+
 
 /**
- * Sa-Token 上下文 [grpc版本]
+ * SaTokenContext 上下文读写工具类
  *
- * @author lym
- * @since 1.34.0
+ * @author click33
+ * @since 1.42.0
  */
-public class SaTokenSecondContextForGrpc implements SaTokenSecondContext {
+public class SaGrpcContextUtil {
 
-    @Override
-    public SaRequest getRequest() {
-        return new SaRequestForGrpc();
-    }
+	/**
+	 * 写入当前上下文
+	 */
+	public static void setContext() {
+		SaRequest saRequest = new SaRequestForGrpc();
+		SaResponse saResponse = new SaResponseForGrpc();
+		SaStorage saStorage = new SaStorageForGrpc();
+		SaManager.getSaTokenContext().setContext(saRequest, saResponse, saStorage);
+	}
 
-    @Override
-    public SaResponse getResponse() {
-        return new SaResponseForGrpc();
-    }
-
-    @Override
-    public SaStorage getStorage() {
-        return new SaStorageForGrpc();
-    }
-
-    @Override
-    public boolean isValid() {
-        return SaTokenGrpcContext.isNotNull();
-    }
+	/**
+	 * 清除当前上下文
+	 */
+	public static void clearContext() {
+		SaManager.getSaTokenContext().clearContext();
+	}
 
 }

@@ -207,6 +207,16 @@ public class SaTokenConsts {
 	public static final int SA_TOKEN_CONTEXT_FILTER_ORDER = -104;
 
 	/**
+	 * RPC 框架权限过滤器的注册顺序
+	 */
+	public static final int RPC_PERMISSION_FILTER_ORDER = -30000;
+
+	/**
+	 * RPC 框架上下文过滤器的注册顺序
+	 */
+	public static final int RPC_CONTEXT_FILTER_ORDER = -30005;
+
+	/**
 	 * Content-Type  key
 	 */
 	public static final String CONTENT_TYPE_KEY = "Content-Type";

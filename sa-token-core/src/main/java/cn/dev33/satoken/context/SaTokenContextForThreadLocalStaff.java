@@ -18,6 +18,7 @@ package cn.dev33.satoken.context;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenContextException;
 
@@ -29,12 +30,12 @@ import cn.dev33.satoken.exception.SaTokenContextException;
  * @author click33
  * @since 1.16.0
  */
-public class SaTokenContextForThreadLocalStorage {
+public class SaTokenContextForThreadLocalStaff {
 	
 	/**
 	 * 基于 ThreadLocal 的 [ Box 存储器 ]
 	 */
-	public static ThreadLocal<Box> boxThreadLocal = new InheritableThreadLocal<>();
+	public static ThreadLocal<SaTokenContextModelBox> modelBoxThreadLocal = new InheritableThreadLocal<>();
 	
 	/**
 	 * 初始化当前线程的 [ Box 存储器 ]
@@ -42,34 +43,34 @@ public class SaTokenContextForThreadLocalStorage {
 	 * @param response {@link SaResponse}
 	 * @param storage {@link SaStorage}
 	 */
-	public static void setBox(SaRequest request, SaResponse response, SaStorage storage) {
-		Box bok = new Box(request, response, storage);
-		boxThreadLocal.set(bok);
+	public static void setModelBox(SaRequest request, SaResponse response, SaStorage storage) {
+		SaTokenContextModelBox bok = new SaTokenContextModelBox(request, response, storage);
+		modelBoxThreadLocal.set(bok);
 	}
 
 	/**
 	 * 清除当前线程的 [ Box 存储器 ]
 	 */
-	public static void clearBox() {
-		boxThreadLocal.remove();
+	public static void clearModelBox() {
+		modelBoxThreadLocal.remove();
 	}
 
 	/**
 	 * 获取当前线程的 [ Box 存储器 ]
 	 * @return /
 	 */
-	public static Box getBox() {
-		return boxThreadLocal.get();
+	public static SaTokenContextModelBox getModelBoxOrNull() {
+		return modelBoxThreadLocal.get();
 	}
 	
 	/**
 	 * 获取当前线程的 [ Box 存储器 ], 如果为空则抛出异常
 	 * @return /
 	 */
-	public static Box getBoxNotNull() {
-		Box box = boxThreadLocal.get();
+	public static SaTokenContextModelBox getModelBox() {
+		SaTokenContextModelBox box = modelBoxThreadLocal.get();
 		if(box ==  null) {
-			throw new SaTokenContextException("未能获取有效的上下文").setCode(SaErrorCode.CODE_10002);
+			throw new SaTokenContextException("SaTokenContext 上下文尚未初始化").setCode(SaErrorCode.CODE_10002);
 		}
 		return box;
 	}
@@ -80,7 +81,7 @@ public class SaTokenContextForThreadLocalStorage {
 	 * @return /
 	 */
 	public static SaRequest getRequest() {
-		return getBoxNotNull().getRequest();
+		return getModelBox().getRequest();
 	}
 
 	/**
@@ -89,7 +90,7 @@ public class SaTokenContextForThreadLocalStorage {
 	 * @return /
 	 */
 	public static SaResponse getResponse() {
-		return getBoxNotNull().getResponse();
+		return getModelBox().getResponse();
 	}
 
 	/**
@@ -98,59 +99,8 @@ public class SaTokenContextForThreadLocalStorage {
 	 * @return /
 	 */
 	public static SaStorage getStorage() {
-		return getBoxNotNull().getStorage();
+		return getModelBox().getStorage();
 	}
 
-	
-	/**
-	 * Box 临时内部类，用于存储 [ SaRequest、SaResponse、SaStorage ] 三个包装对象
-	 *
-	 * @author click33
-	 * @since 1.16.0
-	 */
-	public static class Box {
-		
-		public SaRequest request;
-		
-		public SaResponse response;
-		
-		public SaStorage storage;
-		
-		public Box(SaRequest request, SaResponse response, SaStorage storage){
-			this.request = request;
-			this.response = response;
-			this.storage = storage;
-		}
 
-		public SaRequest getRequest() {
-			return request;
-		}
-
-		public void setRequest(SaRequest request) {
-			this.request = request;
-		}
-
-		public SaResponse getResponse() {
-			return response;
-		}
-
-		public void setResponse(SaResponse response) {
-			this.response = response;
-		}
-
-		public SaStorage getStorage() {
-			return storage;
-		}
-
-		public void setStorage(SaStorage storage) {
-			this.storage = storage;
-		}
-
-		@Override
-		public String toString() {
-			return "Box [request=" + request + ", response=" + response + ", storage=" + storage + "]";
-		}
-		
-	}
-	
 }

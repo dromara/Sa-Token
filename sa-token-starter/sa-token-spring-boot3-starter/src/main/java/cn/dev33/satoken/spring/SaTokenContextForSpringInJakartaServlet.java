@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.spring;
 
-import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.SaTokenContextForReadOnly;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -31,7 +31,7 @@ import cn.dev33.satoken.servlet.model.SaStorageForServlet;
  * @author click33
  * @since 1.34.0
  */
-public class SaTokenContextForSpringInJakartaServlet implements SaTokenContext {
+public class SaTokenContextForSpringInJakartaServlet implements SaTokenContextForReadOnly {
 
 	/**
 	 * 获取当前请求的 Request 包装对象

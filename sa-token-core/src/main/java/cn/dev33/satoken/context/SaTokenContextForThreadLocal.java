@@ -18,6 +18,7 @@ package cn.dev33.satoken.context;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 
 /**
  * Sa-Token 上下文处理器 [ ThreadLocal 版本 ]
@@ -35,23 +36,23 @@ import cn.dev33.satoken.context.model.SaStorage;
 public class SaTokenContextForThreadLocal implements SaTokenContext {
 
 	@Override
-	public SaRequest getRequest() {
-		return SaTokenContextForThreadLocalStorage.getRequest();
+	public void setContext(SaRequest req, SaResponse res, SaStorage stg) {
+		SaTokenContextForThreadLocalStaff.setModelBox(req, res, stg);
 	}
 
 	@Override
-	public SaResponse getResponse() {
-		return SaTokenContextForThreadLocalStorage.getResponse();
-	}
-
-	@Override
-	public SaStorage getStorage() {
-		return SaTokenContextForThreadLocalStorage.getStorage();
+	public void clearContext() {
+		SaTokenContextForThreadLocalStaff.clearModelBox();
 	}
 
 	@Override
 	public boolean isValid() {
-		return SaTokenContextForThreadLocalStorage.getBox() != null;
+		return SaTokenContextForThreadLocalStaff.getModelBoxOrNull() != null;
+	}
+
+	@Override
+	public SaTokenContextModelBox getModelBox() {
+		return SaTokenContextForThreadLocalStaff.getModelBox();
 	}
 
 }

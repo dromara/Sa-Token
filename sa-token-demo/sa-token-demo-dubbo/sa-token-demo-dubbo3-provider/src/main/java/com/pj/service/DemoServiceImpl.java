@@ -1,4 +1,4 @@
-package com.pj.more;
+package com.pj.service;
 
 import org.apache.dubbo.config.annotation.DubboService;
 

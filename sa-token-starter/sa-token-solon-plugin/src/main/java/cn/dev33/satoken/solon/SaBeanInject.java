@@ -21,7 +21,6 @@ import cn.dev33.satoken.apikey.SaApiKeyTemplate;
 import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoader;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
-import cn.dev33.satoken.context.second.SaTokenSecondContextCreator;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
@@ -119,17 +118,6 @@ public class SaBeanInject {
 	@Bean
 	public void setSaTokenContext(SaTokenContext saTokenContext) {
 		SaManager.setSaTokenContext(saTokenContext);
-	}
-
-	/**
-	 * 注入二级上下文Bean
-	 *
-	 * @param saTokenSecondContextCreator 二级上下文创建器
-	 */
-	@Condition(onBean = SaTokenSecondContextCreator.class)
-	@Bean
-	public void setSaTokenContext(SaTokenSecondContextCreator saTokenSecondContextCreator) {
-		SaManager.setSaTokenSecondContext(saTokenSecondContextCreator.create());
 	}
 
 	/**

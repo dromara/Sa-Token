@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.jfinal;
 
-import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.SaTokenContextForReadOnly;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -27,7 +27,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
 /**
  * Sa-Token 上线文处理器 [Jfinal 版本实现]
  */
-public class SaTokenContextForJfinal implements SaTokenContext {
+public class SaTokenContextForJfinal implements SaTokenContextForReadOnly {
 
     public SaTokenContextForJfinal() {
         // 重写路由匹配算法
@@ -62,6 +62,7 @@ public class SaTokenContextForJfinal implements SaTokenContext {
 
     @Override
     public boolean isValid() {
-        return SaTokenContext.super.isValid();
+        return SaControllerContext.get() != null;
     }
+
 }

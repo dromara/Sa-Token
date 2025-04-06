@@ -15,11 +15,11 @@
  */
 package cn.dev33.satoken.reactor.context;
 
-import cn.dev33.satoken.context.SaTokenContextForThreadLocalStorage;
-import cn.dev33.satoken.context.SaTokenContextForThreadLocalStorage.Box;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaRetGenericFunction;
 import cn.dev33.satoken.reactor.model.SaRequestForReactor;
 import cn.dev33.satoken.reactor.model.SaResponseForReactor;
@@ -42,14 +42,14 @@ public class SaReactorSyncHolder {
 		SaRequest request = new SaRequestForReactor(exchange.getRequest());
 		SaResponse response = new SaResponseForReactor(exchange.getResponse());
 		SaStorage storage = new SaStorageForReactor(exchange);
-		SaTokenContextForThreadLocalStorage.setBox(request, response, storage);
+		SaManager.getSaTokenContext().setContext(request, response, storage);
 	}
 
 	/**
 	 * 在同步上下文清除 ServerWebExchange
 	 */
 	public static void clearContext() {
-		SaTokenContextForThreadLocalStorage.clearBox();
+		SaManager.getSaTokenContext().clearContext();
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class SaReactorSyncHolder {
 	 * @return /
 	 */
 	public static ServerWebExchange getExchange() {
-		Box box = SaTokenContextForThreadLocalStorage.getBoxNotNull();
+		SaTokenContextModelBox box = SaManager.getSaTokenContext().getModelBox();
 		return (ServerWebExchange)box.getStorage().getSource();
 	}
 

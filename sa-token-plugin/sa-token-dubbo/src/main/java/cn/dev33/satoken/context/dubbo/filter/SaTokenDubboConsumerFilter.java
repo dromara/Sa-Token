@@ -15,20 +15,14 @@
  */
 package cn.dev33.satoken.context.dubbo.filter;
 
-import org.apache.dubbo.common.constants.CommonConstants;
-import org.apache.dubbo.common.extension.Activate;
-import org.apache.dubbo.rpc.Filter;
-import org.apache.dubbo.rpc.Invocation;
-import org.apache.dubbo.rpc.Invoker;
-import org.apache.dubbo.rpc.Result;
-import org.apache.dubbo.rpc.RpcContext;
-import org.apache.dubbo.rpc.RpcException;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
+import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.common.extension.Activate;
+import org.apache.dubbo.rpc.*;
 
 /**
  * Sa-Token 整合 Dubbo Consumer 端（调用端）过滤器
@@ -36,7 +30,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * @author click33
  * @since 1.34.0
  */
-@Activate(group = {CommonConstants.CONSUMER}, order = -30000)
+@Activate(group = {CommonConstants.CONSUMER}, order = SaTokenConsts.RPC_PERMISSION_FILTER_ORDER)
 public class SaTokenDubboConsumerFilter implements Filter {
 
 	@Override

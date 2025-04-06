@@ -30,11 +30,11 @@ import org.apache.dubbo.rpc.*;
  * @author click33
  * @since 1.34.0
  */
-@Activate(group = {CommonConstants.CONSUMER}, order = -30000)
+@Activate(group = {CommonConstants.CONSUMER}, order = SaTokenConsts.RPC_PERMISSION_FILTER_ORDER)
 public class SaTokenDubbo3ConsumerFilter implements Filter {
 
 	@Override
-	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
+	public Result invoke(Invoker<?> invoker, Invocation invocation) {
 		
 		// 追加 Same-Token 参数 
 		if(SaManager.getConfig().getCheckSameToken()) {

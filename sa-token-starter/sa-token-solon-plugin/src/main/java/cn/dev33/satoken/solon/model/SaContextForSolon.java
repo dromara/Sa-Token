@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.solon.model;
 
-import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.SaTokenContextForReadOnly;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -27,7 +27,7 @@ import org.noear.solon.core.handle.Context;
  * @author noear
  * @since 1.4
  */
-public class SaContextForSolon implements SaTokenContext {
+public class SaContextForSolon implements SaTokenContextForReadOnly {
 
     /**
      * 获取当前请求的Request对象

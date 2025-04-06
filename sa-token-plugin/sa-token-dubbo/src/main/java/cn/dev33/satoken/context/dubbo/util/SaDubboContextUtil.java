@@ -13,43 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.context.dubbo;
+package cn.dev33.satoken.context.dubbo.util;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.dubbo.model.SaRequestForDubbo;
 import cn.dev33.satoken.context.dubbo.model.SaResponseForDubbo;
 import cn.dev33.satoken.context.dubbo.model.SaStorageForDubbo;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
-import cn.dev33.satoken.context.second.SaTokenSecondContext;
 import org.apache.dubbo.rpc.RpcContext;
 
+
 /**
- * Sa-Token 二级上下文 [ Dubbo版本 ]
- * 
+ * SaTokenContext 上下文读写工具类
+ *
  * @author click33
- * @since 1.34.0
+ * @since 1.42.0
  */
-public class SaTokenSecondContextForDubbo implements SaTokenSecondContext {
+public class SaDubboContextUtil {
 
-	@Override
-	public SaRequest getRequest() {
-		return new SaRequestForDubbo(RpcContext.getContext());
+	/**
+	 * 写入当前上下文
+	 * @param rpcContext /
+	 */
+	public static void setContext(RpcContext rpcContext) {
+		SaRequest saRequest = new SaRequestForDubbo(RpcContext.getContext());
+		SaResponse saResponse = new SaResponseForDubbo(RpcContext.getContext());
+		SaStorage saStorage = new SaStorageForDubbo(RpcContext.getContext());
+		SaManager.getSaTokenContext().setContext(saRequest, saResponse, saStorage);
 	}
 
-	@Override
-	public SaResponse getResponse() {
-		return new SaResponseForDubbo(RpcContext.getContext());
+	/**
+	 * 清除当前上下文
+	 */
+	public static void clearContext() {
+		SaManager.getSaTokenContext().clearContext();
 	}
 
-	@Override
-	public SaStorage getStorage() {
-		return new SaStorageForDubbo(RpcContext.getContext());
-	}
-
-	@Override
-	public boolean isValid() {
-		return RpcContext.getContext() != null;
-	}
-	
 }

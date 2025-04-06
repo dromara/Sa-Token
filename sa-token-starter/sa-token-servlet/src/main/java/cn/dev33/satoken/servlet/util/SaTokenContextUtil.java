@@ -15,11 +15,11 @@
  */
 package cn.dev33.satoken.servlet.util;
 
-import cn.dev33.satoken.context.SaTokenContextForThreadLocalStorage;
-import cn.dev33.satoken.context.SaTokenContextForThreadLocalStorage.Box;
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
 import cn.dev33.satoken.servlet.model.SaResponseForServlet;
@@ -45,14 +45,14 @@ public class SaTokenContextUtil {
 		SaRequest req = new SaRequestForServlet(request);
 		SaResponse res = new SaResponseForServlet(response);
 		SaStorage stg = new SaStorageForServlet(request);
-		SaTokenContextForThreadLocalStorage.setBox(req, res, stg);
+		SaManager.getSaTokenContext().setContext(req, res, stg);
 	}
 
 	/**
 	 * 清除当前上下文
 	 */
 	public static void clearContext() {
-		SaTokenContextForThreadLocalStorage.clearBox();
+		SaManager.getSaTokenContext().clearContext();
 	}
 
 	/**
@@ -71,11 +71,11 @@ public class SaTokenContextUtil {
 	}
 
 	/**
-	 * 获取当前 Box
+	 * 获取当前 ModelBox
 	 * @return /
 	 */
-	public static Box getBox() {
-		return SaTokenContextForThreadLocalStorage.getBoxNotNull();
+	public static SaTokenContextModelBox getModelBox() {
+		return SaManager.getSaTokenContext().getModelBox();
 	}
 
 	/**
@@ -83,8 +83,7 @@ public class SaTokenContextUtil {
 	 * @return /
 	 */
 	public static HttpServletRequest getRequest() {
-		Box box = SaTokenContextForThreadLocalStorage.getBoxNotNull();
-		return (HttpServletRequest) box.getRequest().getSource();
+		return (HttpServletRequest) getModelBox().getRequest().getSource();
 	}
 
 	/**
@@ -92,8 +91,7 @@ public class SaTokenContextUtil {
 	 * @return /
 	 */
 	public static HttpServletResponse getResponse() {
-		Box box = SaTokenContextForThreadLocalStorage.getBoxNotNull();
-		return (HttpServletResponse) box.getResponse().getSource();
+		return (HttpServletResponse) getModelBox().getResponse().getSource();
 	}
 
 }

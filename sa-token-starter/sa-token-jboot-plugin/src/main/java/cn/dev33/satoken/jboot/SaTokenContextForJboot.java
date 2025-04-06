@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.jboot;
 
-import cn.dev33.satoken.context.SaTokenContext;
+import cn.dev33.satoken.context.SaTokenContextForReadOnly;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -28,7 +28,7 @@ import io.jboot.web.controller.JbootControllerContext;
 /**
  * Sa-Token 上线文处理器 [Jboot 版本实现]
  */
-public class SaTokenContextForJboot implements SaTokenContext {
+public class SaTokenContextForJboot implements SaTokenContextForReadOnly {
 
     public SaTokenContextForJboot() {
         // 重写路由匹配算法
@@ -63,6 +63,6 @@ public class SaTokenContextForJboot implements SaTokenContext {
 
     @Override
     public boolean isValid() {
-        return SaTokenContext.super.isValid();
+        return JbootControllerContext.get() != null;
     }
 }
