@@ -17,11 +17,14 @@ package cn.dev33.satoken.solon;
 
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.solon.integration.SaFirewallCheckFilterForSolon;
+import cn.dev33.satoken.solon.integration.SaTokenContextFilterForSolon;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Filter;
+import org.noear.solon.core.util.PathAnalyzer;
 
 /**
  * 注册Sa-Token所需要的Bean 
@@ -31,6 +34,13 @@ import org.noear.solon.core.handle.Filter;
  */
 @Configuration
 public class SaBeanRegister {
+
+	public SaBeanRegister() {
+		// 重写路由匹配算法
+		SaStrategy.instance.routeMatcher = (pattern, path) -> {
+			return PathAnalyzer.get(pattern).matches(path);
+		};
+	}
 
 	/**
 	 * 获取配置Bean
@@ -47,7 +57,17 @@ public class SaBeanRegister {
 	}
 
 	/**
-	 * 防火墙校验过滤器
+	 * 上下文过滤器
+	 *
+	 * @return /
+	 */
+	@Bean(index = SaTokenConsts.SA_TOKEN_CONTEXT_FILTER_ORDER)
+	public Filter saTokenContextFilterForSolon() {
+		return new SaTokenContextFilterForSolon();
+	}
+
+	/**
+	 * 防火墙过滤器
 	 *
 	 * @return /
 	 */

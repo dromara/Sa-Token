@@ -15,8 +15,10 @@
  */
 package cn.dev33.satoken.spring;
 
-import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet;
+import cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet;
+import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
+import cn.dev33.satoken.strategy.SaStrategy;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -27,18 +29,25 @@ import org.springframework.context.annotation.Bean;
  */
 public class SaTokenContextRegister {
 
-	/**
-	 * 获取上下文处理器组件 (SpringBoot3 Jakarta Servlet 版)
-	 * 
-	 * @return / 
-	 */
-	@Bean
-	public SaTokenContext getSaTokenContextForSpringInJakartaServlet() {
-		return new SaTokenContextForSpringInJakartaServlet();
+	public SaTokenContextRegister() {
+		// 重写路由匹配算法
+		SaStrategy.instance.routeMatcher = (pattern, path) -> {
+			return SaPathPatternParserUtil.match(pattern, path);
+		};
 	}
 
 	/**
-	 * 请求 path 校验过滤器
+	 * 上下文过滤器
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaTokenContextFilterForJakartaServlet saTokenContextFilterForServlet() {
+		return new SaTokenContextFilterForJakartaServlet();
+	}
+
+	/**
+	 * 防火墙过滤器
 	 *
 	 * @return /
 	 */

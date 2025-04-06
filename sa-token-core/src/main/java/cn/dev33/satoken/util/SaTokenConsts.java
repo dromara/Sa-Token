@@ -194,7 +194,17 @@ public class SaTokenConsts {
 	/**
 	 * 防火墙校验过滤器的注册顺序
 	 */
-	public static final int FIREWALL_CHECK_FILTER_ORDER = -1000;
+	public static final int FIREWALL_CHECK_FILTER_ORDER = -102;
+
+	/**
+	 * 跨域处理过滤器的注册顺序
+	 */
+	public static final int CORS_FILTER_ORDER = -103;
+
+	/**
+	 * 上下文过滤器的注册顺序
+	 */
+	public static final int SA_TOKEN_CONTEXT_FILTER_ORDER = -104;
 
 	/**
 	 * Content-Type  key

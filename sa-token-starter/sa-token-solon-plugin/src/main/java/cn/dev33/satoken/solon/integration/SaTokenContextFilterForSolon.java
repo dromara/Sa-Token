@@ -13,29 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.error;
+package cn.dev33.satoken.solon.integration;
+
+import cn.dev33.satoken.solon.util.SaTokenContextUtil;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Filter;
+import org.noear.solon.core.handle.FilterChain;
 
 /**
- * 定义 sa-token-spring-boot-starter 所有异常细分状态码 
- * 
- * @author click33
- * @since 1.34.0
+ * 上下文初始化过滤器  (基于 Solon)
+ *
+ * @author noear
+ * @since 1.42.0
  */
-public interface SaSpringBootErrorCode {
-	
-	/** 企图在非 Web 上下文获取 Request、Response 等对象 */
-	int CODE_20101 = 20101;
+public class SaTokenContextFilterForSolon implements Filter {
 
-	/** 对象转 JSON 字符串失败 */
-	int CODE_20103 = 20103;
-
-	/** JSON 字符串转 Map 失败 */
-	int CODE_20104 = 20104;
-
-	/** JSON 字符串转 Object 失败 */
-	int CODE_20106 = 20106;
-
-	/** 默认的 Filter 异常处理函数 */
-	int CODE_20105 = 20105;
+	@Override
+	public void doFilter(Context ctx, FilterChain chain) throws Throwable {
+		try {
+			SaTokenContextUtil.setContext(ctx);
+			chain.doFilter(ctx);
+		} finally {
+			SaTokenContextUtil.clearContext();
+		}
+	}
 
 }

@@ -5,7 +5,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import org.springframework.boot.SpringBootVersion;
 
 /**
- * SpringBoot 版本与 Sa-Token 版本兼容检查器
+ * SpringBoot 版本与 Sa-Token 版本兼容检查器，当开发者错误的在 SpringBoot3.x 项目中引入当前集成包时，将在控制台做出提醒并阻断项目启动
  *
  * @author Uncarbon
  * @since 1.38.0

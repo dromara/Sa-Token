@@ -16,9 +16,9 @@
 package cn.dev33.satoken.jfinal;
 
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
-import cn.dev33.satoken.filter.SaFilter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

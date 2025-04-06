@@ -22,9 +22,10 @@ import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
 import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.servlet.model.SaStorageForServlet;
-import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
 
 /**
+ * <h2> 此为低版本(<1.42.0) 的上下文处理方案，基于 Spring 内部工具类 RequestContextHolder 读写上下文，仅做留档，如无必要请勿使用 </h2>
+ *
  * Sa-Token 上下文处理器 [ SpringBoot3 Jakarta Servlet 版 ]，在 SpringBoot3 中使用 Sa-Token 时，必须注入此实现类，否则会出现上下文无效异常
  * 
  * @author click33
@@ -54,14 +55,6 @@ public class SaTokenContextForSpringInJakartaServlet implements SaTokenContext {
 	@Override
 	public SaStorage getStorage() {
 		return new SaStorageForServlet(SpringMVCUtil.getRequest());
-	}
-	
-	/**
-	 * 判断：指定路由匹配符是否可以匹配成功指定路径
-	 */
-	@Override
-	public boolean matchPath(String pattern, String path) {
-		return SaPathPatternParserUtil.match(pattern, path);
 	}
 
 	/**

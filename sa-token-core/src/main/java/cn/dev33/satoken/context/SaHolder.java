@@ -36,7 +36,7 @@ public class SaHolder {
 	 * @return /
 	 */
 	public static SaTokenContext getContext() {
-		return SaManager.getSaTokenContextOrSecond();
+		return SaManager.getSaTokenContext();
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class SaHolder {
 	 * @return /
 	 */
 	public static SaRequest getRequest() {
-		return SaManager.getSaTokenContextOrSecond().getRequest();
+		return SaManager.getSaTokenContext().getRequest();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class SaHolder {
 	 * @return /
 	 */
 	public static SaResponse getResponse() {
-		return SaManager.getSaTokenContextOrSecond().getResponse();
+		return SaManager.getSaTokenContext().getResponse();
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class SaHolder {
 	 * @return /
 	 */
 	public static SaStorage getStorage() {
-		return SaManager.getSaTokenContextOrSecond().getStorage();
+		return SaManager.getSaTokenContext().getStorage();
 	}
 
 	/**

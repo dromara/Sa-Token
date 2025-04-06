@@ -15,15 +15,15 @@
  */
 package cn.dev33.satoken.router;
 
-import java.util.List;
-
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.fun.SaParamRetFunction;
+import cn.dev33.satoken.strategy.SaStrategy;
+
+import java.util.List;
 
 /**
  * 路由匹配操作工具类
@@ -55,7 +55,7 @@ public class SaRouter {
 	 * @return 是否匹配成功 
 	 */
 	public static boolean isMatch(String pattern, String path) {
-		return SaManager.getSaTokenContextOrSecond().matchPath(pattern, path);
+		return SaStrategy.instance.routeMatcher.apply(pattern, path);
 	}
 
 	/**

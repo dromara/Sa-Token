@@ -27,7 +27,11 @@ public class SaResponseForSolon implements SaResponse {
 	protected Context ctx;
 
 	public SaResponseForSolon() {
-		ctx = Context.current();
+		this(Context.current());
+	}
+
+	public SaResponseForSolon(Context ctx) {
+		this.ctx = ctx;
 	}
 
 	@Override

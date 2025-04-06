@@ -15,8 +15,10 @@
  */
 package cn.dev33.satoken.reactor.spring;
 
-import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.reactor.filter.SaFirewallCheckFilterForReactor;
+import cn.dev33.satoken.reactor.filter.SaTokenContextFilterForReactor;
+import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
+import cn.dev33.satoken.strategy.SaStrategy;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -27,18 +29,25 @@ import org.springframework.context.annotation.Bean;
  */
 public class SaTokenContextRegister {
 
+	public SaTokenContextRegister() {
+		// 重写路由匹配算法
+		SaStrategy.instance.routeMatcher = (pattern, path) -> {
+			return SaPathPatternParserUtil.match(pattern, path);
+		};
+	}
+
 	/**
-	 * 获取上下文处理器组件 (Spring Reactor 版)
+	 * 上下文过滤器
 	 *
 	 * @return /
 	 */
 	@Bean
-	public SaTokenContext getSaTokenContextForSpringReactor() {
-		return new SaTokenContextForSpringReactor();
+	public SaTokenContextFilterForReactor saTokenContextFilterForServlet() {
+		return new SaTokenContextFilterForReactor();
 	}
 
 	/**
-	 * 请求 path 校验过滤器
+	 * 防火墙过滤器
 	 *
 	 * @return /
 	 */

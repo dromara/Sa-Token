@@ -22,6 +22,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
+import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
 import cn.dev33.satoken.context.second.SaTokenSecondContext;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
@@ -155,9 +156,16 @@ public class SaManager {
 		SaTokenEventCenter.doRegisterComponent("SaTokenContext", saTokenContext);
 	}
 	public static SaTokenContext getSaTokenContext() {
+		if (saTokenContext == null) {
+			synchronized (SaManager.class) {
+				if (saTokenContext == null) {
+					SaManager.saTokenContext = new SaTokenContextForThreadLocal();
+				}
+			}
+		}
 		return saTokenContext;
 	}
-	
+
 	/**
 	 * 二级上下文 SaTokenSecondContext
 	 */
@@ -169,29 +177,29 @@ public class SaManager {
 	public static SaTokenSecondContext getSaTokenSecondContext() {
 		return saTokenSecondContext;
 	}
-	
+
 	/**
 	 * 获取一个可用的 SaTokenContext （按照一级上下文、二级上下文、默认上下文的顺序来判断）
-	 * @return / 
+	 * @return /
 	 */
 	public static SaTokenContext getSaTokenContextOrSecond() {
-		
+
 		// s1. 一级Context可用时返回一级Context
 		if(saTokenContext != null) {
 			if(saTokenSecondContext == null || saTokenContext.isValid()) {
-				// 因为 isValid 是一个耗时操作，所以此处假定：二级Context为null的情况下无需验证一级Context有效性 
-				// 这样可以提升6倍左右的上下文获取速度 
+				// 因为 isValid 是一个耗时操作，所以此处假定：二级Context为null的情况下无需验证一级Context有效性
+				// 这样可以提升6倍左右的上下文获取速度
 				return saTokenContext;
 			}
 		}
-		
-		// s2. 一级Context不可用时判断二级Context是否可用 
+
+		// s2. 一级Context不可用时判断二级Context是否可用
 		if(saTokenSecondContext != null && saTokenSecondContext.isValid()) {
 			return saTokenSecondContext;
 		}
-		
-		// s3. 都不行，就返回默认的 Context 
-		return SaTokenContextDefaultImpl.defaultContext; 
+
+		// s3. 都不行，就返回默认的 Context
+		return SaTokenContextDefaultImpl.defaultContext;
 	}
 
 	/**

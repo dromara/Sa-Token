@@ -20,13 +20,15 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.util.PathAnalyzer;
 
 /**
+ * <h2> 此为低版本(<1.42.0) 的上下文处理方案，基于 Solon 内部封装 Context.current() 读写上下文，仅做留档，如无必要请勿使用 </h2>
+ *
  * @author noear
  * @since 1.4
  */
 public class SaContextForSolon implements SaTokenContext {
+
     /**
      * 获取当前请求的Request对象
      */
@@ -49,14 +51,6 @@ public class SaContextForSolon implements SaTokenContext {
     @Override
     public SaStorage getStorage() {
         return new SaStorageForSolon();
-    }
-
-    /**
-     * 校验指定路由匹配符是否可以匹配成功指定路径
-     */
-    @Override
-    public boolean matchPath(String pattern, String path) {
-        return  PathAnalyzer.get(pattern).matches(path);
     }
 
     /**

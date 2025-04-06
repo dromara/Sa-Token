@@ -18,10 +18,11 @@ package cn.dev33.satoken.solon.integration;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
-import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.solon.util.SaSolonOperateUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.*;
@@ -180,22 +181,14 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 					auth.run(finalMainHandler);
 				}
 			});
-		} catch (StopMatchException e) {
-			// StopMatchException 异常代表：停止匹配，进入Controller
-		} catch (SaTokenException e) {
-			// 1. 获取异常处理策略结果
-			Object result;
-			if (e instanceof BackResultException) {
-				result = e.getMessage();
-			} else {
-				result = error.run(e);
-			}
-
-			// 2. 写入输出流
-			if (result != null) {
-				ctx.render(result);
-			}
-			ctx.setHandled(true);
+		}
+		catch (StopMatchException ignored) {}
+		catch (BackResultException e) {
+			SaSolonOperateUtil.writeResult(ctx, e.getMessage());
+			return;
+		}
+		catch (SaTokenException e) {
+			SaSolonOperateUtil.writeResult(ctx, error.run(e));
 			return;
 		}
 

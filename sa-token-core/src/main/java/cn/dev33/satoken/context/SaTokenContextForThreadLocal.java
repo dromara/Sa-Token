@@ -50,11 +50,6 @@ public class SaTokenContextForThreadLocal implements SaTokenContext {
 	}
 
 	@Override
-	public boolean matchPath(String pattern, String path) {
-		return false;
-	}
-
-	@Override
 	public boolean isValid() {
 		return SaTokenContextForThreadLocalStorage.getBox() != null;
 	}

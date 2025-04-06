@@ -27,7 +27,11 @@ public class SaStorageForSolon implements SaStorage {
     protected Context ctx;
 
     public SaStorageForSolon() {
-        ctx = Context.current();
+        this(Context.current());
+    }
+
+    public SaStorageForSolon(Context ctx) {
+        this.ctx = ctx;
     }
 
     @Override

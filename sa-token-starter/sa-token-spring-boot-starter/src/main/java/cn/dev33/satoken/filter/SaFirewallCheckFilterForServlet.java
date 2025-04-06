@@ -15,10 +15,12 @@
  */
 package cn.dev33.satoken.filter;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.FirewallCheckException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
 import cn.dev33.satoken.servlet.model.SaResponseForServlet;
+import cn.dev33.satoken.servlet.util.SaServletOperateUtil;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
@@ -48,15 +50,14 @@ public class SaFirewallCheckFilterForServlet implements Filter {
 		try {
 			SaFirewallStrategy.instance.check.execute(saRequest, saResponse, null);
 		}
-		catch (StopMatchException e) {
-			// 如果是 StopMatchException 异常，代表通过了防火墙验证，进入 Controller
+		catch (StopMatchException ignored) {}
+		catch (BackResultException e) {
+			SaServletOperateUtil.writeResult(response, e.getMessage());
+			return;
 		}
 		catch (FirewallCheckException e) {
-			// FirewallCheckException 异常则交由异常处理策略处理
 			if(SaFirewallStrategy.instance.checkFailHandle == null) {
-				response.setContentType("text/plain; charset=utf-8");
-				response.getWriter().print(e.getMessage());
-				response.getWriter().flush();
+				SaServletOperateUtil.writeResult(response, e.getMessage());
             } else {
 				SaFirewallStrategy.instance.checkFailHandle.run(e, saRequest, saResponse, null);
             }
@@ -68,14 +69,4 @@ public class SaFirewallCheckFilterForServlet implements Filter {
 		chain.doFilter(request, response);
 	}
 
-	@Override
-	public void init(FilterConfig filterConfig) {
-	}
-	
-	@Override
-	public void destroy() {
-	}
-
-	
-	
 }

@@ -58,7 +58,7 @@ public class SaTokenGrpcClientInterceptor implements ClientInterceptor, Ordered 
                 // 调用前，传递会话Token
                 String tokenValue = StpUtil.getTokenValue();
                 if (SaFoxUtil.isNotEmpty(tokenValue)
-                        && SaManager.getSaTokenContextOrSecond() != SaTokenContextDefaultImpl.defaultContext) {
+                        && SaManager.getSaTokenContext() != SaTokenContextDefaultImpl.defaultContext) {
                     headers.put(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX, tokenValue);
                 }
 

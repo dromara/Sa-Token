@@ -21,9 +21,8 @@ import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
-import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
-import cn.dev33.satoken.reactor.error.SaReactorSpringBootErrorCode;
+import cn.dev33.satoken.reactor.util.SaReactorOperateUtil;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
@@ -96,7 +95,7 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 	 * 异常处理函数：每次[认证函数]发生异常时执行此函数
 	 */
 	public SaFilterErrorStrategy error = e -> {
-		throw new SaTokenException(e).setCode(SaReactorSpringBootErrorCode.CODE_20205);
+		throw new SaTokenException(e);
 	};
 
 	/**
@@ -123,60 +122,28 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 		return this;
 	}
 
-	
 	// ------------------------ filter
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-		
-		// 写入WebFilterChain对象 
-		exchange.getAttributes().put(SaReactorHolder.CHAIN_KEY, chain);
-		
-		// ---------- 全局认证处理 
-		try {
-			// 写入全局上下文 (同步) 
-			SaReactorSyncHolder.setContext(exchange);
-			
-			// 执行全局过滤器
-			beforeAuth.run(null);
-			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-				auth.run(null);
-			});
-			
-		} catch (StopMatchException e) {
-			// StopMatchException 异常代表：停止匹配，进入Controller
 
-		} catch (Throwable e) {
-			// 1. 获取异常处理策略结果 
-			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
-			
-			// 2. 写入输出流
-			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
-			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
-			if(exchange.getResponse().getHeaders().getFirst(SaTokenConsts.CONTENT_TYPE_KEY) == null) {
-				exchange.getResponse().getHeaders().set(SaTokenConsts.CONTENT_TYPE_KEY, SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
-			}
-			return exchange.getResponse().writeWith(Mono.just(exchange.getResponse().bufferFactory().wrap(result.getBytes())));
-			
-		} finally {
-			// 清除上下文 
+		// ---------- 全局认证处理
+		try {
+			SaReactorSyncHolder.setContext(exchange);
+			beforeAuth.run(null);
+			SaRouter.match(includeList).notMatch(excludeList).check(r -> auth.run(null));
+		}
+		catch (StopMatchException ignored) {}
+		catch (BackResultException e) {
+			return SaReactorOperateUtil.writeResult(exchange, e.getMessage());
+		}
+		catch (Throwable e) {
+			return SaReactorOperateUtil.writeResult(exchange, String.valueOf(error.run(e)));
+		}
+		finally {
 			SaReactorSyncHolder.clearContext();
 		}
 
-		// ---------- 执行
-
-		// 写入全局上下文 (同步) 
-		SaReactorSyncHolder.setContext(exchange);
-		
-		// 执行 
-		return chain.filter(exchange).contextWrite(ctx -> {
-			// 写入全局上下文 (异步) 
-			ctx = ctx.put(SaReactorHolder.CONTEXT_KEY, exchange);
-			return ctx;
-		}).doFinally(r -> {
-			// 清除上下文 
-			SaReactorSyncHolder.clearContext();
-		});
+		return chain.filter(exchange);
 	}
-	
 }

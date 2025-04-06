@@ -15,9 +15,12 @@
  */
 package cn.dev33.satoken.reactor.context;
 
+import cn.dev33.satoken.fun.SaRetGenericFunction;
 import org.springframework.web.server.ServerWebExchange;
-
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+import reactor.util.context.Context;
+import reactor.util.context.ContextView;
 
 /**
  * Reactor 上下文操作（异步），持有当前请求的 ServerWebExchange 全局引用
@@ -28,37 +31,67 @@ import reactor.core.publisher.Mono;
 public class SaReactorHolder {
 	
 	/**
-	 * key 
+	 * ServerWebExchange key
 	 */
-	public static final Class<ServerWebExchange> CONTEXT_KEY = ServerWebExchange.class;
+	public static final String EXCHANGE_KEY = "SA_REACTOR_EXCHANGE_KEY";
 
 	/**
-	 * chain_key 
+	 * WebFilterChain key
 	 */
-	public static final String CHAIN_KEY = "WEB_FILTER_CHAIN_KEY";
-	
+	public static final String CHAIN_KEY = "SA_REACTOR__CHAIN_KEY";
+
 	/**
-	 * 获取上下文对象 
-	 * @return see note 
+	 * 在流式上下文写入 ServerWebExchange
+	 * @param ctx 必填
+	 * @param exchange 必填
+	 * @param chain 非必填
+	 * @return /
 	 */
-	public static Mono<ServerWebExchange> getContext() {
-		// 从全局 Mono<Context> 获取 
-		return Mono.subscriberContext().map(ctx -> ctx.get(CONTEXT_KEY));
+	public static Context setContext(Context ctx, ServerWebExchange exchange, WebFilterChain chain) {
+		return ctx
+				.put(EXCHANGE_KEY, exchange)
+				.put(CHAIN_KEY, chain);
 	}
-	
+
 	/**
-	 * 获取上下文对象, 并设置到同步上下文中 
-	 * @return see note 
+	 * 在流式上下文获取 ServerWebExchange
+	 * @param ctx /
+	 * @return /
 	 */
-	public static Mono<ServerWebExchange> getContextAndSetSync() {
-		// 从全局 Mono<Context> 获取 
-		return Mono.subscriberContext().map(ctx -> {
-			// 设置到sync中 
-			SaReactorSyncHolder.setContext(ctx.get(CONTEXT_KEY));
-			return ctx.get(CONTEXT_KEY);
-		}).doFinally(r->{
-			// 从sync中清除 
-			SaReactorSyncHolder.clearContext();
+	public static ServerWebExchange getExchange(ContextView ctx) {
+		return ctx.get(EXCHANGE_KEY);
+	}
+
+	/**
+	 * 在流式上下文获取 WebFilterChain
+	 * @param ctx /
+	 * @return /
+	 */
+	public static WebFilterChain getChain(ContextView ctx) {
+		return ctx.get(CHAIN_KEY);
+	}
+
+	/**
+	 * 获取 Mono < ServerWebExchange >
+	 * @return /
+	 */
+	public static Mono<ServerWebExchange> getMonoExchange() {
+		return Mono.deferContextual(ctx -> Mono.just(getExchange(ctx)));
+	}
+
+	/**
+	 * 将 exchange 写入到同步上下文中，并执行一段代码，执行完毕清除上下文
+	 *
+	 * @return /
+	 */
+	public static <R> Mono<R> sync(SaRetGenericFunction<R> fun) {
+		return Mono.deferContextual(ctx -> {
+			try {
+				SaReactorSyncHolder.setContext(ctx.get(EXCHANGE_KEY));
+				return Mono.just(fun.run());
+			} finally {
+				SaReactorSyncHolder.clearContext();
+			}
 		});
 	}
 

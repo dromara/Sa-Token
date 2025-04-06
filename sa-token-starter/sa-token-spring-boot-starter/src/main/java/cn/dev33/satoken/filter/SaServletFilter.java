@@ -15,11 +15,11 @@
  */
 package cn.dev33.satoken.filter;
 
-import cn.dev33.satoken.error.SaSpringBootErrorCode;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.servlet.util.SaServletOperateUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
 
@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Servlet 全局鉴权过滤器
+ * 全局鉴权过滤器 (基于 Servlet)
  * <p>
  *     默认优先级为 -100，尽量保证在其它过滤器之前执行
  * </p>
@@ -89,7 +89,7 @@ public class SaServletFilter implements SaFilter, Filter {
 	 * 异常处理函数：每次[认证函数]发生异常时执行此函数
 	 */
 	public SaFilterErrorStrategy error = e -> {
-		throw new SaTokenException(e).setCode(SaSpringBootErrorCode.CODE_20105);
+		throw new SaTokenException(e);
 	};
 
 	/**
@@ -128,21 +128,14 @@ public class SaServletFilter implements SaFilter, Filter {
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> {
 				auth.run(null);
 			});
-			
-		} catch (StopMatchException e) {
-			// StopMatchException 异常代表：停止匹配，进入Controller
-
-		} catch (Throwable e) {
-			// 1. 获取异常处理策略结果 
-			String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
-			
-			// 2. 写入输出流
-			// 		请注意此处默认 Content-Type 为 text/plain，如果需要返回 JSON 信息，需要在 return 前自行设置 Content-Type 为 application/json
-			// 		例如：SaHolder.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
-			if(response.getContentType() == null) {
-				response.setContentType(SaTokenConsts.CONTENT_TYPE_TEXT_PLAIN);
-			}
-			response.getWriter().print(result);
+		}
+		catch (StopMatchException ignored) {}
+		catch (BackResultException e) {
+			SaServletOperateUtil.writeResult(response, e.getMessage());
+			return;
+		}
+		catch (Throwable e) {
+			SaServletOperateUtil.writeResult(response, String.valueOf(error.run(e)));
 			return;
 		}
 		
@@ -150,14 +143,4 @@ public class SaServletFilter implements SaFilter, Filter {
 		chain.doFilter(request, response);
 	}
 
-	@Override
-	public void init(FilterConfig filterConfig) {
-	}
-	
-	@Override
-	public void destroy() {
-	}
-
-	
-	
 }

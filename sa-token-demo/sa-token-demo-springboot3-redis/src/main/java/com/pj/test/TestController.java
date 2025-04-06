@@ -1,6 +1,7 @@
 package com.pj.test;
 
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.servlet.util.SaTokenContextUtil;
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,9 @@ public class TestController {
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public SaResult test() {
-		System.out.println("------------进来了"); 
+		System.out.println("------------进来了");
+		System.out.println(SpringMVCUtil.getRequest());
+		System.out.println(SaTokenContextUtil.getRequest());
 		return SaResult.ok();
 	}
 	

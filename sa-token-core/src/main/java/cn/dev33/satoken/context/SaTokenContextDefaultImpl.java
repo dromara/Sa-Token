@@ -59,9 +59,4 @@ public class SaTokenContextDefaultImpl implements SaTokenContext {
 		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
 	}
 
-	@Override
-	public boolean matchPath(String pattern, String path) {
-		throw new SaTokenContextException(ERROR_MESSAGE).setCode(SaErrorCode.CODE_10001);
-	}
-
 }

@@ -15,10 +15,12 @@
  */
 package cn.dev33.satoken.solon.integration;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.FirewallCheckException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.solon.model.SaRequestForSolon;
 import cn.dev33.satoken.solon.model.SaResponseForSolon;
+import cn.dev33.satoken.solon.util.SaSolonOperateUtil;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Filter;
@@ -41,17 +43,17 @@ public class SaFirewallCheckFilterForSolon implements Filter {
 		try {
 			SaFirewallStrategy.instance.check.execute(saRequest, saResponse, null);
 		}
-		catch (StopMatchException e) {
-			// 如果是 StopMatchException 异常，代表通过了防火墙验证，进入 Controller
+		catch (StopMatchException ignored) {}
+		catch (BackResultException e) {
+			SaSolonOperateUtil.writeResult(ctx, e.getMessage());
+			return;
 		}
 		catch (FirewallCheckException e) {
-			// FirewallCheckException 异常则交由异常处理策略处理
 			if(SaFirewallStrategy.instance.checkFailHandle == null) {
-				ctx.render(e.getMessage());
+				SaSolonOperateUtil.writeResult(ctx, e.getMessage());
 			} else {
 				SaFirewallStrategy.instance.checkFailHandle.run(e, saRequest, saResponse, null);
 			}
-			ctx.setHandled(true);
 			return;
 		}
 		// 更多异常则不处理，交由 Web 框架处理

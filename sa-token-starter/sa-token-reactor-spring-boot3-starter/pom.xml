@@ -32,15 +32,13 @@
 	    <dependency>
 	    	<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<!--<version>5.3.7</version>-->
 			<optional>true</optional>
 	    </dependency>
 	    
-		<!-- reactor-core (optional) -->
+		<!-- reactor-core -->
 	    <dependency>
 	    	<groupId>io.projectreactor</groupId>
 	    	<artifactId>reactor-core</artifactId>
-			<optional>true</optional>
 	    </dependency>
 	    
 		<!-- jackson-databind (optional) -->
@@ -56,24 +54,13 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-    
-		<!-- sa-token-core -->
-		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-core</artifactId>
-        </dependency>
-        
+
 		<!-- sa-token-spring-boot-autoconfig -->
 		<dependency>
             <groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
         </dependency>
-        
-		<!-- <dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-webflux</artifactId>
-			<version>${springboot.version}</version>
-		</dependency> -->
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -85,25 +72,19 @@
 	            <artifactId>spring-boot-starter</artifactId>
 				<version>${springboot3.version}</version>
 	        </dependency>
-			<!-- spring-boot-starter-web -->
+			<!-- spring-web -->
 		    <dependency>
 		    	<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
-				<version>6.0.0</version>
+				<version>6.2.5</version>
 		    </dependency>
-		    
-		    <dependency>
-		    	<groupId>io.projectreactor</groupId>
-		    	<artifactId>reactor-core</artifactId>
-				<version>3.5.1</version>
-		    </dependency>
-		    
+
 			<!-- jackson-databind (optional) -->
-			<dependency>
+			<!--<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>2.14.1</version>
-			</dependency>
+			</dependency>-->
 		
 			<!-- config (optional) -->
 			<dependency>

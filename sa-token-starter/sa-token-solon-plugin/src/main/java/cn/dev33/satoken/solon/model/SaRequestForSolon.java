@@ -32,7 +32,11 @@ public class SaRequestForSolon implements SaRequest {
     protected Context ctx;
 
     public SaRequestForSolon() {
-        ctx = Context.current();
+        this(Context.current());
+    }
+
+    public SaRequestForSolon(Context ctx) {
+        this.ctx = ctx;
     }
 
     @Override

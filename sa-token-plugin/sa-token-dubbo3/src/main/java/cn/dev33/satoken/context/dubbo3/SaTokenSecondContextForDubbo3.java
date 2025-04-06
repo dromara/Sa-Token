@@ -22,7 +22,6 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.second.SaTokenSecondContext;
-import cn.dev33.satoken.exception.ApiDisabledException;
 import org.apache.dubbo.rpc.RpcContext;
 
 /**
@@ -46,11 +45,6 @@ public class SaTokenSecondContextForDubbo3 implements SaTokenSecondContext {
 	@Override
 	public SaStorage getStorage() {
 		return new SaStorageForDubbo3(RpcContext.getServiceContext());
-	}
-
-	@Override
-	public boolean matchPath(String pattern, String path) {
-		throw new ApiDisabledException();
 	}
 
 	@Override

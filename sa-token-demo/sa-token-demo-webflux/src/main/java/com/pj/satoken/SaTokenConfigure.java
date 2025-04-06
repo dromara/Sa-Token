@@ -1,7 +1,7 @@
 package com.pj.satoken;
 
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
-import com.pj.util.AjaxJson;
+import cn.dev33.satoken.util.SaResult;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,7 +32,7 @@ public class SaTokenConfigure {
         		.setError(e -> {
         			System.out.println("---------- sa全局异常 ");
 					e.printStackTrace();
-        			return AjaxJson.getError(e.getMessage());
+        			return SaResult.error(e.getMessage());
         		})
         		;
     }

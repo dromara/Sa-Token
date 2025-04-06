@@ -15,14 +15,12 @@
  */
 package cn.dev33.satoken.spring;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import cn.dev33.satoken.exception.NotWebContextException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import cn.dev33.satoken.error.SaSpringBootErrorCode;
-import cn.dev33.satoken.exception.NotWebContextException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * SpringMVC 相关操作工具类，快速获取当前会话的 HttpServletRequest、HttpServletResponse 对象
@@ -42,7 +40,7 @@ public class SpringMVCUtil {
 	public static HttpServletRequest getRequest() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new NotWebContextException("非 web 上下文无法获取 HttpServletRequest").setCode(SaSpringBootErrorCode.CODE_20101);
+			throw new NotWebContextException("非 web 上下文无法获取 HttpServletRequest");
 		}
 		return servletRequestAttributes.getRequest();
 	}
@@ -54,7 +52,7 @@ public class SpringMVCUtil {
 	public static HttpServletResponse getResponse() {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		if(servletRequestAttributes == null) {
-			throw new NotWebContextException("非 web 上下文无法获取 HttpServletResponse").setCode(SaSpringBootErrorCode.CODE_20101);
+			throw new NotWebContextException("非 web 上下文无法获取 HttpServletResponse");
 		}
 		return servletRequestAttributes.getResponse();
 	}

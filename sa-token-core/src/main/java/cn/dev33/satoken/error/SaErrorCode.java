@@ -227,4 +227,9 @@ public interface SaErrorCode {
 	/** API Key 不属于指定用户 */
 	int CODE_12312 = 12312;
 
+	// ------------
+
+	/** 未实现具体的路由匹配策略 */
+	int CODE_12401 = 12401;
+
 }

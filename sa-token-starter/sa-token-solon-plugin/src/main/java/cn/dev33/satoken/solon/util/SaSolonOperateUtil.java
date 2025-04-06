@@ -13,23 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.reactor.error;
+package cn.dev33.satoken.solon.util;
+
+import org.noear.solon.core.handle.Context;
 
 /**
- * 定义 sa-token-reactor3-spring-boot-starter 所有异常细分状态码
- * 
+ * Solon 操作工具类
+ *
  * @author click33
- * @since 1.34.0
+ * @since 1.42.0
  */
-public interface SaReactorSpringBootErrorCode {
-	
-	/** 对象转 JSON 字符串失败 */
-	int CODE_20203 = 20203;
+public class SaSolonOperateUtil {
 
-	/** JSON 字符串转 Map 失败 */
-	int CODE_20204 = 20204;
+	/**
+	 * 写入结果到输出流
+	 * @param ctx /
+	 * @param result /
+	 */
+	public static void writeResult(Context ctx, Object result) throws Throwable {
+		if (result != null) {
+			ctx.render(result);
+		}
+		ctx.setHandled(true);
+	}
 
-	/** 默认的 Filter 异常处理函数 */
-	int CODE_20205 = 20205;
 
 }

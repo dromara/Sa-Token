@@ -42,7 +42,7 @@ public class SaTokenDubbo3ConsumerFilter implements Filter {
 		}
 		
 		// 1. 调用前，向下传递会话Token
-		if(SaManager.getSaTokenContextOrSecond() != SaTokenContextDefaultImpl.defaultContext) {
+		if(SaManager.getSaTokenContext() != SaTokenContextDefaultImpl.defaultContext) {
 			RpcContext.getServiceContext().setAttachment(SaTokenConsts.JUST_CREATED, StpUtil.getTokenValueNotCut());
 		}
 

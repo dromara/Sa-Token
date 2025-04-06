@@ -23,7 +23,6 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.second.SaTokenSecondContext;
-import cn.dev33.satoken.exception.ApiDisabledException;
 
 /**
  * Sa-Token 上下文 [grpc版本]
@@ -46,11 +45,6 @@ public class SaTokenSecondContextForGrpc implements SaTokenSecondContext {
     @Override
     public SaStorage getStorage() {
         return new SaStorageForGrpc();
-    }
-
-    @Override
-    public boolean matchPath(String pattern, String path) {
-        throw new ApiDisabledException();
     }
 
     @Override

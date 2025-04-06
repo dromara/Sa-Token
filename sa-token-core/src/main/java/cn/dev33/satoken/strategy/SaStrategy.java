@@ -16,6 +16,8 @@
 package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.NotImplException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.strategy.*;
 import cn.dev33.satoken.session.SaSession;
@@ -173,6 +175,13 @@ public final class SaStrategy {
 	 */
 	public SaCreateStpLogicFunction createStpLogic = (loginType) -> {
 		return new StpLogic(loginType);
+	};
+
+	/**
+	 * 路由匹配策略
+	 */
+	public SaRouteMatchFunction routeMatcher = (pattern, path) -> {
+		throw new NotImplException("未实现具体路由匹配策略").setCode(SaErrorCode.CODE_12401);
 	};
 
 
