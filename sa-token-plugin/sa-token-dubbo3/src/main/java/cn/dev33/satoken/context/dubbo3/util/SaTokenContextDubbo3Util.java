@@ -31,7 +31,7 @@ import org.apache.dubbo.rpc.RpcContext;
  * @author click33
  * @since 1.42.0
  */
-public class SaDubbo3ContextUtil {
+public class SaTokenContextDubbo3Util {
 
 	/**
 	 * 写入当前上下文

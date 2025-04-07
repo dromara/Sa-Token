@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.context.grpc.util;
+package cn.dev33.satoken.context.dubbo.util;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.grpc.model.SaRequestForGrpc;
-import cn.dev33.satoken.context.grpc.model.SaResponseForGrpc;
-import cn.dev33.satoken.context.grpc.model.SaStorageForGrpc;
+import cn.dev33.satoken.context.dubbo.model.SaRequestForDubbo;
+import cn.dev33.satoken.context.dubbo.model.SaResponseForDubbo;
+import cn.dev33.satoken.context.dubbo.model.SaStorageForDubbo;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
+import org.apache.dubbo.rpc.RpcContext;
 
 
 /**
@@ -30,15 +31,16 @@ import cn.dev33.satoken.context.model.SaStorage;
  * @author click33
  * @since 1.42.0
  */
-public class SaGrpcContextUtil {
+public class SaTokenContextDubboUtil {
 
 	/**
 	 * 写入当前上下文
+	 * @param rpcContext /
 	 */
-	public static void setContext() {
-		SaRequest saRequest = new SaRequestForGrpc();
-		SaResponse saResponse = new SaResponseForGrpc();
-		SaStorage saStorage = new SaStorageForGrpc();
+	public static void setContext(RpcContext rpcContext) {
+		SaRequest saRequest = new SaRequestForDubbo(RpcContext.getContext());
+		SaResponse saResponse = new SaResponseForDubbo(RpcContext.getContext());
+		SaStorage saStorage = new SaStorageForDubbo(RpcContext.getContext());
 		SaManager.getSaTokenContext().setContext(saRequest, saResponse, saStorage);
 	}
 

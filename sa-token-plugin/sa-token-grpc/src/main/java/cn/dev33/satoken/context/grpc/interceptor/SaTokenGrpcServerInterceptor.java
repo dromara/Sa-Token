@@ -17,7 +17,7 @@ package cn.dev33.satoken.context.grpc.interceptor;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.grpc.constants.GrpcContextConstants;
-import cn.dev33.satoken.context.grpc.util.SaGrpcContextUtil;
+import cn.dev33.satoken.context.grpc.util.SaTokenContextGrpcUtil;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -36,7 +36,7 @@ public class SaTokenGrpcServerInterceptor implements ServerInterceptor {
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers, ServerCallHandler<ReqT, RespT> next) {
         try{
             // 初始化上下文
-            SaGrpcContextUtil.setContext();
+            SaTokenContextGrpcUtil.setContext();
 
             // RPC 调用鉴权
             if (SaManager.getConfig().getCheckSameToken()) {
@@ -61,7 +61,7 @@ public class SaTokenGrpcServerInterceptor implements ServerInterceptor {
             }, headers);
         }finally {
             // 清除上下文
-            SaGrpcContextUtil.clearContext();
+            SaTokenContextGrpcUtil.clearContext();
         }
     }
 }

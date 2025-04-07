@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.filter;
 
-import cn.dev33.satoken.servlet.util.SaTokenContextUtil;
+import cn.dev33.satoken.servlet.util.SaTokenContextServletUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
 
@@ -36,10 +36,10 @@ public class SaTokenContextFilterForServlet implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
-			SaTokenContextUtil.setContext((HttpServletRequest) request, (HttpServletResponse) response);
+			SaTokenContextServletUtil.setContext((HttpServletRequest) request, (HttpServletResponse) response);
 			chain.doFilter(request, response);
 		} finally {
-			SaTokenContextUtil.clearContext();
+			SaTokenContextServletUtil.clearContext();
 		}
 	}
 

@@ -1,6 +1,6 @@
 package com.pj.test;
 
-import cn.dev33.satoken.servlet.util.SaTokenContextUtil;
+import cn.dev33.satoken.servlet.util.SaTokenContextServletUtil;
 import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class Test2Controller {
 	public SaResult test2() {
 
 		System.out.println(SpringMVCUtil.getRequest());
-		System.out.println(SaTokenContextUtil.getRequest());
+		System.out.println(SaTokenContextServletUtil.getRequest());
 
 //		StpUtil.login(30003);
 //		System.out.println(StpUtil.getSession().timeout());

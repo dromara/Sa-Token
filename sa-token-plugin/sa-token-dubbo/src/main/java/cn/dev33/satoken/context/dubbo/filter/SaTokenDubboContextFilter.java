@@ -16,7 +16,7 @@
 package cn.dev33.satoken.context.dubbo.filter;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.dubbo.util.SaDubboContextUtil;
+import cn.dev33.satoken.context.dubbo.util.SaTokenContextDubboUtil;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -34,7 +34,7 @@ public class SaTokenDubboContextFilter implements Filter {
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) {
 		try {
-			SaDubboContextUtil.setContext(RpcContext.getContext());
+			SaTokenContextDubboUtil.setContext(RpcContext.getContext());
 			return invoker.invoke(invocation);
 		} finally {
 			SaManager.getSaTokenContext().clearContext();

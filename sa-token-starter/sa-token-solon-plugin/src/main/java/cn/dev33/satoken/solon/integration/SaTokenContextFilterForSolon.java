@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.solon.integration;
 
-import cn.dev33.satoken.solon.util.SaTokenContextUtil;
+import cn.dev33.satoken.solon.util.SaTokenContextSolonUtil;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Filter;
 import org.noear.solon.core.handle.FilterChain;
@@ -31,10 +31,10 @@ public class SaTokenContextFilterForSolon implements Filter {
 	@Override
 	public void doFilter(Context ctx, FilterChain chain) throws Throwable {
 		try {
-			SaTokenContextUtil.setContext(ctx);
+			SaTokenContextSolonUtil.setContext(ctx);
 			chain.doFilter(ctx);
 		} finally {
-			SaTokenContextUtil.clearContext();
+			SaTokenContextSolonUtil.clearContext();
 		}
 	}
 

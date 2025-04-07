@@ -21,6 +21,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.fun.SaRetGenericFunction;
 import cn.dev33.satoken.solon.model.SaRequestForSolon;
 import cn.dev33.satoken.solon.model.SaResponseForSolon;
 import cn.dev33.satoken.solon.model.SaStorageForSolon;
@@ -32,7 +33,7 @@ import org.noear.solon.core.handle.Context;
  * @author click33
  * @since 1.42.0
  */
-public class SaTokenContextUtil {
+public class SaTokenContextSolonUtil {
 
 	/**
 	 * 写入当前上下文
@@ -42,13 +43,6 @@ public class SaTokenContextUtil {
 		SaResponse res = new SaResponseForSolon(ctx);
 		SaStorage stg = new SaStorageForSolon(ctx);
 		SaManager.getSaTokenContext().setContext(req, res, stg);
-	}
-
-	/**
-	 * 清除当前上下文
-	 */
-	public static void clearContext() {
-		SaManager.getSaTokenContext().clearContext();
 	}
 
 	/**
@@ -63,6 +57,30 @@ public class SaTokenContextUtil {
 		} finally {
 			clearContext();
 		}
+	}
+
+	/**
+	 * 写入上下文对象, 并在执行函数后将其清除
+	 *
+	 * @param ctx /
+	 * @param fun /
+	 * @return /
+	 * @param <T> /
+	 */
+	public static <T> T setContext(Context ctx, SaRetGenericFunction<T> fun) {
+		try {
+			setContext(ctx);
+			return fun.run();
+		} finally {
+			clearContext();
+		}
+	}
+
+	/**
+	 * 清除当前上下文
+	 */
+	public static void clearContext() {
+		SaManager.getSaTokenContext().clearContext();
 	}
 
 	/**

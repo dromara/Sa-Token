@@ -35,7 +35,7 @@ public class SaTokenContextForThreadLocalStaff {
 	/**
 	 * 基于 ThreadLocal 的 [ Box 存储器 ]
 	 */
-	public static ThreadLocal<SaTokenContextModelBox> modelBoxThreadLocal = new InheritableThreadLocal<>();
+	public static ThreadLocal<SaTokenContextModelBox> modelBoxThreadLocal = new ThreadLocal<>();
 	
 	/**
 	 * 初始化当前线程的 [ Box 存储器 ]

@@ -127,6 +127,15 @@ public class StpUtil {
 	}
 
 	/**
+	 * 将 token 写入到当前请求的 Storage 存储器里
+	 *
+	 * @param tokenValue 要保存的 token 值
+	 */
+	public static void setTokenValueToStorage(String tokenValue){
+		stpLogic.setTokenValueToStorage(tokenValue);
+	}
+
+	/**
 	 * 获取当前请求的 token 值
 	 *
 	 * @return 当前tokenValue
