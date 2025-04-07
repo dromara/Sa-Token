@@ -177,7 +177,29 @@ public class ApiKeyResourcesController {
 ```
 
 
-### 4、打开数据库模式
+### 4、前端如何提交 API Key？
+默认情况下，前端可以从任意途径提交 API Key 字符串，只要后端能接受到。
+
+但是如果后端是通过 `SaApiKeyUtil.currentApiKey()` 方法获取，或者 `@SaCheckApiKey` 注解校验，则需要前端按照一定的格式来提交了：
+
+方式一：通过请求参数或请求头，参数名为 `apikey`（全小写）
+
+``` url
+/user/getInfo?apikey=AK-NAO6u57zbOWCmLaiVQuVW2tyt3rHpZrXkaQp
+```
+
+
+方式二：通过 Basic 参数提交
+
+``` url
+http://AK-NAO6u57zbOWCmLaiVQuVW2tyt3rHpZrXkaQp@localhost:8081/user/getInfo
+```
+
+
+
+
+
+### 5、打开数据库模式
 
 框架默认将所有 API Key 信息保存在缓存中，这可以称之为“缓存模式”，这种模式下，重启缓存库后，数据将丢失。
 

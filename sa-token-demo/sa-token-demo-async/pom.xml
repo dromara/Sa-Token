@@ -41,19 +41,6 @@
 			<version>${sa-token.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>5.8.36</version>
-		</dependency>
-
-		<!-- Sa-Token 整合  Redis (使用jdk默认序列化方式) -->
-		<!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis</artifactId>
-            <version>${sa-token.version}</version>
-        </dependency> -->
-
 		<!-- Sa-Token 整合 RedisTemplate -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
@@ -73,65 +60,7 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
 
     </dependencies>
 
-	<!-- 构建配置 -->
-	<build>
-		<!-- 配置资源目录  -->
-		<resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-			</resource>
-		</resources>
-		<plugins>
-			<!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>${java.run.main.class}</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<!-- 拷贝依赖的jar包到lib目录 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>
-								${project.build.directory}/lib
-							</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-	
 </project>
