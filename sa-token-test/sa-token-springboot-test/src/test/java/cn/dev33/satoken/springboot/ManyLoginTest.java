@@ -18,13 +18,12 @@ package cn.dev33.satoken.springboot;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.servlet.util.SaTokenContextServletUtil;
 import cn.dev33.satoken.session.SaTerminalInfo;
+import cn.dev33.satoken.spring.SpringMVCUtil;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -51,8 +50,18 @@ public class ManyLoginTest {
 	// 结束 
     @AfterAll
     public static void afterClass() {
-//    	System.out.println("\n---------- 多端登录测试 end ... \n");
+    	System.out.println("\n---------- 多端登录测试 end ... \n");
     }
+
+	@BeforeEach
+	public void beforeEach() {
+		SaTokenContextServletUtil.setContext(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse());
+	}
+
+	@AfterEach
+	public void afterEach() {
+		SaTokenContextServletUtil.clearContext();
+	}
 
     // 测试：并发登录、共享token、同端 
     @Test

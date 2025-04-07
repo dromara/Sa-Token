@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.integrate.configure;
 
+import cn.dev33.satoken.servlet.util.SaTokenContextServletUtil;
+import cn.dev33.satoken.spring.SpringMVCUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,6 +35,12 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册 Sa-Token 拦截器，打开注解式鉴权功能 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+        // 测试环境下上下文过滤器不生效，所以此处从拦截器需要补充上下文
+        registry.addInterceptor(new SaInterceptor(handle -> {
+            SaTokenContextServletUtil.setContext(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse());
+        }).isAnnotation(false)).addPathPatterns("/**");
+
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能 
         registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
     }

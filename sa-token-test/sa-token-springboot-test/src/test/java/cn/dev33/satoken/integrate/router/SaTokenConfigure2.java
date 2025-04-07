@@ -15,19 +15,21 @@
  */
 package cn.dev33.satoken.integrate.router;
 
-import java.util.Arrays;
-
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.filter.SaServletFilter;
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.router.SaHttpMethod;
+import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.servlet.util.SaTokenContextServletUtil;
+import cn.dev33.satoken.spring.SpringMVCUtil;
+import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.interceptor.SaInterceptor;
-import cn.dev33.satoken.router.SaHttpMethod;
-import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.spring.SpringMVCUtil;
-import cn.dev33.satoken.util.SaResult;
+import java.util.Arrays;
 
 /**
  * Sa-Token 相关配置类
@@ -41,11 +43,17 @@ public class SaTokenConfigure2 implements WebMvcConfigurer {
     // 路由鉴权
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+		// 测试环境下上下文过滤器不生效，所以此处从拦截器需要补充上下文
+		registry.addInterceptor(new SaInterceptor(handle -> {
+			SaTokenContextServletUtil.setContext(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse());
+		}).isAnnotation(false)).addPathPatterns("/**");
+
         // 路由鉴权
         registry.addInterceptor(new SaInterceptor(handle -> {})
         		.isAnnotation(true)
         		.setAuth(handle -> {
-        	
+
         	// 匹配 getInfo ，返回code=201 
         	SaRouter.match("/**")
         		.match(SaHttpMethod.POST)
@@ -105,6 +113,6 @@ public class SaTokenConfigure2 implements WebMvcConfigurer {
         	
         })).addPathPatterns("/**");
     }
-    
+
 }
 

@@ -1,9 +1,8 @@
 package com.pj.test;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import cn.dev33.satoken.servlet.util.SaTokenContextServletUtil;
+import cn.dev33.satoken.spring.SpringMVCUtil;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -43,6 +42,16 @@ public class JwtForStatelessTest {
     public static void afterClass() {
     	System.out.println("\n\n------------------------ JwtForStatelessTest end ... \n");
     }
+
+	@BeforeEach
+	public void beforeEach() {
+		SaTokenContextServletUtil.setContext(SpringMVCUtil.getRequest(), SpringMVCUtil.getResponse());
+	}
+
+	@AfterEach
+	public void afterEach() {
+		SaTokenContextServletUtil.clearContext();
+	}
 
     // 测试：登录 
     @Test
