@@ -64,6 +64,25 @@ public final class SaFirewallStrategy {
 	}
 
 	/**
+	 * 注册一个防火墙校验 hook 到第一位，
+	 * <b>请注意将 hook 注册到第一位将会优先于白名单的判断，如果您依然希望白名单 hook 保持最高优先级，请调用 registerHookToSecond </b>
+	 * @param checkHook /
+	 */
+	public void registerHookToFirst(SaFirewallCheckHook checkHook) {
+		SaManager.getLog().info("防火墙校验 hook 注册成功: " + checkHook.getClass());
+		checkHooks.add(0, checkHook);
+	}
+
+	/**
+	 * 注册一个防火墙校验 hook 到第二位
+	 * @param checkHook /
+	 */
+	public void registerHookToSecond(SaFirewallCheckHook checkHook) {
+		SaManager.getLog().info("防火墙校验 hook 注册成功: " + checkHook.getClass());
+		checkHooks.add(1, checkHook);
+	}
+
+	/**
 	 * 移除指定类型的防火墙校验 hook
 	 * @param hookClass /
 	 */
