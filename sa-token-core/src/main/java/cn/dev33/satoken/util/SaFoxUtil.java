@@ -828,5 +828,17 @@ public class SaFoxUtil {
 		return false;
 	}
 
+	/**
+	 * 将 value 转化为 String，如果 value 为 null，则返回空字符串
+	 * @param value /
+	 * @return /
+	 */
+	public static String valueToString(Object value) {
+		if (value == null) {
+			return "";
+		}
+		return value.toString();
+	}
+
 
 }

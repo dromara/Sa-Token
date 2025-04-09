@@ -1,10 +1,9 @@
 package com.pj.cases.up;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Sa-Token 同端互斥登录示例 
@@ -62,7 +61,7 @@ public class MutexLoginController {
 	public SaResult isLogin() {
 		// StpUtil.isLogin() 查询当前客户端是否登录，返回 true 或 false 
 		boolean isLogin = StpUtil.isLogin();
-		return SaResult.ok("当前客户端是否登录：" + isLogin + "，登录的设备是：" + StpUtil.getLoginDevice());
+		return SaResult.ok("当前客户端是否登录：" + isLogin + "，登录的设备是：" + StpUtil.getLoginDeviceType());
 	}
 
 }

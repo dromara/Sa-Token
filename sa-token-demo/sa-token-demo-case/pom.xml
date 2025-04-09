@@ -59,6 +59,13 @@
             <artifactId>commons-pool2</artifactId>
         </dependency>
 
+		<!-- Sa-Token 临时 token 模块整合 jwt -->
+		<!--<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-temp-jwt</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>-->
+
 		<!-- @ConfigurationProperties -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

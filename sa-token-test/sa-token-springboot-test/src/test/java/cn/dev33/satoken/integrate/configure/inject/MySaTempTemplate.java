@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.temp;
+package cn.dev33.satoken.integrate.configure.inject;
 
-/**
- * Sa-Token 临时令牌验证模块 默认实现类
- *
- * @author click33
- * @since 1.20.0
- */
-public class SaTempDefaultImpl implements SaTempInterface {
+import cn.dev33.satoken.temp.SaTempTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MySaTempTemplate extends SaTempTemplate {
 	
 }

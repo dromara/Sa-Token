@@ -120,6 +120,7 @@ public class SaTokenConsts {
 	/**
 	 * 常量 key 标记: 临时 Token 认证模块，默认的业务类型 
 	 */
+	@Deprecated
 	public static final String DEFAULT_TEMP_TOKEN_SERVICE = "record"; 
 
 

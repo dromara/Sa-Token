@@ -32,4 +32,7 @@ public interface SaTempJwtErrorCode {
 	/** Token已超时 */
 	int CODE_30303 = 30303;
 
+	/** jwt 模式不可以查询旧 Token 列表 */
+	int CODE_30304 = 30304;
+
 }

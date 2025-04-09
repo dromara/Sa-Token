@@ -16,6 +16,7 @@
 package cn.dev33.satoken.application;
 
 import cn.dev33.satoken.fun.SaRetFunction;
+import cn.dev33.satoken.fun.SaRetGenericFunction;
 
 /**
  * 对写值的一组方法封装
@@ -55,7 +56,7 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 	 * @return 值 
 	 */
 	@SuppressWarnings("unchecked")
-	default <T> T get(String key, SaRetFunction fun) {
+	default <T> T get(String key, SaRetGenericFunction<T> fun) {
 		Object value = get(key);
 		if(value == null) {
 			value = fun.run();

@@ -1,7 +1,7 @@
 # 端口
 server:
     port: 8081
-        
+
 # sa-token 配置
 sa-token: 
     # token 名称 (同时也是 cookie 名称)
@@ -16,10 +16,8 @@ sa-token:
     is-share: false
     # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
     token-style: uuid
-    # 是否输出操作日志 
-    is-log: true
-    # jwt 秘钥
-    jwt-secret-key: JfdDSgfCmPsDfmsAaQwnXk
+    # jwt秘钥 
+    jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk
     
 spring: 
     # redis配置 
@@ -32,8 +30,8 @@ spring:
         port: 6379
         # Redis服务器连接密码（默认为空）
         password: 
-        # 连接超时时间
-        timeout: 10s
+        # 连接超时时间（毫秒）
+        timeout: 10000ms
         lettuce:
             pool:
                 # 连接池最大连接数
@@ -44,8 +42,5 @@ spring:
                 max-idle: 10
                 # 连接池中的最小空闲连接
                 min-idle: 0
-        
-        
-        
         
         

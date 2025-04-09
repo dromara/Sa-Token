@@ -41,8 +41,7 @@ import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
-import cn.dev33.satoken.temp.SaTempDefaultImpl;
-import cn.dev33.satoken.temp.SaTempInterface;
+import cn.dev33.satoken.temp.SaTempTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.LinkedHashMap;
@@ -167,20 +166,20 @@ public class SaManager {
 	/**
 	 * 临时 token 认证模块
 	 */
-	private volatile static SaTempInterface saTemp;
-	public static void setSaTemp(SaTempInterface saTemp) {
-		SaManager.saTemp = saTemp;
-		SaTokenEventCenter.doRegisterComponent("SaTempInterface", saTemp);
+	private volatile static SaTempTemplate saTempTemplate;
+	public static void setSaTempTemplate(SaTempTemplate saTempTemplate) {
+		SaManager.saTempTemplate = saTempTemplate;
+		SaTokenEventCenter.doRegisterComponent("SaTempInterface", saTempTemplate);
 	}
-	public static SaTempInterface getSaTemp() {
-		if (saTemp == null) {
+	public static SaTempTemplate getSaTempTemplate() {
+		if (saTempTemplate == null) {
 			synchronized (SaManager.class) {
-				if (saTemp == null) {
-					SaManager.saTemp = new SaTempDefaultImpl();
+				if (saTempTemplate == null) {
+					SaManager.saTempTemplate = new SaTempTemplate();
 				}
 			}
 		}
-		return saTemp;
+		return saTempTemplate;
 	}
 
 	/**

@@ -42,7 +42,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
 import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
-import cn.dev33.satoken.temp.SaTempInterface;
+import cn.dev33.satoken.temp.SaTempTemplate;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
@@ -145,12 +145,12 @@ public class SaBeanInject {
 	/**
 	 * 注入临时令牌验证模块 Bean
 	 *
-	 * @param saTemp saTemp对象
+	 * @param saTempTemplate /
 	 */
-	@Condition(onBean = SaTempInterface.class)
+	@Condition(onBean = SaTempTemplate.class)
 	@Bean
-	public void setSaTemp(SaTempInterface saTemp) {
-		SaManager.setSaTemp(saTemp);
+	public void setSaTempTemplate(SaTempTemplate saTempTemplate) {
+		SaManager.setSaTempTemplate(saTempTemplate);
 	}
 
 	/**

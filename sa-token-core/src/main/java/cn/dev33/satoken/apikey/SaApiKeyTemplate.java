@@ -26,7 +26,7 @@ import cn.dev33.satoken.exception.ApiKeyException;
 import cn.dev33.satoken.exception.ApiKeyScopeException;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.session.SaSessionRawUtil;
+import cn.dev33.satoken.session.raw.SaRawSessionDelegator;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -42,9 +42,9 @@ import java.util.List;
 public class SaApiKeyTemplate {
 
 	/**
-	 * ApiKey 的 raw-session 类型
+	 * Raw Session 读写委托
 	 */
-	public static final String SESSION_TYPE = "apikey";
+	public SaRawSessionDelegator rawSessionDelegator = new SaRawSessionDelegator("apikey");
 
 	/**
 	 * 在 raw-session 中的保存索引列表使用的 key
@@ -132,10 +132,10 @@ public class SaApiKeyTemplate {
 			getSaTokenDao().setObject(saveKey, ak, ak.expiresIn());
 		}
 
-		// 调整索引
+		// 记录索引
 		if (SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
-			// 记录索引
-			SaSession session = SaSessionRawUtil.getSessionById(SESSION_TYPE, ak.getLoginId());
+			// 添加索引
+			SaSession session = rawSessionDelegator.getSessionById(ak.getLoginId());
 			ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
 			if(! apiKeyList.contains(ak.getApiKey())) {
 				apiKeyList.add(ak.getApiKey());
@@ -172,7 +172,7 @@ public class SaApiKeyTemplate {
 		// 删索引
 		if(SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
 			// RawSession 中不存在，提前退出
-			SaSession session = SaSessionRawUtil.getSessionById(SESSION_TYPE, ak.getLoginId(), false);
+			SaSession session = rawSessionDelegator.getSessionById(ak.getLoginId(), false);
 			if(session == null) {
 				return;
 			}
@@ -184,7 +184,7 @@ public class SaApiKeyTemplate {
 
 			// 如果只有一个 ApiKey，则整个 RawSession 删掉
 			if (apiKeyList.size() == 1) {
-				SaSessionRawUtil.deleteSessionById(SESSION_TYPE, ak.getLoginId());
+				rawSessionDelegator.deleteSessionById(ak.getLoginId());
 			} else {
 				// 否则移除此 ApiKey 并保存
 				apiKeyList.remove(apiKey);
@@ -205,7 +205,7 @@ public class SaApiKeyTemplate {
 		}
 
 		// RawSession 中不存在，提前退出
-		SaSession session = SaSessionRawUtil.getSessionById(SESSION_TYPE, loginId, false);
+		SaSession session = rawSessionDelegator.getSessionById(loginId, false);
 		if(session == null) {
 			return;
 		}
@@ -217,7 +217,7 @@ public class SaApiKeyTemplate {
 		}
 
 		// 再删索引
-		SaSessionRawUtil.deleteSessionById(SESSION_TYPE, loginId);
+		rawSessionDelegator.deleteSessionById(loginId);
 	}
 
 	// ------- 创建
@@ -382,7 +382,7 @@ public class SaApiKeyTemplate {
 
 		// 未提供则现场查询
 		if(session == null) {
-			session = SaSessionRawUtil.getSessionById(SESSION_TYPE, loginId, false);
+			session = rawSessionDelegator.getSessionById(loginId, false);
 			if(session == null) {
 				return;
 			}
@@ -399,6 +399,11 @@ public class SaApiKeyTemplate {
 			}
 			apiKeyNewList.add(apikey);
 			apiKeyModelList.add(ak);
+		}
+		// 如果队列里已无有效值，则删除该 session
+		if(apiKeyNewList.isEmpty()) {
+			rawSessionDelegator.deleteSessionById(loginId);
+			return;
 		}
 		session.set(API_KEY_LIST, apiKeyNewList);
 
@@ -433,7 +438,7 @@ public class SaApiKeyTemplate {
 
 		// 先查 RawSession
 		List<ApiKeyModel> apiKeyModelList = new ArrayList<>();
-		SaSession session = SaSessionRawUtil.getSessionById(SESSION_TYPE, loginId, false);
+		SaSession session = rawSessionDelegator.getSessionById(loginId, false);
 		if(session == null) {
 			return apiKeyModelList;
 		}

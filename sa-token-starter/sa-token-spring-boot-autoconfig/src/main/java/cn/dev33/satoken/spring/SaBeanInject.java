@@ -43,7 +43,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
 import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
-import cn.dev33.satoken.temp.SaTempInterface;
+import cn.dev33.satoken.temp.SaTempTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.PathMatcher;
@@ -139,11 +139,11 @@ public class SaBeanInject {
 	/**
 	 * 注入临时令牌验证模块 Bean
 	 * 
-	 * @param saTemp saTemp对象 
+	 * @param saTempTemplate /
 	 */
 	@Autowired(required = false)
-	public void setSaTemp(SaTempInterface saTemp) {
-		SaManager.setSaTemp(saTemp);
+	public void setSaTempTemplate(SaTempTemplate saTempTemplate) {
+		SaManager.setSaTempTemplate(saTempTemplate);
 	}
 
 	/**

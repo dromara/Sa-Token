@@ -22,10 +22,10 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
-		<!-- jwt -->
+        <!-- jwt -->
         <dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
         </dependency>
         <!-- 不加这个报 java.lang.NoClassDefFoundError: javax/xml/bind/DatatypeConverter -->
         <dependency>

@@ -17,6 +17,8 @@ package cn.dev33.satoken.temp;
 
 import cn.dev33.satoken.SaManager;
 
+import java.util.List;
+
 /**
  * Sa-Token 临时 token 验证模块 - 工具类
  *
@@ -35,108 +37,94 @@ public class SaTempUtil {
 	// -------- 创建
 
 	/**
-	 * 为指定 value 创建一个临时 Token
+	 * 为指定 value 创建一个临时 token (如果多条业务线均需要创建临时 token，请自行在 value 拼接不同前缀)
+	 *
 	 * @param value 指定值
-	 * @param timeout 有效期，单位：秒，-1 代表永久有效
-	 * @return 生成的token
+	 * @param timeout 有效时间，单位：秒，-1 代表永久有效
+	 * @return 生成的 token
 	 */
 	public static String createToken(Object value, long timeout) {
-		return SaManager.getSaTemp().createToken(value, timeout);
+		return SaManager.getSaTempTemplate().createToken(value, timeout);
 	}
 
 	/**
 	 * 为指定 业务标识、指定 value 创建一个 Token
-	 * @param service 业务标识
 	 * @param value 指定值
 	 * @param timeout 有效期，单位：秒，-1 代表永久有效
+	 * @param isRecordIndex 是否记录索引，以便后续使用 value 反查 token
 	 * @return 生成的token
 	 */
-	public static String createToken(String service, Object value, long timeout) {
-		return SaManager.getSaTemp().createToken(service, value, timeout);
+	public static String createToken(Object value, long timeout, boolean isRecordIndex) {
+		return SaManager.getSaTempTemplate().createToken(value, timeout, isRecordIndex);
 	}
 
 	// -------- 解析
 
 	/**
-	 * 解析 Token 获取 value 
-	 * @param token 指定 Token 
-	 * @return  / 
+	 * 解析 Token 获取 value
+	 * @param token 指定 Token
+	 * @return /
 	 */
 	public static Object parseToken(String token) {
-		return SaManager.getSaTemp().parseToken(token);
-	}
-
-	/**
-	 * 解析 Token 获取 value 
-	 * @param service 业务标识
-	 * @param token 指定 Token 
-	 * @return /
-	 */
-	public static Object parseToken(String service, String token) {
-		return SaManager.getSaTemp().parseToken(service, token);
-	}
-
-	/**
-	 * 解析 Token 获取 value，并转换为指定类型 
-	 * @param token 指定 Token 
-	 * @param cs 指定类型 
-	 * @param <T> 默认值的类型 
-	 * @return /
-	 */
-	public static<T> T parseToken(String token, Class<T> cs) {
-		return SaManager.getSaTemp().parseToken(token, cs);
+		return SaManager.getSaTempTemplate().parseToken(token);
 	}
 
 	/**
 	 * 解析 Token 获取 value，并转换为指定类型
-	 * @param service 业务标识
-	 * @param token 指定 Token 
-	 * @param cs 指定类型 
-	 * @param <T> 默认值的类型 
-	 * @return /
-	 */
-	public static<T> T parseToken(String service, String token, Class<T> cs) {
-		return SaManager.getSaTemp().parseToken(service, token, cs);
-	}
-	
-	/**
-	 * 获取指定 Token 的剩余有效期，单位：秒 
-	 * <p> 返回值 -1 代表永久，-2 代表token无效 
+	 *
 	 * @param token 指定 Token
+	 * @param cs 指定类型
+	 * @param <T> 默认值的类型
 	 * @return /
 	 */
-	public static long getTimeout(String token) {
-		return SaManager.getSaTemp().getTimeout(token);
+	public static<T> T parseToken(String token, Class<T> cs) {
+		return SaManager.getSaTempTemplate().parseToken(token, cs);
 	}
 
 	/**
-	 * 获取指定 业务标识、指定 Token 的剩余有效期，单位：秒
-	 * <p> 返回值 -1 代表永久，-2 代表token无效 
-	 * @param service 业务标识
+	 * 解析 token 获取 value，并裁剪指定前缀，然后转换为指定类型
+	 *
 	 * @param token 指定 Token
-	 * @return / 
+	 * @param cs 指定类型
+	 * @param <T> 默认值的类型
+	 * @return /
 	 */
-	public static long getTimeout(String service, String token) {
-		return SaManager.getSaTemp().getTimeout(service, token);
+	public static<T> T parseToken(String token, String cutPrefix, Class<T> cs) {
+		return SaManager.getSaTempTemplate().parseToken(token, cutPrefix, cs);
 	}
+
+	/**
+	 * 获取指定指定 Token 的剩余有效期，单位：秒
+	 * <p> 返回值 -1 代表永久，-2 代表 token 无效
+	 *
+	 * @param token /
+	 * @return /
+	 */
+	public static long getTimeout(String token) {
+		return SaManager.getSaTempTemplate().getTimeout(token);
+	}
+
 
 	// -------- 删除
 
 	/**
-	 * 删除一个 Token
-	 * @param token 指定 Token 
+	 * 删除一个 token
+	 * @param token 指定 Token
 	 */
 	public static void deleteToken(String token) {
-		SaManager.getSaTemp().deleteToken(token);
+		SaManager.getSaTempTemplate().deleteToken(token);
 	}
-	
+
+
+	// ------------------- 索引操作
+
 	/**
-	 * 删除一个 Token
-	 * @param service 业务标识
-	 * @param token 指定 Token 
+	 * 获取指定 value 的 temp-token 列表记录
+	 * @param value /
+	 * @return /
 	 */
-	public static void deleteToken(String service, String token) {
-		SaManager.getSaTemp().deleteToken(service, token);
+	public static List<String> getTempTokenList(Object value) {
+		return SaManager.getSaTempTemplate().getTempTokenList(value);
 	}
-	
+
 }

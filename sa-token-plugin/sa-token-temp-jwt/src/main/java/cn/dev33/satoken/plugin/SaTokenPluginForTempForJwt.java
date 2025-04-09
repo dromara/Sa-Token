@@ -16,7 +16,7 @@
 package cn.dev33.satoken.plugin;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.temp.jwt.SaTempForJwt;
+import cn.dev33.satoken.temp.jwt.SaTempTemplateForJwt;
 
 /**
  * SaToken 插件安装：临时 token 生成器 - Jwt 版
@@ -28,7 +28,7 @@ public class SaTokenPluginForTempForJwt implements SaTokenPlugin {
 
     @Override
     public void install() {
-        SaManager.setSaTemp(new SaTempForJwt());
+        SaManager.setSaTempTemplate(new SaTempTemplateForJwt());
     }
 
 }

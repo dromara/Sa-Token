@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.session;
+package cn.dev33.satoken.session.raw;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
@@ -24,9 +25,9 @@ import cn.dev33.satoken.strategy.SaStrategy;
  * @author click33
  * @since 1.42.0
  */
-public class SaSessionRawUtil {
+public class SaRawSessionUtil {
 
-	private SaSessionRawUtil() {
+	private SaRawSessionUtil() {
 	}
 
 	/**
