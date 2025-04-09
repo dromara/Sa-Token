@@ -1,4 +1,4 @@
-# 自定义 Token 前缀
+# Token 提交前缀
 
 ### 需求场景
 
@@ -18,7 +18,7 @@
 <!------------- tab:yaml 风格  ------------->
 ``` yaml
 sa-token: 
-	# token前缀
+	# 指定 token 提交时的前缀
 	token-prefix: Bearer
 ```
 <!------------- tab:properties 风格  ------------->
@@ -31,9 +31,27 @@ sa-token.token-prefix=Bearer
 
 此时 Sa-Token 便可在读取 Token 时裁剪掉 `Bearer`，成功获取`xxxx-xxxx-xxxx-xxxx`。
 
+注：**Token前缀  与 Token值 之间必须有一个空格**
 
-> [!WARNING| label:注意点] 
-> 1. Token前缀  与 Token值 之间必须有一个空格。
-> 2. 一旦配置了 Token前缀，则前端提交 `Token` 时，必须带有前缀，否则会导致框架无法读取 Token。
-> 3. 由于`Cookie`中无法存储空格字符，所以配置 Token 前缀后，Cookie 模式将会失效，此时只能将 Token 提交到`header`里进行传输。
+
+### Cookie 模式自动填充前缀
+
+由于`Cookie`中无法存储空格字符，所以配置 Token 前缀后，Cookie 模式将会失效，无法成功提交带有前缀的 token。
+
+如果需要在这种场景下仍然使用 Cookie 模式验证 token，可以使用 `cookieAutoFillPrefix` 配置项打开 Cookie 模式自动填充前缀：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+sa-token: 
+	# 指定 Cookie 模式下自动填充 token 提交前缀
+	cookie-auto-fill-prefix: true
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 指定 Cookie 模式下自动填充 token 提交前缀
+sa-token.cookie-auto-fill-prefix=true
+```
+<!---------------------------- tabs:end ---------------------------->
+
 

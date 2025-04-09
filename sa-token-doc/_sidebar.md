@@ -21,7 +21,7 @@
 	- [集成 Redis](/up/integ-redis)
 	- [前后端分离](/up/not-cookie) 
 	- [自定义 Token 风格](/up/token-style) 
-	- [自定义 Token 前缀](/up/token-prefix) 
+	- [Token 提交前缀](/up/token-prefix) 
 	- [同端互斥登录](/up/mutex-login) 
 	- [记住我模式](/up/remember-me)
 	- [登录参数 & 注销参数](/up/login-parameter) 

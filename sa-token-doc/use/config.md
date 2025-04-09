@@ -142,7 +142,7 @@ public class SaTokenConfigure {
 | tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录），[详解](/use/config?id=配置项详解：tokenSessionCheckLogin)		|
 | autoRenew				| Boolean	| true		| 是否打开自动续签 （如果此值为true，框架会在每次直接或间接调用 `getLoginId()` 时进行一次过期检查与续签操作），[参考：token有效期详解](/fun/token-timeout)		|
 | tokenPrefix			| String	| null		| token前缀，例如填写 `Bearer` 实际传参 `satoken: Bearer xxxx-xxxx-xxxx-xxxx` 	[参考：自定义Token前缀](/up/token-prefix) 			|
-| cookieAutoFillPrefix	| Boolean	| false		| cookie 模式是否自动填充 token 前缀				|
+| cookieAutoFillPrefix	| Boolean	| false		| cookie 模式是否自动填充 token 提交前缀				|
 | isPrint				| Boolean	| true		| 是否在初始化配置时打印版本字符画													|
 | isLog					| Boolean	| false		| 是否打印操作日志																	|
 | logLevel				| String	| trace		| 日志等级（trace、debug、info、warn、error、fatal），此值与 logLevelInt 联动				|
