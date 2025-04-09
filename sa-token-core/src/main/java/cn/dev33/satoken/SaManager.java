@@ -169,7 +169,7 @@ public class SaManager {
 	private volatile static SaTempTemplate saTempTemplate;
 	public static void setSaTempTemplate(SaTempTemplate saTempTemplate) {
 		SaManager.saTempTemplate = saTempTemplate;
-		SaTokenEventCenter.doRegisterComponent("SaTempInterface", saTempTemplate);
+		SaTokenEventCenter.doRegisterComponent("SaTempTemplate", saTempTemplate);
 	}
 	public static SaTempTemplate getSaTempTemplate() {
 		if (saTempTemplate == null) {

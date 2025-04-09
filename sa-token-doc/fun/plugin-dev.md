@@ -36,26 +36,27 @@ SaStrategy.instance.createToken = (loginId, loginType) -> {
 
 ### 方式2：更改全局组件实现
 
-你可以找到不符合你需求的组件，重新定义一个实现类，以 临时令牌认证 模块为例，你需要自定义 `SaTempInterface` 的实现类：
+你可以找到不符合你需求的组件，重新定义一个子类，以 临时令牌认证 模块为例，你需要自定义 `SaTempTemplate` 的子类：
 
 ``` java
 /**
- * 临时认证模块 自定义实现 
+ * 临时认证模块 自定义子类实现 
  */
-public class MySaTemp implements SaTempInterface {
+@Component
+public class MySaTempTemplate extends SaTempTemplate {
 
-	@Override
-	public String createToken(Object value, long timeout) {
-		System.out.println("------- 自定义一些逻辑 createToken ");
-		return SaTempInterface.super.createToken(value, timeout);
-	}
-	
-	@Override
-	public Object parseToken(String token) {
-		System.out.println("------- 自定义一些逻辑 parseToken ");
-		return SaTempInterface.super.parseToken(token);
-	}
-	
+    @Override
+    public String createToken(Object value, long timeout, boolean isRecordIndex) {
+        System.out.println("------- 自定义一些逻辑 createToken ");
+        return super.createToken(value, timeout, isRecordIndex);
+    }
+
+    @Override
+    public Object parseToken(String token) {
+        System.out.println("------- 自定义一些逻辑 parseToken ");
+        return super.parseToken(token);
+    }
+
 }
 ```
 
@@ -83,7 +84,7 @@ SaTokenContext 是对接不同框架的上下文接口，篇幅限制，可参�
 
 ``` java
 @Component
-public class MySaTemp implements SaTempInterface {
+public class MySaTempTemplate extends SaTempTemplate {
 	// ... 
 }
 ```
@@ -108,7 +109,7 @@ public void rewriteSaStrategy() {
 public static void main(String[] args) {
 	// 示例：手动替换 Sa-Token 内部组件
 	// Sa-Token 大部分全局组件都定义在 SaManager 之上，参考：https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/SaManager.java 
-	SaManager.setSaTemp(new MySaTemp());
+	SaManager.setSaTempTemplate(new MySaTempTemplate());
 	
 	// 示例：手动重写 Sa-Token 全局策略
 	SaStrategy.instance.createToken = (loginId, loginType) -> {

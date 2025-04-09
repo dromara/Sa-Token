@@ -108,7 +108,7 @@ public class SaTempTemplate {
 				"Temp Token",
 				SaManager.getConfig().getMaxTryTimes(),
 				() -> randomTempToken(value),
-				_apiKey -> parseToken(_apiKey) == null
+				_apiKey -> _getValue(_apiKey) == null
 		);
 	}
 
