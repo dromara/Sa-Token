@@ -17,6 +17,7 @@ package cn.dev33.satoken.temp;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.raw.SaRawSessionDelegator;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -73,7 +74,7 @@ public class SaTempTemplate {
 		String tempToken = createTempTokenValue(value);
 
 		// 持久化映射关系
-		_saveToken(tempToken, value, timeout);
+		saveToken(tempToken, value, timeout);
 
 		// 记录索引
 		if(isRecordIndex) {
@@ -84,6 +85,17 @@ public class SaTempTemplate {
 
 		// 返回
 		return tempToken;
+	}
+
+	/**
+	 * 保存 token
+	 * @param token /
+	 * @param value /
+	 * @param timeout /
+	 */
+	public void saveToken(String token, Object value, long timeout) {
+		String key = splicingTempTokenSaveKey(token);
+		SaManager.getSaTokenDao().setObject(key, value, timeout);
 	}
 
 	/**
@@ -135,6 +147,11 @@ public class SaTempTemplate {
 
 	/**
 	 * 解析 token 获取 value，并裁剪指定前缀，然后转换为指定类型
+	 * <h2>
+	 *     请注意此方法在旧版本（<= v1.41.0） 时的三个参数为：service, token, class <br/>
+	 *     新版本三个参数为：token, cutPrefix, class <br/>
+	 *     请注意其中的逻辑变化
+	 * </h2>
 	 *
 	 * @param token 指定 Token
 	 * @param cs 指定类型
@@ -151,6 +168,7 @@ public class SaTempTemplate {
 		}
 
 		// 如果符合前缀则裁剪并返回，如果不符合前缀则返回 null
+		checkCutPrefixLength(cutPrefix);
 		String str = SaFoxUtil.valueToString(value);
 		if(str.startsWith(cutPrefix)) {
 			return SaFoxUtil.getValueByType(str.substring(cutPrefix.length()), cs);
@@ -297,10 +315,6 @@ public class SaTempTemplate {
 		String key = splicingTempTokenSaveKey(token);
 		return SaManager.getSaTokenDao().getObject(key);
 	}
-	protected void _saveToken(String token, Object value, long timeout) {
-		String key = splicingTempTokenSaveKey(token);
-		SaManager.getSaTokenDao().setObject(key, value, timeout);
-	}
 	protected void _deleteToken(String token) {
 		String key = splicingTempTokenSaveKey(token);
 		SaManager.getSaTokenDao().deleteObject(key);
@@ -313,6 +327,16 @@ public class SaTempTemplate {
 
 
 	// -------- 其它
+
+	/**
+	 * 检查裁剪前缀长度
+	 * @param cutPrefix /
+	 */
+	protected static void checkCutPrefixLength(String cutPrefix) {
+		if(cutPrefix.length() >= 32) {
+			throw new SaTokenException("裁剪前缀长度必须小于 32 位");
+		}
+	}
 
 	/**
 	 * 过期时间转 ttl (秒) 获取最大 ttl 值

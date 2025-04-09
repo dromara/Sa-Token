@@ -58,6 +58,16 @@ public class SaTempUtil {
 		return SaManager.getSaTempTemplate().createToken(value, timeout, isRecordIndex);
 	}
 
+	/**
+	 * 保存 token
+	 * @param token /
+	 * @param value /
+	 * @param timeout /
+	 */
+	public static void saveToken(String token, Object value, long timeout) {
+		SaManager.getSaTempTemplate().saveToken(token, value, timeout);
+	}
+
 	// -------- 解析
 
 	/**
@@ -83,6 +93,11 @@ public class SaTempUtil {
 
 	/**
 	 * 解析 token 获取 value，并裁剪指定前缀，然后转换为指定类型
+	 * <h2>
+	 *     请注意此方法在旧版本（<= v1.41.0） 时的三个参数为：service, token, class <br/>
+	 *     新版本三个参数为：token, cutPrefix, class <br/>
+	 *     请注意其中的逻辑变化
+	 * </h2>
 	 *
 	 * @param token 指定 Token
 	 * @param cs 指定类型
