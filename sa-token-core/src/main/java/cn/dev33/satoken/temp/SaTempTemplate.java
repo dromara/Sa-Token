@@ -38,14 +38,40 @@ import java.util.*;
 public class SaTempTemplate {
 
 	/**
+	 *默认命名空间
+	 */
+	public static final String DEFAULT_NAMESPACE = "temp-token";
+
+	/**
+	 * 命名空间
+	 */
+	public String namespace;
+
+	/**
 	 * Raw Session 读写委托
 	 */
-	public SaRawSessionDelegator rawSessionDelegator = new SaRawSessionDelegator("temp-token");
+	public SaRawSessionDelegator rawSessionDelegator;
 
 	/**
 	 * 在 raw-session 中的保存索引列表使用的 key
 	 */
 	public static final String TEMP_TOKEN_MAP = "__HD_TEMP_TOKEN_MAP";
+
+	public SaTempTemplate(){
+		this(DEFAULT_NAMESPACE);
+	}
+
+	/**
+	 * 实例化
+	 * @param namespace 命名空间，用于多实例隔离
+	 */
+	public SaTempTemplate(String namespace){
+		if(SaFoxUtil.isEmpty(namespace)) {
+			throw new SaTokenException("namespace 不能为空");
+		}
+		this.namespace = namespace;
+		this.rawSessionDelegator = new SaRawSessionDelegator(namespace);
+	}
 
 
 	// -------- 创建
@@ -393,7 +419,7 @@ public class SaTempTemplate {
 	 * @return key
 	 */
 	public String splicingTempTokenSaveKey(String token) {
-		return SaManager.getConfig().getTokenName() + ":temp-token:" + token;
+		return SaManager.getConfig().getTokenName() + ":" + namespace + ":" + token;
 	}
 
 	/**
