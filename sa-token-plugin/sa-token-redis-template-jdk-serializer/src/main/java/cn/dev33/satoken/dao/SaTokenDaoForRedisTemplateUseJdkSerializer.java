@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author click33
  * @since 1.34.0
  */
-public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRedisTemplate {
+public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRedisTemplate implements SaTokenDao {
 
 	/**
 	 * Object 读写专用

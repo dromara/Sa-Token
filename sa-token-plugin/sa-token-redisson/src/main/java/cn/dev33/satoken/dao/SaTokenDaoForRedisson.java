@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  * @author noear
  * @since 1.34.0
  */
-public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString {
+public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, SaTokenDao {
 
 	/**
 	 * redisson 客户端

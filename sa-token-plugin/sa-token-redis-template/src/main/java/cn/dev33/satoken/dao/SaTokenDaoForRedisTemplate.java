@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * @author click33
  * @since 1.34.0
  */
-public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowString {
+public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowString, SaTokenDao {
 
 	public StringRedisTemplate stringRedisTemplate;
 
