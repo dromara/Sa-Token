@@ -247,6 +247,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-demo-solon-reisson           // [示例] Sa-Token 集成 Solon、Reisson
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
 		├── sa-token-demo-springboot3-redis       // [示例] Sa-Token 整合 SpringBoot3 整合 Redis 
+		├── sa-token-demo-springboot-low-version  // [示例] Sa-Token 整合 SpringBoot2 低版本
 		├── sa-token-demo-springboot-redis        // [示例] Sa-Token 整合 SpringBoot 整合 Redis 
 		├── sa-token-demo-springboot-redisson     // [示例] Sa-Token 整合 SpringBoot 整合 redisson 
 		├── sa-token-demo-ssm                     // [示例] 在 SSM 中使用 Sa-Token 

@@ -8,6 +8,8 @@ cd sa-token-demo
 
 cd sa-token-demo-alone-redis & call mvn clean & cd ..
 cd sa-token-demo-alone-redis-cluster & call mvn clean & cd ..
+cd sa-token-demo-apikey & call mvn clean & cd ..
+cd sa-token-demo-async & call mvn clean & cd ..
 cd sa-token-demo-beetl & call mvn clean & cd ..
 cd sa-token-demo-bom-import & call mvn clean & cd ..
 cd sa-token-demo-case & call mvn clean & cd ..
@@ -22,6 +24,7 @@ cd sa-token-demo-solon & call mvn clean & cd ..
 cd sa-token-demo-solon-redisson & call mvn clean & cd ..
 cd sa-token-demo-springboot & call mvn clean & cd ..
 cd sa-token-demo-springboot3-redis & call mvn clean & cd ..
+cd sa-token-demo-springboot-low-version & call mvn clean & cd ..
 cd sa-token-demo-springboot-redis & call mvn clean & cd ..
 cd sa-token-demo-springboot-redisson & call mvn clean & cd ..
 cd sa-token-demo-ssm & call mvn clean & cd ..
