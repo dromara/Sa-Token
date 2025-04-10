@@ -32,7 +32,7 @@ import java.util.Set;
  * @since 1.34.0
  * @since 1.41.0
  */
-public class SaTokenDaoForRedisx implements SaTokenDaoByObjectFollowString {
+public class SaTokenDaoForRedisx implements SaTokenDaoByObjectFollowString, SaTokenDao {
     private final RedisBucket redisBucket;
 
     public SaTokenDaoForRedisx(Properties props) {

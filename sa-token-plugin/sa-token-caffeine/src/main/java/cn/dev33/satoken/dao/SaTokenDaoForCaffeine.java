@@ -28,7 +28,7 @@ import java.util.List;
  * @author click33
  * @since 1.41.0
  */
-public class SaTokenDaoForCaffeine implements SaTokenDaoByStringFollowObject {
+public class SaTokenDaoForCaffeine implements SaTokenDaoByStringFollowObject, SaTokenDao {
 
 	public SaTimedCache timedCache = new SaTimedCache(
 			new SaMapPackageForCaffeine<>(),
