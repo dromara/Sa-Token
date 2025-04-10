@@ -18,6 +18,7 @@ package cn.dev33.satoken.solon;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.solon.integration.SaFirewallCheckFilterForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenContextFilterForSolon;
+import cn.dev33.satoken.solon.integration.SaTokenCorsFilterForSolon;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.noear.solon.annotation.Bean;
@@ -64,6 +65,16 @@ public class SaBeanRegister {
 	@Bean(index = SaTokenConsts.SA_TOKEN_CONTEXT_FILTER_ORDER)
 	public Filter saTokenContextFilterForSolon() {
 		return new SaTokenContextFilterForSolon();
+	}
+
+	/**
+	 * CORS 跨域策略过滤器
+	 *
+	 * @return /
+	 */
+	@Bean(index = SaTokenConsts.CORS_FILTER_ORDER)
+	public Filter saTokenCorsFilterForSolon() {
+		return new SaTokenCorsFilterForSolon();
 	}
 
 	/**

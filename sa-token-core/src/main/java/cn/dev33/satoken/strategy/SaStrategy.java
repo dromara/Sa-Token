@@ -184,6 +184,13 @@ public final class SaStrategy {
 		throw new NotImplException("未实现具体路由匹配策略").setCode(SaErrorCode.CODE_12401);
 	};
 
+	/**
+	 * CORS 策略处理函数
+	 */
+	public SaCorsHandleFunction corsHandle = (req, res, sto) -> {
+
+	};
+
 
 	// ----------------------- 重写策略 set连缀风格
 

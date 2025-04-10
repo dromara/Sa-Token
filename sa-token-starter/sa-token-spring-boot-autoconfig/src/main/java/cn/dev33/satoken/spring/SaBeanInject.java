@@ -22,6 +22,7 @@ import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoader;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.fun.strategy.SaCorsHandleFunction;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.httpauth.digest.SaHttpDigestTemplate;
@@ -42,6 +43,7 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.strategy.hooks.SaFirewallCheckHook;
 import cn.dev33.satoken.temp.SaTempTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -266,6 +268,16 @@ public class SaBeanInject {
 		for (SaFirewallCheckHook hook : hooks) {
 			SaFirewallStrategy.instance.registerHook(hook);
 		}
+	}
+
+	/**
+	 * 注入CORS 策略处理函数
+	 *
+	 * @param corsHandle /
+	 */
+	@Autowired(required = false)
+	public void setCorsHandle(SaCorsHandleFunction corsHandle) {
+		SaStrategy.instance.corsHandle = corsHandle;
 	}
 
 	/**

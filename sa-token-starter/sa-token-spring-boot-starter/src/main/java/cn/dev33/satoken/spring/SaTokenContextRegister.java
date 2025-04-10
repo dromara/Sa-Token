@@ -17,6 +17,7 @@ package cn.dev33.satoken.spring;
 
 import cn.dev33.satoken.filter.SaFirewallCheckFilterForServlet;
 import cn.dev33.satoken.filter.SaTokenContextFilterForServlet;
+import cn.dev33.satoken.filter.SaTokenCorsFilterForServlet;
 import cn.dev33.satoken.spring.pathmatch.SaPatternsRequestConditionHolder;
 import cn.dev33.satoken.strategy.SaStrategy;
 import org.springframework.context.annotation.Bean;
@@ -44,6 +45,16 @@ public class SaTokenContextRegister {
 	@Bean
 	public SaTokenContextFilterForServlet saTokenContextFilterForServlet() {
 		return new SaTokenContextFilterForServlet();
+	}
+
+	/**
+	 * CORS 跨域策略过滤器
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaTokenCorsFilterForServlet saTokenCorsFilterForServlet() {
+		return new SaTokenCorsFilterForServlet();
 	}
 
 	/**
