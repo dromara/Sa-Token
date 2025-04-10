@@ -1,7 +1,7 @@
 package com.pj.mock;
 
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @author click33
  * @since 2025/4/4
  */
-@Service
+@Component
 public class SaApiKeyMockMapper {
 
     // 添加模拟测试数据

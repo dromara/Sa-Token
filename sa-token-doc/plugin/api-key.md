@@ -223,7 +223,7 @@ public class SaApiKeyDataLoaderImpl implements SaApiKeyDataLoader {
 
     // 根据 apiKey 从数据库获取 ApiKeyModel 信息 （实现此方法无需为数据做缓存处理，框架内部已包含缓存逻辑）
     @Override
-    public ApiKeyModel getApiKeyModelFromDatabase(String apiKey) {
+    public ApiKeyModel getApiKeyModelFromDatabase(String namespace, String apiKey) {
         return apiKeyMapper.getApiKeyModel(apiKey);
     }
 
@@ -240,7 +240,28 @@ public class SaApiKeyDataLoaderImpl implements SaApiKeyDataLoader {
 
 
 
+### 6、多账号模式使用 
 
+如果系统有多套账号表，比如 Admin 和 User，只需要指定不同的命名空间即可：
+
+例如 User 账号的 API Key，我们使用原生 `SaApiKeyUtil` 进行创建与校验。
+
+对于 Admin 账号的 API Key，我们则新建一个 `SaApiKeyTemplate` 实例
+
+``` java
+// 新建 Admin 账号的 apiKeyTemplate 对象，命名空间为 "admin-apikey"
+public static SaApiKeyTemplate adminApiKeyTemplate = new SaApiKeyTemplate("admin-apikey");
+
+// 创建一个新的 ApiKey，并返回
+@RequestMapping("/createApiKey")
+public SaResult createApiKey() {
+	ApiKeyModel akModel = adminApiKeyTemplate.createApiKeyModel(StpUtil.getLoginId()).setTitle("test");
+	adminApiKeyTemplate.saveApiKey(akModel);
+	return SaResult.data(akModel);
+}
+
+// ...校验、查询等操作，均使用新创建的 adminApiKeyTemplate，而非原生 `SaApiKeyUtil`
+```
 
 
 

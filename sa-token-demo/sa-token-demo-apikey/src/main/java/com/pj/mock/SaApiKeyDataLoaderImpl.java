@@ -24,7 +24,7 @@ public class SaApiKeyDataLoaderImpl implements SaApiKeyDataLoader {
 
     // 根据 apiKey 从数据库获取 ApiKeyModel 信息 （实现此方法无需为数据做缓存处理，框架内部已包含缓存逻辑）
     @Override
-    public ApiKeyModel getApiKeyModelFromDatabase(String apiKey) {
+    public ApiKeyModel getApiKeyModelFromDatabase(String namespace, String apiKey) {
         return apiKeyMockMapper.getApiKeyModel(apiKey);
     }
 

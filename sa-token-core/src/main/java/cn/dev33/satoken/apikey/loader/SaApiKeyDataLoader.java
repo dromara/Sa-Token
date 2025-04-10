@@ -38,10 +38,11 @@ public interface SaApiKeyDataLoader {
     /**
      * 根据 apiKey 从数据库获取 ApiKeyModel 信息 （实现此方法无需为数据做缓存处理，框架内部已包含缓存逻辑）
      *
+     * @param namespace /
      * @param apiKey /
      * @return ApiKeyModel
      */
-    default ApiKeyModel getApiKeyModelFromDatabase(String apiKey) {
+    default ApiKeyModel getApiKeyModelFromDatabase(String namespace, String apiKey) {
         return null;
     }
 

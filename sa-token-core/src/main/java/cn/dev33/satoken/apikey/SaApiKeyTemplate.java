@@ -42,19 +42,40 @@ import java.util.List;
 public class SaApiKeyTemplate {
 
 	/**
+	 *默认命名空间
+	 */
+	public static final String DEFAULT_NAMESPACE = "apikey";
+
+	/**
+	 * 命名空间
+	 */
+	public String namespace;
+
+	/**
 	 * Raw Session 读写委托
 	 */
-	public SaRawSessionDelegator rawSessionDelegator = new SaRawSessionDelegator("apikey");
+	public SaRawSessionDelegator rawSessionDelegator;
 
 	/**
 	 * 在 raw-session 中的保存索引列表使用的 key
 	 */
 	public static final String API_KEY_LIST = "__HD_API_KEY_LIST";
 
+	public SaApiKeyTemplate(){
+		this(DEFAULT_NAMESPACE);
+	}
+
 	/**
-	 * 网络传输时的参数名称 (字母全小写)
+	 * 实例化
+	 * @param namespace 命名空间，用于多实例隔离
 	 */
-	public static final String API_KEY_PARAMETER_NAME = "apikey";
+	public SaApiKeyTemplate(String namespace){
+		if(SaFoxUtil.isEmpty(namespace)) {
+			throw new ApiKeyException("namespace 不能为空");
+		}
+		this.namespace = namespace;
+		this.rawSessionDelegator = new SaRawSessionDelegator(namespace);
+	}
 
 	// ------------------- ApiKey
 
@@ -73,7 +94,7 @@ public class SaApiKeyTemplate {
 	 * @return /
 	 */
 	public ApiKeyModel getApiKeyModelFromDatabase(String apiKey) {
-		return SaManager.getSaApiKeyDataLoader().getApiKeyModelFromDatabase(apiKey);
+		return SaManager.getSaApiKeyDataLoader().getApiKeyModelFromDatabase(namespace, apiKey);
 	}
 
 	/**
@@ -133,7 +154,7 @@ public class SaApiKeyTemplate {
 		}
 
 		// 记录索引
-		if (SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
+		if (getIsRecordIndex()) {
 			// 添加索引
 			SaSession session = rawSessionDelegator.getSessionById(ak.getLoginId());
 			ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
@@ -170,7 +191,7 @@ public class SaApiKeyTemplate {
 		getSaTokenDao().deleteObject(splicingApiKeySaveKey(apiKey));
 
 		// 删索引
-		if(SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
+		if(getIsRecordIndex()) {
 			// RawSession 中不存在，提前退出
 			SaSession session = rawSessionDelegator.getSessionById(ak.getLoginId(), false);
 			if(session == null) {
@@ -199,7 +220,7 @@ public class SaApiKeyTemplate {
 	 */
 	public void deleteApiKeyByLoginId(Object loginId) {
 		// 先判断是否开启索引
-		if(! SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
+		if(! getIsRecordIndex()) {
 			SaManager.getLog().warn("当前 API Key 模块未开启索引记录功能，无法执行 deleteApiKeyByLoginId 操作");
 			return;
 		}
@@ -375,7 +396,7 @@ public class SaApiKeyTemplate {
 	 */
 	public void adjustIndex(Object loginId, SaSession session) {
 		// 先判断是否开启索引
-		if(! SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
+		if(! getIsRecordIndex()) {
 			SaManager.getLog().warn("当前 API Key 模块未开启索引记录功能，无法执行 adjustIndex 操作");
 			return;
 		}
@@ -431,7 +452,7 @@ public class SaApiKeyTemplate {
 	 */
 	public List<ApiKeyModel> getApiKeyList(Object loginId) {
 		// 先判断是否开启索引
-		if(! SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
+		if(! getIsRecordIndex()) {
 			SaManager.getLog().warn("当前 API Key 模块未开启索引记录功能，无法执行 getApiKeyList 操作");
 			return new ArrayList<>();
 		}
@@ -464,13 +485,13 @@ public class SaApiKeyTemplate {
 	public String readApiKeyValue(SaRequest request) {
 
 		// 优先从请求参数中获取
-		String apiKey = request.getParam(API_KEY_PARAMETER_NAME);
+		String apiKey = request.getParam(namespace);
 		if(SaFoxUtil.isNotEmpty(apiKey)) {
 			return apiKey;
 		}
 
 		// 然后请求头
-		apiKey = request.getHeader(API_KEY_PARAMETER_NAME);
+		apiKey = request.getHeader(namespace);
 		if(SaFoxUtil.isNotEmpty(apiKey)) {
 			return apiKey;
 		}
@@ -496,7 +517,6 @@ public class SaApiKeyTemplate {
 	}
 
 
-
 	// ------------------- 拼接key
 
 	/**
@@ -505,7 +525,7 @@ public class SaApiKeyTemplate {
 	 * @return key
 	 */
 	public String splicingApiKeySaveKey(String apiKey) {
-		return getSaTokenConfig().getTokenName() + ":apikey:" + apiKey;
+		return getSaTokenConfig().getTokenName() + ":" + namespace + ":" + apiKey;
 	}
 
 
@@ -530,13 +550,10 @@ public class SaApiKeyTemplate {
 	}
 
 	/**
-	 * 校验是否开启了索引记录功能，如果未开启则抛出异常
+	 * 是否保存索引信息
 	 */
-//	protected void checkOpenRecordIndex() {
-//		if(! SaManager.getSaApiKeyDataLoader().getIsRecordIndex()) {
-//			SaManager.getLog().warn("当前 API Key 模块未开启索引记录功能，无法执行此操作");
-//			throw new ApiKeyException("当前 API Key 模块未开启索引记录功能，无法执行此操作").setCode(SaErrorCode.CODE_12305);
-//		}
-//	}
+	public boolean getIsRecordIndex() {
+		return SaManager.getSaApiKeyDataLoader().getIsRecordIndex();
+	}
 
 }
