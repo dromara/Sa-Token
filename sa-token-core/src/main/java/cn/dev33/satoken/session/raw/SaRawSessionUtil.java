@@ -66,7 +66,6 @@ public class SaRawSessionUtil {
 		if (session == null && isCreate) {
 			session = SaStrategy.instance.createSession.apply(sessionId);
 			session.setType(type);
-			// TODO 过期时间
 			SaManager.getSaTokenDao().setSession(session, SaManager.getConfig().getTimeout());
 		}
 		return session;

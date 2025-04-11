@@ -1,6 +1,52 @@
 # 更新日志 
 
 
+### v1.42.0 @2025-4-11
+
+- core: 
+	- 新增: 新增 `API Key` 模块。   **[重要]**
+	- 新增: 新增 `TOTP` 实现。   **[重要]**
+	- 重构：重构 `TempToken` 模块，新增 value 反查 token 机制。   **[重要]**
+	- 升级: 重构升级 `SaTokenContext` 上下文读写策略。   **[重要]**
+	- 新增: 新增 Mock 上下文模块。   **[重要]**
+	- 删除: 删除二级上下文模块。
+	- 新增: 新增异步场景使用 demo。   **[重要]**
+	- 新增: 新增 `Base32` 编码工具类。
+	- 新增：新增 `CORS` 跨域策略处理函数，提供不同架构下统一的跨域处理方案。
+	- 新增：`renewTimeout` 续期方法增加 token 终端信息有效性校验。
+	- 新增: 全局配置项 `cookieAutoFillPrefix`：cookie 模式是否自动填充 token 前缀。
+	- 新增: 全局配置项 `rightNowCreateTokenSession`：在登录时，是否立即创建对应的 `Token-Session`。
+	- 优化：优化 `Token-Session` 获取算法，减少缓存读取次数。
+	- 新增：`SaLoginParameter` 支持配置 `SaCookieConfig`，以配置 Cookie 相关参数。
+	- 修改：防火墙校验过滤器的注册顺序 修改为 -102。
+	- 新增：防火墙 `hook` 注册新增 `registerHookToFirst`、`registerHookToSecond` 方法，以便更灵活的控制 hook 顺序。
+- 插件：
+	- 新增: `sa-token-quick-login` 插件支持 `Http Basic` 方式通过认证。
+- 单元测试：
+	- 补全：补全 `Temp Token` 模块单元测试。
+- 文档：
+	- 补全：补全赞助者名单。
+	- 修复：修复 `Thymeleaf` 集成文档不正确的依赖示例说明。
+	- 修复：修复 `unionid` 章节错误描述。
+	- 优化：采用更细致的描述优化SSO模式三单点注销步骤。
+	- 新增：登录认证文档添加 Cookie 查看步骤演示图。
+	- 新增：多账号模式新增注意点：运行时不可更改 `LoginType`。
+	- 新增: 多账号模式QA：在一个接口里获取是哪个体系的账号正在登录。
+	- 新增：新增QA：解决低版本 `SpringBoot (<2.2.0)` 引入 Sa-Token 报错的问题。
+	- 新增：新增QA：前后端一体项目下，在拦截未登录进入登录页面时，如何登录完成后原路返回？
+	- 新增：新增QA：Sa-Token 集成 Redis 如何集群？
+	- 新增：新增QA：如何自定义框架读取 token 的方式？
+	- 新增：新增QA：修改 `hosts` 文件无效可能原因排查。
+	- 新增：新增QA：如何防止 CSRF 攻击。
+	- 新增: “异步 & Mock 上下文” 章节。
+	- 升级：升级“自定义 SaTokenContext 指南”章节文档。
+
+
+
+
+
+
+
 ### v1.41.0 @2025-3-21
 更新导读：[视频](https://www.bilibili.com/video/BV1aNo4YCEM1/)、[文字版](https://juejin.cn/post/7484191942358499368)
 
