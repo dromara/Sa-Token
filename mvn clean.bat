@@ -27,6 +27,7 @@ cd sa-token-demo-springboot3-redis & call mvn clean & cd ..
 cd sa-token-demo-springboot-low-version & call mvn clean & cd ..
 cd sa-token-demo-springboot-redis & call mvn clean & cd ..
 cd sa-token-demo-springboot-redisson & call mvn clean & cd ..
+cd sa-token-demo-sse & call mvn clean & cd ..
 cd sa-token-demo-ssm & call mvn clean & cd ..
 cd sa-token-demo-test & call mvn clean & cd ..
 cd sa-token-demo-thymeleaf & call mvn clean & cd ..

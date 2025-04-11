@@ -38,6 +38,7 @@
 		<module>sa-token-demo-springboot-low-version</module>
 		<module>sa-token-demo-springboot-redis</module>
 		<module>sa-token-demo-springboot-redisson</module>
+		<module>sa-token-demo-sse</module>
 		<module>sa-token-demo-ssm</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso-server</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso1-client</module>
