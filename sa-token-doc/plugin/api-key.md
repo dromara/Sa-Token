@@ -4,6 +4,10 @@ API Key（应用程序编程接口密钥） 是一种用于身份验证和授权
 
 以上是官话，简单理解：API Key 是一种接口调用密钥，类似于会话 token ，但比会话 token 具有更灵活的权限控制。
 
+示例仓库地址：[sa-token-demo-apikey](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-apikey) 🔗
+
+![sa-api-key](https://oss.dev33.cn/sa-token/doc/plugin/sa-api-key.png 's-w-sh')
+
 
 ### 1、需求场景
 
