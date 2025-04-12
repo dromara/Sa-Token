@@ -9,57 +9,11 @@
 
 ## 一、常见报错
 
-### Q：报错：非 web 上下文无法获取 HttpServletRequest。
 
-报错原因解析：
+### Q：报错：SaTokenContext 上下文尚未初始化
 
-Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUtil.getLoginId()` 获取当前用户Id，这个方法第一步需要先从前端提交的参数里获取 token 值，
-当你在 main 方法里调用这个 API 时，由于 main 方法本质上不是一个 Controller 请求，所以框架无法完成 *“从前端提交的参数里获取 token 值”* 这一步骤，框架就只能抛出异常。
+报这个错说明你在异步上下文/响应式上下文里调用了 Sa-Token 的同步 API，解决方案参考：[异步 & Mock 上下文](/fun/async--mock)
 
-按照此标准，Sa-Token 的 API 可粗浅的分为两大类：
-- 必须在 Web 上下文中才能调用的 API，例如：`StpUtil.getLoginId()`、`StpUtil.getTokenValue()` 等等。
-- 无需 Web 上下文也能调用的 API，例如：`StpUtil.getLoginType()`、`SaManager.getConfig()` 等等。
-
-此处无法逐一列出到底哪些 API 属于 *“必须依赖 Web 上下文的 API”*，因为太多了，你只需要记住关键的一点：
-**当一个 API 执行的代码需要先从前端请求中获取一些数据时，这个 API 就属于 *“必须依赖 Web 上下文的 API”*。**
-
-如果你的代码报这个错，说明你在不是 Web 上下文中的地方，调用了 *“必须依赖 Web 上下文的 API”*，请排查：
-
-1. 是否在 main 方法中调用了 *“必须依赖 Web 上下文的 API”*。
-2. 是否在带有 `@Async` 注解的方法中调用了 *“必须依赖 Web 上下文的 API”*。
-3. 是否在一些丢失 web 上下文的子线程中调用了 *“必须依赖 Web 上下文的 API”*，例如 `MyBatis-Plus` 的 `insertFill` 自动填充。
-4. 是否在一些非 Http 协议的 RPC 框架中（例如 Dubbo）调用了 *“必须依赖 Web 上下文的 API”*。
-5. 是否在 SpringBoot 启动初始化的方法中调用了 *“必须依赖 Web 上下文的 API”*，例如 `@PostConstruct` 修饰的方法。
-6. 是否在定时任务中调用了 *“必须依赖 Web 上下文的 API”*。
-
-
-### Q：报错：未能获取有效的上下文处理器。
-
-报错原因解析：
-
-在 sa-token-core 核心包中，Sa-Token 底层不能确认最终运行的 web 容器，所以抽象了 `SaTokenContext` 接口，对接不同容器时需要注入不同的实现，
-通常这个注入工作都是框架自动完成的，你只需要按照文档开始部分集成相应的依赖即可。例如：
-
-- 你要在 Springboot2.x 中使用 Sa-Token，就引入：`sa-token-spring-boot-starter`。
-- 你要在 Springboot3.x 中使用 Sa-Token，就引入：`sa-token-spring-boot3-starter`。
-- 你要在基于 webflux 架构的网关中使用 Sa-Token，就引入：`sa-token-reactor-spring-boot-starter`。
-- 你要在 Solon 中使用 Sa-Token，就引入：`sa-token-solon-plugin`。
-- 等等等等……
-
-如果你的代码报 *“未能获取有效的上下文处理器”* 这个错，大概率是因为你没有正确引入所需的包，导致框架没有注入正确的 `SaTokenContext` 上下文实现，请排查：
-
-1. 如果你的项目是微服务项目，请直接参考：[微服务-依赖引入说明](/micro/import-intro)，如果是单体项目，请往下看：
-2. 请判断你的项目是 SpringMVC 环境还是 WebFlux 环境：
-	- 如果是 SpringMVC 环境就引入 `sa-token-spring-boot-starter` 依赖，参考：[在SpringBoot环境集成](/start/example)
-	- 如果是 WebFlux 环境就引入 `sa-token-reactor-spring-boot-starter` 依赖，参考：[在WebFlux环境集成](/start/webflux-example)
-3. 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖：
-	- 如果引入了`spring-boot-starter-web`就是 SpringMVC 环境。
-	- 如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。
-	- 什么？你说你两个都引入了？那你的项目能启动成功吗？
-4. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了 SaReactorFilter 全局过滤器，在 WebFlux 下这一步是必须的**，具体还是请参考上面的 [ 在WebFlux环境集成 ] 章节。
-5. 需要仔细注意，如果你使用的是 Springboot3.x 版本，就不要错误的引入 `sa-token-spring-boot-starter`，需要引入的是 `sa-token-spring-boot3-starter`，不然就会导致框架报错。
-6. 如果你的项目开启了全局懒加载(spring.main.lazy-initialization=true)后，能启动项目，但是访问接口报异常，请直接参考：[Q：开启了全局懒加载后，能启动项目，但是访问接口报未能获取有效的上下文处理器](/more/common-questions?id=q：开启了全局懒加载后，能启动项目，但是访问接口报未能获取有效的上下文处理器)
-7. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
 
 ### Q：报错：NotLoginException：xxx
 
@@ -615,6 +569,58 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 
 
 
+
+### Q：报错：非 web 上下文无法获取 HttpServletRequest。
+
+报错原因解析：
+
+Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUtil.getLoginId()` 获取当前用户Id，这个方法第一步需要先从前端提交的参数里获取 token 值，
+当你在 main 方法里调用这个 API 时，由于 main 方法本质上不是一个 Controller 请求，所以框架无法完成 *“从前端提交的参数里获取 token 值”* 这一步骤，框架就只能抛出异常。
+
+按照此标准，Sa-Token 的 API 可粗浅的分为两大类：
+- 必须在 Web 上下文中才能调用的 API，例如：`StpUtil.getLoginId()`、`StpUtil.getTokenValue()` 等等。
+- 无需 Web 上下文也能调用的 API，例如：`StpUtil.getLoginType()`、`SaManager.getConfig()` 等等。
+
+此处无法逐一列出到底哪些 API 属于 *“必须依赖 Web 上下文的 API”*，因为太多了，你只需要记住关键的一点：
+**当一个 API 执行的代码需要先从前端请求中获取一些数据时，这个 API 就属于 *“必须依赖 Web 上下文的 API”*。**
+
+如果你的代码报这个错，说明你在不是 Web 上下文中的地方，调用了 *“必须依赖 Web 上下文的 API”*，请排查：
+
+1. 是否在 main 方法中调用了 *“必须依赖 Web 上下文的 API”*。
+2. 是否在带有 `@Async` 注解的方法中调用了 *“必须依赖 Web 上下文的 API”*。
+3. 是否在一些丢失 web 上下文的子线程中调用了 *“必须依赖 Web 上下文的 API”*，例如 `MyBatis-Plus` 的 `insertFill` 自动填充。
+4. 是否在一些非 Http 协议的 RPC 框架中（例如 Dubbo）调用了 *“必须依赖 Web 上下文的 API”*。
+5. 是否在 SpringBoot 启动初始化的方法中调用了 *“必须依赖 Web 上下文的 API”*，例如 `@PostConstruct` 修饰的方法。
+6. 是否在定时任务中调用了 *“必须依赖 Web 上下文的 API”*。
+
+
+### Q：报错：未能获取有效的上下文处理器。
+
+报错原因解析：
+
+在 sa-token-core 核心包中，Sa-Token 底层不能确认最终运行的 web 容器，所以抽象了 `SaTokenContext` 接口，对接不同容器时需要注入不同的实现，
+通常这个注入工作都是框架自动完成的，你只需要按照文档开始部分集成相应的依赖即可。例如：
+
+- 你要在 Springboot2.x 中使用 Sa-Token，就引入：`sa-token-spring-boot-starter`。
+- 你要在 Springboot3.x 中使用 Sa-Token，就引入：`sa-token-spring-boot3-starter`。
+- 你要在基于 webflux 架构的网关中使用 Sa-Token，就引入：`sa-token-reactor-spring-boot-starter`。
+- 你要在 Solon 中使用 Sa-Token，就引入：`sa-token-solon-plugin`。
+- 等等等等……
+
+如果你的代码报 *“未能获取有效的上下文处理器”* 这个错，大概率是因为你没有正确引入所需的包，导致框架没有注入正确的 `SaTokenContext` 上下文实现，请排查：
+
+1. 如果你的项目是微服务项目，请直接参考：[微服务-依赖引入说明](/micro/import-intro)，如果是单体项目，请往下看：
+2. 请判断你的项目是 SpringMVC 环境还是 WebFlux 环境：
+	- 如果是 SpringMVC 环境就引入 `sa-token-spring-boot-starter` 依赖，参考：[在SpringBoot环境集成](/start/example)
+	- 如果是 WebFlux 环境就引入 `sa-token-reactor-spring-boot-starter` 依赖，参考：[在WebFlux环境集成](/start/webflux-example)
+3. 如果你还无法分辨你是哪个环境，就看你的 pom.xml 依赖：
+	- 如果引入了`spring-boot-starter-web`就是 SpringMVC 环境。
+	- 如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。
+	- 什么？你说你两个都引入了？那你的项目能启动成功吗？
+4. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了 SaReactorFilter 全局过滤器，在 WebFlux 下这一步是必须的**，具体还是请参考上面的 [ 在WebFlux环境集成 ] 章节。
+5. 需要仔细注意，如果你使用的是 Springboot3.x 版本，就不要错误的引入 `sa-token-spring-boot-starter`，需要引入的是 `sa-token-spring-boot3-starter`，不然就会导致框架报错。
+6. 如果你的项目开启了全局懒加载(spring.main.lazy-initialization=true)后，能启动项目，但是访问接口报异常，请直接参考：[Q：开启了全局懒加载后，能启动项目，但是访问接口报未能获取有效的上下文处理器](/more/common-questions?id=q：开启了全局懒加载后，能启动项目，但是访问接口报未能获取有效的上下文处理器)
+7. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
 
 
 

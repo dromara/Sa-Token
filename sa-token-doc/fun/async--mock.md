@@ -1,5 +1,7 @@
 # 异步 & Mock 上下文
 
+### 异步上下文
+
 有一些方法（例如`StpUtil.isLogin()`）只可以在同步的 Web 上下文中才可以调用，如果在异步上下文中调用则会抛出异常：
 
 ``` text
@@ -44,3 +46,57 @@ public SaResult isLogin2() {
 
 更多使用姿势请参考仓库示例：[Async-TestController.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-async/src/main/java/com/pj/test/TestController.java)
 
+
+### 响应式上下文
+
+在 WebFlux / Spring Cloud 等响应式环境下调用 Sa-Token 的同步 API 也有可能发生上下文异常：
+
+```
+cn.dev33.satoken.exception.SaTokenContextException: SaTokenContext 上下文尚未初始化
+	at cn.dev33.satoken.context.SaTokenContextForThreadLocalStaff.getModelBox(SaTokenContextForThreadLocalStaff.java:73) ~[classes/:na]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	*__checkpoint ⇢ cn.dev33.satoken.reactor.filter.SaReactorFilter [DefaultWebFilterChain]
+	*__checkpoint ⇢ cn.dev33.satoken.reactor.filter.SaFirewallCheckFilterForReactor [DefaultWebFilterChain]
+	*__checkpoint ⇢ cn.dev33.satoken.reactor.filter.SaTokenCorsFilterForReactor [DefaultWebFilterChain]
+	*__checkpoint ⇢ cn.dev33.satoken.reactor.filter.SaTokenContextFilterForReactor [DefaultWebFilterChain]
+	*__checkpoint ⇢ HTTP GET "/test/isLogin" [ExceptionHandlingWebHandler]
+```
+
+如果是在自定义 Filter 中报的这个错，需要你在调用 Sa-Token 的同步 API 之前手动 set 一下上下文：
+``` java
+// 自定义过滤器
+@Component
+public class MyFilter implements WebFilter {
+	@Override
+	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+		try {
+			// 先 set 上下文，再调用 Sa-Token 同步 API，并在 finally 里清除上下文
+			SaReactorSyncHolder.setContext(exchange);
+			System.out.println(StpUtil.isLogin());
+		}
+		finally {
+			SaReactorSyncHolder.clearContext();
+		}
+		return chain.filter(exchange);
+	}
+}
+```
+
+参考：[MyFilter.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-webflux-springboot3/src/main/java/com/pj/satoken/MyFilter.java)
+
+在 Controller 里同理：
+
+``` java
+@RequestMapping("isLogin2")
+public SaResult isLogin2(ServerWebExchange exchange) {
+	SaResult res = SaReactorSyncHolder.setContext(exchange, ()->{
+		System.out.println("是否登录：" + StpUtil.isLogin());
+		return SaResult.data(StpUtil.getTokenInfo());
+	});
+	return SaResult.data(res);
+}
+```
+
+更多示例请参考：
+[TestController.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-webflux-springboot3/src/main/java/com/pj/test/TestController.java)
