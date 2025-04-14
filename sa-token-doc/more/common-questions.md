@@ -465,17 +465,13 @@ spring:
 步骤2：再改 Sa-Token 的：
 ``` java
 /**
- * 自定义 SaTokenContext 实现类，重写 matchPath 方法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
+ * 重写路由匹配算法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
  */
-@Primary
-@Component
-public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForSpringInJakartaServlet {
-
-    @Override
-    public boolean matchPath(String pattern, String path) {
-        return SaPatternsRequestConditionHolder.match(pattern, path);
-    }
-
+@PostConstruct
+public void customRouteMatcher() {
+	SaStrategy.instance.routeMatcher = (pattern, path) -> {
+		return SaPatternsRequestConditionHolder.match(pattern, path);
+	};
 }
 ```
 
@@ -492,17 +488,13 @@ java.lang.NoClassDefFoundError: org/springframework/web/servlet/mvc/condition/Pa
 
 ``` java
 /**
- * 自定义 SaTokenContext 实现类，重写 matchPath 方法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
+ * 重写路由匹配算法，切换为 ant_path_matcher 模式，使之可以支持 `**` 之后再出现内容
  */
-@Primary
-@Component
-public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForSpringReactor {
-
-    @Override
-    public boolean matchPath(String pattern, String path) {
-        return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
-    }
-
+@PostConstruct
+public void customRouteMatcher() {
+	SaStrategy.instance.routeMatcher = (pattern, path) -> {
+		return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
+	};
 }
 ```
 
@@ -525,15 +517,13 @@ java.lang.NoSuchFieldError: defaultInstance
 
 ``` java
 /**
- * 自定义 SaTokenContext 实现类，重写 matchPath 方法，将 PathPatternParser.defaultInstance 改为 SaPathMatcherHolder.getPathMatcher()
+ * 重写路由匹配算法，将 PathPatternParser.defaultInstance 改为 SaPathMatcherHolder.getPathMatcher()
  */
-@Primary
-@Component
-public class SaTokenContextByPatternsRequestCondition extends SaTokenContextForSpringReactor {
-    @Override
-    public boolean matchPath(String pattern, String path) {
-        return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
-    }
+@PostConstruct
+public void customRouteMatcher() {
+	SaStrategy.instance.routeMatcher = (pattern, path) -> {
+		return SaPathMatcherHolder.getPathMatcher().match(pattern, path);
+	};
 }
 ```
 
