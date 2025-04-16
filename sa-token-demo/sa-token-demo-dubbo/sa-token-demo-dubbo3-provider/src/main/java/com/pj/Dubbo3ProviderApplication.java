@@ -14,9 +14,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Dubbo3ProviderApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Dubbo3ProviderApplication.class, args);
 		System.out.println("Dubbo3ProviderApplication 启动成功");
 	}
-	
+
 }
