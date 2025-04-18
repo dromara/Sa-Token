@@ -68,8 +68,11 @@ public class SaSessionForSnack3Customized extends SaSession {
 		if (value instanceof ONode) {
 			ONode jo = (ONode) value;
 			return jo.toObject(cs);
+		} else if (value instanceof String) {
+			return ONode.deserialize((String) value, cs);
 		} else {
-			return ONode.deserialize(value.toString(), cs);
+			//有可能是 Map
+			return ONode.load(value).toObject(cs);
 		}
 	}
 }
