@@ -145,7 +145,10 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 
 
 ### SSO 单点登录
+
 Sa-Token SSO 分为三种模式，解决同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离……等不同架构下的 SSO 接入问题：
+
+![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-sso--white.png)
 
 | 系统架构						| 采用模式	| 简介						|  文档链接	|
 | :--------						| :--------	| :--------					| :--------	|
