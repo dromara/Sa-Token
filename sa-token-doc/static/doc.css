@@ -448,10 +448,13 @@ body {
 .ad-close:hover{cursor: pointer; text-decoration: underline; color: red;}
 
 .main-box .top-ad-box{font-size: 12px;}
-.main-box .top-ad-box a{border-bottom: 0px;}
+.main-box .top-ad-box a{border-bottom: 0px; text-decoration: none;}
 .main-box .top-ad-box a:hover{border-bottom: 0px;}
-.main-box .top-ad-box a img{border: 0px #ddd solid; width: 100%; /* max-height: 80px; */ border-radius: 2px; transition: all 0.2s;}
+.main-box .top-ad-box a img{border: 1px #eee solid; width: 100%; /* max-height: 80px; */ border-radius: 2px; transition: all 0.1s !important;}
 .main-box .top-ad-box a img:hover{box-shadow: 0 0 20px #ddd;}
+
+.main-box .top-ad-box2 a img{ width: 48.5%; margin-bottom: 2px; }
+.main-box .top-ad-box2 a:nth-child(2n+1) img{margin-right: 2px; }
 
 
 /* 帮助按钮 */
