@@ -186,7 +186,9 @@ sa.copr=true
 
 ##### 打包步骤
 
-首先放上懒人链接：[sa-quick-dist.jar](https://gitee.com/dromara/sa-token/attach_files/695353/download) ，不想手动操作的同学可以直接点此链接下载打包后的jar文件 
+<!-- [sa-quick-dist.jar](https://gitee.com/dromara/sa-token/attach_files/695353/download) -->
+
+首先放上懒人链接：[sa-quick-dist.jar](https://pan.quark.cn/s/04fd34a24928)，不想手动操作的同学可以直接点此链接下载打包后的jar文件 
 
 1、首先将 `sa-token-demo-quick-login` 模块添加到顶级父模块的`<modules>`节点中
 

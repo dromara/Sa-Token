@@ -461,6 +461,8 @@ body {
 
 /* ew-wa */
 .ew-wa{ margin-top: 14px; line-height: 18px; color: #aaa; }
+.ew-wa a{ margin-right: 5px; text-decoration: none; color: #8693A7; }
+.ew-wa a:hover{text-decoration: underline; color: #44f; }
 
 /* 按钮发光动画 */
 /* .help-btn{animation: helpbtnanimation 3s infinite;}

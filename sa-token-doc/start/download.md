@@ -157,7 +157,8 @@ implementation 'cn.dev33:sa-token-core:${sa.top.version}'
 Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/doc.html#/start/maven-pull)
 
 ## jar包下载
-[点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar)
+<!-- [点击下载：sa-token-1.6.0.jar](https://oss.dev33.cn/sa-token/sa-token-1.6.0.jar) -->
+[点击下载：sa-token-1.6.0.jar](https://pan.quark.cn/s/85e4d75f500c)
 
 注：当前仅提供 `v1.6.0` 版本jar包下载，更多版本请前往 maven 中央仓库获取，[直达链接](https://search.maven.org/search?q=sa-token)
 
