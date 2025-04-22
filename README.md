@@ -21,7 +21,9 @@
 
 ### Sa-Token 介绍
 
-Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
+Sa-Token 是一个免费、开源的 轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
+
+![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-jss--tran.png)
 
 要在 SpringBoot 项目中使用 Sa-Token，你只需要在 pom.xml 中引入依赖：
 
@@ -38,7 +40,7 @@ Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心�
 
 
 <details>
-<summary><b>简单示例展示：（点击展开 / 折叠）</b></summary>
+<summary><b>简单示例展示：</b>（点击展开 / 折叠）</summary>
 
 Sa-Token 旨在以简单、优雅的方式完成系统的权限认证部分，以登录认证为例，你只需要：
 
@@ -90,13 +92,15 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 })).addPathPatterns("/**");
 ```
 
-当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
+**如果您曾经使用过 Shiro、SpringSecurity，在切换到 Sa-Token 后，您将体会到质的飞跃。**
+
+<!-- 当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！ -->
 
 </details>
 
 
 <details>
-<summary> <b>核心模块一览：（点击展开 / 折叠）</b> </summary>
+<summary> <b>核心模块一览：</b>（点击展开 / 折叠） </summary>
 
 - **登录认证** —— 单端登录、多端登录、同端互斥登录、七天内免登录。
 - **权限认证** —— 权限认证、角色认证、会话二级认证。
@@ -138,8 +142,6 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 
 </details>
 
-
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png)
 
 
 ### SSO 单点登录
