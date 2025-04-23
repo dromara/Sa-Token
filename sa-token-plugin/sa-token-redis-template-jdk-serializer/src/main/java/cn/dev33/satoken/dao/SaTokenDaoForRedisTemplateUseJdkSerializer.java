@@ -63,6 +63,18 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	}
 
 	/**
+	 * 获取 Object (指定反序列化类型)，如无返空
+	 *
+	 * @param key 键名称
+	 * @return object
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> T getObject(String key, Class<T> classType) {
+		return (T) objectRedisTemplate.opsForValue().get(key);
+	}
+
+	/**
 	 * 写入Object，并设定存活时间 (单位: 秒) 
 	 */
 	@Override
