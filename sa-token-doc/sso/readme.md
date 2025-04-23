@@ -28,6 +28,8 @@ Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO �
 2. 后端同Redis：就是指多个系统可以连接同一个Redis。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳： <a href="#/plugin/alone-redis" target="_blank">Alone独立Redis插件</a>。
 3. 如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）。
 
+![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-sso--white.png)
+
 
 ### Sa-Token-SSO 特性
 1. API 简单易用，文档介绍详细，且提供直接可用的集成示例。

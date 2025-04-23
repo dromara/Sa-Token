@@ -2,7 +2,7 @@
 	<img alt="logo" src="https://sa-token.cc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.42.0</h1>
-<h5 align="center">一个轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h5>
+<h5 align="center">开源、免费、轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h5>
 <p align="center" class="badge-box">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
@@ -27,6 +27,8 @@
 
 **Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**登录认证**、**权限认证**、**单点登录**、**OAuth2.0**、**分布式Session会话**、**微服务网关鉴权**
 等一系列权限相关问题。
+
+![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-jss--tran.png)
 
 Sa-Token 旨在以简单、优雅的方式完成系统的权限认证部分，以登录认证为例，你只需要：
 

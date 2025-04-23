@@ -124,6 +124,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .feature h2{font-size: 22px; color: #000; font-weight: 400;}
 .feature p{margin-top: 14px; font-size: 16px; color: #4e6e8e;}
 
+.sa-token-jss-img{ width: 100%; }
+
 /* 功能结构图介绍 */
 /* .sa-token-js-box{margin-bottom: 50px; transition: all 0.2s;}
 .sa-token-js-box img{max-width: 100%;}
