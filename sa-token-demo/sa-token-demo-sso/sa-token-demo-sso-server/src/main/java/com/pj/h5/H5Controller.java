@@ -21,7 +21,7 @@ public class H5Controller {
 	 * 获取 redirectUrl 
 	 */
 	@RequestMapping("/sso/getRedirectUrl")
-	public SaResult getRedirectUrl(String redirect, String mode, String client) {
+	public SaResult getRedirectUrl(String client, String redirect, String mode) {
 		// 未登录情况下，返回 code=401 
 		if(StpUtil.isLogin() == false) {
 			return SaResult.code(401);
@@ -30,7 +30,7 @@ public class H5Controller {
 		redirect = SaFoxUtil.decoderUrl(redirect);
 		if(SaSsoConsts.MODE_SIMPLE.equals(mode)) {
 			// 模式一 
-			SaSsoUtil.checkRedirectUrl(redirect);
+			SaSsoUtil.checkRedirectUrl(client, redirect);
 			return SaResult.data(redirect);
 		} else {
 			// 模式二或模式三

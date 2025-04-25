@@ -19,6 +19,14 @@ sa-token:
         # ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
         # 是否打开模式三 
         is-http: true
+
+        allow-anon-client: false
+        clients:
+            sso-client2:
+                client: sso-client2
+                allow-url: http://sa-sso-client1.com:9002/sso/login
+
+
     sign:
         # API 接口调用秘钥
         secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor

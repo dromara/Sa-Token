@@ -27,7 +27,9 @@ import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Sa-Token SSO 单点登录模块 配置类 （Server端）
@@ -83,9 +85,42 @@ public class SaSsoServerConfig implements Serializable {
     public int maxRegClient = 32;
 
     /**
+     * 是否允许匿名 Client 接入
+     */
+    public Boolean allowAnonClient = true;
+
+    /**
      * 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
      */
     public Boolean isCheckSign = true;
+
+    /**
+     * Client 信息配置列表
+     */
+    public Map<String, SaSsoClientModel> clients = new LinkedHashMap<>();
+
+
+    // 额外方法
+
+    /**
+     * 以数组形式写入允许的授权回调地址
+     * @param url 所有集合
+     * @return 对象自身
+     */
+    public SaSsoServerConfig setAllow(String ...url) {
+        this.setAllowUrl(SaFoxUtil.arrayJoin(url));
+        return this;
+    }
+
+    /**
+     * 添加一个应用
+     * @param client /
+     * @return 对象自身
+     */
+    public SaSsoServerConfig addClient(SaSsoClientModel client) {
+        this.clients.put(client.getClient(), client);
+        return this;
+    }
 
 
     // get set
@@ -245,12 +280,41 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * 以数组形式写入允许的授权回调地址
-     * @param url 所有集合
+     * 获取 是否允许匿名 Client 接入
+     *
+     * @return /
+     */
+    public Boolean getAllowAnonClient() {
+        return this.allowAnonClient;
+    }
+
+    /**
+     * 设置 是否允许匿名 Client 接入
+     *
+     * @param allowAnonClient /
+     */
+    public SaSsoServerConfig setAllowAnonClient(Boolean allowAnonClient) {
+        this.allowAnonClient = allowAnonClient;
+        return this;
+    }
+
+    /**
+     * 获取 Client 信息配置列表
+     *
+     * @return clients Client 信息配置列表
+     */
+    public Map<String, SaSsoClientModel> getClients() {
+        return this.clients;
+    }
+
+    /**
+     * 设置 Client 信息配置列表
+     *
+     * @param clients Client 信息配置列表
      * @return 对象自身
      */
-    public SaSsoServerConfig setAllow(String ...url) {
-        this.setAllowUrl(SaFoxUtil.arrayJoin(url));
+    public SaSsoServerConfig setClients(Map<String, SaSsoClientModel> clients) {
+        this.clients = clients;
         return this;
     }
 
@@ -266,6 +330,8 @@ public class SaSsoServerConfig implements Serializable {
                 + ", autoRenewTimeout=" + autoRenewTimeout
                 + ", maxRegClient=" + maxRegClient
                 + ", isCheckSign=" + isCheckSign
+                + ", allowAnonClient=" + allowAnonClient
+                + ", clients=" + clients
                 + "]";
     }
 
@@ -300,5 +366,77 @@ public class SaSsoServerConfig implements Serializable {
     public SendHttpFunction sendHttp = url -> {
         throw new SaSsoException("请配置 Http 请求处理器").setCode(SaSsoErrorCode.CODE_30010);
     };
+
+    /**
+     * 获取 SSO-Server端：未登录时返回的View
+     *
+     * @return notLoginView SSO-Server端：未登录时返回的View
+     */
+    public NotLoginViewFunction getNotLoginView() {
+        return this.notLoginView;
+    }
+
+    /**
+     * 设置 SSO-Server端：未登录时返回的View
+     *
+     * @param notLoginView SSO-Server端：未登录时返回的View
+     */
+    public void setNotLoginView(NotLoginViewFunction notLoginView) {
+        this.notLoginView = notLoginView;
+    }
+
+    /**
+     * 获取 SSO-Server端：登录函数
+     *
+     * @return doLoginHandle SSO-Server端：登录函数
+     */
+    public DoLoginHandleFunction getDoLoginHandle() {
+        return this.doLoginHandle;
+    }
+
+    /**
+     * 设置 SSO-Server端：登录函数
+     *
+     * @param doLoginHandle SSO-Server端：登录函数
+     */
+    public void setDoLoginHandle(DoLoginHandleFunction doLoginHandle) {
+        this.doLoginHandle = doLoginHandle;
+    }
+
+    /**
+     * 获取 SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+     *
+     * @return checkTicketAppendData SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+     */
+    public CheckTicketAppendDataFunction getCheckTicketAppendData() {
+        return this.checkTicketAppendData;
+    }
+
+    /**
+     * 设置 SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+     *
+     * @param checkTicketAppendData SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+     */
+    public void setCheckTicketAppendData(CheckTicketAppendDataFunction checkTicketAppendData) {
+        this.checkTicketAppendData = checkTicketAppendData;
+    }
+
+    /**
+     * 获取 SSO-Server端：发送Http请求的处理函数
+     *
+     * @return sendHttp SSO-Server端：发送Http请求的处理函数
+     */
+    public SendHttpFunction getSendHttp() {
+        return this.sendHttp;
+    }
+
+    /**
+     * 设置 SSO-Server端：发送Http请求的处理函数
+     *
+     * @param sendHttp SSO-Server端：发送Http请求的处理函数
+     */
+    public void setSendHttp(SendHttpFunction sendHttp) {
+        this.sendHttp = sendHttp;
+    }
 
 }

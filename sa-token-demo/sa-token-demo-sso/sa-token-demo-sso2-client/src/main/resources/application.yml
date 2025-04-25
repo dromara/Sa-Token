@@ -10,6 +10,9 @@ sa-token:
         server-url: http://sa-sso-server.com:9000
         # 在 sso-server 端前后端分离时打开这个（上面的不要注释，auth-url 配置项和 server-url 要同时存在）
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
+
+        client: sso-client2
+
     sign:
         # API 接口调用秘钥
         secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor

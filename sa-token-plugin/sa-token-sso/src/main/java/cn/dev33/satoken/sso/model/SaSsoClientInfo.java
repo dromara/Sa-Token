@@ -21,12 +21,12 @@ import cn.dev33.satoken.sso.util.SaSsoConsts;
 import java.io.Serializable;
 
 /**
- * Sa-Token SSO Model
+ * Sa-Token SSO 应用信息
  *
  * @author click33
  * @since 1.38.0
  */
-public class SaSsoClientModel implements Serializable {
+public class SaSsoClientInfo implements Serializable {
 
     private static final long serialVersionUID = 1406115065849845073L;
 
@@ -65,13 +65,13 @@ public class SaSsoClientModel implements Serializable {
      */
     public int index;
 
-    public SaSsoClientModel() {
+    public SaSsoClientInfo() {
     }
 
     /**
      * 模式三构建
      */
-    public SaSsoClientModel(String client, String sloCallbackUrl, int index) {
+    public SaSsoClientInfo(String client, String sloCallbackUrl, int index) {
         this.mode = SaSsoConsts.SSO_MODE_3;
         this.client = client;
         this.sloCallbackUrl = sloCallbackUrl;
@@ -95,7 +95,7 @@ public class SaSsoClientModel implements Serializable {
      * @param mode 此 client 登录模式（1=模式一，2=模式二，3=模式三）
      * @return /
      */
-    public SaSsoClientModel setMode(int mode) {
+    public SaSsoClientInfo setMode(int mode) {
         this.mode = mode;
         return this;
     }
@@ -115,7 +115,7 @@ public class SaSsoClientModel implements Serializable {
      * @param client 客户端标识
      * @return /
      */
-    public SaSsoClientModel setClient(String client) {
+    public SaSsoClientInfo setClient(String client) {
         this.client = client;
         return this;
     }
@@ -155,7 +155,7 @@ public class SaSsoClientModel implements Serializable {
      * @param sloCallbackUrl 单点注销回调url
      * @return /
      */
-    public SaSsoClientModel setSloCallbackUrl(String sloCallbackUrl) {
+    public SaSsoClientInfo setSloCallbackUrl(String sloCallbackUrl) {
         this.sloCallbackUrl = sloCallbackUrl;
         return this;
     }
@@ -175,7 +175,7 @@ public class SaSsoClientModel implements Serializable {
      * @param regTime 此 client 注册信息的时间，13位时间戳
      * @return /
      */
-    public SaSsoClientModel setRegTime(long regTime) {
+    public SaSsoClientInfo setRegTime(long regTime) {
         this.regTime = regTime;
         return this;
     }
@@ -195,7 +195,7 @@ public class SaSsoClientModel implements Serializable {
      * @param index 此账号有记录以来为第几次登录，默认从0开始递增
      * @return /
      */
-    public SaSsoClientModel setIndex(int index) {
+    public SaSsoClientInfo setIndex(int index) {
         this.index = index;
         return this;
     }

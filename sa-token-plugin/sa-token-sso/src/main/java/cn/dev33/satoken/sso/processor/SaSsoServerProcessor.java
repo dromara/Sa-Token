@@ -105,8 +105,9 @@ public class SaSsoServerProcessor {
 			return cfg.notLoginView.get();
 		}
 		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
-		String mode = req.getParam(paramName.mode, "");
+		String mode = req.getParam(paramName.mode, SaSsoConsts.MODE_TICKET);
 		String redirect = req.getParam(paramName.redirect);
+		String client = req.getParam(paramName.client);
 
 		// 方式1：直接重定向回Client端 (mode=simple)
 		if(mode.equals(SaSsoConsts.MODE_SIMPLE)) {
@@ -118,16 +119,15 @@ public class SaSsoServerProcessor {
 				}
 				return res.redirect(cfg.getHomeRoute());
 			}
-			ssoServerTemplate.checkRedirectUrl(redirect);
+			ssoServerTemplate.checkRedirectUrl(client, redirect);
 			return res.redirect(redirect);
 		} else {
-			// 方式2：带着ticket参数重定向回Client端 (mode=ticket)
+			// 方式2：带着 ticket 参数重定向回Client端 (mode=ticket)
 
 			// 校验提供的client是否为非法字符
-			String client = req.getParam(paramName.client);
-			if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
-				throw new SaSsoException("无效 client 标识：" + client).setCode(SaSsoErrorCode.CODE_30013);
-			}
+			//			if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+			//				throw new SaSsoException("无效 client 标识：" + client).setCode(SaSsoErrorCode.CODE_30013);
+			//			}
 
 			// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
 			if(SaFoxUtil.isEmpty(redirect)) {

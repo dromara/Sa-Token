@@ -95,20 +95,24 @@ public class SaSsoUtil {
 		return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, client);
 	}
 
-	/**
-	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) 
-	 * @return see note 
-	 */
-	public static String getAllowUrl() {
-		return SaSsoServerProcessor.instance.ssoServerTemplate.getAllowUrl();
-	}
+//	/**
+//	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+//	 *
+//	 * @param client 应用标识
+//	 * @return /
+//	 */
+//	public static String getAllowUrl(String client) {
+//		return SaSsoServerProcessor.instance.ssoServerTemplate.getAllowUrl(client);
+//	}
 
 	/**
 	 * 校验重定向url合法性
-	 * @param url 下放ticket的url地址 
+	 *
+	 * @param client 应用标识
+	 * @param url 下放ticket的url地址
 	 */
-	public static void checkRedirectUrl(String url) {
-		SaSsoServerProcessor.instance.ssoServerTemplate.checkRedirectUrl(url);
+	public static void checkRedirectUrl(String client, String url) {
+		SaSsoServerProcessor.instance.ssoServerTemplate.checkRedirectUrl(client, url);
 	}
 
 	
