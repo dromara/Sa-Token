@@ -151,6 +151,18 @@ public class SaTotpTemplate {
 		return StrFormatter.format("otpauth://totp/{}?secret={}", account, secretKey);
 	}
 
+	/**
+	 * 生成谷歌认证器的扫码字符串 (形如：otpauth://totp/{issuer}:{account}?secret={secretKey}&issuer={issuer})
+	 *
+	 * @param account  账户名
+	 * @param secretKey  TOTP 秘钥
+	 * @param issuer  签发者
+	 * @return /
+	 */
+	public String generateGoogleSecretKey(String account, String issuer, String secretKey) {
+		return StrFormatter.format("otpauth://totp/{}:{}?secret={}&issuer={}", issuer, account, secretKey, issuer);
+	}
+
 	protected String _generateTOTP(String secretKey, long time) {
 		// Base32解码密钥
 		byte[] keyBytes = SaBase32Util.decodeStringToBytes(secretKey);
