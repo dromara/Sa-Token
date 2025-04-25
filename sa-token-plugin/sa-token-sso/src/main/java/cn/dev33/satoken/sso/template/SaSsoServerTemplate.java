@@ -16,7 +16,10 @@
 package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaSignConfig;
+import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientModel;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
@@ -260,12 +263,8 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      */
     public SaSsoClientModel getClientNotNull(String client) {
         if(SaFoxUtil.isEmpty(client)) {
-            SaSsoServerConfig serverConfig = getServerConfig();
-            if(serverConfig.getAllowAnonClient()) {
-                SaSsoClientModel scm = new SaSsoClientModel();
-                scm.setAllowUrl(serverConfig.getAllowUrl());
-                scm.setIsSlo(serverConfig.getIsSlo());
-                return scm;
+            if(getServerConfig().getAllowAnonClient()) {
+                return getAnonClient();
             } else {
                 throw new SaSsoException("client 标识不可为空");
             }
@@ -276,6 +275,23 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             }
             return scm;
         }
+    }
+
+    /**
+     * 获取匿名 client 信息
+     *
+     * @return /
+     */
+    public SaSsoClientModel getAnonClient() {
+        SaSsoServerConfig serverConfig = getServerConfig();
+        SaSsoClientModel scm = new SaSsoClientModel();
+        scm.setAllowUrl(serverConfig.getAllowUrl());
+        scm.setIsSlo(serverConfig.getIsSlo());
+        scm.setSecretKey(serverConfig.getSecretKey());
+        if(SaFoxUtil.isEmpty(scm.getSecretKey())) {
+            scm.setSecretKey(SaManager.getSaSignTemplate().getSignConfigOrGlobal().getSecretKey());
+        }
+        return scm;
     }
 
     /**
@@ -558,6 +574,39 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     // ---------------------- 重构 ----------------------
 
 
+    /**
+     * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除
+     * @param ticket Ticket码
+     * @param client client 标识
+     */
+    public void checkTicketVerifySign(SaRequest req, String ticket, String client) {
+        SaSignTemplate signTemplate = getSignTemplate(client);
+        signTemplate.checkRequest(req, paramName.client, paramName.ticket, paramName.ssoLogoutCall);
+    }
+
+
+    /**
+     * 获取底层使用的 API 签名对象
+     * @param client 指定客户端标识，填 null 代表获取默认的
+     * @return /
+     */
+    @Override
+    public SaSignTemplate getSignTemplate(String client) {
+        SaSignConfig signConfig = SaManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
+        SaSsoClientModel clientModel = getClientNotNull(client);
+
+        // 使用 secretKey 的优先级：client 单独配置 > SSO 模块全局配置 > sign 模块默认配置
+        String secretKey = clientModel.getSecretKey();
+        if (SaFoxUtil.isEmpty(secretKey) && SaFoxUtil.isNotEmpty(client)) {
+            secretKey = getServerConfig().getSecretKey();
+        }
+        if(SaFoxUtil.isEmpty(secretKey)) {
+            secretKey = signConfig.getSecretKey();
+        }
+        signConfig.setSecretKey(secretKey);
+
+        return new SaSignTemplate(signConfig);
+    }
 
 
 

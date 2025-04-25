@@ -15,7 +15,7 @@ sa-token:
 
     sign:
         # API 接口调用秘钥
-        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        secret-key: SSO-C2-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
     
     # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
     alone-redis: 

@@ -95,6 +95,11 @@ public class SaSsoServerConfig implements Serializable {
     public Boolean isCheckSign = true;
 
     /**
+     * API 调用签名秘钥
+     */
+    public String secretKey;
+
+    /**
      * Client 信息配置列表
      */
     public Map<String, SaSsoClientModel> clients = new LinkedHashMap<>();
@@ -299,6 +304,26 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
+     * 获取 API 调用签名秘钥
+     *
+     * @return /
+     */
+    public String getSecretKey() {
+        return this.secretKey;
+    }
+
+    /**
+     * 设置 API 调用签名秘钥
+     *
+     * @param secretKey /
+     * @return 对象自身
+     */
+    public SaSsoServerConfig setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+        return this;
+    }
+
+    /**
      * 获取 Client 信息配置列表
      *
      * @return clients Client 信息配置列表
@@ -331,6 +356,7 @@ public class SaSsoServerConfig implements Serializable {
                 + ", maxRegClient=" + maxRegClient
                 + ", isCheckSign=" + isCheckSign
                 + ", allowAnonClient=" + allowAnonClient
+                + ", secretKey=" + secretKey
                 + ", clients=" + clients
                 + "]";
     }

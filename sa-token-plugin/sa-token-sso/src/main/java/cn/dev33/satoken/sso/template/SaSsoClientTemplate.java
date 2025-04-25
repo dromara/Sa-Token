@@ -16,6 +16,8 @@
 package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaSignConfig;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
@@ -189,6 +191,25 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
         // 拼接
         return SaFoxUtil.joinParam(url, signParamsStr);
+    }
+
+    /**
+     * 获取底层使用的 API 签名对象
+     * @param client 指定客户端标识，填 null 代表获取默认的
+     * @return /
+     */
+    @Override
+    public SaSignTemplate getSignTemplate(String client) {
+        SaSignConfig signConfig = SaManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
+
+        // 使用 secretKey 的优先级：SSO 模块全局配置 > sign 模块默认配置
+        String secretKey = getClientConfig().getSecretKey();
+        if(SaFoxUtil.isEmpty(secretKey)) {
+            secretKey = signConfig.getSecretKey();
+        }
+        signConfig.setSecretKey(secretKey);
+
+        return new SaSignTemplate(signConfig);
     }
 
 

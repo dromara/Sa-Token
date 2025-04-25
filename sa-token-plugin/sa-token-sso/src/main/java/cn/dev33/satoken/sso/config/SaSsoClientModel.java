@@ -47,7 +47,10 @@ public class SaSsoClientModel implements Serializable {
      */
     public Boolean isSlo = true;
 
-
+    /**
+     * API 调用签名秘钥
+     */
+    public String secretKey;
 
     // 额外方法
 
@@ -60,7 +63,6 @@ public class SaSsoClientModel implements Serializable {
         this.setAllowUrl(SaFoxUtil.arrayJoin(url));
         return this;
     }
-
 
     // get set
 
@@ -116,12 +118,33 @@ public class SaSsoClientModel implements Serializable {
         return this;
     }
 
+    /**
+     * 获取 API 调用签名秘钥
+     *
+     * @return /
+     */
+    public String getSecretKey() {
+        return this.secretKey;
+    }
+
+    /**
+     * 设置 API 调用签名秘钥
+     *
+     * @param secretKey /
+     * @return 对象自身
+     */
+    public SaSsoClientModel setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SaSsoClientModel ["
                 + "client=" + client
                 + ", allowUrl=" + allowUrl
                 + ", isSlo=" + isSlo
+                + ", secretKey=" + secretKey
                 + "]";
     }
 
