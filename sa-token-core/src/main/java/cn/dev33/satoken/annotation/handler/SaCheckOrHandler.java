@@ -40,7 +40,7 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
 
     @Override
     public void checkMethod(SaCheckOr at, Method method) {
-        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), method);
+        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), at.apikey(), method);
     }
 
     public static void _checkMethod(
@@ -51,6 +51,7 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
             SaCheckHttpBasic[] httpBasic,
             SaCheckHttpDigest[] httpDigest,
             SaCheckDisable[] disable,
+            SaCheckApiKey[] apikey,
             Method method
     ) {
         // 先把所有注解塞到一个 list 里
@@ -62,6 +63,7 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
         annotationList.addAll(Arrays.asList(disable));
         annotationList.addAll(Arrays.asList(httpBasic));
         annotationList.addAll(Arrays.asList(httpDigest));
+        annotationList.addAll(Arrays.asList(apikey));
 
         // 如果 atList 为空，说明 SaCheckOr 上不包含任何注解校验，我们直接跳过即可
         if(annotationList.isEmpty()) {
