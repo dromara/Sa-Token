@@ -40,6 +40,7 @@
 		<redisson.version>3.45.0</redisson.version>
 		<hutool-cache.version>5.8.36</hutool-cache.version>
 		<caffeine.version>3.2.0</caffeine.version>
+		<forest.version>1.6.4</forest.version>
     </properties>
 
     <dependencyManagement>
@@ -272,6 +273,13 @@
 				<groupId>com.github.ben-manes.caffeine</groupId>
 				<artifactId>caffeine</artifactId>
 				<version>${caffeine.version}</version>
+			</dependency>
+
+			<!-- Forest -->
+			<dependency>
+				<groupId>com.dtflys.forest</groupId>
+				<artifactId>forest-core</artifactId>
+				<version>${forest.version}</version>
 			</dependency>
 
 			<!-- sa-token 自身依赖 -->
