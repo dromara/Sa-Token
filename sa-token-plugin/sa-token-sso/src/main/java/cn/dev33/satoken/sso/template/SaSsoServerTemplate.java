@@ -16,12 +16,16 @@
 package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaSignConfig;
+import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.SaSsoManager;
+import cn.dev33.satoken.sso.config.SaSsoClientModel;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
-import cn.dev33.satoken.sso.model.SaSsoClientModel;
+import cn.dev33.satoken.sso.model.SaSsoClientInfo;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -239,18 +243,74 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
 
     /**
      * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
-     * @return see note
+     *
+     * @param client /
+     * @return /
      */
-    public String getAllowUrl() {
-        // 默认从配置文件中返回
-        return getServerConfig().getAllowUrl();
+//    public String getAllowUrl(String client) {
+//        if(SaFoxUtil.isEmpty(client)) {
+//            return getServerConfig().getAllowUrl();
+//        } else {
+//            return getClientNotNull(client).getAllowUrl();
+//        }
+//    }
+
+    /**
+     * 获取应用信息，无效 client 则抛出异常
+     *
+     * @param client /
+     * @return /
+     */
+    public SaSsoClientModel getClientNotNull(String client) {
+        if(SaFoxUtil.isEmpty(client)) {
+            if(getServerConfig().getAllowAnonClient()) {
+                return getAnonClient();
+            } else {
+                throw new SaSsoException("client 标识不可为空");
+            }
+        } else {
+            SaSsoClientModel scm = getClient(client);
+            if(scm == null) {
+                throw new SaSsoException("未能获取应用信息，client=" + client).setCode(SaSsoErrorCode.CODE_30013);
+            }
+            return scm;
+        }
+    }
+
+    /**
+     * 获取匿名 client 信息
+     *
+     * @return /
+     */
+    public SaSsoClientModel getAnonClient() {
+        SaSsoServerConfig serverConfig = getServerConfig();
+        SaSsoClientModel scm = new SaSsoClientModel();
+        scm.setAllowUrl(serverConfig.getAllowUrl());
+        scm.setIsSlo(serverConfig.getIsSlo());
+        scm.setSecretKey(serverConfig.getSecretKey());
+        if(SaFoxUtil.isEmpty(scm.getSecretKey())) {
+            scm.setSecretKey(SaManager.getSaSignTemplate().getSignConfigOrGlobal().getSecretKey());
+        }
+        return scm;
+    }
+
+    /**
+     * 获取应用信息，无效 client 返回 null
+     *
+     * @param client /
+     * @return /
+     */
+    public SaSsoClientModel getClient(String client) {
+        return getServerConfig().getClients().get(client);
     }
 
     /**
      * 校验重定向url合法性
+     *
+     * @param client 应用标识
      * @param url 下放ticket的url地址
      */
-    public void checkRedirectUrl(String url) {
+    public void checkRedirectUrl(String client, String url) {
 
         // 1、是否是一个有效的url
         if( ! SaFoxUtil.isUrl(url) ) {
@@ -289,7 +349,8 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         }
 
         // 4、判断是否在 [ 允许的地址列表 ] 之中
-        List<String> allowUrlList = Arrays.asList(getAllowUrl().replaceAll(" ", "").split(","));
+        String allowUrlString = getClientNotNull(client).getAllowUrl();
+        List<String> allowUrlList = Arrays.asList(allowUrlString.replaceAll(" ", "").split(","));
         checkAllowUrlList(allowUrlList);
         if( ! SaStrategy.instance.hasElement.apply(allowUrlList, url) ) {
             throw new SaSsoException("非法redirect：" + url).setCode(SaSsoErrorCode.CODE_30002);
@@ -356,7 +417,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         }
 
         // step.1 遍历通知 Client 端注销会话
-        List<SaSsoClientModel> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
+        List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
         scmList.forEach(scm -> {
             notifyClientLogout(loginId, scm, false);
         });
@@ -370,7 +431,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param scmList /
      * @return /
      */
-    public int calcNextIndex(List<SaSsoClientModel> scmList) {
+    public int calcNextIndex(List<SaSsoClientInfo> scmList) {
         // 如果目前还没有任何登录记录，则直接返回0
         if(scmList == null || scmList.isEmpty()) {
             return 0;
@@ -403,10 +464,10 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         SaSession session = getStpLogic().getSessionByLoginId(loginId);
 
         // 取出原来的
-        List<SaSsoClientModel> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
+        List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
 
         // 将 新登录client 加入到集合中
-        SaSsoClientModel scm = new SaSsoClientModel(client, sloCallbackUrl, calcNextIndex(scmList));
+        SaSsoClientInfo scm = new SaSsoClientInfo(client, sloCallbackUrl, calcNextIndex(scmList));
         scmList.add(scm);
 
         // 如果登录的client数量超过了限制，则从最早的一个登录开始清退
@@ -414,7 +475,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         if(maxRegClient != -1)  {
             for (;;) {
                 if(scmList.size() > maxRegClient) {
-                    SaSsoClientModel removeScm = scmList.remove(0);
+                    SaSsoClientInfo removeScm = scmList.remove(0);
                     notifyClientLogout(loginId, removeScm, true);
                 } else {
                     break;
@@ -432,7 +493,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param scm 客户端信息对象
      * @param autoLogout 是否为超过 maxRegClient 的自动注销
      */
-    public void notifyClientLogout(Object loginId, SaSsoClientModel scm, boolean autoLogout) {
+    public void notifyClientLogout(Object loginId, SaSsoClientInfo scm, boolean autoLogout) {
 
         // 如果给个null值，不进行任何操作
         if(scm == null || scm.mode != SaSsoConsts.SSO_MODE_3) {
@@ -471,7 +532,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     public String buildRedirectUrl(Object loginId, String client, String redirect) {
 
         // 校验 重定向地址 是否合法
-        checkRedirectUrl(redirect);
+        checkRedirectUrl(client, redirect);
 
         // 删掉 旧Ticket
         deleteTicket(getTicketValue(loginId));
@@ -508,6 +569,46 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         url = url.substring(0, index + length) + back;
         return url;
     }
+
+
+    // ---------------------- 重构 ----------------------
+
+
+    /**
+     * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除
+     * @param ticket Ticket码
+     * @param client client 标识
+     */
+    public void checkTicketVerifySign(SaRequest req, String ticket, String client) {
+        SaSignTemplate signTemplate = getSignTemplate(client);
+        signTemplate.checkRequest(req, paramName.client, paramName.ticket, paramName.ssoLogoutCall);
+    }
+
+
+    /**
+     * 获取底层使用的 API 签名对象
+     * @param client 指定客户端标识，填 null 代表获取默认的
+     * @return /
+     */
+    @Override
+    public SaSignTemplate getSignTemplate(String client) {
+        SaSignConfig signConfig = SaManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
+        SaSsoClientModel clientModel = getClientNotNull(client);
+
+        // 使用 secretKey 的优先级：client 单独配置 > SSO 模块全局配置 > sign 模块默认配置
+        String secretKey = clientModel.getSecretKey();
+        if (SaFoxUtil.isEmpty(secretKey) && SaFoxUtil.isNotEmpty(client)) {
+            secretKey = getServerConfig().getSecretKey();
+        }
+        if(SaFoxUtil.isEmpty(secretKey)) {
+            secretKey = signConfig.getSecretKey();
+        }
+        signConfig.setSecretKey(secretKey);
+
+        return new SaSignTemplate(signConfig);
+    }
+
+
 
 
     // ------------------- 返回相应key -------------------

@@ -74,6 +74,19 @@ public class SaSignConfig {
         }
     }
 
+    /**
+     * 复制对象
+     * @return /
+     */
+    public SaSignConfig copy()  {
+        SaSignConfig obj = new SaSignConfig();
+        obj.secretKey = this.secretKey;
+        obj.timestampDisparity = this.timestampDisparity;
+        obj.digestAlgo = this.digestAlgo;
+        obj.digestMethod = this.digestMethod;
+        return obj;
+    }
+
 
     // -------------- 策略函数
 

@@ -559,6 +559,15 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 
 
 
+### Q：在 idea 导入源码，运行报错：java: 程序包cn.dev33.satoken.oauth2不存在。
+
+在项目根目录进入 cmd，执行 `mvn package`，然后重新运行试试。
+
+如果不行，先执行 `maven clean` ，然后删除 .idea 文件夹里除 `icon.png` 外的所有文件，然后执行 `mvn package`，然后重新运行试试。
+
+如果还不行，删除整个项目，重新从 git 地址拉取一遍，再运行。
+
+
 
 ### Q：报错：非 web 上下文无法获取 HttpServletRequest。
 

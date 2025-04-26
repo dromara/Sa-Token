@@ -90,6 +90,11 @@ public class SaSsoClientConfig implements Serializable {
     public Boolean isHttp = false;
 
     /**
+     * API 调用签名秘钥
+     */
+    public String secretKey;
+
+    /**
      * 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
      */
     public Boolean isCheckSign = true;
@@ -275,6 +280,26 @@ public class SaSsoClientConfig implements Serializable {
     }
 
     /**
+     * 获取 API 调用签名秘钥
+     *
+     * @return /
+     */
+    public String getSecretKey() {
+        return this.secretKey;
+    }
+
+    /**
+     * 设置 API 调用签名秘钥
+     *
+     * @param secretKey /
+     * @return 对象自身
+     */
+    public SaSsoClientConfig setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+        return this;
+    }
+
+    /**
      * 获取 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
      *
      * @return isCheckSign 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
@@ -307,6 +332,7 @@ public class SaSsoClientConfig implements Serializable {
                 + ", currSsoLogoutCall=" + currSsoLogoutCall
                 + ", isSlo=" + isSlo
                 + ", isHttp=" + isHttp
+                + ", secretKey=" + secretKey
                 + ", isCheckSign=" + isCheckSign
                 + "]";
     }
