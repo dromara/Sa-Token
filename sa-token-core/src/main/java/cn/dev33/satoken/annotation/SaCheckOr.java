@@ -81,4 +81,11 @@ public @interface SaCheckOr {
      */
     SaCheckDisable[] disable() default {};
 
+    /**
+     * 设定 @SaCheckApiKey，参考 {@link SaCheckApiKey}
+     *
+     * @return /
+     */
+    SaCheckApiKey[] apikey() default {};
+
 }
