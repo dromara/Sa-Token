@@ -37,6 +37,9 @@ public interface SaErrorCode {
 	/** JSON 转换器未实现 */
 	int CODE_10003 = 10003;
 
+	/** HTTP 请求处理器未实现 */
+	int CODE_10004 = 10004;
+
 	/** 未能从全局 StpLogic 集合中找到对应 type 的 StpLogic */
 	int CODE_10011 = 10011;
 

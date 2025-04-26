@@ -23,6 +23,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.strategy.SaCorsHandleFunction;
+import cn.dev33.satoken.http.SaHttpTemplate;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.httpauth.digest.SaHttpDigestTemplate;
@@ -186,6 +187,16 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaJsonTemplate(SaJsonTemplate saJsonTemplate) {
 		SaManager.setSaJsonTemplate(saJsonTemplate);
+	}
+
+	/**
+	 * 注入自定义的 Http 转换器 Bean
+	 *
+	 * @param saHttpTemplate /
+	 */
+	@Autowired(required = false)
+	public void setSaHttpTemplate(SaHttpTemplate saHttpTemplate) {
+		SaManager.setSaHttpTemplate(saHttpTemplate);
 	}
 
 	/**

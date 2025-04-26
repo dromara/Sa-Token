@@ -26,6 +26,8 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.http.SaHttpTemplate;
+import cn.dev33.satoken.http.SaHttpTemplateDefaultImpl;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
@@ -199,6 +201,25 @@ public class SaManager {
 			}
 		}
 		return saJsonTemplate;
+	}
+
+	/**
+	 * HTTP 转换器
+	 */
+	private volatile static SaHttpTemplate saHttpTemplate;
+	public static void setSaHttpTemplate(SaHttpTemplate saHttpTemplate) {
+		SaManager.saHttpTemplate = saHttpTemplate;
+		SaTokenEventCenter.doRegisterComponent("SaHttpTemplate", saHttpTemplate);
+	}
+	public static SaHttpTemplate getSaHttpTemplate() {
+		if (saHttpTemplate == null) {
+			synchronized (SaManager.class) {
+				if (saHttpTemplate == null) {
+					SaManager.saHttpTemplate = new SaHttpTemplateDefaultImpl();
+				}
+			}
+		}
+		return saHttpTemplate;
 	}
 
 	/**
