@@ -57,12 +57,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
-		<!-- Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉） -->
+
+		<!-- Sa-Token 插件：整合 Forest 请求工具 -->
 		<dependency>
-		    <groupId>com.dtflys.forest</groupId>
-		    <artifactId>forest-spring-boot-starter</artifactId>
-		    <version>1.5.26</version>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-forest</artifactId>
+			<version>${sa-token.version}</version>
 		</dependency>
 
 		

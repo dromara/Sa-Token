@@ -43,6 +43,11 @@ public class SaSsoClientModel implements Serializable {
     public String allowUrl = "*";
 
     /**
+     * 是否打开模式三（此值为 true 时使用 http 调用方式进行消息通知）
+     */
+    public Boolean isHttp = false;
+
+    /**
      * 是否打开单点注销功能
      */
     public Boolean isSlo = true;
@@ -52,7 +57,18 @@ public class SaSsoClientModel implements Serializable {
      */
     public String secretKey;
 
-    // 额外方法
+    /**
+     * 此 Client 端主机总地址
+     */
+    public String serverUrl;
+
+    /**
+     * 此 Client 端推送消息的地址
+     */
+    public String pushUrl = "/sso/pushC";
+
+
+    // 额外添加的一些函数
 
     /**
      * 以数组形式写入允许的授权回调地址
@@ -63,6 +79,25 @@ public class SaSsoClientModel implements Serializable {
         this.setAllowUrl(SaFoxUtil.arrayJoin(url));
         return this;
     }
+
+    /**
+     * 获取拼接 url：此 Client 端推送消息的地址
+     *
+     * @return /
+     */
+    public String splicingNoticeUrl() {
+        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getPushUrl());
+    }
+
+    /**
+     * 判断是否配置了有效地推送地址
+     *
+     * @return /
+     */
+    public boolean isValidNoticeUrl() {
+        return SaFoxUtil.isUrl(splicingNoticeUrl());
+    }
+
 
     // get set
 
@@ -103,6 +138,22 @@ public class SaSsoClientModel implements Serializable {
     }
 
     /**
+     * @return isHttp 是否打开模式三
+     */
+    public Boolean getIsHttp() {
+        return isHttp;
+    }
+
+    /**
+     * @param isHttp 是否打开模式三
+     * @return 对象自身
+     */
+    public SaSsoClientModel setIsHttp(Boolean isHttp) {
+        this.isHttp = isHttp;
+        return this;
+    }
+
+    /**
      * @return 是否打开单点注销功能
      */
     public Boolean getIsSlo() {
@@ -138,13 +189,56 @@ public class SaSsoClientModel implements Serializable {
         return this;
     }
 
+    /**
+     * 获取 此 Client 端主机总地址
+     *
+     * @return serverUrl 此 Client 端主机总地址
+     */
+    public String getServerUrl() {
+        return this.serverUrl;
+    }
+
+    /**
+     * 设置 此 Client 端主机总地址
+     *
+     * @param serverUrl 此 Client 端主机总地址
+     * @return 对象自身
+     */
+    public SaSsoClientModel setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+        return this;
+    }
+
+    /**
+     * 获取 此 Client 端推送消息的地址
+     *
+     * @return noticeUrl 此 Client 端推送消息的地址
+     */
+    public String getPushUrl() {
+        return this.pushUrl;
+    }
+
+    /**
+     * 设置 此 Client 端推送消息的地址
+     *
+     * @param pushUrl 此 Client 端推送消息的地址
+     * @return 对象自身
+     */
+    public SaSsoClientModel setPushUrl(String pushUrl) {
+        this.pushUrl = pushUrl;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SaSsoClientModel ["
                 + "client=" + client
                 + ", allowUrl=" + allowUrl
                 + ", isSlo=" + isSlo
+                + ", isHttp=" + isHttp
                 + ", secretKey=" + secretKey
+                + ", serverUrl=" + serverUrl
+                + ", pushUrl=" + pushUrl
                 + "]";
     }
 

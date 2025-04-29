@@ -5,7 +5,6 @@ import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.dev33.satoken.sso.template.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import com.dtflys.forest.Forest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,13 +44,7 @@ public class SsoClientController {
 	// 配置SSO相关参数 
 	@Autowired
 	private void configSso(SaSsoClientConfig ssoClient) {
-		// 配置Http请求处理器 
-		ssoClient.sendHttp = url -> {
-			System.out.println("------ 发起请求：" + url);
-			String resStr = Forest.get(url).executeAsString();
-			System.out.println("------ 请求结果：" + resStr);
-			return resStr;
-		};
+
 	}
 	
 	// 查询我的账号信息 

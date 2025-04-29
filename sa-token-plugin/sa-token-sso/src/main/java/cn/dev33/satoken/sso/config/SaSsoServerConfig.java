@@ -16,12 +16,9 @@
 package cn.dev33.satoken.sso.config;
 
 
-import cn.dev33.satoken.sso.error.SaSsoErrorCode;
-import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.function.CheckTicketAppendDataFunction;
 import cn.dev33.satoken.sso.function.DoLoginHandleFunction;
 import cn.dev33.satoken.sso.function.NotLoginViewFunction;
-import cn.dev33.satoken.sso.function.SendHttpFunction;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -55,11 +52,6 @@ public class SaSsoServerConfig implements Serializable {
     public long ticketTimeout = 60 * 5;
 
     /**
-     * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
-     */
-    public String allowUrl = "*";
-
-    /**
      * 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
      */
     public String homeRoute;
@@ -70,24 +62,14 @@ public class SaSsoServerConfig implements Serializable {
     public Boolean isSlo = true;
 
     /**
-     * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
-     */
-    public Boolean isHttp = false;
-
-    /**
      * 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）
      */
     public Boolean autoRenewTimeout = false;
 
     /**
-     * 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
+     * 在 Account-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
      */
     public int maxRegClient = 32;
-
-    /**
-     * 是否允许匿名 Client 接入
-     */
-    public Boolean allowAnonClient = true;
 
     /**
      * 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
@@ -95,14 +77,26 @@ public class SaSsoServerConfig implements Serializable {
     public Boolean isCheckSign = true;
 
     /**
-     * API 调用签名秘钥
-     */
-    public String secretKey;
-
-    /**
      * Client 信息配置列表
      */
     public Map<String, SaSsoClientModel> clients = new LinkedHashMap<>();
+
+    // 匿名 Client 相关配置
+
+    /**
+     * 是否允许匿名 Client 接入
+     */
+    public Boolean allowAnonClient = true;
+
+    /**
+     * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) (匿名 client 使用)
+     */
+    public String allowUrl = "*";
+
+    /**
+     * API 调用签名秘钥 (全局默认 + 匿名 client 使用)
+     */
+    public String secretKey;
 
 
     // 额外方法
@@ -126,6 +120,31 @@ public class SaSsoServerConfig implements Serializable {
         this.clients.put(client.getClient(), client);
         return this;
     }
+
+
+    // -------------------- 所有回调函数 --------------------
+
+
+    /**
+     * SSO-Server端：未登录时返回的View
+     */
+    public NotLoginViewFunction notLoginView = () -> {
+        return "当前会话在SSO-Server认证中心尚未登录（当前未配置登录视图）";
+    };
+
+    /**
+     * SSO-Server端：登录函数
+     */
+    public DoLoginHandleFunction doLoginHandle = (name, pwd) -> {
+        return SaResult.error();
+    };
+
+    /**
+     * SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+     */
+    public CheckTicketAppendDataFunction checkTicketAppendData = (loginId, result) -> {
+        return result;
+    };
 
 
     // get set
@@ -165,14 +184,14 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * @return 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+     * @return 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) (匿名 client 使用)
      */
     public String getAllowUrl() {
         return allowUrl;
     }
 
     /**
-     * @param allowUrl 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+     * @param allowUrl 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) (匿名 client 使用)
      * @return 对象自身
      */
     public SaSsoServerConfig setAllowUrl(String allowUrl) {
@@ -218,22 +237,6 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * @return isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
-     */
-    public Boolean getIsHttp() {
-        return isHttp;
-    }
-
-    /**
-     * @param isHttp 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、获取userinfo）
-     * @return 对象自身
-     */
-    public SaSsoServerConfig setIsHttp(Boolean isHttp) {
-        this.isHttp = isHttp;
-        return this;
-    }
-
-    /**
      * @return 是否在每次下发 ticket 时，自动续期 token 的有效期（根据全局 timeout 值）
      */
     public Boolean getAutoRenewTimeout() {
@@ -250,14 +253,14 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * @return maxLoginClient 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
+     * @return maxLoginClient 在 Account-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
      */
     public int getMaxRegClient() {
         return maxRegClient;
     }
 
     /**
-     * @param maxRegClient 在 Access-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
+     * @param maxRegClient 在 Account-Session 上记录 Client 信息的最高数量（-1=无限），超过此值将进行自动清退处理，先进先出
      * @return 对象自身
      */
     public SaSsoServerConfig setMaxRegClient(int maxRegClient) {
@@ -304,7 +307,7 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * 获取 API 调用签名秘钥
+     * 获取 API 调用签名秘钥 (全局默认 + 匿名 client 使用)
      *
      * @return /
      */
@@ -313,7 +316,7 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * 设置 API 调用签名秘钥
+     * 设置 API 调用签名秘钥 (全局默认 + 匿名 client 使用)
      *
      * @param secretKey /
      * @return 对象自身
@@ -351,7 +354,6 @@ public class SaSsoServerConfig implements Serializable {
                 + ", allowUrl=" + allowUrl
                 + ", homeRoute=" + homeRoute
                 + ", isSlo=" + isSlo
-                + ", isHttp=" + isHttp
                 + ", autoRenewTimeout=" + autoRenewTimeout
                 + ", maxRegClient=" + maxRegClient
                 + ", isCheckSign=" + isCheckSign
@@ -361,108 +363,5 @@ public class SaSsoServerConfig implements Serializable {
                 + "]";
     }
 
-
-    // -------------------- 所有回调函数 --------------------
-
-
-    /**
-     * SSO-Server端：未登录时返回的View
-     */
-    public NotLoginViewFunction notLoginView = () -> {
-        return "当前会话在SSO-Server认证中心尚未登录（当前未配置登录视图）";
-    };
-
-    /**
-     * SSO-Server端：登录函数
-     */
-    public DoLoginHandleFunction doLoginHandle = (name, pwd) -> {
-        return SaResult.error();
-    };
-
-    /**
-     * SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
-     */
-    public CheckTicketAppendDataFunction checkTicketAppendData = (loginId, result) -> {
-        return result;
-    };
-
-    /**
-     * SSO-Server端：发送Http请求的处理函数
-     */
-    public SendHttpFunction sendHttp = url -> {
-        throw new SaSsoException("请配置 Http 请求处理器").setCode(SaSsoErrorCode.CODE_30010);
-    };
-
-    /**
-     * 获取 SSO-Server端：未登录时返回的View
-     *
-     * @return notLoginView SSO-Server端：未登录时返回的View
-     */
-    public NotLoginViewFunction getNotLoginView() {
-        return this.notLoginView;
-    }
-
-    /**
-     * 设置 SSO-Server端：未登录时返回的View
-     *
-     * @param notLoginView SSO-Server端：未登录时返回的View
-     */
-    public void setNotLoginView(NotLoginViewFunction notLoginView) {
-        this.notLoginView = notLoginView;
-    }
-
-    /**
-     * 获取 SSO-Server端：登录函数
-     *
-     * @return doLoginHandle SSO-Server端：登录函数
-     */
-    public DoLoginHandleFunction getDoLoginHandle() {
-        return this.doLoginHandle;
-    }
-
-    /**
-     * 设置 SSO-Server端：登录函数
-     *
-     * @param doLoginHandle SSO-Server端：登录函数
-     */
-    public void setDoLoginHandle(DoLoginHandleFunction doLoginHandle) {
-        this.doLoginHandle = doLoginHandle;
-    }
-
-    /**
-     * 获取 SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
-     *
-     * @return checkTicketAppendData SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
-     */
-    public CheckTicketAppendDataFunction getCheckTicketAppendData() {
-        return this.checkTicketAppendData;
-    }
-
-    /**
-     * 设置 SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
-     *
-     * @param checkTicketAppendData SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
-     */
-    public void setCheckTicketAppendData(CheckTicketAppendDataFunction checkTicketAppendData) {
-        this.checkTicketAppendData = checkTicketAppendData;
-    }
-
-    /**
-     * 获取 SSO-Server端：发送Http请求的处理函数
-     *
-     * @return sendHttp SSO-Server端：发送Http请求的处理函数
-     */
-    public SendHttpFunction getSendHttp() {
-        return this.sendHttp;
-    }
-
-    /**
-     * 设置 SSO-Server端：发送Http请求的处理函数
-     *
-     * @param sendHttp SSO-Server端：发送Http请求的处理函数
-     */
-    public void setSendHttp(SendHttpFunction sendHttp) {
-        this.sendHttp = sendHttp;
-    }
 
 }

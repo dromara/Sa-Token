@@ -6,7 +6,6 @@ import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import com.dtflys.forest.Forest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,19 +49,7 @@ public class SsoServerController {
 			}
 			return SaResult.error("登录失败！");
 		};
-		
-		// 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉） 
-		ssoServer.sendHttp = url -> {
-			try {
-				System.out.println("------ 发起请求：" + url);
-				String resStr = Forest.get(url).executeAsString();
-				System.out.println("------ 请求结果：" + resStr);
-				return resStr;
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		};
+
 	}
 
 	// 示例：获取数据接口（用于在模式三下，为 client 端开放拉取数据的接口）

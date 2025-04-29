@@ -22,6 +22,7 @@ import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.model.SaCheckTicketResult;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
@@ -30,6 +31,8 @@ import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
+
+import java.util.Map;
 
 /**
  * SSO 请求处理器 （Client端）
@@ -74,8 +77,13 @@ public class SaSsoClientProcessor {
 			return ssoLogout();
 		}
 
+		// ---------- SSO-Client端：接收消息推送
+		if(req.isPath(apiName.ssoPushC)) {
+			return ssoPushC();
+		}
+
 		// ---------- SSO-Client端：单点注销的回调 	[模式三]
-		if(req.isPath(apiName.ssoLogoutCall) && cfg.getIsSlo() && cfg.getIsHttp()) {
+		if(req.isPath(apiName.ssoLogoutCall) && cfg.getRegLogoutCall()) {
 			return ssoLogoutCall();
 		}
 
@@ -155,6 +163,27 @@ public class SaSsoClientProcessor {
 	}
 
 	/**
+	 * SSO-Client端：接收推送消息
+	 *
+	 * @return 处理结果
+	 */
+	public Object ssoPushC() {
+		SaSsoClientConfig ssoClientConfig = ssoClientTemplate.getClientConfig();
+
+		// 1、校验签名
+		Map<String, String> paramMap = SaHolder.getRequest().getParamMap();
+		if(ssoClientConfig.getIsCheckSign()) {
+			ssoClientTemplate.getSignTemplate(ssoClientConfig.getClient()).checkParamMap(paramMap);
+		} else {
+			SaSsoManager.printNoCheckSignWarningByRuntime();
+		}
+
+		// 2、处理消息
+		SaSsoMessage message = new SaSsoMessage(paramMap);
+		return ssoClientTemplate.handleMessage(message);
+	}
+
+	/**
 	 * SSO-Client端：单点注销 [模式二]
 	 * @return 处理结果
 	 */
@@ -189,8 +218,8 @@ public class SaSsoClientProcessor {
 		}
 
 		// 调用 sso-server 认证中心单点注销API
-		String url = ssoClientTemplate.buildSloUrl(stpLogic.getLoginId());
-		SaResult result = ssoClientTemplate.request(url);
+		SaSsoMessage message = ssoClientTemplate.buildSloMessage(stpLogic.getLoginId());
+		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
 
 		// 校验响应状态码
 		if(result.getCode() != null && SaResult.CODE_SUCCESS == result.getCode()) {
@@ -224,8 +253,7 @@ public class SaSsoClientProcessor {
 
 		// 校验参数签名
 		if(ssoConfig.getIsCheckSign()) {
-			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).
-					checkRequest(req, paramName.loginId, paramName.client, paramName.autoLogout);
+			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).checkRequest(req, paramName.loginId, paramName.client, paramName.autoLogout);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
@@ -256,7 +284,7 @@ public class SaSsoClientProcessor {
 
 			// 计算当前 sso-client 的单点注销回调地址
 			String ssoLogoutCall = null;
-			if(cfg.getIsSlo()) {
+			if(cfg.getRegLogoutCall()) {
 				// 如果配置了回调地址，就使用配置的值：
 				if(SaFoxUtil.isNotEmpty(cfg.getCurrSsoLogoutCall())) {
 					ssoLogoutCall = cfg.getCurrSsoLogoutCall();
@@ -270,11 +298,9 @@ public class SaSsoClientProcessor {
 				}
 			}
 
-			// 构建请求URL
-			String checkUrl = ssoClientTemplate.buildCheckTicketUrl(ticket, ssoLogoutCall);
-
 			// 发起请求
-			SaResult result = ssoClientTemplate.request(checkUrl);
+			SaSsoMessage message = ssoClientTemplate.buildCheckTicketMessage(ticket, ssoLogoutCall);
+			SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
 
 			// 校验
 			if(result.getCode() != null && result.getCode() == SaResult.CODE_SUCCESS) {

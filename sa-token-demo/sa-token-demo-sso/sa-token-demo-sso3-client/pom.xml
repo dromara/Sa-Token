@@ -53,15 +53,16 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-		
-		<!-- Http请求工具 -->
+
+		<!-- Sa-Token 插件：整合 Forest 请求工具 -->
 		<dependency>
-		    <groupId>com.dtflys.forest</groupId>
-		    <artifactId>forest-spring-boot-starter</artifactId>
-		    <version>1.5.26</version>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-forest</artifactId>
+			<version>${sa-token.version}</version>
 		</dependency>
-        
-		
+
+
+
 	</dependencies>
 	
 	

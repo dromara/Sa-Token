@@ -13,27 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.plugin;
+package cn.dev33.satoken.sso.message.handle;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.http.SaHttpTemplateForForest;
-import com.dtflys.forest.config.ForestConfiguration;
+
+import cn.dev33.satoken.sso.message.SaSsoMessage;
+import cn.dev33.satoken.sso.template.SaSsoTemplate;
 
 /**
- * SaToken 插件安装：Http 请求处理器 - Forest 版
+ * Sa-Token SSO 消息 处理器
  *
  * @author click33
  * @since 1.43.0
  */
-public class SaTokenPluginForForest implements SaTokenPlugin {
+public interface SaSsoMessageHandle {
 
-    @Override
-    public void install() {
-        // 关闭 Forest 默认日志打印
-        ForestConfiguration.getDefaultConfiguration().setLogEnabled(false);
+    /**
+     * 获取所要处理的消息类型
+     *
+     * @return /
+     */
+    String getHandlerType();
 
-        // 设置 Forest 作为 Http 请求处理器
-        SaManager.setSaHttpTemplate(new SaHttpTemplateForForest());
-    }
+    /**
+     * 执行方法
+     *
+     * @param ssoTemplate /
+     * @param message /
+     * @return /
+     */
+    Object handle(SaSsoTemplate ssoTemplate, SaSsoMessage message);
 
 }

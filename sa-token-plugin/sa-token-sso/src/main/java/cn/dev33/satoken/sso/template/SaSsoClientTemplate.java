@@ -22,11 +22,13 @@ import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.message.SaSsoMessage;
+import cn.dev33.satoken.sso.message.handle.client.SaSsoMessageLogoutCallHandle;
+import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Sa-Token SSO 模板方法类 （Client端）
@@ -36,12 +38,8 @@ import java.util.TreeMap;
  */
 public class SaSsoClientTemplate extends SaSsoTemplate {
 
-    /**
-     * 获取底层使用的SsoClient配置对象
-     * @return /
-     */
-    public SaSsoClientConfig getClientConfig() {
-        return SaSsoManager.getClientConfig();
+    public SaSsoClientTemplate() {
+        super.messageHolder.addHandle(new SaSsoMessageLogoutCallHandle());
     }
 
 
@@ -66,7 +64,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
      */
     public Object getData(String path, Map<String, Object> paramMap) {
         String url = buildCustomPathUrl(path, paramMap);
-        return getClientConfig().sendHttp.apply(url);
+        return request(url);
     }
 
     // ---------------------- 构建URL ----------------------
@@ -109,56 +107,6 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     }
 
     /**
-     * 构建URL：校验ticket的URL
-     * <p> 在模式三下，Client端拿到Ticket后根据此地址向Server端发送请求，获取账号id
-     * @param ticket ticket码
-     * @param ssoLogoutCallUrl 单点注销时的回调URL
-     * @return 构建完毕的URL
-     */
-    public String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
-
-        SaSsoClientConfig ssoConfig = getClientConfig();
-
-        // 1、url
-        String url = ssoConfig.splicingCheckTicketUrl();
-
-        // 2、参数：client、ticket、ssoLogoutCall
-        Map<String, Object> paramMap = new TreeMap<>();
-        paramMap.put(paramName.ticket, ticket);
-        paramMap.put(paramName.client, ssoConfig.getClient());
-        paramMap.put(paramName.ssoLogoutCall, ssoLogoutCallUrl);
-
-        // 追加签名参数，并序列化为kv字符串
-        String signParamStr = getSignTemplate(ssoConfig.getClient()).addSignParamsAndJoin(paramMap);
-
-        // 3、拼接
-        return SaFoxUtil.joinParam(url, signParamStr);
-    }
-
-    /**
-     * 构建URL：单点注销URL
-     * @param loginId 要注销的账号id
-     * @return 单点注销URL
-     */
-    public String buildSloUrl(Object loginId) {
-        // 获取所需对象
-        SaSsoClientConfig ssoConfig = getClientConfig();
-        String url = ssoConfig.splicingSloUrl();
-        String currClient = ssoConfig.getClient();
-
-        // 组织请求参数
-        Map<String, Object> paramMap = new TreeMap<>();
-        paramMap.put(paramName.loginId, loginId);
-        paramMap.put(paramName.client, currClient);
-
-        // 追加签名参数，并序列化为kv字符串
-        String signParamsStr = getSignTemplate(currClient).addSignParamsAndJoin(paramMap);
-
-        //  拼接到 url 上
-        return SaFoxUtil.joinParam(url, signParamsStr);
-    }
-
-    /**
      * 构建URL：Server端 getData 地址，带签名等参数
      * @param paramMap 查询参数
      * @return /
@@ -181,7 +129,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         String url = path;
         if( ! url.startsWith("http") ) {
             String serverUrl = ssoConfig.getServerUrl();
-            SaSsoException.notEmpty(serverUrl, "请先配置 sa-token.sso.server-url 地址", SaSsoErrorCode.CODE_30012);
+            SaSsoException.notEmpty(serverUrl, "请先配置 sa-token.sso-client.server-url 地址", SaSsoErrorCode.CODE_30012);
             url = SaFoxUtil.spliceTwoUrl(serverUrl, path);
         }
 
@@ -191,6 +139,86 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
         // 拼接
         return SaFoxUtil.joinParam(url, signParamsStr);
+    }
+
+    /**
+     * 构建消息：校验 ticket
+     *
+     * @param ticket ticket码
+     * @param ssoLogoutCallUrl 单点注销时的回调URL
+     * @return 构建完毕的URL
+     */
+    public SaSsoMessage buildCheckTicketMessage(String ticket, String ssoLogoutCallUrl) {
+        SaSsoClientConfig ssoConfig = getClientConfig();
+        SaSsoMessage message = new SaSsoMessage();
+        message.setType(SaSsoConsts.MESSAGE_CHECK_TICKET);
+        message.set(paramName.client, ssoConfig.getClient());
+        message.set(paramName.ticket, ticket);
+        message.set(paramName.ssoLogoutCall, ssoLogoutCallUrl);
+        return message;
+    }
+
+    /**
+     * 构建消息：单点注销
+     * @param loginId 要注销的账号 id
+     * @return 单点注销URL
+     */
+    public SaSsoMessage buildSloMessage(Object loginId) {
+        SaSsoClientConfig ssoConfig = getClientConfig();
+        SaSsoMessage message = new SaSsoMessage();
+        message.setType(SaSsoConsts.MESSAGE_SIGNOUT);
+        message.set(paramName.client, ssoConfig.getClient());
+        message.set(paramName.loginId, loginId);
+        return message;
+    }
+
+
+    // ------------------- 消息推送 -------------------
+
+    /**
+     * 向 sso-server 推送消息
+     *
+     * @param message /
+     * @return /
+     */
+    public String pushMessage(SaSsoMessage message) {
+        SaSsoClientConfig ssoConfig = getClientConfig();
+
+        // 拼接 push-url 地址
+        String pushUrl = ssoConfig.splicingPushUrl();
+        SaSsoException.notTrue(! SaFoxUtil.isUrl(pushUrl), "无效 push-url 地址：" + pushUrl, SaSsoErrorCode.CODE_30023);
+
+        // 组织参数
+        message.set(paramName.client, ssoConfig.getClient());
+        message.checkType();
+        String paramsStr = getSignTemplate(ssoConfig.getClient()).addSignParamsAndJoin(message);
+
+        // 发起请求
+        String finalUrl = SaFoxUtil.joinParam(pushUrl, paramsStr);
+        return request(finalUrl);
+    }
+
+    /**
+     * 向 sso-server 推送消息，并将返回值转为 SaResult
+     *
+     * @param message /
+     * @return /
+     */
+    public SaResult pushMessageAsSaResult(SaSsoMessage message) {
+        String res = pushMessage(message);
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(res);
+        return new SaResult(map);
+    }
+
+
+    // ------------------- Bean 对象获取 -------------------
+
+    /**
+     * 获取底层使用的SsoClient配置对象
+     * @return /
+     */
+    public SaSsoClientConfig getClientConfig() {
+        return SaSsoManager.getClientConfig();
     }
 
     /**
@@ -210,20 +238,6 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         signConfig.setSecretKey(secretKey);
 
         return new SaSignTemplate(signConfig);
-    }
-
-
-    // ------------------- 发起请求 -------------------
-
-    /**
-     * 发出请求，并返回 SaResult 结果
-     * @param url 请求地址
-     * @return 返回的结果
-     */
-    public SaResult request(String url) {
-        String body = getClientConfig().sendHttp.apply(url);
-        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
-        return new SaResult(map);
     }
 
 }

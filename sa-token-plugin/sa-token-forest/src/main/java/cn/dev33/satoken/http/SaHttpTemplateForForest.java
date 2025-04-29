@@ -21,7 +21,7 @@ import com.dtflys.forest.Forest;
 import java.util.Map;
 
 /**
- * Http 转换器， Forest 版实现
+ * Http 请求处理器， Forest 版实现
  * 
  * @author click33
  * @since 1.43.0

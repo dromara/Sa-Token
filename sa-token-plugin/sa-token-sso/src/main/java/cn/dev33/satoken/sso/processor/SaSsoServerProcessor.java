@@ -22,6 +22,7 @@ import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
@@ -29,6 +30,8 @@ import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
+
+import java.util.Map;
 
 /**
  * SSO 请求处理器 （Server端）
@@ -63,24 +66,24 @@ public class SaSsoServerProcessor {
 
 		// ------------------ 路由分发 ------------------
 
-		// ---------- SSO-Server端：授权地址
+		// sso-server：授权地址
 		if(req.isPath(apiName.ssoAuth)) {
 			return ssoAuth();
 		}
 
-		// ---------- SSO-Server端：RestAPI 登录接口
+		// sso-server：RestAPI 登录接口
 		if(req.isPath(apiName.ssoDoLogin)) {
 			return ssoDoLogin();
 		}
 
-		// ---------- SSO-Server端：校验ticket 获取账号id
-		if(req.isPath(apiName.ssoCheckTicket) && cfg.getIsHttp()) {
-			return ssoCheckTicket();
-		}
-
-		// ---------- SSO-Server端：单点注销
+		// sso-server：单点注销
 		if(req.isPath(apiName.ssoSignout)) {
 			return ssoSignout();
+		}
+
+		// sso-server：接收推送消息
+		if(req.isPath(apiName.ssoPushS)) {
+			return ssoPush();
 		}
 
 		// 默认返回
@@ -163,77 +166,10 @@ public class SaSsoServerProcessor {
 	}
 
 	/**
-	 * SSO-Server端：校验ticket 获取账号id [模式三]
-	 * @return 处理结果
-	 */
-	public Object ssoCheckTicket() {
-		ParamName paramName = ssoServerTemplate.paramName;
-
-		// 1、获取参数
-		SaRequest req = SaHolder.getRequest();
-		SaSsoServerConfig ssoServerConfig = ssoServerTemplate.getServerConfig();
-		String client = req.getParam(paramName.client);
-		String ticket = req.getParamNotNull(paramName.ticket);
-		String sloCallback = req.getParam(paramName.ssoLogoutCall);
-
-		// 2、校验提供的client是否为非法字符
-		if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
-			return SaResult.error("无效 client 标识：" + client);
-		}
-
-		// 3、校验签名
-		if(ssoServerConfig.getIsCheckSign()) {
-			ssoServerTemplate.getSignTemplate(client).checkRequest(req,
-					paramName.client, paramName.ticket, paramName.ssoLogoutCall);
-		} else {
-			SaSsoManager.printNoCheckSignWarningByRuntime();
-		}
-
-		// 4、校验ticket，获取 loginId
-		Object loginId = ssoServerTemplate.checkTicket(ticket, client);
-		if(SaFoxUtil.isEmpty(loginId)) {
-			return SaResult.error("无效ticket：" + ticket);
-		}
-
-		// 5、注册此客户端的单点注销回调URL
-		ssoServerTemplate.registerSloCallbackUrl(loginId, client, sloCallback);
-
-		// 6、给 client 端响应结果
-		long remainSessionTimeout = ssoServerTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
-		SaResult result = SaResult.data(loginId).set(paramName.remainSessionTimeout, remainSessionTimeout);
-		result = ssoServerConfig.checkTicketAppendData.apply(loginId, result);
-		return result;
-	}
-
-	/**
 	 * SSO-Server端：单点注销
 	 * @return 处理结果
 	 */
 	public Object ssoSignout() {
-		// 获取对象
-		SaRequest req = SaHolder.getRequest();
-		SaSsoServerConfig cfg = ssoServerTemplate.getServerConfig();
-		ParamName paramName = ssoServerTemplate.paramName;
-
-		// SSO-Server端：单点注销 [用户访问式]   (不带loginId参数)
-		if(cfg.getIsSlo() && ! req.hasParam(paramName.loginId)) {
-			return ssoSignoutByUserVisit();
-		}
-
-		// SSO-Server端：单点注销 [Client调用式]  (带loginId参数)
-		if(cfg.getIsSlo() && req.hasParam(paramName.loginId)) {
-			return ssoSignoutByClientHttp();
-		}
-
-		// 默认返回
-		return SaSsoConsts.NOT_HANDLE;
-	}
-
-	/**
-	 * SSO-Server端：单点注销 [用户访问式]
-	 * @return 处理结果
-	 */
-	public Object ssoSignoutByUserVisit() {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
@@ -245,43 +181,41 @@ public class SaSsoServerProcessor {
 		}
 
 		// 完成
-		return ssoLogoutBack(req, res);
+		return SaSsoProcessorHelper.ssoLogoutBack(req, res, ssoServerTemplate.paramName);
 	}
 
 	/**
-	 * SSO-Server端：单点注销 [Client调用式]
+	 * SSO-Server端：接收推送消息
+	 *
 	 * @return 处理结果
 	 */
-	public Object ssoSignoutByClientHttp() {
+	public Object ssoPush() {
 		ParamName paramName = ssoServerTemplate.paramName;
+		SaSsoServerConfig ssoServerConfig = ssoServerTemplate.getServerConfig();
 
-		// 获取参数
+		// 1、获取参数
 		SaRequest req = SaHolder.getRequest();
-		String loginId = req.getParam(paramName.loginId);
 		String client = req.getParam(paramName.client);
 
-		// step.1 校验签名
-		if(ssoServerTemplate.getServerConfig().getIsCheckSign()) {
-			ssoServerTemplate.getSignTemplate(client).checkRequest(req, paramName.client, paramName.loginId);
+		// 2、校验提供的client是否为非法字符
+		if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+			return SaResult.error("无效 client 标识：" + client);
+		}
+
+		// 3、校验签名
+		Map<String, String> paramMap = req.getParamMap();
+		if(ssoServerConfig.getIsCheckSign()) {
+			ssoServerTemplate.getSignTemplate(client).checkParamMap(paramMap);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
 
-		// step.2 单点注销
-		ssoServerTemplate.ssoLogout(loginId);
-
-		// 响应
-		return SaResult.ok();
+		// 处理消息
+		SaSsoMessage message = new SaSsoMessage(paramMap);
+		if( ! ssoServerTemplate.messageHolder.hasHandle(message.getType())) {
+			return SaResult.error("未能找到消息处理器: " + message.getType());
+		}
+		return ssoServerTemplate.handleMessage(message);
 	}
-
-	/**
-	 * 封装：单点注销成功后返回结果
-	 * @param req SaRequest对象
-	 * @param res SaResponse对象
-	 * @return 返回结果
-	 */
-	public Object ssoLogoutBack(SaRequest req, SaResponse res) {
-        return SaSsoProcessorHelper.ssoLogoutBack(req, res, ssoServerTemplate.paramName);
-    }
 
 }

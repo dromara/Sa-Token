@@ -68,4 +68,13 @@ public interface SaSsoErrorCode {
 	/** 无效的 allow-url 配置 */
 	int CODE_30015 = 30015;
 
+	/** 未能找到指定类型的消息处理器 */
+	int CODE_30021 = 30021;
+
+	/** 消息类型不能为空 */
+	int CODE_30022 = 30022;
+
+	/** 无效的消息推送地址 */
+	int CODE_30023 = 30023;
+
 }

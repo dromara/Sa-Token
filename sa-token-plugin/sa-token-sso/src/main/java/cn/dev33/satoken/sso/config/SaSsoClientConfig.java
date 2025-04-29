@@ -16,9 +16,6 @@
 package cn.dev33.satoken.sso.config;
 
 
-import cn.dev33.satoken.sso.error.SaSsoErrorCode;
-import cn.dev33.satoken.sso.exception.SaSsoException;
-import cn.dev33.satoken.sso.function.SendHttpFunction;
 import cn.dev33.satoken.sso.function.TicketResultHandleFunction;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -40,12 +37,12 @@ public class SaSsoClientConfig implements Serializable {
     public String mode = "";
 
     /**
-     * 当前 Client 名称标识，用于和 ticket 码的互相锁定
+     * 当前 Client 标识
      */
     public String client;
 
     /**
-     * 配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置
+     * 配置 Server 端主机总地址
      */
     public String serverUrl;
 
@@ -53,11 +50,6 @@ public class SaSsoClientConfig implements Serializable {
      * 单独配置 Server 端单点登录授权地址
      */
     public String authUrl = "/sso/auth";
-
-    /**
-     * 单独配置 Server 端的 ticket 校验地址
-     */
-    public String checkTicketUrl = "/sso/checkTicket";
 
     /**
      * 单独配置 Server 端查询数据 getData 地址
@@ -70,6 +62,11 @@ public class SaSsoClientConfig implements Serializable {
     public String sloUrl = "/sso/signout";
 
     /**
+     * 单独配置 Server 端推送消息地址
+     */
+    public String pushUrl = "/sso/pushS";
+
+    /**
      * 配置当前 Client 端的登录地址（为空时自动获取）
      */
     public String currSsoLogin;
@@ -80,12 +77,17 @@ public class SaSsoClientConfig implements Serializable {
     public String currSsoLogoutCall;
 
     /**
-     * 是否打开单点注销功能
+     * 是否打开单点注销功能 (为 true 时，接收单点注销回调消息推送)
      */
     public Boolean isSlo = true;
 
     /**
-     * 是否打开模式三（此值为 true 时将使用 http 请求：校验ticket值、单点注销、拉取数据getData）
+     * 是否注册单点登录注销回调 (为 true 时，登录时附带单点登录回调地址，并且开放 /sso/logoutCall 地址)
+     */
+    public Boolean regLogoutCall = false;
+
+    /**
+     * 是否打开模式三（此值为 true 时将使用 http 请求校验 ticket 值）
      */
     public Boolean isHttp = false;
 
@@ -98,6 +100,47 @@ public class SaSsoClientConfig implements Serializable {
      * 是否校验参数签名（方便本地调试用的一个配置项，生产环境请务必为true）
      */
     public Boolean isCheckSign = true;
+
+
+    // 额外添加的一些函数
+
+    /**
+     * @return 获取拼接url：Server 端单点登录授权地址
+     */
+    public String splicingAuthUrl() {
+        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getAuthUrl());
+    }
+
+    /**
+     * @return 获取拼接url：Server 端查询数据 getData 地址
+     */
+    public String splicingGetDataUrl() {
+        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getGetDataUrl());
+    }
+
+    /**
+     * @return 获取拼接url：Server 端单点注销地址
+     */
+    public String splicingSloUrl() {
+        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getSloUrl());
+    }
+
+    /**
+     * @return 获取拼接url：单独配置 Server 端推送消息地址
+     */
+    public String splicingPushUrl() {
+        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getPushUrl());
+    }
+
+
+    // -------------------- 所有回调函数 --------------------
+
+    /**
+     * SSO-Client端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
+     * <p> 参数：loginId, back
+     * <p> 返回值：返回给前端的值
+     */
+    public TicketResultHandleFunction ticketResultHandle = null;
 
 
     // get set
@@ -184,22 +227,6 @@ public class SaSsoClientConfig implements Serializable {
     }
 
     /**
-     * @return 配置的 Server 端的 ticket 校验地址
-     */
-    public String getCheckTicketUrl() {
-        return checkTicketUrl;
-    }
-
-    /**
-     * @param checkTicketUrl 配置 Server 端的 ticket 校验地址
-     * @return 对象自身
-     */
-    public SaSsoClientConfig setCheckTicketUrl(String checkTicketUrl) {
-        this.checkTicketUrl = checkTicketUrl;
-        return this;
-    }
-
-    /**
      * @return Server 端查询数据 getData 地址
      */
     public String getGetDataUrl() {
@@ -228,6 +255,26 @@ public class SaSsoClientConfig implements Serializable {
      */
     public SaSsoClientConfig setSloUrl(String sloUrl) {
         this.sloUrl = sloUrl;
+        return this;
+    }
+
+    /**
+     * 获取 单独配置 Server 端推送消息地址
+     *
+     * @return /
+     */
+    public String getPushUrl() {
+        return this.pushUrl;
+    }
+
+    /**
+     * 设置 单独配置 Server 端推送消息地址
+     *
+     * @param pushUrl /
+     * @return 对象自身
+     */
+    public SaSsoClientConfig setPushUrl(String pushUrl) {
+        this.pushUrl = pushUrl;
         return this;
     }
 
@@ -318,6 +365,26 @@ public class SaSsoClientConfig implements Serializable {
         return this;
     }
 
+    /**
+     * 获取 是否注册单点登录注销回调 (为 true 时，登录时附带单点登录回调地址，并且开放 /sso/logoutCall 地址)
+     *
+     * @return /
+     */
+    public Boolean getRegLogoutCall() {
+        return this.regLogoutCall;
+    }
+
+    /**
+     * 设置 是否注册单点登录注销回调 (为 true 时，登录时附带单点登录回调地址，并且开放 /sso/logoutCall 地址)
+     *
+     * @param regLogoutCall /
+     * @return /
+     */
+    public SaSsoClientConfig setRegLogoutCall(Boolean regLogoutCall) {
+        this.regLogoutCall = regLogoutCall;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SaSsoClientConfig ["
@@ -325,63 +392,16 @@ public class SaSsoClientConfig implements Serializable {
                 + ", client=" + client
                 + ", serverUrl=" + serverUrl
                 + ", authUrl=" + authUrl
-                + ", checkTicketUrl=" + checkTicketUrl
                 + ", getDataUrl=" + getDataUrl
                 + ", sloUrl=" + sloUrl
                 + ", currSsoLogin=" + currSsoLogin
                 + ", currSsoLogoutCall=" + currSsoLogoutCall
-                + ", isSlo=" + isSlo
                 + ", isHttp=" + isHttp
+                + ", isSlo=" + isSlo
+                + ", regLogoutCall=" + regLogoutCall
                 + ", secretKey=" + secretKey
                 + ", isCheckSign=" + isCheckSign
                 + "]";
     }
-
-    // 额外添加的一些函数
-
-    /**
-     * @return 获取拼接url：Server 端单点登录授权地址
-     */
-    public String splicingAuthUrl() {
-        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getAuthUrl());
-    }
-
-    /**
-     * @return 获取拼接url：Server 端的 ticket 校验地址
-     */
-    public String splicingCheckTicketUrl() {
-        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getCheckTicketUrl());
-    }
-
-    /**
-     * @return 获取拼接url：Server 端查询数据 getData 地址
-     */
-    public String splicingGetDataUrl() {
-        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getGetDataUrl());
-    }
-
-    /**
-     * @return 获取拼接url：Server 端单点注销地址
-     */
-    public String splicingSloUrl() {
-        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getSloUrl());
-    }
-
-
-    // -------------------- 所有回调函数 --------------------
-
-    /**
-     * SSO-Client端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
-     * <p> 参数：loginId, back
-     * <p> 返回值：返回给前端的值
-     */
-    public TicketResultHandleFunction ticketResultHandle = null;
-
-    /**
-     * SSO-Client端：发送Http请求的处理函数
-     */
-    public SendHttpFunction sendHttp = url -> {
-        throw new SaSsoException("请配置 Http 请求处理器").setCode(SaSsoErrorCode.CODE_30010);
-    };
 
 }

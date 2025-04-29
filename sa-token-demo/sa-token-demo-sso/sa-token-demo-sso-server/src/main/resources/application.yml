@@ -35,8 +35,9 @@ sa-token:
             # 应用 sso-client3，采用模式三对接 (跨域、跨Redis)
             sso-client3:
                 client: sso-client3
-                secret-key: SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
                 allow-url: "*"
+                secret-key: SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+                push-url: http://sa-sso-client1.com:9003/sso/pushC
 
 
         # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 

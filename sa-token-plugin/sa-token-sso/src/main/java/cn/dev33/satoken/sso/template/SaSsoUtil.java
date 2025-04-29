@@ -95,16 +95,6 @@ public class SaSsoUtil {
 		return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, client);
 	}
 
-//	/**
-//	 * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
-//	 *
-//	 * @param client 应用标识
-//	 * @return /
-//	 */
-//	public static String getAllowUrl(String client) {
-//		return SaSsoServerProcessor.instance.ssoServerTemplate.getAllowUrl(client);
-//	}
-
 	/**
 	 * 校验重定向url合法性
 	 *
@@ -117,16 +107,6 @@ public class SaSsoUtil {
 
 	
 	// ------------------- SSO 模式三 ------------------- 
-	
-	/**
-	 * 构建URL：校验ticket的URL 
-	 * @param ticket ticket码
-	 * @param ssoLogoutCallUrl 单点注销时的回调URL 
-	 * @return 构建完毕的URL 
-	 */
-	public static String buildCheckTicketUrl(String ticket, String ssoLogoutCallUrl) {
-		return SaSsoClientProcessor.instance.ssoClientTemplate.buildCheckTicketUrl(ticket, ssoLogoutCallUrl);
-	}
 
 	/**
 	 * 为指定账号id注册单点注销回调URL 
@@ -136,15 +116,6 @@ public class SaSsoUtil {
 	 */
 	public static void registerSloCallbackUrl(Object loginId, String client, String sloCallbackUrl) {
 		SaSsoServerProcessor.instance.ssoServerTemplate.registerSloCallbackUrl(loginId, client, sloCallbackUrl);
-	}
-
-	/**
-	 * 构建URL：单点注销URL 
-	 * @param loginId 要注销的账号id
-	 * @return 单点注销URL 
-	 */
-	public static String buildSloUrl(Object loginId) {
-		return SaSsoClientProcessor.instance.ssoClientTemplate.buildSloUrl(loginId);
 	}
 
 	/**

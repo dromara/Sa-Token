@@ -17,7 +17,6 @@ package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaSignConfig;
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.SaSsoManager;
@@ -25,10 +24,14 @@ import cn.dev33.satoken.sso.config.SaSsoClientModel;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.message.SaSsoMessage;
+import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageCheckTicketHandle;
+import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageSignoutHandle;
 import cn.dev33.satoken.sso.model.SaSsoClientInfo;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaResult;
 
 import java.util.*;
 
@@ -40,12 +43,9 @@ import java.util.*;
  */
 public class SaSsoServerTemplate extends SaSsoTemplate {
 
-    /**
-     * 获取底层使用的SsoServer配置对象
-     * @return /
-     */
-    public SaSsoServerConfig getServerConfig() {
-        return SaSsoManager.getServerConfig();
+    public SaSsoServerTemplate() {
+        super.messageHolder.addHandle(new SaSsoMessageCheckTicketHandle());
+        super.messageHolder.addHandle(new SaSsoMessageSignoutHandle());
     }
 
     // ---------------------- Ticket 操作 ----------------------
@@ -165,7 +165,6 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
     //
-
     /**
      * 根据 账号id 创建一个 Ticket码
      * @param loginId 账号id
@@ -217,8 +216,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             } else {
                 // 开始详细比对
                 if(SaFoxUtil.notEquals(client, ticketClient)) {
-                    throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket)
-                            .setCode(SaSsoErrorCode.CODE_30011);
+                    throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket).setCode(SaSsoErrorCode.CODE_30011);
                 }
             }
 
@@ -241,19 +239,28 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         return SaFoxUtil.getRandomString(64);
     }
 
+
+    // ---------------------- Client 信息获取 ----------------------
+
     /**
-     * 获取：所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+     * 获取所有 Client
+     *
+     * @return /
+     */
+    public List<SaSsoClientModel> getClients() {
+        Map<String, SaSsoClientModel> clients = getServerConfig().getClients();
+        return new ArrayList<>(clients.values());
+    }
+
+    /**
+     * 获取应用信息，无效 client 返回 null
      *
      * @param client /
      * @return /
      */
-//    public String getAllowUrl(String client) {
-//        if(SaFoxUtil.isEmpty(client)) {
-//            return getServerConfig().getAllowUrl();
-//        } else {
-//            return getClientNotNull(client).getAllowUrl();
-//        }
-//    }
+    public SaSsoClientModel getClient(String client) {
+        return getServerConfig().getClients().get(client);
+    }
 
     /**
      * 获取应用信息，无效 client 则抛出异常
@@ -295,13 +302,70 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
     /**
-     * 获取应用信息，无效 client 返回 null
+     * 获取所有需要接收消息推送的 Client
      *
-     * @param client /
      * @return /
      */
-    public SaSsoClientModel getClient(String client) {
-        return getServerConfig().getClients().get(client);
+    public List<SaSsoClientModel> getNeedPushClients() {
+        List<SaSsoClientModel> list = new ArrayList<>();
+        List<SaSsoClientModel> clients = getClients();
+        for(SaSsoClientModel scm : clients) {
+            if (scm.isValidNoticeUrl()) {
+                list.add(scm);
+            }
+        }
+        return list;
+    }
+
+
+    // ------------------- 重定向 URL 构建与校验 -------------------
+
+    /**
+     * 构建URL：Server端向Client下放ticket的地址
+     * @param loginId 账号id
+     * @param client 客户端标识
+     * @param redirect Client端提供的重定向地址
+     * @return see note
+     */
+    public String buildRedirectUrl(Object loginId, String client, String redirect) {
+
+        // 校验 重定向地址 是否合法
+        checkRedirectUrl(client, redirect);
+
+        // 删掉 旧Ticket
+        deleteTicket(getTicketValue(loginId));
+
+        // 创建 新Ticket
+        String ticket = createTicket(loginId, client);
+
+        // 构建 授权重定向地址 （Server端 根据此地址向 Client端 下放Ticket）
+        return SaFoxUtil.joinParam(encodeBackParam(redirect), paramName.ticket, ticket);
+    }
+
+    /**
+     * 对url中的back参数进行URL编码, 解决超链接重定向后参数丢失的bug
+     * @param url url
+     * @return 编码过后的url
+     */
+    public String encodeBackParam(String url) {
+
+        // 获取back参数所在位置
+        int index = url.indexOf("?" + paramName.back + "=");
+        if(index == -1) {
+            index = url.indexOf("&" + paramName.back + "=");
+            if(index == -1) {
+                return url;
+            }
+        }
+
+        // 开始编码
+        int length = paramName.back.length() + 2;
+        String back = url.substring(index + length);
+        back = SaFoxUtil.encodeUrl(back);
+
+        // 放回url中
+        url = url.substring(0, index + length) + back;
+        return url;
     }
 
     /**
@@ -402,55 +466,11 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         }
     }
 
-    // ------------------- SSO -------------------
+
+    // ------------------- 单点注销 -------------------
 
     /**
-     * 指定账号单点注销
-     * @param loginId 指定账号
-     */
-    public void ssoLogout(Object loginId) {
-
-        // 如果这个账号尚未登录，则无操作
-        SaSession session = getStpLogic().getSessionByLoginId(loginId, false);
-        if(session == null) {
-            return;
-        }
-
-        // step.1 遍历通知 Client 端注销会话
-        List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
-        scmList.forEach(scm -> {
-            notifyClientLogout(loginId, scm, false);
-        });
-
-        // step.2 Server端注销
-        getStpLogic().logout(loginId);
-    }
-
-    /**
-     * 计算下一个 index 值
-     * @param scmList /
-     * @return /
-     */
-    public int calcNextIndex(List<SaSsoClientInfo> scmList) {
-        // 如果目前还没有任何登录记录，则直接返回0
-        if(scmList == null || scmList.isEmpty()) {
-            return 0;
-        }
-        // 获取目前最大的index值
-        int maxIndex = scmList.get(scmList.size() - 1).index;
-
-        // 如果已经是 int 最大值了，则直接返回0
-        if(maxIndex == Integer.MAX_VALUE) {
-            return 0;
-        }
-
-        // 否则返回最大值+1
-        maxIndex++;
-        return maxIndex;
-    }
-
-    /**
-     * 为指定账号id注册单点注销回调信息（模式三）
+     * 为指定账号 id 注册单点注销回调信息（模式三）
      * @param loginId 账号id
      * @param client 指定客户端标识，可为null
      * @param sloCallbackUrl 单点注销时的回调URL
@@ -488,6 +508,52 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
     /**
+     * 计算下一个 index 值
+     * @param scmList /
+     * @return /
+     */
+    public int calcNextIndex(List<SaSsoClientInfo> scmList) {
+        // 如果目前还没有任何登录记录，则直接返回0
+        if(scmList == null || scmList.isEmpty()) {
+            return 0;
+        }
+        // 获取目前最大的index值
+        int maxIndex = scmList.get(scmList.size() - 1).index;
+
+        // 如果已经是 int 最大值了，则直接返回0
+        if(maxIndex == Integer.MAX_VALUE) {
+            return 0;
+        }
+
+        // 否则返回最大值+1
+        maxIndex++;
+        return maxIndex;
+    }
+
+    /**
+     * 指定账号单点注销
+     * @param loginId 指定账号
+     */
+    public void ssoLogout(Object loginId) {
+
+        // 1、消息推送：单点注销
+        pushToAllClientByLogoutCall(loginId);
+
+        // 2、SaSession 挂载的 Client 端注销会话
+        SaSession session = getStpLogic().getSessionByLoginId(loginId, false);
+        if(session == null) {
+            return;
+        }
+        List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
+        scmList.forEach(scm -> {
+            notifyClientLogout(loginId, scm, false);
+        });
+
+        // 3、Server 端本身注销
+        getStpLogic().logout(loginId);
+    }
+
+    /**
      * 通知指定账号的指定客户端注销
      * @param loginId 指定账号
      * @param scm 客户端信息对象
@@ -500,7 +566,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             return;
         }
 
-        // url
+        // 如果此 Client 并没有注册 单点登录 回调地址，则立即返回
         String sloCallUrl = scm.getSloCallbackUrl();
         if(SaFoxUtil.isEmpty(sloCallUrl)) {
             return;
@@ -517,73 +583,101 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
 
         // 发起请求
-        getServerConfig().sendHttp.apply(finalUrl);
+        request(finalUrl);
     }
 
-    // ---------------------- 构建URL ----------------------
+
+    // ------------------- 消息推送 -------------------
 
     /**
-     * 构建URL：Server端向Client下放ticket的地址
-     * @param loginId 账号id
-     * @param client 客户端标识
-     * @param redirect Client端提供的重定向地址
-     * @return see note
+     * 向指定 Client 推送消息
+     * @param clientModel /
+     * @param message /
+     * @return /
      */
-    public String buildRedirectUrl(Object loginId, String client, String redirect) {
-
-        // 校验 重定向地址 是否合法
-        checkRedirectUrl(client, redirect);
-
-        // 删掉 旧Ticket
-        deleteTicket(getTicketValue(loginId));
-
-        // 创建 新Ticket
-        String ticket = createTicket(loginId, client);
-
-        // 构建 授权重定向地址 （Server端 根据此地址向 Client端 下放Ticket）
-        return SaFoxUtil.joinParam(encodeBackParam(redirect), paramName.ticket, ticket);
+    public String pushMessage(SaSsoClientModel clientModel, SaSsoMessage message) {
+        message.checkType();
+        String noticeUrl = clientModel.splicingNoticeUrl();
+        String paramsStr = getSignTemplate(clientModel.getClient()).addSignParamsAndJoin(message);
+        String finalUrl = SaFoxUtil.joinParam(noticeUrl, paramsStr);
+        return request(finalUrl);
     }
 
     /**
-     * 对url中的back参数进行URL编码, 解决超链接重定向后参数丢失的bug
-     * @param url url
-     * @return 编码过后的url
+     * 向指定 client 推送消息，并将返回值转为 SaResult
+     *
+     * @param clientModel /
+     * @param message /
+     * @return /
      */
-    public String encodeBackParam(String url) {
+    public SaResult pushMessageAsSaResult(SaSsoClientModel clientModel, SaSsoMessage message) {
+        String res = pushMessage(clientModel, message);
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(res);
+        return new SaResult(map);
+    }
 
-        // 获取back参数所在位置
-        int index = url.indexOf("?" + paramName.back + "=");
-        if(index == -1) {
-            index = url.indexOf("&" + paramName.back + "=");
-            if(index == -1) {
-                return url;
+    /**
+     * 向指定 Client 推送消息
+     * @param client /
+     * @param message /
+     * @return /
+     */
+    public String pushMessage(String client, SaSsoMessage message) {
+        return pushMessage(getClientNotNull(client), message);
+    }
+
+    /**
+     * 向指定 client 推送消息，并将返回值转为 SaResult
+     *
+     * @param client /
+     * @param message /
+     * @return /
+     */
+    public SaResult pushMessageAsSaResult(String client, SaSsoMessage message) {
+        String res = pushMessage(client, message);
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(res);
+        return new SaResult(map);
+    }
+
+    /**
+     * 向所有 Client 推送消息
+     *
+     * @param message /
+     */
+    public void pushToAllClient(SaSsoMessage message) {
+        List<SaSsoClientModel> mode3Clients = getNeedPushClients();
+        for (SaSsoClientModel client : mode3Clients) {
+            pushMessage(client, message);
+        }
+    }
+
+    /**
+     * 向所有 Client 推送消息：单点注销回调
+     *
+     * @param loginId /
+     */
+    public void pushToAllClientByLogoutCall(Object loginId) {
+        List<SaSsoClientModel> npClients = getNeedPushClients();
+        for (SaSsoClientModel client : npClients) {
+            if(client.getIsSlo()) {
+                SaSsoMessage message = new SaSsoMessage();
+                message.setType(SaSsoConsts.MESSAGE_LOGOUT_CALL);
+                message.set(paramName.loginId, loginId);
+                pushMessage(client, message);
             }
         }
-
-        // 开始编码
-        int length = paramName.back.length() + 2;
-        String back = url.substring(index + length);
-        back = SaFoxUtil.encodeUrl(back);
-
-        // 放回url中
-        url = url.substring(0, index + length) + back;
-        return url;
     }
 
 
-    // ---------------------- 重构 ----------------------
-
+    // ------------------- Bean 获取 -------------------
 
     /**
-     * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除
-     * @param ticket Ticket码
-     * @param client client 标识
+     * 获取底层使用的SsoServer配置对象
+     * @return /
      */
-    public void checkTicketVerifySign(SaRequest req, String ticket, String client) {
-        SaSignTemplate signTemplate = getSignTemplate(client);
-        signTemplate.checkRequest(req, paramName.client, paramName.ticket, paramName.ssoLogoutCall);
+    public SaSsoServerConfig getServerConfig() {
+        return SaSsoManager.getServerConfig();
     }
-
 
     /**
      * 获取底层使用的 API 签名对象
@@ -607,8 +701,6 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
 
         return new SaSignTemplate(signConfig);
     }
-
-
 
 
     // ------------------- 返回相应key -------------------

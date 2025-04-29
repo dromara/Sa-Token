@@ -17,10 +17,15 @@ package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.sign.SaSignTemplate;
+import cn.dev33.satoken.sso.message.SaSsoMessage;
+import cn.dev33.satoken.sso.message.SaSsoMessageHolder;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
+
+import java.util.Map;
 
 /**
  * Sa-Token SSO 模板方法类 （公共端）
@@ -77,5 +82,41 @@ public class SaSsoTemplate {
 		// 框架默认只返回全局 SaSignTemplate，client 参数留作开发者扩展
 		return SaManager.getSaSignTemplate();
 	}
+
+	// ----------- 消息处理
+
+	public SaSsoMessageHolder messageHolder = new SaSsoMessageHolder();
+
+	/**
+	 * 发送 Http 请求
+	 *
+	 * @param url /
+	 * @return /
+	 */
+	public String request(String url) {
+		return SaManager.getSaHttpTemplate().get(url);
+	}
+
+	/**
+	 * 发送 Http 请求，并将响应结果转换为 SaResult
+	 *
+	 * @param url 请求地址
+	 * @return 返回的结果
+	 */
+	public SaResult requestAsSaResult(String url) {
+		String body = request(url);
+		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
+		return new SaResult(map);
+	}
+
+	/**
+	 * 处理指定消息
+	 *
+	 * @param message /
+	 */
+	public Object handleMessage(SaSsoMessage message) {
+		return messageHolder.handleMessage(this, message);
+	}
+
 
 }
