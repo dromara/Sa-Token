@@ -916,8 +916,16 @@ public class StpLogic {
 		if(session != null) {
 
 			// 2、遍历此 SaTerminalInfo 客户端列表，清除相关数据
-			List<SaTerminalInfo> terminalList = session.getTerminalListByDeviceType(logoutParameter.getDeviceType());
+			List<SaTerminalInfo> terminalList = session.terminalListCopy();
 			for (SaTerminalInfo terminal: terminalList) {
+				// 不符合 deviceType 的跳过
+				if( ! SaFoxUtil.isEmpty(logoutParameter.getDeviceType()) && ! logoutParameter.getDeviceType().equals(terminal.getDeviceType())) {
+					continue;
+				}
+				// 不符合 deviceId 的跳过
+				if( ! SaFoxUtil.isEmpty(logoutParameter.getDeviceId()) && ! logoutParameter.getDeviceId().equals(terminal.getDeviceId())) {
+					continue;
+				}
 				_removeTerminal(session, terminal, logoutParameter);
 			}
 
