@@ -48,6 +48,9 @@ public class SaSsoConsts {
 	/** client 身份，* 代表通配，可以解析出所有 client 的 ticket */
 	public static final String CLIENT_WILDCARD = "*";
 
+	/** client 身份，代表匿名 client  */
+	public static final String CLIENT_ANON = "anon";
+
 	/** SSO 模式1 */
 	public static final int SSO_MODE_1 = 1;
 	/** SSO 模式2 */

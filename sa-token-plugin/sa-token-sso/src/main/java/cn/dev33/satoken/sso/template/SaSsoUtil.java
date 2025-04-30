@@ -50,10 +50,11 @@ public class SaSsoUtil {
 	
 	/**
 	 * 删除 Ticket索引 
-	 * @param loginId 账号id 
+	 * @param client 应用 id
+	 * @param loginId 账号id
 	 */
-	public static void deleteTicketIndex(Object loginId) {
-		SaSsoServerProcessor.instance.ssoServerTemplate.deleteTicketIndex(loginId);
+	public static void deleteTicketIndex(String client, Object loginId) {
+		SaSsoServerProcessor.instance.ssoServerTemplate.deleteTicketIndex(client, loginId);
 	}
 
 	/**

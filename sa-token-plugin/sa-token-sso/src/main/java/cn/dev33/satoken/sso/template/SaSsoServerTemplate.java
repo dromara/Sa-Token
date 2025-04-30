@@ -28,6 +28,7 @@ import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageCheckTicketHandle;
 import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageSignoutHandle;
 import cn.dev33.satoken.sso.model.SaSsoClientInfo;
+import cn.dev33.satoken.sso.model.TicketModel;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -51,38 +52,38 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     // ---------------------- Ticket 操作 ----------------------
 
     /**
-     * 保存 Ticket 关联的 loginId
-     * @param ticket ticket码
-     * @param loginId 账号id
+     * 保存 Ticket
+     * @param ticketModel /
      */
-    public void saveTicket(String ticket, Object loginId) {
-        // 保存 ticket -> loginId 的关系
+    public void saveTicket(TicketModel ticketModel) {
         long ticketTimeout = getServerConfig().getTicketTimeout();
-        SaManager.getSaTokenDao().set(splicingTicketSaveKey(ticket), String.valueOf(loginId), ticketTimeout);
+        SaManager.getSaTokenDao().setObject(splicingTicketSaveKey(ticketModel.getTicket()), ticketModel, ticketTimeout);
     }
 
     /**
      * 保存 Ticket 索引 （id 反查 ticket）
+     *
+     * @param client 应用端
      * @param ticket ticket码
      * @param loginId 账号id
      */
-    public void saveTicketIndex(String ticket, Object loginId) {
+    public void saveTicketIndex(String client, String ticket, Object loginId) {
         long ticketTimeout = getServerConfig().getTicketTimeout();
-        SaManager.getSaTokenDao().set(splicingTicketIndexKey(loginId), String.valueOf(ticket), ticketTimeout);
+        SaManager.getSaTokenDao().set(splicingTicketIndexKey(client, loginId), String.valueOf(ticket), ticketTimeout);
     }
 
-    /**
-     * 保存 Ticket 关联的 client
-     * @param ticket ticket码
-     * @param client 客户端标识
-     */
-    public void saveTicketToClient(String ticket, String client) {
-        if(SaFoxUtil.isEmpty(client)) {
-            return;
-        }
-        long ticketTimeout = getServerConfig().getTicketTimeout();
-        SaManager.getSaTokenDao().set(splicingTicketToClientSaveKey(ticket), client, ticketTimeout);
-    }
+//    /**
+//     * 保存 Ticket 关联的 client
+//     * @param ticket ticket码
+//     * @param client 客户端标识
+//     */
+//    public void saveTicketToClient(String ticket, String client) {
+//        if(SaFoxUtil.isEmpty(client)) {
+//            return;
+//        }
+//        long ticketTimeout = getServerConfig().getTicketTimeout();
+//        SaManager.getSaTokenDao().set(splicingTicketToClientSaveKey(ticket), client, ticketTimeout);
+//    }
 
     /**
      * 删除 Ticket
@@ -92,29 +93,45 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         if(ticket == null) {
             return;
         }
-        SaManager.getSaTokenDao().delete(splicingTicketSaveKey(ticket));
+        SaManager.getSaTokenDao().deleteObject(splicingTicketSaveKey(ticket));
     }
 
     /**
      * 删除 Ticket索引
+     *
+     * @param client 应用标识
      * @param loginId 账号id
      */
-    public void deleteTicketIndex(Object loginId) {
+    public void deleteTicketIndex(String client, Object loginId) {
         if(loginId == null) {
             return;
         }
-        SaManager.getSaTokenDao().delete(splicingTicketIndexKey(loginId));
+        SaManager.getSaTokenDao().delete(splicingTicketIndexKey(client, loginId));
     }
 
+//    /**
+//     * 删除 Ticket 关联的 client
+//     *
+//     * @param ticket Ticket码
+//     */
+//    public void deleteTicketToClient(String ticket) {
+//        if(ticket == null) {
+//            return;
+//        }
+//        SaManager.getSaTokenDao().delete(splicingTicketToClientSaveKey(ticket));
+//    }
+
     /**
-     * 删除 Ticket 关联的 client
+     * 查询 ticket ，如果 ticket 码无效则返回 null
+     *
      * @param ticket Ticket码
+     * @return 账号id
      */
-    public void deleteTicketToClient(String ticket) {
-        if(ticket == null) {
-            return;
+    public TicketModel getTicket(String ticket) {
+        if(SaFoxUtil.isEmpty(ticket)) {
+            return null;
         }
-        SaManager.getSaTokenDao().delete(splicingTicketToClientSaveKey(ticket));
+        return SaManager.getSaTokenDao().getObject(splicingTicketSaveKey(ticket), TicketModel.class);
     }
 
     /**
@@ -123,10 +140,11 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @return 账号id
      */
     public Object getLoginId(String ticket) {
-        if(SaFoxUtil.isEmpty(ticket)) {
+        TicketModel ticketModel = getTicket(ticket);
+        if(ticketModel == null) {
             return null;
         }
-        return SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
+        return ticketModel.getLoginId();
     }
 
     /**
@@ -141,28 +159,30 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
     /**
-     * 查询 指定 loginId 其所属的 ticket 值
+     * 查询 指定 client、loginId 其所属的 ticket 值
+     *
+     * @param client 应用
      * @param loginId 账号id
      * @return Ticket值
      */
-    public String getTicketValue(Object loginId) {
+    public String getTicketValue(String client, Object loginId) {
         if(loginId == null) {
             return null;
         }
-        return SaManager.getSaTokenDao().get(splicingTicketIndexKey(loginId));
+        return SaManager.getSaTokenDao().get(splicingTicketIndexKey(client, loginId));
     }
 
-    /**
-     * 查询 ticket 关联的 client，如果 ticket 码无效则返回 null
-     * @param ticket Ticket码
-     * @return 账号id
-     */
-    public String getTicketToClient(String ticket) {
-        if(SaFoxUtil.isEmpty(ticket)) {
-            return null;
-        }
-        return SaManager.getSaTokenDao().get(splicingTicketToClientSaveKey(ticket));
-    }
+//    /**
+//     * 查询 ticket 关联的 client，如果 ticket 码无效则返回 null
+//     * @param ticket Ticket码
+//     * @return 账号id
+//     */
+//    public String getTicketToClient(String ticket) {
+//        if(SaFoxUtil.isEmpty(ticket)) {
+//            return null;
+//        }
+//        return SaManager.getSaTokenDao().get(splicingTicketToClientSaveKey(ticket));
+//    }
 
     //
     /**
@@ -174,11 +194,15 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     public String createTicket(Object loginId, String client) {
         // 创建 Ticket
         String ticket = randomTicket(loginId);
+        TicketModel ticketModel = new TicketModel();
+        ticketModel.setTicket(ticket);
+        ticketModel.setClient(client);
+        ticketModel.setLoginId(loginId);
+        // TODO ticketModel.setDeviceId();
 
         // 保存 Ticket
-        saveTicket(ticket, loginId);
-        saveTicketIndex(ticket, loginId);
-        saveTicketToClient(ticket, client);
+        saveTicket(ticketModel);
+        saveTicketIndex(client, ticket, loginId);
 
         // 返回 Ticket
         return ticket;
@@ -201,30 +225,31 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      */
     public Object checkTicket(String ticket, String client) {
         // 读取 loginId
-        String loginId = SaManager.getSaTokenDao().get(splicingTicketSaveKey(ticket));
-
-        if(loginId != null) {
-
-            // 解析出这个 ticket 关联的 Client
-            String ticketClient = getTicketToClient(ticket);
-
-            // 校验 client 参数是否正确，即：创建 ticket 的 client 和当前校验 ticket 的 client 是否一致
-            if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
-                // 如果提供的是通配符，直接越过 client 校验
-            } else if (SaFoxUtil.isEmpty(client) && SaFoxUtil.isEmpty(ticketClient)) {
-                // 如果提供的和期望的两者均为空，则通过校验
-            } else {
-                // 开始详细比对
-                if(SaFoxUtil.notEquals(client, ticketClient)) {
-                    throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket).setCode(SaSsoErrorCode.CODE_30011);
-                }
-            }
-
-            // 删除 ticket 信息，使其只有一次性有效
-            deleteTicket(ticket);
-            deleteTicketIndex(loginId);
-            deleteTicketToClient(ticket);
+        TicketModel ticketModel = getTicket(ticket);
+        if(ticketModel == null) {
+            return null;
         }
+
+        Object loginId = ticketModel.getLoginId();
+        String ticketClient = ticketModel.getClient();
+
+        // 解析出这个 ticket 关联的 Client
+
+        // 校验 client 参数是否正确，即：创建 ticket 的 client 和当前校验 ticket 的 client 是否一致
+        if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+            // 如果提供的是通配符，直接越过 client 校验
+        } else if (SaFoxUtil.isEmpty(client) && SaFoxUtil.isEmpty(ticketClient)) {
+            // 如果提供的和期望的两者均为空，则通过校验
+        } else {
+            // 开始详细比对
+            if(SaFoxUtil.notEquals(client, ticketClient)) {
+                throw new SaSsoException("该 ticket 不属于 client=" + client + ", ticket 值: " + ticket).setCode(SaSsoErrorCode.CODE_30011);
+            }
+        }
+
+        // 删除 ticket 信息，使其只有一次性有效
+        deleteTicket(ticket);
+        deleteTicketIndex(ticket, loginId);
 
         //
         return loginId;
@@ -333,7 +358,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         checkRedirectUrl(client, redirect);
 
         // 删掉 旧Ticket
-        deleteTicket(getTicketValue(loginId));
+        deleteTicket(getTicketValue(client, loginId));
 
         // 创建 新Ticket
         String ticket = createTicket(loginId, client);
@@ -714,22 +739,27 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         return getStpLogic().getConfigOrGlobal().getTokenName() + ":ticket:" + ticket;
     }
 
-    /**
-     * 拼接key：Ticket 查 所属的 client
-     * @param ticket ticket值
-     * @return key
-     */
-    public String splicingTicketToClientSaveKey(String ticket) {
-        return getStpLogic().getConfigOrGlobal().getTokenName() + ":ticket-client:" + ticket;
-    }
+//    /**
+//     * 拼接key：Ticket 查 所属的 client
+//     * @param ticket ticket值
+//     * @return key
+//     */
+//    public String splicingTicketToClientSaveKey(String ticket) {
+//        return getStpLogic().getConfigOrGlobal().getTokenName() + ":ticket-client:" + ticket;
+//    }
 
     /**
      * 拼接key：账号Id 反查 Ticket
+     *
+     * @param client 应用标识
      * @param id 账号id
      * @return key
      */
-    public String splicingTicketIndexKey(Object id) {
-        return getStpLogic().getConfigOrGlobal().getTokenName() + ":id-ticket:" + id;
+    public String splicingTicketIndexKey(String client, Object id) {
+        if(SaFoxUtil.isEmpty(client) || SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
+            client = SaSsoConsts.CLIENT_ANON;
+        }
+        return getStpLogic().getConfigOrGlobal().getTokenName() + ":id-ticket:" + client + ":" + id;
     }
 
 }
