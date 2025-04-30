@@ -678,6 +678,15 @@ public class StpUtil {
  		stpLogic.checkActiveTimeout();
  	}
 
+	/**
+	 * 获取当前 token 的最后活跃时间（13位时间戳），如果不存在则返回 -2
+	 *
+	 * @return /
+	 */
+	public static long getTokenLastActiveTime() {
+		return stpLogic.getTokenLastActiveTime();
+	}
+
 
 	// ------------------- 过期时间相关 -------------------  
 
@@ -1011,6 +1020,25 @@ public class StpUtil {
 	}
 
 	/**
+	 * 返回当前 token 指向的 SaTerminalInfo 设备信息，如果 token 无效则返回 null
+	 *
+	 * @return /
+	 */
+	public static SaTerminalInfo getTerminalInfo() {
+		return stpLogic.getTerminalInfo();
+	}
+
+	/**
+	 * 返回指定 token 指向的 SaTerminalInfo 设备信息，如果 Token 无效则返回 null
+	 *
+	 * @param tokenValue 指定 token
+	 * @return /
+	 */
+	public static SaTerminalInfo getTerminalInfoByToken(String tokenValue) {
+		return stpLogic.getTerminalInfoByToken(tokenValue);
+	}
+
+	/**
 	 * 返回当前会话的登录设备类型
 	 *
 	 * @return 当前令牌的登录设备类型
@@ -1030,12 +1058,22 @@ public class StpUtil {
 	}
 
 	/**
-	 * 获取当前 token 的最后活跃时间（13位时间戳），如果不存在则返回 -2
+	 * 返回当前会话的登录设备 ID
 	 *
 	 * @return /
 	 */
-	public static long getTokenLastActiveTime() {
-		return stpLogic.getTokenLastActiveTime();
+	public static String getLoginDeviceId() {
+		return stpLogic.getLoginDeviceId();
+	}
+
+	/**
+	 * 返回指定 token 会话的登录设备 ID
+	 *
+	 * @param tokenValue 指定token
+	 * @return /
+	 */
+	public static String getLoginDeviceIdByToken(String tokenValue) {
+		return stpLogic.getLoginDeviceIdByToken(tokenValue);
 	}
 
 	/**
