@@ -41,6 +41,12 @@ public class ParamName {
 	/** client参数名称 */
 	public String client = "client";
 
+	/** tokenValue 参数 */
+	public String tokenValue = "tokenValue";
+
+	/** deviceId 参数名称 */
+	public String deviceId = "deviceId";
+
 	/** secretkey参数名称 */
 	public String secretkey = "secretkey";
 	
@@ -59,5 +65,11 @@ public class ParamName {
 
 	/** Session 剩余有效期 参数名称 */
 	public String remainSessionTimeout = "remainSessionTimeout";
+
+	/** token 剩余有效期 参数名称 */
+	public String remainTokenTimeout = "remainTokenTimeout";
+
+	/** singleDeviceIdLogout 参数 */
+	public String singleDeviceIdLogout = "singleDeviceIdLogout";
 
 }

@@ -34,7 +34,7 @@ public class H5Controller {
 			return SaResult.data(redirect);
 		} else {
 			// 模式二或模式三
-			String redirectUrl = SaSsoUtil.buildRedirectUrl(StpUtil.getLoginId(), client, redirect);
+			String redirectUrl = SaSsoUtil.buildRedirectUrl(client, redirect, StpUtil.getLoginId(), StpUtil.getLoginDeviceId());
 			return SaResult.data(redirectUrl);
 		}
 	}

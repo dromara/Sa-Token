@@ -18,15 +18,15 @@ package cn.dev33.satoken.sso.message.handle.server;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.SaSsoMessageHandle;
+import cn.dev33.satoken.sso.model.TicketModel;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.sso.template.SaSsoTemplate;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
-import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -60,9 +60,11 @@ public class SaSsoMessageCheckTicketHandle implements SaSsoMessageHandle {
         // 1、获取参数
         SaRequest req = SaHolder.getRequest();
         SaSsoServerConfig ssoServerConfig = ssoServerTemplate.getServerConfig();
+        StpLogic stpLogic = ssoServerTemplate.getStpLogic();
         String client = req.getParam(paramName.client);
         String ticket = req.getParamNotNull(paramName.ticket);
         String sloCallback = req.getParam(paramName.ssoLogoutCall);
+
 
         // 2、校验提供的client是否为非法字符
         if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
@@ -77,17 +79,21 @@ public class SaSsoMessageCheckTicketHandle implements SaSsoMessageHandle {
 //        }
 
         // 4、校验ticket，获取 loginId
-        Object loginId = ssoServerTemplate.checkTicket(ticket, client);
-        if(SaFoxUtil.isEmpty(loginId)) {
-            return SaResult.error("无效ticket：" + ticket);
-        }
+        TicketModel ticketModel = ssoServerTemplate.checkTicketParamAndDelete(ticket, client);
+        Object loginId = ticketModel.getLoginId();
 
         // 5、注册此客户端的单点注销回调URL
         ssoServerTemplate.registerSloCallbackUrl(loginId, client, sloCallback);
 
         // 6、给 client 端响应结果
-        long remainSessionTimeout = ssoServerTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
-        SaResult result = SaResult.data(loginId).set(paramName.remainSessionTimeout, remainSessionTimeout);
+        SaResult result = SaResult.ok();
+        result.setData(loginId); // 兼容历史版本
+        result.set(paramName.loginId, loginId);
+        result.set(paramName.tokenValue, ticketModel.getTokenValue());
+        result.set(paramName.deviceId, stpLogic.getLoginDeviceIdByToken(ticketModel.getTokenValue()));
+        result.set(paramName.remainTokenTimeout, stpLogic.getTokenTimeout(ticketModel.getTokenValue()));
+        result.set(paramName.remainSessionTimeout, stpLogic.getSessionTimeoutByLoginId(loginId));
+
         result = ssoServerConfig.checkTicketAppendData.apply(loginId, result);
         return result;
     }

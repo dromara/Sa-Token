@@ -30,6 +30,7 @@ import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageSignoutHandle;
 import cn.dev33.satoken.sso.model.SaSsoClientInfo;
 import cn.dev33.satoken.sso.model.TicketModel;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -67,7 +68,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param ticket ticket码
      * @param loginId 账号id
      */
-    public void saveTicketIndex(String client, String ticket, Object loginId) {
+    public void saveTicketIndex(String client, Object loginId, String ticket) {
         long ticketTimeout = getServerConfig().getTicketTimeout();
         SaManager.getSaTokenDao().set(splicingTicketIndexKey(client, loginId), String.valueOf(ticket), ticketTimeout);
     }
@@ -186,56 +187,65 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
 
     //
     /**
-     * 根据 账号id 创建一个 Ticket码
-     * @param loginId 账号id
+     * 根据参数创建一个 ticket 码
+     *
      * @param client 客户端标识
+     * @param loginId 账号 id
+     * @param tokenValue 会话 Token
      * @return Ticket码
      */
-    public String createTicket(Object loginId, String client) {
+    public String createTicket(String client, Object loginId, String tokenValue) {
         // 创建 Ticket
         String ticket = randomTicket(loginId);
         TicketModel ticketModel = new TicketModel();
         ticketModel.setTicket(ticket);
         ticketModel.setClient(client);
         ticketModel.setLoginId(loginId);
-        // TODO ticketModel.setDeviceId();
+        ticketModel.setTokenValue(tokenValue);
 
         // 保存 Ticket
         saveTicket(ticketModel);
-        saveTicketIndex(client, ticket, loginId);
+        saveTicketIndex(client, loginId, ticket);
 
         // 返回 Ticket
         return ticket;
     }
 
     /**
-     * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除
+     * 校验 Ticket，无效 ticket 会抛出异常
+     *
      * @param ticket Ticket码
-     * @return 账号id
+     * @return /
      */
-    public Object checkTicket(String ticket) {
-        return checkTicket(ticket, SaSsoConsts.CLIENT_WILDCARD);
+    public TicketModel checkTicket(String ticket) {
+        TicketModel ticketModel = getTicket(ticket);
+        if(ticketModel == null) {
+            throw new SaSsoException("无效 ticket : " + ticket).setCode(SaSsoErrorCode.CODE_30004);
+        }
+        return ticketModel;
     }
 
     /**
-     * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除
+     * 校验 Ticket 码，无效 ticket 会抛出异常，如果此ticket是有效的，则立即删除
      * @param ticket Ticket码
-     * @param client client 标识
      * @return 账号id
      */
-    public Object checkTicket(String ticket, String client) {
-        // 读取 loginId
-        TicketModel ticketModel = getTicket(ticket);
-        if(ticketModel == null) {
-            return null;
-        }
+    public TicketModel checkTicketParamAndDelete(String ticket) {
+        return checkTicketParamAndDelete(ticket, SaSsoConsts.CLIENT_WILDCARD);
+    }
 
-        Object loginId = ticketModel.getLoginId();
-        String ticketClient = ticketModel.getClient();
-
-        // 解析出这个 ticket 关联的 Client
+    /**
+     * 校验 Ticket，无效 ticket 会抛出异常，如果此ticket是有效的，则立即删除
+     *
+     * @param ticket Ticket码
+     * @param client client 标识
+     * @return /
+     */
+    public TicketModel checkTicketParamAndDelete(String ticket, String client) {
+        TicketModel ticketModel = checkTicket(ticket);
 
         // 校验 client 参数是否正确，即：创建 ticket 的 client 和当前校验 ticket 的 client 是否一致
+        String ticketClient = ticketModel.getClient();
         if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
             // 如果提供的是通配符，直接越过 client 校验
         } else if (SaFoxUtil.isEmpty(client) && SaFoxUtil.isEmpty(ticketClient)) {
@@ -249,10 +259,10 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
 
         // 删除 ticket 信息，使其只有一次性有效
         deleteTicket(ticket);
-        deleteTicketIndex(ticket, loginId);
+        deleteTicketIndex(client, ticketModel.getLoginId());
 
         //
-        return loginId;
+        return ticketModel;
     }
 
     /**
@@ -346,13 +356,15 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     // ------------------- 重定向 URL 构建与校验 -------------------
 
     /**
-     * 构建URL：Server端向Client下放ticket的地址
-     * @param loginId 账号id
+     * 构建 URL：sso-server 端向 sso-client 下放 ticket 的地址
+     *
      * @param client 客户端标识
-     * @param redirect Client端提供的重定向地址
-     * @return see note
+     * @param redirect sso-client 端的重定向地址
+     * @param loginId 账号 id
+     * @param tokenValue 会话 token
+     * @return /
      */
-    public String buildRedirectUrl(Object loginId, String client, String redirect) {
+    public String buildRedirectUrl(String client, String redirect, Object loginId, String tokenValue) {
 
         // 校验 重定向地址 是否合法
         checkRedirectUrl(client, redirect);
@@ -361,7 +373,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         deleteTicket(getTicketValue(client, loginId));
 
         // 创建 新Ticket
-        String ticket = createTicket(loginId, client);
+        String ticket = createTicket(client, loginId, tokenValue);
 
         // 构建 授权重定向地址 （Server端 根据此地址向 Client端 下放Ticket）
         return SaFoxUtil.joinParam(encodeBackParam(redirect), paramName.ticket, ticket);
@@ -521,7 +533,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             for (;;) {
                 if(scmList.size() > maxRegClient) {
                     SaSsoClientInfo removeScm = scmList.remove(0);
-                    notifyClientLogout(loginId, removeScm, true);
+                    notifyClientLogout(loginId, null, removeScm, true);
                 } else {
                     break;
                 }
@@ -557,12 +569,24 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
 
     /**
      * 指定账号单点注销
+     *
      * @param loginId 指定账号
      */
     public void ssoLogout(Object loginId) {
+        ssoLogout(loginId, getStpLogic().createSaLogoutParameter());
+    }
+
+    /**
+     * 指定账号单点注销
+     *
+     * @param loginId 指定账号
+     * @param logoutParameter 注销参数
+     */
+    public void ssoLogout(Object loginId, SaLogoutParameter logoutParameter) {
 
         // 1、消息推送：单点注销
-        pushToAllClientByLogoutCall(loginId);
+        // TODO 需要把对应的 SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_ 记录也删掉
+        pushToAllClientByLogoutCall(loginId, logoutParameter);
 
         // 2、SaSession 挂载的 Client 端注销会话
         SaSession session = getStpLogic().getSessionByLoginId(loginId, false);
@@ -571,20 +595,21 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         }
         List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
         scmList.forEach(scm -> {
-            notifyClientLogout(loginId, scm, false);
+            notifyClientLogout(loginId, logoutParameter.getDeviceId(), scm, false);
         });
 
         // 3、Server 端本身注销
-        getStpLogic().logout(loginId);
+        getStpLogic().logout(loginId, logoutParameter);
     }
 
     /**
      * 通知指定账号的指定客户端注销
      * @param loginId 指定账号
+     * @param deviceId 指定设备 id
      * @param scm 客户端信息对象
      * @param autoLogout 是否为超过 maxRegClient 的自动注销
      */
-    public void notifyClientLogout(Object loginId, SaSsoClientInfo scm, boolean autoLogout) {
+    public void notifyClientLogout(Object loginId, String deviceId, SaSsoClientInfo scm, boolean autoLogout) {
 
         // 如果给个null值，不进行任何操作
         if(scm == null || scm.mode != SaSsoConsts.SSO_MODE_3) {
@@ -601,6 +626,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         Map<String, Object> paramsMap = new TreeMap<>();
         paramsMap.put(paramName.client, scm.getClient());
         paramsMap.put(paramName.loginId, loginId);
+        paramsMap.put(paramName.deviceId, deviceId);
         paramsMap.put(paramName.autoLogout, autoLogout);
         String signParamsStr = getSignTemplate(scm.getClient()).addSignParamsAndJoin(paramsMap);
 
@@ -680,14 +706,16 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * 向所有 Client 推送消息：单点注销回调
      *
      * @param loginId /
+     * @param logoutParameter 注销参数
      */
-    public void pushToAllClientByLogoutCall(Object loginId) {
+    public void pushToAllClientByLogoutCall(Object loginId, SaLogoutParameter logoutParameter) {
         List<SaSsoClientModel> npClients = getNeedPushClients();
         for (SaSsoClientModel client : npClients) {
             if(client.getIsSlo()) {
                 SaSsoMessage message = new SaSsoMessage();
                 message.setType(SaSsoConsts.MESSAGE_LOGOUT_CALL);
                 message.set(paramName.loginId, loginId);
+                message.set(paramName.deviceId, logoutParameter.getDeviceId());
                 pushMessage(client, message);
             }
         }

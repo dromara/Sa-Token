@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.sso.template;
 
+import cn.dev33.satoken.sso.model.TicketModel;
 import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 
@@ -29,15 +30,17 @@ import java.util.Map;
 public class SaSsoUtil {
 
 	// ---------------------- Ticket 操作 ---------------------- 
-	
+
 	/**
-	 * 根据 账号id 创建一个 Ticket码 
-	 * @param loginId 账号id 
-	 * @param client 客户端标识 
-	 * @return Ticket码 
+	 * 根据参数创建一个 ticket 码
+	 *
+	 * @param client 客户端标识
+	 * @param loginId 账号 id
+	 * @param deviceId 设备 id
+	 * @return Ticket码
 	 */
-	public static String createTicket(Object loginId, String client) {
-		return SaSsoServerProcessor.instance.ssoServerTemplate.createTicket(loginId, client);
+	public static String createTicket(String client, Object loginId, String deviceId) {
+		return SaSsoServerProcessor.instance.ssoServerTemplate.createTicket(client, loginId, deviceId);
 	}
 	
 	/**
@@ -78,22 +81,22 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 校验 Ticket 码，获取账号id，如果此ticket是有效的，则立即删除 
+	 * 校验 Ticket，无效 ticket 会抛出异常，如果此ticket是有效的，则立即删除
 	 * @param ticket Ticket码
 	 * @return 账号id 
 	 */
-	public static Object checkTicket(String ticket) {
-		return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket);
+	public static TicketModel checkTicket(String ticket) {
+		return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket);
 	}
 	
 	/**
-	 * 校验ticket码，获取账号id，如果此ticket是有效的，则立即删除 
+	 * 校验ticket码，无效 ticket 会抛出异常，如果此ticket是有效的，则立即删除
 	 * @param ticket Ticket码
 	 * @param client client 标识 
 	 * @return 账号id 
 	 */
-	public static Object checkTicket(String ticket, String client) {
-		return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, client);
+	public static TicketModel checkTicket(String ticket, String client) {
+		return SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, client);
 	}
 
 	/**
@@ -160,14 +163,16 @@ public class SaSsoUtil {
 	}
 
 	/**
-	 * 构建URL：Server端向Client下放ticket的地址
-	 * @param loginId 账号id 
-	 * @param client 客户端标识 
-	 * @param redirect Client端提供的重定向地址 
-	 * @return see note 
+	 * 构建 URL：sso-server 端向 sso-client 下放 ticket 的地址
+	 *
+	 * @param client 客户端标识
+	 * @param redirect sso-client 端的重定向地址
+	 * @param loginId 账号 id
+	 * @param tokenValue 会话 token
+	 * @return /
 	 */
-	public static String buildRedirectUrl(Object loginId, String client, String redirect) {
-		return SaSsoServerProcessor.instance.ssoServerTemplate.buildRedirectUrl(loginId, client, redirect);
+	public static String buildRedirectUrl(String client, String redirect, Object loginId, String tokenValue) {
+		return SaSsoServerProcessor.instance.ssoServerTemplate.buildRedirectUrl(client, redirect, loginId, tokenValue);
 	}
 
 	/**

@@ -28,6 +28,7 @@ import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -141,7 +142,7 @@ public class SaSsoServerProcessor {
 			}
 
 			// 构建并跳转
-			String redirectUrl = ssoServerTemplate.buildRedirectUrl(stpLogic.getLoginId(), client, redirect);
+			String redirectUrl = ssoServerTemplate.buildRedirectUrl(client, redirect, stpLogic.getLoginId(), stpLogic.getTokenValue());
 			// 构建成功，说明 redirect 地址合法，此时需要更新一下该账号的Session有效期
 			if(cfg.getAutoRenewTimeout()) {
 				stpLogic.renewTimeout(stpLogic.getConfigOrGlobal().getTimeout());
@@ -174,10 +175,15 @@ public class SaSsoServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		Object loginId = ssoServerTemplate.getStpLogic().getLoginIdDefaultNull();
+		boolean singleDeviceIdLogout = req.isParam(ssoServerTemplate.paramName.singleDeviceIdLogout, "true");
 
 		// 单点注销
 		if(SaFoxUtil.isNotEmpty(loginId)) {
-			ssoServerTemplate.ssoLogout(loginId);
+			SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogic().createSaLogoutParameter();
+			if(singleDeviceIdLogout) {
+				logoutParameter.setDeviceId(ssoServerTemplate.getStpLogic().getLoginDeviceId());
+			}
+			ssoServerTemplate.ssoLogout(loginId, logoutParameter);
 		}
 
 		// 完成

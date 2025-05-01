@@ -25,6 +25,7 @@ import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.sso.template.SaSsoTemplate;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -64,9 +65,12 @@ public class SaSsoMessageLogoutCallHandle implements SaSsoMessageHandle {
 
         // 获取参数
         String loginId = req.getParamNotNull(paramName.loginId);
+        String deviceId = message.getString(paramName.deviceId);
 
         // 注销当前应用端会话
-        stpLogic.logout(loginId);
+        stpLogic.logout(loginId, new SaLogoutParameter()
+                .setDeviceId(deviceId)
+        );
 
         // 响应
         return SaResult.ok("单点注销回调成功");

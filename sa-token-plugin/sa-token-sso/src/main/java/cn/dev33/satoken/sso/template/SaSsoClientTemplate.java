@@ -25,6 +25,7 @@ import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.client.SaSsoMessageLogoutCallHandle;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -160,15 +161,18 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
     /**
      * 构建消息：单点注销
+     *
      * @param loginId 要注销的账号 id
+     * @param logoutParameter 单点注销
      * @return 单点注销URL
      */
-    public SaSsoMessage buildSloMessage(Object loginId) {
+    public SaSsoMessage buildSloMessage(Object loginId, SaLogoutParameter logoutParameter) {
         SaSsoClientConfig ssoConfig = getClientConfig();
         SaSsoMessage message = new SaSsoMessage();
         message.setType(SaSsoConsts.MESSAGE_SIGNOUT);
         message.set(paramName.client, ssoConfig.getClient());
         message.set(paramName.loginId, loginId);
+        message.set(paramName.deviceId, logoutParameter.getDeviceId());
         return message;
     }
 

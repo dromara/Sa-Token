@@ -37,15 +37,20 @@ public class TicketModel implements Serializable {
 	 */
 	public String client;
 
-	/**
-	 * 设备 id
-	 */
-	public String deviceId;
+//	/**
+//	 * 设备 id
+//	 */
+//	public String deviceId;
 
 	/**
 	 * 对应 loginId
 	 */
 	public Object loginId;
+
+	/**
+	 * 会话 token
+	 */
+	public String tokenValue;
 
 	/**
 	 * 创建时间，13位时间戳
@@ -64,14 +69,14 @@ public class TicketModel implements Serializable {
 	 * @param ticket 授权码
 	 * @param client 应用id
 	 * @param loginId 对应的账号id
-	 * @param deviceId 重定向地址
+	 * @param tokenValue 会话 token
 	 */
-	public TicketModel(String ticket, String client, String deviceId, Object loginId) {
+	public TicketModel(String ticket, String client, Object loginId, String tokenValue) {
 		this();
 		this.ticket = ticket;
 		this.client = client;
-		this.deviceId = deviceId;
 		this.loginId = loginId;
+		this.tokenValue = tokenValue;
 	}
 
 
@@ -118,26 +123,6 @@ public class TicketModel implements Serializable {
 	}
 
 	/**
-	 * 获取 设备 id
-	 *
-	 * @return /
-	 */
-	public String getDeviceId() {
-		return this.deviceId;
-	}
-
-	/**
-	 * 设置 设备 id
-	 *
-	 * @param deviceId /
-	 * @return 对象自身
-	 */
-	public TicketModel setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-		return this;
-	}
-
-	/**
 	 * 获取 对应 loginId
 	 *
 	 * @return /
@@ -154,6 +139,26 @@ public class TicketModel implements Serializable {
 	 */
 	public TicketModel setLoginId(Object loginId) {
 		this.loginId = loginId;
+		return this;
+	}
+
+	/**
+	 * 获取 会话 token
+	 *
+	 * @return tokenValue 会话 token
+	 */
+	public String getTokenValue() {
+		return this.tokenValue;
+	}
+
+	/**
+	 * 设置 会话 token
+	 *
+	 * @param tokenValue 会话 token
+	 * @return 对象自身
+	 */
+	public TicketModel setTokenValue(String tokenValue) {
+		this.tokenValue = tokenValue;
 		return this;
 	}
 
@@ -182,8 +187,8 @@ public class TicketModel implements Serializable {
 		return "TicketModel{" +
 				"ticket='" + ticket + '\'' +
 				", client='" + client + '\'' +
-				", deviceId='" + deviceId + '\'' +
 				", loginId=" + loginId +
+				", tokenValue=" + tokenValue +
 				", createTime=" + createTime +
 				'}';
 	}

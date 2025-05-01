@@ -24,6 +24,7 @@ import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.sso.template.SaSsoTemplate;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaResult;
 
 /**
@@ -61,9 +62,12 @@ public class SaSsoMessageSignoutHandle implements SaSsoMessageHandle {
         // 获取参数
         SaRequest req = SaHolder.getRequest();
         String loginId = req.getParam(paramName.loginId);
+        String deviceId = req.getParam(paramName.deviceId);
 
         // step.2 单点注销
-        ssoServerTemplate.ssoLogout(loginId);
+        SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogic().createSaLogoutParameter()
+                        .setDeviceId(deviceId);
+        ssoServerTemplate.ssoLogout(loginId, logoutParameter);
 
         // 响应
         return SaResult.ok();

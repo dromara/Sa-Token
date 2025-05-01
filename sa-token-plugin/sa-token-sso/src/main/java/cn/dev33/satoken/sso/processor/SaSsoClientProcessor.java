@@ -24,11 +24,14 @@ import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.model.SaCheckTicketResult;
+import cn.dev33.satoken.sso.model.TicketModel;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 
@@ -139,7 +142,10 @@ public class SaSsoClientProcessor {
 			}
 
 			// 3、登录并重定向至back地址
-			stpLogic.login(ctr.loginId, ctr.remainSessionTimeout);
+			stpLogic.login(ctr.loginId, new SaLoginParameter()
+					.setTimeout(ctr.remainTokenTimeout)
+					.setDeviceId(ctr.deviceId)
+			);
 			return res.redirect(back);
 		}
 	}
@@ -211,6 +217,7 @@ public class SaSsoClientProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		boolean singleDeviceIdLogout = req.isParam(ssoClientTemplate.paramName.singleDeviceIdLogout, "true");
 
 		// 如果未登录，则无需注销
 		if( ! stpLogic.isLogin()) {
@@ -218,7 +225,11 @@ public class SaSsoClientProcessor {
 		}
 
 		// 调用 sso-server 认证中心单点注销API
-		SaSsoMessage message = ssoClientTemplate.buildSloMessage(stpLogic.getLoginId());
+		SaLogoutParameter logoutParameter = stpLogic.createSaLogoutParameter();
+		if(singleDeviceIdLogout) {
+			logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
+		}
+		SaSsoMessage message = ssoClientTemplate.buildSloMessage(stpLogic.getLoginId(), logoutParameter);
 		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
 
 		// 校验响应状态码
@@ -248,18 +259,20 @@ public class SaSsoClientProcessor {
 
 		// 获取参数
 		String loginId = req.getParamNotNull(paramName.loginId);
+		String deviceId = req.getParam(paramName.deviceId);
 		// String client = req.getParam(paramName.client);
 		// String autoLogout = req.getParam(paramName.autoLogout);
 
 		// 校验参数签名
 		if(ssoConfig.getIsCheckSign()) {
-			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).checkRequest(req, paramName.loginId, paramName.client, paramName.autoLogout);
+			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).checkRequest(req);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
 
 		// 注销当前应用端会话
-		stpLogic.logout(loginId);
+		SaLogoutParameter logoutParameter = ssoClientTemplate.getStpLogic().createSaLogoutParameter();
+		stpLogic.logout(loginId, logoutParameter.setDeviceId(deviceId));
 
 		// 响应
 		return SaResult.ok("单点注销回调成功");
@@ -269,9 +282,10 @@ public class SaSsoClientProcessor {
 
 	/**
 	 * 封装：校验ticket，取出loginId，如果 ticket 无效则抛出异常 （适用于模式二或模式三）
+	 *
 	 * @param ticket ticket码
 	 * @param currUri 当前路由的uri，用于计算单点注销回调地址 （如果是使用模式二，可以填写null）
-	 * @return loginId
+	 * @return SaCheckTicketResult
 	 */
 	public SaCheckTicketResult checkTicket(String ticket, String currUri) {
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
@@ -304,18 +318,16 @@ public class SaSsoClientProcessor {
 
 			// 校验
 			if(result.getCode() != null && result.getCode() == SaResult.CODE_SUCCESS) {
-				// 取出 loginId
-				Object loginId = result.getData();
-				if(SaFoxUtil.isEmpty(loginId)) {
-					throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoErrorCode.CODE_30004);
-				}
-				// 取出 Session 剩余有效期
-				Long remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
-				if(remainSessionTimeout == null) {
-					remainSessionTimeout = ssoClientTemplate.getStpLogic().getConfigOrGlobal().getTimeout();
-				}
-				// 构建返回
-				return new SaCheckTicketResult(loginId, remainSessionTimeout, result);
+
+				SaCheckTicketResult ctr = new SaCheckTicketResult();
+				ctr.loginId = result.get(paramName.loginId);
+				ctr.tokenValue = result.get(paramName.tokenValue, String.class);
+				ctr.deviceId = result.get(paramName.deviceId, String.class);
+				ctr.remainTokenTimeout = result.get(paramName.remainTokenTimeout, Long.class);
+				ctr.remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
+				ctr.result = result;
+
+				return ctr;
 			} else {
 				// 将 sso-server 回应的消息作为异常抛出
 				throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30005);
@@ -328,15 +340,18 @@ public class SaSsoClientProcessor {
 			// 		可能会导致调用失败（注意是可能，而非一定），
 			// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
 
-			// 取出 loginId
-			Object loginId = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicket(ticket, cfg.getClient());
-			if(SaFoxUtil.isEmpty(loginId)) {
-				throw new SaSsoException("无效ticket：" + ticket).setCode(SaSsoErrorCode.CODE_30004);
-			}
-			// 取出 Session 剩余有效期
-			long remainSessionTimeout = ssoClientTemplate.getStpLogic().getSessionTimeoutByLoginId(loginId);
-			// 构建返回
-			return new SaCheckTicketResult(loginId, remainSessionTimeout, null);
+			StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+			TicketModel ticketModel = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, cfg.getClient());
+
+			SaCheckTicketResult ctr = new SaCheckTicketResult();
+			ctr.loginId = ticketModel.getLoginId();
+			ctr.tokenValue = ticketModel.getTokenValue();
+			ctr.deviceId = stpLogic.getLoginDeviceIdByToken(ticketModel.getTokenValue());
+			ctr.remainTokenTimeout = stpLogic.getTokenTimeout(ticketModel.getTokenValue());
+			ctr.remainSessionTimeout = stpLogic.getSessionTimeoutByLoginId(ticketModel.getLoginId());
+			ctr.result = null;
+
+			return ctr;
 		}
 	}
 

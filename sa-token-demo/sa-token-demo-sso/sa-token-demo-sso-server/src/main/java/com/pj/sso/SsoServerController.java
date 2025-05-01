@@ -5,6 +5,8 @@ import cn.dev33.satoken.sign.SaSignUtil;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +46,8 @@ public class SsoServerController {
 		ssoServer.doLoginHandle = (name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
-				StpUtil.login(10001);
+				String deviceId = SaHolder.getRequest().getParam("deviceId", SaFoxUtil.getRandomString(32));
+				StpUtil.login(10001, SaLoginParameter.create().setDeviceId(deviceId));
 				return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
 			}
 			return SaResult.error("登录失败！");

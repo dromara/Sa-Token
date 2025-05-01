@@ -32,21 +32,31 @@ public class SaCheckTicketResult implements Serializable {
     /** 账号id */
     public Object loginId;
 
+    /** 在 sso-server 端的 token 值 */
+    public String tokenValue;
+
+    /** 登录设备 id */
+    public String deviceId;
+
+    /** 此账号 token 剩余有效期 */
+    public Long remainTokenTimeout;
+
     /** 此账号会话剩余有效期 */
-    public long remainSessionTimeout;
+    public Long remainSessionTimeout;
 
     /** 从 sso-server 返回的所有参数 */
     public SaResult result;
 
-    public SaCheckTicketResult(Object loginId, long remainSessionTimeout, SaResult result) {
-        this.loginId = loginId;
-        this.remainSessionTimeout = remainSessionTimeout;
-        this.result = result;
+    public SaCheckTicketResult() {
     }
+
     @Override
     public String toString() {
-        return "CheckTicketResult{" +
+        return "SaCheckTicketResult{" +
                 "loginId=" + loginId +
+                ", tokenValue='" + tokenValue + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", remainTokenTimeout=" + remainTokenTimeout +
                 ", remainSessionTimeout=" + remainSessionTimeout +
                 ", result=" + result +
                 '}';
