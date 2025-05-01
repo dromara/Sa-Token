@@ -16,7 +16,6 @@
 package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.SaSsoMessageHolder;
 import cn.dev33.satoken.sso.name.ApiName;
@@ -71,16 +70,6 @@ public class SaSsoTemplate {
 	 */
 	public StpLogic getStpLogic() {
 		return StpUtil.stpLogic;
-	}
-
-	/**
-	 * 获取底层使用的 API 签名对象
-	 * @param client 指定客户端标识，填 null 代表获取默认的
-	 * @return /
-	 */
-	public SaSignTemplate getSignTemplate(String client) {
-		// 框架默认只返回全局 SaSignTemplate，client 参数留作开发者扩展
-		return SaManager.getSaSignTemplate();
 	}
 
 	// ----------- 消息处理

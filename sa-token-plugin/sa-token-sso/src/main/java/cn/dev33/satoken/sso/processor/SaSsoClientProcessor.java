@@ -179,7 +179,7 @@ public class SaSsoClientProcessor {
 		// 1、校验签名
 		Map<String, String> paramMap = SaHolder.getRequest().getParamMap();
 		if(ssoClientConfig.getIsCheckSign()) {
-			ssoClientTemplate.getSignTemplate(ssoClientConfig.getClient()).checkParamMap(paramMap);
+			ssoClientTemplate.getSignTemplate().checkParamMap(paramMap);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
@@ -265,7 +265,7 @@ public class SaSsoClientProcessor {
 
 		// 校验参数签名
 		if(ssoConfig.getIsCheckSign()) {
-			ssoClientTemplate.getSignTemplate(ssoConfig.getClient()).checkRequest(req);
+			ssoClientTemplate.getSignTemplate().checkRequest(req);
 		} else {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
@@ -341,7 +341,7 @@ public class SaSsoClientProcessor {
 			// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
 
 			StpLogic stpLogic = ssoClientTemplate.getStpLogic();
-			TicketModel ticketModel = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, cfg.getClient());
+			TicketModel ticketModel = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, ssoClientTemplate.getClient());
 
 			SaCheckTicketResult ctr = new SaCheckTicketResult();
 			ctr.loginId = ticketModel.getLoginId();

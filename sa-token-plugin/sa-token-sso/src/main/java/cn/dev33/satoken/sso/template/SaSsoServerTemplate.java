@@ -737,7 +737,6 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param client 指定客户端标识，填 null 代表获取默认的
      * @return /
      */
-    @Override
     public SaSignTemplate getSignTemplate(String client) {
         SaSignConfig signConfig = SaManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
         SaSsoClientModel clientModel = getClientNotNull(client);

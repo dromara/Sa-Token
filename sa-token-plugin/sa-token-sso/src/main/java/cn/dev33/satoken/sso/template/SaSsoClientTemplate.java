@@ -83,7 +83,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         String serverUrl = ssoConfig.splicingAuthUrl();
 
         // 拼接客户端标识
-        String client = ssoConfig.getClient();
+        String client = getClient();
         if(SaFoxUtil.isNotEmpty(client)) {
             serverUrl = SaFoxUtil.joinParam(serverUrl, paramName.client, client);
         }
@@ -135,8 +135,8 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         }
 
         // 构建参数字符串
-        paramMap.put(paramName.client, ssoConfig.getClient());
-        String signParamsStr = getSignTemplate(ssoConfig.getClient()).addSignParamsAndJoin(paramMap);
+        paramMap.put(paramName.client, getClient());
+        String signParamsStr = getSignTemplate().addSignParamsAndJoin(paramMap);
 
         // 拼接
         return SaFoxUtil.joinParam(url, signParamsStr);
@@ -153,7 +153,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         SaSsoClientConfig ssoConfig = getClientConfig();
         SaSsoMessage message = new SaSsoMessage();
         message.setType(SaSsoConsts.MESSAGE_CHECK_TICKET);
-        message.set(paramName.client, ssoConfig.getClient());
+        message.set(paramName.client, getClient());
         message.set(paramName.ticket, ticket);
         message.set(paramName.ssoLogoutCall, ssoLogoutCallUrl);
         return message;
@@ -170,7 +170,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         SaSsoClientConfig ssoConfig = getClientConfig();
         SaSsoMessage message = new SaSsoMessage();
         message.setType(SaSsoConsts.MESSAGE_SIGNOUT);
-        message.set(paramName.client, ssoConfig.getClient());
+        message.set(paramName.client, getClient());
         message.set(paramName.loginId, loginId);
         message.set(paramName.deviceId, logoutParameter.getDeviceId());
         return message;
@@ -193,9 +193,9 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         SaSsoException.notTrue(! SaFoxUtil.isUrl(pushUrl), "无效 push-url 地址：" + pushUrl, SaSsoErrorCode.CODE_30023);
 
         // 组织参数
-        message.set(paramName.client, ssoConfig.getClient());
+        message.set(paramName.client, getClient());
         message.checkType();
-        String paramsStr = getSignTemplate(ssoConfig.getClient()).addSignParamsAndJoin(message);
+        String paramsStr = getSignTemplate().addSignParamsAndJoin(message);
 
         // 发起请求
         String finalUrl = SaFoxUtil.joinParam(pushUrl, paramsStr);
@@ -226,12 +226,19 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     }
 
     /**
-     * 获取底层使用的 API 签名对象
-     * @param client 指定客户端标识，填 null 代表获取默认的
+     * 获取当前项目 client 标识
      * @return /
      */
-    @Override
-    public SaSignTemplate getSignTemplate(String client) {
+    public String getClient() {
+        return getClientConfig().getClient();
+    }
+
+    /**
+     * 获取底层使用的 API 签名对象
+     *
+     * @return /
+     */
+    public SaSignTemplate getSignTemplate() {
         SaSignConfig signConfig = SaManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
 
         // 使用 secretKey 的优先级：SSO 模块全局配置 > sign 模块默认配置
