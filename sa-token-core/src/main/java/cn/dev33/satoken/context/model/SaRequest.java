@@ -201,7 +201,7 @@ public interface SaRequest {
 	 * @return /
 	 */
 	default boolean isAjax() {
-		return getHeader("X-Requested-With") != null;
+		return "XMLHttpRequest".equalsIgnoreCase(getHeader("X-Requested-With")) || isParam("_ajax", "true");
 	}
 
 	/**

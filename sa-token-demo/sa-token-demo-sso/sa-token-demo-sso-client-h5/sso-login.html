@@ -11,81 +11,33 @@
 		<div class="login-box">
 			
 		</div>
-		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
-		<script>window.jQuery || alert('当前页面CDN服务商已宕机，请将所有js包更换为本地依赖')</script>
+		<script src="common.js"></script>
 		<script type="text/javascript">
 		
-			// 后端接口地址 
-			var baseUrl = "http://sa-sso-client1.com:9002";
-			
 			var back = getParam('back', '/');
 			var ticket = getParam('ticket');
-			$(function() {
+			
+			window.onload = function(){
 				if(ticket) {
 					doLoginByTicket(ticket);
 				} else {
 					goSsoAuthUrl();
 				}
-			})
+			}
 			
 			// 重定向至认证中心 
 			function goSsoAuthUrl() {
-				sa.ajax('/sso/getSsoAuthUrl', {clientLoginUrl: location.href}, function(res) {
-					console.log(res);
+				ajax('/sso/getSsoAuthUrl', {clientLoginUrl: location.href}, function(res) {
 					location.href = res.data;
 				})
 			}
 		
 			// 根据ticket值登录 
 			function doLoginByTicket(ticket) {
-				sa.ajax('/sso/doLoginByTicket', {ticket: ticket}, function(res) {
-					console.log(res);
-					if(res.code == 200) {
-						localStorage.setItem('satoken', res.data);
-						location.href = decodeURIComponent(back); 
-					} else {
-						alert(res.msg);
-					}
+				ajax('/sso/doLoginByTicket', {ticket: ticket}, function(res) {
+					localStorage.setItem('satoken', res.data);
+					location.href = decodeURIComponent(back); 
 				})
-			}
-			
-			// 从url中查询到指定名称的参数值 
-			function getParam(name, defaultValue){
-				var query = window.location.search.substring(1);
-				var vars = query.split("&");
-				for (var i=0;i<vars.length;i++) {
-					var pair = vars[i].split("=");
-					if(pair[0] == name){return pair[1];}
-				}
-				return(defaultValue == undefined ? null : defaultValue);
-			}
-			
-		</script>
-		<script type="text/javascript">
-			var sa = {};
-
-			// 封装一下Ajax
-			sa.ajax = function(url, data, successFn) {
-				// sa.loading("正在努力加载...");
-				$.ajax({
-					url: baseUrl + url,
-					type: "post", 
-					data: data,
-					dataType: 'json',
-					headers: {
-						satoken: localStorage.getItem('satoken')
-					},
-					success: function(res){
-						console.log('返回数据：', res);
-						successFn(res);
-					},
-					error: function(xhr, type, errorThrown){
-						if(xhr.status == 0){
-							return alert('无法连接到服务器，请检查网络');
-						}
-						return alert("异常：" + JSON.stringify(xhr));
-					}
-				});
 			}
 			
 		</script>

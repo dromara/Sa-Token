@@ -41,6 +41,9 @@ public class ParamName {
 	/** client参数名称 */
 	public String client = "client";
 
+	/** tokenName 参数 */
+	public String tokenName = "tokenName";
+
 	/** tokenValue 参数 */
 	public String tokenValue = "tokenValue";
 
@@ -71,5 +74,11 @@ public class ParamName {
 
 	/** singleDeviceIdLogout 参数 */
 	public String singleDeviceIdLogout = "singleDeviceIdLogout";
+
+	public String isLogin = "isLogin";
+	public String authUrl = "authUrl";
+	public String redirectUrl = "redirectUrl";
+	public String currSsoLoginUrl = "currSsoLoginUrl";
+
 
 }

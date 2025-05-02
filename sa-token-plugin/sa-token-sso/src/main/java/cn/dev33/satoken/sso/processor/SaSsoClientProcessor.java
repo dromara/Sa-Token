@@ -111,16 +111,17 @@ public class SaSsoClientProcessor {
 		String back = req.getParam(paramName.back, "/");
 		String ticket = req.getParam(paramName.ticket);
 
-		// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回
-		if(stpLogic.isLogin()) {
-			return res.redirect(back);
-		}
 		/*
 		 * 此时有两种情况:
 		 * 情况1：ticket无值，说明此请求是Client端访问，需要重定向至SSO认证中心
 		 * 情况2：ticket有值，说明此请求从SSO认证中心重定向而来，需要根据ticket进行登录
 		 */
 		if(ticket == null) {
+			// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回
+			if(stpLogic.isLogin()) {
+				return res.redirect(back);
+			}
+
 			// 获取当前项目的 sso 登录地址
 			// 全局配置了就是用全局的，否则使用当前请求的地址
 			String currSsoLoginUrl;

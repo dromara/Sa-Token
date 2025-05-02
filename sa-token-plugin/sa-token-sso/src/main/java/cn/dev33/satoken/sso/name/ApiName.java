@@ -47,6 +47,9 @@ public class ApiName {
 	/** SSO-Client端：单点注销地址 */ 
 	public String ssoLogout = "/sso/logout";
 
+	/** SSO-Client端：判断当前是否登录地址 */
+	public String ssoIsLogin = "/sso/isLogin";
+
 	/** SSO-Client端：单点注销的回调 */ 
 	public String ssoLogoutCall = "/sso/logoutCall";
 
@@ -67,6 +70,7 @@ public class ApiName {
 		this.ssoSignout  = prefix + this.ssoSignout;
 		this.ssoLogin = prefix + this.ssoLogin;
 		this.ssoLogout = prefix + this.ssoLogout;
+		this.ssoIsLogin = prefix + this.ssoIsLogin;
 		this.ssoPushC = prefix + this.ssoPushC;
 		this.ssoLogoutCall = prefix + this.ssoLogoutCall;
 		return this;
@@ -87,6 +91,7 @@ public class ApiName {
 		this.ssoSignout = this.ssoSignout.replaceFirst(oldPrefix, prefix);
 		this.ssoLogin = this.ssoLogin.replaceFirst(oldPrefix, prefix);
 		this.ssoLogout = this.ssoLogout.replaceFirst(oldPrefix, prefix);
+		this.ssoIsLogin = this.ssoIsLogin.replaceFirst(oldPrefix, prefix);
 		this.ssoPushC = this.ssoPushC.replaceFirst(oldPrefix, prefix);
 		this.ssoLogoutCall = this.ssoLogoutCall.replaceFirst(oldPrefix, prefix);
 		return this;

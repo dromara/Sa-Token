@@ -8,31 +8,18 @@
 		<h2>Sa-Token SSO-Client 应用端（前后端分离版-原生h5）</h2>
 		<p>当前是否登录：<b class="is-login"></b></p>
 		<p>
-			<a href="javascript:location.href='sso-login.html?back=' + encodeURIComponent(location.href);">登录</a>
-			<a href="javascript:location.href=baseUrl + '/sso/logout?satoken=' + localStorage.satoken + '&back=' + encodeURIComponent(location.href);">注销</a>
+			<a class="login-btn">登录</a>
+			<a class="logout-btn">注销</a>
 		</p>
-		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="common.js"></script>
 		<script type="text/javascript">
-		
-			// 后端接口地址 
-			var baseUrl = "http://sa-sso-client1.com:9002";
-				
-			// 查询当前会话是否登录 
-			$.ajax({
-				url: baseUrl + '/sso/isLogin',
-				type: "post", 
-				dataType: 'json',
-				headers: {
-					"X-Requested-With": "XMLHttpRequest",
-					"satoken": localStorage.getItem("satoken")
-				},
-				success: function(res){
-					$('.is-login').html(res.data + '');
-				},
-				error: function(xhr, type, errorThrown){
-					return alert("异常：" + JSON.stringify(xhr));
-				}
-			});
+			
+			document.querySelector('.login-btn').href = 'sso-login.html?back=' + encodeURIComponent(location.href);
+			document.querySelector('.logout-btn').href = baseUrl + '/sso/logout?satoken=' + localStorage.satoken + '&back=' + encodeURIComponent(location.href);
+			
+			ajax('/sso/isLogin', {}, function(res){
+				setHtml('.is-login', res.data);
+			})
 			
 		</script>
 	</body>

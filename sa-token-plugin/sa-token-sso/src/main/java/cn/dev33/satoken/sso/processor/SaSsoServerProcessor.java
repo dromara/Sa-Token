@@ -31,6 +31,7 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
+import cn.dev33.satoken.util.SaSugar;
 
 import java.util.Map;
 
@@ -113,43 +114,34 @@ public class SaSsoServerProcessor {
 		String redirect = req.getParam(paramName.redirect);
 		String client = req.getParam(paramName.client);
 
-		// 方式1：直接重定向回Client端 (mode=simple)
-		if(mode.equals(SaSsoConsts.MODE_SIMPLE)) {
-
-			// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
-			if(SaFoxUtil.isEmpty(redirect)) {
-				if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
-					throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
-				}
-				return res.redirect(cfg.getHomeRoute());
+		// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
+		if(SaFoxUtil.isEmpty(redirect)) {
+			if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
+				throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
 			}
-			ssoServerTemplate.checkRedirectUrl(client, redirect);
-			return res.redirect(redirect);
-		} else {
-			// 方式2：带着 ticket 参数重定向回Client端 (mode=ticket)
-
-			// 校验提供的client是否为非法字符
-			//			if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
-			//				throw new SaSsoException("无效 client 标识：" + client).setCode(SaSsoErrorCode.CODE_30013);
-			//			}
-
-			// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
-			if(SaFoxUtil.isEmpty(redirect)) {
-				if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
-					throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
-				}
-				return res.redirect(cfg.getHomeRoute());
-			}
-
-			// 构建并跳转
-			String redirectUrl = ssoServerTemplate.buildRedirectUrl(client, redirect, stpLogic.getLoginId(), stpLogic.getTokenValue());
-			// 构建成功，说明 redirect 地址合法，此时需要更新一下该账号的Session有效期
-			if(cfg.getAutoRenewTimeout()) {
-				stpLogic.renewTimeout(stpLogic.getConfigOrGlobal().getTimeout());
-			}
-			// 跳转
-			return res.redirect(redirectUrl);
+			return res.redirect(cfg.getHomeRoute());
 		}
+
+		String redirectUrl = SaSugar.get(() -> {
+			// 方式1：直接重定向回Client端 (mode=simple)
+			if(mode.equals(SaSsoConsts.MODE_SIMPLE)) {
+				ssoServerTemplate.checkRedirectUrl(client, redirect);
+				return redirect;
+			} else {
+				// 方式2：带着 ticket 参数重定向回Client端 (mode=ticket)
+
+				// 构建并跳转
+				String _redirectUrl = ssoServerTemplate.buildRedirectUrl(client, redirect, stpLogic.getLoginId(), stpLogic.getTokenValue());
+				// 构建成功，说明 redirect 地址合法，此时需要更新一下该账号的Session有效期
+				if(cfg.getAutoRenewTimeout()) {
+					stpLogic.renewTimeout(stpLogic.getConfigOrGlobal().getTimeout());
+				}
+				return _redirectUrl;
+			}
+		});
+
+		// 跳转
+		return res.redirect(redirectUrl);
 	}
 
 	/**

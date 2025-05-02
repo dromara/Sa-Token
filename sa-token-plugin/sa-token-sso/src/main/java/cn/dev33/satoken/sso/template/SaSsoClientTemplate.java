@@ -99,7 +99,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
          * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
          * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
          */
-        if( ! clientLoginUrl.contains(paramName.back + "=" + back) ) {
+        if( ! clientLoginUrl.contains(paramName.back + "=") ) {
             clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
         }
 
