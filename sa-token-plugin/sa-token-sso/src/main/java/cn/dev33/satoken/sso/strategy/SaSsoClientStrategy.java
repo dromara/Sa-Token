@@ -16,6 +16,7 @@
 package cn.dev33.satoken.sso.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.SaParamRetFunction;
 import cn.dev33.satoken.sso.function.SendHttpFunction;
 import cn.dev33.satoken.sso.function.TicketResultHandleFunction;
 
@@ -35,10 +36,30 @@ public class SaSsoClientStrategy {
     };
 
     /**
-     * SSO-Client端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
+     * 自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
      * <p> 参数：loginId, back
      * <p> 返回值：返回给前端的值
      */
     public TicketResultHandleFunction ticketResultHandle = null;
+
+    /**
+     * 转换：认证中心 centerId > 本地 loginId
+     *
+     * <p> 参数：认证中心 centerId
+     * <p> 返回值：本地 loginId
+     */
+    public SaParamRetFunction<Object, Object> convertCenterIdToLoginId = (centerId) -> {
+        return centerId;
+    };
+
+    /**
+     * 转换：本地 loginId > 认证中心 centerId
+     *
+     * <p> 参数：本地 loginId
+     * <p> 返回值：认证中心 centerId
+     */
+    public SaParamRetFunction<Object, Object> convertLoginIdToCenterId = (loginId) -> {
+        return loginId;
+    };
 
 }

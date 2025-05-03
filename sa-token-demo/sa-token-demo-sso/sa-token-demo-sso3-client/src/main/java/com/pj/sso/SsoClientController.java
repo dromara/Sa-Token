@@ -24,7 +24,7 @@ public class SsoClientController {
 	@RequestMapping("/")
 	public String index() {
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
+					"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
 					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a>" + 
 					" <a href='/sso/logout?back=self'>注销</a></p>";
 		return str;
@@ -44,6 +44,14 @@ public class SsoClientController {
 	// 配置SSO相关参数 
 	@Autowired
 	private void configSso(SaSsoClientTemplate ssoClientTemplate) {
+		// 将 centerId 转换为 loginId 的函数
+		ssoClientTemplate.strategy.convertCenterIdToLoginId = (centerId) -> {
+			return "Stu_" + centerId;
+		};
+		// 将 loginId 转换为 centerId 的函数
+		ssoClientTemplate.strategy.convertLoginIdToCenterId = (loginId) -> {
+			return loginId.toString().substring(4);
+		};
 
 	}
 	

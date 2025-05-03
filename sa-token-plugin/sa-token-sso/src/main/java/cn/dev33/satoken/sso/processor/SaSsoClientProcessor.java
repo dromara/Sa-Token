@@ -136,6 +136,8 @@ public class SaSsoClientProcessor {
 		} else {
 			// 1、校验ticket，获取 loginId
 			SaCheckTicketResult ctr = checkTicket(ticket, apiName.ssoLogin);
+			ctr.centerId = ctr.loginId;
+			ctr.loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(ctr.centerId);
 
 			// 2、如果开发者自定义了ticket结果值处理函数，则使用自定义的函数
 			if(ssoClientTemplate.strategy.ticketResultHandle != null) {
@@ -230,7 +232,8 @@ public class SaSsoClientProcessor {
 		if(singleDeviceIdLogout) {
 			logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
 		}
-		SaSsoMessage message = ssoClientTemplate.buildSloMessage(stpLogic.getLoginId(), logoutParameter);
+		Object centerId = ssoClientTemplate.strategy.convertLoginIdToCenterId.run(stpLogic.getLoginId());
+		SaSsoMessage message = ssoClientTemplate.buildSloMessage(centerId, logoutParameter);
 		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
 
 		// 校验响应状态码
@@ -259,7 +262,8 @@ public class SaSsoClientProcessor {
 		SaSsoClientConfig ssoConfig = ssoClientTemplate.getClientConfig();
 
 		// 获取参数
-		String loginId = req.getParamNotNull(paramName.loginId);
+		Object loginId = req.getParamNotNull(paramName.loginId);
+		loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(loginId);
 		String deviceId = req.getParam(paramName.deviceId);
 		// String client = req.getParam(paramName.client);
 		// String autoLogout = req.getParam(paramName.autoLogout);

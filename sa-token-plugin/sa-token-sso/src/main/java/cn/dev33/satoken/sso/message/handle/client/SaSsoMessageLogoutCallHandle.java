@@ -64,7 +64,8 @@ public class SaSsoMessageLogoutCallHandle implements SaSsoMessageHandle {
         ParamName paramName = ssoClientTemplate.paramName;
 
         // 获取参数
-        String loginId = req.getParamNotNull(paramName.loginId);
+        Object loginId = req.getParamNotNull(paramName.loginId);
+        loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(loginId);
         String deviceId = message.getString(paramName.deviceId);
 
         // 注销当前应用端会话

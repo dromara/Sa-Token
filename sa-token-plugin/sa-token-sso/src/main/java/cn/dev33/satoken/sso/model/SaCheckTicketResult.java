@@ -47,6 +47,9 @@ public class SaCheckTicketResult implements Serializable {
     /** 从 sso-server 返回的所有参数 */
     public SaResult result;
 
+    /** 此账号在认证中心的 loginId */
+    public Object centerId;
+
     public SaCheckTicketResult() {
     }
 
