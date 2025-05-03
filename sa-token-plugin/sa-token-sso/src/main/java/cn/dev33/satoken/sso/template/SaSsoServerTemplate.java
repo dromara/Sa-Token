@@ -29,6 +29,7 @@ import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageCheckTicketHandle;
 import cn.dev33.satoken.sso.message.handle.server.SaSsoMessageSignoutHandle;
 import cn.dev33.satoken.sso.model.SaSsoClientInfo;
 import cn.dev33.satoken.sso.model.TicketModel;
+import cn.dev33.satoken.sso.strategy.SaSsoServerStrategy;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.strategy.SaStrategy;
@@ -44,6 +45,11 @@ import java.util.*;
  * @since 1.38.0
  */
 public class SaSsoServerTemplate extends SaSsoTemplate {
+
+    /**
+     * Server 相关策略
+     */
+    public SaSsoServerStrategy strategy = new SaSsoServerStrategy();
 
     public SaSsoServerTemplate() {
         super.messageHolder.addHandle(new SaSsoMessageCheckTicketHandle());
@@ -634,11 +640,23 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
 
         // 发起请求
-        request(finalUrl);
+        strategy.sendHttp.apply(finalUrl);
     }
 
 
     // ------------------- 消息推送 -------------------
+
+    /**
+     * 发送 Http 请求，并将响应结果转换为 SaResult
+     *
+     * @param url 请求地址
+     * @return 返回的结果
+     */
+    public SaResult requestAsSaResult(String url) {
+        String body = strategy.sendHttp.apply(url);;
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
+        return new SaResult(map);
+    }
 
     /**
      * 向指定 Client 推送消息
@@ -651,7 +669,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         String noticeUrl = clientModel.splicingNoticeUrl();
         String paramsStr = getSignTemplate(clientModel.getClient()).addSignParamsAndJoin(message);
         String finalUrl = SaFoxUtil.joinParam(noticeUrl, paramsStr);
-        return request(finalUrl);
+        return strategy.sendHttp.apply(finalUrl);
     }
 
     /**

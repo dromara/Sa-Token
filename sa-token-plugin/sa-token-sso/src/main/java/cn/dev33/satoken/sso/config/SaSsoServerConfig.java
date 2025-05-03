@@ -16,12 +16,8 @@
 package cn.dev33.satoken.sso.config;
 
 
-import cn.dev33.satoken.sso.function.CheckTicketAppendDataFunction;
-import cn.dev33.satoken.sso.function.DoLoginHandleFunction;
-import cn.dev33.satoken.sso.function.NotLoginViewFunction;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
-import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -120,31 +116,6 @@ public class SaSsoServerConfig implements Serializable {
         this.clients.put(client.getClient(), client);
         return this;
     }
-
-
-    // -------------------- 所有回调函数 --------------------
-
-
-    /**
-     * SSO-Server端：未登录时返回的View
-     */
-    public NotLoginViewFunction notLoginView = () -> {
-        return "当前会话在SSO-Server认证中心尚未登录（当前未配置登录视图）";
-    };
-
-    /**
-     * SSO-Server端：登录函数
-     */
-    public DoLoginHandleFunction doLoginHandle = (name, pwd) -> {
-        return SaResult.error();
-    };
-
-    /**
-     * SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
-     */
-    public CheckTicketAppendDataFunction checkTicketAppendData = (loginId, result) -> {
-        return result;
-    };
 
 
     // get set
@@ -362,6 +333,5 @@ public class SaSsoServerConfig implements Serializable {
                 + ", clients=" + clients
                 + "]";
     }
-
 
 }

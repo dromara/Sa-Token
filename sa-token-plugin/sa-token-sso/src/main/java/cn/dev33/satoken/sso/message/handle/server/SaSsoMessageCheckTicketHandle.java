@@ -94,7 +94,7 @@ public class SaSsoMessageCheckTicketHandle implements SaSsoMessageHandle {
         result.set(paramName.remainTokenTimeout, stpLogic.getTokenTimeout(ticketModel.getTokenValue()));
         result.set(paramName.remainSessionTimeout, stpLogic.getSessionTimeoutByLoginId(loginId));
 
-        result = ssoServerConfig.checkTicketAppendData.apply(loginId, result);
+        result = ssoServerTemplate.strategy.checkTicketAppendData.apply(loginId, result);
         return result;
     }
 

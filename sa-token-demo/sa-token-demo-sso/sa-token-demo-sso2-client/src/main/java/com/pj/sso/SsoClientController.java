@@ -1,8 +1,8 @@
 package com.pj.sso;
 
 import cn.dev33.satoken.sso.SaSsoManager;
-import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class SsoClientController {
 
 	// 配置SSO相关参数
 	@Autowired
-	private void configSso(SaSsoClientConfig ssoClient) {
+	private void configSso(SaSsoClientTemplate ssoClientTemplate) {
 
 	}
 

@@ -24,6 +24,7 @@ import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.client.SaSsoMessageLogoutCallHandle;
+import cn.dev33.satoken.sso.strategy.SaSsoClientStrategy;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -39,10 +40,14 @@ import java.util.Map;
  */
 public class SaSsoClientTemplate extends SaSsoTemplate {
 
+    /**
+     * Client 相关策略
+     */
+    public SaSsoClientStrategy strategy = new SaSsoClientStrategy();
+
     public SaSsoClientTemplate() {
         super.messageHolder.addHandle(new SaSsoMessageLogoutCallHandle());
     }
-
 
 
     // ------------------- SSO 模式三相关 -------------------
@@ -65,7 +70,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
      */
     public Object getData(String path, Map<String, Object> paramMap) {
         String url = buildCustomPathUrl(path, paramMap);
-        return request(url);
+        return strategy.sendHttp.apply(url);
     }
 
     // ---------------------- 构建URL ----------------------
@@ -87,7 +92,6 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         if(SaFoxUtil.isNotEmpty(client)) {
             serverUrl = SaFoxUtil.joinParam(serverUrl, paramName.client, client);
         }
-
 
         // 对back地址编码
         back = (back == null ? "" : back);
@@ -180,6 +184,18 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     // ------------------- 消息推送 -------------------
 
     /**
+     * 发送 Http 请求，并将响应结果转换为 SaResult
+     *
+     * @param url 请求地址
+     * @return 返回的结果
+     */
+    public SaResult requestAsSaResult(String url) {
+        String body = strategy.sendHttp.apply(url);
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
+        return new SaResult(map);
+    }
+
+    /**
      * 向 sso-server 推送消息
      *
      * @param message /
@@ -199,7 +215,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
         // 发起请求
         String finalUrl = SaFoxUtil.joinParam(pushUrl, paramsStr);
-        return request(finalUrl);
+        return strategy.sendHttp.apply(finalUrl);
     }
 
     /**

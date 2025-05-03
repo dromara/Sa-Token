@@ -138,8 +138,8 @@ public class SaSsoClientProcessor {
 			SaCheckTicketResult ctr = checkTicket(ticket, apiName.ssoLogin);
 
 			// 2、如果开发者自定义了ticket结果值处理函数，则使用自定义的函数
-			if(cfg.ticketResultHandle != null) {
-				return cfg.ticketResultHandle.run(ctr, back);
+			if(ssoClientTemplate.strategy.ticketResultHandle != null) {
+				return ssoClientTemplate.strategy.ticketResultHandle.run(ctr, back);
 			}
 
 			// 3、登录并重定向至back地址

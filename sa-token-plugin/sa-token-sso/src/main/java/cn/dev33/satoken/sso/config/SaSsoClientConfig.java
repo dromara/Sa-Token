@@ -16,7 +16,6 @@
 package cn.dev33.satoken.sso.config;
 
 
-import cn.dev33.satoken.sso.function.TicketResultHandleFunction;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
@@ -131,16 +130,6 @@ public class SaSsoClientConfig implements Serializable {
     public String splicingPushUrl() {
         return SaFoxUtil.spliceTwoUrl(getServerUrl(), getPushUrl());
     }
-
-
-    // -------------------- 所有回调函数 --------------------
-
-    /**
-     * SSO-Client端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
-     * <p> 参数：loginId, back
-     * <p> 返回值：返回给前端的值
-     */
-    public TicketResultHandleFunction ticketResultHandle = null;
 
 
     // get set

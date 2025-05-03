@@ -2,8 +2,8 @@ package com.pj.sso;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sign.SaSignUtil;
-import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
+import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -35,15 +35,15 @@ public class SsoServerController {
 
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSso(SaSsoServerConfig ssoServer) {
-		
+	private void configSso(SaSsoServerTemplate ssoServerTemplate) {
+
 		// 配置：未登录时返回的View 
-		ssoServer.notLoginView = () -> {
+		ssoServerTemplate.strategy.notLoginView = () -> {
 			return new ModelAndView("sa-login.html");
 		};
 		
 		// 配置：登录处理函数 
-		ssoServer.doLoginHandle = (name, pwd) -> {
+		ssoServerTemplate.strategy.doLoginHandle = (name, pwd) -> {
 			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				String deviceId = SaHolder.getRequest().getParam("deviceId", SaFoxUtil.getRandomString(32));

@@ -18,6 +18,10 @@ package cn.dev33.satoken.solon.sso;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
+import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
+import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
@@ -60,4 +64,25 @@ public class SaSsoBeanRegister {
 			return clientConfig;
 		}
 	}
+
+	/**
+	 * 获取 SSO Server 端 SaSsoServerTemplate
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaSsoServerTemplate getSaSsoServerTemplate() {
+		return SaSsoServerProcessor.instance.ssoServerTemplate;
+	}
+
+	/**
+	 * 获取 SSO Client 端 SaSsoClientTemplate
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaSsoClientTemplate getSaSsoClientTemplate() {
+		return SaSsoClientProcessor.instance.ssoClientTemplate;
+	}
+
 }

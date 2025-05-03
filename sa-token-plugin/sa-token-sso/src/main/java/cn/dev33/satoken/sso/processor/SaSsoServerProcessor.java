@@ -107,7 +107,7 @@ public class SaSsoServerProcessor {
 		// ---------- 此处有两种情况分开处理：
 		// ---- 情况1：在SSO认证中心尚未登录，需要先去登录
 		if( ! stpLogic.isLogin()) {
-			return cfg.notLoginView.get();
+			return ssoServerTemplate.strategy.notLoginView.get();
 		}
 		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
 		String mode = req.getParam(paramName.mode, SaSsoConsts.MODE_TICKET);
@@ -155,7 +155,7 @@ public class SaSsoServerProcessor {
 		ParamName paramName = ssoServerTemplate.paramName;
 
 		// 处理
-		return cfg.doLoginHandle.apply(req.getParam(paramName.name), req.getParam(paramName.pwd));
+		return ssoServerTemplate.strategy.doLoginHandle.apply(req.getParam(paramName.name), req.getParam(paramName.pwd));
 	}
 
 	/**

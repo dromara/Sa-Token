@@ -76,27 +76,15 @@ public class SaSsoTemplate {
 
 	public SaSsoMessageHolder messageHolder = new SaSsoMessageHolder();
 
-	/**
-	 * 发送 Http 请求
-	 *
-	 * @param url /
-	 * @return /
-	 */
-	public String request(String url) {
-		return SaManager.getSaHttpTemplate().get(url);
-	}
-
-	/**
-	 * 发送 Http 请求，并将响应结果转换为 SaResult
-	 *
-	 * @param url 请求地址
-	 * @return 返回的结果
-	 */
-	public SaResult requestAsSaResult(String url) {
-		String body = request(url);
-		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
-		return new SaResult(map);
-	}
+//	/**
+//	 * 发送 Http 请求
+//	 *
+//	 * @param url /
+//	 * @return /
+//	 */
+//	public String request(String url) {
+//		return SaManager.getSaHttpTemplate().get(url);
+//	}
 
 	/**
 	 * 处理指定消息

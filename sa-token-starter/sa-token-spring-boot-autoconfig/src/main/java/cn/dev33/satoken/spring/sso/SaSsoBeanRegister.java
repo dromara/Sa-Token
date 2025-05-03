@@ -18,6 +18,10 @@ package cn.dev33.satoken.spring.sso;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
+import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
+import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
+import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -49,6 +53,26 @@ public class SaSsoBeanRegister {
 	@ConfigurationProperties(prefix = "sa-token.sso-client")
 	public SaSsoClientConfig getSaSsoClientConfig() {
 		return new SaSsoClientConfig();
+	}
+
+	/**
+	 * 获取 SSO Server 端 SaSsoServerTemplate
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaSsoServerTemplate getSaSsoServerTemplate() {
+		return SaSsoServerProcessor.instance.ssoServerTemplate;
+	}
+
+	/**
+	 * 获取 SSO Client 端 SaSsoClientTemplate
+	 *
+	 * @return /
+	 */
+	@Bean
+	public SaSsoClientTemplate getSaSsoClientTemplate() {
+		return SaSsoClientProcessor.instance.ssoClientTemplate;
 	}
 
 }
