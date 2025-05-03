@@ -18,7 +18,11 @@
 			document.querySelector('.logout-btn').href = baseUrl + '/sso/logout?satoken=' + localStorage.satoken + '&back=' + encodeURIComponent(location.href);
 			
 			ajax('/sso/isLogin', {}, function(res){
-				setHtml('.is-login', res.data);
+				if(res.data) {
+					setHtml('.is-login', res.data + ' (' + res.loginId + ')');
+				} else {
+					setHtml('.is-login', res.data);
+				}
 			})
 			
 		</script>

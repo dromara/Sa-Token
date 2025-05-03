@@ -22,7 +22,7 @@ public class H5Controller {
 	// 当前是否登录 
 	@RequestMapping("/sso/isLogin")
 	public Object isLogin() {
-		return SaResult.data(StpUtil.isLogin());
+		return SaResult.data(StpUtil.isLogin()).set("loginId", StpUtil.getLoginIdDefaultNull());
 	}
 	
 	// 返回SSO认证中心登录地址 
