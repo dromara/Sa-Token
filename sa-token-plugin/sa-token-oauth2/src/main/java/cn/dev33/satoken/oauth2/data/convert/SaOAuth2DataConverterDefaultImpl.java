@@ -45,9 +45,10 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         if(SaFoxUtil.isEmpty(scopeString)) {
             return new ArrayList<>();
         }
-        // 兼容以下三种分隔符：空格、逗号、%20
+        // 兼容以下三种分隔符：空格、逗号、%20、加号
         scopeString = scopeString.replaceAll(" ", ",");
         scopeString = scopeString.replaceAll("%20", ",");
+        scopeString = scopeString.replaceAll("+", ",");
         return SaFoxUtil.convertStringToList(scopeString);
     }
 
