@@ -16,6 +16,7 @@
 package cn.dev33.satoken.sso.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.sso.function.CheckTicketAppendDataFunction;
 import cn.dev33.satoken.sso.function.DoLoginHandleFunction;
 import cn.dev33.satoken.sso.function.NotLoginViewFunction;
@@ -49,6 +50,13 @@ public class SaSsoServerStrategy {
      */
     public DoLoginHandleFunction doLoginHandle = (name, pwd) -> {
         return SaResult.error();
+    };
+
+    /**
+     * SSO-Server端：在授权重定向之前的通知
+     */
+    public SaParamFunction<String> jumpToRedirectUrlNotice = (redirectUrl) -> {
+
     };
 
     /**

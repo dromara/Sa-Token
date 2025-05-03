@@ -44,11 +44,11 @@ public class SaCheckTicketResult implements Serializable {
     /** 此账号会话剩余有效期 */
     public Long remainSessionTimeout;
 
-    /** 从 sso-server 返回的所有参数 */
-    public SaResult result;
-
     /** 此账号在认证中心的 loginId */
     public Object centerId;
+
+    /** 从 sso-server 返回的所有参数 */
+    public SaResult result;
 
     public SaCheckTicketResult() {
     }
@@ -61,6 +61,7 @@ public class SaCheckTicketResult implements Serializable {
                 ", deviceId='" + deviceId + '\'' +
                 ", remainTokenTimeout=" + remainTokenTimeout +
                 ", remainSessionTimeout=" + remainSessionTimeout +
+                ", centerId=" + centerId +
                 ", result=" + result +
                 '}';
     }

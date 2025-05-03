@@ -119,6 +119,7 @@ public class SaSsoServerProcessor {
 			if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
 				throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
 			}
+			ssoServerTemplate.strategy.jumpToRedirectUrlNotice.run(cfg.getHomeRoute());
 			return res.redirect(cfg.getHomeRoute());
 		}
 
@@ -141,6 +142,7 @@ public class SaSsoServerProcessor {
 		});
 
 		// 跳转
+		ssoServerTemplate.strategy.jumpToRedirectUrlNotice.run(redirectUrl);
 		return res.redirect(redirectUrl);
 	}
 
