@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Sa-Token SSO 单点登录模块 配置类 （Server端）
+ * Sa-Token SSO Server 端 配置类
  *
  * @author click33
  * @since 1.38.0
@@ -43,7 +43,7 @@ public class SaSsoServerConfig implements Serializable {
     public String mode = "";
 
     /**
-     * Ticket有效期 (单位: 秒)
+     * ticket 有效期 (单位: 秒)
      */
     public long ticketTimeout = 60 * 5;
 
@@ -53,7 +53,7 @@ public class SaSsoServerConfig implements Serializable {
     public String homeRoute;
 
     /**
-     * 是否打开单点注销功能
+     * 是否打开单点注销功能 (为 true 时接收 client 端推送的单点注销消息)
      */
     public Boolean isSlo = true;
 
@@ -98,7 +98,7 @@ public class SaSsoServerConfig implements Serializable {
     // 额外方法
 
     /**
-     * 以数组形式写入允许的授权回调地址
+     * 以数组形式写入允许的授权回调地址 (不在此列表中的URL将禁止下放ticket) (匿名 client 使用)
      * @param url 所有集合
      * @return 对象自身
      */
@@ -139,14 +139,14 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * @return Ticket有效期 (单位: 秒)
+     * @return ticket 有效期 (单位: 秒)
      */
     public long getTicketTimeout() {
         return ticketTimeout;
     }
 
     /**
-     * @param ticketTimeout Ticket有效期 (单位: 秒)
+     * @param ticketTimeout ticket 有效期 (单位: 秒)
      * @return 对象自身
      */
     public SaSsoServerConfig setTicketTimeout(long ticketTimeout) {
@@ -192,14 +192,14 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * @return 是否打开单点注销功能
+     * @return 是否打开单点注销功能 (为 true 时接收 client 端推送的单点注销消息)
      */
     public Boolean getIsSlo() {
         return isSlo;
     }
 
     /**
-     * @param isSlo 是否打开单点注销功能
+     * @param isSlo 是否打开单点注销功能 (为 true 时接收 client 端推送的单点注销消息)
      * @return 对象自身
      */
     public SaSsoServerConfig setIsSlo(Boolean isSlo) {

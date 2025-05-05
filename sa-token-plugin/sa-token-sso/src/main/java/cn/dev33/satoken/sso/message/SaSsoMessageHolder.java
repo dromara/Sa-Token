@@ -25,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Sa-Token SSO 消息处理器持有者
+ * SSO 消息处理器 - 持有器
  *
  * @author click33
  * @since 1.43.0
@@ -33,7 +33,7 @@ import java.util.Map;
 public class SaSsoMessageHolder {
 
     /**
-     * 所有消息处理器的集合
+     * 所有已注册的消息处理器
      */
     public final Map<String, SaSsoMessageHandle> messageHandleMap = new LinkedHashMap<>();
 
@@ -61,6 +61,7 @@ public class SaSsoMessageHolder {
      * 添加指定类型的消息处理器
      *
      * @param handle /
+     * @return 对象自身
      */
     public SaSsoMessageHolder addHandle(SaSsoMessageHandle handle) {
         messageHandleMap.put(handle.getHandlerType(), handle);
@@ -81,7 +82,7 @@ public class SaSsoMessageHolder {
      *
      * @param ssoTemplate /
      * @param message /
-     * @return /
+     * @return 处理结果
      */
     public Object handleMessage(SaSsoTemplate ssoTemplate, SaSsoMessage message) {
         SaSsoMessageHandle handle = messageHandleMap.get(message.getType());

@@ -70,22 +70,22 @@ public class SaSsoClientProcessor {
 
 		// ------------------ 路由分发 ------------------
 
-		// ---------- SSO-Client端：登录地址
+		// sso-client：登录地址
 		if(req.isPath(apiName.ssoLogin)) {
 			return ssoLogin();
 		}
 
-		// ---------- SSO-Client端：单点注销
+		// sso-client：单点注销
 		if(req.isPath(apiName.ssoLogout)) {
 			return ssoLogout();
 		}
 
-		// ---------- SSO-Client端：接收消息推送
+		// sso-client：接收消息推送
 		if(req.isPath(apiName.ssoPushC)) {
 			return ssoPushC();
 		}
 
-		// ---------- SSO-Client端：单点注销的回调 	[模式三]
+		// sso-client：单点注销的回调
 		if(req.isPath(apiName.ssoLogoutCall) && cfg.getRegLogoutCall()) {
 			return ssoLogoutCall();
 		}
@@ -101,55 +101,18 @@ public class SaSsoClientProcessor {
 	public Object ssoLogin() {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
-		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
-		ApiName apiName = ssoClientTemplate.apiName;
 		ParamName paramName = ssoClientTemplate.paramName;
-
-		// 获取参数
-		String back = req.getParam(paramName.back, "/");
 		String ticket = req.getParam(paramName.ticket);
 
 		/*
 		 * 此时有两种情况:
-		 * 情况1：ticket无值，说明此请求是Client端访问，需要重定向至SSO认证中心
-		 * 情况2：ticket有值，说明此请求从SSO认证中心重定向而来，需要根据ticket进行登录
+		 * 		情况1：ticket 无值，说明此请求是 sso-client 端访问，需要重定向至 sso-server 认证中心
+		 * 		情况2：ticket 有值，说明此请求从 sso-server 认证中心重定向而来，需要根据 ticket 进行登录
 		 */
 		if(ticket == null) {
-			// 如果当前Client端已经登录，则无需访问SSO认证中心，可以直接返回
-			if(stpLogic.isLogin()) {
-				return res.redirect(back);
-			}
-
-			// 获取当前项目的 sso 登录地址
-			// 全局配置了就是用全局的，否则使用当前请求的地址
-			String currSsoLoginUrl;
-			if(SaFoxUtil.isNotEmpty(cfg.getCurrSsoLogin())) {
-				currSsoLoginUrl = cfg.getCurrSsoLogin();
-			} else {
-				currSsoLoginUrl = SaHolder.getRequest().getUrl();
-			}
-			// 构建url
-			String serverAuthUrl = ssoClientTemplate.buildServerAuthUrl(currSsoLoginUrl, back);
-			return res.redirect(serverAuthUrl);
+			return _goServerAuth();
 		} else {
-			// 1、校验ticket，获取 loginId
-			SaCheckTicketResult ctr = checkTicket(ticket, apiName.ssoLogin);
-			ctr.centerId = ctr.loginId;
-			ctr.loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(ctr.centerId);
-
-			// 2、如果开发者自定义了ticket结果值处理函数，则使用自定义的函数
-			if(ssoClientTemplate.strategy.ticketResultHandle != null) {
-				return ssoClientTemplate.strategy.ticketResultHandle.run(ctr, back);
-			}
-
-			// 3、登录并重定向至back地址
-			stpLogic.login(ctr.loginId, new SaLoginParameter()
-					.setTimeout(ctr.remainTokenTimeout)
-					.setDeviceId(ctr.deviceId)
-			);
-			return res.redirect(back);
+			return _loginByTicket();
 		}
 	}
 
@@ -162,9 +125,10 @@ public class SaSsoClientProcessor {
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
 
 		// 无论登录时选择的是模式二还是模式三
-		//  在注销时都应该按照模式三的方法，通过 http 请求调用 sso-server 的单点注销接口来做到全端下线
+		// 		在注销时都应该按照模式三的方法，通过 http 请求调用 sso-server 的单点注销接口来做到全端下线
+		//		如果按照模式二的方法注销，则会导致按照模式三登录的应用无法参与到单点注销环路中来
 		if(cfg.getIsSlo()) {
-			return ssoLogoutByMode3();
+			return _ssoLogoutByMode3();
 		}
 
 		// 默认返回
@@ -193,63 +157,6 @@ public class SaSsoClientProcessor {
 	}
 
 	/**
-	 * SSO-Client端：单点注销 [模式二]
-	 * @return 处理结果
-	 */
-	public Object ssoLogoutByMode2() {
-		// 获取对象
-		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
-
-		// 开始处理
-		if(stpLogic.isLogin()) {
-			stpLogic.logout(stpLogic.getLoginId());
-		}
-
-		// 返回
-		return ssoLogoutBack(req, res);
-	}
-
-	/**
-	 * SSO-Client端：单点注销 [模式三]
-	 * @return 处理结果
-	 */
-	public Object ssoLogoutByMode3() {
-		// 获取对象
-		SaRequest req = SaHolder.getRequest();
-		SaResponse res = SaHolder.getResponse();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
-		boolean singleDeviceIdLogout = req.isParam(ssoClientTemplate.paramName.singleDeviceIdLogout, "true");
-
-		// 如果未登录，则无需注销
-		if( ! stpLogic.isLogin()) {
-			return ssoLogoutBack(req, res);
-		}
-
-		// 调用 sso-server 认证中心单点注销API
-		SaLogoutParameter logoutParameter = stpLogic.createSaLogoutParameter();
-		if(singleDeviceIdLogout) {
-			logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
-		}
-		Object centerId = ssoClientTemplate.strategy.convertLoginIdToCenterId.run(stpLogic.getLoginId());
-		SaSsoMessage message = ssoClientTemplate.buildSloMessage(centerId, logoutParameter);
-		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
-
-		// 校验响应状态码
-		if(result.getCode() != null && SaResult.CODE_SUCCESS == result.getCode()) {
-			// 极端场景下，sso-server 中心的单点注销可能并不会通知到此 client 端，所以这里需要再补一刀
-			if(stpLogic.isLogin()) {
-				stpLogic.logout();
-			}
-			return ssoLogoutBack(req, res);
-		} else {
-			// 将 sso-server 回应的消息作为异常抛出
-			throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30006);
-		}
-	}
-
-	/**
 	 * SSO-Client端：单点注销的回调 [模式三]
 	 * @return 处理结果
 	 */
@@ -265,8 +172,6 @@ public class SaSsoClientProcessor {
 		Object loginId = req.getParamNotNull(paramName.loginId);
 		loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(loginId);
 		String deviceId = req.getParam(paramName.deviceId);
-		// String client = req.getParam(paramName.client);
-		// String autoLogout = req.getParam(paramName.autoLogout);
 
 		// 校验参数签名
 		if(ssoConfig.getIsCheckSign()) {
@@ -283,7 +188,109 @@ public class SaSsoClientProcessor {
 		return SaResult.ok("单点注销回调成功");
 	}
 
-	// 工具方法
+	// 次级方法
+
+	/**
+	 * 跳转去 sso-server 认证中心
+	 * @return /
+	 */
+	public Object _goServerAuth() {
+		// 获取对象
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		ParamName paramName = ssoClientTemplate.paramName;
+
+		// 获取参数
+		String back = req.getParam(paramName.back, "/");
+
+		// 如果当前 sso-client 端已经登录，则无需访问 SSO 认证中心，可以直接返回
+		if(stpLogic.isLogin()) {
+			return res.redirect(back);
+		}
+
+		// 获取当前项目的 sso 登录中转页地址，形如：http://sso-client.com/sso/login
+		// 		全局配置了就是用全局的，否则使用当前请求的地址
+		String currSsoLoginUrl = cfg.getCurrSsoLogin();
+		if(SaFoxUtil.isEmpty(currSsoLoginUrl)) {
+			currSsoLoginUrl = SaHolder.getRequest().getUrl();
+		}
+		// 构建最终授权地址 url，形如：http://sso-server.com/sso/auth?redirectUrl=http://sso-client.com/sso/login?back=http://sso-client.com
+		String serverAuthUrl = ssoClientTemplate.buildServerAuthUrl(currSsoLoginUrl, back);
+		return res.redirect(serverAuthUrl);
+	}
+
+	/**
+	 * 根据认证中心回传的 ticket 进行登录
+	 * @return /
+	 */
+	public Object _loginByTicket() {
+		// 获取对象
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		ParamName paramName = ssoClientTemplate.paramName;
+		ApiName apiName = ssoClientTemplate.apiName;
+
+		// 获取参数
+		String back = req.getParam(paramName.back, "/");
+		String ticket = req.getParam(paramName.ticket);
+
+		// 1、校验 ticket，获取 loginId 等数据
+		SaCheckTicketResult ctr = checkTicket(ticket, apiName.ssoLogin);
+		ctr.centerId = ctr.loginId;
+		ctr.loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(ctr.centerId);
+
+		// 2、如果开发者自定义了 ticket 结果值处理函数，则使用自定义的函数
+		if(ssoClientTemplate.strategy.ticketResultHandle != null) {
+			return ssoClientTemplate.strategy.ticketResultHandle.run(ctr, back);
+		}
+
+		// 3、登录并重定向至back地址
+		stpLogic.login(ctr.loginId, new SaLoginParameter()
+				.setTimeout(ctr.remainTokenTimeout)
+				.setDeviceId(ctr.deviceId)
+		);
+		return res.redirect(back);
+	}
+
+	/**
+	 * SSO-Client端：单点注销 [模式三]
+	 * @return 处理结果
+	 */
+	public Object _ssoLogoutByMode3() {
+		// 获取对象
+		SaRequest req = SaHolder.getRequest();
+		SaResponse res = SaHolder.getResponse();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		boolean singleDeviceIdLogout = req.isParam(ssoClientTemplate.paramName.singleDeviceIdLogout, "true");
+
+		// 如果未登录，则无需注销
+		if( ! stpLogic.isLogin()) {
+			return _ssoLogoutBack(req, res);
+		}
+
+		// 向 sso-server 认证中心推送消息：单点注销
+		SaLogoutParameter logoutParameter = stpLogic.createSaLogoutParameter();
+		if(singleDeviceIdLogout) {
+			logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
+		}
+		Object centerId = ssoClientTemplate.strategy.convertLoginIdToCenterId.run(stpLogic.getLoginId());
+		SaSsoMessage message = ssoClientTemplate.buildSloMessage(centerId, logoutParameter);
+		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
+
+		// 如果 sso-server 响应的状态码非200，代表业务失败，将回应的 msg 字段作为异常抛出
+		if(result.getCode() == null || SaResult.CODE_SUCCESS != result.getCode()) {
+			throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30006);
+		}
+
+		// 极端场景下，sso-server 中心的单点注销可能并不会通知到当前 client 端，所以这里需要再补一刀
+		if(stpLogic.isLogin()) {
+			stpLogic.logout(logoutParameter);
+		}
+		return _ssoLogoutBack(req, res);
+	}
 
 	/**
 	 * 封装：校验ticket，取出loginId，如果 ticket 无效则抛出异常 （适用于模式二或模式三）
@@ -294,70 +301,90 @@ public class SaSsoClientProcessor {
 	 */
 	public SaCheckTicketResult checkTicket(String ticket, String currUri) {
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
+
+		// 两种模式：
+		//		isHttp=true：模式三，使用 http 请求从认证中心校验ticket
+		//		isHttp=false：模式二，直连 redis 中校验 ticket
+		if(cfg.getIsHttp()) {
+			return _checkTicketByHttp(ticket, currUri);
+		} else {
+			return _checkTicketByRedis(ticket);
+		}
+	}
+
+	/**
+	 * 校验 ticket，http 请求方式
+	 * @param ticket /
+	 * @param currUri /
+	 * @return /
+	 */
+	public SaCheckTicketResult _checkTicketByHttp(String ticket, String currUri) {
+		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
 		ApiName apiName = ssoClientTemplate.apiName;
 		ParamName paramName = ssoClientTemplate.paramName;
 
-		// --------- 两种模式
-		if(cfg.getIsHttp()) {
-			// q1、使用模式三：使用 http 请求从认证中心校验ticket
-
-			// 计算当前 sso-client 的单点注销回调地址
-			String ssoLogoutCall = null;
-			if(cfg.getRegLogoutCall()) {
-				// 如果配置了回调地址，就使用配置的值：
-				if(SaFoxUtil.isNotEmpty(cfg.getCurrSsoLogoutCall())) {
-					ssoLogoutCall = cfg.getCurrSsoLogoutCall();
-				}
-				// 如果提供了当前 uri，则根据此值来计算：
-				else if(SaFoxUtil.isNotEmpty(currUri)) {
-					ssoLogoutCall = SaHolder.getRequest().getUrl().replace(currUri, apiName.ssoLogoutCall);
-				}
-				// 否则视为不注册单点注销回调地址
-				else {
-				}
+		// 计算当前 sso-client 的单点注销回调地址
+		String ssoLogoutCall = null;
+		if(cfg.getRegLogoutCall()) {
+			// 如果配置了回调地址，就使用配置的值：
+			if(SaFoxUtil.isNotEmpty(cfg.getCurrSsoLogoutCall())) {
+				ssoLogoutCall = cfg.getCurrSsoLogoutCall();
 			}
-
-			// 发起请求
-			SaSsoMessage message = ssoClientTemplate.buildCheckTicketMessage(ticket, ssoLogoutCall);
-			SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
-
-			// 校验
-			if(result.getCode() != null && result.getCode() == SaResult.CODE_SUCCESS) {
-
-				SaCheckTicketResult ctr = new SaCheckTicketResult();
-				ctr.loginId = result.get(paramName.loginId);
-				ctr.tokenValue = result.get(paramName.tokenValue, String.class);
-				ctr.deviceId = result.get(paramName.deviceId, String.class);
-				ctr.remainTokenTimeout = result.get(paramName.remainTokenTimeout, Long.class);
-				ctr.remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
-				ctr.result = result;
-
-				return ctr;
-			} else {
-				// 将 sso-server 回应的消息作为异常抛出
-				throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30005);
+			// 如果提供了当前 uri，则根据此值来计算：
+			else if(SaFoxUtil.isNotEmpty(currUri)) {
+				ssoLogoutCall = SaHolder.getRequest().getUrl().replace(currUri, apiName.ssoLogoutCall);
 			}
-		} else {
-			// q2、使用模式二：直连Redis校验ticket
-			// 		注意此处调用了 SaSsoServerProcessor 处理器里的方法，
-			// 		这意味着如果你的 sso-server 端重写了 SaSsoServerProcessor 里的部分方法，
-			// 		而在当前 sso-client 没有按照相应格式重写 SaSsoClientProcessor 里的方法，
-			// 		可能会导致调用失败（注意是可能，而非一定），
-			// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
-
-			StpLogic stpLogic = ssoClientTemplate.getStpLogic();
-			TicketModel ticketModel = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, ssoClientTemplate.getClient());
-
-			SaCheckTicketResult ctr = new SaCheckTicketResult();
-			ctr.loginId = ticketModel.getLoginId();
-			ctr.tokenValue = ticketModel.getTokenValue();
-			ctr.deviceId = stpLogic.getLoginDeviceIdByToken(ticketModel.getTokenValue());
-			ctr.remainTokenTimeout = stpLogic.getTokenTimeout(ticketModel.getTokenValue());
-			ctr.remainSessionTimeout = stpLogic.getSessionTimeoutByLoginId(ticketModel.getLoginId());
-			ctr.result = null;
-
-			return ctr;
+			// 否则视为不注册单点注销回调地址
+			else {
+			}
 		}
+
+		// 发起请求
+		SaSsoMessage message = ssoClientTemplate.buildCheckTicketMessage(ticket, ssoLogoutCall);
+		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
+
+		// 如果 sso-server 响应的状态码非200，代表业务失败，将回应的 msg 字段作为异常抛出
+		if(result.getCode() == null || result.getCode() != SaResult.CODE_SUCCESS) {
+			throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30005);
+		}
+
+		// 构建返回结果
+		SaCheckTicketResult ctr = new SaCheckTicketResult();
+		ctr.loginId = result.get(paramName.loginId);
+		ctr.tokenValue = result.get(paramName.tokenValue, String.class);
+		ctr.deviceId = result.get(paramName.deviceId, String.class);
+		ctr.remainTokenTimeout = result.get(paramName.remainTokenTimeout, Long.class);
+		ctr.remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
+		ctr.result = result;
+
+		return ctr;
+	}
+
+	/**
+	 * 校验 ticket，直连 redis 方式
+	 * @param ticket /
+	 * @return /
+	 */
+	public SaCheckTicketResult _checkTicketByRedis(String ticket) {
+		// 直连 redis 校验 ticket
+		// 		注意此处调用了 SaSsoServerProcessor 处理器里的方法，
+		// 		这意味着如果你的 sso-server 端重写了 SaSsoServerProcessor 里的部分方法，
+		// 		而在当前 sso-client 没有按照相应格式重写 SaSsoClientProcessor 里的方法，
+		// 		可能会导致调用失败（注意是可能，而非一定，主要取决于你是否改变了数据读写格式），
+		// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
+
+		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		TicketModel ticketModel = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, ssoClientTemplate.getClient());
+
+		SaCheckTicketResult ctr = new SaCheckTicketResult();
+		ctr.loginId = ticketModel.getLoginId();
+		ctr.tokenValue = ticketModel.getTokenValue();
+		ctr.deviceId = stpLogic.getLoginDeviceIdByToken(ticketModel.getTokenValue());
+		ctr.remainTokenTimeout = stpLogic.getTokenTimeout(ticketModel.getTokenValue());
+		ctr.remainSessionTimeout = stpLogic.getSessionTimeoutByLoginId(ticketModel.getLoginId());
+		ctr.result = null;
+
+		return ctr;
 	}
 
 	/**
@@ -366,10 +393,8 @@ public class SaSsoClientProcessor {
 	 * @param res SaResponse对象
 	 * @return 返回结果
 	 */
-	public Object ssoLogoutBack(SaRequest req, SaResponse res) {
+	public Object _ssoLogoutBack(SaRequest req, SaResponse res) {
 		return SaSsoProcessorHelper.ssoLogoutBack(req, res, ssoClientTemplate.paramName);
 	}
-
-
 
 }

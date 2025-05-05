@@ -17,8 +17,8 @@ package cn.dev33.satoken.sso.processor;
 
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
-import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.sso.name.ParamName;
+import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 

@@ -57,13 +57,13 @@ public class SaSsoServerProcessor {
 
 	/**
 	 * 分发 Server 端所有请求
+	 *
 	 * @return 处理结果
 	 */
 	public Object dister() {
 
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
-		SaSsoServerConfig cfg = ssoServerTemplate.getServerConfig();
 		ApiName apiName = ssoServerTemplate.apiName;
 
 		// ------------------ 路由分发 ------------------
@@ -104,36 +104,44 @@ public class SaSsoServerProcessor {
 		StpLogic stpLogic = ssoServerTemplate.getStpLogic();
 		ParamName paramName = ssoServerTemplate.paramName;
 
-		// ---------- 此处有两种情况分开处理：
-		// ---- 情况1：在SSO认证中心尚未登录，需要先去登录
+		// 两种情况：
+		// 		情况1：在 SSO 认证中心尚未登录，需要显示登录视图，去登录
+		// 		情况2：在 SSO 认证中心已经登录，需要重定向回 Client 端
+
+		// 情况1，显示登录视图
 		if( ! stpLogic.isLogin()) {
 			return ssoServerTemplate.strategy.notLoginView.get();
 		}
-		// ---- 情况2：在SSO认证中心已经登录，需要重定向回 Client 端，而这又分为两种方式：
+
+		// 情况2，开始跳转
 		String mode = req.getParam(paramName.mode, SaSsoConsts.MODE_TICKET);
 		String redirect = req.getParam(paramName.redirect);
 		String client = req.getParam(paramName.client);
 
-		// 若 redirect 为空，则选择 homeRoute，若 homeRoute 也为空，则抛出异常
-		if(SaFoxUtil.isEmpty(redirect)) {
-			if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
-				throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
-			}
-			ssoServerTemplate.strategy.jumpToRedirectUrlNotice.run(cfg.getHomeRoute());
-			return res.redirect(cfg.getHomeRoute());
-		}
-
+		// 构建最终重定向地址
 		String redirectUrl = SaSugar.get(() -> {
-			// 方式1：直接重定向回Client端 (mode=simple)
+
+			// 若 redirect 参数为空，说明用户并不是从 client 重定向来的，而是直接访问的 http://sso-server.com/sso/auth 地址
+			// 此时需要跳转到配置的 homeRoute 路由上，
+			// 若 homeRoute 也为空，则没有明确的跳转地址了，需要抛出异常
+			if(SaFoxUtil.isEmpty(redirect)) {
+				if(SaFoxUtil.isEmpty(cfg.getHomeRoute())) {
+					throw new SaSsoException("未指定 redirect 参数，也未配置 homeRoute 路由，无法完成重定向操作").setCode(SaSsoErrorCode.CODE_30014);
+				}
+				return cfg.getHomeRoute();
+			}
+
+			// 方式1：直接重定向回Client端 (mode=simple，一般是模式一)
 			if(mode.equals(SaSsoConsts.MODE_SIMPLE)) {
 				ssoServerTemplate.checkRedirectUrl(client, redirect);
 				return redirect;
 			} else {
-				// 方式2：带着 ticket 参数重定向回Client端 (mode=ticket)
+				// 方式2：带着 ticket 参数重定向回Client端 (mode=ticket，一般是模式二、三)
 
 				// 构建并跳转
 				String _redirectUrl = ssoServerTemplate.buildRedirectUrl(client, redirect, stpLogic.getLoginId(), stpLogic.getTokenValue());
-				// 构建成功，说明 redirect 地址合法，此时需要更新一下该账号的Session有效期
+
+				// 构建成功，说明 redirect 地址合法，此时需要更新一下当前 token 有效期
 				if(cfg.getAutoRenewTimeout()) {
 					stpLogic.renewTimeout(stpLogic.getConfigOrGlobal().getTimeout());
 				}
@@ -151,13 +159,14 @@ public class SaSsoServerProcessor {
 	 * @return 处理结果
 	 */
 	public Object ssoDoLogin() {
-		// 获取对象
+		// 获取参数
 		SaRequest req = SaHolder.getRequest();
-		SaSsoServerConfig cfg = ssoServerTemplate.getServerConfig();
 		ParamName paramName = ssoServerTemplate.paramName;
+		String name = req.getParam(paramName.name);
+		String pwd = req.getParam(paramName.pwd);
 
 		// 处理
-		return ssoServerTemplate.strategy.doLoginHandle.apply(req.getParam(paramName.name), req.getParam(paramName.pwd));
+		return ssoServerTemplate.strategy.doLoginHandle.apply(name, pwd);
 	}
 
 	/**
@@ -168,14 +177,15 @@ public class SaSsoServerProcessor {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		Object loginId = ssoServerTemplate.getStpLogic().getLoginIdDefaultNull();
+		StpLogic stpLogic = ssoServerTemplate.getStpLogic();
+		Object loginId = stpLogic.getLoginIdDefaultNull();
 		boolean singleDeviceIdLogout = req.isParam(ssoServerTemplate.paramName.singleDeviceIdLogout, "true");
 
 		// 单点注销
 		if(SaFoxUtil.isNotEmpty(loginId)) {
-			SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogic().createSaLogoutParameter();
+			SaLogoutParameter logoutParameter = stpLogic.createSaLogoutParameter();
 			if(singleDeviceIdLogout) {
-				logoutParameter.setDeviceId(ssoServerTemplate.getStpLogic().getLoginDeviceId());
+				logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
 			}
 			ssoServerTemplate.ssoLogout(loginId, logoutParameter);
 		}
@@ -202,7 +212,7 @@ public class SaSsoServerProcessor {
 			return SaResult.error("无效 client 标识：" + client);
 		}
 
-		// 3、校验签名
+		// 3、校验参数签名
 		Map<String, String> paramMap = req.getParamMap();
 		if(ssoServerConfig.getIsCheckSign()) {
 			ssoServerTemplate.getSignTemplate(client).checkParamMap(paramMap);
@@ -210,10 +220,10 @@ public class SaSsoServerProcessor {
 			SaSsoManager.printNoCheckSignWarningByRuntime();
 		}
 
-		// 处理消息
+		// 4、处理消息
 		SaSsoMessage message = new SaSsoMessage(paramMap);
 		if( ! ssoServerTemplate.messageHolder.hasHandle(message.getType())) {
-			return SaResult.error("未能找到消息处理器: " + message.getType());
+			return SaResult.error("未能找到消息处理器：" + message.getType());
 		}
 		return ssoServerTemplate.handleMessage(message);
 	}

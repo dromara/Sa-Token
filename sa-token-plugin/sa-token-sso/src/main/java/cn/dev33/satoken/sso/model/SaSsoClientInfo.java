@@ -21,7 +21,7 @@ import cn.dev33.satoken.sso.util.SaSsoConsts;
 import java.io.Serializable;
 
 /**
- * Sa-Token SSO 应用信息
+ * Sa-Token SSO 应用信息（注册在 SaSession 上的已登录应用信息列表）
  *
  * @author click33
  * @since 1.38.0
@@ -45,13 +45,8 @@ public class SaSsoClientInfo implements Serializable {
      */
     public String client;
 
-//    /**
-//     * 此次登录 token 值
-//     */
-//    public String tokenValue;
-
     /**
-     * 单点注销回调url
+     * 单点注销回调 url
      */
     public String sloCallbackUrl;
 
@@ -79,6 +74,8 @@ public class SaSsoClientInfo implements Serializable {
         this.index = index;
     }
 
+
+    // get set
 
     /**
      * 获取 此 client 登录模式（1=模式一，2=模式二，3=模式三）
@@ -119,26 +116,6 @@ public class SaSsoClientInfo implements Serializable {
         this.client = client;
         return this;
     }
-
-//    /**
-//     * 获取 此次登录 token 值
-//     *
-//     * @return tokenValue 此次登录 token 值
-//     */
-//    public String getTokenValue() {
-//        return this.tokenValue;
-//    }
-//
-//    /**
-//     * 设置 此次登录 token 值
-//     *
-//     * @param tokenValue 此次登录 token 值
-//     * @return /
-//     */
-//    public SaSsoClientModel setTokenValue(String tokenValue) {
-//        this.tokenValue = tokenValue;
-//        return this;
-//    }
 
     /**
      * 获取 单点注销回调url
@@ -205,7 +182,6 @@ public class SaSsoClientInfo implements Serializable {
         return "SaSsoClientModel{" +
                 "mode=" + mode +
                 ", client='" + client + '\'' +
-//                ", tokenValue='" + tokenValue + '\'' +
                 ", sloCallbackUrl='" + sloCallbackUrl + '\'' +
                 ", regTime=" + regTime +
                 ", index=" + index +

@@ -23,6 +23,8 @@ import cn.dev33.satoken.sso.function.NotLoginViewFunction;
 import cn.dev33.satoken.sso.function.SendHttpFunction;
 import cn.dev33.satoken.util.SaResult;
 
+import java.util.Map;
+
 /**
  * Sa-Token SSO Server 相关策略
  *
@@ -65,5 +67,17 @@ public class SaSsoServerStrategy {
     public CheckTicketAppendDataFunction checkTicketAppendData = (loginId, result) -> {
         return result;
     };
+
+    /**
+     * 发送 Http 请求，并将响应结果转换为 SaResult
+     *
+     * @param url 请求地址
+     * @return 返回的结果
+     */
+    public SaResult requestAsSaResult(String url) {
+        String body = sendHttp.apply(url);
+        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
+        return new SaResult(map);
+    }
 
 }

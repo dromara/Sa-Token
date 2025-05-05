@@ -20,7 +20,7 @@ import cn.dev33.satoken.util.SaResult;
 import java.util.function.BiFunction;
 
 /**
- * 函数式接口：SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+ * 函数式接口：sso-server 端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
  *
  * <p>  参数：loginId, SaResult 响应参数对象  </p>
  * <p>  返回：SaResult 响应参数对象  </p>

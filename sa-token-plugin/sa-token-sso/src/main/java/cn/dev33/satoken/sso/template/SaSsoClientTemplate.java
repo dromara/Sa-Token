@@ -33,7 +33,7 @@ import cn.dev33.satoken.util.SaResult;
 import java.util.Map;
 
 /**
- * Sa-Token SSO 模板方法类 （Client端）
+ * SSO 模板方法类 （Client端）
  *
  * @author click33
  * @since 1.38.0
@@ -50,10 +50,11 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     }
 
 
-    // ------------------- SSO 模式三相关 -------------------
+    // ------------------- getData 相关 -------------------
 
     /**
      * 根据配置的 getData 地址，查询数据
+     *
      * @param paramMap 查询参数
      * @return 查询结果
      */
@@ -64,6 +65,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
     /**
      * 根据自定义 path 地址，查询数据 （此方法需要配置 sa-token.sso.server-url 地址）
+     *
      * @param path 自定义 path
      * @param paramMap 查询参数
      * @return 查询结果
@@ -71,44 +73,6 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     public Object getData(String path, Map<String, Object> paramMap) {
         String url = buildCustomPathUrl(path, paramMap);
         return strategy.sendHttp.apply(url);
-    }
-
-    // ---------------------- 构建URL ----------------------
-
-    /**
-     * 构建URL：Server端 单点登录地址
-     * @param clientLoginUrl Client端登录地址
-     * @param back 回调路径
-     * @return [SSO-Server端-认证地址 ]
-     */
-    public String buildServerAuthUrl(String clientLoginUrl, String back) {
-        SaSsoClientConfig ssoConfig = getClientConfig();
-
-        // 服务端认证地址
-        String serverUrl = ssoConfig.splicingAuthUrl();
-
-        // 拼接客户端标识
-        String client = getClient();
-        if(SaFoxUtil.isNotEmpty(client)) {
-            serverUrl = SaFoxUtil.joinParam(serverUrl, paramName.client, client);
-        }
-
-        // 对back地址编码
-        back = (back == null ? "" : back);
-        back = SaFoxUtil.encodeUrl(back);
-
-        // 开始拼接 sso 统一认证地址，形如：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
-
-        /*
-         * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
-         * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
-         */
-        if( ! clientLoginUrl.contains(paramName.back + "=") ) {
-            clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
-        }
-
-        // 返回
-        return SaFoxUtil.joinParam(serverUrl, paramName.redirect, clientLoginUrl);
     }
 
     /**
@@ -146,54 +110,48 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         return SaFoxUtil.joinParam(url, signParamsStr);
     }
 
-    /**
-     * 构建消息：校验 ticket
-     *
-     * @param ticket ticket码
-     * @param ssoLogoutCallUrl 单点注销时的回调URL
-     * @return 构建完毕的URL
-     */
-    public SaSsoMessage buildCheckTicketMessage(String ticket, String ssoLogoutCallUrl) {
-        SaSsoClientConfig ssoConfig = getClientConfig();
-        SaSsoMessage message = new SaSsoMessage();
-        message.setType(SaSsoConsts.MESSAGE_CHECK_TICKET);
-        message.set(paramName.client, getClient());
-        message.set(paramName.ticket, ticket);
-        message.set(paramName.ssoLogoutCall, ssoLogoutCallUrl);
-        return message;
-    }
+
+    // ---------------------- 构建交互地址 ----------------------
 
     /**
-     * 构建消息：单点注销
-     *
-     * @param loginId 要注销的账号 id
-     * @param logoutParameter 单点注销
-     * @return 单点注销URL
+     * 构建URL：Server端 单点登录授权地址，
+     * <br/> 形如：http://sso-server.com/sso/auth?redirectUrl=http://sso-client.com/sso/login?back=http://sso-client.com
+     * @param clientLoginUrl Client端登录地址
+     * @param back 回调路径
+     * @return [SSO-Server端-认证地址 ]
      */
-    public SaSsoMessage buildSloMessage(Object loginId, SaLogoutParameter logoutParameter) {
+    public String buildServerAuthUrl(String clientLoginUrl, String back) {
         SaSsoClientConfig ssoConfig = getClientConfig();
-        SaSsoMessage message = new SaSsoMessage();
-        message.setType(SaSsoConsts.MESSAGE_SIGNOUT);
-        message.set(paramName.client, getClient());
-        message.set(paramName.loginId, loginId);
-        message.set(paramName.deviceId, logoutParameter.getDeviceId());
-        return message;
+
+        // 服务端认证地址
+        String serverUrl = ssoConfig.splicingAuthUrl();
+
+        // 拼接客户端标识
+        String client = getClient();
+        if(SaFoxUtil.isNotEmpty(client)) {
+            serverUrl = SaFoxUtil.joinParam(serverUrl, paramName.client, client);
+        }
+
+        // 对back地址编码
+        back = (back == null ? "" : back);
+        back = SaFoxUtil.encodeUrl(back);
+
+        // 开始拼接 sso 统一认证地址，形如：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
+
+        /*
+         * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
+         * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
+         */
+        if( ! clientLoginUrl.contains(paramName.back + "=") ) {
+            clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
+        }
+
+        // 返回
+        return SaFoxUtil.joinParam(serverUrl, paramName.redirect, clientLoginUrl);
     }
 
 
     // ------------------- 消息推送 -------------------
-
-    /**
-     * 发送 Http 请求，并将响应结果转换为 SaResult
-     *
-     * @param url 请求地址
-     * @return 返回的结果
-     */
-    public SaResult requestAsSaResult(String url) {
-        String body = strategy.sendHttp.apply(url);
-        Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
-        return new SaResult(map);
-    }
 
     /**
      * 向 sso-server 推送消息
@@ -228,6 +186,40 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         String res = pushMessage(message);
         Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(res);
         return new SaResult(map);
+    }
+
+    /**
+     * 构建消息：校验 ticket
+     *
+     * @param ticket ticket码
+     * @param ssoLogoutCallUrl 单点注销时的回调URL
+     * @return 构建完毕的URL
+     */
+    public SaSsoMessage buildCheckTicketMessage(String ticket, String ssoLogoutCallUrl) {
+        SaSsoClientConfig ssoConfig = getClientConfig();
+        SaSsoMessage message = new SaSsoMessage();
+        message.setType(SaSsoConsts.MESSAGE_CHECK_TICKET);
+        message.set(paramName.client, getClient());
+        message.set(paramName.ticket, ticket);
+        message.set(paramName.ssoLogoutCall, ssoLogoutCallUrl);
+        return message;
+    }
+
+    /**
+     * 构建消息：单点注销
+     *
+     * @param loginId 要注销的账号 id
+     * @param logoutParameter 单点注销
+     * @return 单点注销URL
+     */
+    public SaSsoMessage buildSloMessage(Object loginId, SaLogoutParameter logoutParameter) {
+        SaSsoClientConfig ssoConfig = getClientConfig();
+        SaSsoMessage message = new SaSsoMessage();
+        message.setType(SaSsoConsts.MESSAGE_SIGNOUT);
+        message.set(paramName.client, getClient());
+        message.set(paramName.loginId, loginId);
+        message.set(paramName.deviceId, logoutParameter.getDeviceId());
+        return message;
     }
 
 

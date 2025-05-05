@@ -37,11 +37,6 @@ public class TicketModel implements Serializable {
 	 */
 	public String client;
 
-//	/**
-//	 * 设备 id
-//	 */
-//	public String deviceId;
-
 	/**
 	 * 对应 loginId
 	 */

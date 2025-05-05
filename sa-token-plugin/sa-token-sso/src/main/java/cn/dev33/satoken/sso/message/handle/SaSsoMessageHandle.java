@@ -20,7 +20,7 @@ import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.template.SaSsoTemplate;
 
 /**
- * Sa-Token SSO 消息 处理器
+ * SSO 消息处理器 - 父接口
  *
  * @author click33
  * @since 1.43.0
@@ -35,7 +35,7 @@ public interface SaSsoMessageHandle {
     String getHandlerType();
 
     /**
-     * 执行方法
+     * 具体要执行的处理方法
      *
      * @param ssoTemplate /
      * @param message /

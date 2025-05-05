@@ -77,4 +77,7 @@ public interface SaSsoErrorCode {
 	/** 无效的消息推送地址 */
 	int CODE_30023 = 30023;
 
+	/** SSO 消息里缺少指定的参数 */
+	int CODE_30024 = 30024;
+
 }

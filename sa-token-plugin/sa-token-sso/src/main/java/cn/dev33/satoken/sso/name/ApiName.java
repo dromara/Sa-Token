@@ -32,7 +32,7 @@ public class ApiName {
 	/** SSO-Server端：校验ticket 获取账号id */ 
 	public String ssoCheckTicket = "/sso/checkTicket";
 
-	/** SSO-Server端：接受推送消息 */
+	/** SSO-Server端：接收推送消息 */
 	public String ssoPushS = "/sso/pushS";
 
 	/** SSO-Server端：获取userinfo  */ 
@@ -53,11 +53,11 @@ public class ApiName {
 	/** SSO-Client端：单点注销的回调 */ 
 	public String ssoLogoutCall = "/sso/logoutCall";
 
-	/** SSO-Client端：接受推送消息 */
+	/** SSO-Client端：接收推送消息 */
 	public String ssoPushC = "/sso/pushC";
 
 	/**
-	 * 批量修改path，新增固定前缀 
+	 * 批量修改 path，新增固定前缀
 	 * @param prefix 示例值：/sso-user、/sso-admin
 	 * @return 对象自身 
 	 */
@@ -77,7 +77,7 @@ public class ApiName {
 	}
 	
 	/**
-	 * 批量修改path，替换掉 /sso 固定前缀 
+	 * 批量修改 path，替换掉 /sso 固定前缀
 	 * @param prefix 示例值：/sso-user、/sso-admin
 	 * @return 对象自身 
 	 */
@@ -106,6 +106,7 @@ public class ApiName {
 				", ssoPushS='" + ssoPushS + '\'' +
 				", ssoUserinfo='" + ssoUserinfo + '\'' +
 				", ssoSignout='" + ssoSignout + '\'' +
+				", ssoIsLogin='" + ssoIsLogin + '\'' +
 				", ssoLogin='" + ssoLogin + '\'' +
 				", ssoLogout='" + ssoLogout + '\'' +
 				", ssoLogoutCall='" + ssoLogoutCall + '\'' +

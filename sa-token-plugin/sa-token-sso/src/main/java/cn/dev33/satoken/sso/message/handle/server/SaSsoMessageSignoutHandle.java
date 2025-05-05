@@ -16,8 +16,6 @@
 package cn.dev33.satoken.sso.message.handle.server;
 
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.SaSsoMessageHandle;
 import cn.dev33.satoken.sso.name.ParamName;
@@ -28,7 +26,7 @@ import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * Sa-Token SSO 消息 处理器 - sso-server 端：处理 单点注销 的请求
+ * SSO 消息处理器 - sso-server 端：处理 单点注销 的请求
  *
  * @author click33
  * @since 1.43.0
@@ -52,24 +50,25 @@ public class SaSsoMessageSignoutHandle implements SaSsoMessageHandle {
      * @return /
      */
     public Object handle(SaSsoTemplate ssoTemplate, SaSsoMessage message) {
+
+        // 1、获取对象
         SaSsoServerTemplate ssoServerTemplate = (SaSsoServerTemplate) ssoTemplate;
         ParamName paramName = ssoServerTemplate.paramName;
 
+        // 2、判断当前是否开启了全局单点注销功能
         if( ! ssoServerTemplate.getServerConfig().getIsSlo()) {
             return SaResult.error("当前 sso-server 端未开启单点注销功能");
         }
 
-        // 获取参数
-        SaRequest req = SaHolder.getRequest();
-        String loginId = req.getParam(paramName.loginId);
-        String deviceId = req.getParam(paramName.deviceId);
+        // 3、获取参数
+        Object loginId = message.get(paramName.loginId);
+        String deviceId = message.getString(paramName.deviceId);
 
-        // step.2 单点注销
-        SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogic().createSaLogoutParameter()
-                        .setDeviceId(deviceId);
+        // 4、单点注销
+        SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogic().createSaLogoutParameter().setDeviceId(deviceId);
         ssoServerTemplate.ssoLogout(loginId, logoutParameter);
 
-        // 响应
+        // 5、响应
         return SaResult.ok();
     }
 

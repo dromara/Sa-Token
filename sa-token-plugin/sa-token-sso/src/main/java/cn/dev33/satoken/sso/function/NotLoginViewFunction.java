@@ -18,7 +18,7 @@ package cn.dev33.satoken.sso.function;
 import java.util.function.Supplier;
 
 /**
- * 函数式接口：SSO-Server端：未登录时返回的View
+ * 函数式接口：sso-server 端：未登录时返回的 View
  *
  * <p>  参数：无  </p>
  * <p>  返回：未登录时的 View 视图  </p>

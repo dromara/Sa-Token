@@ -18,7 +18,7 @@ package cn.dev33.satoken.sso.function;
 import cn.dev33.satoken.sso.model.SaCheckTicketResult;
 
 /**
- * 函数式接口：SSO-Client端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
+ * 函数式接口：sso-client 端：自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
  *
  * <p>  参数：loginId, back  </p>
  * <p>  返回：返回给前端的值  </p>

@@ -16,6 +16,8 @@
 package cn.dev33.satoken.sso.config;
 
 
+import cn.dev33.satoken.sso.error.SaSsoErrorCode;
+import cn.dev33.satoken.sso.exception.SaSsoException;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -23,29 +25,29 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Sa-Token SSO 客户端信息配置
+ * Sa-Token SSO 客户端信息配置 （在 Server 端配置允许接入的 Client 信息）
  *
  * @author click33
- * @since 1.42.0
+ * @since 1.43.0
  */
 public class SaSsoClientModel implements Serializable {
 
     private static final long serialVersionUID = -6541180061782004705L;
 
     /**
-     * 当前 Client 名称标识，用于和 ticket 码的互相锁定
+     * Client 名称标识
      */
     public String client;
 
     /**
-     * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+     * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的 URL 将禁止下放 ticket )
      */
     public String allowUrl = "*";
 
     /**
-     * 是否打开模式三（此值为 true 时使用 http 调用方式进行消息通知）
+     * 是否接收推送消息
      */
-    public Boolean isHttp = false;
+    public Boolean isPush = false;
 
     /**
      * 是否打开单点注销功能
@@ -63,7 +65,7 @@ public class SaSsoClientModel implements Serializable {
     public String serverUrl;
 
     /**
-     * 此 Client 端推送消息的地址
+     * 此 Client 端推送消息的地址 (如不配置，默认根据 serverUrl + '/sso/pushC' 进行拼接)
      */
     public String pushUrl = "/sso/pushC";
 
@@ -85,8 +87,12 @@ public class SaSsoClientModel implements Serializable {
      *
      * @return /
      */
-    public String splicingNoticeUrl() {
-        return SaFoxUtil.spliceTwoUrl(getServerUrl(), getPushUrl());
+    public String splicingPushUrl() {
+        String _pushUrl = SaFoxUtil.spliceTwoUrl(getServerUrl(), getPushUrl());
+        if ( ! SaFoxUtil.isUrl(_pushUrl)) {
+            throw new SaSsoException("应用 [" + getClient() + "] 推送地址无效：" + _pushUrl).setCode(SaSsoErrorCode.CODE_30023);
+        }
+        return _pushUrl;
     }
 
     /**
@@ -94,22 +100,22 @@ public class SaSsoClientModel implements Serializable {
      *
      * @return /
      */
-    public boolean isValidNoticeUrl() {
-        return SaFoxUtil.isUrl(splicingNoticeUrl());
+    public boolean isValidPushUrl() {
+        return SaFoxUtil.isUrl(splicingPushUrl());
     }
 
 
     // get set
 
     /**
-     * @return 当前 Client 名称标识
+     * @return Client 名称标识
      */
     public String getClient() {
         return client;
     }
 
     /**
-     * @param client 当前 Client 名称标识
+     * @param client Client 名称标识
      */
     public SaSsoClientModel setClient(String client) {
         this.client = client;
@@ -117,14 +123,14 @@ public class SaSsoClientModel implements Serializable {
     }
 
     /**
-     * @return 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+     * @return 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的 URL 将禁止下放 ticket )
      */
     public String getAllowUrl() {
         return allowUrl;
     }
 
     /**
-     * @param allowUrl 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket)
+     * @param allowUrl 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的 URL 将禁止下放 ticket )
      * @return 对象自身
      */
     public SaSsoClientModel setAllowUrl(String allowUrl) {
@@ -140,16 +146,16 @@ public class SaSsoClientModel implements Serializable {
     /**
      * @return isHttp 是否打开模式三
      */
-    public Boolean getIsHttp() {
-        return isHttp;
+    public Boolean getIsPush() {
+        return isPush;
     }
 
     /**
-     * @param isHttp 是否打开模式三
+     * @param isPush 是否打开模式三
      * @return 对象自身
      */
-    public SaSsoClientModel setIsHttp(Boolean isHttp) {
-        this.isHttp = isHttp;
+    public SaSsoClientModel setIsPush(Boolean isPush) {
+        this.isPush = isPush;
         return this;
     }
 
@@ -210,16 +216,16 @@ public class SaSsoClientModel implements Serializable {
     }
 
     /**
-     * 获取 此 Client 端推送消息的地址
+     * 获取 此 Client 端推送消息的地址 (如不配置，默认根据 serverUrl + '/sso/pushC' 进行拼接)
      *
-     * @return noticeUrl 此 Client 端推送消息的地址
+     * @return /
      */
     public String getPushUrl() {
         return this.pushUrl;
     }
 
     /**
-     * 设置 此 Client 端推送消息的地址
+     * 设置 此 Client 端推送消息的地址 (如不配置，默认根据 serverUrl + '/sso/pushC' 进行拼接)
      *
      * @param pushUrl 此 Client 端推送消息的地址
      * @return 对象自身
@@ -235,7 +241,7 @@ public class SaSsoClientModel implements Serializable {
                 + "client=" + client
                 + ", allowUrl=" + allowUrl
                 + ", isSlo=" + isSlo
-                + ", isHttp=" + isHttp
+                + ", isPush=" + isPush
                 + ", secretKey=" + secretKey
                 + ", serverUrl=" + serverUrl
                 + ", pushUrl=" + pushUrl

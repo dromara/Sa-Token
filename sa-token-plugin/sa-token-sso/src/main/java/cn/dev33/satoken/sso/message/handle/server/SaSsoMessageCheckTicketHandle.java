@@ -16,9 +16,6 @@
 package cn.dev33.satoken.sso.message.handle.server;
 
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.sso.config.SaSsoServerConfig;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.SaSsoMessageHandle;
 import cn.dev33.satoken.sso.model.TicketModel;
@@ -30,7 +27,7 @@ import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaResult;
 
 /**
- * Sa-Token SSO 消息 处理器 - sso-server 端：处理校验 ticket 的请求
+ * SSO 消息处理器 - sso-server 端：处理校验 ticket 的请求
  *
  * @author click33
  * @since 1.43.0
@@ -54,38 +51,23 @@ public class SaSsoMessageCheckTicketHandle implements SaSsoMessageHandle {
      * @return /
      */
     public Object handle(SaSsoTemplate ssoTemplate, SaSsoMessage message) {
+
+        // 1、获取对象
         SaSsoServerTemplate ssoServerTemplate = (SaSsoServerTemplate) ssoTemplate;
         ParamName paramName = ssoServerTemplate.paramName;
-
-        // 1、获取参数
-        SaRequest req = SaHolder.getRequest();
-        SaSsoServerConfig ssoServerConfig = ssoServerTemplate.getServerConfig();
         StpLogic stpLogic = ssoServerTemplate.getStpLogic();
-        String client = req.getParam(paramName.client);
-        String ticket = req.getParamNotNull(paramName.ticket);
-        String sloCallback = req.getParam(paramName.ssoLogoutCall);
+        String client = message.getString(paramName.client);
+        String ticket = message.getValueNotNull(paramName.ticket).toString();
+        String sloCallback = message.getString(paramName.ssoLogoutCall);
 
-
-        // 2、校验提供的client是否为非法字符
-        if(SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
-            return SaResult.error("无效 client 标识：" + client);
-        }
-
-        // 3、校验签名
-//        if(ssoServerConfig.getIsCheckSign()) {
-//            ssoServerTemplate.getSignTemplate(client).checkRequest(req, paramName.client, paramName.ticket, paramName.ssoLogoutCall);
-//        } else {
-//            SaSsoManager.printNoCheckSignWarningByRuntime();
-//        }
-
-        // 4、校验ticket，获取 loginId
+        // 2、校验ticket，获取 loginId
         TicketModel ticketModel = ssoServerTemplate.checkTicketParamAndDelete(ticket, client);
         Object loginId = ticketModel.getLoginId();
 
-        // 5、注册此客户端的单点注销回调URL
+        // 3、注册此客户端的登录信息
         ssoServerTemplate.registerSloCallbackUrl(loginId, client, sloCallback);
 
-        // 6、给 client 端响应结果
+        // 4、给 client 端响应结果
         SaResult result = SaResult.ok();
         result.setData(loginId); // 兼容历史版本
         result.set(paramName.loginId, loginId);
@@ -93,7 +75,6 @@ public class SaSsoMessageCheckTicketHandle implements SaSsoMessageHandle {
         result.set(paramName.deviceId, stpLogic.getLoginDeviceIdByToken(ticketModel.getTokenValue()));
         result.set(paramName.remainTokenTimeout, stpLogic.getTokenTimeout(ticketModel.getTokenValue()));
         result.set(paramName.remainSessionTimeout, stpLogic.getSessionTimeoutByLoginId(loginId));
-
         result = ssoServerTemplate.strategy.checkTicketAppendData.apply(loginId, result);
         return result;
     }

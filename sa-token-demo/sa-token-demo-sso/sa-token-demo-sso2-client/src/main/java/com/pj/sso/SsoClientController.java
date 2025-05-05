@@ -20,7 +20,7 @@ public class SsoClientController {
 	// 首页 
 	@RequestMapping("/")
 	public String index() {
-		String solUrl = SaSsoManager.getClientConfig().splicingSloUrl();
+		String solUrl = SaSsoManager.getClientConfig().splicingSignoutUrl();
 		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
 					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " +

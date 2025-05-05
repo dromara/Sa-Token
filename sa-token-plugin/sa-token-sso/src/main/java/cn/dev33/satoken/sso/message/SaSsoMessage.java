@@ -26,7 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Sa-Token SSO 消息 Model
+ * SSO 消息 Model
  *
  * @author click33
  * @since 1.43.0
@@ -106,6 +106,21 @@ public class SaSsoMessage extends LinkedHashMap<String, Object> implements SaSet
     public SaSsoMessage delete(String key) {
         super.remove(key);
         return this;
+    }
+
+    // -----------
+
+    /**
+     * 获取一个值 （此值必须存在，否则抛出异常 ）
+     * @param key 键
+     * @return 参数值
+     */
+    public Object getValueNotNull(String key) {
+        Object value = get(key);
+        if(SaFoxUtil.isEmpty(value)) {
+            throw new SaSsoException("缺少参数：" + key).setCode(SaSsoErrorCode.CODE_30024);
+        }
+        return value;
     }
 
 }

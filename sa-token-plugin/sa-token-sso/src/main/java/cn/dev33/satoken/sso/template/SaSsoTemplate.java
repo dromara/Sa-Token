@@ -15,19 +15,15 @@
  */
 package cn.dev33.satoken.sso.template;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.SaSsoMessageHolder;
 import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
-
-import java.util.Map;
 
 /**
- * Sa-Token SSO 模板方法类 （公共端）
+ * SSO 模板方法类 （公共端）
  *
  * @author click33
  * @since 1.30.0
@@ -74,17 +70,10 @@ public class SaSsoTemplate {
 
 	// ----------- 消息处理
 
+	/**
+	 * SSO 消息处理器 - 持有器
+	 */
 	public SaSsoMessageHolder messageHolder = new SaSsoMessageHolder();
-
-//	/**
-//	 * 发送 Http 请求
-//	 *
-//	 * @param url /
-//	 * @return /
-//	 */
-//	public String request(String url) {
-//		return SaManager.getSaHttpTemplate().get(url);
-//	}
 
 	/**
 	 * 处理指定消息
@@ -94,6 +83,5 @@ public class SaSsoTemplate {
 	public Object handleMessage(SaSsoMessage message) {
 		return messageHolder.handleMessage(this, message);
 	}
-
 
 }

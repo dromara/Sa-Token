@@ -58,9 +58,6 @@ public class SaSsoConsts {
 	/** SSO 模式3 */
 	public static final int SSO_MODE_3 = 3;
 
-//	/** 消息类型：单点注销 */
-//	public static final String MESSAGE_LOGOUT = "logout";
-
 	/** 消息类型：校验 ticket */
 	public static final String MESSAGE_CHECK_TICKET = "checkTicket";
 

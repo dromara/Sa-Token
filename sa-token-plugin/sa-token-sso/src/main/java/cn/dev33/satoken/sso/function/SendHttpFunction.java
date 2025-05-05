@@ -18,7 +18,7 @@ package cn.dev33.satoken.sso.function;
 import java.util.function.Function;
 
 /**
- * 函数式接口：发送Http请求的处理函数
+ * 函数式接口：发送 Http 请求的处理函数
  *
  * <p>  参数：要请求的url  </p>
  * <p>  返回：请求结果  </p>

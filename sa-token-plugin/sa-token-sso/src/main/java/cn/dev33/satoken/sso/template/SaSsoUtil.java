@@ -23,10 +23,13 @@ import java.util.Map;
 
 /**
  * Sa-Token-SSO 单点登录模块 工具类
+ *
+ * <h2> 请更换为 SaSsoServerUtil 或 SaSsoClientUtil <h2/>
  * 
  * @author click33
  * @since 1.30.0
  */
+@Deprecated
 public class SaSsoUtil {
 
 	// ---------------------- Ticket 操作 ---------------------- 
@@ -40,7 +43,7 @@ public class SaSsoUtil {
 	 * @return Ticket码
 	 */
 	public static String createTicket(String client, Object loginId, String deviceId) {
-		return SaSsoServerProcessor.instance.ssoServerTemplate.createTicket(client, loginId, deviceId);
+		return SaSsoServerProcessor.instance.ssoServerTemplate.createTicketAndSave(client, loginId, deviceId);
 	}
 	
 	/**

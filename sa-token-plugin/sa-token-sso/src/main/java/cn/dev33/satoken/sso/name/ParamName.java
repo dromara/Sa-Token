@@ -23,40 +23,40 @@ package cn.dev33.satoken.sso.name;
  */
 public class ParamName {
 
-	/** redirect参数名称 */
+	/** redirect 参数名称 */
 	public String redirect = "redirect";
 	
-	/** ticket参数名称 */
+	/** ticket 参数名称 */
 	public String ticket = "ticket";
 
-	/** back参数名称 */
+	/** back 参数名称 */
 	public String back = "back";
 
-	/** mode参数名称 */
+	/** mode 参数名称 */
 	public String mode = "mode";
 	
-	/** loginId参数名称 */
+	/** 账号 id */
 	public String loginId = "loginId";
 
-	/** client参数名称 */
+	/** client 应用标识 */
 	public String client = "client";
 
-	/** tokenName 参数 */
+	/** token 名称 */
 	public String tokenName = "tokenName";
 
-	/** tokenValue 参数 */
+	/** token 值 */
 	public String tokenValue = "tokenValue";
 
-	/** deviceId 参数名称 */
+	/** 设备 id */
 	public String deviceId = "deviceId";
 
-	/** secretkey参数名称 */
+	/** 接口参数签名秘钥 */
 	public String secretkey = "secretkey";
 	
-	/** Client端单点注销时-回调URL 参数名称 */
+	/** Client 端单点注销时 - 回调 URL 参数名称 */
 	public String ssoLogoutCall = "ssoLogoutCall";
 
-	/** 是否为超过 maxRegClient 的自动注销 */
+	/** 是否为超过 maxRegClient 触发的自动注销 */
 	public String autoLogout = "autoLogout";
 
 	public String name = "name";
@@ -72,13 +72,8 @@ public class ParamName {
 	/** token 剩余有效期 参数名称 */
 	public String remainTokenTimeout = "remainTokenTimeout";
 
-	/** singleDeviceIdLogout 参数 */
+	/** 是否单设备 id 注销 */
 	public String singleDeviceIdLogout = "singleDeviceIdLogout";
-
-	public String isLogin = "isLogin";
-	public String authUrl = "authUrl";
-	public String redirectUrl = "redirectUrl";
-	public String currSsoLoginUrl = "currSsoLoginUrl";
 
 
 }
