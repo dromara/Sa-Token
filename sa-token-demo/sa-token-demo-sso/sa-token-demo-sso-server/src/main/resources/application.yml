@@ -7,43 +7,57 @@ sa-token:
     # 打印操作日志
     is-log: true
 
-    # ------- SSO-模式一相关配置  (非模式一不需要配置) 
-    # cookie:
-         # 配置 Cookie 作用域 
-         # domain: stp.com
+    # ------- SSO 模式一配置  (非模式一不需要配置)
+#    cookie:
+#         # 配置 Cookie 作用域
+#          domain: stp.com
         
-    # ------- SSO-模式二相关配置 
+    # SSO-Server 配置
     sso-server:
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
-        # 所有允许的授权回调地址
+        # 主页路由，在不指定 redirect 参数时，默认跳转的地址
+        home-route: /home
+        # 是否启用匿名 client (开启匿名 client 后，允许客户端接入时不提交 client 参数)
+        allow-anon-client: true
+        # 所有允许的授权回调地址 (匿名 client 使用)
         allow-url: "*"
-        # API 接口调用秘钥 (默认)
+        # API 接口调用秘钥 (全局默认 + 匿名 client 使用)
         secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
-        # 是否启用匿名 client
-        allow-anon-client: false
-
-        # ------- SSO-模式三相关配置 （下面的配置在使用SSO模式三时打开）
-        # 是否打开模式三 
-        is-http: true
-
+        # 应用列表：配置接入的应用信息
         clients:
-            # 应用 sso-client2，采用模式二对接 (跨域、同Redis)
+            # 应用 sso-client2：采用模式二对接 (跨域、同Redis)
             sso-client2:
                 client: sso-client2
                 allow-url: "*"
-            # 应用 sso-client3，采用模式三对接 (跨域、跨Redis)
+                secret-key: SSO-C2-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+            # 应用 sso-client3：采用模式三对接 (跨域、跨Redis)
             sso-client3:
+                # 应用名称
                 client: sso-client3
+                # 允许授权地址
                 allow-url: "*"
-                secret-key: SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+                # 是否接收消息推送
+                is-push: true
+                # 消息推送地址
                 push-url: http://sa-sso-client1.com:9003/sso/pushC
-
-
-        # ---- 除了以上配置项，你还需要为 Sa-Token 配置http请求处理器（文档有步骤说明） 
+                # 接口调用秘钥 (如果不配置则使用全局默认秘钥)
+                secret-key: SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+            # 应用 sso-client3-resdk：采用 ReSdk 模式对接
+            sso-client3-resdk:
+                # 应用名称
+                client: sso-client3-resdk
+                # 允许授权地址
+                allow-url: "*"
+                # 是否接收消息推送
+                is-push: true
+                # 消息推送地址
+                push-url: http://sa-sso-client1.com:9005/sso/pushC
+                # 接口调用秘钥 (如果不配置则使用全局默认秘钥)
+                secret-key: SSO-C3-ReSdk-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         
 spring: 
-    # Redis配置 （SSO模式一和模式二使用Redis来同步会话）
+    # Redis配置 （SSO模式一和模式二使用 Redis 来同步会话）
     redis:
         # Redis数据库索引（默认为0）
         database: 1

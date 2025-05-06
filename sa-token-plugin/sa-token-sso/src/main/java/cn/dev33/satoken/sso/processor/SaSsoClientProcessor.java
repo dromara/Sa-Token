@@ -164,7 +164,7 @@ public class SaSsoClientProcessor {
 
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogicOrGlobal();
 		ParamName paramName = ssoClientTemplate.paramName;
 		SaSsoClientConfig ssoConfig = ssoClientTemplate.getClientConfig();
 
@@ -181,7 +181,7 @@ public class SaSsoClientProcessor {
 		}
 
 		// 注销当前应用端会话
-		SaLogoutParameter logoutParameter = ssoClientTemplate.getStpLogic().createSaLogoutParameter();
+		SaLogoutParameter logoutParameter = ssoClientTemplate.getStpLogicOrGlobal().createSaLogoutParameter();
 		stpLogic.logout(loginId, logoutParameter.setDeviceId(deviceId));
 
 		// 响应
@@ -199,7 +199,7 @@ public class SaSsoClientProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoClientConfig cfg = ssoClientTemplate.getClientConfig();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogicOrGlobal();
 		ParamName paramName = ssoClientTemplate.paramName;
 
 		// 获取参数
@@ -229,7 +229,7 @@ public class SaSsoClientProcessor {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogicOrGlobal();
 		ParamName paramName = ssoClientTemplate.paramName;
 		ApiName apiName = ssoClientTemplate.apiName;
 
@@ -239,8 +239,6 @@ public class SaSsoClientProcessor {
 
 		// 1、校验 ticket，获取 loginId 等数据
 		SaCheckTicketResult ctr = checkTicket(ticket, apiName.ssoLogin);
-		ctr.centerId = ctr.loginId;
-		ctr.loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(ctr.centerId);
 
 		// 2、如果开发者自定义了 ticket 结果值处理函数，则使用自定义的函数
 		if(ssoClientTemplate.strategy.ticketResultHandle != null) {
@@ -263,7 +261,7 @@ public class SaSsoClientProcessor {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogicOrGlobal();
 		boolean singleDeviceIdLogout = req.isParam(ssoClientTemplate.paramName.singleDeviceIdLogout, "true");
 
 		// 如果未登录，则无需注销
@@ -290,6 +288,16 @@ public class SaSsoClientProcessor {
 			stpLogic.logout(logoutParameter);
 		}
 		return _ssoLogoutBack(req, res);
+	}
+
+	/**
+	 * 封装：校验ticket，取出loginId，如果 ticket 无效则抛出异常 （适用于模式二或模式三）
+	 *
+	 * @param ticket ticket码
+	 * @return SaCheckTicketResult
+	 */
+	public SaCheckTicketResult checkTicket(String ticket) {
+		return checkTicket(ticket, null);
 	}
 
 	/**
@@ -357,6 +365,10 @@ public class SaSsoClientProcessor {
 		ctr.remainSessionTimeout = result.get(paramName.remainSessionTimeout, Long.class);
 		ctr.result = result;
 
+		// 转换 loginId 和 centerId
+		ctr.centerId = ctr.loginId;
+		ctr.loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(ctr.centerId);
+
 		return ctr;
 	}
 
@@ -373,7 +385,7 @@ public class SaSsoClientProcessor {
 		// 		可能会导致调用失败（注意是可能，而非一定，主要取决于你是否改变了数据读写格式），
 		// 		解决方案为：在当前 sso-client 端也按照 sso-server 端的格式重写 SaSsoClientProcessor 里的方法
 
-		StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+		StpLogic stpLogic = ssoClientTemplate.getStpLogicOrGlobal();
 		TicketModel ticketModel = SaSsoServerProcessor.instance.ssoServerTemplate.checkTicketParamAndDelete(ticket, ssoClientTemplate.getClient());
 
 		SaCheckTicketResult ctr = new SaCheckTicketResult();
@@ -383,6 +395,10 @@ public class SaSsoClientProcessor {
 		ctr.remainTokenTimeout = stpLogic.getTokenTimeout(ticketModel.getTokenValue());
 		ctr.remainSessionTimeout = stpLogic.getSessionTimeoutByLoginId(ticketModel.getLoginId());
 		ctr.result = null;
+
+		// 转换 loginId 和 centerId
+		ctr.centerId = ctr.loginId;
+		ctr.loginId = ssoClientTemplate.strategy.convertCenterIdToLoginId.run(ctr.centerId);
 
 		return ctr;
 	}

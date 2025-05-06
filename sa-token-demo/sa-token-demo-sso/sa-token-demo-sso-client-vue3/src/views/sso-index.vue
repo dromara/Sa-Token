@@ -1,29 +1,70 @@
 <!-- 项目首页 -->
 <template>
-  <h2> Sa-Token SSO-Client 应用端（前后端分离版-Vue3） </h2>
-  <p>当前是否登录：<b>{{isLogin}}</b></p>
-  <p>
-    <router-link :to="loginUrl">登录</router-link>&nbsp;&nbsp;
-    <a :href="logoutUrl">注销</a>
-  </p>
+  <div>
+    <h2> Sa-Token SSO-Client 应用端（前后端分离版-Vue3） </h2>
+    <p>当前是否登录：<b>{{ state.isLogin }} ({{ state.loginId }})</b></p>
+    <p>
+      <a href="javascript: null;" @click="login()" >登录</a> -
+      <a href="javascript: null;" @click="doLogoutByAlone()" >单应用注销</a> -
+      <a href="javascript: null;" @click="doLogoutBySingleDeviceId();">单浏览器注销</a> -
+      <a href="javascript: null;" @click="doLogout();">全端注销</a> -
+      <a href="javascript: null;" @click="doMyInfo();">账号资料</a>
+    </p>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import {baseUrl, ajax} from './method-util.js'
+import { reactive } from 'vue'
+import { ajax } from './sso-common.js'
+import router from "../router/index.js";
 
-// 单点登录地址
-const loginUrl =  '/sso-login?back=' + encodeURIComponent(location.href);
-// 单点注销地址
-const logoutUrl = baseUrl + '/sso/logout?satoken=' + localStorage.satoken + '&back=' + encodeURIComponent(location.href);
-
-// 是否登录
-const isLogin = ref(false);
-
-// 查询当前会话是否登录
-ajax('/sso/isLogin', {}, function (res) {
-  console.log('/isLogin 返回数据：', res);
-  isLogin.value = res.data;
+// 数据
+const state = reactive({
+  isLogin: false,
+  loginId: '',
 })
+
+// 登录
+function login() {
+  router.push('/sso-login?back=' + encodeURIComponent(location.href));
+}
+
+// 单应用注销
+function doLogoutByAlone() {
+  ajax('/sso/logoutByAlone', {}, function(res){
+    doIsLogin();
+  })
+}
+
+// 单浏览器注销
+function doLogoutBySingleDeviceId() {
+  ajax('/sso/logout', { singleDeviceIdLogout: true }, function(res){
+    doIsLogin();
+  })
+}
+
+// 全端注销
+function doLogout() {
+  ajax('/sso/logout', {  }, function(res){
+    doIsLogin();
+  })
+}
+
+// 账号资料
+function doMyInfo() {
+  ajax('/sso/myInfo', {  }, function(res){
+    alert(JSON.stringify(res));
+  })
+}
+
+// 判断是否登录
+function doIsLogin() {
+  ajax('/sso/isLogin', {}, function(res){
+    state.isLogin = res.data;
+    state.loginId = res.loginId;
+  })
+}
+doIsLogin();
+
 
 </script>

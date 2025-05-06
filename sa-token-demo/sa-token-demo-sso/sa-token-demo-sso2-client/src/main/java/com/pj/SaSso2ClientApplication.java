@@ -16,7 +16,7 @@ public class SaSso2ClientApplication {
 		System.out.println("测试访问应用端一: http://sa-sso-client1.com:9002");
 		System.out.println("测试访问应用端二: http://sa-sso-client2.com:9002");
 		System.out.println("测试访问应用端三: http://sa-sso-client3.com:9002");
-		System.out.println("测试前需要根据官网文档修改hosts文件，测试账号密码：sa / 123456");
+		System.out.println("测试前需要根据官网文档修改 hosts 文件，测试账号密码：sa / 123456");
 		System.out.println();
 	}
 	

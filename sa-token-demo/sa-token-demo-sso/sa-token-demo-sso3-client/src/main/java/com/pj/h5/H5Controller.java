@@ -2,19 +2,18 @@ package com.pj.h5;
 
 import cn.dev33.satoken.sso.model.SaCheckTicketResult;
 import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
-import cn.dev33.satoken.sso.template.SaSsoUtil;
+import cn.dev33.satoken.sso.template.SaSsoClientUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.util.SaResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 前后台分离架构下集成SSO所需的代码 （SSO-Client端）
  * <p>（注：如果不需要前后端分离架构下集成SSO，可删除此包下所有代码）</p>
- * @author click33
  *
+ * @author click33
  */
 @RestController
 public class H5Controller {
@@ -28,7 +27,7 @@ public class H5Controller {
 	// 返回SSO认证中心登录地址 
 	@RequestMapping("/sso/getSsoAuthUrl")
 	public SaResult getSsoAuthUrl(String clientLoginUrl) {
-		String serverAuthUrl = SaSsoUtil.buildServerAuthUrl(clientLoginUrl, "");
+		String serverAuthUrl = SaSsoClientUtil.buildServerAuthUrl(clientLoginUrl, "");
 		return SaResult.data(serverAuthUrl);
 	}
 	
@@ -43,11 +42,4 @@ public class H5Controller {
 		return SaResult.data(StpUtil.getTokenValue());
 	}
 
-	// 全局异常拦截 
-	@ExceptionHandler
-	public SaResult handlerException(Exception e) {
-		e.printStackTrace(); 
-		return SaResult.error(e.getMessage());
-	}
-	
 }

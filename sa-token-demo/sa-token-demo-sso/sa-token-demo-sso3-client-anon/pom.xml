@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-demo-sso3-client-test2</artifactId>
+	<artifactId>sa-token-demo-sso3-client-anon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<!-- SpringBoot -->
@@ -53,15 +53,15 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-		
-		<!-- Http请求工具 -->
+
+		<!-- Sa-Token 插件：整合 Forest 请求工具 -->
 		<dependency>
-		    <groupId>com.dtflys.forest</groupId>
-		    <artifactId>forest-spring-boot-starter</artifactId>
-		    <version>1.5.26</version>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-forest</artifactId>
+			<version>${sa-token.version}</version>
 		</dependency>
-        
-		
+
+
 	</dependencies>
 	
 	

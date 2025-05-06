@@ -18,7 +18,9 @@ package cn.dev33.satoken.sso.message;
 
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
 import cn.dev33.satoken.sso.exception.SaSsoException;
+import cn.dev33.satoken.sso.function.SaSsoMessageHandleFunction;
 import cn.dev33.satoken.sso.message.handle.SaSsoMessageHandle;
+import cn.dev33.satoken.sso.message.handle.SaSsoMessageSimpleHandle;
 import cn.dev33.satoken.sso.template.SaSsoTemplate;
 
 import java.util.LinkedHashMap;
@@ -65,6 +67,18 @@ public class SaSsoMessageHolder {
      */
     public SaSsoMessageHolder addHandle(SaSsoMessageHandle handle) {
         messageHandleMap.put(handle.getHandlerType(), handle);
+        return this;
+    }
+
+    /**
+     * 添加指定类型的简单消息处理器
+     *
+     * @param type 要处理的消息类型
+     * @param handle 要执行的方法
+     * @return 对象自身
+     */
+    public SaSsoMessageHolder addHandle(String type, SaSsoMessageHandleFunction handle) {
+        messageHandleMap.put(type, new SaSsoMessageSimpleHandle(type, handle));
         return this;
     }
 

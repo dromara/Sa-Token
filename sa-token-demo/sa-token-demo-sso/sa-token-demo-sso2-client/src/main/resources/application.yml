@@ -6,18 +6,17 @@ server:
 sa-token:
     # SSO-相关配置
     sso-client:
+        # 应用标识
+        client: sso-client2
         # SSO-Server 端主机地址
         server-url: http://sa-sso-server.com:9000
-        # 在 sso-server 端前后端分离时打开这个（上面的不要注释，auth-url 配置项和 server-url 要同时存在）
+        # 在 sso-server 端前后端分离时需要单独配置 auth-url 参数（上面的不要注释，auth-url 配置项和 server-url 要同时存在）
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
-
-        client: sso-client2
-
-    sign:
-        # API 接口调用秘钥
+        # API 接口调用秘钥 (单点注销时会用到)
         secret-key: SSO-C2-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
     
-    # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    # 配置 Sa-Token 单独使用的Redis连接（此处需要和 SSO-Server 端连接同一个 Redis）
+    # 注：使用 alone-redis 需要在 pom.xml 引入 sa-token-alone-redis 依赖
     alone-redis: 
         # Redis数据库索引
         database: 1

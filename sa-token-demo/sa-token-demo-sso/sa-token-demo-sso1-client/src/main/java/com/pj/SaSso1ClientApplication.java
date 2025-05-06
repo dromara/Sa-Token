@@ -21,7 +21,7 @@ public class SaSso1ClientApplication {
 		System.out.println("测试访问应用端一: http://s1.stp.com:9001");
 		System.out.println("测试访问应用端二: http://s2.stp.com:9001");
 		System.out.println("测试访问应用端三: http://s3.stp.com:9001");
-		System.out.println("测试前需要根据官网文档修改hosts文件，测试账号密码：sa / 123456");
+		System.out.println("测试前需要根据官网文档修改 hosts 文件，测试账号密码：sa / 123456");
 		System.out.println();
 	}
 	

@@ -1,0 +1,18 @@
+# 端口
+server:
+    port: 9005
+
+# sa-token 配置
+sa-token:
+    # 是否打印操作日志
+    is-log: true
+    # sso-client 相关配置
+    sso-client:
+        # client 标识
+        client: sso-client3-resdk
+        # sso-server 端主机地址
+        server-url: http://sa-sso-server.com:9000
+        # 使用 Http 请求校验ticket (模式三)
+        is-http: true
+        # API 接口调用秘钥
+        secret-key: SSO-C3-ReSdk-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor

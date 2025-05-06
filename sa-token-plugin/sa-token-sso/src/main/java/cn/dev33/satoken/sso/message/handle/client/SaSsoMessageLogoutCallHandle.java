@@ -16,8 +16,6 @@
 package cn.dev33.satoken.sso.message.handle.client;
 
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.message.handle.SaSsoMessageHandle;
 import cn.dev33.satoken.sso.name.ParamName;
@@ -56,7 +54,7 @@ public class SaSsoMessageLogoutCallHandle implements SaSsoMessageHandle {
 
         // 1、获取对象
         SaSsoClientTemplate ssoClientTemplate = (SaSsoClientTemplate) ssoTemplate;
-        StpLogic stpLogic = ssoClientTemplate.getStpLogic();
+        StpLogic stpLogic = ssoClientTemplate.getStpLogicOrGlobal();
         ParamName paramName = ssoClientTemplate.paramName;
 
         // 2、判断当前应用是否开启单点注销功能

@@ -1,4 +1,4 @@
-package com.pj.home;
+package com.pj.sso;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.stp.StpUtil;

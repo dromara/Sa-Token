@@ -1,5 +1,6 @@
 // 服务器接口主机地址
-var baseUrl = "http://sa-sso-client1.com:9003";
+// var baseUrl = "http://sa-sso-client1.com:9002";  // 模式二后端 
+var baseUrl = "http://sa-sso-client1.com:9003";  // 模式三后端 
 
 // 封装一下Ajax
 function ajax(path, data, successFn, errorFn) {

@@ -101,7 +101,7 @@ public class SaSsoServerProcessor {
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
 		SaSsoServerConfig cfg = ssoServerTemplate.getServerConfig();
-		StpLogic stpLogic = ssoServerTemplate.getStpLogic();
+		StpLogic stpLogic = ssoServerTemplate.getStpLogicOrGlobal();
 		ParamName paramName = ssoServerTemplate.paramName;
 
 		// 两种情况：
@@ -177,7 +177,7 @@ public class SaSsoServerProcessor {
 		// 获取对象
 		SaRequest req = SaHolder.getRequest();
 		SaResponse res = SaHolder.getResponse();
-		StpLogic stpLogic = ssoServerTemplate.getStpLogic();
+		StpLogic stpLogic = ssoServerTemplate.getStpLogicOrGlobal();
 		Object loginId = stpLogic.getLoginIdDefaultNull();
 		boolean singleDeviceIdLogout = req.isParam(ssoServerTemplate.paramName.singleDeviceIdLogout, "true");
 
@@ -191,7 +191,7 @@ public class SaSsoServerProcessor {
 		}
 
 		// 完成
-		return SaSsoProcessorHelper.ssoLogoutBack(req, res, ssoServerTemplate.paramName);
+		return _ssoLogoutBack(req, res);
 	}
 
 	/**
@@ -226,6 +226,16 @@ public class SaSsoServerProcessor {
 			return SaResult.error("未能找到消息处理器：" + message.getType());
 		}
 		return ssoServerTemplate.handleMessage(message);
+	}
+
+	/**
+	 * 封装：单点注销成功后返回结果
+	 * @param req SaRequest对象
+	 * @param res SaResponse对象
+	 * @return 返回结果
+	 */
+	public Object _ssoLogoutBack(SaRequest req, SaResponse res) {
+		return SaSsoProcessorHelper.ssoLogoutBack(req, res, ssoServerTemplate.paramName);
 	}
 
 }

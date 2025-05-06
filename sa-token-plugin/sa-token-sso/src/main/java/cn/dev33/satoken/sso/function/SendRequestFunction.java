@@ -27,6 +27,6 @@ import java.util.function.Function;
  * @since 1.38.0
  */
 @FunctionalInterface
-public interface SendHttpFunction extends Function<String, String> {
+public interface SendRequestFunction extends Function<String, String> {
 
 }

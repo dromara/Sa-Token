@@ -65,7 +65,7 @@ public class SaSsoMessageSignoutHandle implements SaSsoMessageHandle {
         String deviceId = message.getString(paramName.deviceId);
 
         // 4、单点注销
-        SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogic().createSaLogoutParameter().setDeviceId(deviceId);
+        SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogicOrGlobal().createSaLogoutParameter().setDeviceId(deviceId);
         ssoServerTemplate.ssoLogout(loginId, logoutParameter);
 
         // 5、响应

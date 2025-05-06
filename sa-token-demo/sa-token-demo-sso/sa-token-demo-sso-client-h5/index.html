@@ -8,22 +8,59 @@
 		<h2>Sa-Token SSO-Client 应用端（前后端分离版-原生h5）</h2>
 		<p>当前是否登录：<b class="is-login"></b></p>
 		<p>
-			<a class="login-btn">登录</a>
-			<a class="logout-btn">注销</a>
+			<a href="javascript: login();">登录</a> - 
+			<a href="javascript: doLogoutByAlone();">单应用注销</a> - 
+			<a href="javascript: doLogoutBySingleDeviceId();">单浏览器注销</a> - 
+			<a href="javascript: doLogout();">全端注销</a> - 
+			<a href="javascript: doMyInfo();">账号资料</a>
 		</p>
-		<script src="common.js"></script>
+		<script src="sso-common.js"></script>
 		<script type="text/javascript">
 			
-			document.querySelector('.login-btn').href = 'sso-login.html?back=' + encodeURIComponent(location.href);
-			document.querySelector('.logout-btn').href = baseUrl + '/sso/logout?satoken=' + localStorage.satoken + '&back=' + encodeURIComponent(location.href);
+			// 登录 
+			function login() {
+				location.href = 'sso-login.html?back=' + encodeURIComponent(location.href);
+			}
 			
-			ajax('/sso/isLogin', {}, function(res){
-				if(res.data) {
-					setHtml('.is-login', res.data + ' (' + res.loginId + ')');
-				} else {
-					setHtml('.is-login', res.data);
-				}
-			})
+			// 单应用注销
+			function doLogoutByAlone() {
+				ajax('/sso/logoutByAlone', {}, function(res){
+					doIsLogin();
+				})
+			}
+			
+			// 单浏览器注销
+			function doLogoutBySingleDeviceId() {
+				ajax('/sso/logout', { singleDeviceIdLogout: true }, function(res){
+					doIsLogin();
+				})
+			}
+			
+			// 全端注销
+			function doLogout() {
+				ajax('/sso/logout', {  }, function(res){
+					doIsLogin();
+				})
+			}
+			
+			// 账号资料
+			function doMyInfo() {
+				ajax('/sso/myInfo', {  }, function(res){
+					alert(JSON.stringify(res));
+				})
+			}
+			
+			// 判断是否登录 
+			function doIsLogin() {
+				ajax('/sso/isLogin', {}, function(res){
+					if(res.data) {
+						setHtml('.is-login', res.data + ' (' + res.loginId + ')');
+					} else {
+						setHtml('.is-login', res.data);
+					}
+				})
+			}
+			doIsLogin();
 			
 		</script>
 	</body>

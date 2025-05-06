@@ -1,10 +1,12 @@
 import axios from 'axios'
 
 // sso-client 的后端服务地址
-export const baseUrl = "http://sa-sso-client1.com:9001";
+// export const baseUrl = "http://sa-sso-client1.com:9002"; // 模式二后端
+export const baseUrl = "http://sa-sso-client1.com:9003";  // 模式三后端
 
 // 封装一下 Ajax 方法
 export const ajax = function(path, data, successFn) {
+    console.log('发起请求：', baseUrl + path, JSON.stringify(data));
     axios({
         url: baseUrl + path,
         method: 'post',
@@ -16,9 +18,14 @@ export const ajax = function(path, data, successFn) {
     }).
     then(function (response) { // 成功时执行
         const res = response.data;
+        console.log('返回数据：', res);
+        if(res.code === 500) {
+            return alert(res.msg);
+        }
         successFn(res);
     }).
     catch(function (error) {
+        console.error('请求失败:', error);
         return alert("异常：" + JSON.stringify(error));
     })
 }

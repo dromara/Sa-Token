@@ -61,11 +61,39 @@ public class SaSsoTemplate {
 	}
 
 	/**
-	 * 获取底层使用的会话对象 
+	 * 底层使用的 StpLogic 对象
+	 */
+	StpLogic stpLogic;
+
+	/**
+	 * 写入底层使用的会话对象
+	 *
+	 * @param stpLogic /
+	 * @return /
+	 */
+	public SaSsoTemplate setStpLogic(StpLogic stpLogic) {
+		this.stpLogic = stpLogic;
+		return this;
+	}
+
+	/**
+	 * 获取底层使用的会话对象
 	 * @return /
 	 */
 	public StpLogic getStpLogic() {
-		return StpUtil.stpLogic;
+		return this.stpLogic;
+	}
+
+	/**
+	 * 获取底层使用的会话对象，如果没有配置则返回全局默认 StpLogic
+	 * @return /
+	 */
+	public StpLogic getStpLogicOrGlobal() {
+		StpLogic stpLogic = getStpLogic();
+		if (stpLogic == null) {
+			return StpUtil.stpLogic;
+		}
+		return stpLogic;
 	}
 
 	// ----------- 消息处理

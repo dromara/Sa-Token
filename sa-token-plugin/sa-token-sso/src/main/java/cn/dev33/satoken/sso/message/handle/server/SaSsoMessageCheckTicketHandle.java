@@ -55,7 +55,7 @@ public class SaSsoMessageCheckTicketHandle implements SaSsoMessageHandle {
         // 1、获取对象
         SaSsoServerTemplate ssoServerTemplate = (SaSsoServerTemplate) ssoTemplate;
         ParamName paramName = ssoServerTemplate.paramName;
-        StpLogic stpLogic = ssoServerTemplate.getStpLogic();
+        StpLogic stpLogic = ssoServerTemplate.getStpLogicOrGlobal();
         String client = message.getString(paramName.client);
         String ticket = message.getValueNotNull(paramName.ticket).toString();
         String sloCallback = message.getString(paramName.ssoLogoutCall);

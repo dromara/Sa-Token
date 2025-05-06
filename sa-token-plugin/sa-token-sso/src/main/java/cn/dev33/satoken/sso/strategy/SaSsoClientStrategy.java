@@ -17,7 +17,7 @@ package cn.dev33.satoken.sso.strategy;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaParamRetFunction;
-import cn.dev33.satoken.sso.function.SendHttpFunction;
+import cn.dev33.satoken.sso.function.SendRequestFunction;
 import cn.dev33.satoken.sso.function.TicketResultHandleFunction;
 import cn.dev33.satoken.util.SaResult;
 
@@ -34,7 +34,7 @@ public class SaSsoClientStrategy {
     /**
      * 发送 Http 请求的处理函数
      */
-    public SendHttpFunction sendHttp = url -> {
+    public SendRequestFunction sendHttp = url -> {
         return SaManager.getSaHttpTemplate().get(url);
     };
 

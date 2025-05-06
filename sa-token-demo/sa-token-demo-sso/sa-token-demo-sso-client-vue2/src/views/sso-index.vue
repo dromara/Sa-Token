@@ -2,35 +2,76 @@
 <template>
   <div>
     <h2> Sa-Token SSO-Client 应用端（前后端分离版-Vue2） </h2>
-    <p>当前是否登录：<b>{{isLogin}}</b></p>
+    <p>当前是否登录：<b>{{isLogin}} ({{ loginId }})</b></p>
     <p>
-      <router-link :to="loginUrl">登录</router-link>&nbsp;&nbsp;
-      <a :href="logoutUrl">注销</a>
+      <a href="javascript: null;" @click="login()" >登录</a> -
+      <a href="javascript: null;" @click="doLogoutByAlone()" >单应用注销</a> -
+      <a href="javascript: null;" @click="doLogoutBySingleDeviceId();">单浏览器注销</a> -
+      <a href="javascript: null;" @click="doLogout();">全端注销</a> -
+      <a href="javascript: null;" @click="doMyInfo();">账号资料</a>
     </p>
   </div>
 </template>
 
 <script>
-import {baseUrl, ajax} from './method-util.js'
+import {ajax} from './sso-common.js'
+import router from "@/router";
 
 export default {
   name: 'App',
   data() {
     return {
-      // 单点登录地址
-      loginUrl: '/sso-login?back=' + encodeURIComponent(location.href),
-      // 单点注销地址
-      logoutUrl: baseUrl + '/sso/logout?satoken=' + localStorage.satoken + '&back=' + encodeURIComponent(location.href),
       // 是否登录
-      isLogin: false
+      isLogin: false,
+      // 登录账号
+      loginId: ''
+    }
+  },
+  methods: {
+
+    // 登录
+    login: function() {
+      router.push('/sso-login?back=' + encodeURIComponent(location.href));
+    },
+
+    // 单应用注销
+    doLogoutByAlone: function() {
+      ajax('/sso/logoutByAlone', {}, function(){
+        this.doIsLogin();
+      }.bind(this))
+    },
+
+    // 单浏览器注销
+    doLogoutBySingleDeviceId: function() {
+      ajax('/sso/logout', { singleDeviceIdLogout: true }, function(){
+        this.doIsLogin();
+      }.bind(this))
+    },
+
+    // 全端注销
+    doLogout: function () {
+      ajax('/sso/logout', {  }, function(){
+        this.doIsLogin();
+      }.bind(this))
+    },
+
+    // 账号资料
+    doMyInfo: function() {
+      ajax('/sso/myInfo', {  }, function(res){
+        alert(JSON.stringify(res));
+      })
+    },
+
+    // 判断是否登录
+    doIsLogin: function() {
+      ajax('/sso/isLogin', {}, function(res){
+        this.isLogin = res.data;
+        this.loginId = res.loginId;
+      }.bind(this))
     }
   },
   created() {
-    // 查询当前会话是否登录
-    ajax('/sso/isLogin', {}, function (res) {
-      console.log('/isLogin 返回数据：', res);
-      this.isLogin = res.data;
-    }.bind(this))
+    this.doIsLogin();
   }
 }
 </script>

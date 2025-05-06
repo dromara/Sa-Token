@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * [Sa-Token 权限认证] 配置类 （解决跨域问题）
+ * [Sa-Token 权限认证] 配置类
  *
  * @author click33
  */

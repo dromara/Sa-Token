@@ -16,11 +16,12 @@
 package cn.dev33.satoken.sso.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.sso.function.CheckTicketAppendDataFunction;
 import cn.dev33.satoken.sso.function.DoLoginHandleFunction;
 import cn.dev33.satoken.sso.function.NotLoginViewFunction;
-import cn.dev33.satoken.sso.function.SendHttpFunction;
+import cn.dev33.satoken.sso.function.SendRequestFunction;
 import cn.dev33.satoken.util.SaResult;
 
 import java.util.Map;
@@ -36,8 +37,17 @@ public class SaSsoServerStrategy {
     /**
      * 发送 Http 请求的处理函数
      */
-    public SendHttpFunction sendHttp = url -> {
+    public SendRequestFunction sendRequest = url -> {
         return SaManager.getSaHttpTemplate().get(url);
+    };
+
+    /**
+     * 使用异步模式执行一个任务
+     */
+    public SaParamFunction<SaFunction> asyncRun = fun -> {
+        new Thread(() -> {
+            fun.run();
+        }).start();
     };
 
     /**
@@ -75,7 +85,7 @@ public class SaSsoServerStrategy {
      * @return 返回的结果
      */
     public SaResult requestAsSaResult(String url) {
-        String body = sendHttp.apply(url);
+        String body = sendRequest.apply(url);
         Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
         return new SaResult(map);
     }

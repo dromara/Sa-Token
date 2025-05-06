@@ -82,7 +82,7 @@ public class SaSsoServerConfig implements Serializable {
     /**
      * 是否允许匿名 Client 接入
      */
-    public Boolean allowAnonClient = true;
+    public Boolean allowAnonClient = false;
 
     /**
      * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) (匿名 client 使用)

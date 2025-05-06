@@ -507,7 +507,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             return;
         }
 
-        SaSession session = getStpLogic().getSessionByLoginId(loginId);
+        SaSession session = getStpLogicOrGlobal().getSessionByLoginId(loginId);
 
         // 取出原来的
         List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
@@ -522,7 +522,9 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             for (;;) {
                 if(scmList.size() > maxRegClient) {
                     SaSsoClientInfo removeScm = scmList.remove(0);
-                    notifyClientLogout(loginId, null, removeScm, true, true);
+                    strategy.asyncRun.run(() -> {
+                        notifyClientLogout(loginId, null, removeScm, true, true);
+                    });
                 } else {
                     break;
                 }
@@ -562,7 +564,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param loginId 指定账号
      */
     public void ssoLogout(Object loginId) {
-        ssoLogout(loginId, getStpLogic().createSaLogoutParameter());
+        ssoLogout(loginId, getStpLogicOrGlobal().createSaLogoutParameter());
     }
 
     /**
@@ -577,32 +579,37 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         pushToAllClientByLogoutCall(loginId, logoutParameter);
 
         // 2、SaSession 挂载的 Client 端注销会话
-        SaSession session = getStpLogic().getSessionByLoginId(loginId, false);
+        SaSession session = getStpLogicOrGlobal().getSessionByLoginId(loginId, false);
         if(session == null) {
             return;
         }
         List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
         scmList.forEach(scm -> {
-            notifyClientLogout(loginId, logoutParameter.getDeviceId(), scm, false, false);
+            strategy.asyncRun.run(() -> {
+                notifyClientLogout(loginId, logoutParameter.getDeviceId(), scm, false, false);
+            });
         });
 
         // 3、Server 端本身注销
-        getStpLogic().logout(loginId, logoutParameter);
+        getStpLogicOrGlobal().logout(loginId, logoutParameter);
     }
 
     /**
      * 通知指定账号的指定客户端注销
+     *
      * @param loginId 指定账号
      * @param deviceId 指定设备 id
      * @param scm 客户端信息对象
      * @param autoLogout 是否为超过 maxRegClient 的自动注销
      * @param isPushWork 如果该 client 没有注册注销回调地址，是否使用 push 消息的方式进行注销回调通知
+     *
+     * @return /
      */
-    public void notifyClientLogout(Object loginId, String deviceId, SaSsoClientInfo scm, boolean autoLogout, boolean isPushWork) {
+    public String notifyClientLogout(Object loginId, String deviceId, SaSsoClientInfo scm, boolean autoLogout, boolean isPushWork) {
 
         // 如果给个null值，不进行任何操作
         if(scm == null || scm.mode != SaSsoConsts.SSO_MODE_3) {
-            return;
+            return null;
         }
 
         // 如果此 Client 并没有注册 单点注销 回调地址
@@ -610,9 +617,10 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         if(SaFoxUtil.isEmpty(sloCallUrl)) {
             // TODO 代码有效性待验证
             if(isPushWork && SaFoxUtil.isNotEmpty(scm.getClient())) {
-                pushToClientByLogoutCall(getClient(scm.getClient()), loginId, getStpLogic().createSaLogoutParameter());
+                SaSsoClientModel client = getClient(scm.getClient());
+                return pushToClientByLogoutCall(client, loginId, getStpLogicOrGlobal().createSaLogoutParameter());
             }
-            return;
+            return null;
         }
 
         // 参数
@@ -627,7 +635,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         String finalUrl = SaFoxUtil.joinParam(sloCallUrl, signParamsStr);
 
         // 发起请求
-        strategy.sendHttp.apply(finalUrl);
+        return strategy.sendRequest.apply(finalUrl);
     }
 
 
@@ -644,7 +652,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         String noticeUrl = clientModel.splicingPushUrl();
         String paramsStr = getSignTemplate(clientModel.getClient()).addSignParamsAndJoin(message);
         String finalUrl = SaFoxUtil.joinParam(noticeUrl, paramsStr);
-        return strategy.sendHttp.apply(finalUrl);
+        return strategy.sendRequest.apply(finalUrl);
     }
 
     /**
@@ -691,7 +699,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     public void pushToAllClient(SaSsoMessage message) {
         List<SaSsoClientModel> needPushClients = getNeedPushClients();
         for (SaSsoClientModel client : needPushClients) {
-            pushMessage(client, message);
+            strategy.asyncRun.run(() -> pushMessage(client, message));
         }
     }
 
@@ -705,7 +713,9 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         List<SaSsoClientModel> npClients = getNeedPushClients();
         for (SaSsoClientModel client : npClients) {
             if(client.getIsSlo()) {
-                pushToClientByLogoutCall(client, loginId, logoutParameter);
+                strategy.asyncRun.run(() -> {
+                    pushToClientByLogoutCall(client, loginId, logoutParameter);
+                });
             }
         }
     }
@@ -715,13 +725,14 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      *
      * @param loginId /
      * @param logoutParameter 注销参数
+     * @return /
      */
-    public void pushToClientByLogoutCall(SaSsoClientModel client, Object loginId, SaLogoutParameter logoutParameter) {
+    public String pushToClientByLogoutCall(SaSsoClientModel client, Object loginId, SaLogoutParameter logoutParameter) {
         SaSsoMessage message = new SaSsoMessage();
         message.setType(SaSsoConsts.MESSAGE_LOGOUT_CALL);
         message.set(paramName.loginId, loginId);
         message.set(paramName.deviceId, logoutParameter.getDeviceId());
-        pushMessage(client, message);
+        return pushMessage(client, message);
     }
 
 
@@ -766,7 +777,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @return key
      */
     public String splicingTicketModelSaveKey(String ticket) {
-        return getStpLogic().getConfigOrGlobal().getTokenName() + ":ticket:" + ticket;
+        return getStpLogicOrGlobal().getConfigOrGlobal().getTokenName() + ":ticket:" + ticket;
     }
 
     /**
@@ -780,7 +791,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         if(SaFoxUtil.isEmpty(client) || SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
             client = SaSsoConsts.CLIENT_ANON;
         }
-        return getStpLogic().getConfigOrGlobal().getTokenName() + ":ticket-index:" + client + ":" + id;
+        return getStpLogicOrGlobal().getConfigOrGlobal().getTokenName() + ":ticket-index:" + client + ":" + id;
     }
 
 }

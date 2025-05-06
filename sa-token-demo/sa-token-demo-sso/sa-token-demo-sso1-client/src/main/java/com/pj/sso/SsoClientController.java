@@ -18,11 +18,11 @@ public class SsoClientController {
 	@RequestMapping("/")
 	public String index() {
 		String authUrl = SaSsoManager.getClientConfig().splicingAuthUrl();
-		String solUrl = SaSsoManager.getClientConfig().splicingSignoutUrl();
-		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
+		String signoutUrl = SaSsoManager.getClientConfig().splicingSignoutUrl();
+		String str = "<h2>Sa-Token SSO-Client 应用端 (模式一)</h2>" +
+					"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
 					"<p><a href=\"javascript:location.href='" + authUrl + "?mode=simple&redirect=' + encodeURIComponent(location.href);\">登录</a> " + 
-					"<a href=\"javascript:location.href='" + solUrl + "?back=' + encodeURIComponent(location.href);\">注销</a> </p>";
+					"<a href=\"javascript:location.href='" + signoutUrl + "?back=' + encodeURIComponent(location.href);\">注销</a> </p>";
 		return str;
 	}
 	

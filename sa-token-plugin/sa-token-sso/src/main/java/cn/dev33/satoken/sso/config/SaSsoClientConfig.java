@@ -81,7 +81,7 @@ public class SaSsoClientConfig implements Serializable {
     public Boolean isHttp = false;
 
     /**
-     * 是否打开单点注销功能 (为 true 时，接收单点注销回调消息推送)
+     * 是否打开单点注销功能 (为 true 时，开放 /sso/logout 接口，以及接收单点注销回调消息推送)
      */
     public Boolean isSlo = true;
 
@@ -153,14 +153,14 @@ public class SaSsoClientConfig implements Serializable {
     }
 
     /**
-     * @return 是否打开单点注销功能 (为 true 时，接收单点注销回调消息推送)
+     * @return 是否打开单点注销功能  (为 true 时，开放 /sso/logout 接口，以及接收单点注销回调消息推送)
      */
     public Boolean getIsSlo() {
         return isSlo;
     }
 
     /**
-     * @param isSlo 是否打开单点注销功能 (为 true 时，接收单点注销回调消息推送)
+     * @param isSlo 是否打开单点注销功能 (为 true 时，开放 /sso/logout 接口，以及接收单点注销回调消息推送)
      * @return 对象自身
      */
     public SaSsoClientConfig setIsSlo(Boolean isSlo) {

@@ -149,8 +149,10 @@ public class SaResult extends LinkedHashMap<String, Object> implements Serializa
 	 * @return 对象自身 
 	 */
 	public SaResult setMap(Map<String, ?> map) {
-		for (String key : map.keySet()) {
-			this.put(key, map.get(key));
+		if(map != null) {
+			for (String key : map.keySet()) {
+				this.put(key, map.get(key));
+			}
 		}
 		return this;
 	}
