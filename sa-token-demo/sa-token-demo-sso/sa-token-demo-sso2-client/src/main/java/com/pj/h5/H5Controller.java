@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class H5Controller {
 
-	// 当前是否登录 
+	// 判断当前是否登录
 	@RequestMapping("/sso/isLogin")
 	public Object isLogin() {
 		return SaResult.data(StpUtil.isLogin()).set("loginId", StpUtil.getLoginIdDefaultNull());
@@ -31,7 +31,7 @@ public class H5Controller {
 		return SaResult.data(serverAuthUrl);
 	}
 	
-	// 根据ticket进行登录
+	// 根据 ticket 进行登录
 	@RequestMapping("/sso/doLoginByTicket")
 	public SaResult doLoginByTicket(String ticket) {
 		SaCheckTicketResult ctr = SaSsoClientProcessor.instance.checkTicket(ticket);

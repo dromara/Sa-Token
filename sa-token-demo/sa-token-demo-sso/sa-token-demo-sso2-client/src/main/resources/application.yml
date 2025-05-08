@@ -4,6 +4,9 @@ server:
 
 # sa-token配置 
 sa-token:
+    # 打印操作日志
+    is-log: true
+
     # SSO-相关配置
     sso-client:
         # 应用标识
@@ -17,7 +20,7 @@ sa-token:
     
     # 配置 Sa-Token 单独使用的Redis连接（此处需要和 SSO-Server 端连接同一个 Redis）
     # 注：使用 alone-redis 需要在 pom.xml 引入 sa-token-alone-redis 依赖
-    alone-redis: 
+    alone-redis:
         # Redis数据库索引
         database: 1
         # Redis服务器地址

@@ -275,7 +275,7 @@ public class SaSsoClientProcessor {
 			logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
 		}
 		Object centerId = ssoClientTemplate.strategy.convertLoginIdToCenterId.run(stpLogic.getLoginId());
-		SaSsoMessage message = ssoClientTemplate.buildSloMessage(centerId, logoutParameter);
+		SaSsoMessage message = ssoClientTemplate.buildSignoutMessage(centerId, logoutParameter);
 		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
 
 		// 如果 sso-server 响应的状态码非200，代表业务失败，将回应的 msg 字段作为异常抛出

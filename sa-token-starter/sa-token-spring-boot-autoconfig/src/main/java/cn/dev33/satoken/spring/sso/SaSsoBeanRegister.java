@@ -23,6 +23,7 @@ import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -61,6 +62,7 @@ public class SaSsoBeanRegister {
 	 * @return /
 	 */
 	@Bean
+	@ConditionalOnMissingBean(SaSsoServerTemplate.class)
 	public SaSsoServerTemplate getSaSsoServerTemplate() {
 		return SaSsoServerProcessor.instance.ssoServerTemplate;
 	}
@@ -71,6 +73,7 @@ public class SaSsoBeanRegister {
 	 * @return /
 	 */
 	@Bean
+	@ConditionalOnMissingBean(SaSsoClientTemplate.class)
 	public SaSsoClientTemplate getSaSsoClientTemplate() {
 		return SaSsoClientProcessor.instance.ssoClientTemplate;
 	}

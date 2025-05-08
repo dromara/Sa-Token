@@ -212,7 +212,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
      * @param logoutParameter 单点注销
      * @return 单点注销URL
      */
-    public SaSsoMessage buildSloMessage(Object loginId, SaLogoutParameter logoutParameter) {
+    public SaSsoMessage buildSignoutMessage(Object loginId, SaLogoutParameter logoutParameter) {
         SaSsoMessage message = new SaSsoMessage();
         message.setType(SaSsoConsts.MESSAGE_SIGNOUT);
         message.set(paramName.client, getClient());

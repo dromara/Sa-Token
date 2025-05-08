@@ -48,7 +48,7 @@ public class SaSsoServerConfig implements Serializable {
     public long ticketTimeout = 60 * 5;
 
     /**
-     * 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
+     * 主页路由：在 /sso/auth 登录页不指定 redirect 参数时，默认跳转的地址
      */
     public String homeRoute;
 
@@ -176,14 +176,14 @@ public class SaSsoServerConfig implements Serializable {
     }
 
     /**
-     * @return 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
+     * @return 主页路由：在 /sso/auth 登录页不指定 redirect 参数时，默认跳转的地址
      */
     public String getHomeRoute() {
         return homeRoute;
     }
 
     /**
-     * @param homeRoute 主页路由：在 /sso/auth 登录后不指定 redirect 参数的情况下默认跳转的路由
+     * @param homeRoute 主页路由：在 /sso/auth 登录页不指定 redirect 参数时，默认跳转的地址
      * @return 对象自身
      */
     public SaSsoServerConfig setHomeRoute(String homeRoute) {

@@ -21,7 +21,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<!-- Http 请求工具 -->
         <dependency>
 		    <groupId>com.dtflys.forest</groupId>

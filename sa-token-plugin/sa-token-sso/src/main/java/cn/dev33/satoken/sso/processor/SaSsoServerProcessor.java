@@ -85,7 +85,7 @@ public class SaSsoServerProcessor {
 
 		// sso-server：接收推送消息
 		if(req.isPath(apiName.ssoPushS)) {
-			return ssoPush();
+			return ssoPushS();
 		}
 
 		// 默认返回
@@ -199,7 +199,7 @@ public class SaSsoServerProcessor {
 	 *
 	 * @return 处理结果
 	 */
-	public Object ssoPush() {
+	public Object ssoPushS() {
 		ParamName paramName = ssoServerTemplate.paramName;
 		SaSsoServerConfig ssoServerConfig = ssoServerTemplate.getServerConfig();
 

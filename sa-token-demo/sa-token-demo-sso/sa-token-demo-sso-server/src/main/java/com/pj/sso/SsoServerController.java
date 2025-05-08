@@ -22,7 +22,7 @@ public class SsoServerController {
 
 	/**
 	 * SSO-Server端：处理所有SSO相关请求 
-	 * 		http://{host}:{port}/sso/auth			-- 单点登录授权地址 
+	 * 		http://{host}:{port}/sso/auth			-- 单点登录授权地址
 	 * 		http://{host}:{port}/sso/doLogin		-- 账号密码登录接口，接受参数：name、pwd
 	 * 		http://{host}:{port}/sso/signout		-- 单点注销地址（isSlo=true时打开）
 	 */
@@ -42,19 +42,18 @@ public class SsoServerController {
 		
 		// 配置：登录处理函数 
 		ssoServerTemplate.strategy.doLoginHandle = (name, pwd) -> {
-			// 此处仅做模拟登录，真实环境应该查询数据进行登录 
+			// 此处仅做模拟登录，真实环境应该查询数据库进行登录
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				String deviceId = SaHolder.getRequest().getParam("deviceId", SaFoxUtil.getRandomString(32));
-				StpUtil.login(10001, SaLoginParameter.create().setDeviceId(deviceId));
+				StpUtil.login(10001, new SaLoginParameter().setDeviceId(deviceId));
 				return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
 			}
 			return SaResult.error("登录失败！");
 		};
 
-		// 添加消息处理器：userinfo (获取用户资料) （用于在模式三下，为 client 端开放拉取数据的接口）
+		// 添加消息处理器：userinfo (获取用户资料) （用于为 client 端开放拉取数据的接口）
 		ssoServerTemplate.messageHolder.addHandle("userinfo", (ssoTemplate, message) -> {
 			System.out.println("收到消息：" + message);
-			System.out.println("loginId=" + message.get("loginId"));
 
 			// 自定义返回结果（模拟）
 			return SaResult.ok()

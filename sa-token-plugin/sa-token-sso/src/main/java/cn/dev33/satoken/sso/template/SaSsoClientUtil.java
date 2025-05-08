@@ -28,7 +28,7 @@ import java.util.Map;
  * @author click33
  * @since 1.38.0
  */
-public class SaSsoClientUtil extends SaSsoTemplate {
+public class SaSsoClientUtil {
 
     private SaSsoClientUtil() {
     }
@@ -120,8 +120,8 @@ public class SaSsoClientUtil extends SaSsoTemplate {
      * @param logoutParameter 单点注销
      * @return 单点注销URL
      */
-    public static SaSsoMessage buildSloMessage(Object loginId, SaLogoutParameter logoutParameter) {
-        return SaSsoClientProcessor.instance.ssoClientTemplate.buildSloMessage(loginId, logoutParameter);
+    public static SaSsoMessage buildSignoutMessage(Object loginId, SaLogoutParameter logoutParameter) {
+        return SaSsoClientProcessor.instance.ssoClientTemplate.buildSignoutMessage(loginId, logoutParameter);
     }
 
 }

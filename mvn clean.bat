@@ -58,8 +58,9 @@ cd sa-token-demo-sso-server & call mvn clean & cd ..
 cd sa-token-demo-sso1-client & call mvn clean & cd ..
 cd sa-token-demo-sso2-client & call mvn clean & cd ..
 cd sa-token-demo-sso3-client & call mvn clean & cd ..
-cd sa-token-demo-sso3-client-test2 & call mvn clean & cd ..
 cd sa-token-demo-sso3-client-nosdk & call mvn clean & cd ..
+cd sa-token-demo-sso3-client-resdk & call mvn clean & cd ..
+cd sa-token-demo-sso3-client-anon & call mvn clean & cd ..
 cd ..
 
 cd sa-token-demo-sso-for-solon

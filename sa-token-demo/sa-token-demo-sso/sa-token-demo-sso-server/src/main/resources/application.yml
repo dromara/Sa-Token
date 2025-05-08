@@ -7,7 +7,7 @@ sa-token:
     # 打印操作日志
     is-log: true
 
-    # ------- SSO 模式一配置  (非模式一不需要配置)
+    # SSO 模式一配置  (非模式一不需要配置)
 #    cookie:
 #         # 配置 Cookie 作用域
 #          domain: stp.com
@@ -16,7 +16,7 @@ sa-token:
     sso-server:
         # Ticket有效期 (单位: 秒)，默认五分钟 
         ticket-timeout: 300
-        # 主页路由，在不指定 redirect 参数时，默认跳转的地址
+        # 主页路由：在 /sso/auth 登录页不指定 redirect 参数时，默认跳转的地址
         home-route: /home
         # 是否启用匿名 client (开启匿名 client 后，允许客户端接入时不提交 client 参数)
         allow-anon-client: true
@@ -26,6 +26,10 @@ sa-token:
         secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
         # 应用列表：配置接入的应用信息
         clients:
+            # 应用 sso-client1：采用模式一对接 (同域、同Redis)
+            sso-client1:
+                client: sso-client1
+                allow-url: "*"
             # 应用 sso-client2：采用模式二对接 (跨域、同Redis)
             sso-client2:
                 client: sso-client2

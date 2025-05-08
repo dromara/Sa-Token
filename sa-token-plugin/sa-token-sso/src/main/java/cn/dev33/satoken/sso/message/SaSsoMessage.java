@@ -41,7 +41,7 @@ public class SaSsoMessage extends LinkedHashMap<String, Object> implements SaSet
     /**
      * KEY：TYPE
      */
-    public static final String MSG_TYPE = "msg_type";
+    public static final String MSG_TYPE = "msgType";
 
     public SaSsoMessage() {
 

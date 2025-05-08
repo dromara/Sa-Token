@@ -47,6 +47,8 @@ public class SsoClientController {
 	// 配置SSO相关参数
 	@Autowired
 	private void configSso(SaSsoClientTemplate ssoClientTemplate) {
+		// 重写 loginId 与 centerId 转换策略函数，做到本地应用 userId 与认证中心 userId 的互相映射
+
 //		// 将 centerId 转换为 loginId 的函数
 //		ssoClientTemplate.strategy.convertCenterIdToLoginId = (centerId) -> {
 //			return "Stu" + centerId;
@@ -72,7 +74,10 @@ public class SsoClientController {
 			return "尚未登录，无法获取";
 		}
 
-		// 获取本地 loginId 对应的认证中心 centerId
+		// 原写法：直接调用 StpUtil.getLoginId() 当做 centerId 来提交
+		// Object centerId = StpUtil.getLoginId();
+
+		// 新写法：获取本地 loginId 对应的认证中心 centerId
 		Object centerId = SaSsoClientUtil.getSsoTemplate().strategy.convertLoginIdToCenterId.run(StpUtil.getLoginId());
 
 		// 推送消息

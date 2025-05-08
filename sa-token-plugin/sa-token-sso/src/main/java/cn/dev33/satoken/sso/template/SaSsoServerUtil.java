@@ -30,7 +30,7 @@ import java.util.List;
  * @author click33
  * @since 1.43.0
  */
-public class SaSsoServerUtil extends SaSsoTemplate {
+public class SaSsoServerUtil {
 
     private SaSsoServerUtil() {
     }
@@ -295,6 +295,16 @@ public class SaSsoServerUtil extends SaSsoTemplate {
      */
     public static void pushToAllClient(SaSsoMessage message) {
         SaSsoServerProcessor.instance.ssoServerTemplate.pushToAllClient(message);
+    }
+
+    /**
+     * 向所有 Client 推送消息，并忽略掉某个 client
+     *
+     * @param ignoreClient 要被忽略掉的 client，填 null 代表不忽略
+     * @param message /
+     */
+    public static void pushToAllClient(SaSsoMessage message, String ignoreClient) {
+        SaSsoServerProcessor.instance.ssoServerTemplate.pushToAllClient(message, ignoreClient);
     }
 
 }

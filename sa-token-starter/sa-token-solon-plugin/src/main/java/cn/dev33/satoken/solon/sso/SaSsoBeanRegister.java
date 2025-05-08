@@ -71,6 +71,7 @@ public class SaSsoBeanRegister {
 	 * @return /
 	 */
 	@Bean
+	@Condition(onMissingBean = SaSsoServerTemplate.class)
 	public SaSsoServerTemplate getSaSsoServerTemplate() {
 		return SaSsoServerProcessor.instance.ssoServerTemplate;
 	}
@@ -81,6 +82,7 @@ public class SaSsoBeanRegister {
 	 * @return /
 	 */
 	@Bean
+	@Condition(onMissingBean = SaSsoClientTemplate.class)
 	public SaSsoClientTemplate getSaSsoClientTemplate() {
 		return SaSsoClientProcessor.instance.ssoClientTemplate;
 	}

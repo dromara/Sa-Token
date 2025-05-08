@@ -292,7 +292,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      */
     public SaSsoClientModel getClientNotNull(String client) {
         if(SaFoxUtil.isEmpty(client)) {
-            if(getServerConfig().getAllowAnonClient()) {
+            if(getConfigOfAllowAnonClient()) {
                 return getAnonClient();
             } else {
                 throw new SaSsoException("client 标识不可为空");
@@ -307,7 +307,16 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     }
 
     /**
-     * 获取匿名 client 信息
+     * 获取配置项：是否允许匿名 client 接入
+     *
+     * @return /
+     */
+    public boolean getConfigOfAllowAnonClient() {
+        return getServerConfig().getAllowAnonClient();
+    }
+
+    /**
+     * 获取匿名 client 配置信息
      *
      * @return /
      */
@@ -697,8 +706,22 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param message /
      */
     public void pushToAllClient(SaSsoMessage message) {
+        pushToAllClient(message, null);
+    }
+
+    /**
+     * 向所有 Client 推送消息，并忽略掉某个 client
+     *
+     * @param ignoreClient 要被忽略掉的 client，填 null 代表不忽略
+     * @param message /
+     */
+    public void pushToAllClient(SaSsoMessage message, String ignoreClient) {
+        // TODO 待验证
         List<SaSsoClientModel> needPushClients = getNeedPushClients();
         for (SaSsoClientModel client : needPushClients) {
+            if(ignoreClient != null && ignoreClient.equals(client.getClient())) {
+                continue;
+            }
             strategy.asyncRun.run(() -> pushMessage(client, message));
         }
     }

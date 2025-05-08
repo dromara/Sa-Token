@@ -40,13 +40,13 @@
             <artifactId>sa-token-sso</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
-        
-		<!-- Sa-Token 整合redis (使用jackson序列化方式) -->
+
+		<!-- Sa-Token 整合 RedisTemplate -->
 		<dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-jackson</artifactId>
-            <version>${sa-token.version}</version>
-        </dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-template</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
         
 		<!-- 提供Redis连接池 -->
 		<dependency>
