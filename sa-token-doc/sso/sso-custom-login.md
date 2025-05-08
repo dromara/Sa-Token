@@ -81,7 +81,7 @@ if(res.code == 401) {
 
 ``` java
 // 配置：未登录时返回的View 
-sso.notLoginView = () -> {
+ssoServerTemplate.strategy.notLoginView = () -> {
 	return new ModelAndView("xxx.html");
 }
 ```
@@ -119,7 +119,7 @@ public SaResult ss(String name, String pwd) {
 
 如果你的不同应用覆盖的用户群体差异极大，此时你可能想针对不同的应用跳转到不同的登录页，让每个应用的用户在登录时能够看到当前应用的专属信息，怎么做呢？
 
-首先，你需要在每个 sso-client 端配置上不同的 client 标识：
+首先，保证每个 sso-client 端都配置了不同的 client 标识：
 
 
 <!---------------------------- tabs:start ---------------------------->
@@ -143,10 +143,10 @@ sa-token.sso-client.client=sso-client-shop
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaSsoServerConfig ssoServer) {
+private void configSso(SaSsoServerTemplate ssoServerTemplate) {
 	
 	// 配置：未登录时返回的View 
-	ssoServer.notLoginView = () -> {
+	ssoServerTemplate.strategy.notLoginView = () -> {
 
 		String client = SaHolder.getRequest().getParam("client");
 		if("sso-client-shop".equals(client)) {

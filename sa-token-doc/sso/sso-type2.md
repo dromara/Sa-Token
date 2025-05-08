@@ -89,10 +89,10 @@ sa-token.cookie.domain=stp.com
 	<version>${sa.top.version}</version>
 </dependency>
 
-<!-- Sa-Token 整合redis (使用jackson序列化方式) -->
+<!-- Sa-Token 整合 RedisTemplate -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-template</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
@@ -106,6 +106,13 @@ sa-token.cookie.domain=stp.com
 	<artifactId>sa-token-alone-redis</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
+
+<!-- Sa-Token 插件：整合 Forest 请求工具 -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-forest</artifactId>
+	<version>${sa-token.version}</version>
+</dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
@@ -115,12 +122,15 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 // Sa-Token 插件：整合SSO
 implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
 
-// Sa-Token 整合 Redis (使用 jackson 序列化方式)
-implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
+// Sa-Token 整合 RedisTemplate
+implementation 'cn.dev33:sa-token-redis-template:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 
 // Sa-Token插件：权限缓存与业务缓存分离
 implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
+
+// Sa-Token插件：整合 Forest 请求工具
+implementation 'cn.dev33:sa-token-forest:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
@@ -140,27 +150,57 @@ public class SsoClientController {
 	// 首页 
 	@RequestMapping("/")
 	public String index() {
-		String solUrl = SaSsoManager.getClientConfig().splicingSloUrl();
-		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a> " +
-					"<a href=\"javascript:location.href='" + solUrl + "?back=' + encodeURIComponent(location.href);\">注销</a> </p>";
+		String str = "<h2>Sa-Token SSO-Client 应用端 (模式二)</h2>" +
+					"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
+					"<p> " +
+						"<a href='/sso/login?back=/'>登录</a> - " +
+						"<a href='/sso/logoutByAlone?back=/'>单应用注销</a> - " +
+						"<a href='/sso/logout?back=self'>全端注销</a> - " +
+						"<a href='/sso/myInfo' target='_blank'>账号资料</a>" +
+					"</p>";
 		return str;
 	}
 	
 	/*
 	 * SSO-Client端：处理所有SSO相关请求 
-	 * 		http://{host}:{port}/sso/login          -- Client端登录地址，接受参数：back=登录后的跳转地址 
-	 * 		http://{host}:{port}/sso/logout         -- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址 
-	 * 		http://{host}:{port}/sso/logoutCall     -- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
+	 * 		http://{host}:{port}/sso/login			-- Client 端登录地址
+	 * 		http://{host}:{port}/sso/logout			-- Client 端注销地址（isSlo=true时打开）
+	 * 		http://{host}:{port}/sso/pushC			-- Client 端接收消息推送地址
 	 */
 	@RequestMapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoClientProcessor.instance.dister();
 	}
 
+	// 配置SSO相关参数
+	@Autowired
+	private void configSso(SaSsoClientTemplate ssoClientTemplate) {
+
+	}
+
+	// 当前应用独自注销 (不退出其它应用)
+	@RequestMapping("/sso/logoutByAlone")
+	public Object logoutByAlone() {
+		StpUtil.logout();
+		return SaSsoClientProcessor.instance._ssoLogoutBack(SaHolder.getRequest(), SaHolder.getResponse());
+	}
+
 }
 ```
+
+全局异常处理：
+``` java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+	// 全局异常拦截 
+	@ExceptionHandler
+	public SaResult handlerException(Exception e) {
+		e.printStackTrace(); 
+		return SaResult.error(e.getMessage());
+	}
+}
+```
+
 
 ##### 3.4、配置SSO认证中心地址 
 你需要在 `application.yml` 配置如下信息：
@@ -170,16 +210,23 @@ public class SsoClientController {
 ``` yaml
 # 端口
 server:
-    port: 9001
+    port: 9002
 
 # sa-token配置 
 sa-token: 
+    # 打印操作日志
+    is-log: true
     # SSO-相关配置
     sso-client: 
+        # 应用标识
+        client: sso-client2
         # SSO-Server 端主机地址
         server-url: http://sa-sso-server.com:9000
+        # API 接口调用秘钥 (单点注销时会用到)
+        secret-key: SSO-C2-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 
-    # 配置Sa-Token单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    # 配置 Sa-Token 单独使用的Redis连接（此处需要和 SSO-Server 端连接同一个 Redis）
+    # 注：使用 alone-redis 需要在 pom.xml 引入 sa-token-alone-redis 依赖
     alone-redis: 
         # Redis数据库索引 (默认为0)
         database: 1
@@ -195,13 +242,20 @@ sa-token:
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # 端口
-server.port=9001
+server.port=9002
 
 ######### Sa-Token 配置 #########
+# 打印操作日志 
+sa-token.is-log=true
+# 应用标识 
+sa-token.sso-client.client=sso-client2
 # SSO-Server端 统一认证地址 
 sa-token.sso-client.server-url=http://sa-sso-server.com:9000
+# API 接口调用秘钥 (单点注销时会用到)
+sa-token.sso-client.secret-key=SSO-C2-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 
-# 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+# 配置 Sa-Token 单独使用的Redis连接（此处需要和 SSO-Server 端连接同一个 Redis）
+# 注：使用 alone-redis 需要在 pom.xml 引入 sa-token-alone-redis 依赖
 # Redis数据库索引
 sa-token.alone-redis.database=1
 # Redis服务器地址
@@ -228,9 +282,9 @@ public class SaSso2ClientApplication {
 		System.out.println();
 		System.out.println("---------------------- Sa-Token SSO 模式二 Client 端启动成功 ----------------------");
 		System.out.println("配置信息：" + SaSsoManager.getClientConfig());
-		System.out.println("测试访问应用端一: http://sa-sso-client1.com:9001");
-		System.out.println("测试访问应用端二: http://sa-sso-client2.com:9001");
-		System.out.println("测试访问应用端三: http://sa-sso-client3.com:9001");
+		System.out.println("测试访问应用端一: http://sa-sso-client1.com:9002");
+		System.out.println("测试访问应用端二: http://sa-sso-client2.com:9002");
+		System.out.println("测试访问应用端三: http://sa-sso-client3.com:9002");
 		System.out.println("测试前需要根据官网文档修改hosts文件，测试账号密码：sa / 123456");
 		System.out.println();
 	}
@@ -241,27 +295,27 @@ public class SaSso2ClientApplication {
 
 ### 4、测试访问 
 
-(1) 依次启动 `SSO-Server` 与 `SSO-Client`，然后从浏览器访问：[http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+(1) 依次启动 `SSO-Server` 与 `SSO-Client`，然后从浏览器访问：[http://sa-sso-client1.com:9002/](http://sa-sso-client1.com:9002/)
 
-<!-- （注：先前版本文档测试demo端口号为9001，后为了方便区分三种模式改为了9002，因此出现文字描述与截图端口号不一致情况，请注意甄别，后不再赘述） -->
+（注：先前版本文档测试demo端口号为9001，后为了方便区分三种模式改为了9002，因此出现文字描述与截图端口号不一致情况，请注意甄别，后不再赘述）
 
 ![sso-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index.png 's-w-sh')
 
 (2) 首次打开，提示当前未登录，我们点击 **`登录`** 按钮，页面会被重定向到登录中心
 
-![sso-server-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-auth.png 's-w-sh')
+![sso-server-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-auth--v43.png 's-w-sh')
 
-(3) SSO-Server提示我们在认证中心尚未登录，我们点击 **`doLogin登录`** 按钮进行模拟登录
+(3) SSO-Server提示我们在认证中心尚未登录，我们点击 **`登录`** 按钮进行模拟登录
 
-![sso-server-dologin.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-dologin.png 's-w-sh')
+<!-- ![sso-server-dologin.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-dologin.png 's-w-sh') -->
 
-(4) SSO-Server认证中心登录成功，我们回到刚才的页面刷新页面
+(4) SSO-Server认证中心登录成功，系统重定向回 client
 
 ![sso-client-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index-ok.png 's-w-sh')
 
 (5) 页面被重定向至`Client`端首页，并提示登录成功，至此，`Client1`应用已单点登录成功！ 
 
-(6) 我们再次访问`Client2`：[http://sa-sso-client2.com:9001/](http://sa-sso-client2.com:9001/)
+(6) 我们再次访问`Client2`：[http://sa-sso-client2.com:9002/](http://sa-sso-client2.com:9002/)
 
 ![sso-client2-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client2-index.png 's-w-sh')
 
@@ -269,7 +323,7 @@ public class SaSso2ClientApplication {
 
 ![sso-client2-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client2-index-ok.png 's-w-sh')
 
-(8) 同样的方式，我们打开`Client3`，也可以直接登录成功：[http://sa-sso-client3.com:9001/](http://sa-sso-client3.com:9001/)
+(8) 同样的方式，我们打开`Client3`，也可以直接登录成功：[http://sa-sso-client3.com:9002/](http://sa-sso-client3.com:9002/)
 
 ![sso-client3-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client3-index-ok.png 's-w-sh')
 
@@ -291,7 +345,7 @@ public class SaSso2ClientApplication {
 > - `/sa-token-demo/sa-token-demo-sso2-client/`
 > 
 > 然后访问：
-> - [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
+> - [http://sa-sso-client1.com:9002/](http://sa-sso-client1.com:9002/)
 
 ![sso-server-login-hua](https://oss.dev33.cn/sa-token/doc/sso/sso-server-login-hua.png 's-w-sh')
 

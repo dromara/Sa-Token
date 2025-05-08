@@ -20,7 +20,7 @@ http://{host}:{port}/sso/auth
 
 | 参数			| 是否必填	| 说明																|
 | :--------		| :--------	| :--------															|
-| redirect		| 是		| 登录成功后的重定向地址，一般填写 location.href（从哪来回哪去）							|
+| redirect		| 否		| 登录成功后的重定向地址，一般填写 location.href（从哪来回哪去），如不填，则跳转至 home-route						|
 | mode			| 否		| 授权模式，取值 [simple, ticket]，simple=登录后直接重定向，ticket=带着ticket参数重定向，默认值为ticket			|
 | client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则校验 ticket 时也必须是这个 client 才可以校验成功			|
 
@@ -28,11 +28,12 @@ http://{host}:{port}/sso/auth
 - 情况一：当前会话在 SSO 认证中心未登录，会进入登录页开始登录。
 - 情况二：当前会话在 SSO 认证中心已登录，会被重定向至 `redirect` 地址，并携带 `ticket` 参数。
 
-`ticket` 码具有以下特点：
+Ticket 码具有以下特点：
 1. 每次授权产生的 `ticket` 码都不一样。
 2. `ticket` 码用完即废，不能二次使用。
 3. 一个 `ticket` 的有效期默认为五分钟，超时自动作废。
 4. 每次授权产生新 `ticket` 码，会导致旧 `ticket` 码立即作废，即使旧 `ticket` 码尚未使用。
+
 
 ### 2、RestAPI 登录接口
 ``` url
@@ -46,42 +47,63 @@ http://{host}:{port}/sso/doLogin
 | name			| 是		| 用户名  |
 | pwd			| 是		| 密码	 |
 
-此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 `ssoServer.doLoginHandle` 函数中，此函数的返回值即是此接口的响应值。
+此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 `ssoServerTemplate.strategy.doLoginHandle` 函数中，此函数的返回值即是此接口的响应值。
 
 另外需要注意：此接口并非只能携带 name、pwd 参数，因为你可以在方法里通过 `SaHolder.getRequest().getParam("xxx")` 来获取前端提交的其它参数。 
 
 
-### 3、Ticket 校验接口
-此接口仅配置模式三 `(isHttp=true)` 时打开 
+### 3、单点注销接口
+``` url
+http://{host}:{port}/sso/signout
+```
+
+接受参数：
+
+| 参数			| 是否必填	| 说明											|
+| :--------		| :--------	| :--------										|
+| back			| 否		| 注销成功后的重定向地址，一般填写 location.href（从哪来回哪去），也可以填写 self 字符串，含义同上			|
+
+
+### 4、消息推送接口
 
 ``` url
-http://{host}:{port}/sso/checkTicket
+http://{host}:{port}/sso/pusS
 ```
 
 接收参数：
 
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
-| ticket		| 是		| 在步骤 1 中授权重定向时的 ticket 参数 						|
-| ssoLogoutCall	| 否		| 单点注销时的回调通知地址，只在SSO模式三单点注销时需要携带此参数|
-| client		| 否		| 客户端标识，可不填，代表是一个匿名应用，若填写了，则必须填写的和 `/sso/auth` 登录时填写的一致才可以校验成功			|
+| client		| 否		| 客户端标识，可不填，代表是一个匿名应用				|
 | timestamp		| 是		| 当前时间戳，13位									|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法：`md5( [client={client值}&]nonce={随机字符串}&[ssoLogoutCall={单点注销回调地址}&]ticket={ticket值}&timestamp={13位时间戳}&key={secretkey秘钥} )`	 注：[]内容代表可选 				|
+| sign			| 是		| 签名，生成算法：`md5( client={client值}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
 
-返回值场景：
-- 校验成功时：
+此接口可根据消息类型增加任意参数。新增加的参数要参与 sign 签名。
+
+返回值示例：
+
+- 推送成功时：
 
 ``` js
 {
     "code": 200,
     "msg": "ok",
-    "data": "10001",	// 此 ticket 指向的 loginId
-	"remainSessionTimeout": 7200, // 此账号在 sso-server 端的会话剩余有效期（单位：s）
+    "data": "10001",	// 返回的数据 
 }
 ```
 
-- 校验失败时：
+- 推送失败时：
+
+``` js
+{
+    "code": 500,    // 200表示请求成功，非200标识请求失败
+    "msg": "签名无效：xxx",    // 失败原因 
+    "data": null
+}
+```
+
+- 也有可能消息推送成功了，但是处理消息失败，例如校验 ticket 时：
 
 ``` js
 {
@@ -91,58 +113,6 @@ http://{host}:{port}/sso/checkTicket
 }
 ```
 
-
-### 4、单点注销接口
-``` url
-http://{host}:{port}/sso/signout
-```
-
-此接口有两种调用方式
-
-##### 4.1、方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数 
-例如：
-
-``` url
-http://{host}:{port}/sso/signout?back=xxx
-```
-用户注销成功后将返回 back 地址 
-
-##### 4.2、方式二：在 Client 的后端通过 http 工具来调用
-
-接受参数：
-
-| 参数			| 是否必填	| 说明											|
-| :--------		| :--------	| :--------										|
-| loginId		| 是		| 要注销的账号 id			 					|
-| timestamp		| 是		| 当前时间戳，13位									|
-| nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法：`md5( loginId={账号id}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`							|
-| client		| 否		| 客户端标识，可不填，一般在帮助 “sso-server 端不同client不同秘钥” 的场景下找到对应秘钥时，才填写		|
-
-例如：
-``` url
-http://{host}:{port}/sso/signout?loginId={value}&timestamp={value}&nonce={value}&sign={value}
-```
-
-将返回 json 数据结果，形如：
-
-``` js
-{
-    "code": 200,    // 200表示请求成功，非200标识请求失败
-    "msg": "单点注销成功",
-    "data": null
-}
-```
-
-如果单点注销失败，将返回：
-
-``` js
-{
-    "code": 500,    // 200表示请求成功，非200标识请求失败
-    "msg": "签名无效：xxx",	// 失败原因 
-    "data": null
-}
-```
 
 
 <br>
@@ -197,7 +167,7 @@ http://{host}:{port}/sso/logout
 
 
 ### 3、单点注销回调接口
-此接口仅配置模式三 `(isHttp=true)` 时打开，且为框架回调，开发者无需关心
+此接口仅配置 `(reg-logout-call=true)` 时打开，且为框架回调，开发者无需关心
 
 ``` url
 http://{host}:{port}/sso/logoutCall
@@ -225,6 +195,45 @@ http://{host}:{port}/sso/logoutCall
 }
 ```
 
+
+
+### 4、消息推送接口
+
+``` url
+http://{host}:{port}/sso/pusC
+```
+
+接收参数：
+
+| 参数			| 是否必填	| 说明													|
+| :--------		| :--------	| :--------												|
+| timestamp		| 是		| 当前时间戳，13位									|
+| nonce			| 是		| 随机字符串										|
+| sign			| 是		| 签名，生成算法：`md5( nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
+
+此接口可根据消息类型增加任意参数。新增加的参数要参与 sign 签名。
+
+返回值示例：
+
+- 推送成功时：
+
+``` js
+{
+    "code": 200,
+    "msg": "ok",
+    "data": "10001",	// 返回的数据 
+}
+```
+
+- 推送失败时：
+
+``` js
+{
+    "code": 500,    // 200表示请求成功，非200标识请求失败
+    "msg": "签名无效：xxx",    // 失败原因 
+    "data": null
+}
+```
 
 
 

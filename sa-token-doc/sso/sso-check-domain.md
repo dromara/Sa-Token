@@ -3,19 +3,19 @@
 --- 
 
 ### 1、Ticket劫持攻击
-在前面章节的 SSO-Server 示例中，配置项 `sa-token.sso-server.allow-url=*` 意为配置所有允许的Client端授权地址，不在此配置项中的URL将无法单点登录成功
+在前面章节的 SSO-Server 示例中，配置项 `sa-token.sso-server.clients.sso-client3.allow-url=*` 意为改 client 所有允许的授权地址，不在此配置项中的 URL 将无法单点登录成功。
 
-为了方便测试，上述代码将其配置为`*`，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被 Ticket 劫持的风险 
+为了方便测试，上述代码将其配置为`*`，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被 Ticket 劫持的风险。
 
-假设攻击者根据模仿我们的授权地址，巧妙的构造一个URL
+假设攻击者根据模仿我们的授权地址，巧妙的构造一个URL：
 
-> [http://sa-sso-server.com:9000/sso/auth?redirect=https://www.baidu.com/](http://sa-sso-server.com:9000/sso/auth?redirect=https://www.baidu.com/)
+> [http://sa-sso-server.com:9000/sso/auth?client=sso-client3&redirect=https://www.baidu.com/](http://sa-sso-server.com:9000/sso/auth?client=sso-client3&redirect=https://www.baidu.com/)
 
-当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页
+当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页：
 
 ![sso-ticket-jc](https://oss.dev33.cn/sa-token/doc/sso/sso-ticket-jc.png 's-w-sh')
 
-可以看到，代表着用户身份的 Ticket 码也显现到了URL之中，借此漏洞，攻击者完全可以构建一个URL将小红的 Ticket 码自动提交到攻击者自己的服务器，伪造小红身份登录网站
+可以看到，代表着用户身份的 Ticket 码也显现到了 URL 之中，借此漏洞，攻击者完全可以构建一个URL将小红的 Ticket 码自动提交到攻击者自己的服务器，伪造小红身份登录网站
 
 ### 2、防范方法
 
@@ -27,13 +27,15 @@
 ``` yaml
 sa-token: 
 	sso-server: 
-        # 配置允许单点登录的 url 
-        allow-url: http://sa-sso-client1.com:9001/sso/login
+		clients:
+			sso-client3:
+				# 配置允许单点登录的 url 
+				allow-url: http://sa-sso-client1.com:9003/sso/login
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
 # 配置允许单点登录的 url 
-sa-token.sso-server.allow-url=http://sa-sso-client1.com:9001/sso/login
+sa-token.sso-server.clients.so-client3.allow-url=http://sa-sso-client1.com:9003/sso/login
 ```
 <!---------------------------- tabs:end ---------------------------->
 

@@ -45,11 +45,15 @@
 	- [配置域名校验](/sso/sso-check-domain)
 	- [定制化登录页面](/sso/sso-custom-login)
 	- [自定义API路由](/sso/sso-custom-api)
-	- [前后端分离下的整合方案](/sso/sso-h5)
-	- [NoSdk 模式与非 java 项目](/sso/sso-nosdk)
 	- [平台中心跳转模式](/sso/sso-home-jump)
-	- [不同 Client 不同秘钥](/sso/sso-diff-key)
+	- [匿名 client 接入](/sso/anon-client)
+	- [单点注销](/sso/signout)
+	- [前后端分离下的整合方案](/sso/sso-h5)
+	- [消息推送机制](/sso/message-push)
+	<!-- - [不同 Client 不同秘钥](/sso/sso-diff-key) -->
 	- [用户数据同步 / 迁移](/sso/user-data-sync)
+	- [NoSdk、ReSdk 模式与非 java 项目](/sso/sso-nosdk)
+	- [SSO 代码 API 参考](/sso/sso-dev)
 	- [常见问题总结](/sso/sso-questions)
 	- [Sa-Sso-Pro：单点登录商业版](/sso/sso-pro)
 

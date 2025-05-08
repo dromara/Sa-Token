@@ -15,22 +15,43 @@
 假设子系统的地址是：
 
 ``` url
-http://sa-sso-client1.com:9001/
+http://sa-sso-client1.com:9003/
 ```
 
 那么我们改造后的地址就是：
 
 ``` url
-/sso/auth?redirect=http://sa-sso-client1.com:9001/sso/login?back=http://sa-sso-client1.com:9001/
+/sso/auth?client=sso-client3&redirect=http://sa-sso-client1.com:9003/sso/login?back=http://sa-sso-client1.com:9003/
 ```
 
-格式形如：`/sso/auth?redirect=${子系统首页}/sso/login?back=${子系统首页}`
+格式形如：`/sso/auth?client={client标识}&redirect=${子系统首页}/sso/login?back=${子系统首页}`
 
 --- 
 
 ### 完整代码示例：
 
-1、在 sso-server 中添加 `HomeController`，作为平台中心首页：
+1、在 sso-server 中配置 `home-route` 字段：
+
+<!---------------------------- tabs:start ---------------------------->
+<!------------- tab:yaml 风格  ------------->
+``` yaml
+# Sa-Token 配置
+sa-token:
+    # SSO-Server 配置
+    sso-server:
+        # 主页路由：在 /sso/auth 登录页不指定 redirect 参数时，默认跳转的地址
+        home-route: /home
+```
+<!------------- tab:properties 风格  ------------->
+``` properties
+# 主页路由：在 /sso/auth 登录页不指定 redirect 参数时，默认跳转的地址
+sa-token.sso-server.home-route: /home
+```
+<!---------------------------- tabs:end ---------------------------->
+
+
+
+2、在 sso-server 中添加 `HomeController`，作为平台中心首页：
 
 ``` java
 /**
@@ -39,51 +60,33 @@ http://sa-sso-client1.com:9001/
 @RestController
 public class HomeController {
 	// 平台化首页
-	@RequestMapping("/home")
-	public Object index() {
-		// 如果未登录，则先去登录
-		if(!StpUtil.isLogin()) {
-			return SaHolder.getResponse().redirect("/sso/auth");
-		}
-		
-		// 拼接各个子系统的地址，格式形如：/sso/auth?redirect=${子系统首页}/sso/login?back=${子系统首页}
-		String link1 = "/sso/auth?redirect=http://sa-sso-client1.com:9001/sso/login?back=http://sa-sso-client1.com:9001/";
-		String link2 = "/sso/auth?redirect=http://sa-sso-client2.com:9001/sso/login?back=http://sa-sso-client2.com:9001/";
-		String link3 = "/sso/auth?redirect=http://sa-sso-client3.com:9001/sso/login?back=http://sa-sso-client3.com:9001/";
+    @RequestMapping({"/", "/home"})
+    public Object index() {
+        // 如果未登录，则先去登录
+        if(!StpUtil.isLogin()) {
+            return SaHolder.getResponse().redirect("/sso/auth");
+        }
 
-		// 组织网页结构返回到前端 
-		String title = "<h2>SSO 平台首页</h2>";
-		String client1 = "<p><a href='" + link1 + "' target='_blank'> 进入Client1系统 </a></p>";
-		String client2 = "<p><a href='" + link2 + "' target='_blank'> 进入Client2系统 </a></p>";
-		String client3 = "<p><a href='" + link3 + "' target='_blank'> 进入Client3系统 </a></p>";
-		
-		return title + client1 + client2 + client3;
-	}
+        // 拼接各个子系统的地址，格式形如：/sso/auth?client=xxx&redirect=${子系统首页}/sso/login?back=${子系统首页}
+        String link1 = "/sso/auth?client=sso-client3&redirect=http://sa-sso-client1.com:9003/sso/login?back=http://sa-sso-client1.com:9003/";
+        String link2 = "/sso/auth?client=sso-client3&redirect=http://sa-sso-client2.com:9003/sso/login?back=http://sa-sso-client2.com:9003/";
+        String link3 = "/sso/auth?client=sso-client3&redirect=http://sa-sso-client3.com:9003/sso/login?back=http://sa-sso-client3.com:9003/";
+
+        // 组织网页结构返回到前端
+        String title = "<h2>SSO 平台首页 (平台中心模式)</h2>";
+        String client1 = "<p><a href='" + link1 + "' target='_blank'> 进入Client1系统 </a></p>";
+        String client2 = "<p><a href='" + link2 + "' target='_blank'> 进入Client2系统 </a></p>";
+        String client3 = "<p><a href='" + link3 + "' target='_blank'> 进入Client3系统 </a></p>";
+
+        return title + client1 + client2 + client3;
+    }
 }
 ```
 
-2、修改一下SSO路由处理的代码，使登录后不再重定向到client端，而是跳转到平台中心首页。
-
-在 `SsoServerController` 的 `ssoRequest` 方法中添加跳转 `/home` 的代码：
-
-``` java
-// SSO-Server端：处理所有SSO相关请求 
-@RequestMapping("/sso/*")
-public Object ssoRequest() {
-	// 如果登录时没有提供redirect参数，则进入平台中心首页 /home，而不是重定向到 client 端 
-	SaRequest req = SaHolder.getRequest();
-	if(req.isPath("/sso/auth") && req.hasParam("redirect") == false && StpUtil.isLogin()) {
-		return SaHolder.getResponse().redirect("/home");
-	}
-	return SaSsoServerProcessor.instance.dister();
-}
-```
-
-新加代码在 4-8 行。
 
 ### 测试访问
 
-启动项目，访问：[http://sa-sso-server.com:9000/home](http://sa-sso-server.com:9000/home)
+启动项目，访问：[http://sa-sso-server.com:9000](http://sa-sso-server.com:9000)
 
 首次访问，因为我们没有登录，所以会被重定向到 `/sso/auth` 登录页，我们登录上之后，便会跳转到平台中心首页：
 

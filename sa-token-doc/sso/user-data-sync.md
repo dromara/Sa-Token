@@ -102,12 +102,12 @@
 ```  java 
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaSsoServerConfig ssoServer) {
+private void configSso(SaSsoServerTemplate ssoServerTemplate) {
 	
 	// 其它配置 ...
 	
 	// 配置：Ticket校验函数
-	ssoServer.checkTicketAppendData = (loginId, result) -> {
+	ssoServerTemplate.strategy.checkTicketAppendData = (loginId, result) -> {
 		System.out.println("-------- 追加返回信息到 sso-client --------");
 
 		// 在校验 ticket 后，给 sso-client 端追加返回信息的函数
@@ -126,12 +126,12 @@ private void configSso(SaSsoServerConfig ssoServer) {
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaSsoClientConfig ssoClient) {
+private void configSso(SaSsoClientTemplate ssoClientTemplate) {
 
 	// 其它配置 ... 
 
 	// 自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
-	ssoClient.ticketResultHandle = (ctr, back) -> {
+	ssoClientTemplate.strategy.ticketResultHandle = (ctr, back) -> {
 		System.out.println("--------- 自定义 ticket 校验结果处理函数 ---------");
 		System.out.println("此账号在 sso-server 的 userId：" + ctr.loginId);
 		System.out.println("此账号在 sso-server 会话剩余有效期：" + ctr.remainSessionTimeout + " 秒");
@@ -192,12 +192,12 @@ private void configSso(SaSsoClientConfig ssoClient) {
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaSsoClientConfig ssoClient) {
+private void configSso(SaSsoClientTemplate ssoClientTemplate) {
 
 	// 其它配置 ... 
 
 	// 自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
-	ssoClient.ticketResultHandle = (ctr, back) -> {
+	ssoClientTemplate.strategy.ticketResultHandle = (ctr, back) -> {
 		System.out.println("--------- 自定义 ticket 校验结果处理函数 ---------");
 		System.out.println("此账号在 sso-server 的 userId：" + ctr.loginId);
 		System.out.println("此账号在 sso-server 会话剩余有效期：" + ctr.remainSessionTimeout + " 秒");
@@ -240,3 +240,66 @@ private void configSso(SaSsoClientConfig ssoClient) {
 > 	- 5.1 查的到，证明有账号，直接登录。
 > 	- 5.2 查不到，证明无账号，程序自动给他添加一条 user 账号，并登录。
 > 6. 登录完成。
+
+
+
+### 5、解决模式三下，loginId 与 centerId 不一致的问题
+
+按照字段关联法登录之后，如果一个用户在本地应用端的 userId 和认证中心端的 userId 不一致，则可能发生单点注销失败的情况：
+
+假设，一个用户在认证中心的 userId=10002，在本地应用端的 userId=100335，
+则在本地应用端发起单点注销时，其传递的 loginId 值是 100335，在 sso-server 是找不到 userId=100335 用户的，自然无法单点注销成功。
+
+解决方案是在本地应用端重写 loginId 与 centerId 转换策略函数，做到本地应用 userId 与认证中心 userId 的互相映射：
+
+``` java
+@RestController
+public class SsoClientController {
+
+	// 配置SSO相关参数
+	@Autowired
+	private void configSso(SaSsoClientTemplate ssoClientTemplate) {
+		// 重写 loginId 与 centerId 转换策略函数，做到本地应用 userId 与认证中心 userId 的互相映射
+		
+		// 将 centerId 转换为 loginId 的函数
+		ssoClientTemplate.strategy.convertCenterIdToLoginId = (centerId) -> {
+			return "Stu" + centerId;
+		};
+		// 将 loginId 转换为 centerId 的函数
+		ssoClientTemplate.strategy.convertLoginIdToCenterId = (loginId) -> {
+			return loginId.toString().substring(3);
+		};
+	}
+
+}
+```
+
+如上代码，演示了应用本地 loginId 与认证中心 centerId 不一致时的转换写法（演示的逻辑为添加和裁剪指定前缀），真实项目中，应该根据用户表存储的映射关系来做查询返回。
+
+值得注意的是，在重写转换策略后，我们在消息推送时也应该严格按照转换写法提交 loginId 参数，例如：
+
+``` java
+// 查询我的账号信息：sso-client 前端 -> sso-center 后端 -> sso-server 后端
+@RequestMapping("/sso/myInfo")
+public Object myInfo() {
+	// 如果尚未登录
+	if( ! StpUtil.isLogin()) {
+		return "尚未登录，无法获取";
+	}
+
+	// 原写法：直接调用 StpUtil.getLoginId() 当做 centerId 来提交
+	// Object centerId = StpUtil.getLoginId();
+
+	// 新写法：获取本地 loginId 对应的认证中心 centerId
+	Object centerId = SaSsoClientUtil.getSsoTemplate().strategy.convertLoginIdToCenterId.run(StpUtil.getLoginId());
+
+	// 推送消息
+	SaSsoMessage message = new SaSsoMessage();
+	message.setType("userinfo");
+	message.set("loginId", centerId);
+	SaResult result = SaSsoClientUtil.pushMessageAsSaResult(message);
+
+	// 返回给前端
+	return result;
+}
+```

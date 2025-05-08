@@ -33,13 +33,11 @@ public class SsoServerController {
 ``` java
 // 配置SSO相关参数 
 @Autowired
-private void configSso(SaSsoServerConfig ssoServer) {
+private void configSso(SaSsoServerTemplate ssoServerTemplate) {
 	// 自定义API地址
 	SaSsoServerProcessor.instance.ssoServerTemplate.apiName.ssoAuth = "/sso/auth2";
 	// ... 
 	
-	// SSO 相关配置
-	ssoServer.xxx ... ;
 }
 ```
 
@@ -70,10 +68,10 @@ public class SsoServerController {
 		return SaSsoServerProcessor.instance.ssoDoLogin();
 	}
 
-	// SSO-Server：校验ticket 获取账号id 
-	@RequestMapping("/sso/checkTicket")
-	public Object ssoCheckTicket() {
-		return SaSsoServerProcessor.instance.ssoCheckTicket();
+	// SSO-Server：接收推送消息地址
+	@RequestMapping("/sso/pushS")
+	public Object ssoPushS() {
+		return SaSsoServerProcessor.instance.ssoPushS();
 	}
 
 	// SSO-Server：单点注销 
@@ -89,3 +87,41 @@ public class SsoServerController {
 
 拆分式路由 与 聚合式路由 在功能上完全等价，且提供了更为细致的路由管控。
 
+
+### SSO-Client 端拆分路由入口示例
+
+``` java
+/**
+ * Sa-Token-SSO Client端 Controller 
+ */
+@RestController
+public class SsoClientController {
+
+	// SSO-Client：登录地址
+	@RequestMapping("/sso/login")
+	public Object ssoLogin() {
+		return SaSsoClientProcessor.instance.ssoLogin();
+	}
+
+	// SSO-Client：单点注销地址
+	@RequestMapping("/sso/logout")
+	public Object ssoLogout() {
+		return SaSsoClientProcessor.instance.ssoLogout();
+	}
+
+	// SSO-Client：单点注销回调
+	@RequestMapping("/sso/logoutCall")
+	public Object ssoLogoutCall() {
+		return SaSsoClientProcessor.instance.ssoLogoutCall();
+	}
+
+	// SSO-Client：接收消息推送地址
+	@RequestMapping("/sso/ssoPushC")
+	public Object ssoPushC() {
+		return SaSsoClientProcessor.instance.ssoPushC();
+	}
+
+	// ... 其它方法 
+	
+}
+```

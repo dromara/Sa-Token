@@ -207,6 +207,8 @@ body{
 .lang-html .token.tag .attr-name *{color: #A6E22E; opacity: 0.9;}
 .lang-html .token.tag .attr-value,
 .lang-html .token.tag .attr-value *{color: #E6DB74; opacity: 0.9;}
+.lang-html .token.annotation.punctuation{color: #ddd;}
+.lang-html .token.punctuation{color: #ddd;}
 
 /* java语言样式优化 */
 .main-box .lang-java{color: #01a252 !important;; opacity: 1;}

@@ -22,64 +22,106 @@
 
 ### 2、在Client 端更改 Ticket 校验方式
 
+如果想要更直观的感受模式二与模式三的差距，可以把前面章节创建的模式二 demo 代码复制一份，在新复制的项目上继续更改来测试模式三。
 
-#### 2.1、增加 pom.xml 配置 
+#### 2.1、去除 Alone-Redis 依赖
+
+模式三要求 sso-client 与 sso-server 连接不同的 redis，所以此处没有必要再引入 sa-token-alone-redis 机制，可以去除相关依赖：
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
-``` xml
-<!-- Http请求工具 -->
+``` xml 
+<!-- Sa-Token插件：权限缓存与业务缓存分离 -->
 <dependency>
-	<groupId>com.dtflys.forest</groupId>
-	<artifactId>forest-spring-boot-starter</artifactId>
-	<version>1.5.26</version>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-alone-redis</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Http请求工具
-implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'
+// Sa-Token插件：权限缓存与业务缓存分离
+implementation 'cn.dev33:sa-token-alone-redis:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-Forest 是一个轻量级 http 请求工具，详情参考：[Forest](https://forest.dtflyx.com/)
 
+#### 2.2、SSO-Client 端更改配置
 
-#### 2.2、SSO-Client 端新增配置：API调用秘钥
-
-在 `application.yml` 增加：
+更改 `application.yml` ：
 
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
 ``` yaml
-sa-token: 
-    sso-client: 
-        # 打开模式三（使用Http请求校验ticket）
+# 端口
+server:
+    port: 9003
+	
+# sa-token配置 
+sa-token:
+    # 打印操作日志
+    is-log: true
+
+    # sso-client 相关配置
+    sso-client:
+        # 应用标识
+        client: sso-client3
+        # sso-server 端主机地址
+        server-url: http://sa-sso-server.com:9000
+        # 使用 Http 请求校验 ticket (模式三)
         is-http: true
-    sign:
         # API 接口调用秘钥
-        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        secret-key: SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
 		
-forest: 
-	# 关闭 forest 请求日志打印
-	log-enabled: false
+spring: 
+    # 配置 Redis 连接 （此处与 SSO-Server 端连接不同的 Redis）
+    redis: 
+        # Redis数据库索引
+        database: 3
+        # Redis服务器地址
+        host: 127.0.0.1
+        # Redis服务器连接端口
+        port: 6379
+        # Redis服务器连接密码（默认为空）
+        password: 
+        # 连接超时时间
+        timeout: 10s
 ```
 <!------------- tab:properties 风格  ------------->
 ``` properties
-# 打开模式三（使用Http请求校验ticket）
-sa-token.sso-client.is-http=true
-# 接口调用秘钥 
-sa-token.sign.secret-key=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+# 端口
+server.port=9003
+	
+# sa-token配置 
 
-# 关闭 forest 请求日志打印
-forest.log-enabled=false
+# 打印操作日志
+sa-token.is-log=true
+
+# sso-client 相关配置
+# 应用标识
+sa-token.sso-client.client=sso-client3
+# sso-server 端主机地址
+sa-token.sso-client.server-url=http://sa-sso-server.com:9000
+# 使用 Http 请求校验 ticket (模式三)
+sa-token.sso-client.is-http=true
+# API 接口调用秘钥
+sa-token.sso-client.secret-key=SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+
+# 配置 Redis 连接 （此处与 SSO-Server 端连接不同的 Redis）
+# Redis数据库索引
+spring.redis.database=3
+# Redis服务器地址
+spring.redis.host=127.0.0.1
+# Redis服务器连接端口
+spring.redis.port=6379
+# Redis服务器连接密码（默认为空）
+spring.redis.password=
+# 连接超时时间
+spring.redis.timeout=10s
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-因为我们已经在控制台手动打印 url 请求日志了，所以此处 `forest.log-enabled=false` 关闭 Forest 框架自身的日志打印，这不是必须的，你可以将其打开。
-
-注意 secretkey 秘钥需要与SSO认证中心的一致 
-
+<!-- 
 #### 2.3、SSO-Client 配置 http 请求处理器
 ``` java
 // 配置SSO相关参数
@@ -93,24 +135,24 @@ private void configSso(SaSsoClientConfig ssoClient) {
 		return resStr;
 	};
 }
-```
+``` -->
 
 
-#### 2.4、测试
+#### 2.3、测试
 
 重启项目，访问测试：
-- [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
-- [http://sa-sso-client2.com:9001/](http://sa-sso-client2.com:9001/)
-- [http://sa-sso-client3.com:9001/](http://sa-sso-client3.com:9001/)
+- [http://sa-sso-client1.com:9003/](http://sa-sso-client1.com:9003/)
+- [http://sa-sso-client2.com:9003/](http://sa-sso-client2.com:9003/)
+- [http://sa-sso-client3.com:9003/](http://sa-sso-client3.com:9003/)
 
 > [!WARNING| label:小提示] 
 > 注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰
 
+测试步骤同模式二，不再赘述。
 
 
 
-
-
+<!-- 
 ### 3、获取 UserInfo 
 除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的拉取。
 
@@ -252,71 +294,10 @@ public Object getFansList(Long loginId) {
 
 #### 4.3、访问测试
 访问测试：[http://sa-sso-client1.com:9001/sso/myFansList](http://sa-sso-client1.com:9001/sso/myFansList)
+ -->
 
 
-### 5、无刷单点注销
-
-有了单点登录，就必然伴随着单点注销（一处注销，全端下线）
-
-
-此处简单介绍一下 SSO 模式三的单点注销链路过程：
-
-1. sso-client 端在校验 ticket 时(调用 `http://{sso-server}/sso/checkTicket` 时)，将注销回调地址 `http://{sso-client}/sso/logoutCall` 发送到 Server 端。
-2. sso-server 端将此 sso-client 的注销回调地址以 List 集合的形式存储在该账号 Access-Session 的 dataMap。
-3. sso-client 的前端向 sso-client 的后端发起单点注销请求。(调用 `http://{sso-client}/sso/logout`)
-4. sso-client 的后端向 sso-server 的后端发送单点注销请求。(调用 `http://{sso-server}/sso/signout`)
-5. sso-server 端遍历该账号 Access-Session 存储的注销回调地址集合，逐个通知 sso-client 端下线。(`http://{sso-client}/sso/logoutCall`)
-6. sso-server 端注销下线。
-7. sso-server 后端响应 sso-client 后端：注销完成。
-7. sso-client 后端响应 sso-client 前端：注销完成。
-8. 整体完成。
-
-
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso3-logout.gif">加载动态演示图</button>
-
-
-这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文档步骤集成即可。
-
-#### 5.1、更改注销方案
-
-将 sso-client 首页路由方法里的注销链接换成 `/sso/logout` 接口：
-``` java
-// SSO-Client端：首页
-@RequestMapping("/")
-public String index() {
-	String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-				"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-				"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a>" + 
-				" <a href='/sso/logout?back=self'>注销</a></p>";
-	return str;
-}
-```
-
-#### 5.2、启动测试 
-重启项目，依次登录三个 client：
-- [http://sa-sso-client1.com:9001/](http://sa-sso-client1.com:9001/)
-- [http://sa-sso-client2.com:9001/](http://sa-sso-client2.com:9001/)
-- [http://sa-sso-client3.com:9001/](http://sa-sso-client3.com:9001/)
-
-![sso-type3-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-client-index.png 's-w-sh')
-
-在任意一个 client 里，点击 **`[注销]`** 按钮，即可单点注销成功（打开另外两个client，刷新一下页面，登录态丢失）。
-
-<!-- ![sso-type3-slo.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo.png 's-w-sh') -->
-
-![sso-type3-slo-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo-index.png 's-w-sh')
-
-PS：这里我们为了方便演示，使用的是超链接跳页面的形式，正式项目中使用 Ajax 调用接口即可做到无刷单点登录退出。
-
-例如，我们使用 [Apifox 接口测试工具](https://www.apifox.cn/) 可以做到同样的效果：
-
-![sso-slo-apifox.png](https://oss.dev33.cn/sa-token/doc/sso/sso-slo-apifox.png 's-w-sh')
-
-测试完毕！
-
-
-
-### 6、后记
+### 3、后记
 当我们熟读三种模式的单点登录之后，其实不难发现：所谓单点登录，其本质就是多个系统之间的会话共享。
 
 当我们理解这一点之后，三种模式的工作原理也浮出水面：

@@ -58,7 +58,7 @@ sa-token.cookie.domain=stp.com
 ```
 <!---------------------------- tabs:end ---------------------------->
 
-这个配置原本是被注释掉的，现在将其打开。另外我们格外需要注意：
+**这个配置原本是被注释掉的，现在将其打开。**另外我们格外需要注意：
 在SSO模式一测试完毕之后，一定要将这个配置再次注释掉，因为模式一与模式二三使用不同的授权流程，这行配置会影响到我们模式二和模式三的正常运行。 
 
 
@@ -88,10 +88,10 @@ sa-token.cookie.domain=stp.com
 	<version>${sa.top.version}</version>
 </dependency>
 
-<!-- Sa-Token 整合redis (使用jackson序列化方式) -->
+<!-- Sa-Token 整合 RedisTemplate  -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-template</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
@@ -114,8 +114,8 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 // Sa-Token 插件：整合SSO
 implementation 'cn.dev33:sa-token-sso:${sa.top.version}'
 
-// Sa-Token 整合 Redis (使用 jackson 序列化方式)
-implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
+// Sa-Token 整合 RedisTemplate
+implementation 'cn.dev33:sa-token-redis-template:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 
 // Sa-Token插件：权限缓存与业务缓存分离
@@ -136,13 +136,16 @@ public class SsoClientController {
 
 	// SSO-Client端：首页 
 	@RequestMapping("/")
-	public String index() {
-		String authUrl = SaSsoManager.getClientConfig().splicingAuthUrl();
-		String solUrl = SaSsoManager.getClientConfig().splicingSloUrl();
-		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='" + authUrl + "?mode=simple&redirect=' + encodeURIComponent(location.href);\">登录</a> " + 
-					"<a href=\"javascript:location.href='" + solUrl + "?back=' + encodeURIComponent(location.href);\">注销</a> </p>";
+	public String index(HttpServletRequest request) {
+		String url = SaFoxUtil.encodeUrl( SaFoxUtil.joinParam(SaHolder.getRequest().getUrl(), request.getQueryString()) );
+		SaSsoClientConfig cfg = SaSsoManager.getClientConfig();
+
+		String str = "<h2>Sa-Token SSO-Client 应用端 (模式一)</h2>" +
+					"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
+					"<p>" +
+						"<a href='" + cfg.splicingAuthUrl() + "?mode=simple&client=" + cfg.getClient() + "&redirect=" + url + "'>登录</a> - " +
+						"<a href='" + cfg.splicingSignoutUrl() + "?back=" + url + "'>注销</a> " +
+					"</p>";
 		return str;
 	}
 	
@@ -169,10 +172,13 @@ server:
 sa-token: 
     # SSO-相关配置
     sso-client:
+        # client 标识
+        client: sso-client1
         # SSO-Server端主机地址
         server-url: http://sso.stp.com:9000
-    
-    # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+        
+    # 配置 Sa-Token 单独使用的Redis连接（此处需要和 SSO-Server 端连接同一个 Redis）
+    # 注：使用 alone-redis 需要在 pom.xml 引入 sa-token-alone-redis 依赖
     alone-redis: 
         # Redis数据库索引
         database: 1
@@ -192,10 +198,13 @@ server.port=9001
 
 ######### Sa-Token 配置 #########
 
+# client 标识 
+sa-token.sso-client.client=sso-client1
 # SSO-Server端主机地址
 sa-token.sso-client.server-url=http://sso.stp.com:9000
-
-# 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+    
+# 配置 Sa-Token 单独使用的Redis连接（此处需要和 SSO-Server 端连接同一个 Redis）
+# 注：使用 alone-redis 需要在 pom.xml 引入 sa-token-alone-redis 依赖
 # Redis数据库索引
 sa-token.alone-redis.database=1
 # Redis服务器地址
@@ -247,9 +256,9 @@ public class SaSso1ClientApplication {
 
 然后点击登录，被重定向至SSO认证中心：
 
-![sso1--login-page2.png](https://oss.dev33.cn/sa-token/doc/sso/sso1--login-page2.png 's-w-sh')
+![sso1--login-page2.png](https://oss.dev33.cn/sa-token/doc/sso/sso1--login-page2--v43.png 's-w-sh')
 
-我们点击登录，然后刷新页面：
+我们登录之后，然后刷新页面：
 
 ![sso1-login-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso1-login-ok.png 's-w-sh')
 

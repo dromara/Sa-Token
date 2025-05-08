@@ -87,7 +87,7 @@ public class SaSsoServerApplication {
 ### 问：模式三配置一堆 xxx-url ，有办法简化一下吗？
 可以使用 `sa-token.sso-client.server-url` 来简化：
 
-配置含义：配置 Server 端主机总地址，拼接在 authUrl、checkTicketUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
 
 在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
 
@@ -96,8 +96,6 @@ sa-token:
     sso-client: 
         # SSO-Server端 统一认证地址 
         auth-url: http://sa-sso-server.com:9000/sso/auth
-        # SSO-Server端 ticket校验地址 
-        check-ticket-url: http://sa-sso-server.com:9000/sso/checkTicket
         # 单点注销地址 
         slo-url: http://sa-sso-server.com:9000/sso/signout
         # SSO-Server端 查询数据地址 
@@ -214,21 +212,47 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 
 
-### 问：sa-token.sso-server.allow-url 配置项可以做成从数据库读取的吗？
-可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getAllowUrl` 方法即可：
+### 问：Client 信息可以做成从数据库读取的吗？
+可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getClient` 与 `getClient` 方法即可：
 ``` java
 /**
- * 重写 SaSsoServerTemplate 部分方法，增强功能 
+ * 重写 SaSsoServerTemplate 部分方法，增强功能
  */
 @Component
 public class CustomSaSsoServerTemplate extends SaSsoServerTemplate {
-	
-	// 重写 [获取授权回调地址] 方法，改为从数据库中读取 
-	@Override
-	public String getAllowUrl() {
-		String allowUrl = ""; // 改为从数据库读取 
-		return allowUrl;
-	}
+
+    // 获取指定 client 的配置信息
+    @Override
+    public SaSsoClientModel getClient(String client) {
+        if("sso-client1".equals(client)) {
+            SaSsoClientModel scm = new SaSsoClientModel();
+            scm.setAllowUrl("sso-client1");
+            scm.setSecretKey("kQwIOrYvnXmSDkwEiFngrKidMcdrgKor");
+            return scm;
+        }
+
+        // ...
+
+        return null;
+    }
+
+    // 返回所有 client 信息
+    @Override
+    public List<SaSsoClientModel> getClients() {
+        // 模拟示例代码，真实项目可改为从数据查询
+
+        SaSsoClientModel scm1 = new SaSsoClientModel();
+        scm1.setAllowUrl("sso-client1");
+        scm1.setSecretKey("kQwIOrYvnXmSDkwEiFngrKidMcdrgKor");
+
+        SaSsoClientModel scm2 = new SaSsoClientModel();
+        scm2.setAllowUrl("sso-client2");
+        scm2.setSecretKey("kQwIOrYvnXmSDkwEiFngrKidMcdrgKor");
+
+        // ...
+
+        return Arrays.asList(scm1, scm2);
+    }
 
 }
 ```
@@ -258,24 +282,24 @@ public class CustomSaSsoServerTemplate extends SaSsoServerTemplate {
 public class SsoController {
 	
 	// 处理 SSO-Server 端所有请求 
-	@RequestMapping({"/sso/auth", "/sso/doLogin", "/sso/checkTicket", "/sso/signout"})
+	@RequestMapping({"/sso/auth", "/sso/doLogin", "/sso/signout", "/sso/pushS"})
 	public Object ssoServerRequest() {
 		return SaSsoServerProcessor.instance.dister();
 	}
 	
 	// 处理 SSO-Client 端所有请求 
-	@RequestMapping({"/sso/login", "/sso/logout", "/sso/logoutCall"})
+	@RequestMapping({"/sso/login", "/sso/logout", "/sso/logoutCall", "/sso/pushC"})
 	public Object ssoClientRequest() {
 		return SaSsoClientProcessor.instance.dister();
 	}
 	
 	// 配置SSO相关参数 
 	@Autowired
-	private void configSsoServer(SaSsoServerConfig ssoServer) {
+	private void configSsoServer(SaSsoServerTemplate ssoServerTemplate) {
 		// SSO Server 配置代码，参考文档前几章 ... 
 	}
 	@Autowired
-	private void configSsoClient(SaSsoClientConfig ssoClient) {
+	private void configSsoClient(SaSsoClientTemplate ssoClientTemplate) {
 		// SSO Client 配置代码，参考文档前几章 ... 
 	}
 	
@@ -295,7 +319,7 @@ public class SsoController {
 
 ``` java
 /**
- * Sa-Token-SSO 第二套 SSO-Server端 Controller 
+ * Sa-Token-SSO 第二套 SSO-Server端 Controller
  */
 @RestController
 public class SsoUserServerController {
@@ -305,21 +329,23 @@ public class SsoUserServerController {
      */
     public static SaSsoServerProcessor ssoUserServerProcessor = new SaSsoServerProcessor();
     static {
-        // 自定义一个 SaSsoTemplate 对象
+
+        // 自定义一个 getServerConfig
+        SaSsoServerConfig serverConfig = new SaSsoServerConfig();
+        serverConfig.setSecretKey("xxx");
+        // 更多配置 ...
+
+        // 自定义一个 SaSsoServerTemplate 对象
         SaSsoServerTemplate ssoUserTemplate = new SaSsoServerTemplate() {
-            // 使用的会话对象 是自定义的 StpUserUtil
             @Override
-            public StpLogic getStpLogic() {
-                return StpUserUtil.stpLogic;
-            }
-            // 使用自定义的签名秘钥
-            SaSignConfig signConfig =  new SaSignConfig().setSecretKey("xxxx-新的秘钥-xxxx");
-            SaSignTemplate userSignTemplate = new SaSignTemplate().setSignConfig(signConfig);
-            @Override
-            public SaSignTemplate getSignTemplate(String client) {
-                return userSignTemplate;
+            public SaSsoServerConfig getServerConfig() {
+                return serverConfig;
             }
         };
+
+        // 使用自定义的 StpLogic 会话对象
+        ssoUserTemplate.setStpLogic(StpUserUtil.stpLogic);
+
         // 让这个SSO请求处理器，使用的路由前缀是 /sso-user，而不是原先的 /sso
         ssoUserTemplate.apiName.replacePrefix("/sso-user");
 
@@ -329,10 +355,9 @@ public class SsoUserServerController {
 
     /*
      * 第二套 sso-server 服务：处理所有SSO相关请求
-     * 		http://{host}:{port}/sso-user/auth			-- 单点登录授权地址，接受参数：redirect=授权重定向地址
-     * 		http://{host}:{port}/sso-user/doLogin		-- 账号密码登录接口，接受参数：name、pwd
-     * 		http://{host}:{port}/sso-user/checkTicket	-- Ticket校验接口（isHttp=true时打开），接受参数：ticket=ticket码、ssoLogoutCall=单点注销回调地址 [可选]
-     * 		http://{host}:{port}/sso-user/signout		-- 单点注销地址（isSlo=true时打开），接受参数：loginId=账号id、secretkey=接口调用秘钥
+     * 		http://{host}:{port}/sso-user/auth			-- 单点登录授权地址 
+     * 		http://{host}:{port}/sso-user/doLogin		-- 账号密码登录接口 
+     * 		http://{host}:{port}/sso-user/signout		-- 单点注销地址（isSlo=true时打开） 
      */
     @RequestMapping("/sso-user/*")
     public Object ssoUserRequest() {
