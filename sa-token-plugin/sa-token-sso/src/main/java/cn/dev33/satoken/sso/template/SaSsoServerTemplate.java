@@ -624,10 +624,9 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         // 如果此 Client 并没有注册 单点注销 回调地址
         String sloCallUrl = scm.getSloCallbackUrl();
         if(SaFoxUtil.isEmpty(sloCallUrl)) {
-            // TODO 代码有效性待验证
             if(isPushWork && SaFoxUtil.isNotEmpty(scm.getClient())) {
                 SaSsoClientModel client = getClient(scm.getClient());
-                return pushToClientByLogoutCall(client, loginId, getStpLogicOrGlobal().createSaLogoutParameter());
+                return pushToClientByLogoutCall(client, loginId, true, getStpLogicOrGlobal().createSaLogoutParameter());
             }
             return null;
         }
@@ -716,7 +715,6 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param message /
      */
     public void pushToAllClient(SaSsoMessage message, String ignoreClient) {
-        // TODO 待验证
         List<SaSsoClientModel> needPushClients = getNeedPushClients();
         for (SaSsoClientModel client : needPushClients) {
             if(ignoreClient != null && ignoreClient.equals(client.getClient())) {
@@ -737,7 +735,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         for (SaSsoClientModel client : npClients) {
             if(client.getIsSlo()) {
                 strategy.asyncRun.run(() -> {
-                    pushToClientByLogoutCall(client, loginId, logoutParameter);
+                    pushToClientByLogoutCall(client, loginId, false, logoutParameter);
                 });
             }
         }
@@ -746,14 +744,17 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     /**
      * 向指定 Client 推送消息：单点注销回调
      *
+     * @param client 应用
      * @param loginId /
+     * @param autoLogout 是否为超过 maxRegClient 的自动注销
      * @param logoutParameter 注销参数
      * @return /
      */
-    public String pushToClientByLogoutCall(SaSsoClientModel client, Object loginId, SaLogoutParameter logoutParameter) {
+    public String pushToClientByLogoutCall(SaSsoClientModel client, Object loginId, boolean autoLogout, SaLogoutParameter logoutParameter) {
         SaSsoMessage message = new SaSsoMessage();
         message.setType(SaSsoConsts.MESSAGE_LOGOUT_CALL);
         message.set(paramName.loginId, loginId);
+        message.set(paramName.autoLogout, autoLogout);
         message.set(paramName.deviceId, logoutParameter.getDeviceId());
         return pushMessage(client, message);
     }
