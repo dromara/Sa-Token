@@ -55,14 +55,13 @@
 			<artifactId>solon.view.thymeleaf</artifactId>
 			<version>${solon.version}</version>
 		</dependency>
-		
-		<!-- Http请求工具（在模式三的单点注销功能下用到，如不需要可以注释掉） -->
-		<dependency>
-		    <groupId>org.noear</groupId>
-		    <artifactId>forest-solon-plugin</artifactId>
-			<version>${solon.version}</version>
-		</dependency>
 
+		<!-- Sa-Token 插件：整合 Forest 请求工具 (模式三需要通过 http 请求推送消息) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-forest</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
 
 
 	</dependencies>

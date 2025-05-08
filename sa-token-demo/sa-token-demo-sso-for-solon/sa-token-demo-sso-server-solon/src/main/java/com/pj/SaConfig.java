@@ -13,7 +13,7 @@ import org.noear.solon.annotation.Inject;
 public class SaConfig {
 
     /**
-     * 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
+     * 构建建 SaToken redis dao（如果不需要 redis；可以注释掉）
      * */
     @Bean
     public SaTokenDao saTokenDaoInit(@Inject("${sa-token.dao.redis}") SaTokenDaoForRedisx saTokenDao) {

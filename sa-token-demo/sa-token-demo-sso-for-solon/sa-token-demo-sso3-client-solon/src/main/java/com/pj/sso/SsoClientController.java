@@ -1,69 +1,82 @@
 package com.pj.sso;
 
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.sso.message.SaSsoMessage;
 import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
-import cn.dev33.satoken.sso.template.SaSsoUtil;
+import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
+import cn.dev33.satoken.sso.template.SaSsoClientUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import org.noear.solon.annotation.Controller;
-import org.noear.solon.annotation.Mapping;
-import org.noear.solon.annotation.Produces;
+import org.noear.solon.annotation.*;
 import org.noear.solon.boot.web.MimeType;
-import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.Render;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Sa-Token-SSO Client端 Controller 
  * @author click33
  */
 @Controller
-public class SsoClientController implements Render {
+@Configuration
+public class SsoClientController {
 
 	// SSO-Client端：首页
 	@Produces(MimeType.TEXT_HTML_VALUE)
 	@Mapping("/")
 	public String index() {
-		String str = "<h2>Sa-Token SSO-Client 应用端</h2>" + 
-					"<p>当前会话是否登录：" + StpUtil.isLogin() + "</p>" + 
-					"<p><a href=\"javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);\">登录</a>" + 
-					" <a href='/sso/logout?back=self'>注销</a></p>";
+		String str = "<h2>Sa-Token SSO-Client 应用端 (模式三)</h2>" +
+				"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
+				"<p> " +
+				"<a href='/sso/login?back=/'>登录</a> - " +
+				"<a href='/sso/logoutByAlone?back=/'>单应用注销</a> - " +
+				"<a href='/sso/logout?back=self&singleDeviceIdLogout=true'>单浏览器注销</a> - " +
+				"<a href='/sso/logout?back=self'>全端注销</a> - " +
+				"<a href='/sso/myInfo' target='_blank'>账号资料</a>" +
+				"</p>";
 		return str;
 	}
-	
+
 	/*
-	 * SSO-Client端：处理所有SSO相关请求 
-	 * 		http://{host}:{port}/sso/login			-- Client端登录地址，接受参数：back=登录后的跳转地址 
-	 * 		http://{host}:{port}/sso/logout			-- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址 
-	 * 		http://{host}:{port}/sso/logoutCall		-- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
+	 * SSO-Client端：处理所有SSO相关请求
+	 * 		http://{host}:{port}/sso/login			-- Client 端登录地址
+	 * 		http://{host}:{port}/sso/logout			-- Client 端注销地址（isSlo=true时打开）
+	 * 		http://{host}:{port}/sso/pushC			-- Client 端接收消息推送地址
 	 */
 	@Mapping("/sso/*")
 	public Object ssoRequest() {
 		return SaSsoClientProcessor.instance.dister();
 	}
-	
-	// 查询我的账号信息 
+
+	// 配置SSO相关参数
+	@Bean
+	private void configSso(SaSsoClientTemplate ssoClientTemplate) {
+
+	}
+
+	// 当前应用独自注销 (不退出其它应用)
+	@Mapping("/sso/logoutByAlone")
+	public Object logoutByAlone() {
+		StpUtil.logout();
+		return SaSsoClientProcessor.instance._ssoLogoutBack(SaHolder.getRequest(), SaHolder.getResponse());
+	}
+
+	// 查询我的账号信息：sso-client 前端 -> sso-center 后端 -> sso-server 后端
 	@Mapping("/sso/myInfo")
 	public Object myInfo() {
-		// 组织请求参数
-		Map<String, Object> map = new HashMap<>();
-		map.put("apiType", "userinfo");
-		map.put("loginId", StpUtil.getLoginId());
-
-		// 发起请求
-		Object resData = SaSsoUtil.getData(map);
-		System.out.println("sso-server 返回的信息：" + resData);
-		return resData;
-	}
-
-	// 全局异常拦截并转换
-	@Override
-	public void render(Object data, Context ctx) throws Throwable {
-		if(data instanceof Exception){
-			data = SaResult.error(((Exception)data).getMessage());
+		// 如果尚未登录
+		if( ! StpUtil.isLogin()) {
+			return "尚未登录，无法获取";
 		}
 
-		ctx.render(data);
+		// 获取本地 loginId
+		Object loginId = StpUtil.getLoginId();
+
+		// 推送消息
+		SaSsoMessage message = new SaSsoMessage();
+		message.setType("userinfo");
+		message.set("loginId", loginId);
+		SaResult result = SaSsoClientUtil.pushMessageAsSaResult(message);
+
+		// 返回给前端
+		return result;
 	}
+
 }

@@ -3,8 +3,8 @@ package com.pj.h5;
 import cn.dev33.satoken.fun.strategy.SaCorsHandleFunction;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.noear.solon.annotation.Bean;
+import org.noear.solon.annotation.Configuration;
 
 /**
  * [Sa-Token 权限认证] 配置类 （解决跨域问题）
@@ -22,7 +22,7 @@ public class SaTokenConfigure {
         return (req, res, sto) -> {
             res.
                     // 允许指定域访问跨域资源
-                            setHeader("Access-Control-Allow-Origin", "*")
+                    setHeader("Access-Control-Allow-Origin", "*")
                     // 允许所有请求方式
                     .setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
                     // 有效时间

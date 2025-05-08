@@ -1,6 +1,5 @@
 package com.pj;
 
-
 import cn.dev33.satoken.sso.SaSsoManager;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.SolonMain;

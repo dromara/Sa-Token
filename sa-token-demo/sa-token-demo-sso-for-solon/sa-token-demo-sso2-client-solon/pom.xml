@@ -53,11 +53,13 @@
 			<version>${sa-token.version}</version>
 		</dependency>
 
-		<!-- Http 请求工具 -->
+		<!-- Sa-Token 插件：整合 Forest 请求工具 -->
 		<dependency>
-			<groupId>org.noear</groupId>
-			<artifactId>forest-solon-plugin</artifactId>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-forest</artifactId>
+			<version>${sa-token.version}</version>
 		</dependency>
+
 
 	</dependencies>
 	

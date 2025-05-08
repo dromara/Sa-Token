@@ -2,18 +2,21 @@
 server:
     port: 9002
 
-# sa-token配置 
-sa-token: 
+# sa-token配置
+sa-token:
+    # 打印操作日志
+    is-log: true
+
     # SSO-相关配置
     sso-client:
-        # SSO-Server端 主机地址
+        # 应用标识
+        client: sso-client2
+        # SSO-Server 端主机地址
         server-url: http://sa-sso-server.com:9000
+        # 在 sso-server 端前后端分离时需要单独配置 auth-url 参数（上面的不要注释，auth-url 配置项和 server-url 要同时存在）
         # auth-url: http://127.0.0.1:8848/sa-token-demo-sso-server-h5/sso-auth.html
-        # 是否打开单点注销接口
-        is-slo: true
-    sign:
-        # API 接口调用秘钥
-        secret-key: kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+        # API 接口调用秘钥 (单点注销时会用到)
+        secret-key: SSO-C2-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
     
 # 配置 Sa-Token 单独使用的Redis连接 （此处需要和SSO-Server端连接同一个Redis）
 sa-token.dao: #名字可以随意取

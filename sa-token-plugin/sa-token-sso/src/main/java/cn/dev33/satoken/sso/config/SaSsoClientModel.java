@@ -42,7 +42,7 @@ public class SaSsoClientModel implements Serializable {
     /**
      * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的 URL 将禁止下放 ticket )
      */
-    public String allowUrl = "*";
+    public String allowUrl = "";
 
     /**
      * 是否接收推送消息

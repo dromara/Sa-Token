@@ -3,9 +3,14 @@ server:
     port: 9001
 
 # Sa-Token 配置 
-sa-token: 
+sa-token:
+    # 打印操作日志
+    is-log: true
+
     # SSO-相关配置
     sso-client:
+        # client 标识
+        client: sso-client1
         # SSO-Server端 - 主机地址
         server-url: http://sso.stp.com:9000
     

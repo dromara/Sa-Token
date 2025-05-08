@@ -21,11 +21,6 @@
 
 	<dependencies>
 
-		<!-- Solon 依赖 -->
-		<!--<dependency>
-			<groupId>org.noear</groupId>
-			<artifactId>solon-api</artifactId>
-		</dependency>-->
 		<dependency>
 			<groupId>org.noear</groupId>
 			<artifactId>solon-web</artifactId>

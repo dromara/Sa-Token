@@ -70,7 +70,7 @@ public class CustomSaSsoServerTemplate extends SaSsoServerTemplate {
 ```
 
 
-### 2、在 sso-server 端开启匿名 client 接入
+### 2、在 sso-client 端不要配置 client 字段
 
 然后在对应的应用端不要配置 client 字段，例如：
 

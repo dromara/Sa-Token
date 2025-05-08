@@ -21,23 +21,12 @@
 
 	<dependencies>
 
-		<!-- Solon 依赖 -->
-<!--		<dependency>-->
-<!--			<groupId>org.noear</groupId>-->
-<!--			<artifactId>solon-api</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.noear</groupId>
 			<artifactId>solon-web</artifactId>
 			<version>${solon.version}</version>
 		</dependency>
 
-		<!-- Http 请求工具 -->
-		<dependency>
-			<groupId>org.noear</groupId>
-			<artifactId>forest-solon-plugin</artifactId>
-		</dependency>
-		
 		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
 		<dependency>
             <groupId>cn.dev33</groupId>
@@ -56,6 +45,13 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-redisx</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
+		<!-- Sa-Token 插件：整合 Forest 请求工具 -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-forest</artifactId>
 			<version>${sa-token.version}</version>
 		</dependency>
 
