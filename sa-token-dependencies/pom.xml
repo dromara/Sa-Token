@@ -25,9 +25,9 @@
 		<jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
 		<freemarker.version>2.3.34</freemarker.version>
-		<solon.version>3.0.1</solon.version>
+		<solon.version>3.2.1</solon.version>
 		<noear-redisx.version>1.6.9</noear-redisx.version>
-		<noear-snack3.version>3.2.127</noear-snack3.version>
+		<noear-snack3.version>3.2.133</noear-snack3.version>
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
