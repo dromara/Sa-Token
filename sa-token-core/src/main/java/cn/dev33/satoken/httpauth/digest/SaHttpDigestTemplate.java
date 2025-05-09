@@ -120,7 +120,9 @@ public class SaHttpDigestTemplate {
             String[] kv = s.split("=");
             if (kv.length == 2) {
                 map.put(kv[0].trim(), kv[1].trim().replace("\"", ""));
-            }
+            } else if (s.contains("=")) { // 解决字符串包含多个=，如：url带参数的问题
+				map.put(kv[0].trim(), s.substring(kv[0].length() + 1).trim().replace("\"", ""));
+			}
         }
 
         /*
