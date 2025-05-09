@@ -15,8 +15,6 @@
  */
 package cn.dev33.satoken.solon;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.solon.json.SaJsonTemplateForSnack3;
 import cn.dev33.satoken.solon.oauth2.SaOAuth2BeanInject;
 import cn.dev33.satoken.solon.oauth2.SaOAuth2BeanRegister;
 import cn.dev33.satoken.solon.sso.SaSsoBeanInject;
@@ -32,10 +30,6 @@ public class SaSolonPlugin implements Plugin {
 
     @Override
     public void start(AppContext context) {
-
-        // 注入JSON解析器Bean
-        SaManager.setSaJsonTemplate(new SaJsonTemplateForSnack3());
-
         //sa-token
         context.beanMake(SaBeanRegister.class);
         context.beanMake(SaBeanInject.class);
