@@ -61,12 +61,13 @@ public class SaSsoMessageSignoutHandle implements SaSsoMessageHandle {
         }
 
         // 3、获取参数
+        String client = message.getString(paramName.client);
         Object loginId = message.get(paramName.loginId);
         String deviceId = message.getString(paramName.deviceId);
 
         // 4、单点注销
         SaLogoutParameter logoutParameter = ssoServerTemplate.getStpLogicOrGlobal().createSaLogoutParameter().setDeviceId(deviceId);
-        ssoServerTemplate.ssoLogout(loginId, logoutParameter);
+        ssoServerTemplate.ssoLogout(loginId, logoutParameter, client);
 
         // 5、响应
         return SaResult.ok();

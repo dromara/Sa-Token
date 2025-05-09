@@ -79,7 +79,7 @@ SaSsoServerUtil.checkRedirectUrl(String client, String url);
 SaSsoServerUtil.ssoLogout(Object loginId);
 
 // 指定账号单点注销
-SaSsoServerUtil.ssoLogout(Object loginId, SaLogoutParameter logoutParameter);
+SaSsoServerUtil.ssoLogout(Object loginId, SaLogoutParameter logoutParameter, String ignoreClient);
 ```
 
 

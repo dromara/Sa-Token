@@ -187,7 +187,7 @@ public class SaSsoServerProcessor {
 			if(singleDeviceIdLogout) {
 				logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
 			}
-			ssoServerTemplate.ssoLogout(loginId, logoutParameter);
+			ssoServerTemplate.ssoLogout(loginId, logoutParameter, null);
 		}
 
 		// 完成

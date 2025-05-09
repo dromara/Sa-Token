@@ -573,7 +573,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @param loginId 指定账号
      */
     public void ssoLogout(Object loginId) {
-        ssoLogout(loginId, getStpLogicOrGlobal().createSaLogoutParameter());
+        ssoLogout(loginId, getStpLogicOrGlobal().createSaLogoutParameter(), null);
     }
 
     /**
@@ -581,11 +581,12 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      *
      * @param loginId 指定账号
      * @param logoutParameter 注销参数
+     * @param ignoreClient 要被忽略掉的 client，填 null 代表不忽略
      */
-    public void ssoLogout(Object loginId, SaLogoutParameter logoutParameter) {
+    public void ssoLogout(Object loginId, SaLogoutParameter logoutParameter, String ignoreClient) {
 
         // 1、消息推送：单点注销
-        pushToAllClientByLogoutCall(loginId, logoutParameter);
+        pushToAllClientByLogoutCall(loginId, logoutParameter, ignoreClient);
 
         // 2、SaSession 挂载的 Client 端注销会话
         SaSession session = getStpLogicOrGlobal().getSessionByLoginId(loginId, false);
@@ -717,7 +718,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
     public void pushToAllClient(SaSsoMessage message, String ignoreClient) {
         List<SaSsoClientModel> needPushClients = getNeedPushClients();
         for (SaSsoClientModel client : needPushClients) {
-            if(ignoreClient != null && ignoreClient.equals(client.getClient())) {
+            if(SaFoxUtil.isNotEmpty(ignoreClient) && ignoreClient.equals(client.getClient())) {
                 continue;
             }
             strategy.asyncRun.run(() -> pushMessage(client, message));
@@ -729,10 +730,14 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      *
      * @param loginId /
      * @param logoutParameter 注销参数
+     * @param ignoreClient 要被忽略掉的 client，填 null 代表不忽略
      */
-    public void pushToAllClientByLogoutCall(Object loginId, SaLogoutParameter logoutParameter) {
+    public void pushToAllClientByLogoutCall(Object loginId, SaLogoutParameter logoutParameter, String ignoreClient) {
         List<SaSsoClientModel> npClients = getNeedPushClients();
         for (SaSsoClientModel client : npClients) {
+            if(SaFoxUtil.isNotEmpty(ignoreClient) && ignoreClient.equals(client.getClient())) {
+                continue;
+            }
             if(client.getIsSlo()) {
                 strategy.asyncRun.run(() -> {
                     pushToClientByLogoutCall(client, loginId, false, logoutParameter);

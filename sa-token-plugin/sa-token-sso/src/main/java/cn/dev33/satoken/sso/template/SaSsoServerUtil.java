@@ -238,9 +238,10 @@ public class SaSsoServerUtil {
      *
      * @param loginId 指定账号
      * @param logoutParameter 注销参数
+     * @param ignoreClient 要被忽略掉的 client，填 null 代表不忽略
      */
-    public static void ssoLogout(Object loginId, SaLogoutParameter logoutParameter) {
-        SaSsoServerProcessor.instance.ssoServerTemplate.ssoLogout(loginId, logoutParameter);
+    public static void ssoLogout(Object loginId, SaLogoutParameter logoutParameter, String ignoreClient) {
+        SaSsoServerProcessor.instance.ssoServerTemplate.ssoLogout(loginId, logoutParameter, ignoreClient);
     }
 
 
