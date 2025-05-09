@@ -138,7 +138,10 @@ public class SaOAuth2ServerProcessor {
 		// 6、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
 		boolean isNeedCarefulConfirm = oauth2Template.isNeedCarefulConfirm(ra.loginId, ra.clientId, ra.scopes);
 		if(isNeedCarefulConfirm) {
-			return cfg.confirmView.apply(ra.clientId, ra.scopes);
+			SaClientModel cm = oauth2Template.checkClientModel(ra.clientId);
+			if( ! cm.getIsAutoConfirm()) {
+				return cfg.confirmView.apply(ra.clientId, ra.scopes);
+			}
 		}
 
 		// 7、判断授权类型，重定向到不同地址

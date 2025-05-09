@@ -78,6 +78,9 @@ public class SaClientModel implements Serializable {
 	/** 单独配置此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置] */
 	public long lowerClientTokenTimeout;
 
+	/** 是否允许此应用自动确认授权（高危配置，禁止向不被信任的第三方开启此选项） */
+	public Boolean isAutoConfirm = false;
+
 	
 	public SaClientModel() {
 		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
@@ -88,7 +91,7 @@ public class SaClientModel implements Serializable {
 		this.lowerClientTokenTimeout = config.getLowerClientTokenTimeout();
 	}
 	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowRedirectUris) {
-		super();
+		this();
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.contractScopes = contractScopes;
@@ -274,7 +277,26 @@ public class SaClientModel implements Serializable {
 		this.lowerClientTokenTimeout = lowerClientTokenTimeout;
 		return this;
 	}
-	
+
+	/**
+	 * 获取 是否允许此应用自动确认授权（高危配置，禁止向不被信任的第三方开启此选项）
+	 *
+	 * @return /
+	 */
+	public Boolean getIsAutoConfirm() {
+		return this.isAutoConfirm;
+	}
+
+	/**
+	 * 设置 是否允许此应用自动确认授权（高危配置，禁止向不被信任的第三方开启此选项）
+	 *
+	 * @param isAutoConfirm /
+	 * @return 对象自身
+	 */
+	public SaClientModel setIsAutoConfirm(Boolean isAutoConfirm) {
+		this.isAutoConfirm = isAutoConfirm;
+		return this;
+	}
 	//
 
 	@Override
@@ -291,6 +313,7 @@ public class SaClientModel implements Serializable {
 				", refreshTokenTimeout=" + refreshTokenTimeout +
 				", clientTokenTimeout=" + clientTokenTimeout +
 				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
+				", isAutoConfirm=" + isAutoConfirm +
 				'}';
 	}
 
