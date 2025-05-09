@@ -47,7 +47,21 @@
             <artifactId>sa-token-redisx</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
-		
+
+		<!-- Sa-Token 插件：整合snack3 (json) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-snack3</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
+		<!-- snack3 版号要 >= 3.2.133 -->
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>snack3</artifactId>
+			<version>3.2.133</version>
+		</dependency>
+
 	</dependencies>
 	
 	

@@ -51,6 +51,13 @@
             <version>${sa-token.version}</version>
         </dependency>
 
+		<!-- sa-token json 序列化器组件：snack3 实现  -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-snack3</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
 		<!-- hutool工具类，用来生成雪花算法唯一id -->
 		<!-- <dependency>
 		     <groupId>cn.hutool</groupId>
