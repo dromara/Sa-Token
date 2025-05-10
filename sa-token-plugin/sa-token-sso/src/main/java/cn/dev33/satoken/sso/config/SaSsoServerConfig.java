@@ -87,7 +87,7 @@ public class SaSsoServerConfig implements Serializable {
     /**
      * 所有允许的授权回调地址，多个用逗号隔开 (不在此列表中的URL将禁止下放ticket) (匿名 client 使用)
      */
-    public String allowUrl = "*";
+    public String allowUrl = "";
 
     /**
      * API 调用签名秘钥 (全局默认 + 匿名 client 使用)
