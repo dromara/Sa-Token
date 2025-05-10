@@ -144,6 +144,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 生成新 Access-Token
         AccessTokenModel at = SaOAuth2Manager.getDataConverter().convertRefreshTokenToAccessToken(rt);
+        SaOAuth2Strategy.instance.refreshAccessTokenWorkByScope.accept(at);
 
         // 保存新 Access-Token
         dao.saveAccessToken(at);

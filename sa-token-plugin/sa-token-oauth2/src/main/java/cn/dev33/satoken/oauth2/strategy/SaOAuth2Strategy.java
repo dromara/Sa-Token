@@ -106,6 +106,24 @@ public final class SaOAuth2Strategy {
 	};
 
 	/**
+	 * 当使用 RefreshToken 刷新 AccessToken 时，根据 scope 信息对一个 AccessTokenModel 进行加工处理
+	 */
+	public SaOAuth2ScopeWorkAccessTokenFunction refreshAccessTokenWorkByScope = (at) -> {
+		if(at.scopes != null && !at.scopes.isEmpty()) {
+			for (String scope : at.scopes) {
+				SaOAuth2ScopeHandlerInterface handler = scopeHandlerMap.get(scope);
+				if(handler != null && handler.refreshAccessTokenIsWork()) {
+					handler.workAccessToken(at);
+				}
+			}
+		}
+		SaOAuth2ScopeHandlerInterface finallyWorkScopeHandler = scopeHandlerMap.get(SaOAuth2Consts._FINALLY_WORK_SCOPE);
+		if(finallyWorkScopeHandler != null && finallyWorkScopeHandler.refreshAccessTokenIsWork()) {
+			finallyWorkScopeHandler.workAccessToken(at);
+		}
+	};
+
+	/**
 	 * 根据 scope 信息对一个 ClientTokenModel 进行加工处理
 	 */
 	public SaOAuth2ScopeWorkClientTokenFunction workClientTokenByScope = (ct) -> {

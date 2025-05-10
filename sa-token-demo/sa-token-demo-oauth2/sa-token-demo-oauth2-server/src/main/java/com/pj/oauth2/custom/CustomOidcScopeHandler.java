@@ -19,10 +19,11 @@
 //        System.out.println("----- 为 idToken 追加扩展字段 ----- ");
 //
 //        idToken.extraData.put("uid", userId); // 用户id
-//        idToken.extraData.put("nickname", "lin_xiao_lin"); // 昵称
+//        idToken.extraData.put("nickname", "linXiaoLin"); // 昵称
 //        idToken.extraData.put("picture", "https://sa-token.cc/logo.png"); // 头像
 //        idToken.extraData.put("email", "456456@xx.com"); // 邮箱
 //        idToken.extraData.put("phone_number", "13144556677"); // 手机号
+//
 //        // 更多字段 ...
 //        // 可参考：https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
 //

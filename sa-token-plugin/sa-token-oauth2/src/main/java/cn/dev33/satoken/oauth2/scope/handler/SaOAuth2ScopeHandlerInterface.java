@@ -47,4 +47,13 @@ public interface SaOAuth2ScopeHandlerInterface {
      */
     void workClientToken(ClientTokenModel ct);
 
+    /**
+     * 当使用 RefreshToken 刷新 AccessToken 时，是否重新执行 workAccessToken 构建方法
+     *
+     * @return /
+     */
+    default boolean refreshAccessTokenIsWork() {
+        return false;
+    }
+
 }
