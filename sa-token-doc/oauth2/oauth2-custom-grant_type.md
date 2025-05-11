@@ -7,16 +7,50 @@ OAuth2 协议的 `/oauth2/token` 接口定义了两种获取 `access_token` 的 
 - `authorization_code`：使用用户授权的授权码获取 access_token。
 - `password`：使用用户提交的账号、密码来获取 access_token。
 
-除此之外，你还可以自定义 `grant_type`，来支持更多的场景。
+你可以重写内置 `grant_type` 处理器，或添加自定义 `grant_type` 处理器，来支持更多的场景。
 
-假设有以下需求：通过 手机号+验证码 登录，返回 `access_token`。
+
 
 --- 
 
 
-### 2、实现步骤
+### 2、重写 password 认证模式处理器
 
-#### 2.1、新增验证码发送接口
+当我们按照文档搭建的代码直接测试 password 认证模式时，控制台会得到警告：
+``` txt
+警告信息：当前 password 认证模式，使用默认实现 (SaOAuth2Strategy.instance.doLoginHandle)，仅供开发测试
+正式项目请重写 PasswordGrantTypeHandler 处理器 loginByUsernamePassword 方法
+```
+
+这是因为为方便测试，框架内部直接将 password 认证请求转发到了 `SaOAuth2Strategy.instance.doLoginHandle` 来处理，
+在真正的项目中需要大家重写 password 认证模式处理器：
+
+``` java
+/**
+ * 自定义 Password Grant_Type 授权模式处理器认证过程
+ */
+@Component
+public class CustomPasswordGrantTypeHandler extends PasswordGrantTypeHandler {
+
+    @Override
+    public PasswordAuthResult loginByUsernamePassword(String username, String password) {
+        if("sa".equals(username) && "123456".equals(password)) {
+            long userId = 10001;
+            return new PasswordAuthResult(userId);
+        } else {
+            throw new SaOAuth2Exception("无效账号密码");
+        }
+    }
+
+}
+```
+
+
+### 3、添加自定义 grant_type 处理器
+
+假设有以下需求：通过 手机号+验证码 登录，返回 `access_token`。
+
+#### 3.1、新增验证码发送接口
 
 首先在 oauth2-server 端开放一个接口，为指定手机号发送验证码。
 
@@ -41,7 +75,7 @@ public class PhoneLoginController {
 真实项目肯定是要对接短信服务商的，此处我们仅做模拟代码，将发送的验证码打印在控制台上。
 
 
-#### 2.2、自定义 grant_type 处理器
+#### 3.2、自定义 grant_type 处理器
 
 在 oauth2-server 新建 `PhoneCodeGrantTypeHandler` 实现 `SaOAuth2GrantTypeHandlerInterface` 接口：
 
@@ -89,7 +123,7 @@ public class PhoneCodeGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterf
 }
 ```
 
-#### 2.3、为应用添加允许的授权类型
+#### 3.3、为应用添加允许的授权类型
 
 在 `SaOAuth2DataLoader` 实现类中，为 client 的允许授权类型增加自定义的 `phone_code` 
 
@@ -124,7 +158,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 完工，开始测试。
 
 
-### 3、测试步骤
+### 4、测试步骤
 
 #### 1、先发送验证码 
 

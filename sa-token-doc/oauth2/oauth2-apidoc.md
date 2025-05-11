@@ -306,6 +306,9 @@ http://{host}:{port}/oauth2/token
 }
 ```
 
+> [!WARNING| label:重写认证处理器] 
+> 在正式项目中，password 认证模式需要重写 `PasswordGrantTypeHandler` 处理器，在后面的 [自定义 grant_type](/oauth2/oauth2-custom-grant_type) 章节我们会详细介绍
+
 
 ## 4、模式四：凭证式（Client Credentials）
 以上三种模式获取的都是用户的 `Access-Token`，代表用户对第三方应用的授权，
