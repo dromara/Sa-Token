@@ -173,7 +173,7 @@ public final class SaOAuth2Strategy {
 	}
 
 	/**
-	 * 根据 scope 信息对一个 AccessTokenModel 进行加工处理
+	 * 根据 grantType 构造一个 AccessTokenModel
 	 */
 	public SaOAuth2GrantTypeAuthFunction grantTypeAuth = (req) -> {
 		String grantType = req.getParamNotNull(SaOAuth2Consts.Param.grant_type);

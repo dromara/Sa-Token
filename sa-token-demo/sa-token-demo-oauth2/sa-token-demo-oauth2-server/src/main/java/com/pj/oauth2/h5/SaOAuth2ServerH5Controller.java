@@ -8,6 +8,7 @@ import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.generate.SaOAuth2DataGenerate;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
@@ -63,8 +64,11 @@ public class SaOAuth2ServerH5Controller {
         // 6、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
         boolean isNeedCarefulConfirm = oauth2Template.isNeedCarefulConfirm(ra.loginId, ra.clientId, ra.scopes);
         if(isNeedCarefulConfirm) {
-            // code=411，需要用户手动确认授权
-            return SaResult.get(411, "need confirm", null);
+            SaClientModel cm = oauth2Template.checkClientModel(ra.clientId);
+            if( ! cm.getIsAutoConfirm()) {
+                // code=411，需要用户手动确认授权
+                return SaResult.get(411, "need confirm", null);
+            }
         }
 
         // 7、判断授权类型，重定向到不同地址

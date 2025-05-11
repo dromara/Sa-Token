@@ -104,6 +104,9 @@ public interface SaOAuth2ErrorCode {
 	/** 无效的请求 Method */
 	int CODE_30151 = 30151;
 
+	/** Password 模式认证失败 */
+	int CODE_30161 = 30161;
+
 	/** 其它异常 */
 	int CODE_30191 = 30191;
 

@@ -21,7 +21,9 @@ import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
+import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.granttype.handler.model.PasswordAuthResult;
 import cn.dev33.satoken.stp.StpUtil;
 
 import java.util.List;
@@ -47,10 +49,10 @@ public class PasswordGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterfa
         String password = req.getParamNotNull(SaOAuth2Consts.Param.password);
 
         // 3、调用API 开始登录，如果没能成功登录，则直接退出
-        loginByUsernamePassword(username, password);
-        Object loginId = StpUtil.getLoginIdDefaultNull();
+        PasswordAuthResult passwordAuthResult = loginByUsernamePassword(username, password);
+        Object loginId = passwordAuthResult.getLoginId();
         if(loginId == null) {
-            throw new SaOAuth2Exception("登录失败");
+            throw new SaOAuth2Exception("登录失败").setCode(SaOAuth2ErrorCode.CODE_30161);
         }
 
         // 4、构建 ra 对象
@@ -65,12 +67,15 @@ public class PasswordGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterfa
     }
 
     /**
-     * 根据 username、password 进行登录，如果登录失败请直接抛出异常
+     * 根据 username、password 进行登录，如果登录失败请直接抛出异常或返回 loginId = null
      * @param username /
      * @param password /
      */
-    public void loginByUsernamePassword(String username, String password) {
+    public PasswordAuthResult loginByUsernamePassword(String username, String password) {
+        System.err.println("当前暂未重写 PasswordGrantTypeHandler 处理器，将使用默认实现，仅供开发测试");
         SaOAuth2Manager.getServerConfig().doLoginHandle.apply(username, password);
+        Object loginId = StpUtil.getLoginIdDefaultNull();
+        return new PasswordAuthResult(loginId);
     }
 
 }
