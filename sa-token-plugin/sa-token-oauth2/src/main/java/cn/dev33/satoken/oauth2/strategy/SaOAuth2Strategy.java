@@ -24,6 +24,9 @@ import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
+import cn.dev33.satoken.oauth2.function.SaOAuth2ConfirmViewFunction;
+import cn.dev33.satoken.oauth2.function.SaOAuth2DoLoginHandleFunction;
+import cn.dev33.satoken.oauth2.function.SaOAuth2NotLoginViewFunction;
 import cn.dev33.satoken.oauth2.function.strategy.*;
 import cn.dev33.satoken.oauth2.granttype.handler.AuthorizationCodeGrantTypeHandler;
 import cn.dev33.satoken.oauth2.granttype.handler.PasswordGrantTypeHandler;
@@ -32,6 +35,7 @@ import cn.dev33.satoken.oauth2.granttype.handler.SaOAuth2GrantTypeHandlerInterfa
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.scope.handler.*;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaResult;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -55,7 +59,8 @@ public final class SaOAuth2Strategy {
 	 */
 	public static final SaOAuth2Strategy instance = new SaOAuth2Strategy();
 
-	// 权限处理器
+
+	// ------------------ 权限处理器 ------------------
 
 	/**
 	 * 权限处理器集合
@@ -141,7 +146,8 @@ public final class SaOAuth2Strategy {
 		}
 	};
 
-	// grant_type 处理器
+
+	// ------------------ grant_type 处理器 ------------------
 
 	/**
 	 * grant_type 处理器集合
@@ -206,7 +212,7 @@ public final class SaOAuth2Strategy {
 	};
 
 
-	// ----------------------- 所有策略
+	// ------------------ 凭证创建 ------------------
 
 	/**
 	 * 创建一个 code value
@@ -235,5 +241,25 @@ public final class SaOAuth2Strategy {
 	public SaOAuth2CreateClientTokenValueFunction createClientToken = (clientId, scopes) -> {
 		return SaFoxUtil.getRandomString(60);
 	};
+
+
+	// ------------------ 认证流程回调 ------------------
+
+	/**
+	 * OAuth-Server端：未登录时返回的View
+	 */
+	public SaOAuth2NotLoginViewFunction notLoginView = () -> "当前会话在 OAuth-Server 认证中心尚未登录";
+
+	/**
+	 * OAuth-Server端：确认授权时返回的View
+	 */
+	public SaOAuth2ConfirmViewFunction confirmView = (clientId, scopes) -> "本次操作需要用户授权";
+
+	/**
+	 * OAuth-Server端：登录函数
+	 */
+	public SaOAuth2DoLoginHandleFunction doLoginHandle = (name, pwd) -> SaResult.error();
+
+
 
 }

@@ -3,6 +3,7 @@ package com.pj.oauth2;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,12 @@ public class SaOAuth2ServerController {
 	@Autowired
 	public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 		// 未登录的视图
-		oauth2Server.notLoginView = ()->{
+		SaOAuth2Strategy.instance.notLoginView = ()->{
 			return new ModelAndView("login.html");
 		};
 
 		// 登录处理函数
-		oauth2Server.doLoginHandle = (name, pwd) -> {
+		SaOAuth2Strategy.instance.doLoginHandle = (name, pwd) -> {
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
 				return SaResult.ok().set("satoken", StpUtil.getTokenValue());
@@ -46,7 +47,7 @@ public class SaOAuth2ServerController {
 		};
 
 		// 授权确认视图
-		oauth2Server.confirmView = (clientId, scopes)->{
+		SaOAuth2Strategy.instance.confirmView = (clientId, scopes)->{
 			Map<String, Object> map = new HashMap<>();
 			map.put("clientId", clientId);
 			map.put("scope", scopes);

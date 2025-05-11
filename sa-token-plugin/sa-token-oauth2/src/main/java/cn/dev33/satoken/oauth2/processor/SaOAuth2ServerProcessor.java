@@ -123,7 +123,7 @@ public class SaOAuth2ServerProcessor {
 
 		// 2、如果尚未登录, 则先去登录
 		if( ! SaOAuth2Manager.getStpLogic().isLogin()) {
-			return cfg.notLoginView.get();
+			return SaOAuth2Strategy.instance.notLoginView.get();
 		}
 
 		// 3、构建请求 Model
@@ -140,7 +140,7 @@ public class SaOAuth2ServerProcessor {
 		if(isNeedCarefulConfirm) {
 			SaClientModel cm = oauth2Template.checkClientModel(ra.clientId);
 			if( ! cm.getIsAutoConfirm()) {
-				return cfg.confirmView.apply(ra.clientId, ra.scopes);
+				return SaOAuth2Strategy.instance.confirmView.apply(ra.clientId, ra.scopes);
 			}
 		}
 
@@ -221,9 +221,8 @@ public class SaOAuth2ServerProcessor {
 	public Object doLogin() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		SaOAuth2ServerConfig cfg = SaOAuth2Manager.getServerConfig();
 
-		return cfg.doLoginHandle.apply(req.getParam(Param.name), req.getParam(Param.pwd));
+		return SaOAuth2Strategy.instance.doLoginHandle.apply(req.getParam(Param.name), req.getParam(Param.pwd));
 	}
 
 	/**

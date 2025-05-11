@@ -143,7 +143,7 @@ public class SaOAuth2ServerController {
 		// oauth2Server.addClient(...)
 		
 		// 配置：未登录时返回的View 
-		oauth2Server.notLoginView = () -> {
+		SaOAuth2Strategy.instance.notLoginView = () -> {
 			String msg = "当前会话在OAuth-Server端尚未登录，请先访问"
 						+ "<a href='/oauth2/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
 						+ "进行登录之后，刷新页面开始授权";
@@ -151,7 +151,7 @@ public class SaOAuth2ServerController {
 		};
 		
 		// 配置：登录处理函数 
-		oauth2Server.doLoginHandle = (name, pwd) -> {
+		SaOAuth2Strategy.instance.doLoginHandle = (name, pwd) -> {
 			if("sa".equals(name) && "123456".equals(pwd)) {
 				StpUtil.login(10001);
 				return SaResult.ok();
@@ -160,7 +160,7 @@ public class SaOAuth2ServerController {
 		};
 		
 		// 配置：确认授权时返回的 view 
-		oauth2Server.confirmView = (clientId, scopes) -> {
+		SaOAuth2Strategy.instance.confirmView = (clientId, scopes) -> {
 			String scopeStr = SaFoxUtil.convertListToString(scopes);
 			String yesCode =
 					"fetch('/oauth2/doConfirm?client_id=" + clientId + "&scope=" + scopeStr + "', {method: 'POST'})" +

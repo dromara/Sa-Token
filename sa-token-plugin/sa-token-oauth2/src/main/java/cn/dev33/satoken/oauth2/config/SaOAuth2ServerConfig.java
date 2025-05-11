@@ -17,10 +17,6 @@ package cn.dev33.satoken.oauth2.config;
 
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
-import cn.dev33.satoken.oauth2.function.SaOAuth2ConfirmViewFunction;
-import cn.dev33.satoken.oauth2.function.SaOAuth2DoLoginHandleFunction;
-import cn.dev33.satoken.oauth2.function.SaOAuth2NotLoginViewFunction;
-import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -91,6 +87,23 @@ public class SaOAuth2ServerConfig implements Serializable {
 
 	/** client 列表 */
 	public Map<String, SaClientModel> clients = new LinkedHashMap<>();
+
+	// 额外方法
+
+	/**
+	 * 注册 client
+	 * @return /
+	 */
+	public SaOAuth2ServerConfig addClient(SaClientModel client) {
+		if(this.clients == null) {
+			this.clients = new LinkedHashMap<>();
+		}
+		this.clients.put(client.getClientId(), client);
+		return this;
+	}
+
+
+	// get set
 
 	/**
 	 * @return enableCode
@@ -390,24 +403,6 @@ public class SaOAuth2ServerConfig implements Serializable {
 		return this;
 	}
 
-
-	// -------------------- SaOAuth2Handle 所有回调函数 --------------------
-	
-	/**
-	 * OAuth-Server端：未登录时返回的View 
-	 */
-	public SaOAuth2NotLoginViewFunction notLoginView = () -> "当前会话在 OAuth-Server 认证中心尚未登录";
-
-	/**
-	 * OAuth-Server端：确认授权时返回的View 
-	 */
-	public SaOAuth2ConfirmViewFunction confirmView = (clientId, scopes) -> "本次操作需要用户授权";
-
-	/**
-	 * OAuth-Server端：登录函数 
-	 */
-	public SaOAuth2DoLoginHandleFunction doLoginHandle = (name, pwd) -> SaResult.error();
-
 	@Override
 	public String toString() {
 		return "SaOAuth2ServerConfig{" +
@@ -431,18 +426,6 @@ public class SaOAuth2ServerConfig implements Serializable {
 				'}';
 	}
 
-
-	/**
-	 * 注册 client
-	 * @return /
-	 */
-	public SaOAuth2ServerConfig addClient(SaClientModel client) {
-		if(this.clients == null) {
-			this.clients = new LinkedHashMap<>();
-		}
-		this.clients.put(client.getClientId(), client);
-		return this;
-	}
 
 
 }

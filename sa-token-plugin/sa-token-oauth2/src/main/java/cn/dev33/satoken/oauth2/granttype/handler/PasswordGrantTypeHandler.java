@@ -24,6 +24,7 @@ import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.granttype.handler.model.PasswordAuthResult;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.stp.StpUtil;
 
 import java.util.List;
@@ -72,8 +73,9 @@ public class PasswordGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterfa
      * @param password /
      */
     public PasswordAuthResult loginByUsernamePassword(String username, String password) {
-        System.err.println("当前暂未重写 PasswordGrantTypeHandler 处理器，将使用默认实现，仅供开发测试");
-        SaOAuth2Manager.getServerConfig().doLoginHandle.apply(username, password);
+        System.err.println("警告信息：当前 password 认证模式，使用默认实现 (SaOAuth2Strategy.instance.doLoginHandle)，仅供开发测试");
+        System.err.println("正式项目请重写 PasswordGrantTypeHandler 处理器 loginByUsernamePassword 方法");
+        SaOAuth2Strategy.instance.doLoginHandle.apply(username, password);
         Object loginId = StpUtil.getLoginIdDefaultNull();
         return new PasswordAuthResult(loginId);
     }
