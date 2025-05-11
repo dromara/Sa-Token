@@ -144,10 +144,17 @@ public class SaOAuth2ServerController {
 		
 		// 配置：未登录时返回的View 
 		SaOAuth2Strategy.instance.notLoginView = () -> {
-			String msg = "当前会话在OAuth-Server端尚未登录，请先访问"
-						+ "<a href='/oauth2/doLogin?name=sa&pwd=123456' target='_blank'> doLogin登录 </a>"
-						+ "进行登录之后，刷新页面开始授权";
-			return msg;
+			// 简化模拟表单
+			String doLoginCode =
+					"fetch(`/oauth2/doLogin?name=${document.querySelector('#name').value}&pwd=${document.querySelector('#pwd').value}`) " +
+							" .then(res => res.json()) " +
+							" .then(res => { if(res.code === 200) { location.reload() } else { alert(res.msg) } } )";
+			String res =
+					"<h2>当前客户端在 OAuth-Server 认证中心尚未登录，请先登录</h2>" +
+							"用户：<input id='name' /> <br> " +
+							"密码：<input id='pwd' /> <br>" +
+							"<button onclick=\"" + doLoginCode + "\">登录</button>";
+			return res;
 		};
 		
 		// 配置：登录处理函数 
