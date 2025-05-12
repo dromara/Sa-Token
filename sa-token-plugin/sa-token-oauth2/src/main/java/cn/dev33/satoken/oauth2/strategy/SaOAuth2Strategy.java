@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.SaTwoParamFunction;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
 import cn.dev33.satoken.oauth2.consts.GrantType;
@@ -259,6 +260,13 @@ public final class SaOAuth2Strategy {
 	 * OAuth-Server端：登录函数
 	 */
 	public SaOAuth2DoLoginHandleFunction doLoginHandle = (name, pwd) -> SaResult.error();
+
+	/**
+	 * OAuth-Server端：用户在授权指定 client 前的检查，如果检查不通过，请直接抛出异常
+	 */
+	public SaTwoParamFunction<Object, String> userAuthorizeClientCheck = (loginId, clientId) -> {
+
+	};
 
 
 

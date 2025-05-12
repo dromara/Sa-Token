@@ -88,9 +88,8 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         CodeModel cm = dao.getCode(code);
         SaOAuth2AuthorizationCodeException.throwBy(cm == null, "无效 code: " + code, code, SaOAuth2ErrorCode.CODE_30110);
 
-        // 2、删除旧Token，TODO 目测不用删，保存索引的时候如果超出了会自动删
-//        dao.deleteAccessToken(dao.getAccessTokenList(cm.clientId, cm.loginId));
-//        dao.deleteRefreshToken(dao.getRefreshTokenValue(cm.clientId, cm.loginId));
+        // 2、开发者自定义的授权前置检查
+        SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(cm.loginId, cm.clientId);
 
         // 3、生成token
         AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm);
@@ -128,7 +127,10 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         RefreshTokenModel rt = dao.getRefreshToken(refreshToken);
         SaOAuth2RefreshTokenException.throwBy(rt == null, "无效 refresh_token: " + refreshToken, refreshToken, SaOAuth2ErrorCode.CODE_30111);
 
-        // 如果配置了[每次刷新产生新的Refresh-Token]
+        // 开发者自定义的授权前置检查
+        SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(rt.loginId, rt.clientId);
+
+        // 如果配置了 [每次刷新产生新的Refresh-Token]
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
         if(clientModel.getIsNewRefresh()) {
             // 删除旧 Refresh-Token
@@ -173,6 +175,9 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 //        if(isCreateRt) {
 //            dao.deleteRefreshToken(dao.getRefreshTokenValue(ra.clientId, ra.loginId));
 //        }
+
+        // 1、开发者自定义的授权前置检查
+        SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(ra.loginId, ra.clientId);
 
         // 2、生成 新Access-Token
         String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
