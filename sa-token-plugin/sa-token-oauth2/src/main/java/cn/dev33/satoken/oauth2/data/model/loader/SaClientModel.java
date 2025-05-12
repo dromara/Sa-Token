@@ -81,6 +81,15 @@ public class SaClientModel implements Serializable {
 	/** 是否允许此应用自动确认授权（高危配置，禁止向不被信任的第三方开启此选项） */
 	public Boolean isAutoConfirm = false;
 
+	/** 此应用单个用户最多同时存在的 Access-Token 数量 */
+	public int maxAccessTokenCount;
+
+	/** 此应用单个用户最多同时存在的 Refresh-Token 数量 */
+	public int maxRefreshTokenCount;
+
+	/** 此应用最多同时存在的 Client-Token 数量 */
+	public int maxClientTokenCount;
+
 	
 	public SaClientModel() {
 		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
@@ -89,6 +98,9 @@ public class SaClientModel implements Serializable {
 		this.refreshTokenTimeout = config.getRefreshTokenTimeout();
 		this.clientTokenTimeout = config.getClientTokenTimeout();
 		this.lowerClientTokenTimeout = config.getLowerClientTokenTimeout();
+		this.maxAccessTokenCount = config.getMaxAccessTokenCount();
+		this.maxRefreshTokenCount = config.getMaxRefreshTokenCount();
+		this.maxClientTokenCount = config.getMaxClientTokenCount();
 	}
 	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowRedirectUris) {
 		this();
@@ -97,6 +109,48 @@ public class SaClientModel implements Serializable {
 		this.contractScopes = contractScopes;
 		this.allowRedirectUris = allowRedirectUris;
 	}
+
+
+	// 追加方法
+
+	/**
+	 * @param scopes 添加应用签约的所有权限
+	 * @return 对象自身
+	 */
+	public SaClientModel addContractScopes(String... scopes) {
+		if(this.contractScopes == null) {
+			this.contractScopes = new ArrayList<>();
+		}
+		this.contractScopes.addAll(Arrays.asList(scopes));
+		return this;
+	}
+
+	/**
+	 * @param redirectUris 添加应用允许授权的所有 redirect_uri
+	 * @return 对象自身
+	 */
+	public SaClientModel addAllowRedirectUris(String... redirectUris) {
+		if(this.allowRedirectUris == null) {
+			this.allowRedirectUris = new ArrayList<>();
+		}
+		this.allowRedirectUris.addAll(Arrays.asList(redirectUris));
+		return this;
+	}
+
+	/**
+	 * @param grantTypes 应用允许的所有 grant_type
+	 * @return 对象自身
+	 */
+	public SaClientModel addAllowGrantTypes(String... grantTypes) {
+		if(this.allowGrantTypes == null) {
+			this.allowGrantTypes = new ArrayList<>();
+		}
+		this.allowGrantTypes.addAll(Arrays.asList(grantTypes));
+		return this;
+	}
+
+
+	// get set
 
 	/**
 	 * @return 应用id
@@ -297,7 +351,60 @@ public class SaClientModel implements Serializable {
 		this.isAutoConfirm = isAutoConfirm;
 		return this;
 	}
-	//
+
+	/**
+	 *  此应用单个用户最多同时存在的 Access-Token 数量
+	 * @return /
+	 */
+	public int getMaxAccessTokenCount() {
+		return maxAccessTokenCount;
+	}
+
+	/**
+	 * 设置  此应用单个用户最多同时存在的 Access-Token 数量
+	 * @param maxAccessTokenCount /
+	 * @return 对象自身
+	 */
+	public SaClientModel setMaxAccessTokenCount(int maxAccessTokenCount) {
+		this.maxAccessTokenCount = maxAccessTokenCount;
+		return this;
+	}
+
+	/**
+	 * 此应用单个用户最多同时存在的 Refresh-Token 数量
+	 * @return /
+	 */
+	public int getMaxRefreshTokenCount() {
+		return maxRefreshTokenCount;
+	}
+
+	/**
+	 * 此应用单个用户最多同时存在的 Refresh-Token 数量
+	 * @param maxRefreshTokenCount /
+	 * @return 对象自身
+	 */
+	public SaClientModel setMaxRefreshTokenCount(int maxRefreshTokenCount) {
+		this.maxRefreshTokenCount = maxRefreshTokenCount;
+		return this;
+	}
+
+	/**
+	 * 此应用单个用户最多同时存在的 Client-Token 数量
+	 * @return /
+	 */
+	public int getMaxClientTokenCount() {
+		return maxClientTokenCount;
+	}
+
+	/**
+	 * 此应用单个用户最多同时存在的 Client-Token 数量
+	 * @param maxClientTokenCount /
+	 * @return 对象自身
+	 */
+	public SaClientModel setMaxClientTokenCount(int maxClientTokenCount) {
+		this.maxClientTokenCount = maxClientTokenCount;
+		return this;
+	}
 
 	@Override
 	public String toString() {
@@ -314,47 +421,10 @@ public class SaClientModel implements Serializable {
 				", clientTokenTimeout=" + clientTokenTimeout +
 				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
 				", isAutoConfirm=" + isAutoConfirm +
+				", maxAccessTokenCount=" + maxAccessTokenCount +
+				", refreshTokenTimeout=" + refreshTokenTimeout +
+				", maxClientTokenCount=" + maxClientTokenCount +
 				'}';
 	}
-
-
-	// 追加方法
-
-	/**
-	 * @param scopes 添加应用签约的所有权限
-	 * @return 对象自身
-	 */
-	public SaClientModel addContractScopes(String... scopes) {
-		if(this.contractScopes == null) {
-			this.contractScopes = new ArrayList<>();
-		}
-		this.contractScopes.addAll(Arrays.asList(scopes));
-		return this;
-	}
-
-	/**
-	 * @param redirectUris 添加应用允许授权的所有 redirect_uri
-	 * @return 对象自身
-	 */
-	public SaClientModel addAllowRedirectUris(String... redirectUris) {
-		if(this.allowRedirectUris == null) {
-			this.allowRedirectUris = new ArrayList<>();
-		}
-		this.allowRedirectUris.addAll(Arrays.asList(redirectUris));
-		return this;
-	}
-
-	/**
-	 * @param grantTypes 应用允许的所有 grant_type
-	 * @return 对象自身
-	 */
-	public SaClientModel addAllowGrantTypes(String... grantTypes) {
-		if(this.allowGrantTypes == null) {
-			this.allowGrantTypes = new ArrayList<>();
-		}
-		this.allowGrantTypes.addAll(Arrays.asList(grantTypes));
-		return this;
-	}
-
 
 }

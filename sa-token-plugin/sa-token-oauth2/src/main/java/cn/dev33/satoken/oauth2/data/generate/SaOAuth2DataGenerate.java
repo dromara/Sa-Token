@@ -39,7 +39,7 @@ public interface SaOAuth2DataGenerate {
     CodeModel generateCode(RequestAuthModel ra);
 
     /**
-     * 构建Model：Access-Token
+     * 构建Model：Access-Token (根据 code 授权码)
      * @param code 授权码Model
      * @return AccessToken Model
      */

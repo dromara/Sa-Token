@@ -16,12 +16,14 @@ import java.util.List;
 @Component
 public class SaClientMockDao {
 
-    public List<SaClientModel> list = new ArrayList<>();
+    public List<SaClientModel> list;
 
     /**
      * 构造方法，添加三个模拟应用
      */
-    public SaClientMockDao(){
+    public void init(){
+        list = new ArrayList<>();
+
         // 模拟应用1
         SaClientModel client1 = new SaClientModel()
                 .setClientId("1001")    // client id
@@ -77,6 +79,9 @@ public class SaClientMockDao {
      * @return 应用对象
      */
     public SaClientModel getClientModel(String clientId) {
+        if(list == null) {
+            init();
+        }
         return list.stream()
                 .filter(e -> e.getClientId().equals(clientId))
                 .findFirst()

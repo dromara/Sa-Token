@@ -62,6 +62,15 @@ public class SaOAuth2ServerConfig implements Serializable {
 	/** Lower-Client-Token 保存的时间(单位：秒) 默认为 -1，代表延续 Client-Token 有效期 */
 	public long lowerClientTokenTimeout = -1;
 
+	/** 全局默认配置所有应用：单个应用单个用户最多同时存在的 Access-Token 数量 */
+	public int maxAccessTokenCount = 12;
+
+	/** 全局默认配置所有应用：单个应用单个用户最多同时存在的 Refresh-Token 数量 */
+	public int maxRefreshTokenCount = 12;
+
+	/** 全局默认配置所有应用：单个应用最多同时存在的 Client-Token 数量 */
+	public int maxClientTokenCount = 12;
+
 	/** 默认 openid 生成算法中使用的摘要前缀 */
 	public String openidDigestPrefix = SaOAuth2Consts.OPENID_DEFAULT_DIGEST_PREFIX;
 
@@ -265,6 +274,58 @@ public class SaOAuth2ServerConfig implements Serializable {
 	}
 
 	/**
+	 * @return maxAccessTokenCount
+	 */
+	public int getMaxAccessTokenCount() {
+		return maxAccessTokenCount;
+	}
+
+	/**
+	 * @param maxAccessTokenCount 要设置的 maxAccessTokenCount
+	 * @return 对象自身
+	 */
+	public SaOAuth2ServerConfig setMaxAccessTokenCount(int maxAccessTokenCount) {
+		this.maxAccessTokenCount = maxAccessTokenCount;
+		return this;
+	}
+
+	/**
+	 * 全局默认配置所有应用：单个应用单个用户最多同时存在的 Refresh-Token 数量
+	 * @return /
+	 */
+	public int getMaxRefreshTokenCount() {
+		return maxRefreshTokenCount;
+	}
+
+	/**
+	 * 全局默认配置所有应用：单个应用单个用户最多同时存在的 Refresh-Token 数量
+	 * @param maxRefreshTokenCount /
+	 * @return 对象自身
+	 */
+	public SaOAuth2ServerConfig setMaxRefreshTokenCount(int maxRefreshTokenCount) {
+		this.maxRefreshTokenCount = maxRefreshTokenCount;
+		return this;
+	}
+
+	/**
+	 * 全局默认配置所有应用：单个应用单个用户最多同时存在的 Client-Token 数量
+	 * @return /
+	 */
+	public int getMaxClientTokenCount() {
+		return maxClientTokenCount;
+	}
+
+	/**
+	 * 全局默认配置所有应用：单个应用单个用户最多同时存在的 Client-Token 数量
+	 * @param maxClientTokenCount /
+	 * @return 对象自身
+	 */
+	public SaOAuth2ServerConfig setMaxClientTokenCount(int maxClientTokenCount) {
+		this.maxClientTokenCount = maxClientTokenCount;
+		return this;
+	}
+
+	/**
 	 * @return openidDigestPrefix
 	 */
 	public String getOpenidDigestPrefix() {
@@ -416,6 +477,9 @@ public class SaOAuth2ServerConfig implements Serializable {
 				", refreshTokenTimeout=" + refreshTokenTimeout +
 				", clientTokenTimeout=" + clientTokenTimeout +
 				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
+				", maxAccessTokenCount=" + maxAccessTokenCount +
+				", maxRefreshTokenCount=" + maxRefreshTokenCount +
+				", maxClientTokenCount=" + maxClientTokenCount +
 				", openidDigestPrefix='" + openidDigestPrefix +
 				", unionidDigestPrefix='" + unionidDigestPrefix +
 				", higherScope='" + higherScope +

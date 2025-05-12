@@ -74,7 +74,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     }
 
     /**
-     * 构建Model：Access-Token
+     * 构建Model：Access-Token (根据 code 授权码)
      * @param code 授权码
      * @return AccessToken Model
      */
@@ -88,9 +88,9 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         CodeModel cm = dao.getCode(code);
         SaOAuth2AuthorizationCodeException.throwBy(cm == null, "无效 code: " + code, code, SaOAuth2ErrorCode.CODE_30110);
 
-        // 2、删除旧Token
-        dao.deleteAccessToken(dao.getAccessTokenValue(cm.clientId, cm.loginId));
-        dao.deleteRefreshToken(dao.getRefreshTokenValue(cm.clientId, cm.loginId));
+        // 2、删除旧Token，TODO 目测不用删，保存索引的时候如果超出了会自动删
+//        dao.deleteAccessToken(dao.getAccessTokenList(cm.clientId, cm.loginId));
+//        dao.deleteRefreshToken(dao.getRefreshTokenValue(cm.clientId, cm.loginId));
 
         // 3、生成token
         AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm);
@@ -100,10 +100,11 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         at.refreshExpiresTime = rt.expiresTime;
 
         // 4、保存token
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
         dao.saveAccessToken(at);
-        dao.saveAccessTokenIndex(at);
+        dao.saveAccessTokenIndex(at, clientModel.getMaxAccessTokenCount());
         dao.saveRefreshToken(rt);
-        dao.saveRefreshTokenIndex(rt);
+        dao.saveRefreshTokenIndex(rt, clientModel.getMaxRefreshTokenCount());
 
         // 5、删除此Code
         dao.deleteCode(code);
@@ -131,16 +132,16 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
         if(clientModel.getIsNewRefresh()) {
             // 删除旧 Refresh-Token
-            dao.deleteRefreshToken(rt.refreshToken);
+//            dao.deleteRefreshToken(rt.refreshToken);
 
             // 创建并保存新的 Refresh-Token
             rt = SaOAuth2Manager.getDataConverter().convertRefreshTokenToRefreshToken(rt);
             dao.saveRefreshToken(rt);
-            dao.saveRefreshTokenIndex(rt);
+            dao.saveRefreshTokenIndex(rt, clientModel.getMaxRefreshTokenCount());
         }
 
         // 删除旧 Access-Token
-        dao.deleteAccessToken(dao.getAccessTokenValue(rt.clientId, rt.loginId));
+//        dao.deleteAccessToken(dao.getAccessTokenList(rt.clientId, rt.loginId));
 
         // 生成新 Access-Token
         AccessTokenModel at = SaOAuth2Manager.getDataConverter().convertRefreshTokenToAccessToken(rt);
@@ -148,7 +149,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 保存新 Access-Token
         dao.saveAccessToken(at);
-        dao.saveAccessTokenIndex(at);
+        dao.saveAccessTokenIndex(at, clientModel.getMaxAccessTokenCount());
 
         // 返回新 Access-Token
         return at;
@@ -168,10 +169,10 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
         // 1、删除 旧Token
-        dao.deleteAccessToken(dao.getAccessTokenValue(ra.clientId, ra.loginId));
-        if(isCreateRt) {
-            dao.deleteRefreshToken(dao.getRefreshTokenValue(ra.clientId, ra.loginId));
-        }
+//        dao.deleteAccessToken(dao.getAccessTokenList(ra.clientId, ra.loginId));
+//        if(isCreateRt) {
+//            dao.deleteRefreshToken(dao.getRefreshTokenValue(ra.clientId, ra.loginId));
+//        }
 
         // 2、生成 新Access-Token
         String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
@@ -195,12 +196,12 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
             at.refreshExpiresTime = rt.expiresTime;
 
             dao.saveRefreshToken(rt);
-            dao.saveRefreshTokenIndex(rt);
+            dao.saveRefreshTokenIndex(rt, clientModel.getMaxRefreshTokenCount());
         }
 
         // 5、保存 新Access-Token
         dao.saveAccessToken(at);
-        dao.saveAccessTokenIndex(at);
+        dao.saveAccessTokenIndex(at, clientModel.getMaxAccessTokenCount());
 
         // 6、返回 新Access-Token
         return at;
@@ -218,18 +219,18 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
         // 1、删掉旧 Lower-Client-Token
-        dao.deleteClientToken(dao.getLowerClientTokenValue(clientId));
+//        dao.deleteClientToken(dao.getLowerClientTokenValue(clientId));
 
         // 2、将旧Client-Token 标记为新 Lower-Client-Token
-        ClientTokenModel oldCt = dao.getClientToken(dao.getClientTokenValue(clientId));
-        dao.saveLowerClientTokenIndex(oldCt);
+//        ClientTokenModel oldCt = dao.getClientToken(dao.getClientTokenValue(clientId));
+//        dao.saveLowerClientTokenIndex(oldCt);
 
         // 2.5、如果配置了 Lower-Client-Token 的 ttl ，则需要更新一下
         SaClientModel cm = SaOAuth2Manager.getDataLoader().getClientModelNotNull(clientId);
-        if(oldCt != null && cm.getLowerClientTokenTimeout() != -1) {
-            oldCt.expiresTime = System.currentTimeMillis() + (cm.getLowerClientTokenTimeout() * 1000);
-            dao.saveClientToken(oldCt);
-        }
+//        if(oldCt != null && cm.getLowerClientTokenTimeout() != -1) {
+//            oldCt.expiresTime = System.currentTimeMillis() + (cm.getLowerClientTokenTimeout() * 1000);
+//            dao.saveClientToken(oldCt);
+//        }
 
         // 3、生成新 Client-Token
         String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientId, scopes);
@@ -242,7 +243,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         // 3、保存新Client-Token
         dao.saveClientToken(ct);
-        dao.saveClientTokenIndex(ct);
+        dao.saveClientTokenIndex(ct, cm.getMaxClientTokenCount());
 
         // 4、返回
         return ct;

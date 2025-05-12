@@ -181,13 +181,13 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 获取 Access-Token，根据索引： clientId、loginId
+	 * 获取 Access-Token 列表：此应用下 对 某个用户 签发的所有 Access-token
 	 * @param clientId /
 	 * @param loginId /
 	 * @return /
 	 */
-	public static String getAccessTokenValue(String clientId, Object loginId) {
-		return SaOAuth2Manager.getTemplate().getAccessTokenValue(clientId, loginId);
+	public static List<String> getAccessTokenValueList(String clientId, Object loginId) {
+		return SaOAuth2Manager.getTemplate().getAccessTokenValueList(clientId, loginId);
 	}
 
 	/**
@@ -227,7 +227,7 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收 Access-Token
+	 * 回收一个 Access-Token
 	 * @param accessToken Access-Token值
 	 */
 	public static void revokeAccessToken(String accessToken) {
@@ -235,7 +235,7 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收 Access-Token，根据索引： clientId、loginId
+	 * 回收全部 Access-Token：指定应用下 指定用户 的全部 Access-Token
 	 * @param clientId /
 	 * @param loginId /
 	 */
@@ -265,17 +265,19 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 获取 Refresh-Token，根据索引： clientId、loginId
+	 * 获取 Refresh-Token 列表：此应用下 对 某个用户 签发的所有 Refresh-Token
+	 *
 	 * @param clientId /
 	 * @param loginId /
 	 * @return /
 	 */
-	public static String getRefreshTokenValue(String clientId, Object loginId) {
-		return SaOAuth2Manager.getTemplate().getRefreshTokenValue(clientId, loginId);
+	public static List<String> getRefreshTokenValueList(String clientId, Object loginId) {
+		return SaOAuth2Manager.getTemplate().getRefreshTokenValueList(clientId, loginId);
 	}
 
 	/**
-	 * 回收 Refresh-Token
+	 * 回收一个 Refresh-Token
+	 *
 	 * @param refreshToken Refresh-Token 值
 	 */
 	public static void revokeRefreshToken(String refreshToken) {
@@ -283,7 +285,7 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收 Refresh-Token，根据索引： clientId、loginId
+	 * 回收全部 Refresh-Token：指定应用下 指定用户 的全部 Refresh-Token
 	 * @param clientId /
 	 * @param loginId /
 	 */
@@ -322,12 +324,13 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 获取 ClientToken，根据索引： clientId
+	 * 获取 Client-Token 列表：此应用下 对 某个用户 签发的所有 Client-token
+	 *
 	 * @param clientId /
 	 * @return /
 	 */
-	public static String getClientTokenValue(String clientId) {
-		return SaOAuth2Manager.getTemplate().getClientTokenValue(clientId);
+	public static List<String> getClientTokenValueList(String clientId) {
+		return SaOAuth2Manager.getTemplate().getClientTokenValueList(clientId);
 	}
 
 	/**
@@ -349,7 +352,7 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收 ClientToken
+	 * 回收一个 ClientToken
 	 *
 	 * @param clientToken /
 	 */
@@ -358,21 +361,12 @@ public class SaOAuth2Util {
 	}
 
 	/**
-	 * 回收 ClientToken，根据索引： clientId
+	 * 回收全部 Client-Token：指定应用下的全部 Client-Token
 	 *
 	 * @param clientId /
 	 */
 	public static void revokeClientTokenByIndex(String clientId) {
 		SaOAuth2Manager.getTemplate().revokeClientTokenByIndex(clientId);
-	}
-
-	/**
-	 * 回收 Lower-Client-Token，根据索引： clientId
-	 *
-	 * @param clientId /
-	 */
-	public static void revokeLowerClientTokenByIndex(String clientId) {
-		SaOAuth2Manager.getTemplate().revokeLowerClientTokenByIndex(clientId);
 	}
 
 }
