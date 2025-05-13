@@ -1,4 +1,4 @@
-//package com.pj.oauth2.custom;
+//package com.pj.oauth2.custom_grant_type;
 //
 //import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 //import cn.dev33.satoken.oauth2.granttype.handler.PasswordGrantTypeHandler;

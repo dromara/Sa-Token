@@ -227,9 +227,9 @@ http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=10
 
 2、由于首次访问，我们在OAuth-Server端暂未登录，会被转发到登录视图 
 
-![sa-oauth2-server-login-view](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-server-login-view.png 's-w-sh')
+![sa-oauth2-server-login-view](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-server-login-view--v43.png 's-w-sh')
 
-3、点击doLogin进行登录之后刷新页面，会提示我们确认授权
+3、输入 `sa/123456` 进行登录之后，会提示我们确认授权
 ![sa-oauth2-server-scope](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-server-scope.png 's-w-sh')
 
 4、点击同意授权之后，我们会被重定向至 redirect_uri 页面，并携带了code参数 

@@ -33,6 +33,9 @@ SaOAuth2Util.checkRedirectUri(clientId, url);
 
 // 判断：指定 loginId 是否对一个 Client 授权给了指定 Scope
 SaOAuth2Util.isGrantScope(loginId, clientId, scopes);
+
+// 删除：指定 loginId 针对指定 Client 的授权信息
+SaOAuth2Util.deleteGrantScope(loginId, clientId);
 ```
 
 
@@ -57,8 +60,8 @@ SaOAuth2Util.getAccessToken(accessToken);
 // 校验 Access-Token，成功返回 AccessTokenModel，失败则抛出异常
 SaOAuth2Util.checkAccessToken(accessToken);
 
-// 获取 Access-Token，根据索引： clientId、loginId
-SaOAuth2Util.getAccessTokenValue(clientId, loginId);
+// 获取 Access-Token 列表：此应用下 对 某个用户 签发的所有 Access-token
+SaOAuth2Util.getAccessTokenValueList(clientId, loginId);
 
 // 判断：指定 Access-Token 是否具有指定 Scope 列表，返回 true 或 false
 SaOAuth2Util.hasAccessTokenScope(accessToken, ...scopes);
@@ -72,10 +75,10 @@ SaOAuth2Util.getLoginIdByAccessToken(accessToken);
 // 获取 Access-Token 所代表的 clientId
 SaOAuth2Util.getClientIdByAccessToken(accessToken);
 
-// 回收 Access-Token
+// 回收一个 Access-Token
 SaOAuth2Util.revokeAccessToken(accessToken);
 
-// 回收 Access-Token，根据索引： clientId、loginId
+// 回收全部 Access-Token：指定应用下 指定用户 的全部 Access-Token
 SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);
 ```
 
@@ -88,8 +91,14 @@ SaOAuth2Util.getRefreshToken(refreshToken);
 // 校验 Refresh-Token，成功返回 RefreshTokenModel，失败则抛出异常
 SaOAuth2Util.checkRefreshToken(refreshToken);
 
-// 获取 Refresh-Token，根据索引： clientId、loginId
-SaOAuth2Util.getRefreshTokenValue(clientId, Object loginId);
+// 获取 Refresh-Token 列表：此应用下 对 某个用户 签发的所有 Refresh-Token
+SaOAuth2Util.getRefreshTokenValueList(clientId, loginId);
+
+// 回收一个 Refresh-Token
+SaOAuth2Util.revokeRefreshToken(refreshToken);
+
+// 回收全部 Refresh-Token：指定应用下 指定用户 的全部 Refresh-Token
+SaOAuth2Util.revokeRefreshTokenByIndex(clientId, loginId);
 
 // 根据 RefreshToken 刷新出一个 AccessToken
 SaOAuth2Util.refreshAccessToken(refreshToken);
@@ -105,8 +114,8 @@ SaOAuth2Util.getClientToken(clientToken);
 // 校验 Client-Token，成功返回 ClientTokenModel，失败则抛出异常
 SaOAuth2Util.checkClientToken(clientToken);
 
-// 获取 ClientToken，根据索引： clientId
-SaOAuth2Util.getClientTokenValue(clientId);
+// 获取 Client-Token 列表：此应用下 对 某个用户 签发的所有 Client-token
+SaOAuth2Util.getClientTokenValueList(clientId);
 
 // 判断：指定 Client-Token 是否具有指定 Scope 列表，返回 true 或 false
 SaOAuth2Util.hasClientTokenScope(clientToken, ...scopes);
@@ -114,14 +123,11 @@ SaOAuth2Util.hasClientTokenScope(clientToken, ...scopes);
 // 校验：指定 Client-Token 是否具有指定 Scope 列表，如果不具备则抛出异常
 SaOAuth2Util.checkClientTokenScope(clientToken, ...scopes);
 
-// 回收 ClientToken
+// 回收一个 ClientToken
 SaOAuth2Util.revokeClientToken(clientToken);
 
-// 回收 ClientToken，根据索引： clientId
+// 回收全部 Client-Token：指定应用下的全部 Client-Token
 SaOAuth2Util.revokeClientTokenByIndex(clientId);
-
-// 回收 Lower-ClientToken，根据索引： clientId
-SaOAuth2Util.revokeLowerClientTokenByIndex(clientId);
 ```
 
 --- 

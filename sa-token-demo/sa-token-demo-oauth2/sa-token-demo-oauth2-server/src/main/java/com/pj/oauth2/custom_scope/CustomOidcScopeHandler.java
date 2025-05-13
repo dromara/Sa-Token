@@ -1,4 +1,4 @@
-//package com.pj.oauth2.custom;
+//package com.pj.oauth2.custom_scope;
 //
 //import cn.dev33.satoken.oauth2.data.model.oidc.IdTokenModel;
 //import cn.dev33.satoken.oauth2.scope.handler.OidcScopeHandler;

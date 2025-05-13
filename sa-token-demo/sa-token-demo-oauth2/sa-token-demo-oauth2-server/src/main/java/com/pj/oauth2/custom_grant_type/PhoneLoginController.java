@@ -1,4 +1,4 @@
-//package com.pj.oauth2.custom;
+//package com.pj.oauth2.custom_grant_type;
 //
 //import cn.dev33.satoken.SaManager;
 //import cn.dev33.satoken.util.SaFoxUtil;

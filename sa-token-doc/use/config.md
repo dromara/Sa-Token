@@ -424,25 +424,31 @@ sa-token.sso-server.clients.sso-client2.secret-key=SSO-C2-kQwIOrYvnXmSDkwEiFngrK
 
 
 ### 4、OAuth2.0相关配置 
+
+#### 4.1、OAuth2-Server 相关配置
+
 | 参数名称					| 类型		| 默认值	| 说明																		|
 | :--------					| :--------	| :--------	| :--------																	|
 | enableAuthorizationCode	| Boolean	| true		| 是否打开模式：授权码（`Authorization Code`）								|
 | enableImplicit			| Boolean	| true		| 是否打开模式：隐藏式（`Implicit`）											|
 | enablePassword			| Boolean	| true		| 是否打开模式：密码式（`Password`）											|
 | enableClientCredentials	| Boolean	| true		| 是否打开模式：凭证式（`Client Credentials`）								|
-| isNewRefresh				| Boolean	| false		| 是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 `Refresh-Token`	|
 | codeTimeout				| long		| 300		| Code授权码 保存的时间（单位：秒） 默认五分钟									|
-| accessTokenTimeout		| long		| 7200		| `Access-Token` 保存的时间（单位：秒）默认两个小时								|
-| refreshTokenTimeout		| long		| 2592000	| `Refresh-Token` 保存的时间（单位：秒） 默认30 天								|
-| clientTokenTimeout		| long		| 7200		| `Client-Token` 保存的时间（单位：秒） 默认两个小时								|
-| lowerClientTokenTimeout	| long		| 7200		| `Lower-Client-Token` 保存的时间（单位：秒） ，默认为-1，代表延续 `Client-Token` 的有效时间 	|
+| accessTokenTimeout		| long		| 7200		| 全局默认配置所有应用：`Access-Token` 保存的时间（单位：秒）默认两个小时								|
+| refreshTokenTimeout		| long		| 2592000	| 全局默认配置所有应用：`Refresh-Token` 保存的时间（单位：秒） 默认30 天								|
+| clientTokenTimeout		| long		| 7200		| 全局默认配置所有应用：`Client-Token` 保存的时间（单位：秒） 默认两个小时								|
+| maxAccessTokenCount		| int		| 12		| 全局默认配置所有应用：单个应用单个用户最多同时存在的 Access-Token 数量				|
+| maxRefreshTokenCount		| int		| 12		| 全局默认配置所有应用：单个应用单个用户最多同时存在的 Refresh-Token 数量			|
+| maxClientTokenCount		| int		| 12		| 全局默认配置所有应用：单个应用最多同时存在的 Client-Token 数量			|
+| isNewRefresh				| Boolean	| false		| 全局默认配置所有应用：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 `Refresh-Token`	|
 | openidDigestPrefix		| String	| openid_default_digest_prefix		| 默认 openid 生成算法中使用的摘要前缀				 	|
 | unionidDigestPrefix		| String	| unionid_default_digest_prefix		| 默认 unionid 生成算法中使用的摘要前缀				 	|
 | higherScope				| String	| 		| 指定高级权限，多个用逗号隔开				 	|
 | lowerScope				| String	| 		| 指定低级权限，多个用逗号隔开				 	|
 | mode4ReturnAccessToken	| Boolean	| false	| 模式4是否返回 AccessToken 字段，用于兼容OAuth2标准协议			 	|
 | hideStatusField			| Boolean	| false	| 是否在返回值中隐藏默认的状态字段 (code、msg、data)			 	|
-| oidc		| SaOAuth2OidcConfig	| new SaOAuth2OidcConfig()	| OIDC 相关配置			 	|
+| oidc						| SaOAuth2OidcConfig	| new SaOAuth2OidcConfig()	| OIDC 相关配置			 	|
+| clients					| Map<String, SaClientModel>	| 配置 SaClientModel 列表信息			 	|
 
 配置示例：
 <!---------------------------- tabs:start ---------------------------->
@@ -471,7 +477,7 @@ sa-token.oauth2-server.enable-client-credentials=true
 <!---------------------------- tabs:end ---------------------------->
 
 
-##### OIDC 相关配置
+#### 4.2、OIDC 相关配置
 | 参数名称					| 类型		| 默认值	| 说明																			|
 | :--------					| :--------	| :--------	| :--------																	|
 | iss						| String	| 			| iss 值，如不配置则自动计算													|
@@ -496,19 +502,25 @@ sa-token.oauth2-server.oidc.idTokenTimeout=600
 
 
 
-##### SaClientModel属性定义
+#### 4.3、SaClientModel属性定义
 | 参数名称				| 类型			| 默认值	| 说明													|
 | :--------				| :--------		| :--------	| :--------											|
 | clientId				| String		| null		| 应用id，应该全局唯一								|
 | clientSecret			| String		| null		| 应用秘钥											|
-| contractScopes		| List<String>	| null		| 应用签约的所有权限 									|
-| allowRedirectUris		| List<String>	| null		| 应用允许授权的所有URL（可以使用 `*` 号通配符）			|
-| allowGrantTypes		| List<String>	| new ArrayList<>()	| 应用允许的所有 `grant_type`							|
-| isNewRefresh			| Boolean		| 取全局配置		| 单独配置此Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
-| accessTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
-| refreshTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
-| clientTokenTimeout	| long			| 取全局配置		| 单独配置此Client：`Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
-|lowerClientTokenTimeout	| long		| 取全局配置		| 单独配置此Client：`Lower-Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| contractScopes		| List<String>	| []		| 应用签约的所有权限 									|
+| allowRedirectUris		| List<String>	| []		| 应用允许授权的所有URL（可以使用 `*` 号通配符）			|
+| allowGrantTypes		| List<String>	| []		| 应用允许的所有 `grant_type`							|
+| subjectId				| String		| null		| 应用主体id							|
+| accessTokenTimeout	| long			| 取全局配置 (7200)	| 此应用`Access-Token` 保存的时间（单位：秒）  [默认取全局配置]	|
+| refreshTokenTimeout	| long			| 取全局配置 (2592000)| 此应用`Refresh-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| clientTokenTimeout	| Boolean		| 取全局配置 (7200)| 此应用`Client-Token` 保存的时间（单位：秒） [默认取全局配置]	|
+| maxAccessTokenCount	| long			| 取全局配置 (12)| 此应用单个用户最多同时存在的 Access-Token 数量	|
+| maxRefreshTokenCount	| long			| 取全局配置 (12)| 此应用单个用户最多同时存在的 Refresh-Token 数量	|
+| maxClientTokenCount	| long			| 取全局配置 (12)| 此应用最多同时存在的 Client-Token 数量	|
+| isNewRefresh			| Boolean		| 取全局配置		| 单独配置此 Client：是否在每次 `Refresh-Token` 刷新 `Access-Token` 时，产生一个新的 Refresh-Token [ 默认取全局配置 ]	|
+| isAutoConfirm			| Boolean		| false		| 是否允许此应用自动确认授权 <span style="color: red;">（高危配置，禁止向不被信任的第三方开启此选项）</span>	|
+
+
 
 
 

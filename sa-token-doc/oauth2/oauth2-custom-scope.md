@@ -96,14 +96,19 @@ http://sa-oauth-server.com:8000/oauth2/userinfo?access_token=${access_token}
 在 oauth2-server 新建 `UserinfoScopeHandler.java` 实现 `SaOAuth2ScopeHandlerInterface` 接口：
 
 ``` java
+/**
+ *  自定义 userinfo scope 处理器 
+ */
 @Component
 public class UserinfoScopeHandler implements SaOAuth2ScopeHandlerInterface {
 
+    // 指示当前处理器所要处理的 scope 
     @Override
     public String getHandlerScope() {
         return "userinfo";
     }
 
+    // 当构建的 AccessToken 具有此权限时，所需要执行的方法
     @Override
     public void workAccessToken(AccessTokenModel at) {
         System.out.println("--------- userinfo 权限，加工 AccessTokenModel --------- ");
@@ -118,10 +123,18 @@ public class UserinfoScopeHandler implements SaOAuth2ScopeHandlerInterface {
         at.extraData.putAll(map);
     }
 
+    // 当构建的 ClientToken 具有此权限时，所需要执行的方法
     @Override
     public void workClientToken(ClientTokenModel ct) {
     }
 
+    // 当使用 RefreshToken 刷新 AccessToken 时，是否重新执行 workAccessToken 构建方法
+	// 在一些实时性较高的数据中需要指定为 true 
+    @Override
+    public boolean refreshAccessTokenIsWork() {
+        return true;
+    }
+    
 }
 ```
 

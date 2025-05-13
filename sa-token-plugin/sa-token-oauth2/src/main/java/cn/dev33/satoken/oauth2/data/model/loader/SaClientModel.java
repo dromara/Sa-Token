@@ -45,12 +45,12 @@ public class SaClientModel implements Serializable {
 	/**
 	 * 应用签约的所有权限
 	 */
-	public List<String> contractScopes;
+	public List<String> contractScopes = new ArrayList<>();
 	
 	/**
 	 * 应用允许授权的所有 redirect_uri
 	 */
-	public List<String> allowRedirectUris;
+	public List<String> allowRedirectUris = new ArrayList<>();
 
 	/**
 	 * 应用允许的所有 grant_type
@@ -62,23 +62,14 @@ public class SaClientModel implements Serializable {
 	 */
 	public String subjectId;
 
-	/** 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
-	public Boolean isNewRefresh;
-
-	/** 单独配置此Client：Access-Token 保存的时间(单位秒)  [默认取全局配置] */
+	/** 此应用 Access-Token 保存的时间(单位秒)  [默认取全局配置] */
 	public long accessTokenTimeout;
 
-	/** 单独配置此Client：Refresh-Token 保存的时间(单位秒) [默认取全局配置] */
+	/** 此应用 Refresh-Token 保存的时间(单位秒) [默认取全局配置] */
 	public long refreshTokenTimeout;
 
-	/** 单独配置此Client：Client-Token 保存的时间(单位秒) [默认取全局配置] */
+	/** 此应用 Client-Token 保存的时间(单位秒) [默认取全局配置] */
 	public long clientTokenTimeout;
-
-	/** 单独配置此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置] */
-	public long lowerClientTokenTimeout;
-
-	/** 是否允许此应用自动确认授权（高危配置，禁止向不被信任的第三方开启此选项） */
-	public Boolean isAutoConfirm = false;
 
 	/** 此应用单个用户最多同时存在的 Access-Token 数量 */
 	public int maxAccessTokenCount;
@@ -88,6 +79,12 @@ public class SaClientModel implements Serializable {
 
 	/** 此应用最多同时存在的 Client-Token 数量 */
 	public int maxClientTokenCount;
+
+	/** 此应用 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置] */
+	public Boolean isNewRefresh;
+
+	/** 是否允许此应用自动确认授权（高危配置，禁止向不被信任的第三方开启此选项） */
+	public Boolean isAutoConfirm = false;
 
 	
 	public SaClientModel() {
@@ -244,14 +241,14 @@ public class SaClientModel implements Serializable {
 	}
 
 	/**
-	 * @return 此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
+	 * @return 此应用 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
 	 */
 	public Boolean getIsNewRefresh() {
 		return isNewRefresh;
 	}
 	
 	/**
-	 * @param isNewRefresh 单独配置此Client：是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
+	 * @param isNewRefresh 此应用 是否在每次 Refresh-Token 刷新 Access-Token 时，产生一个新的 Refresh-Token [默认取全局配置]
 	 * @return 对象自身 
 	 */
 	public SaClientModel setIsNewRefresh(Boolean isNewRefresh) {
@@ -260,14 +257,14 @@ public class SaClientModel implements Serializable {
 	}
 	
 	/**
-	 * @return 此Client：Access-Token 保存的时间(单位秒)  [默认取全局配置]
+	 * @return 此应用 Access-Token 保存的时间(单位秒)  [默认取全局配置]
 	 */
 	public long getAccessTokenTimeout() {
 		return accessTokenTimeout;
 	}
 	
 	/**
-	 * @param accessTokenTimeout 单独配置此Client：Access-Token 保存的时间(单位秒)  [默认取全局配置]
+	 * @param accessTokenTimeout 此应用 Access-Token 保存的时间(单位秒)  [默认取全局配置]
 	 * @return 对象自身 
 	 */
 	public SaClientModel setAccessTokenTimeout(long accessTokenTimeout) {
@@ -276,14 +273,14 @@ public class SaClientModel implements Serializable {
 	}
 	
 	/**
-	 * @return 此Client：Refresh-Token 保存的时间(单位秒) [默认取全局配置]
+	 * @return 此应用 Refresh-Token 保存的时间(单位秒) [默认取全局配置]
 	 */
 	public long getRefreshTokenTimeout() {
 		return refreshTokenTimeout;
 	}
 	
 	/**
-	 * @param refreshTokenTimeout 单独配置此Client：Refresh-Token 保存的时间(单位秒) [默认取全局配置]
+	 * @param refreshTokenTimeout 此应用 Refresh-Token 保存的时间(单位秒) [默认取全局配置]
 	 * @return 对象自身 
 	 */
 	public SaClientModel setRefreshTokenTimeout(long refreshTokenTimeout) {
@@ -292,34 +289,18 @@ public class SaClientModel implements Serializable {
 	}
 	
 	/**
-	 * @return 此Client：Client-Token 保存的时间(单位秒) [默认取全局配置]
+	 * @return 此应用 Client-Token 保存的时间(单位秒) [默认取全局配置]
 	 */
 	public long getClientTokenTimeout() {
 		return clientTokenTimeout;
 	}
 	
 	/**
-	 * @param clientTokenTimeout 单独配置此Client：Client-Token 保存的时间(单位秒) [默认取全局配置]
+	 * @param clientTokenTimeout 此应用 Client-Token 保存的时间(单位秒) [默认取全局配置]
 	 * @return 对象自身 
 	 */
 	public SaClientModel setClientTokenTimeout(long clientTokenTimeout) {
 		this.clientTokenTimeout = clientTokenTimeout;
-		return this;
-	}
-	
-	/**
-	 * @return 此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置]
-	 */
-	public long getLowerClientTokenTimeout() {
-		return lowerClientTokenTimeout;
-	}
-	
-	/**
-	 * @param lowerClientTokenTimeout 单独配置此Client：Lower-Client-Token 保存的时间(单位：秒) [默认取全局配置]
-	 * @return 对象自身 
-	 */
-	public SaClientModel setLowerClientTokenTimeout(long lowerClientTokenTimeout) {
-		this.lowerClientTokenTimeout = lowerClientTokenTimeout;
 		return this;
 	}
 
@@ -410,7 +391,6 @@ public class SaClientModel implements Serializable {
 				", accessTokenTimeout=" + accessTokenTimeout +
 				", refreshTokenTimeout=" + refreshTokenTimeout +
 				", clientTokenTimeout=" + clientTokenTimeout +
-				", lowerClientTokenTimeout=" + lowerClientTokenTimeout +
 				", isAutoConfirm=" + isAutoConfirm +
 				", maxAccessTokenCount=" + maxAccessTokenCount +
 				", refreshTokenTimeout=" + refreshTokenTimeout +
