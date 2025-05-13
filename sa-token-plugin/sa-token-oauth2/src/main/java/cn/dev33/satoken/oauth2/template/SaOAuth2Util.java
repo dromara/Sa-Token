@@ -128,6 +128,15 @@ public class SaOAuth2Util {
 		return SaOAuth2Manager.getTemplate().isGrantScope(loginId, clientId, scopes);
 	}
 
+	/**
+	 * 删除：指定 loginId 针对指定 Client 的授权信息
+	 * @param loginId 账号id
+	 * @param clientId 应用id
+	 */
+	public static void deleteGrantScope(Object loginId, String clientId) {
+		SaOAuth2Manager.getTemplate().deleteGrantScope(loginId, clientId);
+	}
+
 
 	// ----------------- Code 相关 -----------------
 

@@ -27,23 +27,26 @@ import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.raw.SaRawSessionDelegator;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTtlMethods;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static cn.dev33.satoken.oauth2.template.SaOAuth2Util.checkClientModel;
 
 /**
- * Sa-Token OAuth2 数据持久层
+ * Sa-Token OAuth2 数据持久层 (在 SaTokenDao 之上再封装一层，方便 OAuth2 模块整体的数据读写操作)
  *
  * @author click33
  * @since 1.39.0
  */
-public class SaOAuth2Dao {
+public class SaOAuth2Dao implements SaTtlMethods {
 
 	// ------------------- 索引操作公共代码
 
 	/**
-	 * Raw Session 读写委托
+	 * Raw Session 读写委托 (存储 Access-Token、Refresh-Token、Client-Token 索引)
 	 */
 	public SaRawSessionDelegator oauth2RSD = new SaRawSessionDelegator("oauth2");
 
@@ -63,10 +66,11 @@ public class SaOAuth2Dao {
 	public static final String CLIENT_TOKEN_MAP = "__HD_CLIENT_TOKEN_MAP";
 
 	/**
-	 * 获取 Access-Token 索引 RawSession
+	 * 获取：保存 Access-Token 索引时使用的 RawSession
+	 *
 	 * @param clientId 应用 id
 	 * @param loginId 账号 id
-	 * @param isCreate 如果尚未创建，是否理解创建
+	 * @param isCreate 如果尚未创建，是否立即创建
 	 * @return /
 	 */
 	protected SaSession getRawSessionByAccessToken(String clientId, Object loginId, boolean isCreate) {
@@ -75,10 +79,11 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取 refresh_token 索引 RawSession
+	 * 获取：保存 Refresh-Token 索引时使用的 RawSession
+	 *
 	 * @param clientId 应用 id
 	 * @param loginId 账号 id
-	 * @param isCreate 如果尚未创建，是否理解创建
+	 * @param isCreate 如果尚未创建，是否立即创建
 	 * @return /
 	 */
 	protected SaSession getRawSessionByRefreshToken(String clientId, Object loginId, boolean isCreate) {
@@ -87,9 +92,10 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取 client_token 索引 RawSession
+	 * 获取：保存 Client-Token 索引时使用的 RawSession
+	 *
 	 * @param clientId 应用 id
-	 * @param isCreate 如果尚未创建，是否理解创建
+	 * @param isCreate 如果尚未创建，是否立即创建
 	 * @return /
 	 */
 	protected SaSession getRawSessionByClientToken(String clientId, boolean isCreate) {
@@ -98,7 +104,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 在 RawSession 上添加 token 索引
+	 * 在 RawSession 上添加 token 索引，并完整调整索引列表
 	 *
 	 * @param session 待操作的 RawSession
 	 * @param tokenIndexMapSaveKey 在 session 上保存 token 索引列表使用的 key
@@ -107,19 +113,19 @@ public class SaOAuth2Dao {
 	 * @param maxTokenCount 允许的最多 token 数量，超出的将被删除 (-1=不限制)
 	 * @param removeFun 执行删除 token 的函数
 	 */
-	protected void addTokenIndex(SaSession session, String tokenIndexMapSaveKey, String token, long timeout, int maxTokenCount, SaParamFunction<String> removeFun) {
+	protected void addTokenIndex_AndAdjust(SaSession session, String tokenIndexMapSaveKey, String token, long timeout, int maxTokenCount, SaParamFunction<String> removeFun) {
 		Map<String, Long> tokenIndexMap = session.get(tokenIndexMapSaveKey, this::newTokenIndexMap);
 		if(! tokenIndexMap.containsKey(token)) {
 			// 添加
 			tokenIndexMap.put(token, ttlToExpireTime(timeout));
 			// 剔除过期的
-			tokenIndexMap = removeExpiredIndex(tokenIndexMap);
+			tokenIndexMap = _removeExpiredIndex(tokenIndexMap);
 			// 删掉溢出的
-			tokenIndexMap = removeOverflowIndex(tokenIndexMap, maxTokenCount, removeFun);
+			tokenIndexMap = _removeOverflowIndex(tokenIndexMap, maxTokenCount, removeFun);
 			// 保存
 			session.set(tokenIndexMapSaveKey, tokenIndexMap);
 			// 更新 TTL
-			long maxTtl = getMaxTtl(tokenIndexMap.values());
+			long maxTtl = getMaxTtlByExpireTime(tokenIndexMap.values());
 			if(maxTtl != 0) {
 				session.updateTimeout(maxTtl);
 			}
@@ -127,12 +133,13 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 在 RawSession 上删除 token 索引
+	 * 在 RawSession 上删除 token 索引，并尝试注销 RawSession
+	 *
 	 * @param session 待操作的 RawSession
 	 * @param tokenIndexMapSaveKey 在 session 上保存 token 索引列表使用的 key
 	 * @param token 待删除的 token
 	 */
-	protected void deleteTokenIndex(SaSession session, String tokenIndexMapSaveKey, String token) {
+	protected void deleteTokenIndex_AndTryLogout(SaSession session, String tokenIndexMapSaveKey, String token) {
 		Map<String, Long> tokenIndexMap = session.get(tokenIndexMapSaveKey, this::newTokenIndexMap);
 		tokenIndexMap.remove(token);
 		// 如果删除后还有记录，就再次保存
@@ -150,8 +157,8 @@ public class SaOAuth2Dao {
 	 * @param tokenIndexMap token 索引列表
 	 * @return 调整后的索引列表
 	 */
-	protected Map<String, Long> removeExpiredIndex(Map<String, Long> tokenIndexMap) {
-		Map<String, Long>  newTokenList = newTokenIndexMap();
+	protected Map<String, Long> _removeExpiredIndex(Map<String, Long> tokenIndexMap) {
+		Map<String, Long> newTokenList = newTokenIndexMap();
 		for (Map.Entry<String, Long> entry : tokenIndexMap.entrySet()) {
 			long ttl = expireTimeToTtl(entry.getValue());
 			if(ttl != SaTokenDao.NOT_VALUE_EXPIRE) {
@@ -169,7 +176,7 @@ public class SaOAuth2Dao {
 	 * @param removeFun 执行删除 token 的函数
 	 * @return 调整后的索引列表
 	 */
-	protected Map<String, Long> removeOverflowIndex(Map<String, Long> tokenIndexMap, int maxTokenCount, SaParamFunction<String> removeFun) {
+	protected Map<String, Long> _removeOverflowIndex(Map<String, Long> tokenIndexMap, int maxTokenCount, SaParamFunction<String> removeFun) {
 
 		// 如果当前数量未超过限制，直接返回
 		if (tokenIndexMap.size() <= maxTokenCount || maxTokenCount == SaTokenDao.NEVER_EXPIRE) {
@@ -203,25 +210,25 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取 Token 列表
+	 * 从 RawSession 获取 Token 索引列表（获取之前会完整调整索引列表，保证获取的都是有效 token）
 	 *
 	 * @param session 待操作的 RawSession
 	 * @param tokenIndexMapSaveKey 在 session 上保存 token 索引列表使用的 key
 	 * @return /
 	 */
-	protected List<String> getTokenValueList(SaSession session, String tokenIndexMapSaveKey) {
+	protected Map<String, Long> getTokenIndexMap_FromAdjustAfter(SaSession session, String tokenIndexMapSaveKey) {
 		if(session == null) {
-			return new ArrayList<>();
+			return newTokenIndexMap();
 		}
 
 		// 根据 ttl 值过滤一遍
 		Map<String, Long> tokenIndexMap = session.get(tokenIndexMapSaveKey, this::newTokenIndexMap);
-		Map<String, Long> newTokenIndexMap = removeExpiredIndex(tokenIndexMap);
+		Map<String, Long> newTokenIndexMap = _removeExpiredIndex(tokenIndexMap);
 
 		// 如果调整后集合长度归零了，说明 token 已全部过期，直接注销此 RawSession
 		if(newTokenIndexMap.isEmpty()) {
 			session.logout();
-			return new ArrayList<>();
+			return newTokenIndexMap();
 		}
 
 		// 没有归零，但是长度变小了，说明有过期的 token，需要重写写入一遍
@@ -230,15 +237,26 @@ public class SaOAuth2Dao {
 		}
 
 		// 转 List 返回
-		return new ArrayList<>(newTokenIndexMap.keySet());
+		return newTokenIndexMap;
+	}
+
+	/**
+	 * 从 RawSession 获取 Token 列表（获取之前会完整调整索引列表，保证获取的都是有效 token）
+	 *
+	 * @param session 待操作的 RawSession
+	 * @param tokenIndexMapSaveKey 在 session 上保存 token 索引列表使用的 key
+	 * @return /
+	 */
+	protected List<String> getTokenValueList_FromAdjustAfter(SaSession session, String tokenIndexMapSaveKey) {
+		return new ArrayList<>(getTokenIndexMap_FromAdjustAfter(session, tokenIndexMapSaveKey).keySet());
 	}
 
 
 	// ------------------- code 操作
 
 	/**
-	 * 持久化：Code-Model
-	 * @param c .
+	 * 保存：CodeModel
+	 * @param c / 
 	 */
 	public void saveCode(CodeModel c) {
 		if(c == null) {
@@ -248,8 +266,8 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 删除：Code
-	 * @param code 值
+	 * 删除：CodeModel
+	 * @param code /
 	 */
 	public void deleteCode(String code) {
 		if(code != null) {
@@ -258,9 +276,9 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取：Code Model
-	 * @param code .
-	 * @return .
+	 * 获取：CodeModel
+	 * @param code /
+	 * @return /
 	 */
 	public CodeModel getCode(String code) {
 		if(code == null) {
@@ -273,8 +291,8 @@ public class SaOAuth2Dao {
 	// ------------------- code 索引
 
 	/**
-	 * 持久化：Code-索引
-	 * @param c .
+	 * 保存：Code 索引
+	 * @param c /
 	 */
 	public void saveCodeIndex(CodeModel c) {
 		if(c == null) {
@@ -284,7 +302,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 删除：Code索引
+	 * 删除：Code 索引
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 */
@@ -296,18 +314,18 @@ public class SaOAuth2Dao {
 	 * 获取：Code Value
 	 * @param clientId 应用id
 	 * @param loginId 账号id
-	 * @return .
+	 * @return /
 	 */
 	public String getCodeValue(String clientId, Object loginId) {
 		return getSaTokenDao().get(splicingCodeIndexKey(clientId, loginId));
 	}
 
 
-	// ------------------- access_token Model
+	// ------------------- Access-Token Model
 
 	/**
-	 * 持久化：AccessToken-Model
-	 * @param at .
+	 * 保存：AccessTokenModel
+	 * @param at /
 	 */
 	public void saveAccessToken(AccessTokenModel at) {
 		if(at == null) {
@@ -317,7 +335,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 删除：Access-Token
+	 * 删除：AccessTokenModel
 	 * @param accessToken 值
 	 */
 	public void deleteAccessToken(String accessToken) {
@@ -327,9 +345,9 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取：Access-Token Model
-	 * @param accessToken .
-	 * @return .
+	 * 获取：AccessTokenModel
+	 * @param accessToken /
+	 * @return /
 	 */
 	public AccessTokenModel getAccessToken(String accessToken) {
 		if(accessToken == null) {
@@ -339,20 +357,20 @@ public class SaOAuth2Dao {
 	}
 
 
-	// ------------------- access_token 索引
+	// ------------------- Access-Token 索引
 
 	/**
-	 * 持久化：Access-Token 索引
+	 * 保存：Access-Token 索引，并完整调整索引列表
 	 *
 	 * @param at /
 	 * @param maxAccessTokenCount 允许的最多 Access-Token 数量，超出的将被删除 (-1=不限制)
 	 */
-	public void saveAccessTokenIndex(AccessTokenModel at, int maxAccessTokenCount) {
+	public void saveAccessTokenIndex_AndAdjust(AccessTokenModel at, int maxAccessTokenCount) {
 		if(at == null) {
 			return;
 		}
 		SaSession session = getRawSessionByAccessToken(at.clientId, at.loginId, true);
-		addTokenIndex(session, ACCESS_TOKEN_MAP, at.accessToken, at.getExpiresIn(), maxAccessTokenCount, this::deleteAccessToken);
+		addTokenIndex_AndAdjust(session, ACCESS_TOKEN_MAP, at.accessToken, at.getExpiresIn(), maxAccessTokenCount, this::deleteAccessToken);
 	}
 
 	/**
@@ -362,12 +380,12 @@ public class SaOAuth2Dao {
 	 * @param loginId 账号id
 	 * @param accessToken 值
 	 */
-	public void deleteAccessTokenIndexBySingleData(String clientId, Object loginId, String accessToken) {
+	public void deleteAccessTokenIndex_BySingleData(String clientId, Object loginId, String accessToken) {
 		SaSession session = getRawSessionByAccessToken(clientId, loginId, false);
 		if(session == null) {
 			return;
 		}
-		deleteTokenIndex(session, ACCESS_TOKEN_MAP, accessToken);
+		deleteTokenIndex_AndTryLogout(session, ACCESS_TOKEN_MAP, accessToken);
 	}
 
 	/**
@@ -380,22 +398,34 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取 Access-Token 列表：此应用下 对 某个用户 签发的所有 Access-token
+	 * 获取 Access-Token 索引列表（获取之前会完整调整索引列表，保证获取的都是有效 AccessToken 索引）
 	 *
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return /
 	 */
-	public List<String> getAccessTokenValueList(String clientId, Object loginId) {
+	public Map<String, Long> getAccessTokenIndexMap_FromAdjustAfter(String clientId, Object loginId) {
 		SaSession session = getRawSessionByAccessToken(clientId, loginId, false);
-		return getTokenValueList(session, ACCESS_TOKEN_MAP);
+		return getTokenIndexMap_FromAdjustAfter(session, ACCESS_TOKEN_MAP);
+	}
+
+	/**
+	 * 获取 Access-Token 列表（获取之前会完整调整索引列表，保证获取的都是有效 AccessToken）
+	 *
+	 * @param clientId 应用id
+	 * @param loginId 账号id
+	 * @return /
+	 */
+	public List<String> getAccessTokenValueList_FromAdjustAfter(String clientId, Object loginId) {
+		SaSession session = getRawSessionByAccessToken(clientId, loginId, false);
+		return getTokenValueList_FromAdjustAfter(session, ACCESS_TOKEN_MAP);
 	}
 
 
-	// ------------------- refresh_token Model
+	// ------------------- Refresh-Token Model
 
 	/**
-	 * 持久化：RefreshToken-Model
+	 * 保存：RefreshTokenModel
 	 * @param rt .
 	 */
 	public void saveRefreshToken(RefreshTokenModel rt) {
@@ -406,7 +436,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 删除：Refresh-Token
+	 * 删除：RefreshTokenModel
 	 * @param refreshToken 值
 	 */
 	public void deleteRefreshToken(String refreshToken) {
@@ -416,9 +446,9 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取：Refresh-Token Model
-	 * @param refreshToken .
-	 * @return .
+	 * 获取：RefreshTokenModel
+	 * @param refreshToken /
+	 * @return /
 	 */
 	public RefreshTokenModel getRefreshToken(String refreshToken) {
 		if(refreshToken == null) {
@@ -428,20 +458,20 @@ public class SaOAuth2Dao {
 	}
 
 
-	// ------------------- refresh_token 索引
+	// ------------------- Refresh-Token 索引
 
 	/**
-	 * 持久化：Refresh-Token 索引
+	 * 保存：Refresh-Token 索引
 	 *
 	 * @param rt /
 	 * @param maxRefreshTokenCount 允许的最多 Refresh-Token 数量，超出的将被删除 (-1=不限制)
 	 */
-	public void saveRefreshTokenIndex(RefreshTokenModel rt, int maxRefreshTokenCount) {
+	public void saveRefreshTokenIndex_AndAdjust(RefreshTokenModel rt, int maxRefreshTokenCount) {
 		if(rt == null) {
 			return;
 		}
 		SaSession session = getRawSessionByRefreshToken(rt.clientId, rt.loginId, true);
-		addTokenIndex(session, REFRESH_TOKEN_MAP, rt.refreshToken, rt.getExpiresIn(), maxRefreshTokenCount, this::deleteRefreshToken);
+		addTokenIndex_AndAdjust(session, REFRESH_TOKEN_MAP, rt.refreshToken, rt.getExpiresIn(), maxRefreshTokenCount, this::deleteRefreshToken);
 	}
 
 	/**
@@ -451,12 +481,12 @@ public class SaOAuth2Dao {
 	 * @param loginId 账号id
 	 * @param refreshToken 值
 	 */
-	public void deleteRefreshTokenIndexBySingleData(String clientId, Object loginId, String refreshToken) {
+	public void deleteRefreshTokenIndex_BySingleData(String clientId, Object loginId, String refreshToken) {
 		SaSession session = getRawSessionByRefreshToken(clientId, loginId, false);
 		if(session == null) {
 			return;
 		}
-		deleteTokenIndex(session, REFRESH_TOKEN_MAP, refreshToken);
+		deleteTokenIndex_AndTryLogout(session, REFRESH_TOKEN_MAP, refreshToken);
 	}
 
 	/**
@@ -469,22 +499,34 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取 Refresh-Token 列表：此应用下 对 某个用户 签发的所有 Refresh-token
+	 * 获取 Refresh-Token 索引列表（获取之前会完整调整索引列表，保证获取的都是有效 RefreshToken 索引）
 	 *
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return /
 	 */
-	public List<String> getRefreshTokenValueList(String clientId, Object loginId) {
+	public Map<String, Long> getRefreshTokenIndexMap_FromAdjustAfter(String clientId, Object loginId) {
 		SaSession session = getRawSessionByRefreshToken(clientId, loginId, false);
-		return getTokenValueList(session, REFRESH_TOKEN_MAP);
+		return getTokenIndexMap_FromAdjustAfter(session, REFRESH_TOKEN_MAP);
+	}
+
+	/**
+	 * 获取 Refresh-Token 列表（获取之前会完整调整索引列表，保证获取的都是有效 RefreshToken）
+	 *
+	 * @param clientId 应用id
+	 * @param loginId 账号id
+	 * @return /
+	 */
+	public List<String> getRefreshTokenValueList_FromAdjustAfter(String clientId, Object loginId) {
+		SaSession session = getRawSessionByRefreshToken(clientId, loginId, false);
+		return getTokenValueList_FromAdjustAfter(session, REFRESH_TOKEN_MAP);
 	}
 
 
-	// ------------------- client_token Model
+	// ------------------- Client-Token Model
 
 	/**
-	 * 持久化：ClientToken-Model
+	 * 保存：ClientTokenModel
 	 * @param ct .
 	 */
 	public void saveClientToken(ClientTokenModel ct) {
@@ -495,7 +537,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 删除：Client-Token
+	 * 删除：ClientTokenModel
 	 * @param clientToken 值
 	 */
 	public void deleteClientToken(String clientToken) {
@@ -505,9 +547,9 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取：Client-Token Model
-	 * @param clientToken .
-	 * @return .
+	 * 获取：ClientTokenModel
+	 * @param clientToken /
+	 * @return /
 	 */
 	public ClientTokenModel getClientToken(String clientToken) {
 		if(clientToken == null) {
@@ -517,20 +559,20 @@ public class SaOAuth2Dao {
 	}
 
 
-	// ------------------- client_token 索引
+	// ------------------- Client-Token 索引
 
 	/**
-	 * 持久化：Client-Token 索引
+	 * 保存：Client-Token 索引
 	 *
 	 * @param ct /
 	 * @param maxClientTokenCount 允许的最多 Client-Token 数量，超出的将被删除 (-1=不限制)
 	 */
-	public void saveClientTokenIndex(ClientTokenModel ct, int maxClientTokenCount) {
+	public void saveClientTokenIndex_AndAdjust(ClientTokenModel ct, int maxClientTokenCount) {
 		if(ct == null) {
 			return;
 		}
 		SaSession session = getRawSessionByClientToken(ct.clientId, true);
-		addTokenIndex(session, CLIENT_TOKEN_MAP, ct.clientToken, ct.getExpiresIn(), maxClientTokenCount, this::deleteClientToken);
+		addTokenIndex_AndAdjust(session, CLIENT_TOKEN_MAP, ct.clientToken, ct.getExpiresIn(), maxClientTokenCount, this::deleteClientToken);
 	}
 
 	/**
@@ -538,12 +580,12 @@ public class SaOAuth2Dao {
 	 * @param clientId 应用 id
 	 * @param clientToken 值
 	 */
-	public void deleteClientTokenIndexBySingleData(String clientId, String clientToken) {
+	public void deleteClientTokenIndex_BySingleData(String clientId, String clientToken) {
 		SaSession session = getRawSessionByClientToken(clientId, false);
 		if(session == null) {
 			return;
 		}
-		deleteTokenIndex(session, CLIENT_TOKEN_MAP, clientToken);
+		deleteTokenIndex_AndTryLogout(session, CLIENT_TOKEN_MAP, clientToken);
 	}
 
 	/**
@@ -556,21 +598,33 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 获取 Client-Token 列表：此应用下 对 某个用户 签发的所有 Client-token
+	 * 获取 Client-Token 索引列表（获取之前会完整调整索引列表，保证获取的都是有效 ClientToken 索引）
+	 *
+	 * @param clientId 应用id
+	 * @param loginId 账号id
+	 * @return /
+	 */
+	public Map<String, Long> getClientTokenIndexMap_FromAdjustAfter(String clientId, Object loginId) {
+		SaSession session = getRawSessionByClientToken(clientId, false);
+		return getTokenIndexMap_FromAdjustAfter(session, CLIENT_TOKEN_MAP);
+	}
+
+	/**
+	 * 获取 Client-Token 列表（获取之前会完整调整索引列表，保证获取的都是有效 ClientToken）
 	 *
 	 * @param clientId 应用id
 	 * @return /
 	 */
-	public List<String> getClientTokenValueList(String clientId) {
+	public List<String> getClientTokenValueList_FromAdjustAfter(String clientId) {
 		SaSession session = getRawSessionByClientToken(clientId, false);
-		return getTokenValueList(session, CLIENT_TOKEN_MAP);
+		return getTokenValueList_FromAdjustAfter(session, CLIENT_TOKEN_MAP);
 	}
 
 
 	// ------------------- GrantScope
 
 	/**
-	 * 持久化：用户授权记录
+	 * 保存：用户授权记录
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @param scopes 权限列表
@@ -607,7 +661,7 @@ public class SaOAuth2Dao {
 	// ------------------- State
 
 	/**
-	 * 持久化：state
+	 * 保存：state
 	 * @param state /
 	 */
 	public void saveState(String state) {
@@ -641,8 +695,8 @@ public class SaOAuth2Dao {
 	// ------------------- 其它
 
 	/**
-	 * 持久化：nonce-索引
-	 * @param c .
+	 * 保存：nonce-索引
+	 * @param c /
 	 */
 	public void saveCodeNonceIndex(CodeModel c) {
 		if(c == null || SaFoxUtil.isEmpty(c.nonce)) {
@@ -667,7 +721,7 @@ public class SaOAuth2Dao {
 	// ------------------- 拼接key
 
 	/**
-	 * 拼接key：Code持久化
+	 * 拼接 key：Code 保存
 	 * @param code 授权码
 	 * @return key
 	 */
@@ -676,7 +730,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：Code 索引
+	 * 拼接 key：Code 索引
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return key
@@ -686,7 +740,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：Access-Token持久化
+	 * 拼接 key：Access-Token 保存
 	 * @param accessToken accessToken
 	 * @return key
 	 */
@@ -695,7 +749,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：Access-Token RSD Value
+	 * 拼接 key：Access-Token RSD Value
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return key
@@ -705,7 +759,16 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：Refresh-Token RSD Value
+	 * 拼接 key：Refresh-Token 保存
+	 * @param refreshToken refreshToken
+	 * @return key
+	 */
+	public String splicingRefreshTokenSaveKey(String refreshToken) {
+		return getSaTokenConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
+	}
+
+	/**
+	 * 拼接 key：Refresh-Token RSD Value
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return key
@@ -715,25 +778,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：Client-Token RSD Value
-	 * @param clientId 应用id
-	 * @return key
-	 */
-	public String splicingClientTokenRSDValue(String clientId) {
-		return "client-token:" + clientId;
-	}
-
-	/**
-	 * 拼接key：Refresh-Token持久化
-	 * @param refreshToken refreshToken
-	 * @return key
-	 */
-	public String splicingRefreshTokenSaveKey(String refreshToken) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
-	}
-
-	/**
-	 * 拼接key：Client-Token持久化
+	 * 拼接 key：Client-Token 保存
 	 * @param clientToken clientToken
 	 * @return key
 	 */
@@ -742,7 +787,16 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：用户授权记录
+	 * 拼接 key：Client-Token RSD Value
+	 * @param clientId 应用id
+	 * @return key
+	 */
+	public String splicingClientTokenRSDValue(String clientId) {
+		return "client-token:" + clientId;
+	}
+
+	/**
+	 * 拼接 key：用户授权记录
 	 * @param clientId 应用id
 	 * @param loginId 账号id
 	 * @return key
@@ -752,7 +806,7 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：state 参数持久化
+	 * 拼接 key：state 参数保存
 	 * @param state /
 	 * @return key
 	 */
@@ -761,80 +815,13 @@ public class SaOAuth2Dao {
 	}
 
 	/**
-	 * 拼接key：code-nonce 索引 参数持久化
+	 * 拼接 key：code-nonce 索引 参数保存
 	 * @param code 授权码
 	 * @return key
 	 */
 	public String splicingCodeNonceIndexSaveKey(String code) {
 		return getSaTokenConfig().getTokenName() + ":oauth2:code-nonce-index:" + code;
 	}
-
-
-	// -------- 工具方法
-
-	/**
-	 * 获取一个新的 TokenMap 集合
-	 * @return /
-	 */
-	protected Map<String, Long> newTokenIndexMap() {
-		return new LinkedHashMap<>();
-	}
-
-	/**
-	 * 过期时间转 ttl (秒) 获取最大 ttl 值
-	 * @param expireTimeList /
-	 * @return /
-	 */
-	protected long getMaxTtl(Collection<Long> expireTimeList) {
-		long maxTtl = 0;
-		for (long expireTime : expireTimeList) {
-			long ttl = expireTimeToTtl(expireTime);
-			if(ttl == SaTokenDao.NEVER_EXPIRE) {
-				maxTtl = SaTokenDao.NEVER_EXPIRE;
-				break;
-			}
-			if(ttl > maxTtl) {
-				maxTtl = ttl;
-			}
-		}
-		return maxTtl;
-	}
-
-	/**
-	 * 过期时间转 ttl (秒)
-	 * @param expireTime /
-	 * @return /
-	 */
-	protected long expireTimeToTtl(long expireTime) {
-		if(expireTime == SaTokenDao.NEVER_EXPIRE) {
-			return SaTokenDao.NEVER_EXPIRE;
-		}
-		if(expireTime == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return SaTokenDao.NOT_VALUE_EXPIRE;
-		}
-		// TODO temp-token 模块与 apikey 模块是否也应该修改为这个逻辑 ？
-		long currentTime = System.currentTimeMillis();
-		if(expireTime < currentTime) {
-			return SaTokenDao.NOT_VALUE_EXPIRE;
-		}
-		return (expireTime - currentTime) / 1000;
-	}
-
-	/**
-	 * ttl (秒) 转 过期时间
-	 * @param ttl /
-	 * @return /
-	 */
-	protected long ttlToExpireTime(long ttl) {
-		if(ttl == SaTokenDao.NEVER_EXPIRE) {
-			return SaTokenDao.NEVER_EXPIRE;
-		}
-		if(ttl == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return SaTokenDao.NOT_VALUE_EXPIRE;
-		}
-		return ttl * 1000 + System.currentTimeMillis();
-	}
-
 
 
 	// -------- bean 对象代理

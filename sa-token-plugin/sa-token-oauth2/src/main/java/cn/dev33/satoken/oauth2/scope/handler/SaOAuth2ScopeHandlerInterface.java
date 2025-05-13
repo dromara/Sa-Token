@@ -19,7 +19,7 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 
 /**
- * 所有 OAuth2 权限处理器的父接口
+ * 所有 OAuth2 权限处理器的父接口，如果要自定义 Scope 处理器，必须实现此接口
  *
  * @author click33
  * @since 1.39.0

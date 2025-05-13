@@ -69,6 +69,20 @@ public class RefreshTokenModel implements Serializable {
 	}
 
 
+	// 额外追加方法
+
+	/**
+	 * 获取：此 Refresh-Token 的剩余有效期（秒）
+	 * @return /
+	 */
+	public long getExpiresIn() {
+		long s = (expiresTime - System.currentTimeMillis()) / 1000;
+		return s < 1 ? -2 : s;
+	}
+
+
+	// get set
+
 	public String getRefreshToken() {
 		return refreshToken;
 	}
@@ -145,13 +159,4 @@ public class RefreshTokenModel implements Serializable {
 				"]";
 	}
 
-	/**
-	 * 获取：此 Refresh-Token 的剩余有效期（秒）
-	 * @return /
-	 */
-	public long getExpiresIn() {
-		long s = (expiresTime - System.currentTimeMillis()) / 1000;
-		return s < 1 ? -2 : s;
-	}
-	
 }

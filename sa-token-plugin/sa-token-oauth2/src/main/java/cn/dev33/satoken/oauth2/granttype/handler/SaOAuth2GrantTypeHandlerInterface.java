@@ -21,7 +21,7 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import java.util.List;
 
 /**
- * 所有 OAuth2 GrantType 处理器的父接口
+ * 所有 OAuth2 GrantType 处理器的父接口，如果要自定义 GrantType 处理器，必须实现此接口
  *
  * @author click33
  * @since 1.39.0

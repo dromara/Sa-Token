@@ -15,8 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.data.model.loader;
 
-import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -92,15 +91,7 @@ public class SaClientModel implements Serializable {
 
 	
 	public SaClientModel() {
-		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
-		this.isNewRefresh = config.getIsNewRefresh();
-		this.accessTokenTimeout = config.getAccessTokenTimeout();
-		this.refreshTokenTimeout = config.getRefreshTokenTimeout();
-		this.clientTokenTimeout = config.getClientTokenTimeout();
-		this.lowerClientTokenTimeout = config.getLowerClientTokenTimeout();
-		this.maxAccessTokenCount = config.getMaxAccessTokenCount();
-		this.maxRefreshTokenCount = config.getMaxRefreshTokenCount();
-		this.maxClientTokenCount = config.getMaxClientTokenCount();
+		SaOAuth2Strategy.instance.setSaClientModelDefaultFields.run(this);
 	}
 	public SaClientModel(String clientId, String clientSecret, List<String> contractScopes, List<String> allowRedirectUris) {
 		this();

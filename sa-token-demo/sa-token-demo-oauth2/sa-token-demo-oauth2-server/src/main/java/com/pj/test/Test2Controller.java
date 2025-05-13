@@ -1,11 +1,13 @@
 package com.pj.test;
 
+import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Util;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 测试 OAuth2 相关 token 增删查
@@ -24,6 +26,13 @@ public class Test2Controller {
         return SaResult.data(accessTokenValueList);
     }
 
+    // 测试：查询全部 Access-Token, 带过期时间   --- http://localhost:8000/test/getAccessTokenIndexMap?clientId=1001&loginId=10001
+    @RequestMapping("/getAccessTokenIndexMap")
+    public SaResult getAccessTokenIndexMap(String clientId, long loginId) {
+        Map<String, Long> accessTokenIndexMap = SaOAuth2Manager.getDao().getAccessTokenIndexMap_FromAdjustAfter(clientId, loginId);
+        return SaResult.data(accessTokenIndexMap);
+    }
+
     // 测试：回收指定 Access-Token   --- http://localhost:8000/test/revokeAccessToken?access_token=xxxxxxxxxx
     @RequestMapping("/revokeAccessToken")
     public SaResult revokeAccessToken(String access_token) {
@@ -38,11 +47,19 @@ public class Test2Controller {
         return SaResult.ok();
     }
 
+
     // 测试：查询全部 Refresh-Token   --- http://localhost:8000/test/getRefreshTokenValueList?clientId=1001&loginId=10001
     @RequestMapping("/getRefreshTokenValueList")
     public SaResult getRefreshTokenValueList(String clientId, long loginId) {
         List<String> refreshTokenValueList = SaOAuth2Util.getRefreshTokenValueList(clientId, loginId);
         return SaResult.data(refreshTokenValueList);
+    }
+
+    // 测试：查询全部 Refresh-Token, 带过期时间   --- http://localhost:8000/test/getRefreshTokenIndexMap?clientId=1001&loginId=10001
+    @RequestMapping("/getRefreshTokenIndexMap")
+    public SaResult getRefreshTokenIndexMap(String clientId, long loginId) {
+        Map<String, Long> refreshTokenIndexMap = SaOAuth2Manager.getDao().getRefreshTokenIndexMap_FromAdjustAfter(clientId, loginId);
+        return SaResult.data(refreshTokenIndexMap);
     }
 
     // 测试：回收指定 Refresh-Token   --- http://localhost:8000/test/revokeRefreshToken?refresh_token=xxxxxxxxxx
@@ -59,11 +76,19 @@ public class Test2Controller {
         return SaResult.ok();
     }
 
+
     // 测试：查询全部 Client-Token   --- http://localhost:8000/test/getClientTokenValueList?clientId=1001
     @RequestMapping("/getClientTokenValueList")
     public SaResult getClientTokenValueList(String clientId) {
         List<String> clientTokenValueList = SaOAuth2Util.getClientTokenValueList(clientId);
         return SaResult.data(clientTokenValueList);
+    }
+
+    // 测试：查询全部 Client-Token, 带过期时间   --- http://localhost:8000/test/getClientTokenIndexMap?clientId=1001&loginId=10001
+    @RequestMapping("/getClientTokenIndexMap")
+    public SaResult getClientTokenIndexMap(String clientId, long loginId) {
+        Map<String, Long> rlientTokenIndexMap = SaOAuth2Manager.getDao().getClientTokenIndexMap_FromAdjustAfter(clientId, loginId);
+        return SaResult.data(rlientTokenIndexMap);
     }
 
     // 测试：回收指定 Client-Token   --- http://localhost:8000/test/revokeClientToken?client_token=xxxxxxxxxxx

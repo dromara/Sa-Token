@@ -104,6 +104,28 @@ public class AccessTokenModel implements Serializable {
 		this.scopes = scopes;
 	}
 
+	// 额外追加方法
+
+	/**
+	 * 获取：此 Access-Token 的剩余有效期（秒）
+	 * @return /
+	 */
+	public long getExpiresIn() {
+		long s = (expiresTime - System.currentTimeMillis()) / 1000;
+		return s < 1 ? -2 : s;
+	}
+
+	/**
+	 * 获取：此 Refresh-Token 的剩余有效期（秒）
+	 * @return /
+	 */
+	public long getRefreshExpiresIn() {
+		long s = (refreshExpiresTime - System.currentTimeMillis()) / 1000;
+		return s < 1 ? -2 : s;
+	}
+
+
+	// get set
 
 	public String getAccessToken() {
 		return accessToken;
@@ -221,24 +243,5 @@ public class AccessTokenModel implements Serializable {
 				'}';
 	}
 
-	// 追加只读属性
-
-	/**
-	 * 获取：此 Access-Token 的剩余有效期（秒）
-	 * @return /
-	 */
-	public long getExpiresIn() {
-		long s = (expiresTime - System.currentTimeMillis()) / 1000;
-		return s < 1 ? -2 : s;
-	}
-
-	/**
-	 * 获取：此 Refresh-Token 的剩余有效期（秒）
-	 * @return /
-	 */
-	public long getRefreshExpiresIn() {
-		long s = (refreshExpiresTime - System.currentTimeMillis()) / 1000;
-		return s < 1 ? -2 : s;
-	}
 
 }

@@ -49,20 +49,20 @@ public class PasswordGrantTypeHandler implements SaOAuth2GrantTypeHandlerInterfa
         String username = req.getParamNotNull(SaOAuth2Consts.Param.username);
         String password = req.getParamNotNull(SaOAuth2Consts.Param.password);
 
-        // 3、调用API 开始登录，如果没能成功登录，则直接退出
+        // 2、调用API 开始登录，如果没能成功登录，则直接退出
         PasswordAuthResult passwordAuthResult = loginByUsernamePassword(username, password);
         Object loginId = passwordAuthResult.getLoginId();
         if(loginId == null) {
             throw new SaOAuth2Exception("登录失败").setCode(SaOAuth2ErrorCode.CODE_30161);
         }
 
-        // 4、构建 ra 对象
+        // 3、构建 ra 对象
         RequestAuthModel ra = new RequestAuthModel();
         ra.clientId = clientId;
         ra.loginId = loginId;
         ra.scopes = scopes;
 
-        // 5、生成 Access-Token
+        // 4、生成 Access-Token
         AccessTokenModel at = SaOAuth2Manager.getDataGenerate().generateAccessToken(ra, true, atm -> atm.grantType = GrantType.password);
         return at;
     }

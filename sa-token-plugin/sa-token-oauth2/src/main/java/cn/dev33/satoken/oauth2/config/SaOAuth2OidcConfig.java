@@ -33,19 +33,42 @@ public class SaOAuth2OidcConfig implements Serializable {
 	/** idToken 有效期（单位秒） 默认十分钟 */
 	public long idTokenTimeout = 60 * 10;
 
+
+	/**
+	 * 获取 iss 值，如不配置则自动计算
+	 *
+	 * @return /
+	 */
 	public String getIss() {
-		return iss;
+		return this.iss;
 	}
 
+	/**
+	 * 设置 iss 值，如不配置则自动计算
+	 *
+	 * @param iss /
+	 * @return 对象自身
+	 */
 	public SaOAuth2OidcConfig setIss(String iss) {
 		this.iss = iss;
 		return this;
 	}
 
+	/**
+	 * 获取 idToken 有效期（单位秒） 默认十分钟
+	 *
+	 * @return /
+	 */
 	public long getIdTokenTimeout() {
-		return idTokenTimeout;
+		return this.idTokenTimeout;
 	}
 
+	/**
+	 * 设置 idToken 有效期（单位秒） 默认十分钟
+	 *
+	 * @param idTokenTimeout /
+	 * @return 对象自身
+	 */
 	public SaOAuth2OidcConfig setIdTokenTimeout(long idTokenTimeout) {
 		this.idTokenTimeout = idTokenTimeout;
 		return this;

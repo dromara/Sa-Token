@@ -77,7 +77,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
      */
     @Override
     public String readAccessToken(SaRequest request) {
-        // 优先从请求参数中获取
+        // 优先从请求参数中获取，可以读取到的话直接返回
         String accessToken = request.getParam(Param.access_token);
         if(SaFoxUtil.isNotEmpty(accessToken)) {
             return accessToken;
@@ -104,7 +104,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
      */
     @Override
     public String readClientToken(SaRequest request) {
-        // 优先从请求参数中获取
+        // 优先从请求参数中获取，可以读取到的话直接返回
         String clientToken = request.getParam(Param.client_token);
         if(SaFoxUtil.isNotEmpty(clientToken)) {
             return clientToken;
@@ -172,7 +172,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("token_type", ct.tokenType);
         map.put("client_token", ct.clientToken);
-        if(SaOAuth2Manager.getServerConfig().mode4ReturnAccessToken) {
+        if(SaOAuth2Manager.getServerConfig().getMode4ReturnAccessToken()) {
              map.put("access_token", ct.clientToken);
         }
         map.put("expires_in", ct.getExpiresIn());

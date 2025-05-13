@@ -57,7 +57,7 @@ public interface SaOAuth2DataLoader {
     }
 
     /**
-     * 根据 ClientId 和 LoginId 获取openid
+     * 根据 ClientId 和 LoginId 获取 openid
      *
      * @param clientId 应用id
      * @param loginId 账号id

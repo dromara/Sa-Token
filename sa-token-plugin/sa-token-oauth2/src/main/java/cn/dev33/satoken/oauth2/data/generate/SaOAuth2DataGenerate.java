@@ -32,28 +32,28 @@ import java.util.function.Consumer;
 public interface SaOAuth2DataGenerate {
 
     /**
-     * 构建Model：Code授权码
+     * 构建 Model：Code授权码
      * @param ra 请求参数Model
      * @return 授权码Model
      */
     CodeModel generateCode(RequestAuthModel ra);
 
     /**
-     * 构建Model：Access-Token (根据 code 授权码)
+     * 构建 Model：Access-Token (根据 code 授权码)
      * @param code 授权码Model
      * @return AccessToken Model
      */
     AccessTokenModel generateAccessToken(String code);
 
     /**
-     * 刷新Model：根据 Refresh-Token 生成一个新的 Access-Token
+     * 刷新 Model：根据 Refresh-Token 生成一个新的 Access-Token
      * @param refreshToken Refresh-Token值
      * @return 新的 Access-Token
      */
     AccessTokenModel refreshAccessToken(String refreshToken);
 
     /**
-     * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式)
+     * 构建 Model：Access-Token (根据 RequestAuthModel 构建，用于隐藏式 and 密码式)
      * @param ra 请求参数Model
      * @param isCreateRt 是否生成对应的Refresh-Token
      * @param appendWork 对生成的 AccessTokenModel 进行追加操作
@@ -62,7 +62,7 @@ public interface SaOAuth2DataGenerate {
     AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt, Consumer<AccessTokenModel> appendWork);
 
     /**
-     * 构建Model：Client-Token
+     * 构建 Model：Client-Token
      * @param clientId 应用id
      * @param scopes 授权范围
      * @return Client-Token Model
@@ -70,7 +70,7 @@ public interface SaOAuth2DataGenerate {
     ClientTokenModel generateClientToken(String clientId, List<String> scopes);
 
     /**
-     * 构建URL：下放Code URL (Authorization Code 授权码)
+     * 构建 URL：下放Code URL (Authorization Code 授权码)
      * @param redirectUri 下放地址
      * @param code code参数
      * @param state state参数
@@ -79,7 +79,7 @@ public interface SaOAuth2DataGenerate {
     String buildRedirectUri(String redirectUri, String code, String state);
 
     /**
-     * 构建URL：下放Access-Token URL （implicit 隐藏式）
+     * 构建 URL：下放Access-Token URL （implicit 隐藏式）
      * @param redirectUri 下放地址
      * @param token token
      * @param state state参数

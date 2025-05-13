@@ -182,8 +182,12 @@ public class SaOAuth2ServerProcessor {
 	 */
 	public Object refresh() {
 		SaRequest req = SaHolder.getRequest();
+
+		// 校验 grant_type 必须为 refresh_token
 		String grantType = req.getParamNotNull(Param.grant_type);
 		SaOAuth2Exception.throwBy(!grantType.equals(GrantType.refresh_token), "无效 grant_type：" + grantType, SaOAuth2ErrorCode.CODE_30126);
+
+		// 刷新 Access-Token
 		AccessTokenModel accessTokenModel = SaOAuth2Strategy.instance.grantTypeAuth.apply(req);
 		return SaOAuth2Manager.getDataResolver().buildRefreshTokenReturnValue(accessTokenModel);
 	}
@@ -205,7 +209,7 @@ public class SaOAuth2ServerProcessor {
 
 		// 如果 Access-Token 不存在，直接返回
 		if(oauth2Template.getAccessToken(accessToken) == null) {
-			return SaResult.ok("access_token不存在：" + accessToken);
+			return SaResult.ok("access_token 不存在：" + accessToken);
 		}
 
 		// 校验参数
@@ -223,9 +227,7 @@ public class SaOAuth2ServerProcessor {
 	 * @return 处理结果
 	 */
 	public Object doLogin() {
-		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-
 		return SaOAuth2Strategy.instance.doLoginHandle.apply(req.getParam(Param.name), req.getParam(Param.pwd));
 	}
 
@@ -262,10 +264,10 @@ public class SaOAuth2ServerProcessor {
 
 		// -------- 情况2：需要返回最终的 redirect_uri 地址
 
-		// s3、构建请求 Model
+		// 构建请求 Model
 		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, loginId);
 
-		// 7、判断授权类型，构建不同的重定向地址
+		// 判断授权类型，构建不同的重定向地址
 		// 		如果是 授权码式，则：开始重定向授权，下放code
 		if(ResponseType.code.equals(ra.responseType)) {
 			CodeModel codeModel = dataGenerate.generateCode(ra);
@@ -311,7 +313,7 @@ public class SaOAuth2ServerProcessor {
 		String clientSecret = clientIdAndSecret.clientSecret;
 		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(req.getParam(Param.scope));
 
-		//校验 ClientScope
+		// 校验 ClientScope
 		oauth2Template.checkContractScope(clientId, scopes);
 
 		// 校验 ClientSecret

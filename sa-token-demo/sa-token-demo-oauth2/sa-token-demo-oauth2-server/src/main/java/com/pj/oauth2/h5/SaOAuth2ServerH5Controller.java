@@ -13,6 +13,7 @@ import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
+import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,13 +56,16 @@ public class SaOAuth2ServerH5Controller {
         // 3、构建请求 Model
         RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, loginId);
 
-        // 4、校验：重定向域名是否合法
+        // 4、开发者自定义的授权前置检查
+        SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(ra.loginId, ra.clientId);
+
+        // 5、校验：重定向域名是否合法
         oauth2Template.checkRedirectUri(ra.clientId, ra.redirectUri);
 
-        // 5、校验：此次申请的Scope，该Client是否已经签约
+        // 6、校验：此次申请的Scope，该Client是否已经签约
         oauth2Template.checkContractScope(ra.clientId, ra.scopes);
 
-        // 6、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
+        // 7、判断：如果此次申请的Scope，该用户尚未授权，则转到授权页面
         boolean isNeedCarefulConfirm = oauth2Template.isNeedCarefulConfirm(ra.loginId, ra.clientId, ra.scopes);
         if(isNeedCarefulConfirm) {
             SaClientModel cm = oauth2Template.checkClientModel(ra.clientId);
@@ -71,7 +75,7 @@ public class SaOAuth2ServerH5Controller {
             }
         }
 
-        // 7、判断授权类型，重定向到不同地址
+        // 8、判断授权类型，重定向到不同地址
         // 		如果是 授权码式，则：开始重定向授权，下放code
         if(SaOAuth2Consts.ResponseType.code.equals(ra.responseType)) {
             CodeModel codeModel = dataGenerate.generateCode(ra);

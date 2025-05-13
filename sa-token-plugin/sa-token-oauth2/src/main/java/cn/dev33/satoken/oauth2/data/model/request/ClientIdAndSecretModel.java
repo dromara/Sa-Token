@@ -84,4 +84,5 @@ public class ClientIdAndSecretModel implements Serializable {
 				", clientSecret='" + clientSecret + '\'' +
 				'}';
 	}
+
 }

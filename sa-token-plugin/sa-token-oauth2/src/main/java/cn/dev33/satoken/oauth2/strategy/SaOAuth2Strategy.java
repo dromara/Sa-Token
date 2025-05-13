@@ -16,6 +16,7 @@
 package cn.dev33.satoken.oauth2.strategy;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.fun.SaTwoParamFunction;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
@@ -64,12 +65,12 @@ public final class SaOAuth2Strategy {
 	// ------------------ 权限处理器 ------------------
 
 	/**
-	 * 权限处理器集合
+	 * Scope 权限处理器集合
 	 */
 	public Map<String, SaOAuth2ScopeHandlerInterface> scopeHandlerMap = new LinkedHashMap<>();
 
 	/**
-	 * 注册所有默认的权限处理器
+	 * 注册所有默认的 Scope 权限处理器
 	 */
 	public void registerDefaultScopeHandler() {
 		scopeHandlerMap.put(CommonScope.OPENID, new OpenIdScopeHandler());
@@ -156,7 +157,7 @@ public final class SaOAuth2Strategy {
 	public Map<String, SaOAuth2GrantTypeHandlerInterface> grantTypeHandlerMap = new LinkedHashMap<>();
 
 	/**
-	 * 注册所有默认的权限处理器
+	 * 注册所有默认的 grant_type 处理器
 	 */
 	public void registerDefaultGrantTypeHandler() {
 		grantTypeHandlerMap.put(GrantType.authorization_code, new AuthorizationCodeGrantTypeHandler());
@@ -165,7 +166,7 @@ public final class SaOAuth2Strategy {
 	}
 
 	/**
-	 * 注册一个权限处理器
+	 * 注册一个 grant_type 处理器
 	 */
 	public void registerGrantTypeHandler(SaOAuth2GrantTypeHandlerInterface handler) {
 		grantTypeHandlerMap.put(handler.getHandlerGrantType(), handler);
@@ -173,7 +174,7 @@ public final class SaOAuth2Strategy {
 	}
 
 	/**
-	 * 移除一个权限处理器
+	 * 移除一个 grant_type 处理器
 	 */
 	public void removeGrantTypeHandler(String scope) {
 		scopeHandlerMap.remove(scope);
@@ -183,13 +184,14 @@ public final class SaOAuth2Strategy {
 	 * 根据 grantType 构造一个 AccessTokenModel
 	 */
 	public SaOAuth2GrantTypeAuthFunction grantTypeAuth = (req) -> {
+		// 先校验提供的 grant_type 是否有效
 		String grantType = req.getParamNotNull(SaOAuth2Consts.Param.grant_type);
 		SaOAuth2GrantTypeHandlerInterface grantTypeHandler = grantTypeHandlerMap.get(grantType);
 		if(grantTypeHandler == null) {
 			throw new SaOAuth2Exception("无效 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
 		}
 
-		// 看看全局是否开启了此 grantType
+		// 针对 authorization_code 与 password 两种特殊 grant_type，需要判断全局是否开启
 		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
 		if(grantType.equals(GrantType.authorization_code) && !config.getEnableAuthorizationCode() ) {
 			throw new SaOAuth2Exception("系统未开放的 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30126);
@@ -208,7 +210,7 @@ public final class SaOAuth2Strategy {
 			throw new SaOAuth2Exception("应用未开放的 grant_type: " + grantType).setCode(SaOAuth2ErrorCode.CODE_30141);
 		}
 
-		// 调用 处理器
+		// 调用 处理器构建 Access-Token
 		return grantTypeHandler.getAccessToken(req, clientIdAndSecretModel.getClientId(), scopes);
 	};
 
@@ -269,5 +271,20 @@ public final class SaOAuth2Strategy {
 	};
 
 
+	// ------------------ 其它 ------------------
+
+	/**
+	 * 在创建 SaClientModel 时，设置其默认字段
+	 */
+	public SaParamFunction<SaClientModel> setSaClientModelDefaultFields = (clientModel) -> {
+		SaOAuth2ServerConfig config = SaOAuth2Manager.getServerConfig();
+		clientModel.accessTokenTimeout = config.getAccessTokenTimeout();
+		clientModel.refreshTokenTimeout = config.getRefreshTokenTimeout();
+		clientModel.clientTokenTimeout = config.getClientTokenTimeout();
+		clientModel.maxAccessTokenCount = config.getMaxAccessTokenCount();
+		clientModel.maxRefreshTokenCount = config.getMaxRefreshTokenCount();
+		clientModel.maxClientTokenCount = config.getMaxClientTokenCount();
+		clientModel.isNewRefresh = config.getIsNewRefresh();
+	};
 
 }

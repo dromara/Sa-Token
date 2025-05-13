@@ -15,15 +15,17 @@
  */
 package cn.dev33.satoken.oauth2.data.convert;
 
-import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTtlMethods;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -35,7 +37,7 @@ import java.util.List;
  * @author click33
  * @since 1.39.0
  */
-public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
+public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter, SaTtlMethods {
 
     /**
      * 转换 scope 数据格式：String -> List
@@ -72,10 +74,47 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
     }
 
     /**
-     * 将 Code 转换为 Access-Token
+     * 根据 RequestAuthModel 构建一个 CodeModel
+     * @param ra RequestAuthModel
+     * @return CodeModel 对象
      */
     @Override
-    public AccessTokenModel convertCodeToAccessToken(CodeModel cm) {
+    public CodeModel convertRequestAuthToCode(RequestAuthModel ra){
+        String codeValue = SaOAuth2Strategy.instance.createCodeValue.execute(ra.clientId, ra.loginId, ra.scopes);
+        CodeModel cm = new CodeModel();
+        cm.code = codeValue;
+        cm.clientId = ra.clientId;
+        cm.scopes = ra.scopes;
+        cm.loginId = ra.loginId;
+        cm.redirectUri = ra.redirectUri;
+        cm.nonce = ra.getNonce();
+        return cm;
+    }
+
+    /**
+     * 根据 RequestAuthModel 构建一个 AccessTokenModel
+     * @param ra RequestAuthModel
+     * @return AccessTokenModel 对象
+     */
+    @Override
+    public AccessTokenModel convertRequestAuthToAccessToken(RequestAuthModel ra, long accessTokenTimeout) {
+        String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
+        AccessTokenModel at = new AccessTokenModel();
+        at.accessToken = newAtValue;
+        at.clientId = ra.clientId;
+        at.loginId = ra.loginId;
+        at.scopes = ra.scopes;
+        at.tokenType = SaOAuth2Consts.TokenType.bearer;
+        at.expiresTime = ttlToExpireTime(accessTokenTimeout);
+        at.extraData = new LinkedHashMap<>();
+        return at;
+    }
+
+    /**
+     * 根据 Code 构建一个 Access-Token
+     */
+    @Override
+    public AccessTokenModel convertCodeToAccessToken(CodeModel cm, long accessTokenTimeout) {
         AccessTokenModel at = new AccessTokenModel();
         at.accessToken = SaOAuth2Strategy.instance.createAccessToken.execute(cm.clientId, cm.loginId, cm.scopes);
         at.clientId = cm.clientId;
@@ -83,40 +122,31 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         at.scopes = cm.scopes;
         at.tokenType = SaOAuth2Consts.TokenType.bearer;
         at.grantType = GrantType.authorization_code;
-        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
-        at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
+        at.expiresTime = ttlToExpireTime(accessTokenTimeout);
         at.extraData = new LinkedHashMap<>();
         return at;
     }
 
     /**
-     * 将 Access-Token 转换为 Refresh-Token
-     * @param at .
-     * @return .
+     * 根据 Access-Token 构建一个 Refresh-Token
      */
     @Override
-    public RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at) {
+    public RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at, long refreshTokenTimeout) {
         RefreshTokenModel rt = new RefreshTokenModel();
         rt.refreshToken = SaOAuth2Strategy.instance.createRefreshToken.execute(at.clientId, at.loginId, at.scopes);
         rt.clientId = at.clientId;
         rt.loginId = at.loginId;
         rt.scopes = at.scopes;
-        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(at.clientId);
-        rt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
+        rt.expiresTime = ttlToExpireTime(refreshTokenTimeout);
         rt.extraData = new LinkedHashMap<>(at.extraData);
-        // 改变 at 属性
-//        at.refreshToken = rt.refreshToken;
-//        at.refreshExpiresTime = rt.expiresTime;
         return rt;
     }
 
     /**
-     * 将 Refresh-Token 转换为 Access-Token
-     * @param rt .
-     * @return .
+     * 根据 Refresh-Token 构建一个 Access-Token
      */
     @Override
-    public AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt) {
+    public AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt, long accessTokenTimeout) {
         AccessTokenModel at = new AccessTokenModel();
         at.accessToken = SaOAuth2Strategy.instance.createAccessToken.execute(rt.clientId, rt.loginId, rt.scopes);
         at.refreshToken = rt.refreshToken;
@@ -126,28 +156,44 @@ public class SaOAuth2DataConverterDefaultImpl implements SaOAuth2DataConverter {
         at.tokenType = SaOAuth2Consts.TokenType.bearer;
         at.grantType = GrantType.refresh_token;
         at.extraData = new LinkedHashMap<>(rt.extraData);
-        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
-        at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
+        at.expiresTime = ttlToExpireTime(accessTokenTimeout);
         at.refreshExpiresTime = rt.expiresTime;
         return at;
     }
 
     /**
-     * 根据 Refresh-Token 创建一个新的 Refresh-Token
-     * @param rt .
-     * @return .
+     * 根据 Refresh-Token 构建一个新的 Refresh-Token
      */
     @Override
-    public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt) {
+    public RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt, long refreshTokenTimeout) {
         RefreshTokenModel newRt = new RefreshTokenModel();
         newRt.refreshToken = SaOAuth2Strategy.instance.createRefreshToken.execute(rt.clientId, rt.loginId, rt.scopes);
-        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
-        newRt.expiresTime = System.currentTimeMillis() + (clientModel.getRefreshTokenTimeout() * 1000);
+        newRt.expiresTime = ttlToExpireTime(refreshTokenTimeout);
         newRt.clientId = rt.clientId;
         newRt.scopes = rt.scopes;
         newRt.loginId = rt.loginId;
         newRt.extraData = new LinkedHashMap<>(rt.extraData);
         return newRt;
+    }
+
+    /**
+     * 根据 SaClientModel 构建一个 ClientTokenModel
+     * @param clientModel /
+     * @param scopes 权限列表
+     * @return /
+     */
+    @Override
+    public ClientTokenModel convertSaClientToClientToken(SaClientModel clientModel, List<String> scopes) {
+        String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientModel.getClientId(), scopes);
+        ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientModel.getClientId(), scopes);
+        ct.clientToken = clientTokenValue;
+        ct.clientId = clientModel.getClientId();
+        ct.scopes = scopes;
+        ct.tokenType = SaOAuth2Consts.TokenType.bearer;
+        ct.expiresTime = ttlToExpireTime(clientModel.getClientTokenTimeout());
+        ct.grantType = GrantType.client_credentials;
+        ct.extraData = new LinkedHashMap<>();
+        return ct;
     }
 
 }

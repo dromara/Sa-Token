@@ -15,12 +15,12 @@
  */
 package cn.dev33.satoken.oauth2.data.model.request;
 
-import java.io.Serializable;
-import java.util.List;
-
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 请求授权参数的 Model
@@ -181,7 +181,7 @@ public class RequestAuthModel implements Serializable {
 	}
 
 	/**
-	 * 检查此Model参数是否有效  
+	 * 数据自检
 	 * @return 对象自身
 	 */
 	public RequestAuthModel checkModel() {
@@ -200,5 +200,17 @@ public class RequestAuthModel implements Serializable {
 		return this;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "RequestAuthModel{" +
+				"clientId='" + clientId + '\'' +
+				", scopes=" + scopes +
+				", loginId=" + loginId +
+				", redirectUri='" + redirectUri + '\'' +
+				", responseType='" + responseType + '\'' +
+				", state='" + state + '\'' +
+				", nonce='" + nonce + '\'' +
+				'}';
+	}
+
 }

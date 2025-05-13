@@ -86,6 +86,20 @@ public class ClientTokenModel implements Serializable {
 		this.scopes = scopes;
 	}
 
+	// 额外追加方法
+
+	/**
+	 * 获取：此 Client-Token 的剩余有效期（秒）
+	 * @return /
+	 */
+	public long getExpiresIn() {
+		long s = (expiresTime - System.currentTimeMillis()) / 1000;
+		return s < 1 ? -2 : s;
+	}
+
+
+	// get set
+
 	public String getClientToken() {
 		return clientToken;
 	}
@@ -170,15 +184,6 @@ public class ClientTokenModel implements Serializable {
 				", extraData=" + extraData +
 				", createTime=" + createTime +
 				'}';
-	}
-
-	/**
-	 * 获取：此 Client-Token 的剩余有效期（秒）
-	 * @return /
-	 */
-	public long getExpiresIn() {
-		long s = (expiresTime - System.currentTimeMillis()) / 1000;
-		return s < 1 ? -2 : s;
 	}
 
 }

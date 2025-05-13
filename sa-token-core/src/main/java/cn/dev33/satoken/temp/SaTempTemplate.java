@@ -22,6 +22,7 @@ import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.raw.SaRawSessionDelegator;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTtlMethods;
 
 import java.util.*;
 
@@ -35,7 +36,7 @@ import java.util.*;
  * @author click33
  * @since 1.42.0
  */
-public class SaTempTemplate {
+public class SaTempTemplate implements SaTtlMethods {
 
 	/**
 	 *默认命名空间
@@ -256,14 +257,14 @@ public class SaTempTemplate {
 		if(session == null) {
 			session = rawSessionDelegator.getSessionById(value, false);
 			if(session == null) {
-				return newTempTokenMap();
+				return newTokenIndexMap();
 			}
 		}
 
 		// 重新整理索引列表
-		Map<String, Long>  tempTokenNewList = newTempTokenMap();
+		Map<String, Long>  tempTokenNewList = newTokenIndexMap();
 		ArrayList<Long> tempTokenTtlList = new ArrayList<>();
-		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTempTokenMap);
+		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTokenIndexMap);
 		for (Map.Entry<String, Long> entry : tempTokenMap.entrySet()) {
 			long ttl = expireTimeToTtl(entry.getValue());
 			if(ttl != SaTokenDao.NOT_VALUE_EXPIRE) {
@@ -306,7 +307,7 @@ public class SaTempTemplate {
 	 * @param timeout /
 	 */
 	protected void addTempTokenIndex(SaSession session, String token, long timeout) {
-		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTempTokenMap);
+		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTokenIndexMap);
 		if(! tempTokenMap.containsKey(token)) {
 			tempTokenMap.put(token, ttlToExpireTime(timeout));
 			session.set(TEMP_TOKEN_MAP, tempTokenMap);
@@ -319,19 +320,11 @@ public class SaTempTemplate {
 	 * @param token /
 	 */
 	protected void deleteTempTokenIndex(SaSession session, String token) {
-		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTempTokenMap);
+		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTokenIndexMap);
 		if(tempTokenMap.containsKey(token)) {
 			tempTokenMap.remove(token);
 			session.set(TEMP_TOKEN_MAP, tempTokenMap);
 		}
-	}
-
-	/**
-	 * 获取一个新的 TempTokenMap 集合
-	 * @return /
-	 */
-	protected Map<String, Long> newTempTokenMap() {
-		return new LinkedHashMap<>();
 	}
 
 
@@ -362,55 +355,6 @@ public class SaTempTemplate {
 		if(cutPrefix.length() >= 32) {
 			throw new SaTokenException("裁剪前缀长度必须小于 32 位");
 		}
-	}
-
-	/**
-	 * 过期时间转 ttl (秒) 获取最大 ttl 值
-	 * @param tempTokenTtlList /
-	 * @return /
-	 */
-	protected long getMaxTtl(ArrayList<Long> tempTokenTtlList) {
-		long maxTtl = 0;
-		for (long ttl : tempTokenTtlList) {
-			if(ttl == SaTokenDao.NEVER_EXPIRE) {
-				maxTtl = SaTokenDao.NEVER_EXPIRE;
-				break;
-			}
-			if(ttl > maxTtl) {
-				maxTtl = ttl;
-			}
-		}
-		return maxTtl;
-	}
-
-	/**
-	 * 过期时间转 ttl (秒)
-	 * @param expireTime /
-	 * @return /
-	 */
-	protected long expireTimeToTtl(long expireTime) {
-		if(expireTime == SaTokenDao.NEVER_EXPIRE) {
-			return SaTokenDao.NEVER_EXPIRE;
-		}
-		if(expireTime == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return SaTokenDao.NOT_VALUE_EXPIRE;
-		}
-		return (expireTime - System.currentTimeMillis()) / 1000;
-	}
-
-	/**
-	 * ttl (秒) 转 过期时间
-	 * @param ttl /
-	 * @return /
-	 */
-	protected long ttlToExpireTime(long ttl) {
-		if(ttl == SaTokenDao.NEVER_EXPIRE) {
-			return SaTokenDao.NEVER_EXPIRE;
-		}
-		if(ttl == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return SaTokenDao.NOT_VALUE_EXPIRE;
-		}
-		return ttl * 1000 + System.currentTimeMillis();
 	}
 
 	/**

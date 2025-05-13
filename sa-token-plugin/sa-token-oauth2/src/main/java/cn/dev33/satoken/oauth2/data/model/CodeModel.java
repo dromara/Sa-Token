@@ -69,13 +69,15 @@ public class CodeModel implements Serializable {
 	public CodeModel() {
 		this.createTime = System.currentTimeMillis();
 	}
+
 	/**
 	 * 构建一个 
 	 * @param code 授权码 
 	 * @param clientId 应用id 
 	 * @param scopes 请求授权范围
 	 * @param loginId 对应的账号id 
-	 * @param redirectUri 重定向地址 
+	 * @param redirectUri 重定向地址
+	 * @param nonce 随机数
 	 */
 	public CodeModel(String code, String clientId, List<String> scopes, Object loginId, String redirectUri, String nonce) {
 		this();

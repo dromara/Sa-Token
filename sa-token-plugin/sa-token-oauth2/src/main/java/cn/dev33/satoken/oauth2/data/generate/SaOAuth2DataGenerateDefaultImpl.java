@@ -16,7 +16,6 @@
 package cn.dev33.satoken.oauth2.data.generate;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.consts.GrantType;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.convert.SaOAuth2DataConverter;
@@ -32,8 +31,8 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2RefreshTokenException;
 import cn.dev33.satoken.oauth2.strategy.SaOAuth2Strategy;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.util.SaTtlMethods;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -43,10 +42,10 @@ import java.util.function.Consumer;
  * @author click33
  * @since 1.39.0
  */
-public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
+public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate, SaTtlMethods {
 
     /**
-     * 构建Model：Code授权码
+     * 构建 Model：Code授权码
      * @param ra 请求参数Model
      * @return 授权码Model
      */
@@ -55,18 +54,17 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
-        // 删除旧Code
+        // 删除旧 Code
         dao.deleteCode(dao.getCodeValue(ra.clientId, ra.loginId));
 
-        // 生成新Code
-        String codeValue = SaOAuth2Strategy.instance.createCodeValue.execute(ra.clientId, ra.loginId, ra.scopes);
-        CodeModel cm = new CodeModel(codeValue, ra.clientId, ra.scopes, ra.loginId, ra.redirectUri, ra.getNonce());
+        // 生成新 Code
+        CodeModel cm = SaOAuth2Manager.getDataConverter().convertRequestAuthToCode(ra);
 
-        // 保存新Code
+        // 保存新 Code
         dao.saveCode(cm);
         dao.saveCodeIndex(cm);
 
-        // 保存code-nonce
+        // 保存 code -> nonce
         dao.saveCodeNonceIndex(cm);
 
         // 返回
@@ -74,7 +72,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     }
 
     /**
-     * 构建Model：Access-Token (根据 code 授权码)
+     * 构建 Model：Access-Token (根据 code 授权码)
      * @param code 授权码
      * @return AccessToken Model
      */
@@ -91,30 +89,32 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
         // 2、开发者自定义的授权前置检查
         SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(cm.loginId, cm.clientId);
 
-        // 3、生成token
-        AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm);
+        // 3、生成新 Access-Token
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
+        AccessTokenModel at = dataConverter.convertCodeToAccessToken(cm, clientModel.getAccessTokenTimeout());
         SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
-        RefreshTokenModel rt = dataConverter.convertAccessTokenToRefreshToken(at);
+
+        // 4、生成新 Refresh-Token
+        RefreshTokenModel rt = dataConverter.convertAccessTokenToRefreshToken(at, clientModel.getRefreshTokenTimeout());
         at.refreshToken = rt.refreshToken;
         at.refreshExpiresTime = rt.expiresTime;
 
-        // 4、保存token
-        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(cm.clientId);
+        // 5、保存 Access-Token、Refresh-Token
         dao.saveAccessToken(at);
-        dao.saveAccessTokenIndex(at, clientModel.getMaxAccessTokenCount());
+        dao.saveAccessTokenIndex_AndAdjust(at, clientModel.getMaxAccessTokenCount());
         dao.saveRefreshToken(rt);
-        dao.saveRefreshTokenIndex(rt, clientModel.getMaxRefreshTokenCount());
+        dao.saveRefreshTokenIndex_AndAdjust(rt, clientModel.getMaxRefreshTokenCount());
 
-        // 5、删除此Code
+        // 6、删除 Code (一个 code 只可以使用一次)
         dao.deleteCode(code);
         dao.deleteCodeIndex(cm.clientId, cm.loginId);
 
-        // 6、返回 Access-Token
+        // 7、返回 Access-Token
         return at;
     }
 
     /**
-     * 刷新Model：根据 Refresh-Token 生成一个新的 Access-Token
+     * 刷新 Model：根据 Refresh-Token 生成一个新的 Access-Token
      * @param refreshToken Refresh-Token值
      * @return 新的 Access-Token
      */
@@ -123,42 +123,35 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
-        // 获取 Refresh-Token 信息
+        // 1、获取 Refresh-Token 信息
         RefreshTokenModel rt = dao.getRefreshToken(refreshToken);
         SaOAuth2RefreshTokenException.throwBy(rt == null, "无效 refresh_token: " + refreshToken, refreshToken, SaOAuth2ErrorCode.CODE_30111);
 
-        // 开发者自定义的授权前置检查
+        // 2、开发者自定义的授权前置检查
         SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(rt.loginId, rt.clientId);
 
-        // 如果配置了 [每次刷新产生新的Refresh-Token]
+        // 3、如果配置了 isNewRefresh=true，则生成一个新的 Refresh-Token
         SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(rt.clientId);
         if(clientModel.getIsNewRefresh()) {
-            // 删除旧 Refresh-Token
-//            dao.deleteRefreshToken(rt.refreshToken);
-
-            // 创建并保存新的 Refresh-Token
-            rt = SaOAuth2Manager.getDataConverter().convertRefreshTokenToRefreshToken(rt);
+            rt = SaOAuth2Manager.getDataConverter().convertRefreshTokenToRefreshToken(rt, clientModel.getRefreshTokenTimeout());
             dao.saveRefreshToken(rt);
-            dao.saveRefreshTokenIndex(rt, clientModel.getMaxRefreshTokenCount());
+            dao.saveRefreshTokenIndex_AndAdjust(rt, clientModel.getMaxRefreshTokenCount());
         }
 
-        // 删除旧 Access-Token
-//        dao.deleteAccessToken(dao.getAccessTokenList(rt.clientId, rt.loginId));
-
-        // 生成新 Access-Token
-        AccessTokenModel at = SaOAuth2Manager.getDataConverter().convertRefreshTokenToAccessToken(rt);
+        // 4、生成新 Access-Token
+        AccessTokenModel at = SaOAuth2Manager.getDataConverter().convertRefreshTokenToAccessToken(rt, clientModel.getAccessTokenTimeout());
         SaOAuth2Strategy.instance.refreshAccessTokenWorkByScope.accept(at);
 
-        // 保存新 Access-Token
+        // 5、保存新 Access-Token
         dao.saveAccessToken(at);
-        dao.saveAccessTokenIndex(at, clientModel.getMaxAccessTokenCount());
+        dao.saveAccessTokenIndex_AndAdjust(at, clientModel.getMaxAccessTokenCount());
 
-        // 返回新 Access-Token
+        // 6、返回新 Access-Token
         return at;
     }
 
     /**
-     * 构建Model：Access-Token (根据RequestAuthModel构建，用于隐藏式 and 密码式)
+     * 构建 Model：Access-Token (根据 RequestAuthModel 构建，用于隐藏式 and 密码式)
      * @param ra 请求参数Model
      * @param isCreateRt 是否生成对应的Refresh-Token
      * @param appendWork 对生成的 AccessTokenModel 进行追加操作
@@ -169,51 +162,39 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     public AccessTokenModel generateAccessToken(RequestAuthModel ra, boolean isCreateRt, Consumer<AccessTokenModel> appendWork) {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
-
-        // 1、删除 旧Token
-//        dao.deleteAccessToken(dao.getAccessTokenList(ra.clientId, ra.loginId));
-//        if(isCreateRt) {
-//            dao.deleteRefreshToken(dao.getRefreshTokenValue(ra.clientId, ra.loginId));
-//        }
+        SaOAuth2DataConverter dataConverter = SaOAuth2Manager.getDataConverter();
 
         // 1、开发者自定义的授权前置检查
         SaOAuth2Strategy.instance.userAuthorizeClientCheck.run(ra.loginId, ra.clientId);
 
-        // 2、生成 新Access-Token
-        String newAtValue = SaOAuth2Strategy.instance.createAccessToken.execute(ra.clientId, ra.loginId, ra.scopes);
-        AccessTokenModel at = new AccessTokenModel(newAtValue, ra.clientId, ra.loginId, ra.scopes);
-        at.tokenType = SaOAuth2Consts.TokenType.bearer;
+        // 2、生成 Access-Token
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(ra.clientId);
+        AccessTokenModel at = dataConverter.convertRequestAuthToAccessToken(ra, clientModel.getAccessTokenTimeout());
         if(appendWork != null) {
             appendWork.accept(at);
         }
-
-        // 3、根据权限构建额外参数
-        at.extraData = new LinkedHashMap<>();
         SaOAuth2Strategy.instance.workAccessTokenByScope.accept(at);
 
-        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(ra.clientId);
-        at.expiresTime = System.currentTimeMillis() + (clientModel.getAccessTokenTimeout() * 1000);
-
-        // 3、生成&保存 Refresh-Token
+        // 3、生成 & 保存 Refresh-Token
         if(isCreateRt) {
-            RefreshTokenModel rt = SaOAuth2Manager.getDataConverter().convertAccessTokenToRefreshToken(at);
+            RefreshTokenModel rt = dataConverter.convertAccessTokenToRefreshToken(at, clientModel.getRefreshTokenTimeout());
             at.refreshToken = rt.refreshToken;
             at.refreshExpiresTime = rt.expiresTime;
 
             dao.saveRefreshToken(rt);
-            dao.saveRefreshTokenIndex(rt, clientModel.getMaxRefreshTokenCount());
+            dao.saveRefreshTokenIndex_AndAdjust(rt, clientModel.getMaxRefreshTokenCount());
         }
 
-        // 5、保存 新Access-Token
+        // 4、保存 Access-Token
         dao.saveAccessToken(at);
-        dao.saveAccessTokenIndex(at, clientModel.getMaxAccessTokenCount());
+        dao.saveAccessTokenIndex_AndAdjust(at, clientModel.getMaxAccessTokenCount());
 
-        // 6、返回 新Access-Token
+        // 5、返回 Access-Token
         return at;
     }
 
     /**
-     * 构建Model：Client-Token
+     * 构建 Model：Client-Token
      * @param clientId 应用id
      * @param scopes 授权范围
      * @return Client-Token Model
@@ -223,39 +204,23 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
 
         SaOAuth2Dao dao = SaOAuth2Manager.getDao();
 
-        // 1、删掉旧 Lower-Client-Token
-//        dao.deleteClientToken(dao.getLowerClientTokenValue(clientId));
+        // 1、如果配置了 Lower-Client-Token 的 ttl ，则需要更新一下
+        SaClientModel clientModel = SaOAuth2Manager.getDataLoader().getClientModelNotNull(clientId);
 
-        // 2、将旧Client-Token 标记为新 Lower-Client-Token
-//        ClientTokenModel oldCt = dao.getClientToken(dao.getClientTokenValue(clientId));
-//        dao.saveLowerClientTokenIndex(oldCt);
-
-        // 2.5、如果配置了 Lower-Client-Token 的 ttl ，则需要更新一下
-        SaClientModel cm = SaOAuth2Manager.getDataLoader().getClientModelNotNull(clientId);
-//        if(oldCt != null && cm.getLowerClientTokenTimeout() != -1) {
-//            oldCt.expiresTime = System.currentTimeMillis() + (cm.getLowerClientTokenTimeout() * 1000);
-//            dao.saveClientToken(oldCt);
-//        }
-
-        // 3、生成新 Client-Token
-        String clientTokenValue = SaOAuth2Strategy.instance.createClientToken.execute(clientId, scopes);
-        ClientTokenModel ct = new ClientTokenModel(clientTokenValue, clientId, scopes);
-        ct.tokenType = SaOAuth2Consts.TokenType.bearer;
-        ct.expiresTime = System.currentTimeMillis() + (cm.getClientTokenTimeout() * 1000);
-        ct.grantType = GrantType.client_credentials;
-        ct.extraData = new LinkedHashMap<>();
+        // 2、生成 Client-Token
+        ClientTokenModel ct = SaOAuth2Manager.getDataConverter().convertSaClientToClientToken(clientModel, scopes);
         SaOAuth2Strategy.instance.workClientTokenByScope.accept(ct);
 
-        // 3、保存新Client-Token
+        // 3、保存 Client-Token
         dao.saveClientToken(ct);
-        dao.saveClientTokenIndex(ct, cm.getMaxClientTokenCount());
+        dao.saveClientTokenIndex_AndAdjust(ct, clientModel.getMaxClientTokenCount());
 
         // 4、返回
         return ct;
     }
 
     /**
-     * 构建URL：下放Code URL (Authorization Code 授权码)
+     * 构建 URL：下放Code URL (Authorization Code 授权码)
      * @param redirectUri 下放地址
      * @param code code参数
      * @param state state参数
@@ -272,7 +237,7 @@ public class SaOAuth2DataGenerateDefaultImpl implements SaOAuth2DataGenerate {
     }
 
     /**
-     * 构建URL：下放Access-Token URL （implicit 隐藏式）
+     * 构建 URL：下放Access-Token URL （implicit 隐藏式）
      * @param redirectUri 下放地址
      * @param token token
      * @param state state参数

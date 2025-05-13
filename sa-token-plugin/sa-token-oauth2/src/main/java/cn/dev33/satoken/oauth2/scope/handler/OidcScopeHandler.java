@@ -120,8 +120,8 @@ public class OidcScopeHandler implements SaOAuth2ScopeHandlerInterface {
     public String getNonce() {
         String nonce = SaHolder.getRequest().getParam(SaOAuth2Consts.Param.nonce);
         if(SaFoxUtil.isEmpty(nonce)) {
-            //通过code查找nonce
-            //为了避免其它handler可能会用到nonce,任由其自然过期，只取用不删除
+            // 通过 code 查找nonce
+            // 为了避免其它 handler 可能会用到 nonce, 任由其自然过期，只取用不删除
             nonce = SaOAuth2Manager.getDao().getNonce(SaHolder.getRequest().getParam(SaOAuth2Consts.Param.code));
         }
         if(SaFoxUtil.isEmpty(nonce)) {
@@ -136,7 +136,7 @@ public class OidcScopeHandler implements SaOAuth2ScopeHandlerInterface {
      * @return /
      */
     public IdTokenModel workExtraData(IdTokenModel idToken) {
-        //
+        // 留给开发者扩展
         return idToken;
     }
 

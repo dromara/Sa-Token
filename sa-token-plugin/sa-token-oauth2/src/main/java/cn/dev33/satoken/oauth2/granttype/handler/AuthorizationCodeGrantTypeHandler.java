@@ -17,8 +17,8 @@ package cn.dev33.satoken.oauth2.granttype.handler;
 
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.GrantType;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
 
@@ -39,9 +39,7 @@ public class AuthorizationCodeGrantTypeHandler implements SaOAuth2GrantTypeHandl
 
     @Override
     public AccessTokenModel getAccessToken(SaRequest req, String clientId, List<String> scopes) {
-        // 获取参数
         ClientIdAndSecretModel clientIdAndSecret = SaOAuth2Manager.getDataResolver().readClientIdAndSecret(req);
-//        String clientId = clientIdAndSecret.clientId;
         String clientSecret = clientIdAndSecret.clientSecret;
         String code = req.getParamNotNull(SaOAuth2Consts.Param.code);
         String redirectUri = req.getParam(SaOAuth2Consts.Param.redirect_uri);
@@ -50,8 +48,7 @@ public class AuthorizationCodeGrantTypeHandler implements SaOAuth2GrantTypeHandl
         SaOAuth2Manager.getTemplate().checkGainTokenParam(code, clientId, clientSecret, redirectUri);
 
         // 构建 Access-Token、返回
-        AccessTokenModel accessTokenModel = SaOAuth2Manager.getDataGenerate().generateAccessToken(code);
-        return accessTokenModel;
+        return SaOAuth2Manager.getDataGenerate().generateAccessToken(code);
     }
 
 }

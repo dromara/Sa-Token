@@ -16,7 +16,7 @@
 package cn.dev33.satoken.oauth2.scope;
 
 /**
- * OAuth2 常见权限定义
+ * OAuth2 常见 Scope 定义
  *
  * @author click33
  * @since 1.39.0

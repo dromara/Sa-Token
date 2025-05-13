@@ -66,7 +66,6 @@ public interface SaOAuth2DataResolver {
      */
     RequestAuthModel readRequestAuthModel(SaRequest req, Object loginId);
 
-
     /**
      * 构建返回值: 获取 token
      * @param at token信息

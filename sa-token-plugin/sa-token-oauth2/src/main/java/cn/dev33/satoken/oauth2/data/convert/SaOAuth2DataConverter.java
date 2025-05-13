@@ -16,8 +16,11 @@
 package cn.dev33.satoken.oauth2.data.convert;
 
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
+import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
+import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
+import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 
 import java.util.List;
 
@@ -51,31 +54,58 @@ public interface SaOAuth2DataConverter {
     List<String> convertRedirectUriStringToList(String redirectUris);
 
     /**
-     * 将 Code 转换为 Access-Token
+     * 根据 RequestAuthModel 构建一个 CodeModel
+     * @param ra RequestAuthModel
+     * @return CodeModel 对象
+     */
+    CodeModel convertRequestAuthToCode(RequestAuthModel ra);
+
+    /**
+     * 根据 RequestAuthModel 构建一个 AccessTokenModel
+     * @param ra RequestAuthModel
+     * @param accessTokenTimeout Access-Token 有效期 (单位：秒)
+     * @return AccessTokenModel 对象
+     */
+    AccessTokenModel convertRequestAuthToAccessToken(RequestAuthModel ra, long accessTokenTimeout);
+
+    /**
+     * 根据 Code 构建一个 Access-Token
      * @param cm CodeModel对象
+     * @param accessTokenTimeout Access-Token 有效期 (单位：秒)
      * @return AccessToken对象
      */
-    AccessTokenModel convertCodeToAccessToken(CodeModel cm);
+    AccessTokenModel convertCodeToAccessToken(CodeModel cm, long accessTokenTimeout);
 
     /**
-     * 将 Access-Token 转换为 Refresh-Token
+     * 根据 Access-Token 构建一个 Refresh-Token
      * @param at /
+     * @param refreshTokenTimeout Refresh-Token 有效期 (单位：秒)
      * @return /
      */
-    RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at);
+    RefreshTokenModel convertAccessTokenToRefreshToken(AccessTokenModel at, long refreshTokenTimeout);
 
     /**
-     * 将 Refresh-Token 转换为 Access-Token
+     * 根据 Refresh-Token 构建一个 Access-Token
      * @param rt /
+     * @param accessTokenTimeout Access-Token 有效期 (单位：秒)
      * @return /
      */
-    AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt);
+    AccessTokenModel convertRefreshTokenToAccessToken(RefreshTokenModel rt, long accessTokenTimeout);
 
     /**
-     * 根据 Refresh-Token 创建一个新的 Refresh-Token
+     * 根据 Refresh-Token 构建一个新的 Refresh-Token
      * @param rt /
+     * @param refreshTokenTimeout Refresh-Token 有效期 (单位：秒)
      * @return /
      */
-    RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt);
+    RefreshTokenModel convertRefreshTokenToRefreshToken(RefreshTokenModel rt, long refreshTokenTimeout);
+
+    /**
+     * 根据 SaClientModel 构建一个 ClientTokenModel
+     * @param clientModel /
+     * @param scopes 权限列表
+     * @return /
+     */
+    ClientTokenModel convertSaClientToClientToken(SaClientModel clientModel, List<String> scopes);
 
 }
