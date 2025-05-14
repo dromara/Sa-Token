@@ -1,9 +1,9 @@
 package com.pj.test;
 
-import cn.dev33.satoken.annotation.SaCheckApiKey;
 import cn.dev33.satoken.annotation.SaMode;
-import cn.dev33.satoken.apikey.SaApiKeyUtil;
+import cn.dev33.satoken.apikey.annotation.SaCheckApiKey;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
+import cn.dev33.satoken.apikey.template.SaApiKeyUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

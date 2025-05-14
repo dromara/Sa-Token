@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.config;
+package cn.dev33.satoken.apikey.config;
 
 /**
  * Sa-Token API Key 相关配置

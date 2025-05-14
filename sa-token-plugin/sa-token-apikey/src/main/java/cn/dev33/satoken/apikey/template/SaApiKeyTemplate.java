@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.apikey;
+package cn.dev33.satoken.apikey.template;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.apikey.SaApiKeyManager;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
@@ -94,7 +95,7 @@ public class SaApiKeyTemplate {
 	 * @return /
 	 */
 	public ApiKeyModel getApiKeyModelFromDatabase(String apiKey) {
-		return SaManager.getSaApiKeyDataLoader().getApiKeyModelFromDatabase(namespace, apiKey);
+		return SaApiKeyManager.getSaApiKeyDataLoader().getApiKeyModelFromDatabase(namespace, apiKey);
 	}
 
 	/**
@@ -264,7 +265,7 @@ public class SaApiKeyTemplate {
 	 * @return /
 	 */
 	public ApiKeyModel createApiKeyModel(Object loginId) {
-		long timeout = SaManager.getConfig().getApiKey().getTimeout();
+		long timeout = SaApiKeyManager.getConfig().getTimeout();
 		long expiresTime = (timeout == SaTokenDao.NEVER_EXPIRE) ? SaTokenDao.NEVER_EXPIRE : System.currentTimeMillis() + timeout * 1000;
 		return createApiKeyModel()
 				.setLoginId(loginId)
@@ -279,7 +280,7 @@ public class SaApiKeyTemplate {
 	 * @return /
 	 */
 	public String randomApiKeyValue() {
-		return SaManager.getConfig().getApiKey().getPrefix() + SaFoxUtil.getRandomString(36);
+		return SaApiKeyManager.getConfig().getPrefix() + SaFoxUtil.getRandomString(36);
 	}
 
 
@@ -553,7 +554,7 @@ public class SaApiKeyTemplate {
 	 * 是否保存索引信息
 	 */
 	public boolean getIsRecordIndex() {
-		return SaManager.getSaApiKeyDataLoader().getIsRecordIndex();
+		return SaApiKeyManager.getSaApiKeyDataLoader().getIsRecordIndex();
 	}
 
 }

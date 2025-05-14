@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.apikey;
+package cn.dev33.satoken.apikey.template;
 
-import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.apikey.SaApiKeyManager;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.session.SaSession;
@@ -36,7 +36,7 @@ public class SaApiKeyUtil {
 	 * @return /
 	 */
 	public static ApiKeyModel getApiKey(String apiKey) {
-		return SaManager.getSaApiKeyTemplate().getApiKey(apiKey);
+		return SaApiKeyManager.getSaApiKeyTemplate().getApiKey(apiKey);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class SaApiKeyUtil {
 	 * @return /
 	 */
 	public static ApiKeyModel checkApiKey(String apiKey) {
-		return SaManager.getSaApiKeyTemplate().checkApiKey(apiKey);
+		return SaApiKeyManager.getSaApiKeyTemplate().checkApiKey(apiKey);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class SaApiKeyUtil {
 	 * @param ak /
 	 */
 	public static void saveApiKey(ApiKeyModel ak) {
-		SaManager.getSaApiKeyTemplate().saveApiKey(ak);
+		SaApiKeyManager.getSaApiKeyTemplate().saveApiKey(ak);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class SaApiKeyUtil {
 	 * @return LoginId
 	 */
 	public static Object getLoginIdByApiKey(String apiKey) {
-		return SaManager.getSaApiKeyTemplate().getLoginIdByApiKey(apiKey);
+		return SaApiKeyManager.getSaApiKeyTemplate().getLoginIdByApiKey(apiKey);
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class SaApiKeyUtil {
 	 * @param apiKey ApiKey
 	 */
 	public static void deleteApiKey(String apiKey) {
-		SaManager.getSaApiKeyTemplate().deleteApiKey(apiKey);
+		SaApiKeyManager.getSaApiKeyTemplate().deleteApiKey(apiKey);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class SaApiKeyUtil {
 	 * @param loginId /
 	 */
 	public static void deleteApiKeyByLoginId(Object loginId) {
-		SaManager.getSaApiKeyTemplate().deleteApiKeyByLoginId(loginId);
+		SaApiKeyManager.getSaApiKeyTemplate().deleteApiKeyByLoginId(loginId);
 	}
 
 	// ------- 创建
@@ -89,7 +89,7 @@ public class SaApiKeyUtil {
 	 * @return /
 	 */
 	public static ApiKeyModel createApiKeyModel() {
-		return SaManager.getSaApiKeyTemplate().createApiKeyModel();
+		return SaApiKeyManager.getSaApiKeyTemplate().createApiKeyModel();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class SaApiKeyUtil {
 	 * @return /
 	 */
 	public static ApiKeyModel createApiKeyModel(Object loginId) {
-		return SaManager.getSaApiKeyTemplate().createApiKeyModel(loginId);
+		return SaApiKeyManager.getSaApiKeyTemplate().createApiKeyModel(loginId);
 	}
 
 
@@ -110,7 +110,7 @@ public class SaApiKeyUtil {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public static boolean hasApiKeyScope(String apiKey, String... scopes) {
-		return SaManager.getSaApiKeyTemplate().hasApiKeyScope(apiKey, scopes);
+		return SaApiKeyManager.getSaApiKeyTemplate().hasApiKeyScope(apiKey, scopes);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class SaApiKeyUtil {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public static void checkApiKeyScope(String apiKey, String... scopes) {
-		SaManager.getSaApiKeyTemplate().checkApiKeyScope(apiKey, scopes);
+		SaApiKeyManager.getSaApiKeyTemplate().checkApiKeyScope(apiKey, scopes);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class SaApiKeyUtil {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public static boolean hasApiKeyScopeOr(String apiKey, String... scopes) {
-		return SaManager.getSaApiKeyTemplate().hasApiKeyScopeOr(apiKey, scopes);
+		return SaApiKeyManager.getSaApiKeyTemplate().hasApiKeyScopeOr(apiKey, scopes);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class SaApiKeyUtil {
 	 * @param scopes 需要校验的权限列表
 	 */
 	public static void checkApiKeyScopeOr(String apiKey, String... scopes) {
-		SaManager.getSaApiKeyTemplate().checkApiKeyScopeOr(apiKey, scopes);
+		SaApiKeyManager.getSaApiKeyTemplate().checkApiKeyScopeOr(apiKey, scopes);
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class SaApiKeyUtil {
 	 * @param loginId /
 	 */
 	public static boolean isApiKeyLoginId(String apiKey, Object loginId) {
-		return SaManager.getSaApiKeyTemplate().isApiKeyLoginId(apiKey, loginId);
+		return SaApiKeyManager.getSaApiKeyTemplate().isApiKeyLoginId(apiKey, loginId);
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class SaApiKeyUtil {
 	 * @param loginId /
 	 */
 	public static void checkApiKeyLoginId(String apiKey, Object loginId) {
-		SaManager.getSaApiKeyTemplate().checkApiKeyLoginId(apiKey, loginId);
+		SaApiKeyManager.getSaApiKeyTemplate().checkApiKeyLoginId(apiKey, loginId);
 	}
 
 
@@ -166,14 +166,14 @@ public class SaApiKeyUtil {
 	 * 数据读取：从请求对象中读取 ApiKey，获取不到返回 null
 	 */
 	public static String readApiKeyValue(SaRequest request) {
-		return SaManager.getSaApiKeyTemplate().readApiKeyValue(request);
+		return SaApiKeyManager.getSaApiKeyTemplate().readApiKeyValue(request);
 	}
 
 	/**
 	 * 数据读取：从请求对象中读取 ApiKey，并查询到 ApiKeyModel 信息
 	 */
 	public static ApiKeyModel currentApiKey() {
-		return SaManager.getSaApiKeyTemplate().currentApiKey();
+		return SaApiKeyManager.getSaApiKeyTemplate().currentApiKey();
 	}
 
 
@@ -185,7 +185,7 @@ public class SaApiKeyUtil {
 	 * @param session 可填写 null，代表使用 loginId 现场查询
 	 */
 	public static void adjustIndex(Object loginId, SaSession session) {
-		SaManager.getSaApiKeyTemplate().adjustIndex(loginId, session);
+		SaApiKeyManager.getSaApiKeyTemplate().adjustIndex(loginId, session);
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class SaApiKeyUtil {
 	 * @return /
 	 */
 	public static List<ApiKeyModel> getApiKeyList(Object loginId) {
-		return SaManager.getSaApiKeyTemplate().getApiKeyList(loginId);
+		return SaApiKeyManager.getSaApiKeyTemplate().getApiKeyList(loginId);
 	}
 
 }

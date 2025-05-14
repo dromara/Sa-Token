@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.annotation;
+package cn.dev33.satoken.apikey.annotation;
+
+import cn.dev33.satoken.annotation.SaMode;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

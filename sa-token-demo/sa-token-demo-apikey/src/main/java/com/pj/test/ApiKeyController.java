@@ -1,7 +1,7 @@
 package com.pj.test;
 
-import cn.dev33.satoken.apikey.SaApiKeyUtil;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
+import cn.dev33.satoken.apikey.template.SaApiKeyUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.RequestMapping;

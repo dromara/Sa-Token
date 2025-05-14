@@ -62,7 +62,6 @@ public final class SaAnnotationStrategy {
 		annotationHandlerMap.put(SaCheckHttpDigest.class, new SaCheckHttpDigestHandler());
 		annotationHandlerMap.put(SaCheckOr.class, new SaCheckOrHandler());
 		annotationHandlerMap.put(SaCheckSign.class, new SaCheckSignHandler());
-		annotationHandlerMap.put(SaCheckApiKey.class, new SaCheckApiKeyHandler());
 	}
 
 	/**

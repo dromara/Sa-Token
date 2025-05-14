@@ -68,12 +68,21 @@ API Key 具有以下特点：
 
 
 
+### 2、引入依赖
+在使用 API Key 模块之前，你必须先引入依赖：
+``` xml
+<!-- Sa-Token 整合 API Key -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-apikey</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
 
 
-### 2、创建 API Key
+### 3、创建 API Key
 
-理解了应用场景后，让我们看看 Sa-Token 为 API Key 提供了哪些方法
-*（此插件是内嵌到 sa-token-core 核心包中的模块，大家无需再次引入其它依赖，插件直接可用）*：
+理解了应用场景后，让我们看看 Sa-Token 为 API Key 提供了哪些方法：
 
 
 ``` java
@@ -117,7 +126,7 @@ List<ApiKeyModel> apiKeyList = SaApiKeyUtil.getApiKeyList(10001);
 ```
 
 
-### 3、校验 API Key
+### 4、校验 API Key
 
 ``` java
 // 校验指定 API Key 是否有效，无效会抛出异常 ApiKeyException
@@ -181,7 +190,7 @@ public class ApiKeyResourcesController {
 ```
 
 
-### 4、前端如何提交 API Key？
+### 5、前端如何提交 API Key？
 默认情况下，前端可以从任意途径提交 API Key 字符串，只要后端能接受到。
 
 但是如果后端是通过 `SaApiKeyUtil.currentApiKey()` 方法获取，或者 `@SaCheckApiKey` 注解校验，则需要前端按照一定的格式来提交了：
@@ -203,7 +212,7 @@ http://AK-NAO6u57zbOWCmLaiVQuVW2tyt3rHpZrXkaQp@localhost:8081/user/getInfo
 
 
 
-### 5、打开数据库模式
+### 6、打开数据库模式
 
 框架默认将所有 API Key 信息保存在缓存中，这可以称之为“缓存模式”，这种模式下，重启缓存库后，数据将丢失。
 
@@ -244,7 +253,7 @@ public class SaApiKeyDataLoaderImpl implements SaApiKeyDataLoader {
 
 
 
-### 6、多账号模式使用 
+### 7、多账号模式使用 
 
 如果系统有多套账号表，比如 Admin 和 User，只需要指定不同的命名空间即可：
 

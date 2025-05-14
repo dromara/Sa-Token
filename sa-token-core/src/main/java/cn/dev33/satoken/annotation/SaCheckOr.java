@@ -79,13 +79,6 @@ public @interface SaCheckOr {
     SaCheckDisable[] disable() default {};
 
     /**
-     * 设定 @SaCheckApiKey，参考 {@link SaCheckApiKey}
-     *
-     * @return /
-     */
-    SaCheckApiKey[] apikey() default {};
-
-    /**
      * 需要追加抓取的注解 Class (只能填写 Sa-Token 相关注解类型)
      *
      * @return /

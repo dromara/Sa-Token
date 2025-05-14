@@ -200,6 +200,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-temp-jwt                     // [插件] Sa-Token 整合 jjwt (临时 Token) 
 		├── sa-token-sso                          // [插件] Sa-Token 实现 SSO 单点登录
 		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 认证
+		├── sa-token-apikey                       // [插件] Sa-Token 实现 API Key 认证
 		├── sa-token-redisson                     // [插件] Sa-Token 整合 Redisson (数据缓存插件) 
 		├── sa-token-redisx                       // [插件] Sa-Token 整合 Redisx (数据缓存插件) 
 		├── sa-token-serializer-features          // [插件] Sa-Token 序列化实现扩展 

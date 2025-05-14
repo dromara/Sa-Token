@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.apikey.loader;
 
-import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.apikey.SaApiKeyManager;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
 
 /**
@@ -32,7 +32,7 @@ public interface SaApiKeyDataLoader {
      * @return /
      */
     default Boolean getIsRecordIndex() {
-        return SaManager.getConfig().getApiKey().getIsRecordIndex();
+        return SaApiKeyManager.getConfig().getIsRecordIndex();
     }
 
     /**

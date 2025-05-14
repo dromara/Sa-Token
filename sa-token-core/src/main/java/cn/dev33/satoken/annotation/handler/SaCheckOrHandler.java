@@ -40,7 +40,7 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
 
     @Override
     public void checkMethod(SaCheckOr at, AnnotatedElement element) {
-        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), at.apikey(), at.append(), element);
+        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), at.append(), element);
     }
 
     public static void _checkMethod(
@@ -51,7 +51,6 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
             SaCheckHttpBasic[] httpBasic,
             SaCheckHttpDigest[] httpDigest,
             SaCheckDisable[] disable,
-            SaCheckApiKey[] apikey,
             Class<? extends Annotation>[] append,
             AnnotatedElement element
     ) {
@@ -64,7 +63,6 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
         annotationList.addAll(Arrays.asList(disable));
         annotationList.addAll(Arrays.asList(httpBasic));
         annotationList.addAll(Arrays.asList(httpDigest));
-        annotationList.addAll(Arrays.asList(apikey));
         for (Class<? extends Annotation> annotationClass : append) {
             Annotation annotation = SaAnnotationStrategy.instance.getAnnotation.apply(element, annotationClass);
             if(annotation != null) {

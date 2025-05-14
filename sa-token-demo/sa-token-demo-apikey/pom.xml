@@ -47,6 +47,13 @@
 			<artifactId>commons-pool2</artifactId>
 		</dependency>
 
+		<!-- Sa-Token 整合 API Key -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-apikey</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
 		<!-- 热刷新 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

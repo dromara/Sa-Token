@@ -49,19 +49,27 @@
 			<artifactId>sa-token-jackson</artifactId>
 		</dependency>
 
-		<!-- OAuth2.0 (optional) -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-oauth2</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
 		<!-- SSO (optional) -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-sso</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- OAuth2.0 (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-oauth2</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- API Key (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-apikey</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 	</dependencies>
 
 

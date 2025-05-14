@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.annotation.handler;
+package cn.dev33.satoken.apikey.annotation.handle;
 
-import cn.dev33.satoken.annotation.SaCheckApiKey;
 import cn.dev33.satoken.annotation.SaMode;
-import cn.dev33.satoken.apikey.SaApiKeyUtil;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
+import cn.dev33.satoken.apikey.annotation.SaCheckApiKey;
+import cn.dev33.satoken.apikey.template.SaApiKeyUtil;
 import cn.dev33.satoken.context.SaHolder;
 
 import java.lang.reflect.AnnotatedElement;
