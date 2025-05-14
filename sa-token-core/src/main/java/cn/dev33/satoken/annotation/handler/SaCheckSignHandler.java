@@ -20,7 +20,7 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.sign.SaSignMany;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckSign 的处理器
@@ -36,7 +36,7 @@ public class SaCheckSignHandler implements SaAnnotationHandlerInterface<SaCheckS
     }
 
     @Override
-    public void checkMethod(SaCheckSign at, Method method) {
+    public void checkMethod(SaCheckSign at, AnnotatedElement element) {
         _checkMethod(at.appid(), at.verifyParams());
     }
 

@@ -22,7 +22,7 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.util.SaFoxUtil;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckPermission 的处理器
@@ -38,7 +38,7 @@ public class SaCheckPermissionHandler implements SaAnnotationHandlerInterface<Sa
     }
 
     @Override
-    public void checkMethod(SaCheckPermission at, Method method) {
+    public void checkMethod(SaCheckPermission at, AnnotatedElement element) {
         _checkMethod(at.type(), at.value(), at.mode(), at.orRole());
     }
 

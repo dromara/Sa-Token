@@ -20,7 +20,7 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.annotation.SaCheckClientToken;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckAccessToken 的处理器
@@ -36,7 +36,7 @@ public class SaCheckClientTokenHandler implements SaAnnotationHandlerInterface<S
     }
 
     @Override
-    public void checkMethod(SaCheckClientToken at, Method method) {
+    public void checkMethod(SaCheckClientToken at, AnnotatedElement element) {
         _checkMethod(at.scope());
     }
 

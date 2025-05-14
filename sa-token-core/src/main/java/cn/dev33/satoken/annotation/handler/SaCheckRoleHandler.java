@@ -20,7 +20,7 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpLogic;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckRole 的处理器
@@ -36,7 +36,7 @@ public class SaCheckRoleHandler implements SaAnnotationHandlerInterface<SaCheckR
     }
 
     @Override
-    public void checkMethod(SaCheckRole at, Method method) {
+    public void checkMethod(SaCheckRole at, AnnotatedElement element) {
         _checkMethod(at.type(), at.value(), at.mode());
     }
 

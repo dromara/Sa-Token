@@ -213,6 +213,18 @@ public SaResult test() {
 ```
 
 
+使用 append 字段追加抓取扩展包里的注解，例如：
+``` java
+// 测试：只有通过登录校验，或者提供了正确的 ApiKey，才可以进入方法
+@RequestMapping("/test")
+@SaCheckOr(login = @SaCheckLogin, append = { SaCheckApiKey.class })
+@SaCheckApiKey
+public SaResult test() {
+	// ...
+	return SaResult.ok();
+}
+```
+
 
 ### 7、扩展阅读
 

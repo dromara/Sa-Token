@@ -19,7 +19,7 @@ import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.oauth2.annotation.SaCheckClientIdSecret;
 import cn.dev33.satoken.oauth2.processor.SaOAuth2ServerProcessor;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckClientSecret 的处理器
@@ -35,7 +35,7 @@ public class SaCheckClientIdSecretHandler implements SaAnnotationHandlerInterfac
     }
 
     @Override
-    public void checkMethod(SaCheckClientIdSecret at, Method method) {
+    public void checkMethod(SaCheckClientIdSecret at, AnnotatedElement element) {
         _checkMethod();
     }
 

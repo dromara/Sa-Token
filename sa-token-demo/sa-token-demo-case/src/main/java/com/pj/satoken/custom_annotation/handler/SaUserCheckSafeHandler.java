@@ -6,7 +6,7 @@ import com.pj.satoken.StpUserUtil;
 import com.pj.satoken.custom_annotation.SaUserCheckSafe;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaUserCheckPermission 的处理器
@@ -22,7 +22,7 @@ public class SaUserCheckSafeHandler implements SaAnnotationHandlerInterface<SaUs
     }
 
     @Override
-    public void checkMethod(SaUserCheckSafe at, Method method) {
+    public void checkMethod(SaUserCheckSafe at, AnnotatedElement element) {
         SaCheckSafeHandler._checkMethod(StpUserUtil.TYPE, at.value());
     }
 

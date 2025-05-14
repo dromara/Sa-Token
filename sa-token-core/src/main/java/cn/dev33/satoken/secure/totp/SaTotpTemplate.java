@@ -155,8 +155,8 @@ public class SaTotpTemplate {
 	 * 生成谷歌认证器的扫码字符串 (形如：otpauth://totp/{issuer}:{account}?secret={secretKey}&issuer={issuer})
 	 *
 	 * @param account  账户名
-	 * @param secretKey  TOTP 秘钥
 	 * @param issuer  签发者
+	 * @param secretKey  TOTP 秘钥
 	 * @return /
 	 */
 	public String generateGoogleSecretKey(String account, String issuer, String secretKey) {

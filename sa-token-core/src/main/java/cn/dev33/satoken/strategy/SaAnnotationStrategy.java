@@ -17,15 +17,12 @@ package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.annotation.handler.*;
-import cn.dev33.satoken.fun.strategy.SaCheckELRootMapExtendFunction;
-import cn.dev33.satoken.fun.strategy.SaCheckMethodAnnotationFunction;
-import cn.dev33.satoken.fun.strategy.SaGetAnnotationFunction;
-import cn.dev33.satoken.fun.strategy.SaIsAnnotationPresentFunction;
+import cn.dev33.satoken.fun.strategy.*;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
+import cn.dev33.satoken.router.SaRouter;
 
 import java.lang.annotation.Annotation;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Sa-Token 注解鉴权相关策略
@@ -56,7 +53,6 @@ public final class SaAnnotationStrategy {
 	 * 注册所有默认的注解处理器
 	 */
 	public void registerDefaultAnnotationHandler() {
-		annotationHandlerMap.put(SaIgnore.class, new SaIgnoreHandler());
 		annotationHandlerMap.put(SaCheckLogin.class, new SaCheckLoginHandler());
 		annotationHandlerMap.put(SaCheckRole.class, new SaCheckRoleHandler());
 		annotationHandlerMap.put(SaCheckPermission.class, new SaCheckPermissionHandler());
@@ -98,21 +94,42 @@ public final class SaAnnotationStrategy {
 	/**
 	 * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现）
 	 */
-	@SuppressWarnings("unchecked")
 	public SaCheckMethodAnnotationFunction checkMethodAnnotation = (method) -> {
-		// 遍历所有的注解处理器，检查此 method 是否具有这些指定的注解
+
+		// 如果 Method 或其所属 Class 上有 @SaIgnore 注解，则直接跳过整个校验过程
+		if(instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
+			SaRouter.stop();
+		}
+
+		// 先校验 Method 所属 Class 上的注解
+		instance.checkElementAnnotation.accept(method.getDeclaringClass());
+
+		// 再校验 Method 上的注解
+		instance.checkElementAnnotation.accept(method);
+	};
+
+	/**
+	 * 对一个 [Element] 对象进行注解校验 （注解鉴权内部实现）
+	 */
+	@SuppressWarnings("unchecked")
+	public SaCheckElementAnnotationFunction checkElementAnnotation = (element) -> {
+		// 如果此元素上标注了 @SaCheckOr，则必须在后续判断中忽略掉其指定的 append() 类型注解判断
+		List<Class<? extends Annotation>> ignoreClassList = new ArrayList<>();
+		SaCheckOr checkOr = (SaCheckOr)instance.getAnnotation.apply(element, SaCheckOr.class);
+		if(checkOr != null) {
+			ignoreClassList = Arrays.asList(checkOr.append());
+		}
+
+		// 遍历所有的注解处理器，检查此 element 是否具有这些指定的注解
 		for (Map.Entry<Class<?>, SaAnnotationHandlerInterface<?>> entry: annotationHandlerMap.entrySet()) {
-
-			// 先校验 Method 所属 Class 上的注解
-			Annotation classTakeAnnotation = instance.getAnnotation.apply(method.getDeclaringClass(), (Class<Annotation>)entry.getKey());
-			if(classTakeAnnotation != null) {
-				entry.getValue().check(classTakeAnnotation, method);
+			// 忽略掉在 @SaCheckOr 中 append 字段指定的注解
+			Class<Annotation> atClass = (Class<Annotation>)entry.getKey();
+			if(ignoreClassList.contains(atClass)) {
+				continue;
 			}
-
-			// 再校验 Method 上的注解
-			Annotation methodTakeAnnotation = instance.getAnnotation.apply(method, (Class<Annotation>)entry.getKey());
-			if(methodTakeAnnotation != null) {
-				entry.getValue().check(methodTakeAnnotation, method);
+			Annotation annotation = instance.getAnnotation.apply(element, atClass);
+			if(annotation != null) {
+				entry.getValue().check(annotation, element);
 			}
 		}
 	};
@@ -121,7 +138,6 @@ public final class SaAnnotationStrategy {
 	 * 从元素上获取注解
 	 */
 	public SaGetAnnotationFunction getAnnotation = (element, annotationClass)->{
-		// 默认使用jdk的注解处理器
 		return element.getAnnotation(annotationClass);
 	};
 

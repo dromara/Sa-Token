@@ -20,7 +20,7 @@ import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.apikey.SaApiKeyUtil;
 import cn.dev33.satoken.context.SaHolder;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckApiKey 的处理器
@@ -36,7 +36,7 @@ public class SaCheckApiKeyHandler implements SaAnnotationHandlerInterface<SaChec
     }
 
     @Override
-    public void checkMethod(SaCheckApiKey at, Method method) {
+    public void checkMethod(SaCheckApiKey at, AnnotatedElement element) {
         _checkMethod(at.scope(), at.mode());
     }
 

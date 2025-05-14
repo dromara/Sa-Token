@@ -18,10 +18,11 @@ package cn.dev33.satoken.annotation.handler;
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.router.SaRouter;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaIgnore 的处理器
+ * <h2> v1.43.0 版本起，SaIgnore 注解处理逻辑已转移到全局策略中，此处理器代码仅做留档 </h2>
  *
  * @author click33
  * @since 2024/8/2
@@ -34,7 +35,7 @@ public class SaIgnoreHandler implements SaAnnotationHandlerInterface<SaIgnore> {
     }
 
     @Override
-    public void checkMethod(SaIgnore at, Method method) {
+    public void checkMethod(SaIgnore at, AnnotatedElement element) {
         _checkMethod();
     }
 

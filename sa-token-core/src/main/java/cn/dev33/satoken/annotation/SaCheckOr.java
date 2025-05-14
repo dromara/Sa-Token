@@ -15,10 +15,7 @@
  */
 package cn.dev33.satoken.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 批量注解鉴权：只要满足其中一个注解即可通过验证
@@ -87,5 +84,12 @@ public @interface SaCheckOr {
      * @return /
      */
     SaCheckApiKey[] apikey() default {};
+
+    /**
+     * 需要追加抓取的注解 Class (只能填写 Sa-Token 相关注解类型)
+     *
+     * @return /
+     */
+    Class<? extends Annotation>[] append() default {};
 
 }

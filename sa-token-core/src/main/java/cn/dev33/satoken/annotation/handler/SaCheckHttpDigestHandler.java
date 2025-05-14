@@ -20,7 +20,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.httpauth.digest.SaHttpDigestUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 
 /**
  * 注解 SaCheckHttpDigest 的处理器
@@ -36,7 +36,7 @@ public class SaCheckHttpDigestHandler implements SaAnnotationHandlerInterface<Sa
     }
 
     @Override
-    public void checkMethod(SaCheckHttpDigest at, Method method) {
+    public void checkMethod(SaCheckHttpDigest at, AnnotatedElement element) {
         _checkMethod(at.username(), at.password(), at.realm(), at.value());
     }
 

@@ -69,7 +69,7 @@ public class AtController {
 	public SaResult checkSafe() {
 		return SaResult.ok();
 	}
-	
+
 	// 通过Basic认证后才可以进入  ---- http://localhost:8081/at/checkBasic 
 	@SaCheckHttpBasic(account = "sa:123456")
 	@RequestMapping("checkBasic")

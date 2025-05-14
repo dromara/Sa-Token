@@ -20,7 +20,7 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,8 +39,8 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
     }
 
     @Override
-    public void checkMethod(SaCheckOr at, Method method) {
-        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), at.apikey(), method);
+    public void checkMethod(SaCheckOr at, AnnotatedElement element) {
+        _checkMethod(at.login(), at.role(), at.permission(), at.safe(), at.httpBasic(), at.httpDigest(), at.disable(), at.apikey(), at.append(), element);
     }
 
     public static void _checkMethod(
@@ -52,7 +52,8 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
             SaCheckHttpDigest[] httpDigest,
             SaCheckDisable[] disable,
             SaCheckApiKey[] apikey,
-            Method method
+            Class<? extends Annotation>[] append,
+            AnnotatedElement element
     ) {
         // 先把所有注解塞到一个 list 里
         List<Annotation> annotationList = new ArrayList<>();
@@ -64,6 +65,12 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
         annotationList.addAll(Arrays.asList(httpBasic));
         annotationList.addAll(Arrays.asList(httpDigest));
         annotationList.addAll(Arrays.asList(apikey));
+        for (Class<? extends Annotation> annotationClass : append) {
+            Annotation annotation = SaAnnotationStrategy.instance.getAnnotation.apply(element, annotationClass);
+            if(annotation != null) {
+                annotationList.add(annotation);
+            }
+        }
 
         // 如果 atList 为空，说明 SaCheckOr 上不包含任何注解校验，我们直接跳过即可
         if(annotationList.isEmpty()) {
@@ -74,7 +81,7 @@ public class SaCheckOrHandler implements SaAnnotationHandlerInterface<SaCheckOr>
         List<SaTokenException> errorList = new ArrayList<>();
         for (Annotation item : annotationList) {
             try {
-                SaAnnotationStrategy.instance.annotationHandlerMap.get(item.annotationType()).check(item, method);
+                SaAnnotationStrategy.instance.annotationHandlerMap.get(item.annotationType()).check(item, element);
                 // 只要有一个校验通过，就可以直接返回了
                 return;
             } catch (SaTokenException e) {
