@@ -265,15 +265,16 @@ public class SaTokenEventCenter {
 	}
 
 	/**
-	 * 事件发布：指定 Token 续期成功
-	 * 
-	 * @param tokenValue token 值 
-	 * @param loginId 账号id 
-	 * @param timeout 续期时间 
+	 * 每次 Token 续期时触发（注意：是 timeout 续期，而不是 active-timeout 续期）
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token 值
+	 * @param timeout 续期时间
 	 */
-	public static void doRenewTimeout(String tokenValue,  Object loginId, long timeout) {
+	public static void doRenewTimeout(String loginType, Object loginId, String tokenValue, long timeout) {
 		for (SaTokenListener listener : listenerList) {
-			listener.doRenewTimeout(tokenValue, loginId, timeout);
+			listener.doRenewTimeout(loginType, loginId, tokenValue, timeout);
 		}
 	}
 

@@ -2002,7 +2002,7 @@ public class StpLogic {
 		}
 
 		// 7、$$ 发布事件：某某 token 被续期了
-		SaTokenEventCenter.doRenewTimeout(tokenValue, loginId, timeout);
+		SaTokenEventCenter.doRenewTimeout(loginType, loginId, tokenValue, timeout);
 	}
 
 

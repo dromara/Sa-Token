@@ -17,8 +17,8 @@ package cn.dev33.satoken.listener;
 
 import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
-import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import static cn.dev33.satoken.SaManager.log;
@@ -112,13 +112,12 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	}
 
 	/**
-	 * 每次Token续期时触发
+	 * 每次 Token 续期时触发
 	 */
 	@Override
-	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
+	public void doRenewTimeout(String loginType, Object loginId, String tokenValue, long timeout) {
 		log.info("token 续期成功, {} 秒后到期, 帐号={}, token值={} ", timeout, loginId, tokenValue);
 	}
-
 
 	/**
 	 * 全局组件载入 
