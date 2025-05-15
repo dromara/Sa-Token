@@ -39,6 +39,7 @@
         <module>sa-token-redisx</module>
         <module>sa-token-serializer-features</module>
         <module>sa-token-forest</module>
+        <module>sa-token-okhttps</module>
 
         <!-- SpringBoot 环境插件 -->
         <module>sa-token-redis-template</module>

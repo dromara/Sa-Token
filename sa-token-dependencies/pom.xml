@@ -41,6 +41,7 @@
 		<hutool-cache.version>5.8.36</hutool-cache.version>
 		<caffeine.version>3.2.0</caffeine.version>
 		<forest.version>1.6.4</forest.version>
+		<okhttps.version>4.1.0</okhttps.version>
     </properties>
 
     <dependencyManagement>
@@ -280,6 +281,13 @@
 				<groupId>com.dtflys.forest</groupId>
 				<artifactId>forest-core</artifactId>
 				<version>${forest.version}</version>
+			</dependency>
+
+			<!-- Forest -->
+			<dependency>
+				<groupId>cn.zhxu</groupId>
+				<artifactId>okhttps</artifactId>
+				<version>${okhttps.version}</version>
 			</dependency>
 
 			<!-- sa-token 自身依赖 -->
