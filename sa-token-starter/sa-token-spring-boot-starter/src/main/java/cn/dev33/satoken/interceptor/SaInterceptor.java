@@ -40,8 +40,14 @@ public class SaInterceptor implements HandlerInterceptor {
 	public boolean isAnnotation = true;
 	
 	/**
-	 * 认证函数：每次请求执行 
+	 * 认证前置函数：在注解鉴权之前执行
 	 * <p> 参数：路由处理函数指针 
+	 */
+	public SaParamFunction<Object> beforeAuth = handler -> {};
+
+	/**
+	 * 认证函数：每次请求执行
+	 * <p> 参数：路由处理函数指针
 	 */
 	public SaParamFunction<Object> auth = handler -> {};
 
@@ -68,18 +74,28 @@ public class SaInterceptor implements HandlerInterceptor {
 		this.isAnnotation = isAnnotation;
 		return this;
 	}
-	
+
+	/**
+	 * 写入 [ 认证前置函数 ]: 在注解鉴权之前执行
+	 * @param beforeAuth /
+	 * @return 对象自身
+	 */
+	public SaInterceptor setBeforeAuth(SaParamFunction<Object> beforeAuth) {
+		this.beforeAuth = beforeAuth;
+		return this;
+	}
+
 	/**
 	 * 写入 [ 认证函数 ]: 每次请求执行
-	 * @param auth / 
-	 * @return 对象自身 
+	 * @param auth /
+	 * @return 对象自身
 	 */
 	public SaInterceptor setAuth(SaParamFunction<Object> auth) {
 		this.auth = auth;
 		return this;
 	}
-	
-	
+
+
 	// ----------------- 验证方法 ----------------- 
 
 	/**
@@ -91,6 +107,8 @@ public class SaInterceptor implements HandlerInterceptor {
 			throws Exception {
 
 		try {
+			// 前置函数：在注解鉴权之前执行
+			beforeAuth.run(handler);
 
 			// 这里必须确保 handler 是 HandlerMethod 类型时，才能进行注解鉴权
 			if(isAnnotation && handler instanceof HandlerMethod) {

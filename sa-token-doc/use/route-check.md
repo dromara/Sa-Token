@@ -225,7 +225,7 @@ public SaResult getList() {
 
 ### 7、关闭注解校验
 
-`SaInterceptor` 只要注册到项目中，默认就会打开注解校验，如果要关闭此能力，需要：
+`SaInterceptor` 只要注册到项目中，默认就会打开注解校验，如果要关闭此能力，需要指定 `isAnnotation` 为 false：
 
 ``` java
 @Override
@@ -237,6 +237,26 @@ public void addInterceptors(InterceptorRegistry registry) {
 	).addPathPatterns("/**");
 }
 ```
+
+
+你也可以使用 `setBeforeAuth` 注册认证前置函数：
+
+``` java
+@Override
+public void addInterceptors(InterceptorRegistry registry) {
+	registry.addInterceptor(new SaInterceptor(handle -> {
+		System.out.println(1);
+	})
+	.setBeforeAuth(handle -> {
+		System.out.println(2);
+	})
+	).addPathPatterns("/**");
+}
+```
+
+如上代码，先执行 2，再执行注解鉴权，再执行 1，如果 beforeAuth 里包含 `SaRouter.stop()` 将跳过后续的注解鉴权和 auth 认证环节。
+
+
 
 ---
 
