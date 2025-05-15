@@ -73,7 +73,8 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     }
 
     /**
-     * 数据读取：从请求对象中读取 AccessToken，获取不到返回 null
+     * 数据读取：从请求对象中读取 AccessToken，获取不到返回 null，获取不到返回 null
+     * <br /> 1、请求参数 access_token，2、请求头 Authorization Bearer access_token
      */
     @Override
     public String readAccessToken(SaRequest request) {
@@ -101,6 +102,7 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
 
     /**
      * 数据读取：从请求对象中读取 ClientToken，获取不到返回 null
+     * <br /> 1、请求参数 client_token，2、请求头 Authorization Bearer client_token
      */
     @Override
     public String readClientToken(SaRequest request) {

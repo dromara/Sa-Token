@@ -43,7 +43,8 @@ public interface SaOAuth2DataResolver {
     ClientIdAndSecretModel readClientIdAndSecret(SaRequest request);
 
     /**
-     * 数据读取：从请求对象中读取 AccessToken
+     * 数据读取：从请求对象中读取 AccessToken，获取不到返回 null
+     * <br /> 1、请求参数 access_token，2、请求头 Authorization Bearer access_token
      *
      * @param request /
      * @return /
@@ -51,7 +52,8 @@ public interface SaOAuth2DataResolver {
     String readAccessToken(SaRequest request);
 
     /**
-     * 数据读取：从请求对象中读取 ClientToken
+     * 数据读取：从请求对象中读取 ClientToken，获取不到返回 null
+     * <br /> 1、请求参数 client_token，2、请求头 Authorization Bearer client_token
      *
      * @param request /
      * @return /

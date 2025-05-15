@@ -130,6 +130,21 @@ SaOAuth2Util.revokeClientToken(clientToken);
 SaOAuth2Util.revokeClientTokenByIndex(clientId);
 ```
 
+
+### 请求查询
+
+``` java
+// 数据读取：从当前请求对象中读取 access_token，并查询到 AccessTokenModel 信息，无效 access_token 抛出异常
+// 1、请求参数 access_token，2、请求头 Authorization Bearer access_token
+SaOAuth2Util.currentAccessToken();
+
+// 数据读取：从当前请求对象中读取 client_token，并查询到 ClientTokenModel 信息，无效 client_token 抛出异常
+// 1、请求参数 client_token，2、请求头 Authorization Bearer client_token
+SaOAuth2Util.currentClientToken();
+```
+
+
+
 详情请参考源码：[码云：SaOAuth2Util.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Util.java)
 
 

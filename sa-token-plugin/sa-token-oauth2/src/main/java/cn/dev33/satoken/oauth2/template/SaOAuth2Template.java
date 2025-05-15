@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.template;
 
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
 import cn.dev33.satoken.oauth2.dao.SaOAuth2Dao;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
@@ -723,6 +724,27 @@ public class SaOAuth2Template {
 			// 删索引
 			dao.deleteClientTokenIndex(clientId);
 		}
+	}
+
+
+	// ------------------- 请求查询
+
+	/**
+	 * 数据读取：从当前请求对象中读取 access_token，并查询到 AccessTokenModel 信息，无效 access_token 抛出异常
+	 * <br /> 1、请求参数 access_token，2、请求头 Authorization Bearer access_token
+	 */
+	public AccessTokenModel currentAccessToken() {
+		String accessToken = SaOAuth2Manager.getDataResolver().readAccessToken(SaHolder.getRequest());
+		return checkAccessToken(accessToken);
+	}
+
+	/**
+	 * 数据读取：从当前请求对象中读取 client_token，并查询到 ClientTokenModel 信息，无效 client_token 抛出异常
+	 * <br /> 1、请求参数 client_token，2、请求头 Authorization Bearer client_token
+	 */
+	public ClientTokenModel currentClientToken() {
+		String clientToken = SaOAuth2Manager.getDataResolver().readClientToken(SaHolder.getRequest());
+		return checkClientToken(clientToken);
 	}
 
 

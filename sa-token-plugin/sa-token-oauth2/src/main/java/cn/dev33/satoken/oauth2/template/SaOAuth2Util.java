@@ -378,4 +378,23 @@ public class SaOAuth2Util {
 		SaOAuth2Manager.getTemplate().revokeClientTokenByIndex(clientId);
 	}
 
+
+	// ------------------- 请求查询
+
+	/**
+	 * 数据读取：从当前请求对象中读取 access_token，并查询到 AccessTokenModel 信息，无效 access_token 抛出异常
+	 * <br /> 1、请求参数 access_token，2、请求头 Authorization Bearer access_token
+	 */
+	public static AccessTokenModel currentAccessToken() {
+		return SaOAuth2Manager.getTemplate().currentAccessToken();
+	}
+
+	/**
+	 * 数据读取：从当前请求对象中读取 client_token，并查询到 ClientTokenModel 信息，无效 client_token 抛出异常
+	 * <br /> 1、请求参数 client_token，2、请求头 Authorization Bearer client_token
+	 */
+	public static ClientTokenModel currentClientToken() {
+		return SaOAuth2Manager.getTemplate().currentClientToken();
+	}
+
 }
