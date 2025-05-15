@@ -1,7 +1,6 @@
 package com.pj.test;
 
 import cn.dev33.satoken.annotation.SaCheckHttpDigest;
-import cn.dev33.satoken.annotation.SaCheckSign;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaTerminalInfo;

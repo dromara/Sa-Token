@@ -148,36 +148,4 @@ public class SaTokenException extends RuntimeException {
 		}
 	}
 
-	// ------------------- 已过期 -------------------
-
-	/**
-	 * 如果flag==true，则抛出message异常
-	 * <h2>已过期：请使用 notTrue 代替，用法不变</h2>
-	 *
-	 * @param flag 标记
-	 * @param message 异常信息
-	 * @param code 异常细分状态码
-	 */
-	@Deprecated
-	public static void throwBy(boolean flag, String message, int code) {
-		if(flag) {
-			throw new SaTokenException(message).setCode(code);
-		}
-	}
-
-	/**
-	 * 如果value==null或者isEmpty，则抛出message异常
-	 * <h2>已过期：请使用 notEmpty 代替，用法不变</h2>
-	 *
-	 * @param value 值
-	 * @param message 异常信息
-	 * @param code 异常细分状态码
-	 */
-	@Deprecated
-	public static void throwByNull(Object value, String message, int code) {
-		if(SaFoxUtil.isEmpty(value)) {
-			throw new SaTokenException(message).setCode(code);
-		}
-	}
-
 }

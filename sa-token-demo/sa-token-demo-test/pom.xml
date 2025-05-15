@@ -66,7 +66,14 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-        
+
+		<!-- Sa-Token API 参数签名 -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sign</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
 		<!-- @ConfigurationProperties -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

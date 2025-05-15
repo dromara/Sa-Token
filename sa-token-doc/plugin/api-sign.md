@@ -10,7 +10,7 @@
 - 请求参数被篡改。
 - 请求被抓包，然后重放攻击。
 
-sa-token api-sign 模块将帮你轻松解决以上难题。*（此插件是内嵌到 sa-token-core 核心包中的模块，开发者无需再次引入其它依赖，插件直接可用）*
+sa-token-sign 模块将帮你轻松解决以上难题。
 
 本篇将根据假设的需求场景，循序渐进讲明白跨系统接口调用时必做的几个步骤，以及为什么要有这些步骤的原因。
 
@@ -383,7 +383,7 @@ public SaResult addMoney(long userId, long money, long timestamp, String nonce, 
 
 ### 9、使用 Sa-Token 框架完成 API 参数签名
 
-接下来步入正题，使用 Sa-Token 内置的 sign 模块，方便的完成 API 签名创建、校验等步骤：
+接下来步入正题，使用 sa-token-sign 模块，方便的完成 API 签名创建、校验等步骤：
 - 不限制请求的参数数量，方便组织业务需求代码。
 - 自动补全 nonce、timestamp 参数，省时省力。
 - 自动构建签名，并序列化参数为字符串。
@@ -391,16 +391,16 @@ public SaResult addMoney(long userId, long money, long timestamp, String nonce, 
 
 
 #### 9.1、引入依赖
-api-sign 模块已内嵌到核心包，只需要引入 sa-token 本身依赖即可：（请求发起端和接收端都需要引入）
+请求发起端和接收端都需要引入：
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 
 ``` xml 
-<!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+<!-- Sa-Token 整合 API 参数签名校验 -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-spring-boot-starter</artifactId>
+	<artifactId>sa-token-sign</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
@@ -408,8 +408,8 @@ api-sign 模块已内嵌到核心包，只需要引入 sa-token 本身依赖即�
 <!-------- tab:Gradle 方式 -------->
 
 ``` gradle
-// Sa-Token 权限认证，在线文档：https://sa-token.cc
-implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
+// Sa-Token 整合 API 参数签名校验
+implementation 'cn.dev33:sa-token-sign:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 

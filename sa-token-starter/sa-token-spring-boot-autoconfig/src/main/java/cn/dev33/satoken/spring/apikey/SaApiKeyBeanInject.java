@@ -37,7 +37,7 @@ public class SaApiKeyBeanInject {
 	 * @param saApiKeyConfig 配置对象
 	 */
 	@Autowired(required = false)
-	public void setSaOAuth2Config(SaApiKeyConfig saApiKeyConfig) {
+	public void setSaApiKeyConfig(SaApiKeyConfig saApiKeyConfig) {
 		SaApiKeyManager.setConfig(saApiKeyConfig);
 	}
 

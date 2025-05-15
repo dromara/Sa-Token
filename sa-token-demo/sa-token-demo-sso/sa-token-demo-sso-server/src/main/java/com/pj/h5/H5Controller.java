@@ -1,6 +1,6 @@
 package com.pj.h5;
 
-import cn.dev33.satoken.sso.template.SaSsoUtil;
+import cn.dev33.satoken.sso.template.SaSsoServerUtil;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -30,11 +30,11 @@ public class H5Controller {
 		redirect = SaFoxUtil.decoderUrl(redirect);
 		if(SaSsoConsts.MODE_SIMPLE.equals(mode)) {
 			// 模式一 
-			SaSsoUtil.checkRedirectUrl(client, redirect);
+			SaSsoServerUtil.checkRedirectUrl(client, redirect);
 			return SaResult.data(redirect);
 		} else {
 			// 模式二或模式三
-			String redirectUrl = SaSsoUtil.buildRedirectUrl(client, redirect, StpUtil.getLoginId(), StpUtil.getLoginDeviceId());
+			String redirectUrl = SaSsoServerUtil.buildRedirectUrl(client, redirect, StpUtil.getLoginId(), StpUtil.getLoginDeviceId());
 			return SaResult.data(redirectUrl);
 		}
 	}

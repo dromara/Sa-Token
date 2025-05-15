@@ -22,6 +22,11 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
         </dependency>
+        <!-- sa-token-sign -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sign</artifactId>
+        </dependency>
 	</dependencies>
 
 

@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.annotation.handler;
+package cn.dev33.satoken.sign.annotation.handle;
 
-import cn.dev33.satoken.annotation.SaCheckSign;
+import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
+import cn.dev33.satoken.sign.annotation.SaCheckSign;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.sign.SaSignMany;
+import cn.dev33.satoken.sign.template.SaSignMany;
 
 import java.lang.reflect.AnnotatedElement;
 

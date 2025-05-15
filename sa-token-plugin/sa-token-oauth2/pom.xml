@@ -28,6 +28,11 @@
             <artifactId>sa-token-jwt</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- sa-token-sign 校验 nonce -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sign</artifactId>
+        </dependency>
 	</dependencies>
 
 

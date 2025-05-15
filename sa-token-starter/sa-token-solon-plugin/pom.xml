@@ -42,6 +42,20 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- API Key (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-apikey</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- API Sign (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sign</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- redisx + snack3 -->
         <dependency>
             <groupId>org.noear</groupId>

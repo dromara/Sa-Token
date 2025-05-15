@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.config;
+package cn.dev33.satoken.sign.config;
 
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaParamRetFunction;

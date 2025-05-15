@@ -34,7 +34,6 @@ import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.secure.totp.SaTotpTemplate;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJson;
-import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
@@ -236,25 +235,6 @@ public class SaManager {
 			}
 		}
 		return saSerializerTemplate;
-	}
-
-	/**
-	 * API 参数签名
-	 */
-	private volatile static SaSignTemplate saSignTemplate;
-	public static void setSaSignTemplate(SaSignTemplate saSignTemplate) {
-		SaManager.saSignTemplate = saSignTemplate;
-		SaTokenEventCenter.doRegisterComponent("SaSignTemplate", saSignTemplate);
-	}
-	public static SaSignTemplate getSaSignTemplate() {
-		if (saSignTemplate == null) {
-			synchronized (SaManager.class) {
-				if (saSignTemplate == null) {
-					SaManager.saSignTemplate = new SaSignTemplate();
-				}
-			}
-		}
-		return saSignTemplate;
 	}
 
 	/**

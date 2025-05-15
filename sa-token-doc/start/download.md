@@ -201,6 +201,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-sso                          // [插件] Sa-Token 实现 SSO 单点登录
 		├── sa-token-oauth2                       // [插件] Sa-Token 实现 OAuth2.0 认证
 		├── sa-token-apikey                       // [插件] Sa-Token 实现 API Key 认证
+		├── sa-token-sign                         // [插件] Sa-Token 实现 API 参数签名  
 		├── sa-token-redisson                     // [插件] Sa-Token 整合 Redisson (数据缓存插件) 
 		├── sa-token-redisx                       // [插件] Sa-Token 整合 Redisx (数据缓存插件) 
 		├── sa-token-serializer-features          // [插件] Sa-Token 序列化实现扩展 
@@ -213,6 +214,7 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 		├── sa-token-grpc                         // [插件] Sa-Token 整合 gRPC (RPC 调用鉴权、状态传递) 
 		├── sa-token-quick-login                  // [插件] Sa-Token 快速注入登录页插件 
 		├── sa-token-redisson-spring-boot-starter // [插件] Sa-Token 整合 Redisson - SpringBoot 自动配置包 (数据缓存插件) 
+		├── sa-token-forest                       // [插件] Sa-Token 整合 Forest，http 请求 
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
 		├── sa-token-demo-alone-redis-cluster     // [示例] Sa-Token 集成 alone-redis 模块、集群模式

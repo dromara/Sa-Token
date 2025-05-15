@@ -16,9 +16,10 @@
 package cn.dev33.satoken.sso.template;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.config.SaSignConfig;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.sign.SaSignTemplate;
+import cn.dev33.satoken.sign.SaSignManager;
+import cn.dev33.satoken.sign.config.SaSignConfig;
+import cn.dev33.satoken.sign.template.SaSignTemplate;
 import cn.dev33.satoken.sso.SaSsoManager;
 import cn.dev33.satoken.sso.config.SaSsoClientModel;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
@@ -327,7 +328,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         scm.setIsSlo(serverConfig.getIsSlo());
         scm.setSecretKey(serverConfig.getSecretKey());
         if(SaFoxUtil.isEmpty(scm.getSecretKey())) {
-            scm.setSecretKey(SaManager.getSaSignTemplate().getSignConfigOrGlobal().getSecretKey());
+            scm.setSecretKey(SaSignManager.getSaSignTemplate().getSignConfigOrGlobal().getSecretKey());
         }
         return scm;
     }
@@ -781,7 +782,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @return /
      */
     public SaSignTemplate getSignTemplate(String client) {
-        SaSignConfig signConfig = SaManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
+        SaSignConfig signConfig = SaSignManager.getSaSignTemplate().getSignConfigOrGlobal().copy();
         SaSsoClientModel clientModel = getClientNotNull(client);
 
         // 使用 secretKey 的优先级：client 单独配置 > SSO 模块全局配置 > sign 模块默认配置

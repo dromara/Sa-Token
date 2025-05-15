@@ -17,14 +17,14 @@ package cn.dev33.satoken.apikey.template;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.apikey.SaApiKeyManager;
+import cn.dev33.satoken.apikey.error.SaApiKeyErrorCode;
+import cn.dev33.satoken.apikey.exception.ApiKeyException;
+import cn.dev33.satoken.apikey.exception.ApiKeyScopeException;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.ApiKeyException;
-import cn.dev33.satoken.exception.ApiKeyScopeException;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.raw.SaRawSessionDelegator;
@@ -124,13 +124,13 @@ public class SaApiKeyTemplate {
 	public ApiKeyModel checkApiKey(String apiKey) {
 		ApiKeyModel ak = getApiKey(apiKey);
 		if(ak == null) {
-			throw new ApiKeyException("无效 API Key: " + apiKey).setApiKey(apiKey).setCode(SaErrorCode.CODE_12301);
+			throw new ApiKeyException("无效 API Key: " + apiKey).setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12301);
 		}
 		if(ak.timeExpired()) {
-			throw new ApiKeyException("API Key 已过期: " + apiKey).setApiKey(apiKey).setCode(SaErrorCode.CODE_12302);
+			throw new ApiKeyException("API Key 已过期: " + apiKey).setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12302);
 		}
 		if(! ak.getIsValid()) {
-			throw new ApiKeyException("API Key 已被禁用: " + apiKey).setApiKey(apiKey).setCode(SaErrorCode.CODE_12303);
+			throw new ApiKeyException("API Key 已被禁用: " + apiKey).setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12303);
 		}
 		return ak;
 	}
@@ -315,7 +315,7 @@ public class SaApiKeyTemplate {
 				throw new ApiKeyScopeException("该 API Key 不具备 Scope：" + scope)
 						.setApiKey(apiKey)
 						.setScope(scope)
-						.setCode(SaErrorCode.CODE_12311);
+						.setCode(SaApiKeyErrorCode.CODE_12311);
 			}
 		}
 	}
@@ -352,7 +352,7 @@ public class SaApiKeyTemplate {
 		throw new ApiKeyScopeException("该 API Key 不具备 Scope：" + scopes[0])
 				.setApiKey(apiKey)
 				.setScope(scopes[0])
-				.setCode(SaErrorCode.CODE_12311);
+				.setCode(SaApiKeyErrorCode.CODE_12311);
 	}
 
 	/**
@@ -378,12 +378,12 @@ public class SaApiKeyTemplate {
 	public void checkApiKeyLoginId(String apiKey, Object loginId) {
 		ApiKeyModel ak = getApiKey(apiKey);
 		if(ak == null) {
-			throw new ApiKeyException("无效 API Key: " + apiKey).setApiKey(apiKey).setCode(SaErrorCode.CODE_12301);
+			throw new ApiKeyException("无效 API Key: " + apiKey).setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12301);
 		}
 		if (SaFoxUtil.notEquals(String.valueOf(ak.getLoginId()), String.valueOf(loginId))) {
 			throw new ApiKeyException("该 API Key 不属于用户: " + loginId)
 					.setApiKey(apiKey)
-					.setCode(SaErrorCode.CODE_12312);
+					.setCode(SaApiKeyErrorCode.CODE_12312);
 		}
 	}
 

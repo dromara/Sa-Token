@@ -35,7 +35,6 @@ import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.secure.totp.SaTotpTemplate;
 import cn.dev33.satoken.serializer.SaSerializerTemplate;
-import cn.dev33.satoken.sign.SaSignTemplate;
 import cn.dev33.satoken.spring.pathmatch.SaPathMatcherHolder;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
@@ -205,16 +204,6 @@ public class SaBeanInject {
 	@Autowired(required = false)
 	public void setSaSerializerTemplate(SaSerializerTemplate saSerializerTemplate) {
 		SaManager.setSaSerializerTemplate(saSerializerTemplate);
-	}
-
-	/**
-	 * 注入自定义的 参数签名 Bean 
-	 * 
-	 * @param saSignTemplate 参数签名 Bean 
-	 */
-	@Autowired(required = false)
-	public void setSaSignTemplate(SaSignTemplate saSignTemplate) {
-		SaManager.setSaSignTemplate(saSignTemplate);
 	}
 
 	/**

@@ -15,7 +15,6 @@
  */
 package cn.dev33.satoken.oauth2.scope.handler;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.jwt.SaJwtUtil;
@@ -29,6 +28,7 @@ import cn.dev33.satoken.oauth2.data.model.oidc.IdTokenModel;
 import cn.dev33.satoken.oauth2.data.model.request.ClientIdAndSecretModel;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
+import cn.dev33.satoken.sign.SaSignManager;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.net.MalformedURLException;
@@ -127,7 +127,7 @@ public class OidcScopeHandler implements SaOAuth2ScopeHandlerInterface {
         if(SaFoxUtil.isEmpty(nonce)) {
             nonce = SaFoxUtil.getRandomString(32);
         }
-        SaManager.getSaSignTemplate().checkNonce(nonce);
+        SaSignManager.getSaSignTemplate().checkNonce(nonce);
         return nonce;
     }
 

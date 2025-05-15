@@ -43,7 +43,7 @@ public class SaSsoBeanRegister {
 	 * @return 配置对象
 	 */
 	@Bean
-	public SaSsoServerConfig getSaSsoServerConfig(@Inject(value = "${sa-token.sso-server)", required = false) SaSsoServerConfig serverConfig) {
+	public SaSsoServerConfig getSaSsoServerConfig(@Inject(value = "${sa-token.sso-server}", required = false) SaSsoServerConfig serverConfig) {
 		if (serverConfig == null) {
 			return new SaSsoServerConfig();
 		} else {

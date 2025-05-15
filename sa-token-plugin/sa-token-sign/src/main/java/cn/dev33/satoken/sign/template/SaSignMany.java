@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.sign;
+package cn.dev33.satoken.sign.template;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.config.SaSignConfig;
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.SaSignException;
 import cn.dev33.satoken.fun.SaParamRetFunction;
+import cn.dev33.satoken.sign.SaSignManager;
+import cn.dev33.satoken.sign.config.SaSignConfig;
+import cn.dev33.satoken.sign.error.SaSignErrorCode;
+import cn.dev33.satoken.sign.exception.SaSignException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
@@ -34,7 +34,7 @@ public class SaSignMany {
 	 * 根据 appid 获取 SaSignConfig，允许自定义
 	 */
 	public static SaParamRetFunction<String, SaSignConfig> findSaSignConfigMethod = (appid) -> {
-		return SaManager.getConfig().getSignMany().get(appid);
+		return SaSignManager.getSignMany().get(appid);
 	};
 
 	/**
@@ -46,13 +46,13 @@ public class SaSignMany {
 
 		// appid 为空，返回全局默认 SaSignTemplate
 		if(SaFoxUtil.isEmpty(appid)){
-			return SaManager.getSaSignTemplate();
+			return SaSignManager.getSaSignTemplate();
 		}
 
 		// 获取 SaSignConfig
 		SaSignConfig config = findSaSignConfigMethod.run(appid);
 		if(config == null){
-			throw new SaSignException("未找到签名配置，appid=" + appid).setCode(SaErrorCode.CODE_12211);
+			throw new SaSignException("未找到签名配置，appid=" + appid).setCode(SaSignErrorCode.CODE_12211);
 		}
 
 		// 创建 SaSignTemplate 并返回

@@ -193,42 +193,6 @@ public interface SaErrorCode {
 	/** RSA 私钥解密异常 */
 	int CODE_12119 = 12119;
 
-	// ------------ 
-
-	/** 参与参数签名的秘钥不可为空 */
-	int CODE_12201 = 12201;
-
-	/** 给定的签名无效 */
-	int CODE_12202 = 12202;
-
-	/** timestamp 超出允许的范围 */
-	int CODE_12203 = 12203;
-
-	/** 未找到对应 appid 的 SaSignConfig */
-	int CODE_12211 = 12211;
-
-	// ------------
-
-	/** 无效 API Key */
-	int CODE_12301 = 12301;
-
-	/** API Key 已过期 */
-	int CODE_12302 = 12302;
-
-	/** API Key 已被禁用 */
-	int CODE_12303 = 12303;
-
-	/** API Key 字段自检未通过 */
-	int CODE_12304 = 12304;
-
-	/** 未开启索引记录功能却调用了相关 API */
-	int CODE_12305 = 12305;
-
-	/** API Key 不具有指定 Scope */
-	int CODE_12311 = 12311;
-
-	/** API Key 不属于指定用户 */
-	int CODE_12312 = 12312;
 
 	// ------------
 

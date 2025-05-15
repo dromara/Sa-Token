@@ -34,6 +34,7 @@
         <module>sa-token-sso</module>
         <module>sa-token-oauth2</module>
         <module>sa-token-apikey</module>
+        <module>sa-token-sign</module>
         <module>sa-token-redisson</module>
         <module>sa-token-redisx</module>
         <module>sa-token-serializer-features</module>

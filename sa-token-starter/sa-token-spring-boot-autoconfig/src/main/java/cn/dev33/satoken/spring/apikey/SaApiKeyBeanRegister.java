@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
  * 注册 Sa-Token API Key 所需要的 Bean
  *
  * @author click33
- * @since 1.34.0
+ * @since 1.43.0
  */
 @ConditionalOnClass(SaApiKeyManager.class)
 public class SaApiKeyBeanRegister {

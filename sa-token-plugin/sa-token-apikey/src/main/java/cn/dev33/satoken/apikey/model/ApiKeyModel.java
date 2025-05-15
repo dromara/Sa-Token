@@ -15,9 +15,9 @@
  */
 package cn.dev33.satoken.apikey.model;
 
+import cn.dev33.satoken.apikey.error.SaApiKeyErrorCode;
+import cn.dev33.satoken.apikey.exception.ApiKeyException;
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.ApiKeyException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
@@ -140,19 +140,19 @@ public class ApiKeyModel implements Serializable {
 	 */
 	public void checkByCanSaved() {
 		if (SaFoxUtil.isEmpty(this.apiKey)) {
-			throw new ApiKeyException("ApiKey 值不可为空").setApiKey(apiKey).setCode(SaErrorCode.CODE_12304);
+			throw new ApiKeyException("ApiKey 值不可为空").setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12304);
 		}
 		if (this.loginId == null) {
-			throw new ApiKeyException("无效 ApiKey: " + apiKey).setApiKey(apiKey).setCode(SaErrorCode.CODE_12304);
+			throw new ApiKeyException("无效 ApiKey: " + apiKey).setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12304);
 		}
 		if (this.createTime == 0) {
-			throw new ApiKeyException("请指定 createTime 创建时间").setApiKey(apiKey).setCode(SaErrorCode.CODE_12304);
+			throw new ApiKeyException("请指定 createTime 创建时间").setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12304);
 		}
 		if (this.expiresTime == 0) {
-			throw new ApiKeyException("请指定 expiresTime 过期时间").setApiKey(apiKey).setCode(SaErrorCode.CODE_12304);
+			throw new ApiKeyException("请指定 expiresTime 过期时间").setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12304);
 		}
 		if (this.isValid == null) {
-			throw new ApiKeyException("请指定 isValid 是否生效").setApiKey(apiKey).setCode(SaErrorCode.CODE_12304);
+			throw new ApiKeyException("请指定 isValid 是否生效").setApiKey(apiKey).setCode(SaApiKeyErrorCode.CODE_12304);
 		}
 	}
 

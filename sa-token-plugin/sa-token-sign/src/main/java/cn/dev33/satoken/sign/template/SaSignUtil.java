@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.sign;
+package cn.dev33.satoken.sign.template;
 
-import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.sign.SaSignManager;
 
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class SaSignUtil {
 	 * @return 拼接出的参数字符串 
 	 */
 	public static String joinParams(Map<String, ?> paramsMap) {
-		return SaManager.getSaSignTemplate().joinParams(paramsMap);
+		return SaSignManager.getSaSignTemplate().joinParams(paramsMap);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class SaSignUtil {
 	 * @return 拼接出的参数字符串 
 	 */
 	public static String joinParamsDictSort(Map<String, ?> paramsMap) {
-		return SaManager.getSaSignTemplate().joinParamsDictSort(paramsMap);
+		return SaSignManager.getSaSignTemplate().joinParamsDictSort(paramsMap);
 	}
 
 
@@ -57,7 +57,7 @@ public class SaSignUtil {
 	 * @return 签名 
 	 */
 	public static String createSign(Map<String, ?> paramsMap) {
-		return SaManager.getSaSignTemplate().createSign(paramsMap);
+		return SaSignManager.getSaSignTemplate().createSign(paramsMap);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class SaSignUtil {
 	 * @return 加工后的参数列表 
 	 */
 	public static Map<String, Object> addSignParams(Map<String, Object> paramsMap) {
-		return SaManager.getSaSignTemplate().addSignParams(paramsMap);
+		return SaSignManager.getSaSignTemplate().addSignParams(paramsMap);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class SaSignUtil {
 	 * @return 加工后的参数列表 转化为的参数字符串
 	 */
 	public static String addSignParamsAndJoin(Map<String, Object> paramsMap) {
-		return SaManager.getSaSignTemplate().addSignParamsAndJoin(paramsMap);
+		return SaSignManager.getSaSignTemplate().addSignParamsAndJoin(paramsMap);
 	}
 
 
@@ -88,7 +88,7 @@ public class SaSignUtil {
 	 * @return 是否在允许的范围内
 	 */
 	public static boolean isValidTimestamp(long timestamp) {
-		return SaManager.getSaSignTemplate().isValidTimestamp(timestamp);
+		return SaSignManager.getSaSignTemplate().isValidTimestamp(timestamp);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class SaSignUtil {
 	 * @param timestamp 待校验的时间戳
 	 */
 	public static void checkTimestamp(long timestamp) {
-		SaManager.getSaSignTemplate().checkTimestamp(timestamp);
+		SaSignManager.getSaSignTemplate().checkTimestamp(timestamp);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class SaSignUtil {
 	 * @return 是否有效
 	 */
 	public static boolean isValidNonce(String nonce) {
-		return SaManager.getSaSignTemplate().isValidNonce(nonce);
+		return SaSignManager.getSaSignTemplate().isValidNonce(nonce);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class SaSignUtil {
 	 * @param nonce 待校验的随机字符串
 	 */
 	public static void checkNonce(String nonce) {
-		SaManager.getSaSignTemplate().checkNonce(nonce);
+		SaSignManager.getSaSignTemplate().checkNonce(nonce);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class SaSignUtil {
 	 * @return 签名是否有效
 	 */
 	public static boolean isValidSign(Map<String, ?> paramsMap, String sign) {
-		return SaManager.getSaSignTemplate().isValidSign(paramsMap, sign);
+		return SaSignManager.getSaSignTemplate().isValidSign(paramsMap, sign);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class SaSignUtil {
 	 * @param sign 待验证的签名
 	 */
 	public static void checkSign(Map<String, ?> paramsMap, String sign) {
-		SaManager.getSaSignTemplate().checkSign(paramsMap, sign);
+		SaSignManager.getSaSignTemplate().checkSign(paramsMap, sign);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class SaSignUtil {
 	 * @return 是否合法
 	 */
 	public static boolean isValidParamMap(Map<String, String> paramMap) {
-		return SaManager.getSaSignTemplate().isValidParamMap(paramMap);
+		return SaSignManager.getSaSignTemplate().isValidParamMap(paramMap);
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class SaSignUtil {
 	 * @param paramMap 待校验的请求参数集合
 	 */
 	public static void checkParamMap(Map<String, String> paramMap) {
-		SaManager.getSaSignTemplate().checkParamMap(paramMap);
+		SaSignManager.getSaSignTemplate().checkParamMap(paramMap);
 	}
 
 
@@ -164,7 +164,7 @@ public class SaSignUtil {
 	 * @return 是否合法
 	 */
 	public static boolean isValidRequest(SaRequest request, String... paramNames) {
-		return SaManager.getSaSignTemplate().isValidRequest(request, paramNames);
+		return SaSignManager.getSaSignTemplate().isValidRequest(request, paramNames);
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class SaSignUtil {
 	 * @param paramNames 指定参与签名的参数有哪些，如果不填写则默认为全部参数
 	 */
 	public static void checkRequest(SaRequest request, String... paramNames) {
-		SaManager.getSaSignTemplate().checkRequest(request, paramNames);
+		SaSignManager.getSaSignTemplate().checkRequest(request, paramNames);
 	}
 
 }

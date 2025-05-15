@@ -21,8 +21,6 @@ import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Sa-Token 配置类 Model
@@ -222,16 +220,6 @@ public class SaTokenConfig implements Serializable {
 	 * Cookie配置对象 
 	 */
 	public SaCookieConfig cookie = new SaCookieConfig();
-
-	/**
-	 * API 签名配置对象
-	 */
-	public SaSignConfig sign = new SaSignConfig();
-
-	/**
-	 * API 签名配置 多实例
-	 */
-	public Map<String, SaSignConfig> signMany = new LinkedHashMap<>();
 
 	/**
 	 * @return token 名称 （同时也是： cookie 名称、提交 token 时参数的名称、存储 token 时的 key 前缀）
@@ -861,42 +849,6 @@ public class SaTokenConfig implements Serializable {
 		return this;
 	}
 
-	/**
-	 * @return API 签名全局配置对象
-	 */
-	public SaSignConfig getSign() {
-		return sign;
-	}
-
-	/**
-	 * @param sign API 签名全局配置对象
-	 * @return 对象自身
-	 */
-	public SaTokenConfig setSign(SaSignConfig sign) {
-		this.sign = sign;
-		return this;
-	}
-
-	/**
-	 * 获取 API 签名配置 多实例
-	 *
-	 * @return /
-	 */
-	public Map<String, SaSignConfig> getSignMany() {
-		return this.signMany;
-	}
-
-	/**
-	 * 设置 API 签名配置 多实例
-	 *
-	 * @param signMany /
-	 * @return /
-	 */
-	public SaTokenConfig setSignMany(Map<String, SaSignConfig> signMany) {
-		this.signMany = signMany;
-		return this;
-	}
-
 
 	@Override
 	public String toString() {
@@ -938,8 +890,6 @@ public class SaTokenConfig implements Serializable {
 				+ ", sameTokenTimeout=" + sameTokenTimeout
 				+ ", checkSameToken=" + checkSameToken 
 				+ ", cookie=" + cookie
-				+ ", sign=" + sign
-				+ ", signMany=" + signMany
 				+ "]";
 	}
 
@@ -954,7 +904,7 @@ public class SaTokenConfig implements Serializable {
 	 */
 	@Deprecated
 	public long getActivityTimeout() {
-		System.err.println("配置项已过期，请更换：sa-token.activity-timeout -> sa-token.active-timeout");
+//		System.err.println("配置项已过期，请更换：sa-token.activity-timeout -> sa-token.active-timeout");
 		return activeTimeout;
 	}
 

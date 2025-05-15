@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.sign;
+package cn.dev33.satoken.sign.template;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.config.SaSignConfig;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.error.SaErrorCode;
-import cn.dev33.satoken.exception.SaSignException;
+import cn.dev33.satoken.sign.error.SaSignErrorCode;
+import cn.dev33.satoken.sign.exception.SaSignException;
+import cn.dev33.satoken.sign.SaSignManager;
+import cn.dev33.satoken.sign.config.SaSignConfig;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.Map;
@@ -79,7 +81,7 @@ public class SaSignTemplate {
 			return signConfig;
 		}
 		// 否则使用全局默认配置
-		return SaManager.getConfig().getSign();
+		return SaSignManager.getConfig();
 	}
 
 	/**
@@ -160,7 +162,7 @@ public class SaSignTemplate {
 	 */
 	public String createSign(Map<String, ?> paramsMap) {
 		String secretKey = getSecretKey();
-		SaSignException.notEmpty(secretKey, "参与参数签名的秘钥不可为空", SaErrorCode.CODE_12201);
+		SaSignException.notEmpty(secretKey, "参与参数签名的秘钥不可为空", SaSignErrorCode.CODE_12201);
 
 		// 如果调用者不小心传入了 sign 参数，则此处需要将 sign 参数排除在外
 		if(paramsMap.containsKey(sign)) {
@@ -237,7 +239,7 @@ public class SaSignTemplate {
 	 */
 	public void checkTimestamp(long timestamp) {
 		if( ! isValidTimestamp(timestamp) ) {
-			throw new SaSignException("timestamp 超出允许的范围：" + timestamp).setCode(SaErrorCode.CODE_12203);
+			throw new SaSignException("timestamp 超出允许的范围：" + timestamp).setCode(SaSignErrorCode.CODE_12203);
 		}
 	}
 
@@ -297,7 +299,7 @@ public class SaSignTemplate {
 	 */
 	public void checkSign(Map<String, ?> paramsMap, String sign) {
 		if( ! isValidSign(paramsMap, sign) )  {
-			throw new SaSignException("无效签名：" + sign).setCode(SaErrorCode.CODE_12202);
+			throw new SaSignException("无效签名：" + sign).setCode(SaSignErrorCode.CODE_12202);
 		}
 	}
 

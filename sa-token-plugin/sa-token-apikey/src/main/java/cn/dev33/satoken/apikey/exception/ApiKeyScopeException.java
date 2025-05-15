@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.exception;
+package cn.dev33.satoken.apikey.exception;
 
 /**
  * 一个异常：代表 ApiKey Scope 相关错误

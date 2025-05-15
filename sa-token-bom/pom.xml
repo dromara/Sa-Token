@@ -186,6 +186,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-sign</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-quick-login</artifactId>
                 <version>${revision}</version>
             </dependency>
