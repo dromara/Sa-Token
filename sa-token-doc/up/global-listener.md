@@ -96,6 +96,13 @@ public class MySaTokenListener implements SaTokenListener {
 	public void doRenewTimeout(String tokenValue, Object loginId, long timeout) {
 		System.out.println("---------- 自定义侦听器实现 doRenewTimeout");
 	}
+	
+    /** 每次Token续期时触发 */
+    @Override
+    public void doRenewTimeout(String loginType, Object loginId, String tokenValue, long timeout) {
+        System.out.println("---------- 自定义侦听器实现 doRenewTimeout");
+    }
+
 }
 ```
 

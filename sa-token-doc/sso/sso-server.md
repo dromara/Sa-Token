@@ -67,7 +67,7 @@ implementation 'org.apache.commons:commons-pool2'
 implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 // Sa-Token 插件：整合 Forest 请求工具 (模式三需要通过 http 请求推送消息)
-implementation 'cn.dev33:sa-token-forest:1.5.26'
+implementation 'cn.dev33:sa-token-forest:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 

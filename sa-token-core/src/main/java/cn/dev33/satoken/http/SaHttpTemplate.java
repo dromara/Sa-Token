@@ -21,7 +21,7 @@ import java.util.Map;
  * Http 请求处理器
  * 
  * @author click33
- * @since 1.42.0
+ * @since 1.43.0
  */
 public interface SaHttpTemplate {
 
