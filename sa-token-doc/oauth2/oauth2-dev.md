@@ -130,8 +130,93 @@ SaOAuth2Util.revokeClientToken(clientToken);
 SaOAuth2Util.revokeClientTokenByIndex(clientId);
 ```
 
---- 
-
 详情请参考源码：[码云：SaOAuth2Util.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Util.java)
 
+
+### OAuth2-Server 所有可重写策略
+
+
+#### 权限处理器
+``` java
+// 根据 scope 信息对一个 AccessTokenModel 进行加工处理
+SaOAuth2Strategy.instance.workAccessTokenByScope = at -> {
+	// ... 
+}
+
+// 当使用 RefreshToken 刷新 AccessToken 时，根据 scope 信息对一个 AccessTokenModel 进行加工处理
+SaOAuth2Strategy.instance.refreshAccessTokenWorkByScope = at -> {
+	// ... 
+}
+
+// 根据 scope 信息对一个 ClientTokenModel 进行加工处理
+SaOAuth2Strategy.instance.workClientTokenByScope = at -> {
+	// ... 
+}
+```
+
+
+#### grant_type 处理器
+``` java
+// 根据 grantType 构造一个 AccessTokenModel
+SaOAuth2Strategy.instance.grantTypeAuth = req -> {
+	// ... 
+}
+```
+
+
+#### 凭证创建
+``` java
+// 创建一个 code value
+SaOAuth2Strategy.instance.createCodeValue = (clientId, loginId, scopes) -> {
+	// ... 
+}
+
+// 创建一个 AccessToken value
+SaOAuth2Strategy.instance.createAccessToken = (clientId, loginId, scopes) -> {
+	// ... 
+}
+
+// 创建一个 RefreshToken value
+SaOAuth2Strategy.instance.createRefreshToken = (clientId, loginId, scopes) -> {
+	// ... 
+}
+
+// 创建一个 ClientToken value
+SaOAuth2Strategy.instance.createClientToken = (clientId, scopes) -> {
+	// ... 
+}
+```
+
+
+#### 认证流程回调
+``` java
+// OAuth-Server端：未登录时返回的View
+SaOAuth2Strategy.instance.notLoginView = () -> {
+	// ... 
+}
+
+// OAuth-Server端：确认授权时返回的View
+SaOAuth2Strategy.instance.confirmView = (clientId, scopes) -> {
+	// ... 
+}
+
+// OAuth-Server端：登录函数
+SaOAuth2Strategy.instance.doLoginHandle = (name, pwd) -> {
+	// ... 
+}
+
+// OAuth-Server端：用户在授权指定 client 前的检查，如果检查不通过，请直接抛出异常
+SaOAuth2Strategy.instance.userAuthorizeClientCheck = (loginId, clientId) -> {
+	// ... 
+}
+```
+
+
+#### 其它
+``` java
+// 在创建 SaClientModel 时，设置其默认字段
+SaOAuth2Strategy.instance.setSaClientModelDefaultFields = (clientModel) -> {
+	// ... 
+}
+```
 

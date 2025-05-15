@@ -73,7 +73,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
      */
     public Object getData(String path, Map<String, Object> paramMap) {
         String url = buildCustomPathUrl(path, paramMap);
-        return strategy.sendHttp.apply(url);
+        return strategy.sendRequest.apply(url);
     }
 
     /**
@@ -174,7 +174,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
         // 发起请求
         String finalUrl = SaFoxUtil.joinParam(pushUrl, paramsStr);
-        return strategy.sendHttp.apply(finalUrl);
+        return strategy.sendRequest.apply(finalUrl);
     }
 
     /**

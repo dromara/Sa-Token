@@ -141,3 +141,64 @@ SaSsoClientUtil.buildSignoutMessage(Object loginId, SaLogoutParameter logoutPara
 详情请参考源码：[码云：SaSsoClientUtil.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-sso/src/main/java/cn/dev33/satoken/sso/template/SaSsoClientUtil.java)
 
 
+
+
+## Sso-Server 所有可重写策略 
+
+``` java
+// 发送 Http 请求的处理函数
+SaSsoServerProcessor.instance.ssoServerTemplate.strategy.sendRequest = url -> {
+	// ...
+}
+
+// 使用异步模式执行一个任务
+SaSsoServerProcessor.instance.ssoServerTemplate.strategy.asyncRun = fun -> {
+	// ...
+}
+
+// 未登录时返回的 View
+SaSsoServerProcessor.instance.ssoServerTemplate.strategy.notLoginView = () -> {
+	// ...
+}
+
+// SSO-Server端：登录函数
+SaSsoServerProcessor.instance.ssoServerTemplate.strategy.doLoginHandle = (name, pwd) -> {
+	// ...
+}
+
+//SSO-Server端：在授权重定向之前的通知
+SaSsoServerProcessor.instance.ssoServerTemplate.strategy.jumpToRedirectUrlNotice = (redirectUrl) -> {
+	// ...
+}
+
+// SSO-Server端：在校验 ticket 后，给 sso-client 端追加返回信息的函数
+SaSsoServerProcessor.instance.ssoServerTemplate.strategy.checkTicketAppendData = (loginId, result) -> {
+	// ...
+}
+```
+
+
+
+## Sso-Client 所有可重写策略
+
+``` java
+// 发送 Http 请求的处理函数
+SaSsoClientProcessor.instance.ssoClientTemplate.strategy.sendRequest = url -> {
+	// ...
+}
+
+// 自定义校验 ticket 返回值的处理逻辑 （每次从认证中心获取校验 ticket 的结果后调用）
+SaSsoClientProcessor.instance.ssoClientTemplate.strategy.ticketResultHandle = (ctr, back) -> {
+	// ...
+}
+
+// 转换：认证中心 centerId > 本地 loginId
+SaSsoClientProcessor.instance.ssoClientTemplate.strategy.convertCenterIdToLoginId = (centerId) -> {
+	// ...
+}
+
+// 转换：本地 loginId > 认证中心 centerId
+SaSsoClientProcessor.instance.ssoClientTemplate.strategy.convertLoginIdToCenterId = (loginId) -> {
+	// ...
+}
+```

@@ -34,7 +34,7 @@ public class SaSsoClientStrategy {
     /**
      * 发送 Http 请求的处理函数
      */
-    public SendRequestFunction sendHttp = url -> {
+    public SendRequestFunction sendRequest = url -> {
         return SaManager.getSaHttpTemplate().get(url);
     };
 
@@ -72,7 +72,7 @@ public class SaSsoClientStrategy {
      * @return 返回的结果
      */
     public SaResult requestAsSaResult(String url) {
-        String body = sendHttp.apply(url);
+        String body = sendRequest.apply(url);
         Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(body);
         return new SaResult(map);
     }
