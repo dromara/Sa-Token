@@ -37,7 +37,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-        <revision>1.42.0</revision>
+        <revision>1.43.0</revision>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
@@ -104,8 +104,23 @@
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>2.10.3</version>
+			<version>3.4.1</version>
+			<configuration>
+				<!-- 统一生成聚合文档，解决 mvn package 时控制台发出 javadoc 警告的问题 -->
+				<aggregate>true</aggregate>
+				<!-- 忽略部分 error 和 warning -->
+				<failOnError>false</failOnError>
+				<failOnWarnings>false</failOnWarnings>
+				<additionalOptions>-Xdoclint:none</additionalOptions>
+				<detectLinks>false</detectLinks>
+			</configuration>
 			<executions>
+				<execution>
+					<phase>package</phase>
+					<goals>
+						<goal>aggregate</goal>
+					</goals>
+				</execution>
 				<execution>
 					<id>attach-javadocs</id>
 					<goals>

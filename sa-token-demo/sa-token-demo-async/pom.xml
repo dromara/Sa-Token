@@ -18,7 +18,7 @@
 	
 	<!-- 定义 Sa-Token 版本号 -->
 	<properties>
-		<sa-token.version>1.42.0</sa-token.version>
+		<sa-token.version>1.43.0</sa-token.version>
 		<java.run.main.class>com.pj.SaTokenAsyncApplication</java.run.main.class>
 	</properties>
 

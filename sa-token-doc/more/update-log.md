@@ -1,6 +1,72 @@
 # 更新日志 
 
 
+### v1.43.0 @2025-5-17
+- core: 
+	- 新增：`SaLogoutParameter` 新增 `deviceId` 参数，用于控制指定设备 id 的注销。  **[重要]**
+	- 新增：新增 `SaHttpTemplate` 请求处理器模块。
+	- 新增：TOTP 增加 `issuer` 字段。  merge: [pr 329](https://gitee.com/dromara/sa-token/pulls/329) 
+	- 修复：修复 `Http Digest` 认证时 url 上带有查询参数时认证无法通过的问题。merge: [pr 334](https://gitee.com/dromara/sa-token/pulls/334) 
+	- 新增：@SaCheckOr 注解添加 `append` 字段，用于抓取未预先定义的注解类型进行批量注解鉴权。
+	- 新增：侦听器 `doRenewTimeout` 方法添加 loginType 参数。
+	- 新增：`SaInterceptor` 新增 `beforeAuth` 认证前置函数。
+- SSO：
+	- 新增：单点注销支持单设备注销。   **[重要]**  fix: [#IA6ZK0](https://gitee.com/dromara/sa-token/issues/IA6ZK0) 、[#747](https://github.com/dromara/Sa-Token/issues/747)
+	- 新增：新增消息推送机制。  **[重要]**   fix: [#IBGXA7](https://gitee.com/dromara/sa-token/issues/IBGXA7) 
+	- 新增：配置项 clients 用于单独配置每个 client 的授权信息。  **[重要]** 
+	- 新增：配置项 `allowAnonClient` 决定是否启用匿名 client。
+	- 新增：SSO 模块新增配置文件方式启用“不同 client 不同秘钥”能力。
+	- 重构：sso-client 封装化获取 client 标识值。
+	- 新增：新增 SSO Strategy 策略类。
+	- 新增：sso-client 新增 `convertCenterIdToLoginId`、`convertLoginIdToCenterId` 策略函数，用于描述本地 LoginId 与认证中心 loginId 的转换规则。
+	- 新增：sso-server 新增 `jumpToRedirectUrlNotice` 策略，用于授权重定向跳转之前的通知。
+	- 优化：调整整体 SSO 示例代码。
+	- 新增：新增 ReSdk 模式对接示例：`sa-token-demo-sso3-client-resdk`。  **[重要]** 
+	- 新增：新增匿名应用模式对接示例：`sa-token-demo-sso3-client-anon`。  **[重要]** 
+- OAuth2：
+	- 新增：`SaClientModel` 新增 `isAutoConfirm` 配置项，用于决定是否允许应用可以自动确认授权。 **[重要]** 
+	- 新增：多 `Access-Token` 并存、多 `Refresh-Token` 并存、多 `Client-Token` 并存能力。 **[重要]**  fix: [#IBHFD1](https://gitee.com/dromara/sa-token/issues/IBHFD1) 、 [#IBLL4Q](https://gitee.com/dromara/sa-token/issues/IBLL4Q) 、[#724](https://github.com/dromara/Sa-Token/issues/724) 
+	- 新增：Scope 分割符支持加号。merge: [pr 333](https://gitee.com/dromara/sa-token/pulls/333) 
+	- 修复：修复 oidc 协议下，当用户数据变动后，id_token 仍是旧信息的问题。
+	- 优化：对 `OAuth2 Password` 认证模式需要重写处理器添加强提醒。
+	- 优化：将认证流程回调从 `SaOAuth2ServerConfig` 转移到 `SaOAuth2Strategy`。
+	- 新增：新增 `SaOAuth2Strategy.instance.userAuthorizeClientCheck` 策略，用于检查指定用户是否可以授权指定应用。fix: [#553](https://github.com/dromara/Sa-Token/issues/553) 
+	- 优化：优化调整 `sa-token-oauth2` 模块代码结构及注释。
+	- 新增：`currentAccessToken()`、`currentClientToken()`，简化读取 `access_token`、`client_token` 步骤
+- 插件：
+	- 新增：新增 `sa-token-forest` 插件，用于在 Http 请求处理器模块整合 Forest。
+	- 新增：新增 `sa-token-okhttps` 插件，用于在 Http 请求处理器模块整合 OkHttps。
+	- 拆分：API Key 模块拆分独立插件包：`sa-token-apikey`。
+	- 拆分：API Sign 模块拆分独立插件包：`sa-token-sign`。
+	- 修复：修复 `sa-token-dubbo` 插件部分场景上下文控制出错的问题。
+	- 修复：修复 `sa-token-sanck3` `SaSessionForSnack3Customized:getModel` 接收 map 值时会出错的问题。 merge: [pr 330](https://gitee.com/dromara/sa-token/pulls/330) 
+	- 修复：修复使用 `sa-token-redis-template-jdk-serializer` 时反序列化错误。merge: [pr 331](https://gitee.com/dromara/sa-token/pulls/331) 
+	- 修复：`sa-token-snack3` 优化 `objectToJson` 序列化处理（增加类名，但不增加根类名）。
+	- 重构：重构 `sa-token-redis-template`、`sa-token-redis-template-jdk-serializer` 插件中 update 方法 ttl 获取方式改为毫秒，以减少 update 时的 ttl 计算误差。  **[重要]** 
+- 示例：
+	- 新增：新增 SSE 鉴权示例。
+- 文档：
+	- 新增：新增文档离线版下载。
+	- 新增：新增框架功能列表插图。
+	- 新增：新增示例：如何在响应式环境下的 Filter 里调用 Sa-Token 同步 API。
+	- 新增：新增 QA：在 idea 导入源码，运行报错：java: 程序包cn.dev33.satoken.oauth2不存在。
+	- 新增：新增 QA：新增QA：报错：SaTokenContext 上下文尚未初始化。
+	- 新增：新增 QA：在 idea 导入源码，运行报错：java: 程序包cn.dev33.satoken.oauth2不存在。
+	- 新增：重写路由匹配算法修正为最新写法。
+	- 新增：修复 OAuth2 UnionId 章节相关不正确描述。
+	- 优化：完善 QA：访问了一个不存在的路由，报错：SaTokenContext 上下文尚未初始化。   fix: [#771](https://github.com/dromara/Sa-Token/issues/771)
+	- 优化：补充 sso 模块遗漏的配置字段介绍。
+	- 优化：OAuth2-Server 示例添加真正表单。
+	- 新增：文档新增重写 `PasswordGrantTypeHandler` 处理器示例。
+	- 新增：sso 章节和 oauth2 章节文档增加可重写策略说明。
+- 其它：
+	- 新增：readme 新增框架功能介绍图。
+	- 新增：SSO 模块新增思维导图说明。
+	- 新增：readme 新增 Forest 的友情链接。
+									
+								
+
+
 ### v1.42.0 @2025-4-11
 
 - core: 
@@ -40,10 +106,6 @@
 	- 新增：新增QA：如何防止 CSRF 攻击。
 	- 新增: “异步 & Mock 上下文” 章节。
 	- 升级：升级“自定义 SaTokenContext 指南”章节文档。
-
-
-
-
 
 
 

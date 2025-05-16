@@ -18,7 +18,7 @@
 	<properties> 
 		<java.version>17</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-		<sa-token.version>1.42.0</sa-token.version>
+		<sa-token.version>1.43.0</sa-token.version>
 		<dubbo.version>3.2.2</dubbo.version>
 		<nacos.version>2.2.2</nacos.version>
 	</properties>
