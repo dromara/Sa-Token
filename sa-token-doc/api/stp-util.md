@@ -135,7 +135,7 @@ StpUtil.hasPermission(permission);   // 判断：当前账号是否拥有指定�
 StpUtil.hasPermission(loginId, permission);   // 判断：指定账号是否含有指定权限标识, 返回true或false 
 StpUtil.hasPermissionAnd(...permissionArray);   // 判断：当前账号是否含有指定权限标识 [指定多个，必须全部验证通过] 
 StpUtil.hasPermissionOr(...permissionArray);   // 判断：当前账号是否含有指定权限标识 [指定多个，只要其一验证通过即可] 
-StpUtil.checkPermission(permission);   // 校验：当前账号是否含有指定权限标识, 如果验证未通过，则抛出异常: NotRPermissionException 
+StpUtil.checkPermission(permission);   // 校验：当前账号是否含有指定权限标识, 如果验证未通过，则抛出异常: NotPermissionException 
 StpUtil.checkPermissionAnd(...permissionArray);   // 校验：当前账号是否含有指定权限标识 [指定多个，必须全部验证通过] 
 StpUtil.checkPermissionOr(...permissionArray);   // 校验：当前账号是否含有指定权限标识 [指定多个，只要其一验证通过即可] 
 ```

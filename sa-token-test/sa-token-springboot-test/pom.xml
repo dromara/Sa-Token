@@ -31,6 +31,11 @@
 			<artifactId>sa-token-oauth2</artifactId>
             <scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sign</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- 冗余（生成单元测试报告） -->
 		<dependency>
 			<groupId>cn.dev33</groupId>

@@ -9,9 +9,7 @@ SaManager 负责管理 Sa-Token 所有全局组件。
 SaManager.getConfig();                 // 获取全局配置对象 
 SaManager.getSaTokenDao();             // 获取数据持久化对象 
 SaManager.getStpInterface();           // 获取权限认证对象 
-SaManager.getSaTokenContext();         // 获取一级Context处理对象
-SaManager.getSaTokenSecondContext();   // 获取二级Context处理对象
-SaManager.getSaTokenContextOrSecond(); // 获取一个可用的 Context 处理对象
+SaManager.getSaTokenContext();         // 获取SaTokenContext上下文处理对象
 SaManager.getSaTokenListener();        // 获取侦听器对象 
 SaManager.getSaTemp();                 // 获取临时令牌认证模块对象 
 SaManager.getSaJsonTemplate();         // 获取 JSON 转换器 Bean

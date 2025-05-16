@@ -15,8 +15,8 @@
  */
 package cn.dev33.satoken.core.sign;
 
-import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.config.SaSignConfig;
+import cn.dev33.satoken.sign.SaSignManager;
+import cn.dev33.satoken.sign.config.SaSignConfig;
 import cn.dev33.satoken.util.SoMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class SaSignTemplateTest {
 				.set("name", "zhang")
 				.set("age", 18)
 				.set("sex", "女");
-		String str = SaManager.getSaSignTemplate().joinParamsDictSort(map);
+		String str = SaSignManager.getSaSignTemplate().joinParamsDictSort(map);
 
 		// 按照音序排列 
 		Assertions.assertEquals(str, "age=18&name=zhang&sex=女");
@@ -51,12 +51,12 @@ public class SaSignTemplateTest {
 				.set("name", "zhang")
 				.set("age", 18)
 				.set("sex", "女");
-		SaManager.getSaSignTemplate().setSignConfig(new SaSignConfig().setSecretKey(key));
-		String sign = SaManager.getSaSignTemplate().createSign(map);
+		SaSignManager.getSaSignTemplate().setSignConfig(new SaSignConfig().setSecretKey(key));
+		String sign = SaSignManager.getSaSignTemplate().createSign(map);
 		Assertions.assertEquals(sign, "6f5e844a53e74363c2f6b24f64c4f0ff");
 		
 		// 多次签名，结果一致  
-		String sign2 = SaManager.getSaSignTemplate().createSign(map);
+		String sign2 = SaSignManager.getSaSignTemplate().createSign(map);
 		Assertions.assertEquals(sign, sign2);
 	}
 	

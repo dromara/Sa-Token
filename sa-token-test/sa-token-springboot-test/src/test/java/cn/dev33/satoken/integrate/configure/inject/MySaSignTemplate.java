@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.integrate.configure.inject;
 
-import cn.dev33.satoken.sign.SaSignTemplate;
+import cn.dev33.satoken.sign.template.SaSignTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
