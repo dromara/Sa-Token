@@ -94,12 +94,18 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public void update(String key, String value) {
-		long expire = getTimeout(key);
-		// -2 = 无此键 
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
+		@SuppressWarnings("all")
+		long expireMs = stringRedisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+		// -2 = 无此键
+		if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		this.set(key, value, expire);
+		// -1 = 永不过期
+		if(expireMs == SaTokenDao.NEVER_EXPIRE) {
+			stringRedisTemplate.opsForValue().set(key, value);
+		} else {
+			stringRedisTemplate.opsForValue().set(key, value, expireMs, TimeUnit.MILLISECONDS);
+		}
 	}
 	
 	/**

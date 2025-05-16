@@ -95,12 +95,18 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public void updateObject(String key, Object object) {
-		long expire = getObjectTimeout(key);
-		// -2 = 无此键 
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
+		@SuppressWarnings("all")
+		long expireMs = stringRedisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+		// -2 = 无此键
+		if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		this.setObject(key, object, expire);
+		// -1 = 永不过期
+		if(expireMs == SaTokenDao.NEVER_EXPIRE) {
+			objectRedisTemplate.opsForValue().set(key, object);
+		} else {
+			objectRedisTemplate.opsForValue().set(key, object, expireMs, TimeUnit.MILLISECONDS);
+		}
 	}
 
 	/**
