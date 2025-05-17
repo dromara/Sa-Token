@@ -68,6 +68,7 @@
 
 
 ### v1.42.0 @2025-4-11
+更新导读：[视频](https://www.bilibili.com/video/BV1h85izzEe8/)、[文字版](https://juejin.cn/post/7491971657201451062)
 
 - core: 
 	- 新增: 新增 `API Key` 模块。   **[重要]**
