@@ -41,6 +41,11 @@
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+
+		<!-- Maven GPG Plugin -->
+		<maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+		<!-- Maven Central Portal -->
+		<central.publishing.maven.version>0.7.0</central.publishing.maven.version>
 	</properties>
 
 	<!-- 仓库信息 -->
@@ -58,15 +63,6 @@
 			<email>2393584716@qq.com</email>
 		</developer>
 	</developers>
-	
-	
-	<!-- 父仓库 -->
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-		<relativePath/>
-	</parent>
 	
 	<!-- 仓库依赖 -->
 	<dependencies>
@@ -159,7 +155,28 @@
                 </execution>
             </executions>
         </plugin>
-        
+
+		   <plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-gpg-plugin</artifactId>
+			   <executions>
+				   <execution>
+					   <id>sign-artifacts</id>
+					   <phase>verify</phase>
+					   <goals>
+						   <goal>sign</goal>
+					   </goals>
+				   </execution>
+			   </executions>
+		   </plugin>
+		   <plugin>
+			   <groupId>org.sonatype.central</groupId>
+			   <artifactId>central-publishing-maven-plugin</artifactId>
+			   <extensions>true</extensions>
+			   <configuration>
+				   <publishingServerId>central</publishingServerId>
+			   </configuration>
+		   </plugin>
 	   </plugins>
 	   <pluginManagement>
 		   	<plugins>
@@ -186,6 +203,17 @@
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven-gpg-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.central</groupId>
+					<artifactId>central-publishing-maven-plugin</artifactId>
+					<version>${central.publishing.maven.version}</version>
 				</plugin>
 			</plugins>
 	   </pluginManagement>
