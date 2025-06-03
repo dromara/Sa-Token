@@ -16,6 +16,7 @@
 package cn.dev33.satoken.context.dubbo3.filter;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
@@ -39,6 +40,11 @@ public class SaTokenDubbo3ConsumerFilter implements Filter {
 		// 追加 Same-Token 参数 
 		if(SaManager.getConfig().getCheckSameToken()) {
 			RpcContext.getServiceContext().setAttachment(SaSameUtil.SAME_TOKEN,SaSameUtil.getToken());
+		}
+
+		// 无上下文时只做简单调用，不传递会话 token
+		if( ! SaHolder.getContext().isValid()) {
+			return invoker.invoke(invocation);
 		}
 		
 		// 1. 调用前，向下传递会话Token
