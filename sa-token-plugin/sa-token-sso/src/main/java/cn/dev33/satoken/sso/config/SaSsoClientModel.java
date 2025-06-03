@@ -95,15 +95,6 @@ public class SaSsoClientModel implements Serializable {
         return _pushUrl;
     }
 
-    /**
-     * 判断是否配置了有效地推送地址
-     *
-     * @return /
-     */
-    public boolean isValidPushUrl() {
-        return SaFoxUtil.isUrl(splicingPushUrl());
-    }
-
 
     // get set
 
