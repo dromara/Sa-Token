@@ -1,0 +1,11 @@
+com.kfyty.loveqq.framework.core.autoconfig.annotation.EnableAutoConfiguration=\
+    cn.dev33.satoken.loveqq.boot.SaBeanRegister,\
+    cn.dev33.satoken.loveqq.boot.SaBeanInject,\
+    cn.dev33.satoken.loveqq.boot.apiKey.SaApiKeyBeanRegister,\
+    cn.dev33.satoken.loveqq.boot.apiKey.SaApiKeyBeanInject,\
+    cn.dev33.satoken.loveqq.boot.oauth2.SaOAuth2BeanRegister,\
+    cn.dev33.satoken.loveqq.boot.oauth2.SaOAuth2BeanInject,\
+    cn.dev33.satoken.loveqq.boot.sign.SaSignBeanRegister,\
+    cn.dev33.satoken.loveqq.boot.sign.SaSignBeanInject,\
+    cn.dev33.satoken.loveqq.boot.sso.SaSsoBeanRegister,\
+    cn.dev33.satoken.loveqq.boot.sso.SaSsoBeanInject
