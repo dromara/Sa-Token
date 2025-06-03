@@ -765,8 +765,7 @@ public class SaOAuth2Template {
 	 * @return /
 	 */
 	public List<String> getHigherScopeList() {
-		String higherScope = SaOAuth2Manager.getServerConfig().getHigherScope();
-		return SaOAuth2Manager.getDataConverter().convertScopeStringToList(higherScope);
+		return SaOAuth2Manager.getDataLoader().getHigherScopeList();
 	}
 
 	/**
@@ -774,8 +773,7 @@ public class SaOAuth2Template {
 	 * @return /
 	 */
 	public List<String> getLowerScopeList() {
-		String lowerScope = SaOAuth2Manager.getServerConfig().getLowerScope();
-		return SaOAuth2Manager.getDataConverter().convertScopeStringToList(lowerScope);
+		return SaOAuth2Manager.getDataLoader().getLowerScopeList();
 	}
 
 }
