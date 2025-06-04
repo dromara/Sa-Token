@@ -30,7 +30,7 @@
 		<noear-snack3.version>3.2.133</noear-snack3.version>
 		<jfinal.version>4.9.17</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
-		<loveqq.version>1.1.2</loveqq.version>
+		<loveqq.version>1.1.2-java8</loveqq.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
 		<dubbo.version>2.7.21</dubbo.version>
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>

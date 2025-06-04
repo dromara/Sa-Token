@@ -16,7 +16,7 @@
     <description>loveqq-framework integrate sa-token</description>
 
     <properties>
-        <jdk.version>17</jdk.version>
+        <jdk.version>1.8</jdk.version>
     </properties>
 
     <dependencies>
