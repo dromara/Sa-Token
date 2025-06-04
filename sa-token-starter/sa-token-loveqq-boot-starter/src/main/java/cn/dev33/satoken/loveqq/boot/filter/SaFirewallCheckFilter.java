@@ -32,7 +32,7 @@ import com.kfyty.loveqq.framework.web.core.http.ServerRequest;
 import com.kfyty.loveqq.framework.web.core.http.ServerResponse;
 
 /**
- * 防火墙校验过滤器
+ * 防火墙校验过滤器 (基于 loveqq-framework 统一 Filter，可以统一 servlet 和 reactor 配置)
  *
  * @author click33
  * @since 1.37.0

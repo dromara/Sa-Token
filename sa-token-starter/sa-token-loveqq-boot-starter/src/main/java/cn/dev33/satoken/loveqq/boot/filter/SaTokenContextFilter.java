@@ -25,7 +25,7 @@ import com.kfyty.loveqq.framework.web.core.http.ServerRequest;
 import com.kfyty.loveqq.framework.web.core.http.ServerResponse;
 
 /**
- * SaTokenContext 上下文初始化过滤器 (基于 Servlet)
+ * SaTokenContext 上下文初始化过滤器 (基于 loveqq-framework 统一 Filter，可以统一 servlet 和 reactor 配置)
  *
  * @author click33
  * @since 1.42.0

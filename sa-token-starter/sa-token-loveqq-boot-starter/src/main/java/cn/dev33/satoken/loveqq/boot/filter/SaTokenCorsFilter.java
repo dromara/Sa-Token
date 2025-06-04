@@ -30,9 +30,11 @@ import com.kfyty.loveqq.framework.web.core.http.ServerRequest;
 import com.kfyty.loveqq.framework.web.core.http.ServerResponse;
 
 /**
- * CORS 跨域策略过滤器
+ * CORS 跨域策略过滤器 (基于 loveqq-framework 统一 Filter，可以统一 servlet 和 reactor 配置)
+ * loveqq-framework 也有跨域过滤器，切勿同时配置
  *
  * @author click33
+ * @see com.kfyty.loveqq.framework.web.core.cors.CorsFilter
  * @since 1.42.0
  */
 @Component

@@ -38,6 +38,7 @@ import com.kfyty.loveqq.framework.web.core.http.ServerResponse;
 public class SaTokenContextUtil {
     /**
      * 写入当前上下文
+     * 并返回当前的上下文，以支持 loveqq-framework 的 servlet/reactor 的统一配置
      *
      * @param request  /
      * @param response /
@@ -87,6 +88,7 @@ public class SaTokenContextUtil {
 
     /**
      * 清除当前上下文
+     * 并恢复之前的上下文，以支持 loveqq-framework 的 servlet/reactor 的统一配置
      */
     public static void clearContext(SaTokenContextModelBox prev) {
         if (prev == null) {
