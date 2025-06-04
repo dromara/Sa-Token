@@ -17,7 +17,8 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 
 /**
- * 测试专用Controller
+ * 测试专用 Controller
+ * 本示例是基于 reactor 编写，如果是 servlet，去除 SaReactorHolder/SaTokenContextUtil 包装，直接调用 sa-token api 即可
  *
  * @author click33
  */
