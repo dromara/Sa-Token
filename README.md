@@ -1,7 +1,7 @@
 <p align="center">
 	<img alt="logo" src="https://sa-token.cc/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.43.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.44.0</h1>
 <h4 align="center">开源、免费、轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
@@ -32,7 +32,7 @@ Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心�
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.43.0</version>
+	<version>1.44.0</version>
 </dependency>
 ```
 
