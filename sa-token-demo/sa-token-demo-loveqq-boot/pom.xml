@@ -18,7 +18,7 @@
         <java.version>17</java.version>
         <maven.source.version>17</maven.source.version>
         <maven.compile.version>17</maven.compile.version>
-        <sa-token.version>1.43.0</sa-token.version>
+        <sa-token.version>1.44.0</sa-token.version>
     </properties>
 
     <dependencies>

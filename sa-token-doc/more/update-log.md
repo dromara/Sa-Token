@@ -9,6 +9,7 @@
 - 修复：修复 `sa-token-dubbo` 与 `sa-token-dubbo3` 每次调用都强制需要上下文的问题。
 - 文档：新增 `sa-token-dubbo3` 的说明。
 - 文档：更新赞助者名单。
+- 文档：新增 `loveqq-framework` 框架集成包。 **[重要]**
 
 
 
