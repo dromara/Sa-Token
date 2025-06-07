@@ -5,11 +5,11 @@
 - 修复：修复 sso-server 前后端分离示例无法正常登录的问题。
 - 修复：修复 SSO 模式三全端注销失效的问题。
 - 修复：修复 SSO `SaSsoClientModel` 部分场景下无法序列化的问题。
-- 新增：OAuth2 模块新增支持从 `SaOAuth2DataLoader` 接口获取高级权限与低级权限的方法。
+- 新增：OAuth2 模块新增支持从 `SaOAuth2DataLoader` 接口获取高级权限与低级权限的方法。merge: [pr 339](https://gitee.com/dromara/sa-token/pulls/339) 
 - 修复：修复 `sa-token-dubbo` 与 `sa-token-dubbo3` 每次调用都强制需要上下文的问题。
 - 文档：新增 `sa-token-dubbo3` 的说明。
 - 文档：更新赞助者名单。
-- 文档：新增 `loveqq-framework` 框架集成包。 **[重要]**
+- 文档：新增 `loveqq-framework` 框架集成包。 **[重要]**  merge: [pr 339](https://gitee.com/dromara/sa-token/pulls/340) 
 
 
 
