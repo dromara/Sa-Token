@@ -5,8 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Sa-Token 整合 Caffeine 示例
- * @author click33
+ * Sa-Token 整合 Ehcache 示例
+ * @author sanyang176
  *
  */
 @SpringBootApplication

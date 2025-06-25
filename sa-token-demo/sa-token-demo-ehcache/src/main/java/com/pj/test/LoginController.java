@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 
+/**
+ * 登录测试
+ * @author sanyang176
+ *
+ */
 @RestController
 @RequestMapping("/acc/")
 public class LoginController {
