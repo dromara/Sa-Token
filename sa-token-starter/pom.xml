@@ -28,6 +28,7 @@
         <module>sa-token-solon-plugin</module>
         <module>sa-token-jboot-plugin</module>
         <module>sa-token-jfinal-plugin</module>
+        <module>sa-token-loveqq-boot-starter</module>
     </modules>
 
 </project>

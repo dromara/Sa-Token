@@ -16,6 +16,7 @@
 package cn.dev33.satoken.context.dubbo.filter;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
@@ -36,23 +37,28 @@ public class SaTokenDubboConsumerFilter implements Filter {
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
-		// 1、追加 Same-Token 参数
+		// 追加 Same-Token 参数
 		if(SaManager.getConfig().getCheckSameToken()) {
 			RpcContext.getContext().setAttachment(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken()); 
 		}
-		
-		// 2、调用前，向下传递会话Token
+
+		// 无上下文时只做简单调用，不传递会话 token
+		if( ! SaHolder.getContext().isValid()) {
+			return invoker.invoke(invocation);
+		}
+
+		// 1、调用前，向下传递会话Token
 		if(SaManager.getSaTokenContext() != SaTokenContextDefaultImpl.defaultContext) {
 			RpcContext.getContext().setAttachment(SaTokenConsts.JUST_CREATED, StpUtil.getTokenValueNotCut()); 
 		}
 
-		// 3、开始调用
+		// 2、开始调用
 		Result invoke = invoker.invoke(invocation);
 		
-		// 4、调用后，解析回传的Token值
+		// 3、调用后，解析回传的Token值
 		StpUtil.setTokenValue(invoke.getAttachment(SaTokenConsts.JUST_CREATED_NOT_PREFIX));
 		
-		// 5、返回结果
+		// note
 		return invoke;
 	}
 

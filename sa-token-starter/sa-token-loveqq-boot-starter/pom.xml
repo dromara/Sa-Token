@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-starter</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <name>sa-token-loveqq-boot-starter</name>
+    <artifactId>sa-token-loveqq-boot-starter</artifactId>
+    <packaging>jar</packaging>
+    <description>loveqq-framework integrate sa-token</description>
+
+    <properties>
+        <jdk.version>1.8</jdk.version>
+    </properties>
+
+    <dependencies>
+        <!-- loveqq-core -->
+        <dependency>
+            <groupId>com.kfyty</groupId>
+            <artifactId>loveqq-core</artifactId>
+        </dependency>
+
+        <!-- loveqq-mvc-core -->
+        <dependency>
+            <groupId>com.kfyty</groupId>
+            <artifactId>loveqq-mvc-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- jackson 序列化、redis集成、SSO、OAuth2 等模块要用到，比较重要所以内置集成 -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-jackson</artifactId>
+        </dependency>
+
+        <!-- loveqq redisson starter -->
+        <dependency>
+            <groupId>com.kfyty</groupId>
+            <artifactId>loveqq-boot-starter-redisson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- SSO (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sso</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- OAuth2.0 (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-oauth2</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- API Key (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-apikey</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- API Sign (optional) -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-sign</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

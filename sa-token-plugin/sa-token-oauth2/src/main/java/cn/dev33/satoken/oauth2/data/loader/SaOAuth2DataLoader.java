@@ -21,6 +21,8 @@ import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientModelException;
 import cn.dev33.satoken.secure.SaSecureUtil;
 
+import java.util.List;
+
 /**
  * Sa-Token OAuth2 数据加载器
  *
@@ -78,4 +80,21 @@ public interface SaOAuth2DataLoader {
         return SaSecureUtil.md5(SaOAuth2Manager.getServerConfig().getUnionidDigestPrefix() + "_" + subjectId + "_" + loginId);
     }
 
+    /**
+     * 获取高级权限列表
+     * @return /
+     */
+    default List<String> getHigherScopeList() {
+        String higherScope = SaOAuth2Manager.getServerConfig().getHigherScope();
+        return SaOAuth2Manager.getDataConverter().convertScopeStringToList(higherScope);
+    }
+
+    /**
+     * 获取低级权限列表
+     * @return /
+     */
+    default List<String> getLowerScopeList() {
+        String lowerScope = SaOAuth2Manager.getServerConfig().getLowerScope();
+        return SaOAuth2Manager.getDataConverter().convertScopeStringToList(lowerScope);
+    }
 }

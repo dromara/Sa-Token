@@ -36,13 +36,12 @@ public class SaTokenDubboContextFilter implements Filter {
 	public Result invoke(Invoker<?> invoker, Invocation invocation) {
 		if(SaHolder.getContext().isValid()) {
 			return invoker.invoke(invocation);
-		} else {
-			try {
-				SaTokenContextDubboUtil.setContext(RpcContext.getContext());
-				return invoker.invoke(invocation);
-			} finally {
-				SaManager.getSaTokenContext().clearContext();
-			}
+		}
+		try {
+			SaTokenContextDubboUtil.setContext(RpcContext.getContext());
+			return invoker.invoke(invocation);
+		} finally {
+			SaManager.getSaTokenContext().clearContext();
 		}
 	}
 

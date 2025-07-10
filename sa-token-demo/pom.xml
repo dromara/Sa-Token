@@ -57,8 +57,9 @@
 		<module>sa-token-demo-webflux-springboot3</module>
 		<module>sa-token-demo-websocket</module>
 		<module>sa-token-demo-websocket-spring</module>
+        <module>sa-token-demo-loveqq-boot</module>
 
-	</modules>
+    </modules>
 
 
 

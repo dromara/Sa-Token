@@ -42,6 +42,7 @@ implementation 'cn.dev33:sa-token-dubbo:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+注：如果使用的是 dubbo3，只需要将 `sa-token-dubbo` 修改为 `sa-token-dubbo3` 即可。
 
 
 然后我们就可以愉快的做到以下事情：

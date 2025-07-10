@@ -36,7 +36,7 @@ public class SaTokenConsts {
 	/**
 	 * Sa-Token 当前版本号 
 	 */
-	public static final String VERSION_NO = "v1.43.0";
+	public static final String VERSION_NO = "v1.44.0";
 
 	/**
 	 * Sa-Token 开源地址 Gitee 
