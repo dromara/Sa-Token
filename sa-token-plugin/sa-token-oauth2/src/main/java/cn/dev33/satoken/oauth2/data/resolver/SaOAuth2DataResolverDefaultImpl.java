@@ -51,14 +51,22 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     @Override
     public ClientIdAndSecretModel readClientIdAndSecret(SaRequest request) {
         // 优先从请求参数中获取
-        String clientId = request.getParam(Param.client_id);
-        String clientSecret = request.getParam(Param.client_secret);
+        String clientId = request.getParam(SaOAuth2Consts.Param.client_id);
+        String clientSecret = request.getParam(SaOAuth2Consts.Param.client_secret);
+        String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
         if(SaFoxUtil.isNotEmpty(clientId)) {
+            // 如果请求参数中没有提供 client_secret 参数，则尝试从 Authorization 中获取
+            // 防止请求参数只存在client_id，而client_secret只存在Authorization中的场景导致的获取client_secret失败
+            if (SaFoxUtil.isEmpty(clientSecret) && SaFoxUtil.isNotEmpty(authorizationValue)) {
+                int index = authorizationValue.indexOf(StrUtil.COLON);
+                if (index >= 0) {
+                    clientSecret = authorizationValue.substring(index + 1);
+                }
+            }
             return new ClientIdAndSecretModel(clientId, clientSecret);
         }
 
         // 如果请求参数中没有提供 client_id 参数，则尝试从 Authorization 中获取
-        String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
         if(SaFoxUtil.isNotEmpty(authorizationValue)) {
             String[] arr = authorizationValue.split(":");
             clientId = arr[0];
