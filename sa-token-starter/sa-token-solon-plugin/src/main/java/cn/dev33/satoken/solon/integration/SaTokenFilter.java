@@ -26,7 +26,6 @@ import cn.dev33.satoken.solon.util.SaSolonOperateUtil;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.*;
-import org.noear.solon.core.route.RoutingTable;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -161,10 +160,9 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 			if (mainHandler instanceof Gateway) {
 				//支持网关处理
 				Gateway gateway = (Gateway) mainHandler;
-				RoutingTable<Handler> mainRouting = gateway.getMainRouting();
-				MethodType method = MethodTypeUtil.valueOf(ctx.method());
-				mainHandler = mainRouting.matchOne(ctx.pathNew(), method);
+				mainHandler = gateway.find(ctx);
 			}
+
 			Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
 			//1.执行前置处理（主要是一些跨域之类的）
