@@ -21,6 +21,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
+import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -111,6 +112,11 @@ public class SaLoginParameter {
 	private Boolean isWriteHeader;
 
 	/**
+	 * 当 isConcurrent=false 时，多客户端登录时的处理策略
+	 */
+	private SaRepeatLoginsMode repeatLoginsMode;
+
+	/**
 	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
 	 */
 	private SaReplacedRange replacedRange;
@@ -158,6 +164,7 @@ public class SaLoginParameter {
 		this.replacedRange = config.getReplacedRange();
 		this.overflowLogoutMode = config.getOverflowLogoutMode();
 		this.rightNowCreateTokenSession = config.getRightNowCreateTokenSession();
+		this.repeatLoginsMode = config.getRepeatLoginsMode();
 
 		this.setupCookieConfig(cookie -> {
 			SaCookieConfig gCookie = config.getCookie();
@@ -568,6 +575,23 @@ public class SaLoginParameter {
 		return this;
 	}
 
+
+	/**
+	 * 获取：多客户端登录时的处理策略
+	 * @return 多客户端登录时的处理策略
+	 */
+	public SaRepeatLoginsMode getRepeatLoginsMode() {
+		return repeatLoginsMode;
+	}
+
+	/**
+	 * 设置：多客户端登录时的处理策略
+	 * @param repeatLoginsMode 多客户端登录时的处理策略
+	 */
+	public void setRepeatLoginsMode(SaRepeatLoginsMode repeatLoginsMode) {
+		this.repeatLoginsMode = repeatLoginsMode;
+	}
+
 	/*
 	 * toString
 	 */
@@ -577,6 +601,7 @@ public class SaLoginParameter {
 				+ "deviceType=" + deviceType
 				+ ", deviceId=" + deviceId
 				+ ", replacedRange=" + replacedRange
+				+ ", repeatLoginsMode=" + repeatLoginsMode
 				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout
