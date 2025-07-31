@@ -36,6 +36,7 @@ import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
+import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -538,14 +539,25 @@ public class StpLogic {
 	protected String distUsableToken(Object id, SaLoginParameter loginParameter) {
 
 		// 1、获取全局配置的 isConcurrent 参数
-		//    如果配置为：不允许一个账号多地同时登录，则需要先将这个账号的历史登录会话标记为：被顶下线
+		//    如果配置为：不允许一个账号多地同时登录，则需要根据配置选择：
+		//    	一.将这个账号的历史登录会话标记为：被顶下线
+		//    	二.提示错误并拒绝本次登录
 		if( ! loginParameter.getIsConcurrent()) {
-			if(loginParameter.getReplacedRange() == SaReplacedRange.CURR_DEVICE_TYPE) {
-				replaced(id, loginParameter.getDeviceType());
+			if (loginParameter.getRepeatLoginsMode() == SaRepeatLoginsMode.KICKOUT){
+				if(loginParameter.getReplacedRange() == SaReplacedRange.CURR_DEVICE_TYPE) {
+					replaced(id, loginParameter.getDeviceType());
+				}
+				if(loginParameter.getReplacedRange() == SaReplacedRange.ALL_DEVICE_TYPE) {
+					replaced(id, createSaLogoutParameter());
+				}
+			} else if (loginParameter.getRepeatLoginsMode() == SaRepeatLoginsMode.INTERCEPT){
+				List<SaTerminalInfo> terminalListByLoginId = getTerminalListByLoginId(id);
+				if(!terminalListByLoginId.isEmpty()) {
+					throw new SaTokenException("当前账号已在其他客户端登录").setCode(SaErrorCode.CODE_11004);
+				}
+
 			}
-			if(loginParameter.getReplacedRange() == SaReplacedRange.ALL_DEVICE_TYPE) {
-				replaced(id, createSaLogoutParameter());
-			}
+
 		}
 
 		// 2、如果调用者预定了要生成的 token，则直接返回这个预定的值，框架无需再操心了
