@@ -36,7 +36,6 @@ import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
-import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -561,7 +560,6 @@ public class StpLogic {
                 }
 
 			}
-
 		}
 
 		// 2、如果调用者预定了要生成的 token，则直接返回这个预定的值，框架无需再操心了
