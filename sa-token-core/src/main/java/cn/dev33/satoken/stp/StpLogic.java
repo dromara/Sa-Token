@@ -36,6 +36,7 @@ import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
+import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
