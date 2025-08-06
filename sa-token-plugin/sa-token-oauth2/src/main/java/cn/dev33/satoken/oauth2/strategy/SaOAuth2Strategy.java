@@ -177,7 +177,7 @@ public final class SaOAuth2Strategy {
 	 * 移除一个 grant_type 处理器
 	 */
 	public void removeGrantTypeHandler(String scope) {
-		scopeHandlerMap.remove(scope);
+		grantTypeHandlerMap.remove(scope);
 	}
 
 	/**
