@@ -24,6 +24,7 @@
         <dependency>
             <groupId>com.kfyty</groupId>
             <artifactId>loveqq-core</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- loveqq-mvc-core -->
@@ -33,17 +34,40 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- loveqq redisson starter，默认提供，不配置链接信息不生效 -->
+        <dependency>
+            <groupId>com.kfyty</groupId>
+            <artifactId>loveqq-boot-starter-redisson</artifactId>
+        </dependency>
+
         <!-- jackson 序列化、redis集成、SSO、OAuth2 等模块要用到，比较重要所以内置集成 -->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-jackson</artifactId>
+            <exclusions>
+                <!-- loveqq-core 已有，这里排除以统一版本 -->
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.datatype</groupId>
+                    <artifactId>jackson-datatype-jsr310</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- loveqq redisson starter -->
+        <!-- redisson，默认提供，不配置不生效 -->
         <dependency>
-            <groupId>com.kfyty</groupId>
-            <artifactId>loveqq-boot-starter-redisson</artifactId>
-            <scope>provided</scope>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redisson</artifactId>
+            <exclusions>
+                <!-- 使用 loveqq redisson starter 提供的 -->
+                <exclusion>
+                    <groupId>org.redisson</groupId>
+                    <artifactId>redisson</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Servlet API -->
