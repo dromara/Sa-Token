@@ -67,7 +67,7 @@ http://{host}:{port}/sso/signout
 ### 4、消息推送接口
 
 ``` url
-http://{host}:{port}/sso/pusS
+http://{host}:{port}/sso/pushS
 ```
 
 接收参数：
@@ -200,7 +200,7 @@ http://{host}:{port}/sso/logoutCall
 ### 4、消息推送接口
 
 ``` url
-http://{host}:{port}/sso/pusC
+http://{host}:{port}/sso/pushC
 ```
 
 接收参数：
