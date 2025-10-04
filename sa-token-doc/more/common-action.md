@@ -114,13 +114,10 @@ SpringMVCUtil.isWeb();                // 判断当前是否处于 Web 上下文�
 Sa-Token集成Reactor时的 ServerWebExchange 工具类，位于包：`sa-token-reactor-spring-boot-starter`
 ``` java
 // 异步方式获取 ServerWebExchange 对象 
-SaReactorHolder.getContext().map(e -> {
+SaReactorHolder.getMonoExchange().map(e -> {
 	System.out.println(e);
+	return e;
 });
-
-// 同步方式获取 ServerWebExchange 对象 
-ServerWebExchange e = SaReactorSyncHolder.getContext();
-System.out.println(e);
 ```
 
 
