@@ -3,7 +3,7 @@
 --- 
 
 ### 1、Ticket劫持攻击
-在前面章节的 SSO-Server 示例中，配置项 `sa-token.sso-server.clients.sso-client3.allow-url=*` 意为改 client 所有允许的授权地址，不在此配置项中的 URL 将无法单点登录成功。
+在前面章节的 SSO-Server 示例中，配置项 `sa-token.sso-server.clients.sso-client3.allow-url=*` 意为该 client 所有允许的授权地址，不在此配置项中的 URL 将无法单点登录成功。
 
 为了方便测试，上述代码将其配置为`*`，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被 Ticket 劫持的风险。
 
