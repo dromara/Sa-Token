@@ -28,6 +28,27 @@ import cn.dev33.satoken.context.model.SaStorage;
  * @since 1.18.0
  */
 public class SaHolder {
+
+    /**
+     * 当前请求实际调用的 Controller 类 (用于父类方法继承子类注解)
+     */
+    private static final ThreadLocal<Class<?>> actualClassHolder = new ThreadLocal<>();
+
+    /**
+     * 设置当前请求实际调用的 Controller 类
+     * @param clazz 实际的 Controller 类
+     */
+    public static void setActualClass(Class<?> clazz) {
+        actualClassHolder.set(clazz);
+    }
+
+    /**
+     * 获取当前请求实际调用的 Controller 类
+     * @return 实际的 Controller 类
+     */
+    public static Class<?> getActualClass() {
+        return actualClassHolder.get();
+    }
 	
 	/**
 	 * 获取当前请求的 SaTokenContext 上下文对象

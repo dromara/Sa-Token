@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.interceptor;
 
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaParamFunction;
@@ -92,6 +93,10 @@ public class SaInterceptor implements HandlerInterceptor {
 		
 		try {
 
+            if (handler instanceof HandlerMethod) {
+                SaHolder.setActualClass(((HandlerMethod) handler).getBeanType());
+            }
+
 			// 这里必须确保 handler 是 HandlerMethod 类型时，才能进行注解鉴权
 			if(isAnnotation && handler instanceof HandlerMethod) {
 				Method method = ((HandlerMethod) handler).getMethod();
@@ -113,7 +118,9 @@ public class SaInterceptor implements HandlerInterceptor {
 			}
 			response.getWriter().print(e.getMessage());
 			return false;
-		}
+		}finally {
+            SaHolder.setActualClass(null);
+        }
 		
 		// 通过验证 
 		return true;

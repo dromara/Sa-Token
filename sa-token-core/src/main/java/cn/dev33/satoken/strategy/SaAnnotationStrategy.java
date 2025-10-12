@@ -17,6 +17,8 @@ package cn.dev33.satoken.strategy;
 
 import cn.dev33.satoken.annotation.*;
 import cn.dev33.satoken.annotation.handler.*;
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.fun.SaCheckParentMethodAnnotationFunction;
 import cn.dev33.satoken.fun.strategy.*;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.router.SaRouter;
@@ -104,9 +106,63 @@ public final class SaAnnotationStrategy {
 
 		// 再校验 Method 上的注解
 		instance.checkElementAnnotation.accept(method);
+
+        // 实现 SaCheckLogin 子类注解的 checkParent 功能
+        instance.checkParentMethodAnnotation.accept(method);
 	};
 
-	/**
+    public SaCheckParentMethodAnnotationFunction checkParentMethodAnnotation = (method) -> {
+        //检查父类方法本身有没有鉴权注解
+        if (hasAuthAnnotation(method)) {
+            return; // 如果父类方法有注解,优先使用方法自己的注解
+        }
+        //获取方法所属类(父类)
+        Class<?> declaringClass = method.getDeclaringClass();
+
+        // 检查父类(方法所属类)有没有 @SaCheckLogin(checkParent=true)
+        SaCheckLogin declaringClassCheckLogin = (SaCheckLogin) instance.getAnnotation.apply(
+                declaringClass,
+                SaCheckLogin.class
+        );
+        if (declaringClassCheckLogin != null && declaringClassCheckLogin.checkParent()) {
+            return;
+        }
+
+        //获取实际调用的类(子类)
+        Class<?> actualClass = SaHolder.getActualClass();
+        if (actualClass == null || actualClass.equals(declaringClass)) {
+            return; // 无法获取实际类,或者不是继承场景
+        }
+        // 检查子类有没有 @SaCheckLogin(checkParent=true)
+        SaCheckLogin actualClassCheckLogin = (SaCheckLogin) instance.getAnnotation.apply(
+                actualClass,
+                SaCheckLogin.class
+        );
+        //用子类的注解校验父类方法
+        if (actualClassCheckLogin != null && actualClassCheckLogin.checkParent()) {
+            SaCheckLoginHandler handler = new SaCheckLoginHandler();
+            handler.check(actualClassCheckLogin, method);
+        }
+    };
+
+
+
+    /**
+     * 判断方法上是否有鉴权注解
+     */
+    private boolean hasAuthAnnotation(java.lang.reflect.Method method) {
+        for (Class<?> annotationClass : annotationHandlerMap.keySet()) {
+            if (instance.getAnnotation.apply(method, (Class<Annotation>) annotationClass) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+
+    /**
 	 * 对一个 [Element] 对象进行注解校验 （注解鉴权内部实现）
 	 */
 	@SuppressWarnings("unchecked")
