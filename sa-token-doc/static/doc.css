@@ -62,6 +62,10 @@ body{
 		--doc-left-width: 200px;
 		--doc-context-width: calc( 100vw - 400px - 50px);
 		--doc-right-width: calc(200px - 20px);
+		
+		/* 窄屏幕时，广告更换为上下显示 */
+		.main-box .top-ad-box .mad-img{ float: none; margin-right: 10px;  border: 0px; }
+		.main-box .top-ad-box .mad-text{ float: none; display: block; width: 100%; margin-top: 10px; color: #000; word-break: normal; }
 	}
 }
 /* 小于 1100px时 */
@@ -454,6 +458,11 @@ body {
 .main-box .top-ad-box a:hover{border-bottom: 0px;}
 .main-box .top-ad-box a img{border: 1px #eee solid; width: 100%; /* max-height: 80px; */ border-radius: 2px; transition: all 0.1s !important;}
 .main-box .top-ad-box a img:hover{box-shadow: 0 0 20px #ddd;}
+
+.mad-bg-box{ padding: 10px; background-color: #F4F8FA; /* border: 1px #eee solid; */ overflow: hidden; }
+.mad-wh-box{ width: 100%; }
+.main-box .top-ad-box .mad-img{ width: 130px; float: left; margin-right: 10px;  border: 0px; }
+.main-box .top-ad-box .mad-text{ float: left; width: calc(100% - 140px); color: #000; font-size: 14px; line-height: 20px; word-break: break-all; }
 
 .main-box .top-ad-box2 a img{ width: 48.5%; margin-bottom: 2px; }
 .main-box .top-ad-box2 a:nth-child(2n+1) img{margin-right: 2px; }

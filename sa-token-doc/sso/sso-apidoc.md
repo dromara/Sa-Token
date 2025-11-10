@@ -113,11 +113,13 @@ http://{host}:{port}/sso/pushS
 }
 ```
 
+详细可参考：[消息推送机制](/sso/message-push)
+
 
 
 <br>
 
-SSO 认证中心只有这四个接口，接下来让我一起来看一下 Client 端的对接流程：[SSO模式一 共享Cookie同步会话](/sso/sso-type1) 
+<!-- SSO 认证中心只有这四个接口，接下来让我一起来看一下 Client 端的对接流程：[SSO模式一 共享Cookie同步会话](/sso/sso-type1) -->
 
 
 
@@ -235,7 +237,7 @@ http://{host}:{port}/sso/pushC
 }
 ```
 
-
+详细可参考：[消息推送机制](/sso/message-push)
 
 
 

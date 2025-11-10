@@ -647,6 +647,12 @@
 						<a href="https://www.meixxx.com/" target="_blank" title="美象信息">
 							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/meixiangxinxi.png">
 						</a>
+						<a href="https://www.3into1.cn/" target="_blank" title="杭州三之一智联科技有限公司">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/3into1.png">
+						</a>
+						<a href="http://www.kingchuangcloud.com/" target="_blank" title="北京金创云医疗健康科技有限公司">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/com/jinchuangzhongcheng.png">
+						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 					<p>
@@ -938,6 +944,23 @@
 							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/mica-mqtt.png"
 								msg="java mqtt 基于 java aio 实现，开源、简单、易用、低延迟、高性能百万级 java mqtt client 组件和 java mqtt broker 服务。">
 						</a>
+						<a href="https://gitee.com/dromara/wgai" target="_blank">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/wgai.png"
+								msg="开箱即用的JAVA AI平台融合了AI图像识别opencv、yolo、esayAI内核识别;AI智能客服、AI语言模型、可定制化自主离线化部署并自主化行业化使用 避免占用内存、GPU消耗训练与识别分开使用;支持yolov3、yolov5、yolov8模型 支持exel、txt等文本语言模型；">
+						</a>
+						<a href="https://gitee.com/dromara/omega-ai" target="_blank">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/omega-ai.png"
+								msg="基于java打造的深度学习框架，帮助你快速搭建神经网络，实现模型推理与训练，引擎支持自动求导，多GPU训练，GPU支持CUDA，CUDNN。">
+						</a>
+						<a href="https://github.com/dromara/rsmedia" target="_blank">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/rsmedia.png"
+								msg="audio/video toolkit based FFmpeg 6.x, 7.x supported for multimedia with Hardware Acceleration.">
+						</a>
+						<a href="https://gitee.com/dromara/sqlrest" target="_blank">
+							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/SQLREST.png"
+								msg="SQLREST是一款完全开源的SQL转 RESTful API的SQL2API低代码工具">
+						</a>
+						
 						<!-- <a href="https://dromara.org/zh/projects/" target="_blank">
 							<img class="lazy" data-original="https://oss.dev33.cn/sa-token/link/dromara.png"
 								msg="让每一位开源爱好者，体会到开源的快乐。">
@@ -1280,6 +1303,38 @@
 			}
 			start();
 
+		</script>
+		
+		
+		
+		
+		<script>
+			// Gitee 2025 投票 
+			function toupiao() {
+				// 弹出一次后，多少天不再弹出  （2天）
+				const dayy = 1000 * 60 * 60 * 24 * 2;
+				// 判断是否近期已经判断过了
+				try{
+					const isTanChu = localStorage.isTanChu;
+					if(isTanChu) {
+						// 记录 star 的时间，和当前时间的差距
+						const disparity = new Date().getTime() - parseInt(isTanChu);
+						
+						// 判断差距 
+						if(disparity < dayy) {
+							console.log('checked ... toupiao ');
+							return;
+						}
+					}
+				}catch(e){
+					console.error(e);
+				}
+				var mssg = 'Sa-Token 正在参加 Gitee 2025 最受欢迎开源软件投票活动。如果 Sa-Token 帮到了你，希望你可以来支持一下，这对我们非常重要，感谢！ ❤️ ❤️ ❤️ <br>'
+					+ '<a href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank">https://gitee.com/activity/2025opensource?ident=IGPG3R</a><br>';
+				layer.alert(mssg)
+				localStorage.isTanChu = new Date().getTime();
+			}
+			toupiao();
 		</script>
 		
 	</body>
