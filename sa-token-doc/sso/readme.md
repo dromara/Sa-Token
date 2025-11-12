@@ -1,5 +1,9 @@
 # Sa-Token-SSO 单点登录模块 
 
+<p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">
+	观看 SSO 模块视频讲解（B站：王清江唷）
+</a></p>
+
 凡是稍微上点规模的系统，统一认证中心都是绕不过去的槛。而单点登录——便是我们搭建统一认证中心的关键。
 
 --- 
