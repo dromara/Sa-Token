@@ -76,8 +76,9 @@ http://{host}:{port}/sso/pushS
 | :--------		| :--------	| :--------												|
 | client		| 否		| 客户端标识，可不填，代表是一个匿名应用				|
 | timestamp		| 是		| 当前时间戳，13位									|
+| msgType		| 是		| 消息类型										|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法：`md5( client={client值}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
+| sign			| 是		| 签名，生成算法：`md5( client={client值}&msgType={消息类型}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
 
 此接口可根据消息类型增加任意参数。新增加的参数要参与 sign 签名。
 
@@ -210,8 +211,9 @@ http://{host}:{port}/sso/pushC
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
 | timestamp		| 是		| 当前时间戳，13位									|
+| msgType		| 是		| 消息类型										|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法：`md5( nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
+| sign			| 是		| 签名，生成算法：`md5( msgType={消息类型}&nonce={随机字符串}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
 
 此接口可根据消息类型增加任意参数。新增加的参数要参与 sign 签名。
 

@@ -23,12 +23,13 @@ http://{sso-server主机地址}/sso/pushS
 
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
+| msgType		| 是		| 消息类型，此处填 `checkTicket`							|
 | ticket		| 是		| ticket 码							|
 | client		| 否		| 客户端标识，可不填，代表是一个匿名应用				|
 | ssoLogoutCall	| 否		| Client 端单点注销时 - 回调 URL 参数名称 (匿名 Client 时使用)			|
 | timestamp		| 是		| 当前时间戳，13位									|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法示例：`md5( client={client值}&nonce={随机字符串}&ticket={ticket码}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
+| sign			| 是		| 签名，生成算法示例：`md5( client={client值}&msgType={checkTicket}&nonce={随机字符串}&ticket={ticket码}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
 
 **<font color="#080" >签名算法规则：将所有参数按照字典顺序依次排列（key除外，挂在最后面），然后进行 md5 摘要。以下不再赘述。</font>**
 
@@ -59,12 +60,13 @@ http://{sso-server主机地址}/sso/pushS
 
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
+| msgType		| 是		| 消息类型，此处填 `signout`							|
 | loginId		| 是		| 账号id							|
 | client		| 否		| 客户端标识，可不填，代表是一个匿名应用				|
 | deviceId		| 否		| 客户端设备 id 								|
 | timestamp		| 是		| 当前时间戳，13位									|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法示例：`md5( client={client值}&deviceId={设备id}&nonce={随机字符串}&loginId={loginId}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
+| sign			| 是		| 签名，生成算法示例：`md5( client={client值}&deviceId={设备id}&msgType={signout}&nonce={随机字符串}&loginId={loginId}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
 
 返回值示例：
 ``` js
@@ -90,11 +92,12 @@ http://{sso-client主机地址}/sso/pushC
 
 | 参数			| 是否必填	| 说明													|
 | :--------		| :--------	| :--------												|
+| msgType		| 是		| 消息类型，此处填 `logoutCall`							|
 | loginId		| 是		| 账号id							|
 | deviceId		| 否		| 客户端设备 id 								|
 | timestamp		| 是		| 当前时间戳，13位									|
 | nonce			| 是		| 随机字符串										|
-| sign			| 是		| 签名，生成算法示例：`md5( deviceId={设备id}&nonce={随机字符串}&loginId={loginId}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
+| sign			| 是		| 签名，生成算法示例：`md5( deviceId={设备id}&msgType={logoutCall}&nonce={随机字符串}&loginId={loginId}&timestamp={13位时间戳}&key={secretkey秘钥} )`					|
 
 返回值示例：
 ``` js
