@@ -55,7 +55,6 @@
 					</div> -->
 					<a class="wzi" href="index.html">首页</a>
 					<a class="wzi" href="doc.html">文档</a>
-					<a class="p-none wzi" href="doc.html#/more/link">案例</a>
 					<div class="zk-box">
 						<a class="wzi" href="javascript:;">
 							<span>视频 </span>
@@ -77,11 +76,12 @@
 							</div>
 						</div>
 					</div>
+					<a class="p-none wzi" href="doc.html#/more/link">案例</a>
+					<a class="p-none wzi" href="doc.html#/more/join-group">加入讨论群</a>
 					<a class="p-none wzi" href="doc.html#/more/demand-commit">需求提交</a>
 					<!-- <a class="p-none wzi" href="doc.html#/more/blog">博客</a> -->
-					<a class="p-none wzi" href="doc.html#/more/join-group">加入讨论群</a>
-					<a class="p-none wzi" href="doc.html#/more/sa-token-donate">赞助</a>
-					<a class="p-none wzi" href="doc.html#/sso/sso-pro">🔥 SSO商业版</a>
+					<!-- <a class="p-none wzi" href="doc.html#/more/sa-token-donate">赞助</a> -->
+					<a class="p-none wzi" href="doc.html#/pro/st_index_top">🔥 SSO/OAuth2 商业版</a>
 					<div class="zk-box">
 						<a class="wzi" href="javascript:;">
 							<span>相关资源 </span>
@@ -1332,7 +1332,10 @@
 				}
 				var mssg = 'Sa-Token 正在参加 Gitee 2025 最受欢迎开源软件投票活动。如果 Sa-Token 帮到了你，希望你可以来支持一下，这对我们非常重要，感谢！ ❤️ ❤️ ❤️ <br>'
 					+ '<a href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank">https://gitee.com/activity/2025opensource?ident=IGPG3R</a><br>';
-				layer.alert(mssg)
+				layer.alert(mssg, {}, function(index){
+					open('https://gitee.com/activity/2025opensource?ident=IGPG3R');
+					layer.close(index)
+				})
 				localStorage.isTanChu = new Date().getTime();
 			}
 			toupiao();
