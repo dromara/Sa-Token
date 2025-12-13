@@ -520,8 +520,8 @@ public class StpLogic {
 		SaTokenEventCenter.doLogin(loginType, id, tokenValue, loginParameter);
 
 		// 9、检查此账号会话数量是否超出最大值，如果超过，则按照登录时间顺序，把最开始登录的给注销掉
-		if(loginParameter.getMaxLoginCount() != -1) {
-			logoutByMaxLoginCount(id, session, null, loginParameter.getMaxLoginCount(), loginParameter.getOverflowLogoutMode());
+		if (loginParameter.getMaxLoginCount() != -1) {
+			logoutByMaxLoginCount(id, session, loginParameter.getDeviceType(), loginParameter.getMaxLoginCount(), loginParameter.getOverflowLogoutMode());
 		}
 
 		// 10、一切处理完毕，返回会话凭证 token
