@@ -20,6 +20,7 @@ Sa-Token提供两种解决方案：
 
 ![子服务外网隔离.drawio.svg](https://oss.dev33.cn/sa-token/doc/micro/子服务外网隔离.drawio.svg 'w-100')
 
+
 ### 二、网关转发鉴权 
 
 ##### 1、引入依赖
@@ -203,7 +204,10 @@ public interface SpCfgInterface {
 
 Same-Token —— 专门解决同源系统互相调用时的身份认证校验，它的作用不仅局限于微服务调用场景
 
-基本使用流程为：服务调用方获取Token，提交到请求中，被调用方取出Token进行校验：Token一致则校验通过，否则拒绝服务
+基本使用流程为：服务调用方获取 Same-Token，提交到请求中，被调用方取出 Same-Token 进行校验：如果一致则校验通过，否则拒绝服务。
+
+![Same-Token_同源系统认证.drawio.svg](https://oss.dev33.cn/sa-token/doc/micro/Same-Token_同源系统认证.drawio.svg 'w-100')
+
 
 首先我们预览一下此模块的相关API：
 ``` java
