@@ -18,6 +18,8 @@ Sa-Token提供两种解决方案：
 
 本篇主要讲解方案二 `Same-Token` 模块的整合步骤，其鉴权流程与 OAuth2.0 类似，不过使用方式上更加简洁（希望使用方案一的同学可参考Sa-OAuth2模块，此处不再赘述）
 
+![子服务外网隔离.drawio.svg](https://oss.dev33.cn/sa-token/doc/micro/子服务外网隔离.drawio.svg 'w-100')
+
 ### 二、网关转发鉴权 
 
 ##### 1、引入依赖

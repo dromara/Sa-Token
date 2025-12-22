@@ -104,6 +104,7 @@
 						</div>
 					</div>
 				</div>
+				<a class="p-none wzi" href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank" style="color: red;">❤️ 投票支持 ❤️</a>
 				<a class="wzi" href="index.html">首页</a>
 				<a class="wzi" href="doc.html">文档</a>
 				<div class="zk-box">
@@ -592,6 +593,33 @@
 			}
 		</script>
 		
+		<!-- 自定义滚动条颜色 -->
+		<!-- <style>
+		    /* 自定义body滚动条样式 */
+		    body::-webkit-scrollbar { width: 8px; }
+			/* 滚动条颜色 */
+		    body::-webkit-scrollbar-thumb { background-color: green; border-radius: 3px; }
+			/* 滚动条上面的和下面的颜色 */
+		    body::-webkit-scrollbar-track {
+		        background: linear-gradient(to bottom, 
+		            #42B983 0%, 
+		            #42B983 var(--scroll-progress, 0%), 
+		            #FCFCFC var(--scroll-progress, 0%), 
+		            #FCFCFC 100%);
+		    }
+		</style>
+		<script>
+		    // 动态更新滚动条颜色
+		    window.addEventListener('scroll', function() {
+		        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+		        const scrollProgress = (scrollTop / scrollHeight) * 100;
+		        
+		        document.body.style.setProperty('--scroll-progress', scrollProgress + '%');
+		    });
+		    // 初始化滚动条状态
+		    window.dispatchEvent(new Event('scroll'));
+		</script> -->
 		
 		<script>
 			// Gitee 2025 投票 

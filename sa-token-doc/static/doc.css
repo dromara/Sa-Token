@@ -250,6 +250,7 @@ body{
 	[title=s-w],[title=s-w-sh]{max-width: 80%;}
 }
 [title=s-w-sh]{display: inline-block; border: 1px #eee solid;}
+[title=w-100]{display: inline-block; border: 1px #ddd solid; max-width: 100%;}
 
 /* 公众号table */
 .gzh-table{ /* table-layout:fixed !important; */}
