@@ -252,6 +252,13 @@ body{
 [title=s-w-sh]{display: inline-block; border: 1px #eee solid;}
 [title=w-100]{display: inline-block; border: 1px #eee solid; max-width: 100%;}
 
+/* 鼠标悬浮时切换img */
+.hover-change-img {border: 1px #eee solid; max-width: 100%; }
+.hover-change-img:hover img:first-child{ display: none; }
+.hover-change-img img:last-child{ display: none; }
+.hover-change-img img:first-child{ display: inline-block; }
+.hover-change-img:hover img:last-child{ display: inline-block; }
+
 /* 公众号table */
 .gzh-table{ /* table-layout:fixed !important; */}
 /* .gzh-table,.gzh-table tr,.gzh-table td{display: block !important;} */

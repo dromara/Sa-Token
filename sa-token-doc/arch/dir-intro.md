@@ -1,6 +1,29 @@
 # 仓库目录介绍
 
-仓库目录介绍：
+--- 
+
+### 1、仓库根目录介绍：
+
+``` js
+── sa-token
+	├── sa-token-core                         // [核心] Sa-Token 核心模块
+	├── sa-token-dependencies                 // [依赖] Sa-Token 依赖版本信息
+	├── sa-token-bom                          // [核心] Sa-Token bom 包
+	├── sa-token-starter                      // [整合] Sa-Token 与其它框架整合
+	├── sa-token-plugin                       // [插件] Sa-Token 插件合集
+	├── sa-token-demo                         // [示例] Sa-Token 示例合集
+	├── sa-token-test                         // [测试] Sa-Token 单元测试合集
+	├── sa-token-doc                          // [文档] Sa-Token 开发文档 
+	├── pom.xml                               // [依赖] 顶级pom文件 
+	├── LICENSE                               // 开源协议
+	├── mvn clean.bat                         // 一键 mvn clean 核心包+所有示例包
+	├── mvn test.bat                          // 一键单元测试 
+	├── preview-doc.bat                       // 一键预览开发文档
+	├── README.md                             // 仓库自述文件 
+```
+
+
+### 2、所有目录详细介绍：
 
 ``` js
 ── sa-token

@@ -115,7 +115,7 @@
 
 - **框架设计**
 	- [仓库目录](/arch/dir-intro)
-	
+	- [数据结构](/arch/data-structure)
 
 
 - **其它**
@@ -140,7 +140,6 @@
 	- [数据读写三大作用域](/fun/three-scope)  
 	- [TokenInfo参数详解](/fun/token-info)
 	- [异常细分状态码](/fun/exception-code)
-	- [数据结构](/fun/data-structure)
 	- [自定义注解](/fun/custom-annotations)
 	- [防火墙](/fun/firewall)
 	- [参考：把权限放在缓存里](/fun/jur-cache)

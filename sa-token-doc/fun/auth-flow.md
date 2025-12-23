@@ -4,7 +4,7 @@
 
 ### Sa-Token 功能结构图：
 
-![sa-token-rz](https://oss.dev33.cn/sa-token/art/sa-token-js4.png 's-w')
+![sa-token-rz](https://oss.dev33.cn/sa-token/art/sa-token-js4--2.png 's-w')
 
 ### Sa-Token 认证流程图：
 
