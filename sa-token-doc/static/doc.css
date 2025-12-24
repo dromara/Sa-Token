@@ -412,7 +412,7 @@ body {
 .sidebar{background-color: transparent !important;}
 
 /* 变色的动画 */
-.doc-header,body{transition: all 0.5s !important;}
+.doc-header{transition: background-color 0.3s !important;}
 
 /* 调色按钮 */
 .theme-btn{width: 25px; height: 25px; line-height: 60px; vertical-align: middle; position: relative; top: -1px;}
