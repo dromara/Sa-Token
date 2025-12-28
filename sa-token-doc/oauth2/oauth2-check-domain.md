@@ -33,7 +33,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 
 当不知情的小红被诱导访问了这个 URL 时，它将被重定向至百度首页。
 
-![oauth2-ticket-jc](https://oss.dev33.cn/sa-token/doc/oauth2-new/oauth2-ticket-jc.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/oauth2-new/oauth2-ticket-jc.png" alt="oauth2-ticket-jc" />
 
 可以看到，代表着用户身份的 code 授权码也显现到了URL之中，借此漏洞，攻击者完全可以构建一个 URL 将小红的 code 授权码自动提交到攻击者自己的服务器，伪造小红身份登录网站。
 
@@ -64,7 +64,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 
 再次访问上述链接：
 
-![oauth2-feifa-rf](https://oss.dev33.cn/sa-token/doc/oauth2-new/oauth2-feifa-rf.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/oauth2-new/oauth2-feifa-rf.png" alt="oauth2-feifa-rf" />
 
 URL 没有通过校验，拒绝授权！
 

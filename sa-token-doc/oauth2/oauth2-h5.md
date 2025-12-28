@@ -117,11 +117,11 @@ public class SaOAuth2ServerH5Controller {
 
 在前端 ide 中导入 demo 案例的 `sa-token-demo-oauth2-server-h5` 项目，然后直接预览 `oauth2-authorize.html` 页面，如图所示：
 
-![sa-oauth2-server-authorize-h5.png](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-server-authorize-h5.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/oauth2-new/sa-oauth2-server-authorize-h5.png" alt="sa-oauth2-server-authorize-h5.png" />
 
 复制上述地址，然后将其配置到 “OAuth2前端测试页” 的 “OAuth2 Server 授权页地址” 选项中，其它选项保持默认不变：
 
-![sa-oauth2-client-test-h5-page-setting.png](https://oss.dev33.cn/sa-token/doc/oauth2-new/sa-oauth2-client-test-h5-page-setting.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/oauth2-new/sa-oauth2-client-test-h5-page-setting.png" alt="sa-oauth2-client-test-h5-page-setting.png" />
 
 然后根据 “OAuth2前端测试页” 的页面提示进行测试即可，此处不再赘述。
 
