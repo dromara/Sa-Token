@@ -134,7 +134,7 @@ public class SaTokenConfigure{
 
 如果想在写标签属性时增加代码提示：
 
-![thymeleaf-code-tips.png](https://oss.dev33.cn/sa-token/doc/thymeleaf-code-tips.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/thymeleaf-code-tips.png" alt="thymeleaf-code-tips.png" />
 
 只需在头部声明增加上对应的命名空间即可：
 

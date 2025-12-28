@@ -34,7 +34,7 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-tiangan.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-tiangan.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-tiangan.png" alt="sa-custom-serializer-tiangan.png" />
 
 
 #### 2、SaSerializerForBase64UsePeriodicTable
@@ -50,7 +50,7 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-yszqb.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-yszqb.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-yszqb.png" alt="sa-custom-serializer-yszqb.png" />
 
 
 
@@ -67,7 +67,7 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-tsfh.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-tsfh.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-tsfh.png" alt="sa-custom-serializer-tsfh.png" />
 
 
 #### 4、SaSerializerForBase64UseEmoji
@@ -83,9 +83,9 @@ public void rewriteComponent() {
 
 效果图：
 
-![sa-custom-serializer-emoji.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-emoji.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-emoji.png" alt="sa-custom-serializer-emoji.png" />
 
-![sa-custom-serializer-emoji2.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-custom-serializer-emoji2.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-emoji2.png" alt="sa-custom-serializer-emoji2.png" />
 
 
 
