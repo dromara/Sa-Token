@@ -3,12 +3,12 @@
 2. 滑动右侧页面滑块, 查看页面内容最下方, 评论区上方
 3. 找到这一行文字
    
-![在线编辑提示](https://oss.dev33.cn/sa-token/doc/git-pr/online_1.png)
+<img src="/big-file/doc/fun/online_1.png" alt="在线编辑提示" />
 
 4. 点击Gitee或GitHub按钮中的任意一个, 国内用户推荐使用 [Gitee](https://gitee.com) (请先注册登录后再往下浏览)
 5. 此时会进入当前页面源码预览页面,找到下方按钮组
 
-![按钮组](https://oss.dev33.cn/sa-token/doc/git-pr/online_2.png)
+<img src="/big-file/doc/fun/online_2.png" alt="按钮组" />
 
 6. 点击编辑按钮
 7. 此时进入待修改页面的源码页面, 按照markdown格式编辑为需要的结果(Ctrl+P可查看最终效果,再次按下可恢复源码界面)
@@ -36,16 +36,16 @@ git config --list
 1. 点击[Gitee](https://gitee.com/dromara/sa-token)或[Github](https://github.com/dromara/sa-token)进入Sa-Token项目主页, 以下以Gitee为例,Github类似(请先注册登录后再往下浏览)
 2. 找到页面右上角的按钮组, 点击Forked按钮
    
-![按钮组](https://oss.dev33.cn/sa-token/doc/git-pr/code_1.png)
+<img src="/big-file/doc/fun/code_1.png" alt="按钮组" />
 
 3. 选择个人仓库并点击确认
 4. 此时在你的个人仓库中会多了一个Sa-Token项目
-5. 在新的Sa-Token项目中, 点击 ![克隆/下载](https://oss.dev33.cn/sa-token/doc/git-pr/code_2.png) 按钮, 点击弹出框里面的复制按钮
+5. 在新的Sa-Token项目中, 点击 <img src="/big-file/doc/fun/code_2.png" alt="克隆/下载" /> 按钮, 点击弹出框里面的复制按钮
 6.  在本地某空文件夹下右键选择: git bash here
 
-![git bash](https://oss.dev33.cn/sa-token/doc/git-pr/code_4.png)
+<img src="/big-file/doc/fun/code_4.png" alt="git bash" />
 
-![git bash 打开后的图](https://oss.dev33.cn/sa-token/doc/git-pr/code_3.png)
+<img src="/big-file/doc/fun/code_3.png" alt="git bash 打开后的图" />
 
 14. 在里面输入如下命令, 按换行后自动下载整个项目
 
@@ -61,18 +61,18 @@ git clone 这里替换为复制后的链接
 ### 方式一
 1. 在idea中打开项目进入Commit选项
 
-![本地暂存](https://oss.dev33.cn/sa-token/doc/git-pr/code_5.png)
+<img src="/big-file/doc/fun/code_5.png" alt="本地暂存" />
 
 2. 勾选需要本地暂存的文件
 3. 在同一页面的下方输入提示信息
 
-![提示信息](https://oss.dev33.cn/sa-token/doc/git-pr/code_6.png)
+<img src="/big-file/doc/fun/code_6.png" alt="提示信息" />
 
 4. 点击Commit按钮暂存到本地, 点击Commit and Push按钮暂存之后提交到远程
 ### 方式二
 1. 除了点击Commit and Push按钮外,还有一个地方可以提交git
 
-![git按钮](https://oss.dev33.cn/sa-token/doc/git-pr/code_7.png)
+<img src="/big-file/doc/fun/code_7.png" alt="git按钮" />
 
 2. 位置在idea右上方的工具栏里面
 3. 指向左下箭头为拉取项目,可以随时更新
@@ -82,11 +82,11 @@ git clone 这里替换为复制后的链接
 1. 提交后进入Gitee个人仓库中克隆的Sa-Token项目
 2. 找到下图的Pull Request按钮
 
-![工具栏](https://oss.dev33.cn/sa-token/doc/git-pr/code_8.png)
+<img src="/big-file/doc/fun/code_8.png" alt="工具栏" />
 
 3. 点击提交, 进入如下页面
 
-![提交信息填写页面](https://oss.dev33.cn/sa-token/doc/git-pr/code_9.png 's-width')
+<img class="s-width" src="/big-file/doc/fun/code_9.png" alt="提交信息填写页面" />
 
 4. 在这里,你可以选择要提交的分支,一般都是dev开发分支.可以填写合并信息,其他测试审查之类的可以不填写, 最后点击创建即可完成一次提交.
 
@@ -94,7 +94,7 @@ git clone 这里替换为复制后的链接
 1. 有时候主项目更新了,之前克隆的项目代码陈旧,如何处理?
 2. 在个人仓库的Sa-Token项目主页面中, 找到下图的圆圈
 
-![更新按钮](https://oss.dev33.cn/sa-token/doc/git-pr/code_10.png)
+<img src="/big-file/doc/fun/code_10.png" alt="更新按钮" />
 
 3. 点击右侧圆圈按钮后Gitee会自动同步主项目, 这样就不用像我之前一样,删除项目又重新fork了.
 

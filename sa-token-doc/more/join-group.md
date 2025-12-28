@@ -6,8 +6,6 @@
 
 ### 1、加入QQ交流群
 
-<!-- ![QQ群](https://oss.dev33.cn/sa-token/qr/qq-group-5-gsa.png ':size=180') -->
-
 <!-- QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)
  -->
  
@@ -16,9 +14,9 @@ QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE)
 
 ### 2、加入微信交流群：
 
-<!-- ![微信群](https://oss.dev33.cn/sa-token/wx-qr-300.png ':size=180') -->
+<!-- <img class="s-w" src="/big-file/contact/wx-qr-300.png" style="width: 180px;" alt="微信群" /> -->
 
-![微信群](https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png ':size=175')
+<img class="s-w" src="/big-file/contact/i-wx-qr2.jpg" style="width: 180px;" alt="微信群" />
 
 （扫码添加微信，备注：sa，邀您加入群聊）
 
