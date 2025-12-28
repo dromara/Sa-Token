@@ -254,6 +254,7 @@ body{
 /* 大屏幕时，某些图片限制一下宽度 */
 @media screen and (min-width: 800px) {
 	[title=s-w],[title=s-w-sh]{max-width: 80%;}
+	.s-w,.s-w-sh{ max-width: 80%; }
 }
 .s-w-sh, [title=s-w-sh]{display: inline-block; border: 1px #eee solid;}
 .w-100, [title=w-100]{display: inline-block; border: 1px #eee solid; max-width: 100%;}

@@ -66,7 +66,7 @@ public SaResult doLogin(String name, String pwd) {
 > 
 > 在浏览器打开 f12 控制台，即可看到被注入的 Cookie 值：
 > 
-> <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/use/sa-login-cookie-pre.png">加载演示图</button>
+> <button class="show-img" img-src="/big-file/doc/use/sa-login-cookie-pre.png">加载演示图</button>
 
 
 ### 2、校验是否登录
@@ -78,7 +78,7 @@ public SaResult doLogin(String name, String pwd) {
 
 <img class="w-100" src="/big-file/doc/use/use-login-check.svg" />
 
-<!-- <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--login-auth.gif">加载动态演示图</button> -->
+<!-- <button class="show-img" img-src="/big-file/doc/use/g3--login-auth.gif">加载动态演示图</button> -->
 
 使用以下方法判断当前会话是否已登录：
 

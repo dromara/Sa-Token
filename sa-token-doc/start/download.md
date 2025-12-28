@@ -180,4 +180,4 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 - 2、从根目录导入项目。
 - 3、选择相应的示例添加为 Maven 项目，打开 XxxApplication.java 运行。
 
-![运行示例](https://oss.dev33.cn/sa-token/doc/import-demo-run.png  's-w-sh')
+<img src="/big-file/doc/start/import-demo-run.png" alt="运行示例" title="s-w-sh">
