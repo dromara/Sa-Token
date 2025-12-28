@@ -4,28 +4,33 @@
 
 ### 1、设计思路
 
-所谓权限认证，核心逻辑就是判断一个账号是否拥有指定权限：<br/>
+权限认证的最终目的在于：规定哪些用户可以访问哪些 接口/页面/资源。
+
+例如对于同一个页面：
+- 管理员账号访问：<green>正常返回数据</green>。
+- 普通账号访问：<red>权限不足，拒绝访问</red>。
+
+![基础-权限认证.svg](../big-file/use/use-jur-auth.svg 'w-100')
+
+
+那么框架是如何判断，一个账号是否有权限访问某个接口的呢？
+
+从底层数据的角度来讲，<green>**每个账号都会拥有一组权限码集合，框架要做的就是校验这个集合中是否包含指定的权限码。**</green>
+
 - 有，就让你通过。
 - 没有？那么禁止访问！
 
-深入到底层数据中，就是每个账号都会拥有一组权限码集合，框架来校验这个集合中是否包含指定的权限码。 
-
-例如：当前账号拥有权限码集合 `["user-add", "user-delete", "user-get"]`，这时候我来校验权限 `"user-update"`，则其结果就是：**验证失败，禁止访问**。 <br/>
-
-
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--jur-auth.gif">加载动态演示图</button>
+![基础-权限校验.svg](../big-file/use/use-jur-check.svg 'w-100')
 
 
 所以现在问题的核心就是两个：
-1. 如何获取一个账号所拥有的权限码集合？
-2. 本次操作需要验证的权限码是哪个？
+1. 如何定义一个账号所拥有的权限码集合？
+2. 本次操作需要校验的权限码是哪个？
 
 
 ### 2、获取当前账号权限码集合
-因为每个项目的需求不同，其权限设计也千变万化，因此 [ 获取当前账号权限码集合 ] 这一操作不可能内置到框架中，
-所以 Sa-Token 将此操作以接口的方式暴露给你，以方便你根据自己的业务逻辑进行重写。
 
-你需要做的就是新建一个类，实现 `StpInterface`接口，例如以下代码：
+在进行具体的权限校验之前，你需要实现 `StpInterface`接口，告诉框架指定账号拥有的权限码集合是哪些：
 
 ``` java 
 /**
@@ -66,12 +71,12 @@ public class StpInterfaceImpl implements StpInterface {
 ```
 
 **参数解释：**
-- loginId：账号id，即你在调用 `StpUtil.login(id)` 时写入的标识值。
+- loginId：账号id，即你在调用 `StpUtil.login(id)` 时写入的`唯一标识`值。
 - loginType：账号体系标识，此处可以暂时忽略，在 [ 多账户认证 ] 章节下会对这个概念做详细的解释。
 
 可参考代码：[码云：StpInterfaceImpl.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpInterfaceImpl.java)
 
-> [!TIP| label:有同学会产生疑问：我实现了此接口，但是程序启动时好像并没有执行，是不是我写错了？] 
+> [!WARNING| label:有同学会产生疑问：我实现了此接口，但是程序启动时好像并没有执行，是不是我写错了？] 
 > 答：不执行是正常现象，程序启动时不会执行这个接口的方法，在每次调用鉴权代码时，才会执行到此。
 
 
@@ -95,7 +100,7 @@ StpUtil.checkPermissionAnd("user.add", "user.delete", "user.get");
 StpUtil.checkPermissionOr("user.add", "user.delete", "user.get");	
 ```
 
-扩展：`NotPermissionException` 对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
+扩展：<red>`NotPermissionException`</red> 异常对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 
 ### 4、角色校验
@@ -118,7 +123,7 @@ StpUtil.checkRoleAnd("super-admin", "shop-admin");
 StpUtil.checkRoleOr("super-admin", "shop-admin");		
 ```
 
-扩展：`NotRoleException` 对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
+扩展：<red>NotRoleException</red> 异常对象可通过 `getLoginType()` 方法获取具体是哪个 `StpLogic` 抛出的异常
 
 
 
@@ -169,6 +174,8 @@ StpUtil.hasPermission("index.html");      // false
 ### 7、如何把权限精确到按钮级？
 权限精确到按钮级的意思就是指：**权限范围可以控制到页面上的每一个按钮是否显示**。
 
+![基础-按钮级权限.svg](../big-file/use/use-jur-btn.svg 'w-100')
+
 思路：如此精确的范围控制只依赖后端已经难以完成，此时需要前端进行一定的逻辑判断。
 
 如果是前后端一体项目，可以参考：[Thymeleaf 标签方言](/plugin/thymeleaf-extend)，如果是前后端分离项目，则：
@@ -180,7 +187,11 @@ StpUtil.hasPermission("index.html");      // false
 // `arr`是当前用户拥有的权限码数组
 // `user.delete`是显示按钮需要拥有的权限码
 // `删除按钮`是用户拥有权限码才可以看到的内容。
-<button v-if="arr.indexOf('user.delete') > -1">删除按钮</button>
+<div>
+	<button v-if="arr.indexOf('user.get') > -1">查询用户</button>
+	<button v-if="arr.indexOf('user.update') > -1">修改用户</button>
+	<button v-if="arr.indexOf('user.delete') > -1">删除按钮</button>
+</div>
 ```
 
 以上写法只为提供一个参考示例，不同框架有不同写法，大家可根据项目技术栈灵活封装进行调用。
