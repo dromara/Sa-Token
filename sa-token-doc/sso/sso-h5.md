@@ -293,7 +293,7 @@ function setHtml(select, html) {
 
 使用前端 ide 导入项目 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server-h5`，浏览器访问 `sso-auth.html` 页面：
 
-![sso-type2-server-h5-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type2-server-h5-auth.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-type2-server-h5-auth.png" alt="sso-type2-server-h5-auth.png" />
 
 复制上述地址，将其配置到 Client 端的配置项 `sa-token.sso-client.auth-url` ，例如：
 

@@ -4,7 +4,7 @@
 
 有的时候，我们需要把 sso-server 搭建成一个平台中心，效果图大致如下：
 
-![sso-home-jump.png](https://oss.dev33.cn/sa-token/doc/sso/sso-home-jump.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-home-jump.png" alt="sso-home-jump.png" />
 
 如图所示，用户先从 sso-server 登录进入平台首页，在首页上有各个子系统的进入链接，用户点击链接进入子系统（免登录）。
 
@@ -90,6 +90,6 @@ public class HomeController {
 
 首次访问，因为我们没有登录，所以会被重定向到 `/sso/auth` 登录页，我们登录上之后，便会跳转到平台中心首页：
 
-![sso-home-jump-do.png](https://oss.dev33.cn/sa-token/doc/sso/sso-home-jump-do.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-home-jump-do.png" alt="sso-home-jump-do.png" />
 
 依次点击三个链接，便可在跳转的同时自动登录上子系统。
