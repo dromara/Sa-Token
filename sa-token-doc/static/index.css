@@ -54,8 +54,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .gb-cursor {display: inline-block;width: 2px;height: 22px;position: relative;top: 4px;left: -4px;background-color: black;animation: blink 0.7s infinite alternate;}
 @keyframes blink { from {opacity: 0;} to {opacity: 1;} }
 
-/* .main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg);} */
-.main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg3.png); background-size: 120% 100%;}
+.main-box{background-image: url(/big-file/index/home-bg3.jpg); background-size: 120% 100%;}
 .main-box{animation: changes 30s 0.2s linear infinite normal; /* background-attachment: ; */}  /* normal | alternate */
 @keyframes changes {
 	from {background-position: 0vw 0%;}

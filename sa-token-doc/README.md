@@ -28,8 +28,9 @@
 **Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**登录认证**、**权限认证**、**单点登录**、**OAuth2.0**、**分布式Session会话**、**微服务网关鉴权**
 等一系列权限相关问题。
 
-<!-- ![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-jss--tran.png) -->
-<object class="sa-token-jss-img" data="static/img/sa-token-jss--tran--onclick.svg"></object>
+<!-- ![sa-token-jss](/big-file/index/intro/sa-token-jss--tran.png) -->
+
+<object class="sa-token-jss-img" data="/big-file/index/intro/sa-token-jss--tran--onclick.svg"></object>
 
 Sa-Token 旨在以简单、优雅的方式完成系统的权限认证部分，以登录认证为例，你只需要：
 
@@ -128,7 +129,7 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 功能结构图：
 
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png 's-w')
+<img class="s-w" src="/big-file/index/intro/sa-token-js4.png" />
 
 
 ## 开源仓库 Star 趋势
