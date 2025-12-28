@@ -10,7 +10,6 @@ Sa-Token 采用 Apache-2.0 开源协议，**承诺框架本身与官网文档永
 
 您可以在项目 [Gitee](https://gitee.com/dromara/sa-token) 主页进行捐赠
 
-<!-- ![gitee-zanzhu2.png](https://oss.dev33.cn/sa-token/doc/gitee-zanzhu2.png) -->
 <img src="/big-file/doc/more/gitee-zanzhu2.png" alt="gitee-zanzhu2.png" />
 
 

@@ -259,7 +259,6 @@ http://sa-oauth-server.com:8000/oauth2/token?grant_type=authorization_code&clien
 }
 ```
 
-<!-- ![sa-oauth2-server-token](https://oss.dev33.cn/sa-token/doc/oauth2/sa-oauth2-server-token.png 's-w-sh') -->
 
 测试完毕
 
