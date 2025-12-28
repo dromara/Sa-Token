@@ -14,5 +14,6 @@ unpackage/
 .idea/
 
 sa-token-three-plugin/
+sa-token-doc/big-file/
 
 .flattened-pom.xml
