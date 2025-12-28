@@ -29,7 +29,7 @@
 由于`jwt`模式不在服务端存储数据，对于比较复杂的业务可能会功能受限，因此更加推荐使用方案三
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--dcs-session.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/micro/g3--dcs-session.gif">加载动态演示图</button>
 
 
 集成依赖示例：
