@@ -34,12 +34,12 @@ public class GlobalExceptionHandler {
 
 然后我们访问这个接口时，浏览器会强制弹出一个表单：
 
-![sa-basic.png](https://oss.dev33.cn/sa-token/doc/sa-basic.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/up/sa-basic.png" alt="sa-basic.png">
 
 
 当我们输入账号密码后 `（sa / 123456）`，才可以继续访问数据：
 
-![sa-basic-ok.png](https://oss.dev33.cn/sa-token/doc/sa-basic-ok.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/up/sa-basic-ok.png" alt="sa-basic-ok.png">
 
 
 ### 2、其它启用方式 

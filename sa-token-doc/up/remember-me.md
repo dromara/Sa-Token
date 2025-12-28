@@ -3,7 +3,7 @@
 
 如图所示，一般网站的登录界面都会有一个 **`[记住我]`** 按钮，当你勾选它登录后，即使你关闭浏览器再次打开网站，也依然会处于登录状态，无须重复验证密码：
 
-![../static/login-view.png](https://oss.dev33.cn/sa-token/doc/login-view.png)
+<img src="/big-file/doc/up/login-view.png" alt="../static/login-view.png">
 
 那么在Sa-Token中，如何做到 [ 记住我 ] 功能呢？
 
@@ -30,7 +30,7 @@ Cookie作为浏览器提供的默认会话跟踪机制，其生命周期有两�
 - 不勾选 [记住我] 按钮时：调用`StpUtil.login(10001, false)`，在浏览器写入一个`临时Cookie`储存 Token，此时用户在重启浏览器后 Token 便会消失，导致会话失效。
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--remember-me.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/up/g3--remember-me.gif">加载动态演示图</button>
 
 
 ### 前后端分离模式下如何实现[记住我]?
