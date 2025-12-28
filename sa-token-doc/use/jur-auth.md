@@ -10,7 +10,7 @@
 - 管理员账号访问：<green>正常返回数据</green>。
 - 普通账号访问：<red>权限不足，拒绝访问</red>。
 
-![基础-权限认证.svg](../big-file/use/use-jur-auth.svg 'w-100')
+<img class="w-100" src="/big-file/doc/use/use-jur-auth.svg" />
 
 
 那么框架是如何判断，一个账号是否有权限访问某个接口的呢？
@@ -20,7 +20,7 @@
 - 有，就让你通过。
 - 没有？那么禁止访问！
 
-![基础-权限校验.svg](../big-file/use/use-jur-check.svg 'w-100')
+<img class="w-100" src="/big-file/doc/use/use-jur-check.svg" />
 
 
 所以现在问题的核心就是两个：
@@ -174,7 +174,7 @@ StpUtil.hasPermission("index.html");      // false
 ### 7、如何把权限精确到按钮级？
 权限精确到按钮级的意思就是指：**权限范围可以控制到页面上的每一个按钮是否显示**。
 
-![基础-按钮级权限.svg](../big-file/use/use-jur-btn.svg 'w-100')
+<img class="w-100" src="/big-file/doc/use/use-jur-btn.svg" />
 
 思路：如此精确的范围控制只依赖后端已经难以完成，此时需要前端进行一定的逻辑判断。
 

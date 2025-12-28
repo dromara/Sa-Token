@@ -24,7 +24,7 @@ SysUser user = (SysUser) StpUtil.getSession().get("user");
 > 有关 Account-Session 与 Token-Session 的详细区别，可参考：[Session模型详解](/fun/session-model)
 
 
-### Account-Session
+### 2、Account-Session
 有关 账号-Session 的 API 如下：
 ``` java
 // 获取当前账号 id 的 Account-Session (必须是登录后才能调用)
@@ -44,7 +44,7 @@ StpUtil.getSessionBySessionId("xxxx-xxxx");
 ```
 
 
-### Token-Session
+### 3、Token-Session
 有关 令牌-Session 的 API 如下：
 ``` java
 // 获取当前 Token 的 Token-Session 对象
@@ -55,7 +55,7 @@ StpUtil.getTokenSessionByToken(token);
 ```
 
 
-### Custom-Session
+### 4、Custom-Session
 自定义 Session 指的是以一个`特定的值`作为 SessionId 来分配的`Session`, 借助自定义Session，你可以为系统中的任意元素分配相应的session<br>
 例如以商品 id 作为 key 为每个商品分配一个Session，以便于缓存和商品相关的数据，其相关API如下：
 ``` java
@@ -73,7 +73,7 @@ SaSessionCustomUtil.deleteSessionById("goods-10001");
 ```
 
 
-### 在 Session 上存取值
+### 5、在 Session 上存取值
 
 以上三种 Session 均为框架设计概念上的区分，实际上在获取它们时，返回的都是 SaSession 对象，你可以使用以下 API 在 SaSession 对象上存取值：
 
@@ -118,7 +118,7 @@ session.keys();
 ```
 
 
-### 其它操作
+### 6、其它操作
 
 ``` java
 // 返回此 Session 的id 
@@ -138,7 +138,7 @@ session.logout();
 ```
 
 
-### 避免与 HttpSession 混淆使用
+### 7、避免与 HttpSession 混淆使用
 经常有同学会把 `SaSession` 与 `HttpSession` 进行混淆，例如：
 ``` java
 @PostMapping("/resetPoints")
@@ -154,7 +154,7 @@ public void reset(HttpSession session) {
 2. `HttpSession`并未被框架接管，在使用Sa-Token时，请在任何情况下均使用`SaSession`，不要使用`HttpSession` 
 
 
-### 未登录场景下获取 Token-Session 
+### 8、未登录场景下获取 Token-Session 
 
 默认场景下，只有登录后才能通过 `StpUtil.getTokenSession()` 获取 `Token-Session`。
 

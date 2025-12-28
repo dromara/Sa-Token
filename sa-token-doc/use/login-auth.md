@@ -13,7 +13,7 @@
 
 在整个流程中，Sa-Token 负责哪些部分呢？ 下图可以帮助你理解：
 
-![基础-登录认证流程图.svg](../big-file/use/use-login-auth.svg 'w-100')
+<img class="w-100" src="/big-file/doc/use/use-login-auth.svg" />
 
 如上图所示：<green>**无论用户采用何种登录方式，本质上都是通过提交一定的认证信息，使系统可以定位到 Ta 的唯一标识 —— userId**</green>。
 
@@ -76,7 +76,7 @@ public SaResult doLogin(String name, String pwd) {
 - 如果校验通过，则：<green>正常返回数据。</green>
 - 如果校验未通过，则：<red>抛出异常，告知其需要先进行登录。</red>
 
-![基础-登录校验流程图.svg](../big-file/use/use-login-check.svg 'w-100')
+<img class="w-100" src="/big-file/doc/use/use-login-check.svg" />
 
 <!-- <button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--login-auth.gif">加载动态演示图</button> -->
 
