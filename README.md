@@ -23,7 +23,7 @@
 
 Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
-![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-jss--tran.png)
+![sa-token-jss](https://sa-token.cc/big-file/index/intro/sa-token-jss--tran.png)
 
 要在 SpringBoot 项目中使用 Sa-Token，你只需要在 pom.xml 中引入依赖：
 
@@ -148,7 +148,7 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 
 Sa-Token SSO 分为三种模式，解决同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离……等不同架构下的 SSO 接入问题：
 
-![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-sso--white.png)
+![sa-token-jss](https://sa-token.cc/big-file/doc/sso/sa-token-sso--white.png)
 
 | 系统架构						| 采用模式	| 简介						|  文档链接	|
 | :--------						| :--------	| :--------					| :--------	|
@@ -225,7 +225,7 @@ QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE)
 
 <!-- <img src="https://oss.dev33.cn/sa-token/qr/wx-qr-m-400k.png" width="230px" title="微信群" /> -->
 
-<img src="https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png" width="230px" title="微信群" />
+<img src="https://sa-token.cc/big-file/contact/i-wx-qr2.jpg" width="230px" title="微信群" />
 
 (扫码添加微信，备注：sa-token，邀您加入群聊)
 
