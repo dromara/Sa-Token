@@ -231,7 +231,7 @@ PS：扫码添加微信 (备注：sa-token)，邀您加入群聊。
 
 <br>
 
-<img class="s-w" src="http://localhost:3000/big-file/contact/show/wx-group-show3--zhai.png" style="max-width: 50%;" alt="微信群" />
+<img class="s-w" src="http://localhost:3000/big-file/contact/show/wx-group-show3--liubai.png" style="max-width: 50%;" alt="微信群" />
 
 
 加入群聊的好处：
