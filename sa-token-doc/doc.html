@@ -106,8 +106,6 @@
 						</div>
 					</div>
 				</div>
-				<a class="p-none wzi" href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank"
-					style="color: red;">❤️ 投票支持 ❤️</a>
 				<a class="wzi" href="index.html">首页</a>
 				<a class="wzi" href="doc.html">文档</a>
 				<div class="zk-box">
@@ -529,37 +527,6 @@
 		    window.dispatchEvent(new Event('scroll'));
 		</script> -->
 
-		<script>
-			// Gitee 2025 投票 
-			function toupiao() {
-				// 弹出一次后，多少天不再弹出  （2天）
-				const dayy = 1000 * 60 * 60 * 24 * 2;
-				// 判断是否近期已经判断过了
-				try {
-					const isTanChu = localStorage.isTanChu;
-					if (isTanChu) {
-						// 记录 star 的时间，和当前时间的差距
-						const disparity = new Date().getTime() - parseInt(isTanChu);
-
-						// 判断差距 
-						if (disparity < dayy) {
-							console.log('checked ... toupiao ');
-							return;
-						}
-					}
-				} catch (e) {
-					console.error(e);
-				}
-				var mssg = 'Sa-Token 正在参加 Gitee 2025 最受欢迎开源软件投票活动。如果 Sa-Token 帮到了你，希望你可以来支持一下，这对我们非常重要，感谢！ ❤️ ❤️ ❤️ <br>' +
-					'<a href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank">https://gitee.com/activity/2025opensource?ident=IGPG3R</a><br>';
-				layer.alert(mssg, {}, function(index) {
-					open('https://gitee.com/activity/2025opensource?ident=IGPG3R');
-					layer.close(index)
-				})
-				localStorage.isTanChu = new Date().getTime();
-			}
-			toupiao();
-		</script>
 
 	</body>
 </html>

@@ -53,7 +53,6 @@
 							</div>
 						</div>
 					</div> -->
-					<a class="p-none wzi" href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank" style="color: red;">❤️ 投票支持 ❤️</a>
 					<a class="wzi" href="index.html">首页</a>
 					<a class="wzi" href="doc.html">文档</a>
 					<div class="zk-box">
@@ -329,9 +328,26 @@
 				</div>
 			</div>
 
+			<!-- ------------ GitHub Stars 对比 ------------- -->
+			<div style="margin-top: -50px;">
+				<div class="feature-z">
+					<h2 class="s-title">Java 鉴权框架 Stars 对比</h2>
+					<div style="border: 0px #000 solid;">
+						<iframe 
+						  src="./static/page-com/github-stars-vs/github-stars-vs.html" 
+						  width="1000" 
+						  height="700" 
+						  frameborder="0"
+						  scrolling="no"
+						  style="border: none;"
+						></iframe>
+					</div>
+				</div>
+			</div>
+
 
 			<!-- ------------ 赞助者名单 ------------- -->
-			<div style="margin-top: -30px;">
+			<div style="margin-top: -50px;">
 				<div class="feature-z">
 					<h2 class="s-title">赞助者名单（感谢！感谢！感谢！）</h2>
 					<div class="">
@@ -1014,6 +1030,10 @@
 							<img class="lazy" data-original="/big-file/index/link/chat2db.png"
 								msg="一个AI驱动的数据库管理和BI工具，支持Mysql、pg、Oracle、Redis等22种数据库的管理。">
 						</a>
+						<a href="https://onlinenotepad101.org/zh" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/notepad.png"
+								msg="在线记事本 – 免费在线文本编辑器：专为无干扰写作、高效记笔记。完全免费，无需注册，打开即用，支持富文本内容编辑。支持保存、导出，以及分享给其他人。简洁流畅，专注创作。">
+						</a>
 					</div>
 					<div style="height: 10px; clear: both;"></div>
 				</div>
@@ -1117,12 +1137,12 @@
 		<!-- 悬浮效果 -->
 		<script src="static/jquery.min.js"></script>
 		<script src="static/layer-v3.1.1/layer.js"></script>
+		
+		<!-- 赞助者名单 -->
 		<script src="static/donate/donate-list.js"></script>
 		<script src="static/donate/donate-fun.js"></script>
+		<script type="text/javascript">renderDonateTable();</script>
 		<script type="text/javascript">
-			
-			// 渲染赞助者清单 
-			renderDonateTable();
 			
 			// 鼠标悬浮在友情链接时，提示信息 
 			$(".com-box-you a img").hover(function() {
@@ -1303,38 +1323,6 @@
 		    window.dispatchEvent(new Event('scroll'));
 		</script> -->
 		
-		
-		<script>
-			// Gitee 2025 投票 
-			function toupiao() {
-				// 弹出一次后，多少天不再弹出  （2天）
-				const dayy = 1000 * 60 * 60 * 24 * 2;
-				// 判断是否近期已经判断过了
-				try{
-					const isTanChu = localStorage.isTanChu;
-					if(isTanChu) {
-						// 记录 star 的时间，和当前时间的差距
-						const disparity = new Date().getTime() - parseInt(isTanChu);
-						
-						// 判断差距 
-						if(disparity < dayy) {
-							console.log('checked ... toupiao ');
-							return;
-						}
-					}
-				}catch(e){
-					console.error(e);
-				}
-				var mssg = 'Sa-Token 正在参加 Gitee 2025 最受欢迎开源软件投票活动。如果 Sa-Token 帮到了你，希望你可以来支持一下，这对我们非常重要，感谢！ ❤️ ❤️ ❤️ <br>'
-					+ '<a href="https://gitee.com/activity/2025opensource?ident=IGPG3R" target="_blank">https://gitee.com/activity/2025opensource?ident=IGPG3R</a><br>';
-				layer.alert(mssg, {}, function(index){
-					open('https://gitee.com/activity/2025opensource?ident=IGPG3R');
-					layer.close(index)
-				})
-				localStorage.isTanChu = new Date().getTime();
-			}
-			toupiao();
-		</script>
 		
 	</body>
 </html>
