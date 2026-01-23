@@ -227,9 +227,12 @@ QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE)
 
 <img src="https://sa-token.cc/big-file/contact/i-wx-qr2.jpg" width="230px" title="微信群" />
 
-(扫码添加微信，备注：sa-token，邀您加入群聊)
+PS：扫码添加微信 (备注：sa-token)，邀您加入群聊。
 
 <br>
+
+<img class="s-w" src="http://localhost:3000/big-file/contact/show/wx-group-show3--zhai.png" style="max-width: 50%;" alt="微信群" />
+
 
 加入群聊的好处：
 - 第一时间收到框架更新通知。

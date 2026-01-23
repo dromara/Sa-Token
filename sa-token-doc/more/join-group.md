@@ -18,15 +18,20 @@ QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE)
 
 <img class="s-w" src="/big-file/contact/i-wx-qr2.jpg" style="width: 180px;" alt="微信群" />
 
-（扫码添加微信，备注：sa，邀您加入群聊）
+PS：扫码添加微信 (备注：sa)，邀您加入群聊。
 
 <br>
+
+
+<img class="s-w" src="/big-file/contact/show/wx-group-show3.png" style="max-width: 50%;" alt="微信群" />
+
 
 加入群聊的好处：
 - 第一时间收到框架更新通知。
 - 第一时间收到框架 bug 通知。
 - 第一时间收到新增开源案例通知。
 - 和众多大佬一起互相 (huá shuǐ) 交流 (mō yú)。
+
 
 
 ### 3、群规（碎碎念）：
