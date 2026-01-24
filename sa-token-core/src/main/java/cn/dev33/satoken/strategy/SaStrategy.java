@@ -32,12 +32,13 @@ import java.util.UUID;
  * <p>
  * 此类统一定义框架内的一些关键性逻辑算法，方便开发者进行按需重写，例：
  * </p>
+ * 
  * <pre>
- // SaStrategy全局单例，所有方法都用以下形式重写
- SaStrategy.instance.setCreateToken((loginId, loginType) -》 {
- // 自定义Token生成的算法
- return "xxxx";
- });
+ * // SaStrategy全局单例，所有方法都用以下形式重写
+ * SaStrategy.instance.setCreateToken((loginId, loginType) -> {
+ * 	// 自定义Token生成的算法
+ * 	return "xxxx";
+ * });
  * </pre>
  *
  * @author click33
@@ -52,7 +53,6 @@ public final class SaStrategy {
 	 * 获取 SaStrategy 对象的单例引用
 	 */
 	public static final SaStrategy instance = new SaStrategy();
-
 
 	// ----------------------- 所有策略
 
@@ -86,7 +86,8 @@ public final class SaStrategy {
 
 			// tik风格 (2_14_16)
 			case SaTokenConsts.TOKEN_STYLE_TIK:
-				return SaFoxUtil.getRandomString(2) + "_" + SaFoxUtil.getRandomString(14) + "_" + SaFoxUtil.getRandomString(16) + "__";
+				return SaFoxUtil.getRandomString(2) + "_" + SaFoxUtil.getRandomString(14) + "_"
+						+ SaFoxUtil.getRandomString(16) + "__";
 
 			// 默认，还是uuid
 			default:
@@ -114,7 +115,7 @@ public final class SaStrategy {
 	public SaHasElementFunction hasElement = (list, element) -> {
 
 		// 空集合直接返回false
-		if(list == null || list.size() == 0) {
+		if (list == null || list.size() == 0) {
 			return false;
 		}
 
@@ -125,7 +126,7 @@ public final class SaStrategy {
 
 		// 开始模糊匹配
 		for (String patt : list) {
-			if(SaFoxUtil.vagueMatch(patt, element)) {
+			if (SaFoxUtil.vagueMatch(patt, element)) {
 				return true;
 			}
 		}
@@ -137,12 +138,13 @@ public final class SaStrategy {
 	/**
 	 * 生成唯一式 token 的算法
 	 */
-	public SaGenerateUniqueTokenFunction generateUniqueToken = (elementName, maxTryTimes, createTokenFunction, checkTokenFunction) -> {
+	public SaGenerateUniqueTokenFunction generateUniqueToken = (elementName, maxTryTimes, createTokenFunction,
+			checkTokenFunction) -> {
 
 		// 为方便叙述，以下代码注释均假设在处理生成 token 的场景，但实际上本方法也可能被用于生成 code、ticket 等
 
 		// 循环生成
-		for (int i = 1; ; i++) {
+		for (int i = 1;; i++) {
 			// 生成 token
 			String token = createTokenFunction.get();
 
@@ -164,11 +166,11 @@ public final class SaStrategy {
 	};
 
 	/**
-     * 是否自动续期 active-timeout
-     */
-    public SaAutoRenewFunction autoRenew = (stpLogic) -> {
-        return stpLogic.getConfigOrGlobal().getAutoRenew();
-    };
+	 * 是否自动续期 active-timeout
+	 */
+	public SaAutoRenewFunction autoRenew = (stpLogic) -> {
+		return stpLogic.getConfigOrGlobal().getAutoRenew();
+	};
 
 	/**
 	 * 创建 StpLogic 的算法
@@ -190,7 +192,6 @@ public final class SaStrategy {
 	public SaCorsHandleFunction corsHandle = (req, res, sto) -> {
 
 	};
-
 
 	// ----------------------- 重写策略 set连缀风格
 
@@ -250,15 +251,15 @@ public final class SaStrategy {
 	}
 
 	/**
-     * 是否自动续期
-     *
-     * @param autoRenew /
-     * @return /
-     */
-    public SaStrategy setAutoRenew(SaAutoRenewFunction autoRenew) {
-        this.autoRenew = autoRenew;
-        return this;
-    }
+	 * 是否自动续期
+	 *
+	 * @param autoRenew /
+	 * @return /
+	 */
+	public SaStrategy setAutoRenew(SaAutoRenewFunction autoRenew) {
+		this.autoRenew = autoRenew;
+		return this;
+	}
 
 	//
 

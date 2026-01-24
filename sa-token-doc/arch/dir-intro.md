@@ -104,7 +104,7 @@
 			├── page_project                          // [示例] Sa-Token 实现 [ 记住我 ] 模式、前端页面
 			├── sa-token-demo-remember-me-server      // [示例] Sa-Token 实现 [ 记住我 ] 模式、后端接口
 		├── sa-token-demo-solon                   // [示例] Sa-Token 集成 Solon 
-		├── sa-token-demo-solon-reisson           // [示例] Sa-Token 集成 Solon、Reisson
+		├── sa-token-demo-solon-redisson           // [示例] Sa-Token 集成 Solon、Redisson
 		├── sa-token-demo-springboot              // [示例] Sa-Token 整合 SpringBoot 
 		├── sa-token-demo-springboot3-redis       // [示例] Sa-Token 整合 SpringBoot3 整合 Redis 
 		├── sa-token-demo-springboot-low-version  // [示例] Sa-Token 整合 SpringBoot2 低版本
