@@ -152,7 +152,7 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 - GitHub 关注量达到 18523 Star，是主要竞争框架 Spring Security 的 1.97 倍，Apache Shiro 的 4.19 倍。
 - 25+ 微信粉丝群 (500人)，8+ QQ粉丝群 (1000人 or 2000人) ，在线文档访问量月PV 20万+。
 
-这是众多开发者用脚投票的数据，相信它们比任何言语都能证明 Sa-Token 的热度。
+这是众多开发者用脚投票的数据，相信这些数据比任何言语都能证明 Sa-Token 的热度。
 
 
 **4、Sa-Token 有哪些权威认证？** 
@@ -162,7 +162,7 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 **5、Sa-Token 收费吗？** 
 
-Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与官网文档永久免费开放。当然如果您有心赞助 Sa-Token，我们也不回避：[赞助链接](https://sa-token.cc/doc.html#/more/sa-token-donate)。
+Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永久免费开放。当然如果您有心赞助 Sa-Token，我们也不回避：[赞助链接](https://sa-token.cc/doc.html#/more/sa-token-donate)。
 我们将定期同步赞助者名单到在线文档展示。（您需要注意的一点是：该赞助仅为友情赞助，不提供任何商业交换）
 
 
