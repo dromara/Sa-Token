@@ -14,7 +14,7 @@
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 <!-- <p align="center">学习测试请拉取 master 分支，dev 是在开发分支 (在根目录执行 `git checkout master`)</p> -->
-<p align="center"><a href="https://sa-token.cc" target="_blank">在线文档：https://sa-token.cc</a></p>
+<p align="center"><a href="https://sa-token.cc?way=readme" target="_blank">在线文档：https://sa-token.cc</a></p>
 
 
 ---
