@@ -255,7 +255,7 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 ### 💬 交流群
 <!-- QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)-->
 
-QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE) 
+QQ交流群：1081649142 [点击加入](https://qm.qq.com/q/SCAaZ6Ros2) 
 
 微信交流群：
 
