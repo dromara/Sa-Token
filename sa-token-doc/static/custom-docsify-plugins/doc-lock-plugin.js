@@ -33,7 +33,7 @@ var docLockPlugin = function(hook, vm) {
 	const dl_AllowDisparity = 1000 * 60 * 60 * 24 * 30 * 1;  // 1个月
 	// 拦截 path ，如果填 /** 代表所有路径，填 /sso/* 代表 /sso/ 目录下所有路径
 	const dl_exeArray = [
-		'/sso/*', '/oauth2/*', '/more/common-questions'
+		'/sso/*', '/oauth2/*', '/more/common-questions', '/up/*', '/micro/*', '/plugin/*'
 	];
 	// 排除 path 
 	const dl_excludeArray = [
