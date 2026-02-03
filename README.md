@@ -6,7 +6,7 @@
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
-	<a href="https://gitcode.com/dromara/sa-token/stargazers"><img src="https://gitcode.com/dromara/Sa-Token/star/badge.svg"></a>
+	<a href="https://atomgit.com/dromara/sa-token/stargazers"><img src="https://atomgit.com/dromara/Sa-Token/star/badge.svg"></a>
 	<a href="https://github.com/dromara/sa-token/stargazers"><img src="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
@@ -248,7 +248,7 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 ### 📦 代码托管
 - Gitee：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - GitHub：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
-- GitCode：[https://gitcode.com/dromara/sa-token](https://gitcode.com/dromara/sa-token)
+- AtomGit：[https://atomgit.com/dromara/sa-token](https://atomgit.com/dromara/sa-token)
 
 
 
