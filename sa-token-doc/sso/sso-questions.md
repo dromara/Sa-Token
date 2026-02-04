@@ -213,7 +213,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 
 ### 问：Client 信息可以做成从数据库读取的吗？
-可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getClient` 与 `getClient` 方法即可：
+可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getClient` 与 `getClients` 方法即可：
 ``` java
 /**
  * 重写 SaSsoServerTemplate 部分方法，增强功能
