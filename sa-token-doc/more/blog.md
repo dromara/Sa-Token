@@ -5,10 +5,96 @@
 
 --- 
 
+- [[ 公众号 ] Sa-Token实战：SpringBoot与微服务权限认证极简方案](https://mp.weixin.qq.com/s/yNma6FhHvPLNHUqYFkdPCg) （2026-1-25）
 
+- [[ 公众号 ] Sa-Token过期机制](https://mp.weixin.qq.com/s/gFQ8YJT1yg5pTm8Z3uDZHw) （2026-1-22）
 
+- [[ 公众号 ] 别再写死权限了！SpringBoot + Sa-Token 实现 RBAC 的最佳姿势](https://mp.weixin.qq.com/s/ZwzAInOoqiQ2h0ogWaOoQg) （2026-1-14）
 
-- [[ 公众号 ] sa-token之@SaIgnore注解失效的真正原因及正确姿势](https://mp.weixin.qq.com/s/c6eckHp2M4oz2x3Hea6pGg) （2025-1-15）
+- [[ 公众号 ] 集成sa-token跨域正确姿势](https://mp.weixin.qq.com/s/tbqjCKrTMj-l1lZbeyu81g) （2026-1-9）
+
+- [[ 公众号 ] 后端开发必看：最简单的 Java 登录认证框架 Sa-Token 上手指南](https://mp.weixin.qq.com/s/Kk9HEVAG43-FPikiMZKWJw) （2026-1-8）
+
+- [[ 公众号 ] Sa-Token：一站式权限认证解决方案的实战指南](https://mp.weixin.qq.com/s/FVkn-3CqWT8dNM6a5kD2oA) （2025-12-30）
+
+- [[ 公众号 ] SpringSecurity、Shiro和Sa-Token，哪个更好？](https://mp.weixin.qq.com/s/gtQ7_n9cPJd2-i_Qm-jk1A) （2025-12-28）
+
+- [[ 公众号 ] SpringBoot + JWT + Sa-Token：认证鉴权双框架对比，安全登录与权限控制最佳实践](https://mp.weixin.qq.com/s/SDPKdmxtwb4MbOHfg-bF8Q) （2025-12-27）
+
+- [[ 公众号 ] 一行代码搞定认证](https://mp.weixin.qq.com/s/UaAw1WdVtumA44SxjFW3yg) （2025-12-24）
+
+- [[ 公众号 ] 《第27节》SpringBoot+SaToken实现鉴权功能](https://mp.weixin.qq.com/s/mY_jrQL1dG2yis51rX2i9w) （2025-12-16）
+
+- [[ 公众号 ] 告别 Spring Security！Sa-Token + Gateway + Nacos 极简鉴权实战](https://mp.weixin.qq.com/s/s36bdkhi5ACGN2j7hLiD7w) （2025-12-15）
+
+- [[ 公众号 ] 《第26节》SpringBoot3+SaToken实现用户注册登录功能](https://mp.weixin.qq.com/s/u7nVa0PJcFWx-9xKq1RNhA) （2025-12-13）
+
+- [[ 公众号 ] 《第25节》SpringBoot3之集成sa-token权限认证框架](https://mp.weixin.qq.com/s/sxgzLqiKCf4_fqWAxN8Ozg) （2025-12-12）
+
+- [[ 公众号 ] Sa-Token 1.44.0：Java权限认证的“轻量级王者”，让鉴权优雅如诗](https://mp.weixin.qq.com/s/UprusTkp9LZOH9TJDTKJRw) （2025-11-20）
+
+- [[ 公众号 ] sa-token-rust 项目：高性能的 Rust 认证授权框架](https://mp.weixin.qq.com/s/jlQAX1K1M64DtUgrHrDX1A) （2025-11-17）
+
+- [[ 公众号 ] 不会吧，居然还有人没有用过？全网爆火的权限校验框架 Sa-Token 超详细教程它来了](https://mp.weixin.qq.com/s/kNYq0MmlYB_0tRWI-HvU1g) （2025-11-6）
+
+- [[ 公众号 ] 若依框架集成 Sa-Token 实现权限认证与会话管理](https://mp.weixin.qq.com/s/JAgL0hxcPeP0E4OW4oy8Yg) （2025-10-21）
+
+- [[ 公众号 ] 太强了！Sa-Token 的 Go 版本！](https://mp.weixin.qq.com/s/idfrMeAMY2CeGAZGY9csmw) （2025-10-20）
+
+- [[ 公众号 ] 太强了！Sa-Token 的 rust 版本！](https://mp.weixin.qq.com/s/CveVq368Dz5Xw-a2nT3YDw) （2025-10-12）
+
+- [[ 公众号 ] 功能最全的Java权限认证框架](https://mp.weixin.qq.com/s/fO5Mm1UIN8oDOwvbq-sQTw) （2025-10-10）
+
+- [[ 公众号 ] 从 0 到 1！Sa-Token 与 SpringBoot 整合教程，让鉴权优雅到飞起](https://mp.weixin.qq.com/s/PudodYBsIQODdfeweo39fQ) （2025-10-16）
+
+- [[ 公众号 ] 一篇搞定！SpringBoot 搭建超安全 Sa-Token 登录鉴权系统](https://mp.weixin.qq.com/s/5fbrNS6jMpuViPPO8z_kMw) （2025-10-3）
+
+- [[ 公众号 ] 《Spring Cloud Gateway 从入门到实战》第4篇：安全与认证 —— 基于 Sa-Token 的网关统一鉴权方案](https://mp.weixin.qq.com/s/qeWQufIDNtGPyJ0b7yF4vQ) （2025-9-29）
+
+- [[ 公众号 ] SpringBoot整合Sa-Token实现认证与鉴权](https://mp.weixin.qq.com/s/l4OjqdeNpXjMyFCSr3PuWw) （2025-9-25）
+
+- [[ 公众号 ] Spring Gateway、Sa-Token、Nacos 认证/鉴权方案](https://mp.weixin.qq.com/s/JpXtI75eANwkRAppQZJG9Q) （2025-9-17）
+
+- [[ 公众号 ] 告别 Spring Security！Sa-Token + Gateway + Nacos 极简鉴权实战](https://mp.weixin.qq.com/s/hlBH1H6vX-KIlQGmeY8bIg) （2025-9-15）
+
+- [[ 公众号 ] Spring Gateway、Sa-Token、Nacos 认证/鉴权方案，yyds！](https://mp.weixin.qq.com/s/OYsxjEmLfkxH0NqZidb4fA) （2025-9-10）
+
+- [[ 公众号 ] Ruoyi-vue-plus-5.x第一篇Sa-Token权限认证体系深度解析：1.4 Sa-Token高级特性实现](https://mp.weixin.qq.com/s/0Fex83DyngC-mxIu346X1Q) （2025-8-30）
+
+- [[ 公众号 ] Ruoyi-vue-plus-5.x第一篇Sa-Token权限认证体系深度解析：1.3 权限控制与注解使用](https://mp.weixin.qq.com/s/f4iVDeIAZ-nixqR6BNtUfg) （2025-8-30）
+
+- [[ 公众号 ] Ruoyi-vue-plus-5.x第一篇Sa-Token权限认证体系深度解析：1.2 登录认证机制详解](https://mp.weixin.qq.com/s/gu5kT93WjEauut7xoXmuag) （2025-8-29）
+
+- [[ 公众号 ] Ruoyi-vue-plus-5.x第一篇Sa-Token权限认证体系深度解析：1.1 Sa-Token框架基础](https://mp.weixin.qq.com/s/w8c5fvaap7ipMu2OdXNZng) （2025-8-29）
+
+- [[ 公众号 ] 告别 Spring Security！Sa-Token + Gateway + Nacos 极简鉴权实战](https://mp.weixin.qq.com/s/5nmEDAsFgEWk-Ymn_pE74w) （2025-8-22）
+
+- [[ 公众号 ] 搭建基于sa-token 的网关权限管理系统](https://mp.weixin.qq.com/s/LM6g3QaklSHpaVJXUz5Gvg) （2025-7-19）
+
+- [[ 公众号 ] 别再被 Spring Security 和 Shiro 劝退了！这款国产 Java 权限框架真香！](https://mp.weixin.qq.com/s/2C0WSlM8zpjqQDtgv59Kaw) （2025-7-1）
+
+- [[ 公众号 ] 一文精通Java集成Sa-Token实现SSO单点登录](https://mp.weixin.qq.com/s/-fex5XFm4wmTmuzZCtUiRw) （2025-5-22）
+
+- [[ 公众号 ] 47.8k star，一款接私活神器，10分钟搞定企业级鉴权！](https://mp.weixin.qq.com/s/KRz3-h6etPaKOwHN4Xz7qg) （2025-5-15）
+
+- [[ 公众号 ] Sa-Token：17.5k Star！轻量级Java权限认证框架，登录鉴权超简单](https://mp.weixin.qq.com/s/akPTgU8sQkwWmXm4GNSyyQ) （2025-5-11）
+
+- [[ 公众号 ] SaToken-微服务认证与授权](https://mp.weixin.qq.com/s/9WYg6iLDST7YDSSsCt1NxQ) （2025-4-3）
+
+- [[ 公众号 ] SpringBoot 整合 Sa-Token 快速实现 API 接口签名安全校验](https://mp.weixin.qq.com/s/2NS3axN1CbRYULHrv5Du2w) （2025-3-20）
+
+- [[ 公众号 ] SaToken 简化开发的身份认证与权限管理框架](https://mp.weixin.qq.com/s/Yxsswl4Zn8244j4XeV8_VA) （2025-1-24）
+
+- [[ 公众号 ] 使用 Sa-Token 平替 Spring Security，告别繁琐的认证与鉴权！](https://mp.weixin.qq.com/s/whKQPm09ApzkVBjlSwO2Tg) （2025-1-15）
+
+- [[ 公众号 ] sa-token之@SaIgnore注解失效的真正原因及正确姿势](https://mp.weixin.qq.com/s/c6eckHp2M4oz2x3Hea6pGg) （2025-1-14）
+
+- [[ 公众号 ] SpringBoot3.x+Vue3+Sa-Token实现登录认证](https://mp.weixin.qq.com/s/0GkDoOYW8KKxTfzV83J6UA) （2024-12-27）
+
+- [[ 公众号 ] 万字雄文：一次说清基于Sa-Token和MaxKey的统一认证中心实现](https://mp.weixin.qq.com/s/Gl2K47F9I6-Il-AieWLplw) （2024-11-15）
+
+<!-- 2026-2-3 搜集至 2024-11-15 公众号平台 -->
+
 
 - [[ 公众号 ] 集成sa-token前后端分离部署配置corsFliter解决跨域失效的真正原因](https://mp.weixin.qq.com/s/bSS4vmKlKM7ov_CUkjxkBg) （2024-07-08）
 
