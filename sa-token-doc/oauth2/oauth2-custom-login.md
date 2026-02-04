@@ -6,7 +6,7 @@
 
 ### 1、如何自定义 OAuth-Server 端的登录视图？
 
-重写 `cfg.notLoginView` 策略：
+重写 `SaOAuth2Strategy.instance.notLoginView` 策略：
 
 ``` java
 @Autowired
@@ -60,7 +60,7 @@ public SaResult ss(String name, String pwd) {
 
 ### 3、如何自定义 OAuth-Server 端的确认授权视图？
 
-重写 `cfg.confirmView` 策略：
+重写 `SaOAuth2Strategy.instance.confirmView` 策略：
 
 ``` java
 @Autowired

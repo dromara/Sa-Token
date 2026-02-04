@@ -4,7 +4,7 @@
 
 ## SSO-Client 前后端分离
 
-要在前后端分离的环境中接入 SSO，思路不难，主要的工作是吧后端 `/sso/login` 接口的路由中转工作拿到前端来，以`sa-token-demo-sso3-client`为例：
+要在前后端分离的环境中接入 SSO，思路不难，主要的工作是把后端 `/sso/login` 接口的路由中转工作拿到前端来，以`sa-token-demo-sso3-client`为例：
 
 ### 1、在 sso-client 后端新建`H5Controller`，开放接口：
 
