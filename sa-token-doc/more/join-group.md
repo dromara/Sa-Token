@@ -70,5 +70,6 @@ QQ群聊号码：939849926
 （例如：xx开源项目作者集成了 sa-token，申请加入群聊），如果字数太多无法写完，也可在开源交流群里@管理员协助交流。
 
 
-
+### 5、Sa-Token 内容合作群
+专门为 Sa-Token 内容创作者们准备的交流群：[Sa-Token 内容合作群](/more/content-cooperation) 
 

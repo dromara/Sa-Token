@@ -15,7 +15,7 @@ var docLockPlugin = function(hook, vm) {
 	
 	// 钩子函数：每次路由切换时数据全部加载完成后调用，没有参数。
 	hook.doneEach(function() {
-		// isShowTanChuang(vm);
+		isShowTanChuang(vm);
 	});
 	
 	// 钩子函数：初始化并第一次加载完成数据后调用，没有参数。
@@ -206,7 +206,7 @@ function initTanChuangFun() {
 	// 配置项
 	const CONFIG = {
 		correctPassword: 'sa-token yyds', // 正确密码
-		qqImageUrl: './big-file/doc/zong/doc-lock-pre-qq.png',
+		gzhImageUrl: './big-file/contact/lykj-gzh.jpg',
 		wechatImageUrl: './big-file/doc/zong/doc-lock-pre-wx.png'
 	};
 	
@@ -221,7 +221,7 @@ function initTanChuangFun() {
 					<p class="error-message" id="errorMessage">密码错误，请重新输入！</p>
 					
 					<div class="password-form">
-						<input type="text" class="password-input" id="passwordInput" placeholder="加群可获得访问密码" autocomplete="off">
+						<input type="text" class="password-input" id="passwordInput" placeholder="关注公众号可查看密码" autocomplete="off">
 						
 						<div class="form-actions">
 							<button class="form-btn btn-verify" id="verifyBtn">验证</button>
@@ -230,18 +230,14 @@ function initTanChuangFun() {
 					</div>
 					
 					<div class="password-help-section">
-						<div class="help-text">
-							加入 QQ群 或 微信群 后可在群公告查看密码：<a href="#/more/join-group" target="_black">加群链接</a>
+						<div class="help-text" style="text-align: center;">
+							关注公众号可查看密码：
 						</div>
 						
-						<div class="images-container">
-							<div class="qr-image-container">
-								<img src="${CONFIG.qqImageUrl}" alt="QQ 群公告" class="qr-image">
-								<div class="image-label">QQ 群公告</div>
-							</div>
-							<div class="qr-image-container">
-								<img src="${CONFIG.wechatImageUrl}" alt="微信群公告" class="qr-image">
-								<div class="image-label">微信群公告</div>
+						<div class="images-container" style="text-align: center;">
+							<div class="qr-image-container" style="border: 0;">
+								<img src="${CONFIG.gzhImageUrl}" alt="QQ 群公告" class="qr-image" style="width: 200px; height: 200px; margin: 0 auto; ">
+								<div class="image-label">关注后点击 [私信]，点击菜单栏下方 [ 文档密码 ]</div>
 							</div>
 						</div>
 					</div>
