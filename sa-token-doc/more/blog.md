@@ -4,6 +4,15 @@
 > 如果你也想投稿，请考虑加入：[Sa-Token 内容合作群 ](/more/content-cooperation)
 
 --- 
+- [[ 公众号 ] Sa-Token 实战进阶：从“能用”到“好用”的企业级鉴权方案](https://mp.weixin.qq.com/s/hOY37lIxw01aPvjmdTf6VQ) （2026-2-9）
+
+- [[ 公众号 ] Sa-Token：把“登录/鉴权/踢人/SSO/OAuth2”做成一套顺手的 Java 权限方案（附 Spring Boot 快速上手）](https://mp.weixin.qq.com/s/zT8iRNuFfOEqDZfhVFy15w) （2026-2-9）
+
+- [[ 公众号 ] 开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！](https://mp.weixin.qq.com/s/FLDwIXHQoa6V2nKPs1r4cw) （2026-2-9）
+
+- [[ 公众号 ] Sa-Token 注解鉴权](https://mp.weixin.qq.com/s/72oLlgj-x8oetUpIJhR02A) （2026-2-9）
+
+- [[ 公众号 ] 用户投诉账号异常登录，CTO 让我 5 分钟内解决](https://mp.weixin.qq.com/s/pfMSZLxmDKIVYoq6UGUj1Q) （2026-2-4）
 
 - [[ 公众号 ] Sa-Token实战：SpringBoot与微服务权限认证极简方案](https://mp.weixin.qq.com/s/yNma6FhHvPLNHUqYFkdPCg) （2026-1-25）
 
@@ -23,6 +32,8 @@
 
 - [[ 公众号 ] 一行代码搞定认证](https://mp.weixin.qq.com/s/UaAw1WdVtumA44SxjFW3yg) （2025-12-24）
 
+- [[ 掘金 ] Netty + Sa-Token 实现 WebSocket 握手认证](https://juejin.cn/post/7585490245006950406) （2025-12-21）
+
 - [[ 公众号 ] 《第27节》SpringBoot+SaToken实现鉴权功能](https://mp.weixin.qq.com/s/mY_jrQL1dG2yis51rX2i9w) （2025-12-16）
 
 - [[ 公众号 ] 告别 Spring Security！Sa-Token + Gateway + Nacos 极简鉴权实战](https://mp.weixin.qq.com/s/s36bdkhi5ACGN2j7hLiD7w) （2025-12-15）
@@ -30,6 +41,8 @@
 - [[ 公众号 ] 《第26节》SpringBoot3+SaToken实现用户注册登录功能](https://mp.weixin.qq.com/s/u7nVa0PJcFWx-9xKq1RNhA) （2025-12-13）
 
 - [[ 公众号 ] 《第25节》SpringBoot3之集成sa-token权限认证框架](https://mp.weixin.qq.com/s/sxgzLqiKCf4_fqWAxN8Ozg) （2025-12-12）
+
+- [[ 掘金 ] sa-token前后端分离集成redis与jwt基础案例](https://juejin.cn/post/7576843726011645978) （2025-11-26）
 
 - [[ 公众号 ] Sa-Token 1.44.0：Java权限认证的“轻量级王者”，让鉴权优雅如诗](https://mp.weixin.qq.com/s/UprusTkp9LZOH9TJDTKJRw) （2025-11-20）
 
