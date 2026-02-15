@@ -4,6 +4,15 @@
 > 如果你也想投稿，请考虑加入：[Sa-Token 内容合作群 ](/more/content-cooperation)
 
 --- 
+
+- [[ 公众号 ] sa-token前后端分离集成redis与jwt基础案例](https://mp.weixin.qq.com/s/c1UYdxuRjWudGnpQa_A72w) （2026-2-11）
+
+- [[ 公众号 ] Sa-Token(一)之简介及入门：告别鉴权内耗，让每一位Java开发者都能轻松上手](https://mp.weixin.qq.com/s/JLQSMAgqK1U0vtrdtRsKlA) （2026-2-11）
+
+- [[ 公众号 ] Sa-Token 的极简设计哲学](https://mp.weixin.qq.com/s/Yr48InNXxaVkNfVRbllO7w) （2026-2-10）
+
+- [[ 公众号 ] 还在用 @PreAuthorize？聊聊我切换到 Sa-Token 路由拦截后的真实体感](https://mp.weixin.qq.com/s/VMtSZDC1AFquCKRakTxytw) （2026-2-10）
+
 - [[ 公众号 ] Sa-Token 实战进阶：从“能用”到“好用”的企业级鉴权方案](https://mp.weixin.qq.com/s/hOY37lIxw01aPvjmdTf6VQ) （2026-2-9）
 
 - [[ 公众号 ] Sa-Token：把“登录/鉴权/踢人/SSO/OAuth2”做成一套顺手的 Java 权限方案（附 Spring Boot 快速上手）](https://mp.weixin.qq.com/s/zT8iRNuFfOEqDZfhVFy15w) （2026-2-9）
