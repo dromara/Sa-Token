@@ -2,7 +2,7 @@
 	<img alt="logo" src="https://sa-token.cc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.44.0</h1>
-<h5 align="center">开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！</h5>
+<h5 align="center">✨ 开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！</h5>
 <p align="center" class="badge-box">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
@@ -16,14 +16,14 @@
 
 ---
 
-## 前言：️️
+## 📝 前言：️️
 为了保证新同学不迷路，请允许我唠叨一下：无论您从何处看到本篇文章，最新开发文档永远在：[https://sa-token.cc](https://sa-token.cc)，
 建议收藏在浏览器书签，如果您已经身处本网站下，则请忽略此条说明。
 
 本文档将会尽力讲解每个功能的设计原因、应用场景，用心阅读文档，你学习到的将不止是 `Sa-Token` 框架本身，更是绝大多数场景下权限设计的最佳实践。
 
 
-## Sa-Token 介绍
+## 🛠️ Sa-Token 介绍
 
 **Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**登录认证**、**权限认证**、**单点登录**、**OAuth2.0**、**分布式Session会话**、**微服务网关鉴权**
 等一系列权限相关问题。
@@ -85,7 +85,7 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
 
 
-## Sa-Token 功能一览
+## 🚦 Sa-Token 功能一览
 
 Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
@@ -132,7 +132,7 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 <img class="s-w" src="/big-file/index/intro/sa-token-js4.png" />
 
 
-## 疑问解答
+## 📖❓ 疑问解答
 
 **1、Sa-Token 功能全不全？** 
 
@@ -167,7 +167,7 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 
 
 
-## 开源仓库 Star 趋势
+## 📈 开源仓库 Star 趋势
 
 <p class="un-dec-a-pre"></p>
 
@@ -179,12 +179,11 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 [GitHub](https://github.com/dromara/sa-token)
 
 
-## 使用Sa-Token的开源项目 
+## 🚀 使用 Sa-Token 的开源项目 
 参考：[Sa-Token 生态](/more/link)
 
 
 
-## 交流群
+## 💬 交流群
 加入 Sa-Token 框架 QQ、微信讨论群：[点击加入](/more/join-group.md)
-
 

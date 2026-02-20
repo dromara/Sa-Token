@@ -2,7 +2,7 @@
 	<img alt="logo" src="https://sa-token.cc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.44.0</h1>
-<h4 align="center">开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！ </h4>
+<h4 align="center">✨ 开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！ </h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
@@ -218,7 +218,7 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 
 
 
-### 🚀 开源集成案例
+### 🚀 优秀开源集成案例
 
 - [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + Vite + SpringBoot + Mp + HuTool + SaToken。
 - [[ RuoYi-Vue-Plus ]](https://gitee.com/dromara/RuoYi-Vue-Plus)：重写RuoYi-Vue所有功能 集成 Sa-Token、Mybatis-Plus、Xxl-Job、knife4j、OSS 定期同步。
