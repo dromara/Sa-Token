@@ -85,7 +85,7 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
 
 
-## 🚦 Sa-Token 功能一览
+## 🎉 Sa-Token 功能一览
 
 Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
