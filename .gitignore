@@ -12,6 +12,7 @@ unpackage/
 /.factorypath
 
 .idea/
+.vscode/
 
 sa-token-three-plugin/
 sa-token-doc/big-file/
