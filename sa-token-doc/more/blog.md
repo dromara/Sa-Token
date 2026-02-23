@@ -5,6 +5,26 @@
 
 --- 
 
+- [[ 公众号 ] SpringBoot3 + Sa-Token 单点登录｜30分钟上手，代码可复制，新手零踩坑](https://mp.weixin.qq.com/s/2jN9HotfYttLFMzHE54XiA) （2026-2-21）
+
+- [[ 公众号 ] Sa-Token Session会话：三种模型彻底搞懂，不再傻傻分不清](https://mp.weixin.qq.com/s/gpqogF0QyahuqJIqhs6DUg) （2026-2-21）
+
+- [[ 公众号 ] SpringBoot3 + Sa-Token 双Token登录认证实战（避坑版）](https://mp.weixin.qq.com/s/LDSCSZYuUIkQA91MYXhnGQ) （2026-2-20）
+
+- [[ CSDN ] SaToken实战：5分钟搞定微信小程序登录功能（附完整代码）](https://blog.csdn.net/weixin_29218509/article/details/158226233) （2026-2-20）
+
+- [[ 公众号 ] 告别SpringSecurity！Sa-Token+Gateway+Nacos极简鉴权实战](https://mp.weixin.qq.com/s/lFcH7XyLRtaNH6q4-TzHbQ) （2026-2-19）
+
+- [[ 公众号 ] SpringSecurity、Shiro和Sa-Token，哪个更好？](https://mp.weixin.qq.com/s/BEvk1ohFntL7iorDEvqIpg) （2026-2-18）
+
+- [[ CSDN ] Sa-Token 1.42.0实战：5分钟搞定API Key权限隔离与TOTP双因子认证](https://blog.csdn.net/weixin_29271053/article/details/158175327) （2026-2-18）
+
+- [[ CSDN ] SaToken权限注解全解析：@SaCheckPermission和@SaCheckRole的20种实战用法](https://blog.csdn.net/weixin_28454475/article/details/158163447) （2026-2-18）
+
+- [[ 公众号 ] 5 分钟上手 Sa-Token：Spring Boot 权限认证从未如此简单](https://mp.weixin.qq.com/s/2iRMPQdfBEgqSgeld3crXw) （2026-2-17）
+
+- [[ 公众号 ] SpringSecurity、Shiro和Sa-Token，哪个更好？](https://mp.weixin.qq.com/s/QdR1tyIXN8GvWbhN48XTjA) （2026-2-13）
+
 - [[ 公众号 ] sa-token前后端分离集成redis与jwt基础案例](https://mp.weixin.qq.com/s/c1UYdxuRjWudGnpQa_A72w) （2026-2-11）
 
 - [[ 公众号 ] Sa-Token(一)之简介及入门：告别鉴权内耗，让每一位Java开发者都能轻松上手](https://mp.weixin.qq.com/s/JLQSMAgqK1U0vtrdtRsKlA) （2026-2-11）
