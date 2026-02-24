@@ -39,4 +39,6 @@ public @interface SaCheckLogin {
      */
     String type() default "";
 
+    boolean checkParent() default false;
+
 }
