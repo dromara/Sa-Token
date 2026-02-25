@@ -17,22 +17,21 @@ package cn.dev33.satoken.plugin;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
-import cn.dev33.satoken.json.SaJsonTemplateForJackson;
+import cn.dev33.satoken.json.SaJsonTemplateForJackson3;
 
 /**
- * SaToken 插件安装：JSON 转换器 (jackson 版)
+ * SaToken 插件安装：JSON 转换器 (Jackson 3 版)
  *
  * @author click33
- * @since 1.41.0
+ * @since 1.45.0
  */
-public class SaTokenPluginForJackson implements SaTokenPlugin {
+public class SaTokenPluginForJackson3 implements SaTokenPlugin {
 
-    @Override
-    public void install() {
-        // 只有在未提供自定义的 json 解析器时才会生效，给于其较弱的优先级
-        if(SaManager.getSaJsonTemplate().getClass() == SaJsonTemplateDefaultImpl.class){
-            SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
-        }
-    }
-
+	@Override
+	public void install() {
+		// 只有在未提供自定义的 json 解析器时才会生效，给予其较弱的优先级
+		if (SaManager.getSaJsonTemplate().getClass() == SaJsonTemplateDefaultImpl.class) {
+			SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson3());
+		}
+	}
 }

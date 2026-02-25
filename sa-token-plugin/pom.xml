@@ -20,6 +20,7 @@
     <modules>
         <!-- 通用插件 -->
         <module>sa-token-jackson</module>
+        <module>sa-token-jackson3</module>
         <module>sa-token-fastjson</module>
         <module>sa-token-fastjson2</module>
         <module>sa-token-snack3</module>

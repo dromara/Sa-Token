@@ -21,6 +21,7 @@
 		<reactor-core.version>3.7.4</reactor-core.version>
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
+		<jackson3-databind.version>3.0.0</jackson3-databind.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
@@ -96,6 +97,13 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 	      	  	<version>${jackson-databind.version}</version>	
+			</dependency>
+
+			<!-- jackson-databind 3.x (tools.jackson) -->
+			<dependency>
+				<groupId>tools.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson3-databind.version}</version>
 			</dependency>
 			
 			<!-- solon -->
