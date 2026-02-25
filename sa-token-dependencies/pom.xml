@@ -17,11 +17,12 @@
 		<!-- 统一定义依赖版本号 -->
 		<springboot.version>2.7.18</springboot.version>
 		<springboot3.version>3.4.3</springboot3.version>
+		<springboot4.version>4.0.3</springboot4.version>
 		<spring-web.low.version>5.3.39</spring-web.low.version>
 		<reactor-core.version>3.7.4</reactor-core.version>
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
-		<jackson3-databind.version>3.0.0</jackson3-databind.version>
+		<jackson3-databind.version>3.1.0</jackson3-databind.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
 		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
@@ -69,6 +70,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
 				<version>${springboot.version}</version>
+			</dependency>
+
+			<!-- spring-boot-starter-webmvc (Spring Boot 4) -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-webmvc</artifactId>
+				<version>${springboot4.version}</version>
 			</dependency>
 		
 			<!-- spring-boot-starter -->

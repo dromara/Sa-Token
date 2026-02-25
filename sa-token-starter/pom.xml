@@ -23,6 +23,7 @@
         <module>sa-token-spring-boot-autoconfig</module>
         <module>sa-token-spring-boot-starter</module>
         <module>sa-token-spring-boot3-starter</module>
+        <module>sa-token-spring-boot4-starter</module>
         <module>sa-token-reactor-spring-boot-starter</module>
         <module>sa-token-reactor-spring-boot3-starter</module>
         <module>sa-token-solon-plugin</module>

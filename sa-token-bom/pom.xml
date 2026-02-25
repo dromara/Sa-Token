@@ -81,6 +81,11 @@
                 <artifactId>sa-token-spring-boot3-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot4-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- endregion-->
 
             <!-- region sa-token-plugin -->
