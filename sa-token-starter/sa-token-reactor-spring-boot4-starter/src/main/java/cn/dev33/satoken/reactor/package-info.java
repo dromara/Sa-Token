@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Sa-Token 集成 Reactor 响应式编程的各个组件
+ * Sa-Token 集成 Reactor 响应式编程 (SpringBoot 4.x)
  */
 package cn.dev33.satoken.reactor;

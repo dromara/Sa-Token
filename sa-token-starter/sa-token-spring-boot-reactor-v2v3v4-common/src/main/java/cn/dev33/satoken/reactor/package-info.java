@@ -13,18 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.reactor.spring;
-
-import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
-
 /**
- * <h2> 此为低版本(<1.42.0) 的上下文处理方案，仅做留档，如无必要请勿使用 </h2>
- *
- * Sa-Token 上下文处理器 [ Spring Reactor 版本实现 ] ，基于 SaTokenContextForThreadLocal 定制
- *
- * @author click33
- * @since 1.33.0
+ * Sa-Token 集成 Reactor 响应式编程的各个组件
  */
-public class SaTokenContextForSpringReactor extends SaTokenContextForThreadLocal {
-
-}
+package cn.dev33.satoken.reactor;

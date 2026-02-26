@@ -105,6 +105,17 @@ public class TestController {
 		return SaResult.ok("登录人：" + StpUtil.getLoginIdByToken(satoken));
 	}
 
+	// API测试：SaSession 写值     	--- http://localhost:8081/test/sessionSet
+	@RequestMapping("sessionSet")
+	public Mono<SaResult> sessionSet() {
+		return SaReactorHolder.sync(() -> {
+			System.out.println("session name 值为：" + StpUtil.getSession().get("name"));
+			StpUtil.getSession().set("name", "zhangsan");
+			System.out.println("session name 值为：" + StpUtil.getSession().get("name"));
+			return SaResult.data(StpUtil.getSession().get("name"));
+		});
+	}
+
 	// 测试   浏览器访问： http://localhost:8081/test/test
 	@RequestMapping("test")
 	public SaResult test() {

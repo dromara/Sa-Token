@@ -19,6 +19,7 @@
 
     <properties>
         <springboot4.version>4.0.3</springboot4.version>
+        <springboot4-spring.version>7.0.3</springboot4-spring.version>
     </properties>
 
     <dependencyManagement>
@@ -40,7 +41,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
-                <version>7.0.3</version>
+                <version>${springboot4-spring.version}</version>
             </dependency>
             <!-- spring-boot-starter-webflux (for reactor) -->
             <dependency>

@@ -24,37 +24,10 @@
 			<optional>true</optional>
         </dependency>
 
-		<!-- spring-web (optional) -->
-	    <dependency>
-	    	<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<optional>true</optional>
-	    </dependency>
-	    
-		<!-- reactor-core -->
-	    <dependency>
-	    	<groupId>io.projectreactor</groupId>
-	    	<artifactId>reactor-core</artifactId>
-	    </dependency>
-	    
-		<!-- jackson-databind (optional) -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
-		<!-- config -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<!-- sa-token-spring-boot-webmvc-reactor-v2v3v4-common -->
+		<!-- sa-token-spring-boot-reactor-v2v3v4-common -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+			<artifactId>sa-token-spring-boot-reactor-v2v3v4-common</artifactId>
         </dependency>
 
 		<!-- sa-token-jackson: JSON serialization -->

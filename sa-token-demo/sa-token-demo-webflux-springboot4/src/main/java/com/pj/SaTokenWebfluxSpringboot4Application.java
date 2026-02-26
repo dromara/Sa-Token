@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Sa-Token整合webflux 示例 (springboot4)
  * 
  * @author click33
- * @since 2023年1月3日
+ * @since 2026年2月27日
  *
  */
 @SpringBootApplication
