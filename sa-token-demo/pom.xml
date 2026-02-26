@@ -56,6 +56,7 @@
 		<module>sa-token-demo-thymeleaf</module>
 		<module>sa-token-demo-webflux</module>
 		<module>sa-token-demo-webflux-springboot3</module>
+		<module>sa-token-demo-webflux-springboot4</module>
 		<module>sa-token-demo-websocket</module>
 		<module>sa-token-demo-websocket-spring</module>
         <module>sa-token-demo-loveqq-boot</module>
