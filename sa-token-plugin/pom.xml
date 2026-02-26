@@ -56,10 +56,28 @@
 
 	<dependencies>
 		<!-- spring-boot-configuration -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
+            <version>2.5.14</version>
 			<optional>true</optional>
-		</dependency>
+		</dependency>-->
 	</dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- 默认使用 sa-token springboot2 相关依赖版本定义，子模块也可以引入其它的进行覆盖 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot2-dependencies</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
 </project>

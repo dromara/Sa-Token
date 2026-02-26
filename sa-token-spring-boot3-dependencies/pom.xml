@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 父仓库 -->
+    <parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <packaging>pom</packaging>
+
+    <artifactId>sa-token-spring-boot3-dependencies</artifactId>
+    <name>sa-token-spring-boot3-dependencies</name>
+    <description>Sa-Token SpringBoot3 Dependencies</description>
+
+    <properties>
+        <springboot3.version>3.0.1</springboot3.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- spring-boot-starter -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${springboot3.version}</version>
+            </dependency>
+            <!-- spring-boot-starter-web -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${springboot3.version}</version>
+            </dependency>
+            <!-- config (optional) -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${springboot3.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+	
+</project>

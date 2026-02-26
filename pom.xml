@@ -19,6 +19,9 @@
 	<!-- 所有模块 -->
 	<modules>
 		<module>sa-token-dependencies</module>
+		<module>sa-token-spring-boot2-dependencies</module>
+		<module>sa-token-spring-boot3-dependencies</module>
+		<module>sa-token-spring-boot4-dependencies</module>
 		<module>sa-token-bom</module>
 		<module>sa-token-core</module>
 		<module>sa-token-starter</module>
@@ -75,7 +78,11 @@
 	
 	<dependencyManagement>
 		<dependencies>
-		
+
+			<!--
+			 	导入 sa-token-dependencies 所有版本定义，并传导到每个子项目。
+			 	需要注意的是：该 import 只会导入 <dependencyManagement> 部分，而不会导入 <dependencies> 部分和 <properties> 部分。
+			 -->
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-dependencies</artifactId>

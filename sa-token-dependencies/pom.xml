@@ -15,10 +15,10 @@
         <revision>1.44.0</revision>
 		
 		<!-- 统一定义依赖版本号 -->
-		<springboot.version>2.7.18</springboot.version>
+<!--		<springboot.version>2.7.18</springboot.version>-->
 		<springboot3.version>3.4.3</springboot3.version>
 		<springboot4.version>4.0.3</springboot4.version>
-		<spring-web.low.version>5.3.39</spring-web.low.version>
+<!--		<spring-web.low.version>5.3.39</spring-web.low.version>-->
 		<reactor-core.version>3.7.4</reactor-core.version>
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
@@ -65,34 +65,13 @@
 				<version>${jakarta-servlet-api.version}</version>
 			</dependency>
 
-			<!-- spring-boot-starter-web -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
-				<version>${springboot.version}</version>
-			</dependency>
-
 			<!-- spring-boot-starter-webmvc (Spring Boot 4) -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-webmvc</artifactId>
 				<version>${springboot4.version}</version>
 			</dependency>
-		
-			<!-- spring-boot-starter -->
-	        <dependency>
-	            <groupId>org.springframework.boot</groupId>
-	            <artifactId>spring-boot-starter</artifactId>
-				<version>${springboot.version}</version>
-	        </dependency>
-	        
-			<!-- spring-web -->
-		    <!-- <dependency>
-		    	<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>5.3.7</version>
-		    </dependency> -->
-		    
+
 			<!-- reactor-core -->
 		    <dependency>
 		    	<groupId>io.projectreactor</groupId>
@@ -100,14 +79,14 @@
 		   		<version>${reactor-core.version}</version>
 		    </dependency>
 		    
-			<!-- jackson-databind -->
+			<!-- jackson2 databind -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 	      	  	<version>${jackson-databind.version}</version>	
 			</dependency>
 
-			<!-- jackson-databind 3.x (tools.jackson) -->
+			<!-- jackson3 databind (tools.jackson) -->
 			<dependency>
 				<groupId>tools.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
@@ -163,25 +142,7 @@
 				<version>${loveqq.version}</version>
 			</dependency>
 			
-			<!-- test -->
-			<!-- <dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-test</artifactId>
-				<version>${springboot.version}</version>
-			</dependency> -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-configuration-processor</artifactId>
-				<version>${springboot.version}</version>
-			</dependency>
-			
 			<!-- ****************** sa-token-plugin 相关依赖 ****************** -->
-			
-	        <dependency>
-	            <groupId>org.springframework.boot</groupId>
-	            <artifactId>spring-boot-starter-data-redis</artifactId>
-				<version>${springboot.version}</version>
-	        </dependency>
 
 			<!-- Redisson 相关操作API -->
 			<dependency>
@@ -252,26 +213,6 @@
 				<version>${freemarker.version}</version>
 			</dependency>
 
-			<!-- spring-boot-starter-thymeleaf -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-thymeleaf</artifactId>
-				<version>${springboot.version}</version>
-			</dependency>
-			
-			<!-- spring-boot-starter-aop -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-aop</artifactId>
-				<version>${springboot.version}</version>
-			</dependency>
-
-			<!-- spring-boot-starter-actuator -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-actuator</artifactId>
-				<version>${springboot.version}</version>
-			</dependency>
 			
 			<!-- hutool-jwt -->
 	        <dependency>

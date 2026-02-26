@@ -55,11 +55,17 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- sa-token-spring-boot-autoconfig -->
+		<!-- sa-token-spring-boot-webmvc-reactor-v2v3v4-common -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
+			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
         </dependency>
+
+		<!-- sa-token-jackson: JSON serialization -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jackson</artifactId>
+		</dependency>
 
 	</dependencies>
 
@@ -79,13 +85,6 @@
 				<version>6.2.5</version>
 		    </dependency>
 
-			<!-- jackson-databind (optional) -->
-			<!--<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-				<version>2.14.1</version>
-			</dependency>-->
-		
 			<!-- config (optional) -->
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
