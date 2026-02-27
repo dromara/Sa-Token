@@ -147,3 +147,10 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 		return chain.filter(exchange);
 	}
 }
+
+/*
+ * 三种 Filter ：
+ * 	WebFilter：		Spring WebFlux 的过滤器，用于拦截 Web 请求
+ * 	GlobalFilter：	Spring Cloud Gateway 的全局过滤器，用于拦截 Gateway 请求
+ * 	GatewayFilter：	Spring Cloud Gateway 的局部过滤器，用于拦截 Gateway 请求
+ */

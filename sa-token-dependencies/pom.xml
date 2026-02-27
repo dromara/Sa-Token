@@ -4,16 +4,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.dev33</groupId>
+	<parent>
+		<groupId>cn.dev33</groupId>
+		<artifactId>sa-token-bom</artifactId>
+		<version>${revision}</version>
+		<!-- 寻址 -->
+		<relativePath>../sa-token-bom/pom.xml</relativePath>
+	</parent>
+	<packaging>pom</packaging>
+
     <artifactId>sa-token-dependencies</artifactId>
-    <version>${revision}</version>
-    <packaging>pom</packaging>
     <name>sa-token-dependencies</name>
     <description>Sa-Token Dependencies</description>
 
     <properties>
-        <revision>1.44.0</revision>
-		
 		<!-- 第三方依赖版本号 -->
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
@@ -250,96 +254,8 @@
 				<version>${okhttps.version}</version>
 			</dependency>
 
-			<!-- sa-token 自身依赖 -->
-			<dependency>
-				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-bom</artifactId>
-				<version>${revision}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
         </dependencies>
     </dependencyManagement>
 
-	<!-- 父仓库：不能使用 sa-token-parent，因其 dependencyManagement 会 import 本模块，形成循环依赖 -->
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-		<relativePath/>
-	</parent>
-	
-	<!-- 项目构建：因无法继承 sa-token-parent，此处需单独配置 -->
-	<build>
-	   <plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.10.1</version>
-			<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-				<encoding>UTF-8</encoding>
-			</configuration>
-		</plugin>
-
-        <!-- 统一版本号管理 -->
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
-            <version>1.2.7</version>
-            <configuration>
-                <updatePomFile>true</updatePomFile>
-                <flattenMode>resolveCiFriendliesOnly</flattenMode>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>flatten</id>
-                    <phase>process-resources</phase>
-                    <goals>
-                        <goal>flatten</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>flatten.clean</id>
-                    <phase>clean</phase>
-                    <goals>
-                        <goal>clean</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-
-	   </plugins>
-	   <pluginManagement>
-		   	<plugins>
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-enforcer-plugin</artifactId>
-										<versionRange>[1.0.0,)</versionRange>
-										<goals>
-											<goal>enforce</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-	   </pluginManagement>
-	</build>
 	
 </project>

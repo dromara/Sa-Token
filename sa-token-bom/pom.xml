@@ -4,6 +4,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+        <relativePath/>
+    </parent>
+
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-bom</artifactId>
     <version>${revision}</version>
@@ -263,14 +270,6 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <!-- 父仓库 -->
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-        <relativePath/>
-    </parent>
 
     <!-- 项目构建 -->
     <build>

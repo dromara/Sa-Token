@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
     <artifactId>sa-token-special-dependencies</artifactId>
     <name>sa-token-special-dependencies</name>
-    <description>Sa-Token Special Dependencies - 聚合 Spring Boot 各版本依赖</description>
+    <description>Sa-Token Special Dependencies</description>
 
     <modules>
         <module>sa-token-spring-boot2-dependencies</module>

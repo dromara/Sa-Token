@@ -109,7 +109,7 @@
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>3.4.1</version>
+			<version>3.12.0</version>
 			<configuration>
 				<!-- 统一生成聚合文档，解决 mvn package 时控制台发出 javadoc 警告的问题 -->
 				<aggregate>true</aggregate>
@@ -132,7 +132,7 @@
 						<goal>jar</goal>
 					</goals>
 					<configuration>
-						<additionalparam>-Xdoclint:none</additionalparam>
+						<doclint>none</doclint>
 					</configuration>
 				</execution>
 			</executions>
