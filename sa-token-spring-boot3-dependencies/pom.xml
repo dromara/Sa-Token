@@ -19,7 +19,7 @@
 
     <properties>
         <springboot3.version>3.0.1</springboot3.version>
-        <springboot3-spring.version>6.2.5</springboot3-spring.version>
+        <springboot3-spring.version>6.2.8</springboot3-spring.version>
     </properties>
 
     <dependencyManagement>
