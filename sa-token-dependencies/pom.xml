@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-basic-dependencies</artifactId>
+    <artifactId>sa-token-dependencies</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>sa-token-basic-dependencies</name>
+    <name>sa-token-dependencies</name>
     <description>Sa-Token Dependencies</description>
 
     <properties>
@@ -283,7 +283,7 @@
 				<encoding>UTF-8</encoding>
 			</configuration>
 		</plugin>
-        
+
         <!-- 统一版本号管理 -->
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
@@ -310,7 +310,7 @@
                 </execution>
             </executions>
         </plugin>
-        
+
 	   </plugins>
 	   <pluginManagement>
 		   	<plugins>

@@ -54,17 +54,6 @@
         <module>sa-token-redisson-spring-boot-starter</module>
     </modules>
 
-	<dependencies>
-		<!-- spring-boot-configuration -->
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-            <version>2.5.14</version>
-			<optional>true</optional>
-		</dependency>-->
-	</dependencies>
-
-
     <dependencyManagement>
         <dependencies>
 

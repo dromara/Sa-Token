@@ -7,7 +7,7 @@
     <!-- 父仓库 -->
     <parent>
         <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-parent</artifactId>
+        <artifactId>sa-token-special-dependencies</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -18,8 +18,8 @@
     <description>Sa-Token SpringBoot3 Dependencies</description>
 
     <properties>
-        <springboot3.version>3.0.1</springboot3.version>
-        <springboot3-spring.version>6.2.5</springboot3-spring.version>
+        <springboot3.version>3.5.11</springboot3.version>
+        <springboot3-spring.version>6.2.16</springboot3-spring.version>
     </properties>
 
     <dependencyManagement>

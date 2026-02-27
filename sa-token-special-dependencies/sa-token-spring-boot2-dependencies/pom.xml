@@ -7,7 +7,7 @@
     <!-- 父仓库 -->
     <parent>
         <groupId>cn.dev33</groupId>
-        <artifactId>sa-token-parent</artifactId>
+        <artifactId>sa-token-special-dependencies</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>

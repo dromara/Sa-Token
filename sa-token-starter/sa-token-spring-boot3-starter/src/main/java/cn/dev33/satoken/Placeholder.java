@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
+package cn.dev33.satoken;
+
+
 /**
- * Sa-Token 集成 Reactor 响应式编程 (SpringBoot 3.x)
+ * 占位符
+ *
+ * @author click33
+ * @since 1.45.0
  */
-package cn.dev33.satoken.reactor;
+public class Placeholder {
+
+}
