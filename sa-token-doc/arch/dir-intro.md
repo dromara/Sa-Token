@@ -7,7 +7,7 @@
 ``` js
 ── sa-token
 	├── sa-token-core                         // [核心] Sa-Token 核心模块
-	├── sa-token-dependencies                 // [依赖] Sa-Token 依赖版本信息
+	├── sa-token-basic-dependencies                 // [依赖] Sa-Token 依赖版本信息
 	├── sa-token-bom                          // [核心] Sa-Token bom 包
 	├── sa-token-starter                      // [整合] Sa-Token 与其它框架整合
 	├── sa-token-plugin                       // [插件] Sa-Token 插件合集
@@ -28,7 +28,7 @@
 ``` js
 ── sa-token
 	├── sa-token-core                         // [核心] Sa-Token 核心模块
-	├── sa-token-dependencies                 // [依赖] Sa-Token 依赖版本信息
+	├── sa-token-basic-dependencies                 // [依赖] Sa-Token 依赖版本信息
 	├── sa-token-bom                          // [核心] Sa-Token bom 包
 	├── sa-token-starter                      // [整合] Sa-Token 与其它框架整合
 		├── sa-token-servlet                      // [整合] Sa-Token 整合 Servlet 容器实现类包

@@ -18,8 +18,9 @@
     <description>Sa-Token SpringBoot2 Dependencies</description>
 
     <properties>
-        <springboot.version>2.7.18</springboot.version>
-        <spring-web.low.version>5.3.39</spring-web.low.version>
+        <springboot2.version>2.7.18</springboot2.version>
+        <springboot2-spring.version>5.3.39</springboot2-spring.version>
+        <reactor-core.version>3.7.4</reactor-core.version>
     </properties>
 
     <dependencyManagement>
@@ -29,33 +30,40 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
             <!-- spring-boot-starter-web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
             <!-- spring-boot-configuration-processor -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
-                <version>${spring-web.low.version}</version>
+                <version>${springboot2-spring.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
-                <version>${spring-web.low.version}</version>
+                <version>${springboot2-spring.version}</version>
+            </dependency>
+
+            <!-- reactor-core -->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>${reactor-core.version}</version>
             </dependency>
 
 
@@ -65,28 +73,28 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
             <!-- spring-boot-starter-thymeleaf -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
             <!-- spring-boot-starter-aop -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-aop</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
             <!-- spring-boot-starter-actuator -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-actuator</artifactId>
-                <version>${springboot.version}</version>
+                <version>${springboot2.version}</version>
             </dependency>
 
         </dependencies>

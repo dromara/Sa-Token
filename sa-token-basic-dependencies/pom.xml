@@ -5,21 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.dev33</groupId>
-    <artifactId>sa-token-dependencies</artifactId>
+    <artifactId>sa-token-basic-dependencies</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>sa-token-dependencies</name>
+    <name>sa-token-basic-dependencies</name>
     <description>Sa-Token Dependencies</description>
 
     <properties>
         <revision>1.44.0</revision>
 		
-		<!-- 统一定义依赖版本号 -->
-<!--		<springboot.version>2.7.18</springboot.version>-->
-		<springboot3.version>3.4.3</springboot3.version>
-		<springboot4.version>4.0.3</springboot4.version>
-<!--		<spring-web.low.version>5.3.39</spring-web.low.version>-->
-		<reactor-core.version>3.7.4</reactor-core.version>
+		<!-- 第三方依赖版本号 -->
 		<jackson-databind.version>2.13.4.1</jackson-databind.version>	
 		<jackson-datatype-jsr310.version>2.11.2</jackson-datatype-jsr310.version>
 		<jackson3-databind.version>3.1.0</jackson3-databind.version>
@@ -65,20 +60,6 @@
 				<version>${jakarta-servlet-api.version}</version>
 			</dependency>
 
-			<!-- spring-boot-starter-webmvc (Spring Boot 4) -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-webmvc</artifactId>
-				<version>${springboot4.version}</version>
-			</dependency>
-
-			<!-- reactor-core -->
-		    <dependency>
-		    	<groupId>io.projectreactor</groupId>
-		    	<artifactId>reactor-core</artifactId>
-		   		<version>${reactor-core.version}</version>
-		    </dependency>
-		    
 			<!-- jackson2 databind -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -281,7 +262,7 @@
         </dependencies>
     </dependencyManagement>
 
-	<!-- 父仓库 -->
+	<!-- 父仓库：不能使用 sa-token-parent，因其 dependencyManagement 会 import 本模块，形成循环依赖 -->
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -289,7 +270,7 @@
 		<relativePath/>
 	</parent>
 	
-	<!-- 项目构建 -->
+	<!-- 项目构建：因无法继承 sa-token-parent，此处需单独配置 -->
 	<build>
 	   <plugins>
 		<plugin>

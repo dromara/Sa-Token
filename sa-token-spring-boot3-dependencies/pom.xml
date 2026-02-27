@@ -19,7 +19,7 @@
 
     <properties>
         <springboot3.version>3.0.1</springboot3.version>
-        <spring-web.version>6.2.5</spring-web.version>
+        <springboot3-spring.version>6.2.5</springboot3-spring.version>
     </properties>
 
     <dependencyManagement>
@@ -43,7 +43,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
-                <version>${spring-web.version}</version>
+                <version>${springboot3-spring.version}</version>
             </dependency>
 
             <!-- config (optional) -->
