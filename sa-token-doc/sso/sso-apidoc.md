@@ -1,14 +1,42 @@
 # SSO-Server 认证中心开放接口
 
-如果你的 SSO-Server 端和 SSO-Client 端都使用 Sa-Token-SSO 搭建，那么你可以直接跳过本章，开始 [SSO模式一 共享Cookie同步会话](/sso/sso-type1) 的学习。
-
-如果你仅在 SSO-Server 端使用 Sa-Token-SSO 搭建，而 SSO-Client 端使用其它框架的话，那么你就需要手动调用 http 请求来对接 SSO-Server 认证中心，
-下面的 API 列表将给你的对接步骤做一份参考。
-
 --- 
 
+## 一、对接方式说明
 
-## 一、SSO-Server 认证中心接口 
+在前一章节，我们成功搭建了 SSO-Server 端。SSO-Server 可以为各个子系统提供中央认证服务。
+
+在默认代码架构下，SSO-Server 将提供一套标准 HTTP 接口对外开放。要对接 SSO-Server，有两种方式：
+- SDK 方式：在你的 SSO-Client 端，也引入 Sa-Token SSO 框架，通过框架提供的 API 方法完成对接。
+	<!-- - 适用于：java + Sa-Token 项目，较为简单、直接。 -->
+- NoSDK 方式：在你的 SSO-Client 端，不引入 Sa-Token SSO 框架，通过工具库调用 Http 接口的方式完成对接。
+	<!-- - 适用于：非java、非 Sa-Token 项目，稍微复杂一些，但适用性更广。 -->
+
+如果你的 SSO-Client 端是 java 项目，且支持引入 sa-token-sso 框架，我们强烈推荐你使用 SDK 方式对接。**你可以直接跳过本章**，开始 [SSO模式一 共享Cookie同步会话](/sso/sso-type1) 的学习。
+
+如果你的 SSO-Client 端是 非java 项目，或不支持引入 sa-token-sso 框架，那么你可以使用 NoSDK 方式进行对接。
+在之后的 [SSO整合 - NoSdk 模式对接](/sso/sso-nosdk) 章节我们会详细介绍对接步骤，下面的 API 文档将给你的对接步骤做一份参考。
+
+
+## 二、STS 协议
+
+Sa-Token SSO 模块的开放接口标准为 STS 协议。
+
+STS 协议并非一套公共授权协议，而是 sa-token-sso 框架本身内化、抽离出的一套授权协议标准。
+
+- 一般的公共协议遵循的路线是：发现需求 -> 先为解决方案定义一套协议 -> 再进行框架实现。
+- 而 Sa-Token SSO 的路线为：发现需求 -> 先进行框架实现 -> 再基于框架实现定义一套协议，将解决方案进行标准化。
+
+定义 STS 协议将有助于让 Sa-Token SSO 模块进行标准化，也为日后实现多语言 SDK 提供基础支持。
+
+目前 STS 协议规定了应用进行 单点登录、单点注销、消息推送 等动作的标准流程。
+可解决：同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离、纯 js、vue2、vue3、Sa-Token 项目、非 Sa-Token 项目、java 项目、非 java 项目 等架构下的 SSO 认证需求。
+
+下面两节将介绍 STS 协议在 SSO-Server 端和 SSO-Client 端开放的接口标准。
+
+
+
+## 三、SSO-Server 认证中心接口 
 
 
 ### 1、单点登录授权地址
@@ -57,7 +85,7 @@ http://{host}:{port}/sso/doLogin
 http://{host}:{port}/sso/signout
 ```
 
-接受参数：
+接收参数：
 
 | 参数			| 是否必填	| 说明											|
 | :--------		| :--------	| :--------										|
@@ -126,7 +154,7 @@ http://{host}:{port}/sso/pushS
 
 ---
 
-## 二、SSO-Client 应用端开放接口 
+## 四、SSO-Client 应用端开放接口 
 
 ### 1、登录地址
 ``` url
@@ -176,7 +204,7 @@ http://{host}:{port}/sso/logout
 http://{host}:{port}/sso/logoutCall
 ```
 
-接受参数：
+接收参数：
 
 | 参数			| 是否必填	| 说明											|
 | :--------		| :--------	| :--------										|
