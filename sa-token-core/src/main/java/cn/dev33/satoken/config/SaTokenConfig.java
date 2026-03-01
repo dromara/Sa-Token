@@ -17,6 +17,7 @@ package cn.dev33.satoken.config;
 
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
+import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -63,6 +64,11 @@ public class SaTokenConfig implements Serializable {
 	 * 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 	 */
 	private Boolean isShare = false;
+
+	/**
+	 * 当 isConcurrent=false 时，多客户端登录时的处理策略
+	 */
+	private SaRepeatLoginsMode repeatLoginsMode = SaRepeatLoginsMode.KICKOUT;
 
 	/**
 	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
@@ -714,6 +720,22 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
+	 * @return 不允许并发登录时，重复登录处理策略
+	 */
+	public SaRepeatLoginsMode getRepeatLoginsMode() {
+		return repeatLoginsMode;
+	}
+
+	/**
+	 * @param repeatLoginsMode 不允许并发登录时，重复登录处理策略
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setRepeatLoginsMode(SaRepeatLoginsMode repeatLoginsMode) {
+		this.repeatLoginsMode = repeatLoginsMode;
+		return this;
+	}
+
+	/**
 	 * 获取 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端 ALL_DEVICE_TYPE=所有设备类型端)
 	 *
 	 * @return /
@@ -860,6 +882,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", isConcurrent=" + isConcurrent
 				+ ", isShare=" + isShare
 				+ ", replacedRange=" + replacedRange
+				+ ", repeatLoginsMode=" + repeatLoginsMode
 				+ ", maxLoginCount=" + maxLoginCount
 				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", maxTryTimes=" + maxTryTimes
