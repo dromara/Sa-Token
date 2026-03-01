@@ -18,6 +18,7 @@ package cn.dev33.satoken.oauth2.data.resolver;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
@@ -53,20 +54,14 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
         // 优先从请求参数中获取
         String clientId = request.getParam(SaOAuth2Consts.Param.client_id);
         String clientSecret = request.getParam(SaOAuth2Consts.Param.client_secret);
-        String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
-        if(SaFoxUtil.isNotEmpty(clientId)) {
-            // 如果请求参数中没有提供 client_secret 参数，则尝试从 Authorization 中获取
-            // 防止请求参数只存在client_id，而client_secret只存在Authorization中的场景导致的获取client_secret失败
-            if (SaFoxUtil.isEmpty(clientSecret) && SaFoxUtil.isNotEmpty(authorizationValue)) {
-                int index = authorizationValue.indexOf(StrUtil.COLON);
-                if (index >= 0) {
-                    clientSecret = authorizationValue.substring(index + 1);
-                }
-            }
+
+        // 此处必须 clientId 和 clientSecret 都有值才可以采用，fix pr: https://gitee.com/dromara/sa-token/pulls/346
+        if(SaFoxUtil.isNotEmpty(clientId) && SaFoxUtil.isNotEmpty(clientSecret)) {
             return new ClientIdAndSecretModel(clientId, clientSecret);
         }
 
         // 如果请求参数中没有提供 client_id 参数，则尝试从 Authorization 中获取
+        String authorizationValue = SaHttpBasicUtil.getAuthorizationValue();
         if(SaFoxUtil.isNotEmpty(authorizationValue)) {
             String[] arr = authorizationValue.split(":");
             clientId = arr[0];
@@ -74,6 +69,11 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
                 clientSecret = arr[1];
             }
             return new ClientIdAndSecretModel(clientId, clientSecret);
+        }
+
+        // 如果只提供了 clientId 参数，也为其构建一个 ClientIdAndSecretModel 对象，clientSecret 置空
+        if(SaFoxUtil.isNotEmpty(clientId)) {
+            return new ClientIdAndSecretModel(clientId, null);
         }
 
         // 如果都没有提供，则抛出异常
