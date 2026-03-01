@@ -125,7 +125,7 @@ public class SaTokenDaoTest {
     	Assertions.assertNull(dao.get("mid"));
     }
 
-    // timeout为0或者小于-2时，不写入
+    // timeout为0或者小于等于-2时，不写入
     @Test
     public void test0Timeout() {
     	

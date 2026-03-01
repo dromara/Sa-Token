@@ -124,7 +124,7 @@ public class SaTokenMongoDao implements SaTokenDao {
      *
      * @param key     键名称
      * @param value   值
-     * @param timeout 数据有效期（值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储）
+     * @param timeout 数据有效期（值大于0时限时存储，值=-1时永久存储，值=0或小于等于-2时不存储）
      */
     @Override
     public void set(String key, String value, long timeout) {
@@ -228,7 +228,7 @@ public class SaTokenMongoDao implements SaTokenDao {
      *
      * @param key     键名称
      * @param object  值
-     * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于-2时不存储）
+     * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于等于-2时不存储）
      */
     @Override
     public void setObject(String key, Object object, long timeout) {
