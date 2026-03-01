@@ -25,7 +25,8 @@ import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import com.kfyty.loveqq.framework.web.core.http.ServerRequest;
 import com.kfyty.loveqq.framework.web.core.http.ServerResponse;
 import com.kfyty.loveqq.framework.web.core.interceptor.HandlerInterceptor;
-import com.kfyty.loveqq.framework.web.core.mapping.MethodMapping;
+import com.kfyty.loveqq.framework.web.core.route.HandlerMethodRoute;
+import com.kfyty.loveqq.framework.web.core.route.Route;
 
 import java.lang.reflect.Method;
 
@@ -110,15 +111,15 @@ public class SaInterceptor implements HandlerInterceptor {
      * 每次请求之前触发的方法
      */
     @Override
-    public boolean preHandle(ServerRequest request, ServerResponse response, MethodMapping handler) {
+    public boolean preHandle(ServerRequest request, ServerResponse response, Route handler) {
         SaTokenContextModelBox prev = SaTokenContextUtil.setContext(request, response);
         try {
             // 前置函数：在注解鉴权之前执行
             beforeAuth.run(handler);
 
             // 这里必须确保 handler 是 HandlerMethod 类型时，才能进行注解鉴权
-            if (isAnnotation) {
-                Method method = handler.getMappingMethod();
+            if (isAnnotation && handler instanceof HandlerMethodRoute) {
+                Method method = ((HandlerMethodRoute) handler).getMappedMethod();
                 SaAnnotationStrategy.instance.checkMethodAnnotation.accept(method);
             }
 
