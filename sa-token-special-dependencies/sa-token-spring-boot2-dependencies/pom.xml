@@ -97,6 +97,13 @@
                 <version>${springboot2.version}</version>
             </dependency>
 
+            <!-- spring-boot-starter-test 测试 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${springboot2.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 	
