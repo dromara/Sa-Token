@@ -5,6 +5,18 @@
 
 --- 
 
+- [[ CSDN ] JAVA：Spring Boot3 集成 Sa-Token 轻量级权限认证](https://shdxhl.blog.csdn.net/article/details/157695326) （2026-2-27）
+
+- [[ 公众号 ] 苦 Spring Security 久矣？这款霸榜 Gitee 的权限框架，把优雅做到了极致](https://mp.weixin.qq.com/s/CzBPkeV6jWZ7mpA_6JH09g) （2026-2-27）
+
+- [[ 公众号 ] 架构师推荐开源项目：轻量级Java权限认证框架！](https://mp.weixin.qq.com/s/OZtTqYIZNU2l_yyKFvbd9A) （2026-2-24）
+
+- [[ 公众号 ] Sa-Token(一)之简介及入门：告别鉴权内耗，让每一位Java开发者都能轻松上手](https://mp.weixin.qq.com/s/HLG1PHnbfOTpC3e-tGutew) （2026-2-24）
+
+- [[ CSDN ] Sa-Token SSO 前后端分离实战：SpringBoot + Vue2 单点登录全流程解析](https://blog.csdn.net/weixin_29291863/article/details/158324193) （2026-2-24）
+
+- [[ CSDN ] RefreshToken反查踩坑记：Sa-Token 1.42.0临时令牌管理新姿势](https://blog.csdn.net/weixin_28327051/article/details/158301601) （2026-2-23）
+
 - [[ 公众号 ] SpringBoot3 + Sa-Token 单点登录｜30分钟上手，代码可复制，新手零踩坑](https://mp.weixin.qq.com/s/2jN9HotfYttLFMzHE54XiA) （2026-2-21）
 
 - [[ 公众号 ] Sa-Token Session会话：三种模型彻底搞懂，不再傻傻分不清](https://mp.weixin.qq.com/s/gpqogF0QyahuqJIqhs6DUg) （2026-2-21）
