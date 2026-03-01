@@ -1,0 +1,54 @@
+/*
+ * Copyright 2020-2099 sa-token.cc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.dev33.satoken.json;
+
+import cn.dev33.satoken.util.SaFoxUtil;
+import org.noear.snack4.ONode;
+import org.noear.snack4.Feature;
+import org.noear.snack4.Options;
+
+/**
+ * JSON 转换器， Snack3 版实现
+ *
+ * @author click33
+ * @author noear
+ * @since 1.41.0
+ */
+public class SaJsonTemplateForSnack4 implements SaJsonTemplate {
+    private final Options options = Options.of(Feature.Write_ClassName, Feature.Write_NotRootClassName, Feature.Read_AutoType);
+
+    /**
+     * 序列化：对象 -> json 字符串
+     */
+    @Override
+    public String objectToJson(Object obj) {
+        if (SaFoxUtil.isEmpty(obj)) {
+            return null;
+        }
+        return ONode.ofBean(obj, options).toJson();
+    }
+
+    /**
+     * 反序列化：json 字符串 → 对象
+     */
+    @Override
+    public <T> T jsonToObject(String jsonStr, Class<T> type) {
+        if (SaFoxUtil.isEmpty(jsonStr)) {
+            return null;
+        }
+        return ONode.deserialize(jsonStr, type, options);
+    }
+}
