@@ -36,7 +36,7 @@ import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
-import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -539,27 +539,25 @@ public class StpLogic {
 	protected String distUsableToken(Object id, SaLoginParameter loginParameter) {
 
 		// 1、获取全局配置的 isConcurrent 参数
-		//    如果配置为：不允许一个账号多地同时登录，则需要根据配置选择：
-		//    	一.将这个账号的历史登录会话标记为：被顶下线
-		//    	二.提示错误并拒绝本次登录
 		if( ! loginParameter.getIsConcurrent()) {
-			if (loginParameter.getRepeatLoginsMode() == SaRepeatLoginsMode.KICKOUT){
+			//    如果配置为：不允许一个账号多地同时登录，则需要根据配置选择：
+			//    	一.将这个账号的历史登录会话标记为：被顶下线
+			//    	二.提示错误并拒绝本次登录
+			if (loginParameter.getReplacedLoginExitMode() == SaReplacedLoginExitMode.OLD_DEVICE){
 				if(loginParameter.getReplacedRange() == SaReplacedRange.CURR_DEVICE_TYPE) {
 					replaced(id, loginParameter.getDeviceType());
 				}
 				if(loginParameter.getReplacedRange() == SaReplacedRange.ALL_DEVICE_TYPE) {
 					replaced(id, createSaLogoutParameter());
 				}
-			} else if (loginParameter.getRepeatLoginsMode() == SaRepeatLoginsMode.INTERCEPT){
+			} else if (loginParameter.getReplacedLoginExitMode() == SaReplacedLoginExitMode.NEW_DEVICE){
 				List<SaTerminalInfo> terminalListByLoginId = getTerminalListByLoginId(id);
-                // 只有当存在有效的会话时才拒绝登录
+                // 只有当存在有效地会话时才拒绝登录
                 boolean hasActiveSession = terminalListByLoginId.stream()
                         .anyMatch(terminal -> isValidToken(terminal.getTokenValue()));
-
                 if (hasActiveSession) {
-                    throw new SaTokenException("当前账号已在其他客户端登录").setCode(SaErrorCode.CODE_11004);
+                    throw new SaTokenException("登录失败：当前账号已在其它客户端登录").setCode(SaErrorCode.CODE_11004);
                 }
-
 			}
 		}
 

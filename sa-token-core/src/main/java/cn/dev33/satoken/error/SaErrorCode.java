@@ -80,7 +80,7 @@ public interface SaErrorCode {
 	/** 更改 Token 指向的 账号Id 时，账号Id值为空 */
 	int CODE_11003 = 11003;
 
-	/** 当前账号已经登录 */
+	/** 登录失败：当前账号已在其它客户端登录 */
 	int CODE_11004 = 11004;
 
 	/** 未能读取到有效Token */

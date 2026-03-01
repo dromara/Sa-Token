@@ -17,7 +17,7 @@ package cn.dev33.satoken.config;
 
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
-import cn.dev33.satoken.stp.parameter.enums.SaRepeatLoginsMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -66,9 +66,9 @@ public class SaTokenConfig implements Serializable {
 	private Boolean isShare = false;
 
 	/**
-	 * 当 isConcurrent=false 时，多客户端登录时的处理策略
+	 * 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
 	 */
-	private SaRepeatLoginsMode repeatLoginsMode = SaRepeatLoginsMode.KICKOUT;
+	private SaReplacedLoginExitMode replacedLoginExitMode = SaReplacedLoginExitMode.OLD_DEVICE;
 
 	/**
 	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
@@ -720,18 +720,18 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
-	 * @return 不允许并发登录时，重复登录处理策略
+	 * @return 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
 	 */
-	public SaRepeatLoginsMode getRepeatLoginsMode() {
-		return repeatLoginsMode;
+	public SaReplacedLoginExitMode getReplacedLoginExitMode() {
+		return replacedLoginExitMode;
 	}
 
 	/**
-	 * @param repeatLoginsMode 不允许并发登录时，重复登录处理策略
+	 * @param replacedLoginExitMode 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
 	 * @return 对象自身
 	 */
-	public SaTokenConfig setRepeatLoginsMode(SaRepeatLoginsMode repeatLoginsMode) {
-		this.repeatLoginsMode = repeatLoginsMode;
+	public SaTokenConfig setReplacedLoginExitMode(SaReplacedLoginExitMode replacedLoginExitMode) {
+		this.replacedLoginExitMode = replacedLoginExitMode;
 		return this;
 	}
 
@@ -882,7 +882,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", isConcurrent=" + isConcurrent
 				+ ", isShare=" + isShare
 				+ ", replacedRange=" + replacedRange
-				+ ", repeatLoginsMode=" + repeatLoginsMode
+				+ ", replacedLoginExitMode=" + replacedLoginExitMode
 				+ ", maxLoginCount=" + maxLoginCount
 				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", maxTryTimes=" + maxTryTimes
