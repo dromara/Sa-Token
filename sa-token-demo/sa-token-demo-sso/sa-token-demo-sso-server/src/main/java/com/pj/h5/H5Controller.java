@@ -16,7 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class H5Controller {
-	
+
+	/**
+	 * 返回当前是否已经登录
+	 */
+	@RequestMapping("/sso/isLogin")
+	public SaResult isLogin() {
+		return SaResult.data(StpUtil.isLogin());
+	}
+
 	/**
 	 * 获取 redirectUrl 
 	 */

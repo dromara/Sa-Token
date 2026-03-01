@@ -29,8 +29,8 @@ import reactor.core.publisher.Mono;
  * @since 1.19.0
  */
 public class SaReactorHolder {
-    public static final String REQUEST_CONTEXT_ATTRIBUTE = "com.kfyty.loveqq.framework.web.mvc.netty.request.support.RequestContextHolder.REQUEST_CONTEXT_ATTRIBUTE";
-    public static final String RESPONSE_CONTEXT_ATTRIBUTE = "com.kfyty.loveqq.framework.web.mvc.netty.request.support.ResponseContextHolder.REQUEST_CONTEXT_ATTRIBUTE";
+    public static final String REQUEST_CONTEXT_ATTRIBUTE = "com.kfyty.loveqq.framework.web.mvc.reactor.request.support.RequestContextHolder.REQUEST_CONTEXT_ATTRIBUTE";
+    public static final String RESPONSE_CONTEXT_ATTRIBUTE = "com.kfyty.loveqq.framework.web.mvc.reactor.request.support.ResponseContextHolder.REQUEST_CONTEXT_ATTRIBUTE";
 
     /**
      * 获取 Mono < ServerRequest >

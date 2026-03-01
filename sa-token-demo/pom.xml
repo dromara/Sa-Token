@@ -35,6 +35,7 @@
 		<module>sa-token-demo-solon-redisson</module>
 		<module>sa-token-demo-springboot</module>
 		<module>sa-token-demo-springboot3-redis</module>
+		<module>sa-token-demo-springboot4-redis</module>
 		<module>sa-token-demo-springboot-low-version</module>
 		<module>sa-token-demo-springboot-redis</module>
 		<module>sa-token-demo-springboot-redisson</module>
@@ -55,6 +56,7 @@
 		<module>sa-token-demo-thymeleaf</module>
 		<module>sa-token-demo-webflux</module>
 		<module>sa-token-demo-webflux-springboot3</module>
+		<module>sa-token-demo-webflux-springboot4</module>
 		<module>sa-token-demo-websocket</module>
 		<module>sa-token-demo-websocket-spring</module>
         <module>sa-token-demo-loveqq-boot</module>

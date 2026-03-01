@@ -17,6 +17,7 @@ package cn.dev33.satoken.config;
 
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -63,6 +64,11 @@ public class SaTokenConfig implements Serializable {
 	 * 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
 	 */
 	private Boolean isShare = false;
+
+	/**
+	 * 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
+	 */
+	private SaReplacedLoginExitMode replacedLoginExitMode = SaReplacedLoginExitMode.OLD_DEVICE;
 
 	/**
 	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
@@ -714,6 +720,22 @@ public class SaTokenConfig implements Serializable {
 	}
 
 	/**
+	 * @return 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
+	 */
+	public SaReplacedLoginExitMode getReplacedLoginExitMode() {
+		return replacedLoginExitMode;
+	}
+
+	/**
+	 * @param replacedLoginExitMode 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setReplacedLoginExitMode(SaReplacedLoginExitMode replacedLoginExitMode) {
+		this.replacedLoginExitMode = replacedLoginExitMode;
+		return this;
+	}
+
+	/**
 	 * 获取 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端 ALL_DEVICE_TYPE=所有设备类型端)
 	 *
 	 * @return /
@@ -860,6 +882,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", isConcurrent=" + isConcurrent
 				+ ", isShare=" + isShare
 				+ ", replacedRange=" + replacedRange
+				+ ", replacedLoginExitMode=" + replacedLoginExitMode
 				+ ", maxLoginCount=" + maxLoginCount
 				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", maxTryTimes=" + maxTryTimes

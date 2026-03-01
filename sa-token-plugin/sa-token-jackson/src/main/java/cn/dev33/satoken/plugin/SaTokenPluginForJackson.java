@@ -20,7 +20,7 @@ import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import cn.dev33.satoken.json.SaJsonTemplateForJackson;
 
 /**
- * SaToken 插件安装：JSON 转换器 (jackjson 版)
+ * SaToken 插件安装：JSON 转换器 (Jackson 版)
  *
  * @author click33
  * @since 1.41.0

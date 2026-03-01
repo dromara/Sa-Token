@@ -555,7 +555,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 		if(clientToken == null) {
 			return null;
 		}
-		return (ClientTokenModel)getSaTokenDao().getObject(splicingClientTokenSaveKey(clientToken));
+		return getSaTokenDao().getObject(splicingClientTokenSaveKey(clientToken), ClientTokenModel.class);
 	}
 
 

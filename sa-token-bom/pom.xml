@@ -4,6 +4,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+        <relativePath/>
+    </parent>
+
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-bom</artifactId>
     <version>${revision}</version>
@@ -53,6 +60,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot4-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-servlet</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -68,7 +80,17 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-spring-boot-autoconfig</artifactId>
+                <artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-reactor-v2v3v4-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-webmvc-v3v4-common</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -79,6 +101,11 @@
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot4-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <!-- endregion-->
@@ -117,6 +144,11 @@
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-jackson</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-jackson3</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -239,21 +271,13 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- 父仓库 -->
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-        <relativePath/>
-    </parent>
-
     <!-- 项目构建 -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.15.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>

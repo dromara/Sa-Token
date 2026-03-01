@@ -8,7 +8,7 @@ Sa-Token 提供一种侦听器机制，通过注册侦听器，你可以订阅�
 
 事件触发流程大致如下：
 
-![sa-token-listener](https://oss.dev33.cn/sa-token/doc/sa-token-listener.svg  's-w')
+<img class="s-w" src="/big-file/doc/up/sa-token-listener.svg" alt="sa-token-listener">
 
 框架默认内置了侦听器 `SaTokenListenerForLog` 实现：[代码参考](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/listener/SaTokenListenerForLog.java)
 ，功能是控制台 log 打印输出，你可以通过配置`sa-token.is-log=true`开启。
@@ -163,7 +163,7 @@ public SaResult login() {
 
 启动项目，访问登录接口，观察控制台输出：
 
-![sa-token-listener-println](https://oss.dev33.cn/sa-token/doc/sa-token-listener-println.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/up/sa-token-listener-println.png" alt="sa-token-listener-println">
 
 
 ### 3、其它注意点

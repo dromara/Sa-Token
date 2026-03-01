@@ -21,6 +21,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaTokenConsts;
 
@@ -111,6 +112,11 @@ public class SaLoginParameter {
 	private Boolean isWriteHeader;
 
 	/**
+	 * 在 isConcurrent=false 时，决定新旧设备谁将放弃会话
+	 */
+	private SaReplacedLoginExitMode replacedLoginExitMode;
+
+	/**
 	 * 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端)
 	 */
 	private SaReplacedRange replacedRange;
@@ -158,6 +164,7 @@ public class SaLoginParameter {
 		this.replacedRange = config.getReplacedRange();
 		this.overflowLogoutMode = config.getOverflowLogoutMode();
 		this.rightNowCreateTokenSession = config.getRightNowCreateTokenSession();
+		this.replacedLoginExitMode = config.getReplacedLoginExitMode();
 
 		this.setupCookieConfig(cookie -> {
 			SaCookieConfig gCookie = config.getCookie();
@@ -568,6 +575,25 @@ public class SaLoginParameter {
 		return this;
 	}
 
+
+	/**
+	 * 获取：在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
+	 * @return /
+	 */
+	public SaReplacedLoginExitMode getReplacedLoginExitMode() {
+		return replacedLoginExitMode;
+	}
+
+	/**
+	 * 设置：在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)
+	 * @param replacedLoginExitMode /
+	 * @return 对象自身
+	 */
+	public SaLoginParameter setReplacedLoginExitMode(SaReplacedLoginExitMode replacedLoginExitMode) {
+		this.replacedLoginExitMode = replacedLoginExitMode;
+		return this;
+	}
+
 	/*
 	 * toString
 	 */
@@ -577,6 +603,7 @@ public class SaLoginParameter {
 				+ "deviceType=" + deviceType
 				+ ", deviceId=" + deviceId
 				+ ", replacedRange=" + replacedRange
+				+ ", replacedLoginExitMode=" + replacedLoginExitMode
 				+ ", overflowLogoutMode=" + overflowLogoutMode
 				+ ", isLastingCookie=" + isLastingCookie
 				+ ", timeout=" + timeout

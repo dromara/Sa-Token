@@ -19,7 +19,7 @@
 而共享Redis，并不需要我们把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **[权限缓存与业务缓存分离]** 的解决方案，详情戳：[Alone独立Redis插件](/plugin/alone-redis)。
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso1.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/sso/g3--sso1.gif">加载动态演示图</button>
 
 
 OK，所有理论就绪，下面开始实战：
@@ -252,19 +252,19 @@ public class SaSso1ClientApplication {
 
 均返回：
 
-![sso1--index.png](https://oss.dev33.cn/sa-token/doc/sso/sso1--index.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso1--index.png" alt="sso1--index.png" />
 
 然后点击登录，被重定向至SSO认证中心：
 
-![sso1--login-page2.png](https://oss.dev33.cn/sa-token/doc/sso/sso1--login-page2--v43.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso1--login-page2--v43.png" alt="sso1--login-page2.png" />
 
 我们登录之后，然后刷新页面：
 
-![sso1-login-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso1-login-ok.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso1-login-ok.png" alt="sso1-login-ok.png" />
 
 刷新另外两个Client端，均显示已登录 
 
-![sso1-login-ok2.png](https://oss.dev33.cn/sa-token/doc/sso/sso1-login-ok2.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso1-login-ok2.png" alt="sso1-login-ok2.png" />
 
 测试完成 
 

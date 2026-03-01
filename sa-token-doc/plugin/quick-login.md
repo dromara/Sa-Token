@@ -108,11 +108,11 @@ public class TestController {
 ### 测试访问
 启动项目，使用浏览器访问：`http://localhost:8081`，首次访问时，由于处于未登录状态，会被强制进入登录页面
 
-![登录](https://oss.dev33.cn/sa-token/doc/sa-quick-login.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-quick-login.png" alt="登录" />
 
 使用默认账号：`sa / 123456`进行登录，会看到资源页面
 
-![登录](https://oss.dev33.cn/sa-token/doc/sa-quick-login-index.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-quick-login-index.png" alt="登录" />
 
 也可以通过 Http Basic 的方式直接进行认证 (一般需要在专门的 API 测试工具下才能正常测试，浏览器会自动忽略@之前的信息)
 
@@ -222,7 +222,7 @@ java -jar sa-quick-dist.jar
 
 5、测试访问，根据控制台输出提示，我们使用浏览器访问测试: `http://localhost:8080`
 
-![sa-quick-start](https://oss.dev33.cn/sa-token/doc/sa-quick-start.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-quick-start.png" alt="sa-quick-start" />
 
 如果可以进入登录界面，则代表打包运行成功 <br>
 当然仅仅运行成功还不够，下面我们演示一下如何使用这个jar包进行静态网站部署
@@ -272,7 +272,7 @@ SpringBoot默认开放了一些路径作为资源目录，比如`classpath:/stat
 
 同时，我们还可以在jar包同目录创建yml配置文件，来覆盖jar包内的yml配置，如下图所示：
 
-![sa-quick-case.png](https://oss.dev33.cn/sa-token/doc/sa-quick-case.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-quick-case.png" alt="sa-quick-case.png" />
 
 例如如上目录中`/static`中有一个`1.jpg`文件，我们启动jar包后访问`http://localhost:8080/1.jpg`即可查看到此文件，这是Springboot自带的功能，在此不再赘述
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <packaging>pom</packaging>
+    <artifactId>sa-token-special-dependencies</artifactId>
+    <name>sa-token-special-dependencies</name>
+    <description>Sa-Token Special Dependencies</description>
+
+    <modules>
+        <module>sa-token-spring-boot2-dependencies</module>
+        <module>sa-token-spring-boot3-dependencies</module>
+        <module>sa-token-spring-boot4-dependencies</module>
+    </modules>
+
+</project>

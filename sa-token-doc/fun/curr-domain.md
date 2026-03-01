@@ -16,11 +16,11 @@ public String test() {
 
 从浏览器访问此接口，我们可以看到：
 
-![test-curr-domain.png](https://oss.dev33.cn/sa-token/doc/test-curr-domain.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/fun/test-curr-domain.png" alt="test-curr-domain.png" />
 
 此 API 在本地开发时一般可以正常工作，然而如果我们在部署时使用 Nginx 做了一层反向代理后，其最终结果可能会和我们预想的有一点偏差：
 
-![test-curr-domain-fxdl.png](https://oss.dev33.cn/sa-token/doc/test-curr-domain-fxdl.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/fun/test-curr-domain-fxdl.png" alt="test-curr-domain-fxdl.png" />
 
 不仅是 Nginx，所有包含路由转发的地方都有可能导致上述丢失 uri 的现象，解决方案也很简单，既然程序无法自动识别，我们改成手动获取即可，Sa-Token 提供两个方案：
 
@@ -29,7 +29,7 @@ public String test() {
 
 ##### 1、首先在 Nginx 代理转发的地方增加参数
 
-![nginx-add-header.png](https://oss.dev33.cn/sa-token/doc/nginx-add-header.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/fun/nginx-add-header.png" alt="nginx-add-header.png" />
 
 重点是这一句：`proxy_set_header Public-Network-URL http://$http_host$request_uri;`
 

@@ -27,7 +27,9 @@ var myDocsifyPlugin = function(hook, vm) {
 			'<footer>',
 			'<span>发现错误？ 您可以在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
 			'" target="_blank">GitHub</a> 帮助我们完善此页文档！</span>',
-			'或 <a href="#/more/join-group">加入讨论群</a> 交流反馈',
+			'或 <a href="#/more/join-group">加入讨论群</a> 交流反馈。',
+			'<br/><br/>',
+			'<a href="https://beian.miit.gov.cn/" target="_blank" style="color:#aaa; border-color: #aaa;">鲁ICP备18046274号-4</a>',
 			'</footer>'
 		].join('');
 		return html + footer;
@@ -73,7 +75,7 @@ var myDocsifyPlugin = function(hook, vm) {
 		// 	var ad = `<p class="top-ad-box">
 		// 		<span class="ad-tips">推广信息：</span>
 		// 		<span class="ad-tips ad-close">关闭</span>
-		// 		<a href="http://sa-pro.dev33.cn?from=satop" target="_blank">
+		// 		<a href="http://sa-pro.yun94.cn?from=satop" target="_blank">
 		// 			<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-s3.png" />
 		// 		</a>
 		// 	</p>`;

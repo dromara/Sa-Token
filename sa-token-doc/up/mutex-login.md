@@ -4,7 +4,7 @@
 同端互斥登录，指的就是：像腾讯QQ一样，在同一类型设备上只允许单地点登录，在不同类型设备上允许同时在线。
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--mutex-login.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/up/g3--mutex-login.gif">加载动态演示图</button>
 
 --- 
 

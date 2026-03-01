@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-starter</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-spring-boot-webmvc-v3v4-common</name>
+    <artifactId>sa-token-spring-boot-webmvc-v3v4-common</artifactId>
+	<description>sa-token springboot webmvc v3v4 common</description>
+
+	<dependencies>
+		<!-- spring-boot-starter-web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- config (optional) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- sa-token-jakarta-servlet -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jakarta-servlet</artifactId>
+		</dependency>
+		
+		<!-- sa-token-spring-boot-webmvc-reactor-v2v3v4-common -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+		</dependency>
+		
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- 默认引入 sa-token springboot3 相关依赖版本定义，上层可以继续引入其它版本定义来覆盖本层，Maven 采用就近原则选择依赖版本 -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot3-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+</project>

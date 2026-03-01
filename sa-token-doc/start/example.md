@@ -139,9 +139,9 @@ public class UserController {
 ### 6、运行
 启动代码，从浏览器依次访问上述测试接口：
 
-![运行结果](https://oss.dev33.cn/sa-token/doc/test-do-login.png)
+<img src="/big-file/doc/start/test-do-login.png" alt="运行结果">
 
-![运行结果](https://oss.dev33.cn/sa-token/doc/test-is-login.png)
+<img src="/big-file/doc/start/test-is-login.png" alt="运行结果">
 
 <!-- 
 ### 普通Spring环境

@@ -14,7 +14,7 @@
 
 解决这个问题的关键就在于 `SaTokenContext` 接口，此接口的作用是屏蔽掉不同 Web 框架之间的差异，提供统一的调用API：
 
-![sa-token-context](https://oss.dev33.cn/sa-token/doc/sa-token-context.svg 's-w')
+<img class="s-w" src="/big-file/doc/fun/sa-token-context.svg" alt="sa-token-context" />
 
 
 SaTokenContext只是一个接口，没有工作能力，这也就意味着 SaTokenContext 接口的实现是必须的。

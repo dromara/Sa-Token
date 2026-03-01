@@ -8,6 +8,12 @@ body{font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu
 .main-box .markdown-section{ /* padding: 38px 20px; */ max-width: 100%; /* margin-left: 12%; */}
 .main-box .markdown-section h4{font-size: 1rem;}
 
+.main-box red, .main-box red *{ color: red !important; }
+.main-box green, .main-box green *{ color: green !important; }
+.main-box blue, .main-box blue *{ color: blue;!important; }
+.main-box purple, .main-box purple *{ color: purple;!important; }
+.main-box question, .main-box question *{ color: purple;!important; }
+
 
 
 /* ------- 多设备适配 start ------- */
@@ -62,6 +68,10 @@ body{
 		--doc-left-width: 200px;
 		--doc-context-width: calc( 100vw - 400px - 50px);
 		--doc-right-width: calc(200px - 20px);
+		
+		/* 窄屏幕时，广告更换为上下显示 */
+		.main-box .top-ad-box .mad-img{ float: none; margin-right: 10px;  border: 0px; }
+		.main-box .top-ad-box .mad-text{ float: none; display: block; width: 100%; margin-top: 10px; color: #000; word-break: normal; }
 	}
 }
 /* 小于 1100px时 */
@@ -139,7 +149,7 @@ body{
 .zk-box{display: inline-block;}
 /* 外层盒 */
 .zk-box .zk-context{max-height: 0px; position: absolute; overflow: hidden;}
-.zk-box:hover .zk-context{max-height: 300px;}
+.zk-box:hover .zk-context{max-height: 400px;}
 /* 内层盒 */
 .zk-context>div{padding: 1em 0.5em 1em 1em; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
 .zk-box:hover .zk-context>div{opacity: 1;}
@@ -244,8 +254,17 @@ body{
 /* 大屏幕时，某些图片限制一下宽度 */
 @media screen and (min-width: 800px) {
 	[title=s-w],[title=s-w-sh]{max-width: 80%;}
+	.s-w,.s-w-sh{ max-width: 80%; }
 }
-[title=s-w-sh]{display: inline-block; border: 1px #eee solid;}
+.s-w-sh, [title=s-w-sh]{display: inline-block; border: 1px #eee solid;}
+.w-100, [title=w-100]{display: inline-block; border: 1px #eee solid; max-width: 100%;}
+
+/* 鼠标悬浮时切换img */
+.hover-change-img {border: 1px #eee solid; max-width: 100%; }
+.hover-change-img:hover img:first-child{ display: none; }
+.hover-change-img img:last-child{ display: none; }
+.hover-change-img img:first-child{ display: inline-block; }
+.hover-change-img:hover img:last-child{ display: inline-block; }
 
 /* 公众号table */
 .gzh-table{ /* table-layout:fixed !important; */}
@@ -400,7 +419,7 @@ body {
 .sidebar{background-color: transparent !important;}
 
 /* 变色的动画 */
-.doc-header,body{transition: all 0.5s !important;}
+.doc-header{transition: background-color 0.3s !important;}
 
 /* 调色按钮 */
 .theme-btn{width: 25px; height: 25px; line-height: 60px; vertical-align: middle; position: relative; top: -1px;}
@@ -454,6 +473,11 @@ body {
 .main-box .top-ad-box a:hover{border-bottom: 0px;}
 .main-box .top-ad-box a img{border: 1px #eee solid; width: 100%; /* max-height: 80px; */ border-radius: 2px; transition: all 0.1s !important;}
 .main-box .top-ad-box a img:hover{box-shadow: 0 0 20px #ddd;}
+
+.mad-bg-box{ padding: 10px; background-color: #F4F8FA; /* border: 1px #eee solid; */ overflow: hidden; }
+.mad-wh-box{ width: 100%; }
+.main-box .top-ad-box .mad-img{ width: 130px; float: left; margin-right: 10px;  border: 0px; }
+.main-box .top-ad-box .mad-text{ float: left; width: calc(100% - 140px); color: #000; font-size: 14px; line-height: 20px; word-break: break-all; }
 
 .main-box .top-ad-box2 a img{ width: 48.5%; margin-bottom: 2px; }
 .main-box .top-ad-box2 a:nth-child(2n+1) img{margin-right: 2px; }

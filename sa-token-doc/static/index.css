@@ -54,8 +54,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .gb-cursor {display: inline-block;width: 2px;height: 22px;position: relative;top: 4px;left: -4px;background-color: black;animation: blink 0.7s infinite alternate;}
 @keyframes blink { from {opacity: 0;} to {opacity: 1;} }
 
-/* .main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg.jpg);} */
-.main-box{background-image: url(https://oss.dev33.cn/sa-token/home-bg3.png); background-size: 120% 100%;}
+.main-box{background-image: url(/big-file/index/home-bg3.jpg); background-size: 120% 100%;}
 .main-box{animation: changes 30s 0.2s linear infinite normal; /* background-attachment: ; */}  /* normal | alternate */
 @keyframes changes {
 	from {background-position: 0vw 0%;}
@@ -281,7 +280,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .zk-box{display: inline-block; padding-right: 0px; margin-right: -25px;}
 /* 外层盒 */
 .zk-box .zk-context{max-height: 0px; position: absolute; overflow: hidden;}
-.zk-box:hover .zk-context{max-height: 300px;}
+.zk-box:hover .zk-context{max-height: 400px;}
 /* 内层盒 */
 .zk-context>div{padding: 1em 0.5em 1em 1em; border: 1px #ccc solid; border-radius: 2px; background-color: #FFF; font-size: 12px; transition: all 0.2s; opacity: 0;}
 .zk-box:hover .zk-context>div{opacity: 1;}

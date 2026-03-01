@@ -1,4 +1,4 @@
-# SSO整合 - NoSdk 模式与非 java 项目
+# SSO整合 - NoSdk、ReSdk 模式与非 java 项目
 
 ---
 

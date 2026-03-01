@@ -18,6 +18,7 @@ package cn.dev33.satoken.oauth2.data.resolver;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicUtil;
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
+import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.Param;
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts.TokenType;
 import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
@@ -51,9 +52,11 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
     @Override
     public ClientIdAndSecretModel readClientIdAndSecret(SaRequest request) {
         // 优先从请求参数中获取
-        String clientId = request.getParam(Param.client_id);
-        String clientSecret = request.getParam(Param.client_secret);
-        if(SaFoxUtil.isNotEmpty(clientId)) {
+        String clientId = request.getParam(SaOAuth2Consts.Param.client_id);
+        String clientSecret = request.getParam(SaOAuth2Consts.Param.client_secret);
+
+        // 此处必须 clientId 和 clientSecret 都有值才可以采用，fix pr: https://gitee.com/dromara/sa-token/pulls/346
+        if(SaFoxUtil.isNotEmpty(clientId) && SaFoxUtil.isNotEmpty(clientSecret)) {
             return new ClientIdAndSecretModel(clientId, clientSecret);
         }
 
@@ -66,6 +69,11 @@ public class SaOAuth2DataResolverDefaultImpl implements SaOAuth2DataResolver {
                 clientSecret = arr[1];
             }
             return new ClientIdAndSecretModel(clientId, clientSecret);
+        }
+
+        // 如果只提供了 clientId 参数，也为其构建一个 ClientIdAndSecretModel 对象，clientSecret 置空
+        if(SaFoxUtil.isNotEmpty(clientId)) {
+            return new ClientIdAndSecretModel(clientId, null);
         }
 
         // 如果都没有提供，则抛出异常

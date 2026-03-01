@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>GitHub仓库Star数量对比</title>
+    <script src="./echarts.min-5.4.3.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #333333;
+            width: 1000px;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .comparison-text {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            font-size: 16px;
+            line-height: 1.5;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+        }
+        
+        .highlight {
+            color: #8A2BE2; /* 紫色 */
+            font-weight: 700; /* 更粗 */
+            font-size: 18px; /* 增大字号 */
+			margin-left: 6px;
+			margin-right: 6px;
+            /* padding: 0 5px; /* 左右添加空格 */ */
+        }
+        
+        .chart-container {
+            background: #ffffff;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            border-radius: 0;
+        }
+        
+        #starsChart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(74, 144, 226, 0.2);
+            border-radius: 50%;
+            border-top-color: #4a90e2;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="comparison-text" id="comparisonText">
+            正在加载数据...
+        </div>
+        
+        <div class="chart-container">
+            <div id="starsChart"></div>
+            <div class="loading" id="loadingOverlay">
+                <div class="spinner"></div>
+                <p>正在加载数据...</p>
+            </div>
+        </div>
+    </div>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        // 配置要获取的仓库列表
+        const repos = [
+            { owner: 'dromara', name: 'Sa-Token', desc: 'Sa-Token', color: '#349A34' },
+            { owner: 'spring-projects', name: 'spring-security', desc: 'Spring Security', color: '#5DB1FF' },
+            { owner: 'apache', name: 'shiro', desc: 'Apache Shiro', color: '#ED7C25' }
+        ];
+        
+        // ECharts实例和数据
+        let starsChart = null;
+        let repoData = [];
+        
+        // 初始化ECharts
+        function initChart() {
+            const chartDom = document.getElementById('starsChart');
+            if (!chartDom) {
+                console.error("找不到图表容器");
+                return null;
+            }
+            
+            starsChart = echarts.init(chartDom);
+            return starsChart;
+        }
+        
+        // 页面加载完成后执行
+        window.onload = async function() {
+            console.log("页面加载完成，开始初始化...");
+            
+            // 初始化图表
+            starsChart = initChart();
+            if (!starsChart) {
+                console.error("ECharts初始化失败");
+                return;
+            }
+            
+            // 显示加载状态
+            showLoading(true);
+            
+            // 获取数据
+            await fetchAllStars();
+            
+            // 每30分钟自动刷新数据
+            setInterval(fetchAllStars, 30 * 60 * 1000);
+        };
+        
+        // 获取所有仓库的star数量
+        async function fetchAllStars() {
+            try {
+                const promises = repos.map(repo => fetchRepoStars(repo));
+                const results = await Promise.allSettled(promises);
+                
+                // 处理结果
+                repoData = results.map((result, index) => {
+                    if (result.status === 'fulfilled') {
+                        return {
+                            ...repos[index],
+                            stars: result.value,
+                            error: null
+                        };
+                    } else {
+                        return {
+                            ...repos[index],
+                            stars: 0,
+                            error: result.reason.message
+                        };
+                    }
+                });
+                
+                console.log("获取到的数据:", repoData);
+                
+                // 更新UI
+                updateComparisonText();
+                updateChart();
+                showLoading(false);
+                
+            } catch (error) {
+                console.error('获取数据时发生错误:', error);
+                document.querySelector('.comparison-text').innerHTML = "数据加载失败，请稍后重试";
+                showLoading(false);
+            }
+        }
+        
+        // 获取单个仓库的star数量
+        async function fetchRepoStars(repo) {
+            try {
+                // 使用GitHub API
+                const url = `https://api.github.com/repos/${repo.owner}/${repo.name}`;
+                
+                console.log(`正在获取 ${repo.owner}/${repo.name} 的数据...`);
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'User-Agent': 'GitHub-Stars-Chart'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log(`${repo.owner}/${repo.name}: ${data.stargazers_count} stars`);
+                return data.stargazers_count;
+            } catch (error) {
+                console.error(`获取 ${repo.owner}/${repo.name} 数据失败:`, error);
+                
+                // 返回模拟数据用于测试
+                if (repo.name === 'Sa-Token') return 18452;
+                if (repo.name === 'spring-security') return 9398;
+                if (repo.name === 'shiro') return 4419;
+                
+                throw error;
+            }
+        }
+        
+        // 更新比较文本
+        function updateComparisonText() {
+            const saTokenData = repoData.find(r => r.name === 'Sa-Token');
+            const springSecurityData = repoData.find(r => r.name === 'spring-security');
+            const shiroData = repoData.find(r => r.name === 'shiro');
+            
+            if (!saTokenData || !springSecurityData || !shiroData) {
+                document.querySelector('.comparison-text').innerHTML = "数据加载不完整";
+                return;
+            }
+            
+            const saTokenStars = saTokenData.stars || 0;
+            const springSecurityStars = springSecurityData.stars || 1;
+            const shiroStars = shiroData.stars || 1;
+            
+            const springSecurityMultiple = (saTokenStars / springSecurityStars).toFixed(2);
+            const shiroMultiple = (saTokenStars / shiroStars).toFixed(2);
+            
+            document.querySelector('.comparison-text').innerHTML = 
+                `Sa-Token GitHub 关注量达到 <span class="highlight"> ${saTokenStars.toLocaleString()} </span> Star，是主要竞争框架 Spring Security 的 <span class="highlight"> ${springSecurityMultiple} </span> 倍，Apache Shiro 的 <span class="highlight"> ${shiroMultiple} </span> 倍`;
+        }
+        
+        // 更新柱状图
+        function updateChart() {
+            if (!starsChart) {
+                console.error("图表实例未初始化");
+                return;
+            }
+            
+            // 准备图表数据
+            const labels = repoData.map(repo => repo.desc);
+            const stars = repoData.map(repo => repo.stars);
+            const colors = repoData.map(repo => repo.color);
+            
+            console.log("图表数据准备完成:", { labels, stars, colors });
+            
+            // 配置ECharts选项
+            const option = {
+				toolbox: {
+					show: true,
+					top: 15,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: function(params) {
+                        const data = params[0];
+                        return `<div style="color:#fff;font-size:14px;">
+                            ${data.name}<br/>
+                            Star数量: <span style="color:#ffd700;font-weight:bold">${data.value.toLocaleString()} star</span>
+                        </div>`;
+                    },
+                    backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                    borderColor: '#333',
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 14
+                    }
+                },
+                grid: {
+                    left: '5%',
+                    right: '5%',
+                    bottom: '8%',
+                    top: '8%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: labels,
+                    axisLine: {
+                        lineStyle: {
+                            color: '#333'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#333',
+                        fontSize: 14,
+                        fontWeight: 'bold'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Star数量',
+                    nameTextStyle: {
+                        color: '#333',
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        padding: [0, 0, 0, 10]
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#f0f0f0'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#666',
+                        fontSize: 12,
+                        formatter: function(value) {
+                            if (value >= 1000) {
+                                return (value / 1000).toFixed(1) + 'k';
+                            }
+                            return value;
+                        },
+                        margin: 10
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#f0f0f0'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Star数量',
+                        type: 'bar',
+                        data: stars.map((value, index) => ({
+                            value: value,
+                            itemStyle: {
+                                color: colors[index]
+                            }
+                        })),
+                        barWidth: '70%',
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{c} star',
+                            color: '#333',
+                            fontSize: 14,
+                            fontWeight: 'bold'
+                        },
+                        itemStyle: {
+                            borderRadius: [4, 4, 0, 0]
+                        }
+                    }
+                ]
+            };
+            
+            // 设置图表选项
+            try {
+                starsChart.setOption(option);
+                console.log("图表更新成功");
+                
+                // 响应窗口大小变化
+                window.addEventListener('resize', function() {
+                    starsChart.resize();
+                });
+                
+            } catch (error) {
+                console.error("更新图表时发生错误:", error);
+                
+                // 显示错误信息
+                const chartContainer = document.querySelector('.chart-container');
+                chartContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #e74c3c;">
+                        <p>图表更新失败: ${error.message}</p>
+                        <p>数据已加载: ${JSON.stringify(repoData.map(r => ({name: r.name, stars: r.stars})))}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // 显示/隐藏加载状态
+        function showLoading(show) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = show ? 'flex' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>

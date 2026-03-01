@@ -1,0 +1,133 @@
+
+2026-3-1 调试记录
+
+启动 SaOAuth2ServerApplication，报错空指针：SaOAuth2ServerController 文件的 SaOAuth2Strategy.instance.notLoginView 空指针，SaOAuth2Strategy.instance 为 null 
+
+
+SaOAuth2Strategy.instance 的定义为：
+public static final SaOAuth2Strategy instance = new SaOAuth2Strategy();
+
+看代码是无论如何也不可能空指针的，诡异。
+
+在 main 方法第一句加上测试
+
+@SpringBootApplication
+public class SaOAuth2ServerApplication {
+
+	public static void main(String[] args) {
+		System.out.println(SaOAuth2Strategy.instance);
+		SpringApplication.run(SaOAuth2ServerApplication.class, args);
+		System.out.println("\nSa-Token-OAuth2 Server端启动成功，配置如下：");
+		System.out.println(SaOAuth2Manager.getServerConfig());
+	}
+	
+}
+
+打印居然为 null。
+
+询问 AI，解释的乱七八糟，没有参考价值。
+
+然后在根目录执行 mvn clean，居然无法成功。sa-token-test 模块无法 clean 。
+
+报错 test 依赖不存在
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-test</artifactId>
+	<scope>test</scope>
+</dependency>
+
+最后必须在 dependencyManagement 加上这个才行
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-test</artifactId>
+	<version>2.7.18</version>
+</dependency>
+
+可是就算不加，我也已经在 sa-token-spring-boot2-dependencies 中定义这个依赖了呀，为什么 在 sa-token-test 中无法 import spring-boot-starter-test ？
+
+加了后，mvn clean 执行成功了
+
+但是 mvn package 又开始无法打包。
+
+可以昨天我明明能打包成功的啊？今天好像就变动了一下 sa-token-test 中的依赖配置。这有什么影响吗？
+
+而且打包报错信息居然是：sa-token-jboot-plugin 插件中 javax.servlet.http.HttpServletRequest 无法转换为 HttpServletRequest
+
+什么东西啊。
+
+抓头挠腮解决不了。
+
+这个插件已经十几个版本没有变动过代码了，代码不变，打包环境不变，命令不变，今天就突然报这种莫名其妙的错误，无奈，只能先去除这个插件，不让它参与打包。
+
+继续打包，又开始报错：
+
+sa-token-jfinal-plugin 中 cn.dev33.satoken.context.SaTokenContext 无法转换为 SaTokenContext。
+
+这一瞬间我怀疑自己正处于梦中。
+
+纠结了半分钟，继续去除此插件，继续打包。
+
+打包成功了。
+
+启动 SaOAuth2ServerApplication，启动成功，SaOAuth2ServerController 文件的 SaOAuth2Strategy.instance.notLoginView 空指针问题，消失了。
+
+请问中间的这几个报错和这个空指针有任何关联吗？我请问呢？
+
+
+
+注：以上所有叙述均为最后打包成功后进行回忆，可能细节上略有偏差。
+
+
+
+
+
+
+
+两小时后：
+本来可以运行成功的代码，只要一改子模块的代码就无法再运行成功，报错：java: 无法访问SaRequest。
+试了好多解决方案，不行。
+
+--- 
+吃了两份炉盖香酥鸡饼，原来人在压力大的时候真的需要补充能量。
+---
+
+继续报错：
+Maven 资源编译器: 模块 'sa-token-oauth2' 所需的 Maven 项目配置不可用。仅当从 IDE 启动外部构建时，才支持 Maven 项目编译。
+sa-token-jwt、sso、sign 等模块均出现此问题 
+
+最后：
+把项目删掉，重新下载一份，导入
+项目可以运行成功了，但是每次修改子模块，在 demo 示例里无法实时起作用。需要 mvn clean install 才能看到效果。
+
+最后：
+取消勾选 maven 配置项：Delegate IDE build/run actions to Maven
+
+一切问题解决，包括最上面的诡异调试现象也消失了。
+
+idea，你给老子爬 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

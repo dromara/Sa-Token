@@ -713,13 +713,13 @@ public class StpInterfaceImpl implements StpInterface {
 
 	// 加载角色信息
 	@Override
-	public List<String> getPermissionList(Object loginId, String loginType) {
+	public List<String> getRoleList(Object loginId, String loginType) {
 		return Arrays.asList("admin", "super-admin", "ceo");
 	}
 
 	// 加载权限信息
 	@Override
-	public List<String> getRoleList(Object loginId, String loginType) {
+	public List<String> getPermissionList(Object loginId, String loginType) {
 		return Arrays.asList("user:add", "user:delete", "user:update");
 	}
 

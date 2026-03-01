@@ -16,6 +16,8 @@
 package cn.dev33.satoken.loveqq.boot;
 
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.dao.SaTokenDaoForRedisson;
 import cn.dev33.satoken.loveqq.boot.context.path.ApplicationContextPathLoading;
 import cn.dev33.satoken.loveqq.boot.filter.SaFirewallCheckFilter;
 import cn.dev33.satoken.loveqq.boot.filter.SaTokenContextFilter;
@@ -26,6 +28,8 @@ import com.kfyty.loveqq.framework.core.autoconfig.annotation.Bean;
 import com.kfyty.loveqq.framework.core.autoconfig.annotation.Component;
 import com.kfyty.loveqq.framework.core.autoconfig.annotation.ConfigurationProperties;
 import com.kfyty.loveqq.framework.core.autoconfig.annotation.Import;
+import com.kfyty.loveqq.framework.core.autoconfig.condition.annotation.ConditionalOnBean;
+import org.redisson.api.RedissonClient;
 
 /**
  * 注册Sa-Token所需要的Bean
@@ -55,6 +59,17 @@ public class SaBeanRegister {
     @ConfigurationProperties("sa-token")
     public SaTokenConfig getSaTokenConfig() {
         return new SaTokenConfig();
+    }
+
+    /**
+     * redis dao 集成
+     *
+     * @return {@link SaTokenDao}
+     */
+    @Bean
+    @ConditionalOnBean(RedissonClient.class)
+    public SaTokenDao saTokenDao(RedissonClient redisson) {
+        return new SaTokenDaoForRedisson(redisson);
     }
 
     /**

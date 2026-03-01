@@ -23,7 +23,7 @@ OAuth2.0 与 SSO 相比，增加了对应用授权范围的控制，减弱了应
 3. 密码式（Password）：Client 端直接拿着用户的账号密码换取授权 `Access-Token`。
 4. 客户端凭证（Client Credentials）：Server 端针对 Client 级别的 Token，代表应用自身的资源授权。
 
-![https://oss.dev33.cn/sa-token/doc/oauth2/sa-oauth2-setup.png](https://oss.dev33.cn/sa-token/doc/oauth2/sa-oauth2-setup.png)
+<img src="/big-file/doc/oauth2-new/sa-oauth2-setup.png" alt="sa-oauth2-setup.png" />
 
 接下来我们将通过简单示例演示如何在 Sa-Token-OAuth2 中完成这四种模式的对接: [搭建OAuth2-Server](/oauth2/oauth2-server)
 

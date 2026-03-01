@@ -548,7 +548,7 @@ public class StpUtil {
 	 * @param tokenValue token
 	 * @return 账号id
 	 */
-	public Object getLoginIdByTokenNotThinkFreeze(String tokenValue) {
+	public static Object getLoginIdByTokenNotThinkFreeze(String tokenValue) {
 		return stpLogic.getLoginIdByTokenNotThinkFreeze(tokenValue);
 	}
 
