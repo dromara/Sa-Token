@@ -17,7 +17,6 @@ package cn.dev33.satoken.sign.template;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.model.SaRequest;
-import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.sign.error.SaSignErrorCode;
 import cn.dev33.satoken.sign.exception.SaSignException;
 import cn.dev33.satoken.sign.SaSignManager;

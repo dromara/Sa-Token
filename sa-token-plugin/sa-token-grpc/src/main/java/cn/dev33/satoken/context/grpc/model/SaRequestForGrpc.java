@@ -19,7 +19,6 @@ import cn.dev33.satoken.context.grpc.context.SaTokenGrpcContext;
 import cn.dev33.satoken.context.model.SaRequest;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
