@@ -45,6 +45,11 @@
 		<caffeine.version>3.2.0</caffeine.version>
 		<forest.version>1.6.4</forest.version>
 		<okhttps.version>4.1.0</okhttps.version>
+
+		<!-- Maven GPG Plugin -->
+		<maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+		<!-- Maven Central Portal -->
+		<central.publishing.maven.version>0.7.0</central.publishing.maven.version>
     </properties>
 
     <dependencyManagement>
@@ -264,6 +269,109 @@
 
         </dependencies>
     </dependencyManagement>
+	
+	<!-- 项目构建 -->
+	<build>
+	   <plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.10.1</version>
+			<configuration>
+				<source>1.8</source>
+				<target>1.8</target>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+        
+        <!-- 统一版本号管理 -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>flatten-maven-plugin</artifactId>
+            <version>1.2.7</version>
+            <configuration>
+                <updatePomFile>true</updatePomFile>
+                <flattenMode>resolveCiFriendliesOnly</flattenMode>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>flatten</id>
+                    <phase>process-resources</phase>
+                    <goals>
+                        <goal>flatten</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>flatten.clean</id>
+                    <phase>clean</phase>
+                    <goals>
+                        <goal>clean</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
 
+		   <plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-gpg-plugin</artifactId>
+			   <executions>
+				   <execution>
+					   <id>sign-artifacts</id>
+					   <phase>verify</phase>
+					   <goals>
+						   <goal>sign</goal>
+					   </goals>
+				   </execution>
+			   </executions>
+		   </plugin>
+		   <plugin>
+			   <groupId>org.sonatype.central</groupId>
+			   <artifactId>central-publishing-maven-plugin</artifactId>
+			   <extensions>true</extensions>
+			   <configuration>
+				   <publishingServerId>central</publishingServerId>
+			   </configuration>
+		   </plugin>
+	   </plugins>
+	   <pluginManagement>
+		   	<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-enforcer-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>enforce</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven-gpg-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.central</groupId>
+					<artifactId>central-publishing-maven-plugin</artifactId>
+					<version>${central.publishing.maven.version}</version>
+				</plugin>
+			</plugins>
+	   </pluginManagement>
+	</build>
 	
 </project>
