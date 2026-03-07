@@ -9,6 +9,7 @@
 | `commit-message` | 根据 git 变更生成符合 Sa-Token 项目风格的 commit message | 生成提交信息、写 commit message | [SKILL.md](commit-message/SKILL.md) |
 | `organize-update-log` | 根据 git 提交记录生成符合项目规范的更新日志内容 | 整理更新日志、分析版本变更 | [SKILL.md](organize-update-log/SKILL.md) |
 | `remove-redundancy-import` | 检查并移除 Java 类中未被引用的冗余 import | 清理冗余导包、优化 import | [SKILL.md](remove-redundancy-import/SKILL.md) |
+| `upgrade-version` | 将项目版本号从旧版本升级到新版本，批量修改 pom、常量、Demo 及文档 | 升级版本、修改版本号、version bump | [SKILL.md](upgrade-version/SKILL.md) |
 
 ### 详细说明
 
@@ -20,6 +21,9 @@
 
 #### remove-redundancy-import
 扫描项目中所有 Java 类，检测未被引用的冗余 import，生成清理计划供审阅，确认后执行移除。支持通过内置 Python 脚本快速扫描。
+
+#### upgrade-version
+将 Sa-Token 项目版本号从旧版本升级到新版本。批量修改根 POM、BOM、SaTokenConsts、所有 Demo 子项目 pom.xml 及文档（README、index.html、doc.html、new-version.md 等）中的版本引用。明确排除历史记录、@since 标注、更新日志等不应修改的文件。
 
 ## 快速使用
 
@@ -34,6 +38,9 @@
 
 用户：清理一下冗余 import
 → 自动使用 remove-redundancy-import skill 扫描并清理未使用的 import
+
+用户：把版本从 v1.44.0 升级到 v1.45.0
+→ 自动使用 upgrade-version skill 批量修改版本号
 ```
 
 ## 新增 Skill 维护指南
