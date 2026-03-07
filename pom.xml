@@ -38,15 +38,14 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-        <revision>1.44.0</revision>
+        <revision>1.45.0</revision>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
 
-		<!-- Maven GPG Plugin -->
-		<maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-		<!-- Maven Central Portal -->
-		<central.publishing.maven.version>0.7.0</central.publishing.maven.version>
+		<!-- Maven GPG Plugin & Maven Central Portal -->
+		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+		<central.publishing.maven.version>0.10.0</central.publishing.maven.version>
 	</properties>
 
 	<!-- 仓库信息 -->
@@ -90,80 +89,85 @@
 	
 	<!-- 项目构建 -->
 	<build>
-	   <plugins>
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>3.15.0</version>
-			<configuration>
-				<source>1.8</source>
-				<target>1.8</target>
-				<encoding>UTF-8</encoding>
-			</configuration>
-		</plugin>
-		
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-javadoc-plugin</artifactId>
-			<version>3.12.0</version>
-			<configuration>
-				<!-- 统一生成聚合文档，解决 mvn package 时控制台发出 javadoc 警告的问题 -->
-<!--				<aggregate>true</aggregate>-->
-				<!-- 忽略部分 error 和 warning -->
-				<failOnError>false</failOnError>
-				<failOnWarnings>false</failOnWarnings>
-				<additionalOptions>-Xdoclint:none</additionalOptions>
-				<detectLinks>false</detectLinks>
-			</configuration>
-			<executions>
-				<execution>
-					<phase>package</phase>
-					<goals>
-						<goal>aggregate</goal>
-					</goals>
-				</execution>
-				<execution>
-					<id>attach-javadocs</id>
-					<goals>
-						<goal>jar</goal>
-					</goals>
-					<configuration>
-						<doclint>none</doclint>
-					</configuration>
-				</execution>
-			</executions>
-		</plugin>
+		<plugins>
 
-        <!-- 统一版本号管理 -->
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
-            <version>1.7.3</version>
-            <configuration>
-                <updatePomFile>true</updatePomFile>
-                <flattenMode>resolveCiFriendliesOnly</flattenMode>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>flatten</id>
-                    <phase>process-resources</phase>
-                    <goals>
-                        <goal>flatten</goal>
-                    </goals>
-                </execution>
-                <execution>
-                    <id>flatten.clean</id>
-                    <phase>clean</phase>
-                    <goals>
-                        <goal>clean</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+			<!-- 源码编译 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.15.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
 
-		   <plugin>
+			<!-- API 文档 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.12.0</version>
+				<configuration>
+					<!-- 统一生成聚合文档，解决 mvn package 时控制台发出 javadoc 警告的问题 -->
+					<!-- <aggregate>true</aggregate> -->
+					<!-- 忽略部分 error 和 warning -->
+					<failOnError>false</failOnError>
+					<failOnWarnings>false</failOnWarnings>
+					<additionalOptions>-Xdoclint:none</additionalOptions>
+					<detectLinks>false</detectLinks>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<doclint>none</doclint>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- flatten 统一版本号管理 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.7.3</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<flattenMode>resolveCiFriendliesOnly</flattenMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>flatten.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- gpg 签名 -->
+		   	<plugin>
 			   <groupId>org.apache.maven.plugins</groupId>
 			   <artifactId>maven-gpg-plugin</artifactId>
+			   <version>${maven-gpg-plugin.version}</version>
 			   <executions>
 				   <execution>
 					   <id>sign-artifacts</id>
@@ -173,17 +177,27 @@
 					   </goals>
 				   </execution>
 			   </executions>
-		   </plugin>
-		   <plugin>
-			   <groupId>org.sonatype.central</groupId>
-			   <artifactId>central-publishing-maven-plugin</artifactId>
-			   <extensions>true</extensions>
-			   <configuration>
-				   <publishingServerId>central</publishingServerId>
-			   </configuration>
-		   </plugin>
-	   </plugins>
-	   <pluginManagement>
+		   	</plugin>
+
+			<!-- 新版 Central Portal 中央仓库上传   -->
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>${central.publishing.maven.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<!-- 必须与 settings.xml 中 server 的 id 一致 -->
+					<publishingServerId>central</publishingServerId>
+					<!-- 是否自动发布。设为 true 后，上传完成无需手动点击发布 -->
+					<!-- <autoPublish>true</autoPublish> -->
+					<!-- 等待直到发布完成，让构建过程等待最终结果 -->
+					<!-- <waitUntil>published</waitUntil> -->
+				</configuration>
+		   	</plugin>
+
+	   	</plugins>
+
+	   	<pluginManagement>
 		   	<plugins>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -209,19 +223,9 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>${maven-gpg-plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.sonatype.central</groupId>
-					<artifactId>central-publishing-maven-plugin</artifactId>
-					<version>${central.publishing.maven.version}</version>
-				</plugin>
 			</plugins>
-	   </pluginManagement>
+	   	</pluginManagement>
+
 	</build>
 	
 </project>
