@@ -20,15 +20,19 @@ description: 根据 git 变更生成符合 Sa-Token 项目风格的 commit messa
 ```bash
 git status
 git diff --staged
+git diff
 ```
 
-若无 staged 变更，则用 `git diff` 查看工作区变更。
+**必须包含的变更范围**：
+- **staged 变更**：`git diff --staged`
+- **unstaged 变更**：若无 staged，则用 `git diff` 查看工作区修改
+- **未跟踪文件**：`git status` 中的 Untracked files 也要纳入分析，生成 commit message 时需一并考虑
 
-**注意新文件**：`git status` 中标记为 `Untracked files` 的新增文件也需要纳入分析，这些文件通常代表新增功能、新模块或新资源。
+若存在未跟踪的新增文件（如新 skill、新配置等），应在 message 中体现，或给出「包含全部变更」与「仅已修改文件」两种方案供用户选择。
 
 ### 第二步：分析变更类型
 
-根据变更内容（包括新增文件、修改文件、删除文件）选择 type 前缀：
+根据变更内容选择 type 前缀：
 
 | type | 适用场景 |
 |------|----------|
@@ -44,11 +48,6 @@ git diff --staged
 | memo | 备忘录、内部记录 |
 | revert | 回滚某次提交 |
 | AI | AI 创建的 skill、规则等 |
-
-**新增文件的处理**：
-- 新创建的未跟踪文件（`git status` 中显示为 `Untracked files`）必须纳入 commit message 的描述范围
-- 新增文件通常对应 `feat` 类型（新功能、新模块、新插件、新资源）
-- 示例场景：新增插件模块、新增配置文件、新增资源文件、新增文档、新增 skill 等
 
 ### 第三步：撰写描述
 
@@ -102,7 +101,6 @@ feat: 新增重复登录处理策略
 | 变更内容 | 示例输出 |
 |----------|----------|
 | 新增插件 | `feat: 添加 sa-token-jackson3 插件` |
-| 新增文件（未跟踪） | `feat: 新增 sign 模块配置类 SignConfig` |
 | 修复 bug | `fix: 修复 StpUtil.getLoginIdByTokenNotThinkFreeze 方法缺少 static 的问题` |
 | 性能优化 | `perf: 优化 StrFormatter 常量封装` |
 | 重构模块 | `refactor: 重构模块依赖层级` |
