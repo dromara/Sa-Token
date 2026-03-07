@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-starter</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</name>
+    <artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+	<description>sa-token springboot webmvc/reactor v2/v3/v4 common</description>
+
+	<dependencies>
+		
+		<!-- spring-boot-starter (optional) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+			<optional>true</optional>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- config (optional) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- SSO (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sso</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- OAuth2.0 (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-oauth2</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- API Key (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-apikey</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- API Sign (optional) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sign</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+	</dependencies>
+
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- 默认引入 sa-token springboot2 相关依赖版本定义，上层可以继续引入其它版本定义来覆盖本层，Maven 采用就近原则选择依赖版本 -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot2-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+</project>

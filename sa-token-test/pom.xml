@@ -21,11 +21,13 @@
 	<!-- 所有子模块 -->
     <modules>
         <!-- <module>sa-token-core-test</module> -->
+		<module>sa-token-easy-test</module>
 		<module>sa-token-springboot-test</module>
         <!-- <module>sa-token-springboot-integrate-test</module> -->
         <module>sa-token-jwt-test</module>
 		<module>sa-token-temp-jwt-test</module>
 		<module>sa-token-json-test</module>
+		<module>sa-token-jackson3-test</module>
 		<module>sa-token-serializer-test</module>
     </modules>
 
@@ -34,7 +36,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<version>2.5.12</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- config -->
@@ -44,6 +45,27 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot2-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- 不在这放一个这个，maven clean 一直报错，原因未知 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>2.7.18</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 	    <plugins>

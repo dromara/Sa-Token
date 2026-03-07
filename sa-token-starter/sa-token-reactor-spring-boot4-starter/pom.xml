@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-starter</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+
+	<name>sa-token-reactor-spring-boot4-starter</name>
+    <artifactId>sa-token-reactor-spring-boot4-starter</artifactId>
+	<description>springboot4 reactor integrate sa-token</description>
+	
+	<dependencies>
+
+		<!-- sa-token-spring-boot-reactor-v2v3v4-common -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-reactor-v2v3v4-common</artifactId>
+        </dependency>
+
+		<!-- sa-token-jackson3: JSON serialization for Spring Boot 4 (Jackson 3) -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jackson3</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+        <dependencies>
+
+			<!-- sa-token springboot4 相关依赖版本定义 -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot4-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

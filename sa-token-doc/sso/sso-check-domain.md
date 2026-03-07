@@ -13,7 +13,7 @@
 
 当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页：
 
-![sso-ticket-jc](https://oss.dev33.cn/sa-token/doc/sso/sso-ticket-jc.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-ticket-jc.png" alt="sso-ticket-jc">
 
 可以看到，代表着用户身份的 Ticket 码也显现到了 URL 之中，借此漏洞，攻击者完全可以构建一个URL将小红的 Ticket 码自动提交到攻击者自己的服务器，伪造小红身份登录网站
 
@@ -41,7 +41,7 @@ sa-token.sso-server.clients.so-client3.allow-url=http://sa-sso-client1.com:9003/
 
 再次访问上述链接：
 
-![sso-feifa-rf](https://oss.dev33.cn/sa-token/doc/sso/sso-feifa-rf.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-feifa-rf.png" alt="sso-feifa-rf">
 
 域名没有通过校验，拒绝授权！
 

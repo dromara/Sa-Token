@@ -44,7 +44,7 @@ public Object logoutByAlone() {
 7. 整体完成。
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso3-logout.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/sso/g3--sso3-logout.gif">加载动态演示图</button>
 
 
 这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文档步骤集成即可。以模式三 demo 为例：
@@ -76,19 +76,19 @@ public String index() {
 - [http://sa-sso-client2.com:9003/](http://sa-sso-client2.com:9003/)
 - [http://sa-sso-client3.com:9003/](http://sa-sso-client3.com:9003/)
 
-![sso-type3-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-client-index.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-type3-client-index.png" alt="sso-type3-client-index.png" />
 
 在任意一个 client 里，点击 **`[注销]`** 按钮，即可单点注销成功（打开另外两个client，刷新一下页面，登录态丢失）。
 
 <!-- ![sso-type3-slo.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo.png 's-w-sh') -->
 
-![sso-type3-slo-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo-index.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-type3-slo-index.png" alt="sso-type3-slo-index.png" />
 
 PS：这里我们为了方便演示，使用的是超链接跳页面的形式，正式项目中使用 Ajax 调用接口即可做到无刷单点登录退出。
 
 例如，我们使用 [Apifox 接口测试工具](https://www.apifox.cn/) 可以做到同样的效果：
 
-![sso-slo-apifox.png](https://oss.dev33.cn/sa-token/doc/sso/sso-slo-apifox.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-slo-apifox.png" alt="sso-slo-apifox.png" />
 
 
 

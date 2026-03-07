@@ -2,7 +2,7 @@
 
 所谓踢人下线，核心操作就是找到指定 `loginId` 对应的 `Token`，并设置其失效。
 
-![踢下线](https://oss.dev33.cn/sa-token/doc/kickout.png)
+<img src="/big-file/doc/use/kickout.png" alt="踢下线">
 
 --- 
 
@@ -27,7 +27,7 @@ StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
 - 踢人下线不会清除Token信息，而是将其打上特定标记，再次访问会提示：Token已被踢下线。
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--kickout.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/use/g3--kickout.gif">加载动态演示图</button>
 
 
 ### 3、顶人下线

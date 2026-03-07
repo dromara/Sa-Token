@@ -2,33 +2,35 @@
 	<img alt="logo" src="https://sa-token.cc/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.44.0</h1>
-<h5 align="center">开源、免费、轻量级 Java 权限认证框架，让鉴权变得简单、优雅！</h5>
+<h5 align="center">✨ 开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！</h5>
 <p align="center" class="badge-box">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
 	<a href="https://gitee.com/dromara/sa-token/members"><img src="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
-	<a href="https://gitcode.com/dromara/sa-token/stargazers"><img src="https://gitcode.com/dromara/Sa-Token/star/badge.svg"></a>
+	<a href="https://atomgit.com/dromara/sa-token/stargazers"><img src="https://atomgit.com/dromara/Sa-Token/star/badge.svg"></a>
 	<a href="https://github.com/dromara/sa-token/stargazers"><img src="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
-	<a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
 	<!-- <a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 
 ---
 
-## 前言：️️
+## 📝 前言：️️
 为了保证新同学不迷路，请允许我唠叨一下：无论您从何处看到本篇文章，最新开发文档永远在：[https://sa-token.cc](https://sa-token.cc)，
 建议收藏在浏览器书签，如果您已经身处本网站下，则请忽略此条说明。
 
 本文档将会尽力讲解每个功能的设计原因、应用场景，用心阅读文档，你学习到的将不止是 `Sa-Token` 框架本身，更是绝大多数场景下权限设计的最佳实践。
 
 
-## Sa-Token 介绍
+## 🛠️ Sa-Token 介绍
 
 **Sa-Token** 是一个轻量级 Java 权限认证框架，主要解决：**登录认证**、**权限认证**、**单点登录**、**OAuth2.0**、**分布式Session会话**、**微服务网关鉴权**
 等一系列权限相关问题。
 
-![sa-token-jss](https://oss.dev33.cn/sa-token/doc/home/sa-token-jss--tran.png)
+<!-- ![sa-token-jss](/big-file/index/intro/sa-token-jss--tran.png) -->
+
+<object class="sa-token-jss-img" data="/big-file/index/intro/sa-token-jss--tran--onclick.svg"></object>
 
 Sa-Token 旨在以简单、优雅的方式完成系统的权限认证部分，以登录认证为例，你只需要：
 
@@ -83,7 +85,7 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 当你受够 Shiro、SpringSecurity 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！
 
 
-## Sa-Token 功能一览
+## 🎉 Sa-Token 功能一览
 
 Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
@@ -127,10 +129,45 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 功能结构图：
 
-![sa-token-js](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/x/sa-token-js4.png 's-w')
+<img class="s-w" src="/big-file/index/intro/sa-token-js4.png" />
 
 
-## 开源仓库 Star 趋势
+## 📖❓ 疑问解答
+
+**1、Sa-Token 功能全不全？** 
+
+七年磨一剑：五大核心模块(登录、鉴权、SSO、OAuth2、微服务) + 众多实用插件 (短 token、jwt 集成、API 参数签名、API Key 秘钥授权...) 我们提供的不只是权限认证，我们提供的是一站式解决方案。
+
+
+**2、Sa-Token 好不好学？** 
+
+中文文档 + 中文代码注释 + 中文交流社区 + 大量实战案例博客 + 多个视频教程 + 大量优秀开源项目集成案例。
+
+
+**3、Sa-Token 用的人多不多？** 
+
+截止统计日 (2026-1-25) 起，Sa-Token 在：
+
+- Gitee 关注量达到 48627 Star，位列平台所有推荐项目排行榜第一名。
+- GitHub 关注量达到 18523 Star，是主要竞争框架 Spring Security 的 1.97 倍，Apache Shiro 的 4.19 倍。
+- 25+ 微信粉丝群 (500人)，8+ QQ粉丝群 (1000人 or 2000人) ，在线文档访问量月PV 20万+。
+
+这是众多开发者用脚投票的数据，相信这些数据比任何言语都能证明 Sa-Token 的热度。
+
+
+**4、Sa-Token 有哪些权威认证？** 
+
+曾获荣誉包括但不限于：Gitee GVP 最有价值开源项目、GitCode G-Star 优质开源项目、OSCHINA 2021 人气指数 TOP 30 开源项目、OSCHINA 2022 年度最火热中国开源项目社区之一、开放原子基金会2023快速成长开源项目、 Dromara 组织顶尖项目（之一）、可信开源社区共同体预备成员、所在开源社区 “Dromara” 荣获《2024中国互联网发展创新与投资大赛（开源）》二等奖。 Gitee High Star 计划项目(5000+star)。Gitee 2025年度开源项目 Web应用开发 Top 2。
+
+
+**5、Sa-Token 收费吗？** 
+
+Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永久免费开放。当然如果您有心赞助 Sa-Token，我们也不回避：[赞助链接](https://sa-token.cc/doc.html#/more/sa-token-donate)。
+我们将定期同步赞助者名单到在线文档展示。（您需要注意的一点是：该赞助仅为友情赞助，不提供任何商业交换）
+
+
+
+## 📈 开源仓库 Star 趋势
 
 <p class="un-dec-a-pre"></p>
 
@@ -138,15 +175,15 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 如果 Sa-Token 帮助到了您，希望您可以为其点上一个 `star`：
 [码云](https://gitee.com/dromara/sa-token)、
+[AtomGit](https://atomgit.com/dromara/sa-token)、
 [GitHub](https://github.com/dromara/sa-token)
 
 
-## 使用Sa-Token的开源项目 
+## 🚀 使用 Sa-Token 的开源项目 
 参考：[Sa-Token 生态](/more/link)
 
 
 
-## 交流群
+## 💬 交流群
 加入 Sa-Token 框架 QQ、微信讨论群：[点击加入](/more/join-group.md)
-
 

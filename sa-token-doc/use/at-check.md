@@ -17,12 +17,12 @@
 - `@SaCheckSign`：API 签名校验 —— 用于跨系统的 API 签名参数校验。
 - `@SaIgnore`：忽略校验 —— 表示被修饰的方法或类无需进行注解鉴权和路由拦截器鉴权。
 
-Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态<br>
-因此，为了使用注解鉴权，**你必须手动将 Sa-Token 的全局拦截器注册到你项目中**
+Sa-Token 使用全局拦截器完成注解鉴权功能，为了不为项目带来不必要的性能负担，拦截器默认处于关闭状态。
+因此，为了使用注解鉴权，<green>**你必须手动将 Sa-Token 的全局拦截器注册到你项目中**</green>。
 
 
 ### 1、注册拦截器
-以`SpringBoot2.0`为例，新建配置类`SaTokenConfigure.java`
+以 SpringBoot2 项目为例，新建配置类`SaTokenConfigure.java`
 
 ``` java
 @Configuration

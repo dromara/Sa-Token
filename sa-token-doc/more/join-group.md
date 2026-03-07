@@ -6,29 +6,32 @@
 
 ### 1、加入QQ交流群
 
-<!-- ![QQ群](https://oss.dev33.cn/sa-token/qr/qq-group-5-gsa.png ':size=180') -->
-
 <!-- QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)
  -->
  
 <!-- QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0) -->
-QQ交流群：823181187 [点击加入](https://qm.qq.com/q/EBIJVZBVGE) 
+QQ交流群：1081649142 [点击加入](https://qm.qq.com/q/SCAaZ6Ros2) 
 
 ### 2、加入微信交流群：
 
-<!-- ![微信群](https://oss.dev33.cn/sa-token/wx-qr-300.png ':size=180') -->
+<!-- <img class="s-w" src="/big-file/contact/wx-qr-300.png" style="width: 180px;" alt="微信群" /> -->
 
-![微信群](https://oss.dev33.cn/sa-token/qr/i-wx-qr2.png ':size=175')
+<img class="s-w" src="/big-file/contact/i-wx-qr2.jpg" style="width: 180px;" alt="微信群" />
 
-（扫码添加微信，备注：sa，邀您加入群聊）
+PS：扫码添加微信 (备注：sa)，邀您加入群聊。
 
 <br>
+
+
+<img class="s-w" src="/big-file/contact/show/wx-group-show3.png" style="max-width: 50%;" alt="微信群" />
+
 
 加入群聊的好处：
 - 第一时间收到框架更新通知。
 - 第一时间收到框架 bug 通知。
 - 第一时间收到新增开源案例通知。
-- 和众多大佬一起互相 (huá shuǐ) 交流 (mō yú)。
+- 和众多大佬一起互相 (huá shuǐ) 交流 (mō yú) 🖐️🐟️。
+
 
 
 ### 3、群规（碎碎念）：
@@ -67,5 +70,6 @@ QQ群聊号码：939849926
 （例如：xx开源项目作者集成了 sa-token，申请加入群聊），如果字数太多无法写完，也可在开源交流群里@管理员协助交流。
 
 
-
+### 5、Sa-Token 内容合作群
+专门为 Sa-Token 内容创作者们准备的交流群：[Sa-Token 内容合作群](/more/content-cooperation) 
 

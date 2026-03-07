@@ -1,0 +1,30 @@
+/* 水滴样式 */
+.water-drop {
+	position: fixed;
+	/* 改为fixed避免触发滚动条 */
+	width: 20px;
+	height: 28px;
+	border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+	transform: rotate(45deg);
+	z-index: 1550;
+	border: 2px solid rgba(0, 0, 0, 0.2);
+	/* 添加轮廓 */
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	/* 添加阴影增强视觉效果 */
+}
+
+/* 圆形扩散效果 div */
+.color-wave {
+	position: fixed;
+	border-radius: 50%;
+	transform: scale(0);
+	z-index: -1;
+	/* 降低z-index确保不遮挡内容 */
+	pointer-events: none;
+}
+
+/* 将页面主盒子设置为定位，这样就可以让水滴扩散的div 设置 z-index: 保持不覆盖 main-box 里的内容了 */
+.main-box{
+	position: relative;
+	/* z-index: 1; */
+}

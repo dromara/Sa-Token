@@ -15,7 +15,6 @@
  */
 package cn.dev33.satoken.application;
 
-import cn.dev33.satoken.fun.SaRetFunction;
 import cn.dev33.satoken.fun.SaRetGenericFunction;
 
 /**

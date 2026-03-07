@@ -51,7 +51,11 @@ window.$docsify.plugins = [].concat(subNavDraw, window.$docsify.plugins)
 // 滚动时设置一下左侧滚动条高度，不要超出可视区域 
 $(document).scroll(function(){
 	if(isOpenRightSubTitle) {
-		const offsetTop = $('.active-rep').get(0).offsetTop;
-		$('.sidebar').scrollTop(offsetTop - ($('.sidebar').height() / 2))
+		try{
+			const offsetTop = $('.active-rep').get(0).offsetTop;
+			$('.sidebar').scrollTop(offsetTop - ($('.sidebar').height() / 2))
+		} catch (e) {
+			// console.log(e);
+		}
 	}
 })

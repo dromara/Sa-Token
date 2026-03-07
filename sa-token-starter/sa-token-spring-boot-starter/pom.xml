@@ -36,14 +36,33 @@
 			<artifactId>sa-token-servlet</artifactId>
 		</dependency>
 		
-		<!-- sa-token-spring-boot-autoconfig -->
+		<!-- sa-token-spring-boot-webmvc-reactor-v2v3v4-common -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
+			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+		</dependency>
+		
+		<!-- sa-token-jackson: JSON serialization -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jackson</artifactId>
 		</dependency>
 		
 	</dependencies>
 
+	<dependencyManagement>
+		<dependencies>
 
+			<!-- sa-token springboot2 相关依赖版本定义 -->
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot2-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 
 </project>

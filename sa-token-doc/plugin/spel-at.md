@@ -132,14 +132,14 @@ public SaResult test11() {
 
 如果在书写 SpEL 表达式时需要代码提示：
 
-![sa-check-el-code-tips.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-check-el-code-tips.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-check-el-code-tips.png" alt="sa-check-el-code-tips.png" />
 
 可以在 idea 中安装 **SpEL Assistant** 插件，该插件由 `@ly-chn` 提供，允许为自定义注解书写 SpEL 表达式时增加代码提示功能，
 开源地址：[https://github.com/ly-chn/SpEL-Assistant](https://github.com/ly-chn/SpEL-Assistant)
 
 安装方式：直接在 idea 插件商店中搜索 “**SpEL Assistant**” 即可
 
-![sa-check-el-code-tips.png](https://oss.dev33.cn/sa-token/doc/plugin/sa-check-el-setup-plugin.png 's-w')
+<img class="s-w" src="/big-file/doc/plugin/sa-check-el-setup-plugin.png" alt="sa-check-el-code-tips.png" />
 
 
 <a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/more/SaCheckELController.java"

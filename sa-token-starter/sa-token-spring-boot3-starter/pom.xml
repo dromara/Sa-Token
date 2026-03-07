@@ -15,63 +15,37 @@
 	<name>sa-token-spring-boot3-starter</name>
     <artifactId>sa-token-spring-boot3-starter</artifactId>
 	<description>springboot3 integrate sa-token</description>
-
-    <properties>
-		<springboot3.version>3.0.1</springboot3.version>
-    </properties>
     
 	<dependencies>
-		<!-- spring-boot-starter-web -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		
-		<!-- config (optional) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		
-		<!-- sa-token-jakarta-servlet -->
+
+		<!-- sa-token-spring-boot-webmvc-v3v4-common -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jakarta-servlet</artifactId>
+			<artifactId>sa-token-spring-boot-webmvc-v3v4-common</artifactId>
 		</dependency>
 		
-		<!-- sa-token-spring-boot-autoconfig -->
+		<!-- sa-token-jackson: JSON serialization for Spring Boot 3 (Jackson 2.x) -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-autoconfig</artifactId>
+			<artifactId>sa-token-jackson</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-			
-			<!-- spring-boot-starter -->
-	        <dependency>
-	            <groupId>org.springframework.boot</groupId>
-	            <artifactId>spring-boot-starter</artifactId>
-				<version>${springboot3.version}</version>
-	        </dependency>
-			<!-- spring-boot-starter-web -->
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- sa-token springboot3 相关依赖版本定义 -->
 			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
-				<version>${springboot3.version}</version>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-spring-boot3-dependencies</artifactId>
+				<version>${revision}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
-			<!-- config (optional) -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-configuration-processor</artifactId>
-				<version>${springboot3.version}</version>
-			</dependency>
-			
-        </dependencies>
-    </dependencyManagement>
+
+		</dependencies>
+	</dependencyManagement>
 
 
 </project>

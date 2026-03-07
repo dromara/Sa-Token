@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>SSO-Server 平台首页</title>
+	</head>
+	<body>
+		<h2>SSO-Server 平台首页 (前后端分离模式) (平台中心模式)</h2>
+		<p>
+			<a href='sso-auth.html?client=sso-client3&redirect=http://sa-sso-client1.com:9003/sso/login?back=http://sa-sso-client1.com:9003/'
+				target='_blank'> 进入Client1系统 </a>
+		</p>
+		<p>
+			<a href='sso-auth.html?client=sso-client3&redirect=http://sa-sso-client2.com:9003/sso/login?back=http://sa-sso-client2.com:9003/'
+				target='_blank'> 进入Client2系统 </a>
+		</p>
+		<p>
+			<a href='sso-auth.html?client=sso-client3&redirect=http://sa-sso-client3.com:9003/sso/login?back=http://sa-sso-client3.com:9003/'
+				target='_blank'> 进入Client3系统 </a>
+		</p>
+		
+		<!-- scripts -->
+		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="./common.js"></script>
+		<script>
+			sa.ajax("/sso/isLogin", {}, function(res) {
+				if(res.data) {
+					// 已登录... 
+					console.log('已登录，开始操作...');
+				} else {
+					layer.msg('未登录，请先登录...')
+					setTimeout(function(){
+						location.href = './sso-auth.html';
+					}, 1000)
+				}
+			})
+		</script>
+	</body>
+</html>

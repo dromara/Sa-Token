@@ -1,6 +1,6 @@
-## sa-token-redisson-jackson2 
+## sa-token-redisson
 
-此扩展，不与生态绑定。可用于不同的生态。
+此扩展，不与生态绑定。可用于不同的生态（SpringBoot，Solon，JFinal等）。
 
 ### 1、例 solon 集成
 
@@ -50,7 +50,7 @@ public class SaTokenConfigure {
 	 * */
 	@Bean
 	public SaTokenDao saTokenDaoInit(RedissonClient redissonClient) {
-		return new SaTokenDaoRedissonJackson(redissonClient);
+		return new SaTokenDaoForRedisson(redissonClient);
 	}
 }
 ```
@@ -94,7 +94,7 @@ public class SaTokenConfigure {
 	 * */
 	@Bean
 	public SaTokenDao saTokenDaoInit(RedissonClient redissonClient) {
-		return new SaTokenDaoRedissonJackson(redissonClient);
+		return new SaTokenDaoForRedisson(redissonClient);
 	}
 }
 ```

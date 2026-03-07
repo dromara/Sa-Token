@@ -29,7 +29,7 @@
 所以第四步也将自动化，也就是单点登录的最终目的 —— 一次登录，处处通行。
 
 
-<button class="show-img" img-src="https://oss.dev33.cn/sa-token/doc/g/g3--sso2.gif">加载动态演示图</button>
+<button class="show-img" img-src="/big-file/doc/sso/g3--sso2.gif">加载动态演示图</button>
 
 
 下面我们按照步骤依次完成上述过程：
@@ -299,11 +299,11 @@ public class SaSso2ClientApplication {
 
 （注：先前版本文档测试demo端口号为9001，后为了方便区分三种模式改为了9002，因此出现文字描述与截图端口号不一致情况，请注意甄别，后不再赘述）
 
-![sso-client-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-client-index.png" alt="sso-client-index.png" />
 
 (2) 首次打开，提示当前未登录，我们点击 **`登录`** 按钮，页面会被重定向到登录中心
 
-![sso-server-auth.png](https://oss.dev33.cn/sa-token/doc/sso/sso-server-auth--v43.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-server-auth--v43.png" alt="sso-server-auth.png" />
 
 (3) SSO-Server提示我们在认证中心尚未登录，我们点击 **`登录`** 按钮进行模拟登录
 
@@ -311,21 +311,21 @@ public class SaSso2ClientApplication {
 
 (4) SSO-Server认证中心登录成功，系统重定向回 client
 
-![sso-client-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client-index-ok.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-client-index-ok.png" alt="sso-client-index-ok.png" />
 
 (5) 页面被重定向至`Client`端首页，并提示登录成功，至此，`Client1`应用已单点登录成功！ 
 
 (6) 我们再次访问`Client2`：[http://sa-sso-client2.com:9002/](http://sa-sso-client2.com:9002/)
 
-![sso-client2-index.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client2-index.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-client2-index.png" alt="sso-client2-index.png" />
 
 (7) 提示未登录，我们点击 **`登录`** 按钮，会直接提示登录成功
 
-![sso-client2-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client2-index-ok.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-client2-index-ok.png" alt="sso-client2-index-ok.png" />
 
 (8) 同样的方式，我们打开`Client3`，也可以直接登录成功：[http://sa-sso-client3.com:9002/](http://sa-sso-client3.com:9002/)
 
-![sso-client3-index-ok.png](https://oss.dev33.cn/sa-token/doc/sso/sso-client3-index-ok.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-client3-index-ok.png" alt="sso-client3-index-ok.png" />
 
 至此，测试完毕！
 
@@ -333,7 +333,7 @@ public class SaSso2ClientApplication {
 
 我们可以通过 F12控制台 Network 跟踪整个过程
 
-![sso-genzong](https://oss.dev33.cn/sa-token/doc/sso/sso-genzong.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-genzong.png" alt="sso-genzong" />
 
 <!-- 
 ### 5、运行官方仓库 
@@ -347,7 +347,7 @@ public class SaSso2ClientApplication {
 > 然后访问：
 > - [http://sa-sso-client1.com:9002/](http://sa-sso-client1.com:9002/)
 
-![sso-server-login-hua](https://oss.dev33.cn/sa-token/doc/sso/sso-server-login-hua.png 's-w-sh')
+<img class="s-w-sh" src="/big-file/doc/sso/sso-server-login-hua.png" alt="sso-server-login-hua" />
 
 默认测试密码：`sa / 123456`，其余流程保持不变 
  -->
