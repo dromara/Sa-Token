@@ -66,6 +66,17 @@
 </dependency>
 ```
 
+<!------------- tab:LoveQQ-Framework 集成  ------------->
+参考：[LoveQQ-Framework](https://gitee.com/kfyty725/loveqq-framework)
+``` xml
+<!-- Sa-Token 整合 LoveQQ-Framework, 在线文档：https://sa-token.cc -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-loveqq-boot-starter</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
+
 <!------------- tab:Quarkus 集成  ------------->
 参考：[quarkus-sa-token](https://github.com/quarkiverse/quarkus-sa-token)
 ``` xml
@@ -129,6 +140,11 @@ implementation 'cn.dev33:sa-token-jfinal-plugin:${sa.top.version}'
 <!-- tab:Jboot 集成  -->
 ``` gradle
 implementation 'cn.dev33:sa-token-jboot-plugin:${sa.top.version}'
+```
+
+<!-- tab:LoveQQ-Framework 集成  -->
+``` gradle
+implementation 'cn.dev33:sa-token-loveqq-boot-starter:${sa.top.version}'
 ```
 
 <!-- tab:Quarkus 集成  -->
