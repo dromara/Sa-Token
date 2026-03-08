@@ -56,6 +56,21 @@
                 <version>${springboot4.version}</version>
             </dependency>
 
+            <!-- spring-boot-starter-data-redis (for sa-token-alone-redis-by-spring-boot4) -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${springboot4.version}</version>
+            </dependency>
+
+            <!-- redis pool -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>2.12.1</version>
+                <optional>true</optional>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 	

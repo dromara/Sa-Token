@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-demo-alone-redis-sb4</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- SpringBoot 4 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.3</version>
+		<relativePath/>
+	</parent>
+	
+	<!-- 定义 Sa-Token 版本号 -->
+	<properties>
+		<sa-token.version>1.45.0</sa-token.version>
+	</properties>
+
+	<dependencies>
+
+		<!-- SpringBoot 4 依赖：webmvc 替代 deprecated 的 starter-web，aspectj 替代 starter-aop -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aspectj</artifactId>
+		</dependency>
+
+		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot4-starter</artifactId>
+            <version>${sa-token.version}</version>
+        </dependency>
+        
+		<!-- Sa-Token整合 Redis -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-template</artifactId>
+            <version>${sa-token.version}</version>
+        </dependency>
+
+		<!-- Sa-Token整合 Redis -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-template-jdk-serializer</artifactId>
+			<version>${sa-token.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 提供Redis连接池 -->
+		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+		<!-- Sa-Token插件：权限缓存与业务缓存分离（Spring Boot 4） -->
+		<dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-alone-redis-by-spring-boot4</artifactId>
+            <version>${sa-token.version}</version>
+        </dependency>
+
+		<!-- @ConfigurationProperties -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+	</dependencies>
+
+</project>

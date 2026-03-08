@@ -48,6 +48,7 @@
         <module>sa-token-redis-template-jdk-serializer</module>
         <module>sa-token-redis-jackson</module>
         <module>sa-token-alone-redis</module>
+        <module>sa-token-alone-redis-by-spring-boot4</module>
         <module>sa-token-spring-aop</module>
         <module>sa-token-spring-el</module>
         <module>sa-token-grpc</module>
