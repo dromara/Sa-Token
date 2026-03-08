@@ -12,7 +12,7 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-redis-jdk-serializer</name>
+	<name>sa-token-redis-template-jdk-serializer</name>
     <artifactId>sa-token-redis-template-jdk-serializer</artifactId>
 	<description>sa-token integrate RedisTemplate （jdk-serializer）</description>
 

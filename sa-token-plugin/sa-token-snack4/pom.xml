@@ -10,7 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>sa-token-snack4</name>
     <artifactId>sa-token-snack4</artifactId>
+    <description>sa-token integrate Snack4</description>
 
     <dependencies>
         <dependency>

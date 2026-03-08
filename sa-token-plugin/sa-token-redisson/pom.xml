@@ -12,9 +12,9 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-redisson-jackson2</name>
+	<name>sa-token-redisson</name>
     <artifactId>sa-token-redisson</artifactId>
-	<description>sa-token integrate redisson (to jackson)</description>
+	<description>sa-token integrate Redisson</description>
 
 	<!-- parent 里的版本适合与 springboot2 兼容；其它更新的框架里版本容易冲突 -->
 	<!--<properties>

@@ -10,10 +10,11 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <packaging>jar</packaging>
 
+    <name>sa-token-grpc</name>
     <artifactId>sa-token-grpc</artifactId>
+    <description>sa-token-grpc</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

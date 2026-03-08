@@ -12,7 +12,7 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-redisson-jackson</name>
+	<name>sa-token-redisson-spring-boot-starter</name>
     <artifactId>sa-token-redisson-spring-boot-starter</artifactId>
 	<description>sa-token integrate redisson (to jackson)</description>
 
