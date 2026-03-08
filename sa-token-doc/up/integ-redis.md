@@ -56,7 +56,7 @@ Redis 的集成有多种方式，缓存的方案也不止 Redis 一种，Sa-Toke
 框架的默认序列化层调用为 `String 序列化` -> `JSON 序列化`。要自定义数据序列化方式你可以从这两方面入手：
 
 
-#### 自定义 JSON 序列化方案：
+#### 2.1、自定义 JSON 序列化方案：
 
 先说较为底层的 `JSON 序列化`，如果你引入的是 sa-token-spring-boot-starter 集成包 (含SpringBoot3) ，那么框架将会自动引入 Jackson 框架作为 JSON 序列化方案。
 
@@ -100,8 +100,9 @@ Gradle 参考：`implementation 'cn.dev33:sa-token-snack3:${sa.top.version}'`
 
 <!---------------------------- tabs:end ------------------------------>
 
+完整插件列表请参考：[JSON 序列化扩展](/plugin/json-extend)
 
-#### 自定义 String 序列化方案：
+#### 2.2、自定义 String 序列化方案：
 
 或者你想更直接点，不使用 json 序列化方案，也是可以的。你可以直接自定义数据的 String 序列化方案：
 
