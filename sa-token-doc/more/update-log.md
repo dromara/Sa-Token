@@ -1,5 +1,79 @@
 # 更新日志 
 
+### v1.45.0 @2026-3-8
+- core：
+	- 新增：新增重复登录处理策略，当同一账号不允许多客户端同时登录时支持选择踢人下线或拦截本次登录。  **[重要]** merge: [pr 349](https://gitee.com/dromara/sa-token/pulls/349)
+	- 修复：修复 `StpUtil.getLoginIdByTokenNotThinkFreeze` 方法缺少 `static` 修饰符的问题。
+	- 优化：优化路由匹配 pattern 缓存算法，消除魔法值。merge: [pr 907](https://github.com/dromara/Sa-Token/pulls/907)
+	- 优化：移除冗余导包。
+- 插件：
+	- 新增：新增 `sa-token-jackson3` 插件，用于 Jackson 3 的 JSON 操作。  **[重要]**
+	- 新增：新增 `sa-token-jackson3-test` 单元测试。
+	- 新增：新增 `sa-token-snack4` 插件。  **[重要]** merge: [pr 356](https://gitee.com/dromara/sa-token/pulls/356)
+	- 修复：修复 Dubbo 上下文清理问题。 merge: [pr 889](https://github.com/dromara/Sa-Token/pulls/889)
+	- 新增：loveqq-framework 版本更新。merge: [pr 351](https://gitee.com/dromara/sa-token/pulls/351)
+- starter：
+	- 新增：新增 `sa-token-spring-boot4-starter` 集成包，支持 Spring Boot 4 环境集成。  **[重要]**
+	- 新增：新增 `sa-token-reactor-spring-boot4-starter` 集成包，支持 Reactor + Spring Boot 4 环境集成。  **[重要]**
+	- 新增：新增 `sa-token-demo-springboot4`、`sa-token-demo-webflux-springboot4` 示例。
+	- 新增：新增 Spring Boot 4 整合 demo 示例。
+- 重构：
+	- 重构：重构 `sa-token-dependencies` 相关模块，优化依赖关系。  **[重要]**
+	- 重构：重构 Spring Boot WebMVC/Reactor 相关集成包，优化依赖关系。 **[重要]**
+	- 优化：优化整体模块依赖关系。
+- Solon：
+	- 优化：`sa-token-solon-plugin` 优化 Gateway 接口的处理，避免使用路由接口。merge: [pr 348](https://gitee.com/dromara/sa-token/pulls/348)
+- SSO：
+	- 新增：sso-server 前后端分离模式下 平台中心模式 demo 示例。
+	- 修复：SSO 模块 msgType 参数说明、API 说明修正。
+	- 新增：SSO 模块视频讲解链接：B站 王清江唷 SSO篇（29集）。  **[重要]**
+	- 补全：SSO 模块内置消息处理器相关文档。
+	- 新增：文档为 `sa-token-sso` 模块定义 STS 协议。  **[重要]**
+- OAuth2：
+	- 修复：修复 `sa-token-oauth2` 组件使用 `sa-token-fastjson2` 序列化导致的类型转换问题。merge: [pr 355](https://gitee.com/dromara/sa-token/pulls/355)
+	- 优化：修改 `ClientIdSecretModel` 的读取构建逻辑。merge: [pr 346](https://gitee.com/dromara/sa-token/pulls/346)
+- 文档：
+	- 同步：同步公众号文章列表、博客列表、赞助者名单、企业登记案例。
+	- 新增：新增 Sa-Token 内容合作者群。  **[重要]**
+	- 新增：新增《Gitee 2025 年度开源项目 Web 应用开发 Top 2》证书展示。
+	- 新增：新增赞赏码展示、文档首页 stars 对比图。
+	- 新增：新增解决跨域专题文章。
+	- 新增：增加微信群聊信息展示。
+	- 优化：优化框架 Slogan。
+	- 优化：优化 README、案例库展示。
+	- 优化：文档主题切换增加水滴特效，调整主题色块顺序。
+	- 优化：文档优化 [登录认证]、[权限认证]、[路由拦截鉴权] 篇。
+	- 优化：补全全局策略说明、数据结构说明。
+	- 新增：目录树增加专门栏目记录项目架构设计。
+	- 优化：功能结构图增加点击事件跳转到对应功能文档。
+	- 优化：子服务外网隔离章节增加示意图。
+	- 优化：Same-Token 同源系统认证图示说明。
+	- 修复：更换 GitCode logo 为 AtomGit。
+	- 修复：更换 QQ 群链接、微信群聊展示图。
+	- 修复：文档图片地址更换为本地文件。
+	- 修复：错别字修复。
+	- 修复：maven-pull.md 文档，解决父子项目依赖下载问题。
+	- 新增：Maven 父子项目无法下载依赖的问题解决方案。merge: [pr 358](https://gitee.com/dromara/sa-token/pulls/358)
+	- 修复：订正文档错别字。merge: [pr 354](https://gitee.com/dromara/sa-token/pulls/354)
+	- 修复：文档内代码示例修正。merge: [pr 347](https://gitee.com/dromara/sa-token/pulls/347)
+- AI: 
+	- 新增：新增 organize-update-log SKILL，用于格式化整理版本更新日志信息。
+	- 新增：新增 commit-message SKILL，用于整理 git commit 日志信息。
+	- 新增：新增 upgrade-version SKILL，用于统一升级修改版本号。
+- 其它：
+	- 新增：readme 增加快问快答区域。
+	- 新增：增加忽略 .vscode 目录。
+	- 优化：注释优化。
+	- 新增：新增 `skills/remove-redundancy-import` 技能，用于检查 Java 类中无效冗余导包并移除。
+	- 重构：备忘录重构为专门的文件夹。
+	- 重构：调整项目发布配置至 Maven Central Portal。merge: [pr 792](https://github.com/dromara/Sa-Token/pull/792)
+	- 优化：部分构建配置升级到最新版。
+
+
+
+
+
+
 ### v1.44.0 @2025-6-7
 
 - 修复：修复 sso-server 前后端分离示例无法正常登录的问题。
