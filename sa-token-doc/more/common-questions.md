@@ -625,9 +625,10 @@ Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUti
 在 sa-token-core 核心包中，Sa-Token 底层不能确认最终运行的 web 容器，所以抽象了 `SaTokenContext` 接口，对接不同容器时需要注入不同的实现，
 通常这个注入工作都是框架自动完成的，你只需要按照文档开始部分集成相应的依赖即可。例如：
 
-- 你要在 Springboot2.x 中使用 Sa-Token，就引入：`sa-token-spring-boot-starter`。
-- 你要在 Springboot3.x 中使用 Sa-Token，就引入：`sa-token-spring-boot3-starter`。
-- 你要在基于 webflux 架构的网关中使用 Sa-Token，就引入：`sa-token-reactor-spring-boot-starter`。
+- 如果你使用的 `SpringBoot 2.x`，请引入 `sa-token-spring-boot-starter`。
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
+- 如果你在基于 WebFlux 架构的网关中使用 Sa-Token，请引入 `sa-token-reactor-spring-boot-starter`（3.x 用 `sa-token-reactor-spring-boot3-starter`，4.x 用 `sa-token-reactor-spring-boot4-starter`）。
 - 你要在 Solon 中使用 Sa-Token，就引入：`sa-token-solon-plugin`。
 - 等等等等……
 
@@ -642,7 +643,7 @@ Sa-Token 的部分 API 只能在 Web 上下文中才能调用，例如：`StpUti
 	- 如果引入了 `spring-boot-starter-webflux` 就是WebFlux环境。
 	- 什么？你说你两个都引入了？那你的项目能启动成功吗？
 4. 如果是 WebFlux 环境而且正确引入了依赖，依然报错，**请检查是否注册了 SaReactorFilter 全局过滤器，在 WebFlux 下这一步是必须的**，具体还是请参考上面的 [ 在WebFlux环境集成 ] 章节。
-5. 需要仔细注意，如果你使用的是 Springboot3.x 版本，就不要错误的引入 `sa-token-spring-boot-starter`，需要引入的是 `sa-token-spring-boot3-starter`，不然就会导致框架报错。
+5. 需要仔细注意，如果你使用的是 `SpringBoot 3.x` 或 `SpringBoot 4.x`，请分别引入 `sa-token-spring-boot3-starter` 或 `sa-token-spring-boot4-starter`，不要错误引入 `sa-token-spring-boot-starter`，不然会导致框架报错。
 6. 如果你的项目开启了全局懒加载(spring.main.lazy-initialization=true)后，能启动项目，但是访问接口报异常，请直接参考：[Q：开启了全局懒加载后，能启动项目，但是访问接口报未能获取有效的上下文处理器](/more/common-questions?id=q：开启了全局懒加载后，能启动项目，但是访问接口报未能获取有效的上下文处理器)
 7. 如果以上步骤排除无误后依然报错，请直接提 issue 或者加入QQ群求助。
 

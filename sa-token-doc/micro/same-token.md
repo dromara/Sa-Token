@@ -28,7 +28,6 @@ Sa-Token提供两种解决方案：
 在网关处引入的依赖为（此处以 SpringCloud Gateway 为例）：
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
-注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` xml 
 <!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc -->
 <dependency>
@@ -48,8 +47,10 @@ Sa-Token提供两种解决方案：
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-reactor-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-reactor-spring-boot4-starter`。
+
 <!-------- tab:Gradle 方式 -------->
-注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
 ``` gradle
 // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
@@ -58,12 +59,13 @@ implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-reactor-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-reactor-spring-boot4-starter`。
 <!---------------------------- tabs:end ------------------------------>
 
 在下游子服务引入的依赖为：
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
-注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 ``` xml 
 <!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc -->
 <dependency>
@@ -83,8 +85,10 @@ implementation 'org.apache.commons:commons-pool2'
     <artifactId>commons-pool2</artifactId>
 </dependency>
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
+
 <!-------- tab:Gradle 方式 -------->
-注：如果你使用的是 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
 ``` gradle
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
@@ -93,6 +97,8 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
 <!---------------------------- tabs:end ------------------------------>
 
 ##### 2、网关处添加Same-Token

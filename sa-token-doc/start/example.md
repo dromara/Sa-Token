@@ -15,9 +15,6 @@
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
-
-注：如果你使用的是 SpringBoot 3.x，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
-
 ``` xml 
 <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
 <dependency>
@@ -26,15 +23,16 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
 
 <!-------- tab:Gradle 方式 -------->
-
-注：如果你使用的是 SpringBoot 3.x，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
-
 ``` gradle
 // Sa-Token 权限认证，在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
 <!---------------------------- tabs:end ---------------------------->
 
 

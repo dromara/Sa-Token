@@ -19,7 +19,8 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-spring-boot-starter` 修改为 `sa-token-spring-boot3-starter` 即可。
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
 
 <!------------- tab:WebFlux环境 （Reactor）  ------------->
 注：如果你使用的框架基于 Reactor 模型构建（WebFlux、SpringCloud Gateway 等），请引入此包
@@ -31,7 +32,8 @@
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-注：如果你使用的 `SpringBoot 3.x`，只需要将 `sa-token-reactor-spring-boot-starter` 修改为 `sa-token-reactor-spring-boot3-starter` 即可。
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-reactor-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-reactor-spring-boot4-starter`。
 
 <!------------- tab:Solon 集成  ------------->
 参考：[Solon官网](https://solon.noear.org/)
@@ -121,11 +123,15 @@
 ``` gradle
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-spring-boot4-starter`。
 
 <!-- tab:WebFlux环境 （Reactor）  -->
 ``` gradle
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
+- 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-reactor-spring-boot3-starter`。
+- 如果你使用的 `SpringBoot 4.x`，请引入 `sa-token-reactor-spring-boot4-starter`。
 
 <!-- tab:Solon 集成  -->
 ``` gradle
