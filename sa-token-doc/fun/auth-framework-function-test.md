@@ -1621,10 +1621,10 @@ if(localStorage.token) {
 
 pom.xml 引入依赖
 ``` xml
-<!-- Sa-Token整合 Redis (使用jackson序列化方式) -->
+<!-- Sa-Token 整合 RedisTemplate -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-template</artifactId>
 	<version>${sa-token.version}</version>
 </dependency>
 

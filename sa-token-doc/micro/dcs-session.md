@@ -37,10 +37,10 @@
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+<!-- Sa-Token 整合 RedisTemplate -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-template</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
@@ -50,8 +50,8 @@
 ```
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 整合 Redis （使用 jackson 序列化方式）
-implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
+// Sa-Token 整合 RedisTemplate
+implementation 'cn.dev33:sa-token-redis-template:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 ```
 <!---------------------------- tabs:end ------------------------------>

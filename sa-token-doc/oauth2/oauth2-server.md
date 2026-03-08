@@ -30,11 +30,11 @@
 	<version>${sa.top.version}</version>
 </dependency>
 
-<!-- Sa-Token 整合 Redis (可选) -->
+<!-- Sa-Token 整合 RedisTemplate (可选) -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
-	<version>${sa-token.version}</version>
+	<artifactId>sa-token-redis-template</artifactId>
+	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
 	<groupId>org.apache.commons</groupId>
@@ -49,8 +49,8 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 // Sa-Token OAuth2.0 模块
 implementation 'cn.dev33:sa-token-oauth2:${sa.top.version}'
 
-// Sa-Token 整合 Redis (可选)
-implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
+// Sa-Token 整合 RedisTemplate (可选)
+implementation 'cn.dev33:sa-token-redis-template:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 ```
 <!---------------------------- tabs:end ---------------------------->

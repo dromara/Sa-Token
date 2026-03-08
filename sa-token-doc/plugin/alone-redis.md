@@ -160,7 +160,5 @@ public class TestController {
 
 ### 4、注意点
 目前 Sa-Token-Alone-Redis 仅对以下插件有 Redis 分离效果：
-- sa-token-redis
-- sa-token-redis-jackson
-- sa-token-redis-fastjson
-- sa-token-redis-fastjson2
+- sa-token-redis-template
+- sa-token-redis-template-jdk-serializer

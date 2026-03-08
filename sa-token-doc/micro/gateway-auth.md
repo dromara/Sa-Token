@@ -24,10 +24,10 @@
     <version>${sa.top.version}</version>
 </dependency>
 
-<!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+<!-- Sa-Token 整合 RedisTemplate -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-template</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 <dependency>
@@ -43,8 +43,8 @@
 // Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 
-// Sa-Token 整合 Redis （使用 jackson 序列化方式）
-implementation 'cn.dev33:sa-token-redis-jackson:${sa.top.version}'
+// Sa-Token 整合 RedisTemplate
+implementation 'cn.dev33:sa-token-redis-template:${sa.top.version}'
 implementation 'org.apache.commons:commons-pool2'
 ```
 - 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-reactor-spring-boot3-starter`。

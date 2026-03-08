@@ -20,16 +20,16 @@ Sa-token默认将会话数据保存在内存中，此模式读写速度最快，
 优点：兼容性好，缺点：Session序列化后基本不可读，对开发者来讲等同于乱码
 
 
-### 2. Sa-Token 整合 Redis (使用jackson序列化方式)
+### 2. Sa-Token 整合 RedisTemplate
 ``` xml 
-<!-- Sa-Token整合redis (使用jackson序列化方式) -->
+<!-- Sa-Token 整合 RedisTemplate -->
 <dependency>
 	<groupId>cn.dev33</groupId>
-	<artifactId>sa-token-redis-jackson</artifactId>
+	<artifactId>sa-token-redis-template</artifactId>
 	<version>${sa.top.version}</version>
 </dependency>
 ```
-优点：Session序列化后可读性强，可灵活手动修改，缺点：兼容性稍差
+优点：Session 序列化后可读性强（默认 JSON 格式），可灵活手动修改
 
 
 <br>
