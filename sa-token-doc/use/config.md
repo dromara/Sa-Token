@@ -124,7 +124,8 @@ public class SaTokenConfigure {
 | dynamicActiveTimeout	| Boolean	| false		| 是否启用动态 activeTimeout 功能，如不需要请设置为 false，节省缓存请求次数	|
 | isConcurrent			| Boolean	| true		| 是否允许同一账号并发登录 （为 true 时允许一起登录，为 false 时新登录挤掉旧登录）															|
 | isShare				| Boolean	| false		| 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token，login 时提供了 Extra 数据后，即使配置了为 true 也不能复用旧 Token，必须创建新 Token） 	|
-| replacedRange	| SaReplacedRange	| CURR_DEVICE_TYPE		| 当 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端) |
+| replacedLoginExitMode	| SaReplacedLoginExitMode	| OLD_DEVICE	| 在 isConcurrent=false 时，决定新旧设备谁将放弃会话 (OLD_DEVICE=旧设备下线，新设备登录成功, NEW_DEVICE=新设备登录失败，旧设备维持在线)	|
+| replacedRange	| SaReplacedRange	| CURR_DEVICE_TYPE		| 在 isConcurrent=false 时，顶人下线的范围 (CURR_DEVICE_TYPE=当前指定的设备类型端, ALL_DEVICE_TYPE=所有设备类型端) |
 | maxLoginCount			| int		| 12		| 同一账号最大登录数量，-1代表不限 （只有在 `isConcurrent=true`，`isShare=false` 时此配置才有效），[详解](/use/config?id=配置项详解：maxlogincount)	|
 | overflowLogoutMode	| SaLogoutMode	| LOGOUT	| 溢出 maxLoginCount 的客户端，将以何种方式注销下线   (LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线)			|
 | maxTryTimes			| int		| 12		| 在每次创建 Token 时的最高循环次数，用于保证 Token 唯一性（-1=不循环重试，直接使用）			|
