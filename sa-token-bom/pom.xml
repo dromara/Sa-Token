@@ -20,6 +20,32 @@
         <central.publishing.maven.version>0.10.0</central.publishing.maven.version>
     </properties>
 
+    <!-- 开源协议 apache 2.0 -->
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <!-- 仓库信息 -->
+    <scm>
+        <tag>master</tag>
+        <url>https://github.com/dromara/sa-token.git</url>
+        <connection>scm:git:https://github.com/dromara/sa-token.git</connection>
+        <developerConnection>scm:git:https://github.com/dromara/sa-token.git</developerConnection>
+    </scm>
+
+    <!-- 作者信息 -->
+    <developers>
+        <developer>
+            <name>click33</name>
+            <email>2393584716@qq.com</email>
+        </developer>
+    </developers>
+
     <dependencyManagement>
         <dependencies>
             <!-- sa-token 核心 -->
@@ -116,6 +142,11 @@
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-alone-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-alone-redis-by-spring-boot4</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

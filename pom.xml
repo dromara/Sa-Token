@@ -59,7 +59,7 @@
 	<!-- 作者信息 -->
 	<developers>
 		<developer>
-			<name>shengzhang</name>
+			<name>click33</name>
 			<email>2393584716@qq.com</email>
 		</developer>
 	</developers>
@@ -90,6 +90,24 @@
 	<!-- 项目构建 -->
 	<build>
 		<plugins>
+
+			<!-- Source -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.4.0</version>
+				<configuration>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<!-- 源码编译 -->
 			<plugin>
