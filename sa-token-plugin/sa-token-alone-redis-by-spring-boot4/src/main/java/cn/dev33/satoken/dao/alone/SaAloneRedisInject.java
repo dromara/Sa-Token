@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  *
  *
  * @author click33
- * @since 1.21.0
+ * @since 1.45.0
  */
 @Configuration
 public class SaAloneRedisInject {
