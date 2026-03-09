@@ -25,7 +25,7 @@ public class CheckAccountHandler implements SaAnnotationHandlerInterface<CheckAc
 
     // 每次请求校验注解时，会执行的方法
     @Override
-    public void checkMethod(CheckAccount at, AnnotatedElement element) {
+    public void checkMethod(CheckAccount at, AnnotatedElement method) {
         // 获取前端请求提交的参数
         String name = SaHolder.getRequest().getParamNotNull("name");
         String pwd = SaHolder.getRequest().getParamNotNull("pwd");
