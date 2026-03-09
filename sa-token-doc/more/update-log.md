@@ -60,11 +60,11 @@
 	- 新增：新增 organize-update-log SKILL，用于格式化整理版本更新日志信息。
 	- 新增：新增 commit-message SKILL，用于整理 git commit 日志信息。
 	- 新增：新增 upgrade-version SKILL，用于统一升级修改版本号。
+	- 新增：新增 remove-redundancy-import SKILL，用于检查 Java 类中无效冗余导包并移除。
 - 其它：
 	- 新增：readme 增加快问快答区域。
 	- 新增：增加忽略 .vscode 目录。
 	- 优化：注释优化。
-	- 新增：新增 `skills/remove-redundancy-import` 技能，用于检查 Java 类中无效冗余导包并移除。
 	- 重构：备忘录重构为专门的文件夹。
 	- 重构：调整项目发布配置至 Maven Central Portal。merge: [pr 792](https://github.com/dromara/Sa-Token/pull/792)
 	- 优化：部分构建配置升级到最新版。

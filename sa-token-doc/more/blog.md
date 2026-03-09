@@ -5,6 +5,24 @@
 
 --- 
 
+- [[ 公众号 ] Kaleido-AI教程（九）基于Sa-Token实现多账户认证体系 ](https://mp.weixin.qq.com/s/ihW1sM8DvQJS-1ZKhFr9KQ) （2026-3-8）
+
+- [[ 公众号 ] Sa-Token 的 token-prefix 和 token-style，到底谁管谁？ ](https://mp.weixin.qq.com/s/1_PaPxvEui-16Is6Urw3CA) （2026-3-7）
+
+- [[ 公众号 ] JAVA：Spring Boot3 集成 Sa-Token 轻量级权限认证 ](https://mp.weixin.qq.com/s/cjk9ad9tj397Bd0hAyCsyA) （2026-3-6）
+
+- [[ 公众号 ] Sa-Token(二)之从入门到实战——一篇文章助你真正了解掌握Sa-Token ](https://mp.weixin.qq.com/s/9-CLoSJZBrfTF2tul-M8Ww) （2026-3-6）
+
+- [[ 公众号 ] 不用 Cookie，鉴权照样稳 ](https://mp.weixin.qq.com/s/k8DC-GiYYPbofGDD_4jlPQ) （2026-3-6）
+
+- [[ CSDN ] Sa-Token登录策略全解析：从单地登录到同端互斥，这些配置项你都知道吗？ ](https://blog.csdn.net/weixin_29284885/article/details/158675177) （2026-3-5）
+
+- [[ 公众号 ] 18.6k vs 9.5k Star！若依认证该选谁？ ](https://mp.weixin.qq.com/s/BVFWWPiYloa1nuZ4MZ8XZg) （2026-3-4）
+
+- [[ 公众号 ] SaToken 支持使用 JSON body验签 ](https://mp.weixin.qq.com/s/0Rr9PuDBUJwaEolhtJxBwA) （2026-3-3）
+
+- [[ 公众号 ] 明明接了 Redis，重启后会话还是丢了？ ](https://mp.weixin.qq.com/s/-O1qwR0I30wngurGo-qOuw) （2026-3-3）
+
 - [[ CSDN ] JAVA：Spring Boot3 集成 Sa-Token 轻量级权限认证](https://shdxhl.blog.csdn.net/article/details/157695326) （2026-2-27）
 
 - [[ 公众号 ] 苦 Spring Security 久矣？这款霸榜 Gitee 的权限框架，把优雅做到了极致](https://mp.weixin.qq.com/s/CzBPkeV6jWZ7mpA_6JH09g) （2026-2-27）
