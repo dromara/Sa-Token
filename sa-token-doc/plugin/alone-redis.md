@@ -17,10 +17,11 @@ Sa-Token默认的Redis集成方式会把权限数据和业务缓存放在一起�
 
 ### 1、首先引入Alone-Redis依赖 
 
-!--
-> [!NOTE| label:Spring Boot 4 用户]
+
+> [!WARNING| label:Spring Boot 4 用户]
 > 若使用 Spring Boot 4.x，请引入 `sa-token-alone-redis-by-spring-boot4` 替代 `sa-token-alone-redis`。
--->
+> 注：当前版本下(v1.45.0)，此包尚未发布到 Maven 中央仓库，如需使用请下载源码手动自行打包或直接将源码复制到你的项目中进行使用。
+
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
