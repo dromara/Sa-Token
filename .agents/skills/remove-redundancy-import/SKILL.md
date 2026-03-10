@@ -25,9 +25,9 @@ description: 检查 Java 类中未被引用的冗余 import 并移除。先输�
 
 ```bash
 # 在项目根目录执行
-python .cursor/skills/remove-redundancy-import/scan_redundant_imports.py
+python .agents/skills/remove-redundancy-import/scan_redundant_imports.py
 # 或指定扫描根路径
-python .cursor/skills/remove-redundancy-import/scan_redundant_imports.py .
+python .agents/skills/remove-redundancy-import/scan_redundant_imports.py .
 ```
 
 脚本输出格式：`文件路径 | 冗余import1; import2 | 数量`，末尾两行为 `TOTAL_FILES:N` 和 `TOTAL_IMPORTS:M`。

@@ -1,6 +1,6 @@
-# Cursor Agent Skills
+# Agent Skills
 
-本目录存放用于辅助 Sa-Token 项目开发的 Cursor Agent Skills。这些 skills 封装了项目特定的知识和操作规范，可在对话中直接调用。
+本目录存放用于辅助 Sa-Token 项目开发的 Agent Skills。这些 skills 封装了项目特定的知识和操作规范，可在对话中直接调用。
 
 ## Skill 列表
 
@@ -27,7 +27,7 @@
 
 ## 快速使用
 
-在 Cursor 对话中，直接描述你的需求即可自动触发相应 skill：
+在 AI 对话中，直接描述你的需求即可自动触发相应 skill：
 
 ```
 用户：帮我生成 commit message
@@ -52,7 +52,7 @@
 每个 skill 应创建独立的子目录，结构如下：
 
 ```
-.cursor/skills/
+.agents/skills/
 ├── README.md              # 本文件
 └── skill-name/            # skill 目录（小写，短横线分隔）
     ├── SKILL.md           # skill 主文件（必须包含 YAML 元数据和使用说明）

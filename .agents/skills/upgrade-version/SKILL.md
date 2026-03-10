@@ -52,7 +52,7 @@ description: 将 Sa-Token 项目版本号升级到指定新版本。每次调用
 
 以下为历史记录或示例，**保持原样**：
 
-- `.cursor/skills/` 下的示例（format-reference.md、SKILL.md 等）
+- `.agents/skills/` 下的示例（format-reference.md、SKILL.md 等）
 - `MEMO/` 下的历史备忘录
 - `sa-token-core/.../*.java` 中的 `@since X.Y.Z`（表示 API 引入版本，不随发布升级）
 - `sa-token-doc/more/update-log.md`：更新日志应**新增**新版本条目，而非修改旧条目
