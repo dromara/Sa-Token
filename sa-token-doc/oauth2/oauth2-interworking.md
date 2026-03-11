@@ -43,13 +43,6 @@ public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 > 应该根据自己的架构合理分析是否应该整合数据互通。
 
 
-**疑问：数据互通后，两个 token 的过期策略是什么？**
-
-会话 token 由 `sa-token.timeout` 决定，`access_token` 由 `sa-token.oauth2-server.access-token-timeout` 决定。
-
-数据互通只是将会话 token 拷贝了一份作为 access_token 使用，动作完成之后两者不再有任何联系。
-
-
 
 ### OAuth2-Client 数据互通
 除了Server端，Client端也可以打通 `access_token` 与 `satoken` 会话。做法是在 Client 端拿到 `access_token` 后进行登录时，使用 `SaLoginParameter` 预定登录生成的 Token 值 
@@ -64,6 +57,13 @@ StpUtil.login(uid, new SaLoginParameter().setToken(access_token));
 // 3. 其它代码...
 ```
 
+
+
+**疑问：数据互通后，两个 token 的过期策略是什么？**
+
+会话 token 由 `sa-token.timeout` 决定，`access_token` 由 `sa-token.oauth2-server.access-token-timeout` 决定。
+
+数据互通只是将 token 拷贝一份进行复用，动作完成之后两者不再有任何联系。
 
 
 

@@ -14,3 +14,12 @@
 - 对框架新增特性功能但比较复杂，会延后几个版本制定相应的计划后进行开发。
 - 与框架设计理念不太相符，或超出权限认证范畴，将会视需求人数决定是否开发。
 
+
+### 其它反馈途径
+除了问卷提交，你还可以从以下渠道向我们提交反馈：
+- Gitee：[issue 提交](https://gitee.com/dromara/sa-token/issues)  
+- GitHub：[issue 提交](https://github.com/dromara/sa-token/issues)  
+- AtomGit：[issue 提交](https://atomgit.com/dromara/sa-token/issues)
+- 交流群：[加群链接](/more/join-group)
+
+请大胆提交、大胆咨询，请在交流群中大胆艾特我们，请不要有任何害羞，就算我们不实现，你也不会损失什么，对吧！
