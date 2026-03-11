@@ -12,7 +12,7 @@
 	
 	<!-- 项目介绍 -->
 	<name>sa-token</name>
-	<description>A Java Web lightweight authority authentication framework, comprehensive function, easy to use</description>
+	<description>An open-source, free, and one-stop Java authentication framework that makes authentication simple and elegant!</description>
 	<url>https://github.com/dromara/sa-token</url>
 
 	

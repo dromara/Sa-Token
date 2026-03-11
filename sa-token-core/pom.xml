@@ -13,7 +13,7 @@
 
 	<name>sa-token-core</name>
     <artifactId>sa-token-core</artifactId>
-	<description>A Java Web lightweight authority authentication framework, comprehensive function, easy to use</description>
+	<description>An open-source, free, and one-stop Java authentication framework that makes authentication simple and elegant!</description>
 
 	<dependencies>
 		<!-- Zero Dependence -->
