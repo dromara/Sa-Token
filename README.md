@@ -44,7 +44,7 @@ Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心�
 </dependency>
 ```
 
-除了支持 SpringBoot2、Sa-Token 还为 SpringBoot3、Solon、JFinal 等常见 Web 框架提供集成包，做到真正的开箱即用。
+除了支持 SpringBoot2、Sa-Token 还为 SpringBoot3/4、Solon、JFinal 等常见 Web 框架提供集成包，做到真正的开箱即用。
 
 
 <details>
