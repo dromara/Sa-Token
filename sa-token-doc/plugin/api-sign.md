@@ -300,7 +300,7 @@ public SaResult addMoney(long userId, long money, long timestamp, String nonce, 
 @RequestMapping("addMoney")
 public SaResult addMoney(long userId, long money, long timestamp, String nonce, String sign) {
 
-	// 1、检查 timestamp 是否超出允许的范围 （重点一：此处需要取绝对值）
+	// 1、检查 timestamp 是否超出允许的范围 （⚠️ 重点一：此处需要取绝对值）
 	long timestampDisparity = Math.abs(System.currentTimeMillis() - timestamp);
 	if(timestampDisparity > 1000 * 60 * 15) {
 		return SaResult.error("timestamp 时间差超出允许的范围，请求无效");
@@ -312,7 +312,7 @@ public SaResult addMoney(long userId, long money, long timestamp, String nonce, 
 	// 3、验证签名
 	// 代码同上，不再赘述 
 
-	// 4、将 nonce 记入缓存，防止重复使用（重点二：此处需要将 ttl 设定为允许 timestamp 时间差的值 x 2 ）
+	// 4、将 nonce 记入缓存，防止重复使用（⚠️ 重点二：此处需要将 ttl 设定为允许 timestamp 时间差的值 x 2 ）
 	CacheUtil.set("nonce_" + nonce, "1", (1000 * 60 * 15) * 2);
 
 	// 5、业务代码 ...

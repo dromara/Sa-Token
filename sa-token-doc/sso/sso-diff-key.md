@@ -140,11 +140,11 @@ public SaResult getData(String apiType, String loginId) {
     System.out.println("apiType=" + apiType);
     System.out.println("loginId=" + loginId);
 
-    // ↓↓↓ 重点代码 ↓↓↓
+    // ↓↓↓ ⚠️ 重点代码 ↓↓↓
     // 校验签名：只有拥有正确秘钥发起的请求才能通过校验  
     String client = SaHolder.getRequest().getHeader("client");
     SaSsoServerProcessor.instance.ssoServerTemplate.getSignTemplate(client).checkRequest(SaHolder.getRequest());
-    // ↑↑↑ 重点代码 ↑↑↑
+    // ↑↑↑ ⚠️ 重点代码 ↑↑↑
 
     // 自定义返回结果（模拟）
     return SaResult.ok()

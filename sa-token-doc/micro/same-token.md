@@ -191,7 +191,7 @@ public class FeignInterceptor implements RequestInterceptor {
  */
 @FeignClient(
 		name = "sp-home", 				// 服务名称 
-		configuration = FeignInterceptor.class,		// 请求拦截器 （关键代码）
+		configuration = FeignInterceptor.class,		// 请求拦截器 （⚠️ 关键代码）
 		fallbackFactory = SpCfgInterfaceFallback.class	// 服务降级处理 
 		)	
 public interface SpCfgInterface {

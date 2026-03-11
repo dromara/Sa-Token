@@ -115,7 +115,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
             return new SaClientModel()
 					.setClientId("xxxx")  
 					.setClientSecret("xxxx")   
-					.setSubjectId("1000001")   // 关键代码：主体 id (可选)
+					.setSubjectId("1000001")   // ⚠️ 关键代码：主体 id (可选)
 					// ....
             ;
         }

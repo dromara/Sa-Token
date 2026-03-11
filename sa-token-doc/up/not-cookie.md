@@ -56,7 +56,7 @@ uni.request({
 	url: 'https://www.example.com/request', // 仅为示例，并非真实接口地址。
 	header: {
 		"content-type": "application/x-www-form-urlencoded",
-		"satoken": uni.getStorageSync('tokenValue')		// 关键代码, 注意参数名字是 satoken 
+		"satoken": uni.getStorageSync('tokenValue')		// ⚠️ 关键代码, 注意参数名字是 satoken 
 	},
 	success: (res) => {
 		console.log(res.data);	
