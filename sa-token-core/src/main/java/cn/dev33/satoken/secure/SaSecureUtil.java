@@ -365,7 +365,7 @@ public class SaSecureUtil {
 
 	/**
 	 * RSA私钥解密
-	 * @param privateKeyString 公钥
+	 * @param privateKeyString 私钥
 	 * @param content 已加密内容
 	 * @return 解密后内容
 	 */
