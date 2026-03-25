@@ -23,13 +23,13 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Pattern;
 
 /**
  * Sa-Token 内部工具类
@@ -41,6 +41,22 @@ public class SaFoxUtil {
 
 	private SaFoxUtil() {
 	}
+
+	/**
+	 * 验证URL的正则表达式
+	 */
+	public static String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]";
+
+	/**
+	 * 预编译的 URL 正则 Pattern，避免每次调用 isUrl() 时重复编译，提升性能
+	 */
+	private static final Pattern URL_PATTERN = Pattern.compile(
+			"(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");
+
+	/**
+	 * 线程安全的日期时间格式化器（yyyy-MM-dd HH:mm:ss），DateTimeFormatter 是不可变对象可安全复用
+	 */
+	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 	/**
 	 * 打印 Sa-Token 版本字符画
@@ -170,7 +186,7 @@ public class SaFoxUtil {
 	 * @return 格式化后的时间
 	 */
 	public static String formatDate(Date date){
-		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+		return date.toInstant().atZone(ZoneId.systemDefault()).format(DATE_TIME_FORMATTER);
 	}
 
 	/**
@@ -179,7 +195,7 @@ public class SaFoxUtil {
 	 * @return 格式化后的时间
 	 */
 	public static String formatDate(ZonedDateTime zonedDateTime) {
-		return zonedDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return zonedDateTime.format(DATE_TIME_FORMATTER);
 	}
 
 	/**
@@ -570,7 +586,7 @@ public class SaFoxUtil {
 		if(isEmpty(str)) {
 			return false;
 		}
-        return str.toLowerCase().matches(URL_REGEX);
+        return URL_PATTERN.matcher(str.toLowerCase()).matches();
 	}
 
 	/**
