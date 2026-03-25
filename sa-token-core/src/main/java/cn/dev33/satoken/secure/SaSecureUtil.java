@@ -65,7 +65,7 @@ public class SaSecureUtil {
 		str = (str == null ? "" : str);
 		char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 		try {
-			byte[] btInput = str.getBytes();
+			byte[] btInput = str.getBytes(StandardCharsets.UTF_8);
 			MessageDigest mdInst = MessageDigest.getInstance("MD5");
 			mdInst.update(btInput);
 			byte[] md = mdInst.digest();
