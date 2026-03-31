@@ -16,9 +16,6 @@ public class SaSsoClientNoSdkApplication {
 		System.out.println("测试访问应用端三: http://sa-sso-client3.com:9004");
 		System.out.println("测试前需要根据官网文档修改hosts文件，测试账号密码：sa / 123456");
 		System.out.println();
-
-		System.err.println("自 v1.43.0 版本起，Sa-Token SSO 不再维护 NoSdk 示例，此项目仅做留档");
-		System.err.println("如您需要非 Sa-Token 技术栈项目接入 SSO-Server 认证中心，请参考 ReSdk 版本示例");
 	}
 
 }

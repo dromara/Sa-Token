@@ -12,14 +12,13 @@ NoSdk 模式（不使用SDK）：通过 http 工具类调用接口的方式来�
 
 参考 demo：[sa-token-demo-sso3-client-nosdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client-nosdk)
 
-该 demo 假设应用端没有使用任何“权限认证框架”，使用最基础的 ServletAPI 进行会话管理，模拟了 `/sso/login`、 `/sso/logout`、 `/sso/logoutCall` 三个接口的处理逻辑。
+该 demo 假设应用端没有使用任何“权限认证框架”，使用最基础的 ServletAPI 进行会话管理，模拟了 `/sso/login`、 `/sso/logout`、 `/sso/pushC` 三个接口的处理逻辑。
 
-> [!WARNING| label:NoSdk 示例不再主维护] 
-> 基于以下原因：
-> - 1、NoSdk demo 相当于通过 http 工具类再次重写了一遍 Sa-Token SSO 模块代码，繁琐且冗余。
-> - 2、重写的代码无法拥有 Sa-Token SSO 模块全部能力，仅能完成基本对接，算是一个简化版 SDK。
-> 
-> 自 v1.43.0 版本起，不再主维护 NoSdk 模式，仓库示例仅做留档参考，大家可以转为 ReSdk 模式。
+> [!INFO| label:NoSdk 模式优缺点] 
+> - 1、支持客户端使用任意技术栈。
+> - 2、代码简单易懂，流程直观清晰。
+> - 3、用 http 工具类模拟 Sa-Token SSO 内部实现，样版代码较多，略显冗余。
+
 
 
 ### ReSdk 模式
@@ -28,11 +27,10 @@ ReSdk 模式（重写SDK部分方法）：通过重写框架关键步骤点，�
 
 参考 demo：[sa-token-demo-sso3-client-resdk](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client-resdk)
 
-> [!INFO| label:ReSdk 模式优点] 
-> - 1、依然支持客户端使用任意技术栈。
+> [!INFO| label:ReSdk 模式优缺点] 
+> - 1、支持客户端使用任意技术栈。
 > - 2、仅重写少量部分关键代码，即可完成对接。几乎可以得到 Sa-Token SSO 模块全量能力。
-
-建议新项目首选 ReSdk 模式作为参考。
+> - 3、此模式需要对 Sa-Token SSO 内部实现较为熟悉，才可以驾驭。
 
 
 

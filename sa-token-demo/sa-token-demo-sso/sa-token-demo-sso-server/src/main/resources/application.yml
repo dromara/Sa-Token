@@ -47,6 +47,18 @@ sa-token:
                 push-url: http://sa-sso-client1.com:9003/sso/pushC
                 # 接口调用秘钥 (如果不配置则使用全局默认秘钥)
                 secret-key: SSO-C3-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
+            # 应用 sso-client3-nosdk：采用 NoSdk 模式对接 (不依赖 Sa-Token 客户端 SDK，手动实现协议)
+            sso-client3-nosdk:
+                # 应用名称
+                client: sso-client3-nosdk
+                # 允许授权地址
+                allow-url: "*"
+                # 是否接收消息推送
+                is-push: true
+                # 消息推送地址
+                push-url: http://sa-sso-client1.com:9004/sso/pushC
+                # 接口调用秘钥 (如果不配置则使用全局默认秘钥)
+                secret-key: SSO-C3-NoSdk-kQwIOrYvnXmSDkwEiFngrKidMcdrgKor
             # 应用 sso-client3-resdk：采用 ReSdk 模式对接
             sso-client3-resdk:
                 # 应用名称
