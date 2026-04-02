@@ -1504,6 +1504,13 @@ var donateList = [
 		"date": "2026-03-18"
 	},
 	{
+		"name": "Ma.chine_M（微信打赏）",
+		"link": "",
+		"money": 20.00,
+		"msg": '喝杯咖啡！',
+		"date": "2026-03-20"
+	},
+	{
 		"name": "四云（赞赏码）",
 		"link": "",
 		"money": 200,
