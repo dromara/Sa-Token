@@ -28,6 +28,8 @@
 
 - [[ 公众号 ] 告别Spring Security！Sa-Token一行代码搞定登录+权限（有料有源码）](https://mp.weixin.qq.com/s/ciTXQTSCeihR6axa8MxiJg) （2026-3-20）
 
+- [[ 公众号 ] 面试官：你能手写一个 SSO 单点登录流程吗？](https://mp.weixin.qq.com/s/abhYTjpshCQo4Tbyv71GYw) （2026-3-19）
+
 - [[ 公众号 ] 面试官："你们项目用的什么权限框架，为什么这么选?"，用了Sa-Token，上手快开箱即用。。。](https://mp.weixin.qq.com/s/kojBf_Qo5a6giBlU9Y18vg) （2026-3-18）
 
 - [[ PHP中文网 ] 怎样在Java中搭建Sa-Token权限认证环境_Java安全新选型](https://www.php.cn/faq/2211433.html) （2026-3-16）
