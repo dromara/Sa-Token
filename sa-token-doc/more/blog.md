@@ -5,6 +5,39 @@
 
 --- 
 
+
+- [[ 公众号 ] 登录不是接口调用，而是一套账号生命周期策略](https://mp.weixin.qq.com/s/pcGcTmU6zu3GDsnpNXZ88A) （2026-3-27）
+
+- [[ 公众号 ] Sa-Token：轻量级 Java 权限认证框架推荐](https://mp.weixin.qq.com/s/qTLYmx2otKcd46j_0iBP1A) （2026-3-27）
+
+- [[ 公众号 ] Sa-Token 记住我机制，讲透 Cookie 和 Token](https://mp.weixin.qq.com/s/dMekJRRRhOgGPLpEvPmh1g) （2026-3-26）
+
+- [[ 公众号 ] 多端登录不是功能，是账号策略](https://mp.weixin.qq.com/s/HNWo8qoE-RRiylnMaBMqeg) （2026-3-25）
+
+- [[ 公众号 ] 16、Spring Boot 3.2.5 整合 Sa-Token 1.44.0 完整教程](https://mp.weixin.qq.com/s/A_LqOzTHJcZGNqTBxT8hKA) （2026-3-25）
+
+- [[ 公众号 ] 多租户 SaaS 别再乱答了！数据隔离就这三层，有github代码](https://mp.weixin.qq.com/s/AcoEOB_RzgY227RwaulHsA) （2026-3-25）
+
+- [[ 公众号 ] 七年磨一剑，一款开源、免费、一站式 java 权限认证框架，让鉴权变得简单](https://mp.weixin.qq.com/s/YQW4r5BmfHjUY-TBm9FDng) （2026-3-24）
+
+- [[ 公众号 ] 告别繁琐配置：Sa-Token 如何让 Java 鉴权回归"一行代码"的优雅](https://mp.weixin.qq.com/s/sWw7JU91Bk8gHf0Z3CHfdQ) （2026-3-22）
+
+- [[ 公众号 ] Sa-Token 整合用户认证授权（完整实战指南）](https://mp.weixin.qq.com/s/8yiu-ij0Vk8dAWw3qxAGpg) （2026-3-22）
+
+- [[ 公众号 ] 微服务鉴权不用愁！Sa-Token 网关统一鉴权 + 分布式Session 实战+源码](https://mp.weixin.qq.com/s/9WW67naQQTRtTCb_cHg8LA) （2026-3-21）
+
+- [[ 公众号 ] 告别Spring Security！Sa-Token一行代码搞定登录+权限（有料有源码）](https://mp.weixin.qq.com/s/ciTXQTSCeihR6axa8MxiJg) （2026-3-20）
+
+- [[ 公众号 ] 面试官："你们项目用的什么权限框架，为什么这么选?"，用了Sa-Token，上手快开箱即用。。。](https://mp.weixin.qq.com/s/kojBf_Qo5a6giBlU9Y18vg) （2026-3-18）
+
+- [[ PHP中文网 ] 怎样在Java中搭建Sa-Token权限认证环境_Java安全新选型](https://www.php.cn/faq/2211433.html) （2026-3-16）
+
+- [[ 公众号 ] SpringBoot3 + Sa-Token 双Token登录认证实战（避坑版）](https://mp.weixin.qq.com/s/rOZ8LvghG64ZSTsIokiUhA) （2026-3-12）
+
+- [[ 公众号 ] Sa-Token 多端会话管控解析：构建统一身份认证秩序，解决多端登录难题](https://mp.weixin.qq.com/s/mpoOxgz4jDPcFBoGHVhoiw) （2026-3-11）
+
+- [[ 公众号 ] 诈尸级更新？停更9个月，Sa-Token 1.45.0 携 Spring Boot 4.x 适配回来了！](https://mp.weixin.qq.com/s/Wj83wEbbYoUQU0M7IgfVnA) （2026-3-10）
+
 - [[ 公众号 ] Kaleido-AI教程（九）基于Sa-Token实现多账户认证体系 ](https://mp.weixin.qq.com/s/ihW1sM8DvQJS-1ZKhFr9KQ) （2026-3-8）
 
 - [[ 公众号 ] Sa-Token 的 token-prefix 和 token-style，到底谁管谁？ ](https://mp.weixin.qq.com/s/1_PaPxvEui-16Is6Urw3CA) （2026-3-7）
