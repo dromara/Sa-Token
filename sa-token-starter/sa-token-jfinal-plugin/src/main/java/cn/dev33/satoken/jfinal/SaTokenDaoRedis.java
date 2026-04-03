@@ -22,10 +22,11 @@ import com.jfinal.plugin.redis.Cache;
 import com.jfinal.plugin.redis.Redis;
 import com.jfinal.plugin.redis.serializer.ISerializer;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class SaTokenDaoRedis implements SaTokenDaoBySessionFollowObject {
 
@@ -240,8 +241,23 @@ public class SaTokenDaoRedis implements SaTokenDaoBySessionFollowObject {
      */
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
-        Set<String> keys = redis.keys(prefix + "*" + keyword + "*");
-        List<String> list = new ArrayList<>(keys);
+        // 使用 SCAN 命令替代 KEYS，避免在大数据量时阻塞 Redis
+        List<String> list = new ArrayList<>();
+        String pattern = prefix + "*" + keyword + "*";
+        String cursor = ScanParams.SCAN_POINTER_START;
+        ScanParams params = new ScanParams().match(pattern).count(1000);
+        
+        Jedis jedis = getJedis();
+        try {
+            do {
+                ScanResult<String> result = jedis.scan(cursor, params);
+                list.addAll(result.getResult());
+                cursor = result.getCursor();
+            } while (!cursor.equals(ScanParams.SCAN_POINTER_START));
+        } finally {
+            close(jedis);
+        }
+        
         return SaFoxUtil.searchList(list, start, size, sortType);
     }
 
