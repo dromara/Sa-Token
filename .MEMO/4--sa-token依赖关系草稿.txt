@@ -1,0 +1,38 @@
+
+
+	sa-token-bom				定义 sa-token 所有自身依赖的版本 
+	sa-token-dependencies			定义 sa-token 所有第三方依赖版本，并继承 sa-token-bom
+	sa-token-spring-boot2-dependencies		定义 spring-boot2 相关依赖版本 
+	sa-token-spring-boot3-dependencies		定义 spring-boot3 相关依赖版本 
+	sa-token-spring-boot4-dependencies		定义 spring-boot4 相关依赖版本 
+	
+	sa-token-parent		父级 pom.xml  引入  sa-token-dependencies 
+
+
+
+	sa-token-spring-boot-webmvc-reactor-v2v3v4-common		import  sa-token-spring-boot2-dependencies
+
+	sa-token-spring-boot-starter  				import  	sa-token-spring-boot2-dependencies
+	sa-token-reactor-spring-boot-starter  		import  	sa-token-spring-boot2-dependencies
+	sa-token-spring-boot-webmvc-v3v4-common 	import  	sa-token-spring-boot3-dependencies
+		引入 	sa-token-spring-boot-webmvc-reactor-v2v3v4-common
+	
+	
+	sa-token-spring-boot3-starter  		import  	sa-token-spring-boot3-dependencies
+	sa-token-spring-boot4-starter  		import  	sa-token-spring-boot4-dependencies
+		引入 	sa-token-spring-boot-webmvc-v3v4-common 
+		
+		
+		
+		
+A 定义了 <dependencyManagement>，
+
+B通过如下方式引入 A：
+        <dependencies>
+			<dependency>
+				A
+			</dependency>
+        </dependencies>
+
+那么 A 里定义的 <dependencyManagement>，在 B 里生效吗？
+不生效
