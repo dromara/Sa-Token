@@ -484,7 +484,9 @@ body {
 
 
 /* 帮助按钮 */
-.help-btn{transition: all 0.5s; text-align: center; border: 1px #42b983 solid; background-color: rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 13px; color: #42b983; line-height: 40px;}
+.help-btn{transition: all 0.5s; text-align: center; background-color: rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 13px; line-height: 40px;}
+.help-btn{ margin-top: 20px; border: 1px #42b983 solid; color: green;}
+.help-btn a{ text-decoration: none !important; color: inherit; height: 100%; width: 100%; display: inline-block; }
 .help-btn:hover{box-shadow: 0 0 20px #D1EEE1 !important;}
 .xiaozhushou-intro p{line-height: 14px;}
 
