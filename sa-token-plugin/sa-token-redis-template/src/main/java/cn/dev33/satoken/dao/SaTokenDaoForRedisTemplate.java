@@ -24,7 +24,9 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.ScanOptions;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -152,23 +154,22 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	@Override
 	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
 		// 使用 SCAN 命令替代 KEYS，避免在大数据量时阻塞 Redis
-		List<String> list = new ArrayList<>();
+		Set<String> allKeysSet = new HashSet<>();
 		String pattern = prefix + "*" + keyword + "*";
-		
+
 		// 使用 RedisConnection 的 scan 方法进行非阻塞遍历
 		stringRedisTemplate.execute((RedisCallback<Void>) connection -> {
 			ScanOptions options = ScanOptions.scanOptions().match(pattern).count(1000).build();
 			try (org.springframework.data.redis.core.Cursor<byte[]> cursor = connection.scan(options)) {
 				while (cursor.hasNext()) {
-					list.add(new String(cursor.next()));
+					allKeysSet.add(new String(cursor.next()));
 				}
 			} catch (Exception e) {
 				throw new RuntimeException("Redis scan error", e);
 			}
 			return null;
 		});
-		
-		return SaFoxUtil.searchList(list, start, size, sortType);
+		return SaFoxUtil.searchList(new ArrayList<>(allKeysSet), start, size, sortType);
 	}
 	
 	
