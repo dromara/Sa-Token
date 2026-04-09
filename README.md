@@ -245,6 +245,17 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 还有更多优秀开源案例无法逐一展示，请参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
 
 
+### 🌍 其它语言版本
+
+Sa-Token 社区成员贡献了多语言实现版本：
+
+- Rust 版本：[https://gitee.com/sa-tokens/sa-token-rust](https://gitee.com/sa-tokens/sa-token-rust)
+- Go 版本：[https://gitee.com/sa-tokens/sa-token-go](https://gitee.com/sa-tokens/sa-token-go)
+- PHP 版本：[https://gitee.com/jinan-jimeng-network_0/real-token](https://gitee.com/jinan-jimeng-network_0/real-token)
+
+我们诚邀对上述语言较为熟练的开发者，一起建设相关版本。🤝
+
+
 ### 🔗 友情链接
 - [[ OkHttps ]](https://gitee.com/ejlchina-zhxu/okhttps)：轻量级 http 通信框架，API无比优雅，支持 WebSocket、Stomp 协议
 - [[ Forest ]](https://gitee.com/dromara/forest)：声明式与编程式双修，让天下没有难以发送的 HTTP 请求
