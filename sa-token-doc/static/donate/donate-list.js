@@ -1525,4 +1525,12 @@ var donateList = [
 		"date": "2026-03-29"
 	},
 	
+	{
+		"name": "Right（赞赏码）",
+		"link": "",
+		"money": 1.0,
+		"msg": '',
+		"date": "2026-04-09"
+	},
+	
 ]

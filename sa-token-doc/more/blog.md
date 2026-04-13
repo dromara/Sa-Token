@@ -6,11 +6,31 @@
 --- 
 
 
+- [[ 公众号 ] Sa-Token + WebSocket 鉴权：别让"长连接"成了安全漏洞！](https://mp.weixin.qq.com/s/m34rq63GHgZMxvzkJYRy2w) （2026-4-10）
+
+- [[ 公众号 ] 使用Sa-Token解决WebSocket握手身份认证](https://mp.weixin.qq.com/s/ieCtD3-SW748k5Ri-iSmkg) （2026-4-10）
+
+- [[ 公众号 ] 苦 Spring Security 久矣？这款霸榜 Gitee 的权限框架，把优雅做到了极致](https://mp.weixin.qq.com/s/yJDy7o6ZnNLEvn_9hHah4Q) （2026-4-10）
+
+- [[ 公众号 ] Sa-Token 真的好用：告别 Spring Security 的"配置地狱"，真香！](https://mp.weixin.qq.com/s/-uuj2CxGLRtwg55RxwKwDA) （2026-4-9）
+
+- [[ 公众号 ] 别只会 MD5！API 签名这几种才是大厂标配（Sa-Token 实战版）](https://mp.weixin.qq.com/s/hxMQCJrraGLaZk8JpU_XGA) （2026-4-9）
+
+- [[ 公众号 ] 基于 Sa-Token 搭建大模型开放平台：生产级 API Key 认证与限流实战](https://mp.weixin.qq.com/s/AXiOnEI_mbhOCtv3ZezcQQ) （2026-4-7）
+
+- [[ 公众号 ] 一行代码搞定鉴权！1.8万Star的Sa-Token，Java权限认证框架](https://mp.weixin.qq.com/s/nFrVbDcRMVOAuxNMmqyWkw) （2026-4-6）
+
+- [[ 公众号 ] 一文彻底搞懂 Sa-Token safe-auth：它不是"再登录一次"，而是给危险接口加一道门](https://mp.weixin.qq.com/s/zdhZh9LPwcF0wXF7bFzNHA) （2026-4-3）
+
+- [[ 公众号 ] Sa-Token：一行代码搞定登录权限、优雅“踢人”，有github源码，开箱即可踢，优雅！](https://mp.weixin.qq.com/s/M6tXTCsHZr-ONwfn3v9JeA) （2026-4-2）
+
 - [[ 公众号 ] 登录不是接口调用，而是一套账号生命周期策略](https://mp.weixin.qq.com/s/pcGcTmU6zu3GDsnpNXZ88A) （2026-3-27）
 
 - [[ 公众号 ] Sa-Token：轻量级 Java 权限认证框架推荐](https://mp.weixin.qq.com/s/qTLYmx2otKcd46j_0iBP1A) （2026-3-27）
 
 - [[ 公众号 ] Sa-Token 记住我机制，讲透 Cookie 和 Token](https://mp.weixin.qq.com/s/dMekJRRRhOgGPLpEvPmh1g) （2026-3-26）
+
+- [[ 公众号 ] Sa-Token + JWT：强强联合，打造前后端分离认证的最佳实践](https://mp.weixin.qq.com/s/NMmMcHRxPEthV6FRBlDxDg) （2026-3-26）
 
 - [[ 公众号 ] 多端登录不是功能，是账号策略](https://mp.weixin.qq.com/s/HNWo8qoE-RRiylnMaBMqeg) （2026-3-25）
 
