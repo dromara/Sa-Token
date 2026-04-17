@@ -21,6 +21,7 @@ import org.redisson.api.RBatch;
 import org.redisson.api.RBucket;
 import org.redisson.api.RBucketAsync;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.StringCodec;
 
 import java.time.Duration;
 import java.util.List;
@@ -51,7 +52,7 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 	 */
 	@Override
 	public String get(String key) {
-		RBucket<String> rBucket = redissonClient.getBucket(key);
+		RBucket<String> rBucket = redissonClient.getBucket(key, StringCodec.INSTANCE);
 		return rBucket.get();
 	}
 
