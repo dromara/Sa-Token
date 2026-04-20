@@ -6,6 +6,20 @@
 --- 
 
 
+- [[ 公众号 ] SpringBoot + JWT + Sa-Token：认证鉴权双框架对比，安全登录与权限控制最佳实践](https://mp.weixin.qq.com/s/NoO5wd-B1Jl4exlLYX8y2g) （2026-4-18）
+
+- [[ 公众号 ] 别再盲目上 SSO 了！Sa-Token 多端跳转的「作弊级」解法](https://mp.weixin.qq.com/s/x828OMUIjQMf7RqiwGIgcw) （2026-4-17）
+
+- [[ CSDN ] Sa-Token vs Spring Security权限认证对比：Ruoyi-vue-plus项目该选哪个？](https://blog.csdn.net/weixin_42563415/article/details/160171603) （2026-4-15）
+
+- [[ 公众号 ] 真相：别再复制粘贴了！Sa-Token 全链路权限架构，一次落地所有项目](https://mp.weixin.qq.com/s/3Msd1UNA0GgY81fioDDahQ) （2026-4-14）
+
+- [[ 公众号 ] 基于 Sa-Token 搭建大模型开放平台：生产级 API Key 认证与限流实战](https://mp.weixin.qq.com/s/B9QttdYnkN3Au8cbhuo5Vw) （2026-4-14）
+
+- [[ CSDN ] JWT与Sa-Token认证方案对比](https://blog.csdn.net/t194978/article/details/160158394) （2026-4-14）
+
+- [[ 公众号 ] 告别SpringSecurity！Sa-Token+Gateway+Nacos极简鉴权实战](https://mp.weixin.qq.com/s/-mKBH70Z0zDYR3JT9YN7Qw) （2026-4-13）
+
 - [[ 公众号 ] Sa-Token + WebSocket 鉴权：别让"长连接"成了安全漏洞！](https://mp.weixin.qq.com/s/m34rq63GHgZMxvzkJYRy2w) （2026-4-10）
 
 - [[ 公众号 ] 使用Sa-Token解决WebSocket握手身份认证](https://mp.weixin.qq.com/s/ieCtD3-SW748k5Ri-iSmkg) （2026-4-10）
