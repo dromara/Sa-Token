@@ -17,7 +17,7 @@
 
 > [!TIP| label:demo | style:callout] 
 > 模式三的 Demo 示例地址：`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client/` 
-> [源码链接](https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)，如遇难点可参考示例 
+> ，如遇难点可参考示例。[Sa-Token 集成示例大全下载](/more/download-demos) 。
 
 
 ### 2、在Client 端更改 Ticket 校验方式

@@ -6,7 +6,7 @@
 	- [在 WebFlux 环境集成](/start/webflux-example) 	
 	- [在 Solon 环境集成](/start/solon-example) 	
 	- [其它环境集成示例](/start/download)
-
+	- [Sa-Token 集成示例大全下载](/more/download-demos) 
 
 - **基础**
 	- [登录认证](/use/login-auth) 
@@ -125,7 +125,7 @@
 	- [框架博客](/more/blog) 
 	- [推荐公众号](/more/tj-gzh) 
 	- [加入讨论群](/more/join-group) 
-	- [下载 demo 示例](/more/download-demos) 
+	<!-- - [下载 demo 示例](/more/download-demos) -->
 	- [Sa-Token 内容合作群](/more/content-cooperation) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 	- [需求提交](/more/demand-commit) 

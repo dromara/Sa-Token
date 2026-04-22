@@ -3,7 +3,7 @@
 在开始SSO三种模式的对接之前，我们必须先搭建一个 SSO-Server 认证中心 
 
 > [!TIP| label:demo] 
-> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习，demo里有制作好的登录页面 
+> 搭建示例在官方仓库的 `/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，如遇到难点可结合源码进行测试学习。[Sa-Token 集成示例大全下载](/more/download-demos) ，demo里有制作好的登录页面 
 
 --- 
 

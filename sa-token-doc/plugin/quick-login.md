@@ -174,7 +174,7 @@ sa.copr=true
 
 <br>
 
-**注：**示例源码在`/sa-token-demo/sa-token-demo-quick-login`目录下，可结合源码查看学习
+**注：**示例源码在`/sa-token-demo/sa-token-demo-quick-login`目录下，可结合源码查看学习。[Sa-Token 集成示例大全下载](/more/download-demos) 。
 
 
 

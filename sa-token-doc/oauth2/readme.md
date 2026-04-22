@@ -27,6 +27,8 @@ OAuth2.0 与 SSO 相比，增加了对应用授权范围的控制，减弱了应
 
 接下来我们将通过简单示例演示如何在 Sa-Token-OAuth2 中完成这四种模式的对接: [搭建OAuth2-Server](/oauth2/oauth2-server)
 
+若需下载官方仓库内全套可运行 Demo 压缩包，请见：[Sa-Token 集成示例大全下载](/more/download-demos) 。
+
 
 ### OAuth2.0 第三方开放平台完整开发流程参考
 

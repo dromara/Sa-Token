@@ -108,9 +108,9 @@ public class SaOAuth2ServerH5Controller {
 
 ### 3、新建前端项目
 
-既然是前后台分离，那肯定要有一个独立的前端项目，所需代码比较冗长，不便于在文档处直接展示，大家可以参考在线仓库示例：
+既然是前后台分离，那肯定要有一个独立的前端项目，所需代码比较冗长，不便于在文档处直接展示，大家可以参考仓库示例`/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-server-h5`（完整压缩包见 [Sa-Token 集成示例大全下载](/more/download-demos) ）：
 
-[sa-token-demo-oauth2-server-h5/](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-server-h5/)
+<!-- [sa-token-demo-oauth2-server-h5/](https://gitee.com/dromara/sa-token/blob/dev/sa-token-demo/sa-token-demo-oauth2/sa-token-demo-oauth2-server-h5/) -->
 
 
 ### 4、运行测试

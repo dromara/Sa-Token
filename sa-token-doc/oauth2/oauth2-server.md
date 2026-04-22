@@ -11,7 +11,7 @@
 
 
 ### 2、引入依赖 
-创建SpringBoot项目 `sa-token-demo-oauth2-server`（不会的同学自行百度或参考仓库示例），引入 `pom.xml` 依赖：
+创建SpringBoot项目 `sa-token-demo-oauth2-server`（不会的同学自行百度或参考仓库示例：[Sa-Token 集成示例大全下载](/more/download-demos) 获取全套 Demo），引入 `pom.xml` 依赖：
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->

@@ -27,6 +27,7 @@ Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO �
 | 前端不同域 + 后端同 Redis	| 模式二		| URL重定向传播会话 		| [文档](/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client)	|
 | 前端不同域 + 后端不同 Redis	| 模式三		| Http请求获取会话		| [文档](/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)	|
 
+集成示例还可下载全套 Demo 压缩包：[Sa-Token 集成示例大全下载](/more/download-demos) 。
 
 1. 前端同域：就是指多个系统可以部署在同一个主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`。
 2. 后端同Redis：就是指多个系统可以连接同一个Redis。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 **`[权限缓存与业务缓存分离]`** 的解决方案，详情戳： <a href="#/plugin/alone-redis" target="_blank">Alone独立Redis插件</a>。
