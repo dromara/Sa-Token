@@ -125,6 +125,7 @@
 	- [框架博客](/more/blog) 
 	- [推荐公众号](/more/tj-gzh) 
 	- [加入讨论群](/more/join-group) 
+	- [下载 demo 示例](/more/download-demos) 
 	- [Sa-Token 内容合作群](/more/content-cooperation) 
 	- [赞助 Sa-Token](/more/sa-token-donate)
 	- [需求提交](/more/demand-commit) 

@@ -276,6 +276,16 @@ Sa-Token 社区成员贡献了多语言实现版本：
 
 
 
+### 📚 示例大全
+
+**我们为框架几乎所有技术点均单独制作了对应的集成示例，此压缩包共计 60+ Demo**：涵盖 Sa-Token 登录认证、权限认证、SSO 单点登录、OAUth2 统一认证、微服务鉴权、API Key 认证、JWT集成、跨系统调用参数签名校验 等鉴权认证的方方面面。
+
+下载地址：[https://sa-token.cc/doc.html#/more/download-demos](https://sa-token.cc/doc.html#/more/download-demos) 
+
+<img class="s-w" src="https://sa-token.cc/big-file/contact/show/sa-token-demos-pre-liubai.png" />
+
+
+
 ### 💬 交流群
 <!-- QQ交流群：685792424 [点击加入](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Y05Ld4125W92YSwZ0gA8e3RhG9Q4Vsfx&authKey=IomXuIuhP9g8G7l%2ByfkrRsS7i%2Fna0lIBpkTXxx%2BQEaz0NNEyJq00kgeiC4dUyNLS&noverify=0&group_code=685792424)-->
 
