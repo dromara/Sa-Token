@@ -6,6 +6,16 @@
 --- 
 
 
+- [[ 公众号 ] Sa-Token 的 switchTo，不是 "管理员冒充用户"](https://mp.weixin.qq.com/s/Uqh1sDhjnJIBEkNwoxqA-g) （2026-4-24）
+
+- [[ 公众号 ] 权限框架怎么选？SpringSecurity、Shiro、Sa-Token 全面对比](https://mp.weixin.qq.com/s/ilOjwq92KK3FIOHUwjKOLA) （2026-4-24）
+
+- [[ CSDN ] 别再只写@SaCheckPermission了！手把手教你自定义Sa-Token权限校验逻辑（附源码）](https://blog.csdn.net/weixin_42568801/article/details/160469012) （2026-4-24）
+
+- [[ 公众号 ] Sa-Token权限框架](https://mp.weixin.qq.com/s/X-Ew5ig_nQUoGw5uPSPLgw) （2026-4-23）
+
+- [[ CSDN ] 【RuoYi-Vue-Plus】Sa-Token 拦截器升级实战：从源码拆解 SaInterceptor 的设计哲学与性能优化](https://blog.csdn.net/weixin_42568801/article/details/160306227) （2026-4-19）
+
 - [[ 公众号 ] SpringBoot + JWT + Sa-Token：认证鉴权双框架对比，安全登录与权限控制最佳实践](https://mp.weixin.qq.com/s/NoO5wd-B1Jl4exlLYX8y2g) （2026-4-18）
 
 - [[ 公众号 ] 别再盲目上 SSO 了！Sa-Token 多端跳转的「作弊级」解法](https://mp.weixin.qq.com/s/x828OMUIjQMf7RqiwGIgcw) （2026-4-17）
