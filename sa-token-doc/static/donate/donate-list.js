@@ -1521,7 +1521,7 @@ var donateList = [
 		"name": "小火（赞赏码）",
 		"link": "",
 		"money": 0.05,
-		"msg": '',
+		"msg": '感谢您的开源项目',
 		"date": "2026-03-29"
 	},
 	
@@ -1529,8 +1529,22 @@ var donateList = [
 		"name": "Right（赞赏码）",
 		"link": "",
 		"money": 1.0,
-		"msg": '',
+		"msg": '感谢，ZZT.',
 		"date": "2026-04-09"
+	},
+	{
+		"name": "糍粑（赞赏码）",
+		"link": "",
+		"money": 1.0,
+		"msg": '加油',
+		"date": "2026-04-28"
+	},
+	{
+		"name": "jerry（赞赏码）",
+		"link": "",
+		"money": 42.9,
+		"msg": '非常棒的项目！',
+		"date": "2026-04-29"
 	},
 	
 ]

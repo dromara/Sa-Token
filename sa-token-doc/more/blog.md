@@ -6,6 +6,10 @@
 --- 
 
 
+- [[ 公众号 ] Sa-Token 核心流程](https://mp.weixin.qq.com/s/Y_8neMzyUg5danEU3Y1PdQ) （2026-5-1）
+
+- [[ 51cto ] SpringBoot结合Sa-token实现权限认证（3）](https://blog.51cto.com/u_16099187/14575721) （2026-4-29）
+
 - [[ 公众号 ] Sa-Token 的 switchTo，不是 "管理员冒充用户"](https://mp.weixin.qq.com/s/Uqh1sDhjnJIBEkNwoxqA-g) （2026-4-24）
 
 - [[ 公众号 ] 权限框架怎么选？SpringSecurity、Shiro、Sa-Token 全面对比](https://mp.weixin.qq.com/s/ilOjwq92KK3FIOHUwjKOLA) （2026-4-24）
