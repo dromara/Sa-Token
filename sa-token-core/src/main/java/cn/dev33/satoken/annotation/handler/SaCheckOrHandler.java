@@ -28,6 +28,12 @@ import java.util.List;
 /**
  * 注解 SaCheckOr 的处理器
  *
+ * <p>
+ * 注意：尽管 SaCheckOr 在技术上可以组合 SaCheckLogin 与 SaCheckApiKey，但并不推荐这种用法，
+ * 因为身份认证在概念上是单一通道的。如需实现 OR 风格的身份认证，请优先使用 SaInterceptor#beforeAuth，
+ * SaCheckOr 应保留用于权限校验的组合场景。
+ * </p>
+ *
  * @author click33
  * @since 2024/8/2
  */
