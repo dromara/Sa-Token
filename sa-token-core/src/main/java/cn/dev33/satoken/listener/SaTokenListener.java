@@ -121,6 +121,16 @@ public interface SaTokenListener {
 	void doRenewTimeout(String loginType, Object loginId, String tokenValue, long timeout);
 
 	/**
+	 * 每次 Token 的 active-timeout 续期时触发
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token 值
+	 * @param activeTimeout 续期时间
+	 */
+	default void doRenewActiveTimeout(String loginType, Object loginId, String tokenValue, long activeTimeout) {}
+
+	/**
 	 * 全局组件载入 
 	 * @param compName 组件名称
 	 * @param compObj 组件对象
