@@ -93,6 +93,9 @@ public class ClientTokenModel implements Serializable {
 	 * @return /
 	 */
 	public long getExpiresIn() {
+		if(expiresTime == -1) {
+			return -1;
+		}
 		long s = (expiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
