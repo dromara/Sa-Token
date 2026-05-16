@@ -69,6 +69,16 @@ public SaResult doLogin(String name, String pwd) {
 > <button class="show-img" img-src="/big-file/doc/use/sa-login-cookie-pre.png">加载演示图</button>
 
 
+> [!TIP| label:关于设备类型 deviceType] 
+> 设备类型 (deviceType) 是由调用方在登录时显式传入的逻辑标识，框架不会自动从 User-Agent 推断 PC/WEB/HD/MOBILE/APP 等类型。如未指定，则使用默认值 `DEF`。
+> 
+> 如需指定设备类型，可使用 `SaLoginModel.setDeviceType(...)` 方法，例如：
+> 
+> ``` java
+> StpUtil.login(10001, new SaLoginModel().setDeviceType("PC"));
+> ```
+
+
 ### 2、校验是否登录
 
 对于一些登录之后才能访问的接口（例如：查询我的账号资料），我们通常的做法是增加一层接口校验：
