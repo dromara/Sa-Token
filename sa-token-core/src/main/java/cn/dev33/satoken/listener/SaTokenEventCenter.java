@@ -168,6 +168,19 @@ public class SaTokenEventCenter {
 			listener.doLogout(loginType, loginId, tokenValue);
 		}
 	}
+
+	/**
+	 * 事件发布：xx 账号 token 续签成功（在线时间）
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param timeout 续签时间
+	 */
+	public static void doRenewActiveTimeout(String loginType, Object loginId, String tokenValue, long timeout) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doRenewActiveTimeout(loginType, loginId, tokenValue, timeout);
+		}
+	}
 	
 	/**
 	 * 事件发布：xx 账号被踢下线
