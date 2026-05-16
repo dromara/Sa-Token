@@ -23,7 +23,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * API Key 校验：指定请求中必须包含有效的 ApiKey ，并且包含指定的 scope
+ * API Key 校验：指定请求中必须包含有效的 ApiKey （认证）；可选地校验其包含指定的 scope（授权）
+ *
+ * <p> 仅做 scope 授权校验请使用 {@link SaCheckApiKeyScope}
  *
  * <p> 可标注在方法、类上（效果等同于标注在此类的所有方法上）
  *
