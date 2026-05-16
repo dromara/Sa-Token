@@ -17,6 +17,7 @@ package cn.dev33.satoken.listener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -37,7 +38,7 @@ public class SaTokenEventCenter {
 
 	// --------- 注册侦听器 
 	
-	private static List<SaTokenListener> listenerList = new ArrayList<>();
+	private static List<SaTokenListener> listenerList = new CopyOnWriteArrayList<>();
 	
 	static {
 		// 默认添加控制台日志侦听器 
