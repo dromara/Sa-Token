@@ -20,6 +20,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.dao.SaTokenDao;
 
 import java.util.Set;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 一个定时缓存的简单实现，采用：惰性检查 + 异步循环扫描
@@ -39,6 +40,8 @@ public class SaTimedCache {
 	 */
 	public SaMapPackage<Long> expireMap;
 
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
 	public SaTimedCache(SaMapPackage<Object> dataMap, SaMapPackage<Long> expireMap) {
 		this.dataMap = dataMap;
 		this.expireMap = expireMap;
@@ -49,27 +52,47 @@ public class SaTimedCache {
 
 	public Object getObject(String key) {
 		clearKeyByTimeout(key);
-		return dataMap.get(key);
+		lock.readLock().lock();
+		try {
+			return dataMap.get(key);
+		} finally {
+			lock.readLock().unlock();
+		}
 	}
 
 	public void setObject(String key, Object object, long timeout) {
 		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
 			return;
 		}
-		dataMap.put(key, object);
-		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+		lock.writeLock().lock();
+		try {
+			dataMap.put(key, object);
+			expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+		} finally {
+			lock.writeLock().unlock();
+		}
 	}
 
 	public void updateObject(String key, Object object) {
-		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return;
+		lock.writeLock().lock();
+		try {
+			if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
+				return;
+			}
+			dataMap.put(key, object);
+		} finally {
+			lock.writeLock().unlock();
 		}
-		dataMap.put(key, object);
 	}
 
 	public void deleteObject(String key) {
-		dataMap.remove(key);
-		expireMap.remove(key);
+		lock.writeLock().lock();
+		try {
+			dataMap.remove(key);
+			expireMap.remove(key);
+		} finally {
+			lock.writeLock().unlock();
+		}
 	}
 
 	public long getObjectTimeout(String key) {
@@ -77,11 +100,21 @@ public class SaTimedCache {
 	}
 
 	public void updateObjectTimeout(String key, long timeout) {
-		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+		lock.writeLock().lock();
+		try {
+			expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+		} finally {
+			lock.writeLock().unlock();
+		}
 	}
 
 	public Set<String> keySet() {
-		return dataMap.keySet();
+		lock.readLock().lock();
+		try {
+			return dataMap.keySet();
+		} finally {
+			lock.readLock().unlock();
+		}
 	}
 
 
@@ -92,14 +125,19 @@ public class SaTimedCache {
 	 * @param key 指定 key
 	 */
 	void clearKeyByTimeout(String key) {
-		Long expirationTime = expireMap.get(key);
-		// 清除条件：
-		// 		1、数据存在。
-		// 		2、不是 [ 永不过期 ]。
-		// 		3、已经超过过期时间。
-		if(expirationTime != null && expirationTime != SaTokenDao.NEVER_EXPIRE && expirationTime < System.currentTimeMillis()) {
-			dataMap.remove(key);
-			expireMap.remove(key);
+		lock.writeLock().lock();
+		try {
+			Long expirationTime = expireMap.get(key);
+			// 清除条件：
+			// 		1、数据存在。
+			// 		2、不是 [ 永不过期 ]。
+			// 		3、已经超过过期时间。
+			if(expirationTime != null && expirationTime != SaTokenDao.NEVER_EXPIRE && expirationTime < System.currentTimeMillis()) {
+				dataMap.remove(key);
+				expireMap.remove(key);
+			}
+		} finally {
+			lock.writeLock().unlock();
 		}
 	}
 
@@ -112,31 +150,36 @@ public class SaTimedCache {
 		// 由于数据过期检测属于惰性扫描，很可能此时这个 key 已经是过期状态了，所以这里需要先检查一下
 		clearKeyByTimeout(key);
 
-		// 获取这个 key 的过期时间
-		Long expire = expireMap.get(key);
+		lock.writeLock().lock();
+		try {
+			// 获取这个 key 的过期时间
+			Long expire = expireMap.get(key);
 
-		// 如果 expire 数据不存在，说明框架没有存储这个 key，此时返回 NOT_VALUE_EXPIRE
-		if(expire == null) {
-			return SaTokenDao.NOT_VALUE_EXPIRE;
+			// 如果 expire 数据不存在，说明框架没有存储这个 key，此时返回 NOT_VALUE_EXPIRE
+			if(expire == null) {
+				return SaTokenDao.NOT_VALUE_EXPIRE;
+			}
+
+			// 如果 expire 被标注为永不过期，则返回 NEVER_EXPIRE
+			if(expire == SaTokenDao.NEVER_EXPIRE) {
+				return SaTokenDao.NEVER_EXPIRE;
+			}
+
+			// ---- 代码至此，说明这个 key 是有过期时间的，且未过期，那么：
+
+			// 计算剩余时间并返回 （过期时间戳 - 当前时间戳） / 1000 转秒
+			long timeout = (expire - System.currentTimeMillis()) / 1000;
+
+			// 小于零时，视为不存在 
+			if(timeout < 0) {
+				dataMap.remove(key);
+				expireMap.remove(key);
+				return SaTokenDao.NOT_VALUE_EXPIRE;
+			}
+			return timeout;
+		} finally {
+			lock.writeLock().unlock();
 		}
-
-		// 如果 expire 被标注为永不过期，则返回 NEVER_EXPIRE
-		if(expire == SaTokenDao.NEVER_EXPIRE) {
-			return SaTokenDao.NEVER_EXPIRE;
-		}
-
-		// ---- 代码至此，说明这个 key 是有过期时间的，且未过期，那么：
-
-		// 计算剩余时间并返回 （过期时间戳 - 当前时间戳） / 1000 转秒
-		long timeout = (expire - System.currentTimeMillis()) / 1000;
-
-		// 小于零时，视为不存在 
-		if(timeout < 0) {
-			dataMap.remove(key);
-			expireMap.remove(key);
-			return SaTokenDao.NOT_VALUE_EXPIRE;
-		}
-		return timeout;
 	}
 
 	// --------- 定时清理过期数据
