@@ -44,6 +44,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 管理 Sa-Token 所有全局组件，可通过此类快速获取、写入各种全局组件对象
@@ -52,6 +53,8 @@ import java.util.Map;
  * @since 1.18.0
  */
 public class SaManager {
+
+	private static final ReentrantLock initLock = new ReentrantLock();
 
 	/**
 	 * 全局配置对象
@@ -86,10 +89,13 @@ public class SaManager {
 	 */
 	public static SaTokenConfig getConfig() {
 		if (config == null) {
-			synchronized (SaManager.class) {
+			initLock.lock();
+			try {
 				if (config == null) {
 					setConfigMethod(SaTokenConfigFactory.createConfig());
 				}
+			} finally {
+				initLock.unlock();
 			}
 		}
 		return config;
@@ -114,10 +120,13 @@ public class SaManager {
 	}
 	public static SaTokenDao getSaTokenDao() {
 		if (saTokenDao == null) {
-			synchronized (SaManager.class) {
+			initLock.lock();
+			try {
 				if (saTokenDao == null) {
 					setSaTokenDaoMethod(new SaTokenDaoDefaultImpl());
 				}
+			} finally {
+				initLock.unlock();
 			}
 		}
 		return saTokenDao;
@@ -133,10 +142,13 @@ public class SaManager {
 	}
 	public static StpInterface getStpInterface() {
 		if (stpInterface == null) {
-			synchronized (SaManager.class) {
+			initLock.lock();
+			try {
 				if (stpInterface == null) {
 					SaManager.stpInterface = new StpInterfaceDefaultImpl();
 				}
+			} finally {
+				initLock.unlock();
 			}
 		}
 		return stpInterface;
@@ -152,10 +164,13 @@ public class SaManager {
 	}
 	public static SaTokenContext getSaTokenContext() {
 		if (saTokenContext == null) {
-			synchronized (SaManager.class) {
+			initLock.lock();
+			try {
 				if (saTokenContext == null) {
 					SaManager.saTokenContext = new SaTokenContextForThreadLocal();
 				}
+			} finally {
+				initLock.unlock();
 			}
 		}
 		return saTokenContext;
@@ -171,10 +186,13 @@ public class SaManager {
 	}
 	public static SaTempTemplate getSaTempTemplate() {
 		if (saTempTemplate == null) {
-			synchronized (SaManager.class) {
+			initLock.lock();
+			try {
 				if (saTempTemplate == null) {
 					SaManager.saTempTemplate = new SaTempTemplate();
 				}
+			} finally {
+				initLock.unlock();
 			}
 		}
 		return saTempTemplate;
