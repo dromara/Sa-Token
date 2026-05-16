@@ -111,6 +111,9 @@ public class AccessTokenModel implements Serializable {
 	 * @return /
 	 */
 	public long getExpiresIn() {
+		if(expiresTime == -1) {
+			return -1;
+		}
 		long s = (expiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
@@ -120,6 +123,9 @@ public class AccessTokenModel implements Serializable {
 	 * @return /
 	 */
 	public long getRefreshExpiresIn() {
+		if(refreshExpiresTime == -1) {
+			return -1;
+		}
 		long s = (refreshExpiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
