@@ -18,3 +18,12 @@ sa-token-three-plugin/
 sa-token-doc/big-file/
 
 .flattened-pom.xml
+
+.qoder
+.soloncode/
+.cursor
+.agents
+.github
+
+AGENTS.md
+CLAUDE.md
