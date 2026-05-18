@@ -208,6 +208,8 @@
 
 - [[ 公众号 ] sa-token-rust 项目：高性能的 Rust 认证授权框架](https://mp.weixin.qq.com/s/jlQAX1K1M64DtUgrHrDX1A) （2025-11-17）
 
+- [[ 知乎 ] Sa-Token 与 Spring Security 对比分析](https://zhuanlan.zhihu.com/p/1975162115833754745) （2025-11-12）
+
 - [[ 公众号 ] 不会吧，居然还有人没有用过？全网爆火的权限校验框架 Sa-Token 超详细教程它来了](https://mp.weixin.qq.com/s/kNYq0MmlYB_0tRWI-HvU1g) （2025-11-6）
 
 - [[ 公众号 ] 若依框架集成 Sa-Token 实现权限认证与会话管理](https://mp.weixin.qq.com/s/JAgL0hxcPeP0E4OW4oy8Yg) （2025-10-21）
