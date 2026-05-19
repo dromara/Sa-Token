@@ -100,7 +100,7 @@
 
 - [[ PHP中文网 ] 怎样在Java中搭建Sa-Token权限认证环境_Java安全新选型](https://www.php.cn/faq/2211433.html) （2026-3-16）
 
-- [[ 公众号 ] SpringBoot3 + Sa-Token 双Token登录认证实战（避坑版）](https://mp.weixin.qq.com/s/rOZ8LvghG64ZSTsIokiUhA) （2026-3-12）
+<!-- - [[ 公众号 ] SpringBoot3 + Sa-Token 双Token登录认证实战（避坑版）](https://mp.weixin.qq.com/s/rOZ8LvghG64ZSTsIokiUhA) （2026-3-12） -->
 
 - [[ 公众号 ] Sa-Token 多端会话管控解析：构建统一身份认证秩序，解决多端登录难题](https://mp.weixin.qq.com/s/mpoOxgz4jDPcFBoGHVhoiw) （2026-3-11）
 
