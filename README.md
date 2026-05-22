@@ -31,7 +31,7 @@
 
 Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
-**还在手搓以下功能？Stop ⚠️ 交给 Sa-Token 吧！**
+**还在手搓以下功能？Stop ⚠️ 让 Sa-Token 来！**
 
 ![sa-token-jss](https://sa-token.cc/big-file/index/intro/sa-token-jss--tran.png)
 
