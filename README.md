@@ -233,6 +233,28 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 						
 
 
+
+#### 证书 ⭐ 奖杯 🏆 荣誉展示 
+
+<table align="center">
+  <tr>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/gvp.jpg" title="GVP - Gitee 最有价值开源项目" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/g-star.jpg" title="GitCode G-Star 优质开源项目" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/osc-2021.jpg" title="OSCHINA 2021 人气指数 TOP 30 开源项目" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/osc-2022--chang.jpg" title="OSCHINA 2022 年度最火热中国开源项目社区" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/kexin.jpg" title="可信开源社区共同体预备成员" /></td>
+  </tr>
+  <tr>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/gitee-star-5000.jpg" title="Gitee 5000 star 专属奖杯" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/gitee-2025--chang.jpg" title="Gitee 2025年度开源项目 Web应用开发 Top 2" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/dromara.jpg" title="Dromara 组织顶尖项目（之一）" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/kaifangyuanzi2--chang.jpg" title="开放原子基金会2023快速成长开源项目" /></td>
+    <td align="center" width="330"><img src="https://sa-token.cc/big-file/index/awards-zip/dromara-2024-tzds.jpg" title="Dromara 荣获《2024中国互联网发展创新与投资大赛（开源）》二等奖" /></td>
+  </tr>
+</table>
+
+
+
 ### 🚀 优秀开源集成案例
 
 - [[ Snowy ]](https://gitee.com/xiaonuobase/snowy)：国内首个国密前后分离快速开发平台，采用 Vue3 + Vite + SpringBoot + Mp + HuTool + SaToken。
