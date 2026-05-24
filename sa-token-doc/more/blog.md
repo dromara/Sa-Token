@@ -8,6 +8,10 @@
 
 
 
+- [[ CSDN ] ChaperTwo-整合 SaToken 实现 JWT 登录功能](https://blog.csdn.net/2503_91700196/article/details/161235399) （2026-5-19）
+
+- [[ CSDN ] Spring Boot + Sa-Token 实时聊天系统：用户注册流程源码深度剖析](https://blog.csdn.net/2401_89707442/article/details/161193882) （2026-5-18）
+
 - [[ 公众号 ] 9 大框架统一接入，sa-token-rust 为什么值得关注](https://mp.weixin.qq.com/s/kLx5ff2DNIACXnSclv00ZA) （2026-5-7）
 
 - [[ CSDN ] Sa-Token基础篇](https://blog.csdn.net/2401_87882047/article/details/160829277) （2026-5-6）
