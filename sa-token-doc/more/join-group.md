@@ -10,7 +10,8 @@
  -->
  
 <!-- QQ交流群：936523917 [点击加入](https://qm.qq.com/q/xfoMJA5Az0) -->
-QQ交流群：1081649142 [点击加入](https://qm.qq.com/q/SCAaZ6Ros2) 
+<!-- QQ交流群：1081649142 [点击加入](https://qm.qq.com/q/SCAaZ6Ros2) -->
+QQ交流群：1098917026 [点击加入](https://qm.qq.com/q/26OFBGd2Zy) 
 
 ### 2、加入微信交流群：
 

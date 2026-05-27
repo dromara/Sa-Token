@@ -9,7 +9,7 @@
 
 加入 Sa-Token 交流群，即可在群公告查看下载地址：
 
-加入QQ交流群：1081649142 [点击加入](https://qm.qq.com/q/SCAaZ6Ros2) 
+加入QQ交流群：1098917026 [点击加入](https://qm.qq.com/q/26OFBGd2Zy) 
 
 加入微信交流群：
 
