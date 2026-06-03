@@ -121,6 +121,8 @@ public class SaTokenDaoForRedisx implements SaTokenDaoByObjectFollowString, SaTo
 
     /**
      * 搜索数据
+     * 
+     * 注意：redisx 库的 keys() 方法内部已使用 SCAN 实现，不会阻塞 Redis
      */
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {

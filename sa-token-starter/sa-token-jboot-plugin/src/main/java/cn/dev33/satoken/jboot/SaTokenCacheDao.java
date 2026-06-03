@@ -25,11 +25,12 @@ import io.jboot.exception.JbootIllegalConfigException;
 import io.jboot.support.redis.JbootRedisConfig;
 import io.jboot.utils.ConfigUtil;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanParams;
+import redis.clients.jedis.ScanResult;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -272,14 +273,24 @@ public class SaTokenCacheDao implements SaTokenDaoBySessionFollowObject {
 
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
+        // 使用 SCAN 命令替代 KEYS，避免在大数据量时阻塞 Redis
+        List<String> list = new ArrayList<>();
+        String pattern = prefix + "*" + keyword + "*";
+        String cursor = ScanParams.SCAN_POINTER_START;
+        ScanParams params = new ScanParams().match(pattern).count(1000);
+        
         Jedis jedis = saRedisCache.getJedis();
         try {
-            Set<String> keys = jedis.keys(prefix + "*" + keyword + "*");
-            List<String> list = new ArrayList<>(keys);
-            return SaFoxUtil.searchList(list, start, size, sortType);
+            do {
+                ScanResult<String> result = jedis.scan(cursor, params);
+                list.addAll(result.getResult());
+                cursor = result.getCursor();
+            } while (!cursor.equals(ScanParams.SCAN_POINTER_START));
         } finally {
             saRedisCache.returnResource(jedis);
         }
+        
+        return SaFoxUtil.searchList(list, start, size, sortType);
     }
 
 
