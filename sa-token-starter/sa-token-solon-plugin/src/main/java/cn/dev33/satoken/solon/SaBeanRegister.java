@@ -25,7 +25,7 @@ import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Filter;
-import org.noear.solon.core.util.PathAnalyzer;
+import org.noear.solon.core.util.PathMatcher;
 
 /**
  * 注册Sa-Token所需要的Bean 
@@ -39,7 +39,7 @@ public class SaBeanRegister {
 	public SaBeanRegister() {
 		// 重写路由匹配算法
 		SaStrategy.instance.routeMatcher = (pattern, path) -> {
-			return PathAnalyzer.get(pattern).matches(path);
+			return PathMatcher.get(pattern).matches(path);
 		};
 	}
 

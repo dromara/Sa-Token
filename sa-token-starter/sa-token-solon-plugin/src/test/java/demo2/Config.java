@@ -2,9 +2,9 @@ package demo2;
 
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
-import org.noear.solon.Solon;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
+import org.noear.solon.core.route.RouterInterceptor;
 
 /**
  * @author noear 2022/7/11 created
@@ -39,8 +39,8 @@ public class Config {
 //    }
 
     @Bean
-    public void saTokenPathInterceptor2() {
-        Solon.app().routerInterceptor((ctx, mainHandler, chain) -> {
+    public RouterInterceptor saTokenPathInterceptor2() {
+        return (ctx, mainHandler, chain) -> {
             SaRouter.match("/**", StpUtil::checkLogin);
             // 根据路由划分模块，不同模块不同鉴权
             SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
@@ -49,6 +49,6 @@ public class Config {
             SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
 
             chain.doIntercept(ctx, mainHandler);
-        });
+        };
     }
 }
