@@ -8,6 +8,10 @@
 
 
 
+- [[ CSDN ] Sa-Token：一行代码搞定登录，Java鉴权框架还能这么简单](https://blog.csdn.net/chenchuang0128/article/details/161693721) （2026-6-4）
+
+- [[ CSDN ] Spring Boot脚手架集成Sa-Token实现生产级RBAC权限管理](https://blog.csdn.net/qq_39818325/article/details/161524723) （2026-6-1）
+
 - [[ 公众号 ] Sa-Token：48,800+ Star 的背后让鉴权变得简单优雅](https://mp.weixin.qq.com/s/1w9Ac-EGfn8dU7pb45YCdQ) （2026-5-27）
 
 - [[ 公众号 ] 还在受 Spring Security 折磨？1 分钟认识国产鉴权神器 Sa-Token](https://mp.weixin.qq.com/s/Cn7tT_O8KMHmQ_RVwSZ6zg) （2026-5-22）
