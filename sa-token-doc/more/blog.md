@@ -8,7 +8,15 @@
 
 
 
+- [[ 公众号 ] SpringBoot 携手 Sa-Token：极简配置，开启权限认证的丝滑体验](https://mp.weixin.qq.com/s/QpumBtc2L4GWyZNkSlPLIQ) （2026-6-8）
+
+- [[ 百家号 ] Sa-Token把登录、SSO、OAuth2、网关鉴权都塞进几行代码，省下的不是配置，是后面三年的维护命](https://baijiahao.baidu.com/s?id=1867417301403436037) （2026-6-8）
+
+- [[ 公众号 ] 告别Shiro与Spring Security？Sa-Token：一个足以颠覆Java权限生态的极简框架](https://mp.weixin.qq.com/s/o_HOYldBh9zfL6_tAvantQ) （2026-6-7）
+
 - [[ CSDN ] Sa-Token：一行代码搞定登录，Java鉴权框架还能这么简单](https://blog.csdn.net/chenchuang0128/article/details/161693721) （2026-6-4）
+
+- [[ 公众号 ] Sa-Token - 一站式 Java 权限认证框架](https://mp.weixin.qq.com/s/u8gbFJ4rSzaQiC1oeo5bqA) （2026-6-3）
 
 - [[ CSDN ] Spring Boot脚手架集成Sa-Token实现生产级RBAC权限管理](https://blog.csdn.net/qq_39818325/article/details/161524723) （2026-6-1）
 
