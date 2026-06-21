@@ -7,6 +7,13 @@
 
 
 
+- [[ 公众号 ] Sa-Token：Java 权限认证框架，让鉴权简单优雅](https://mp.weixin.qq.com/s/WvXPVyhx27zO0iJwRfJO_w) （2026-6-19）
+
+- [[ CSDN ] 一行代码登录，微秒级鉴权：Sa-Token + Redis Session 实践](https://blog.csdn.net/LI_124301012/article/details/162080845) （2026-6-18）
+
+- [[ 公众号 ] 若依AI学习第10天：Sa-Token 5分钟入门实战](https://mp.weixin.qq.com/s/Fes4WbdJ8wUxQ7dpwVEnng) （2026-6-17）
+
+- [[ 公众号 ] 9.若依AI学习第9天：Sa-Token 权限认证](https://mp.weixin.qq.com/s/p3ot7Vy7OeHe075STJqX7g) （2026-6-15）
 
 - [[ 公众号 ] SpringBoot 携手 Sa-Token：极简配置，开启权限认证的丝滑体验](https://mp.weixin.qq.com/s/QpumBtc2L4GWyZNkSlPLIQ) （2026-6-8）
 
@@ -381,5 +388,5 @@
 
 - [[ 掘金 ] sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录](https://juejin.cn/post/6914612737020526599) （2021-1-6）
 
-- [[ 掘金 ] Spring Boot 系列教程 | 第一百一篇：SpringBoot整合sa-token权限框架](https://juejin.cn/post/6875525673897869319) （2020-9-23）
+- [[ 掘金 ] Spring Boot 系列教程 | 第一百一篇：SpringBoot整合sa-token权限框架](https://juejin.cn/post/6875525673897869319) （2020-9-23)
 
