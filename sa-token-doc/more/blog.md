@@ -7,6 +7,8 @@
 
 
 
+- [[ 公众号 ] 架构实战第5篇：四道防线守护每个接口-鹿鲸项目的Sa-Token权限架构解析](https://mp.weixin.qq.com/s/XRKkluee_LQK2D4OwC21Gg) （2026-6-26）
+
 - [[ 公众号 ] Sa-Token：Java 权限认证框架，让鉴权简单优雅](https://mp.weixin.qq.com/s/WvXPVyhx27zO0iJwRfJO_w) （2026-6-19）
 
 - [[ CSDN ] 一行代码登录，微秒级鉴权：Sa-Token + Redis Session 实践](https://blog.csdn.net/LI_124301012/article/details/162080845) （2026-6-18）
