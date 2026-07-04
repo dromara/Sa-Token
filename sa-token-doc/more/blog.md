@@ -7,6 +7,14 @@
 
 
 
+- [[ 公众号 ] 为什么后来我的项目，几乎都开始使用 Sa-Token？](https://mp.weixin.qq.com/s/-7swQiXqnkIpF1ydN1bAbQ) （2026-7-2）
+
+- [[ 公众号 ] Sa-Token JWT认证方案：Token续期、多点登录控制、权限缓存一站式实践](https://mp.weixin.qq.com/s/BlBQ2A3waEckRZNorTh__Q) （2026-7-1）
+
+- [[ CSDN ] SpringBoot 整合 Sa-Token 实现权限认证——轻量级替代 Shiro](https://blog.csdn.net/DoubleZ137/article/details/162438684) （2026-6-30）
+
+- [[ CSDN ] Sa-Token到底怎么鉴权的？？？（个人项目复盘）](https://blog.csdn.net/weixin_52073525/article/details/162464158) （2026-6-30）
+
 - [[ 公众号 ] 架构实战第5篇：四道防线守护每个接口-鹿鲸项目的Sa-Token权限架构解析](https://mp.weixin.qq.com/s/XRKkluee_LQK2D4OwC21Gg) （2026-6-26）
 
 - [[ 公众号 ] Sa-Token：Java 权限认证框架，让鉴权简单优雅](https://mp.weixin.qq.com/s/WvXPVyhx27zO0iJwRfJO_w) （2026-6-19）
