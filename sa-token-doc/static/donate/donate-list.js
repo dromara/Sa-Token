@@ -1602,4 +1602,11 @@ var donateList = [
 		"msg": '感谢您的赞赏！这将支持 Sa-Token 走的更加长远！',
 		"date": "2026-06-12"
 	},
+	{
+		"name": "willSleep（赞赏码）",
+		"link": "",
+		"money": 1.00,
+		"msg": '感谢您的赞赏！这将支持 Sa-Token 走的更加长远！',
+		"date": "2026-07-16"
+	},
 ]
