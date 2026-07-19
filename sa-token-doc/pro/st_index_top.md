@@ -5,7 +5,7 @@
 根据 SSO / OAuth2 模块文档，以及官网提供的源码示例，您可以很方便的搭建一个 SSO / OAuth2 模式的认证 Demo 示例。
 
 然而，要真正开发一个商业级项目的统一认证中心系统，绝非一朝一夕可以搭建完毕，为此我们特意准备了项目：
-[[ Sa-Max 统一认证商业版 ]](https://sa-pro.yun94.cn?way=st_index_top)。
+[[ Sa-Max 统一认证商业版 ]](https://sa-max.cn?way=st_index_top)。
 
 项目基于 Sa-Token 搭建，集成了统一认证常见技术点，<b style="color: #FF5722;">可大大缩短您的项目接入统一授权认证的开发周期</b>：
 - 支持：同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离、纯 js、vue2、vue3、java 项目、非 java 项目 等架构下的 SSO 认证需求。 
