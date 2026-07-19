@@ -54,6 +54,7 @@
         <module>sa-token-grpc</module>
         <module>sa-token-quick-login</module>
         <module>sa-token-redisson-spring-boot-starter</module>
+        <module>sa-token-reactive-redis-template</module>
     </modules>
 
     <dependencyManagement>
