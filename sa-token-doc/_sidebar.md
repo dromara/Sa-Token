@@ -55,7 +55,7 @@
 	- [NoSdk、ReSdk 模式与非 java 项目](/sso/sso-nosdk)
 	- [SSO 代码 API 参考](/sso/sso-dev)
 	- [常见问题总结](/sso/sso-questions)
-	- [Sa-Pro：单点登录商业版](https://sa-pro.yun94.cn?way=st_sso)
+	- [Sa-Pro：单点登录商业版](https://sa-max.cn?way=st_sso)
 
 - **OAuth2.0**
 	- [OAuth2.0简述](/oauth2/readme)
@@ -75,7 +75,7 @@
 	- [OAuth2-与登录会话实现数据互通](/oauth2/oauth2-interworking)
 	- [OAuth2 代码 API 参考](/oauth2/oauth2-dev)
 	- [常见问题总结](/oauth2/oauth2-questions)
-	- [Sa-Max：统一认证商业版](https://sa-pro.yun94.cn?way=st_oauth2)
+	- [Sa-Max：统一认证商业版](https://sa-max.cn?way=st_oauth2)
 	<!-- - [前后端分离模式整合方案](/oauth2/4) -->
 	<!-- - [平台中心模式开发](/oauth2/5) -->
 	<!-- - [jwt 风格 token](/oauth2/6) -->

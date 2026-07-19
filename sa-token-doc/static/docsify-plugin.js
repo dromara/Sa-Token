@@ -75,7 +75,7 @@ var myDocsifyPlugin = function(hook, vm) {
 		// 	var ad = `<p class="top-ad-box">
 		// 		<span class="ad-tips">推广信息：</span>
 		// 		<span class="ad-tips ad-close">关闭</span>
-		// 		<a href="http://sa-pro.yun94.cn?from=satop" target="_blank">
+		// 		<a href="http://sa-max.cn?from=satop" target="_blank">
 		// 			<img src="https://oss.dev33.cn/sa-token/ad/sa-sso-pro-s3.png" />
 		// 		</a>
 		// 	</p>`;
