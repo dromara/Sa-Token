@@ -5,7 +5,7 @@
 根据 SSO 模块文档，以及官网提供的源码示例，您可以很方便的搭建一个SSO模式的认证 Demo 示例。
 
 然而，要真正开发一个商业级项目的统一认证中心系统，绝非一朝一夕可以搭建完毕，为此，我们特意准备了项目：
-[[ Sa-Pro 单点登录商业版 ]](https://sa-pro.yun94.cn?way=st_sso)。
+[[ Sa-Pro 单点登录商业版 ]](https://sa-max.cn?way=st_sso)。
 
 项目基于 Sa-Token 搭建，集成了单点登录常见技术点，可解决： 
 同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离、纯 js、vue2、vue3、java 项目、非 java 项目 等架构下的 SSO 认证需求。 
