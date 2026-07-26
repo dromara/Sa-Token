@@ -7,6 +7,8 @@
 
 
 
+- [[ 公众号 ] 安全体系深度对比：Sa-Token JWT + RBAC + 数据权限 vs Spring Security + Shiro](https://mp.weixin.qq.com/s/hYG5lC0g4ndwae2cLiI5LQ) （2026-7-22）
+
 - [[ 公众号 ] 为什么后来我的项目，几乎都开始使用 Sa-Token？](https://mp.weixin.qq.com/s/-7swQiXqnkIpF1ydN1bAbQ) （2026-7-2）
 
 - [[ 公众号 ] Sa-Token JWT认证方案：Token续期、多点登录控制、权限缓存一站式实践](https://mp.weixin.qq.com/s/BlBQ2A3waEckRZNorTh__Q) （2026-7-1）
