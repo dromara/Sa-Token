@@ -22,7 +22,9 @@ sa-token-doc/big-file/
 .qoder
 .soloncode/
 .cursor
+.firecrawl/
 .agents
+.claude
 .github
 
 AGENTS.md
