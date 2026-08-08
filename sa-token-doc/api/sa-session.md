@@ -40,7 +40,7 @@ session.isTrustDeviceId("xxxxxxxxxxxxxxxxxxxxxxxx");   // 判断指定设备 id 
 session.update();   // 更新Session（从持久库更新刷新一下）
 session.logout();   // 注销Session (从持久库删除)
 session.logoutByTerminalCountToZero();   // 当 Session 上的 SaTerminalInfo 数量为零时，注销会话 
-session.getTimeout();   // 获取此Session的剩余存活时间 (单位: 秒)
+session.timeout();   // 获取此Session的剩余存活时间 (单位: 秒)
 session.updateTimeout(timeout);   // 修改此Session的剩余存活时间
 session.updateMinTimeout(minTimeout);   // 修改此Session的最小剩余存活时间 (只有在 Session 的过期时间低于指定的 minTimeout 时才会进行修改)
 session.updateMaxTimeout(maxTimeout);   // 修改此Session的最大剩余存活时间 (只有在 Session 的过期时间高于指定的 maxTimeout 时才会进行修改)
