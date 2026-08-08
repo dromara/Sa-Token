@@ -3,9 +3,19 @@
 > 此页面收集 Sa-Token 相关技术文章（不限平台，按照发表日期倒序），
 > 如果你也想投稿，请考虑加入：[Sa-Token 内容合作群 ](/more/content-cooperation)
 
---- 
+---
 
+- [[ 公众号 ] 为什么越来越多人用 Sa-Token？](https://mp.weixin.qq.com/s/m-cfYtLb34heeM9W7fSUVw) （2026-8-7）
 
+- [[ 51CTO ] sa-token项目的日志SaLog接口他的实现以及salog配置生效](https://blog.51cto.com/lenglingx/14828743) （2026-8-6）
+
+- [[ CSDN ] 基于Sa-Token实现OAuth 2.0静默授权：原理、配置与生产实践](https://blog.csdn.net/weixin_42614269/article/details/163546104) （2026-8-6）
+
+- [[ 公众号 ] 为什么越来越多人用Sa-Token？](https://mp.weixin.qq.com/s/NAsaVb5iOuTCmK4FVIm8IQ) （2026-8-4）
+
+- [[ CSDN ] Sa-Token 核心原理与实战：从登录会话到微服务权限鉴权](https://blog.csdn.net/weixin_57796792/article/details/163417448) （2026-8-3）
+
+- [[ 公众号 ] Spring | 基于 Sa-Token 构建安全、优雅的登录认证体系](https://mp.weixin.qq.com/s/GzROn0J6yjuk208XLu2nvg) （2026-7-31）
 
 - [[ 公众号 ] 安全体系深度对比：Sa-Token JWT + RBAC + 数据权限 vs Spring Security + Shiro](https://mp.weixin.qq.com/s/hYG5lC0g4ndwae2cLiI5LQ) （2026-7-22）
 
@@ -143,29 +153,27 @@
 
 - [[ PHP中文网 ] 怎样在Java中搭建Sa-Token权限认证环境_Java安全新选型](https://www.php.cn/faq/2211433.html) （2026-3-16）
 
-<!-- - [[ 公众号 ] SpringBoot3 + Sa-Token 双Token登录认证实战（避坑版）](https://mp.weixin.qq.com/s/rOZ8LvghG64ZSTsIokiUhA) （2026-3-12） -->
-
 - [[ 公众号 ] Sa-Token 多端会话管控解析：构建统一身份认证秩序，解决多端登录难题](https://mp.weixin.qq.com/s/mpoOxgz4jDPcFBoGHVhoiw) （2026-3-11）
 
 - [[ 公众号 ] 诈尸级更新？停更9个月，Sa-Token 1.45.0 携 Spring Boot 4.x 适配回来了！](https://mp.weixin.qq.com/s/Wj83wEbbYoUQU0M7IgfVnA) （2026-3-10）
 
-- [[ 公众号 ] Kaleido-AI教程（九）基于Sa-Token实现多账户认证体系 ](https://mp.weixin.qq.com/s/ihW1sM8DvQJS-1ZKhFr9KQ) （2026-3-8）
+- [[ 公众号 ] Kaleido-AI教程（九）基于Sa-Token实现多账户认证体系](https://mp.weixin.qq.com/s/ihW1sM8DvQJS-1ZKhFr9KQ) （2026-3-8）
 
-- [[ 公众号 ] Sa-Token 的 token-prefix 和 token-style，到底谁管谁？ ](https://mp.weixin.qq.com/s/1_PaPxvEui-16Is6Urw3CA) （2026-3-7）
+- [[ 公众号 ] Sa-Token 的 token-prefix 和 token-style，到底谁管谁？](https://mp.weixin.qq.com/s/1_PaPxvEui-16Is6Urw3CA) （2026-3-7）
 
-- [[ 公众号 ] JAVA：Spring Boot3 集成 Sa-Token 轻量级权限认证 ](https://mp.weixin.qq.com/s/cjk9ad9tj397Bd0hAyCsyA) （2026-3-6）
+- [[ 公众号 ] JAVA：Spring Boot3 集成 Sa-Token 轻量级权限认证](https://mp.weixin.qq.com/s/cjk9ad9tj397Bd0hAyCsyA) （2026-3-6）
 
-- [[ 公众号 ] Sa-Token(二)之从入门到实战——一篇文章助你真正了解掌握Sa-Token ](https://mp.weixin.qq.com/s/9-CLoSJZBrfTF2tul-M8Ww) （2026-3-6）
+- [[ 公众号 ] Sa-Token(二)之从入门到实战——一篇文章助你真正了解掌握Sa-Token](https://mp.weixin.qq.com/s/9-CLoSJZBrfTF2tul-M8Ww) （2026-3-6）
 
-- [[ 公众号 ] 不用 Cookie，鉴权照样稳 ](https://mp.weixin.qq.com/s/k8DC-GiYYPbofGDD_4jlPQ) （2026-3-6）
+- [[ 公众号 ] 不用 Cookie，鉴权照样稳](https://mp.weixin.qq.com/s/k8DC-GiYYPbofGDD_4jlPQ) （2026-3-6）
 
-- [[ CSDN ] Sa-Token登录策略全解析：从单地登录到同端互斥，这些配置项你都知道吗？ ](https://blog.csdn.net/weixin_29284885/article/details/158675177) （2026-3-5）
+- [[ CSDN ] Sa-Token登录策略全解析：从单地登录到同端互斥，这些配置项你都知道吗？](https://blog.csdn.net/weixin_29284885/article/details/158675177) （2026-3-5）
 
-- [[ 公众号 ] 18.6k vs 9.5k Star！若依认证该选谁？ ](https://mp.weixin.qq.com/s/BVFWWPiYloa1nuZ4MZ8XZg) （2026-3-4）
+- [[ 公众号 ] 18.6k vs 9.5k Star！若依认证该选谁？](https://mp.weixin.qq.com/s/BVFWWPiYloa1nuZ4MZ8XZg) （2026-3-4）
 
-- [[ 公众号 ] SaToken 支持使用 JSON body验签 ](https://mp.weixin.qq.com/s/0Rr9PuDBUJwaEolhtJxBwA) （2026-3-3）
+- [[ 公众号 ] SaToken 支持使用 JSON body验签](https://mp.weixin.qq.com/s/0Rr9PuDBUJwaEolhtJxBwA) （2026-3-3）
 
-- [[ 公众号 ] 明明接了 Redis，重启后会话还是丢了？ ](https://mp.weixin.qq.com/s/-O1qwR0I30wngurGo-qOuw) （2026-3-3）
+- [[ 公众号 ] 明明接了 Redis，重启后会话还是丢了？](https://mp.weixin.qq.com/s/-O1qwR0I30wngurGo-qOuw) （2026-3-3）
 
 - [[ CSDN ] JAVA：Spring Boot3 集成 Sa-Token 轻量级权限认证](https://shdxhl.blog.csdn.net/article/details/157695326) （2026-2-27）
 
@@ -259,11 +267,11 @@
 
 - [[ 公众号 ] 太强了！Sa-Token 的 Go 版本！](https://mp.weixin.qq.com/s/idfrMeAMY2CeGAZGY9csmw) （2025-10-20）
 
+- [[ 公众号 ] 从 0 到 1！Sa-Token 与 SpringBoot 整合教程，让鉴权优雅到飞起](https://mp.weixin.qq.com/s/PudodYBsIQODdfeweo39fQ) （2025-10-16）
+
 - [[ 公众号 ] 太强了！Sa-Token 的 rust 版本！](https://mp.weixin.qq.com/s/CveVq368Dz5Xw-a2nT3YDw) （2025-10-12）
 
 - [[ 公众号 ] 功能最全的Java权限认证框架](https://mp.weixin.qq.com/s/fO5Mm1UIN8oDOwvbq-sQTw) （2025-10-10）
-
-- [[ 公众号 ] 从 0 到 1！Sa-Token 与 SpringBoot 整合教程，让鉴权优雅到飞起](https://mp.weixin.qq.com/s/PudodYBsIQODdfeweo39fQ) （2025-10-16）
 
 - [[ 公众号 ] 一篇搞定！SpringBoot 搭建超安全 Sa-Token 登录鉴权系统](https://mp.weixin.qq.com/s/5fbrNS6jMpuViPPO8z_kMw) （2025-10-3）
 
@@ -311,26 +319,19 @@
 
 - [[ 公众号 ] 万字雄文：一次说清基于Sa-Token和MaxKey的统一认证中心实现](https://mp.weixin.qq.com/s/Gl2K47F9I6-Il-AieWLplw) （2024-11-15）
 
-<!-- 2026-2-3 搜集至 2024-11-15 公众号平台 -->
+- [[ 公众号 ] 集成sa-token前后端分离部署配置corsFliter解决跨域失效的真正原因](https://mp.weixin.qq.com/s/bSS4vmKlKM7ov_CUkjxkBg) （2024-7-8）
 
+- [[ 公众号 ] sa-token前后端分离解决跨域的正确姿势](https://mp.weixin.qq.com/s/96WbWL28T5_-xzyCfJ7Stg) （2024-7-6）
 
-- [[ 公众号 ] 集成sa-token前后端分离部署配置corsFliter解决跨域失效的真正原因](https://mp.weixin.qq.com/s/bSS4vmKlKM7ov_CUkjxkBg) （2024-07-08）
+- [[ 公众号 ] 集成sa-token实现登录和RBAC权限控制](https://mp.weixin.qq.com/s/SREjXoyL9s1JfddQnU38yA) （2024-4-16）
 
-- [[ 公众号 ] sa-token前后端分离解决跨域的正确姿势](https://mp.weixin.qq.com/s/96WbWL28T5_-xzyCfJ7Stg) （2024-07-06）
+- [[ CSDN ] springboot整合Sa-Token实现登录认证和权限校验（万字长文）](https://blog.csdn.net/2301_78646673/article/details/136008153) （2024-3-31）
 
-- [[ 公众号 ] 集成sa-token实现登录和RBAC权限控制](https://mp.weixin.qq.com/s/SREjXoyL9s1JfddQnU38yA) （2024-04-16）
+- [[ CSDN ] 【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-8-9）
 
-- [[ CSDN ] springboot整合Sa-Token实现登录认证和权限校验（万字长文）](https://blog.csdn.net/2301_78646673/article/details/136008153) （2024-03-31）
+- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 31 - Sa-Token（五）登录验证拦截器之 Token 有效期及其续签（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/126071871) （2022-7-30）
 
-- [[ CSDN ]【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-11-01）
-
-- [[ CSDN ]【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-11-01）
-
-- [[ CSDN ] 【Sa-Token】9、Sa-Token实现在线用户管理功能](https://blog.csdn.net/qq_40065776/article/details/132180932) （2023-08-09）
-
-- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 31 - Sa-Token（五）登录验证拦截器之 Token 有效期及其续签（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/126071871) （2022-07-30）
-
-- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 29 - Sa-Token（四）V1.30.0 登录流程分析（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/125659797) （2022-07-07）
+- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 29 - Sa-Token（四）V1.30.0 登录流程分析（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/125659797) （2022-7-7）
 
 - [[ 掘金 ] sa-token过期后WebSocket提示过期](https://juejin.cn/post/7103446095987998733) （2022-5-30）
 
@@ -338,37 +339,35 @@
 
 - [[ 掘金 ] SaToken技术分享](https://juejin.cn/post/7097967875670933535) （2022-5-15）
 
-- [[今日头条] SpringCloud Gateway配置Nacos服务发现，Sa-Token实现接口授权](https://www.toutiao.com/article/7089584645368578567/) （2022-04-24）
-
 - [[ CSDN ] 使用sa-token 进行权限控制](https://blog.csdn.net/u012389318/article/details/124098705) （2022-4-13）
 
 - [[ 掘金 ] SpringMVC配置sa-Token](https://juejin.cn/post/7081471627766005790) （2022-4-1）
 
-- [[ CSDN ] 【SpringBoot】59、SpringBoot使用Sa-Token-Quick-Login插件快速登录认证](https://lizhou.blog.csdn.net/article/details/123571910) （2022-03-30）
+- [[ CSDN ] 【SpringBoot】59、SpringBoot使用Sa-Token-Quick-Login插件快速登录认证](https://lizhou.blog.csdn.net/article/details/123571910) （2022-3-30）
 
-- [[ CSDN ] 【Sa-Token】1、Sa-Token实现登录功能](https://lizhou.blog.csdn.net/article/details/119301185) （2022-03-30）
+- [[ CSDN ] 【Sa-Token】1、Sa-Token实现登录功能](https://lizhou.blog.csdn.net/article/details/119301185) （2022-3-30）
 
 - [[ 掘金 ] 【SpringCloud-Alibaba系列教程】13.gateway网关结合Sa-token进行登录鉴权](https://juejin.cn/post/7070805258296885285) （2022-3-3）
 
-- [[ CSDN ] Sa-Token的Token有效期和临时有效期的区别](https://blog.csdn.net/ControlDemo/article/details/123177825) （2022-02-28）
+- [[ CSDN ] Sa-Token的Token有效期和临时有效期的区别](https://blog.csdn.net/ControlDemo/article/details/123177825) （2022-2-28）
 
 - [[ 掘金 ] Spring Cloud Gateway 集成Sa-Token](https://juejin.cn/post/7069748160087719967) （2022-2-28）
 
 - [[ 掘金 ] Java轻量级权限认证框架 Sa-Token 初体验](https://juejin.cn/post/7068105371839102983) （2022-2-24）
 
-- [[ CSDN ] Sa-Token获取当前所有可用Token](https://blog.csdn.net/ControlDemo/article/details/122940634) （2022-02-15）
+- [[ CSDN ] Sa-Token获取当前所有可用Token](https://blog.csdn.net/ControlDemo/article/details/122940634) （2022-2-15）
 
 - [[ 掘金 ] 使用 Sa-Token 解决 WebSocket 握手身份认证](https://juejin.cn/post/7064232762664255525) （2022-2-14）
 
-- [[ CSDN ] sa-token配置路由拦截放行Swagger路径](https://blog.csdn.net/ControlDemo/article/details/122885782) （2022-02-11）
+- [[ CSDN ] sa-token配置路由拦截放行Swagger路径](https://blog.csdn.net/ControlDemo/article/details/122885782) （2022-2-11）
 
 - [[ CSDN ] sa-token 多端登录思路和遇到的坑](https://blog.csdn.net/ControlDemo/article/details/122428512) （2022-1-28）
 
-- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 13 - Sa-Token（三）退出登录流程（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/122691698) （2022-01-25）
+- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 13 - Sa-Token（三）退出登录流程（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/122691698) （2022-1-25）
 
-- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 12 - Sa-Token（二）通过注解校验用户权限（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/122526722) （2022-01-16）
+- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 12 - Sa-Token（二）通过注解校验用户权限（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/122526722) （2022-1-16）
 
-- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 11 - 集成 Sa-Token 实现登录认证流程（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/122480703) （2022-01-13）
+- [[ CSDN ] 【RuoYi-Vue-Plus】学习笔记 11 - 集成 Sa-Token 实现登录认证流程（Sa-Token 源码）](https://blog.csdn.net/Michelle_Zhong/article/details/122480703) （2022-1-13）
 
 - [[ 掘金 ] Springboot插件集成(三)-权限认证插件sa-token](https://juejin.cn/post/7051872914458542093) （2022-1-11）
 
@@ -378,7 +377,7 @@
 
 - [[ 公众号 ] 还在用Spring Security？推荐你一款使用简单、功能强大的权限认证框架](https://mp.weixin.qq.com/s/L2KOgwJcXCxrSAV8bPJsJQ) （2021-10-8）
 
-- [[ 公众号 ] Spring Security太复杂？试试这个轻量、强大、优雅的权限认证框架！](https://mp.weixin.qq.com/s/BWziNxRZH29F2v4Tmb5meA) （2021-09-22）
+- [[ 公众号 ] Spring Security太复杂？试试这个轻量、强大、优雅的权限认证框架！](https://mp.weixin.qq.com/s/BWziNxRZH29F2v4Tmb5meA) （2021-9-22）
 
 - [[ 博客园 ] Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！](https://www.cnblogs.com/shengzhang/p/15260818.html) （2021-9-13）
 
@@ -394,11 +393,8 @@
 
 - [[ 掘金 ] 权限认证就它了Sa-Token](https://juejin.cn/post/6938747514837434376) （2021-3-12）
 
-- [[ 掘金 ] sa-token之前后端分离模式下如何完成权限认证](https://juejin.cn/post/6937219472507797535) （2021-03-8）
+- [[ 掘金 ] sa-token之前后端分离模式下如何完成权限认证](https://juejin.cn/post/6937219472507797535) （2021-3-8）
 
 - [[ 掘金 ] 一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录](https://juejin.cn/post/6917884159491276808) （2021-1-15）
 
 - [[ 掘金 ] sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录](https://juejin.cn/post/6914612737020526599) （2021-1-6）
-
-- [[ 掘金 ] Spring Boot 系列教程 | 第一百一篇：SpringBoot整合sa-token权限框架](https://juejin.cn/post/6875525673897869319) （2020-9-23)
-
