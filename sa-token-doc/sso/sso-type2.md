@@ -111,7 +111,7 @@ sa-token.cookie.domain=stp.com
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-forest</artifactId>
-	<version>${sa-token.version}</version>
+	<version>${sa.top.version}</version>
 </dependency>
 ```
 <!-------- tab:Gradle 方式 -------->
