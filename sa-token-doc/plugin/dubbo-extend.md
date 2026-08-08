@@ -35,14 +35,17 @@ RPC 模式的调用，可以让我们像调用本地方法一样完成服务通�
 	<version>${sa.top.version}</version>
 </dependency>
 ```
+注：如果使用的是 dubbo3，只需要将 `sa-token-dubbo` 修改为 `sa-token-dubbo3` 即可。
+
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
 // Sa-Token 整合 Dubbo
 implementation 'cn.dev33:sa-token-dubbo:${sa.top.version}'
 ```
+注：如果使用的是 dubbo3，只需要将 `sa-token-dubbo` 修改为 `sa-token-dubbo3` 即可。
 <!---------------------------- tabs:end ---------------------------->
 
-注：如果使用的是 dubbo3，只需要将 `sa-token-dubbo` 修改为 `sa-token-dubbo3` 即可。
+
 
 
 然后我们就可以愉快的做到以下事情：
