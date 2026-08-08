@@ -115,7 +115,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 /* -------- 支持特性 --------- */
 .feature-z{padding: 0em 1em; padding-top: 0px; padding-bottom: 60px; text-align: center; color: #000;}
-.feature-z .s-title{font-size: 30px; font-weight: 400; margin-top: 70px; margin-bottom: 40px;}
+.feature-z .s-title{font-size: 30px; font-weight: 400; margin-top: 70px; margin-bottom: 40px; line-height: 1.5;}
 .feature-z{color: rgb(128, 128, 128); text-align: center; box-sizing: border-box; line-height: 24px; font-size: 16px;}
 
 .feature-box{margin-top: 10px; margin-bottom: 70px; display: flex; flex-wrap: wrap; justify-content: space-between; /* justify-content: flex-start; */}
@@ -133,6 +133,24 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .re-text{padding: 0 1em;}
 .re-text a{color: #0969da; text-decoration: none;}
 .re-text a:hover{border-bottom: 1px #0969da solid;}
+
+/* 渐变色文字（兼容搜狗等 WebKit 内核浏览器） */
+.s-gradient-text{
+	display: inline-block;
+	line-height: 1.5;
+	background-image: linear-gradient(to right, #44f, #bd34fe);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+	.s-gradient-text{
+		background: none;
+		-webkit-text-fill-color: #7b3fe4;
+		color: #7b3fe4;
+	}
+}
 
 /* -------- 集成案例 --------- */
 .s-case-box{justify-content: space-between;}
