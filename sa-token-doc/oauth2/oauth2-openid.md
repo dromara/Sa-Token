@@ -1,7 +1,7 @@
 # OpenId 与 UnionId
 
 <p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV1oz6AY5ERJ/" target="_blank">
-	参考视频：OAuth2 授权流程中的 clientId、openId、unionId、userId 都是干嘛的？
+	视频讲解：OAuth2 授权流程中的 clientId、openId、unionId、userId 都是干嘛的？
 </a></p>
 
 

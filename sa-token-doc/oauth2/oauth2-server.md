@@ -288,7 +288,7 @@ OAuth2 前端测试页：
 <img class="s-w-sh" src="/big-file/doc/oauth2-new/sa-oauth2-client-test-h5-page.png" alt="sa-oauth2-client-index" />
 
 <p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV13LSMYzEmE/" target="_blank">
-	参考视频：OAuth2 四种模式 前端测试页
+	视频讲解：OAuth2 四种模式 前端测试页
 </a></p>
 
 
