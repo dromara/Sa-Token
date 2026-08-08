@@ -1953,7 +1953,7 @@ public class StpLogic {
 	}
 
 	/**
-	 * 对当前 token 的 timeout 值进行续期
+	 * 重置当前 token 的 timeout 有效期
 	 *
 	 * @param timeout 要修改成为的有效时间 (单位: 秒)
 	 */
@@ -1974,7 +1974,7 @@ public class StpLogic {
 	}
 
 	/**
-	 * 对指定 token 的 timeout 值进行续期
+	 * 重置指定 token 的 timeout 有效期
 	 *
 	 * @param tokenValue 指定 token
 	 * @param timeout 要修改成为的有效时间 (单位: 秒，填 -1 代表要续为永久有效)
