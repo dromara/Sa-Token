@@ -166,7 +166,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 
 /* 悬浮动画 */
-.s-case:hover{box-shadow: 0 0 20px #ccc;}
+.s-case:hover{box-shadow: 0 0 20px #ccc; border-color: rgba(22, 119, 255, 0.25);}
 .s-case:hover img{transform: scale(1.3, 1.3); }
 .s-case-link img{transition: transform 0.3s !important;}
 .s-case img:hover{cursor: pointer;}
@@ -184,6 +184,45 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 	line-height: 10;
 	color: rgba(0,0,0,0);
 	cursor: pointer;
+}
+
+/* 边框流光环绕（悬浮触发，参考阿里云云服务器卡片） */
+@property --s-case-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+.s-case::before{
+	content: "";
+	position: absolute;
+	inset: 0;
+	padding: 1.5px;
+	/* 头实尾虚：亮头在前，拖尾渐隐 */
+	background: conic-gradient(
+		from var(--s-case-angle),
+		transparent 0%,
+		transparent 66%,
+		rgba(22, 119, 255, 0.15) 78%,
+		rgba(105, 192, 255, 0.45) 88%,
+		#4dabff 95%,
+		#1677ff 100%
+	);
+	-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 3;
+	transition: opacity 0.25s ease;
+	animation: s-case-border-spin 7s linear infinite;
+	animation-play-state: paused;
+}
+.s-case:hover::before{
+	opacity: 1;
+	animation-play-state: running;
+}
+@keyframes s-case-border-spin{
+	to{ --s-case-angle: 360deg; }
 }
 
 
