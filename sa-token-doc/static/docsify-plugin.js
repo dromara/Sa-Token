@@ -20,18 +20,21 @@ var myDocsifyPlugin = function(hook, vm) {
 	hook.afterEach(function(html) {
 		
 		// 功能 2，文章底部添加仓库地址  
-		var url = 'https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/' + vm.route.file;
-		var url2 = 'https://github.com/dromara/sa-token/tree/dev/sa-token-doc/' + vm.route.file;
-		var footer = [
-			'<br/><br/><br/><br/><br/><br/><br/><hr/>',
-			'<footer>',
-			'<span>发现错误？ 您可以在 <a href="' + url + '" target="_blank">Gitee</a> 或 <a href="' + url2 +
-			'" target="_blank">GitHub</a> 帮助我们完善此页文档！</span>',
-			'或 <a href="#/more/join-group">加入讨论群</a> 交流反馈。',
-			'<br/><br/>',
-			'<a href="https://beian.miit.gov.cn/" target="_blank" style="color:#aaa; border-color: #aaa;">鲁ICP备18046274号-4</a>',
-			'</footer>'
-		].join('');
+		var giteeUrl = `https://gitee.com/dromara/sa-token/tree/dev/sa-token-doc/${vm.route.file}`;
+		var githubUrl = `https://github.com/dromara/sa-token/tree/dev/sa-token-doc/${vm.route.file}`;
+		var atomgitUrl = `https://atomgit.com/dromara/sa-token/tree/dev/sa-token-doc/${vm.route.file}`;
+		var footer = `
+			<br/><br/><br/><br/><br/><br/><br/><hr/>
+			<footer>
+				<span>发现错误？ 您可以在 <a href="${giteeUrl}" target="_blank">Gitee</a> 或 <a href="${githubUrl}" target="_blank">GitHub</a> 或 <a href="${atomgitUrl}" target="_blank">AtomGit</a> 帮助我们完善此页文档！</span>
+				或 <a href="#/more/join-group" target="_blank">加入讨论群</a> 交流反馈。
+				<br/>
+				<p style="font-size: 12px; color: #999;">我们坚信，即使再复杂的技术，也可以用清晰、干练、易懂的文字描述出它的具体细节，如果你在阅读文档时有难以理解的章节，那一定是我们还没有优化好它，
+					请向我们 <a href="#/more/demand-commit" target="_blank">反馈</a> 你的困惑之处，我们将持续优化文档。</p>
+				<br/>
+				<a href="https://beian.miit.gov.cn/" target="_blank" style="color:#aaa; border-color: #aaa;">鲁ICP备18046274号-4</a>
+			</footer>
+		`;
 		return html + footer;
 	});
 	
