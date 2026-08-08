@@ -116,7 +116,7 @@ public class SaTokenListenerForLog implements SaTokenListener {
 	 */
 	@Override
 	public void doRenewTimeout(String loginType, Object loginId, String tokenValue, long timeout) {
-		log.info("token 续期成功, {} 秒后到期, 帐号={}, token值={} ", timeout, loginId, tokenValue);
+		log.info("token 续期成功, {} 秒后到期, 账号={}, token值={} ", timeout, loginId, tokenValue);
 	}
 
 	/**
