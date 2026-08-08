@@ -16,13 +16,6 @@ OAuth2 集成常见问题整理
 
 地址写错了，框架就不会处理这个请求，会直接返回 `{"msg": "not handle"}`，所有开放地址可参考：[OAuth2 开放接口](/oauth2/oauth2-apidoc)
 
-如果仔细检查地址后没有写错，却依然返回了这个信息，那有可能是对应的接口没有打开，比如说：
-
-- sso-server 端的单点注销地址：`http://{host}:{port}/sso/signout`；
-- sso-client 端的注销地址：`http://{host}:{port}/sso/logout`；
-
-都需要在配置文件配置：`sa-token.sso.is-slo=true`后，才会打开。
-
 
 
 ### 问：我参照文档搭建 oauth2-server，一直提示：code 无效，请问怎么回事？
