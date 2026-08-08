@@ -332,7 +332,7 @@ sa-token.sso-server.home-route=/home
 | :--------			| :--------	| :--------	| :--------										|
 | mode				| String	| 					| 指定当前系统集成 SSO 时使用的模式（约定型配置项，不对代码逻辑产生任何影响）			|
 | client			| String	| ""				| 当前 Client 名称标识，用于和 ticket 码的互相锁定			|
-| serverUrl			| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，参考：[详解](/sso/sso-questions?id=问：模式三配置一堆-xxx-url-，有办法简化一下吗？)	|
+| serverUrl			| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`signoutUrl`、`pushUrl` 属性前面，用以简化各种 url 配置，参考：[详解](/sso/sso-questions?id=问：模式三配置一堆-xxx-url-，有办法简化一下吗？)	|
 | authUrl			| String	| /sso/auth			| 配置 Server 端单点登录授权地址					|
 | signoutUrl		| String	| /sso/signout		| 配置 Server 端单点注销地址										|
 | pushUrl			| String	| /sso/pushS		| 配置 Server 端的推送消息地址						|
@@ -379,7 +379,7 @@ sa-token.sso-client.is-slo=true
 | isPush			| Boolean	| false				| 是否接收推送消息			|
 | isSlo				| Boolean	| true				| 是否打开单点注销功能							|
 | secretKey			| String	| ""				| API 调用签名秘钥					|
-| serverUrl			| String	| null				| 配置 Server 端主机总地址，拼接在 `authUrl`、`checkTicketUrl`、`userinfoUrl`、`sloUrl` 属性前面，用以简化各种 url 配置，参考：[详解](/sso/sso-questions?id=问：模式三配置一堆-xxx-url-，有办法简化一下吗？)	|
+| serverUrl			| String	| null				| 配置此 Client 端主机总地址，拼接在 `pushUrl` 属性前面（默认 `/sso/pushC`），用以简化推送地址配置	|
 | pushUrl			| String	| /sso/pushC		| 配置此 Client 端的推送消息地址						|
 
 配置示例：

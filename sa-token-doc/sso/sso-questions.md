@@ -87,7 +87,7 @@ public class SaSsoServerApplication {
 ### 问：模式三配置一堆 xxx-url ，有办法简化一下吗？
 可以使用 `sa-token.sso-client.server-url` 来简化：
 
-配置含义：配置 Server 端主机总地址，拼接在 authUrl、getDataUrl、sloUrl 属性前面，用以简化各种 url 配置。
+配置含义：配置 Server 端主机总地址，拼接在 authUrl、getDataUrl、signoutUrl、pushUrl 属性前面，用以简化各种 url 配置。
 
 在开发 SSO 模块时，我们需要在 sso-client 配置认证中心的各种地址，特别是在模式三下，一般代码会变成这样：
 
