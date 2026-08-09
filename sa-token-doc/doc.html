@@ -210,7 +210,7 @@
 					<div class="ad-box">
 
 						<div class="ad-title">
-							<span class="ad-tips">推广信息：</span>
+							<span class="ad-tips">推荐</span>
 							<span class="ad-tips ad-close">关闭</span>
 						</div>
 
@@ -406,7 +406,7 @@
 					let allowJg = 1000 * 60 * 60 * 24 * 1;
 					// allowJg = 1000 * 10;
 					try {
-						const closeAdTime = localStorage.closeAdTime;
+						const closeAdTime = localStorage.closeAdTimeRight;
 						if (closeAdTime) {
 							// 点击广告关闭的时间，和当前时间的差距
 							const closeAdJg = new Date().getTime() - parseInt(closeAdTime);
@@ -429,7 +429,7 @@
 						layer.confirm('关闭后，一天内不再展现此信息', function() {
 							$(".ad-box").fadeOut(1000); // 淡出效果
 							layer.msg('关闭成功');
-							localStorage.closeAdTime = new Date().getTime();
+							localStorage.closeAdTimeRight = new Date().getTime();
 						})
 					})
 				}
