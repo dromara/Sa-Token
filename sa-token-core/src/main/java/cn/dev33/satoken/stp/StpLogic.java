@@ -89,6 +89,9 @@ public class StpLogic {
 	/**
 	 * 安全的重置当前账号类型
 	 *
+	 * <p> 注意：此方法只能在项目启动时调用，项目启动后不可动态更改 loginType。
+	 * 若在运行时修改，可能造成线程安全问题和严重的逻辑问题。
+	 *
 	 * @param loginType 账号类型标识
 	 * @return 对象自身
 	 */
