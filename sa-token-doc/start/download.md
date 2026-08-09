@@ -188,9 +188,10 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 
 
 ## 获取源码
-如果你想深入了解 Sa-Token，你可以通过`Gitee`或者`GitHub`来获取源码 （**学习测试请拉取 master 分支**，dev为正在开发的分支，有很多特性并不稳定）
+如果你想深入了解 Sa-Token，你可以通过 `Gitee`、`GitHub`、`AtomGit` 来获取源码 （**学习测试请拉取 master 分支**，dev为正在开发的分支，有很多特性并不稳定）
 - **Gitee**地址：[https://gitee.com/dromara/sa-token](https://gitee.com/dromara/sa-token)
 - **GitHub**地址：[https://github.com/dromara/sa-token](https://github.com/dromara/sa-token)
+- **AtomGit**地址：[https://atomgit.com/dromara/sa-token](https://atomgit.com/dromara/sa-token)
 - 开源不易，求鼓励，点个`star`吧
 - 源码目录介绍: - [仓库目录](/arch/dir-intro)
 
@@ -198,10 +199,10 @@ Maven依赖一直无法加载成功？[参考解决方案](https://sa-token.cc/d
 
 
 
-## 运行示例
+<!-- ## 运行示例
 
 - 1、下载代码（学习测试用 master 分支）。
 - 2、从根目录导入项目。
 - 3、选择相应的示例添加为 Maven 项目，打开 XxxApplication.java 运行。
 
-<img src="/big-file/doc/start/import-demo-run.png" alt="运行示例" title="s-w-sh">
+<img src="/big-file/doc/start/import-demo-run.png" alt="运行示例" title="s-w-sh"> -->
