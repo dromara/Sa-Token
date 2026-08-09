@@ -20,16 +20,8 @@
 
 ## 二、STS 协议
 
-Sa-Token SSO 模块的开放接口标准为 STS 协议。
-
-STS 协议并非一套公共授权协议，而是 sa-token-sso 框架本身内化、抽离出的一套授权协议标准。
-
-- 一般的公共协议遵循的路线是：发现需求 -> 先为解决方案定义一套协议 -> 再进行框架实现。
-- 而 Sa-Token SSO 的路线为：发现需求 -> 先进行框架实现 -> 再基于框架实现定义一套协议，将解决方案进行标准化。
-
-定义 STS 协议将有助于让 Sa-Token SSO 模块进行标准化，也为日后实现多语言 SDK 提供基础支持。
-
-目前 STS 协议规定了应用进行 单点登录、单点注销、消息推送 等动作的标准流程。
+Sa-Token SSO 模块的开放接口标准为 STS 协议。STS 协议的设计充分参考了 CAS、Spring Authorization Server、KeyClock、OAuth2 协议等经典框架/ 协议的授权流程。
+定义了应用进行 单点登录、单点注销、消息推送 等动作的标准动作。
 可解决：同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离、纯 js、vue2、vue3、Sa-Token 项目、非 Sa-Token 项目、java 项目、非 java 项目 等架构下的 SSO 认证需求。
 
 下面两节将介绍 STS 协议在 SSO-Server 端和 SSO-Client 端开放的接口标准。
