@@ -17,6 +17,7 @@ StpUtil.setTokenValue(tokenValue, timeout);   // 在当前会话中写入 Token 
 StpUtil.setTokenValue(tokenValue, loginParameter);   // 在当前会话中写入 Token 值，并指定登录参数。
 StpUtil.setTokenValueToStorage(tokenValue);   // 将 Token 写入当前请求的 Storage 存储器。
 StpUtil.getTokenInfo();   // 获取当前 Token 的详细参数。
+StpUtil.createSaLoginParameter();   // 根据当前配置对象创建一个 SaLoginParameter 对象
 ```
 
 
@@ -70,7 +71,7 @@ StpUtil.getLoginIdDefaultNull();   // 获取当前会话账号id, 如果未登�
 StpUtil.getLoginIdAsString();   // 获取当前会话账号id, 并转换为String类型
 StpUtil.getLoginIdAsInt();   // 获取当前会话账号id, 并转换为int类型
 StpUtil.getLoginIdAsLong();   // 获取当前会话账号id, 并转换为long类型 
-StpUtil.getLoginIdByToken(token);   // 获取指定Token对应的账号id，如果未登录，则返回 null 
+StpUtil.getLoginIdByToken(token);   // 获取指定 Token 对应的账号 id，若 token 无效/被踢/被顶/被冻结则返回 null 
 StpUtil.getLoginIdByTokenNotThinkFreeze(token);   // 获取指定Token对应的账号id（不考虑冻结状态），如果未登录，则返回 null 
 StpUtil.getExtra(key);   // 获取当前 Token 的扩展信息（此函数只在jwt模式下生效）
 StpUtil.getExtra(token, key);   // 获取指定 Token 的扩展信息（此函数只在jwt模式下生效）
@@ -86,7 +87,7 @@ StpUtil.getSessionByLoginId(10001);   // 获取指定账号id的Session，如果
 StpUtil.getSessionByLoginId(10001, true);   // 获取指定账号id的Session, 如果Session尚未创建，isCreate=是否新建并返回
 
 // Token-Session 相关 
-StpUtil.getTokenSession();   // 获取当前会话的Session，如果Session尚未创建，则新建并返回 
+StpUtil.getTokenSession();   // 获取当前 Token-Session，如果 Session 尚未创建，则新建并返回 
 StpUtil.getTokenSessionByToken(token);   // 获取指定Token-Session，如果Session尚未创建，则新建并返回
 StpUtil.getAnonTokenSession();   // 获取当前匿名 Token-Session （可在未登录情况下使用的Token-Session）
 
@@ -150,7 +151,7 @@ StpUtil.getTokenValueListByLoginId(10001);   // 获取指定账号id的tokenValu
 StpUtil.getTokenValueListByLoginId(10001, "APP");   // 获取指定账号id指定设备类型端的tokenValue 集合 
 StpUtil.getTerminalListByLoginId(10001);   // 获取指定账号 id 已登录设备信息集合
 StpUtil.getTerminalListByLoginId(10001, "PC");   // 获取指定账号 id 指定设备类型端的已登录设备信息集合
-StpUtil.forEachTerminalList(10001, (terminal) -> {});   // 遍历指定账号的已登录设备列表
+StpUtil.forEachTerminalList(10001, (session, terminal) -> {});   // 遍历指定账号的已登录设备列表
 StpUtil.getTerminalInfo();   // 获取当前会话的终端信息
 StpUtil.getTerminalInfoByToken(token);   // 获取指定 token 的终端信息
 StpUtil.getLoginDeviceId();   // 返回当前会话的登录设备 id

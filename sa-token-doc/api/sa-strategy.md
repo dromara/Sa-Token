@@ -84,76 +84,13 @@ public SaCorsHandleFunction corsHandle = (req, res, sto) -> {
 ```
 
 
-### 注解操作相关策略 
+### 重写策略（set 连缀风格）
 
 ``` java
-/**
- * 对一个 [Method] 对象进行注解校验 （注解鉴权内部实现）
- * <p>  参数：Method句柄  </p>
- * <p>  返回：无  </p>
- */
-public SaCheckMethodAnnotationFunction checkMethodAnnotation = (method) -> {
-	// ... 
-};
-
-/**
- * 对一个 [Element] 对象进行注解校验 （注解鉴权内部实现）
- * <p>  参数：element元素  </p>
- * <p>  返回：无  </p>
- */
-@SuppressWarnings("unchecked")
-public SaCheckElementAnnotationFunction checkElementAnnotation = (element) -> {
-	// ... 
-};
-
-/**
- * 从元素上获取注解
- * <p>  参数：element元素，要获取的注解类型  </p>
- * <p>  返回：注解对象  </p>
- */
-public SaGetAnnotationFunction getAnnotation = (element, annotationClass)->{
-	return element.getAnnotation(annotationClass);
-};
-
-/**
- * 判断一个 Method 或其所属 Class 是否包含指定注解
- * <p>  参数：Method、注解  </p>
- * <p>  返回：是否包含  </p>
- */
-public SaIsAnnotationPresentFunction isAnnotationPresent = (method, annotationClass) -> {
-	// ...
-	return false;
-};
-
-/**
- * SaCheckELRootMap 扩展函数
- * <p>  参数：SaCheckELRootMap 对象 </p>
- */
-public SaCheckELRootMapExtendFunction checkELRootMapExtendFunction = rootMap -> {
-	// 默认不做任何处理
-};
+SaStrategy.instance.setCreateToken(createToken);   // 重写创建 Token 的策略
+SaStrategy.instance.setCreateSession(createSession);   // 重写创建 Session 的策略
+SaStrategy.instance.setHasElement(hasElement);   // 重写集合模糊匹配策略
+SaStrategy.instance.setGenerateUniqueToken(generateUniqueToken);   // 重写生成唯一 token 的策略
+SaStrategy.instance.setCreateStpLogic(createStpLogic);   // 重写创建 StpLogic 的策略
+SaStrategy.instance.setAutoRenew(autoRenew);   // 重写是否自动续期策略
 ```
-
-
-
-### 防火墙相关策略 
-
-``` java
-/**
- * 防火墙校验函数
- * <p> 参数：请求对象、响应对象、预留扩展参数 </p>
- */
-public SaFirewallCheckFunction check = (req, res, extArg) -> {
-	// ... 
-};
-
-/**
- * 自定义当请求 path 校验不通过时地处理方案 
- * <p> 参数：防火墙校验异常、请求对象、响应对象、预留扩展参数 </p>
- */
-SaFirewallStrategy.instance.checkFailHandle = (e, req, res, extArg) -> {
-	// 自定义处理逻辑 ...
-};
-```
-
-参考：[防火墙](/fun/firewall)

@@ -18,6 +18,14 @@ session.getId();   // 获取此 Session 的 id
 session.setId(id);   // 写入此 Session 的 id
 session.getCreateTime();   // 返回当前会话创建时间（时间戳）
 session.setCreateTime(createTime);   // 写入此 Session 的创建时间（时间戳）
+session.getType();   // 获取此 Session 的类型
+session.setType(type);   // 写入此 Session 的类型
+session.getLoginType();   // 获取此 Session 的账号类型
+session.setLoginType(loginType);   // 写入此 Session 的账号类型
+session.getLoginId();   // 获取此 Session 的账号 id
+session.setLoginId(loginId);   // 写入此 Session 的账号 id
+session.getToken();   // 获取此 Session 的 token 值
+session.setToken(token);   // 写入此 Session 的 token 值
 ```
 
 
@@ -27,10 +35,13 @@ session.setTerminalList(terminalList);   // 写入登录终端信息列表
 session.getTerminalList();   // 获取登录终端信息列表
 session.terminalListCopy();   // 获取 登录终端信息列表 (拷贝副本)
 session.getTerminalListByDeviceType(deviceType);   // 获取 登录终端信息列表 (拷贝副本)，根据 deviceType 筛选
+session.getTokenValueListByDeviceType(deviceType);   // 获取指定设备类型的 token 值列表
 session.getTerminal(tokenValue);   // 查找一个终端信息，根据 tokenValue
 session.addTerminal(terminal);   // 添加一个终端信息
 session.removeTerminal(tokenValue);   // 移除一个终端信息
-session.maxTerminalIndex();   // 获取最大的终端索引值，如无返0
+session.forEachTerminalList((session, terminal) -> {});   // 遍历登录终端信息列表
+session.getHistoryTerminalCount();   // 获取历史终端数量
+session.setHistoryTerminalCount(count);   // 设置历史终端数量
 session.isTrustDeviceId("xxxxxxxxxxxxxxxxxxxxxxxx");   // 判断指定设备 id 是否为可信任设备
 ```
 
@@ -44,7 +55,6 @@ session.timeout();   // 获取此Session的剩余存活时间 (单位: 秒)
 session.updateTimeout(timeout);   // 修改此Session的剩余存活时间
 session.updateMinTimeout(minTimeout);   // 修改此Session的最小剩余存活时间 (只有在 Session 的过期时间低于指定的 minTimeout 时才会进行修改)
 session.updateMaxTimeout(maxTimeout);   // 修改此Session的最大剩余存活时间 (只有在 Session 的过期时间高于指定的 maxTimeout 时才会进行修改)
-session.trans(value);   // value为 -1 时返回 Long.MAX_VALUE，否则原样返回 
 ```
 
 
@@ -67,6 +77,7 @@ session.delete(key);   // 删值
 session.keys();   // 返回当前Session的所有key 
 session.clear();   // 清空所有值 
 session.getDataMap();   // 获取数据挂载集合（如果更新map里的值，请调用session.update()方法避免产生脏数据 ） 
+session.setDataMap(dataMap);   // 写入数据挂载集合
 session.refreshDataMap(dataMap);   // 写入数据集合 (不改变底层对象，只将此dataMap所有数据进行替换) 
 ```
 

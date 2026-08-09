@@ -7,17 +7,33 @@
 SaManager 负责管理 Sa-Token 所有全局组件。
 ``` java
 SaManager.getConfig();                 // 获取全局配置对象 
+SaManager.setConfig(config);           // 设置全局配置对象
 SaManager.getSaTokenDao();             // 获取数据持久化对象 
+SaManager.setSaTokenDao(saTokenDao);   // 设置数据持久化对象
 SaManager.getStpInterface();           // 获取权限认证对象 
-SaManager.getSaTokenContext();         // 获取SaTokenContext上下文处理对象
-SaManager.getSaTokenListener();        // 获取侦听器对象 
-SaManager.getSaTemp();                 // 获取临时令牌认证模块对象 
+SaManager.setStpInterface(stpInterface);   // 设置权限认证对象
+SaManager.getSaTokenContext();         // 获取 SaTokenContext 上下文处理对象
+SaManager.setSaTokenContext(saTokenContext);   // 设置 SaTokenContext 上下文处理对象
+SaManager.getSaTempTemplate();         // 获取临时令牌认证模块对象 
+SaManager.setSaTempTemplate(saTempTemplate);   // 设置临时令牌认证模块对象
 SaManager.getSaJsonTemplate();         // 获取 JSON 转换器 Bean
-SaManager.getSaSignTemplate();         // 获取参数签名 Bean 
-SaManager.getStpLogic("type");         // 获取指定账号类型的StpLogic对象，获取不到时自动创建并返回 
-SaManager.getStpLogic("type", false);  // 获取指定账号类型的StpLogic对象，获取不到时抛出异常 
+SaManager.setSaJsonTemplate(saJsonTemplate);   // 设置 JSON 转换器 Bean
+SaManager.getSaHttpTemplate();         // 获取 Http 请求处理 Bean
+SaManager.setSaHttpTemplate(saHttpTemplate);   // 设置 Http 请求处理 Bean
+SaManager.getSaSerializerTemplate();   // 获取序列化器 Bean
+SaManager.setSaSerializerTemplate(saSerializerTemplate);   // 设置序列化器 Bean
+SaManager.getSaSameTemplate();         // 获取 Same-Token 模块 Bean
+SaManager.setSaSameTemplate(saSameTemplate);   // 设置 Same-Token 模块 Bean
+SaManager.getSaTotpTemplate();         // 获取 TOTP 模块 Bean
+SaManager.setSaTotpTemplate(totpTemplate);   // 设置 TOTP 模块 Bean
+SaManager.getLog();                    // 获取日志输出对象
+SaManager.setLog(log);                 // 设置日志输出对象
+SaManager.getStpLogic("type");         // 获取指定账号类型的 StpLogic 对象，获取不到时自动创建并返回 
+SaManager.getStpLogic("type", false);  // 获取指定账号类型的 StpLogic 对象，获取不到时抛出异常 
 SaManager.putStpLogic(stpLogic);       // 向全局集合中 put 一个 StpLogic 
 ```
+
+侦听器注册请使用 `SaTokenEventCenter.registerListener(listener)`，参数签名模块请使用 `SaSignManager.getSaSignTemplate()`（见 [参数签名](/plugin/api-sign) 章节）。
 
 
 ### SaHolder
@@ -118,6 +134,14 @@ SaReactorHolder.getMonoExchange().map(e -> {
 	System.out.println(e);
 	return e;
 });
+
+SaReactorHolder.sync(() -> {});   // 在 Reactor 异步上下文中同步执行代码块
+
+// 同步方式（WebFilter 等场景）
+SaReactorSyncHolder.setContext(exchange);   // 写入当前请求的 ServerWebExchange
+SaReactorSyncHolder.getExchange();          // 获取当前请求的 ServerWebExchange
+SaReactorSyncHolder.clearContext();         // 清除当前上下文
+SaReactorSyncHolder.setContext(exchange, () -> {});   // 在指定 exchange 上下文中执行代码块并返回结果
 ```
 
 

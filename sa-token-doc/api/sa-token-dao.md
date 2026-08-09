@@ -25,6 +25,7 @@ dao.updateTimeout(key, timeout);   // 修改Value的剩余存活时间 (单位: 
 ### 3、对象读写 
 ``` java
 dao.getObject(key);   // 获取Object，如无返空
+dao.getObject(key, classType);   // 获取Object，并指定转换类型
 dao.setObject(key, value, timeout);   // 写入Object，并设定存活时间 (单位: 秒)
 dao.updateObject(key, value);   // 更新Object (过期时间不变)
 dao.deleteObject(key);   // 删除Object
@@ -37,7 +38,7 @@ dao.updateObjectTimeout(key, timeout);   // 修改Object的剩余存活时间 (�
 ``` java
 dao.getSession(sessionId);   // 获取Session，如无返空
 dao.setSession(session, timeout);   // 写入Session，并设定存活时间 (单位: 秒)
-dao.setSession(session);   // 更新Session (过期时间不变)
+dao.updateSession(session);   // 更新Session (过期时间不变)
 dao.deleteSession(sessionId);   // 删除Session
 dao.getSessionTimeout(sessionId);   // 获取Session的剩余存活时间 (单位: 秒) 
 dao.updateSessionTimeout(sessionId, timeout);   // 修改Session的剩余存活时间 (单位: 秒) 
