@@ -35,24 +35,15 @@
         .comparison-text {
             text-align: center;
             margin-bottom: 15px;
-            padding: 12px;
+            padding: 20px 16px;
             background: #f8f9fa;
             font-size: 16px;
-            line-height: 1.5;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
+            line-height: 1.6;
         }
         
         .highlight {
-            color: #8A2BE2; /* 紫色 */
-            font-weight: 700; /* 更粗 */
-            font-size: 18px; /* 增大字号 */
-			margin-left: 6px;
-			margin-right: 6px;
-            /* padding: 0 5px; /* 左右添加空格 */ */
+            color: #8A2BE2;
+            font-weight: 700;
         }
         
         .chart-container {
@@ -121,8 +112,20 @@
         const repos = [
             { owner: 'dromara', name: 'Sa-Token', desc: 'Sa-Token', color: '#349A34' },
             { owner: 'spring-projects', name: 'spring-security', desc: 'Spring Security', color: '#5DB1FF' },
-            { owner: 'apache', name: 'shiro', desc: 'Apache Shiro', color: '#ED7C25' }
+            { owner: 'apache', name: 'shiro', desc: 'Apache Shiro', color: '#ED7C25' },
+            { owner: 'spring-projects', name: 'spring-authorization-server', desc: 'Spring Auth Server', color: '#6366F1' },
+            { owner: 'auth0', name: 'java-jwt', desc: 'java-jwt', color: '#9333EA' }
         ];
+
+        // GitHub API 不可用时的保底 Star 数（按仓库 name 索引）
+        // 快照日期：2026-8-9，取自 GitHub REST API 当时返回值；限流、网络异常等情况回退使用
+        const fallbackStarsByRepoName = {
+            'Sa-Token': 18977,
+            'spring-security': 9598,
+            'shiro': 4451,
+            'java-jwt': 6233,
+            'spring-authorization-server': 5106
+        };
         
         // ECharts实例和数据
         let starsChart = null;
@@ -222,12 +225,12 @@
                 return data.stargazers_count;
             } catch (error) {
                 console.error(`获取 ${repo.owner}/${repo.name} 数据失败:`, error);
-                
-                // 返回模拟数据用于测试
-                if (repo.name === 'Sa-Token') return 18452;
-                if (repo.name === 'spring-security') return 9398;
-                if (repo.name === 'shiro') return 4419;
-                
+
+                const fallbackStars = fallbackStarsByRepoName[repo.name];
+                if (fallbackStars !== undefined) {
+                    return fallbackStars;
+                }
+
                 throw error;
             }
         }
@@ -237,8 +240,10 @@
             const saTokenData = repoData.find(r => r.name === 'Sa-Token');
             const springSecurityData = repoData.find(r => r.name === 'spring-security');
             const shiroData = repoData.find(r => r.name === 'shiro');
+            const javaJwtData = repoData.find(r => r.name === 'java-jwt');
+            const springAuthServerData = repoData.find(r => r.name === 'spring-authorization-server');
             
-            if (!saTokenData || !springSecurityData || !shiroData) {
+            if (!saTokenData || !springSecurityData || !shiroData || !javaJwtData || !springAuthServerData) {
                 document.querySelector('.comparison-text').innerHTML = "数据加载不完整";
                 return;
             }
@@ -246,12 +251,20 @@
             const saTokenStars = saTokenData.stars || 0;
             const springSecurityStars = springSecurityData.stars || 1;
             const shiroStars = shiroData.stars || 1;
+            const javaJwtStars = javaJwtData.stars || 1;
+            const springAuthServerStars = springAuthServerData.stars || 1;
             
             const springSecurityMultiple = (saTokenStars / springSecurityStars).toFixed(2);
             const shiroMultiple = (saTokenStars / shiroStars).toFixed(2);
+            const javaJwtMultiple = (saTokenStars / javaJwtStars).toFixed(2);
+            const springAuthServerMultiple = (saTokenStars / springAuthServerStars).toFixed(2);
             
-            document.querySelector('.comparison-text').innerHTML = 
-                `Sa-Token GitHub 关注量达到 <span class="highlight"> ${saTokenStars.toLocaleString()} </span> Star，是主要竞争框架 Spring Security 的 <span class="highlight"> ${springSecurityMultiple} </span> 倍，Apache Shiro 的 <span class="highlight"> ${shiroMultiple} </span> 倍`;
+            document.querySelector('.comparison-text').innerHTML =
+                `Sa-Token GitHub 关注量达到 <span class="highlight">${saTokenStars.toLocaleString()}</span> Star，` +
+                `是主要竞争框架 Spring Security 的 <span class="highlight">${springSecurityMultiple}</span> 倍、` +
+                `Apache Shiro 的 <span class="highlight">${shiroMultiple}</span> 倍、` +
+                `Spring Authorization Server 的 <span class="highlight">${springAuthServerMultiple}</span> 倍、` +
+                `java-jwt 的 <span class="highlight">${javaJwtMultiple}</span> 倍`;
         }
         
         // 更新柱状图
@@ -301,7 +314,7 @@
                 grid: {
                     left: '5%',
                     right: '5%',
-                    bottom: '8%',
+                    bottom: '14%',
                     top: '8%',
                     containLabel: true
                 },
@@ -315,8 +328,11 @@
                     },
                     axisLabel: {
                         color: '#333',
-                        fontSize: 14,
-                        fontWeight: 'bold'
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                        interval: 0,
+                        hideOverlap: false,
+                        lineHeight: 16
                     }
                 },
                 yAxis: {
@@ -360,7 +376,7 @@
                                 color: colors[index]
                             }
                         })),
-                        barWidth: '70%',
+                        barWidth: '45%',
                         label: {
                             show: true,
                             position: 'top',
@@ -370,7 +386,7 @@
                             fontWeight: 'bold'
                         },
                         itemStyle: {
-                            borderRadius: [4, 4, 0, 0]
+                            borderRadius: [2, 2, 0, 0]
                         }
                     }
                 ]
