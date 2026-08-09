@@ -29,8 +29,21 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 .nav-right a{color: #34495E; text-decoration: none; transition: all 0.2s;}
 .nav-right a:hover{color: #42B983;}
-.doc-header .nav-right .wzi{font-size: 14px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
-.doc-header .nav-right .wzi:hover{border-bottom: 2px #42B983 solid;}
+.doc-header .nav-right .wzi{font-size: 14px; line-height: 61px; transition: color 0.2s; position: relative; text-decoration: none;}
+.doc-header .nav-right .wzi::after{
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(50% + 0.8em);
+	height: 2px;
+	background-color: #42B983;
+	transform: scaleX(0);
+	transform-origin: center;
+	transition: transform 0.25s ease;
+}
+.doc-header .nav-right .wzi:hover::after,
+.doc-header .nav-right .wzi.nav-active::after{transform: scaleX(1);}
 
 /* 小章鱼 */
 .github-corner svg{color: #fff; fill: var(--theme-color, #42b983); height: 80px; width: 80px; z-index: 1001 !important;}

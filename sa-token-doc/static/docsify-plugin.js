@@ -1,5 +1,46 @@
 // 声明 docsify 插件
 var myDocsifyPlugin = function(hook, vm) {
+
+	// 文档页顶栏：根据当前路由高亮对应导航项
+	function updateDocNavActive() {
+		var header = document.querySelector('.doc-header .nav-right');
+		if (!header) return;
+
+		var hash = location.hash || '#/';
+		var onDocPage = location.pathname.indexOf('doc.html') !== -1;
+
+		header.querySelectorAll('.wzi').forEach(function(a) {
+			a.classList.remove('nav-active');
+		});
+
+		header.querySelectorAll(':scope > a.wzi').forEach(function(a) {
+			var href = a.getAttribute('href');
+			if (!href || href.indexOf('javascript') === 0 || href.indexOf('http') === 0) return;
+			if (href.indexOf('#/') === 0 && (hash === href || hash.indexOf(href + '/') === 0)) {
+				a.classList.add('nav-active');
+			}
+		});
+
+		header.querySelectorAll(':scope > .zk-box').forEach(function(box) {
+			var trigger = box.querySelector(':scope > .wzi');
+			if (!trigger) return;
+			box.querySelectorAll('.zk-context a[href^="#/"]').forEach(function(link) {
+				var href = link.getAttribute('href');
+				if (hash === href || hash.indexOf(href + '/') === 0) {
+					trigger.classList.add('nav-active');
+				}
+			});
+		});
+
+		var docLink = header.querySelector(':scope > a.wzi[href*="doc.html"]');
+		if (docLink && onDocPage) {
+			var hashNavActive = header.querySelector(':scope > a.wzi.nav-active[href^="#/"]');
+			var zkNavActive = header.querySelector(':scope > .zk-box > .wzi.nav-active');
+			if (!hashNavActive && !zkNavActive) {
+				docLink.classList.add('nav-active');
+			}
+		}
+	}
 	
 	// 钩子函数：解析之前执行
 	hook.beforeEach(function(content) {
@@ -32,7 +73,7 @@ var myDocsifyPlugin = function(hook, vm) {
 				<p style="font-size: 12px; color: #999;">我们坚信，即使再复杂的技术，也可以用清晰、干练、易懂的文字描述出它的具体细节，如果你在阅读文档时有难以理解的章节，那一定是我们还没有优化好它，
 					请向我们 <a href="#/more/demand-commit" target="_blank">反馈</a> 你的困惑之处，我们将持续优化文档。</p>
 				<br/>
-				<a href="https://beian.miit.gov.cn/" target="_blank" style="color:#aaa; border-color: #aaa;">鲁ICP备18046274号-4</a>
+				<a href="https://beian.miit.gov.cn/" target="_blank" class="footer-beian">鲁ICP备18046274号-4</a>
 			</footer>
 		`;
 		return html + footer;
@@ -72,6 +113,8 @@ var myDocsifyPlugin = function(hook, vm) {
 			renderDonateTable();
 			onZanzhuSortClick();
 		}
+
+		updateDocNavActive();
 		
 		// 功能6：标题下面的广告 
 		// if(vm.route.path !== '/' && $(window).width() >= 800) {
@@ -128,6 +171,9 @@ var myDocsifyPlugin = function(hook, vm) {
 	
 	// 钩子函数：初始化并第一次加载完成数据后调用，没有参数。
 	hook.ready(function() {
+		updateDocNavActive();
+		window.addEventListener('hashchange', updateDocNavActive);
+
 		// 将搜索框转移到右上角 
 		document.querySelector(".sear-box").innerHTML = '';
 		document.querySelector(".sear-box").append(document.querySelector(".search"));

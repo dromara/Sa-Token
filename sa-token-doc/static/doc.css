@@ -131,8 +131,21 @@ body{
 .doc-header .nav-right>select:hover{box-shadow: 0 0 10px #aaa;}
 
 .github-corner{z-index: 1001 !important;}
-.doc-header .nav-right .wzi{font-size: 14px; line-height: 61px; transition: color 0.2s; padding-bottom: 4px;}
-.doc-header .nav-right .wzi:hover{border-bottom: 2px var(--a-color) solid;}
+.doc-header .nav-right .wzi{font-size: 14px; line-height: 61px; transition: color 0.2s; position: relative; text-decoration: none;}
+.doc-header .nav-right .wzi::after{
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(50% + 0.8em);
+	height: 2px;
+	background-color: var(--a-color);
+	transform: scaleX(0);
+	transform-origin: center;
+	transition: transform 0.25s ease;
+}
+.doc-header .nav-right .wzi:hover::after,
+.doc-header .nav-right .wzi.nav-active::after{transform: scaleX(1);}
 
 .nav-right a{color: #34495E;}
 
@@ -326,6 +339,9 @@ body {
 #main .un-dec-a-pre+p a,
 #main p[align=center] a{border-bottom:0px;}
 
+#main footer a.footer-beian,
+#main footer a.footer-beian:hover{font-size: 12px; color: #999; border-bottom: 1px #999 solid;}
+#main footer a.footer-beian:hover{color: #777; border-bottom-color: #777;}
 
 /* toc目录树 */
 .toc-box>li{margin-bottom: 15px;}
@@ -351,20 +367,6 @@ body {
 	background-color: #eaf6eb;
 }
 .show-to-img{cursor: pointer;}
-
-/* 导航栏悬浮时出现下滑条条 */
-/* .doc-header .nav-right .wzi::after {
-    content: '';
-    width: 0%;
-	float: left;
-    display: inline-block;
-	text-align: center;
-	margin-top: -15px;
-    border-bottom: 2px var(--a-color) solid;
-	transition: all 0.2s;
-}
-.doc-header .nav-right .wzi:hover::after {width: 100%;} */
-
 
 /* 保证点开图片时在最上面 */
 .medium-zoom-image.medium-zoom-image--opened{
