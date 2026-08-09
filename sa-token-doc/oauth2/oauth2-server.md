@@ -248,7 +248,7 @@ http://sa-oauth-server.com:8000/oauth2/token?grant_type=authorization_code&clien
   "code": 200,
   "msg": "ok",
   "data": null,
-  "token_type": "bearer",
+  "token_type": "Bearer",
   "access_token": "cAls8jnBLmeo5yuCUMwb8zxaSsQPPzGINXF3NOCjCqFHplr6hagdT6A5HeR2",
   "refresh_token": "L2rPbJ3aaOXwaB4Zu0EGWNz5EjVNpw5u2oMP9CS2IEap7rR3Hb76ZqqHS07J",
   "expires_in": 7199,

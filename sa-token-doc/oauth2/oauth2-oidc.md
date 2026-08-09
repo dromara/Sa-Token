@@ -93,7 +93,7 @@ http://sa-oauth-server.com:8000/oauth2/token
 	"code": 200,
 	"msg": "ok",
 	"data": null,
-	"token_type": "bearer",
+	"token_type": "Bearer",
 	"access_token": "WdpjZdGlXdOzsAcr7gqPwmLVInHrhpznQa2pDOVqZmLXQynBflkcWqE6f5o2",
 	"refresh_token": "hKHwBm3eH6iqSHlXRGWQaziV8OoyHvzmUb97lKEEZnZJLt3NunBFx7rVZWbT",
 	"expires_in": 7199,

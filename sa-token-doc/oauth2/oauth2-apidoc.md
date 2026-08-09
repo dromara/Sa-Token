@@ -151,7 +151,7 @@ header['Authorization'] = base64(`${client_id}:${client_secret}`);
     "code": 200,    // 200表示请求成功，非200标识请求失败, 以下不再赘述 
     "msg": "ok",
     "data": null,
-    "token_type": "bearer",
+    "token_type": "Bearer",
     "access_token": "Gly7mnnXSdCxkOqmOwcA5SbG6ZtPmJVX7ZgSn1pidhRmnenBEgxbWJS8VWxA",     // Access-Token值
     "refresh_token": "EuYNwpxdc18MpaZLPyhFeyAyzr2IOWEr4q3QUGgPWqdJujQqvohjQEDJpwOm",    // Refresh-Token值
     "expires_in": 7199,                  // Access-Token剩余有效期，单位秒  

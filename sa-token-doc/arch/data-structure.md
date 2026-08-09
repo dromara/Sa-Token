@@ -248,7 +248,7 @@ value 示例：
       "oidc"
     ]
   ],
-  "tokenType": "bearer",   // tokenType 
+  "tokenType": "Bearer",   // tokenType 
   "grantType": "authorization_code",   // 授权方式 
   "extraData": {   // 扩展数据  
     "@class": "java.util.LinkedHashMap",
@@ -345,7 +345,7 @@ value 示例：
       "oidc"
     ]
   ],
-  "tokenType": "bearer",   // tokenType   
+  "tokenType": "Bearer",   // tokenType   
   "grantType": "client_credentials",   // 授权类型    
   "extraData": {   // 扩展数据
     "@class": "java.util.LinkedHashMap"
