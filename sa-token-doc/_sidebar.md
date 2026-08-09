@@ -6,6 +6,7 @@
 	- [在 WebFlux 环境集成](/start/webflux-example) 	
 	- [在 Solon 环境集成](/start/solon-example) 	
 	- [其它环境集成示例](/start/download)
+	- [源码运行指南](/start/run-source-code)
 	- [Sa-Token 集成示例大全下载](/more/download-demos) 
 
 - **基础**
