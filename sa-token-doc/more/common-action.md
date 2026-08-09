@@ -135,7 +135,11 @@ SaReactorHolder.getMonoExchange().map(e -> {
 	return e;
 });
 
-SaReactorHolder.sync(() -> {});   // 在 Reactor 异步上下文中同步执行代码块
+// 在 Mono 链中调用 Sa-Token 同步 API（返回 Mono<R>，Controller 中需 return）
+return SaReactorHolder.sync(() -> {
+	StpUtil.checkLogin();
+	return SaResult.ok();
+});
 
 // 同步方式（WebFilter 等场景）
 SaReactorSyncHolder.setContext(exchange);   // 写入当前请求的 ServerWebExchange
