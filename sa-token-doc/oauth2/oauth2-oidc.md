@@ -123,7 +123,7 @@ http://sa-oauth-server.com:8000/oauth2/token
 
 ### 3、扩展 id_token 载荷
 
-新建 `CustomOidcScopeHandler` 集成 `OidcScopeHandler`，扩展 OIDC 权限处理器，返回更多字段：
+新建 `CustomOidcScopeHandler` 继承 `OidcScopeHandler`，扩展 OIDC 权限处理器，返回更多字段：
 ``` java
 /**
  * 扩展 OIDC 权限处理器，返回更多字段
