@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.router;
 
-import java.util.HashMap;
+import java.util.ConcurrentHashMap;
 import java.util.Map;
 
 import cn.dev33.satoken.error.SaErrorCode;
@@ -38,7 +38,7 @@ public enum SaHttpMethod {
 	 */
 	ALL;
 	
-	private static final Map<String, SaHttpMethod> map = new HashMap<>();
+	private static final Map<String, SaHttpMethod> map = new ConcurrentHashMap<>();
 
 	static {
 		for (SaHttpMethod reqMethod : values()) {

@@ -42,7 +42,7 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.temp.SaTempTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 
-import java.util.LinkedHashMap;
+import java.util.ConcurrentHashMap;
 import java.util.Map;
 
 /**
@@ -293,7 +293,7 @@ public class SaManager {
 	/**
 	 * StpLogic 集合, 记录框架所有成功初始化的 StpLogic
 	 */
-	public static Map<String, StpLogic> stpLogicMap = new LinkedHashMap<>();
+	public static Map<String, StpLogic> stpLogicMap = new ConcurrentHashMap<>();
 	
 	/**
 	 * 向全局集合中 put 一个 StpLogic 
