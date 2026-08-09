@@ -42,8 +42,8 @@ import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.temp.SaTempTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
 
-import java.util.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 管理 Sa-Token 所有全局组件，可通过此类快速获取、写入各种全局组件对象

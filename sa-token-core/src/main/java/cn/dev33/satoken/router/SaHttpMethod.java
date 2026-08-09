@@ -15,8 +15,8 @@
  */
 package cn.dev33.satoken.router;
 
-import java.util.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
