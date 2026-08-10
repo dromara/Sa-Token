@@ -37,7 +37,12 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 }
 ```
 
+可能3：SpringMVC 项目里使用了 `SseEmitter` / `Flux` 等异步、流式返回，参考下面这条 QA。
 
+
+### Q：SpringMVC 下使用 SSE / Flux 流式返回时报错：SaTokenContext 上下文尚未初始化？
+
+常见于未引入 WebFlux、仅个别接口返回 `SseEmitter`、`Flux` 的场景，参考：[升级后 SSE 请求报 SaTokenContext 上下文尚未初始化](https://gitee.com/dromara/sa-token/issues/IC4XFE)
 
 
 ### Q：报错：NotLoginException：xxx
