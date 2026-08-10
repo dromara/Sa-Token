@@ -13,7 +13,7 @@
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+<!-- Sa-Token 权限认证，在线文档：https://sa-token.com -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
@@ -25,7 +25,7 @@
 
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证，在线文档：https://sa-token.cc
+// Sa-Token 权限认证，在线文档：https://sa-token.com
 implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 ```
 - 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-spring-boot3-starter`。
@@ -35,7 +35,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 <!---------------------------- tabs:start ------------------------------>
 <!-------- tab:Maven 方式 -------->
 ``` xml 
-<!-- Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc -->
+<!-- Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.com -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-reactor-spring-boot-starter</artifactId>
@@ -47,7 +47,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 
 <!-------- tab:Gradle 方式 -------->
 ``` gradle
-// Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.cc
+// Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.com
 implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:${sa.top.version}'
 ```
 - 如果你使用的 `SpringBoot 3.x`，请引入 `sa-token-reactor-spring-boot3-starter`。

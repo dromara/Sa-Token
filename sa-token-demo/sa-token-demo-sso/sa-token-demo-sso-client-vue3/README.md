@@ -1,7 +1,7 @@
 # sa-token-demo-sso-client-vue3
 Sa-Token SSO-Client 应用端（前后端分离版-Vue3）
 
-在线文档：[https://sa-token.cc/](https://sa-token.cc/)
+在线文档：[https://sa-token.com/](https://sa-token.com/)
 
 
 ## 运行

@@ -76,5 +76,5 @@ function getParam(name, defaultValue){
 }
 
 // 打印信息 
-var str = "This page is provided by Sa-Token, Please refer to: " + "https://sa-token.cc/";
+var str = "This page is provided by Sa-Token, Please refer to: " + "https://sa-token.com/";
 console.log(str);

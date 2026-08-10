@@ -12,7 +12,7 @@
 
 <!------------- tab:yaml 风格  ------------->
 ``` yaml
-############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+############## Sa-Token 配置 (文档: https://sa-token.com) ##############
 sa-token: 
 	# token 名称（同时也是 cookie 名称）
 	token-name: satoken
@@ -32,7 +32,7 @@ sa-token:
 
 <!------------- tab:properties 风格  ------------->
 ``` properties
-############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+############## Sa-Token 配置 (文档: https://sa-token.com) ##############
 
 # token 名称（同时也是 cookie 名称）
 sa-token.token-name=satoken
@@ -64,7 +64,7 @@ sa-token.is-log=true
  */
 @Configuration
 public class SaTokenConfigure {
-	// Sa-Token 参数配置，参考文档：https://sa-token.cc
+	// Sa-Token 参数配置，参考文档：https://sa-token.com
 	// 此配置会覆盖 application.yml 中的配置
     @Bean
     @Primary
@@ -88,7 +88,7 @@ public class SaTokenConfigure {
  */
 @Configuration
 public class SaTokenConfigure {
-	// Sa-Token 参数配置，参考文档：https://sa-token.cc
+	// Sa-Token 参数配置，参考文档：https://sa-token.com
 	// 此配置会与 application.yml 中的配置合并 （代码配置优先）
 	@Autowired
 	public void configSaToken(SaTokenConfig config) {

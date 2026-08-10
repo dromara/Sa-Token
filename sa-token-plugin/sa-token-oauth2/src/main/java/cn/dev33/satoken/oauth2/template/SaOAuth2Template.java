@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2099 sa-token.cc
+ * Copyright 2020-2099 sa-token.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -171,10 +171,10 @@ public class SaOAuth2Template {
 			//  开发者原意是为了允许 sa-oauth-client.com 下的所有地址都可以下放 code
 			//
 			//  但是如果攻击者精心构建一个url：
-			// 	     http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com@sa-token.cc
+			// 	     http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-oauth-client.com@sa-token.com
 			//
 			//  那么这个url就会绕过 allow-url 的校验，code 被下发到了第三方服务器地址：
-			//       http://sa-token.cc/?code=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
+			//       http://sa-token.com/?code=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
 			//
 			//  造成了 code 参数劫持
 			//  所以此处需要禁止在 url 中出现 @ 字符
@@ -224,10 +224,10 @@ public class SaOAuth2Template {
 				//      例如：http://shop.sa-oauth-client.com/
 				//
 				//  但是如果攻击者精心构建一个url：
-				//       http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-token.cc/a.sa-oauth-client.com/
+				//       http://sa-oauth-server.com:8000/oauth2/authorize?response_type=code&client_id=1001&redirect_uri=http://sa-token.com/a.sa-oauth-client.com/
 				//
 				//  那么这个 url 就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址：
-				//       http://sa-token.cc/a.sa-oauth-client.com/?code=v2KKMUFK7dDsMMzXLQ3aWGsyGUjrA0dBB2jeOWrpCnC8b5ScmXXQSv20mIwPK7Cx
+				//       http://sa-token.com/a.sa-oauth-client.com/?code=v2KKMUFK7dDsMMzXLQ3aWGsyGUjrA0dBB2jeOWrpCnC8b5ScmXXQSv20mIwPK7Cx
 				//
 				//  造成了 ticket 参数劫持
 				//  所以此处需要禁止 allow-url 配置项的中间位置出现 * 字符（出现在末尾是没有问题的）

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2099 sa-token.cc
+ * Copyright 2020-2099 sa-token.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import java.io.Serializable;
  *
  * <p>
  *     你可以通过yml、properties、java代码等形式配置本类参数，具体请查阅官方文档:
- *     <a href="https://sa-token.cc">https://sa-token.cc</a>
+ *     <a href="https://sa-token.com">https://sa-token.com</a>
  * </p>
  *
  * @author click33

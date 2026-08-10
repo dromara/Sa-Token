@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="https://sa-token.cc/logo.png" width="150" height="150">
+	<img alt="logo" src="https://sa-token.com/logo.png" width="150" height="150">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.45.0</h1>
 <h5 align="center">✨ 开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！</h5>
@@ -17,7 +17,7 @@
 ---
 
 ## 📝 前言：️️
-为了保证新同学不迷路，请允许我唠叨一下：无论您从何处看到本篇文章，最新开发文档永远在：[https://sa-token.cc](https://sa-token.cc)，
+为了保证新同学不迷路，请允许我唠叨一下：无论您从何处看到本篇文章，最新开发文档永远在：[https://sa-token.com](https://sa-token.com)，
 建议收藏在浏览器书签 (快捷键 **ctrl + D**)，如果您已经身处本网站下，则请忽略此条说明。
 
 回望 2020 年初，我为 Sa-Token 提交第一行代码之际，彼时市面上 Java 缺少的不仅是一个简洁好用的鉴权框架，更是一整套清晰、自洽的权限架构设计思想。
@@ -164,7 +164,7 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 **5、Sa-Token 收费吗？** 
 
-Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永久免费开放。当然如果您有心赞助 Sa-Token，我们也不回避：[赞助链接](https://sa-token.cc/doc.html#/more/sa-token-donate)。
+Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永久免费开放。当然如果您有心赞助 Sa-Token，我们也不回避：[赞助链接](https://sa-token.com/doc.html#/more/sa-token-donate)。
 我们将定期同步赞助者名单到在线文档展示。（您需要注意的一点是：该赞助仅为友情赞助，不提供任何商业交换）
 
 

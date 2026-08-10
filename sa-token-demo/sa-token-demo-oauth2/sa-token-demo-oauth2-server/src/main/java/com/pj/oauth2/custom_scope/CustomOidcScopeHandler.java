@@ -20,7 +20,7 @@
 //
 //        idToken.extraData.put("uid", userId); // 用户id
 //        idToken.extraData.put("nickname", "linXiaoLin"); // 昵称
-//        idToken.extraData.put("picture", "https://sa-token.cc/logo.png"); // 头像
+//        idToken.extraData.put("picture", "https://sa-token.com/logo.png"); // 头像
 //        idToken.extraData.put("email", "456456@xx.com"); // 邮箱
 //        idToken.extraData.put("phone_number", "13144556677"); // 手机号
 //

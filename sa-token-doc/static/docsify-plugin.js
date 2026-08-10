@@ -121,7 +121,9 @@ var myDocsifyPlugin = function(hook, vm) {
 				<p style="font-size: 12px; color: #999;">我们坚信，即使再复杂的技术，也可以用清晰、干练、易懂的文字描述出它的具体细节，如果你在阅读文档时有难以理解的章节，那一定是我们还没有优化好它，
 					请向我们 <a href="#/more/demand-commit" target="_blank">反馈</a> 你的困惑之处，我们将持续优化文档。</p>
 				<br/>
-				<a href="https://beian.miit.gov.cn/" target="_blank" class="footer-beian">鲁ICP备18046274号-4</a>
+				<a href="https://beian.miit.gov.cn/" target="_blank" class="footer-beian">鲁ICP备18046274号-5</a>
+				<span style="color:#999;font-size:12px;margin:0 12px;">|</span>
+				<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" class="footer-beian"><img src="/big-file/index/gonganbeian.png" alt="" style="width:14px;height:14px;vertical-align:-2px;margin-right:3px;">鲁公网安备37011202002956号</a>
 			</footer>
 		`;
 		return html + footer;

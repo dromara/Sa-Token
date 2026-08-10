@@ -28,8 +28,8 @@ var isStarPlugin = function(hook, vm) {
 // 应用参数 
 const client_id = '0cc618beb08db99bff50e500e38c2144d95ada9abb51c00c44592726ecd583f4';
 const client_secret = 'xxx';
-const redirect_uri = 'https://sa-token.cc/doc.html';
-const docDomain = 'sa-token.cc';
+const redirect_uri = 'https://sa-token.com/doc.html';
+const docDomain = 'sa-token.com';
 // const redirect_uri = 'http://127.0.0.1:8848/sa-token-doc/doc.html';
 // const docDomain = '127.0.0.1:8848';
 		
@@ -157,7 +157,7 @@ function goAuth() {
 function getAccessToken(code) {
 	// 根据 code 获取 access_token
 	$.ajax({
-		url: 'https://sa-token.cc/server/oauth/token',
+		url: 'https://sa-token.com/server/oauth/token',
 		method: 'post',
 		data: {
 			grant_type: 'authorization_code',

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2099 sa-token.cc
+ * Copyright 2020-2099 sa-token.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ public class SaCookieTest {
     @Test
     public void test() {
     	SaCookie cookie = new SaCookie("satoken", "xxxx-xxxx-xxxx-xxxx")
-    			.setDomain("https://sa-token.cc/")
+    			.setDomain("https://sa-token.com/")
     			.setMaxAge(-1)
     			.setPath("/")
     			.setSameSite("Lax")
@@ -40,13 +40,13 @@ public class SaCookieTest {
 
     	Assertions.assertEquals(cookie.getName(), "satoken");
     	Assertions.assertEquals(cookie.getValue(), "xxxx-xxxx-xxxx-xxxx");
-    	Assertions.assertEquals(cookie.getDomain(), "https://sa-token.cc/");
+    	Assertions.assertEquals(cookie.getDomain(), "https://sa-token.com/");
     	Assertions.assertEquals(cookie.getMaxAge(), -1);
     	Assertions.assertEquals(cookie.getPath(), "/");
     	Assertions.assertEquals(cookie.getSameSite(), "Lax");
     	Assertions.assertEquals(cookie.getHttpOnly(), true);
     	Assertions.assertEquals(cookie.getSecure(), true);
-    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.cc/; Path=/; Secure; HttpOnly; SameSite=Lax");
+    	Assertions.assertEquals(cookie.toHeaderValue(), "satoken=xxxx-xxxx-xxxx-xxxx; Domain=https://sa-token.com/; Path=/; Secure; HttpOnly; SameSite=Lax");
     	
     	Assertions.assertNotNull(cookie.toString());
     }

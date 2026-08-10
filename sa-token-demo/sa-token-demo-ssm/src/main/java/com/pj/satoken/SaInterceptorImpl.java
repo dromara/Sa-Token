@@ -24,7 +24,7 @@ public class SaInterceptorImpl extends SaInterceptor {
 //            SaRouter.match("/notice/**", r -> StpUtil.checkPermission("notice"));
 //            SaRouter.match("/comment/**", r -> StpUtil.checkPermission("comment"));
 
-            // 更多写法参考：https://sa-token.cc/doc.html#/use/route-check
+            // 更多写法参考：https://sa-token.com/doc.html#/use/route-check
 
         });
     }

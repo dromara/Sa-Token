@@ -28,7 +28,7 @@ public Object logoutByAlone() {
 
 在前端或跳转或 ajax 异步调用此接口即可。
 
-如果是跳转可指定 back 参数，代表注销成功后跳转的地址，例如：`http://sso-client.com/sso/logoutByAlone?back=https://sa-token.cc` 
+如果是跳转可指定 back 参数，代表注销成功后跳转的地址，例如：`http://sso-client.com/sso/logoutByAlone?back=https://sa-token.com` 
 
 
 ### 2、全端注销

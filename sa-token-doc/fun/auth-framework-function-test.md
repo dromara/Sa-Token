@@ -23,7 +23,7 @@
 <!------------- tab:Sa-Token ------------->
 
 ``` xml
-<!-- Sa-Token 权限认证, 在线文档：https://sa-token.cc/ -->
+<!-- Sa-Token 权限认证, 在线文档：https://sa-token.com/ -->
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot3-starter</artifactId>

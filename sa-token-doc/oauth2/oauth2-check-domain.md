@@ -82,8 +82,8 @@ URL 没有通过校验，拒绝授权！
 
 1、AllowRedirectUris 配置的地址不允许出现 `@` 字符。
 
-- 反例：`http://user@sa-token.cc`
-- 反例：`http://sa-oauth-client.com@sa-token.cc`
+- 反例：`http://user@sa-token.com`
+- 反例：`http://sa-oauth-client.com@sa-token.com`
 
 *详见源码：[SaOAuth2Template.java](https://gitee.com/dromara/sa-token/blob/master/sa-token-plugin/sa-token-oauth2/src/main/java/cn/dev33/satoken/oauth2/template/SaOAuth2Template.java) 
 `checkRedirectUri` 方法。*

@@ -33,7 +33,7 @@ StpUtil.login(10001, new SaLoginParameter()
 		.setOverflowLogoutMode(SaLogoutMode.LOGOUT)         // 溢出 maxLoginCount 的客户端，将以何种方式注销下线: LOGOUT=注销下线, KICKOUT=踢人下线, REPLACED=顶人下线
 		.setRightNowCreateTokenSession(true)                // 是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）
 		.setupCookieConfig(cookie->{     // 设置 Cookie 配置项 
-			cookie.setDomain("sa-token.cc");  // 设置：作用域
+			cookie.setDomain("sa-token.com");  // 设置：作用域
 			cookie.setPath("/shop");          // 设置：路径 （一般只有当你在一个域名下部署多个项目时才会用到此值。）
 			cookie.setSecure(true);           // 设置：是否只在 https 协议下有效
 			cookie.setHttpOnly(true);         // 设置：是否禁止 js 操作 Cookie 

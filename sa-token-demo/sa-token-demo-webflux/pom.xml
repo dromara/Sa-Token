@@ -27,7 +27,7 @@
 		    <artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
-		<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.cc/ -->
+		<!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.com/ -->
 		<dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-reactor-spring-boot-starter</artifactId>
