@@ -1,3 +1,5 @@
+简体中文 | [繁體中文](./README_zh_TW.md) | [English](./README_en.md) | [日本語](./README_ja.md) | [한국어](./README_ko.md) | [Русский](./README_ru.md)
+
 <p align="center">
 	<img alt="logo" src="https://sa-token.com/logo.png" width="150" height="150">
 </p>
@@ -199,17 +201,17 @@ Sa-Token OAuth2 模块分为四种授权模式，解决不同场景下的授权�
 
 ### 📖❓ 疑问解答
 
-**1、Sa-Token 功能全不全？** 
+**1、Sa-Token 功能全不全？**
 
 七年磨一剑：五大核心模块(登录、鉴权、SSO、OAuth2、微服务) + 众多实用插件 (短 token、jwt 集成、API 参数签名、API Key 秘钥授权...) 我们提供的不只是权限认证，我们提供的是一站式解决方案。
 
 
-**2、Sa-Token 好不好学？** 
+**2、Sa-Token 好不好学？**
 
 中文文档 + 中文代码注释 + 中文交流社区 + 大量实战案例博客 + 多个视频教程 + 大量优秀开源项目集成案例。
 
 
-**3、Sa-Token 用的人多不多？** 
+**3、Sa-Token 用的人多不多？**
 
 截止统计日 (2026-1-25) 起，Sa-Token 在：
 
@@ -220,18 +222,18 @@ Sa-Token OAuth2 模块分为四种授权模式，解决不同场景下的授权�
 这是众多开发者用脚投票的数据，相信这些数据比任何言语都能证明 Sa-Token 的热度。
 
 
-**4、Sa-Token 有哪些权威认证？** 
+**4、Sa-Token 有哪些权威认证？**
 
 曾获荣誉包括但不限于：Gitee GVP 最有价值开源项目、GitCode G-Star 优质开源项目、OSCHINA 2021 人气指数 TOP 30 开源项目、OSCHINA 2022 年度最火热中国开源项目社区之一、开放原子基金会2023快速成长开源项目、 Dromara 组织顶尖项目（之一）、可信开源社区共同体预备成员、所在开源社区 “Dromara” 荣获《2024中国互联网发展创新与投资大赛（开源）》二等奖。 Gitee High Star 计划项目(5000+star)。Gitee 2025年度开源项目 Web应用开发 Top 2。
 
 
-**5、Sa-Token 收费吗？** 
+**5、Sa-Token 收费吗？**
 
 Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永久免费开放。当然如果您有心赞助 Sa-Token，我们也不回避：[赞助链接](https://sa-token.com/doc.html#/more/sa-token-donate)。
 我们将定期同步赞助者名单到在线文档展示。（您需要注意的一点是：该赞助仅为友情赞助，不提供任何商业交换）
 
 
-**6、Sa-Token 是封装的 SpringSecurity 吗？是套壳 ApacheShiro 吗？** 
+**6、Sa-Token 是封装的 SpringSecurity 吗？是套壳 ApacheShiro 吗？**
 
 不是。Sa-Token 不是一个后台模板，也不是针对 xx 框架的二次封装套壳，而是从 0 开始的纯血自研框架，核心包零依赖，完全自主可控的架构内核 + 众多主流框架的集成适配。
 						
