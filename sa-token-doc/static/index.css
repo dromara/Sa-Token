@@ -395,3 +395,8 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .ajax-layer-load.layui-layer-dialog{min-width: 0px !important; background-color: rgba(0,0,0,0.85);}
 .ajax-layer-load.layui-layer-dialog .layui-layer-content{padding: 10px 20px 10px 40px; color: #FFF;}
 .ajax-layer-load.layui-layer-dialog .layui-layer-content .layui-layer-ico{width: 20px; height: 20px; background-size: 20px 20px; top: 12px; }
+
+/* 公安备案 */
+.foot-beian-gongan{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;}
+.foot-beian-gongan-icon{width:16px;height:16px;flex-shrink:0;}
+#main footer a.footer-beian img{width:14px;height:14px;vertical-align:-2px;margin-right:3px;}

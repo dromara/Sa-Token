@@ -118,6 +118,7 @@ body{
 
 /* 左边导航 */
 .nav-left{display: inline-block; float: left;}
+.nav-left > a{text-decoration: none; color: inherit;}
 .logo-box {display: inline-block; cursor: pointer; color: #000; padding-left: 24px; height: 60px; line-height: 60px;}
 .logo-box img {width: 50px; height: 50px; vertical-align: middle; position: relative; top: -1px; margin-right: 5px;}
 .logo-box .logo-text {display: inline-block; margin: 0; padding: 0; color: #000; vertical-align: middle; font-size: 26px;font-weight: 500;}
@@ -177,6 +178,23 @@ body{
 
 /* 版本选择按钮 */
 .select-version{background-color: transparent !important;}
+/* 版本选择：放在 logo 旁（高度对齐官网原生 select） */
+.nav-left .select-version{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+	border: 1px solid #999;
+	color: #666;
+	outline: 0;
+	cursor: pointer;
+	transition: all 0.2s;
+	background-color: #FFF;
+	font-size: 12px;
+	padding: 2px 2px;
+	position: relative;
+	top: 2px;
+}
+.nav-left .select-version:hover{box-shadow: 0 0 10px #aaa;}
 
 
 /* ------- 调整一下左侧树的字体样式 ------- */
@@ -570,3 +588,8 @@ body {
 .main-box .alert.flat.note{background-color: #E8F4FF;}
 .main-box .alert.flat.tip{background-color: #F0F9EB;}
 .main-box .alert.flat.warning{background-color: #FDF6EC;}
+
+/* 公安备案 */
+.foot-beian-gongan{display:inline-flex;align-items:center;gap:4px;vertical-align:middle;}
+.foot-beian-gongan-icon{width:16px;height:16px;flex-shrink:0;}
+#main footer a.footer-beian img{width:14px;height:14px;vertical-align:-2px;margin-right:3px;}

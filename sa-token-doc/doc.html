@@ -20,64 +20,14 @@
 					<div class="logo-box">
 						<img src="logo.png" title="logo" />
 						<h1 class="logo-text">Sa-Token</h1>
-						<sub>v1.45.0</sub>
 					</div>
 				</a>
-			</div>
+				<select class="select-version p-none" onchange="location.href=this.value"></select>
+</div>
 			<nav class="nav-right">
 				<div class="sear-box p-none" tabindex="-1">
 					<!-- 加载中…… -->
 				</div>
-				<select class="select-version p-none" onchange="location.href=this.value">
-					<option value="/doc.html">最新版</option>
-					<option value="/v/v1.44.0/doc.html">v1.44.0</option>
-					<option value="/v/v1.43.0/doc.html">v1.43.0</option>
-					<option value="/v/v1.42.0/doc.html">v1.42.0</option>
-					<option value="/v/v1.41.0/doc.html">v1.41.0</option>
-					<option value="/v/v1.40.0/doc.html">v1.40.0</option>
-					<option value="/v/v1.39.0/doc.html">v1.39.0</option>
-					<option value="/v/v1.38.0/doc.html">v1.38.0</option>
-					<option value="/v/v1.37.0/doc.html">v1.37.0</option>
-					<option value="/v/v1.36.0/doc.html">v1.36.0</option>
-					<option value="/v/v1.35.0/doc.html">v1.35.0</option>
-					<option value="/v/v1.34.0/doc.html">v1.34.0</option>
-					<option value="/v/v1.33.0/doc.html">v1.33.0</option>
-					<option value="/v/v1.32.0/doc.html">v1.32.0</option>
-					<option value="/v/v1.31.0/doc.html">v1.31.0</option>
-					<option value="/v/v1.30.0/doc/index.html">v1.30.0</option>
-					<option value="/v/v1.29.0/doc/index.html">v1.29.0</option>
-					<option value="/v/v1.28.0/doc/index.html">v1.28.0</option>
-					<option value="/v/v1.27.0/doc/index.html">v1.27.0</option>
-					<option value="/v/v1.26.0/doc/index.html">v1.26.0</option>
-					<option value="/v/v1.25.0/doc/index.html">v1.25.0</option>
-					<option value="/v/v1.24.0/doc/index.html">v1.24.0</option>
-					<option value="/v/v1.23.0/doc/index.html">v1.23.0</option>
-					<option value="/v/v1.22.0/doc/index.html">v1.22.0</option>
-					<option value="/v/v1.21.0/doc/index.html">v1.21.0</option>
-					<option value="/v/v1.20.0/doc/index.html">v1.20.0</option>
-					<option value="/v/v1.19.0/doc/index.html">v1.19.0</option>
-					<option value="/v/v1.18.0/doc/index.html">v1.18.0</option>
-					<option value="/v/v1.17.0/doc/index.html">v1.17.0</option>
-					<option value="/v/v1.16.0/doc/index.html">v1.16.0</option>
-					<option value="/v/v1.15.0/doc/index.html">v1.15.0</option>
-					<option value="/v/v1.14.0/doc/index.html">v1.14.0</option>
-					<option value="/v/v1.13.0/doc/index.html">v1.13.0</option>
-					<option value="/v/v1.12.1/doc/index.html">v1.12.1</option>
-					<option value="/v/v1.12.0/doc/index.html">v1.12.0</option>
-					<option value="/v/v1.11.0/doc/index.html">v1.11.0</option>
-					<option value="/v/v1.10.0/doc/index.html">v1.10.0</option>
-					<option value="/v/v1.9.0/doc/index.html">v1.9.0</option>
-					<option value="/v/v1.8.0/doc/index.html">v1.8.0</option>
-					<option value="/v/v1.7.0/doc/index.html">v1.7.0</option>
-					<option value="/v/v1.6.0/doc/index.html">v1.6.0</option>
-					<option value="/v/v1.5.1/doc/index.html">v1.5.1</option>
-					<option value="/v/v1.4.0/doc/index.html">v1.4.0</option>
-					<option value="/v/v1.3.0/doc/index.html">v1.3.0</option>
-					<option value="/v/v1.2.0/doc/index.html">v1.2.0</option>
-					<option value="/v/v1.1.0/doc/index.html">v1.1.0</option>
-					<option value="/v/v1.0.0/doc/index.html">v1.0.0</option>
-					<option value="/">首页</option>
-				</select>
 				<div class="zk-box p-none">
 					<a class="wzi" href="javascript:;">
 						<!-- <span>背景 </span> -->
@@ -288,6 +238,8 @@
 		<!-- jqeury -->
 		<script src="static/jquery.min.js"></script>
 		<script src="static/layer-v3.1.1/layer.js"></script>
+		<script src="/static/all-version-common.js"></script>
+		<script>SaTokenVersions.initVersionSelects();</script>
 
 		<!--  -->
 		<script src="./static/docsify-plugin.js?v=8"></script>
@@ -436,40 +388,16 @@
 			})();
 		</script>
 
-		<!-- 搜索引擎自动提交 -->
-		<script>
-			(function() {
-				var bp = document.createElement('script');
-				var curProtocol = window.location.protocol.split(':')[0];
-				if (curProtocol === 'https') {
-					bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-				} else {
-					bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-				}
-				var s = document.getElementsByTagName("script")[0];
-				s.parentNode.insertBefore(bp, s);
-			})();
-		</script>
 
 		<!-- 万维广告 -->
 		<!-- <script data-mode="hash" type="text/javascript" src="https://cdn.wwads.cn/js/makemoney.js" async></script> -->
 
-		<!-- 百度统计 -->
-		<script>
-			var _hmt = _hmt || [];
-			(function() {
-				var hm = document.createElement("script");
-				hm.src = "https://hm.baidu.com/hm.js?35ad501304eae758ac6139a22a9830f5";
-				var s = document.getElementsByTagName("script")[0];
-				s.parentNode.insertBefore(hm, s);
-			})();
-		</script>
 
 		<script type="text/javascript">
 			// 预览版提示 
-			if (location.host === 'rc.sa-token.cc') {
+			if (location.host === 'rc.sa-token.com') {
 				const newTips =
-					'<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.cc/" target="_blank">https://sa-token.cc/</a></b>';
+					'<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.com/" target="_blank">https://sa-token.com/</a></b>';
 				layer.alert(newTips);
 			}
 		</script>
@@ -543,5 +471,5 @@
 
 
 	<script src="./a/star-guide/star-guide.js"></script>
-	</body>
+</body>
 </html>
