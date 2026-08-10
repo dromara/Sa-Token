@@ -29,6 +29,8 @@
 							<!-- <sub>vx.x.x</sub> -->
 						</div>
 					</a>
+					<!-- 语言切换：translate.js 会往这个容器里生成 select -->
+					<span id="translate" class="select-language-box ignore"></span>
 				</div>
 				<nav class="nav-right">
 					<!-- <div class="zk-box p-none">
@@ -1213,6 +1215,11 @@
 		<script src="static/jquery.min.js"></script>
 		<script src="static/layer-v3.1.1/layer.js"></script>
 		<script src="/static/all-version-common.js"></script>
+
+		<!-- 多语言：translate.js + 本地初始化（见 static/sa-translate.js） -->
+		<script src="https://res.zvo.cn/translate/translate.js"></script>
+		<script src="./static/sa-translate.js"></script>
+		<script>initSaTranslate();</script>
 		
 		<!-- 赞助者名单 -->
 		<script src="static/donate/donate-list.js"></script>

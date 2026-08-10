@@ -23,7 +23,9 @@
 					</div>
 				</a>
 				<select class="select-version p-none" onchange="location.href=this.value"></select>
-</div>
+				<!-- 语言切换：translate.js 会往这个容器里生成 select -->
+				<span id="translate" class="select-language-box ignore"></span>
+			</div>
 			<nav class="nav-right">
 				<div class="sear-box p-none" tabindex="-1">
 					<!-- 加载中…… -->
@@ -241,6 +243,10 @@
 		<script src="/static/all-version-common.js"></script>
 		<script>SaTokenVersions.initVersionSelects();</script>
 
+		<!-- 多语言：translate.js + 本地初始化（见 static/sa-translate.js） -->
+		<script src="https://res.zvo.cn/translate/translate.js"></script>
+		<script src="./static/sa-translate.js"></script>
+
 		<!--  -->
 		<script src="./static/docsify-plugin.js?v=8"></script>
 		<script src="./static/is-star-plugin.js?v=7"></script>
@@ -307,6 +313,7 @@
 				// 自定义插件 
 				plugins: [ 
 					myDocsifyPlugin,         // 基础插件  
+					saTranslatePlugin,       // 顶部多语言切换（translate.js）
 					// window.isStarPlugin,     // 是否 star 
 					// window.isFillInWjPlugin  // 问卷填写 
 					// window.docLockPlugin,  // 章节锁 

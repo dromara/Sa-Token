@@ -176,25 +176,52 @@ body{
 .zk-icon{display: inline-block; width: 0px; height: 0px; position: relative;top: 3px; margin-left: 4px;}
 .zk-icon{border-style: solid; border-width: 5px; border-color: #aaa transparent transparent transparent; }
 
-/* 版本选择按钮 */
-.select-version{background-color: transparent !important;}
-/* 版本选择：放在 logo 旁（高度对齐官网原生 select） */
-.nav-left .select-version{
-	display: inline-block;
+/*
+ * 版本 / 语言下拉：同一套样式
+ * 语言框用 #translateSelectLanguage 写死——切换语种时 translate.js 会重绘 select，
+ * 临时 class 会被冲掉，不能指望 JS 事后补 class
+ */
+.select-version,
+#translateSelectLanguage{
+	background-color: transparent !important;
+}
+.nav-left .select-version,
+#translateSelectLanguage{
+	display: inline-block !important;
 	vertical-align: middle;
-	margin-left: 10px;
-	border: 1px solid #999;
-	color: #666;
+	margin-left: 10px !important;
+	border: 1px solid #999 !important;
+	color: #666 !important;
 	outline: 0;
 	cursor: pointer;
 	transition: all 0.2s;
 	background-color: #FFF;
-	font-size: 12px;
-	padding: 2px 2px;
+	font-size: 12px !important;
+	padding: 2px 2px !important;
 	position: relative;
 	top: 2px;
+	appearance: auto;
+	-webkit-appearance: menulist;
+	height: 22px !important;
+	line-height: 16px !important;
+	box-sizing: border-box;
 }
-.nav-left .select-version:hover{box-shadow: 0 0 10px #aaa;}
+.nav-left .select-version:hover,
+#translateSelectLanguage:hover{box-shadow: 0 0 10px #aaa;}
+
+/* 语言框单独限宽：长语种名（如 Bahasa Indonesia）别把顶栏撑爆 */
+#translateSelectLanguage{
+	width: 88px !important;
+	max-width: 88px !important;
+}
+
+/*
+ * 语言容器用 contents：不生成盒子，内部 select 跟版本 select 同级排版
+ * 否则多一层 span，高低会对不齐
+ */
+.nav-left .select-language-box{
+	display: contents;
+}
 
 
 /* ------- 调整一下左侧树的字体样式 ------- */

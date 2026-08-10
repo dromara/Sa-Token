@@ -18,9 +18,43 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 
 /* 左边logo */
 .nav-left{display: inline-block; float: left;}
+.nav-left > a{text-decoration: none; color: inherit;}
 .logo-box {display: inline-block; cursor: pointer; color: #000; padding-left: 24px; height: 60px; line-height: 60px;}
 .logo-box img {width: 50px; height: 50px; vertical-align: middle; position: relative; top: -1px;}
 .logo-box .logo-text {display: inline-block; margin: 0; padding: 0; padding-left: 5px; vertical-align: middle; font-size: 22px;/* font-weight: 700; */}
+
+/*
+ * 语言下拉：与文档页同一套样式
+ * 用 #translateSelectLanguage 写死，切换语种重绘也不丢样式
+ */
+#translateSelectLanguage{
+	background-color: transparent !important;
+	display: inline-block !important;
+	vertical-align: middle;
+	margin-left: 10px !important;
+	border: 1px solid #999 !important;
+	color: #666 !important;
+	outline: 0;
+	cursor: pointer;
+	transition: all 0.2s;
+	background-color: #FFF;
+	font-size: 12px !important;
+	padding: 2px 2px !important;
+	position: relative;
+	top: 2px;
+	appearance: auto;
+	-webkit-appearance: menulist;
+	height: 22px !important;
+	line-height: 16px !important;
+	box-sizing: border-box;
+}
+#translateSelectLanguage:hover{box-shadow: 0 0 10px #aaa;}
+/* 语言框单独限宽：长语种名别把顶栏撑爆 */
+#translateSelectLanguage{
+	width: 88px !important;
+	max-width: 88px !important;
+}
+.nav-left .select-language-box{display: contents;}
 
 /* 右边导航 */
 .doc-header .nav-right{margin: 0;  float: right; line-height: 60px; padding-right: 4em; white-space: nowrap; }
