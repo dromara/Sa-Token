@@ -13,7 +13,7 @@ Use one of these private channels instead:
    GitHub automatically routes it to the maintainers, keeps the discussion private until you and the maintainers agree to publish, and (optionally) assigns a CVE on publish.
 
 2. **Email.**
-   If GitHub PVR is unavailable to you for any reason, email the project lead directly. Maintainers should add the preferred email here when they configure the policy.
+   If GitHub PVR is unavailable to you for any reason, email the project lead directly: [2393584716@qq.com](mailto:2393584716@qq.com).
 
 ## What to include
 
