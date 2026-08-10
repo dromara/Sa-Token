@@ -172,6 +172,8 @@
 
 - Go：[[ sa-token-go ]](https://github.com/sa-tokens/sa-token-go)： 一个轻量级、高性能的 Go 权限认证框架。
 
+- NodeJS：[[ xlt-token ]](https://github.com/xiaoLangtou/xlt-token)： 框架无关 Token 鉴权库，灵感来源于 Sa-Token；核心零框架依赖，NestJS 一行接入。
+
 - PHP：[[ real-token ]](https://gitee.com/jinan-jimeng-network_0/real-token)： 一个轻量级 thinkphp6 权限认证框架，让鉴权变得简单、优雅！
 
 

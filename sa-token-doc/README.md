@@ -178,8 +178,9 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 
 Sa-Token 社区成员贡献了多语言实现版本：
 
-- Rust 版本：[https://gitee.com/sa-tokens/sa-token-rust](https://gitee.com/sa-tokens/sa-token-rust)
-- Go 版本：[https://gitee.com/sa-tokens/sa-token-go](https://gitee.com/sa-tokens/sa-token-go)
+- Rust 版本：[https://github.com/sa-tokens/sa-token-rust](https://github.com/sa-tokens/sa-token-rust)
+- Go 版本：[https://github.com/sa-tokens/sa-token-go](https://github.com/sa-tokens/sa-token-go)
+- NodeJS 版本：[https://github.com/xiaoLangtou/xlt-token](https://github.com/xiaoLangtou/xlt-token)
 - PHP 版本：[https://gitee.com/jinan-jimeng-network_0/real-token](https://gitee.com/jinan-jimeng-network_0/real-token)
 
 我们诚邀对上述语言较为熟练的开发者，一起建设相关版本。🤝
