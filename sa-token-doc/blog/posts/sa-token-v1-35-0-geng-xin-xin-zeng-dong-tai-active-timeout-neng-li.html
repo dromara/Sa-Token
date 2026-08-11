@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
 	<title>Sa-Token v1.35.0 更新，新增动态 active-timeout 能力 - Sa-Token 博客</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="description" content="Sa-Token v1.35.0 重点新增动态 active-timeout 能力，可按账号或会话灵活调整活跃超时。同时继续完善登录认证、权限认证、分布式 Session、单点登录与 OAuth2.0。文内附完整更新说明，方便针对性试用新能力，并评估对现有超时策略的影响。">
-	<meta name="keywords" content="sa-token,java,权限认证,release-old">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,SSO,单点登录,OAuth2,版本更新">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="canonical" href="https://sa-token.com/blog/posts/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html">
 	<meta property="og:type" content="article">
@@ -13,6 +13,12 @@
 	<meta property="og:description" content="Sa-Token v1.35.0 重点新增动态 active-timeout 能力，可按账号或会话灵活调整活跃超时。同时继续完善登录认证、权限认证、分布式 Session、单点登录与 OAuth2.0。文内附完整更新说明，方便针对性试用新能力，并评估对现有超时策略的影响。">
 	<meta property="og:url" content="https://sa-token.com/blog/posts/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html">
 	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Sa-Token v1.35.0 更新，新增动态 active-timeout 能力">
+	<meta name="twitter:description" content="Sa-Token v1.35.0 重点新增动态 active-timeout 能力，可按账号或会话灵活调整活跃超时。同时继续完善登录认证、权限认证、分布式 Session、单点登录与 OAuth2.0。文内附完整更新说明，方便针对性试用新能力，并评估对现有超时策略的影响。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -23,6 +29,8 @@
   "headline": "Sa-Token v1.35.0 更新，新增动态 active-timeout 能力",
   "description": "Sa-Token v1.35.0 重点新增动态 active-timeout 能力，可按账号或会话灵活调整活跃超时。同时继续完善登录认证、权限认证、分布式 Session、单点登录与 OAuth2.0。文内附完整更新说明，方便针对性试用新能力，并评估对现有超时策略的影响。",
   "datePublished": "2023-06-27",
+  "dateModified": "2023-06-27",
+  "url": "https://sa-token.com/blog/posts/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html",
   "author": {
     "@type": "Organization",
     "name": "Sa-Token"
@@ -35,7 +43,10 @@
       "url": "https://sa-token.com/logo.png"
     }
   },
-  "mainEntityOfPage": "https://sa-token.com/blog/posts/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/posts/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html"
+  },
   "image": "https://sa-token.com/logo.png"
 }</script>
 </head>
@@ -51,14 +62,14 @@
 					<h1 class="logo-text">Sa-Token</h1>
 				</div>
 			</a>
-			<span id="translate" class="select-language-box ignore"></span>
+			<span id="translate" class="select-language-box ignore p-none"></span>
 		</div>
 		<nav class="nav-right">
 			<div class="sear-box p-none" tabindex="-1"></div>
 			<a class="wzi" href="../../index.html">首页</a>
 			<a class="wzi" href="../../doc.html">文档</a>
 			<a class="wzi nav-active" href="../index.html">博客</a>
-			<div class="zk-box">
+			<div class="zk-box p-none">
 				<a class="wzi" href="javascript:;">
 					<span>视频 </span>
 					<span class="zk-icon"></span>
@@ -80,7 +91,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="zk-box">
+			<div class="zk-box p-none">
 				<a class="wzi" href="javascript:;">
 					<span>案例 </span>
 					<span class="zk-icon"></span>
@@ -97,7 +108,7 @@
 			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
 			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
 			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
-			<div class="zk-box">
+			<div class="zk-box p-none">
 				<a class="wzi" href="javascript:;">
 					<span>安全推荐 </span>
 					<span class="zk-icon"></span>
@@ -113,7 +124,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="zk-box">
+			<div class="zk-box p-none">
 				<a class="wzi" href="javascript:;">
 					<span>相关资源 </span>
 					<span class="zk-icon"></span>
@@ -340,7 +351,7 @@
 					</div>
 				</div>
 				<div class="ew-wa">
-										<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
 				</div>
 			</div>
 
@@ -372,6 +383,7 @@
 	<script src="../../static/prism/prism-yaml.min.js"></script>
 	<script src="../../static/prism/prism-properties.min.js"></script>
 	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
 	<script src="../common/blog.js"></script>
 </body>
 </html>
