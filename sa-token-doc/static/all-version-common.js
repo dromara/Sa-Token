@@ -181,6 +181,29 @@
 	global.saTokenLatestVersion = LATEST_VERSION;
 })(typeof window !== 'undefined' ? window : this);
 
+/* 导航「博客」统一指向最新博客首页（旧版 /v/vX.Y.Z/ 下相对路径会指错） */
+(function () {
+	function fixBlogNavHref() {
+		if (!document || !document.querySelectorAll) {
+			return;
+		}
+		var links = document.querySelectorAll('a.wzi');
+		for (var i = 0; i < links.length; i++) {
+			var a = links[i];
+			var text = (a.textContent || '').replace(/\s+/g, '');
+			if (text !== '博客') {
+				continue;
+			}
+			a.setAttribute('href', '/blog/index.html');
+		}
+	}
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', fixBlogNavHref);
+	} else {
+		fixBlogNavHref();
+	}
+})();
+
 /* 百度统计 + 搜索引擎自动提交（引入即执行；本地环境跳过） */
 (function() {
 	var host = (location.hostname || '').toLowerCase();
