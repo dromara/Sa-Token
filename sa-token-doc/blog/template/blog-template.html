@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{{title}} - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="{{description}}">
+	<meta name="keywords" content="{{keywords}}">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="{{canonicalUrl}}">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="{{title}}">
+	<meta property="og:description" content="{{description}}">
+	<meta property="og:url" content="{{canonicalUrl}}">
+	<meta property="og:image" content="{{ogImage}}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{assetPrefix}}logo.png">
+	<link rel="stylesheet" href="{{assetPrefix}}static/doc.css">
+	<link rel="stylesheet" href="{{assetPrefix}}static/vue.css">
+	<link rel="stylesheet" href="{{blogCommonPrefix}}blog.css">
+	<script type="application/ld+json">{{jsonLd}}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+	{{docNav}}
+
+	<div class="main-box blog-main-box">
+		{{blogSidebar}}
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>{{title}}</h1>
+					{{articleMeta}}
+					{{content}}
+					{{prevNext}}
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc">{{articleToc}}</div>
+			</div>
+			{{blogRightAside}}
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="{{assetPrefix}}static/jquery.min.js"></script>
+	<script src="{{assetPrefix}}static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="{{assetPrefix}}static/sa-translate.js"></script>
+	<script src="{{blogCommonPrefix}}prism-core.min.js"></script>
+	<script src="{{blogCommonPrefix}}prism-clike.min.js"></script>
+	<script src="{{blogCommonPrefix}}prism-markup.min.js"></script>
+	<script src="{{blogCommonPrefix}}prism-javascript.min.js"></script>
+	<script src="{{blogCommonPrefix}}prism-css.min.js"></script>
+	<script src="{{blogCommonPrefix}}prism-bash.min.js"></script>
+	<script src="{{assetPrefix}}static/prism/prism-java.min.js"></script>
+	<script src="{{assetPrefix}}static/prism/prism-gradle.min.js"></script>
+	<script src="{{assetPrefix}}static/prism/prism-yaml.min.js"></script>
+	<script src="{{assetPrefix}}static/prism/prism-properties.min.js"></script>
+	<script src="{{assetPrefix}}static/zoom-image.min.js"></script>
+	<script src="{{blogCommonPrefix}}blog.js"></script>
+</body>
+</html>

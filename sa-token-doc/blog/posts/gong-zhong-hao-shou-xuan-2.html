@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>公众号首宣 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="JavaWeb 项目离不开认证授权。相较 Shiro、SpringSecurity，在前后端分离主流下往往要写不少兼容代码。本文首宣推荐 Sa-Token：轻量优雅完成登录认证、权限认证、SSO、OAuth2、网关鉴权等能力，适合想换更轻方案的同学快速上手体验。">
+	<meta name="keywords" content="sa-token,java,权限认证,起量">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/posts/gong-zhong-hao-shou-xuan-2.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="公众号首宣">
+	<meta property="og:description" content="JavaWeb 项目离不开认证授权。相较 Shiro、SpringSecurity，在前后端分离主流下往往要写不少兼容代码。本文首宣推荐 Sa-Token：轻量优雅完成登录认证、权限认证、SSO、OAuth2、网关鉴权等能力，适合想换更轻方案的同学快速上手体验。">
+	<meta property="og:url" content="https://sa-token.com/blog/posts/gong-zhong-hao-shou-xuan-2.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "公众号首宣",
+  "description": "JavaWeb 项目离不开认证授权。相较 Shiro、SpringSecurity，在前后端分离主流下往往要写不少兼容代码。本文首宣推荐 Sa-Token：轻量优雅完成登录认证、权限认证、SSO、OAuth2、网关鉴权等能力，适合想换更轻方案的同学快速上手体验。",
+  "datePublished": "2023-04-24",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": "https://sa-token.com/blog/posts/gong-zhong-hao-shou-xuan-2.html",
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="../../doc.html">文档</a>
+			<a class="wzi nav-active" href="../index.html">博客</a>
+			<div class="zk-box">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi" href="../../doc.html#/more/join-group">加群</a>
+			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
+			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
+			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="../../doc.html#/more/update-log">更新日志</a>
+						<a href="../../doc.html#/more/common-questions">常见报错</a>
+						<a href="../../doc.html#/more/tj-gzh">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="../../doc.html#/fun/sa-token-test">在线考试</a>
+						<a href="../../doc.html#/fun/issue-template">在线提问</a>
+						<a href="../../doc.html#/more/wenjuan">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar"><div class="sidebar-nav"><ul>
+<li><strong>精选</strong><ul>
+<li class=""><a href="../posts/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html" title="使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）">使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</a></li>
+<li class=""><a href="../posts/qian-tan-ti-ren-xia-xian-de-she-ji-si-lu-fu-dai-ma-shi-xian-fang-an-2.html" title="浅谈踢人下线的设计思路！（附代码实现方案）">浅谈踢人下线的设计思路！（附代码实现方案）</a></li>
+<li class=""><a href="../posts/shi-yong-sa-token-jie-jue-websocket-wo-shou-shen-fen-ren-zheng-2.html" title="使用 Sa-Token 解决 WebSocket 握手身份认证">使用 Sa-Token 解决 WebSocket 握手身份认证</a></li>
+<li class=""><a href="../posts/yi-ge-deng-lu-gong-neng-ye-neng-wan-chu-zhe-me-duo-hua-yang-sa-token-dan-di-deng.html" title="一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录">一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录</a></li>
+</ul></li>
+<li><strong>随笔</strong><ul>
+<li class=""><a href="../posts/dui-min-gan-cao-zuo-de-er-ci-ren-zheng-xiang-jie-sa-token-er-ji-ren-zheng.html" title="对敏感操作的二次认证 —— 详解 Sa-Token 二级认证">对敏感操作的二次认证 —— 详解 Sa-Token 二级认证</a></li>
+<li class=""><a href="../posts/zai-wei-fu-wu-zhong-shi-yong-sa-token-fen-bu-shi-session-hui-hua-wang-guan-tong.html" title="在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权">在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权</a></li>
+<li class=""><a href="../posts/qian-hou-duan-fen-li-jia-gou-xia-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html" title="前后端分离架构下使用 Sa-Token 完成登录认证">前后端分离架构下使用 Sa-Token 完成登录认证</a></li>
+<li class=""><a href="../posts/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html" title="别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权">别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权</a></li>
+<li class=""><a href="../posts/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html" title="使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录">使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录</a></li>
+<li class=""><a href="../posts/shi-yong-sa-token-shi-xian-ji-zhu-wo-mo-shi-deng-lu-qi-tian-mian-deng-lu.html" title="使用 Sa-Token 实现 [记住我] 模式登录、七天免登录">使用 Sa-Token 实现 [记住我] 模式登录、七天免登录</a></li>
+<li class=""><a href="../posts/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html" title="使用 Sa-Token 完成踢人下线功能">使用 Sa-Token 完成踢人下线功能</a></li>
+<li class=""><a href="../posts/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html" title="不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现">不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现</a></li>
+<li class=""><a href="../posts/yi-wen-xiang-jie-sa-token-zhong-de-sasession-dui-xiang.html" title="一文详解 Sa-Token 中的 SaSession 对象">一文详解 Sa-Token 中的 SaSession 对象</a></li>
+<li class=""><a href="../posts/springboot-xiang-mu-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html" title="SpringBoot 项目使用 Sa-Token 完成登录认证">SpringBoot 项目使用 Sa-Token 完成登录认证</a></li>
+<li class=""><a href="../posts/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html" title="SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁">SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁</a></li>
+<li class=""><a href="../posts/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html" title="SpringBoot 使用 Sa-Token 完成路由拦截鉴权">SpringBoot 使用 Sa-Token 完成路由拦截鉴权</a></li>
+<li class=""><a href="../posts/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html" title="SpringBoot 使用 Sa-Token 完成注解鉴权功能">SpringBoot 使用 Sa-Token 完成注解鉴权功能</a></li>
+<li class=""><a href="../posts/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html" title="SpringBoot 使用 Sa-Token 完成权限认证">SpringBoot 使用 Sa-Token 完成权限认证</a></li>
+<li class=""><a href="../posts/sa-token-ji-cheng-jwt.html" title="Sa-Token 集成 jwt">Sa-Token 集成 jwt</a></li>
+<li class=""><a href="../posts/sa-token-duo-zhang-hao-ren-zheng-tong-shi-wei-xi-tong-de-admin-zhang-hao-he-user.html" title="Sa-Token 多账号认证：同时为系统的 Admin 账号和 User 账号提供鉴权操作">Sa-Token 多账号认证：同时为系统的 Admin 账号和 User 账号提供鉴权操作</a></li>
+<li class=""><a href="../posts/sa-token-dan-dian-deng-lu-di-si-pian-kua-yu-kua-redis-xia-de-sso-dui-jie-bu-zhou.html" title="Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../posts/sa-token-dan-dian-deng-lu-di-liu-pian-ding-zhi-hua-deng-lu-ye-mian.html" title="Sa-Token 单点登录第六篇：定制化登录页面">Sa-Token 单点登录第六篇：定制化登录页面</a></li>
+<li class=""><a href="../posts/sa-token-dan-dian-deng-lu-di-wu-pian-qian-hou-duan-fen-li-jia-gou-xia-de-sso-dui.html" title="Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤">Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤</a></li>
+<li class=""><a href="../posts/sa-token-dan-dian-deng-lu-di-er-pian-tong-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html" title="Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../posts/sa-token-dan-dian-deng-lu-di-san-pian-kua-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html" title="Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../posts/sa-token-dan-dian-deng-lu-di-yi-pian-da-jian-sso-server-tong-yi-ren-zheng-zhong.html" title="Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心">Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心</a></li>
+</ul></li>
+<li><strong>版本更新</strong><ul>
+<li class=""><a href="../posts/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html" title="Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配">Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配</a></li>
+<li class=""><a href="../posts/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html" title="Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力">Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力</a></li>
+<li class=""><a href="../posts/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html" title="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力</a></li>
+<li class=""><a href="../posts/sa-token-v1-41-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html" title="Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！">Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！</a></li>
+<li class=""><a href="../posts/sa-token-v1-40-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html" title="Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！">Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！</a></li>
+<li class=""><a href="../posts/sa-token-v1-39-0-geng-xin-da-fu-zhong-gou-oauth2-mo-kuai.html" title="Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块">Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块</a></li>
+<li class=""><a href="../posts/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html" title="Sa-Token v1.35.0 更新，新增动态 active-timeout 能力">Sa-Token v1.35.0 更新，新增动态 active-timeout 能力</a></li>
+<li class=""><a href="../posts/sa-token-v1-34-0-geng-xin-shi-pei-springboot3.html" title="Sa-Token v1.34.0 更新，适配 SpringBoot3">Sa-Token v1.34.0 更新，适配 SpringBoot3</a></li>
+<li class=""><a href="../posts/sa-token-v1-33-0-geng-xin-xin-zeng-quan-ju-log-mo-kuai.html" title="Sa-Token v1.33.0 更新，新增全局 Log 模块">Sa-Token v1.33.0 更新，新增全局 Log 模块</a></li>
+<li class=""><a href="../posts/sa-token-v1-32-0-geng-xin-xin-zeng-zhang-hao-fen-lei-feng-jin-jie-ti-feng-jin-go.html" title="Sa-Token v1.32.0 更新，新增账号分类封禁、阶梯封禁功能">Sa-Token v1.32.0 更新，新增账号分类封禁、阶梯封禁功能</a></li>
+<li class=""><a href="../posts/sa-token-v1-31-0-geng-xin-xin-zeng-zhang-hao-fen-lei-feng-jin-jie-ti-feng-jin-go.html" title="Sa-Token v1.31.0 更新，新增账号分类封禁、阶梯封禁功能">Sa-Token v1.31.0 更新，新增账号分类封禁、阶梯封禁功能</a></li>
+<li class=""><a href="../posts/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html" title="Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证">Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证</a></li>
+<li class=""><a href="../posts/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html" title="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例</a></li>
+</ul></li>
+<li><strong>特殊文章</strong><ul>
+<li class=""><a href="../posts/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html" title="太强了！Sa-Token 的 NodeJS 版本！">太强了！Sa-Token 的 NodeJS 版本！</a></li>
+<li class=""><a href="../posts/sa-token-di-10000-ge-star-li-cheng-bei-gan-xie-san-nian-lai-suo-you-guan-zhu-sa.html" title="Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！">Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！</a></li>
+<li class=""><a href="../posts/sa-token-v1-28-0-geng-xin-bing-rong-huo-kai-yuan-zhong-guo-ma-yun-gvp-ren-zheng.html" title="Sa-Token v1.28.0更新，并荣获开源中国“码云GVP认证”">Sa-Token v1.28.0更新，并荣获开源中国“码云GVP认证”</a></li>
+</ul></li>
+<li><strong>其它</strong><ul>
+<li class=""><a href="../posts/chu-shi-sa-token-yi-xing-dai-ma-gao-ding-deng-lu-shou-quan.html" title="初识sa-token，一行代码搞定登录授权！">初识sa-token，一行代码搞定登录授权！</a></li>
+<li class="active-rep"><a href="../posts/gong-zhong-hao-shou-xuan-2.html" title="公众号首宣">公众号首宣</a></li>
+<li class=""><a href="../posts/java-feng-jin-mou-ge-zhang-hao-hou-shi-qi-hui-hua-li-ji-diao-xian.html" title="java中如何踢人下线？封禁某个账号后使其会话立即掉线！">java中如何踢人下线？封禁某个账号后使其会话立即掉线！</a></li>
+<li class=""><a href="../posts/sa-token-you-ya-de-jiang-jian-quan-yu-ye-wu-dai-ma-fen-li.html" title="Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！">Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！</a></li>
+</ul></li>
+</ul></div></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>公众号首宣</h1>
+					<div class="blog-article-meta"><span>2023-04-24</span><span>其它</span></div>
+					<h2 id="qian-yan">前言：</h2>
+<blockquote>
+<p>在 JavaWeb 项目中，认证授权是必不可少的功能，比较传统的框架有 Shiro、SpringSecurity 等等，这些框架在如今“前后端分离” 已成主流的情况下，并不是十分好用，需要写不少兼容性代码才能集成。<br/><br/><br />
+今天给大家推荐的这个框架是 Sa-Token，可以让我们非常优雅的集成鉴权功能！<br/><br/><br />
+GitHub开源地址：https://github.com/dromara/sa-token</p>
+</blockquote>
+<h2 id="sa-token-jie-shao">Sa-Token 介绍</h2>
+<p><strong>Sa-Token</strong> 是一个轻量级 Java 权限认证框架，主要解决：<strong><code>登录认证</code></strong>、<strong><code>权限认证</code></strong>、<strong><code>Session会话</code></strong>、<strong><code>单点登录</code></strong>、<strong><code>OAuth2.0</code></strong>、<strong><code>微服务网关鉴权</code></strong> 等一系列权限相关问题。</p>
+<p>Sa-Token 的 API 设计非常简单，有多简单呢？以登录认证为例，你只需要：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 在登录时写入当前会话的账号id
+StpUtil.login(10001);
+
+// 然后在需要校验登录处调用以下方法：
+// 如果当前会话未登录，这句代码会抛出 `NotLoginException` 异常
+StpUtil.checkLogin();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>至此，我们已经借助 Sa-Token 完成登录认证！</p>
+<p>此时的你小脑袋可能飘满了问号，就这么简单？自定义 Realm 呢？全局过滤器呢？我不用写各种配置文件吗？</p>
+<p>没错，在 Sa-Token 中，登录认证就是如此简单，不需要任何的复杂前置工作，只需这一行简单的API调用，就可以完成会话登录认证！</p>
+<p>当你受够 SpringSecurity、Shiro 等框架的三拜九叩之后，你就会明白，相对于这些传统老牌框架，Sa-Token 的 API 设计是多么的简单、优雅！</p>
+<p>权限认证示例（只有具备 <code>user:add</code> 权限的会话才可以进入请求）</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SaCheckPermission(&quot;user:add&quot;)
+@RequestMapping(&quot;/user/insert&quot;)
+public String insert(SysUser user) {
+    // ...
+    return &quot;用户增加&quot;;
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>将某个账号踢下线（待到对方再次访问系统时会抛出<code>NotLoginException</code>异常）</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 使账号id为 10001 的会话强制注销登录
+StpUtil.logoutByLoginId(10001);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>在 Sa-Token 中，绝大多数功能都可以 <strong>一行代码</strong> 完成：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">StpUtil.login(10001);   // 标记当前会话登录的账号id
+StpUtil.getLoginId();   // 获取当前会话登录的账号id
+StpUtil.isLogin();   // 获取当前会话是否已经登录, 返回true或false
+StpUtil.logout();   // 当前会话注销登录
+StpUtil.logoutByLoginId(10001);   // 让账号为10001的会话注销登录（踢人下线）
+StpUtil.hasRole(&quot;super-admin&quot;);   // 查询当前账号是否含有指定角色标识, 返回true或false
+StpUtil.hasPermission(&quot;user:add&quot;);   // 查询当前账号是否含有指定权限, 返回true或false
+StpUtil.getSession();   // 获取当前账号id的Session
+StpUtil.getSessionByLoginId(10001);   // 获取账号id为10001的Session
+StpUtil.getTokenValueByLoginId(10001);   // 获取账号id为10001的token令牌值
+StpUtil.login(10001, &quot;PC&quot;);   // 指定设备标识登录，常用于“同端互斥登录”
+StpUtil.logoutByLoginId(10001, &quot;PC&quot;);   // 指定设备标识进行强制注销 (不同端不受影响)
+StpUtil.openSafe(120);   // 在当前会话开启二级认证，有效期为120秒
+StpUtil.checkSafe();   // 校验当前会话是否处于二级认证有效期内，校验失败会抛出异常
+StpUtil.switchTo(10044);   // 将当前会话身份临时切换为其它账号</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<p>即使不运行测试，相信您也能意会到绝大多数 API 的用法。</p>
+<h2 id="sa-token-gong-neng-yi-lan">Sa-Token 功能一览</h2>
+<ul>
+<li><strong>登录认证</strong> —— 单端登录、多端登录、同端互斥登录、七天内免登录</li>
+<li><strong>权限认证</strong> —— 权限认证、角色认证、会话二级认证</li>
+<li><strong>Session会话</strong> —— 全端共享Session、单端独享Session、自定义Session</li>
+<li><strong>踢人下线</strong> —— 根据账号id踢人下线、根据Token值踢人下线</li>
+<li><strong>账号封禁</strong> —— 指定天数封禁、永久封禁、设定解封时间</li>
+<li><strong>持久层扩展</strong> —— 可集成Redis、Memcached等专业缓存中间件，重启数据不丢失</li>
+<li><strong>分布式会话</strong> —— 提供jwt集成、共享数据中心两种分布式会话方案</li>
+<li><strong>微服务网关鉴权</strong> —— 适配Gateway、ShenYu、Zuul等常见网关的路由拦截认证</li>
+<li><strong>单点登录</strong> —— 内置三种单点登录模式：无论是否跨域、是否共享Redis，都可以搞定</li>
+<li><strong>OAuth2.0认证</strong> —— 基于RFC-6749标准编写，OAuth2.0标准流程的授权认证，支持openid模式</li>
+<li><strong>二级认证</strong> —— 在已登录的基础上再次认证，保证安全性</li>
+<li><strong>独立Redis</strong> —— 将权限缓存与业务缓存分离</li>
+<li><strong>临时Token验证</strong> —— 解决短时间的Token授权问题</li>
+<li><strong>模拟他人账号</strong> —— 实时操作任意用户状态数据</li>
+<li><strong>临时身份切换</strong> —— 将会话身份临时切换为其它账号</li>
+<li><strong>前后台分离</strong> —— APP、小程序等不支持Cookie的终端</li>
+<li><strong>同端互斥登录</strong> —— 像QQ一样手机电脑同时在线，但是两个手机上互斥登录</li>
+<li><strong>多账号认证体系</strong> —— 比如一个商城项目的user表和admin表分开鉴权</li>
+<li><strong>花式token生成</strong> —— 内置六种Token风格，还可：自定义Token生成策略、自定义Token前缀</li>
+<li><strong>注解式鉴权</strong> —— 优雅的将鉴权与业务代码分离</li>
+<li><strong>路由拦截式鉴权</strong> —— 根据路由拦截鉴权，可适配restful模式</li>
+<li><strong>自动续签</strong> —— 提供两种Token过期策略，灵活搭配使用，还可自动续签</li>
+<li><strong>会话治理</strong> —— 提供方便灵活的会话查询接口</li>
+<li><strong>记住我模式</strong> —— 适配[记住我]模式，重启浏览器免验证</li>
+<li><strong>密码加密</strong> —— 提供密码加密模块，可快速MD5、SHA1、SHA256、AES、RSA加密</li>
+<li><strong>全局侦听器</strong> —— 在用户登陆、注销、被踢下线等关键性操作时进行一些AOP操作</li>
+<li><strong>开箱即用</strong> —— 提供SpringMVC、WebFlux等常见web框架starter集成包，真正的开箱即用</li>
+</ul>
+<h2 id="dan-dian-deng-lu-amp-oauth2-0">单点登录 &amp; OAuth2.0</h2>
+<p>通过 Sa-Token ，我们可以很方便的搭建单点登录认证中心：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
+ * Sa-Token-SSO Server端 Controller 
+ */
+@RestController
+public class SsoServerController {
+    // SSO-Server端：处理所有SSO相关请求 
+    @RequestMapping(&quot;/sso/*&quot;)
+    public Object ssoRequest() {
+        return SaSsoHandle.serverRequest();
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<p>同样，我们也可以很方便的搭建一个 OAuth2.0 认证中心：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
+ * Sa-Token-OAuth2.0 Server端 Controller 
+ */
+@RestController
+public class SaOAuth2ServerController {
+    // SSO-Server端：处理所有SSO相关请求 
+    @RequestMapping(&quot;/oauth2/*&quot;)
+    public Object request() {
+        return SaSsoHandle.serverRequest();
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<p>详细代码请参考框架官网介绍。</p>
+<h2 id="zong-jie">总结</h2>
+<p>通过以上示例我们可以看出，Sa-Token 同时兼顾 <strong>简单</strong>、<strong>全面</strong> 两个优点，是一个非常值得上手的优秀框架。</p>
+<p>同时，其官网非常文档也写的非常详细，不光介绍了 Sa-Token 框架，还介绍了非常多的权限设计思想，是真正的授人以渔。</p>
+<p><img alt="官方文档" src="https://cdn.jsdelivr.net/gh/filess/img2@main/2021/08/25/1629828921121-1a061151-f2d8-4f59-a8b7-0514a97b0461.png" /></p>
+<h2 id="can-kao-zi-liao">参考资料</h2>
+<ul>
+<li>开源地址：https://github.com/dromara/sa-token</li>
+<li>官方文档：http://sa-token.com/</li>
+<li>框架官方讨论群非常活跃，长按扫码即可加入：</li>
+</ul>
+<p><img alt="加入群聊" src="https://cdn.jsdelivr.net/gh/filess/img15@main/2021/08/25/1629829000989-58fdf7cc-ce1f-44a0-8469-05084dcbcf25.png" /></p>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../posts/java-feng-jin-mou-ge-zhang-hao-hou-shi-qi-hui-hua-li-ji-diao-xian.html">← java中如何踢人下线？封禁某个账号后使其会话立即掉线！</a>
+<a class="blog-post-nav-next" href="../posts/chu-shi-sa-token-yi-xing-dai-ma-gao-ding-deng-lu-shou-quan.html">初识sa-token，一行代码搞定登录授权！ →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#qian-yan">前言：</a></li>
+<li class="toc-h2"><a href="#sa-token-jie-shao">Sa-Token 介绍</a></li>
+<li class="toc-h2"><a href="#sa-token-gong-neng-yi-lan">Sa-Token 功能一览</a></li>
+<li class="toc-h2"><a href="#dan-dian-deng-lu-amp-oauth2-0">单点登录 &amp;amp; OAuth2.0</a></li>
+<li class="toc-h2"><a href="#zong-jie">总结</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>
+						<a href="https://pan.quark.cn/s/d5abda720e88" target="_blank">离线版文档</a>
+						<a href="https://pan.quark.cn/s/fea7e5ec72ee" target="_blank">历史所有版本文档</a>
+						<a href="../../doc.html#/more/download-demos">Demo 示例大全下载</a>
+					</p>
+				</div>
+				<div class="ew-wa">
+					<p>如果 Sa-Token 帮助到了你，希望你可以向同事、朋友推荐了解本框架，这对我们非常重要，感谢支持！</p>
+					<p>加油，工程师！</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

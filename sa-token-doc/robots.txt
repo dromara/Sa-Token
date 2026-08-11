@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sa-token.com/blog/sitemap.xml

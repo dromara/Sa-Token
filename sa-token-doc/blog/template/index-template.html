@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{{title}}</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="{{description}}">
+	<meta name="keywords" content="{{keywords}}">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="{{canonicalUrl}}">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="{{title}}">
+	<meta property="og:description" content="{{description}}">
+	<meta property="og:url" content="{{canonicalUrl}}">
+	<meta property="og:image" content="{{ogImage}}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{assetPrefix}}logo.png">
+	<link rel="stylesheet" href="{{assetPrefix}}static/doc.css">
+	<link rel="stylesheet" href="{{assetPrefix}}static/vue.css">
+	<link rel="stylesheet" href="{{blogCommonPrefix}}blog.css">
+	<script type="application/ld+json">{{jsonLd}}</script>
+</head>
+<body class="blog-page blog-index-page ready">
+	{{docNav}}
+
+	<div class="main-box blog-main-box">
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					{{indexContent}}
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">博客说明</div>
+				<div class="blog-index-aside ignore">
+					<p>本站官方博客开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+					<p>社区博客和推荐博客版权属于其作者本人，如需转载请联系对应作者申请授权。</p>
+				</div>
+			</div>
+			{{blogRightAside}}
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="{{assetPrefix}}static/jquery.min.js"></script>
+	<script src="{{assetPrefix}}static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="{{assetPrefix}}static/sa-translate.js"></script>
+	<script src="{{blogCommonPrefix}}blog.js"></script>
+</body>
+</html>
