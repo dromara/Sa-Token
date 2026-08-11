@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>SpringBoot 使用 Sa-Token 完成路由拦截鉴权 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="注解鉴权虽方便，却不适合所有场景。本文讲解如何用 Sa-Token 做路由拦截式鉴权：按 URL 规则统一校验登录与权限，适配 REST 风格接口，并可与注解鉴权搭配使用，在全局拦截与局部声明之间灵活取舍，覆盖更多网关式鉴权需求，文内含示例，可直接对照实践。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,微服务鉴权,网关鉴权,SpringBoot">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="SpringBoot 使用 Sa-Token 完成路由拦截鉴权">
+	<meta property="og:description" content="注解鉴权虽方便，却不适合所有场景。本文讲解如何用 Sa-Token 做路由拦截式鉴权：按 URL 规则统一校验登录与权限，适配 REST 风格接口，并可与注解鉴权搭配使用，在全局拦截与局部声明之间灵活取舍，覆盖更多网关式鉴权需求，文内含示例，可直接对照实践。">
+	<meta property="og:url" content="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="SpringBoot 使用 Sa-Token 完成路由拦截鉴权">
+	<meta name="twitter:description" content="注解鉴权虽方便，却不适合所有场景。本文讲解如何用 Sa-Token 做路由拦截式鉴权：按 URL 规则统一校验登录与权限，适配 REST 风格接口，并可与注解鉴权搭配使用，在全局拦截与局部声明之间灵活取舍，覆盖更多网关式鉴权需求，文内含示例，可直接对照实践。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "SpringBoot 使用 Sa-Token 完成路由拦截鉴权",
+  "description": "注解鉴权虽方便，却不适合所有场景。本文讲解如何用 Sa-Token 做路由拦截式鉴权：按 URL 规则统一校验登录与权限，适配 REST 风格接口，并可与注解鉴权搭配使用，在全局拦截与局部声明之间灵活取舍，覆盖更多网关式鉴权需求，文内含示例，可直接对照实践。",
+  "datePublished": "2023-04-24",
+  "dateModified": "2023-04-24",
+  "url": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="../../doc.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi" href="../../doc.html#/more/join-group">加群</a>
+			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
+			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
+			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="../../doc.html#/more/update-log">更新日志</a>
+						<a href="../../doc.html#/more/common-questions">常见报错</a>
+						<a href="../../doc.html#/more/tj-gzh">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="../../doc.html#/fun/sa-token-test">在线考试</a>
+						<a href="../../doc.html#/fun/issue-template">在线提问</a>
+						<a href="../../doc.html#/more/wenjuan">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar"><div class="sidebar-nav"><ul>
+<li><strong>精选</strong><ul>
+<li class=""><a href="../featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html" title="使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）">使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</a></li>
+<li class=""><a href="../featured/qian-tan-ti-ren-xia-xian-de-she-ji-si-lu-fu-dai-ma-shi-xian-fang-an-2.html" title="浅谈踢人下线的设计思路！（附代码实现方案）">浅谈踢人下线的设计思路！（附代码实现方案）</a></li>
+<li class=""><a href="../featured/shi-yong-sa-token-jie-jue-websocket-wo-shou-shen-fen-ren-zheng-2.html" title="使用 Sa-Token 解决 WebSocket 握手身份认证">使用 Sa-Token 解决 WebSocket 握手身份认证</a></li>
+<li class=""><a href="../featured/yi-ge-deng-lu-gong-neng-ye-neng-wan-chu-zhe-me-duo-hua-yang-sa-token-dan-di-deng.html" title="一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录">一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录</a></li>
+</ul></li>
+<li><strong>随笔</strong><ul>
+<li class=""><a href="../essays/dui-min-gan-cao-zuo-de-er-ci-ren-zheng-xiang-jie-sa-token-er-ji-ren-zheng.html" title="对敏感操作的二次认证 —— 详解 Sa-Token 二级认证">对敏感操作的二次认证 —— 详解 Sa-Token 二级认证</a></li>
+<li class=""><a href="../essays/zai-wei-fu-wu-zhong-shi-yong-sa-token-fen-bu-shi-session-hui-hua-wang-guan-tong.html" title="在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权">在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权</a></li>
+<li class=""><a href="../essays/qian-hou-duan-fen-li-jia-gou-xia-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html" title="前后端分离架构下使用 Sa-Token 完成登录认证">前后端分离架构下使用 Sa-Token 完成登录认证</a></li>
+<li class=""><a href="../essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html" title="别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权">别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权</a></li>
+<li class=""><a href="../essays/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html" title="使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录">使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录</a></li>
+<li class=""><a href="../essays/shi-yong-sa-token-shi-xian-ji-zhu-wo-mo-shi-deng-lu-qi-tian-mian-deng-lu.html" title="使用 Sa-Token 实现 [记住我] 模式登录、七天免登录">使用 Sa-Token 实现 [记住我] 模式登录、七天免登录</a></li>
+<li class=""><a href="../essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html" title="使用 Sa-Token 完成踢人下线功能">使用 Sa-Token 完成踢人下线功能</a></li>
+<li class=""><a href="../essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html" title="不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现">不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现</a></li>
+<li class=""><a href="../essays/yi-wen-xiang-jie-sa-token-zhong-de-sasession-dui-xiang.html" title="一文详解 Sa-Token 中的 SaSession 对象">一文详解 Sa-Token 中的 SaSession 对象</a></li>
+<li class=""><a href="../essays/springboot-xiang-mu-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html" title="SpringBoot 项目使用 Sa-Token 完成登录认证">SpringBoot 项目使用 Sa-Token 完成登录认证</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html" title="SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁">SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁</a></li>
+<li class="active-rep"><a href="../essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html" title="SpringBoot 使用 Sa-Token 完成路由拦截鉴权">SpringBoot 使用 Sa-Token 完成路由拦截鉴权</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html" title="SpringBoot 使用 Sa-Token 完成注解鉴权功能">SpringBoot 使用 Sa-Token 完成注解鉴权功能</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html" title="SpringBoot 使用 Sa-Token 完成权限认证">SpringBoot 使用 Sa-Token 完成权限认证</a></li>
+<li class=""><a href="../essays/sa-token-ji-cheng-jwt.html" title="Sa-Token 集成 jwt">Sa-Token 集成 jwt</a></li>
+<li class=""><a href="../essays/sa-token-duo-zhang-hao-ren-zheng-tong-shi-wei-xi-tong-de-admin-zhang-hao-he-user.html" title="Sa-Token 多账号认证：同时为系统的 Admin 账号和 User 账号提供鉴权操作">Sa-Token 多账号认证：同时为系统的 Admin 账号和 User 账号提供鉴权操作</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-si-pian-kua-yu-kua-redis-xia-de-sso-dui-jie-bu-zhou.html" title="Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-liu-pian-ding-zhi-hua-deng-lu-ye-mian.html" title="Sa-Token 单点登录第六篇：定制化登录页面">Sa-Token 单点登录第六篇：定制化登录页面</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-wu-pian-qian-hou-duan-fen-li-jia-gou-xia-de-sso-dui.html" title="Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤">Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-er-pian-tong-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html" title="Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-san-pian-kua-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html" title="Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-yi-pian-da-jian-sso-server-tong-yi-ren-zheng-zhong.html" title="Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心">Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心</a></li>
+</ul></li>
+<li><strong>版本更新</strong><ul>
+<li class=""><a href="../release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html" title="Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配">Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配</a></li>
+<li class=""><a href="../release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html" title="Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力">Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力</a></li>
+<li class=""><a href="../release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html" title="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力</a></li>
+<li class=""><a href="../release/sa-token-v1-41-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html" title="Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！">Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！</a></li>
+<li class=""><a href="../release/sa-token-v1-40-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html" title="Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！">Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！</a></li>
+<li class=""><a href="../release/sa-token-v1-39-0-geng-xin-da-fu-zhong-gou-oauth2-mo-kuai.html" title="Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块">Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块</a></li>
+<li class=""><a href="../release/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html" title="Sa-Token v1.35.0 更新，新增动态 active-timeout 能力">Sa-Token v1.35.0 更新，新增动态 active-timeout 能力</a></li>
+<li class=""><a href="../release/sa-token-v1-34-0-geng-xin-shi-pei-springboot3.html" title="Sa-Token v1.34.0 更新，适配 SpringBoot3">Sa-Token v1.34.0 更新，适配 SpringBoot3</a></li>
+<li class=""><a href="../release/sa-token-v1-33-0-geng-xin-xin-zeng-quan-ju-log-mo-kuai.html" title="Sa-Token v1.33.0 更新，新增全局 Log 模块">Sa-Token v1.33.0 更新，新增全局 Log 模块</a></li>
+<li class=""><a href="../release/sa-token-v1-32-0-geng-xin-xin-zeng-zhang-hao-fen-lei-feng-jin-jie-ti-feng-jin-go.html" title="Sa-Token v1.32.0 更新，新增账号分类封禁、阶梯封禁功能">Sa-Token v1.32.0 更新，新增账号分类封禁、阶梯封禁功能</a></li>
+<li class=""><a href="../release/sa-token-v1-31-0-geng-xin-xin-zeng-zhang-hao-fen-lei-feng-jin-jie-ti-feng-jin-go.html" title="Sa-Token v1.31.0 更新，新增账号分类封禁、阶梯封禁功能">Sa-Token v1.31.0 更新，新增账号分类封禁、阶梯封禁功能</a></li>
+<li class=""><a href="../release/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html" title="Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证">Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证</a></li>
+<li class=""><a href="../release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html" title="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例</a></li>
+</ul></li>
+<li><strong>特殊文章</strong><ul>
+<li class=""><a href="../special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html" title="太强了！Sa-Token 的 NodeJS 版本！">太强了！Sa-Token 的 NodeJS 版本！</a></li>
+<li class=""><a href="../special/sa-token-di-10000-ge-star-li-cheng-bei-gan-xie-san-nian-lai-suo-you-guan-zhu-sa.html" title="Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！">Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！</a></li>
+<li class=""><a href="../special/sa-token-v1-28-0-geng-xin-bing-rong-huo-kai-yuan-zhong-guo-ma-yun-gvp-ren-zheng.html" title="Sa-Token v1.28.0更新，并荣获开源中国“码云GVP认证”">Sa-Token v1.28.0更新，并荣获开源中国“码云GVP认证”</a></li>
+</ul></li>
+<li><strong>其它</strong><ul>
+<li class=""><a href="../other/chu-shi-sa-token-yi-xing-dai-ma-gao-ding-deng-lu-shou-quan.html" title="初识sa-token，一行代码搞定登录授权！">初识sa-token，一行代码搞定登录授权！</a></li>
+<li class=""><a href="../other/gong-zhong-hao-shou-xuan-2.html" title="公众号首宣">公众号首宣</a></li>
+<li class=""><a href="../other/java-feng-jin-mou-ge-zhang-hao-hou-shi-qi-hui-hua-li-ji-diao-xian.html" title="java中如何踢人下线？封禁某个账号后使其会话立即掉线！">java中如何踢人下线？封禁某个账号后使其会话立即掉线！</a></li>
+<li class=""><a href="../other/sa-token-you-ya-de-jiang-jian-quan-yu-ye-wu-dai-ma-fen-li.html" title="Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！">Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！</a></li>
+</ul></li>
+</ul></div></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>SpringBoot 使用 Sa-Token 完成路由拦截鉴权</h1>
+					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
+					<h3 id="yi-xu-qiu-fen-xi">一、需求分析</h3>
+<p>在前文，我们详细的讲述了在 Sa-Token 如何使用注解进行权限认证，注解鉴权虽然方便，却并不适合所有鉴权场景。</p>
+<p>假设有如下需求：项目中所有接口均需要登录认证校验，只有 “登录接口” 本身对外开放。</p>
+<p>如果我们对项目所有接口都加上 <code>@SaCheckLogin</code> 注解，会显得非常冗余且没有必要，在这个需求中我们真正需要的是一种基于路由拦截的鉴权模式，那么在 Sa-Token 怎么实现路由拦截鉴权呢？</p>
+<blockquote>
+<p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
+Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
+</blockquote>
+<h3 id="er-zhu-ce-sa-token-lu-you-lan-jie-qi">二、注册 Sa-Token 路由拦截器</h3>
+<p>首先在项目中引入 Sa-Token 依赖：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.34.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
+<p>新建配置类<code>SaTokenConfigure.java</code></p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+    // 注册拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
+        registry.addInterceptor(new SaInterceptor(handle -&gt; StpUtil.checkLogin()))
+                .addPathPatterns(&quot;/**&quot;)
+                .excludePathPatterns(&quot;/user/doLogin&quot;); 
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<p>以上代码，我们注册了一个基于 <code>StpUtil.checkLogin()</code> 的登录校验拦截器，并且排除了<code>/user/doLogin</code>接口用来开放登录（除了<code>/user/doLogin</code>以外的所有接口都需要登录才能访问）。</p>
+<blockquote>
+<p><code>SaInterceptor</code> 是新版本提供的拦截器，点此 <a href="https://blog.csdn.net/shengzhang_/article/details/126458949">查看旧版本代码迁移示例</a>。</p>
+</blockquote>
+<h3 id="san-jiao-yan-han-shu-xiang-jie">三、校验函数详解</h3>
+<p>自定义认证规则：<code>new SaInterceptor(handle -&gt; StpUtil.checkLogin())</code> 是最简单的写法，代表只进行登录校验功能。</p>
+<p>我们可以往构造函数塞一个完整的 lambda 表达式，来定义详细的校验规则，例如：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册 Sa-Token 拦截器，定义详细认证规则 
+        registry.addInterceptor(new SaInterceptor(handler -&gt; {
+            // 指定一条 match 规则
+            SaRouter
+                .match(&quot;/**&quot;)   // 拦截的 path 列表，可以写多个 */
+                .notMatch(&quot;/user/doLogin&quot;)      // 排除掉的 path 列表，可以写多个 
+                .check(r -&gt; StpUtil.checkLogin());      // 要执行的校验动作，可以写完整的 lambda 表达式
+
+            // 根据路由划分模块，不同模块不同鉴权 
+            SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
+            SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
+            SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
+            SaRouter.match(&quot;/orders/**&quot;, r -&gt; StpUtil.checkPermission(&quot;orders&quot;));
+            SaRouter.match(&quot;/notice/**&quot;, r -&gt; StpUtil.checkPermission(&quot;notice&quot;));
+            SaRouter.match(&quot;/comment/**&quot;, r -&gt; StpUtil.checkPermission(&quot;comment&quot;));
+        })).addPathPatterns(&quot;/**&quot;);
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
+<p>SaRouter.match() 匹配函数有两个参数：<br />
+- 参数一：要匹配的path路由。<br />
+- 参数二：要执行的校验函数。</p>
+<p>在校验函数内不只可以使用 <code>StpUtil.checkPermission("xxx")</code> 进行权限校验，你还可以写任意代码，例如：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+    // 注册 Sa-Token 的拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册路由拦截器，自定义认证规则 
+        registry.addInterceptor(new SaInterceptor(handler -&gt; {
+
+            // 登录校验 -- 拦截所有路由，并排除/user/doLogin 用于开放登录 
+            SaRouter.match(&quot;/**&quot;, &quot;/user/doLogin&quot;, r -&gt; StpUtil.checkLogin());
+
+            // 角色校验 -- 拦截以 admin 开头的路由，必须具备 admin 角色或者 super-admin 角色才可以通过认证 
+            SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkRoleOr(&quot;admin&quot;, &quot;super-admin&quot;));
+
+            // 权限校验 -- 不同模块校验不同权限 
+            SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
+            SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
+            SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
+            SaRouter.match(&quot;/orders/**&quot;, r -&gt; StpUtil.checkPermission(&quot;orders&quot;));
+            SaRouter.match(&quot;/notice/**&quot;, r -&gt; StpUtil.checkPermission(&quot;notice&quot;));
+            SaRouter.match(&quot;/comment/**&quot;, r -&gt; StpUtil.checkPermission(&quot;comment&quot;));
+
+            // 甚至你可以随意的写一个打印语句
+            SaRouter.match(&quot;/**&quot;, r -&gt; System.out.println(&quot;----啦啦啦----&quot;));
+
+            // 连缀写法
+            SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;----啦啦啦----&quot;));
+
+        })).addPathPatterns(&quot;/**&quot;);
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li></ul></pre>
+<h3 id="si-pi-pei-te-zheng-xiang-jie">四、匹配特征详解</h3>
+<p>除了上述示例的 path 路由匹配，还可以根据很多其它特征进行匹配，以下是所有可匹配的特征：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 基础写法样例：匹配一个path，执行一个校验函数 
+SaRouter.match(&quot;/user/**&quot;).check(r -&gt; StpUtil.checkLogin());
+
+// 根据 path 路由匹配   ——— 支持写多个path，支持写 restful 风格路由 
+// 功能说明: 使用 /user , /goods 或者 /art/get 开头的任意路由都将进入 check 方法
+SaRouter.match(&quot;/user/**&quot;, &quot;/goods/**&quot;, &quot;/art/get/{id}&quot;).check( /* 要执行的校验函数 */ );
+
+// 根据 path 路由排除匹配 
+// 功能说明: 使用 .html , .css 或者 .js 结尾的任意路由都将跳过, 不会进入 check 方法
+SaRouter.match(&quot;/**&quot;).notMatch(&quot;*.html&quot;, &quot;*.css&quot;, &quot;*.js&quot;).check( /* 要执行的校验函数 */ );
+
+// 根据请求类型匹配 
+SaRouter.match(SaHttpMethod.GET).check( /* 要执行的校验函数 */ );
+
+// 根据一个 boolean 条件进行匹配 
+SaRouter.match( StpUtil.isLogin() ).check( /* 要执行的校验函数 */ );
+
+// 根据一个返回 boolean 结果的lambda表达式匹配 
+SaRouter.match( r -&gt; StpUtil.isLogin() ).check( /* 要执行的校验函数 */ );
+
+// 多个条件一起使用 
+// 功能说明: 必须是 Get 请求 并且 请求路径以 `/user/` 开头 
+SaRouter.match(SaHttpMethod.GET).match(&quot;/user/**&quot;).check( /* 要执行的校验函数 */ );
+
+// 可以无限连缀下去 
+// 功能说明: 同时满足 Get 方式请求, 且路由以 /admin 开头, 路由中间带有 /send/ 字符串, 路由结尾不能是 .js 和 .css
+SaRouter
+    .match(SaHttpMethod.GET)
+    .match(&quot;/admin/**&quot;)
+    .match(&quot;/**/send/**&quot;) 
+    .notMatch(&quot;/**/*.js&quot;)
+    .notMatch(&quot;/**/*.css&quot;)
+    // ....
+    .check( /* 只有上述所有条件都匹配成功，才会执行最后的check校验函数 */ );</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li></ul></pre>
+<h3 id="wu-ti-qian-tui-chu-pi-pei-lian">五、提前退出匹配链</h3>
+<p>使用 <code>SaRouter.stop()</code> 可以提前退出匹配链，例：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">registry.addInterceptor(new SaInterceptor(handler -&gt; {
+    SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;进入1&quot;));
+    SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;进入2&quot;)).stop();
+    SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;进入3&quot;));
+    SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;进入4&quot;));
+    SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;进入5&quot;));
+})).addPathPatterns(&quot;/**&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
+<p>如上示例，代码运行至第2条匹配链时，会在stop函数处提前退出整个匹配函数，从而忽略掉剩余的所有match匹配 </p>
+<p>除了<code>stop()</code>函数，<code>SaRouter</code>还提供了 <code>back()</code> 函数，用于：停止匹配，结束执行，直接向前端返回结果</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 执行back函数后将停止匹配，也不会进入Controller，而是直接将 back参数 作为返回值输出到前端
+SaRouter.match(&quot;/user/back&quot;).back(&quot;要返回到前端的内容&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>stop() 与 back() 函数的区别在于：<br />
+- <code>SaRouter.stop()</code> 会停止匹配，进入Controller。<br />
+- <code>SaRouter.back()</code> 会停止匹配，直接返回结果到前端。</p>
+<h3 id="liu-shi-yong-free">六、使用free打开一个独立的作用域</h3>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 进入 free 独立作用域 
+SaRouter.match(&quot;/**&quot;).free(r -&gt; {
+    SaRouter.match(&quot;/a/**&quot;).check(/* --- */);
+    SaRouter.match(&quot;/b/**&quot;).check(/* --- */).stop();
+    SaRouter.match(&quot;/c/**&quot;).check(/* --- */);
+});
+// 执行 stop() 函数跳出 free 后继续执行下面的 match 匹配 
+SaRouter.match(&quot;/**&quot;).check(/* --- */);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<p>free() 的作用是：打开一个独立的作用域，使内部的 stop() 不再一次性跳出整个 Auth 函数，而是仅仅跳出当前 free 作用域。</p>
+<h3 id="qi-shi-yong-zhu-jie-hu-lve-diao-lu-you-lan-jie-jiao-yan">七、使用注解忽略掉路由拦截校验</h3>
+<p>我们可以使用 <code>@SaIgnore</code> 注解，忽略掉路由拦截认证：</p>
+<p>1、先配置好了拦截规则：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new SaInterceptor(handler -&gt; {
+        // 根据路由划分模块，不同模块不同鉴权 
+        SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
+        SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
+        SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
+        // ... 
+    })).addPathPatterns(&quot;/**&quot;);
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
+<p>2、然后在 <code>Controller</code> 里又添加了忽略校验的注解</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SaIgnore
+@RequestMapping(&quot;/user/getList&quot;)
+public SaResult getList() {
+    System.out.println(&quot;------------ 访问进来方法&quot;); 
+    return SaResult.ok(); 
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>请求将会跳过拦截器的校验，直接进入 Controller 的方法中。</p>
+<p><strong>注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。</strong></p>
+<h3 id="ba-guan-bi-zhu-jie-jiao-yan">八、关闭注解校验</h3>
+<p><code>SaInterceptor</code> 只要注册到项目中，默认就会打开注解校验，如果要关闭此能力，需要：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
+public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(
+        new SaInterceptor(handle -&gt; {
+            SaRouter.match(&quot;/**&quot;).check(r -&gt; StpUtil.checkLogin());
+        }).isAnnotation(false)  // 指定关闭掉注解鉴权能力，这样框架就只会做路由拦截校验了 
+    ).addPathPatterns(&quot;/**&quot;);
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<hr />
+<h3 id="can-kao-zi-liao">参考资料</h3>
+<ul>
+<li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
+<li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
+<li>GitHub 仓库地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
+</ul>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../essays/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html">← SpringBoot 使用 Sa-Token 完成注解鉴权功能</a>
+<a class="blog-post-nav-next" href="../essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html">SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁 →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h3"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
+<li class="toc-h3"><a href="#er-zhu-ce-sa-token-lu-you-lan-jie-qi">二、注册 Sa-Token 路由拦截器</a></li>
+<li class="toc-h3"><a href="#san-jiao-yan-han-shu-xiang-jie">三、校验函数详解</a></li>
+<li class="toc-h3"><a href="#si-pi-pei-te-zheng-xiang-jie">四、匹配特征详解</a></li>
+<li class="toc-h3"><a href="#wu-ti-qian-tui-chu-pi-pei-lian">五、提前退出匹配链</a></li>
+<li class="toc-h3"><a href="#liu-shi-yong-free">六、使用free打开一个独立的作用域</a></li>
+<li class="toc-h3"><a href="#qi-shi-yong-zhu-jie-hu-lve-diao-lu-you-lan-jie-jiao-yan">七、使用注解忽略掉路由拦截校验</a></li>
+<li class="toc-h3"><a href="#ba-guan-bi-zhu-jie-jiao-yan">八、关闭注解校验</a></li>
+<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

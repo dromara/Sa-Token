@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>太强了！Sa-Token 的 NodeJS 版本！ - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="这是由 Sa-Token 社区成员发起的项目 xlt-token：把 sa-token 的鉴权思路带到 NodeJS。本文介绍项目背景、能力概览与仓库地址，方便前端或全栈同学在 Node 技术栈里复用熟悉的权限认证体验，降低跨语言学习成本，也欢迎参与社区共建。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="太强了！Sa-Token 的 NodeJS 版本！">
+	<meta property="og:description" content="这是由 Sa-Token 社区成员发起的项目 xlt-token：把 sa-token 的鉴权思路带到 NodeJS。本文介绍项目背景、能力概览与仓库地址，方便前端或全栈同学在 Node 技术栈里复用熟悉的权限认证体验，降低跨语言学习成本，也欢迎参与社区共建。">
+	<meta property="og:url" content="https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="太强了！Sa-Token 的 NodeJS 版本！">
+	<meta name="twitter:description" content="这是由 Sa-Token 社区成员发起的项目 xlt-token：把 sa-token 的鉴权思路带到 NodeJS。本文介绍项目背景、能力概览与仓库地址，方便前端或全栈同学在 Node 技术栈里复用熟悉的权限认证体验，降低跨语言学习成本，也欢迎参与社区共建。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "太强了！Sa-Token 的 NodeJS 版本！",
+  "description": "这是由 Sa-Token 社区成员发起的项目 xlt-token：把 sa-token 的鉴权思路带到 NodeJS。本文介绍项目背景、能力概览与仓库地址，方便前端或全栈同学在 Node 技术栈里复用熟悉的权限认证体验，降低跨语言学习成本，也欢迎参与社区共建。",
+  "datePublished": "2026-05-16",
+  "dateModified": "2026-05-16",
+  "url": "https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="../../doc.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi" href="../../doc.html#/more/join-group">加群</a>
+			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
+			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
+			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="../../doc.html#/more/update-log">更新日志</a>
+						<a href="../../doc.html#/more/common-questions">常见报错</a>
+						<a href="../../doc.html#/more/tj-gzh">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="../../doc.html#/fun/sa-token-test">在线考试</a>
+						<a href="../../doc.html#/fun/issue-template">在线提问</a>
+						<a href="../../doc.html#/more/wenjuan">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar"><div class="sidebar-nav"><ul>
+<li><strong>精选</strong><ul>
+<li class=""><a href="../featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html" title="使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）">使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</a></li>
+<li class=""><a href="../featured/qian-tan-ti-ren-xia-xian-de-she-ji-si-lu-fu-dai-ma-shi-xian-fang-an-2.html" title="浅谈踢人下线的设计思路！（附代码实现方案）">浅谈踢人下线的设计思路！（附代码实现方案）</a></li>
+<li class=""><a href="../featured/shi-yong-sa-token-jie-jue-websocket-wo-shou-shen-fen-ren-zheng-2.html" title="使用 Sa-Token 解决 WebSocket 握手身份认证">使用 Sa-Token 解决 WebSocket 握手身份认证</a></li>
+<li class=""><a href="../featured/yi-ge-deng-lu-gong-neng-ye-neng-wan-chu-zhe-me-duo-hua-yang-sa-token-dan-di-deng.html" title="一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录">一个登录功能也能玩出这么多花样？sa-token带你轻松搞定多地登录、单地登录、同端互斥登录</a></li>
+</ul></li>
+<li><strong>随笔</strong><ul>
+<li class=""><a href="../essays/dui-min-gan-cao-zuo-de-er-ci-ren-zheng-xiang-jie-sa-token-er-ji-ren-zheng.html" title="对敏感操作的二次认证 —— 详解 Sa-Token 二级认证">对敏感操作的二次认证 —— 详解 Sa-Token 二级认证</a></li>
+<li class=""><a href="../essays/zai-wei-fu-wu-zhong-shi-yong-sa-token-fen-bu-shi-session-hui-hua-wang-guan-tong.html" title="在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权">在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权</a></li>
+<li class=""><a href="../essays/qian-hou-duan-fen-li-jia-gou-xia-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html" title="前后端分离架构下使用 Sa-Token 完成登录认证">前后端分离架构下使用 Sa-Token 完成登录认证</a></li>
+<li class=""><a href="../essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html" title="别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权">别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权</a></li>
+<li class=""><a href="../essays/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html" title="使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录">使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录</a></li>
+<li class=""><a href="../essays/shi-yong-sa-token-shi-xian-ji-zhu-wo-mo-shi-deng-lu-qi-tian-mian-deng-lu.html" title="使用 Sa-Token 实现 [记住我] 模式登录、七天免登录">使用 Sa-Token 实现 [记住我] 模式登录、七天免登录</a></li>
+<li class=""><a href="../essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html" title="使用 Sa-Token 完成踢人下线功能">使用 Sa-Token 完成踢人下线功能</a></li>
+<li class=""><a href="../essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html" title="不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现">不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现</a></li>
+<li class=""><a href="../essays/yi-wen-xiang-jie-sa-token-zhong-de-sasession-dui-xiang.html" title="一文详解 Sa-Token 中的 SaSession 对象">一文详解 Sa-Token 中的 SaSession 对象</a></li>
+<li class=""><a href="../essays/springboot-xiang-mu-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html" title="SpringBoot 项目使用 Sa-Token 完成登录认证">SpringBoot 项目使用 Sa-Token 完成登录认证</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html" title="SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁">SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html" title="SpringBoot 使用 Sa-Token 完成路由拦截鉴权">SpringBoot 使用 Sa-Token 完成路由拦截鉴权</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html" title="SpringBoot 使用 Sa-Token 完成注解鉴权功能">SpringBoot 使用 Sa-Token 完成注解鉴权功能</a></li>
+<li class=""><a href="../essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html" title="SpringBoot 使用 Sa-Token 完成权限认证">SpringBoot 使用 Sa-Token 完成权限认证</a></li>
+<li class=""><a href="../essays/sa-token-ji-cheng-jwt.html" title="Sa-Token 集成 jwt">Sa-Token 集成 jwt</a></li>
+<li class=""><a href="../essays/sa-token-duo-zhang-hao-ren-zheng-tong-shi-wei-xi-tong-de-admin-zhang-hao-he-user.html" title="Sa-Token 多账号认证：同时为系统的 Admin 账号和 User 账号提供鉴权操作">Sa-Token 多账号认证：同时为系统的 Admin 账号和 User 账号提供鉴权操作</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-si-pian-kua-yu-kua-redis-xia-de-sso-dui-jie-bu-zhou.html" title="Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-liu-pian-ding-zhi-hua-deng-lu-ye-mian.html" title="Sa-Token 单点登录第六篇：定制化登录页面">Sa-Token 单点登录第六篇：定制化登录页面</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-wu-pian-qian-hou-duan-fen-li-jia-gou-xia-de-sso-dui.html" title="Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤">Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-er-pian-tong-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html" title="Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-san-pian-kua-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html" title="Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤">Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤</a></li>
+<li class=""><a href="../essays/sa-token-dan-dian-deng-lu-di-yi-pian-da-jian-sso-server-tong-yi-ren-zheng-zhong.html" title="Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心">Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心</a></li>
+</ul></li>
+<li><strong>版本更新</strong><ul>
+<li class=""><a href="../release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html" title="Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配">Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配</a></li>
+<li class=""><a href="../release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html" title="Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力">Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力</a></li>
+<li class=""><a href="../release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html" title="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力</a></li>
+<li class=""><a href="../release/sa-token-v1-41-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html" title="Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！">Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！</a></li>
+<li class=""><a href="../release/sa-token-v1-40-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html" title="Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！">Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！</a></li>
+<li class=""><a href="../release/sa-token-v1-39-0-geng-xin-da-fu-zhong-gou-oauth2-mo-kuai.html" title="Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块">Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块</a></li>
+<li class=""><a href="../release/sa-token-v1-35-0-geng-xin-xin-zeng-dong-tai-active-timeout-neng-li.html" title="Sa-Token v1.35.0 更新，新增动态 active-timeout 能力">Sa-Token v1.35.0 更新，新增动态 active-timeout 能力</a></li>
+<li class=""><a href="../release/sa-token-v1-34-0-geng-xin-shi-pei-springboot3.html" title="Sa-Token v1.34.0 更新，适配 SpringBoot3">Sa-Token v1.34.0 更新，适配 SpringBoot3</a></li>
+<li class=""><a href="../release/sa-token-v1-33-0-geng-xin-xin-zeng-quan-ju-log-mo-kuai.html" title="Sa-Token v1.33.0 更新，新增全局 Log 模块">Sa-Token v1.33.0 更新，新增全局 Log 模块</a></li>
+<li class=""><a href="../release/sa-token-v1-32-0-geng-xin-xin-zeng-zhang-hao-fen-lei-feng-jin-jie-ti-feng-jin-go.html" title="Sa-Token v1.32.0 更新，新增账号分类封禁、阶梯封禁功能">Sa-Token v1.32.0 更新，新增账号分类封禁、阶梯封禁功能</a></li>
+<li class=""><a href="../release/sa-token-v1-31-0-geng-xin-xin-zeng-zhang-hao-fen-lei-feng-jin-jie-ti-feng-jin-go.html" title="Sa-Token v1.31.0 更新，新增账号分类封禁、阶梯封禁功能">Sa-Token v1.31.0 更新，新增账号分类封禁、阶梯封禁功能</a></li>
+<li class=""><a href="../release/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html" title="Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证">Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证</a></li>
+<li class=""><a href="../release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html" title="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例</a></li>
+</ul></li>
+<li><strong>特殊文章</strong><ul>
+<li class="active-rep"><a href="../special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html" title="太强了！Sa-Token 的 NodeJS 版本！">太强了！Sa-Token 的 NodeJS 版本！</a></li>
+<li class=""><a href="../special/sa-token-di-10000-ge-star-li-cheng-bei-gan-xie-san-nian-lai-suo-you-guan-zhu-sa.html" title="Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！">Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！</a></li>
+<li class=""><a href="../special/sa-token-v1-28-0-geng-xin-bing-rong-huo-kai-yuan-zhong-guo-ma-yun-gvp-ren-zheng.html" title="Sa-Token v1.28.0更新，并荣获开源中国“码云GVP认证”">Sa-Token v1.28.0更新，并荣获开源中国“码云GVP认证”</a></li>
+</ul></li>
+<li><strong>其它</strong><ul>
+<li class=""><a href="../other/chu-shi-sa-token-yi-xing-dai-ma-gao-ding-deng-lu-shou-quan.html" title="初识sa-token，一行代码搞定登录授权！">初识sa-token，一行代码搞定登录授权！</a></li>
+<li class=""><a href="../other/gong-zhong-hao-shou-xuan-2.html" title="公众号首宣">公众号首宣</a></li>
+<li class=""><a href="../other/java-feng-jin-mou-ge-zhang-hao-hou-shi-qi-hui-hua-li-ji-diao-xian.html" title="java中如何踢人下线？封禁某个账号后使其会话立即掉线！">java中如何踢人下线？封禁某个账号后使其会话立即掉线！</a></li>
+<li class=""><a href="../other/sa-token-you-ya-de-jiang-jian-quan-yu-ye-wu-dai-ma-fen-li.html" title="Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！">Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！</a></li>
+</ul></li>
+</ul></div></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>太强了！Sa-Token 的 NodeJS 版本！</h1>
+					<div class="blog-article-meta"><span>2026-05-16</span><span>特殊文章</span></div>
+					<p>这是由 Sa-Token 社区成员发起的一个项目：<strong>xlt-token</strong> —— sa-token 的 NodeJS 版本。</p>
+<p>对 NodeJS / TypeScript 熟悉的同学速来围观啦。</p>
+<p>目前该仓库已完成 1.0.0-rc.1 版本发布，完成度相当不错，单测覆盖率 98%+，195 个测试用例全部通过。源码全部使用 TypeScript 编写，类型定义完整无缺。</p>
+<p>开源地址：<a href="https://github.com/xiaoLangtou/xlt-token">https://github.com/xiaoLangtou/xlt-token</a></p>
+<blockquote>
+<p>📱 <strong>加群交流</strong>：作者已建好 xlt-token 交流群，欢迎大家扫码加入，一起讨论、提需求、报 Bug～</p>
+</blockquote>
+<p><img alt="xlt-token 交流群" src="/big-file/blog/2026-5/sa-token-nodejs--wx-group-qr.png" /></p>
+<p>一个为 NestJS 设计的轻量级、功能完备的 Token 认证授权框架：</p>
+<h3 id="he-xin-te-xing">✨ 核心特性</h3>
+<ul>
+<li>🔐 <strong>灵活的 Token 管理</strong> — 支持登录、登出、续签、踢人下线等完整生命周期</li>
+<li>🌐 <strong>多端登录</strong> — 支持同账号多设备同时在线，可配置互踢模式</li>
+<li>🎨 <strong>Token 策略</strong> — 支持多种 token 格式（UUID、Simple UUID、随机字符串）</li>
+<li>🛡️ <strong>全局守卫</strong> — 黑名单 / 白名单双模式，默认安全</li>
+<li>🧩 <strong>可扩展守卫</strong> — 提供 <code>XltAbstractLoginGuard</code> 抽象基类，通过 <code>onAuthSuccess</code> / <code>onAuthFail</code> 钩子注入业务会话</li>
+<li>🎯 <strong>声明式装饰器</strong> — <code>@XltIgnore</code> / <code>@XltCheckLogin</code> / <code>@LoginId</code> / <code>@TokenValue</code> / <code>@XltCheckPermission</code> / <code>@XltCheckRole</code></li>
+<li>🔑 <strong>权限 / 角色校验</strong> — <code>StpPermLogic</code> 引擎，支持 AND / OR 模式 + 通配符匹配（<code>user:*</code>）</li>
+<li>🗂️ <strong>会话对象</strong> — <code>XltSession</code> 承载一次登录期间的扩展数据，与 token 同生命周期</li>
+<li>📜 <strong>下线追溯</strong> — 被踢 / 被顶后可查询下线时间和原因</li>
+<li>💾 <strong>内置存储</strong> — 内置内存存储和 Redis 存储实现，开箱即用</li>
+<li>🔧 <strong>零业务依赖</strong> — 纯粹的认证库，不依赖任何业务代码</li>
+<li>📦 <strong>TypeScript</strong> — 完整的类型定义</li>
+<li>⚡ <strong>静态门面</strong> — 提供 <code>StpUtil</code> 静态方法，无需注入即可使用</li>
+<li>🧪 <strong>质量保障</strong> — 195 个测试用例（158 单测 + 37 E2E），单测覆盖率 98%+</li>
+</ul>
+<h3 id="xiang-mu-jie-gou">📦 项目结构</h3>
+<pre><code>xlt-token/
+├── src/
+│   ├── auth/                          # 认证核心逻辑
+│   │   ├── stp-logic.ts               # Token 生命周期管理（登录、登出、踢人、续签）
+│   │   └── stp-util.ts                # 静态门面 StpUtil
+│   ├── core/
+│   │   └── xlt-token-config.ts        # 配置定义
+│   ├── perm/                          # 权限 / 角色校验
+│   │   ├── stp-interface.ts           # 业务接口（权限列表、角色列表）
+│   │   ├── stp-perm-logic.ts          # 校验引擎（AND/OR + 通配符）
+│   │   └── perm-pattern-match.ts      # 通配符匹配引擎
+│   ├── session/
+│   │   └── xlt-session.ts             # 会话管理
+│   ├── guards/                        # 守卫层
+│   │   ├── xlt-token.guard.ts         # 全局 Token 守卫
+│   │   └── xlt-abstract-login.guard.ts # 可扩展登录守卫基类
+│   ├── decorators/                    # 声明式装饰器
+│   │   ├── xlt-ignore.decorator.ts
+│   │   ├── xlt-check-login.decorator.ts
+│   │   ├── login-id.decorator.ts
+│   │   ├── token-value.decorator.ts
+│   │   ├── xlt-check-permission.decorator.ts
+│   │   └── xlt-check-role.decorator.ts
+│   ├── store/                         # 存储后端
+│   │   ├── xlt-token-store.interface.ts # 存储接口
+│   │   ├── memory-store.ts            # 内存存储（开发环境）
+│   │   └── redis-store.ts             # Redis 存储（生产环境）
+│   ├── token/                         # Token 生成策略
+│   │   ├── token-strategy.interface.ts
+│   │   └── uuid-strategy.ts
+│   ├── exceptions/                    # 异常定义
+│   │   ├── not-login.exception.ts
+│   │   ├── not-permission.exception.ts
+│   │   └── not-role.exception.ts
+│   ├── const/                         # 常量定义
+│   │   └── index.ts
+│   ├── index.ts                       # 包入口
+│   └── xlt-token.module.ts            # NestJS 模块入口
+├── test/                              # 测试用例
+│   ├── unit/                          # 158 个单元测试
+│   └── e2e/                           # 37 个 E2E 测试
+├── docs/                              # 📖 在线文档
+├── package.json
+└── tsconfig.json
+</code></pre>
+<h3 id="he-xin-zu-jian">🎯 核心组件</h3>
+<h4 id="1-stplogic">1. StpLogic</h4>
+<p>核心认证授权逻辑：</p>
+<ul>
+<li>Token 生成、验证、续签和刷新</li>
+<li>Session 管理</li>
+<li>权限和角色检查</li>
+<li>多端登录、互踢模式</li>
+<li>下线原因追溯</li>
+</ul>
+<h4 id="2-stputil-jing-tai-men-mian">2. StpUtil（静态门面）</h4>
+<p>提供无需注入即可直接调用的静态 API：</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { StpUtil } from 'xlt-token';
+
+// 无需注入，直接调用
+const token = await StpUtil.login(userId);
+const loginId = await StpUtil.getLoginId(req);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<h4 id="3-sheng-ming-shi-zhuang-shi-qi">3. 声明式装饰器</h4>
+<table>
+<thead>
+<tr>
+<th>装饰器</th>
+<th>作用</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@XltIgnore()</code></td>
+<td>忽略登录校验（黑名单模式下放行）</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>@XltCheckLogin()</code></td>
+<td>强制校验登录（白名单模式下开启）</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>@LoginId()</code></td>
+<td>注入当前登录用户 ID（参数装饰器）</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>@TokenValue()</code></td>
+<td>注入当前 token 值（参数装饰器）</td>
+<td>无</td>
+</tr>
+<tr>
+<td><code>@XltCheckPermission(perms, options?)</code></td>
+<td>校验权限</td>
+<td><code>perms: string \| string[]</code>，<code>options?: { mode: XltMode }</code></td>
+</tr>
+<tr>
+<td><code>@XltCheckRole(roles, options?)</code></td>
+<td>校验角色</td>
+<td><code>roles: string \| string[]</code>，<code>options?: { mode: XltMode }</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-ke-kuo-zhan-shou-wei-xltabstractloginguard">4. 可扩展守卫（XltAbstractLoginGuard）</h4>
+<p>如果你需要在校验通过后把用户信息加载到 <code>request.user</code>、记录审计日志、使用自己的元数据键（如 <code>@RequireLogin()</code>），请继承 <code>XltAbstractLoginGuard</code>，仅重写你关心的钩子即可。token 校验、异常抛出、默认元数据解析已在基类完成。</p>
+<p><strong>生命周期：</strong></p>
+<pre><code>canActivate
+ ├─ requiresLogin(ctx)           // 可重写：替换元数据策略
+ │   └─ 否 → 直接放行
+ ├─ stpLogic.checkLogin(request)
+ ├─ !ok → onAuthFail(result, request)  // 可重写
+ │   throw NotLoginException
+ └─ ok → request.stpLoginId / stpToken 赋值
+     → onAuthSuccess(result, request)  // 可重写：业务会话加载
+</code></pre>
+<h4 id="5-quan-xian-jue-se-jiao-yan-yin-qing">5. 权限 / 角色校验引擎</h4>
+<p><code>StpPermLogic</code> 支持 AND / OR 两种模式，以及通配符匹配（<code>user:*</code> 可匹配 <code>user:read</code>、<code>user:write</code> 等）。</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// AND 模式：全部满足
+@XltCheckPermission(['order:read', 'order:write'], { mode: XltMode.AND })
+
+// OR 模式：任一满足
+@XltCheckRole(['admin', 'super'], { mode: XltMode.OR })
+
+// 通配符匹配
+@XltCheckPermission('order:*')</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<h3 id="kuai-su-kai-shi">🚀 快速开始</h3>
+<h4 id="1-an-zhuang">1. 安装</h4>
+<pre v-pre data-lang="bash"><code class="lang-bash language-bash has-numbering">pnpm add xlt-token
+# 或
+npm install xlt-token
+# 或
+yarn add xlt-token</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<p>如需使用 Redis 存储，还需安装 redis 包：</p>
+<pre v-pre data-lang="bash"><code class="lang-bash language-bash has-numbering">pnpm add redis</code><ul class="code-line-box"><li>1</li></ul></pre>
+<h4 id="2-zhu-ce-mo-kuai">2. 注册模块</h4>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// app.module.ts
+import { Module } from '@nestjs/common';
+import { XltTokenModule } from 'xlt-token';
+
+@Module({
+  imports: [
+    XltTokenModule.forRoot({
+      isGlobal: true,
+      config: {
+        tokenName: 'authorization',
+        timeout: 2592000,      // 30 天
+        tokenStyle: 'uuid',
+        tokenPrefix: 'Bearer ',
+      },
+    }),
+  ],
+})
+export class AppModule {}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
+<h4 id="3-yong-hu-deng-lu">3. 用户登录</h4>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// auth.service.ts
+import { Injectable } from '@nestjs/common';
+import { StpLogic } from 'xlt-token';
+
+@Injectable()
+export class AuthService {
+  constructor(private readonly stpLogic: StpLogic) {}
+
+  async login(userId: string) {
+    const token = await this.stpLogic.login(userId);
+    return { token };
+  }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
+<h4 id="4-shi-yong-shou-wei-zhuang-shi-qi">4. 使用守卫 + 装饰器</h4>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// user.controller.ts
+import { Controller, Get, Post } from '@nestjs/common';
+import { XltIgnore, LoginId } from 'xlt-token';
+
+@Controller('user')
+export class UserController {
+  @XltIgnore()  // 忽略登录校验
+  @Post('login')
+  async login() {
+    // 登录逻辑
+  }
+
+  @Get('profile')
+  async getProfile(@LoginId() loginId: string) {
+    return { userId: loginId };
+  }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+<h4 id="5-zhu-ce-quan-ju-shou-wei">5. 注册全局守卫</h4>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// app.module.ts
+import { APP_GUARD } from '@nestjs/core';
+import { XltTokenGuard } from 'xlt-token';
+
+@Module({
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: XltTokenGuard,
+    },
+  ],
+})
+export class AppModule {}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
+<p><code>XltTokenGuard</code> 只做 token 校验并把 <code>loginId</code> / <code>token</code> 挂到 <code>request.stpLoginId</code> / <code>request.stpToken</code>，不涉及业务。</p>
+<h4 id="6-quan-xian-jue-se-jiao-yan">6. 权限 / 角色校验</h4>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// stp.service.ts — 实现 StpInterface 业务接口
+import { Injectable } from '@nestjs/common';
+import { StpInterface } from 'xlt-token';
+
+@Injectable()
+export class StpService implements StpInterface {
+  async getPermissionList(loginId: string): Promise&lt;string[]&gt; {
+    // 从数据库 / 缓存读取
+    return ['user:read', 'user:write', 'order:*'];
+  }
+
+  async getRoleList(loginId: string): Promise&lt;string[]&gt; {
+    return ['admin'];
+  }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// 在 Controller 上使用
+import { XltCheckPermission, XltCheckRole, XltMode } from 'xlt-token';
+
+@Controller('order')
+export class OrderController {
+  @XltCheckPermission('order:read')                     // 单一权限
+  @Get()
+  list() {}
+
+  @XltCheckPermission(['order:read', 'order:write'],
+    { mode: XltMode.AND })                              // 全部满足
+  @Post()
+  create() {}
+
+  @XltCheckRole(['admin', 'super'],
+    { mode: XltMode.OR })                               // 任一满足
+  @Delete(':id')
+  remove() {}
+
+  @XltCheckPermission('order:*')                        // 通配符匹配
+  @Patch(':id')
+  update() {}
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li></ul></pre>
+<p>权限校验失败抛出 <code>NotPermissionException</code>（HTTP <strong>403</strong>），角色校验失败抛出 <code>NotRoleException</code>（HTTP <strong>403</strong>）。</p>
+<h3 id="hui-hua-guan-li-xltsession">🗂️ 会话管理（XltSession）</h3>
+<p>每个登录账号关联一个 <code>XltSession</code>，用于存储登录期间的扩展数据（昵称、最近 IP、扩展字段等）。生命周期与 token 一致。</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { StpUtil } from 'xlt-token';
+
+// 写入
+const session = StpUtil.getSession(loginId);
+await session.set('nickname', 'xlt');
+await session.set('lastLoginIp', '127.0.0.1');
+
+// 读取
+const nickname = await session.get&lt;string&gt;('nickname');
+
+// 其他方法
+await session.has('nickname');    // boolean
+await session.remove('nickname');
+const keys = await session.keys(); // string[]
+await session.clear();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<h3 id="xia-xian-yuan-yin-zhui-su">📜 下线原因追溯</h3>
+<p>被踢 / 被顶后，旧 token 失效。可查询下线原因：</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">const record = await StpUtil.getOfflineReason(token);
+// { reason: 'KICK_OUT' | 'BE_REPLACED', time: 1714112400000 }</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<h3 id="yi-chang-chu-li">⚠️ 异常处理</h3>
+<p>库提供三种业务异常，建议在全局 <code>ExceptionFilter</code> 中统一处理：</p>
+<table>
+<thead>
+<tr>
+<th>异常</th>
+<th>HTTP 状态</th>
+<th>触发场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NotLoginException</code></td>
+<td>401</td>
+<td>未登录 / token 无效 / 被顶 / 被踢 / 冻结 / 超时</td>
+</tr>
+<tr>
+<td><code>NotPermissionException</code></td>
+<td>403</td>
+<td><code>@XltCheckPermission</code> 校验失败</td>
+</tr>
+<tr>
+<td><code>NotRoleException</code></td>
+<td>403</td>
+<td><code>@XltCheckRole</code> 校验失败</td>
+</tr>
+</tbody>
+</table>
+<p><code>NotLoginException</code> 提供了 <code>NotLoginType</code> 常量用于区分登录失败场景：</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { NotLoginException, NotLoginType } from 'xlt-token';
+
+try {
+  await stpLogic.checkLogin(req);
+} catch (e) {
+  if (e instanceof NotLoginException) {
+    switch (e.message) {
+      case NotLoginType.NOT_TOKEN:      // 请求中没 token
+        break;
+      case NotLoginType.INVALID_TOKEN:  // token 在服务端找不到
+        break;
+      case NotLoginType.TOKEN_TIMEOUT:  // token 已过期
+        break;
+      case NotLoginType.TOKEN_FREEZE:   // 临时活跃过期
+        break;
+      case NotLoginType.BE_REPLACED:    // 被顶号
+        break;
+      case NotLoginType.KICK_OUT:       // 被踢下线
+        break;
+    }
+  }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
+<h3 id="shi-yong-redis-cun-chu">💾 使用 Redis 存储</h3>
+<p>库已内置 <code>RedisStore</code> 实现，只需提供 Redis 客户端即可使用：</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { Module } from '@nestjs/common';
+import { XltTokenModule, RedisStore, XLT_REDIS_CLIENT } from 'xlt-token';
+import { createClient } from 'redis';
+
+@Module({
+  imports: [
+    XltTokenModule.forRoot({
+      store: { useClass: RedisStore },
+      providers: [
+        {
+          provide: XLT_REDIS_CLIENT,
+          useFactory: async () =&gt; {
+            const client = createClient({
+              url: 'redis://localhost:6379',
+            });
+            await client.connect();
+            return client;
+          },
+        },
+      ],
+    }),
+  ],
+})
+export class AppModule {}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li></ul></pre>
+<h3 id="zi-ding-yi-store">🔧 自定义 Store</h3>
+<p>如需实现自定义存储，实现 <code>XltTokenStore</code> 接口即可：</p>
+<pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { XltTokenStore } from 'xlt-token';
+
+export class CustomStore implements XltTokenStore {
+  async get(key: string): Promise&lt;string | null&gt; { /* ... */ }
+  async set(key: string, value: string, timeoutSec: number): Promise&lt;void&gt; { /* ... */ }
+  async delete(key: string): Promise&lt;void&gt; { /* ... */ }
+  async has(key: string): Promise&lt;boolean&gt; { /* ... */ }
+  async update(key: string, value: string): Promise&lt;void&gt; { /* ... */ }
+  async updateTimeout(key: string, timeoutSec: number): Promise&lt;void&gt; { /* ... */ }
+  async getTimeout(key: string): Promise&lt;number&gt; { /* ... */ }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<h3 id="pei-zhi-xuan-xiang">🎛️ 配置选项</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tokenName</code></td>
+<td><code>string</code></td>
+<td><code>'authorization'</code></td>
+<td>HTTP header / cookie / query 中读取 token 的键名</td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td><code>number</code></td>
+<td><code>2592000</code>（30 天）</td>
+<td>token 有效期（秒）</td>
+</tr>
+<tr>
+<td><code>activeTimeout</code></td>
+<td><code>number</code></td>
+<td><code>-1</code></td>
+<td>滑动过期秒数，<code>-1</code> 表示不启用</td>
+</tr>
+<tr>
+<td><code>isConcurrent</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>是否允许同账号多端同时在线</td>
+</tr>
+<tr>
+<td><code>isShare</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>同账号多次登录是否共享同一 token</td>
+</tr>
+<tr>
+<td><code>tokenStyle</code></td>
+<td><code>'uuid' \| 'simple-uuid' \| 'random-32'</code></td>
+<td><code>'uuid'</code></td>
+<td>token 格式</td>
+</tr>
+<tr>
+<td><code>isReadHeader</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>是否从 HTTP Header 读取 token</td>
+</tr>
+<tr>
+<td><code>isReadCookie</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>是否从 Cookie 读取</td>
+</tr>
+<tr>
+<td><code>isReadQuery</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>是否从 URL Query 读取</td>
+</tr>
+<tr>
+<td><code>tokenPrefix</code></td>
+<td><code>string</code></td>
+<td><code>'Bearer '</code></td>
+<td>Header 中 token 的前缀（读取时自动剥离）</td>
+</tr>
+<tr>
+<td><code>defaultCheck</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>全局守卫默认模式：<code>true</code>=黑名单，<code>false</code>=白名单</td>
+</tr>
+</tbody>
+</table>
+<h3 id="he-xin-api">📖 核心 API</h3>
+<h4 id="stplogic-stputil">StpLogic / StpUtil</h4>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>参数</th>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>login(loginId, options?)</code></td>
+<td><code>loginId: string \| number</code>，<code>options: { timeout?, device?, token? }</code></td>
+<td><code>Promise&lt;string&gt;</code></td>
+<td>登录，返回 token</td>
+</tr>
+<tr>
+<td><code>logout(token)</code></td>
+<td><code>token: string</code></td>
+<td><code>Promise&lt;boolean \| null&gt;</code></td>
+<td>登出（通过 token）</td>
+</tr>
+<tr>
+<td><code>logoutByLoginId(loginId)</code></td>
+<td><code>loginId: string</code></td>
+<td><code>Promise&lt;boolean \| null&gt;</code></td>
+<td>登出（通过 loginId）</td>
+</tr>
+<tr>
+<td><code>kickout(loginId)</code></td>
+<td><code>loginId: string</code></td>
+<td><code>Promise&lt;boolean \| null&gt;</code></td>
+<td>踢人下线</td>
+</tr>
+<tr>
+<td><code>renewTimeout(token, timeout)</code></td>
+<td><code>token: string</code>，<code>timeout: number</code></td>
+<td><code>Promise&lt;boolean \| null&gt;</code></td>
+<td>续签 token</td>
+</tr>
+<tr>
+<td><code>isLogin(req)</code></td>
+<td><code>req: Request</code></td>
+<td><code>Promise&lt;boolean&gt;</code></td>
+<td>判断是否登录</td>
+</tr>
+<tr>
+<td><code>checkLogin(req)</code></td>
+<td><code>req: Request</code></td>
+<td><code>Promise&lt;{ ok, loginId?, token?, reason? }&gt;</code></td>
+<td>校验登录（未登录抛异常）</td>
+</tr>
+<tr>
+<td><code>getTokenValue(req)</code></td>
+<td><code>req: Request</code></td>
+<td><code>Promise&lt;string \| null&gt;</code></td>
+<td>获取 token 值</td>
+</tr>
+<tr>
+<td><code>getLoginId(req)</code></td>
+<td><code>req: Request</code></td>
+<td><code>Promise&lt;string&gt;</code></td>
+<td>获取当前登录用户 ID</td>
+</tr>
+<tr>
+<td><code>getSession(loginId)</code></td>
+<td><code>loginId: string</code></td>
+<td><code>XltSession</code></td>
+<td>获取会话对象</td>
+</tr>
+<tr>
+<td><code>getOfflineReason(token)</code></td>
+<td><code>token: string</code></td>
+<td><code>Promise&lt;{ reason, time }&gt;</code></td>
+<td>获取下线原因</td>
+</tr>
+</tbody>
+</table>
+<h3 id="xiao-jie">📣 小结</h3>
+<p>xlt-token 作为 Sa-Token 在 NodeJS / NestJS 生态的移植版本，在 API 设计上非常接近 Java 原版的使用体验，同时充分利用了 TypeScript 的类型系统和 NestJS 的装饰器 / 守卫机制，做到了大道至简、开箱即用。</p>
+<p>对于使用 NestJS 开发后端项目、又需要一套成熟的认证授权方案的小伙伴来说，这是一个非常值得关注的项目。195 个测试用例 + 98% 的单测覆盖率，质量方面也让人放心 👍</p>
+<hr />
+<h3 id="kai-yuan-di-zhi">🔗 开源地址</h3>
+<p>感兴趣的同学可以来关注一波：</p>
+<p>👉 <a href="https://github.com/xiaoLangtou/xlt-token">https://github.com/xiaoLangtou/xlt-token</a></p>
+<p>📖 在线文档：<a href="https://xiaolangtou.github.io/xlt-token/">https://xiaolangtou.github.io/xlt-token/</a></p>
+<hr />
+<blockquote>
+<p>📱 <strong>还没有加群？</strong> 扫下方二维码加入 xlt-token 交流群，和作者面对面交流～</p>
+</blockquote>
+<p><img alt="xlt-token 交流群" src="/big-file/blog/2026-5/sa-token-nodejs--wx-group-qr.png" /></p>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../special/sa-token-di-10000-ge-star-li-cheng-bei-gan-xie-san-nian-lai-suo-you-guan-zhu-sa.html">← Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h3"><a href="#he-xin-te-xing">✨ 核心特性</a></li>
+<li class="toc-h3"><a href="#xiang-mu-jie-gou">📦 项目结构</a></li>
+<li class="toc-h3"><a href="#he-xin-zu-jian">🎯 核心组件</a></li>
+<li class="toc-h4"><a href="#1-stplogic">1. StpLogic</a></li>
+<li class="toc-h4"><a href="#2-stputil-jing-tai-men-mian">2. StpUtil（静态门面）</a></li>
+<li class="toc-h4"><a href="#3-sheng-ming-shi-zhuang-shi-qi">3. 声明式装饰器</a></li>
+<li class="toc-h4"><a href="#4-ke-kuo-zhan-shou-wei-xltabstractloginguard">4. 可扩展守卫（XltAbstractLoginGuard）</a></li>
+<li class="toc-h4"><a href="#5-quan-xian-jue-se-jiao-yan-yin-qing">5. 权限 / 角色校验引擎</a></li>
+<li class="toc-h3"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
+<li class="toc-h4"><a href="#1-an-zhuang">1. 安装</a></li>
+<li class="toc-h4"><a href="#2-zhu-ce-mo-kuai">2. 注册模块</a></li>
+<li class="toc-h4"><a href="#3-yong-hu-deng-lu">3. 用户登录</a></li>
+<li class="toc-h4"><a href="#4-shi-yong-shou-wei-zhuang-shi-qi">4. 使用守卫 + 装饰器</a></li>
+<li class="toc-h4"><a href="#5-zhu-ce-quan-ju-shou-wei">5. 注册全局守卫</a></li>
+<li class="toc-h4"><a href="#6-quan-xian-jue-se-jiao-yan">6. 权限 / 角色校验</a></li>
+<li class="toc-h3"><a href="#hui-hua-guan-li-xltsession">🗂️ 会话管理（XltSession）</a></li>
+<li class="toc-h3"><a href="#xia-xian-yuan-yin-zhui-su">📜 下线原因追溯</a></li>
+<li class="toc-h3"><a href="#yi-chang-chu-li">⚠️ 异常处理</a></li>
+<li class="toc-h3"><a href="#shi-yong-redis-cun-chu">💾 使用 Redis 存储</a></li>
+<li class="toc-h3"><a href="#zi-ding-yi-store">🔧 自定义 Store</a></li>
+<li class="toc-h3"><a href="#pei-zhi-xuan-xiang">🎛️ 配置选项</a></li>
+<li class="toc-h3"><a href="#he-xin-api">📖 核心 API</a></li>
+<li class="toc-h4"><a href="#stplogic-stputil">StpLogic / StpUtil</a></li>
+<li class="toc-h3"><a href="#xiao-jie">📣 小结</a></li>
+<li class="toc-h3"><a href="#kai-yuan-di-zhi">🔗 开源地址</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>
