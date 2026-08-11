@@ -361,6 +361,12 @@ body.blog-page.blog-sidebar-open {
 	color: #888;
 }
 
+/* 字符串：勿跟 --theme-color 深蓝，黑底对比度不够 */
+.blog-page .main-box .markdown-section .token.string,
+.blog-page .main-box .markdown-section .token.attr-value {
+	color: #42b983;
+}
+
 /* 覆盖 vue.css：.sidebar ul { margin-left: 15px } */
 .blog-page .blog-sidebar .sidebar-nav ul {
 	margin: 0;
