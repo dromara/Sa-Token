@@ -23,7 +23,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Sa-Token 持久层实现 [ RedisTemplate 存储、JDK默认序列化 ] (可用环境: SpringBoot2、SpringBoot3)
+ * Sa-Token 持久层实现 [ RedisTemplate 存储、JDK默认序列化 ] (可用环境: SpringBoot2、SpringBoot3、SpringBoot4)
  * 
  * @author click33
  * @since 1.34.0
@@ -59,7 +59,8 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public Object getObject(String key) {
-		return objectRedisTemplate.opsForValue().get(key);
+		String finalKey = wrapKey(key);
+		return objectRedisTemplate.opsForValue().get(finalKey);
 	}
 
 	/**
@@ -71,7 +72,8 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getObject(String key, Class<T> classType) {
-		return (T) objectRedisTemplate.opsForValue().get(key);
+		String finalKey = wrapKey(key);
+		return (T) objectRedisTemplate.opsForValue().get(finalKey);
 	}
 
 	/**
@@ -79,14 +81,15 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public void setObject(String key, Object object, long timeout) {
+		String finalKey = wrapKey(key);
 		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
 			return;
 		}
 		// 判断是否为永不过期 
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			objectRedisTemplate.opsForValue().set(key, object);
+			objectRedisTemplate.opsForValue().set(finalKey, object);
 		} else {
-			objectRedisTemplate.opsForValue().set(key, object, timeout, TimeUnit.SECONDS);
+			objectRedisTemplate.opsForValue().set(finalKey, object, timeout, TimeUnit.SECONDS);
 		}
 	}
 
@@ -95,17 +98,18 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public void updateObject(String key, Object object) {
+		String finalKey = wrapKey(key);
 		@SuppressWarnings("all")
-		long expireMs = stringRedisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+		long expireMs = stringRedisTemplate.getExpire(finalKey, TimeUnit.MILLISECONDS);
 		// -2 = 无此键
 		if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
 		// -1 = 永不过期
 		if(expireMs == SaTokenDao.NEVER_EXPIRE) {
-			objectRedisTemplate.opsForValue().set(key, object);
+			objectRedisTemplate.opsForValue().set(finalKey, object);
 		} else {
-			objectRedisTemplate.opsForValue().set(key, object, expireMs, TimeUnit.MILLISECONDS);
+			objectRedisTemplate.opsForValue().set(finalKey, object, expireMs, TimeUnit.MILLISECONDS);
 		}
 	}
 
@@ -114,7 +118,8 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public void deleteObject(String key) {
-		objectRedisTemplate.delete(key);
+		String finalKey = wrapKey(key);
+		objectRedisTemplate.delete(finalKey);
 	}
 
 	/**
@@ -122,7 +127,8 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public long getObjectTimeout(String key) {
-		return objectRedisTemplate.getExpire(key);
+		String finalKey = wrapKey(key);
+		return objectRedisTemplate.getExpire(finalKey);
 	}
 
 	/**
@@ -130,8 +136,10 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	 */
 	@Override
 	public void updateObjectTimeout(String key, long timeout) {
+		String finalKey = wrapKey(key);
 		// 判断是否想要设置为永久
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			// 调用本类其它方法时使用原始 key，避免二次 wrap
 			long expire = getObjectTimeout(key);
 			if(expire == SaTokenDao.NEVER_EXPIRE) {
 				// 如果其已经被设置为永久，则不作任何处理 
@@ -141,7 +149,7 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 			}
 			return;
 		}
-		objectRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		objectRedisTemplate.expire(finalKey, timeout, TimeUnit.SECONDS);
 	}
 
 

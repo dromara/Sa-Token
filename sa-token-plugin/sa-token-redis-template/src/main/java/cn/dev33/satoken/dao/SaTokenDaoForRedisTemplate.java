@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Sa-Token 持久层实现 [ Redis 存储 ] (可用环境: SpringBoot2、SpringBoot3)
+ * Sa-Token 持久层实现 [ Redis 存储 ] (可用环境: SpringBoot2、SpringBoot3、SpringBoot4)
  * 
  * @author click33
  * @since 1.34.0
@@ -70,7 +70,8 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public String get(String key) {
-		return stringRedisTemplate.opsForValue().get(key);
+		String finalKey = wrapKey(key);
+		return stringRedisTemplate.opsForValue().get(finalKey);
 	}
 
 	/**
@@ -78,14 +79,15 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public void set(String key, String value, long timeout) {
+		String finalKey = wrapKey(key);
 		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
 			return;
 		}
 		// 判断是否为永不过期 
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			stringRedisTemplate.opsForValue().set(key, value);
+			stringRedisTemplate.opsForValue().set(finalKey, value);
 		} else {
-			stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+			stringRedisTemplate.opsForValue().set(finalKey, value, timeout, TimeUnit.SECONDS);
 		}
 	}
 
@@ -94,17 +96,18 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public void update(String key, String value) {
+		String finalKey = wrapKey(key);
 		@SuppressWarnings("all")
-		long expireMs = stringRedisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+		long expireMs = stringRedisTemplate.getExpire(finalKey, TimeUnit.MILLISECONDS);
 		// -2 = 无此键
 		if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
 		// -1 = 永不过期
 		if(expireMs == SaTokenDao.NEVER_EXPIRE) {
-			stringRedisTemplate.opsForValue().set(key, value);
+			stringRedisTemplate.opsForValue().set(finalKey, value);
 		} else {
-			stringRedisTemplate.opsForValue().set(key, value, expireMs, TimeUnit.MILLISECONDS);
+			stringRedisTemplate.opsForValue().set(finalKey, value, expireMs, TimeUnit.MILLISECONDS);
 		}
 	}
 	
@@ -113,7 +116,8 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public void delete(String key) {
-		stringRedisTemplate.delete(key);
+		String finalKey = wrapKey(key);
+		stringRedisTemplate.delete(finalKey);
 	}
 
 	/**
@@ -121,7 +125,8 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public long getTimeout(String key) {
-		return stringRedisTemplate.getExpire(key);
+		String finalKey = wrapKey(key);
+		return stringRedisTemplate.getExpire(finalKey);
 	}
 
 	/**
@@ -129,8 +134,10 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public void updateTimeout(String key, long timeout) {
+		String finalKey = wrapKey(key);
 		// 判断是否想要设置为永久
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			// 调用本类其它方法时使用原始 key，避免二次 wrap
 			long expire = getTimeout(key);
 			if(expire == SaTokenDao.NEVER_EXPIRE) {
 				// 如果其已经被设置为永久，则不作任何处理 
@@ -140,7 +147,7 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 			}
 			return;
 		}
-		stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		stringRedisTemplate.expire(finalKey, timeout, TimeUnit.SECONDS);
 	}
 
 
@@ -150,9 +157,21 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	 */
 	@Override
 	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
-		Set<String> keys = stringRedisTemplate.keys(prefix + "*" + keyword + "*");
+		// 对完整匹配串做 wrap，避免用户在 key 尾部等位置加工时只 wrap(prefix) 拼错 pattern
+		String finalPattern = wrapKey(prefix + "*" + keyword + "*");
+		Set<String> keys = stringRedisTemplate.keys(finalPattern);
 		List<String> list = new ArrayList<>(keys);
 		return SaFoxUtil.searchList(list, start, size, sortType);
+	}
+
+	/**
+	 * 包装 key（默认原样返回）。需要给 Redis 键加统一前缀时，可重写此方法。
+	 *
+	 * @param key 原始 key
+	 * @return 包装后的 key
+	 */
+	public String wrapKey(String key) {
+		return key;
 	}
 	
 	

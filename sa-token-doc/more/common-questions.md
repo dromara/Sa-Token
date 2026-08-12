@@ -864,11 +864,7 @@ SaHolder.getResponse().setStatus(401)
 
 ### Q：多个项目共用同一个 redis，怎么防止冲突？
 
-首先，如无特殊需求，建议多个项目不要共用同一个 redis，如果非要共用，有以下方式避免数据冲突：
-
-- 方式 1：使用不同的 db 索引，Redis 默认提供 16 个 database 容器，每个项目配置不同的 db 索引即可。
-- 方式 2：给项目配置不同的 `sa-token.token-name` 值，此配置项默认为 `satoken`，是框架在 Redis 存储数据时使用的统一前缀。
-- 方式 3：使用 `sa-token-three-redis-jackson-add-prefix` 插件，参考：[sa-token-three-plugin](https://gitee.com/sa-tokens/sa-token-three-plugin)。
+详见：[集成 Redis - 多个项目共用同一个 Redis，怎么防止冲突？](/up/integ-redis?id=_4多个项目共用同一个-redis怎么防止冲突)
 
 
 ### Q：如何防止 CSRF 攻击？

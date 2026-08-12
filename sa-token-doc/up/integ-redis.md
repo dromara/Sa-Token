@@ -205,8 +205,54 @@ spring.redis.lettuce.pool.min-idle=0
 Sa-Token-Redis 集成包的版本尽量与 Sa-Token-Starter 集成包的版本一致，否则可能出现兼容性问题。
 
 
+### 4、多个项目共用同一个 Redis，怎么防止冲突？
 
-### 4、扩展：集成 MongoDB 
+如无特殊需求，建议多个项目不要共用同一个 Redis。如果非要共用，可用以下方式隔离数据：
+
+**方式 1：使用不同的 db 索引**
+
+Redis 默认提供 16 个 database，每个项目配置不同的 `spring.redis.database`（SpringBoot3 为 `spring.data.redis.database`）即可。
+
+**方式 2：配置不同的 `sa-token.token-name`**
+
+此配置项默认为 `satoken`，会作为框架在 Redis 中存储数据时的统一前缀，例如：
+
+``` yaml
+sa-token: 
+    token-name: my-app-a
+```
+
+> [!NOTE| label:注意 ]
+> `token-name` 同时也会作为前端提交 Token 时的参数名 / Header 名。若只想隔离 Redis 键、又不想改前端传参方式，请看方式 4。
+
+**方式 3：使用 Alone 独立 Redis 插件**
+
+让权限缓存与业务缓存分离，或让不同项目连接不同的 Redis 实例，详见：[Alone 独立 Redis 插件](/plugin/alone-redis)。
+
+**方式 4：重写 `wrapKey` 自定义键前缀（保底方案）**
+
+`sa-token-redis-template`（及 `sa-token-redis-template-jdk-serializer`）提供了 `wrapKey` 钩子，默认原样返回 key。需要给所有 Redis 键加项目前缀时，可注册自定义 Dao 并重写该方法：
+
+``` java
+@Configuration
+public class SaTokenDaoConfig {
+	@Bean
+	@Primary
+	public SaTokenDao saTokenDao() {
+		return new SaTokenDaoForRedisTemplate() {
+			@Override
+			public String wrapKey(String key) {
+				return "my-app:" + key;
+			}
+		};
+	}
+}
+```
+
+重写后，框架读写的键会变成类似：`my-app:satoken:login:token:xxxx`。
+
+
+### 5、扩展：集成 MongoDB 
 
 - [集成 MongoDB 参考一](/up/integ-spring-mongod-1)
 - [集成 MongoDB 参考二](/up/integ-spring-mongod-2)
