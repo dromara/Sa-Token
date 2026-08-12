@@ -169,3 +169,5 @@ public class TestController {
 目前 Sa-Token-Alone-Redis 仅对以下插件有 Redis 分离效果：
 - sa-token-redis-template
 - sa-token-redis-template-jdk-serializer
+
+若使用的是 Redisson 而非 RedisTemplate，请改用 [Alone 独立 Redisson 插件](/plugin/alone-redisson)。

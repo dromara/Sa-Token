@@ -12,6 +12,8 @@
 		<module>sa-token-demo-alone-redis</module>
 		<module>sa-token-demo-alone-redis-cluster</module>
 		<module>sa-token-demo-alone-redis-sb4</module>
+		<module>sa-token-demo-alone-redisson</module>
+		<module>sa-token-demo-alone-redisson-cluster</module>
 		<module>sa-token-demo-apikey</module>
 		<module>sa-token-demo-async</module>
 		<module>sa-token-demo-beetl</module>

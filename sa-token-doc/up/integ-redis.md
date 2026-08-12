@@ -225,9 +225,11 @@ sa-token:
 > [!NOTE| label:注意 ]
 > `token-name` 同时也会作为前端提交 Token 时的参数名 / Header 名。若只想隔离 Redis 键、又不想改前端传参方式，请看方式 4。
 
-**方式 3：使用 Alone 独立 Redis 插件**
+**方式 3：使用 Alone 独立 Redis / Redisson 插件**
 
-让权限缓存与业务缓存分离，或让不同项目连接不同的 Redis 实例，详见：[Alone 独立 Redis 插件](/plugin/alone-redis)。
+让权限缓存与业务缓存分离，或让不同项目连接不同的 Redis 实例：
+- RedisTemplate：[Alone 独立 Redis 插件](/plugin/alone-redis)
+- Redisson：[Alone 独立 Redisson 插件](/plugin/alone-redisson)
 
 **方式 4：重写 `wrapKey` 自定义键前缀（保底方案）**
 

@@ -75,6 +75,7 @@
 		├── sa-token-redis-template-jdk-serializer // [插件] Sa-Token 整合 RedisTemplate - 使用 jdk 序列化算法 (数据缓存插件) 
 		├── sa-token-redis-jackson                // [插件] Sa-Token 整合 RedisTemplate - 使用 Jackson 序列化算法 (数据缓存插件) 
 		├── sa-token-alone-redis                  // [插件] Sa-Token 独立 Redis 插件，实现 [ 权限缓存与业务缓存分离 ]
+		├── sa-token-alone-redisson               // [插件] Sa-Token 独立 Redisson 插件，实现 [ 权限缓存与业务缓存分离 ]
 		├── sa-token-spring-aop                   // [插件] Sa-Token 整合 SpringAOP 注解鉴权
 		├── sa-token-spring-el                    // [插件] Sa-Token 实现 SpringEL 表达式注解鉴权
 		├── sa-token-grpc                         // [插件] Sa-Token 整合 gRPC (RPC 调用鉴权、状态传递) 
@@ -85,6 +86,8 @@
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
 		├── sa-token-demo-alone-redis-cluster     // [示例] Sa-Token 集成 alone-redis 模块、集群模式
+		├── sa-token-demo-alone-redisson          // [示例] Sa-Token 集成 alone-redisson 模块
+		├── sa-token-demo-alone-redisson-cluster  // [示例] Sa-Token 集成 alone-redisson 模块、集群模式
 		├── sa-token-demo-apikey                  // [示例] Sa-Token API Key 模块示例
 		├── sa-token-demo-async                   // [示例] Sa-Token 异步场景示例
 		├── sa-token-demo-beetl                   // [示例] Sa-Token 集成 beetl 示例
