@@ -352,6 +352,10 @@ public class SaTokenConfigure extends WebMvcConfigurationSupport {
 两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新。
 
 
+### Q：升级 sa-token-redisson 后登录失效 / 读 Redis 报错？
+`SaTokenDaoForRedisson` 已改为默认使用 `StringCodec`，与升级前跟随 Redisson 全局 codec（一般为 `Kryo5Codec`）不兼容。请清空 Redis 中的 Sa-Token 旧缓存，或构造时传入 `new Kryo5Codec()`。详见：[集成 Redis - 集成 Redisson](/up/integ-redis?id=_5集成-redisson)。
+
+
 ### Q：调用 `StpUtil.getExtra("name")` 报错：`this api is disabled`。
 `StpUtil.getExtra(key)` 是给 sa-token-jwt 插件提供的，不集成这个插件就不能调用这个API，如果是普通模式需要存储自定义参数，请在 SaSession 上存储
 

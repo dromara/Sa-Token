@@ -148,6 +148,6 @@ public class TestController {
 ### 4、注意点
 - 引入本插件后，无需再引入 `sa-token-redisson` 或 `sa-token-redisson-spring-boot-starter`。
 - 业务代码注入的 `RedissonClient` 来自官方 `redisson-spring-boot-starter` 或你自己注册的 Bean，与 Sa-Token 使用的独立连接互不影响。Spring Boot 4 请自行注册，不要引入 3.45 的 starter。
-- 独立客户端固定使用 `StringCodec`，与 `SaTokenDaoForRedisson` 的字符串读写一致。
+- `SaTokenDaoForRedisson` 默认使用 `StringCodec`，与业务 `RedissonClient` 的全局 codec 无关。
 - Redis Cluster 没有 database 索引，集群配置里不要写 `database`。
 - 哨兵模式同样走 Redisson 原生 yaml（`sentinelServersConfig`），按 [Redisson 配置文档](https://github.com/redisson/redisson/wiki/2.-Configuration) 填写即可。

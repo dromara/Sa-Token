@@ -21,6 +21,8 @@ import org.redisson.api.RBatch;
 import org.redisson.api.RBucket;
 import org.redisson.api.RBucketAsync;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.Codec;
+import org.redisson.client.codec.StringCodec;
 
 import java.time.Duration;
 import java.util.List;
@@ -29,6 +31,8 @@ import java.util.stream.Stream;
 
 /**
  * Sa-Token 持久层实现  [ Redisson客户端、Redis存储 ]
+ *
+ * <p> 默认使用 {@link StringCodec}，与业务 RedissonClient 的全局 codec 隔离。
  * 
  * @author 疯狂的狮子Li
  * @author noear
@@ -41,8 +45,35 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 	 */
 	public final RedissonClient redissonClient;
 
+	/**
+	 * 读写 Bucket 使用的 codec，默认 {@link StringCodec}
+	 */
+	public final Codec codec;
+
+	/**
+	 * 使用默认 {@link StringCodec}
+	 */
 	public SaTokenDaoForRedisson(RedissonClient redissonClient) {
+		this(redissonClient, StringCodec.INSTANCE);
+	}
+
+	/**
+	 * 指定 codec，与业务 RedissonClient 全局 codec 隔离
+	 *
+	 * @param redissonClient Redisson 客户端
+	 * @param codec Bucket 编解码器
+	 * @since 1.46.0
+	 */
+	public SaTokenDaoForRedisson(RedissonClient redissonClient, Codec codec) {
 		this.redissonClient = redissonClient;
+		this.codec = codec;
+	}
+
+	/**
+	 * 按指定 codec 获取 Bucket
+	 */
+	private RBucket<String> getBucket(String key) {
+		return redissonClient.getBucket(key, codec);
 	}
 	
 	
@@ -51,8 +82,7 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 	 */
 	@Override
 	public String get(String key) {
-		RBucket<String> rBucket = redissonClient.getBucket(key);
-		return rBucket.get();
+		return getBucket(key).get();
 	}
 
 	/**
@@ -65,11 +95,10 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 		}
 		// 判断是否为永不过期
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
-			RBucket<String> bucket = redissonClient.getBucket(key);
-			bucket.set(value);
+			getBucket(key).set(value);
 		} else {
 			RBatch batch = redissonClient.createBatch();
-			RBucketAsync<String> bucket = batch.getBucket(key);
+			RBucketAsync<String> bucket = batch.getBucket(key, codec);
 			bucket.setAsync(value);
 			bucket.expireAsync(Duration.ofSeconds(timeout));
 			batch.execute();
@@ -94,7 +123,7 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 	 */
 	@Override
 	public void delete(String key) {
-		redissonClient.getBucket(key).delete();
+		getBucket(key).delete();
 	}
 
 	/**
@@ -102,8 +131,7 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 	 */
 	@Override
 	public long getTimeout(String key) {
-		RBucket<String> rBucket = redissonClient.getBucket(key);
-		long timeout = rBucket.remainTimeToLive();
+		long timeout = getBucket(key).remainTimeToLive();
 		return timeout < 0 ? timeout : timeout / 1000;
 	}
 
@@ -123,8 +151,7 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 			}
 			return;
 		}
-		RBucket<String> rBucket = redissonClient.getBucket(key);
-		rBucket.expire(Duration.ofSeconds(timeout));
+		getBucket(key).expire(Duration.ofSeconds(timeout));
 	}
 
 	

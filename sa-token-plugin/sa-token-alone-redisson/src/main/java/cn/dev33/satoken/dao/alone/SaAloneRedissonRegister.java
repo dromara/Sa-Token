@@ -20,7 +20,6 @@ import cn.dev33.satoken.dao.SaTokenDaoForRedisson;
 import cn.dev33.satoken.exception.SaTokenException;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.StringCodec;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -83,8 +82,6 @@ public class SaAloneRedissonRegister implements DisposableBean {
 			} else {
 				throw new SaTokenException("请配置 sa-token.alone-redisson.config 或 sa-token.alone-redisson.file");
 			}
-			// SaTokenDaoForRedisson 按 String 读写，固定 StringCodec，避免与业务 Kryo/JSON codec 冲突
-			config.setCodec(StringCodec.INSTANCE);
 			return config;
 		} catch (SaTokenException e) {
 			throw e;

@@ -98,3 +98,18 @@ public class SaTokenConfigure {
 	}
 }
 ```
+
+
+### 3、Codec
+
+`SaTokenDaoForRedisson` 默认使用 `StringCodec`，与业务 `RedissonClient` 全局 codec 隔离：
+
+```java
+// 默认 StringCodec
+return new SaTokenDaoForRedisson(redissonClient);
+
+// 指定 codec（例如兼容升级前的 Kryo5 缓存）
+return new SaTokenDaoForRedisson(redissonClient, new Kryo5Codec());
+```
+
+**升级注意：** 此前跟随 Redisson 全局 codec（未自定义时为 `Kryo5Codec`）。升级后旧缓存无法用 `StringCodec` 读取。请清空 Redis 中的 Sa-Token 数据，或构造时传入 `new Kryo5Codec()`。

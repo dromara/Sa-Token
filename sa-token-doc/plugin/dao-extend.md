@@ -16,6 +16,8 @@
 - sa-token-alone-redisson：独立 Redisson 连接，权限缓存与业务缓存分离。
 - sa-token-redisx：Redisx 集成包。 
 
+`SaTokenDaoForRedisson` 默认使用 `StringCodec`。从旧版本升级时，请先清空 Redis 中的 Sa-Token 缓存，或构造时传入 `Kryo5Codec` 以兼容旧数据，详见：[集成 Redis - 集成 Redisson](/up/integ-redis?id=_5集成-redisson)。
+
 
 有关 Redis 集成，详细参考：[集成Redis](/up/integ-redis)，更多存储方式欢迎提交PR 
 
