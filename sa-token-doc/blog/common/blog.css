@@ -238,6 +238,58 @@ body.blog-page.blog-sidebar-open {
 	color: #252933;
 }
 
+/* 文章页正文浅灰网格（掘金同款）：四边渐隐；标题区无网格（标题在网格层之外） */
+.blog-page.blog-article-page #main .markdown-section {
+	position: relative;
+}
+
+.blog-page.blog-article-page #main .markdown-section::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background-image:
+		linear-gradient(90deg, rgba(60, 10, 30, 0.04) 3%, transparent 0),
+		linear-gradient(1turn, rgba(60, 10, 30, 0.04) 3%, transparent 0);
+	background-size: 20px 20px;
+	background-position: 50% center;
+	-webkit-mask-image:
+		linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent),
+		linear-gradient(to bottom, transparent, #000 40px, #000 calc(100% - 64px), transparent);
+	-webkit-mask-composite: source-in;
+	mask-image:
+		linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent),
+		linear-gradient(to bottom, transparent, #000 40px, #000 calc(100% - 64px), transparent);
+	mask-composite: intersect;
+}
+
+.blog-page.blog-article-page #main .markdown-section > * {
+	position: relative;
+	z-index: 1;
+}
+
+/* 标题 + 元信息铺白底，盖住网格（对齐掘金：标题在 .markdown-body 外） */
+.blog-page.blog-article-page #main .markdown-section > h1 {
+	background: #fff;
+	margin: -32px -40px 16px;
+	padding: 32px 40px 0;
+}
+
+.blog-page.blog-article-page #main .markdown-section > .blog-article-meta {
+	background: #fff;
+	margin: 0 -40px 24px;
+	padding: 0 40px 8px;
+}
+
+/* 上一篇 / 下一篇：同样铺白底，盖住网格 */
+.blog-page.blog-article-page #main .markdown-section > .blog-post-nav {
+	background: #fff;
+	margin: 48px -40px -64px;
+	padding: 24px 40px 64px;
+	border-top: 1px solid #eee;
+}
+
 /* 压过 doc.css 链接单独指定「思源黑体」，避免正文内中英文基线不齐 */
 .blog-page #main *:not(h1, h2, h3, h4, h5, h6) a {
 	font-family: var(--blog-font);
@@ -267,7 +319,8 @@ body.blog-page.blog-sidebar-open {
 	line-height: 1.4;
 	margin: 34px 0 20px;
 	padding-bottom: 12px;
-	border-bottom: 2px solid #e2e8f0;
+	/* 淡蓝下划线，与灰色网格区分 */
+	border-bottom: 2px solid #c5d8f0;
 	font-weight: 700;
 	color: #252933;
 }
@@ -277,7 +330,7 @@ body.blog-page.blog-sidebar-open {
 	line-height: 1.4;
 	margin: 36px 0 16px;
 	padding-bottom: 8px;
-	border-bottom: 1px solid #e2e8f0;
+	border-bottom: 1px solid #d2e2f5;
 	font-weight: 700;
 	color: #252933;
 }
@@ -1077,6 +1130,30 @@ body.blog-page.blog-sidebar-open {
 		padding: 24px 20px 48px;
 		font-size: 15px;
 		line-height: 2;
+	}
+
+	.blog-page.blog-article-page #main .markdown-section > h1 {
+		margin: -24px -20px 16px;
+		padding: 24px 20px 0;
+	}
+
+	.blog-page.blog-article-page #main .markdown-section > .blog-article-meta {
+		margin: 0 -20px 24px;
+		padding: 0 20px 8px;
+	}
+
+	.blog-page.blog-article-page #main .markdown-section > .blog-post-nav {
+		margin: 48px -20px -48px;
+		padding: 24px 20px 48px;
+	}
+
+	.blog-page.blog-article-page #main .markdown-section::before {
+		-webkit-mask-image:
+			linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent),
+			linear-gradient(to bottom, transparent, #000 28px, #000 calc(100% - 48px), transparent);
+		mask-image:
+			linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent),
+			linear-gradient(to bottom, transparent, #000 28px, #000 calc(100% - 48px), transparent);
 	}
 }
 
