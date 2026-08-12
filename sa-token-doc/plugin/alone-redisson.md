@@ -111,6 +111,7 @@ singleServerConfig:
 完整示例：
 - 单机：[sa-token-demo-alone-redisson](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson/src/main/resources/application.yml)
 - 集群：[sa-token-demo-alone-redisson-cluster](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson-cluster/src/main/resources/application.yml)
+- Spring Boot 3：[sa-token-demo-alone-redisson-sb3](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson-sb3/src/main/resources/application.yml)
 - Spring Boot 4：[sa-token-demo-alone-redisson-sb4](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson-sb4/src/main/resources/application.yml)
 
 
