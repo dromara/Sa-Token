@@ -88,6 +88,7 @@
 		├── sa-token-demo-alone-redis-cluster     // [示例] Sa-Token 集成 alone-redis 模块、集群模式
 		├── sa-token-demo-alone-redisson          // [示例] Sa-Token 集成 alone-redisson 模块
 		├── sa-token-demo-alone-redisson-cluster  // [示例] Sa-Token 集成 alone-redisson 模块、集群模式
+		├── sa-token-demo-alone-redisson-sb4      // [示例] Sa-Token 集成 alone-redisson 模块（Spring Boot 4）
 		├── sa-token-demo-apikey                  // [示例] Sa-Token API Key 模块示例
 		├── sa-token-demo-async                   // [示例] Sa-Token 异步场景示例
 		├── sa-token-demo-beetl                   // [示例] Sa-Token 集成 beetl 示例

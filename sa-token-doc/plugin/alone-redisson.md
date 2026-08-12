@@ -12,7 +12,9 @@ Sa-Token 默认的 Redisson 集成会把权限数据和业务缓存放在同一�
 
 引入 `sa-token-alone-redisson` 即可，**无需再引入** `sa-token-redisson` 或 `sa-token-redisson-spring-boot-starter`（本插件已包含 Dao 实现并完成注册）。
 
-业务代码如果也要用 `RedissonClient`，再引入官方 `redisson-spring-boot-starter`（或自行注册 Bean）。
+业务代码如果也要用 `RedissonClient`：
+- Spring Boot 2 / 3：可再引入官方 `redisson-spring-boot-starter`，或自行注册 Bean。
+- Spring Boot 4：当前 Redisson 3.45 的 starter 仍引用已移除的 `RedisAutoConfiguration`，**不要引入** `redisson-spring-boot-starter`，改为引入 `redisson` 并自行注册 Bean。`sa-token-alone-redisson` 本身无需 Boot 4 专用包。
 
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
@@ -109,6 +111,7 @@ singleServerConfig:
 完整示例：
 - 单机：[sa-token-demo-alone-redisson](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson/src/main/resources/application.yml)
 - 集群：[sa-token-demo-alone-redisson-cluster](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson-cluster/src/main/resources/application.yml)
+- Spring Boot 4：[sa-token-demo-alone-redisson-sb4](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-alone-redisson-sb4/src/main/resources/application.yml)
 
 
 ### 3、测试
@@ -143,7 +146,7 @@ public class TestController {
 
 ### 4、注意点
 - 引入本插件后，无需再引入 `sa-token-redisson` 或 `sa-token-redisson-spring-boot-starter`。
-- 业务代码注入的 `RedissonClient` 来自官方 `redisson-spring-boot-starter`（或你自己注册的 Bean），与 Sa-Token 使用的独立连接互不影响。
+- 业务代码注入的 `RedissonClient` 来自官方 `redisson-spring-boot-starter` 或你自己注册的 Bean，与 Sa-Token 使用的独立连接互不影响。Spring Boot 4 请自行注册，不要引入 3.45 的 starter。
 - 独立客户端固定使用 `StringCodec`，与 `SaTokenDaoForRedisson` 的字符串读写一致。
 - Redis Cluster 没有 database 索引，集群配置里不要写 `database`。
 - 哨兵模式同样走 Redisson 原生 yaml（`sentinelServersConfig`），按 [Redisson 配置文档](https://github.com/redisson/redisson/wiki/2.-Configuration) 填写即可。
