@@ -509,6 +509,8 @@ public SaResult test3() {
 }
 ```
 
+> 注：上述注解与 `SaSignUtil.checkRequest` 默认从 **Query / Form** 参数中取参验签。若业务使用 **JSON Body** 传参，请参考下文第 12 节。
+
 
 ### 11、多应用模式
 
@@ -586,6 +588,14 @@ SaSignMany.getSignTemplate("xm-shop").checkRequest(SaHolder.getRequest());
 ```
 
 
+### 12、JSON Body 验签参考（社区示例）
+
+官方默认的签名校验基于请求参数（Query / Form），无法直接读取 `Content-Type: application/json` 的请求体字段。
+
+若你的接口使用 JSON Body 传参，可参考社区示例自行扩展（自定义 `@SaCheckSign` 处理器、缓存可重复读取的 Request Body 等）：
+
+> [!TIP| label:社区示例 | style:callout]
+> 仓库：[https://github.com/ly-chn/sa-token-check-sign-from-body](https://github.com/ly-chn/sa-token-check-sign-from-body)  
 
 
 
