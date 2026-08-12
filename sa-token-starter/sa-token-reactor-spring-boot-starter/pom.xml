@@ -17,6 +17,12 @@
 	<description>springboot reactor integrate sa-token</description>
 	
 	<dependencies>
+		<!-- sa-token-core -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-core</artifactId>
+		</dependency>
+
 		<!-- spring-boot-starter (optional) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -24,11 +30,32 @@
 			<optional>true</optional>
         </dependency>
 
-		<!-- sa-token-spring-boot-reactor-v2v3v4-common -->
+		<!-- spring-web (optional) -->
 		<dependency>
-            <groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-reactor-v2v3v4-common</artifactId>
-        </dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- reactor-core (optional) -->
+	    <dependency>
+	    	<groupId>io.projectreactor</groupId>
+	    	<artifactId>reactor-core</artifactId>
+			<optional>true</optional>
+	    </dependency>
+		
+		<!-- spring-boot-configuration-processor (optional) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- sa-token-spring-boot-webmvc-reactor-v2v3v4-common -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+		</dependency>
 
 		<!-- sa-token-jackson: JSON serialization -->
 		<dependency>

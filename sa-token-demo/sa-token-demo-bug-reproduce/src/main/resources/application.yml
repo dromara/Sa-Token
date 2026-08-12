@@ -1,0 +1,6 @@
+server:
+  port: 8092
+
+sa-token:
+  token-name: satoken
+  is-log: true

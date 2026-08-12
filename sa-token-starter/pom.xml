@@ -21,7 +21,7 @@
         <module>sa-token-servlet</module>
         <module>sa-token-jakarta-servlet</module>
         <module>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</module>
-        <module>sa-token-spring-boot-reactor-v2v3v4-common</module>
+        <module>sa-token-spring-boot-reactor-v3v4-common</module>
         <module>sa-token-spring-boot-starter</module>
         <module>sa-token-spring-boot-webmvc-v3v4-common</module>
         <module>sa-token-spring-boot3-starter</module>

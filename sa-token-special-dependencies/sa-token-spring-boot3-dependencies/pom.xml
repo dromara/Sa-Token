@@ -20,6 +20,7 @@
     <properties>
         <springboot3.version>3.5.11</springboot3.version>
         <springboot3-spring.version>6.2.16</springboot3-spring.version>
+        <reactor-core.version>3.7.4</reactor-core.version>
     </properties>
 
     <dependencyManagement>
@@ -44,6 +45,13 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${springboot3-spring.version}</version>
+            </dependency>
+
+            <!-- reactor-core -->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>${reactor-core.version}</version>
             </dependency>
 
             <!-- config (optional) -->

@@ -18,10 +18,10 @@
 	
 	<dependencies>
 
-		<!-- sa-token-spring-boot-reactor-v2v3v4-common -->
+		<!-- sa-token-spring-boot-reactor-v3v4-common -->
 		<dependency>
             <groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-reactor-v2v3v4-common</artifactId>
+			<artifactId>sa-token-spring-boot-reactor-v3v4-common</artifactId>
         </dependency>
 
 		<!-- sa-token-jackson: JSON serialization -->

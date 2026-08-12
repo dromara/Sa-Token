@@ -12,9 +12,9 @@
     </parent>
     <packaging>jar</packaging>
 
-	<name>sa-token-spring-boot-reactor-v2v3v4-common</name>
-    <artifactId>sa-token-spring-boot-reactor-v2v3v4-common</artifactId>
-	<description>sa-token springboot reactor v2/v3/v4 common</description>
+	<name>sa-token-spring-boot-reactor-v3v4-common</name>
+    <artifactId>sa-token-spring-boot-reactor-v3v4-common</artifactId>
+	<description>sa-token springboot reactor v3v4 common</description>
 
 	<dependencies>
 		
@@ -64,10 +64,10 @@
 	<dependencyManagement>
 		<dependencies>
 
-			<!-- 默认引入 sa-token springboot2 相关依赖版本定义，上层可以继续引入其它版本定义来覆盖本层，Maven 采用就近原则选择依赖版本 -->
+			<!-- 默认引入 sa-token springboot3 相关依赖版本定义，上层可以继续引入其它版本定义来覆盖本层，Maven 采用就近原则选择依赖版本 -->
 			<dependency>
 				<groupId>cn.dev33</groupId>
-				<artifactId>sa-token-spring-boot2-dependencies</artifactId>
+				<artifactId>sa-token-spring-boot3-dependencies</artifactId>
 				<version>${revision}</version>
 				<type>pom</type>
 				<scope>import</scope>

@@ -37,7 +37,7 @@
 		├── sa-token-servlet                      // [整合] Sa-Token 整合 Servlet 容器实现类包
 		├── sa-token-jakarta-servlet              // [整合] Sa-Token 整合 Jakarta-Servlet 容器实现类包
 		├── sa-token-spring-boot-webmvc-reactor-v2v3v4-common  // [整合] Sa-Token SpringBoot WebMvc+Reactor 公共包 (2/3/4)
-		├── sa-token-spring-boot-reactor-v2v3v4-common         // [整合] Sa-Token SpringBoot Reactor 公共包 (2/3/4)
+		├── sa-token-spring-boot-reactor-v3v4-common          // [整合] Sa-Token SpringBoot Reactor 公共包 (3/4)
 		├── sa-token-spring-boot-starter                       // [整合] Sa-Token 整合 SpringBoot2 快速集成 
 		├── sa-token-spring-boot-webmvc-v3v4-common            // [整合] Sa-Token SpringBoot WebMvc 公共包 (3/4)
 		├── sa-token-spring-boot3-starter         // [整合] Sa-Token 整合 SpringBoot3 快速集成 
@@ -99,6 +99,7 @@
 			├── sa-token-demo-dubbo3-provider         // [示例] Sa-Token 集成 dubbo3 鉴权，生产端（被调用端）
 		├── sa-token-demo-freemarker              // [示例] Sa-Token 集成 Freemarker 标签方言
 		├── sa-token-demo-first-run               // [示例] 源码首次运行引导，强制引入 apikey、sso、oauth2、sign、jwt 等可选模块
+		├── sa-token-demo-bug-reproduce           // [示例] Issue/Bug 复现沙盒（按需改代码验证）
 		├── sa-token-demo-grpc                    // [示例] Sa-Token 集成 grpc 鉴权
 			├── client                                // [示例] Sa-Token 集成 grpc 鉴权，client 端
 			├── server                                // [示例] Sa-Token 集成 grpc 鉴权，server 端
