@@ -33,26 +33,26 @@ spring:
         # 连接超时时间
         timeout: 10s
 
-redisson:
-    # 线程池数量
-    threads: 8
-    # Netty线程池数量
-    nettyThreads: 32
-    # 单节点配置
-    singleServerConfig:
-        # 客户端名称
-        clientName: test
-        # 最小空闲连接数
-        connectionMinimumIdleSize: 8
-        # 连接池大小
-        connectionPoolSize: 32
-        # 连接空闲超时，单位：毫秒
-        idleConnectionTimeout: 10000
-        # 命令等待超时，单位：毫秒
-        timeout: 3000
-        # 如果尝试在此限制之内发送成功，则开始启用 timeout 计时。
-        retryAttempts: 3
-        # 命令重试发送时间间隔，单位：毫秒
-        retryInterval: 1500
-        # 发布和订阅连接池大小
-        subscriptionConnectionPoolSize: 50
+#redisson:
+#    # 线程池数量
+#    threads: 8
+#    # Netty线程池数量
+#    nettyThreads: 32
+#    # 单节点配置
+#    singleServerConfig:
+#        # 客户端名称
+#        clientName: test
+#        # 最小空闲连接数
+#        connectionMinimumIdleSize: 8
+#        # 连接池大小
+#        connectionPoolSize: 32
+#        # 连接空闲超时，单位：毫秒
+#        idleConnectionTimeout: 10000
+#        # 命令等待超时，单位：毫秒
+#        timeout: 3000
+#        # 如果尝试在此限制之内发送成功，则开始启用 timeout 计时。
+#        retryAttempts: 3
+#        # 命令重试发送时间间隔，单位：毫秒
+#        retryInterval: 1500
+#        # 发布和订阅连接池大小
+#        subscriptionConnectionPoolSize: 50

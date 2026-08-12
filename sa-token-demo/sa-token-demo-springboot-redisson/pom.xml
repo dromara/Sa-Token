@@ -11,7 +11,6 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.14</version>
-		<!-- <version>1.5.9.RELEASE</version> -->
 		<relativePath/>
 	</parent>
 	
@@ -27,10 +26,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
 		
 		<!-- Sa-Token 权限认证, 在线文档：https://sa-token.com/ -->
 		<dependency>
@@ -45,17 +40,11 @@
             <artifactId>sa-token-redisson-spring-boot-starter</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
+		<!-- Redisson 3.45 会加载 DomainSocketAddress；Boot 2.5 默认不引入该模块 -->
 		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jackson</artifactId>
-			<version>${sa-token.version}</version>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-transport-native-unix-common</artifactId>
 		</dependency>
-        
-		<!-- 无需提供Redis连接池 Redisson使用Netty管理 -->
-<!--		<dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-pool2</artifactId>-->
-<!--        </dependency>-->
         
 		<!-- @ConfigurationProperties -->
 		<dependency>

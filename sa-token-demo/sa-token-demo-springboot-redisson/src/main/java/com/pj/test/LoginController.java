@@ -37,7 +37,16 @@ public class LoginController {
 	public SaResult tokenInfo() {
 		return SaResult.data(StpUtil.getTokenInfo());
 	}
-	
+
+	// 读写 SaSession  ---- http://localhost:8081/acc/session
+	@RequestMapping("session")
+	public SaResult session() {
+		System.out.println(StpUtil.getSession().get("name"));
+		StpUtil.getSession().set("name", "zhangsan");
+		System.out.println(StpUtil.getSession().get("name"));
+		return SaResult.ok("Session 写入成功");
+	}
+
 	// 测试注销  ---- http://localhost:8081/acc/logout
 	@RequestMapping("logout")
 	public SaResult logout() {

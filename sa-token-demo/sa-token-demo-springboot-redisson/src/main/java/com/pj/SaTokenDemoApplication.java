@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import cn.dev33.satoken.SaManager;
 
 /**
- * Sa-Token整合SpringBoot 示例，整合redis  
+ * Sa-Token 整合 Redisson 示例
  * @author click33
  *
  */
