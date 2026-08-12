@@ -867,6 +867,39 @@ SaHolder.getResponse().setStatus(401)
 详见：[集成 Redis - 多个项目共用同一个 Redis，怎么防止冲突？](/up/integ-redis?id=_4多个项目共用同一个-redis怎么防止冲突)
 
 
+### Q：是否启用 Redis，可以通过配置文件来决定吗？
+
+框架没有提供直接的配置开关。不过你可以自己注册 `SaTokenDao`，根据配置返回不同实现：
+
+``` yaml
+# 自定义开关（非框架内置配置项）
+sa-token:
+    my-use-redis: true
+```
+
+``` java
+@Configuration
+public class SaTokenDaoConfig {
+
+	@Value("${sa-token.my-use-redis:false}")
+	private boolean useRedis;
+
+	@Bean
+	@Primary
+	public SaTokenDao saTokenDao() {
+		// 开启 Redis：使用 RedisTemplate 持久化
+		if (useRedis) {
+			return new SaTokenDaoForRedisTemplate();
+		}
+		// 关闭 Redis：回落到内存实现
+		return new SaTokenDaoDefaultImpl();
+	}
+}
+```
+
+也可以按 SpringBoot 多环境配置文件拆分（如 `application-dev.yml` / `application-prod.yml` 配不同的 `sa-token.my-use-redis`），达到「开发用内存、生产用 Redis」的效果。
+
+
 ### Q：如何防止 CSRF 攻击？
 CSRF 攻击的核心在于利用浏览器自动提交 Cookie 的特性，代替用户发送自己不想发送的请求。
 
