@@ -16,7 +16,10 @@
 package cn.dev33.satoken.dao;
 
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStringCommands;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -94,23 +97,14 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	}
 
 	/**
-	 * 更新Object (过期时间不变) 
+	 * 更新Object (过期时间不变)
+	 *
+	 * <p> 使用 Redis SET KEEPTTL（{@link Expiration#keepTtl()}），要求 Redis 版本 >= 6.0。
+	 * 低于 6.0 的兼容写法见 {@link SaTokenDaoForRedisTemplate} 文件底部注释。
 	 */
 	@Override
 	public void updateObject(String key, Object object) {
-		String finalKey = wrapKey(key);
-		@SuppressWarnings("all")
-		long expireMs = stringRedisTemplate.getExpire(finalKey, TimeUnit.MILLISECONDS);
-		// -2 = 无此键
-		if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
-			return;
-		}
-		// -1 = 永不过期
-		if(expireMs == SaTokenDao.NEVER_EXPIRE) {
-			objectRedisTemplate.opsForValue().set(finalKey, object);
-		} else {
-			objectRedisTemplate.opsForValue().set(finalKey, object, expireMs, TimeUnit.MILLISECONDS);
-		}
+		setObjectAndKeepTTL(wrapKey(key), object);
 	}
 
 	/**
@@ -150,6 +144,21 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 			return;
 		}
 		objectRedisTemplate.expire(finalKey, timeout, TimeUnit.SECONDS);
+	}
+
+	/**
+	 * SET key value XX KEEPTTL：仅 key 存在时覆写 Object，并保留原 TTL
+	 */
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public void setObjectAndKeepTTL(String finalKey, Object object) {
+		objectRedisTemplate.execute((RedisCallback<Boolean>) connection ->
+			connection.set(
+				objectRedisTemplate.getKeySerializer().serialize(finalKey),
+				objectRedisTemplate.getValueSerializer().serialize(object),
+				Expiration.keepTtl(),
+				RedisStringCommands.SetOption.ifPresent()
+			)
+		);
 	}
 
 
