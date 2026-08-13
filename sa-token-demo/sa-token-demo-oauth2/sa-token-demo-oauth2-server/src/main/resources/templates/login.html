@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<base th:href="@{/}" />
 		<title>Sa-OAuth2-认证中心-登录页</title>
 		<style type="text/css">
 			body{background-color: #F5F5D5;}
@@ -19,9 +20,8 @@
 			<button onclick="doLogin()">登录</button>
 			<span style="color: #666;">（测试账号： sa / 123456）</span>
 		</div>
-		<script src="https://unpkg.zhimg.com/jquery@3.4.1/dist/jquery.min.js"></script>
-		<script src="https://www.layuicdn.com/layer-v3.1.0/layer.js"></script>
-		<script>window.jQuery || alert('当前页面CDN服务商已宕机，请将所有js包更换为本地依赖')</script>
+		<script src="./sa-res/jquery.min.js"></script>
+		<script src="./sa-res/layer/layer.js"></script>
 		<script type="text/javascript">
 			
 			// 登录方法 
