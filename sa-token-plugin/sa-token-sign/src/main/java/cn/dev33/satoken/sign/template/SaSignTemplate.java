@@ -410,7 +410,7 @@ public class SaSignTemplate {
 	 * @return key
 	 */
 	public String splicingNonceSaveKey(String nonce) {
-		return SaManager.getConfig().getTokenName() + ":sign:nonce:" + nonce;
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":sign:nonce:" + nonce;
 	}
 
 }

@@ -1,5 +1,14 @@
 # 更新日志 
 
+### v1.46.0 @TODO
+- core：
+	- 新增：新增 `sa-token.cache-key-prefix` 配置项，支持为所有 token、session 等持久层 key 添加项目级公共前缀，方便多个项目共用同一个 Redis 时进行数据隔离。merge: [issue 956](https://github.com/dromara/Sa-Token/issues/956)
+	- 新增：为 `cache-key-prefix` 添加相关单元测试与集成测试。
+- 文档：
+	- 新增：在配置文档中补充 `cache-key-prefix` 配置项说明。
+	- 新增：在常见问题中补充“多个项目共用同一个 redis，怎么防止冲突？”的解决方案。
+	- 优化：数据结构文档增加 `cache-key-prefix` 前缀相关说明。
+
 ### v1.45.0 @2026-3-8
 - core：
 	- 新增：新增重复登录处理策略，当同一账号不允许多客户端同时登录时支持选择踢人下线或拦截本次登录。  **[重要]** merge: [pr 349](https://gitee.com/dromara/sa-token/pulls/349)

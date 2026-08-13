@@ -111,7 +111,7 @@ public class SaApplication implements SaSetValueInterface {
 	 * @return 拼接后的 key 值 
 	 */
 	public String splicingDataKey(String key) {
-		return SaManager.getConfig().getTokenName() + ":var:" + key;
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":var:" + key;
 	}
 	
 }

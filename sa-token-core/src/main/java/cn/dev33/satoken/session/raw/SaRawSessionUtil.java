@@ -38,7 +38,7 @@ public class SaRawSessionUtil {
 	 * @return sessionId
 	 */
 	public static String splicingSessionKey(String type, Object valueId) {
-		return SaManager.getConfig().getTokenName() + ":raw-session:" + type + ":" + valueId;
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":raw-session:" + type + ":" + valueId;
 	}
 
 	/**

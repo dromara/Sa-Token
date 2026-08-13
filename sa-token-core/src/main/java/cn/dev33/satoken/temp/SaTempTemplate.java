@@ -363,7 +363,7 @@ public class SaTempTemplate implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingTempTokenSaveKey(String token) {
-		return SaManager.getConfig().getTokenName() + ":" + namespace + ":" + token;
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":" + namespace + ":" + token;
 	}
 
 	/**

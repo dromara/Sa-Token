@@ -3043,7 +3043,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyTokenValue(String tokenValue) {
-		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":token:" + tokenValue;
+		return getConfigOrGlobal().splicingCacheKeyPrefix() + ":" + loginType + ":token:" + tokenValue;
 	}
 
 	/**
@@ -3053,7 +3053,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeySession(Object loginId) {
-		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":session:" + loginId;
+		return getConfigOrGlobal().splicingCacheKeyPrefix() + ":" + loginType + ":session:" + loginId;
 	}
 
 	/**
@@ -3063,7 +3063,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyTokenSession(String tokenValue) {
-		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":token-session:" + tokenValue;
+		return getConfigOrGlobal().splicingCacheKeyPrefix() + ":" + loginType + ":token-session:" + tokenValue;
 	}
 
 	/**
@@ -3073,7 +3073,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyLastActiveTime(String tokenValue) {
-		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":last-active:" + tokenValue;
+		return getConfigOrGlobal().splicingCacheKeyPrefix() + ":" + loginType + ":last-active:" + tokenValue;
 	}
 
 	/**
@@ -3103,7 +3103,7 @@ public class StpLogic {
 	 * @return key
 	 */
 	public String splicingKeyDisable(Object loginId, String service) {
-		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":disable:" + service + ":" + loginId;
+		return getConfigOrGlobal().splicingCacheKeyPrefix() + ":" + loginType + ":disable:" + service + ":" + loginId;
 	}
 
 	/**
@@ -3116,7 +3116,7 @@ public class StpLogic {
 	public String splicingKeySafe(String tokenValue, String service) {
 		// 格式：<Token名称>:<账号类型>:<safe>:<业务标识>:<Token值>
 		// 形如：satoken:login:safe:important:gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__
-		return getConfigOrGlobal().getTokenName() + ":" + loginType + ":safe:" + service + ":" + tokenValue;
+		return getConfigOrGlobal().splicingCacheKeyPrefix() + ":" + loginType + ":safe:" + service + ":" + tokenValue;
 	}
 
 

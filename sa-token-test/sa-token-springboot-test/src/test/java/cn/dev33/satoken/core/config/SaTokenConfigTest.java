@@ -77,6 +77,16 @@ public class SaTokenConfigTest {
 		config.setTokenPrefix("token");
 		Assertions.assertEquals(config.getTokenPrefix(), "token");
 
+		config.setCacheKeyPrefix("example");
+		Assertions.assertEquals(config.getCacheKeyPrefix(), "example");
+		Assertions.assertEquals(config.splicingCacheKeyPrefix(), "example:nav-token");
+
+		config.setCacheKeyPrefix("");
+		Assertions.assertEquals(config.splicingCacheKeyPrefix(), "nav-token");
+
+		config.setCacheKeyPrefix(null);
+		Assertions.assertEquals(config.splicingCacheKeyPrefix(), "nav-token");
+
 		config.setIsPrint(false);
 		Assertions.assertEquals(config.getIsPrint(), false);
 
@@ -115,6 +125,8 @@ public class SaTokenConfigTest {
 		Assertions.assertEquals(config.getIsConcurrent(), false);
 		Assertions.assertEquals(config.getIsShare(), false);
 		Assertions.assertEquals(config.getIsLog(), true);
+		Assertions.assertEquals(config.getCacheKeyPrefix(), "example");
+		Assertions.assertEquals(config.splicingCacheKeyPrefix(), "example:use-token");
 	}
 
 	// 测试 SaCookieConfig 

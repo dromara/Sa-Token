@@ -176,7 +176,7 @@ public class SaSameTemplate {
 	 * @return key
 	 */
 	public String splicingTokenSaveKey() {
-		return SaManager.getConfig().getTokenName() + ":var:same-token";
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":var:same-token";
 	}
 
 	/** 
@@ -184,7 +184,7 @@ public class SaSameTemplate {
 	 * @return key
 	 */
 	public String splicingPastTokenSaveKey() {
-		return SaManager.getConfig().getTokenName() + ":var:past-same-token";
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":var:past-same-token";
 	}
 
 }

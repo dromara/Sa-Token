@@ -807,7 +807,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @return key
      */
     public String splicingTicketModelSaveKey(String ticket) {
-        return getStpLogicOrGlobal().getConfigOrGlobal().getTokenName() + ":ticket:" + ticket;
+        return getStpLogicOrGlobal().getConfigOrGlobal().splicingCacheKeyPrefix() + ":ticket:" + ticket;
     }
 
     /**
@@ -821,7 +821,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         if(SaFoxUtil.isEmpty(client) || SaSsoConsts.CLIENT_WILDCARD.equals(client)) {
             client = SaSsoConsts.CLIENT_ANON;
         }
-        return getStpLogicOrGlobal().getConfigOrGlobal().getTokenName() + ":ticket-index:" + client + ":" + id;
+        return getStpLogicOrGlobal().getConfigOrGlobal().splicingCacheKeyPrefix() + ":ticket-index:" + client + ":" + id;
     }
 
 }

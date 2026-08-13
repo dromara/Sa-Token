@@ -1,5 +1,7 @@
 # 数据结构
 
+> 说明：下文所列 key 均默认未配置 `cache-key-prefix`。当配置了 `sa-token.cache-key-prefix` 后，所有 key 最前面会再拼接上 `{cacheKeyPrefix}:`。
+
 
 ## 1、登录会话
 

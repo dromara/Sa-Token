@@ -526,7 +526,7 @@ public class SaApiKeyTemplate {
 	 * @return key
 	 */
 	public String splicingApiKeySaveKey(String apiKey) {
-		return getSaTokenConfig().getTokenName() + ":" + namespace + ":" + apiKey;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":" + namespace + ":" + apiKey;
 	}
 
 

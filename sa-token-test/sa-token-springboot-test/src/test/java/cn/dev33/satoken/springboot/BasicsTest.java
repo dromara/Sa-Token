@@ -100,47 +100,81 @@ public class BasicsTest {
     	Assertions.assertEquals(SaManager.getStpLogic("login"), loginStpLogic);
     }
     
-    // 测试：登录 
+    // 测试：登录
     @Test
     public void testDoLogin() {
     	// 登录
     	StpUtil.login(10001);
     	String token = StpUtil.getTokenValue();
-    	
-    	// token 存在 
+
+    	// token 存在
     	Assertions.assertNotNull(token);
     	Assertions.assertEquals(token, StpUtil.getTokenValueNotCut());
     	Assertions.assertEquals(token, StpUtil.getTokenValueByLoginId(10001));
     	Assertions.assertEquals(token, StpUtil.getTokenValueByLoginId(10001, SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE));
-    	
-    	// token 队列 
+
+    	// token 队列
     	List<String> tokenList = StpUtil.getTokenValueListByLoginId(10001);
     	List<String> tokenList2 = StpUtil.getTokenValueListByLoginId(10001, SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);
     	Assertions.assertEquals(token, tokenList.get(tokenList.size() - 1));
     	Assertions.assertEquals(token, tokenList2.get(tokenList.size() - 1));
-    	
-    	// API 验证 
-    	Assertions.assertTrue(StpUtil.isLogin());	
+
+    	// API 验证
+    	Assertions.assertTrue(StpUtil.isLogin());
     	Assertions.assertDoesNotThrow(() -> StpUtil.checkLogin());
     	Assertions.assertNotNull(token);	// token不为null
-    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginIdAsInt(), 10001);	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginIdAsString(), "10001");	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginId(), "10001");	// loginId=10001 
-    	Assertions.assertEquals(StpUtil.getLoginIdDefaultNull(), "10001");	// loginId=10001 
+    	Assertions.assertEquals(StpUtil.getLoginIdAsLong(), 10001);	// loginId=10001
+    	Assertions.assertEquals(StpUtil.getLoginIdAsInt(), 10001);	// loginId=10001
+    	Assertions.assertEquals(StpUtil.getLoginIdAsString(), "10001");	// loginId=10001
+    	Assertions.assertEquals(StpUtil.getLoginId(), "10001");	// loginId=10001
+    	Assertions.assertEquals(StpUtil.getLoginIdDefaultNull(), "10001");	// loginId=10001
     	Assertions.assertEquals(StpUtil.getLoginDevice(), SaTokenConsts.DEFAULT_LOGIN_DEVICE_TYPE);	// 登录设备类型
-    	
-    	// db数据 验证  
-    	// token存在 
+
+    	// db数据 验证
+    	// token存在
     	Assertions.assertEquals(dao.get("satoken:login:token:" + token), "10001");
-    	// Session 存在 
+    	// Session 存在
     	SaSession session = dao.getSession("satoken:login:session:" + 10001);
     	Assertions.assertNotNull(session);
     	Assertions.assertEquals(session.getId(), "satoken:login:session:" + 10001);
     	Assertions.assertTrue(session.getTerminalList().size() >= 1);
     }
-    
-    // 测试：注销 
+
+    // 测试：cacheKeyPrefix 对 Redis key 的影响
+    @Test
+    public void testCacheKeyPrefix() {
+    	// 备份原配置
+    	String oldCacheKeyPrefix = SaManager.getConfig().getCacheKeyPrefix();
+
+    	try {
+    		// 设置项目级公共前缀
+    		SaManager.getConfig().setCacheKeyPrefix("project-a");
+
+    		// 登录
+    		StpUtil.login(10001);
+    		String token = StpUtil.getTokenValue();
+
+    		// tokenName 不应该受 cacheKeyPrefix 影响
+    		Assertions.assertEquals(StpUtil.getTokenName(), "satoken");
+
+    		// Redis 中的 key 应该带有 project-a 前缀
+    		Assertions.assertEquals(dao.get("project-a:satoken:login:token:" + token), "10001");
+
+    		// Session key 也应该带有前缀
+    		SaSession session = dao.getSession("project-a:satoken:login:session:" + 10001);
+    		Assertions.assertNotNull(session);
+    		Assertions.assertEquals(session.getId(), "project-a:satoken:login:session:" + 10001);
+
+    		// 注销，验证清理也走前缀 key
+    		StpUtil.logout();
+    		Assertions.assertNull(dao.get("project-a:satoken:login:token:" + token));
+    	} finally {
+    		// 恢复配置
+    		SaManager.getConfig().setCacheKeyPrefix(oldCacheKeyPrefix);
+    	}
+    }
+
+    // 测试：注销
     @Test
     public void testLogout() {
     	// 登录

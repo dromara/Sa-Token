@@ -726,7 +726,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingCodeSaveKey(String code) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:code:" + code;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:code:" + code;
 	}
 
 	/**
@@ -736,7 +736,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingCodeIndexKey(String clientId, Object loginId) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:code-index:" + clientId + ":" + loginId;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:code-index:" + clientId + ":" + loginId;
 	}
 
 	/**
@@ -745,7 +745,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingAccessTokenSaveKey(String accessToken) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:access-token:" + accessToken;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:access-token:" + accessToken;
 	}
 
 	/**
@@ -764,7 +764,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingRefreshTokenSaveKey(String refreshToken) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:refresh-token:" + refreshToken;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:refresh-token:" + refreshToken;
 	}
 
 	/**
@@ -783,7 +783,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingClientTokenSaveKey(String clientToken) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:client-token:" + clientToken;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:client-token:" + clientToken;
 	}
 
 	/**
@@ -802,7 +802,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingGrantScopeKey(String clientId, Object loginId) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:grant-scope:" + clientId + ":" + loginId;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:grant-scope:" + clientId + ":" + loginId;
 	}
 
 	/**
@@ -811,7 +811,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingStateSaveKey(String state) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:state:" + state;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:state:" + state;
 	}
 
 	/**
@@ -820,7 +820,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @return key
 	 */
 	public String splicingCodeNonceIndexSaveKey(String code) {
-		return getSaTokenConfig().getTokenName() + ":oauth2:code-nonce-index:" + code;
+		return getSaTokenConfig().splicingCacheKeyPrefix() + ":oauth2:code-nonce-index:" + code;
 	}
 
 

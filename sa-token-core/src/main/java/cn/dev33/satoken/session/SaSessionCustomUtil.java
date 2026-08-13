@@ -54,7 +54,7 @@ public class SaSessionCustomUtil {
 	 * @return sessionId
 	 */
 	public static String splicingSessionKey(String sessionId) {
-		return SaManager.getConfig().getTokenName() + ":" + sessionKey + ":session:" + sessionId;
+		return SaManager.getConfig().splicingCacheKeyPrefix() + ":" + sessionKey + ":session:" + sessionId;
 	}
 
 	/**

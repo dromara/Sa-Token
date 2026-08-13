@@ -163,6 +163,12 @@ public class SaTokenConfig implements Serializable {
 	private String tokenPrefix;
 
 	/**
+	 * 持久层数据 key 的公共前缀，用于多个项目共用同一个 Redis 时做数据隔离。
+	 * <br/> 例如配置为 {@code example} 后，token 存储 key 将变为 {@code example:satoken:login:token:xxx}。
+	 */
+	private String cacheKeyPrefix = "";
+
+	/**
 	 * cookie 模式是否自动填充 token 前缀
 	 */
 	private Boolean cookieAutoFillPrefix = false;
@@ -519,6 +525,35 @@ public class SaTokenConfig implements Serializable {
 	public SaTokenConfig setTokenPrefix(String tokenPrefix) {
 		this.tokenPrefix = tokenPrefix;
 		return this;
+	}
+
+	/**
+	 * @return 持久层数据 key 的公共前缀
+	 */
+	public String getCacheKeyPrefix() {
+		return cacheKeyPrefix;
+	}
+
+	/**
+	 * @param cacheKeyPrefix 持久层数据 key 的公共前缀
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setCacheKeyPrefix(String cacheKeyPrefix) {
+		this.cacheKeyPrefix = cacheKeyPrefix;
+		return this;
+	}
+
+	/**
+	 * 拼接：持久层数据 key 的统一前缀（cacheKeyPrefix + tokenName）。
+	 * <br/> 如果未配置 cacheKeyPrefix，则只返回 tokenName，保持与旧版本一致。
+	 *
+	 * @return /
+	 */
+	public String splicingCacheKeyPrefix() {
+		if (SaFoxUtil.isEmpty(cacheKeyPrefix)) {
+			return tokenName;
+		}
+		return cacheKeyPrefix + ":" + tokenName;
 	}
 
 	/**
@@ -900,6 +935,7 @@ public class SaTokenConfig implements Serializable {
 				+ ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
 				+ ", autoRenew=" + autoRenew
 				+ ", tokenPrefix=" + tokenPrefix
+				+ ", cacheKeyPrefix=" + cacheKeyPrefix
 				+ ", cookieAutoFillPrefix=" + cookieAutoFillPrefix
 				+ ", isPrint=" + isPrint 
 				+ ", isLog=" + isLog 
