@@ -284,7 +284,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 		if(code == null) {
 			return null;
 		}
-		return (CodeModel)getSaTokenDao().getObject(splicingCodeSaveKey(code));
+		return getSaTokenDao().getObject(splicingCodeSaveKey(code), CodeModel.class);
 	}
 
 
@@ -353,7 +353,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 		if(accessToken == null) {
 			return null;
 		}
-		return (AccessTokenModel)getSaTokenDao().getObject(splicingAccessTokenSaveKey(accessToken));
+		return getSaTokenDao().getObject(splicingAccessTokenSaveKey(accessToken), AccessTokenModel.class);
 	}
 
 
@@ -454,7 +454,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 		if(refreshToken == null) {
 			return null;
 		}
-		return (RefreshTokenModel)getSaTokenDao().getObject(splicingRefreshTokenSaveKey(refreshToken));
+		return getSaTokenDao().getObject(splicingRefreshTokenSaveKey(refreshToken), RefreshTokenModel.class);
 	}
 
 
