@@ -1,9 +1,8 @@
 package com.pj;
 
+import cn.dev33.satoken.SaManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import cn.dev33.satoken.SaManager;
 
 /**
  * Sa-Token 整合 Redisson 示例
@@ -13,7 +12,7 @@ import cn.dev33.satoken.SaManager;
 @SpringBootApplication
 public class SaTokenDemoApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		SpringApplication.run(SaTokenDemoApplication.class, args); 
 		System.out.println("\n启动成功：Sa-Token配置如下：" + SaManager.getConfig());
 	}

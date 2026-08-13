@@ -106,16 +106,20 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 	}
 
 	/**
-	 * 修修改指定key-value键值对 (过期时间不变) 
+	 * 修改指定key-value键值对 (过期时间不变)
+	 *
+	 * <p> 使用 {@link RBucket#setAndKeepTTL(Object)}（Redis SET KEEPTTL），要求 Redis 版本 >= 6.0。
+	 * 低于 6.0 的兼容写法见本类文件底部注释。
 	 */
 	@Override
 	public void update(String key, String value) {
-		long expire = getTimeout(key);
-		// -2 = 无此键 
-		if(expire == SaTokenDao.NOT_VALUE_EXPIRE) {
+		RBucket<String> bucket = getBucket(key);
+		// -2 = 无此键
+		if (bucket.remainTimeToLive() == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
 		}
-		this.set(key, value, expire);
+		// Redis >= 6.0：原子覆写 value，保留原 TTL
+		bucket.setAndKeepTTL(value);
 	}
 	
 	/**
@@ -164,4 +168,25 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 		List<String> list = stream.collect(Collectors.toList());
 		return SaFoxUtil.searchList(list, start, size, sortType);
 	}
+
+	/*
+	 * Redis < 6.0 时无法使用 setAndKeepTTL，可将 update 方法替换为下列毫秒写法（与 sa-token-redis-template 一致）：
+	 *
+	 * @Override
+	 * public void update(String key, String value) {
+	 *     RBucket<String> bucket = getBucket(key);
+	 *     long expireMs = bucket.remainTimeToLive();
+	 *     // -2 = 无此键
+	 *     if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
+	 *         return;
+	 *     }
+	 *     // -1 = 永不过期
+	 *     if (expireMs == SaTokenDao.NEVER_EXPIRE) {
+	 *         bucket.set(value);
+	 *     } else {
+	 *         bucket.set(value, Duration.ofMillis(expireMs));
+	 *     }
+	 * }
+	 */
+
 }
