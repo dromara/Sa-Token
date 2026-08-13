@@ -38,8 +38,8 @@
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
 		<hutool-jwt.version>5.8.36</hutool-jwt.version>
 		<jjwt.version>0.12.6</jjwt.version>
-		<fastjson.version>1.2.83</fastjson.version>
-		<fastjson2.version>2.0.15</fastjson2.version>
+		<fastjson.version>2.0.64</fastjson.version>
+		<fastjson2.version>2.0.64</fastjson2.version>
 		<redisson.version>3.45.0</redisson.version>
 		<hutool-cache.version>5.8.36</hutool-cache.version>
 		<caffeine.version>3.2.0</caffeine.version>
