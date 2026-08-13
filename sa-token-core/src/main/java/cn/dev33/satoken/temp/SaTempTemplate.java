@@ -264,7 +264,7 @@ public class SaTempTemplate implements SaTtlMethods {
 		// 重新整理索引列表
 		Map<String, Long>  tempTokenNewList = newTokenIndexMap();
 		ArrayList<Long> tempTokenTtlList = new ArrayList<>();
-		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTokenIndexMap);
+		Map<String, Long> tempTokenMap = session.getMap(TEMP_TOKEN_MAP, String.class, Long.class, this::newTokenIndexMap);
 		for (Map.Entry<String, Long> entry : tempTokenMap.entrySet()) {
 			long ttl = expireTimeToTtl(entry.getValue());
 			if(ttl != SaTokenDao.NOT_VALUE_EXPIRE) {
@@ -307,7 +307,7 @@ public class SaTempTemplate implements SaTtlMethods {
 	 * @param timeout /
 	 */
 	protected void addTempTokenIndex(SaSession session, String token, long timeout) {
-		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTokenIndexMap);
+		Map<String, Long> tempTokenMap = session.getMap(TEMP_TOKEN_MAP, String.class, Long.class, this::newTokenIndexMap);
 		if(! tempTokenMap.containsKey(token)) {
 			tempTokenMap.put(token, ttlToExpireTime(timeout));
 			session.set(TEMP_TOKEN_MAP, tempTokenMap);
@@ -320,7 +320,7 @@ public class SaTempTemplate implements SaTtlMethods {
 	 * @param token /
 	 */
 	protected void deleteTempTokenIndex(SaSession session, String token) {
-		Map<String, Long> tempTokenMap = session.get(TEMP_TOKEN_MAP, this::newTokenIndexMap);
+		Map<String, Long> tempTokenMap = session.getMap(TEMP_TOKEN_MAP, String.class, Long.class, this::newTokenIndexMap);
 		if(tempTokenMap.containsKey(token)) {
 			tempTokenMap.remove(token);
 			session.set(TEMP_TOKEN_MAP, tempTokenMap);

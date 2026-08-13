@@ -15,7 +15,18 @@
  */
 package cn.dev33.satoken.application;
 
+import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.util.SaFoxUtil;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 对取值的一组方法封装
@@ -125,6 +136,44 @@ public interface SaGetValueInterface {
 	}
 
 	/**
+	 * 取值 (指定 List 元素类型)
+	 *
+	 * @param key key
+	 * @param elementClass List 元素类型
+	 * @param <T> 元素泛型
+	 * @return 转换后的 List；值为 null 时返回空 List
+	 */
+	default <T> List<T> getList(String key, Class<T> elementClass) {
+		return convertToList(get(key), key, elementClass);
+	}
+
+	/**
+	 * 取值 (指定 Set 元素类型)
+	 *
+	 * @param key key
+	 * @param elementClass Set 元素类型
+	 * @param <T> 元素泛型
+	 * @return 转换后的 Set；值为 null 时返回空 Set
+	 */
+	default <T> Set<T> getSet(String key, Class<T> elementClass) {
+		return convertToSet(get(key), key, elementClass);
+	}
+
+	/**
+	 * 取值 (指定 Map 键值类型)
+	 *
+	 * @param key key
+	 * @param keyClass Map 键类型
+	 * @param valueClass Map 值类型
+	 * @param <K> 键泛型
+	 * @param <V> 值泛型
+	 * @return 转换后的 Map；值为 null 时返回空 Map
+	 */
+	default <K, V> Map<K, V> getMap(String key, Class<K> keyClass, Class<V> valueClass) {
+		return convertToMap(get(key), key, keyClass, valueClass);
+	}
+
+	/**
 	 * 是否含有某个 key
 	 * @param key 指定 key
 	 * @return 是否含有
@@ -164,6 +213,128 @@ public interface SaGetValueInterface {
 		Class<T> cs = (Class<T>) defaultValue.getClass();
 		return SaFoxUtil.getValueByType(value, cs);
 	}
-	
-	
+
+	/**
+	 * 将 value 转换为指定元素类型的 List
+	 *
+	 * @param value 原始值
+	 * @param key key（仅用于异常提示）
+	 * @param elementClass List 元素类型
+	 * @param <T> 元素泛型
+	 * @return 转换后的 List；值为 null 时返回空 List
+	 */
+	default <T> List<T> convertToList(Object value, String key, Class<T> elementClass) {
+		if(valueIsNull(value)) {
+			return new ArrayList<>();
+		}
+		Collection<?> rawCollection = resolveCollection(value, key);
+		List<T> list = new ArrayList<>(rawCollection.size());
+		for (Object item : rawCollection) {
+			list.add(convertToElement(item, elementClass));
+		}
+		return list;
+	}
+
+	/**
+	 * 将 value 转换为指定元素类型的 Set
+	 *
+	 * @param value 原始值
+	 * @param key key（仅用于异常提示）
+	 * @param elementClass Set 元素类型
+	 * @param <T> 元素泛型
+	 * @return 转换后的 Set；值为 null 时返回空 Set
+	 */
+	default <T> Set<T> convertToSet(Object value, String key, Class<T> elementClass) {
+		if(valueIsNull(value)) {
+			return new LinkedHashSet<>();
+		}
+		Collection<?> rawCollection = resolveCollection(value, key);
+		Set<T> set = new LinkedHashSet<>(rawCollection.size());
+		for (Object item : rawCollection) {
+			set.add(convertToElement(item, elementClass));
+		}
+		return set;
+	}
+
+	/**
+	 * 将 value 转换为指定键值类型的 Map
+	 *
+	 * @param value 原始值
+	 * @param key key（仅用于异常提示）
+	 * @param keyClass Map 键类型
+	 * @param valueClass Map 值类型
+	 * @param <K> 键泛型
+	 * @param <V> 值泛型
+	 * @return 转换后的 Map；值为 null 时返回空 Map
+	 */
+	default <K, V> Map<K, V> convertToMap(Object value, String key, Class<K> keyClass, Class<V> valueClass) {
+		if(valueIsNull(value)) {
+			return new LinkedHashMap<>();
+		}
+		Map<?, ?> rawMap = resolveMap(value, key);
+		Map<K, V> map = new LinkedHashMap<>(rawMap.size());
+		for (Map.Entry<?, ?> entry : rawMap.entrySet()) {
+			map.put(
+				convertToElement(entry.getKey(), keyClass),
+				convertToElement(entry.getValue(), valueClass)
+			);
+		}
+		return map;
+	}
+
+	/**
+	 * 解析 Map 集合
+	 *
+	 * @param value 原始值
+	 * @param key key（仅用于异常提示）
+	 * @return Map
+	 */
+	default Map<?, ?> resolveMap(Object value, String key) {
+		if(value instanceof Map) {
+			return (Map<?, ?>) value;
+		}
+		throw new SaTokenException("key [" + key + "] 的值不是 Map 类型");
+	}
+
+	/**
+	 * 解析 List / Set 集合（JSON 持久化读回时 Set 可能变为 List）
+	 *
+	 * @param value 原始值
+	 * @param key key（仅用于异常提示）
+	 * @return 集合
+	 */
+	default Collection<?> resolveCollection(Object value, String key) {
+		if(value instanceof List) {
+			return (List<?>) value;
+		}
+		if(value instanceof Set) {
+			return (Set<?>) value;
+		}
+		throw new SaTokenException("key [" + key + "] 的值不是 List 或 Set 类型");
+	}
+
+	/**
+	 * 将单个元素转换为指定类型
+	 *
+	 * @param item 原始元素
+	 * @param elementClass 目标类型
+	 * @param <T> 元素泛型
+	 * @return 转换后的元素
+	 */
+	default <T> T convertToElement(Object item, Class<T> elementClass) {
+		if(item == null) {
+			return null;
+		}
+		if(SaFoxUtil.isBasicType(elementClass)) {
+			return SaFoxUtil.getValueByType(item, elementClass);
+		}
+		if(elementClass.isInstance(item)) {
+			return elementClass.cast(item);
+		}
+		SaJsonTemplate jsonTemplate = SaManager.getSaJsonTemplate();
+		String jsonString = jsonTemplate.objectToJson(item);
+		return jsonTemplate.jsonToObject(jsonString, elementClass);
+	}
+
+
 }

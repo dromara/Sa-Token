@@ -16,14 +16,20 @@
 package cn.dev33.satoken.core.session;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaTerminalInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -84,6 +90,63 @@ public class SaSessionTest {
     	Assertions.assertNotNull(user2);
     	Assertions.assertEquals(user2.name, "zhangsan");
     	Assertions.assertEquals(user2.age, 18);
+    }
+
+    // getList / getSet / getMap 存取值
+    @Test
+    public void testGetListSetMap() {
+
+    	SaSession session = new SaSession("session-get-collection");
+
+    	// getList：内存对象直接读取
+    	List<String> nameList = new ArrayList<>(Arrays.asList("a", "b"));
+    	session.set("nameList", nameList);
+    	List<String> nameList2 = session.getList("nameList", String.class);
+    	Assertions.assertEquals(nameList2.size(), 2);
+    	Assertions.assertEquals(nameList2.get(0), "a");
+
+    	// getList：lazy 初始化
+    	List<String> emptyList = session.getList("emptyList", String.class, ArrayList::new);
+    	Assertions.assertTrue(emptyList.isEmpty());
+    	Assertions.assertTrue(session.has("emptyList"));
+
+    	// getList：Set 存储、List 读取
+    	Set<String> nameSet = new HashSet<>(Arrays.asList("x", "y"));
+    	session.set("nameSetAsList", nameSet);
+    	List<String> nameSetAsList = session.getList("nameSetAsList", String.class);
+    	Assertions.assertEquals(nameSetAsList.size(), 2);
+    	Assertions.assertTrue(nameSetAsList.contains("x"));
+
+    	// getSet：List 存储、Set 读取
+    	session.set("nameListAsSet", nameList);
+    	Set<String> nameListAsSet = session.getSet("nameListAsSet", String.class);
+    	Assertions.assertEquals(nameListAsSet.size(), 2);
+    	Assertions.assertTrue(nameListAsSet.contains("b"));
+
+    	// getSet：lazy 初始化
+    	Set<String> emptySet = session.getSet("emptySet", String.class, LinkedHashSet::new);
+    	Assertions.assertTrue(emptySet.isEmpty());
+    	Assertions.assertTrue(session.has("emptySet"));
+
+    	// getMap：内存 Map 读取
+    	Map<String, Long> scoreMap = new LinkedHashMap<>();
+    	scoreMap.put("k1", 100L);
+    	scoreMap.put("k2", 200L);
+    	session.set("scoreMap", scoreMap);
+    	Map<String, Long> scoreMap2 = session.getMap("scoreMap", String.class, Long.class);
+    	Assertions.assertEquals(scoreMap2.size(), 2);
+    	Assertions.assertEquals(scoreMap2.get("k1"), 100L);
+
+    	// getMap：lazy 初始化
+    	Map<String, Long> emptyMap = session.getMap("emptyMap", String.class, Long.class, LinkedHashMap::new);
+    	Assertions.assertTrue(emptyMap.isEmpty());
+    	Assertions.assertTrue(session.has("emptyMap"));
+
+    	// 非集合类型读取时抛异常
+    	session.set("notCollection", "abc");
+    	Assertions.assertThrows(SaTokenException.class, () -> session.getList("notCollection", String.class));
+    	Assertions.assertThrows(SaTokenException.class, () -> session.getSet("notCollection", String.class));
+    	Assertions.assertThrows(SaTokenException.class, () -> session.getMap("notCollection", String.class, Long.class));
     }
     
     // 测试有效期

@@ -114,7 +114,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @param removeFun 执行删除 token 的函数
 	 */
 	protected void addTokenIndex_AndAdjust(SaSession session, String tokenIndexMapSaveKey, String token, long timeout, int maxTokenCount, SaParamFunction<String> removeFun) {
-		Map<String, Long> tokenIndexMap = session.get(tokenIndexMapSaveKey, this::newTokenIndexMap);
+		Map<String, Long> tokenIndexMap = session.getMap(tokenIndexMapSaveKey, String.class, Long.class, this::newTokenIndexMap);
 		if(! tokenIndexMap.containsKey(token)) {
 			// 添加
 			tokenIndexMap.put(token, ttlToExpireTime(timeout));
@@ -140,7 +140,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 	 * @param token 待删除的 token
 	 */
 	protected void deleteTokenIndex_AndTryLogout(SaSession session, String tokenIndexMapSaveKey, String token) {
-		Map<String, Long> tokenIndexMap = session.get(tokenIndexMapSaveKey, this::newTokenIndexMap);
+		Map<String, Long> tokenIndexMap = session.getMap(tokenIndexMapSaveKey, String.class, Long.class, this::newTokenIndexMap);
 		tokenIndexMap.remove(token);
 		// 如果删除后还有记录，就再次保存
 		if( ! tokenIndexMap.isEmpty()) {
@@ -222,7 +222,7 @@ public class SaOAuth2Dao implements SaTtlMethods {
 		}
 
 		// 根据 ttl 值过滤一遍
-		Map<String, Long> tokenIndexMap = session.get(tokenIndexMapSaveKey, this::newTokenIndexMap);
+		Map<String, Long> tokenIndexMap = session.getMap(tokenIndexMapSaveKey, String.class, Long.class, this::newTokenIndexMap);
 		Map<String, Long> newTokenIndexMap = _removeExpiredIndex(tokenIndexMap);
 
 		// 如果调整后集合长度归零了，说明 token 已全部过期，直接注销此 RawSession

@@ -17,6 +17,10 @@ package cn.dev33.satoken.application;
 
 import cn.dev33.satoken.fun.SaRetGenericFunction;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * 对写值的一组方法封装
  * <p> 封装 SaStorage、SaSession、SaApplication 等存取值的一些固定方法，减少重复编码 </p>
@@ -62,6 +66,65 @@ public interface SaSetValueInterface extends SaGetValueInterface {
 			set(key, value);
 		}
 		return (T) value;
+	}
+
+	/**
+	 * 取值 (指定 List 元素类型；值为 null 时执行 fun 获取值并写入)
+	 *
+	 * @param key key
+	 * @param elementClass List 元素类型
+	 * @param fun 值为 null 时执行的函数
+	 * @param <T> 元素泛型
+	 * @return 转换后的 List
+	 */
+	default <T> List<T> getList(String key, Class<T> elementClass, SaRetGenericFunction<List<T>> fun) {
+		Object value = get(key);
+		if(value == null) {
+			List<T> list = fun.run();
+			set(key, list);
+			return list;
+		}
+		return convertToList(value, key, elementClass);
+	}
+
+	/**
+	 * 取值 (指定 Set 元素类型；值为 null 时执行 fun 获取值并写入)
+	 *
+	 * @param key key
+	 * @param elementClass Set 元素类型
+	 * @param fun 值为 null 时执行的函数
+	 * @param <T> 元素泛型
+	 * @return 转换后的 Set
+	 */
+	default <T> Set<T> getSet(String key, Class<T> elementClass, SaRetGenericFunction<Set<T>> fun) {
+		Object value = get(key);
+		if(value == null) {
+			Set<T> set = fun.run();
+			set(key, set);
+			return set;
+		}
+		return convertToSet(value, key, elementClass);
+	}
+
+	/**
+	 * 取值 (指定 Map 键值类型；值为 null 时执行 fun 获取值并写入)
+	 *
+	 * @param key key
+	 * @param keyClass Map 键类型
+	 * @param valueClass Map 值类型
+	 * @param fun 值为 null 时执行的函数
+	 * @param <K> 键泛型
+	 * @param <V> 值泛型
+	 * @return 转换后的 Map
+	 */
+	default <K, V> Map<K, V> getMap(String key, Class<K> keyClass, Class<V> valueClass, SaRetGenericFunction<Map<K, V>> fun) {
+		Object value = get(key);
+		if(value == null) {
+			Map<K, V> map = fun.run();
+			set(key, map);
+			return map;
+		}
+		return convertToMap(value, key, keyClass, valueClass);
 	}
 	
 	/**

@@ -158,7 +158,7 @@ public class SaApiKeyTemplate {
 		if (getIsRecordIndex()) {
 			// 添加索引
 			SaSession session = rawSessionDelegator.getSessionById(ak.getLoginId());
-			ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
+			List<String> apiKeyList = session.getList(API_KEY_LIST, String.class, ArrayList::new);
 			if(! apiKeyList.contains(ak.getApiKey())) {
 				apiKeyList.add(ak.getApiKey());
 				session.set(API_KEY_LIST, apiKeyList);
@@ -199,7 +199,7 @@ public class SaApiKeyTemplate {
 				return;
 			}
 			// 索引无记录，提前退出
-			ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
+			List<String> apiKeyList = session.getList(API_KEY_LIST, String.class, ArrayList::new);
 			if(! apiKeyList.contains(apiKey)) {
 				return;
 			}
@@ -233,7 +233,7 @@ public class SaApiKeyTemplate {
 		}
 
 		// 先删 ApiKeyModel
-		ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
+		List<String> apiKeyList = session.getList(API_KEY_LIST, String.class, ArrayList::new);
 		for (String apiKey : apiKeyList) {
 			getSaTokenDao().deleteObject(splicingApiKeySaveKey(apiKey));
 		}
@@ -411,7 +411,7 @@ public class SaApiKeyTemplate {
 		}
 
 		// 重新整理索引列表
-		ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
+		List<String> apiKeyList = session.getList(API_KEY_LIST, String.class, ArrayList::new);
 		ArrayList<String> apiKeyNewList = new ArrayList<>();
 		ArrayList<ApiKeyModel> apiKeyModelList = new ArrayList<>();
 		for (String apikey : apiKeyList) {
@@ -466,7 +466,7 @@ public class SaApiKeyTemplate {
 		}
 
 		// 从 RawSession 遍历查询
-		ArrayList<String> apiKeyList = session.get(API_KEY_LIST, ArrayList::new);
+		List<String> apiKeyList = session.getList(API_KEY_LIST, String.class, ArrayList::new);
 		for (String apikey : apiKeyList) {
 			ApiKeyModel ak = getApiKeyModelFromCache(apikey);
 			if(ak == null || ak.timeExpired()) {

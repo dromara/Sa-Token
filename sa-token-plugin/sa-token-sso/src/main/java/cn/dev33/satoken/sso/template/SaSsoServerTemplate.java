@@ -520,7 +520,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         SaSession session = getStpLogicOrGlobal().getSessionByLoginId(loginId);
 
         // 取出原来的
-        List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
+        List<SaSsoClientInfo> scmList = session.getList(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, SaSsoClientInfo.class, ArrayList::new);
 
         // 将 新登录client 加入到集合中
         SaSsoClientInfo scm = new SaSsoClientInfo(client, sloCallbackUrl, calcNextIndex(scmList));
@@ -594,7 +594,7 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
         if(session == null) {
             return;
         }
-        List<SaSsoClientInfo> scmList = session.get(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, ArrayList::new);
+        List<SaSsoClientInfo> scmList = session.getList(SaSsoConsts.SSO_CLIENT_MODEL_LIST_KEY_, SaSsoClientInfo.class, ArrayList::new);
         scmList.forEach(scm -> {
             strategy.asyncRun.run(() -> {
                 notifyClientLogout(loginId, logoutParameter.getDeviceId(), scm, false, false);
