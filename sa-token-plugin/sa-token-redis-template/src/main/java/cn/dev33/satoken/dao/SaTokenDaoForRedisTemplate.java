@@ -19,9 +19,13 @@ import cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -159,9 +163,17 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
 		// 对完整匹配串做 wrap，避免用户在 key 尾部等位置加工时只 wrap(prefix) 拼错 pattern
 		String finalPattern = wrapKey(prefix + "*" + keyword + "*");
-		Set<String> keys = stringRedisTemplate.keys(finalPattern);
-		List<String> list = new ArrayList<>(keys);
-		return SaFoxUtil.searchList(list, start, size, sortType);
+		Set<String> keys = new HashSet<>();
+		ScanOptions options = ScanOptions.scanOptions().match(finalPattern).count(1000).build();
+		stringRedisTemplate.execute((RedisCallback<Void>) connection -> {
+			try (Cursor<byte[]> cursor = connection.scan(options)) {
+				while (cursor.hasNext()) {
+					keys.add(stringRedisTemplate.getStringSerializer().deserialize(cursor.next()));
+				}
+			}
+			return null;
+		});
+		return SaFoxUtil.searchList(new ArrayList<>(keys), start, size, sortType);
 	}
 
 	/**
