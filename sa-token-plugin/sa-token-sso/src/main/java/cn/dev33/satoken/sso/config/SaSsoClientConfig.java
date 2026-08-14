@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sso.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -26,7 +28,7 @@ import java.io.Serializable;
  * @author click33
  * @since 1.30.0
  */
-public class SaSsoClientConfig implements Serializable {
+public class SaSsoClientConfig implements SaJsonType, Serializable {
 
     private static final long serialVersionUID = -6541180061782004705L;
 

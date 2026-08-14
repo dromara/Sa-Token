@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
@@ -34,7 +36,7 @@ import java.io.Serializable;
  * @author click33
  * @since 1.10.0
  */
-public class SaTokenConfig implements Serializable {
+public class SaTokenConfig implements SaJsonType, Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 

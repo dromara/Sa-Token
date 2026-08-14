@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-demo-json-typing-security-for-solon</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Sa-Token Snack4 AutoType 反序列化白名单 — Solon 长期回归 Demo</description>
+
+	<parent>
+		<groupId>org.noear</groupId>
+		<artifactId>solon-parent</artifactId>
+		<version>3.2.1</version>
+		<relativePath/>
+	</parent>
+
+	<properties>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<sa-token.version>1.45.0</sa-token.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.noear</groupId>
+			<artifactId>solon.logging.simple</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-solon-plugin</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redisx</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-snack4</artifactId>
+			<version>${sa-token.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerArgument>-parameters</compilerArgument>
+					<source>17</source>
+					<target>17</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

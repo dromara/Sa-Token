@@ -1,12 +1,14 @@
 package com.pj.test.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 /**
  * Role 实体类
  * 
  * @author click33
  * @since 2022-10-15
  */
-public class SysRole {
+public class SysRole implements SaJsonType {
 //
 //	public SysRole() {
 //	}

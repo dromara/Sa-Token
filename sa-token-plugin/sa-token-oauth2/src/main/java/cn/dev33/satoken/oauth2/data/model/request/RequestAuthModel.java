@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.oauth2.data.model.request;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -28,7 +30,7 @@ import java.util.List;
  * @author click33
  * @since 1.23.0
  */
-public class RequestAuthModel implements Serializable {
+public class RequestAuthModel implements SaJsonType, Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 

@@ -352,6 +352,14 @@ public class SaTokenConfigure extends WebMvcConfigurationSupport {
 两者的序列化算法不一致导致的反序列化失败，如果要更改序列化方式，则需要先将 Redis 中历史数据清除，再做更新。
 
 
+### Q：报错：无法反序列化的类型：com.pj.model.SysUser，请先将其注册到 JSON 全局类型白名单？
+
+说明 Session 或 Redis 中的 JSON 在反序列化时，遇到了 **未加入白名单** 的业务实体类型。  
+常见于：`session.set("user", sysUser)` 后集成 Redis，或使用 `SaTokenDao.getObject()` 读回自定义 Model。
+
+**原因与解决方案** 详见：[JSON 序列化扩展 - JSON 全局类型白名单](/plugin/json-extend?id=json-全局类型白名单机制)
+
+
 ### Q：升级 sa-token-redisson 后登录失效 / 读 Redis 报错？
 `SaTokenDaoForRedisson` 已改为默认使用 `StringCodec`，与升级前跟随 Redisson 全局 codec（一般为 `Kryo5Codec`）不兼容。请清空 Redis 中的 Sa-Token 旧缓存，或构造时传入 `new Kryo5Codec()`。详见：[集成 Redis - 集成 Redisson](/up/integ-redis?id=_5集成-redisson)。
 

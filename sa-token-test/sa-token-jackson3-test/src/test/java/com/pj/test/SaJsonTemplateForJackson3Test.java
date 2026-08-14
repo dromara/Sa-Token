@@ -1,13 +1,20 @@
 package com.pj.test;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.exception.SaJsonConvertException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.json.SaJsonTemplateForJackson3;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.strategy.SaJsonStrategy;
 import com.pj.test.model.SysUser;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,8 +61,10 @@ public class SaJsonTemplateForJackson3Test {
     // 测试：Jackson3
     @Test
     public void testJackson3() {
+        SaJsonStrategy.instance.resetState();
         SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson3());
         Assertions.assertEquals(SaJsonTemplateForJackson3.class, SaManager.getSaJsonTemplate().getClass());
+        Assertions.assertTrue(SaJsonStrategy.instance.isInit());
 
         // test   Object -> Json
         SysUser user = new SysUser(10001, "张三", 18);
@@ -73,6 +82,47 @@ public class SaJsonTemplateForJackson3Test {
         // more
         testNull();
         testMap();
+    }
+
+    // 测试：Jackson3 允许 Session 中常见的 JDK 值类型（Date、金额、java.time 等）
+    @Test
+    public void testJackson3AllowCommonTypesInSession() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson3());
+        Date time = new Date(1234567890000L);
+        BigDecimal amount = new BigDecimal("99.50");
+        LocalDateTime loginTime = LocalDateTime.of(2026, 8, 15, 12, 30, 0);
+        SaSession session = new SaSession("test-session");
+        session.set("time", time);
+        session.set("amount", amount);
+        session.set("loginTime", loginTime);
+        String json = SaManager.getSaJsonTemplate().objectToJson(session);
+        SaSession session2 = SaManager.getSaJsonTemplate().jsonToObject(json, SaSession.class);
+        Assertions.assertEquals(time, session2.get("time"));
+        Assertions.assertEquals(amount, session2.get("amount"));
+        Assertions.assertEquals(loginTime, session2.get("loginTime"));
+    }
+
+    // 测试：Jackson3 白名单拦截未授权 @class
+    @Test
+    public void testJackson3BlockUnknownAllowType() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson3());
+        String evilJson = "{\"@class\":\"java.lang.ProcessBuilder\",\"command\":[\"calc.exe\"]}";
+        SaJsonConvertException ex = Assertions.assertThrows(SaJsonConvertException.class, () ->
+                SaManager.getSaJsonTemplate().jsonToObject(evilJson));
+        Assertions.assertEquals(
+                "无法反序列化的类型：java.lang.ProcessBuilder，请先将其注册到 JSON 全局类型白名单",
+                ex.getMessage());
+    }
+
+    // 测试：Jackson3 初始化后不可再 register
+    @Test
+    public void testJackson3StrategyInit() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson3());
+        Assertions.assertThrows(SaTokenException.class, () ->
+                SaJsonStrategy.instance.registerAllowType(String.class));
     }
 
     // 测试 Map 的转换

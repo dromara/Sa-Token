@@ -64,6 +64,8 @@
 		<module>sa-token-demo-webflux-springboot3</module>
 		<module>sa-token-demo-webflux-springboot4</module>
 		<module>sa-token-demo-bug-reproduce</module>
+		<module>sa-token-demo-json-typing-security</module>
+		<module>sa-token-demo-json-typing-security-for-solon</module>
 		<module>sa-token-demo-websocket</module>
 		<module>sa-token-demo-websocket-spring</module>
         <module>sa-token-demo-loveqq-boot</module>

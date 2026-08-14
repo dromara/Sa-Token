@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.session;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,7 +27,7 @@ import java.util.Map;
  * @author click33
  * @since 1.41.0
  */
-public class SaTerminalInfo implements Serializable {
+public class SaTerminalInfo implements SaJsonType, Serializable {
 
 	/**
 	 *

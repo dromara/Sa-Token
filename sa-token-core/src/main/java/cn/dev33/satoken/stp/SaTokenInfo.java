@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.stp;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 /**
  * Token 信息 Model: 用来描述一个 Token 的常见参数。
  *
@@ -39,7 +41,7 @@ package cn.dev33.satoken.stp;
  * @author click33
  * @since 1.10.0
  */
-public class SaTokenInfo {
+public class SaTokenInfo implements SaJsonType {
 
 	/** token 名称 */
 	public String tokenName;

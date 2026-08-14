@@ -15,13 +15,15 @@
  */
 package cn.dev33.satoken.sso.name;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 /**
  * SSO 模块所有参数名称定义 
  * 
  * @author click33
  * @since 1.32.0
  */
-public class ParamName {
+public class ParamName implements SaJsonType {
 
 	/** redirect 参数名称 */
 	public String redirect = "redirect";

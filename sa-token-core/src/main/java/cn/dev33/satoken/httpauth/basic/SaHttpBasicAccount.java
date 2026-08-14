@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.httpauth.basic;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
 
@@ -24,7 +26,7 @@ import cn.dev33.satoken.util.SaFoxUtil;
  * @author click33
  * @since 1.41.0
  */
-public class SaHttpBasicAccount {
+public class SaHttpBasicAccount implements SaJsonType {
 
 	/**
 	 * 账号

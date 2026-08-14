@@ -17,9 +17,11 @@ package cn.dev33.satoken.json;
 
 import cn.dev33.satoken.exception.SaJsonConvertException;
 import cn.dev33.satoken.util.SaFoxUtil;
+import cn.dev33.satoken.strategy.SaJsonStrategy;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
@@ -61,13 +63,8 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 	public SaJsonTemplateForJackson() {
 
 		// 1、使 objectMapper 序列化时带上类型信息，以便该 json 字符串可以成功反序列化
-		// 	  构建反序列化限制器，此处可以限制只允许指定类型或指定包下的类型才可以反序列化，此处指定所有类型都可以反序列化
-		PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
-				// 允许所有子类型反序列化（即反序列化时遇到的类）
-				.allowIfSubType(Object.class)
-				// 允许所有基类型反序列化（如 Object、自定义抽象类）
-				.allowIfBaseType(Object.class)
-				.build();
+		//    构建反序列化限制器：仅允许 SaJsonStrategy 白名单内的类型
+		PolymorphicTypeValidator ptv = buildAllowTypeValidator();
 		// 	  启用全局默认类型（嵌入类型信息）
 		objectMapper.activateDefaultTyping(
 				ptv,
@@ -128,7 +125,7 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 		try {
             return objectMapper.readValue(jsonStr, type);
 		} catch (JsonProcessingException e) {
-			throw new SaJsonConvertException(e);
+			throw toSaJsonConvertException(e);
 		}
 	}
 
@@ -167,4 +164,44 @@ public class SaJsonTemplateForJackson implements SaJsonTemplate {
 			throw new SaJsonConvertException(e);
 		}
 	}
+
+
+	// ----------------------- 内部方法
+
+	/**
+	 * 根据 {@link SaJsonStrategy} 白名单构建 Jackson 多态反序列化校验器
+	 *
+	 * @return 仅允许白名单内类型参与多态反序列化的 {@link PolymorphicTypeValidator}
+	 */
+	public static PolymorphicTypeValidator buildAllowTypeValidator() {
+		BasicPolymorphicTypeValidator.Builder builder = BasicPolymorphicTypeValidator.builder();
+		for (Class<?> type : SaJsonStrategy.instance.getSaJsonAllowTypeList()) {
+			builder.allowIfSubType(type);
+		}
+		return builder.build();
+	}
+
+	/**
+	 * 将 Jackson 反序列化异常包装为 {@link SaJsonConvertException}；
+	 * 若为多态类型白名单拦截，则明确提示无法反序列化的类型名。
+	 */
+	static SaJsonConvertException toSaJsonConvertException(JsonProcessingException e) {
+		InvalidTypeIdException typeIdEx = findInvalidTypeIdException(e);
+		if (typeIdEx != null && typeIdEx.getTypeId() != null) {
+			return new SaJsonConvertException(
+					"无法反序列化的类型：" + typeIdEx.getTypeId() + "，请先将其注册到 JSON 全局类型白名单",
+					e);
+		}
+		return new SaJsonConvertException(e);
+	}
+
+	static InvalidTypeIdException findInvalidTypeIdException(Throwable e) {
+		for (Throwable t = e; t != null; t = t.getCause()) {
+			if (t instanceof InvalidTypeIdException) {
+				return (InvalidTypeIdException) t;
+			}
+		}
+		return null;
+	}
+
 }

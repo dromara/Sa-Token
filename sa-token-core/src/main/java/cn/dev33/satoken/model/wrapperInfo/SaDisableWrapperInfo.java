@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.model.wrapperInfo;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
@@ -23,7 +25,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
  * @author click33
  * @since 1.40.0
  */
-public class SaDisableWrapperInfo {
+public class SaDisableWrapperInfo implements SaJsonType {
 
     /**
      * 是否被封禁

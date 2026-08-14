@@ -15,13 +15,15 @@
  */
 package cn.dev33.satoken.httpauth.digest;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 /**
  * Sa-Token Http Digest 认证 - 参数实体类
  *
  * @author click33
  * @since 1.38.0
  */
-public class SaHttpDigestModel {
+public class SaHttpDigestModel implements SaJsonType {
 
     /**
      * 默认的 Realm 领域名称

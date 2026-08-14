@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sso.message;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 
 import cn.dev33.satoken.application.SaSetValueInterface;
 import cn.dev33.satoken.sso.error.SaSsoErrorCode;
@@ -31,7 +33,7 @@ import java.util.Map;
  * @author click33
  * @since 1.43.0
  */
-public class SaSsoMessage extends LinkedHashMap<String, Object> implements SaSetValueInterface, Serializable {
+public class SaSsoMessage extends LinkedHashMap<String, Object> implements SaSetValueInterface, SaJsonType, Serializable {
 
     /**
      *

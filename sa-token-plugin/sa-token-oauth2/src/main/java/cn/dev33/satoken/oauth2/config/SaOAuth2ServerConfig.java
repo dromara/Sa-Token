@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.oauth2.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 
@@ -28,7 +30,7 @@ import java.util.Map;
  * @author click33
  * @since 1.19.0
  */
-public class SaOAuth2ServerConfig implements Serializable {
+public class SaOAuth2ServerConfig implements SaJsonType, Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 

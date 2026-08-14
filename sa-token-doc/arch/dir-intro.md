@@ -105,6 +105,8 @@
 		├── sa-token-demo-freemarker              // [示例] Sa-Token 集成 Freemarker 标签方言
 		├── sa-token-demo-first-run               // [示例] 源码首次运行引导，强制引入 apikey、sso、oauth2、sign、jwt 等可选模块
 		├── sa-token-demo-bug-reproduce           // [示例] Issue/Bug 复现沙盒（按需改代码验证）
+		├── sa-token-demo-json-typing-security    // [示例] JSON 多态反序列化白名单回归（Spring Boot + Jackson）
+		├── sa-token-demo-json-typing-security-for-solon // [示例] JSON 多态反序列化白名单回归（Solon + Snack4）
 		├── sa-token-demo-grpc                    // [示例] Sa-Token 集成 grpc 鉴权
 			├── client                                // [示例] Sa-Token 集成 grpc 鉴权，client 端
 			├── server                                // [示例] Sa-Token 集成 grpc 鉴权，server 端
@@ -162,8 +164,8 @@
 		├── sa-token-springboot-test            // [测试] Sa-Token SpringBoot 整合测试
 		├── sa-token-jwt-test                   // [测试] Sa-Token jwt 整合测试
 		├── sa-token-temp-jwt-test              // [测试] Sa-Token temp-jwt 整合测试
-		├── sa-token-json-test                  // [测试] Sa-Token json 序列化测试
-		├── sa-token-jackson3-test              // [测试] Sa-Token Jackson3 整合测试
+		├── sa-token-json-test                  // [测试] Sa-Token json 序列化测试（Jackson / Snack4 白名单等）
+		├── sa-token-jackson3-test              // [测试] Sa-Token Jackson3 整合测试（含 DefaultTyping 白名单）
 		├── sa-token-serializer-test            // [测试] Sa-Token 序列化测试
 	├── sa-token-doc                          // [文档] Sa-Token 开发文档 
 	├── MEMO                                  // [备忘] 内部备忘录、开发记录

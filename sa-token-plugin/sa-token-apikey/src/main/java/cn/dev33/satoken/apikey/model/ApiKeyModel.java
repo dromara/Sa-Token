@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.apikey.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.apikey.error.SaApiKeyErrorCode;
 import cn.dev33.satoken.apikey.exception.ApiKeyException;
 import cn.dev33.satoken.dao.SaTokenDao;
@@ -29,7 +31,7 @@ import java.util.*;
  * @author click33
  * @since 1.41.0
  */
-public class ApiKeyModel implements Serializable {
+public class ApiKeyModel implements SaJsonType, Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 

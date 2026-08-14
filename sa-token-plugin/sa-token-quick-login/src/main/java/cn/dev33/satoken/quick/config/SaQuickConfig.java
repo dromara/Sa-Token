@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.quick.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.quick.function.DoLoginHandleFunction;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -26,7 +28,7 @@ import cn.dev33.satoken.util.SaResult;
  * @author click33
  * @since 1.19.0
  */
-public class SaQuickConfig {
+public class SaQuickConfig implements SaJsonType {
 
 	/** 是否开启全局登录校验，如果为 false，则不再拦截请求出现登录页 */
 	private Boolean auth = true;

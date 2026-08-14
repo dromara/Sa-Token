@@ -1,7 +1,10 @@
 # sa-token-demo-bug-reproduce
 
-专门用来**复现 Issue / Bug** 的沙盒 Demo。  
+专门用来**临时复现 Issue / Bug** 的沙盒 Demo。  
 社区报了问题、本地要验证修复或回归时，在这个模块里改代码跑，避免污染正式示例。
+
+> Jackson DefaultTyping 反序列化白名单的长期回归 Demo 已独立为  
+> **`sa-token-demo-json-typing-security`**，本模块不再保留该用例。
 
 ## 使用约定
 
@@ -10,36 +13,19 @@
 3. 入口类：`BugReproduceApplication`
 4. 默认端口：`8092`
 
-## 当前用例：setStatus NoSuchMethodError（已修）
+## 当前用例
 
-关联：
+（暂无 — 按新 Issue 在此补充）
 
-- Gitee [IIAW1A](https://gitee.com/dromara/sa-token/issues/IIAW1A)
-- GitHub [#916](https://github.com/dromara/Sa-Token/issues/916)
-- 提案 `#92` / `#221`
-
-现象（修复前）：Boot 3.5 + WebFlux 下 `SaHolder.getResponse().setStatus(401)` →  
-`NoSuchMethodError: ServerHttpResponse.setStatusCode(HttpStatus)`
-
-根因：Reactor common 按 Spring 5 编译，高版本运行签名不兼容。  
-修复：Boot2 实现收在 `sa-token-reactor-spring-boot-starter`，Boot3/4 共用 `reactor-v3v4-common`（`HttpStatusCode`）。
-
-### 怎么跑当前用例
+健康检查：
 
 ```bash
-# IDEA 运行 BugReproduceApplication，或：
-mvn -DskipTests spring-boot:run
+curl http://127.0.0.1:8092/ok
 ```
-
-```bash
-curl -i http://127.0.0.1:8092/repro/direct-set-status
-curl -i http://127.0.0.1:8092/basic/ping
-```
-
-期望（修复后）：返回 HTTP 401，进程不崩、无 `NoSuchMethodError`。
 
 ## 历史用例
 
 | 日期 | Issue | 摘要 | 状态 |
 |------|-------|------|------|
+| 2026-08 | — | Jackson DefaultTyping 白名单 | 已迁至 `sa-token-demo-json-typing-security` |
 | 2026-08 | IIAW1A / #916 | WebFlux setStatus 二进制不兼容 | 已修 |

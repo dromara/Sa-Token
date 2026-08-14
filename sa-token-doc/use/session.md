@@ -23,6 +23,9 @@ SysUser user = (SysUser) StpUtil.getSession().get("user");
 > [!TIP| style:callout] 
 > 有关 Account-Session 与 Token-Session 的详细区别，可参考：[Session模型详解](/fun/session-model)
 
+> [!WARNING| ] 
+> 若往 Session 存自定义实体类后，从 Redis 读回报错 `无法反序列化的类型：xxx，请先将其注册到 JSON 全局类型白名单`，请参考：[JSON 全局类型白名单机制](/plugin/json-extend?id=json-全局类型白名单机制)
+
 
 ### 2、Account-Session
 有关 账号-Session 的 API 如下：

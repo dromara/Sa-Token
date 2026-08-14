@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.stp.parameter;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
@@ -39,7 +41,7 @@ import java.util.Map;
  * @author click33
  * @since 1.13.2
  */
-public class SaLoginParameter {
+public class SaLoginParameter implements SaJsonType {
 
 	// --------- 单独参数
 

@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.context.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.util.SaFoxUtil;
@@ -32,7 +34,7 @@ import java.util.Map;
  * @author click33
  * @since 1.16.0
  */
-public class SaCookie {
+public class SaCookie implements SaJsonType {
 
 	/**
 	 * 写入响应头时使用的key

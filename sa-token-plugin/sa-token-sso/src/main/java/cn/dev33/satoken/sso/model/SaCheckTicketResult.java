@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sso.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.util.SaResult;
 
 import java.io.Serializable;
@@ -25,7 +27,7 @@ import java.io.Serializable;
  * @author click33
  * @since 1.38.0
  */
-public class SaCheckTicketResult implements Serializable {
+public class SaCheckTicketResult implements SaJsonType, Serializable {
 
     private static final long serialVersionUID = 1406115065849845073L;
 

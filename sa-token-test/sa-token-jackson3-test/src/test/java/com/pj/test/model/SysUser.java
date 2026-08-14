@@ -1,12 +1,14 @@
 package com.pj.test.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 /**
  * User 实体类 
  * 
  * @author click33
  * @since 2022-10-15
  */
-public class SysUser {
+public class SysUser implements SaJsonType {
 
 	public SysUser() {
 	}

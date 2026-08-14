@@ -15,13 +15,15 @@
  */
 package cn.dev33.satoken.apikey.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 /**
  * Sa-Token API Key 相关配置
  *
  * @author click33
  * @since 1.42.0
  */
-public class SaApiKeyConfig {
+public class SaApiKeyConfig implements SaJsonType {
 
 	/**
 	 * API Key 前缀

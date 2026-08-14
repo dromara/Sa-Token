@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.stp.parameter;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
@@ -31,7 +33,7 @@ import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
  * @author click33
  * @since 1.41.0
  */
-public class SaLogoutParameter {
+public class SaLogoutParameter implements SaJsonType {
 
 	// --------- 单独参数
 

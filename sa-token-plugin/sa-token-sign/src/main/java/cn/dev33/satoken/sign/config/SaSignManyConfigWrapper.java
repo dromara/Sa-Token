@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sign.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ import java.util.Map;
  * @author click33
  * @since 1.43.0
  */
-public class SaSignManyConfigWrapper {
+public class SaSignManyConfigWrapper implements SaJsonType {
 
     public Map<String, SaSignConfig> signMany = new LinkedHashMap<>();
 

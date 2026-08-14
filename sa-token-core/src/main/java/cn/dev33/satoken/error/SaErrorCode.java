@@ -40,6 +40,9 @@ public interface SaErrorCode {
 	/** HTTP 请求处理器未实现 */
 	int CODE_10004 = 10004;
 
+	/** SaJsonStrategy 状态非法（已初始化后注册、SPI 加载失败等） */
+	int CODE_10005 = 10005;
+
 	/** 未能从全局 StpLogic 集合中找到对应 type 的 StpLogic */
 	int CODE_10011 = 10011;
 

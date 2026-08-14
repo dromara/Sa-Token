@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.util;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.SaManager;
 
 import java.io.Serializable;
@@ -34,7 +36,7 @@ import java.util.Map;
  * @author click33
  * @since 1.22.0
  */
-public class SaResult extends LinkedHashMap<String, Object> implements Serializable{
+public class SaResult extends LinkedHashMap<String, Object> implements SaJsonType, Serializable{
 
 	// 序列化版本号
 	private static final long serialVersionUID = 1L;

@@ -36,4 +36,14 @@ public class SaJsonConvertException extends SaTokenException {
 		super(cause);
 	}
 
+	/**
+	 * 一个异常：代表 JSON 转换失败
+	 *
+	 * @param message 异常描述信息
+	 * @param cause 异常对象
+	 */
+	public SaJsonConvertException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
 }

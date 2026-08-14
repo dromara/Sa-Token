@@ -1,0 +1,12 @@
+server:
+  port: 8094
+
+sa-token:
+  token-name: satoken
+  is-log: true
+
+sa-token-dao:
+  redis:
+    server: "127.0.0.1:6379"
+    db: 1
+    maxTotal: 200

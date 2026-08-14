@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.oauth2.data.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +27,7 @@ import java.util.Map;
  * @author click33
  * @since 1.23.0
  */
-public class ClientTokenModel implements Serializable {
+public class ClientTokenModel implements SaJsonType, Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 

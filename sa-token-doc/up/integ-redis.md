@@ -49,6 +49,10 @@ Redis 的集成有多种方式，缓存的方案也不止 Redis 一种，Sa-Toke
 如果你想对缓存方案再进行一下深入探究，那么你可以参考：[缓存层扩展](/plugin/dao-extend) 
 
 
+> [!WARNING| ] 
+> 若往 Session 存自定义实体类后，从 Redis 读回报错 `无法反序列化的类型：xxx，请先将其注册到 JSON 全局类型白名单`，请参考：[JSON 全局类型白名单机制](/plugin/json-extend?id=json-全局类型白名单机制)
+
+
 ### 2、自定义序列化方案
 
 如果你按照上述 RedisTemplate 方案进行集成测试，会发现框架在 Redis 中是以 json 格式存储数据的。可以自定义数据序列化格式吗？当然是可以的。

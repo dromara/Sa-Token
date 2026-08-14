@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sso.model;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import java.io.Serializable;
 
 /**
@@ -23,7 +25,7 @@ import java.io.Serializable;
  * @author click33
  * @since 1.43.0
  */
-public class TicketModel implements Serializable {
+public class TicketModel implements SaJsonType, Serializable {
 
 	private static final long serialVersionUID = -6541180061782004705L;
 

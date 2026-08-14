@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.sign.config;
 
+import cn.dev33.satoken.json.SaJsonType;
+
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.fun.SaParamRetFunction;
 import cn.dev33.satoken.secure.SaSecureUtil;
@@ -25,7 +27,7 @@ import cn.dev33.satoken.secure.SaSecureUtil;
  * @author click33
  * @since 1.34.0
  */
-public class SaSignConfig {
+public class SaSignConfig implements SaJsonType {
 
     /**
      * API 调用签名秘钥
