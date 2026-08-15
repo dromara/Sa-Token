@@ -422,29 +422,29 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             url = url.substring(0, qIndex);
         }
 
-        // 3、不允许出现@字符
-        if(url.contains("@")) {
+        // 3、不允许出现@字符（含 URL 编码 %40、%2540，否则可能绕过校验后在客户端被解码为 @）
+        if(url.contains("@") || url.contains("%40") || url.contains("%2540")) {
             //  为什么不允许出现 @ 字符呢，因为这有可能导致 redirect 参数绕过 AllowUrl 列表的校验
             //
             //  举个例子 配置文件：
-            //       sa-token.sso-server.allow-url=http://sa-sso-client1.com*
+            //       sa-token.sso-server.allow-url=http://sa-sso-client1.com:*
             //
-            //  开发者原意是为了允许 sa-sso-client1.com 下的所有地址都可以下放ticket
+            //  开发者原意是为了允许 sa-sso-client1.com 任意端口的地址都可以下放ticket
             //
             //  但是如果攻击者精心构建一个url：
-            //       http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com@sa-token.com
+            //       http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com:9003@sa-token.com
             //
             //  那么这个url就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址：
             //       http://sa-token.com/?ticket=i8vDfbpqBViMe01QoLY1kHROJWYvv9plBtvTZ6kk77KK0e0U4Xj99NPfSZEYjRul
             //
             //  造成了ticket 参数劫持
-            //  所以此处需要禁止在 url 中出现 @ 字符
+            //  所以此处需要禁止在 url 中出现 @ 字符（以及其 URL 编码形式 %40、%2540）
             //
             //  这么一刀切的做法，可能会导致一些特殊的正常url也无法通过校验，例如：
             //       http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com:9003/@getInfo
             //
             //  但是为了安全起见，这么做还是有必要的
-            throw new SaSsoException("无效redirect（不允许出现@字符）：" + url).setCode(SaSsoErrorCode.CODE_30001);
+            throw new SaSsoException("无效redirect（不允许出现@、%40、%2540）：" + url).setCode(SaSsoErrorCode.CODE_30001);
         }
 
         // 4、判断是否在 [ 允许的地址列表 ] 之中
@@ -497,6 +497,28 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
                 //
                 //  但是为了安全起见，这么做还是有必要的
                 throw new SaSsoException("无效的 allow-url 配置（*通配符只允许出现在最后一位）：" + url).setCode(SaSsoErrorCode.CODE_30015);
+            }
+            // * 出现在末尾时，其前一位必须是 / 或 :
+            if(index != -1 && !"*".equals(url)) {
+                char prev = url.charAt(index - 1);
+                if(prev != '/' && prev != ':') {
+                    //  为什么 * 出现在末尾时，其前一位必须是 / 或 : 呢，因为这有可能导致 redirect 参数绕过 allow-url 列表的校验
+                    //
+                    //  举个例子 配置文件：
+                    //       sa-token.sso-server.allow-url=http://sa-sso-client1.com*
+                    //
+                    //  开发者原意是为了允许 sa-sso-client1.com 下的所有地址都可以下放ticket
+                    //      例如：http://sa-sso-client1.com/sso/login
+                    //
+                    //  但是如果攻击者精心构建一个url：
+                    //       http://sa-sso-server.com:9000/sso/auth?redirect=http://sa-sso-client1.com.evil.com/callback
+                    //
+                    //  那么这个 url 就会绕过 allow-url 的校验，ticket 被下发到了第三方服务器地址
+                    //
+                    //  造成了 ticket 参数劫持
+                    //  所以此处需要禁止 allow-url 配置项写成 http://domain* 的形式，应写为 http://domain/* 或 http://domain:*
+                    throw new SaSsoException("无效的 allow-url 配置（*前一位必须是 / 或 :）：" + url).setCode(SaSsoErrorCode.CODE_30015);
+                }
             }
         }
     }

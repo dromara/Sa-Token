@@ -267,6 +267,9 @@ public class SaOAuth2ServerProcessor {
 		// 构建请求 Model
 		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, loginId);
 
+		// 校验：重定向域名是否合法
+		oauth2Template.checkRedirectUri(ra.clientId, ra.redirectUri);
+
 		// 判断授权类型，构建不同的重定向地址
 		// 		如果是 授权码式，则：开始重定向授权，下放code
 		if(ResponseType.code.equals(ra.responseType)) {
