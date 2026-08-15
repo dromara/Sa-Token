@@ -17,7 +17,6 @@ package cn.dev33.satoken.json;
 
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.snack.ONode;
-import org.noear.snack.core.Feature;
 
 /**
  * JSON 转换器， Snack3 版实现
@@ -36,7 +35,7 @@ public class SaJsonTemplateForSnack3 implements SaJsonTemplate {
 		if (SaFoxUtil.isEmpty(obj)) {
 			return null;
 		}
-		return ONode.loadObj(obj, Feature.WriteClassName, Feature.NotWriteRootClassName).toJson();
+		return ONode.loadObj(obj).toJson();
 	}
 
 	/**

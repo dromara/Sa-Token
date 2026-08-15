@@ -112,7 +112,7 @@ Sa-Token 在 **集成 Redis** 等持久化场景下，会把 `SaSession` 以及 
 
 白名单内置常见 JDK 值类型，以及已实现 `SaJsonType` 的框架 Model 等；**你的业务实体类默认不在白名单中**，因此反序列化时会抛出上述异常。
 
-> 说明：`sa-token-fastjson` / `sa-token-fastjson2` 默认不在 JSON 中写入类型信息，一般不会出现此报错。
+> 说明：`sa-token-fastjson` / `sa-token-fastjson2` / `sa-token-snack3` 默认不在 JSON 中写入类型信息，一般不会出现此报错；业务对象请通过 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)` 指定类型。
 
 白名单由 [SaJsonStrategy](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/strategy/SaJsonStrategy.java) 统一管理。**首次** 构建 JSON 插件（如 `SaJsonTemplateForJackson`）时会完成初始化；初始化之后不可再注册类型。
 
