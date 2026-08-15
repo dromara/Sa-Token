@@ -42,7 +42,10 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 ### Q：SpringMVC 下使用 SSE / Flux 流式返回时报错：SaTokenContext 上下文尚未初始化？
 
-常见于未引入 WebFlux、仅个别接口返回 `SseEmitter`、`Flux` 的场景，参考：[升级后 SSE 请求报 SaTokenContext 上下文尚未初始化](https://gitee.com/dromara/sa-token/issues/IC4XFE)
+常见于未引入 WebFlux、仅个别接口返回 `SseEmitter`、`Flux` 的场景。
+
+- **v1.46.0 起**：框架已在 `SaTokenContextFilter` 注册时原生支持 `REQUEST` + `ASYNC` dispatch，一般无需额外配置。
+- **v1.45.0 及以下**：参考 Issue 排查与临时规避：[升级后 SSE 请求报 SaTokenContext 上下文尚未初始化](https://gitee.com/dromara/sa-token/issues/IC4XFE)
 
 
 ### Q：报错：NotLoginException：xxx

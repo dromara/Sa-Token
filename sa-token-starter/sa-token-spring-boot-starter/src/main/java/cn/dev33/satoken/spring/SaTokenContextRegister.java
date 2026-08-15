@@ -20,7 +20,12 @@ import cn.dev33.satoken.filter.SaTokenContextFilterForServlet;
 import cn.dev33.satoken.filter.SaTokenCorsFilterForServlet;
 import cn.dev33.satoken.spring.pathmatch.SaPatternsRequestConditionHolder;
 import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.util.SaTokenConsts;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
 
 /**
  * 注册 Sa-Token 框架所需要的 Bean
@@ -43,8 +48,13 @@ public class SaTokenContextRegister {
 	 * @return /
 	 */
 	@Bean
-	public SaTokenContextFilterForServlet saTokenContextFilterForServlet() {
-		return new SaTokenContextFilterForServlet();
+	public FilterRegistrationBean<SaTokenContextFilterForServlet> saTokenContextFilterForServlet() {
+		FilterRegistrationBean<SaTokenContextFilterForServlet> bean = new FilterRegistrationBean<>(new SaTokenContextFilterForServlet());
+		bean.addUrlPatterns("/*");
+		bean.setOrder(SaTokenConsts.SA_TOKEN_CONTEXT_FILTER_ORDER);
+		bean.setAsyncSupported(true);
+		bean.setDispatcherTypes(EnumSet.of(DispatcherType.REQUEST, DispatcherType.ASYNC));
+		return bean;
 	}
 
 	/**
