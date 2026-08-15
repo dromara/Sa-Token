@@ -6,9 +6,8 @@
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-demo-bug-reproduce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>Sa-Token Issue / Bug 临时复现沙盒（用例随 Issue 更换）</description>
+	<description>Sa-Token Issue / Bug 临时复现沙盒（用例随 Issue 更换，平时保持空壳）</description>
 
-	<!-- 当前用例：按需替换 -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -31,17 +30,6 @@
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot3-starter</artifactId>
 			<version>${sa-token.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-redis-template</artifactId>
-			<version>${sa-token.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-pool2</artifactId>
 		</dependency>
 	</dependencies>
 

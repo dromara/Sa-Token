@@ -3,18 +3,3 @@ server:
 
 sa-token:
   token-name: satoken
-  is-log: true
-
-spring:
-  redis:
-    database: 1
-    host: 127.0.0.1
-    port: 6379
-    password:
-    timeout: 10s
-    lettuce:
-      pool:
-        max-active: 200
-        max-wait: -1ms
-        max-idle: 10
-        min-idle: 0
