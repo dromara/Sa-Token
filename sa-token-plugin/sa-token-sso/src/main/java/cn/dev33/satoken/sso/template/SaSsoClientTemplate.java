@@ -133,18 +133,20 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
             serverUrl = SaFoxUtil.joinParam(serverUrl, paramName.client, client);
         }
 
-        // 对back地址编码
-        back = (back == null ? "" : back);
-        back = SaFoxUtil.encodeUrl(back);
+        // back 非空时才拼接；空串表示调用方已在 clientLoginUrl 中自行携带 back，或本次跳转不需要 back
+        if(SaFoxUtil.isNotEmpty(back)) {
+            // 对back地址编码
+            back = SaFoxUtil.encodeUrl(back);
 
-        // 开始拼接 sso 统一认证地址，形如：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
+            // 开始拼接 sso 统一认证地址，形如：serverAuthUrl = http://xxx.com?redirectUrl=xxx.com?back=xxx.com
 
-        /*
-         * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
-         * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
-         */
-        if( ! clientLoginUrl.contains(paramName.back + "=") ) {
-            clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
+            /*
+             * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
+             * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
+             */
+            if( ! clientLoginUrl.contains(paramName.back + "=") ) {
+                clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
+            }
         }
 
         // 返回
