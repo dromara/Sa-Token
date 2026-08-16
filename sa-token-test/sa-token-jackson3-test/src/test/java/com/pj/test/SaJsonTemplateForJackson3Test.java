@@ -116,6 +116,18 @@ public class SaJsonTemplateForJackson3Test {
                 ex.getMessage());
     }
 
+    // 测试：Jackson3 遇到 classpath 不存在的类型时，保留原始异常信息
+    @Test
+    public void testJackson3ClassNotFoundKeepsOriginalMessage() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson3());
+        String json = "{\"@class\":\"cn.dev33.satoken.sso.model.SaSsoClientInfo\",\"mode\":3}";
+        SaJsonConvertException ex = Assertions.assertThrows(SaJsonConvertException.class, () ->
+                SaManager.getSaJsonTemplate().jsonToObject(json));
+        Assertions.assertTrue(ex.getMessage().contains("no such class found"));
+        Assertions.assertFalse(ex.getMessage().contains("JSON 全局类型白名单"));
+    }
+
     // 测试：Jackson3 初始化后不可再 register
     @Test
     public void testJackson3StrategyInit() {

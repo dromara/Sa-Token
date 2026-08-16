@@ -130,11 +130,11 @@ public class SaJsonTemplateForSnack4 implements SaJsonTemplate {
 
 	/**
 	 * 将 Snack4 反序列化异常包装为 {@link SaJsonConvertException}；
-	 * 若为多态类型白名单拦截，则明确提示无法反序列化的类型名。
+	 * 仅当类型存在于 classpath 但被白名单拒绝时，才提示注册 JSON 全局类型白名单。
 	 */
 	static SaJsonConvertException toSaJsonConvertException(Throwable e) {
 		String blockedType = findBlockedTypeClassName(e);
-		if (blockedType != null) {
+		if (blockedType != null && isTypeOnClasspath(blockedType)) {
 			return new SaJsonConvertException(
 					"无法反序列化的类型：" + blockedType + "，请先将其注册到 JSON 全局类型白名单",
 					e);
@@ -153,6 +153,18 @@ public class SaJsonTemplateForSnack4 implements SaJsonTemplate {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 判断类型是否存在于当前 classpath（用于区分「缺依赖 / 脏数据」与「白名单拒绝」）。
+	 */
+	static boolean isTypeOnClasspath(String className) {
+		try {
+			Class.forName(className, false, Thread.currentThread().getContextClassLoader());
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
 	}
 
 }

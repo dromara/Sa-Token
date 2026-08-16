@@ -134,11 +134,11 @@ public class SaJsonTemplateForJackson3 implements SaJsonTemplate {
 
 	/**
 	 * 将 Jackson 反序列化异常包装为 {@link SaJsonConvertException}；
-	 * 若为多态类型白名单拦截，则明确提示无法反序列化的类型名。
+	 * 仅当 {@link PolymorphicTypeValidator} 明确拒绝类型时，才提示注册 JSON 全局类型白名单。
 	 */
 	static SaJsonConvertException toSaJsonConvertException(JacksonException e) {
 		InvalidTypeIdException typeIdEx = findInvalidTypeIdException(e);
-		if (typeIdEx != null && typeIdEx.getTypeId() != null) {
+		if (typeIdEx != null && typeIdEx.getTypeId() != null && isWhitelistDenied(typeIdEx)) {
 			return new SaJsonConvertException(
 					"无法反序列化的类型：" + typeIdEx.getTypeId() + "，请先将其注册到 JSON 全局类型白名单",
 					e);
@@ -153,6 +153,14 @@ public class SaJsonTemplateForJackson3 implements SaJsonTemplate {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 判断 {@link InvalidTypeIdException} 是否由多态类型白名单拒绝引起（而非 classpath 缺少类型）。
+	 */
+	static boolean isWhitelistDenied(InvalidTypeIdException e) {
+		String message = e.getMessage();
+		return message != null && message.contains("denied resolution");
 	}
 
 }

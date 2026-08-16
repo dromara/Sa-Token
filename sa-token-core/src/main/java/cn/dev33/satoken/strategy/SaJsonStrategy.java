@@ -146,16 +146,21 @@ public final class SaJsonStrategy {
 	 * 1、JDK 内置允许类型
 	 * <p>
 	 * 含集合结构锚点（{@link Map}、{@link Collection}），以及实体 / Session 中常见的 JDK 值类型：
+	 * 基本类型包装类（{@link Number}、{@link Boolean}、{@link Character}）、
 	 * 旧版日期（{@link Date}、{@link Calendar}）、{@code java.time}、金额（{@link BigDecimal}）、{@link UUID} 等。
 	 * </p>
 	 *
 	 * @return JDK 内置允许类型列表
 	 */
 	public List<Class<?>> getJdkAllowTypeList() {
-		List<Class<?>> list = new ArrayList<>(24);
+		List<Class<?>> list = new ArrayList<>(27);
 		// 集合结构锚点
 		list.add(Map.class);
 		list.add(Collection.class);
+		// 基本类型包装类（Session / Map 中常见；DefaultTyping 可能写入 @class）
+		list.add(Number.class);
+		list.add(Boolean.class);
+		list.add(Character.class);
 		// 旧版日期（non-final，DefaultTyping 会写入 @class）
 		list.add(Date.class);
 		list.add(Calendar.class);

@@ -202,6 +202,18 @@ public class SaJsonTemplateTest {
                 ex.getMessage());
     }
 
+    // 测试：Snack4 遇到 classpath 不存在的类型时，保留原始异常信息
+    @Test
+    public void testSnack4ClassNotFoundKeepsOriginalMessage() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForSnack4());
+        String json = "{\"@type\":\"cn.dev33.satoken.sso.model.SaSsoClientInfo\",\"mode\":3}";
+        SaJsonConvertException ex = Assertions.assertThrows(SaJsonConvertException.class, () ->
+                SaManager.getSaJsonTemplate().jsonToObject(json));
+        Assertions.assertTrue(ex.getMessage().contains("Blocked type, class: cn.dev33.satoken.sso.model.SaSsoClientInfo"));
+        Assertions.assertFalse(ex.getMessage().contains("JSON 全局类型白名单"));
+    }
+
     // 测试：Snack4 初始化后不可再 register
     @Test
     public void testSnack4StrategyInit() {
@@ -230,6 +242,22 @@ public class SaJsonTemplateTest {
         Assertions.assertEquals(loginTime, session2.get("loginTime"));
     }
 
+    // 测试：Jackson 允许 Session Map 中的基本类型包装类（如 Long 过期时间戳）
+    @Test
+    public void testJacksonAllowWrapperTypesInSessionMap() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
+        java.util.LinkedHashMap<String, Long> tokenIndexMap = new java.util.LinkedHashMap<>();
+        tokenIndexMap.put("access-token-value", 1786860583046L);
+        SaSession session = new SaSession("oauth2-raw-session");
+        session.set("__HD_ACCESS_TOKEN_MAP", tokenIndexMap);
+        String json = SaManager.getSaJsonTemplate().objectToJson(session);
+        SaSession session2 = SaManager.getSaJsonTemplate().jsonToObject(json, SaSession.class);
+        @SuppressWarnings("unchecked")
+        java.util.Map<String, Long> map2 = (java.util.Map<String, Long>) session2.get("__HD_ACCESS_TOKEN_MAP");
+        Assertions.assertEquals(1786860583046L, map2.get("access-token-value"));
+    }
+
     // 测试：Jackson 白名单拦截未授权 @class
     @Test
     public void testJacksonBlockUnknownAllowType() {
@@ -241,6 +269,18 @@ public class SaJsonTemplateTest {
         Assertions.assertEquals(
                 "无法反序列化的类型：java.lang.ProcessBuilder，请先将其注册到 JSON 全局类型白名单",
                 ex.getMessage());
+    }
+
+    // 测试：Jackson 遇到 classpath 不存在的类型时，保留原始异常信息
+    @Test
+    public void testJacksonClassNotFoundKeepsOriginalMessage() {
+        SaJsonStrategy.instance.resetState();
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForJackson());
+        String json = "{\"@class\":\"cn.dev33.satoken.sso.model.SaSsoClientInfo\",\"mode\":3}";
+        SaJsonConvertException ex = Assertions.assertThrows(SaJsonConvertException.class, () ->
+                SaManager.getSaJsonTemplate().jsonToObject(json));
+        Assertions.assertTrue(ex.getMessage().contains("no such class found"));
+        Assertions.assertFalse(ex.getMessage().contains("JSON 全局类型白名单"));
     }
 
     // 测试：Jackson 初始化后不可再 register
