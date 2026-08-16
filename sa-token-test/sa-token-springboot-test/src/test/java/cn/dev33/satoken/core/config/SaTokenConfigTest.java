@@ -98,6 +98,9 @@ public class SaTokenConfigTest {
 		config.setCheckSameToken(false);
 		Assertions.assertEquals(config.getCheckSameToken(), false);
 
+		config.setAllowLoginIdColon(true);
+		Assertions.assertEquals(config.getAllowLoginIdColon(), true);
+
 		SaCookieConfig scc = new SaCookieConfig();
 		config.setCookie(scc);
 		Assertions.assertEquals(config.getCookie(), scc);

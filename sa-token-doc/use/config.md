@@ -138,6 +138,7 @@ public class SaTokenConfigure {
 | isLogoutKeepFreezeOps		| Boolean	| false	| 如果 token 已被冻结，是否保留其操作权 (是否允许此 token 调用注销API)	(此参数只在调用 StpUtil.[logout/kickout/replaced]ByTokenValue("token") 时有效)			|
 | isLogoutKeepTokenSession	| Boolean	| false	| 在注销 token 后，是否保留其对应的 Token-Session					|
 | rightNowCreateTokenSession| Boolean	| false	| 在登录时，是否立即创建对应的 Token-Session （true=在登录时立即创建，false=在第一次调用 getTokenSession() 时创建）	|
+| allowLoginIdColon		| Boolean	| false	| 是否允许 loginId 包含冒号（`:`）。默认为 false，因 Sa-Token 持久化 key 使用冒号分段，loginId 含冒号会导致 key 难以解析；存量项目如需使用可设为 true	|
 | tokenStyle			| String	| uuid		| token风格， [参考：自定义Token风格](/up/token-style)										|
 | dataRefreshPeriod		| int		| 30		| 默认数据持久组件实现类中，每次清理过期数据间隔的时间 （单位: 秒） ，默认值30秒，设置为-1代表不启动定时清理 		|
 | tokenSessionCheckLogin	| Boolean	| true	| 获取 `Token-Session` 时是否必须登录 （如果配置为true，会在每次获取 `Token-Session` 时校验是否登录），[详解](/use/config?id=配置项详解：tokenSessionCheckLogin)		|

@@ -619,12 +619,17 @@ public class StpLogic {
 			throw new SaTokenException("loginId 不能为以下值：" + NotLoginException.ABNORMAL_LIST);
 		}
 
-		// 3、账号 id 不能是复杂类型
+		// 3、账号 id 不能包含冒号（:），除非配置 allowLoginIdColon=true
+		if( ! Boolean.TRUE.equals(getConfigOrGlobal().getAllowLoginIdColon()) && id.toString().contains(":")) {
+			throw new SaTokenException("loginId 不能包含冒号（:）").setCode(SaErrorCode.CODE_11018);
+		}
+
+		// 4、账号 id 不能是复杂类型
 		if( ! SaFoxUtil.isBasicType(id.getClass())) {
 			SaManager.log.warn("loginId 应该为简单类型，例如：String | int | long，不推荐使用复杂类型：" + id.getClass());
 		}
 
-		// 4、判断当前 StpLogic 是否支持 extra 扩展参数
+		// 5、判断当前 StpLogic 是否支持 extra 扩展参数
 		if( ! isSupportExtra()) {
 			// 如果不支持，开发者却传入了 extra 扩展参数，那么就打印警告信息
 			if(loginParameter.haveExtraData()) {
@@ -632,7 +637,7 @@ public class StpLogic {
 			}
 		}
 
-		// 5、如果全局配置未启动动态 activeTimeout 功能，但是此次登录却传入了 activeTimeout 参数，那么就打印警告信息
+		// 6、如果全局配置未启动动态 activeTimeout 功能，但是此次登录却传入了 activeTimeout 参数，那么就打印警告信息
 		if( ! getConfigOrGlobal().getDynamicActiveTimeout() && loginParameter.getActiveTimeout() != null) {
 			SaManager.log.warn("当前全局配置未开启动态 activeTimeout 功能，传入的 activeTimeout 参数将被忽略");
 		}

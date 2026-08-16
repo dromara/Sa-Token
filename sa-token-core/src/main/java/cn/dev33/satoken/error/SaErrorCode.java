@@ -80,6 +80,9 @@ public interface SaErrorCode {
 	/** 登录时的账号id值为空 */
 	int CODE_11002 = 11002;
 
+	/** loginId 不能包含冒号（:） */
+	int CODE_11018 = 11018;
+
 	/** 更改 Token 指向的 账号Id 时，账号Id值为空 */
 	int CODE_11003 = 11003;
 

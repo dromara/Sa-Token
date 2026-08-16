@@ -140,6 +140,12 @@ public class SaTokenConfig implements SaJsonType, Serializable {
 	private Boolean rightNowCreateTokenSession = false;
 
 	/**
+	 * 是否允许 loginId 包含冒号（:），默认 false。
+	 * <p> Sa-Token 持久化 key 使用冒号分段，loginId 含冒号会导致 key 难以解析，不建议使用。 </p>
+	 */
+	private Boolean allowLoginIdColon = false;
+
+	/**
 	 * token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
 	 */
 	private String tokenStyle = "uuid";
@@ -858,6 +864,26 @@ public class SaTokenConfig implements SaJsonType, Serializable {
 	}
 
 	/**
+	 * 获取 是否允许 loginId 包含冒号（:）
+	 *
+	 * @return /
+	 */
+	public Boolean getAllowLoginIdColon() {
+		return this.allowLoginIdColon;
+	}
+
+	/**
+	 * 设置 是否允许 loginId 包含冒号（:）
+	 *
+	 * @param allowLoginIdColon /
+	 * @return 对象自身
+	 */
+	public SaTokenConfig setAllowLoginIdColon(Boolean allowLoginIdColon) {
+		this.allowLoginIdColon = allowLoginIdColon;
+		return this;
+	}
+
+	/**
 	 * @return Cookie 全局配置对象
 	 */
 	public SaCookieConfig getCookie() {
@@ -897,6 +923,7 @@ public class SaTokenConfig implements SaJsonType, Serializable {
 				+ ", isLogoutKeepFreezeOps=" + isLogoutKeepFreezeOps
 				+ ", isLogoutKeepTokenSession=" + isLogoutKeepTokenSession
 				+ ", rightNowCreateTokenSession=" + rightNowCreateTokenSession
+				+ ", allowLoginIdColon=" + allowLoginIdColon
 				+ ", tokenStyle=" + tokenStyle
 				+ ", dataRefreshPeriod=" + dataRefreshPeriod 
 				+ ", tokenSessionCheckLogin=" + tokenSessionCheckLogin
