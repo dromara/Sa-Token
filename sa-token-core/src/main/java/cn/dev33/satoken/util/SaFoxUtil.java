@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -38,6 +39,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * @since 1.18.0
  */
 public class SaFoxUtil {
+
+	/** 安全敏感随机串、验证码等使用 CSPRNG（线程安全，可静态共享） */
+	private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
 	private SaFoxUtil() {
 	}
@@ -68,9 +72,9 @@ public class SaFoxUtil {
 	 */
 	public static String getRandomString(int length) {
 		String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(length);
 		for (int i = 0; i < length; i++) {
-			int number = ThreadLocalRandom.current().nextInt(62);
+			int number = SECURE_RANDOM.nextInt(62);
 			sb.append(str.charAt(number));
 		}
 		return sb.toString();
@@ -84,7 +88,7 @@ public class SaFoxUtil {
 	 * @return /
 	 */
 	public static int getRandomNumber(int min, int max) {
-		return ThreadLocalRandom.current().nextInt(min, max + 1);
+		return SECURE_RANDOM.nextInt(max - min + 1) + min;
 	}
 
 	/**
