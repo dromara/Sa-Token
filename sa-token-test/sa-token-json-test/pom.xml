@@ -31,6 +31,10 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-fory-json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-snack3</artifactId>
 		</dependency>
 		<dependency>

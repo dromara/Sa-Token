@@ -118,6 +118,55 @@ public class SaJsonTemplateTest {
         testMap();
     }
 
+    // 测试：Fory JSON
+    @Test
+    public void testForyJson() {
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForForyJson());
+        Assertions.assertEquals(SaManager.getSaJsonTemplate().getClass(), SaJsonTemplateForForyJson.class);
+
+        // test   Object -> Json
+        SysUser user = new SysUser(10001, "张三", 18);
+        String objectJson = SaManager.getSaJsonTemplate().objectToJson(user);
+        SysUser userFromJson = SaManager.getSaJsonTemplate().jsonToObject(objectJson, SysUser.class);
+        Assertions.assertEquals(userFromJson.toString(), user.toString());
+
+        // test   Json -> Object
+        SysUser user2 = SaManager.getSaJsonTemplate().jsonToObject(objectJson, SysUser.class);
+        Assertions.assertEquals(user2.toString(), user.toString());
+
+        // more
+        testNull();
+        testForyJsonMap();
+    }
+
+    // 测试：Fory JSON 允许 Session 中常见的 JDK 值类型（Date、金额、java.time 等）
+    @Test
+    public void testForyJsonAllowCommonTypesInSession() {
+        SaManager.setSaJsonTemplate(new SaJsonTemplateForForyJson());
+        Date time = new Date(1234567890000L);
+        BigDecimal amount = new BigDecimal("99.50");
+        LocalDateTime loginTime = LocalDateTime.of(2026, 8, 15, 12, 30, 0);
+        SaSession session = new SaSession("test-session");
+        session.set("time", time);
+        session.set("amount", amount);
+        session.set("loginTime", loginTime);
+        String json = SaManager.getSaJsonTemplate().objectToJson(session);
+        SaSession session2 = SaManager.getSaJsonTemplate().jsonToObject(json, SaSession.class);
+        Object timeValue = session2.get("time");
+        if (timeValue instanceof Date) {
+            Assertions.assertEquals(time, timeValue);
+        } else {
+            Assertions.assertEquals(time.getTime(), ((Number) timeValue).longValue());
+        }
+        Assertions.assertEquals(0, amount.compareTo(new BigDecimal(session2.get("amount").toString())));
+        Object loginTimeValue = session2.get("loginTime");
+        if (loginTimeValue instanceof LocalDateTime) {
+            Assertions.assertEquals(loginTime, loginTimeValue);
+        } else {
+            Assertions.assertNotNull(loginTimeValue);
+        }
+    }
+
     // 测试：Snack3
     @Test
     public void testSnack3() {
@@ -304,6 +353,19 @@ public class SaJsonTemplateTest {
         Assertions.assertEquals("{\"name\":\"张三\",\"id\":10001,\"age\":18}", mapJson);
 
         // test   Json -> Map
+        Map<String, Object> map2 = SaManager.getSaJsonTemplate().jsonToMap(mapJson);
+        Assertions.assertEquals(map2.toString(), map.toString());
+
+    }
+
+    // 测试 Map 的转换（Fory JSON，不校验字段顺序）
+    private void testForyJsonMap() {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", 10001);
+        map.put("name", "张三");
+        map.put("age", 18);
+        String mapJson = SaManager.getSaJsonTemplate().objectToJson(map);
         Map<String, Object> map2 = SaManager.getSaJsonTemplate().jsonToMap(mapJson);
         Assertions.assertEquals(map2.toString(), map.toString());
 

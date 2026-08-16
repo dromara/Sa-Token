@@ -40,6 +40,7 @@
 		<jjwt.version>0.12.6</jjwt.version>
 		<fastjson.version>2.0.64</fastjson.version>
 		<fastjson2.version>2.0.64</fastjson2.version>
+		<fory-json.version>1.6.1</fory-json.version>
 		<redisson.version>3.45.0</redisson.version>
 		<hutool-cache.version>5.8.36</hutool-cache.version>
 		<caffeine.version>3.2.0</caffeine.version>
@@ -175,7 +176,14 @@
 				<artifactId>fastjson2</artifactId>
 				<version>${fastjson2.version}</version>
 			</dependency>
-			
+
+			<!-- fory-json -->
+			<dependency>
+				<groupId>org.apache.fory</groupId>
+				<artifactId>fory-json</artifactId>
+				<version>${fory-json.version}</version>
+			</dependency>
+
 			<!-- noear-redisx -->
 	        <dependency>
 	            <groupId>org.noear</groupId>

@@ -23,6 +23,7 @@
         <module>sa-token-jackson3</module>
         <module>sa-token-fastjson</module>
         <module>sa-token-fastjson2</module>
+        <module>sa-token-fory-json</module>
         <module>sa-token-snack3</module>
         <module>sa-token-snack4</module>
         <module>sa-token-hutool-timed-cache</module>

@@ -54,6 +54,7 @@
 		├── sa-token-jackson3                     // [插件] Sa-Token 整合 Jackson3 (json序列化插件) 
 		├── sa-token-fastjson                     // [插件] Sa-Token 整合 Fastjson (json序列化插件) 
 		├── sa-token-fastjson2                    // [插件] Sa-Token 整合 Fastjson2 (json序列化插件) 
+		├── sa-token-fory-json                    // [插件] Sa-Token 整合 Apache Fory JSON (json序列化插件) 
 		├── sa-token-snack3                       // [插件] Sa-Token 整合 Snack3 (json序列化插件) 
 		├── sa-token-snack4                       // [插件] Sa-Token 整合 Snack4 (json序列化插件) 
 		├── sa-token-hutool-timed-cache           // [插件] Sa-Token 整合 Hutool 缓存组件 Timed-Cache（基于内存） (数据缓存插件) 
