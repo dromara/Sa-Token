@@ -19,11 +19,15 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.solon.integration.SaFirewallCheckFilterForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenContextFilterForSolon;
 import cn.dev33.satoken.solon.integration.SaTokenCorsFilterForSolon;
+import cn.dev33.satoken.solon.model.SaRequestForSolon;
+import cn.dev33.satoken.solon.model.SaResponseForSolon;
+import cn.dev33.satoken.solon.model.SaStorageForSolon;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Filter;
 import org.noear.solon.core.util.PathMatcher;
 
@@ -41,6 +45,12 @@ public class SaBeanRegister {
 		SaStrategy.instance.routeMatcher = (pattern, path) -> {
 			return PathMatcher.get(pattern).matches(path);
 		};
+		// 重写 SaRequest 创建策略
+		SaStrategy.instance.createSaRequest = source -> new SaRequestForSolon((Context) source);
+		// 重写 SaResponse 创建策略
+		SaStrategy.instance.createSaResponse = source -> new SaResponseForSolon((Context) source);
+		// 重写 SaStorage 创建策略
+		SaStrategy.instance.createSaStorage = source -> new SaStorageForSolon((Context) source);
 	}
 
 	/**

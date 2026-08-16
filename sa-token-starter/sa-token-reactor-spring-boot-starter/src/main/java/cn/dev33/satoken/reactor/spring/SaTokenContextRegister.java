@@ -18,9 +18,15 @@ package cn.dev33.satoken.reactor.spring;
 import cn.dev33.satoken.reactor.filter.SaFirewallCheckFilterForReactor;
 import cn.dev33.satoken.reactor.filter.SaTokenContextFilterForReactor;
 import cn.dev33.satoken.reactor.filter.SaTokenCorsFilterForReactor;
+import cn.dev33.satoken.reactor.model.SaRequestForReactor;
+import cn.dev33.satoken.reactor.model.SaResponseForReactor;
+import cn.dev33.satoken.reactor.model.SaStorageForReactor;
 import cn.dev33.satoken.spring.pathmatch.SaPathPatternParserUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.server.ServerWebExchange;
 
 /**
  * 注册 Sa-Token 所需要的 Bean
@@ -35,6 +41,12 @@ public class SaTokenContextRegister {
 		SaStrategy.instance.routeMatcher = (pattern, path) -> {
 			return SaPathPatternParserUtil.match(pattern, path);
 		};
+		// 重写 SaRequest 创建策略
+		SaStrategy.instance.createSaRequest = source -> new SaRequestForReactor((ServerHttpRequest) source);
+		// 重写 SaResponse 创建策略
+		SaStrategy.instance.createSaResponse = source -> new SaResponseForReactor((ServerHttpResponse) source);
+		// 重写 SaStorage 创建策略
+		SaStrategy.instance.createSaStorage = source -> new SaStorageForReactor((ServerWebExchange) source);
 	}
 
 	/**

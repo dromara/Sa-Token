@@ -19,10 +19,11 @@ import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.FirewallCheckException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
-import cn.dev33.satoken.reactor.model.SaRequestForReactor;
-import cn.dev33.satoken.reactor.model.SaResponseForReactor;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.reactor.util.SaReactorOperateUtil;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.server.ServerWebExchange;
@@ -42,8 +43,8 @@ public class SaFirewallCheckFilterForReactor implements WebFilter {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 
-		SaRequestForReactor saRequest = new SaRequestForReactor(exchange.getRequest());
-		SaResponseForReactor saResponse = new SaResponseForReactor(exchange.getResponse());
+		SaRequest saRequest = SaStrategy.instance.createSaRequest.apply(exchange.getRequest());
+		SaResponse saResponse = SaStrategy.instance.createSaResponse.apply(exchange.getResponse());
 
 		try {
 			SaReactorSyncHolder.setContext(exchange);

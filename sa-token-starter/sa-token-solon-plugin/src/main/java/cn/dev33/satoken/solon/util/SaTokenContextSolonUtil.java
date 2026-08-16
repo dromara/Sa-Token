@@ -22,9 +22,7 @@ import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.fun.SaRetGenericFunction;
-import cn.dev33.satoken.solon.model.SaRequestForSolon;
-import cn.dev33.satoken.solon.model.SaResponseForSolon;
-import cn.dev33.satoken.solon.model.SaStorageForSolon;
+import cn.dev33.satoken.strategy.SaStrategy;
 import org.noear.solon.core.handle.Context;
 
 /**
@@ -39,9 +37,9 @@ public class SaTokenContextSolonUtil {
 	 * 写入当前上下文
 	 */
 	public static void setContext(Context ctx) {
-		SaRequest req = new SaRequestForSolon(ctx);
-		SaResponse res = new SaResponseForSolon(ctx);
-		SaStorage stg = new SaStorageForSolon(ctx);
+		SaRequest req = SaStrategy.instance.createSaRequest.apply(ctx);
+		SaResponse res = SaStrategy.instance.createSaResponse.apply(ctx);
+		SaStorage stg = SaStrategy.instance.createSaStorage.apply(ctx);
 		SaManager.getSaTokenContext().setContext(req, res, stg);
 	}
 

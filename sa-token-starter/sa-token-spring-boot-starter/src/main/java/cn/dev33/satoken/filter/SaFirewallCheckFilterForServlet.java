@@ -18,10 +18,11 @@ package cn.dev33.satoken.filter;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.FirewallCheckException;
 import cn.dev33.satoken.exception.StopMatchException;
-import cn.dev33.satoken.servlet.model.SaRequestForServlet;
-import cn.dev33.satoken.servlet.model.SaResponseForServlet;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.servlet.util.SaServletOperateUtil;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import org.springframework.core.annotation.Order;
 
@@ -44,8 +45,8 @@ public class SaFirewallCheckFilterForServlet implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		SaRequestForServlet saRequest = new SaRequestForServlet(req);
-		SaResponseForServlet saResponse = new SaResponseForServlet(res);
+		SaRequest saRequest = SaStrategy.instance.createSaRequest.apply(req);
+		SaResponse saResponse = SaStrategy.instance.createSaResponse.apply(res);
 
 		try {
 			SaFirewallStrategy.instance.check.execute(saRequest, saResponse, null);

@@ -21,9 +21,7 @@ import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaRetGenericFunction;
-import cn.dev33.satoken.reactor.model.SaRequestForReactor;
-import cn.dev33.satoken.reactor.model.SaResponseForReactor;
-import cn.dev33.satoken.reactor.model.SaStorageForReactor;
+import cn.dev33.satoken.strategy.SaStrategy;
 import org.springframework.web.server.ServerWebExchange;
 
 /**
@@ -39,9 +37,9 @@ public class SaReactorSyncHolder {
 	 * @param exchange /
 	 */
 	public static void setContext(ServerWebExchange exchange) {
-		SaRequest request = new SaRequestForReactor(exchange.getRequest());
-		SaResponse response = new SaResponseForReactor(exchange.getResponse());
-		SaStorage storage = new SaStorageForReactor(exchange);
+		SaRequest request = SaStrategy.instance.createSaRequest.apply(exchange.getRequest());
+		SaResponse response = SaStrategy.instance.createSaResponse.apply(exchange.getResponse());
+		SaStorage storage = SaStrategy.instance.createSaStorage.apply(exchange);
 		SaManager.getSaTokenContext().setContext(request, response, storage);
 	}
 

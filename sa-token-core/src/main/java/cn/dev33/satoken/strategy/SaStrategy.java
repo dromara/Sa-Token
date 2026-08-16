@@ -185,6 +185,27 @@ public final class SaStrategy {
 	};
 
 	/**
+	 * 创建 SaRequest 的策略
+	 */
+	public SaCreateSaRequestFunction createSaRequest = (source) -> {
+		throw new NotImplException("未实现具体 SaRequest 创建策略").setCode(SaErrorCode.CODE_12402);
+	};
+
+	/**
+	 * 创建 SaResponse 的策略
+	 */
+	public SaCreateSaResponseFunction createSaResponse = (source) -> {
+		throw new NotImplException("未实现具体 SaResponse 创建策略").setCode(SaErrorCode.CODE_12403);
+	};
+
+	/**
+	 * 创建 SaStorage 的策略
+	 */
+	public SaCreateSaStorageFunction createSaStorage = (source) -> {
+		throw new NotImplException("未实现具体 SaStorage 创建策略").setCode(SaErrorCode.CODE_12404);
+	};
+
+	/**
 	 * CORS 策略处理函数
 	 */
 	public SaCorsHandleFunction corsHandle = (req, res, sto) -> {
@@ -259,6 +280,39 @@ public final class SaStrategy {
         this.autoRenew = autoRenew;
         return this;
     }
+
+	/**
+	 * 创建 SaRequest 的策略
+	 *
+	 * @param createSaRequest /
+	 * @return /
+	 */
+	public SaStrategy setCreateSaRequest(SaCreateSaRequestFunction createSaRequest) {
+		this.createSaRequest = createSaRequest;
+		return this;
+	}
+
+	/**
+	 * 创建 SaResponse 的策略
+	 *
+	 * @param createSaResponse /
+	 * @return /
+	 */
+	public SaStrategy setCreateSaResponse(SaCreateSaResponseFunction createSaResponse) {
+		this.createSaResponse = createSaResponse;
+		return this;
+	}
+
+	/**
+	 * 创建 SaStorage 的策略
+	 *
+	 * @param createSaStorage /
+	 * @return /
+	 */
+	public SaStrategy setCreateSaStorage(SaCreateSaStorageFunction createSaStorage) {
+		this.createSaStorage = createSaStorage;
+		return this;
+	}
 
 	//
 

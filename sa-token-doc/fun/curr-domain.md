@@ -33,24 +33,27 @@ public String test() {
 
 重点是这一句：`proxy_set_header Public-Network-URL http://$http_host$request_uri;`
 
-##### 2、在程序中新增类 `CustomSaTokenContextForSpring.java`，重写获取uri的逻辑
+##### 2、在程序中重写 SaRequest 创建策略，自定义获取 uri 的逻辑
 
 ``` java
-@Primary
-@Component
-public class CustomSaTokenContextForSpring extends SaTokenContextForSpring {
-	
-	@Override
-	public SaRequest getRequest() {
-		return new SaRequestForServlet(SpringMVCUtil.getRequest()) {
-			@Override
-			public String getUrl() {
-				if(request.getHeader("Public-Network-URL") != null) {
-					return request.getHeader("Public-Network-URL");
+@Configuration
+public class SaTokenConfigure {
+
+	@PostConstruct
+	public void configSaStrategy() {
+		SaStrategy.instance.setCreateSaRequest(source -> {
+			HttpServletRequest request = (HttpServletRequest) source;
+			return new SaRequestForServlet(request) {
+				@Override
+				public String getUrl() {
+					String publicUrl = request.getHeader("Public-Network-URL");
+					if (publicUrl != null) {
+						return publicUrl;
+					}
+					return super.getUrl();
 				}
-				return request.getRequestURL().toString();
-			}
-		};
+			};
+		});
 	}
 
 }

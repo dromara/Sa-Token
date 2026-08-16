@@ -19,11 +19,12 @@ import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.FirewallCheckException;
 import cn.dev33.satoken.exception.StopMatchException;
-import cn.dev33.satoken.loveqq.boot.model.LoveqqSaRequest;
-import cn.dev33.satoken.loveqq.boot.model.LoveqqSaResponse;
+import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.loveqq.boot.utils.SaTokenContextUtil;
 import cn.dev33.satoken.loveqq.boot.utils.SaTokenOperateUtil;
 import cn.dev33.satoken.strategy.SaFirewallStrategy;
+import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaTokenConsts;
 import com.kfyty.loveqq.framework.core.autoconfig.annotation.Component;
 import com.kfyty.loveqq.framework.core.autoconfig.annotation.Order;
@@ -43,8 +44,8 @@ public class SaFirewallCheckFilter implements Filter {
 
     @Override
     public Continue doFilter(ServerRequest request, ServerResponse response) {
-        LoveqqSaRequest saRequest = new LoveqqSaRequest(request);
-        LoveqqSaResponse saResponse = new LoveqqSaResponse(response);
+        SaRequest saRequest = SaStrategy.instance.createSaRequest.apply(request);
+        SaResponse saResponse = SaStrategy.instance.createSaResponse.apply(response);
         SaTokenContextModelBox prev = SaTokenContextUtil.setContext(request, response);
         try {
             SaFirewallStrategy.instance.check.execute(saRequest, saResponse, null);

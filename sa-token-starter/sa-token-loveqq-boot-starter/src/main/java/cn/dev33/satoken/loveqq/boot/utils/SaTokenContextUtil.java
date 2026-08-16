@@ -23,9 +23,7 @@ import cn.dev33.satoken.context.model.SaStorage;
 import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.fun.SaRetGenericFunction;
-import cn.dev33.satoken.loveqq.boot.model.LoveqqSaRequest;
-import cn.dev33.satoken.loveqq.boot.model.LoveqqSaResponse;
-import cn.dev33.satoken.loveqq.boot.model.LoveqqSaStorage;
+import cn.dev33.satoken.strategy.SaStrategy;
 import com.kfyty.loveqq.framework.web.core.http.ServerRequest;
 import com.kfyty.loveqq.framework.web.core.http.ServerResponse;
 
@@ -45,9 +43,9 @@ public class SaTokenContextUtil {
      */
     public static SaTokenContextModelBox setContext(ServerRequest request, ServerResponse response) {
         SaTokenContextModelBox prev = SaTokenContextForThreadLocalStaff.getModelBoxOrNull();
-        SaRequest req = new LoveqqSaRequest(request);
-        SaResponse res = new LoveqqSaResponse(response);
-        SaStorage stg = new LoveqqSaStorage(request);
+        SaRequest req = SaStrategy.instance.createSaRequest.apply(request);
+        SaResponse res = SaStrategy.instance.createSaResponse.apply(response);
+        SaStorage stg = SaStrategy.instance.createSaStorage.apply(request);
         SaManager.getSaTokenContext().setContext(req, res, stg);
         return prev;
     }

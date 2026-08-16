@@ -205,4 +205,13 @@ public interface SaErrorCode {
 	/** 未实现具体的路由匹配策略 */
 	int CODE_12401 = 12401;
 
+	/** 未实现具体的 SaRequest 创建策略 */
+	int CODE_12402 = 12402;
+
+	/** 未实现具体的 SaResponse 创建策略 */
+	int CODE_12403 = 12403;
+
+	/** 未实现具体的 SaStorage 创建策略 */
+	int CODE_12404 = 12404;
+
 }

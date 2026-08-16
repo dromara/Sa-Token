@@ -34,6 +34,12 @@ public class SaTokenContextForJfinal implements SaTokenContextForReadOnly {
         SaStrategy.instance.routeMatcher = (pattern, path) -> {
             return PathAnalyzer.get(pattern).matches(path);
         };
+        // 重写 SaRequest 创建策略
+        SaStrategy.instance.createSaRequest = source -> new SaRequestForServlet((javax.servlet.http.HttpServletRequest) source);
+        // 重写 SaResponse 创建策略
+        SaStrategy.instance.createSaResponse = source -> new SaResponseForServlet((javax.servlet.http.HttpServletResponse) source);
+        // 重写 SaStorage 创建策略
+        SaStrategy.instance.createSaStorage = source -> new SaStorageForServlet((javax.servlet.http.HttpServletRequest) source);
     }
 
     /**
@@ -41,7 +47,7 @@ public class SaTokenContextForJfinal implements SaTokenContextForReadOnly {
      */
     @Override
     public SaRequest getRequest() {
-        return new SaRequestForServlet(SaControllerContext.get().getRequest());
+        return SaStrategy.instance.createSaRequest.apply(SaControllerContext.get().getRequest());
     }
 
     /**
@@ -49,7 +55,7 @@ public class SaTokenContextForJfinal implements SaTokenContextForReadOnly {
      */
     @Override
     public SaResponse getResponse() {
-        return new SaResponseForServlet(SaControllerContext.get().getResponse());
+        return SaStrategy.instance.createSaResponse.apply(SaControllerContext.get().getResponse());
     }
 
     /**
@@ -57,7 +63,7 @@ public class SaTokenContextForJfinal implements SaTokenContextForReadOnly {
      */
     @Override
     public SaStorage getStorage() {
-        return new SaStorageForServlet(SaControllerContext.get().getRequest());
+        return SaStrategy.instance.createSaStorage.apply(SaControllerContext.get().getRequest());
     }
 
     @Override
