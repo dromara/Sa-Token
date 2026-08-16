@@ -1,6 +1,6 @@
 # 框架博客
 
-> 官方精品原创文章见 [Sa-Token 博客](/blog/index.html)。
+> 官方精品原创文章见 <a href="/blog/index.html">Sa-Token 博客</a>。
 > 此页面收集 Sa-Token 相关技术文章（不限平台，按照发表日期倒序），
 > 如果你也想投稿，请考虑加入：[Sa-Token 内容合作群 ](/more/content-cooperation)
 
