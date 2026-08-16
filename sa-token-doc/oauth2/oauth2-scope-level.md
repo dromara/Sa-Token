@@ -95,15 +95,15 @@ http://{host}:{port}/oauth2/authorize
 
 由于申请高级权限时，每次都必须用户手动点击确认授权，`/oauth2/authorize` 路由接口是无法完成权限验证操作的。
 
-此时需要将构建 `redirect_uri` 的动作提前，在 `/oauth2/doConfirm` 确认授权接口时额外追加 `build_redirect_uri: true` 等参数：
+此时需要将构建 `redirect_uri` 的动作提前，在 `/oauth2/doConfirm` 确认授权接口时提交当前授权页的全部 query 参数，并额外追加 `build_redirect_uri=true`：
 ``` url
 http://{host}:{port}/oauth2/doConfirm
-    ?client={value}
+    ?client_id={value}
     &scope={value}
-    &build_redirect_uri=true
     &response_type={value}
     &redirect_uri={value}
     &state={value}
+    &build_redirect_uri=true
 ```
 
 返回结果示例：

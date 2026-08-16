@@ -81,6 +81,11 @@ public void configOAuth2Server(SaOAuth2ServerConfig oauth2Server) {
 | :--------		| :--------	| :--------								|
 | client_id		| 是		| 应用 id								|
 | scope			| 是		| 具体授予的权限，多个用逗号(或空格)隔开	|
+| response_type	| 是		| 取当前授权页 URL 上的 `response_type` 参数提交	|
+| redirect_uri	| 是		| 取当前授权页 URL 上的 `redirect_uri` 参数提交	|
+| state			| 否		| 取当前授权页 URL 上的 `state` 参数提交			|
+
+推荐直接提交当前页面的 query 参数，例如：`fetch('/oauth2/doConfirm' + location.search, {method: 'POST'})`
 
 接口返回值样例：
 ``` js

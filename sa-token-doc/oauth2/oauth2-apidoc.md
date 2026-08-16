@@ -88,12 +88,14 @@ http://{host}:{port}/oauth2/doConfirm
 | :--------				| :--------	| :--------												|
 | client_id				| 是		| 应用 id												|
 | scope					| 是		| 具体确认的权限，多个用逗号(或空格)隔开					|
-| build_redirect_uri	| 否		| 是否立即构建 `redirect_uri` 授权地址，取值：true | false		|
-| response_type			| 否		| 取 url 上的 `response_type` 参数来提交					|
-| redirect_uri			| 否		| 取 url 上的 `redirect_uri` 参数来提交					|
+| response_type			| 是		| 取 url 上的 `response_type` 参数来提交					|
+| redirect_uri			| 是		| 取 url 上的 `redirect_uri` 参数来提交					|
+| build_redirect_uri	| 否		| 是否立即构建 `redirect_uri` 授权地址，取值：true / false (默认)		|
 | state					| 否		| 取 url 上的 `state` 参数来提交							|
 
-此接口有两种调用方式，一种只提供 `client_id`、`scope` 两个参数，此时返回结果代表是否确认授权成功：
+此接口有两种调用方式，均需提交 `client_id`、`scope`、`response_type`、`redirect_uri` 参数（可直接取当前授权页 URL 上的 query 参数），区别仅在于是否立即构建授权地址：
+
+**方式一**：不提供 `build_redirect_uri`（或设为 `false`），仅确认授权，返回结果代表是否确认授权成功：
 ``` js
 {
     code: 200, 
@@ -102,7 +104,9 @@ http://{host}:{port}/oauth2/doConfirm
 }
 ```
 
-一种是指定 `build_redirect_uri: true`，并同时提供 `client_id`、`scope`、`response_type`、`redirect_uri`、`state` 全部参数，
+确认成功后，需再访问 `/oauth2/authorize` 完成授权跳转。
+
+**方式二**：指定 `build_redirect_uri: true`，并同时提供 `state` 等参数，
 此时返回结果包括最终的 code 授权地址：
 ``` js
 {

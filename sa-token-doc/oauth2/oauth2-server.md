@@ -170,7 +170,7 @@ public class SaOAuth2ServerController {
 		SaOAuth2Strategy.instance.confirmView = (clientId, scopes) -> {
 			String scopeStr = SaFoxUtil.convertListToString(scopes);
 			String yesCode =
-					"fetch('/oauth2/doConfirm?client_id=" + clientId + "&scope=" + scopeStr + "', {method: 'POST'})" +
+					"fetch('/oauth2/doConfirm' + location.search, {method: 'POST'})" +
 					".then(res => res.json())" +
 					".then(res => location.reload())";
 			String res = "<p>应用 " + clientId + " 请求授权：" + scopeStr + "，是否同意？</p>"

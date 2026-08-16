@@ -238,10 +238,7 @@ public class SaOAuth2ServerProcessor {
 	public Object doConfirm() {
 		// 获取变量
 		SaRequest req = SaHolder.getRequest();
-		String clientId = req.getParamNotNull(Param.client_id);
 		Object loginId = SaOAuth2Manager.getStpLogic().getLoginId();
-		String scope = req.getParamNotNull(Param.scope);
-		List<String> scopes = SaOAuth2Manager.getDataConverter().convertScopeStringToList(scope);
 		SaOAuth2DataGenerate dataGenerate = SaOAuth2Manager.getDataGenerate();
 		SaOAuth2Template oauth2Template = SaOAuth2Manager.getTemplate();
 
@@ -250,25 +247,33 @@ public class SaOAuth2ServerProcessor {
 			throw new SaOAuth2Exception("无效请求方式：" + req.getMethod()).setCode(SaOAuth2ErrorCode.CODE_30151);
 		}
 
-		// 确认授权
-		oauth2Template.saveGrantScope(clientId, loginId, scopes);
+		// 构建请求 Model
+		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, loginId);
+
+		// 校验：Client 是否存在
+		oauth2Template.checkClientModel(ra.clientId);
+
+		// 校验：此次申请的 Scope，该 Client 是否已经签约
+		oauth2Template.checkContractScope(ra.clientId, ra.scopes);
+
+		// 校验：授权模式是否开启
+		checkAuthorizeResponseType(ra.responseType, req, SaOAuth2Manager.getServerConfig());
+
+		// 校验：重定向域名是否合法
+		oauth2Template.checkRedirectUri(ra.clientId, ra.redirectUri);
 
 		// 判断所需的返回结果模式
 		boolean buildRedirectUri = req.isParam(Param.build_redirect_uri, "true");
 
+		// 确认授权
+		oauth2Template.saveGrantScope(ra.clientId, loginId, ra.scopes);
+
 		// -------- 情况1：只返回确认结果即可
 		if( ! buildRedirectUri ) {
-			oauth2Template.saveGrantScope(clientId, loginId, scopes);
 			return SaResult.ok();
 		}
 
 		// -------- 情况2：需要返回最终的 redirect_uri 地址
-
-		// 构建请求 Model
-		RequestAuthModel ra = SaOAuth2Manager.getDataResolver().readRequestAuthModel(req, loginId);
-
-		// 校验：重定向域名是否合法
-		oauth2Template.checkRedirectUri(ra.clientId, ra.redirectUri);
 
 		// 判断授权类型，构建不同的重定向地址
 		// 		如果是 授权码式，则：开始重定向授权，下放code
