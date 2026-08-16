@@ -9,6 +9,7 @@
 	<bean id="saTokenBeanInjection" class="com.pj.satoken.SaTokenBeanInjection">
 		<constructor-arg ref="saLog"/>
 		<constructor-arg ref="saTokenConfig"/>
+		<constructor-arg><null/></constructor-arg>
 		<constructor-arg ref="redisConnectionFactory"/>
 		<!-- 项目路由前缀，至关重要的一个属性，想要使用路由拦截鉴权必须把这个属性配置对 -->
 		<constructor-arg value="/sa_token_demo_ssm_war"/>

@@ -14,6 +14,16 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!-- Sa-Token 上下文初始化过滤器（v1.42.0+ 必须注册；不要开 async-supported，javax.servlet-api 须 provided） -->
+    <filter>
+        <filter-name>saTokenContextFilter</filter-name>
+        <filter-class>com.pj.satoken.SaTokenContextFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>saTokenContextFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -47,4 +57,5 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
 </web-app>

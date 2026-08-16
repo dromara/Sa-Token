@@ -25,7 +25,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!--<spring.version>4.2.5.RELEASE</spring.version>-->
-		<spring.version>5.3.7</spring.version>
+		<spring.version>5.3.31</spring.version>
 		<jackson.version>2.16.1</jackson.version>
 		<sa-token.version>1.45.0</sa-token.version>
 	</properties>
@@ -37,6 +37,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Spring 依赖 -->
@@ -117,10 +118,11 @@
 			<artifactId>jedis</artifactId>
 			<version>3.8.0</version>
 		</dependency>
+		<!-- 版本须与 sa-token-redis-jackson 引入的 spring-boot-starter-data-redis 对齐，勿使用过低的 2.3.x -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>2.3.9.RELEASE</version>
+			<version>2.7.18</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
