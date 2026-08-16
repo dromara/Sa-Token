@@ -213,7 +213,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
 
 ### 问：Client 信息可以做成从数据库读取的吗？
-可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getClient` 与 `getClients` 方法即可：
+可以，自定义 `SaSsoServerTemplate` 实现类，重写 `getClients` 方法即可（`getClient` 会基于 `getClients` 查找，无需重复重写）：
 ``` java
 /**
  * 重写 SaSsoServerTemplate 部分方法，增强功能
@@ -221,31 +221,18 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 @Component
 public class CustomSaSsoServerTemplate extends SaSsoServerTemplate {
 
-    // 获取指定 client 的配置信息
-    @Override
-    public SaSsoClientModel getClient(String client) {
-        if("sso-client1".equals(client)) {
-            SaSsoClientModel scm = new SaSsoClientModel();
-            scm.setAllowUrl("sso-client1");
-            scm.setSecretKey("kQwIOrYvnXmSDkwEiFngrKidMcdrgKor");
-            return scm;
-        }
-
-        // ...
-
-        return null;
-    }
-
     // 返回所有 client 信息
     @Override
     public List<SaSsoClientModel> getClients() {
-        // 模拟示例代码，真实项目可改为从数据查询
+        // 模拟示例代码，真实项目可改为从数据库查询
 
         SaSsoClientModel scm1 = new SaSsoClientModel();
+        scm1.setClient("sso-client1");
         scm1.setAllowUrl("sso-client1");
         scm1.setSecretKey("kQwIOrYvnXmSDkwEiFngrKidMcdrgKor");
 
         SaSsoClientModel scm2 = new SaSsoClientModel();
+        scm2.setClient("sso-client2");
         scm2.setAllowUrl("sso-client2");
         scm2.setSecretKey("kQwIOrYvnXmSDkwEiFngrKidMcdrgKor");
 

@@ -282,7 +282,15 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
      * @return /
      */
     public SaSsoClientModel getClient(String client) {
-        return getServerConfig().getClients().get(client);
+        if(SaFoxUtil.isEmpty(client)) {
+            return null;
+        }
+        for (SaSsoClientModel scm : getClients()) {
+            if(client.equals(scm.getClient())) {
+                return scm;
+            }
+        }
+        return null;
     }
 
     /**
