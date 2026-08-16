@@ -11,7 +11,7 @@ Session 是会话中专业的数据缓存组件，通过 Session 我们可以很
 StpUtil.getSession().set("user", user);
 
 // 然后我们就可以在任意处使用这个 user 对象
-SysUser user = (SysUser) StpUtil.getSession().get("user");
+SysUser user = StpUtil.getSession().getModel("user", SysUser.class);
 ```
 
 在 Sa-Token 中，Session 分为三种，分别是：

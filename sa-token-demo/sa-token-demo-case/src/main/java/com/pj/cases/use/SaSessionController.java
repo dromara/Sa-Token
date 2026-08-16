@@ -77,7 +77,7 @@ public class SaSessionController {
 		
 		// 然后我们就可以在任意代码处获取这个 user 了
 		SysUser user2 = StpUtil.getSession().getModel("user", SysUser.class);
-		
+
 		// 返回
 		return SaResult.data(user2);
 	}
