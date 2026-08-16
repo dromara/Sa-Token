@@ -41,4 +41,7 @@ public interface SaJwtErrorCode {
 	/** 登录时提供的账号id为空 */
 	int CODE_30206 = 30206;
 
+	/** extraData 包含 jwt 保留字段 */
+	int CODE_30207 = 30207;
+
 }

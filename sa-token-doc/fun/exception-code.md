@@ -198,6 +198,7 @@ SaToken 中的所有异常都是继承于 `SaTokenException` 的，也就是说�
 | 30204		| 此 jwt 已超时							|
 | 30205		| 没有配置jwt秘钥						|
 | 30206		| 登录时提供的账号id为空					|
+| 30207		| extraData 包含 jwt 保留字段				|
 
 
 #### sa-token-temp-jwt 插件相关：

@@ -26,8 +26,11 @@ import cn.hutool.jwt.JWTException;
 import cn.hutool.jwt.signers.JWTSigner;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * jwt 操作模板方法封装
@@ -62,6 +65,13 @@ public class SaJwtTemplate {
 	 */
 	public static final String RN_STR = "rnStr";
 
+	/**
+	 * jwt payload 保留字段，不可通过 extraData 传入
+	 */
+	private static final Set<String> RESERVED_PAYLOAD_KEYS = new HashSet<>(Arrays.asList(
+			LOGIN_TYPE, LOGIN_ID, DEVICE_TYPE, EFF, RN_STR
+	));
+
 	/** 
 	 * 当有效期被设为此值时，代表永不过期 
 	 */ 
@@ -75,6 +85,23 @@ public class SaJwtTemplate {
 	// ------ 创建
 
 	/**
+	 * 校验 extraData 是否包含 jwt 保留字段
+	 *
+	 * @param extraData 扩展数据
+	 */
+	private void checkExtraData(Map<String, Object> extraData) {
+		if (extraData == null || extraData.isEmpty()) {
+			return;
+		}
+		for (String key : extraData.keySet()) {
+			if (RESERVED_PAYLOAD_KEYS.contains(key)) {
+				throw new SaJwtException("extraData 不可包含保留字段：" + key)
+						.setCode(SaJwtErrorCode.CODE_30207);
+			}
+		}
+	}
+
+	/**
 	 * 创建 jwt （简单方式）
 	 *
      * @param loginType 登录类型 
@@ -84,7 +111,8 @@ public class SaJwtTemplate {
 	 * @return jwt-token 
 	 */
     public String createToken(String loginType, Object loginId, Map<String, Object> extraData, String keyt) {
-    	
+		checkExtraData(extraData);
+
     	// 构建
     	JWT jwt = JWT.create()
 				.setPayload(LOGIN_TYPE, loginType)
@@ -111,6 +139,7 @@ public class SaJwtTemplate {
 	 */
 	public String createToken(String loginType, Object loginId, String deviceType,
 									 long timeout, Map<String, Object> extraData, String keyt) {
+		checkExtraData(extraData);
 
 		// 计算 eff 有效期：
 		// 		如果 timeout 指定为 -1，那么 eff 也为 -1，代表永不过期
