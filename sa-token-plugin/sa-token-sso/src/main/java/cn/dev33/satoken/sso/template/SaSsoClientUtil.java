@@ -71,6 +71,7 @@ public class SaSsoClientUtil {
     /**
      * 构建URL：Server端 单点登录授权地址，
      * <br/> 形如：http://sso-server.com/sso/auth?redirectUrl=http://sso-client.com/sso/login?back=http://sso-client.com
+     * <br/> 注意：如果 clientLoginUrl 是编码状态，则无法识别 back 参数，请调用者在编码前自行拼接 back 参数
      * @param clientLoginUrl Client端登录地址
      * @param back 回调路径
      * @return [SSO-Server端-认证地址 ]

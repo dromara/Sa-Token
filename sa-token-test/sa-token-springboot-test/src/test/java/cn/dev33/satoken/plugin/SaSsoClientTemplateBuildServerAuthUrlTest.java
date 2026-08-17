@@ -67,22 +67,6 @@ public class SaSsoClientTemplateBuildServerAuthUrlTest {
 	}
 
 	@Test
-	public void skipAppend_whenFullyEncodedQuestionBackAlreadyPresent() {
-		String clientLoginUrl = "http://client.com/sso/login%3Fback%3Dhttp%3A%2F%2Fclient.com%2Findex";
-		String url = template.buildServerAuthUrl(clientLoginUrl, "http://client.com/other");
-		Assertions.assertTrue(url.contains(clientLoginUrl));
-		Assertions.assertFalse(url.toLowerCase().contains("back="));
-	}
-
-	@Test
-	public void skipAppend_whenFullyEncodedAmpersandBackAlreadyPresent() {
-		String clientLoginUrl = "http://client.com/sso/login%3Ffoo%3D1%26back%3Dhttp%3A%2F%2Fclient.com%2Findex";
-		String url = template.buildServerAuthUrl(clientLoginUrl, "http://client.com/other");
-		Assertions.assertTrue(url.contains(clientLoginUrl));
-		Assertions.assertFalse(url.toLowerCase().contains("back="));
-	}
-
-	@Test
 	public void stillAppend_whenParamNameOnlyLooksLikeBack() {
 		String url = template.buildServerAuthUrl("http://client.com/sso/login?abcback=1", "http://client.com/index");
 		Assertions.assertTrue(url.contains("&back=" + SaFoxUtil.encodeUrl("http://client.com/index")));

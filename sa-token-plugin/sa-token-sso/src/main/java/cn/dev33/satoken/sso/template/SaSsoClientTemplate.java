@@ -117,6 +117,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     /**
      * 构建URL：Server端 单点登录授权地址，
      * <br/> 形如：http://sso-server.com/sso/auth?redirectUrl=http://sso-client.com/sso/login?back=http://sso-client.com
+     * <br/> 注意：如果 clientLoginUrl 是编码状态，则无法识别 back 参数，请调用者在编码前自行拼接 back 参数
      * @param clientLoginUrl Client端登录地址
      * @param back 回调路径
      * @return [SSO-Server端-认证地址 ]
@@ -142,9 +143,7 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
             /*
              * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
-             * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题。
-             * 另：部分场景（如前端带 # 的 back）会把整个 clientLoginUrl 再 encode 一次，此时 back 形态为 %3Fback%3D，
-             * 不能只认明文 back=，否则会再拼一个 ?back=
+             * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
              */
             if( ! containsBackParam(clientLoginUrl) ) {
                 clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
@@ -156,16 +155,12 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
     }
 
     /**
-     * clientLoginUrl 是否已携带 back 参数。
-     * 明文认 ?back= / &back=，整段 URL 编码认 %3Fback%3D / %26back%3D，避免 abcback= 误判。
+     * clientLoginUrl 是否已携带明文 back 参数（?back= / &back=）
      */
     protected boolean containsBackParam(String clientLoginUrl) {
         String name = paramName.back.toLowerCase();
         String url = clientLoginUrl.toLowerCase();
-        return url.contains("?" + name + "=")
-                || url.contains("&" + name + "=")
-                || url.contains("%3f" + name + "%3d")
-                || url.contains("%26" + name + "%3d");
+        return url.contains("?" + name + "=") || url.contains("&" + name + "=");
     }
 
 
