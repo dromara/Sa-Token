@@ -212,6 +212,27 @@ public final class SaStrategy {
 
 	};
 
+	/**
+	 * 获取 SaTokenConfig 的策略
+	 * <p>
+	 * 	默认值为 null，表示使用框架内置逻辑获取配置（先读 {@link SaManager#config}，为空时自动读取 sa-token.properties）。
+	 * 	赋值后，每次调用 {@link SaManager#getConfig()} 时都会执行此策略并直接返回其结果。
+	 * </p>
+	 * <p>
+	 * 	注意：策略内请勿再调用 {@link SaManager#getConfig()}，否则会陷入无限递归。
+	 * </p>
+	 * <p>
+	 * 	使用示例：
+	 * </p>
+	 * <pre>
+	 * SaStrategy.instance.setGetSaTokenConfig(() -> {
+	 * 	// 从数据库读取配置 ...
+	 * 	return config;
+	 * });
+	 * </pre>
+	 */
+	public SaGetSaTokenConfigFunction getSaTokenConfig = null;
+
 
 	// ----------------------- 重写策略 set连缀风格
 
@@ -311,6 +332,18 @@ public final class SaStrategy {
 	 */
 	public SaStrategy setCreateSaStorage(SaCreateSaStorageFunction createSaStorage) {
 		this.createSaStorage = createSaStorage;
+		return this;
+	}
+
+	/**
+	 * 获取 SaTokenConfig 的策略
+	 * <p> 默认 null 表示不启用；启用后由 {@link #getSaTokenConfig} 接管 {@link SaManager#getConfig()} 的返回值 </p>
+	 *
+	 * @param getSaTokenConfig /
+	 * @return /
+	 */
+	public SaStrategy setGetSaTokenConfig(SaGetSaTokenConfigFunction getSaTokenConfig) {
+		this.getSaTokenConfig = getSaTokenConfig;
 		return this;
 	}
 

@@ -85,6 +85,9 @@ public class SaManager {
 	 * @return 全局配置信息
 	 */
 	public static SaTokenConfig getConfig() {
+		if (SaStrategy.instance.getSaTokenConfig != null) {
+			return SaStrategy.instance.getSaTokenConfig.get();
+		}
 		if (config == null) {
 			synchronized (SaManager.class) {
 				if (config == null) {

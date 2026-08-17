@@ -81,6 +81,14 @@ public SaRouteMatchFunction routeMatcher = (pattern, path) -> {
 public SaCorsHandleFunction corsHandle = (req, res, sto) -> {
 
 };
+
+/**
+ * 获取 SaTokenConfig 的策略
+ * <p>  默认 null，表示使用框架内置逻辑（先读 SaManager.config，为空时自动读取 sa-token.properties）  </p>
+ * <p>  赋值后，每次调用 SaManager.getConfig() 时都会执行此策略并直接返回其结果  </p>
+ * <p>  注意：策略内请勿再调用 SaManager.getConfig()，否则会陷入无限递归  </p>
+ */
+public SaGetSaTokenConfigFunction getSaTokenConfig = null;
 ```
 
 
@@ -93,4 +101,23 @@ SaStrategy.instance.setHasElement(hasElement);   // 重写集合模糊匹配策�
 SaStrategy.instance.setGenerateUniqueToken(generateUniqueToken);   // 重写生成唯一 token 的策略
 SaStrategy.instance.setCreateStpLogic(createStpLogic);   // 重写创建 StpLogic 的策略
 SaStrategy.instance.setAutoRenew(autoRenew);   // 重写是否自动续期策略
+SaStrategy.instance.setGetSaTokenConfig(getSaTokenConfig);   // 重写获取 SaTokenConfig 的策略
 ```
+
+#### getSaTokenConfig 使用示例
+
+适用于需要从数据库等外部数据源动态读取配置的场景：
+
+``` java
+SaStrategy.instance.setGetSaTokenConfig(() -> {
+	// 从数据库读取配置，自行做好缓存
+	SaTokenConfig config = new SaTokenConfig();
+	config.setTokenName("satoken");
+	config.setTimeout(30 * 24 * 60 * 60);
+	return config;
+});
+```
+
+注意：
+- 策略内**不要**调用 `SaManager.getConfig()`，否则会无限递归。
+- 启用后，每次 `SaManager.getConfig()` 都会走此策略；请做好缓存处理。
