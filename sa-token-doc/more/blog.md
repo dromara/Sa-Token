@@ -1,10 +1,12 @@
 # 框架博客
 
-> 官方精品原创文章见 <a href="/blog/index.html">Sa-Token 博客</a>。
-> 此页面收集 Sa-Token 相关技术文章（不限平台，按照发表日期倒序），
-> 如果你也想投稿，请考虑加入：[Sa-Token 内容合作群 ](/more/content-cooperation)
+> 社区文章已迁移至  <a href="/blog/index.html">Sa-Token 博客</a>，本页不再更新。
 
 ---
+
+- [[ 公众号 ] 49K Star！Sa-Token：让 Java 鉴权简单到像写句子](https://mp.weixin.qq.com/s/6i8fMjOqCWNiKSMdmXOijQ) （2026-8-13）
+
+- [[ CSDN ] SpringBoot集成Sa-Token与JWT实现轻量级权限认证](https://blog.csdn.net/weixin_29758911/article/details/163682010) （2026-8-11）
 
 - [[ 公众号 ] 为什么越来越多人用 Sa-Token？](https://mp.weixin.qq.com/s/m-cfYtLb34heeM9W7fSUVw) （2026-8-7）
 
