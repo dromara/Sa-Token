@@ -296,14 +296,9 @@ public class SaFoxUtilTest {
 
     @Test
     public void isUrl() {
+    	// 详细用例见 SaFoxUtilIsUrlTest
     	Assertions.assertTrue(SaFoxUtil.isUrl("https://sa-token.com"));
-    	Assertions.assertTrue(SaFoxUtil.isUrl("https://www.baidu.com/"));
-
-    	Assertions.assertFalse(SaFoxUtil.isUrl(null));
-    	Assertions.assertFalse(SaFoxUtil.isUrl(""));
-    	Assertions.assertFalse(SaFoxUtil.isUrl("htt://www.baidu.com/"));
-    	Assertions.assertFalse(SaFoxUtil.isUrl("https:www.baidu.com/"));
-    	Assertions.assertFalse(SaFoxUtil.isUrl("httpswwwbaiducom/"));
+    	Assertions.assertTrue(SaFoxUtil.isUrl("http://[::1]:9003/sso/login"));
     	Assertions.assertFalse(SaFoxUtil.isUrl("https://www.baidu.com/,"));
     }
 

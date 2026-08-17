@@ -21,6 +21,8 @@ import cn.dev33.satoken.exception.SaTokenException;
 import java.io.Console;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
@@ -561,20 +563,56 @@ public class SaFoxUtil {
 	}
 
 	/**
-	 * 验证URL的正则表达式
+	 * 验证URL的正则表达式（历史字段；{@link #isUrl(String)} 已改用 URI 解析，含 IPv6 方括号地址）
 	 */
-	public static String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]";
+	public static String URL_REGEX = "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;\\[\\]]+[-A-Za-z0-9+&@#/%=~_|\\[\\]]";
 
 	/**
-	 * 使用正则表达式判断一个字符串是否为URL
+	 * 判断一个字符串是否为 URL（支持 IPv6 方括号地址，如 {@code http://[::1]:9003/path}）
 	 * @param str 字符串
-	 * @return 拼接后的url字符串
+	 * @return /
 	 */
 	public static boolean isUrl(String str) {
 		if(isEmpty(str)) {
 			return false;
 		}
-        return str.toLowerCase().matches(URL_REGEX);
+		String lower = str.toLowerCase();
+		if( ! (lower.startsWith("http://") || lower.startsWith("https://")
+				|| lower.startsWith("ftp://") || lower.startsWith("file://")) ) {
+			return false;
+		}
+		try {
+			URI uri = new URI(str);
+			String scheme = uri.getScheme();
+			if(scheme == null) {
+				return false;
+			}
+			switch (scheme.toLowerCase()) {
+				case "http":
+				case "https":
+				case "ftp":
+					if(uri.getHost() == null || uri.getHost().isEmpty()) {
+						return false;
+					}
+					// 未使用方括号的裸 IPv6（authority 中含多个冒号）按 RFC 3986 视为非法
+					String authority = uri.getAuthority();
+					if(authority != null && !authority.contains("[")
+							&& authority.chars().filter(ch -> ch == ':').count() > 1) {
+						return false;
+					}
+					// 与历史正则行为一致：末尾为逗号视为非法
+					if(str.endsWith(",")) {
+						return false;
+					}
+					return true;
+				case "file":
+					return true;
+				default:
+					return false;
+			}
+		} catch (URISyntaxException e) {
+			return false;
+		}
 	}
 
 	/**
