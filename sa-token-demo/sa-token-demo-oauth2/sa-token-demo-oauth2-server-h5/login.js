@@ -89,6 +89,10 @@ function yes() {
 // 拒绝授权事件 
 function no() {
 	var url = joinParam(getParam('redirect_uri'), "handle=refuse&msg=用户拒绝了授权");
+	var state = getParam('state');
+	if (state) {
+		url = joinParam(url, "state=" + state);
+	}
 	location.href = url;
 }
 
@@ -180,7 +184,7 @@ function joinParam(url, parameStr) {
 	// ? 是其中一位
 	if(index > -1 && index < url.length - 1) {
 		// 如果最后一位是 不是&, 且 parameStr 第一位不是 &, 就增送一个 &
-		if(url.lastIndexOf('&') != url.length - 1 && parameStrindexOf('&') != 0) {
+		if(url.lastIndexOf('&') != url.length - 1 && parameStr.indexOf('&') != 0) {
 			return url + '&' + parameStr;
 		} else {
 			return url + parameStr;
