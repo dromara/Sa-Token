@@ -259,6 +259,78 @@
     });
   }
 
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function platformCssSlug(platform) {
+    var name = String(platform || '').trim();
+    var lookup = {
+      csdn: 'csdn',
+      '掘金': 'juejin',
+      '公众号': 'weixin',
+      '51cto': '51cto',
+      '博客园': 'cnblogs',
+      '知乎': 'zhihu',
+      '百家号': 'baijiahao',
+      'php中文网': 'php'
+    };
+    var key = /^[\x00-\x7F]*$/.test(name) ? name.toLowerCase() : name;
+    return lookup[key] || 'default';
+  }
+
+  function renderCommunityList(items) {
+    var list = document.querySelector('.blog-community-list');
+    if (!list) return;
+    if (!items || !items.length) {
+      list.innerHTML = '<p class="blog-community-empty">暂无社区文章</p>';
+      return;
+    }
+    var html = '';
+    items.forEach(function (item) {
+      var slug = platformCssSlug(item.platform);
+      html +=
+        '<article class="blog-community-card">' +
+        '<span class="blog-community-platform blog-community-platform--' + slug + '">' +
+        escapeHtml(item.platform) + '</span>' +
+        '<a class="blog-community-title" href="' + escapeHtml(item.url) + '" ' +
+        'target="_blank" rel="noopener noreferrer">' + escapeHtml(item.title) + '</a>' +
+        '<time class="blog-community-date" datetime="' + escapeHtml(item.date) + '">' +
+        escapeHtml(item.date) + '</time>' +
+        '</article>';
+    });
+    list.innerHTML = html;
+  }
+
+  function renderRecommendedList(items) {
+    var list = document.querySelector('.blog-recommended-list');
+    if (!list) return;
+    if (!items || !items.length) {
+      list.innerHTML = '<p class="blog-recommended-empty">暂无推荐文章</p>';
+      return;
+    }
+    var html = '';
+    items.forEach(function (item) {
+      html +=
+        '<article class="blog-recommended-card">' +
+        '<a class="blog-recommended-title" href="' + escapeHtml(item.url) + '" ' +
+        'target="_blank" rel="noopener noreferrer">' + escapeHtml(item.title) + '</a>' +
+        '<time class="blog-recommended-date" datetime="' + escapeHtml(item.date) + '">' +
+        escapeHtml(item.date) + '</time>' +
+        '</article>';
+    });
+    list.innerHTML = html;
+  }
+
+  function initBlogExtraLists() {
+    renderCommunityList(window.SA_TOKEN_BLOG_COMMUNITY);
+    renderRecommendedList(window.SA_TOKEN_BLOG_RECOMMENDED);
+  }
+
   function initBlogIndexTabs() {
     var tabBar = document.querySelector('.blog-index-tabs');
     if (!tabBar) return;
@@ -353,6 +425,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initSidebarDrawer();
     initSidebarEnd();
+    initBlogExtraLists();
     initBlogIndexTabs();
     initIndexDescClamp();
     initTocHighlight();
