@@ -15,13 +15,12 @@
  */
 package cn.dev33.satoken.stp.parameter;
 
-import cn.dev33.satoken.json.SaJsonType;
-
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.fun.SaParamFunction;
+import cn.dev33.satoken.json.SaJsonType;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
@@ -254,7 +253,7 @@ public class SaLoginParameter implements SaJsonType {
 	 * @return /
 	 */
 	public int getCookieTimeout() {
-		if( ! getIsLastingCookie()) {
+		if (!Boolean.TRUE.equals(getIsLastingCookie())) {
 			return -1;
 		}
 		long _timeout = getTimeout();
