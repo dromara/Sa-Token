@@ -18,7 +18,7 @@ SaManager.getSaTempTemplate();         // 获取临时令牌认证模块对象
 SaManager.setSaTempTemplate(saTempTemplate);   // 设置临时令牌认证模块对象
 SaManager.getSaJsonTemplate();         // 获取 JSON 转换器 Bean
 SaManager.setSaJsonTemplate(saJsonTemplate);   // 设置 JSON 转换器 Bean
-SaManager.getSaHttpTemplate();         // 获取 Http 请求处理 Bean
+SaManager.getSaHttpTemplate();         // 获取 Http 请求处理 Bean（详见 [HTTP 请求扩展](/plugin/http-extend)）
 SaManager.setSaHttpTemplate(saHttpTemplate);   // 设置 Http 请求处理 Bean
 SaManager.getSaSerializerTemplate();   // 获取序列化器 Bean
 SaManager.setSaSerializerTemplate(saSerializerTemplate);   // 设置序列化器 Bean

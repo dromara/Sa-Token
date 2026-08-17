@@ -51,6 +51,7 @@
 		<module>sa-token-demo-sso/sa-token-demo-sso1-client</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso2-client</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso3-client</module>
+		<module>sa-token-demo-sso/sa-token-demo-sso3-client--sb4</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso3-client-nosdk</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso3-client-resdk</module>
 		<module>sa-token-demo-sso/sa-token-demo-sso3-client-anon</module>

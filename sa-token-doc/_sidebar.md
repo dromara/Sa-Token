@@ -96,6 +96,7 @@
 	- [缓存层扩展](/plugin/dao-extend)
 	- [JSON 序列化扩展](/plugin/json-extend)
 	- [序列化插件扩展包](/plugin/custom-serializer)
+	- [HTTP 请求扩展](/plugin/http-extend)
 	- [和 Thymeleaf 集成](/plugin/thymeleaf-extend)
 	- [和 Freemarker 集成](/plugin/freemarker-extend)
 	- [注解鉴权 SpEL 表达式](/plugin/spel-at)

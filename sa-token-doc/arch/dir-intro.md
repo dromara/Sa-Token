@@ -84,6 +84,8 @@
 		├── sa-token-redisson-spring-boot-starter // [插件] Sa-Token 整合 Redisson - SpringBoot 自动配置包 (数据缓存插件) 
 		├── sa-token-forest                       // [插件] Sa-Token 整合 Forest，http 请求处理器 
 		├── sa-token-okhttps                      // [插件] Sa-Token 整合 OkHttps，http 请求处理器 
+		├── sa-token-rest-template                // [插件] Sa-Token 整合 RestTemplate，http 请求处理器 
+		├── sa-token-rest-client                  // [插件] Sa-Token 整合 RestClient，http 请求处理器 
 	├── sa-token-demo                         // [示例] Sa-Token 示例合集
 		├── sa-token-demo-alone-redis             // [示例] Sa-Token 集成 alone-redis 模块
 		├── sa-token-demo-alone-redis-cluster     // [示例] Sa-Token 集成 alone-redis 模块、集群模式
@@ -139,6 +141,7 @@
 			├── sa-token-demo-sso1-client             // [示例] Sa-Token 集成 SSO单点登录-模式一 应用端 (同域、同Redis)
 			├── sa-token-demo-sso2-client             // [示例] Sa-Token 集成 SSO单点登录-模式二 应用端 (跨域、同Redis)
 			├── sa-token-demo-sso3-client             // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端 (跨域、跨Redis)
+			├── sa-token-demo-sso3-client--sb4        // [示例] SSO 模式三 应用端 (Spring Boot 4 + RestClient)
 			├── sa-token-demo-sso3-client-nosdk       // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端 (不使用sdk，纯手动对接)
 			├── sa-token-demo-sso3-client-resdk       // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端 (ReSdk 模式，重写部分方法对接任意技术栈)
 			├── sa-token-demo-sso3-client-anon        // [示例] Sa-Token 集成 SSO单点登录-模式三 应用端 (匿名应用接入示例)

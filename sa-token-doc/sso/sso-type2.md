@@ -134,6 +134,8 @@ implementation 'cn.dev33:sa-token-forest:${sa.top.version}'
 ```
 <!---------------------------- tabs:end ---------------------------->
 
+> 也可选用 `sa-token-rest-template`（Spring Boot 2/3/4）或 `sa-token-rest-client`（Spring Boot 3.2+）作为 HTTP 请求处理器，详见：[HTTP 请求扩展](/plugin/http-extend)。
+
 
 #### 3.3、创建 SSO-Client 端认证接口
 
