@@ -142,15 +142,30 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
 
             /*
              * 部分 Servlet 版本 request.getRequestURL() 返回的 url 带有 query 参数，形如：http://domain.com?id=1，
-             * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题
+             * 如果不加判断会造成最终生成的 serverAuthUrl 带有双 back 参数 ，这个 if 判断正是为了解决此问题。
+             * 另：部分场景（如前端带 # 的 back）会把整个 clientLoginUrl 再 encode 一次，此时 back 形态为 %3Fback%3D，
+             * 不能只认明文 back=，否则会再拼一个 ?back=
              */
-            if( ! clientLoginUrl.contains(paramName.back + "=") ) {
+            if( ! containsBackParam(clientLoginUrl) ) {
                 clientLoginUrl = SaFoxUtil.joinParam(clientLoginUrl, paramName.back, back);
             }
         }
 
         // 返回
         return SaFoxUtil.joinParam(serverUrl, paramName.redirect, clientLoginUrl);
+    }
+
+    /**
+     * clientLoginUrl 是否已携带 back 参数。
+     * 明文认 ?back= / &back=，整段 URL 编码认 %3Fback%3D / %26back%3D，避免 abcback= 误判。
+     */
+    protected boolean containsBackParam(String clientLoginUrl) {
+        String name = paramName.back.toLowerCase();
+        String url = clientLoginUrl.toLowerCase();
+        return url.contains("?" + name + "=")
+                || url.contains("&" + name + "=")
+                || url.contains("%3f" + name + "%3d")
+                || url.contains("%26" + name + "%3d");
     }
 
 
