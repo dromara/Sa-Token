@@ -18,6 +18,7 @@ package cn.dev33.satoken.listener;
 import cn.dev33.satoken.annotation.handler.SaAnnotationHandlerInterface;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
@@ -38,6 +39,36 @@ public interface SaTokenListener {
 	 * @param loginParameter 登录参数
 	 */
 	void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter);
+
+	/**
+	 * 每次注销前触发（在清理 Token-Session、Token 映射等数据之前）
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	default void doBeforeLogout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {}
+
+	/**
+	 * 每次被踢下线前触发（在清理 Token-Session、Token 映射等数据之前）
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	default void doBeforeKickout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {}
+
+	/**
+	 * 每次被顶下线前触发（在清理 Token-Session、Token 映射等数据之前）
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	default void doBeforeReplaced(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {}
 			
 	/**
 	 * 每次注销时触发 

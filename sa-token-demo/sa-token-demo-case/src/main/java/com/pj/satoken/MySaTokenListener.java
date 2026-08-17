@@ -2,6 +2,7 @@ package com.pj.satoken;
 
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 
 /**
  * Sa-Token 自定义侦听器的实现 
@@ -9,7 +10,7 @@ import cn.dev33.satoken.stp.parameter.SaLoginParameter;
  * @author click33
  * @since 2022-10-17
  */
-//@Component	// 打开此注解，让 SpringBoot 扫描到组件，即可完成自定义侦听器的注入 
+//@Component	// 打开此注解，让 SpringBoot 扫描到组件，即可完成自定义侦听器的注入
 public class MySaTokenListener implements SaTokenListener {
 
     /** 每次登录时触发 */
@@ -22,6 +23,24 @@ public class MySaTokenListener implements SaTokenListener {
     @Override
     public void doLogout(String loginType, Object loginId, String tokenValue) {
         System.out.println("---------- 自定义侦听器实现 doLogout");
+    }
+
+    /** 每次注销前触发 */
+    @Override
+    public void doBeforeLogout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+        System.out.println("---------- 自定义侦听器实现 doBeforeLogout");
+    }
+
+    /** 每次被踢下线前触发 */
+    @Override
+    public void doBeforeKickout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+        System.out.println("---------- 自定义侦听器实现 doBeforeKickout");
+    }
+
+    /** 每次被顶下线前触发 */
+    @Override
+    public void doBeforeReplaced(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+        System.out.println("---------- 自定义侦听器实现 doBeforeReplaced");
     }
 
     /** 每次被踢下线时触发 */

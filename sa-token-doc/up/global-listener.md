@@ -43,6 +43,24 @@ public class MySaTokenListener implements SaTokenListener {
 		System.out.println("---------- 自定义侦听器实现 doLogout");
 	}
 
+	/** 每次注销前触发 */
+	@Override
+	public void doBeforeLogout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		System.out.println("---------- 自定义侦听器实现 doBeforeLogout");
+	}
+
+	/** 每次被踢下线前触发 */
+	@Override
+	public void doBeforeKickout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		System.out.println("---------- 自定义侦听器实现 doBeforeKickout");
+	}
+
+	/** 每次被顶下线前触发 */
+	@Override
+	public void doBeforeReplaced(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		System.out.println("---------- 自定义侦听器实现 doBeforeReplaced");
+	}
+
 	/** 每次被踢下线时触发 */
 	@Override
 	public void doKickout(String loginType, Object loginId, String tokenValue) {
@@ -215,6 +233,21 @@ SaTokenEventCenter.registerListener(new SaTokenListenerForSimple() {
 
 ##### 3.4、疑问：一个项目可以注册多个侦听器吗？
 可以，多个侦听器间彼此独立，互不影响，按照注册顺序依次接受到事件通知。
+
+##### 3.5、注销前钩子：doBeforeLogout / doBeforeKickout / doBeforeReplaced
+
+在 `doLogout`、`doKickout`、`doReplaced` 触发**之前**，框架会先触发对应的 `doBefore*` 钩子。此时 Token-Session、Token 映射、Account-Session 上的设备信息尚未清理，适合做授权日志、审计等需要在注销前读取会话信息的场景。
+
+``` java
+@Override
+public void doBeforeLogout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+	SaSession session = SaManager.getStpLogic(loginType).getSessionByLoginId(loginId, false);
+	SaTerminalInfo terminal = session == null ? null : session.getTerminal(tokenValue);
+	// 记录注销日志 ...
+}
+```
+
+注意：请勿依赖 `StpUtil` 读取当前请求上下文，应使用钩子参数及 `loginId`、`tokenValue` 主动查询会话数据。
 
 
 ---

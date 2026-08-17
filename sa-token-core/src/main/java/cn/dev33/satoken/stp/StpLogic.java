@@ -794,24 +794,65 @@ public class StpLogic {
 			return;
 		}
 
-		// 2、清除这个 token 的最后活跃时间记录
+		// 2、$$ 发布注销前事件通知
+		_fireBeforeLogoutEvent(loginId, tokenValue, logoutParameter);
+
+		// 3、清除这个 token 的最后活跃时间记录
 		if(isOpenCheckActiveTimeout()) {
 			clearLastActive(tokenValue);
 		}
 
-		// 3、清除 Token-Session
+		// 4、清除 Token-Session
 		if( ! logoutParameter.getIsKeepTokenSession()) {
 			deleteTokenSession(tokenValue);
 		}
 
-		// 4、清理或更改 Token 映射
-		// 5、发布事件通知
+		// 5、清理或更改 Token 映射，并发布事件通知
+		_fireLogoutEvent(loginId, tokenValue, logoutParameter);
+
+		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
+		SaSession session = getSessionByLoginId(loginId, false);
+		if(session != null) {
+			session.removeTerminal(tokenValue);
+			session.logoutByTerminalCountToZero();
+		}
+	}
+
+	/**
+	 * [work] 发布注销前事件通知
+	 * <p> 根据 {@link SaLogoutParameter#getMode()} 触发 doBeforeLogout / doBeforeKickout / doBeforeReplaced </p>
+	 *
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	private void _fireBeforeLogoutEvent(Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		if(logoutParameter.getMode() == SaLogoutMode.LOGOUT) {
+			SaTokenEventCenter.doBeforeLogout(loginType, loginId, tokenValue, logoutParameter);
+		}
+		if(logoutParameter.getMode() == SaLogoutMode.KICKOUT) {
+			SaTokenEventCenter.doBeforeKickout(loginType, loginId, tokenValue, logoutParameter);
+		}
+		if(logoutParameter.getMode() == SaLogoutMode.REPLACED) {
+			SaTokenEventCenter.doBeforeReplaced(loginType, loginId, tokenValue, logoutParameter);
+		}
+	}
+
+	/**
+	 * [work] 清理或更改 Token 映射，并发布注销事件通知
+	 * <p> 根据 {@link SaLogoutParameter#getMode()} 触发 doLogout / doKickout / doReplaced </p>
+	 *
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	private void _fireLogoutEvent(Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
 		// 		SaLogoutMode.LOGOUT：注销下线
 		if(logoutParameter.getMode() == SaLogoutMode.LOGOUT) {
 			deleteTokenToIdMapping(tokenValue);
 			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
 		}
-		// 		SaLogoutMode.LOGOUT：踢人下线
+		// 		SaLogoutMode.KICKOUT：踢人下线
 		if(logoutParameter.getMode() == SaLogoutMode.KICKOUT) {
 			updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
 			SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
@@ -820,13 +861,6 @@ public class StpLogic {
 		if(logoutParameter.getMode() == SaLogoutMode.REPLACED) {
 			updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
 			SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
-		}
-
-		// 6、清理这个账号的 Account-Session 上的 terminal 信息，并且尝试注销掉 Account-Session
-		SaSession session = getSessionByLoginId(loginId, false);
-		if(session != null) {
-			session.removeTerminal(tokenValue);
-			session.logoutByTerminalCountToZero();
 		}
 	}
 
@@ -1000,36 +1034,24 @@ public class StpLogic {
 		Object loginId = session.getLoginId();
 		String tokenValue = terminal.getTokenValue();
 
-		// 1、从 Account-Session 上清除此设备信息
+		// 1、$$ 发布注销前事件通知
+		_fireBeforeLogoutEvent(loginId, tokenValue, logoutParameter);
+
+		// 2、从 Account-Session 上清除此设备信息
 		session.removeTerminal(tokenValue);
 
-		// 2、清除这个 token 的最后活跃时间记录
+		// 3、清除这个 token 的最后活跃时间记录
 		if(isOpenCheckActiveTimeout()) {
 			clearLastActive(tokenValue);
 		}
 
-		// 3、清除这个 token 的 Token-Session 对象
+		// 4、清除这个 token 的 Token-Session 对象
 		if( ! logoutParameter.getIsKeepTokenSession()) {
 			deleteTokenSession(tokenValue);
 		}
 
-		// 4、清理或更改 Token 映射
-		// 5、发布事件通知
-		// 		SaLogoutMode.LOGOUT：注销下线
-		if(logoutParameter.getMode() == SaLogoutMode.LOGOUT) {
-			deleteTokenToIdMapping(tokenValue);
-			SaTokenEventCenter.doLogout(loginType, loginId, tokenValue);
-		}
-		// 		SaLogoutMode.LOGOUT：踢人下线
-		if(logoutParameter.getMode() == SaLogoutMode.KICKOUT) {
-			updateTokenToIdMapping(tokenValue, NotLoginException.KICK_OUT);
-			SaTokenEventCenter.doKickout(loginType, loginId, tokenValue);
-		}
-		//		SaLogoutMode.REPLACED：顶人下线
-		if(logoutParameter.getMode() == SaLogoutMode.REPLACED) {
-			updateTokenToIdMapping(tokenValue, NotLoginException.BE_REPLACED);
-			SaTokenEventCenter.doReplaced(loginType, loginId, tokenValue);
-		}
+		// 5、清理或更改 Token 映射，并发布事件通知
+		_fireLogoutEvent(loginId, tokenValue, logoutParameter);
 	}
 
 	/**

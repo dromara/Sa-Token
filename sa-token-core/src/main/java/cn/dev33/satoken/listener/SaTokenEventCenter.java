@@ -23,6 +23,7 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.stp.StpLogic;
 
 /**
@@ -154,6 +155,48 @@ public class SaTokenEventCenter {
 	public static void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		for (SaTokenListener listener : listenerList) {
 			listener.doLogin(loginType, loginId, tokenValue, loginParameter);
+		}
+	}
+
+	/**
+	 * 事件发布：xx 账号注销前
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	public static void doBeforeLogout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doBeforeLogout(loginType, loginId, tokenValue, logoutParameter);
+		}
+	}
+
+	/**
+	 * 事件发布：xx 账号被踢下线前
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	public static void doBeforeKickout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doBeforeKickout(loginType, loginId, tokenValue, logoutParameter);
+		}
+	}
+
+	/**
+	 * 事件发布：xx 账号被顶下线前
+	 *
+	 * @param loginType 账号类别
+	 * @param loginId 账号id
+	 * @param tokenValue token值
+	 * @param logoutParameter 注销参数
+	 */
+	public static void doBeforeReplaced(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+		for (SaTokenListener listener : listenerList) {
+			listener.doBeforeReplaced(loginType, loginId, tokenValue, logoutParameter);
 		}
 	}
 			
