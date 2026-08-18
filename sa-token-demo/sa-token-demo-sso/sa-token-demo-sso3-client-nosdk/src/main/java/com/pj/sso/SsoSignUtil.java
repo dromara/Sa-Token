@@ -1,5 +1,7 @@
 package com.pj.sso;
 
+import com.pj.sso.util.CacheUtil;
+
 import java.security.MessageDigest;
 import java.util.Map;
 import java.util.Random;
@@ -11,6 +13,9 @@ import java.util.TreeMap;
  * @author click33
  */
 public class SsoSignUtil {
+
+	/** 时间戳允许的最大偏差（与官方 SaSignConfig.timestampDisparity 默认值一致：15 分钟） */
+	private static final long TIMESTAMP_DISPARITY = 1000L * 60 * 15;
 
 
 
@@ -45,14 +50,33 @@ public class SsoSignUtil {
 	}
 
 	/**
-	 * 校验请求中的 sign 参数是否合法
+	 * 校验请求中的 timestamp、nonce、sign 是否合法（对齐官方 SaSignTemplate.checkParamMap）
 	 * @param params 包含 sign 的请求参数
-	 * @return 签名是否合法
+	 * @return 是否合法
 	 */
 	public static boolean verifySign(Map<String, String> params) {
 		String sign = params.get("sign");
-		if (sign == null) return false;
-		return sign.equals(computeSign(params));
+		String timestamp = params.get("timestamp");
+		String nonce = params.get("nonce");
+		if (SsoRequestUtil.isEmpty(sign) || SsoRequestUtil.isEmpty(timestamp) || SsoRequestUtil.isEmpty(nonce)) {
+			return false;
+		}
+
+		long ts;
+		try {
+			ts = Long.parseLong(timestamp);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+		if (Math.abs(System.currentTimeMillis() - ts) > TIMESTAMP_DISPARITY) {
+			return false;
+		}
+
+		if (!sign.equals(computeSign(params))) {
+			return false;
+		}
+
+		return CacheUtil.setIfAbsent(nonce, nonce, TIMESTAMP_DISPARITY);
 	}
 
 

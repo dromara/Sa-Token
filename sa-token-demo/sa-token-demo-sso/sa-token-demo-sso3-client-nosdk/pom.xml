@@ -28,6 +28,13 @@
 		    <artifactId>forest-spring-boot-starter</artifactId>
 		    <version>1.5.26</version>
 		</dependency>
+
+		<!-- Hutool 缓存（nonce 防重放） -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-cache</artifactId>
+			<version>5.8.36</version>
+		</dependency>
 		
 	</dependencies>
 	
