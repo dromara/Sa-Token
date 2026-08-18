@@ -103,6 +103,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-loveqq-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -252,6 +257,11 @@
             <dependency>
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-hutool-timed-cache</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-caffeine</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
