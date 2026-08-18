@@ -1,7 +1,5 @@
 package com.pj.test.model;
 
-import cn.dev33.satoken.json.SaJsonType;
-
 import java.io.Serializable;
 
 /**
@@ -10,7 +8,7 @@ import java.io.Serializable;
  * @author click33
  * @since 2022-10-15
  */
-public class SysUser implements SaJsonType, Serializable {
+public class SysUser implements Serializable {
 
 	public SysUser() {
 	}
