@@ -262,9 +262,10 @@ public class StpInterfaceImpl implements StpInterface {
 	 *
 	 * @param loginId  账号id
 	 * @param service 业务标识符
+	 * @param loginType 账号类型
 	 * @return 描述该账号是否封禁的包装信息对象
 	 */
-	public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+	public SaDisableWrapperInfo isDisabled(Object loginId, String service, String loginType) {
 		// 查库操作 ...  (此处仅做示例代码)
 		return SaDisableWrapperInfo.createDisabled(86400, 1);
 	}
@@ -275,22 +276,22 @@ public class StpInterfaceImpl implements StpInterface {
 该方法返回一个 `SaDisableWrapperInfo` 实例对象，用来描述指定账号是否已被封禁，一般有以下几种写法：
 ``` java
 // 标准写法：new 对象返回，参数为：是否被封禁、封禁时间(秒)、封禁等级
-public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+public SaDisableWrapperInfo isDisabled(Object loginId, String service, String loginType) {
 	return new SaDisableWrapperInfo(true, 86400, 1);
 }
 
 // 快捷写法：被封禁，解封倒计时86400秒，封禁等级1
-public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+public SaDisableWrapperInfo isDisabled(Object loginId, String service, String loginType) {
 	return SaDisableWrapperInfo.createDisabled(86400, 1);
 }
 
 // 快捷写法：未被封禁 
-public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+public SaDisableWrapperInfo isDisabled(Object loginId, String service, String loginType) {
 	return SaDisableWrapperInfo.createNotDisabled();
 }
 
 // 快捷写法：未被封禁，且将查询结果保存到缓存中，ttl为86400，改时间内不再重复进入 isDisabled 方法 
-public SaDisableWrapperInfo isDisabled(Object loginId, String service) {
+public SaDisableWrapperInfo isDisabled(Object loginId, String service, String loginType) {
 	return SaDisableWrapperInfo.createNotDisabled(86400);
 }
 ```

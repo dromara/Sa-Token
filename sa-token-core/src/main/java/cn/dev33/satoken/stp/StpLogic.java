@@ -2838,7 +2838,7 @@ public class StpLogic {
 		}
 
 		// 2、如果缓存中无数据，则从"数据加载器"中再次查询
-		SaDisableWrapperInfo disableWrapperInfo = SaManager.getStpInterface().isDisabled(loginId, service);
+		SaDisableWrapperInfo disableWrapperInfo = SaManager.getStpInterface().isDisabled(loginId, service, loginType);
 
 		// 如果返回值 disableTime 有效，则代表返回结果需要写入缓存
 		if(disableWrapperInfo.disableTime == SaTokenDao.NEVER_EXPIRE || disableWrapperInfo.disableTime > 0) {
