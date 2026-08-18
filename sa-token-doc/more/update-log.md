@@ -34,7 +34,7 @@
 	- 修复：demo-ssm 适配 v1.42.0+ 上下文机制。
 - Solon：
 	- 优化：`sa-token-solon-plugin` 由 PathAnalyzer 适配改为 PathMatcher，优化 Config 示例。
-	- 优化：升级依赖 noear-redisx 至 1.8.5、noear-snack4 至 4.0.50。
+	- 优化：升级依赖 noear-redisx 至 1.8.5、noear-snack4 至 4.0.59。
 - SSO：
 	- 新增：SSO 客户端新增指定账号单点注销 API。
 	- 补全：补全最新版 SSO NoSdk 模式实现，新增 `SsoSignUtil`。
