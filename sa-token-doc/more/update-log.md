@@ -1,5 +1,77 @@
 # 更新日志 
 
+### v1.46.0 @2026-8-18
+- core：
+	- 新增：新增注销前侦听器 `doBeforeLogout` / `doBeforeKickout` / `doBeforeReplaced`。
+	- 新增：`StpInterface.isDisabled` 补充 `loginType` 参数。
+	- 新增：新增 `allowLoginIdColon` 配置，默认禁止 loginId 包含冒号。
+	- 新增：`getSaTokenConfig` 策略支持自定义配置来源。
+	- 新增：新增 `SaRequest` / `SaResponse` / `SaStorage` 创建策略。
+	- 新增：Session 新增 `getList` / `getSet` / `getMap` 类型安全集合读取。
+	- 修改：随机字符串/数字改用 CSPRNG（`SecureRandom`）生成。
+	- 修复：`isLastingCookie` 为 null 时 `getCookieTimeout` 不再 NPE。
+	- 修复：`isUrl` 支持 IPv6 方括号地址并拒绝裸 IPv6。
+	- 修复：Jackson DefaultTyping 多态反序列化 RCE，新增 `SaJsonStrategy` 全局类型白名单。  **[重要]**
+	- 修复：JSON 反序列化容错优化。
+- 插件：
+	- 新增：新增 `sa-token-fory-json` JSON 序列化插件。  **[重要]**
+	- 新增：新增 HTTP 请求扩展插件 `sa-token-rest-client` / `sa-token-rest-template`。  **[重要]**
+	- 新增：新增 `sa-token-alone-redisson` 独立连接插件及 Spring Boot 3/4 示例。  **[重要]**
+	- 新增：新增 `sa-token-alone-redis-by-spring-boot4` 插件及示例，实现 Spring Boot 4 下权限缓存与业务缓存分离。  **[重要]**
+	- 新增：`SaTokenDaoForRedisson` 支持指定 Codec（默认 `StringCodec`），update 方法改用 `setAndKeepTTL` 原子保留原过期时间。 **[重要]**
+	- 新增：RedisTemplate Dao 支持重写 `wrapKey` 自定义键前缀。
+	- 修复：`sa-token-redis-template` 及 jdk-serializer 在 update key 时 TTL 偏移的问题； **[重要]**
+	- 修复：`sa-token-redis-template-jdk-serializer` KEEPTTL 泛型编译错误。
+	- 修复：redis-template `searchData` 由 KEYS 改为 SCAN。  **[重要]**
+	- 修复：Snack3 序列化不再写入类型信息，对齐 fastjson 安全策略。
+	- 修复：JWT `extraData` 禁止包含保留字段。
+	- 优化：升级 fastjson / fastjson2 至 2.0.64。
+- starter：
+	- 修复：Context Filter 注册 REQUEST+ASYNC，修复 SSE/Flux 流式返回上下文未初始化。 **[重要]**
+	- 修复：修复 Boot3+ WebFlux/Gateway `setStatus` NoSuchMethodError。 
+	- 新增：新增 SSO Client Spring Boot 4 示例。
+	- 新增：新增 `sa-token-demo-first-run` 首次运行引导示例。
+	- 修复：demo-ssm 适配 v1.42.0+ 上下文机制。
+- Solon：
+	- 优化：`sa-token-solon-plugin` 由 PathAnalyzer 适配改为 PathMatcher，优化 Config 示例。
+	- 优化：升级依赖 noear-redisx 至 1.8.5、noear-snack4 至 4.0.50。
+- SSO：
+	- 新增：SSO 客户端新增指定账号单点注销 API。
+	- 补全：补全最新版 SSO NoSdk 模式实现，新增 `SsoSignUtil`。
+	- 修复：修复 OAuth2/SSO `redirect` 参数绕过 `allow-url` 校验的安全漏洞。  **[重要]**
+	- 修复：`buildServerAuthUrl` 识别 URL 编码后的 back 参数，back 为空时跳过追加，并增强重定向编码/解码健壮性。
+	- 修复：`getClient` 统一通过 `getClients` 查找以支持子类覆盖。
+	- 修复：NoSdk demo 签名校验补充时间窗与 nonce 防重放。
+	- 修复：订正 SSO-Client 接收消息推送地址的路由说明。
+- OAuth2：
+	- 修复：修复 `redirect` 参数绕过 `allow-url` 校验的安全漏洞。  **[重要]**
+	- 修改：`expiresTime` 为 -1 时按永久有效存储 Token。
+	- 重构：`doConfirm` 确认授权流程统一校验。
+	- 重构：`SaOAuth2Dao` 改用带 Class 参数的 `getObject` 反序列化。
+	- 修复：OAuth2 demo 拒绝授权时回传 state。
+	- 新增：OAuth2 章节补充数据互通后的 token 过期策略说明。
+- 文档：
+	- 修改：全仓库域名 sa-token.cc 统一迁移至 sa-token.com。  **[重要]**
+	- 新增：上线独立博客系统，收录原创文章。  **[重要]**
+	- 新增：文档站点暗色主题切换，支持 5 种 IDE 风格。
+	- 新增：文档站点多语言切换（基于 translate.js）。  **[重要]**
+	- 新增：README 多语言版本（英文、日文、韩文、俄文、繁体中文）与切换入口。  **[重要]**
+	- 新增：文档版本选择器改为动态加载（`all-version-common.js`）。
+	- 新增：新增源码运行指南文档。
+	- 新增：新增 `SECURITY.md` 安全策略及联系邮箱。  **[重要]**
+	- 新增：新增「Sa-Token 集成 Demos 示例大全下载」文档。
+	- 新增：导航栏增加安全推荐与案例下拉菜单。
+	- 优化：文档站点整体优化（侧边栏、首页、捐赠页、导航交互、API 手册等）。
+	- 同步：同步公众号文章列表、博客列表、赞助者名单、企业登记案例。
+	- 补充：补充 SSE/Flux 流式返回常见问题；补充按配置决定是否启用 Redis 的示例。
+	- 修复：订正 API 手册、SSO/OAuth2/WebFlux/Dubbo 等文档错漏。
+- 其它：
+	- 新增：新增乐之者java B站视频教程链接。  **[重要]**
+	- 优化：统一日志文案用词，「帐号」改为「账号」。
+	- 优化：统一 token 续期相关注释措辞。
+	- 修复：修正 ConcurrentHashMap 的错误 import 路径。
+
+
 ### v1.45.0 @2026-3-8
 - core：
 	- 新增：新增重复登录处理策略，当同一账号不允许多客户端同时登录时支持选择踢人下线或拦截本次登录。  **[重要]** merge: [pr 349](https://gitee.com/dromara/sa-token/pulls/349)
