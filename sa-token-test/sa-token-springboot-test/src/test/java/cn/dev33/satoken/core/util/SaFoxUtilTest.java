@@ -307,6 +307,31 @@ public class SaFoxUtilTest {
     	Assertions.assertEquals(SaFoxUtil.encodeUrl("https://sa-token.com"), "https%3A%2F%2Fsa-token.com");
     	Assertions.assertEquals(SaFoxUtil.decoderUrl("https%3A%2F%2Fsa-token.com"), "https://sa-token.com");
     }
+
+    @Test
+    public void decoderUrlIfEncoded() {
+    	String plainWithEncodedQuery = "http://client.com/sso/login?back=http%3A%2F%2Fclient.com%2F%23%2Findex";
+    	Assertions.assertFalse(SaFoxUtil.isEncodedUrl(plainWithEncodedQuery));
+    	Assertions.assertTrue(SaFoxUtil.isEncodedUrl("https%3A%2F%2Fsa-token.com"));
+    	Assertions.assertFalse(SaFoxUtil.isEncodedUrl("https://sa-token.com"));
+    	Assertions.assertEquals(plainWithEncodedQuery, SaFoxUtil.decoderUrlIfEncoded(plainWithEncodedQuery));
+
+    	Assertions.assertEquals("https://sa-token.com", SaFoxUtil.decoderUrlIfEncoded("https%3A%2F%2Fsa-token.com"));
+    	Assertions.assertEquals("HTTP://client.com/sso/login", SaFoxUtil.decoderUrlIfEncoded("HTTP%3A%2F%2Fclient.com%2Fsso%2Flogin"));
+    	Assertions.assertEquals("https://sa-token.com", SaFoxUtil.decoderUrlIfEncoded("https://sa-token.com"));
+    	Assertions.assertNull(SaFoxUtil.decoderUrlIfEncoded(null));
+    	Assertions.assertEquals("", SaFoxUtil.decoderUrlIfEncoded(""));
+    }
+
+    @Test
+    public void encodeUrlIfNotEncoded() {
+    	Assertions.assertEquals("https%3A%2F%2Fsa-token.com", SaFoxUtil.encodeUrlIfNotEncoded("https://sa-token.com"));
+    	Assertions.assertEquals("https%3A%2F%2Fsa-token.com", SaFoxUtil.encodeUrlIfNotEncoded("https%3A%2F%2Fsa-token.com"));
+    	Assertions.assertEquals("HTTP%3A%2F%2Fclient.com%2Fsso%2Flogin", SaFoxUtil.encodeUrlIfNotEncoded("HTTP%3A%2F%2Fclient.com%2Fsso%2Flogin"));
+    	Assertions.assertEquals(SaFoxUtil.encodeUrl("/index"), SaFoxUtil.encodeUrlIfNotEncoded("/index"));
+    	Assertions.assertNull(SaFoxUtil.encodeUrlIfNotEncoded(null));
+    	Assertions.assertEquals("", SaFoxUtil.encodeUrlIfNotEncoded(""));
+    }
     
     @Test
     public void convertStringToList() {

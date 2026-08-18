@@ -401,9 +401,16 @@ public class SaSsoServerTemplate extends SaSsoTemplate {
             }
         }
 
-        // 开始编码
+        // 获取 back 参数值
         int length = paramName.back.length() + 2;
         String back = url.substring(index + length);
+
+        // 如果 back 参数值已经是编码状态，则直接返回
+        if(SaFoxUtil.isEncodedUrl(back)) {
+            return url;
+        }
+
+        // 开始编码
         back = SaFoxUtil.encodeUrl(back);
 
         // 放回url中

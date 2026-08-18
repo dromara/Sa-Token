@@ -115,7 +115,10 @@ public class SaSsoServerProcessor {
 
 		// 情况2，开始跳转
 		String mode = req.getParam(paramName.mode, SaSsoConsts.MODE_TICKET);
-		String redirect = req.getParam(paramName.redirect);
+		String _redirect = req.getParam(paramName.redirect);
+
+		// 底层 web 容器会对获取到的参数值进行解码一次，但不确保未来是否会对接不遵守此规范的 web 容器，所以此处加一层保险
+		String redirect = SaFoxUtil.decoderUrlIfEncoded(_redirect);
 		String client = req.getParam(paramName.client);
 
 		// 构建最终重定向地址

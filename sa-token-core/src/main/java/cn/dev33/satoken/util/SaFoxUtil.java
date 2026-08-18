@@ -642,6 +642,45 @@ public class SaFoxUtil {
 	}
 
 	/**
+	 * 是否为整段编码后的 http(s) 绝对地址（开头为 {@code http%3A%2F%2F} / {@code https%3A%2F%2F}）
+	 * @param url see note
+	 * @return /
+	 */
+	public static boolean isEncodedUrl(String url) {
+		if(isEmpty(url)) {
+			return false;
+		}
+		String lower = url.toLowerCase();
+		return lower.startsWith("http%3a%2f%2f") || lower.startsWith("https%3a%2f%2f");
+	}
+
+	/**
+	 * 若整段是编码后的 http(s) 绝对地址则解码一次，否则原样返回。
+	 * 避免把明文 URL 里 query 的编码值解坏。
+	 * @param url see note
+	 * @return see note
+	 */
+	public static String decoderUrlIfEncoded(String url) {
+		if(isEncodedUrl(url)) {
+			return decoderUrl(url);
+		}
+		return url;
+	}
+
+	/**
+	 * 若尚未整段编码则编码一次，否则原样返回。
+	 * 避免对已编码的 http(s) 绝对地址二次编码。
+	 * @param url see note
+	 * @return see note
+	 */
+	public static String encodeUrlIfNotEncoded(String url) {
+		if(isEmpty(url) || isEncodedUrl(url)) {
+			return url;
+		}
+		return encodeUrl(url);
+	}
+
+	/**
 	 * 将指定字符串按照逗号分隔符转化为字符串集合
 	 * @param str 字符串
 	 * @return 分割后的字符串集合

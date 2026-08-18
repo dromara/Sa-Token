@@ -30,7 +30,7 @@ export default {
   methods: {
     // 重定向至认证中心
     goSsoAuthUrl: function() {
-      ajax('/sso/getSsoAuthUrl', {clientLoginUrl: location.href}, function(res) {
+      ajax('/sso/getSsoAuthUrl', {clientLoginUrl: encodeURIComponent(location.href)}, function(res) {
         location.href = res.data;
       })
     },
