@@ -13,7 +13,7 @@
     <url>https://github.com/dromara/sa-token</url>
 
     <properties>
-        <revision>1.45.0</revision>
+        <revision>1.46.0</revision>
 
         <!-- Maven GPG Plugin & Maven Central Portal -->
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>

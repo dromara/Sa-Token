@@ -3,7 +3,7 @@
 <p align="center">
 	<img alt="logo" src="https://sa-token.com/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.45.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.46.0</h1>
 <h4 align="center">✨ Open source, free, one-stop java permission authentication framework, making authentication simple and elegant! </h4>
 <p align="center">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
@@ -48,7 +48,7 @@ To use Sa-Token in a SpringBoot project, you only need to introduce dependencies
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-boot-starter</artifactId>
-	<version>1.45.0</version>
+	<version>1.46.0</version>
 </dependency>
 ```
 

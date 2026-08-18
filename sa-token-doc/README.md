@@ -1,7 +1,7 @@
 <p align="center">
 	<img alt="logo" src="https://sa-token.com/logo.png" width="150" height="150">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.45.0</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Sa-Token v1.46.0</h1>
 <h5 align="center">✨ 开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！</h5>
 <p align="center" class="badge-box">
 	<a href="https://gitee.com/dromara/sa-token/stargazers"><img src="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>

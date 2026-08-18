@@ -12,10 +12,11 @@
 	'use strict';
 
 	/** 当前线上最新版（根目录 /doc.html） */
-	var LATEST_VERSION = 'v1.45.0';
+	var LATEST_VERSION = 'v1.46.0';
 
 	/** 全部版本号，从新到旧（含最新版） */
 	var ALL_VERSIONS = [
+		'v1.46.0',
 		'v1.45.0',
 		'v1.44.0',
 		'v1.43.0',
