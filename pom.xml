@@ -88,26 +88,9 @@
 	</dependencyManagement>
 	
 	<!-- 项目构建 -->
+	<!-- 日常：mvn package（不生成 javadoc / sources / gpg） -->
 	<build>
 		<plugins>
-
-			<!-- Source -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.4.0</version>
-				<configuration>
-					<attach>true</attach>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 
 			<!-- 源码编译 -->
 			<plugin>
@@ -119,39 +102,6 @@
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
-			</plugin>
-
-			<!-- API 文档 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.12.0</version>
-				<configuration>
-					<!-- 统一生成聚合文档，解决 mvn package 时控制台发出 javadoc 警告的问题 -->
-					<!-- <aggregate>true</aggregate> -->
-					<!-- 忽略部分 error 和 warning -->
-					<failOnError>false</failOnError>
-					<failOnWarnings>false</failOnWarnings>
-					<additionalOptions>-Xdoclint:none</additionalOptions>
-					<detectLinks>false</detectLinks>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>aggregate</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<configuration>
-							<doclint>none</doclint>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 
 			<!-- flatten 统一版本号管理 -->
@@ -180,22 +130,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- gpg 签名 -->
-		   	<plugin>
-			   <groupId>org.apache.maven.plugins</groupId>
-			   <artifactId>maven-gpg-plugin</artifactId>
-			   <version>${maven-gpg-plugin.version}</version>
-			   <executions>
-				   <execution>
-					   <id>sign-artifacts</id>
-					   <phase>verify</phase>
-					   <goals>
-						   <goal>sign</goal>
-					   </goals>
-				   </execution>
-			   </executions>
-		   	</plugin>
 
 			<!-- 新版 Central Portal 中央仓库上传   -->
 			<plugin>
@@ -245,5 +179,66 @@
 	   	</pluginManagement>
 
 	</build>
+
+	<!-- 仅发 Maven 中央时启用，日常 package / install 不跑 -->
+	<profiles>
+		<profile>
+			<id>sonatype-oss-release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.4.0</version>
+						<configuration>
+							<attach>true</attach>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.12.0</version>
+						<configuration>
+							<failOnError>false</failOnError>
+							<failOnWarnings>false</failOnWarnings>
+							<additionalOptions>-Xdoclint:none</additionalOptions>
+							<detectLinks>false</detectLinks>
+							<doclint>none</doclint>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>${maven-gpg-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	
 </project>
