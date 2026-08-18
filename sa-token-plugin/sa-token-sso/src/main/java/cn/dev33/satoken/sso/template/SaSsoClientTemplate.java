@@ -234,6 +234,35 @@ public class SaSsoClientTemplate extends SaSsoTemplate {
         return message;
     }
 
+    /**
+     * 指定账号单点注销（向认证中心推送，并由认证中心通知各端下线）
+     *
+     * @param loginId 指定账号（本地 loginId，会按策略转换为认证中心 id）
+     */
+    public void ssoLogout(Object loginId) {
+        ssoLogout(loginId, getStpLogicOrGlobal().createSaLogoutParameter());
+    }
+
+    /**
+     * 指定账号单点注销（向认证中心推送，并由认证中心通知各端下线）
+     *
+     * @param loginId 指定账号（本地 loginId，会按策略转换为认证中心 id）
+     * @param logoutParameter 注销参数
+     */
+    public void ssoLogout(Object loginId, SaLogoutParameter logoutParameter) {
+        Object centerId = strategy.convertLoginIdToCenterId.run(loginId);
+        SaSsoMessage message = buildSignoutMessage(centerId, logoutParameter);
+        SaResult result = pushMessageAsSaResult(message);
+
+        // 如果 sso-server 响应的状态码非200，代表业务失败，将回应的 msg 字段作为异常抛出
+        if(result.getCode() == null || SaResult.CODE_SUCCESS != result.getCode()) {
+            throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30006);
+        }
+
+        // 极端场景下，sso-server 中心的单点注销可能并不会通知到当前 client 端，所以这里需要再补一刀
+        getStpLogicOrGlobal().logout(loginId, logoutParameter);
+    }
+
 
     // ------------------- Bean 对象获取 -------------------
 

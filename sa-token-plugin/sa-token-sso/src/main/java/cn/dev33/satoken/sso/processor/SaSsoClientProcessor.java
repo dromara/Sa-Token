@@ -274,20 +274,7 @@ public class SaSsoClientProcessor {
 		if(singleDeviceIdLogout) {
 			logoutParameter.setDeviceId(stpLogic.getLoginDeviceId());
 		}
-		Object loginId = stpLogic.getLoginId();
-		Object centerId = ssoClientTemplate.strategy.convertLoginIdToCenterId.run(loginId);
-		SaSsoMessage message = ssoClientTemplate.buildSignoutMessage(centerId, logoutParameter);
-		SaResult result = ssoClientTemplate.pushMessageAsSaResult(message);
-
-		// 如果 sso-server 响应的状态码非200，代表业务失败，将回应的 msg 字段作为异常抛出
-		if(result.getCode() == null || SaResult.CODE_SUCCESS != result.getCode()) {
-			throw new SaSsoException(result.getMsg()).setCode(SaSsoErrorCode.CODE_30006);
-		}
-
-		// 极端场景下，sso-server 中心的单点注销可能并不会通知到当前 client 端，所以这里需要再补一刀
-		if(stpLogic.isLogin()) {
-			stpLogic.logout(loginId, logoutParameter);
-		}
+		ssoClientTemplate.ssoLogout(stpLogic.getLoginId(), logoutParameter);
 		return _ssoLogoutBack(req, res);
 	}
 

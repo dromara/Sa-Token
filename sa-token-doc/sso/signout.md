@@ -156,3 +156,16 @@ public String index() {
 > 必须打开两个不同的浏览器来测试，或者按快捷键 `ctrl + shift + N` 打开隐私模式，才可以做到会话相互隔离。
 
 
+### 4、代码里指定账号单点注销
+
+``` java
+// sso-server：指定账号单点注销
+SaSsoServerUtil.ssoLogout(loginId);
+SaSsoServerUtil.ssoLogout(loginId, logoutParameter, ignoreClient);
+
+// sso-client：指定账号单点注销
+SaSsoClientUtil.ssoLogout(loginId);
+SaSsoClientUtil.ssoLogout(loginId, logoutParameter);
+```
+
+

@@ -122,6 +122,16 @@ SaSsoClientUtil.buildServerAuthUrl(String clientLoginUrl, String back);
 ```
 
 
+### 单点注销
+``` java
+// 指定账号单点注销（loginId 为本地账号 id，框架会按策略转换为认证中心 id）
+SaSsoClientUtil.ssoLogout(Object loginId);
+
+// 指定账号单点注销
+SaSsoClientUtil.ssoLogout(Object loginId, SaLogoutParameter logoutParameter);
+```
+
+
 ### 消息推送 
 
 ``` java

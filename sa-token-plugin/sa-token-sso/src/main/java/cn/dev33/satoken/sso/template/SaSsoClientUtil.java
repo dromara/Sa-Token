@@ -125,4 +125,26 @@ public class SaSsoClientUtil {
         return SaSsoClientProcessor.instance.ssoClientTemplate.buildSignoutMessage(loginId, logoutParameter);
     }
 
+
+    // ------------------- 单点注销 -------------------
+
+    /**
+     * 指定账号单点注销（向认证中心推送，并由认证中心通知各端下线）
+     *
+     * @param loginId 指定账号（本地 loginId，会按策略转换为认证中心 id）
+     */
+    public static void ssoLogout(Object loginId) {
+        SaSsoClientProcessor.instance.ssoClientTemplate.ssoLogout(loginId);
+    }
+
+    /**
+     * 指定账号单点注销（向认证中心推送，并由认证中心通知各端下线）
+     *
+     * @param loginId 指定账号（本地 loginId，会按策略转换为认证中心 id）
+     * @param logoutParameter 注销参数
+     */
+    public static void ssoLogout(Object loginId, SaLogoutParameter logoutParameter) {
+        SaSsoClientProcessor.instance.ssoClientTemplate.ssoLogout(loginId, logoutParameter);
+    }
+
 }
