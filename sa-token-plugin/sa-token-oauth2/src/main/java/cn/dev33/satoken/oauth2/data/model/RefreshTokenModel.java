@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.oauth2.data.model;
 
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.json.SaJsonType;
 
 import java.io.Serializable;
@@ -74,10 +75,13 @@ public class RefreshTokenModel implements SaJsonType, Serializable {
 	// 额外追加方法
 
 	/**
-	 * 获取：此 Refresh-Token 的剩余有效期（秒）
+	 * 获取：此 Refresh-Token 的剩余有效期（秒），-1=永不过期
 	 * @return /
 	 */
 	public long getExpiresIn() {
+		if (expiresTime == SaTokenDao.NEVER_EXPIRE) {
+			return SaTokenDao.NEVER_EXPIRE;
+		}
 		long s = (expiresTime - System.currentTimeMillis()) / 1000;
 		return s < 1 ? -2 : s;
 	}
