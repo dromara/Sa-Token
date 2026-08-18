@@ -21,6 +21,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.concurrent.TimeUnit;
@@ -149,12 +150,13 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializer extends SaTokenDaoForRed
 	/**
 	 * SET key value XX KEEPTTL：仅 key 存在时覆写 Object，并保留原 TTL
 	 */
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings("unchecked")
 	public void setObjectAndKeepTTL(String finalKey, Object object) {
+		RedisSerializer<Object> valueSerializer = (RedisSerializer<Object>) objectRedisTemplate.getValueSerializer();
 		objectRedisTemplate.execute((RedisCallback<Boolean>) connection ->
 			connection.set(
-				objectRedisTemplate.getKeySerializer().serialize(finalKey),
-				objectRedisTemplate.getValueSerializer().serialize(object),
+				objectRedisTemplate.getStringSerializer().serialize(finalKey),
+				valueSerializer.serialize(object),
 				Expiration.keepTtl(),
 				RedisStringCommands.SetOption.ifPresent()
 			)
