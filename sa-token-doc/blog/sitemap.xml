@@ -2,7 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sa-token.com/blog/index.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-20</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html</loc>
+    <lastmod>2026-08-18</lastmod>
   </url>
   <url>
     <loc>https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html</loc>

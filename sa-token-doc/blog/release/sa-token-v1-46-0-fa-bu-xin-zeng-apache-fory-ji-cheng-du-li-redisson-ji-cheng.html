@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="Sa-Token v1.46.0 版本更新发布。本版新增 Fory JSON、RestClient、独立 Redisson 等插件，并加固 SSO/OAuth2 重定向与 JSON 反序列化。完整变更见文内更新日志，升级前请核对不向下兼容项。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,SSO,单点登录,OAuth2,版本更新">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成">
+	<meta property="og:description" content="Sa-Token v1.46.0 版本更新发布。本版新增 Fory JSON、RestClient、独立 Redisson 等插件，并加固 SSO/OAuth2 重定向与 JSON 反序列化。完整变更见文内更新日志，升级前请核对不向下兼容项。">
+	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html">
+	<meta property="og:image" content="https://sa-token.com/big-file/blog/common/sa-token-jss--tran.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成">
+	<meta name="twitter:description" content="Sa-Token v1.46.0 版本更新发布。本版新增 Fory JSON、RestClient、独立 Redisson 等插件，并加固 SSO/OAuth2 重定向与 JSON 反序列化。完整变更见文内更新日志，升级前请核对不向下兼容项。">
+	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/common/sa-token-jss--tran.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成",
+  "description": "Sa-Token v1.46.0 版本更新发布。本版新增 Fory JSON、RestClient、独立 Redisson 等插件，并加固 SSO/OAuth2 重定向与 JSON 反序列化。完整变更见文内更新日志，升级前请核对不向下兼容项。",
+  "datePublished": "2026-08-18",
+  "dateModified": "2026-08-18",
+  "url": "https://sa-token.com/blog/release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html"
+  },
+  "image": "https://sa-token.com/big-file/blog/common/sa-token-jss--tran.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="../../doc.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi" href="../../doc.html#/more/join-group">加群</a>
+			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
+			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
+			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="../../doc.html#/more/update-log">更新日志</a>
+						<a href="../../doc.html#/more/common-questions">常见报错</a>
+						<a href="../../doc.html#/more/tj-gzh">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="../../doc.html#/fun/sa-token-test">在线考试</a>
+						<a href="../../doc.html#/fun/issue-template">在线提问</a>
+						<a href="../../doc.html#/more/wenjuan">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成</h1>
+					<div class="blog-article-meta"><span>2026-08-18</span><span>版本更新</span></div>
+					<p>Sa-Token 是一款 <strong>开源</strong>、<strong>免费</strong> 的轻量级 Java 权限认证框架，主要解决：<strong>登录认证</strong>、<strong>权限认证</strong>、<strong>单点登录</strong>、<strong>OAuth2.0</strong>、<strong>微服务网关鉴权</strong> 等一系列权限相关问题。🔐</p>
+<p><img alt="sa-token-jss--tran" src="/big-file/blog/common/sa-token-jss--tran.png" /></p>
+<p><strong>目前最新版本 <code>v1.46.0</code> 已推送至 <code>Maven</code> 中央仓库</strong> 🎉，大家可以通过如下方式引入：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-spring-boot4-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<blockquote>
+<p>Spring Boot 3.x 请改用 <code>sa-token-spring-boot3-starter</code>，Spring Boot 2.x 请改用 <code>sa-token-spring-boot-starter</code>。</p>
+</blockquote>
+<p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
+<h3 id="geng-xin-dian-1-xin-zeng-sa-token-fory-json-cha-jian-json-fa">📦 更新点1：新增 <code>sa-token-fory-json</code> 插件，JSON 方案再添一位</h3>
+<p>这是官方规划里「JSON 模块集成 Apache Fory」的落地，把 <a href="https://fory.apache.org/docs/json/">Fory JSON</a> 接到 <code>SaJsonTemplate</code> 上。</p>
+<p>此前 Session / Redis 序列化主要是 Jackson（Boot 默认，JSON 里会写 <code>@class</code>）和 Fastjson2 / Snack（默认不写类型信息）。相对 Jackson：Fory 官方文档给出的吞吐更高，且<strong>默认不写类型信息</strong>，避开多态反序列化那条面；相对 Fastjson2：用法接近，适合已经在用 Apache Fory、或不想再绑 Fastjson 栈的项目。引入后 SPI 自动注入，不用自己包一层。</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 整合 Apache Fory JSON --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-fory-json&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>JSON 插件全家桶现在是：Jackson、Jackson3、Fastjson、Fastjson2、<strong>Fory JSON</strong>、Snack3、Snack4。Boot 2/3 默认仍是 Jackson，Boot 4 默认 Jackson3，用得顺不必为了换而换。</p>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/json-extend">JSON 序列化扩展</a> 🔗</p>
+<h3 id="geng-xin-dian-2-xin-zeng-sa-token-rest-client-sa-token-rest">🌐 更新点2：新增 <code>sa-token-rest-client</code> / <code>sa-token-rest-template</code> 插件</h3>
+<p>SSO 模式三的 ticket 校验、单点注销、消息推送都要发 HTTP。此前只有 Forest、OkHttps 两套第三方客户端。Spring 项目本来就有 <code>spring-web</code>，再为 SSO 拉一套 HTTP 库，依赖和 API 都多一层。</p>
+<p>本版按官方规划补上 Spring 官方客户端：<code>sa-token-rest-template</code>、<code>sa-token-rest-client</code>。相对 Forest / OkHttps：不引入第三方 HTTP 栈，跟 Spring 一条线。<code>RestClient</code> 相对 <code>RestTemplate</code>：它是 Spring Framework 6.1+ / Boot 3.2+ 的官方继任者，Boot 4 里 <code>RestTemplate</code> 已标记 deprecated，新项目优先 RestClient。Boot 2 或 Boot 3.0–3.1 没有 <code>RestClient</code>，继续用 RestTemplate 或 Forest。</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Spring Boot 3.2+ / 4 优先 RestClient --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-rest-client&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">运行环境</th>
+<th style="text-align: left;">推荐插件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">非 Spring / Solon</td>
+<td style="text-align: left;"><code>sa-token-forest</code> 或 <code>sa-token-okhttps</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Spring Boot 2，或 Boot 3.0–3.1</td>
+<td style="text-align: left;"><code>sa-token-rest-template</code> 或 <code>sa-token-forest</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Spring Boot 3.2+ / 4</td>
+<td style="text-align: left;"><strong>优先</strong> <code>sa-token-rest-client</code></td>
+</tr>
+</tbody>
+</table>
+<p>同一 classpath 只放一个 HTTP 插件。没配任何处理器会报错误码 30010。本版还加了 SSO Client 的 Spring Boot 4 示例。</p>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/http-extend">HTTP 请求扩展</a> 🔗</p>
+<h3 id="geng-xin-dian-3-xin-zeng-sa-token-alone-redisson-cha-jian-qu">🗄️ 更新点3：新增 <code>sa-token-alone-redisson</code> 插件，权限缓存和业务缓存拆开</h3>
+<p>来自 GitHub <a href="https://github.com/dromara/Sa-Token/issues/710">#710</a>、Gitee <a href="https://gitee.com/dromara/sa-token/issues/ICE2V0">#ICE2V0</a>：alone-redis 要能配独立 Redisson。</p>
+<p><strong>升级有什么用：</strong> 现在 <code>redisson</code> 集成也可以做到权限缓存和业务缓存分离了，会话数据和业务 Redis 不再挤在同一个 Client 上，key 冲突、误删、codec 打架都能避开。Boot 4 另有 <code>sa-token-alone-redis-by-spring-boot4</code>。</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-alone-redisson&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<p>引入后<strong>不必再引</strong> <code>sa-token-redisson</code> / <code>sa-token-redisson-spring-boot-starter</code>。</p>
+<pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">sa-token:
+    alone-redisson:
+        config: 
+            singleServerConfig:
+                address: &quot;redis://127.0.0.1:6379&quot;
+                database: 2</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p><code>config</code> 与 <code>file</code> 二选一。示例覆盖单机、集群、Boot 3/4。</p>
+<p>Boot 4 注意：Redisson 3.45 的 starter 仍引用已移除的 <code>RedisAutoConfiguration</code>，<strong>不要引</strong> <code>redisson-spring-boot-starter</code>，自己注册 Bean。<code>SaTokenDaoForRedisson</code> 默认 <code>StringCodec</code>，并可用 <code>setAndKeepTTL</code> 原子保留 TTL。fix: <a href="https://github.com/dromara/Sa-Token/issues/791">#791</a></p>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/alone-redisson">独立 Redisson 插件</a> 🔗</p>
+<h3 id="geng-xin-dian-4-redistemplate-jian-suo-gai-scan-update-bao-t">🔧 更新点4：RedisTemplate 检索改 SCAN、update 保 TTL、key 可加前缀</h3>
+<p>这几条都是社区老工单：</p>
+<ul>
+<li><code>searchData</code> 用 KEYS 会堵 Redis：<a href="https://github.com/dromara/Sa-Token/issues/702">#702</a></li>
+<li>update 后续期 TTL 偏移：<a href="https://gitee.com/dromara/sa-token/issues/I80P5O">#I80P5O</a>、<a href="https://gitee.com/dromara/sa-token/issues/ICWJOQ">#ICWJOQ</a></li>
+<li>多项目共用 Redis 要加前缀：<a href="https://github.com/dromara/Sa-Token/issues/956">#956</a></li>
+</ul>
+<p><strong>升级有什么用：</strong> 在线用户查询不再 <code>KEYS *</code>；改 Session 不会把过期时间抹成「再活一整段 timeout」；多系统共 Redis 可以 <code>wrapKey</code> 隔离开。</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">public class MySaTokenDao extends SaTokenDaoForRedisTemplate {
+    @Override
+    public String wrapKey(String key) {
+        return &quot;my-app:&quot; + key;
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>KEEPTTL 需要 Redis &gt;= 6.0。</p>
+<h3 id="geng-xin-dian-5-zhu-xiao-qian-zhen-ting-qi-hui-hua-qing-diao">🔔 更新点5：注销前侦听器，会话清掉之前还能读现场</h3>
+<p>来自 sa-token 小助手用户「潮汐」的建议：侦听器触发时设备信息往往已经没了，审计不好记。</p>
+<p><strong>升级有什么用：</strong> 踢人、顶人、主动注销前，还能读到 Token-Session、设备列表，写日志、发通知不用自己抢时序。</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
+public void doBeforeLogout(String loginType, Object loginId, String tokenValue, SaLogoutParameter logoutParameter) {
+    SaSession session = SaManager.getStpLogic(loginType).getSessionByLoginId(loginId, false);
+    SaTerminalInfo terminal = session == null ? null : session.getTerminal(tokenValue);
+    // 记注销日志
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>对应钩子：<code>doBeforeLogout</code> / <code>doBeforeKickout</code> / <code>doBeforeReplaced</code>。不要用 <code>StpUtil</code> 读当前请求上下文，用参数里的 <code>loginId</code>、<code>tokenValue</code> 去查。</p>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/up/global-listener">全局侦听器</a> 🔗</p>
+<h3 id="geng-xin-dian-6-session-xin-zeng-getlist-getset-getmap">📋 更新点6：Session 新增 <code>getList</code> / <code>getSet</code> / <code>getMap</code></h3>
+<p>本版主动补齐。以前从 Session 取集合，要么 <code>get</code> 完再强转，要么自己处理 Redis 回来的裸 List。现在把元素类型写在参数上，主要是为了让代码写得更优雅，调用更友善。</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 以前
+@SuppressWarnings(&quot;unchecked&quot;)
+List&lt;SysUser&gt; users = (List&lt;SysUser&gt;) session.get(&quot;users&quot;);
+
+// 现在
+List&lt;SysUser&gt; users = session.getList(&quot;users&quot;, SysUser.class);
+Set&lt;String&gt; roles = session.getSet(&quot;roles&quot;, String.class);
+Map&lt;String, Long&gt; scoreMap = session.getMap(&quot;scoreMap&quot;, String.class, Long.class);
+
+// 缺 key 时给默认集合
+session.getList(&quot;users&quot;, SysUser.class, ArrayList::new);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<p>OAuth2 索引、SSO Client 列表、ApiKey 索引也切到这套 API，业务侧同一套写法。</p>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/use/session">Session 会话</a> 🔗</p>
+<h3 id="geng-xin-dian-7-sso-ke-hu-duan-zhi-chi-an-zhang-hao-dan-dian">🚪 更新点7：SSO 客户端支持按账号单点注销</h3>
+<p>社区提案：子系统删用户时，希望一行 API 通知认证中心把该账号全端打下线。</p>
+<p><strong>升级有什么用：</strong> 后台封号、离职回收，不必再自己拼 SSO 推送报文。</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// sso-server
+SaSsoServerUtil.ssoLogout(loginId);
+
+// sso-client（本地 loginId，框架按策略转成认证中心 id）
+SaSsoClientUtil.ssoLogout(loginId);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/sso/signout">Sa-Token SSO 单点注销</a> 🔗</p>
+<h3 id="geng-xin-dian-8-sarequest-saresponse-sastorage-ke-ce-lve-chu">🧩 更新点8：<code>SaRequest</code> / <code>SaResponse</code> / <code>SaStorage</code> 可策略创建</h3>
+<p>来自 GitHub <a href="https://github.com/dromara/Sa-Token/issues/841">#841</a>：旧版靠继承 <code>SaTokenContextForSpring</code> 改上下文，v1.42 重构后那套父类没了。</p>
+<p><strong>升级有什么用：</strong> Nginx 改 URI、自定义 Request 包装，改策略函数即可，不用再继承已删除的上下文类。</p>
+<p><code>SaStrategy</code> 新增 <code>createSaRequest</code> / <code>createSaResponse</code> / <code>createSaStorage</code>。<code>getSaTokenConfig</code> 也可接管配置来源，方便从数据库读 Sa-Token 配置。</p>
+<h3 id="geng-xin-dian-9-liang-chu-bu-xiang-xia-jian-rong-sheng-ji-xi">⚠️ 更新点9：两处不向下兼容，升级先看</h3>
+<p><strong>1）<code>allowLoginIdColon</code> 默认 false。</strong> 官方一直强调 loginId 不要带冒号（持久化 key 用 <code>:</code> 分段）。本版源码直接拒登。存量项目如果 loginId 里真有冒号：</p>
+<pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">sa-token:
+    allow-login-id-colon: true</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p><strong>2）<code>StpInterface.isDisabled</code> 增加 <code>loginType</code> 参数。</strong> 自己实现了封禁查询的，要改方法签名。</p>
+<p>另外：JWT <code>extraData</code> 禁止写入 <code>loginType</code>、<code>loginId</code>、<code>deviceType</code>、<code>eff</code>、<code>rnStr</code> 等保留字段，撞名会直接抛错。</p>
+<h3 id="geng-xin-dian-10-xiu-fu-oauth2-sso-redirect-rao-guo-allow-ur">🛡️ 更新点10：修复 OAuth2 / SSO <code>redirect</code> 绕过 <code>allow-url</code> 漏洞</h3>
+<p>来自社区用户提交的漏洞报告：OAuth2 调用 <code>/oauth2/doConfirm</code> 时，<code>redirect_uri</code> 校验可被绕过；本版审查后确认 SSO 的 <code>redirect</code> 存在同类问题。</p>
+<p><strong>触发条件为（需同时满足）：</strong></p>
+<ol>
+<li>项目搭了 <strong>SSO 认证中心</strong> 或 <strong>OAuth2 授权服务器</strong>；</li>
+<li>请求里可以由前端（或攻击者）传入 <code>redirect</code> / <code>redirect_uri</code>；</li>
+<li><code>allow-url</code> 配了不安全通配（如 <code>http://domain*</code>，<code>*</code>出现在域名部分，前面不是<code>/</code>或<code>:</code>）。</li>
+</ol>
+<p>普通登录鉴权、没用 SSO/OAuth2 的项目，与这条无关。<code>allow-url: "*"</code> 等于主动放开白名单，也不在本条讨论范围。</p>
+<p><strong>会造成：</strong> ticket 或授权码被下发到第三方站点。</p>
+<p><strong>新版本：</strong> SSO 与 OAuth2 两侧同时拒绝 <code>@</code>、<code>%40</code>、<code>%2540</code>；<code>*</code> 只能出现在最后一位，且前一位必须是 <code>/</code> 或 <code>:</code>；<code>isUrl</code> 支持 IPv6 方括号地址。生产环境请把 <code>allow-url</code> 配成明确地址。用了 SSO/OAuth2 的，建议升到 v1.46.0。</p>
+<pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">sa-token:
+    sso-server:
+        clients:
+            sso-client1:
+                allow-url: http://sa-sso-client1.com:9003/*</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<p>感谢这位社区用户提交的漏洞报告。</p>
+<h3 id="geng-xin-dian-11-xiu-fu-jackson-duo-tai-fan-xu-lie-hua-lou-d">🔐 更新点11：修复 Jackson 多态反序列化漏洞，新增类型白名单</h3>
+<p>这是本版对 JSON 反序列化路径的主动审查：使用 Jackson / Jackson3 把 <code>SaSession</code> 写入 Redis 时，JSON 里会带 <code>@class</code> 类型标记；旧版本未限制严格限制反序列化类型白名单，可能会在反序列化时触发 classpath 上的任意类。</p>
+<p><strong>触发条件为（需同时满足）：</strong> 使用 <code>SaJsonTemplate</code> 去反序列化业务中未严格审查的 json 字符串。</p>
+<p><code>fastjson</code> / <code>fastjson2</code> / <code>fory-json</code> / <code>snack3</code> 默认不写类型标记，一般不走这条面。不去使用 <code>SaJsonTemplate</code> 去反序列化业务中未严格审查的 json 字符串。本版起 <code>sa-token-snack3</code> 也不再写入类型信息。</p>
+<p><strong>会造成：</strong> 攻击者提交恶意 json 字符串，可能触发多态反序列化 RCE。</p>
+<p><strong>新版本：</strong> 增加 <code>SaJsonStrategy</code> 全局类型白名单，只允许白名单内类型参与这类反序列化。JDK 常见值类型、框架已实现 <code>SaJsonType</code> 的 Model 默认在名单里；<strong>你的业务实体默认不在</strong>。用了 Jackson 且 Session 里存了自定义对象的，升级后可能看到：</p>
+<pre><code>无法反序列化的类型：com.pj.model.SysUser，请先将其注册到 JSON 全局类型白名单
+</code></pre>
+<p>推荐让实体实现 <code>SaJsonType</code>：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">public class SysUser implements SaJsonType {
+    // ...
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
+<p>也可以在 <code>SpringApplication.run</code> <strong>之前</strong> 调用 <code>SaJsonStrategy.instance.registerAllowType(SysUser.class)</code>，或在 <code>META-INF/satoken/sa-json-type.list</code> 按行写完整类名。JSON 插件初始化后再注册会失败。不要登记 <code>Object.class</code>。用了 Jackson + SaJsonTemplate 反序列化业务 json 字符串的，建议升到 v1.46.0，并先把业务类型登记进白名单。</p>
+<p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/json-extend">JSON 序列化扩展</a> 🔗</p>
+<h3 id="geng-xin-dian-12-xiu-fu-sse-flux-shang-xia-wen-wei-chu-shi-h">📡 更新点12：修复 SSE / Flux 上下文未初始化，以及 Boot3 WebFlux <code>setStatus</code></h3>
+<p>这两条都是社区报错工单：SSE 来自 Gitee <a href="https://gitee.com/dromara/sa-token/issues/IC4XFE">#IC4XFE</a>、<a href="https://gitee.com/dromara/sa-token/issues/ICB9OJ">#ICB9OJ</a>；<code>setStatus</code> 来自 <a href="https://gitee.com/dromara/sa-token/issues/IIAW1A">#IIAW1A</a>、GitHub <a href="https://github.com/dromara/Sa-Token/issues/916">#916</a>。</p>
+<p><strong>SSE / Flux</strong></p>
+<p>在之前的版本中，SpringMVC 接口如果返回 <code>SseEmitter</code>、<code>Flux</code> 等异步、流式结果，随后再调 <code>StpUtil</code> / <code>SaHolder</code> 会报：</p>
+<pre><code>cn.dev33.satoken.exception.SaTokenContextException: SaTokenContext 上下文尚未初始化
+</code></pre>
+<p>这是因为 Context Filter 只注册了 <code>REQUEST</code>。流式返回会再走一遍 <code>ASYNC</code> dispatch，过滤器没挂上，ThreadLocal 上下文是空的。普通 <code>@RequestMapping</code> 一问一答不受影响。</p>
+<p>新版本把 Filter 注册为 <code>REQUEST</code> + <code>ASYNC</code>，二次 dispatch 也会初始化上下文，一般不用再手改 Filter。</p>
+<p><strong>Boot3+ WebFlux / Gateway <code>setStatus</code></strong></p>
+<p>在之前的版本中，Boot3+ 的 WebFlux 或 Gateway 里调用：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">SaHolder.getResponse().setStatus(401);</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p>会报：</p>
+<pre><code>java.lang.NoSuchMethodError: 'org.springframework.http.server.reactive.ServerHttpResponse setStatusCode(org.springframework.http.HttpStatus)'
+</code></pre>
+<p>这是因为 Boot2 的 <code>ServerHttpResponse.setStatusCode</code> 吃 <code>HttpStatus</code>，Boot3 改成了 <code>HttpStatusCode</code>，旧 Reactor starter 字节码对不上。WebMVC 用户与这条无关。</p>
+<p>新版本拆了 Boot2 / Boot3+ 的 Reactor 实现，Boot3+ 走 <code>HttpStatusCode.valueOf(sc)</code>，不再报错。<code>sa-token-dependencies</code> 也不再锁死 Reactor 版本，避免跟 Spring Cloud Gateway 打架。fix: <a href="https://github.com/dromara/Sa-Token/issues/622">#622</a></p>
+<h3 id="geng-xin-dian-13-wen-dang-zhan-qi-yong-com-ding-ji-yu-ming-b">📚 更新点13：文档站启用 .com 顶级域名，博客、多语言、安全策略</h3>
+<p>域名从 <code>sa-token.cc</code> 迁到 <a href="https://sa-token.com">sa-token.com</a>，请即使修改书签。独立博客上线；文档站暗色主题 5 种 IDE 风格；translate.js 多语言；README 有英/日/韩/俄/繁中。</p>
+<p>随机数改用 <code>SecureRandom</code>。新增 <code>SECURITY.md</code>：安全问题走 GitHub Private Vulnerability Reporting 或邮件，不要开公开 Issue。</p>
+<p>文档版本选择器改为动态加载。Solon 插件由 PathAnalyzer 换成 PathMatcher。</p>
+<p>感谢 <a href="https://github.com/dromara/Sa-Token/pull/933">@Ran</a> 补充 <code>SECURITY.md</code>（fix <a href="https://github.com/dromara/Sa-Token/issues/932">#932</a>、<a href="https://github.com/dromara/Sa-Token/issues/877">#877</a>）；感谢 <a href="https://gitee.com/dromara/sa-token/pulls/364">@noear</a> 适配 Solon PathMatcher（fix <a href="https://gitee.com/dromara/sa-token/issues/IJTNJK">#IJTNJK</a>）。</p>
+<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.46.0 版本的完整更新日志：</p>
+<ul>
+<li>core：<ul>
+<li>新增：侦听器新增注销前钩子 <code>doBeforeLogout</code> / <code>doBeforeKickout</code> / <code>doBeforeReplaced</code>。 <strong>[重要]</strong></li>
+<li>新增：<code>StpInterface.isDisabled</code> 补充 <code>loginType</code> 参数。  <strong>[不向下兼容]</strong></li>
+<li>新增：新增 <code>allowLoginIdColon</code> 配置，默认禁止 loginId 包含冒号。  <strong>[不向下兼容]</strong></li>
+<li>修复：Jackson DefaultTyping 多态反序列化 RCE，新增 <code>SaJsonStrategy</code> 全局类型白名单。  <strong>[重要]</strong>  <strong>[漏洞修复]</strong></li>
+<li>新增：<code>getSaTokenConfig</code> 策略支持自定义配置来源，方便从数据库中读取配置。</li>
+<li>新增：新增 <code>SaRequest</code> / <code>SaResponse</code> / <code>SaStorage</code> 创建策略。  fix: <a href="https://github.com/dromara/Sa-Token/issues/841">#841</a></li>
+<li>新增：Session 新增 <code>getList</code> / <code>getSet</code> / <code>getMap</code> 类型安全集合读取。</li>
+<li>修改：随机字符串/数字改用 CSPRNG（<code>SecureRandom</code>）生成。</li>
+<li>修复：<code>isLastingCookie</code> 为 null 时 <code>getCookieTimeout</code> 不再 NPE。</li>
+<li>修复：<code>isUrl</code> 支持 IPv6 方括号地址并拒绝裸 IPv6。</li>
+<li>修复：JSON 反序列化容错优化。  fix: <a href="https://gitee.com/dromara/sa-token/issues/ICOTM8">#ICOTM8</a></li>
+</ul>
+</li>
+<li>插件：<ul>
+<li>新增：新增 <code>sa-token-fory-json</code> JSON 序列化插件。  <strong>[重要]</strong></li>
+<li>新增：新增 HTTP 请求扩展插件 <code>sa-token-rest-client</code> / <code>sa-token-rest-template</code>。  <strong>[重要]</strong></li>
+<li>新增：新增 <code>sa-token-alone-redisson</code> 独立连接插件及 Spring Boot 3/4 示例。  <strong>[重要]</strong>  fix: <a href="https://github.com/dromara/Sa-Token/issues/710">#710</a>、<a href="https://gitee.com/dromara/sa-token/issues/ICE2V0">#ICE2V0</a></li>
+<li>新增：新增 <code>sa-token-alone-redis-by-spring-boot4</code> 插件及示例，实现 Spring Boot 4 下权限缓存与业务缓存分离。  <strong>[重要]</strong></li>
+<li>新增：<code>SaTokenDaoForRedisson</code> 支持指定 Codec（默认 <code>StringCodec</code>），update 方法改用 <code>setAndKeepTTL</code> 原子保留原过期时间。  <strong>[重要]</strong>  fix: <a href="https://github.com/dromara/Sa-Token/issues/791">#791</a></li>
+<li>修复：<code>sa-token-redis-template</code> 及 jdk-serializer 在 update key 时 TTL 偏移的问题。  <strong>[重要]</strong>  fix: <a href="https://gitee.com/dromara/sa-token/issues/I80P5O">#I80P5O</a>、<a href="https://gitee.com/dromara/sa-token/issues/ICWJOQ">#ICWJOQ</a></li>
+<li>修复：redis-template <code>searchData</code> 由 KEYS 改为 SCAN。  <strong>[重要]</strong>  fix: <a href="https://github.com/dromara/Sa-Token/issues/702">#702</a></li>
+<li>新增：RedisTemplate Dao 支持重写 <code>wrapKey</code> 自定义键前缀。  fix: <a href="https://github.com/dromara/Sa-Token/issues/956">#956</a></li>
+<li>修复：<code>sa-token-redis-template-jdk-serializer</code> KEEPTTL 泛型编译错误。</li>
+<li>修复：Snack3 序列化不再写入类型信息，对齐 fastjson 安全策略。  <strong>[漏洞修复]</strong></li>
+<li>修复：集成 JWT 时 <code>extraData</code> 禁止包含保留字段。  <strong>[不向下兼容]</strong></li>
+<li>优化：升级 fastjson / fastjson2 至 2.0.64。</li>
+<li>优化：<code>sa-token-dependencies</code> 不再锁定 Reactor 版本，避免与 Spring Cloud Gateway 冲突。  fix: <a href="https://github.com/dromara/Sa-Token/issues/622">#622</a></li>
+</ul>
+</li>
+<li>starter：<ul>
+<li>修复：Context Filter 注册 REQUEST+ASYNC，修复 SSE/Flux 流式返回上下文未初始化。  <strong>[重要]</strong>  fix: <a href="https://gitee.com/dromara/sa-token/issues/IC4XFE">#IC4XFE</a>、<a href="https://gitee.com/dromara/sa-token/issues/ICB9OJ">#ICB9OJ</a></li>
+<li>修复：Boot3+ WebFlux/Gateway <code>setStatus</code> NoSuchMethodError。  fix: <a href="https://gitee.com/dromara/sa-token/issues/IIAW1A">#IIAW1A</a>、<a href="https://github.com/dromara/Sa-Token/issues/916">#916</a>、<a href="https://gitee.com/dromara/sa-token/issues/IHRIBY">#IHRIBY</a></li>
+<li>新增：新增 SSO Client Spring Boot 4 示例。</li>
+<li>新增：新增 <code>sa-token-demo-first-run</code> 首次运行引导示例。</li>
+<li>修复：demo-ssm 适配 v1.42.0+ 上下文机制。</li>
+</ul>
+</li>
+<li>Solon：<ul>
+<li>优化：<code>sa-token-solon-plugin</code> 由 PathAnalyzer 适配改为 PathMatcher，优化 Config 示例。  merge: <a href="https://gitee.com/dromara/sa-token/pulls/364">pr 364</a>  fix: <a href="https://gitee.com/dromara/sa-token/issues/IJTNJK">#IJTNJK</a></li>
+<li>优化：升级依赖 noear-redisx 至 1.8.5、noear-snack4 至 4.0.59。</li>
+</ul>
+</li>
+<li>SSO：<ul>
+<li>修复：OAuth2/SSO <code>redirect</code> 参数绕过 <code>allow-url</code> 校验的安全漏洞。  <strong>[重要]</strong>  <strong>[漏洞修复]</strong></li>
+<li>新增：SSO 客户端新增指定账号单点注销 API。</li>
+<li>补全：补全最新版 SSO NoSdk 模式实现，新增 <code>SsoSignUtil</code>。</li>
+<li>修复：<code>buildServerAuthUrl</code> 识别 URL 编码后的 back 参数，back 为空时跳过追加，并增强重定向编码/解码健壮性。  fix: <a href="https://github.com/dromara/Sa-Token/issues/842">#842</a></li>
+<li>修复：<code>getClient</code> 统一通过 <code>getClients</code> 查找以支持子类覆盖。</li>
+<li>修复：NoSdk demo 签名校验补充时间窗与 nonce 防重放。  <strong>[漏洞修复]</strong></li>
+<li>修复：订正 SSO-Client 接收消息推送地址的路由说明。</li>
+</ul>
+</li>
+<li>OAuth2：<ul>
+<li>修复：<code>redirect</code> 参数绕过 <code>allow-url</code> 校验的安全漏洞。  <strong>[重要]</strong>  <strong>[漏洞修复]</strong></li>
+<li>修改：<code>expiresTime</code> 为 -1 时按永久有效存储 Token。</li>
+<li>重构：<code>doConfirm</code> 确认授权流程统一校验。</li>
+<li>重构：<code>SaOAuth2Dao</code> 改用带 Class 参数的 <code>getObject</code> 反序列化。  fix: <a href="https://gitee.com/dromara/sa-token/issues/IK5GYU">#IK5GYU</a></li>
+<li>修复：OAuth2 demo 拒绝授权时回传 state。</li>
+<li>新增：OAuth2 章节补充数据互通后的 token 过期策略说明。</li>
+</ul>
+</li>
+<li>文档：<ul>
+<li>修改：全仓库域名 sa-token.cc 统一迁移至 sa-token.com。  <strong>[重要]</strong></li>
+<li>新增：上线独立博客系统，收录原创文章。  <strong>[重要]</strong></li>
+<li>新增：文档站点多语言切换（基于 translate.js）。  <strong>[重要]</strong></li>
+<li>新增：README 多语言版本（英文、日文、韩文、俄文、繁体中文）与切换入口。  <strong>[重要]</strong></li>
+<li>新增：新增 <code>SECURITY.md</code> 安全策略及联系邮箱。  <strong>[重要]</strong>  merge: <a href="https://github.com/dromara/Sa-Token/pull/933">pr 933</a>  fix: <a href="https://github.com/dromara/Sa-Token/issues/932">#932</a>、<a href="https://github.com/dromara/Sa-Token/issues/877">#877</a></li>
+<li>新增：文档站点暗色主题切换，支持 5 种 IDE 风格。</li>
+<li>新增：文档版本选择器改为动态加载（<code>all-version-common.js</code>）。  merge: <a href="https://github.com/dromara/Sa-Token/pull/928">pr 928</a>  fix: <a href="https://github.com/dromara/Sa-Token/issues/900">#900</a></li>
+<li>新增：新增源码运行指南文档。</li>
+<li>新增：新增「Sa-Token 集成 Demos 示例大全下载」文档。</li>
+<li>新增：导航栏增加安全推荐与案例下拉菜单。</li>
+<li>优化：文档站点整体优化（侧边栏、首页、捐赠页、导航交互、API 手册等）。</li>
+<li>同步：同步公众号文章列表、博客列表、赞助者名单、企业登记案例。</li>
+<li>补充：补充 SSE/Flux 流式返回常见问题；补充按配置决定是否启用 Redis 的示例。  fix: <a href="https://gitee.com/dromara/sa-token/issues/I9I4ZG">#I9I4ZG</a></li>
+<li>修复：订正 API 手册、SSO/OAuth2/WebFlux/Dubbo 等文档错漏。</li>
+</ul>
+</li>
+<li>其它：<ul>
+<li>新增：新增乐之者java B站视频教程链接。  <strong>[重要]</strong></li>
+<li>优化：统一日志文案用词，「帐号」改为「账号」。</li>
+<li>优化：统一 token 续期相关注释措辞。</li>
+<li>修复：修正 ConcurrentHashMap 的错误 import 路径。  merge: <a href="https://gitee.com/dromara/sa-token/pulls/359">pr 359</a></li>
+</ul>
+</li>
+</ul>
+<p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
+<h3 id="qi-ta">🌟 其它</h3>
+<p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
+<p>框架功能结构图：</p>
+<p><img alt="js" src="/big-file/blog/common/sa-token-js4--2.png" /></p>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html">← Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h3"><a href="#geng-xin-dian-1-xin-zeng-sa-token-fory-json-cha-jian-json-fa">📦 更新点1：新增 sa-token-fory-json 插件，JSON 方案再添一位</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-2-xin-zeng-sa-token-rest-client-sa-token-rest">🌐 更新点2：新增 sa-token-rest-client / sa-token-rest-template 插件</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-3-xin-zeng-sa-token-alone-redisson-cha-jian-qu">🗄️ 更新点3：新增 sa-token-alone-redisson 插件，权限缓存和业务缓存拆开</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-4-redistemplate-jian-suo-gai-scan-update-bao-t">🔧 更新点4：RedisTemplate 检索改 SCAN、update 保 TTL、key 可加前缀</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-5-zhu-xiao-qian-zhen-ting-qi-hui-hua-qing-diao">🔔 更新点5：注销前侦听器，会话清掉之前还能读现场</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-6-session-xin-zeng-getlist-getset-getmap">📋 更新点6：Session 新增 getList / getSet / getMap</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-7-sso-ke-hu-duan-zhi-chi-an-zhang-hao-dan-dian">🚪 更新点7：SSO 客户端支持按账号单点注销</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-8-sarequest-saresponse-sastorage-ke-ce-lve-chu">🧩 更新点8：SaRequest / SaResponse / SaStorage 可策略创建</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-9-liang-chu-bu-xiang-xia-jian-rong-sheng-ji-xi">⚠️ 更新点9：两处不向下兼容，升级先看</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-10-xiu-fu-oauth2-sso-redirect-rao-guo-allow-ur">🛡️ 更新点10：修复 OAuth2 / SSO redirect 绕过 allow-url 漏洞</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-11-xiu-fu-jackson-duo-tai-fan-xu-lie-hua-lou-d">🔐 更新点11：修复 Jackson 多态反序列化漏洞，新增类型白名单</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-12-xiu-fu-sse-flux-shang-xia-wen-wei-chu-shi-h">📡 更新点12：修复 SSE / Flux 上下文未初始化，以及 Boot3 WebFlux setStatus</a></li>
+<li class="toc-h3"><a href="#geng-xin-dian-13-wen-dang-zhan-qi-yong-com-ding-ji-yu-ming-b">📚 更新点13：文档站启用 .com 顶级域名，博客、多语言、安全策略</a></li>
+<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>
