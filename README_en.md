@@ -27,9 +27,9 @@
 
 ### 📝 Foreword:
 
-Looking back at the beginning of 2020, when I submitted the first line of code for Sa-Token, what Java on the market lacked at that time was not only a simple and easy-to-use authentication framework, but also a set of clear and self-consistent permission architecture design ideas.
+Looking back at the beginning of 2020, when I submitted the first line of code for Sa-Token, **what Java on the market lacked at that time was not only a simple and easy-to-use authentication framework, but also a complete set of clear and self-consistent permission architecture design ideas**.
 
-Therefore, in the past few years, I have devoted a lot of time to writing Sa-Token documentation. Almost every chapter, every sentence, and every word has been repeatedly revised and finely polished in order to achieve the clearest, most concise, and easy-to-understand expression. Read the documentation carefully, and you will learn not only the Sa-Token framework itself, but also the best practices for permission design in most scenarios.
+Therefore, in the past few years, I have devoted a lot of time to writing Sa-Token documentation. Almost every chapter, every sentence, and every word has been repeatedly revised and finely polished in order to achieve the clearest, most concise, and easy-to-understand expression. **Read the documentation carefully, and you will learn not only the Sa-Token framework itself, but also the best practices for authentication and authorization design in most scenarios**.
 
 
 
@@ -37,7 +37,7 @@ Therefore, in the past few years, I have devoted a lot of time to writing Sa-Tok
 
 Sa-Token is a lightweight Java permission authentication framework that currently has five core modules: login authentication, permission authentication, single sign-on, OAuth2.0, and microservice authentication.
 
-**Still hand-rolling these features? Stop ⚠️ Let Sa-Token handle them!**
+Still hand-rolling these features? **Stop, let Sa-Token handle them!**
 
 ![sa-token-jss](https://sa-token.com/big-file/index/intro/sa-token-jss--tran.png)
 
