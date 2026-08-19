@@ -52,6 +52,9 @@ Redis 的集成有多种方式，缓存的方案也不止 Redis 一种，Sa-Toke
 > [!WARNING| ] 
 > 若往 Session 存自定义实体类后，从 Redis 读回报错 `无法反序列化的类型：xxx，请先将其注册到 JSON 全局类型白名单`，请参考：[JSON 全局类型白名单机制](/plugin/json-extend?id=json-全局类型白名单机制)
 
+> [!WARNING| ] 
+> 自 v1.46.0 起，`sa-token-redis-template` / `sa-token-redisson` 使用了 Redis 6.0+ 的 `SET KEEPTTL` 特性。若 Redis 服务低于 6.0，会报 `ERR syntax error`。解决方案见：[Q：Redis 6.0 以下版本集成报错](/more/common-questions?id=q：redis-60-以下版本集成报错：err-syntax-error)
+
 
 ### 2、自定义序列化方案
 
@@ -362,6 +365,8 @@ public class SaTokenDaoConfig {
 ```
 
 若你曾在 Redisson 配置里指定过其它 codec（如 `JsonJacksonCodec`），请传入当时使用的那个，而不是 `Kryo5Codec`。
+
+`setAndKeepTTL` 要求 Redis 6.0+。若 Redis 服务低于 6.0，会报 `ERR syntax error`，请参考：[Q：Redis 6.0 以下版本集成报错](/more/common-questions?id=q：redis-60-以下版本集成报错：err-syntax-error)
 
 
 ### 6、扩展：集成 MongoDB  

@@ -367,6 +367,85 @@ public class SaTokenConfigure extends WebMvcConfigurationSupport {
 `SaTokenDaoForRedisson` 已改为默认使用 `StringCodec`，与升级前跟随 Redisson 全局 codec（一般为 `Kryo5Codec`）不兼容。请清空 Redis 中的 Sa-Token 旧缓存，或构造时传入 `new Kryo5Codec()`。详见：[集成 Redis - 集成 Redisson](/up/integ-redis?id=_5集成-redisson)。
 
 
+### Q：Redis 6.0 以下版本集成报错：ERR syntax error
+自 v1.46.0 起，当 Redis 6.0 以下集成时，可能会发生报错：
+
+```
+io.lettuce.core.RedisCommandExecutionException: ERR syntax error
+org.redisson.client.RedisException: ERR syntax error. command: (SET), params: [key, value, KEEPTTL]
+```
+
+这是因为 Redis 集成插件使用了 `SET KEEPTTL` 高级特性（原子覆写 value 并保留原 TTL），如果你的 Redis 服务低于 6.0 版本，将会报错。
+
+解决方案有两种：
+
+1、将 Redis 升级到 6.0+（推荐）
+
+2、重写相关组件，恢复旧写法：
+
+如果你使用的 sa-token-redis-template 插件，请这样重写：
+
+``` java
+@Configuration
+public class SaTokenDaoConfig {
+	@Bean
+	@Primary
+	public SaTokenDao saTokenDao() {
+		return new SaTokenDaoForRedisTemplate() {
+			@Override
+			public void update(String key, String value) {
+				String finalKey = wrapKey(key);
+				long expireMs = stringRedisTemplate.getExpire(finalKey, TimeUnit.MILLISECONDS);
+				// -2 = 无此键
+				if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
+					return;
+				}
+				// -1 = 永不过期
+				if (expireMs == SaTokenDao.NEVER_EXPIRE) {
+					stringRedisTemplate.opsForValue().set(finalKey, value);
+				} else {
+					stringRedisTemplate.opsForValue().set(finalKey, value, expireMs, TimeUnit.MILLISECONDS);
+				}
+			}
+		};
+	}
+}
+```
+
+如果你使用的是 sa-token-redis-template-jdk-serializer 插件，把上面的 `SaTokenDaoForRedisTemplate` 换成 `SaTokenDaoForRedisTemplateUseJdkSerializer`，并额外重写 `updateObject`（写法相同，把 `stringRedisTemplate` 换成 `objectRedisTemplate`）。
+
+如果你使用的是 sa-token-redisson 相关插件，请这样重写：
+
+``` java
+@Configuration
+public class SaTokenDaoConfig {
+	@Bean
+	@Primary
+	public SaTokenDao saTokenDao(RedissonClient redissonClient) {
+		return new SaTokenDaoForRedisson(redissonClient) {
+			@Override
+			public void update(String key, String value) {
+				RBucket<String> bucket = redissonClient.getBucket(key, codec);
+				long expireMs = bucket.remainTimeToLive();
+				// -2 = 无此键
+				if (expireMs == SaTokenDao.NOT_VALUE_EXPIRE) {
+					return;
+				}
+				// -1 = 永不过期
+				if (expireMs == SaTokenDao.NEVER_EXPIRE) {
+					bucket.set(value);
+				} else {
+					bucket.set(value, Duration.ofMillis(expireMs));
+				}
+			}
+		};
+	}
+}
+```
+
+> 旧写法会先读 TTL 再 SET，极端并发下可能有毫秒级偏差；能升级 Redis 的话，优先升级。
+
+
 ### Q：调用 `StpUtil.getExtra("name")` 报错：`this api is disabled`。
 `StpUtil.getExtra(key)` 是给 sa-token-jwt 插件提供的，不集成这个插件就不能调用这个API，如果是普通模式需要存储自定义参数，请在 SaSession 上存储
 
