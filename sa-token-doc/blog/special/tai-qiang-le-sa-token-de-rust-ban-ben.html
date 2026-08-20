@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>太强了！Sa-Token 的 rust 版本！ - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="这是由 Sa-Token 社区成员发起的项目 sa-token-rust：把 sa-token 的鉴权思路带到 Rust。本文介绍早期能力与 Axum / Actix-web 等框架接入方式，方便 Rust 同学围观共建。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-rust-ban-ben.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="太强了！Sa-Token 的 rust 版本！">
+	<meta property="og:description" content="这是由 Sa-Token 社区成员发起的项目 sa-token-rust：把 sa-token 的鉴权思路带到 Rust。本文介绍早期能力与 Axum / Actix-web 等框架接入方式，方便 Rust 同学围观共建。">
+	<meta property="og:url" content="https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-rust-ban-ben.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="太强了！Sa-Token 的 rust 版本！">
+	<meta name="twitter:description" content="这是由 Sa-Token 社区成员发起的项目 sa-token-rust：把 sa-token 的鉴权思路带到 Rust。本文介绍早期能力与 Axum / Actix-web 等框架接入方式，方便 Rust 同学围观共建。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "太强了！Sa-Token 的 rust 版本！",
+  "description": "这是由 Sa-Token 社区成员发起的项目 sa-token-rust：把 sa-token 的鉴权思路带到 Rust。本文介绍早期能力与 Axum / Actix-web 等框架接入方式，方便 Rust 同学围观共建。",
+  "datePublished": "2025-10-12",
+  "dateModified": "2025-10-12",
+  "url": "https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-rust-ban-ben.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-rust-ban-ben.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="../../doc.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi" href="../../doc.html#/more/join-group">加群</a>
+			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
+			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
+			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="../../doc.html#/more/update-log">更新日志</a>
+						<a href="../../doc.html#/more/common-questions">常见报错</a>
+						<a href="../../doc.html#/more/tj-gzh">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="../../doc.html#/fun/sa-token-test">在线考试</a>
+						<a href="../../doc.html#/fun/issue-template">在线提问</a>
+						<a href="../../doc.html#/more/wenjuan">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>太强了！Sa-Token 的 rust 版本！</h1>
+					<div class="blog-article-meta"><span>2025-10-12</span><span>特殊文章</span></div>
+					<p>这是由 Sa-Token 社区成员发起的一个项目：sa-token-rust —— sa-token 的 rust 版本。</p>
+<p>对 rust 熟悉的同学速来围观啦。</p>
+<p>目前该仓库处于起步阶段，不过已经有不错的完成度了。源码注释也是中文的哦。</p>
+<p>一个轻量级、高性能的 Rust 认证授权框架：</p>
+<h3 id="te-xing">✨ 特性</h3>
+<ul>
+<li>🚀 多框架支持: Axum, Actix-web, Poem, Rocket, Warp</li>
+<li>🔐 完整的认证: 登录、登出、Token 验证、Session 管理</li>
+<li>🛡️ 细粒度授权: 基于权限和角色的访问控制</li>
+<li>💾 灵活存储: 内存、Redis 和数据库存储后端</li>
+<li>🎯 易于使用: 过程宏和工具类简化集成</li>
+<li>⚡ 高性能: 零拷贝设计，支持 async/await</li>
+<li>🔧 高度可配置: Token 超时、Cookie 选项、自定义 Token 名称</li>
+</ul>
+<h3 id="jia-gou">📦 架构</h3>
+<pre><code>sa-token-rust/
+├── sa-token-core/              # 核心库（Token、Session、Manager）
+├── sa-token-adapter/           # 适配器接口（Storage、Request/Response）
+├── sa-token-macro/             # 过程宏（#[sa_check_login] 等）
+├── sa-token-storage-memory/    # 内存存储实现
+├── sa-token-storage-redis/     # Redis 存储实现
+├── sa-token-storage-database/  # 数据库存储实现（占位符）
+├── sa-token-plugin-axum/       # Axum 框架集成
+├── sa-token-plugin-actix-web/  # Actix-web 框架集成
+├── sa-token-plugin-poem/       # Poem 框架集成
+├── sa-token-plugin-rocket/     # Rocket 框架集成
+├── sa-token-plugin-warp/       # Warp 框架集成
+└── examples/                   # 示例项目
+    ├── axum-full-example/      # 完整 Axum 示例
+    └── poem-full-example/      # 完整 Poem 示例
+</code></pre>
+<h3 id="he-xin-zu-jian">🎯 核心组件</h3>
+<h4 id="1-sa-token-core">1. sa-token-core</h4>
+<p>核心认证授权逻辑：</p>
+<ul>
+<li>SaTokenManager: Token 和 Session 操作的主管理器</li>
+<li>StpUtil: 提供简化 API 的工具类 (文档)</li>
+<li>Token 生成、验证和刷新</li>
+<li>Session 管理</li>
+<li>权限和角色检查</li>
+</ul>
+<h4 id="2-sa-token-adapter">2. sa-token-adapter</h4>
+<p>框架集成的抽象层：</p>
+<ul>
+<li>SaStorage: Token 和 Session 的存储接口</li>
+<li>SaRequest / SaResponse: 请求/响应抽象</li>
+</ul>
+<h4 id="3-sa-token-macro">3. sa-token-macro</h4>
+<p>用于注解式认证的过程宏：</p>
+<ul>
+<li><code>#[sa_check_login]</code>: 要求登录</li>
+<li><code>#[sa_check_permission("user:list")]</code>: 检查权限 (匹配规则)</li>
+<li><code>#[sa_check_role("admin")]</code>: 检查角色</li>
+<li><code>#[sa_check_permissions_and(...)]</code>: 检查多个权限（AND）</li>
+<li><code>#[sa_check_permissions_or(...)]</code>: 检查多个权限（OR）</li>
+<li><code>#[sa_ignore]</code>: 跳过认证</li>
+</ul>
+<h4 id="4-web-kuang-jia-cha-jian">4. Web 框架插件</h4>
+<p>所有插件都提供：</p>
+<ul>
+<li>使用 Builder 模式的状态管理</li>
+<li>双重中间件（基础 + 强制登录）</li>
+<li>三种提取器（必须、可选、LoginId）</li>
+<li>请求/响应适配器</li>
+<li>从 Header/Cookie/Query 提取 Token</li>
+<li>Bearer Token 支持</li>
+</ul>
+<h3 id="kuai-su-kai-shi">🚀 快速开始</h3>
+<h4 id="1-tian-jia-yi-lai">1. 添加依赖</h4>
+<pre><code>[dependencies]
+sa-token-core = &quot;0.1&quot;
+sa-token-storage-memory = &quot;0.1&quot;
+sa-token-plugin-axum = &quot;0.1&quot;  # 选择你的框架
+tokio = { version = &quot;1&quot;, features = [&quot;full&quot;] }
+axum = &quot;0.7&quot;
+</code></pre>
+<h4 id="2-chu-shi-hua-sa-token">2. 初始化 sa-token</h4>
+<pre><code>use sa_token_core::StpUtil;
+use sa_token_plugin_axum::SaTokenState;
+use sa_token_storage_memory::MemoryStorage;
+use std::sync::Arc;
+
+#[tokio::main]
+async fn main() {
+    // 创建状态（StpUtil 会自动初始化）
+    let state = SaTokenState::builder()
+        .storage(Arc::new(MemoryStorage::new()))
+        .token_name(&quot;Authorization&quot;)
+        .timeout(86400)  // 24 小时
+        .build();
+
+    // StpUtil 已就绪，可以直接使用！
+    // 你的应用代码...
+}
+</code></pre>
+<h4 id="3-yong-hu-deng-lu">3. 用户登录</h4>
+<pre><code>use sa_token_core::StpUtil;
+
+// 用户登录
+let token = StpUtil::login(&quot;user_id_10001&quot;).await?;
+println!(&quot;Token: {}&quot;, token.value());
+
+// 设置权限和角色
+StpUtil::set_permissions(
+    &quot;user_id_10001&quot;,
+    vec![&quot;user:list&quot;.to_string(), &quot;user:add&quot;.to_string()]
+).await?;
+
+StpUtil::set_roles(
+    &quot;user_id_10001&quot;,
+    vec![&quot;admin&quot;.to_string()]
+).await?;
+</code></pre>
+<h4 id="4-jian-cha-ren-zheng-axum-shi-li">4. 检查认证（Axum 示例）</h4>
+<pre><code>use axum::{Router, routing::get};
+use sa_token_plugin_axum::{SaTokenMiddleware, LoginIdExtractor};
+
+async fn user_info(LoginIdExtractor(login_id): LoginIdExtractor) -&gt; String {
+    format!(&quot;当前用户: {}&quot;, login_id)
+}
+
+async fn admin_panel(login_id: LoginIdExtractor) -&gt; String {
+    // 检查权限
+    if !StpUtil::has_permission(&amp;login_id.0, &quot;admin:panel&quot;).await {
+        return &quot;无权限&quot;.to_string();
+    }
+    format!(&quot;欢迎管理员: {}&quot;, login_id.0)
+}
+
+let app = Router::new()
+    .route(&quot;/user/info&quot;, get(user_info))
+    .route(&quot;/admin/panel&quot;, get(admin_panel))
+    .layer(SaTokenMiddleware::new(state));
+</code></pre>
+<h4 id="5-shi-yong-guo-cheng-hong">5. 使用过程宏</h4>
+<pre><code>use sa_token_macro::*;
+
+#[sa_check_login]
+async fn protected_route() -&gt; &amp;'static str {
+    &quot;此路由需要登录&quot;
+}
+
+#[sa_check_permission(&quot;user:delete&quot;)]
+async fn delete_user(user_id: String) -&gt; &amp;'static str {
+    &quot;用户已删除&quot;
+}
+
+#[sa_check_role(&quot;admin&quot;)]
+async fn admin_only() -&gt; &amp;'static str {
+    &quot;仅管理员可见内容&quot;
+}
+</code></pre>
+<h3 id="kuang-jia-ji-cheng-shi-li">📚 框架集成示例</h3>
+<h4 id="axum">Axum</h4>
+<pre><code>use axum::{Router, routing::{get, post}};
+use sa_token_plugin_axum::{SaTokenState, SaTokenMiddleware, LoginIdExtractor};
+
+let state = SaTokenState::builder()
+    .storage(Arc::new(MemoryStorage::new()))
+    .build();
+
+let app = Router::new()
+    .route(&quot;/user/info&quot;, get(user_info))
+    .layer(SaTokenMiddleware::new(state));
+</code></pre>
+<h4 id="actix-web">Actix-web</h4>
+<pre><code>use actix_web::{App, HttpServer, web};
+use sa_token_plugin_actix_web::{SaTokenState, SaTokenMiddleware, LoginIdExtractor};
+
+let state = SaTokenState::builder()
+    .storage(Arc::new(MemoryStorage::new()))
+    .build();
+
+HttpServer::new(move || {
+    App::new()
+        .app_data(state.clone())
+        .wrap(SaTokenMiddleware::new((*state).clone()))
+        .route(&quot;/user/info&quot;, web::get().to(user_info))
+})
+.bind(&quot;127.0.0.1:8080&quot;)?
+.run()
+.await
+</code></pre>
+<h4 id="poem">Poem</h4>
+<pre><code>use poem::{Route, Server};
+use sa_token_plugin_poem::{SaTokenState, SaTokenMiddleware, LoginIdExtractor};
+
+let state = SaTokenState::builder()
+    .storage(Arc::new(MemoryStorage::new()))
+    .build();
+
+let app = Route::new()
+    .at(&quot;/user/info&quot;, poem::get(user_info))
+    .with(SaTokenMiddleware::new(state));
+
+Server::new(TcpListener::bind(&quot;127.0.0.1:8080&quot;))
+    .run(app)
+    .await
+</code></pre>
+<h4 id="rocket">Rocket</h4>
+<pre><code>use rocket::{launch, get, routes};
+use sa_token_plugin_rocket::{SaTokenState, SaTokenFairing, LoginIdGuard};
+
+#[get(&quot;/user/info&quot;)]
+fn user_info(login_id: LoginIdGuard) -&gt; String {
+    format!(&quot;用户: {}&quot;, login_id.0)
+}
+
+#[launch]
+fn rocket() -&gt; _ {
+    let state = SaTokenState::builder()
+        .storage(Arc::new(MemoryStorage::new()))
+        .build();
+
+    rocket::build()
+        .attach(SaTokenFairing::new(state))
+        .mount(&quot;/&quot;, routes![user_info])
+}
+</code></pre>
+<h4 id="warp">Warp</h4>
+<pre><code>use warp::Filter;
+use sa_token_plugin_warp::{SaTokenState, sa_token_filter};
+
+let state = SaTokenState::builder()
+    .storage(Arc::new(MemoryStorage::new()))
+    .build();
+
+let routes = warp::path(&quot;user&quot;)
+    .and(warp::path(&quot;info&quot;))
+    .and(sa_token_filter(state))
+    .map(|token_data| {
+        format!(&quot;用户信息&quot;)
+    });
+
+warp::serve(routes)
+    .run(([127, 0, 0, 1], 8080))
+    .await;
+</code></pre>
+<h3 id="kai-yuan-di-zhi">开源地址</h3>
+<p>感兴趣的同学可以来关注一波：</p>
+<p>https://github.com/llc-993/sa-token-rust</p>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../special/sa-token-di-10000-ge-star-li-cheng-bei-gan-xie-san-nian-lai-suo-you-guan-zhu-sa.html">← Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！</a>
+<a class="blog-post-nav-next" href="../special/tai-qiang-le-sa-token-de-go-ban-ben.html">太强了！Sa-Token 的 Go 版本！ →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h3"><a href="#te-xing">✨ 特性</a></li>
+<li class="toc-h3"><a href="#jia-gou">📦 架构</a></li>
+<li class="toc-h3"><a href="#he-xin-zu-jian">🎯 核心组件</a></li>
+<li class="toc-h4"><a href="#1-sa-token-core">1. sa-token-core</a></li>
+<li class="toc-h4"><a href="#2-sa-token-adapter">2. sa-token-adapter</a></li>
+<li class="toc-h4"><a href="#3-sa-token-macro">3. sa-token-macro</a></li>
+<li class="toc-h4"><a href="#4-web-kuang-jia-cha-jian">4. Web 框架插件</a></li>
+<li class="toc-h3"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
+<li class="toc-h4"><a href="#1-tian-jia-yi-lai">1. 添加依赖</a></li>
+<li class="toc-h4"><a href="#2-chu-shi-hua-sa-token">2. 初始化 sa-token</a></li>
+<li class="toc-h4"><a href="#3-yong-hu-deng-lu">3. 用户登录</a></li>
+<li class="toc-h4"><a href="#4-jian-cha-ren-zheng-axum-shi-li">4. 检查认证（Axum 示例）</a></li>
+<li class="toc-h4"><a href="#5-shi-yong-guo-cheng-hong">5. 使用过程宏</a></li>
+<li class="toc-h3"><a href="#kuang-jia-ji-cheng-shi-li">📚 框架集成示例</a></li>
+<li class="toc-h4"><a href="#axum">Axum</a></li>
+<li class="toc-h4"><a href="#actix-web">Actix-web</a></li>
+<li class="toc-h4"><a href="#poem">Poem</a></li>
+<li class="toc-h4"><a href="#rocket">Rocket</a></li>
+<li class="toc-h4"><a href="#warp">Warp</a></li>
+<li class="toc-h3"><a href="#kai-yuan-di-zhi">开源地址</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

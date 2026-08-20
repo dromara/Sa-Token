@@ -3,6 +3,10 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
     "label": "精选",
     "items": [
       {
+        "title": "9 大框架统一接入，sa-token-rust 为什么值得关注",
+        "url": "featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html"
+      },
+      {
         "title": "使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）",
         "url": "featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html"
       },
@@ -196,6 +200,14 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
       {
         "title": "太强了！Sa-Token 的 NodeJS 版本！",
         "url": "special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html"
+      },
+      {
+        "title": "太强了！Sa-Token 的 Go 版本！",
+        "url": "special/tai-qiang-le-sa-token-de-go-ban-ben.html"
+      },
+      {
+        "title": "太强了！Sa-Token 的 rust 版本！",
+        "url": "special/tai-qiang-le-sa-token-de-rust-ban-ben.html"
       },
       {
         "title": "Sa-Token 第 10000 个star 里程碑，感谢三年来所有关注 Sa-Token 的小伙伴！",
