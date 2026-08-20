@@ -2,22 +2,22 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<title>Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例 - Sa-Token 博客</title>
+	<title>sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录 - Sa-Token 博客</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta name="description" content="Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。">
+	<meta name="description" content="Sa-Token v1.9.0 版本更新说明：新增同端互斥登录，同一类型设备只允许单地点登录，不同类型设备允许同时在线。本文给出指定设备标识登录、强制注销与 id 反查 token 的用法，方便对照升级。">
 	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,版本更新">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html">
+	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-v1-9-0-ban-ben-yi-fa-bu-dai-lai-ji-dong-ren-xin-xin-te-xing-tong-duan-h.html">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">
-	<meta property="og:description" content="Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。">
-	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html">
+	<meta property="og:title" content="sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录">
+	<meta property="og:description" content="Sa-Token v1.9.0 版本更新说明：新增同端互斥登录，同一类型设备只允许单地点登录，不同类型设备允许同时在线。本文给出指定设备标识登录、强制注销与 id 反查 token 的用法，方便对照升级。">
+	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-9-0-ban-ben-yi-fa-bu-dai-lai-ji-dong-ren-xin-xin-te-xing-tong-duan-h.html">
 	<meta property="og:image" content="https://sa-token.com/logo.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">
-	<meta name="twitter:description" content="Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。">
+	<meta name="twitter:title" content="sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录">
+	<meta name="twitter:description" content="Sa-Token v1.9.0 版本更新说明：新增同端互斥登录，同一类型设备只允许单地点登录，不同类型设备允许同时在线。本文给出指定设备标识登录、强制注销与 id 反查 token 的用法，方便对照升级。">
 	<meta name="twitter:image" content="https://sa-token.com/logo.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
@@ -26,11 +26,11 @@
 	<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例",
-  "description": "Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。",
-  "datePublished": "2023-04-24",
-  "dateModified": "2023-04-24",
-  "url": "https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html",
+  "headline": "sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录",
+  "description": "Sa-Token v1.9.0 版本更新说明：新增同端互斥登录，同一类型设备只允许单地点登录，不同类型设备允许同时在线。本文给出指定设备标识登录、强制注销与 id 反查 token 的用法，方便对照升级。",
+  "datePublished": "2021-01-06",
+  "dateModified": "2021-01-06",
+  "url": "https://sa-token.com/blog/release/sa-token-v1-9-0-ban-ben-yi-fa-bu-dai-lai-ji-dong-ren-xin-xin-te-xing-tong-duan-h.html",
   "author": {
     "@type": "Organization",
     "name": "Sa-Token"
@@ -45,7 +45,7 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html"
+    "@id": "https://sa-token.com/blog/release/sa-token-v1-9-0-ban-ben-yi-fa-bu-dai-lai-ji-dong-ren-xin-xin-te-xing-tong-duan-h.html"
   },
   "image": "https://sa-token.com/logo.png"
 }</script>
@@ -157,94 +157,31 @@
 		<main class="content blog-content">
 			<div id="main">
 				<div class="markdown-section">
-					<h1>Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例</h1>
-					<div class="blog-article-meta"><span>2023-04-24</span><span>版本更新</span></div>
-					<h3 id="qian-yan">前言</h3>
-<p>如果你的项目没有使用旧写法，可以忽略本篇文章 <a href="https://sa-token.com/doc/index.html#/use/at-check">移步官网</a>，本文只针对旧版本到新版本的迁移提供示例。</p>
-<h3 id="1-jiu-ban-ben">1、旧版本</h3>
-<p>Sa-Token  在 1.30.0 及以下版本中使用两个拦截器： </p>
-<ul>
-<li><code>SaAnnotationInterceptor</code>：负责提供注解鉴权能力。</li>
-<li><code>SaRouteInterceptor</code>：负责提供路由拦截鉴权能力。</li>
-</ul>
-<p>这次新增的拦截器 <code>SaInterceptor</code> 名字为综合拦截器，见名思意就是综合上述两个拦截器的能力，既提供注解鉴权能力，也提供路由鉴权能力，目的是为了替代上述两个拦截器（v1.31.0已将上述两个类打上 <code>@Deprecated</code> 标记）。</p>
-<h3 id="2-xin-ban-ben-yong-fa">2、新版本用法</h3>
-<p>在用法上 SaInterceptor 可以简单总结为两点：</p>
-<ol>
-<li>相对于 <code>SaAnnotationInterceptor</code>，只做增强，不做改变，可以直接无损替换。</li>
-<li>相对于 <code>SaRouteInterceptor</code>，除掉其默认的 <code>StpUtil.checkLogin()</code> 登录校验能力，默认不执行任何动作。</li>
-</ol>
-<p>下面将用几个示例详细展示 SaInterceptor 带来的变化点。</p>
-<h3 id="3-shi-li">3、示例</h3>
-<h5>示例1，注解鉴权</h5>
-<p>原写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 注解拦截器，打开注解鉴权功能 
-    registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<p>新版本写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 拦截器，打开注解鉴权功能 
-    registry.addInterceptor(new SaInterceptor()).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<p>总结：只替换一下拦截器的名称就可以了。</p>
-<h5>示例2，路由鉴权，默认登录校验</h5>
-<p>原写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 的路由拦截器
-    registry.addInterceptor(new SaRouteInterceptor())
-        .addPathPatterns(&quot;/**&quot;)
-        .excludePathPatterns(&quot;/user/doLogin&quot;); 
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
-<p>新版本写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 的路由拦截器
-    registry.addInterceptor(new SaInterceptor(handle -&gt; StpUtil.checkLogin()))
-            .addPathPatterns(&quot;/**&quot;)
-            .excludePathPatterns(&quot;/user/doLogin&quot;); 
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
-<p>总结：由于默认的登录校验功能不提供了，所有需要我们手动补一下。</p>
-<h5>示例3，路由鉴权，自定义认证规则</h5>
-<p>原写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 拦截器，定义详细认证规则 
-    registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -&gt; {
-        // 根据路由划分模块，不同模块不同鉴权 
-        SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
-        SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
-        SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
-        SaRouter.match(&quot;/orders/**&quot;, r -&gt; StpUtil.checkPermission(&quot;orders&quot;));
-        SaRouter.match(&quot;/notice/**&quot;, r -&gt; StpUtil.checkPermission(&quot;notice&quot;));
-        SaRouter.match(&quot;/comment/**&quot;, r -&gt; StpUtil.checkPermission(&quot;comment&quot;));
-        // ...
-    })).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<p>新版本写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 拦截器，定义详细认证规则
-    registry.addInterceptor(new SaInterceptor(handler -&gt; {
-        // 根据路由划分模块，不同模块不同鉴权 
-        SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
-        SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
-        SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
-        SaRouter.match(&quot;/orders/**&quot;, r -&gt; StpUtil.checkPermission(&quot;orders&quot;));
-        SaRouter.match(&quot;/notice/**&quot;, r -&gt; StpUtil.checkPermission(&quot;notice&quot;));
-        SaRouter.match(&quot;/comment/**&quot;, r -&gt; StpUtil.checkPermission(&quot;comment&quot;));
-        // ...
-    })).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<p>总结：做一下名称 + 参数替换 就可以了。</p>
-<hr />
-<p>新版本拦截器大体上就带来这三种变化，另外还新增了一个注解 <code>@SaIgnore</code> 代表忽略掉指定方法的鉴权校验，快来官网文档查看一下吧。：）</p>
+					<h1>sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录</h1>
+					<div class="blog-article-meta"><span>2021-01-06</span><span>版本更新</span></div>
+					<h4 id="sa-token">sa-token是什么？</h4>
+<p>sa-token是一个JavaWeb轻量级权限认证框架, 官网首页： <a href="https://sa-token.com">https://sa-token.com</a></p>
+<p>如果你经常使用腾讯QQ，就会发现它的登录有如下特点：它可以手机电脑同时在线，但是不能在两个手机上同时登录一个账号<br />
+同端互斥登录，指的就是像腾讯QQ一样，在同一类型设备上只允许单地点登录，在不同类型设备上允许同时在线</p>
+<h4 id="zai-sa-token">在sa-token中如何做到同端互斥登录?</h4>
+<p>首先在配置文件中，将 <code>allowConcurrentLogin</code> 配置为false，然后调用登录等相关接口时声明设备标识即可：</p>
+<h4 id="zhi-ding-she-bei-biao-shi-deng-lu">指定设备标识登录</h4>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 指定`账号id`和`设备标识`进行登录
+StpUtil.setLoginId(10001, &quot;PC&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>调用此方法登录后，同设备的会被顶下线(不同设备不受影响)，再次访问系统时会抛出 <code>NotLoginException</code> 异常，场景值=<code>-4</code></p>
+<h4 id="zhi-ding-she-bei-biao-shi-qiang-zhi-zhu-xiao">指定设备标识强制注销</h4>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 指定`账号id`和`设备标识`进行强制注销 (踢人下线)
+StpUtil.logoutByLoginId(10001, &quot;PC&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>如果第二个参数填写null或不填，代表将这个账号id所有在线端踢下线，被踢出者再次访问系统时会抛出 <code>NotLoginException</code> 异常，场景值=<code>-5</code></p>
+<h4 id="cha-xun-dang-qian-deng-lu-de-she-bei-biao-shi">查询当前登录的设备标识</h4>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 指返回当前token的登录设备
+StpUtil.getLoginDevice();</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<h4 id="id-token">id反查token</h4>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取指定loginId指定设备端的tokenValue
+StpUtil.getTokenValueByLoginId(10001, &quot;APP&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
 					<div class="blog-post-nav">
-<a class="blog-post-nav-prev" href="../release/sa-token-v1-20-0-fa-bu-xin-zeng-lin-shi-token.html">← Sa-Token v1.20.0 发布，新增临时Token认证</a>
-<a class="blog-post-nav-next" href="../release/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html">Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证 →</a>
+<a class="blog-post-nav-prev" href="../release/java-sa-token-v1-8-0-ban-ben-yi-fa-bu-dai-lai-da-liang-ji-dong-ren-xin-de-te-xin.html">← java权限认证框架 sa-token v1.8.0 版本已发布，带来大量激动人心的特性</a>
+<a class="blog-post-nav-next" href="../release/sa-token-v1-20-0-fa-bu-xin-zeng-lin-shi-token.html">Sa-Token v1.20.0 发布，新增临时Token认证 →</a>
 </div>
 				</div>
 			</div>
@@ -253,10 +190,12 @@ public void addInterceptors(InterceptorRegistry registry) {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#qian-yan">前言</a></li>
-<li class="toc-h3"><a href="#1-jiu-ban-ben">1、旧版本</a></li>
-<li class="toc-h3"><a href="#2-xin-ban-ben-yong-fa">2、新版本用法</a></li>
-<li class="toc-h3"><a href="#3-shi-li">3、示例</a></li>
+<li class="toc-h4"><a href="#sa-token">sa-token是什么？</a></li>
+<li class="toc-h4"><a href="#zai-sa-token">在sa-token中如何做到同端互斥登录?</a></li>
+<li class="toc-h4"><a href="#zhi-ding-she-bei-biao-shi-deng-lu">指定设备标识登录</a></li>
+<li class="toc-h4"><a href="#zhi-ding-she-bei-biao-shi-qiang-zhi-zhu-xiao">指定设备标识强制注销</a></li>
+<li class="toc-h4"><a href="#cha-xun-dang-qian-deng-lu-de-she-bei-biao-shi">查询当前登录的设备标识</a></li>
+<li class="toc-h4"><a href="#id-token">id反查token</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

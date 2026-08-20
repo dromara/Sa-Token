@@ -2,22 +2,22 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<title>Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例 - Sa-Token 博客</title>
+	<title>sa-token 一个的JavaWeb权限认证框架，强大、简单、好用 - Sa-Token 博客</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta name="description" content="Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。">
-	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,版本更新">
+	<meta name="description" content="从十几个项目锤炼出的轻量 JavaWeb 权限认证框架正式开源。覆盖登录验证、权限验证、踢人下线、多账号体系、无 Cookie 模式等，并给出 SpringBoot 零配置集成示例，适合作为 Sa-Token 最早的公开介绍文对照阅读。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,踢人下线,SpringBoot">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html">
+	<link rel="canonical" href="https://sa-token.com/blog/other/sa-token-yi-ge-de-javaweb-qiang-da-jian-dan-hao-yong.html">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">
-	<meta property="og:description" content="Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。">
-	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html">
+	<meta property="og:title" content="sa-token 一个的JavaWeb权限认证框架，强大、简单、好用">
+	<meta property="og:description" content="从十几个项目锤炼出的轻量 JavaWeb 权限认证框架正式开源。覆盖登录验证、权限验证、踢人下线、多账号体系、无 Cookie 模式等，并给出 SpringBoot 零配置集成示例，适合作为 Sa-Token 最早的公开介绍文对照阅读。">
+	<meta property="og:url" content="https://sa-token.com/blog/other/sa-token-yi-ge-de-javaweb-qiang-da-jian-dan-hao-yong.html">
 	<meta property="og:image" content="https://sa-token.com/logo.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:title" content="Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例">
-	<meta name="twitter:description" content="Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。">
+	<meta name="twitter:title" content="sa-token 一个的JavaWeb权限认证框架，强大、简单、好用">
+	<meta name="twitter:description" content="从十几个项目锤炼出的轻量 JavaWeb 权限认证框架正式开源。覆盖登录验证、权限验证、踢人下线、多账号体系、无 Cookie 模式等，并给出 SpringBoot 零配置集成示例，适合作为 Sa-Token 最早的公开介绍文对照阅读。">
 	<meta name="twitter:image" content="https://sa-token.com/logo.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
@@ -26,11 +26,11 @@
 	<script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例",
-  "description": "Sa-Token 在 1.30.0 及以下使用双拦截器写法，新版本统一为 SaInterceptor。若项目仍是旧写法，可参考本文完成迁移；已用新写法可忽略。文中给出功能说明与旧代码对照示例，帮助平滑升级、减少踩坑，特别适合从旧版本跨到新拦截器体系的同学。",
-  "datePublished": "2023-04-24",
-  "dateModified": "2023-04-24",
-  "url": "https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html",
+  "headline": "sa-token 一个的JavaWeb权限认证框架，强大、简单、好用",
+  "description": "从十几个项目锤炼出的轻量 JavaWeb 权限认证框架正式开源。覆盖登录验证、权限验证、踢人下线、多账号体系、无 Cookie 模式等，并给出 SpringBoot 零配置集成示例，适合作为 Sa-Token 最早的公开介绍文对照阅读。",
+  "datePublished": "2020-02-20",
+  "dateModified": "2020-02-20",
+  "url": "https://sa-token.com/blog/other/sa-token-yi-ge-de-javaweb-qiang-da-jian-dan-hao-yong.html",
   "author": {
     "@type": "Organization",
     "name": "Sa-Token"
@@ -45,7 +45,7 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html"
+    "@id": "https://sa-token.com/blog/other/sa-token-yi-ge-de-javaweb-qiang-da-jian-dan-hao-yong.html"
   },
   "image": "https://sa-token.com/logo.png"
 }</script>
@@ -157,94 +157,92 @@
 		<main class="content blog-content">
 			<div id="main">
 				<div class="markdown-section">
-					<h1>Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例</h1>
-					<div class="blog-article-meta"><span>2023-04-24</span><span>版本更新</span></div>
-					<h3 id="qian-yan">前言</h3>
-<p>如果你的项目没有使用旧写法，可以忽略本篇文章 <a href="https://sa-token.com/doc/index.html#/use/at-check">移步官网</a>，本文只针对旧版本到新版本的迁移提供示例。</p>
-<h3 id="1-jiu-ban-ben">1、旧版本</h3>
-<p>Sa-Token  在 1.30.0 及以下版本中使用两个拦截器： </p>
+					<h1>sa-token 一个的JavaWeb权限认证框架，强大、简单、好用</h1>
+					<div class="blog-article-meta"><span>2020-02-20</span><span>其它</span></div>
+					<h2 id="bei-jing">背景</h2>
+<p>从两年前便有了写一个安全认证框架的想法，经过十几个项目的锤炼，这套代码从最初简单封装的一个util，逐步迭代成了一个完整的框架，由于近来时间比较充裕，便将这个项目正式开源，欢迎大家<code>star</code></p>
 <ul>
-<li><code>SaAnnotationInterceptor</code>：负责提供注解鉴权能力。</li>
-<li><code>SaRouteInterceptor</code>：负责提供路由拦截鉴权能力。</li>
+<li>github： <a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
+<li>官网文档： <a href="https://sa-token.com">https://sa-token.com</a></li>
 </ul>
-<p>这次新增的拦截器 <code>SaInterceptor</code> 名字为综合拦截器，见名思意就是综合上述两个拦截器的能力，既提供注解鉴权能力，也提供路由鉴权能力，目的是为了替代上述两个拦截器（v1.31.0已将上述两个类打上 <code>@Deprecated</code> 标记）。</p>
-<h3 id="2-xin-ban-ben-yong-fa">2、新版本用法</h3>
-<p>在用法上 SaInterceptor 可以简单总结为两点：</p>
-<ol>
-<li>相对于 <code>SaAnnotationInterceptor</code>，只做增强，不做改变，可以直接无损替换。</li>
-<li>相对于 <code>SaRouteInterceptor</code>，除掉其默认的 <code>StpUtil.checkLogin()</code> 登录校验能力，默认不执行任何动作。</li>
-</ol>
-<p>下面将用几个示例详细展示 SaInterceptor 带来的变化点。</p>
-<h3 id="3-shi-li">3、示例</h3>
-<h5>示例1，注解鉴权</h5>
-<p>原写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 注解拦截器，打开注解鉴权功能 
-    registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<p>新版本写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 拦截器，打开注解鉴权功能 
-    registry.addInterceptor(new SaInterceptor()).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<p>总结：只替换一下拦截器的名称就可以了。</p>
-<h5>示例2，路由鉴权，默认登录校验</h5>
-<p>原写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 的路由拦截器
-    registry.addInterceptor(new SaRouteInterceptor())
-        .addPathPatterns(&quot;/**&quot;)
-        .excludePathPatterns(&quot;/user/doLogin&quot;); 
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
-<p>新版本写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 的路由拦截器
-    registry.addInterceptor(new SaInterceptor(handle -&gt; StpUtil.checkLogin()))
-            .addPathPatterns(&quot;/**&quot;)
-            .excludePathPatterns(&quot;/user/doLogin&quot;); 
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
-<p>总结：由于默认的登录校验功能不提供了，所有需要我们手动补一下。</p>
-<h5>示例3，路由鉴权，自定义认证规则</h5>
-<p>原写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 拦截器，定义详细认证规则 
-    registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -&gt; {
-        // 根据路由划分模块，不同模块不同鉴权 
-        SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
-        SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
-        SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
-        SaRouter.match(&quot;/orders/**&quot;, r -&gt; StpUtil.checkPermission(&quot;orders&quot;));
-        SaRouter.match(&quot;/notice/**&quot;, r -&gt; StpUtil.checkPermission(&quot;notice&quot;));
-        SaRouter.match(&quot;/comment/**&quot;, r -&gt; StpUtil.checkPermission(&quot;comment&quot;));
-        // ...
-    })).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<p>新版本写法：</p>
-<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
-public void addInterceptors(InterceptorRegistry registry) {
-    // 注册 Sa-Token 拦截器，定义详细认证规则
-    registry.addInterceptor(new SaInterceptor(handler -&gt; {
-        // 根据路由划分模块，不同模块不同鉴权 
-        SaRouter.match(&quot;/user/**&quot;, r -&gt; StpUtil.checkPermission(&quot;user&quot;));
-        SaRouter.match(&quot;/admin/**&quot;, r -&gt; StpUtil.checkPermission(&quot;admin&quot;));
-        SaRouter.match(&quot;/goods/**&quot;, r -&gt; StpUtil.checkPermission(&quot;goods&quot;));
-        SaRouter.match(&quot;/orders/**&quot;, r -&gt; StpUtil.checkPermission(&quot;orders&quot;));
-        SaRouter.match(&quot;/notice/**&quot;, r -&gt; StpUtil.checkPermission(&quot;notice&quot;));
-        SaRouter.match(&quot;/comment/**&quot;, r -&gt; StpUtil.checkPermission(&quot;comment&quot;));
-        // ...
-    })).addPathPatterns(&quot;/**&quot;);
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<p>总结：做一下名称 + 参数替换 就可以了。</p>
-<hr />
-<p>新版本拦截器大体上就带来这三种变化，另外还新增了一个注解 <code>@SaIgnore</code> 代表忽略掉指定方法的鉴权校验，快来官网文档查看一下吧。：）</p>
+<h2 id="sa-token">sa-token是什么？</h2>
+<p>一个的<code>JavaWeb</code>权限认证框架，强大、简单、好用</p>
+<blockquote>
+<p>与其它权限认证框架相比，sa-token尽力保证两点：</p>
+<ul>
+<li>上手简单：能自动化的配置全部自动化，不让你费脑子</li>
+<li>功能强大：能涵盖的功能全部涵盖，不让你用个框架还要自己给框架打各种补丁</li>
+</ul>
+</blockquote>
+<h2 id="han-gai-gong-neng">涵盖功能</h2>
+<ul>
+<li>登录验证</li>
+<li>权限验证</li>
+<li>自定义session会话</li>
+<li>踢人下线</li>
+<li>模拟他人账号</li>
+<li>持久层扩展（集成redis）</li>
+<li>多账号认证体系（比如一个商城项目的user表和admin表）</li>
+<li>无cookie模式（APP、小程序等前后台分离场景）</li>
+<li>零配置与Spring等框架集成</li>
+<li>...</li>
+</ul>
+<h2 id="springboot">springboot集成示例</h2>
+<h4 id="1-chuang-jian-xiang-mu">1、创建项目</h4>
+<p>在IDE中新建一个Springboot项目，例如：<code>sa-token-demo-springboot</code>（不会的同学请自行百度或者参考github示例）</p>
+<h4 id="2-she-zhi-jar">2、设置jar包依赖</h4>
+<ul>
+<li>在 <code>pom.xml</code> 中添加依赖：</li>
+</ul>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- sa-token 权限认证, 在线文档：https://sa-token.com --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token&lt;/artifactId&gt;
+    &lt;version&gt;1.0.1&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<h4 id="3-pei-zhi-wen-jian">3、配置文件</h4>
+<ul>
+<li>你可以零配置启动项目</li>
+<li>但同时你也可以在<code>application.yml</code>中增加如下配置，定制性使用框架：</li>
+</ul>
+<pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">spring:
+    # sa-token配置
+    sa-token:
+        # token名称（同时也是cookie名称）
+        token-name: satoken
+        # token有效期，单位s 默认30天，-1为永不过期
+        timeout: 2592000
+        # 在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）
+        is-share: true
+        # 是否在cookie读取不到token时，继续从请求header里继续尝试读取
+        is-read-head: true
+        #  是否在header读取不到token时，继续从请求题参数里继续尝试读取
+        is-read-body: true
+        # 是否在初始化配置时打印版本字符画
+        is-v: true</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<blockquote>
+<ul>
+<li>如果你习惯于 <code>application.properties</code> 类型的配置文件，那也很好办:</li>
+<li>百度： <a href="https://www.baidu.com/s?ie=UTF-8&amp;wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB">springboot properties与yml 配置文件的区别</a></li>
+</ul>
+</blockquote>
+<h4 id="4-chuang-jian-zhu-lei">4、创建主类</h4>
+<p>在项目中新建包 <code>com.pj</code> ，在此包内新建主类 <code>SaTokenDemoApplication.java</code>，输入以下代码：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SaTokenSetup // 标注启动 sa-token
+@SpringBootApplication
+public class SaTokenDemoApplication {
+    public static void main(String[] args) throws JsonProcessingException {
+        SpringApplication.run(SaTokenDemoApplication.class, args); // run--&gt;
+        System.out.println(&quot;启动成功：sa-token配置如下：&quot; + SaTokenManager.getConfig());
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<h4 id="5-yun-xing">5、运行</h4>
+<p>运行代码，当你从控制台看到类似下面的内容时，就代表框架已经成功集成了</p>
+<p><img alt="运行结果" src="https://res.dev33.cn/sa-token-blog/img/2020-2/sa-token-console-run.png" /></p>
+<p>程序员交流qq群：782974737 <a href="https://jq.qq.com/?_wv=1027&amp;k=5eeinSn">点击加入</a></p>
 					<div class="blog-post-nav">
-<a class="blog-post-nav-prev" href="../release/sa-token-v1-20-0-fa-bu-xin-zeng-lin-shi-token.html">← Sa-Token v1.20.0 发布，新增临时Token认证</a>
-<a class="blog-post-nav-next" href="../release/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html">Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证 →</a>
+<span class="blog-post-nav-empty"></span>
+<a class="blog-post-nav-next" href="../other/shiro-kuai-lai-shi-shi-zhe-ge-qing-liang-ji-quan-xian-ren-zheng-kuang-jia.html">shiro太复杂？快来试试这个轻量级权限认证框架！ →</a>
 </div>
 				</div>
 			</div>
@@ -253,10 +251,15 @@ public void addInterceptors(InterceptorRegistry registry) {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#qian-yan">前言</a></li>
-<li class="toc-h3"><a href="#1-jiu-ban-ben">1、旧版本</a></li>
-<li class="toc-h3"><a href="#2-xin-ban-ben-yong-fa">2、新版本用法</a></li>
-<li class="toc-h3"><a href="#3-shi-li">3、示例</a></li>
+<li class="toc-h2"><a href="#bei-jing">背景</a></li>
+<li class="toc-h2"><a href="#sa-token">sa-token是什么？</a></li>
+<li class="toc-h2"><a href="#han-gai-gong-neng">涵盖功能</a></li>
+<li class="toc-h2"><a href="#springboot">springboot集成示例</a></li>
+<li class="toc-h4"><a href="#1-chuang-jian-xiang-mu">1、创建项目</a></li>
+<li class="toc-h4"><a href="#2-she-zhi-jar">2、设置jar包依赖</a></li>
+<li class="toc-h4"><a href="#3-pei-zhi-wen-jian">3、配置文件</a></li>
+<li class="toc-h4"><a href="#4-chuang-jian-zhu-lei">4、创建主类</a></li>
+<li class="toc-h4"><a href="#5-yun-xing">5、运行</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

@@ -171,6 +171,18 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
       {
         "title": "Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例",
         "url": "release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html"
+      },
+      {
+        "title": "Sa-Token v1.20.0 发布，新增临时Token认证",
+        "url": "release/sa-token-v1-20-0-fa-bu-xin-zeng-lin-shi-token.html"
+      },
+      {
+        "title": "sa-token v1.9.0 版本已发布，带来激动人心新特性：同端互斥登录",
+        "url": "release/sa-token-v1-9-0-ban-ben-yi-fa-bu-dai-lai-ji-dong-ren-xin-xin-te-xing-tong-duan-h.html"
+      },
+      {
+        "title": "java权限认证框架 sa-token v1.8.0 版本已发布，带来大量激动人心的特性",
+        "url": "release/java-sa-token-v1-8-0-ban-ben-yi-fa-bu-dai-lai-da-liang-ji-dong-ren-xin-de-te-xin.html"
       }
     ]
   },
@@ -213,6 +225,18 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
       {
         "title": "Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！",
         "url": "other/sa-token-you-ya-de-jiang-jian-quan-yu-ye-wu-dai-ma-fen-li.html"
+      },
+      {
+        "title": "再见 Shiro！权限认证我选择 Sa-Token：简单、优雅！",
+        "url": "other/zai-jian-shiro-quan-xian-ren-zheng-wo-xuan-ze-sa-token-jian-dan-you-ya.html"
+      },
+      {
+        "title": "shiro太复杂？快来试试这个轻量级权限认证框架！",
+        "url": "other/shiro-kuai-lai-shi-shi-zhe-ge-qing-liang-ji-quan-xian-ren-zheng-kuang-jia.html"
+      },
+      {
+        "title": "sa-token 一个的JavaWeb权限认证框架，强大、简单、好用",
+        "url": "other/sa-token-yi-ge-de-javaweb-qiang-da-jian-dan-hao-yong.html"
       }
     ]
   }
