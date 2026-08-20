@@ -379,7 +379,8 @@ body.blog-page.blog-sidebar-open {
 }
 
 /* 代码块：只压 vue.css 浅色主题；行高(1.5rem)、字号(.8rem) 与 doc.html 一致，勿覆盖 line-height / font-size */
-.blog-page .main-box .markdown-section pre[v-pre][data-lang] {
+.blog-page .main-box .markdown-section pre[v-pre][data-lang],
+.blog-page .main-box .markdown-section pre:not([data-lang]) {
 	position: relative;
 	padding: 0 !important;
 	margin: 1.2em 0;
@@ -392,7 +393,8 @@ body.blog-page.blog-sidebar-open {
 	-webkit-font-smoothing: initial;
 }
 
-.blog-page .main-box .markdown-section pre[v-pre][data-lang] > code {
+.blog-page .main-box .markdown-section pre[v-pre][data-lang] > code,
+.blog-page .main-box .markdown-section pre:not([data-lang]) > code {
 	/* inline-block + min-width：随最长行撑开，横向滚动时背景不露白 */
 	display: inline-block;
 	min-width: calc(100% - 40px);
@@ -412,6 +414,115 @@ body.blog-page.blog-sidebar-open {
 
 .blog-page .main-box .markdown-section pre[v-pre][data-lang]:after {
 	color: #888;
+}
+
+/* 代码块右上角：复制到剪贴板（与 doc.html docsify-copy-code 一致） */
+.blog-page .docsify-copy-code-button,
+.blog-page .docsify-copy-code-button span {
+	cursor: pointer;
+	transition: all .25s ease;
+}
+.blog-page .docsify-copy-code-button {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	right: 0;
+	overflow: visible;
+	padding: .65em .8em;
+	border: 0;
+	border-radius: 0;
+	outline: 0;
+	font-size: 1em;
+	background: var(--theme-color, grey);
+	color: #fff;
+	opacity: 0;
+}
+.blog-page .docsify-copy-code-button span {
+	border-radius: 3px;
+	background: inherit;
+	pointer-events: none;
+}
+.blog-page .docsify-copy-code-button .error,
+.blog-page .docsify-copy-code-button .success {
+	position: absolute;
+	z-index: -100;
+	top: 50%;
+	left: 0;
+	padding: .5em .65em;
+	font-size: .825em;
+	opacity: 0;
+	transform: translateY(-50%);
+}
+.blog-page .docsify-copy-code-button.error .error,
+.blog-page .docsify-copy-code-button.success .success {
+	opacity: 1;
+	transform: translate(-115%, -50%);
+}
+.blog-page .docsify-copy-code-button:focus,
+.blog-page .markdown-section pre:hover .docsify-copy-code-button {
+	opacity: 1;
+}
+
+/* 标识符默认绿色，和 java / js 一致 */
+.blog-page .main-box .markdown-section pre[v-pre] > code,
+.blog-page .main-box .markdown-section pre:not([data-lang]) > code {
+	color: #01a252;
+}
+
+/* 黑底通用 token：未单独定制的语言（ts / rust / json / toml 等）也能花花绿绿 */
+.blog-page .main-box .markdown-section .token.comment,
+.blog-page .main-box .markdown-section .token.prolog,
+.blog-page .main-box .markdown-section .token.doctype,
+.blog-page .main-box .markdown-section .token.cdata {
+	color: #6a9955;
+}
+.blog-page .main-box .markdown-section .token.keyword {
+	color: #db2d20;
+}
+.blog-page .main-box .markdown-section .token.function,
+.blog-page .main-box .markdown-section .token.decorator {
+	color: #e96900;
+}
+.blog-page .main-box .markdown-section .token.class-name,
+.blog-page .main-box .markdown-section .token.builtin {
+	color: #55b5db;
+}
+.blog-page .main-box .markdown-section .token.number,
+.blog-page .main-box .markdown-section .token.boolean {
+	color: #c76b29;
+}
+.blog-page .main-box .markdown-section .token.punctuation,
+.blog-page .main-box .markdown-section .token.operator {
+	color: #ddd;
+}
+.blog-page .main-box .markdown-section .token.property,
+.blog-page .main-box .markdown-section .token.attr-name,
+.blog-page .main-box .markdown-section .token.variable,
+.blog-page .main-box .markdown-section .token.placeholder {
+	color: #9cdcfe;
+}
+.blog-page .main-box .markdown-section .token.tag {
+	color: #db2d20;
+}
+.blog-page .main-box .markdown-section .token.selector {
+	color: #d7ba7d;
+}
+.blog-page .main-box .markdown-section .token.namespace {
+	color: #01A252;
+	opacity: 1;
+}
+.blog-page .main-box .markdown-section .token.constant {
+	color: #4fc1ff;
+}
+.blog-page .main-box .markdown-section .token.regex,
+.blog-page .main-box .markdown-section .token.important {
+	color: #d16969;
+}
+.blog-page .main-box .markdown-section .token.atrule {
+	color: #22a2c9;
+}
+.blog-page .main-box .markdown-section .token.annotation {
+	color: #dcdcaa;
 }
 
 /* 字符串：勿跟 --theme-color 深蓝，黑底对比度不够 */

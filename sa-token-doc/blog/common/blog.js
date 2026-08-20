@@ -4,11 +4,89 @@
     xml: 'markup',
     html: 'markup',
     cmd: 'bash',
-    url: 'plain'
+    url: 'plain',
+    yml: 'yaml',
+    js: 'javascript',
+    ts: 'typescript',
+    txt: 'plain',
+    text: 'plain'
   };
 
   function normalizePrismLang(lang) {
     return PRISM_LANG[lang] || lang;
+  }
+
+  function addCodeLineNumbers(code) {
+    var pre = code.parentElement;
+    if (!pre || pre.querySelector('.code-line-box')) return;
+
+    var lines = (code.textContent || '').split('\n');
+    if (lines[lines.length - 1] === '') lines.pop();
+
+    code.classList.add('has-numbering');
+    var numbering = document.createElement('ul');
+    numbering.className = 'code-line-box';
+    var count = Math.max(lines.length, 1);
+    for (var i = 1; i <= count; i++) {
+      var li = document.createElement('li');
+      li.textContent = String(i);
+      numbering.appendChild(li);
+    }
+    pre.appendChild(numbering);
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject();
+      } catch (err) {
+        reject(err);
+      }
+      document.body.removeChild(ta);
+    });
+  }
+
+  function initCopyCode() {
+    if (!document.body.classList.contains('blog-article-page')) return;
+    var section = document.querySelector('#main .markdown-section');
+    if (!section) return;
+
+    var buttonHtml =
+      '<button type="button" class="docsify-copy-code-button">' +
+      '<span class="label">复制到剪贴板</span>' +
+      '<span class="error">错误</span>' +
+      '<span class="success">复制成功</span>' +
+      '</button>';
+
+    section.querySelectorAll('pre').forEach(function (pre) {
+      if (!pre.querySelector('code')) return;
+      if (pre.querySelector('.docsify-copy-code-button')) return;
+      pre.insertAdjacentHTML('beforeend', buttonHtml);
+    });
+
+    section.addEventListener('click', function (e) {
+      var btn = e.target.closest('.docsify-copy-code-button');
+      if (!btn) return;
+      e.preventDefault();
+      var code = btn.parentElement && btn.parentElement.querySelector('code');
+      if (!code) return;
+      copyText(code.textContent || '').then(function () {
+        btn.classList.add('success');
+        setTimeout(function () { btn.classList.remove('success'); }, 1000);
+      }).catch(function () {
+        btn.classList.add('error');
+        setTimeout(function () { btn.classList.remove('error'); }, 1000);
+      });
+    });
   }
 
   function initCodeHighlight() {
@@ -30,6 +108,8 @@
       code.classList.add('lang-' + lang);
       pre.classList.remove('language-' + normalizePrismLang(lang));
     });
+
+    document.querySelectorAll('.markdown-section pre:not([data-lang]) > code').forEach(addCodeLineNumbers);
   }
 
   function initSidebarDrawer() {
@@ -465,6 +545,7 @@
     initHashNavigation();
     scrollActiveSidebarItem();
     initCodeHighlight();
+    initCopyCode();
     initImageZoom();
     initContentLinks();
     initAdClose();
