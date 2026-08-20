@@ -12,13 +12,13 @@
 	<meta property="og:title" content="SpringBoot 使用 Sa-Token 完成注解鉴权功能">
 	<meta property="og:description" content="注解鉴权可以把鉴权逻辑与业务代码优雅分离。本文介绍在 Sa-Token 中如何通过 @SaCheckLogin、@SaCheckPermission、@SaCheckRole 等注解完成登录与权限校验，并说明拦截器注册方式，让鉴权声明式、可读性更好，维护成本更低。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/at-basic-auth.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="SpringBoot 使用 Sa-Token 完成注解鉴权功能">
 	<meta name="twitter:description" content="注解鉴权可以把鉴权逻辑与业务代码优雅分离。本文介绍在 Sa-Token 中如何通过 @SaCheckLogin、@SaCheckPermission、@SaCheckRole 等注解完成登录与权限校验，并说明拦截器注册方式，让鉴权声明式、可读性更好，维护成本更低。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/at-basic-auth.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/at-basic-auth.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -391,9 +391,9 @@ public class AtController {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
 <p>当我们访问这个接口时，浏览器会强制弹出一个表单：</p>
-<p><img alt="img" src="/big-file/blog/2023-4/at-basic-auth.png" /></p>
+<p><img alt="img" src="https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth.png" /></p>
 <p>当我们输入账号密码后 <code>（sa / 123456）</code>，才可以继续访问数据：</p>
-<p><img alt="img" src="/big-file/blog/2023-4/at-basic-auth-ok.png" /></p>
+<p><img alt="img" src="https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth-ok.png" /></p>
 <h3 id="ba-fu-wu-jin-yong-xing-jiao-yan">八、服务禁用性校验</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestController
 @RequestMapping(&quot;/at/&quot;)

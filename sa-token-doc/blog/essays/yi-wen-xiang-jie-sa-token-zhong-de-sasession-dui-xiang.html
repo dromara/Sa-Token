@@ -12,13 +12,13 @@
 	<meta property="og:title" content="一文详解 Sa-Token 中的 SaSession 对象">
 	<meta property="og:description" content="SaSession 是 Sa-Token 的会话对象，可在 Token 或账号维度存取业务数据。本文详解 Account-Session、Token-Session、自定义 Session 的使用场景与 API，对比传统 HttpSession，帮助你在分布式环境里正确管理会话数据，避免存错维度。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/yi-wen-xiang-jie-sa-token-zhong-de-sasession-dui-xiang.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/session-model3.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/session-model3.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="一文详解 Sa-Token 中的 SaSession 对象">
 	<meta name="twitter:description" content="SaSession 是 Sa-Token 的会话对象，可在 Token 或账号维度存取业务数据。本文详解 Account-Session、Token-Session、自定义 Session 的使用场景与 API，对比传统 HttpSession，帮助你在分布式环境里正确管理会话数据，避免存错维度。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/session-model3.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/session-model3.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/yi-wen-xiang-jie-sa-token-zhong-de-sasession-dui-xiang.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/session-model3.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/session-model3.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -178,7 +178,7 @@ SysUser user = (SysUser) StpUtil.getSession().get(&quot;user&quot;);</code><ul c
 <li><code>Custom-Session</code>: 指的是以一个 特定的值 作为SessionId，来分配的 Session。 </li>
 </ul>
 <p>假设三个客户端登录同一账号，且配置了不共享token，那么此时的Session模型是：</p>
-<p><img alt="session-model" src="/big-file/blog/2023-4/session-model3.png" /></p>
+<p><img alt="session-model" src="https://res.dev33.cn/sa-token-blog/img/2023-4/session-model3.png" title="s-w" /></p>
 <p>简而言之：<br />
 - <code>User-Session</code>  以UserId为主，只要token指向的UserId一致，那么对应的Session对象就一致。<br />
 - <code>Token-Session</code> 以token为主，只要token不同，那么对应的Session对象就不同。<br />

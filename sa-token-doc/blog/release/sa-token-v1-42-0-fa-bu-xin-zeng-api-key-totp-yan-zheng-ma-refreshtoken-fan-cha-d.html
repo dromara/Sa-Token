@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">
 	<meta property="og:description" content="Sa-Token v1.42.0 版本更新发布。免费开源的轻量级 Java 权限认证框架本版继续优化登录认证、权限认证、单点登录、OAuth2.0 与网关鉴权，并简化跨域等常见场景。详见文内更新日志，适合跟进社区最新实践，顺便核对跨域相关写法是否需调整。">
 	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2025-4/sa-api-key.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">
 	<meta name="twitter:description" content="Sa-Token v1.42.0 版本更新发布。免费开源的轻量级 Java 权限认证框架本版继续优化登录认证、权限认证、单点登录、OAuth2.0 与网关鉴权，并简化跨域等常见场景。详见文内更新日志，适合跟进社区最新实践，顺便核对跨域相关写法是否需调整。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2025-4/sa-api-key.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2025-4/sa-api-key.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -174,7 +174,7 @@
 <p>本次更新带来了 API Key 的全流程管理，支持为指定账号签发、校验、禁用、删除 API Key 。<br />
 同时每个 API Key 都可以单独设置不同的 scope 权限，以便在不同的场景下使用不同的 API Key，做到秘钥相互隔离，最小化授权。🛡️</p>
 <p>为了更好的展示此模块的能力，我们专门制作了一个 demo 示例：</p>
-<p><img alt="sa-api-key" src="/big-file/blog/2025-4/sa-api-key.png" /></p>
+<p><img alt="sa-api-key" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png" /></p>
 <p>示例仓库地址：<a href="https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-apikey">sa-token-demo-apikey</a> 🔗</p>
 <p>在这个示例中，你可以登录测试不同的账号，并为它们签发 API Key，设置 scope 权限，并使用不同的 API Key 测试调用接口，观察响应结果。 🧪</p>
 <p>框架默认将所有 API Key 信息保存在缓存中，这可以称之为“缓存模式”，在这种模式下，重启缓存库后，数据将会丢失。⚠️</p>
@@ -182,10 +182,10 @@
 <p>在线文档直达地址：<a href="https://sa-token.com/doc.html#/plugin/api-key">API Key 接口调用秘钥</a> 🔗</p>
 <h3 id="geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</h3>
 <p>在 Sa-Token 文档中有一段这样的示例：📚</p>
-<p><img alt="sa-refresh-token" src="/big-file/blog/2025-4/sa-refresh-token.png" /></p>
+<p><img alt="sa-refresh-token" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-refresh-token.png" /></p>
 <p>该示例演示了如何通过临时 Token 认证模块，创建 <code>RefreshToken</code> 为登录会话做到双 Token 的效果。🔄</p>
 <p>但是有一天我在官网 sa-token 小助手接收到一位用户的咨询： 💬</p>
-<p><img alt="sa-refresh-token-wnglian-zixun" src="/big-file/blog/2025-4/sa-refresh-token-wnglian-zixun.png" /></p>
+<p><img alt="sa-refresh-token-wnglian-zixun" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-refresh-token-wnglian-zixun.png" /></p>
 <p>该用户指出，是否可以为 <code>RefreshToken</code> 提供反查机制，以便获取某个账号历史签发的 全部 <code>RefreshToken</code>。</p>
 <p>必须安排！💪🏆</p>
 <p>此次版本更新，允许程序在创建 refresh-token 时，指定第三个参数，该参数表示是否允许框架记录 Token 索引信息：</p>
@@ -270,9 +270,9 @@ public class TestController {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
 <p>启动项目，使用浏览器访问：<code>http://localhost:8081</code>，首次访问时，由于处于未登录状态，会被强制进入登录页面 🚪：</p>
-<p><img alt="登录" src="/big-file/blog/2025-4/sa-quick-login.png" /></p>
+<p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-quick-login.png" /></p>
 <p>使用默认账号：<code>sa / 123456</code>进行登录，会看到资源页面</p>
-<p><img alt="登录" src="/big-file/blog/2025-4/sa-quick-login-index.png" /></p>
+<p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-quick-login-index.png" /></p>
 <p>新版本中更新了通过 Http Basic 的方式直接进行认证的能力：</p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://sa:123456@localhost:8081/</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>这将非常有助于大家在专门的 API 测试工具下进行 quick-login 相关资源接口的测试。🧪</p>
@@ -329,7 +329,7 @@ public class TestController {
 <h3 id="qi-ta">🌟 其它</h3>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
-<p><img alt="js" src="/big-file/blog/2025-4/sa-token-js4.png" /></p>
+<p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-token-js4.png" /></p>
 					<div class="blog-post-nav">
 <a class="blog-post-nav-prev" href="../release/sa-token-v1-41-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html">← Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！</a>
 <a class="blog-post-nav-next" href="../release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html">Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力 →</a>

@@ -12,13 +12,13 @@
 	<meta property="og:title" content="使用 Sa-Token 完成踢人下线功能">
 	<meta property="og:description" content="企业级项目里，踢人下线很常见：按账号 id 或 Token 强制下线、区分强制注销与踢人、并给出友好提示。本文演示如何用 Sa-Token 一行代码完成踢人下线，说明两者差异，以及如何在后台管理系统里做会话治理与在线用户清退，文内含示例，可直接对照实践。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--kickout.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--kickout.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="使用 Sa-Token 完成踢人下线功能">
 	<meta name="twitter:description" content="企业级项目里，踢人下线很常见：按账号 id 或 Token 强制下线、区分强制注销与踢人、并给出友好提示。本文演示如何用 Sa-Token 一行代码完成踢人下线，说明两者差异，以及如何在后台管理系统里做会话治理与在线用户清退，文内含示例，可直接对照实践。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--kickout.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--kickout.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--kickout.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--kickout.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -194,7 +194,7 @@ StpUtil.kickoutByTokenValue(&quot;token&quot;);      // 将指定 Token 踢下�
 - 强制注销等价于对方主动调用了注销方法，再次访问会提示：Token无效。<br />
 - 踢人下线不会清除Token信息，而是将其打上特定标记，再次访问会提示：Token已被踢下线。</p>
 <p>动态图演示：</p>
-<p><img alt="强制注销 和 踢人下线" src="/big-file/blog/2023-4/g3--kickout.gif" /></p>
+<p><img alt="强制注销 和 踢人下线" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--kickout.gif" /></p>
 <p>下面开始进行代码实战。</p>
 <h3 id="san-gen-ju-zhang-hao-ti-ren-xia-xian">三、根据账号踢人下线</h3>
 <p>在完成踢人下线之前，我们需要先让会话完成登录。正常的登录需要根据 <code>username</code> + <code>password</code> 判断账号合法性，由于我们本篇的重点是 <strong>踢人下线</strong>，<br />

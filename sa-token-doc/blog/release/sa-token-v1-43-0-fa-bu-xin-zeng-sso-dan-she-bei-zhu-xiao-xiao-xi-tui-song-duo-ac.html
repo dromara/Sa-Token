@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力">
 	<meta property="og:description" content="Sa-Token v1.43.0 版本更新发布。本版围绕登录认证、权限认证、单点登录、OAuth2.0、微服务网关鉴权等能力继续演进。文内汇总新增、优化与修复项，适合已有项目评估升级成本，并规划灰度发布节奏，把风险控制在可回滚范围内，升级前建议先对照变更做回归。">
 	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2025-5/sa-token-jss--tran.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-token-jss--tran.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力">
 	<meta name="twitter:description" content="Sa-Token v1.43.0 版本更新发布。本版围绕登录认证、权限认证、单点登录、OAuth2.0、微服务网关鉴权等能力继续演进。文内汇总新增、优化与修复项，适合已有项目评估升级成本，并规划灰度发布节奏，把风险控制在可回滚范围内，升级前建议先对照变更做回归。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2025-5/sa-token-jss--tran.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-token-jss--tran.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2025-5/sa-token-jss--tran.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2025-5/sa-token-jss--tran.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -160,7 +160,7 @@
 					<h1>Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力</h1>
 					<div class="blog-article-meta"><span>2025-05-19</span><span>版本更新</span></div>
 					<p>Sa-Token 是一款 <strong>免费</strong>、<strong>开源</strong> 的轻量级 Java 权限认证框架，主要解决：<strong>登录认证</strong>、<strong>权限认证</strong>、<strong>单点登录</strong>、<strong>OAuth2.0</strong>、<strong>微服务网关鉴权</strong> 等一系列权限相关问题。🔐</p>
-<p><img alt="sa-token-jss--tran" src="/big-file/blog/2025-5/sa-token-jss--tran.png" /></p>
+<p><img alt="sa-token-jss--tran" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-token-jss--tran.png" /></p>
 <p><strong>目前最新版本 <code>v1.43.0</code> 已推送至 <code>Maven</code> 中央仓库</strong> 🎉，大家可以通过如下方式引入：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
 &lt;dependency&gt;
@@ -180,7 +180,7 @@
 <p>以上几种注销方式仅需通过一行代码或者调用一个接口即可实现，详细可参考在线文档：<a href="https://sa-token.com/doc.html#/sso/signout">Sa-Token SSO 单点注销</a>。</p>
 <h3 id="geng-xin-dian-2-dan-dian-deng-lu-mo-kuai-xin-zeng-xiao-xi-tu">⛏️️️️ 更新点2：单点登录模块新增消息推送机制</h3>
 <p>此提案来源于社区交流群中的一位开发者咨询：</p>
-<p><img alt="sa-sso-message-push-tian.png" src="/big-file/blog/2025-5/sa-sso-message-push-tian.png" /></p>
+<p><img alt="sa-sso-message-push-tian.png" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-sso-message-push-tian.png" /></p>
 <p>该开发者指出是否可以在 SSO 模块增加各个系统互相通知 token 续期的功能，以便做到系统之间会话有效期的强同步。</p>
 <p>本次更新没有直接增加这两个 API，而是从底层构建了一套消息推送体系，允许 sso-client 端按照特点格式构建一个 http 请求，调用 sso-server 端的 /sso/pushS 接口，sso-server 接收到消息后做出处理回应 sso-client 端。</p>
 <p>消息推送是相互的，sso-server 端也可以构建 http 请求，调用 sso-client 端的 /sso/pushC 接口。</p>
@@ -263,9 +263,9 @@ public Object myInfo() {
 <h3 id="geng-xin-dian-4-oauth2-access-token-bing-cun-neng-li">⛏️️️️ 更新点4：OAuth2新增多 Access-Token 并存能力。</h3>
 <p>点击非常高的一个提案：<code>OAuth2 模块每次生成新的 access_token 时能否保留旧 access_token 依然有效</code>。</p>
 <p>fix issues: <a href="https://gitee.com/dromara/sa-token/issues/IBHFD1">#IBHFD1</a> 、 <a href="https://gitee.com/dromara/sa-token/issues/IBLL4Q">#IBLL4Q</a> 、<a href="https://github.com/dromara/Sa-Token/issues/724">#724</a> </p>
-<p><img alt="sa-many-access-token-issue1" src="/big-file/blog/2025-5/sa-many-access-token-issue1.png" /></p>
-<p><img alt="sa-many-access-token-issue2" src="/big-file/blog/2025-5/sa-many-access-token-issue2.png" /></p>
-<p><img alt="sa-many-access-token-issue3" src="/big-file/blog/2025-5/sa-many-access-token-issue3.png" /></p>
+<p><img alt="sa-many-access-token-issue1" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-many-access-token-issue1.png" /></p>
+<p><img alt="sa-many-access-token-issue2" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-many-access-token-issue2.png" /></p>
+<p><img alt="sa-many-access-token-issue3" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-many-access-token-issue3.png" /></p>
 <p>在之前的版本中，因索引数据结构设计所限，每次申请 <code>access_token</code> 时会导致旧 <code>access_token</code> 立即失效，新版本重构了索引数据结构，增加了多 <code>Access-Token</code> 并存能力。</p>
 <p>相关 API 展示：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取 AccessTokenModel，无效的 AccessToken 会返回 null

@@ -12,13 +12,13 @@
 	<meta property="og:title" content="SpringBoot 项目使用 Sa-Token 完成登录认证">
 	<meta property="og:description" content="登录后才能访问的接口（如查询账号资料）通常要加一层登录校验。本文讲解如何在 SpringBoot 中接入 Sa-Token，用极简 API 完成登录、注销与登录态判断，快速搭好权限认证第一步，少写重复样板代码，适合鉴权入门，文内含示例，可直接对照实践。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/springboot-xiang-mu-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--login-auth.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--login-auth.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="SpringBoot 项目使用 Sa-Token 完成登录认证">
 	<meta name="twitter:description" content="登录后才能访问的接口（如查询账号资料）通常要加一层登录校验。本文讲解如何在 SpringBoot 中接入 Sa-Token，用极简 API 完成登录、注销与登录态判断，快速搭好权限认证第一步，少写重复样板代码，适合鉴权入门，文内含示例，可直接对照实践。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--login-auth.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--login-auth.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/springboot-xiang-mu-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--login-auth.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--login-auth.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -174,7 +174,7 @@
 </ol>
 <p>所谓登录认证，指的就是服务器校验账号密码，为用户颁发 Token 会话凭证的过程，这个 Token 也是我们后续判断会话是否登录的关键所在。</p>
 <p>动态图演示：</p>
-<p><img alt="登录认证" src="/big-file/blog/2023-4/g3--login-auth.gif" /></p>
+<p><img alt="登录认证" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--login-auth.gif" /></p>
 <p>接下来，我们将介绍在 SpringBoot 中如何使用 Sa-Token 完成登录认证操作。</p>
 <blockquote>
 <p>Sa-Token 是一个 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />

@@ -12,13 +12,13 @@
 	<meta property="og:title" content="SpringBoot 使用 Sa-Token 完成权限认证">
 	<meta property="og:description" content="权限认证的核心，是判断账号是否拥有指定权限：每个账号持有一组权限码，框架校验集合里是否包含目标权限码。本文介绍在 SpringBoot 中用 Sa-Token 完成权限认证与角色认证，并给出常用校验 API 与注解写法，方便直接落地，文内含示例，可直接对照实践。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--jur-auth.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="SpringBoot 使用 Sa-Token 完成权限认证">
 	<meta name="twitter:description" content="权限认证的核心，是判断账号是否拥有指定权限：每个账号持有一组权限码，框架校验集合里是否包含目标权限码。本文介绍在 SpringBoot 中用 Sa-Token 完成权限认证与角色认证，并给出常用校验 API 与注解写法，方便直接落地，文内含示例，可直接对照实践。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--jur-auth.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--jur-auth.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -168,7 +168,7 @@
 <p>深入到底层数据中，就是每个账号都会拥有一个权限码集合，框架来校验这个集合中是否包含指定的权限码。 </p>
 <p>例如：当前账号拥有权限码集合 <code>["user-add", "user-delete", "user-get"]</code>，这时候我来校验权限 <code>"user-update"</code>，则其结果就是：<strong>验证失败，禁止访问</strong>。 </p>
 <p>动态演示图：</p>
-<p><img alt="权限认证" src="/big-file/blog/2023-4/g3--jur-auth.gif" /></p>
+<p><img alt="权限认证" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif" /></p>
 <p>所以现在问题的核心就是：<br />
 1. 如何获取一个账号所拥有的的权限码集合？<br />
 2. 本次操作需要验证的权限码是哪个？</p>

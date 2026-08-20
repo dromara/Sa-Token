@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证">
 	<meta property="og:description" content="Sa-Token v1.23.0 正式支持 OAuth2.0 授权认证，在登录认证、权限认证、Session、单点登录等能力之外补齐标准授权流程。本文汇总本版本更新点与 OAuth2 相关能力说明，方便你对照升级并快速验证新特性，评估是否满足开放平台对接需求。">
 	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/sa-oauth2-server-login-view.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-login-view.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token v1.23.0 更新， 正式支持OAuth2.0授权认证">
 	<meta name="twitter:description" content="Sa-Token v1.23.0 正式支持 OAuth2.0 授权认证，在登录认证、权限认证、Session、单点登录等能力之外补齐标准授权流程。本文汇总本版本更新点与 OAuth2 相关能力说明，方便你对照升级并快速验证新特性，评估是否满足开放平台对接需求。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/sa-oauth2-server-login-view.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-login-view.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/release/sa-token-v1-23-0-geng-xin-zheng-shi-zhi-chi-oauth2-0.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/sa-oauth2-server-login-view.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-login-view.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -290,15 +290,15 @@ public class SaOAuth2ServerApplication {
 <p>1、由于暂未搭建Client端，我们可以使用Sa-Token官网作为重定向URL进行测试：</p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://sa-oauth-server.com:8001/oauth2/authorize?response_type=code&amp;client_id=1001&amp;redirect_uri=http://sa-token.com/&amp;scope=userinfo</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>2、由于首次访问，我们在OAuth-Server端暂未登录，会被转发到登录视图 </p>
-<p><img alt="sa-oauth2-server-login-view" src="/big-file/blog/2023-4/sa-oauth2-server-login-view.png" /></p>
+<p><img alt="sa-oauth2-server-login-view" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-login-view.png" title="s-w-sh" /></p>
 <p>3、点击doLogin进行登录之后刷新页面，会提示我们确认授权<br />
-<img alt="sa-oauth2-server-login-view" src="/big-file/blog/2023-4/sa-oauth2-server-scope.png" /></p>
+<img alt="sa-oauth2-server-login-view" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-scope.png" title="s-w-sh" /></p>
 <p>4、点击确认授权之后刷新页面，我们会被重定向至 redirect_uri 页面，并携带了code参数 </p>
-<p><img alt="sa-oauth2-server-code" src="/big-file/blog/2023-4/sa-oauth2-server-code.png" /></p>
+<p><img alt="sa-oauth2-server-code" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-code.png" title="s-w-sh" /></p>
 <p>4、我们拿着code参数，访问以下地址：</p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://sa-oauth-server.com:8001/oauth2/token?grant_type=authorization_code&amp;client_id=1001&amp;client_secret=aaaa-bbbb-cccc-dddd-eeee&amp;code={code}</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>将得到 <code>Access-Token</code>、<code>Refresh-Token</code>、<code>openid</code>等授权信息 </p>
-<p><img alt="sa-oauth2-server-token" src="/big-file/blog/2023-4/sa-oauth2-server-token.png" /></p>
+<p><img alt="sa-oauth2-server-token" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-oauth2-server-token.png" title="s-w-sh" /></p>
 <p>测试完毕</p>
 <p>详细参考文档：<a href="http://sa-token.com/doc/index.html#/oauth2/readme">http://sa-token.com/doc/index.html#/oauth2/readme</a></p>
 					<div class="blog-post-nav">

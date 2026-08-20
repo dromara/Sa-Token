@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤">
 	<meta property="og:description" content="本篇是 Sa-Token SSO 系列第四篇：跨域且不共享 Redis 的完整模式。介绍通过 HTTP 校验 Ticket、拉取用户信息的对接流程，适合各子系统独立部署、数据中心隔离的单点登录场景，也是生产环境常见架构，配置步骤可直接照着落地。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-si-pian-kua-yu-kua-redis-xia-de-sso-dui-jie-bu-zhou.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--sso3-logout.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso3-logout.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token 单点登录第四篇：跨域、跨 Redis 下的 SSO 对接步骤">
 	<meta name="twitter:description" content="本篇是 Sa-Token SSO 系列第四篇：跨域且不共享 Redis 的完整模式。介绍通过 HTTP 校验 Ticket、拉取用户信息的对接流程，适合各子系统独立部署、数据中心隔离的单点登录场景，也是生产环境常见架构，配置步骤可直接照着落地。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--sso3-logout.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso3-logout.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-si-pian-kua-yu-kua-redis-xia-de-sso-dui-jie-bu-zhou.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--sso3-logout.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso3-logout.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -336,7 +336,7 @@ public Object myFollowList() {
 <li>Server 端注销下线。</li>
 <li>单点注销完成。</li>
 </ol>
-<p><button class="show-img" img-src="/big-file/blog/2023-4/g3--sso3-logout.gif">加载动态演示图</button></p>
+<p><button class="show-img" img-src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso3-logout.gif">加载动态演示图</button></p>
 <p>这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文档增加以下配置即可：</p>
 <h4 id="5-1-sso-client-duan-xin-zeng-pei-zhi">5.1、SSO-Client 端新增配置</h4>
 <p>在 <code>application.yml</code> 增加配置：<code>API调用秘钥</code> 和 <code>单点注销接口URL</code>。</p>
@@ -365,14 +365,14 @@ sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor</code><ul class="code-li
 <h4 id="5-2-qi-dong-ce-shi">5.2、启动测试</h4>
 <p>重启项目，访问测试：<a href="http://sa-sso-client1.com:9001/">http://sa-sso-client1.com:9001/</a>，<br />
 我们主要的测试点在于 <code>单点注销</code>，正常登录即可。</p>
-<p><img alt="sso-type3-client-index.png" src="/big-file/blog/2023-4/sso-type3-client-index.png" /></p>
+<p><img alt="sso-type3-client-index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type3-client-index.png" title="s-w-sh" /></p>
 <p>点击 <strong><code>[注销]</code></strong> 按钮，即可单点注销成功。</p>
-<!-- ![sso-type3-slo.png](/big-file/blog/2023-4/sso-type3-slo.png) -->
+<!-- ![sso-type3-slo.png](https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type3-slo.png 's-w-sh') -->
 
-<p><img alt="sso-type3-slo-index.png" src="/big-file/blog/2023-4/sso-type3-slo-index.png" /></p>
+<p><img alt="sso-type3-slo-index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type3-slo-index.png" title="s-w-sh" /></p>
 <p>PS：这里我们为了方便演示，使用的是超链接跳页面的形式，正式项目中使用 Ajax 调用接口即可做到无刷单点登录退出。</p>
 <p>例如，我们使用 <a href="https://www.apifox.cn/">Apifox 接口测试工具</a> 可以做到同样的效果：</p>
-<p><img alt="sso-slo-apifox.png" src="/big-file/blog/2023-4/sso-slo-apifox.png" /></p>
+<p><img alt="sso-slo-apifox.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-slo-apifox.png" title="s-w-sh" /></p>
 <p>测试完毕！</p>
 <h3 id="liu-xia-pian-yu-gao-qian-hou-duan-fen-li-mo-shi-xia-de-sso-d">六、下篇预告：前后端分离模式下的 SSO 对接方案</h3>
 <p>当我们熟读三种模式的单点登录之后，其实不难发现：所谓单点登录，其本质就是多个系统之间的会话共享。</p>

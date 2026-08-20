@@ -12,13 +12,13 @@
 	<meta property="og:title" content="使用 Sa-Token 解决 WebSocket 握手身份认证">
 	<meta property="og:description" content="WebSocket 可做订单推送、IM 聊天等实时业务，但握手阶段同样需要身份认证。本文讲解如何用 Sa-Token 在 WebSocket 握手时校验登录态，避免未登录连接长连，并给出可落地的接入思路，让实时通道也纳入统一鉴权体系，减少安全盲区。">
 	<meta property="og:url" content="https://sa-token.com/blog/featured/shi-yong-sa-token-jie-jue-websocket-wo-shou-shen-fen-ren-zheng-2.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/st-websocket--token.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--token.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="使用 Sa-Token 解决 WebSocket 握手身份认证">
 	<meta name="twitter:description" content="WebSocket 可做订单推送、IM 聊天等实时业务，但握手阶段同样需要身份认证。本文讲解如何用 Sa-Token 在 WebSocket 握手时校验登录态，避免未登录连接长连，并给出可落地的接入思路，让实时通道也纳入统一鉴权体系，减少安全盲区。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/st-websocket--token.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--token.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/featured/shi-yong-sa-token-jie-jue-websocket-wo-shou-shen-fen-ren-zheng-2.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/st-websocket--token.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--token.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -322,15 +322,15 @@ public class SaTokenWebSocketApplication {
 <p>1、首先我们访问登录接口，拿到会话token </p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">http://localhost:8081/acc/doLogin?name=zhang&amp;pwd=123456</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如图所示：</p>
-<p><img alt="令牌" src="/big-file/blog/2023-4/st-websocket--token.png" /></p>
+<p><img alt="令牌" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--token.png" /></p>
 <p>2、然后我们随便找一个WebSocket在线测试页面进行连接<br />
 ，例如：<a href="https://www.bejson.com/httputil/websocket/">https://www.bejson.com/httputil/websocket/</a></p>
 <p>连接地址：</p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">ws://localhost:8081/ws-connect/302ee2f8-60aa-42aa-8ecb-eeae5ba57015</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如图所示：</p>
-<p><img alt="测试连接" src="/big-file/blog/2023-4/st-websocket--lj.png" /></p>
+<p><img alt="测试连接" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--lj.png" /></p>
 <p>3、如果我们输入一个错误的token，会怎样呢？</p>
-<p><img alt="连接失败" src="/big-file/blog/2023-4/st-websocket--fail.png" /></p>
+<p><img alt="连接失败" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--fail.png" /></p>
 <p>可以看到，连接会被立即断开！</p>
 <h3 id="fang-shi-er-spring-feng-zhuang-ban-websocketsession">方式二：Spring 封装版：WebSocketSession</h3>
 <h5>1、同上：首先是引入 pom.xml 依赖</h5>
@@ -514,16 +514,16 @@ public class SaTokenWebSocketSpringApplication {
 <p>1、首先访问登录接口，拿到会话token </p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">http://localhost:8081/acc/doLogin?name=zhang&amp;pwd=123456</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如图所示：</p>
-<p><img alt="令牌" src="/big-file/blog/2023-4/st-websocket2--token.png" /></p>
+<p><img alt="令牌" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket2--token.png" /></p>
 <p>2、然后打开WebSocket在线测试页面进行连接<br />
 ，例如：<a href="https://www.bejson.com/httputil/websocket/">https://www.bejson.com/httputil/websocket/</a></p>
 <p>连接地址：</p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">ws://localhost:8081/ws-connect?satoken=fe6e7dbd-38b8-4de2-ae05-cda7e36bf2f7</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如图所示：</p>
-<p><img alt="测试连接" src="/big-file/blog/2023-4/st-websocket2--lj.png" /></p>
+<p><img alt="测试连接" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket2--lj.png" /></p>
 <p>注：这里采用 url 传递 Token 是因为在第三方测试页面上这样比较方便，真实项目中可以从Cookie、Header参数、url参数 三种方式任选其一传递会话令牌，效果同等</p>
 <p>3、如果输入一个错误的 Token </p>
-<p><img alt="连接失败" src="/big-file/blog/2023-4/st-websocket2--fail.png" /></p>
+<p><img alt="连接失败" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket2--fail.png" /></p>
 <p>连接失败！</p>
 <h3 id="shi-li-di-zhi">示例地址</h3>
 <p>以上代码已经上传git，示例地址：<br />

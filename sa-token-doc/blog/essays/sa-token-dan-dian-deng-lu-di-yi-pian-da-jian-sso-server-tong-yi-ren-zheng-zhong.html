@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心">
 	<meta property="og:description" content="本篇是 Sa-Token SSO 系列第一篇：从零搭建 SSO-Server 统一认证中心。介绍单点登录整体架构、三种模式差异，以及认证中心的核心接口与配置，为后续同域、跨域、跨 Redis、前后端分离等对接文章打好基础，建议按系列顺序阅读。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-yi-pian-da-jian-sso-server-tong-yi-ren-zheng-zhong.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/sso-server-start.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-start.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token 单点登录第一篇：搭建 SSO-Server 统一认证中心">
 	<meta name="twitter:description" content="本篇是 Sa-Token SSO 系列第一篇：从零搭建 SSO-Server 统一认证中心。介绍单点登录整体架构、三种模式差异，以及认证中心的核心接口与配置，为后续同域、跨域、跨 Redis、前后端分离等对接文章打好基础，建议按系列顺序阅读。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/sso-server-start.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-start.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-yi-pian-da-jian-sso-server-tong-yi-ren-zheng-zhong.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/sso-server-start.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-start.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -388,15 +388,15 @@ public class SaSsoServerApplication {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
 <p>启动项目，不出意外的情况下我们将看到如下输出：</p>
-<p><img alt="sso-server-start" src="/big-file/blog/2023-4/sso-server-start.png" /></p>
+<p><img alt="sso-server-start" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-start.png" title="s-w-sh" /></p>
 <p>访问统一授权地址：</p>
 <blockquote>
 <p>http://localhost:9000/sso/auth</p>
 </blockquote>
-<p><img alt="sso-server-init-login.png" src="/big-file/blog/2023-4/sso-server-init-login.png" /></p>
+<p><img alt="sso-server-init-login.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-init-login.png" title="s-w-sh" /></p>
 <p>可以看到这个页面目前非常简陋，这是因为我们以上的代码示例，主要目标是为了带大家从零搭建一个可用的SSO认证服务端，所以就对一些不太必要的步骤做了简化。</p>
 <p>大家可以下载运行一下 Sa-Token 官方仓库里的示例<code>/sa-token-demo/sa-token-demo-sso-server/</code>，里面有制作好的登录页面：</p>
-<p><img alt="sso-server-init-login2.png" src="/big-file/blog/2023-4/sso-server-init-login2.png" /></p>
+<p><img alt="sso-server-init-login2.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-init-login2.png" title="s-w-sh" /></p>
 <p>默认账号密码为：<code>sa / 123456</code>，先别着急点击登录，因为我们还没有搭建对应的 Client 端项目，<br />
 真实项目中我们是不会直接从浏览器访问 <code>/sso/auth</code> 授权地址的，我们需要在 Client 端点击登录按钮重定向而来。</p>
 <hr />

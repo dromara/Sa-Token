@@ -12,13 +12,13 @@
 	<meta property="og:title" content="不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现">
 	<meta property="og:description" content="只想快速挂一个可用登录页，不想自己写前端？本文介绍 Sa-Token-Quick-Login：引入依赖后即可获得开箱即用的登录界面与基础鉴权能力，适合演示项目、后台管理与快速原型，把时间留给真正的业务功能，也能先把登录链路跑通再迭代，文内含示例，可直接对照实践。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/sa-quick-login.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现">
 	<meta name="twitter:description" content="只想快速挂一个可用登录页，不想自己写前端？本文介绍 Sa-Token-Quick-Login：引入依赖后即可获得开箱即用的登录界面与基础鉴权能力，适合演示项目、后台管理与快速原型，把时间留给真正的业务功能，也能先把登录链路跑通再迭代，文内含示例，可直接对照实践。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/sa-quick-login.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/sa-quick-login.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -241,9 +241,9 @@ public class TestController {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
 <h3 id="si-ce-shi-fang-wen">四、测试访问</h3>
 <p>启动项目，使用浏览器访问：<code>http://localhost:8081</code>，首次访问时，由于处于未登录状态，会被强制进入登录页面</p>
-<p><img alt="登录" src="/big-file/blog/2023-4/sa-quick-login.png" /></p>
+<p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login.png" title="s-w" /></p>
 <p>使用默认账号：<code>sa / 123456</code>进行登录，会看到资源页面</p>
-<p><img alt="登录" src="/big-file/blog/2023-4/sa-quick-login-index.png" /></p>
+<p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login-index.png" title="s-w" /></p>
 <h3 id="wu-ke-pei-zhi-xin-xi">五、可配置信息</h3>
 <p>你可以在yml中添加如下配置 (所有配置都是可选的) </p>
 <!---------------------------- tabs:start ---------------------------->
@@ -286,7 +286,7 @@ sa:
 <p>4、我们将其重命名为<code>sa-quick-dist.jar</code>，现在这个jar包就是我们的最终程序，我们在这个<code>\target</code>目录直接进入cmd，执行如下命令启动jar包</p>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>5、测试访问，根据控制台输出提示，我们使用浏览器访问测试: <code>http://localhost:8080</code></p>
-<p><img alt="sa-quick-start" src="/big-file/blog/2023-4/sa-quick-start.png" /></p>
+<p><img alt="sa-quick-start" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-start.png" title="s-w" /></p>
 <p>如果可以进入登录界面，则代表打包运行成功 <br><br />
 当然仅仅运行成功还不够，下面我们演示一下如何使用这个jar包进行静态网站部署</p>
 <h3 id="ba-suo-you-gong-neng-shi-li">八、所有功能示例</h3>
@@ -310,7 +310,7 @@ sa:
 <p>SpringBoot默认开放了一些路径作为资源目录，比如<code>classpath:/static/</code>，<br />
 怎么使用呢？我们只需要在jar包同目录创建一个<code>\static</code>文件夹，将静态资源文件复制到此目录下，然后启动jar包即可访问</p>
 <p>同时，我们还可以在jar包同目录创建yml配置文件，来覆盖jar包内的yml配置，如下图所示：</p>
-<p><img alt="sa-quick-case.png" src="/big-file/blog/2023-4/sa-quick-case.png" /></p>
+<p><img alt="sa-quick-case.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-case.png" title="s-w" /></p>
 <p>例如如上目录中<code>/static</code>中有一个<code>1.jpg</code>文件，我们启动jar包后访问<code>http://localhost:8080/1.jpg</code>即可查看到此文件，这是Springboot自带的功能，在此不再赘述</p>
 <hr />
 <h3 id="can-kao-zi-liao">参考资料</h3>

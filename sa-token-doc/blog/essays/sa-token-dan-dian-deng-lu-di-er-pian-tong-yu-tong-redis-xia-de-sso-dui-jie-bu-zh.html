@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤">
 	<meta property="og:description" content="本篇是 Sa-Token SSO 系列第二篇：同域且共享 Redis 场景下的客户端对接。讲解最简模式的配置步骤、登录跳转与会话共享原理，适合同一顶级域名下的多系统快速打通单点登录，上手成本最低，也是理解后续复杂模式的最佳起点，建议结合本系列前后篇一起看。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-er-pian-tong-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--sso1.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso1.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token 单点登录第二篇：同域、同 Redis 下的 SSO 对接步骤">
 	<meta name="twitter:description" content="本篇是 Sa-Token SSO 系列第二篇：同域且共享 Redis 场景下的客户端对接。讲解最简模式的配置步骤、登录跳转与会话共享原理，适合同一顶级域名下的多系统快速打通单点登录，上手成本最低，也是理解后续复杂模式的最佳起点，建议结合本系列前后篇一起看。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--sso1.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso1.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-er-pian-tong-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--sso1.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso1.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -176,7 +176,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <p>所谓共享Cookie，就是主域名Cookie在二级域名下的共享，举个例子：写在父域名<code>stp.com</code>下的Cookie，在<code>s1.stp.com</code>、<code>s2.stp.com</code>等子域名都是可以共享访问的。</p>
 <p>而共享Redis，并不需要我们把所有项目的数据都放在同一个Redis中，Sa-Token提供了 <strong>[权限缓存与业务缓存分离]</strong> 的解决方案：Alone独立Redis插件。</p>
 <p>动态演示图：</p>
-<p><img alt="SSO 模式一" src="/big-file/blog/2023-4/g3--sso1.gif" /></p>
+<p><img alt="SSO 模式一" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso1.gif" /></p>
 <p>OK，所有理论就绪，下面开始实战：</p>
 <h3 id="er-zhun-bei-gong-zuo">二、准备工作</h3>
 <p>首先修改hosts文件<code>(C:\windows\system32\drivers\etc\hosts)</code>，添加以下IP映射，方便我们进行测试：</p>
@@ -358,13 +358,13 @@ public class SaSso1ClientApplication {
 </ul>
 </blockquote>
 <p>均返回：</p>
-<p><img alt="sso1--index.png" src="/big-file/blog/2023-4/sso1--index.png" /></p>
+<p><img alt="sso1--index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso1--index.png" title="s-w-sh" /></p>
 <p>然后点击登录，被重定向至SSO认证中心：</p>
-<p><img alt="sso1--login-page2.png" src="/big-file/blog/2023-4/sso1--login-page2.png" /></p>
+<p><img alt="sso1--login-page2.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso1--login-page2.png" title="s-w-sh" /></p>
 <p>我们点击登录，然后刷新页面：</p>
-<p><img alt="sso1-login-ok.png" src="/big-file/blog/2023-4/sso1-login-ok.png" /></p>
+<p><img alt="sso1-login-ok.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso1-login-ok.png" title="s-w-sh" /></p>
 <p>刷新另外两个Client端，均显示已登录 </p>
-<p><img alt="sso1-login-ok2.png" src="/big-file/blog/2023-4/sso1-login-ok2.png" /></p>
+<p><img alt="sso1-login-ok2.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso1-login-ok2.png" title="s-w-sh" /></p>
 <p>测试完成 </p>
 <h3 id="liu-xia-pian-yu-gao-kua-yu-mo-shi-xia-de-jie-jue-fang-an">六、下篇预告：跨域模式下的解决方案</h3>
 <p>如上，我们使用简单的步骤实现了同域下的单点登录，聪明如你😏，马上想到了这种模式有着一个不小的限制：</p>

@@ -12,13 +12,13 @@
 	<meta property="og:title" content="使用 Sa-Token 实现 [记住我] 模式登录、七天免登录">
 	<meta property="og:description" content="登录页常见「记住我」：勾选后即使关闭浏览器再打开，仍保持登录状态。本文介绍如何用 Sa-Token 实现记住我模式与七天免登录，说明 timeout、Cookie 持久化等配置要点，让长期免登录既好用又可控，兼顾安全与用户体验，文内含示例，可直接对照实践。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/shi-yong-sa-token-shi-xian-ji-zhu-wo-mo-shi-deng-lu-qi-tian-mian-deng-lu.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--remember-me.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--remember-me.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="使用 Sa-Token 实现 [记住我] 模式登录、七天免登录">
 	<meta name="twitter:description" content="登录页常见「记住我」：勾选后即使关闭浏览器再打开，仍保持登录状态。本文介绍如何用 Sa-Token 实现记住我模式与七天免登录，说明 timeout、Cookie 持久化等配置要点，让长期免登录既好用又可控，兼顾安全与用户体验，文内含示例，可直接对照实践。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--remember-me.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--remember-me.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/shi-yong-sa-token-shi-xian-ji-zhu-wo-mo-shi-deng-lu-qi-tian-mian-deng-lu.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--remember-me.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--remember-me.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -161,7 +161,7 @@
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
 					<h3 id="yi-xu-qiu-fen-xi">一、需求分析</h3>
 <p>如图所示，一般网站的登录界面都会有一个 <strong><code>[记住我]</code></strong> 按钮，当你勾选它登录后，即使你关闭浏览器再次打开网站，也依然会处于登录状态，无须重复验证密码：</p>
-<p><img alt="../static/login-view.png" src="/big-file/blog/2023-4/login-view.png" /></p>
+<p><img alt="../static/login-view.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/login-view.png" /></p>
 <p>本文将详细介绍在 Sa-Token中，如何做到以下登录模式：<br />
 - 记住我登录：登录后关闭浏览器，再次打开网站登录状态依然有效，无需重复登录。<br />
 - 仅本次有效登录：登录后关闭浏览器，再次打开网站登录状态将失效，需要再次登录。<br />
@@ -191,7 +191,7 @@ StpUtil.login(10001, false);</code><ul class="code-line-box"><li>1</li><li>2</li
 - 勾选 [记住我] 按钮时：调用<code>StpUtil.login(10001, true)</code>，在浏览器写入一个<code>持久Cookie</code>储存 Token，此时用户即使重启浏览器 Token 依然有效。<br />
 - 不勾选 [记住我] 按钮时：调用<code>StpUtil.login(10001, false)</code>，在浏览器写入一个<code>临时Cookie</code>储存 Token，此时用户在重启浏览器后 Token 便会消失，导致会话失效。</p>
 <p>动态演示图：</p>
-<p><img alt="记住我登录" src="/big-file/blog/2023-4/g3--remember-me.gif" /></p>
+<p><img alt="记住我登录" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--remember-me.gif" /></p>
 <h3 id="si-qian-hou-duan-fen-li-mo-shi-xia-ru-he-shi-xian-ji-zhu-wo">四、前后端分离模式下如何实现[记住我]?</h3>
 <p>此时机智的你😏很快发现一个问题，Cookie虽好，却无法在前后端分离环境下使用，那是不是代表上述方案在APP、小程序等环境中无效？</p>
 <p>准确的讲，答案是肯定的，任何基于Cookie的认证方案在前后端分离环境下都会失效（原因在于这些客户端默认没有实现Cookie功能），不过好在，这些客户端一般都提供了替代方案，<br />

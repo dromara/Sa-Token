@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤">
 	<meta property="og:description" content="本篇是 Sa-Token SSO 系列第三篇：跨域但共享 Redis 的对接方式。说明 Ticket 换取、跨域 Cookie 限制与解决思路，帮助不同域名系统在共享缓存前提下完成单点登录，兼顾架构约束与对接复杂度，适合子系统域名拆分但仍共用 Redis 的团队。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-san-pian-kua-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--sso2.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso2.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token 单点登录第三篇：跨域、同 Redis 下的 SSO 对接步骤">
 	<meta name="twitter:description" content="本篇是 Sa-Token SSO 系列第三篇：跨域但共享 Redis 的对接方式。说明 Ticket 换取、跨域 Cookie 限制与解决思路，帮助不同域名系统在共享缓存前提下完成单点登录，兼顾架构约束与对接复杂度，适合子系统域名拆分但仍共用 Redis 的团队。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--sso2.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso2.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-san-pian-kua-yu-tong-redis-xia-de-sso-dui-jie-bu-zh.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--sso2.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso2.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -195,7 +195,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <p>整个过程，除了第四步用户在SSO认证中心登录时会被打断，其余过程均是自动化的，当用户在另一个子系统再次点击<code>[登录]</code>按钮，由于此用户在SSO认证中心已有会话存在，<br />
 所以第四步也将自动化，也就是单点登录的最终目的 —— 一次登录，处处通行。</p>
 <p>动态演示图：</p>
-<p><img alt="SSO 模式二" src="/big-file/blog/2023-4/g3--sso2.gif" /></p>
+<p><img alt="SSO 模式二" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso2.gif" /></p>
 <p>下面我们按照步骤依次完成上述过程：</p>
 <h3 id="er-zhun-bei-gong-zuo">二、准备工作</h3>
 <p>首先修改hosts文件<code>(C:\windows\system32\drivers\etc\hosts)</code>，添加以下IP映射，方便我们进行测试：</p>
@@ -365,24 +365,24 @@ public class SaSso2ClientApplication {
 <p>启动项目 </p>
 <h3 id="si-ce-shi-fang-wen">四、测试访问</h3>
 <p>(1) 依次启动 <code>SSO-Server</code> 与 <code>SSO-Client</code>，然后从浏览器访问：<code>http://sa-sso-client1.com:9001/</code></p>
-<p><img alt="sso-client-index.png" src="/big-file/blog/2023-4/sso-client-index.png" /></p>
+<p><img alt="sso-client-index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-client-index.png" title="s-w-sh" /></p>
 <p>(2) 首次打开，提示当前未登录，我们点击<strong><code>登录</code></strong> 按钮，页面会被重定向到登录中心</p>
-<p><img alt="sso-server-auth.png" src="/big-file/blog/2023-4/sso-server-auth.png" /></p>
+<p><img alt="sso-server-auth.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-auth.png" title="s-w-sh" /></p>
 <p>(3) SSO-Server提示我们在认证中心尚未登录，我们点击 <strong><code>doLogin登录</code></strong>按钮进行模拟登录</p>
-<p><img alt="sso-server-dologin.png" src="/big-file/blog/2023-4/sso-server-dologin.png" /></p>
+<p><img alt="sso-server-dologin.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-server-dologin.png" title="s-w-sh" /></p>
 <p>(4) SSO-Server认证中心登录成功，我们回到刚才的页面刷新页面</p>
-<p><img alt="sso-client-index-ok.png" src="/big-file/blog/2023-4/sso-client-index-ok.png" /></p>
+<p><img alt="sso-client-index-ok.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-client-index-ok.png" title="s-w-sh" /></p>
 <p>(5) 页面被重定向至<code>Client</code>端首页，并提示登录成功，至此，<code>Client1</code>应用已单点登录成功！ </p>
 <p>(6) 我们再次访问<code>Client2</code>：<a href="http://sa-sso-client2.com:9001/">http://sa-sso-client2.com:9001/</a></p>
-<p><img alt="sso-client2-index.png" src="/big-file/blog/2023-4/sso-client2-index.png" /></p>
+<p><img alt="sso-client2-index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-client2-index.png" title="s-w-sh" /></p>
 <p>(7) 提示未登录，我们点击<strong><code>登录</code></strong>按钮，会直接提示登录成功</p>
-<p><img alt="sso-client2-index-ok.png" src="/big-file/blog/2023-4/sso-client2-index-ok.png" /></p>
+<p><img alt="sso-client2-index-ok.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-client2-index-ok.png" title="s-w-sh" /></p>
 <p>(8) 同样的方式，我们打开<code>Client3</code>，也可以直接登录成功：<a href="http://sa-sso-client3.com:9001/">http://sa-sso-client3.com:9001/</a></p>
-<p><img alt="sso-client3-index-ok.png" src="/big-file/blog/2023-4/sso-client3-index-ok.png" /></p>
+<p><img alt="sso-client3-index-ok.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-client3-index-ok.png" title="s-w-sh" /></p>
 <p>至此，测试完毕！</p>
 <p>可以看出，除了在<code>Client1</code>端我们需要手动登录一次之外，在<code>Client2端</code>和<code>Client3端</code>都是可以无需再次认证，直接登录成功的。</p>
 <p>我们可以通过 F12控制台 Network 跟踪整个过程</p>
-<p><img alt="sso-genzong" src="/big-file/blog/2023-4/sso-genzong.png" /></p>
+<p><img alt="sso-genzong" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-genzong.png" title="s-w-sh" /></p>
 <h3 id="wu-ticket-jie-chi-gong-ji">五、Ticket 劫持攻击</h3>
 <p>在上面的示例中，配置项 <code>sa-token.sso.allow-url=*</code> 意为配置所有允许的Client端授权地址，不在此配置项中的URL将无法单点登录成功。</p>
 <p>为了方便测试，上述代码将其配置为<code>*</code>，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被 Ticket 劫持的风险。</p>
@@ -391,7 +391,7 @@ public class SaSso2ClientApplication {
 <p>http://sa-sso-server.com:9000/sso/auth?redirect=https://www.baidu.com/</p>
 </blockquote>
 <p>当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页</p>
-<p><img alt="sso-ticket-jc" src="/big-file/blog/2023-4/sso-ticket-jc.png" /></p>
+<p><img alt="sso-ticket-jc" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-ticket-jc.png" title="s-w-sh" /></p>
 <p>可以看到，代表着用户身份的 Ticket 码也显现到了URL之中，借此漏洞，攻击者完全可以构建一个URL将小红的 Ticket 码自动提交到攻击者自己的服务器，伪造小红身份登录网站</p>
 <h3 id="liu-fang-fan-fang-fa">六、防范方法</h3>
 <p>造成T icket 劫持攻击的直接原因就是SSO-Server认证中心没有对 <code>redirect地址</code> 进行任何的限制，防范的方法也很简单，就是对<code>redirect参数</code>进行校验，如果其不在指定的URL列表中时，拒绝下放ticket </p>
@@ -410,7 +410,7 @@ sa-token.sso.allow-url=http://sa-sso-client1.com:9001/sso/login</code><ul class=
 <!---------------------------- tabs:end ---------------------------->
 
 <p>再次访问上述链接：</p>
-<p><img alt="sso-feifa-rf" src="/big-file/blog/2023-4/sso-feifa-rf.png" /></p>
+<p><img alt="sso-feifa-rf" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-feifa-rf.png" title="s-w-sh" /></p>
 <p>域名没有通过校验，拒绝授权！</p>
 <h5>配置安全性参考表</h5>
 <table>

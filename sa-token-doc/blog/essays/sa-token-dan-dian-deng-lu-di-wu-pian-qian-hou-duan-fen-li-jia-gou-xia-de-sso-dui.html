@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤">
 	<meta property="og:description" content="本篇是 Sa-Token SSO 系列第五篇：前后端分离架构下的单点登录对接。讲解无 Cookie 场景如何携带 Token、前端跳转登录页与回调处理，以及与传统同域 Cookie 方案的差异，方便 SPA、小程序等终端接入 SSO，打通前后端分离登录链路。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-wu-pian-qian-hou-duan-fen-li-jia-gou-xia-de-sso-dui.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/sso-type2-server-h5-auth.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type2-server-h5-auth.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token 单点登录第五篇：前后端分离架构下的 SSO 对接步骤">
 	<meta name="twitter:description" content="本篇是 Sa-Token SSO 系列第五篇：前后端分离架构下的单点登录对接。讲解无 Cookie 场景如何携带 Token、前端跳转登录页与回调处理，以及与传统同域 Cookie 方案的差异，方便 SPA、小程序等终端接入 SSO，打通前后端分离登录链路。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/sso-type2-server-h5-auth.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type2-server-h5-auth.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/sa-token-dan-dian-deng-lu-di-wu-pian-qian-hou-duan-fen-li-jia-gou-xia-de-sso-dui.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/sso-type2-server-h5-auth.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type2-server-h5-auth.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -590,7 +590,7 @@ var str = &quot;This page is provided by Sa-Token, Please refer to: &quot; + &qu
 console.log(str);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li><li>72</li><li>73</li><li>74</li><li>75</li><li>76</li><li>77</li><li>78</li><li>79</li><li>80</li><li>81</li><li>82</li><li>83</li><li>84</li><li>85</li><li>86</li><li>87</li><li>88</li><li>89</li><li>90</li><li>91</li><li>92</li><li>93</li><li>94</li><li>95</li><li>96</li><li>97</li><li>98</li><li>99</li><li>100</li><li>101</li><li>102</li><li>103</li><li>104</li><li>105</li><li>106</li><li>107</li></ul></pre>
 <h3 id="qi-qi-dong-ce-shi">七、启动测试</h3>
 <p>使用前端ide导入项目 <code>sa-token-demo-sso-server-h5</code>，浏览器访问 <code>sso-auth.html</code> 页面：</p>
-<p><img alt="sso-type2-server-h5-auth.png" src="/big-file/blog/2023-4/sso-type2-server-h5-auth.png" /></p>
+<p><img alt="sso-type2-server-h5-auth.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type2-server-h5-auth.png" title="s-w-sh" /></p>
 <p>复制上述地址，将其配置到 Client 端的 yml 配置文件中，例如：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->

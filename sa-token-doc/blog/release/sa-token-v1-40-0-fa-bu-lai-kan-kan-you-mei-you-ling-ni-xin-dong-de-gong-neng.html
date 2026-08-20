@@ -12,13 +12,13 @@
 	<meta property="og:title" content="Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！">
 	<meta property="og:description" content="Sa-Token v1.40.0 版本更新发布。作为轻量级 Java 权限认证框架，本版在登录认证、权限认证、单点登录、OAuth2.0、微服务网关鉴权等方向持续迭代。文内整理完整更新日志，便于对照升级与排查兼容性变化，建议升级前先看清破坏性改动。">
 	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-40-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2025-2/sa-oauth2-client-test-h5-page.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth2-client-test-h5-page.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Sa-Token v1.40.0 发布 🚀，来看看有没有令你心动的功能！">
 	<meta name="twitter:description" content="Sa-Token v1.40.0 版本更新发布。作为轻量级 Java 权限认证框架，本版在登录认证、权限认证、单点登录、OAuth2.0、微服务网关鉴权等方向持续迭代。文内整理完整更新日志，便于对照升级与排查兼容性变化，建议升级前先看清破坏性改动。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2025-2/sa-oauth2-client-test-h5-page.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth2-client-test-h5-page.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/release/sa-token-v1-40-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2025-2/sa-oauth2-client-test-h5-page.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth2-client-test-h5-page.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -174,7 +174,7 @@
 <p>起初我以为 http 响应头 <code>Cookie</code> 参数只有 <code>domain</code>、<code>path</code>、<code>secure</code>、<code>httpOnly</code>、<code>sameSite</code> 等几个扩展属性😶，<br />
 顺着这个 issue，我查阅了一下相关资料，这不查不知道，一查吓一跳 😱。</p>
 <p>原来 <code>Cookie</code> 还有这么多我不知道的扩展属性🔍：</p>
-<p><img alt="Cookie扩展属性" src="/big-file/blog/2025-2/cookie-extra-prop.png" /></p>
+<p><img alt="Cookie扩展属性" src="https://res.dev33.cn/sa-token-blog/img/2025-2/cookie-extra-prop.png" /></p>
 <p>（参考文章：https://blog.csdn.net/fengbin2005/article/details/136544226）</p>
 <p>本着“可扩展性”的原则，本次版本更新没有补充这些属性的配置定义，而是直接增加了一个 <code>extraAttrs</code> 字段，你可以借助该字段扩展任意自定义属性✨。</p>
 <p>举个例子，如下代码配置：</p>
@@ -210,7 +210,7 @@
 <p>对于刚刚接触 OAuth2 概念的初学者来说，不仅 OAuth2 Server 端的搭建比较困难，其接入与测试也是一件极其繁琐的事情😫。</p>
 <p>OAuth2 对接涉及大量繁琐的参数拼接、响应报文解析等步骤，仅一个授权码式的对接，其调试过程可能也要可能耗费数小时乃至数天⏳。</p>
 <p>为此，我们提供了一个专门对接 OAuth2 Server 的前端测试页🖥️：</p>
-<p><img alt="OAuth2 前端测试页" src="/big-file/blog/2025-2/sa-oauth2-client-test-h5-page.png" /></p>
+<p><img alt="OAuth2 前端测试页" src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth2-client-test-h5-page.png" /></p>
 <p>该测试页允许你：<br />
 -  1️⃣ 在前端直接配置 OAuth2 Server 的主机地址、授权页地址、token接口地址、Scope参数 等信息。<br />
 -  2️⃣ 一键拼接授权URL地址，一键测试对应平台 授权码式、隐藏式、密码式和客户端凭证式 的完整授权流程。<br />
@@ -219,14 +219,14 @@
 <p>详情可参考该视频：<a href="https://www.bilibili.com/video/BV13LSMYzEmE/">Sa-Token v1.40 新功能预览：OAuth2 四种模式 一键测试页</a> 🔗</p>
 <h3 id="geng-xin-dian-5-xin-zeng-unionid-lian-he-id-shi-xian-fang-bi">🤝 更新点5：新增 UnionId 联合 ID 实现，方便跨应用识别用户</h3>
 <p>此提案来自于一位开发者对 官网 sa-token 小助手的咨询 💬：</p>
-<p><img alt="有关 UnionId 功能的 sa-token 小助手咨询 " src="/big-file/blog/2025-2/sa-oauth-unionid-xzs-zixun.png" /></p>
+<p><img alt="有关 UnionId 功能的 sa-token 小助手咨询 " src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth-unionid-xzs-zixun.png" /></p>
 <p>这位开发者在使用 Sa-Token 的 OAuth2 模块时，需要一个叫做 <code>UnionId</code> 的功能。简单来讲：<code>UnionId</code> 可以帮助开发者在同主体的多个应用下定位到同一用户 🔍。</p>
 <p>作为立志要成为国内第一 java 权限认证框架的 Sa-Token 来讲，这是必须给安排上的💪🏆。</p>
 <p>详情可参考该视频️：<a href="https://www.bilibili.com/video/BV1oz6AY5ERJ/">OAuth2 授权流程中的 clientId、openId、unionId、userId 都是干嘛的？Sa-Token v1.40 预览：新增unionid支持</a> 🔗</p>
 <h3 id="geng-xin-dian-6-xin-zeng-oauth2-server-duan-qian-hou-tai-fen">🌐 更新点6：新增 OAuth2-Server 端前后台分离示例与文档</h3>
 <p>有 Web Page 服务的地方就有前后台分离，当然 OAuth2 也不例外🌍。</p>
 <p>之前的版本 本质也是支持搭建 OAuth2-Server 端前后台分离服务的，但是由于官网仓库缺乏 Demo示例和相关介绍文档，导致 “OAuth2-Server 端能否前后台分离？” 成为点击量特别高的一个问题🔥。</p>
-<p><img alt="OAuth2-Server 端能否前后台分离？微信咨询" src="/big-file/blog/2025-2/sa-oauth2-qhdfl-wx-zixun.png" /></p>
+<p><img alt="OAuth2-Server 端能否前后台分离？微信咨询" src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth2-qhdfl-wx-zixun.png" /></p>
 <p>参考 issue: <br />
 - <a href="https://gitee.com/dromara/sa-token/issues/I9DQGA">https://gitee.com/dromara/sa-token/issues/I9DQGA</a><br />
 - <a href="https://gitee.com/dromara/sa-token/issues/I9W2RU">https://gitee.com/dromara/sa-token/issues/I9W2RU</a></p>
@@ -432,7 +432,7 @@ public class StpInterfaceImpl implements StpInterface {
 <h3 id="qi-ta">🌟 其它</h3>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
-<p><img alt="js" src="/big-file/blog/2025-2/sa-token-js4.png" /></p>
+<p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-token-js4.png" /></p>
 <p>本文章由 DeepSeek 参与指导与润色，感谢 DeepSeek 团队。</p>
 					<div class="blog-post-nav">
 <a class="blog-post-nav-prev" href="../release/sa-token-v1-39-0-geng-xin-da-fu-zhong-gou-oauth2-mo-kuai.html">← Sa-Token v1.39.0 更新，大幅重构 OAuth2 模块</a>

@@ -12,13 +12,13 @@
 	<meta property="og:title" content="使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录">
 	<meta property="og:description" content="像 QQ 一样：手机和电脑可同时在线，但两个手机不能同时登录。本文讲解 Sa-Token 如何实现单地登录、多地登录、同端互斥登录，并说明 is-concurrent、is-share 等关键配置，覆盖常见多端登录业务规则，方便按产品需求灵活切换。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html">
-	<meta property="og:image" content="https://sa-token.com/big-file/blog/2023-4/g3--mutex-login.gif">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--mutex-login.gif">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录">
 	<meta name="twitter:description" content="像 QQ 一样：手机和电脑可同时在线，但两个手机不能同时登录。本文讲解 Sa-Token 如何实现单地登录、多地登录、同端互斥登录，并说明 is-concurrent、is-share 等关键配置，覆盖常见多端登录业务规则，方便按产品需求灵活切换。">
-	<meta name="twitter:image" content="https://sa-token.com/big-file/blog/2023-4/g3--mutex-login.gif">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--mutex-login.gif">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html"
   },
-  "image": "https://sa-token.com/big-file/blog/2023-4/g3--mutex-login.gif"
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--mutex-login.gif"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -163,7 +163,7 @@
 <p>如果你经常使用腾讯QQ，就会发现它的登录有如下特点：它可以手机电脑同时在线，但是不能在两个手机上同时登录一个账号。</p>
 <p>同端互斥登录，指的就是：像腾讯QQ一样，在同一类型设备上只允许单地点登录，在不同类型设备上允许同时在线。</p>
 <p>动态演示图：</p>
-<p><img alt="同端互斥登录" src="/big-file/blog/2023-4/g3--mutex-login.gif" /></p>
+<p><img alt="同端互斥登录" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--mutex-login.gif" /></p>
 <blockquote>
 <p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
 Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>

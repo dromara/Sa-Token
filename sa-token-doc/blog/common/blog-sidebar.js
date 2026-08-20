@@ -1,4 +1,3 @@
-// 博客左侧目录（由 doc--build-blog 编译生成，勿手改）
 window.SA_TOKEN_BLOG_SIDEBAR = [
   {
     "label": "精选",
