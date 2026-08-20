@@ -178,6 +178,10 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
     "label": "特殊文章",
     "items": [
       {
+        "title": "号外！Sa-Token-Rust 入驻开放原子开源基金会·旋武社区！",
+        "url": "special/hao-wai-sa-token-rust-ru-zhu-kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu.html"
+      },
+      {
         "title": "太强了！Sa-Token 的 NodeJS 版本！",
         "url": "special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html"
       },

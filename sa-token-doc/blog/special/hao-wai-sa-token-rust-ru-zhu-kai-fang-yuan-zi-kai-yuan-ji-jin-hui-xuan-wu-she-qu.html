@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>号外！Sa-Token-Rust 入驻开放原子开源基金会·旋武社区！ - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="Sa-Token 社区推动的 Rust 鉴权框架 sa-token-rust，于 2026-08-18 入驻开放原子开源基金会·旋武社区。本文介绍入驻背景、项目能力与快速上手方式，方便 Java 粉丝和 Rust 同学一起围观共建。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/special/hao-wai-sa-token-rust-ru-zhu-kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="号外！Sa-Token-Rust 入驻开放原子开源基金会·旋武社区！">
+	<meta property="og:description" content="Sa-Token 社区推动的 Rust 鉴权框架 sa-token-rust，于 2026-08-18 入驻开放原子开源基金会·旋武社区。本文介绍入驻背景、项目能力与快速上手方式，方便 Java 粉丝和 Rust 同学一起围观共建。">
+	<meta property="og:url" content="https://sa-token.com/blog/special/hao-wai-sa-token-rust-ru-zhu-kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu.html">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-list.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="号外！Sa-Token-Rust 入驻开放原子开源基金会·旋武社区！">
+	<meta name="twitter:description" content="Sa-Token 社区推动的 Rust 鉴权框架 sa-token-rust，于 2026-08-18 入驻开放原子开源基金会·旋武社区。本文介绍入驻背景、项目能力与快速上手方式，方便 Java 粉丝和 Rust 同学一起围观共建。">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-list.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "号外！Sa-Token-Rust 入驻开放原子开源基金会·旋武社区！",
+  "description": "Sa-Token 社区推动的 Rust 鉴权框架 sa-token-rust，于 2026-08-18 入驻开放原子开源基金会·旋武社区。本文介绍入驻背景、项目能力与快速上手方式，方便 Java 粉丝和 Rust 同学一起围观共建。",
+  "datePublished": "2026-08-20",
+  "dateModified": "2026-08-20",
+  "url": "https://sa-token.com/blog/special/hao-wai-sa-token-rust-ru-zhu-kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/special/hao-wai-sa-token-rust-ru-zhu-kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu.html"
+  },
+  "image": "https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-list.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="../../doc.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi" href="../../doc.html#/more/join-group">加群</a>
+			<a class="p-none wzi" href="../../doc.html#/more/demand-commit">需求提交</a>
+			<a class="p-none wzi" href="../../doc.html#/more/sa-token-donate">赞助</a>
+			<a class="p-none wzi" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="../../doc.html#/more/update-log">更新日志</a>
+						<a href="../../doc.html#/more/common-questions">常见报错</a>
+						<a href="../../doc.html#/more/tj-gzh">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="../../doc.html#/fun/sa-token-test">在线考试</a>
+						<a href="../../doc.html#/fun/issue-template">在线提问</a>
+						<a href="../../doc.html#/more/wenjuan">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>号外！Sa-Token-Rust 入驻开放原子开源基金会·旋武社区！</h1>
+					<div class="blog-article-meta"><span>2026-08-20</span><span>特殊文章</span></div>
+					<p><strong>Sa-Token-Rust</strong> 是 Sa-Token 社区推动的一个项目：把 Java 生态里那套「登录认证、权限认证、Session、SSO、OAuth2」的用法，搬到 Rust 里。API 贴近原版 <code>StpUtil</code>，同时适配 Axum、Actix-web、Poem、Rocket、Warp、Salvo 等主流 Web 框架。</p>
+<p>开源地址：<a href="https://github.com/sa-tokens/sa-token-rust">https://github.com/sa-tokens/sa-token-rust</a></p>
+<p>2026-8-18，Sa-Token-Rust 正式入驻 <strong><a href="https://xuanwu.openatom.org/">开放原子开源基金会·旋武社区</a></strong>！</p>
+<p><img alt="sa-token-rust 入驻旋武社区开源项目列表" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-list.png" /></p>
+<h3 id="kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu">开放原子开源基金会 · 旋武社区</h3>
+<p>开放原子开源基金会 · 旋武社区 是基金会旗下的 <strong>Rust 中国社区</strong>：有章程、有例会、有工作组，华为、统信、360、中科院软件所、深开鸿、麒麟软件、OPPO、vivo、京东 <strong>9 家会员单位共建</strong>。发行版、在线课程、Playground、高校走进、开源生态大会上的 Rust 论坛，都是这条线上的活。</p>
+<p>名录里目前挂着 <strong>60+</strong> 个项目，覆盖基础库、AI、鸿蒙生态、认证授权等。sa-token-rust 进的是「应用框架与软件 / 认证授权」——对社区来说，等于把项目放到了国内 Rust 官方展台上。</p>
+<p>项目详情页：<a href="https://xuanwu.openatom.org/articles/project/sa-token-rust/">https://xuanwu.openatom.org/articles/project/sa-token-rust/</a></p>
+<p><img alt="Sa-Token-Rust 旋武社区项目详情页" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-page.png" /></p>
+<h3 id="sa-token-rust-shi-gan-shen-me-de">sa-token-rust 是干什么的？</h3>
+<p>一个轻量级、高性能的 Rust 认证授权框架，灵感来自 <a href="https://github.com/dromara/sa-token">Sa-Token</a>。当前版本 <strong>0.1.18</strong>。</p>
+<p>Java 同学可以把它理解成：熟悉的 <code>StpUtil.login()</code> / <code>checkLogin()</code> / 注解鉴权，换成 Rust 的过程宏和 async/await。Rust 同学可以把它理解成：不必从零拼 JWT + Session + 权限模型，一套 crate 覆盖登录到 SSO。</p>
+<h4 id="te-xing">特性</h4>
+<ul>
+<li>🚀 <strong>多框架支持</strong>：Axum、Actix-web、Poem、Rocket、Warp、Salvo、Tide、Gotham、Ntex</li>
+<li>🔐 <strong>完整认证</strong>：登录、登出、Token 验证、Session 管理</li>
+<li>🛡️ <strong>细粒度授权</strong>：权限 + 角色访问控制</li>
+<li>💾 <strong>灵活存储</strong>：内存、Redis、数据库后端</li>
+<li>🎯 <strong>易于使用</strong>：过程宏 + <code>StpUtil</code> 工具类</li>
+<li>⚡ <strong>高性能</strong>：零拷贝设计，支持 async/await</li>
+<li>🔧 <strong>高度可配置</strong>：Token 超时、Cookie、自定义 Token 名称</li>
+<li>🎧 <strong>事件监听</strong>：登录、登出、踢人下线等</li>
+<li>🔑 <strong>JWT</strong>：多种算法</li>
+<li>🔒 <strong>安全特性</strong>：Nonce 防重放、Refresh Token</li>
+<li>🌐 <strong>OAuth2</strong>：授权码模式</li>
+<li>🌐 <strong>WebSocket 认证</strong>：多种 Token 来源</li>
+<li>👥 <strong>在线用户管理</strong>：实时状态跟踪与消息推送</li>
+<li>🔄 <strong>分布式 Session</strong>：跨服务共享，适合微服务</li>
+<li>🎫 <strong>SSO</strong>：票据认证 + 统一登出</li>
+<li>👤 <strong>多账号体系</strong>：通过 <code>SaLogic</code> 隔离 <code>admin</code> / <code>user</code> 等 <code>login_type</code></li>
+<li>📱 <strong>多设备终端</strong>：<code>SaTerminalInfo</code> 按设备记录、按类型查询</li>
+</ul>
+<h4 id="jia-gou">架构</h4>
+<p>分层很干净：核心不绑框架，插件层对接 Web，存储层可替换。</p>
+<pre><code>sa-token-rust/
+├── sa-token-core/              # Token、Session、Manager、JWT、OAuth2、SSO…
+├── sa-token-adapter/           # 存储 / 请求 / 响应抽象
+├── sa-token-macro/             # #[sa_check_login] 等过程宏
+├── sa-token-storage-memory/    # 内存存储
+├── sa-token-storage-redis/     # Redis 存储
+├── sa-token-plugin-axum/       # 各 Web 框架插件
+├── sa-token-plugin-actix-web/
+├── …（poem / rocket / warp / salvo / tide / gotham / ntex）
+└── examples/                   # JWT、OAuth2、SSO、WebSocket 等示例
+</code></pre>
+<ul>
+<li><strong>核心层</strong>：认证授权逻辑，和具体 Web 框架无关。</li>
+<li><strong>适配层</strong>：<code>SaStorage</code>、<code>SaRequest</code> / <code>SaResponse</code>，核心只认接口。</li>
+<li><strong>插件层</strong>：各框架的中间件、提取器，对外 API 尽量统一。</li>
+<li><strong>存储层</strong>：内存 / Redis / 数据库，按场景选。</li>
+<li><strong>工具层</strong>：过程宏，声明式鉴权。</li>
+</ul>
+<h4 id="kuai-su-kai-shi-axum">快速开始（Axum）</h4>
+<p>一个依赖即可，核心、宏、存储都从插件 crate 再导出：</p>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">[dependencies]
+sa-token-plugin-axum = &quot;0.1.18&quot;  # 默认内存存储
+tokio = { version = &quot;1&quot;, features = [&quot;full&quot;] }
+axum = &quot;0.8&quot;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li></ul></pre>
+<p>生产环境改 Redis：</p>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">sa-token-plugin-axum = { version = &quot;0.1.18&quot;, features = [&quot;redis&quot;] }</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p>初始化 + 登录 + 鉴权：</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use sa_token_plugin_axum::*;
+use std::sync::Arc;
+
+#[tokio::main]
+async fn main() {
+    let state = SaTokenState::builder()
+        .storage(Arc::new(MemoryStorage::new()))
+        .token_name(&quot;Authorization&quot;)
+        .timeout(86400)  // 24 小时
+        .build();
+
+    // 登录
+    let token = StpUtil::login(&quot;user_id_10001&quot;).await.unwrap();
+    println!(&quot;Token: {}&quot;, token.value());
+
+    StpUtil::set_permissions(
+        &quot;user_id_10001&quot;,
+        vec![&quot;user:list&quot;.to_string(), &quot;user:add&quot;.to_string()],
+    ).await.ok();
+
+    StpUtil::set_roles(&quot;user_id_10001&quot;, vec![&quot;admin&quot;.to_string()]).await.ok();
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
+<p>过程宏和 Java 原版注解是同一套思路：</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use sa_token_macro::*;
+
+#[sa_check_login]
+async fn protected_route() -&gt; &amp;'static str {
+    &quot;此路由需要登录&quot;
+}
+
+#[sa_check_permission(&quot;user:delete&quot;)]
+async fn delete_user(user_id: String) -&gt; &amp;'static str {
+    &quot;用户已删除&quot;
+}
+
+#[sa_check_role(&quot;admin&quot;)]
+async fn admin_only() -&gt; &amp;'static str {
+    &quot;仅管理员可见内容&quot;
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<p>Axum 路由里挂中间件，用提取器拿当前登录 id：</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use axum::{Router, routing::get};
+use sa_token_plugin_axum::{SaTokenMiddleware, LoginIdExtractor};
+
+async fn user_info(LoginIdExtractor(login_id): LoginIdExtractor) -&gt; String {
+    format!(&quot;当前用户: {}&quot;, login_id)
+}
+
+let app = Router::new()
+    .route(&quot;/user/info&quot;, get(user_info))
+    .layer(SaTokenMiddleware::new(state));</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
+<p>其它框架换对应插件即可：<code>sa-token-plugin-actix-web</code>、<code>sa-token-plugin-poem</code>、<code>sa-token-plugin-rocket</code>……一行 <code>use sa_token_plugin_xxx::*;</code>。</p>
+<p>更完整的 JWT、OAuth2、SSO、分布式 Session、多账号 / 多设备说明，直接看仓库 README 和 <code>docs/</code>。</p>
+<h3 id="xie-zai-zui-hou">写在最后</h3>
+<p>Sa-Token 从 Java 走到今天，社区里一直有人把同一套鉴权思路带到别的语言。Sa-Token-Rust 是其中完成度比较高的一条线：框架覆盖面、SSO / OAuth2 / JWT、存储抽象，都已经能上手。</p>
+<p>这次入驻旋武，不是换个 logo，而是把项目放到国内 Rust 官方社区的展台上。后续文档、示例、issue 都欢迎大家来砸。</p>
+<ul>
+<li>GitHub：<a href="https://github.com/sa-tokens/sa-token-rust">https://github.com/sa-tokens/sa-token-rust</a></li>
+<li>Gitee：<a href="https://gitee.com/sa-tokens/sa-token-rust">https://gitee.com/sa-tokens/sa-token-rust</a></li>
+<li>AtomGit：<a href="https://atomgit.com/sa-tokens/sa-token-rust">https://atomgit.com/sa-tokens/sa-token-rust</a></li>
+<li>旋武项目页：<a href="https://xuanwu.openatom.org/articles/project/sa-token-rust/">https://xuanwu.openatom.org/articles/project/sa-token-rust/</a></li>
+<li>旋武社区：<a href="https://xuanwu.openatom.org/">https://xuanwu.openatom.org/</a></li>
+<li>开放原子开源基金会：<a href="https://www.openatom.org/">https://www.openatom.org/</a></li>
+</ul>
+<p>写 Rust、或打算把鉴权迁到 Rust 的同学，扫码进群：</p>
+<p><img alt="sa-token-rust 微信交流群" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust--wx-group-qr.png" /></p>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html">← 太强了！Sa-Token 的 NodeJS 版本！</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h3"><a href="#kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu">开放原子开源基金会 · 旋武社区</a></li>
+<li class="toc-h3"><a href="#sa-token-rust-shi-gan-shen-me-de">sa-token-rust 是干什么的？</a></li>
+<li class="toc-h4"><a href="#te-xing">特性</a></li>
+<li class="toc-h4"><a href="#jia-gou">架构</a></li>
+<li class="toc-h4"><a href="#kuai-su-kai-shi-axum">快速开始（Axum）</a></li>
+<li class="toc-h3"><a href="#xie-zai-zui-hou">写在最后</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="https://res.zvo.cn/translate/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>
