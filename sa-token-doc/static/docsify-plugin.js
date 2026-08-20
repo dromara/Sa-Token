@@ -42,9 +42,9 @@ var myDocsifyPlugin = function(hook, vm) {
 		}
 	}
 
-	// 功能6：标题下面的广告（正文区 doc-inline-ad，仅 SSO / OAuth2 章节）
+	// 功能6：标题下面的广告（正文区 doc-inline-ad，README 首页除外）
 	function renderDocInlineAd(routePath) {
-		if (!/^\/(sso|oauth2)\//.test(routePath) || $(window).width() < 800) {
+		if (routePath === '/' || $(window).width() < 800) {
 			return;
 		}
 
