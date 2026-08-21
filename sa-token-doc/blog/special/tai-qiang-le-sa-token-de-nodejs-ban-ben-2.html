@@ -168,7 +168,7 @@
 </blockquote>
 <p><img alt="xlt-token 交流群" src="https://res.dev33.cn/sa-token-blog/img/2026-5/sa-token-nodejs--wx-group-qr.png" /></p>
 <p>一个为 NestJS 设计的轻量级、功能完备的 Token 认证授权框架：</p>
-<h3 id="he-xin-te-xing">✨ 核心特性</h3>
+<h2 id="he-xin-te-xing">✨ 核心特性</h2>
 <ul>
 <li>🔐 <strong>灵活的 Token 管理</strong> — 支持登录、登出、续签、踢人下线等完整生命周期</li>
 <li>🌐 <strong>多端登录</strong> — 支持同账号多设备同时在线，可配置互踢模式</li>
@@ -185,8 +185,8 @@
 <li>⚡ <strong>静态门面</strong> — 提供 <code>StpUtil</code> 静态方法，无需注入即可使用</li>
 <li>🧪 <strong>质量保障</strong> — 195 个测试用例（158 单测 + 37 E2E），单测覆盖率 98%+</li>
 </ul>
-<h3 id="xiang-mu-jie-gou">📦 项目结构</h3>
-<pre><code>xlt-token/
+<h2 id="xiang-mu-jie-gou">📦 项目结构</h2>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">xlt-token/
 ├── src/
 │   ├── auth/                          # 认证核心逻辑
 │   │   ├── stp-logic.ts               # Token 生命周期管理（登录、登出、踢人、续签）
@@ -229,10 +229,9 @@
 │   └── e2e/                           # 37 个 E2E 测试
 ├── docs/                              # 📖 在线文档
 ├── package.json
-└── tsconfig.json
-</code></pre>
-<h3 id="he-xin-zu-jian">🎯 核心组件</h3>
-<h4 id="1-stplogic">1. StpLogic</h4>
+└── tsconfig.json</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li></ul></pre>
+<h2 id="he-xin-zu-jian">🎯 核心组件</h2>
+<h3 id="1-stplogic">1. StpLogic</h3>
 <p>核心认证授权逻辑：</p>
 <ul>
 <li>Token 生成、验证、续签和刷新</li>
@@ -241,14 +240,14 @@
 <li>多端登录、互踢模式</li>
 <li>下线原因追溯</li>
 </ul>
-<h4 id="2-stputil-jing-tai-men-mian">2. StpUtil（静态门面）</h4>
+<h3 id="2-stputil-jing-tai-men-mian">2. StpUtil（静态门面）</h3>
 <p>提供无需注入即可直接调用的静态 API：</p>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { StpUtil } from 'xlt-token';
 
 // 无需注入，直接调用
 const token = await StpUtil.login(userId);
 const loginId = await StpUtil.getLoginId(req);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<h4 id="3-sheng-ming-shi-zhuang-shi-qi">3. 声明式装饰器</h4>
+<h3 id="3-sheng-ming-shi-zhuang-shi-qi">3. 声明式装饰器</h3>
 <table>
 <thead>
 <tr>
@@ -290,19 +289,18 @@ const loginId = await StpUtil.getLoginId(req);</code><ul class="code-line-box"><
 </tr>
 </tbody>
 </table>
-<h4 id="4-ke-kuo-zhan-shou-wei-xltabstractloginguard">4. 可扩展守卫（XltAbstractLoginGuard）</h4>
+<h3 id="4-ke-kuo-zhan-shou-wei-xltabstractloginguard">4. 可扩展守卫（XltAbstractLoginGuard）</h3>
 <p>如果你需要在校验通过后把用户信息加载到 <code>request.user</code>、记录审计日志、使用自己的元数据键（如 <code>@RequireLogin()</code>），请继承 <code>XltAbstractLoginGuard</code>，仅重写你关心的钩子即可。token 校验、异常抛出、默认元数据解析已在基类完成。</p>
 <p><strong>生命周期：</strong></p>
-<pre><code>canActivate
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">canActivate
  ├─ requiresLogin(ctx)           // 可重写：替换元数据策略
  │   └─ 否 → 直接放行
  ├─ stpLogic.checkLogin(request)
  ├─ !ok → onAuthFail(result, request)  // 可重写
  │   throw NotLoginException
  └─ ok → request.stpLoginId / stpToken 赋值
-     → onAuthSuccess(result, request)  // 可重写：业务会话加载
-</code></pre>
-<h4 id="5-quan-xian-jue-se-jiao-yan-yin-qing">5. 权限 / 角色校验引擎</h4>
+     → onAuthSuccess(result, request)  // 可重写：业务会话加载</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<h3 id="5-quan-xian-jue-se-jiao-yan-yin-qing">5. 权限 / 角色校验引擎</h3>
 <p><code>StpPermLogic</code> 支持 AND / OR 两种模式，以及通配符匹配（<code>user:*</code> 可匹配 <code>user:read</code>、<code>user:write</code> 等）。</p>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// AND 模式：全部满足
 @XltCheckPermission(['order:read', 'order:write'], { mode: XltMode.AND })
@@ -312,8 +310,8 @@ const loginId = await StpUtil.getLoginId(req);</code><ul class="code-line-box"><
 
 // 通配符匹配
 @XltCheckPermission('order:*')</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
-<h3 id="kuai-su-kai-shi">🚀 快速开始</h3>
-<h4 id="1-an-zhuang">1. 安装</h4>
+<h2 id="kuai-su-kai-shi">🚀 快速开始</h2>
+<h3 id="1-an-zhuang">1. 安装</h3>
 <pre v-pre data-lang="bash"><code class="lang-bash language-bash has-numbering">pnpm add xlt-token
 # 或
 npm install xlt-token
@@ -321,7 +319,7 @@ npm install xlt-token
 yarn add xlt-token</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
 <p>如需使用 Redis 存储，还需安装 redis 包：</p>
 <pre v-pre data-lang="bash"><code class="lang-bash language-bash has-numbering">pnpm add redis</code><ul class="code-line-box"><li>1</li></ul></pre>
-<h4 id="2-zhu-ce-mo-kuai">2. 注册模块</h4>
+<h3 id="2-zhu-ce-mo-kuai">2. 注册模块</h3>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// app.module.ts
 import { Module } from '@nestjs/common';
 import { XltTokenModule } from 'xlt-token';
@@ -340,7 +338,7 @@ import { XltTokenModule } from 'xlt-token';
   ],
 })
 export class AppModule {}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
-<h4 id="3-yong-hu-deng-lu">3. 用户登录</h4>
+<h3 id="3-yong-hu-deng-lu">3. 用户登录</h3>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// auth.service.ts
 import { Injectable } from '@nestjs/common';
 import { StpLogic } from 'xlt-token';
@@ -354,7 +352,7 @@ export class AuthService {
     return { token };
   }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
-<h4 id="4-shi-yong-shou-wei-zhuang-shi-qi">4. 使用守卫 + 装饰器</h4>
+<h3 id="4-shi-yong-shou-wei-zhuang-shi-qi">4. 使用守卫 + 装饰器</h3>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// user.controller.ts
 import { Controller, Get, Post } from '@nestjs/common';
 import { XltIgnore, LoginId } from 'xlt-token';
@@ -372,7 +370,7 @@ export class UserController {
     return { userId: loginId };
   }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
-<h4 id="5-zhu-ce-quan-ju-shou-wei">5. 注册全局守卫</h4>
+<h3 id="5-zhu-ce-quan-ju-shou-wei">5. 注册全局守卫</h3>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// app.module.ts
 import { APP_GUARD } from '@nestjs/core';
 import { XltTokenGuard } from 'xlt-token';
@@ -387,7 +385,7 @@ import { XltTokenGuard } from 'xlt-token';
 })
 export class AppModule {}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
 <p><code>XltTokenGuard</code> 只做 token 校验并把 <code>loginId</code> / <code>token</code> 挂到 <code>request.stpLoginId</code> / <code>request.stpToken</code>，不涉及业务。</p>
-<h4 id="6-quan-xian-jue-se-jiao-yan">6. 权限 / 角色校验</h4>
+<h3 id="6-quan-xian-jue-se-jiao-yan">6. 权限 / 角色校验</h3>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">// stp.service.ts — 实现 StpInterface 业务接口
 import { Injectable } from '@nestjs/common';
 import { StpInterface } from 'xlt-token';
@@ -427,7 +425,7 @@ export class OrderController {
   update() {}
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li></ul></pre>
 <p>权限校验失败抛出 <code>NotPermissionException</code>（HTTP <strong>403</strong>），角色校验失败抛出 <code>NotRoleException</code>（HTTP <strong>403</strong>）。</p>
-<h3 id="hui-hua-guan-li-xltsession">🗂️ 会话管理（XltSession）</h3>
+<h2 id="hui-hua-guan-li-xltsession">🗂️ 会话管理（XltSession）</h2>
 <p>每个登录账号关联一个 <code>XltSession</code>，用于存储登录期间的扩展数据（昵称、最近 IP、扩展字段等）。生命周期与 token 一致。</p>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { StpUtil } from 'xlt-token';
 
@@ -444,11 +442,11 @@ await session.has('nickname');    // boolean
 await session.remove('nickname');
 const keys = await session.keys(); // string[]
 await session.clear();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
-<h3 id="xia-xian-yuan-yin-zhui-su">📜 下线原因追溯</h3>
+<h2 id="xia-xian-yuan-yin-zhui-su">📜 下线原因追溯</h2>
 <p>被踢 / 被顶后，旧 token 失效。可查询下线原因：</p>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">const record = await StpUtil.getOfflineReason(token);
 // { reason: 'KICK_OUT' | 'BE_REPLACED', time: 1714112400000 }</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
-<h3 id="yi-chang-chu-li">⚠️ 异常处理</h3>
+<h2 id="yi-chang-chu-li">⚠️ 异常处理</h2>
 <p>库提供三种业务异常，建议在全局 <code>ExceptionFilter</code> 中统一处理：</p>
 <table>
 <thead>
@@ -499,7 +497,7 @@ try {
     }
   }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
-<h3 id="shi-yong-redis-cun-chu">💾 使用 Redis 存储</h3>
+<h2 id="shi-yong-redis-cun-chu">💾 使用 Redis 存储</h2>
 <p>库已内置 <code>RedisStore</code> 实现，只需提供 Redis 客户端即可使用：</p>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { Module } from '@nestjs/common';
 import { XltTokenModule, RedisStore, XLT_REDIS_CLIENT } from 'xlt-token';
@@ -525,7 +523,7 @@ import { createClient } from 'redis';
   ],
 })
 export class AppModule {}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li></ul></pre>
-<h3 id="zi-ding-yi-store">🔧 自定义 Store</h3>
+<h2 id="zi-ding-yi-store">🔧 自定义 Store</h2>
 <p>如需实现自定义存储，实现 <code>XltTokenStore</code> 接口即可：</p>
 <pre v-pre data-lang="typescript"><code class="lang-typescript language-typescript has-numbering">import { XltTokenStore } from 'xlt-token';
 
@@ -538,7 +536,7 @@ export class CustomStore implements XltTokenStore {
   async updateTimeout(key: string, timeoutSec: number): Promise&lt;void&gt; { /* ... */ }
   async getTimeout(key: string): Promise&lt;number&gt; { /* ... */ }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
-<h3 id="pei-zhi-xuan-xiang">🎛️ 配置选项</h3>
+<h2 id="pei-zhi-xuan-xiang">🎛️ 配置选项</h2>
 <table>
 <thead>
 <tr>
@@ -617,8 +615,8 @@ export class CustomStore implements XltTokenStore {
 </tr>
 </tbody>
 </table>
-<h3 id="he-xin-api">📖 核心 API</h3>
-<h4 id="stplogic-stputil">StpLogic / StpUtil</h4>
+<h2 id="he-xin-api">📖 核心 API</h2>
+<h3 id="stplogic-stputil">StpLogic / StpUtil</h3>
 <table>
 <thead>
 <tr>
@@ -697,11 +695,11 @@ export class CustomStore implements XltTokenStore {
 </tr>
 </tbody>
 </table>
-<h3 id="xiao-jie">📣 小结</h3>
+<h2 id="xiao-jie">📣 小结</h2>
 <p>xlt-token 作为 Sa-Token 在 NodeJS / NestJS 生态的移植版本，在 API 设计上非常接近 Java 原版的使用体验，同时充分利用了 TypeScript 的类型系统和 NestJS 的装饰器 / 守卫机制，做到了大道至简、开箱即用。</p>
 <p>对于使用 NestJS 开发后端项目、又需要一套成熟的认证授权方案的小伙伴来说，这是一个非常值得关注的项目。195 个测试用例 + 98% 的单测覆盖率，质量方面也让人放心 👍</p>
 <hr />
-<h3 id="kai-yuan-di-zhi">🔗 开源地址</h3>
+<h2 id="kai-yuan-di-zhi">🔗 开源地址</h2>
 <p>感兴趣的同学可以来关注一波：</p>
 <p>👉 <a href="https://github.com/xiaoLangtou/xlt-token">https://github.com/xiaoLangtou/xlt-token</a></p>
 <p>📖 在线文档：<a href="https://xiaolangtou.github.io/xlt-token/">https://xiaolangtou.github.io/xlt-token/</a></p>
@@ -721,31 +719,31 @@ export class CustomStore implements XltTokenStore {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#he-xin-te-xing">✨ 核心特性</a></li>
-<li class="toc-h3"><a href="#xiang-mu-jie-gou">📦 项目结构</a></li>
-<li class="toc-h3"><a href="#he-xin-zu-jian">🎯 核心组件</a></li>
-<li class="toc-h4"><a href="#1-stplogic">1. StpLogic</a></li>
-<li class="toc-h4"><a href="#2-stputil-jing-tai-men-mian">2. StpUtil（静态门面）</a></li>
-<li class="toc-h4"><a href="#3-sheng-ming-shi-zhuang-shi-qi">3. 声明式装饰器</a></li>
-<li class="toc-h4"><a href="#4-ke-kuo-zhan-shou-wei-xltabstractloginguard">4. 可扩展守卫（XltAbstractLoginGuard）</a></li>
-<li class="toc-h4"><a href="#5-quan-xian-jue-se-jiao-yan-yin-qing">5. 权限 / 角色校验引擎</a></li>
-<li class="toc-h3"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
-<li class="toc-h4"><a href="#1-an-zhuang">1. 安装</a></li>
-<li class="toc-h4"><a href="#2-zhu-ce-mo-kuai">2. 注册模块</a></li>
-<li class="toc-h4"><a href="#3-yong-hu-deng-lu">3. 用户登录</a></li>
-<li class="toc-h4"><a href="#4-shi-yong-shou-wei-zhuang-shi-qi">4. 使用守卫 + 装饰器</a></li>
-<li class="toc-h4"><a href="#5-zhu-ce-quan-ju-shou-wei">5. 注册全局守卫</a></li>
-<li class="toc-h4"><a href="#6-quan-xian-jue-se-jiao-yan">6. 权限 / 角色校验</a></li>
-<li class="toc-h3"><a href="#hui-hua-guan-li-xltsession">🗂️ 会话管理（XltSession）</a></li>
-<li class="toc-h3"><a href="#xia-xian-yuan-yin-zhui-su">📜 下线原因追溯</a></li>
-<li class="toc-h3"><a href="#yi-chang-chu-li">⚠️ 异常处理</a></li>
-<li class="toc-h3"><a href="#shi-yong-redis-cun-chu">💾 使用 Redis 存储</a></li>
-<li class="toc-h3"><a href="#zi-ding-yi-store">🔧 自定义 Store</a></li>
-<li class="toc-h3"><a href="#pei-zhi-xuan-xiang">🎛️ 配置选项</a></li>
-<li class="toc-h3"><a href="#he-xin-api">📖 核心 API</a></li>
-<li class="toc-h4"><a href="#stplogic-stputil">StpLogic / StpUtil</a></li>
-<li class="toc-h3"><a href="#xiao-jie">📣 小结</a></li>
-<li class="toc-h3"><a href="#kai-yuan-di-zhi">🔗 开源地址</a></li>
+<li class="toc-h2"><a href="#he-xin-te-xing">✨ 核心特性</a></li>
+<li class="toc-h2"><a href="#xiang-mu-jie-gou">📦 项目结构</a></li>
+<li class="toc-h2"><a href="#he-xin-zu-jian">🎯 核心组件</a></li>
+<li class="toc-h3"><a href="#1-stplogic">1. StpLogic</a></li>
+<li class="toc-h3"><a href="#2-stputil-jing-tai-men-mian">2. StpUtil（静态门面）</a></li>
+<li class="toc-h3"><a href="#3-sheng-ming-shi-zhuang-shi-qi">3. 声明式装饰器</a></li>
+<li class="toc-h3"><a href="#4-ke-kuo-zhan-shou-wei-xltabstractloginguard">4. 可扩展守卫（XltAbstractLoginGuard）</a></li>
+<li class="toc-h3"><a href="#5-quan-xian-jue-se-jiao-yan-yin-qing">5. 权限 / 角色校验引擎</a></li>
+<li class="toc-h2"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
+<li class="toc-h3"><a href="#1-an-zhuang">1. 安装</a></li>
+<li class="toc-h3"><a href="#2-zhu-ce-mo-kuai">2. 注册模块</a></li>
+<li class="toc-h3"><a href="#3-yong-hu-deng-lu">3. 用户登录</a></li>
+<li class="toc-h3"><a href="#4-shi-yong-shou-wei-zhuang-shi-qi">4. 使用守卫 + 装饰器</a></li>
+<li class="toc-h3"><a href="#5-zhu-ce-quan-ju-shou-wei">5. 注册全局守卫</a></li>
+<li class="toc-h3"><a href="#6-quan-xian-jue-se-jiao-yan">6. 权限 / 角色校验</a></li>
+<li class="toc-h2"><a href="#hui-hua-guan-li-xltsession">🗂️ 会话管理（XltSession）</a></li>
+<li class="toc-h2"><a href="#xia-xian-yuan-yin-zhui-su">📜 下线原因追溯</a></li>
+<li class="toc-h2"><a href="#yi-chang-chu-li">⚠️ 异常处理</a></li>
+<li class="toc-h2"><a href="#shi-yong-redis-cun-chu">💾 使用 Redis 存储</a></li>
+<li class="toc-h2"><a href="#zi-ding-yi-store">🔧 自定义 Store</a></li>
+<li class="toc-h2"><a href="#pei-zhi-xuan-xiang">🎛️ 配置选项</a></li>
+<li class="toc-h2"><a href="#he-xin-api">📖 核心 API</a></li>
+<li class="toc-h3"><a href="#stplogic-stputil">StpLogic / StpUtil</a></li>
+<li class="toc-h2"><a href="#xiao-jie">📣 小结</a></li>
+<li class="toc-h2"><a href="#kai-yuan-di-zhi">🔗 开源地址</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

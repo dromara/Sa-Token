@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>前后端分离架构下使用 Sa-Token 完成登录认证</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
-					<h3 id="yi-jia-gou-fen-xi">一、架构分析</h3>
+					<h2 id="yi-jia-gou-fen-xi">一、架构分析</h2>
 <p>目前绝大多数系统都已经采用 “前后端分离” 架构来设计了，传统的Session模式鉴权也不再适合这种架构（或者需要额外写很多的代码来专门适配）。</p>
 <p>Sa-Token 是一个 java 轻量级权限认证框架，专为前后端分离架构打造，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。</p>
 <blockquote>
@@ -174,7 +174,7 @@
     &lt;version&gt;1.34.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
-<h3 id="er-wu-cookie-mo-shi">二、无 Cookie 模式</h3>
+<h2 id="er-wu-cookie-mo-shi">二、无 Cookie 模式</h2>
 <p>无 Cookie 模式：特指不支持 Cookie 功能的终端，通俗来讲就是我们常说的 —— <strong>前后端分离模式</strong>。</p>
 <p>常规 Web 端鉴权方法，一般由 <code>Cookie模式</code> 完成，而 Cookie 有两个特性：<br />
 1. 可由后端控制写入。<br />
@@ -184,7 +184,7 @@
 <p>见招拆招，其实答案很简单：<br />
 - 不能后端控制写入了，就前端自己写入。（难点在<strong>后端如何将 Token 传递到前端</strong>）<br />
 - 每次请求不能自动提交了，那就手动提交。（难点在<strong>前端如何将 Token 传递到后端</strong>，同时<strong>后端将其读取出来</strong>）</p>
-<h3 id="san-hou-duan-jiang-token-fan-hui-dao-qian-duan">三、后端将 token 返回到前端</h3>
+<h2 id="san-hou-duan-jiang-token-fan-hui-dao-qian-duan">三、后端将 token 返回到前端</h2>
 <ol>
 <li>首先调用 <code>StpUtil.login(id)</code> 进行登录。</li>
 <li>调用 <code>StpUtil.getTokenInfo()</code> 返回当前会话的 token 详细参数。<ul>
@@ -204,7 +204,7 @@ public SaResult doLogin() {
     // 第3步，返回给前端 
     return SaResult.data(tokenInfo);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h3 id="si-qian-duan-jiang-token-ti-jiao-dao-hou-duan">四、前端将 token 提交到后端</h3>
+<h2 id="si-qian-duan-jiang-token-ti-jiao-dao-hou-duan">四、前端将 token 提交到后端</h2>
 <ol>
 <li>无论是app还是小程序，其传递方式都大同小异。</li>
 <li>那就是，将 token 塞到请求<code>header</code>里 ，格式为：<code>{tokenName: tokenValue}</code>。</li>
@@ -259,7 +259,7 @@ uni.request({
 <p>如果你对 Cookie 非常了解，那你就会明白，所谓 Cookie ，本质上就是一个特殊的<code>header</code>参数而已，<br />
 而既然它只是一个 header 参数，我们就能手动模拟实现它，从而完成鉴权操作。</p>
 <p>这其实是对<code>无Cookie模式</code>的另一种解决方案，有兴趣的同学可以百度了解一下，在此暂不赘述。</p>
-<h3 id="wu-dai-ma-dui-bi">五、代码对比</h3>
+<h2 id="wu-dai-ma-dui-bi">五、代码对比</h2>
 <p>为了更加直观的显示出 前后端一体架构 和 前后端分离架构 的差异，此处再提供一个示例：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">package com.pj.cases.up;
 
@@ -312,7 +312,7 @@ public class NotCookieController {
 <li>接口一：Token 将在 Cookie 上下文返回到前端，并由浏览器每次请求时自动提交，这种模式适合前后端一体的架构。</li>
 <li>接口二：Token 将在响应 body 里返回到前端，并由前端手动存储，并手动在每次请求时提交，这种模式适合前后端分离的架构。</li>
 </ul>
-<h3 id="liu-zi-ding-yi-token-ti-jiao-de-qian-zhui">六、自定义 Token 提交的前缀</h3>
+<h2 id="liu-zi-ding-yi-token-ti-jiao-de-qian-zhui">六、自定义 Token 提交的前缀</h2>
 <p>在某些系统中，前端提交token时会在前面加个固定的前缀，例如：</p>
 <pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">{
     &quot;satoken&quot;: &quot;Bearer xxxx-xxxx-xxxx-xxxx&quot;
@@ -329,7 +329,7 @@ public class NotCookieController {
 <li>一旦配置了 Token前缀，则前端提交 <code>Token</code> 时，必须带有前缀，否则会导致框架无法读取 Token。</li>
 <li>由于<code>Cookie</code>中无法存储空格字符，也就意味配置 Token 前缀后，Cookie 鉴权方式将会失效，此时只能将 Token 提交到<code>header</code>里进行传输。</li>
 </ol>
-<h3 id="qi-zi-ding-yi-token-feng-ge">七、自定义 Token 风格</h3>
+<h2 id="qi-zi-ding-yi-token-feng-ge">七、自定义 Token 风格</h2>
 <p>Sa-Token默认的token生成策略是uuid风格，其模样类似于：<code>623368f0-ae5e-4475-a53f-93e4225f16ae</code>。<br><br />
 如果你对这种风格不太感冒，还可以将token生成设置为其他风格。</p>
 <p>怎么设置呢？只需要在yml配置文件里设置 <code>sa-token.token-style=风格类型</code> 即可，其有多种取值： </p>
@@ -350,10 +350,10 @@ public class NotCookieController {
 
 // 6. token-style=tik    —— tik风格
 &quot;gr_SwoIN0MC1ewxHX_vfCW3BothWDZMMtx__&quot;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
-<h3 id="ba-zi-ding-yi-token-sheng-cheng-ce-lve">八、自定义 Token 生成策略</h3>
+<h2 id="ba-zi-ding-yi-token-sheng-cheng-ce-lve">八、自定义 Token 生成策略</h2>
 <p>如果你觉着以上风格都不是你喜欢的类型，那么你还可以<strong>自定义token生成策略</strong>，来定制化token生成风格。 <br></p>
 <p>怎么做呢？只需要重写 <code>SaStrategy</code> 策略类的 <code>createToken</code> 算法即可：</p>
-<h4 id="can-kao-bu-zhou-ru-xia">参考步骤如下：</h4>
+<h3 id="can-kao-bu-zhou-ru-xia">参考步骤如下：</h3>
 <p>1、在<code>SaTokenConfigure</code>配置类中添加代码：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
 public class SaTokenConfigure {
@@ -371,7 +371,7 @@ public class SaTokenConfigure {
 <p>2、再次调用 <code>StpUtil.login(10001)</code>方法进行登录，观察其生成的token样式:</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">gfuPSwZsnUhwgz08GTCH4wOgasWtc3odP4HLwXJ7NDGOximTvT4OlW19zeLH</code><ul class="code-line-box"><li>1</li></ul></pre>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -388,16 +388,16 @@ public class SaTokenConfigure {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-jia-gou-fen-xi">一、架构分析</a></li>
-<li class="toc-h3"><a href="#er-wu-cookie-mo-shi">二、无 Cookie 模式</a></li>
-<li class="toc-h3"><a href="#san-hou-duan-jiang-token-fan-hui-dao-qian-duan">三、后端将 token 返回到前端</a></li>
-<li class="toc-h3"><a href="#si-qian-duan-jiang-token-ti-jiao-dao-hou-duan">四、前端将 token 提交到后端</a></li>
-<li class="toc-h3"><a href="#wu-dai-ma-dui-bi">五、代码对比</a></li>
-<li class="toc-h3"><a href="#liu-zi-ding-yi-token-ti-jiao-de-qian-zhui">六、自定义 Token 提交的前缀</a></li>
-<li class="toc-h3"><a href="#qi-zi-ding-yi-token-feng-ge">七、自定义 Token 风格</a></li>
-<li class="toc-h3"><a href="#ba-zi-ding-yi-token-sheng-cheng-ce-lve">八、自定义 Token 生成策略</a></li>
-<li class="toc-h4"><a href="#can-kao-bu-zhou-ru-xia">参考步骤如下：</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-jia-gou-fen-xi">一、架构分析</a></li>
+<li class="toc-h2"><a href="#er-wu-cookie-mo-shi">二、无 Cookie 模式</a></li>
+<li class="toc-h2"><a href="#san-hou-duan-jiang-token-fan-hui-dao-qian-duan">三、后端将 token 返回到前端</a></li>
+<li class="toc-h2"><a href="#si-qian-duan-jiang-token-ti-jiao-dao-hou-duan">四、前端将 token 提交到后端</a></li>
+<li class="toc-h2"><a href="#wu-dai-ma-dui-bi">五、代码对比</a></li>
+<li class="toc-h2"><a href="#liu-zi-ding-yi-token-ti-jiao-de-qian-zhui">六、自定义 Token 提交的前缀</a></li>
+<li class="toc-h2"><a href="#qi-zi-ding-yi-token-feng-ge">七、自定义 Token 风格</a></li>
+<li class="toc-h2"><a href="#ba-zi-ding-yi-token-sheng-cheng-ce-lve">八、自定义 Token 生成策略</a></li>
+<li class="toc-h3"><a href="#can-kao-bu-zhou-ru-xia">参考步骤如下：</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

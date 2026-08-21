@@ -172,7 +172,7 @@
 <p>Spring Boot 3.x 请改用 <code>sa-token-spring-boot3-starter</code>，Spring Boot 2.x 请改用 <code>sa-token-spring-boot-starter</code>。</p>
 </blockquote>
 <p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
-<h3 id="geng-xin-dian-1-xin-zeng-sa-token-fory-json-cha-jian-json-fa">📦 更新点1：新增 <code>sa-token-fory-json</code> 插件，JSON 方案再添一位</h3>
+<h2 id="geng-xin-dian-1-xin-zeng-sa-token-fory-json-cha-jian-json-fa">📦 更新点1：新增 <code>sa-token-fory-json</code> 插件，JSON 方案再添一位</h2>
 <p>这是官方规划里「JSON 模块集成 Apache Fory」的落地，把 <a href="https://fory.apache.org/docs/json/">Fory JSON</a> 接到 <code>SaJsonTemplate</code> 上。</p>
 <p>此前 Session / Redis 序列化主要是 Jackson（Boot 默认，JSON 里会写 <code>@class</code>）和 Fastjson2 / Snack（默认不写类型信息）。相对 Jackson：Fory 官方文档给出的吞吐更高，且<strong>默认不写类型信息</strong>，避开多态反序列化那条面；相对 Fastjson2：用法接近，适合已经在用 Apache Fory、或不想再绑 Fastjson 栈的项目。引入后 SPI 自动注入，不用自己包一层。</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 整合 Apache Fory JSON --&gt;
@@ -183,7 +183,7 @@
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>JSON 插件全家桶现在是：Jackson、Jackson3、Fastjson、Fastjson2、<strong>Fory JSON</strong>、Snack3、Snack4。Boot 2/3 默认仍是 Jackson，Boot 4 默认 Jackson3，用得顺不必为了换而换。</p>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/json-extend">JSON 序列化扩展</a> 🔗</p>
-<h3 id="geng-xin-dian-2-xin-zeng-sa-token-rest-client-sa-token-rest">🌐 更新点2：新增 <code>sa-token-rest-client</code> / <code>sa-token-rest-template</code> 插件</h3>
+<h2 id="geng-xin-dian-2-xin-zeng-sa-token-rest-client-sa-token-rest">🌐 更新点2：新增 <code>sa-token-rest-client</code> / <code>sa-token-rest-template</code> 插件</h2>
 <p>SSO 模式三的 ticket 校验、单点注销、消息推送都要发 HTTP。此前只有 Forest、OkHttps 两套第三方客户端。Spring 项目本来就有 <code>spring-web</code>，再为 SSO 拉一套 HTTP 库，依赖和 API 都多一层。</p>
 <p>本版按官方规划补上 Spring 官方客户端：<code>sa-token-rest-template</code>、<code>sa-token-rest-client</code>。相对 Forest / OkHttps：不引入第三方 HTTP 栈，跟 Spring 一条线。<code>RestClient</code> 相对 <code>RestTemplate</code>：它是 Spring Framework 6.1+ / Boot 3.2+ 的官方继任者，Boot 4 里 <code>RestTemplate</code> 已标记 deprecated，新项目优先 RestClient。Boot 2 或 Boot 3.0–3.1 没有 <code>RestClient</code>，继续用 RestTemplate 或 Forest。</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Spring Boot 3.2+ / 4 优先 RestClient --&gt;
@@ -216,7 +216,7 @@
 </table>
 <p>同一 classpath 只放一个 HTTP 插件。没配任何处理器会报错误码 30010。本版还加了 SSO Client 的 Spring Boot 4 示例。</p>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/http-extend">HTTP 请求扩展</a> 🔗</p>
-<h3 id="geng-xin-dian-3-xin-zeng-sa-token-alone-redisson-cha-jian-qu">🗄️ 更新点3：新增 <code>sa-token-alone-redisson</code> 插件，权限缓存和业务缓存拆开</h3>
+<h2 id="geng-xin-dian-3-xin-zeng-sa-token-alone-redisson-cha-jian-qu">🗄️ 更新点3：新增 <code>sa-token-alone-redisson</code> 插件，权限缓存和业务缓存拆开</h2>
 <p>来自 GitHub <a href="https://github.com/dromara/Sa-Token/issues/710">#710</a>、Gitee <a href="https://gitee.com/dromara/sa-token/issues/ICE2V0">#ICE2V0</a>：alone-redis 要能配独立 Redisson。</p>
 <p><strong>升级有什么用：</strong> 现在 <code>redisson</code> 集成也可以做到权限缓存和业务缓存分离了，会话数据和业务 Redis 不再挤在同一个 Client 上，key 冲突、误删、codec 打架都能避开。Boot 4 另有 <code>sa-token-alone-redis-by-spring-boot4</code>。</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;dependency&gt;
@@ -234,7 +234,7 @@
 <p><code>config</code> 与 <code>file</code> 二选一。示例覆盖单机、集群、Boot 3/4。</p>
 <p>Boot 4 注意：Redisson 3.45 的 starter 仍引用已移除的 <code>RedisAutoConfiguration</code>，<strong>不要引</strong> <code>redisson-spring-boot-starter</code>，自己注册 Bean。<code>SaTokenDaoForRedisson</code> 默认 <code>StringCodec</code>，并可用 <code>setAndKeepTTL</code> 原子保留 TTL。fix: <a href="https://github.com/dromara/Sa-Token/issues/791">#791</a></p>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/alone-redisson">独立 Redisson 插件</a> 🔗</p>
-<h3 id="geng-xin-dian-4-redistemplate-jian-suo-gai-scan-update-bao-t">🔧 更新点4：RedisTemplate 检索改 SCAN、update 保 TTL、key 可加前缀</h3>
+<h2 id="geng-xin-dian-4-redistemplate-jian-suo-gai-scan-update-bao-t">🔧 更新点4：RedisTemplate 检索改 SCAN、update 保 TTL、key 可加前缀</h2>
 <p>这几条都是社区老工单：</p>
 <ul>
 <li><code>searchData</code> 用 KEYS 会堵 Redis：<a href="https://github.com/dromara/Sa-Token/issues/702">#702</a></li>
@@ -249,7 +249,7 @@
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>KEEPTTL 需要 Redis &gt;= 6.0。</p>
-<h3 id="geng-xin-dian-5-zhu-xiao-qian-zhen-ting-qi-hui-hua-qing-diao">🔔 更新点5：注销前侦听器，会话清掉之前还能读现场</h3>
+<h2 id="geng-xin-dian-5-zhu-xiao-qian-zhen-ting-qi-hui-hua-qing-diao">🔔 更新点5：注销前侦听器，会话清掉之前还能读现场</h2>
 <p>来自 sa-token 小助手用户「潮汐」的建议：侦听器触发时设备信息往往已经没了，审计不好记。</p>
 <p><strong>升级有什么用：</strong> 踢人、顶人、主动注销前，还能读到 Token-Session、设备列表，写日志、发通知不用自己抢时序。</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
@@ -260,7 +260,7 @@ public void doBeforeLogout(String loginType, Object loginId, String tokenValue, 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>对应钩子：<code>doBeforeLogout</code> / <code>doBeforeKickout</code> / <code>doBeforeReplaced</code>。不要用 <code>StpUtil</code> 读当前请求上下文，用参数里的 <code>loginId</code>、<code>tokenValue</code> 去查。</p>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/up/global-listener">全局侦听器</a> 🔗</p>
-<h3 id="geng-xin-dian-6-session-xin-zeng-getlist-getset-getmap">📋 更新点6：Session 新增 <code>getList</code> / <code>getSet</code> / <code>getMap</code></h3>
+<h2 id="geng-xin-dian-6-session-xin-zeng-getlist-getset-getmap">📋 更新点6：Session 新增 <code>getList</code> / <code>getSet</code> / <code>getMap</code></h2>
 <p>本版主动补齐。以前从 Session 取集合，要么 <code>get</code> 完再强转，要么自己处理 Redis 回来的裸 List。现在把元素类型写在参数上，主要是为了让代码写得更优雅，调用更友善。</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 以前
 @SuppressWarnings(&quot;unchecked&quot;)
@@ -275,7 +275,7 @@ Map&lt;String, Long&gt; scoreMap = session.getMap(&quot;scoreMap&quot;, String.c
 session.getList(&quot;users&quot;, SysUser.class, ArrayList::new);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
 <p>OAuth2 索引、SSO Client 列表、ApiKey 索引也切到这套 API，业务侧同一套写法。</p>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/use/session">Session 会话</a> 🔗</p>
-<h3 id="geng-xin-dian-7-sso-ke-hu-duan-zhi-chi-an-zhang-hao-dan-dian">🚪 更新点7：SSO 客户端支持按账号单点注销</h3>
+<h2 id="geng-xin-dian-7-sso-ke-hu-duan-zhi-chi-an-zhang-hao-dan-dian">🚪 更新点7：SSO 客户端支持按账号单点注销</h2>
 <p>社区提案：子系统删用户时，希望一行 API 通知认证中心把该账号全端打下线。</p>
 <p><strong>升级有什么用：</strong> 后台封号、离职回收，不必再自己拼 SSO 推送报文。</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// sso-server
@@ -284,17 +284,17 @@ SaSsoServerUtil.ssoLogout(loginId);
 // sso-client（本地 loginId，框架按策略转成认证中心 id）
 SaSsoClientUtil.ssoLogout(loginId);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/sso/signout">Sa-Token SSO 单点注销</a> 🔗</p>
-<h3 id="geng-xin-dian-8-sarequest-saresponse-sastorage-ke-ce-lve-chu">🧩 更新点8：<code>SaRequest</code> / <code>SaResponse</code> / <code>SaStorage</code> 可策略创建</h3>
+<h2 id="geng-xin-dian-8-sarequest-saresponse-sastorage-ke-ce-lve-chu">🧩 更新点8：<code>SaRequest</code> / <code>SaResponse</code> / <code>SaStorage</code> 可策略创建</h2>
 <p>来自 GitHub <a href="https://github.com/dromara/Sa-Token/issues/841">#841</a>：旧版靠继承 <code>SaTokenContextForSpring</code> 改上下文，v1.42 重构后那套父类没了。</p>
 <p><strong>升级有什么用：</strong> Nginx 改 URI、自定义 Request 包装，改策略函数即可，不用再继承已删除的上下文类。</p>
 <p><code>SaStrategy</code> 新增 <code>createSaRequest</code> / <code>createSaResponse</code> / <code>createSaStorage</code>。<code>getSaTokenConfig</code> 也可接管配置来源，方便从数据库读 Sa-Token 配置。</p>
-<h3 id="geng-xin-dian-9-liang-chu-bu-xiang-xia-jian-rong-sheng-ji-xi">⚠️ 更新点9：两处不向下兼容，升级先看</h3>
+<h2 id="geng-xin-dian-9-liang-chu-bu-xiang-xia-jian-rong-sheng-ji-xi">⚠️ 更新点9：两处不向下兼容，升级先看</h2>
 <p><strong>1）<code>allowLoginIdColon</code> 默认 false。</strong> 官方一直强调 loginId 不要带冒号（持久化 key 用 <code>:</code> 分段）。本版源码直接拒登。存量项目如果 loginId 里真有冒号：</p>
 <pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">sa-token:
     allow-login-id-colon: true</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
 <p><strong>2）<code>StpInterface.isDisabled</code> 增加 <code>loginType</code> 参数。</strong> 自己实现了封禁查询的，要改方法签名。</p>
 <p>另外：JWT <code>extraData</code> 禁止写入 <code>loginType</code>、<code>loginId</code>、<code>deviceType</code>、<code>eff</code>、<code>rnStr</code> 等保留字段，撞名会直接抛错。</p>
-<h3 id="geng-xin-dian-10-xiu-fu-oauth2-sso-redirect-rao-guo-allow-ur">🛡️ 更新点10：修复 OAuth2 / SSO <code>redirect</code> 绕过 <code>allow-url</code> 漏洞</h3>
+<h2 id="geng-xin-dian-10-xiu-fu-oauth2-sso-redirect-rao-guo-allow-ur">🛡️ 更新点10：修复 OAuth2 / SSO <code>redirect</code> 绕过 <code>allow-url</code> 漏洞</h2>
 <p>来自社区用户提交的漏洞报告：OAuth2 调用 <code>/oauth2/doConfirm</code> 时，<code>redirect_uri</code> 校验可被绕过；本版审查后确认 SSO 的 <code>redirect</code> 存在同类问题。</p>
 <p><strong>触发条件为（需同时满足）：</strong></p>
 <ol>
@@ -311,42 +311,39 @@ SaSsoClientUtil.ssoLogout(loginId);</code><ul class="code-line-box"><li>1</li><l
             sso-client1:
                 allow-url: http://sa-sso-client1.com:9003/*</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
 <p>感谢这位社区用户提交的漏洞报告。</p>
-<h3 id="geng-xin-dian-11-xiu-fu-jackson-duo-tai-fan-xu-lie-hua-lou-d">🔐 更新点11：修复 Jackson 多态反序列化漏洞，新增类型白名单</h3>
+<h2 id="geng-xin-dian-11-xiu-fu-jackson-duo-tai-fan-xu-lie-hua-lou-d">🔐 更新点11：修复 Jackson 多态反序列化漏洞，新增类型白名单</h2>
 <p>这是本版对 JSON 反序列化路径的主动审查：使用 Jackson / Jackson3 把 <code>SaSession</code> 写入 Redis 时，JSON 里会带 <code>@class</code> 类型标记；旧版本未限制严格限制反序列化类型白名单，可能会在反序列化时触发 classpath 上的任意类。</p>
 <p><strong>触发条件为（需同时满足）：</strong> 使用 <code>SaJsonTemplate</code> 去反序列化业务中未严格审查的 json 字符串。</p>
 <p><code>fastjson</code> / <code>fastjson2</code> / <code>fory-json</code> / <code>snack3</code> 默认不写类型标记，一般不走这条面。不去使用 <code>SaJsonTemplate</code> 去反序列化业务中未严格审查的 json 字符串。本版起 <code>sa-token-snack3</code> 也不再写入类型信息。</p>
 <p><strong>会造成：</strong> 攻击者提交恶意 json 字符串，可能触发多态反序列化 RCE。</p>
 <p><strong>新版本：</strong> 增加 <code>SaJsonStrategy</code> 全局类型白名单，只允许白名单内类型参与这类反序列化。JDK 常见值类型、框架已实现 <code>SaJsonType</code> 的 Model 默认在名单里；<strong>你的业务实体默认不在</strong>。用了 Jackson 且 Session 里存了自定义对象的，升级后可能看到：</p>
-<pre><code>无法反序列化的类型：com.pj.model.SysUser，请先将其注册到 JSON 全局类型白名单
-</code></pre>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">无法反序列化的类型：com.pj.model.SysUser，请先将其注册到 JSON 全局类型白名单</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>推荐让实体实现 <code>SaJsonType</code>：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">public class SysUser implements SaJsonType {
     // ...
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
 <p>也可以在 <code>SpringApplication.run</code> <strong>之前</strong> 调用 <code>SaJsonStrategy.instance.registerAllowType(SysUser.class)</code>，或在 <code>META-INF/satoken/sa-json-type.list</code> 按行写完整类名。JSON 插件初始化后再注册会失败。不要登记 <code>Object.class</code>。用了 Jackson + SaJsonTemplate 反序列化业务 json 字符串的，建议升到 v1.46.0，并先把业务类型登记进白名单。</p>
 <p>在线文档：<a href="https://sa-token.com/doc.html#/plugin/json-extend">JSON 序列化扩展</a> 🔗</p>
-<h3 id="geng-xin-dian-12-xiu-fu-sse-flux-shang-xia-wen-wei-chu-shi-h">📡 更新点12：修复 SSE / Flux 上下文未初始化，以及 Boot3 WebFlux <code>setStatus</code></h3>
+<h2 id="geng-xin-dian-12-xiu-fu-sse-flux-shang-xia-wen-wei-chu-shi-h">📡 更新点12：修复 SSE / Flux 上下文未初始化，以及 Boot3 WebFlux <code>setStatus</code></h2>
 <p>这两条都是社区报错工单：SSE 来自 Gitee <a href="https://gitee.com/dromara/sa-token/issues/IC4XFE">#IC4XFE</a>、<a href="https://gitee.com/dromara/sa-token/issues/ICB9OJ">#ICB9OJ</a>；<code>setStatus</code> 来自 <a href="https://gitee.com/dromara/sa-token/issues/IIAW1A">#IIAW1A</a>、GitHub <a href="https://github.com/dromara/Sa-Token/issues/916">#916</a>。</p>
 <p><strong>SSE / Flux</strong></p>
 <p>在之前的版本中，SpringMVC 接口如果返回 <code>SseEmitter</code>、<code>Flux</code> 等异步、流式结果，随后再调 <code>StpUtil</code> / <code>SaHolder</code> 会报：</p>
-<pre><code>cn.dev33.satoken.exception.SaTokenContextException: SaTokenContext 上下文尚未初始化
-</code></pre>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">cn.dev33.satoken.exception.SaTokenContextException: SaTokenContext 上下文尚未初始化</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>这是因为 Context Filter 只注册了 <code>REQUEST</code>。流式返回会再走一遍 <code>ASYNC</code> dispatch，过滤器没挂上，ThreadLocal 上下文是空的。普通 <code>@RequestMapping</code> 一问一答不受影响。</p>
 <p>新版本把 Filter 注册为 <code>REQUEST</code> + <code>ASYNC</code>，二次 dispatch 也会初始化上下文，一般不用再手改 Filter。</p>
 <p><strong>Boot3+ WebFlux / Gateway <code>setStatus</code></strong></p>
 <p>在之前的版本中，Boot3+ 的 WebFlux 或 Gateway 里调用：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">SaHolder.getResponse().setStatus(401);</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>会报：</p>
-<pre><code>java.lang.NoSuchMethodError: 'org.springframework.http.server.reactive.ServerHttpResponse setStatusCode(org.springframework.http.HttpStatus)'
-</code></pre>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">java.lang.NoSuchMethodError: 'org.springframework.http.server.reactive.ServerHttpResponse setStatusCode(org.springframework.http.HttpStatus)'</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>这是因为 Boot2 的 <code>ServerHttpResponse.setStatusCode</code> 吃 <code>HttpStatus</code>，Boot3 改成了 <code>HttpStatusCode</code>，旧 Reactor starter 字节码对不上。WebMVC 用户与这条无关。</p>
 <p>新版本拆了 Boot2 / Boot3+ 的 Reactor 实现，Boot3+ 走 <code>HttpStatusCode.valueOf(sc)</code>，不再报错。<code>sa-token-dependencies</code> 也不再锁死 Reactor 版本，避免跟 Spring Cloud Gateway 打架。fix: <a href="https://github.com/dromara/Sa-Token/issues/622">#622</a></p>
-<h3 id="geng-xin-dian-13-wen-dang-zhan-qi-yong-com-ding-ji-yu-ming-b">📚 更新点13：文档站启用 .com 顶级域名，博客、多语言、安全策略</h3>
+<h2 id="geng-xin-dian-13-wen-dang-zhan-qi-yong-com-ding-ji-yu-ming-b">📚 更新点13：文档站启用 .com 顶级域名，博客、多语言、安全策略</h2>
 <p>域名从 <code>sa-token.cc</code> 迁到 <a href="https://sa-token.com">sa-token.com</a>，请即使修改书签。独立博客上线；文档站暗色主题 5 种 IDE 风格；translate.js 多语言；README 有英/日/韩/俄/繁中。</p>
 <p>随机数改用 <code>SecureRandom</code>。新增 <code>SECURITY.md</code>：安全问题走 GitHub Private Vulnerability Reporting 或邮件，不要开公开 Issue。</p>
 <p>文档版本选择器改为动态加载。Solon 插件由 PathAnalyzer 换成 PathMatcher。</p>
 <p>感谢 <a href="https://github.com/dromara/Sa-Token/pull/933">@Ran</a> 补充 <code>SECURITY.md</code>（fix <a href="https://github.com/dromara/Sa-Token/issues/932">#932</a>、<a href="https://github.com/dromara/Sa-Token/issues/877">#877</a>）；感谢 <a href="https://gitee.com/dromara/sa-token/pulls/364">@noear</a> 适配 Solon PathMatcher（fix <a href="https://gitee.com/dromara/sa-token/issues/IJTNJK">#IJTNJK</a>）。</p>
-<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
 <p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.46.0 版本的完整更新日志：</p>
 <ul>
 <li>core：<ul>
@@ -437,7 +434,7 @@ SaSsoClientUtil.ssoLogout(loginId);</code><ul class="code-line-box"><li>1</li><l
 </li>
 </ul>
 <p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
-<h3 id="qi-ta">🌟 其它</h3>
+<h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
 <p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/common/sa-token-js4--2.png" /></p>
@@ -451,21 +448,21 @@ SaSsoClientUtil.ssoLogout(loginId);</code><ul class="code-line-box"><li>1</li><l
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#geng-xin-dian-1-xin-zeng-sa-token-fory-json-cha-jian-json-fa">📦 更新点1：新增 sa-token-fory-json 插件，JSON 方案再添一位</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-2-xin-zeng-sa-token-rest-client-sa-token-rest">🌐 更新点2：新增 sa-token-rest-client / sa-token-rest-template 插件</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-3-xin-zeng-sa-token-alone-redisson-cha-jian-qu">🗄️ 更新点3：新增 sa-token-alone-redisson 插件，权限缓存和业务缓存拆开</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-4-redistemplate-jian-suo-gai-scan-update-bao-t">🔧 更新点4：RedisTemplate 检索改 SCAN、update 保 TTL、key 可加前缀</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-5-zhu-xiao-qian-zhen-ting-qi-hui-hua-qing-diao">🔔 更新点5：注销前侦听器，会话清掉之前还能读现场</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-6-session-xin-zeng-getlist-getset-getmap">📋 更新点6：Session 新增 getList / getSet / getMap</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-7-sso-ke-hu-duan-zhi-chi-an-zhang-hao-dan-dian">🚪 更新点7：SSO 客户端支持按账号单点注销</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-8-sarequest-saresponse-sastorage-ke-ce-lve-chu">🧩 更新点8：SaRequest / SaResponse / SaStorage 可策略创建</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-9-liang-chu-bu-xiang-xia-jian-rong-sheng-ji-xi">⚠️ 更新点9：两处不向下兼容，升级先看</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-10-xiu-fu-oauth2-sso-redirect-rao-guo-allow-ur">🛡️ 更新点10：修复 OAuth2 / SSO redirect 绕过 allow-url 漏洞</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-11-xiu-fu-jackson-duo-tai-fan-xu-lie-hua-lou-d">🔐 更新点11：修复 Jackson 多态反序列化漏洞，新增类型白名单</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-12-xiu-fu-sse-flux-shang-xia-wen-wei-chu-shi-h">📡 更新点12：修复 SSE / Flux 上下文未初始化，以及 Boot3 WebFlux setStatus</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-13-wen-dang-zhan-qi-yong-com-ding-ji-yu-ming-b">📚 更新点13：文档站启用 .com 顶级域名，博客、多语言、安全策略</a></li>
-<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
-<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-1-xin-zeng-sa-token-fory-json-cha-jian-json-fa">📦 更新点1：新增 sa-token-fory-json 插件，JSON 方案再添一位</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-xin-zeng-sa-token-rest-client-sa-token-rest">🌐 更新点2：新增 sa-token-rest-client / sa-token-rest-template 插件</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-xin-zeng-sa-token-alone-redisson-cha-jian-qu">🗄️ 更新点3：新增 sa-token-alone-redisson 插件，权限缓存和业务缓存拆开</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-redistemplate-jian-suo-gai-scan-update-bao-t">🔧 更新点4：RedisTemplate 检索改 SCAN、update 保 TTL、key 可加前缀</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-zhu-xiao-qian-zhen-ting-qi-hui-hua-qing-diao">🔔 更新点5：注销前侦听器，会话清掉之前还能读现场</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-session-xin-zeng-getlist-getset-getmap">📋 更新点6：Session 新增 getList / getSet / getMap</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-7-sso-ke-hu-duan-zhi-chi-an-zhang-hao-dan-dian">🚪 更新点7：SSO 客户端支持按账号单点注销</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-8-sarequest-saresponse-sastorage-ke-ce-lve-chu">🧩 更新点8：SaRequest / SaResponse / SaStorage 可策略创建</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-9-liang-chu-bu-xiang-xia-jian-rong-sheng-ji-xi">⚠️ 更新点9：两处不向下兼容，升级先看</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-10-xiu-fu-oauth2-sso-redirect-rao-guo-allow-ur">🛡️ 更新点10：修复 OAuth2 / SSO redirect 绕过 allow-url 漏洞</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-11-xiu-fu-jackson-duo-tai-fan-xu-lie-hua-lou-d">🔐 更新点11：修复 Jackson 多态反序列化漏洞，新增类型白名单</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-12-xiu-fu-sse-flux-shang-xia-wen-wei-chu-shi-h">📡 更新点12：修复 SSE / Flux 上下文未初始化，以及 Boot3 WebFlux setStatus</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-13-wen-dang-zhan-qi-yong-com-ding-ji-yu-ming-b">📚 更新点13：文档站启用 .com 顶级域名，博客、多语言、安全策略</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

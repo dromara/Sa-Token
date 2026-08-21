@@ -167,7 +167,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <p>凡是稍微上点规模的系统，统一认证中心都是绕不过去的槛。而单点登录 —— 便是我们搭建统一认证中心的关键。</p>
 <p>前面几篇文章介绍了在前后端一体同域、跨域、同Redis、跨Redis 等架构下的单点登录，本篇将介绍：前后端分离架构下的 SSO 对接方案。</p>
 <p>以之前的 SSO 模式二对接 demo 为例，将其改造为前后端分离模式，只需以下几步：</p>
-<h3 id="yi-xin-jian-h5controller">一、新建<code>H5Controller</code>开放接口</h3>
+<h2 id="yi-xin-jian-h5controller">一、新建<code>H5Controller</code>开放接口</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 前后端分离架构下集成SSO所需的接口 
  */
@@ -206,7 +206,7 @@ public class H5Controller {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li></ul></pre>
-<h3 id="er-zeng-jia-kua-yu-guo-lv-qi-corsfilter-java">二、增加跨域过滤器<code>CorsFilter.java</code></h3>
+<h2 id="er-zeng-jia-kua-yu-guo-lv-qi-corsfilter-java">二、增加跨域过滤器<code>CorsFilter.java</code></h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 跨域过滤器
  */
@@ -250,7 +250,7 @@ public class CorsFilter implements Filter {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li></ul></pre>
-<h3 id="san-xin-jian-qian-duan-xiang-mu">三、新建前端项目</h3>
+<h2 id="san-xin-jian-qian-duan-xiang-mu">三、新建前端项目</h2>
 <p>任意文件夹新建前端项目：<code>sa-token-demo-sso-client-h5</code>，在根目录添加测试文件：<code>index.html</code></p>
 <pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -291,7 +291,7 @@ public class CorsFilter implements Filter {
         &lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li></ul></pre>
-<h3 id="si-tian-jia-deng-lu-chu-li-wen-jian-sso-login-html">四、添加登录处理文件<code>sso-login.html</code></h3>
+<h2 id="si-tian-jia-deng-lu-chu-li-wen-jian-sso-login-html">四、添加登录处理文件<code>sso-login.html</code></h2>
 <pre v-pre data-lang="html"><code class="lang-html language-html has-numbering">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -385,10 +385,10 @@ public class CorsFilter implements Filter {
         &lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li><li>72</li><li>73</li><li>74</li><li>75</li><li>76</li><li>77</li><li>78</li><li>79</li><li>80</li><li>81</li><li>82</li><li>83</li><li>84</li><li>85</li><li>86</li><li>87</li><li>88</li><li>89</li><li>90</li><li>91</li><li>92</li><li>93</li></ul></pre>
-<h3 id="wu-ce-shi-yun-xing">五、测试运行</h3>
+<h2 id="wu-ce-shi-yun-xing">五、测试运行</h2>
 <p>先启动Server服务端与Client服务端，再随便找个能预览html的工具打开前端项目（比如<a href="https://www.dcloud.io/hbuilderx.html">HBuilderX</a>），<br />
 测试流程与之前的一体版一致，在此暂不赘述。 </p>
-<h3 id="liu-sso-server-duan-de-qian-hou-duan-fen-li">六、SSO-Server 端的前后端分离</h3>
+<h2 id="liu-sso-server-duan-de-qian-hou-duan-fen-li">六、SSO-Server 端的前后端分离</h2>
 <p>疑问：上述代码都是针对 Client 端进行拆分，如果我想在 SSO-Server 端也进行前后端分离改造，应该怎么做？</p>
 <blockquote>
 <p>答：解决思路都是大同小异的，与Client一样，我们需要把原本在 “后端处理的授权重定向逻辑” 拿到前端来实现。</p>
@@ -588,7 +588,7 @@ function getParam(name, defaultValue){
 // 打印信息 
 var str = &quot;This page is provided by Sa-Token, Please refer to: &quot; + &quot;https://sa-token.com/&quot;;
 console.log(str);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li><li>72</li><li>73</li><li>74</li><li>75</li><li>76</li><li>77</li><li>78</li><li>79</li><li>80</li><li>81</li><li>82</li><li>83</li><li>84</li><li>85</li><li>86</li><li>87</li><li>88</li><li>89</li><li>90</li><li>91</li><li>92</li><li>93</li><li>94</li><li>95</li><li>96</li><li>97</li><li>98</li><li>99</li><li>100</li><li>101</li><li>102</li><li>103</li><li>104</li><li>105</li><li>106</li><li>107</li></ul></pre>
-<h3 id="qi-qi-dong-ce-shi">七、启动测试</h3>
+<h2 id="qi-qi-dong-ce-shi">七、启动测试</h2>
 <p>使用前端ide导入项目 <code>sa-token-demo-sso-server-h5</code>，浏览器访问 <code>sso-auth.html</code> 页面：</p>
 <p><img alt="sso-type2-server-h5-auth.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type2-server-h5-auth.png" title="s-w-sh" /></p>
 <p>复制上述地址，将其配置到 Client 端的 yml 配置文件中，例如：</p>
@@ -604,7 +604,7 @@ console.log(str);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li>
 <p>然后我们启动项目 <code>sa-token-demo-sso-server</code> 与 <code>sa-token-demo-sso2-client</code>，按照之前的测试步骤访问：<br />
 <a href="http://sa-sso-client1.com:9001/">http://sa-sso-client1.com:9001/</a>，即可以前后端分离模式完成 SSO-Server 端的授权登录。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -621,14 +621,14 @@ console.log(str);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li>
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-xin-jian-h5controller">一、新建H5Controller开放接口</a></li>
-<li class="toc-h3"><a href="#er-zeng-jia-kua-yu-guo-lv-qi-corsfilter-java">二、增加跨域过滤器CorsFilter.java</a></li>
-<li class="toc-h3"><a href="#san-xin-jian-qian-duan-xiang-mu">三、新建前端项目</a></li>
-<li class="toc-h3"><a href="#si-tian-jia-deng-lu-chu-li-wen-jian-sso-login-html">四、添加登录处理文件sso-login.html</a></li>
-<li class="toc-h3"><a href="#wu-ce-shi-yun-xing">五、测试运行</a></li>
-<li class="toc-h3"><a href="#liu-sso-server-duan-de-qian-hou-duan-fen-li">六、SSO-Server 端的前后端分离</a></li>
-<li class="toc-h3"><a href="#qi-qi-dong-ce-shi">七、启动测试</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-xin-jian-h5controller">一、新建H5Controller开放接口</a></li>
+<li class="toc-h2"><a href="#er-zeng-jia-kua-yu-guo-lv-qi-corsfilter-java">二、增加跨域过滤器CorsFilter.java</a></li>
+<li class="toc-h2"><a href="#san-xin-jian-qian-duan-xiang-mu">三、新建前端项目</a></li>
+<li class="toc-h2"><a href="#si-tian-jia-deng-lu-chu-li-wen-jian-sso-login-html">四、添加登录处理文件sso-login.html</a></li>
+<li class="toc-h2"><a href="#wu-ce-shi-yun-xing">五、测试运行</a></li>
+<li class="toc-h2"><a href="#liu-sso-server-duan-de-qian-hou-duan-fen-li">六、SSO-Server 端的前后端分离</a></li>
+<li class="toc-h2"><a href="#qi-qi-dong-ce-shi">七、启动测试</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

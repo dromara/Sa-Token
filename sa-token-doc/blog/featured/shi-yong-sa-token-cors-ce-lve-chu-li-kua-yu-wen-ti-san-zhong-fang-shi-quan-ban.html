@@ -159,14 +159,14 @@
 				<div class="markdown-section">
 					<h1>使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</h1>
 					<div class="blog-article-meta"><span>2025-04-11</span><span>精选</span></div>
-					<h3 id="qian-yan">前言</h3>
+					<h2 id="qian-yan">前言</h2>
 <p>之前写了一篇 <a href="https://juejin.cn/post/7247376558367981627">使用 Sa-Token 的全局过滤器解决跨域问题（三种方式全版）</a> <br />
 详解了如何使用 Sa-Token 的全局过滤器解决各种跨域问题，正好最近 Sa-Token 更新了版本，最新版本简化了跨域处理方案，<br />
 本文章将介绍一下最新版本的写法，以便给正在使用新版本的同学做个参考。</p>
 <p>注：本文章仅针对新版本（v1.42.0 及以上版本）提供参考，低于 v1.42.0 版本可以移步上述文章进行了解。</p>
 <hr />
 <p>在 web 开发中，跨域绝对是比较折磨新同学的一个问题，本文将讲解三种常见的跨域情形，并讲解如何使用 Sa-Token 框架解决跨域问题。</p>
-<h3 id="shen-me-qing-kuang-xia-hui-fa-sheng-kua-yu">什么情况下会发生跨域</h3>
+<h2 id="shen-me-qing-kuang-xia-hui-fa-sheng-kua-yu">什么情况下会发生跨域</h2>
 <p>简单理解，就是你在 A 域名下的页面，去调用 B 域名的接口，浏览器感觉你这次调用可能是不安全的请求行为，于是它需要用 cors 安全策略来确认一下这个请求是由用户真实的意愿发出的，而不是被 csrf 伪造请求攻击偷偷发送的。（这么说只是为了方便大家理解，不是特别严谨，实际上同域名下部分情形也会出现跨域问题）</p>
 <p>请仔细理解上面这段话，因为它说明了两点：<br />
 - 跨域不是后端接口对前端浏览器的限制，而是前端浏览器对用户的限制。<br />
@@ -176,14 +176,14 @@
 - 1、本地页面调用测试服务器，只在项目开发阶段会有跨域问题。（比较简单）<br />
 - 2、使用 header 头提交 token，产生的跨域问题。（比较常见+通用，推荐使用）<br />
 - 3、使用第三方 Cookie 提交 token，产生的跨域问题。（最古老的方案，目前新版浏览器对此方案限制越来越严格，非必要不选择此方案，如果对此方案不是很熟悉就贸然使用也容易出现安全问题）</p>
-<h3 id="kua-yu-qing-xing-yi-zhi-zai-xiang-mu-kai-fa-jie-duan-hui-you">跨域情形一：只在项目开发阶段会有跨域问题</h3>
+<h2 id="kua-yu-qing-xing-yi-zhi-zai-xiang-mu-kai-fa-jie-duan-hui-you">跨域情形一：只在项目开发阶段会有跨域问题</h2>
 <p>有些公司项目的开发方式为：<br />
 - 在项目开发时：使用本地页面调用测试服务器接口。（域名不同，存在跨域问题）<br />
 - 在项目部署时：将后端接口和前端页面部署在同一域名下。（域名一致，不存在跨域问题）</p>
 <p>这种情况下比较好解决，在代码层面我们无需任何更改，只在前端客户端做出一定的更改就行了。比如说：在前端配置一个代理服务器，或者修改一下 Chrome 客户端使其去除跨域限制。</p>
 <p>具体的方案有很多，大家可参考这篇博客：<a href="https://helang.blog.csdn.net/article/details/123946361">手把手教你解决web前端跨域问题</a></p>
 <p>上面是说的普通前后端分离开发，而在APP、小程序 开发中，其天然就是个没有跨域限制的客户端，我们什么都不用做就能解决跨域问题。</p>
-<h3 id="kua-yu-qing-xing-er-shi-yong-header-tou-ti-jiao-token-chan-s">跨域情形二：使用 header 头提交 token，产生的跨域问题（比较常见+通用，推荐使用）</h3>
+<h2 id="kua-yu-qing-xing-er-shi-yong-header-tou-ti-jiao-token-chan-s">跨域情形二：使用 header 头提交 token，产生的跨域问题（比较常见+通用，推荐使用）</h2>
 <p>当你使用 header 头提交 token 时，会产生跨域问题。此方案比较常见+通用，推荐使用。</p>
 <p>jquery 代码示例：</p>
 <pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">    $.ajax({
@@ -254,7 +254,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li></ul></pre>
 <p>WebFlux 同理，此处理策略全环境通用。</p>
-<h3 id="kua-yu-qing-xing-san-shi-yong-di-san-fang-cookie-ti-jiao-tok">跨域情形三：使用第三方 Cookie 提交 token，产生的跨域问题。</h3>
+<h2 id="kua-yu-qing-xing-san-shi-yong-di-san-fang-cookie-ti-jiao-tok">跨域情形三：使用第三方 Cookie 提交 token，产生的跨域问题。</h2>
 <p>这是最古老的方案，目前新版浏览器对此方案限制越来越严格，非必要不选择此方案，如果对此方案不是很熟悉就贸然使用也容易出现安全问题。</p>
 <p>jquery 代码示例：</p>
 <pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">    $.ajax({
@@ -359,11 +359,11 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#qian-yan">前言</a></li>
-<li class="toc-h3"><a href="#shen-me-qing-kuang-xia-hui-fa-sheng-kua-yu">什么情况下会发生跨域</a></li>
-<li class="toc-h3"><a href="#kua-yu-qing-xing-yi-zhi-zai-xiang-mu-kai-fa-jie-duan-hui-you">跨域情形一：只在项目开发阶段会有跨域问题</a></li>
-<li class="toc-h3"><a href="#kua-yu-qing-xing-er-shi-yong-header-tou-ti-jiao-token-chan-s">跨域情形二：使用 header 头提交 token，产生的跨域问题（比较常见+通用，推荐使用）</a></li>
-<li class="toc-h3"><a href="#kua-yu-qing-xing-san-shi-yong-di-san-fang-cookie-ti-jiao-tok">跨域情形三：使用第三方 Cookie 提交 token，产生的跨域问题。</a></li>
+<li class="toc-h2"><a href="#qian-yan">前言</a></li>
+<li class="toc-h2"><a href="#shen-me-qing-kuang-xia-hui-fa-sheng-kua-yu">什么情况下会发生跨域</a></li>
+<li class="toc-h2"><a href="#kua-yu-qing-xing-yi-zhi-zai-xiang-mu-kai-fa-jie-duan-hui-you">跨域情形一：只在项目开发阶段会有跨域问题</a></li>
+<li class="toc-h2"><a href="#kua-yu-qing-xing-er-shi-yong-header-tou-ti-jiao-token-chan-s">跨域情形二：使用 header 头提交 token，产生的跨域问题（比较常见+通用，推荐使用）</a></li>
+<li class="toc-h2"><a href="#kua-yu-qing-xing-san-shi-yong-di-san-fang-cookie-ti-jiao-tok">跨域情形三：使用第三方 Cookie 提交 token，产生的跨域问题。</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

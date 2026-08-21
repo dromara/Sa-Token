@@ -166,14 +166,14 @@
 <h2 id="sa-token-shi-shen-me">sa-token 是什么？</h2>
 <p>sa-token是一个轻量级Java权限认证框架，主要解决: 登录认证、权限认证、Session会话 等一系列权限相关问题</p>
 <p>sa-token的API调用非常简单，一行代码即可搞定登录授权，废话不多说，我们直接上示例：</p>
-<h5>1. 添加pom依赖</h5>
+<h3 id="1-tian-jia-pom">1. 添加pom依赖</h3>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">    &lt;!-- sa-token 权限认证, 在线文档：http://sa-token.com/ --&gt;
     &lt;dependency&gt;
         &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
         &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
         &lt;version&gt;1.12.0&lt;/version&gt;
     &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
-<h5>2. 调用框架API进行登录</h5>
+<h3 id="2-diao-yong-kuang-jia-api">2. 调用框架API进行登录</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 在用户账号密码验证成功后，直接调用以下API进行登录授权
 StpUtil.setLoginId(10001); </code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
 <p>至此，我们已经借助sa-token框架完成登录授权！</p>
@@ -218,6 +218,8 @@ StpUtil.switchTo(10044);                // 将当前会话身份临时切换为�
 				<div class="blog-article-toc"><ul class="blog-toc-list">
 <li class="toc-h2"><a href="#qian-yan">前言</a></li>
 <li class="toc-h2"><a href="#sa-token-shi-shen-me">sa-token 是什么？</a></li>
+<li class="toc-h3"><a href="#1-tian-jia-pom">1. 添加pom依赖</a></li>
+<li class="toc-h3"><a href="#2-diao-yong-kuang-jia-api">2. 调用框架API进行登录</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

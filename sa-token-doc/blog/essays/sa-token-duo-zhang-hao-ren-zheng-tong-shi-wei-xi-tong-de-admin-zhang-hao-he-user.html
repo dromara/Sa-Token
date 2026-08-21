@@ -164,11 +164,11 @@
 <p>Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
 <p>本篇将介绍 Sa-Token 中的多账号认证操作。</p>
-<h3 id="yi-xu-qiu-fen-xi">一、需求分析</h3>
+<h2 id="yi-xu-qiu-fen-xi">一、需求分析</h2>
 <p>有的时候，我们会在一个项目中设计两套账号体系，比如一个电商系统的 user表 和 admin表， 在这种场景下，如果两套账号我们都使用 StpUtil 类的API进行登录鉴权，那么势必会发生逻辑冲突。</p>
 <p>在Sa-Token中，这个问题的模型叫做：多账号体系认证。</p>
 <p>要解决这个问题，我们必须有一个合理的机制将这两套账号的授权给区分开，让它们互不干扰才行。</p>
-<h3 id="er-yan-jin-si-lu">二、演进思路</h3>
+<h2 id="er-yan-jin-si-lu">二、演进思路</h2>
 <p>假如说我们的 user表 和 admin表 都有一个 id=10001 的账号，它们对应的登录代码：<code>StpUtil.login(10001)</code> 是一样的，<br />
 那么问题来了：在<code>StpUtil.getLoginId()</code>获取到的账号id如何区分它是User用户，还是Admin用户？</p>
 <p>你可能会想到为他们加一个固定前缀，比如<code>StpUtil.login("User_" + 10001)</code>、<code>StpUtil.login("Admin_" + 10001)</code>，这样确实是可以解决问题的，<br />
@@ -181,14 +181,14 @@ SaManager.getStpLogic(&quot;admin&quot;).login(10001);
 // 在当前会话登录 User 账号 10001
 SaManager.getStpLogic(&quot;user&quot;).login(10001);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
 <p>这是一种解决方案，但仍然需要我们每次调用方法时指定账号类型参数，代码略显啰嗦，接下来我们介绍方案二：自定义 StpUtil 鉴权工具类。</p>
-<h3 id="san-zi-ding-yi-stputil-jian-quan-gong-ju-lei">三、自定义 StpUtil 鉴权工具类</h3>
+<h2 id="san-zi-ding-yi-stputil-jian-quan-gong-ju-lei">三、自定义 StpUtil 鉴权工具类</h2>
 <p>前面几篇介绍的api调用，都是经过 StpUtil 类的各种静态方法进行授权认证，<br />
 而如果我们深入它的源码，<a href="https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/stp/StpUtil.java">点此阅览</a> <br/><br />
 就会发现，此类并没有任何代码逻辑，唯一做的事就是对成员变量<code>stpLogic</code>的各个API包装一下进行转发。</p>
 <p>这样做有两个优点: <br />
 - StpLogic 类的所有函数都可以被重写，按需扩展。<br />
 - 在构造方法时随意传入一个不同的 <code>loginType</code>，就可以再造一套账号登录体系。</p>
-<h3 id="si-cao-zuo-shi-li">四、操作示例</h3>
+<h2 id="si-cao-zuo-shi-li">四、操作示例</h2>
 <p>比如说，对于原生<code>StpUtil</code>类，我们只做<code>admin账号</code>权限认证，而对于<code>user账号</code>，我们则：<br />
 1. 新建一个新的权限认证类，比如： <code>StpUserUtil.java</code>。<br />
 2. 将<code>StpUtil.java</code>类的全部代码复制粘贴到 <code>StpUserUtil.java</code>里。<br />
@@ -209,7 +209,7 @@ SaManager.getStpLogic(&quot;user&quot;).login(10001);</code><ul class="code-line
 <blockquote>
 <p>成品样例参考：<a href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/StpUserUtil.java">码云 StpUserUtil.java</a></p>
 </blockquote>
-<h3 id="wu-zai-duo-zhang-hu-mo-shi-xia-shi-yong-zhu-jie-jian-quan">五、在多账户模式下使用注解鉴权</h3>
+<h2 id="wu-zai-duo-zhang-hu-mo-shi-xia-shi-yong-zhu-jie-jian-quan">五、在多账户模式下使用注解鉴权</h2>
 <p>框架默认的注解鉴权 如<code>@SaCheckLogin</code> 只针对原生<code>StpUtil</code>进行鉴权。</p>
 <p>例如，我们在一个方法上加上<code>@SaCheckLogin</code>注解，这个注解只会放行通过<code>StpUtil.login(id)</code>进行登录的会话，<br />
 而对于通过<code>StpUserUtil.login(id)</code>进行登录的会话，则始终不会通过校验。</p>
@@ -221,12 +221,12 @@ public String info() {
     return &quot;查询用户信息&quot;;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：<code>@SaCheckRole("xxx")</code>、<code>@SaCheckPermission("xxx")</code>同理，亦可根据type属性指定其校验的账号体系，此属性默认为<code>""</code>，代表使用原生<code>StpUtil</code>账号体系。</p>
-<h3 id="liu-shi-yong-zhu-jie-he-bing-jian-hua-dai-ma">六、使用注解合并简化代码</h3>
+<h2 id="liu-shi-yong-zhu-jie-he-bing-jian-hua-dai-ma">六、使用注解合并简化代码</h2>
 <p>交流群里有同学反应，虽然可以根据 <code>@SaCheckLogin(type = "user")</code> 指定账号类型，但几十上百个注解都加上这个的话，还是有些繁琐，代码也不够优雅，有么有更简单的解决方案？</p>
 <p>我们期待一种<code>[注解继承/合并]</code>的能力，即：自定义一个注解，标注上<code>@SaCheckLogin(type = "user")</code>，<br />
 然后在方法上标注这个自定义注解，效果等同于标注<code>@SaCheckLogin(type = "user")</code>。</p>
 <p>很遗憾，JDK默认的注解处理器并没有提供这种<code>[注解继承/合并]</code>的能力，不过好在我们可以利用 Spring 的注解处理器，达到同样的目的。</p>
-<h5>1、重写Sa-Token默认的注解处理器：</h5>
+<h3 id="1-zhong-xie-sa-token">1、重写Sa-Token默认的注解处理器：</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
 public class SaTokenConfigure {
     @Autowired
@@ -237,7 +237,7 @@ public class SaTokenConfigure {
         };
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h5>2、自定义一个注解：</h5>
+<h3 id="2-zi-ding-yi-yi-ge-zhu-jie">2、自定义一个注解：</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 登录认证(User版)：只有登录之后才能进入该方法 
  * &lt;p&gt; 可标注在函数、类上（效果等同于标注在此类的所有方法上） 
@@ -248,7 +248,7 @@ public class SaTokenConfigure {
 public @interface SaUserCheckLogin {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h5>3、接下来就可以使用我们的自定义注解了：</h5>
+<h3 id="3-jie-xia-lai-jiu-ke-yi-shi-yong-wo-men-de-zi-ding-yi-zhu-ji">3、接下来就可以使用我们的自定义注解了：</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 使用 @SaUserCheckLogin 的效果等同于使用：@SaCheckLogin(type = &quot;user&quot;)
 @SaUserCheckLogin
 @RequestMapping(&quot;info&quot;)
@@ -257,7 +257,7 @@ public String info() {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：其它注解 <code>@SaCheckRole("xxx")</code>、<code>@SaCheckPermission("xxx")</code>同理，<br />
 完整示例参考：<a href="https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/satoken/at">码云：自定义注解</a>。</p>
-<h3 id="qi-tong-duan-duo-deng-lu">七、同端多登陆</h3>
+<h2 id="qi-tong-duan-duo-deng-lu">七、同端多登陆</h2>
 <p>假设我们不仅需要在后台同时集成两套账号，我们还需要在一个客户端同时登陆两套账号（业务场景举例：一个APP中可以同时登陆商家账号和用户账号）。</p>
 <p>如果我们不做任何特殊处理的话，在客户端会发生<code>token覆盖</code>，新登录的token会覆盖掉旧登录的token从而导致旧登录失效。</p>
 <p>那么如何解决这个问题？<br><br />
@@ -278,7 +278,7 @@ public String info() {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
 <p>再次调用 <code>StpUserUtil.login(10001)</code> 进行登录授权时，token的名称将不再是 <code>satoken</code>，而是我们重写后的 <code>satoken-user</code>。</p>
-<h3 id="ba-bu-tong-ti-xi-bu-tong-satokenconfig-pei-zhi">八、不同体系不同 SaTokenConfig 配置</h3>
+<h2 id="ba-bu-tong-ti-xi-bu-tong-satokenconfig-pei-zhi">八、不同体系不同 SaTokenConfig 配置</h2>
 <p>如果自定义的 StpUserUtil 需要使用不同 SaTokenConfig 对象, 也很简单，参考示例如下：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">public class StpUserUtil {
 
@@ -302,7 +302,7 @@ public String info() {
     // ... 
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
-<h3 id="jiu-duo-zhang-hao-ti-xi-hun-he-jian-quan">九、多账号体系混合鉴权</h3>
+<h2 id="jiu-duo-zhang-hao-ti-xi-hun-he-jian-quan">九、多账号体系混合鉴权</h2>
 <p>QQ群中有小伙伴提问：在多账号体系下，怎么在 <code>SaInterceptor</code> 拦截器中给一个接口登录鉴权？</p>
 <p>其实这个问题，主要是靠你的业务需求来决定，以后台 Admin 账号和前台 User 账号为例：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 注册 Sa-Token 拦截器
@@ -332,7 +332,7 @@ public void addInterceptors(InterceptorRegistry registry) {
     })).addPathPatterns(&quot;/**&quot;);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li></ul></pre>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -349,16 +349,19 @@ public void addInterceptors(InterceptorRegistry registry) {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
-<li class="toc-h3"><a href="#er-yan-jin-si-lu">二、演进思路</a></li>
-<li class="toc-h3"><a href="#san-zi-ding-yi-stputil-jian-quan-gong-ju-lei">三、自定义 StpUtil 鉴权工具类</a></li>
-<li class="toc-h3"><a href="#si-cao-zuo-shi-li">四、操作示例</a></li>
-<li class="toc-h3"><a href="#wu-zai-duo-zhang-hu-mo-shi-xia-shi-yong-zhu-jie-jian-quan">五、在多账户模式下使用注解鉴权</a></li>
-<li class="toc-h3"><a href="#liu-shi-yong-zhu-jie-he-bing-jian-hua-dai-ma">六、使用注解合并简化代码</a></li>
-<li class="toc-h3"><a href="#qi-tong-duan-duo-deng-lu">七、同端多登陆</a></li>
-<li class="toc-h3"><a href="#ba-bu-tong-ti-xi-bu-tong-satokenconfig-pei-zhi">八、不同体系不同 SaTokenConfig 配置</a></li>
-<li class="toc-h3"><a href="#jiu-duo-zhang-hao-ti-xi-hun-he-jian-quan">九、多账号体系混合鉴权</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
+<li class="toc-h2"><a href="#er-yan-jin-si-lu">二、演进思路</a></li>
+<li class="toc-h2"><a href="#san-zi-ding-yi-stputil-jian-quan-gong-ju-lei">三、自定义 StpUtil 鉴权工具类</a></li>
+<li class="toc-h2"><a href="#si-cao-zuo-shi-li">四、操作示例</a></li>
+<li class="toc-h2"><a href="#wu-zai-duo-zhang-hu-mo-shi-xia-shi-yong-zhu-jie-jian-quan">五、在多账户模式下使用注解鉴权</a></li>
+<li class="toc-h2"><a href="#liu-shi-yong-zhu-jie-he-bing-jian-hua-dai-ma">六、使用注解合并简化代码</a></li>
+<li class="toc-h3"><a href="#1-zhong-xie-sa-token">1、重写Sa-Token默认的注解处理器：</a></li>
+<li class="toc-h3"><a href="#2-zi-ding-yi-yi-ge-zhu-jie">2、自定义一个注解：</a></li>
+<li class="toc-h3"><a href="#3-jie-xia-lai-jiu-ke-yi-shi-yong-wo-men-de-zi-ding-yi-zhu-ji">3、接下来就可以使用我们的自定义注解了：</a></li>
+<li class="toc-h2"><a href="#qi-tong-duan-duo-deng-lu">七、同端多登陆</a></li>
+<li class="toc-h2"><a href="#ba-bu-tong-ti-xi-bu-tong-satokenconfig-pei-zhi">八、不同体系不同 SaTokenConfig 配置</a></li>
+<li class="toc-h2"><a href="#jiu-duo-zhang-hao-ti-xi-hun-he-jian-quan">九、多账号体系混合鉴权</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

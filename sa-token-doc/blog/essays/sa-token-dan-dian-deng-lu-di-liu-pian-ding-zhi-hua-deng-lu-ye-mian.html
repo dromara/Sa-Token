@@ -165,11 +165,11 @@
 Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
 <p>本篇将介绍在集成 Sa-Token SSO 模块时，如何自定义登录页面等信息。</p>
-<h3 id="yi-he-shi-yin-dao-yong-hu-qu-deng-lu">一、何时引导用户去登录？</h3>
-<h4 id="fang-an-yi-qian-duan-an-niu-tiao-zhuan">方案一：前端按钮跳转</h4>
+<h2 id="yi-he-shi-yin-dao-yong-hu-qu-deng-lu">一、何时引导用户去登录？</h2>
+<h3 id="fang-an-yi-qian-duan-an-niu-tiao-zhuan">方案一：前端按钮跳转</h3>
 <p>前端页面准备一个<strong><code>[登录]</code></strong>按钮，当用户点击按钮时，跳转到登录接口 </p>
 <pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">&lt;a href=&quot;javascript:location.href='/sso/login?back=' + encodeURIComponent(location.href);&quot;&gt;登录&lt;/a&gt;</code><ul class="code-line-box"><li>1</li></ul></pre>
-<h4 id="fang-an-er-hou-duan-lan-jie-zhong-ding-xiang">方案二：后端拦截重定向</h4>
+<h3 id="fang-an-er-hou-duan-lan-jie-zhong-ding-xiang">方案二：后端拦截重定向</h3>
 <p>在后端注册全局过滤器（或拦截器、或全局异常处理），拦截需要登录后才能访问的页面资源，将未登录的访问重定向至登录接口 </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * Sa-Token 配置类 
@@ -192,7 +192,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                 ;
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul></pre>
-<h4 id="fang-an-san-hou-duan-lan-jie-qian-duan-tiao-zhuan">方案三：后端拦截 + 前端跳转</h4>
+<h3 id="fang-an-san-hou-duan-lan-jie-qian-duan-tiao-zhuan">方案三：后端拦截 + 前端跳转</h3>
 <p>首先，后端仍需要提供拦截，但是不直接引导用户重定向，而是返回未登录的提示信息 </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * Sa-Token 配置类 
@@ -219,19 +219,19 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     location.href = '/sso/login?back=' + encodeURIComponent(location.href);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
 <p>这种方案比较适合以 Ajax 访问的 RestAPI 接口重定向 </p>
-<h3 id="er-ru-he-zi-ding-yi-deng-lu-shi-tu">二、如何自定义登录视图？</h3>
-<h4 id="fang-shi-yi-zai-demo-login-html-ye-mian-dai-ma-ji-ke">方式一：在demo示例中直接更改 login.html 页面代码即可</h4>
-<h4 id="fang-shi-er-zai-pei-zhi-zhong-pei-zhi-deng-lu-shi-tu-di-zhi">方式二：在配置中配置登录视图地址</h4>
+<h2 id="er-ru-he-zi-ding-yi-deng-lu-shi-tu">二、如何自定义登录视图？</h2>
+<h3 id="fang-shi-yi-zai-demo-login-html-ye-mian-dai-ma-ji-ke">方式一：在demo示例中直接更改 login.html 页面代码即可</h3>
+<h3 id="fang-shi-er-zai-pei-zhi-zhong-pei-zhi-deng-lu-shi-tu-di-zhi">方式二：在配置中配置登录视图地址</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 配置：未登录时返回的View 
 sso.setNotLoginView(() -&gt; {
     return new ModelAndView(&quot;xxx.html&quot;);
 })</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li></ul></pre>
-<h3 id="san-ru-he-zi-ding-yi-deng-lu-api">三、如何自定义登录API的接口地址？</h3>
+<h2 id="san-ru-he-zi-ding-yi-deng-lu-api">三、如何自定义登录API的接口地址？</h2>
 <p>根据需求点选择解决方案：</p>
-<h4 id="3-1-ru-guo-zhi-shi-xiang-zai-setdologinhandle-han-shu-li-huo">3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？</h4>
+<h3 id="3-1-ru-guo-zhi-shi-xiang-zai-setdologinhandle-han-shu-li-huo">3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 在任意代码处获取前端提交的参数 
 String xxx = SaHolder.getRequest().getParam(&quot;xxx&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
-<h4 id="3-2-xiang-wan-quan-zi-ding-yi-yi-ge-jie-kou-lai-jie-shou-qia">3.2、想完全自定义一个接口来接受前端登录请求？</h4>
+<h3 id="3-2-xiang-wan-quan-zi-ding-yi-yi-ge-jie-kou-lai-jie-shou-qia">3.2、想完全自定义一个接口来接受前端登录请求？</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 直接定义一个拦截路由为 `/sso/doLogin` 的接口即可 
 @RequestMapping(&quot;/sso/doLogin&quot;)
 public SaResult ss(String name, String pwd) {
@@ -242,10 +242,10 @@ public SaResult ss(String name, String pwd) {
     }
     return SaResult.error(&quot;登录失败！&quot;);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h4 id="3-3-bu-xiang-shi-yong-sso-dologin-xiang-zi-ding-yi-yi-ge-api">3.3、不想使用<code>/sso/doLogin</code>这个接口，想自定义一个API地址？</h4>
+<h3 id="3-3-bu-xiang-shi-yong-sso-dologin-xiang-zi-ding-yi-yi-ge-api">3.3、不想使用<code>/sso/doLogin</code>这个接口，想自定义一个API地址？</h3>
 <p>答：直接在前端更改点击按钮时 Ajax 的请求地址即可 </p>
-<h3 id="si-ru-he-zi-ding-yi-api-lu-you">四、如何自定义 API 路由</h3>
-<h4 id="fang-shi-yi-xiu-gai-quan-ju-bian-liang">方式一：修改全局变量</h4>
+<h2 id="si-ru-he-zi-ding-yi-api-lu-you">四、如何自定义 API 路由</h2>
+<h3 id="fang-shi-yi-xiu-gai-quan-ju-bian-liang">方式一：修改全局变量</h3>
 <p>在之前的章节中，我们演示了如何搭建一个SSO认证中心：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * Sa-Token-SSO Server端 Controller 
@@ -278,7 +278,7 @@ private void configSso(SaSsoConfig sso) {
     sso.setXxx ... ;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
 <p>启动项目，统一认证地址就被我们修改成了：<code>http://{host}:{port}/sso/auth2</code></p>
-<h4 id="fang-shi-er-chai-fen-lu-you-ru-kou">方式二：拆分路由入口</h4>
+<h3 id="fang-shi-er-chai-fen-lu-you-ru-kou">方式二：拆分路由入口</h3>
 <p>根据上述路由入口：<code>@RequestMapping("/sso/*")</code>，我们给它起一个合适的名字 —— 聚合式路由。</p>
 <p>与之对应的，我们可以将其修改为拆分式路由：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
@@ -315,8 +315,8 @@ public class SsoServerController {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li></ul></pre>
 <p>拆分式路由 与 聚合式路由 在功能上完全等价，且提供了更为细致的路由管控。</p>
-<h3 id="wu-yi-cuo-dian">五、易错点</h3>
-<h4 id="yi-cuo-dian-yi-da-jian-hao-sso-server-huo-sso-client-fu-wu-h">易错点一：搭建好 <code>sso-server</code> 或 <code>sso-client</code> 服务后，访问返回：<code>{"msg": "not handle"}</code>。</h4>
+<h2 id="wu-yi-cuo-dian">五、易错点</h2>
+<h3 id="yi-cuo-dian-yi-da-jian-hao-sso-server-huo-sso-client-fu-wu-h">易错点一：搭建好 <code>sso-server</code> 或 <code>sso-client</code> 服务后，访问返回：<code>{"msg": "not handle"}</code>。</h3>
 <p>返回这个信息，代表你访问的路由有错误，比如说：</p>
 <ul>
 <li>统一认证登录地址是：<code>http://{host}:{port}/sso/auth</code>。</li>
@@ -329,7 +329,7 @@ public class SsoServerController {
 <li>sso-client 端的注销地址：<code>http://{host}:{port}/sso/logout</code>；</li>
 </ul>
 <p>都需要在配置文件配置：<code>sa-token.sso.is-slo=true</code>后，才会打开。</p>
-<h4 id="yi-cuo-dian-er-can-zhao-wen-dang-da-jian-sso-client-yi-zhi-t">易错点二：参照文档搭建SSO-Client，一直提示：Ticket无效，这是怎么回事？</h4>
+<h3 id="yi-cuo-dian-er-can-zhao-wen-dang-da-jian-sso-client-yi-zhi-t">易错点二：参照文档搭建SSO-Client，一直提示：Ticket无效，这是怎么回事？</h3>
 <p>如果使用的是模式二，出现此异常概率最大的原因是因为 <code>Client</code> 与 <code>Server</code> 没有连接同一个Redis，SSO模式二中两者必须连接同一个 Redis 才可以登录成功。</p>
 <p>你可能会问：我看配置文件明明是同一个啊？</p>
 <p>我的建议是：排查时不要仅凭肉眼判断，分别在你的 <code>Client</code> 与 <code>Server</code> 启动后调用 <code>SaManager.getSaTokenDao().set("name", "value", 100000);</code> <br />
@@ -345,7 +345,7 @@ public class SaSsoServerApplication {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
 <p>如果使用的是模式三，则排查是否有重复校验 ticket 的代码，一个 ticket 码只能使用一次，多次重复使用就会提示这个。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -362,24 +362,24 @@ public class SaSsoServerApplication {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-he-shi-yin-dao-yong-hu-qu-deng-lu">一、何时引导用户去登录？</a></li>
-<li class="toc-h4"><a href="#fang-an-yi-qian-duan-an-niu-tiao-zhuan">方案一：前端按钮跳转</a></li>
-<li class="toc-h4"><a href="#fang-an-er-hou-duan-lan-jie-zhong-ding-xiang">方案二：后端拦截重定向</a></li>
-<li class="toc-h4"><a href="#fang-an-san-hou-duan-lan-jie-qian-duan-tiao-zhuan">方案三：后端拦截 + 前端跳转</a></li>
-<li class="toc-h3"><a href="#er-ru-he-zi-ding-yi-deng-lu-shi-tu">二、如何自定义登录视图？</a></li>
-<li class="toc-h4"><a href="#fang-shi-yi-zai-demo-login-html-ye-mian-dai-ma-ji-ke">方式一：在demo示例中直接更改 login.html 页面代码即可</a></li>
-<li class="toc-h4"><a href="#fang-shi-er-zai-pei-zhi-zhong-pei-zhi-deng-lu-shi-tu-di-zhi">方式二：在配置中配置登录视图地址</a></li>
-<li class="toc-h3"><a href="#san-ru-he-zi-ding-yi-deng-lu-api">三、如何自定义登录API的接口地址？</a></li>
-<li class="toc-h4"><a href="#3-1-ru-guo-zhi-shi-xiang-zai-setdologinhandle-han-shu-li-huo">3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？</a></li>
-<li class="toc-h4"><a href="#3-2-xiang-wan-quan-zi-ding-yi-yi-ge-jie-kou-lai-jie-shou-qia">3.2、想完全自定义一个接口来接受前端登录请求？</a></li>
-<li class="toc-h4"><a href="#3-3-bu-xiang-shi-yong-sso-dologin-xiang-zi-ding-yi-yi-ge-api">3.3、不想使用/sso/doLogin这个接口，想自定义一个API地址？</a></li>
-<li class="toc-h3"><a href="#si-ru-he-zi-ding-yi-api-lu-you">四、如何自定义 API 路由</a></li>
-<li class="toc-h4"><a href="#fang-shi-yi-xiu-gai-quan-ju-bian-liang">方式一：修改全局变量</a></li>
-<li class="toc-h4"><a href="#fang-shi-er-chai-fen-lu-you-ru-kou">方式二：拆分路由入口</a></li>
-<li class="toc-h3"><a href="#wu-yi-cuo-dian">五、易错点</a></li>
-<li class="toc-h4"><a href="#yi-cuo-dian-yi-da-jian-hao-sso-server-huo-sso-client-fu-wu-h">易错点一：搭建好 sso-server 或 sso-client 服务后，访问返回：{&quot;msg&quot;: &quot;not handle&quot;}。</a></li>
-<li class="toc-h4"><a href="#yi-cuo-dian-er-can-zhao-wen-dang-da-jian-sso-client-yi-zhi-t">易错点二：参照文档搭建SSO-Client，一直提示：Ticket无效，这是怎么回事？</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-he-shi-yin-dao-yong-hu-qu-deng-lu">一、何时引导用户去登录？</a></li>
+<li class="toc-h3"><a href="#fang-an-yi-qian-duan-an-niu-tiao-zhuan">方案一：前端按钮跳转</a></li>
+<li class="toc-h3"><a href="#fang-an-er-hou-duan-lan-jie-zhong-ding-xiang">方案二：后端拦截重定向</a></li>
+<li class="toc-h3"><a href="#fang-an-san-hou-duan-lan-jie-qian-duan-tiao-zhuan">方案三：后端拦截 + 前端跳转</a></li>
+<li class="toc-h2"><a href="#er-ru-he-zi-ding-yi-deng-lu-shi-tu">二、如何自定义登录视图？</a></li>
+<li class="toc-h3"><a href="#fang-shi-yi-zai-demo-login-html-ye-mian-dai-ma-ji-ke">方式一：在demo示例中直接更改 login.html 页面代码即可</a></li>
+<li class="toc-h3"><a href="#fang-shi-er-zai-pei-zhi-zhong-pei-zhi-deng-lu-shi-tu-di-zhi">方式二：在配置中配置登录视图地址</a></li>
+<li class="toc-h2"><a href="#san-ru-he-zi-ding-yi-deng-lu-api">三、如何自定义登录API的接口地址？</a></li>
+<li class="toc-h3"><a href="#3-1-ru-guo-zhi-shi-xiang-zai-setdologinhandle-han-shu-li-huo">3.1、如果只是想在 setDoLoginHandle 函数里获取除 name、pwd 以外的参数？</a></li>
+<li class="toc-h3"><a href="#3-2-xiang-wan-quan-zi-ding-yi-yi-ge-jie-kou-lai-jie-shou-qia">3.2、想完全自定义一个接口来接受前端登录请求？</a></li>
+<li class="toc-h3"><a href="#3-3-bu-xiang-shi-yong-sso-dologin-xiang-zi-ding-yi-yi-ge-api">3.3、不想使用/sso/doLogin这个接口，想自定义一个API地址？</a></li>
+<li class="toc-h2"><a href="#si-ru-he-zi-ding-yi-api-lu-you">四、如何自定义 API 路由</a></li>
+<li class="toc-h3"><a href="#fang-shi-yi-xiu-gai-quan-ju-bian-liang">方式一：修改全局变量</a></li>
+<li class="toc-h3"><a href="#fang-shi-er-chai-fen-lu-you-ru-kou">方式二：拆分路由入口</a></li>
+<li class="toc-h2"><a href="#wu-yi-cuo-dian">五、易错点</a></li>
+<li class="toc-h3"><a href="#yi-cuo-dian-yi-da-jian-hao-sso-server-huo-sso-client-fu-wu-h">易错点一：搭建好 sso-server 或 sso-client 服务后，访问返回：{&quot;msg&quot;: &quot;not handle&quot;}。</a></li>
+<li class="toc-h3"><a href="#yi-cuo-dian-er-can-zhao-wen-dang-da-jian-sso-client-yi-zhi-t">易错点二：参照文档搭建SSO-Client，一直提示：Ticket无效，这是怎么回事？</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

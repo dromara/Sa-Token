@@ -169,7 +169,7 @@
     &lt;version&gt;1.45.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
-<h3 id="geng-xin-dian-1-wan-ren-xue-shu-de-spring-boot-4-ji-cheng-ba">🚀 更新点1：万人血书的 Spring Boot 4 集成包，它来了！</h3>
+<h2 id="geng-xin-dian-1-wan-ren-xue-shu-de-spring-boot-4-ji-cheng-ba">🚀 更新点1：万人血书的 Spring Boot 4 集成包，它来了！</h2>
 <p>Spring Boot 4 正式版发布后，社区里「求适配」的呼声就没停过！fix: <a href="https://github.com/dromara/Sa-Token/issues/869">#869</a>、<a href="https://gitee.com/dromara/sa-token/issues/IDB02G">#IDB02G</a>、<a href="https://gitee.com/dromara/sa-token/issues/IDGQYM">#IDGQYM</a> 这次，它真的来了！🎉</p>
 <p><img alt="need-spring-boot-4-starter.png.png" src="https://res.dev33.cn/sa-token-blog/img/2026-3/need-spring-boot-4-starter.png" /></p>
 <p>本次更新新增了完整的 Spring Boot 4 集成支持：🌟</p>
@@ -183,7 +183,7 @@
 <li><code>sa-token-demo-webflux-springboot4</code>：Spring Boot 4 + WebFlux 示例。</li>
 </ul>
 <p>如果你正在或计划升级到 Spring Boot 4，可以直接引入对应 starter，体验与 Spring Boot 2/3 一致的丝滑集成。✨</p>
-<h3 id="geng-xin-dian-2-chong-fu-deng-lu-chu-li-ce-lve-sheng-ji-ke-l">🎯 更新点2：重复登录处理策略升级，可灵活配置是 “顶人下线” 还是 “不允许登录”</h3>
+<h2 id="geng-xin-dian-2-chong-fu-deng-lu-chu-li-ce-lve-sheng-ji-ke-l">🎯 更新点2：重复登录处理策略升级，可灵活配置是 “顶人下线” 还是 “不允许登录”</h2>
 <p>Sa-Token 在多端登录控制场景下，现已支持通过 <code>replacedLoginExitMode</code> 配置项自定义重复登录时的行为方式：</p>
 <ul>
 <li>当同一账号不允许多客户端同时登录时，以往 Sa-Token 的默认策略为“新登录顶掉旧会话”，即新登录后会将旧端踢下线。🔄</li>
@@ -196,7 +196,7 @@
 </ul>
 <p>只需在 Sa-Token 配置文件或启动参数中切换即可，非常便捷。🛡️</p>
 <p>merge: <a href="https://gitee.com/dromara/sa-token/pulls/349">pr 349</a></p>
-<h3 id="geng-xin-dian-3-xin-zeng-sa-token-jackson3-sa-token-snack4-c">📦 更新点3：新增 sa-token-jackson3、sa-token-snack4 插件，生态持续扩展</h3>
+<h2 id="geng-xin-dian-3-xin-zeng-sa-token-jackson3-sa-token-snack4-c">📦 更新点3：新增 sa-token-jackson3、sa-token-snack4 插件，生态持续扩展</h2>
 <p>Sa-Token 的 JSON 与序列化生态一直在持续丰富，本次又迎来两位新成员：📚</p>
 <ul>
 <li><strong>sa-token-jackson3</strong>：用于 Jackson 3 的 JSON 操作。Jackson 3 是 Jackson 的最新大版本，如果你已经在使用 Jackson 3，现在可以无缝对接 Sa-Token 了。</li>
@@ -217,7 +217,7 @@
     &lt;version&gt;1.45.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
 <p>无论你偏好 Jackson、Fastjson、Snack3 还是 Snack4，Sa-Token 都能满足。🎛️</p>
-<h3 id="geng-xin-dian-4-zhong-gou-sa-token-dependencies-ji-webmvc-re">🏗️ 更新点4：重构 sa-token-dependencies 及 WebMVC/Reactor 集成包</h3>
+<h2 id="geng-xin-dian-4-zhong-gou-sa-token-dependencies-ji-webmvc-re">🏗️ 更新点4：重构 sa-token-dependencies 及 WebMVC/Reactor 集成包</h2>
 <p>本次版本对依赖体系进行了一次重要重构：🔧</p>
 <ul>
 <li>重构 <code>sa-token-dependencies</code> 相关模块，优化依赖关系，使版本管理更清晰。</li>
@@ -225,7 +225,7 @@
 <li>优化整体模块依赖关系，减少冗余、提升构建效率。</li>
 </ul>
 <p>这是一次「看不见的升级」，但对长期维护和后续扩展都有积极影响。📐</p>
-<h3 id="geng-xin-dian-5-sso-mo-kuai-xin-zeng-sts-xie-yi-ding-yi-shi">📺 更新点5：SSO 模块新增 STS 协议定义、视频讲解与平台中心模式 demo</h3>
+<h2 id="geng-xin-dian-5-sso-mo-kuai-xin-zeng-sts-xie-yi-ding-yi-shi">📺 更新点5：SSO 模块新增 STS 协议定义、视频讲解与平台中心模式 demo</h2>
 <p>SSO 单点登录模块在本版本也有不少文档与示例上的增强：📖</p>
 <ul>
 <li><strong>STS 协议定义</strong>：文档为 <code>sa-token-sso</code> 模块正式定义了 STS 协议，方便大家理解与对接。</li>
@@ -235,7 +235,7 @@
 </ul>
 <!-- ![bilibili-sa-token-sso-video](https://res.dev33.cn/sa-token-blog/img/2026-3/bilibili-sa-token-sso-video.png) -->
 
-<h3 id="geng-xin-dian-6-xiu-fu-oauth2-xu-lie-hua-lei-xing-zhuan-huan">🐞 更新点6：修复 OAuth2 序列化类型转换、Dubbo 上下文清理等问题</h3>
+<h2 id="geng-xin-dian-6-xiu-fu-oauth2-xu-lie-hua-lei-xing-zhuan-huan">🐞 更新点6：修复 OAuth2 序列化类型转换、Dubbo 上下文清理等问题</h2>
 <p>本版本修复了多个社区反馈的问题：🙏</p>
 <ul>
 <li><strong>OAuth2</strong>：修复 <code>sa-token-oauth2</code> 组件使用 <code>sa-token-fastjson2</code> 序列化导致的类型转换问题。merge: <a href="https://gitee.com/dromara/sa-token/pulls/355">pr 355</a></li>
@@ -243,7 +243,7 @@
 <li><strong>Core</strong>：修复 <code>StpUtil.getLoginIdByTokenNotThinkFreeze</code> 方法缺少 <code>static</code> 修饰符的问题。</li>
 <li><strong>Core</strong>：优化路由匹配 pattern 缓存算法，消除魔法值。merge: <a href="https://github.com/dromara/Sa-Token/pulls/907">pr 907</a></li>
 </ul>
-<h3 id="geng-xin-dian-7-wen-dang-yu-she-qu-jian-she">📚 更新点7：文档与社区建设</h3>
+<h2 id="geng-xin-dian-7-wen-dang-yu-she-qu-jian-she">📚 更新点7：文档与社区建设</h2>
 <p>文档与社区方面也有不少更新：❤️</p>
 <ul>
 <li>新增 <strong>Sa-Token 内容合作者群</strong>，欢迎愿意参与文档、教程、视频等内容创作的小伙伴加入。</li>
@@ -255,7 +255,7 @@
 <li>新增《Gitee 2025 年度开源项目 Web 应用开发 Top 2》证书展示，感谢社区认可。🏆</li>
 </ul>
 <p><img alt="gitee-2025-top2" src="https://res.dev33.cn/sa-token-blog/img/2026-3/gitee-2025-top2.jpg" /></p>
-<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
 <p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.45.0 版本的完整更新日志：</p>
 <ul>
 <li>core：<ul>
@@ -347,7 +347,7 @@
 </li>
 </ul>
 <p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
-<h3 id="qi-ta">🌟 其它</h3>
+<h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
 <p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2026-3/sa-token-js4--2.png" /></p>
@@ -362,15 +362,15 @@
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#geng-xin-dian-1-wan-ren-xue-shu-de-spring-boot-4-ji-cheng-ba">🚀 更新点1：万人血书的 Spring Boot 4 集成包，它来了！</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-2-chong-fu-deng-lu-chu-li-ce-lve-sheng-ji-ke-l">🎯 更新点2：重复登录处理策略升级，可灵活配置是 “顶人下线” 还是 “不允许登录”</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-3-xin-zeng-sa-token-jackson3-sa-token-snack4-c">📦 更新点3：新增 sa-token-jackson3、sa-token-snack4 插件，生态持续扩展</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-4-zhong-gou-sa-token-dependencies-ji-webmvc-re">🏗️ 更新点4：重构 sa-token-dependencies 及 WebMVC/Reactor 集成包</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-5-sso-mo-kuai-xin-zeng-sts-xie-yi-ding-yi-shi">📺 更新点5：SSO 模块新增 STS 协议定义、视频讲解与平台中心模式 demo</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-6-xiu-fu-oauth2-xu-lie-hua-lei-xing-zhuan-huan">🐞 更新点6：修复 OAuth2 序列化类型转换、Dubbo 上下文清理等问题</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-7-wen-dang-yu-she-qu-jian-she">📚 更新点7：文档与社区建设</a></li>
-<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
-<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-1-wan-ren-xue-shu-de-spring-boot-4-ji-cheng-ba">🚀 更新点1：万人血书的 Spring Boot 4 集成包，它来了！</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-chong-fu-deng-lu-chu-li-ce-lve-sheng-ji-ke-l">🎯 更新点2：重复登录处理策略升级，可灵活配置是 “顶人下线” 还是 “不允许登录”</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-xin-zeng-sa-token-jackson3-sa-token-snack4-c">📦 更新点3：新增 sa-token-jackson3、sa-token-snack4 插件，生态持续扩展</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-zhong-gou-sa-token-dependencies-ji-webmvc-re">🏗️ 更新点4：重构 sa-token-dependencies 及 WebMVC/Reactor 集成包</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-sso-mo-kuai-xin-zeng-sts-xie-yi-ding-yi-shi">📺 更新点5：SSO 模块新增 STS 协议定义、视频讲解与平台中心模式 demo</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-xiu-fu-oauth2-xu-lie-hua-lei-xing-zhuan-huan">🐞 更新点6：修复 OAuth2 序列化类型转换、Dubbo 上下文清理等问题</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-7-wen-dang-yu-she-qu-jian-she">📚 更新点7：文档与社区建设</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

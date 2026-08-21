@@ -163,7 +163,7 @@
 <p>对 rust 熟悉的同学速来围观啦。</p>
 <p>目前该仓库处于起步阶段，不过已经有不错的完成度了。源码注释也是中文的哦。</p>
 <p>一个轻量级、高性能的 Rust 认证授权框架：</p>
-<h3 id="te-xing">✨ 特性</h3>
+<h2 id="te-xing">✨ 特性</h2>
 <ul>
 <li>🚀 多框架支持: Axum, Actix-web, Poem, Rocket, Warp</li>
 <li>🔐 完整的认证: 登录、登出、Token 验证、Session 管理</li>
@@ -173,8 +173,8 @@
 <li>⚡ 高性能: 零拷贝设计，支持 async/await</li>
 <li>🔧 高度可配置: Token 超时、Cookie 选项、自定义 Token 名称</li>
 </ul>
-<h3 id="jia-gou">📦 架构</h3>
-<pre><code>sa-token-rust/
+<h2 id="jia-gou">📦 架构</h2>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">sa-token-rust/
 ├── sa-token-core/              # 核心库（Token、Session、Manager）
 ├── sa-token-adapter/           # 适配器接口（Storage、Request/Response）
 ├── sa-token-macro/             # 过程宏（#[sa_check_login] 等）
@@ -188,10 +188,9 @@
 ├── sa-token-plugin-warp/       # Warp 框架集成
 └── examples/                   # 示例项目
     ├── axum-full-example/      # 完整 Axum 示例
-    └── poem-full-example/      # 完整 Poem 示例
-</code></pre>
-<h3 id="he-xin-zu-jian">🎯 核心组件</h3>
-<h4 id="1-sa-token-core">1. sa-token-core</h4>
+    └── poem-full-example/      # 完整 Poem 示例</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<h2 id="he-xin-zu-jian">🎯 核心组件</h2>
+<h3 id="1-sa-token-core">1. sa-token-core</h3>
 <p>核心认证授权逻辑：</p>
 <ul>
 <li>SaTokenManager: Token 和 Session 操作的主管理器</li>
@@ -200,13 +199,13 @@
 <li>Session 管理</li>
 <li>权限和角色检查</li>
 </ul>
-<h4 id="2-sa-token-adapter">2. sa-token-adapter</h4>
+<h3 id="2-sa-token-adapter">2. sa-token-adapter</h3>
 <p>框架集成的抽象层：</p>
 <ul>
 <li>SaStorage: Token 和 Session 的存储接口</li>
 <li>SaRequest / SaResponse: 请求/响应抽象</li>
 </ul>
-<h4 id="3-sa-token-macro">3. sa-token-macro</h4>
+<h3 id="3-sa-token-macro">3. sa-token-macro</h3>
 <p>用于注解式认证的过程宏：</p>
 <ul>
 <li><code>#[sa_check_login]</code>: 要求登录</li>
@@ -216,7 +215,7 @@
 <li><code>#[sa_check_permissions_or(...)]</code>: 检查多个权限（OR）</li>
 <li><code>#[sa_ignore]</code>: 跳过认证</li>
 </ul>
-<h4 id="4-web-kuang-jia-cha-jian">4. Web 框架插件</h4>
+<h3 id="4-web-kuang-jia-cha-jian">4. Web 框架插件</h3>
 <p>所有插件都提供：</p>
 <ul>
 <li>使用 Builder 模式的状态管理</li>
@@ -226,17 +225,16 @@
 <li>从 Header/Cookie/Query 提取 Token</li>
 <li>Bearer Token 支持</li>
 </ul>
-<h3 id="kuai-su-kai-shi">🚀 快速开始</h3>
-<h4 id="1-tian-jia-yi-lai">1. 添加依赖</h4>
-<pre><code>[dependencies]
+<h2 id="kuai-su-kai-shi">🚀 快速开始</h2>
+<h3 id="1-tian-jia-yi-lai">1. 添加依赖</h3>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">[dependencies]
 sa-token-core = &quot;0.1&quot;
 sa-token-storage-memory = &quot;0.1&quot;
 sa-token-plugin-axum = &quot;0.1&quot;  # 选择你的框架
 tokio = { version = &quot;1&quot;, features = [&quot;full&quot;] }
-axum = &quot;0.7&quot;
-</code></pre>
-<h4 id="2-chu-shi-hua-sa-token">2. 初始化 sa-token</h4>
-<pre><code>use sa_token_core::StpUtil;
+axum = &quot;0.7&quot;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<h3 id="2-chu-shi-hua-sa-token">2. 初始化 sa-token</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use sa_token_core::StpUtil;
 use sa_token_plugin_axum::SaTokenState;
 use sa_token_storage_memory::MemoryStorage;
 use std::sync::Arc;
@@ -252,10 +250,9 @@ async fn main() {
 
     // StpUtil 已就绪，可以直接使用！
     // 你的应用代码...
-}
-</code></pre>
-<h4 id="3-yong-hu-deng-lu">3. 用户登录</h4>
-<pre><code>use sa_token_core::StpUtil;
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+<h3 id="3-yong-hu-deng-lu">3. 用户登录</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use sa_token_core::StpUtil;
 
 // 用户登录
 let token = StpUtil::login(&quot;user_id_10001&quot;).await?;
@@ -270,10 +267,9 @@ StpUtil::set_permissions(
 StpUtil::set_roles(
     &quot;user_id_10001&quot;,
     vec![&quot;admin&quot;.to_string()]
-).await?;
-</code></pre>
-<h4 id="4-jian-cha-ren-zheng-axum-shi-li">4. 检查认证（Axum 示例）</h4>
-<pre><code>use axum::{Router, routing::get};
+).await?;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<h3 id="4-jian-cha-ren-zheng-axum-shi-li">4. 检查认证（Axum 示例）</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use axum::{Router, routing::get};
 use sa_token_plugin_axum::{SaTokenMiddleware, LoginIdExtractor};
 
 async fn user_info(LoginIdExtractor(login_id): LoginIdExtractor) -&gt; String {
@@ -291,10 +287,9 @@ async fn admin_panel(login_id: LoginIdExtractor) -&gt; String {
 let app = Router::new()
     .route(&quot;/user/info&quot;, get(user_info))
     .route(&quot;/admin/panel&quot;, get(admin_panel))
-    .layer(SaTokenMiddleware::new(state));
-</code></pre>
-<h4 id="5-shi-yong-guo-cheng-hong">5. 使用过程宏</h4>
-<pre><code>use sa_token_macro::*;
+    .layer(SaTokenMiddleware::new(state));</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li></ul></pre>
+<h3 id="5-shi-yong-guo-cheng-hong">5. 使用过程宏</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use sa_token_macro::*;
 
 #[sa_check_login]
 async fn protected_route() -&gt; &amp;'static str {
@@ -309,11 +304,10 @@ async fn delete_user(user_id: String) -&gt; &amp;'static str {
 #[sa_check_role(&quot;admin&quot;)]
 async fn admin_only() -&gt; &amp;'static str {
     &quot;仅管理员可见内容&quot;
-}
-</code></pre>
-<h3 id="kuang-jia-ji-cheng-shi-li">📚 框架集成示例</h3>
-<h4 id="axum">Axum</h4>
-<pre><code>use axum::{Router, routing::{get, post}};
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<h2 id="kuang-jia-ji-cheng-shi-li">📚 框架集成示例</h2>
+<h3 id="axum">Axum</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use axum::{Router, routing::{get, post}};
 use sa_token_plugin_axum::{SaTokenState, SaTokenMiddleware, LoginIdExtractor};
 
 let state = SaTokenState::builder()
@@ -322,10 +316,9 @@ let state = SaTokenState::builder()
 
 let app = Router::new()
     .route(&quot;/user/info&quot;, get(user_info))
-    .layer(SaTokenMiddleware::new(state));
-</code></pre>
-<h4 id="actix-web">Actix-web</h4>
-<pre><code>use actix_web::{App, HttpServer, web};
+    .layer(SaTokenMiddleware::new(state));</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
+<h3 id="actix-web">Actix-web</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use actix_web::{App, HttpServer, web};
 use sa_token_plugin_actix_web::{SaTokenState, SaTokenMiddleware, LoginIdExtractor};
 
 let state = SaTokenState::builder()
@@ -340,10 +333,9 @@ HttpServer::new(move || {
 })
 .bind(&quot;127.0.0.1:8080&quot;)?
 .run()
-.await
-</code></pre>
-<h4 id="poem">Poem</h4>
-<pre><code>use poem::{Route, Server};
+.await</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<h3 id="poem">Poem</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use poem::{Route, Server};
 use sa_token_plugin_poem::{SaTokenState, SaTokenMiddleware, LoginIdExtractor};
 
 let state = SaTokenState::builder()
@@ -356,10 +348,9 @@ let app = Route::new()
 
 Server::new(TcpListener::bind(&quot;127.0.0.1:8080&quot;))
     .run(app)
-    .await
-</code></pre>
-<h4 id="rocket">Rocket</h4>
-<pre><code>use rocket::{launch, get, routes};
+    .await</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<h3 id="rocket">Rocket</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use rocket::{launch, get, routes};
 use sa_token_plugin_rocket::{SaTokenState, SaTokenFairing, LoginIdGuard};
 
 #[get(&quot;/user/info&quot;)]
@@ -376,10 +367,9 @@ fn rocket() -&gt; _ {
     rocket::build()
         .attach(SaTokenFairing::new(state))
         .mount(&quot;/&quot;, routes![user_info])
-}
-</code></pre>
-<h4 id="warp">Warp</h4>
-<pre><code>use warp::Filter;
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
+<h3 id="warp">Warp</h3>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use warp::Filter;
 use sa_token_plugin_warp::{SaTokenState, sa_token_filter};
 
 let state = SaTokenState::builder()
@@ -395,9 +385,8 @@ let routes = warp::path(&quot;user&quot;)
 
 warp::serve(routes)
     .run(([127, 0, 0, 1], 8080))
-    .await;
-</code></pre>
-<h3 id="kai-yuan-di-zhi">开源地址</h3>
+    .await;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+<h2 id="kai-yuan-di-zhi">开源地址</h2>
 <p>感兴趣的同学可以来关注一波：</p>
 <p>https://github.com/llc-993/sa-token-rust</p>
 					<div class="blog-post-nav">
@@ -411,26 +400,26 @@ warp::serve(routes)
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#te-xing">✨ 特性</a></li>
-<li class="toc-h3"><a href="#jia-gou">📦 架构</a></li>
-<li class="toc-h3"><a href="#he-xin-zu-jian">🎯 核心组件</a></li>
-<li class="toc-h4"><a href="#1-sa-token-core">1. sa-token-core</a></li>
-<li class="toc-h4"><a href="#2-sa-token-adapter">2. sa-token-adapter</a></li>
-<li class="toc-h4"><a href="#3-sa-token-macro">3. sa-token-macro</a></li>
-<li class="toc-h4"><a href="#4-web-kuang-jia-cha-jian">4. Web 框架插件</a></li>
-<li class="toc-h3"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
-<li class="toc-h4"><a href="#1-tian-jia-yi-lai">1. 添加依赖</a></li>
-<li class="toc-h4"><a href="#2-chu-shi-hua-sa-token">2. 初始化 sa-token</a></li>
-<li class="toc-h4"><a href="#3-yong-hu-deng-lu">3. 用户登录</a></li>
-<li class="toc-h4"><a href="#4-jian-cha-ren-zheng-axum-shi-li">4. 检查认证（Axum 示例）</a></li>
-<li class="toc-h4"><a href="#5-shi-yong-guo-cheng-hong">5. 使用过程宏</a></li>
-<li class="toc-h3"><a href="#kuang-jia-ji-cheng-shi-li">📚 框架集成示例</a></li>
-<li class="toc-h4"><a href="#axum">Axum</a></li>
-<li class="toc-h4"><a href="#actix-web">Actix-web</a></li>
-<li class="toc-h4"><a href="#poem">Poem</a></li>
-<li class="toc-h4"><a href="#rocket">Rocket</a></li>
-<li class="toc-h4"><a href="#warp">Warp</a></li>
-<li class="toc-h3"><a href="#kai-yuan-di-zhi">开源地址</a></li>
+<li class="toc-h2"><a href="#te-xing">✨ 特性</a></li>
+<li class="toc-h2"><a href="#jia-gou">📦 架构</a></li>
+<li class="toc-h2"><a href="#he-xin-zu-jian">🎯 核心组件</a></li>
+<li class="toc-h3"><a href="#1-sa-token-core">1. sa-token-core</a></li>
+<li class="toc-h3"><a href="#2-sa-token-adapter">2. sa-token-adapter</a></li>
+<li class="toc-h3"><a href="#3-sa-token-macro">3. sa-token-macro</a></li>
+<li class="toc-h3"><a href="#4-web-kuang-jia-cha-jian">4. Web 框架插件</a></li>
+<li class="toc-h2"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
+<li class="toc-h3"><a href="#1-tian-jia-yi-lai">1. 添加依赖</a></li>
+<li class="toc-h3"><a href="#2-chu-shi-hua-sa-token">2. 初始化 sa-token</a></li>
+<li class="toc-h3"><a href="#3-yong-hu-deng-lu">3. 用户登录</a></li>
+<li class="toc-h3"><a href="#4-jian-cha-ren-zheng-axum-shi-li">4. 检查认证（Axum 示例）</a></li>
+<li class="toc-h3"><a href="#5-shi-yong-guo-cheng-hong">5. 使用过程宏</a></li>
+<li class="toc-h2"><a href="#kuang-jia-ji-cheng-shi-li">📚 框架集成示例</a></li>
+<li class="toc-h3"><a href="#axum">Axum</a></li>
+<li class="toc-h3"><a href="#actix-web">Actix-web</a></li>
+<li class="toc-h3"><a href="#poem">Poem</a></li>
+<li class="toc-h3"><a href="#rocket">Rocket</a></li>
+<li class="toc-h3"><a href="#warp">Warp</a></li>
+<li class="toc-h2"><a href="#kai-yuan-di-zhi">开源地址</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

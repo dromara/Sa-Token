@@ -188,9 +188,9 @@
 <li>...</li>
 </ul>
 <h2 id="springboot">springboot集成示例</h2>
-<h4 id="1-chuang-jian-xiang-mu">1、创建项目</h4>
+<h3 id="1-chuang-jian-xiang-mu">1、创建项目</h3>
 <p>在IDE中新建一个Springboot项目，例如：<code>sa-token-demo-springboot</code>（不会的同学请自行百度或者参考github示例）</p>
-<h4 id="2-she-zhi-jar">2、设置jar包依赖</h4>
+<h3 id="2-she-zhi-jar">2、设置jar包依赖</h3>
 <ul>
 <li>在 <code>pom.xml</code> 中添加依赖：</li>
 </ul>
@@ -200,7 +200,7 @@
     &lt;artifactId&gt;sa-token&lt;/artifactId&gt;
     &lt;version&gt;1.0.1&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
-<h4 id="3-pei-zhi-wen-jian">3、配置文件</h4>
+<h3 id="3-pei-zhi-wen-jian">3、配置文件</h3>
 <ul>
 <li>你可以零配置启动项目</li>
 <li>但同时你也可以在<code>application.yml</code>中增加如下配置，定制性使用框架：</li>
@@ -226,7 +226,7 @@
 <li>百度： <a href="https://www.baidu.com/s?ie=UTF-8&amp;wd=springboot%20properties%E4%B8%8Eyml%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB">springboot properties与yml 配置文件的区别</a></li>
 </ul>
 </blockquote>
-<h4 id="4-chuang-jian-zhu-lei">4、创建主类</h4>
+<h3 id="4-chuang-jian-zhu-lei">4、创建主类</h3>
 <p>在项目中新建包 <code>com.pj</code> ，在此包内新建主类 <code>SaTokenDemoApplication.java</code>，输入以下代码：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SaTokenSetup // 标注启动 sa-token
 @SpringBootApplication
@@ -236,7 +236,7 @@ public class SaTokenDemoApplication {
         System.out.println(&quot;启动成功：sa-token配置如下：&quot; + SaTokenManager.getConfig());
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
-<h4 id="5-yun-xing">5、运行</h4>
+<h3 id="5-yun-xing">5、运行</h3>
 <p>运行代码，当你从控制台看到类似下面的内容时，就代表框架已经成功集成了</p>
 <p><img alt="运行结果" src="https://res.dev33.cn/sa-token-blog/img/2020-2/sa-token-console-run.png" /></p>
 <p>程序员交流qq群：782974737 <a href="https://jq.qq.com/?_wv=1027&amp;k=5eeinSn">点击加入</a></p>
@@ -255,11 +255,11 @@ public class SaTokenDemoApplication {
 <li class="toc-h2"><a href="#sa-token">sa-token是什么？</a></li>
 <li class="toc-h2"><a href="#han-gai-gong-neng">涵盖功能</a></li>
 <li class="toc-h2"><a href="#springboot">springboot集成示例</a></li>
-<li class="toc-h4"><a href="#1-chuang-jian-xiang-mu">1、创建项目</a></li>
-<li class="toc-h4"><a href="#2-she-zhi-jar">2、设置jar包依赖</a></li>
-<li class="toc-h4"><a href="#3-pei-zhi-wen-jian">3、配置文件</a></li>
-<li class="toc-h4"><a href="#4-chuang-jian-zhu-lei">4、创建主类</a></li>
-<li class="toc-h4"><a href="#5-yun-xing">5、运行</a></li>
+<li class="toc-h3"><a href="#1-chuang-jian-xiang-mu">1、创建项目</a></li>
+<li class="toc-h3"><a href="#2-she-zhi-jar">2、设置jar包依赖</a></li>
+<li class="toc-h3"><a href="#3-pei-zhi-wen-jian">3、配置文件</a></li>
+<li class="toc-h3"><a href="#4-chuang-jian-zhu-lei">4、创建主类</a></li>
+<li class="toc-h3"><a href="#5-yun-xing">5、运行</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

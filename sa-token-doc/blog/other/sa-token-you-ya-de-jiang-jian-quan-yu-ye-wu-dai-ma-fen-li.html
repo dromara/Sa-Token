@@ -159,11 +159,11 @@
 				<div class="markdown-section">
 					<h1>Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>其它</span></div>
-					<h3 id="sa-token-jie-shao">Sa-Token 介绍：</h3>
+					<h2 id="sa-token-jie-shao">Sa-Token 介绍：</h2>
 <p>Sa-Token 是一个轻量级 Java 权限认证框架，主要解决：<code>登录认证</code>、<code>权限认证</code>、<code>Session会话</code>、<code>单点登录</code>、<code>OAuth2.0</code>、<code>微服务网关鉴权</code> 等一系列权限相关问题。</p>
 <p>今天，我们主要介绍一下 Sa-Token 中的<strong>注解鉴权</strong>，它可以让我们：<code>优雅的将鉴权与业务代码分离</code>！</p>
 <p>GitHub 开源地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></p>
-<h3 id="qian-zhi-gong-zuo">前置工作：</h3>
+<h2 id="qian-zhi-gong-zuo">前置工作：</h2>
 <p>1、首先我们在 pom.xml 引入依赖：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
 &lt;dependency&gt;
@@ -243,7 +243,7 @@ public class SaTokenDemoApplication {
 <li><code>@SaCheckSafe</code>: 二级认证校验 —— 必须二级认证之后才能进入该方法</li>
 <li><code>@SaCheckBasic</code>: HttpBasic认证 —— 只有通过 Basic 认证后才能进入该方法</li>
 </ul>
-<h3 id="deng-lu-ren-zheng">登录认证：</h3>
+<h2 id="deng-lu-ren-zheng">登录认证：</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 注解鉴权测试 
  */
@@ -260,7 +260,7 @@ public class AtController {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
 <p>注：<code>@SaCheckLogin</code>注解可以加在类上，效果等同于标注在此类的所有方法上</p>
-<h3 id="quan-xian-ren-zheng">权限认证：</h3>
+<h2 id="quan-xian-ren-zheng">权限认证：</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestController
 @RequestMapping(&quot;/at/&quot;)
 public class AtController {
@@ -287,7 +287,7 @@ public class AtController {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li></ul></pre>
-<h3 id="jue-se-ren-zheng">角色认证：</h3>
+<h2 id="jue-se-ren-zheng">角色认证：</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestController
 @RequestMapping(&quot;/at/&quot;)
 public class AtController {
@@ -301,7 +301,7 @@ public class AtController {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
 <p>注：<code>@SaCheckRole</code> 与 <code>@SaCheckPermission</code> 类似，可以指定 <code>and | or</code> 模式 </p>
-<h3 id="er-ji-ren-zheng">二级认证：</h3>
+<h2 id="er-ji-ren-zheng">二级认证：</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestController
 @RequestMapping(&quot;/at/&quot;)
 public class AtController {
@@ -322,7 +322,7 @@ public class AtController {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li></ul></pre>
 <p>注：必须先经过<code>StpUtil.openSafe(200)</code>打开二级认证，才可以通过 <code>@SaCheckSafe</code> 的检查。</p>
-<h3 id="httpbasic">HttpBasic认证：</h3>
+<h2 id="httpbasic">HttpBasic认证：</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestController
 @RequestMapping(&quot;/at/&quot;)
 public class AtController {
@@ -339,9 +339,9 @@ public class AtController {
 <p><img alt="img" src="https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth.png" /></p>
 <p>当我们输入账号密码后 <code>（sa / 123456）</code>，才可以继续访问数据：</p>
 <p><img alt="img" src="https://res.dev33.cn/sa-token-blog/img/2023-4/at-basic-auth-ok.png" /></p>
-<h3 id="zong-jie">总结</h3>
+<h2 id="zong-jie">总结</h2>
 <p>通过以上示例我们可以看出，Sa-Token 的注解鉴权还是非常强大的，能够简单、灵活的帮我我们完成鉴权需求。</p>
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>开源地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
 <li>官方文档：<a href="https://sa-token.com/">https://sa-token.com/</a></li>
@@ -357,15 +357,15 @@ public class AtController {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#sa-token-jie-shao">Sa-Token 介绍：</a></li>
-<li class="toc-h3"><a href="#qian-zhi-gong-zuo">前置工作：</a></li>
-<li class="toc-h3"><a href="#deng-lu-ren-zheng">登录认证：</a></li>
-<li class="toc-h3"><a href="#quan-xian-ren-zheng">权限认证：</a></li>
-<li class="toc-h3"><a href="#jue-se-ren-zheng">角色认证：</a></li>
-<li class="toc-h3"><a href="#er-ji-ren-zheng">二级认证：</a></li>
-<li class="toc-h3"><a href="#httpbasic">HttpBasic认证：</a></li>
-<li class="toc-h3"><a href="#zong-jie">总结</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#sa-token-jie-shao">Sa-Token 介绍：</a></li>
+<li class="toc-h2"><a href="#qian-zhi-gong-zuo">前置工作：</a></li>
+<li class="toc-h2"><a href="#deng-lu-ren-zheng">登录认证：</a></li>
+<li class="toc-h2"><a href="#quan-xian-ren-zheng">权限认证：</a></li>
+<li class="toc-h2"><a href="#jue-se-ren-zheng">角色认证：</a></li>
+<li class="toc-h2"><a href="#er-ji-ren-zheng">二级认证：</a></li>
+<li class="toc-h2"><a href="#httpbasic">HttpBasic认证：</a></li>
+<li class="toc-h2"><a href="#zong-jie">总结</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

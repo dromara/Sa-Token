@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>SpringBoot 使用 Sa-Token 完成权限认证</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
-					<h3 id="yi-she-ji-si-lu">一、设计思路</h3>
+					<h2 id="yi-she-ji-si-lu">一、设计思路</h2>
 <p>所谓权限认证，核心逻辑就是判断一个账号是否拥有指定权限：</p>
 <ul>
 <li>有，就让你通过。</li>
@@ -185,7 +185,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
     &lt;version&gt;1.34.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
-<h3 id="er-huo-qu-dang-qian-zhang-hao-quan-xian-ma-ji-he">二、获取当前账号权限码集合</h3>
+<h2 id="er-huo-qu-dang-qian-zhang-hao-quan-xian-ma-ji-he">二、获取当前账号权限码集合</h2>
 <p>因为每个项目的需求不同，其权限设计也千变万化，因此 [ 获取当前账号权限码集合 ] 这一操作不可能内置到框架中，<br />
 所以 Sa-Token 将此操作以接口的方式暴露给你，以方便你根据自己的业务逻辑进行重写。</p>
 <p>你需要做的就是新建一个类，实现 <code>StpInterface</code>接口，例如以下代码：</p>
@@ -229,7 +229,7 @@ public class StpInterfaceImpl implements StpInterface {
 - loginType：账号体系标识，此处可以暂时忽略，在 [ 多账户认证 ] 章节下会对这个概念做详细的解释。</p>
 <p><strong>注意点：</strong><br />
 类上一定要加上 <code>@Component</code> 注解，保证组件被 Springboot 扫描到，成功注入到 Sa-Token 框架内。</p>
-<h3 id="san-quan-xian-jiao-yan">三、权限校验</h3>
+<h2 id="san-quan-xian-jiao-yan">三、权限校验</h2>
 <p>启动类：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
 public class SaTokenCaseApplication {
@@ -254,7 +254,7 @@ StpUtil.checkPermissionAnd(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;
 // 校验：当前账号是否含有指定权限 [指定多个，只要其一验证通过即可]
 StpUtil.checkPermissionOr(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);   </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
 <p>扩展：<code>NotPermissionException</code> 对象可通过 <code>getLoginType()</code> 方法获取具体是哪个 <code>StpLogic</code> 抛出的异常</p>
-<h3 id="si-jue-se-jiao-yan">四、角色校验</h3>
+<h2 id="si-jue-se-jiao-yan">四、角色校验</h2>
 <p>在Sa-Token中，角色和权限可以独立验证</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取：当前账号所拥有的角色集合
 StpUtil.getRoleList();
@@ -271,7 +271,7 @@ StpUtil.checkRoleAnd(&quot;super-admin&quot;, &quot;shop-admin&quot;);
 // 校验：当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
 StpUtil.checkRoleOr(&quot;super-admin&quot;, &quot;shop-admin&quot;);       </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
 <p>扩展：<code>NotRoleException</code> 对象可通过 <code>getLoginType()</code> 方法获取具体是哪个 <code>StpLogic</code> 抛出的异常</p>
-<h3 id="wu-lan-jie-quan-ju-yi-chang">五、拦截全局异常</h3>
+<h2 id="wu-lan-jie-quan-ju-yi-chang">五、拦截全局异常</h2>
 <p>有同学要问，鉴权失败，抛出异常，然后呢？要把异常显示给用户看吗？<strong>当然不可以！</strong></p>
 <p>你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestControllerAdvice
@@ -283,7 +283,7 @@ public class GlobalExceptionHandler {
         return SaResult.error(e.getMessage());
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
-<h3 id="liu-quan-xian-tong-pei-fu">六、权限通配符</h3>
+<h2 id="liu-quan-xian-tong-pei-fu">六、权限通配符</h2>
 <p>Sa-Token允许你根据通配符指定<strong>泛权限</strong>，例如当一个账号拥有<code>art.*</code>的权限时，<code>art.add</code>、<code>art.delete</code>、<code>art.update</code>都将匹配通过</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 当拥有 art.* 权限时
 StpUtil.hasPermission(&quot;art.add&quot;);        // true
@@ -302,7 +302,7 @@ StpUtil.hasPermission(&quot;index.html&quot;);      // false</code><ul class="co
 <blockquote>
 <p>上帝权限：当一个账号拥有 <code>"*"</code> 权限时，他可以验证通过任何权限码 （角色认证同理）</p>
 </blockquote>
-<h3 id="qi-ru-he-ba-quan-xian-jing-que-dao-an-niu-ji">七、如何把权限精确到按钮级？</h3>
+<h2 id="qi-ru-he-ba-quan-xian-jing-que-dao-an-niu-ji">七、如何把权限精确到按钮级？</h2>
 <p>权限精确到按钮级的意思就是指：<strong>权限范围可以控制到页面上的每一个按钮是否显示</strong>。</p>
 <p>思路：如此精确的范围控制只依赖后端已经难以完成，此时需要前端进行一定的逻辑判断。</p>
 <p>如果是前后端一体项目，可以参考：<a href="https://sa-token.com/doc.html#/plugin/thymeleaf-extend">Thymeleaf 标签方言</a>，如果是前后端分离项目，则：</p>
@@ -314,10 +314,10 @@ StpUtil.hasPermission(&quot;index.html&quot;);      // false</code><ul class="co
 <pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">&lt;button v-if=&quot;arr.indexOf('user.delete') &gt; -1&quot;&gt;删除按钮&lt;/button&gt;</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>其中：<code>arr</code>是当前用户拥有的权限码数组，<code>user.delete</code>是显示按钮需要拥有的权限码，<code>删除按钮</code>是用户拥有权限码才可以看到的内容。</p>
 <p>注意：以上写法只为提供一个参考示例，不同框架有不同写法，大家可根据项目技术栈灵活封装进行调用。</p>
-<h3 id="ba-qian-duan-you-le-jian-quan-hou-duan-hai-xu-yao-jian-quan">八、前端有了鉴权后端还需要鉴权吗？</h3>
+<h2 id="ba-qian-duan-you-le-jian-quan-hou-duan-hai-xu-yao-jian-quan">八、前端有了鉴权后端还需要鉴权吗？</h2>
 <p><strong>需要！</strong></p>
 <p>前端的鉴权只是一个辅助功能，对于专业人员这些限制都是可以轻松绕过的，为保证服务器安全，无论前端是否进行了权限校验，后端接口都需要对会话请求再次进行权限校验！</p>
-<h3 id="jiu-lai-ge-xiao-shi-li-jia-shen-yi-xia-yin-xiang">九、来个小示例，加深一下印象</h3>
+<h2 id="jiu-lai-ge-xiao-shi-li-jia-shen-yi-xia-yin-xiang">九、来个小示例，加深一下印象</h2>
 <p>新建 <code>JurAuthController</code>，复制以下代码</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">package com.pj.cases.use;
 
@@ -432,7 +432,7 @@ public class JurAuthController {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li><li>72</li><li>73</li><li>74</li><li>75</li><li>76</li><li>77</li><li>78</li><li>79</li><li>80</li><li>81</li><li>82</li><li>83</li><li>84</li><li>85</li><li>86</li><li>87</li><li>88</li><li>89</li><li>90</li><li>91</li><li>92</li><li>93</li><li>94</li><li>95</li><li>96</li><li>97</li><li>98</li><li>99</li><li>100</li><li>101</li><li>102</li><li>103</li><li>104</li><li>105</li><li>106</li><li>107</li><li>108</li><li>109</li><li>110</li><li>111</li></ul></pre>
 <p>代码注释已针对每一步操作做出详细解释，大家可根据可参照注释中的访问链接进行逐步测试。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -449,16 +449,16 @@ public class JurAuthController {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
-<li class="toc-h3"><a href="#er-huo-qu-dang-qian-zhang-hao-quan-xian-ma-ji-he">二、获取当前账号权限码集合</a></li>
-<li class="toc-h3"><a href="#san-quan-xian-jiao-yan">三、权限校验</a></li>
-<li class="toc-h3"><a href="#si-jue-se-jiao-yan">四、角色校验</a></li>
-<li class="toc-h3"><a href="#wu-lan-jie-quan-ju-yi-chang">五、拦截全局异常</a></li>
-<li class="toc-h3"><a href="#liu-quan-xian-tong-pei-fu">六、权限通配符</a></li>
-<li class="toc-h3"><a href="#qi-ru-he-ba-quan-xian-jing-que-dao-an-niu-ji">七、如何把权限精确到按钮级？</a></li>
-<li class="toc-h3"><a href="#ba-qian-duan-you-le-jian-quan-hou-duan-hai-xu-yao-jian-quan">八、前端有了鉴权后端还需要鉴权吗？</a></li>
-<li class="toc-h3"><a href="#jiu-lai-ge-xiao-shi-li-jia-shen-yi-xia-yin-xiang">九、来个小示例，加深一下印象</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
+<li class="toc-h2"><a href="#er-huo-qu-dang-qian-zhang-hao-quan-xian-ma-ji-he">二、获取当前账号权限码集合</a></li>
+<li class="toc-h2"><a href="#san-quan-xian-jiao-yan">三、权限校验</a></li>
+<li class="toc-h2"><a href="#si-jue-se-jiao-yan">四、角色校验</a></li>
+<li class="toc-h2"><a href="#wu-lan-jie-quan-ju-yi-chang">五、拦截全局异常</a></li>
+<li class="toc-h2"><a href="#liu-quan-xian-tong-pei-fu">六、权限通配符</a></li>
+<li class="toc-h2"><a href="#qi-ru-he-ba-quan-xian-jing-que-dao-an-niu-ji">七、如何把权限精确到按钮级？</a></li>
+<li class="toc-h2"><a href="#ba-qian-duan-you-le-jian-quan-hou-duan-hai-xu-yao-jian-quan">八、前端有了鉴权后端还需要鉴权吗？</a></li>
+<li class="toc-h2"><a href="#jiu-lai-ge-xiao-shi-li-jia-shen-yi-xia-yin-xiang">九、来个小示例，加深一下印象</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

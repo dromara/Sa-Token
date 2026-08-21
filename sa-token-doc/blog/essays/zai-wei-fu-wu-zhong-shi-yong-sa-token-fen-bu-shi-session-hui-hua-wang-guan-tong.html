@@ -166,7 +166,7 @@
 <p>本篇将介绍在微服务中使用 Sa-Token 的两种常见技术：<br />
 - 分布式 Session 会话。<br />
 - 网关统一鉴权。</p>
-<h3 id="yi-fen-bu-shi-session-hui-hua">一、分布式 Session 会话</h3>
+<h2 id="yi-fen-bu-shi-session-hui-hua">一、分布式 Session 会话</h2>
 <p>微服务架构下的第一个难题便是数据同步，单机版的<code>Session</code>在分布式环境下一般不能正常工作，为此我们需要对框架做一些特定的处理。</p>
 <p>首先我们要明白，分布式环境下为什么<code>Session</code>会失效？因为用户在一个节点对会话做出的更改无法实时同步到其它的节点，<br />
 这就导致一个很严重的问题：如果用户在节点一上已经登录成功，那么当下一次的请求落在节点二上时，对节点二来讲，此用户仍然是未登录状态。</p>
@@ -260,14 +260,14 @@ public class TestController {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li></ul></pre>
 <p>分别访问两个接口，观察Redis中增加的数据：<br />
 <img alt="Alone-Redis" src="https://res.dev33.cn/sa-token-blog/img/2023-4/alone-redis.png" /></p>
-<h3 id="er-wang-guan-tong-yi-jian-quan">二、网关统一鉴权</h3>
+<h2 id="er-wang-guan-tong-yi-jian-quan">二、网关统一鉴权</h2>
 <p>微服务架构下的鉴权一般分为两种：</p>
 <ul>
 <li>每个服务各自鉴权。</li>
 <li>网关统一鉴权。</li>
 </ul>
 <p>方案一和传统单体鉴权差别不大，不再过多赘述，下面介绍方案二的整合步骤：</p>
-<h4 id="1-yin-ru-zheng-que-de-yi-lai">1、引入正确的依赖：</h4>
+<h3 id="1-yin-ru-zheng-que-de-yi-lai">1、引入正确的依赖：</h3>
 <p>在交流群里不少小伙伴提出bug解决到最后发现都是因为依赖引入错误导致的，此处重点强调一下：</p>
 <blockquote>
 <p>在微服务架构中使用Sa-Token时，网关和内部服务要分开引入Sa-Token依赖（不要直接在顶级父pom中引入Sa-Token）</p>
@@ -303,7 +303,7 @@ public class TestController {
     &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
     &lt;artifactId&gt;commons-pool2&lt;/artifactId&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h4 id="2-shi-xian-jian-quan-jie-kou">2、实现鉴权接口</h4>
+<h3 id="2-shi-xian-jian-quan-jie-kou">2、实现鉴权接口</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 自定义权限验证接口扩展 
  */
@@ -327,7 +327,7 @@ public class StpInterfaceImpl implements StpInterface {
 1. 在网关处集成ORM框架，直接从数据库查询数据<br />
 2. 先从Redis中获取数据，获取不到时走ORM框架查询数据库 <br />
 3. 先从Redis中获取缓存数据，获取不到时走RPC调用子服务 (专门的权限数据提供服务) 获取</p>
-<h3 id="3-zhu-ce-quan-ju-guo-lv-qi">3、注册全局过滤器</h3>
+<h2 id="3-zhu-ce-quan-ju-guo-lv-qi">3、注册全局过滤器</h2>
 <p>然后我们就可以在网关处注册全局过滤器进行鉴权操作了：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * [Sa-Token 权限认证] 配置类 
@@ -366,7 +366,7 @@ public class SaTokenConfigure {
 <p>在此处，你可以按照 路由拦截鉴权 模式进行鉴权。</p>
 <p><img alt="Sa-Token 认证流程图" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-token-rz2.png" /></p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -383,12 +383,12 @@ public class SaTokenConfigure {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-fen-bu-shi-session-hui-hua">一、分布式 Session 会话</a></li>
-<li class="toc-h3"><a href="#er-wang-guan-tong-yi-jian-quan">二、网关统一鉴权</a></li>
-<li class="toc-h4"><a href="#1-yin-ru-zheng-que-de-yi-lai">1、引入正确的依赖：</a></li>
-<li class="toc-h4"><a href="#2-shi-xian-jian-quan-jie-kou">2、实现鉴权接口</a></li>
-<li class="toc-h3"><a href="#3-zhu-ce-quan-ju-guo-lv-qi">3、注册全局过滤器</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-fen-bu-shi-session-hui-hua">一、分布式 Session 会话</a></li>
+<li class="toc-h2"><a href="#er-wang-guan-tong-yi-jian-quan">二、网关统一鉴权</a></li>
+<li class="toc-h3"><a href="#1-yin-ru-zheng-que-de-yi-lai">1、引入正确的依赖：</a></li>
+<li class="toc-h3"><a href="#2-shi-xian-jian-quan-jie-kou">2、实现鉴权接口</a></li>
+<li class="toc-h2"><a href="#3-zhu-ce-quan-ju-guo-lv-qi">3、注册全局过滤器</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

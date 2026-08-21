@@ -166,7 +166,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 </blockquote>
 <p>凡是稍微上点规模的系统，统一认证中心都是绕不过去的槛。而单点登录 —— 便是我们搭建统一认证中心的关键。</p>
 <p>如果我们的多个系统：部署在不同的域名之下，但是后端可以连接同一个Redis，那么便可以使用 <strong><code>SSO 模式二：[URL重定向传播会话]</code></strong> 的方式做到单点登录。</p>
-<h3 id="yi-she-ji-si-lu">一、设计思路</h3>
+<h2 id="yi-she-ji-si-lu">一、设计思路</h2>
 <p>首先我们再次复习一下，多个系统之间为什么无法同步登录状态？</p>
 <ol>
 <li>前端的<code>Token</code>无法在多个系统下共享。</li>
@@ -197,17 +197,17 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <p>动态演示图：</p>
 <p><img alt="SSO 模式二" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso2.gif" /></p>
 <p>下面我们按照步骤依次完成上述过程：</p>
-<h3 id="er-zhun-bei-gong-zuo">二、准备工作</h3>
+<h2 id="er-zhun-bei-gong-zuo">二、准备工作</h2>
 <p>首先修改hosts文件<code>(C:\windows\system32\drivers\etc\hosts)</code>，添加以下IP映射，方便我们进行测试：</p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">127.0.0.1 sa-sso-server.com
 127.0.0.1 sa-sso-client1.com
 127.0.0.1 sa-sso-client2.com
 127.0.0.1 sa-sso-client3.com</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li></ul></pre>
-<h3 id="san-da-jian-client-duan-xiang-mu">三、搭建 Client 端项目</h3>
+<h2 id="san-da-jian-client-duan-xiang-mu">三、搭建 Client 端项目</h2>
 <blockquote>
 <p>搭建示例在 Sa-Token 官方仓库的 <code>/sa-token-demo/sa-token-demo-sso2-client/</code>，如遇到难点可结合源码进行测试学习</p>
 </blockquote>
-<h4 id="3-1-qu-chu-sso-server-de-cookie-zuo-yong-yu-pei-zhi">3.1、去除 SSO-Server 的 Cookie 作用域配置</h4>
+<h3 id="3-1-qu-chu-sso-server-de-cookie-zuo-yong-yu-pei-zhi">3.1、去除 SSO-Server 的 Cookie 作用域配置</h3>
 <p>在SSO模式一章节中我们打开了配置：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
@@ -219,7 +219,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <!---------------------------- tabs:end ---------------------------->
 
 <p>此为模式一专属配置，现在我们将其注释掉</p>
-<h4 id="3-2-chuang-jian-sso-client-duan-xiang-mu">3.2、创建 SSO-Client 端项目</h4>
+<h3 id="3-2-chuang-jian-sso-client-duan-xiang-mu">3.2、创建 SSO-Client 端项目</h3>
 <p>创建一个 SpringBoot 项目 <code>sa-token-demo-sso2-client</code>，引入依赖：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
@@ -269,7 +269,7 @@ implementation 'org.apache.commons:commons-pool2'
 implementation 'cn.dev33:sa-token-alone-redis:1.34.0'</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
 <!---------------------------- tabs:end ---------------------------->
 
-<h4 id="3-3-chuang-jian-sso-client-duan-ren-zheng-jie-kou">3.3、创建 SSO-Client 端认证接口</h4>
+<h3 id="3-3-chuang-jian-sso-client-duan-ren-zheng-jie-kou">3.3、创建 SSO-Client 端认证接口</h3>
 <p>同 SSO-Server 一样，Sa-Token 为 SSO-Client 端所需代码也提供了完整的封装，你只需提供一个访问入口，接入 Sa-Token 的方法即可。</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">
 /**
@@ -300,7 +300,7 @@ public class SsoClientController {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li></ul></pre>
-<h5>3.4、配置SSO认证中心地址</h5>
+<h4 id="3-4-pei-zhi-sso">3.4、配置SSO认证中心地址</h4>
 <p>你需要在 <code>application.yml</code> 配置如下信息：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
@@ -354,7 +354,7 @@ sa-token.alone-redis.timeout=10s</code><ul class="code-line-box"><li>1</li><li>2
 <!---------------------------- tabs:end ---------------------------->
 
 <p>注意点：<code>sa-token.alone-redis</code> 的配置需要和SSO-Server端连接同一个Redis（database也要一样）</p>
-<h4 id="3-5-xie-qi-dong-lei">3.5、写启动类</h4>
+<h3 id="3-5-xie-qi-dong-lei">3.5、写启动类</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
 public class SaSso2ClientApplication {
     public static void main(String[] args) {
@@ -363,7 +363,7 @@ public class SaSso2ClientApplication {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
 <p>启动项目 </p>
-<h3 id="si-ce-shi-fang-wen">四、测试访问</h3>
+<h2 id="si-ce-shi-fang-wen">四、测试访问</h2>
 <p>(1) 依次启动 <code>SSO-Server</code> 与 <code>SSO-Client</code>，然后从浏览器访问：<code>http://sa-sso-client1.com:9001/</code></p>
 <p><img alt="sso-client-index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-client-index.png" title="s-w-sh" /></p>
 <p>(2) 首次打开，提示当前未登录，我们点击<strong><code>登录</code></strong> 按钮，页面会被重定向到登录中心</p>
@@ -383,7 +383,7 @@ public class SaSso2ClientApplication {
 <p>可以看出，除了在<code>Client1</code>端我们需要手动登录一次之外，在<code>Client2端</code>和<code>Client3端</code>都是可以无需再次认证，直接登录成功的。</p>
 <p>我们可以通过 F12控制台 Network 跟踪整个过程</p>
 <p><img alt="sso-genzong" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-genzong.png" title="s-w-sh" /></p>
-<h3 id="wu-ticket-jie-chi-gong-ji">五、Ticket 劫持攻击</h3>
+<h2 id="wu-ticket-jie-chi-gong-ji">五、Ticket 劫持攻击</h2>
 <p>在上面的示例中，配置项 <code>sa-token.sso.allow-url=*</code> 意为配置所有允许的Client端授权地址，不在此配置项中的URL将无法单点登录成功。</p>
 <p>为了方便测试，上述代码将其配置为<code>*</code>，但是，<font color="#FF0000" >在生产环境中，此配置项绝对不能配置为 * </font>，否则会有被 Ticket 劫持的风险。</p>
 <p>假设攻击者根据模仿我们的授权地址，巧妙的构造一个URL：</p>
@@ -393,7 +393,7 @@ public class SaSso2ClientApplication {
 <p>当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页</p>
 <p><img alt="sso-ticket-jc" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-ticket-jc.png" title="s-w-sh" /></p>
 <p>可以看到，代表着用户身份的 Ticket 码也显现到了URL之中，借此漏洞，攻击者完全可以构建一个URL将小红的 Ticket 码自动提交到攻击者自己的服务器，伪造小红身份登录网站</p>
-<h3 id="liu-fang-fan-fang-fa">六、防范方法</h3>
+<h2 id="liu-fang-fan-fang-fa">六、防范方法</h2>
 <p>造成T icket 劫持攻击的直接原因就是SSO-Server认证中心没有对 <code>redirect地址</code> 进行任何的限制，防范的方法也很简单，就是对<code>redirect参数</code>进行校验，如果其不在指定的URL列表中时，拒绝下放ticket </p>
 <p>我们将其配置为一个具体的URL：</p>
 <!---------------------------- tabs:start ---------------------------->
@@ -412,7 +412,7 @@ sa-token.sso.allow-url=http://sa-sso-client1.com:9001/sso/login</code><ul class=
 <p>再次访问上述链接：</p>
 <p><img alt="sso-feifa-rf" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-feifa-rf.png" title="s-w-sh" /></p>
 <p>域名没有通过校验，拒绝授权！</p>
-<h5>配置安全性参考表</h5>
+<h3 id="pei-zhi-an-quan-xing-can-kao-biao">配置安全性参考表</h3>
 <table>
 <thead>
 <tr>
@@ -443,14 +443,14 @@ sa-token.sso.allow-url=http://sa-sso-client1.com:9001/sso/login</code><ul class=
 </tr>
 </tbody>
 </table>
-<h5>疑问：为什么不直接回传 Token，而是先回传 Ticket，再用 Ticket 去查询对应的账号id？</h5>
+<h3 id="yi-wen-wei-shen-me-bu-zhi-jie-hui-chuan-token-er-shi-xian-hu">疑问：为什么不直接回传 Token，而是先回传 Ticket，再用 Ticket 去查询对应的账号id？</h3>
 <p>Token 作为长时间有效的会话凭证，在任何时候都不应该直接暴露在 URL 之中（虽然 Token 直接的暴露本身不会造成安全漏洞，但会为很多漏洞提供可乘之机）</p>
 <p>为了不让系统安全处于亚健康状态，Sa-Token-SSO 选择先回传 Ticket，再由 Ticket 获取账号id，且 Ticket 一次性用完即废，提高安全性。</p>
-<h3 id="qi-xia-pian-yu-gao-kua-redis-mo-shi-xia-de-jie-jue-fang-an">七、下篇预告：跨 Redis 模式下的解决方案</h3>
+<h2 id="qi-xia-pian-yu-gao-kua-redis-mo-shi-xia-de-jie-jue-fang-an">七、下篇预告：跨 Redis 模式下的解决方案</h2>
 <p>以上流程解决了跨域模式下的单点登录，但是后端仍然采用了共享 Redis 来同步会话，如果我们的架构设计中Client端与Server端无法共享Redis，又该怎么完成单点登录？</p>
 <p>这就是下篇博客要介绍的 SSO 模式三：跨域、跨 Redis 下的 SSO 对接步骤。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -467,18 +467,21 @@ sa-token.sso.allow-url=http://sa-sso-client1.com:9001/sso/login</code><ul class=
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
-<li class="toc-h3"><a href="#er-zhun-bei-gong-zuo">二、准备工作</a></li>
-<li class="toc-h3"><a href="#san-da-jian-client-duan-xiang-mu">三、搭建 Client 端项目</a></li>
-<li class="toc-h4"><a href="#3-1-qu-chu-sso-server-de-cookie-zuo-yong-yu-pei-zhi">3.1、去除 SSO-Server 的 Cookie 作用域配置</a></li>
-<li class="toc-h4"><a href="#3-2-chuang-jian-sso-client-duan-xiang-mu">3.2、创建 SSO-Client 端项目</a></li>
-<li class="toc-h4"><a href="#3-3-chuang-jian-sso-client-duan-ren-zheng-jie-kou">3.3、创建 SSO-Client 端认证接口</a></li>
-<li class="toc-h4"><a href="#3-5-xie-qi-dong-lei">3.5、写启动类</a></li>
-<li class="toc-h3"><a href="#si-ce-shi-fang-wen">四、测试访问</a></li>
-<li class="toc-h3"><a href="#wu-ticket-jie-chi-gong-ji">五、Ticket 劫持攻击</a></li>
-<li class="toc-h3"><a href="#liu-fang-fan-fang-fa">六、防范方法</a></li>
-<li class="toc-h3"><a href="#qi-xia-pian-yu-gao-kua-redis-mo-shi-xia-de-jie-jue-fang-an">七、下篇预告：跨 Redis 模式下的解决方案</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
+<li class="toc-h2"><a href="#er-zhun-bei-gong-zuo">二、准备工作</a></li>
+<li class="toc-h2"><a href="#san-da-jian-client-duan-xiang-mu">三、搭建 Client 端项目</a></li>
+<li class="toc-h3"><a href="#3-1-qu-chu-sso-server-de-cookie-zuo-yong-yu-pei-zhi">3.1、去除 SSO-Server 的 Cookie 作用域配置</a></li>
+<li class="toc-h3"><a href="#3-2-chuang-jian-sso-client-duan-xiang-mu">3.2、创建 SSO-Client 端项目</a></li>
+<li class="toc-h3"><a href="#3-3-chuang-jian-sso-client-duan-ren-zheng-jie-kou">3.3、创建 SSO-Client 端认证接口</a></li>
+<li class="toc-h4"><a href="#3-4-pei-zhi-sso">3.4、配置SSO认证中心地址</a></li>
+<li class="toc-h3"><a href="#3-5-xie-qi-dong-lei">3.5、写启动类</a></li>
+<li class="toc-h2"><a href="#si-ce-shi-fang-wen">四、测试访问</a></li>
+<li class="toc-h2"><a href="#wu-ticket-jie-chi-gong-ji">五、Ticket 劫持攻击</a></li>
+<li class="toc-h2"><a href="#liu-fang-fan-fang-fa">六、防范方法</a></li>
+<li class="toc-h3"><a href="#pei-zhi-an-quan-xing-can-kao-biao">配置安全性参考表</a></li>
+<li class="toc-h3"><a href="#yi-wen-wei-shen-me-bu-zhi-jie-hui-chuan-token-er-shi-xian-hu">疑问：为什么不直接回传 Token，而是先回传 Ticket，再用 Ticket 去查询对应的账号id？</a></li>
+<li class="toc-h2"><a href="#qi-xia-pian-yu-gao-kua-redis-mo-shi-xia-de-jie-jue-fang-an">七、下篇预告：跨 Redis 模式下的解决方案</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

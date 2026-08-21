@@ -319,8 +319,7 @@ body.blog-page.blog-sidebar-open {
 	line-height: 1.4;
 	margin: 34px 0 20px;
 	padding-bottom: 12px;
-	/* 淡蓝下划线，与灰色网格区分 */
-	border-bottom: 2px solid #c5d8f0;
+	border-bottom: 2px solid #e2e2e2;
 	font-weight: 700;
 	color: #252933;
 }
@@ -330,7 +329,7 @@ body.blog-page.blog-sidebar-open {
 	line-height: 1.4;
 	margin: 36px 0 16px;
 	padding-bottom: 8px;
-	border-bottom: 1px solid #d2e2f5;
+	border-bottom: 1px solid #e2e2e2;
 	font-weight: 700;
 	color: #252933;
 }
@@ -656,11 +655,11 @@ body.blog-page.blog-sidebar-open {
 }
 
 .blog-article-toc .blog-toc-list li.toc-h3 {
-	padding-left: 1.5em;
+	padding-left: 28px;
 }
 
 .blog-article-toc .blog-toc-list li.toc-h4 {
-	padding-left: 2.15em;
+	padding-left: 44px;
 }
 
 .blog-article-toc .blog-toc-list a {

@@ -317,17 +317,14 @@
 </ul>
 <h3 id="guo-qu-zen-me-yong-shi-yi">过去怎么用（示意）</h3>
 <p>业务 <code>Cargo.toml</code> 里写死一套框架大版本，插件往往只跟其中一条线对齐；团队想从 Axum 0.7 升到 0.8、或 Actix 3 升到 4 时，经常遇到「插件与主项目类型树/依赖树冲突、只能等插件发新版或自己 fork」。</p>
-<pre><code># 过去：框架与插件强绑定一条线，大版本升级容易“牵一发而动全身”
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering"># 过去：框架与插件强绑定一条线，大版本升级容易“牵一发而动全身”
 axum = &quot;0.7&quot;
-# 假设当时示例/文档都按 0.7 写，换 0.8 后中间件与 Request 类型要对齐大量细节
-</code></pre>
+# 假设当时示例/文档都按 0.7 写，换 0.8 后中间件与 Request 类型要对齐大量细节</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
 <h3 id="xian-zai-zen-me-yong-shi-yi">现在怎么用（示意）</h3>
 <p><strong>A 组</strong>（Axum / Warp / Poem / Tide）：仍是 <strong>单一</strong><code>sa-token-plugin-*</code> crate，用 <strong>框架绑定 feature</strong>（如 <code>axum-08</code>）选对大版本，存储再用 <code>memory</code> / <code>redis</code> 等。</p>
-<pre><code>sa-token-plugin-axum = { version = &quot;0.1.13&quot;, features = [&quot;axum-08&quot;, &quot;redis&quot;] }
-</code></pre>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">sa-token-plugin-axum = { version = &quot;0.1.13&quot;, features = [&quot;axum-08&quot;, &quot;redis&quot;] }</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p><strong>B 组</strong>（Actix / Rocket / Salvo / Ntex / Gotham）： <strong>门面 crate</strong> + <code>features</code> 选具体大版本（如 <code>v4</code>、<code>v05</code>），共享逻辑在 <code>*-core</code>，版本差异在 <code>*-v*</code>。</p>
-<pre><code>sa-token-plugin-actix-web = { version = &quot;0.1.13&quot;, features = [&quot;v4&quot;, &quot;redis&quot;] }
-</code></pre>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">sa-token-plugin-actix-web = { version = &quot;0.1.13&quot;, features = [&quot;v4&quot;, &quot;redis&quot;] }</code><ul class="code-line-box"><li>1</li></ul></pre>
 <hr />
 <h2 id="2-ren-zheng-lian-lu-tong-yi-dao-run-auth-flow">2) 认证链路统一到 <code>run_auth_flow</code></h2>
 <p>把“token 提取 + 鉴权决策 + context 生成”做成统一流程，下沉到核心层；插件层只做框架相关写入和响应。</p>
@@ -339,17 +336,16 @@ axum = &quot;0.7&quot;
 </ul>
 <h3 id="guo-qu-zen-me-yong-shi-yi-2">过去怎么用（示意）</h3>
 <p>每个插件中间件里各自实现「从 Header/Cookie 取 token → 调 <code>SaTokenManager</code> 校验 → 拼 <code>SaTokenContext</code> → 写 extensions / 401」；逻辑相似但复制多，行为容易慢慢不一致。</p>
-<pre><code>// 过去：伪代码 — 各框架各写一套，核心层没有统一入口
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 过去：伪代码 — 各框架各写一套，核心层没有统一入口
 // let token = self.extract_token_from_request(&amp;req);  // 每插件一份
 // let auth = self.process_path_and_validate(token).await;
 // let ctx = self.build_context(&amp;auth);
 // SaTokenContext::set_current(ctx);
 // let res = inner.call(req).await;
-// SaTokenContext::clear();
-</code></pre>
+// SaTokenContext::clear();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
 <h3 id="xian-zai-zen-me-yong-shi-yi-2">现在怎么用（示意）</h3>
 <p>核心层提供 <strong><code>run_auth_flow</code></strong>，一次走完「提取 token → 路径规则/默认校验 → 生成上下文」；插件只负责把实现了 <strong><code>SaRequest</code></strong> 的请求快照喂进去（如 Axum 的 <code>AxumRequestSnapshot::capture(&amp;request)</code>），以及把 <code>token</code> / <code>login_id</code> 写进框架自己的扩展位，并用 <strong><code>AuthFlowResult::run</code></strong> 把后续 handler 包在正确的作用域里（与第 3 点的 task-local 一致）。</p>
-<pre><code>// 现在：与 sa-token-plugin-axum 0.8 中间件同思路的精简示意
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 现在：与 sa-token-plugin-axum 0.8 中间件同思路的精简示意
 let snapshot = AxumRequestSnapshot::capture(&amp;request);
 let flow = run_auth_flow(&amp;snapshot, &amp;state.manager, path_config.as_ref()).await;
 
@@ -363,8 +359,7 @@ if let Some(id) = &amp;flow.login_id {
     request.extensions_mut().insert(id.clone());
 }
 
-flow.run(inner.call(request)).await
-</code></pre>
+flow.run(inner.call(request)).await</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
 <hr />
 <h2 id="3-shang-xia-wen-chuan-bo-an-quan-sheng-ji-lu-xian-thread-loc">3) 上下文传播安全升级路线：thread-local -&gt; task-local</h2>
 <p>已明确迁移方案，用于修复异步多线程 runtime 下跨 <code>await</code> 的上下文一致性风险。</p>
@@ -372,22 +367,20 @@ flow.run(inner.call(request)).await
 <p>这种方向说明项目不只是在“加功能”，也在持续做底层可靠性建设。</p>
 <h3 id="guo-qu-zen-me-yong-shi-yi-3">过去怎么用（示意）</h3>
 <p>请求级上下文若主要依赖 <strong>thread-local</strong> 的 <code>set_current</code> / <code>clear</code>，在 <strong>异步、多线程调度</strong> 的 runtime 里，任务可能在不同 worker 线程上续跑；跨过 <code>await</code> 后若仍假设“同一线程上的 TLS”，存在上下文丢失或串台的理论风险，中间件里需要非常小心配对。</p>
-<pre><code>// 过去：示意 — 依赖线程局部 + 手动配对，跨 await 场景要自证安全
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 过去：示意 — 依赖线程局部 + 手动配对，跨 await 场景要自证安全
 // SaTokenContext::set_current(ctx);
 // let response = inner.call(request).await;
-// SaTokenContext::clear();
-</code></pre>
+// SaTokenContext::clear();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li></ul></pre>
 <h3 id="xian-zai-zen-me-yong-shi-yi-3">现在怎么用（示意）</h3>
 <p>路线是 <strong>task-local（及 <code>SaTokenContext::scope</code>）</strong>：与异步任务绑定， <strong>可安全跨 <code>await</code></strong>。业务侧推荐通过框架插件已接好的链路走；核心 API 上，<code>AuthFlowResult::run</code> 内部即使用 <code>SaTokenContext::scope</code> 执行后续 <code>Future</code>。</p>
-<pre><code>// 现在：与核心实现一致 — scope 包裹整个后续异步过程
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 现在：与核心实现一致 — scope 包裹整个后续异步过程
 // pub async fn run&lt;F, R&gt;(self, fut: F) -&gt; R
 // where F: Future&lt;Output = R&gt; {
 //     SaTokenContext::scope(self.context, fut).await
 // }
 
 // 插件里典型写法就是一行：
-flow.run(inner.call(request)).await
-</code></pre>
+flow.run(inner.call(request)).await</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
 <p>若你在自定义中间件里需要同样语义，可直接使用 <strong><code>SaTokenContext::scope(ctx, async { ... }).await</code></strong>，避免手写 <code>set_current</code> / <code>clear</code> 的配对逻辑。</p>
 <hr />
 <h2 id="chang-jing-hua-ni-ke-yi-zen-me-luo-di">场景化：你可以怎么落地</h2>

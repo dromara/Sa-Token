@@ -189,7 +189,7 @@
 <li>同端互斥登录：在同一类型设备上只允许单地点登录，在不同类型设备上允许同时在线</li>
 </ul>
 <p>接下来让我们看看使用<code>sa-token</code>是如何轻松处理这三种登录问题的</p>
-<h4 id="duo-di-deng-lu">多地登录</h4>
+<h3 id="duo-di-deng-lu">多地登录</h3>
 <p>此模式较为简单，<code>sa-token</code>默认模式即为多地登录模式</p>
 <ol>
 <li>首先添加<code>pom.xml</code>框架 </li>
@@ -227,7 +227,7 @@ public class SaTokenDemoApplication {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
 <p>至此，我们已经完成了多地点登录的全部代码，上述代码在多人登录同一账号时将不会对旧会话做任何处理，同一账号可以在多个地点任意登录，互不影响</p>
-<h4 id="dan-di-deng-lu">单地登录</h4>
+<h3 id="dan-di-deng-lu">单地登录</h3>
 <p><code>单地登录</code>与<code>多地登录</code>唯一的差异就是, 需要改一下yml配置文件 </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">spring: 
     # sa-token配置
@@ -241,17 +241,17 @@ public class SaTokenDemoApplication {
     &quot;data&quot;: null,
     &quot;dataCount&quot;: null
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
-<h4 id="tong-duan-hu-chi-deng-lu">同端互斥登录</h4>
+<h3 id="tong-duan-hu-chi-deng-lu">同端互斥登录</h3>
 <p>好了，终于到了最终难题，同端互斥登录可以让我们像<code>腾讯QQ</code>一样，在同一类型设备上只允许单地点登录，在不同类型设备上允许同时在线</p>
 <p>那么在<code>sa-token</code>中如何做到同端互斥登录呢? <br><br />
 首先如<code>单地登录</code>一样，在配置文件中，将 <code>allowConcurrentLogin</code> 配置为<code>false</code>，然后调用登录等相关接口时声明设备标识即可：</p>
-<h5>指定设备标识登录</h5>
+<h4 id="zhi-ding-she-bei-biao-shi-deng-lu">指定设备标识登录</h4>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">StpUtil.setLoginId(10001, &quot;PC&quot;);    </code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>调用此方法登录后，同设备的会被顶下线(不同设备不受影响)，再次访问系统时会抛出 <code>NotLoginException</code> 异常，场景值=-4</p>
-<h5>指定设备标识强制注销(踢人下线)</h5>
+<h4 id="zhi-ding-she-bei-biao-shi-qiang-zhi-zhu-xiao-ti-ren-xia-xian">指定设备标识强制注销(踢人下线)</h4>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">StpUtil.logoutByLoginId(10001, &quot;PC&quot;);       </code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如果第二个参数填写null或不填，代表将这个账号id所有在线端踢下线，被踢出者再次访问系统时会抛出 <code>NotLoginException</code> 异常，场景值=-5</p>
-<h5>查询当前登录的设备标识</h5>
+<h4 id="cha-xun-dang-qian-deng-lu-de-she-bei-biao-shi">查询当前登录的设备标识</h4>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">StpUtil.getLoginDevice(); </code><ul class="code-line-box"><li>1</li></ul></pre>
 <h2 id="jie-wei">结尾</h2>
 <p>以上就是<code>sa-token</code>框架在处理登录问题时的各种技巧，可以看出不管是简单的<code>多地登录</code>还是复杂的<code>同端互斥登录</code>，在<code>sa-token</code>都有完成的解决方案</p>
@@ -278,9 +278,12 @@ public class SaTokenDemoApplication {
 				<div class="blog-article-toc"><ul class="blog-toc-list">
 <li class="toc-h2"><a href="#xu-qiu-chang-jing">需求场景</a></li>
 <li class="toc-h2"><a href="#zheng-ti">正题</a></li>
-<li class="toc-h4"><a href="#duo-di-deng-lu">多地登录</a></li>
-<li class="toc-h4"><a href="#dan-di-deng-lu">单地登录</a></li>
-<li class="toc-h4"><a href="#tong-duan-hu-chi-deng-lu">同端互斥登录</a></li>
+<li class="toc-h3"><a href="#duo-di-deng-lu">多地登录</a></li>
+<li class="toc-h3"><a href="#dan-di-deng-lu">单地登录</a></li>
+<li class="toc-h3"><a href="#tong-duan-hu-chi-deng-lu">同端互斥登录</a></li>
+<li class="toc-h4"><a href="#zhi-ding-she-bei-biao-shi-deng-lu">指定设备标识登录</a></li>
+<li class="toc-h4"><a href="#zhi-ding-she-bei-biao-shi-qiang-zhi-zhu-xiao-ti-ren-xia-xian">指定设备标识强制注销(踢人下线)</a></li>
+<li class="toc-h4"><a href="#cha-xun-dang-qian-deng-lu-de-she-bei-biao-shi">查询当前登录的设备标识</a></li>
 <li class="toc-h2"><a href="#jie-wei">结尾</a></li>
 </ul></div>
 			</div>

@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>SpringBoot 项目使用 Sa-Token 完成登录认证</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
-					<h3 id="yi-she-ji-si-lu">一、设计思路</h3>
+					<h2 id="yi-she-ji-si-lu">一、设计思路</h2>
 <p>对于一些登录之后才能访问的接口（例如：查询我的账号资料），我们通常的做法是增加一层接口校验：</p>
 <ul>
 <li>如果校验通过，则：正常返回数据。</li>
@@ -188,7 +188,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
     &lt;version&gt;1.34.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
-<h3 id="er-deng-lu-yu-zhu-xiao">二、登录与注销</h3>
+<h2 id="er-deng-lu-yu-zhu-xiao">二、登录与注销</h2>
 <p>根据以上思路，我们需要一个会话登录的函数：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 会话登录：参数填写要登录的账号id，建议的数据类型：long | int | String， 不可以传入复杂类型，如：User、Admin 等等
 StpUtil.login(Object id);    </code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
@@ -304,7 +304,7 @@ public SaResult handlerNotLoginException(NotLoginException nle)
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li></ul></pre>
 <p><br/><br />
 注意：以上代码并非处理逻辑的最佳方式，只为以最简单的代码演示出场景值的获取与应用，大家可以根据自己的项目需求来定制化处理</p>
-<h3 id="san-hui-hua-cha-xun">三、会话查询</h3>
+<h2 id="san-hui-hua-cha-xun">三、会话查询</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取当前会话账号id, 如果未登录，则抛出异常：`NotLoginException`
 StpUtil.getLoginId();
 
@@ -320,7 +320,7 @@ StpUtil.getLoginIdDefaultNull();
 
 // 获取当前会话账号id, 如果未登录，则返回默认值 （`defaultValue`可以为任意类型）
 StpUtil.getLoginId(T defaultValue);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
-<h3 id="si-token-cha-xun">四、Token 查询</h3>
+<h2 id="si-token-cha-xun">四、Token 查询</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取当前会话的token值
 StpUtil.getTokenValue();
 
@@ -348,7 +348,7 @@ StpUtil.getTokenInfo();</code><ul class="code-line-box"><li>1</li><li>2</li><li>
     &quot;tokenActivityTimeout&quot;: -1,       // token剩余无操作有效时间 (单位: 秒)
     &quot;loginDevice&quot;: &quot;default-device&quot;   // 登录设备类型 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
-<h3 id="wu-lai-ge-xiao-ce-shi-jia-shen-yi-xia-li-jie">五、来个小测试，加深一下理解</h3>
+<h2 id="wu-lai-ge-xiao-ce-shi-jia-shen-yi-xia-li-jie">五、来个小测试，加深一下理解</h2>
 <p>新建 <code>LoginAuthController</code>，复制以下代码</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">package com.pj.cases.use;
 
@@ -493,7 +493,7 @@ public class LoginAuthController {
 <p>本示例代码已上传至 Gitee，可参考：<br />
 <a href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/LoginAuthController.java">Sa-Token 登录认证示例</a></p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
 <li>GitHub 仓库地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
@@ -510,12 +510,12 @@ public class LoginAuthController {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
-<li class="toc-h3"><a href="#er-deng-lu-yu-zhu-xiao">二、登录与注销</a></li>
-<li class="toc-h3"><a href="#san-hui-hua-cha-xun">三、会话查询</a></li>
-<li class="toc-h3"><a href="#si-token-cha-xun">四、Token 查询</a></li>
-<li class="toc-h3"><a href="#wu-lai-ge-xiao-ce-shi-jia-shen-yi-xia-li-jie">五、来个小测试，加深一下理解</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
+<li class="toc-h2"><a href="#er-deng-lu-yu-zhu-xiao">二、登录与注销</a></li>
+<li class="toc-h2"><a href="#san-hui-hua-cha-xun">三、会话查询</a></li>
+<li class="toc-h2"><a href="#si-token-cha-xun">四、Token 查询</a></li>
+<li class="toc-h2"><a href="#wu-lai-ge-xiao-ce-shi-jia-shen-yi-xia-li-jie">五、来个小测试，加深一下理解</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

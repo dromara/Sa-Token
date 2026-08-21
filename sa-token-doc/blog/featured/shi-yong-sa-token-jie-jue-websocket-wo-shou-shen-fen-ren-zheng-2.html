@@ -159,21 +159,21 @@
 				<div class="markdown-section">
 					<h1>使用 Sa-Token 解决 WebSocket 握手身份认证</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>精选</span></div>
-					<h3 id="qian-yan">前言</h3>
+					<h2 id="qian-yan">前言</h2>
 <p>相比于 Http 的单项通信方式，WebSocket 可以从服务器向浏览器主动推送消息，这一特性可以帮助我们完成诸如 订单消息推送、IM实时聊天 等一些特定业务。</p>
 <p>然而 WebSocket 本身对“身份认证”并没有提供直接的支持，对客户端的连接默认是“来者不拒”，所以认证授权这个事，得我们自己动手。</p>
 <p>Sa-Token 是一个 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
 GitHub 开源地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></p>
 <p>下面我们介绍一下如何在 WebSocket 中集成 Sa-Token 身份认证，保证连接的安全性。</p>
-<h3 id="liang-zhong-ji-cheng-fang-shi">两种集成方式</h3>
+<h2 id="liang-zhong-ji-cheng-fang-shi">两种集成方式</h2>
 <p>我们将依次介绍目前最常见的两种集成 WebSocket 方式：</p>
 <ul>
 <li>Java 原生版：javax.websocket.Session</li>
 <li>Spring 封装版：WebSocketSession</li>
 </ul>
 <p>废话不多说，直接开搞：</p>
-<h3 id="fang-shi-yi-java-yuan-sheng-ban-javax-websocket-session">方式一：Java 原生版 javax.websocket.Session</h3>
-<h5>1、首先是引入 pom.xml 依赖</h5>
+<h2 id="fang-shi-yi-java-yuan-sheng-ban-javax-websocket-session">方式一：Java 原生版 javax.websocket.Session</h2>
+<h3 id="1-shou-xian-shi-yin-ru-pom-xml-yi-lai">1、首先是引入 pom.xml 依赖</h3>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- SpringBoot依赖 --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -192,7 +192,7 @@ GitHub 开源地址：<a href="https://github.com/dromara/sa-token">https://gith
     &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
     &lt;version&gt;1.29.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
-<h5>2、登录接口，用于获取会话token</h5>
+<h3 id="2-deng-lu-jie-kou-yong-yu-huo-qu-hui-hua-token">2、登录接口，用于获取会话token</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 登录测试 
  */
@@ -214,7 +214,7 @@ public class LoginController {
     // ... 
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul></pre>
-<h5>3、WebSocket连接处理</h5>
+<h3 id="3-websocket">3、WebSocket连接处理</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Component
 @ServerEndpoint(&quot;/ws-connect/{satoken}&quot;)
 public class WebSocketConnect {
@@ -295,7 +295,7 @@ public class WebSocketConnect {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li><li>72</li><li>73</li><li>74</li><li>75</li><li>76</li><li>77</li><li>78</li><li>79</li><li>80</li></ul></pre>
-<h5>4、WebSocket配置</h5>
+<h3 id="4-websocket">4、WebSocket配置</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 开启WebSocket支持
  */
@@ -308,7 +308,7 @@ public class WebSocketConfig {
     }
 
 } </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
-<h5>5、启动类</h5>
+<h3 id="5-qi-dong-lei">5、启动类</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
 public class SaTokenWebSocketApplication {
 
@@ -318,7 +318,7 @@ public class SaTokenWebSocketApplication {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
 <p>搭建完毕，启动项目</p>
-<h5>6、测试</h5>
+<h3 id="6-ce-shi">6、测试</h3>
 <p>1、首先我们访问登录接口，拿到会话token </p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">http://localhost:8081/acc/doLogin?name=zhang&amp;pwd=123456</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如图所示：</p>
@@ -332,8 +332,8 @@ public class SaTokenWebSocketApplication {
 <p>3、如果我们输入一个错误的token，会怎样呢？</p>
 <p><img alt="连接失败" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket--fail.png" /></p>
 <p>可以看到，连接会被立即断开！</p>
-<h3 id="fang-shi-er-spring-feng-zhuang-ban-websocketsession">方式二：Spring 封装版：WebSocketSession</h3>
-<h5>1、同上：首先是引入 pom.xml 依赖</h5>
+<h2 id="fang-shi-er-spring-feng-zhuang-ban-websocketsession">方式二：Spring 封装版：WebSocketSession</h2>
+<h3 id="1-tong-shang-shou-xian-shi-yin-ru-pom-xml-yi-lai">1、同上：首先是引入 pom.xml 依赖</h3>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- SpringBoot依赖 --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -352,7 +352,7 @@ public class SaTokenWebSocketApplication {
     &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
     &lt;version&gt;1.29.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
-<h5>2、登录接口，用于获取会话token</h5>
+<h3 id="2-deng-lu-jie-kou-yong-yu-huo-qu-hui-hua-token-2">2、登录接口，用于获取会话token</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 登录测试 
  */
@@ -374,7 +374,7 @@ public class LoginController {
     // ... 
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul></pre>
-<h5>3、WebSocket 连接处理</h5>
+<h3 id="3-websocket-lian-jie-chu-li">3、WebSocket 连接处理</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 处理 WebSocket 连接 
  */
@@ -444,7 +444,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li></ul></pre>
-<h5>4、WebSocket 前置拦截器</h5>
+<h3 id="4-websocket-qian-zhi-lan-jie-qi">4、WebSocket 前置拦截器</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * WebSocket 握手的前置拦截器 
  */
@@ -476,7 +476,7 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li></ul></pre>
-<h5>5、WebSocket 配置</h5>
+<h3 id="5-websocket-pei-zhi">5、WebSocket 配置</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * WebSocket 相关配置 
  */
@@ -497,7 +497,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li></ul></pre>
-<h5>6、启动类</h5>
+<h3 id="6-qi-dong-lei">6、启动类</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * Sa-Token 整合 WebSocket 鉴权示例 
  */
@@ -510,7 +510,7 @@ public class SaTokenWebSocketSpringApplication {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
 <p>启动项目，开始测试 </p>
-<h5>7、测试</h5>
+<h3 id="7-ce-shi">7、测试</h3>
 <p>1、首先访问登录接口，拿到会话token </p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">http://localhost:8081/acc/doLogin?name=zhang&amp;pwd=123456</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>如图所示：</p>
@@ -525,10 +525,10 @@ public class SaTokenWebSocketSpringApplication {
 <p>3、如果输入一个错误的 Token </p>
 <p><img alt="连接失败" src="https://res.dev33.cn/sa-token-blog/img/2023-4/st-websocket2--fail.png" /></p>
 <p>连接失败！</p>
-<h3 id="shi-li-di-zhi">示例地址</h3>
+<h2 id="shi-li-di-zhi">示例地址</h2>
 <p>以上代码已经上传git，示例地址：<br />
 <a href="https://gitee.com/dromara/sa-token/tree/dev/sa-token-demo/sa-token-demo-websocket">码云：sa-token-demo-websocket</a></p>
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Gitee地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
 <li>GitHub地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
@@ -545,12 +545,25 @@ public class SaTokenWebSocketSpringApplication {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#qian-yan">前言</a></li>
-<li class="toc-h3"><a href="#liang-zhong-ji-cheng-fang-shi">两种集成方式</a></li>
-<li class="toc-h3"><a href="#fang-shi-yi-java-yuan-sheng-ban-javax-websocket-session">方式一：Java 原生版 javax.websocket.Session</a></li>
-<li class="toc-h3"><a href="#fang-shi-er-spring-feng-zhuang-ban-websocketsession">方式二：Spring 封装版：WebSocketSession</a></li>
-<li class="toc-h3"><a href="#shi-li-di-zhi">示例地址</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#qian-yan">前言</a></li>
+<li class="toc-h2"><a href="#liang-zhong-ji-cheng-fang-shi">两种集成方式</a></li>
+<li class="toc-h2"><a href="#fang-shi-yi-java-yuan-sheng-ban-javax-websocket-session">方式一：Java 原生版 javax.websocket.Session</a></li>
+<li class="toc-h3"><a href="#1-shou-xian-shi-yin-ru-pom-xml-yi-lai">1、首先是引入 pom.xml 依赖</a></li>
+<li class="toc-h3"><a href="#2-deng-lu-jie-kou-yong-yu-huo-qu-hui-hua-token">2、登录接口，用于获取会话token</a></li>
+<li class="toc-h3"><a href="#3-websocket">3、WebSocket连接处理</a></li>
+<li class="toc-h3"><a href="#4-websocket">4、WebSocket配置</a></li>
+<li class="toc-h3"><a href="#5-qi-dong-lei">5、启动类</a></li>
+<li class="toc-h3"><a href="#6-ce-shi">6、测试</a></li>
+<li class="toc-h2"><a href="#fang-shi-er-spring-feng-zhuang-ban-websocketsession">方式二：Spring 封装版：WebSocketSession</a></li>
+<li class="toc-h3"><a href="#1-tong-shang-shou-xian-shi-yin-ru-pom-xml-yi-lai">1、同上：首先是引入 pom.xml 依赖</a></li>
+<li class="toc-h3"><a href="#2-deng-lu-jie-kou-yong-yu-huo-qu-hui-hua-token-2">2、登录接口，用于获取会话token</a></li>
+<li class="toc-h3"><a href="#3-websocket-lian-jie-chu-li">3、WebSocket 连接处理</a></li>
+<li class="toc-h3"><a href="#4-websocket-qian-zhi-lan-jie-qi">4、WebSocket 前置拦截器</a></li>
+<li class="toc-h3"><a href="#5-websocket-pei-zhi">5、WebSocket 配置</a></li>
+<li class="toc-h3"><a href="#6-qi-dong-lei">6、启动类</a></li>
+<li class="toc-h3"><a href="#7-ce-shi">7、测试</a></li>
+<li class="toc-h2"><a href="#shi-li-di-zhi">示例地址</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

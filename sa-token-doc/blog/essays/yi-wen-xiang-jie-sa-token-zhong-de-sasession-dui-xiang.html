@@ -164,7 +164,7 @@
 <p>Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
 <p>本文将详细介绍 Sa-Token 中的不同 SaSession 对象的区别，以及各种方便的存取值的方法。</p>
-<h3 id="yi-session-shi-shen-me">一、Session 是什么？</h3>
+<h2 id="yi-session-shi-shen-me">一、Session 是什么？</h2>
 <p>Session 是会话中专业的数据缓存组件，通过 Session 我们可以很方便的缓存一些高频读写数据，提高程序性能，例如：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 在登录时缓存user对象 
 StpUtil.getSession().set(&quot;user&quot;, user);
@@ -183,7 +183,7 @@ SysUser user = (SysUser) StpUtil.getSession().get(&quot;user&quot;);</code><ul c
 - <code>User-Session</code>  以UserId为主，只要token指向的UserId一致，那么对应的Session对象就一致。<br />
 - <code>Token-Session</code> 以token为主，只要token不同，那么对应的Session对象就不同。<br />
 - <code>Custom-Session</code> 以特定的key为主，不同key对应不同的Session对象，同样的key指向同一个Session对象。</p>
-<h3 id="er-huo-qu-user-session">二、获取 User-Session</h3>
+<h2 id="er-huo-qu-user-session">二、获取 User-Session</h2>
 <p>有关账号Session的API如下：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取当前账号id的Session (必须是登录后才能调用)
 StpUtil.getSession();
@@ -199,14 +199,14 @@ StpUtil.getSessionByLoginId(10001, true);
 
 // 获取SessionId为xxxx-xxxx的Session, 在Session尚未创建时, 返回null 
 StpUtil.getSessionBySessionId(&quot;xxxx-xxxx&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<h3 id="san-huo-qu-token-session">三、获取 Token-Session</h3>
+<h2 id="san-huo-qu-token-session">三、获取 Token-Session</h2>
 <p>有关令牌Session的API如下：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取当前 Token 的 Token-Session 对象
 StpUtil.getTokenSession();
 
 // 获取指定 Token 的 Token-Session 对象
 StpUtil.getTokenSessionByToken(token);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<h3 id="si-huo-qu-zi-ding-yi-session">四、获取自定义Session</h3>
+<h2 id="si-huo-qu-zi-ding-yi-session">四、获取自定义Session</h2>
 <p>自定义Session指的是以一个<code>特定的值</code>作为SessionId来分配的<code>Session</code>, 借助自定义Session，你可以为系统中的任意元素分配相应的session<br><br />
 例如以商品id作为key为每个商品分配一个Session，以便于缓存和商品相关的数据，其相关API如下：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 查询指定key的Session是否存在
@@ -220,7 +220,7 @@ SaSessionCustomUtil.getSessionById(&quot;goods-10001&quot;, false);
 
 // 删除指定key的Session
 SaSessionCustomUtil.deleteSessionById(&quot;goods-10001&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
-<h3 id="wu-zai-session-shang-cun-qu-zhi">五、在 Session 上存取值</h3>
+<h2 id="wu-zai-session-shang-cun-qu-zhi">五、在 Session 上存取值</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 写值 
 session.set(&quot;name&quot;, &quot;zhang&quot;); 
 
@@ -258,7 +258,7 @@ session.clear();
 
 // 获取此 Session 的所有key (返回Set&lt;String&gt;)
 session.keys();      </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li></ul></pre>
-<h3 id="liu-qi-ta-cao-zuo">六、其它操作</h3>
+<h2 id="liu-qi-ta-cao-zuo">六、其它操作</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 返回此 Session 的id 
 session.getId();                          
 
@@ -273,7 +273,7 @@ session.update();
 
 // 注销此 Session 会话 (从持久库删除此Session)
 session.logout();                         </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<h3 id="qi-sasession-huan-jing-ge-li-shuo-ming">七、SaSession 环境隔离说明</h3>
+<h2 id="qi-sasession-huan-jing-ge-li-shuo-ming">七、SaSession 环境隔离说明</h2>
 <p>有同学经常会把 <code>SaSession</code> 与 <code>HttpSession</code> 进行混淆，例如：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@PostMapping(&quot;/resetPoints&quot;)
 public void reset(HttpSession session) {
@@ -285,7 +285,7 @@ public void reset(HttpSession session) {
 <p><strong>要点：</strong><br />
 1. <code>SaSession</code> 与 <code>HttpSession</code> 没有任何关系，在<code>HttpSession</code>上写入的值，在<code>SaSession</code>中无法取出。<br />
 2. <code>HttpSession</code>并未被框架接管，在使用Sa-Token时，请在任何情况下均使用<code>SaSession</code>，不要使用<code>HttpSession</code>。</p>
-<h3 id="ba-wei-deng-lu-chang-jing-xia-huo-qu-token-session">八、未登录场景下获取 Token-Session</h3>
+<h2 id="ba-wei-deng-lu-chang-jing-xia-huo-qu-token-session">八、未登录场景下获取 Token-Session</h2>
 <p>默认场景下，只有登录后才能通过 <code>StpUtil.getTokenSession()</code> 获取 <code>Token-Session</code>。</p>
 <p>如果想要在未登录场景下获取 Token-Session ，有两种方法：</p>
 <ul>
@@ -297,7 +297,7 @@ StpUtil.getAnonTokenSession();</code><ul class="code-line-box"><li>1</li><li>2</
 <p>注意点：如果前端没有提交 Token ，或者提交的 Token 是一个无效 Token 的话，框架将不会根据此 Token 创建 <code>Token-Session</code> 对象，<br />
 而是随机一个新的 Token 值来创建 <code>Token-Session</code> 对象，此 Token 值可以通过 <code>StpUtil.getTokenValue()</code> 获取到。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -314,15 +314,15 @@ StpUtil.getAnonTokenSession();</code><ul class="code-line-box"><li>1</li><li>2</
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-session-shi-shen-me">一、Session 是什么？</a></li>
-<li class="toc-h3"><a href="#er-huo-qu-user-session">二、获取 User-Session</a></li>
-<li class="toc-h3"><a href="#san-huo-qu-token-session">三、获取 Token-Session</a></li>
-<li class="toc-h3"><a href="#si-huo-qu-zi-ding-yi-session">四、获取自定义Session</a></li>
-<li class="toc-h3"><a href="#wu-zai-session-shang-cun-qu-zhi">五、在 Session 上存取值</a></li>
-<li class="toc-h3"><a href="#liu-qi-ta-cao-zuo">六、其它操作</a></li>
-<li class="toc-h3"><a href="#qi-sasession-huan-jing-ge-li-shuo-ming">七、SaSession 环境隔离说明</a></li>
-<li class="toc-h3"><a href="#ba-wei-deng-lu-chang-jing-xia-huo-qu-token-session">八、未登录场景下获取 Token-Session</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-session-shi-shen-me">一、Session 是什么？</a></li>
+<li class="toc-h2"><a href="#er-huo-qu-user-session">二、获取 User-Session</a></li>
+<li class="toc-h2"><a href="#san-huo-qu-token-session">三、获取 Token-Session</a></li>
+<li class="toc-h2"><a href="#si-huo-qu-zi-ding-yi-session">四、获取自定义Session</a></li>
+<li class="toc-h2"><a href="#wu-zai-session-shang-cun-qu-zhi">五、在 Session 上存取值</a></li>
+<li class="toc-h2"><a href="#liu-qi-ta-cao-zuo">六、其它操作</a></li>
+<li class="toc-h2"><a href="#qi-sasession-huan-jing-ge-li-shuo-ming">七、SaSession 环境隔离说明</a></li>
+<li class="toc-h2"><a href="#ba-wei-deng-lu-chang-jing-xia-huo-qu-token-session">八、未登录场景下获取 Token-Session</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

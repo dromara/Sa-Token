@@ -193,7 +193,7 @@
 </ul>
 <h3 id="jia-gou">架构</h3>
 <p>分层很干净：核心不绑框架，插件层对接 Web，存储层可替换。</p>
-<pre><code>sa-token-rust/
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">sa-token-rust/
 ├── sa-token-core/              # Token、Session、Manager、JWT、OAuth2、SSO…
 ├── sa-token-adapter/           # 存储 / 请求 / 响应抽象
 ├── sa-token-macro/             # #[sa_check_login] 等过程宏
@@ -202,8 +202,7 @@
 ├── sa-token-plugin-axum/       # 各 Web 框架插件
 ├── sa-token-plugin-actix-web/
 ├── …（poem / rocket / warp / salvo / tide / gotham / ntex）
-└── examples/                   # JWT、OAuth2、SSO、WebSocket 等示例
-</code></pre>
+└── examples/                   # JWT、OAuth2、SSO、WebSocket 等示例</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
 <ul>
 <li><strong>核心层</strong>：认证授权逻辑，和具体 Web 框架无关。</li>
 <li><strong>适配层</strong>：<code>SaStorage</code>、<code>SaRequest</code> / <code>SaResponse</code>，核心只认接口。</li>

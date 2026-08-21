@@ -164,7 +164,7 @@
 <p>Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
 <p>今天介绍一下 Sa-Token 中的 Sa-Token-Quick-Login 插件。</p>
-<h3 id="yi-jie-jue-shen-me-wen-ti">一、解决什么问题</h3>
+<h2 id="yi-jie-jue-shen-me-wen-ti">一、解决什么问题</h2>
 <p>Sa-Token-Quick-Login 可以为一个系统快速的、零代码 注入一个登录页面。</p>
 <p>试想一下，假如我们开发了一个非常简单的小系统，比如说：服务器性能监控页面，<br />
 我们将它部署在服务器上，通过访问这个页面，我们可以随时了解服务器性能信息，非常方便。</p>
@@ -182,7 +182,7 @@
 <p>你马上就会发现，写个监控页你一下午就可以搞定，然而这个登录页你却可能需要花上两三天的时间，这是一笔及其不划算的时间浪费</p>
 <p>那么现在你可能就会有个疑问，难道就没有什么方法给我的小项目快速增加一个登录功能吗？</p>
 <p>Sa-Token-Quick-Login便是为了解决这个问题！</p>
-<h3 id="er-shi-yong-chang-jing">二、适用场景</h3>
+<h2 id="er-shi-yong-chang-jing">二、适用场景</h2>
 <p>Sa-Token-Quick-Login 旨在用最小的成本为项目增加一个登录认证功能</p>
 <ul>
 <li><strong>简单</strong>：只需要引入一个依赖便可为系统注入登录功能，快速、简单、零代码！</li>
@@ -190,9 +190,9 @@
 </ul>
 <p>Sa-Token-Quick-Login的定位是这样的场景：你的项目需要一个登录认证功能、这个认证页面可以不华丽、可以烂，但是一定要有，同时你又不想花费太多的时间浪费在登录页面上，<br />
 那么你便可以尝试一下<code>Sa-Token-Quick-Login</code></p>
-<h3 id="san-ji-cheng-bu-zhou">三、集成步骤</h3>
+<h2 id="san-ji-cheng-bu-zhou">三、集成步骤</h2>
 <p>首先我们需要创建一个SpringBoot的demo项目，比如：<code>sa-token-demo-quick-login</code></p>
-<h5>1、添加pom依赖</h5>
+<h3 id="1-tian-jia-pom">1、添加pom依赖</h3>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 启动依赖 --&gt;
 &lt;dependency&gt;
         &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
@@ -212,7 +212,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:${sa.top.version}'
 
 // Sa-Token-Quick-Login 插件
 implementation 'cn.dev33:sa-token-quick-login:${sa.top.version}'</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<h5>2、启动类</h5>
+<h3 id="2-qi-dong-lei">2、启动类</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
 public class SaTokenQuickDemoApplication {
     public static void main(String[] args) {
@@ -223,7 +223,7 @@ public class SaTokenQuickDemoApplication {
         System.out.println(&quot;pwd:  &quot; + SaQuickManager.getConfig().getPwd());
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h5>3、新建测试Controller</h5>
+<h3 id="3-xin-jian-ce-shi-controller">3、新建测试Controller</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 测试专用Controller 
  */
@@ -239,12 +239,12 @@ public class TestController {
         return str;
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
-<h3 id="si-ce-shi-fang-wen">四、测试访问</h3>
+<h2 id="si-ce-shi-fang-wen">四、测试访问</h2>
 <p>启动项目，使用浏览器访问：<code>http://localhost:8081</code>，首次访问时，由于处于未登录状态，会被强制进入登录页面</p>
 <p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login.png" title="s-w" /></p>
 <p>使用默认账号：<code>sa / 123456</code>进行登录，会看到资源页面</p>
 <p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-login-index.png" title="s-w" /></p>
-<h3 id="wu-ke-pei-zhi-xin-xi">五、可配置信息</h3>
+<h2 id="wu-ke-pei-zhi-xin-xi">五、可配置信息</h2>
 <p>你可以在yml中添加如下配置 (所有配置都是可选的) </p>
 <!---------------------------- tabs:start ---------------------------->
 
@@ -266,10 +266,10 @@ sa:
     # include: /**
     # 指定排除路径
     # exclude: /1.jpg</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
-<h3 id="liu-shi-yong-du-li-jar">六、使用独立jar包运行</h3>
+<h2 id="liu-shi-yong-du-li-jar">六、使用独立jar包运行</h2>
 <p>使用<code>sa-token-quick-login</code>只需引入一个依赖即可为系统注入登录模块，现在我们更进一步，将这个项目打成一个独立的jar包。</p>
 <p>通过这个jar包，我们可以方便的部署任意静态网站！做到真正的零编码注入登录功能。</p>
-<h5>打包步骤</h5>
+<h3 id="da-bao-bu-zhou">打包步骤</h3>
 <p>首先放上懒人链接：<a href="https://gitee.com/dromara/sa-token/attach_files/695353/download">sa-quick-dist.jar</a> ，不想手动操作的同学可以直接点此链接下载打包后的jar文件 </p>
 <p>1、首先将 <code>sa-token-demo-quick-login</code> 模块添加到顶级父模块的<code>&lt;modules&gt;</code>节点中</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- 所有模块 --&gt;
@@ -289,31 +289,31 @@ sa:
 <p><img alt="sa-quick-start" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-start.png" title="s-w" /></p>
 <p>如果可以进入登录界面，则代表打包运行成功 <br><br />
 当然仅仅运行成功还不够，下面我们演示一下如何使用这个jar包进行静态网站部署</p>
-<h3 id="ba-suo-you-gong-neng-shi-li">八、所有功能示例</h3>
-<h5>Case 1. 指定静态资源路径</h5>
+<h2 id="ba-suo-you-gong-neng-shi-li">八、所有功能示例</h2>
+<h3 id="case-1-zhi-ding-jing-tai-zi-yuan-lu-jing">Case 1. 指定静态资源路径</h3>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar --sa.dir file:E:\www</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>使用dir参数指定<code>E:\www</code>目录作为资源目录进行部署 (现在我们可以通过浏览器访问<code>E:\www</code>目录下的文件了！)</p>
-<h5>Case 2. 指定登录名与密码</h5>
+<h3 id="case-2-zhi-ding-deng-lu-ming-yu-mi-ma">Case 2. 指定登录名与密码</h3>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar --sa.name=zhang --sa.pwd=zhang123</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>现在，默认的账号<code>sa/123456</code>将被废弃，而是使用<code>zhang/zhang123</code>进行账号校验</p>
-<h5>Case 3. 指定其自动生成账号密码</h5>
+<h3 id="case-3-zhi-ding-qi-zi-dong-sheng-cheng-zhang-hao-mi-ma">Case 3. 指定其自动生成账号密码</h3>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar --sa.auto=true</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>每次启动时随机生成账号密码（会在启动成功时打印到控制台上）</p>
-<h5>Case 4. 指定登录页的标题</h5>
+<h3 id="case-4-zhi-ding-deng-lu-ye-de-biao-ti">Case 4. 指定登录页的标题</h3>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar --sa.title=&quot;XXX 系统登录&quot;</code><ul class="code-line-box"><li>1</li></ul></pre>
-<h5>Case 5. 关闭账号校验，仅作为静态资源部署使用</h5>
+<h3 id="case-5-guan-bi-zhang-hao-jiao-yan-jin-zuo-wei-jing-tai-zi-yu">Case 5. 关闭账号校验，仅作为静态资源部署使用</h3>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar --sa.auth=false</code><ul class="code-line-box"><li>1</li></ul></pre>
-<h5>Case 6. 指定启动端口（默认8080）</h5>
+<h3 id="case-6-zhi-ding-qi-dong-duan-kou-mo-ren-8080">Case 6. 指定启动端口（默认8080）</h3>
 <pre v-pre data-lang="cmd"><code class="lang-cmd language-cmd has-numbering">java -jar sa-quick-dist.jar --server.port=80 </code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>注：所有参数可组合使用</p>
-<h3 id="jiu-shi-yong-springboot">九、使用SpringBoot默认资源路径</h3>
+<h2 id="jiu-shi-yong-springboot">九、使用SpringBoot默认资源路径</h2>
 <p>SpringBoot默认开放了一些路径作为资源目录，比如<code>classpath:/static/</code>，<br />
 怎么使用呢？我们只需要在jar包同目录创建一个<code>\static</code>文件夹，将静态资源文件复制到此目录下，然后启动jar包即可访问</p>
 <p>同时，我们还可以在jar包同目录创建yml配置文件，来覆盖jar包内的yml配置，如下图所示：</p>
 <p><img alt="sa-quick-case.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sa-quick-case.png" title="s-w" /></p>
 <p>例如如上目录中<code>/static</code>中有一个<code>1.jpg</code>文件，我们启动jar包后访问<code>http://localhost:8080/1.jpg</code>即可查看到此文件，这是Springboot自带的功能，在此不再赘述</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -330,15 +330,25 @@ sa:
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-jie-jue-shen-me-wen-ti">一、解决什么问题</a></li>
-<li class="toc-h3"><a href="#er-shi-yong-chang-jing">二、适用场景</a></li>
-<li class="toc-h3"><a href="#san-ji-cheng-bu-zhou">三、集成步骤</a></li>
-<li class="toc-h3"><a href="#si-ce-shi-fang-wen">四、测试访问</a></li>
-<li class="toc-h3"><a href="#wu-ke-pei-zhi-xin-xi">五、可配置信息</a></li>
-<li class="toc-h3"><a href="#liu-shi-yong-du-li-jar">六、使用独立jar包运行</a></li>
-<li class="toc-h3"><a href="#ba-suo-you-gong-neng-shi-li">八、所有功能示例</a></li>
-<li class="toc-h3"><a href="#jiu-shi-yong-springboot">九、使用SpringBoot默认资源路径</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-jie-jue-shen-me-wen-ti">一、解决什么问题</a></li>
+<li class="toc-h2"><a href="#er-shi-yong-chang-jing">二、适用场景</a></li>
+<li class="toc-h2"><a href="#san-ji-cheng-bu-zhou">三、集成步骤</a></li>
+<li class="toc-h3"><a href="#1-tian-jia-pom">1、添加pom依赖</a></li>
+<li class="toc-h3"><a href="#2-qi-dong-lei">2、启动类</a></li>
+<li class="toc-h3"><a href="#3-xin-jian-ce-shi-controller">3、新建测试Controller</a></li>
+<li class="toc-h2"><a href="#si-ce-shi-fang-wen">四、测试访问</a></li>
+<li class="toc-h2"><a href="#wu-ke-pei-zhi-xin-xi">五、可配置信息</a></li>
+<li class="toc-h2"><a href="#liu-shi-yong-du-li-jar">六、使用独立jar包运行</a></li>
+<li class="toc-h3"><a href="#da-bao-bu-zhou">打包步骤</a></li>
+<li class="toc-h2"><a href="#ba-suo-you-gong-neng-shi-li">八、所有功能示例</a></li>
+<li class="toc-h3"><a href="#case-1-zhi-ding-jing-tai-zi-yuan-lu-jing">Case 1. 指定静态资源路径</a></li>
+<li class="toc-h3"><a href="#case-2-zhi-ding-deng-lu-ming-yu-mi-ma">Case 2. 指定登录名与密码</a></li>
+<li class="toc-h3"><a href="#case-3-zhi-ding-qi-zi-dong-sheng-cheng-zhang-hao-mi-ma">Case 3. 指定其自动生成账号密码</a></li>
+<li class="toc-h3"><a href="#case-4-zhi-ding-deng-lu-ye-de-biao-ti">Case 4. 指定登录页的标题</a></li>
+<li class="toc-h3"><a href="#case-5-guan-bi-zhang-hao-jiao-yan-jin-zuo-wei-jing-tai-zi-yu">Case 5. 关闭账号校验，仅作为静态资源部署使用</a></li>
+<li class="toc-h3"><a href="#case-6-zhi-ding-qi-dong-duan-kou-mo-ren-8080">Case 6. 指定启动端口（默认8080）</a></li>
+<li class="toc-h2"><a href="#jiu-shi-yong-springboot">九、使用SpringBoot默认资源路径</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

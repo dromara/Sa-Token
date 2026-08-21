@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
-					<h3 id="yi-xu-qiu-chang-jing">一、需求场景</h3>
+					<h2 id="yi-xu-qiu-chang-jing">一、需求场景</h2>
 <p>在微服务项目中，我们的子服务一般不能通过外网直接访问，必须通过网关转发才是一个合法的请求，这种子服务与外网的隔离一般分为两种：</p>
 <ol>
 <li>物理隔离：子服务部署在指定的内网环境中，只有网关对外网开放。</li>
@@ -174,8 +174,8 @@
 <p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
 Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
-<h3 id="er-wang-guan-zhuan-fa-jian-quan">二、网关转发鉴权</h3>
-<h4 id="1-yin-ru-yi-lai">1、引入依赖</h4>
+<h2 id="er-wang-guan-zhuan-fa-jian-quan">二、网关转发鉴权</h2>
+<h3 id="1-yin-ru-yi-lai">1、引入依赖</h3>
 <p>在网关处引入的依赖为（此处以 SpringCloud Gateway 为例）：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证（Reactor响应式集成）, 在线文档：https://sa-token.com --&gt;
 &lt;dependency&gt;
@@ -226,7 +226,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:1.34.0'
 // Sa-Token 整合 Redis （使用 jackson 序列化方式）
 implementation 'cn.dev33:sa-token-dao-redis-jackson:1.34.0'
 implementation 'org.apache.commons:commons-pool2'</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
-<h4 id="2-wang-guan-chu-tian-jia-same-token">2、网关处添加Same-Token</h4>
+<h3 id="2-wang-guan-chu-tian-jia-same-token">2、网关处添加Same-Token</h3>
 <p>为网关添加全局过滤器：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 全局过滤器，为请求添加 Same-Token 
@@ -246,7 +246,7 @@ public class ForwardAuthFilter implements GlobalFilter {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
 <p>此过滤器会为 Request 请求头追加 <code>Same-Token</code> 参数，这个参数会被转发到子服务 </p>
-<h4 id="3-zai-zi-fu-wu-li-jiao-yan-can-shu">3、在子服务里校验参数</h4>
+<h3 id="3-zai-zi-fu-wu-li-jiao-yan-can-shu">3、在子服务里校验参数</h3>
 <p>在子服务添加过滤器校验参数 </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * Sa-Token 权限认证 配置类 
@@ -274,10 +274,10 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 <blockquote>
 <p>如果通过网关转发，可以正常访问，直接访问子服务会提示：<code>无效Same-Token：xxx</code></p>
 </blockquote>
-<h3 id="san-rpc">三、RPC调用鉴权</h3>
+<h2 id="san-rpc">三、RPC调用鉴权</h2>
 <p>有时候我们需要在一个服务调用另一个服务的接口，这也是需要添加<code>Same-Token</code>作为身份凭证的</p>
 <p>在服务里添加 Same-Token 流程与网关类似，我们以RPC框架 <code>Feign</code> 为例：</p>
-<h5>1、首先在调用方添加 FeignInterceptor</h5>
+<h3 id="1-shou-xian-zai-diao-yong-fang-tian-jia-feigninterceptor">1、首先在调用方添加 FeignInterceptor</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * feign拦截器, 在feign请求发出之前，加入一些操作 
  */
@@ -289,7 +289,7 @@ public class FeignInterceptor implements RequestInterceptor {
         requestTemplate.header(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken());
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
-<h5>2、在调用接口里使用此 Interceptor</h5>
+<h3 id="2-zai-diao-yong-jie-kou-li-shi-yong-ci-interceptor">2、在调用接口里使用此 Interceptor</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 服务调用 
  */
@@ -306,7 +306,7 @@ public interface SpCfgInterface {
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
 <p>被调用方的代码无需更改（按照网关转发鉴权处的代码注册全局过滤器），保持启动测试即可 </p>
-<h3 id="si-same-token-mo-kuai-xiang-jie">四、Same-Token 模块详解</h3>
+<h2 id="si-same-token-mo-kuai-xiang-jie">四、Same-Token 模块详解</h2>
 <p>Same-Token —— 专门解决同源系统互相调用时的身份认证校验，它的作用不仅局限于微服务调用场景。</p>
 <p>基本使用流程为：服务调用方获取Token，提交到请求中，被调用方取出Token进行校验：Token一致则校验通过，否则拒绝服务。</p>
 <p>首先我们预览一下此模块的相关API：</p>
@@ -327,9 +327,9 @@ SaSameUtil.refreshToken();
 
 // 在 Request 上储存 Same-Token 时建议使用的key
 SaSameUtil.SAME_TOKEN;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
-<h5>1、疑问：这个Token保存在什么地方？有没有泄露的风险？Token为永久有效还是临时有效？</h5>
+<h3 id="1-yi-wen-zhe-ge-token-you-mei-you-xie-lou-de-feng-xian-token">1、疑问：这个Token保存在什么地方？有没有泄露的风险？Token为永久有效还是临时有效？</h3>
 <p>Same-Token 默认随 Sa-Token 数据一起保存在Redis中，理论上不会存在泄露的风险，每个Token默认有效期只有一天</p>
-<h5>2、如何主动刷新Same-Token，例如：五分钟、两小时刷新一次？</h5>
+<h3 id="2-ru-he-zhu-dong-shua-xin-same-token-li-ru-wu-fen-zhong-lian">2、如何主动刷新Same-Token，例如：五分钟、两小时刷新一次？</h3>
 <p>Same-Token 刷新间隔越短，其安全性越高，每个Token的默认有效期为一天，在一天后再次获取会自动产生一个新的Token</p>
 <blockquote>
 <p>需要注意的一点是：Same-Token默认的自刷新机制，并不能做到高并发可用，多个服务一起触发Token刷新可能会造成毫秒级的短暂服务失效，其只能适用于 项目开发阶段 或 低并发业务场景 </p>
@@ -348,12 +348,12 @@ public class SaSameTokenRefreshTask {
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
 <p>以上的cron表达式刷新间隔可以配置为<code>五分钟</code>、<code>十分钟</code> 或 <code>两小时</code>，只要低于Same-Token的有效期（默认为一天）即可。</p>
-<h5>3、如果网关携带token转发的请求在落到子服务的节点上时，恰好刷新了token，导致鉴权未通过怎么办？</h5>
+<h3 id="3-ru-guo-wang-guan-xie-dai-token-qia-hao-shua-xin-le-token-d">3、如果网关携带token转发的请求在落到子服务的节点上时，恰好刷新了token，导致鉴权未通过怎么办？</h3>
 <p>Same-Token 模块在每次刷新 Token 时，旧 Token 会被作为次级 Token 存储起来，<br />
 只要网关携带的 Token 符合新旧 Token 其一即可通过认证，直至下一次刷新，新 Token 再次作为次级 Token 将此替换掉。</p>
-<h3 id="wu-zai-dubbo-zhong-ji-cheng-same-token">五、在 Dubbo 中集成 Same-Token</h3>
+<h2 id="wu-zai-dubbo-zhong-ji-cheng-same-token">五、在 Dubbo 中集成 Same-Token</h2>
 <p>Same-Token 不仅可以为 Feign 提供调用鉴权操作，在 dubbo 的 RPC 调用时也可以使用 Same-Token 进行鉴权，提供这个能力的正是 <code>sa-token-context-dubbo</code> 插件。</p>
-<h4 id="1-xian-shuo-shuo-yao-jie-jue-de-wen-ti">1、先说说要解决的问题</h4>
+<h3 id="1-xian-shuo-shuo-yao-jie-jue-de-wen-ti">1、先说说要解决的问题</h3>
 <p>在 Dubbo 的整个调用链中，代码被分为 Consumer 端和 Provider 端，为方便理解我们可以称其为 <code>[调用端]</code> 和 <code>[被调用端]</code>。 </p>
 <p>RPC 模式的调用，可以让我们像调用本地方法一样完成服务通信，然而这种便利下却隐藏着两个问题：</p>
 <ul>
@@ -366,7 +366,7 @@ public class SaSameTokenRefreshTask {
 <li>在 [ 被调用端 ] 提供以 Dubbo 为基础的上下文环境 </li>
 <li>在 RPC 调用时将 Token 传递至 [ 被调用端 ]，同时在调用结束时将 Token 回传至 [ 调用端 ]。</li>
 </ul>
-<h4 id="2-yin-ru-cha-jian">2、引入插件</h4>
+<h3 id="2-yin-ru-cha-jian">2、引入插件</h3>
 <p>在项目已经引入 Dubbo 的基础上，继续添加依赖（Consumer 端和 Provider 端都需要引入）：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 整合 Dubbo --&gt;
 &lt;dependency&gt;
@@ -389,14 +389,14 @@ implementation 'cn.dev33:sa-token-context-dubbo:1.34.0'</code><ul class="code-li
 <li>[ 被调用端 ] 执行的 <code>SaResponse.setHeader()</code>、<code>setStatus()</code> 等代码无效。</li>
 </ol>
 <p>应该合理避开以上 API 的使用。</p>
-<h4 id="3-dubbo-de-rpc">3、dubbo 的 RPC调用鉴权</h4>
+<h3 id="3-dubbo-de-rpc">3、dubbo 的 RPC调用鉴权</h3>
 <p>下面我们演示一下在 Dubbo 中如何集成 Same-Token 模块。其实思路和 Feign 模式一致，在 [ 调用端 ] 追加 Same-Token 参数，在 [ 被调用端 ] 校验这个 Same-Token 参数：</p>
 <ul>
 <li>校验通过：调用成功。</li>
 <li>校验不通过：调用失败，抛出异常。</li>
 </ul>
 <p>我们有两种方式完成整合。</p>
-<h5>方式一、使用配置（推荐）</h5>
+<h4 id="fang-shi-yi-shi-yong-pei-zhi-tui-jian">方式一、使用配置（推荐）</h4>
 <p>直接在 <code>application.yml</code> 配置即可：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
@@ -410,7 +410,7 @@ implementation 'cn.dev33:sa-token-context-dubbo:1.34.0'</code><ul class="code-li
 sa-token.check-same-token=true</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
 <!---------------------------- tabs:end ---------------------------->
 
-<h5>方式二、自建 Dubbo 过滤器校验</h5>
+<h4 id="fang-shi-er-zi-jian-dubbo-guo-lv-qi-jiao-yan">方式二、自建 Dubbo 过滤器校验</h4>
 <p>此方式略显繁琐，好处是除了Same-Token，我们还可以添加其它自定义参数 (attachment)。</p>
 <p>1、在 [ 调用端 ] 的 <code>\resources\META-INF\dubbo\</code> 目录新建 <code>org.apache.dubbo.rpc.Filter</code> 文件</p>
 <pre v-pre data-lang="html"><code class="lang-html language-html has-numbering">dubboConsumerFilter=com.pj.DubboConsumerFilter</code><ul class="code-line-box"><li>1</li></ul></pre>
@@ -477,7 +477,7 @@ public class DubboProviderFilter implements Filter {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li></ul></pre>
 <p>然后我们就可以进行安全的 RPC 调用了，不带有 Same-Token 参数的调用都会抛出异常，无法调用成功。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -494,18 +494,25 @@ public class DubboProviderFilter implements Filter {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-xu-qiu-chang-jing">一、需求场景</a></li>
-<li class="toc-h3"><a href="#er-wang-guan-zhuan-fa-jian-quan">二、网关转发鉴权</a></li>
-<li class="toc-h4"><a href="#1-yin-ru-yi-lai">1、引入依赖</a></li>
-<li class="toc-h4"><a href="#2-wang-guan-chu-tian-jia-same-token">2、网关处添加Same-Token</a></li>
-<li class="toc-h4"><a href="#3-zai-zi-fu-wu-li-jiao-yan-can-shu">3、在子服务里校验参数</a></li>
-<li class="toc-h3"><a href="#san-rpc">三、RPC调用鉴权</a></li>
-<li class="toc-h3"><a href="#si-same-token-mo-kuai-xiang-jie">四、Same-Token 模块详解</a></li>
-<li class="toc-h3"><a href="#wu-zai-dubbo-zhong-ji-cheng-same-token">五、在 Dubbo 中集成 Same-Token</a></li>
-<li class="toc-h4"><a href="#1-xian-shuo-shuo-yao-jie-jue-de-wen-ti">1、先说说要解决的问题</a></li>
-<li class="toc-h4"><a href="#2-yin-ru-cha-jian">2、引入插件</a></li>
-<li class="toc-h4"><a href="#3-dubbo-de-rpc">3、dubbo 的 RPC调用鉴权</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-xu-qiu-chang-jing">一、需求场景</a></li>
+<li class="toc-h2"><a href="#er-wang-guan-zhuan-fa-jian-quan">二、网关转发鉴权</a></li>
+<li class="toc-h3"><a href="#1-yin-ru-yi-lai">1、引入依赖</a></li>
+<li class="toc-h3"><a href="#2-wang-guan-chu-tian-jia-same-token">2、网关处添加Same-Token</a></li>
+<li class="toc-h3"><a href="#3-zai-zi-fu-wu-li-jiao-yan-can-shu">3、在子服务里校验参数</a></li>
+<li class="toc-h2"><a href="#san-rpc">三、RPC调用鉴权</a></li>
+<li class="toc-h3"><a href="#1-shou-xian-zai-diao-yong-fang-tian-jia-feigninterceptor">1、首先在调用方添加 FeignInterceptor</a></li>
+<li class="toc-h3"><a href="#2-zai-diao-yong-jie-kou-li-shi-yong-ci-interceptor">2、在调用接口里使用此 Interceptor</a></li>
+<li class="toc-h2"><a href="#si-same-token-mo-kuai-xiang-jie">四、Same-Token 模块详解</a></li>
+<li class="toc-h3"><a href="#1-yi-wen-zhe-ge-token-you-mei-you-xie-lou-de-feng-xian-token">1、疑问：这个Token保存在什么地方？有没有泄露的风险？Token为永久有效还是临时有效？</a></li>
+<li class="toc-h3"><a href="#2-ru-he-zhu-dong-shua-xin-same-token-li-ru-wu-fen-zhong-lian">2、如何主动刷新Same-Token，例如：五分钟、两小时刷新一次？</a></li>
+<li class="toc-h3"><a href="#3-ru-guo-wang-guan-xie-dai-token-qia-hao-shua-xin-le-token-d">3、如果网关携带token转发的请求在落到子服务的节点上时，恰好刷新了token，导致鉴权未通过怎么办？</a></li>
+<li class="toc-h2"><a href="#wu-zai-dubbo-zhong-ji-cheng-same-token">五、在 Dubbo 中集成 Same-Token</a></li>
+<li class="toc-h3"><a href="#1-xian-shuo-shuo-yao-jie-jue-de-wen-ti">1、先说说要解决的问题</a></li>
+<li class="toc-h3"><a href="#2-yin-ru-cha-jian">2、引入插件</a></li>
+<li class="toc-h3"><a href="#3-dubbo-de-rpc">3、dubbo 的 RPC调用鉴权</a></li>
+<li class="toc-h4"><a href="#fang-shi-yi-shi-yong-pei-zhi-tui-jian">方式一、使用配置（推荐）</a></li>
+<li class="toc-h4"><a href="#fang-shi-er-zi-jian-dubbo-guo-lv-qi-jiao-yan">方式二、自建 Dubbo 过滤器校验</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

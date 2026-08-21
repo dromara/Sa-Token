@@ -168,7 +168,7 @@
     &lt;version&gt;1.42.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
-<h3 id="geng-xin-dian-1-xin-zeng-api-key-mo-kuai">🗝️ 更新点1：新增 API Key 模块</h3>
+<h2 id="geng-xin-dian-1-xin-zeng-api-key-mo-kuai">🗝️ 更新点1：新增 API Key 模块</h2>
 <p>如果你曾经对接过 ChatGPT、DeepSeek 等大模型平台的开放接口，那你一定对 API Key 不陌生。🤝</p>
 <p>API Key 是一种接口调用密钥，类似于会话 token ，但比会话 token 具有更灵活的权限控制。🔑</p>
 <p>本次更新带来了 API Key 的全流程管理，支持为指定账号签发、校验、禁用、删除 API Key 。<br />
@@ -180,7 +180,7 @@
 <p>框架默认将所有 API Key 信息保存在缓存中，这可以称之为“缓存模式”，在这种模式下，重启缓存库后，数据将会丢失。⚠️</p>
 <p>框架预留了 SaApiKeyDataLoader 接口，以便你将数据的加载切换为 “数据库模式”，做到数据长久有效保存。 💾</p>
 <p>在线文档直达地址：<a href="https://sa-token.com/doc.html#/plugin/api-key">API Key 接口调用秘钥</a> 🔗</p>
-<h3 id="geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</h3>
+<h2 id="geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</h2>
 <p>在 Sa-Token 文档中有一段这样的示例：📚</p>
 <p><img alt="sa-refresh-token" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-refresh-token.png" /></p>
 <p>该示例演示了如何通过临时 Token 认证模块，创建 <code>RefreshToken</code> 为登录会话做到双 Token 的效果。🔄</p>
@@ -194,7 +194,7 @@
 <p>例如我们可以通过 <code>SaTempUtil.getTempTokenList("xxx")</code> 方法获取指定账号所有历史签发的 <code>RefreshToken</code> 记录：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">List&lt;String&gt; refreshTokenList = SaTempUtil.getTempTokenList(&quot;10001&quot;);</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>在线文档直达地址：<a href="https://sa-token.com/doc.html#/plugin/temp-token">临时 Token 令牌认证</a> 🔗</p>
-<h3 id="geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</h3>
+<h2 id="geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</h2>
 <p>TOTP 是一种动态密码算法，用于生成短暂有效的数字验证码（通常6-8位）️。它的核心原理是：结合密钥与当前时间，通过哈希运算生成一次性密码。⏱</p>
 <p>TOTP 一般有以下应用场景：</p>
 <ul>
@@ -203,7 +203,7 @@
 <li>3、替代短信验证码：TOTP 验证码无需网络，可离线计算生成，一定程度上可以替代短信验证码验证身份。📴</li>
 </ul>
 <p>本次版本新增了 TOTP 验证码的生成与校验功能，这将方便大家为自己的系统添加双因子认证能力。🚀</p>
-<h3 id="geng-xin-dian-4-zhong-gou-sheng-ji-satokencontext-shang-xia">⚙️ 更新点4：重构升级 <code>SaTokenContext</code> 上下文读写策略</h3>
+<h2 id="geng-xin-dian-4-zhong-gou-sheng-ji-satokencontext-shang-xia">⚙️ 更新点4：重构升级 <code>SaTokenContext</code> 上下文读写策略</h2>
 <p>这可能是近几个版本中最底层的一次重构，几乎完全推翻了之前上下文模块的设计。💥</p>
 <p>在之前的版本中，Sa-Token 对接不同的 Web 框架需要利用这些 Web 框架的原生上下文能力来构建 Sa-Token 的上下文。 🌐</p>
 <p>本次更新 Sa-Token 利用 ThreadLocal 实现了自己的上下文存储机制，这将带来以下好处：</p>
@@ -213,7 +213,7 @@
 <li>3、彻底删除了二级上下文模块，做到了 Web 请求与 RPC 请求的上下文统一。</li>
 <li>4、在防火墙 hook 里也可以调用 Sa-Token 同步 API 了。</li>
 </ul>
-<h3 id="geng-xin-dian-5-xin-zeng-cors-kua-yu-ce-lve-chu-li-han-shu-t">🌐 更新点5：新增 <code>CORS</code> 跨域策略处理函数，提供不同架构下统一的跨域处理方案</h3>
+<h2 id="geng-xin-dian-5-xin-zeng-cors-kua-yu-ce-lve-chu-li-han-shu-t">🌐 更新点5：新增 <code>CORS</code> 跨域策略处理函数，提供不同架构下统一的跨域处理方案</h2>
 <p>在之前的版本中，跨域处理总是要写在全局鉴权过滤器中，属于“鉴权之下的额外补充操作”。⏳</p>
 <p>新版本专门提供了一个 CORS 跨域处理策略组件，以后再也不用仅仅为了跨域就书写一个长长的鉴权过滤器组件了。🚀</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
@@ -239,7 +239,7 @@ public SaCorsHandleFunction corsHandle() {
     };
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
 <p>开源仓库示例：<a href="https://gitee.com/sa-tokens/sa-token-demo-cross">sa-token-demo-cross</a> 🔗</p>
-<h3 id="geng-xin-dian-6-sa-token-quick-login-cha-jian-zhi-chi-http-b">🔑 更新点6：<code>sa-token-quick-login</code> 插件支持 <code>Http Basic</code> 方式通过认证</h3>
+<h2 id="geng-xin-dian-6-sa-token-quick-login-cha-jian-zhi-chi-http-b">🔑 更新点6：<code>sa-token-quick-login</code> 插件支持 <code>Http Basic</code> 方式通过认证</h2>
 <p><code>sa-token-quick-login</code> 可以快速、方便的为项目注入一个登录页面，当我们引入依赖后：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;dependency&gt;
     &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
@@ -276,7 +276,7 @@ public class TestController {
 <p>新版本中更新了通过 Http Basic 的方式直接进行认证的能力：</p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://sa:123456@localhost:8081/</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>这将非常有助于大家在专门的 API 测试工具下进行 quick-login 相关资源接口的测试。🧪</p>
-<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
 <p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.42.0 版本的完整更新日志：</p>
 <ul>
 <li>core: <ul>
@@ -326,7 +326,7 @@ public class TestController {
 </li>
 </ul>
 <p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
-<h3 id="qi-ta">🌟 其它</h3>
+<h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
 <p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-token-js4.png" /></p>
@@ -341,14 +341,14 @@ public class TestController {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#geng-xin-dian-1-xin-zeng-api-key-mo-kuai">🗝️ 更新点1：新增 API Key 模块</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-4-zhong-gou-sheng-ji-satokencontext-shang-xia">⚙️ 更新点4：重构升级 SaTokenContext 上下文读写策略</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-5-xin-zeng-cors-kua-yu-ce-lve-chu-li-han-shu-t">🌐 更新点5：新增 CORS 跨域策略处理函数，提供不同架构下统一的跨域处理方案</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-6-sa-token-quick-login-cha-jian-zhi-chi-http-b">🔑 更新点6：sa-token-quick-login 插件支持 Http Basic 方式通过认证</a></li>
-<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
-<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-1-xin-zeng-api-key-mo-kuai">🗝️ 更新点1：新增 API Key 模块</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-zhong-gou-sheng-ji-satokencontext-shang-xia">⚙️ 更新点4：重构升级 SaTokenContext 上下文读写策略</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-xin-zeng-cors-kua-yu-ce-lve-chu-li-han-shu-t">🌐 更新点5：新增 CORS 跨域策略处理函数，提供不同架构下统一的跨域处理方案</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-sa-token-quick-login-cha-jian-zhi-chi-http-b">🔑 更新点6：sa-token-quick-login 插件支持 Http Basic 方式通过认证</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

@@ -166,7 +166,7 @@
 <h2 id="zheng-wen">正文</h2>
 <p>如果把踢人下线比喻成拆房子，那么在学会拆房之前，我们必须要了解这座房子是怎么盖起来的，不同的盖法对应不同的拆法，不能混为一谈</p>
 <p>对于目前大多数系统来讲，登录主要有两种方式，一是传统<code>Session</code>模式，二是<code>jwt令牌</code>模式</p>
-<h4 id="chuan-tong-session">传统Session模式</h4>
+<h3 id="chuan-tong-session">传统Session模式</h3>
 <p>我们先以<code>Session模式</code>为例，这种模式是怎么登录的呢？</p>
 <p>(注：此处的<code>Session</code>不单指<code>HttpSession</code>，指一切使用服务端控制会话的手段) </p>
 <p>这里我们不使用任何框架，从底层逻辑开始说起。</p>
@@ -200,7 +200,7 @@
 <p>此时你可能会说：</p>
 <p>就这？我创建个集合保存所有要踢出下线的账号，每次拦截器里判断这个会话是否在这个集合中不就OK了？</p>
 <p>大佬请慢喷！这就是我要说的第二种模式————黑名单机制，且往下看</p>
-<h4 id="jwt">jwt模式</h4>
+<h3 id="jwt">jwt模式</h3>
 <p><code>jwt模式</code>的登陆步骤与<code>传统Session模式</code>区别不大，在此暂不赘述</p>
 <p>不同点在于，<code>jwt</code>登陆时，不会在服务器保存任何会话信息，所有的用户参数都被写进了jwt生成的token中</p>
 <p>（所以<code>jwt</code>的<code>token</code>才会长的那么长！通常两三百字符长度起步）</p>
@@ -214,11 +214,11 @@
 <p>这种方式和传统Session模式孰优孰劣呢？只能说各有千秋！</p>
 <p>黑名单机制在存储时节省性能，在拦截器里多了一步黑名单检测的步骤，浪费性能！</p>
 <p>不过坦白了讲，这丁点的性能的浪费对于现在的CPU来说都是毛毛雨，可以直接忽略！</p>
-<h4 id="ti-wai-hua">题外话</h4>
+<h3 id="ti-wai-hua">题外话</h3>
 <p>在我一位同事的项目中，给我提供了jwt踢人下线的另一种实现思路：</p>
 <p>那就是在生成jwt令牌时，加入一个固定的参数当做令牌<code>生成因子</code>，如果要将一个用户踢出下线，只需要修改一下这个因子的值，然后在拦截器里每次校验这个因子生成的令牌是否与客户端传递的令牌一致!即可判断出这个token是否已被拉黑！</p>
 <p>这种模式提供了一个比较新颖的逻辑算法，但是严格来讲，还是借助服务器存储一定的数据完成的会话验证，仍然属于<code>Session模式</code>。在此暂不展开细讲。</p>
-<h4 id="dai-ma-shi-xian-fang-an">代码实现方案？</h4>
+<h3 id="dai-ma-shi-xian-fang-an">代码实现方案？</h3>
 <p>说了这么多理论，总归是要上代码的，由于笔者除了<code>sa-token框架</code>以外没有找到任何一个框架对踢人下线有直接现成的解决方案，所以在此暂以<code>sa-token框架</code>为例</p>
 <ol>
 <li>首先添加pom.xml依赖</li>
@@ -255,7 +255,7 @@ public String kickout(long userId) {
     return &quot;踢出成功&quot;;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>对框架感兴趣的同学可以查看官网：<a href="http://sa-token.com/">sa-token 一个java轻量级权限认证框架</a></p>
-<h4 id="hou-hua">后话</h4>
+<h3 id="hou-hua">后话</h3>
 <p>文章写的再详细也难免会有遗漏之处，在此还求大家轻喷，可以在评论出留言指出不足之处</p>
 <p>如果觉得文章写得不错还请大家不要吝惜为文章点个赞，您的支持是我更新的最大动力！</p>
 <p><br><br><br><br></p>
@@ -272,11 +272,11 @@ public String kickout(long userId) {
 				<div class="blog-article-toc"><ul class="blog-toc-list">
 <li class="toc-h2"><a href="#qian-yan">前言</a></li>
 <li class="toc-h2"><a href="#zheng-wen">正文</a></li>
-<li class="toc-h4"><a href="#chuan-tong-session">传统Session模式</a></li>
-<li class="toc-h4"><a href="#jwt">jwt模式</a></li>
-<li class="toc-h4"><a href="#ti-wai-hua">题外话</a></li>
-<li class="toc-h4"><a href="#dai-ma-shi-xian-fang-an">代码实现方案？</a></li>
-<li class="toc-h4"><a href="#hou-hua">后话</a></li>
+<li class="toc-h3"><a href="#chuan-tong-session">传统Session模式</a></li>
+<li class="toc-h3"><a href="#jwt">jwt模式</a></li>
+<li class="toc-h3"><a href="#ti-wai-hua">题外话</a></li>
+<li class="toc-h3"><a href="#dai-ma-shi-xian-fang-an">代码实现方案？</a></li>
+<li class="toc-h3"><a href="#hou-hua">后话</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

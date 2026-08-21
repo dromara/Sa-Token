@@ -168,7 +168,7 @@
     &lt;version&gt;1.40.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>该版本包含大量 ⛏️️️新增特性、⛏️️️️漏洞修复、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
-<h3 id="geng-xin-dian-1-xin-zeng-cookie-zi-ding-yi-shu-xing-zhi-chi">🍪️ 更新点1：新增 Cookie 自定义属性支持</h3>
+<h2 id="geng-xin-dian-1-xin-zeng-cookie-zi-ding-yi-shu-xing-zhi-chi">🍪️ 更新点1：新增 Cookie 自定义属性支持</h2>
 <p>这是来自名为 “@massinger” 的用户创建的 GitHub issue <a href="https://github.com/dromara/Sa-Token/issues/693">#693</a> ，<br />
 该开发者提出“是否可以为 <code>Cookie</code> 添加 <code>Partitioned</code> 属性，用于支持 iframe 嵌入跨域” 💡。</p>
 <p>起初我以为 http 响应头 <code>Cookie</code> 参数只有 <code>domain</code>、<code>path</code>、<code>secure</code>、<code>httpOnly</code>、<code>sameSite</code> 等几个扩展属性😶，<br />
@@ -191,7 +191,7 @@
             abc: def</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
 <p>将会促使 Sa-Token 框架生成以下格式的 Cookie 响应头🍪️：</p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">Set-Cookie: satoken=4d1a2052-29e0-4302-9ecd-ac54dece5fde; Max-Age=2592000; Expires=Tue, 4 Mar 2025 00:49:03 +0800; Path=/; HttpOnly; SameSite=Lax; Priority=Medium; Partitioned; abc=def</code><ul class="code-line-box"><li>1</li></ul></pre>
-<h3 id="geng-xin-dian-2-xin-zeng-safirewallstrategy-fang-huo-qiang-c">🛡️ 更新点2：新增 SaFirewallStrategy 防火墙策略</h3>
+<h2 id="geng-xin-dian-2-xin-zeng-safirewallstrategy-fang-huo-qiang-c">🛡️ 更新点2：新增 SaFirewallStrategy 防火墙策略</h2>
 <p>危险 path 路径符校验是在最早 v1.37.0 就支持的功能，如果前端提交的请求 path 包含 “<code>//、\、%2e、%2f、%5c、%25</code>” 等特殊字符时，Sa-Token 全局过滤器将会截断请求，<br />
 返回类似 “非法请求：/test/login//” 的响应提示⚠️。</p>
 <p>因为包含这些特殊字符的请求通常被用于路径遍历、请求绕行等网络攻击行为💻⚔️。</p>
@@ -200,13 +200,13 @@
 - 非法字符校验。<br />
 - 白名单放行。</p>
 <p>该组件在后续版本中还将计划增加ip校验、请求头校验等能力，并尝试引入 hooks 机制，以方便开发者更自由的进行功能扩展 🚀。</p>
-<h3 id="geng-xin-dian-3-xin-zeng-dui-fen-hao-zi-fu-de-path-lu-jing-j">🔍 更新点3：新增对分号字符的 path 路径校验，以预防潜在的网络攻击</h3>
+<h2 id="geng-xin-dian-3-xin-zeng-dui-fen-hao-zi-fu-de-path-lu-jing-j">🔍 更新点3：新增对分号字符的 path 路径校验，以预防潜在的网络攻击</h2>
 <p>此功能提案来源于 “船山信安” 公众号的一篇漏洞报告📄：<a href="https://mp.weixin.qq.com/s/77CIDZbgBwRunJeluofPTA">Sa-Token对url过滤不全存在的风险点</a> 🔗</p>
 <p>该文章指出了 Sa-Token 对包含 “;” 字符过滤不全存在的风险点⚠️：由于 Sa-Token 与底层 WebMVC 框架对 path 路径匹配的方式存在部分差异，<br />
 当前端提交的请求 path 中包含 “;” 字符，将可能导致请求绕过过滤器的权限检测，执行对应的 <code>Controller</code> 方法，从而导致越权问题💥。</p>
 <p>目前在最新 v1.40.0 版本中已修复此问题，框架将从最顶层过滤器直接截断 path 中包含“;”字符的请求，避免鉴权被绕过的问题🔒。</p>
 <p>感谢“船山信安”团队做出的贡献🙏🌟。</p>
-<h3 id="geng-xin-dian-4-xin-zeng-oauth2-client-qian-duan-ce-shi-ye-z">🚀 更新点4：新增 OAuth2 Client 前端测试页，助你快速对接调试 OAuth2-Server</h3>
+<h2 id="geng-xin-dian-4-xin-zeng-oauth2-client-qian-duan-ce-shi-ye-z">🚀 更新点4：新增 OAuth2 Client 前端测试页，助你快速对接调试 OAuth2-Server</h2>
 <p>对于刚刚接触 OAuth2 概念的初学者来说，不仅 OAuth2 Server 端的搭建比较困难，其接入与测试也是一件极其繁琐的事情😫。</p>
 <p>OAuth2 对接涉及大量繁琐的参数拼接、响应报文解析等步骤，仅一个授权码式的对接，其调试过程可能也要可能耗费数小时乃至数天⏳。</p>
 <p>为此，我们提供了一个专门对接 OAuth2 Server 的前端测试页🖥️：</p>
@@ -217,13 +217,13 @@
 -  3️⃣ 离线化自由部署，所有代码均在前端实现，敏感数据全程不经过第三方服务器，完整开源可自由二开。</p>
 <p>通过该测试页面，你将非常直观的 get 到 OAuth2 四种模式的对接步骤、响应报文等信息，帮助你快速定位和解决 OAuth2 对接流程中的大部分问题 💡✨。</p>
 <p>详情可参考该视频：<a href="https://www.bilibili.com/video/BV13LSMYzEmE/">Sa-Token v1.40 新功能预览：OAuth2 四种模式 一键测试页</a> 🔗</p>
-<h3 id="geng-xin-dian-5-xin-zeng-unionid-lian-he-id-shi-xian-fang-bi">🤝 更新点5：新增 UnionId 联合 ID 实现，方便跨应用识别用户</h3>
+<h2 id="geng-xin-dian-5-xin-zeng-unionid-lian-he-id-shi-xian-fang-bi">🤝 更新点5：新增 UnionId 联合 ID 实现，方便跨应用识别用户</h2>
 <p>此提案来自于一位开发者对 官网 sa-token 小助手的咨询 💬：</p>
 <p><img alt="有关 UnionId 功能的 sa-token 小助手咨询 " src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth-unionid-xzs-zixun.png" /></p>
 <p>这位开发者在使用 Sa-Token 的 OAuth2 模块时，需要一个叫做 <code>UnionId</code> 的功能。简单来讲：<code>UnionId</code> 可以帮助开发者在同主体的多个应用下定位到同一用户 🔍。</p>
 <p>作为立志要成为国内第一 java 权限认证框架的 Sa-Token 来讲，这是必须给安排上的💪🏆。</p>
 <p>详情可参考该视频️：<a href="https://www.bilibili.com/video/BV1oz6AY5ERJ/">OAuth2 授权流程中的 clientId、openId、unionId、userId 都是干嘛的？Sa-Token v1.40 预览：新增unionid支持</a> 🔗</p>
-<h3 id="geng-xin-dian-6-xin-zeng-oauth2-server-duan-qian-hou-tai-fen">🌐 更新点6：新增 OAuth2-Server 端前后台分离示例与文档</h3>
+<h2 id="geng-xin-dian-6-xin-zeng-oauth2-server-duan-qian-hou-tai-fen">🌐 更新点6：新增 OAuth2-Server 端前后台分离示例与文档</h2>
 <p>有 Web Page 服务的地方就有前后台分离，当然 OAuth2 也不例外🌍。</p>
 <p>之前的版本 本质也是支持搭建 OAuth2-Server 端前后台分离服务的，但是由于官网仓库缺乏 Demo示例和相关介绍文档，导致 “OAuth2-Server 端能否前后台分离？” 成为点击量特别高的一个问题🔥。</p>
 <p><img alt="OAuth2-Server 端能否前后台分离？微信咨询" src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-oauth2-qhdfl-wx-zixun.png" /></p>
@@ -232,7 +232,7 @@
 - <a href="https://gitee.com/dromara/sa-token/issues/I9W2RU">https://gitee.com/dromara/sa-token/issues/I9W2RU</a></p>
 <p>本次 v1.40.0 版本针对 OAuth2-Server 端的前后台分离搭建补充了详细的 demo示例📦 与 说明文档📚。</p>
 <p>在线官网直达地址：<a href="https://sa-token.com/doc.html#/oauth2/oauth2-h5">OAuth2-Server 端前后台分离</a> 🔗</p>
-<h3 id="geng-xin-dian-7-xin-zeng-sa-token-freemarker-cha-jian-zheng">🔌 更新点7：新增 <code>sa-token-freemarker</code> 插件，整合 <code>Freemarker</code> 视图引擎。</h3>
+<h2 id="geng-xin-dian-7-xin-zeng-sa-token-freemarker-cha-jian-zheng">🔌 更新点7：新增 <code>sa-token-freemarker</code> 插件，整合 <code>Freemarker</code> 视图引擎。</h2>
 <p>来源 issue：<a href="https://github.com/dromara/sa-token/issues/651">#651</a> 💡</p>
 <p>虽然前后台分离已成为当今的主流架构模式 🌊，但仍有一部分系统依旧采用前后台一体的方式进行搭建开发🏗️。</p>
 <p>在这部分应用中，80%的系统会采用 <code>SpringBoot</code> 官方推荐的 <code>Thymeleaf</code> 作为视图引擎组件📊。只有很少一部分才会采用 <code>Freemarker</code>、<code>jsp</code>、<code>beetl</code> 等技术🛠️。</p>
@@ -280,7 +280,7 @@
 
 &lt;/div&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li></ul></pre>
 <p>在线文档直达链接：<a href="https://sa-token.com/doc.html#/plugin/freemarker-extend">Sa-Token 整合 Freemarker</a> 📚</p>
-<h3 id="geng-xin-dian-8-xin-zeng-sa-token-spring-el-cha-jian-yong-yu">💡 更新点8：新增 <code>sa-token-spring-el</code> 插件，用于支持 SpEL 表达式注解鉴权。</h3>
+<h2 id="geng-xin-dian-8-xin-zeng-sa-token-spring-el-cha-jian-yong-yu">💡 更新点8：新增 <code>sa-token-spring-el</code> 插件，用于支持 SpEL 表达式注解鉴权。</h2>
 <p>fix issue：<br />
 - <a href="https://gitee.com/dromara/sa-token/issues/IB3GBB">#IB3GBB</a><br />
 - <a href="https://gitee.com/dromara/sa-token/issues/IAIXSL">#IAIXSL</a><br />
@@ -327,7 +327,7 @@ public class SaCheckELController {
 <p>值得一提的是：在本次更新中，<code>@ly-chn</code> 同学给了我很大的技术支持🙏。是他提供的 demo 案例才让我顺利完成了 <code>sa-token-spring-el</code> 插件开发🚀。</p>
 <p>同时他也是 idea 插件 <code>SpEL Assistant</code> 的开发作者💡，该插件允许为自定义注解书写 <code>SpEL</code> 表达式时增加代码提示功能，<br />
 开源地址：<a href="https://github.com/ly-chn/SpEL-Assistant">https://github.com/ly-chn/SpEL-Assistant</a>🔗</p>
-<h3 id="geng-xin-dian-9-xin-zeng-mongodb-ji-cheng-shi-li-quan-xian-s">🍃 更新点9：新增 <code>MongoDB</code> 集成示例，权限数据可以缓存到 MongoDB 中了！</h3>
+<h2 id="geng-xin-dian-9-xin-zeng-mongodb-ji-cheng-shi-li-quan-xian-s">🍃 更新点9：新增 <code>MongoDB</code> 集成示例，权限数据可以缓存到 MongoDB 中了！</h2>
 <p>merge pr: <br />
 - <a href="https://gitee.com/dromara/sa-token/pulls/322">pr322</a><br />
 - <a href="https://github.com/dromara/Sa-Token/pull/667">pr667</a></p>
@@ -337,7 +337,7 @@ public class SaCheckELController {
 <p>在线文档直达链接：<br />
 - <a href="https://sa-token.com/doc.html#/up/integ-spring-mongod-1">Sa-Token 集成 MongoDB 参考一</a> 📘。<br />
 - <a href="https://sa-token.com/doc.html#/up/integ-spring-mongod-2">Sa-Token 集成 MongoDB 参考二</a> 📙。</p>
-<h3 id="geng-xin-dian-10-feng-jin-mo-kuai-xin-zeng-zhi-chi-shi-shi-c">💾 更新点10：封禁模块新增支持实时从数据库查询数据</h3>
+<h2 id="geng-xin-dian-10-feng-jin-mo-kuai-xin-zeng-zhi-chi-shi-shi-c">💾 更新点10：封禁模块新增支持实时从数据库查询数据</h2>
 <p>Sa-Token 默认将封禁信息储存在缓存中，缓存中的数据是 “临时性的⏳”、“易丢失的💨”，而在大多数系统的设计中，需要将封禁数据持久化到数据库中💾。</p>
 <p>要使封禁信息持久化，你只需要在调用 Sa-Token 的封禁 API 后，再继续调用插入数据库的代码即可</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 在 Sa-Token 框架中封禁指定账号
@@ -366,7 +366,7 @@ public class StpInterfaceImpl implements StpInterface {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
 <p>该方法返回值具有多种写法，分别代表不同的封禁策略🔧，详细可参考在线文档：<br />
 <a href="https://sa-token.com/doc.html#/up/disable">Sa-Token 账号封禁</a> 📚</p>
-<h3 id="geng-xin-dian-11-wen-dang-xin-zeng-nei-rong">📚 更新点11：文档新增内容</h3>
+<h2 id="geng-xin-dian-11-wen-dang-xin-zeng-nei-rong">📚 更新点11：文档新增内容</h2>
 <ul>
 <li>文档首页新增：哔哩哔哩、抖音、微信视频号链接，欢迎大家关注❤️。</li>
 <li>导航栏视频新增👉 [fox说技术] 录制的 Sa-Token 课程链接 🎓。</li>
@@ -376,7 +376,7 @@ public class StpInterfaceImpl implements StpInterface {
 <li>文档新增新增团队成员展示👥。</li>
 <li>补全赞助者名单：v1.40 版本开发期间，共有20+用户进行打赏💰，总金额超过500元+，感谢这些用户的充电支持🙏。</li>
 </ul>
-<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
 <p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.40.0 版本的完整更新日志：</p>
 <ul>
 <li>core: <ul>
@@ -429,7 +429,7 @@ public class StpInterfaceImpl implements StpInterface {
 </li>
 </ul>
 <p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
-<h3 id="qi-ta">🌟 其它</h3>
+<h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
 <p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2025-2/sa-token-js4.png" /></p>
@@ -445,19 +445,19 @@ public class StpInterfaceImpl implements StpInterface {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#geng-xin-dian-1-xin-zeng-cookie-zi-ding-yi-shu-xing-zhi-chi">🍪️ 更新点1：新增 Cookie 自定义属性支持</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-2-xin-zeng-safirewallstrategy-fang-huo-qiang-c">🛡️ 更新点2：新增 SaFirewallStrategy 防火墙策略</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-3-xin-zeng-dui-fen-hao-zi-fu-de-path-lu-jing-j">🔍 更新点3：新增对分号字符的 path 路径校验，以预防潜在的网络攻击</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-4-xin-zeng-oauth2-client-qian-duan-ce-shi-ye-z">🚀 更新点4：新增 OAuth2 Client 前端测试页，助你快速对接调试 OAuth2-Server</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-5-xin-zeng-unionid-lian-he-id-shi-xian-fang-bi">🤝 更新点5：新增 UnionId 联合 ID 实现，方便跨应用识别用户</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-6-xin-zeng-oauth2-server-duan-qian-hou-tai-fen">🌐 更新点6：新增 OAuth2-Server 端前后台分离示例与文档</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-7-xin-zeng-sa-token-freemarker-cha-jian-zheng">🔌 更新点7：新增 sa-token-freemarker 插件，整合 Freemarker 视图引擎。</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-8-xin-zeng-sa-token-spring-el-cha-jian-yong-yu">💡 更新点8：新增 sa-token-spring-el 插件，用于支持 SpEL 表达式注解鉴权。</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-9-xin-zeng-mongodb-ji-cheng-shi-li-quan-xian-s">🍃 更新点9：新增 MongoDB 集成示例，权限数据可以缓存到 MongoDB 中了！</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-10-feng-jin-mo-kuai-xin-zeng-zhi-chi-shi-shi-c">💾 更新点10：封禁模块新增支持实时从数据库查询数据</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-11-wen-dang-xin-zeng-nei-rong">📚 更新点11：文档新增内容</a></li>
-<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
-<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-1-xin-zeng-cookie-zi-ding-yi-shu-xing-zhi-chi">🍪️ 更新点1：新增 Cookie 自定义属性支持</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-xin-zeng-safirewallstrategy-fang-huo-qiang-c">🛡️ 更新点2：新增 SaFirewallStrategy 防火墙策略</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-xin-zeng-dui-fen-hao-zi-fu-de-path-lu-jing-j">🔍 更新点3：新增对分号字符的 path 路径校验，以预防潜在的网络攻击</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-xin-zeng-oauth2-client-qian-duan-ce-shi-ye-z">🚀 更新点4：新增 OAuth2 Client 前端测试页，助你快速对接调试 OAuth2-Server</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-xin-zeng-unionid-lian-he-id-shi-xian-fang-bi">🤝 更新点5：新增 UnionId 联合 ID 实现，方便跨应用识别用户</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-xin-zeng-oauth2-server-duan-qian-hou-tai-fen">🌐 更新点6：新增 OAuth2-Server 端前后台分离示例与文档</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-7-xin-zeng-sa-token-freemarker-cha-jian-zheng">🔌 更新点7：新增 sa-token-freemarker 插件，整合 Freemarker 视图引擎。</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-8-xin-zeng-sa-token-spring-el-cha-jian-yong-yu">💡 更新点8：新增 sa-token-spring-el 插件，用于支持 SpEL 表达式注解鉴权。</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-9-xin-zeng-mongodb-ji-cheng-shi-li-quan-xian-s">🍃 更新点9：新增 MongoDB 集成示例，权限数据可以缓存到 MongoDB 中了！</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-10-feng-jin-mo-kuai-xin-zeng-zhi-chi-shi-shi-c">💾 更新点10：封禁模块新增支持实时从数据库查询数据</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-11-wen-dang-xin-zeng-nei-rong">📚 更新点11：文档新增内容</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

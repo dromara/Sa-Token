@@ -159,24 +159,24 @@
 				<div class="markdown-section">
 					<h1>Sa-Token v.1.31.0 新增拦截器 SaInterceptor 功能说明，以及旧代码迁移示例</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>版本更新</span></div>
-					<h3 id="qian-yan">前言</h3>
+					<h2 id="qian-yan">前言</h2>
 <p>如果你的项目没有使用旧写法，可以忽略本篇文章 <a href="https://sa-token.com/doc/index.html#/use/at-check">移步官网</a>，本文只针对旧版本到新版本的迁移提供示例。</p>
-<h3 id="1-jiu-ban-ben">1、旧版本</h3>
+<h2 id="1-jiu-ban-ben">1、旧版本</h2>
 <p>Sa-Token  在 1.30.0 及以下版本中使用两个拦截器： </p>
 <ul>
 <li><code>SaAnnotationInterceptor</code>：负责提供注解鉴权能力。</li>
 <li><code>SaRouteInterceptor</code>：负责提供路由拦截鉴权能力。</li>
 </ul>
 <p>这次新增的拦截器 <code>SaInterceptor</code> 名字为综合拦截器，见名思意就是综合上述两个拦截器的能力，既提供注解鉴权能力，也提供路由鉴权能力，目的是为了替代上述两个拦截器（v1.31.0已将上述两个类打上 <code>@Deprecated</code> 标记）。</p>
-<h3 id="2-xin-ban-ben-yong-fa">2、新版本用法</h3>
+<h2 id="2-xin-ban-ben-yong-fa">2、新版本用法</h2>
 <p>在用法上 SaInterceptor 可以简单总结为两点：</p>
 <ol>
 <li>相对于 <code>SaAnnotationInterceptor</code>，只做增强，不做改变，可以直接无损替换。</li>
 <li>相对于 <code>SaRouteInterceptor</code>，除掉其默认的 <code>StpUtil.checkLogin()</code> 登录校验能力，默认不执行任何动作。</li>
 </ol>
 <p>下面将用几个示例详细展示 SaInterceptor 带来的变化点。</p>
-<h3 id="3-shi-li">3、示例</h3>
-<h5>示例1，注解鉴权</h5>
+<h2 id="3-shi-li">3、示例</h2>
+<h3 id="shi-li-1-zhu-jie-jian-quan">示例1，注解鉴权</h3>
 <p>原写法：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
 public void addInterceptors(InterceptorRegistry registry) {
@@ -190,7 +190,7 @@ public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new SaInterceptor()).addPathPatterns(&quot;/**&quot;);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
 <p>总结：只替换一下拦截器的名称就可以了。</p>
-<h5>示例2，路由鉴权，默认登录校验</h5>
+<h3 id="shi-li-2-lu-you-jian-quan-mo-ren-deng-lu-jiao-yan">示例2，路由鉴权，默认登录校验</h3>
 <p>原写法：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
 public void addInterceptors(InterceptorRegistry registry) {
@@ -208,7 +208,7 @@ public void addInterceptors(InterceptorRegistry registry) {
             .excludePathPatterns(&quot;/user/doLogin&quot;); 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
 <p>总结：由于默认的登录校验功能不提供了，所有需要我们手动补一下。</p>
-<h5>示例3，路由鉴权，自定义认证规则</h5>
+<h3 id="shi-li-3-lu-you-jian-quan-zi-ding-yi-ren-zheng-gui-ze">示例3，路由鉴权，自定义认证规则</h3>
 <p>原写法：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
 public void addInterceptors(InterceptorRegistry registry) {
@@ -253,10 +253,13 @@ public void addInterceptors(InterceptorRegistry registry) {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#qian-yan">前言</a></li>
-<li class="toc-h3"><a href="#1-jiu-ban-ben">1、旧版本</a></li>
-<li class="toc-h3"><a href="#2-xin-ban-ben-yong-fa">2、新版本用法</a></li>
-<li class="toc-h3"><a href="#3-shi-li">3、示例</a></li>
+<li class="toc-h2"><a href="#qian-yan">前言</a></li>
+<li class="toc-h2"><a href="#1-jiu-ban-ben">1、旧版本</a></li>
+<li class="toc-h2"><a href="#2-xin-ban-ben-yong-fa">2、新版本用法</a></li>
+<li class="toc-h2"><a href="#3-shi-li">3、示例</a></li>
+<li class="toc-h3"><a href="#shi-li-1-zhu-jie-jian-quan">示例1，注解鉴权</a></li>
+<li class="toc-h3"><a href="#shi-li-2-lu-you-jian-quan-mo-ren-deng-lu-jiao-yan">示例2，路由鉴权，默认登录校验</a></li>
+<li class="toc-h3"><a href="#shi-li-3-lu-you-jian-quan-zi-ding-yi-ren-zheng-gui-ze">示例3，路由鉴权，自定义认证规则</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

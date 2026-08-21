@@ -169,7 +169,7 @@
     &lt;version&gt;1.43.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
-<h3 id="geng-xin-dian-1-dan-dian-deng-lu-mo-kuai-xin-zeng-dan-she-be">⛏️️️️ 更新点1：单点登录模块新增“单设备注销”模式</h3>
+<h2 id="geng-xin-dian-1-dan-dian-deng-lu-mo-kuai-xin-zeng-dan-she-be">⛏️️️️ 更新点1：单点登录模块新增“单设备注销”模式</h2>
 <p>有单点登录就必然要有单点注销，目前 SSO 单点登录模块包含：单应用注销、单设备注销、全端注销 三种模式，怎么理解三者的差异呢？</p>
 <p>举个例子，用户在 Chrome 浏览器 登录了 应用A、应用B、应用C，又在 Firefox 浏览器登录了应用A、应用B，那么此时他：</p>
 <ul>
@@ -178,7 +178,7 @@
 <li>点击“全端注销”后：用户在所有浏览器登录的所以会话一起注销下线。</li>
 </ul>
 <p>以上几种注销方式仅需通过一行代码或者调用一个接口即可实现，详细可参考在线文档：<a href="https://sa-token.com/doc.html#/sso/signout">Sa-Token SSO 单点注销</a>。</p>
-<h3 id="geng-xin-dian-2-dan-dian-deng-lu-mo-kuai-xin-zeng-xiao-xi-tu">⛏️️️️ 更新点2：单点登录模块新增消息推送机制</h3>
+<h2 id="geng-xin-dian-2-dan-dian-deng-lu-mo-kuai-xin-zeng-xiao-xi-tu">⛏️️️️ 更新点2：单点登录模块新增消息推送机制</h2>
 <p>此提案来源于社区交流群中的一位开发者咨询：</p>
 <p><img alt="sa-sso-message-push-tian.png" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-sso-message-push-tian.png" /></p>
 <p>该开发者指出是否可以在 SSO 模块增加各个系统互相通知 token 续期的功能，以便做到系统之间会话有效期的强同步。</p>
@@ -245,7 +245,7 @@ public Object myInfo() {
     return result;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
 <p>详细可参考在线文档：<a href="https://sa-token.com/doc.html#/sso/message-push">Sa-Token SSO 消息推送机制</a> 。</p>
-<h3 id="geng-xin-dian-3-dan-dian-deng-lu-xin-zeng-resdk-dui-jie-mo-s">⛏️️️️ 更新点3：单点登录新增 resdk 对接模式</h3>
+<h2 id="geng-xin-dian-3-dan-dian-deng-lu-xin-zeng-resdk-dui-jie-mo-s">⛏️️️️ 更新点3：单点登录新增 resdk 对接模式</h2>
 <p>Sa-Token SSO 模块一直是支持非 Sa-Token 技术栈、甚至非 java 项目对接的，在之前版本给出的对接方式是 NoSdk 模式。</p>
 <p>NoSdk 模式就是指不集成 Sa-Token，直接通过 http 工具类调用接口的方式来对接 SSO-Server。</p>
 <p>参考 demo：<a href="https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client-nosdk">sa-token-demo-sso3-client-nosdk</a></p>
@@ -260,7 +260,7 @@ public Object myInfo() {
 <p>ReSdk 模式优点：</p>
 <p>1、依然支持客户端使用任意技术栈。<br />
 2、仅重写少量部分关键代码，即可完成对接。几乎可以得到 Sa-Token SSO 模块全量能力。</p>
-<h3 id="geng-xin-dian-4-oauth2-access-token-bing-cun-neng-li">⛏️️️️ 更新点4：OAuth2新增多 Access-Token 并存能力。</h3>
+<h2 id="geng-xin-dian-4-oauth2-access-token-bing-cun-neng-li">⛏️️️️ 更新点4：OAuth2新增多 Access-Token 并存能力。</h2>
 <p>点击非常高的一个提案：<code>OAuth2 模块每次生成新的 access_token 时能否保留旧 access_token 依然有效</code>。</p>
 <p>fix issues: <a href="https://gitee.com/dromara/sa-token/issues/IBHFD1">#IBHFD1</a> 、 <a href="https://gitee.com/dromara/sa-token/issues/IBLL4Q">#IBLL4Q</a> 、<a href="https://github.com/dromara/Sa-Token/issues/724">#724</a> </p>
 <p><img alt="sa-many-access-token-issue1" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-many-access-token-issue1.png" /></p>
@@ -295,7 +295,7 @@ SaOAuth2Util.revokeAccessToken(accessToken);
 // 回收全部 Access-Token：指定应用下 指定用户 的全部 Access-Token
 SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li></ul></pre>
 <p>在线文档相关章节：<a href="https://sa-token.com/doc.html#/oauth2/oauth2-dev">Sa-Token-OAuth2 常用方法</a></p>
-<h3 id="geng-xin-dian-5-jian-hua-core-he-xin-bao-gong-neng-mo-kuai-j">⛏️️️️ 更新点5：简化 core 核心包功能模块，进行拆包</h3>
+<h2 id="geng-xin-dian-5-jian-hua-core-he-xin-bao-gong-neng-mo-kuai-j">⛏️️️️ 更新点5：简化 core 核心包功能模块，进行拆包</h2>
 <p>在社区群聊中有同学提到目前 sa-token-core 核心包功能过于拥挤复杂。应要求本次将部分功能模块进行删减，转移到了 plugin 包下：</p>
 <ul>
 <li>拆分：API Key 模块拆分独立插件包：<code>sa-token-apikey</code>。</li>
@@ -306,7 +306,7 @@ SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);</code><ul class="code-
 <li>新增：新增 <code>sa-token-forest</code> 插件，用于在 Http 请求处理器模块整合 Forest。</li>
 <li>新增：新增 <code>sa-token-okhttps</code> 插件，用于在 Http 请求处理器模块整合 OkHttps。</li>
 </ul>
-<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
 <p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.43.0 版本的完整更新日志：</p>
 <ul>
 <li>core: <ul>
@@ -386,7 +386,7 @@ SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);</code><ul class="code-
 </li>
 </ul>
 <p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
-<h3 id="qi-ta">🌟 其它</h3>
+<h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 					<div class="blog-post-nav">
 <a class="blog-post-nav-prev" href="../release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html">← Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力</a>
@@ -399,13 +399,13 @@ SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);</code><ul class="code-
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#geng-xin-dian-1-dan-dian-deng-lu-mo-kuai-xin-zeng-dan-she-be">⛏️️️️ 更新点1：单点登录模块新增“单设备注销”模式</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-2-dan-dian-deng-lu-mo-kuai-xin-zeng-xiao-xi-tu">⛏️️️️ 更新点2：单点登录模块新增消息推送机制</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-3-dan-dian-deng-lu-xin-zeng-resdk-dui-jie-mo-s">⛏️️️️ 更新点3：单点登录新增 resdk 对接模式</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-4-oauth2-access-token-bing-cun-neng-li">⛏️️️️ 更新点4：OAuth2新增多 Access-Token 并存能力。</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-5-jian-hua-core-he-xin-bao-gong-neng-mo-kuai-j">⛏️️️️ 更新点5：简化 core 核心包功能模块，进行拆包</a></li>
-<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
-<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-1-dan-dian-deng-lu-mo-kuai-xin-zeng-dan-she-be">⛏️️️️ 更新点1：单点登录模块新增“单设备注销”模式</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-dan-dian-deng-lu-mo-kuai-xin-zeng-xiao-xi-tu">⛏️️️️ 更新点2：单点登录模块新增消息推送机制</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-dan-dian-deng-lu-xin-zeng-resdk-dui-jie-mo-s">⛏️️️️ 更新点3：单点登录新增 resdk 对接模式</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-oauth2-access-token-bing-cun-neng-li">⛏️️️️ 更新点4：OAuth2新增多 Access-Token 并存能力。</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-jian-hua-core-he-xin-bao-gong-neng-mo-kuai-j">⛏️️️️ 更新点5：简化 core 核心包功能模块，进行拆包</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

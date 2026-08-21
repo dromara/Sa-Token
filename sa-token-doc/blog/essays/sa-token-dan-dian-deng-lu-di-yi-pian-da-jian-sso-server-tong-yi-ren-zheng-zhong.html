@@ -166,12 +166,12 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 </blockquote>
 <p>凡是稍微上点规模的系统，统一认证中心都是绕不过去的槛。而单点登录 —— 便是我们搭建统一认证中心的关键。</p>
 <p>本篇将介绍如何使用 Sa-Token 方便的搭建一个 sso-server 认证中心。</p>
-<h3 id="yi-shen-me-shi-dan-dian-deng-lu-jie-jue-shen-me-wen-ti">一、什么是单点登录？解决什么问题？</h3>
+<h2 id="yi-shen-me-shi-dan-dian-deng-lu-jie-jue-shen-me-wen-ti">一、什么是单点登录？解决什么问题？</h2>
 <p>举个场景，假设我们的系统被切割为N个部分：商城、论坛、直播、社交…… 如果用户每访问一个模块都要登录一次，那么用户将会疯掉，<br />
 为了优化用户体验，我们急需一套机制将这N个系统的认证授权互通共享，让用户在一个系统登录之后，便可以畅通无阻的访问其它所有系统。 </p>
 <p>单点登录——就是为了解决这个问题而生！</p>
 <p>简而言之，单点登录可以做到：<strong><code>在多个互相信任的系统中，用户只需登录一次，就可以访问所有系统。</code></strong></p>
-<h3 id="er-jia-gou-xuan-xing">二、架构选型</h3>
+<h2 id="er-jia-gou-xuan-xing">二、架构选型</h2>
 <p>Sa-Token-SSO 由简入难划分为三种模式，解决不同架构下的 SSO 接入问题：</p>
 <table>
 <thead>
@@ -204,7 +204,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <li>后端同Redis：就是指多个系统可以连接同一个Redis。PS：这里并不需要把所有项目的数据都放在同一个Redis中，Sa-Token提供了 <strong><code>[权限缓存与业务缓存分离]</code></strong> 的解决方案。</li>
 <li>如果既无法做到前端同域，也无法做到后端同Redis，那么只能走模式三，Http请求获取会话（Sa-Token对SSO提供了完整的封装，你只需要按照示例从文档上复制几段代码便可以轻松集成）。</li>
 </ol>
-<h3 id="san-sa-token-sso-te-xing">三、Sa-Token-SSO 特性</h3>
+<h2 id="san-sa-token-sso-te-xing">三、Sa-Token-SSO 特性</h2>
 <ol>
 <li>API 简单易用，文档介绍详细，且提供直接可用的集成示例。</li>
 <li>支持三种模式，不论是否跨域、是否共享Redis、是否前后端分离，都可以完美解决。</li>
@@ -214,7 +214,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <li>高可定制：Sa-Token-SSO模块对代码架构侵入性极低，结合Sa-Token本身的路由拦截特性，你可以非常轻松的定制化开发。</li>
 </ol>
 <p>在开始SSO三种模式的对接之前，我们必须先搭建一个 SSO-Server 认证中心</p>
-<h3 id="si-tian-jia-yi-lai">四、添加依赖</h3>
+<h2 id="si-tian-jia-yi-lai">四、添加依赖</h2>
 <p>创建 SpringBoot 项目 <code>sa-token-demo-sso-server</code>，引入依赖：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
@@ -263,7 +263,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 - 在前后端分离模式下可以删除 thymeleaf 相关包<br />
 - 在不需要 SSO 模式三单点注销的情况下可以删除 http 工具包 </p>
 <p>建议先完整测试三种模式之后再对pom依赖进行酌情删减。</p>
-<h3 id="wu-kai-fang-ren-zheng-jie-kou">五、开放认证接口</h3>
+<h2 id="wu-kai-fang-ren-zheng-jie-kou">五、开放认证接口</h2>
 <p>新建 <code>SsoServerController</code>，用于对外开放接口：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * Sa-Token-SSO Server端 Controller 
@@ -329,7 +329,7 @@ public class GlobalExceptionHandler {
         return SaResult.error(e.getMessage());
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
-<h3 id="liu-application-yml">六、application.yml配置</h3>
+<h2 id="liu-application-yml">六、application.yml配置</h2>
 <!---------------------------- tabs:start ---------------------------->
 
 <!------------- tab:yaml 风格  ------------->
@@ -379,7 +379,7 @@ forest:
 <!---------------------------- tabs:end ---------------------------->
 
 <p>注意点：<code>sa-token.sso.allow-url</code>为了方便测试配置为<code>*</code>，线上生产环境一定要配置为详细URL地址 （之后的章节我们会详细阐述此配置项）</p>
-<h3 id="qi-chuang-jian-qi-dong-lei">七、创建启动类</h3>
+<h2 id="qi-chuang-jian-qi-dong-lei">七、创建启动类</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
 public class SaSsoServerApplication {
     public static void main(String[] args) {
@@ -401,11 +401,11 @@ public class SaSsoServerApplication {
 真实项目中我们是不会直接从浏览器访问 <code>/sso/auth</code> 授权地址的，我们需要在 Client 端点击登录按钮重定向而来。</p>
 <hr />
 <p>现在我们先来看看除了 <code>/sso/auth</code> 统一授权地址，这个 SSO-Server 认证中心还开放了哪些API：</p>
-<h3 id="ba-sso-server-ren-zheng-zhong-xin-kai-fang-jie-kou-can-kao">八、SSO-Server 认证中心开放接口参考</h3>
+<h2 id="ba-sso-server-ren-zheng-zhong-xin-kai-fang-jie-kou-can-kao">八、SSO-Server 认证中心开放接口参考</h2>
 <p>如果你的 SSO-Server 端和 SSO-Client 端都使用 Sa-Token-SSO 搭建，那么你可以忽略以下部分内容，直接使用 Sa-Token SSO 模块进行对接。</p>
 <p>如果你仅在 SSO-Server 端使用 Sa-Token-SSO 搭建，而 SSO-Client 端使用其它框架的话，那么你就需要手动调用 http 请求来对接 SSO-Server 认证中心，<br />
 下面的 API 列表将给你的对接步骤做一份参考。</p>
-<h4 id="1-dan-dian-deng-lu-shou-quan-di-zhi">1、单点登录授权地址</h4>
+<h3 id="1-dan-dian-deng-lu-shou-quan-di-zhi">1、单点登录授权地址</h3>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://{host}:{port}/sso/auth</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>接收参数：</p>
 <table>
@@ -432,7 +432,7 @@ public class SaSsoServerApplication {
 <p>访问接口后有两种情况：<br />
 - 情况一：当前会话在 SSO 认证中心未登录，会进入登录页开始登录。<br />
 - 情况二：当前会话在 SSO 认证中心已登录，会被重定向至 <code>redirect</code> 地址，并携带 <code>ticket</code> 参数。</p>
-<h4 id="2-restapi-deng-lu-jie-kou">2、RestAPI 登录接口</h4>
+<h3 id="2-restapi-deng-lu-jie-kou">2、RestAPI 登录接口</h3>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://{host}:{port}/sso/doLogin</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>接收参数：</p>
 <table>
@@ -458,7 +458,7 @@ public class SaSsoServerApplication {
 </table>
 <p>此接口属于 RestAPI (使用ajax访问)，会进入后端配置的 <code>sso.setDoLoginHandle</code> 函数中，此函数的返回值即是此接口的响应值。</p>
 <p>另外需要注意：此接口并非只能携带 name、pwd 参数，因为你可以在方法里通过 <code>SaHolder.getRequest().getParam("xxx")</code> 来获取前端提交的其它参数。 </p>
-<h4 id="3-ticket-jiao-yan-jie-kou">3、Ticket 校验接口</h4>
+<h3 id="3-ticket-jiao-yan-jie-kou">3、Ticket 校验接口</h3>
 <p>此接口仅配置模式三 <code>(isHttp=true)</code> 时打开 </p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://{host}:{port}/sso/checkTicket</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>接收参数：</p>
@@ -498,14 +498,14 @@ public class SaSsoServerApplication {
     &quot;msg&quot;: &quot;无效ticket：vESj0MtqrtSoucz4DDHJnsqU3u7AKFzbj0KH57EfJvuhkX1uAH23DuNrMYSjTnEq&quot;,
     &quot;data&quot;: null
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<h4 id="4-dan-dian-zhu-xiao-jie-kou">4、单点注销接口</h4>
+<h3 id="4-dan-dian-zhu-xiao-jie-kou">4、单点注销接口</h3>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://{host}:{port}/sso/signout</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>此接口有两种调用方式</p>
-<h5>4.1、方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数</h5>
+<h4 id="4-1-fang-shi-yi-zai-client-de-qian-duan-ye-mian-yin-dao-yong">4.1、方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数</h4>
 <p>例如：</p>
 <pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://{host}:{port}/sso/signout?back=xxx</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>用户注销成功后将返回 back 地址 </p>
-<h5>4.2、方式二：在 Client 的后端通过 http 工具来调用</h5>
+<h4 id="4-2-fang-shi-er-zai-client-de-hou-duan-tong-guo-http-gong-ju">4.2、方式二：在 Client 的后端通过 http 工具来调用</h4>
 <p>接受参数：</p>
 <table>
 <thead>
@@ -555,7 +555,7 @@ public class SaSsoServerApplication {
 <p>SSO 认证中心只有这四个接口，此部分内容先介绍至此，接下来的文章我会依次介绍在 Sa-Token SSO 中：<br />
 同域、跨域、同Redis、跨Redis、前后端分离、前后端一体等各种不同架构下的单点登录对接流程。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -572,19 +572,21 @@ public class SaSsoServerApplication {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-shen-me-shi-dan-dian-deng-lu-jie-jue-shen-me-wen-ti">一、什么是单点登录？解决什么问题？</a></li>
-<li class="toc-h3"><a href="#er-jia-gou-xuan-xing">二、架构选型</a></li>
-<li class="toc-h3"><a href="#san-sa-token-sso-te-xing">三、Sa-Token-SSO 特性</a></li>
-<li class="toc-h3"><a href="#si-tian-jia-yi-lai">四、添加依赖</a></li>
-<li class="toc-h3"><a href="#wu-kai-fang-ren-zheng-jie-kou">五、开放认证接口</a></li>
-<li class="toc-h3"><a href="#liu-application-yml">六、application.yml配置</a></li>
-<li class="toc-h3"><a href="#qi-chuang-jian-qi-dong-lei">七、创建启动类</a></li>
-<li class="toc-h3"><a href="#ba-sso-server-ren-zheng-zhong-xin-kai-fang-jie-kou-can-kao">八、SSO-Server 认证中心开放接口参考</a></li>
-<li class="toc-h4"><a href="#1-dan-dian-deng-lu-shou-quan-di-zhi">1、单点登录授权地址</a></li>
-<li class="toc-h4"><a href="#2-restapi-deng-lu-jie-kou">2、RestAPI 登录接口</a></li>
-<li class="toc-h4"><a href="#3-ticket-jiao-yan-jie-kou">3、Ticket 校验接口</a></li>
-<li class="toc-h4"><a href="#4-dan-dian-zhu-xiao-jie-kou">4、单点注销接口</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-shen-me-shi-dan-dian-deng-lu-jie-jue-shen-me-wen-ti">一、什么是单点登录？解决什么问题？</a></li>
+<li class="toc-h2"><a href="#er-jia-gou-xuan-xing">二、架构选型</a></li>
+<li class="toc-h2"><a href="#san-sa-token-sso-te-xing">三、Sa-Token-SSO 特性</a></li>
+<li class="toc-h2"><a href="#si-tian-jia-yi-lai">四、添加依赖</a></li>
+<li class="toc-h2"><a href="#wu-kai-fang-ren-zheng-jie-kou">五、开放认证接口</a></li>
+<li class="toc-h2"><a href="#liu-application-yml">六、application.yml配置</a></li>
+<li class="toc-h2"><a href="#qi-chuang-jian-qi-dong-lei">七、创建启动类</a></li>
+<li class="toc-h2"><a href="#ba-sso-server-ren-zheng-zhong-xin-kai-fang-jie-kou-can-kao">八、SSO-Server 认证中心开放接口参考</a></li>
+<li class="toc-h3"><a href="#1-dan-dian-deng-lu-shou-quan-di-zhi">1、单点登录授权地址</a></li>
+<li class="toc-h3"><a href="#2-restapi-deng-lu-jie-kou">2、RestAPI 登录接口</a></li>
+<li class="toc-h3"><a href="#3-ticket-jiao-yan-jie-kou">3、Ticket 校验接口</a></li>
+<li class="toc-h3"><a href="#4-dan-dian-zhu-xiao-jie-kou">4、单点注销接口</a></li>
+<li class="toc-h4"><a href="#4-1-fang-shi-yi-zai-client-de-qian-duan-ye-mian-yin-dao-yong">4.1、方式一：在 Client 的前端页面引导用户直接跳转，并带有 back 参数</a></li>
+<li class="toc-h4"><a href="#4-2-fang-shi-er-zai-client-de-hou-duan-tong-guo-http-gong-ju">4.2、方式二：在 Client 的后端通过 http 工具来调用</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

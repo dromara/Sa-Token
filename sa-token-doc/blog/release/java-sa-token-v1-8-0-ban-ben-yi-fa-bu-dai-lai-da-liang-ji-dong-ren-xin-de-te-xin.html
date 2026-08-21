@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>java权限认证框架 sa-token v1.8.0 版本已发布，带来大量激动人心的特性</h1>
 					<div class="blog-article-meta"><span>2021-01-02</span><span>版本更新</span></div>
-					<h3 id="sa-token">sa-token是什么？</h3>
+					<h2 id="sa-token">sa-token是什么？</h2>
 <p>sa-token是一个JavaWeb轻量级权限认证框架，其API调用非常简单，有多简单呢？以登录验证为例，你只需要：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 在登录时写入当前会话的账号id
 StpUtil.setLoginId(10001);
@@ -168,7 +168,7 @@ StpUtil.setLoginId(10001);
 StpUtil.checkLogin();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
 <p><strong>没有复杂的封装！不要任何的配置！只需这两行简单的调用，即可轻松完成系统登录鉴权！</strong></p>
 <p>框架目前已集成诸多特性：登录验证、权限验证、Session会话、踢人下线、集成Redis、前后台分离、模拟他人账号、多账号体系、注解式鉴权、花式token、自动续签、Spring集成...</p>
-<h3 id="api">API展示</h3>
+<h2 id="api">API展示</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">StpUtil.setLoginId(10001);          // 标记当前会话登录的账号id
 StpUtil.getLoginId();               // 获取当前会话登录的账号id
 StpUtil.isLogin();                  // 获取当前会话是否已经登录, 返回true或false
@@ -179,7 +179,7 @@ StpUtil.hasPermission(&quot;user:add&quot;);  // 查询当前账号是否含有�
 StpUtil.getSession();               // 获取当前账号id的Session
 StpUtil.getSessionByLoginId(10001); // 获取账号id为10001的Session
 StpUtil.getTokenValueByLoginId(10001);  // 获取账号id为10001的token令牌值</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
-<h3 id="v1-8-0-geng-xin-ri-zhi">v1.8.0 更新日志</h3>
+<h2 id="v1-8-0-geng-xin-ri-zhi">v1.8.0 更新日志</h2>
 <ul>
 <li>优化：优化源码注释</li>
 <li>修复：修复部分文档错别字</li>
@@ -210,9 +210,9 @@ StpUtil.getTokenValueByLoginId(10001);  // 获取账号id为10001的token令牌�
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#sa-token">sa-token是什么？</a></li>
-<li class="toc-h3"><a href="#api">API展示</a></li>
-<li class="toc-h3"><a href="#v1-8-0-geng-xin-ri-zhi">v1.8.0 更新日志</a></li>
+<li class="toc-h2"><a href="#sa-token">sa-token是什么？</a></li>
+<li class="toc-h2"><a href="#api">API展示</a></li>
+<li class="toc-h2"><a href="#v1-8-0-geng-xin-ri-zhi">v1.8.0 更新日志</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

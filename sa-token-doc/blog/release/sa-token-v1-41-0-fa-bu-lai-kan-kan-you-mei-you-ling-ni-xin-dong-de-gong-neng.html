@@ -168,7 +168,7 @@
     &lt;version&gt;1.41.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
-<h3 id="geng-xin-dian-1-fang-huo-qiang-mo-kuai-xin-zeng-hooks-kuo-zh">🛡️ 更新点1：防火墙模块新增 hooks 扩展机制</h3>
+<h2 id="geng-xin-dian-1-fang-huo-qiang-mo-kuai-xin-zeng-hooks-kuo-zh">🛡️ 更新点1：防火墙模块新增 hooks 扩展机制</h2>
 <p>本次更新针对防火墙新增了多条校验规则，之前的规则为：<br />
 - path 白名单放行。<br />
 - path 黑名单拦截。<br />
@@ -191,7 +191,7 @@ public void saTokenPostConstruct() {
     });
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
 <p>文档直达地址：<a href="https://sa-token.com/doc.html#/fun/firewall">Sa-Token 防火墙</a> 🔗</p>
-<h3 id="geng-xin-dian-2-xin-zeng-ji-yu-spi-ji-zhi-de-cha-jian-ti-xi">💡 更新点2：新增基于 SPI 机制的插件体系</h3>
+<h2 id="geng-xin-dian-2-xin-zeng-ji-yu-spi-ji-zhi-de-cha-jian-ti-xi">💡 更新点2：新增基于 SPI 机制的插件体系</h2>
 <p>之前在 Sa-Token 中也有插件体系，不过都是利用 SpringBoot 的 SPI 机制完成组件注册的。</p>
 <p>这种注册机制有一个问题，就是插件只能在 SpringBoot 环境下正常工作，在其它环境，比如 Solon 项目中，就只能手动注册插件才行 😫。</p>
 <p>也就是说，严格来讲，这些插件只能算是 SpringBoot 的插件，而非 Sa-Token 框架的插件 🌐。</p>
@@ -211,7 +211,7 @@ public class SaTokenPluginForXxx implements SaTokenPlugin {
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">cn.dev33.satoken.plugin.SaTokenPluginForXxx</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>这样便可以在项目启动时，被 Sa-Token 插件管理器加载到此插件，执行插件注册类的 install 方法，完成插件安装 ✅。</p>
 <p>文档直达地址：<a href="https://sa-token.com/doc.html#/fun/plugin-dev">Sa-Token 插件开发指南</a> 🔗</p>
-<h3 id="geng-xin-dian-3-zhong-gou-huan-cun-ti-xi-jiang-shu-ju-du-xie">🎛️ 更新点3：重构缓存体系，将数据读写与序列化操作分离</h3>
+<h2 id="geng-xin-dian-3-zhong-gou-huan-cun-ti-xi-jiang-shu-ju-du-xie">🎛️ 更新点3：重构缓存体系，将数据读写与序列化操作分离</h2>
 <p>在之前的版本中，Redis 集成通常和具体的序列化方式耦合在一起，这不仅让 Redis 相关插件产生大量的重复冗余代码，也让大家在选择 Redis 插件时严重受限。⚠️</p>
 <p>本次版本更新彻底重构了此模块，将数据读写与序列化操作分离，使其每一块都可以单独自定义实现类，做到灵活扩展 ✨，例如：</p>
 <ul>
@@ -220,7 +220,7 @@ public class SaTokenPluginForXxx implements SaTokenPlugin {
 <li>3️⃣ JSON 序列化可以选择：Jackson、Fastjson、Snack3 等组件。</li>
 </ul>
 <p>所有实现类均可以按需选择，自由搭配，大大提高灵活性🏗️。</p>
-<h3 id="geng-xin-dian-4-saloginparameter-deng-lu-can-shu-lei-xin-zen">⚙️️ 更新点4：SaLoginParameter 登录参数类新增大量配置项</h3>
+<h2 id="geng-xin-dian-4-saloginparameter-deng-lu-can-shu-lei-xin-zen">⚙️️ 更新点4：SaLoginParameter 登录参数类新增大量配置项</h2>
 <p>SaLoginParameter (前SaLoginModel) 用于控制登录操作中的部分细节行为，本次新增的配置项有：<br />
 - isConcurrent：决定是否允许同一账号多地同时登录（为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）。🌍<br />
 - isShare：在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）。🔄<br />
@@ -230,7 +230,7 @@ public class SaTokenPluginForXxx implements SaTokenPlugin {
 - terminalExtraData：本次登录挂载到 SaTerminalInfo 的自定义扩展数据。📦</p>
 <p>以上大部分配置项在之前的版本中也有支持，不过它们都被定义在了全局配置类 SaTokenConfig 之上，本次更新支持在 SaLoginParameter 中定义这些配置项，<br />
 这将让登录策略的控制变得更加灵活。✨</p>
-<h3 id="geng-xin-dian-5-xin-zeng-salogoutparameter-zhu-xiao-can-shu">🚪 更新点5：新增 SaLogoutParameter 注销参数类</h3>
+<h2 id="geng-xin-dian-5-xin-zeng-salogoutparameter-zhu-xiao-can-shu">🚪 更新点5：新增 SaLogoutParameter 注销参数类</h2>
 <p>SaLogoutParameter 用于控制注销操作中的部分细节行为️，例如：</p>
 <p>通过 <code>Range</code> 参数决定注销范围 🎯：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 注销范围： TOKEN=只注销当前 token 的会话，ACCOUNT=注销当前 token 指向的 loginId 其所有客户端会话
@@ -239,10 +239,10 @@ StpUtil.logout(new SaLogoutParameter().setRange(SaLogoutRange.TOKEN));</code><ul
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 指定 10001 账号，所有 PC 端注销下线，其它端如 APP 端不受影响 
 StpUtil.logout(10001, new SaLogoutParameter().setDeviceType(&quot;PC&quot;));</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
 <p>还有其它参数此处暂不逐一列举，文档直达地址：<a href="https://sa-token.com/doc.html#/up/login-parameter">Sa-Token 登录参数 &amp; 注销参数</a> 🔗</p>
-<h3 id="geng-xin-dian-6-xiu-fu-stputil-settokenvalue-xxx-loginparame">🐞 更新点6：修复 <code>StpUtil.setTokenValue("xxx")</code>、<code>loginParameter.getIsWriteHeader()</code> 空指针的问题。</h3>
+<h2 id="geng-xin-dian-6-xiu-fu-stputil-settokenvalue-xxx-loginparame">🐞 更新点6：修复 <code>StpUtil.setTokenValue("xxx")</code>、<code>loginParameter.getIsWriteHeader()</code> 空指针的问题。</h2>
 <p>这个没啥好说的，有 bug 🐛 必须修复。</p>
 <p>fix issue：<a href="https://gitee.com/dromara/sa-token/issues/IBKSM0">#IBKSM0</a> 🔗</p>
-<h3 id="geng-xin-dian-7-api-can-shu-qian-ming-mo-kuai-sheng-ji">✨ 更新点7：API 参数签名模块升级</h3>
+<h2 id="geng-xin-dian-7-api-can-shu-qian-ming-mo-kuai-sheng-ji">✨ 更新点7：API 参数签名模块升级</h2>
 <ul>
 <li>1、新增了 @SaCheckSign 注解，现在 API 参数签名模块也支持注解鉴权了。🆕</li>
 <li>2、新增自定义签名的摘要算法，现在不仅可以 md5 算法计算签名，也支持 sha1、sha256 等算法了。🔐</li>
@@ -270,7 +270,7 @@ String paramStr = SaSignMany.getSignTemplate(&quot;xm-shop&quot;).addSignParamsA
 
 // 校验签名示例
 SaSignMany.getSignTemplate(&quot;xm-shop&quot;).checkRequest(SaHolder.getRequest());</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
-<h3 id="geng-xin-dian-8-xin-zeng-sa-token-caffeine-cha-jian-yong-yu">⚡ 更新点8：新增 sa-token-caffeine 插件，用于整合 Caffeine</h3>
+<h2 id="geng-xin-dian-8-xin-zeng-sa-token-caffeine-cha-jian-yong-yu">⚡ 更新点8：新增 sa-token-caffeine 插件，用于整合 Caffeine</h2>
 <p>Caffeine 是一个基于 Java 的高性能本地缓存库，本次新增 sa-token-caffeine 插件用于将 Caffeine 作为 Sa-Token 的缓存层，存储会话鉴权数据。🚀<br />
 这进一步丰富了 Sa-Token 的缓存层插件生态。🌱</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 整合 Caffeine --&gt;
@@ -279,14 +279,14 @@ SaSignMany.getSignTemplate(&quot;xm-shop&quot;).checkRequest(SaHolder.getRequest
     &lt;artifactId&gt;sa-token-caffeine&lt;/artifactId&gt;
     &lt;version&gt;1.41.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
-<h3 id="geng-xin-dian-9-xin-zeng-sa-token-serializer-features-xu-lie">🎪 更新点9：新增 sa-token-serializer-features 序列化扩展包</h3>
+<h2 id="geng-xin-dian-9-xin-zeng-sa-token-serializer-features-xu-lie">🎪 更新点9：新增 sa-token-serializer-features 序列化扩展包</h2>
 <p>引入此插件可以为 Sa-Token 提供一些有意思的序列化方案。（娱乐向，不建议上生产 🎭）</p>
 <p>例如：以base64 编码，采用：元素周期表 🧪、特殊符号 🔣、或 emoji 😊 作为元字符集存储数据 ：</p>
 <p><img alt="sa-custom-serializer-yszqb.png" src="https://res.dev33.cn/sa-token-blog/img/2025-3/sa-custom-serializer-yszqb.png" /></p>
 <p><img alt="sa-custom-serializer-tsfh.png" src="https://res.dev33.cn/sa-token-blog/img/2025-3/sa-custom-serializer-tsfh.png" /></p>
 <p><img alt="sa-custom-serializer-emoji.png" src="https://res.dev33.cn/sa-token-blog/img/2025-3/sa-custom-serializer-emoji.png" /></p>
 <p><img alt="sa-custom-serializer-emoji2.png" src="https://res.dev33.cn/sa-token-blog/img/2025-3/sa-custom-serializer-emoji2.png" /></p>
-<h3 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h3>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
 <p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.41.0 版本的完整更新日志：</p>
 <ul>
 <li>core: <ul>
@@ -360,7 +360,7 @@ SaSignMany.getSignTemplate(&quot;xm-shop&quot;).checkRequest(SaHolder.getRequest
 </li>
 </ul>
 <p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
-<h3 id="qi-ta">🌟 其它</h3>
+<h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>
 <p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2025-3/sa-token-js4.png" /></p>
@@ -375,17 +375,17 @@ SaSignMany.getSignTemplate(&quot;xm-shop&quot;).checkRequest(SaHolder.getRequest
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#geng-xin-dian-1-fang-huo-qiang-mo-kuai-xin-zeng-hooks-kuo-zh">🛡️ 更新点1：防火墙模块新增 hooks 扩展机制</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-2-xin-zeng-ji-yu-spi-ji-zhi-de-cha-jian-ti-xi">💡 更新点2：新增基于 SPI 机制的插件体系</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-3-zhong-gou-huan-cun-ti-xi-jiang-shu-ju-du-xie">🎛️ 更新点3：重构缓存体系，将数据读写与序列化操作分离</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-4-saloginparameter-deng-lu-can-shu-lei-xin-zen">⚙️️ 更新点4：SaLoginParameter 登录参数类新增大量配置项</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-5-xin-zeng-salogoutparameter-zhu-xiao-can-shu">🚪 更新点5：新增 SaLogoutParameter 注销参数类</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-6-xiu-fu-stputil-settokenvalue-xxx-loginparame">🐞 更新点6：修复 StpUtil.setTokenValue(&quot;xxx&quot;)、loginParameter.getIsWriteHeader() 空指针的问题。</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-7-api-can-shu-qian-ming-mo-kuai-sheng-ji">✨ 更新点7：API 参数签名模块升级</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-8-xin-zeng-sa-token-caffeine-cha-jian-yong-yu">⚡ 更新点8：新增 sa-token-caffeine 插件，用于整合 Caffeine</a></li>
-<li class="toc-h3"><a href="#geng-xin-dian-9-xin-zeng-sa-token-serializer-features-xu-lie">🎪 更新点9：新增 sa-token-serializer-features 序列化扩展包</a></li>
-<li class="toc-h3"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
-<li class="toc-h3"><a href="#qi-ta">🌟 其它</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-1-fang-huo-qiang-mo-kuai-xin-zeng-hooks-kuo-zh">🛡️ 更新点1：防火墙模块新增 hooks 扩展机制</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-xin-zeng-ji-yu-spi-ji-zhi-de-cha-jian-ti-xi">💡 更新点2：新增基于 SPI 机制的插件体系</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-zhong-gou-huan-cun-ti-xi-jiang-shu-ju-du-xie">🎛️ 更新点3：重构缓存体系，将数据读写与序列化操作分离</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-saloginparameter-deng-lu-can-shu-lei-xin-zen">⚙️️ 更新点4：SaLoginParameter 登录参数类新增大量配置项</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-xin-zeng-salogoutparameter-zhu-xiao-can-shu">🚪 更新点5：新增 SaLogoutParameter 注销参数类</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-xiu-fu-stputil-settokenvalue-xxx-loginparame">🐞 更新点6：修复 StpUtil.setTokenValue(&quot;xxx&quot;)、loginParameter.getIsWriteHeader() 空指针的问题。</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-7-api-can-shu-qian-ming-mo-kuai-sheng-ji">✨ 更新点7：API 参数签名模块升级</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-8-xin-zeng-sa-token-caffeine-cha-jian-yong-yu">⚡ 更新点8：新增 sa-token-caffeine 插件，用于整合 Caffeine</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-9-xin-zeng-sa-token-serializer-features-xu-lie">🎪 更新点9：新增 sa-token-serializer-features 序列化扩展包</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>SpringBoot 使用 Sa-Token 完成路由拦截鉴权</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
-					<h3 id="yi-xu-qiu-fen-xi">一、需求分析</h3>
+					<h2 id="yi-xu-qiu-fen-xi">一、需求分析</h2>
 <p>在前文，我们详细的讲述了在 Sa-Token 如何使用注解进行权限认证，注解鉴权虽然方便，却并不适合所有鉴权场景。</p>
 <p>假设有如下需求：项目中所有接口均需要登录认证校验，只有 “登录接口” 本身对外开放。</p>
 <p>如果我们对项目所有接口都加上 <code>@SaCheckLogin</code> 注解，会显得非常冗余且没有必要，在这个需求中我们真正需要的是一种基于路由拦截的鉴权模式，那么在 Sa-Token 怎么实现路由拦截鉴权呢？</p>
@@ -167,7 +167,7 @@
 <p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
 Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
-<h3 id="er-zhu-ce-sa-token-lu-you-lan-jie-qi">二、注册 Sa-Token 路由拦截器</h3>
+<h2 id="er-zhu-ce-sa-token-lu-you-lan-jie-qi">二、注册 Sa-Token 路由拦截器</h2>
 <p>首先在项目中引入 Sa-Token 依赖：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
 &lt;dependency&gt;
@@ -192,7 +192,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 <blockquote>
 <p><code>SaInterceptor</code> 是新版本提供的拦截器，点此 <a href="https://blog.csdn.net/shengzhang_/article/details/126458949">查看旧版本代码迁移示例</a>。</p>
 </blockquote>
-<h3 id="san-jiao-yan-han-shu-xiang-jie">三、校验函数详解</h3>
+<h2 id="san-jiao-yan-han-shu-xiang-jie">三、校验函数详解</h2>
 <p>自定义认证规则：<code>new SaInterceptor(handle -&gt; StpUtil.checkLogin())</code> 是最简单的写法，代表只进行登录校验功能。</p>
 <p>我们可以往构造函数塞一个完整的 lambda 表达式，来定义详细的校验规则，例如：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
@@ -252,7 +252,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         })).addPathPatterns(&quot;/**&quot;);
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li></ul></pre>
-<h3 id="si-pi-pei-te-zheng-xiang-jie">四、匹配特征详解</h3>
+<h2 id="si-pi-pei-te-zheng-xiang-jie">四、匹配特征详解</h2>
 <p>除了上述示例的 path 路由匹配，还可以根据很多其它特征进行匹配，以下是所有可匹配的特征：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 基础写法样例：匹配一个path，执行一个校验函数 
 SaRouter.match(&quot;/user/**&quot;).check(r -&gt; StpUtil.checkLogin());
@@ -288,7 +288,7 @@ SaRouter
     .notMatch(&quot;/**/*.css&quot;)
     // ....
     .check( /* 只有上述所有条件都匹配成功，才会执行最后的check校验函数 */ );</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li></ul></pre>
-<h3 id="wu-ti-qian-tui-chu-pi-pei-lian">五、提前退出匹配链</h3>
+<h2 id="wu-ti-qian-tui-chu-pi-pei-lian">五、提前退出匹配链</h2>
 <p>使用 <code>SaRouter.stop()</code> 可以提前退出匹配链，例：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">registry.addInterceptor(new SaInterceptor(handler -&gt; {
     SaRouter.match(&quot;/**&quot;).check(r -&gt; System.out.println(&quot;进入1&quot;));
@@ -304,7 +304,7 @@ SaRouter.match(&quot;/user/back&quot;).back(&quot;要返回到前端的内容&qu
 <p>stop() 与 back() 函数的区别在于：<br />
 - <code>SaRouter.stop()</code> 会停止匹配，进入Controller。<br />
 - <code>SaRouter.back()</code> 会停止匹配，直接返回结果到前端。</p>
-<h3 id="liu-shi-yong-free">六、使用free打开一个独立的作用域</h3>
+<h2 id="liu-shi-yong-free">六、使用free打开一个独立的作用域</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 进入 free 独立作用域 
 SaRouter.match(&quot;/**&quot;).free(r -&gt; {
     SaRouter.match(&quot;/a/**&quot;).check(/* --- */);
@@ -314,7 +314,7 @@ SaRouter.match(&quot;/**&quot;).free(r -&gt; {
 // 执行 stop() 函数跳出 free 后继续执行下面的 match 匹配 
 SaRouter.match(&quot;/**&quot;).check(/* --- */);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
 <p>free() 的作用是：打开一个独立的作用域，使内部的 stop() 不再一次性跳出整个 Auth 函数，而是仅仅跳出当前 free 作用域。</p>
-<h3 id="qi-shi-yong-zhu-jie-hu-lve-diao-lu-you-lan-jie-jiao-yan">七、使用注解忽略掉路由拦截校验</h3>
+<h2 id="qi-shi-yong-zhu-jie-hu-lve-diao-lu-you-lan-jie-jiao-yan">七、使用注解忽略掉路由拦截校验</h2>
 <p>我们可以使用 <code>@SaIgnore</code> 注解，忽略掉路由拦截认证：</p>
 <p>1、先配置好了拦截规则：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
@@ -336,7 +336,7 @@ public SaResult getList() {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>请求将会跳过拦截器的校验，直接进入 Controller 的方法中。</p>
 <p><strong>注意点：此注解的忽略效果只针对 SaInterceptor拦截器 和 AOP注解鉴权 生效，对自定义拦截器与过滤器不生效。</strong></p>
-<h3 id="ba-guan-bi-zhu-jie-jiao-yan">八、关闭注解校验</h3>
+<h2 id="ba-guan-bi-zhu-jie-jiao-yan">八、关闭注解校验</h2>
 <p><code>SaInterceptor</code> 只要注册到项目中，默认就会打开注解校验，如果要关闭此能力，需要：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Override
 public void addInterceptors(InterceptorRegistry registry) {
@@ -347,7 +347,7 @@ public void addInterceptors(InterceptorRegistry registry) {
     ).addPathPatterns(&quot;/**&quot;);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -364,15 +364,15 @@ public void addInterceptors(InterceptorRegistry registry) {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
-<li class="toc-h3"><a href="#er-zhu-ce-sa-token-lu-you-lan-jie-qi">二、注册 Sa-Token 路由拦截器</a></li>
-<li class="toc-h3"><a href="#san-jiao-yan-han-shu-xiang-jie">三、校验函数详解</a></li>
-<li class="toc-h3"><a href="#si-pi-pei-te-zheng-xiang-jie">四、匹配特征详解</a></li>
-<li class="toc-h3"><a href="#wu-ti-qian-tui-chu-pi-pei-lian">五、提前退出匹配链</a></li>
-<li class="toc-h3"><a href="#liu-shi-yong-free">六、使用free打开一个独立的作用域</a></li>
-<li class="toc-h3"><a href="#qi-shi-yong-zhu-jie-hu-lve-diao-lu-you-lan-jie-jiao-yan">七、使用注解忽略掉路由拦截校验</a></li>
-<li class="toc-h3"><a href="#ba-guan-bi-zhu-jie-jiao-yan">八、关闭注解校验</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
+<li class="toc-h2"><a href="#er-zhu-ce-sa-token-lu-you-lan-jie-qi">二、注册 Sa-Token 路由拦截器</a></li>
+<li class="toc-h2"><a href="#san-jiao-yan-han-shu-xiang-jie">三、校验函数详解</a></li>
+<li class="toc-h2"><a href="#si-pi-pei-te-zheng-xiang-jie">四、匹配特征详解</a></li>
+<li class="toc-h2"><a href="#wu-ti-qian-tui-chu-pi-pei-lian">五、提前退出匹配链</a></li>
+<li class="toc-h2"><a href="#liu-shi-yong-free">六、使用free打开一个独立的作用域</a></li>
+<li class="toc-h2"><a href="#qi-shi-yong-zhu-jie-hu-lve-diao-lu-you-lan-jie-jiao-yan">七、使用注解忽略掉路由拦截校验</a></li>
+<li class="toc-h2"><a href="#ba-guan-bi-zhu-jie-jiao-yan">八、关闭注解校验</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

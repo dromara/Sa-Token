@@ -166,7 +166,7 @@
 <p>很多小伙伴关心的一个话题，那就是 Sa-Token 和 JWT 哪个更好用一些，其实不用纠结这个问题，Sa-Token 提供了 <code>sa-token-jwt</code> 插件，<br />
 可以将 Sa-Token 和 jwt 结合起来，这样我们就可以既有 Sa-Token 进行方便的鉴权，又可以得到 jwt 的 Token 扩展参数能力了。</p>
 <p>下面我将介绍如何在 Sa-Token 中方便的集成 jwt。</p>
-<h3 id="yi-yin-ru-yi-lai">一、引入依赖</h3>
+<h2 id="yi-yin-ru-yi-lai">一、引入依赖</h2>
 <p>首先在项目 pom.xml 中引入：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- SpringBoot 集成 Sa-Token --&gt;
 &lt;dependency&gt;
@@ -190,13 +190,13 @@ implementation 'cn.dev33:sa-token-jwt:1.34.0'</code><ul class="code-line-box"><l
 <blockquote>
 <p>注意: sa-token-jwt 显式依赖 hutool-jwt 5.7.14 版本，意味着：你的项目中要么不引入 Hutool，要么引入版本 &gt;= 5.7.14 的 Hutool 版本</p>
 </blockquote>
-<h3 id="er-pei-zhi-mi-yao">二、配置秘钥</h3>
+<h2 id="er-pei-zhi-mi-yao">二、配置秘钥</h2>
 <p>在 <code>application.yml</code> 配置文件中配置 jwt 生成秘钥：</p>
 <pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">sa-token:
     # jwt秘钥 
     jwt-secret-key: asdasdasifhueuiwyurfewbfjsdafjk</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
 <p>注：为了安全起见请不要直接复制官网示例这个字符串（随便按几个字符就好了）</p>
-<h3 id="san-zhu-ru-jwt">三、注入jwt实现</h3>
+<h2 id="san-zhu-ru-jwt">三、注入jwt实现</h2>
 <p>根据不同的整合规则，插件提供了三种不同的模式，你需要 <strong>选择其中一种</strong> 注入到你的项目中 </p>
 <p>Simple 简单模式：Token 风格替换</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
@@ -225,7 +225,7 @@ public class SaTokenConfigure {
         return new StpLogicJwtForStateless();
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
-<h3 id="si-kai-shi-shi-yong">四、开始使用</h3>
+<h2 id="si-kai-shi-shi-yong">四、开始使用</h2>
 <p>然后我们就可以像之前一样使用 Sa-Token 了 </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 登录测试 
@@ -257,7 +257,7 @@ public class LoginController {
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li></ul></pre>
 <p>访问上述接口，观察Token生成的样式</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbklkIjoiMTAwMDEiLCJybiI6IjZYYzgySzBHVWV3Uk5NTTl1dFdjbnpFZFZHTVNYd3JOIn0.F_7fbHsFsDZmckHlGDaBuwDotZwAjZ0HB14DRujQfOQ</code><ul class="code-line-box"><li>1</li></ul></pre>
-<h3 id="wu-bu-tong-mo-shi-ce-lve-dui-bi">五、不同模式策略对比</h3>
+<h2 id="wu-bu-tong-mo-shi-ce-lve-dui-bi">五、不同模式策略对比</h2>
 <p>注入不同模式会让框架具有不同的行为策略，以下是三种模式的差异点（为方便叙述，以下比较以同时引入 jwt 与 Redis 作为前提）：</p>
 <table>
 <thead>
@@ -385,7 +385,7 @@ public class LoginController {
 </tr>
 </tbody>
 </table>
-<h3 id="liu-kuo-zhan-can-shu">六、扩展参数</h3>
+<h2 id="liu-kuo-zhan-can-shu">六、扩展参数</h2>
 <p>你可以通过以下方式在登录时注入扩展参数：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 登录10001账号，并为生成的 Token 追加扩展参数name
 StpUtil.login(10001, SaLoginConfig.setExtra(&quot;name&quot;, &quot;zhangsan&quot;));
@@ -401,7 +401,7 @@ String name = StpUtil.getExtra(&quot;name&quot;);
 
 // 获取任意 Token 的扩展参数 
 String name = StpUtil.getExtra(&quot;tokenValue&quot;, &quot;name&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<h3 id="qi-zai-duo-zhang-hu-mo-shi-zhong-ji-cheng-jwt">七、在多账户模式中集成 jwt</h3>
+<h2 id="qi-zai-duo-zhang-hu-mo-shi-zhong-ji-cheng-jwt">七、在多账户模式中集成 jwt</h2>
 <p>sa-token-jwt 插件默认只为 <code>StpUtil</code> 注入 <code>StpLogicJwtFoxXxx</code> 实现，自定义的 <code>StpUserUtil</code> 是不会自动注入的，我们需要帮其手动注入：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 为 StpUserUtil 注入 StpLogicJwt 实现 
@@ -410,7 +410,7 @@ String name = StpUtil.getExtra(&quot;tokenValue&quot;, &quot;name&quot;);</code>
 public void setUserStpLogic() {
     StpUserUtil.setStpLogic(new StpLogicJwtForSimple(StpUserUtil.TYPE));
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
-<h3 id="ba-zi-ding-yi-sajwtutil-sheng-cheng-token-de-suan-fa">八、自定义 SaJwtUtil 生成 token 的算法</h3>
+<h2 id="ba-zi-ding-yi-sajwtutil-sheng-cheng-token-de-suan-fa">八、自定义 SaJwtUtil 生成 token 的算法</h2>
 <p>如果需要自定义生成 token 的算法（例如更换sign方式），直接重写 SaJwtTemplate 对象即可：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 自定义 SaJwtUtil 生成 token 的算法 
@@ -425,15 +425,15 @@ public void setSaJwtTemplate() {
         }
     });
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
-<h3 id="jiu-zhu-yi-dian">九、注意点</h3>
-<h5>1、使用 jwt-simple 模式后，is-share=false 恒等于 false。</h5>
+<h2 id="jiu-zhu-yi-dian">九、注意点</h2>
+<h3 id="1-shi-yong-jwt-simple-mo-shi-hou-is-share-false-heng-deng-yu">1、使用 jwt-simple 模式后，is-share=false 恒等于 false。</h3>
 <p><code>is-share=true</code> 的意思是每次登录都产生一样的 token，这种策略和 [ 为每个 token 单独设定 setExtra 数据 ] 不兼容的，<br />
 为保证正确设定 Extra 数据，当使用 <code>jwt-simple</code> 模式后，<code>is-share</code> 配置项 恒等于 <code>false</code>。</p>
-<h5>2、使用 jwt-mixin 模式后，is-concurrent 必须为 true。</h5>
+<h3 id="2-shi-yong-jwt-mixin-mo-shi-hou-is-concurrent-bi-xu-wei-true">2、使用 jwt-mixin 模式后，is-concurrent 必须为 true。</h3>
 <p><code>is-concurrent=false</code> 代表每次登录都把旧登录顶下线，但是 jwt-mixin 模式登录的 token 并不会记录在持久库数据中，<br />
 技术上来讲无法将其踢下线，所以此时顶人下线和踢人下线等 API 都属于不可用状态，所以此时 <code>is-concurrent</code> 配置项必须配置为 <code>true</code>。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -450,16 +450,18 @@ public void setSaJwtTemplate() {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-yin-ru-yi-lai">一、引入依赖</a></li>
-<li class="toc-h3"><a href="#er-pei-zhi-mi-yao">二、配置秘钥</a></li>
-<li class="toc-h3"><a href="#san-zhu-ru-jwt">三、注入jwt实现</a></li>
-<li class="toc-h3"><a href="#si-kai-shi-shi-yong">四、开始使用</a></li>
-<li class="toc-h3"><a href="#wu-bu-tong-mo-shi-ce-lve-dui-bi">五、不同模式策略对比</a></li>
-<li class="toc-h3"><a href="#liu-kuo-zhan-can-shu">六、扩展参数</a></li>
-<li class="toc-h3"><a href="#qi-zai-duo-zhang-hu-mo-shi-zhong-ji-cheng-jwt">七、在多账户模式中集成 jwt</a></li>
-<li class="toc-h3"><a href="#ba-zi-ding-yi-sajwtutil-sheng-cheng-token-de-suan-fa">八、自定义 SaJwtUtil 生成 token 的算法</a></li>
-<li class="toc-h3"><a href="#jiu-zhu-yi-dian">九、注意点</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-yin-ru-yi-lai">一、引入依赖</a></li>
+<li class="toc-h2"><a href="#er-pei-zhi-mi-yao">二、配置秘钥</a></li>
+<li class="toc-h2"><a href="#san-zhu-ru-jwt">三、注入jwt实现</a></li>
+<li class="toc-h2"><a href="#si-kai-shi-shi-yong">四、开始使用</a></li>
+<li class="toc-h2"><a href="#wu-bu-tong-mo-shi-ce-lve-dui-bi">五、不同模式策略对比</a></li>
+<li class="toc-h2"><a href="#liu-kuo-zhan-can-shu">六、扩展参数</a></li>
+<li class="toc-h2"><a href="#qi-zai-duo-zhang-hu-mo-shi-zhong-ji-cheng-jwt">七、在多账户模式中集成 jwt</a></li>
+<li class="toc-h2"><a href="#ba-zi-ding-yi-sajwtutil-sheng-cheng-token-de-suan-fa">八、自定义 SaJwtUtil 生成 token 的算法</a></li>
+<li class="toc-h2"><a href="#jiu-zhu-yi-dian">九、注意点</a></li>
+<li class="toc-h3"><a href="#1-shi-yong-jwt-simple-mo-shi-hou-is-share-false-heng-deng-yu">1、使用 jwt-simple 模式后，is-share=false 恒等于 false。</a></li>
+<li class="toc-h3"><a href="#2-shi-yong-jwt-mixin-mo-shi-hou-is-concurrent-bi-xu-wei-true">2、使用 jwt-mixin 模式后，is-concurrent 必须为 true。</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

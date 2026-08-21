@@ -159,7 +159,7 @@
 				<div class="markdown-section">
 					<h1>SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
-					<h3 id="yi-xu-qiu-fen-xi">一、需求分析</h3>
+					<h2 id="yi-xu-qiu-fen-xi">一、需求分析</h2>
 <p>之前的章节中，我们学习了 踢人下线 和 强制注销 功能，用于清退违规账号。在部分场景下，我们还需要将其 <strong>账号封禁</strong>，以防止其再次登录。</p>
 <blockquote>
 <p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
@@ -180,7 +180,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
     &lt;version&gt;1.34.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
-<h3 id="er-zhang-hao-feng-jin">二、账号封禁</h3>
+<h2 id="er-zhang-hao-feng-jin">二、账号封禁</h2>
 <p>对指定账号进行封禁：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 封禁指定账号 
 StpUtil.disable(10001, 86400); </code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
@@ -216,7 +216,7 @@ StpUtil.getDisableTime(10001);
 
 // 解除封禁
 StpUtil.untieDisable(10001); </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<h3 id="san-fen-lei-feng-jin">三、分类封禁</h3>
+<h2 id="san-fen-lei-feng-jin">三、分类封禁</h2>
 <p>有的时候，我们并不需要将整个账号禁掉，而是只禁止其访问部分服务。</p>
 <p>假设我们在开发一个电商系统，对于违规账号的处罚，我们设定三种分类封禁：</p>
 <ul>
@@ -270,7 +270,7 @@ StpUtil.getDisableTime(10001, &quot;&lt;业务标识&gt;&quot;);
 
 // 解封：指定账号的指定服务
 StpUtil.untieDisable(10001, &quot;&lt;业务标识&gt;&quot;); </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
-<h3 id="si-jie-ti-feng-jin">四、阶梯封禁</h3>
+<h2 id="si-jie-ti-feng-jin">四、阶梯封禁</h2>
 <p>对于多次违规的用户，我们常常采取阶梯处罚的策略，这种 “阶梯” 一般有两种形式：</p>
 <ul>
 <li>处罚时间阶梯：首次违规封禁 1 天，第二次封禁 7 天，第三次封禁 30 天，依次顺延……</li>
@@ -312,7 +312,7 @@ StpUtil.isDisableLevel(10001, &quot;comment&quot;, 3);
 
 // 校验：指定账号的指定服务 是否已被封禁到指定级别（例如 comment服务 已被3级封禁，这里校验是否达到2级），如果已达到此级别，则抛出异常 
 StpUtil.checkDisableLevel(10001, &quot;comment&quot;, 2);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
-<h3 id="wu-shi-yong-zhu-jie-wan-cheng-feng-jin-jiao-yan">五、使用注解完成封禁校验</h3>
+<h2 id="wu-shi-yong-zhu-jie-wan-cheng-feng-jin-jiao-yan">五、使用注解完成封禁校验</h2>
 <p>首先我们需要注册 Sa-Token 全局拦截器：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
@@ -362,7 +362,7 @@ public SaResult send() {
     // ... 
     return SaResult.ok(); 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li></ul></pre>
-<h3 id="liu-lai-ge-xiao-shi-li-jia-shen-li-jie">六、来个小示例，加深理解</h3>
+<h2 id="liu-lai-ge-xiao-shi-li-jia-shen-li-jie">六、来个小示例，加深理解</h2>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">package com.pj.cases.up;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -426,7 +426,7 @@ public class DisableController {
 5. 解封账号    ---- <code>http://localhost:8081/disable/untieDisable?userId=10001</code><br />
 6. 再次访问登录接口，登录成功    ---- <code>http://localhost:8081/disable/login?userId=10001</code></p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -443,13 +443,13 @@ public class DisableController {
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
-<li class="toc-h3"><a href="#er-zhang-hao-feng-jin">二、账号封禁</a></li>
-<li class="toc-h3"><a href="#san-fen-lei-feng-jin">三、分类封禁</a></li>
-<li class="toc-h3"><a href="#si-jie-ti-feng-jin">四、阶梯封禁</a></li>
-<li class="toc-h3"><a href="#wu-shi-yong-zhu-jie-wan-cheng-feng-jin-jiao-yan">五、使用注解完成封禁校验</a></li>
-<li class="toc-h3"><a href="#liu-lai-ge-xiao-shi-li-jia-shen-li-jie">六、来个小示例，加深理解</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
+<li class="toc-h2"><a href="#er-zhang-hao-feng-jin">二、账号封禁</a></li>
+<li class="toc-h2"><a href="#san-fen-lei-feng-jin">三、分类封禁</a></li>
+<li class="toc-h2"><a href="#si-jie-ti-feng-jin">四、阶梯封禁</a></li>
+<li class="toc-h2"><a href="#wu-shi-yong-zhu-jie-wan-cheng-feng-jin-jiao-yan">五、使用注解完成封禁校验</a></li>
+<li class="toc-h2"><a href="#liu-lai-ge-xiao-shi-li-jia-shen-li-jie">六、来个小示例，加深理解</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">

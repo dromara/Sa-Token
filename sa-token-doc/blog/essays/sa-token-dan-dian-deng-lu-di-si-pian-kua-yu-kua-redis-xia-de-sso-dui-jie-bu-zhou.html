@@ -169,7 +169,7 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <blockquote>
 <p>阅读本篇之前请务必先熟读SSO模式二！因为模式三仅仅属于模式二的一个特殊场景，熟读模式二有助于您快速理解本章内容</p>
 </blockquote>
-<h3 id="yi-wen-ti-fen-xi">一、问题分析</h3>
+<h2 id="yi-wen-ti-fen-xi">一、问题分析</h2>
 <p>我们先来分析一下，当后端不使用共享 Redis 时，会对架构产生哪些影响：</p>
 <ol>
 <li>Client 端无法直连 Redis 校验 ticket，取出账号id。</li>
@@ -180,8 +180,8 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 <blockquote>
 <p>模式三的 Demo 示例在 Sa-Token 官方仓库 <code>/sa-token-demo/sa-token-demo-sso3-client/</code> ，如遇难点可参考示例 </p>
 </blockquote>
-<h3 id="er-zai-client-duan-geng-gai-ticket-jiao-yan-fang-shi">二、在 Client 端更改 Ticket 校验方式</h3>
-<h4 id="2-1-zeng-jia-pom-xml-pei-zhi">2.1、增加 pom.xml 配置</h4>
+<h2 id="er-zai-client-duan-geng-gai-ticket-jiao-yan-fang-shi">二、在 Client 端更改 Ticket 校验方式</h2>
+<h3 id="2-1-zeng-jia-pom-xml-pei-zhi">2.1、增加 pom.xml 配置</h3>
 <!---------------------------- tabs:start ---------------------------->
 <!-------- tab:Maven 方式 -------->
 
@@ -200,7 +200,7 @@ implementation 'com.dtflys.forest:forest-spring-boot-starter:1.5.26'</code><ul c
 <blockquote>
 <p>Forest 是一个轻量级 http 请求工具，详情参考：<a href="https://forest.dtflyx.com/">Forest</a></p>
 </blockquote>
-<h4 id="2-2-pei-zhi-http-qing-qiu-chu-li-qi">2.2、配置 http 请求处理器</h4>
+<h3 id="2-2-pei-zhi-http-qing-qiu-chu-li-qi">2.2、配置 http 请求处理器</h3>
 <p>在SSO-Client端的 <code>SsoClientController</code> 中，新增以下配置</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 配置SSO相关参数 
 @Autowired
@@ -213,7 +213,7 @@ private void configSso(SaSsoConfig sso) {
         return Forest.get(url).executeAsString();
     });
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
-<h4 id="2-3-application-yml-xin-zeng-pei-zhi">2.3、application.yml 新增配置</h4>
+<h3 id="2-3-application-yml-xin-zeng-pei-zhi">2.3、application.yml 新增配置</h3>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
 
@@ -239,7 +239,7 @@ forest.log-enabled: false</code><ul class="code-line-box"><li>1</li><li>2</li><l
 <!---------------------------- tabs:end ---------------------------->
 
 <p>因为我们已经在控制台手动打印 url 请求日志了，所以此处 <code>forest.log-enabled=false</code> 关闭 Forest 框架自身的日志打印，这不是必须的，你可以将其打开。</p>
-<h4 id="2-4-qi-dong-xiang-mu-ce-shi">2.4、启动项目测试</h4>
+<h3 id="2-4-qi-dong-xiang-mu-ce-shi">2.4、启动项目测试</h3>
 <p>重启项目，访问测试：<br />
 - <a href="http://sa-sso-client1.com:9001/">http://sa-sso-client1.com:9001/</a><br />
 - <a href="http://sa-sso-client2.com:9001/">http://sa-sso-client2.com:9001/</a><br />
@@ -247,10 +247,10 @@ forest.log-enabled: false</code><ul class="code-line-box"><li>1</li><li>2</li><l
 <blockquote>
 <p>注：如果已测试运行模式二，可先将Redis中的数据清空，以防旧数据对测试造成干扰</p>
 </blockquote>
-<h3 id="san-huo-qu-userinfo">三、获取 Userinfo</h3>
+<h2 id="san-huo-qu-userinfo">三、获取 Userinfo</h2>
 <p>除了账号id，我们可能还需要将用户的昵称、头像等信息从 Server端 带到 Client端，即：用户资料的同步。</p>
 <p>在模式二中我们只需要将需要同步的资料放到 SaSession 即可，但是在模式三中两端不再连接同一个Redis，这时候我们需要通过http接口来同步信息：</p>
-<h4 id="3-1-zai-server-duan-zi-ding-yi-jie-kou-cha-xun-yong-hu-zi-li">3.1、在 Server 端自定义接口，查询用户资料</h4>
+<h3 id="3-1-zai-server-duan-zi-ding-yi-jie-kou-cha-xun-yong-hu-zi-li">3.1、在 Server 端自定义接口，查询用户资料</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 自定义接口：获取userinfo 
 @RequestMapping(&quot;/sso/userinfo&quot;)
 public Object userinfo(String loginId) {
@@ -266,7 +266,7 @@ public Object userinfo(String loginId) {
             .set(&quot;sex&quot;, &quot;女&quot;)
             .set(&quot;age&quot;, 18);
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
-<h4 id="3-2-zai-client-duan-diao-yong-ci-jie-kou-cha-xun-userinfo">3.2、在 Client 端调用此接口查询 userinfo</h4>
+<h3 id="3-2-zai-client-duan-diao-yong-ci-jie-kou-cha-xun-userinfo">3.2、在 Client 端调用此接口查询 userinfo</h3>
 <p>首先在 application.yml 中配置接口地址：</p>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
@@ -289,14 +289,14 @@ public Object myinfo() {
     System.out.println(&quot;--------info：&quot; + userinfo);
     return userinfo;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
-<h4 id="3-3-fang-wen-ce-shi">3.3、访问测试</h4>
+<h3 id="3-3-fang-wen-ce-shi">3.3、访问测试</h3>
 <p>访问测试：<a href="http://sa-sso-client1.com:9001/sso/myinfo">http://sa-sso-client1.com:9001/sso/myinfo</a></p>
-<h3 id="si-zi-ding-yi-jie-kou-tong-xin">四、自定义接口通信</h3>
+<h2 id="si-zi-ding-yi-jie-kou-tong-xin">四、自定义接口通信</h2>
 <p>群里有小伙伴提问：<code>SaSsoUtil.getUserinfo</code> 提供的参数太少，只有一个 loginId，无法满足业务需求怎么办？</p>
 <p>答：SaSsoUtil.getUserinfo只是为了避免你在项目中硬编码认证中心 url 而提供的简易封装，如果这个API无法满足你的业务需求，<br />
 你完全可以在 Server 端自定义一些接口然后从 Client 端使用 http 工具调用即可。</p>
 <p>以下是一个简单的示例：</p>
-<h4 id="4-1-xian-zai-sso-server-duan-zi-ding-yi-yi-ge-jie-kou">4.1、先在 sso-server 端自定义一个接口</h4>
+<h3 id="4-1-xian-zai-sso-server-duan-zi-ding-yi-yi-ge-jie-kou">4.1、先在 sso-server 端自定义一个接口</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取指定用户的关注列表 
 @RequestMapping(&quot;/sso/getFollowList&quot;)
 public Object ssoRequest(Long loginId) {
@@ -310,7 +310,7 @@ public Object ssoRequest(Long loginId) {
     // 返回 
     return list;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
-<h4 id="4-2-ran-hou-zai-sso-client-duan-diao-yong-zhe-ge-jie-kou">4.2、然后在 sso-client 端调用这个接口</h4>
+<h3 id="4-2-ran-hou-zai-sso-client-duan-diao-yong-zhe-ge-jie-kou">4.2、然后在 sso-client 端调用这个接口</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 查询我的账号信息 
 @RequestMapping(&quot;/sso/myFollowList&quot;)
 public Object myFollowList() {
@@ -323,9 +323,9 @@ public Object myFollowList() {
     // 返回给前端 
     return res;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
-<h4 id="4-3-fang-wen-ce-shi">4.3、访问测试</h4>
+<h3 id="4-3-fang-wen-ce-shi">4.3、访问测试</h3>
 <p>访问测试：<a href="http://sa-sso-client1.com:9001/sso/myFollowList">http://sa-sso-client1.com:9001/sso/myFollowList</a></p>
-<h3 id="wu-wu-shua-dan-dian-zhu-xiao">五、无刷单点注销</h3>
+<h2 id="wu-wu-shua-dan-dian-zhu-xiao">五、无刷单点注销</h2>
 <p>有了单点登录就必然要有单点注销，网上给出的大多数解决方案是将注销请求重定向至SSO-Server中心，逐个通知Client端下线</p>
 <p>在某些场景下，页面的跳转可能造成不太好的用户体验，Sa-Token-SSO 允许你以 <code>REST API</code> 的形式构建接口，做到页面无刷新单点注销。</p>
 <ol>
@@ -338,7 +338,7 @@ public Object myFollowList() {
 </ol>
 <p><button class="show-img" img-src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--sso3-logout.gif">加载动态演示图</button></p>
 <p>这些逻辑 Sa-Token 内部已经封装完毕，你只需按照文档增加以下配置即可：</p>
-<h4 id="5-1-sso-client-duan-xin-zeng-pei-zhi">5.1、SSO-Client 端新增配置</h4>
+<h3 id="5-1-sso-client-duan-xin-zeng-pei-zhi">5.1、SSO-Client 端新增配置</h3>
 <p>在 <code>application.yml</code> 增加配置：<code>API调用秘钥</code> 和 <code>单点注销接口URL</code>。</p>
 <!---------------------------- tabs:start ---------------------------->
 <!------------- tab:yaml 风格  ------------->
@@ -362,7 +362,7 @@ sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor</code><ul class="code-li
 <!---------------------------- tabs:end ---------------------------->
 
 <p>注意 secretkey 秘钥需要与SSO认证中心的一致 </p>
-<h4 id="5-2-qi-dong-ce-shi">5.2、启动测试</h4>
+<h3 id="5-2-qi-dong-ce-shi">5.2、启动测试</h3>
 <p>重启项目，访问测试：<a href="http://sa-sso-client1.com:9001/">http://sa-sso-client1.com:9001/</a>，<br />
 我们主要的测试点在于 <code>单点注销</code>，正常登录即可。</p>
 <p><img alt="sso-type3-client-index.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-type3-client-index.png" title="s-w-sh" /></p>
@@ -374,7 +374,7 @@ sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor</code><ul class="code-li
 <p>例如，我们使用 <a href="https://www.apifox.cn/">Apifox 接口测试工具</a> 可以做到同样的效果：</p>
 <p><img alt="sso-slo-apifox.png" src="https://res.dev33.cn/sa-token-blog/img/2023-4/sso-slo-apifox.png" title="s-w-sh" /></p>
 <p>测试完毕！</p>
-<h3 id="liu-xia-pian-yu-gao-qian-hou-duan-fen-li-mo-shi-xia-de-sso-d">六、下篇预告：前后端分离模式下的 SSO 对接方案</h3>
+<h2 id="liu-xia-pian-yu-gao-qian-hou-duan-fen-li-mo-shi-xia-de-sso-d">六、下篇预告：前后端分离模式下的 SSO 对接方案</h2>
 <p>当我们熟读三种模式的单点登录之后，其实不难发现：所谓单点登录，其本质就是多个系统之间的会话共享。</p>
 <p>当我们理解这一点之后，三种模式的工作原理也浮出水面：</p>
 <ul>
@@ -384,7 +384,7 @@ sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor</code><ul class="code-li
 </ul>
 <p>以上三种模式解决了前后端一体架构下的单点登录，下篇博客将介绍：前后端分离架构下的 SSO 对接方案。</p>
 <hr />
-<h3 id="can-kao-zi-liao">参考资料</h3>
+<h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
 <li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
@@ -401,25 +401,25 @@ sa-token.sso.secretkey=kQwIOrYvnXmSDkwEiFngrKidMcdrgKor</code><ul class="code-li
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#yi-wen-ti-fen-xi">一、问题分析</a></li>
-<li class="toc-h3"><a href="#er-zai-client-duan-geng-gai-ticket-jiao-yan-fang-shi">二、在 Client 端更改 Ticket 校验方式</a></li>
-<li class="toc-h4"><a href="#2-1-zeng-jia-pom-xml-pei-zhi">2.1、增加 pom.xml 配置</a></li>
-<li class="toc-h4"><a href="#2-2-pei-zhi-http-qing-qiu-chu-li-qi">2.2、配置 http 请求处理器</a></li>
-<li class="toc-h4"><a href="#2-3-application-yml-xin-zeng-pei-zhi">2.3、application.yml 新增配置</a></li>
-<li class="toc-h4"><a href="#2-4-qi-dong-xiang-mu-ce-shi">2.4、启动项目测试</a></li>
-<li class="toc-h3"><a href="#san-huo-qu-userinfo">三、获取 Userinfo</a></li>
-<li class="toc-h4"><a href="#3-1-zai-server-duan-zi-ding-yi-jie-kou-cha-xun-yong-hu-zi-li">3.1、在 Server 端自定义接口，查询用户资料</a></li>
-<li class="toc-h4"><a href="#3-2-zai-client-duan-diao-yong-ci-jie-kou-cha-xun-userinfo">3.2、在 Client 端调用此接口查询 userinfo</a></li>
-<li class="toc-h4"><a href="#3-3-fang-wen-ce-shi">3.3、访问测试</a></li>
-<li class="toc-h3"><a href="#si-zi-ding-yi-jie-kou-tong-xin">四、自定义接口通信</a></li>
-<li class="toc-h4"><a href="#4-1-xian-zai-sso-server-duan-zi-ding-yi-yi-ge-jie-kou">4.1、先在 sso-server 端自定义一个接口</a></li>
-<li class="toc-h4"><a href="#4-2-ran-hou-zai-sso-client-duan-diao-yong-zhe-ge-jie-kou">4.2、然后在 sso-client 端调用这个接口</a></li>
-<li class="toc-h4"><a href="#4-3-fang-wen-ce-shi">4.3、访问测试</a></li>
-<li class="toc-h3"><a href="#wu-wu-shua-dan-dian-zhu-xiao">五、无刷单点注销</a></li>
-<li class="toc-h4"><a href="#5-1-sso-client-duan-xin-zeng-pei-zhi">5.1、SSO-Client 端新增配置</a></li>
-<li class="toc-h4"><a href="#5-2-qi-dong-ce-shi">5.2、启动测试</a></li>
-<li class="toc-h3"><a href="#liu-xia-pian-yu-gao-qian-hou-duan-fen-li-mo-shi-xia-de-sso-d">六、下篇预告：前后端分离模式下的 SSO 对接方案</a></li>
-<li class="toc-h3"><a href="#can-kao-zi-liao">参考资料</a></li>
+<li class="toc-h2"><a href="#yi-wen-ti-fen-xi">一、问题分析</a></li>
+<li class="toc-h2"><a href="#er-zai-client-duan-geng-gai-ticket-jiao-yan-fang-shi">二、在 Client 端更改 Ticket 校验方式</a></li>
+<li class="toc-h3"><a href="#2-1-zeng-jia-pom-xml-pei-zhi">2.1、增加 pom.xml 配置</a></li>
+<li class="toc-h3"><a href="#2-2-pei-zhi-http-qing-qiu-chu-li-qi">2.2、配置 http 请求处理器</a></li>
+<li class="toc-h3"><a href="#2-3-application-yml-xin-zeng-pei-zhi">2.3、application.yml 新增配置</a></li>
+<li class="toc-h3"><a href="#2-4-qi-dong-xiang-mu-ce-shi">2.4、启动项目测试</a></li>
+<li class="toc-h2"><a href="#san-huo-qu-userinfo">三、获取 Userinfo</a></li>
+<li class="toc-h3"><a href="#3-1-zai-server-duan-zi-ding-yi-jie-kou-cha-xun-yong-hu-zi-li">3.1、在 Server 端自定义接口，查询用户资料</a></li>
+<li class="toc-h3"><a href="#3-2-zai-client-duan-diao-yong-ci-jie-kou-cha-xun-userinfo">3.2、在 Client 端调用此接口查询 userinfo</a></li>
+<li class="toc-h3"><a href="#3-3-fang-wen-ce-shi">3.3、访问测试</a></li>
+<li class="toc-h2"><a href="#si-zi-ding-yi-jie-kou-tong-xin">四、自定义接口通信</a></li>
+<li class="toc-h3"><a href="#4-1-xian-zai-sso-server-duan-zi-ding-yi-yi-ge-jie-kou">4.1、先在 sso-server 端自定义一个接口</a></li>
+<li class="toc-h3"><a href="#4-2-ran-hou-zai-sso-client-duan-diao-yong-zhe-ge-jie-kou">4.2、然后在 sso-client 端调用这个接口</a></li>
+<li class="toc-h3"><a href="#4-3-fang-wen-ce-shi">4.3、访问测试</a></li>
+<li class="toc-h2"><a href="#wu-wu-shua-dan-dian-zhu-xiao">五、无刷单点注销</a></li>
+<li class="toc-h3"><a href="#5-1-sso-client-duan-xin-zeng-pei-zhi">5.1、SSO-Client 端新增配置</a></li>
+<li class="toc-h3"><a href="#5-2-qi-dong-ce-shi">5.2、启动测试</a></li>
+<li class="toc-h2"><a href="#liu-xia-pian-yu-gao-qian-hou-duan-fen-li-mo-shi-xia-de-sso-d">六、下篇预告：前后端分离模式下的 SSO 对接方案</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">
