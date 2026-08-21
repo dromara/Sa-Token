@@ -163,15 +163,15 @@
 <p>开源地址：<a href="https://github.com/sa-tokens/sa-token-rust">https://github.com/sa-tokens/sa-token-rust</a></p>
 <p>2026-8-18，Sa-Token-Rust 正式入驻 <strong><a href="https://xuanwu.openatom.org/">开放原子开源基金会·旋武社区</a></strong>！</p>
 <p><img alt="sa-token-rust 入驻旋武社区开源项目列表" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-list.png" /></p>
-<h3 id="kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu">开放原子开源基金会 · 旋武社区</h3>
+<h2 id="kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu">开放原子开源基金会 · 旋武社区</h2>
 <p>开放原子开源基金会 · 旋武社区 是基金会旗下的 <strong>Rust 中国社区</strong>：有章程、有例会、有工作组，华为、统信、360、中科院软件所、深开鸿、麒麟软件、OPPO、vivo、京东 <strong>9 家会员单位共建</strong>。发行版、在线课程、Playground、高校走进、开源生态大会上的 Rust 论坛，都是这条线上的活。</p>
 <p>名录里目前挂着 <strong>60+</strong> 个项目，覆盖基础库、AI、鸿蒙生态、认证授权等。sa-token-rust 进的是「应用框架与软件 / 认证授权」——对社区来说，等于把项目放到了国内 Rust 官方展台上。</p>
 <p>项目详情页：<a href="https://xuanwu.openatom.org/articles/project/sa-token-rust/">https://xuanwu.openatom.org/articles/project/sa-token-rust/</a></p>
 <p><img alt="Sa-Token-Rust 旋武社区项目详情页" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-page.png" /></p>
-<h3 id="sa-token-rust-shi-gan-shen-me-de">sa-token-rust 是干什么的？</h3>
+<h2 id="sa-token-rust-shi-gan-shen-me-de">sa-token-rust 是干什么的？</h2>
 <p>一个轻量级、高性能的 Rust 认证授权框架，灵感来自 <a href="https://github.com/dromara/sa-token">Sa-Token</a>。当前版本 <strong>0.1.18</strong>。</p>
 <p>Java 同学可以把它理解成：熟悉的 <code>StpUtil.login()</code> / <code>checkLogin()</code> / 注解鉴权，换成 Rust 的过程宏和 async/await。Rust 同学可以把它理解成：不必从零拼 JWT + Session + 权限模型，一套 crate 覆盖登录到 SSO。</p>
-<h4 id="te-xing">特性</h4>
+<h3 id="te-xing">特性</h3>
 <ul>
 <li>🚀 <strong>多框架支持</strong>：Axum、Actix-web、Poem、Rocket、Warp、Salvo、Tide、Gotham、Ntex</li>
 <li>🔐 <strong>完整认证</strong>：登录、登出、Token 验证、Session 管理</li>
@@ -191,7 +191,7 @@
 <li>👤 <strong>多账号体系</strong>：通过 <code>SaLogic</code> 隔离 <code>admin</code> / <code>user</code> 等 <code>login_type</code></li>
 <li>📱 <strong>多设备终端</strong>：<code>SaTerminalInfo</code> 按设备记录、按类型查询</li>
 </ul>
-<h4 id="jia-gou">架构</h4>
+<h3 id="jia-gou">架构</h3>
 <p>分层很干净：核心不绑框架，插件层对接 Web，存储层可替换。</p>
 <pre><code>sa-token-rust/
 ├── sa-token-core/              # Token、Session、Manager、JWT、OAuth2、SSO…
@@ -211,7 +211,7 @@
 <li><strong>存储层</strong>：内存 / Redis / 数据库，按场景选。</li>
 <li><strong>工具层</strong>：过程宏，声明式鉴权。</li>
 </ul>
-<h4 id="kuai-su-kai-shi-axum">快速开始（Axum）</h4>
+<h3 id="kuai-su-kai-shi-axum">快速开始（Axum）</h3>
 <p>一个依赖即可，核心、宏、存储都从插件 crate 再导出：</p>
 <pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">[dependencies]
 sa-token-plugin-axum = &quot;0.1.18&quot;  # 默认内存存储
@@ -272,7 +272,7 @@ let app = Router::new()
     .layer(SaTokenMiddleware::new(state));</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
 <p>其它框架换对应插件即可：<code>sa-token-plugin-actix-web</code>、<code>sa-token-plugin-poem</code>、<code>sa-token-plugin-rocket</code>……一行 <code>use sa_token_plugin_xxx::*;</code>。</p>
 <p>更完整的 JWT、OAuth2、SSO、分布式 Session、多账号 / 多设备说明，直接看仓库 README 和 <code>docs/</code>。</p>
-<h3 id="xie-zai-zui-hou">写在最后</h3>
+<h2 id="xie-zai-zui-hou">写在最后</h2>
 <p>Sa-Token 从 Java 走到今天，社区里一直有人把同一套鉴权思路带到别的语言。Sa-Token-Rust 是其中完成度比较高的一条线：框架覆盖面、SSO / OAuth2 / JWT、存储抽象，都已经能上手。</p>
 <p>这次入驻旋武，不是换个 logo，而是把项目放到国内 Rust 官方社区的展台上。后续文档、示例、issue 都欢迎大家来砸。</p>
 <ul>
@@ -295,12 +295,12 @@ let app = Router::new()
 			<div class="blog-right-toc-panel">
 				<div class="doc-right-bj-box-title">章节目录</div>
 				<div class="blog-article-toc"><ul class="blog-toc-list">
-<li class="toc-h3"><a href="#kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu">开放原子开源基金会 · 旋武社区</a></li>
-<li class="toc-h3"><a href="#sa-token-rust-shi-gan-shen-me-de">sa-token-rust 是干什么的？</a></li>
-<li class="toc-h4"><a href="#te-xing">特性</a></li>
-<li class="toc-h4"><a href="#jia-gou">架构</a></li>
-<li class="toc-h4"><a href="#kuai-su-kai-shi-axum">快速开始（Axum）</a></li>
-<li class="toc-h3"><a href="#xie-zai-zui-hou">写在最后</a></li>
+<li class="toc-h2"><a href="#kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu">开放原子开源基金会 · 旋武社区</a></li>
+<li class="toc-h2"><a href="#sa-token-rust-shi-gan-shen-me-de">sa-token-rust 是干什么的？</a></li>
+<li class="toc-h3"><a href="#te-xing">特性</a></li>
+<li class="toc-h3"><a href="#jia-gou">架构</a></li>
+<li class="toc-h3"><a href="#kuai-su-kai-shi-axum">快速开始（Axum）</a></li>
+<li class="toc-h2"><a href="#xie-zai-zui-hou">写在最后</a></li>
 </ul></div>
 			</div>
 						<div class="doc-right-more-item">
