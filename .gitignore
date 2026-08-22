@@ -41,3 +41,7 @@ __pycache__/
 
 # 本地工具脚本（todo 审查等）
 tools/
+
+# Reasonix
+.reasonix/
+reasonix.toml
