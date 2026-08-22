@@ -55,18 +55,25 @@ public class SaJdkSerializer implements JbootSerializer {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
-        ObjectInputStream objectInput = null;
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         try {
-            ByteArrayInputStream bytesInput = new ByteArrayInputStream(bytes);
-            objectInput = new ObjectInputStream(bytesInput);
-            return objectInput.readObject();
-        }
-        catch (Exception e) {
+            // Configure mapper for safe deserialization
+            mapper.configure(MapperFeature.AUTO_DETECT_FIELDS, true);
+            mapper.configure(MapperFeature.AUTO_DETECT_SETTERS, true);
+            mapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            
+            // Use mapper instead of ObjectInputStream
+            return mapper.readValue(bais, _clazz);
+        } catch (Exception e) {
+            LOG.error("Error during deserialization of bytes", e);
             throw new RuntimeException(e);
-        }
-        finally {
-            if (objectInput != null)
-                try {objectInput.close();} catch (Exception e) {LOG.error(e.getMessage(), e);}
+        } finally {
+            try {
+                bais.close();
+            } catch (Exception e) {
+                LOG.error(e.getMessage(), e);
+            }
         }
     }
 }
