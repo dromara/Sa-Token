@@ -121,6 +121,10 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
     "label": "版本更新",
     "items": [
       {
+        "title": "Sa-Token-Rust v0.2.0 发布，被提名 G-Star 孵化项目!",
+        "url": "release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html"
+      },
+      {
         "title": "Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成",
         "url": "release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html"
       },
