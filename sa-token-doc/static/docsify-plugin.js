@@ -42,6 +42,148 @@ var myDocsifyPlugin = function(hook, vm) {
 		}
 	}
 
+	// 功能8：长页锚点带动画定位。挡住 Docsify Tweezer 的 scrollTo，避免两套动画在终点互抢导致抖动。
+	var hashScrollRaf = 0;
+	var hashScrollToken = 0;
+	var hashScrollPath = '';
+	var nativeScrollTo = window.scrollTo;
+	var nativeScrollToFn = nativeScrollTo.bind(window);
+	var scrollHijacked = false;
+
+	function getHashPath() {
+		return (location.hash || '').split('?')[0];
+	}
+
+	function getHashId() {
+		var hash = location.hash || '';
+		var match = hash.match(/[?&]id=([^&]*)/);
+		if (!match) {
+			return '';
+		}
+		try {
+			return decodeURIComponent(match[1]);
+		} catch (e) {
+			return match[1];
+		}
+	}
+
+	function getPageY() {
+		return window.pageYOffset || document.documentElement.scrollTop || 0;
+	}
+
+	function easeInOutCubic(t) {
+		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+	}
+
+	function hijackDocsifyScroll() {
+		if (scrollHijacked) {
+			return;
+		}
+		window.scrollTo = function() {};
+		scrollHijacked = true;
+	}
+
+	function restoreDocsifyScroll() {
+		if (!scrollHijacked) {
+			return;
+		}
+		window.scrollTo = nativeScrollTo;
+		scrollHijacked = false;
+	}
+
+	function cancelHashScroll() {
+		hashScrollToken++;
+		if (hashScrollRaf) {
+			cancelAnimationFrame(hashScrollRaf);
+			hashScrollRaf = 0;
+		}
+		restoreDocsifyScroll();
+	}
+
+	function onUserScrollIntent() {
+		if (hashScrollRaf) {
+			cancelHashScroll();
+		}
+	}
+
+	function scrollToHashId() {
+		var id = getHashId();
+		if (!id) {
+			cancelHashScroll();
+			return;
+		}
+
+		var token = ++hashScrollToken;
+		restoreDocsifyScroll();
+		var topMargin = (window.$docsify && window.$docsify.topMargin) || 0;
+		var startY = 0;
+		var startTime = 0;
+		var duration = 0;
+		var waitStart = 0;
+		var started = false;
+		var snapped = false;
+		var lockedEndY = 0;
+
+		if (hashScrollRaf) {
+			cancelAnimationFrame(hashScrollRaf);
+		}
+
+		function targetY(el) {
+			return Math.max(0, Math.round(el.getBoundingClientRect().top + getPageY() - topMargin));
+		}
+
+		function tick(now) {
+			if (token !== hashScrollToken) {
+				return;
+			}
+			now = now || performance.now();
+			var el = document.getElementById(id);
+			if (!el) {
+				if (!waitStart) {
+					waitStart = now;
+				}
+				if (now - waitStart < 2000) {
+					hashScrollRaf = requestAnimationFrame(tick);
+				} else {
+					hashScrollRaf = 0;
+				}
+				return;
+			}
+
+			var liveY = targetY(el);
+			if (!started) {
+				started = true;
+				hijackDocsifyScroll();
+				startTime = now;
+				startY = getPageY();
+				lockedEndY = liveY;
+				duration = Math.min(650, Math.max(400, Math.abs(liveY - startY) * 0.04));
+			} else if (Math.abs(liveY - lockedEndY) > 4) {
+				lockedEndY = liveY;
+			}
+
+			var elapsed = now - startTime;
+			if (elapsed < duration) {
+				nativeScrollToFn(0, Math.round(startY + (lockedEndY - startY) * easeInOutCubic(elapsed / duration)));
+				hashScrollRaf = requestAnimationFrame(tick);
+				return;
+			}
+
+			if (!snapped) {
+				snapped = true;
+				nativeScrollToFn(0, targetY(el));
+			}
+			if (elapsed < Math.max(duration, 520)) {
+				hashScrollRaf = requestAnimationFrame(tick);
+			} else {
+				hashScrollRaf = 0;
+				restoreDocsifyScroll();
+			}
+		}
+
+		hashScrollRaf = requestAnimationFrame(tick);
+	}
+
 	// 功能6：标题下面的广告（正文区 doc-inline-ad，README 首页除外）
 	function renderDocInlineAd(routePath) {
 		if (routePath === '/' || $(window).width() < 800) {
@@ -169,13 +311,36 @@ var myDocsifyPlugin = function(hook, vm) {
 
 		// 功能6，标题下面的广告
 		renderDocInlineAd(vm.route.path);
+
+		// 功能8，长页锚点定位（广告插入后再校一次）
+		hashScrollPath = getHashPath();
+		scrollToHashId();
 		
 	});
 	
 	// 钩子函数：初始化并第一次加载完成数据后调用，没有参数。
 	hook.ready(function() {
 		updateDocNavActive();
-		window.addEventListener('hashchange', updateDocNavActive);
+		if ('scrollRestoration' in history) {
+			history.scrollRestoration = 'manual';
+		}
+		window.addEventListener('wheel', onUserScrollIntent, { passive: true });
+		window.addEventListener('touchmove', onUserScrollIntent, { passive: true });
+		window.addEventListener('keydown', function(e) {
+			if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'PageUp' || e.key === 'PageDown' || e.key === 'Home' || e.key === 'End' || e.key === ' ') {
+				onUserScrollIntent();
+			}
+		});
+
+		window.addEventListener('hashchange', function() {
+			updateDocNavActive();
+			var path = getHashPath();
+			var samePage = path === hashScrollPath;
+			hashScrollPath = path;
+			if (samePage) {
+				scrollToHashId();
+			}
+		});
 
 		// 将搜索框转移到右上角 
 		document.querySelector(".sear-box").innerHTML = '';
