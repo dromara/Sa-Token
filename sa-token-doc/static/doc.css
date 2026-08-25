@@ -88,6 +88,7 @@ body{
 @media screen and (max-width: 800px) {
 	.nav-left .logo-box .logo-text,
 	.nav-left .logo-box sub{display: none;}
+	.doc-header .nav-left .logo-box .logo-text{display: inline-block;}
 	/* .main-box .markdown-section{max-width: 1000px; margin-left: auto; margin-top: 40px;} */
 }
 /* 手机端不显示广告，和一些其它东西 */
@@ -115,9 +116,10 @@ body{
 /* ------- 头部样式 ------- */
 .doc-header{position: fixed; top: 0; z-index: 1000; width: 100%; height: 60px; line-height: 60px;}
 .doc-header{/* background-color: hsla(0,0%,100%,0.97); */ background-color: rgba(255, 255, 255, 0.97); box-shadow: 0 1px 3px rgba(26,26,26,0.1);}
+.doc-header{display: flex; align-items: center;}
 
 /* 左边导航 */
-.nav-left{display: inline-block; float: left;}
+.nav-left{display: flex; align-items: center; flex: 0 0 auto;}
 .nav-left > a{text-decoration: none; color: inherit;}
 .logo-box {display: inline-block; cursor: pointer; color: #000; padding-left: 24px; height: 60px; line-height: 60px;}
 .logo-box img {width: 50px; height: 50px; vertical-align: middle; position: relative; top: -1px; margin-right: 5px;}
@@ -125,7 +127,7 @@ body{
 .logo-box sub{margin-left: 5px; color: #666;}
 
 /* 右边导航 */
-.doc-header .nav-right{margin: 0;  float: right; padding-right: 3em; margin-right: 20px !important;}
+.doc-header .nav-right{margin: 0; flex: 1 1 auto; display: flex; align-items: center; justify-content: flex-end; flex-wrap: nowrap; min-width: 0; padding-right: 3em; margin-right: 20px !important;}
 .doc-header .nav-right>*{padding: 0px; margin: 0 10px;}
 .doc-header .nav-right>*:last-child{position: relative; z-index: 1002;}
 .doc-header .nav-right>select{border-color: #999; color: #666; outline: 0; cursor: pointer; transition: all 0.2s; background-color: #FFF; border-width: 1px; outline: 0;}
@@ -223,6 +225,23 @@ body{
 	display: contents;
 }
 
+/* 顶栏按重要程度分级隐藏：尽量晚点藏，多露出一档 */
+@media screen and (max-width: 1599px) {
+	.doc-header .github-corner,
+	body:has(.doc-header .nav-t4) .github-corner { display: none !important; }
+	.doc-header .nav-right { padding-right: 12px; }
+}
+@media screen and (max-width: 1450px) {
+	.doc-header .nav-t4 { display: none !important; }
+}
+@media screen and (max-width: 1200px) {
+	.doc-header .nav-t3 { display: none !important; }
+}
+@media screen and (max-width: 920px) {
+	.doc-header .nav-t2,
+	.doc-header .select-version.nav-t2 { display: none !important; }
+	.doc-header .nav-right > * { margin: 0 6px; }
+}
 
 /* ------- 调整一下左侧树的字体样式 ------- */
 .main-box .sidebar{padding-top: 25px; margin-top: 60px;}

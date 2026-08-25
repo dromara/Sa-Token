@@ -46,27 +46,11 @@ body.blog-page.blog-sidebar-open {
 	text-decoration: none;
 }
 
-/* 移动端顶栏：只保留 首页/文档/博客，避免按钮挤到下一行 */
+/* 窄屏顶栏：分级隐藏由 doc.css 的 nav-t* 负责；这里只保证标题仍显示 */
 @media screen and (max-width: 800px) {
-	.blog-page .doc-header .nav-left .select-language-box,
-	.blog-page .doc-header .nav-right .zk-box,
-	.blog-page .doc-header .nav-right .github-corner {
-		display: none !important;
-	}
-
-	/* 覆盖 doc.css 隐藏 logo 文字；有空位就显示 Sa-Token */
 	.blog-page .doc-header .nav-left .logo-box .logo-text {
 		display: inline-block !important;
 		font-size: 20px;
-	}
-
-	.blog-page .doc-header .nav-right {
-		padding-right: 8px;
-		margin-right: 0 !important;
-	}
-
-	.blog-page .doc-header .nav-right > * {
-		margin: 0 6px;
 	}
 }
 
