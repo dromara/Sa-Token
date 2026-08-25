@@ -12,13 +12,13 @@
 	<meta property="og:title" content="别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权">
 	<meta property="og:description" content="微服务子服务通常不能被外网直连，需经网关转发才算合法请求。若有人绕过网关直调资源服务会怎样？本文用 Sa-Token 讲清网关转发鉴权与 RPC 调用鉴权，堵住「绕过网关」缺口，加固内网服务边界安全，适合已有网关但仍担心直连风险的团队，文内含示例，可直接对照实践。">
 	<meta property="og:url" content="https://sa-token.com/blog/essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html">
-	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/cover/sa-token-gateway-cover-tech.png">
 	<meta property="og:site_name" content="Sa-Token">
 	<meta property="og:locale" content="zh_CN">
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权">
 	<meta name="twitter:description" content="微服务子服务通常不能被外网直连，需经网关转发才算合法请求。若有人绕过网关直调资源服务会怎样？本文用 Sa-Token 讲清网关转发鉴权与 RPC 调用鉴权，堵住「绕过网关」缺口，加固内网服务边界安全，适合已有网关但仍担心直连风险的团队，文内含示例，可直接对照实践。">
-	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/cover/sa-token-gateway-cover-tech.png">
 	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
 	<link rel="stylesheet" href="../../static/doc.css">
 	<link rel="stylesheet" href="../../static/vue.css">
@@ -47,7 +47,7 @@
     "@type": "WebPage",
     "@id": "https://sa-token.com/blog/essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html"
   },
-  "image": "https://sa-token.com/logo.png"
+  "image": "https://res.dev33.cn/sa-token-blog/img/cover/sa-token-gateway-cover-tech.png"
 }</script>
 </head>
 <body class="blog-page blog-article-page ready">
@@ -160,7 +160,7 @@
 					<h1>别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
 					<h2 id="yi-xu-qiu-chang-jing">一、需求场景</h2>
-<p>在微服务项目中，我们的子服务一般不能通过外网直接访问，必须通过网关转发才是一个合法的请求，这种子服务与外网的隔离一般分为两种：</p>
+<p>在微服务项目中，<strong>我们的子服务一般不能通过外网直接访问，必须通过网关转发才是一个合法的请求</strong>，这种子服务与外网的隔离一般分为两种：</p>
 <ol>
 <li>物理隔离：子服务部署在指定的内网环境中，只有网关对外网开放。</li>
 <li>逻辑隔离：子服务与网关同时暴露在外网，但是子服务会有一个权限拦截层保证只接受网关发送来的请求，绕过网关直接访问子服务会被提示：无效请求。 </li>
@@ -169,10 +169,11 @@
 <p>Sa-Token提供两种解决方案：<br />
 1. 使用 OAuth2.0 模式的凭证式，将 Client-Token 用作各个服务的身份凭证进行权限校验。<br />
 2. 使用 Same-Token 模块提供的身份校验能力，完成服务间的权限认证。</p>
-<p>本篇主要讲解方案二 <code>Same-Token</code> 模块的整合步骤，其鉴权流程与 OAuth2.0 类似，不过使用方式上更加简洁。</p>
+<p>本篇主要讲解方案二 <code>Same-Token</code> 模块的整合步骤，其鉴权流程与 OAuth2.0 类似，不过使用方式上更加简洁。本文代码基于 Sa-Token <code>v1.46.0</code>。</p>
 <blockquote>
-<p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
-Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
+<p>Sa-Token 是一个开源、免费、一站式 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
+- 在线文档：<a href="https://sa-token.com?way=blog">https://sa-token.com</a><br />
+- 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
 </blockquote>
 <h2 id="er-wang-guan-zhuan-fa-jian-quan">二、网关转发鉴权</h2>
 <h3 id="1-yin-ru-yi-lai">1、引入依赖</h3>
@@ -181,14 +182,14 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 &lt;dependency&gt;
     &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
     &lt;artifactId&gt;sa-token-reactor-spring-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;1.34.0&lt;/version&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
 &lt;/dependency&gt;
 
-&lt;!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） --&gt;
+&lt;!-- Sa-Token 整合 RedisTemplate --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
-    &lt;artifactId&gt;sa-token-dao-redis-jackson&lt;/artifactId&gt;
-    &lt;version&gt;1.34.0&lt;/version&gt;
+    &lt;artifactId&gt;sa-token-redis-template&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
@@ -196,24 +197,25 @@ Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
 <p>Gradle 方式：</p>
 <pre v-pre data-lang="gradle"><code class="lang-gradle language-gradle has-numbering">// Sa-Token 权限认证（Reactor响应式集成），在线文档：https://sa-token.com
-implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.34.0'
+implementation 'cn.dev33:sa-token-reactor-spring-boot-starter:1.46.0'
 
-// Sa-Token 整合 Redis （使用 jackson 序列化方式）
-implementation 'cn.dev33:sa-token-dao-redis-jackson:1.34.0'
+// Sa-Token 整合 RedisTemplate
+implementation 'cn.dev33:sa-token-redis-template:1.46.0'
 implementation 'org.apache.commons:commons-pool2'</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>注：SpringBoot 3.x 请改用 <code>sa-token-reactor-spring-boot3-starter</code>，SpringBoot 4.x 请改用 <code>sa-token-reactor-spring-boot4-starter</code>。</p>
 <p>在子服务引入的依赖为：</p>
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证, 在线文档：https://sa-token.com --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
     &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
-    &lt;version&gt;1.34.0&lt;/version&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
 &lt;/dependency&gt;
 
-&lt;!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） --&gt;
+&lt;!-- Sa-Token 整合 RedisTemplate --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
-    &lt;artifactId&gt;sa-token-dao-redis-jackson&lt;/artifactId&gt;
-    &lt;version&gt;1.34.0&lt;/version&gt;
+    &lt;artifactId&gt;sa-token-redis-template&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
@@ -221,11 +223,13 @@ implementation 'org.apache.commons:commons-pool2'</code><ul class="code-line-box
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
 <p>Gradle 方式：</p>
 <pre v-pre data-lang="gradle"><code class="lang-gradle language-gradle has-numbering">// Sa-Token 权限认证，在线文档：https://sa-token.com
-implementation 'cn.dev33:sa-token-spring-boot-starter:1.34.0'
+implementation 'cn.dev33:sa-token-spring-boot-starter:1.46.0'
 
-// Sa-Token 整合 Redis （使用 jackson 序列化方式）
-implementation 'cn.dev33:sa-token-dao-redis-jackson:1.34.0'
+// Sa-Token 整合 RedisTemplate
+implementation 'cn.dev33:sa-token-redis-template:1.46.0'
 implementation 'org.apache.commons:commons-pool2'</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>注：SpringBoot 3.x 请改用 <code>sa-token-spring-boot3-starter</code>，SpringBoot 4.x 请改用 <code>sa-token-spring-boot4-starter</code>。</p>
+<p>旧文里的 <code>sa-token-dao-redis-jackson</code> 已更名为 <code>sa-token-redis-jackson</code>，当前文档推荐改用 <code>sa-token-redis-template</code>。自 v1.46.0 起，该插件用了 Redis 6.0+ 的 <code>SET KEEPTTL</code>，Redis 低于 6.0 会报 <code>ERR syntax error</code>，处理方式见 <a href="https://sa-token.com/doc.html?way=blog#/more/common-questions">常见问题</a>。</p>
 <h3 id="2-wang-guan-chu-tian-jia-same-token">2、网关处添加Same-Token</h3>
 <p>为网关添加全局过滤器：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
@@ -245,7 +249,7 @@ public class ForwardAuthFilter implements GlobalFilter {
         return chain.filter(newExchange);
     }
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
-<p>此过滤器会为 Request 请求头追加 <code>Same-Token</code> 参数，这个参数会被转发到子服务 </p>
+<p>此过滤器会为 Request 请求头追加 <code>Same-Token</code> 参数（请求头名是 <code>SA-SAME-TOKEN</code>），这个参数会被转发到子服务 </p>
 <h3 id="3-zai-zi-fu-wu-li-jiao-yan-can-shu">3、在子服务里校验参数</h3>
 <p>在子服务添加过滤器校验参数 </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
@@ -283,12 +287,15 @@ public class SaTokenConfigure implements WebMvcConfigurer {
  */
 @Component
 public class FeignInterceptor implements RequestInterceptor {
-    // 为 Feign 的 RCP调用 添加请求头Same-Token 
+    // 为 Feign 的 RPC 调用 添加请求头Same-Token 
     @Override
     public void apply(RequestTemplate requestTemplate) {
         requestTemplate.header(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken());
+
+        // 如果希望被调用方有会话状态，此处就还需要将 satoken 添加到请求头中
+        // requestTemplate.header(StpUtil.getTokenName(), StpUtil.getTokenValue());
     }
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
 <h3 id="2-zai-diao-yong-jie-kou-li-shi-yong-ci-interceptor">2、在调用接口里使用此 Interceptor</h3>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
  * 服务调用 
@@ -328,7 +335,7 @@ SaSameUtil.refreshToken();
 // 在 Request 上储存 Same-Token 时建议使用的key
 SaSameUtil.SAME_TOKEN;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
 <h3 id="1-yi-wen-zhe-ge-token-you-mei-you-xie-lou-de-feng-xian-token">1、疑问：这个Token保存在什么地方？有没有泄露的风险？Token为永久有效还是临时有效？</h3>
-<p>Same-Token 默认随 Sa-Token 数据一起保存在Redis中，理论上不会存在泄露的风险，每个Token默认有效期只有一天</p>
+<p>Same-Token 默认随 Sa-Token 数据一起保存在Redis中，理论上不会存在泄露的风险，每个Token默认有效期只有一天（配置项 <code>sa-token.same-token-timeout</code>，默认 <code>86400</code> 秒）</p>
 <h3 id="2-ru-he-zhu-dong-shua-xin-same-token-li-ru-wu-fen-zhong-lian">2、如何主动刷新Same-Token，例如：五分钟、两小时刷新一次？</h3>
 <p>Same-Token 刷新间隔越短，其安全性越高，每个Token的默认有效期为一天，在一天后再次获取会自动产生一个新的Token</p>
 <blockquote>
@@ -352,7 +359,7 @@ public class SaSameTokenRefreshTask {
 <p>Same-Token 模块在每次刷新 Token 时，旧 Token 会被作为次级 Token 存储起来，<br />
 只要网关携带的 Token 符合新旧 Token 其一即可通过认证，直至下一次刷新，新 Token 再次作为次级 Token 将此替换掉。</p>
 <h2 id="wu-zai-dubbo-zhong-ji-cheng-same-token">五、在 Dubbo 中集成 Same-Token</h2>
-<p>Same-Token 不仅可以为 Feign 提供调用鉴权操作，在 dubbo 的 RPC 调用时也可以使用 Same-Token 进行鉴权，提供这个能力的正是 <code>sa-token-context-dubbo</code> 插件。</p>
+<p>Same-Token 不仅可以为 Feign 提供调用鉴权操作，在 dubbo 的 RPC 调用时也可以使用 Same-Token 进行鉴权，提供这个能力的正是 <code>sa-token-dubbo</code> 插件（旧名 <code>sa-token-context-dubbo</code>）。</p>
 <h3 id="1-xian-shuo-shuo-yao-jie-jue-de-wen-ti">1、先说说要解决的问题</h3>
 <p>在 Dubbo 的整个调用链中，代码被分为 Consumer 端和 Provider 端，为方便理解我们可以称其为 <code>[调用端]</code> 和 <code>[被调用端]</code>。 </p>
 <p>RPC 模式的调用，可以让我们像调用本地方法一样完成服务通信，然而这种便利下却隐藏着两个问题：</p>
@@ -371,12 +378,13 @@ public class SaSameTokenRefreshTask {
 <pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 整合 Dubbo --&gt;
 &lt;dependency&gt;
     &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
-    &lt;artifactId&gt;sa-token-context-dubbo&lt;/artifactId&gt;
-    &lt;version&gt;1.34.0&lt;/version&gt;
+    &lt;artifactId&gt;sa-token-dubbo&lt;/artifactId&gt;
+    &lt;version&gt;1.46.0&lt;/version&gt;
 &lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>Gradle 方式</p>
 <pre v-pre data-lang="gradle"><code class="lang-gradle language-gradle has-numbering">// Sa-Token 整合 Dubbo
-implementation 'cn.dev33:sa-token-context-dubbo:1.34.0'</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+implementation 'cn.dev33:sa-token-dubbo:1.46.0'</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>注：如果使用的是 Dubbo 3，将 <code>sa-token-dubbo</code> 改成 <code>sa-token-dubbo3</code> 即可。</p>
 <p>然后我们就可以愉快的做到以下事情：</p>
 <ol>
 <li>在 [ 被调用端 ] 安全的调用 Sa-Token 相关 API。</li>
@@ -398,18 +406,12 @@ implementation 'cn.dev33:sa-token-context-dubbo:1.34.0'</code><ul class="code-li
 <p>我们有两种方式完成整合。</p>
 <h4 id="fang-shi-yi-shi-yong-pei-zhi-tui-jian">方式一、使用配置（推荐）</h4>
 <p>直接在 <code>application.yml</code> 配置即可：</p>
-<!---------------------------- tabs:start ---------------------------->
-<!------------- tab:yaml 风格  ------------->
-
 <pre v-pre data-lang="yaml"><code class="lang-yaml language-yaml has-numbering">sa-token: 
     # 打开 RPC 调用鉴权 
     check-same-token: true</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
-<!------------- tab:properties 风格  ------------->
-
 <pre v-pre data-lang="properties"><code class="lang-properties language-properties has-numbering"># 打开 RPC 调用鉴权 
 sa-token.check-same-token=true</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
-<!---------------------------- tabs:end ---------------------------->
-
+<p>插件内置过滤器会在调用端自动追加 Same-Token，在被调用端自动校验。gRPC 同理：引入 <code>sa-token-grpc</code> 后同样配置 <code>check-same-token: true</code> 即可。</p>
 <h4 id="fang-shi-er-zi-jian-dubbo-guo-lv-qi-jiao-yan">方式二、自建 Dubbo 过滤器校验</h4>
 <p>此方式略显繁琐，好处是除了Same-Token，我们还可以添加其它自定义参数 (attachment)。</p>
 <p>1、在 [ 调用端 ] 的 <code>\resources\META-INF\dubbo\</code> 目录新建 <code>org.apache.dubbo.rpc.Filter</code> 文件</p>
@@ -443,6 +445,7 @@ public class DubboConsumerFilter implements Filter {
     }
 
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li></ul></pre>
+<p>Dubbo 3 请把 <code>RpcContext.getContext()</code> 换成 <code>RpcContext.getServiceContext()</code>。</p>
 <p>2、在 [ 被调用端 ] 的 <code>\resources\META-INF\dubbo\</code> 目录新建 <code>org.apache.dubbo.rpc.Filter</code> 文件</p>
 <pre v-pre data-lang="html"><code class="lang-html language-html has-numbering">dubboProviderFilter=com.pj.DubboProviderFilter</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>新建 <code>DubboProviderFilter.java</code> 过滤器</p>
@@ -465,6 +468,10 @@ public class DubboProviderFilter implements Filter {
 
         // 取出 Same-Token 进行校验 
         String sameToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN);
+        // 部分协议会把 attachment key 转成小写
+        if(sameToken == null) {
+            sameToken = invocation.getAttachment(SaSameUtil.SAME_TOKEN.toLowerCase());
+        }
         SaSameUtil.checkToken(sameToken);
 
         // 取出其他自定义附加数据
@@ -474,7 +481,7 @@ public class DubboProviderFilter implements Filter {
         return invoker.invoke(invocation);
     }
 
-}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li></ul></pre>
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li></ul></pre>
 <p>然后我们就可以进行安全的 RPC 调用了，不带有 Same-Token 参数的调用都会抛出异常，无法调用成功。</p>
 <hr />
 <h2 id="can-kao-zi-liao">参考资料</h2>
