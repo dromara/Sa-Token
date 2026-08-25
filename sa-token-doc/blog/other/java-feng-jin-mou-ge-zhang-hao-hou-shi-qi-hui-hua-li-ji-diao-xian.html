@@ -159,6 +159,8 @@
 				<div class="markdown-section">
 					<h1>java中如何踢人下线？封禁某个账号后使其会话立即掉线！</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>其它</span></div>
+					
+					<div class="blog-article-body">
 					<h2 id="xu-qiu-chang-jing">需求场景</h2>
 <p>封禁账号是一个比较常见的业务需求，尤其是在论坛、社区类型的项目中，当出现了违规用户时我们需要将其账号立即封禁。</p>
 <p>常规的设计思路是：在设计<code>用户表</code>时增加一个状态字段，例如：<code>status</code>，其值为1时代表账号正常，其值为0时代表账号已被封禁。</p>
@@ -217,6 +219,7 @@ public String kickout(long userId) {
 <li>GitHub开源地址: <a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
 </ul>
 <p><br><br><br><br></p>
+					</div>
 					<div class="blog-post-nav">
 <a class="blog-post-nav-prev" href="../other/sa-token-you-ya-de-jiang-jian-quan-yu-ye-wu-dai-ma-fen-li.html">← Sa-Token之注解鉴权：优雅的将鉴权与业务代码分离！</a>
 <a class="blog-post-nav-next" href="../other/gong-zhong-hao-shou-xuan-2.html">公众号首宣 →</a>

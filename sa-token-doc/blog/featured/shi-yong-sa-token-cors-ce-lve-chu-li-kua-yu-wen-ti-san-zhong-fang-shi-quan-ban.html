@@ -159,6 +159,8 @@
 				<div class="markdown-section">
 					<h1>使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</h1>
 					<div class="blog-article-meta"><span>2025-04-11</span><span>精选</span></div>
+					
+					<div class="blog-article-body">
 					<h2 id="qian-yan">前言</h2>
 <p>之前写了一篇 <a href="https://juejin.cn/post/7247376558367981627">使用 Sa-Token 的全局过滤器解决跨域问题（三种方式全版）</a> <br />
 详解了如何使用 Sa-Token 的全局过滤器解决各种跨域问题，正好最近 Sa-Token 更新了版本，最新版本简化了跨域处理方案，<br />
@@ -348,6 +350,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         # 指明第三方 Cookie 限制级别为：不限制
         sameSite: None</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
 <p>2、后端的服务必须是 https 形式，前端无要求。</p>
+					</div>
 					<div class="blog-post-nav">
 <a class="blog-post-nav-prev" href="../featured/qian-tan-ti-ren-xia-xian-de-she-ji-si-lu-fu-dai-ma-shi-xian-fang-an-2.html">← 浅谈踢人下线的设计思路！（附代码实现方案）</a>
 <a class="blog-post-nav-next" href="../featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html">9 大框架统一接入，sa-token-rust 为什么值得关注 →</a>

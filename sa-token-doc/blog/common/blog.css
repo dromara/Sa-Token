@@ -253,6 +253,22 @@ body.blog-page.blog-sidebar-open {
 	z-index: 1;
 }
 
+/* 文章封面：日期下面、正文上面，当配图不抢标题 */
+.blog-page.blog-article-page #main .markdown-section > .blog-article-cover {
+	margin: -8px 0 24px;
+	padding: 0;
+	line-height: 0;
+	overflow: hidden;
+}
+
+.blog-page.blog-article-page #main .markdown-section > .blog-article-cover img {
+	display: block;
+	width: 100%;
+	height: auto;
+	margin: 0;
+	cursor: default;
+}
+
 /* 标题 + 元信息铺白底，盖住网格（对齐掘金：标题在 .markdown-body 外） */
 .blog-page.blog-article-page #main .markdown-section > h1 {
 	background: #fff;

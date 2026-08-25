@@ -159,6 +159,8 @@
 				<div class="markdown-section">
 					<h1>对敏感操作的二次认证 —— 详解 Sa-Token 二级认证</h1>
 					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
+					
+					<div class="blog-article-body">
 					<h2 id="yi-xu-qiu-fen-xi">一、需求分析</h2>
 <p>在某些敏感操作下，我们需要对已登录的会话进行二次验证。</p>
 <p>比如代码托管平台的仓库删除操作，尽管我们已经登录了账号，当我们点击 <strong>[删除]</strong> 按钮时，还是需要再次输入一遍密码，这么做主要为了两点：</p>
@@ -379,6 +381,7 @@ public String add2() {
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
 <li>GitHub 仓库地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
 </ul>
+					</div>
 					<div class="blog-post-nav">
 <a class="blog-post-nav-prev" href="../essays/zai-wei-fu-wu-zhong-shi-yong-sa-token-fen-bu-shi-session-hui-hua-wang-guan-tong.html">← 在微服务中使用 Sa-Token：分布式Session会话、网关统一鉴权</a>
 </div>
