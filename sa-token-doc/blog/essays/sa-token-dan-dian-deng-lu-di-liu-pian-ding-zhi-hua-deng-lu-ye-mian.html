@@ -322,7 +322,7 @@ public class SsoServerController {
 <li>统一认证登录地址是：<code>http://{host}:{port}/sso/auth</code>。</li>
 <li>而你访问的却是：<code>http://{host}:{port}/sso/auth2</code>。</li>
 </ul>
-<p>地址写错了，框架就不会处理这个请求，会直接返回 <code>{"msg": "not handle"}</code>，所有开放地址可参考：<a href="https://sa-token.com/doc.html#/sso/sso-apidoc">SSO 开放接口</a></p>
+<p>地址写错了，框架就不会处理这个请求，会直接返回 <code>{"msg": "not handle"}</code>，所有开放地址可参考：<a href="https://sa-token.com/doc.html?way=blog#/sso/sso-apidoc">SSO 开放接口</a></p>
 <p>如果仔细检查地址后没有写错，却依然返回了这个信息，那有可能是对应的接口没有打开，比如说：</p>
 <ul>
 <li>sso-server 端的单点注销地址：<code>http://{host}:{port}/sso/signout</code>；</li>
@@ -347,7 +347,7 @@ public class SaSsoServerApplication {
 <hr />
 <h2 id="can-kao-zi-liao">参考资料</h2>
 <ul>
-<li>Sa-Token 文档：<a href="https://sa-token.com">https://sa-token.com</a></li>
+<li>Sa-Token 文档：<a href="https://sa-token.com?way=blog">https://sa-token.com</a></li>
 <li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
 <li>GitHub 仓库地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
 </ul>
