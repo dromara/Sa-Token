@@ -266,7 +266,7 @@ body.blog-page.blog-sidebar-open {
 	width: 100%;
 	height: auto;
 	margin: 0;
-	cursor: default;
+	cursor: zoom-in;
 }
 
 /* 标题 + 元信息铺白底，盖住网格（对齐掘金：标题在 .markdown-body 外） */

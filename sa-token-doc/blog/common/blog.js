@@ -466,8 +466,9 @@
 
     var matches = Element.prototype.matches || Element.prototype.msMatchesSelector;
     var imgs = [].slice.call(
-      document.querySelectorAll('#main .markdown-section img:not(.emoji):not([data-no-zoom])')
+      document.querySelectorAll('#main .markdown-section img:not(.emoji)')
     ).filter(function (img) {
+      if (img.hasAttribute('data-no-zoom') && !img.closest('.blog-article-cover')) return false;
       return matches.call(img, 'a img') === false;
     });
     if (!imgs.length) return;
