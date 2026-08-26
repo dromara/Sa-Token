@@ -805,23 +805,25 @@ body.blog-page.blog-sidebar-open {
 }
 
 .blog-index-card {
-	padding: 20px 0;
+	padding: 12px 0;
 	border-bottom: 1px solid #e5e6eb;
 }
 
 .blog-index-card-body {
 	display: flex;
-	align-items: flex-start;
+	align-items: stretch;
 }
 
 .blog-index-card-text {
 	flex: 1;
 	min-width: 0;
+	display: flex;
+	flex-direction: column;
 }
 
-.blog-index-card-cover {
-	flex: 0 0 120px;
-	width: 120px;
+.blog-index-card-cover:not(.blog-index-card-cover--empty) {
+	flex: 0 0 160px;
+	width: 160px;
 	margin-left: 16px;
 }
 
@@ -834,6 +836,7 @@ body.blog-page.blog-sidebar-open {
 
 .blog-index-cover {
 	display: block;
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	line-height: 0;
@@ -844,8 +847,8 @@ body.blog-page.blog-sidebar-open {
 
 .blog-index-cover img {
 	display: block;
-	width: 120px;
-	height: 80px;
+	width: 160px;
+	height: 100%;
 	margin: 0;
 	object-fit: cover;
 	border: 1px solid var(--blog-panel-border);
@@ -861,6 +864,7 @@ body.blog-page.blog-sidebar-open {
 	border-bottom: 0 !important;
 	text-decoration: none !important;
 	box-shadow: none;
+	height: 100%;
 }
 
 .blog-index-card:last-child {
@@ -871,14 +875,14 @@ body.blog-page.blog-sidebar-open {
 	font-size: 19px;
 	line-height: 1.35;
 	letter-spacing: -0.01em;
-	margin: 0 0 12px;
+	margin: 0 0 6px;
 	font-weight: 700;
 	border-bottom: 0;
 	padding-bottom: 0;
 }
 
 .blog-index-page #main .markdown-section .blog-index-card h2 {
-	margin: 0 0 8px !important;
+	margin: 0 0 6px !important;
 	padding: 0 !important;
 	border-bottom: 0 !important;
 	font-size: 19px;
@@ -909,7 +913,20 @@ body.blog-page.blog-sidebar-open {
 }
 
 .blog-index-meta {
-	display: none;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0;
+	margin: 0;
+	font-size: 13px;
+	line-height: 22px;
+	color: #8a919f;
+}
+
+.blog-index-meta span:last-child::before {
+	content: "|";
+	margin: 0 10px;
+	color: #c9cdd4;
 }
 
 /* 压过 .blog-page #main .markdown-section p 的 line-height:2 / margin，以及 vue.css 的 word-spacing */
@@ -929,7 +946,7 @@ body.blog-page.blog-sidebar-open {
 	font-weight: 400;
 	line-height: 1.5 !important;
 	color: #909399;
-	margin: 0 !important;
+	margin: 0 0 8px !important;
 	word-spacing: normal;
 	letter-spacing: normal;
 	-webkit-font-smoothing: antialiased;
