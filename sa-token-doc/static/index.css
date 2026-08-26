@@ -156,16 +156,18 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .dmt-detail h4{padding-top: 10px; padding-bottom: 20px;}
 /* 悬浮时展开 */
 .dmt-link{display: inline-block; position: relative;}
-.dmt-detail{position: absolute; transform: translate(-300px, 0px); background-color: #FFF; overflow: hidden; display: none; transition: all 0.2s;}
+.dmt-detail{position: absolute; transform: translate(-420px, 0px); background-color: #FFF; overflow: hidden; display: none; transition: all 0.2s;}
 .dmt-link:hover .dmt-detail{display: block; }
 .dmt-detail{padding: 30px; padding-top: 15px; border: 1px #ccc solid;}
-.dmt-item-box{display: flex; width: 600px;}
-.dmt-detail .dmt-item{width: 200px; flex: 1; text-align: center; cursor: pointer;}
+.dmt-item-box{display: flex; width: 760px;}
+.dmt-detail .dmt-item{width: 190px; flex: 1; text-align: center; cursor: pointer;}
 .dmt-item .dmt-qr-img{ max-width: 180px; }
 .dmt-item .dmt-logo-img{ max-width: 180px; max-height: 50px; margin-top: 10px;}
-.dmt-item-douyin,.dmt-item-wxsph{ margin-top: 15px; }
+.dmt-item-gzh,.dmt-item-douyin,.dmt-item-wxsph{ margin-top: 15px; }
 .dmt-item-bilibili .dmt-logo-img{margin-top: 20px;}
 .dmt-item-wxsph .dmt-logo-img{margin-top: 15px;}
+.dmt-logo-gzh{display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 18px; height: 36px; color: #1a1a1a; font-size: 16px; font-weight: 700; white-space: nowrap;}
+.dmt-logo-gzh svg{width: 28px; height: 28px; flex-shrink: 0;}
 
 /* 微信二维码 */
 .wx-qr-box{margin-top: 50px;}
