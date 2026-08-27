@@ -56,7 +56,7 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
         "url": "essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html"
       },
       {
-        "title": "不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现",
+        "title": "不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现！",
         "url": "essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html"
       },
       {
