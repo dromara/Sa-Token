@@ -1,0 +1,635 @@
+/* 水滴样式 */
+.water-drop {
+	position: fixed;
+	width: 20px;
+	height: 28px;
+	border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+	transform: rotate(45deg);
+	z-index: 1550;
+	border: 2px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.color-wave {
+	position: fixed;
+	border-radius: 50%;
+	transform: scale(0);
+	z-index: -1;
+	pointer-events: none;
+}
+
+.main-box {
+	position: relative;
+}
+
+
+/* ========== 暗色主题（IDE 风） ========== */
+
+body[data-st-theme="vscode-dark"] {
+	--st-bg: #1e1e1e;
+	--st-bg-elevated: #252526;
+	--st-bg-soft: #2d2d2d;
+	--st-fg: #d4d4d4;
+	--st-fg-muted: #9d9d9d;
+	--st-border: #3e3e42;
+	--st-accent: #007acc;
+	--st-link: #3794ff;
+	--st-link-hover: #4fc1ff;
+	--st-header-bg: rgba(30, 30, 30, 0.97);
+	--st-sidebar: #cccccc;
+	--st-heading: #ffffff;
+	--st-code-inline-bg: rgba(255, 255, 255, 0.08);
+	--st-blockquote-bg: #252526;
+	--st-table-bg: #252526;
+	--st-ad-bg: #2a2d2e;
+	--st-alert-note-bg: #1a2a3a;
+	--st-alert-tip-bg: #1e2e22;
+	--st-alert-warn-bg: #2e2618;
+	--st-alert-attention-bg: #3a2222;
+}
+
+body[data-st-theme="darcula"] {
+	--st-bg: #2b2b2b;
+	--st-bg-elevated: #3c3f41;
+	--st-bg-soft: #313335;
+	--st-fg: #a9b7c6;
+	--st-fg-muted: #808080;
+	--st-border: #555555;
+	--st-accent: #cc7832;
+	--st-link: #6897bb;
+	--st-link-hover: #85c0ec;
+	--st-header-bg: rgba(43, 43, 43, 0.97);
+	--st-sidebar: #a9b7c6;
+	--st-heading: #e8e8e8;
+	--st-code-inline-bg: rgba(255, 255, 255, 0.07);
+	--st-blockquote-bg: #313335;
+	--st-table-bg: #313335;
+	--st-ad-bg: #3c3f41;
+	--st-alert-note-bg: #2a3340;
+	--st-alert-tip-bg: #2a3530;
+	--st-alert-warn-bg: #353028;
+	--st-alert-attention-bg: #3d2b2b;
+}
+
+body[data-st-theme="one-dark"] {
+	--st-bg: #282c34;
+	--st-bg-elevated: #21252b;
+	--st-bg-soft: #2c313a;
+	--st-fg: #abb2bf;
+	--st-fg-muted: #5c6370;
+	--st-border: #3b4048;
+	--st-accent: #61afef;
+	--st-link: #61afef;
+	--st-link-hover: #98c379;
+	--st-header-bg: rgba(40, 44, 52, 0.97);
+	--st-sidebar: #abb2bf;
+	--st-heading: #e6e6e6;
+	--st-code-inline-bg: rgba(255, 255, 255, 0.08);
+	--st-blockquote-bg: #21252b;
+	--st-table-bg: #21252b;
+	--st-ad-bg: #2c313a;
+	--st-alert-note-bg: #1e2838;
+	--st-alert-tip-bg: #1e2e24;
+	--st-alert-warn-bg: #2e2a1e;
+	--st-alert-attention-bg: #382828;
+}
+
+body[data-st-theme="dracula"] {
+	--st-bg: #282a36;
+	--st-bg-elevated: #21222c;
+	--st-bg-soft: #343746;
+	--st-fg: #f8f8f2;
+	--st-fg-muted: #6272a4;
+	--st-border: #44475a;
+	--st-accent: #bd93f9;
+	--st-link: #8be9fd;
+	--st-link-hover: #50fa7b;
+	--st-header-bg: rgba(40, 42, 54, 0.97);
+	--st-sidebar: #f8f8f2;
+	--st-heading: #ffffff;
+	--st-code-inline-bg: rgba(255, 255, 255, 0.08);
+	--st-blockquote-bg: #21222c;
+	--st-table-bg: #21222c;
+	--st-ad-bg: #343746;
+	--st-alert-note-bg: #1e2238;
+	--st-alert-tip-bg: #1e2e22;
+	--st-alert-warn-bg: #30281e;
+	--st-alert-attention-bg: #3b2530;
+}
+
+body[data-st-theme="tokyo-night"] {
+	--st-bg: #1a1b26;
+	--st-bg-elevated: #16161e;
+	--st-bg-soft: #24283b;
+	--st-fg: #a9b1d6;
+	--st-fg-muted: #565f89;
+	--st-border: #3b4261;
+	--st-accent: #7aa2f7;
+	--st-link: #7dcfff;
+	--st-link-hover: #bb9af7;
+	--st-header-bg: rgba(26, 27, 38, 0.97);
+	--st-sidebar: #c0caf5;
+	--st-heading: #e8ecff;
+	--st-code-inline-bg: rgba(255, 255, 255, 0.07);
+	--st-blockquote-bg: #16161e;
+	--st-table-bg: #16161e;
+	--st-ad-bg: #24283b;
+	--st-alert-note-bg: #1a2238;
+	--st-alert-tip-bg: #1a2828;
+	--st-alert-warn-bg: #28221a;
+	--st-alert-attention-bg: #3a2230;
+}
+
+
+/* ========== 暗色通用覆盖 ========== */
+
+body[data-st-theme] {
+	color: var(--st-fg) !important;
+	background-color: var(--st-bg) !important;
+	--a-color: var(--st-link);
+	--a-hover-color: var(--st-link-hover);
+	--st-alert-note-title: #6cb6ff;
+	--st-alert-note-border: #3794ff;
+	--st-alert-tip-title: #56d364;
+	--st-alert-tip-border: #3fb950;
+	--st-alert-warn-title: #e3b341;
+	--st-alert-warn-border: #d29922;
+	--st-alert-attention-title: #ff7b72;
+	--st-alert-attention-border: #f85149;
+	--st-footer-fg: #5a5a5a;
+	--st-footer-link: #6b7280;
+}
+
+/* —— 顶栏 —— */
+body[data-st-theme] .doc-header {
+	background-color: var(--st-header-bg) !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+body[data-st-theme] .logo-box,
+body[data-st-theme] .logo-box .logo-text {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .logo-box sub {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .nav-right a,
+body[data-st-theme] .doc-header .nav-right .wzi {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .theme-btn {
+	filter: brightness(1.8);
+}
+
+body[data-st-theme] .zk-icon {
+	border-color: var(--st-fg-muted) transparent transparent transparent;
+}
+
+body[data-st-theme] .zk-context > div {
+	background-color: var(--st-bg-elevated);
+	border-color: var(--st-border);
+	color: var(--st-fg);
+}
+
+body[data-st-theme] .zk-box .zk-context a {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .zk-box .zk-context .zk-fengexian {
+	border-bottom-color: var(--st-border);
+}
+
+body[data-st-theme] .theme-box span {
+	border-color: var(--st-border);
+}
+
+body[data-st-theme] .nav-left .select-version,
+body[data-st-theme] #translateSelectLanguage {
+	border-color: var(--st-border) !important;
+	color: var(--st-fg) !important;
+	background-color: var(--st-bg-elevated) !important;
+}
+
+/* —— 搜索 —— */
+body[data-st-theme] .sear-box .search input {
+	border-color: var(--st-border);
+	color: var(--st-fg) !important;
+	background-color: var(--st-bg-elevated);
+	background-image: url(../search-icon.svg);
+	background-repeat: no-repeat;
+	background-position: 10px 8px;
+	background-size: 14px;
+}
+
+body[data-st-theme] .results-panel {
+	background-color: var(--st-bg-elevated);
+	border-color: var(--st-border);
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .search a,
+body[data-st-theme] .results-panel .matching-post {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .search .search-keyword {
+	color: var(--st-accent) !important;
+}
+
+/* —— 左侧目录 —— */
+body[data-st-theme] .sidebar .sidebar-nav > ul > li > strong,
+body[data-st-theme] .sidebar .sidebar-nav > ul > li > p,
+body[data-st-theme] .sidebar .sidebar-nav > ul > li > p strong,
+body[data-st-theme] .sidebar .sidebar-nav strong {
+	color: var(--st-heading) !important;
+}
+
+body[data-st-theme] .sidebar .sidebar-nav,
+body[data-st-theme] .sidebar .sidebar-nav p {
+	color: var(--st-sidebar) !important;
+}
+
+body[data-st-theme] .main-box .sidebar ul li a {
+	color: var(--st-sidebar) !important;
+}
+
+body[data-st-theme] .main-box .sidebar li a:hover,
+body[data-st-theme] .sidebar .sidebar-nav > ul > li > ul > li.active-rep > a {
+	color: var(--st-accent) !important;
+}
+
+body[data-st-theme] .main-box .sidebar-nav > ul > li > ul > li > .app-sub-sidebar li a {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .main-box .sidebar-nav > ul > li > ul > li > .app-sub-sidebar li.active a {
+	color: var(--st-accent) !important;
+}
+
+body[data-st-theme] .sidebar-toggle span {
+	background-color: var(--st-fg-muted);
+}
+
+/* —— 正文区 —— */
+body[data-st-theme] #main,
+body[data-st-theme] #main .markdown-section {
+	color: var(--st-fg) !important;
+}
+
+/* 覆盖 vue.css：.markdown-section h1~h4, strong { color: #2c3e50 } */
+body[data-st-theme] .main-box .markdown-section h1,
+body[data-st-theme] .main-box .markdown-section h2,
+body[data-st-theme] .main-box .markdown-section h3,
+body[data-st-theme] .main-box .markdown-section h4,
+body[data-st-theme] .main-box .markdown-section h5,
+body[data-st-theme] .main-box .markdown-section h6,
+body[data-st-theme] .main-box .markdown-section strong,
+body[data-st-theme] #main h1,
+body[data-st-theme] #main h2,
+body[data-st-theme] #main h3,
+body[data-st-theme] #main h4,
+body[data-st-theme] #main h5,
+body[data-st-theme] #main h6,
+body[data-st-theme] #main strong {
+	color: var(--st-heading) !important;
+}
+
+/* 覆盖 vue.css：.anchor span { color: #34495e } */
+body[data-st-theme] .main-box .markdown-section .anchor,
+body[data-st-theme] .main-box .markdown-section .anchor span,
+body[data-st-theme] .main-box .markdown-section h1 a,
+body[data-st-theme] .main-box .markdown-section h2 a,
+body[data-st-theme] .main-box .markdown-section h3 a,
+body[data-st-theme] .main-box .markdown-section h4 a,
+body[data-st-theme] .main-box .markdown-section h5 a,
+body[data-st-theme] .main-box .markdown-section h6 a {
+	color: var(--st-heading) !important;
+	border-bottom-color: transparent;
+}
+
+body[data-st-theme] #main p,
+body[data-st-theme] #main li,
+body[data-st-theme] #main td,
+body[data-st-theme] #main th,
+body[data-st-theme] #main em,
+body[data-st-theme] #main label,
+body[data-st-theme] #main .markdown-section blockquote,
+body[data-st-theme] #main .markdown-section blockquote p {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .main-box .markdown-section :not(pre) > code {
+	color: var(--st-accent) !important;
+	background-color: var(--st-code-inline-bg) !important;
+}
+
+body[data-st-theme] .main-box .markdown-section pre {
+	background-color: var(--st-code-inline-bg);
+}
+
+body[data-st-theme] .main-box .markdown-section blockquote {
+	background-color: var(--st-blockquote-bg);
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .main-box .markdown-section hr {
+	border-color: var(--st-border);
+}
+
+/* 正文图片：透明底 PNG 在暗色背景下加白底（徽章区除外） */
+body[data-st-theme] .main-box .markdown-section img {
+	background-color: #fff;
+}
+
+body[data-st-theme] .main-box .markdown-section .badge-box img {
+	background-color: transparent !important;
+}
+
+/* —— 右侧栏 / TOC —— */
+body[data-st-theme] .doc-right-bj-box-title {
+	color: var(--st-fg-muted) !important;
+	border-bottom-color: var(--st-border);
+}
+
+body[data-st-theme] .doc-right-more-item {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] #main .toc-box .toc-h2 a span,
+body[data-st-theme] #main .toc-box a span {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .ad-title {
+	color: var(--st-fg-muted) !important;
+	border-bottom-color: var(--st-border);
+}
+
+body[data-st-theme] .ew-wa {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .ew-wa a {
+	color: var(--st-link) !important;
+}
+
+body[data-st-theme] .help-btn {
+	background-color: var(--st-bg-soft);
+	color: var(--st-accent) !important;
+	border-color: var(--st-accent);
+}
+
+body[data-st-theme] .help-btn:hover {
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+body[data-st-theme] .mad-bg-box {
+	background-color: var(--st-ad-bg);
+}
+
+body[data-st-theme] .main-box .top-ad-box .mad-text {
+	color: var(--st-fg) !important;
+}
+
+/* —— 表格 / 广告 / 按钮 —— */
+body[data-st-theme] #main .gzh-table tr {
+	background-color: var(--st-table-bg);
+}
+
+body[data-st-theme] #main table tr {
+	background-color: transparent;
+}
+
+body[data-st-theme] #main table th,
+body[data-st-theme] #main table td {
+	border-color: var(--st-border);
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .main-box {
+	--docsifytabs-border-color: var(--st-border);
+	--docsifytabs-tab-color: var(--st-fg-muted);
+}
+
+body[data-st-theme] .docsify-tabs__tab {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .docsify-tabs__tab--active {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] #main .doc-inline-ad__card {
+	background-color: var(--st-ad-bg);
+}
+
+body[data-st-theme] #main .doc-inline-ad__text p,
+body[data-st-theme] #main .doc-inline-ad__close {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] #main .doc-inline-ad__close:hover {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .show-img {
+	background-color: var(--st-bg-elevated);
+	border-color: var(--st-accent);
+	color: var(--st-accent) !important;
+}
+
+body[data-st-theme] .show-img:hover {
+	background-color: var(--st-bg-soft);
+}
+
+body[data-st-theme] #main .dt-btn,
+body[data-st-theme] #main .case-btn {
+	background-color: var(--st-bg-soft);
+	color: var(--st-fg) !important;
+	border-color: var(--st-border) !important;
+}
+
+body[data-st-theme] #main .case-btn.case-btn-video {
+	background-color: var(--st-bg-soft);
+	color: var(--st-link) !important;
+	border-color: var(--st-border) !important;
+}
+
+/* —— details / alert —— */
+body[data-st-theme] .main-box details {
+	background-color: var(--st-bg-soft);
+	border-color: var(--st-accent);
+	color: var(--st-fg);
+}
+
+body[data-st-theme] .main-box details summary {
+	background-color: var(--st-bg-soft);
+	color: var(--st-accent) !important;
+}
+
+/* —— flexible-alerts 提示框（flat / callout） —— */
+body[data-st-theme] .main-box .alert.flat,
+body[data-st-theme] .main-box .alert.callout {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat p,
+body[data-st-theme] .main-box .alert.callout p {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat .icon,
+body[data-st-theme] .main-box .alert.callout .icon {
+	filter: brightness(0) invert(1);
+	opacity: 0.9;
+}
+
+body[data-st-theme] .main-box .alert.flat.note {
+	background-color: var(--st-alert-note-bg) !important;
+	border-color: var(--st-alert-note-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.note .title {
+	color: var(--st-alert-note-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.tip {
+	background-color: var(--st-alert-tip-bg) !important;
+	border-color: var(--st-alert-tip-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.tip .title {
+	color: var(--st-alert-tip-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.warning {
+	background-color: var(--st-alert-warn-bg) !important;
+	border-color: var(--st-alert-warn-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.warning .title {
+	color: var(--st-alert-warn-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.attention {
+	background-color: var(--st-alert-attention-bg) !important;
+	border-color: var(--st-alert-attention-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.flat.attention .title {
+	color: var(--st-alert-attention-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout {
+	background-color: var(--st-bg-soft) !important;
+	border-color: var(--st-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.note {
+	border-left-color: var(--st-alert-note-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.note .title {
+	color: var(--st-alert-note-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.tip {
+	border-left-color: var(--st-alert-tip-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.tip .title {
+	color: var(--st-alert-tip-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.warning {
+	border-left-color: var(--st-alert-warn-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.warning .title {
+	color: var(--st-alert-warn-title) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.attention {
+	border-left-color: var(--st-alert-attention-border) !important;
+}
+
+body[data-st-theme] .main-box .alert.callout.attention .title {
+	color: var(--st-alert-attention-title) !important;
+}
+
+/* —— 赞助 / 团队 —— */
+body[data-st-theme] .zanzhu-sort-box .zanzhu-sort-btn {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .zanzhu-sort-box .zanzhu-sort-btn:hover,
+body[data-st-theme] .zanzhu-sort-box .zanzhu-sort-btn.zz-sort-native {
+	color: var(--st-link) !important;
+}
+
+body[data-st-theme] .zz-btn-box {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] .zz-btn-box button,
+body[data-st-theme] .syzz-show-btn {
+	background-color: var(--st-bg-elevated);
+	color: var(--st-fg) !important;
+	border-color: var(--st-border);
+}
+
+body[data-st-theme] .zanzhu-box table tr td:nth-child(2) {
+	color: #f48771 !important;
+}
+
+/* —— 页脚：首行保持正常可读，仅压暗下方说明与备案 —— */
+body[data-st-theme] #main footer > span:first-of-type,
+body[data-st-theme] #main footer > a:not(.footer-beian) {
+	color: var(--st-fg) !important;
+}
+
+body[data-st-theme] #main footer > span:first-of-type a,
+body[data-st-theme] #main footer > a:not(.footer-beian) {
+	color: var(--st-link) !important;
+	border-bottom-color: var(--st-link) !important;
+}
+
+body[data-st-theme] #main footer > span:first-of-type a:hover,
+body[data-st-theme] #main footer > a:not(.footer-beian):hover {
+	color: var(--st-link-hover) !important;
+	border-bottom-color: var(--st-link-hover) !important;
+}
+
+body[data-st-theme] #main footer p,
+body[data-st-theme] #main footer p[style],
+body[data-st-theme] #main footer p a {
+	color: var(--st-footer-fg) !important;
+	border-bottom-color: transparent !important;
+}
+
+body[data-st-theme] #main footer p a:hover {
+	color: var(--st-fg-muted) !important;
+}
+
+body[data-st-theme] #main footer > span[style],
+body[data-st-theme] #main footer a.footer-beian {
+	color: var(--st-footer-link) !important;
+	border-bottom-color: transparent !important;
+}
+
+body[data-st-theme] #main footer a.footer-beian:hover {
+	color: var(--st-fg-muted) !important;
+	border-bottom-color: transparent !important;
+}
+
+body[data-st-theme] #main footer hr {
+	border-color: var(--st-border) !important;
+	opacity: 0.6;
+}
+
+body[data-st-theme] .hover-change-img {
+	border-color: var(--st-border);
+}

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="Sa-Token v1.42.0 版本更新发布。免费开源的轻量级 Java 权限认证框架本版继续优化登录认证、权限认证、单点登录、OAuth2.0 与网关鉴权，并简化跨域等常见场景。详见文内更新日志，适合跟进社区最新实践，顺便核对跨域相关写法是否需调整。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,SSO,单点登录,OAuth2,微服务鉴权,网关鉴权,API Key,跨域,CORS,版本更新">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">
+	<meta property="og:description" content="Sa-Token v1.42.0 版本更新发布。免费开源的轻量级 Java 权限认证框架本版继续优化登录认证、权限认证、单点登录、OAuth2.0 与网关鉴权，并简化跨域等常见场景。详见文内更新日志，适合跟进社区最新实践，顺便核对跨域相关写法是否需调整。">
+	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力">
+	<meta name="twitter:description" content="Sa-Token v1.42.0 版本更新发布。免费开源的轻量级 Java 权限认证框架本版继续优化登录认证、权限认证、单点登录、OAuth2.0 与网关鉴权，并简化跨域等常见场景。详见文内更新日志，适合跟进社区最新实践，顺便核对跨域相关写法是否需调整。">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力",
+  "description": "Sa-Token v1.42.0 版本更新发布。免费开源的轻量级 Java 权限认证框架本版继续优化登录认证、权限认证、单点登录、OAuth2.0 与网关鉴权，并简化跨域等常见场景。详见文内更新日志，适合跟进社区最新实践，顺便核对跨域相关写法是否需调整。",
+  "datePublished": "2025-04-11",
+  "dateModified": "2025-04-11",
+  "url": "https://sa-token.com/blog/release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/release/sa-token-v1-42-0-fa-bu-xin-zeng-api-key-totp-yan-zheng-ma-refreshtoken-fan-cha-d.html"
+  },
+  "image": "https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>Sa-Token v1.42.0 发布 🚀，新增 API Key、TOTP 验证码、RefreshToken 反查等能力</h1>
+					<div class="blog-article-meta"><span>2025-04-11</span><span>版本更新</span></div>
+					
+					<div class="blog-article-body">
+					<p>Sa-Token 是一款 <strong>免费</strong>、<strong>开源</strong> 的轻量级 Java 权限认证框架，主要解决：<strong>登录认证</strong>、<strong>权限认证</strong>、<strong>单点登录</strong>、<strong>OAuth2.0</strong>、<strong>微服务网关鉴权</strong> 等一系列权限相关问题。🔐</p>
+<p><strong>目前最新版本 <code>v1.42.0</code> 已推送至 <code>Maven</code> 中央仓库</strong> 🎉，大家可以通过如下方式引入：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.42.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
+<h2 id="geng-xin-dian-1-xin-zeng-api-key-mo-kuai">🗝️ 更新点1：新增 API Key 模块</h2>
+<p>如果你曾经对接过 ChatGPT、DeepSeek 等大模型平台的开放接口，那你一定对 API Key 不陌生。🤝</p>
+<p>API Key 是一种接口调用密钥，类似于会话 token ，但比会话 token 具有更灵活的权限控制。🔑</p>
+<p>本次更新带来了 API Key 的全流程管理，支持为指定账号签发、校验、禁用、删除 API Key 。<br />
+同时每个 API Key 都可以单独设置不同的 scope 权限，以便在不同的场景下使用不同的 API Key，做到秘钥相互隔离，最小化授权。🛡️</p>
+<p>为了更好的展示此模块的能力，我们专门制作了一个 demo 示例：</p>
+<p><img alt="sa-api-key" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-api-key.png" /></p>
+<p>示例仓库地址：<a href="https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-apikey">sa-token-demo-apikey</a> 🔗</p>
+<p>在这个示例中，你可以登录测试不同的账号，并为它们签发 API Key，设置 scope 权限，并使用不同的 API Key 测试调用接口，观察响应结果。 🧪</p>
+<p>框架默认将所有 API Key 信息保存在缓存中，这可以称之为“缓存模式”，在这种模式下，重启缓存库后，数据将会丢失。⚠️</p>
+<p>框架预留了 SaApiKeyDataLoader 接口，以便你将数据的加载切换为 “数据库模式”，做到数据长久有效保存。 💾</p>
+<p>在线文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/plugin/api-key">API Key 接口调用秘钥</a> 🔗</p>
+<h2 id="geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</h2>
+<p>在 Sa-Token 文档中有一段这样的示例：📚</p>
+<p><img alt="sa-refresh-token" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-refresh-token.png" /></p>
+<p>该示例演示了如何通过临时 Token 认证模块，创建 <code>RefreshToken</code> 为登录会话做到双 Token 的效果。🔄</p>
+<p>但是有一天我在官网 sa-token 小助手接收到一位用户的咨询： 💬</p>
+<p><img alt="sa-refresh-token-wnglian-zixun" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-refresh-token-wnglian-zixun.png" /></p>
+<p>该用户指出，是否可以为 <code>RefreshToken</code> 提供反查机制，以便获取某个账号历史签发的 全部 <code>RefreshToken</code>。</p>
+<p>必须安排！💪🏆</p>
+<p>此次版本更新，允许程序在创建 refresh-token 时，指定第三个参数，该参数表示是否允许框架记录 Token 索引信息：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">SaTempUtil.createToken(&quot;10001&quot;, 2592000, true);</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p>指定为 false 代表不记录索引，只生成 token，指定为 true 代表记录索引信息，以便日后可以通过 value 反查历史签发的所有 token。🔍 </p>
+<p>例如我们可以通过 <code>SaTempUtil.getTempTokenList("xxx")</code> 方法获取指定账号所有历史签发的 <code>RefreshToken</code> 记录：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">List&lt;String&gt; refreshTokenList = SaTempUtil.getTempTokenList(&quot;10001&quot;);</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p>在线文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/plugin/temp-token">临时 Token 令牌认证</a> 🔗</p>
+<h2 id="geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</h2>
+<p>TOTP 是一种动态密码算法，用于生成短暂有效的数字验证码（通常6-8位）️。它的核心原理是：结合密钥与当前时间，通过哈希运算生成一次性密码。⏱</p>
+<p>TOTP 一般有以下应用场景：</p>
+<ul>
+<li>1、登录时的双因子认证：用户输入账号密码后还需要再输入 TOTP 验证码才可以登录成功。 🔐</li>
+<li>2、敏感操作的二次认证：用户在进行一些高危敏感操作时，需要输入 TOTP 验证码才可以继续操作。🛡️</li>
+<li>3、替代短信验证码：TOTP 验证码无需网络，可离线计算生成，一定程度上可以替代短信验证码验证身份。📴</li>
+</ul>
+<p>本次版本新增了 TOTP 验证码的生成与校验功能，这将方便大家为自己的系统添加双因子认证能力。🚀</p>
+<h2 id="geng-xin-dian-4-zhong-gou-sheng-ji-satokencontext-shang-xia">⚙️ 更新点4：重构升级 <code>SaTokenContext</code> 上下文读写策略</h2>
+<p>这可能是近几个版本中最底层的一次重构，几乎完全推翻了之前上下文模块的设计。💥</p>
+<p>在之前的版本中，Sa-Token 对接不同的 Web 框架需要利用这些 Web 框架的原生上下文能力来构建 Sa-Token 的上下文。 🌐</p>
+<p>本次更新 Sa-Token 利用 ThreadLocal 实现了自己的上下文存储机制，这将带来以下好处：</p>
+<ul>
+<li>1、可以更方便、更简单的对接更多的 Web 框架。</li>
+<li>2、可在异步场景中临时 Mock 一个上下文，调用 Sa-Token 框架同步 API。</li>
+<li>3、彻底删除了二级上下文模块，做到了 Web 请求与 RPC 请求的上下文统一。</li>
+<li>4、在防火墙 hook 里也可以调用 Sa-Token 同步 API 了。</li>
+</ul>
+<h2 id="geng-xin-dian-5-xin-zeng-cors-kua-yu-ce-lve-chu-li-han-shu-t">🌐 更新点5：新增 <code>CORS</code> 跨域策略处理函数，提供不同架构下统一的跨域处理方案</h2>
+<p>在之前的版本中，跨域处理总是要写在全局鉴权过滤器中，属于“鉴权之下的额外补充操作”。⏳</p>
+<p>新版本专门提供了一个 CORS 跨域处理策略组件，以后再也不用仅仅为了跨域就书写一个长长的鉴权过滤器组件了。🚀</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
+ * CORS 跨域处理
+ */
+@Bean
+public SaCorsHandleFunction corsHandle() {
+    return (req, res, sto) -&gt; {
+        res.
+                // 允许指定域访问跨域资源
+                setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;)
+                // 允许所有请求方式
+                .setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;POST, GET, OPTIONS, DELETE&quot;)
+                // 有效时间
+                .setHeader(&quot;Access-Control-Max-Age&quot;, &quot;3600&quot;)
+                // 允许的header参数
+                .setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;*&quot;);
+
+        // 如果是预检请求，则立即返回到前端
+        SaRouter.match(SaHttpMethod.OPTIONS)
+                .free(r -&gt; System.out.println(&quot;--------OPTIONS预检请求，不做处理&quot;))
+                .back();
+    };
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
+<p>开源仓库示例：<a href="https://gitee.com/sa-tokens/sa-token-demo-cross">sa-token-demo-cross</a> 🔗</p>
+<h2 id="geng-xin-dian-6-sa-token-quick-login-cha-jian-zhi-chi-http-b">🔑 更新点6：<code>sa-token-quick-login</code> 插件支持 <code>Http Basic</code> 方式通过认证</h2>
+<p><code>sa-token-quick-login</code> 可以快速、方便的为项目注入一个登录页面，当我们引入依赖后：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-quick-login&lt;/artifactId&gt;
+    &lt;version&gt;1.42.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<p>启动类：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
+public class SaTokenQuickDemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SaTokenQuickDemoApplication.class, args);
+
+        System.out.println(&quot;\n------ 启动成功 ------&quot;);
+        System.out.println(&quot;name: &quot; + SaQuickManager.getConfig().getName());
+        System.out.println(&quot;pwd:  &quot; + SaQuickManager.getConfig().getPwd());
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul></pre>
+<p>测试 Controller</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestController
+public class TestController {
+    @RequestMapping({&quot;/&quot;, &quot;/index&quot;})
+    public String index() {
+        String str = &quot;&lt;br /&gt;&quot;
+                + &quot;&lt;h1 style='text-align: center;'&gt;资源页 （登录后才可进入本页面） &lt;/h1&gt;&quot;
+                + &quot;&lt;hr/&gt;&quot;
+                + &quot;&lt;p style='text-align: center;'&gt; Sa-Token &quot; + SaTokenConsts.VERSION_NO + &quot; &lt;/p&gt;&quot;;
+        return str;
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<p>启动项目，使用浏览器访问：<code>http://localhost:8081</code>，首次访问时，由于处于未登录状态，会被强制进入登录页面 🚪：</p>
+<p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-quick-login.png" /></p>
+<p>使用默认账号：<code>sa / 123456</code>进行登录，会看到资源页面</p>
+<p><img alt="登录" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-quick-login-index.png" /></p>
+<p>新版本中更新了通过 Http Basic 的方式直接进行认证的能力：</p>
+<pre v-pre data-lang="url"><code class="lang-url language-url has-numbering">http://sa:123456@localhost:8081/</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p>这将非常有助于大家在专门的 API 测试工具下进行 quick-login 相关资源接口的测试。🧪</p>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
+<p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.42.0 版本的完整更新日志：</p>
+<ul>
+<li>core: <ul>
+<li>新增: 新增 <code>API Key</code> 模块。   <strong>[重要]</strong></li>
+<li>新增: 新增 <code>TOTP</code> 实现。   <strong>[重要]</strong></li>
+<li>重构：重构 <code>TempToken</code> 模块，新增 value 反查 token 机制。   <strong>[重要]</strong></li>
+<li>升级: 重构升级 <code>SaTokenContext</code> 上下文读写策略。   <strong>[重要]</strong></li>
+<li>新增: 新增 Mock 上下文模块。   <strong>[重要]</strong></li>
+<li>删除: 删除二级上下文模块。</li>
+<li>新增: 新增异步场景使用 demo。   <strong>[重要]</strong></li>
+<li>新增: 新增 <code>Base32</code> 编码工具类。</li>
+<li>新增：新增 <code>CORS</code> 跨域策略处理函数，提供不同架构下统一的跨域处理方案。</li>
+<li>新增：<code>renewTimeout</code> 续期方法增加 token 终端信息有效性校验。</li>
+<li>新增: 全局配置项 <code>cookieAutoFillPrefix</code>：cookie 模式是否自动填充 token 前缀。</li>
+<li>新增: 全局配置项 <code>rightNowCreateTokenSession</code>：在登录时，是否立即创建对应的 <code>Token-Session</code>。</li>
+<li>优化：优化 <code>Token-Session</code> 获取算法，减少缓存读取次数。</li>
+<li>新增：<code>SaLoginParameter</code> 支持配置 <code>SaCookieConfig</code>，以配置 Cookie 相关参数。</li>
+<li>修改：防火墙校验过滤器的注册顺序 修改为 -102。</li>
+<li>新增：防火墙 <code>hook</code> 注册新增 <code>registerHookToFirst</code>、<code>registerHookToSecond</code> 方法，以便更灵活的控制 hook 顺序。</li>
+</ul>
+</li>
+<li>插件：<ul>
+<li>新增: <code>sa-token-quick-login</code> 插件支持 <code>Http Basic</code> 方式通过认证。</li>
+</ul>
+</li>
+<li>单元测试：<ul>
+<li>补全：补全 <code>Temp Token</code> 模块单元测试。</li>
+</ul>
+</li>
+<li>文档：<ul>
+<li>补全：补全赞助者名单。</li>
+<li>修复：修复 <code>Thymeleaf</code> 集成文档不正确的依赖示例说明。</li>
+<li>修复：修复 <code>unionid</code> 章节错误描述。</li>
+<li>优化：采用更细致的描述优化SSO模式三单点注销步骤。</li>
+<li>新增：登录认证文档添加 Cookie 查看步骤演示图。</li>
+<li>新增：多账号模式新增注意点：运行时不可更改 <code>LoginType</code>。</li>
+<li>新增: 多账号模式QA：在一个接口里获取是哪个体系的账号正在登录。</li>
+<li>新增：新增QA：解决低版本 <code>SpringBoot (&lt;2.2.0)</code> 引入 Sa-Token 报错的问题。</li>
+<li>新增：新增QA：前后端一体项目下，在拦截未登录进入登录页面时，如何登录完成后原路返回？</li>
+<li>新增：新增QA：Sa-Token 集成 Redis 如何集群？</li>
+<li>新增：新增QA：如何自定义框架读取 token 的方式？</li>
+<li>新增：新增QA：修改 <code>hosts</code> 文件无效可能原因排查。</li>
+<li>新增：新增QA：如何防止 CSRF 攻击。</li>
+<li>新增: “异步 &amp; Mock 上下文” 章节。</li>
+<li>升级：升级“自定义 SaTokenContext 指南”章节文档。</li>
+</ul>
+</li>
+</ul>
+<p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html?way=blog#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
+<h2 id="qi-ta">🌟 其它</h2>
+<p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
+<p>框架功能结构图：</p>
+<p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-token-js4.png" /></p>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../release/sa-token-v1-41-0-fa-bu-lai-kan-kan-you-mei-you-ling-ni-xin-dong-de-gong-neng.html">← Sa-Token v1.41.0 发布 🚀，来看看有没有令你心动的功能！</a>
+<a class="blog-post-nav-next" href="../release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html">Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力 →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#geng-xin-dian-1-xin-zeng-api-key-mo-kuai">🗝️ 更新点1：新增 API Key 模块</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-zhong-gou-sheng-ji-satokencontext-shang-xia">⚙️ 更新点4：重构升级 SaTokenContext 上下文读写策略</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-xin-zeng-cors-kua-yu-ce-lve-chu-li-han-shu-t">🌐 更新点5：新增 CORS 跨域策略处理函数，提供不同架构下统一的跨域处理方案</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-sa-token-quick-login-cha-jian-zhi-chi-http-b">🔑 更新点6：sa-token-quick-login 插件支持 Http Basic 方式通过认证</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

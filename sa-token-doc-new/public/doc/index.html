@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Sa-Token 文档</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://sa-token.com/readme.html">
+  <script>
+    (function () {
+      var hash = location.hash || '';
+      var search = location.search || '';
+      var inner = hash.replace(/^#\/?/, '');
+      var qIndex = inner.indexOf('?');
+      var pathPart = qIndex >= 0 ? inner.slice(0, qIndex) : inner;
+      var id = '';
+      if (qIndex >= 0) {
+        inner.slice(qIndex + 1).split('&').forEach(function (pair) {
+          var kv = pair.split('=');
+          if (kv[0] === 'id') {
+            try { id = decodeURIComponent(kv[1] || ''); }
+            catch (e) { id = kv[1] || ''; }
+          }
+        });
+      }
+      pathPart = (pathPart || '').replace(/\/+$/, '');
+      var dest;
+      if (!pathPart || pathPart === 'index' || pathPart === 'README' || pathPart === 'readme') dest = '/readme.html';
+      else dest = '/' + pathPart.replace(/^\/+/, '') + '.html';
+      dest = dest.replace(/\/+/g, '/');
+      if (search) dest += search;
+      if (id.charAt(0) === '_') id = id.slice(1);
+      if (id) dest += '#' + id;
+      location.replace(dest);
+    })();
+  </script>
+</head>
+<body>正在跳转到新版文档…</body>
+</html>

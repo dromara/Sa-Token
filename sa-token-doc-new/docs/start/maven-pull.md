@@ -1,0 +1,53 @@
+---
+description: "Maven 拉不下 Sa-Token 依赖时的排查：清理残包、检查阿里云镜像，以及本地仓库路径。"
+---
+
+# Maven 依赖一直无法拉取成功？
+
+--- 
+方法1、先重启一下试试。
+
+--- 
+方法2、可能依赖还没有下载完毕，请看一下编辑器下方是否有正在构建项目的进度条。
+
+--- 
+方法3、可能是网络不太稳定，导致本地下载了一些残碎文件，先把这些残碎文件删除了，再重新构建项目试试。
+
+一般本地的文件都在 `C:\Users\你的电脑用户名\.m2\repository\cn\dev33`，打开后，把文件全部删除。注：如果你修改过 Maven jar 下载目录，就按照你修改的来。
+
+--- 
+方法4、可能你给你的 Maven 配置了阿里云镜像，而部分 jar 包无法通过阿里云镜像加载成功。
+
+打开你的 Maven setting.xml 文件，看看有没有以下配置：
+
+``` xml
+<mirror>
+	<id>nexus-aliyun</id>
+	<mirrorOf>central</mirrorOf>
+	<name>Nexus aliyun</name>
+	<url>http://maven.aliyun.com/nexus/content/groups/public</url> 
+</mirror>
+```
+
+如果有的话，先把它注释掉（注释掉就直连 Maven 中央仓库了），或者修改为其它的镜像，例如腾讯云的：
+
+``` xml
+<mirror> 
+	<id>tencent</id> 
+	<name>tencent maven</name> 
+	<url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+	<mirrorOf>central</mirrorOf> 
+</mirror>
+```
+
+然后重启你的代码编辑器，重新构建项目。
+
+--- --- 
+方法5、如果使用的是父子Maven项目，在父项目导入该依赖后,Pom无法识别的情况：
+
+需要先在子项目中引用该依赖，再进行重新加载。
+
+若还是不行，可以新建先一个小的Maven项目尝试将该依赖下载后，再返回原父子项目中将该依赖导入。
+
+--- --- 
+再不行的话，就加群反馈吧。

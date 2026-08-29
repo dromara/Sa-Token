@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>页面不存在 | Sa-Token</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="页面不存在">
+	<link rel="icon" href="/favicon.ico">
+	<style>
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		html, body { height: 100%; }
+		body {
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: "Source Sans Pro", "PingFang SC", "Microsoft YaHei", sans-serif;
+			color: #34495e;
+			background: linear-gradient(180deg, #f7fbf8 0%, #eef6f1 48%, #e6f4ec 100%);
+		}
+		.wrap { text-align: center; padding: 24px 20px; }
+		.rise {
+			opacity: 0;
+			transform: translateY(24px);
+		}
+		.wrap > .rise:nth-child(1) { animation: rise 0.28s ease 0s forwards; }
+		.wrap > .rise:nth-child(2) { animation: rise 0.28s ease 0.16s forwards; }
+		.wrap > .rise:nth-child(3) { animation: rise 0.28s ease 0.32s forwards; }
+		.wrap > .rise:nth-child(4) { animation: rise 0.28s ease 0.48s forwards; }
+		.code {
+			font-size: clamp(120px, 22vw, 220px);
+			font-weight: 700;
+			line-height: 0.9;
+			letter-spacing: -0.04em;
+			color: #42b983;
+		}
+		.kicker {
+			margin-top: 28px;
+			font-size: 15px;
+			color: #4e6e8e;
+		}
+		h1 {
+			margin-top: 8px;
+			margin-bottom: 36px;
+			font-size: 22px;
+			font-weight: 500;
+			color: #2c3e50;
+		}
+		.btns { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
+		.btns a {
+			min-width: 140px;
+			padding: 12px 28px;
+			font-size: 14px;
+			letter-spacing: 1px;
+			text-decoration: none;
+			border-radius: 2em;
+			border: 1px solid #1e8f5c;
+			color: #1e8f5c;
+			background: rgba(66, 185, 131, 0.08);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+		.btns a.doc-btn {
+			color: #fff;
+			background: #42b983;
+			border-color: #42b983;
+		}
+		.btns a:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 18px rgba(66, 185, 131, 0.22);
+		}
+		@keyframes rise {
+			from { opacity: 0; transform: translateY(24px); }
+			to { opacity: 1; transform: none; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.rise { opacity: 1; transform: none; animation: none; }
+			.btns a:hover { transform: none; box-shadow: none; }
+		}
+	</style>
+</head>
+<body>
+	<main class="wrap">
+		<div class="code rise">404</div>
+		<p class="kicker rise">这里是 Sa-Token 文档</p>
+		<h1 class="rise">访问的页面不存在</h1>
+		<div class="btns rise">
+			<a href="/">回到首页</a>
+			<a class="doc-btn" href="/readme.html">回到文档页</a>
+		</div>
+	</main>
+</body>
+</html>

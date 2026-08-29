@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>使用 Sa-Token CORS 策略处理跨域问题（三种方式全版） - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="前后端分离几乎绕不开跨域。本文基于 Sa-Token 新版本（v1.42.0+）讲解 CORS 处理的三种方式全版：全局过滤器、策略配置与常见坑，帮你简化跨域方案；低于该版本可参考此前过滤器专题文章，避免照搬过时写法导致联调失败，文内含示例，可直接对照实践。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,前后端分离,跨域,CORS">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）">
+	<meta property="og:description" content="前后端分离几乎绕不开跨域。本文基于 Sa-Token 新版本（v1.42.0+）讲解 CORS 处理的三种方式全版：全局过滤器、策略配置与常见坑，帮你简化跨域方案；低于该版本可参考此前过滤器专题文章，避免照搬过时写法导致联调失败，文内含示例，可直接对照实践。">
+	<meta property="og:url" content="https://sa-token.com/blog/featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）">
+	<meta name="twitter:description" content="前后端分离几乎绕不开跨域。本文基于 Sa-Token 新版本（v1.42.0+）讲解 CORS 处理的三种方式全版：全局过滤器、策略配置与常见坑，帮你简化跨域方案；低于该版本可参考此前过滤器专题文章，避免照搬过时写法导致联调失败，文内含示例，可直接对照实践。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）",
+  "description": "前后端分离几乎绕不开跨域。本文基于 Sa-Token 新版本（v1.42.0+）讲解 CORS 处理的三种方式全版：全局过滤器、策略配置与常见坑，帮你简化跨域方案；低于该版本可参考此前过滤器专题文章，避免照搬过时写法导致联调失败，文内含示例，可直接对照实践。",
+  "datePublished": "2025-04-11",
+  "dateModified": "2025-04-11",
+  "url": "https://sa-token.com/blog/featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</h1>
+					<div class="blog-article-meta"><span>2025-04-11</span><span>精选</span></div>
+					
+					<div class="blog-article-body">
+					<h2 id="qian-yan">前言</h2>
+<p>之前写了一篇 <a href="https://juejin.cn/post/7247376558367981627">使用 Sa-Token 的全局过滤器解决跨域问题（三种方式全版）</a> <br />
+详解了如何使用 Sa-Token 的全局过滤器解决各种跨域问题，正好最近 Sa-Token 更新了版本，最新版本简化了跨域处理方案，<br />
+本文章将介绍一下最新版本的写法，以便给正在使用新版本的同学做个参考。</p>
+<p>注：本文章仅针对新版本（v1.42.0 及以上版本）提供参考，低于 v1.42.0 版本可以移步上述文章进行了解。</p>
+<hr />
+<p>在 web 开发中，跨域绝对是比较折磨新同学的一个问题，本文将讲解三种常见的跨域情形，并讲解如何使用 Sa-Token 框架解决跨域问题。</p>
+<h2 id="shen-me-qing-kuang-xia-hui-fa-sheng-kua-yu">什么情况下会发生跨域</h2>
+<p>简单理解，就是你在 A 域名下的页面，去调用 B 域名的接口，浏览器感觉你这次调用可能是不安全的请求行为，于是它需要用 cors 安全策略来确认一下这个请求是由用户真实的意愿发出的，而不是被 csrf 伪造请求攻击偷偷发送的。（这么说只是为了方便大家理解，不是特别严谨，实际上同域名下部分情形也会出现跨域问题）</p>
+<p>请仔细理解上面这段话，因为它说明了两点：<br />
+- 跨域不是后端接口对前端浏览器的限制，而是前端浏览器对用户的限制。<br />
+- 跨域不是在保护后端接口免受攻击，而是浏览器在保护用户，避免用户发送自己不想发送的请求。</p>
+<p>请一定要记住上面跨域的本质，明白了症状和原因，我们才能对症下药。</p>
+<p>一般情况下，我们会碰到三种跨域场景：<br />
+- 1、本地页面调用测试服务器，只在项目开发阶段会有跨域问题。（比较简单）<br />
+- 2、使用 header 头提交 token，产生的跨域问题。（比较常见+通用，推荐使用）<br />
+- 3、使用第三方 Cookie 提交 token，产生的跨域问题。（最古老的方案，目前新版浏览器对此方案限制越来越严格，非必要不选择此方案，如果对此方案不是很熟悉就贸然使用也容易出现安全问题）</p>
+<h2 id="kua-yu-qing-xing-yi-zhi-zai-xiang-mu-kai-fa-jie-duan-hui-you">跨域情形一：只在项目开发阶段会有跨域问题</h2>
+<p>有些公司项目的开发方式为：<br />
+- 在项目开发时：使用本地页面调用测试服务器接口。（域名不同，存在跨域问题）<br />
+- 在项目部署时：将后端接口和前端页面部署在同一域名下。（域名一致，不存在跨域问题）</p>
+<p>这种情况下比较好解决，在代码层面我们无需任何更改，只在前端客户端做出一定的更改就行了。比如说：在前端配置一个代理服务器，或者修改一下 Chrome 客户端使其去除跨域限制。</p>
+<p>具体的方案有很多，大家可参考这篇博客：<a href="https://helang.blog.csdn.net/article/details/123946361">手把手教你解决web前端跨域问题</a></p>
+<p>上面是说的普通前后端分离开发，而在APP、小程序 开发中，其天然就是个没有跨域限制的客户端，我们什么都不用做就能解决跨域问题。</p>
+<h2 id="kua-yu-qing-xing-er-shi-yong-header-tou-ti-jiao-token-chan-s">跨域情形二：使用 header 头提交 token，产生的跨域问题（比较常见+通用，推荐使用）</h2>
+<p>当你使用 header 头提交 token 时，会产生跨域问题。此方案比较常见+通用，推荐使用。</p>
+<p>jquery 代码示例：</p>
+<pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">    $.ajax({
+        url: &quot;/user/getInfo&quot;,
+        type: &quot;post&quot;, 
+        data: {},
+        dataType: 'json',
+        headers: {
+            &quot;X-Requested-With&quot;: &quot;XMLHttpRequest&quot;,
+            // 重点处：请求的 header 头里塞入自定义参数
+            &quot;satoken&quot;: localStorage.getItem(&quot;satoken&quot;)
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(xhr, type, errorThrown){
+            return alert(&quot;异常：&quot; + JSON.stringify(xhr));
+        }
+    });</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+<p>Axios 代码示例：</p>
+<pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">    axios({
+        url: &quot;/user/getInfo&quot;,
+        method: 'post',
+        data: {},
+        headers: {
+            &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;,
+            // 重点处：请求的 header 头里塞入自定义参数
+            &quot;satoken&quot;: localStorage.getItem(&quot;satoken&quot;)
+        }
+    }).
+    then(function (response) { // 成功时执行
+        const res = response.data;
+        console.log(res);
+    }).
+    catch(function (error) {
+        return alert(&quot;异常：&quot; + JSON.stringify(error));
+    })</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+<p>此时在后端，我们应该添加以下响应头：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
+ * [Sa-Token 权限认证] 配置类 
+ *
+ * @author click33
+ */
+@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+
+    /**
+     * CORS 跨域处理策略
+     */
+    @Bean
+    public SaCorsHandleFunction corsHandle() {
+        return (req, res, sto) -&gt; {
+            res.
+                // 允许指定域访问跨域资源
+                setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;)
+                // 允许所有请求方式
+                .setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;POST, GET, OPTIONS, DELETE&quot;)
+                // 有效时间
+                .setHeader(&quot;Access-Control-Max-Age&quot;, &quot;3600&quot;)
+                // 允许的header参数
+                .setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;*&quot;);
+
+            // 如果是预检请求，则立即返回到前端
+            SaRouter.match(SaHttpMethod.OPTIONS)
+                .free(r -&gt; System.out.println(&quot;--------OPTIONS预检请求，不做处理&quot;))
+                .back();
+        };
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li></ul></pre>
+<p>WebFlux 同理，此处理策略全环境通用。</p>
+<h2 id="kua-yu-qing-xing-san-shi-yong-di-san-fang-cookie-ti-jiao-tok">跨域情形三：使用第三方 Cookie 提交 token，产生的跨域问题。</h2>
+<p>这是最古老的方案，目前新版浏览器对此方案限制越来越严格，非必要不选择此方案，如果对此方案不是很熟悉就贸然使用也容易出现安全问题。</p>
+<p>jquery 代码示例：</p>
+<pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">    $.ajax({
+        url: &quot;/user/getInfo&quot;,
+        type: &quot;post&quot;, 
+        data: {},
+        dataType: 'json',
+        // 重点处：指定是跨域模式，需要提交第三方 Cookie 
+        crossDomain: true,
+        xhrFields:{
+            withCredentials: true
+        },
+        headers: {
+            &quot;X-Requested-With&quot;: &quot;XMLHttpRequest&quot;
+        },
+        success: function(res){
+            console.log(res);
+        },
+        error: function(xhr, type, errorThrown){
+            return alert(&quot;异常：&quot; + JSON.stringify(xhr));
+        }
+    });</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li></ul></pre>
+<p>Axios 代码示例：</p>
+<pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">    axios({
+        url: &quot;/user/getInfo&quot;,
+        method: 'post',
+        data: {},
+        // 重点处：开启第三方 Cookie 
+        withCredentials: true,
+        headers: {
+            &quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;
+        }
+    }).
+    then(function (response) { // 成功时执行
+        console.log(res);
+    }).
+    catch(function (error) {
+        return alert(&quot;异常：&quot; + JSON.stringify(error));
+    })</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<p>此时在后端，我们应该添加以下响应头：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
+ * [Sa-Token 权限认证] 配置类 
+ *
+ * @author click33
+ */
+@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+
+    /**
+     * CORS 跨域处理策略
+     */
+    @Bean
+    public SaCorsHandleFunction corsHandle() {
+        return (req, res, sto) -&gt; {
+            // 获得客户端domain
+            String origin = req.getHeader(&quot;Origin&quot;);
+            if (origin == null) {
+                origin = req.getHeader(&quot;Referer&quot;);
+            }
+
+            // ---------- 设置跨域响应头 ----------
+            res
+                // 允许第三方 Cookie
+                .setHeader(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;)
+                // 允许指定域访问跨域资源
+                .setHeader(&quot;Access-Control-Allow-Origin&quot;, origin)
+                // 允许所有请求方式
+                .setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;POST, GET, OPTIONS, DELETE&quot;)
+                // 允许的header参数
+                .setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;x-requested-with,satoken&quot;)
+                // 有效时间
+                .setHeader(&quot;Access-Control-Max-Age&quot;, &quot;3600&quot;)
+            ;
+
+            // 如果是预检请求，则立即返回到前端
+            SaRouter.match(SaHttpMethod.OPTIONS)
+                .free(r -&gt; System.out.println(&quot;--------OPTIONS预检请求，不做处理&quot;))
+                .back();
+        };
+    }
+
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li></ul></pre>
+<p>WebFlux 同理，此处理策略全环境通用。</p>
+<p>注意：根据浏览器最新标准，Cookie 模式认证需要做到以下两点：</p>
+<p>1、Cookie 属性指定 secure=true 以及 sameSite=None</p>
+<pre v-pre data-lang="yml"><code class="lang-yml language-yml has-numbering">sa-token:
+    is-log: true
+    cookie:
+        # 指明当前为 https 安全连接
+        secure: true
+        # 指明第三方 Cookie 限制级别为：不限制
+        sameSite: None</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
+<p>2、后端的服务必须是 https 形式，前端无要求。</p>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../featured/qian-tan-ti-ren-xia-xian-de-she-ji-si-lu-fu-dai-ma-shi-xian-fang-an-2.html">← 浅谈踢人下线的设计思路！（附代码实现方案）</a>
+<a class="blog-post-nav-next" href="../featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html">9 大框架统一接入，sa-token-rust 为什么值得关注 →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#qian-yan">前言</a></li>
+<li class="toc-h2"><a href="#shen-me-qing-kuang-xia-hui-fa-sheng-kua-yu">什么情况下会发生跨域</a></li>
+<li class="toc-h2"><a href="#kua-yu-qing-xing-yi-zhi-zai-xiang-mu-kai-fa-jie-duan-hui-you">跨域情形一：只在项目开发阶段会有跨域问题</a></li>
+<li class="toc-h2"><a href="#kua-yu-qing-xing-er-shi-yong-header-tou-ti-jiao-token-chan-s">跨域情形二：使用 header 头提交 token，产生的跨域问题（比较常见+通用，推荐使用）</a></li>
+<li class="toc-h2"><a href="#kua-yu-qing-xing-san-shi-yong-di-san-fang-cookie-ti-jiao-tok">跨域情形三：使用第三方 Cookie 提交 token，产生的跨域问题。</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

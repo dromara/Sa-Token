@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /404.html
+Disallow: /public/
+
+Sitemap: https://sa-token.com/sitemap-docs.xml
+Sitemap: https://sa-token.com/blog/sitemap.xml

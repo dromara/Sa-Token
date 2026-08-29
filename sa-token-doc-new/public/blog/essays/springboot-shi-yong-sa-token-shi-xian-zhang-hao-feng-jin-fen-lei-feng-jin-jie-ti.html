@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="踢人下线与强制注销用于清退违规账号，但有时还要封禁以防再次登录。本文介绍 Sa-Token 的账号封禁、分类封禁与阶梯封禁：指定天数、永久封禁、按服务禁用，以及解封时机，适合社区、内容平台与后台治理等账号管控场景，文内含示例，可直接对照实践。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,踢人下线,账号封禁,SpringBoot">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁">
+	<meta property="og:description" content="踢人下线与强制注销用于清退违规账号，但有时还要封禁以防再次登录。本文介绍 Sa-Token 的账号封禁、分类封禁与阶梯封禁：指定天数、永久封禁、按服务禁用，以及解封时机，适合社区、内容平台与后台治理等账号管控场景，文内含示例，可直接对照实践。">
+	<meta property="og:url" content="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁">
+	<meta name="twitter:description" content="踢人下线与强制注销用于清退违规账号，但有时还要封禁以防再次登录。本文介绍 Sa-Token 的账号封禁、分类封禁与阶梯封禁：指定天数、永久封禁、按服务禁用，以及解封时机，适合社区、内容平台与后台治理等账号管控场景，文内含示例，可直接对照实践。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁",
+  "description": "踢人下线与强制注销用于清退违规账号，但有时还要封禁以防再次登录。本文介绍 Sa-Token 的账号封禁、分类封禁与阶梯封禁：指定天数、永久封禁、按服务禁用，以及解封时机，适合社区、内容平台与后台治理等账号管控场景，文内含示例，可直接对照实践。",
+  "datePublished": "2023-04-24",
+  "dateModified": "2023-04-24",
+  "url": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-shi-xian-zhang-hao-feng-jin-fen-lei-feng-jin-jie-ti.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>SpringBoot 使用 Sa-Token 实现账号封禁、分类封禁、阶梯封禁</h1>
+					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
+					
+					<div class="blog-article-body">
+					<h2 id="yi-xu-qiu-fen-xi">一、需求分析</h2>
+<p>之前的章节中，我们学习了 踢人下线 和 强制注销 功能，用于清退违规账号。在部分场景下，我们还需要将其 <strong>账号封禁</strong>，以防止其再次登录。</p>
+<blockquote>
+<p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
+Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
+</blockquote>
+<p>Sa-Token 提供的封禁操作有三种：</p>
+<ul>
+<li>账号封禁：封禁掉一个账号的登录能力，使其无法登录。</li>
+<li>分类封禁：封禁掉一个账号的部分业务操作权限，不影响账号的整体登录等基础功能。</li>
+<li>阶梯封禁：按照不同的违规程度，给与其不同的封禁力度。</li>
+</ul>
+<p>本篇文章将介绍在 Sa-Token 中如何完成上述三种封禁操作。</p>
+<p>首先在项目中引入 Sa-Token 依赖：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.34.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
+<h2 id="er-zhang-hao-feng-jin">二、账号封禁</h2>
+<p>对指定账号进行封禁：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 封禁指定账号 
+StpUtil.disable(10001, 86400); </code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>参数含义：<br />
+- 参数1：要封禁的账号id。<br />
+- 参数2：封禁时间，单位：秒，此为 86400秒 = 1天（此值为 -1 时，代表永久封禁）。</p>
+<p>注意点：对于正在登录的账号，将其封禁并不会使它立即掉线，如果我们需要它即刻下线，可采用先踢再封禁的策略，例如：<br></p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 先踢下线
+StpUtil.kickout(10001); 
+// 再封禁账号
+StpUtil.disable(10001, 86400); </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li></ul></pre>
+<p>待到下次登录时，我们先校验一下这个账号是否已被封禁：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 校验指定账号是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
+StpUtil.checkDisable(10001); 
+
+// 通过校验后，再进行登录：
+StpUtil.login(10001); </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul></pre>
+<blockquote>
+<p>旧版本在 <code>StpUtil.login()</code> 时会自动校验账号是否被封禁，v1.31.0 之后将 校验封禁 和 登录 两个动作分离成两个方法，不再自动校验，请注意其中的逻辑更改。</p>
+</blockquote>
+<p>此模块所有方法：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 封禁指定账号 
+StpUtil.disable(10001, 86400); 
+
+// 获取指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+StpUtil.isDisable(10001); 
+
+// 校验指定账号是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
+StpUtil.checkDisable(10001); 
+
+// 获取指定账号剩余封禁时间，单位：秒，如果该账号未被封禁，则返回-2 
+StpUtil.getDisableTime(10001); 
+
+// 解除封禁
+StpUtil.untieDisable(10001); </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<h2 id="san-fen-lei-feng-jin">三、分类封禁</h2>
+<p>有的时候，我们并不需要将整个账号禁掉，而是只禁止其访问部分服务。</p>
+<p>假设我们在开发一个电商系统，对于违规账号的处罚，我们设定三种分类封禁：</p>
+<ul>
+<li>1、封禁评价能力：账号A 因为多次虚假好评，被限制订单评价功能。</li>
+<li>2、封禁下单能力：账号B 因为多次薅羊毛，被限制下单功能。</li>
+<li>3、封禁开店能力：账号C 因为店铺销售假货，被限制开店功能。</li>
+</ul>
+<p>相比于封禁账号的一刀切处罚，这里的关键点在于：每一项能力封禁的同时，都不会对其它能力造成影响。</p>
+<p>也就是说我们需要一种只对部分服务进行限制的能力，对应到代码层面，就是只禁止部分接口的调用。</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 封禁指定用户评论能力，期限为 1天
+StpUtil.disable(10001, &quot;comment&quot;, 86400);</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
+<p>参数释义：<br />
+- 参数1：要封禁的账号id。<br />
+- 参数2：针对这个账号，要封禁的服务标识（可以是任意的自定义字符串）。<br />
+- 参数3：要封禁的时间，单位：秒，此为 86400秒 = 1天（此值为 -1 时，代表永久封禁）。</p>
+<p>分类封禁模块所有可用API：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/*
+ * 以下示例中：&quot;comment&quot;=评论服务标识、&quot;place-order&quot;=下单服务标识、&quot;open-shop&quot;=开店服务标识
+ */
+
+// 封禁指定用户评论能力，期限为 1天
+StpUtil.disable(10001, &quot;comment&quot;, 86400);
+
+// 在评论接口，校验一下，会抛出异常：`DisableServiceException`，使用 e.getService() 可获取业务标识 `comment` 
+StpUtil.checkDisable(10001, &quot;comment&quot;);
+
+// 在下单时，我们校验一下 下单能力，并不会抛出异常，因为我们没有限制其下单功能
+StpUtil.checkDisable(10001, &quot;place-order&quot;);
+
+// 现在我们再将其下单能力封禁一下，期限为 7天 
+StpUtil.disable(10001, &quot;place-order&quot;, 86400 * 7);
+
+// 然后在下单接口，我们添加上校验代码，此时用户便会因为下单能力被封禁而无法下单（代码抛出异常）
+StpUtil.checkDisable(10001, &quot;place-order&quot;);
+
+// 但是此时，用户如果调用开店功能的话，还是可以通过，因为我们没有限制其开店能力 （除非我们再调用了封禁开店的代码）
+StpUtil.checkDisable(10001, &quot;open-shop&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul></pre>
+<p>通过以上示例，你应该大致可以理解 <code>业务封禁 -&gt; 业务校验</code> 的处理步骤。</p>
+<p>有关分类封禁的所有方法：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 封禁：指定账号的指定服务 
+StpUtil.disable(10001, &quot;&lt;业务标识&gt;&quot;, 86400); 
+
+// 判断：指定账号的指定服务 是否已被封禁 (true=已被封禁, false=未被封禁) 
+StpUtil.isDisable(10001, &quot;&lt;业务标识&gt;&quot;); 
+
+// 校验：指定账号的指定服务 是否已被封禁，如果被封禁则抛出异常 `DisableServiceException`
+StpUtil.checkDisable(10001, &quot;&lt;业务标识&gt;&quot;); 
+
+// 获取：指定账号的指定服务 剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+StpUtil.getDisableTime(10001, &quot;&lt;业务标识&gt;&quot;); 
+
+// 解封：指定账号的指定服务
+StpUtil.untieDisable(10001, &quot;&lt;业务标识&gt;&quot;); </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<h2 id="si-jie-ti-feng-jin">四、阶梯封禁</h2>
+<p>对于多次违规的用户，我们常常采取阶梯处罚的策略，这种 “阶梯” 一般有两种形式：</p>
+<ul>
+<li>处罚时间阶梯：首次违规封禁 1 天，第二次封禁 7 天，第三次封禁 30 天，依次顺延……</li>
+<li>处罚力度阶梯：首次违规消息提醒、第二次禁言禁评论、第三次禁止账号登录，等等……</li>
+</ul>
+<p>基于处罚时间的阶梯，我们只需在封禁时 <code>StpUtil.disable(10001, 86400)</code> 传入不同的封禁时间即可，下面我们着重探讨一下基于处罚力度的阶梯形式。</p>
+<p>假设我们在开发一个论坛系统，对于违规账号的处罚，我们设定三种力度：</p>
+<ul>
+<li>1、轻度违规：封禁其发帖、评论能力，但允许其点赞、关注等操作。</li>
+<li>2、中度违规：封禁其发帖、评论、点赞、关注等一切与别人互动的能力，但允许其浏览帖子、浏览评论。</li>
+<li>3、重度违规：封禁其登录功能，限制一切能力。</li>
+</ul>
+<p>解决这种需求的关键在于，我们需要把不同处罚力度，量化成不同的处罚等级，比如上述的 <code>轻度</code>、<code>中度</code>、<code>重度</code> 3 个力度，<br />
+我们将其量化为<code>一级封禁</code>、<code>二级封禁</code>、<code>三级封禁</code> 3个等级，数字越大代表封禁力度越高。</p>
+<p>然后我们就可以使用阶梯封禁的API，进行鉴权了：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 阶梯封禁，参数：封禁账号、封禁级别、封禁时间 
+StpUtil.disableLevel(10001, 3, 10000);
+
+// 获取：指定账号封禁的级别 （如果此账号未被封禁则返回 -2）
+StpUtil.getDisableLevel(10001);
+
+// 判断：指定账号是否已被封禁到指定级别，返回 true 或 false
+StpUtil.isDisableLevel(10001, 3);
+
+// 校验：指定账号是否已被封禁到指定级别，如果已达到此级别（例如已被3级封禁，这里校验是否达到2级），则抛出异常 `DisableServiceException`
+StpUtil.checkDisableLevel(10001, 2);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<p>注意点：<code>DisableServiceException</code> 异常代表当前账号未通过封禁校验，可以：<br />
+- 通过 <code>e.getLevel()</code> 获取这个账号实际被封禁的等级。<br />
+- 通过 <code>e.getLimitLevel()</code> 获取这个账号在校验时要求低于的等级。当 <code>Level &gt;= LimitLevel</code> 时，框架就会抛出异常。</p>
+<p>如果业务足够复杂，我们还可能将 分类封禁 和 阶梯封禁 组合使用：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 分类阶梯封禁，参数：封禁账号、封禁服务、封禁级别、封禁时间 
+StpUtil.disableLevel(10001, &quot;comment&quot;, 3, 10000);
+
+// 获取：指定账号的指定服务 封禁的级别 （如果此账号未被封禁则返回 -2）
+StpUtil.getDisableLevel(10001, &quot;comment&quot;);
+
+// 判断：指定账号的指定服务 是否已被封禁到指定级别，返回 true 或 false
+StpUtil.isDisableLevel(10001, &quot;comment&quot;, 3);
+
+// 校验：指定账号的指定服务 是否已被封禁到指定级别（例如 comment服务 已被3级封禁，这里校验是否达到2级），如果已达到此级别，则抛出异常 
+StpUtil.checkDisableLevel(10001, &quot;comment&quot;, 2);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li></ul></pre>
+<h2 id="wu-shi-yong-zhu-jie-wan-cheng-feng-jin-jiao-yan">五、使用注解完成封禁校验</h2>
+<p>首先我们需要注册 Sa-Token 全局拦截器：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@Configuration
+public class SaTokenConfigure implements WebMvcConfigurer {
+    // 注册 Sa-Token 拦截器，打开注解式鉴权功能 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SaInterceptor()).addPathPatterns(&quot;/**&quot;);    
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<p>然后我们就可以使用以下注解校验账号是否封禁：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 校验当前账号是否被封禁，如果已被封禁会抛出异常，无法进入方法 
+@SaCheckDisable
+@PostMapping(&quot;send&quot;)
+public SaResult send() {
+    // ... 
+    return SaResult.ok(); 
+}
+
+// 校验当前账号是否被封禁 comment 服务，如果已被封禁会抛出异常，无法进入方法 
+@SaCheckDisable(&quot;comment&quot;)
+@PostMapping(&quot;send&quot;)
+public SaResult send() {
+    // ... 
+    return SaResult.ok(); 
+}
+
+// 校验当前账号是否被封禁 comment、place-order、open-shop 等服务，指定多个值，只要有一个已被封禁，就无法进入方法 
+@SaCheckDisable({&quot;comment&quot;, &quot;place-order&quot;, &quot;open-shop&quot;})
+@PostMapping(&quot;send&quot;)
+public SaResult send() {
+    // ... 
+    return SaResult.ok(); 
+}
+
+// 阶梯封禁，校验当前账号封禁等级是否达到5级，如果达到则抛出异常 
+@SaCheckDisable(level = 5)
+@PostMapping(&quot;send&quot;)
+public SaResult send() {
+    // ... 
+    return SaResult.ok(); 
+}
+
+// 分类封禁 + 阶梯封禁 校验：校验当前账号的 comment 服务，封禁等级是否达到5级，如果达到则抛出异常 
+@SaCheckDisable(value = &quot;comment&quot;, level = 5)
+@PostMapping(&quot;send&quot;)
+public SaResult send() {
+    // ... 
+    return SaResult.ok(); 
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li></ul></pre>
+<h2 id="liu-lai-ge-xiao-shi-li-jia-shen-li-jie">六、来个小示例，加深理解</h2>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">package com.pj.cases.up;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
+
+/**
+ * Sa-Token 账号封禁示例 
+ * 
+ * @author kong
+ * @since 2022-10-17 
+ */
+@RestController
+@RequestMapping(&quot;/disable/&quot;)
+public class DisableController {
+
+    // 会话登录接口  ---- http://localhost:8081/disable/login?userId=10001
+    @RequestMapping(&quot;login&quot;)
+    public SaResult login(long userId) {
+        // 1、先检查此账号是否已被封禁 
+        StpUtil.checkDisable(userId);
+        // 2、检查通过后，再登录 
+        StpUtil.login(userId);
+        return SaResult.ok(&quot;账号登录成功&quot;);
+    }
+
+    // 会话注销接口  ---- http://localhost:8081/disable/logout
+    @RequestMapping(&quot;logout&quot;)
+    public SaResult logout() {
+        StpUtil.logout();
+        return SaResult.ok(&quot;账号退出成功&quot;);
+    }
+
+    // 封禁指定账号  ---- http://localhost:8081/disable/disable?userId=10001
+    @RequestMapping(&quot;disable&quot;)
+    public SaResult disable(long userId) {
+        /*
+         * 账号封禁：
+         *  参数1：要封禁的账号id
+         *  参数2：要封禁的时间，单位：秒，86400秒=1天
+         */
+        StpUtil.disable(userId, 86400);
+        return SaResult.ok(&quot;账号 &quot; + userId + &quot; 封禁成功&quot;);
+    }
+
+    // 解封指定账号  ---- http://localhost:8081/disable/untieDisable?userId=10001
+    @RequestMapping(&quot;untieDisable&quot;)
+    public SaResult untieDisable(long userId) {
+        StpUtil.untieDisable(userId);
+        return SaResult.ok(&quot;账号 &quot; + userId + &quot; 解封成功&quot;);
+    }
+
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li></ul></pre>
+<p>测试步骤：<br />
+1. 访问登录接口，可以正常登录    ---- <code>http://localhost:8081/disable/login?userId=10001</code><br />
+2. 注销登录    ---- <code>http://localhost:8081/disable/logout</code><br />
+3. 禁用账号    ---- <code>http://localhost:8081/disable/disable?userId=10001</code><br />
+4. 再次访问登录接口，登录失败    ---- <code>http://localhost:8081/disable/login?userId=10001</code><br />
+5. 解封账号    ---- <code>http://localhost:8081/disable/untieDisable?userId=10001</code><br />
+6. 再次访问登录接口，登录成功    ---- <code>http://localhost:8081/disable/login?userId=10001</code></p>
+<hr />
+<h2 id="can-kao-zi-liao">参考资料</h2>
+<ul>
+<li>Sa-Token 文档：<a href="https://sa-token.com?way=blog">https://sa-token.com</a></li>
+<li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
+<li>GitHub 仓库地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
+</ul>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../essays/springboot-shi-yong-sa-token-wan-cheng-lu-you-lan-jie-jian-quan.html">← SpringBoot 使用 Sa-Token 完成路由拦截鉴权</a>
+<a class="blog-post-nav-next" href="../essays/springboot-xiang-mu-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html">SpringBoot 项目使用 Sa-Token 完成登录认证 →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#yi-xu-qiu-fen-xi">一、需求分析</a></li>
+<li class="toc-h2"><a href="#er-zhang-hao-feng-jin">二、账号封禁</a></li>
+<li class="toc-h2"><a href="#san-fen-lei-feng-jin">三、分类封禁</a></li>
+<li class="toc-h2"><a href="#si-jie-ti-feng-jin">四、阶梯封禁</a></li>
+<li class="toc-h2"><a href="#wu-shi-yong-zhu-jie-wan-cheng-feng-jin-jiao-yan">五、使用注解完成封禁校验</a></li>
+<li class="toc-h2"><a href="#liu-lai-ge-xiao-shi-li-jia-shen-li-jie">六、来个小示例，加深理解</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

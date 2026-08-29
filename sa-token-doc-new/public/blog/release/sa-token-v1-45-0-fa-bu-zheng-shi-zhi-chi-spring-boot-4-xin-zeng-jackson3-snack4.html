@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="Sa-Token v1.45.0 版本更新发布。开源免费的轻量级 Java 权限认证框架本版继续增强登录认证、权限认证、单点登录、OAuth2.0 与微服务网关鉴权。完整变更见文内更新日志，便于跟进社区最新能力与修复，建议结合官方文档一起核对。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,SSO,单点登录,OAuth2,微服务鉴权,网关鉴权,SpringBoot,版本更新">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配">
+	<meta property="og:description" content="Sa-Token v1.45.0 版本更新发布。开源免费的轻量级 Java 权限认证框架本版继续增强登录认证、权限认证、单点登录、OAuth2.0 与微服务网关鉴权。完整变更见文内更新日志，便于跟进社区最新能力与修复，建议结合官方文档一起核对。">
+	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2026-3/sa-token-jss--tran.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配">
+	<meta name="twitter:description" content="Sa-Token v1.45.0 版本更新发布。开源免费的轻量级 Java 权限认证框架本版继续增强登录认证、权限认证、单点登录、OAuth2.0 与微服务网关鉴权。完整变更见文内更新日志，便于跟进社区最新能力与修复，建议结合官方文档一起核对。">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2026-3/sa-token-jss--tran.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配",
+  "description": "Sa-Token v1.45.0 版本更新发布。开源免费的轻量级 Java 权限认证框架本版继续增强登录认证、权限认证、单点登录、OAuth2.0 与微服务网关鉴权。完整变更见文内更新日志，便于跟进社区最新能力与修复，建议结合官方文档一起核对。",
+  "datePublished": "2026-03-09",
+  "dateModified": "2026-03-09",
+  "url": "https://sa-token.com/blog/release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html"
+  },
+  "image": "https://res.dev33.cn/sa-token-blog/img/2026-3/sa-token-jss--tran.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>Sa-Token v1.45.0 发布 🚀，正式支持 Spring Boot 4、新增 Jackson3/Snack4 插件适配</h1>
+					<div class="blog-article-meta"><span>2026-03-09</span><span>版本更新</span></div>
+					
+					<div class="blog-article-body">
+					<p>Sa-Token 是一款 <strong>开源</strong>、<strong>免费</strong> 的轻量级 Java 权限认证框架，主要解决：<strong>登录认证</strong>、<strong>权限认证</strong>、<strong>单点登录</strong>、<strong>OAuth2.0</strong>、<strong>微服务网关鉴权</strong> 等一系列权限相关问题。🔐</p>
+<p><img alt="sa-token-jss--tran" src="https://res.dev33.cn/sa-token-blog/img/2026-3/sa-token-jss--tran.png" /></p>
+<p><strong>目前最新版本 <code>v1.45.0</code> 已推送至 <code>Maven</code> 中央仓库</strong> 🎉，大家可以通过如下方式引入：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-spring-boot4-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.45.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>该版本包含大量 ⛏️️️新增特性、⛏️底层重构、⛏️️️代码优化 等，下面容我列举几条比较重要的更新内容供大家参阅：</p>
+<h2 id="geng-xin-dian-1-wan-ren-xue-shu-de-spring-boot-4-ji-cheng-ba">🚀 更新点1：万人血书的 Spring Boot 4 集成包，它来了！</h2>
+<p>Spring Boot 4 正式版发布后，社区里「求适配」的呼声就没停过！fix: <a href="https://github.com/dromara/Sa-Token/issues/869">#869</a>、<a href="https://gitee.com/dromara/sa-token/issues/IDB02G">#IDB02G</a>、<a href="https://gitee.com/dromara/sa-token/issues/IDGQYM">#IDGQYM</a> 这次，它真的来了！🎉</p>
+<p><img alt="need-spring-boot-4-starter.png.png" src="https://res.dev33.cn/sa-token-blog/img/2026-3/need-spring-boot-4-starter.png" /></p>
+<p>本次更新新增了完整的 Spring Boot 4 集成支持：🌟</p>
+<ul>
+<li><strong>sa-token-spring-boot4-starter</strong>：WebMVC 环境下的 Spring Boot 4 集成包。</li>
+<li><strong>sa-token-reactor-spring-boot4-starter</strong>：Reactor 响应式环境下的 Spring Boot 4 集成包。</li>
+</ul>
+<p>同时配套新增了示例项目：</p>
+<ul>
+<li><code>sa-token-demo-springboot4</code>：Spring Boot 4 + WebMVC 整合 demo。</li>
+<li><code>sa-token-demo-webflux-springboot4</code>：Spring Boot 4 + WebFlux 示例。</li>
+</ul>
+<p>如果你正在或计划升级到 Spring Boot 4，可以直接引入对应 starter，体验与 Spring Boot 2/3 一致的丝滑集成。✨</p>
+<h2 id="geng-xin-dian-2-chong-fu-deng-lu-chu-li-ce-lve-sheng-ji-ke-l">🎯 更新点2：重复登录处理策略升级，可灵活配置是 “顶人下线” 还是 “不允许登录”</h2>
+<p>Sa-Token 在多端登录控制场景下，现已支持通过 <code>replacedLoginExitMode</code> 配置项自定义重复登录时的行为方式：</p>
+<ul>
+<li>当同一账号不允许多客户端同时登录时，以往 Sa-Token 的默认策略为“新登录顶掉旧会话”，即新登录后会将旧端踢下线。🔄</li>
+<li>但部分业务对安全性有更高要求，例如用户 A 已在手机端登录，再用电脑登录时，希望直接拦截本次登录，不影响原有会话，即提示“该账号已在其他设备登录，无法顶替下线”，而不是让手机端被踢下线。📱💻</li>
+</ul>
+<p>本次更新新增了配置项 <code>replacedLoginExitMode</code>，你可通过它自由选择策略，无需变动业务代码，灵活应对不同安全需求。配置项含义说明如下：</p>
+<ul>
+<li><code>replacedLoginExitMode = OLD_DEVICE</code>：旧设备下线，新设备登录成功（<strong>默认行为</strong>，顶人下线模式）。</li>
+<li><code>replacedLoginExitMode = NEW_DEVICE</code>：新设备登录失败，旧设备维持在线（<strong>拦截本次登录</strong>）。</li>
+</ul>
+<p>只需在 Sa-Token 配置文件或启动参数中切换即可，非常便捷。🛡️</p>
+<p>merge: <a href="https://gitee.com/dromara/sa-token/pulls/349">pr 349</a></p>
+<h2 id="geng-xin-dian-3-xin-zeng-sa-token-jackson3-sa-token-snack4-c">📦 更新点3：新增 sa-token-jackson3、sa-token-snack4 插件，生态持续扩展</h2>
+<p>Sa-Token 的 JSON 与序列化生态一直在持续丰富，本次又迎来两位新成员：📚</p>
+<ul>
+<li><strong>sa-token-jackson3</strong>：用于 Jackson 3 的 JSON 操作。Jackson 3 是 Jackson 的最新大版本，如果你已经在使用 Jackson 3，现在可以无缝对接 Sa-Token 了。</li>
+<li><strong>sa-token-snack4</strong>：用于 Snack4 的 JSON 操作。merge: <a href="https://gitee.com/dromara/sa-token/pulls/356">pr 356</a></li>
+</ul>
+<p>引入方式示例：</p>
+<pre v-pre data-lang="xml"><code class="lang-xml language-xml has-numbering">&lt;!-- Sa-Token 整合 Jackson 3 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-jackson3&lt;/artifactId&gt;
+    &lt;version&gt;1.45.0&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Sa-Token 整合 Snack4 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-snack4&lt;/artifactId&gt;
+    &lt;version&gt;1.45.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
+<p>无论你偏好 Jackson、Fastjson、Snack3 还是 Snack4，Sa-Token 都能满足。🎛️</p>
+<h2 id="geng-xin-dian-4-zhong-gou-sa-token-dependencies-ji-webmvc-re">🏗️ 更新点4：重构 sa-token-dependencies 及 WebMVC/Reactor 集成包</h2>
+<p>本次版本对依赖体系进行了一次重要重构：🔧</p>
+<ul>
+<li>重构 <code>sa-token-dependencies</code> 相关模块，优化依赖关系，使版本管理更清晰。</li>
+<li>重构 Spring Boot WebMVC/Reactor 相关集成包，优化模块划分与依赖传递。</li>
+<li>优化整体模块依赖关系，减少冗余、提升构建效率。</li>
+</ul>
+<p>这是一次「看不见的升级」，但对长期维护和后续扩展都有积极影响。📐</p>
+<h2 id="geng-xin-dian-5-sso-mo-kuai-xin-zeng-sts-xie-yi-ding-yi-shi">📺 更新点5：SSO 模块新增 STS 协议定义、视频讲解与平台中心模式 demo</h2>
+<p>SSO 单点登录模块在本版本也有不少文档与示例上的增强：📖</p>
+<ul>
+<li><strong>STS 协议定义</strong>：文档为 <code>sa-token-sso</code> 模块正式定义了 STS 协议，方便大家理解与对接。</li>
+<li><strong>平台中心模式 demo</strong>：sso-server 前后端分离模式下，新增平台中心模式 demo 示例。</li>
+<li><strong>消息处理器相关文档</strong>：补全了 SSO 模块内置消息处理器相关文档，修复了 msgType 参数说明与 API 说明。🔗</li>
+<li><strong>视频讲解</strong>：B 站 up 主「王清江唷」录制了 SSO 篇共 29 集视频，从零到一讲解单点登录，非常适合入门与进阶。</li>
+</ul>
+<!-- ![bilibili-sa-token-sso-video](https://res.dev33.cn/sa-token-blog/img/2026-3/bilibili-sa-token-sso-video.png) -->
+
+<h2 id="geng-xin-dian-6-xiu-fu-oauth2-xu-lie-hua-lei-xing-zhuan-huan">🐞 更新点6：修复 OAuth2 序列化类型转换、Dubbo 上下文清理等问题</h2>
+<p>本版本修复了多个社区反馈的问题：🙏</p>
+<ul>
+<li><strong>OAuth2</strong>：修复 <code>sa-token-oauth2</code> 组件使用 <code>sa-token-fastjson2</code> 序列化导致的类型转换问题。merge: <a href="https://gitee.com/dromara/sa-token/pulls/355">pr 355</a></li>
+<li><strong>Dubbo</strong>：修复 Dubbo 上下文清理问题，避免 RPC 调用时上下文污染。merge: <a href="https://github.com/dromara/Sa-Token/pulls/889">pr 889</a></li>
+<li><strong>Core</strong>：修复 <code>StpUtil.getLoginIdByTokenNotThinkFreeze</code> 方法缺少 <code>static</code> 修饰符的问题。</li>
+<li><strong>Core</strong>：优化路由匹配 pattern 缓存算法，消除魔法值。merge: <a href="https://github.com/dromara/Sa-Token/pulls/907">pr 907</a></li>
+</ul>
+<h2 id="geng-xin-dian-7-wen-dang-yu-she-qu-jian-she">📚 更新点7：文档与社区建设</h2>
+<p>文档与社区方面也有不少更新：❤️</p>
+<ul>
+<li>新增 <strong>Sa-Token 内容合作者群</strong>，欢迎愿意参与文档、教程、视频等内容创作的小伙伴加入。</li>
+<li>新增赞赏码展示、文档首页 stars 对比图、解决跨域专题文章。</li>
+<li>优化框架 Slogan、README、案例库展示。</li>
+<li>文档主题切换增加水滴特效，登录认证、权限认证、路由拦截鉴权等章节优化。</li>
+<li>补全全局策略说明、数据结构说明，目录树增加项目架构设计栏目。</li>
+<li>新增 Maven 父子项目无法下载依赖的问题解决方案。merge: <a href="https://gitee.com/dromara/sa-token/pulls/358">pr 358</a></li>
+<li>新增《Gitee 2025 年度开源项目 Web 应用开发 Top 2》证书展示，感谢社区认可。🏆</li>
+</ul>
+<p><img alt="gitee-2025-top2" src="https://res.dev33.cn/sa-token-blog/img/2026-3/gitee-2025-top2.jpg" /></p>
+<h2 id="wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</h2>
+<p>除了以上提到的几点以外，还有更多更新点无法逐一详细介绍，下面是 v1.45.0 版本的完整更新日志：</p>
+<ul>
+<li>core：<ul>
+<li>新增：新增重复登录处理策略，当同一账号不允许多客户端同时登录时支持选择踢人下线或拦截本次登录。  <strong>[重要]</strong> merge: <a href="https://gitee.com/dromara/sa-token/pulls/349">pr 349</a></li>
+<li>修复：修复 <code>StpUtil.getLoginIdByTokenNotThinkFreeze</code> 方法缺少 <code>static</code> 修饰符的问题。</li>
+<li>优化：优化路由匹配 pattern 缓存算法，消除魔法值。merge: <a href="https://github.com/dromara/Sa-Token/pulls/907">pr 907</a></li>
+<li>优化：移除冗余导包。</li>
+</ul>
+</li>
+<li>插件：<ul>
+<li>新增：新增 <code>sa-token-jackson3</code> 插件，用于 Jackson 3 的 JSON 操作。  <strong>[重要]</strong></li>
+<li>新增：新增 <code>sa-token-jackson3-test</code> 单元测试。</li>
+<li>新增：新增 <code>sa-token-snack4</code> 插件。  <strong>[重要]</strong> merge: <a href="https://gitee.com/dromara/sa-token/pulls/356">pr 356</a></li>
+<li>修复：修复 Dubbo 上下文清理问题。 merge: <a href="https://github.com/dromara/Sa-Token/pulls/889">pr 889</a></li>
+<li>新增：loveqq-framework 版本更新。merge: <a href="https://gitee.com/dromara/sa-token/pulls/351">pr 351</a></li>
+</ul>
+</li>
+<li>starter：<ul>
+<li>新增：新增 <code>sa-token-spring-boot4-starter</code> 集成包，支持 Spring Boot 4 环境集成。  <strong>[重要]</strong></li>
+<li>新增：新增 <code>sa-token-reactor-spring-boot4-starter</code> 集成包，支持 Reactor + Spring Boot 4 环境集成。  <strong>[重要]</strong></li>
+<li>新增：新增 <code>sa-token-demo-springboot4</code>、<code>sa-token-demo-webflux-springboot4</code> 示例。</li>
+<li>新增：新增 Spring Boot 4 整合 demo 示例。</li>
+</ul>
+</li>
+<li>重构：<ul>
+<li>重构：重构 <code>sa-token-dependencies</code> 相关模块，优化依赖关系。  <strong>[重要]</strong></li>
+<li>重构：重构 Spring Boot WebMVC/Reactor 相关集成包，优化依赖关系。 <strong>[重要]</strong></li>
+<li>优化：优化整体模块依赖关系。</li>
+</ul>
+</li>
+<li>Solon：<ul>
+<li>优化：<code>sa-token-solon-plugin</code> 优化 Gateway 接口的处理，避免使用路由接口。merge: <a href="https://gitee.com/dromara/sa-token/pulls/348">pr 348</a></li>
+</ul>
+</li>
+<li>SSO：<ul>
+<li>新增：sso-server 前后端分离模式下 平台中心模式 demo 示例。</li>
+<li>修复：SSO 模块 msgType 参数说明、API 说明修正。</li>
+<li>新增：SSO 模块视频讲解链接：B站 王清江唷 SSO篇（29集）。  <strong>[重要]</strong></li>
+<li>补全：SSO 模块内置消息处理器相关文档。</li>
+<li>新增：文档为 <code>sa-token-sso</code> 模块定义 STS 协议。  <strong>[重要]</strong></li>
+</ul>
+</li>
+<li>OAuth2：<ul>
+<li>修复：修复 <code>sa-token-oauth2</code> 组件使用 <code>sa-token-fastjson2</code> 序列化导致的类型转换问题。merge: <a href="https://gitee.com/dromara/sa-token/pulls/355">pr 355</a></li>
+<li>优化：修改 <code>ClientIdSecretModel</code> 的读取构建逻辑。merge: <a href="https://gitee.com/dromara/sa-token/pulls/346">pr 346</a></li>
+</ul>
+</li>
+<li>文档：<ul>
+<li>同步：同步公众号文章列表、博客列表、赞助者名单、企业登记案例。</li>
+<li>新增：新增 Sa-Token 内容合作者群。  <strong>[重要]</strong></li>
+<li>新增：新增《Gitee 2025 年度开源项目 Web 应用开发 Top 2》证书展示。</li>
+<li>新增：新增赞赏码展示、文档首页 stars 对比图。</li>
+<li>新增：新增解决跨域专题文章。</li>
+<li>新增：增加微信群聊信息展示。</li>
+<li>优化：优化框架 Slogan。</li>
+<li>优化：优化 README、案例库展示。</li>
+<li>优化：文档主题切换增加水滴特效，调整主题色块顺序。</li>
+<li>优化：文档优化 [登录认证]、[权限认证]、[路由拦截鉴权] 篇。</li>
+<li>优化：补全全局策略说明、数据结构说明。</li>
+<li>新增：目录树增加专门栏目记录项目架构设计。</li>
+<li>优化：功能结构图增加点击事件跳转到对应功能文档。</li>
+<li>优化：子服务外网隔离章节增加示意图。</li>
+<li>优化：Same-Token 同源系统认证图示说明。</li>
+<li>修复：更换 GitCode logo 为 AtomGit。</li>
+<li>修复：更换 QQ 群链接、微信群聊展示图。</li>
+<li>修复：文档图片地址更换为本地文件。</li>
+<li>修复：错别字修复。</li>
+<li>修复：maven-pull.md 文档，解决父子项目依赖下载问题。</li>
+<li>新增：Maven 父子项目无法下载依赖的问题解决方案。merge: <a href="https://gitee.com/dromara/sa-token/pulls/358">pr 358</a></li>
+<li>修复：订正文档错别字。merge: <a href="https://gitee.com/dromara/sa-token/pulls/354">pr 354</a></li>
+<li>修复：文档内代码示例修正。merge: <a href="https://gitee.com/dromara/sa-token/pulls/347">pr 347</a></li>
+</ul>
+</li>
+<li>AI: <ul>
+<li>新增：新增 organize-update-log SKILL，用于格式化整理版本更新日志信息。</li>
+<li>新增：新增 commit-message SKILL，用于整理 git commit 日志信息。</li>
+<li>新增：新增 upgrade-version SKILL，用于统一升级修改版本号。</li>
+<li>新增：新增 remove-redundancy-import SKILL，用于检查 Java 类中无效冗余导包并移除。</li>
+</ul>
+</li>
+<li>其它：<ul>
+<li>新增：readme 增加快问快答区域。</li>
+<li>新增：增加忽略 .vscode 目录。</li>
+<li>优化：注释优化。</li>
+<li>重构：备忘录重构为专门的文件夹。</li>
+<li>重构：调整项目发布配置至 Maven Central Portal。merge: <a href="https://github.com/dromara/Sa-Token/pull/792">pr 792</a></li>
+<li>优化：部分构建配置升级到最新版。</li>
+</ul>
+</li>
+</ul>
+<p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html?way=blog#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
+<h2 id="qi-ta">🌟 其它</h2>
+<p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
+<p>框架功能结构图：</p>
+<p><img alt="js" src="https://res.dev33.cn/sa-token-blog/img/2026-3/sa-token-js4--2.png" /></p>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html">← Sa-Token v1.43.0 发布 🚀，新增 SSO 单设备注销、消息推送，多 Access-Token 并存能力</a>
+<a class="blog-post-nav-next" href="../release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html">Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成 →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#geng-xin-dian-1-wan-ren-xue-shu-de-spring-boot-4-ji-cheng-ba">🚀 更新点1：万人血书的 Spring Boot 4 集成包，它来了！</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-2-chong-fu-deng-lu-chu-li-ce-lve-sheng-ji-ke-l">🎯 更新点2：重复登录处理策略升级，可灵活配置是 “顶人下线” 还是 “不允许登录”</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-3-xin-zeng-sa-token-jackson3-sa-token-snack4-c">📦 更新点3：新增 sa-token-jackson3、sa-token-snack4 插件，生态持续扩展</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-4-zhong-gou-sa-token-dependencies-ji-webmvc-re">🏗️ 更新点4：重构 sa-token-dependencies 及 WebMVC/Reactor 集成包</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-5-sso-mo-kuai-xin-zeng-sts-xie-yi-ding-yi-shi">📺 更新点5：SSO 模块新增 STS 协议定义、视频讲解与平台中心模式 demo</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-6-xiu-fu-oauth2-xu-lie-hua-lei-xing-zhuan-huan">🐞 更新点6：修复 OAuth2 序列化类型转换、Dubbo 上下文清理等问题</a></li>
+<li class="toc-h2"><a href="#geng-xin-dian-7-wen-dang-yu-she-qu-jian-she">📚 更新点7：文档与社区建设</a></li>
+<li class="toc-h2"><a href="#wan-zheng-geng-xin-ri-zhi">📜 完整更新日志</a></li>
+<li class="toc-h2"><a href="#qi-ta">🌟 其它</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

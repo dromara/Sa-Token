@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Sa-Token-Rust v0.2.0 发布，被提名 G-Star 孵化项目！ - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="sa-token-rust 0.2.0 发布：存储契约、登录事务、插件收敛与安全默认值一次性做硬。同期入驻旋武社区、被提名 AtomGit G-Star 孵化项目，中英文档站同步上线。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,版本更新">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Sa-Token-Rust v0.2.0 发布，被提名 G-Star 孵化项目！">
+	<meta property="og:description" content="sa-token-rust 0.2.0 发布：存储契约、登录事务、插件收敛与安全默认值一次性做硬。同期入驻旋武社区、被提名 AtomGit G-Star 孵化项目，中英文档站同步上线。">
+	<meta property="og:url" content="https://sa-token.com/blog/release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust--g-star--jietu.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Sa-Token-Rust v0.2.0 发布，被提名 G-Star 孵化项目！">
+	<meta name="twitter:description" content="sa-token-rust 0.2.0 发布：存储契约、登录事务、插件收敛与安全默认值一次性做硬。同期入驻旋武社区、被提名 AtomGit G-Star 孵化项目，中英文档站同步上线。">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust--g-star--jietu.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Sa-Token-Rust v0.2.0 发布，被提名 G-Star 孵化项目！",
+  "description": "sa-token-rust 0.2.0 发布：存储契约、登录事务、插件收敛与安全默认值一次性做硬。同期入驻旋武社区、被提名 AtomGit G-Star 孵化项目，中英文档站同步上线。",
+  "datePublished": "2026-08-24",
+  "dateModified": "2026-08-24",
+  "url": "https://sa-token.com/blog/release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html"
+  },
+  "image": "https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust--g-star--jietu.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>Sa-Token-Rust v0.2.0 发布，被提名 G-Star 孵化项目！</h1>
+					<div class="blog-article-meta"><span>2026-08-24</span><span>版本更新</span></div>
+					
+					<div class="blog-article-body">
+					<p>从「能用」到「能放心用」——这是 0.2.0 真正想交付的东西。</p>
+<h2 id="wo-men-bei-kan-jian-le-ye-ba-zi-ji-zuo-ying-le">我们被看见了，也把自己做硬了</h2>
+<p>如果你在找 <strong>Rust 生态里的认证与授权方案</strong>，很可能已经刷到过 <strong>sa-token-rust</strong>。</p>
+<p>它是一套轻量、高性能的 Rust 认证授权框架，设计理念对齐 Java 生态中广为人知的 <a href="https://github.com/dromara/sa-token">Dromara sa-token</a>，但代码与实现完全独立（MIT OR Apache-2.0）。</p>
+<p>最近三件对社区很重要的事：</p>
+<ol>
+<li><strong>项目被「旋武社区」收录</strong><br />
+   开放原子开源基金会旗下旋武社区项目页：<br />
+<a href="https://xuanwu.openatom.org/articles/project/sa-token-rust/">https://xuanwu.openatom.org/articles/project/sa-token-rust/</a></li>
+</ol>
+<p><img alt="sa-token-rust 入驻旋武社区开源项目列表" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust-xuanwu-list.png" /></p>
+<ol>
+<li><strong>被提名 AtomGit「G-Star」孵化项目</strong><br />
+<a href="https://gitcode.com/?tn=67bc3fa197a0293d6bfebd05">G-Star 开源摘星计划</a> 是 AtomGit 面向优质开源项目的全流程扶持（流量、品牌、运营）。入选孵化，仓库会进入官方 G-Star 展台。<br />
+   项目详情页：<a href="https://atomgit.com/sa-tokens/sa-token-rust">https://atomgit.com/sa-tokens/sa-token-rust</a></li>
+</ol>
+<p><img alt="sa-token-rust 入选 AtomGit G-Star" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust--g-star--jietu.png" /></p>
+<ol>
+<li><strong>正式文档站上线（中英双语）</strong><br />
+<a href="https://sa-tokens.github.io/sa-token-rust/">https://sa-tokens.github.io/sa-token-rust/</a><br />
+   从快速入门、迁移指南，到 StpUtil、存储、OAuth2、SSO、安全能力，一站查齐。</li>
+</ol>
+<p><img alt="sa-token-rust 入选 AtomGit G-Star" src="https://res.dev33.cn/sa-token-blog/img/2026-8/sa-token-rust--doc--jietu.png" /></p>
+<p>旋武收录、G-Star 提名，是「被看见」；而 <strong>0.2.0</strong> 这一版，我们真正想说的是：<strong>看见之后，能不能经得起生产环境拷问。</strong></p>
+<p>过去一段时间，仓库按 A0→F 一整套重构路线，把 0.1.x 时代「功能堆得很多、边界却偏软」的地方，系统性地改到了更接近生产级框架的形态。本文用「以前 vs 现在」的方式，把变化讲清楚。</p>
+<hr />
+<h2 id="yi-ju-hua-ding-wei-0-2-reng-ran-cheng-li-dan-geng-ying">一句话定位（0.2 仍然成立，但更硬）</h2>
+<p><strong>sa-token-rust</strong>：登录 / 鉴权 / Session / 权限角色 / 多账号多端 / 事件总线 / JWT / OAuth2 / SSO / WebSocket 鉴权 / 在线用户 / 分布式 Session —— 用同一套 <code>StpUtil</code> + <code>SaTokenState</code> 心智模型，覆盖 Axum、Actix-web、Poem、Rocket、Warp、Salvo、Tide、Gotham、Ntex，以及 Tonic gRPC。</p>
+<p>0.1.x 已经把「能力清单」铺得很全；<br />
+0.2.0 做的是：<strong>把能力清单背后的契约、安全默认值、插件一致性、可迁移文档，一次性做对。</strong></p>
+<hr />
+<h2 id="wei-shen-me-yao-dong-da-shou-shu-0-1-x-de-zhen-shi-tong-dian">为什么要动大手术：0.1.x 的真实痛点</h2>
+<p>如果只用一句话概括 0.1.x 的问题：</p>
+<blockquote>
+<p><strong>功能多，但「写存储」「读 Token」「踢人清理」「插件鉴权」「初始化失败」等关键路径，各自为政，容易在生产里踩坑。</strong></p>
+</blockquote>
+<p>更具体一点：</p>
+<table>
+<thead>
+<tr>
+<th>痛点</th>
+<th>0.1.x 常见表现</th>
+<th>生产风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储契约弱</td>
+<td>序列化散落 <code>serde_json</code>；键名不统一；缺 CAS / scan 等原子能力</td>
+<td>多实例不一致、滚动升级困难</td>
+</tr>
+<tr>
+<td>Manager 过重</td>
+<td>登录、踢人、权限、在线……挤在「上帝对象」里</td>
+<td>难测、难改、静默失效</td>
+</tr>
+<tr>
+<td>登录非事务</td>
+<td>写了一半失败，索引/Token 可能残留</td>
+<td>幽灵登录、踢不干净</td>
+</tr>
+<tr>
+<td>插件重复</td>
+<td>多个 <code>*-core</code> 各写一套中间件</td>
+<td>框架间行为不一致</td>
+</tr>
+<tr>
+<td>门面易 panic</td>
+<td><code>init_manager</code> / 未初始化路径偏硬</td>
+<td>库代码里崩进程</td>
+</tr>
+<tr>
+<td>安全默认偏松</td>
+<td>OAuth2 密钥明文倾向、SSO 验票偏弱、续期默认偏激进</td>
+<td>被扫漏洞时很难解释</td>
+</tr>
+<tr>
+<td>文档与代码漂移</td>
+<td>迁移说明和真实 API 打架</td>
+<td>升级成本高、社区信任下降</td>
+</tr>
+</tbody>
+</table>
+<p>0.2.0 不是「再加几个 feature」，而是按 <strong>A0 工程化 → A 存储 → B 核心 → C 插件/门面 → D 安全 → E 能力对齐 → F 收口与性能</strong> 的顺序，把地基换了一遍。</p>
+<hr />
+<h2 id="zong-lan-zhong-gou-lu-xian-tu">总览：重构路线图</h2>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">A0  工程化基线（fmt/clippy/版本/门禁/根 facade）
+A1  存储原语升级（scan / CAS / list / get_del …）
+A2  可插拔序列化（SaSerializer，默认 JSON，可选 fory）
+A3  存储键统一（SaKeys / 账号命名空间）
+B1  Manager 拆分 + 登录事务化（Dao / Repo / AuthService）
+B2  授权体系收敛（AuthzService / 权限匹配）
+B3  请求上下文单轨化（SaTokenContext）
+B4  事件系统重构（DispatchMode / 超时）
+C1  插件收敛到 plugin-common（删除 *-core）
+C2  StpUtil 门面重整（try_* / SaLogic 无注册表）
+C3  宏层增强
+D1  OAuth2 / SSO 安全加固
+D2  分布式化与遗留清理
+D3  测试补全与文档迁移
+E1  与 Java 能力对齐补齐（Sign / TempToken / Same-Token …）
+E2  配置项落地与 Token 读写链路（token_io）
+F   收口与性能（Arc 化、分片缓存、旁路清理）</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+<p>下面按大家最关心的点展开对比。</p>
+<hr />
+<h2 id="dui-bi-yi-gong-cheng-hua-cong-neng-bian-yi-dao-neng-fa-bu">对比一：工程化 —— 从「能编译」到「能发布」</h2>
+<h3 id="yi-qian-0-1-x">以前（0.1.x）</h3>
+<ul>
+<li>版本号分散，示例与门禁偶发红灯</li>
+<li>发布链路对质量门禁依赖弱</li>
+<li>根包「一键引入」体验不完整</li>
+</ul>
+<h3 id="xian-zai-0-2-0">现在（0.2.0）</h3>
+<ul>
+<li>Workspace 版本统一 <strong><code>0.2.0</code></strong>，内部依赖进 <code>[workspace.dependencies]</code></li>
+<li>发布脚本 <code>scripts/publish_all.sh</code> 内置质量门禁：<br />
+<code>cargo fmt --check</code> → <code>clippy -D warnings</code> → <code>cargo test --workspace</code></li>
+<li>根 crate <code>sa-token-rust</code> 作为 facade，方便 <code>cargo add</code></li>
+<li>MSRV、docs.rs、resolver 等元数据补齐</li>
+</ul>
+<p><strong>对你意味着什么：</strong><br />
+开源项目不只是「仓库里有代码」，而是 <strong>可持续发布、可复现构建</strong>。旋武社区收录的是一个能交付的工程，而不只是一个 README。</p>
+<hr />
+<h2 id="dui-bi-er-cun-chu-ceng-cong-sui-bian-to-string-dao-qi-yue-ke">对比二：存储层 —— 从「随便 to_string」到「契约 + 可升级」</h2>
+<h3 id="yi-qian">以前</h3>
+<ul>
+<li>存储读写路径大量硬编码 JSON</li>
+<li>键名散落各处，多账号隔离靠约定而非统一布局</li>
+<li>原子能力（CAS、scan、list）不齐或后端不一致</li>
+</ul>
+<h3 id="xian-zai">现在</h3>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SaTokenDao</strong></td>
+<td>唯一存储漏斗：键 + 序列化 + TTL</td>
+</tr>
+<tr>
+<td><strong>SaKeys</strong></td>
+<td>统一键布局与账号命名空间（<code>login_type</code> 隔离）</td>
+</tr>
+<tr>
+<td><strong>SaSerializer</strong></td>
+<td>可插拔编码；默认 JSON；可选 <code>fory</code> 二进制 + 滚动升级读存量 JSON</td>
+</tr>
+<tr>
+<td><strong>SaStorage 原语</strong></td>
+<td><code>scan</code> / <code>get_del</code> / <code>compare_and_swap</code> / <code>list_*</code> 等生产向能力</td>
+</tr>
+</tbody>
+</table>
+<p>Memory / Redis / Database（PostgreSQL KV）仍可按插件 feature 切换；业务侧应走 Dao，而不是在服务里直接握底层存储。</p>
+<p><strong>对你意味着什么：</strong><br />
+换 Redis、扩多实例、以后换编码格式，路径是清晰的；不再「每个模块自己发明一种存法」。</p>
+<p>文档入口：<a href="https://sa-tokens.github.io/sa-token-rust/guide/storage.html">Storage 指南</a></p>
+<hr />
+<h2 id="dui-bi-san-he-xin-jia-gou-cong-shang-di-manager-dao-fen-ceng">对比三：核心架构 —— 从「上帝 Manager」到「分层 + 事务登录」</h2>
+<h3 id="yi-qian-2">以前</h3>
+<ul>
+<li><code>SaTokenManager</code> 职责过重</li>
+<li>登录写入非阶段化，失败易残留</li>
+<li>踢人 / 顶号 / 最大登录数等边界有已知缺陷风险</li>
+<li>Token 读路径自动续期默认偏激进，可能「每次读都写存储」</li>
+</ul>
+<h3 id="xian-zai-2">现在</h3>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">请求 / StpUtil
+    ↓
+SaTokenManager（薄门面）
+    ↓
+AuthService / AuthzService
+    ↓
+TokenRepo / SessionRepo / GrantRepo
+    ↓
+SaTokenDao → SaStorage</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
+<p>关键变化：</p>
+<ol>
+<li><strong>登录事务化</strong>：阶段写入 + 失败逆序补偿，<code>login:token</code> 用 CAS 作为提交点  </li>
+<li><strong>踢人 / 登出模式</strong>：清理路径统一，减少幽灵 Token  </li>
+<li><strong><code>auto_renew</code> 默认改为 <code>false</code></strong>：避免每次鉴权都打存储；需要旧行为时显式打开，并可配 <code>renew_threshold</code>  </li>
+<li><strong>权限 / 角色</strong> 走 <code>AuthzService</code>，与登录事务边界清晰  </li>
+</ol>
+<p><strong>对你意味着什么：</strong><br />
+「登录成功」更接近真正的业务事务语义；「踢人失败却还在线」这类诡异问题显著减少。</p>
+<hr />
+<h2 id="dui-bi-si-cha-jian-yu-kuang-jia-cong-wu-tao-core-dao-yi-tao">对比四：插件与框架 —— 从「五套 core」到「一套 common」</h2>
+<h3 id="yi-qian-3">以前</h3>
+<ul>
+<li>多个 <code>sa-token-plugin-*-core</code> 重复实现状态、拒绝体、扩展写入  </li>
+<li>Warp 等个别框架曾绕过统一鉴权流，行为不一致  </li>
+<li>Extractor 缺 Token 时的 HTTP 状态码不统一  </li>
+</ul>
+<h3 id="xian-zai-3">现在</h3>
+<ul>
+<li>新建 <strong><code>sa-token-plugin-common</code></strong>：<code>SaTokenState</code> / rejection / snapshot / ext 一处维护  </li>
+<li><strong>删除</strong> 各 <code>*-core</code> crate  </li>
+<li>全框架对齐 <strong><code>run_auth_flow</code></strong>：读 Token、写上下文、路径鉴权同一条链路  </li>
+<li>Actix / Rocket / Salvo / Gotham / Ntex 仍是 <strong>门面 + 版本绑定 feature</strong>；Axum / Poem / Warp / Tide / Tonic 一体化插件  </li>
+</ul>
+<p><strong>对你意味着什么：</strong><br />
+换框架时，心智模型不变：还是 <code>SaTokenState</code> + 中间件 / Layer + <code>StpUtil</code>。少学一套「这个框架特供的坑」。</p>
+<p>文档入口：<a href="https://sa-tokens.github.io/sa-token-rust/guide/framework-integration.html">Framework integration</a></p>
+<hr />
+<h2 id="dui-bi-wu-stputil-men-mian-cong-neng-panic-dao-result-you-xi">对比五：StpUtil 门面 —— 从「能 panic」到「Result 优先」</h2>
+<h3 id="yi-qian-4">以前</h3>
+<ul>
+<li><code>init_manager</code> 作为主路径，失败易直接崩  </li>
+<li>多账号依赖全局注册表（<code>put_stp_logic</code>）  </li>
+<li>默认路径 <code>login_type</code> 分裂：权限已跟上下文，踢人/Session 仍可能写死 <code>default</code>  </li>
+<li>TokenBuilder / Token-Session / 按类型封禁等能力不齐  </li>
+</ul>
+<h3 id="xian-zai-4">现在</h3>
+<table>
+<thead>
+<tr>
+<th>API / 概念</th>
+<th>0.2 行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>try_init_manager</code> / <code>try_get_manager</code></td>
+<td>返回 <code>Result</code>；重复初始化 → <code>AlreadyInitialized</code></td>
+</tr>
+<tr>
+<td><code>init_manager</code></td>
+<td><strong>废弃</strong>（仍可能 panic，不推荐）</td>
+</tr>
+<tr>
+<td><code>SaLogic</code></td>
+<td><strong>廉价 Clone 门面</strong>，无进程级注册表；<code>put_stp_logic</code> 为废弃空操作</td>
+</tr>
+<tr>
+<td><code>login</code> / <code>login_with_extra</code></td>
+<td><strong>固定 default</strong> 账号体系（不偷偷跟上下文）</td>
+</tr>
+<tr>
+<td><code>kick_out</code> / <code>disable</code> / Session 等短方法</td>
+<td>跟当前请求 <code>login_type</code>，否则 default</td>
+</tr>
+<tr>
+<td><code>TokenBuilder</code></td>
+<td>支持 <code>nonce</code> / <code>expire_at</code> / <code>expire_at_unix</code></td>
+</tr>
+<tr>
+<td>Token-Session / <code>kick_out_by_token</code> / <code>disable_with_type</code></td>
+<td>门面补齐</td>
+</tr>
+</tbody>
+</table>
+<p><strong>对你意味着什么：</strong><br />
+库代码可以优雅处理「未初始化 / 已初始化」；多账号写法变成「拿一个 <code>SaLogic</code> 钉死类型」，而不是维护一张全局表。</p>
+<p>文档入口：<a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/stp-util.html">StpUtil</a> · <a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/multi-account.html">多账号</a></p>
+<hr />
+<h2 id="dui-bi-liu-qing-qiu-shang-xia-wen-yu-hong-dan-gui-ke-yu-ce">对比六：请求上下文与宏 —— 单轨、可预测</h2>
+<h3 id="yi-qian-5">以前</h3>
+<ul>
+<li>上下文与宏、中间件之间存在双轨风险  </li>
+<li><code>#[sa_ignore]</code> 容易被误解成「中间件也放行」  </li>
+</ul>
+<h3 id="xian-zai-5">现在</h3>
+<ul>
+<li><strong><code>SaTokenContext</code> 单轨化</strong>：请求级上下文清晰，宏与中间件共用同一套元数据思路  </li>
+<li><strong><code>PathAuthConfig::exclude</code></strong>：公开路由必须写进排除列表  </li>
+<li><strong><code>#[sa_ignore]</code></strong>：只跳过宏插入的检查，<strong>绝不</strong>绕过 Layer / Middleware  </li>
+<li><strong><code>#[sa_check_login]</code></strong>：走异步强校验（存储仍有效），handler 需 <code>async</code>  </li>
+</ul>
+<p>这是很多线上事故的「根因级」修正：<strong>公开路由靠配置声明，而不是靠宏碰运气。</strong></p>
+<p>文档入口：<a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/path-auth.html">路径鉴权</a></p>
+<hr />
+<h2 id="dui-bi-qi-an-quan-mo-ren-zhi-oauth2-sso-token-du-xie">对比七：安全默认值 —— OAuth2 / SSO / Token 读写</h2>
+<h3 id="oauth2-sso-yi-qian-vs-xian-zai">OAuth2 / SSO（以前 vs 现在）</h3>
+<table>
+<thead>
+<tr>
+<th>项</th>
+<th>以前倾向</th>
+<th>0.2.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client Secret</td>
+<td>易明文落库</td>
+<td><strong>Argon2id PHC</strong> 哈希存储与校验</td>
+</tr>
+<tr>
+<td>公共客户端</td>
+<td>PKCE 弱或缺失</td>
+<td><strong>强制 PKCE（S256）</strong></td>
+</tr>
+<tr>
+<td>Refresh</td>
+<td>轮换与失败回写不严</td>
+<td><strong>原子 take + 失败回写</strong></td>
+</tr>
+<tr>
+<td>OAuth2/SSO 存储</td>
+<td>进程内 HashMap</td>
+<td><strong>Dao 持久化</strong></td>
+</tr>
+<tr>
+<td>SSO 验票</td>
+<td>偏弱</td>
+<td><strong>真消费票据 + HMAC 请求签名</strong></td>
+</tr>
+<tr>
+<td>统一登出</td>
+<td>能力有限</td>
+<td><strong>SloNotifier</strong>（HTTP 实现按 feature）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="token-du-xie-lian-lu">Token 读写链路</h3>
+<p>统一走核心 <strong><code>token_io</code></strong>：</p>
+<ul>
+<li><code>read_token</code>：按 <code>is_read_header</code> / <code>is_read_cookie</code> / <code>is_read_body</code> 真实生效  </li>
+<li><code>token_prefix</code>：可选前缀（如 <code>Bearer</code>）  </li>
+<li><code>is_write_cookie</code> + <code>write_token_cookie</code>：登录写 Cookie <strong>默认关闭、需显式打开</strong>  </li>
+</ul>
+<h3 id="qi-ta-an-quan-neng-li-bu-qi">其它安全能力补齐</h3>
+<ul>
+<li>通用 <strong>请求签名</strong> <code>RequestSign</code>  </li>
+<li><strong>临时令牌</strong> TempToken  </li>
+<li><strong>Same-Token</strong> 加固（CSPRNG + CAS 刷新）  </li>
+<li>登录 Token <strong>唯一性重试</strong>（<code>max_try_times</code>）  </li>
+</ul>
+<p><strong>对你意味着什么：</strong><br />
+默认值更保守、更可审计；需要旧行为时必须「知情同意」地打开开关。</p>
+<p>文档入口：<a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/security-features.html">Security</a> · <a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/oauth2.html">OAuth2</a> · <a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/sso.html">SSO</a></p>
+<hr />
+<h2 id="dui-bi-ba-shi-jian-xing-neng-yu-shou-kou">对比八：事件、性能与收口</h2>
+<h3 id="shi-jian-zong-xian">事件总线</h3>
+<ul>
+<li><code>DispatchMode</code>：Sequential / Concurrent / Detached  </li>
+<li>Listener 超时可控；未初始化时 <code>event_bus()</code> 返回 <code>None</code>，不再硬崩  </li>
+</ul>
+<h3 id="xing-neng-yu-shou-kou">性能与收口</h3>
+<ul>
+<li>Config / TokenValue 等关键路径 <strong>Arc 化</strong>，降低 Clone 成本  </li>
+<li>MemoryStorage <strong>分片</strong>；GrantCache <strong>分片 + flight 锁</strong>  </li>
+<li>清理 Dao 旁路；Refresh 索引走统一 Repo  </li>
+<li>插件读 Token 统一 <code>token_io</code>  </li>
+</ul>
+<p>这些改动不喧哗，但决定了高并发下「稳不稳、抖不抖」。</p>
+<hr />
+<h2 id="dui-bi-jiu-wen-dang-yu-she-qu-jiao-fu-cong-cang-ku-shuo-ming">对比九：文档与社区交付 —— 从「仓库说明书」到「双语站点」</h2>
+<h3 id="yi-qian-6">以前</h3>
+<ul>
+<li>文档分散、中英不对等、与代码偶有矛盾（例如迁移文写「没有 token_prefix」）  </li>
+<li>旋武收录页目前仍主要镜像较早的 README 能力清单（功能全，但尚未体现 0.2 架构叙事）</li>
+</ul>
+<h3 id="xian-zai-6">现在</h3>
+<ul>
+<li><strong>VitePress 正式站</strong>：<a href="https://sa-tokens.github.io/sa-token-rust/">https://sa-tokens.github.io/sa-token-rust/</a>  </li>
+<li><strong>中英成对指南</strong>（同一文件名、同一信息密度）  </li>
+<li>根目录 <strong><a href="https://github.com/sa-tokens/sa-token-rust/blob/main/MIGRATION_0.2.md">MIGRATION_0.2.md</a></strong> 作为破坏性变更单一真相源  </li>
+<li>站点内迁移页：<a href="https://sa-tokens.github.io/sa-token-rust/guide/migration-0.2.html">Migrate to 0.2</a></li>
+</ul>
+<p>从 0.1.x 升级的同学，先读迁移指南再改依赖；新同学直接从 <a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/quick-start.html">快速入门</a> 开始。</p>
+<hr />
+<h2 id="yi-zhang-biao-0-1-x-0-2-0-su-cha">一张表：0.1.x → 0.2.0 速查</h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>0.1.x</th>
+<th>0.2.0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>版本</td>
+<td>分散（如 0.1.18）</td>
+<td>统一 <strong>0.2.0</strong></td>
+</tr>
+<tr>
+<td>初始化</td>
+<td><code>init_manager</code> 主路径</td>
+<td><strong><code>try_init_manager</code> / <code>try_build</code></strong></td>
+</tr>
+<tr>
+<td>存储访问</td>
+<td>服务常直连 <code>SaStorage</code></td>
+<td><strong><code>SaTokenDao</code> 收口</strong></td>
+</tr>
+<tr>
+<td>序列化</td>
+<td>硬编码 JSON</td>
+<td><strong><code>SaSerializer</code> 可插拔</strong></td>
+</tr>
+<tr>
+<td>键布局</td>
+<td>分散</td>
+<td><strong><code>SaKeys</code> + 账号命名空间</strong></td>
+</tr>
+<tr>
+<td>登录</td>
+<td>非事务、易残留</td>
+<td><strong>阶段写入 + 补偿</strong></td>
+</tr>
+<tr>
+<td>续期</td>
+<td>默认偏激进</td>
+<td><strong><code>auto_renew</code> 默认 false</strong></td>
+</tr>
+<tr>
+<td>插件状态</td>
+<td>多个 <code>*-core</code></td>
+<td><strong><code>sa-token-plugin-common</code></strong></td>
+</tr>
+<tr>
+<td>多账号</td>
+<td>全局注册表</td>
+<td><strong><code>SaLogic</code> 廉价 Clone，无注册表</strong></td>
+</tr>
+<tr>
+<td>公开路由</td>
+<td>易误解 <code>sa_ignore</code></td>
+<td><strong><code>PathAuthConfig::exclude</code></strong></td>
+</tr>
+<tr>
+<td>OAuth2 密钥</td>
+<td>偏明文</td>
+<td><strong>Argon2id + PKCE</strong></td>
+</tr>
+<tr>
+<td>SSO</td>
+<td>进程内 / 验票弱</td>
+<td><strong>Dao + 真验票 + 签名</strong></td>
+</tr>
+<tr>
+<td>Token 读写</td>
+<td>各插件略异</td>
+<td><strong>统一 <code>token_io</code></strong></td>
+</tr>
+<tr>
+<td>文档</td>
+<td>分散、易过时</td>
+<td><strong>双语 VitePress + MIGRATION</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="zui-xiao-dai-ma-ti-gan-0-2-tui-jian-xie-fa">最小代码体感（0.2 推荐写法）</h2>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">use sa_token_plugin_axum::*;
+use std::sync::Arc;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+    let state = SaTokenState::builder()
+        .storage(Arc::new(MemoryStorage::new()))
+        .timeout(7200)
+        .build(); // 内部 try_init_manager
+
+    // 库代码更推荐：
+    // let mgr = SaTokenConfig::builder()
+    //     .storage(Arc::new(MemoryStorage::new()))
+    //     .try_build()?;
+
+    let token = StpUtil::login(&quot;10001&quot;).await?;
+    println!(&quot;token = {token}&quot;);
+
+    // 多账号：钉死 login_type
+    let admin = StpUtil::stp_logic(&quot;admin&quot;)?;
+    let admin_token = admin.login(&quot;10001&quot;).await?;
+
+    Ok(())
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li></ul></pre>
+<p>公开路由请记得：</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">PathAuthConfig::new()
+    .exclude(&quot;/api/login&quot;)
+    .exclude(&quot;/health&quot;);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
+<p>而不是指望单独一个 <code>#[sa_ignore]</code> 就能放行中间件。</p>
+<hr />
+<h2 id="ni-ke-yi-zen-me-kai-shi">你可以怎么开始</h2>
+<h3 id="1-xin-xiang-mu-xuan-xing">1. 新项目选型</h3>
+<p>直接上 <strong>0.2.0</strong>。从文档站 Quick start 进，按框架选插件 crate，Memory 开发、Redis 生产。</p>
+<h3 id="2-0-1-x-cun-liang-xiang-mu">2. 0.1.x 存量项目</h3>
+<p>按 <a href="https://sa-tokens.github.io/sa-token-rust/zh/guide/migration-0.2.html">迁移指南</a> 清单改：</p>
+<ul>
+<li>依赖升到 <code>0.2.0</code>  </li>
+<li><code>*-core</code> → <code>plugin-common</code> / 插件 prelude  </li>
+<li><code>init_manager</code> → <code>try_init_manager</code>  </li>
+<li>公开路由 → <code>PathAuthConfig::exclude</code>  </li>
+<li>按需打开 <code>auto_renew</code> / <code>token_prefix</code> / <code>is_write_cookie</code>  </li>
+<li>OAuth2 / SSO 按新安全模型重读一遍  </li>
+</ul>
+<h3 id="3-guan-zhu-kai-yuan-yu-she-qu-de-peng-you">3. 关注开源与社区的朋友</h3>
+<p>旋武收录、G-Star 提名，证明项目进入了更广的开源视野；<br />
+0.2 的意义是：<strong>在被看见之后，把工程质量配得上这份看见。</strong></p>
+<hr />
+<h2 id="wo-men-zhen-zheng-xiang-jiao-fu-de-bu-zhi-shi-you-yi-ge-auth">我们真正想交付的，不只是「又一个 Auth 库」</h2>
+<p>认证授权框架的价值，从来不在「功能列表有多长」，而在于：</p>
+<ul>
+<li>失败时会不会把半截状态写进 Redis；  </li>
+<li>换一个 Web 框架，行为会不会悄悄变；  </li>
+<li>默认配置会不会在你不知情时「每次读 Token 都写库」；  </li>
+<li>文档写的 API，能不能和 crates.io 上的二进制对得上。</li>
+</ul>
+<p><strong>sa-token-rust 0.2.0</strong> 做的，就是把这些问题从「靠经验躲开」变成「靠架构默认正确」。</p>
+<p>欢迎 Star、提 Issue、提 PR；<br />
+也欢迎把文档站收藏进团队内部 Wiki——下次选型时，少踩一轮坑。</p>
+<h2 id="xiang-guan-lian-jie">相关链接</h2>
+<table>
+<thead>
+<tr>
+<th>说明</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正式文档（中英）</td>
+<td><a href="https://sa-tokens.github.io/sa-token-rust/">https://sa-tokens.github.io/sa-token-rust/</a></td>
+</tr>
+<tr>
+<td>旋武社区收录页</td>
+<td><a href="https://xuanwu.openatom.org/articles/project/sa-token-rust/">https://xuanwu.openatom.org/articles/project/sa-token-rust/</a></td>
+</tr>
+<tr>
+<td>AtomGit / G-Star 详情页</td>
+<td><a href="https://atomgit.com/sa-tokens/sa-token-rust">https://atomgit.com/sa-tokens/sa-token-rust</a></td>
+</tr>
+<tr>
+<td>GitHub 仓库</td>
+<td><a href="https://github.com/sa-tokens/sa-token-rust">https://github.com/sa-tokens/sa-token-rust</a></td>
+</tr>
+<tr>
+<td>Gitee 仓库</td>
+<td><a href="https://gitee.com/sa-tokens/sa-token-rust">https://gitee.com/sa-tokens/sa-token-rust</a></td>
+</tr>
+<tr>
+<td>Issues</td>
+<td><a href="https://github.com/sa-tokens/sa-token-rust/issues">https://github.com/sa-tokens/sa-token-rust/issues</a></td>
+</tr>
+<tr>
+<td>0.2 迁移说明</td>
+<td><a href="https://github.com/sa-tokens/sa-token-rust/blob/main/MIGRATION_0.2.md">MIGRATION_0.2.md</a></td>
+</tr>
+<tr>
+<td>crates.io（搜索 sa-token）</td>
+<td>统一版本 <strong>0.2.0</strong></td>
+</tr>
+</tbody>
+</table>
+<p>设计灵感来自 Dromara sa-token；本仓库为 <strong>独立 Rust 实现</strong>，许可证 MIT OR Apache-2.0，详见仓库 <code>NOTICE</code>。</p>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html">← Sa-Token v1.46.0 发布 🚀，新增 Apache Fory 集成、独立 Redisson 集成</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#wo-men-bei-kan-jian-le-ye-ba-zi-ji-zuo-ying-le">我们被看见了，也把自己做硬了</a></li>
+<li class="toc-h2"><a href="#yi-ju-hua-ding-wei-0-2-reng-ran-cheng-li-dan-geng-ying">一句话定位（0.2 仍然成立，但更硬）</a></li>
+<li class="toc-h2"><a href="#wei-shen-me-yao-dong-da-shou-shu-0-1-x-de-zhen-shi-tong-dian">为什么要动大手术：0.1.x 的真实痛点</a></li>
+<li class="toc-h2"><a href="#zong-lan-zhong-gou-lu-xian-tu">总览：重构路线图</a></li>
+<li class="toc-h2"><a href="#dui-bi-yi-gong-cheng-hua-cong-neng-bian-yi-dao-neng-fa-bu">对比一：工程化 —— 从「能编译」到「能发布」</a></li>
+<li class="toc-h3"><a href="#yi-qian-0-1-x">以前（0.1.x）</a></li>
+<li class="toc-h3"><a href="#xian-zai-0-2-0">现在（0.2.0）</a></li>
+<li class="toc-h2"><a href="#dui-bi-er-cun-chu-ceng-cong-sui-bian-to-string-dao-qi-yue-ke">对比二：存储层 —— 从「随便 to_string」到「契约 + 可升级」</a></li>
+<li class="toc-h3"><a href="#yi-qian">以前</a></li>
+<li class="toc-h3"><a href="#xian-zai">现在</a></li>
+<li class="toc-h2"><a href="#dui-bi-san-he-xin-jia-gou-cong-shang-di-manager-dao-fen-ceng">对比三：核心架构 —— 从「上帝 Manager」到「分层 + 事务登录」</a></li>
+<li class="toc-h3"><a href="#yi-qian-2">以前</a></li>
+<li class="toc-h3"><a href="#xian-zai-2">现在</a></li>
+<li class="toc-h2"><a href="#dui-bi-si-cha-jian-yu-kuang-jia-cong-wu-tao-core-dao-yi-tao">对比四：插件与框架 —— 从「五套 core」到「一套 common」</a></li>
+<li class="toc-h3"><a href="#yi-qian-3">以前</a></li>
+<li class="toc-h3"><a href="#xian-zai-3">现在</a></li>
+<li class="toc-h2"><a href="#dui-bi-wu-stputil-men-mian-cong-neng-panic-dao-result-you-xi">对比五：StpUtil 门面 —— 从「能 panic」到「Result 优先」</a></li>
+<li class="toc-h3"><a href="#yi-qian-4">以前</a></li>
+<li class="toc-h3"><a href="#xian-zai-4">现在</a></li>
+<li class="toc-h2"><a href="#dui-bi-liu-qing-qiu-shang-xia-wen-yu-hong-dan-gui-ke-yu-ce">对比六：请求上下文与宏 —— 单轨、可预测</a></li>
+<li class="toc-h3"><a href="#yi-qian-5">以前</a></li>
+<li class="toc-h3"><a href="#xian-zai-5">现在</a></li>
+<li class="toc-h2"><a href="#dui-bi-qi-an-quan-mo-ren-zhi-oauth2-sso-token-du-xie">对比七：安全默认值 —— OAuth2 / SSO / Token 读写</a></li>
+<li class="toc-h3"><a href="#oauth2-sso-yi-qian-vs-xian-zai">OAuth2 / SSO（以前 vs 现在）</a></li>
+<li class="toc-h3"><a href="#token-du-xie-lian-lu">Token 读写链路</a></li>
+<li class="toc-h3"><a href="#qi-ta-an-quan-neng-li-bu-qi">其它安全能力补齐</a></li>
+<li class="toc-h2"><a href="#dui-bi-ba-shi-jian-xing-neng-yu-shou-kou">对比八：事件、性能与收口</a></li>
+<li class="toc-h3"><a href="#shi-jian-zong-xian">事件总线</a></li>
+<li class="toc-h3"><a href="#xing-neng-yu-shou-kou">性能与收口</a></li>
+<li class="toc-h2"><a href="#dui-bi-jiu-wen-dang-yu-she-qu-jiao-fu-cong-cang-ku-shuo-ming">对比九：文档与社区交付 —— 从「仓库说明书」到「双语站点」</a></li>
+<li class="toc-h3"><a href="#yi-qian-6">以前</a></li>
+<li class="toc-h3"><a href="#xian-zai-6">现在</a></li>
+<li class="toc-h2"><a href="#yi-zhang-biao-0-1-x-0-2-0-su-cha">一张表：0.1.x → 0.2.0 速查</a></li>
+<li class="toc-h2"><a href="#zui-xiao-dai-ma-ti-gan-0-2-tui-jian-xie-fa">最小代码体感（0.2 推荐写法）</a></li>
+<li class="toc-h2"><a href="#ni-ke-yi-zen-me-kai-shi">你可以怎么开始</a></li>
+<li class="toc-h3"><a href="#1-xin-xiang-mu-xuan-xing">1. 新项目选型</a></li>
+<li class="toc-h3"><a href="#2-0-1-x-cun-liang-xiang-mu">2. 0.1.x 存量项目</a></li>
+<li class="toc-h3"><a href="#3-guan-zhu-kai-yuan-yu-she-qu-de-peng-you">3. 关注开源与社区的朋友</a></li>
+<li class="toc-h2"><a href="#wo-men-zhen-zheng-xiang-jiao-fu-de-bu-zhi-shi-you-yi-ge-auth">我们真正想交付的，不只是「又一个 Auth 库」</a></li>
+<li class="toc-h2"><a href="#xiang-guan-lian-jie">相关链接</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

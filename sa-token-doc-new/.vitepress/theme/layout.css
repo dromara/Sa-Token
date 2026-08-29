@@ -1,0 +1,408 @@
+/*
+ * 文档壳布局：顶栏占位、左栏钉死、正文居中、右栏大纲、折叠按钮、404。
+ * Layout.vue 只负责结构，宽高定位写这里。
+ * 正文内部排版（标题、代码、提示框）在 custom.css，别往这文件塞。
+ */
+.st-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  color: #222;
+}
+
+.st-body {
+  flex: 1;
+  position: relative;
+  padding-top: 60px;
+}
+
+/* 侧栏钉在顶栏正下方；排版对齐 vue.css + doc.css */
+.main-box .st-sidebar.sidebar,
+.st-sidebar {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  margin-top: 0 !important;
+  width: var(--doc-left-width, 300px);
+  height: calc(100vh - 60px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 25px 0 0;
+  font-size: 15px;
+  background: transparent;
+  color: #364149;
+  border-right: 1px solid rgba(0, 0, 0, 0.07);
+  transition: transform 0.25s ease-out;
+}
+.st-shell:not(.sidebar-open) .st-sidebar {
+  transform: translateX(-100%);
+}
+.st-shell:not(.sidebar-ready) .st-sidebar,
+.st-shell:not(.sidebar-ready) .sidebar-toggle,
+.st-shell:not(.sidebar-ready) .st-article {
+  transition: none;
+}
+
+/* 4px 灰条始终可见（vue.css 悬停态），不用 :hover 透明、也不用 scrollbar-color（Chrome 会变成 overlay 自动藏） */
+.st-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.st-sidebar::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 53.3%, 0.4);
+  border-radius: 4px;
+}
+.st-sidebar::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 53.3%, 0.1);
+}
+@supports (-moz-appearance: none) {
+  .st-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: hsla(0, 0%, 53.3%, 0.4) hsla(0, 0%, 53.3%, 0.1);
+  }
+}
+
+.st-sidebar .sidebar-nav {
+  line-height: 2em;
+  padding-bottom: 40px;
+}
+
+.st-sidebar .sidebar-nav > ul {
+  margin: 0 0 0 15px;
+  padding: 0 0 0 6px;
+  list-style: none;
+}
+
+.st-sidebar .sidebar-nav ul,
+.st-sidebar .sidebar-nav ul li {
+  list-style: none;
+}
+
+.st-sidebar .sidebar-nav ul li {
+  margin: 0;
+}
+
+.st-sidebar .sidebar-nav > ul > li > p {
+  font-weight: 700;
+  margin: 10px 0 0;
+}
+
+.st-sidebar .sidebar-nav > ul > li:first-child > p {
+  margin-top: 0;
+}
+
+.st-sidebar .sidebar-nav ul li ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.st-sidebar .sidebar-nav ul li a {
+  display: block;
+  border-bottom: none;
+  color: #00323c;
+  font-size: 14px;
+  font-weight: 400;
+  overflow: hidden;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.st-sidebar .sidebar-nav ul li a:hover {
+  color: #42b983;
+  text-decoration: underline;
+}
+
+.st-sidebar .sidebar-nav > ul > li > ul > li.active-rep > a {
+  color: #42b983;
+  font-weight: 700;
+}
+
+.st-sidebar .sidebar-end {
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  margin: 0;
+}
+
+.st-article {
+  min-width: 0;
+  padding: 0;
+  transition: padding-left 0.25s ease;
+}
+.st-shell:not(.sidebar-open) .st-article {
+  padding-left: 0 !important;
+}
+
+/* 正文按视口居中，和旧站 --doc-context-width 一套变量 */
+.st-article .markdown-section,
+.main-box .markdown-section {
+  width: var(--doc-context-width, 1000px);
+  max-width: calc(100% - 32px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 38px 20px 100px;
+}
+
+.st-content.vp-doc h1:first-of-type {
+  margin-top: 0;
+}
+
+.st-aside {
+  /* 定位交给 doc.css 的 .doc-right-bj-box：fixed + 视口居中偏右 */
+  padding: 10px;
+}
+
+/* 宽度跟旧站走：absolute + 100%（相对右侧栏 padding box，比内容区宽 20px）
+   不再用 JS 改 top，避免开场滑动；top 用文档流静态位置 */
+.st-aside .doc-right-more-item {
+  position: absolute;
+  width: 100%;
+  margin-top: 30px;
+  transition: none;
+}
+
+.st-outline .app-sub-sidebar {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  line-height: 1.4em;
+  max-height: 50vh;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.st-outline .app-sub-sidebar::-webkit-scrollbar {
+  width: 0;
+}
+
+.st-outline .app-sub-sidebar li {
+  list-style: none;
+  margin: 6px 0;
+}
+
+.st-outline .app-sub-sidebar li:before {
+  content: "-";
+  padding-right: 4px;
+  float: left;
+}
+
+.st-outline .app-sub-sidebar a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #888;
+  text-decoration: none;
+  border-bottom: none;
+  font-weight: 400;
+}
+
+.st-outline .app-sub-sidebar a:hover {
+  color: #42b983;
+}
+
+.st-outline .app-sub-sidebar li.active > a {
+  color: #42b983;
+}
+
+.st-outline .app-sub-sidebar .lv-3 { padding-left: 10px; }
+.st-outline .app-sub-sidebar .lv-4 { padding-left: 20px; }
+
+.st-muted {
+  color: #999;
+  font-size: 12px;
+}
+
+.st-footer-wrap hr {
+  border: none;
+  border-bottom: 1px solid #eee;
+  margin: 2em 0;
+}
+
+#main footer a.footer-beian img {
+  display: inline !important;
+}
+
+.st-404 {
+  flex: 1;
+  padding: 120px 24px;
+  text-align: center;
+}
+.st-404__kicker {
+  color: #4e6e8e;
+  margin-bottom: 12px;
+}
+.st-404 p a + a {
+  margin-left: 1.5em;
+}
+
+.vp-doc green,
+.st-content green { color: green; }
+.vp-doc red,
+.st-content red { color: red; }
+.vp-doc blue,
+.st-content blue { color: blue; }
+
+.st-content .toc-box,
+.vp-doc .table-of-contents {
+  margin: 12px 0 24px;
+}
+
+.doc-header,
+.doc-header .nav-right {
+  flex-wrap: nowrap;
+}
+.doc-header .nav-right .wzi {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.st-menu-mask {
+  display: none;
+}
+
+/* 对齐 docsify vue.css 左下角三条杠 */
+.sidebar-toggle {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 30;
+  border: 0;
+  outline: none;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  width: var(--doc-left-width, 300px);
+  background: transparent;
+  transition: width 0.25s ease-out, padding 0.25s ease-out;
+}
+.st-shell:not(.sidebar-open) .sidebar-toggle {
+  width: auto;
+}
+.sidebar-toggle:hover .sidebar-toggle-button {
+  opacity: 0.4;
+}
+.sidebar-toggle-button {
+  display: inline-block;
+  transition: opacity 0.3s;
+}
+.sidebar-toggle span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  margin-bottom: 4px;
+  background-color: #42b983;
+}
+.sidebar-toggle span:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1100px) {
+  .st-aside { display: none; }
+  /* 旧站 1600 公式仍减 400px 右栏，这里右栏已经没了 */
+  body {
+    --doc-context-width: calc(100vw - var(--doc-left-width, 200px) - 40px);
+    --doc-right-width: 0px;
+  }
+  .st-article {
+    padding-left: var(--doc-left-width, 200px);
+  }
+  .st-article .markdown-section,
+  .main-box .markdown-section {
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    --doc-left-width: 0px;
+    --doc-context-width: 100%;
+  }
+  .st-article {
+    padding-left: 0;
+  }
+  .st-article .markdown-section,
+  .main-box .markdown-section {
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 20px 16px 80px;
+  }
+  .st-shell:not(.sidebar-ready) .st-sidebar {
+    transform: translateX(-100%);
+  }
+  .main-box .st-sidebar.sidebar,
+  .st-sidebar {
+    position: fixed;
+    inset: 60px auto 0 0;
+    width: min(80vw, 280px) !important;
+    margin-top: 0 !important;
+    background: #fff !important;
+    z-index: 15;
+    border-right: 1px solid #eee;
+    box-shadow: 8px 0 24px rgb(0 0 0 / 8%);
+  }
+  .sidebar-toggle {
+    width: auto;
+    padding: 30px 30px 10px 10px;
+  }
+  .st-shell.sidebar-open .sidebar-toggle {
+    width: min(80vw, 280px);
+    padding: 10px;
+  }
+  .st-shell.sidebar-open .st-menu-mask {
+    display: block;
+    position: fixed;
+    inset: 60px 0 0 0;
+    background: rgb(0 0 0 / 35%);
+    z-index: 14;
+  }
+  body:has(.st-shell.sidebar-open) {
+    overflow: hidden;
+  }
+  .doc-header .nav-left .logo-box {
+    padding-left: 12px;
+  }
+  .doc-header .nav-right {
+    flex: 0 0 auto;
+    padding-right: 8px;
+    margin-right: 0 !important;
+  }
+  .doc-header .nav-right > * {
+    margin: 0 6px;
+  }
+  .doc-inline-ad {
+    display: none !important;
+  }
+  .st-content.vp-doc {
+    overflow-wrap: break-word;
+  }
+  .st-content.vp-doc table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .doc-header .nav-t1 {
+    display: none !important;
+  }
+}
+
+/* 调色板改的是 body 背景，壳透明才能透出来 */
+html {
+  background: transparent;
+}
+@media (max-width: 800px) {
+  body[data-st-theme] .st-sidebar {
+    background: var(--st-bg-elevated, var(--st-bg, #1e1e1e)) !important;
+    border-right-color: var(--st-border);
+  }
+}

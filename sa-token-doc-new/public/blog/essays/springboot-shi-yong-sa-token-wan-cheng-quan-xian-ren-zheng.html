@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>SpringBoot 使用 Sa-Token 完成权限认证 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="权限认证的核心，是判断账号是否拥有指定权限：每个账号持有一组权限码，框架校验集合里是否包含目标权限码。本文介绍在 SpringBoot 中用 Sa-Token 完成权限认证与角色认证，并给出常用校验 API 与注解写法，方便直接落地，文内含示例，可直接对照实践。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,SpringBoot">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="SpringBoot 使用 Sa-Token 完成权限认证">
+	<meta property="og:description" content="权限认证的核心，是判断账号是否拥有指定权限：每个账号持有一组权限码，框架校验集合里是否包含目标权限码。本文介绍在 SpringBoot 中用 Sa-Token 完成权限认证与角色认证，并给出常用校验 API 与注解写法，方便直接落地，文内含示例，可直接对照实践。">
+	<meta property="og:url" content="https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html">
+	<meta property="og:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="SpringBoot 使用 Sa-Token 完成权限认证">
+	<meta name="twitter:description" content="权限认证的核心，是判断账号是否拥有指定权限：每个账号持有一组权限码，框架校验集合里是否包含目标权限码。本文介绍在 SpringBoot 中用 Sa-Token 完成权限认证与角色认证，并给出常用校验 API 与注解写法，方便直接落地，文内含示例，可直接对照实践。">
+	<meta name="twitter:image" content="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "SpringBoot 使用 Sa-Token 完成权限认证",
+  "description": "权限认证的核心，是判断账号是否拥有指定权限：每个账号持有一组权限码，框架校验集合里是否包含目标权限码。本文介绍在 SpringBoot 中用 Sa-Token 完成权限认证与角色认证，并给出常用校验 API 与注解写法，方便直接落地，文内含示例，可直接对照实践。",
+  "datePublished": "2023-04-24",
+  "dateModified": "2023-04-24",
+  "url": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/essays/springboot-shi-yong-sa-token-wan-cheng-quan-xian-ren-zheng.html"
+  },
+  "image": "https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>SpringBoot 使用 Sa-Token 完成权限认证</h1>
+					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
+					
+					<div class="blog-article-body">
+					<h2 id="yi-she-ji-si-lu">一、设计思路</h2>
+<p>所谓权限认证，核心逻辑就是判断一个账号是否拥有指定权限：</p>
+<ul>
+<li>有，就让你通过。</li>
+<li>没有？那么禁止访问！</li>
+</ul>
+<p>深入到底层数据中，就是每个账号都会拥有一个权限码集合，框架来校验这个集合中是否包含指定的权限码。 </p>
+<p>例如：当前账号拥有权限码集合 <code>["user-add", "user-delete", "user-get"]</code>，这时候我来校验权限 <code>"user-update"</code>，则其结果就是：<strong>验证失败，禁止访问</strong>。 </p>
+<p>动态演示图：</p>
+<p><img alt="权限认证" src="https://res.dev33.cn/sa-token-blog/img/2023-4/g3--jur-auth.gif" /></p>
+<p>所以现在问题的核心就是：<br />
+1. 如何获取一个账号所拥有的的权限码集合？<br />
+2. 本次操作需要验证的权限码是哪个？</p>
+<p>接下来，我们将介绍在 SpringBoot 中如何使用 Sa-Token 完成权限认证操作。</p>
+<blockquote>
+<p>Sa-Token 是一个轻量级 java 权限认证框架，主要解决登录认证、权限认证、单点登录、OAuth2、微服务网关鉴权 等一系列权限相关问题。<br />
+Gitee 开源地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></p>
+</blockquote>
+<p>首先在项目中引入 Sa-Token 依赖：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">&lt;!-- Sa-Token 权限认证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;cn.dev33&lt;/groupId&gt;
+    &lt;artifactId&gt;sa-token-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.34.0&lt;/version&gt;
+&lt;/dependency&gt;</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<p>注：如果你使用的是 <code>SpringBoot 3.x</code>，只需要将 <code>sa-token-spring-boot-starter</code> 修改为 <code>sa-token-spring-boot3-starter</code> 即可。</p>
+<h2 id="er-huo-qu-dang-qian-zhang-hao-quan-xian-ma-ji-he">二、获取当前账号权限码集合</h2>
+<p>因为每个项目的需求不同，其权限设计也千变万化，因此 [ 获取当前账号权限码集合 ] 这一操作不可能内置到框架中，<br />
+所以 Sa-Token 将此操作以接口的方式暴露给你，以方便你根据自己的业务逻辑进行重写。</p>
+<p>你需要做的就是新建一个类，实现 <code>StpInterface</code>接口，例如以下代码：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
+ * 自定义权限验证接口扩展
+ */
+@Component  // 保证此类被SpringBoot扫描，完成Sa-Token的自定义权限验证扩展 
+public class StpInterfaceImpl implements StpInterface {
+
+    /**
+     * 返回一个账号所拥有的权限码集合 
+     */
+    @Override
+    public List&lt;String&gt; getPermissionList(Object loginId, String loginType) {
+        // 本list仅做模拟，实际项目中要根据具体业务逻辑来查询权限
+        List&lt;String&gt; list = new ArrayList&lt;String&gt;();    
+        list.add(&quot;101&quot;);
+        list.add(&quot;user.add&quot;);
+        list.add(&quot;user.update&quot;);
+        list.add(&quot;user.get&quot;);
+        // list.add(&quot;user.delete&quot;);
+        list.add(&quot;art.*&quot;);
+        return list;
+    }
+
+    /**
+     * 返回一个账号所拥有的角色标识集合 (权限与角色可分开校验)
+     */
+    @Override
+    public List&lt;String&gt; getRoleList(Object loginId, String loginType) {
+        // 本list仅做模拟，实际项目中要根据具体业务逻辑来查询角色
+        List&lt;String&gt; list = new ArrayList&lt;String&gt;();    
+        list.add(&quot;admin&quot;);
+        list.add(&quot;super-admin&quot;);
+        return list;
+    }
+
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li></ul></pre>
+<p><strong>参数解释：</strong><br />
+- loginId：账号id，即你在调用 <code>StpUtil.login(id)</code> 时写入的标识值。<br />
+- loginType：账号体系标识，此处可以暂时忽略，在 [ 多账户认证 ] 章节下会对这个概念做详细的解释。</p>
+<p><strong>注意点：</strong><br />
+类上一定要加上 <code>@Component</code> 注解，保证组件被 Springboot 扫描到，成功注入到 Sa-Token 框架内。</p>
+<h2 id="san-quan-xian-jiao-yan">三、权限校验</h2>
+<p>启动类：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@SpringBootApplication
+public class SaTokenCaseApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SaTokenCaseApplication.class, args); 
+        System.out.println(&quot;\n启动成功：Sa-Token配置如下：&quot; + SaManager.getConfig());
+    }   
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
+<p>然后就可以用以下api来鉴权了</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取：当前账号所拥有的权限集合
+StpUtil.getPermissionList();
+
+// 判断：当前账号是否含有指定权限, 返回 true 或 false
+StpUtil.hasPermission(&quot;user.add&quot;);      
+
+// 校验：当前账号是否含有指定权限, 如果验证未通过，则抛出异常: NotPermissionException 
+StpUtil.checkPermission(&quot;user.add&quot;);        
+
+// 校验：当前账号是否含有指定权限 [指定多个，必须全部验证通过]
+StpUtil.checkPermissionAnd(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);      
+
+// 校验：当前账号是否含有指定权限 [指定多个，只要其一验证通过即可]
+StpUtil.checkPermissionOr(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);   </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<p>扩展：<code>NotPermissionException</code> 对象可通过 <code>getLoginType()</code> 方法获取具体是哪个 <code>StpLogic</code> 抛出的异常</p>
+<h2 id="si-jue-se-jiao-yan">四、角色校验</h2>
+<p>在Sa-Token中，角色和权限可以独立验证</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 获取：当前账号所拥有的角色集合
+StpUtil.getRoleList();
+
+// 判断：当前账号是否拥有指定角色, 返回 true 或 false
+StpUtil.hasRole(&quot;super-admin&quot;);     
+
+// 校验：当前账号是否含有指定角色标识, 如果验证未通过，则抛出异常: NotRoleException
+StpUtil.checkRole(&quot;super-admin&quot;);       
+
+// 校验：当前账号是否含有指定角色标识 [指定多个，必须全部验证通过]
+StpUtil.checkRoleAnd(&quot;super-admin&quot;, &quot;shop-admin&quot;);      
+
+// 校验：当前账号是否含有指定角色标识 [指定多个，只要其一验证通过即可] 
+StpUtil.checkRoleOr(&quot;super-admin&quot;, &quot;shop-admin&quot;);       </code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<p>扩展：<code>NotRoleException</code> 对象可通过 <code>getLoginType()</code> 方法获取具体是哪个 <code>StpLogic</code> 抛出的异常</p>
+<h2 id="wu-lan-jie-quan-ju-yi-chang">五、拦截全局异常</h2>
+<p>有同学要问，鉴权失败，抛出异常，然后呢？要把异常显示给用户看吗？<strong>当然不可以！</strong></p>
+<p>你可以创建一个全局异常拦截器，统一返回给前端的格式，参考：</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">@RestControllerAdvice
+public class GlobalExceptionHandler {
+    // 全局异常拦截 
+    @ExceptionHandler
+    public SaResult handlerException(Exception e) {
+        e.printStackTrace(); 
+        return SaResult.error(e.getMessage());
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
+<h2 id="liu-quan-xian-tong-pei-fu">六、权限通配符</h2>
+<p>Sa-Token允许你根据通配符指定<strong>泛权限</strong>，例如当一个账号拥有<code>art.*</code>的权限时，<code>art.add</code>、<code>art.delete</code>、<code>art.update</code>都将匹配通过</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 当拥有 art.* 权限时
+StpUtil.hasPermission(&quot;art.add&quot;);        // true
+StpUtil.hasPermission(&quot;art.update&quot;);     // true
+StpUtil.hasPermission(&quot;goods.add&quot;);      // false
+
+// 当拥有 *.delete 权限时
+StpUtil.hasPermission(&quot;art.delete&quot;);      // true
+StpUtil.hasPermission(&quot;user.delete&quot;);     // true
+StpUtil.hasPermission(&quot;user.update&quot;);     // false
+
+// 当拥有 *.js 权限时
+StpUtil.hasPermission(&quot;index.js&quot;);        // true
+StpUtil.hasPermission(&quot;index.css&quot;);       // false
+StpUtil.hasPermission(&quot;index.html&quot;);      // false</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<blockquote>
+<p>上帝权限：当一个账号拥有 <code>"*"</code> 权限时，他可以验证通过任何权限码 （角色认证同理）</p>
+</blockquote>
+<h2 id="qi-ru-he-ba-quan-xian-jing-que-dao-an-niu-ji">七、如何把权限精确到按钮级？</h2>
+<p>权限精确到按钮级的意思就是指：<strong>权限范围可以控制到页面上的每一个按钮是否显示</strong>。</p>
+<p>思路：如此精确的范围控制只依赖后端已经难以完成，此时需要前端进行一定的逻辑判断。</p>
+<p>如果是前后端一体项目，可以参考：<a href="https://sa-token.com/doc.html?way=blog#/plugin/thymeleaf-extend">Thymeleaf 标签方言</a>，如果是前后端分离项目，则：</p>
+<ol>
+<li>在登录时，把当前账号拥有的所有权限码一次性返回给前端。</li>
+<li>前端将权限码集合保存在<code>localStorage</code>或其它全局状态管理对象中。</li>
+<li>在需要权限控制的按钮上，使用 js 进行逻辑判断，例如在<code>Vue</code>框架中我们可以使用如下写法：</li>
+</ol>
+<pre v-pre data-lang="js"><code class="lang-js language-js has-numbering">&lt;button v-if=&quot;arr.indexOf('user.delete') &gt; -1&quot;&gt;删除按钮&lt;/button&gt;</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p>其中：<code>arr</code>是当前用户拥有的权限码数组，<code>user.delete</code>是显示按钮需要拥有的权限码，<code>删除按钮</code>是用户拥有权限码才可以看到的内容。</p>
+<p>注意：以上写法只为提供一个参考示例，不同框架有不同写法，大家可根据项目技术栈灵活封装进行调用。</p>
+<h2 id="ba-qian-duan-you-le-jian-quan-hou-duan-hai-xu-yao-jian-quan">八、前端有了鉴权后端还需要鉴权吗？</h2>
+<p><strong>需要！</strong></p>
+<p>前端的鉴权只是一个辅助功能，对于专业人员这些限制都是可以轻松绕过的，为保证服务器安全，无论前端是否进行了权限校验，后端接口都需要对会话请求再次进行权限校验！</p>
+<h2 id="jiu-lai-ge-xiao-shi-li-jia-shen-yi-xia-yin-xiang">九、来个小示例，加深一下印象</h2>
+<p>新建 <code>JurAuthController</code>，复制以下代码</p>
+<pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">package com.pj.cases.use;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaResult;
+
+/**
+ * Sa-Token 权限认证示例 
+ * 
+ * @author kong
+ * @since 2022-10-13
+ */
+@RestController
+@RequestMapping(&quot;/jur/&quot;)
+public class JurAuthController {
+
+    /*
+     * 前提1：首先调用登录接口进行登录，代码在 com.pj.cases.use.LoginAuthController 中有详细解释，此处不再赘述 
+     *      ---- http://localhost:8081/acc/doLogin?name=zhang&amp;pwd=123456
+     * 
+     * 前提2：项目实现 StpInterface 接口，代码在  com.pj.satoken.StpInterfaceImpl
+     *      Sa-Token 将从此实现类获取 每个账号拥有哪些权限。
+     * 
+     * 然后我们就可以使用以下示例中的代码进行鉴权了 
+     */
+
+    // 查询权限   ---- http://localhost:8081/jur/getPermission
+    @RequestMapping(&quot;getPermission&quot;)
+    public SaResult getPermission() {
+        // 查询权限信息 ，如果当前会话未登录，会返回一个空集合 
+        List&lt;String&gt; permissionList = StpUtil.getPermissionList();
+        System.out.println(&quot;当前登录账号拥有的所有权限：&quot; + permissionList);
+
+        // 查询角色信息 ，如果当前会话未登录，会返回一个空集合 
+        List&lt;String&gt; roleList = StpUtil.getRoleList();
+        System.out.println(&quot;当前登录账号拥有的所有角色：&quot; + roleList);
+
+        // 返回给前端 
+        return SaResult.ok()
+                .set(&quot;roleList&quot;, roleList)
+                .set(&quot;permissionList&quot;, permissionList);
+    }
+
+    // 权限校验  ---- http://localhost:8081/jur/checkPermission
+    @RequestMapping(&quot;checkPermission&quot;)
+    public SaResult checkPermission() {
+
+        // 判断：当前账号是否拥有一个权限，返回 true 或 false
+        //      如果当前账号未登录，则永远返回 false 
+        StpUtil.hasPermission(&quot;user.add&quot;);
+        StpUtil.hasPermissionAnd(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);  // 指定多个，必须全部拥有才会返回 true 
+        StpUtil.hasPermissionOr(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);  // 指定多个，只要拥有一个就会返回 true 
+
+        // 校验：当前账号是否拥有一个权限，校验不通过时会抛出 `NotPermissionException` 异常 
+        //      如果当前账号未登录，则永远校验失败 
+        StpUtil.checkPermission(&quot;user.add&quot;);
+        StpUtil.checkPermissionAnd(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);  // 指定多个，必须全部拥有才会校验通过 
+        StpUtil.checkPermissionOr(&quot;user.add&quot;, &quot;user.delete&quot;, &quot;user.get&quot;);  // 指定多个，只要拥有一个就会校验通过 
+
+        return SaResult.ok();
+    }
+
+    // 角色校验  ---- http://localhost:8081/jur/checkRole
+    @RequestMapping(&quot;checkRole&quot;)
+    public SaResult checkRole() {
+
+        // 判断：当前账号是否拥有一个角色，返回 true 或 false
+        //      如果当前账号未登录，则永远返回 false 
+        StpUtil.hasRole(&quot;admin&quot;);
+        StpUtil.hasRoleAnd(&quot;admin&quot;, &quot;ceo&quot;, &quot;cfo&quot;);  // 指定多个，必须全部拥有才会返回 true 
+        StpUtil.hasRoleOr(&quot;admin&quot;, &quot;ceo&quot;, &quot;cfo&quot;);     // 指定多个，只要拥有一个就会返回 true 
+
+        // 校验：当前账号是否拥有一个角色，校验不通过时会抛出 `NotRoleException` 异常 
+        //      如果当前账号未登录，则永远校验失败 
+        StpUtil.checkRole(&quot;admin&quot;);
+        StpUtil.checkRoleAnd(&quot;admin&quot;, &quot;ceo&quot;, &quot;cfo&quot;);  // 指定多个，必须全部拥有才会校验通过 
+        StpUtil.checkRoleOr(&quot;admin&quot;, &quot;ceo&quot;, &quot;cfo&quot;);  // 指定多个，只要拥有一个就会校验通过 
+
+        return SaResult.ok();
+    }
+
+    // 权限通配符  ---- http://localhost:8081/jur/wildcardPermission
+    @RequestMapping(&quot;wildcardPermission&quot;)
+    public SaResult wildcardPermission() {
+
+        // 前提条件：在 StpInterface 实现类中，为账号返回了 &quot;art.*&quot; 泛权限
+        StpUtil.hasPermission(&quot;art.add&quot;);  // 返回 true 
+        StpUtil.hasPermission(&quot;art.delete&quot;);  // 返回 true 
+        StpUtil.hasPermission(&quot;goods.add&quot;);  // 返回 false，因为前缀不符合  
+
+        // * 符合可以出现在任意位置，比如权限码的开头，当账号拥有 &quot;*.delete&quot; 时  
+        StpUtil.hasPermission(&quot;goods.add&quot;);        // false
+        StpUtil.hasPermission(&quot;goods.delete&quot;);     // true
+        StpUtil.hasPermission(&quot;art.delete&quot;);      // true
+
+        // 也可以出现在权限码的中间，比如当账号拥有 &quot;shop.*.user&quot; 时  
+        StpUtil.hasPermission(&quot;shop.add.user&quot;);  // true
+        StpUtil.hasPermission(&quot;shop.delete.user&quot;);  // true
+        StpUtil.hasPermission(&quot;shop.delete.goods&quot;);  // false，因为后缀不符合 
+
+        // 注意点：
+        // 1、上帝权限：当一个账号拥有 &quot;*&quot; 权限时，他可以验证通过任何权限码
+        // 2、角色校验也可以加 * ，指定泛角色，例如： &quot;*.admin&quot;，暂不赘述 
+
+        return SaResult.ok();
+    }
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li><li>72</li><li>73</li><li>74</li><li>75</li><li>76</li><li>77</li><li>78</li><li>79</li><li>80</li><li>81</li><li>82</li><li>83</li><li>84</li><li>85</li><li>86</li><li>87</li><li>88</li><li>89</li><li>90</li><li>91</li><li>92</li><li>93</li><li>94</li><li>95</li><li>96</li><li>97</li><li>98</li><li>99</li><li>100</li><li>101</li><li>102</li><li>103</li><li>104</li><li>105</li><li>106</li><li>107</li><li>108</li><li>109</li><li>110</li><li>111</li></ul></pre>
+<p>代码注释已针对每一步操作做出详细解释，大家可根据可参照注释中的访问链接进行逐步测试。</p>
+<hr />
+<h2 id="can-kao-zi-liao">参考资料</h2>
+<ul>
+<li>Sa-Token 文档：<a href="https://sa-token.com?way=blog">https://sa-token.com</a></li>
+<li>Gitee 仓库地址：<a href="https://gitee.com/dromara/sa-token">https://gitee.com/dromara/sa-token</a></li>
+<li>GitHub 仓库地址：<a href="https://github.com/dromara/sa-token">https://github.com/dromara/sa-token</a></li>
+</ul>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../essays/sa-token-ji-cheng-jwt.html">← Sa-Token 集成 jwt</a>
+<a class="blog-post-nav-next" href="../essays/springboot-shi-yong-sa-token-wan-cheng-zhu-jie-jian-quan-gong-neng.html">SpringBoot 使用 Sa-Token 完成注解鉴权功能 →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#yi-she-ji-si-lu">一、设计思路</a></li>
+<li class="toc-h2"><a href="#er-huo-qu-dang-qian-zhang-hao-quan-xian-ma-ji-he">二、获取当前账号权限码集合</a></li>
+<li class="toc-h2"><a href="#san-quan-xian-jiao-yan">三、权限校验</a></li>
+<li class="toc-h2"><a href="#si-jue-se-jiao-yan">四、角色校验</a></li>
+<li class="toc-h2"><a href="#wu-lan-jie-quan-ju-yi-chang">五、拦截全局异常</a></li>
+<li class="toc-h2"><a href="#liu-quan-xian-tong-pei-fu">六、权限通配符</a></li>
+<li class="toc-h2"><a href="#qi-ru-he-ba-quan-xian-jing-que-dao-an-niu-ji">七、如何把权限精确到按钮级？</a></li>
+<li class="toc-h2"><a href="#ba-qian-duan-you-le-jian-quan-hou-duan-hai-xu-yao-jian-quan">八、前端有了鉴权后端还需要鉴权吗？</a></li>
+<li class="toc-h2"><a href="#jiu-lai-ge-xiao-shi-li-jia-shen-yi-xia-yin-xiang">九、来个小示例，加深一下印象</a></li>
+<li class="toc-h2"><a href="#can-kao-zi-liao">参考资料</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

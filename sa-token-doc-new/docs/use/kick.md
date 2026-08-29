@@ -1,0 +1,54 @@
+---
+description: "Sa-Token 踢人下线：按账号、指定端或 Token 强制注销或踢下线，用于后台治理会话。"
+---
+
+# 踢人下线
+
+所谓踢人下线，核心操作就是找到指定 `loginId` 对应的 `Token`，并设置其失效。
+
+<img src="/big-file/doc/use/kickout.png" alt="踢下线">
+
+--- 
+
+
+### 1、强制注销
+``` java
+StpUtil.logout(10001);                    // 强制指定账号注销下线 
+StpUtil.logout(10001, "PC");              // 强制指定账号指定端注销下线 
+StpUtil.logoutByTokenValue("token");      // 强制指定 Token 注销下线 
+```
+
+
+### 2、踢人下线
+``` java
+StpUtil.kickout(10001);                    // 将指定账号踢下线 
+StpUtil.kickout(10001, "PC");              // 将指定账号指定端踢下线
+StpUtil.kickoutByTokenValue("token");      // 将指定 Token 踢下线
+```
+
+强制注销 和 踢人下线 的区别在于：
+- 强制注销等价于对方主动调用了注销方法，再次访问会提示：Token无效。
+- 踢人下线不会清除Token信息，而是将其打上特定标记，再次访问会提示：Token已被踢下线。
+
+
+<button class="show-img" img-src="/big-file/doc/use/g3--kickout.gif">加载动态演示图</button>
+
+
+### 3、顶人下线
+“顶人下线” 操作发生在框架登录时顶退旧登录设备，属于框架内部操作，一般情形下你不会调用到此 API：
+``` java
+StpUtil.replaced(10001);                    // 将指定账号顶下线 
+StpUtil.replaced(10001, "PC");              // 将指定账号指定端顶下线
+StpUtil.replacedByTokenValue("token");      // 将指定 Token 顶下线
+```
+
+
+---
+
+<a class="case-btn" href="https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-case/src/main/java/com/pj/cases/use/KickoutController.java"
+	target="_blank">
+	本章代码示例：Sa-Token 踢人下线 —— [ KickoutController.java ]
+</a>
+<a class="dt-btn" href="https://www.wenjuan.ltd/s/MFNN7bK/" target="_blank">本章小练习：Sa-Token 基础 - 踢人下线，章节测试</a>
+
+

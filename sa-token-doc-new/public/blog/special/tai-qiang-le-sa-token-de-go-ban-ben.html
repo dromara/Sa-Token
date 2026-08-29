@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>太强了！Sa-Token 的 Go 版本！ - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="这是由 Sa-Token 社区成员发起的项目 sa-token-go：把登录认证、权限、踢人、OAuth2 等能力带到 Go。本文介绍核心特性、Token 风格与快速开始，方便 Go 同学复用熟悉的鉴权心智。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,OAuth2,踢人下线">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-go-ban-ben.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="太强了！Sa-Token 的 Go 版本！">
+	<meta property="og:description" content="这是由 Sa-Token 社区成员发起的项目 sa-token-go：把登录认证、权限、踢人、OAuth2 等能力带到 Go。本文介绍核心特性、Token 风格与快速开始，方便 Go 同学复用熟悉的鉴权心智。">
+	<meta property="og:url" content="https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-go-ban-ben.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="太强了！Sa-Token 的 Go 版本！">
+	<meta name="twitter:description" content="这是由 Sa-Token 社区成员发起的项目 sa-token-go：把登录认证、权限、踢人、OAuth2 等能力带到 Go。本文介绍核心特性、Token 风格与快速开始，方便 Go 同学复用熟悉的鉴权心智。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "太强了！Sa-Token 的 Go 版本！",
+  "description": "这是由 Sa-Token 社区成员发起的项目 sa-token-go：把登录认证、权限、踢人、OAuth2 等能力带到 Go。本文介绍核心特性、Token 风格与快速开始，方便 Go 同学复用熟悉的鉴权心智。",
+  "datePublished": "2025-10-20",
+  "dateModified": "2025-10-20",
+  "url": "https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-go-ban-ben.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-go-ban-ben.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>太强了！Sa-Token 的 Go 版本！</h1>
+					<div class="blog-article-meta"><span>2025-10-20</span><span>特殊文章</span></div>
+					
+					<div class="blog-article-body">
+					<p>这是由 Sa-Token 社区成员发起的一个项目：sa-token-go —— sa-token 的 go 版本。</p>
+<p>对 go 语言熟悉的同学速来围观啦。</p>
+<p>目前该仓库处于起步阶段，不过已经有不错的完成度了。</p>
+<p>开源地址：https://github.com/click33/sa-token-go</p>
+<p>一个轻量级、高性能的 go 认证授权框架：</p>
+<h2 id="he-xin-te-xing">核心特性：</h2>
+<ul>
+<li>🔐 登录认证 - 支持多设备登录、Token管理</li>
+<li>🛡️ 权限验证 - 细粒度权限控制、通配符支持（<code>*</code>、<code>user:*</code>、<code>user:*:view</code>）</li>
+<li>👥 角色管理 - 灵活的角色授权机制</li>
+<li>🚫 账号封禁 - 临时/永久封禁功能</li>
+<li>👢 踢人下线 - 强制用户下线、多端互斥登录</li>
+<li>💾 Session会话 - 完整的Session管理</li>
+<li>⏰ 活跃检测 - 自动检测Token活跃度</li>
+<li>🔄 自动续期 - Token异步自动续期（性能提升400%）</li>
+<li>🎨 注解支持 - @SaCheckLogin、@SaCheckRole、@SaCheckPermission</li>
+<li>🎧 事件监听 - 强大的事件系统、支持优先级、异步执行</li>
+<li>📦 模块化设计 - 按需导入、最小依赖</li>
+<li>🔒 Nonce防重放 - 防止请求重放攻击、一次性令牌</li>
+<li>🔄 Refresh Token - 刷新令牌机制、无感刷新</li>
+<li>🔐 OAuth2 - 完整的OAuth2授权码模式实现</li>
+</ul>
+<h2 id="token-feng-ge">🎨 Token 风格：</h2>
+<p>Sa-Token-Go 支持 9 种 Token 生成风格：</p>
+<table>
+<thead>
+<tr>
+<th>风格</th>
+<th>格式示例</th>
+<th>长度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UUID</strong></td>
+<td><code>550e8400-e29b-41d4-...</code></td>
+<td>36</td>
+<td>通用场景</td>
+</tr>
+<tr>
+<td><strong>Simple</strong></td>
+<td><code>aB3dE5fG7hI9jK1l</code></td>
+<td>16</td>
+<td>紧凑型Token</td>
+</tr>
+<tr>
+<td><strong>Random32/64/128</strong></td>
+<td>随机字符串</td>
+<td>32/64/128</td>
+<td>高安全性</td>
+</tr>
+<tr>
+<td><strong>JWT</strong></td>
+<td><code>eyJhbGciOiJIUzI1...</code></td>
+<td>可变</td>
+<td>无状态认证</td>
+</tr>
+<tr>
+<td><strong>Hash</strong> 🆕</td>
+<td><code>a3f5d8b2c1e4f6a9...</code></td>
+<td>64</td>
+<td>SHA256哈希</td>
+</tr>
+<tr>
+<td><strong>Timestamp</strong> 🆕</td>
+<td><code>1700000000123_user1000_...</code></td>
+<td>可变</td>
+<td>可追溯时间</td>
+</tr>
+<tr>
+<td><strong>Tik</strong> 🆕</td>
+<td><code>7Kx9mN2pQr4</code></td>
+<td>11</td>
+<td>短ID（类似抖音）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="an-quan-te-xing">🔒 安全特性</h2>
+<h3 id="nonce-fang-zhong-fang-gong-ji">Nonce 防重放攻击</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 生成nonce
+nonce, _ := stputil.GenerateNonce()
+
+// 验证nonce（一次性使用）
+valid := stputil.VerifyNonce(nonce)  // true
+valid = stputil.VerifyNonce(nonce)   // false（防止重放）</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
+<h3 id="refresh-token-shua-xin-ji-zhi">Refresh Token 刷新机制</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 登录获取访问令牌和刷新令牌
+tokenInfo, _ := stputil.LoginWithRefreshToken(1000, &quot;web&quot;)
+fmt.Println(&quot;Access Token:&quot;, tokenInfo.AccessToken)
+fmt.Println(&quot;Refresh Token:&quot;, tokenInfo.RefreshToken)
+
+// 刷新访问令牌
+newInfo, _ := stputil.RefreshAccessToken(tokenInfo.RefreshToken)</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
+<h3 id="oauth2-shou-quan-ma-mo-shi">OAuth2 授权码模式</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 创建OAuth2服务器
+oauth2Server := stputil.GetOAuth2Server()
+
+// 注册客户端
+oauth2Server.RegisterClient(&amp;core.OAuth2Client{
+    ClientID:     &quot;webapp&quot;,
+    ClientSecret: &quot;secret123&quot;,
+    RedirectURIs: []string{&quot;http://localhost:8080/callback&quot;},
+    GrantTypes:   []core.OAuth2GrantType{core.GrantTypeAuthorizationCode},
+    Scopes:       []string{&quot;read&quot;, &quot;write&quot;},
+})
+
+// 生成授权码
+authCode, _ := oauth2Server.GenerateAuthorizationCode(
+    &quot;webapp&quot;, &quot;http://localhost:8080/callback&quot;, &quot;user123&quot;, []string{&quot;read&quot;},
+)
+
+// 用授权码换取访问令牌
+accessToken, _ := oauth2Server.ExchangeCodeForToken(
+    authCode.Code, &quot;webapp&quot;, &quot;secret123&quot;, &quot;http://localhost:8080/callback&quot;,
+)</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul></pre>
+<h2 id="kuai-su-kai-shi">🚀 快速开始</h2>
+<h3 id="an-zhuang">安装</h3>
+<h4 id="fang-shi-yi-jian-hua-dao-ru-tui-jian">方式一：简化导入（推荐）✨</h4>
+<p><strong>只需导入一个框架集成包，自动包含 core 和 stputil 功能！</strong></p>
+<pre v-pre data-lang="bash"><code class="lang-bash language-bash has-numbering"># 只导入框架集成包（自动包含 core + stputil）
+go get github.com/click33/sa-token-go/integrations/gin@v0.1.0    # Gin框架
+# 或
+go get github.com/click33/sa-token-go/integrations/echo@v0.1.0   # Echo框架
+# 或
+go get github.com/click33/sa-token-go/integrations/fiber@v0.1.0  # Fiber框架
+# 或
+go get github.com/click33/sa-token-go/integrations/chi@v0.1.0    # Chi框架
+
+# 存储模块（选一个）
+go get github.com/click33/sa-token-go/storage/memory@v0.1.0  # 内存存储（开发）
+go get github.com/click33/sa-token-go/storage/redis@v0.1.0   # Redis存储（生产）</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li></ul></pre>
+<h4 id="fang-shi-er-fen-kai-dao-ru">方式二：分开导入</h4>
+<pre v-pre data-lang="bash"><code class="lang-bash language-bash has-numbering"># 核心模块
+go get github.com/click33/sa-token-go/core@v0.1.0
+go get github.com/click33/sa-token-go/stputil@v0.1.0
+
+# 存储模块（选一个）
+go get github.com/click33/sa-token-go/storage/memory@v0.1.0  # 内存存储（开发）
+go get github.com/click33/sa-token-go/storage/redis@v0.1.0   # Redis存储（生产）
+
+# 框架集成（可选）
+go get github.com/click33/sa-token-go/integrations/gin@v0.1.0    # Gin框架
+go get github.com/click33/sa-token-go/integrations/echo@v0.1.0   # Echo框架
+go get github.com/click33/sa-token-go/integrations/fiber@v0.1.0  # Fiber框架
+go get github.com/click33/sa-token-go/integrations/chi@v0.1.0    # Chi框架</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li></ul></pre>
+<h3 id="chao-jian-jie-shi-yong-yi-xing-chu-shi-hua">超简洁使用（一行初始化）</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">package main
+
+import (
+    &quot;github.com/click33/sa-token-go/core&quot;
+    &quot;github.com/click33/sa-token-go/stputil&quot;
+    &quot;github.com/click33/sa-token-go/storage/memory&quot;
+)
+
+func init() {
+    // 🎯 一行初始化！显示启动 Banner
+    stputil.SetManager(
+        core.NewBuilder().
+            Storage(memory.NewStorage()).
+            TokenName(&quot;Authorization&quot;).
+            Timeout(86400).                      // 24小时
+            TokenStyle(core.TokenStyleRandom64). // Token风格
+            IsPrintBanner(true).                 // 显示启动Banner
+            Build(),
+    )
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li></ul></pre>
+<p><strong>启动时会显示 Banner：</strong></p>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">   _____         ______      __                  ______
+  / ___/____ _  /_  __/___  / /_____  ____      / ____/____
+  \__ \/ __  |   / / / __ \/ //_/ _ \/ __ \_____/ / __/ __ \
+ ___/ / /_/ /   / / / /_/ / ,&lt; /  __/ / / /_____/ /_/ / /_/ /
+/____/\__,_/   /_/  \____/_/|_|\___/_/ /_/      \____/\____/
+
+:: Sa-Token-Go ::                                    (v0.1.0)
+:: Go Version ::                                     go1.21.0
+:: GOOS/GOARCH ::                                    darwin/arm64
+
+┌─────────────────────────────────────────────────────────┐
+│ Token Style     : random64                              │
+│ Token Timeout   : 86400                      seconds    │
+│ Auto Renew      : true                                  │
+└─────────────────────────────────────────────────────────┘</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">func main() {
+    // 🚀 直接使用 StpUtil，无需传递manager
+    token, _ := stputil.Login(1000)
+    println(&quot;登录成功，Token:&quot;, token)
+
+    // 设置权限
+    stputil.SetPermissions(1000, []string{&quot;user:read&quot;, &quot;user:write&quot;})
+
+    // 检查权限
+    if stputil.HasPermission(1000, &quot;user:read&quot;) {
+        println(&quot;有权限！&quot;)
+    }
+
+    // 登出
+    stputil.Logout(1000)
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<h3 id="gin-dan-yi-dao-ru">Gin框架集成（单一导入）✨</h3>
+<p><strong>新方式：只导入 <code>integrations/gin</code> 即可使用所有功能！</strong></p>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">import (
+    &quot;github.com/gin-gonic/gin&quot;
+    sagin &quot;github.com/click33/sa-token-go/integrations/gin&quot;  // 只需这一个导入！
+    &quot;github.com/click33/sa-token-go/storage/memory&quot;
+)
+
+func main() {
+    // 初始化（所有功能都在 sagin 包中）
+    storage := memory.NewStorage()
+    config := sagin.DefaultConfig()  // 使用 sagin.DefaultConfig
+    manager := sagin.NewManager(storage, config)  // 使用 sagin.NewManager
+    sagin.SetManager(manager)  // 使用 sagin.SetManager
+
+    r := gin.Default()
+
+    // 登录接口
+    r.POST(&quot;/login&quot;, func(c *gin.Context) {
+        userID := c.PostForm(&quot;user_id&quot;)
+        token, _ := sagin.Login(userID)  // 使用 sagin.Login
+        c.JSON(200, gin.H{&quot;token&quot;: token})
+    })
+
+    // 使用注解装饰器（类似Java）
+    r.GET(&quot;/public&quot;, sagin.Ignore(), publicHandler)                  // 公开访问
+    r.GET(&quot;/user&quot;, sagin.CheckLogin(), userHandler)                  // 需要登录
+    r.GET(&quot;/admin&quot;, sagin.CheckPermission(&quot;admin:*&quot;), adminHandler)  // 需要权限
+    r.GET(&quot;/manager&quot;, sagin.CheckRole(&quot;manager&quot;), managerHandler)    // 需要角色
+    r.GET(&quot;/sensitive&quot;, sagin.CheckDisable(), sensitiveHandler)      // 检查封禁
+
+    r.Run(&quot;:8080&quot;)
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li></ul></pre>
+<h2 id="xiang-mu-jie-gou">📦 项目结构</h2>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">sa-token-go/
+├── core/                          # 🔴 核心模块（必需）
+│   ├── adapter/                   # 适配器接口
+│   │   ├── storage.go            # 存储接口
+│   │   └── context.go            # 请求上下文接口
+│   ├── manager/                   # 认证管理器
+│   ├── builder/                   # Builder构建器
+│   ├── session/                   # Session管理
+│   ├── token/                     # Token生成器（支持JWT）
+│   ├── listener/                  # 事件监听系统
+│   ├── banner/                    # 启动Banner
+│   ├── config/                    # 配置定义
+│   ├── context/                   # Sa-Token上下文
+│   ├── utils/                     # 工具函数
+│   ├── errors.go                  # 错误定义
+│   └── satoken.go                 # 核心导出
+│
+├── stputil/                       # 🔧 全局工具类（推荐）
+│   └── stputil.go                # StpUtil.Login(), StpUtil.Logout()...
+│
+├── storage/                       # 💾 存储后端
+│   ├── memory/                    # 内存存储（开发环境）
+│   │   └── memory.go
+│   └── redis/                     # Redis存储（生产环境）
+│       └── redis.go
+│
+├── integrations/                  # 🌐 框架集成
+│   ├── gin/                       # Gin框架（包含注解）
+│   │   ├── context.go
+│   │   ├── plugin.go
+│   │   └── annotation.go
+│   ├── echo/                      # Echo框架
+│   │   ├── context.go
+│   │   └── plugin.go
+│   ├── fiber/                     # Fiber框架
+│   │   ├── context.go
+│   │   └── plugin.go
+│   └── chi/                       # Chi框架
+│       ├── context.go
+│       └── plugin.go
+│
+├── examples/                      # 📚 示例项目
+│   ├── quick-start/
+│   │   └── simple-example/       # ⚡ 快速开始
+│   ├── annotation/
+│   │   └── annotation-example/   # 🎨 注解使用
+│   ├── jwt-example/              # 🔑 JWT Token示例
+│   ├── redis-example/            # 💾 Redis存储示例
+│   ├── listener-example/         # 🎧 事件监听示例
+│   ├── gin/gin-example/          # Gin集成示例
+│   ├── echo/echo-example/        # Echo集成示例
+│   ├── fiber/fiber-example/      # Fiber集成示例
+│   └── chi/chi-example/          # Chi集成示例
+│
+├── docs/                          # 📖 文档
+│   ├── tutorial/                  # 教程
+│   │   └── quick-start.md
+│   ├── guide/                     # 指南
+│   │   ├── authentication.md
+│   │   ├── permission.md
+│   │   ├── annotation.md
+│   │   ├── listener.md
+│   │   ├── jwt.md
+│   │   ├── redis-storage.md      # 英文
+│   │   └── redis-storage_zh.md   # 中文
+│   ├── api/                       # API文档
+│   └── design/                    # 设计文档
+│
+├── go.work                        # Go工作区
+├── README.md                      # 英文README
+└── README_zh.md                   # 中文README</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li><li>43</li><li>44</li><li>45</li><li>46</li><li>47</li><li>48</li><li>49</li><li>50</li><li>51</li><li>52</li><li>53</li><li>54</li><li>55</li><li>56</li><li>57</li><li>58</li><li>59</li><li>60</li><li>61</li><li>62</li><li>63</li><li>64</li><li>65</li><li>66</li><li>67</li><li>68</li><li>69</li><li>70</li><li>71</li></ul></pre>
+<h2 id="shi-jian-jian-ting">🎧 事件监听</h2>
+<p>监听认证和授权事件，实现审计日志、安全监控等功能：</p>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 创建事件管理器
+eventMgr := core.NewEventManager()
+
+// 监听登录事件
+eventMgr.RegisterFunc(core.EventLogin, func(data *core.EventData) {
+    fmt.Printf(&quot;[LOGIN] User: %s, Token: %s\n&quot;, data.LoginID, data.Token)
+    // 记录审计日志、发送通知等
+})
+
+// 监听注销事件
+eventMgr.RegisterFunc(core.EventLogout, func(data *core.EventData) {
+    fmt.Printf(&quot;[LOGOUT] User: %s\n&quot;, data.LoginID)
+})
+
+// 高级特性：优先级、同步执行
+eventMgr.RegisterWithConfig(core.EventLogin,
+    core.ListenerFunc(auditLogger),
+    core.ListenerConfig{
+        Priority: 100,   // 高优先级
+        Async:    false, // 同步执行
+    },
+)
+
+// 监听所有事件（通配符）
+eventMgr.RegisterFunc(core.EventAll, func(data *core.EventData) {
+    log.Printf(&quot;[%s] %s&quot;, data.Event, data.LoginID)
+})</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li></ul></pre>
+<p><strong>可用事件：</strong></p>
+<ul>
+<li><code>EventLogin</code> - 用户登录</li>
+<li><code>EventLogout</code> - 用户登出</li>
+<li><code>EventKickout</code> - 强制下线</li>
+<li><code>EventDisable</code> - 账号封禁</li>
+<li><code>EventPermissionCheck</code> - 权限检查</li>
+<li><code>EventRoleCheck</code> - 角色检查</li>
+<li><code>EventAll</code> - 所有事件（通配符）</li>
+</ul>
+<p>→ 查看 Listener 完整文档</p>
+<h2 id="xiang-mu-jie-gou-2">📖 项目结构</h2>
+<pre v-pre data-lang="text"><code class="lang-text language-text has-numbering">sa-token-go/
+├── core/                    # 核心模块
+│   ├── adapter/            # 适配器接口
+│   ├── builder/            # Builder构建器
+│   ├── config/             # 配置
+│   ├── context/            # 上下文
+│   ├── listener/           # 事件监听
+│   ├── manager/            # 认证管理器
+│   ├── oauth2/             # OAuth2实现 🆕
+│   ├── security/           # 安全特性（Nonce、RefreshToken）🆕
+│   ├── session/            # Session管理
+│   ├── token/              # Token生成器
+│   └── utils/              # 工具函数
+│
+├── stputil/                # 全局工具类
+│
+├── storage/                # 存储模块
+│   ├── memory/             # 内存存储
+│   └── redis/              # Redis存储
+│
+├── integrations/           # 框架集成
+│   ├── gin/                # Gin集成（含注解）
+│   ├── echo/               # Echo集成
+│   ├── fiber/              # Fiber集成
+│   └── chi/                # Chi集成
+│
+├── examples/               # 示例项目
+│   ├── quick-start/        # 快速开始
+│   ├── token-styles/       # Token风格演示 🆕
+│   ├── security-features/  # 安全特性演示 🆕
+│   ├── oauth2-example/     # OAuth2完整示例 🆕
+│   ├── annotation/         # 注解使用
+│   ├── jwt-example/        # JWT示例
+│   ├── redis-example/      # Redis示例
+│   ├── listener-example/   # 事件监听示例
+│   └── gin/echo/fiber/chi/ # 框架集成示例
+│
+└── docs/                   # 文档
+    ├── tutorial/           # 教程
+    ├── guide/              # 使用指南
+    ├── api/                # API文档
+    └── design/             # 设计文档</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li><li>40</li><li>41</li><li>42</li></ul></pre>
+<h2 id="he-xin-api">🔧 核心API</h2>
+<h3 id="deng-lu-ren-zheng">登录认证</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 登录（支持 int, int64, uint, string）
+token, _ := stputil.Login(1000)
+token, _ := stputil.Login(&quot;user123&quot;)
+token, _ := stputil.Login(1000, &quot;mobile&quot;)  // 指定设备
+
+// 检查登录（自动异步续签）
+isLogin := stputil.IsLogin(token)
+
+// 获取登录ID
+loginID, _ := stputil.GetLoginID(token)
+
+// 登出
+stputil.Logout(1000)
+stputil.LogoutByToken(token)
+
+// 踢人下线
+stputil.Kickout(1000)
+stputil.Kickout(1000, &quot;mobile&quot;)</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li></ul></pre>
+<h3 id="jwt-token-zhi-chi">JWT Token 支持</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 使用 JWT Token
+stputil.SetManager(
+    core.NewBuilder().
+        Storage(memory.NewStorage()).
+        TokenStyle(core.TokenStyleJWT).              // 使用 JWT
+        JwtSecretKey(&quot;your-256-bit-secret&quot;).       // JWT 密钥
+        Timeout(3600).                               // 1小时过期
+        Build(),
+)
+
+// 登录后获得 JWT Token
+token, _ := stputil.Login(1000)
+// 返回格式：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+// JWT Token 包含用户信息，可在 https://jwt.io 解析</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<p><strong>支持的 Token 风格：</strong></p>
+<ul>
+<li><code>TokenStyleUUID</code> - UUID（默认）</li>
+<li><code>TokenStyleSimple</code> - 简单随机字符串（16字符）</li>
+<li><code>TokenStyleRandom32/64/128</code> - 指定长度随机串（32/64/128字符）</li>
+<li><code>TokenStyleJWT</code> - JWT Token（推荐用于分布式）</li>
+<li><code>TokenStyleHash</code> - SHA256哈希风格（64字符，高安全性）🆕</li>
+<li><code>TokenStyleTimestamp</code> - 时间戳风格（格式：时间戳_loginID_随机数）🆕</li>
+<li><code>TokenStyleTik</code> - Tik短ID风格（11字符，类似抖音）🆕</li>
+</ul>
+<h3 id="quan-xian-yan-zheng">权限验证</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 设置权限
+stputil.SetPermissions(1000, []string{
+    &quot;user:read&quot;,
+    &quot;user:write&quot;,
+    &quot;admin:*&quot;,      // 通配符：匹配所有admin权限
+})
+
+// 检查权限
+hasPermission := stputil.HasPermission(1000, &quot;user:read&quot;)
+hasPermission := stputil.HasPermission(1000, &quot;admin:delete&quot;)  // 通配符匹配
+
+// 多权限检查
+hasAll := stputil.HasPermissionsAnd(1000, []string{&quot;user:read&quot;, &quot;user:write&quot;})  // AND逻辑
+hasAny := stputil.HasPermissionsOr(1000, []string{&quot;admin&quot;, &quot;super&quot;})           // OR逻辑</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<h3 id="jue-se-guan-li">角色管理</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 设置角色
+stputil.SetRoles(1000, []string{&quot;admin&quot;, &quot;manager&quot;})
+
+// 检查角色
+hasRole := stputil.HasRole(1000, &quot;admin&quot;)
+
+// 多角色检查
+hasAll := stputil.HasRolesAnd(1000, []string{&quot;admin&quot;, &quot;manager&quot;})
+hasAny := stputil.HasRolesOr(1000, []string{&quot;admin&quot;, &quot;super&quot;})</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
+<h3 id="zhang-hao-feng-jin">账号封禁</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 封禁1小时
+stputil.Disable(1000, 1*time.Hour)
+
+// 永久封禁
+stputil.Disable(1000, 0)
+
+// 解封
+stputil.Untie(1000)
+
+// 检查是否被封禁
+isDisabled := stputil.IsDisable(1000)
+
+// 获取剩余封禁时间
+remainingTime, _ := stputil.GetDisableTime(1000)</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li></ul></pre>
+<h3 id="session">Session管理</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">// 获取Session
+sess, _ := stputil.GetSession(1000)
+
+// 设置数据
+sess.Set(&quot;nickname&quot;, &quot;张三&quot;)
+sess.Set(&quot;age&quot;, 25)
+
+// 读取数据
+nickname := sess.GetString(&quot;nickname&quot;)
+age := sess.GetInt(&quot;age&quot;)
+
+// 删除数据
+sess.Delete(&quot;nickname&quot;)
+
+// 删除Session
+stputil.DeleteSession(1000)</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+<h2 id="zhu-jie-zhuang-shi-qi-gin">🎨 注解装饰器（Gin框架）</h2>
+<h3 id="zhi-chi-de-zhu-jie">支持的注解</h3>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@SaIgnore</code></td>
+<td>忽略认证</td>
+<td><code>sagin.Ignore()</code></td>
+</tr>
+<tr>
+<td><code>@SaCheckLogin</code></td>
+<td>检查登录</td>
+<td><code>sagin.CheckLogin()</code></td>
+</tr>
+<tr>
+<td><code>@SaCheckRole</code></td>
+<td>检查角色</td>
+<td><code>sagin.CheckRole("admin")</code></td>
+</tr>
+<tr>
+<td><code>@SaCheckPermission</code></td>
+<td>检查权限</td>
+<td><code>sagin.CheckPermission("admin:*")</code></td>
+</tr>
+<tr>
+<td><code>@SaCheckDisable</code></td>
+<td>检查封禁</td>
+<td><code>sagin.CheckDisable()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="shi-yong-shi-li">使用示例</h3>
+<pre v-pre data-lang="go"><code class="lang-go language-go has-numbering">import sagin &quot;github.com/click33/sa-token-go/integrations/gin&quot;
+
+func main() {
+    r := gin.Default()
+
+    // 公开访问 - 忽略认证
+    r.GET(&quot;/public&quot;, sagin.Ignore(), publicHandler)
+
+    // 需要登录
+    r.GET(&quot;/user/info&quot;, sagin.CheckLogin(), userInfoHandler)
+
+    // 需要管理员权限
+    r.GET(&quot;/admin&quot;, sagin.CheckPermission(&quot;admin:*&quot;), adminHandler)
+
+    // 需要多个权限之一（OR逻辑）
+    r.GET(&quot;/user-or-admin&quot;,
+        sagin.CheckPermission(&quot;user:read&quot;, &quot;admin:*&quot;),
+        userOrAdminHandler)
+
+    // 需要管理员角色
+    r.GET(&quot;/manager&quot;, sagin.CheckRole(&quot;admin&quot;), managerHandler)
+
+    // 检查账号是否被封禁
+    r.GET(&quot;/sensitive&quot;, sagin.CheckDisable(), sensitiveHandler)
+
+    r.Run(&quot;:8080&quot;)
+}</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li></ul></pre>
+<h2 id="kai-yuan-di-zhi">开源地址</h2>
+<p>感兴趣的同学可以来关注一波：</p>
+<p>https://github.com/click33/sa-token-go</p>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../special/tai-qiang-le-sa-token-de-rust-ban-ben.html">← 太强了！Sa-Token 的 rust 版本！</a>
+<a class="blog-post-nav-next" href="../special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html">太强了！Sa-Token 的 NodeJS 版本！ →</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#he-xin-te-xing">核心特性：</a></li>
+<li class="toc-h2"><a href="#token-feng-ge">🎨 Token 风格：</a></li>
+<li class="toc-h2"><a href="#an-quan-te-xing">🔒 安全特性</a></li>
+<li class="toc-h3"><a href="#nonce-fang-zhong-fang-gong-ji">Nonce 防重放攻击</a></li>
+<li class="toc-h3"><a href="#refresh-token-shua-xin-ji-zhi">Refresh Token 刷新机制</a></li>
+<li class="toc-h3"><a href="#oauth2-shou-quan-ma-mo-shi">OAuth2 授权码模式</a></li>
+<li class="toc-h2"><a href="#kuai-su-kai-shi">🚀 快速开始</a></li>
+<li class="toc-h3"><a href="#an-zhuang">安装</a></li>
+<li class="toc-h4"><a href="#fang-shi-yi-jian-hua-dao-ru-tui-jian">方式一：简化导入（推荐）✨</a></li>
+<li class="toc-h4"><a href="#fang-shi-er-fen-kai-dao-ru">方式二：分开导入</a></li>
+<li class="toc-h3"><a href="#chao-jian-jie-shi-yong-yi-xing-chu-shi-hua">超简洁使用（一行初始化）</a></li>
+<li class="toc-h3"><a href="#gin-dan-yi-dao-ru">Gin框架集成（单一导入）✨</a></li>
+<li class="toc-h2"><a href="#xiang-mu-jie-gou">📦 项目结构</a></li>
+<li class="toc-h2"><a href="#shi-jian-jian-ting">🎧 事件监听</a></li>
+<li class="toc-h2"><a href="#xiang-mu-jie-gou-2">📖 项目结构</a></li>
+<li class="toc-h2"><a href="#he-xin-api">🔧 核心API</a></li>
+<li class="toc-h3"><a href="#deng-lu-ren-zheng">登录认证</a></li>
+<li class="toc-h3"><a href="#jwt-token-zhi-chi">JWT Token 支持</a></li>
+<li class="toc-h3"><a href="#quan-xian-yan-zheng">权限验证</a></li>
+<li class="toc-h3"><a href="#jue-se-guan-li">角色管理</a></li>
+<li class="toc-h3"><a href="#zhang-hao-feng-jin">账号封禁</a></li>
+<li class="toc-h3"><a href="#session">Session管理</a></li>
+<li class="toc-h2"><a href="#zhu-jie-zhuang-shi-qi-gin">🎨 注解装饰器（Gin框架）</a></li>
+<li class="toc-h3"><a href="#zhi-chi-de-zhu-jie">支持的注解</a></li>
+<li class="toc-h3"><a href="#shi-yong-shi-li">使用示例</a></li>
+<li class="toc-h2"><a href="#kai-yuan-di-zhi">开源地址</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<title>Sa-Token 官方文档 - java 权限认证框架</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="description"
+			content="Sa-Token 是轻量级 Java 权限认证框架，开箱即用。覆盖登录、权限、SSO、OAuth2.0 与微服务网关鉴权，支持 Spring Boot / WebFlux。">
+		<meta name="keywords" content="Sa-Token,Java权限认证,登录认证,权限认证,SSO,单点登录,OAuth2,微服务鉴权,Spring Boot权限框架">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="canonical" href="https://sa-token.com/">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="Sa-Token 官方文档 - java 权限认证框架">
+		<meta property="og:description" content="Sa-Token 是轻量级 Java 权限认证框架，开箱即用。覆盖登录、权限、SSO、OAuth2.0 与微服务网关鉴权，支持 Spring Boot / WebFlux。">
+		<meta property="og:url" content="https://sa-token.com/">
+		<meta property="og:image" content="https://sa-token.com/logo.png">
+		<meta property="og:site_name" content="Sa-Token">
+		<meta property="og:locale" content="zh_CN">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="Sa-Token 官方文档 - java 权限认证框架">
+		<meta name="twitter:description" content="Sa-Token 是轻量级 Java 权限认证框架，开箱即用。覆盖登录、权限、SSO、OAuth2.0 与微服务网关鉴权，支持 Spring Boot / WebFlux。">
+		<meta name="twitter:image" content="https://sa-token.com/logo.png">
+		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+		<link rel="stylesheet" href="static/index.css">
+		<link rel="stylesheet" href="static/swiper/swiper-bundle.min.css">
+		<link rel="stylesheet" href="static/swiper/index-swiper.css">
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Organization",
+					"name": "Sa-Token",
+					"url": "https://sa-token.com/",
+					"logo": "https://sa-token.com/logo.png"
+				},
+				{
+					"@type": "SoftwareApplication",
+					"name": "Sa-Token",
+					"applicationCategory": "DeveloperApplication",
+					"operatingSystem": "Java",
+					"url": "https://sa-token.com/",
+					"image": "https://sa-token.com/logo.png",
+					"description": "轻量级 Java 权限认证框架，支持登录认证、权限认证、SSO 单点登录、OAuth2.0、微服务网关鉴权等。",
+					"offers": {
+						"@type": "Offer",
+						"price": "0",
+						"priceCurrency": "CNY"
+					},
+					"keywords": "Sa-Token,Java权限认证,登录认证,权限认证,SSO,OAuth2,微服务鉴权"
+				}
+			]
+		}
+		</script>
+	</head>
+	<body>
+		<!-- 总盒子 -->
+		<div class="z-div" style="">
+
+			<!-- ------------ 头部 ------------- -->
+			<header class="doc-header">
+				<div class="nav-left">
+					<a href="./">
+						<div class="logo-box">
+							<img src="./logo.png" title="logo" alt="Sa-Token" />
+							<span class="logo-text">Sa-Token</span>
+							<!-- <h1 class="logo-text">Sa-Token</h1> -->
+							<!-- <sub>vx.x.x</sub> -->
+						</div>
+					</a>
+					<!-- 语言切换：translate.js 会往这个容器里生成 select -->
+					<span id="translate" class="select-language-box ignore nav-t2"></span>
+				</div>
+				<nav class="nav-right">
+					<!-- <div class="zk-box p-none">
+						<a class="wzi" href="javascript:;">
+							<img class="theme-btn" src="static/icon/theme.svg">
+						</a>
+						<div class="zk-context theme-box">
+							<div>
+								<div style="height: 5px;"></div>
+								<span style="background-color: #FFFFFF;"></span>
+								<span style="background-color: #f5f5f5;"></span>
+								<span style="background-color: #F1FAFA;"></span>
+								<span style="background-color: #f5f5d5;"></span>
+								<span style="background-color: #d5f5f5;"></span>
+
+								<span style="background-color: #f5e5f5;"></span>
+								<span style="background-color: #E8E8FF;"></span>
+								<span style="background-color: #f0f9eb;"></span>
+								<span style="background-color: #ebe5dd;"></span>
+								<span style="background-color: #e8f4ff;"></span>
+
+							</div>
+						</div>
+					</div> -->
+					<a class="wzi" href="index.html">首页</a>
+					<a class="wzi" href="/readme.html">文档</a>
+					<a class="wzi" href="/blog/index.html">博客</a>
+					<div class="zk-box nav-t3">
+						<a class="wzi" href="javascript:;">
+							<span>视频 </span>
+							<span class="zk-icon"></span>
+						</a>
+						<div class="zk-context">
+							<div>
+								<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+								<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+								<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+								<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+								<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+								<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+								<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+								<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+								<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+								<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+								<div class="zk-fengexian"></div>
+								<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+								<!-- <a href="javascript: layer.alert('如您有 Sa-Token 相关课程录制，请联系官网文档右侧 < sa-token 小助手 > 进行提交');">
+									[ + 课程提交 ]
+								</a> -->
+							</div>
+						</div>
+					</div>
+					<div class="zk-box nav-t3">
+						<a class="wzi" href="javascript:;">
+							<span>案例 </span>
+							<span class="zk-icon"></span>
+						</a>
+						<div class="zk-context">
+							<div>
+								<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+								<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+								<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+							</div>
+						</div>
+					</div>
+					<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+					<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+					<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+					<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_index_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+					<div class="zk-box nav-t3">
+						<a class="wzi" href="javascript:;">
+							<span>安全推荐 </span>
+							<span class="zk-icon"></span>
+						</a>
+						<div class="zk-context">
+							<div>
+								<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+								<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+								<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+								<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+								<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+								<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+							</div>
+						</div>
+					</div>
+					<div class="zk-box nav-t2">
+						<a class="wzi" href="javascript:;">
+							<span>相关资源 </span>
+							<span class="zk-icon"></span>
+						</a>
+						<div class="zk-context">
+							<div>
+								<!-- <a href="#/more/sa-token-donate">❤️ &nbsp;赞助2</a> -->
+								<a href="/more/update-log.html">更新日志</a>
+								<a href="/more/common-questions.html">常见报错</a>
+								<a href="/more/tj-gzh.html">推荐公众号</a>
+								<div class="zk-fengexian"></div>
+								<!-- <a href="http://sa-app.dev33.cn/wall.html?name=sa-token" target="_blank">需求墙</a> -->
+								<a href="/fun/sa-token-test.html">在线考试</a>
+								<a href="/fun/issue-template.html">在线提问</a>
+								<!-- <a href="https://wj.qq.com/s2/10852322/0d8b/" target="_blank">需求提交</a> -->
+								<a href="/more/wenjuan.html">问卷调查</a>
+							</div>
+						</div>
+					</div>
+					<!-- github小章鱼图标 -->
+					<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner"
+						aria-label="View source on Github" style="position: fixed; top: 0; right: -16px; padding-left: 0px;">
+						<svg viewBox="0 0 250 250" aria-hidden="true">
+							<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+							<path
+								d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+								fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+							<path
+								d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+								fill="currentColor" class="octo-body"></path>
+						</svg>
+					</a>
+				</nav>
+			</header>
+
+			<!-- ------------ 海报部分 ------------- -->
+			<div class="main-box">
+				<div class="content-box">
+					<!-- <div class="fenge"></div> -->
+					<h1>Sa-Token<small>v1.46.0</small></h1>
+					<div class="sub-title">
+						<span class="sub-title-nr">开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！</span>
+						<div class="gb-cursor">&nbsp;</div>
+					</div>
+					<div class="btn-box">
+						<!-- <a class="abtn" href="https://gitee.com/dromara/sa-token" target="_blank">Gitee</a>
+						<a class="abtn" href="https://github.com/dromara/sa-token" target="_blank">GitHub</a> -->
+						<a class="abtn" href="/more/demand-commit.html" target="_self">需求提交</a>
+						<a class="abtn" href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">优秀案例</a>
+						<a class="abtn" href="/more/join-group.html" target="_self">加入讨论群</a>
+						<a class="abtn doc-btn" href="/readme.html" target="_self">在线文档 →</a>
+						<!-- <a href="https://gitee.com/dromara/sa-token" target="_blank">集成案例</a> -->
+					</div>
+					<h4 align="center" class="badge-box">
+						<a href="https://gitee.com/dromara/sa-token/stargazers"><img class="lazy"
+								data-original="https://gitee.com/dromara/sa-token/badge/star.svg?theme=gvp"></a>
+						<a href="https://gitee.com/dromara/sa-token/members"><img class="lazy"
+								data-original="https://gitee.com/dromara/sa-token/badge/fork.svg?theme=gvp"></a>
+						<a href="https://atomgit.com/dromara/sa-token/stargazers"><img class="lazy"
+								data-original="https://atomgit.com/dromara/Sa-Token/star/badge.svg"></a>
+						<a href="https://github.com/dromara/sa-token/stargazers"><img class="lazy"
+								data-original="https://img.shields.io/github/stars/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/network/members"><img class="lazy"
+								data-original="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<a href="https://github.com/dromara/sa-token/watchers"><img class="lazy"
+								data-original="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a>
+						<!-- <a href="https://github.com/dromara/sa-token/issues"><img class="lazy"
+								data-original="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
+						<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img class="lazy"
+								data-original="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
+					</h4>
+					<div class="qt-pt-box">
+						<a href="https://gitee.com/dromara/sa-token" target="_blank">
+							<img src="/big-file/index/platform/gitee.png" alt="">
+						</a>
+						<a href="https://atomgit.com/dromara/sa-token" target="_blank">
+							<img src="/big-file/index/platform/atomgit.svg" alt="">
+						</a>
+						<a href="https://github.com/dromara/sa-token" target="_blank">
+							<img src="/big-file/index/platform/github.png" alt="">
+						</a>
+						<span class="dmt-link">
+							<img class="dmt-img" src="/big-file/index/platform/zong-4.png" alt="">
+							<span class="dmt-tips">公众号、B站、抖音、视频号 ...</span>
+							<div class="dmt-detail">
+								<h4>关注我们 → 分享“权限认证架构设计”干货视频</h4>
+								<div class="dmt-item-box">
+									<div class="dmt-item dmt-item-gzh">
+										<a href="javascript: layer.msg('请使用微信扫码关注公众号');">
+											<img class="dmt-qr-img" src="/big-file/contact/lykj-gzh.jpg" alt="">
+											<span class="dmt-logo-gzh">
+												<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#07C160" d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>
+												<span>微信公众号</span>
+											</span>
+										</a>
+									</div>
+									<div class="dmt-item dmt-item-bilibili">
+										<a href="https://space.bilibili.com/3546758575557094" target="_blank">
+											<img class="dmt-qr-img" src="/big-file/index/platform/bilibili-qr-fang.png" alt="">
+											<img class="dmt-logo-img" src="/big-file/index/platform/bilibili-light.png" alt="">
+										</a>
+									</div>
+									<div class="dmt-item dmt-item-douyin">
+										<a href="https://www.douyin.com/user/MS4wLjABAAAArVqj2lGRurfj-9eO0T12q6_vrbIK-Om9bi3eo4OwB2g" target="_blank">
+											<img class="dmt-qr-img" src="/big-file/index/platform/douyin-qr-fang.png" alt="">
+											<img class="dmt-logo-img" src="/big-file/index/platform/douyin-light.png" alt="">
+										</a>
+									</div>
+									<div class="dmt-item dmt-item-wxsph">
+										<a href="javascript: layer.msg('微信视频号暂未提供PC网站，请在手机微信扫码订阅');">
+											<img class="dmt-qr-img" src="/big-file/index/platform/wxsph-qr-fang.png" alt="">
+											<img class="dmt-logo-img" src="/big-file/index/platform/wxsph-light.png" alt="">
+										</a>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+
+			<!-- ------------ 支持特性 ------------- -->
+			<div>
+				<div class="feature-z s-width">
+					<h2 class="s-title s-title-tx">Sa-Token 支持特性</h2>
+					<div class="feature-box">
+						<div class="feature">
+							<h2>⚡️ 登录认证</h2>
+							<p>多端登录、单端登录、同端互斥登录、七天免登录…… 多种登录策略只需改个配置即可完成</p>
+						</div>
+						<div class="feature">
+							<h2>🔑️️ 权限认证</h2>
+							<p>权限认证、角色认证、会话二级认证、注解鉴权、路由鉴权……多种姿势灵活鉴权</p>
+						</div>
+						<div class="feature">
+							<h2>⛏️ 踢人下线</h2>
+							<p>强制注销、踢人下线、账号封禁、身份切换、自动续签 …… 提供完善的会话管理方案</p>
+						</div>
+						<div class="feature">
+							<h2>🔎 Redis集成</h2>
+							<p>提供 Redis 集成方案、项目重启数据不丢失、多系统数据互通，可自定义数据持久化策略</p>
+						</div>
+						<div class="feature">
+							<h2>🚀️️ 前后端分离</h2>
+							<p>内置多种 Token 读取策略，适配APP、小程序、SPA单页应用等前后端分离场景</p>
+						</div>
+						<div class="feature">
+							<h2>️🍃 单点登录</h2>
+							<p>同域、跨域、共享Redis、跨Redis、前后端一体、前后端分离……提供各种架构下的SSO接入方案</p>
+						</div>
+						<div class="feature">
+							<h2>🍂 OAuth2.0</h2>
+							<p>轻松搭建 OAuth2.0 认证中心，支持四种授权模式，支持 openid 授权机制，支持二次扩展开发</p>
+						</div>
+						<div class="feature">
+							<h2>💦️ 微服务支持</h2>
+							<p>分布式 Session 会话、网关统一鉴权、RPC调用鉴权……提供开箱即用的微服务认证方案</p>
+						</div>
+						<div class="feature">
+							<h2>🗳️ 开箱即用</h2>
+							<p>提供SpringMVC、WebFlux、Solon、jwt 等常见框架集成包，真正的开箱即用……</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- ------------ 支持特性 ------------- -->
+			<div>
+				<div class="feature-z s-width">
+					<div style="margin-top: -60px;"></div>
+					<div class="s-fenge"></div>
+					<div style="height: 20px;"></div>
+					<h2 class="s-title s-title-tx">
+						七年磨一剑 🗡️ 
+						<span class="s-gradient-text"> 一站式解决方案</span>
+					</h2>
+					<div style="margin-top: -20px; margin-bottom: 40px;">
+						<!-- <img class="sa-token-jss-img" src="/big-file/index/intro/sa-token-jss--tran.png"> -->
+						<!-- 使用 object 引入跨域 svg 图片时，图片初始会非常小，鼠标移上去一下才会恢复正常，未找到解决方案 -->
+						<object class="sa-token-jss-img" data="/big-file/index/intro/sa-token-jss--tran--onclick.svg"></object>
+					</div>
+					<div class="re-text">
+						<!-- <span>有了Sa-Token，你所有的权限认证问题，都不再是问题！</span> -->
+						<span>Sa-Token 可以帮你轻松解决大多数权限认证问题！</span>
+						<a href="/big-file/index/intro/sa-token-js4.png" target="_blank">点击查看功能结构图</a>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- ------------ 曾获荣誉 ------------- -->
+			<div>
+				<div class="feature-z ry-kuai">
+					<div class="s-fenge"></div>
+					<h2 class="s-title">曾获荣誉</h2>
+					<div class="ry-box">
+						<div class="swiper mySwiper">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/gvp.jpg" /> <br>
+									<p>GVP - Gitee 最有价值开源项目</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/g-star.jpg" /> <br>
+									<p>GitCode G-Star 优质开源项目</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/osc-2021.jpg"/> <br>
+									<p>OSCHINA 2021 人气指数 TOP 30 开源项目</p>
+								</div>
+								<div class="swiper-slide swiper-slide-tx1">
+									<img src="/big-file/index/awards-zip/osc-2022.jpg" /> <br>
+									<p>OSCHINA 2022 年度最火热中国开源项目社区</p>
+								</div>
+								<div class="swiper-slide swiper-slide-tx1">
+									<img src="/big-file/index/awards-zip/kaifangyuanzi2.jpg" /> <br>
+									<p>开放原子基金会2023快速成长开源项目</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/gitee-star-5000.jpg" /> <br>
+									<p>Gitee 5000 star 专属奖杯</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/gitee-2025.jpg" /> <br>
+									<p>Gitee 2025年度开源项目 Web应用开发 Top 2</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/dromara.jpg" /> <br>
+									<p>Dromara 组织顶尖项目（之一）</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/kexin.jpg" /> <br>
+									<p>可信开源社区共同体预备成员</p>
+								</div>
+								<div class="swiper-slide">
+									<img src="/big-file/index/awards-zip/dromara-2024-tzds.jpg" /> <br>
+									<p>所在开源社区 “Dromara” 荣获《2024中国互联网发展创新与投资大赛（开源）》二等奖</p>
+								</div>
+								<div class="swiper-slide" style="width: 750px;">
+									<img src="/big-file/index/awards-zip/gitee-top-1.png" /> <br>
+									<p>Gitee 项目推荐榜 top 1</p>
+								</div>
+								<div class="swiper-slide" style="width: 750px;">
+									<img src="/big-file/index/awards-zip/github-star-18k.png" /> <br>
+									<p>GitHub stars 超 18k+</p>
+								</div>
+							</div>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
+							<div class="swiper-pagination"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- ------------ GitHub Stars 对比 ------------- -->
+			<div style="margin-top: -50px;">
+				<div class="feature-z">
+					<h2 class="s-title">Java 鉴权框架 Stars 对比</h2>
+					<div style="border: 0px #000 solid;">
+						<iframe 
+						  src="./a/github-stars-vs/index.html" 
+						  width="1000" 
+						  height="700" 
+						  frameborder="0"
+						  scrolling="no"
+						  style="border: none;"
+						></iframe>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- ------------ 赞助者名单 ------------- -->
+			<div style="margin-top: -50px;">
+				<div class="feature-z">
+					<h2 class="s-title">赞助者名单（感谢！感谢！感谢！）</h2>
+					<div class="">
+						<div class="zanzhu-box s-width">
+							<div class="zanzhu-sort-box">
+								<span class="zanzhu-sort-btn zz-sort-native" sort-value="1">日期排序</span>
+								<span> | </span>
+								<span class="zanzhu-sort-btn" sort-value="2">赞助额排序</span>
+							</div>
+							<table class="zanzhu-table" cellspacing="0" border="1" bordercolor="e9e9e9">
+								<thead>
+									<tr>
+										<th>赞助人</th>
+										<th>赞助金额</th>
+										<th>留言</th>
+										<th style="width: 100px;">时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- <tr>
+										<td>时间很快</td>
+										<td>赞助金额</td>
+										<td>感谢您的开源项目！</td>
+										<td>2023-10-27</td>
+									</tr> -->
+								</tbody>
+							</table>
+							<!-- 一些按钮 -->
+							<div class="zz-btn-box">
+								<button onclick="prevPageRDT()"> < </button>
+								<span class="zz-pageInfo">第 1/1 页</span>
+								<button onclick="nextPageRDT()"> > </button>
+							</div>
+							<div style="height: 30px;"></div>
+							<p>
+								（如果您也有赞助 Sa-Token 的想法，可以参考：
+								<a href="/more/sa-token-donate.html" style="color: #999;">赞助名单</a>
+								）
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- ------------ 开源案例 ------------- -->
+			<div>
+				<div class="feature-z s-width">
+					<div class="s-fenge"></div>
+					<h2 class="s-title" style="margin-top: 80px;">优秀开源集成案例</h2>
+					<div class="feature-box s-case-box">
+						<!-- Snowy  33.1K -->
+						<div class="s-case">
+							<a href="https://gitee.com/xiaonuobase/snowy" target="_blank" class="s-case-link">
+								<img class="lazy" data-original="/big-file/index/case/case--snowy.jpg">
+							</a>
+							<h3 class="s-case-title">Snowy</h3>
+							<span class="s-author"> 小诺开源技术 </span>
+							<p class="s-case-intro">国内首个国密前后分离快速开发平台，基于Vue3、Antdv、SaToken</p>
+						</div>
+						<!-- mall4j  17k -->
+						<div class="s-case">
+							<a href="https://gitee.com/gz-yami/mall4j" target="_blank" class="s-case-link">
+								<img class="lazy"
+									data-original="/big-file/index/case/case--mall4j.png">
+							</a>
+							<h3 class="s-case-title">mall4j</h3>
+							<span class="s-author"> Mall4j商城系统 </span>
+							<p class="s-case-intro">基于Spring Boot 3 JDK17的一个商城手脚架。</p>
+						</div>
+						<!-- RuoYi-Vue-Plus  15.6k -->
+						<div class="s-case">
+							<a href="https://gitee.com/dromara/RuoYi-Vue-Plus" target="_blank" class="s-case-link">
+								<img class="lazy"
+									data-original="/big-file/index/case/case--ruoyi-vue-plus.png">
+							</a>
+							<h3 class="s-case-title">RuoYi-Vue-Plus</h3>
+							<span class="s-author"> 疯狂的狮子Li </span>
+							<p class="s-case-intro">重写 RuoYi-Vue 所有功能，集成 Sa-Token、Mybatis-Plus、Hutool 定期同步</p>
+						</div>
+						<!-- Smart-Admin 10.3K -->
+						<div class="s-case">
+							<a href="https://gitee.com/lab1024/smart-admin" target="_blank" class="s-case-link">
+								<img class="lazy" data-original="/big-file/index/case/case--smart-admin.png">
+							</a>
+							<h3 class="s-case-title">Smart-Admin</h3>
+							<span class="s-author"> 1024创新实验室 </span>
+							<p class="s-case-intro">坚持以「高质量代码」为核心，「简洁、高效、安全」的中后台解决方案！</p>
+						</div>
+						<!-- SpringBoot_v2  6.1k -->
+						<div class="s-case">
+							<a href="https://gitee.com/bdj/SpringBoot_v2" target="_blank" class="s-case-link">
+								<img class="lazy"
+									data-original="/big-file/index/case/case--springboot_v2.png">
+							</a>
+							<h3 class="s-case-title">SpringBoot_v2</h3>
+							<span class="s-author">开源oschina</span>
+							<p class="s-case-intro">努力打造 springboot 框架的极致细腻的脚手架，原生纯净。</p>
+						</div>
+						<!-- Lamp-Cloud 5.7K -->
+						<div class="s-case">
+							<a href="https://gitee.com/dromara/lamp-cloud" target="_blank" class="s-case-link">
+								<img class="lazy" data-original="/big-file/index/case/case--lamp-cloud.png">
+							</a>
+							<h3 class="s-case-title">灯灯</h3>
+							<span class="s-author"> 最后 </span>
+							<p class="s-case-intro">专注于多租户解决方案的微服务中后台快速开发平台。</p>
+						</div>
+						<!-- RuoYi-Cloud-Plus  6.8K -->
+						<div class="s-case">
+							<a href="https://gitee.com/dromara/RuoYi-Cloud-Plus" target="_blank" class="s-case-link">
+								<img class="lazy"
+									data-original="/big-file/index/case/case--ruoyi-cloud-plus.png">
+							</a>
+							<h3 class="s-case-title">RuoYi-Cloud-Plus</h3>
+							<span class="s-author"> 疯狂的狮子Li </span>
+							<p class="s-case-intro">重写 RuoYi-Cloud 所有功能 整合 SpringCloudAlibaba、Dubbo3.0、Sa-Token</p>
+						</div>
+						<!-- Orange-Admin 4.6K -->
+						<div class="s-case">
+							<a href="https://gitee.com/orangeform/orange-admin" target="_blank" class="s-case-link">
+								<img class="lazy" data-original="/big-file/index/case/case--orange-admin.png">
+							</a>
+							<h3 class="s-case-title">橙单</h3>
+							<span class="s-author"> orange-form </span>
+							<p class="s-case-intro">橙单中台化低代码生成器。多应用、多租户、多渠道、工作流、在线表单等。</p>
+						</div>
+						<!-- 拾壹博客  2.9K -->
+						<div class="s-case">
+							<a href="https://gitee.com/quequnlong/shiyi-blog" target="_blank" class="s-case-link">
+								<img class="lazy" data-original="/big-file/index/case/case--shiyi-blog.png">
+							</a>
+							<h3 class="s-case-title">拾壹博客</h3>
+							<span class="s-author"> bule </span>
+							<p class="s-case-intro">一款 Vue + SpringBoot 前后端分离的博客系统</p>
+						</div>
+						
+						<!-- https://github.com/DataLinkDC/dinky 3.7k -->
+						<!-- https://gitee.com/mldong/mldong  10k -->
+						<!-- https://gitee.com/junyue/flyflow 6.4k -->
+						
+						
+					</div>
+					<div class="re-text">
+						<span>
+							如果您的开源项目也使用了 Sa-Token，您可以
+							<a href="https://gitee.com/sa-token/awesome-sa-token" target="_blank"
+								style="text-decoration: none;">在此</a>
+							提交
+						</span>
+					</div>
+					
+					<div style=" margin: 40px 14px 0; padding: 20px 0 10px; background-color: #f4f5f7;">
+						<h3 style="padding: 5px 0 20px; color: #333;">Sa-Token 官方公众号，及时接收框架更新通知、技术文章</h3>
+						<img class="lazy gzh-qr" data-original="/big-file/contact/lykj-gzh.jpg" style="width: 150px; cursor: pointer;">
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- ------------ 使用公司 ------------- -->
+			<div>
+				<div class="com-box-f s-width">
+					<div class="s-fenge"></div>
+					<br>
+					<h2 class="s-title">正在使用 Sa-Token 的企业 / 机构</h2>
+					<div class="com-box">
+						<a href="http://yun94.cn/" target="_blank" title="济南凉云网络科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/liangyunwangluo.png">
+						</a>
+						<a href="https://budwk.com/" target="_blank" title="BudWk 开发框架 V7.x">
+							<img class="lazy" data-original="/big-file/index/com/budwk.png">
+						</a>
+						<a href="https://www.quandashi.com/" target="_blank" title="北京梦知网科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/quandashi.png">
+						</a>
+						<a href="http://www.gree.com.cn/" target="_blank" title="珠海格力电器股份有限公司">
+							<img class="lazy" data-original="/big-file/index/com/geli.jpg">
+						</a>
+						<a href="###" title="货好多科技">
+							<img class="lazy" data-original="/big-file/index/com/huohaoduo.png">
+						</a>
+						<a href="http://www.tuodan.tech/" target="_blank" title="深圳加速脱单科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/tuodan.jpg">
+						</a>
+						<a href="https://uniadmin.jiangruyi.com/" target="_blank" title="南京星意信息科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/uniadmin.png">
+						</a>
+						<a href="https://www.dhctech.com/" target="_blank" title="神州医疗">
+							<img class="lazy" data-original="/big-file/index/com/shenzhouyiliao.png">
+						</a>
+						<a href="javascript:;" title="暖通管家">
+							<img class="lazy" data-original="/big-file/index/com/nuantong.png">
+						</a>
+						<a href="http://www.turingoal.com" target="_blank" title="图灵谷（北京）科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/tulinggu.png">
+						</a>
+						<a href="javascript:;" title="辽宁薪达网络科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/taipingyangcanyin.png">
+						</a>
+						<a href="https://www.pactera.com/?renqun_youhua=2483561&bd_vid=9062916023494825120"
+							target="_blank" title="中电文思海辉">
+							<img class="lazy" data-original="/big-file/index/com/zhongdianwensi-logo.png">
+						</a>
+						<a href="https://www.shylsoft.com/" target="_blank" title="上海营联信息技术有限公司">
+							<img class="lazy" data-original="/big-file/index/com/yinglian.png">
+						</a>
+						<a href="http://www.sxpartner.com/" target="_blank" title="陕西小伙伴网络科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/cptc.png">
+						</a>
+						<a href="https://www.hmnst.com/" target="_blank" title="微纳感知（合肥）技术有限公司">
+							<img class="lazy" data-original="/big-file/index/com/weinaganzhi.png">
+						</a>
+						<a href="https://mimirii.com/" target="_blank" title="西安米默网络科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/mimokeji.png">
+						</a>
+						<a href="https://www.geostar.com.cn/" target="_blank" title="吉奥时空">
+							<img class="lazy" data-original="/big-file/index/com/jieaoshikong.png">
+						</a>
+						<a href="http://www.stbella.cn/" target="_blank" title="贝康国际">
+							<img class="lazy" data-original="/big-file/index/com/beikangguoji.png">
+						</a>
+						<a href="http://www.chually.cn/" target="_blank" title="湖北楚商联盟金融信息服务有限公司">
+							<img class="lazy" data-original="/big-file/index/com/chushangjinfu.png">
+						</a>
+						<a href="https://www.zhongyuankeji.cn/" target="_blank" title="山东众远信息科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/zhongyuankeji.png">
+						</a>
+						<a href="https://xmnk.cn/" target="_blank" title="希梦耐康网络科技">
+							<img class="lazy" data-original="/big-file/index/com/ximengnaikang.png">
+						</a>
+						<a href="https://hxp.liuxin.online/" target="_blank" title="沪小漂">
+							<img class="lazy" data-original="/big-file/index/com/hero.png">
+						</a>
+						<a href="https://www.brath.cn" target="_blank" title="荔知AI助手">
+							<img class="lazy" data-original="/big-file/index/com/lizhi-ai.png">
+						</a>
+						<a href="https://www.ninthpalace.com/" target="_blank" title="苏州九宫数字科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/jiugongshuzi.png">
+						</a>
+						<a href="https://www.mall4j.com/" target="_blank" title="广州市蓝海创新科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/guangzhoulanhai.png">
+						</a>
+						<a href="https://yimei.liuxin.online/" target="_blank" title="逸玫工作室">
+							<img class="lazy" data-original="/big-file/index/com/yimei-black.png">
+						</a>
+						<!-- <a href="http://www.njhrchina.top/" target="_blank" title="南京桓瑞软件科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/nanjing-hengrui.png">
+						</a> -->
+						<a href="https://sohelp.net/" target="_blank" title="宁波互邦软件有限公司">
+							<img class="lazy" data-original="/big-file/index/com/ningbohubang.png">
+						</a>
+						<a href="https://www.fakamiao.com/" target="_blank" title="秦皇岛桃猫信息科技有限责任公司">
+							<img class="lazy" data-original="/big-file/index/com/taomaoxinxi.png" style="max-height: 80px;">
+						</a>
+						<a href="https://jiagouyizhan.com/" target="_blank" title="可持续架构（菏泽）信息科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/jiagouyizhan.png">
+						</a>
+						<a href="https://www.symtc.com/" target="_blank" title="沈阳地铁">
+							<img class="lazy" data-original="/big-file/index/com/shenyangditie.png">
+						</a>
+						<a href="https://www.meixxx.com/" target="_blank" title="美象信息">
+							<img class="lazy" data-original="/big-file/index/com/meixiangxinxi.png">
+						</a>
+						<a href="https://www.3into1.cn/" target="_blank" title="杭州三之一智联科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/3into1.png">
+						</a>
+						<a href="http://www.kingchuangcloud.com/" target="_blank" title="北京金创云医疗健康科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/jinchuangzhongcheng.png">
+						</a>
+						<a href="https://www.guihaisoft.cn" target="_blank" title="泰州归海软件有限公司">
+							<img class="lazy" data-original="/big-file/index/com/guihairuanjian.png">
+						</a>
+						<a href="https://www.dargin.com.cn/" target="_blank" title="北京达净科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/dajingkeji.png">
+						</a>
+						<a href="https://www.sitime.vip/" target="_blank" title="思年华信息科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/sinianhuakeji.png">
+						</a>
+						<a href="https://www.tiyuanai.cn" target="_blank" title="广州市题渊网络科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/tiyuanwangluo.png">
+						</a>
+						<a href="https://www.tutuzu.cn" target="_blank" title="宁波埃图电子商务有限公司">
+							<img class="lazy" data-original="/big-file/index/com/aitukeji.png">
+						</a>
+						<a href="https://www.xunmengvip.com" target="_blank" title="安徽梦馨信息技术有限公司">
+							<img class="lazy" data-original="/big-file/index/com/xunmenghehuoren.png">
+						</a>
+						<a href="https://ruoyi.plus/" target="_blank" title="湛江市麻章区湖光镇若依科技工作室">
+							<img class="lazy" data-original="/big-file/index/com/ruoyi-gongzuoshi.png">
+						</a>
+						<a href="https://aiflowy.tech" target="_blank" title="AIFlowy - 开源的 AI 智能体开发平台">
+							<img class="lazy" data-original="/big-file/index/com/aiflowy.png">
+						</a>
+						<a href="https://www.klszkj.com" target="_blank" title="昆仑数智科技有限责任公司">
+							<img class="lazy" data-original="/big-file/index/com/kunlunshuzhi.png">
+						</a>
+						<a href="https://www.haozpay.com/" target="_blank" title="皓臻云（重庆）科技有限责任公司">
+							<img class="lazy" data-original="/big-file/index/com/haozpay.png">
+						</a>
+						<a href="https://www.wxmx.com.cn/" target="_blank" title="无锡梦雪网络科技有限公司">
+							<img class="lazy" data-original="/big-file/index/com/mengxue.png">
+						</a>
+						<a href="http://www.yungnet.cn/" target="_blank" title="辽宁天云港云计算有限责任公司">
+							<img class="lazy" data-original="/big-file/index/com/tianyungang.png">
+						</a>
+						<a href="https://xgk.gkzycc.cn/" target="_blank" title="内蒙古志愿查查咨询服务有限公司">
+							<img class="lazy" data-original="/big-file/index/com/zhiyuanzhachazixun.png">
+						</a>
+						<a href="https://www.gsk-china.com/" target="_blank" title="葛兰素史克（中国）投资有限公司">
+							<img class="lazy" data-original="/big-file/index/com/gelansushike.png">
+						</a>
+						<a href="https://www.ixiayi.net/" target="_blank" title="北京侠医软件技术有限公司">
+							<img class="lazy" data-original="/big-file/index/com/beijingxiayiruanjian.png">
+						</a>
+						
+					</div>
+					<div style="height: 10px; clear: both;"></div>
+					<p>
+						（如果您的企业也使用了 Sa-Token，您可以
+						<a href="https://gitee.com/dromara/sa-token/issues/I3EV1M" target="_blank"
+							style="text-decoration: none;">在此</a>
+						提交）
+					</p>
+				</div>
+				<div style="height: 60px;"></div>
+			</div>
+
+
+			<!-- ------------ Dromara 成员项目 ------------- -->
+			<div>
+				<div class="com-box-f s-width">
+					<div class="s-fenge"></div>
+					<br>
+					<h2 class="s-title">
+						Dromara 成员项目
+					</h2>
+					<div class="com-box com-box-you table-show-pj">
+						<a href="https://gitee.com/dromara/TLog" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/tlog.png"
+								msg="一个轻量级的分布式日志标记追踪神器，10分钟即可接入，自动对日志打标签完成微服务的链路追踪">
+						</a>
+						<a href="https://gitee.com/dromara/liteFlow" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/liteflow.png"
+								msg="轻量，快速，稳定，可编排的组件式流程引擎">
+						</a>
+						<a href="https://hutool.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/hutool.jpg"
+								msg="小而全的Java工具类库，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。">
+						</a>
+						<a href="https://sa-token.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/sa-token.png"
+								msg="一个轻量级 java 权限认证框架，让你的鉴权变得简单、优雅！">
+						</a>
+						<a href="https://gitee.com/dromara/hmily" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/hmily.png"
+								msg="高性能一站式分布式事务解决方案。">
+						</a>
+						<a href="https://gitee.com/dromara/Raincat" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/raincat.png"
+								msg="强一致性分布式事务解决方案。">
+						</a>
+						<a href="https://gitee.com/dromara/myth" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/myth.png"
+								msg="可靠消息分布式事务解决方案。">
+						</a>
+						<a href="https://gitee.com/dromara/cubic" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/cubic.png"
+								msg="一站式问题定位平台，以agent的方式无侵入接入应用，完整集成arthas功能模块，致力于应用级监控，帮助开发人员快速定位问题">
+						</a>
+						<a href="https://maxkey.top/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/maxkey.png"
+								msg="业界领先的身份管理和认证产品">
+						</a>
+						<a href="https://forest.kim/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/forest-logo.png"
+								msg="Forest能够帮助您使用更简单的方式编写Java的HTTP客户端" nf>
+						</a>
+						<a href="https://jpom.top/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/jpom.png"
+								msg="一款简而轻的低侵入式在线构建、自动部署、日常运维、项目监控软件">
+						</a>
+						<a href="https://gitee.com/dromara/sureness" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/sureness.png"
+								msg="面向 REST API 的高性能认证鉴权框架">
+						</a>
+						<a href="https://easy-es.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/easy-es2.png"
+								msg="傻瓜级ElasticSearch搜索引擎ORM框架">
+						</a>
+						<a href="https://gitee.com/dromara/northstar" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/northstar_logo.png"
+								msg="Northstar盈富量化交易平台">
+						</a>
+						<a href="https://gitee.com/dromara/fast-request" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/fast-request.gif"
+								msg="Idea 版 Postman，为简化调试API而生">
+						</a>
+						<a href="https://gitee.com/dromara/mendmix-cloud" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/mendmix.png"
+								msg="开源分布式云原生架构一站式解决方案">
+						</a>
+						<a href="https://gitee.com/dromara/koalas-rpc" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/koalas-rpc2.png"
+								msg="企业生产级百亿日PV高可用可拓展的RPC框架。">
+						</a>
+						<a href="https://async.sizegang.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/gobrs-async.png"
+								msg="配置极简功能强大的异步任务动态编排框架">
+						</a>
+						<a href="https://dynamictp.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dynamic-tp.png"
+								msg="基于配置中心的轻量级动态可监控线程池">
+						</a>
+						<a href="https://gitee.com/dromara/x-easypdf" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/x-easypdf.png"
+								msg="一个用搭积木的方式构建pdf的框架（基于pdfbox）">
+						</a>
+						<a href="https://gitee.com/dromara/image-combiner" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/image-combiner.png"
+								msg="一个专门用于图片合成的工具，没有很复杂的功能，简单实用，却不失强大">
+						</a>
+						<a href="https://www.herodotus.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dante-cloud2.png"
+								msg="Dante-Cloud 是一款企业级微服务架构和服务能力开发平台。">
+						</a>
+						<a href="http://www.mtruning.club" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/go-view.png"
+								msg="低代码数据可视化开发平台">
+						</a>
+						<a href="https://tangyh.top/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/lamp-cloud.png"
+								msg="微服务中后台快速开发平台，支持租户(SaaS)模式、非租户模式">
+						</a>
+						<a href="https://gitee.com/dromara/RedisFront" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/redis-front.png"
+								msg="RedisFront 是一款开源免费的跨平台 Redis 桌面客户端工具, 支持单机模式, 集群模式, 哨兵模式以及 SSH 隧道连接, 可轻松管理Redis缓存数据.">
+						</a>
+						<a href="https://www.yuque.com/u34495/mivcfg" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/electron-egg.png"
+								msg="一个入门简单、跨平台、企业级桌面软件开发框架">
+						</a>
+						<a href="https://gitee.com/dromara/open-capacity-platform" target="_blank">
+							<img class="lazy"
+								data-original="/big-file/index/dromara/open-capacity-platform.jpg"
+								msg="简称ocp是基于Spring Cloud的企业级微服务框架(用户权限管理，配置中心管理，应用管理，....)">
+						</a>
+						<a href="https://gitee.com/dromara/easy_trans" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/easy_trans.png"
+								msg="Easy-Trans 一个注解搞定数据翻译,减少30%SQL代码量">
+						</a>
+						<a href="https://gitee.com/dromara/neutrino-proxy" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/neutrino-proxy.svg"
+								msg="一款基于 Netty 的、开源的内网穿透神器。">
+						</a>
+						<a href="https://gitee.com/dromara/zyplayer-doc" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/zyplayer-doc.png"
+								msg="zyplayer-doc是一款适合团队和个人使用的WIKI文档管理工具，同时还包含数据库文档、Api接口文档。">
+						</a>
+						<a href="https://gitee.com/dromara/payment-spring-boot" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/payment-spring-boot.png"
+								msg="最全最好用的微信支付V3 Spring Boot 组件。">
+						</a>
+						<a href="https://www.j2eefast.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/j2eefast.png"
+								msg="J2eeFAST 是一个致力于中小企业 Java EE 企业级快速开发平台,我们永久开源!">
+						</a>
+						<a href="https://gitee.com/dromara/data-compare" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dataCompare.png"
+								msg="数据库比对工具：hive 表数据比对，mysql、Doris 数据比对，实现自动化配置进行数据比对，避免频繁写sql 进行处理，低代码(Low-Code) 平台">
+						</a>
+						<!-- open-giteye-api：Gitee 组织内已移除，2026-8-5 起不再展示
+						<a href="https://gitee.com/dromara/open-giteye-api" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/open-giteye-api.svg"
+								msg="giteye.net 是专为开源作者设计的数据图表服务工具类站点，提供了包括 Star 趋势图、贡献者列表、Gitee指数等数据图表服务。">
+						</a>
+						-->
+						<a href="https://gitee.com/dromara/RuoYi-Vue-Plus" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/RuoYi-Vue-Plus.png"
+								msg="后台管理系统 重写 RuoYi-Vue 所有功能 集成 Sa-Token + Mybatis-Plus + Jackson + Xxl-Job + SpringDoc + Hutool + OSS 定期同步">
+						</a>
+						<a href="https://gitee.com/dromara/RuoYi-Cloud-Plus" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/RuoYi-Cloud-Plus.png"
+								msg="微服务管理系统 重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba Dubbo3.0 Sa-Token Mybatis-Plus MQ OSS ES Xxl-Job Docker 全方位升级 定期同步">
+						</a>
+						<a href="https://gitee.com/dromara/stream-query" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/stream-query.png"
+								msg="允许完全摆脱 Mapper 的 mybatis-plus 体验！封装 stream 和 lambda 操作进行数据返回处理。">
+						</a>
+						<a href="https://gitee.com/dromara/SMS4J" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/sms4j.png"
+								msg="短信聚合工具，让发送短信变的更简单。">
+						</a>
+						<a href="https://cloudeon.top/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/cloudeon.png"
+								msg="简化kubernetes上大数据集群的运维管理">
+						</a>
+						<a href="https://github.com/dromara/hodor" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/hodor.png"
+								msg="Hodor是一个专注于任务编排和高可用性的分布式任务调度系统。">
+						</a>
+						<a href="https://gitee.com/dromara/TestHub" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/test-hub.png"
+								msg="流程编排，插件驱动，测试无限可能">
+						</a>
+						<a href="https://gitee.com/dromara/disjob" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/disjob-2.png"
+								msg="Disjob是一个分布式的任务调度框架">
+						</a>
+						<a href="https://gitee.com/dromara/binlog4j" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/Binlog4j.png"
+								msg="轻量级 Mysql Binlog 客户端, 提供宕机续读, 高可用集群等特性">
+						</a>
+						<a href="https://gitee.com/dromara/yft-design" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/yft-design.png"
+								msg="基于 Canvas 的开源版 创客贴 支持导出json，svg, image文件。">
+						</a>
+						<a href="https://gitee.com/dromara/x-file-storage" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/x-file-storage.svg"
+								msg="在 SpringBoot 中通过简单的方式将文件存储到 本地、阿里云 OSS、腾讯云 COS、七牛云 Kodo等">
+						</a>
+						<a href="https://wemq.nicholasld.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/wemq.png"
+								msg="开源、高性能、安全、功能强大的物联网调试和管理解决方案。">
+						</a>
+						<a href="https://gitee.com/dromara/mayfly-go" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/mayfly-go.png"
+								msg="web 版 linux(终端[终端回放] 文件 脚本 进程 计划任务)、数据库（mysql postgres）、redis(单机 哨兵 集群)、mongo 统一管理操作平台">
+						</a>
+						<a href="https://akali.yomahub.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/akali.png"
+								msg="Akali(阿卡丽)，轻量级本地化热点检测/降级框架，10秒钟即可接入使用！大流量下的神器">
+						</a>
+						<a href="https://gitee.com/dromara/dbswitch" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dbswitch.png"
+								msg="异构数据库迁移同步(搬家)工具。">
+						</a>
+						<a href="https://gitee.com/dromara/easyAi" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/easyAI.png"
+								msg="Java 傻瓜式 AI 框架。">
+						</a>
+						<a href="https://gitee.com/dromara/tianai-captcha" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/tianai-captcha.png"
+								msg="可能是java界最好的开源行为验证码 captcha、captcha、captcha、captcha、tianai-captcha [滑块验证码、点选验证码、行为验证码、旋转验证码， 滑动验证码]。">
+						</a>
+						<a href="https://gitee.com/dromara/mybatis-plus-ext" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/mybatis-plus-ext.png"
+								msg="mybatis-plus 框架的增强拓展包。">
+						</a>
+						<a href="https://gitee.com/dromara/dax-pay" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dax-pay.png"
+								msg="免费开源的支付网关。">
+						</a>
+						<a href="https://gitee.com/dromara/sayOrder" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/sayorder.png"
+								msg="基于easyAi引擎的JAVA高性能，低成本，轻量级智能客服。">
+						</a>
+						<a href="https://gitee.com/dromara/mybatis-jpa-extra" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/mybatis-jpa-extra.png"
+								msg="扩展MyBatis JPA支持，简化CUID操作，增强SELECT分页查询">
+						</a>
+						<a href="https://newcar.js.org/zh/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/newcar.png"
+								msg="现代化的动画引擎">
+						</a>
+						<a href="http://warm-flow.cn" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/warm-flow.png"
+								msg="国产自研工作流，其特点简洁(只有6张表)但又不简单，五脏俱全，组件独立，可扩展，可满足中小项目的组件。">
+						</a>
+						<a href="https://gitee.com/dromara/dy-java" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dy-java.png"
+								msg="DyJava是一款功能强大的抖音Java开发工具包">
+						</a>
+						<a href="https://gitee.com/dromara/MilvusPlus" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/MilvusPlus-logo.png"
+								msg="MilvusPlus（简称 MP）是一个 Milvus 的操作工具，旨在简化与 Milvus 向量数据库的交互，为开发者提供类似 MyBatis-Plus 注解和方法调用风格的直观 API,提高效率而生。">
+						</a>
+						<a href="http://www.easy-query.com/easy-query-doc/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/easy-query.png"
+								msg="java下唯一一款同时支持强类型对象关系查询和强类型SQL语法查询的ORM,拥有对象模型筛选、隐式子查询、隐式join、显式子查询、显式join,支持Java/Kotlin">
+						</a>
+						<a href="https://gitee.com/dromara/orion-visor" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/horizontal.png"
+								msg="一款高颜值、现代化的智能运维&轻量堡垒机平台。">
+						</a>
+						<a href="https://www.ujcms.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/ujcms.png"
+								msg="Java开源网站内容管理系统(java cms)。使用SpringBoot、MyBatis、Vue3、ElementPlus、Vite、TypeScript等技术开发。">
+						</a>
+						<a href="https://gitee.com/dromara/skyeye" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/skyeye-logo.png"
+								msg="智能制造一体化，采用Springboot + winUI的低代码平台开发模式。包含30多个应用模块、50多种电子流程">
+						</a>
+						<a href="https://domain-admin.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/domain-admin.png"
+								msg="SSL证书监测平台，申请证书，自动续签，到期提醒。">
+						</a>
+						<a href="https://gitee.com/dromara/carbon" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/carbon.svg"
+								msg="轻量级、语义化、对开发者友好的 golang 时间处理库">
+						</a>
+						<a href="https://gitee.com/dromara/mica-mqtt" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/mica-mqtt.png"
+								msg="java mqtt 基于 java aio 实现，开源、简单、易用、低延迟、高性能百万级 java mqtt client 组件和 java mqtt broker 服务。">
+						</a>
+						<a href="https://gitee.com/dromara/wgai" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/wgai.png"
+								msg="开箱即用的JAVA AI平台融合了AI图像识别opencv、yolo、esayAI内核识别;AI智能客服、AI语言模型、可定制化自主离线化部署并自主化行业化使用 避免占用内存、GPU消耗训练与识别分开使用;支持yolov3、yolov5、yolov8模型 支持exel、txt等文本语言模型；">
+						</a>
+						<a href="https://gitee.com/dromara/omega-ai" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/omega-ai.png"
+								msg="基于java打造的深度学习框架，帮助你快速搭建神经网络，实现模型推理与训练，引擎支持自动求导，多GPU训练，GPU支持CUDA，CUDNN。">
+						</a>
+						<a href="https://github.com/dromara/rsmedia" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/rsmedia.png"
+								msg="audio/video toolkit based FFmpeg 6.x, 7.x supported for multimedia with Hardware Acceleration.">
+						</a>
+						<a href="https://gitee.com/dromara/sqlrest" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/SQLREST.png"
+								msg="SQLREST是一款完全开源的SQL转 RESTful API的SQL2API低代码工具">
+						</a>
+						<a href="https://gitee.com/dromara/easy-tl" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/easy-tl.png"
+								msg="EasyTL 是一个轻量级的字符串模板引擎，基于 Java 8 开发，无第三方依赖，提供类似 JavaScript 的表达式语法支持。">
+						</a>
+						<a href="https://gitee.com/dromara/dongle" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dongle.svg"
+								msg="轻量级、语义化、对开发者友好的 golang 编码解码、加密解密和签名验签库">
+						</a>
+						<a href="https://gitee.com/dromara/auto-table" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/auto-table.png"
+								msg="Java最强数据库构建框架，超越JPA，根据 Java 实体，自动创建数据库、表、索引。">
+						</a>
+						<a href="https://gitee.com/dromara/free-fs" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/free-fs.png"
+								msg="一个基于 Spring Boot 3.x 的企业级文件管理网盘系统后端，专注于提供高性能、高可靠的文件存储和管理服务。">
+						</a>
+						<a href="https://gitee.com/dromara/surpass" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/surpass.png"
+								msg="Surpass是API开放平台，支持OpenAPI定义，面向REST API资源无状态认证和调用，实现企业统一权限管理">
+						</a>
+						<a href="https://myobj.sms4j.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/my-obj.svg"
+								msg="MyObj 是基于 Go 的开源家庭网盘系统，支持大文件上传、断点续传、秒传、文件分享与权限管理，可作为企业级对象存储的轻量化替代方案。">
+						</a>
+						<a href="https://gitee.com/dromara/sa-cm" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/sa-cm.png"
+								msg="局域网 Windows 性能监控副屏：CPU、内存、GPU、磁盘、网络、进程、功耗风扇，把吃灰的平板/手机用起来。">
+						</a>
+						
+						
+						<!-- <a href="https://dromara.org/zh/projects/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/dromara.png"
+								msg="让每一位开源爱好者，体会到开源的快乐。">
+						</a> -->
+					</div>
+					<div style="height: 10px; clear: both;"></div>
+					<p>
+						为往圣继绝学，一个人或许能走的更快，但一群人会走的更远。
+					</p>
+					<!-- <div style=" margin: 40px 14px 0; padding: 20px 0 10px; background-color: #f4f5f7;">
+						<h3 style="padding: 0px 0 10px; ">Dromara 知识星球</h3>
+						<img class="lazy" data-original="/big-file/contact/dromara-xingqiu--sa-token.jpg"
+							style="width: 300px;">
+					</div> -->
+				</div>
+				<div style="height: 30px;"></div>
+			</div>
+
+			<!-- ------------ 友情链接 ------------- -->
+			<div>
+				<div class="com-box-f s-width">
+					<div class="s-fenge"></div>
+					<br>
+					<h2 class="s-title">友情链接</h2>
+					<div class="com-box com-box-you">
+						<a href="https://ok.zhxu.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/okhttps.png"
+								msg="如艺术一般优雅，像 1、2、3 一样简单，前后端通用，轻量却强大的 HTTP 客户端（同时支持 WebSocket 以及 Stomp 协议）">
+						</a>
+						<a href="https://bs.zhxu.cn/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/bean-searcher.png"
+								msg="轻量级关系数据库条件检索引擎，使一行代码实现复杂列表检索成为可能！">
+						</a>
+						<a href="https://xiaonuo.vip/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/xiaonuo2.png"
+								msg="通用型后台权限管理框架，紧随潮流、开箱即用, 同时拥有Vue、Layui、SpringCloud三个版本">
+						</a>
+						<a href="https://gitee.com/lunarlanding/pear-admin" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/pear-admin.png"
+								msg="致 力 于 让 Web 开 发 变 得 简 单 优 雅">
+						</a>
+						<a href="http://www.layui-vue.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/layui-vue.png"
+								msg="layui - vue（谐音：类 UI) 是 一 套 Vue 3.0 的 桌 面 端 组 件 库.">
+						</a>
+						<a href="https://shenyu.apache.org/zh/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/shenyu.svg"
+								msg="一个异步的，高性能的，跨语言的，响应式的 API 网关。">
+						</a>
+						<a href="https://dwz.cn/L9hCwepg" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/yungouos.png"
+								msg="官方直连支付系统解决方案，支持个人、个体户、企业全渠道签约。">
+						</a>
+						<a href="https://gitee.com/opengoofy/hippo4j" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/hippo4j.jpg"
+								msg="强大的动态线程池框架，附带监控报警功能，支持 Tomcat、Jetty、Undertow、RocketMQ、Dubbo、RabbitMQ、Hystrix 消费线程池">
+						</a>
+						<a href="https://gitee.com/gz-yami/mall4j" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/mall4j.png"
+								msg="一个基于Spring Boot 3 JDK17的商城系统。">
+						</a>
+						<a href="http://solon.noear.org/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/solon.png"
+								msg="一个更现代感的应用开发框架：更快、更小、更自由。">
+						</a>
+						<a href="https://baomidou.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/mybatis-plus.png"
+								style="max-width: 110%;"
+								msg="MyBatis-Plus（简称 MP）是一个 MyBatis 的增强工具，在 MyBatis 的基础上只做增强不做改变，为简化开发、提高效率而生。">
+						</a>
+						<a href="https://hertzbeat.com/" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/hertzbeat-brand.svg"
+								msg="易用友好的云监控系统">
+						</a>
+						<a href="https://chat2db-ai.com" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/chat2db.png"
+								msg="一个AI驱动的数据库管理和BI工具，支持Mysql、pg、Oracle、Redis等22种数据库的管理。">
+						</a>
+						<a href="https://onlinenotepad101.org/zh" target="_blank">
+							<img class="lazy" data-original="/big-file/index/link/notepad.png"
+								msg="在线记事本 – 免费在线文本编辑器：专为无干扰写作、高效记笔记。完全免费，无需注册，打开即用，支持富文本内容编辑。支持保存、导出，以及分享给其他人。简洁流畅，专注创作。">
+						</a>
+					</div>
+					<div class="you-coop-tip">
+						<a href="/more/join-group.html#6、商务合作" target="_blank">申请友联交换</a>
+					</div>
+					<div style="height: 10px; clear: both;"></div>
+				</div>
+				<div style="height: 60px;"></div>
+			</div>
+
+
+			<!-- ------------ 底部 连接 ------------- -->
+			<div id="footer">
+				<div id="s-footer" class="mao-link"></div>
+				<div class="footer-r-b s-width">
+					<div class="ss-box">
+						<h3>特别鸣谢</h3>
+						<ul class="list-unstyle">
+							<!-- <li><a href="https://dromara.org/zh/projects/" target="_blank">Dromara社区</a></li> -->
+							<li><a href="https://gitee.com/dromara/liteFlow" target="_blank">LiteFlow 规则引擎</a></li>
+							<li><a href="https://gitee.com/dromara/forest" target="_blank">Forest 工具</a></li>
+							<li><a href="https://gitee.com/Apache-ShenYu/incubator-shenyu" target="_blank">ShenYu 网关</a></li>
+						</ul>
+					</div>
+					<div class="ss-box">
+						<h3>技术干货</h3>
+						<ul class="list-unstyle">
+							<li><a href="https://juejin.cn/user/3702810894945422" target="_blank">稀土掘金</a></li>
+							<li><a href="https://blog.csdn.net/shengzhang_" target="_blank">CSDN</a></li>
+							<li><a href="https://my.oschina.net/u/3503445" target="_blank">OSCHINA</a></li>
+						</ul>
+					</div>
+					<div class="ss-box">
+						<h3>关注我们</h3>
+						<ul class="list-unstyle">
+							<li><a href="https://space.bilibili.com/3546758575557094" target="_blank">哔哩哔哩</a></li>
+							<li><a href="https://www.douyin.com/user/MS4wLjABAAAArVqj2lGRurfj-9eO0T12q6_vrbIK-Om9bi3eo4OwB2g" target="_blank">抖音</a></li>
+							<li><a href="https://www.xiaohongshu.com/user/profile/67063b01000000001e00ef23" target="_blank">小红书</a></li>
+						</ul>
+					</div>
+					<!-- <div class="ss-box">
+						<h3>联系我们</h3>
+						<ul class="list-unstyle">
+							<li>QQ群 ：<a href="/more/join-group.html">点击加入</a></li>
+							<li>邮箱：<a href="javascript: alert('暂无');">暂无</a></li>
+							<li>联系：<a href="javascript: alert('暂无');">暂无</a></li>
+						</ul>
+					</div> -->
+					<div class="ss-box">
+						<h3 class="last" style="text-align: left; float: none; padding-left: 0px;">Sa-Token 公众号</h3>
+						<div class="media-img padding-small-top" style="text-align: left;">
+							<img class="dro-qr" src="/big-file/contact/lykj-gzh.jpg" width="100"
+								height="100" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- -------------- 底部 版权 -------------- -->
+			<div>
+				<meta charset="UTF-8">
+				<style type="text/css">
+
+				</style>
+				<div class="foot-box" id="foot">
+					<div class="s-width" style="text-align: center;">
+						Copyright ©2026 Sa-Token java 权限认证 | sa-token.com | <a href="https://beian.miit.gov.cn/"
+							target="_blank">鲁ICP备18046274号-5</a> | <a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;"><img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- UI逐渐显现 -->
+		<style type="text/css">
+			body {
+				opacity: 0.01;
+				transition: opacity 0.5s;
+			}
+		</style>
+		<script type="text/javascript">
+			setTimeout(function() {
+				document.body.style.opacity = 1;
+			}, 1);
+		</script>
+
+
+
+		<!-- 悬浮效果 -->
+		<script src="static/jquery.min.js"></script>
+		<script src="static/layer-v3.1.1/layer.js"></script>
+		<script src="/static/all-version-common.js"></script>
+
+		<!-- 多语言：translate.js + 本地初始化（见 static/sa-translate.js） -->
+		<script src="./static/translate.js"></script>
+		<script src="./static/sa-translate.js"></script>
+		<script>initSaTranslate();</script>
+		
+		<!-- 赞助者名单 -->
+		<script src="static/donate/donate-list.js"></script>
+		<script src="static/donate/donate-fun.js"></script>
+		<script type="text/javascript">renderDonateTable();</script>
+		<script type="text/javascript">
+			
+			// 鼠标悬浮在友情链接时，提示信息 
+			$(".com-box-you a img").hover(function() {
+				var msg = $(this).attr("msg");
+				if (msg) {
+					window.msgLayer = layer.tips(msg, $(this), {
+						tips: 1,
+						time: 0
+					});
+				}
+			}, function() {
+				var index = window.msgLayer;
+				setTimeout(function() {
+					layer.close(index);
+				}, 1000);
+			});
+			// 点击二维码放大
+			$('.wx-qr,.dro-qr,.gzh-qr').click(function() {
+				var w = '300px';
+				var h = 'auto';
+				var content = '<div style="height: 100%; overflow: hidden !important;">' +
+					'<img src="' + this.src + ' " style="width: 100%; height: 100%;" />' +
+					'</div>';
+				layer.open({
+					type: 1,
+					title: false,
+					shadeClose: true,
+					closeBtn: 0,
+					area: [w, h], //宽高
+					content: content
+				});
+			})
+		</script>
+
+		<!-- 初始化轮播图 -->
+		<script src="static/swiper/swiper-bundle.min.js"></script>
+		<script src="static/swiper/index-swiper.js"></script>
+
+		<!-- 修改背景颜色 -->
+		<script>
+			// // 绑定修改背景色的按钮事件
+			// $('.theme-box span').click(function() {
+			// 	let bgColor = this.style.backgroundColor;
+			// 	setBg(bgColor);
+			// 	localStorage.setItem('bg-color-value', bgColor)
+			// })
+			// // 读取上次记录
+			// let bgColor = localStorage.getItem('bg-color-value');
+			// if (bgColor) {
+			// 	setBg(bgColor);
+			// }
+
+			// // 设置背景颜色 
+			// function setBg(bgColor) {
+			// 	console.log('---- 背景颜色设定为：', bgColor);
+
+			// 	// -------- 设置 body 背景
+			// 	document.body.style.backgroundColor = bgColor;
+
+			// 	// -------- 设置 header 头背景
+			// 	// 如果是 16 进制，转 rgba
+			// 	if (bgColor.indexOf('#') == 0) {
+			// 		bgColor = hexToRgba(bgColor, 0.97);
+			// 	}
+			// 	// 如果是 rgb，转 rgba
+			// 	else if (bgColor.match(/\,/g).length == 2) {
+			// 		bgColor = bgColor.replace(')', ' ,0.97)');
+			// 	}
+
+			// 	document.querySelector('.doc-header').style.backgroundColor = bgColor;
+			// }
+
+			// // 16进制 转 rgba
+			// function hexToRgba(str, a) {
+			// 	a = a || 1;
+
+			// 	var reg = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
+			// 	if (!reg.test(str)) {
+			// 		return;
+			// 	}
+			// 	let newStr = (str.toLowerCase()).replace(/\#/g, '')
+			// 	let len = newStr.length;
+			// 	if (len == 3) {
+			// 		let t = ''
+			// 		for (var i = 0; i < len; i++) {
+			// 			t += newStr.slice(i, i + 1).concat(newStr.slice(i, i + 1))
+			// 		}
+			// 		newStr = t
+			// 	}
+			// 	let arr = []; //将字符串分隔，两个两个的分隔
+			// 	for (var i = 0; i < 6; i = i + 2) {
+			// 		let s = newStr.slice(i, i + 2)
+			// 		arr.push(parseInt("0x" + s))
+			// 	}
+			// 	return 'rgb(' + arr.join(",") + ', ' + a + ')';
+			// }
+		</script>
+
+		<!-- 图片懒加载 -->
+		<script src="static/jquery.lazyload-1.9.3.js"></script>
+		<script>
+			$(function() {
+				$("img.lazy").lazyload({
+					effect: "fadeIn", // 动画，show=显示，fadeIn=淡入，slideDown=下拉
+					effectspeed: 1200, // 动画持续时间
+					skip_invisible: true, // 不加载隐藏的图像
+					// threshold: -180,  // 提前加载：距离屏幕多少px时就显示出来
+					// event: 'click',  // 事件触发时才加载，scroll=滑动，click=点击，mouseover=鼠标划过，sporty=运动的
+					// 未加载时的占位图，此为3x3透明小图片
+					placeholder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAhdEVYdENyZWF0aW9uIFRpbWUAMjAyMTowMToyMiAyMjoxNDoxM63SwyUAAAANSURBVBhXYyAGMDAAAAAnAAF2ypRxAAAAAElFTkSuQmCC",
+					load: function() {
+						console.log('lazy img: ' + this.src);
+					}
+				});
+			})
+		</script>
+		
+		<!-- 预览版提示 -->
+		<script type="text/javascript">
+			if (location.host === 'rc.sa-token.com') {
+				const newTips =
+					'<b>当前文档为RC预览版文档，仅做学习测试使用，正式项目请使用正式版：<a href="https://sa-token.com/" target="_blank">https://sa-token.com/</a></b>';
+				layer.alert(newTips);
+			}
+		</script>
+		
+		<script>
+			// 逐字打印效果
+			var tcStr = '开源、免费、一站式 java 权限认证框架，让鉴权变得简单、优雅！';
+			var con = $('.sub-title .sub-title-nr');
+			var index = 1;
+			var length = tcStr.length;
+			var tId = null;
+			 
+			function start(){
+				con.text(tcStr.charAt(0));
+
+				tId = setInterval(function(){
+					con.append(tcStr.charAt(index));
+					if(index++ === length){
+						clearInterval(tId);
+						index = 1;
+						setTimeout(function(){
+							start()
+						}, 3000)
+					}
+				}, 90);
+			}
+			start();
+
+		</script>
+		
+		
+		<script src="./a/star-guide/star-guide.js"></script>
+		
+		<!-- 自定义滚动条颜色 -->
+		<!-- <style>
+		    /* 自定义body滚动条样式 */
+		    body::-webkit-scrollbar { width: 10px; }
+			/* 滚动条颜色 */
+		    body::-webkit-scrollbar-thumb { background-color: #5BAE63; border-radius: 3px; }
+			/* 滚动条上面的和下面的颜色 */
+		    body::-webkit-scrollbar-track {
+		        background: linear-gradient(to bottom, 
+		            #42B983 0%, 
+		            #42B983 var(--scroll-progress, 0%), 
+		            #FCFCFC var(--scroll-progress, 0%), 
+		            #FCFCFC 100%);
+		    }
+		</style>
+		<script>
+		    // 动态更新滚动条颜色
+		    window.addEventListener('scroll', function() {
+		        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+		        const scrollProgress = (scrollTop / scrollHeight) * 100;
+		        
+		        document.body.style.setProperty('--scroll-progress', scrollProgress + '%');
+		    });
+		    // 初始化滚动条状态
+		    window.dispatchEvent(new Event('scroll'));
+		</script> -->
+		
+		
+</body>
+</html>

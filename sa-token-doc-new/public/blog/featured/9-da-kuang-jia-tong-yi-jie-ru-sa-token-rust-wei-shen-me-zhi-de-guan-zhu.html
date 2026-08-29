@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>9 大框架统一接入，sa-token-rust 为什么值得关注 - Sa-Token 博客</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="sa-token-rust 覆盖 9 大 Rust Web 框架，把登录、权限、SSO、OAuth2、WebSocket 收到同一套认证模型。本文说明它解决什么问题，以及多版本适配、run_auth_flow 与 task-local 这轮演进，方便团队判断能否当作长期认证授权底座。">
+	<meta name="keywords" content="Sa-Token,Java,权限认证,登录认证,SSO,单点登录,OAuth2,WebSocket">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://sa-token.com/blog/featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="9 大框架统一接入，sa-token-rust 为什么值得关注">
+	<meta property="og:description" content="sa-token-rust 覆盖 9 大 Rust Web 框架，把登录、权限、SSO、OAuth2、WebSocket 收到同一套认证模型。本文说明它解决什么问题，以及多版本适配、run_auth_flow 与 task-local 这轮演进，方便团队判断能否当作长期认证授权底座。">
+	<meta property="og:url" content="https://sa-token.com/blog/featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html">
+	<meta property="og:image" content="https://sa-token.com/logo.png">
+	<meta property="og:site_name" content="Sa-Token">
+	<meta property="og:locale" content="zh_CN">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="9 大框架统一接入，sa-token-rust 为什么值得关注">
+	<meta name="twitter:description" content="sa-token-rust 覆盖 9 大 Rust Web 框架，把登录、权限、SSO、OAuth2、WebSocket 收到同一套认证模型。本文说明它解决什么问题，以及多版本适配、run_auth_flow 与 task-local 这轮演进，方便团队判断能否当作长期认证授权底座。">
+	<meta name="twitter:image" content="https://sa-token.com/logo.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../logo.png">
+	<link rel="stylesheet" href="../../static/doc.css">
+	<link rel="stylesheet" href="../../static/vue.css">
+	<link rel="stylesheet" href="../common/blog.css">
+	<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "9 大框架统一接入，sa-token-rust 为什么值得关注",
+  "description": "sa-token-rust 覆盖 9 大 Rust Web 框架，把登录、权限、SSO、OAuth2、WebSocket 收到同一套认证模型。本文说明它解决什么问题，以及多版本适配、run_auth_flow 与 task-local 这轮演进，方便团队判断能否当作长期认证授权底座。",
+  "datePublished": "2026-05-07",
+  "dateModified": "2026-05-07",
+  "url": "https://sa-token.com/blog/featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html",
+  "author": {
+    "@type": "Organization",
+    "name": "Sa-Token"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sa-Token",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://sa-token.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://sa-token.com/blog/featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html"
+  },
+  "image": "https://sa-token.com/logo.png"
+}</script>
+</head>
+<body class="blog-page blog-article-page ready">
+	<button type="button" class="blog-sidebar-toggle" aria-label="打开博客目录">☰</button>
+	<div class="blog-sidebar-mask"></div>
+
+		<div class="doc-header">
+		<div class="nav-left">
+			<a href="../../index.html">
+				<div class="logo-box">
+					<img src="../../logo.png" title="logo" alt="Sa-Token" />
+					<h1 class="logo-text">Sa-Token</h1>
+				</div>
+			</a>
+			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
+		</div>
+		<nav class="nav-right">
+			<div class="sear-box p-none nav-t4" tabindex="-1"></div>
+			<a class="wzi" href="../../index.html">首页</a>
+			<a class="wzi" href="/readme.html">文档</a>
+			<a class="wzi nav-active" href="/blog/index.html">博客</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>视频 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://www.bilibili.com/video/BV1LzNu6KEsW" target="_blank">乐之者java（登录认证/权限管理/apiKey等）</a>
+						<a href="https://www.bilibili.com/video/BV1PF9QBXEet/?p=53" target="_blank">抓蛙师（23集）</a>
+						<a href="https://www.bilibili.com/video/BV1fsUVBWEyH/" target="_blank">朱老师的小课堂（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1NF1FBpEe6/" target="_blank">王清江唷 SSO篇（29集）</a>
+						<a href="https://www.bilibili.com/video/BV1uZUpYVEst/" target="_blank">fox说技术（7集）</a>
+						<a href="https://www.bilibili.com/video/BV1eFtRezERp?p=87" target="_blank">架构驿站（11集）</a>
+						<a href="https://www.bilibili.com/video/BV1Zt421u7gk/" target="_blank">王清江唷（99集）</a>
+						<a href="https://www.bilibili.com/video/BV1kG411o7Ms/" target="_blank">筑梦信仰-joy（20集）</a>
+						<a href="https://www.bilibili.com/video/BV11u4y197JL/" target="_blank">达达-Java（26集）</a>
+						<a href="https://space.bilibili.com/473679148/video" target="_blank">晒太阳的盐（22集）</a>
+						<div class="zk-fengexian"></div>
+						<a href="https://wj.qq.com/s2/27539608/zzzd/" target="_blank">[ + 课程提交 ]</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>案例 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://gitee.com/sa-tokens/awesome-sa-token" target="_blank">Gitee - Awesome-Sa-Token</a>
+						<a href="https://github.com/sa-tokens/awesome-sa-token" target="_blank">GitHub - Awesome-Sa-Token</a>
+						<a href="https://atomgit.com/sa-tokens/awesome-sa-token" target="_blank">AtomGit - Awesome-Sa-Token</a>
+					</div>
+				</div>
+			</div>
+			<a class="p-none wzi nav-t3" href="/more/join-group.html">加群</a>
+			<a class="p-none wzi nav-t3" href="/more/demand-commit.html">需求提交</a>
+			<a class="p-none wzi nav-t3" href="/more/sa-token-donate.html">赞助</a>
+			<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_doc_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+			<div class="zk-box p-none nav-t3">
+				<a class="wzi" href="javascript:;">
+					<span>安全推荐 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="https://github.com/FallibleInc/security-guide-for-developers/blob/master/security-checklist-zh.md" target="_blank">开发者安全 Checklist</a>
+						<a href="https://github.com/shieldfy/API-Security-Checklist/blob/master/README-zh.md" target="_blank">API 安全 Checklist</a>
+						<a href="https://github.com/Tencent/secguide" target="_blank">腾讯代码安全指南</a>
+						<a href="https://github.com/LyleMi/Learn-Web-Hacking" target="_blank">Web 安全学习笔记</a>
+						<a href="https://github.com/OWASP/CheatSheetSeries" target="_blank">OWASP Cheat Sheet Series</a>
+						<a href="https://github.com/swisskyrepo/PayloadsAllTheThings" target="_blank">PayloadsAllTheThings</a>
+					</div>
+				</div>
+			</div>
+			<div class="zk-box p-none nav-t2">
+				<a class="wzi" href="javascript:;">
+					<span>相关资源 </span>
+					<span class="zk-icon"></span>
+				</a>
+				<div class="zk-context">
+					<div>
+						<a href="/more/update-log.html">更新日志</a>
+						<a href="/more/common-questions.html">常见报错</a>
+						<a href="/more/tj-gzh.html">推荐公众号</a>
+						<div class="zk-fengexian"></div>
+						<a href="/fun/sa-token-test.html">在线考试</a>
+						<a href="/fun/issue-template.html">在线提问</a>
+						<a href="/more/wenjuan.html">问卷调查</a>
+					</div>
+				</div>
+			</div>
+			<a href="https://github.com/dromara/sa-token" target="_blank" class="github-corner" aria-label="View source on Github" style="position: fixed; right: -16px; padding-left: 0;">
+				<svg viewBox="0 0 250 250" aria-hidden="true">
+					<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+					<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+					<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+				</svg>
+			</a>
+		</nav>
+	</div>
+
+
+	<div class="main-box blog-main-box">
+		<nav class="sidebar blog-sidebar" aria-label="博客目录"></nav>
+		<main class="content blog-content">
+			<div id="main">
+				<div class="markdown-section">
+					<h1>9 大框架统一接入，sa-token-rust 为什么值得关注</h1>
+					<div class="blog-article-meta"><span>2026-05-07</span><span>精选</span></div>
+					
+					<div class="blog-article-body">
+					<p>做 Rust 后端时，很多团队都会遇到同一类问题：</p>
+<ul>
+<li>项目能跑，但认证授权方案“拼装感”太强</li>
+<li>框架一变（Axum、Actix、Rocket...），中间件和鉴权逻辑要重写</li>
+<li>业务变复杂后，登录、权限、SSO、WebSocket、微服务会话开始互相拉扯</li>
+<li>代码能交付，但后续升级和维护很痛苦</li>
+</ul>
+<p><code>sa-token-rust</code> 想解决的不是“能不能登录”，而是：</p>
+<p><strong>在 Rust 里，把认证授权做成一个可持续演进的工程底座。</strong></p>
+<hr />
+<h2 id="xian-kan-jie-lun">先看结论</h2>
+<p><code>sa-token-rust</code> 是一个轻量、高性能、可扩展的 Rust 认证授权框架，覆盖 9 大 Web 框架，支持 JWT / OAuth2 / SSO / WebSocket / 在线用户 / 分布式 Session，且在最新演进中完成了多版本框架适配重构与认证链路统一抽象，兼顾“现在能用”和“未来好升”。</p>
+<hr />
+<h2 id="zhe-tao-kuang-jia-dao-di-jie-jue-le-shen-me">这套框架到底解决了什么</h2>
+<h3 id="1-cong-gong-neng-dian-dui-qi-bian-cheng-ti-xi-hua-ren-zheng">1) 从“功能点堆砌”变成“体系化认证授权”</h3>
+<p>在很多项目里，这些能力通常是分散实现：</p>
+<ul>
+<li>登录登出一套</li>
+<li>权限角色一套</li>
+<li>Token 刷新一套</li>
+<li>WebSocket 鉴权又一套</li>
+<li>SSO / OAuth2 再来一套</li>
+</ul>
+<p><code>sa-token-rust</code> 的做法是把它们统一到同一个认证模型下：</p>
+<p><code>SaTokenManager + StpUtil + Context + EventBus + Plugin Adapter</code></p>
+<p>结果是：你不再是在“接 10 个散件”，而是在“用一套完整系统”。</p>
+<h3 id="2-fu-gai-9-da-rust-web-kuang-jia-tong-yi-jie-ru-ti-yan">2) 覆盖 9 大 Rust Web 框架，统一接入体验</h3>
+<p>支持框架：</p>
+<ul>
+<li>Axum</li>
+<li>Actix-web</li>
+<li>Poem</li>
+<li>Rocket</li>
+<li>Warp</li>
+<li>Salvo</li>
+<li>Tide</li>
+<li>Gotham</li>
+<li>Ntex</li>
+</ul>
+<p>统一心智：</p>
+<ul>
+<li><code>SaTokenState::builder()</code> 初始化</li>
+<li><code>SaTokenLayer</code> / <code>SaTokenMiddleware</code> 接入</li>
+<li>Extractor 读登录态</li>
+<li><code>StpUtil</code> 做业务层 API（登录、权限、角色、session 等）</li>
+</ul>
+<h3 id="3-mian-xiang-zhen-shi-sheng-chan-chang-jing-bu-zhi-hello-wor">3) 面向真实生产场景，不只“Hello World 登录”</h3>
+<ul>
+<li><strong>认证基础</strong>：登录、登出、踢下线、会话管理</li>
+<li><strong>授权控制</strong>：权限/角色校验，支持通配符规则（如 <code>user:*</code>）</li>
+<li><strong>安全能力</strong>：Nonce 防重放、Refresh Token 刷新、JWT 多算法</li>
+<li><strong>协议能力</strong>：OAuth2 授权码模式（RFC 6749）</li>
+<li><strong>组织能力</strong>：SSO 单点登录（票据+统一登出）</li>
+<li><strong>实时能力</strong>：WebSocket 鉴权 + 在线用户管理 + 消息推送</li>
+<li><strong>微服务能力</strong>：分布式 Session 跨服务共享</li>
+<li><strong>可观测能力</strong>：事件监听（登录、登出、踢下线等）</li>
+</ul>
+<hr />
+<h2 id="gong-neng-quan-jing-tu-zhi-guan-ban">功能全景图（直观版）</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">模块</th>
+<th style="text-align: left;">解决什么问题</th>
+<th style="text-align: left;">典型用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">StpUtil API</td>
+<td style="text-align: left;">统一业务调用入口</td>
+<td style="text-align: left;">登录、登出、查权限、查角色</td>
+</tr>
+<tr>
+<td style="text-align: left;">PathAuthConfig</td>
+<td style="text-align: left;">路径级鉴权规则</td>
+<td style="text-align: left;"><code>/api/**</code> 保护、<code>/public/**</code> 放行</td>
+</tr>
+<tr>
+<td style="text-align: left;">JWT</td>
+<td style="text-align: left;">自包含 Token</td>
+<td style="text-align: left;">网关透传、跨服务鉴权</td>
+</tr>
+<tr>
+<td style="text-align: left;">OAuth2</td>
+<td style="text-align: left;">第三方授权</td>
+<td style="text-align: left;">开放平台、统一授权中心</td>
+</tr>
+<tr>
+<td style="text-align: left;">SSO</td>
+<td style="text-align: left;">单点登录</td>
+<td style="text-align: left;">多系统一次登录、统一退出</td>
+</tr>
+<tr>
+<td style="text-align: left;">WebSocket Auth</td>
+<td style="text-align: left;">长连接认证</td>
+<td style="text-align: left;">IM、实时协作、推送系统</td>
+</tr>
+<tr>
+<td style="text-align: left;">OnlineManager</td>
+<td style="text-align: left;">在线状态与推送</td>
+<td style="text-align: left;">在线人数、定向通知、踢下线</td>
+</tr>
+<tr>
+<td style="text-align: left;">Distributed Session</td>
+<td style="text-align: left;">微服务会话共享</td>
+<td style="text-align: left;">网关 + 多服务共享登录态</td>
+</tr>
+<tr>
+<td style="text-align: left;">EventBus</td>
+<td style="text-align: left;">认证事件扩展点</td>
+<td style="text-align: left;">审计日志、风控、告警</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cong-readme-he-shi-li-kan-ta-wei-shen-me-shang-shou-kuai">从 README 和示例看，它为什么“上手快”</h2>
+<h3 id="yi-xing-yi-lai-yi-xing-dao-ru-cha-jian-mo-shi">一行依赖、一行导入（插件模式）</h3>
+<ul>
+<li>依赖层可按框架直接使用 <code>sa-token-plugin-*</code></li>
+<li>导入层可直接 <code>use sa_token_plugin_xxx::*</code></li>
+<li>Builder 里就能把存储、超时、token 名等配齐</li>
+</ul>
+<h3 id="stp-util-demo-zhan-shi-de-shi-zhen-shi-ye-wu-bi-huan"><code>stp_util_demo</code> 展示的是真实业务闭环</h3>
+<p>示例不是只演示 <code>login()</code>，而是完整串起来：</p>
+<ol>
+<li>登录拿 token</li>
+<li>校验登录态</li>
+<li>读取 login_id 和 token_info</li>
+<li>读有效期</li>
+<li>操作 session</li>
+<li>动态加权限、加角色</li>
+<li>做权限和角色检查</li>
+<li>登出并验证状态</li>
+</ol>
+<p>这基本就是很多中后台项目首周要做的鉴权闭环。</p>
+<hr />
+<h2 id="zhe-ci-ban-ben-yan-jin-zui-zhi-de-shuo-de-san-jian-shi">这次版本演进最值得说的三件事</h2>
+<h2 id="1-duo-ban-ben-kuang-jia-shi-pei-zhong-gou-jie-jue-sheng-ji-j">1) 多版本框架适配重构：解决“升级就炸”问题</h2>
+<h3 id="guo-qu-chang-jian-tong-dian">过去常见痛点</h3>
+<ul>
+<li>插件对框架版本绑定过死</li>
+<li>用户项目升级大版本时容易出现类型树冲突</li>
+<li>维护时同一逻辑在多个插件重复散落</li>
+</ul>
+<h3 id="ben-ci-jia-gou-sheng-ji-si-lu">本次架构升级思路</h3>
+<ul>
+<li><strong>A 组（axum/warp/poem/tide）</strong>：单 crate + 版本 feature</li>
+<li><strong>B 组（actix/rocket/salvo/ntex/gotham）</strong>：<code>-core</code> + <code>-vN</code> + facade</li>
+</ul>
+<h3 id="jie-guo">结果</h3>
+<ul>
+<li>用户迁移路径更清晰</li>
+<li>插件内部耦合下降，后续扩展更稳</li>
+<li>大版本支持可以“增量演进”，不是“全量推倒”</li>
+</ul>
+<h3 id="guo-qu-zen-me-yong-shi-yi">过去怎么用（示意）</h3>
+<p>业务 <code>Cargo.toml</code> 里写死一套框架大版本，插件往往只跟其中一条线对齐；团队想从 Axum 0.7 升到 0.8、或 Actix 3 升到 4 时，经常遇到「插件与主项目类型树/依赖树冲突、只能等插件发新版或自己 fork」。</p>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering"># 过去：框架与插件强绑定一条线，大版本升级容易“牵一发而动全身”
+axum = &quot;0.7&quot;
+# 假设当时示例/文档都按 0.7 写，换 0.8 后中间件与 Request 类型要对齐大量细节</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li></ul></pre>
+<h3 id="xian-zai-zen-me-yong-shi-yi">现在怎么用（示意）</h3>
+<p><strong>A 组</strong>（Axum / Warp / Poem / Tide）：仍是 <strong>单一</strong><code>sa-token-plugin-*</code> crate，用 <strong>框架绑定 feature</strong>（如 <code>axum-08</code>）选对大版本，存储再用 <code>memory</code> / <code>redis</code> 等。</p>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">sa-token-plugin-axum = { version = &quot;0.1.13&quot;, features = [&quot;axum-08&quot;, &quot;redis&quot;] }</code><ul class="code-line-box"><li>1</li></ul></pre>
+<p><strong>B 组</strong>（Actix / Rocket / Salvo / Ntex / Gotham）： <strong>门面 crate</strong> + <code>features</code> 选具体大版本（如 <code>v4</code>、<code>v05</code>），共享逻辑在 <code>*-core</code>，版本差异在 <code>*-v*</code>。</p>
+<pre v-pre data-lang="toml"><code class="lang-toml language-toml has-numbering">sa-token-plugin-actix-web = { version = &quot;0.1.13&quot;, features = [&quot;v4&quot;, &quot;redis&quot;] }</code><ul class="code-line-box"><li>1</li></ul></pre>
+<hr />
+<h2 id="2-ren-zheng-lian-lu-tong-yi-dao-run-auth-flow">2) 认证链路统一到 <code>run_auth_flow</code></h2>
+<p>把“token 提取 + 鉴权决策 + context 生成”做成统一流程，下沉到核心层；插件层只做框架相关写入和响应。</p>
+<p>直接收益：</p>
+<ul>
+<li>各框架行为更一致</li>
+<li>减少重复逻辑和分叉 bug</li>
+<li>后续优化可以一处改动，多处生效</li>
+</ul>
+<h3 id="guo-qu-zen-me-yong-shi-yi-2">过去怎么用（示意）</h3>
+<p>每个插件中间件里各自实现「从 Header/Cookie 取 token → 调 <code>SaTokenManager</code> 校验 → 拼 <code>SaTokenContext</code> → 写 extensions / 401」；逻辑相似但复制多，行为容易慢慢不一致。</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 过去：伪代码 — 各框架各写一套，核心层没有统一入口
+// let token = self.extract_token_from_request(&amp;req);  // 每插件一份
+// let auth = self.process_path_and_validate(token).await;
+// let ctx = self.build_context(&amp;auth);
+// SaTokenContext::set_current(ctx);
+// let res = inner.call(req).await;
+// SaTokenContext::clear();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
+<h3 id="xian-zai-zen-me-yong-shi-yi-2">现在怎么用（示意）</h3>
+<p>核心层提供 <strong><code>run_auth_flow</code></strong>，一次走完「提取 token → 路径规则/默认校验 → 生成上下文」；插件只负责把实现了 <strong><code>SaRequest</code></strong> 的请求快照喂进去（如 Axum 的 <code>AxumRequestSnapshot::capture(&amp;request)</code>），以及把 <code>token</code> / <code>login_id</code> 写进框架自己的扩展位，并用 <strong><code>AuthFlowResult::run</code></strong> 把后续 handler 包在正确的作用域里（与第 3 点的 task-local 一致）。</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 现在：与 sa-token-plugin-axum 0.8 中间件同思路的精简示意
+let snapshot = AxumRequestSnapshot::capture(&amp;request);
+let flow = run_auth_flow(&amp;snapshot, &amp;state.manager, path_config.as_ref()).await;
+
+if flow.should_reject() {
+    return Ok(unauthorized_response());
+}
+if let Some(t) = &amp;flow.token {
+    request.extensions_mut().insert(t.clone());
+}
+if let Some(id) = &amp;flow.login_id {
+    request.extensions_mut().insert(id.clone());
+}
+
+flow.run(inner.call(request)).await</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li></ul></pre>
+<hr />
+<h2 id="3-shang-xia-wen-chuan-bo-an-quan-sheng-ji-lu-xian-thread-loc">3) 上下文传播安全升级路线：thread-local -&gt; task-local</h2>
+<p>已明确迁移方案，用于修复异步多线程 runtime 下跨 <code>await</code> 的上下文一致性风险。</p>
+<p>这是典型“用户不一定看得见，但线上稳定性强相关”的改进。</p>
+<p>这种方向说明项目不只是在“加功能”，也在持续做底层可靠性建设。</p>
+<h3 id="guo-qu-zen-me-yong-shi-yi-3">过去怎么用（示意）</h3>
+<p>请求级上下文若主要依赖 <strong>thread-local</strong> 的 <code>set_current</code> / <code>clear</code>，在 <strong>异步、多线程调度</strong> 的 runtime 里，任务可能在不同 worker 线程上续跑；跨过 <code>await</code> 后若仍假设“同一线程上的 TLS”，存在上下文丢失或串台的理论风险，中间件里需要非常小心配对。</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 过去：示意 — 依赖线程局部 + 手动配对，跨 await 场景要自证安全
+// SaTokenContext::set_current(ctx);
+// let response = inner.call(request).await;
+// SaTokenContext::clear();</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li></ul></pre>
+<h3 id="xian-zai-zen-me-yong-shi-yi-3">现在怎么用（示意）</h3>
+<p>路线是 <strong>task-local（及 <code>SaTokenContext::scope</code>）</strong>：与异步任务绑定， <strong>可安全跨 <code>await</code></strong>。业务侧推荐通过框架插件已接好的链路走；核心 API 上，<code>AuthFlowResult::run</code> 内部即使用 <code>SaTokenContext::scope</code> 执行后续 <code>Future</code>。</p>
+<pre v-pre data-lang="rust"><code class="lang-rust language-rust has-numbering">// 现在：与核心实现一致 — scope 包裹整个后续异步过程
+// pub async fn run&lt;F, R&gt;(self, fut: F) -&gt; R
+// where F: Future&lt;Output = R&gt; {
+//     SaTokenContext::scope(self.context, fut).await
+// }
+
+// 插件里典型写法就是一行：
+flow.run(inner.call(request)).await</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li></ul></pre>
+<p>若你在自定义中间件里需要同样语义，可直接使用 <strong><code>SaTokenContext::scope(ctx, async { ... }).await</code></strong>，避免手写 <code>set_current</code> / <code>clear</code> 的配对逻辑。</p>
+<hr />
+<h2 id="chang-jing-hua-ni-ke-yi-zen-me-luo-di">场景化：你可以怎么落地</h2>
+<h3 id="chang-jing-a-zhong-hou-tai-guan-li-xi-tong">场景 A：中后台管理系统</h3>
+<ul>
+<li>登录态 + 角色权限 + 路由保护</li>
+<li>宏注解和中间件搭配，减少重复 if/else 校验</li>
+</ul>
+<h3 id="chang-jing-b-saas-duo-duan-deng-lu">场景 B：SaaS 多端登录</h3>
+<ul>
+<li>Web / App / 小程序多端并行</li>
+<li>设备级登录控制 + 踢下线 + 在线状态管理</li>
+</ul>
+<h3 id="chang-jing-c-kai-fang-ping-tai">场景 C：开放平台</h3>
+<ul>
+<li>OAuth2 授权码模式</li>
+<li>客户端注册、scope 控制、token 刷新/撤销</li>
+</ul>
+<h3 id="chang-jing-d-qi-ye-tong-yi-shen-fen">场景 D：企业统一身份</h3>
+<ul>
+<li>SSO 统一登录入口</li>
+<li>多系统票据校验</li>
+<li>统一登出保证安全闭环</li>
+</ul>
+<h3 id="chang-jing-e-wei-fu-wu-jia-gou">场景 E：微服务架构</h3>
+<ul>
+<li>分布式 Session 跨服务共享</li>
+<li>网关和业务服务统一鉴权上下文</li>
+</ul>
+<h3 id="chang-jing-f-shi-shi-xi-tong">场景 F：实时系统</h3>
+<ul>
+<li>WebSocket 握手认证</li>
+<li>在线用户追踪与实时消息推送</li>
+</ul>
+<hr />
+<h2 id="dui-tuan-dui-zui-you-jia-zhi-de-dian-guan-li-zhe-shi-jiao">对团队最有价值的点（管理者视角）</h2>
+<ul>
+<li><strong>降低重复建设</strong>：不同项目、不同框架都可复用统一方案</li>
+<li><strong>降低维护成本</strong>：认证授权逻辑收敛，升级更可控</li>
+<li><strong>提高安全下限</strong>：内置 Nonce、Refresh、错误体系、路径鉴权</li>
+<li><strong>提升交付效率</strong>：文档体系完整，示例可直接跑通</li>
+</ul>
+<hr />
+<h2 id="dui-kai-fa-zhe-zui-you-jia-zhi-de-dian-gong-cheng-shi-shi-ji">对开发者最有价值的点（工程师视角）</h2>
+<ul>
+<li>API 心智统一，不容易“每个项目都重学一遍”</li>
+<li>从最小可用到复杂场景，都是同一套模型</li>
+<li>插件式接入 + Builder 配置，能快速起步</li>
+<li>事件监听机制非常适合接审计、风控、告警</li>
+</ul>
+<hr />
+<h2 id="xing-dong-jian-yi">行动建议</h2>
+<p>推荐上手路径（30-60 分钟）：</p>
+<ol>
+<li>选你当前框架的 <code>sa-token-plugin-*</code> 跑一个最小 demo</li>
+<li>用 <code>StpUtil</code> 完成登录 + 权限 + 角色 + session 闭环</li>
+<li>再按业务扩展 JWT / OAuth2 / SSO / WebSocket 模块</li>
+<li>最后接事件监听做审计与风控</li>
+</ol>
+<p>这样做，你会很快判断它是否适合你的团队长期作为认证授权底座。</p>
+<hr />
+<h2 id="kai-yuan-di-zhi">开源地址</h2>
+<ul>
+<li>GitHub：https://github.com/sa-tokens/sa-token-rust</li>
+<li>Gitee：https://gitee.com/sa-tokens/sa-token-rust</li>
+<li>AtomGit：https://atomgit.com/sa-tokens/sa-token-rust</li>
+</ul>
+					</div>
+					<div class="blog-post-nav">
+<a class="blog-post-nav-prev" href="../featured/shi-yong-sa-token-cors-ce-lve-chu-li-kua-yu-wen-ti-san-zhong-fang-shi-quan-ban.html">← 使用 Sa-Token CORS 策略处理跨域问题（三种方式全版）</a>
+</div>
+				</div>
+			</div>
+		</main>
+		<div class="doc-right-bj-box">
+			<div class="blog-right-toc-panel">
+				<div class="doc-right-bj-box-title">章节目录</div>
+				<div class="blog-article-toc"><ul class="blog-toc-list">
+<li class="toc-h2"><a href="#xian-kan-jie-lun">先看结论</a></li>
+<li class="toc-h2"><a href="#zhe-tao-kuang-jia-dao-di-jie-jue-le-shen-me">这套框架到底解决了什么</a></li>
+<li class="toc-h3"><a href="#1-cong-gong-neng-dian-dui-qi-bian-cheng-ti-xi-hua-ren-zheng">1) 从“功能点堆砌”变成“体系化认证授权”</a></li>
+<li class="toc-h3"><a href="#2-fu-gai-9-da-rust-web-kuang-jia-tong-yi-jie-ru-ti-yan">2) 覆盖 9 大 Rust Web 框架，统一接入体验</a></li>
+<li class="toc-h3"><a href="#3-mian-xiang-zhen-shi-sheng-chan-chang-jing-bu-zhi-hello-wor">3) 面向真实生产场景，不只“Hello World 登录”</a></li>
+<li class="toc-h2"><a href="#gong-neng-quan-jing-tu-zhi-guan-ban">功能全景图（直观版）</a></li>
+<li class="toc-h2"><a href="#cong-readme-he-shi-li-kan-ta-wei-shen-me-shang-shou-kuai">从 README 和示例看，它为什么“上手快”</a></li>
+<li class="toc-h3"><a href="#yi-xing-yi-lai-yi-xing-dao-ru-cha-jian-mo-shi">一行依赖、一行导入（插件模式）</a></li>
+<li class="toc-h3"><a href="#stp-util-demo-zhan-shi-de-shi-zhen-shi-ye-wu-bi-huan">stp_util_demo 展示的是真实业务闭环</a></li>
+<li class="toc-h2"><a href="#zhe-ci-ban-ben-yan-jin-zui-zhi-de-shuo-de-san-jian-shi">这次版本演进最值得说的三件事</a></li>
+<li class="toc-h2"><a href="#1-duo-ban-ben-kuang-jia-shi-pei-zhong-gou-jie-jue-sheng-ji-j">1) 多版本框架适配重构：解决“升级就炸”问题</a></li>
+<li class="toc-h3"><a href="#guo-qu-chang-jian-tong-dian">过去常见痛点</a></li>
+<li class="toc-h3"><a href="#ben-ci-jia-gou-sheng-ji-si-lu">本次架构升级思路</a></li>
+<li class="toc-h3"><a href="#jie-guo">结果</a></li>
+<li class="toc-h3"><a href="#guo-qu-zen-me-yong-shi-yi">过去怎么用（示意）</a></li>
+<li class="toc-h3"><a href="#xian-zai-zen-me-yong-shi-yi">现在怎么用（示意）</a></li>
+<li class="toc-h2"><a href="#2-ren-zheng-lian-lu-tong-yi-dao-run-auth-flow">2) 认证链路统一到 run_auth_flow</a></li>
+<li class="toc-h3"><a href="#guo-qu-zen-me-yong-shi-yi-2">过去怎么用（示意）</a></li>
+<li class="toc-h3"><a href="#xian-zai-zen-me-yong-shi-yi-2">现在怎么用（示意）</a></li>
+<li class="toc-h2"><a href="#3-shang-xia-wen-chuan-bo-an-quan-sheng-ji-lu-xian-thread-loc">3) 上下文传播安全升级路线：thread-local -&amp;gt; task-local</a></li>
+<li class="toc-h3"><a href="#guo-qu-zen-me-yong-shi-yi-3">过去怎么用（示意）</a></li>
+<li class="toc-h3"><a href="#xian-zai-zen-me-yong-shi-yi-3">现在怎么用（示意）</a></li>
+<li class="toc-h2"><a href="#chang-jing-hua-ni-ke-yi-zen-me-luo-di">场景化：你可以怎么落地</a></li>
+<li class="toc-h3"><a href="#chang-jing-a-zhong-hou-tai-guan-li-xi-tong">场景 A：中后台管理系统</a></li>
+<li class="toc-h3"><a href="#chang-jing-b-saas-duo-duan-deng-lu">场景 B：SaaS 多端登录</a></li>
+<li class="toc-h3"><a href="#chang-jing-c-kai-fang-ping-tai">场景 C：开放平台</a></li>
+<li class="toc-h3"><a href="#chang-jing-d-qi-ye-tong-yi-shen-fen">场景 D：企业统一身份</a></li>
+<li class="toc-h3"><a href="#chang-jing-e-wei-fu-wu-jia-gou">场景 E：微服务架构</a></li>
+<li class="toc-h3"><a href="#chang-jing-f-shi-shi-xi-tong">场景 F：实时系统</a></li>
+<li class="toc-h2"><a href="#dui-tuan-dui-zui-you-jia-zhi-de-dian-guan-li-zhe-shi-jiao">对团队最有价值的点（管理者视角）</a></li>
+<li class="toc-h2"><a href="#dui-kai-fa-zhe-zui-you-jia-zhi-de-dian-gong-cheng-shi-shi-ji">对开发者最有价值的点（工程师视角）</a></li>
+<li class="toc-h2"><a href="#xing-dong-jian-yi">行动建议</a></li>
+<li class="toc-h2"><a href="#kai-yuan-di-zhi">开源地址</a></li>
+</ul></div>
+			</div>
+						<div class="doc-right-more-item">
+				<div class="ad-box">
+					<div class="ad-title">
+						<span class="ad-tips">推荐</span>
+						<span class="ad-tips ad-close">关闭</span>
+					</div>
+					<div class="top-ad-box" style="margin-bottom: 12px;">
+						<a href="https://sa-max.cn?way=st_r" target="_blank">
+							<div class="mad-bg-box">
+								<div class="mad-context-box">
+									<img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
+									<span class="mad-text">
+										<b>Sa-Token 商业版：轻松搭建 SSO 单点登录、OAuth2.0 统一认证、API Key 认证。全源码交付、可二开。</b>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="ew-wa">
+					<p>当前博客已开放版权，所有人均可免费转载，无需联系 Sa-Token 团队获取授权。只需要在转载时保留底部 Sa-Token 官网链接 + 开源仓库链接即可。</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="foot-box blog-foot-box">
+		<div class="s-width" style="text-align: center;">
+			Copyright ©2026 Sa-Token java 权限认证 | sa-token.com |
+			<a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备18046274号-5</a> |
+			<a href="https://beian.mps.gov.cn/#/query/webSearch?code=37011202002956" rel="noreferrer" target="_blank" style="display:inline-flex;align-items:center;gap:4px;vertical-align:middle;">
+				<img src="/big-file/index/gonganbeian.png" alt="" style="width:16px;height:16px;flex-shrink:0;">鲁公网安备37011202002956号
+			</a>
+		</div>
+	</div>
+
+	<script src="../../static/jquery.min.js"></script>
+	<script src="../../static/layer-v3.1.1/layer.js"></script>
+	<script src="../../static/translate.js"></script>
+	<script src="../../static/sa-translate.js"></script>
+	<script src="../common/prism-core.min.js"></script>
+	<script src="../common/prism-clike.min.js"></script>
+	<script src="../common/prism-markup.min.js"></script>
+	<script src="../common/prism-javascript.min.js"></script>
+	<script src="../common/prism-css.min.js"></script>
+	<script src="../common/prism-bash.min.js"></script>
+	<script src="../../static/prism/prism-java.min.js"></script>
+	<script src="../../static/prism/prism-gradle.min.js"></script>
+	<script src="../../static/prism/prism-yaml.min.js"></script>
+	<script src="../../static/prism/prism-properties.min.js"></script>
+	<script src="../../static/prism/prism-json.min.js"></script>
+	<script src="../../static/prism/prism-typescript.min.js"></script>
+	<script src="../../static/prism/prism-rust.min.js"></script>
+	<script src="../../static/prism/prism-toml.min.js"></script>
+	<script src="../../static/zoom-image.min.js"></script>
+	<script src="../../static/all-version-common.js"></script>
+	<script src="../common/blog-sidebar.js"></script>
+	<script src="../common/blog.js"></script>
+</body>
+</html>

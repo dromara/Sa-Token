@@ -1,0 +1,20 @@
+{
+  "name": "sa-token-doc",
+  "version": "1.46.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "devDependencies": {
+    "medium-zoom": "^1.1.0",
+    "vitepress": "2.0.0-alpha.19",
+    "vitepress-plugin-tabs": "^0.9.1",
+    "vue": "^3.5.42"
+  }
+}
