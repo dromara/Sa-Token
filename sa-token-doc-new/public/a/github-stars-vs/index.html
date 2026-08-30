@@ -5,7 +5,7 @@
     <meta name="viewport"
     	content="width=device-width, initial-scale=1.0">
     <title>GitHub仓库Star数量对比</title>
-    <script src="./echarts.min-5.4.3.js"></script>
+    <script defer src="./echarts.min-5.4.3.js"></script>
     <style>
         * {
             margin: 0;
@@ -140,27 +140,32 @@
             }
             
             starsChart = echarts.init(chartDom);
+            window.addEventListener('resize', function() {
+                starsChart.resize();
+            });
             return starsChart;
         }
         
         // 页面加载完成后执行
-        window.onload = async function() {
+        window.onload = function() {
             console.log("页面加载完成，开始初始化...");
             
-            // 初始化图表
             starsChart = initChart();
             if (!starsChart) {
                 console.error("ECharts初始化失败");
                 return;
             }
             
-            // 显示加载状态
-            showLoading(true);
+            repoData = repos.map(repo => ({
+                ...repo,
+                stars: fallbackStarsByRepoName[repo.name],
+                error: null
+            }));
+            updateComparisonText();
+            updateChart();
+            showLoading(false);
             
-            // 获取数据
-            await fetchAllStars();
-            
-            // 每30分钟自动刷新数据
+            fetchAllStars();
             setInterval(fetchAllStars, 30 * 60 * 1000);
         };
         
@@ -192,12 +197,8 @@
                 // 更新UI
                 updateComparisonText();
                 updateChart();
-                showLoading(false);
-                
             } catch (error) {
                 console.error('获取数据时发生错误:', error);
-                document.querySelector('.comparison-text').innerHTML = "数据加载失败，请稍后重试";
-                showLoading(false);
             }
         }
         
@@ -396,12 +397,6 @@
             try {
                 starsChart.setOption(option);
                 console.log("图表更新成功");
-                
-                // 响应窗口大小变化
-                window.addEventListener('resize', function() {
-                    starsChart.resize();
-                });
-                
             } catch (error) {
                 console.error("更新图表时发生错误:", error);
                 

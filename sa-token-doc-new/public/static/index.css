@@ -201,6 +201,15 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .re-text a{color: #0969da; text-decoration: none;}
 .re-text a:hover{border-bottom: 1px #0969da solid;}
 
+.stars-comparison-frame{width: 1000px; height: 700px; margin: 0 auto; position: relative;}
+.stars-comparison-iframe{display: block; position: relative; z-index: 0;}
+.stars-comparison-loading{position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #777; background: linear-gradient(90deg, #f2f3f5 25%, #e7e9ed 50%, #f2f3f5 75%); background-size: 200% 100%; animation: s-case-skeleton 1.2s ease-in-out infinite; transition: opacity .2s;}
+.stars-comparison-spinner{width: 36px; height: 36px; border: 3px solid rgba(74, 144, 226, 0.2); border-top-color: #4a90e2; border-radius: 50%; animation: stars-comparison-spin 1s linear infinite;}
+.stars-comparison-frame.is-loaded .stars-comparison-loading{visibility: hidden; opacity: 0;}
+@keyframes stars-comparison-spin{
+	to{transform: rotate(360deg);}
+}
+
 /* 渐变色文字（兼容搜狗等 WebKit 内核浏览器） */
 .s-gradient-text{
 	display: inline-block;
@@ -224,12 +233,20 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 .s-case{border: 1px #e5e5e5 solid; flex: 0 0 31.5%; margin-top: 30px; text-align: left; box-sizing: border-box; padding-bottom: 16px; overflow: hidden;}
 .s-case{position: relative; transition: all 0.2s; background-color: #FFF;}
 .s-case-link{display: block; width: 100%; height: 0px; padding-bottom: 50%; position: relative; overflow: hidden;}
+.s-case-link,.com-box a{background: linear-gradient(90deg, #f2f3f5 25%, #e7e9ed 50%, #f2f3f5 75%); background-size: 200% 100%; animation: s-case-skeleton 1.2s ease-in-out infinite;}
 .s-case-link img{width: 100%; height: 100%; object-fit: cover; object-position: center; position: absolute;}
+.s-case-link.is-loaded,.com-box a.is-loaded{background: none; animation: none;}
 .s-case-title,.s-case-intro{padding: 0 16px;}
 .s-case-title{margin-top: 20px; font-size: 18px; font-weight: 400; color: #333; font-family: "microsoft yahei";}
 .s-case-intro{margin-top: 15px; font-size: 14px; line-height: 20px; color: #777; word-break:break-all;}
 .s-author{color: #ff5722; border: 1px #ff5722 solid; position: absolute; right: 20px; display: inline-block;}
 .s-author{padding: 0 5px; font-size: 12px; transform: translate(0, -25px);}
+@keyframes s-case-skeleton{
+	to{background-position: -200% 0;}
+}
+@media (prefers-reduced-motion: reduce){
+	.s-case-link,.com-box a,.stars-comparison-loading,.stars-comparison-spinner{animation: none;}
+}
 
 
 /* 悬浮动画 */
