@@ -2,6 +2,12 @@
 window.SA_TOKEN_BLOG_COMMUNITY = [
   {
     "platform": "公众号",
+    "title": "别再无脑上 Spring Security 了，Sa-Token 不香吗？",
+    "url": "https://mp.weixin.qq.com/s/h8E4P566d4-Qv2yTIYmC3A",
+    "date": "2026-08-28"
+  },
+  {
+    "platform": "公众号",
     "title": "Sa-Token 权限认证：替代Spring Security的轻量方案 ，从登录鉴权到微服务网关统一认证",
     "url": "https://mp.weixin.qq.com/s/vgQev9SufoaLVA0wkGh8OQ",
     "date": "2026-08-20"
