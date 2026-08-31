@@ -182,6 +182,7 @@ export const sidebar: DefaultTheme.Sidebar = [
       { "text": "常见问题排查",                       "link": "/more/common-questions.html" },
       { "text": "框架名词解释",                       "link": "/more/noun-intro.html" },
       { "text": "Sa-Token功能结构图",                 "link": "/fun/auth-flow.html" },
+      { "text": "Sa-Token版本更新流程",               "link": "/fun/update-version-flow.html" },
       { "text": "全局 Log 输出",                      "link": "/fun/log.html" },
       { "text": "异步 & Mock 上下文",                 "link": "/fun/async--mock.html" },
       { "text": "未登录场景值详解",                   "link": "/fun/not-login-scene.html" },
