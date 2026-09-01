@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 单点登录简述"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,单点登录简述,单点登录,SSO"
+
 description: "Sa-Token SSO 单点登录：一次登录打通多个子系统，介绍统一认证中心与三种对接模式的适用场景。"
 ---
 

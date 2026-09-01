@@ -1,4 +1,6 @@
 ---
+title: "Sa-Token 公众号合作"
+keywords: "Sa-Token,sa-token,satoken,公众号,互推合作"
 description: "与 Sa-Token 做公众号互推的合作说明：转载仓库介绍并留下官网链接，可获得文档与社群露出。"
 ---
 

@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 为 Scope 划分等级"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,为 Scope 划分等级,OAuth2.0,OAuth2"
+description: "OAuth2 Scope 等级划分：通过配置为 scope 设定高级、低级权限，控制 token 授权粒度。"
+---
+
 # OAuth2 - 为 Scope 划分等级
 
 

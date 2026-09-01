@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 技术选型：SSO 与 OAuth2 对比"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,技术选型：SSO 与 OAuth2 对比,附录"
+description: "SSO 与 OAuth2 选型对比：统一认证中心场景下两种协议的功能差异与适用建议。"
+---
+
 # 技术选型：[ 单点登录 ] VS [ OAuth2.0 ]
 
 --- 

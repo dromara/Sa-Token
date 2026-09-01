@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 异常细分状态码"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,异常细分状态码,附录"
+description: "Sa-Token 异常细分状态码：NotLoginException、NotPermissionException 等类型与状态码对照。"
+---
+
 # 异常细分状态码
 
 --- 

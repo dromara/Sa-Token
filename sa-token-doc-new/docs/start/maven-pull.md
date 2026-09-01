@@ -1,4 +1,6 @@
 ---
+title: "Sa-Token Maven 依赖拉取失败排查"
+keywords: "Sa-Token,sa-token,satoken,Maven,依赖下载,阿里云镜像"
 description: "Maven 拉不下 Sa-Token 依赖时的排查：清理残包、检查阿里云镜像，以及本地仓库路径。"
 ---
 

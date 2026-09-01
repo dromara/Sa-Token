@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Http Basic/Digest 认证"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Http Basic/Digest 认证,深入"
+description: "Sa-Token Http Basic/Digest 认证：注解与 API 方式启用基础 HTTP 认证，简单场景快速鉴权。"
+---
+
 # Http Basic 认证 
 
 Http Basic 是 http 协议中最基础的认证方式，其有两个特点：

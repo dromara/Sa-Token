@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 踢人下线"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,踢人下线,基础,Java权限认证"
+
 description: "Sa-Token 踢人下线：按账号、指定端或 Token 强制注销或踢下线，用于后台治理会话。"
 ---
 

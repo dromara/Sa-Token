@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 自定义 grant_type"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义 grant_type,OAuth2.0,OAuth2"
+description: "OAuth2 自定义 grant_type：扩展 /oauth2/token 授权模式，除 code 与 password 外的令牌获取方式。"
+---
+
 # OAuth2-自定义权限处理器 
 
 

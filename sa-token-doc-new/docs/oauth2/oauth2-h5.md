@@ -1,3 +1,9 @@
+---
+title: "Sa-Token OAuth2-Server端前后台分离"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-Server端前后台分离,OAuth2.0,OAuth2"
+description: "OAuth2-Server 前后端分离：authorize、token 等接口的 H5/SPA 对接改造要点。"
+---
+
 # OAuth2-Server 端前后台分离
 
 ### 1、设计分析

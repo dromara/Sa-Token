@@ -1,4 +1,6 @@
 ---
+title: "Sa-Token 不同 SSO Client 配置不同秘钥"
+keywords: "Sa-Token,sa-token,satoken,SSO,单点登录,Client秘钥"
 description: "为不同 SSO Client 配置不同接口调用秘钥，用于 ticket 校验与单点注销时的 HTTP 签名。"
 ---
 

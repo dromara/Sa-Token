@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 路由拦截鉴权"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,路由拦截鉴权,基础,Java权限认证"
+
 description: "Sa-Token 路由拦截鉴权：拦截器统一做登录校验，除登录接口外全部拦截，免去每个方法重复加注解。"
 ---
 

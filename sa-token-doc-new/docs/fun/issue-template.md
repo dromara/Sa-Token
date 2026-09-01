@@ -1,3 +1,9 @@
+---
+title: "Sa-Token issue 提问模板"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,issue 提问模板,附录"
+description: "Sa-Token issue 提问模板：提交 Bug 前先查 FAQ，按模板附上版本号、复现步骤与关键日志。"
+---
+
 # issue 提问模板
 
 在线提问链接：[Gitee issue](https://gitee.com/dromara/sa-token/issues)、[GitHub issue](https://github.com/dromara/sa-token/issues)

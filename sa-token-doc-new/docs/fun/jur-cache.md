@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 参考：把权限放在缓存里"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,参考：把权限放在缓存里,附录"
+description: "Sa-Token 权限缓存参考：将角色权限放入 Redis 等缓存，降低 StpInterface 数据库访问压力。"
+---
+
 # 参考：将权限数据放在缓存里
 前面我们讲解了如何通过`StpInterface`接口注入权限数据，框架默认是不提供缓存能力的，如果你想减小数据库的访问压力，则需要将权限数据放到缓存中
 

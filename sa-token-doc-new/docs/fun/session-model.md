@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Session模型详解"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Session模型详解,附录"
+description: "Sa-Token Session 模型：Account-Session、Token-Session 分层设计与 HttpSession 的差异说明。"
+---
+
 # Sa-Token 中的 Session会话 模型详解
 
 --- 

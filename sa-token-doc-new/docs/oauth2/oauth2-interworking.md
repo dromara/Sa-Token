@@ -1,3 +1,9 @@
+---
+title: "Sa-Token OAuth2-与登录会话实现数据互通"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-与登录会话实现数据互通,OAuth2.0,OAuth2"
+description: "OAuth2 与登录会话互通：资源令牌 accesstoken 与会话令牌 satoken 的数据打通方案。"
+---
+
 # OAuth2 与登录会话实现数据互通
 
 --- 

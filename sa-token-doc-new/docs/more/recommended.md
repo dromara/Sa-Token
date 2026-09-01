@@ -1,4 +1,6 @@
 ---
+title: "Sa-Token 推荐阅读"
+keywords: "Sa-Token,sa-token,satoken,推荐阅读,博客"
 description: "Sa-Token 推荐阅读：权限模型、OAuth2 与前端安全相关文章；完整列表已迁至官方博客。"
 ---
 

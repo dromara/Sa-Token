@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 自定义 Token 风格"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义 Token 风格,深入"
+
 description: "自定义 Sa-Token 的 Token 生成风格：默认 UUID，也可改为随机字符串、tik 风格或自行实现策略。"
 ---
 

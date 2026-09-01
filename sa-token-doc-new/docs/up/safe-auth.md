@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 二级认证"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,二级认证,深入"
+description: "Sa-Token 二级认证：敏感操作前二次验证密码或凭证，如删除仓库前的安全确认。"
+---
+
 # 二级认证
 
 在某些敏感操作下，我们需要对已登录的会话进行二次验证。

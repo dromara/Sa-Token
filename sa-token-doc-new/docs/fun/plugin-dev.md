@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 插件开发指南"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,插件开发指南,插件"
+description: "Sa-Token 插件开发指南：在不改核心架构前提下扩展 SaTokenDao、上下文与鉴权逻辑。"
+---
+
 # Sa-Token 插件开发指南 
 
 <!-- > 注：为 Sa-Token 提交插件请在 sa-token-three-plugin 仓库进行：[点击跳转](https://gitee.com/sa-tokens/sa-token-three-plugin) -->

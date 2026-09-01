@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 登录认证"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,登录认证,基础,Java权限认证"
+
 description: "Sa-Token 登录认证：调用 StpUtil.login(id) 建立会话，覆盖登录、注销、Token 有效期与多端登录。"
 ---
 

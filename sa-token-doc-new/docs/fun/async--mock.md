@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 异步 & Mock 上下文"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,异步 & Mock 上下文,附录"
+description: "Sa-Token 异步与 Mock 上下文：在定时任务、MQ、单元测试中安全调用 StpUtil 等 Web 上下文 API。"
+---
+
 # 异步 & Mock 上下文
 
 ### 异步上下文

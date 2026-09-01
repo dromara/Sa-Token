@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 仓库目录"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,仓库目录,框架设计"
+description: "Sa-Token 仓库目录：core、starter、plugin、demo 等模块职责与 Awesome-Sa-Token 生态介绍。"
+---
+
 # 仓库目录介绍
 
 --- 

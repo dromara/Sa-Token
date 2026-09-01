@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 平台中心跳转模式"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,平台中心跳转模式,单点登录,SSO"
+description: "SSO 平台中心跳转模式：认证中心作为统一入口，点击子系统链接免登录进入。"
+---
+
 # SSO 平台中心跳转模式，点连接跳入子系统
 
 --- 

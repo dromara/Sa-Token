@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 密码加密"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,密码加密,深入"
+description: "Sa-Token 密码加密模块：封装常见加密算法，配合登录认证完成密码安全存储。"
+---
+
 # 密码加密
 
 严格来讲，密码加密不属于 [权限认证] 的范畴，但是对于大多数系统来讲，密码加密又是安全认证不可或缺的部分，

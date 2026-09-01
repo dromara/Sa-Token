@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token StpUtil-鉴权工具类"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,StpUtil-鉴权工具类,API手册"
+
 description: "StpUtil 鉴权工具类 API：登录、注销、权限、Session、Token 读写等 Sa-Token 核心方法一览。"
 ---
 

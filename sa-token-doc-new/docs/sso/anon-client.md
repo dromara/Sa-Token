@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 匿名 client 接入"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,匿名 client 接入,单点登录,SSO"
+description: "Sa-Token 匿名 Client 接入：无明确 client 标识的应用如何参与 SSO 授权与 ticket 校验。"
+---
+
 # 匿名 Client 接入
 
 匿名 Client 就是指在客户端没有配置 `sso-client` 的应用，没有一个明确的 “Client” 标识名称。

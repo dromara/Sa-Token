@@ -1,3 +1,9 @@
+---
+title: "Sa-Token功能结构图"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Sa-Token功能结构图,附录"
+description: "Sa-Token 功能结构图与认证流程图：一图看懂登录鉴权、Session 管理与插件模块的整体架构。"
+---
+
 # Sa-Token 功能结构图
 
 --- 

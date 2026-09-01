@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 注解鉴权 SpEL 表达式"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,注解鉴权 SpEL 表达式,插件"
+description: "Sa-Token SpEL 注解鉴权：@SaCheckEL 使用 Spring 表达式实现灵活的条件权限校验。"
+---
+
 # SpEL 表达式注解鉴权
 
 Sa-Token 提供一个 `@SaCheckEL` 鉴权注解，该注解允许你使用 SpEL 表达式进行鉴权。

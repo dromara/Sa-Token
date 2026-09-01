@@ -1,3 +1,9 @@
+---
+title: "Sa-Token SSO-Server 认证中心开放 API 接口"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO-Server 认证中心开放 API 接口,单点登录,SSO"
+description: "SSO-Server 认证中心开放 API：ticket 校验、登录、注销等 HTTP 接口与对接方式。"
+---
+
 # SSO-Server 认证中心开放接口
 
 --- 

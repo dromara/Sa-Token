@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 全局侦听器"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,全局侦听器,深入"
+description: "Sa-Token 全局侦听器：订阅登录、注销、踢下线等事件，扩展审计与业务钩子逻辑。"
+---
+
 # 全局侦听器
 
 --- 

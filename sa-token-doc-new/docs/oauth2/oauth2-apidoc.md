@@ -1,3 +1,9 @@
+---
+title: "Sa-Token OAuth2-Server端开放 API 接口"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-Server端开放 API 接口,OAuth2.0,OAuth2"
+description: "OAuth2-Server 开放 API：authorize、token、userinfo 等标准端点 URL 与对接参数说明。"
+---
+
 # Sa-Token-OAuth2 Server端 API列表
 基于官方仓库的搭建示例，`OAuth2-Server`端会暴露出以下API，`OAuth2-Client`端可据此文档进行对接  
 

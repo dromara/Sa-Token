@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 分布式Session会话"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,分布式Session会话,微服务,微服务鉴权"
+
 description: "微服务下的 Sa-Token 分布式 Session：用 Redis 等共享会话，避免请求落到不同节点时登录态丢失。"
 ---
 

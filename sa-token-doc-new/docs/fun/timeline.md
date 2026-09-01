@@ -1,3 +1,9 @@
+---
+title: "Sa-Token开源大事记"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Sa-Token开源大事记,附录"
+description: "Sa-Token 开源大事记：框架自 2020 年开源以来的版本里程碑与社区成长记录。"
+---
+
 # Sa-Token 开源大事记
 
 --- 

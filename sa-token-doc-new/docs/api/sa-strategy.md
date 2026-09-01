@@ -1,3 +1,9 @@
+---
+title: "Sa-Token SaStrategy-全局策略"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SaStrategy-全局策略,API手册"
+description: "SaStrategy 全局策略 API：从外部数据源动态读取 Sa-Token 配置，代理封装核心逻辑。"
+---
+
 # SaStrategy-全局策略
 
 SaStrategy-全局策略，核心逻辑的代理封装。

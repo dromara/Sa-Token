@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 集成 MongoDB 参考一"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成 MongoDB 参考一,附录"
+description: "Sa-Token 集成 MongoDB（一）：扩展 SaTokenDao 将 Session 持久化到 MongoDB，含 Spring Boot 3 示例。"
+---
+
 # Sa-Token 集成 MongoDB 
 --- 
 

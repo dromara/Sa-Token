@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 未登录场景值详解"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,未登录场景值详解,附录"
+description: "Sa-Token 未登录场景值：按 NotLoginException 细分未登录、被踢、被顶下线等场景定制处理逻辑。"
+---
+
 # NotLoginException 场景值
 
 本篇介绍如何根据`NotLoginException`异常的场景值，来定制化处理未登录的逻辑 <br/>

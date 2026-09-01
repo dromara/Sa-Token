@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token OAuth2.0简述"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2.0简述,OAuth2.0,OAuth2"
+
 description: "Sa-Token OAuth2.0 模块：比 SSO 多一层应用授权范围，适合开放平台与第三方接入，文内对比选型。"
 ---
 

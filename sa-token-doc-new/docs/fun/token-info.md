@@ -1,3 +1,9 @@
+---
+title: "Sa-Token TokenInfo参数详解"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,TokenInfo参数详解,附录"
+description: "Sa-Token TokenInfo 参数：tokenName、tokenValue、loginId、isLogin 等登录凭证字段说明。"
+---
+
 # SaTokenInfo 参数详解
 
 token信息Model: 用来描述一个token的常用参数

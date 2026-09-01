@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 依赖引入说明"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,依赖引入说明,微服务,微服务鉴权"
+description: "Sa-Token 微服务依赖引入：网关与子服务分别引入 Starter，避免父 pom 统一依赖导致鉴权异常。"
+---
+
 
 # 微服务中使用Sa-Token 依赖引入说明 
 

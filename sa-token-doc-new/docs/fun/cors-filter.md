@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 解决跨域问题"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,解决跨域问题,附录"
+description: "Sa-Token 跨域问题：前后端分离场景下 CORS 过滤器与 Sa-Token 鉴权协同配置方案。"
+---
+
 # 解决跨域问题 
 
 <!-- 参考：[https://blog.csdn.net/shengzhang_/article/details/119928794](https://blog.csdn.net/shengzhang_/article/details/119928794) -->

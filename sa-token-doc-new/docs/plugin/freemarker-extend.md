@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 和 Freemarker 集成"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,和 Freemarker 集成,插件"
+description: "Sa-Token 整合 Freemarker：页面标签方言，在模板中判断登录状态与权限码。"
+---
+
 # Freemarker 自定义标签 
 
 本插件的作用是让我们可以在 Freemarker 页面中使用 Sa-Token 自定义标签以及相关API。

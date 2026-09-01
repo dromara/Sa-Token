@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 全局过滤器"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,全局过滤器,深入"
+description: "Sa-Token 全局过滤器：用 SaServletFilter 实现全站路由拦截鉴权，替代拦截器方案。"
+---
+
 # 全局过滤器
 --- 
 

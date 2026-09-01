@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Quick-Login快速登录插件"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Quick-Login快速登录插件,插件"
+description: "Sa-Token Quick-Login：为零代码监控页等轻量系统快速注入登录页面与鉴权能力。"
+---
+
 # Sa-Token-Quick-Login 快速登录认证
 --- 
 

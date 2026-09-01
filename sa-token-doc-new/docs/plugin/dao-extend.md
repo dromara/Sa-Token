@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 缓存层扩展"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,缓存层扩展,插件"
+description: "Sa-Token 缓存层扩展：实现 SaTokenDao 接口，对接 Redis、MongoDB 等不同持久化中间件。"
+---
+
 # 缓存层扩展
 --- 
 

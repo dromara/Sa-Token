@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token OAuth2-Server搭建"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-Server搭建,OAuth2.0,OAuth2"
+
 description: "搭建 Sa-Token OAuth2-Server：从 hosts 映射、依赖引入到授权流程，附官方可运行 demo。"
 ---
 

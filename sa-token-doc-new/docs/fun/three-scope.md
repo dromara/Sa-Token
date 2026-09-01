@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 数据读写三大作用域"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,数据读写三大作用域,附录"
+description: "Sa-Token 数据读写三大作用域：SaStorage 请求域、SaSession 会话域与持久层职责划分。"
+---
+
 # 三大作用域 
 
 --- 

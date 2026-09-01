@@ -1,3 +1,9 @@
+---
+title: "Sa-Token SaSession-会话对象"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SaSession-会话对象,API手册"
+description: "SaSession 会话对象 API：Account-Session、Token-Session 数据读写与缓存组件用法说明。"
+---
+
 # SaSession-会话对象
 
 SaSession-会话对象，专业数据缓存组件。

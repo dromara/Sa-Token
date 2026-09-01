@@ -1,3 +1,9 @@
+---
+title: "Sa-Token OpenId 与 UnionId"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OpenId 与 UnionId,OAuth2.0,OAuth2"
+description: "OAuth2 OpenId 与 UnionId：clientId、openId、unionId 在授权流程中的含义与区别。"
+---
+
 # OpenId 与 UnionId
 
 <p><a class="case-btn case-btn-video" href="https://www.bilibili.com/video/BV1oz6AY5ERJ/" target="_blank">

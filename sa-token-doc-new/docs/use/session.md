@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot Session会话"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Session会话,基础,Java权限认证"
+
 description: "Sa-Token Session 会话：在登录态里缓存高频数据，区分 Account-Session、Token-Session 与自定义 Session。"
 ---
 

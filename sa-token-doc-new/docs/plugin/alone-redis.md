@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Alone独立Redis插件"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Alone独立Redis插件,插件,Redis"
+description: "Sa-Token Alone 独立 Redis：权限数据与业务缓存分库部署，降低读写冲突与访问压力。"
+---
+
 # Sa-Token-Alone-Redis 独立Redis插件
 --- 
 

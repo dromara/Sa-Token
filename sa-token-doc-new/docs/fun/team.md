@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 团队成员"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,团队成员,附录"
+description: "Sa-Token 团队成员：核心维护者与社区角色分工，含代码审核与 issue 处理职责。"
+---
+
 # 团队成员 
 
 

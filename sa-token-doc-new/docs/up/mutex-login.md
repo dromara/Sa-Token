@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 同端互斥登录"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,同端互斥登录,深入"
+
 description: "Sa-Token 同端互斥登录：同一类设备只允许一处在线，不同类型设备可同时登录，类似 QQ 多端策略。"
 ---
 

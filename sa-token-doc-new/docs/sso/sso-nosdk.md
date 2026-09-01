@@ -1,3 +1,9 @@
+---
+title: "Sa-Token NoSdk、ReSdk 模式与非 java 项目"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,NoSdk、ReSdk 模式与非 java 项目,单点登录,SSO"
+description: "SSO NoSdk 与非 Java 项目：纯 HTTP 对接认证中心，无需引入 Sa-Token 客户端 SDK。"
+---
+
 # SSO整合 - NoSdk、ReSdk 模式与非 java 项目
 
 ---

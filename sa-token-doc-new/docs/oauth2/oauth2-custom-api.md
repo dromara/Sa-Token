@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 自定义 API 路由"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义 API 路由,OAuth2.0,OAuth2"
+description: "OAuth2 自定义 API 路由：改写 authorize、token 等默认路径，灵活对接业务 URL 规范。"
+---
+
 # OAuth2-自定义 API 路由 
 
 ---

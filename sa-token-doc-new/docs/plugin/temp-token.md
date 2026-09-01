@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 临时 Token 认证"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,临时 Token 认证,插件"
+description: "Sa-Token 临时 Token：五分钟、半小时等短时授权场景，如邀请链接与一次性操作凭证。"
+---
+
 # 临时 Token 令牌认证  
 
 ---

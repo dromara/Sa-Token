@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 开启 OIDC 协议"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,开启 OIDC 协议,OAuth2.0,OAuth2"
+description: "Sa-Token 开启 OIDC：结合 sa-token-jwt 签发 id_token，配置 client 的 OIDC 签约权限。"
+---
+
 # OAuth2 开启 OIDC 协议 （OpenID Connect）
 
 --- 

@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 加入讨论群"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,加入讨论群,其它"
+description: "加入 Sa-Token 讨论群：QQ 群与微信入群方式，与社区开发者交流集成与排错经验。"
+---
+
 # 加入讨论群
 
 加入 Sa-Token 专属讨论群，与众多大佬一起努力 (huá shuǐ) 成长 (mō yú)。

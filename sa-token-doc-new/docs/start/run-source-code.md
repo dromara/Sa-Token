@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 源码运行指南"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,源码运行指南,Spring Boot"
+
 description: "本地运行 Sa-Token 源码与 Demo：从 Gitee / GitHub / AtomGit 克隆，到启动官方示例项目的步骤。"
 ---
 

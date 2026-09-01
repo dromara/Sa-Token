@@ -1,3 +1,9 @@
+---
+title: "为Sa-Token贡献代码"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,为Sa-Token贡献代码,附录"
+description: "为 Sa-Token 贡献代码：文档页跳转 Gitee/GitHub、PR 规范与社区贡献流程说明。"
+---
+
 # 如何更新在线文档
 1. 打开要修改的文档页面
 2. 滑动右侧页面滑块, 查看页面内容最下方, 评论区上方

@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 防火墙"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,防火墙,附录"
+description: "Sa-Token 防火墙 SaFirewallStrategy：拦截异常 path、SQL 注入等可能造成攻击的危险请求。"
+---
+
 # 防火墙
 
 Sa-Token 内置防火墙组件 `SaFirewallStrategy`，用于拦截一些可能造成攻击的危险请求。

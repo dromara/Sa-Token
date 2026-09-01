@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Token有效期详解"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Token有效期详解,附录"
+description: "Sa-Token Token 有效期：详解 timeout 与 active-timeout 两种过期策略的区别与 yml 配置示例。"
+---
+
 # Token有效期详解
 
 <!-- 本篇介绍Token有效期的详细用法 -->

@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 配置 client 域名校验"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,配置 client 域名校验,OAuth2.0,OAuth2"
+description: "OAuth2 Client 域名校验：AllowRedirectUris 配置授权回调白名单，防止非法 redirect 劫持。"
+---
+
 # OAuth2 整合-配置域名校验
 
 --- 

@@ -1,3 +1,9 @@
+---
+title: "SaTokenDao-数据持久接口"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SaTokenDao-数据持久接口,API手册"
+description: "SaTokenDao 数据持久接口：Session、Token 等权限数据的底层读写与 Redis 对接签名说明。"
+---
+
 # SaTokenDao-数据持久接口
 
 SaTokenDao 是数据持久层接口，负责所有会话数据的底层写入和读取。

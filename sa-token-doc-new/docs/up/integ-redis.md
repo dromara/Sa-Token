@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 集成 Redis"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成 Redis,深入,Redis"
+
 description: "把 Sa-Token 会话存进 Redis：避免重启丢数据和多节点登录态不一致，支持 RedisTemplate 等官方方案。"
 ---
 

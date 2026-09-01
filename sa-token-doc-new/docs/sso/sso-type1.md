@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token SSO模式一 共享Cookie同步会话"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO模式一 共享Cookie同步会话,单点登录,SSO"
+
 description: "Sa-Token SSO 模式一：前端同域、后端同 Redis 时，用共享 Cookie 同步会话，实现多系统单点登录。"
 ---
 

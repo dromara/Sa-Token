@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 在 SpringBoot 环境集成"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,在 SpringBoot 环境集成,Spring Boot"
+
 description: "从零把 Sa-Token 接到 Spring Boot：五步完成依赖、登录与鉴权，附官方 sa-token-demo-springboot 可运行示例。"
 ---
 

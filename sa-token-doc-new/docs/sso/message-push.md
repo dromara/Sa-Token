@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 消息推送机制"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,消息推送机制,单点登录,SSO"
+description: "Sa-Token SSO 消息推送：client 按约定格式调用 server /sso/pushS 实现消息下发。"
+---
+
 # 消息推送机制
 
 消息推送机制简单来讲就是：sso-client 端按照特点格式构建一个 http 请求，调用 sso-server 端的 `/sso/pushS` 接口，sso-server 接收到消息后做出处理回应 sso-client 端。

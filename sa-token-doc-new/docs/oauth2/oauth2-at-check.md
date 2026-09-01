@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 使用注解校验 Access-Token"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,使用注解校验 Access-Token,OAuth2.0,OAuth2"
+description: "OAuth2 Access-Token 注解校验：@SaCheckAccessToken 等扩展注解的 scope 与 token 校验用法。"
+---
+
 # Sa-Token OAuth2 模块相关注解
 
 sa-token-oauth2 模块扩展了三个注解用于相关数据校验：

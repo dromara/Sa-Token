@@ -1,3 +1,7 @@
+---
+description: "自定义 SaTokenContext（备份稿）：Web 框架不在官方 Starter 列表时的上下文整合参考。"
+---
+
 # 自定义 SaTokenContext 指南 
 
 目前 Sa-Token 仅对 SpringBoot、SpringMVC、WebFlux、Solon 等部分 Web 框架制作了 Starter 集成包，

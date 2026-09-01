@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 常见问题总结"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,常见问题总结,OAuth2.0,OAuth2"
+description: "OAuth2 集成常见问题：路由错误、redirect 不匹配、token 无效等高频报错排查汇总。"
+---
+
 # Sa-Token-OAuth2整合-常见问题总结
 
 OAuth2 集成常见问题整理

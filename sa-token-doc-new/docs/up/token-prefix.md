@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Token 提交前缀"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Token 提交前缀,深入"
+description: "Sa-Token Token 提交前缀：处理 Bearer 等前缀，避免鉴权时把前缀误当作 token 一部分。"
+---
+
 # Token 提交前缀
 
 ### 需求场景

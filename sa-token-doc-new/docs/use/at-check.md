@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 注解鉴权"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,注解鉴权,基础,Java权限认证"
+
 description: "Sa-Token 注解鉴权：用 @SaCheckLogin、@SaCheckRole、@SaCheckPermission 把校验从业务代码里拆开。"
 ---
 

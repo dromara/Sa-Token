@@ -1,3 +1,9 @@
+---
+title: "Sa-Token SSO 代码 API 参考"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO 代码 API 参考,单点登录,SSO"
+description: "SSO 代码 API 参考：SaSsoServerUtil、SaSsoClientUtil 等常用工具类方法说明。"
+---
+
 # Sa-Token SSO Server端 二次开发用到的所有函数说明 
 
 本篇展示一下 SSO 模块常用的工具类、方法

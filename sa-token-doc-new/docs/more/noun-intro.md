@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 框架名词解释"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,框架名词解释,附录"
+description: "Sa-Token 框架名词解释：梳理 Token、Session、StpUtil 等易混概念，减少权限认证开发中的理解偏差。"
+---
+
 # Sa-Token 名词解释 
 
 Sa-Token 无意发明任何晦涩概念提升逼格，但在处理 issue 、Q群解答时还是发现不少同学因为一些基本概念理解偏差导致代码出错，

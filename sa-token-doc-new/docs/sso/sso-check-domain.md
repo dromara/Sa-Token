@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 配置域名校验"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,配置域名校验,单点登录,SSO"
+description: "SSO 配置域名校验：allow-url 白名单限制授权回调地址，防止非法单点登录跳转。"
+---
+
 # SSO整合-配置域名校验
 
 --- 

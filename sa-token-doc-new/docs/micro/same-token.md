@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 内部服务外网隔离"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,内部服务外网隔离,微服务,微服务鉴权"
+description: "Sa-Token Same-Token 内网隔离：防止绕过网关直连子服务，含网关转发与 Feign RPC 鉴权。"
+---
+
 # 微服务 - 内部服务外网隔离 
 
 --- 

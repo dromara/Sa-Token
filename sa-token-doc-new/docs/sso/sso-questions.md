@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 常见问题总结"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,常见问题总结,单点登录,SSO"
+description: "SSO 集成常见问题：Redis 分离、ticket 失效、跨域与模式选型等高频问答汇总。"
+---
+
 # Sa-Token-SSO整合-常见问题总结
 
 SSO 集成常见问题整理

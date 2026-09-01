@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 模拟他人 & 身份切换"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,模拟他人 & 身份切换,深入"
+description: "Sa-Token 模拟他人与身份切换：查询指定账号权限、Session，管理员运维与调试场景。"
+---
+
 # 模拟他人
 --- 
 

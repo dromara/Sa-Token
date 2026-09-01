@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 搭建统一认证中心：SSO-Server"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,搭建统一认证中心：SSO-Server,单点登录,SSO"
+
 description: "搭建 Sa-Token SSO-Server 统一认证中心：依赖、配置、登录页与官方 demo，是三种 SSO 模式的前置步骤。"
 ---
 

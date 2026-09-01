@@ -1,6 +1,8 @@
 ---
+
 title: 赞助 Sa-Token
 redirect: /more/sa-token-donate.html
+description: "赞助 Sa-Token：支持框架持续维护与社区运营，Apache-2.0 框架与文档永久免费开放。"
 ---
 
 # 赞助 Sa-Token

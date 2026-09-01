@@ -1,3 +1,11 @@
+---
+
+title: "Sa-Sso-Pro 单点登录商业版"
+keywords: "Sa-Sso-Pro,SSO,单点登录,Sa-Token,商业版"
+noindex: true
+description: "Sa-Sso-Pro 商业版：在开源 SSO 基础上提供企业级认证中心所需的高级功能。"
+---
+
 # Sa-Sso-Pro 单点登录商业版
 
 ### 项目介绍

@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 其它环境集成示例"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,其它环境集成示例,Spring Boot"
+
 description: "Sa-Token 在 Spring Boot、WebFlux、Solon、JFinal 等环境的依赖对照，以及各框架官方集成示例入口。"
 ---
 

@@ -1,4 +1,7 @@
 ---
+title: "Sa-Token 多账号认证"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,多账号认证,深入"
+
 description: "Sa-Token 多账号认证：同一项目里 user、admin 等两套账号分开登录鉴权，避免共用 StpUtil 冲突。"
 ---
 

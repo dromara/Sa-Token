@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 全局类、方法"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,全局类、方法,API手册"
+description: "Sa-Token 全局类与方法：SaManager、SaTokenEventCenter、SaSignManager 等常用全局对象速查。"
+---
+
 # 全局类、方法
 本篇介绍 Sa-Token 中一些常用的全局对象、类
 

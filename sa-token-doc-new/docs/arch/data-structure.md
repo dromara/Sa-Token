@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 数据结构"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,数据结构,框架设计"
+description: "Sa-Token Redis 数据结构：Token、Session、索引 key 的命名规则与 value 字段格式说明。"
+---
+
 # 数据结构
 
 

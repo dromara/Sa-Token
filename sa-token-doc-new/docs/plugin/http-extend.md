@@ -1,3 +1,9 @@
+---
+title: "Sa-Token HTTP 请求扩展"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,HTTP 请求扩展,插件"
+description: "Sa-Token HTTP 请求扩展：自定义 SaHttpTemplate，用于 SSO 模式三、单点注销等 HTTP 调用。"
+---
+
 # HTTP 请求扩展
 
 ---

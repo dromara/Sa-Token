@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 序列化插件扩展包"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,序列化插件扩展包,插件"
+description: "Sa-Token 序列化扩展（娱乐向）：天干地支等趣味序列化方案，探索 SaTokenDao 序列化边界。"
+---
+
 # 序列化插件扩展包
 --- 
 

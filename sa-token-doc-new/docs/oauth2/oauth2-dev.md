@@ -1,3 +1,9 @@
+---
+title: "Sa-Token OAuth2 代码 API 参考"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2 代码 API 参考,OAuth2.0,OAuth2"
+description: "OAuth2 代码 API 参考：SaOAuth2Util 等常用工具类方法，二次开发开放更多资源接口。"
+---
+
 # Sa-Token-OAuth2 Server端 二次开发用到的所有函数说明 
 
 官方示例只提供了基本的授权流程，以及 userinfo 资源的开放，如果您需要开放更多的接口，则二次开发时可能用到以下相关 API 方法 

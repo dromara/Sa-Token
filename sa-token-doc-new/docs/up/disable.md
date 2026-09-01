@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 账号封禁"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,账号封禁,深入"
+description: "Sa-Token 账号封禁：按服务维度封禁账号，防止违规用户再次登录指定功能。"
+---
+
 # 账号封禁
 
 之前的章节中，我们学习了 踢人下线 和 强制注销 功能，用于清退违规账号。

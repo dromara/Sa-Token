@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 自定义数据加载器"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义数据加载器,OAuth2.0,OAuth2"
+description: "OAuth2 自定义数据加载器：SaOAuth2DataLoader 从数据库或配置加载 client 与 scope 信息。"
+---
+
 # OAuth2-自定义数据加载器
 
 

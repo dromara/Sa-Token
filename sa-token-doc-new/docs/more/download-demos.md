@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 集成示例大全下载"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成示例大全下载"
+description: "Sa-Token 集成示例下载：60+ Demo 覆盖登录、SSO、OAuth2、微服务鉴权、JWT、API 签名等场景。"
+---
+
 # Sa-Token 集成 Demos 示例大全下载
 
 **我们为框架几乎所有技术点均单独制作了对应的集成示例，此压缩包共计 60+ Demo**：涵盖 Sa-Token 登录认证、权限认证、SSO 单点登录、OAUth2 统一认证、微服务鉴权、API Key 认证、JWT集成、跨系统调用参数签名校验 等鉴权认证的方方面面。

@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 更新日志"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,更新日志,其它"
+description: "Sa-Token 更新日志：各版本新增特性、修复项与破坏性变更记录，按发布时间倒序。"
+---
+
 # 更新日志 
 
 ### v1.46.0 @2026-8-18

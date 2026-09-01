@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 框架博客"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,框架博客,其它"
+description: "Sa-Token 框架博客：官方与社区技术文章收录，涵盖鉴权实战、版本发布与集成案例。"
+---
+
 # 框架博客
 
 > 社区文章已迁移至  <a href="/blog/index.html">Sa-Token 博客</a>，本页不再更新。

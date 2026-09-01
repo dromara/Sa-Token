@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 登录参数 & 注销参数"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,登录参数 & 注销参数,深入"
+description: "Sa-Token 登录与注销参数：SaLoginParameter 控制设备类型、Cookie 持久化、token 有效期等。"
+---
+
 # 登录参数
 
 ### 1、登录参数

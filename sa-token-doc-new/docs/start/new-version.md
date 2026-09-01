@@ -1,4 +1,6 @@
 ---
+title: "Sa-Token 最新版本"
+keywords: "Sa-Token,sa-token,satoken,Spring Boot,Maven,版本号"
 description: "Sa-Token 最新版本号与 Maven 坐标，区分正式版与内测版，并指向依赖拉取失败的解决说明。"
 ---
 

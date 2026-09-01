@@ -1,4 +1,7 @@
 ---
+title: "Spring Boot 权限认证"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,权限认证,基础,Java权限认证"
+
 description: "Sa-Token 权限认证：按账号权限码校验接口与页面访问，支持角色、权限码及自定义权限加载。"
 ---
 

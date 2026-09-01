@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 和 gRPC 集成"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,和 gRPC 集成,插件"
+description: "Sa-Token 整合 gRPC：RPC 链路透传 Token，被调用端恢复 Sa-Token 上下文环境。"
+---
+
 # 和 grpc 集成
 
 本插件的作用是让 Sa-Token 和 grpc 做一个整合。

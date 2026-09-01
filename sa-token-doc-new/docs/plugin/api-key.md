@@ -1,3 +1,9 @@
+---
+title: "Sa-Token API Key 接口调用秘钥"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,API Key 接口调用秘钥,插件"
+description: "Sa-Token API Key：为开放接口生成调用秘钥，校验请求来源与访问权限。"
+---
+
 # API Key 接口调用秘钥
 
 API Key（应用程序编程接口密钥） 是一种用于身份验证和授权的字符串代码，通常由服务提供商生成并分配给开发者或用户。它的主要作用是标识调用 API（应用程序编程接口）的请求来源，确保请求的合法性，并控制访问权限。

@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 集成 MongoDB 参考二"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成 MongoDB 参考二,附录"
+description: "Sa-Token 集成 MongoDB（二）：Spring Data MongoDB 反序列化 SaSession 与 Demo 工程参考。"
+---
+
 # Sa-Token 集成 MongoDB 
 --- 
 

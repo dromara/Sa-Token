@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 自定义注解"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义注解,附录"
+description: "Sa-Token 自定义注解：扩展 @SaCheck 系列，注入业务定制的注解鉴权与参数校验逻辑。"
+---
+
 # 自定义注解
 
 如果框架内置的注解无法满足你的业务需求，你还可以自定义注解注入到框架中。

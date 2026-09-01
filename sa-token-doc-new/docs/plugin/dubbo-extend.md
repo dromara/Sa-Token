@@ -1,3 +1,9 @@
+---
+title: "Sa-Token 和 Dubbo 集成"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,和 Dubbo 集成,插件"
+description: "Sa-Token 整合 Dubbo：RPC 调用传递 Token 与上下文，被调用端安全使用 StpUtil API。"
+---
+
 # 和 Dubbo 集成 
 
 本插件的作用是让 Sa-Token 和 Dubbo 做一个整合。 

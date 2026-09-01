@@ -1,3 +1,9 @@
+---
+title: "Sa-Token Alone独立Redisson插件"
+keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Alone独立Redisson插件,插件,Redis"
+description: "Sa-Token Alone 独立 Redisson：为权限数据单独配置 RedissonClient，与业务缓存彻底分离。"
+---
+
 # Sa-Token-Alone-Redisson 独立 Redisson 插件
 ---
 
