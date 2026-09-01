@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 用户数据同步 / 迁移"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,用户数据同步 / 迁移,单点登录,SSO"
-description: "SSO 用户数据同步与迁移：多系统账号体系对齐的架构参考与设计思路。"
+description: "SSO 用户数据同步与迁移：多系统账号、角色与权限对齐的架构参考，真实项目需结合自身微服务与数据架构取舍。"
 ---
 
 # 用户数据同步 / 迁移

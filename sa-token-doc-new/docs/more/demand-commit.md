@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 需求提交"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,需求提交,其它"
-description: "Sa-Token 需求提交：文档改进与功能建议在线提交入口，欢迎批评与共建。"
+description: "Sa-Token 需求提交：在线反馈文档不清、功能缺失或改进想法。比起赞美我们更重视批评与建议，欢迎共建框架与文档。"
 ---
 
 # 需求提交

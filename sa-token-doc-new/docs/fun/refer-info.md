@@ -1,7 +1,8 @@
 ---
+
 title: "Sa-Token 开发参考资料"
 keywords: "Sa-Token,sa-token,satoken,参考资料,附录"
-description: "Sa-Token 开发参考资料汇总，收录框架实现过程中参考过的文章、视频与安全讨论链接。"
+description: "Sa-Token 开发参考资料：框架设计、权限认证与相关开源项目的阅读索引。"
 ---
 
 # 参考资料

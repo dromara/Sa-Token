@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 问卷调查"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,问卷调查,其它"
-description: "Sa-Token 用户问卷调查：约 1 分钟完成，帮助我们改进文档与社区体验。"
+description: "Sa-Token 用户问卷调查：约 1 分钟、6 道选择题，帮助我们优化文档示例与社区体验，您的每一条意见我们都会认真看。"
 ---
 
 # 问卷调查
