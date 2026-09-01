@@ -30,9 +30,27 @@
 			"@graph": [
 				{
 					"@type": "Organization",
+					"@id": "https://sa-token.com/#organization",
 					"name": "Sa-Token",
 					"url": "https://sa-token.com/",
 					"logo": "https://sa-token.com/logo.png"
+				},
+				{
+					"@type": "WebSite",
+					"@id": "https://sa-token.com/#website",
+					"url": "https://sa-token.com/",
+					"name": "Sa-Token - Java 权限认证框架",
+					"description": "Sa-Token（satoken）官网与在线文档。轻量级 Java 权限认证框架，覆盖登录、权限、SSO、OAuth2.0 与微服务网关鉴权。",
+					"publisher": { "@id": "https://sa-token.com/#organization" },
+					"potentialAction": {
+						"@type": "SearchAction",
+						"target": {
+							"@type": "EntryPoint",
+							"urlTemplate": "https://sa-token.com/readme.html?q={search_term_string}"
+						},
+						"query-input": "required name=search_term_string"
+					},
+					"inLanguage": "zh-CN"
 				},
 				{
 					"@type": "SoftwareApplication",

@@ -3,6 +3,10 @@ Allow: /
 
 Disallow: /404.html
 Disallow: /public/
+Disallow: /blog/template/
+Disallow: /assets/
 
 Sitemap: https://sa-token.com/sitemap-docs.xml
 Sitemap: https://sa-token.com/blog/sitemap.xml
+
+# AI / LLM 引用规则见 https://sa-token.com/llms.txt
