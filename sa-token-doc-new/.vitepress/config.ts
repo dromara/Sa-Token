@@ -287,6 +287,7 @@ export default defineConfig({
     if (fs.existsSync(docsDest)) {
       let xml = fs.readFileSync(docsDest, 'utf8')
       xml = stripSitemapJunkXml(xml)
+      // 营销首页 canonical 为 /，与 readme 一并写入文档 sitemap
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/readme.html`, today)
       fs.writeFileSync(docsDest, xml)

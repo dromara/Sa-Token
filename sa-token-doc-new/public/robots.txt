@@ -6,6 +6,7 @@ Disallow: /public/
 Disallow: /blog/template/
 Disallow: /assets/
 
+Sitemap: https://sa-token.com/sitemap.xml
 Sitemap: https://sa-token.com/sitemap-docs.xml
 Sitemap: https://sa-token.com/blog/sitemap.xml
 

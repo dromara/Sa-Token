@@ -170,15 +170,16 @@ export function extractDescription(md: string, fallback: string) {
 }
 
 /** 跳转页、占位页、博客（博客有自己的 sitemap）不进文档 sitemap，省百度额度 */
-function isSitemapJunk(url: string) {
-  if (!url) return true
-  if (url.includes('/blog/') || url.includes('/public/') || url.includes('/pro/')) return true
-  if (url.includes('/plugin/plugin-dev.html')) return true
-  if (url.includes('/use/dao-extend.html')) return true
-  if (url.includes('/more/sa-token-donate-old.html')) return true
-  if (url.includes('/sso/sso-pro.html')) return true
-  if (url.includes('/404.html')) return true
-  if (url === SITE_ORIGIN || url === `${SITE_ORIGIN}/` || url.includes(`${SITE_ORIGIN}/index.html`)) return true
+function isSitemapJunk(loc: string) {
+  if (!loc) return true
+  if (loc.includes('/blog/') || loc.includes('/public/') || loc.includes('/pro/')) return true
+  // 跳转桩：正文分别在 fun/plugin-dev、plugin/dao-extend
+  if (loc.endsWith('/plugin/plugin-dev.html') || loc.endsWith('/use/dao-extend.html')) return true
+  if (loc.includes('/more/sa-token-donate-old.html')) return true
+  if (loc.includes('/sso/sso-pro.html')) return true
+  if (loc.endsWith('/404.html')) return true
+  // 营销首页 canonical 为 /，仅收录根路径；index.html 与 VitePress 文档壳不重复提交
+  if (loc.endsWith('/index.html')) return true
   return false
 }
 
@@ -189,7 +190,10 @@ export function filterSitemapItems(items: { url?: string }[]) {
 
 /** VitePress 2 alpha 的 transformItems 不一定生效，构建后按 loc 再剔一遍。 */
 export function stripSitemapJunkXml(xml: string) {
-  return xml.replace(/<url>[\s\S]*?<\/url>/g, (block) => (isSitemapJunk(block) ? '' : block))
+  return xml.replace(/<url>[\s\S]*?<\/url>/g, (block) => {
+    const m = block.match(/<loc>([^<]+)<\/loc>/)
+    return m && isSitemapJunk(m[1]) ? '' : block
+  })
 }
 
 /**
