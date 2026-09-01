@@ -7,7 +7,7 @@
   <div v-if="!closed && !isIntro" ref="root" class="doc-inline-ad">
     <div class="doc-inline-ad__card">
       <span class="doc-inline-ad__close" title="关闭" @click.prevent="closeAd">×</span>
-      <a href="https://sa-max.cn?way=st_md_top" target="_blank" rel="noreferrer">
+      <a href="https://sa-max.cn?way=st_md_top" target="_blank">
         <div class="doc-inline-ad__body">
           <img class="doc-inline-ad__img" src="/big-file/contact/sa-token-syb-3.png" alt="" />
           <div class="doc-inline-ad__text">

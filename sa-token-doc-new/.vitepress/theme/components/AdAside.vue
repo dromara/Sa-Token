@@ -11,7 +11,7 @@
         <span class="ad-tips ad-close" @click="closeAd">关闭</span>
       </div>
       <div class="top-ad-box" style="margin-bottom: 12px;">
-        <a href="https://sa-max.cn?way=st_r" target="_blank" rel="noreferrer">
+        <a href="https://sa-max.cn?way=st_r" target="_blank">
           <div class="mad-bg-box">
             <div class="mad-context-box">
               <img class="mad-img" src="/big-file/contact/sa-token-syb-3.png" alt="" width="130" height="100" />
@@ -30,8 +30,8 @@
     </div>
     <div class="ew-wa">
       <p>
-        <a href="https://pan.quark.cn/s/d5abda720e88" target="_blank" rel="noreferrer">离线版文档</a>
-        <a href="https://pan.quark.cn/s/fea7e5ec72ee" target="_blank" rel="noreferrer">历史所有版本文档</a>
+        <a href="https://pan.quark.cn/s/d5abda720e88" target="_blank">离线版文档</a>
+        <a href="https://pan.quark.cn/s/fea7e5ec72ee" target="_blank">历史所有版本文档</a>
         <a href="/more/download-demos.html">Demo 示例大全下载</a>
       </p>
     </div>

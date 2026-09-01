@@ -111,8 +111,7 @@ function attrs(link: string, external?: boolean) {
   const isExt = external || isExternalLink(link)
   return {
     href: link,
-    target: isExt && isExternalLink(link) ? '_blank' : undefined,
-    rel: isExt && isExternalLink(link) ? 'noreferrer' : undefined
+    target: isExt && isExternalLink(link) ? '_blank' : undefined
   }
 }
 

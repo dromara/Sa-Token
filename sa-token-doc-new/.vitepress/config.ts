@@ -107,6 +107,18 @@ function prepareMarkdown(md: { core: { ruler: { after: Function } } }) {
   })
 }
 
+/** VitePress 外链渲染器会补 rel=noreferrer，这里从输出里剥掉，和旧站 <a> 不写 rel 对齐 */
+function stripMarkdownAnchorRel(md: {
+  renderer: { rules: { link_open?: (...args: unknown[]) => string } }
+}) {
+  const prev = md.renderer.rules.link_open
+  if (!prev) return
+  md.renderer.rules.link_open = (...args) => {
+    const html = prev(...args)
+    return html.replace(/\srel="[^"]*"/g, '')
+  }
+}
+
 export default defineConfig({
   lang: 'zh-CN',
   title: 'Sa-Token',
@@ -198,6 +210,8 @@ export default defineConfig({
     config(md) {
       md.use(tabsMarkdownPlugin)
       prepareMarkdown(md)
+      // VitePress 外链默认 target=_blank + rel=noreferrer，后者会把引流来源洗成直访
+      stripMarkdownAnchorRel(md)
     }
   },
   vue: {

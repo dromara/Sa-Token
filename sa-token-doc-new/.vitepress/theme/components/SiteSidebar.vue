@@ -19,7 +19,6 @@
                 v-if="item.link"
                 :href="item.link"
                 :target="isExternalLink(item.link) ? '_blank' : undefined"
-                :rel="isExternalLink(item.link) ? 'noreferrer' : undefined"
               >{{ item.text }}</a>
             </li>
           </ul>
