@@ -19,7 +19,9 @@ import { skipBigFileMetaFromBuild } from './skip-big-file-meta.ts'
 import { serveStaticHome } from './static-home.ts'
 import { SA_TOKEN_VERSION } from './version.ts'
 import docsifyDark from './shiki-docsify-dark.ts'
+import { generateBlogCategoryPages } from './blog-category-pages.ts'
 import {
+  DOC_TITLE_SUFFIX,
   SITE_DESCRIPTION,
   SITE_ORIGIN,
   applyPageSeo,
@@ -124,8 +126,8 @@ export default defineConfig({
   title: 'Sa-Token',
   srcDir: 'docs',              // markdown 在工程根下的 docs/
   outDir: 'dist',              // 构建产物，上传这个目录
-  // 浏览器标题：`登录认证 | Sa-Token`
-  titleTemplate: ':title | Sa-Token',
+  // 浏览器标题：`Sa-Token 登录认证 - Sa-Token 官方文档`
+  titleTemplate: `:title - ${DOC_TITLE_SUFFIX}`,
   description: SITE_DESCRIPTION,
   // 不用 VitePress 自带亮暗切换，文档站走旧站 water-change-theme
   appearance: false,
@@ -146,7 +148,6 @@ export default defineConfig({
     ],
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['link', { rel: 'stylesheet', href: '/static/doc.css' }],
-    ['meta', { name: 'keywords', content: 'Sa-Token文档,Java权限认证,登录认证,权限认证,SSO,OAuth2,微服务鉴权,Spring Boot' }],
     ['meta', { property: 'og:site_name', content: 'Sa-Token' }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
     ['meta', { property: 'og:image', content: `${SITE_ORIGIN}/logo.png` }]
@@ -274,6 +275,7 @@ export default defineConfig({
   buildEnd(siteConfig) {
     const dist = siteConfig.outDir
     restoreHomeAndReadme(dist, siteConfig.publicDir || publicDir)
+    generateBlogCategoryPages(dist, siteConfig.publicDir || publicDir)
     // VitePress 默认写出 sitemap.xml（文档页）。我们改成 sitemapindex：
     // 根 sitemap.xml 指向 sitemap-docs.xml + blog/sitemap.xml
     const docsMap = path.join(dist, 'sitemap.xml')
