@@ -221,6 +221,51 @@
   margin: 2em 0;
 }
 
+/* 正文底部：上一篇 / 下一篇（对齐博客 blog-post-nav） */
+.doc-post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+#main .doc-post-nav a {
+  flex: 1;
+  font-size: 14px;
+  color: #42b983;
+  text-decoration: none;
+  line-height: 1.5;
+  word-break: break-word;
+  border-bottom: 0;
+}
+
+#main .doc-post-nav a:hover {
+  color: #33a06f;
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+.doc-post-nav-next {
+  text-align: right;
+}
+
+.doc-post-nav-placeholder {
+  flex: 1;
+}
+
+@media (max-width: 800px) {
+  .doc-post-nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .doc-post-nav-next {
+    text-align: left;
+  }
+}
+
 #main footer a.footer-beian img {
   display: inline !important;
 }

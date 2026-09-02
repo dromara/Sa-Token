@@ -27,6 +27,7 @@
         <div id="main" class="markdown-section">
           <AdBanner v-if="!isIntro" />
           <Content class="vp-doc st-content" />
+          <DocPrevNext />
           <SiteFooter />
         </div>
       </div>
@@ -45,6 +46,7 @@ import { Content, onContentUpdated, useData, useRoute } from 'vitepress'
 import { computed, onMounted, ref, watch } from 'vue'
 import AdAside from './components/AdAside.vue'
 import AdBanner from './components/AdBanner.vue'
+import DocPrevNext from './components/DocPrevNext.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteOutline from './components/SiteOutline.vue'
