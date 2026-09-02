@@ -310,7 +310,7 @@ Sa-Token 社區成員貢獻了多語言實現版本：
 
 ### 📚 示例大全
 
-**我們為框架幾乎所有技術點均單獨製作了對應的集成示例，此壓縮包共計 60+ Demo**：涵蓋 Sa-Token 登錄認證、權限認證、SSO 單點登錄、OAUth2 統一認證、微服務鑑權、API Key 認證、JWT集成、跨系統調用參數簽名校驗 等鑑權認證的方方面面。
+**我們為框架幾乎所有技術點均單獨製作了對應的集成示例，此壓縮包共計 60+ Demo**：涵蓋 Sa-Token 登錄認證、權限認證、SSO 單點登錄、OAuth2 統一認證、微服務鑑權、API Key 認證、JWT集成、跨系統調用參數簽名校驗 等鑑權認證的方方面面。
 
 下載地址：[https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos) 
 

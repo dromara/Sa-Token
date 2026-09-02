@@ -310,7 +310,7 @@ We sincerely invite developers who are more proficient in the above languages to
 
 ### 📚 Collection of examples
 
-**We have separately produced corresponding integration examples for almost all technical points of the framework. This compressed package has a total of 60+ Demo**: covering all aspects of authentication and authentication such as Sa-Token login authentication, authority authentication, SSO single sign-on, OAUth2 unified authentication, microservice authentication, API Key authentication, JWT integration, cross-system call parameter signature verification, etc.
+**We have separately produced corresponding integration examples for almost all technical points of the framework. This compressed package has a total of 60+ Demo**: covering all aspects of authentication and authentication such as Sa-Token login authentication, authority authentication, SSO single sign-on, OAuth2 unified authentication, microservice authentication, API Key authentication, JWT integration, cross-system call parameter signature verification, etc.
 
 Download address: [https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos)
 
