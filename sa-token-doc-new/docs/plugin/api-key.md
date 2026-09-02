@@ -12,7 +12,7 @@ API Key（应用程序编程接口密钥） 是一种用于身份验证和授权
 
 示例仓库地址：[sa-token-demo-apikey](https://gitee.com/dromara/sa-token/tree/master/sa-token-demo/sa-token-demo-apikey) 🔗
 
-<img class="s-w-sh" src="/big-file/doc/plugin/sa-api-key.png" alt="sa-api-key" />
+<img class="s-w-sh" src="/big-file/doc/plugin/sa-api-key.png" alt="API Key 模块鉴权示意图" />
 
 
 ### 1、需求场景

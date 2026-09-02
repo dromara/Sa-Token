@@ -274,19 +274,19 @@ public class SaSso1ClientApplication {
 
 均返回：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso1--index.png" alt="sso1--index.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso1--index.png" alt="SSO 模式一三个 Client 均未登录" />
 
 然后点击登录，被重定向至SSO认证中心：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso1--login-page2--v43.png" alt="sso1--login-page2.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso1--login-page2--v43.png" alt="SSO 模式一认证中心登录页" />
 
 我们登录之后，然后刷新页面：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso1-login-ok.png" alt="sso1-login-ok.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso1-login-ok.png" alt="SSO 模式一 Client1 登录成功" />
 
 刷新另外两个Client端，均显示已登录 
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso1-login-ok2.png" alt="sso1-login-ok2.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso1-login-ok2.png" alt="SSO 模式一三个 Client 均已登录" />
 
 测试完成 
 

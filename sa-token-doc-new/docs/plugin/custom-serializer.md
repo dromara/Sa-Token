@@ -45,7 +45,7 @@ public void rewriteComponent() {
 
 效果图：
 
-<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-tiangan.png" alt="sa-custom-serializer-tiangan.png" />
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-tiangan.png" alt="自定义序列化：天干地支编码示例" />
 
 
 #### 2、SaSerializerForBase64UsePeriodicTable
@@ -61,7 +61,7 @@ public void rewriteComponent() {
 
 效果图：
 
-<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-yszqb.png" alt="sa-custom-serializer-yszqb.png" />
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-yszqb.png" alt="自定义序列化：三十六字母编码示例" />
 
 
 
@@ -78,7 +78,7 @@ public void rewriteComponent() {
 
 效果图：
 
-<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-tsfh.png" alt="sa-custom-serializer-tsfh.png" />
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-tsfh.png" alt="自定义序列化：特殊符号编码示例" />
 
 
 #### 4、SaSerializerForBase64UseEmoji
@@ -94,9 +94,9 @@ public void rewriteComponent() {
 
 效果图：
 
-<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-emoji.png" alt="sa-custom-serializer-emoji.png" />
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-emoji.png" alt="自定义序列化：Emoji 编码示例（输入）" />
 
-<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-emoji2.png" alt="sa-custom-serializer-emoji2.png" />
+<img class="s-w" src="/big-file/doc/plugin/sa-custom-serializer-emoji2.png" alt="自定义序列化：Emoji 编码示例（输出）" />
 
 
 

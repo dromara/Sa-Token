@@ -10,11 +10,11 @@ description: "Sa-Token 功能结构图与认证流程图：一图看懂登录鉴
 
 ### Sa-Token 功能结构图：
 
-<img class="s-w" src="/big-file/doc/fun/sa-token-js4--2.png" alt="sa-token-rz" />
+<img class="s-w" src="/big-file/doc/fun/sa-token-js4--2.png" alt="Sa-Token 权限认证流程示意图" />
 
 ### Sa-Token 认证流程图：
 
-<img class="s-w" src="/big-file/doc/fun/sa-token-rz2.png" alt="sa-token-rz" />
+<img class="s-w" src="/big-file/doc/fun/sa-token-rz2.png" alt="Sa-Token 登录认证流程示意图" />
 
 <!-- ![sa-token-rz](https://color-test.oss-cn-qingdao.aliyuncs.com/sa-token/sa-token-rz.png 's-w') -->
 

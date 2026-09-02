@@ -106,7 +106,7 @@ session.updateTimeout(1000); // 参数说明和全局有效期保持一致
 
 **假设三个客户端登录同一账号，且配置了不共享token，那么此时的Session模型是：**
 
-<img class="s-w" src="/big-file/doc/fun/session-model3.png" alt="session-model" />
+<img class="s-w" src="/big-file/doc/fun/session-model3.png" alt="Sa-Token Account-Session 与 Token-Session 模型示意图" />
 
 简而言之：
 - `Account-Session`  以账号 id 为主，只要 token 指向的账号 id 一致，那么对应的Session对象就一致

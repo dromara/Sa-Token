@@ -13,9 +13,9 @@ description: "Sa-Token 路由拦截鉴权：拦截器统一做登录校验，除
 
 <!-- ![基础-拦截器鉴权.svg](../big-file/use/use-route-check.svg 'w-100') -->
 
-<img class="w-100" src="/big-file/doc/use/use-route-check.svg" />
+<img class="w-100" src="/big-file/doc/use/use-route-check.svg" alt="Sa-Token 路由拦截鉴权：拦截器统一校验登录，仅登录接口对外开放" />
 
-如上图所示，拦截器将拦截除登录以外的所以请求，并进行一道前置审核决定是否通过。
+如上图所示，拦截器将拦截除登录以外的所有请求，并进行一道前置审核决定是否通过。
 
 --- 
 
@@ -60,7 +60,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 				.check(r -> StpUtil.checkLogin());		// 要执行的校验动作，可以写完整的 lambda 表达式
 				
 			// 根据路由划分模块，不同模块不同鉴权 
-			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
+			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));   // 权限码见「权限认证」章节
 			SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
 			SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
 			SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
@@ -93,7 +93,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 			SaRouter.match("/admin/**", r -> StpUtil.checkRoleOr("admin", "super-admin"));
 
 			// 权限校验 -- 不同模块校验不同权限 
-			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
+			SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));   // 权限码见「权限认证」章节
 			SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
 			SaRouter.match("/goods/**", r -> StpUtil.checkPermission("goods"));
 			SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
@@ -265,6 +265,8 @@ public void addInterceptors(InterceptorRegistry registry) {
 ```
 
 如上代码，先执行 2，再执行注解鉴权，再执行 1，如果 beforeAuth 里包含 `SaRouter.stop()` 将跳过后续的注解鉴权和 auth 认证环节。
+
+
 
 
 

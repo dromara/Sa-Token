@@ -307,18 +307,18 @@ public class SaSsoServerApplication {
 
 启动项目，不出意外的情况下我们将看到如下输出：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-server-start.png" alt="sso-server-start">
+<img class="s-w-sh" src="/big-file/doc/sso/sso-server-start.png" alt="SSO-Server 启动成功控制台输出">
 
 访问统一授权地址（仅测试 SSO-Server 是否部署成功，暂时还不需要点击登录）：
 - [http://localhost:9000/sso/auth](http://localhost:9000/sso/auth)
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-server-init-login--v43.png" alt="sso-server-init-login.png">
+<img class="s-w-sh" src="/big-file/doc/sso/sso-server-init-login--v43.png" alt="SSO 统一授权地址 /sso/auth 初始页面">
 
 可以看到这个页面目前非常简陋，这是因为我们以上的代码示例，主要目标是为了带大家从零搭建一个可用的SSO认证服务端，所以就对一些不太必要的步骤做了简化。
 
 大家可以下载运行一下官方仓库里的示例`/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso-server/`，里面有制作好的登录页面：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-server-init-login2.png" alt="sso-server-init-login2.png">
+<img class="s-w-sh" src="/big-file/doc/sso/sso-server-init-login2.png" alt="SSO-Server 官方示例登录页面">
 
 默认账号密码为：`sa / 123456`，先别着急点击登录，因为我们还没有搭建对应的 Client 端项目，
 真实项目中我们一般不会直接从浏览器访问 `/sso/auth` 授权地址的，我们需要在 Client 端点击登录按钮重定向而来。

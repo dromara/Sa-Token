@@ -66,7 +66,7 @@ public static void setContext(HttpServletRequest request, HttpServletResponse re
 
 Sa-Token 为了一套代码对接所有的 Web 框架，就在原生请求对象的基础上又封装了一层 `SaTokenContext` 相关接口，用于屏蔽掉不同 Web 框架之间的差异，提供统一的调用API：
 
-<img src="/big-file/doc/fun/sa-token-context-2.svg" alt="sa-token-context" />
+<img src="/big-file/doc/fun/sa-token-context-2.svg" alt="Sa-Token 上下文 SaTokenContext 架构示意图" />
 
 因此，要对接不同的 Web 框架，就要针对不同的 Web 框架封装不同版本的 `SaRequest`、`SaResponse`、`SaStorage` 包装类对象。
 

@@ -17,7 +17,7 @@ description: "Sa-Token 权限认证：按账号权限码校验接口与页面访
 - 管理员账号访问：<green>正常返回数据</green>。
 - 普通账号访问：<red>权限不足，拒绝访问</red>。
 
-<img class="w-100" src="/big-file/doc/use/use-jur-auth.svg" />
+<img class="w-100" src="/big-file/doc/use/use-jur-auth.svg" alt="Sa-Token 权限认证：管理员可访问、普通用户被拒绝" />
 
 
 那么框架是如何判断，一个账号是否有权限访问某个接口的呢？
@@ -27,7 +27,7 @@ description: "Sa-Token 权限认证：按账号权限码校验接口与页面访
 - 有，就让你通过。
 - 没有？那么禁止访问！
 
-<img class="w-100" src="/big-file/doc/use/use-jur-check.svg" />
+<img class="w-100" src="/big-file/doc/use/use-jur-check.svg" alt="Sa-Token 权限校验流程：校验账号权限码集合是否包含所需权限" />
 
 
 所以现在问题的核心就是两个：
@@ -183,7 +183,7 @@ StpUtil.hasPermission("index.html");      // false
 ### 7、如何把权限精确到按钮级？
 权限精确到按钮级的意思就是指：**权限范围可以控制到页面上的每一个按钮是否显示**。
 
-<img class="w-100" src="/big-file/doc/use/use-jur-btn.svg" />
+<img class="w-100" src="/big-file/doc/use/use-jur-btn.svg" alt="Sa-Token 按钮级权限：按权限码控制页面按钮是否显示" />
 
 思路：如此精确的范围控制只依赖后端已经难以完成，此时需要前端进行一定的逻辑判断。
 
@@ -210,7 +210,6 @@ StpUtil.hasPermission("index.html");      // false
 **需要！** <br>
 前端的鉴权只是一个辅助功能，对于专业人员这些限制都是可以轻松绕过的，为保证服务器安全：**无论前端是否进行了权限校验，后端接口都需要对会话请求再次进行权限校验！**
 :::
-
 
 
 ---

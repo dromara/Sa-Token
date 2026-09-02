@@ -8,7 +8,7 @@ description: "Sa-Token 集成示例下载：60+ Demo 覆盖登录、SSO、OAuth2
 
 **我们为框架几乎所有技术点均单独制作了对应的集成示例，此压缩包共计 60+ Demo**：涵盖 Sa-Token 登录认证、权限认证、SSO 单点登录、OAuth2 统一认证、微服务鉴权、API Key 认证、JWT集成、跨系统调用参数签名校验 等鉴权认证的方方面面。
 
-<img class="s-w-sh" src="/big-file/contact/show/sa-token-demos-pre.png" />
+<img class="s-w-sh" src="/big-file/contact/show/sa-token-demos-pre.png" alt="Sa-Token 集成示例大全下载页预览" />
 
 
 ### 下载方式
@@ -25,7 +25,7 @@ PS：扫码添加微信 (备注：sa)，邀您加入群聊。
 
 <br>
 
-<img class="s-w" src="/big-file/contact/show/sa-token-demos-notice.png" style="max-width: 70%;" alt="微信群" />
+<img class="s-w" src="/big-file/contact/show/sa-token-demos-notice.png" style="max-width: 70%;" alt="Sa-Token 示例大全网盘领取说明" />
 
 
 

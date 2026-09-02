@@ -40,12 +40,12 @@ public class GlobalExceptionHandler {
 
 然后我们访问这个接口时，浏览器会强制弹出一个表单：
 
-<img class="s-w-sh" src="/big-file/doc/up/sa-basic.png" alt="sa-basic.png">
+<img class="s-w-sh" src="/big-file/doc/up/sa-basic.png" alt="Http Basic 认证浏览器弹窗">
 
 
 当我们输入账号密码后 `（sa / 123456）`，才可以继续访问数据：
 
-<img class="s-w-sh" src="/big-file/doc/up/sa-basic-ok.png" alt="sa-basic-ok.png">
+<img class="s-w-sh" src="/big-file/doc/up/sa-basic-ok.png" alt="Http Basic 认证通过后访问接口">
 
 
 ### 2、其它启用方式 

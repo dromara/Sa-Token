@@ -138,7 +138,7 @@ Sa-Token 目前主要五大功能模块：登录认证、权限认证、单点�
 
 功能结构图：
 
-<img class="s-w" src="/big-file/index/intro/sa-token-js4.png" />
+<img class="s-w" src="/big-file/index/intro/sa-token-js4.png" alt="Sa-Token 框架功能架构示意图" />
 
 
 ## 📖❓ 疑问解答
@@ -216,7 +216,7 @@ Sa-Token 社区成员贡献了多语言实现版本：
 
 下载地址：[Sa-Token 集成示例大全下载](/more/download-demos) 
 
-<img class="s-w" src="/big-file/contact/show/sa-token-demos-pre.png" />
+<img class="s-w" src="/big-file/contact/show/sa-token-demos-pre.png" alt="Sa-Token 集成示例大全下载页预览" />
 
 
 

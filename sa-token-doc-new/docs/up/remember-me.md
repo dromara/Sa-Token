@@ -10,7 +10,7 @@ description: "在 Sa-Token 中实现记住我：勾选后关闭浏览器仍保�
 
 如图所示，一般网站的登录界面都会有一个 **`[记住我]`** 按钮，当你勾选它登录后，即使你关闭浏览器再次打开网站，也依然会处于登录状态，无须重复验证密码：
 
-<img src="/big-file/doc/up/login-view.png" alt="../static/login-view.png">
+<img src="/big-file/doc/up/login-view.png" alt="记住我模式登录页面">
 
 那么在Sa-Token中，如何做到 [ 记住我 ] 功能呢？
 

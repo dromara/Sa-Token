@@ -168,10 +168,10 @@ public class UserController {
 
 启动代码，从浏览器依次访问上述测试接口：
 
-<img src="/big-file/doc/start/test-do-login.png" alt="运行结果">
+<img src="/big-file/doc/start/test-do-login.png" alt="Spring 集成示例登录接口测试成功">
 
 
-<img src="/big-file/doc/start/test-is-login.png" alt="运行结果">
+<img src="/big-file/doc/start/test-is-login.png" alt="Spring 集成示例登录状态查询结果">
 
 
 ### 详细了解

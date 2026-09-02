@@ -9,7 +9,7 @@ description: "Sa-Token 踢人下线：按账号、指定端或 Token 强制注�
 
 所谓踢人下线，核心操作就是找到指定 `loginId` 对应的 `Token`，并设置其失效。
 
-<img src="/big-file/doc/use/kickout.png" alt="踢下线">
+<img src="/big-file/doc/use/kickout.png" alt="Sa-Token 踢人下线功能示意图">
 
 --- 
 

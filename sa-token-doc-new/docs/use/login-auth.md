@@ -20,7 +20,7 @@ description: "Sa-Token 登录认证：调用 StpUtil.login(id) 建立会话，�
 
 在整个流程中，Sa-Token 负责哪些部分呢？ 下图可以帮助你理解：
 
-<img class="w-100" src="/big-file/doc/use/use-login-auth.svg" />
+<img class="w-100" src="/big-file/doc/use/use-login-auth.svg" alt="Sa-Token 登录认证流程：用户提交账号密码后框架创建 Token 并写入 Cookie" />
 
 如上图所示：<green>**无论用户采用何种登录方式，本质上都是通过提交一定的认证信息，使系统可以定位到 Ta 的唯一标识 —— userId**</green>。
 
@@ -84,7 +84,7 @@ public SaResult doLogin(String name, String pwd) {
 - 如果校验通过，则：<green>正常返回数据。</green>
 - 如果校验未通过，则：<red>抛出异常，告知其需要先进行登录。</red>
 
-<img class="w-100" src="/big-file/doc/use/use-login-check.svg" />
+<img class="w-100" src="/big-file/doc/use/use-login-check.svg" alt="Sa-Token 登录校验：已登录正常返回数据，未登录抛出 NotLoginException" />
 
 <!-- <button class="show-img" img-src="/big-file/doc/use/g3--login-auth.gif">加载动态演示图</button> -->
 

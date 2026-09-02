@@ -174,7 +174,7 @@ public class TestController {
 
 分别访问两个接口，观察Redis中增加的数据 
 
-<img class="s-w" src="/big-file/doc/plugin/alone-redis.png" alt="alone-redis" />
+<img class="s-w" src="/big-file/doc/plugin/alone-redis.png" alt="Alone-Redis 插件架构示意图" />
 
 测试完毕！
 

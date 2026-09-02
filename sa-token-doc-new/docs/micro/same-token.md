@@ -24,7 +24,7 @@ Sa-Token提供两种解决方案：
 
 本篇主要讲解方案二 `Same-Token` 模块的整合步骤，其鉴权流程与 OAuth2.0 类似，不过使用方式上更加简洁（希望使用方案一的同学可参考Sa-OAuth2模块，此处不再赘述）
 
-<img class="w-100" src="/big-file/doc/micro/micro-network-isolation.svg" alt="Same-Token_同源系统认证.svg" />
+<img class="w-100" src="/big-file/doc/micro/micro-network-isolation.svg" alt="微服务内网隔离：网关转发与子服务鉴权流程" />
 
 
 ### 二、网关转发鉴权 
@@ -227,7 +227,7 @@ Same-Token —— 专门解决同源系统互相调用时的身份认证校验�
 
 基本使用流程为：服务调用方获取 Same-Token，提交到请求中，被调用方取出 Same-Token 进行校验：如果一致则校验通过，否则拒绝服务。
 
-<img class="w-100" src="/big-file/doc/micro/micro-same-token.svg" alt="Same-Token_同源系统认证.svg" />
+<img class="w-100" src="/big-file/doc/micro/micro-same-token.svg" alt="Same-Token 服务间身份校验流程" />
 
 
 

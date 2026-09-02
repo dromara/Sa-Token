@@ -39,7 +39,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 
 当不知情的小红被诱导访问了这个 URL 时，它将被重定向至百度首页。
 
-<img class="s-w-sh" src="/big-file/doc/oauth2-new/oauth2-ticket-jc.png" alt="oauth2-ticket-jc" />
+<img class="s-w-sh" src="/big-file/doc/oauth2-new/oauth2-ticket-jc.png" alt="OAuth2 非法 redirect 跳转示例" />
 
 可以看到，代表着用户身份的 code 授权码也显现到了URL之中，借此漏洞，攻击者完全可以构建一个 URL 将小红的 code 授权码自动提交到攻击者自己的服务器，伪造小红身份登录网站。
 
@@ -70,7 +70,7 @@ public class SaOAuth2DataLoaderImpl implements SaOAuth2DataLoader {
 
 再次访问上述链接：
 
-<img class="s-w-sh" src="/big-file/doc/oauth2-new/oauth2-feifa-rf.png" alt="oauth2-feifa-rf" />
+<img class="s-w-sh" src="/big-file/doc/oauth2-new/oauth2-feifa-rf.png" alt="OAuth2 配置 redirect 白名单后拒绝非法跳转" />
 
 URL 没有通过校验，拒绝授权！
 

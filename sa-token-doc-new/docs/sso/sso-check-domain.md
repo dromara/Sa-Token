@@ -19,7 +19,7 @@ description: "SSO 配置域名校验：allow-url 白名单限制授权回调地�
 
 当不知情的小红被诱导访问了这个URL时，它将被重定向至百度首页：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-ticket-jc.png" alt="sso-ticket-jc">
+<img class="s-w-sh" src="/big-file/doc/sso/sso-ticket-jc.png" alt="SSO Ticket 劫持攻击：非法 redirect 跳转示例">
 
 可以看到，代表着用户身份的 Ticket 码也显现到了 URL 之中，借此漏洞，攻击者完全可以构建一个URL将小红的 Ticket 码自动提交到攻击者自己的服务器，伪造小红身份登录网站
 
@@ -52,7 +52,7 @@ sa-token.sso-server.clients.so-client3.allow-url=http://sa-sso-client1.com:9003/
 
 再次访问上述链接：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-feifa-rf.png" alt="sso-feifa-rf">
+<img class="s-w-sh" src="/big-file/doc/sso/sso-feifa-rf.png" alt="SSO 配置 allow-url 白名单后拒绝非法 redirect">
 
 域名没有通过校验，拒绝授权！
 

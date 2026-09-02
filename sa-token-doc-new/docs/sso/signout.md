@@ -82,19 +82,19 @@ public String index() {
 - [http://sa-sso-client2.com:9003/](http://sa-sso-client2.com:9003/)
 - [http://sa-sso-client3.com:9003/](http://sa-sso-client3.com:9003/)
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-type3-client-index.png" alt="sso-type3-client-index.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso-type3-client-index.png" alt="SSO 模式三 Client 已登录首页" />
 
 在任意一个 client 里，点击 **`[注销]`** 按钮，即可单点注销成功（打开另外两个client，刷新一下页面，登录态丢失）。
 
 <!-- ![sso-type3-slo.png](https://oss.dev33.cn/sa-token/doc/sso/sso-type3-slo.png 's-w-sh') -->
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-type3-slo-index.png" alt="sso-type3-slo-index.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso-type3-slo-index.png" alt="SSO 模式三单点注销成功" />
 
 PS：这里我们为了方便演示，使用的是超链接跳页面的形式，正式项目中使用 Ajax 调用接口即可做到无刷单点登录退出。
 
 例如，我们使用 [Apifox 接口测试工具](https://www.apifox.cn/) 可以做到同样的效果：
 
-<img class="s-w-sh" src="/big-file/doc/sso/sso-slo-apifox.png" alt="sso-slo-apifox.png" />
+<img class="s-w-sh" src="/big-file/doc/sso/sso-slo-apifox.png" alt="Apifox 调用 SSO 单点注销接口" />
 
 
 
