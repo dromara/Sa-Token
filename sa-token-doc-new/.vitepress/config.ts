@@ -15,6 +15,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
+import { serveFileVer } from './file-ver.ts'
 import { skipBigFileMetaFromBuild } from './skip-big-file-meta.ts'
 import { serveStaticHome } from './static-home.ts'
 import { SA_TOKEN_VERSION } from './version.ts'
@@ -321,7 +322,7 @@ export default defineConfig({
    */
   vite: {
     publicDir,
-    plugins: [serveStaticHome(), skipBigFileMetaFromBuild()],
+    plugins: [serveFileVer(), serveStaticHome(), skipBigFileMetaFromBuild()],
     optimizeDeps: {
       // 预构建 tabs 插件，避免 dev 第一次打开文档空白一阵
       include: ['vitepress-plugin-tabs']

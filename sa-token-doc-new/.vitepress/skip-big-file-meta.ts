@@ -2,11 +2,13 @@
  * 构建时拷贝 public/，但跳过 public/big-file 里的仓库元数据。
  *
  * big-file 是嵌进去的独立 git（图片仓）。.git 拷进 dist 又大又没意义。
+ * public/file-ver/ 里的 SEO 验证文件单独扁平化到 dist 根目录。
  * Vite 默认 copyPublicDir 太粗，关了之后我们自己 cp，并在结束后再清一遍。
  */
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import type { Plugin } from 'vite'
+import { copyFileVerToRoot, isUnderFileVer } from './file-ver.ts'
 
 const SKIP = new Set(['.git', '.gitignore', 'README.md'])
 
@@ -44,8 +46,9 @@ export function skipBigFileMetaFromBuild(): Plugin {
       if (!publicDir) return
       await fs.cp(publicDir, outDir, {
         recursive: true,
-        filter: (src) => !skipBigFileMeta(publicDir, src)
+        filter: (src) => !skipBigFileMeta(publicDir, src) && !isUnderFileVer(publicDir, src)
       })
+      await copyFileVerToRoot(publicDir, outDir)
     },
     async closeBundle() {
       if (outDir) await stripFromDist(outDir)
