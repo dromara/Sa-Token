@@ -31,10 +31,7 @@ function extractLocs(xml) {
 
 function collectUrls() {
   const urls = new Set([`https://${HOST}/`])
-  const files = [
-    path.join(distDir, 'sitemap-docs.xml'),
-    path.join(distDir, 'blog', 'sitemap.xml'),
-  ]
+  const files = [path.join(distDir, 'sitemap.xml')]
   for (const file of files) {
     if (!fs.existsSync(file)) {
       console.warn(`跳过（不存在）: ${file}`)

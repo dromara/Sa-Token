@@ -21,6 +21,7 @@ import { serveStaticHome } from './static-home.ts'
 import { SA_TOKEN_VERSION } from './version.ts'
 import docsifyDark from './shiki-docsify-dark.ts'
 import { generateBlogCategoryPages } from './blog-category-pages.ts'
+import { mergeSitemapFiles } from './merge-sitemap.ts'
 import {
   DOC_TITLE_SUFFIX,
   SITE_DESCRIPTION,
@@ -251,9 +252,8 @@ export default defineConfig({
     }
   },
   /**
-   * VitePress 构建时自动扫所有文档页，写出一份 sitemap XML。
-   * 默认文件名是 dist/sitemap.xml。我们后面在 buildEnd 里会把它改名成
-   * sitemap-docs.xml，根上的 sitemap.xml 改成「目录索引」（指向文档 + 博客两份）。
+   * VitePress 构建时自动扫所有文档页，写出 dist/sitemap.xml（仅文档页）。
+   * buildEnd 再与 blog/sitemap.xml 合并为根目录一份 urlset（百度可直接提交）。
    */
   sitemap: {
     hostname: SITE_ORIGIN,
@@ -266,48 +266,28 @@ export default defineConfig({
    *    VitePress 会把文档介绍页写成 dist/index.html。线上 / 必须是官网首页，
    *    所以把这份文档壳另存为 readme.html，再用 public/index.html 盖回 index.html。
    *
-   * 2) 改 sitemap 结构
-   *    把 VitePress 刚写的 sitemap.xml 改名为 sitemap-docs.xml（只含文档页），
-   *    再写一个新的 sitemap.xml，类型是 sitemapindex，里面两条：
-   *    - https://sa-token.com/sitemap-docs.xml
-   *    - https://sa-token.com/blog/sitemap.xml（博客自己那份，不经 VitePress）
-   *    百度不收 sitemapindex 当「普通收录」，但可以当站点地图提交。
+   * 2) 合并 sitemap
+   *    文档页（VitePress 刚写的 sitemap.xml）+ 博客（public/blog/sitemap.xml，含分类索引页）
+   *    → 根目录 dist/sitemap.xml 一份 urlset，不再使用 sitemapindex。
    */
   buildEnd(siteConfig) {
     const dist = siteConfig.outDir
     restoreHomeAndReadme(dist, siteConfig.publicDir || publicDir)
     generateBlogCategoryPages(dist, siteConfig.publicDir || publicDir)
-    // VitePress 默认写出 sitemap.xml（文档页）。我们改成 sitemapindex：
-    // 根 sitemap.xml 指向 sitemap-docs.xml + blog/sitemap.xml
     const docsMap = path.join(dist, 'sitemap.xml')
-    const docsDest = path.join(dist, 'sitemap-docs.xml')
+    const blogMap = path.join(dist, 'blog/sitemap.xml')
     const today = new Date().toISOString().slice(0, 10)
     if (fs.existsSync(docsMap)) {
-      fs.renameSync(docsMap, docsDest)
-    }
-    if (fs.existsSync(docsDest)) {
-      let xml = fs.readFileSync(docsDest, 'utf8')
+      let xml = fs.readFileSync(docsMap, 'utf8')
       xml = stripSitemapJunkXml(xml)
-      // 营销首页 canonical 为 /，与 readme 一并写入文档 sitemap
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/readme.html`, today)
-      fs.writeFileSync(docsDest, xml)
+      fs.writeFileSync(docsMap, xml)
     }
-    fs.writeFileSync(
-      docsMap,
-      `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${SITE_ORIGIN}/sitemap-docs.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${SITE_ORIGIN}/blog/sitemap.xml</loc>
-    <lastmod>${today}</lastmod>
-  </sitemap>
-</sitemapindex>
-`
-    )
+    fs.writeFileSync(docsMap, mergeSitemapFiles([docsMap, blogMap]))
+    if (fs.existsSync(blogMap)) {
+      fs.unlinkSync(blogMap)
+    }
   },
   /**
    * 塞给底层 Vite 的配置。VitePress 本身是架在 Vite 上的。

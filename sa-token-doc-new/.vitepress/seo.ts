@@ -169,7 +169,7 @@ export function extractDescription(md: string, fallback: string) {
   return desc
 }
 
-/** 跳转页、占位页、博客（博客有自己的 sitemap）不进文档 sitemap，省百度额度 */
+/** 跳转页、占位页、博客（博客 URL 由 buildEnd 从 blog/sitemap.xml 并入全站 sitemap）不进文档 sitemap */
 function isSitemapJunk(loc: string) {
   if (!loc) return true
   if (loc.includes('/blog/') || loc.includes('/public/') || loc.includes('/pro/')) return true
