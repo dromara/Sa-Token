@@ -59,7 +59,7 @@
 			<a href="../../index.html">
 				<div class="logo-box">
 					<img src="../../logo.png" title="logo" alt="Sa-Token" />
-					<h1 class="logo-text">Sa-Token</h1>
+					<span class="logo-text">Sa-Token</span>
 				</div>
 			</a>
 			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
@@ -324,7 +324,7 @@ public class SsoServerController {
 <li>统一认证登录地址是：<code>http://{host}:{port}/sso/auth</code>。</li>
 <li>而你访问的却是：<code>http://{host}:{port}/sso/auth2</code>。</li>
 </ul>
-<p>地址写错了，框架就不会处理这个请求，会直接返回 <code>{"msg": "not handle"}</code>，所有开放地址可参考：<a href="https://sa-token.com/doc.html?way=blog#/sso/sso-apidoc">SSO 开放接口</a></p>
+<p>地址写错了，框架就不会处理这个请求，会直接返回 <code>{"msg": "not handle"}</code>，所有开放地址可参考：<a href="https://sa-token.com/sso/sso-apidoc.html?way=blog">SSO 开放接口</a></p>
 <p>如果仔细检查地址后没有写错，却依然返回了这个信息，那有可能是对应的接口没有打开，比如说：</p>
 <ul>
 <li>sso-server 端的单点注销地址：<code>http://{host}:{port}/sso/signout</code>；</li>

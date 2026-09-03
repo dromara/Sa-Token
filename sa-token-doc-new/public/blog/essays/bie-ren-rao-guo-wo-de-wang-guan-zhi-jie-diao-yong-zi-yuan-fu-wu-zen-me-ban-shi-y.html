@@ -28,8 +28,8 @@
   "@type": "Article",
   "headline": "别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权",
   "description": "微服务子服务通常不能被外网直连，需经网关转发才算合法请求。若有人绕过网关直调资源服务会怎样？本文用 Sa-Token 讲清网关转发鉴权与 RPC 调用鉴权，堵住「绕过网关」缺口，加固内网服务边界安全，适合已有网关但仍担心直连风险的团队，文内含示例，可直接对照实践。",
-  "datePublished": "2023-04-24",
-  "dateModified": "2023-04-24",
+  "datePublished": "2026-08-25",
+  "dateModified": "2026-08-25",
   "url": "https://sa-token.com/blog/essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html",
   "author": {
     "@type": "Organization",
@@ -59,7 +59,7 @@
 			<a href="../../index.html">
 				<div class="logo-box">
 					<img src="../../logo.png" title="logo" alt="Sa-Token" />
-					<h1 class="logo-text">Sa-Token</h1>
+					<span class="logo-text">Sa-Token</span>
 				</div>
 			</a>
 			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
@@ -158,7 +158,7 @@
 			<div id="main">
 				<div class="markdown-section">
 					<h1>别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权</h1>
-					<div class="blog-article-meta"><span>2023-04-24</span><span>随笔</span></div>
+					<div class="blog-article-meta"><span>2026-08-25</span><span>随笔</span></div>
 					<div class="blog-article-cover"><img src="https://res.dev33.cn/sa-token-blog/img/cover/sa-token-gateway-cover-tech.png" alt="别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权"></div>
 					<div class="blog-article-body">
 					<h2 id="yi-xu-qiu-chang-jing">一、需求场景</h2>
@@ -231,7 +231,7 @@ implementation 'cn.dev33:sa-token-spring-boot-starter:1.46.0'
 implementation 'cn.dev33:sa-token-redis-template:1.46.0'
 implementation 'org.apache.commons:commons-pool2'</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul></pre>
 <p>注：SpringBoot 3.x 请改用 <code>sa-token-spring-boot3-starter</code>，SpringBoot 4.x 请改用 <code>sa-token-spring-boot4-starter</code>。</p>
-<p>旧文里的 <code>sa-token-dao-redis-jackson</code> 已更名为 <code>sa-token-redis-jackson</code>，当前文档推荐改用 <code>sa-token-redis-template</code>。自 v1.46.0 起，该插件用了 Redis 6.0+ 的 <code>SET KEEPTTL</code>，Redis 低于 6.0 会报 <code>ERR syntax error</code>，处理方式见 <a href="https://sa-token.com/doc.html?way=blog#/more/common-questions">常见问题</a>。</p>
+<p>旧文里的 <code>sa-token-dao-redis-jackson</code> 已更名为 <code>sa-token-redis-jackson</code>，当前文档推荐改用 <code>sa-token-redis-template</code>。自 v1.46.0 起，该插件用了 Redis 6.0+ 的 <code>SET KEEPTTL</code>，Redis 低于 6.0 会报 <code>ERR syntax error</code>，处理方式见 <a href="https://sa-token.com/more/common-questions.html?way=blog">常见问题</a>。</p>
 <h3 id="2-wang-guan-chu-tian-jia-same-token">2、网关处添加Same-Token</h3>
 <p>为网关添加全局过滤器：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">/**
@@ -494,8 +494,8 @@ public class DubboProviderFilter implements Filter {
 </ul>
 					</div>
 					<div class="blog-post-nav">
-<a class="blog-post-nav-prev" href="../essays/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html">← 使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录</a>
-<a class="blog-post-nav-next" href="../essays/qian-hou-duan-fen-li-jia-gou-xia-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html">前后端分离架构下使用 Sa-Token 完成登录认证 →</a>
+<a class="blog-post-nav-prev" href="../essays/dui-min-gan-cao-zuo-de-er-ci-ren-zheng-xiang-jie-sa-token-er-ji-ren-zheng.html">← 对敏感操作的二次认证 —— 详解 Sa-Token 二级认证</a>
+<a class="blog-post-nav-next" href="../essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html">不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现！ →</a>
 </div>
 				</div>
 			</div>

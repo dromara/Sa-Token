@@ -59,7 +59,7 @@
 			<a href="../../index.html">
 				<div class="logo-box">
 					<img src="../../logo.png" title="logo" alt="Sa-Token" />
-					<h1 class="logo-text">Sa-Token</h1>
+					<span class="logo-text">Sa-Token</span>
 				</div>
 			</a>
 			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
@@ -192,7 +192,7 @@ public void saTokenPostConstruct() {
         }
     });
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li></ul></pre>
-<p>文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/fun/firewall">Sa-Token 防火墙</a> 🔗</p>
+<p>文档直达地址：<a href="https://sa-token.com/fun/firewall.html?way=blog">Sa-Token 防火墙</a> 🔗</p>
 <h2 id="geng-xin-dian-2-xin-zeng-ji-yu-spi-ji-zhi-de-cha-jian-ti-xi">💡 更新点2：新增基于 SPI 机制的插件体系</h2>
 <p>之前在 Sa-Token 中也有插件体系，不过都是利用 SpringBoot 的 SPI 机制完成组件注册的。</p>
 <p>这种注册机制有一个问题，就是插件只能在 SpringBoot 环境下正常工作，在其它环境，比如 Solon 项目中，就只能手动注册插件才行 😫。</p>
@@ -212,7 +212,7 @@ public class SaTokenPluginForXxx implements SaTokenPlugin {
 <p>第二步：在项目的 <code>resources\META-INF\satoken\</code> 文件夹下 📂 创建 <code>cn.dev33.satoken.plugin.SaTokenPlugin</code> 文件，内容为该插件注册类的完全限定名：</p>
 <pre v-pre data-lang="txt"><code class="lang-txt language-txt has-numbering">cn.dev33.satoken.plugin.SaTokenPluginForXxx</code><ul class="code-line-box"><li>1</li></ul></pre>
 <p>这样便可以在项目启动时，被 Sa-Token 插件管理器加载到此插件，执行插件注册类的 install 方法，完成插件安装 ✅。</p>
-<p>文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/fun/plugin-dev">Sa-Token 插件开发指南</a> 🔗</p>
+<p>文档直达地址：<a href="https://sa-token.com/fun/plugin-dev.html?way=blog">Sa-Token 插件开发指南</a> 🔗</p>
 <h2 id="geng-xin-dian-3-zhong-gou-huan-cun-ti-xi-jiang-shu-ju-du-xie">🎛️ 更新点3：重构缓存体系，将数据读写与序列化操作分离</h2>
 <p>在之前的版本中，Redis 集成通常和具体的序列化方式耦合在一起，这不仅让 Redis 相关插件产生大量的重复冗余代码，也让大家在选择 Redis 插件时严重受限。⚠️</p>
 <p>本次版本更新彻底重构了此模块，将数据读写与序列化操作分离，使其每一块都可以单独自定义实现类，做到灵活扩展 ✨，例如：</p>
@@ -240,7 +240,7 @@ StpUtil.logout(new SaLogoutParameter().setRange(SaLogoutRange.TOKEN));</code><ul
 <p>通过 <code>DeviceType</code> 参数决定哪些登录设备类型参与注销 💻： </p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">// 指定 10001 账号，所有 PC 端注销下线，其它端如 APP 端不受影响 
 StpUtil.logout(10001, new SaLogoutParameter().setDeviceType(&quot;PC&quot;));</code><ul class="code-line-box"><li>1</li><li>2</li></ul></pre>
-<p>还有其它参数此处暂不逐一列举，文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/up/login-parameter">Sa-Token 登录参数 &amp; 注销参数</a> 🔗</p>
+<p>还有其它参数此处暂不逐一列举，文档直达地址：<a href="https://sa-token.com/up/login-parameter.html?way=blog">Sa-Token 登录参数 &amp; 注销参数</a> 🔗</p>
 <h2 id="geng-xin-dian-6-xiu-fu-stputil-settokenvalue-xxx-loginparame">🐞 更新点6：修复 <code>StpUtil.setTokenValue("xxx")</code>、<code>loginParameter.getIsWriteHeader()</code> 空指针的问题。</h2>
 <p>这个没啥好说的，有 bug 🐛 必须修复。</p>
 <p>fix issue：<a href="https://gitee.com/dromara/sa-token/issues/IBKSM0">#IBKSM0</a> 🔗</p>
@@ -361,7 +361,7 @@ SaSignMany.getSignTemplate(&quot;xm-shop&quot;).checkRequest(SaHolder.getRequest
 </ul>
 </li>
 </ul>
-<p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html?way=blog#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
+<p>更新日志在线文档直达链接：<a href="https://sa-token.com/more/update-log.html?way=blog">https://sa-token.com/more/update-log.html</a></p>
 <h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>

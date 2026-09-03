@@ -2,7 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sa-token.com/blog/index.html</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-03</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html</loc>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://sa-token.com/blog/release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html</loc>
@@ -81,10 +89,6 @@
     <lastmod>2023-04-24</lastmod>
   </url>
   <url>
-    <loc>https://sa-token.com/blog/essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html</loc>
-    <lastmod>2023-04-24</lastmod>
-  </url>
-  <url>
     <loc>https://sa-token.com/blog/other/chu-shi-sa-token-yi-xing-dai-ma-gao-ding-deng-lu-shou-quan.html</loc>
     <lastmod>2023-04-24</lastmod>
   </url>
@@ -106,10 +110,6 @@
   </url>
   <url>
     <loc>https://sa-token.com/blog/essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html</loc>
-    <lastmod>2023-04-24</lastmod>
-  </url>
-  <url>
-    <loc>https://sa-token.com/blog/essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html</loc>
     <lastmod>2023-04-24</lastmod>
   </url>
   <url>

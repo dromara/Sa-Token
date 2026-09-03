@@ -59,7 +59,7 @@
 			<a href="../../index.html">
 				<div class="logo-box">
 					<img src="../../logo.png" title="logo" alt="Sa-Token" />
-					<h1 class="logo-text">Sa-Token</h1>
+					<span class="logo-text">Sa-Token</span>
 				</div>
 			</a>
 			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
@@ -179,7 +179,7 @@
 <li>点击“单设备注销”后：他在 Chrome 浏览器登录的所有应用会一起下线，但是 Firefox 浏览器登录的应用不受影响。</li>
 <li>点击“全端注销”后：用户在所有浏览器登录的所以会话一起注销下线。</li>
 </ul>
-<p>以上几种注销方式仅需通过一行代码或者调用一个接口即可实现，详细可参考在线文档：<a href="https://sa-token.com/doc.html?way=blog#/sso/signout">Sa-Token SSO 单点注销</a>。</p>
+<p>以上几种注销方式仅需通过一行代码或者调用一个接口即可实现，详细可参考在线文档：<a href="https://sa-token.com/sso/signout.html?way=blog">Sa-Token SSO 单点注销</a>。</p>
 <h2 id="geng-xin-dian-2-dan-dian-deng-lu-mo-kuai-xin-zeng-xiao-xi-tu">⛏️️️️ 更新点2：单点登录模块新增消息推送机制</h2>
 <p>此提案来源于社区交流群中的一位开发者咨询：</p>
 <p><img alt="sa-sso-message-push-tian.png" src="https://res.dev33.cn/sa-token-blog/img/2025-5/sa-sso-message-push-tian.png" /></p>
@@ -246,7 +246,7 @@ public Object myInfo() {
     // 返回给前端
     return result;
 }</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li></ul></pre>
-<p>详细可参考在线文档：<a href="https://sa-token.com/doc.html?way=blog#/sso/message-push">Sa-Token SSO 消息推送机制</a> 。</p>
+<p>详细可参考在线文档：<a href="https://sa-token.com/sso/message-push.html?way=blog">Sa-Token SSO 消息推送机制</a> 。</p>
 <h2 id="geng-xin-dian-3-dan-dian-deng-lu-xin-zeng-resdk-dui-jie-mo-s">⛏️️️️ 更新点3：单点登录新增 resdk 对接模式</h2>
 <p>Sa-Token SSO 模块一直是支持非 Sa-Token 技术栈、甚至非 java 项目对接的，在之前版本给出的对接方式是 NoSdk 模式。</p>
 <p>NoSdk 模式就是指不集成 Sa-Token，直接通过 http 工具类调用接口的方式来对接 SSO-Server。</p>
@@ -296,7 +296,7 @@ SaOAuth2Util.revokeAccessToken(accessToken);
 
 // 回收全部 Access-Token：指定应用下 指定用户 的全部 Access-Token
 SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);</code><ul class="code-line-box"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li></ul></pre>
-<p>在线文档相关章节：<a href="https://sa-token.com/doc.html?way=blog#/oauth2/oauth2-dev">Sa-Token-OAuth2 常用方法</a></p>
+<p>在线文档相关章节：<a href="https://sa-token.com/oauth2/oauth2-dev.html?way=blog">Sa-Token-OAuth2 常用方法</a></p>
 <h2 id="geng-xin-dian-5-jian-hua-core-he-xin-bao-gong-neng-mo-kuai-j">⛏️️️️ 更新点5：简化 core 核心包功能模块，进行拆包</h2>
 <p>在社区群聊中有同学提到目前 sa-token-core 核心包功能过于拥挤复杂。应要求本次将部分功能模块进行删减，转移到了 plugin 包下：</p>
 <ul>
@@ -387,7 +387,7 @@ SaOAuth2Util.revokeAccessTokenByIndex(clientId, loginId);</code><ul class="code-
 </ul>
 </li>
 </ul>
-<p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html?way=blog#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
+<p>更新日志在线文档直达链接：<a href="https://sa-token.com/more/update-log.html?way=blog">https://sa-token.com/more/update-log.html</a></p>
 <h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 					</div>

@@ -59,7 +59,7 @@
 			<a href="../../index.html">
 				<div class="logo-box">
 					<img src="../../logo.png" title="logo" alt="Sa-Token" />
-					<h1 class="logo-text">Sa-Token</h1>
+					<span class="logo-text">Sa-Token</span>
 				</div>
 			</a>
 			<span id="translate" class="select-language-box ignore p-none nav-t2"></span>
@@ -181,7 +181,7 @@
 <p>在这个示例中，你可以登录测试不同的账号，并为它们签发 API Key，设置 scope 权限，并使用不同的 API Key 测试调用接口，观察响应结果。 🧪</p>
 <p>框架默认将所有 API Key 信息保存在缓存中，这可以称之为“缓存模式”，在这种模式下，重启缓存库后，数据将会丢失。⚠️</p>
 <p>框架预留了 SaApiKeyDataLoader 接口，以便你将数据的加载切换为 “数据库模式”，做到数据长久有效保存。 💾</p>
-<p>在线文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/plugin/api-key">API Key 接口调用秘钥</a> 🔗</p>
+<p>在线文档直达地址：<a href="https://sa-token.com/plugin/api-key.html?way=blog">API Key 接口调用秘钥</a> 🔗</p>
 <h2 id="geng-xin-dian-2-zhong-gou-temptoken-mo-kuai-xin-zeng-value-f">🔍 更新点2：重构 TempToken 模块新增 value 反查机制</h2>
 <p>在 Sa-Token 文档中有一段这样的示例：📚</p>
 <p><img alt="sa-refresh-token" src="https://res.dev33.cn/sa-token-blog/img/2025-4/sa-refresh-token.png" /></p>
@@ -195,7 +195,7 @@
 <p>指定为 false 代表不记录索引，只生成 token，指定为 true 代表记录索引信息，以便日后可以通过 value 反查历史签发的所有 token。🔍 </p>
 <p>例如我们可以通过 <code>SaTempUtil.getTempTokenList("xxx")</code> 方法获取指定账号所有历史签发的 <code>RefreshToken</code> 记录：</p>
 <pre v-pre data-lang="java"><code class="lang-java language-java has-numbering">List&lt;String&gt; refreshTokenList = SaTempUtil.getTempTokenList(&quot;10001&quot;);</code><ul class="code-line-box"><li>1</li></ul></pre>
-<p>在线文档直达地址：<a href="https://sa-token.com/doc.html?way=blog#/plugin/temp-token">临时 Token 令牌认证</a> 🔗</p>
+<p>在线文档直达地址：<a href="https://sa-token.com/plugin/temp-token.html?way=blog">临时 Token 令牌认证</a> 🔗</p>
 <h2 id="geng-xin-dian-3-xin-zeng-totp-suan-fa-shi-xian">⏱️ 更新点3：新增 TOTP 算法实现</h2>
 <p>TOTP 是一种动态密码算法，用于生成短暂有效的数字验证码（通常6-8位）️。它的核心原理是：结合密钥与当前时间，通过哈希运算生成一次性密码。⏱</p>
 <p>TOTP 一般有以下应用场景：</p>
@@ -327,7 +327,7 @@ public class TestController {
 </ul>
 </li>
 </ul>
-<p>更新日志在线文档直达链接：<a href="https://sa-token.com/doc.html?way=blog#/more/update-log">https://sa-token.com/doc.html#/more/update-log</a></p>
+<p>更新日志在线文档直达链接：<a href="https://sa-token.com/more/update-log.html?way=blog">https://sa-token.com/more/update-log.html</a></p>
 <h2 id="qi-ta">🌟 其它</h2>
 <p>代码仓库地址：https://gitee.com/dromara/sa-token</p>
 <p>框架功能结构图：</p>

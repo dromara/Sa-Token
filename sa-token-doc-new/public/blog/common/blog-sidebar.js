@@ -28,6 +28,14 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
     "label": "随笔",
     "items": [
       {
+        "title": "不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现！",
+        "url": "essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html"
+      },
+      {
+        "title": "别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权",
+        "url": "essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html"
+      },
+      {
         "title": "对敏感操作的二次认证 —— 详解 Sa-Token 二级认证",
         "url": "essays/dui-min-gan-cao-zuo-de-er-ci-ren-zheng-xiang-jie-sa-token-er-ji-ren-zheng.html"
       },
@@ -40,10 +48,6 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
         "url": "essays/qian-hou-duan-fen-li-jia-gou-xia-shi-yong-sa-token-wan-cheng-deng-lu-ren-zheng.html"
       },
       {
-        "title": "别人绕过我的网关直接调用资源服务怎么办？使用 Sa-Token 解决：网关转发鉴权、RPC调用鉴权",
-        "url": "essays/bie-ren-rao-guo-wo-de-wang-guan-zhi-jie-diao-yong-zi-yuan-fu-wu-zen-me-ban-shi-y.html"
-      },
-      {
         "title": "使用 Sa-Token 实现不同的登录模式：单地登录、多地登录、同端互斥登录",
         "url": "essays/shi-yong-sa-token-shi-xian-bu-tong-de-deng-lu-mo-shi-dan-di-deng-lu-duo-di-deng.html"
       },
@@ -54,10 +58,6 @@ window.SA_TOKEN_BLOG_SIDEBAR = [
       {
         "title": "使用 Sa-Token 完成踢人下线功能",
         "url": "essays/shi-yong-sa-token-wan-cheng-ti-ren-xia-xian-gong-neng.html"
-      },
-      {
-        "title": "不想写代码，但想要集成一个登录页面？Sa-Token-Quick-Login 帮你实现！",
-        "url": "essays/bu-xiang-xie-dai-ma-dan-xiang-yao-ji-cheng-yi-ge-deng-lu-ye-mian-sa-token-quick.html"
       },
       {
         "title": "一文详解 Sa-Token 中的 SaSession 对象",
