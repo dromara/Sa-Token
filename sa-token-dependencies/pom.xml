@@ -51,10 +51,28 @@
 		<maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
 		<!-- Maven Central Portal -->
 		<central.publishing.maven.version>0.7.0</central.publishing.maven.version>
+
+		<!-- 单元测试 -->
+		<junit-jupiter.version>5.11.4</junit-jupiter.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+			<!-- JUnit 5 -->
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit-jupiter.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-test-support</artifactId>
+				<version>${revision}</version>
+			</dependency>
         
 			<!-- ****************** sa-token-starter 相关依赖 ****************** -->
 	        <!-- Servlet API -->

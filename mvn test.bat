@@ -1,11 +1,11 @@
+﻿@echo off
+chcp 65001 >nul
 
-:: 整体test
-call mvn clean test
+:: Sa-Token 全量单元测试 + 集成测试
+call mvn test
 
-
-:: 最后打印
-echo;
-echo;
-echo ----------- test end ----------- 
-echo;
+echo.
+echo.
+echo ----------- test end -----------
+echo.
 pause

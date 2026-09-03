@@ -24,6 +24,7 @@
 		<module>sa-token-core</module>
 		<module>sa-token-starter</module>
 		<module>sa-token-plugin</module>
+		<module>sa-token-testing</module>
 	</modules>
 
 	<!-- 开源协议 apache 2.0 -->
@@ -46,6 +47,11 @@
 		<!-- Maven GPG Plugin & Maven Central Portal -->
 		<maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
 		<central.publishing.maven.version>0.10.0</central.publishing.maven.version>
+
+		<!-- 单元测试工具链 -->
+		<junit-jupiter.version>5.11.4</junit-jupiter.version>
+		<jacoco.version>0.8.12</jacoco.version>
+		<maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
 	</properties>
 
 	<!-- 仓库信息 -->
@@ -147,10 +153,49 @@
 				</configuration>
 		   	</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+
 	   	</plugins>
 
 	   	<pluginManagement>
 		   	<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+					<configuration>
+						<argLine>${argLine} -Dfile.encoding=UTF-8</argLine>
+						<forkCount>1</forkCount>
+						<runOrder>random</runOrder>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>${jacoco.version}</version>
+					<executions>
+						<execution>
+							<id>prepare-agent</id>
+							<goals>
+								<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>report</id>
+							<phase>test</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
