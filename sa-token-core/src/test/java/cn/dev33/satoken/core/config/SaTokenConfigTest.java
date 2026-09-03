@@ -36,74 +36,74 @@ public class SaTokenConfigTest {
 		SaTokenConfig config = new SaTokenConfig();
 		
 		config.setTokenName("nav-token");
-		Assertions.assertEquals(config.getTokenName(), "nav-token");
-		
+		Assertions.assertEquals("nav-token", config.getTokenName());
+
 		config.setTimeout(100204);
-		Assertions.assertEquals(config.getTimeout(), 100204);
-		
+		Assertions.assertEquals(100204, config.getTimeout());
+
 		config.setActiveTimeout(1804);
-		Assertions.assertEquals(config.getActiveTimeout(), 1804);
+		Assertions.assertEquals(1804, config.getActiveTimeout());
 
 		config.setIsConcurrent(false);
-		Assertions.assertEquals(config.getIsConcurrent(), false);
+		Assertions.assertEquals(false, config.getIsConcurrent());
 
 		config.setIsShare(false);
-		Assertions.assertEquals(config.getIsShare(), false);
+		Assertions.assertEquals(false, config.getIsShare());
 
 		config.setMaxLoginCount(11);
-		Assertions.assertEquals(config.getMaxLoginCount(), 11);
+		Assertions.assertEquals(11, config.getMaxLoginCount());
 
 		config.setIsReadBody(false);
-		Assertions.assertEquals(config.getIsReadBody(), false);
+		Assertions.assertEquals(false, config.getIsReadBody());
 
 		config.setIsReadHeader(false);
-		Assertions.assertEquals(config.getIsReadHeader(), false);
+		Assertions.assertEquals(false, config.getIsReadHeader());
 
 		config.setIsReadCookie(false);
-		Assertions.assertEquals(config.getIsReadCookie(), false);
+		Assertions.assertEquals(false, config.getIsReadCookie());
 
 		config.setTokenStyle("tik");
-		Assertions.assertEquals(config.getTokenStyle(), "tik");
+		Assertions.assertEquals("tik", config.getTokenStyle());
 
 		config.setDataRefreshPeriod(111);
-		Assertions.assertEquals(config.getDataRefreshPeriod(), 111);
+		Assertions.assertEquals(111, config.getDataRefreshPeriod());
 
 		config.setTokenSessionCheckLogin(false);
-		Assertions.assertEquals(config.getTokenSessionCheckLogin(), false);
+		Assertions.assertEquals(false, config.getTokenSessionCheckLogin());
 
 		config.setAutoRenew(false);
-		Assertions.assertEquals(config.getAutoRenew(), false);
+		Assertions.assertEquals(false, config.getAutoRenew());
 
 		config.setTokenPrefix("token");
-		Assertions.assertEquals(config.getTokenPrefix(), "token");
+		Assertions.assertEquals("token", config.getTokenPrefix());
 
 		config.setIsPrint(false);
-		Assertions.assertEquals(config.getIsPrint(), false);
+		Assertions.assertEquals(false, config.getIsPrint());
 
 		config.setIsLog(false);
-		Assertions.assertEquals(config.getIsLog(), false);
+		Assertions.assertEquals(false, config.getIsLog());
 
 		config.setJwtSecretKey("NgdfaXasARggr");
-		Assertions.assertEquals(config.getJwtSecretKey(), "NgdfaXasARggr");
+		Assertions.assertEquals("NgdfaXasARggr", config.getJwtSecretKey());
 
 		config.setSameTokenTimeout(1004);
-		Assertions.assertEquals(config.getSameTokenTimeout(), 1004);
+		Assertions.assertEquals(1004, config.getSameTokenTimeout());
 
 		config.setHttpBasic("sa:123456");
-		Assertions.assertEquals(config.getHttpBasic(), "sa:123456");
+		Assertions.assertEquals("sa:123456", config.getHttpBasic());
 
 		config.setCurrDomain("http://127.0.0.1:8084");
-		Assertions.assertEquals(config.getCurrDomain(), "http://127.0.0.1:8084");
+		Assertions.assertEquals("http://127.0.0.1:8084", config.getCurrDomain());
 
 		config.setCheckSameToken(false);
-		Assertions.assertEquals(config.getCheckSameToken(), false);
+		Assertions.assertEquals(false, config.getCheckSameToken());
 
 		config.setAllowLoginIdColon(true);
-		Assertions.assertEquals(config.getAllowLoginIdColon(), true);
+		Assertions.assertEquals(true, config.getAllowLoginIdColon());
 
 		SaCookieConfig scc = new SaCookieConfig();
 		config.setCookie(scc);
-		Assertions.assertEquals(config.getCookie(), scc);
+		Assertions.assertEquals(scc, config.getCookie());
 		
 		config.toString();
 	}
@@ -112,12 +112,12 @@ public class SaTokenConfigTest {
 	@Test
 	public void testSaTokenConfigFactory() {
 		SaTokenConfig config = SaTokenConfigFactory.createConfig("sa-token2.properties");
-		Assertions.assertEquals(config.getTokenName(), "use-token");
-		Assertions.assertEquals(config.getTimeout(), 9000);
-		Assertions.assertEquals(config.getActiveTimeout(), 240);
-		Assertions.assertEquals(config.getIsConcurrent(), false);
-		Assertions.assertEquals(config.getIsShare(), false);
-		Assertions.assertEquals(config.getIsLog(), true);
+		Assertions.assertEquals("use-token", config.getTokenName());
+		Assertions.assertEquals(9000, config.getTimeout());
+		Assertions.assertEquals(240, config.getActiveTimeout());
+		Assertions.assertEquals(false, config.getIsConcurrent());
+		Assertions.assertEquals(false, config.getIsShare());
+		Assertions.assertEquals(true, config.getIsLog());
 	}
 
 	// 测试 SaCookieConfig 
@@ -126,19 +126,19 @@ public class SaTokenConfigTest {
 		SaCookieConfig config = new SaCookieConfig();
 		
 		config.setDomain("stp.cn");
-		Assertions.assertEquals(config.getDomain(), "stp.cn");
-		
+		Assertions.assertEquals("stp.cn", config.getDomain());
+
 		config.setPath("/pro/");
-		Assertions.assertEquals(config.getPath(), "/pro/");
-		
+		Assertions.assertEquals("/pro/", config.getPath());
+
 		config.setSecure(true);
-		Assertions.assertEquals(config.getSecure(), true);
+		Assertions.assertEquals(true, config.getSecure());
 
 		config.setHttpOnly(false);
-		Assertions.assertEquals(config.getHttpOnly(), false);
+		Assertions.assertEquals(false, config.getHttpOnly());
 
 		config.setSameSite("lax");
-		Assertions.assertEquals(config.getSameSite(), "lax");
+		Assertions.assertEquals("lax", config.getSameSite());
 
 	}
 	

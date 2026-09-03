@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.model.wrapperInfo.SaDisableWrapperInfo;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
-import org.junit.jupiter.api.AfterEach;
+import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,18 +30,17 @@ import java.util.List;
 /**
  * StpInterface.isDisabled 按 loginType 分流
  */
+@SaTokenTest
 public class StpInterfaceIsDisabledLoginTypeTest {
 
 	private static final String USER_TYPE = "stp-if-user";
 	private static final String ADMIN_TYPE = "stp-if-admin";
 
-	private StpInterface backup;
 	private StpLogic userLogic;
 	private StpLogic adminLogic;
 
 	@BeforeEach
 	public void setUp() {
-		backup = SaManager.getStpInterface();
 		SaManager.setStpInterface(new StpInterface() {
 			@Override
 			public List<String> getPermissionList(Object loginId, String loginType) {
@@ -61,15 +60,6 @@ public class StpInterfaceIsDisabledLoginTypeTest {
 		});
 		userLogic = new StpLogic(USER_TYPE);
 		adminLogic = new StpLogic(ADMIN_TYPE);
-	}
-
-	@AfterEach
-	public void tearDown() {
-		userLogic.untieDisable(10001);
-		adminLogic.untieDisable(10001);
-		SaManager.removeStpLogic(USER_TYPE);
-		SaManager.removeStpLogic(ADMIN_TYPE);
-		SaManager.setStpInterface(backup);
 	}
 
 	@Test

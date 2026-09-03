@@ -33,7 +33,7 @@ import java.util.Map;
 public class TokenInfoTest {
 
 	@Test
-	public void test() {
+	public void gettersAndSetters() {
 		SaTokenInfo info = new SaTokenInfo();
 		info.setTokenName("satoken");
 		info.setTokenValue("xxxxx-xxxxx-xxxxx-xxxxx");
@@ -47,18 +47,18 @@ public class TokenInfoTest {
 		info.setLoginDeviceType("PC");
 		info.setTag("xxx");
 
-		Assertions.assertEquals(info.getTokenName(), "satoken");
-		Assertions.assertEquals(info.getTokenValue(), "xxxxx-xxxxx-xxxxx-xxxxx");
-		Assertions.assertEquals(info.getIsLogin(), true);
-		Assertions.assertEquals(info.getLoginId(), 10001);
-		Assertions.assertEquals(info.getLoginType(), "login");
-		Assertions.assertEquals(info.getTokenTimeout(), 1800);
-		Assertions.assertEquals(info.getSessionTimeout(), 120);
-		Assertions.assertEquals(info.getTokenSessionTimeout(), 1800);
-		Assertions.assertEquals(info.getTokenActiveTimeout(), 120);
-		Assertions.assertEquals(info.getLoginDeviceType(), "PC");
-		Assertions.assertEquals(info.getTag(), "xxx");
-		
+		Assertions.assertEquals("satoken", info.getTokenName());
+		Assertions.assertEquals("xxxxx-xxxxx-xxxxx-xxxxx", info.getTokenValue());
+		Assertions.assertEquals(true, info.getIsLogin());
+		Assertions.assertEquals(10001, info.getLoginId());
+		Assertions.assertEquals("login", info.getLoginType());
+		Assertions.assertEquals(1800, info.getTokenTimeout());
+		Assertions.assertEquals(120, info.getSessionTimeout());
+		Assertions.assertEquals(1800, info.getTokenSessionTimeout());
+		Assertions.assertEquals(120, info.getTokenActiveTimeout());
+		Assertions.assertEquals("PC", info.getLoginDeviceType());
+		Assertions.assertEquals("xxx", info.getTag());
+
 		Assertions.assertNotNull(info.toString());
 	}
 

@@ -26,6 +26,12 @@
 			<artifactId>sa-token-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-core</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+		</dependency>
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
 		</dependency>

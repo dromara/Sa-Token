@@ -19,6 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.session.SaTerminalInfo;
+import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,11 +34,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * SaSession 测试 
- * 
- * @author click33
- * @since 2022-2-9 
+ * SaSession 测试
  */
+@SaTokenTest
 public class SaSessionTest {
 
 	// 基础属性 
@@ -157,15 +156,12 @@ public class SaSessionTest {
     	SaManager.getSaTokenDao().setSession(session, 20000);
     	session.updateMaxTimeout(100);
     	Assertions.assertTrue(session.timeout() <= 100);
-    	System.out.println(session.timeout());
-    	// 仍然是 <=100 
+    	// 仍然是 <=100
     	session.updateMaxTimeout(1000);
     	Assertions.assertTrue(session.timeout() <= 100);
-    	System.out.println(session.timeout());
-    	// Min 修改 
+    	// Min 修改
     	session.updateMinTimeout(-1);
-    	System.out.println(session.timeout());
-    	Assertions.assertTrue(session.timeout() == -1);
+    	Assertions.assertEquals(-1, session.timeout());
     }
     
     // 测试token 签名 

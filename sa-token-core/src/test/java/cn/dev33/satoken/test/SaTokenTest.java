@@ -13,27 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.core.secure;
+package cn.dev33.satoken.test;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import cn.dev33.satoken.secure.SaBase64Util;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * SaBase64Util 测试
+ * 标记依赖 {@link cn.dev33.satoken.SaManager} 的测试类，自动挂载 {@link SaTokenExtension}。
  */
-public class SaBase64UtilTest {
-
-	@Test
-	public void encodeAndDecode() {
-		String text = "Sa-Token 一个轻量级java权限认证框架";
-
-		String base64Text = SaBase64Util.encode(text);
-		Assertions.assertEquals("U2EtVG9rZW4g5LiA5Liq6L276YeP57qnamF2Yeadg+mZkOiupOivgeahhuaetg==", base64Text);
-
-		String text2 = SaBase64Util.decode(base64Text);
-		Assertions.assertEquals(text, text2);
-	}
-
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@ExtendWith(SaTokenExtension.class)
+public @interface SaTokenTest {
 }

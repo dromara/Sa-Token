@@ -34,8 +34,8 @@ public class SaTerminalInfoTest {
 		terminal.setDeviceType("PC");
 		terminal.setTokenValue("ttt-value");
 		
-		Assertions.assertEquals(terminal.getDeviceType(), "PC");
-		Assertions.assertEquals(terminal.getTokenValue(), "ttt-value");
+		Assertions.assertEquals("PC", terminal.getDeviceType());
+		Assertions.assertEquals("ttt-value", terminal.getTokenValue());
 
 		Assertions.assertNotNull(terminal.toString());
 	}

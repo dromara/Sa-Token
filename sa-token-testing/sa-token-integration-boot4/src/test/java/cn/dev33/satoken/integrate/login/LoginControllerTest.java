@@ -61,8 +61,8 @@ public class LoginControllerTest {
 			MockMvcRequestBuilders.post("/acc/doLogin")
 				.param("name", "zhang")
 				.param("pwd", "123456")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.accept(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andReturn();

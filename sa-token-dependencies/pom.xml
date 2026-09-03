@@ -53,13 +53,13 @@
 		<central.publishing.maven.version>0.7.0</central.publishing.maven.version>
 
 		<!-- 单元测试 -->
-		<junit-jupiter.version>5.11.4</junit-jupiter.version>
+		<junit-jupiter.version>6.1.3</junit-jupiter.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
-			<!-- JUnit 5 -->
+			<!-- JUnit -->
 			<dependency>
 				<groupId>org.junit</groupId>
 				<artifactId>junit-bom</artifactId>

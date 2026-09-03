@@ -49,7 +49,7 @@
 		<central.publishing.maven.version>0.10.0</central.publishing.maven.version>
 
 		<!-- 单元测试工具链 -->
-		<junit-jupiter.version>5.11.4</junit-jupiter.version>
+		<junit-jupiter.version>6.1.3</junit-jupiter.version>
 		<jacoco.version>0.8.12</jacoco.version>
 		<maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
 	</properties>
