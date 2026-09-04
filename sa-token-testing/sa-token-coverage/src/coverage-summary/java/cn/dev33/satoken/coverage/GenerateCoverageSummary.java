@@ -109,10 +109,10 @@ public class GenerateCoverageSummary {
 					pkg = dot > 0 ? className.substring(0, dot) : "(default)";
 				}
 
-				String module = normalizeModuleName(col(cols, index, 0));
+			String module = normalizeModuleName(col(cols, index, 0));
 
-				total.add(row);
-				addMetrics(packageMetrics, pkg, row);
+			total.add(row);
+			addMetrics(packageMetrics, pkg, row);
 				addMetrics(moduleMetrics, module, row);
 			}
 		}
@@ -221,13 +221,13 @@ public class GenerateCoverageSummary {
 		boolean sortable = !highlight;
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table").append(sortable ? " class=\"sortable-table\"" : "").append(">\n<thead><tr>\n");
-		sb.append(sortableHeader("Element", sortable));
-		sb.append(sortableHeader("Instructions", sortable));
-		sb.append(sortableHeader("Branches", sortable));
-		sb.append(sortableHeader("Complexity", sortable));
-		sb.append(sortableHeader("Lines", sortable));
-		sb.append(sortableHeader("Methods", sortable));
-		sb.append(sortableHeader("Classes", sortable));
+		sb.append(sortableHeader("Element (元素)", sortable));
+		sb.append(sortableHeader("Instructions (指令覆盖率)", sortable));
+		sb.append(sortableHeader("Branches (分支覆盖率)", sortable));
+		sb.append(sortableHeader("Complexity (圈复杂度覆盖率)", sortable));
+		sb.append(sortableHeader("Lines (行覆盖率)", sortable));
+		sb.append(sortableHeader("Methods (方法覆盖率)", sortable));
+		sb.append(sortableHeader("Classes (类覆盖率)", sortable));
 		sb.append("</tr></thead>\n<tbody>\n");
 
 		for (Row row : rows) {

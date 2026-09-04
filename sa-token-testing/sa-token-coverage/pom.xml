@@ -243,18 +243,23 @@
 			<artifactId>sa-token-rest-client</artifactId>
 		</dependency>
 
-		<!-- ========== 测试模块：携带 jacoco.exec 执行数据 ========== -->
+		<!-- ========== 测试模块：携带 jacoco.exec 执行数据 ==========
+		     这些模块自身源码不进聚合报告（scope=test），但它们的 jacoco.exec 会被聚合，
+		     从而统计其测试运行时加载的产品模块类的覆盖率。 -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-test-support</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-plugin-contract-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-integration-boot2</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<!-- boot3/boot4 集成测试：classpath 待修复后取消注释 -->
 		<!--
