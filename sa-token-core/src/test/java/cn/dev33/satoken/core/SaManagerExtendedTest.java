@@ -89,6 +89,27 @@ public class SaManagerExtendedTest {
 		Assertions.assertNotNull(SaManager.getConfig().getIsColorLog());
 	}
 
+	/** 关闭日志时，setConfig 不应自动写入彩色日志配置 */
+	@Test
+	void setConfig_doesNotInferColorLogWhenLoggingDisabled() {
+		SaTokenConfig config = new SaTokenConfig();
+		config.setIsPrint(false);
+		config.setIsLog(false);
+		config.setIsColorLog(null);
+
+		SaManager.setConfig(config);
+
+		Assertions.assertNull(SaManager.getConfig().getIsColorLog());
+	}
+
+	/** 空配置应被接受，并在后续读取时恢复默认配置 */
+	@Test
+	void setConfig_acceptsNullAndRestoresDefaultsOnRead() {
+		SaManager.setConfig(null);
+
+		Assertions.assertEquals("satoken", SaManager.getConfig().getTokenName());
+	}
+
 	/** 严格模式下获取不存在的 StpLogic 应抛出 CODE_10002 异常 */
 	@Test
 	void getStpLogicStrictModeThrows() {

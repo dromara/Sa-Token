@@ -106,6 +106,22 @@ public class SaFirewallStrategyTest {
 		Assertions.assertFalse(strategy.checkHooks.contains(hook));
 	}
 
+	/** 注册到首位或第二位时应保持对应 Hook 的执行优先级 */
+	@Test
+	void registerHookToFirst_and_registerHookToSecond() {
+		CountingHook firstHook = new CountingHook();
+		CountingHook secondHook = new CountingHook();
+		SaFirewallCheckHook originalFirstHook = strategy.checkHooks.get(0);
+
+		strategy.registerHookToFirst(firstHook);
+		Assertions.assertSame(firstHook, strategy.checkHooks.get(0));
+
+		strategy.registerHookToSecond(secondHook);
+		Assertions.assertSame(firstHook, strategy.checkHooks.get(0));
+		Assertions.assertSame(secondHook, strategy.checkHooks.get(1));
+		Assertions.assertSame(originalFirstHook, strategy.checkHooks.get(2));
+	}
+
 	/** check 执行时应依次运行已注册的 Hook */
 	@Test
 	void check_runsHooks() {

@@ -80,6 +80,26 @@ public class SaHttpDigestTemplateExtendedTest {
 		});
 	}
 
+	/** challenge 应保留调用方指定的 Digest 参数 */
+	@Test
+	void throwNotHttpDigestAuthException_keepsProvidedChallengeValues() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaHttpDigestModel model = new SaHttpDigestModel();
+			model.realm = "Admin";
+			model.qop = "auth-int";
+			model.nonce = "nonce-fixed";
+			model.nc = "00000009";
+			model.opaque = "opaque-fixed";
+
+			Assertions.assertThrows(NotHttpDigestAuthException.class,
+					() -> template.throwNotHttpDigestAuthException(model));
+
+			String header = ((SaResponseForMock) SaHolder.getResponse()).headerMap.get("WWW-Authenticate");
+			Assertions.assertEquals("Digest realm=\"Admin\", qop=\"auth-int\", nonce=\"nonce-fixed\", "
+					+ "nc=00000009, opaque=\"opaque-fixed\"", header);
+		});
+	}
+
 	/** 缺少 Digest 请求头时 check 应抛出 NotHttpDigestAuthException */
 	@Test
 	void check_throwsWhenNoDigestHeader() {
@@ -188,6 +208,39 @@ public class SaHttpDigestTemplateExtendedTest {
 		Assertions.assertEquals("p", req.password);
 		Assertions.assertEquals("R", req.realm);
 		Assertions.assertEquals("/keep", req.uri);
+	}
+
+	/** copyHopeToReq 应以 hope 的非空字段覆盖请求字段 */
+	@Test
+	void copyHopeToReq_overridesAllSupportedFields() {
+		SaHttpDigestModel hope = new SaHttpDigestModel("hope-user", "hope-password");
+		hope.realm = "hope-realm";
+		hope.nonce = "hope-nonce";
+		hope.uri = "/hope";
+		hope.method = "PUT";
+		hope.qop = "auth";
+		hope.nc = "00000002";
+		hope.opaque = "hope-opaque";
+		SaHttpDigestModel req = new SaHttpDigestModel("req-user", "req-password");
+		req.realm = "req-realm";
+		req.nonce = "req-nonce";
+		req.uri = "/req";
+		req.method = "GET";
+		req.qop = "auth-int";
+		req.nc = "00000001";
+		req.opaque = "req-opaque";
+
+		template.copyHopeToReq(hope, req);
+
+		Assertions.assertEquals("hope-user", req.username);
+		Assertions.assertEquals("hope-password", req.password);
+		Assertions.assertEquals("hope-realm", req.realm);
+		Assertions.assertEquals("hope-nonce", req.nonce);
+		Assertions.assertEquals("/hope", req.uri);
+		Assertions.assertEquals("PUT", req.method);
+		Assertions.assertEquals("auth", req.qop);
+		Assertions.assertEquals("00000002", req.nc);
+		Assertions.assertEquals("hope-opaque", req.opaque);
 	}
 
 }

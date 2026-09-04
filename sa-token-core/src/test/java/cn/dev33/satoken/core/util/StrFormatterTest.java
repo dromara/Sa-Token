@@ -56,5 +56,29 @@ public class StrFormatterTest {
 		Assertions.assertEquals("", StrFormatter.format("", "a"));
 	}
 
+	/** format 应保留参数耗尽后未替换的占位符，并忽略多余参数 */
+	@Test
+	void format_handlesExhaustedAndExtraArguments() {
+		Assertions.assertEquals("a then {}", StrFormatter.format("{} then {}", "a"));
+		Assertions.assertEquals("a", StrFormatter.format("{}", "a", "unused"));
+		Assertions.assertEquals("{} {}", StrFormatter.format("{} {}"));
+		Assertions.assertEquals("null", StrFormatter.format("{}", (Object) null));
+	}
+
+	/** formatWith 应处理转义的自定义占位符和 null 参数数组 */
+	@Test
+	void formatWith_handlesEscapesAndNullArguments() {
+		Assertions.assertEquals("[] value", StrFormatter.formatWith("\\[] []", "[]", "value"));
+		Assertions.assertEquals("\\value", StrFormatter.formatWith("\\\\[]", "[]", "value"));
+		Assertions.assertEquals("{}", StrFormatter.formatWith("{}", "{}", (Object[]) null));
+		Assertions.assertEquals("plain", StrFormatter.formatWith("plain", "{}", "unused"));
+	}
+
+	/** 默认构造函数应可正常创建实例 */
+	@Test
+	void defaultConstructor() {
+		Assertions.assertDoesNotThrow(StrFormatter::new);
+	}
+
 }
 

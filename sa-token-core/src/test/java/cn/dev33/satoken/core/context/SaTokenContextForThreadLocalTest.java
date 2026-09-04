@@ -73,6 +73,24 @@ public class SaTokenContextForThreadLocalTest {
 		Assertions.assertEquals("v", box.getStorage().get("k"));
 	}
 
+	/** ModelBox setter 应替换对象，toString 应包含替换后的对象 */
+	@Test
+	void modelBoxSettersAndToString() {
+		NamedRequest request = new NamedRequest();
+		NamedResponse response = new NamedResponse();
+		NamedStorage storage = new NamedStorage();
+		SaTokenContextModelBox box = new SaTokenContextModelBox(null, null, null);
+
+		box.setRequest(request);
+		box.setResponse(response);
+		box.setStorage(storage);
+
+		Assertions.assertSame(request, box.getRequest());
+		Assertions.assertSame(response, box.getResponse());
+		Assertions.assertSame(storage, box.getStorage());
+		Assertions.assertEquals("Box [request=request, response=response, storage=storage]", box.toString());
+	}
+
 	/** clearContext 后上下文应失效 */
 	@Test
 	void clearContextRemovesBox() {
@@ -99,6 +117,27 @@ public class SaTokenContextForThreadLocalTest {
 		Assertions.assertSame(response, SaTokenContextForThreadLocalStaff.getResponse());
 		Assertions.assertSame(storage, SaTokenContextForThreadLocalStaff.getStorage());
 		Assertions.assertNotNull(SaTokenContextForThreadLocalStaff.getModelBoxOrNull());
+	}
+
+	static class NamedRequest extends SaRequestForMock {
+		@Override
+		public String toString() {
+			return "request";
+		}
+	}
+
+	static class NamedResponse extends SaResponseForMock {
+		@Override
+		public String toString() {
+			return "response";
+		}
+	}
+
+	static class NamedStorage extends SaStorageForMock {
+		@Override
+		public String toString() {
+			return "storage";
+		}
 	}
 
 }

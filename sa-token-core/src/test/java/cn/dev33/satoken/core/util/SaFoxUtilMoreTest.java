@@ -202,4 +202,40 @@ public class SaFoxUtilMoreTest {
 		Assertions.assertFalse(SaFoxUtil.isUrl("ftp://"));
 		Assertions.assertFalse(SaFoxUtil.isUrl("not-a-url"));
 	}
+
+	/** isUrl 应分别处理 file URL、无主机 authority、语法错误及末尾逗号 */
+	@Test
+	void isUrl_fileAndMalformedBoundaries() {
+		Assertions.assertFalse(SaFoxUtil.isUrl("file://"));
+		Assertions.assertFalse(SaFoxUtil.isUrl("https://user@/callback"));
+		Assertions.assertFalse(SaFoxUtil.isUrl("https://example.com/%"));
+		Assertions.assertFalse(SaFoxUtil.isUrl("https://example.com/path,"));
+	}
+
+	/** 集合工具应区分 null、空集合、命中与未命中边界 */
+	@Test
+	void collectionHelpers_handleNullEmptyAndMatches() {
+		List<String> values = Arrays.asList("a", "b");
+		Assertions.assertTrue(SaFoxUtil.isEmptyList(null));
+		Assertions.assertTrue(SaFoxUtil.isEmptyList(Arrays.asList()));
+		Assertions.assertFalse(SaFoxUtil.isEmptyList(values));
+
+		Assertions.assertFalse(SaFoxUtil.list1ContainList2AllElement(null, Arrays.asList("a")));
+		Assertions.assertTrue(SaFoxUtil.list1ContainList2AllElement(values, Arrays.asList("a", "b")));
+		Assertions.assertFalse(SaFoxUtil.list1ContainList2AllElement(values, Arrays.asList("c")));
+		Assertions.assertFalse(SaFoxUtil.list1ContainList2AnyElement(values, null));
+		Assertions.assertTrue(SaFoxUtil.list1ContainList2AnyElement(values, Arrays.asList("c", "b")));
+		Assertions.assertFalse(SaFoxUtil.list1ContainList2AnyElement(values, Arrays.asList("c")));
+		Assertions.assertEquals(Arrays.asList(), SaFoxUtil.list1RemoveByList2(Arrays.asList(), values));
+	}
+
+	/** searchList 应处理空筛选结果、零大小分页和超出范围的起始下标 */
+	@Test
+	void searchList_handlesEmptyAndPaginationBoundaries() {
+		List<String> values = Arrays.asList("a", "b");
+		Assertions.assertEquals(Arrays.asList(),
+				SaFoxUtil.searchList(values, "x", "", 0, 10, true));
+		Assertions.assertEquals(Arrays.asList(), SaFoxUtil.searchList(values, 0, 0, true));
+		Assertions.assertEquals(Arrays.asList(), SaFoxUtil.searchList(values, 3, 2, true));
+	}
 }

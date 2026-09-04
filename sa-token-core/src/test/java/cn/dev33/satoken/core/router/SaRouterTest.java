@@ -22,6 +22,7 @@ import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.router.SaRouterStaff;
 import cn.dev33.satoken.test.SaTestRouteMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,6 +30,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -51,8 +53,10 @@ public class SaRouterTest {
 		Assertions.assertTrue(SaRouter.isMatch(new String[] {"/admin/**", "/user/**"}, "/admin/config"));
 		Assertions.assertTrue(SaRouter.isMatch(Arrays.asList("/api/**"), "/api/v1/info"));
 		Assertions.assertFalse(SaRouter.isMatch("/user/**", "/order/list"));
+		Assertions.assertFalse(SaRouter.isMatch((List<String>) null, "/user/list"));
 		Assertions.assertFalse(SaRouter.isMatch((String[]) null, "/user/list"));
 		Assertions.assertFalse(SaRouter.isMatch(Collections.<String>emptyList(), "/user/list"));
+		Assertions.assertFalse(SaRouter.isMatch(Arrays.asList("/admin/**"), "/user/list"));
 	}
 
 	/** isMatch 应正确匹配 HTTP 方法枚举 */
@@ -60,7 +64,9 @@ public class SaRouterTest {
 	void isMatch_httpMethod() {
 		Assertions.assertTrue(SaRouter.isMatch(new SaHttpMethod[] {SaHttpMethod.GET}, "GET"));
 		Assertions.assertTrue(SaRouter.isMatch(new SaHttpMethod[] {SaHttpMethod.ALL}, "POST"));
+		Assertions.assertTrue(SaRouter.isMatch(new SaHttpMethod[] {SaHttpMethod.POST}, "post"));
 		Assertions.assertFalse(SaRouter.isMatch(new SaHttpMethod[] {SaHttpMethod.POST}, "GET"));
+		Assertions.assertFalse(SaRouter.isMatch(new SaHttpMethod[] {null}, "GET"));
 		Assertions.assertFalse(SaRouter.isMatch((SaHttpMethod[]) null, "GET"));
 	}
 
@@ -72,6 +78,8 @@ public class SaRouterTest {
 			req.requestPath = "/user/doLogin";
 
 			Assertions.assertTrue(SaRouter.isMatchCurrURI("/user/**"));
+			Assertions.assertTrue(SaRouter.isMatchCurrURI(Arrays.asList("/admin/**", "/user/**")));
+			Assertions.assertTrue(SaRouter.isMatchCurrURI(new String[] {"/user/**"}));
 			Assertions.assertFalse(SaRouter.isMatchCurrURI("/admin/**"));
 		});
 	}
@@ -85,6 +93,18 @@ public class SaRouterTest {
 
 			Assertions.assertTrue(SaRouter.isMatchCurrMethod(new SaHttpMethod[] {SaHttpMethod.POST}));
 			Assertions.assertFalse(SaRouter.isMatchCurrMethod(new SaHttpMethod[] {SaHttpMethod.GET}));
+		});
+	}
+
+	/** 静态字符串 varargs 路径重载应正确匹配与排除 */
+	@Test
+	void matchAndNotMatch_stringVarargs() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/user/profile";
+
+			Assertions.assertTrue(SaRouter.match("/admin/**", "/user/**").isHit());
+			Assertions.assertFalse(SaRouter.notMatch("/admin/**", "/user/**").isHit());
 		});
 	}
 
@@ -124,6 +144,43 @@ public class SaRouterTest {
 			SaRouter.match("/user/**", () -> checked.set(true));
 		});
 		Assertions.assertFalse(checked.get());
+	}
+
+	/** 静态入口应创建可用的各类匹配链 */
+	@Test
+	void staticMatchEntries() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/user/profile";
+			req.method = "POST";
+
+			Assertions.assertTrue(SaRouter.match(Arrays.asList("/user/**")).isHit());
+			Assertions.assertFalse(SaRouter.notMatch(Arrays.asList("/user/**")).isHit());
+			Assertions.assertTrue(SaRouter.match(SaHttpMethod.POST).isHit());
+			Assertions.assertFalse(SaRouter.notMatch(SaHttpMethod.POST).isHit());
+			Assertions.assertTrue(SaRouter.matchMethod("POST").isHit());
+			Assertions.assertFalse(SaRouter.notMatchMethod("POST").isHit());
+			Assertions.assertFalse(SaRouter.match(false).isHit());
+			Assertions.assertFalse(SaRouter.notMatch(true).isHit());
+			Assertions.assertTrue(SaRouter.match(staff -> staff instanceof SaRouterStaff).isHit());
+			Assertions.assertFalse(SaRouter.notMatch(staff -> true).isHit());
+		});
+	}
+
+	/** 静态带回调重载应将 staff 传给回调并遵守排除规则 */
+	@Test
+	void staticMatchCallbacks() {
+		AtomicBoolean checked = new AtomicBoolean(false);
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/user/profile";
+
+			SaRouter.match("/user/**", () -> checked.set(true));
+			SaRouter.match("/user/**", staff -> Assertions.assertTrue(staff.isHit()));
+			SaRouter.match("/user/**", "/user/profile", () -> Assertions.fail("excluded path"));
+			SaRouter.match("/user/**", "/admin/**", staff -> checked.set(staff.isHit()));
+		});
+		Assertions.assertTrue(checked.get());
 	}
 
 }

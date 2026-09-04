@@ -57,4 +57,10 @@ public class ApplicationInfoTest {
 		Assertions.assertEquals("/user/list", ApplicationInfo.cutPathPrefix("/user/list"));
 	}
 
+	/** 默认构造函数应可正常创建实例 */
+	@Test
+	void defaultConstructor() {
+		Assertions.assertDoesNotThrow(ApplicationInfo::new);
+	}
+
 }

@@ -17,6 +17,9 @@ package cn.dev33.satoken.core.config;
 
 import cn.dev33.satoken.config.SaCookieConfig;
 import cn.dev33.satoken.config.SaTokenConfig;
+import cn.dev33.satoken.config.SaTokenConfigFactory;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutRange;
 import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
@@ -119,6 +122,36 @@ public class SaTokenConfigExtendedTest {
 		config.setBasic("admin:pwd");
 		Assertions.assertEquals("admin:pwd", config.getBasic());
 		Assertions.assertEquals("admin:pwd", config.getHttpBasic());
+	}
+
+	/** 默认路径不存在配置文件时应保留 SaTokenConfig 默认值 */
+	@Test
+	void configFactory_defaultPathUsesDefaults() {
+		SaTokenConfig config = SaTokenConfigFactory.createConfig();
+
+		Assertions.assertEquals("satoken", config.getTokenName());
+		Assertions.assertEquals(60 * 60 * 24 * 30, config.getTimeout());
+		Assertions.assertTrue(config.getIsConcurrent());
+	}
+
+	/** 指定不存在的配置文件时应返回默认配置 */
+	@Test
+	void configFactory_missingFileUsesDefaults() {
+		SaTokenConfig config = SaTokenConfigFactory.createConfig("missing-sa-token.properties");
+
+		Assertions.assertEquals("uuid", config.getTokenStyle());
+		Assertions.assertEquals(-1, config.getActiveTimeout());
+		Assertions.assertFalse(config.getIsShare());
+	}
+
+	/** 非法属性值应被包装为配置赋值异常 */
+	@Test
+	void configFactory_invalidPropertyThrows() {
+		SaTokenException ex = Assertions.assertThrows(SaTokenException.class,
+				() -> SaTokenConfigFactory.createConfig("sa-token-invalid.properties"));
+
+		Assertions.assertEquals(SaErrorCode.CODE_10022, ex.getCode());
+		Assertions.assertTrue(ex.getMessage().contains("timeout"));
 	}
 
 }

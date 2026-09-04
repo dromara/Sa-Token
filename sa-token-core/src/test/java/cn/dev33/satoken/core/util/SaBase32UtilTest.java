@@ -54,5 +54,11 @@ public class SaBase32UtilTest {
 		Assertions.assertNull(SaBase32Util.decodeStringToBytes(null));
 	}
 
+	/** 默认构造函数应可正常创建实例 */
+	@Test
+	void defaultConstructor() {
+		Assertions.assertDoesNotThrow(SaBase32Util::new);
+	}
+
 }
 

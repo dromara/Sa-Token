@@ -98,4 +98,30 @@ public class BCryptFullTest {
 		Assertions.assertFalse(BCrypt.checkpw("pwd", "$2a$04$abcdefghijklmnopqr"));
 	}
 
+	/** hashpw 应拒绝 Base64 盐值中的无效字符，且不接受超出 bcrypt 字符表的字符 */
+	@Test
+	void hashpw_rejectsInvalidBase64SaltCharacters() {
+		String validSalt = "$2a$04$......................";
+		Assertions.assertTrue(BCrypt.checkpw("pwd", BCrypt.hashpw("pwd", validSalt)));
+
+		Assertions.assertThrows(IllegalArgumentException.class,
+				() -> BCrypt.hashpw("pwd", "$2a$04$!....................."));
+		Assertions.assertThrows(IllegalArgumentException.class,
+				() -> BCrypt.hashpw("pwd", "$2a$04$.\u0100...................."));
+		Assertions.assertThrows(IllegalArgumentException.class,
+				() -> BCrypt.hashpw("pwd", "$2a$04$..!..................."));
+	}
+
+	/** hashpw 应校验版本、轮数及盐值长度边界 */
+	@Test
+	void hashpw_validatesSaltBoundaries() {
+		Assertions.assertThrows(IllegalArgumentException.class,
+				() -> BCrypt.hashpw("pwd", "$3a$04$......................"));
+		Assertions.assertThrows(NumberFormatException.class,
+				() -> BCrypt.hashpw("pwd", "$2a$xx$......................"));
+		Assertions.assertThrows(IllegalArgumentException.class,
+				() -> BCrypt.hashpw("pwd", "$2a$03$......................"));
+		Assertions.assertFalse(BCrypt.checkpw("pwd", "$2a$04$....................."));
+	}
+
 }

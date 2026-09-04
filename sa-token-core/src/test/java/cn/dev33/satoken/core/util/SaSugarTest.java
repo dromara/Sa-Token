@@ -13,30 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.core.secure;
+package cn.dev33.satoken.core.util;
+
+import cn.dev33.satoken.util.SaSugar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import cn.dev33.satoken.secure.SaBase64Util;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
- * SaBase64Util 测试
+ * SaSugar 测试
  *
  * @author click33
  * @since 1.46.0
  */
-public class SaBase64UtilTest {
-	/** encode/decode 应对含中文的字符串正确编解码 */
+public class SaSugarTest {
+
+	/** get 与 exe 应执行传入 Lambda */
 	@Test
-	public void encodeAndDecode() {
-		String text = "Sa-Token 一个轻量级java权限认证框架";
-		String base64Text = SaBase64Util.encode(text);
-		Assertions.assertEquals("U2EtVG9rZW4g5LiA5Liq6L276YeP57qnamF2Yeadg+mZkOiupOivgeahhuaetg==", base64Text);
-		String text2 = SaBase64Util.decode(base64Text);
-		Assertions.assertEquals(text, text2);
+	void invokesLambda() {
+		AtomicBoolean executed = new AtomicBoolean();
+
+		Assertions.assertEquals("value", SaSugar.get(() -> "value"));
+		SaSugar.exe(() -> executed.set(true));
+
+		Assertions.assertTrue(executed.get());
 	}
 
 	/** 默认构造函数应可正常创建实例 */
 	@Test
 	void defaultConstructor() {
-		Assertions.assertDoesNotThrow(SaBase64Util::new);
+		Assertions.assertDoesNotThrow(SaSugar::new);
 	}
+
 }
