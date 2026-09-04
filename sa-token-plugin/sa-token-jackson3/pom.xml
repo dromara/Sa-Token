@@ -28,6 +28,11 @@
 			<artifactId>jackson-databind</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-json-test-common</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

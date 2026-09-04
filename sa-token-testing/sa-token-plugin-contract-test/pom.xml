@@ -14,36 +14,12 @@
 
 	<name>sa-token-plugin-contract-test</name>
 	<artifactId>sa-token-plugin-contract-test</artifactId>
-	<description>Contract tests for Sa-Token plugins (JSON, JWT, Serializer, SSO, OAuth2, ...)</description>
+	<description>Contract tests for Sa-Token plugins (JWT, Serializer, SSO, OAuth2, Sign, ...)</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-test-support</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jackson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-fastjson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-fastjson2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-fory-json</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-snack3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-snack4</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
@@ -70,33 +46,11 @@
 			<artifactId>sa-token-sign</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>2.0.17</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<!-- Jackson3 / Snack4 等插件测试需要 JDK 17+ -->
-					<source>17</source>
-					<target>17</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
