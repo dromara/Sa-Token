@@ -21,6 +21,7 @@ import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaResponseForMock;
 import cn.dev33.satoken.context.mock.SaStorageForMock;
 import cn.dev33.satoken.context.model.SaTokenContextModelBox;
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenContextException;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.AfterEach;
@@ -103,7 +104,9 @@ public class SaTokenContextForThreadLocalTest {
 	/** 未初始化时 getModelBox 应抛出 SaTokenContextException */
 	@Test
 	void getModelBoxThrowsWhenNotInitialized() {
-		Assertions.assertThrows(SaTokenContextException.class, context::getModelBox);
+		SaTokenContextException ex = Assertions.assertThrows(SaTokenContextException.class, context::getModelBox);
+		Assertions.assertEquals("SaTokenContext 上下文尚未初始化", ex.getMessage());
+		Assertions.assertEquals(SaErrorCode.CODE_10002, ex.getCode());
 	}
 
 	/** Staff 工具类应能直接读写 ThreadLocal 中的上下文对象 */

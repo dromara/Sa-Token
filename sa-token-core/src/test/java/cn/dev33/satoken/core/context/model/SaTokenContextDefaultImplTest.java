@@ -17,9 +17,14 @@ package cn.dev33.satoken.core.context.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
-import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.context.mock.SaRequestForMock;
+import cn.dev33.satoken.context.mock.SaResponseForMock;
+import cn.dev33.satoken.context.mock.SaStorageForMock;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenContextException;
 
 /**
  * 默认上下文测试 
@@ -33,9 +38,20 @@ public class SaTokenContextDefaultImplTest {
 	@Test
 	public void testSaTokenContextDefaultImpl() {
 		SaTokenContextDefaultImpl context = new SaTokenContextDefaultImpl();
-		Assertions.assertThrows(SaTokenException.class, () -> context.getStorage());
-		Assertions.assertThrows(SaTokenException.class, () -> context.getRequest());
-		Assertions.assertThrows(SaTokenException.class, () -> context.getResponse());
+		assertContextException(() -> context.setContext(new SaRequestForMock(), new SaResponseForMock(), new SaStorageForMock()));
+		assertContextException(context::clearContext);
+		assertContextException(context::isValid);
+		assertContextException(context::getModelBox);
+		assertContextException(context::getStorage);
+		assertContextException(context::getRequest);
+		assertContextException(context::getResponse);
+	}
+
+	/** 默认上下文的所有操作均应提示缺少有效的上下文处理器 */
+	private void assertContextException(Executable executable) {
+		SaTokenContextException ex = Assertions.assertThrows(SaTokenContextException.class, executable);
+		Assertions.assertEquals(SaTokenContextDefaultImpl.ERROR_MESSAGE, ex.getMessage());
+		Assertions.assertEquals(SaErrorCode.CODE_10001, ex.getCode());
 	}
 	
 }

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package cn.dev33.satoken.core.secure;
+import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import cn.dev33.satoken.secure.SaBase64Util;
@@ -30,8 +32,15 @@ public class SaBase64UtilTest {
 		String text = "Sa-Token 一个轻量级java权限认证框架";
 		String base64Text = SaBase64Util.encode(text);
 		Assertions.assertEquals("U2EtVG9rZW4g5LiA5Liq6L276YeP57qnamF2Yeadg+mZkOiupOivgeahhuaetg==", base64Text);
-		String text2 = SaBase64Util.decode(base64Text);
-		Assertions.assertEquals(text, text2);
+		String decodedText = SaBase64Util.decode(base64Text);
+		Assertions.assertEquals(text, decodedText);
+	}
+
+	/** byte[] 编解码接口应保留原始二进制内容 */
+	@Test
+	void encodeAndDecodeBytes() {
+		byte[] bytes = "Sa-Token \u0000".getBytes(StandardCharsets.UTF_8);
+		Assertions.assertArrayEquals(bytes, SaBase64Util.decodeStringToBytes(SaBase64Util.encodeBytesToString(bytes)));
 	}
 
 	/** 默认构造函数应可正常创建实例 */

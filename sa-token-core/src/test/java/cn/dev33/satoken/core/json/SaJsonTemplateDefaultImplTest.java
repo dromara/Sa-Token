@@ -16,9 +16,11 @@
 package cn.dev33.satoken.core.json;
 
 import cn.dev33.satoken.exception.NotImplException;
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.Collections;
 
@@ -33,15 +35,18 @@ public class SaJsonTemplateDefaultImplTest {
     /** 默认 JSON 实现未引入第三方库时应抛出 NotImplException */
     @Test
     public void testSaJsonTemplateDefaultImpl() {
-    	SaJsonTemplateDefaultImpl saJsonTemplate = new SaJsonTemplateDefaultImpl();
-    	// 组件未实现
-    	Assertions.assertThrows(NotImplException.class, () -> {
-    		saJsonTemplate.jsonToMap("{}");
-    	});
-    	// 组件未实现
-    	Assertions.assertThrows(NotImplException.class, () -> {
-    		saJsonTemplate.objectToJson(Collections.singletonMap("name", "zhangsan"));
-    	});
+		SaJsonTemplateDefaultImpl saJsonTemplate = new SaJsonTemplateDefaultImpl();
+		assertNotImplException(() -> saJsonTemplate.jsonToMap("{}"));
+		assertNotImplException(() -> saJsonTemplate.objectToJson(Collections.singletonMap("name", "zhangsan")));
+		assertNotImplException(() -> saJsonTemplate.jsonToObject("{}"));
+		assertNotImplException(() -> saJsonTemplate.jsonToObject("{}", Object.class));
     }
+
+	/** 默认 JSON 实现的所有转换入口均应提示未注入具体实现 */
+	private void assertNotImplException(Executable executable) {
+		NotImplException ex = Assertions.assertThrows(NotImplException.class, executable);
+		Assertions.assertEquals(SaJsonTemplateDefaultImpl.ERROR_MESSAGE, ex.getMessage());
+		Assertions.assertEquals(SaErrorCode.CODE_10003, ex.getCode());
+	}
 
 }

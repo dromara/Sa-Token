@@ -48,6 +48,20 @@ public class SaValue2BoxTest {
 		Assertions.assertEquals(200L, box.getValue2AsLong());
 	}
 
+	/** 单值字符串和 setter 应正确更新容器中的两个值 */
+	@Test
+	void parseSingleValueAndSetValues() {
+		SaValue2Box box = new SaValue2Box("only");
+		Assertions.assertEquals("only", box.getValue1());
+		Assertions.assertNull(box.getValue2());
+		Assertions.assertTrue(box.isSingleValueState());
+
+		box.setValue1("one");
+		box.setValue2("two");
+		Assertions.assertEquals("one", box.getValue1());
+		Assertions.assertEquals("two", box.getValue2());
+	}
+
 	/** isNotValueState/isSingleValueState/isDoubleValueState 及 isEmpty 判断应正确 */
 	@Test
 	void valueState() {
@@ -66,7 +80,7 @@ public class SaValue2BoxTest {
 
 	/** toString 应按值状态格式化为逗号分隔字符串或 null */
 	@Test
-	void toString_formatsValues() {
+	void toStringFormatsValues() {
 		Assertions.assertEquals("1,2", new SaValue2Box(1, 2).toString());
 		Assertions.assertNull(new SaValue2Box(null, null).toString());
 		Assertions.assertEquals("1", new SaValue2Box(1, null).toString());
