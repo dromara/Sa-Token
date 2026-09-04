@@ -254,10 +254,6 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-plugin-contract-jackson3</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-integration-boot2</artifactId>
 		</dependency>
 		<!-- boot3/boot4 集成测试：classpath 待修复后取消注释 -->

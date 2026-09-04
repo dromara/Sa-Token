@@ -73,6 +73,11 @@
 				<artifactId>sa-token-test-support</artifactId>
 				<version>${revision}</version>
 			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-json-test-common</artifactId>
+				<version>${revision}</version>
+			</dependency>
         
 			<!-- ****************** sa-token-starter 相关依赖 ****************** -->
 	        <!-- Servlet API -->
