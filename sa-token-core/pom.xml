@@ -59,20 +59,6 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>cn/dev33/satoken/stp/StpUtil*</exclude>
-						<exclude>cn/dev33/satoken/stp/SaLoginModel*</exclude>
-						<exclude>cn/dev33/satoken/stp/SaLoginConfig*</exclude>
-						<exclude>cn/dev33/satoken/temp/SaTempUtil*</exclude>
-						<exclude>cn/dev33/satoken/same/SaSameUtil*</exclude>
-						<exclude>cn/dev33/satoken/httpauth/basic/SaHttpBasicUtil*</exclude>
-						<exclude>cn/dev33/satoken/httpauth/digest/SaHttpDigestUtil*</exclude>
-						<exclude>cn/dev33/satoken/secure/totp/SaTotpUtil*</exclude>
-						<exclude>cn/dev33/satoken/http/SaHttpUtil*</exclude>
-						<exclude>cn/dev33/satoken/http/SaHttpTemplateDefaultImpl*</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
