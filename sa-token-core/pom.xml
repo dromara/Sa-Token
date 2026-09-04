@@ -27,6 +27,25 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile-coverage-summary</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<compileSourceRoots>
+								<compileSourceRoot>${project.basedir}/../sa-token-testing/sa-token-coverage/src/coverage-summary/java</compileSourceRoot>
+							</compileSourceRoots>
+							<outputDirectory>${project.build.directory}/coverage-summary-classes</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.4.2</version>
 				<executions>
@@ -34,6 +53,49 @@
 						<goals>
 							<goal>test-jar</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>cn/dev33/satoken/stp/StpUtil*</exclude>
+						<exclude>cn/dev33/satoken/stp/SaLoginModel*</exclude>
+						<exclude>cn/dev33/satoken/stp/SaLoginConfig*</exclude>
+						<exclude>cn/dev33/satoken/temp/SaTempUtil*</exclude>
+						<exclude>cn/dev33/satoken/same/SaSameUtil*</exclude>
+						<exclude>cn/dev33/satoken/httpauth/basic/SaHttpBasicUtil*</exclude>
+						<exclude>cn/dev33/satoken/httpauth/digest/SaHttpDigestUtil*</exclude>
+						<exclude>cn/dev33/satoken/secure/totp/SaTotpUtil*</exclude>
+						<exclude>cn/dev33/satoken/http/SaHttpUtil*</exclude>
+						<exclude>cn/dev33/satoken/http/SaHttpTemplateDefaultImpl*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jacoco-coverage-summary</id>
+						<phase>test</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>${coverage.summary.mainClass}</mainClass>
+							<additionalClasspathElements>
+								<additionalClasspathElement>${project.build.directory}/coverage-summary-classes</additionalClasspathElement>
+							</additionalClasspathElements>
+							<arguments>
+								<argument>${project.build.directory}/site/jacoco/jacoco.csv</argument>
+								<argument>${project.build.directory}/site/jacoco/coverage-summary.html</argument>
+								<argument>sa-token-core Coverage</argument>
+								<argument>index.html</argument>
+							</arguments>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
