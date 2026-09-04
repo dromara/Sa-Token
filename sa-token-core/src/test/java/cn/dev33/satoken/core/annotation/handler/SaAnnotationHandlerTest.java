@@ -37,6 +37,9 @@ import java.util.List;
 
 /**
  * 注解鉴权处理器
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaAnnotationHandlerTest {

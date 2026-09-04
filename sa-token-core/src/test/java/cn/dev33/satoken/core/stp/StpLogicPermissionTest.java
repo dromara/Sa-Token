@@ -30,6 +30,9 @@ import java.util.List;
 
 /**
  * StpLogic 权限校验
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicPermissionTest {

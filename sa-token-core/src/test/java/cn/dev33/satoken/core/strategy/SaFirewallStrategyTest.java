@@ -37,6 +37,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * SaFirewallStrategy 防火墙策略测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaFirewallStrategyTest {

@@ -40,6 +40,9 @@ import java.util.List;
 
 /**
  * StpLogic 剩余 public 路径覆盖：设备信任、多来源读 token、注销参数组合等
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicUltraTest {

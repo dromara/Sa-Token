@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaTimedCache put/get/timeout 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaTimedCacheTest {

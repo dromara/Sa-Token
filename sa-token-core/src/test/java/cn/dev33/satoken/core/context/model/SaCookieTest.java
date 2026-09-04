@@ -22,6 +22,9 @@ import cn.dev33.satoken.context.model.SaCookie;
 
 /**
  * SaCookie 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaCookieTest {
 

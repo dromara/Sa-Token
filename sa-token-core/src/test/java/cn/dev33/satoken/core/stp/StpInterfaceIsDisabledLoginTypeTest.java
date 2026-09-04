@@ -29,6 +29,9 @@ import java.util.List;
 
 /**
  * StpInterface.isDisabled 按 loginType 分流
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpInterfaceIsDisabledLoginTypeTest {

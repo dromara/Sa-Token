@@ -29,6 +29,9 @@ import java.util.Map;
 
 /**
  * SaTempTemplate 剩余路径覆盖
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaTempTemplateExtendedTest {

@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 二级认证与身份切换
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicSafeSwitchTest {

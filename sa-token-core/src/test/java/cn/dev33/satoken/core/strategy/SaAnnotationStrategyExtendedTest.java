@@ -33,6 +33,9 @@ import java.util.Map;
 
 /**
  * SaAnnotationStrategy 扩展测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaAnnotationStrategyExtendedTest {

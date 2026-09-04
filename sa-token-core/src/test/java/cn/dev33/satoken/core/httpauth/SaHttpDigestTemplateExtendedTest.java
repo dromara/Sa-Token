@@ -31,6 +31,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaHttpDigestTemplate 扩展测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaHttpDigestTemplateExtendedTest {

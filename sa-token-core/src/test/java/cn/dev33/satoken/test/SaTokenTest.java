@@ -24,6 +24,9 @@ import java.lang.annotation.Target;
 
 /**
  * 标记依赖 {@link cn.dev33.satoken.SaManager} 的测试类，自动挂载 {@link SaTokenExtension}。
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

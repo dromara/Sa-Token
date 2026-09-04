@@ -28,6 +28,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 指定设备登录与注销
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicDeviceTest {

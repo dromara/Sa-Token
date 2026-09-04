@@ -31,6 +31,9 @@ import java.util.Map;
 
 /**
  * SaJsonStrategy 多态 JSON 类型白名单策略测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaJsonStrategyTest {
 

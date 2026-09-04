@@ -35,6 +35,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SaSession 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaSessionTest {

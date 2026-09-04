@@ -19,6 +19,9 @@ import org.junit.jupiter.api.Test;
 import cn.dev33.satoken.secure.SaBase64Util;
 /**
  * SaBase64Util 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaBase64UtilTest {
 	/** encode/decode 应对含中文的字符串正确编解码 */

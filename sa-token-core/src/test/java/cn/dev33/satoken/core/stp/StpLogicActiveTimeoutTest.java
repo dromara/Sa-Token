@@ -26,6 +26,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic Token 最低活跃频率
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicActiveTimeoutTest {

@@ -26,6 +26,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * SaTokenPluginHolder SPI 加载与 init 路径测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTokenPluginHolderInitTest {
 

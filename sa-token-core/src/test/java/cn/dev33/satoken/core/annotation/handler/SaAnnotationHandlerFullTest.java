@@ -35,6 +35,9 @@ import java.lang.reflect.Method;
 
 /**
  * 注解处理器 getHandlerAnnotationClass 与 SaIgnore 路径测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaAnnotationHandlerFullTest {

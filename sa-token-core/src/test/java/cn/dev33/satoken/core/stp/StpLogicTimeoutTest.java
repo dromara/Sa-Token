@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic Token 与 Session 过期时间
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicTimeoutTest {

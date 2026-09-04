@@ -29,6 +29,9 @@ import java.util.Map;
 
 /**
  * SaTtlMethods 默认方法测试（通过 SaTempTemplate 实现类调用）
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTtlMethodsTest {
 

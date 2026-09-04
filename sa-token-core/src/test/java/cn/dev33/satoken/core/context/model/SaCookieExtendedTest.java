@@ -26,6 +26,9 @@ import java.util.Map;
 
 /**
  * SaCookie 全字段与边界测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaCookieExtendedTest {
 

@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * BCrypt 剩余路径覆盖
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class BCryptFullTest {
 

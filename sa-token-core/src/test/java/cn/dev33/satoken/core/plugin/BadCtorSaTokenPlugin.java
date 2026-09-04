@@ -19,6 +19,9 @@ import cn.dev33.satoken.plugin.SaTokenPlugin;
 
 /**
  * 无无参构造器的插件，用于 installPlugin(Class) 异常路径测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class BadCtorSaTokenPlugin implements SaTokenPlugin {
 

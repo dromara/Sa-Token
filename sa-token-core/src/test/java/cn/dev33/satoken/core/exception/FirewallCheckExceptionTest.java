@@ -23,6 +23,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * FirewallCheckException 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class FirewallCheckExceptionTest {
 

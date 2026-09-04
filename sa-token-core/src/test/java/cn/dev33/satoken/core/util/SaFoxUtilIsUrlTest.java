@@ -19,6 +19,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 /**
  * {@link SaFoxUtil#isUrl(String)} 专项测试（SSO / OAuth2 redirect_url 校验依赖此方法）
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaFoxUtilIsUrlTest {
 	/** isUrl 应识别 http/https 域名、端口及带认证信息的 URL */

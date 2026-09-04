@@ -22,6 +22,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaDisableWrapperInfo 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaDisableWrapperInfoTest {
 

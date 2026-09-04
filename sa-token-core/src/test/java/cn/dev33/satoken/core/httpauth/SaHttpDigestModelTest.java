@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaHttpDigestModel 参数实体测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaHttpDigestModelTest {
 

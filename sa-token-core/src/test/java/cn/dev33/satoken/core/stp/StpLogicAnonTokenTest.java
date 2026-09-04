@@ -26,6 +26,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 匿名 Token-Session
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicAnonTokenTest {

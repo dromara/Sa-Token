@@ -41,6 +41,9 @@ import java.util.Collections;
 
 /**
  * SaManager 全局组件管理测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaManagerTest {

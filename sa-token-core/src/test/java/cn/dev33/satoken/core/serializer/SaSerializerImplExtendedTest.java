@@ -33,6 +33,9 @@ import java.util.Map;
 
 /**
  * serializer.impl 包剩余实现类测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaSerializerImplExtendedTest {

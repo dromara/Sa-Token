@@ -27,6 +27,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaHttpDigestTemplate check(username,password,realm) 与注解 username 路径测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaHttpDigestTemplateFullTest {

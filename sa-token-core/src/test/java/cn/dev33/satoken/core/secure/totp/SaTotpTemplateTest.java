@@ -22,6 +22,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaTotpTemplate TOTP 动态口令测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTotpTemplateTest {
 

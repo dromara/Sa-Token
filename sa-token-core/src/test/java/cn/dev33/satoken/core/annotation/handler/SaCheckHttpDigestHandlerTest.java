@@ -30,6 +30,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaCheckHttpDigestHandler 注解处理器测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaCheckHttpDigestHandlerTest {

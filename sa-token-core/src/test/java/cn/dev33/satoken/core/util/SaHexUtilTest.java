@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaHexUtil 十六进制工具测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaHexUtilTest {
 

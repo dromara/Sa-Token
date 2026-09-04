@@ -29,6 +29,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaHolder 上下文持有类测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaHolderTest {

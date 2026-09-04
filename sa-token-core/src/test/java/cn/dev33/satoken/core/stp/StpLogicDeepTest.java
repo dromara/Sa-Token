@@ -42,6 +42,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * StpLogic 深度路径覆盖：共享 token、单点登录、溢出注销、前缀模式、活跃度等
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicDeepTest {

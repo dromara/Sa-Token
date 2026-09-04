@@ -25,6 +25,9 @@ import java.util.Map;
 
 /**
  * SaSerializerTemplateForJdk JDK 序列化 round-trip 测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaSerializerTemplateForJdkTest {
 

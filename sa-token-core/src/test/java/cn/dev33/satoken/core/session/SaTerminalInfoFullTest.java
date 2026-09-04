@@ -24,6 +24,9 @@ import java.util.Map;
 
 /**
  * SaTerminalInfo getter/setter 与扩展数据测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTerminalInfoFullTest {
 

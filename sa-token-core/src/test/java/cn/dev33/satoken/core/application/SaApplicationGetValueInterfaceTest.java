@@ -32,6 +32,9 @@ import java.util.Set;
 
 /**
  * SaGetValueInterface 默认方法测试（经 SaApplication）
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaApplicationGetValueInterfaceTest {

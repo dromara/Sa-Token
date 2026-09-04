@@ -27,6 +27,9 @@ import java.util.Map;
 
 /**
  * SaFoxUtil 补充测试（覆盖 SaFoxUtilTest 未触及的方法）
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaFoxUtilExtendedTest {
 

@@ -31,6 +31,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * SaTokenEventCenter 扩展事件发布测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTokenEventCenterExtendedTest {
 

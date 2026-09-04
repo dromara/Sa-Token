@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaSameTemplate 同源系统身份认证测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaSameTemplateTest {

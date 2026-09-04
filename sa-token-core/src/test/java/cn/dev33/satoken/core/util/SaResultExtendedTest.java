@@ -29,6 +29,9 @@ import java.util.Map;
 
 /**
  * SaResult 剩余方法测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaResultExtendedTest {

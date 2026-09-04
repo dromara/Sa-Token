@@ -23,6 +23,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaTokenDao 自动跟随接口默认实现测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTokenDaoAutoTest {
 

@@ -43,6 +43,9 @@ import java.util.List;
 
 /**
  * 防火墙 Hook 全量测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaFirewallHooksTest {

@@ -34,6 +34,9 @@ import java.util.List;
 
 /**
  * StpLogic 登录与鉴权状态
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicLoginTest {

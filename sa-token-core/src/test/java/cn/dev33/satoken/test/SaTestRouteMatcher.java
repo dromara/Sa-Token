@@ -19,6 +19,9 @@ import cn.dev33.satoken.strategy.SaStrategy;
 
 /**
  * 单测用简易 Ant 风格路由匹配器（core 默认 {@link SaStrategy#routeMatcher} 未实现）。
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public final class SaTestRouteMatcher {
 

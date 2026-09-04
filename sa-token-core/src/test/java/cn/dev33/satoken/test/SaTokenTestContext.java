@@ -30,6 +30,9 @@ import java.util.Map;
 
 /**
  * 单测 / 集成测中 {@link SaManager} 全局状态快照与复位。
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public final class SaTokenTestContext {
 

@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import cn.dev33.satoken.util.SaResult;
 /**
  * SaResult 结果集测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaResultTest {
 	/** 构造函数、getter/setter 及 getOrDefault 应正确读写字段 */

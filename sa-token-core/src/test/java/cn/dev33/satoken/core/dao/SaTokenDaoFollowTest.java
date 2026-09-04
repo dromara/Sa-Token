@@ -31,6 +31,9 @@ import java.util.List;
 
 /**
  * SaTokenDaoByObjectFollowString / SaTokenDaoBySessionFollowObject 默认跟随实现测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaTokenDaoFollowTest {

@@ -28,6 +28,9 @@ import java.util.Map;
 
 /**
  * SaSerializerTemplate 序列化测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaSerializerTemplateTest {

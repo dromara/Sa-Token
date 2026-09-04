@@ -42,6 +42,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * StpLogic JaCoCo 剩余行覆盖补充
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicCoverageBoostTest {

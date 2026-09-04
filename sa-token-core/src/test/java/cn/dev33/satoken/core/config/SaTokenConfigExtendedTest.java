@@ -28,6 +28,9 @@ import java.util.LinkedHashMap;
 
 /**
  * SaTokenConfig 扩展字段测试（SaTokenConfigTest 未覆盖部分）
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTokenConfigExtendedTest {
 

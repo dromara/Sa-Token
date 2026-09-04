@@ -24,6 +24,9 @@ import java.util.Map;
 
 /**
  * SaCookieConfig getter/setter 与扩展属性测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaCookieConfigFullTest {
 

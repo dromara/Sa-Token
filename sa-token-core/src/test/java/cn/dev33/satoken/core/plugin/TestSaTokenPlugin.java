@@ -19,6 +19,9 @@ import cn.dev33.satoken.plugin.SaTokenPlugin;
 
 /**
  * 单测 SPI 插件
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class TestSaTokenPlugin implements SaTokenPlugin {
 

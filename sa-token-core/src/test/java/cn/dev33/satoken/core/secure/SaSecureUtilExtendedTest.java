@@ -23,6 +23,9 @@ import java.util.HashMap;
 
 /**
  * SaSecureUtil 扩展测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaSecureUtilExtendedTest {
 

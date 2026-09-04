@@ -27,6 +27,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 踢人与顶人下线
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicKickoutReplacedTest {

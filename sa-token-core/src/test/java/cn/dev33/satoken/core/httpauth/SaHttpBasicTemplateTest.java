@@ -28,6 +28,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaHttpBasicTemplate Http Basic 认证测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaHttpBasicTemplateTest {
 

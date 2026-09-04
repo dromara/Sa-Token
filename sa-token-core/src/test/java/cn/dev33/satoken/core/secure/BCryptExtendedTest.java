@@ -23,6 +23,9 @@ import java.security.SecureRandom;
 
 /**
  * BCrypt 扩展路径测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class BCryptExtendedTest {
 

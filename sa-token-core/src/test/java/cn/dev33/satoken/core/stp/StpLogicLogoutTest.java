@@ -28,6 +28,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 注销与踢人下线
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicLogoutTest {

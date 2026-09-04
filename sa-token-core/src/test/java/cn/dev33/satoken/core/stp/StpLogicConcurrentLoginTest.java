@@ -31,6 +31,9 @@ import java.util.List;
 
 /**
  * StpLogic 并发登录与 Token 信息查询
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicConcurrentLoginTest {

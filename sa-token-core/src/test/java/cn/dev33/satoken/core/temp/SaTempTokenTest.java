@@ -26,6 +26,9 @@ import java.util.List;
 
 /**
  * 临时 Token 模块测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaTempTokenTest {

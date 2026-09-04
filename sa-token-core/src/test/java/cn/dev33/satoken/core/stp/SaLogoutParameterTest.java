@@ -25,6 +25,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaLogoutParameter 参数对象测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaLogoutParameterTest {

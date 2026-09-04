@@ -27,6 +27,9 @@ import java.io.PrintStream;
 
 /**
  * SaLogForConsole 控制台日志输出测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaLogForConsoleTest {

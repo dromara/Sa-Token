@@ -28,6 +28,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 账号封禁
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicDisableTest {

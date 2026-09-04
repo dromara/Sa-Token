@@ -26,6 +26,9 @@ import java.util.List;
 
 /**
  * StpLogic 会话搜索
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicSearchTest {

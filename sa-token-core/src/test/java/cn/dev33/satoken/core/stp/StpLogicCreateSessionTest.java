@@ -28,6 +28,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StpLogic 无上下文创建会话与手动写入 Token
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicCreateSessionTest {

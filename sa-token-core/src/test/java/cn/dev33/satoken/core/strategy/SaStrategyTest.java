@@ -51,6 +51,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * SaStrategy 默认策略函数测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaStrategyTest {

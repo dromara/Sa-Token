@@ -48,6 +48,9 @@ import java.lang.reflect.Method;
 
 /**
  * 扩展注解鉴权处理器测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaAnnotationHandlerExtendedTest {

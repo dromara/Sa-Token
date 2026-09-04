@@ -40,6 +40,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * 核心异常扩展测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaTokenExceptionExtendedTest {
 

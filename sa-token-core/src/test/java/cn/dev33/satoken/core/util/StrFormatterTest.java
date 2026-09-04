@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * StrFormatter 字符串格式化测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class StrFormatterTest {
 

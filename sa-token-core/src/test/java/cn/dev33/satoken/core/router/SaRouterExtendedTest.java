@@ -31,6 +31,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * SaRouter 静态方法补充测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 public class SaRouterExtendedTest {
 

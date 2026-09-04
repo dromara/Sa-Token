@@ -30,6 +30,9 @@ import org.junit.jupiter.api.Test;
 
 /**
  * SaTokenContextForThreadLocal 上下文处理器测试
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class SaTokenContextForThreadLocalTest {

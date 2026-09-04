@@ -28,6 +28,9 @@ import java.util.List;
 
 /**
  * StpLogic Token-Session 懒加载与检索
+ *
+ * @author click33
+ * @since 1.46.0
  */
 @SaTokenTest
 public class StpLogicTokenSessionTest {
