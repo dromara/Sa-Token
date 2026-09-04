@@ -49,14 +49,14 @@ public class SaSignManyTest {
         SaSignMany.findSaSignConfigMethod = (appid) -> SaSignManager.getSignMany().get(appid);
     }
 
-    /** getSignTemplate appid 为空时返回全局默认 SaSignTemplate */
+    /** getSignTemplate appid 为空时应该返回全局默认的 SaSignTemplate */
     @Test
     public void getSignTemplate_emptyAppid_returnsGlobalTemplate() {
         Assertions.assertSame(SaSignManager.getSaSignTemplate(), SaSignMany.getSignTemplate(""));
         Assertions.assertSame(SaSignManager.getSaSignTemplate(), SaSignMany.getSignTemplate(null));
     }
 
-    /** getSignTemplate 命中 appid 时返回带该配置的 SaSignTemplate 实例 */
+    /** getSignTemplate 命中 appid 时应该返回带该配置的 SaSignTemplate 实例 */
     @Test
     public void getSignTemplate_hitAppid_returnsConfiguredTemplate() {
         Map<String, SaSignConfig> map = new LinkedHashMap<>();
@@ -68,7 +68,7 @@ public class SaSignManyTest {
         Assertions.assertNotSame(SaSignManager.getSaSignTemplate(), t);
     }
 
-    /** getSignTemplate 未命中 appid 时抛 CODE_12211 */
+    /** getSignTemplate 没找到 appid 时必须抛 CODE_12211 */
     @Test
     public void getSignTemplate_missAppid_throws() {
         SaSignManager.setSignMany(new LinkedHashMap<>());
@@ -78,7 +78,7 @@ public class SaSignManyTest {
         Assertions.assertTrue(ex.getMessage().contains("not-exist"));
     }
 
-    /** findSaSignConfigMethod 可被自定义替换 */
+    /** findSaSignConfigMethod 应该能被自定义替换掉 */
     @Test
     public void findSaSignConfigMethod_custom() {
         SaSignConfig custom = new SaSignConfig().setSecretKey("custom-key");
@@ -86,7 +86,7 @@ public class SaSignManyTest {
         Assertions.assertEquals("custom-key", SaSignMany.getSignTemplate("custom-app").getSecretKey());
     }
 
-    /** 默认构造函数可实例化 */
+    /** 默认构造函数应该能 new 出来 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaSignMany());

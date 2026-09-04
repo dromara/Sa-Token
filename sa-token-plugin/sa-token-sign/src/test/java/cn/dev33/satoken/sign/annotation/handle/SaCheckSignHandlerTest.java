@@ -52,18 +52,18 @@ public class SaCheckSignHandlerTest {
         SaSignManager.setSignMany(backupSignMany);
     }
 
-    /** 用于获取 @SaCheckSign 注解的承载方法 */
+    /** 用于拿到 @SaCheckSign 注解的承载方法 */
     @SaCheckSign(appid = "app1", verifyParams = {"data"})
     public void annotatedMethod() {
     }
 
-    /** getHandlerAnnotationClass 返回 SaCheckSign.class */
+    /** getHandlerAnnotationClass 应该返回 SaCheckSign.class */
     @Test
     public void getHandlerAnnotationClass() {
         Assertions.assertEquals(SaCheckSign.class, new SaCheckSignHandler().getHandlerAnnotationClass());
     }
 
-    /** checkMethod 把注解的 appid 与 verifyParams 透传给 _checkMethod */
+    /** checkMethod 应该把注解的 appid 和 verifyParams 透传给 _checkMethod */
     @Test
     public void checkMethod_delegatesToCheckMethod() throws NoSuchMethodException {
         Method method = SaCheckSignHandlerTest.class.getMethod("annotatedMethod");
@@ -89,7 +89,7 @@ public class SaCheckSignHandlerTest {
         }
     }
 
-    /** _checkMethod 固定 appid 时按该 appid 查找签名配置 */
+    /** _checkMethod 固定 appid 时应该按该 appid 去找签名配置 */
     @Test
     public void checkMethod_fixedAppid() {
         Map<String, SaSignConfig> map = new LinkedHashMap<>();
@@ -111,7 +111,7 @@ public class SaCheckSignHandlerTest {
         }
     }
 
-    /** _checkMethod 成功路径：合法请求参数时 checkRequest 正常返回，覆盖方法末尾调用 */
+    /** _checkMethod 成功路径：请求参数合法时 checkRequest 应该正常返回，覆盖方法末尾的调用 */
     @Test
     public void checkMethod_fixedAppid_validRequest_passes() {
         Map<String, SaSignConfig> map = new LinkedHashMap<>();
@@ -136,7 +136,7 @@ public class SaCheckSignHandlerTest {
         }
     }
 
-    /** checkMethod 成功路径：合法请求时注解校验通过 */
+    /** checkMethod 成功路径：请求合法时注解校验应该通过 */
     @Test
     public void checkMethod_delegatesToCheckMethod_validRequest_passes() throws NoSuchMethodException {
         Method method = SaCheckSignHandlerTest.class.getMethod("annotatedMethod");
@@ -164,7 +164,7 @@ public class SaCheckSignHandlerTest {
         }
     }
 
-    /** _checkMethod appid 为 #{paramName} 时从请求参数解析实际 appid */
+    /** _checkMethod appid 为 #{paramName} 时应该从请求参数里解析出实际 appid */
     @Test
     public void checkMethod_templatedAppid_resolvedFromRequest() {
         Map<String, SaSignConfig> map = new LinkedHashMap<>();
@@ -188,7 +188,7 @@ public class SaCheckSignHandlerTest {
         }
     }
 
-    /** _checkMethod appid 以 #{ 开头但不以 } 结尾时不进入解析分支，按原 appid 查找（未命中抛 CODE_12211） */
+    /** _checkMethod appid 以 #{ 开头但不以 } 结尾时不应该进解析分支，按原 appid 查找（没命中必须抛 CODE_12211） */
     @Test
     public void checkMethod_templatedAppid_notClosedBrace_throws() {
         SaSignManager.setSignMany(new LinkedHashMap<>());

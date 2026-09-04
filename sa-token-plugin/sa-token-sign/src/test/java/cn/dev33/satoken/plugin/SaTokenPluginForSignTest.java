@@ -36,7 +36,7 @@ public class SaTokenPluginForSignTest {
         SaAnnotationStrategy.instance.removeAnnotationHandler(SaCheckSign.class);
     }
 
-    /** install 注册 SaCheckSignHandler 到 SaAnnotationStrategy */
+    /** install 应该把 SaCheckSignHandler 注册到 SaAnnotationStrategy */
     @Test
     public void install_registersSaCheckSignHandler() {
         new cn.dev33.satoken.plugin.SaTokenPluginForSign().install();

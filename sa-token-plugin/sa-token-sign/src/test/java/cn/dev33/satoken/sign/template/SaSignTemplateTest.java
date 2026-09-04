@@ -39,12 +39,12 @@ public class SaSignTemplateTest {
 
     private static final String KEY = "SwqFmsKxcbq23";
 
-    /** 构造一个已配置秘钥的签名模板实例，避免污染全局 SaSignManager */
+    /** 造一个配好秘钥的签名模板实例，别污染全局 SaSignManager */
     private static SaSignTemplate template() {
         return new SaSignTemplate(new SaSignConfig().setSecretKey(KEY));
     }
 
-    /** 示例参数（按插入顺序：name、age、sex） */
+    /** 示例参数，按插入顺序是 name、age、sex */
     private static Map<String, Object> sampleParams() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("name", "zhang");
@@ -53,7 +53,7 @@ public class SaSignTemplateTest {
         return map;
     }
 
-    /** joinParams 不排序，按传入顺序拼接，空值被跳过，末尾 & 被删除 */
+    /** joinParams 不排序时应该按插入顺序拼接，空值要跳过，末尾的 & 也得删掉 */
     @Test
     public void joinParams_keepInsertionOrderAndSkipEmpty() {
         Map<String, Object> map = new LinkedHashMap<>();
@@ -65,7 +65,7 @@ public class SaSignTemplateTest {
         Assertions.assertEquals("", template().joinParams(new LinkedHashMap<>()));
     }
 
-    /** joinParamsDictSort 按字典序拼接参数，TreeMap 入参不再重新包装 */
+    /** joinParamsDictSort 应该按字典序拼接参数，传 TreeMap 进来时不用重新包装 */
     @Test
     public void joinParamsDictSort_sortByDictOrder() {
         Assertions.assertEquals("age=18&name=zhang&sex=女",
@@ -76,7 +76,7 @@ public class SaSignTemplateTest {
         Assertions.assertEquals("a=1&b=2", template().joinParamsDictSort(treeMap));
     }
 
-    /** createSign 对相同参数生成稳定的 md5 签名，含 sign 字段时会被排除 */
+    /** 相同参数多次 createSign 应该得到一样的 md5 签名，参数里带 sign 字段时应该把它排除掉 */
     @Test
     public void createSign_stableAndExcludeSignKey() {
         SaSignTemplate t = template();
@@ -88,7 +88,7 @@ public class SaSignTemplateTest {
         Assertions.assertEquals(sign, t.createSign(withSign));
     }
 
-    /** createSign 秘钥为空时通过继承的 SaTokenException.notEmpty 抛出带 CODE_12201 的异常 */
+    /** createSign 秘钥为空时必须抛异常，code 得是 CODE_12201 */
     @Test
     public void createSign_secretKeyEmpty_throws() {
         SaSignTemplate t = new SaSignTemplate(new SaSignConfig());
@@ -98,14 +98,14 @@ public class SaSignTemplateTest {
         Assertions.assertEquals(SaSignErrorCode.CODE_12201, ex.getCode());
     }
 
-    /** digestFullStr 走配置的摘要算法函数 */
+    /** digestFullStr 应该走配置里的摘要算法函数 */
     @Test
     public void digestFullStr_usesConfigDigestMethod() {
         SaSignTemplate t = new SaSignTemplate(new SaSignConfig().setSecretKey(KEY).setDigestAlgo("sha1"));
         Assertions.assertEquals(t.getSignConfigOrGlobal().digestMethod.run("abc"), t.digestFullStr("abc"));
     }
 
-    /** addSignParams 追加 timestamp、nonce、sign 三个字段，addSignParamsAndJoin 拼接为字符串 */
+    /** addSignParams 应该追加 timestamp、nonce、sign 三个字段，addSignParamsAndJoin 应该把它们拼成字符串 */
     @Test
     public void addSignParams_appendsAndJoins() {
         SaSignTemplate t = template();
@@ -117,7 +117,7 @@ public class SaSignTemplateTest {
         Assertions.assertTrue(result.containsKey(SaSignTemplate.sign));
         Assertions.assertEquals(32, String.valueOf(result.get(SaSignTemplate.nonce)).length());
 
-        // sign 是基于含 timestamp、nonce 的参数算出的，移除 sign 后重新算应一致
+        // sign 是拿带 timestamp、nonce 的参数算出来的，移掉 sign 后重新算应该一样
         Map<String, Object> withoutSign = new LinkedHashMap<>(result);
         withoutSign.remove(SaSignTemplate.sign);
         Assertions.assertEquals(t.createSign(withoutSign), result.get(SaSignTemplate.sign));
@@ -129,7 +129,7 @@ public class SaSignTemplateTest {
         Assertions.assertTrue(joined.contains("sign="));
     }
 
-    /** isValidTimestamp 当前时间在范围内为 true，超出为 false，配置 -1 时恒为 true */
+    /** isValidTimestamp 当前时间在范围内应该返回 true，超出了应该返回 false，配置成 -1 时应该一直返回 true */
     @Test
     public void isValidTimestamp_rangeAndDisable() {
         SaSignTemplate t = template();
@@ -140,7 +140,7 @@ public class SaSignTemplateTest {
         Assertions.assertTrue(disable.isValidTimestamp(System.currentTimeMillis() - 1000000L));
     }
 
-    /** checkTimestamp 超出范围抛出 CODE_12203，在范围内不抛异常 */
+    /** checkTimestamp 时间戳超出范围时必须抛 CODE_12203，在范围内时应该不抛异常 */
     @Test
     public void checkTimestamp_outOfRangeThrows() {
         long past = System.currentTimeMillis() - 1000 * 60 * 20;
@@ -150,7 +150,7 @@ public class SaSignTemplateTest {
         Assertions.assertDoesNotThrow(() -> template().checkTimestamp(System.currentTimeMillis()));
     }
 
-    /** isValidNonce 空为 false，未使用为 true，同一 nonce 可多次判断有效（不缓存） */
+    /** isValidNonce 空值时应该返回 false，没用过的应该返回 true，同一个 nonce 多次判断应该都有效（不缓存） */
     @Test
     public void isValidNonce_emptyAndFreshAndRepeatable() {
         SaSignTemplate t = template();
@@ -160,7 +160,7 @@ public class SaSignTemplateTest {
         Assertions.assertTrue(t.isValidNonce("fresh-nonce-1"));
     }
 
-    /** checkNonce 空抛异常，通过后再次校验同一 nonce 抛异常 */
+    /** checkNonce 空值时必须抛异常，校验通过后再用同一个 nonce 必须抛异常 */
     @Test
     public void checkNonce_emptyAndSecondTimeThrows() {
         SaSignTemplate t = template();
@@ -169,7 +169,7 @@ public class SaSignTemplateTest {
         Assertions.assertThrows(SaSignException.class, () -> t.checkNonce("once-nonce-1"));
     }
 
-    /** isValidSign 正确签名 true，错误签名 false；checkSign 无效抛 CODE_12202，有效不抛 */
+    /** isValidSign 签名正确时应该返回 true，错了应该返回 false；checkSign 签名无效时必须抛 CODE_12202，有效时应该不抛 */
     @Test
     public void isValidSign_andCheckSign() {
         SaSignTemplate t = template();
@@ -182,7 +182,7 @@ public class SaSignTemplateTest {
         Assertions.assertDoesNotThrow(() -> t.checkSign(sampleParams(), sign));
     }
 
-    /** 构造一组带 timestamp/nonce/sign 的合法请求参数 */
+    /** 造一组带 timestamp、nonce、sign 的合法请求参数 */
     private Map<String, String> buildValidParamMap(SaSignTemplate t) {
         Map<String, Object> signed = t.addSignParams(sampleParams());
         Map<String, String> result = new LinkedHashMap<>();
@@ -190,7 +190,7 @@ public class SaSignTemplateTest {
         return result;
     }
 
-    /** isValidParamMap 缺 timestamp/sign 返回 false，全部合法返回 true，timestamp 超出或签名错误返回 false */
+    /** isValidParamMap 缺 timestamp 或 sign 时应该返回 false，全都合法时应该返回 true，timestamp 超出或签名错了时应该返回 false */
     @Test
     public void isValidParamMap_branches() {
         SaSignTemplate t = template();
@@ -215,7 +215,7 @@ public class SaSignTemplateTest {
         Assertions.assertFalse(t.isValidParamMap(wrongSign));
     }
 
-    /** checkParamMap 缺 timestamp/nonce/sign 分别抛对应异常，全部合法时不抛 */
+    /** checkParamMap 缺 timestamp、nonce、sign 时应该分别抛对应的异常，全都合法时应该不抛 */
     @Test
     public void checkParamMap_missingAndValid() {
         SaSignTemplate t = template();
@@ -238,7 +238,7 @@ public class SaSignTemplateTest {
                 () -> t.checkParamMap(noSign)).getMessage().contains("sign"));
     }
 
-    /** isValidRequest 不指定 paramNames 校验全部参数，指定 paramNames 只取指定参数参与签名 */
+    /** isValidRequest 不指定 paramNames 时应该校验全部参数，指定 paramNames 时应该只拿指定参数参与签名 */
     @Test
     public void isValidRequest_allAndSpecifiedParams() {
         SaSignTemplate t = template();
@@ -252,7 +252,7 @@ public class SaSignTemplateTest {
         request.parameterMap = paramMap;
         Assertions.assertTrue(t.isValidRequest(request));
 
-        // 指定 paramNames 时，extra 参数不参与签名校验
+        // 指定 paramNames 时，extra 参数不应该参与签名校验
         Map<String, String> withExtra = new LinkedHashMap<>(paramMap);
         withExtra.put("extra", "not-signed");
         SaRequestForMock request2 = new SaRequestForMock();
@@ -261,7 +261,7 @@ public class SaSignTemplateTest {
         Assertions.assertFalse(t.isValidRequest(request2));
     }
 
-    /** checkRequest 全部合法不抛异常，签名错误抛异常 */
+    /** checkRequest 全都合法时应该不抛异常，签名错了时必须抛异常 */
     @Test
     public void checkRequest_validAndInvalid() {
         SaSignTemplate t = template();
@@ -276,13 +276,13 @@ public class SaSignTemplateTest {
         Assertions.assertThrows(SaSignException.class, () -> t.checkRequest(badRequest));
     }
 
-    /** splicingNonceSaveKey 拼接为 {tokenName}:sign:nonce:{nonce} */
+    /** splicingNonceSaveKey 应该拼成 {tokenName}:sign:nonce:{nonce} 这样的格式 */
     @Test
     public void splicingNonceSaveKey_format() {
         Assertions.assertEquals("satoken:sign:nonce:abc", template().splicingNonceSaveKey("abc"));
     }
 
-    /** getSignConfigOrGlobal 实例有配置用实例配置，无配置用全局配置 */
+    /** getSignConfigOrGlobal 实例自己有配置时应该用实例的，没有时应该用全局的 */
     @Test
     public void getSignConfigOrGlobal_instanceAndGlobal() {
         SaSignConfig instanceConfig = new SaSignConfig().setSecretKey(KEY);
@@ -296,7 +296,7 @@ public class SaSignTemplateTest {
         Assertions.assertSame(cn.dev33.satoken.sign.SaSignManager.getConfig(), noConfig.getSignConfigOrGlobal());
     }
 
-    /** setSignConfig 可重新设置实例配置并返回 this */
+    /** setSignConfig 应该能重新设置实例配置，并且返回 this */
     @Test
     public void setSignConfig_returnsThisAndUpdates() {
         SaSignTemplate t = new SaSignTemplate();

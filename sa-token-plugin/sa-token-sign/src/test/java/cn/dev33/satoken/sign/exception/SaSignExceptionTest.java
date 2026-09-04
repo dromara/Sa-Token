@@ -26,21 +26,21 @@ import org.junit.jupiter.api.Test;
  */
 public class SaSignExceptionTest {
 
-    /** 构造函数携带 message */
+    /** 构造函数携带 message 时应该能读回来 */
     @Test
     public void constructor_message() {
         SaSignException ex = new SaSignException("boom");
         Assertions.assertEquals("boom", ex.getMessage());
     }
 
-    /** notTrue flag 为 true 时抛异常，false 时不抛 */
+    /** notTrue flag 为 true 时必须抛异常，为 false 时应该不抛 */
     @Test
     public void notTrue_throwsWhenFlagTrue() {
         Assertions.assertThrows(SaSignException.class, () -> SaSignException.notTrue(true, "true-case"));
         Assertions.assertDoesNotThrow(() -> SaSignException.notTrue(false, "false-case"));
     }
 
-    /** notEmpty value 为空时抛异常，非空时不抛 */
+    /** notEmpty value 为空时必须抛异常，非空时应该不抛 */
     @Test
     public void notEmpty_throwsWhenEmpty() {
         Assertions.assertThrows(SaSignException.class, () -> SaSignException.notEmpty(null, "null-case"));
@@ -48,7 +48,7 @@ public class SaSignExceptionTest {
         Assertions.assertDoesNotThrow(() -> SaSignException.notEmpty("value", "non-empty-case"));
     }
 
-    /** throwBy (deprecated) flag 为 true 时抛异常 */
+    /** throwBy (deprecated) flag 为 true 时必须抛异常 */
     @Test
     @SuppressWarnings("deprecation")
     public void throwBy_throwsWhenFlagTrue() {
@@ -56,7 +56,7 @@ public class SaSignExceptionTest {
         Assertions.assertDoesNotThrow(() -> SaSignException.throwBy(false, "throwBy-case"));
     }
 
-    /** throwByNull (deprecated) value 为空时抛异常 */
+    /** throwByNull (deprecated) value 为空时必须抛异常 */
     @Test
     @SuppressWarnings("deprecation")
     public void throwByNull_throwsWhenEmpty() {

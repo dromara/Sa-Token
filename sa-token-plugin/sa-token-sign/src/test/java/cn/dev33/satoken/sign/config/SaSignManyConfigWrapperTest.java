@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class SaSignManyConfigWrapperTest {
 
-    /** 默认 signMany 为空非 null map */
+    /** 默认 signMany 应该是空 map，但不能是 null */
     @Test
     public void defaultSignMany_emptyMap() {
         SaSignManyConfigWrapper wrapper = new SaSignManyConfigWrapper();
@@ -37,7 +37,7 @@ public class SaSignManyConfigWrapperTest {
         Assertions.assertTrue(wrapper.getSignMany().isEmpty());
     }
 
-    /** setSignMany 写入后 getSignMany 读取同一实例 */
+    /** setSignMany 写入后 getSignMany 应该读到同一个实例 */
     @Test
     public void setSignMany_readBack() {
         Map<String, SaSignConfig> map = new LinkedHashMap<>();
@@ -48,7 +48,7 @@ public class SaSignManyConfigWrapperTest {
         Assertions.assertEquals("k1", wrapper.getSignMany().get("app1").getSecretKey());
     }
 
-    /** toString 包含 signMany 字段 */
+    /** toString 应该包含 signMany 字段 */
     @Test
     public void toString_containsSignMany() {
         SaSignManyConfigWrapper wrapper = new SaSignManyConfigWrapper();

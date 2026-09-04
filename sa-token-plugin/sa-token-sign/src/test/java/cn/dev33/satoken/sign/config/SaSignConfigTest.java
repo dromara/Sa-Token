@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SaSignConfigTest {
 
-    /** getter/setter 读写一致，默认 digestAlgo 为 md5，timestampDisparity 默认 15 分钟 */
+    /** getter/setter 读写应该一致，默认 digestAlgo 应该是 md5，timestampDisparity 默认 15 分钟 */
     @Test
     public void getterSetter_defaults() {
         SaSignConfig config = new SaSignConfig();
@@ -41,13 +41,13 @@ public class SaSignConfigTest {
         Assertions.assertEquals("sha256", config.getDigestAlgo());
     }
 
-    /** 带秘钥的构造函数 */
+    /** 带秘钥的构造函数应该把秘钥存进去 */
     @Test
     public void constructor_withSecretKey() {
         Assertions.assertEquals("abc", new SaSignConfig("abc").getSecretKey());
     }
 
-    /** getSaveNonceExpire：timestampDisparity>=0 时取毫秒转秒，<0 时取 24 小时 */
+    /** getSaveNonceExpire：timestampDisparity>=0 时应该取毫秒转秒，<0 时应该取 24 小时 */
     @Test
     public void getSaveNonceExpire_branches() {
         SaSignConfig config = new SaSignConfig();
@@ -58,7 +58,7 @@ public class SaSignConfigTest {
         Assertions.assertEquals(60 * 60 * 24, config.getSaveNonceExpire());
     }
 
-    /** copy 复制所有字段，与原对象独立 */
+    /** copy 应该复制所有字段，且和原对象互不影响 */
     @Test
     public void copy_independent() {
         SaSignConfig config = new SaSignConfig().setSecretKey("k").setTimestampDisparity(2000).setDigestAlgo("sha1");
@@ -72,7 +72,7 @@ public class SaSignConfigTest {
         Assertions.assertEquals("k", config.getSecretKey());
     }
 
-    /** digestMethod 默认支持 md5/sha1/sha256/sha384/sha512，未知算法抛 SaTokenException */
+    /** digestMethod 默认应该支持 md5/sha1/sha256/sha384/sha512，算法不认识时必须抛 SaTokenException */
     @Test
     public void digestMethod_supportedAlgos() {
         SaSignConfig config = new SaSignConfig();
@@ -88,7 +88,7 @@ public class SaSignConfigTest {
         Assertions.assertThrows(SaTokenException.class, () -> config.digestMethod.run(sample));
     }
 
-    /** setDigestMethod 可替换摘要函数 */
+    /** setDigestMethod 应该能替换成自定义的摘要函数 */
     @Test
     public void setDigestMethod_custom() {
         SaSignConfig config = new SaSignConfig();
@@ -96,7 +96,7 @@ public class SaSignConfigTest {
         Assertions.assertEquals("custom-abc", config.digestMethod.run("abc"));
     }
 
-    /** toString 包含 secretKey 与 timestampDisparity */
+    /** toString 应该包含 secretKey 和 timestampDisparity */
     @Test
     public void toString_containsKeyFields() {
         String str = new SaSignConfig().setSecretKey("kk").toString();

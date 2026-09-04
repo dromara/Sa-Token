@@ -51,21 +51,21 @@ public class SaSignUtilTest {
         return map;
     }
 
-    /** joinParams 与 joinParamsDictSort 委托全局模板 */
+    /** joinParams 和 joinParamsDictSort 应该委托给全局模板 */
     @Test
     public void joinParams_delegateToGlobalTemplate() {
         Assertions.assertEquals("name=zhang&age=18", SaSignUtil.joinParams(sampleParams()));
         Assertions.assertEquals("age=18&name=zhang", SaSignUtil.joinParamsDictSort(sampleParams()));
     }
 
-    /** createSign 委托全局模板 */
+    /** createSign 应该委托给全局模板 */
     @Test
     public void createSign_delegateToGlobalTemplate() {
         Assertions.assertEquals(SaSignManager.getSaSignTemplate().createSign(sampleParams()),
                 SaSignUtil.createSign(sampleParams()));
     }
 
-    /** addSignParams 与 addSignParamsAndJoin 委托全局模板 */
+    /** addSignParams 和 addSignParamsAndJoin 应该委托给全局模板 */
     @Test
     public void addSignParams_delegateToGlobalTemplate() {
         Map<String, Object> params = new LinkedHashMap<>(sampleParams());
@@ -79,7 +79,7 @@ public class SaSignUtilTest {
         Assertions.assertTrue(joined.contains("sign="));
     }
 
-    /** isValidTimestamp 与 checkTimestamp 委托全局模板 */
+    /** isValidTimestamp 和 checkTimestamp 应该委托给全局模板 */
     @Test
     public void timestamp_delegateToGlobalTemplate() {
         Assertions.assertTrue(SaSignUtil.isValidTimestamp(System.currentTimeMillis()));
@@ -87,7 +87,7 @@ public class SaSignUtilTest {
         Assertions.assertDoesNotThrow(() -> SaSignUtil.checkTimestamp(System.currentTimeMillis()));
     }
 
-    /** isValidNonce 与 checkNonce 委托全局模板 */
+    /** isValidNonce 和 checkNonce 应该委托给全局模板 */
     @Test
     public void nonce_delegateToGlobalTemplate() {
         Assertions.assertTrue(SaSignUtil.isValidNonce("util-fresh-nonce"));
@@ -95,7 +95,7 @@ public class SaSignUtilTest {
         Assertions.assertFalse(SaSignUtil.isValidNonce("util-once-nonce"));
     }
 
-    /** isValidSign 与 checkSign 委托全局模板 */
+    /** isValidSign 和 checkSign 应该委托给全局模板 */
     @Test
     public void sign_delegateToGlobalTemplate() {
         String sign = SaSignUtil.createSign(sampleParams());
@@ -103,7 +103,7 @@ public class SaSignUtilTest {
         Assertions.assertDoesNotThrow(() -> SaSignUtil.checkSign(sampleParams(), sign));
     }
 
-    /** isValidParamMap 与 checkParamMap 委托全局模板 */
+    /** isValidParamMap 和 checkParamMap 应该委托给全局模板 */
     @Test
     public void paramMap_delegateToGlobalTemplate() {
         Map<String, Object> signed = SaSignUtil.addSignParams(new LinkedHashMap<>(sampleParams()));
@@ -113,7 +113,7 @@ public class SaSignUtilTest {
         Assertions.assertDoesNotThrow(() -> SaSignUtil.checkParamMap(paramMap));
     }
 
-    /** isValidRequest 与 checkRequest 委托全局模板 */
+    /** isValidRequest 和 checkRequest 应该委托给全局模板 */
     @Test
     public void request_delegateToGlobalTemplate() {
         Map<String, Object> signed = SaSignUtil.addSignParams(new LinkedHashMap<>(sampleParams()));
@@ -125,7 +125,7 @@ public class SaSignUtilTest {
         Assertions.assertDoesNotThrow(() -> SaSignUtil.checkRequest(request));
     }
 
-    /** 默认构造函数可实例化 */
+    /** 默认构造函数应该能 new 出来 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaSignUtil());

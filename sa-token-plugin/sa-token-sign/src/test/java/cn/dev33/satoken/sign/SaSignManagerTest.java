@@ -51,7 +51,7 @@ public class SaSignManagerTest {
         SaSignManager.setSaSignTemplate(backupTemplate);
     }
 
-    /** getConfig 首次调用会 lazy init 默认 SaSignConfig */
+    /** getConfig 多次调用应该返回同一个实例 */
     @Test
     public void getConfig_lazyInit() {
         // 通过反射无法重置 static volatile，这里验证多次调用返回同一实例
@@ -60,7 +60,7 @@ public class SaSignManagerTest {
         Assertions.assertSame(c1, c2);
     }
 
-    /** setConfig 写入后 getConfig 读取同一实例 */
+    /** setConfig 写入后 getConfig 应该读到同一个实例 */
     @Test
     public void setConfig_readBack() {
         SaSignConfig config = new SaSignConfig().setSecretKey("mgr-key");
@@ -68,13 +68,13 @@ public class SaSignManagerTest {
         Assertions.assertSame(config, SaSignManager.getConfig());
     }
 
-    /** getSignMany 首次调用 lazy init 非 null map */
+    /** getSignMany 多次调用应该返回非 null 的 map */
     @Test
     public void getSignMany_lazyInit() {
         Assertions.assertNotNull(SaSignManager.getSignMany());
     }
 
-    /** setSignMany 写入后 getSignMany 读取同一实例 */
+    /** setSignMany 写入后 getSignMany 应该读到同一个实例 */
     @Test
     public void setSignMany_readBack() {
         Map<String, SaSignConfig> map = new LinkedHashMap<>();
@@ -84,7 +84,7 @@ public class SaSignManagerTest {
         Assertions.assertEquals("k1", SaSignManager.getSignMany().get("app1").getSecretKey());
     }
 
-    /** getSaSignTemplate 首次调用 lazy init 默认 SaSignTemplate */
+    /** getSaSignTemplate 多次调用应该返回同一个实例 */
     @Test
     public void getSaSignTemplate_lazyInit() {
         SaSignTemplate t1 = SaSignManager.getSaSignTemplate();
@@ -92,7 +92,7 @@ public class SaSignManagerTest {
         Assertions.assertSame(t1, t2);
     }
 
-    /** setSaSignTemplate 写入后 getSaSignTemplate 读取同一实例 */
+    /** setSaSignTemplate 写入后 getSaSignTemplate 应该读到同一个实例 */
     @Test
     public void setSaSignTemplate_readBack() {
         SaSignTemplate template = new SaSignTemplate(new SaSignConfig().setSecretKey("t-key"));
@@ -100,7 +100,7 @@ public class SaSignManagerTest {
         Assertions.assertSame(template, SaSignManager.getSaSignTemplate());
     }
 
-    /** 默认构造函数可实例化 */
+    /** 默认构造函数应该能 new 出来 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaSignManager());
