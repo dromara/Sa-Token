@@ -62,6 +62,7 @@ public class StpInterfaceIsDisabledLoginTypeTest {
 		adminLogic = new StpLogic(ADMIN_TYPE);
 	}
 
+	/** StpInterface.isDisabled 应按 loginType 返回不同封禁等级 */
 	@Test
 	public void isDisabled_splitByLoginType() {
 		Assertions.assertEquals(-2, userLogic.getDisableLevel(10001));

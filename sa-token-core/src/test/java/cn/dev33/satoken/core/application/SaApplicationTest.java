@@ -30,6 +30,7 @@ import cn.dev33.satoken.context.SaHolder;
 public class SaApplicationTest {
 
 	// 测试 
+	/** SaApplication 存取值、类型转换与清空应正常工作 */
 	@Test
 	public void testSaApplication() {
 		SaApplication application = SaHolder.getApplication();

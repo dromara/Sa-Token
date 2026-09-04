@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 @SaTokenTest
 public class SaSessionCustomUtilTest {
 
+	/** 自定义 Session 的创建、存在性检查、重复获取与删除应正常工作 */
 	@Test
 	public void customSession_createExistsAndDelete() {
 		SaTokenDao dao = SaManager.getSaTokenDao();

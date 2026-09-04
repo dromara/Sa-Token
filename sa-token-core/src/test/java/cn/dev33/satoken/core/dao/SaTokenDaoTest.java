@@ -33,6 +33,7 @@ public class SaTokenDaoTest {
 	SaTokenDao dao = new SaTokenDaoDefaultImpl();
 
 	// 字符串存取 
+    /** 字符串存取、更新超时与删除应正常工作 */
     @Test
     public void get() {
     	dao.set("name", "zhangsan", 60);
@@ -51,6 +52,7 @@ public class SaTokenDaoTest {
     }
 
 	// 对象存取 
+    /** 对象存取、更新超时与删除应正常工作 */
     @Test
     public void getObject() {
     	dao.setObject("name", "zhangsan", 60);
@@ -68,6 +70,7 @@ public class SaTokenDaoTest {
     }
 
 	// SaSession 存取 
+    /** SaSession 存取、更新超时与删除应正常工作 */
     @Test
     public void getSession() {
     	SaSession session = new SaSession("session-1001");
@@ -88,6 +91,7 @@ public class SaTokenDaoTest {
     }
 
     // 测试永久有效期的写值改值 
+    /** 永久有效期数据 update 后有效期应保持不变 */
     @Test
     public void testUpdate() {
 
@@ -126,6 +130,7 @@ public class SaTokenDaoTest {
     }
 
     // timeout为0或者小于等于-2时，不写入
+    /** timeout 为 0 或小于 -2 时不应写入 */
     @Test
     public void test0Timeout() {
     	

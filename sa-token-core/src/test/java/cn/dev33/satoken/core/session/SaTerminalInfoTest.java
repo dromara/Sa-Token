@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SaTerminalInfoTest {
 
-	// 测试 
+	/** 设置 deviceType 与 tokenValue 后 getter 与 toString 应返回正确值 */
 	@Test
 	public void testSaTerminalInfo() {
 		SaTerminalInfo terminal = new SaTerminalInfo();

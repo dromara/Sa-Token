@@ -30,6 +30,7 @@ import java.util.Collections;
  */
 public class SaJsonTemplateDefaultImplTest {
 
+    /** 默认 JSON 实现未引入第三方库时应抛出 NotImplException */
     @Test
     public void testSaJsonTemplateDefaultImpl() {
     	SaJsonTemplateDefaultImpl saJsonTemplate = new SaJsonTemplateDefaultImpl();

@@ -25,6 +25,7 @@ import cn.dev33.satoken.context.model.SaCookie;
  */
 public class SaCookieTest {
 
+	/** getter 与 toHeaderValue 应输出完整 Set-Cookie 头 */
 	@Test
 	public void gettersAndToHeaderValue() {
 		SaCookie cookie = new SaCookie("satoken", "xxxx-xxxx-xxxx-xxxx")

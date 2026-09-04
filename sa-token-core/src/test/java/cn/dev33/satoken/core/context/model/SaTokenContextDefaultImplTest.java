@@ -29,6 +29,7 @@ import cn.dev33.satoken.exception.SaTokenException;
  */
 public class SaTokenContextDefaultImplTest {
 
+	/** 默认上下文在未集成 Web 框架时应抛出异常 */
 	@Test
 	public void testSaTokenContextDefaultImpl() {
 		SaTokenContextDefaultImpl context = new SaTokenContextDefaultImpl();

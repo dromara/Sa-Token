@@ -30,6 +30,7 @@ import java.util.List;
 @SaTokenTest
 public class SaTempTokenTest {
 
+	/** 临时 Token 的创建、解析与删除应正常工作 */
 	@Test
 	public void createParseAndDeleteToken() {
 		SaTokenDao dao = SaManager.getSaTokenDao();
@@ -52,6 +53,7 @@ public class SaTempTokenTest {
 		Assertions.assertNull(dao.getObject("satoken:temp-token:" + token));
 	}
 
+	/** 开启索引后同一 value 的多 token 应可列举与管理 */
 	@Test
 	public void tempTokenIndex() {
 		SaTokenDao dao = SaManager.getSaTokenDao();
@@ -105,6 +107,7 @@ public class SaTempTokenTest {
 		Assertions.assertEquals(-1, sessionTimeout4);
 	}
 
+	/** 默认 jwtSecretKey 应为 null */
 	@Test
 	public void jwtSecretKey_defaultsToNull() {
 		Assertions.assertNull(SaManager.getSaTempTemplate().getJwtSecretKey());

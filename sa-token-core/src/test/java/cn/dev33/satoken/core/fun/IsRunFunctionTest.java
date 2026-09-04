@@ -25,6 +25,7 @@ import cn.dev33.satoken.fun.IsRunFunction;
  */
 public class IsRunFunctionTest {
 
+	/** isRun 为 true 时应执行 exe 分支 */
 	@Test
 	public void exeRunsWhenTrue() {
 		class TempClass {
@@ -38,6 +39,7 @@ public class IsRunFunctionTest {
 		Assertions.assertEquals(2, obj.count);
 	}
 
+	/** isRun 为 false 时应执行 noExe 分支 */
 	@Test
 	public void noExeRunsWhenFalse() {
 		class TempClass {

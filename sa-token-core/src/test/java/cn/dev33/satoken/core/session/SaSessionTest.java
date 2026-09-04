@@ -39,9 +39,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @SaTokenTest
 public class SaSessionTest {
 
-	// 基础属性 
-    @Test
-    public void testProp() {
+	/** 构造与 setId/setCreateTime 后 id 与 createTime 应正确读写 */
+	@Test
+	public void testProp() {
     	SaSession session = new SaSession("session-1001");
     	Assertions.assertEquals(session.getId(), "session-1001");
 
@@ -54,9 +54,9 @@ public class SaSessionTest {
     	Assertions.assertEquals(session.getCreateTime(), 1662241013902L);
     }
 	
-	// 基础存取值 
-    @Test
-    public void testSetGet() {
+	/** set/get/getModel/setByNull 应正确存取基础值与复杂对象 */
+	@Test
+	public void testSetGet() {
     	
     	// 基础取值 
     	SaSession session = new SaSession("session-1002");
@@ -91,9 +91,9 @@ public class SaSessionTest {
     	Assertions.assertEquals(user2.age, 18);
     }
 
-    // getList / getSet / getMap 存取值
-    @Test
-    public void testGetListSetMap() {
+	/** getList/getSet/getMap 应支持直接读取、懒初始化及跨类型转换，非集合类型应抛异常 */
+	@Test
+	public void testGetListSetMap() {
 
     	SaSession session = new SaSession("session-get-collection");
 
@@ -148,9 +148,9 @@ public class SaSessionTest {
     	Assertions.assertThrows(SaTokenException.class, () -> session.getMap("notCollection", String.class, Long.class));
     }
     
-    // 测试有效期
-    @Test
-    public void testSessionTimeout() {
+	/** updateMaxTimeout 应缩短剩余有效期，updateMinTimeout(-1) 应设为永久 */
+	@Test
+	public void testSessionTimeout() {
     	// 修改剩余有效期 
     	SaSession session = new SaSession("session-1005");
     	SaManager.getSaTokenDao().setSession(session, 20000);
@@ -164,9 +164,9 @@ public class SaSessionTest {
     	Assertions.assertEquals(-1, session.timeout());
     }
     
-    // 测试token 签名 
-    @Test
-    public void testSaTerminalInfo() {
+	/** addTerminal/removeTerminal/setTerminalList 应正确管理终端列表及按 token 查询 */
+	@Test
+	public void testSaTerminalInfo() {
     	SaSession session = new SaSession("session-1002");
     	
     	// 添加 Token 签名 
@@ -199,9 +199,9 @@ public class SaSessionTest {
     	Assertions.assertEquals(session.getTerminal("xxxx-xxxx-xxxx-xxxx-3").getDeviceType(), "ipad");
     }
     
-    // 测试重置 DataMap
-    @Test
-    public void testDataMap() {
+	/** refreshDataMap 应替换全部 Session 数据并更新 keys 计数 */
+	@Test
+	public void testDataMap() {
     	SaSession session = new SaSession("session-1003");
     	session.set("key1", "value1");
     	session.set("key2", "value2");

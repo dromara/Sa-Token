@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 package cn.dev33.satoken.core.secure;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import cn.dev33.satoken.secure.BCrypt;
-
 /**
  * BCrypt 加密测试
  * 
@@ -27,7 +24,7 @@ import cn.dev33.satoken.secure.BCrypt;
  * @since 2022/1/20
  */
 public class BCryptTest {
-
+	/** checkpw 应正确校验 hashpw 生成的密码哈希 */
 	@Test
 	public void testCheckpw() {
 		final String hashed = BCrypt.hashpw("12345");

@@ -31,6 +31,7 @@ import cn.dev33.satoken.config.SaTokenConfigFactory;
 public class SaTokenConfigTest {
 
 	// 基本 get set 测试
+	/** SaTokenConfig 基本属性 getter/setter 应正常工作 */
 	@Test
 	public void testProp() {
 		SaTokenConfig config = new SaTokenConfig();
@@ -109,6 +110,7 @@ public class SaTokenConfigTest {
 	}
 
 	// 从文件读取 
+	/** 应从 properties 文件创建 SaTokenConfig */
 	@Test
 	public void testSaTokenConfigFactory() {
 		SaTokenConfig config = SaTokenConfigFactory.createConfig("sa-token2.properties");
@@ -121,6 +123,7 @@ public class SaTokenConfigTest {
 	}
 
 	// 测试 SaCookieConfig 
+	/** SaCookieConfig 基本属性 getter/setter 应正常工作 */
 	@Test
 	public void testSaCookieConfig() {
 		SaCookieConfig config = new SaCookieConfig();

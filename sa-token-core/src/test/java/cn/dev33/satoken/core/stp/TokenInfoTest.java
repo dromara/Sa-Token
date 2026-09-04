@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class TokenInfoTest {
 
+	/** SaTokenInfo 各字段 getter/setter 与 toString 应正常工作 */
 	@Test
 	public void gettersAndSetters() {
 		SaTokenInfo info = new SaTokenInfo();
@@ -62,6 +63,7 @@ public class TokenInfoTest {
 		Assertions.assertNotNull(info.toString());
 	}
 
+	/** SaLoginParameter 链式设置 extraData 与 getCookieTimeout 计算应正确 */
 	@Test
 	public void testLoginParameter() {
 		Assertions.assertEquals(new SaLoginParameter().setDeviceType("PC").getDeviceType(), "PC");
