@@ -261,6 +261,11 @@
 			<artifactId>sa-token-integration-boot2</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-beaninject-boot2</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- boot3/boot4 集成测试：classpath 待修复后取消注释 -->
 		<!--
 		<dependency>

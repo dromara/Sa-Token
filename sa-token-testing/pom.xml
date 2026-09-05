@@ -22,6 +22,7 @@
 		<module>sa-token-http-test-common</module>
 		<module>sa-token-plugin-contract-test</module>
 		<module>sa-token-integration-boot2</module>
+		<module>sa-token-integration-beaninject-boot2</module>
 		<module>sa-token-integration-boot3</module>
 		<module>sa-token-integration-boot4</module>
 		<module>sa-token-coverage</module>
@@ -78,6 +79,11 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-integration-boot2</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-beaninject-boot2</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

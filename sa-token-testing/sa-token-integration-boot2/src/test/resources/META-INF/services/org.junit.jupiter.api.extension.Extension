@@ -1,1 +1,1 @@
-com.pj.test.SaTokenIntegrationTestExtension
+cn.dev33.satoken.integration.boot2.support.IntegrationTestExtension
