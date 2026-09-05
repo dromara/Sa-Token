@@ -45,4 +45,10 @@ public class SaJsonTemplateForFastjson2Test extends SaJsonTemplateTestCommon {
 		Assertions.assertEquals("李四", session.getModel("userJson", SysUser.class).getName());
 	}
 
+	/** 验证无参构造函数可以创建 Session 对象 */
+	@Test
+	void createsSessionWithNoArgConstructor() {
+		Assertions.assertNotNull(new SaSessionForFastjson2Customized());
+	}
+
 }

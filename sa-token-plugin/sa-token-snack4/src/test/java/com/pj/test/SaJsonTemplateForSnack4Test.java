@@ -103,4 +103,31 @@ public class SaJsonTemplateForSnack4Test extends SaJsonTemplateTestCommon {
 		Assertions.assertEquals("王五", session.getModel("userMap", SysUser.class).getName());
 	}
 
+	/** 验证无参构造函数可以创建 Session 对象 */
+	@Test
+	void createsSessionWithNoArgConstructor() {
+		Assertions.assertNotNull(new SaSessionForSnack4Customized());
+	}
+
+	/**
+	 * 验证 @type 与白名单类名完全一致时直接放行反序列化
+	 * <p>注意：这里不能用 SysUser（它实现了 SaJsonType，会在更早的白名单条目上经"可赋值"路径放行，
+	 * 轮不到精确匹配分支），所以用一个不实现任何白名单接口的普通 POJO
+	 */
+	@Test
+	void allowsExactWhitelistTypeName() {
+		resetJsonStrategy();
+		SaJsonStrategy.instance.registerAllowType(PlainPoint.class);
+		SaJsonTemplateForSnack4 template = new SaJsonTemplateForSnack4();
+		Object obj = template.jsonToObject("{\"@type\":\"com.pj.test.SaJsonTemplateForSnack4Test$PlainPoint\",\"x\":10,\"y\":20}");
+		Assertions.assertTrue(obj instanceof PlainPoint);
+		Assertions.assertEquals("com.pj.test.SaJsonTemplateForSnack4Test$PlainPoint", obj.getClass().getName());
+	}
+
+	/** 测试用简单 POJO：不实现 SaJsonType，也不在其它白名单类型的可赋值范围内 */
+	public static class PlainPoint {
+		public int x;
+		public int y;
+	}
+
 }
