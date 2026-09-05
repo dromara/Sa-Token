@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.integrate.configure.inject;
+package cn.dev33.satoken.integration.boot3;
 
-import org.springframework.stereotype.Component;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import cn.dev33.satoken.stp.StpLogic;
-import cn.dev33.satoken.stp.StpUtil;
+/**
+ * Spring Boot 3 集成测试统一启动类（仅用于差异点冒烟测试）。
+ */
+@SpringBootApplication
+public class IntegrationBoot3Application {
 
-@Component
-public class MyStpLogic extends StpLogic {
-
-	public MyStpLogic() {
-		super(StpUtil.TYPE);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(IntegrationBoot3Application.class, args);
+    }
 
 }
