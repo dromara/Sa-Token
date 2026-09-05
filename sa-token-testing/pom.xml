@@ -19,6 +19,7 @@
 	<modules>
 		<module>sa-token-test-support</module>
 		<module>sa-token-json-test-common</module>
+		<module>sa-token-http-test-common</module>
 		<module>sa-token-plugin-contract-test</module>
 		<module>sa-token-integration-boot2</module>
 		<module>sa-token-integration-boot3</module>
@@ -62,6 +63,11 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-json-test-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-http-test-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
