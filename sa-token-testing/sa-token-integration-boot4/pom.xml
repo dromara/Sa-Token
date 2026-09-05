@@ -14,7 +14,7 @@
 
 	<name>sa-token-integration-boot4</name>
 	<artifactId>sa-token-integration-boot4</artifactId>
-	<description>Spring Boot 4 integration tests for Sa-Token</description>
+	<description>Spring Boot 4 integration tests: version-specific diffs only (common logic in integration-boot2)</description>
 
 	<dependencyManagement>
 		<dependencies>
@@ -38,39 +38,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-test-support</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot4-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-sso</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-oauth2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-sign</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jwt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-temp-jwt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-jakarta-servlet</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -82,12 +54,14 @@
 
 	<build>
 		<plugins>
-			<!-- TODO: 同 boot3，待 Spring Boot 版本 classpath 冲突修复后启用 -->
+			<!-- TODO: 同 boot3，待 v2v3v4-common classpath 冲突修复后启用 autoconfig/ 冒烟测试 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<skipTests>true</skipTests>
+					<excludes>
+						<exclude>**/autoconfig/*</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
