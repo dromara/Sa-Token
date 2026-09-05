@@ -266,17 +266,32 @@
 			<artifactId>sa-token-integration-beaninject-boot2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- boot3/boot4 集成测试：classpath 待修复后取消注释 -->
-		<!--
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-integration-boot3</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-integration-boot4</artifactId>
+			<scope>test</scope>
 		</dependency>
-		-->
+		<!-- Reactor 集成测试：携带 jacoco.exec 执行数据 -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-reactor-boot2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-reactor-boot3</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-reactor-boot4</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

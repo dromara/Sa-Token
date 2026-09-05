@@ -71,6 +71,24 @@ Bean 注入专项集成测试（**独立模块 / 独立 JVM**，避免污染 `Sa
 - sa-token-spring-boot4-starter
 - sa-token-jackson3
 
+### sa-token-integration-reactor-boot2
+
+WebFlux 集成测试（Boot 2 主集成，基于 WebTestClient）：
+
+- sa-token-reactor-spring-boot-starter
+
+### sa-token-integration-reactor-boot3
+
+WebFlux 集成测试（仅 Boot 3 版本差异）：
+
+- sa-token-reactor-spring-boot3-starter（真身 reactor-v3v4-common）
+
+### sa-token-integration-reactor-boot4
+
+WebFlux 集成测试（仅 Boot 4 版本差异）：
+
+- sa-token-reactor-spring-boot4-starter（真身 reactor-v3v4-common）
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -82,6 +100,9 @@ mvn test -pl sa-token-testing/sa-token-integration-boot2 -am
 mvn test -pl sa-token-testing/sa-token-integration-beaninject-boot2 -am
 mvn test -pl sa-token-testing/sa-token-integration-boot3 -am
 mvn test -pl sa-token-testing/sa-token-integration-boot4 -am
+mvn test -pl sa-token-testing/sa-token-integration-reactor-boot2 -am
+mvn test -pl sa-token-testing/sa-token-integration-reactor-boot3 -am
+mvn test -pl sa-token-testing/sa-token-integration-reactor-boot4 -am
 ```
 
 根目录全量：`mvn test.bat`

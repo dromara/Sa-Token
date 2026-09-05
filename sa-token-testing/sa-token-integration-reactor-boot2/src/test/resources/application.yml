@@ -1,0 +1,14 @@
+# 端口
+server:
+  port: 8091
+
+# sa-token 集成测试配置
+sa-token:
+  token-name: satoken
+  timeout: 2592000
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  token-style: uuid
+  is-print: false
+  is-log: false

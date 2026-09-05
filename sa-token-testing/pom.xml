@@ -25,6 +25,9 @@
 		<module>sa-token-integration-beaninject-boot2</module>
 		<module>sa-token-integration-boot3</module>
 		<module>sa-token-integration-boot4</module>
+		<module>sa-token-integration-reactor-boot2</module>
+		<module>sa-token-integration-reactor-boot3</module>
+		<module>sa-token-integration-reactor-boot4</module>
 		<module>sa-token-coverage</module>
 	</modules>
 
@@ -94,6 +97,21 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-integration-boot4</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-reactor-boot2</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-reactor-boot3</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-reactor-boot4</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
