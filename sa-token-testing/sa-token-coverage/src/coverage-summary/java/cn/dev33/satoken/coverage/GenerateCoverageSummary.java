@@ -258,9 +258,9 @@ public class GenerateCoverageSummary {
 		long total = missed + covered;
 		boolean na = total == 0;
 		String percent = pct(missed, covered);
-		String counts = na ? "-" : missed + "/" + total;
+		String counts = na ? "-" : covered + "/" + total;
 		String sortValue = sortValue(missed, covered);
-		String title = na ? "no applicable data" : missed + " missed, " + total + " total";
+		String title = na ? "no applicable data" : covered + " covered, " + missed + " missed, " + total + " total";
 		String barHtml;
 		if (na) {
 			barHtml = "<span class=\"bar na\"></span>";
