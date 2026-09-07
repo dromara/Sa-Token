@@ -33,6 +33,7 @@
 		<module>sa-token-integration-solon</module>
 		<module>sa-token-integration-beaninject-solon</module>
 		<module>sa-token-integration-loveqq</module>
+		<module>sa-token-integration-jfinal</module>
 		<module>sa-token-coverage</module>
 	</modules>
 
@@ -142,6 +143,11 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-integration-loveqq</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-jfinal</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

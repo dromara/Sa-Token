@@ -115,6 +115,12 @@ LoveQQ 集成测试（HTTP Filter / Interceptor、Bean 注入、Redisson Dao 条
 
 - sa-token-loveqq-boot-starter
 
+### sa-token-integration-jfinal
+
+JFinal HTTP 集成测试（真实 Undertow、`SaTokenActionHandler` 上下文、`SaAnnotationInterceptor` 注解鉴权；不起 Redis）：
+
+- sa-token-jfinal-plugin
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -132,6 +138,7 @@ mvn test -pl sa-token-testing/sa-token-integration-reactor-boot4 -am
 mvn test -pl sa-token-testing/sa-token-integration-solon -am
 mvn test -pl sa-token-testing/sa-token-integration-beaninject-solon -am
 mvn test -pl sa-token-testing/sa-token-integration-loveqq -am
+mvn test -pl sa-token-testing/sa-token-integration-jfinal -am
 ```
 
 根目录全量：`mvn test.bat`

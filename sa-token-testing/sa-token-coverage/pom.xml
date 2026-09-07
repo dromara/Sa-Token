@@ -312,6 +312,11 @@
 			<artifactId>sa-token-integration-loveqq</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-jfinal</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
