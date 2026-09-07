@@ -18,6 +18,8 @@ package cn.dev33.satoken.test;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
+import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
+import cn.dev33.satoken.context.SaTokenContextForThreadLocalStaff;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.stp.StpInterface;
@@ -50,6 +52,8 @@ public final class SaTokenTestContext {
 		SaManager.setSaTokenDao(new SaTokenDaoDefaultImpl());
 		SaManager.stpLogicMap.clear();
 		SaManager.setStpInterface(new StpInterfaceDefaultImpl());
+		SaManager.setSaTokenContext(new SaTokenContextForThreadLocal());
+		SaTokenContextForThreadLocalStaff.clearModelBox();
 		StpUtil.getLoginType();
 	}
 

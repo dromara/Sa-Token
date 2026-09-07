@@ -230,6 +230,13 @@
 	            <artifactId>solon-test</artifactId>
 	            <version>${solon.version}</version>
 	        </dependency>
+
+			<!-- solon-web（插件测试起真实 HTTP） -->
+			<dependency>
+				<groupId>org.noear</groupId>
+				<artifactId>solon-web</artifactId>
+				<version>${solon.version}</version>
+			</dependency>
 			
 	        <!-- redis pool -->
 			<dependency>
