@@ -109,6 +109,12 @@ Bean 注入专项集成测试（**独立模块 / 独立 JVM**，避免污染 `Sa
 - 覆盖 `SaBeanInject` + OAuth2 / SSO / Sign / ApiKey 全部 `*BeanInject` 注入点
 - 仅验证 Solon Bean → Manager/Strategy 的注入链路，不测插件业务
 
+### sa-token-integration-loveqq
+
+LoveQQ 集成测试（HTTP Filter / Interceptor、Bean 注入、Redisson Dao 条件装配，真实请求链路）：
+
+- sa-token-loveqq-boot-starter
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -125,6 +131,7 @@ mvn test -pl sa-token-testing/sa-token-integration-reactor-boot3 -am
 mvn test -pl sa-token-testing/sa-token-integration-reactor-boot4 -am
 mvn test -pl sa-token-testing/sa-token-integration-solon -am
 mvn test -pl sa-token-testing/sa-token-integration-beaninject-solon -am
+mvn test -pl sa-token-testing/sa-token-integration-loveqq -am
 ```
 
 根目录全量：`mvn test.bat`

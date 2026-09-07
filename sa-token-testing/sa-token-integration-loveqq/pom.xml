@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>cn.dev33</groupId>
+		<artifactId>sa-token-testing</artifactId>
+		<version>${revision}</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<packaging>jar</packaging>
+
+	<name>sa-token-integration-loveqq</name>
+	<artifactId>sa-token-integration-loveqq</artifactId>
+	<description>LoveQQ HTTP and BeanInject integration tests for sa-token-loveqq-boot-starter</description>
+
+	<properties>
+		<!-- 与 loveqq-framework 1.1.5-java8 对齐；不能被 sa-token BOM 的 2.11/2.13 覆盖，否则 Web 启动会 IllegalAccessError -->
+		<loveqq.jackson.version>2.19.1</loveqq.jackson.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${loveqq.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${loveqq.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${loveqq.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-jsr310</artifactId>
+				<version>${loveqq.jackson.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-loveqq-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sso</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-oauth2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-apikey</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-sign</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redisson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.kfyty</groupId>
+			<artifactId>loveqq-boot-starter-redisson</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.kfyty</groupId>
+			<artifactId>loveqq-boot</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.kfyty</groupId>
+			<artifactId>loveqq-boot-starter-netty</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.kfyty</groupId>
+			<artifactId>loveqq-boot-starter-logback</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>4.11.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${argLine} -Dfile.encoding=UTF-8</argLine>
+					<forkCount>1</forkCount>
+					<!-- 每个测试类会占 LoveQQ 容器 / SaManager，测试类之间不复用 JVM -->
+					<reuseForks>false</reuseForks>
+					<runOrder>random</runOrder>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- LoveQQ 反射读注解内部字段，JDK9+ 必须打开 sun.reflect.annotation -->
+	<profiles>
+		<profile>
+			<id>jdk9-plus</id>
+			<activation>
+				<jdk>[9,)</jdk>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<argLine>${argLine} -Dfile.encoding=UTF-8 --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

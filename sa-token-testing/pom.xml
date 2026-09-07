@@ -32,6 +32,7 @@
 		<module>sa-token-integration-reactor-boot4</module>
 		<module>sa-token-integration-solon</module>
 		<module>sa-token-integration-beaninject-solon</module>
+		<module>sa-token-integration-loveqq</module>
 		<module>sa-token-coverage</module>
 	</modules>
 
@@ -136,6 +137,11 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-integration-beaninject-solon</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-loveqq</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
