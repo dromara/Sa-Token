@@ -173,6 +173,27 @@
 				<artifactId>loveqq-boot-starter-redisson</artifactId>
 				<version>${loveqq.version}</version>
 			</dependency>
+
+			<!-- loveqq-boot（集成测启动） -->
+			<dependency>
+				<groupId>com.kfyty</groupId>
+				<artifactId>loveqq-boot</artifactId>
+				<version>${loveqq.version}</version>
+			</dependency>
+
+			<!-- loveqq netty 服务器 -->
+			<dependency>
+				<groupId>com.kfyty</groupId>
+				<artifactId>loveqq-boot-starter-netty</artifactId>
+				<version>${loveqq.version}</version>
+			</dependency>
+
+			<!-- loveqq logback -->
+			<dependency>
+				<groupId>com.kfyty</groupId>
+				<artifactId>loveqq-boot-starter-logback</artifactId>
+				<version>${loveqq.version}</version>
+			</dependency>
 			
 			<!-- ****************** sa-token-plugin 相关依赖 ****************** -->
 

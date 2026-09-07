@@ -104,5 +104,61 @@
             <artifactId>sa-token-sign</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- SaReactorHolder 用到 Mono；loveqq-mvc-core 里 reactor-core 是 provided，测试和编译都要显式带上 -->
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.7.4</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 测试：@SaTokenTest -->
+        <dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-core</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.11.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- 打 ApplicationContextPathLoading 非空 contextPath 分支，走 LoveQQ 真实启动 -->
+        <dependency>
+            <groupId>com.kfyty</groupId>
+            <artifactId>loveqq-boot</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+	<!-- LoveQQ 反射读注解内部字段，JDK9+ 必须打开 sun.reflect.annotation -->
+	<profiles>
+		<profile>
+			<id>jdk9-plus</id>
+			<activation>
+				<jdk>[9,)</jdk>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<argLine>${argLine} -Dfile.encoding=UTF-8 --add-opens java.base/sun.reflect.annotation=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
