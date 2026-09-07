@@ -16,6 +16,17 @@
     <artifactId>sa-token-quick-login</artifactId>
 	<description>sa-token-quick-login</description>
 
+	<!-- 父 BOM 把 thymeleaf 钉在 3.0.9，和 Boot2 自带的 thymeleaf-spring5 3.0.15 对不上，测试起不来 -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.thymeleaf</groupId>
+				<artifactId>thymeleaf</artifactId>
+				<version>3.0.15.RELEASE</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->
 		<dependency>
@@ -34,6 +45,42 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<!-- 测试：sa-token-core 测试工具（@SaTokenTest / SaTokenExtension） -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-core</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${argLine} -Dfile.encoding=UTF-8</argLine>
+					<forkCount>1</forkCount>
+					<!-- 每个测试类独立 JVM，才能走到 SaQuickManager.getConfig 的懒加载分支 -->
+					<reuseForks>false</reuseForks>
+					<runOrder>random</runOrder>
+					<!-- 本模块同时 optional 了 Boot2/Boot3 starter，测试只跑 Boot2，避免 Spring5/6 混在一起 -->
+					<classpathDependencyExcludes>
+						<classpathDependencyExclude>cn.dev33:sa-token-spring-boot3-starter</classpathDependencyExclude>
+						<classpathDependencyExclude>cn.dev33:sa-token-spring-boot-webmvc-v3v4-common</classpathDependencyExclude>
+						<classpathDependencyExclude>cn.dev33:sa-token-jakarta-servlet</classpathDependencyExclude>
+					</classpathDependencyExcludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
