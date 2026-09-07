@@ -53,6 +53,7 @@ public class SaRequestForMockTest {
 	void defaultParamMethods() {
 		Assertions.assertEquals("zhangsan", request.getParam("name"));
 		Assertions.assertEquals("default", request.getParam("missing", "default"));
+		Assertions.assertEquals("zhangsan", request.getParam("name", "unused"));
 		Assertions.assertTrue(request.isParam("name", "zhangsan"));
 		Assertions.assertFalse(request.isParam("name", "lisi"));
 		Assertions.assertTrue(request.hasParam("name"));
@@ -72,6 +73,7 @@ public class SaRequestForMockTest {
 	void defaultHeaderMethods() {
 		Assertions.assertEquals("abc", request.getHeader("X-Token"));
 		Assertions.assertEquals("fallback", request.getHeader("missing", "fallback"));
+		Assertions.assertEquals("abc", request.getHeader("X-Token", "unused"));
 	}
 
 	/** Cookie 相关方法应正常返回值 */

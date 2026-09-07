@@ -54,6 +54,7 @@ public class SaSameTemplateTest {
 		Assertions.assertFalse(template.isValid(""));
 		Assertions.assertFalse(template.isValid("invalid-token"));
 		Assertions.assertThrows(SameTokenInvalidException.class, () -> template.checkToken("invalid-token"));
+		Assertions.assertThrows(SameTokenInvalidException.class, () -> template.checkToken(null));
 	}
 
 	/** refreshToken 应保留旧 token 并生成新 token */
@@ -76,6 +77,8 @@ public class SaSameTemplateTest {
 
 		template.saveToken("");
 		Assertions.assertNull(dao.get(key));
+		template.savePastToken("", 60);
+		Assertions.assertNull(dao.get(template.splicingPastTokenSaveKey()));
 
 		String token = template.createToken();
 		template.saveToken(token);

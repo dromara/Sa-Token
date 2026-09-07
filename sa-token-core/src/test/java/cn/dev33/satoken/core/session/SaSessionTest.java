@@ -112,6 +112,10 @@ public class SaSessionTest {
     	Assertions.assertTrue(emptyList.isEmpty());
     	Assertions.assertTrue(session.has("emptyList"));
 
+    	// getList：key 已有值时 fun 不应再执行
+    	List<String> existingList = session.getList("nameList", String.class, ArrayList::new);
+    	Assertions.assertEquals(2, existingList.size());
+
     	// getList：Set 存储、List 读取
     	Set<String> nameSet = new HashSet<>(Arrays.asList("x", "y"));
     	session.set("nameSetAsList", nameSet);
@@ -129,6 +133,10 @@ public class SaSessionTest {
     	Set<String> emptySet = session.getSet("emptySet", String.class, LinkedHashSet::new);
     	Assertions.assertTrue(emptySet.isEmpty());
     	Assertions.assertTrue(session.has("emptySet"));
+
+    	// getSet：key 已有值时 fun 不应再执行
+    	Set<String> existingSet = session.getSet("nameListAsSet", String.class, LinkedHashSet::new);
+    	Assertions.assertEquals(2, existingSet.size());
 
     	// getMap：内存 Map 读取
     	Map<String, Long> scoreMap = new LinkedHashMap<>();

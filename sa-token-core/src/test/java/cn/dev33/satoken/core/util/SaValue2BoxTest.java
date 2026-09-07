@@ -67,15 +67,26 @@ public class SaValue2BoxTest {
 	void valueState() {
 		SaValue2Box empty = new SaValue2Box((String) null);
 		Assertions.assertTrue(empty.isNotValueState());
+		Assertions.assertFalse(empty.isSingleValueState());
+		Assertions.assertNull(empty.getValue1AsString());
+		Assertions.assertNull(empty.getValue2AsString());
 
 		SaValue2Box single = new SaValue2Box("only", null);
 		Assertions.assertTrue(single.isSingleValueState());
+		Assertions.assertFalse(single.isNotValueState());
 		Assertions.assertFalse(single.isDoubleValueState());
 
 		SaValue2Box pair = new SaValue2Box(null, "two");
 		Assertions.assertTrue(pair.isDoubleValueState());
+		Assertions.assertFalse(pair.isNotValueState());
+		Assertions.assertFalse(pair.isSingleValueState());
 		Assertions.assertTrue(pair.value1IsEmpty());
 		Assertions.assertFalse(pair.value2IsEmpty());
+
+		SaValue2Box both = new SaValue2Box("a", "b");
+		Assertions.assertFalse(both.isNotValueState());
+		Assertions.assertFalse(both.isSingleValueState());
+		Assertions.assertTrue(both.isDoubleValueState());
 	}
 
 	/** toString 应按值状态格式化为逗号分隔字符串或 null */

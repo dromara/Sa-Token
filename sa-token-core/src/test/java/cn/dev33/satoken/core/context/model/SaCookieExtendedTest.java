@@ -79,6 +79,12 @@ public class SaCookieExtendedTest {
 
 		cookie.removeExtraAttr("a");
 		Assertions.assertFalse(cookie.getExtraAttrs().containsKey("a"));
+
+		cookie.setExtraAttrs(null);
+		cookie.addExtraAttr("lazy", "yes");
+		Assertions.assertEquals("yes", cookie.getExtraAttrs().get("lazy"));
+		cookie.setExtraAttrs(null);
+		Assertions.assertDoesNotThrow(() -> cookie.removeExtraAttr("missing"));
 	}
 
 	/** builder 应设置默认 Path 为 / */
@@ -108,6 +114,20 @@ public class SaCookieExtendedTest {
 		Assertions.assertTrue(header.contains("; HttpOnly"));
 		Assertions.assertTrue(header.contains("; SameSite=Lax"));
 		Assertions.assertTrue(header.contains("; Partitioned"));
+	}
+
+	/** path 为空、extraAttrs 为 null 或带值时 toHeaderValue 应走对应分支 */
+	@Test
+	void toHeaderValue_emptyPathAndExtraAttrBranches() {
+		SaCookie noPath = new SaCookie("k", "v").setPath("");
+		String noPathHeader = noPath.toHeaderValue();
+		Assertions.assertFalse(noPathHeader.contains("; Path="));
+
+		SaCookie valuedAttr = new SaCookie("k", "v").addExtraAttr("foo", "bar");
+		Assertions.assertTrue(valuedAttr.toHeaderValue().contains("; foo=bar"));
+
+		SaCookie noExtra = new SaCookie("k", "v").setExtraAttrs(null);
+		Assertions.assertFalse(noExtra.toHeaderValue().contains("; foo="));
 	}
 
 	/** MaxAge 为 0 时 Expires 应为 Epoch 时间 */

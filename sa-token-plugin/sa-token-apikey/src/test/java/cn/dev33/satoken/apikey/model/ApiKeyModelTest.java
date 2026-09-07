@@ -87,6 +87,9 @@ public class ApiKeyModelTest {
 
         ak.addExtra("k1", "v1");
         Assertions.assertEquals("v1", ak.getExtra("k1"));
+        // extraData 已初始化后再 addExtra，应该直接写入而不是再 new Map
+        ak.addExtra("k2", "v2");
+        Assertions.assertEquals("v2", ak.getExtra("k2"));
         Assertions.assertEquals("v1", ak.removeExtra("k1"));
         Assertions.assertNull(ak.getExtra("k1"));
     }

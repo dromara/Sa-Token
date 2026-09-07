@@ -230,4 +230,30 @@ public class SaApiKeyTemplateIndexTest {
         // 过滤掉缓存不存在的
         Assertions.assertEquals(1, t.getApiKeyList(10011).size());
     }
+
+    /** adjustIndex：传入已有 session，且全是有限 TTL 时应该按最大剩余时间调整 */
+    @Test
+    public void adjustIndex_finiteTtl_usesProvidedSession() {
+        SaApiKeyTemplate t = new SaApiKeyTemplate();
+        t.saveApiKey(buildAk("AK-long", 10012, System.currentTimeMillis() + 300_000L));
+        t.saveApiKey(buildAk("AK-short", 10012, System.currentTimeMillis() + 50_000L));
+        cn.dev33.satoken.session.SaSession session = t.rawSessionDelegator.getSessionById(10012, false);
+        Assertions.assertDoesNotThrow(() -> t.adjustIndex(10012, session));
+        Assertions.assertEquals(2, t.getApiKeyList(10012).size());
+    }
+
+    /** getApiKeyList：索引里缓存已过期的 ApiKey 时应该被过滤掉 */
+    @Test
+    public void getApiKeyList_filtersExpiredStillInCache() {
+        SaApiKeyTemplate t = new SaApiKeyTemplate();
+        t.saveApiKey(buildAk("AK-ok", 10013, SaTokenDao.NEVER_EXPIRE));
+        ApiKeyModel expired = buildAk("AK-exp-cached", 10013, System.currentTimeMillis() - 1000);
+        t.getSaTokenDao().setObject(t.splicingApiKeySaveKey("AK-exp-cached"), expired, 60);
+        cn.dev33.satoken.session.SaSession session = t.rawSessionDelegator.getSessionById(10013, false);
+        java.util.List<String> list = session.getList(SaApiKeyTemplate.API_KEY_LIST, String.class, java.util.ArrayList::new);
+        list.add("AK-exp-cached");
+        session.set(SaApiKeyTemplate.API_KEY_LIST, list);
+        Assertions.assertEquals(1, t.getApiKeyList(10013).size());
+        Assertions.assertEquals("AK-ok", t.getApiKeyList(10013).get(0).getApiKey());
+    }
 }

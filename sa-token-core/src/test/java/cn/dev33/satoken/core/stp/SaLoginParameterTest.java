@@ -119,13 +119,19 @@ public class SaLoginParameterTest {
 
 		param.setExtra("role", "admin")
 				.setExtra("level", 9)
-				.setTerminalExtra("tag", "vip");
+				.setTerminalExtra("tag", "vip")
+				.setTerminalExtra("chan", "web");
 
 		Assertions.assertTrue(param.haveExtraData());
 		Assertions.assertEquals("admin", param.getExtra("role"));
 		Assertions.assertEquals(9, param.getExtra("level"));
 		Assertions.assertTrue(param.haveTerminalExtraData());
 		Assertions.assertEquals("vip", param.getTerminalExtra("tag"));
+		Assertions.assertEquals("web", param.getTerminalExtra("chan"));
+
+		param.setExtraData(new LinkedHashMap<>()).setTerminalExtraData(new LinkedHashMap<>());
+		Assertions.assertFalse(param.haveExtraData());
+		Assertions.assertFalse(param.haveTerminalExtraData());
 
 		Map<String, Object> extraData = new LinkedHashMap<>();
 		extraData.put("a", 1);
@@ -149,6 +155,11 @@ public class SaLoginParameterTest {
 				.setIsLastingCookie(true)
 				.setTimeout(SaTokenDao.NEVER_EXPIRE);
 		Assertions.assertEquals(Integer.MAX_VALUE, neverExpire.getCookieTimeout());
+
+		SaLoginParameter overflow = new SaLoginParameter()
+				.setIsLastingCookie(true)
+				.setTimeout(Integer.MAX_VALUE + 1L);
+		Assertions.assertEquals(Integer.MAX_VALUE, overflow.getCookieTimeout());
 	}
 
 	/** setupCookieConfig 与 setDefaultValues 应正确合并 Cookie 配置 */

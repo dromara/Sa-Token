@@ -71,4 +71,12 @@ public class SaCookieConfigFullTest {
 		Assertions.assertEquals("v", config.getExtraAttrs().get("k"));
 	}
 
+	/** extraAttrs 为 null 时 removeExtraAttr 应该直接返回不抛异常 */
+	@Test
+	void removeExtraAttr_whenMapNull_noThrow() {
+		SaCookieConfig config = new SaCookieConfig();
+		config.setExtraAttrs(null);
+		Assertions.assertDoesNotThrow(() -> config.removeExtraAttr("missing"));
+	}
+
 }

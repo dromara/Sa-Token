@@ -67,7 +67,12 @@ public class SaTerminalInfoFullTest {
 		Assertions.assertEquals("admin", terminal.getExtra("role"));
 		Assertions.assertTrue(terminal.haveExtraData());
 		Assertions.assertNotNull(terminal.getExtraData());
+		terminal.setExtra("dept", "rd");
+		Assertions.assertEquals("rd", terminal.getExtra("dept"));
 		Assertions.assertTrue(terminal.toString().contains("deviceId"));
+
+		terminal.setExtraData(new LinkedHashMap<>());
+		Assertions.assertFalse(terminal.haveExtraData());
 	}
 
 }
