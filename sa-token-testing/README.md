@@ -121,6 +121,12 @@ JFinal HTTP 集成测试（真实 Undertow、`SaTokenActionHandler` 上下文、
 
 - sa-token-jfinal-plugin
 
+### sa-token-integration-jboot
+
+JBoot HTTP 集成测试（真实 Undertow、`SaTokenContextForJboot` 上下文、`SaAnnotationInterceptor` 注解鉴权；不起 Redis / RPC）：
+
+- sa-token-jboot-plugin
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -139,6 +145,7 @@ mvn test -pl sa-token-testing/sa-token-integration-solon -am
 mvn test -pl sa-token-testing/sa-token-integration-beaninject-solon -am
 mvn test -pl sa-token-testing/sa-token-integration-loveqq -am
 mvn test -pl sa-token-testing/sa-token-integration-jfinal -am
+mvn test -pl sa-token-testing/sa-token-integration-jboot -am
 ```
 
 根目录全量：`mvn test.bat`
