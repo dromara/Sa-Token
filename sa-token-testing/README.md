@@ -96,6 +96,19 @@ WebFlux 集成测试（仅 Boot 4 版本差异）：
 
 - sa-token-reactor-spring-boot4-starter（真身 reactor-v3v4-common）
 
+### sa-token-integration-solon
+
+Solon HTTP 集成测试（Filter / Interceptor、真实请求链路）：
+
+- sa-token-solon-plugin
+
+### sa-token-integration-beaninject-solon
+
+Bean 注入专项集成测试（**独立模块 / 独立 JVM**，避免污染 `SaManager` 等全局静态状态）：
+
+- 覆盖 `SaBeanInject` + OAuth2 / SSO / Sign / ApiKey 全部 `*BeanInject` 注入点
+- 仅验证 Solon Bean → Manager/Strategy 的注入链路，不测插件业务
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -110,6 +123,8 @@ mvn test -pl sa-token-testing/sa-token-integration-boot4 -am
 mvn test -pl sa-token-testing/sa-token-integration-reactor-boot2 -am
 mvn test -pl sa-token-testing/sa-token-integration-reactor-boot3 -am
 mvn test -pl sa-token-testing/sa-token-integration-reactor-boot4 -am
+mvn test -pl sa-token-testing/sa-token-integration-solon -am
+mvn test -pl sa-token-testing/sa-token-integration-beaninject-solon -am
 ```
 
 根目录全量：`mvn test.bat`

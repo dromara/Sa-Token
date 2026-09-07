@@ -297,6 +297,16 @@
 			<artifactId>sa-token-integration-reactor-boot4</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-solon</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-beaninject-solon</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
