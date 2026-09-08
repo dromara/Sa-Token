@@ -127,6 +127,18 @@ JBoot HTTP 集成测试（真实 Undertow、`SaTokenContextForJboot` 上下文�
 
 - sa-token-jboot-plugin
 
+### sa-token-integration-sso
+
+SSO 协议 HTTP 集成测试（Spring Boot 2，同一进程挂 Server + Client 两套路由和两套 `StpLogic`；真 302 / Location，模式一 / 二 / 三跳转和单点注销；不起 Redis）：
+
+- sa-token-sso
+
+### sa-token-integration-oauth2
+
+OAuth2 协议 HTTP 集成测试（Spring Boot 2，真 302 / Location 和 token JSON；授权码 / 隐藏式 / 密码 / 凭证 / 刷新 / 回收 / 确认授权；不起 Redis）：
+
+- sa-token-oauth2
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -146,6 +158,8 @@ mvn test -pl sa-token-testing/sa-token-integration-beaninject-solon -am
 mvn test -pl sa-token-testing/sa-token-integration-loveqq -am
 mvn test -pl sa-token-testing/sa-token-integration-jfinal -am
 mvn test -pl sa-token-testing/sa-token-integration-jboot -am
+mvn test -pl sa-token-testing/sa-token-integration-sso -am
+mvn test -pl sa-token-testing/sa-token-integration-oauth2 -am
 ```
 
 根目录全量：`mvn test.bat`

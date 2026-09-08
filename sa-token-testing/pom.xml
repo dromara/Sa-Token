@@ -35,6 +35,8 @@
 		<module>sa-token-integration-loveqq</module>
 		<module>sa-token-integration-jfinal</module>
 		<module>sa-token-integration-jboot</module>
+		<module>sa-token-integration-sso</module>
+		<module>sa-token-integration-oauth2</module>
 		<module>sa-token-coverage</module>
 	</modules>
 
@@ -154,6 +156,16 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-integration-jboot</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-sso</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-oauth2</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
