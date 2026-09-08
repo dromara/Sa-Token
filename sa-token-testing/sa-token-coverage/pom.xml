@@ -334,6 +334,11 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-integration-dubbo</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-integration-dubbo3</artifactId>
 			<scope>test</scope>
 		</dependency>
