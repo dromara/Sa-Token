@@ -37,6 +37,7 @@
 		<module>sa-token-integration-jboot</module>
 		<module>sa-token-integration-sso</module>
 		<module>sa-token-integration-oauth2</module>
+		<module>sa-token-integration-dubbo3</module>
 		<module>sa-token-coverage</module>
 	</modules>
 
@@ -166,6 +167,11 @@
 			<dependency>
 				<groupId>cn.dev33</groupId>
 				<artifactId>sa-token-integration-oauth2</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.dev33</groupId>
+				<artifactId>sa-token-integration-dubbo3</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>

@@ -139,6 +139,12 @@ OAuth2 协议 HTTP 集成测试（Spring Boot 2，真 302 / Location 和 token J
 
 - sa-token-oauth2
 
+### sa-token-integration-dubbo3
+
+Dubbo3 Filter 集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provider，本机 `dubbo://`，`scope=remote` 避免 injvm 串 ThreadLocal；会话下传 / 回传、Same-Token；不起 Nacos / Redis）：
+
+- sa-token-dubbo3
+
 ### sa-token-coverage
 
 覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
@@ -160,6 +166,7 @@ mvn test -pl sa-token-testing/sa-token-integration-jfinal -am
 mvn test -pl sa-token-testing/sa-token-integration-jboot -am
 mvn test -pl sa-token-testing/sa-token-integration-sso -am
 mvn test -pl sa-token-testing/sa-token-integration-oauth2 -am
+mvn test -pl sa-token-testing/sa-token-integration-dubbo3 -am
 ```
 
 根目录全量：`mvn test.bat`
