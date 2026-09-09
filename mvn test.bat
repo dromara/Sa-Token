@@ -1,8 +1,8 @@
 ﻿@echo off
 chcp 65001 >nul
 
-:: Sa-Token 全量单元测试 + 集成测试
-call mvn test
+:: Sa-Token 全量单元测试 + 集成测试（根 POM 默认 skipTests，这里显式打开）
+call mvn test -DskipTests=false
 
 echo.
 echo ----------- Coverage Summary Pages -----------

@@ -55,6 +55,14 @@
 		<exec-maven-plugin.version>3.5.0</exec-maven-plugin.version>
 		<build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
 		<coverage.summary.mainClass>cn.dev33.satoken.coverage.GenerateCoverageSummary</coverage.summary.mainClass>
+
+		<!--
+			日常 package / install 不跑单测和 JaCoCo。
+			要跑测：mvn test -DskipTests=false
+			要覆盖率：mvn-coverage.bat（内部会打开 skipTests / jacoco.skip）
+		-->
+		<skipTests>true</skipTests>
+		<jacoco.skip>true</jacoco.skip>
 	</properties>
 
 	<!-- 仓库信息 -->
@@ -107,7 +115,7 @@
 	</dependencyManagement>
 	
 	<!-- 项目构建 -->
-	<!-- 日常：mvn package（不生成 javadoc / sources / gpg） -->
+	<!-- 日常：mvn package（不跑单测 / JaCoCo，也不生成 javadoc / sources / gpg） -->
 	<build>
 		<plugins>
 

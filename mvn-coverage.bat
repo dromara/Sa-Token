@@ -14,7 +14,7 @@
 @echo.
 
 rem pipe is not a TTY; keep Maven color. JVM UTF-8.
-rem copy log by bytes; do not use Tee-Object, it strips ANSI.
+rem log keeps full stacks; console drops at / Caused-by frames
 @set "MAVEN_OPTS=%MAVEN_OPTS% -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8"
 
 @> "%TEE_PS%" echo $log = $env:COVERAGE_LOG
@@ -29,13 +29,33 @@ rem copy log by bytes; do not use Tee-Object, it strips ANSI.
 @>> "%TEE_PS%" echo $out = [Console]::OpenStandardOutput()
 @>> "%TEE_PS%" echo $fs = [IO.File]::Create($log)
 @>> "%TEE_PS%" echo $buf = New-Object byte[] 8192
+@>> "%TEE_PS%" echo $lineMem = New-Object System.IO.MemoryStream
+@>> "%TEE_PS%" echo $utf8 = New-Object System.Text.UTF8Encoding $false
 @>> "%TEE_PS%" echo try {
-@>> "%TEE_PS%" echo while (($n = $in.Read($buf, 0, $buf.Length)) -gt 0) { $out.Write($buf, 0, $n); $out.Flush(); $fs.Write($buf, 0, $n) }
+@>> "%TEE_PS%" echo while (($n = $in.Read($buf, 0, $buf.Length)) -gt 0) {
+@>> "%TEE_PS%" echo $fs.Write($buf, 0, $n)
+@>> "%TEE_PS%" echo for ($i = 0; $i -lt $n; $i++) {
+@>> "%TEE_PS%" echo $b = $buf[$i]
+@>> "%TEE_PS%" echo [void]$lineMem.WriteByte($b)
+@>> "%TEE_PS%" echo if ($b -ne 10) { continue }
+@>> "%TEE_PS%" echo $lineBytes = $lineMem.ToArray()
+@>> "%TEE_PS%" echo $lineMem.SetLength(0)
+@>> "%TEE_PS%" echo $s = $utf8.GetString($lineBytes)
+@>> "%TEE_PS%" echo $plain = [regex]::Replace($s, [char]27 + '\[[0-9;]*m', '')
+@>> "%TEE_PS%" echo $t = $plain.TrimStart()
+@>> "%TEE_PS%" echo if ($t.StartsWith('at ')) { continue }
+@>> "%TEE_PS%" echo if ($t.StartsWith('Caused by:')) { continue }
+@>> "%TEE_PS%" echo if ($t.StartsWith('... ') -and $t.Contains(' more')) { continue }
+@>> "%TEE_PS%" echo $out.Write($lineBytes, 0, $lineBytes.Length)
+@>> "%TEE_PS%" echo $out.Flush()
+@>> "%TEE_PS%" echo }
+@>> "%TEE_PS%" echo }
+@>> "%TEE_PS%" echo if ($lineMem.Length -gt 0) { $rest = $lineMem.ToArray(); $out.Write($rest, 0, $rest.Length); $out.Flush() }
 @>> "%TEE_PS%" echo } finally { $fs.Dispose() }
 
 rem clean: IDE may write broken class stubs into target; skip compile otherwise.
 @for /f %%I in ('powershell -NoProfile -Command "(Get-Date).Ticks"') do set "T0=%%I"
-@call mvn -Dstyle.color=always clean verify -pl sa-token-testing/sa-token-coverage -am 2>&1 | powershell -NoProfile -ExecutionPolicy Bypass -File "%TEE_PS%"
+@call mvn -Dstyle.color=always -DskipTests=false -Djacoco.skip=false clean verify -pl sa-token-testing/sa-token-coverage -am 2>&1 | powershell -NoProfile -ExecutionPolicy Bypass -File "%TEE_PS%"
 
 rem mvn.cmd turns echo back on after a pipe; keep @ on later lines.
 @echo off
