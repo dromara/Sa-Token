@@ -121,6 +121,7 @@ description: "Sa-Token 仓库目录：core、starter、plugin、demo 等模块�
 			├── server                                // [示例] Sa-Token 集成 grpc 鉴权，server 端
 		├── sa-token-demo-hutool-timed-cache      // [示例] Sa-Token 集成 hutool timed-cache
 		├── sa-token-demo-caffeine                // [示例] Sa-Token 集成 Caffeine
+		├── sa-token-demo-jfinal                  // [示例] Sa-Token 整合 JFinal
 		├── sa-token-demo-jwt                     // [示例] Sa-Token 集成 jwt 登录认证 
 		├── sa-token-demo-oauth2                  // [示例] Sa-Token 集成 OAuth2.0
 			├── sa-token-demo-oauth2-client           // [示例] Sa-Token 集成 OAuth2.0 (客户端)

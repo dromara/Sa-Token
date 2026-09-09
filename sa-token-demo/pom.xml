@@ -31,6 +31,7 @@
 		<module>sa-token-demo-first-run</module>
 <!--		<module>sa-token-demo-grpc</module>-->
 		<module>sa-token-demo-hutool-timed-cache</module>
+		<module>sa-token-demo-jfinal</module>
 		<module>sa-token-demo-jwt</module>
 		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-server</module>
 		<module>sa-token-demo-oauth2/sa-token-demo-oauth2-client</module>
