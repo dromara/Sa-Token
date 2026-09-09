@@ -20,6 +20,13 @@
         <central.publishing.maven.version>0.10.0</central.publishing.maven.version>
     </properties>
 
+
+    <!-- ========================= 仓库元信息 start ========================= -->
+    <!-- 
+        这些信息在 sa-token-parent 中也有定义，之所以重复书写，是因为：
+        sa-token-parent 会 import 导入本模块，而非 parent 继承。
+        import 导入不会向下传播 licenses、SCM、开发者等信息。而本模块会作为独立 POM 发到 Maven Central，必须自带这些元数据。
+    -->
     <!-- 开源协议 apache 2.0 -->
     <licenses>
         <license>
@@ -45,7 +52,9 @@
             <email>2393584716@qq.com</email>
         </developer>
     </developers>
+    <!-- ========================= 仓库元信息 end ========================= -->
 
+    <!-- 定义所有 Sa-Token 相关插件的版本号 -->
     <dependencyManagement>
         <dependencies>
             <!-- sa-token 核心 -->
