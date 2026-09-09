@@ -58,14 +58,6 @@
 			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
 		</dependency>
 
-		<!-- 测试：sa-token-core 测试工具（@SaTokenTest / SaTokenExtension） -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-core</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

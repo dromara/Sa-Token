@@ -30,14 +30,6 @@
             <artifactId>sa-token-http-test-common</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- 测试：sa-token-core 测试工具（@SaTokenTest / SaTokenExtension） -->
-        <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-core</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
         <!-- 测试：forest-core 运行时需要一个 JSON 框架支持（真实环境由应用方提供） -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

@@ -28,14 +28,6 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!-- 测试：sa-token-core 测试工具（@SaTokenTest / SaTokenExtension） -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-core</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

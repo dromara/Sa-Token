@@ -34,14 +34,6 @@
             <artifactId>sa-token-sign</artifactId>
         </dependency>
 
-		<!-- 测试：sa-token-core 测试工具（@SaTokenTest / SaTokenExtension） -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-core</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
 		<!-- OIDC 单测签发 id_token：jwt 是 optional，把 hutool-jwt 拉到 test 类路径 -->
 		<dependency>
 			<groupId>cn.hutool</groupId>

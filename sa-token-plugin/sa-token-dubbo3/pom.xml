@@ -36,14 +36,6 @@
             <version>${dubbo3.version}</version>
         </dependency>
 
-		<!-- 测试：sa-token-core 测试工具（@SaTokenTest / SaTokenExtension） -->
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-core</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
     </dependencies>
 
 </project>
