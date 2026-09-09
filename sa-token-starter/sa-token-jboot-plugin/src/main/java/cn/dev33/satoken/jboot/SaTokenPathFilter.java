@@ -15,16 +15,21 @@
  */
 package cn.dev33.satoken.jboot;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.filter.SaFilter;
+import cn.dev33.satoken.router.SaRouter;
+import com.jfinal.aop.Interceptor;
+import com.jfinal.aop.Invocation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SaTokenPathFilter implements SaFilter {
+public class SaTokenPathFilter implements SaFilter, Interceptor {
 
     // ------------------------ 设置此过滤器 拦截 & 放行 的路由
 
@@ -101,27 +106,18 @@ public class SaTokenPathFilter implements SaFilter {
         return this;
     }
 
-
-    /*@Override
-    public void doFilter(Controller ctx, FilterChain chain) throws Throwable {
+    @Override
+    public void intercept(Invocation inv) {
         try {
-            // 执行全局过滤器
             beforeAuth.run(null);
-            SaRouter.match(includeList).notMatch(excludeList).check(r -> {
-                auth.run(null);
-            });
-
+            SaRouter.match(includeList).notMatch(excludeList).check(r -> auth.run(null));
         } catch (StopMatchException e) {
-
+            // 停止匹配，继续进 Action
         } catch (Throwable e) {
-            // 1. 获取异常处理策略结果
             String result = (e instanceof BackResultException) ? e.getMessage() : String.valueOf(error.run(e));
-            // 2. 写入输出流
-            ctx.renderText(result);
+            inv.getController().renderText(result);
             return;
         }
-
-        // 执行
-        chain.doFilter(ctx);
-    }*/
+        inv.invoke();
+    }
 }

@@ -15,7 +15,6 @@
  */
 package cn.dev33.satoken.jfinal;
 
-import com.jfinal.plugin.redis.serializer.JdkSerializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -72,10 +71,10 @@ public class SaJdkSerializerTest {
         Assertions.assertThrows(RuntimeException.class, () -> serializer.valueFromBytes(new byte[] {1, 2, 3}));
     }
 
-    /** me 字段当前指向的是 JFinal 自带的 JdkSerializer */
+    /** me 字段应该就是本类自己的实例 */
     @Test
-    public void me_isJfinalJdkSerializer() {
-        Assertions.assertTrue(SaJdkSerializer.me instanceof JdkSerializer);
+    public void me_isSaJdkSerializer() {
+        Assertions.assertTrue(SaJdkSerializer.me instanceof SaJdkSerializer);
     }
 
     /** 给序列化来回转用的小对象 */

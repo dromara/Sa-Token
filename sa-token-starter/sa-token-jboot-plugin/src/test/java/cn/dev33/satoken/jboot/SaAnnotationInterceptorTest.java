@@ -16,11 +16,13 @@
 package cn.dev33.satoken.jboot;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
-import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.jboot.testsupport.JbootTestHelper;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.test.SaTokenTest;
 import com.jfinal.aop.Invocation;
+import com.jfinal.core.Controller;
+import io.jboot.web.controller.JbootControllerContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -50,9 +53,9 @@ public class SaAnnotationInterceptorTest {
         verify(invocation).invoke();
     }
 
-    /** 标了登录校验但还没登录时，应该拦住，不能往下 invoke */
+    /** 标了登录校验但还没登录时，应该拦住并写回异常文案，不能往下 invoke */
     @Test
-    public void intercept_checkLogin_whenNotLogin_shouldThrow() throws Exception {
+    public void intercept_checkLogin_whenNotLogin_shouldWriteError() throws Exception {
         Method method = AnnoTarget.class.getMethod("needLogin");
         Invocation invocation = mock(Invocation.class);
         when(invocation.getMethod()).thenReturn(method);
@@ -60,8 +63,10 @@ public class SaAnnotationInterceptorTest {
         HttpServletRequest request = JbootTestHelper.mockRequest("/secure");
         HttpServletResponse response = JbootTestHelper.mockResponse();
         JbootTestHelper.withHeldController(request, response, () -> {
-            Assertions.assertThrows(NotLoginException.class,
-                    () -> new SaAnnotationInterceptor().intercept(invocation));
+            Controller controller = JbootControllerContext.get();
+            when(invocation.getController()).thenReturn(controller);
+            new SaAnnotationInterceptor().intercept(invocation);
+            verify(controller).renderText(anyString());
         });
         verify(invocation, never()).invoke();
     }
@@ -82,6 +87,24 @@ public class SaAnnotationInterceptorTest {
         verify(invocation).invoke();
     }
 
+    /** @SaIgnore 应该吞掉 StopMatchException 并继续 invoke */
+    @Test
+    public void intercept_saIgnore_shouldInvoke() throws Exception {
+        Method method = AnnoTarget.class.getMethod("ignored");
+        Invocation invocation = mock(Invocation.class);
+        when(invocation.getMethod()).thenReturn(method);
+
+        new SaAnnotationInterceptor().intercept(invocation);
+
+        verify(invocation).invoke();
+    }
+
+    /** 默认构造应该能 new */
+    @Test
+    public void ctor_canNew() {
+        Assertions.assertNotNull(new SaAnnotationInterceptor());
+    }
+
     /** 给拦截器提供带注解的目标方法 */
     public static class AnnoTarget {
         public void plain() {
@@ -89,6 +112,11 @@ public class SaAnnotationInterceptorTest {
 
         @SaCheckLogin
         public void needLogin() {
+        }
+
+        @SaIgnore
+        @SaCheckLogin
+        public void ignored() {
         }
     }
 }

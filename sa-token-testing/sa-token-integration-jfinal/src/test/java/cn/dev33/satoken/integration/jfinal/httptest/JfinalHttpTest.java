@@ -75,12 +75,13 @@ public class JfinalHttpTest {
 		Assertions.assertEquals("10001", JfinalHttp.get(port, "/user", token));
 	}
 
-	/** 未登录访问业务接口不应该返回登录 id */
+	/** 未登录访问业务接口应该写回未登录文案，而不是 500 页 */
 	@Test
 	public void user_withoutLogin_shouldBeBlocked() {
 		JfinalHttp.Resp resp = JfinalHttp.exchange(port, "/user");
+		Assertions.assertEquals(200, resp.status);
 		Assertions.assertNotEquals("10001", resp.body);
-		Assertions.assertNotEquals(200, Integer.valueOf(resp.status));
+		Assertions.assertFalse(resp.body.isEmpty());
 	}
 
 	/** 公开路径未登录也应该放行 */
@@ -96,20 +97,21 @@ public class JfinalHttpTest {
 		Assertions.assertEquals("anno-ok", JfinalHttp.get(port, "/anno", token));
 	}
 
-	/** 未登录打注解接口不应该返回业务文案 */
+	/** 未登录打注解接口应该写回未登录文案 */
 	@Test
 	public void annotation_withoutLogin_shouldBeBlocked() {
 		JfinalHttp.Resp resp = JfinalHttp.exchange(port, "/anno");
+		Assertions.assertEquals(200, resp.status);
 		Assertions.assertNotEquals("anno-ok", resp.body);
-		Assertions.assertNotEquals(200, Integer.valueOf(resp.status));
+		Assertions.assertFalse(resp.body.isEmpty());
 	}
 
-	/** @SaIgnore 目前会被 StopMatchException 打成 500：拦截器没有接住就当未知异常渲染了 */
+	/** @SaIgnore 应该跳过登录校验，返回业务文案 */
 	@Test
-	public void saIgnore_currentlyBecomes500() {
+	public void saIgnore_shouldReturnIgnored() {
 		JfinalHttp.Resp resp = JfinalHttp.exchange(port, "/ignored");
-		Assertions.assertNotEquals("ignored", resp.body);
-		Assertions.assertEquals(500, resp.status);
+		Assertions.assertEquals(200, resp.status);
+		Assertions.assertEquals("ignored", resp.body);
 	}
 
 	/** 超管登录后访问角色接口应该通过 */
@@ -119,13 +121,14 @@ public class JfinalHttpTest {
 		Assertions.assertEquals("role-ok", JfinalHttp.get(port, "/role", token));
 	}
 
-	/** 没角色的账号打角色接口不应该返回业务文案 */
+	/** 没角色的账号打角色接口应该写回无角色文案 */
 	@Test
 	public void role_withoutRole_shouldBeBlocked() {
 		String token = JfinalHttp.get(port, "/loginPlain");
 		JfinalHttp.Resp resp = JfinalHttp.exchange(port, "/role", token);
+		Assertions.assertEquals(200, resp.status);
 		Assertions.assertNotEquals("role-ok", resp.body);
-		Assertions.assertNotEquals(200, Integer.valueOf(resp.status));
+		Assertions.assertTrue(resp.body.contains("无此角色"));
 	}
 
 	/** 未登记过的 controller 路径应该走 404 */

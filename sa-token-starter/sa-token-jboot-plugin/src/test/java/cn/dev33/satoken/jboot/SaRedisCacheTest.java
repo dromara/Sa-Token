@@ -182,14 +182,14 @@ public class SaRedisCacheTest {
         Assertions.assertNull(cache.getNames());
     }
 
-    /** scan 一轮就结束时，getKeys 应该把 key 去掉前 3 个字符 */
+    /** scan 一轮就结束时，getKeys 应该返回完整 key */
     @Test
     public void getKeys_completeInOneScan() {
         when(jedis.scan(eq("0"), any(ScanParams.class)))
                 .thenReturn(new ScanResult<String>("0", Arrays.asList("satoken:a")));
         @SuppressWarnings("rawtypes")
         List keys = cache.getKeys("n");
-        Assertions.assertEquals(Collections.singletonList("oken:a"), keys);
+        Assertions.assertEquals(Collections.singletonList("satoken:a"), keys);
     }
 
     /** scan 结果是空列表时，getKeys 应该拿到空列表 */
@@ -215,16 +215,16 @@ public class SaRedisCacheTest {
                 .thenReturn(new ScanResult<String>("5", Arrays.asList("abcdef")));
         when(jedis.scan(eq("5"), any(ScanParams.class)))
                 .thenReturn(new ScanResult<String>("0", Collections.<String>emptyList()));
-        Assertions.assertEquals(Collections.singletonList("def"), cache.getKeys("n"));
+        Assertions.assertEquals(Collections.singletonList("abcdef"), cache.getKeys("n"));
     }
 
-    /** 连接失败时，只塞了 JedisPool 的 cache 现在会 NPE（config 是 null） */
+    /** 连接失败时，只塞了 JedisPool 的 cache 应该把原连接异常抛出去 */
     @Test
-    public void getJedis_connectionFail_withoutConfig_shouldNpe() {
+    public void getJedis_connectionFail_withoutConfig_shouldThrowOriginal() {
         FakeJedisPool failing = new FakeJedisPool(new JedisConnectionException("down"));
         SaRedisCache failingCache = new SaRedisCache(failing);
         try {
-            Assertions.assertThrows(NullPointerException.class, failingCache::getJedis);
+            Assertions.assertThrows(JedisConnectionException.class, failingCache::getJedis);
         } finally {
             failing.close();
         }

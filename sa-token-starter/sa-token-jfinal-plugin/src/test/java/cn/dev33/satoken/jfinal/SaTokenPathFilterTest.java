@@ -15,15 +15,28 @@
  */
 package cn.dev33.satoken.jfinal;
 
+import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.jfinal.testsupport.JfinalTestHelper;
+import cn.dev33.satoken.test.SaTokenTest;
+import com.jfinal.aop.Invocation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * {@link SaTokenPathFilter} 路由配置与钩子函数测试
  */
+@SaTokenTest
 public class SaTokenPathFilterTest {
 
     /** 链式配置 include/exclude 和钩子函数应该能正常读写 */
@@ -66,5 +79,70 @@ public class SaTokenPathFilterTest {
         SaTokenPathFilter filter = new SaTokenPathFilter();
         filter.beforeAuth.run(null);
         filter.auth.run(null);
+    }
+
+    /** include 命中且 auth 通过时应该继续 invoke */
+    @Test
+    public void intercept_authPass_shouldInvoke() {
+        Invocation invocation = mock(Invocation.class);
+        HttpServletRequest request = JfinalTestHelper.mockRequest("/api/user");
+        HttpServletResponse response = JfinalTestHelper.mockResponse();
+        SaTokenPathFilter filter = new SaTokenPathFilter().addInclude("/api/**");
+        JfinalTestHelper.withHeldController(request, response, () -> filter.intercept(invocation));
+        verify(invocation).invoke();
+    }
+
+    /** auth 抛 BackResultException 时应该写回文案，不再 invoke */
+    @Test
+    public void intercept_backResult_shouldRenderAndStop() {
+        Invocation invocation = mock(Invocation.class);
+        HttpServletRequest request = JfinalTestHelper.mockRequest("/api/user");
+        HttpServletResponse response = JfinalTestHelper.mockResponse();
+        SaTokenPathFilter filter = new SaTokenPathFilter()
+                .addInclude("/**")
+                .setAuth(r -> {
+                    throw new BackResultException("blocked");
+                });
+        JfinalTestHelper.withHeldController(request, response, () -> {
+            when(invocation.getController()).thenReturn(SaControllerContext.get());
+            filter.intercept(invocation);
+            verify(SaControllerContext.get()).renderText("blocked");
+        });
+        verify(invocation, never()).invoke();
+    }
+
+    /** StopMatchException 应该继续 invoke */
+    @Test
+    public void intercept_stopMatch_shouldInvoke() {
+        Invocation invocation = mock(Invocation.class);
+        HttpServletRequest request = JfinalTestHelper.mockRequest("/api/user");
+        HttpServletResponse response = JfinalTestHelper.mockResponse();
+        SaTokenPathFilter filter = new SaTokenPathFilter()
+                .addInclude("/**")
+                .setAuth(r -> {
+                    throw new StopMatchException();
+                });
+        JfinalTestHelper.withHeldController(request, response, () -> filter.intercept(invocation));
+        verify(invocation).invoke();
+    }
+
+    /** 自定义 error 策略应该把文案写回 */
+    @Test
+    public void intercept_customError_shouldRender() {
+        Invocation invocation = mock(Invocation.class);
+        HttpServletRequest request = JfinalTestHelper.mockRequest("/api/user");
+        HttpServletResponse response = JfinalTestHelper.mockResponse();
+        SaTokenPathFilter filter = new SaTokenPathFilter()
+                .addInclude("/**")
+                .setAuth(r -> {
+                    throw new RuntimeException("boom");
+                })
+                .setError(e -> "err:" + e.getMessage());
+        JfinalTestHelper.withHeldController(request, response, () -> {
+            when(invocation.getController()).thenReturn(SaControllerContext.get());
+            filter.intercept(invocation);
+            verify(SaControllerContext.get()).renderText("err:boom");
+        });
+        verify(invocation, never()).invoke();
     }
 }

@@ -260,10 +260,10 @@ public class SaTokenDaoRedisTest {
         dao.close(null);
     }
 
-    /** 新建出来的 dao，isInit 默认就是 false */
+    /** 新建出来的 dao，isInit 应该已经是 true */
     @Test
-    public void isInit_defaultFalse() {
-        Assertions.assertFalse(dao.isInit);
+    public void isInit_trueAfterConstruct() {
+        Assertions.assertTrue(dao.isInit);
     }
 
     /** 给 Jedis mock 接上本地 Map，模拟一份最小 Redis */
