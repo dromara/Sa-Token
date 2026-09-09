@@ -25,11 +25,6 @@
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-redis-template</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 </project>

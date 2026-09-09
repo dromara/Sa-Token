@@ -42,11 +42,6 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- OIDC 单测签发 id_token：jwt 是 optional，把 hutool-jwt 拉到 test 类路径 -->
 		<dependency>
 			<groupId>cn.hutool</groupId>

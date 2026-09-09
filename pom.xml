@@ -75,7 +75,17 @@
 	
 	<!-- 仓库依赖 -->
 	<dependencies>
-		
+		<!--
+			子模块单测默认带上 JUnit，避免每个子模块 pom.xml 再抄一遍。
+			scope=test，不会传给引用本仓库 jar 的用户。
+			sa-token-bom / sa-token-dependencies 不以本模块为 parent，不会被带上；
+			special-dependencies 等聚合 POM 会带上，发布出去也只是 scope=test，可接受。
+		-->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
 	<dependencyManagement>
