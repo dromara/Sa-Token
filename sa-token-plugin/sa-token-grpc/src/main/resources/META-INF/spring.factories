@@ -1,5 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   cn.dev33.satoken.context.grpc.interceptor.SaTokenGrpcClientInterceptor,\
   cn.dev33.satoken.context.grpc.interceptor.SaTokenContextGrpcServerInterceptor,\
-  cn.dev33.satoken.context.grpc.interceptor.SaTokenGrpcServerInterceptor,\
-  cn.dev33.satoken.context.grpc.SaTokenSecondContextCreatorForGrpc
+  cn.dev33.satoken.context.grpc.interceptor.SaTokenGrpcServerInterceptor

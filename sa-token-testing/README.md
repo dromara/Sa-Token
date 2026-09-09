@@ -153,7 +153,7 @@ Dubbo3 Filter 集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provid
 
 ### sa-token-integration-grpc
 
-gRPC 拦截器集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provider，本机 gRPC 端口；Same-Token；不起 Nacos / Redis）。当前 Provider 业务方法会因为拦截器提前 `clearContext` 而 `UNKNOWN`，用例按现状断言，修完后应对齐 dubbo 那 4 条：
+gRPC 拦截器集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provider，本机 gRPC 端口；Same-Token；不起 Nacos / Redis）。会话下传 / 回传、未登录匿名，对齐 dubbo 那 4 条：
 
 - sa-token-grpc
 

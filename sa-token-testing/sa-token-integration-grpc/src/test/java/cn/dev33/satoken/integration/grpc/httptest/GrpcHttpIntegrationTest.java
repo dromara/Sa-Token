@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Map;
 
 /**
- * gRPC 真 RPC：本机端口，Same-Token 开着。Provider 业务方法目前会因为上下文被提前清掉而 UNKNOWN。
+ * gRPC 真 RPC：本机端口，Same-Token 开着。会话下传 / 回传对齐 Dubbo。
  */
 @SpringBootTest(classes = IntegrationGrpcApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GrpcHttpIntegrationTest {
@@ -34,35 +34,41 @@ public class GrpcHttpIntegrationTest {
 	@Autowired
 	TestRestTemplate rest;
 
-	/** Consumer 登录后再 RPC，Provider 业务方法目前会报上下文尚未初始化 */
+	/** Consumer 登录后再 RPC，Provider 应该已经是登录态 */
 	@Test
-	public void consumerLogin_currentlyProviderContextMissing() {
-		Map<String, Object> body = getRpcUnknown("/consumer-login-then-rpc");
-		Assertions.assertEquals(500, ((Number) body.get("code")).intValue());
+	public void consumerLogin_reachesProvider() {
+		Map<String, Object> body = getOk("/consumer-login-then-rpc");
+		Map<?, ?> data = (Map<?, ?>) body.get("data");
+		Assertions.assertEquals(Boolean.TRUE, data.get("login"));
+		Assertions.assertEquals("10001", String.valueOf(data.get("loginId")));
+		Assertions.assertNotNull(data.get("token"));
 	}
 
-	/** Provider 登录目前也走不到业务方法，Consumer 拿不到回传 token */
+	/** Provider 登录后，Consumer 应该能拿到回传 token */
 	@Test
-	public void providerLogin_currentlyProviderContextMissing() {
-		Map<String, Object> body = getRpcUnknown("/provider-login-then-check");
-		Assertions.assertEquals(500, ((Number) body.get("code")).intValue());
+	public void providerLogin_writesBackToConsumer() {
+		Map<String, Object> body = getOk("/provider-login-then-check");
+		Assertions.assertEquals(Boolean.TRUE, body.get("consumerLogin"));
+		Assertions.assertEquals("10002", String.valueOf(body.get("consumerLoginId")));
+		Assertions.assertNotNull(body.get("consumerToken"));
 	}
 
-	/** 没登录直接 RPC，Provider 读会话一样会炸 */
+	/** 没登录直接 RPC，Provider 不应该是登录态 */
 	@Test
-	public void noLogin_currentlyProviderContextMissing() {
-		Map<String, Object> body = getRpcUnknown("/rpc-without-login");
-		Assertions.assertEquals(500, ((Number) body.get("code")).intValue());
+	public void noLogin_providerStillAnonymous() {
+		Map<String, Object> body = getOk("/rpc-without-login");
+		Map<?, ?> data = (Map<?, ?>) body.get("data");
+		Assertions.assertEquals(Boolean.FALSE, data.get("login"));
+		Assertions.assertNull(data.get("loginId"));
 	}
 
-	/** Consumer 登录后就算 RPC 炸了，自己这边会话还在 */
+	/** Consumer 登录后 RPC，自己这边会话还在 */
 	@Test
-	public void consumerLogin_staysOnConsumer_evenIfRpcFails() {
+	public void consumerLogin_staysOnConsumer() {
 		Map<String, Object> body = getOk("/consumer-still-login");
 		Assertions.assertEquals(Boolean.TRUE, body.get("consumerLogin"));
 		Assertions.assertEquals("10003", String.valueOf(body.get("consumerLoginId")));
-		Assertions.assertEquals(Boolean.FALSE, body.get("rpcOk"));
-		Assertions.assertEquals("UNKNOWN", body.get("rpcError"));
+		Assertions.assertEquals(Boolean.TRUE, body.get("rpcOk"));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -72,17 +78,6 @@ public class GrpcHttpIntegrationTest {
 		Map<String, Object> body = resp.getBody();
 		Assertions.assertNotNull(body);
 		Assertions.assertEquals(200, ((Number) body.get("code")).intValue(), String.valueOf(body));
-		return body;
-	}
-
-	@SuppressWarnings("unchecked")
-	private Map<String, Object> getRpcUnknown(String path) {
-		ResponseEntity<Map> resp = rest.getForEntity(path, Map.class);
-		Assertions.assertEquals(200, resp.getStatusCodeValue());
-		Map<String, Object> body = resp.getBody();
-		Assertions.assertNotNull(body);
-		Assertions.assertEquals(500, ((Number) body.get("code")).intValue(), String.valueOf(body));
-		Assertions.assertEquals("UNKNOWN", body.get("msg"));
 		return body;
 	}
 

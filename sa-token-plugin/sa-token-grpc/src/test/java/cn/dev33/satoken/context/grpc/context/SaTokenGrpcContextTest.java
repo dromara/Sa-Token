@@ -43,10 +43,12 @@ public class SaTokenGrpcContextTest {
 		Assertions.assertFalse(SaTokenGrpcContext.isNotNull());
 	}
 
-	/** 没 create 时 get 目前会 NPE */
+	/** 没 create 时 set / remove 也不该 NPE */
 	@Test
-	public void get_withoutCreate_currentlyNpe() {
-		Assertions.assertThrows(NullPointerException.class, () -> SaTokenGrpcContext.get("k"));
+	public void setRemove_withoutCreate_shouldNoop() {
+		SaTokenGrpcContext.set("k", "v");
+		SaTokenGrpcContext.removeKey("k");
+		Assertions.assertNull(SaTokenGrpcContext.get("k"));
 	}
 
 	/** create 挂上之后应该能 set / get / delete，getContext 就是那份 Map */

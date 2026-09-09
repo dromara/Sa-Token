@@ -18,7 +18,7 @@ package cn.dev33.satoken.context.grpc.interceptor;
 import org.springframework.core.Ordered;
 
 import cn.dev33.satoken.SaManager;
-import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
+import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.grpc.constants.GrpcContextConstants;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
@@ -55,11 +55,12 @@ public class SaTokenGrpcClientInterceptor implements ClientInterceptor, Ordered 
                     headers.put(GrpcContextConstants.SA_SAME_TOKEN, SaSameUtil.getToken());
                 }
 
-                // 调用前，传递会话Token
-                String tokenValue = StpUtil.getTokenValue();
-                if (SaFoxUtil.isNotEmpty(tokenValue)
-                        && SaManager.getSaTokenContext() != SaTokenContextDefaultImpl.defaultContext) {
-                    headers.put(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX, tokenValue);
+                // 有 Web 上下文时才下传会话 Token
+                if (SaHolder.getContext().isValid()) {
+                    String tokenValue = StpUtil.getTokenValue();
+                    if (SaFoxUtil.isNotEmpty(tokenValue)) {
+                        headers.put(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX, tokenValue);
+                    }
                 }
 
                 super.start(new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(responseListener) {
@@ -68,7 +69,9 @@ public class SaTokenGrpcClientInterceptor implements ClientInterceptor, Ordered 
                      */
                     @Override
                     public void onClose(Status status, Metadata responseHeader) {
-                        StpUtil.setTokenValue(responseHeader.get(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX));
+                        if (SaHolder.getContext().isValid()) {
+                            StpUtil.setTokenValue(responseHeader.get(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX));
+                        }
                         super.onClose(status, responseHeader);
                     }
                 }, headers);

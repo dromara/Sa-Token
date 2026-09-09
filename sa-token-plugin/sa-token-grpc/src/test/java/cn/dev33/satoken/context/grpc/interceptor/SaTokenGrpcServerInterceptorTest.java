@@ -61,16 +61,18 @@ public class SaTokenGrpcServerInterceptorTest {
 			return GrpcTestSupport.emptyServerListener();
 		});
 		Assertions.assertEquals(Boolean.TRUE, validDuringCall.get());
-		Assertions.assertFalse(SaHolder.getContext().isValid());
+		Assertions.assertTrue(SaHolder.getContext().isValid());
 	}
 
-	/** interceptCall 返回之后目前会把上下文清掉（业务方法其实还没跑） */
+	/** interceptCall 返回之后上下文还在，Listener 结束时才清 */
 	@Test
-	public void interceptCall_clearsContextBeforeListenerRuns() {
+	public void interceptCall_keepsContextUntilComplete() {
 		SaManager.getConfig().setCheckSameToken(false);
 		ServerCall.Listener<String> listener = chainIntercept(new RecordingServerCall(), new Metadata(),
 				(call, headers) -> GrpcTestSupport.emptyServerListener());
 		Assertions.assertNotNull(listener);
+		Assertions.assertTrue(SaHolder.getContext().isValid());
+		listener.onComplete();
 		Assertions.assertFalse(SaHolder.getContext().isValid());
 	}
 

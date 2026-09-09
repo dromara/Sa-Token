@@ -19,7 +19,6 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.grpc.constants.GrpcContextConstants;
 import cn.dev33.satoken.context.grpc.support.GrpcTestSupport;
 import cn.dev33.satoken.context.grpc.support.GrpcTestSupport.RecordingChannel;
-import cn.dev33.satoken.exception.SaTokenContextException;
 import cn.dev33.satoken.same.SaSameUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.test.SaTokenTest;
@@ -52,14 +51,26 @@ public class SaTokenGrpcClientInterceptorTest {
 		Assertions.assertEquals(Ordered.HIGHEST_PRECEDENCE, interceptor.getOrder());
 	}
 
-	/** 没 Web 上下文时 getTokenValue 目前会炸，调用发不出去 */
+	/** 没 Web 上下文时不应该读会话，调用照样发出去 */
 	@Test
-	public void noContext_currentlyThrows() {
+	public void noContext_skipsSessionToken() {
 		RecordingChannel channel = new RecordingChannel();
 		ClientCall<String, String> call = interceptor.interceptCall(GrpcTestSupport.unary(), CallOptions.DEFAULT,
 				channel);
-		Assertions.assertThrows(SaTokenContextException.class,
-				() -> call.start(GrpcTestSupport.emptyClientListener(), new Metadata()));
+		call.start(GrpcTestSupport.emptyClientListener(), new Metadata());
+		Assertions.assertNull(channel.sentHeaders.get().get(GrpcContextConstants.SA_JUST_CREATED_NOT_PREFIX));
+	}
+
+	/** 没 Web 上下文但开了 checkSameToken 时，Same-Token 仍应下传 */
+	@Test
+	public void noContext_stillAttachesSameToken() {
+		SaManager.getConfig().setCheckSameToken(true);
+		RecordingChannel channel = new RecordingChannel();
+		ClientCall<String, String> call = interceptor.interceptCall(GrpcTestSupport.unary(), CallOptions.DEFAULT,
+				channel);
+		call.start(GrpcTestSupport.emptyClientListener(), new Metadata());
+		Assertions.assertEquals(SaSameUtil.getToken(),
+				channel.sentHeaders.get().get(GrpcContextConstants.SA_SAME_TOKEN));
 	}
 
 	/** 开了 checkSameToken 且有上下文时，应该带上 Same-Token */

@@ -34,15 +34,22 @@ public class SaTokenGrpcContext {
             Context.key("sa-token-context");
 
     public static Object get(String key) {
-        return SA_TOKEN_CONTEXT_KEY.get().get(key);
+        Map<String, Object> ctx = SA_TOKEN_CONTEXT_KEY.get();
+        return ctx == null ? null : ctx.get(key);
     }
 
     public static void set(String key, Object value) {
-        SA_TOKEN_CONTEXT_KEY.get().put(key, value);
+        Map<String, Object> ctx = SA_TOKEN_CONTEXT_KEY.get();
+        if (ctx != null) {
+            ctx.put(key, value);
+        }
     }
 
     public static void removeKey(String key) {
-        SA_TOKEN_CONTEXT_KEY.get().remove(key);
+        Map<String, Object> ctx = SA_TOKEN_CONTEXT_KEY.get();
+        if (ctx != null) {
+            ctx.remove(key);
+        }
     }
 
     public static Map<String, Object> getContext() {

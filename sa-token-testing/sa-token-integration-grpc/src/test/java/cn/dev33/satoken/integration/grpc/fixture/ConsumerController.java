@@ -57,7 +57,7 @@ public class ConsumerController {
 		return SaResult.data(snapshot("no-login"));
 	}
 
-	/** Consumer 登录后 RPC，自己这边会话还在；RPC 目前会炸，要接住好把会话断言出来 */
+	/** Consumer 登录后 RPC，自己这边会话还在 */
 	@RequestMapping("/consumer-still-login")
 	public SaResult consumerStillLogin() {
 		StpUtil.login(10003);

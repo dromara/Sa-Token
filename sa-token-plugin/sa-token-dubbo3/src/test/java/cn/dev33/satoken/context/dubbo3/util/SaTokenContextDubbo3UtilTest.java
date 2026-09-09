@@ -54,12 +54,12 @@ public class SaTokenContextDubbo3UtilTest {
 		Assertions.assertTrue(SaHolder.getStorage() instanceof SaStorageForDubbo3);
 	}
 
-	/** 传入的 rpcContext 参数目前没用上，实际总是读 RpcContext.getServiceContext() */
+	/** setContext 应该用传入的 rpcContext 包装 */
 	@Test
-	public void setContext_ignoresPassedArgument() {
-		SaTokenContextDubbo3Util.setContext(null);
-		Assertions.assertTrue(SaHolder.getRequest() instanceof SaRequestForDubbo3);
-		Assertions.assertSame(RpcContext.getServiceContext(), SaHolder.getRequest().getSource());
+	public void setContext_usesPassedArgument() {
+		RpcContext ctx = RpcContext.getServiceContext();
+		SaTokenContextDubbo3Util.setContext(ctx);
+		Assertions.assertSame(ctx, SaHolder.getRequest().getSource());
 	}
 
 	/** clearContext 之后 isValid 应该是 false */
