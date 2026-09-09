@@ -122,11 +122,10 @@ public class FilterHttpTest {
 		Assertions.assertEquals("open", LoveqqHttp.get(port, "/open"));
 	}
 
-	/** forward 适配应该转到公开接口或发出重定向 */
+	/** forward 应该服务端转到公开接口，返回业务文案而不是重定向 */
 	@Test
 	public void forward_shouldReachOpen() {
-		String body = LoveqqHttp.get(port, "/fwd");
-		Assertions.assertTrue("open".equals(body) || body.contains("/open") || body.isEmpty());
+		Assertions.assertEquals("open", LoveqqHttp.get(port, "/fwd"));
 	}
 
 	/** Filter auth 抛 BackResultException 时应该把消息写回响应 */

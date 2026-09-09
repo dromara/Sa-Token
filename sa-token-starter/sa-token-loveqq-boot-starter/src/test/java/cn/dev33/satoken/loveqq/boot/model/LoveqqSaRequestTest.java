@@ -129,15 +129,16 @@ public class LoveqqSaRequestTest {
 		Assertions.assertEquals("http://localhost/api/user", saRequest.getUrl());
 	}
 
-	/** forward 应该把底层响应的重定向结果返回回来 */
+	/** forward 应该走 sendForward，而不是 sendRedirect */
 	@Test
-	public void forward_shouldRedirectOnResponse() {
+	public void forward_shouldSendForwardNotRedirect() {
 		TestServerRequest request = LoveqqTestHelper.newGetRequest("/fwd");
 		TestServerResponse response = LoveqqTestHelper.newResponse();
 		LoveqqTestHelper.withSaContext(request, response, () -> {
 			Object result = new LoveqqSaRequest(request).forward("/open");
 			Assertions.assertEquals("/open", result);
-			Assertions.assertEquals("/open", response.redirect());
+			Assertions.assertEquals("/open", response.forward());
+			Assertions.assertNull(response.redirect());
 		});
 	}
 

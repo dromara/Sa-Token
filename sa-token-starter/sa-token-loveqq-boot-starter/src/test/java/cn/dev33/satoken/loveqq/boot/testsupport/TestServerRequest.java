@@ -16,6 +16,7 @@
 package cn.dev33.satoken.loveqq.boot.testsupport;
 
 import com.kfyty.loveqq.framework.web.core.http.ServerRequest;
+import com.kfyty.loveqq.framework.web.core.http.ServerRequest.ServerRequestBuilder;
 import com.kfyty.loveqq.framework.web.core.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -220,6 +221,67 @@ public class TestServerRequest implements ServerRequest {
 	@Override
 	public Locale getLocale() {
 		return Locale.getDefault();
+	}
+
+	@Override
+	public ServerRequestBuilder mutate() {
+		TestServerRequest copy = new TestServerRequest();
+		copy.scheme = this.scheme;
+		copy.host = this.host;
+		copy.serverPort = this.serverPort;
+		copy.method = this.method;
+		copy.requestURI = this.requestURI;
+		copy.requestURL = this.requestURL;
+		copy.contentType = this.contentType;
+		copy.parameters.putAll(this.parameters);
+		copy.headers.putAll(this.headers);
+		copy.cookies.addAll(this.cookies);
+		copy.attributes.putAll(this.attributes);
+		return new ServerRequestBuilder() {
+			private String path = copy.requestURI;
+
+			@Override
+			public ServerRequestBuilder path(String path) {
+				this.path = path;
+				return this;
+			}
+
+			@Override
+			public ServerRequestBuilder headers(String name, String... values) {
+				return this;
+			}
+
+			@Override
+			public ServerRequestBuilder headers(boolean replace, String name, String... values) {
+				return this;
+			}
+
+			@Override
+			public ServerRequestBuilder body(String body) {
+				return this;
+			}
+
+			@Override
+			public ServerRequestBuilder body(byte[] body) {
+				return this;
+			}
+
+			@Override
+			public ServerRequestBuilder body(InputStream body) {
+				return this;
+			}
+
+			@Override
+			public ServerRequestBuilder body(reactor.core.publisher.Flux<io.netty.buffer.ByteBuf> body) {
+				return this;
+			}
+
+			@Override
+			public ServerRequest build() {
+				copy.path(path);
+				return copy;
+			}
+		};
 	}
 
 	@Override

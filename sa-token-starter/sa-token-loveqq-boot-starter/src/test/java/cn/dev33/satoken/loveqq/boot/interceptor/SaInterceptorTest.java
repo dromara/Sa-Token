@@ -17,7 +17,6 @@ package cn.dev33.satoken.loveqq.boot.interceptor;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.exception.BackResultException;
-import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.loveqq.boot.testsupport.LoveqqTestHelper;
 import cn.dev33.satoken.loveqq.boot.testsupport.TestServerRequest;
@@ -125,15 +124,16 @@ public class SaInterceptorTest {
 		Assertions.assertTrue(authCalled.get());
 	}
 
-	/** 开着注解鉴权时，没登录访问带 @SaCheckLogin 的方法应该抛未登录 */
+	/** 开着注解鉴权时，没登录访问带 @SaCheckLogin 的方法应该写回异常并拦住 */
 	@Test
 	public void preHandle_checkLoginAnnotation_notLogin() throws Exception {
 		Method method = AnnoController.class.getDeclaredMethod("loginRequired");
 		HandlerMethodRoute route = HandlerMethodRoute.create("/anno", RequestMethod.GET, new Lazy<Object>(AnnoController::new), method);
 		SaInterceptor interceptor = new SaInterceptor().setAuth(h -> {});
+		TestServerResponse response = LoveqqTestHelper.newResponse();
 
-		Assertions.assertThrows(NotLoginException.class, () ->
-				interceptor.preHandle(LoveqqTestHelper.newGetRequest("/anno"), LoveqqTestHelper.newResponse(), route));
+		Assertions.assertFalse(interceptor.preHandle(LoveqqTestHelper.newGetRequest("/anno"), response, route));
+		Assertions.assertFalse(response.bodyText().isEmpty());
 	}
 
 	/** 开着注解鉴权时，没有鉴权注解的方法应该直接过 */

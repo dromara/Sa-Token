@@ -72,9 +72,9 @@ public class InjectConfig {
 		return new SaTokenPluginHolder();
 	}
 
-	/** 方法名避开 SaBeanRegister.saTokenDao，LoveQQ 同名条件 Bean 会直接冲突 */
+	/** 方法名避开自动配置里的 saTokenDaoForRedisson */
 	@Bean
-	public SaTokenDaoDefaultImpl customSaTokenDao() {
+	public SaTokenDaoDefaultImpl saTokenDao() {
 		return new SaTokenDaoDefaultImpl();
 	}
 

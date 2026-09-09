@@ -61,11 +61,12 @@ public class InterceptorHttpTest {
 		Assertions.assertEquals("10001", LoveqqHttp.get(port, "/user", token));
 	}
 
-	/** 未登录访问业务接口应该被拦截器拦住（异常未转成响应体时也不会返回业务数据） */
+	/** 未登录访问业务接口应该被拦截器拦住并写回文案 */
 	@Test
 	public void user_withoutLogin_shouldBeBlocked() {
 		String body = LoveqqHttp.get(port, "/user");
 		Assertions.assertNotEquals("10001", body);
+		Assertions.assertFalse(body.isEmpty());
 	}
 
 	/** exclude 的公开路径未登录也应该放行 */

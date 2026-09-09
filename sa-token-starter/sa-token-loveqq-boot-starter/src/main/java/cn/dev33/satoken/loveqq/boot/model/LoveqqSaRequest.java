@@ -111,6 +111,6 @@ public class LoveqqSaRequest implements SaRequest {
     @Override
     public Object forward(String path) {
         ServerResponse response = (ServerResponse) SaManager.getSaTokenContext().getResponse().getSource();
-        return response.sendRedirect(path);
+        return response.sendForward(path);
     }
 }

@@ -71,6 +71,25 @@ public class SaReactorHolderTest {
 		Assertions.assertNotNull(new SaReactorHolder());
 	}
 
+	/** LoveQQ 1.1.2 的 netty 包名 key 也应该能 sync */
+	@Test
+	public void sync_nettyPackageKeys_shouldWork() {
+		TestServerRequest request = LoveqqTestHelper.newGetRequest("/rx-netty");
+		TestServerResponse response = LoveqqTestHelper.newResponse();
+		Context ctx = Context.of(
+				"com.kfyty.loveqq.framework.web.mvc.netty.request.support.RequestContextHolder.REQUEST_CONTEXT_ATTRIBUTE",
+				request)
+				.put("com.kfyty.loveqq.framework.web.mvc.netty.request.support.ResponseContextHolder.RESPONSE_CONTEXT_ATTRIBUTE",
+						response);
+
+		String value = SaReactorHolder.sync(() -> {
+			Assertions.assertEquals("/rx-netty", SaHolder.getRequest().getRequestPath());
+			return "ok";
+		}).contextWrite(ctx).block();
+
+		Assertions.assertEquals("ok", value);
+	}
+
 	private void ServerRequestHolderAsserts(TestServerRequest request, TestServerResponse response, Context ctx) {
 		Assertions.assertSame(request, SaReactorHolder.getRequest().contextWrite(ctx).block());
 		Assertions.assertSame(response, SaReactorHolder.getResponse().contextWrite(ctx).block());

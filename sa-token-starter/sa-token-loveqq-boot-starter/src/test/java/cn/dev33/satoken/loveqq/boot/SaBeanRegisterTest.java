@@ -61,7 +61,7 @@ public class SaBeanRegisterTest {
 	@Test
 	public void saTokenDao_withMockRedisson() {
 		RedissonClient redisson = Mockito.mock(RedissonClient.class);
-		SaTokenDao dao = new SaBeanRegister().saTokenDao(redisson);
+		SaTokenDao dao = new SaBeanRegister().saTokenDaoForRedisson(redisson);
 		Assertions.assertTrue(dao instanceof SaTokenDaoForRedisson);
 	}
 

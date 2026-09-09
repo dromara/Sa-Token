@@ -79,7 +79,7 @@ public class SaBeanRegister {
      */
     @Bean
     @ConditionalOnBean(RedissonClient.class)
-    public SaTokenDao saTokenDao(RedissonClient redisson) {
+    public SaTokenDao saTokenDaoForRedisson(RedissonClient redisson) {
         return new SaTokenDaoForRedisson(redisson);
     }
 
