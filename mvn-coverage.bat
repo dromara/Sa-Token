@@ -34,10 +34,12 @@ rem copy log by bytes; do not use Tee-Object, it strips ANSI.
 @>> "%TEE_PS%" echo } finally { $fs.Dispose() }
 
 rem clean: IDE may write broken class stubs into target; skip compile otherwise.
+@for /f %%I in ('powershell -NoProfile -Command "(Get-Date).Ticks"') do set "T0=%%I"
 @call mvn -Dstyle.color=always clean verify -pl sa-token-testing/sa-token-coverage -am 2>&1 | powershell -NoProfile -ExecutionPolicy Bypass -File "%TEE_PS%"
 
 rem mvn.cmd turns echo back on after a pipe; keep @ on later lines.
 @echo off
+@for /f "delims=" %%I in ('powershell -NoProfile -Command "$t=[TimeSpan]::FromTicks((Get-Date).Ticks-$env:T0); $m=[int][Math]::Floor($t.TotalMinutes); '{0} min {1} s' -f $m,$t.Seconds"') do set "ELAPSED=%%I"
 @echo.
 @echo.
 @echo ----------- coverage report -----------
@@ -50,5 +52,6 @@ rem mvn.cmd turns echo back on after a pipe; keep @ on later lines.
 @echo.
 @echo 本次构建日志:
 @echo   %LOG%
+@echo 本轮构建耗时: %ELAPSED%
 @echo.
 @pause
