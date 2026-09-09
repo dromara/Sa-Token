@@ -2,6 +2,36 @@
 window.SA_TOKEN_BLOG_COMMUNITY = [
   {
     "platform": "公众号",
+    "title": "Spring Boot 集成 Sa-Token 实现高可用权限认证：登录鉴权、动态路由权限与接口防重放实战",
+    "url": "https://mp.weixin.qq.com/s/xCFV-6boZM3y-IP94-rFBw",
+    "date": "2026-09-09"
+  },
+  {
+    "platform": "公众号",
+    "title": "从 JWT 迁移到 Sa-Token：踩过的坑和迁移思路",
+    "url": "https://mp.weixin.qq.com/s/F9uiOeHnW4GbjLEs6s-MOg",
+    "date": "2026-09-07"
+  },
+  {
+    "platform": "CSDN",
+    "title": "Spring Boot 3.2.5整合Sa-Token：轻量级认证鉴权实战",
+    "url": "https://blog.csdn.net/weixin_30768881/article/details/164565863",
+    "date": "2026-09-07"
+  },
+  {
+    "platform": "公众号",
+    "title": "Spring Security配了三天还在调FilterChain？我把权限系统换成了sa-token",
+    "url": "https://mp.weixin.qq.com/s/lmZfeNC2IJgCNYdhZVlFxQ",
+    "date": "2026-09-03"
+  },
+  {
+    "platform": "公众号",
+    "title": "国产权限框架Sa-Token深度拆解：StpLogic引擎与跨框架抽象，如何终结配置地狱",
+    "url": "https://mp.weixin.qq.com/s/58aq9UbjTy3QWmYxyCUJvQ",
+    "date": "2026-08-31"
+  },
+  {
+    "platform": "公众号",
     "title": "别再无脑上 Spring Security 了，Sa-Token 不香吗？",
     "url": "https://mp.weixin.qq.com/s/h8E4P566d4-Qv2yTIYmC3A",
     "date": "2026-08-28"
