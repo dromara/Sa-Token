@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sa-Token 仓库依赖关系图</title>
+<style>
+:root {
+  --ink: #1f1e1b;
+  --muted: #6e6b64;
+  --line: #c9c4b8;
+  --paper: #f7f5f0;
+  --p: #b42318;
+  --i: #175cd3;
+  --bom: #e3e0f3;
+  --agg: #f3e2c4;
+  --jar: #dde5ee;
+  --test: #d8eadf;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background-color: #e8e8e8;
+  background-image:
+    linear-gradient(#ddd 1px, transparent 1px),
+    linear-gradient(90deg, #ddd 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink);
+  font: 13px/1.4 "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 16px 28px 0;
+}
+h1 { margin: 0; font-size: 15px; font-weight: 650; }
+.leg { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 12px; }
+.leg b { color: var(--ink); font-weight: 600; }
+.sw { width: 22px; border-top: 2px solid; display: inline-block; vertical-align: middle; margin-right: 4px; }
+.sw.p { border-color: var(--p); }
+.sw.i { border-color: var(--i); border-top-style: dashed; }
+.chip { padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+.chip.bom { background: var(--bom); }
+.chip.agg { background: var(--agg); }
+.chip.jar { background: var(--jar); }
+.chip.test { background: var(--test); }
+h2 {
+  margin: 8px 28px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px 28px;
+}
+.flow { display: flex; align-items: flex-start; }
+.left {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 40px 36px 40px;
+  align-items: center;
+}
+.node {
+  white-space: nowrap;
+  height: 40px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: ui-monospace, Consolas, "Sarasa Mono SC", monospace;
+  font-size: 13px;
+}
+.node.pack { height: 88px; }
+.node.bom { background: var(--bom); }
+.node.agg { background: var(--agg); }
+.node.jar { background: var(--jar); }
+.node.test { background: var(--test); }
+.n-parent { grid-column: 3; grid-row: 1; width: 100%; }
+.n-bom { grid-column: 1; grid-row: 3; }
+.n-deps { grid-column: 3; grid-row: 3; width: 100%; }
+.arr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 11px;
+  gap: 3px;
+}
+.arr i {
+  display: block;
+  width: 40px;
+  height: 0;
+  border-top: 2px solid var(--p);
+  position: relative;
+}
+.arr i::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -5px;
+  border: 5px solid transparent;
+  border-left: 7px solid var(--p);
+  border-right: 0;
+}
+.a-bom { grid-column: 2; grid-row: 3; }
+.a-kids { height: 40px; }
+.v-import {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--i);
+  font-size: 11px;
+}
+.v-import i {
+  height: 28px;
+  width: 0;
+  border-left: 2px dashed var(--i);
+  position: relative;
+}
+.v-import i::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -5px;
+  border: 5px solid transparent;
+  border-bottom: 7px solid var(--i);
+  border-top: 0;
+}
+.fan { display: flex; align-items: flex-start; }
+.spine {
+  width: 16px;
+  align-self: stretch;
+  position: relative;
+  flex-shrink: 0;
+}
+.spine::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 20px;
+  bottom: 20px;
+  border-left: 2px solid var(--p);
+}
+.fan.main > .spine::before { bottom: 116px; }
+.kids {
+  display: grid;
+  grid-template-columns: 14px auto 56px 16px 14px 1fr;
+  grid-template-rows: 40px 40px 40px 40px 88px 88px 40px 88px;
+  column-gap: 0;
+  row-gap: 8px;
+  align-items: center;
+}
+.tick {
+  width: 14px;
+  height: 2px;
+  background: var(--p);
+}
+.kids > .node { width: 100%; }
+.arr.long {
+  grid-column: 3 / 6;
+  width: 100%;
+}
+.arr.long i { width: calc(100% - 16px); }
+.s-tick { grid-column: 1; grid-row: 1; }
+.s-name { grid-column: 2; grid-row: 1; }
+.s-arr { grid-column: 3; grid-row: 1; }
+.s-spine { grid-column: 4; grid-row: 1 / 4; }
+.s-t1 { grid-column: 5; grid-row: 1; }
+.s-b2 { grid-column: 6; grid-row: 1; }
+.s-t2 { grid-column: 5; grid-row: 2; }
+.s-b3 { grid-column: 6; grid-row: 2; }
+.s-t3 { grid-column: 5; grid-row: 3; }
+.s-b4 { grid-column: 6; grid-row: 3; }
+.c-tick { grid-column: 1; grid-row: 4; }
+.c-name { grid-column: 2; grid-row: 4; }
+.p-tick { grid-column: 1; grid-row: 5; }
+.p-name { grid-column: 2; grid-row: 5; }
+.p-arr { grid-row: 5; }
+.p-pack { grid-column: 6; grid-row: 5; }
+.st-tick { grid-column: 1; grid-row: 6; }
+.st-name { grid-column: 2; grid-row: 6; }
+.st-arr { grid-row: 6; }
+.st-pack { grid-column: 6; grid-row: 6; }
+.t-tick { grid-column: 1; grid-row: 7; }
+.t-name { grid-column: 2; grid-row: 7; }
+.t-arr { grid-column: 3; grid-row: 7; }
+.t-spine { grid-column: 4; grid-row: 7 / 9; }
+.t-spine::before { bottom: 44px; }
+.t-t1 { grid-column: 5; grid-row: 7; }
+.t-cov { grid-column: 6; grid-row: 7; }
+.t-t2 { grid-column: 5; grid-row: 8; }
+.t-pack { grid-column: 6; grid-row: 8; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sa-Token 仓库依赖</h1>
+  <div class="leg">
+    <span><i class="sw p"></i><b>parent</b></span>
+    <span><i class="sw i"></i><b>import</b></span>
+    <span class="chip bom">BOM (pom)</span>
+    <span class="chip agg">聚合 (pom)</span>
+    <span class="chip jar">产品 (jar)</span>
+    <span class="chip test">测试 (pom)</span>
+  </div>
+</header>
+<h2>版本 / 继承 · sa-token-bom、sa-token-dependencies 不继承 sa-token-parent</h2>
+<div class="stage">
+  <div class="flow">
+    <div class="left">
+      <div class="node agg n-parent">sa-token-parent (pom)</div>
+      <div class="v-import"><i></i><span>import</span></div>
+      <div class="node bom n-bom">sa-token-bom (pom)</div>
+      <div class="arr a-bom"><span>parent</span><i></i></div>
+      <div class="node bom n-deps">sa-token-dependencies (pom)</div>
+    </div>
+    <div class="arr a-kids"><span>parent</span><i></i></div>
+    <div class="fan main">
+      <div class="spine"></div>
+      <div class="kids">
+        <i class="tick s-tick"></i>
+        <div class="node bom s-name">sa-token-special-dependencies (pom)</div>
+        <div class="arr s-arr"><span>parent</span><i></i></div>
+        <div class="spine s-spine"></div>
+        <i class="tick s-t1"></i>
+        <div class="node bom s-b2">sa-token-spring-boot2-dependencies (pom)</div>
+        <i class="tick s-t2"></i>
+        <div class="node bom s-b3">sa-token-spring-boot3-dependencies (pom)</div>
+        <i class="tick s-t3"></i>
+        <div class="node bom s-b4">sa-token-spring-boot4-dependencies (pom)</div>
+
+        <i class="tick c-tick"></i>
+        <div class="node jar c-name">sa-token-core (jar)</div>
+
+        <i class="tick p-tick"></i>
+        <div class="node agg p-name">sa-token-plugin (pom)</div>
+        <div class="arr long p-arr"><span>parent</span><i></i></div>
+        <div class="node jar pack p-pack">37 个插件 (jar)</div>
+
+        <i class="tick st-tick"></i>
+        <div class="node agg st-name">sa-token-starter (pom)</div>
+        <div class="arr long st-arr"><span>parent</span><i></i></div>
+        <div class="node jar pack st-pack">15 个 starter (jar)</div>
+
+        <i class="tick t-tick"></i>
+        <div class="node test t-name">sa-token-testing (pom)</div>
+        <div class="arr t-arr"><span>parent</span><i></i></div>
+        <div class="spine t-spine"></div>
+        <i class="tick t-t1"></i>
+        <div class="node test t-cov">sa-token-coverage (pom)</div>
+        <i class="tick t-t2"></i>
+        <div class="node test pack t-pack">23 个测试模块 (jar)</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
