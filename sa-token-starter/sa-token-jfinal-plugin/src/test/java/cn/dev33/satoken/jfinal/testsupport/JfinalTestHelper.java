@@ -19,6 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.jfinal.SaControllerContext;
 import cn.dev33.satoken.jfinal.SaTokenContextForJfinal;
+import com.jfinal.core.ActionHandler;
 import com.jfinal.core.Controller;
 
 import javax.servlet.ServletOutputStream;
@@ -32,6 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -45,6 +48,11 @@ import static org.mockito.Mockito.when;
 public final class JfinalTestHelper {
 
     private JfinalTestHelper() {
+    }
+
+    /** 单测里把 ActionHandler 的 JUL ERROR 栈按住，生产 log.error 不受影响 */
+    public static void quietActionHandlerLog() {
+        Logger.getLogger(ActionHandler.class.getName()).setLevel(Level.OFF);
     }
 
     /** 造一个能读写 attribute 的 GET 请求 */

@@ -60,6 +60,7 @@ public class SaTokenActionHandlerTest {
     /** 整个类开始前先把 JFinal RenderManager 初始化好，后面 404/500 才渲染得出来 */
     @BeforeAll
     public static void initRenderManager() {
+        JfinalTestHelper.quietActionHandlerLog();
         try {
             ServletContext servletContext = mock(ServletContext.class);
             when(servletContext.getRealPath(anyString())).thenReturn(System.getProperty("java.io.tmpdir"));
