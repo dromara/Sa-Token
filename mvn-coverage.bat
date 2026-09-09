@@ -13,8 +13,8 @@
 @echo 构建日志同步输出到: %LOG%
 @echo.
 
-rem 管道不是 TTY，强制 Maven 仍输出颜色；JVM 用 UTF-8，避免中文乱码
-rem 日志按字节抄一份，不要用 PowerShell 的 Tee-Object，那会剥色和转码
+rem pipe is not a TTY; keep Maven color. JVM UTF-8.
+rem copy log by bytes; do not use Tee-Object, it strips ANSI.
 @set "MAVEN_OPTS=%MAVEN_OPTS% -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8"
 
 @> "%TEE_PS%" echo $log = $env:COVERAGE_LOG
@@ -33,10 +33,10 @@ rem 日志按字节抄一份，不要用 PowerShell 的 Tee-Object，那会剥�
 @>> "%TEE_PS%" echo while (($n = $in.Read($buf, 0, $buf.Length)) -gt 0) { $out.Write($buf, 0, $n); $out.Flush(); $fs.Write($buf, 0, $n) }
 @>> "%TEE_PS%" echo } finally { $fs.Dispose() }
 
-rem Sa-Token 全量测试 + JaCoCo 覆盖率聚合报告，控制台和 build-log 同时写
-@call mvn -Dstyle.color=always verify -pl sa-token-testing/sa-token-coverage -am 2>&1 | powershell -NoProfile -ExecutionPolicy Bypass -File "%TEE_PS%"
+rem clean: IDE may write broken class stubs into target; skip compile otherwise.
+@call mvn -Dstyle.color=always clean verify -pl sa-token-testing/sa-token-coverage -am 2>&1 | powershell -NoProfile -ExecutionPolicy Bypass -File "%TEE_PS%"
 
-rem mvn.cmd 走管道后会把父窗口 echo 打开，后面每句用 @ 压掉命令回显
+rem mvn.cmd turns echo back on after a pipe; keep @ on later lines.
 @echo off
 @echo.
 @echo.
