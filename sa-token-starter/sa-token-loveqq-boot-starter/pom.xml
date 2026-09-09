@@ -109,14 +109,12 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-            <version>3.7.4</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.11.0</version>
             <scope>test</scope>
         </dependency>
         <!-- 打 ApplicationContextPathLoading 非空 contextPath 分支，走 LoveQQ 真实启动 -->

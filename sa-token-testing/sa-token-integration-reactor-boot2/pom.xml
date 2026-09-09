@@ -21,7 +21,7 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>2.7.18</version>
+				<version>${springboot2.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

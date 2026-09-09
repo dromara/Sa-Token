@@ -16,17 +16,6 @@
     <artifactId>sa-token-quick-login</artifactId>
 	<description>sa-token-quick-login</description>
 
-	<!-- 父 BOM 把 thymeleaf 钉在 3.0.9，和 Boot2 自带的 thymeleaf-spring5 3.0.15 对不上，测试起不来 -->
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.thymeleaf</groupId>
-				<artifactId>thymeleaf</artifactId>
-				<version>3.0.15.RELEASE</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<dependencies>
 		<!-- sa-token-spring-boot-starter -->
 		<dependency>

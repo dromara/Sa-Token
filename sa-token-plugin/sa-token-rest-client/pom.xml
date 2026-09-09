@@ -14,9 +14,17 @@
     <artifactId>sa-token-rest-client</artifactId>
     <description>sa-token integrate RestClient</description>
 
-    <properties>
-        <springboot3-spring.version>6.2.16</springboot3-spring.version>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot3-dependencies</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -26,7 +34,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${springboot3-spring.version}</version>
             <scope>provided</scope>
         </dependency>
 

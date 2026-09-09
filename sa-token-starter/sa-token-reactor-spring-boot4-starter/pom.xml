@@ -50,13 +50,6 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!-- starter-test 版本与上方 springboot4.version 保持一致（BOM 未管理该构件） -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-test</artifactId>
-				<version>4.0.3</version>
-			</dependency>
-
         </dependencies>
     </dependencyManagement>
 

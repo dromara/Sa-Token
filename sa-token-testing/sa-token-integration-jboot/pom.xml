@@ -36,11 +36,10 @@
 			<artifactId>jboot</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- JBoot 3.14.4 需要 JFinal 4.9.22（setMaxPostSize(long)）；BOM 默认是 4.9.17 -->
+		<!-- JBoot 需要 JFinal（setMaxPostSize(long)，版本由 sa-token-dependencies 统一） -->
 		<dependency>
 			<groupId>com.jfinal</groupId>
 			<artifactId>jfinal</artifactId>
-			<version>4.9.22</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- jfinal-undertow 2.x 需要 Servlet 4（MappingMatch）；BOM 默认是 3.1，这里盖掉 -->

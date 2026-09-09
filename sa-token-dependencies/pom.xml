@@ -24,16 +24,16 @@
 		<jackson3-databind.version>3.1.0</jackson3-databind.version>
 		<servlet-api.version>3.1.0</servlet-api.version>
 		<jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
-		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+		<thymeleaf.version>3.0.15.RELEASE</thymeleaf.version>
 		<freemarker.version>2.3.34</freemarker.version>
 		<solon.version>3.2.1</solon.version>
 		<noear-redisx.version>1.8.5</noear-redisx.version>
 		<noear-snack3.version>3.2.139</noear-snack3.version>
         <noear-snack4.version>4.0.59</noear-snack4.version>
-		<jfinal.version>4.9.17</jfinal.version>
+		<jfinal.version>4.9.22</jfinal.version>
 		<jboot.version>3.14.4</jboot.version>
 		<loveqq.version>1.1.5-java8</loveqq.version>
-		<commons-pool2.version>2.5.0</commons-pool2.version>
+		<commons-pool2.version>2.12.1</commons-pool2.version>
 		<dubbo.version>2.7.21</dubbo.version>
 		<grpc-spring-boot-starter.version>2.10.1.RELEASE</grpc-spring-boot-starter.version>
 		<hutool-jwt.version>5.8.36</hutool-jwt.version>
@@ -46,6 +46,16 @@
 		<caffeine.version>3.2.0</caffeine.version>
 		<forest.version>1.6.4</forest.version>
 		<okhttps.version>4.1.0</okhttps.version>
+		<reactor-core.version>3.7.4</reactor-core.version>
+		<jaxb-api.version>2.3.1</jaxb-api.version>
+		<jfinal-undertow.version>2.8</jfinal-undertow.version>
+		<fst.version>2.29</fst.version>
+
+		<!-- 单元测试 / 测试夹具 -->
+		<mockito.version>4.11.0</mockito.version>
+		<jedis-mock.version>1.1.8</jedis-mock.version>
+		<slf4j-simple.version>2.0.17</slf4j-simple.version>
+		<snakeyaml.version>2.2</snakeyaml.version>
 
 		<!-- Maven GPG Plugin -->
 		<maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
@@ -334,6 +344,74 @@
 				<groupId>cn.zhxu</groupId>
 				<artifactId>okhttps</artifactId>
 				<version>${okhttps.version}</version>
+			</dependency>
+
+			<!-- reactor-core（loveqq 等不 import Boot BOM 的模块） -->
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-core</artifactId>
+				<version>${reactor-core.version}</version>
+			</dependency>
+
+			<!-- jaxb-api（JDK8 + jjwt） -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb-api.version}</version>
+			</dependency>
+
+			<!-- jfinal-undertow -->
+			<dependency>
+				<groupId>com.jfinal</groupId>
+				<artifactId>jfinal-undertow</artifactId>
+				<version>${jfinal-undertow.version}</version>
+			</dependency>
+
+			<!-- fst（jfinal 测试） -->
+			<dependency>
+				<groupId>de.ruedigermoeller</groupId>
+				<artifactId>fst</artifactId>
+				<version>${fst.version}</version>
+			</dependency>
+
+			<!-- jackson3 core，与 jackson3-databind 对齐 -->
+			<dependency>
+				<groupId>tools.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson3-databind.version}</version>
+			</dependency>
+
+			<!-- mockito -->
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-inline</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+
+			<!-- jedis-mock -->
+			<dependency>
+				<groupId>com.github.fppt</groupId>
+				<artifactId>jedis-mock</artifactId>
+				<version>${jedis-mock.version}</version>
+			</dependency>
+
+			<!-- slf4j-simple（测试日志） -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${slf4j-simple.version}</version>
+			</dependency>
+
+			<!-- snakeyaml（Redisson YAML） -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${snakeyaml.version}</version>
 			</dependency>
 
         </dependencies>

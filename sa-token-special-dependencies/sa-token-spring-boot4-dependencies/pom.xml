@@ -20,6 +20,9 @@
     <properties>
         <springboot4.version>4.0.3</springboot4.version>
         <springboot4-spring.version>7.0.3</springboot4-spring.version>
+        <!-- 对齐 sa-token-jackson3 的 3.1.0（Boot 4.0.3 BOM 只管理到 jackson-core 3.0.4） -->
+        <jackson3-core.version>3.1.0</jackson3-core.version>
+        <jackson-annotations.version>2.21</jackson-annotations.version>
     </properties>
 
     <dependencyManagement>
@@ -63,12 +66,31 @@
                 <version>${springboot4.version}</version>
             </dependency>
 
-            <!-- redis pool -->
+            <!-- redis pool（与 sa-token-dependencies 的 2.12.1 对齐；单独 import 本 BOM 时也要能管到） -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-pool2</artifactId>
                 <version>2.12.1</version>
                 <optional>true</optional>
+            </dependency>
+
+            <!-- jackson3 core / annotations，压过 Boot 4.0.3 BOM 的 3.0.4 -->
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson3-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
+            </dependency>
+
+            <!-- spring-boot-starter-test 测试 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${springboot4.version}</version>
             </dependency>
 
         </dependencies>

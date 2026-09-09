@@ -38,11 +38,10 @@
 			<artifactId>sa-token-redis-dao-test-common</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- jedis 7 需要较新的 commons-pool2，覆盖仓库里的 2.5.0 -->
+		<!-- jedis 7 需要 commons-pool2（版本由 sa-token-dependencies 统一） -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>
-			<version>2.12.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

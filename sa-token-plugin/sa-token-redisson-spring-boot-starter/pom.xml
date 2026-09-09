@@ -48,14 +48,12 @@
 		<dependency>
 			<groupId>com.github.fppt</groupId>
 			<artifactId>jedis-mock</artifactId>
-			<version>1.1.8</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Redisson Config.fromYAML 需要 snakeyaml 2.x，覆盖 Boot2 自带的 1.x -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
-			<version>2.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

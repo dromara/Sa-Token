@@ -28,20 +28,9 @@
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
-				<version>4.0.3</version>
+				<version>${springboot4.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<!-- 对齐 sa-token-jackson3 传递的 jackson-databind 3.1.0（Boot 4.0.3 BOM 只管理到 jackson-core 3.0.4，混用会导致静态初始化失败） -->
-			<dependency>
-				<groupId>tools.jackson.core</groupId>
-				<artifactId>jackson-core</artifactId>
-				<version>3.1.0</version>
-			</dependency>
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-annotations</artifactId>
-				<version>2.21</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -46,6 +46,13 @@
 	<properties>
 		<maven.deploy.skip>true</maven.deploy.skip>
 		<central.publishing.skip>true</central.publishing.skip>
+		<!--
+			import 不传导 properties，testing 里要 import 官方 spring-boot-dependencies 时只能在这儿再写一遍数字。
+			必须与 sa-token-spring-boot2/3/4-dependencies 的 springbootX.version 保持一致。
+		-->
+		<springboot2.version>2.7.18</springboot2.version>
+		<springboot3.version>3.5.11</springboot3.version>
+		<springboot4.version>4.0.3</springboot4.version>
 	</properties>
 
 	<dependencyManagement>
