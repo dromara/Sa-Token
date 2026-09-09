@@ -47,12 +47,6 @@ h1 { margin: 0; font-size: 15px; font-weight: 650; }
 .chip.agg { background: var(--agg); }
 .chip.jar { background: var(--jar); }
 .chip.test { background: var(--test); }
-h2 {
-  margin: 8px 28px 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-}
 .stage {
   flex: 1;
   display: flex;
@@ -64,21 +58,33 @@ h2 {
 .left {
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-template-rows: 40px 36px 40px;
+  grid-template-rows: 56px 36px 56px;
   align-items: center;
 }
 .node {
   white-space: nowrap;
-  height: 40px;
-  padding: 0 14px;
+  height: 56px;
+  padding: 6px 14px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
   border: 1px solid var(--line);
   border-radius: 6px;
-  font-family: ui-monospace, Consolas, "Sarasa Mono SC", monospace;
-  font-size: 13px;
 }
-.node.pack { height: 88px; }
+.node .nm {
+  font-family: ui-monospace, Consolas, "Sarasa Mono SC", monospace;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+.node .ds {
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--muted);
+}
+.node.pack { height: 100px; }
 .node.bom { background: var(--bom); }
 .node.agg { background: var(--agg); }
 .node.jar { background: var(--jar); }
@@ -114,7 +120,7 @@ h2 {
   border-right: 0;
 }
 .a-bom { grid-column: 2; grid-row: 3; }
-.a-kids { height: 40px; }
+.a-kids { height: 56px; }
 .v-import {
   grid-column: 3;
   grid-row: 2;
@@ -151,15 +157,15 @@ h2 {
   content: "";
   position: absolute;
   left: 6px;
-  top: 20px;
-  bottom: 20px;
+  top: 28px;
+  bottom: 28px;
   border-left: 2px solid var(--p);
 }
-.fan.main > .spine::before { bottom: 116px; }
+.fan.main > .spine::before { bottom: 136px; }
 .kids {
   display: grid;
   grid-template-columns: 14px auto 56px 16px 14px 1fr;
-  grid-template-rows: 40px 40px 40px 40px 88px 88px 40px 88px;
+  grid-template-rows: 56px 56px 56px 56px 100px 100px 56px 100px;
   column-gap: 0;
   row-gap: 8px;
   align-items: center;
@@ -199,7 +205,7 @@ h2 {
 .t-name { grid-column: 2; grid-row: 7; }
 .t-arr { grid-column: 3; grid-row: 7; }
 .t-spine { grid-column: 4; grid-row: 7 / 9; }
-.t-spine::before { bottom: 44px; }
+.t-spine::before { bottom: 50px; }
 .t-t1 { grid-column: 5; grid-row: 7; }
 .t-cov { grid-column: 6; grid-row: 7; }
 .t-t2 { grid-column: 5; grid-row: 8; }
@@ -218,52 +224,51 @@ h2 {
     <span class="chip test">测试 (pom)</span>
   </div>
 </header>
-<h2>版本 / 继承 · sa-token-bom、sa-token-dependencies 不继承 sa-token-parent</h2>
 <div class="stage">
   <div class="flow">
     <div class="left">
-      <div class="node agg n-parent">sa-token-parent (pom)</div>
+      <div class="node agg n-parent"><span class="nm">sa-token-parent (pom)</span><span class="ds">仓库父 POM，聚合各子模块</span></div>
       <div class="v-import"><i></i><span>import</span></div>
-      <div class="node bom n-bom">sa-token-bom (pom)</div>
+      <div class="node bom n-bom"><span class="nm">sa-token-bom (pom)</span><span class="ds">定义 sa-token 内部模块版本号</span></div>
       <div class="arr a-bom"><span>parent</span><i></i></div>
-      <div class="node bom n-deps">sa-token-dependencies (pom)</div>
+      <div class="node bom n-deps"><span class="nm">sa-token-dependencies (pom)</span><span class="ds">定义 sa-token 外部依赖版本号</span></div>
     </div>
     <div class="arr a-kids"><span>parent</span><i></i></div>
     <div class="fan main">
       <div class="spine"></div>
       <div class="kids">
         <i class="tick s-tick"></i>
-        <div class="node bom s-name">sa-token-special-dependencies (pom)</div>
+        <div class="node bom s-name"><span class="nm">sa-token-special-dependencies (pom)</span><span class="ds">聚合 Spring Boot 专用 BOM</span></div>
         <div class="arr s-arr"><span>parent</span><i></i></div>
         <div class="spine s-spine"></div>
         <i class="tick s-t1"></i>
-        <div class="node bom s-b2">sa-token-spring-boot2-dependencies (pom)</div>
+        <div class="node bom s-b2"><span class="nm">sa-token-spring-boot2-dependencies (pom)</span><span class="ds">定义 Spring Boot 2 依赖版本</span></div>
         <i class="tick s-t2"></i>
-        <div class="node bom s-b3">sa-token-spring-boot3-dependencies (pom)</div>
+        <div class="node bom s-b3"><span class="nm">sa-token-spring-boot3-dependencies (pom)</span><span class="ds">定义 Spring Boot 3 依赖版本</span></div>
         <i class="tick s-t3"></i>
-        <div class="node bom s-b4">sa-token-spring-boot4-dependencies (pom)</div>
+        <div class="node bom s-b4"><span class="nm">sa-token-spring-boot4-dependencies (pom)</span><span class="ds">定义 Spring Boot 4 依赖版本</span></div>
 
         <i class="tick c-tick"></i>
-        <div class="node jar c-name">sa-token-core (jar)</div>
+        <div class="node jar c-name"><span class="nm">sa-token-core (jar)</span><span class="ds">框架内核，零第三方依赖</span></div>
 
         <i class="tick p-tick"></i>
-        <div class="node agg p-name">sa-token-plugin (pom)</div>
+        <div class="node agg p-name"><span class="nm">sa-token-plugin (pom)</span><span class="ds">聚合可选功能插件</span></div>
         <div class="arr long p-arr"><span>parent</span><i></i></div>
-        <div class="node jar pack p-pack">37 个插件 (jar)</div>
+        <div class="node jar pack p-pack"><span class="nm">37 个插件 (jar)</span><span class="ds">Redis、JWT、SSO、OAuth2 等</span></div>
 
         <i class="tick st-tick"></i>
-        <div class="node agg st-name">sa-token-starter (pom)</div>
+        <div class="node agg st-name"><span class="nm">sa-token-starter (pom)</span><span class="ds">聚合各 Web 框架集成包</span></div>
         <div class="arr long st-arr"><span>parent</span><i></i></div>
-        <div class="node jar pack st-pack">15 个 starter (jar)</div>
+        <div class="node jar pack st-pack"><span class="nm">15 个 starter (jar)</span><span class="ds">Boot / Solon / JFinal 等</span></div>
 
         <i class="tick t-tick"></i>
-        <div class="node test t-name">sa-token-testing (pom)</div>
+        <div class="node test t-name"><span class="nm">sa-token-testing (pom)</span><span class="ds">聚合测试基础设施</span></div>
         <div class="arr t-arr"><span>parent</span><i></i></div>
         <div class="spine t-spine"></div>
         <i class="tick t-t1"></i>
-        <div class="node test t-cov">sa-token-coverage (pom)</div>
+        <div class="node test t-cov"><span class="nm">sa-token-coverage (pom)</span><span class="ds">汇总 JaCoCo 覆盖率</span></div>
         <i class="tick t-t2"></i>
-        <div class="node test pack t-pack">23 个测试模块 (jar)</div>
+        <div class="node test pack t-pack"><span class="nm">23 个测试模块 (jar)</span><span class="ds">契约测试与集成测试</span></div>
       </div>
     </div>
   </div>
