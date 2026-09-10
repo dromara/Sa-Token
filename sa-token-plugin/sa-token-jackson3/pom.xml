@@ -16,6 +16,10 @@
     <artifactId>sa-token-jackson3</artifactId>
 	<description>sa-token-jackson3: Sa-Token 与 Jackson 3 整合</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
 		<!-- sa-token-core -->
 		<dependency>
@@ -34,18 +38,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>17</source>
-					<target>17</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

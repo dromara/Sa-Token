@@ -15,6 +15,10 @@
 	<name>sa-token-spring-boot3-starter</name>
     <artifactId>sa-token-spring-boot3-starter</artifactId>
 	<description>springboot3 integrate sa-token</description>
+
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
     
 	<dependencies>
 

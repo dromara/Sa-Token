@@ -16,6 +16,10 @@
     <artifactId>sa-token-spring-boot-webmvc-v3v4-common</artifactId>
 	<description>sa-token springboot webmvc v3v4 common</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
 		<!-- spring-boot-starter-web -->
 		<dependency>

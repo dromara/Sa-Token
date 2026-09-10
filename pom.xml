@@ -41,6 +41,7 @@
 	<properties>
         <revision>1.46.0</revision>
         <jdk.version>1.8</jdk.version>
+		<maven.compiler.release>8</maven.compiler.release>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
 
@@ -125,8 +126,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.15.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>${maven.compiler.release}</release>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>

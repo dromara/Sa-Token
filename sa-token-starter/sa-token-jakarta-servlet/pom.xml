@@ -16,6 +16,10 @@
     <artifactId>sa-token-jakarta-servlet</artifactId>
 	<description>sa-token authentication by Jakarta Servlet API</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
 		<!-- sa-token-core -->
 		<dependency>

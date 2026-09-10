@@ -16,6 +16,10 @@
 	<artifactId>sa-token-integration-boot4</artifactId>
 	<description>Spring Boot 4 integration tests: version-specific diffs only (common logic in integration-boot2)</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

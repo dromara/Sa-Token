@@ -16,6 +16,10 @@
     <artifactId>sa-token-alone-redis-by-spring-boot4</artifactId>
 	<description>sa-token-alone-redis for Spring Boot 4</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
 		<!-- Spring Boot 4 Data Redis (provides DataRedisProperties) -->
 		<dependency>

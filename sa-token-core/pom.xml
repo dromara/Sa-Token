@@ -37,7 +37,7 @@
 								<mkdir dir="${project.build.directory}/coverage-summary-classes"/>
 								<javac srcdir="${project.basedir}/../sa-token-testing/sa-token-coverage/src/coverage-summary/java"
 										destdir="${project.build.directory}/coverage-summary-classes"
-										source="1.8" target="1.8" encoding="UTF-8" includeantruntime="false"/>
+										release="8" encoding="UTF-8" includeantruntime="false"/>
 							</target>
 						</configuration>
 					</execution>
