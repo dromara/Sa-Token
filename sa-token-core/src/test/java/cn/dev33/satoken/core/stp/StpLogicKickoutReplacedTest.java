@@ -53,11 +53,8 @@ public class StpLogicKickoutReplacedTest {
 			stpLogic.kickout(10001);
 			Assertions.assertEquals(NotLoginException.KICK_OUT, dao.get(stpLogic.splicingKeyTokenValue(token)));
 
-			try {
-				stpLogic.checkLogin();
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.KICK_OUT, e.getType());
-			}
+			NotLoginException kickOut = Assertions.assertThrows(NotLoginException.class, stpLogic::checkLogin);
+			Assertions.assertEquals(NotLoginException.KICK_OUT, kickOut.getType());
 		});
 	}
 
@@ -72,11 +69,20 @@ public class StpLogicKickoutReplacedTest {
 			stpLogic.replaced(10001);
 			Assertions.assertEquals(NotLoginException.BE_REPLACED, dao.get(stpLogic.splicingKeyTokenValue(token)));
 
-			try {
-				stpLogic.checkLogin();
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.BE_REPLACED, e.getType());
-			}
+			NotLoginException replaced = Assertions.assertThrows(NotLoginException.class, stpLogic::checkLogin);
+			Assertions.assertEquals(NotLoginException.BE_REPLACED, replaced.getType());
+		});
+	}
+
+	/** 单参数 replacedByTokenValue 应将 Token 标记为 BE_REPLACED */
+	@Test
+	void replacedByTokenValue_oneArgOverload() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70019);
+			String token = stpLogic.getTokenValue();
+			stpLogic.replacedByTokenValue(token);
+			Assertions.assertEquals(NotLoginException.BE_REPLACED,
+					SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token)));
 		});
 	}
 

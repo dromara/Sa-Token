@@ -88,4 +88,11 @@ public class StpLogicSessionTest {
 		Assertions.assertNotNull(dao.getSession(stpLogic.splicingKeySession(20002)));
 	}
 
+	/** 空 loginId 调用 getSessionByLoginId 应抛出 SaTokenException */
+	@Test
+	void getSessionByLoginId_rejectsEmptyLoginId() {
+		Assertions.assertThrows(cn.dev33.satoken.exception.SaTokenException.class,
+				() -> stpLogic.getSessionByLoginId("", true));
+	}
+
 }

@@ -16,15 +16,19 @@
 package cn.dev33.satoken.core.stp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * StpLogic 指定设备登录与注销
@@ -76,11 +80,8 @@ public class StpLogicDeviceTest {
 			stpLogic.kickout(30003, "PC");
 			Assertions.assertFalse(stpLogic.isLogin());
 			Assertions.assertEquals(NotLoginException.KICK_OUT, dao.get(stpLogic.splicingKeyTokenValue(token)));
-			try {
-				stpLogic.checkLogin();
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.KICK_OUT, e.getType());
-			}
+			NotLoginException kickOut = Assertions.assertThrows(NotLoginException.class, stpLogic::checkLogin);
+			Assertions.assertEquals(NotLoginException.KICK_OUT, kickOut.getType());
 		});
 	}
 
@@ -93,11 +94,8 @@ public class StpLogicDeviceTest {
 			SaTokenDao dao = SaManager.getSaTokenDao();
 			stpLogic.replaced(30004, "PC");
 			Assertions.assertFalse(stpLogic.isLogin());
-			try {
-				stpLogic.checkLogin();
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.BE_REPLACED, e.getType());
-			}
+			NotLoginException replaced = Assertions.assertThrows(NotLoginException.class, stpLogic::checkLogin);
+			Assertions.assertEquals(NotLoginException.BE_REPLACED, replaced.getType());
 			Assertions.assertEquals(NotLoginException.BE_REPLACED, dao.get(stpLogic.splicingKeyTokenValue(token)));
 		});
 	}
@@ -113,6 +111,68 @@ public class StpLogicDeviceTest {
 			Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(pcToken)));
 			Assertions.assertEquals("30005", dao.get(stpLogic.splicingKeyTokenValue(appToken)));
 			Assertions.assertTrue(stpLogic.isLogin(30005));
+		});
+	}
+
+	/** 无 Session 时 forEachTerminalList 应不执行回调 */
+	@Test
+	void forEachTerminalList_noSession_isNoOp() {
+		AtomicInteger count = new AtomicInteger();
+		stpLogic.forEachTerminalList(79999, (session, terminal) -> count.incrementAndGet());
+		Assertions.assertEquals(0, count.get());
+	}
+
+	/** 无效/冻结/已移除终端的 Token 查询 getTerminalInfoByToken 应返回 null */
+	@Test
+	void getTerminalInfoByToken_invalidOrFrozen_returnsNull() {
+		Assertions.assertNull(stpLogic.getTerminalInfoByToken(null));
+		Assertions.assertNull(stpLogic.getTerminalInfoByToken("invalid-token"));
+
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(10);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70018);
+			String token = stpLogic.getTokenValue();
+			long oldTime = System.currentTimeMillis() - 60_000;
+			SaManager.getSaTokenDao().set(stpLogic.splicingKeyLastActiveTime(token),
+					String.valueOf(oldTime), 3600);
+			Assertions.assertNull(stpLogic.getTerminalInfoByToken(token));
+
+			SaSession session = stpLogic.getSessionByLoginId(70018);
+			session.removeTerminal(token);
+			Assertions.assertNull(stpLogic.getTerminalInfoByToken(token));
+		});
+	}
+
+	/** Session 缺失或终端已移除时 getTerminalInfoByToken 应返回 null */
+	@Test
+	void getTerminalInfoByToken_sessionMissingOrTerminalRemoved_returnsNull() {
+		SaTokenDao dao = SaManager.getSaTokenDao();
+		String token = stpLogic.createTokenValue(70027, "PC", 3600, null);
+		dao.set(stpLogic.splicingKeyTokenValue(token), "70027", 3600);
+		Assertions.assertNull(stpLogic.getTerminalInfoByToken(token));
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70028);
+			String loginToken = stpLogic.getTokenValue();
+			SaSession session = stpLogic.getSessionByLoginId(70028);
+			session.removeTerminal(loginToken);
+			Assertions.assertNull(stpLogic.getTerminalInfoByToken(loginToken));
+		});
+	}
+
+	/** 终端列表为空时 getTerminalInfoByToken 应返回 null */
+	@Test
+	void getTerminalInfoByToken_validTokenButTerminalMissingInList_returnsNull() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70032);
+			String token = stpLogic.getTokenValue();
+			SaSession session = stpLogic.getSessionByLoginId(70032);
+			session.removeTerminal(token);
+			session.setTerminalList(new java.util.ArrayList<>());
+			Assertions.assertNull(stpLogic.getTerminalInfoByToken(token));
 		});
 	}
 

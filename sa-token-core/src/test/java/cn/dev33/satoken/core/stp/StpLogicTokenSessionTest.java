@@ -16,8 +16,10 @@
 package cn.dev33.satoken.core.stp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.test.SaTokenTest;
@@ -87,6 +89,57 @@ public class StpLogicTokenSessionTest {
 				SaSession session = stpLogic.getSessionBySessionId(sessionId);
 				Assertions.assertNotNull(session);
 			});
+		});
+	}
+
+	/** 开启 tokenSessionCheckLogin 时无效 Token 应抛异常 */
+	@Test
+	void getTokenSessionByToken_rejectsInvalidTokenWhenCheckEnabled() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setTokenSessionCheckLogin(true);
+		SaManager.setConfig(config);
+
+		Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.getTokenSessionByToken("not-a-valid-token-value", true));
+	}
+
+	/** 已有 Token-Session 时 getAnonTokenSession 应复用同一会话 */
+	@Test
+	void getAnonTokenSession_reusesExistingTokenSession() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70008);
+			SaSession created = stpLogic.getTokenSession();
+			SaSession reused = stpLogic.getAnonTokenSession(false);
+			Assertions.assertEquals(created.getId(), reused.getId());
+		});
+	}
+
+	/** 有效 Token 无 Session 时 isCreate=true 应创建 Token-Session */
+	@Test
+	void getAnonTokenSession_validTokenWithoutSession_createsWhenRequested() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70009);
+			String token = stpLogic.getTokenValue();
+			SaManager.getSaTokenDao().delete(stpLogic.splicingKeyTokenSession(token));
+
+			SaSession session = stpLogic.getAnonTokenSession(true);
+			Assertions.assertNotNull(session);
+			Assertions.assertEquals(token, stpLogic.getTokenValue());
+		});
+	}
+
+	/** 开启 activeTimeout 时 getAnonTokenSession 应写入最后活跃时间 */
+	@Test
+	void getAnonTokenSession_withActiveTimeout_setsLastActive() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(300);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.logout();
+			stpLogic.getAnonTokenSession();
+			String token = stpLogic.getTokenValue();
+			Assertions.assertNotNull(SaManager.getSaTokenDao().get(stpLogic.splicingKeyLastActiveTime(token)));
 		});
 	}
 

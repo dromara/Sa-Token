@@ -16,6 +16,7 @@
 package cn.dev33.satoken.core.stp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
@@ -23,6 +24,7 @@ import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -126,6 +128,30 @@ public class StpLogicConcurrentLoginTest {
 		Assertions.assertEquals(1, terminals.size());
 		Assertions.assertEquals("web", terminals.get(0).getExtra("client"));
 		Assertions.assertEquals(token, terminals.get(0).getTokenValue());
+	}
+
+	/** 无 Session 时 logoutByMaxLoginCount 应安全返回 */
+	@Test
+	void logoutByMaxLoginCount_noSession_returnsEarly() {
+		Assertions.assertDoesNotThrow(() ->
+				stpLogic.logoutByMaxLoginCount(79998, null, null, 1, SaLogoutMode.LOGOUT));
+	}
+
+	/** 超出 maxLoginCount 时应清除被挤掉 Token 的活跃记录 */
+	@Test
+	void logoutByMaxLoginCount_clearsLastActiveWhenEnabled() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(true);
+		config.setIsShare(false);
+		config.setMaxLoginCount(1);
+		config.setActiveTimeout(300);
+		SaManager.setConfig(config);
+
+		String token1 = stpLogic.createLoginSession(70029, new SaLoginParameter().setDeviceType("PC"));
+		String token2 = stpLogic.createLoginSession(70029, new SaLoginParameter().setDeviceType("APP"));
+		SaTokenDao dao = SaManager.getSaTokenDao();
+		Assertions.assertNotNull(dao.get(stpLogic.splicingKeyLastActiveTime(token2)));
+		Assertions.assertNull(dao.get(stpLogic.splicingKeyLastActiveTime(token1)));
 	}
 
 }

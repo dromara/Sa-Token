@@ -16,6 +16,7 @@
 package cn.dev33.satoken.core.stp;
 
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
+import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.test.SaTokenTest;
@@ -90,6 +91,24 @@ public class StpLogicSafeSwitchTest {
 
 			Assertions.assertFalse(stpLogic.isSwitch());
 			Assertions.assertEquals(10001L, stpLogic.getLoginIdAsLong());
+		});
+	}
+
+	/** 无效 Token 时 isSafe 应返回 false，getSafeTime 应返回 NOT_VALUE_EXPIRE */
+	@Test
+	void isSafe_and_getSafeTime_handleMissingToken() {
+		Assertions.assertFalse(stpLogic.isSafe("invalid-token", "pay"));
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getSafeTime("pay"));
+		});
+	}
+
+	/** Token 无对应 loginId 映射时 isSafe 应返回 false */
+	@Test
+	void isSafe_invalidLoginId_returnsFalse() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.setTokenValue("orphan-token");
+			Assertions.assertFalse(stpLogic.isSafe("orphan-token", "pay"));
 		});
 	}
 

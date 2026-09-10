@@ -210,12 +210,8 @@ public class StpLogicDeepTest {
 			req.headerMap.put(stpLogic.getTokenName(), token);
 
 			Assertions.assertNull(stpLogic.getTokenValue(false));
-			try {
-				stpLogic.getTokenValue(true);
-				Assertions.fail("expected NO_PREFIX");
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.NO_PREFIX, e.getType());
-			}
+			NotLoginException noPrefix = Assertions.assertThrows(NotLoginException.class, () -> stpLogic.getTokenValue(true));
+			Assertions.assertEquals(NotLoginException.NO_PREFIX, noPrefix.getType());
 		});
 	}
 
@@ -325,12 +321,9 @@ public class StpLogicDeepTest {
 			long oldTime = System.currentTimeMillis() - 60_000;
 			dao.set(stpLogic.splicingKeyLastActiveTime(token), String.valueOf(oldTime), 3600);
 
-			try {
-				stpLogic.checkActiveTimeout(token);
-				Assertions.fail("expected TOKEN_FREEZE");
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.TOKEN_FREEZE, e.getType());
-			}
+			NotLoginException freeze = Assertions.assertThrows(NotLoginException.class,
+					() -> stpLogic.checkActiveTimeout(token));
+			Assertions.assertEquals(NotLoginException.TOKEN_FREEZE, freeze.getType());
 			Assertions.assertTrue(stpLogic.isFreeze(token));
 			Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getTokenActiveTimeoutByToken(token));
 		});

@@ -101,4 +101,32 @@ public class StpLogicPermissionTest {
 		});
 	}
 
+	/** 登录后 getPermissionList 应返回 StpInterface 配置 */
+	@Test
+	void getPermissionList_useCurrentLogin() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70014);
+			Assertions.assertTrue(stpLogic.getPermissionList().contains("user:add"));
+		});
+	}
+
+	/** 未登录时 hasPermissionAnd/Or 应返回 false */
+	@Test
+	void hasPermissionAnd_or_returnFalseWhenNotLogin() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertFalse(stpLogic.hasPermissionAnd("user:add"));
+			Assertions.assertFalse(stpLogic.hasPermissionOr("user:add"));
+		});
+	}
+
+	/** 登录后无匹配权限时 hasPermissionAnd/Or 应返回 false */
+	@Test
+	void hasPermissionAnd_or_returnFalseWhenCheckFails() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70026);
+			Assertions.assertFalse(stpLogic.hasPermissionAnd("goods:view", "order:delete"));
+			Assertions.assertFalse(stpLogic.hasPermissionOr("goods:view", "order:delete"));
+		});
+	}
+
 }

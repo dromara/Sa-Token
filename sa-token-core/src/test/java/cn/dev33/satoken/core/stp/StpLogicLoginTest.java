@@ -20,7 +20,9 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
@@ -30,6 +32,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -120,6 +123,125 @@ public class StpLogicLoginTest {
 			Assertions.assertEquals("PC", stpLogic.getLoginDevice());
 			Assertions.assertTrue(stpLogic.getTokenTimeout() > 0);
 		});
+	}
+
+	/** Token 前缀模式下无 Token 时 getTokenValue 应返回 null */
+	@Test
+	void getTokenValue_prefixMode_emptyTokenBecomesNull() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setTokenPrefix("Bearer");
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertNull(stpLogic.getTokenValue());
+		});
+	}
+
+	/** 无 Token 时 getTokenValueNotNull 应抛出 NotLoginException */
+	@Test
+	void getTokenValueNotNull_throwsWhenMissingToken() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertThrows(NotLoginException.class, () -> stpLogic.getTokenValueNotNull());
+		});
+	}
+
+	/** login 应对空/非法 loginId 抛异常，Map 与 extra 参数应允许 */
+	@Test
+	void login_checkLoginArgs_rejectsInvalidLoginId() {
+		Assertions.assertThrows(SaTokenException.class, () -> stpLogic.login(""));
+		Assertions.assertThrows(SaTokenException.class, () -> stpLogic.login(NotLoginException.NOT_TOKEN));
+		Assertions.assertThrows(SaTokenException.class, () -> stpLogic.login("user:colon"));
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertDoesNotThrow(() -> stpLogic.login(new HashMap<>(), new SaLoginParameter()));
+			Assertions.assertDoesNotThrow(() -> stpLogic.login(70001,
+					new SaLoginParameter().setExtra("k", "v").setActiveTimeout(60L)));
+		});
+	}
+
+	/** Token 被标记 TOKEN_TIMEOUT 时 getLoginId 应抛出对应异常 */
+	@Test
+	void getLoginId_throwsTokenTimeout() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70002);
+			String token = stpLogic.getTokenValue();
+			SaManager.getSaTokenDao().set(stpLogic.splicingKeyTokenValue(token),
+					NotLoginException.TOKEN_TIMEOUT, SaTokenDao.NEVER_EXPIRE);
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.parameterMap.put(stpLogic.getTokenName(), token);
+
+			NotLoginException ex = Assertions.assertThrows(NotLoginException.class, () -> stpLogic.getLoginId());
+			Assertions.assertEquals(NotLoginException.TOKEN_TIMEOUT, ex.getType());
+		});
+	}
+
+	/** defaultValue 为 null 时 getLoginId 应返回原始 loginId */
+	@Test
+	void getLoginId_withNullDefault_returnsRawLoginId() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70003);
+			Object loginId = stpLogic.getLoginId((String) null);
+			Assertions.assertEquals("70003", String.valueOf(loginId));
+		});
+	}
+
+	/** 身份切换期间 getLoginIdDefaultNull 应返回切换后的 loginId */
+	@Test
+	void getLoginIdDefaultNull_whenSwitch_returnsSwitchId() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70004);
+			stpLogic.switchTo(70005);
+			Assertions.assertEquals(70005, stpLogic.getLoginIdDefaultNull());
+		});
+	}
+
+	/** Token 冻结时 getLoginIdDefaultNull 应返回 null */
+	@Test
+	void getLoginIdDefaultNull_whenFrozen_returnsNull() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(10);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70006);
+			String token = stpLogic.getTokenValue();
+			long oldTime = System.currentTimeMillis() - 60_000;
+			SaManager.getSaTokenDao().set(stpLogic.splicingKeyLastActiveTime(token),
+					String.valueOf(oldTime), 3600);
+			Assertions.assertNull(stpLogic.getLoginIdDefaultNull());
+		});
+	}
+
+	/** Token 冻结时 getLoginIdByToken 应返回 null */
+	@Test
+	void getLoginIdByToken_returnsNullWhenFrozen() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(10);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70007);
+			String token = stpLogic.getTokenValue();
+			long oldTime = System.currentTimeMillis() - 60_000;
+			SaManager.getSaTokenDao().set(stpLogic.splicingKeyLastActiveTime(token),
+					String.valueOf(oldTime), 3600);
+			Assertions.assertNull(stpLogic.getLoginIdByToken(token));
+		});
+	}
+
+	/** getLoginId 应支持将字符串 loginId 转换为 Long 默认值类型 */
+	@Test
+	void getLoginId_convertsToDefaultValueType() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login("70022");
+			Assertions.assertEquals(70022L, stpLogic.getLoginId(0L));
+		});
+	}
+
+	/** 空 Token 时 getLoginIdByTokenNotThinkFreeze 应返回 null */
+	@Test
+	void getLoginIdByTokenNotThinkFreeze_emptyToken_returnsNull() {
+		Assertions.assertNull(stpLogic.getLoginIdByTokenNotThinkFreeze(null));
+		Assertions.assertNull(stpLogic.getLoginIdByTokenNotThinkFreeze(""));
 	}
 
 }

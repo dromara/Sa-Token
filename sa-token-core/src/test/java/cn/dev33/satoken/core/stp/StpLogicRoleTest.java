@@ -89,4 +89,39 @@ public class StpLogicRoleTest {
 		});
 	}
 
+	/** 登录后 getRoleList 应返回 StpInterface 配置 */
+	@Test
+	void getRoleList_useCurrentLogin() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70014);
+			Assertions.assertTrue(stpLogic.getRoleList().contains("admin"));
+		});
+	}
+
+	/** 未登录时 hasRoleOr 应返回 false */
+	@Test
+	void hasRoleOr_returnFalseWhenNotLogin() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertFalse(stpLogic.hasRoleOr("admin"));
+		});
+	}
+
+	/** 空参数 checkRoleOr 应直接通过 */
+	@Test
+	void checkRoleOr_emptyArray_skipsValidation() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70015);
+			Assertions.assertDoesNotThrow(() -> stpLogic.checkRoleOr());
+		});
+	}
+
+	/** 登录后无匹配角色时 hasRoleOr 应返回 false */
+	@Test
+	void hasRoleOr_returnFalseWhenCheckFails() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70026);
+			Assertions.assertFalse(stpLogic.hasRoleOr("guest", "super"));
+		});
+	}
+
 }

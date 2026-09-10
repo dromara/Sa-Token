@@ -19,6 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.DisableServiceException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.test.SaTokenTest;
 import cn.dev33.satoken.util.SaTokenConsts;
@@ -141,6 +142,18 @@ public class StpLogicDisableTest {
 		stpLogic.untieDisable(10010, "shop");
 		Assertions.assertFalse(stpLogic.isDisable(10010, "shop"));
 		Assertions.assertNull(dao.get(stpLogic.splicingKeyDisable(10010, "shop")));
+	}
+
+	/** untieDisable/disableLevel 传入非法参数应抛出 SaTokenException */
+	@Test
+	void untieDisable_and_disableLevel_validateArguments() {
+		Assertions.assertThrows(SaTokenException.class, () -> stpLogic.untieDisable(null));
+		Assertions.assertThrows(SaTokenException.class, () -> stpLogic.untieDisable(70021, (String[]) null));
+		Assertions.assertThrows(SaTokenException.class, () -> stpLogic.disableLevel(null, 1, 60));
+		Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.disableLevel(70021, "", 1, 60));
+		Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.disableLevel(70021, "shop", -2, 60));
 	}
 
 }

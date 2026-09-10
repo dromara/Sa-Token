@@ -18,14 +18,26 @@ package cn.dev33.satoken.test;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.config.SaTokenConfigFactory;
+import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
 import cn.dev33.satoken.context.SaTokenContextForThreadLocalStaff;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
+import cn.dev33.satoken.http.SaHttpTemplate;
+import cn.dev33.satoken.http.SaHttpTemplateDefaultImpl;
+import cn.dev33.satoken.json.SaJsonTemplate;
+import cn.dev33.satoken.json.SaJsonTemplateDefaultImpl;
+import cn.dev33.satoken.log.SaLog;
+import cn.dev33.satoken.log.SaLogForConsole;
+import cn.dev33.satoken.same.SaSameTemplate;
+import cn.dev33.satoken.secure.totp.SaTotpTemplate;
+import cn.dev33.satoken.serializer.SaSerializerTemplate;
+import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJson;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +54,7 @@ public final class SaTokenTestContext {
 	}
 
 	/**
-	 * 将 SaManager 重置为干净的默认状态（独立 DAO、默认配置、空 StpLogic 集合）。
+	 * 将 SaManager 重置为干净的默认状态（独立 DAO、默认配置、默认模板、空 StpLogic 集合）。
 	 */
 	public static void reset() {
 		SaTokenConfig config = SaTokenConfigFactory.createConfig();
@@ -53,6 +65,13 @@ public final class SaTokenTestContext {
 		SaManager.stpLogicMap.clear();
 		SaManager.setStpInterface(new StpInterfaceDefaultImpl());
 		SaManager.setSaTokenContext(new SaTokenContextForThreadLocal());
+		SaManager.setSaTempTemplate(new SaTempTemplate());
+		SaManager.setSaJsonTemplate(new SaJsonTemplateDefaultImpl());
+		SaManager.setSaHttpTemplate(new SaHttpTemplateDefaultImpl());
+		SaManager.setSaSerializerTemplate(new SaSerializerTemplateForJson());
+		SaManager.setSaSameTemplate(new SaSameTemplate());
+		SaManager.setLog(new SaLogForConsole());
+		SaManager.setSaTotpTemplate(new SaTotpTemplate());
 		SaTokenContextForThreadLocalStaff.clearModelBox();
 		StpUtil.getLoginType();
 	}
@@ -65,6 +84,14 @@ public final class SaTokenTestContext {
 				SaManager.config,
 				SaManager.getSaTokenDao(),
 				SaManager.getStpInterface(),
+				SaManager.getSaTokenContext(),
+				SaManager.getSaTempTemplate(),
+				SaManager.getSaJsonTemplate(),
+				SaManager.getSaHttpTemplate(),
+				SaManager.getSaSerializerTemplate(),
+				SaManager.getSaSameTemplate(),
+				SaManager.getLog(),
+				SaManager.getSaTotpTemplate(),
 				new HashMap<>(SaManager.stpLogicMap)
 		);
 	}
@@ -74,13 +101,32 @@ public final class SaTokenTestContext {
 		private final SaTokenConfig config;
 		private final SaTokenDao saTokenDao;
 		private final StpInterface stpInterface;
+		private final SaTokenContext saTokenContext;
+		private final SaTempTemplate saTempTemplate;
+		private final SaJsonTemplate saJsonTemplate;
+		private final SaHttpTemplate saHttpTemplate;
+		private final SaSerializerTemplate saSerializerTemplate;
+		private final SaSameTemplate saSameTemplate;
+		private final SaLog log;
+		private final SaTotpTemplate totpTemplate;
 		private final Map<String, StpLogic> stpLogicMap;
 
 		private Snapshot(SaTokenConfig config, SaTokenDao saTokenDao, StpInterface stpInterface,
+				SaTokenContext saTokenContext, SaTempTemplate saTempTemplate, SaJsonTemplate saJsonTemplate,
+				SaHttpTemplate saHttpTemplate, SaSerializerTemplate saSerializerTemplate,
+				SaSameTemplate saSameTemplate, SaLog log, SaTotpTemplate totpTemplate,
 				Map<String, StpLogic> stpLogicMap) {
 			this.config = config;
 			this.saTokenDao = saTokenDao;
 			this.stpInterface = stpInterface;
+			this.saTokenContext = saTokenContext;
+			this.saTempTemplate = saTempTemplate;
+			this.saJsonTemplate = saJsonTemplate;
+			this.saHttpTemplate = saHttpTemplate;
+			this.saSerializerTemplate = saSerializerTemplate;
+			this.saSameTemplate = saSameTemplate;
+			this.log = log;
+			this.totpTemplate = totpTemplate;
 			this.stpLogicMap = stpLogicMap;
 		}
 
@@ -94,6 +140,30 @@ public final class SaTokenTestContext {
 			}
 			if (stpInterface != null) {
 				SaManager.setStpInterface(stpInterface);
+			}
+			if (saTokenContext != null) {
+				SaManager.setSaTokenContext(saTokenContext);
+			}
+			if (saTempTemplate != null) {
+				SaManager.setSaTempTemplate(saTempTemplate);
+			}
+			if (saJsonTemplate != null) {
+				SaManager.setSaJsonTemplate(saJsonTemplate);
+			}
+			if (saHttpTemplate != null) {
+				SaManager.setSaHttpTemplate(saHttpTemplate);
+			}
+			if (saSerializerTemplate != null) {
+				SaManager.setSaSerializerTemplate(saSerializerTemplate);
+			}
+			if (saSameTemplate != null) {
+				SaManager.setSaSameTemplate(saSameTemplate);
+			}
+			if (log != null) {
+				SaManager.setLog(log);
+			}
+			if (totpTemplate != null) {
+				SaManager.setSaTotpTemplate(totpTemplate);
 			}
 			SaManager.stpLogicMap.clear();
 			SaManager.stpLogicMap.putAll(stpLogicMap);

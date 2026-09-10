@@ -35,7 +35,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -107,47 +106,41 @@ public class SaManagerRemainingTest {
 
 	/** 各组件为 null 时 getter 应懒加载默认实现 */
 	@Test
-	void lazyInitGetters() throws Exception {
-		setPrivateField("saTokenDao", null);
+	void lazyInitGetters() {
+		SaManager.setSaTokenDao(null);
 		Assertions.assertNotNull(SaManager.getSaTokenDao());
 
-		setPrivateField("stpInterface", null);
+		SaManager.setStpInterface(null);
 		Assertions.assertNotNull(SaManager.getStpInterface());
 		Assertions.assertTrue(SaManager.getStpInterface() instanceof StpInterfaceDefaultImpl);
 
-		setPrivateField("saTokenContext", null);
+		SaManager.setSaTokenContext(null);
 		Assertions.assertNotNull(SaManager.getSaTokenContext());
 		Assertions.assertTrue(SaManager.getSaTokenContext() instanceof SaTokenContextForThreadLocal);
 
-		setPrivateField("saTempTemplate", null);
+		SaManager.setSaTempTemplate(null);
 		Assertions.assertNotNull(SaManager.getSaTempTemplate());
 		Assertions.assertTrue(SaManager.getSaTempTemplate() instanceof SaTempTemplate);
 
-		setPrivateField("saJsonTemplate", null);
+		SaManager.setSaJsonTemplate(null);
 		Assertions.assertNotNull(SaManager.getSaJsonTemplate());
 		Assertions.assertTrue(SaManager.getSaJsonTemplate() instanceof SaJsonTemplateDefaultImpl);
 
-		setPrivateField("saHttpTemplate", null);
+		SaManager.setSaHttpTemplate(null);
 		Assertions.assertNotNull(SaManager.getSaHttpTemplate());
 		Assertions.assertTrue(SaManager.getSaHttpTemplate() instanceof SaHttpTemplateDefaultImpl);
 
-		setPrivateField("saSerializerTemplate", null);
+		SaManager.setSaSerializerTemplate(null);
 		Assertions.assertNotNull(SaManager.getSaSerializerTemplate());
 		Assertions.assertTrue(SaManager.getSaSerializerTemplate() instanceof SaSerializerTemplateForJson);
 
-		setPrivateField("saSameTemplate", null);
+		SaManager.setSaSameTemplate(null);
 		Assertions.assertNotNull(SaManager.getSaSameTemplate());
 		Assertions.assertTrue(SaManager.getSaSameTemplate() instanceof SaSameTemplate);
 
-		setPrivateField("totpTemplate", null);
+		SaManager.setSaTotpTemplate(null);
 		Assertions.assertNotNull(SaManager.getSaTotpTemplate());
 		Assertions.assertTrue(SaManager.getSaTotpTemplate() instanceof SaTotpTemplate);
-	}
-
-	private static void setPrivateField(String name, Object value) throws Exception {
-		Field field = SaManager.class.getDeclaredField(name);
-		field.setAccessible(true);
-		field.set(null, value);
 	}
 
 }

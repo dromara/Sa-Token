@@ -58,11 +58,8 @@ public class StpLogicLogoutByTokenTest {
 			Assertions.assertFalse(stpLogic.isLogin());
 			Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(token)));
 			Assertions.assertNull(dao.getSession(stpLogic.splicingKeySession(30031)));
-			try {
-				stpLogic.checkLogin();
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.INVALID_TOKEN, e.getType());
-			}
+			NotLoginException invalid = Assertions.assertThrows(NotLoginException.class, stpLogic::checkLogin);
+			Assertions.assertEquals(NotLoginException.INVALID_TOKEN, invalid.getType());
 		});
 	}
 
@@ -75,11 +72,8 @@ public class StpLogicLogoutByTokenTest {
 			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
 			req.headerMap.put(stpLogic.getTokenName(), token);
 			stpLogic.kickoutByTokenValue(token);
-			try {
-				stpLogic.checkLogin();
-			} catch (NotLoginException e) {
-				Assertions.assertEquals(NotLoginException.KICK_OUT, e.getType());
-			}
+			NotLoginException kickOut = Assertions.assertThrows(NotLoginException.class, stpLogic::checkLogin);
+			Assertions.assertEquals(NotLoginException.KICK_OUT, kickOut.getType());
 		});
 	}
 
@@ -93,6 +87,23 @@ public class StpLogicLogoutByTokenTest {
 		Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(token)));
 		SaSession session = dao.getSession(stpLogic.splicingKeySession(30033));
 		Assertions.assertTrue(session == null || session.getTerminalList().isEmpty());
+	}
+
+	/** 冻结 Token 无 keepFreezeOps 时 kickoutByTokenValue 不应清除映射 */
+	@Test
+	void logoutByTokenValue_skipsFrozenTokenWithoutKeepFreezeOps() {
+		SaManager.getConfig().setActiveTimeout(10);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(70020);
+			String token = stpLogic.getTokenValue();
+			long oldTime = System.currentTimeMillis() - 60_000;
+			SaTokenDao dao = SaManager.getSaTokenDao();
+			dao.set(stpLogic.splicingKeyLastActiveTime(token), String.valueOf(oldTime), 3600);
+
+			stpLogic.kickoutByTokenValue(token);
+			Assertions.assertEquals("70020", dao.get(stpLogic.splicingKeyTokenValue(token)));
+		});
 	}
 
 }
