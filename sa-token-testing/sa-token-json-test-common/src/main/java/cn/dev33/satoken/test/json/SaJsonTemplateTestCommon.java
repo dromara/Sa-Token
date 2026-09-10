@@ -1,4 +1,4 @@
-package com.pj.test.json;
+package cn.dev33.satoken.test.json;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.exception.SaJsonConvertException;
@@ -9,7 +9,7 @@ import cn.dev33.satoken.plugin.SaTokenPlugin;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.strategy.SaJsonStrategy;
 import cn.dev33.satoken.strategy.SaStrategy;
-import com.pj.test.model.SysUser;
+import cn.dev33.satoken.test.model.SysUser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 

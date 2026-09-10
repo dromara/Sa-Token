@@ -1,4 +1,4 @@
-package com.pj.test.model;
+package cn.dev33.satoken.test.model;
 
 import cn.dev33.satoken.json.SaJsonType;
 

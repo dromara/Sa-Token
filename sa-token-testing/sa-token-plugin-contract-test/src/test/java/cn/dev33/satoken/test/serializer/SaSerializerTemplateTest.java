@@ -1,4 +1,4 @@
-package com.pj.test;
+package cn.dev33.satoken.test.serializer;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.serializer.SaSerializerForBase64UseEmoji;
@@ -8,10 +8,8 @@ import cn.dev33.satoken.serializer.SaSerializerForBase64UseTianGan;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJdkUseBase64;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJdkUseHex;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJdkUseISO_8859_1;
-import com.pj.test.model.SysUser;
-import org.junit.jupiter.api.AfterAll;
+import cn.dev33.satoken.test.model.SysUser;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -22,18 +20,6 @@ import org.junit.jupiter.api.Test;
  */
 public class SaSerializerTemplateTest {
 
-	/** 整个测试类开始前做一次性准备 */
-	@BeforeAll
-    public static void beforeClass() {
-    	System.out.println("\n\n------------------------ SaSerializerTemplateTest star ...");
-    }
-
-    /** 整个测试类结束后做一次性清理 */
-    @AfterAll
-    public static void afterClass() {
-    	System.out.println("\n\n------------------------ SaSerializerTemplateTest end ... \n");
-    }
-
     /** 测试 JDK + Base64 序列化往返 */
     @Test
     public void testSaSerializerTemplateForJdkUseBase64() {
@@ -43,7 +29,7 @@ public class SaSerializerTemplateTest {
         // test   Object -> String
         SysUser user = new SysUser(10001, "张三", 18);
         String objectString = SaManager.getSaSerializerTemplate().objectToString(user);
-        Assertions.assertEquals("rO0ABXNyABljb20ucGoudGVzdC5tb2RlbC5TeXNVc2Vy0MeZoPBtVUwCAARJAANhZ2VKAAJpZEwABG5hbWV0ABJMamF2YS9sYW5nL1N0cmluZztMAARyb2xldAAbTGNvbS9wai90ZXN0L21vZGVsL1N5c1JvbGU7eHAAAAASAAAAAAAAJxF0AAblvKDkuIlw", objectString);
+        Assertions.assertEquals("rO0ABXNyACNjbi5kZXYzMy5zYXRva2VuLnRlc3QubW9kZWwuU3lzVXNlctDHmaDwbVVMAgAESQADYWdlSgACaWRMAARuYW1ldAASTGphdmEvbGFuZy9TdHJpbmc7TAAEcm9sZXQAJUxjbi9kZXYzMy9zYXRva2VuL3Rlc3QvbW9kZWwvU3lzUm9sZTt4cAAAABIAAAAAAAAnEXQABuW8oOS4iXA=", objectString);
 
         // test   String -> Object
         SysUser user2 = SaManager.getSaSerializerTemplate().stringToObject(objectString, SysUser.class);
@@ -62,7 +48,7 @@ public class SaSerializerTemplateTest {
         // test   Object -> String
         SysUser user = new SysUser(10001, "张三", 18);
         String objectString = SaManager.getSaSerializerTemplate().objectToString(user);
-        Assertions.assertEquals("ACED000573720019636F6D2E706A2E746573742E6D6F64656C2E53797355736572D0C799A0F06D554C0200044900036167654A000269644C00046E616D657400124C6A6176612F6C616E672F537472696E673B4C0004726F6C6574001B4C636F6D2F706A2F746573742F6D6F64656C2F537973526F6C653B7870000000120000000000002711740006E5BCA0E4B88970", objectString);
+        Assertions.assertEquals("ACED000573720023636E2E64657633332E7361746F6B656E2E746573742E6D6F64656C2E53797355736572D0C799A0F06D554C0200044900036167654A000269644C00046E616D657400124C6A6176612F6C616E672F537472696E673B4C0004726F6C657400254C636E2F64657633332F7361746F6B656E2F746573742F6D6F64656C2F537973526F6C653B7870000000120000000000002711740006E5BCA0E4B88970", objectString);
 
         // test   String -> Object
         SysUser user2 = SaManager.getSaSerializerTemplate().stringToObject(objectString, SysUser.class);
@@ -100,7 +86,7 @@ public class SaSerializerTemplateTest {
         // test   Object -> String
         SysUser user = new SysUser(10001, "张三", 18);
         String objectString = SaManager.getSaSerializerTemplate().objectToString(user);
-        Assertions.assertEquals("雷辰中甲乙坤卯西甲乙日天离谷中雾艮庚石雾兑庚亥北兑丙宙霜离谷未日离丙宙酉金坤卯亥艮谷亥西中寅金巽石巳乙霜亥戌东丙甲甲未癸甲甲卯火巽谷亥子甲甲癸田巽戊东甲乙庚宙火离乾亥中甲乙癸寅坎月己谷震申安电震乾宙山丑信卯中艮月日雾巽北霜寅甲甲未西离谷南日兑甲甲离酉庚卯露离申安东坎土安中巽坤卯中丑谷信露巽庚亥电丑信卯宙艮信癸露离庚戌泰金辛甲甲甲甲甲申甲甲甲甲甲甲甲甲癸南己中甲甲离日露子丁地雾壬日东", objectString);
+        Assertions.assertEquals("雷辰中甲乙坤卯西甲丙卯天离土宙地巽坤震北寅西宙北震坤未露坎谷亥雾丑山未日艮岚午雾离乾安地巽乾东雾戌岚日北亥坤卯日艮霜丁辛月坎丁东离亥亥寅甲水甲戊申午甲丁震乾兑日申水甲丙坎乾未寅甲甲未雾震乾信日兑甲甲申酉庚田火兑月戊露离庚己雾巽西安酉兑辛癸田离月艮泰酉甲甲戊艮月安电巽坤午甲癸戌南天离土安地巽坤震北寅西安北震坤未露坎谷亥雾丑岚未日艮岚午露离乾安地巽乾东露戌岚日北戌月安电巽酉霜宇艮甲甲甲甲乙壬甲甲甲甲甲甲甲甲山戊坤午甲乙雾乾铭石辰申宇土坤甲口", objectString);
 
         // test   String -> Object
         SysUser user2 = SaManager.getSaSerializerTemplate().stringToObject(objectString, SysUser.class);
@@ -119,7 +105,7 @@ public class SaSerializerTemplateTest {
         // test   Object -> String
         SysUser user = new SysUser(10001, "张三", 18);
         String objectString = SaManager.getSaSerializerTemplate().objectToString(user);
-        Assertions.assertEquals("钌磷碘氢氦铬硅锑氢氦锶氪镍铯碘银铜氮铌银锌氮钛碲锌锂铈钯镍铯氩锶镍锂铈钙镓铬硅钛铜铯钛锑碘铝镓铁铌硫氦钯钛钪铟锂氢氢氩氖氢氢硅硒铁铯钛钠氢氢氖钼铁硼铟氢氦氮铈硒镍钒钛碘氢氦氖铝钴钇碳铯锰钾钐铑锰钒铈锆镁氙硅碘铜钇锶银铁碲钯铝氢氢氩锑镍铯锡锶锌氢氢镍钙氮硅镉镍钾钐铟钴溴钐碘铁铬硅碘镁铯氙镉铁氮钛铑镁氙硅铈铜氙氖镉镍氮钪钕镓氧氢氢氢氢氢钾氢氢氢氢氢氢氢氢氖锡碳碘氢氢镍锶镉钠铍铷银氟锶铟", objectString);
+        Assertions.assertEquals("钌磷碘氢氦铬硅锑氢锂硅氪镍溴铈铷铁铬锰碲铝锑铈碲锰铬氩镉钴铯钛银镁锆氩锶铜钡氯银镍钒钐铷铁钒铟银钪钡锶碲钛铬硅锶铜钯铍氧钇钴铍铟镍钛钛铝氢砷氢硼钾氯氢铍锰钒锌锶钾砷氢锂钴钒氩铝氢氢氩银锰钒氙锶锌氢氢钾钙氮钼硒锌钇硼镉镍氮碳银铁锑钐钙锌氧氖钼镍钇铜钕钙氢氢硼铜钇钐铑铁铬氯氢氖钪锡氪镍溴钐铷铁铬锰碲铝锑钐碲锰铬氩镉钴铯钛银镁钡氩锶铜钡氯镉镍钒钐铷铁钒铟镉钪钡锶碲钪钇钐铑铁钙钯镧铜氢氢氢氢氦氟氢氢氢氢氢氢氢氢锆硼铬氯氢氦银钒钷铌磷钾镧溴铬氢鿫", objectString);
 
         // test   String -> Object
         SysUser user2 = SaManager.getSaSerializerTemplate().stringToObject(objectString, SysUser.class);
@@ -138,7 +124,7 @@ public class SaSerializerTemplateTest {
         // test   Object -> String
         SysUser user = new SysUser(10001, "张三", 18);
         String objectString = SaManager.getSaSerializerTemplate().objectToString(user);
-        Assertions.assertEquals("→▃☶▲▼▌▂☳▲▼§♫▬☰☶↘〓▶↑↘◤▶▎☱◤●☀↓▬☰▆§▬●☀█◥▌▂▎〓☰▎☳☶▁◥▊↑▄▼↓▎▏☲●▲▲▆♥▲▲▂♩▊☰▎♦▲▲♥↗▊■☲▲▼▶☀♩▬▍▎☶▲▼♥▁▉〼★☰▋▇‥↙▋▍☀↖♣☵▂☶〓〼§↘▊☱↓▁▲▲▆☳▬☰☷§◤▲▲▬█▶▂☴▬▇‥☲▉♪‥☶▊▌▂☶♣☰☵☴▊▶▎↙♣☵▂☀〓☵♥☴▬▶▏▪◥◀▲▲▲▲▲▇▲▲▲▲▲▲▲▲♥☷★☶▲▲▬§☴♦◆♬↘♠§☲", objectString);
+        Assertions.assertEquals("→▃☶▲▼▌▂☳▲●▂♫▬♪☀♬▊▌▋☱▁☳☀☱▋▌▆☴▉☰▎↘♣↖▆§〓◐▅↘▬▍‥♬▊▍☲↘▏◐§☱▎▌▂§〓↓◆◀〼▉◆☲▬▎▎▁▲◢▲■▇▅▲◆▋▍◤§▇◢▲●▉▍▆▁▲▲▆↘▋▍☵§◤▲▲▇█▶↗♩◤〼■☴▬▶★↘▊☳‥█◤◀♥↗▬〼〓▪█▲▲■〓〼‥↙▊▌▅▲♥▏☷♫▬♪‥♬▊▌▋☱▁☳‥☱▋▌▆☴▉☰▎↘♣◐▆§〓◐▅☴▬▍‥♬▊▍☲☴▏◐§☱▏〼‥↙▊█↓◑〓▲▲▲▲▼♠▲▲▲▲▲▲▲▲↖■▌▅▲▼↘▍•↑▃▇◑♪▌▲※", objectString);
 
         // test   String -> Object
         SysUser user2 = SaManager.getSaSerializerTemplate().stringToObject(objectString, SysUser.class);
@@ -157,7 +143,7 @@ public class SaSerializerTemplateTest {
         // test   Object -> String
         SysUser user = new SysUser(10001, "张三", 18);
         String objectString = SaManager.getSaSerializerTemplate().objectToString(user);
-        Assertions.assertEquals("😫😎😴😀😁😗😍😲😀😁😥😣😛😶😴😮😜😆😨😮😝😆😕😳😝😂😹😭😛😶😑😥😛😂😹😓😞😗😍😕😜😶😕😲😴😌😞😙😨😏😁😭😕😔😰😂😀😀😑😉😀😀😍😡😙😶😕😊😀😀😉😩😙😄😰😀😁😆😹😡😛😖😕😴😀😁😉😌😚😦😅😶😘😒😽😬😘😖😹😧😋😵😍😴😜😦😥😮😙😳😭😌😀😀😑😲😛😶😱😥😝😀😀😛😓😆😍😯😛😒😽😰😚😢😽😴😙😗😍😴😋😶😵😯😙😆😕😬😋😵😍😹😜😵😉😯😛😆😔😻😞😇😀😀😀😀😀😒😀😀😀😀😀😀😀😀😉😱😅😴😀😀😛😥😯😊😃😤😮😈😥😰", objectString);
+        Assertions.assertEquals("😫😎😴😀😁😗😍😲😀😂😍😣😛😢😹😤😙😗😘😳😌😲😹😳😘😗😑😯😚😶😕😮😋😧😑😥😜😷😐😮😛😖😽😤😙😖😰😮😔😷😥😳😕😗😍😥😜😭😃😇😦😚😃😰😛😕😕😌😀😠😀😄😒😐😀😃😘😖😝😥😒😠😀😂😚😖😑😌😀😀😑😮😘😖😵😥😝😀😀😒😓😆😩😡😝😦😄😯😛😆😅😮😙😲😽😓😝😇😉😩😛😦😜😻😓😀😀😄😜😦😽😬😙😗😐😀😉😔😱😣😛😢😽😤😙😗😘😳😌😲😽😳😘😗😑😯😚😶😕😮😋😷😑😥😜😷😐😯😛😖😽😤😙😖😰😯😔😷😥😳😔😦😽😬😙😓😭😸😜😀😀😀😀😁😈😀😀😀😀😀😀😀😀😧😄😗😐😀😁😮😖😼😨😎😒😸😢😗😀", objectString);
 
         // test   String -> Object
         SysUser user2 = SaManager.getSaSerializerTemplate().stringToObject(objectString, SysUser.class);

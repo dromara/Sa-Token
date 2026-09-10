@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pj.test.redis;
+package cn.dev33.satoken.test.redis;
 
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;

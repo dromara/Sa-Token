@@ -17,7 +17,7 @@ package cn.dev33.satoken.dao.alone;
 
 import cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate;
 import com.github.fppt.jedismock.RedisServer;
-import com.pj.test.redis.JedisMockRedisSupport;
+import cn.dev33.satoken.test.redis.JedisMockRedisSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.env.MockEnvironment;
