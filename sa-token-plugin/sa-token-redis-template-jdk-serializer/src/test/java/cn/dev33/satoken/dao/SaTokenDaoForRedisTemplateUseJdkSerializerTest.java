@@ -16,12 +16,18 @@
 package cn.dev33.satoken.dao;
 
 import com.github.fppt.jedismock.RedisServer;
+import com.pj.test.redis.JedisMockRedisSupport;
+import io.lettuce.core.ClientOptions;
+import io.lettuce.core.protocol.ProtocolVersion;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
@@ -60,16 +66,40 @@ public class SaTokenDaoForRedisTemplateUseJdkSerializerTest {
 	/** 每个用例开始前准备测试现场 */
 	@BeforeEach
 	void setUp() {
-		connectionFactory = JedisMockRedisSupport.createFactory(redisServer);
+		connectionFactory = createConnectionFactory();
 		dao = new SaTokenDaoForRedisTemplateUseJdkSerializer();
 		dao.init(connectionFactory);
-		JedisMockRedisSupport.flushDb(connectionFactory);
+		flushDb();
 	}
 
 	/** 每个用例结束后把测试现场清掉 */
 	@AfterEach
 	void tearDown() {
-		JedisMockRedisSupport.destroyFactory(connectionFactory);
+		if (connectionFactory != null) {
+			connectionFactory.destroy();
+			connectionFactory = null;
+		}
+	}
+
+	/** 创建连到当前内嵌 Redis 的 Lettuce 工厂，强制 RESP2 */
+	private LettuceConnectionFactory createConnectionFactory() {
+		RedisStandaloneConfiguration redisConfig =
+				new RedisStandaloneConfiguration("127.0.0.1", redisServer.getBindPort());
+		LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+				.clientOptions(ClientOptions.builder()
+						.protocolVersion(ProtocolVersion.RESP2)
+						.build())
+				.build();
+		LettuceConnectionFactory factory = new LettuceConnectionFactory(redisConfig, clientConfig);
+		factory.afterPropertiesSet();
+		return factory;
+	}
+
+	/** 清空当前库，避免用例互相脏数据 */
+	private void flushDb() {
+		try (RedisConnection connection = connectionFactory.getConnection()) {
+			connection.serverCommands().flushDb();
+		}
 	}
 
 	/** init 之后应该配好 JDK 序列化的 Object RedisTemplate */
