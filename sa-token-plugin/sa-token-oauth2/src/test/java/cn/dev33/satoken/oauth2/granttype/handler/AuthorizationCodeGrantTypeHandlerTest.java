@@ -24,7 +24,7 @@ import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import java.util.Collections;
 /**
  * 授权码 grant_type 处理器
  */
-@SaTokenTest
+@OAuth2Test
 public class AuthorizationCodeGrantTypeHandlerTest {
 
 	private final AuthorizationCodeGrantTypeHandler handler = new AuthorizationCodeGrantTypeHandler();

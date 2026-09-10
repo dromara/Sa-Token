@@ -23,7 +23,7 @@ import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * 默认数据构建器：code / AT / RT / CT / 回调 URL / state
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2DataGenerateDefaultImplTest {
 
 	private SaOAuth2DataGenerate gen;

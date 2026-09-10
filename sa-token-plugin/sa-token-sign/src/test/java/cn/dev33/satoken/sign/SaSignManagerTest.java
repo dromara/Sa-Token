@@ -16,10 +16,9 @@
 package cn.dev33.satoken.sign;
 
 import cn.dev33.satoken.sign.config.SaSignConfig;
+import cn.dev33.satoken.sign.support.SignTest;
 import cn.dev33.satoken.sign.template.SaSignTemplate;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
@@ -31,27 +30,8 @@ import java.util.Map;
  * @author click33
  * @since 1.46.0
  */
+@SignTest
 public class SaSignManagerTest {
-
-    private SaSignConfig backupConfig;
-    private Map<String, SaSignConfig> backupSignMany;
-    private SaSignTemplate backupTemplate;
-
-    /** 先把全局状态存一份，避免用例互相污染 */
-    @BeforeEach
-    public void backup() {
-        backupConfig = SaSignManager.getConfig();
-        backupSignMany = SaSignManager.getSignMany();
-        backupTemplate = SaSignManager.getSaSignTemplate();
-    }
-
-    /** 把全局状态恢复回去 */
-    @AfterEach
-    public void restore() {
-        SaSignManager.setConfig(backupConfig);
-        SaSignManager.setSignMany(backupSignMany);
-        SaSignManager.setSaSignTemplate(backupTemplate);
-    }
 
     /** getConfig 多次调用应该返回同一个实例 */
     @Test

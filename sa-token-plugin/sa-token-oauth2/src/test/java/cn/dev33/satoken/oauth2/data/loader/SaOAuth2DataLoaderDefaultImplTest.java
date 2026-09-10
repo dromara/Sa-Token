@@ -20,7 +20,7 @@ import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientModelException;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.secure.SaSecureUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * 默认 DataLoader：接口 default 方法走 DefaultImpl
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2DataLoaderDefaultImplTest {
 
 	private final SaOAuth2DataLoaderDefaultImpl loader = new SaOAuth2DataLoaderDefaultImpl();

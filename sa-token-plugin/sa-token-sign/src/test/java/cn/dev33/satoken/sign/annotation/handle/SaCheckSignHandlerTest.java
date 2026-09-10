@@ -21,10 +21,9 @@ import cn.dev33.satoken.sign.SaSignManager;
 import cn.dev33.satoken.sign.annotation.SaCheckSign;
 import cn.dev33.satoken.sign.config.SaSignConfig;
 import cn.dev33.satoken.sign.exception.SaSignException;
+import cn.dev33.satoken.sign.support.SignTest;
 import cn.dev33.satoken.test.SaTokenTest;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
@@ -38,21 +37,8 @@ import java.util.Map;
  * @since 1.46.0
  */
 @SaTokenTest
+@SignTest
 public class SaCheckSignHandlerTest {
-
-    private Map<String, SaSignConfig> backupSignMany;
-
-    /** 先把全局状态存一份，避免用例互相污染 */
-    @BeforeEach
-    public void backup() {
-        backupSignMany = SaSignManager.getSignMany();
-    }
-
-    /** 把全局状态恢复回去 */
-    @AfterEach
-    public void restore() {
-        SaSignManager.setSignMany(backupSignMany);
-    }
 
     /** 用于拿到 @SaCheckSign 注解的承载方法 */
     @SaCheckSign(appid = "app1", verifyParams = {"data"})

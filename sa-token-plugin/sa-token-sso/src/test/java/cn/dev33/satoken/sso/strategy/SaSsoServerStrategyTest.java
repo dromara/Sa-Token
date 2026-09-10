@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.exception.NotImplException;
 import cn.dev33.satoken.http.SaHttpTemplate;
 import cn.dev33.satoken.sso.support.StubSaJsonTemplate;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Server 策略默认 lambda：登录视图、doLogin、发请求、跳转通知
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoServerStrategyTest {
 
 	/** 默认未登录视图应该提示尚未登录 */

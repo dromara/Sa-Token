@@ -18,7 +18,7 @@ package cn.dev33.satoken.sso.template;
 import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.sso.support.SsoTestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ import java.util.LinkedHashMap;
 /**
  * 过时的 SaSsoUtil 每个公开静态方法至少走一遍
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoUtilTest {
 
 	/** 每个用例前换干净 Processor */

@@ -23,7 +23,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.granttype.handler.model.PasswordAuthResult;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ import java.util.Collections;
 /**
  * 密码式 grant_type 处理器，以及 PasswordAuthResult
  */
-@SaTokenTest
+@OAuth2Test
 public class PasswordGrantTypeHandlerTest {
 
 	private final PasswordGrantTypeHandler handler = new PasswordGrantTypeHandler();

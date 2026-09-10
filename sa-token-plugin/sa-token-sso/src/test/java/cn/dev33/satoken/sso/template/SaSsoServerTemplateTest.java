@@ -30,7 +30,7 @@ import cn.dev33.satoken.sign.config.SaSignConfig;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Server 模板：ticket、client、redirect、注销推送、签名秘钥
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoServerTemplateTest {
 
 	private SaSsoServerTemplate tpl;

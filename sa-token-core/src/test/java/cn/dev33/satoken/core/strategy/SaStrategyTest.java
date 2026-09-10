@@ -20,27 +20,14 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.NotImplException;
 import cn.dev33.satoken.exception.SaTokenException;
-import cn.dev33.satoken.fun.strategy.SaAutoRenewFunction;
-import cn.dev33.satoken.fun.strategy.SaCorsHandleFunction;
-import cn.dev33.satoken.fun.strategy.SaCreateSaRequestFunction;
-import cn.dev33.satoken.fun.strategy.SaCreateSaResponseFunction;
-import cn.dev33.satoken.fun.strategy.SaCreateSaStorageFunction;
-import cn.dev33.satoken.fun.strategy.SaCreateSessionFunction;
-import cn.dev33.satoken.fun.strategy.SaCreateStpLogicFunction;
 import cn.dev33.satoken.fun.strategy.SaCreateTokenFunction;
-import cn.dev33.satoken.fun.strategy.SaGenerateUniqueTokenFunction;
-import cn.dev33.satoken.fun.strategy.SaGetSaTokenConfigFunction;
-import cn.dev33.satoken.fun.strategy.SaHasElementFunction;
-import cn.dev33.satoken.fun.strategy.SaRouteMatchFunction;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.test.SaTokenTest;
 import cn.dev33.satoken.util.SaTokenConsts;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -57,55 +44,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @SaTokenTest
 public class SaStrategyTest {
-
-	private SaCreateTokenFunction savedCreateToken;
-	private SaCreateSessionFunction savedCreateSession;
-	private SaHasElementFunction savedHasElement;
-	private SaGenerateUniqueTokenFunction savedGenerateUniqueToken;
-	private SaAutoRenewFunction savedAutoRenew;
-	private SaCreateStpLogicFunction savedCreateStpLogic;
-	private SaRouteMatchFunction savedRouteMatcher;
-	private SaCreateSaRequestFunction savedCreateSaRequest;
-	private SaCreateSaResponseFunction savedCreateSaResponse;
-	private SaCreateSaStorageFunction savedCreateSaStorage;
-	private SaCorsHandleFunction savedCorsHandle;
-	private SaGetSaTokenConfigFunction savedGetSaTokenConfig;
-
-	/** 先把策略状态存一份 */
-	@BeforeEach
-	void saveStrategy() {
-		SaStrategy s = SaStrategy.instance;
-		savedCreateToken = s.createToken;
-		savedCreateSession = s.createSession;
-		savedHasElement = s.hasElement;
-		savedGenerateUniqueToken = s.generateUniqueToken;
-		savedAutoRenew = s.autoRenew;
-		savedCreateStpLogic = s.createStpLogic;
-		savedRouteMatcher = s.routeMatcher;
-		savedCreateSaRequest = s.createSaRequest;
-		savedCreateSaResponse = s.createSaResponse;
-		savedCreateSaStorage = s.createSaStorage;
-		savedCorsHandle = s.corsHandle;
-		savedGetSaTokenConfig = s.getSaTokenConfig;
-	}
-
-	/** 把策略状态恢复回去 */
-	@AfterEach
-	void restoreStrategy() {
-		SaStrategy s = SaStrategy.instance;
-		s.createToken = savedCreateToken;
-		s.createSession = savedCreateSession;
-		s.hasElement = savedHasElement;
-		s.generateUniqueToken = savedGenerateUniqueToken;
-		s.autoRenew = savedAutoRenew;
-		s.createStpLogic = savedCreateStpLogic;
-		s.routeMatcher = savedRouteMatcher;
-		s.createSaRequest = savedCreateSaRequest;
-		s.createSaResponse = savedCreateSaResponse;
-		s.createSaStorage = savedCreateSaStorage;
-		s.corsHandle = savedCorsHandle;
-		s.getSaTokenConfig = savedGetSaTokenConfig;
-	}
 
 	/** createToken 应按 tokenStyle 配置生成不同格式的 Token */
 	@Test

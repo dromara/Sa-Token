@@ -29,7 +29,7 @@ import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.scope.handler.SaOAuth2ScopeHandlerInterface;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * OAuth2 策略：scope / grantType 处理器、凭证创建、默认字段
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2StrategyTest {
 
 	/** 每个用例前把单例策略恢复成默认实现 */

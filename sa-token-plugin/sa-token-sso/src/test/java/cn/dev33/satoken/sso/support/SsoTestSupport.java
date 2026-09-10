@@ -29,6 +29,9 @@ import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.sso.template.SaSsoServerTemplate;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -51,6 +54,18 @@ public final class SsoTestSupport {
 	public static final String ALLOW = "http://sso-client.com/*";
 
 	private SsoTestSupport() {
+	}
+
+	/** 捕获当前 SSO Manager / Processor 静态态，供测试结束后 {@link Snapshot#restore()} */
+	public static Snapshot capture() {
+		return new Snapshot(
+				SaSsoManager.getServerConfig(),
+				SaSsoManager.getClientConfig(),
+				SaSsoServerProcessor.instance,
+				SaSsoServerProcessor.instance.ssoServerTemplate,
+				SaSsoClientProcessor.instance,
+				SaSsoClientProcessor.instance.ssoClientTemplate
+		);
 	}
 
 	/** 给全局 Processor 换上新模板，并把 Server 异步改成同步，避免断言抢跑 */
@@ -142,6 +157,59 @@ public final class SsoTestSupport {
 			out.put(e.getKey(), e.getValue() == null ? null : String.valueOf(e.getValue()));
 		}
 		return out;
+	}
+
+	/** 每个用例开始前拍快照，结束后把 SSO 静态态写回去 */
+	public static final class ResetExtension implements BeforeEachCallback, AfterEachCallback {
+
+		private Snapshot snapshot;
+
+		/** 用例开始前先记下当前 SSO Manager / Processor */
+		@Override
+		public void beforeEach(ExtensionContext context) {
+			snapshot = capture();
+		}
+
+		/** 用例结束后把 SSO 静态态恢复成用例开始前的样子 */
+		@Override
+		public void afterEach(ExtensionContext context) {
+			if (snapshot != null) {
+				snapshot.restore();
+				snapshot = null;
+			}
+		}
+	}
+
+	/** SSO Manager 与 Processor 单例的引用快照 */
+	public static final class Snapshot {
+
+		private final SaSsoServerConfig serverConfig;
+		private final SaSsoClientConfig clientConfig;
+		private final SaSsoServerProcessor serverProcessor;
+		private final SaSsoServerTemplate serverTemplate;
+		private final SaSsoClientProcessor clientProcessor;
+		private final SaSsoClientTemplate clientTemplate;
+
+		private Snapshot(SaSsoServerConfig serverConfig, SaSsoClientConfig clientConfig,
+				SaSsoServerProcessor serverProcessor, SaSsoServerTemplate serverTemplate,
+				SaSsoClientProcessor clientProcessor, SaSsoClientTemplate clientTemplate) {
+			this.serverConfig = serverConfig;
+			this.clientConfig = clientConfig;
+			this.serverProcessor = serverProcessor;
+			this.serverTemplate = serverTemplate;
+			this.clientProcessor = clientProcessor;
+			this.clientTemplate = clientTemplate;
+		}
+
+		/** 把捕获时的 SSO Manager / Processor 写回去 */
+		public void restore() {
+			SaSsoManager.setServerConfig(serverConfig);
+			SaSsoManager.setClientConfig(clientConfig);
+			SaSsoServerProcessor.instance = serverProcessor;
+			SaSsoServerProcessor.instance.ssoServerTemplate = serverTemplate;
+			SaSsoClientProcessor.instance = clientProcessor;
+			SaSsoClientProcessor.instance.ssoClientTemplate = clientTemplate;
+		}
 	}
 
 }

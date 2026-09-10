@@ -17,7 +17,7 @@ package cn.dev33.satoken.oauth2.config;
 
 import cn.dev33.satoken.oauth2.consts.SaOAuth2Consts;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Server 端配置：默认值、getter/setter、clients 为 null 时 addClient、toString
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2ServerConfigTest {
 
 	/** 默认值应该是授权码/隐藏/密码/凭证全开、超时这一套 */

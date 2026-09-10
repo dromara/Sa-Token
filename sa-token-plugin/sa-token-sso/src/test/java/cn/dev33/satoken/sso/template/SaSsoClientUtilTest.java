@@ -21,7 +21,7 @@ import cn.dev33.satoken.sso.support.SsoTestSupport;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ import java.util.LinkedHashMap;
 /**
  * Client 工具类每个公开静态方法都要走到模板上
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoClientUtilTest {
 
 	/** 每个用例前换干净 Processor */

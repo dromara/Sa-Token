@@ -20,7 +20,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
- * 每个测试方法前后自动复位 {@link cn.dev33.satoken.SaManager}，避免单测间全局状态污染。
+ * 每个测试方法前后自动复位 {@link cn.dev33.satoken.SaManager} 与 {@link cn.dev33.satoken.strategy.SaStrategy}，避免单测间全局状态污染。
  *
  * @author click33
  * @since 1.46.0
@@ -29,14 +29,14 @@ public class SaTokenExtension implements BeforeEachCallback, AfterEachCallback {
 
 	private SaTokenTestContext.Snapshot snapshot;
 
-	/** 每个用例开始前先拍快照，再把 SaManager 复位成干净状态 */
+	/** 每个用例开始前先拍快照，再把 SaManager / SaStrategy 复位成干净状态 */
 	@Override
 	public void beforeEach(ExtensionContext context) {
 		snapshot = SaTokenTestContext.capture();
 		SaTokenTestContext.reset();
 	}
 
-	/** 每个用例结束后把 SaManager 恢复成用例开始前的样子 */
+	/** 每个用例结束后把 SaManager / SaStrategy 恢复成用例开始前的样子 */
 	@Override
 	public void afterEach(ExtensionContext context) {
 		if (snapshot != null) {

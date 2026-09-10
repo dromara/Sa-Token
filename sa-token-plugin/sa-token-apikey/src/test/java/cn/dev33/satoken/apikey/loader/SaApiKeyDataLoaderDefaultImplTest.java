@@ -17,9 +17,8 @@ package cn.dev33.satoken.apikey.loader;
 
 import cn.dev33.satoken.apikey.SaApiKeyManager;
 import cn.dev33.satoken.apikey.config.SaApiKeyConfig;
-import org.junit.jupiter.api.AfterEach;
+import cn.dev33.satoken.apikey.support.ApiKeyTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,21 +27,8 @@ import org.junit.jupiter.api.Test;
  * @author click33
  * @since 1.46.0
  */
+@ApiKeyTest
 public class SaApiKeyDataLoaderDefaultImplTest {
-
-    private SaApiKeyConfig backupConfig;
-
-    /** 先把全局状态存一份，避免用例互相污染 */
-    @BeforeEach
-    public void backup() {
-        backupConfig = SaApiKeyManager.getConfig();
-    }
-
-    /** 把全局状态恢复回去 */
-    @AfterEach
-    public void restore() {
-        SaApiKeyManager.setConfig(backupConfig);
-    }
 
     /** getIsRecordIndex 应该跟随全局 SaApiKeyConfig */
     @Test

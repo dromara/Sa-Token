@@ -20,7 +20,7 @@ import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientModelException;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 /**
  * ClientId+Secret 注解处理器：对得上、密钥错 30115、完全没带 30191
  */
-@SaTokenTest
+@OAuth2Test
 public class SaCheckClientIdSecretHandlerTest {
 
 	private final SaCheckClientIdSecretHandler handler = new SaCheckClientIdSecretHandler();

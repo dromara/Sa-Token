@@ -22,14 +22,14 @@ import cn.dev33.satoken.sso.name.ApiName;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
  * 公共模板：换 paramName/apiName/stpLogic，找不到消息处理器
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoTemplateTest {
 
 	/** setParamName / setApiName 应该连缀写回 */

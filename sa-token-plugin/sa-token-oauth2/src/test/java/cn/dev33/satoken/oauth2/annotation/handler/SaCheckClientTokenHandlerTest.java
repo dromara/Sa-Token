@@ -21,7 +21,7 @@ import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientTokenException;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ import java.util.Arrays;
 /**
  * Client-Token 注解处理器：有效 token、缺 token、scope 不对
  */
-@SaTokenTest
+@OAuth2Test
 public class SaCheckClientTokenHandlerTest {
 
 	private final SaCheckClientTokenHandler handler = new SaCheckClientTokenHandler();

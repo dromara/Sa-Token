@@ -21,7 +21,7 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ import java.util.LinkedHashMap;
 /**
  * UnionId 权限处理器：client 有 subjectId 时往 AT extra 里塞 unionid
  */
-@SaTokenTest
+@OAuth2Test
 public class UnionIdScopeHandlerTest {
 
 	private final UnionIdScopeHandler handler = new UnionIdScopeHandler();

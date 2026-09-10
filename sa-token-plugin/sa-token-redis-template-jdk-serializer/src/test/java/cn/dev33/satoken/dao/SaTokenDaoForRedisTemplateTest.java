@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.dao;
 
-import com.pj.test.redis.SaTokenDaoStringTestCommon;
+import cn.dev33.satoken.test.redis.SaTokenDaoStringTestCommon;
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.protocol.ProtocolVersion;
 import org.junit.jupiter.api.Assertions;

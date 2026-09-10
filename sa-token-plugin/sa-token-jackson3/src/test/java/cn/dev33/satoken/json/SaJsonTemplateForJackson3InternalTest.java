@@ -73,8 +73,8 @@ public class SaJsonTemplateForJackson3InternalTest {
 	/** typeId 存在但非白名单拒绝（普通类型解析失败）时应该走通用包装，而不是误报白名单提示 */
 	@Test
 	void toSaJsonConvertException_notWhitelistDenied() {
-		InvalidTypeIdException source = new InvalidTypeIdException(null, "com.pj.test.model.NonExistent", null,
-				"Could not resolve type id 'com.pj.test.model.NonExistent'");
+		InvalidTypeIdException source = new InvalidTypeIdException(null, "cn.dev33.satoken.test.model.NonExistent", null,
+				"Could not resolve type id 'cn.dev33.satoken.test.model.NonExistent'");
 		SaJsonConvertException ex = SaJsonTemplateForJackson3.toSaJsonConvertException(source);
 		Assertions.assertSame(source, ex.getCause());
 		Assertions.assertFalse(ex.getMessage().contains("JSON 全局类型白名单"));

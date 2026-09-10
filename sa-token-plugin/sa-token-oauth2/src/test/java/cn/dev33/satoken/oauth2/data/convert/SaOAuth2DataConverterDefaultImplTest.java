@@ -25,7 +25,7 @@ import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.data.model.loader.SaClientModel;
 import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * 默认数据转换器：scope 分隔、各 Model 互转
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2DataConverterDefaultImplTest {
 
 	private SaOAuth2DataConverter converter;

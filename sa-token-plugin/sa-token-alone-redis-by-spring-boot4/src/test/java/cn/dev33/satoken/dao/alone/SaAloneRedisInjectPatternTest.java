@@ -19,7 +19,7 @@ import cn.dev33.satoken.dao.SaTokenDaoDefaultImpl;
 import cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate;
 import cn.dev33.satoken.exception.SaTokenException;
 import com.github.fppt.jedismock.RedisServer;
-import com.pj.test.redis.JedisMockRedisSupport;
+import cn.dev33.satoken.test.redis.JedisMockRedisSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;

@@ -22,7 +22,7 @@ import cn.dev33.satoken.oauth2.data.model.request.RequestAuthModel;
 import cn.dev33.satoken.oauth2.error.SaOAuth2ErrorCode;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2AccessTokenException;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ import java.util.Arrays;
 /**
  * Access-Token 注解处理器：有效 token、缺 token、scope 不对
  */
-@SaTokenTest
+@OAuth2Test
 public class SaCheckAccessTokenHandlerTest {
 
 	private final SaCheckAccessTokenHandler handler = new SaCheckAccessTokenHandler();

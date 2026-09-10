@@ -21,7 +21,7 @@ import cn.dev33.satoken.sso.processor.SaSsoServerProcessor;
 import cn.dev33.satoken.sso.support.SsoTestSupport;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Server 端单点注销消息处理器
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoMessageSignoutHandleTest {
 
 	/** 每个用例前换干净模板 */

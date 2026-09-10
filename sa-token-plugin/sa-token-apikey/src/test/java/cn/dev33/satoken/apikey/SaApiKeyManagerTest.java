@@ -17,10 +17,9 @@ package cn.dev33.satoken.apikey;
 
 import cn.dev33.satoken.apikey.config.SaApiKeyConfig;
 import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoader;
+import cn.dev33.satoken.apikey.support.ApiKeyTest;
 import cn.dev33.satoken.apikey.template.SaApiKeyTemplate;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -29,27 +28,8 @@ import org.junit.jupiter.api.Test;
  * @author click33
  * @since 1.46.0
  */
+@ApiKeyTest
 public class SaApiKeyManagerTest {
-
-    private SaApiKeyConfig backupConfig;
-    private SaApiKeyDataLoader backupLoader;
-    private SaApiKeyTemplate backupTemplate;
-
-    /** 先把全局状态存一份，避免用例互相污染 */
-    @BeforeEach
-    public void backup() {
-        backupConfig = SaApiKeyManager.getConfig();
-        backupLoader = SaApiKeyManager.getSaApiKeyDataLoader();
-        backupTemplate = SaApiKeyManager.getSaApiKeyTemplate();
-    }
-
-    /** 把全局状态恢复回去 */
-    @AfterEach
-    public void restore() {
-        SaApiKeyManager.setConfig(backupConfig);
-        SaApiKeyManager.setSaApiKeyDataLoader(backupLoader);
-        SaApiKeyManager.setSaApiKeyTemplate(backupTemplate);
-    }
 
     /** getConfig 多次调用应该返回同一个实例 */
     @Test

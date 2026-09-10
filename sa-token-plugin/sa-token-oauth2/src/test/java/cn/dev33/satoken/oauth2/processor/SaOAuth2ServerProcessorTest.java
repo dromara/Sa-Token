@@ -27,7 +27,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.secure.SaBase64Util;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * Server 处理器：authorize / token / refresh / revoke / doLogin / doConfirm / client_token
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2ServerProcessorTest {
 
 	/** 每个用例前换干净 OAuth2 现场 */

@@ -26,13 +26,10 @@ import cn.dev33.satoken.same.SaSameTemplate;
 import cn.dev33.satoken.secure.totp.SaTotpTemplate;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJson;
 import cn.dev33.satoken.stp.StpInterfaceDefaultImpl;
-import cn.dev33.satoken.fun.strategy.SaGetSaTokenConfigFunction;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.temp.SaTempTemplate;
 import cn.dev33.satoken.test.SaTokenTest;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -45,21 +42,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @SaTokenTest
 public class SaManagerRemainingTest {
-
-	private SaGetSaTokenConfigFunction savedGetSaTokenConfig;
-
-	/** 把策略状态恢复回去 */
-	@BeforeEach
-	void clearStrategyConfigOverride() {
-		savedGetSaTokenConfig = SaStrategy.instance.getSaTokenConfig;
-		SaStrategy.instance.getSaTokenConfig = null;
-	}
-
-	/** 把策略状态恢复回去 */
-	@AfterEach
-	void restoreStrategy() {
-		SaStrategy.instance.getSaTokenConfig = savedGetSaTokenConfig;
-	}
 
 	/** config 为 null 时 getConfig 应懒加载默认配置 */
 	@Test

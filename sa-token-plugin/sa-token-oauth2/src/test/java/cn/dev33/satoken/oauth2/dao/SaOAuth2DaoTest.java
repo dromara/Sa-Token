@@ -24,7 +24,7 @@ import cn.dev33.satoken.oauth2.data.model.CodeModel;
 import cn.dev33.satoken.oauth2.data.model.RefreshTokenModel;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * OAuth2 Dao：code / AT / RT / CT / 索引溢出 / 授权记录 / state
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2DaoTest {
 
 	private SaOAuth2Dao dao;

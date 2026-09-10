@@ -26,7 +26,7 @@ import cn.dev33.satoken.sign.SaSignManager;
 import cn.dev33.satoken.sign.config.SaSignConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Client 模板：拼认证地址、getData、推消息、注销
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoClientTemplateTest {
 
 	private SaSsoClientTemplate tpl;

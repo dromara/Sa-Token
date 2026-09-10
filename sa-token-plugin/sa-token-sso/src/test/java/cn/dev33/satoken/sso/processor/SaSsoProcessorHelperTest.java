@@ -18,7 +18,7 @@ package cn.dev33.satoken.sso.processor;
 import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.sso.support.SsoTestSupport;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * 注销回跳：self、url、没 back
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoProcessorHelperTest {
 
 	/** back=self 应该回一段刷新脚本，并带上 html Content-Type */

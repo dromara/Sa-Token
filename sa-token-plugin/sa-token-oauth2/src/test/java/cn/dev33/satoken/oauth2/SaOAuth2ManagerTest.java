@@ -29,7 +29,7 @@ import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 /**
  * OAuth2 总控：get/set 各 Bean、置空后再 get 会懒加载默认实现
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2ManagerTest {
 
 	/** 每个用例前先装一套默认配置 */

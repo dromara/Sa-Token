@@ -26,7 +26,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2Exception;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * OIDC 权限处理器：iss、nonce、jwt id_token、extra 去 null
  */
-@SaTokenTest
+@OAuth2Test
 public class OidcScopeHandlerTest {
 
 	private final OidcScopeHandler handler = new OidcScopeHandler();

@@ -19,7 +19,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate;
 import cn.dev33.satoken.dao.SaTokenDaoForRedisTemplateUseJdkSerializer;
 import com.github.fppt.jedismock.RedisServer;
-import com.pj.test.redis.JedisMockRedisSupport;
+import cn.dev33.satoken.test.redis.JedisMockRedisSupport;
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.protocol.ProtocolVersion;
 import org.junit.jupiter.api.AfterAll;

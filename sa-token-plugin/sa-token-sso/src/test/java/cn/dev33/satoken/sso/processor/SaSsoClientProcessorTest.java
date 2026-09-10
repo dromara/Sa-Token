@@ -24,7 +24,7 @@ import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.sso.util.SaSsoConsts;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Client 处理器：/sso/login、logout、pushC、logoutCall、checkTicket
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoClientProcessorTest {
 
 	/** 每个用例前换干净 Processor，默认把推送回 200 */

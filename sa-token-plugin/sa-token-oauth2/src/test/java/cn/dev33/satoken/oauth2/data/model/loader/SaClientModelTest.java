@@ -16,7 +16,7 @@
 package cn.dev33.satoken.oauth2.data.model.loader;
 
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Client 模型：无参走策略默认值、四参构造、list 为 null 时 add*、getter/setter、toString
  */
-@SaTokenTest
+@OAuth2Test
 public class SaClientModelTest {
 
 	/** 每个用例前先装默认配置，无参构造才能从全局配置抄超时 */

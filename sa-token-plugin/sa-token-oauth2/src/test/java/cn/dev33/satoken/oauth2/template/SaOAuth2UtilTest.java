@@ -29,7 +29,7 @@ import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientModelException;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2ClientTokenException;
 import cn.dev33.satoken.oauth2.exception.SaOAuth2RefreshTokenException;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * SaOAuth2Util 每个公开静态方法都要走到模板上，并且断言结果
  */
-@SaTokenTest
+@OAuth2Test
 public class SaOAuth2UtilTest {
 
 	/** 每个用例前换干净 OAuth2 Bean 和默认 client */

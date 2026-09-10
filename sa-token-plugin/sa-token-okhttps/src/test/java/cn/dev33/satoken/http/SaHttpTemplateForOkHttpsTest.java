@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.http;
 
-import com.pj.test.http.SaHttpTemplateTestCommon;
+import cn.dev33.satoken.test.http.SaHttpTemplateTestCommon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

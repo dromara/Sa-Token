@@ -21,7 +21,7 @@ import cn.dev33.satoken.oauth2.data.model.AccessTokenModel;
 import cn.dev33.satoken.oauth2.data.model.ClientTokenModel;
 import cn.dev33.satoken.oauth2.scope.CommonScope;
 import cn.dev33.satoken.oauth2.support.OAuth2TestSupport;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.oauth2.support.OAuth2Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ import java.util.LinkedHashMap;
 /**
  * OpenId 权限处理器：给 AT 塞 openid，CT 什么都不做
  */
-@SaTokenTest
+@OAuth2Test
 public class OpenIdScopeHandlerTest {
 
 	private final OpenIdScopeHandler handler = new OpenIdScopeHandler();

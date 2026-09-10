@@ -15,7 +15,7 @@
  */
 package cn.dev33.satoken.dao;
 
-import com.pj.test.redis.SaTokenDaoStringTestCommon;
+import cn.dev33.satoken.test.redis.SaTokenDaoStringTestCommon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.noear.redisx.RedisClient;

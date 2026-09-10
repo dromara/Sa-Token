@@ -17,12 +17,14 @@ package cn.dev33.satoken.sso;
 
 import cn.dev33.satoken.sso.config.SaSsoClientConfig;
 import cn.dev33.satoken.sso.config.SaSsoServerConfig;
+import cn.dev33.satoken.sso.support.SsoTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
  * SSO 总控：get/set、关闭验签时打警告、懒加载
  */
+@SsoTest
 public class SaSsoManagerTest {
 
 	/** get/set Server、Client 配置应该能写回去 */

@@ -19,6 +19,7 @@ import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.sign.SaSignManager;
 import cn.dev33.satoken.sign.config.SaSignConfig;
 import cn.dev33.satoken.sign.template.SaSignUtil;
+import cn.dev33.satoken.sign.support.SignTest;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @since 1.46.0
  */
 @SaTokenTest
+@SignTest
 public class SaSignUtilTest {
 
     private static final String KEY = "SwqFmsKxcbq23";

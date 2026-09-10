@@ -17,11 +17,10 @@ package cn.dev33.satoken.apikey.template;
 
 import cn.dev33.satoken.apikey.SaApiKeyManager;
 import cn.dev33.satoken.apikey.config.SaApiKeyConfig;
-import cn.dev33.satoken.apikey.loader.SaApiKeyDataLoader;
 import cn.dev33.satoken.apikey.model.ApiKeyModel;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.apikey.support.ApiKeyTest;
 import cn.dev33.satoken.test.SaTokenTest;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,27 +32,13 @@ import org.junit.jupiter.api.Test;
  * @since 1.46.0
  */
 @SaTokenTest
+@ApiKeyTest
 public class SaApiKeyTemplateWriteTest {
 
-    private SaApiKeyConfig backupConfig;
-    private SaApiKeyDataLoader backupLoader;
-    private SaApiKeyTemplate backupTemplate;
-
-    /** 把全局状态恢复回去 */
+    /** 每个用例前关掉索引记录 */
     @BeforeEach
-    public void backup() {
-        backupConfig = SaApiKeyManager.getConfig();
-        backupLoader = SaApiKeyManager.getSaApiKeyDataLoader();
-        backupTemplate = SaApiKeyManager.getSaApiKeyTemplate();
+    public void setup() {
         SaApiKeyManager.setConfig(new SaApiKeyConfig().setIsRecordIndex(false));
-    }
-
-    /** 把全局状态恢复回去 */
-    @AfterEach
-    public void restore() {
-        SaApiKeyManager.setConfig(backupConfig);
-        SaApiKeyManager.setSaApiKeyDataLoader(backupLoader);
-        SaApiKeyManager.setSaApiKeyTemplate(backupTemplate);
     }
 
     private ApiKeyModel buildAk(String apiKey, Object loginId, long expiresTime, boolean valid) {

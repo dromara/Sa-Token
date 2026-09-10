@@ -19,7 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.exception.NotImplException;
 import cn.dev33.satoken.http.SaHttpTemplate;
 import cn.dev33.satoken.sso.support.StubSaJsonTemplate;
-import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.sso.support.SsoTest;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Client 策略默认 lambda：身份转换、ticketResultHandle、发请求
  */
-@SaTokenTest
+@SsoTest
 public class SaSsoClientStrategyTest {
 
 	/** 默认 convert 应该原样返回 */
