@@ -20,7 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * {@link SaStorageForServlet} Request 作用域存储测试
+ * {@link SaStorageForServlet} Request 作用域存储测试。
+ * 改 Storage 行为时，必须同时改 sa-token-servlet 与 sa-token-jakarta-servlet 对应测试。
  */
 public class SaStorageForServletTest {
 

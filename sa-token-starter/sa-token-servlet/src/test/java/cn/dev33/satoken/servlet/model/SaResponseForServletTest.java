@@ -26,7 +26,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
 
 /**
- * {@link SaResponseForServlet} 响应包装测试
+ * {@link SaResponseForServlet} 响应包装测试。
+ * 改 Response 行为时，必须同时改 sa-token-servlet 与 sa-token-jakarta-servlet 对应测试。
  */
 public class SaResponseForServletTest {
 

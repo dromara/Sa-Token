@@ -20,17 +20,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * {@link SaBeanRegister} Bean 注册测试
+ * {@link SaBeanRegister} 上下文路径加载器测试（默认 SaTokenConfig 工厂由 Boot 集成冒烟覆盖）
  */
 public class SaBeanRegisterTest {
 
-    /** 应该能注册出配置对象和上下文路径加载器 */
+    /** 上下文路径加载器工厂应该能 new 出来 */
     @Test
-    public void registerBeans_shouldCreateObjects() {
-        SaBeanRegister register = new SaBeanRegister();
-
-        Assertions.assertNotNull(register.getSaTokenConfig());
-        ApplicationContextPathLoading loading = register.getApplicationContextPathLoading();
+    public void getApplicationContextPathLoading_notNull() {
+        ApplicationContextPathLoading loading = new SaBeanRegister().getApplicationContextPathLoading();
         Assertions.assertNotNull(loading);
     }
 

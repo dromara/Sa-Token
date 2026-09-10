@@ -38,7 +38,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * {@link SaRequestForServlet} 请求包装测试
+ * {@link SaRequestForServlet} 请求包装测试。
+ * 改 Request 行为时，必须同时改 sa-token-servlet 与 sa-token-jakarta-servlet 对应测试。
  */
 @SaTokenTest
 public class SaRequestForServletTest {

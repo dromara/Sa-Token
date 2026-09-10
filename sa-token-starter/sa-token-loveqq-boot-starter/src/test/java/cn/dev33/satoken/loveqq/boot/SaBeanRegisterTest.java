@@ -15,7 +15,6 @@
  */
 package cn.dev33.satoken.loveqq.boot;
 
-import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.dao.SaTokenDaoForRedisson;
 import cn.dev33.satoken.loveqq.boot.context.path.ApplicationContextPathLoading;
@@ -30,7 +29,7 @@ import org.mockito.Mockito;
 import org.redisson.api.RedissonClient;
 
 /**
- * {@link SaBeanRegister} 策略重写与默认 Bean 工厂测试
+ * {@link SaBeanRegister} 策略重写与可选 Redisson Dao 测试（默认 Config 工厂由 integration-loveqq 覆盖）
  */
 @SaTokenTest
 public class SaBeanRegisterTest {
@@ -48,13 +47,6 @@ public class SaBeanRegisterTest {
 				instanceof cn.dev33.satoken.loveqq.boot.model.LoveqqSaResponse);
 		Assertions.assertTrue(SaStrategy.instance.createSaStorage.apply(request)
 				instanceof cn.dev33.satoken.loveqq.boot.model.LoveqqSaStorage);
-	}
-
-	/** getSaTokenConfig 应该 new 一份默认配置 */
-	@Test
-	public void getSaTokenConfig_returnDefault() {
-		SaTokenConfig config = new SaBeanRegister().getSaTokenConfig();
-		Assertions.assertNotNull(config);
 	}
 
 	/** 有 RedissonClient 时应该组装出 Redisson Dao，但不连真 Redis */
