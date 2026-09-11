@@ -185,13 +185,6 @@ public class RouterIntegrationTest extends AbstractMockMvcIntegrationTest {
 	/** 登录后访问需登录接口时应该能通过 */
 	@Test
 	public void testGetInfo200() {
-//		SaResult res = request("/rt/getInfo_200");
-//		Assertions.assertEquals(res.getCode(), 200);
-//		SaResult res1 = request("/rt/getInfo_201");
-//		Assertions.assertEquals(res1.getCode(), 201);
-//		SaResult res2 = request("/rt/getInfo_202");
-//		Assertions.assertEquals(res2.getCode(), 401);
-		
 		// 登录拿到Token 
     	SaResult resLogin = request("/rt/login?id=10001");
     	String satoken = resLogin.get("token", String.class);

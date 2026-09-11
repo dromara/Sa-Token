@@ -1,6 +1,6 @@
 # 端口
 server:
-  port: 8081
+  port: 0
 
 # sa-token 集成测试配置
 sa-token:

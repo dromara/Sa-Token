@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConsumerController {
 
-	@DubboReference(check = false, injvm = false, url = "dubbo://127.0.0.1:28081")
+	@DubboReference(check = false, injvm = false, url = "dubbo://127.0.0.1:${test.dubbo.port}")
 	private DemoService demoService;
 
 	/** Consumer 登录后再 RPC，看 Provider 能不能接到会话 */

@@ -22,7 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Map;
 
 /**
@@ -33,6 +37,18 @@ public class Dubbo3HttpIntegrationTest {
 
 	@Autowired
 	TestRestTemplate rest;
+
+	/** 容器启动前预留一个空闲端口，Provider 监听、Consumer 直连都用它，避免固定端口撞车 */
+	@DynamicPropertySource
+	static void dubboPort(DynamicPropertyRegistry registry) throws IOException {
+		int port;
+		try (ServerSocket socket = new ServerSocket(0)) {
+			port = socket.getLocalPort();
+		}
+		String portValue = String.valueOf(port);
+		registry.add("dubbo.protocol.port", () -> portValue);
+		registry.add("test.dubbo.port", () -> portValue);
+	}
 
 	/** Consumer 登录后再 RPC，Provider 应该已经是登录态 */
 	@Test

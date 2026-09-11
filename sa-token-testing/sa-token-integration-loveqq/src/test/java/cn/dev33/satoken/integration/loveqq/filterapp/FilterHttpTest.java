@@ -19,6 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.apikey.SaApiKeyManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.dao.SaTokenDaoForRedisson;
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.integration.loveqq.support.LoveqqHttp;
 import cn.dev33.satoken.loveqq.boot.SaBeanInject;
 import cn.dev33.satoken.loveqq.boot.SaBeanRegister;
@@ -111,9 +112,7 @@ public class FilterHttpTest {
 	/** 未登录访问业务接口应该被 Filter 拦住 */
 	@Test
 	public void user_withoutLogin_shouldBeBlocked() {
-		String body = LoveqqHttp.get(port, "/user");
-		Assertions.assertTrue(body.contains("未能读取到有效 token") || body.toLowerCase().contains("token")
-				|| body.contains("未登录") || !body.isEmpty());
+		Assertions.assertEquals(NotLoginException.NOT_TOKEN_MESSAGE, LoveqqHttp.get(port, "/user"));
 	}
 
 	/** exclude 的公开路径未登录也应该放行 */

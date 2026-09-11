@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.integration.solon.interceptorapp;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.solon.integration.SaTokenInterceptor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -44,9 +45,7 @@ public class InterceptorHttpTest extends HttpTester {
 	/** 未登录访问业务接口应该被拦截器拦住 */
 	@Test
 	public void user_withoutLogin_shouldBeBlocked() {
-		String body = path("/user").get();
-		Assertions.assertTrue(body.contains("未能读取到有效 token") || body.toLowerCase().contains("token")
-				|| body.contains("未登录") || !body.isEmpty());
+		Assertions.assertEquals(NotLoginException.NOT_TOKEN_MESSAGE, path("/user").get());
 	}
 
 	/** exclude 的公开路径未登录也应该放行 */
