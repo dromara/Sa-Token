@@ -253,11 +253,6 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-plugin-contract-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-integration-boot2</artifactId>
 			<scope>test</scope>
 		</dependency>

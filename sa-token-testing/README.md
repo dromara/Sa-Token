@@ -6,7 +6,7 @@
 
 ### sa-token-test-support
 
-测试支持（无 `@Test`），供契约测试等复用。
+测试支持（无 `@Test`），提供共享测试模型（SysUser / SysRole）供各插件单测复用（如 sa-token-serializer-features）。
 
 ### sa-token-json-test-common
 
@@ -35,17 +35,6 @@
 - sa-token-okhttps
 - sa-token-rest-client
 - sa-token-rest-template
-
-### sa-token-plugin-contract-test
-
-契约测试（无 Spring 容器）：
-
-- sa-token-jwt
-- sa-token-temp-jwt
-- sa-token-serializer-features
-- sa-token-sso
-- sa-token-oauth2
-- sa-token-sign
 
 ### sa-token-integration-boot2
 
