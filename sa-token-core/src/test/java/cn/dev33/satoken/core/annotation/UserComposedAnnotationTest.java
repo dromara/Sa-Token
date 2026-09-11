@@ -84,6 +84,24 @@ public class UserComposedAnnotationTest {
 		});
 	}
 
+	/** 同一条 user:add / user:delete，手写 StpUtil 和注解扫描的放行、失败类型应该一致 */
+	@Test
+	void userAdd_annotation_sameAsStpUtil() throws Exception {
+		Method addUser = UserAuthApi.class.getMethod("addUser");
+		Method deleteUser = UserAuthApi.class.getMethod("deleteUser");
+		SaTokenContextMockUtil.setMockContext(() -> {
+			StpUtil.login(10001);
+			Assertions.assertDoesNotThrow(() -> StpUtil.checkPermission("user:add"));
+			Assertions.assertDoesNotThrow(() -> checkMethodAnnotation(addUser));
+			NotPermissionException fromApi = Assertions.assertThrows(NotPermissionException.class,
+					() -> StpUtil.checkPermission("user:delete"));
+			NotPermissionException fromAnnotation = Assertions.assertThrows(NotPermissionException.class,
+					() -> checkMethodAnnotation(deleteUser));
+			Assertions.assertEquals(fromApi.getPermission(), fromAnnotation.getPermission());
+			Assertions.assertEquals(fromApi.getLoginType(), fromAnnotation.getLoginType());
+		});
+	}
+
 	/** 默认 getAnnotation 看不到组合注解，用户不重写策略时 @RequireUserAdd 不会触发权限校验 */
 	@Test
 	void defaultLookup_ignoresComposedAnnotation() throws Exception {

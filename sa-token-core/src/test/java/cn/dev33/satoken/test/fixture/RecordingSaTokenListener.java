@@ -35,6 +35,11 @@ public class RecordingSaTokenListener extends SaTokenListenerForSimple {
 	/** 最近一次登录/踢人/顶号/续期带上的 token */
 	public String lastToken;
 
+	/** 把记下的事件收成一条时间线，例如 login==>kickout */
+	public String stepStr() {
+		return String.join("==>", events);
+	}
+
 	@Override
 	public void doLogin(String loginType, Object loginId, String tokenValue, SaLoginParameter loginParameter) {
 		events.add("login");

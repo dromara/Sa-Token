@@ -13,36 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.dev33.satoken.core.extension;
+package cn.dev33.satoken.core.stp.kickout;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
-import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListener;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.test.SaTokenTest;
-import cn.dev33.satoken.test.fixture.PrefixTokenCreator;
 import cn.dev33.satoken.test.fixture.RecordingSaTokenListener;
-import cn.dev33.satoken.test.fixture.RecordingStpInterface;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * 权限、事件、策略扩展点按用户项目写法挂上去，副作用应可观察。
+ * 踢人场景：夹具、步骤串、公开 API 都放在这个包里，不跟别的能力混扫。
  *
  * @author click33
  * @since 1.46.0
  */
 @SaTokenTest
-public class UserExtensionPointTest {
+public class KickoutSequenceTest {
 
 	private List<SaTokenListener> savedListeners;
 
@@ -59,48 +58,31 @@ public class UserExtensionPointTest {
 		SaTokenEventCenter.setListenerList(savedListeners);
 	}
 
-	/** 挂上 RecordingStpInterface 后，有权限的该过、没权限的该拦，并且能看到问过哪个账号 */
+	/** kickout 后旧 Token 应标成 KICK_OUT，事件串是 login==>kickout，下次带着旧 Token 请求要失败 */
 	@Test
-	void recordingStpInterface_drivesPermissionCheck() {
-		RecordingStpInterface stpInterface = new RecordingStpInterface(
-				Arrays.asList("user:add"),
-				Arrays.asList("user"));
-		SaManager.setStpInterface(stpInterface);
-
-		SaTokenContextMockUtil.setMockContext(() -> {
-			StpUtil.login(20001);
-			Assertions.assertDoesNotThrow(() -> StpUtil.checkPermission("user:add"));
-			Assertions.assertThrows(NotPermissionException.class, () -> StpUtil.checkPermission("user:delete"));
-			Assertions.assertEquals("20001", String.valueOf(stpInterface.lastPermissionLoginId));
-		});
-	}
-
-	/** 挂上 RecordingSaTokenListener 后，登录和踢人的步骤串应该是 login==>kickout */
-	@Test
-	void recordingListener_seesLoginThenKickout() {
+	void kickout_oldTokenFails_andStepStr() {
 		RecordingSaTokenListener listener = new RecordingSaTokenListener();
 		SaTokenEventCenter.registerListener(listener);
+		SaTokenDao dao = SaManager.getSaTokenDao();
+		String tokenName = StpUtil.getTokenName();
 
-		SaTokenContextMockUtil.setMockContext(() -> {
-			StpUtil.login(20002);
-			String token = StpUtil.getTokenValue();
+		String t1 = SaTokenContextMockUtil.setMockContext(() -> {
+			StpUtil.login(10002);
 			Assertions.assertEquals("login", listener.stepStr());
-			Assertions.assertEquals(token, listener.lastToken);
-			StpUtil.kickout(20002);
-			Assertions.assertEquals("login==>kickout", listener.stepStr());
-			Assertions.assertEquals(token, listener.lastToken);
+			return StpUtil.getTokenValue();
 		});
-	}
-
-	/** 挂上 PrefixTokenCreator 后，登录生成的 Token 应该带上用户指定的前缀 */
-	@Test
-	void prefixTokenCreator_writesObservableToken() {
-		SaStrategy.instance.createToken = new PrefixTokenCreator("shop");
 
 		SaTokenContextMockUtil.setMockContext(() -> {
-			StpUtil.login(20003);
-			String token = StpUtil.getTokenValue();
-			Assertions.assertTrue(token.startsWith("shop-20003-"));
+			StpUtil.kickout(10002);
+			Assertions.assertEquals("login==>kickout", listener.stepStr());
+			Assertions.assertEquals(NotLoginException.KICK_OUT,
+					dao.get(StpUtil.getStpLogic().splicingKeyTokenValue(t1)));
+		});
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			((SaRequestForMock) SaHolder.getRequest()).headerMap.put(tokenName, t1);
+			NotLoginException e = Assertions.assertThrows(NotLoginException.class, StpUtil::checkLogin);
+			Assertions.assertEquals(NotLoginException.KICK_OUT, e.getType());
 		});
 	}
 
