@@ -17,87 +17,70 @@ package cn.dev33.satoken.integration.boot2.plugin;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.integration.boot2.IntegrationBoot2Application;
 import cn.dev33.satoken.integration.boot2.support.AbstractMockMvcIntegrationTest;
-import cn.dev33.satoken.integration.boot2.support.MockMvcSaResultClient;
 import cn.dev33.satoken.util.SaResult;
 
 /**
  * SaRequest API 与 Http Basic 认证集成测试。
  */
+@SpringBootTest(classes = IntegrationBoot2Application.class)
 public class MoreIntegrationTest extends AbstractMockMvcIntegrationTest {
 
 	/** 基础 API 应该能正常调通 */
 	@Test
 	public void testApi() {
-		SaResult res = requestWithDivHeader("/more/getInfo?name=zhang");
-		Assertions.assertEquals(res.getData(), true);
+		Assertions.assertEquals(true, requestWithDivHeader("/more/getInfo?name=zhang").getData());
 	}
 
 	/** Http Basic 认证失败应该 401，带正确头时应该通过 */
 	@Test
 	public void testBasic() throws Exception {
-		
-		// ---------------- 认证不通过
-		MvcResult mvcResult = mockMvc.perform(
+		MvcResult unauthorized = mockMvc.perform(
 				MockMvcRequestBuilders.post("/more/basicAuth")
 				.contentType(MediaType.APPLICATION_PROBLEM_JSON)
 				.accept(MediaType.APPLICATION_PROBLEM_JSON)
 			)
 			.andExpect(MockMvcResultMatchers.status().is(401))
 			.andReturn();
-	
-		// 转 SaResult 对象
-		String content = mvcResult.getResponse().getContentAsString();
-		SaResult res = MockMvcSaResultClient.parseBody(SaManager.getSaJsonTemplate(), content);
-		Assertions.assertEquals(res.getCode(), 903);
-		// 会有一个特殊响应头
-		String header = mvcResult.getResponse().getHeader("WWW-Authenticate");
-		Assertions.assertEquals(header, "Basic Realm=Sa-Token");
-		
-		
-		// ---------------- 认证通过
-    	MvcResult mvcResult2 = mockMvc.perform(
-    				MockMvcRequestBuilders.post("/more/basicAuth")
+
+		SaResult res = parseResult(unauthorized.getResponse().getContentAsString());
+		Assertions.assertEquals(903, res.getCode());
+		Assertions.assertEquals("Basic Realm=Sa-Token", unauthorized.getResponse().getHeader("WWW-Authenticate"));
+
+		MvcResult authorized = mockMvc.perform(
+				MockMvcRequestBuilders.post("/more/basicAuth")
+				.contentType(MediaType.APPLICATION_PROBLEM_JSON)
+				.accept(MediaType.APPLICATION_PROBLEM_JSON)
+				.header("Authorization", "Basic c2E6MTIzNDU2")
+			)
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andReturn();
+
+		Assertions.assertEquals(200, parseResult(authorized.getResponse().getContentAsString()).getCode());
+	}
+
+	/** 带 div 请求头发 POST */
+	private SaResult requestWithDivHeader(String path) {
+		try {
+			MvcResult mvcResult = mockMvc.perform(
+					MockMvcRequestBuilders.post(path)
 					.contentType(MediaType.APPLICATION_PROBLEM_JSON)
 					.accept(MediaType.APPLICATION_PROBLEM_JSON)
-					.header("Authorization", "Basic c2E6MTIzNDU2")
-    			)
-    			.andExpect(MockMvcResultMatchers.status().isOk())
-    			.andReturn();
-    	
-		// 转 Map 
-		String content2 = mvcResult2.getResponse().getContentAsString();
-		SaResult res2 = MockMvcSaResultClient.parseBody(SaManager.getSaJsonTemplate(), content2);
-		Assertions.assertEquals(res2.getCode(), 200);
-	}
-	
-
-    // 带 div 请求头的 POST 请求
-    private SaResult requestWithDivHeader(String path) {
-    	try {
-    		// 发请求 
-        	MvcResult mvcResult = mockMvc.perform(
-        				MockMvcRequestBuilders.post(path)
-    					.contentType(MediaType.APPLICATION_PROBLEM_JSON)
-    					.accept(MediaType.APPLICATION_PROBLEM_JSON)
-    					.header("div", "val")
-        			)
-        			.andExpect(MockMvcResultMatchers.status().isOk())
-        			.andReturn();
-
-    		String content = mvcResult.getResponse().getContentAsString();
-    		// 转 SaResult 对象
-    		return MockMvcSaResultClient.parseBody(SaManager.getSaJsonTemplate(), content);
-    		
+					.header("div", "val")
+				)
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andReturn();
+			return parseResult(mvcResult.getResponse().getContentAsString());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-    }
-    
+	}
+
 }

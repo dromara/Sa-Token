@@ -16,20 +16,21 @@
 package cn.dev33.satoken.integration.boot2.auth;
 
 import cn.dev33.satoken.integration.boot2.support.AbstractMockMvcIntegrationTest;
-import cn.dev33.satoken.util.SaResult;
+import cn.dev33.satoken.integration.boot2scene.AnnotationAuthSceneApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * 注解鉴权集成测试：{@code @SaCheckLogin} / Role / Permission / Safe / Disable / Ignore。
  */
+@SpringBootTest(classes = AnnotationAuthSceneApplication.class)
 public class AnnotationAuthIntegrationTest extends AbstractMockMvcIntegrationTest {
 
     /** 账号 10001 具备完整角色权限时，注解校验应该全部通过 */
     @Test
     public void annotationChecks_passForFullyAuthorizedUser() {
-        SaResult login = request("/at/login?id=10001");
-        String satoken = login.get("token", String.class);
+        String satoken = request("/at/login?id=10001").get("token", String.class);
         Assertions.assertNotNull(satoken);
 
         Assertions.assertEquals(200, request("/at/checkLogin?satoken=" + satoken).getCode());

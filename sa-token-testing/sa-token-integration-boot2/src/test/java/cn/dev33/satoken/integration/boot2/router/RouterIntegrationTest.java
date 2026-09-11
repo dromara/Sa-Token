@@ -16,18 +16,19 @@
 package cn.dev33.satoken.integration.boot2.router;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.integration.boot2.IntegrationBoot2Application;
 import cn.dev33.satoken.integration.boot2.support.AbstractMockMvcIntegrationTest;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.router.SaRouterStaff;
@@ -36,114 +37,58 @@ import cn.dev33.satoken.util.SaResult;
 /**
  * SaRouter 路由拦截集成测试（/rt/** 端点）。
  */
+@SpringBootTest(classes = IntegrationBoot2Application.class)
 public class RouterIntegrationTest extends AbstractMockMvcIntegrationTest {
 
 	/** 基础 API 应该能正常调通 */
 	@Test
 	public void testApi() {
-		// 是否命中 
-    	SaRouterStaff staff = SaRouter.match(false);
-    	Assertions.assertFalse(staff.isHit());
+		SaRouterStaff staff = SaRouter.match(false);
+		Assertions.assertFalse(staff.isHit());
 
-    	// 重置 
-    	staff.reset();
-    	Assertions.assertTrue(staff.isHit());
-    	
-    	// lambda 形式 
-    	SaRouterStaff staff2 = SaRouter.match(r -> false);
-    	Assertions.assertFalse(staff2.isHit());
-    	
-    	// 匹配 
-    	Assertions.assertTrue(SaRouter.isMatch("/user/**", "/user/add"));
-    	Assertions.assertTrue(SaRouter.isMatch(new String[] {"/user/**", "/art/**", "/goods/**"}, "/art/delete"));
-    	Assertions.assertTrue(SaRouter.isMatch(Arrays.asList("/user/**", "/art/**", "/goods/**"), "/art/delete"));
-    	Assertions.assertTrue(SaRouter.isMatch(new String[] {"POST", "GET", "PUT"},  "GET"));
-    	
-    	// 不匹配的 
-    	Assertions.assertTrue(SaRouter.notMatch(false).isHit());
-    	Assertions.assertTrue(SaRouter.notMatch(r -> false).isHit());
+		staff.reset();
+		Assertions.assertTrue(staff.isHit());
+
+		SaRouterStaff staff2 = SaRouter.match(r -> false);
+		Assertions.assertFalse(staff2.isHit());
+
+		Assertions.assertTrue(SaRouter.isMatch("/user/**", "/user/add"));
+		Assertions.assertTrue(SaRouter.isMatch(new String[] {"/user/**", "/art/**", "/goods/**"}, "/art/delete"));
+		Assertions.assertTrue(SaRouter.isMatch(Arrays.asList("/user/**", "/art/**", "/goods/**"), "/art/delete"));
+		Assertions.assertTrue(SaRouter.isMatch(new String[] {"POST", "GET", "PUT"},  "GET"));
+
+		Assertions.assertTrue(SaRouter.notMatch(false).isHit());
+		Assertions.assertTrue(SaRouter.notMatch(r -> false).isHit());
 	}
-	
+
 	/** 路由匹配命中和未命中时应该走到对应分支 */
 	@Test
 	public void testRouter() {
-		// getInfo 
-		SaResult res = request("/rt/getInfo?name=zhang");
-		Assertions.assertEquals(res.getCode(), 201);
-		
-		// getInfo2 
-		SaResult res2 = request("/rt/getInfo2");
-		Assertions.assertEquals(res2.getCode(), 202);
-
-		// getInfo3 
-		SaResult res3 = request("/rt/getInfo3");
-		Assertions.assertEquals(res3.getCode(), 203);
-
-		// getInfo4 
-		SaResult res4 = request("/rt/getInfo4");
-		Assertions.assertEquals(res4.getCode(), 204);
-		
-		// getInfo5 
-		SaResult res5 = request("/rt/getInfo5");
-		Assertions.assertEquals(res5.getCode(), 205);
-		
-		// getInfo6 
-		SaResult res6 = request("/rt/getInfo6");
-		Assertions.assertEquals(res6.getCode(), 206);
-		
-		// getInfo7 
-		SaResult res7 = request("/rt/getInfo7");
-		Assertions.assertEquals(res7.getCode(), 200);
-		
-		// getInfo8 
-		SaResult res8 = request("/rt/getInfo8");
-		Assertions.assertEquals(res8.getCode(), 200);
-		
-		// getInfo9 
-		SaResult res9 = request("/rt/getInfo9");
-		Assertions.assertEquals(res9.getCode(), 209);
-		
-		// getInfo10 
-		SaResult res10 = request("/rt/getInfo10");
-		Assertions.assertEquals(res10.getCode(), 200);
-		
-		// getInfo11 
-		SaResult res11 = request("/rt/getInfo11");
-		Assertions.assertEquals(res11.getCode(), 211);
-		
-		// getInfo12
-		SaResult res12 = request("/rt/getInfo12");
-		Assertions.assertEquals(res12.getCode(), 212);
-		
-		// getInfo13
-		SaResult res13 = request("/rt/getInfo13");
-		Assertions.assertEquals(res13.getCode(), 213);
-		
-		// getInfo14
-		SaResult res14 = request("/rt/getInfo14");
-		Assertions.assertEquals(res14.getCode(), 214);
-		
-		// getInfo15
-		SaResult res15 = request("/rt/getInfo15");
-		Assertions.assertEquals(res15.getCode(), 215);
-		
+		Assertions.assertEquals(201, request("/rt/getInfo?name=zhang").getCode());
+		Assertions.assertEquals(202, request("/rt/getInfo2").getCode());
+		Assertions.assertEquals(203, request("/rt/getInfo3").getCode());
+		Assertions.assertEquals(204, request("/rt/getInfo4").getCode());
+		Assertions.assertEquals(205, request("/rt/getInfo5").getCode());
+		Assertions.assertEquals(206, request("/rt/getInfo6").getCode());
+		Assertions.assertEquals(200, request("/rt/getInfo7").getCode());
+		Assertions.assertEquals(200, request("/rt/getInfo8").getCode());
+		Assertions.assertEquals(209, request("/rt/getInfo9").getCode());
+		Assertions.assertEquals(200, request("/rt/getInfo10").getCode());
+		Assertions.assertEquals(211, request("/rt/getInfo11").getCode());
+		Assertions.assertEquals(212, request("/rt/getInfo12").getCode());
+		Assertions.assertEquals(213, request("/rt/getInfo13").getCode());
+		Assertions.assertEquals(214, request("/rt/getInfo14").getCode());
+		Assertions.assertEquals(215, request("/rt/getInfo15").getCode());
 	}
 
 	/** getUrl 应该能拿到当前请求路径，自定义域名时应该拼上去 */
 	@Test
 	public void testGetUrl() {
-		// getInfo_101 
-		SaResult res = request("/rt/getInfo_101");
-		Assertions.assertTrue(res.getData().toString().endsWith("/rt/getInfo_101"));
-		
-		// getInfo_101，不包括后面的参数 
-		SaResult res2 = request("/rt/getInfo_101?id=1");
-		Assertions.assertTrue(res2.getData().toString().endsWith("/rt/getInfo_101"));
-		
-		// 自定义当前域名 
+		Assertions.assertTrue(request("/rt/getInfo_101").getData().toString().endsWith("/rt/getInfo_101"));
+		Assertions.assertTrue(request("/rt/getInfo_101?id=1").getData().toString().endsWith("/rt/getInfo_101"));
+
 		SaManager.getConfig().setCurrDomain("http://xxx.com");
-		SaResult res3 = request("/rt/getInfo_101?id=1");
-		Assertions.assertEquals(res3.getData().toString(), "http://xxx.com/rt/getInfo_101");
+		Assertions.assertEquals("http://xxx.com/rt/getInfo_101", request("/rt/getInfo_101?id=1").getData().toString());
 		SaManager.getConfig().setCurrDomain(null);
 	}
 
@@ -158,16 +103,11 @@ public class RouterIntegrationTest extends AbstractMockMvcIntegrationTest {
 			)
 			.andExpect(MockMvcResultMatchers.status().is(200))
 			.andReturn();
-		
-		// 转 Map 
-		String content = mvcResult.getResponse().getContentAsString();
-		Map<String, Object> map = SaManager.getSaJsonTemplate().jsonToMap(content);
-		
-		// 转 SaResult 对象 
-		SaResult res = new SaResult().setMap(map);
-		Assertions.assertEquals(res.getData(), "token-111");
+
+		SaResult res = parseResult(mvcResult.getResponse().getContentAsString());
+		Assertions.assertEquals("token-111", res.getData());
 	}
-	
+
 	/** 重定向时应该返回 302 并带上 Location */
 	@Test
 	public void testRedirect() throws Exception {
@@ -178,25 +118,21 @@ public class RouterIntegrationTest extends AbstractMockMvcIntegrationTest {
 			)
 			.andExpect(MockMvcResultMatchers.status().is(302))
 			.andReturn();
-	
-		Assertions.assertEquals(mvcResult.getResponse().getHeader("Location"), "/rt/getInfo3");
+
+		Assertions.assertEquals("/rt/getInfo3", mvcResult.getResponse().getHeader("Location"));
 	}
 
 	/** 登录后访问需登录接口时应该能通过 */
 	@Test
 	public void testGetInfo200() {
-		// 登录拿到Token 
-    	SaResult resLogin = request("/rt/login?id=10001");
-    	String satoken = resLogin.get("token", String.class);
-		SaResult res3 = request("/rt/getInfo_202?satoken=" + satoken);
-		Assertions.assertEquals(res3.getCode(), 200);
+		String satoken = request("/rt/login?id=10001").get("token", String.class);
+		Assertions.assertEquals(200, request("/rt/getInfo_202?satoken=" + satoken).getCode());
 	}
 
 	/** 请求转发时应该能转到目标接口 */
 	@Test
 	public void testForward() {
-		SaResult res = request("/rt/getInfo_103");
-		Assertions.assertEquals(res.getCode(), 200);
+		Assertions.assertEquals(200, request("/rt/getInfo_103").getCode());
 	}
-	
+
 }

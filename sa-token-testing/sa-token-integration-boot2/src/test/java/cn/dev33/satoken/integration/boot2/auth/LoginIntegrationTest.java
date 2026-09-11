@@ -15,11 +15,12 @@
  */
 package cn.dev33.satoken.integration.boot2.auth;
 
+import cn.dev33.satoken.integration.boot2.IntegrationBoot2Application;
 import cn.dev33.satoken.integration.boot2.support.AbstractMockMvcIntegrationTest;
-import cn.dev33.satoken.integration.boot2.support.MockMvcSaResultClient;
 import cn.dev33.satoken.util.SaResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,6 +31,7 @@ import java.util.Map;
 /**
  * 登录 / 注销 / Token 信息 HTTP 集成测试。
  */
+@SpringBootTest(classes = IntegrationBoot2Application.class)
 public class LoginIntegrationTest extends AbstractMockMvcIntegrationTest {
 
     /** 登录成功后应该写 Cookie 并返回 token */
@@ -64,10 +66,6 @@ public class LoginIntegrationTest extends AbstractMockMvcIntegrationTest {
 
         request("/acc/logout?satoken=" + token);
         Assertions.assertFalse(request("/acc/isLogin?satoken=" + token).get("data", Boolean.class));
-    }
-
-    private SaResult parseResult(String json) {
-        return MockMvcSaResultClient.parseBody(cn.dev33.satoken.SaManager.getSaJsonTemplate(), json);
     }
 
 }
