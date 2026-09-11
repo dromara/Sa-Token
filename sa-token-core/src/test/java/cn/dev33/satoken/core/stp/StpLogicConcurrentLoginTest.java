@@ -20,11 +20,15 @@ import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.ApiDisabledException;
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.stp.parameter.enums.SaLogoutMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedLoginExitMode;
+import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -152,6 +156,108 @@ public class StpLogicConcurrentLoginTest {
 		SaTokenDao dao = SaManager.getSaTokenDao();
 		Assertions.assertNotNull(dao.get(stpLogic.splicingKeyLastActiveTime(token2)));
 		Assertions.assertNull(dao.get(stpLogic.splicingKeyLastActiveTime(token1)));
+	}
+
+	/** isShare=true 时同设备类型重复登录应复用同一 Token */
+	@Test
+	void isShare_reusesTokenOnSameDeviceType() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(true);
+		config.setIsShare(true);
+		SaManager.setConfig(config);
+
+		SaLoginParameter param = new SaLoginParameter().setDeviceType("PC");
+		String token1 = stpLogic.createLoginSession(50001, param);
+		String token2 = stpLogic.createLoginSession(50001, param);
+		Assertions.assertEquals(token1, token2);
+		Assertions.assertEquals("50001", SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token1)));
+	}
+
+	/** isConcurrent=false 时二次登录应将旧 Token 标记为 BE_REPLACED */
+	@Test
+	void isConcurrentFalse_replacesPreviousSession() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(false);
+		config.setReplacedLoginExitMode(SaReplacedLoginExitMode.OLD_DEVICE);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50002, "PC");
+			String oldToken = stpLogic.getTokenValue();
+			stpLogic.login(50002, "PC");
+			String newToken = stpLogic.getTokenValue();
+			Assertions.assertNotEquals(oldToken, newToken);
+			Assertions.assertEquals(NotLoginException.BE_REPLACED,
+					SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(oldToken)));
+			Assertions.assertTrue(stpLogic.isLogin());
+		});
+	}
+
+	/** NEW_DEVICE 模式下新设备登录应拒绝并保留原 Token */
+	@Test
+	void replacedLoginExitMode_newDevice_rejectsSecondLogin() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(false);
+		config.setReplacedLoginExitMode(SaReplacedLoginExitMode.NEW_DEVICE);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50003, "PC");
+			String firstToken = stpLogic.getTokenValue();
+			Assertions.assertThrows(SaTokenException.class, () -> stpLogic.login(50003, "APP"));
+			Assertions.assertEquals(firstToken, stpLogic.getTokenValue());
+			Assertions.assertTrue(stpLogic.isLogin(50003));
+		});
+	}
+
+	/** OLD_DEVICE+ALL_DEVICE_TYPE 模式下新登录应顶掉所有旧 Token */
+	@Test
+	void replacedLoginExitMode_oldDevice_allDeviceTypeReplacesEverywhere() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(false);
+		config.setReplacedLoginExitMode(SaReplacedLoginExitMode.OLD_DEVICE);
+		config.setReplacedRange(SaReplacedRange.ALL_DEVICE_TYPE);
+		SaManager.setConfig(config);
+
+		String pcToken = stpLogic.createLoginSession(50004, new SaLoginParameter().setDeviceType("PC"));
+		String appToken = stpLogic.createLoginSession(50004, new SaLoginParameter().setDeviceType("APP"));
+		SaTokenDao dao = SaManager.getSaTokenDao();
+
+		stpLogic.createLoginSession(50004, new SaLoginParameter().setDeviceType("MINI"));
+		Assertions.assertEquals(NotLoginException.BE_REPLACED, dao.get(stpLogic.splicingKeyTokenValue(pcToken)));
+		Assertions.assertEquals(NotLoginException.BE_REPLACED, dao.get(stpLogic.splicingKeyTokenValue(appToken)));
+	}
+
+	/** overflowLogoutMode=KICKOUT 时超出 maxLoginCount 应将旧 Token 标记 KICK_OUT */
+	@Test
+	void maxLoginCount_overflowLogoutMode_kickout() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(true);
+		config.setIsShare(false);
+		config.setMaxLoginCount(1);
+		config.setOverflowLogoutMode(SaLogoutMode.KICKOUT);
+		SaManager.setConfig(config);
+
+		String token1 = stpLogic.createLoginSession(50006, new SaLoginParameter().setDeviceType("PC"));
+		stpLogic.createLoginSession(50006, new SaLoginParameter().setDeviceType("APP"));
+		Assertions.assertEquals(NotLoginException.KICK_OUT,
+				SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token1)));
+	}
+
+	/** overflowLogoutMode=REPLACED 时超出 maxLoginCount 应将旧 Token 标记 BE_REPLACED */
+	@Test
+	void maxLoginCount_overflowLogoutMode_replaced() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(true);
+		config.setIsShare(false);
+		config.setMaxLoginCount(1);
+		config.setOverflowLogoutMode(SaLogoutMode.REPLACED);
+		SaManager.setConfig(config);
+
+		String token1 = stpLogic.createLoginSession(50007, new SaLoginParameter().setDeviceType("PC"));
+		stpLogic.createLoginSession(50007, new SaLoginParameter().setDeviceType("APP"));
+		Assertions.assertEquals(NotLoginException.BE_REPLACED,
+				SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token1)));
 	}
 
 }

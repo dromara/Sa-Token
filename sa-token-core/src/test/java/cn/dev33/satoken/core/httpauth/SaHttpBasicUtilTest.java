@@ -15,6 +15,8 @@
  */
 package cn.dev33.satoken.core.httpauth;
 
+import cn.dev33.satoken.annotation.SaCheckHttpBasic;
+import cn.dev33.satoken.annotation.handler.SaCheckHttpBasicHandler;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
@@ -59,6 +61,36 @@ public class SaHttpBasicUtilTest {
 
 			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("sa:wrong"));
 			Assertions.assertThrows(NotHttpBasicAuthException.class, () -> SaHttpBasicUtil.check("sa:123456"));
+		});
+	}
+
+	/** 通过注解 handler 路径执行 Basic 校验应正确匹配账号 */
+	@Test
+	void checkByAnnotation_viaHandler() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("anno:pwd"));
+
+			SaCheckHttpBasic annotation = new SaCheckHttpBasic() {
+				@Override
+				public Class<? extends java.lang.annotation.Annotation> annotationType() {
+					return SaCheckHttpBasic.class;
+				}
+
+				@Override
+				public String realm() {
+					return "AnnoRealm";
+				}
+
+				@Override
+				public String account() {
+					return "anno:pwd";
+				}
+			};
+			Assertions.assertDoesNotThrow(() -> SaCheckHttpBasicHandler._checkMethod(
+					annotation.realm(), annotation.account()));
+			Assertions.assertThrows(NotHttpBasicAuthException.class,
+					() -> SaCheckHttpBasicHandler._checkMethod("AnnoRealm", "anno:wrong"));
 		});
 	}
 

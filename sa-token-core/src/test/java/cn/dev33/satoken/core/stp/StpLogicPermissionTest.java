@@ -129,4 +129,19 @@ public class StpLogicPermissionTest {
 		});
 	}
 
+	/** hasElement/isSupportExtra/getLoginDevice 等辅助方法应正确 */
+	@Test
+	void hasElement_isSupportExtra_and_deprecatedGetLoginDevice() {
+		List<String> list = Arrays.asList("admin", "user:1");
+		Assertions.assertTrue(stpLogic.hasElement(list, "admin"));
+		Assertions.assertFalse(stpLogic.hasElement(list, "guest"));
+		Assertions.assertFalse(stpLogic.isSupportExtra());
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(60008, "HD");
+			Assertions.assertEquals("HD", stpLogic.getLoginDevice());
+			Assertions.assertEquals("HD", stpLogic.getLoginDeviceType());
+		});
+	}
+
 }

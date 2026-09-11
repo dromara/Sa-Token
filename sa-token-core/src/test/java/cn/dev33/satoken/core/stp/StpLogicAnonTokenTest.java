@@ -76,4 +76,12 @@ public class StpLogicAnonTokenTest {
 		});
 	}
 
+	/** 无 Token 且 isCreate=false 时 getAnonTokenSession 应返回 null */
+	@Test
+	void getAnonTokenSession_notCreate_returnsNullWithoutToken() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertNull(stpLogic.getAnonTokenSession(false));
+		});
+	}
+
 }

@@ -19,6 +19,9 @@ import cn.dev33.satoken.session.SaTerminalInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * SaTerminalInfo 相关测试 
  * 
@@ -38,6 +41,51 @@ public class SaTerminalInfoTest {
 		Assertions.assertEquals("ttt-value", terminal.getTokenValue());
 
 		Assertions.assertNotNull(terminal.toString());
+	}
+
+	/** 构造函数与链式 setter 应正确读写各字段及扩展数据 */
+	@Test
+	void constructorAndFluentSetters() {
+		Map<String, Object> extra = new LinkedHashMap<>();
+		extra.put("k", "v");
+		SaTerminalInfo terminal = new SaTerminalInfo(2, "token-x", "APP", extra);
+
+		Assertions.assertEquals(2, terminal.getIndex());
+		Assertions.assertEquals("token-x", terminal.getTokenValue());
+		Assertions.assertEquals("APP", terminal.getDeviceType());
+		Assertions.assertEquals("v", terminal.getExtra("k"));
+		Assertions.assertTrue(terminal.haveExtraData());
+		Assertions.assertTrue(terminal.getCreateTime() > 0);
+
+		terminal.setIndex(3)
+				.setTokenValue("token-y")
+				.setDeviceType("PC")
+				.setDeviceId("device-99")
+				.setCreateTime(123456789L)
+				.setExtraData(null);
+		Assertions.assertEquals(3, terminal.getIndex());
+		Assertions.assertEquals("token-y", terminal.getTokenValue());
+		Assertions.assertEquals("PC", terminal.getDeviceType());
+		Assertions.assertEquals("device-99", terminal.getDeviceId());
+		Assertions.assertEquals(123456789L, terminal.getCreateTime());
+		Assertions.assertFalse(terminal.haveExtraData());
+		Assertions.assertNull(terminal.getExtra("k"));
+	}
+
+	/** setExtra 在无扩展数据时应懒创建 Map 并写入键值 */
+	@Test
+	void setExtra_lazyCreatesMap() {
+		SaTerminalInfo terminal = new SaTerminalInfo();
+		terminal.setExtra("role", "admin");
+		Assertions.assertEquals("admin", terminal.getExtra("role"));
+		Assertions.assertTrue(terminal.haveExtraData());
+		Assertions.assertNotNull(terminal.getExtraData());
+		terminal.setExtra("dept", "rd");
+		Assertions.assertEquals("rd", terminal.getExtra("dept"));
+		Assertions.assertTrue(terminal.toString().contains("deviceId"));
+
+		terminal.setExtraData(new LinkedHashMap<>());
+		Assertions.assertFalse(terminal.haveExtraData());
 	}
 	
 }

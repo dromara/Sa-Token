@@ -15,11 +15,14 @@
  */
 package cn.dev33.satoken.core.serializer;
 
+import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJdkUseBase64;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJdkUseHex;
+import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJdkUseISO_8859_1;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -64,6 +67,28 @@ public class SaSerializerTemplateForJdkTest {
 		Assertions.assertNull(serializer.stringToObject(null));
 		Assertions.assertNull(serializer.objectToBytes(null));
 		Assertions.assertNull(serializer.bytesToObject(null));
+	}
+
+	/** SaSerializerTemplateForJdkUseBase64 应对 Map 完成 Base64 编码往返 */
+	@Test
+	void jdkUseBase64_roundTrip() {
+		SaSerializerTemplateForJdkUseBase64 serializer = new SaSerializerTemplateForJdkUseBase64();
+		Map<String, String> map = new HashMap<>();
+		map.put("k", "v");
+		String encoded = serializer.objectToString(map);
+		@SuppressWarnings("unchecked")
+		Map<String, String> restored = (Map<String, String>) serializer.stringToObject(encoded);
+		Assertions.assertEquals("v", restored.get("k"));
+	}
+
+	/** SaSerializerTemplateForJdkUseISO_8859_1 应对对象完成字节往返序列化 */
+	@Test
+	void jdkUseIso8859_roundTrip() {
+		SaSerializerTemplateForJdkUseISO_8859_1 serializer = new SaSerializerTemplateForJdkUseISO_8859_1();
+		SimplePayload bean = new SimplePayload("iso", 1);
+		byte[] bytes = serializer.objectToBytes(bean);
+		SimplePayload restored = (SimplePayload) serializer.bytesToObject(bytes);
+		Assertions.assertEquals("iso", restored.message);
 	}
 
 	private static class SimplePayload implements Serializable {

@@ -110,6 +110,14 @@ public class SaFoxUtilIsUrlTest {
 		// 仅拒绝「整个 URL 以逗号结尾」的历史行为；路径中间的逗号仍视为合法
 		Assertions.assertTrue(SaFoxUtil.isUrl("https://www.baidu.com/a,b"));
 	}
+	/** isUrl 应分别处理 file URL、无主机 authority、语法错误及末尾逗号 */
+	@Test
+	void isUrl_fileAndMalformedBoundaries() {
+		Assertions.assertFalse(SaFoxUtil.isUrl("file://"));
+		Assertions.assertFalse(SaFoxUtil.isUrl("https://user@/callback"));
+		Assertions.assertFalse(SaFoxUtil.isUrl("https://example.com/%"));
+		Assertions.assertFalse(SaFoxUtil.isUrl("https://example.com/path,"));
+	}
 	private static void assertUrl(boolean expected, String... urls) {
 		for (String url : urls) {
 			Assertions.assertEquals(expected, SaFoxUtil.isUrl(url), () -> "isUrl(" + url + ")");

@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * SaSession 测试
@@ -94,51 +96,62 @@ public class SaSessionTest {
     	Assertions.assertEquals(user2.age, 18);
     }
 
-	/** getList/getSet/getMap 应支持直接读取、懒初始化及跨类型转换，非集合类型应抛异常 */
+	/** getList 应支持直接读取、懒初始化（已有值时不再执行工厂）及 Set 转 List */
 	@Test
-	public void testGetListSetMap() {
+	public void testGetList() {
+    	SaSession session = new SaSession("session-get-list");
 
-    	SaSession session = new SaSession("session-get-collection");
-
-    	// getList：内存对象直接读取
+    	// 内存对象直接读取
     	List<String> nameList = new ArrayList<>(Arrays.asList("a", "b"));
     	session.set("nameList", nameList);
     	List<String> nameList2 = session.getList("nameList", String.class);
     	Assertions.assertEquals(nameList2.size(), 2);
     	Assertions.assertEquals(nameList2.get(0), "a");
 
-    	// getList：lazy 初始化
+    	// lazy 初始化
     	List<String> emptyList = session.getList("emptyList", String.class, ArrayList::new);
     	Assertions.assertTrue(emptyList.isEmpty());
     	Assertions.assertTrue(session.has("emptyList"));
 
-    	// getList：key 已有值时 fun 不应再执行
+    	// key 已有值时 fun 不应再执行
     	List<String> existingList = session.getList("nameList", String.class, ArrayList::new);
     	Assertions.assertEquals(2, existingList.size());
 
-    	// getList：Set 存储、List 读取
+    	// Set 存储、List 读取
     	Set<String> nameSet = new HashSet<>(Arrays.asList("x", "y"));
     	session.set("nameSetAsList", nameSet);
     	List<String> nameSetAsList = session.getList("nameSetAsList", String.class);
     	Assertions.assertEquals(nameSetAsList.size(), 2);
     	Assertions.assertTrue(nameSetAsList.contains("x"));
+    }
 
-    	// getSet：List 存储、Set 读取
-    	session.set("nameListAsSet", nameList);
+	/** getSet 应支持 List 转 Set 读取、懒初始化（已有值时不再执行工厂） */
+	@Test
+	public void testGetSet() {
+    	SaSession session = new SaSession("session-get-set");
+
+    	// List 存储、Set 读取
+    	session.set("nameListAsSet", new ArrayList<>(Arrays.asList("a", "b")));
     	Set<String> nameListAsSet = session.getSet("nameListAsSet", String.class);
     	Assertions.assertEquals(nameListAsSet.size(), 2);
     	Assertions.assertTrue(nameListAsSet.contains("b"));
 
-    	// getSet：lazy 初始化
+    	// lazy 初始化
     	Set<String> emptySet = session.getSet("emptySet", String.class, LinkedHashSet::new);
     	Assertions.assertTrue(emptySet.isEmpty());
     	Assertions.assertTrue(session.has("emptySet"));
 
-    	// getSet：key 已有值时 fun 不应再执行
+    	// key 已有值时 fun 不应再执行
     	Set<String> existingSet = session.getSet("nameListAsSet", String.class, LinkedHashSet::new);
     	Assertions.assertEquals(2, existingSet.size());
+    }
 
-    	// getMap：内存 Map 读取
+	/** getMap 应支持内存 Map 直接读取及懒初始化 */
+	@Test
+	public void testGetMap() {
+    	SaSession session = new SaSession("session-get-map");
+
+    	// 内存 Map 读取
     	Map<String, Long> scoreMap = new LinkedHashMap<>();
     	scoreMap.put("k1", 100L);
     	scoreMap.put("k2", 200L);
@@ -147,12 +160,16 @@ public class SaSessionTest {
     	Assertions.assertEquals(scoreMap2.size(), 2);
     	Assertions.assertEquals(scoreMap2.get("k1"), 100L);
 
-    	// getMap：lazy 初始化
+    	// lazy 初始化
     	Map<String, Long> emptyMap = session.getMap("emptyMap", String.class, Long.class, LinkedHashMap::new);
     	Assertions.assertTrue(emptyMap.isEmpty());
     	Assertions.assertTrue(session.has("emptyMap"));
+    }
 
-    	// 非集合类型读取时抛异常
+	/** 用 getList/getSet/getMap 读取非集合类型的值时应抛 SaTokenException */
+	@Test
+	public void testGetCollection_notCollectionValue_throws() {
+    	SaSession session = new SaSession("session-get-not-collection");
     	session.set("notCollection", "abc");
     	Assertions.assertThrows(SaTokenException.class, () -> session.getList("notCollection", String.class));
     	Assertions.assertThrows(SaTokenException.class, () -> session.getSet("notCollection", String.class));
@@ -230,5 +247,98 @@ public class SaSessionTest {
     	Assertions.assertEquals(session.keys().size(), 2);
     	
     }
+
+	/** keys 应返回 DataMap 中所有键的集合 */
+	@Test
+	void keys_returnsDataMapKeys() {
+		SaSession session = new SaSession("sid-keys");
+		session.set("k1", 1);
+		session.set("k2", 2);
+		Set<String> keys = session.keys();
+		Assertions.assertEquals(2, keys.size());
+		Assertions.assertTrue(keys.contains("k1"));
+		Assertions.assertTrue(keys.contains("k2"));
+	}
+
+	/** refreshDataMap 传入空 Map 应清空 Session 数据但保留 Session 本身 */
+	@Test
+	void refreshDataMap_withEmptyMap() {
+		SaSession session = new SaSession("sid-refresh-empty");
+		SaManager.getSaTokenDao().setSession(session, 3600);
+		session.set("old", "value");
+		session.refreshDataMap(new HashMap<>());
+		Assertions.assertTrue(session.keys().isEmpty());
+		Assertions.assertNotNull(SaManager.getSaTokenDao().getSession(session.getId()));
+	}
+
+	/** setDataMap 应替换底层 Map 并可通过 get 读取新数据 */
+	@Test
+	void setDataMap_replacesUnderlyingMap() {
+		SaSession session = new SaSession("sid-set-map");
+		Map<String, Object> newMap = new ConcurrentHashMap<>();
+		newMap.put("newKey", "newValue");
+		session.setDataMap(newMap);
+		Assertions.assertSame(newMap, session.getDataMap());
+		Assertions.assertEquals("newValue", session.get("newKey"));
+	}
+
+	/** clear 应移除 Session 中全部数据 */
+	@Test
+	void clear_removesAllData() {
+		SaSession session = new SaSession("sid-clear");
+		SaManager.getSaTokenDao().setSession(session, 3600);
+		session.set("a", 1);
+		session.clear();
+		Assertions.assertTrue(session.keys().isEmpty());
+	}
+
+	/** updateMinTimeout 在当前剩余时间更长时不应缩短有效期 */
+	@Test
+	void updateMinTimeout_whenCurrentAlreadyHigher_doesNotExtend() {
+		SaSession session = new SaSession("sid-min-timeout");
+		SaManager.getSaTokenDao().setSession(session, 3600);
+		long before = session.timeout();
+		session.updateMinTimeout(100);
+		long after = session.timeout();
+		Assertions.assertTrue(after <= before && after >= before - 5);
+	}
+
+	/** 按设备类型筛选终端列表，forEach 遍历及历史终端计数应正确 */
+	@Test
+	void terminalListByDeviceType_andForEach() {
+		SaSession session = new SaSession("sid-ext");
+		session.addTerminal(new SaTerminalInfo(1, "token-pc", "PC", null));
+		session.addTerminal(new SaTerminalInfo(2, "token-app", "APP", null));
+
+		List<SaTerminalInfo> pcList = session.getTerminalListByDeviceType("PC");
+		Assertions.assertEquals(1, pcList.size());
+		Assertions.assertEquals("token-pc", pcList.get(0).getTokenValue());
+
+		AtomicInteger count = new AtomicInteger();
+		session.forEachTerminalList((s, t) -> count.incrementAndGet());
+		Assertions.assertEquals(2, count.get());
+		Assertions.assertEquals(2, session.getHistoryTerminalCount());
+	}
+
+	/** 终端列表非空时 logoutByTerminalCountToZero 不应注销 Session */
+	@Test
+	void logoutByTerminalCountToZero_whenTerminalListNotEmpty_doesNotLogout() {
+		SaSession session = new SaSession("sid-keep");
+		SaManager.getSaTokenDao().setSession(session, 3600);
+		session.addTerminal(new SaTerminalInfo(1, "token-1", "PC", null));
+		session.addTerminal(new SaTerminalInfo(2, "token-2", "APP", null));
+		session.logoutByTerminalCountToZero();
+		Assertions.assertNotNull(SaManager.getSaTokenDao().getSession(session.getId()));
+		Assertions.assertEquals(2, session.getTerminalList().size());
+	}
+
+	/** 终端列表已空时 logoutByTerminalCountToZero 应注销 Session */
+	@Test
+	void logoutByTerminalCountToZero_whenAlreadyEmpty_logsOutSession() {
+		SaSession session = new SaSession("sid-empty-terminals");
+		SaManager.getSaTokenDao().setSession(session, 3600);
+		session.logoutByTerminalCountToZero();
+		Assertions.assertNull(SaManager.getSaTokenDao().getSession(session.getId()));
+	}
     
 }

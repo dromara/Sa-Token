@@ -16,6 +16,7 @@
 package cn.dev33.satoken.core.serializer;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.json.SaJsonTemplate;
 import cn.dev33.satoken.serializer.impl.SaSerializerTemplateForJson;
 import cn.dev33.satoken.test.SaTokenTest;
@@ -58,6 +59,14 @@ public class SaSerializerTemplateTest {
 
 		Map<String, Object> typed = serializer.stringToObject(json, Map.class);
 		Assertions.assertEquals("zhangsan", typed.get("name"));
+	}
+
+	/** SaSerializerTemplateForJson 的字节序列化方法应抛出 ApiDisabledException */
+	@Test
+	void jsonSerializer_bytesMethodsThrow() {
+		SaSerializerTemplateForJson serializer = new SaSerializerTemplateForJson();
+		Assertions.assertThrows(ApiDisabledException.class, () -> serializer.objectToBytes("x"));
+		Assertions.assertThrows(ApiDisabledException.class, () -> serializer.bytesToObject(new byte[] {1}));
 	}
 
 	private static class SimpleSaJsonTemplate implements SaJsonTemplate {

@@ -21,8 +21,10 @@ import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -173,6 +175,88 @@ public class StpLogicDeviceTest {
 			session.removeTerminal(token);
 			session.setTerminalList(new java.util.ArrayList<>());
 			Assertions.assertNull(stpLogic.getTerminalInfoByToken(token));
+		});
+	}
+
+	/** getTerminalInfo 与 getLoginDeviceByToken 应返回设备信息与扩展数据 */
+	@Test
+	void getTerminalInfo_and_getLoginDeviceByToken() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50014, new SaLoginParameter()
+					.setDeviceType("PC")
+					.setDeviceId("device-001")
+					.setTerminalExtra("channel", "web"));
+			String token = stpLogic.getTokenValue();
+
+			SaTerminalInfo terminal = stpLogic.getTerminalInfo();
+			Assertions.assertNotNull(terminal);
+			Assertions.assertEquals("PC", terminal.getDeviceType());
+			Assertions.assertEquals("device-001", terminal.getDeviceId());
+			Assertions.assertEquals("web", terminal.getExtra("channel"));
+
+			SaTerminalInfo byToken = stpLogic.getTerminalInfoByToken(token);
+			Assertions.assertEquals(token, byToken.getTokenValue());
+			Assertions.assertEquals("PC", stpLogic.getLoginDeviceByToken(token));
+			Assertions.assertEquals("device-001", stpLogic.getLoginDeviceIdByToken(token));
+		});
+	}
+
+	/** forEachTerminalList 应遍历终端，工厂方法应复制全局配置 */
+	@Test
+	void forEachTerminalList_and_factoryMethods() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setIsConcurrent(true);
+		SaManager.setConfig(config);
+
+		stpLogic.createLoginSession(50016, new SaLoginParameter().setDeviceType("PC"));
+		stpLogic.createLoginSession(50016, new SaLoginParameter().setDeviceType("APP"));
+
+		AtomicInteger count = new AtomicInteger();
+		stpLogic.forEachTerminalList(50016, (session, terminal) -> {
+			Assertions.assertNotNull(session.getId());
+			Assertions.assertNotNull(terminal.getTokenValue());
+			count.incrementAndGet();
+		});
+		Assertions.assertEquals(2, count.get());
+
+		SaLoginParameter loginParam = stpLogic.createSaLoginParameter();
+		SaLogoutParameter logoutParam = stpLogic.createSaLogoutParameter();
+		Assertions.assertEquals(config.getIsConcurrent(), loginParam.getIsConcurrent());
+		Assertions.assertEquals(config.getLogoutRange(), logoutParam.getRange());
+		Assertions.assertTrue(stpLogic.isSupportShareToken() == config.getIsShare());
+		Assertions.assertTrue(stpLogic.getConfigOfCookieTimeout() > 0);
+	}
+
+	/** isTrustDeviceId 与 getLoginDeviceId 应正确匹配设备 ID */
+	@Test
+	void isTrustDeviceId_and_getLoginDeviceId() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertFalse(stpLogic.isTrustDeviceId(60001, "dev-a"));
+			Assertions.assertFalse(stpLogic.isTrustDeviceId(60001, ""));
+
+			stpLogic.login(60001, new SaLoginParameter()
+					.setDeviceType("PC")
+					.setDeviceId("dev-a"));
+			Assertions.assertTrue(stpLogic.isTrustDeviceId(60001, "dev-a"));
+			Assertions.assertFalse(stpLogic.isTrustDeviceId(60001, "dev-b"));
+			Assertions.assertEquals("dev-a", stpLogic.getLoginDeviceId());
+			Assertions.assertEquals("dev-a", stpLogic.getLoginDeviceIdByToken(stpLogic.getTokenValue()));
+		});
+	}
+
+	/** 按 deviceId logout 应仅清除匹配终端 */
+	@Test
+	void logout_byDeviceId_clearsMatchingTerminalOnly() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			String tokenA = stpLogic.createLoginSession(60005, new SaLoginParameter()
+					.setDeviceType("PC").setDeviceId("dev-a"));
+			String tokenB = stpLogic.createLoginSession(60005, new SaLoginParameter()
+					.setDeviceType("APP").setDeviceId("dev-b"));
+			SaTokenDao dao = SaManager.getSaTokenDao();
+
+			stpLogic.logout(60005, new SaLogoutParameter().setDeviceId("dev-a"));
+			Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(tokenA)));
+			Assertions.assertEquals("60005", dao.get(stpLogic.splicingKeyTokenValue(tokenB)));
 		});
 	}
 

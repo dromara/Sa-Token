@@ -18,6 +18,8 @@ package cn.dev33.satoken.core.stp;
 import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.test.SaTokenTest;
@@ -93,6 +95,35 @@ public class StpLogicSessionTest {
 	void getSessionByLoginId_rejectsEmptyLoginId() {
 		Assertions.assertThrows(cn.dev33.satoken.exception.SaTokenException.class,
 				() -> stpLogic.getSessionByLoginId("", true));
+	}
+
+	/** 空 sessionId 调用 getSessionBySessionId 应抛出 CODE_11072 */
+	@Test
+	void getSessionBySessionId_emptyId_throws() {
+		SaTokenException ex = Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.getSessionBySessionId("", false, null, null));
+		Assertions.assertEquals(SaErrorCode.CODE_11072, ex.getCode());
+	}
+
+	/** getSessionBySessionId 的 appendOperation 回调应在创建时执行 */
+	@Test
+	void getSessionBySessionId_withAppendOperation() {
+		String sessionId = stpLogic.splicingKeySession(60015);
+		SaSession session = stpLogic.getSessionBySessionId(sessionId, true, 3600L, s -> s.set("init", "yes"));
+		Assertions.assertNotNull(session);
+		Assertions.assertEquals("yes", session.get("init"));
+	}
+
+	/** 带 timeout 的 getSessionByLoginId 与 getSessionBySessionId 应正常返回 Session */
+	@Test
+	void getSession_withTimeoutAndAppendOperation() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(40009);
+			SaSession session = stpLogic.getSessionByLoginId(40009, true, 3600L);
+			Assertions.assertNotNull(session);
+			SaSession byId = stpLogic.getSessionBySessionId(session.getId(), false, null, null);
+			Assertions.assertNotNull(byId);
+		});
 	}
 
 }

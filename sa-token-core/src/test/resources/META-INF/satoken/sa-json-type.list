@@ -1,2 +1,2 @@
-# SPI allow type for SaJsonStrategyExtendedTest
-cn.dev33.satoken.core.strategy.SaJsonStrategyExtendedTest$SpiAllowType
+# SPI allow type for SaJsonStrategyTest
+cn.dev33.satoken.core.strategy.SaJsonStrategyTest$SpiAllowType

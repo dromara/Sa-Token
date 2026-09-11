@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.core.httpauth;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaResponseForMock;
@@ -23,6 +24,7 @@ import cn.dev33.satoken.exception.NotHttpBasicAuthException;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicAccount;
 import cn.dev33.satoken.httpauth.basic.SaHttpBasicTemplate;
 import cn.dev33.satoken.secure.SaBase64Util;
+import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +34,7 @@ import org.junit.jupiter.api.Test;
  * @author click33
  * @since 1.46.0
  */
+@SaTokenTest
 public class SaHttpBasicTemplateTest {
 
 	private final SaHttpBasicTemplate template = new SaHttpBasicTemplate();
@@ -82,6 +85,53 @@ public class SaHttpBasicTemplateTest {
 
 			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("sa:wrong"));
 			Assertions.assertThrows(NotHttpBasicAuthException.class, () -> template.check("sa:123456"));
+		});
+	}
+
+	/** 无参 check 应使用全局 httpBasic 配置校验 */
+	@Test
+	void check_noArg_usesGlobalConfig() {
+		SaManager.getConfig().setHttpBasic("global:pwd");
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("global:pwd"));
+			Assertions.assertDoesNotThrow(() -> template.check());
+		});
+	}
+
+	/** 指定 realm 与 account 时校验失败应返回 401 */
+	@Test
+	void check_withRealmAndAccount() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("realm-user:secret"));
+			Assertions.assertDoesNotThrow(() -> template.check("CustomRealm", "realm-user:secret"));
+			Assertions.assertThrows(NotHttpBasicAuthException.class,
+					() -> template.check("CustomRealm", "realm-user:wrong"));
+			SaResponseForMock res = (SaResponseForMock) SaHolder.getResponse();
+			Assertions.assertEquals(401, res.status);
+		});
+	}
+
+	/** account 为空时应回退使用全局 httpBasic 配置 */
+	@Test
+	void check_emptyAccount_fallsBackToGlobalConfig() {
+		SaManager.getConfig().setHttpBasic("fallback:123");
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("fallback:123"));
+			Assertions.assertDoesNotThrow(() -> template.check(SaHttpBasicTemplate.DEFAULT_REALM, ""));
+		});
+	}
+
+	/** 请求凭证与全局配置不一致时应抛出 NotHttpBasicAuthException */
+	@Test
+	void check_globalConfigMismatch_throws() {
+		SaManager.getConfig().setHttpBasic("cfg-user:cfg-pass");
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("other:pass"));
+			Assertions.assertThrows(NotHttpBasicAuthException.class, () -> template.check());
 		});
 	}
 

@@ -15,9 +15,11 @@
  */
 package cn.dev33.satoken.core.stp;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -77,6 +79,53 @@ public class StpLogicTimeoutTest {
 			stpLogic.logout();
 			long timeout = stpLogic.getTokenTimeout();
 			Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, timeout);
+		});
+	}
+
+	/** renewTimeout 后按 loginId 与 Token 字符串查询的超时应同步更新 */
+	@Test
+	void renewTimeout_reflectedByLoginIdAndTokenString() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50010, 100);
+			String token = stpLogic.getTokenValue();
+			stpLogic.renewTimeout(400);
+			long byLoginId = stpLogic.getTokenTimeoutByLoginId(50010);
+			long byToken = stpLogic.getTokenTimeout(token);
+			Assertions.assertTrue(byLoginId <= 400 && byLoginId >= 395);
+			Assertions.assertTrue(byToken <= 400 && byToken >= 395);
+			Assertions.assertNotNull(SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token)));
+		});
+	}
+
+	/** renewTimeout(NEVER_EXPIRE) 后 getTokenTimeout 应返回 NEVER_EXPIRE */
+	@Test
+	void renewTimeout_neverExpire_rewritesCookieWithIntMax() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90005, 100);
+			stpLogic.renewTimeout(SaTokenDao.NEVER_EXPIRE);
+			Assertions.assertEquals(SaTokenDao.NEVER_EXPIRE, stpLogic.getTokenTimeout());
+		});
+	}
+
+	/** 未登录时 getSessionTimeout 应返回 NOT_VALUE_EXPIRE */
+	@Test
+	void getSessionTimeout_whenNotLogin() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			long timeout = stpLogic.getSessionTimeout();
+			Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, timeout);
+		});
+	}
+
+	/** 重新登录更长 timeout 时 Token 剩余时间应延长 */
+	@Test
+	void updateMinTimeout_extendsOnReLogin() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(60004, new SaLoginParameter().setTimeout(3600));
+			long firstTimeout = stpLogic.getTokenTimeout();
+
+			stpLogic.login(60004, new SaLoginParameter().setTimeout(7200));
+			long secondTimeout = stpLogic.getTokenTimeout();
+			Assertions.assertTrue(secondTimeout >= firstTimeout);
 		});
 	}
 

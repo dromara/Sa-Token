@@ -17,6 +17,7 @@ package cn.dev33.satoken.core.secure;
 import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.secure.SaSecureUtil;
 /**
  * SaSecureUtil 加密工具类 测试 
@@ -56,7 +57,6 @@ public class SaSecureUtilTest {
     	String text = "Sa-Token 一个轻量级java权限认证框架";
     	// 使用公钥加密
     	String ciphertext = SaSecureUtil.rsaEncryptByPublic(publicKey, text);
-//    	Assert.assertEquals(ciphertext, "d9e01fd105b059e975c524a1f4dccbe10dfc3a23b931a9e168ecb0a5758a29c45532254679f86cf83a63e5cc21ef631802fe70ea47e7519f5d96e0d1fab38a6f6dbebdb34b106ce7f27c341838e4e88a8ff3298c519c29a3f0944cf8f668bfecd9394f16945d85d84c4d813d12ecadf34bfb21850c383977b5b2de848fa40995");
     	// 使用私钥解密
     	String text2 = SaSecureUtil.rsaDecryptByPrivate(privateKey, ciphertext);
     	Assertions.assertEquals(text, text2);
@@ -78,4 +78,76 @@ public class SaSecureUtilTest {
     	String text2 = SaSecureUtil.rsaDecryptByPublic(publicKey, ciphertext);
     	Assertions.assertEquals(text, text2);
     }
+
+	/** sha384 与 sha512 应返回固定长度的十六进制摘要 */
+	@Test
+	void sha384AndSha512() {
+		Assertions.assertEquals(96, SaSecureUtil.sha384("123456").length());
+		Assertions.assertEquals(128, SaSecureUtil.sha512("123456").length());
+	}
+
+	/** sha256BySalt 应返回 64 位十六进制加盐哈希 */
+	@Test
+	void sha256BySalt() {
+		String hash = SaSecureUtil.sha256BySalt("abc", "salt");
+		Assertions.assertEquals(64, hash.length());
+	}
+
+	/** 摘要方法在 null 入参时应等同空字符串哈希 */
+	@Test
+	void digestHashes_nullInput_treatedAsEmpty() {
+		String emptyMd5 = SaSecureUtil.md5("");
+		Assertions.assertEquals(emptyMd5, SaSecureUtil.md5(null));
+		Assertions.assertEquals(SaSecureUtil.sha1(""), SaSecureUtil.sha1(null));
+		Assertions.assertEquals(SaSecureUtil.sha256(""), SaSecureUtil.sha256(null));
+		Assertions.assertEquals(SaSecureUtil.sha384(""), SaSecureUtil.sha384(null));
+		Assertions.assertEquals(SaSecureUtil.sha512(""), SaSecureUtil.sha512(null));
+	}
+
+	/** AES 解密非法密文应抛出 SaTokenException */
+	@Test
+	void aesDecrypt_invalidCipher_throws() {
+		Assertions.assertThrows(SaTokenException.class,
+				() -> SaSecureUtil.aesDecrypt("key", "not-valid-base64-cipher!!!"));
+	}
+
+	/** 含换行符的 RSA 密钥仍应正常加解密 */
+	@Test
+	void rsaKeysWithLineBreaks_stillWork() throws Exception {
+		HashMap<String, String> keys = SaSecureUtil.rsaGenerateKeyPair();
+		String privateKey = keys.get("private").replace("\n", "\r\n");
+		String publicKey = keys.get("public").replace("\n", "\r\n");
+		String text = "line-break-key-test";
+
+		String cipher = SaSecureUtil.rsaEncryptByPublic(publicKey, text);
+		Assertions.assertEquals(text, SaSecureUtil.rsaDecryptByPrivate(privateKey, cipher));
+	}
+
+	/** RSA 公钥加密时传入非法密钥应抛出 SaTokenException */
+	@Test
+	void rsaEncryptByPublic_invalidKey_throws() {
+		Assertions.assertThrows(SaTokenException.class,
+				() -> SaSecureUtil.rsaEncryptByPublic("invalid-key", "data"));
+	}
+
+	/** RSA 私钥加密时传入非法密钥应抛出 SaTokenException */
+	@Test
+	void rsaEncryptByPrivate_invalidKey_throws() {
+		Assertions.assertThrows(SaTokenException.class,
+				() -> SaSecureUtil.rsaEncryptByPrivate("invalid-key", "data"));
+	}
+
+	/** RSA 公钥解密时传入非法密钥应抛出 SaTokenException */
+	@Test
+	void rsaDecryptByPublic_invalidKey_throws() {
+		Assertions.assertThrows(SaTokenException.class,
+				() -> SaSecureUtil.rsaDecryptByPublic("invalid-key", "001122"));
+	}
+
+	/** RSA 私钥解密时传入非法密钥应抛出 SaTokenException */
+	@Test
+	void rsaDecryptByPrivate_invalidKey_throws() {
+		Assertions.assertThrows(SaTokenException.class,
+				() -> SaSecureUtil.rsaDecryptByPrivate("invalid-key", "001122"));
+	}
 }

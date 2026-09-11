@@ -19,6 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.error.SaErrorCode;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
@@ -141,6 +142,62 @@ public class StpLogicTokenSessionTest {
 			String token = stpLogic.getTokenValue();
 			Assertions.assertNotNull(SaManager.getSaTokenDao().get(stpLogic.splicingKeyLastActiveTime(token)));
 		});
+	}
+
+	/** rightNowCreateTokenSession=true 时登录应立即创建 Token-Session */
+	@Test
+	void rightNowCreateTokenSession_createsOnLogin() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setRightNowCreateTokenSession(true);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50012);
+			String token = stpLogic.getTokenValue();
+			SaSession tokenSession = SaManager.getSaTokenDao().getSession(stpLogic.splicingKeyTokenSession(token));
+			Assertions.assertNotNull(tokenSession);
+			Assertions.assertEquals(stpLogic.splicingKeyTokenSession(token), tokenSession.getId());
+		});
+	}
+
+	/** 关闭 tokenSessionCheckLogin 时无效 Token 也可创建 Token-Session */
+	@Test
+	void getTokenSession_whenTokenSessionCheckLoginFalse() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setTokenSessionCheckLogin(false);
+		String invalidToken = "invalid-token-for-session";
+		SaSession session = stpLogic.getTokenSessionByToken(invalidToken, true);
+		Assertions.assertNotNull(session);
+		Assertions.assertEquals(stpLogic.splicingKeyTokenSession(invalidToken), session.getId());
+	}
+
+	/** deleteTokenSession 应从 DAO 删除指定 Token 的 Session */
+	@Test
+	void deleteTokenSession() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90007);
+			String token = stpLogic.getTokenValue();
+			stpLogic.getTokenSession();
+			stpLogic.deleteTokenSession(token);
+			Assertions.assertNull(stpLogic.getTokenSessionByToken(token, false));
+		});
+	}
+
+	/** splicingKeyTokenSession 生成的 key 应包含 token-session 与 Token 值 */
+	@Test
+	void splicingKeyTokenSession() {
+		String token = "abc-token";
+		String key = stpLogic.splicingKeyTokenSession(token);
+		Assertions.assertTrue(key.contains("token-session"));
+		Assertions.assertTrue(key.endsWith(token));
+	}
+
+	/** 空 Token 调用 getTokenSessionByToken 应抛出 CODE_11073 */
+	@Test
+	void getTokenSessionByToken_emptyToken_throws() {
+		SaTokenException ex = Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.getTokenSessionByToken("", true));
+		Assertions.assertEquals(SaErrorCode.CODE_11073, ex.getCode());
 	}
 
 }

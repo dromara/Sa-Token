@@ -124,4 +124,26 @@ public class StpLogicRoleTest {
 		});
 	}
 
+	/** 未登录时 hasRole/hasPermission 及各 And/Or 变体应返回 false */
+	@Test
+	void hasRoleAndPermission_whenNotLogin_returnsFalse() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertFalse(stpLogic.hasRole("admin"));
+			Assertions.assertFalse(stpLogic.hasPermission("user:add"));
+			Assertions.assertFalse(stpLogic.hasRoleAnd("admin"));
+			Assertions.assertFalse(stpLogic.hasRoleOr("admin"));
+			Assertions.assertFalse(stpLogic.hasPermissionAnd("user:add"));
+			Assertions.assertFalse(stpLogic.hasPermissionOr("user:add"));
+		});
+	}
+
+	/** 空参数 checkRoleAnd 应直接通过 */
+	@Test
+	void checkRoleAnd_skipsWhenEmptyArray() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90014);
+			Assertions.assertDoesNotThrow(() -> stpLogic.checkRoleAnd());
+		});
+	}
+
 }

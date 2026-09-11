@@ -19,9 +19,11 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -196,6 +198,73 @@ public class StpLogicActiveTimeoutTest {
 			String token = stpLogic.getTokenValue();
 			SaManager.getSaTokenDao().delete(stpLogic.splicingKeySession(70031));
 			Assertions.assertThrows(SaTokenException.class, () -> stpLogic.renewTimeout(token, 3600));
+		});
+	}
+
+	/** 动态 activeTimeout 下登录参数 activeTimeout 应写入 Token 级配置 */
+	@Test
+	void dynamicActiveTimeout_loginParameterActiveTimeout() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setDynamicActiveTimeout(true);
+		config.setActiveTimeout(180);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50013, new SaLoginParameter().setActiveTimeout(60L));
+			String token = stpLogic.getTokenValue();
+			Assertions.assertEquals(60L, stpLogic.getTokenUseActiveTimeout(token));
+			Assertions.assertEquals(60L, stpLogic.getTokenUseActiveTimeoutOrGlobalConfig(token));
+			String lastActiveKey = stpLogic.splicingKeyLastActiveTime(token);
+			Assertions.assertNotNull(SaManager.getSaTokenDao().get(lastActiveKey));
+		});
+	}
+
+	/** 活跃超时后 checkActiveTimeout 应抛出 TOKEN_FREEZE 且 isFreeze 为 true */
+	@Test
+	void checkActiveTimeout_throwsTokenFreeze() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(10);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(50015);
+			String token = stpLogic.getTokenValue();
+			SaTokenDao dao = SaManager.getSaTokenDao();
+			long oldTime = System.currentTimeMillis() - 60_000;
+			dao.set(stpLogic.splicingKeyLastActiveTime(token), String.valueOf(oldTime), 3600);
+
+			NotLoginException freeze = Assertions.assertThrows(NotLoginException.class,
+					() -> stpLogic.checkActiveTimeout(token));
+			Assertions.assertEquals(NotLoginException.TOKEN_FREEZE, freeze.getType());
+			Assertions.assertTrue(stpLogic.isFreeze(token));
+			Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getTokenActiveTimeoutByToken(token));
+		});
+	}
+
+	/** 关闭 dynamicActiveTimeout 时 getTokenUseActiveTimeout 应返回 null */
+	@Test
+	void getTokenUseActiveTimeout_whenDynamicDisabled_returnsNull() {
+		SaManager.getConfig().setDynamicActiveTimeout(false);
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90013);
+			Assertions.assertNull(stpLogic.getTokenUseActiveTimeout(stpLogic.getTokenValue()));
+		});
+	}
+
+	/** updateLastActiveToNow 后 checkActiveTimeoutByConfig 应通过 */
+	@Test
+	void updateLastActiveToNow_and_checkActiveTimeoutByConfig() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(300);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(60016);
+			String token = stpLogic.getTokenValue();
+			stpLogic.updateLastActiveToNow(token);
+			stpLogic.updateLastActiveToNow();
+			Assertions.assertDoesNotThrow(() -> stpLogic.checkActiveTimeoutByConfig(token));
+			Assertions.assertDoesNotThrow(() -> stpLogic.checkActiveTimeout());
 		});
 	}
 

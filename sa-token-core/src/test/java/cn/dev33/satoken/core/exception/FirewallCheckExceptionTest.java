@@ -63,4 +63,12 @@ public class FirewallCheckExceptionTest {
 		Assertions.assertEquals("/bad", ex.getPath());
 	}
 
+	/** RequestPathInvalidException 应保存非法路径 */
+	@Test
+	void requestPathInvalidException() {
+		RequestPathInvalidException ex = new RequestPathInvalidException("bad path", "/bad");
+		Assertions.assertEquals("/bad", ex.getPath());
+		Assertions.assertTrue(ex.getMessage().contains("bad path"));
+	}
+
 }

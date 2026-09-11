@@ -112,4 +112,37 @@ public class StpLogicSafeSwitchTest {
 		});
 	}
 
+	/** 指定 service 的二级认证 openSafe/checkSafe/closeSafe 全流程应正常 */
+	@Test
+	void openSafeAndCheckSafe_withService() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90010);
+			Assertions.assertFalse(stpLogic.isSafe("pay"));
+
+			stpLogic.openSafe("pay", 60);
+			Assertions.assertTrue(stpLogic.isSafe("pay"));
+			Assertions.assertDoesNotThrow(() -> stpLogic.checkSafe("pay"));
+			Assertions.assertTrue(stpLogic.getSafeTime("pay") > 0);
+
+			stpLogic.closeSafe("pay");
+			Assertions.assertFalse(stpLogic.isSafe("pay"));
+			Assertions.assertThrows(NotSafeException.class, () -> stpLogic.checkSafe("pay"));
+		});
+	}
+
+	/** 空 Token 调用 isSafe 应返回 false */
+	@Test
+	void isSafe_emptyToken_returnsFalse() {
+		Assertions.assertFalse(stpLogic.isSafe("", "pay"));
+		Assertions.assertFalse(stpLogic.isSafe(null, "pay"));
+	}
+
+	/** 无 Token 时 closeSafe 应不抛异常 */
+	@Test
+	void closeSafe_withoutToken_isNoOp() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertDoesNotThrow(() -> stpLogic.closeSafe("pay"));
+		});
+	}
+
 }

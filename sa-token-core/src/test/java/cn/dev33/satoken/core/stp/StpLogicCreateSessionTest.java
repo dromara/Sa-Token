@@ -19,6 +19,7 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.parameter.SaLoginParameter;
 import cn.dev33.satoken.test.SaTokenTest;
@@ -89,6 +90,57 @@ public class StpLogicCreateSessionTest {
 			stpLogic.logout();
 			Assertions.assertNull(stpLogic.getTokenValue());
 		});
+	}
+
+	/** save/update/delete TokenToIdMapping 应正确维护 DAO 映射 */
+	@Test
+	void tokenToIdMapping_crud() {
+		SaTokenDao dao = SaManager.getSaTokenDao();
+		String token = "mapping-token-1";
+
+		stpLogic.saveTokenToIdMapping(token, 90001, 3600);
+		Assertions.assertEquals("90001", dao.get(stpLogic.splicingKeyTokenValue(token)));
+
+		stpLogic.updateTokenToIdMapping(token, 90002);
+		Assertions.assertEquals("90002", dao.get(stpLogic.splicingKeyTokenValue(token)));
+
+		stpLogic.deleteTokenToIdMapping(token);
+		Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(token)));
+	}
+
+	/** 空 loginId 更新 Token 映射应抛出 SaTokenException */
+	@Test
+	void updateTokenToIdMapping_emptyLoginId_throws() {
+		Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.updateTokenToIdMapping("any-token", null));
+	}
+
+	/** 上下文内 getOrCreateLoginSession 应创建并复用同一 Token */
+	@Test
+	void getOrCreateLoginSession_inContext_createsWhenMissing() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			String token = stpLogic.getOrCreateLoginSession(60010);
+			Assertions.assertNotNull(token);
+			Assertions.assertTrue(stpLogic.isLogin(60010));
+			String same = stpLogic.getOrCreateLoginSession(60010);
+			Assertions.assertEquals(token, same);
+		});
+	}
+
+	/** 无上下文 getOrCreateLoginSession 应创建并返回 Token */
+	@Test
+	void getOrCreateLoginSession_withoutContext() {
+		String token = stpLogic.getOrCreateLoginSession(40004);
+		Assertions.assertNotNull(token);
+		Assertions.assertEquals("40004", SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token)));
+	}
+
+	/** createTokenValue 应委托策略生成非空 Token */
+	@Test
+	void createTokenValue_delegatesToStrategy() {
+		String token = stpLogic.createTokenValue(60013, "PC", 3600, null);
+		Assertions.assertNotNull(token);
+		Assertions.assertFalse(token.isEmpty());
 	}
 
 }

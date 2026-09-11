@@ -73,4 +73,27 @@ public class SaTotpTemplateTest {
 		Assertions.assertTrue(autoUrl.startsWith("otpauth://totp/lisi?secret="));
 	}
 
+	/** 自定义 timeStep/codeDigits/hmacAlgorithm 的构造函数应生效并生成对应长度口令 */
+	@Test
+	void customConstructorParameters() {
+		SaTotpTemplate template = new SaTotpTemplate(60, 8, "HmacSHA256", 32);
+		Assertions.assertEquals(60, template.timeStep);
+		Assertions.assertEquals(8, template.codeDigits);
+		Assertions.assertEquals("HmacSHA256", template.hmacAlgorithm);
+		Assertions.assertEquals(32, template.secretKeyLength);
+
+		String secretKey = template.generateSecretKey();
+		String code = template._generateTOTP(secretKey);
+		Assertions.assertEquals(8, code.length());
+		Assertions.assertTrue(template.validateTOTP(secretKey, code, 0));
+	}
+
+	/** validateTOTP 在 window=1 时应接受相邻时间窗口内的口令 */
+	@Test
+	void validateTOTP_acceptsAdjacentWindow() {
+		String secretKey = template.generateSecretKey();
+		String code = template._generateTOTP(secretKey);
+		Assertions.assertTrue(template.validateTOTP(secretKey, code, 1));
+	}
+
 }

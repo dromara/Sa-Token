@@ -19,7 +19,10 @@ import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.session.SaTerminalInfo;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,6 +86,70 @@ public class StpLogicKickoutReplacedTest {
 			stpLogic.replacedByTokenValue(token);
 			Assertions.assertEquals(NotLoginException.BE_REPLACED,
 					SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token)));
+		});
+	}
+
+	/** removeTerminalByLogout/Kickout/Replaced 应按模式清除或标记 Token */
+	@Test
+	void removeTerminalByLogoutKickoutReplaced() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90003);
+			String token = stpLogic.getTokenValue();
+			SaSession session = stpLogic.getSessionByLoginId(90003);
+			SaTerminalInfo terminal = session.getTerminal(token);
+			SaTokenDao dao = SaManager.getSaTokenDao();
+
+			stpLogic.getTokenSession();
+			Assertions.assertNotNull(dao.getSession(stpLogic.splicingKeyTokenSession(token)));
+
+			stpLogic.removeTerminalByLogout(session, terminal);
+			Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(token)));
+
+			stpLogic.login(90003);
+			token = stpLogic.getTokenValue();
+			session = stpLogic.getSessionByLoginId(90003);
+			terminal = session.getTerminal(token);
+			stpLogic.removeTerminalByKickout(session, terminal);
+			Assertions.assertEquals(NotLoginException.KICK_OUT, dao.get(stpLogic.splicingKeyTokenValue(token)));
+
+			stpLogic.login(90003);
+			token = stpLogic.getTokenValue();
+			session = stpLogic.getSessionByLoginId(90003);
+			terminal = session.getTerminal(token);
+			stpLogic.removeTerminalByReplaced(session, terminal);
+			Assertions.assertEquals(NotLoginException.BE_REPLACED, dao.get(stpLogic.splicingKeyTokenValue(token)));
+		});
+	}
+
+	/** 带 SaLogoutParameter 的 kickout/replacedByTokenValue 应正确标记 Token */
+	@Test
+	void kickoutAndReplacedByTokenValue_withLogoutParameter() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(60011);
+			String token = stpLogic.getTokenValue();
+			stpLogic.kickoutByTokenValue(token, new SaLogoutParameter());
+			Assertions.assertEquals(NotLoginException.KICK_OUT,
+					SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token)));
+
+			stpLogic.login(60011);
+			token = stpLogic.getTokenValue();
+			stpLogic.replacedByTokenValue(token, new SaLogoutParameter());
+			Assertions.assertEquals(NotLoginException.BE_REPLACED,
+					SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(token)));
+		});
+	}
+
+	/** 带参数的 kickout/replaced 按 loginId 应使当前客户端下线 */
+	@Test
+	void kickoutAndReplacedByLoginId_withParameter() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(40006);
+			stpLogic.kickout(40006, new SaLogoutParameter());
+			Assertions.assertFalse(stpLogic.isLogin());
+
+			stpLogic.login(40006);
+			stpLogic.replaced(40006, new SaLogoutParameter());
+			Assertions.assertFalse(stpLogic.isLogin());
 		});
 	}
 

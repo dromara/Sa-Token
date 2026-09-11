@@ -249,6 +249,20 @@ public class SaRouterStaffTest {
 		Assertions.assertFalse(callbackCalled.get());
 	}
 
+	/** 布尔与自定义函数链式匹配应正确更新命中状态，已失配时 match(true) 也不能翻回命中 */
+	@Test
+	void matchBooleanAndCustomFunction() {
+		SaRouterStaff flagHit = new SaRouterStaff().match(true).notMatch(false);
+		Assertions.assertTrue(flagHit.isHit());
+
+		SaRouterStaff flagMiss = new SaRouterStaff().match(false);
+		Assertions.assertFalse(flagMiss.isHit());
+		Assertions.assertFalse(new SaRouterStaff().setHit(false).match(true).isHit());
+
+		SaRouterStaff custom = new SaRouterStaff().match(r -> true).notMatch(r -> true);
+		Assertions.assertFalse(custom.isHit());
+	}
+
 	/** 带参 check、free 与直接匹配重载应暴露当前 staff */
 	@Test
 	void callbackOverloads_receiveStaff() {
@@ -281,6 +295,84 @@ public class SaRouterStaffTest {
 		Assertions.assertSame(staff, staff.stop());
 		Assertions.assertSame(staff, staff.back());
 		Assertions.assertSame(staff, staff.back("ignored"));
+	}
+
+	/** 链式 match/notMatch 列表重载应正确判定命中与排除 */
+	@Test
+	void matchListAndNotMatchList() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/api/user/list";
+
+			SaRouterStaff hit = SaRouter.newMatch().match(Arrays.asList("/api/**", "/public/**"));
+			Assertions.assertTrue(hit.isHit());
+
+			req.requestPath = "/other";
+			SaRouterStaff miss = SaRouter.newMatch().match(Arrays.asList("/api/**"));
+			Assertions.assertFalse(miss.isHit());
+
+			req.requestPath = "/api/user/list";
+			SaRouterStaff excluded = SaRouter.newMatch()
+					.match("/api/**")
+					.notMatch(Arrays.asList("/api/user/list", "/api/admin/**"));
+			Assertions.assertFalse(excluded.isHit());
+		});
+	}
+
+	/** matchMethod/notMatchMethod 应正确匹配与排除 HTTP 方法 */
+	@Test
+	void matchMethodAndNotMatchMethod() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/any";
+			req.method = "POST";
+
+			SaRouterStaff postHit = SaRouter.newMatch().matchMethod("POST", "PUT");
+			Assertions.assertTrue(postHit.isHit());
+
+			SaRouterStaff getMiss = SaRouter.newMatch().matchMethod("GET");
+			Assertions.assertFalse(getMiss.isHit());
+
+			req.method = "DELETE";
+			SaRouterStaff deleteExcluded = SaRouter.newMatch()
+					.match(true)
+					.notMatchMethod("DELETE");
+			Assertions.assertFalse(deleteExcluded.isHit());
+		});
+	}
+
+	/** SaHttpMethod 枚举匹配与 notMatch 组合应正确 */
+	@Test
+	void matchSaHttpMethodEnum() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/any";
+			req.method = "GET";
+
+			Assertions.assertTrue(SaRouter.newMatch().match(SaHttpMethod.GET).isHit());
+			Assertions.assertFalse(SaRouter.newMatch().match(SaHttpMethod.POST).isHit());
+			Assertions.assertFalse(SaRouter.newMatch().match(SaHttpMethod.GET).notMatch(SaHttpMethod.GET).isHit());
+		});
+	}
+
+	/** stop 与无参/有参 back 在命中时应抛出对应异常 */
+	@Test
+	void stopAndBackVariants() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/secure/data";
+
+			Assertions.assertThrows(StopMatchException.class,
+					() -> SaRouter.match("/secure/**").stop());
+
+			BackResultException emptyBack = Assertions.assertThrows(BackResultException.class,
+					() -> SaRouter.match("/secure/**").back());
+			Assertions.assertEquals("", emptyBack.result);
+
+			BackResultException valueBack = Assertions.assertThrows(BackResultException.class,
+					() -> SaRouter.match("/secure/**").back(403));
+			Assertions.assertEquals(403, valueBack.result);
+		});
 	}
 
 }

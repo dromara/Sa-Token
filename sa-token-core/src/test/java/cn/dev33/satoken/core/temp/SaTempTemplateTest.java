@@ -28,13 +28,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * SaTempTemplate 剩余路径覆盖
+ * SaTempTemplate 临时 Token 模板测试
  *
  * @author click33
  * @since 1.46.0
  */
 @SaTokenTest
-public class SaTempTemplateExtendedTest {
+public class SaTempTemplateTest {
 
 	/** 空 namespace 构造 SaTempTemplate 应抛出异常 */
 	@Test

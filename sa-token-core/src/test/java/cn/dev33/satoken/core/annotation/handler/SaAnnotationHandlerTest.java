@@ -16,22 +16,38 @@
 package cn.dev33.satoken.core.annotation.handler;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.annotation.SaMode;
+import cn.dev33.satoken.annotation.handler.SaCheckDisableHandler;
+import cn.dev33.satoken.annotation.handler.SaCheckHttpBasicHandler;
+import cn.dev33.satoken.annotation.handler.SaCheckHttpDigestHandler;
 import cn.dev33.satoken.annotation.handler.SaCheckLoginHandler;
+import cn.dev33.satoken.annotation.handler.SaCheckOrHandler;
 import cn.dev33.satoken.annotation.handler.SaCheckPermissionHandler;
 import cn.dev33.satoken.annotation.handler.SaCheckRoleHandler;
+import cn.dev33.satoken.annotation.handler.SaCheckSafeHandler;
+import cn.dev33.satoken.annotation.handler.SaIgnoreHandler;
+import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
+import cn.dev33.satoken.exception.DisableServiceException;
+import cn.dev33.satoken.exception.NotHttpBasicAuthException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
 import cn.dev33.satoken.exception.NotRoleException;
+import cn.dev33.satoken.exception.NotSafeException;
+import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.secure.SaBase64Util;
 import cn.dev33.satoken.stp.StpInterface;
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.test.SaTokenTest;
+import cn.dev33.satoken.util.SaTokenConsts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
@@ -131,6 +147,98 @@ public class SaAnnotationHandlerTest {
 			Assertions.assertDoesNotThrow(() ->
 					SaCheckRoleHandler._checkMethod("", new String[] {"super", "user"}, SaMode.OR));
 		});
+	}
+
+	/** 账号未封禁时 SaCheckDisableHandler 应通过校验 */
+	@Test
+	void saCheckDisableHandler_whenNotDisabled() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			StpUtil.login(10001);
+			Assertions.assertDoesNotThrow(() ->
+					SaCheckDisableHandler._checkMethod("", new String[] {"login"}, SaTokenConsts.MIN_DISABLE_LEVEL));
+		});
+	}
+
+	/** 账号已封禁时 SaCheckDisableHandler 应抛出 DisableServiceException */
+	@Test
+	void saCheckDisableHandler_whenDisabled() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			StpUtil.login(10001);
+			StpUtil.disable(10001, "login", 3600);
+			Assertions.assertThrows(DisableServiceException.class, () ->
+					SaCheckDisableHandler._checkMethod("", new String[] {"login"}, SaTokenConsts.MIN_DISABLE_LEVEL));
+		});
+	}
+
+	/** 未开启二级认证时 SaCheckSafeHandler 应抛出 NotSafeException */
+	@Test
+	void saCheckSafeHandler_whenNotSafe() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			StpUtil.login(10001);
+			Assertions.assertThrows(NotSafeException.class, () ->
+					SaCheckSafeHandler._checkMethod("", "pay"));
+		});
+	}
+
+	/** 已开启二级认证时 SaCheckSafeHandler 应通过校验 */
+	@Test
+	void saCheckSafeHandler_whenSafe() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			StpUtil.login(10001);
+			StpUtil.openSafe("pay", 3600);
+			Assertions.assertDoesNotThrow(() -> SaCheckSafeHandler._checkMethod("", "pay"));
+		});
+	}
+
+	/** 携带 Basic 请求头时 SaCheckHttpBasicHandler 应通过校验 */
+	@Test
+	void saCheckHttpBasicHandler_withMockRequest() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock request = (SaRequestForMock) SaHolder.getRequest();
+			request.headerMap.put("Authorization", "Basic " + SaBase64Util.encode("user:pass"));
+			Assertions.assertDoesNotThrow(() -> SaCheckHttpBasicHandler._checkMethod("realm", "user:pass"));
+		});
+	}
+
+	/** 缺少 Authorization 头时 SaCheckHttpBasicHandler 应抛出异常 */
+	@Test
+	void saCheckHttpBasicHandler_withoutAuthHeader() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			Assertions.assertThrows(NotHttpBasicAuthException.class, () ->
+					SaCheckHttpBasicHandler._checkMethod("realm", "user:pass"));
+		});
+	}
+
+	/** 各注解处理器 getHandlerAnnotationClass 应返回对应注解类型 */
+	@Test
+	void allHandlers_exposeAnnotationClass() {
+		Assertions.assertNotNull(new SaCheckLoginHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckRoleHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckPermissionHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckSafeHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckDisableHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckHttpBasicHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckHttpDigestHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaCheckOrHandler().getHandlerAnnotationClass());
+		Assertions.assertNotNull(new SaIgnoreHandler().getHandlerAnnotationClass());
+	}
+
+	/** SaIgnoreHandler 校验时应抛出 StopMatchException 终止路由 */
+	@Test
+	void saIgnoreHandler_checkMethod_stopsRouter() throws Exception {
+		Method method = Sample.class.getMethod("ignored");
+		SaIgnore annotation = method.getAnnotation(SaIgnore.class);
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaIgnoreHandler handler = new SaIgnoreHandler();
+			Assertions.assertThrows(StopMatchException.class,
+					() -> handler.checkMethod(annotation, method));
+		});
+	}
+
+	static class Sample {
+		@SaIgnore
+		public void ignored() {
+		}
 	}
 
 }

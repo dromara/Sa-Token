@@ -28,7 +28,7 @@ import java.util.Map;
  * @author click33
  * @since 1.46.0
  */
-public class SaCookieConfigFullTest {
+public class SaCookieConfigTest {
 
 	/** getter/setter 与 extraAttrs 操作应正常工作 */
 	@Test

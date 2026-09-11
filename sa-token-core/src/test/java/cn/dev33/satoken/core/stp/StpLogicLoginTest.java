@@ -244,4 +244,61 @@ public class StpLogicLoginTest {
 		Assertions.assertNull(stpLogic.getLoginIdByTokenNotThinkFreeze(""));
 	}
 
+	/** allowLoginIdColon 开关应控制 loginId 中冒号是否允许 */
+	@Test
+	void allowLoginIdColon_permitsAndRejectsColon() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setAllowLoginIdColon(false);
+		SaManager.setConfig(config);
+		Assertions.assertThrows(SaTokenException.class,
+				() -> stpLogic.createLoginSession("tenant:user"));
+
+		config.setAllowLoginIdColon(true);
+		SaManager.setConfig(config);
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login("tenant:user");
+			Assertions.assertEquals("tenant:user", stpLogic.getLoginIdAsString());
+			Assertions.assertEquals("tenant:user",
+					SaManager.getSaTokenDao().get(stpLogic.splicingKeyTokenValue(stpLogic.getTokenValue())));
+			Assertions.assertNotNull(SaManager.getSaTokenDao().getSession(stpLogic.splicingKeySession("tenant:user")));
+		});
+	}
+
+	/** isValidLoginId 应拒绝 null/空/特殊标记 loginId */
+	@Test
+	void isValidLoginId_rejectsAbnormalMarkers() {
+		Assertions.assertFalse(stpLogic.isValidLoginId(null));
+		Assertions.assertFalse(stpLogic.isValidLoginId(""));
+		Assertions.assertFalse(stpLogic.isValidLoginId(NotLoginException.KICK_OUT));
+		Assertions.assertTrue(stpLogic.isValidLoginId(60014));
+	}
+
+	/** isLastingCookie 与 timeout 参数登录后 Token 超时时间应正确 */
+	@Test
+	void login_withIsLastingCookieAndTimeout() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(40001, false);
+			Assertions.assertTrue(stpLogic.isLogin());
+			stpLogic.logout();
+
+			stpLogic.login(40002, 60);
+			long timeout = stpLogic.getTokenTimeout();
+			Assertions.assertTrue(timeout <= 60 && timeout >= 55);
+		});
+	}
+
+	/** getTokenValueNotNull 及各 getLoginIdByToken 变体应返回正确 loginId */
+	@Test
+	void getTokenValueNotNull_andByToken() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(40003);
+			String token = stpLogic.getTokenValueNotNull();
+			Assertions.assertEquals("40003", stpLogic.getLoginIdByToken(token));
+			Assertions.assertEquals("40003", stpLogic.getLoginIdByTokenNotThinkFreeze(token));
+			Assertions.assertEquals("40003", stpLogic.getLoginIdNotHandle(token));
+			Assertions.assertTrue(stpLogic.isValidToken(token));
+			Assertions.assertTrue(stpLogic.isValidLoginId(40003));
+		});
+	}
+
 }

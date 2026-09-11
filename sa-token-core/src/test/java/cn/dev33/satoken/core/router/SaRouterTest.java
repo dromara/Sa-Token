@@ -184,4 +184,49 @@ public class SaRouterTest {
 		Assertions.assertTrue(checked.get());
 	}
 
+	/** 静态 match/notMatch 列表重载应正确判定命中与排除 */
+	@Test
+	void staticMatchListAndNotMatchList() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/api/list";
+
+			SaRouterStaff hit = SaRouter.match(Arrays.asList("/api/**", "/public/**"));
+			Assertions.assertTrue(hit.isHit());
+
+			req.requestPath = "/other";
+			SaRouterStaff miss = SaRouter.match(Arrays.asList("/api/**"));
+			Assertions.assertFalse(miss.isHit());
+
+			req.requestPath = "/api/list";
+			SaRouterStaff excluded = SaRouter.notMatch(Arrays.asList("/api/list"));
+			Assertions.assertFalse(excluded.isHit());
+		});
+	}
+
+	/** 静态 HTTP 方法与字符串方法匹配应正确 */
+	@Test
+	void staticMatchHttpMethodAndStringMethod() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			SaRequestForMock req = (SaRequestForMock) SaHolder.getRequest();
+			req.requestPath = "/any";
+			req.method = "POST";
+
+			Assertions.assertTrue(SaRouter.match(SaHttpMethod.POST).isHit());
+			Assertions.assertFalse(SaRouter.match(SaHttpMethod.GET).isHit());
+			Assertions.assertFalse(SaRouter.notMatch(SaHttpMethod.POST).isHit());
+
+			Assertions.assertTrue(SaRouter.matchMethod("POST", "PUT").isHit());
+			Assertions.assertFalse(SaRouter.notMatchMethod("POST").isHit());
+		});
+	}
+
+	/** newMatch 应返回新的 SaRouterStaff 实例 */
+	@Test
+	void newMatchReturnsFreshStaff() {
+		SaRouterStaff staff = SaRouter.newMatch();
+		Assertions.assertNotNull(staff);
+		Assertions.assertTrue(staff.isHit());
+	}
+
 }

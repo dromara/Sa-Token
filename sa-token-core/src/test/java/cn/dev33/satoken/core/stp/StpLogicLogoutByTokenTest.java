@@ -16,6 +16,7 @@
 package cn.dev33.satoken.core.stp;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.mock.SaRequestForMock;
 import cn.dev33.satoken.context.mock.SaTokenContextMockUtil;
@@ -23,6 +24,7 @@ import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.parameter.SaLogoutParameter;
 import cn.dev33.satoken.test.SaTokenTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -103,6 +105,34 @@ public class StpLogicLogoutByTokenTest {
 
 			stpLogic.kickoutByTokenValue(token);
 			Assertions.assertEquals("70020", dao.get(stpLogic.splicingKeyTokenValue(token)));
+		});
+	}
+
+	/** 无效 Token 调用 logoutByTokenValue 应安全返回 */
+	@Test
+	void logoutByTokenValue_invalidToken_returnsEarly() {
+		Assertions.assertDoesNotThrow(() -> stpLogic.logoutByTokenValue("invalid-token-value"));
+	}
+
+	/** 冻结 Token 且 keepFreezeOps 时 logout 应保留 Token-Session */
+	@Test
+	void logoutByTokenValue_keepTokenSession_onFrozenTokenWithKeepFreezeOps() {
+		SaTokenConfig config = SaManager.getConfig();
+		config.setActiveTimeout(10);
+		config.setIsLogoutKeepTokenSession(true);
+		SaManager.setConfig(config);
+
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(60012);
+			String token = stpLogic.getTokenValue();
+			stpLogic.getTokenSession();
+			SaTokenDao dao = SaManager.getSaTokenDao();
+			long oldTime = System.currentTimeMillis() - 60_000;
+			dao.set(stpLogic.splicingKeyLastActiveTime(token), String.valueOf(oldTime), 3600);
+
+			stpLogic.logoutByTokenValue(token, new SaLogoutParameter().setIsKeepFreezeOps(true));
+			Assertions.assertNotNull(dao.getSession(stpLogic.splicingKeyTokenSession(token)));
+			Assertions.assertNull(dao.get(stpLogic.splicingKeyTokenValue(token)));
 		});
 	}
 

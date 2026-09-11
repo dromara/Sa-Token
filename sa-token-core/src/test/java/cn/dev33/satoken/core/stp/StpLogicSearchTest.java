@@ -93,4 +93,27 @@ public class StpLogicSearchTest {
 		});
 	}
 
+	/** 带前缀关键字 searchTokenValue 应返回匹配的 Token 键 */
+	@Test
+	void searchTokenValue_withKeywordPrefix() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90008);
+			stpLogic.login(90009);
+			String prefix = stpLogic.splicingKeyTokenValue("").substring(0, 8);
+			List<String> tokens = stpLogic.searchTokenValue(prefix, 0, 10, true);
+			Assertions.assertFalse(tokens.isEmpty());
+			tokens.forEach(tokenKey -> Assertions.assertTrue(tokenKey.startsWith(prefix)));
+		});
+	}
+
+	/** keyword 为 null 时 searchSessionId 仍应返回结果 */
+	@Test
+	void searchSessionId_nullKeyword() {
+		SaTokenContextMockUtil.setMockContext(() -> {
+			stpLogic.login(90012);
+			List<String> list = stpLogic.searchSessionId(null, 0, 10, true);
+			Assertions.assertFalse(list.isEmpty());
+		});
+	}
+
 }

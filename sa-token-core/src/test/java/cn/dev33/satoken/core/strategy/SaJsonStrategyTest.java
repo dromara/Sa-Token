@@ -115,4 +115,48 @@ public class SaJsonStrategyTest {
 		}
 	}
 
+	/** loadSpiAllowTypeList 应读取测试资源中的 SPI 类型 */
+	@Test
+	void loadSpiAllowTypeList_readsTestResource() {
+		List<Class<?>> spiTypes = strategy.loadSpiAllowTypeList();
+		Assertions.assertTrue(spiTypes.contains(SpiAllowType.class));
+	}
+
+	/** 合并白名单应包含 SPI 加载的类型 */
+	@Test
+	void getSaJsonAllowTypeList_includesSpiTypes() {
+		List<Class<?>> merged = strategy.getSaJsonAllowTypeList();
+		Assertions.assertTrue(merged.contains(SpiAllowType.class));
+		Assertions.assertTrue(strategy.isInit());
+	}
+
+	/** resetState 后应允许再次 registerAllowType */
+	@Test
+	void resetState_allowsRegisterAgain() {
+		strategy.getSaJsonAllowTypeList();
+		Assertions.assertTrue(strategy.isInit());
+		strategy.resetState();
+		Assertions.assertFalse(strategy.isInit());
+		strategy.registerAllowType(SpiAllowType.class);
+		Assertions.assertTrue(strategy.getCustomAllowTypeList().contains(SpiAllowType.class));
+	}
+
+	/** JDK 白名单应包含 Enum 类型 */
+	@Test
+	void getJdkAllowTypeList_containsEnumType() {
+		List<Class<?>> jdkTypes = strategy.getJdkAllowTypeList();
+		Assertions.assertTrue(jdkTypes.contains(Enum.class));
+	}
+
+	/** getSaJsonTypeMarkerList 应返回 SaJsonType 标记类 */
+	@Test
+	void getSaJsonTypeMarkerList_returnsSaJsonTypeMarker() {
+		List<Class<?>> markers = strategy.getSaJsonTypeMarkerList();
+		Assertions.assertEquals(1, markers.size());
+		Assertions.assertEquals(markers, strategy.getSaJsonTypeMarkerList());
+	}
+
+	public static class SpiAllowType {
+	}
+
 }
