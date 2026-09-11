@@ -79,18 +79,20 @@ public class SaSecureUtilTest {
     	Assertions.assertEquals(text, text2);
     }
 
-	/** sha384 与 sha512 应返回固定长度的十六进制摘要 */
+	/** sha384 与 sha512 应对上固定明文的黄金摘要，不能只看长度 */
 	@Test
 	void sha384AndSha512() {
-		Assertions.assertEquals(96, SaSecureUtil.sha384("123456").length());
-		Assertions.assertEquals(128, SaSecureUtil.sha512("123456").length());
+		Assertions.assertEquals("0a989ebc4a77b56a6e2bb7b19d995d185ce44090c13e2984b7ecc6d446d4b61ea9991b76a4c2f04b1b4d244841449454",
+				SaSecureUtil.sha384("123456"));
+		Assertions.assertEquals("ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413",
+				SaSecureUtil.sha512("123456"));
 	}
 
-	/** sha256BySalt 应返回 64 位十六进制加盐哈希 */
+	/** sha256BySalt 应对上 sha256(sha256(str)+sha256(salt)) 的黄金值 */
 	@Test
 	void sha256BySalt() {
-		String hash = SaSecureUtil.sha256BySalt("abc", "salt");
-		Assertions.assertEquals(64, hash.length());
+		Assertions.assertEquals("a3fed8029c5354306e1238a3ce4b4e7e5bef05c9a90ef3bd240954bfa26c09f6",
+				SaSecureUtil.sha256BySalt("abc", "salt"));
 	}
 
 	/** 摘要方法在 null 入参时应等同空字符串哈希 */

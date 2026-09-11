@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import cn.dev33.satoken.secure.BCrypt;
 
 import java.security.SecureRandom;
+import java.util.Random;
 /**
  * BCrypt 加密测试
  * 
@@ -46,6 +47,27 @@ public class BCryptTest {
 		SecureRandom random = new SecureRandom(new byte[] {1, 2, 3, 4});
 		String seededSalt = BCrypt.gensalt(4, random);
 		Assertions.assertTrue(seededSalt.startsWith("$2a$04$"));
+	}
+
+	/** 同一颗 java.util.Random 种子两次 gensalt 应该打出同一条盐，hashpw 应对上黄金哈希 */
+	@Test
+	void gensalt_seededRandom_sameSaltAndHash() {
+		String salt = BCrypt.gensalt(4, seededSecureRandom(12345L));
+		Assertions.assertEquals("$2a$04$zgAdVBExWWKgobhsc.dG4e", salt);
+		Assertions.assertEquals("$2a$04$zgAdVBExWWKgobhsc.dG4e", BCrypt.gensalt(4, seededSecureRandom(12345L)));
+		Assertions.assertEquals("$2a$04$zgAdVBExWWKgobhsc.dG4el234hY.uTwWn/tsPKKbq5BSZ9lA.GRC",
+				BCrypt.hashpw("secret", salt));
+	}
+
+	/** 用可复现的 Random 喂 SecureRandom.nextBytes，不改生产 API */
+	private static SecureRandom seededSecureRandom(long seed) {
+		return new SecureRandom() {
+			private final Random random = new Random(seed);
+			@Override
+			public void nextBytes(byte[] bytes) {
+				random.nextBytes(bytes);
+			}
+		};
 	}
 
 	/** gensalt 轮数超过上限时应抛出 IllegalArgumentException */
