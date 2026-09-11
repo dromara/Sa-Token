@@ -23,6 +23,13 @@
             <artifactId>sa-token-core</artifactId>
         </dependency>
 
+		<!-- 共享测试模型（SysUser），供序列化黄金串断言使用 -->
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-test-support</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 

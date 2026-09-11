@@ -223,6 +223,34 @@ public class SaSsoServerTemplateTest {
 				() -> SaSsoServerTemplate.checkAllowUrlListStaticMethod(Collections.singletonList("http://*.x.com"))).getCode());
 		Assertions.assertEquals(SaSsoErrorCode.CODE_30015, Assertions.assertThrows(SaSsoException.class,
 				() -> SaSsoServerTemplate.checkAllowUrlListStaticMethod(Collections.singletonList("http://domain*"))).getCode());
+		Assertions.assertEquals(SaSsoErrorCode.CODE_30015, Assertions.assertThrows(SaSsoException.class,
+				() -> SaSsoServerTemplate.checkAllowUrlListStaticMethod(Collections.singletonList("http://x:9003*"))).getCode());
+	}
+
+	/** checkRedirectUrl：allowUrl 配了带中括号的 IPv6 时，同样带中括号的回调应该通过 */
+	@Test
+	public void checkRedirectUrl_ipv6_success() {
+		SaSsoManager.getServerConfig().addClient(new SaSsoClientModel()
+				.setClient("ipv6-client")
+				.setAllowUrl("http://[::1]:9003/*,http://[2001:db8::1]:8080/*"));
+		tpl.checkRedirectUrl("ipv6-client", "http://[::1]:9003/sso/login");
+		tpl.checkRedirectUrl("ipv6-client", "http://[2001:db8::1]:8080/callback?back=/");
+	}
+
+	/** checkRedirectUrl：IPv6 不带中括号算无效 url，不在白名单算非法 url，带 @ 直接拒 */
+	@Test
+	public void checkRedirectUrl_ipv6_rejectUnbracketedAndIllegal() {
+		SaSsoManager.getServerConfig().addClient(new SaSsoClientModel()
+				.setClient("ipv6-client")
+				.setAllowUrl("http://[::1]:9003/*"));
+		SaSsoException unbracketed = Assertions.assertThrows(SaSsoException.class,
+				() -> tpl.checkRedirectUrl("ipv6-client", "http://::1:9003/sso/login"));
+		Assertions.assertEquals(SaSsoErrorCode.CODE_30001, unbracketed.getCode());
+		SaSsoException notInList = Assertions.assertThrows(SaSsoException.class,
+				() -> tpl.checkRedirectUrl("ipv6-client", "http://[::2]:9003/sso/login"));
+		Assertions.assertEquals(SaSsoErrorCode.CODE_30002, notInList.getCode());
+		Assertions.assertEquals(SaSsoErrorCode.CODE_30001, Assertions.assertThrows(SaSsoException.class,
+				() -> tpl.checkRedirectUrl("ipv6-client", "http://[::1]:9003@evil.com/sso/login")).getCode());
 	}
 
 	/** registerSloCallbackUrl：空 loginId 跳过；超过 maxRegClient 清退；-1 不限制 */
