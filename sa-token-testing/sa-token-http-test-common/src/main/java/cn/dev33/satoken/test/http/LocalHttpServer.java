@@ -17,6 +17,7 @@ package cn.dev33.satoken.test.http;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,7 +27,9 @@ import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * 本地 Http 服务器测试支持类：基于 JDK 内置 HttpServer 起一个临时端点，
@@ -56,6 +59,9 @@ public class LocalHttpServer {
 
     /** 最近一次 POST 请求解析出的表单参数 */
     private volatile Map<String, String> lastFormParams;
+
+    /** 最近一次请求头（每个名称只留第一个值，查找时大小写不敏感） */
+    private volatile Map<String, String> lastHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     /** 启动服务器（绑定 127.0.0.1:0，由操作系统自动分配当前可用端口，不会因端口占用而失败） */
     public void start() throws IOException {
@@ -93,18 +99,82 @@ public class LocalHttpServer {
         return lastFormParams;
     }
 
-    /** 处理 GET 请求：记录 method 和 query，返回固定响应 */
+    /** 返回最近一次请求里指定名称的请求头（大小写不敏感） */
+    public String getLastHeader(String name) {
+        return lastHeaders.get(name);
+    }
+
+    /** 对端收到的 method 应该等于 expected */
+    public LocalHttpServer assertMethodEquals(String expected) {
+        Assertions.assertEquals(expected, lastMethod);
+        return this;
+    }
+
+    /** 对端收到的 query 串应该等于 expected（不含问号） */
+    public LocalHttpServer assertQueryEquals(String expected) {
+        Assertions.assertEquals(expected, lastQuery);
+        return this;
+    }
+
+    /** 对端收到的指定请求头应该等于 expected */
+    public LocalHttpServer assertHeaderEquals(String name, String expected) {
+        Assertions.assertEquals(expected, getLastHeader(name));
+        return this;
+    }
+
+    /** 对端 Cookie 头里指定名称的值应该等于 expected */
+    public LocalHttpServer assertCookieEquals(String name, String expected) {
+        Assertions.assertEquals(expected, cookie(name));
+        return this;
+    }
+
+    /** 对端收到的指定表单参数应该等于 expected */
+    public LocalHttpServer assertFormParamEquals(String name, String expected) {
+        Assertions.assertEquals(expected, lastFormParams == null ? null : lastFormParams.get(name));
+        return this;
+    }
+
+    /** 处理 GET 请求：记录 method、query、请求头，返回固定响应 */
     private synchronized void handleGet(HttpExchange exchange) throws IOException {
-        lastMethod = exchange.getRequestMethod();
+        record(exchange);
         lastQuery = exchange.getRequestURI().getQuery();
         respond(exchange, "get-ok");
     }
 
-    /** 处理 POST 请求：记录 method 和解析后的表单参数，返回固定响应 */
+    /** 处理 POST 请求：记录 method、请求头和解析后的表单参数，返回固定响应 */
     private synchronized void handlePost(HttpExchange exchange) throws IOException {
-        lastMethod = exchange.getRequestMethod();
+        record(exchange);
         lastFormParams = parseForm(new String(readBody(exchange.getRequestBody()), StandardCharsets.UTF_8));
         respond(exchange, "post-ok");
+    }
+
+    /** 记下最近一次请求的 method 和请求头 */
+    private void record(HttpExchange exchange) {
+        lastMethod = exchange.getRequestMethod();
+        Map<String, String> headers = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        for (Map.Entry<String, List<String>> entry : exchange.getRequestHeaders().entrySet()) {
+            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
+                headers.put(entry.getKey(), entry.getValue().get(0));
+            }
+        }
+        lastHeaders = headers;
+    }
+
+    /** 从最近一次 Cookie 头里拆出指定名称的值 */
+    private String cookie(String name) {
+        String cookieHeader = getLastHeader("Cookie");
+        if (cookieHeader == null) {
+            return null;
+        }
+        for (String pair : cookieHeader.split(";")) {
+            String trimmed = pair.trim();
+            int idx = trimmed.indexOf('=');
+            String key = idx >= 0 ? trimmed.substring(0, idx) : trimmed;
+            if (key.equals(name)) {
+                return idx >= 0 ? trimmed.substring(idx + 1) : "";
+            }
+        }
+        return null;
     }
 
     /** 写回一个 utf-8 文本响应 */
@@ -130,7 +200,7 @@ public class LocalHttpServer {
     /** 解析 form-urlencoded 参数串（key=value&key=value，值做 URL 解码；UTF-8 恒受支持，异常实际不会发生） */
     private static Map<String, String> parseForm(String body) throws UnsupportedEncodingException {
         Map<String, String> params = new LinkedHashMap<>();
-        if (body == null || body.isEmpty()) {
+        if (body.isEmpty()) {
             return params;
         }
         for (String pair : body.split("&")) {

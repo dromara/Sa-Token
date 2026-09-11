@@ -62,8 +62,8 @@ public abstract class SaHttpTemplateTestCommon {
         String res = template.get(server.getBaseUrl() + LocalHttpServer.PATH_GET + "?name=zhang&age=18");
 
         Assertions.assertEquals("get-ok", res);
-        Assertions.assertEquals("GET", server.getLastMethod());
-        Assertions.assertEquals("name=zhang&age=18", server.getLastQuery());
+        server.assertMethodEquals("GET")
+                .assertQueryEquals("name=zhang&age=18");
     }
 
     /** postByFormData 请求时应该能把表单参数传到服务端 */
@@ -76,9 +76,9 @@ public abstract class SaHttpTemplateTestCommon {
         String res = template.postByFormData(server.getBaseUrl() + LocalHttpServer.PATH_POST, params);
 
         Assertions.assertEquals("post-ok", res);
-        Assertions.assertEquals("POST", server.getLastMethod());
-        Assertions.assertEquals("张三", server.getLastFormParams().get("name"));
-        Assertions.assertEquals("18", server.getLastFormParams().get("age"));
+        server.assertMethodEquals("POST")
+                .assertFormParamEquals("name", "张三")
+                .assertFormParamEquals("age", "18");
     }
 
     /** postByFormData 参数值为 null 时应该按空串传到服务端 */
@@ -89,7 +89,7 @@ public abstract class SaHttpTemplateTestCommon {
 
         template.postByFormData(server.getBaseUrl() + LocalHttpServer.PATH_POST, params);
 
-        Assertions.assertEquals("", server.getLastFormParams().get("name"));
+        server.assertFormParamEquals("name", "");
     }
 
 }
