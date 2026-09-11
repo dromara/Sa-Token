@@ -325,7 +325,7 @@ public class SaTokenEventCenterTest {
 		Assertions.assertTrue(setConfig.get());
 	}
 
-	/** 默认构造函数应可正常创建实例 */
+	/** 应测尽测：测试 SaTokenEventCenter 无参构造 */
 	@Test
 	void defaultConstructor() {
 		Assertions.assertDoesNotThrow(SaTokenEventCenter::new);

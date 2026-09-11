@@ -104,7 +104,7 @@ public class SaTokenContextUtilTest {
 		Assertions.assertThrows(Exception.class, () -> SaHolder.getRequest().getRequestPath());
 	}
 
-	/** 工具类默认构造应该能 new 出来 */
+	/** 应测尽测：测试 SaTokenContextUtil 无参构造 */
 	@Test
 	public void constructor_shouldCreateInstance() {
 		Assertions.assertNotNull(new SaTokenContextUtil());

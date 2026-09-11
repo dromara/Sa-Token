@@ -57,7 +57,7 @@ public class SaBeanRegisterTest {
 		Assertions.assertTrue(dao instanceof SaTokenDaoForRedisson);
 	}
 
-	/** 上下文路径加载器工厂应该能 new 出来 */
+	/** 应测尽测：测试 getApplicationContextPathLoading */
 	@Test
 	public void getApplicationContextPathLoading_notNull() {
 		ApplicationContextPathLoading loading = new SaBeanRegister().getApplicationContextPathLoading();

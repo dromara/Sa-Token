@@ -85,7 +85,7 @@ public class SaHolderTest {
 		Assertions.assertSame(SaApplication.defaultInstance, SaHolder.getApplication());
 	}
 
-	/** 默认构造函数应可正常创建实例 */
+	/** 应测尽测：测试 SaHolder 无参构造 */
 	@Test
 	void defaultConstructor() {
 		Assertions.assertDoesNotThrow(SaHolder::new);

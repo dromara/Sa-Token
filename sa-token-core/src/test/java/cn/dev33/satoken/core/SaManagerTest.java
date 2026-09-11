@@ -120,7 +120,7 @@ public class SaManagerTest {
 		Assertions.assertSame(StpUtil.stpLogic, SaManager.getStpLogic("", false));
 	}
 
-	/** 默认构造函数应可正常创建实例 */
+	/** 应测尽测：测试 SaManager 无参构造 */
 	@Test
 	void defaultConstructor() {
 		Assertions.assertDoesNotThrow(SaManager::new);

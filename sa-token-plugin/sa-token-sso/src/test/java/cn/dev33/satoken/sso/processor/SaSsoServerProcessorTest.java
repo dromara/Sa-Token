@@ -290,7 +290,7 @@ public class SaSsoServerProcessorTest {
 		Assertions.assertTrue(url.get().contains("ticket="));
 	}
 
-	/** 新 new 一个 Processor 也应该能分发 */
+	/** 应测尽测：测试 SaSsoServerProcessor 无参构造 */
 	@Test
 	public void ctor_newInstanceWorks() {
 		Assertions.assertNotNull(new SaSsoServerProcessor());

@@ -65,7 +65,7 @@ public class SaReactorHolderTest {
 		Assertions.assertThrows(Exception.class, () -> SaHolder.getRequest().getRequestPath());
 	}
 
-	/** 默认构造应该能 new 出来 */
+	/** 应测尽测：测试 SaReactorHolder 无参构造 */
 	@Test
 	public void constructor_shouldCreateInstance() {
 		Assertions.assertNotNull(new SaReactorHolder());

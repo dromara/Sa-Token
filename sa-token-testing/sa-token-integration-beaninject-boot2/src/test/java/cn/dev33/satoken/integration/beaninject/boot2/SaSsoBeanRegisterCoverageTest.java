@@ -20,11 +20,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * 补测 {@link SaSsoBeanRegister} 默认模板工厂方法（Spring 注入场景下常被 @ConditionalOnMissingBean 跳过）
+ * 应测尽测：测试 {@link SaSsoBeanRegister} 默认模板工厂
  */
 public class SaSsoBeanRegisterCoverageTest {
 
-    /** 直接调用 Register 时，默认 SSO 模板工厂方法应该可用 */
+    /** 应测尽测：测试 getSaSsoServerTemplate / getSaSsoClientTemplate */
     @Test
     public void defaultTemplateFactories_callable() {
         SaSsoBeanRegister register = new SaSsoBeanRegister();

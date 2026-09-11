@@ -38,7 +38,7 @@ public class SaTokenContextDubbo3UtilTest {
 		Dubbo3TestSupport.cleanup();
 	}
 
-	/** 工具类默认构造应该能 new */
+	/** 应测尽测：测试 SaTokenContextDubbo3Util 无参构造 */
 	@Test
 	public void ctor_canNew() {
 		new SaTokenContextDubbo3Util();

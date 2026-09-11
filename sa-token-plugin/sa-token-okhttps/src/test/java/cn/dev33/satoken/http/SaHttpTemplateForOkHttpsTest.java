@@ -44,7 +44,7 @@ public class SaHttpTemplateForOkHttpsTest extends SaHttpTemplateTestCommon {
         assertPostByFormData();
     }
 
-    /** 默认构造函数应该能 new 出来 */
+    /** 应测尽测：测试 SaHttpTemplateForOkHttps 无参构造 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaHttpTemplateForOkHttps());

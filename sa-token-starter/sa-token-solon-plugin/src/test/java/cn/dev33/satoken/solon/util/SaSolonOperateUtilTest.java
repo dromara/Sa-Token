@@ -42,7 +42,7 @@ public class SaSolonOperateUtilTest {
 		SolonTestHelper.runMayNpeOnRender(() -> SaSolonOperateUtil.writeResult(ctx, "blocked"));
 	}
 
-	/** 工具类默认构造应该能 new 出来 */
+	/** 应测尽测：测试 SaSolonOperateUtil 无参构造 */
 	@Test
 	public void constructor_shouldCreateInstance() {
 		Assertions.assertNotNull(new SaSolonOperateUtil());

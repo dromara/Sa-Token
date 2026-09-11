@@ -82,7 +82,7 @@ public class SaSignManagerTest {
         Assertions.assertSame(template, SaSignManager.getSaSignTemplate());
     }
 
-    /** 默认构造函数应该能 new 出来 */
+    /** 应测尽测：测试 SaSignManager 无参构造 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaSignManager());

@@ -85,7 +85,7 @@ public class SaQuickInjectAndControllerTest {
         });
     }
 
-    /** Register 常量与默认构造应该可用 */
+    /** 应测尽测：测试 SaQuickRegister 常量与无参构造 */
     @Test
     public void register_constantAndConstructor() {
         Assertions.assertEquals("sa", SaQuickRegister.CONFIG_VERSION);

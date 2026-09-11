@@ -127,7 +127,7 @@ public class SaJwtUtilTest {
         Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, SaJwtUtil.getTimeout(token, JWT_SECRET_KEY));
     }
 
-    /** 默认构造函数应该能 new 出来 */
+    /** 应测尽测：测试 SaJwtUtil 无参构造 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaJwtUtil());

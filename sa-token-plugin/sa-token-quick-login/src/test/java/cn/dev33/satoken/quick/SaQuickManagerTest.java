@@ -59,7 +59,7 @@ public class SaQuickManagerTest {
         Assertions.assertSame(SaQuickManager.getConfig(), SaQuickManager.getConfig());
     }
 
-    /** 非私有类的默认构造应该能 new 出来 */
+    /** 应测尽测：测试 SaQuickManager 无参构造 */
     @Test
     public void constructor_canNew() {
         Assertions.assertNotNull(new SaQuickManager());

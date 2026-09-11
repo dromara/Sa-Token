@@ -47,7 +47,7 @@ public class SaInterceptorTest {
 		LoveqqTestHelper.ensureLoveqqStrategy();
 	}
 
-	/** 无参构造和带 auth 的构造都应该能 new 出来 */
+	/** 应测尽测：测试 SaInterceptor 无参构造和带 auth 的构造 */
 	@Test
 	public void constructors_shouldCreate() {
 		Assertions.assertNotNull(new SaInterceptor());

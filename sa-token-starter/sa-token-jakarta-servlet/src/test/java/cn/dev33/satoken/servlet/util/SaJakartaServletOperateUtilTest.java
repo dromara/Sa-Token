@@ -25,7 +25,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class SaJakartaServletOperateUtilTest {
 
-    /** 工具类应该能正常实例化 */
+    /** 应测尽测：测试 SaJakartaServletOperateUtil 无参构造 */
     @Test
     public void constructor_ok() {
         new SaJakartaServletOperateUtil();

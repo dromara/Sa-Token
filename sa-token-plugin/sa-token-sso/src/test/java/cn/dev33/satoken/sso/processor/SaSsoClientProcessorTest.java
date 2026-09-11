@@ -359,7 +359,7 @@ public class SaSsoClientProcessorTest {
 		Assertions.assertEquals(200L, ctr.remainSessionTimeout);
 	}
 
-	/** 新 new 一个 Client Processor 也应该能用 */
+	/** 应测尽测：测试 SaSsoClientProcessor 无参构造 */
 	@Test
 	public void ctor_newInstanceWorks() {
 		Assertions.assertNotNull(new SaSsoClientProcessor());

@@ -99,7 +99,7 @@ public class SaAopPointcutAdvisorBeanRegisterTest {
         Assertions.assertFalse(expr.contains(ExtraCheck.class.getName()));
     }
 
-    /** 默认构造 Advisor 与 Register 应该能 new 出来 */
+    /** 应测尽测：测试 Advisor 与 Register 无参构造 */
     @Test
     public void constructors_canNew() {
         Assertions.assertNotNull(new SaAroundAnnotationPointcutAdvisor());

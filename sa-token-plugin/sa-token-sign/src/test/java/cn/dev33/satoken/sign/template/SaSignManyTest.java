@@ -72,7 +72,7 @@ public class SaSignManyTest {
         Assertions.assertEquals("custom-key", SaSignMany.getSignTemplate("custom-app").getSecretKey());
     }
 
-    /** 默认构造函数应该能 new 出来 */
+    /** 应测尽测：测试 SaSignMany 无参构造 */
     @Test
     public void constructor_instantiable() {
         Assertions.assertNotNull(new SaSignMany());

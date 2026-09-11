@@ -33,7 +33,7 @@ public class SaControllerContextTest {
         SaControllerContext.release();
     }
 
-    /** 默认构造也能 new，别让覆盖率卡在这 */
+    /** 应测尽测：测试 SaControllerContext 无参构造 */
     @Test
     public void constructor_canNew() {
         Assertions.assertNotNull(new SaControllerContext());

@@ -69,7 +69,7 @@ public class SaSsoProcessorHelperTest {
 		Assertions.assertTrue(((SaResult) out).getMsg().contains("单点注销成功"));
 	}
 
-	/** 无参构造也要点一下，别让覆盖率漏掉 */
+	/** 应测尽测：测试 SaSsoProcessorHelper 无参构造 */
 	@Test
 	public void ctor_canNew() {
 		Assertions.assertNotNull(new SaSsoProcessorHelper());

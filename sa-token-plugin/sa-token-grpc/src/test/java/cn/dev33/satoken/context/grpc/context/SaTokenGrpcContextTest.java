@@ -31,7 +31,7 @@ public class SaTokenGrpcContextTest {
 		GrpcTestSupport.cleanup();
 	}
 
-	/** 默认构造应该能 new */
+	/** 应测尽测：测试 SaTokenGrpcContext 无参构造 */
 	@Test
 	public void ctor_canNew() {
 		new SaTokenGrpcContext();

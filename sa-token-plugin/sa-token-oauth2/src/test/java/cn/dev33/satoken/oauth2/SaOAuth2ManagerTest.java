@@ -46,7 +46,7 @@ public class SaOAuth2ManagerTest {
 		OAuth2TestSupport.installDefaultConfig();
 	}
 
-	/** 无参构造应该能 new 出来，别让覆盖率漏掉 */
+	/** 应测尽测：测试 SaOAuth2Manager 无参构造 */
 	@Test
 	public void ctor_canNew() {
 		Assertions.assertNotNull(new SaOAuth2Manager());

@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  */
 public class PlaceholderTest {
 
-    /** 占位类应该能正常实例化 */
+    /** 应测尽测：测试 Placeholder 无参构造 */
     @Test
     public void constructor_ok() {
         Assertions.assertNotNull(new Placeholder());

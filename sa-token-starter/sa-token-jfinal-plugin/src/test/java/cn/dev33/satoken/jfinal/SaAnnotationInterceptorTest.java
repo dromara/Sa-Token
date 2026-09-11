@@ -98,7 +98,7 @@ public class SaAnnotationInterceptorTest {
         verify(invocation).invoke();
     }
 
-    /** 默认构造应该能 new */
+    /** 应测尽测：测试 SaAnnotationInterceptor 无参构造 */
     @Test
     public void ctor_canNew() {
         Assertions.assertNotNull(new SaAnnotationInterceptor());

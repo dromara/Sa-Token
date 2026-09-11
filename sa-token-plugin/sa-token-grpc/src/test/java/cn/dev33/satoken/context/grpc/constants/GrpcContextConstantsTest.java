@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
  */
 public class GrpcContextConstantsTest {
 
-	/** 默认构造应该能 new */
+	/** 应测尽测：测试 GrpcContextConstants 无参构造 */
 	@Test
 	public void ctor_canNew() {
 		new GrpcContextConstants();

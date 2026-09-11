@@ -36,7 +36,7 @@ public class SaTokenContextJakartaServletUtilTest {
         JakartaServletModelTestSupport.ensureServletStrategy();
     }
 
-    /** 工具类应该能正常实例化 */
+    /** 应测尽测：测试 SaTokenContextJakartaServletUtil 无参构造 */
     @Test
     public void constructor_ok() {
         new SaTokenContextJakartaServletUtil();

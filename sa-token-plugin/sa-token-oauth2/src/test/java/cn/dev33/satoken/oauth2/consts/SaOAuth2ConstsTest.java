@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SaOAuth2ConstsTest {
 
-	/** 顺手把无参构造点一下，别让覆盖率漏掉 */
+	/** 应测尽测：测试 OAuth2 常量类无参构造 */
 	@Test
 	public void ctors_canNew() {
 		new SaOAuth2Consts();

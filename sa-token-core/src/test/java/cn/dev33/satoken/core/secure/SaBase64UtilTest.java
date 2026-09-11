@@ -43,7 +43,7 @@ public class SaBase64UtilTest {
 		Assertions.assertArrayEquals(bytes, SaBase64Util.decodeStringToBytes(SaBase64Util.encodeBytesToString(bytes)));
 	}
 
-	/** 默认构造函数应可正常创建实例 */
+	/** 应测尽测：测试 SaBase64Util 无参构造 */
 	@Test
 	void defaultConstructor() {
 		Assertions.assertDoesNotThrow(SaBase64Util::new);

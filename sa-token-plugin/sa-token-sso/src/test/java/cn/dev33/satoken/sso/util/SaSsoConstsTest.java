@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  */
 public class SaSsoConstsTest {
 
-	/** 公开常量应该都是这些固定值，顺手把无参构造也点一下 */
+	/** 应测尽测：测试 SSO 公开常量字面量与无参构造 */
 	@Test
 	public void constants_keepLiteralValues() {
 		new SaSsoConsts();
