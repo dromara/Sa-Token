@@ -1,6 +1,6 @@
 # Sa-Token
 
-> 轻量级 Java 权限认证框架（Apache-2.0）。官网与文档：https://sa-token.com
+> 开源、免费、一站式 Java 权限认证框架，让鉴权变得简单、优雅！官网与文档：https://sa-token.com
 
 Sa-Token 提供登录认证、权限认证、SSO 单点登录、OAuth2.0、微服务网关鉴权，可接入 Spring Boot、WebFlux、Solon。开源免费（Apache-2.0）。权威文档：https://sa-token.com
 
