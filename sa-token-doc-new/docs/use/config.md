@@ -1,5 +1,5 @@
 ---
-title: "Spring Boot 框架配置"
+title: "框架配置"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,框架配置,基础,Java权限认证"
 
 description: "Sa-Token 框架配置：可零配置启动，也可在 yml、properties 或代码里改 Token 名称、有效期与 Cookie。"

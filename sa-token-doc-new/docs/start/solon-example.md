@@ -1,5 +1,5 @@
 ---
-title: "Spring Boot Solon 环境集成"
+title: "Solon 集成 Sa-Token 示例"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Solon 环境集成,Spring Boot"
 
 description: "在 Solon 应用中集成 Sa-Token：依赖引入、登录鉴权步骤，以及官方 sa-token-demo-solon 可运行示例。"

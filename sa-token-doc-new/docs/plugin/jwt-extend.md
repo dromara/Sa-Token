@@ -1,5 +1,5 @@
 ---
-title: "Spring Boot 整合 Sa-Token JWT"
+title: "和 jwt 集成"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,整合 Sa-Token JWT,插件,JWT"
 
 description: "Sa-Token 整合 JWT：在现有鉴权上接入 jwt 插件，用无状态 Token 传递登录态，适合前后端分离。"
