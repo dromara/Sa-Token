@@ -3,36 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <title>Sa-Token 文档</title>
-  <meta name="robots" content="noindex">
-  <link rel="canonical" href="https://sa-token.com/readme.html">
-  <script>
-    (function () {
-      var hash = location.hash || '';
-      var search = location.search || '';
-      var inner = hash.replace(/^#\/?/, '');
-      var qIndex = inner.indexOf('?');
-      var pathPart = qIndex >= 0 ? inner.slice(0, qIndex) : inner;
-      var id = '';
-      if (qIndex >= 0) {
-        inner.slice(qIndex + 1).split('&').forEach(function (pair) {
-          var kv = pair.split('=');
-          if (kv[0] === 'id') {
-            try { id = decodeURIComponent(kv[1] || ''); }
-            catch (e) { id = kv[1] || ''; }
-          }
-        });
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sa-Token 官方文档目录：登录认证、权限认证、SSO、OAuth2.0、微服务鉴权等章节。">
+  <link rel="canonical" href="https://sa-token.com/doc.html">
+  <link rel="icon" href="/favicon.ico">
+  <script>(function () {
+  var hash = location.hash || '';
+  var search = location.search || '';
+  var inner = hash.replace(/^#\/?/, '');
+  var qIndex = inner.indexOf('?');
+  var pathPart = qIndex >= 0 ? inner.slice(0, qIndex) : inner;
+  var id = '';
+  if (qIndex >= 0) {
+    inner.slice(qIndex + 1).split('&').forEach(function (pair) {
+      var kv = pair.split('=');
+      if (kv[0] === 'id') {
+        try { id = decodeURIComponent(kv[1] || ''); }
+        catch (e) { id = kv[1] || ''; }
       }
-      pathPart = (pathPart || '').replace(/\/+$/, '');
-      var dest;
-      if (!pathPart || pathPart === 'index' || pathPart === 'README' || pathPart === 'readme') dest = '/readme.html';
-      else dest = '/' + pathPart.replace(/^\/+/, '') + '.html';
-      dest = dest.replace(/\/+/g, '/');
-      if (search) dest += search;
-      if (id.charAt(0) === '_') id = id.slice(1);
-      if (id) dest += '#' + id;
-      location.replace(dest);
-    })();
-  </script>
+    });
+  }
+  pathPart = (pathPart || '').replace(/\/+$/, '');
+  var dest;
+  if (!pathPart || pathPart === 'index' || pathPart === 'README' || pathPart === 'readme') dest = '/readme.html';
+  else dest = '/' + pathPart.replace(/^\/+/, '') + '.html';
+  dest = dest.replace(/\/+/g, '/');
+  if (search) dest += search;
+  if (id.charAt(0) === '_') id = id.slice(1);
+  if (id) dest += '#' + id;
+  location.replace(dest);
+})();</script>
+  <style>
+    body { max-width: 720px; margin: 32px auto; padding: 0 20px 48px; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; color: #2c3e50; line-height: 1.7; }
+    h1 { font-size: 28px; font-weight: 600; }
+    h2 { margin-top: 28px; font-size: 18px; color: #1e8f5c; }
+    p { color: #4e6e8e; }
+    a { color: #1e8f5c; }
+    ul { padding-left: 20px; }
+    li { margin: 4px 0; }
+  </style>
 </head>
-<body>正在跳转到新版文档…</body>
+<body>
+  <h1>Sa-Token 文档</h1>
+  <p>正在跳转到新版文档… 若没有自动跳转，请从下方目录进入对应章节。</p>
+  <p><a href="/readme.html">进入文档介绍</a> · <a href="/">返回官网首页</a></p>
+  <nav>
+    <h2>开始</h2>
+    <ul>
+      <li><a href="/readme.html">框架介绍</a></li>
+      <li><a href="/start/example.html">在 SpringBoot 环境集成</a></li>
+      <li><a href="/start/webflux-example.html">在 WebFlux 环境集成</a></li>
+      <li><a href="/start/solon-example.html">在 Solon 环境集成</a></li>
+      <li><a href="/start/download.html">其它环境集成示例</a></li>
+      <li><a href="/start/run-source-code.html">源码运行指南</a></li>
+      <li><a href="/more/download-demos.html">Sa-Token 集成示例大全下载</a></li>
+    </ul>
+    <h2>基础</h2>
+    <ul>
+      <li><a href="/use/login-auth.html">登录认证</a></li>
+      <li><a href="/use/jur-auth.html">权限认证</a></li>
+      <li><a href="/use/kick.html">踢人下线</a></li>
+      <li><a href="/use/at-check.html">注解鉴权</a></li>
+      <li><a href="/use/route-check.html">路由拦截鉴权</a></li>
+      <li><a href="/use/session.html">Session会话</a></li>
+      <li><a href="/use/config.html">框架配置</a></li>
+    </ul>
+    <h2>深入</h2>
+    <ul>
+      <li><a href="/up/integ-redis.html">集成 Redis</a></li>
+      <li><a href="/up/not-cookie.html">前后端分离</a></li>
+      <li><a href="/up/token-style.html">自定义 Token 风格</a></li>
+      <li><a href="/up/token-prefix.html">Token 提交前缀</a></li>
+      <li><a href="/up/mutex-login.html">同端互斥登录</a></li>
+      <li><a href="/up/remember-me.html">记住我模式</a></li>
+      <li><a href="/up/login-parameter.html">登录参数 &amp; 注销参数</a></li>
+      <li><a href="/up/safe-auth.html">二级认证</a></li>
+      <li><a href="/up/mock-person.html">模拟他人 &amp; 身份切换</a></li>
+      <li><a href="/up/disable.html">账号封禁</a></li>
+      <li><a href="/up/password-secure.html">密码加密</a></li>
+      <li><a href="/up/search-session.html">会话查询</a></li>
+      <li><a href="/up/basic-auth.html">Http Basic/Digest 认证</a></li>
+      <li><a href="/up/global-listener.html">全局侦听器</a></li>
+      <li><a href="/up/global-filter.html">全局过滤器</a></li>
+      <li><a href="/up/many-account.html">多账号认证</a></li>
+    </ul>
+    <h2>单点登录</h2>
+    <ul>
+      <li><a href="/sso/readme.html">单点登录简述</a></li>
+      <li><a href="/sso/sso-server.html">搭建统一认证中心：SSO-Server</a></li>
+      <li><a href="/sso/sso-apidoc.html">SSO-Server 认证中心开放 API 接口</a></li>
+      <li><a href="/sso/sso-type1.html">SSO模式一 共享Cookie同步会话</a></li>
+      <li><a href="/sso/sso-type2.html">SSO模式二 URL重定向传播会话</a></li>
+      <li><a href="/sso/sso-type3.html">SSO模式三 Http请求获取会话</a></li>
+      <li><a href="/sso/sso-check-domain.html">配置域名校验</a></li>
+      <li><a href="/sso/sso-custom-login.html">定制化登录页面</a></li>
+      <li><a href="/sso/sso-custom-api.html">自定义API路由</a></li>
+      <li><a href="/sso/sso-home-jump.html">平台中心跳转模式</a></li>
+      <li><a href="/sso/anon-client.html">匿名 client 接入</a></li>
+      <li><a href="/sso/signout.html">单点注销</a></li>
+      <li><a href="/sso/sso-h5.html">前后端分离下的整合方案</a></li>
+      <li><a href="/sso/message-push.html">消息推送机制</a></li>
+      <li><a href="/sso/user-data-sync.html">用户数据同步 / 迁移</a></li>
+      <li><a href="/sso/sso-nosdk.html">NoSdk、ReSdk 模式与非 java 项目</a></li>
+      <li><a href="/sso/sso-dev.html">SSO 代码 API 参考</a></li>
+      <li><a href="/sso/sso-questions.html">常见问题总结</a></li>
+    </ul>
+    <h2>OAuth2.0</h2>
+    <ul>
+      <li><a href="/oauth2/readme.html">OAuth2.0简述</a></li>
+      <li><a href="/oauth2/oauth2-server.html">OAuth2-Server搭建</a></li>
+      <li><a href="/oauth2/oauth2-apidoc.html">OAuth2-Server端开放 API 接口</a></li>
+      <li><a href="/oauth2/oauth2-data-loader.html">自定义数据加载器</a></li>
+      <li><a href="/oauth2/oauth2-check-domain.html">配置 client 域名校验</a></li>
+      <li><a href="/oauth2/oauth2-custom-scope.html">自定义 Scope 权限及处理器</a></li>
+      <li><a href="/oauth2/oauth2-scope-level.html">为 Scope 划分等级</a></li>
+      <li><a href="/oauth2/oauth2-custom-grant_type.html">自定义 grant_type</a></li>
+      <li><a href="/oauth2/oauth2-custom-login.html">定制化登录页面与授权页面</a></li>
+      <li><a href="/oauth2/oauth2-custom-api.html">自定义 API 路由</a></li>
+      <li><a href="/oauth2/oauth2-h5.html">OAuth2-Server端前后台分离</a></li>
+      <li><a href="/oauth2/oauth2-openid.html">OpenId 与 UnionId</a></li>
+      <li><a href="/oauth2/oauth2-oidc.html">开启 OIDC 协议</a></li>
+      <li><a href="/oauth2/oauth2-at-check.html">使用注解校验 Access-Token</a></li>
+      <li><a href="/oauth2/oauth2-interworking.html">OAuth2-与登录会话实现数据互通</a></li>
+      <li><a href="/oauth2/oauth2-dev.html">OAuth2 代码 API 参考</a></li>
+      <li><a href="/oauth2/oauth2-questions.html">常见问题总结</a></li>
+    </ul>
+    <h2>微服务</h2>
+    <ul>
+      <li><a href="/micro/dcs-session.html">分布式Session会话</a></li>
+      <li><a href="/micro/gateway-auth.html">网关统一鉴权</a></li>
+      <li><a href="/micro/same-token.html">内部服务外网隔离</a></li>
+      <li><a href="/micro/import-intro.html">依赖引入说明</a></li>
+    </ul>
+    <h2>插件</h2>
+    <ul>
+      <li><a href="/plugin/aop-at.html">AOP注解鉴权</a></li>
+      <li><a href="/plugin/temp-token.html">临时 Token 认证</a></li>
+      <li><a href="/plugin/quick-login.html">Quick-Login快速登录插件</a></li>
+      <li><a href="/plugin/alone-redis.html">Alone独立Redis插件</a></li>
+      <li><a href="/plugin/alone-redisson.html">Alone独立Redisson插件</a></li>
+      <li><a href="/plugin/dao-extend.html">缓存层扩展</a></li>
+      <li><a href="/plugin/json-extend.html">JSON 序列化扩展</a></li>
+      <li><a href="/plugin/custom-serializer.html">序列化插件扩展包</a></li>
+      <li><a href="/plugin/http-extend.html">HTTP 请求扩展</a></li>
+      <li><a href="/plugin/thymeleaf-extend.html">和 Thymeleaf 集成</a></li>
+      <li><a href="/plugin/freemarker-extend.html">和 Freemarker 集成</a></li>
+      <li><a href="/plugin/spel-at.html">注解鉴权 SpEL 表达式</a></li>
+      <li><a href="/plugin/jwt-extend.html">和 jwt 集成</a></li>
+      <li><a href="/plugin/dubbo-extend.html">和 Dubbo 集成</a></li>
+      <li><a href="/plugin/grpc-extend.html">和 gRPC 集成</a></li>
+      <li><a href="/plugin/api-sign.html">API 接口参数签名</a></li>
+      <li><a href="/plugin/api-key.html">API Key 接口调用秘钥</a></li>
+      <li><a href="/fun/plugin-dev.html">Sa-Token 插件开发指南</a></li>
+      <li><a href="/fun/sa-token-context.html">自定义 SaTokenContext 指南</a></li>
+    </ul>
+    <h2>API手册</h2>
+    <ul>
+      <li><a href="/api/stp-util.html">StpUtil-鉴权工具类</a></li>
+      <li><a href="/api/sa-session.html">SaSession-会话对象</a></li>
+      <li><a href="/api/sa-token-dao.html">SaTokenDao-数据持久接口</a></li>
+      <li><a href="/api/sa-strategy.html">SaStrategy-全局策略</a></li>
+      <li><a href="/more/common-action.html">全局类、方法</a></li>
+    </ul>
+    <h2>框架设计</h2>
+    <ul>
+      <li><a href="/arch/dir-intro.html">仓库目录</a></li>
+      <li><a href="/arch/data-structure.html">数据结构</a></li>
+    </ul>
+    <h2>其它</h2>
+    <ul>
+      <li><a href="/more/update-log.html">更新日志</a></li>
+      <li><a href="/more/link.html">框架生态</a></li>
+      <li><a href="/more/blog.html">框架博客</a></li>
+      <li><a href="/more/tj-gzh.html">推荐公众号</a></li>
+      <li><a href="/more/join-group.html">加入讨论群</a></li>
+      <li><a href="/more/content-cooperation.html">Sa-Token 内容合作群</a></li>
+      <li><a href="/more/sa-token-donate.html">赞助 Sa-Token</a></li>
+      <li><a href="/more/demand-commit.html">需求提交</a></li>
+      <li><a href="/more/wenjuan.html">问卷调查</a></li>
+    </ul>
+    <h2>附录</h2>
+    <ul>
+      <li><a href="/more/common-questions.html">常见问题排查</a></li>
+      <li><a href="/more/noun-intro.html">框架名词解释</a></li>
+      <li><a href="/fun/auth-flow.html">Sa-Token功能结构图</a></li>
+      <li><a href="/fun/update-version-flow.html">Sa-Token版本更新流程</a></li>
+      <li><a href="/fun/log.html">全局 Log 输出</a></li>
+      <li><a href="/fun/async--mock.html">异步 &amp; Mock 上下文</a></li>
+      <li><a href="/fun/not-login-scene.html">未登录场景值详解</a></li>
+      <li><a href="/fun/token-timeout.html">Token有效期详解</a></li>
+      <li><a href="/fun/session-model.html">Session模型详解</a></li>
+      <li><a href="/fun/three-scope.html">数据读写三大作用域</a></li>
+      <li><a href="/fun/token-info.html">TokenInfo参数详解</a></li>
+      <li><a href="/fun/exception-code.html">异常细分状态码</a></li>
+      <li><a href="/fun/custom-annotations.html">自定义注解</a></li>
+      <li><a href="/fun/firewall.html">防火墙</a></li>
+      <li><a href="/fun/jur-cache.html">参考：把权限放在缓存里</a></li>
+      <li><a href="/fun/dynamic-router-check.html">参考：把路由拦截鉴权动态化</a></li>
+      <li><a href="/fun/curr-domain.html">解决反向代理 uri 丢失的问题</a></li>
+      <li><a href="/fun/cors-filter.html">解决跨域问题</a></li>
+      <li><a href="/fun/sso-vs-oauth2.html">技术选型：SSO 与 OAuth2 对比</a></li>
+      <li><a href="/up/integ-spring-mongod-1.html">集成 MongoDB 参考一</a></li>
+      <li><a href="/up/integ-spring-mongod-2.html">集成 MongoDB 参考二</a></li>
+      <li><a href="/fun/auth-framework-function-test.html">从 Shiro、SpringSecurity、JWT 迁移</a></li>
+      <li><a href="/fun/issue-template.html">issue 提问模板</a></li>
+      <li><a href="/fun/git-pr.html">为Sa-Token贡献代码</a></li>
+      <li><a href="/fun/timeline.html">Sa-Token开源大事记</a></li>
+      <li><a href="/fun/team.html">团队成员</a></li>
+      <li><a href="/fun/sa-token-test.html">Sa-Token框架掌握度--在线考试</a></li>
+    </ul>
+  </nav>
+</body>
 </html>

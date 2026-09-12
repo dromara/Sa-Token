@@ -4,7 +4,6 @@ Allow: /
 Disallow: /404.html
 Disallow: /public/
 Disallow: /blog/template/
-Disallow: /assets/
 
 Sitemap: https://sa-token.com/sitemap.xml
 

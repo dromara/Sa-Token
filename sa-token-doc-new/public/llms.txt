@@ -22,13 +22,11 @@ Allow: /fun/
 Allow: /more/
 Allow: /blog/
 
-Disallow: /assets/
 Disallow: /big-file/
 Disallow: /blog/template/
 Disallow: /public/
 Disallow: /pro/
 Disallow: /404.html
-Disallow: /doc.html
 
 ########################################
 # 2. 使用政策

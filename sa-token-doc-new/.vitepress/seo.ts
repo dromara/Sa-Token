@@ -169,13 +169,10 @@ export function extractDescription(md: string, fallback: string) {
   return desc
 }
 
-/** 跳转页、占位页、博客（博客 URL 由 buildEnd 从 blog/sitemap.xml 并入全站 sitemap）不进文档 sitemap */
+/** 占位页、博客（博客 URL 由 buildEnd 从 blog/sitemap.xml 并入全站 sitemap）不进文档 sitemap */
 function isSitemapJunk(loc: string) {
   if (!loc) return true
   if (loc.includes('/blog/') || loc.includes('/public/') || loc.includes('/pro/')) return true
-  // 跳转桩：正文分别在 fun/plugin-dev、plugin/dao-extend
-  if (loc.endsWith('/plugin/plugin-dev.html') || loc.endsWith('/use/dao-extend.html')) return true
-  if (loc.includes('/more/sa-token-donate-old.html')) return true
   if (loc.includes('/sso/sso-pro.html')) return true
   if (loc.endsWith('/404.html')) return true
   // 营销首页 canonical 为 /，仅收录根路径；index.html 与 VitePress 文档壳不重复提交
@@ -232,43 +229,31 @@ export function applyPageSeo(pageData: PageData, srcDir: string) {
   }
 }
 
-/** 相对路径拼成绝对 URL，给 canonical / og:url */
-function absUrl(href: string) {
-  if (/^https?:\/\//.test(href)) return href
-  const p = withHtmlExt(href).split('#')[0]
-  return SITE_ORIGIN + (p.startsWith('/') ? p : `/${p}`)
-}
-
 /**
  * 拼这一页多出来的 <head> 标签（config 里 transformHead 的返回值）。
  *
  * - canonical / og:url：干净地址，故意丢掉 ?way=，避免百度把同一篇收成两条
- * - 有 redirect、或 /pro/、sso-pro：加 noindex，别浪费收录额度
+ * - 有 /pro/、sso-pro：加 noindex，别浪费收录额度
  * - 正常文档页再加 JSON-LD（TechArticle / 介绍页用 WebPage）
  */
 export function buildHead(pageData: PageData, title: string, description: string): HeadConfig[] {
   if (pageData.isNotFound) {
     return [['meta', { name: 'robots', content: 'noindex, nofollow' }]]
   }
-  const redirect = pageData.frontmatter.redirect as string | undefined
   const relUrl = pagePath(pageData.relativePath)
   const section = SIDEBAR_MAPS.linkToSection[relUrl]
   const noindex =
     !!pageData.frontmatter.noindex ||
-    !!redirect ||
     relUrl.startsWith('/pro/') ||
     relUrl === '/sso/sso-pro.html'
   const pageUrl = `${SITE_ORIGIN}${pagePath(pageData.relativePath)}`
-  const canonical = redirect ? absUrl(redirect) : pageUrl
+  const canonical = pageUrl
   const desc = String(description || pageData.description || SITE_DESCRIPTION)
   const displayTitle = pageData.title || title.replace(/\s*[-|]\s*Sa-Token.*$/, '').trim()
   const isReadme = /^readme\.md$/i.test(pageData.relativePath)
   const ogType = isReadme ? 'website' : 'article'
   const head: HeadConfig[] = []
   if (noindex) head.push(['meta', { name: 'robots', content: 'noindex, follow' }])
-  if (redirect) {
-    head.push(['meta', { 'http-equiv': 'refresh', content: `0;url=${withHtmlExt(redirect)}` }])
-  }
   head.push(
     ['link', { rel: 'canonical', href: canonical }],
     ['meta', { property: 'og:type', content: ogType }],

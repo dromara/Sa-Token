@@ -80,17 +80,7 @@ watch(
   }
 )
 
-watch(
-  () => page.value.frontmatter.redirect,
-  (to) => {
-    // md 头里写了 redirect: 就整页跳走（商业版占位页等）
-    if (typeof to === 'string' && to && typeof window !== 'undefined') window.location.replace(to)
-  }
-)
-
 onMounted(() => {
-  const to = page.value.frontmatter.redirect
-  if (typeof to === 'string' && to) window.location.replace(to)
   if (isNarrow()) sidebarOpen.value = false
   requestAnimationFrame(() => {
     sidebarReady.value = true

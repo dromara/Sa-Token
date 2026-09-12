@@ -21,6 +21,7 @@ import { serveStaticHome } from './static-home.ts'
 import { SA_TOKEN_VERSION } from './version.ts'
 import docsifyDark from './shiki-docsify-dark.ts'
 import { generateBlogCategoryPages } from './blog-category-pages.ts'
+import { writeLegacyDocHtml } from './legacy-doc.ts'
 import { mergeSitemapFiles } from './merge-sitemap.ts'
 import {
   DOC_TITLE_SUFFIX,
@@ -266,13 +267,17 @@ export default defineConfig({
    *    VitePress 会把文档介绍页写成 dist/index.html。线上 / 必须是官网首页，
    *    所以把这份文档壳另存为 readme.html，再用 public/index.html 盖回 index.html。
    *
-   * 2) 合并 sitemap
+   * 2) writeLegacyDocHtml
+   *    旧入口 /doc.html：浏览器 JS 跳新地址，源码里保留真实目录内链给爬虫。
+   *
+   * 3) 合并 sitemap
    *    文档页（VitePress 刚写的 sitemap.xml）+ 博客（public/blog/sitemap.xml，含分类索引页）
    *    → 根目录 dist/sitemap.xml 一份 urlset，不再使用 sitemapindex。
    */
   buildEnd(siteConfig) {
     const dist = siteConfig.outDir
     restoreHomeAndReadme(dist, siteConfig.publicDir || publicDir)
+    writeLegacyDocHtml(dist)
     generateBlogCategoryPages(dist, siteConfig.publicDir || publicDir)
     const docsMap = path.join(dist, 'sitemap.xml')
     const blogMap = path.join(dist, 'blog/sitemap.xml')
@@ -282,6 +287,7 @@ export default defineConfig({
       xml = stripSitemapJunkXml(xml)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/readme.html`, today)
+      xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/doc.html`, today)
       fs.writeFileSync(docsMap, xml)
     }
     fs.writeFileSync(docsMap, mergeSitemapFiles([docsMap, blogMap]))
