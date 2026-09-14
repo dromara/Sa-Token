@@ -193,17 +193,8 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				// 连接池最大阻塞等待时间（使用负值表示没有限制）
 				poolConfig.setMaxWaitMillis(pool.getMaxWait().toMillis());
 			}
-			LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
-			// timeout 
-			if(cfg.getTimeout() != null) {
-				builder.commandTimeout(cfg.getTimeout());
-			}
-			// shutdownTimeout 
-			if(lettuce.getShutdownTimeout() != null) {
-				builder.shutdownTimeout(lettuce.getShutdownTimeout());
-			}
 			// 创建Factory对象
-			LettuceClientConfiguration clientConfig = builder.poolConfig(poolConfig).build();
+			LettuceClientConfiguration clientConfig = buildLettuceClientConfiguration(cfg, lettuce, poolConfig);
 			LettuceConnectionFactory factory = new LettuceConnectionFactory(redisAloneConfig, clientConfig);
 			factory.afterPropertiesSet();
 			
@@ -238,6 +229,43 @@ public class SaAloneRedisInject implements EnvironmentAware{
 		}
 	}
 	
+	/**
+	 * 构建 Lettuce 客户端配置（连接池、超时与 SSL）
+	 */
+	static LettuceClientConfiguration buildLettuceClientConfiguration(RedisProperties cfg, Lettuce lettuce, GenericObjectPoolConfig poolConfig) {
+		LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+		// timeout 
+		if(cfg.getTimeout() != null) {
+			builder.commandTimeout(cfg.getTimeout());
+		}
+		// shutdownTimeout 
+		if(lettuce.getShutdownTimeout() != null) {
+			builder.shutdownTimeout(lettuce.getShutdownTimeout());
+		}
+		// ssl 配置：TLS-only Redis 服务端会直接关闭明文连接，必须按配置启用 SSL
+		if(isSslEnabled(cfg)) {
+			builder.useSsl();
+		}
+		return builder.poolConfig(poolConfig).build();
+	}
+
+	/**
+	 * 读取 ssl 开关：Spring Boot 3+ 为 getSsl().isEnabled() 对象，Spring Boot 2 为 isSsl() 布尔值。
+	 * 本模块按 Spring Boot 2 API 编译，高版本方法只能反射读取。
+	 */
+	static boolean isSslEnabled(RedisProperties cfg) {
+		try {
+			Object ssl = cfg.getClass().getMethod("getSsl").invoke(cfg);
+			Object enabled = ssl.getClass().getMethod("isEnabled").invoke(ssl);
+			return Boolean.TRUE.equals(enabled);
+		} catch (NoSuchMethodException e) {
+			// Spring Boot 2：布尔值
+			return cfg.isSsl();
+		} catch (ReflectiveOperationException e) {
+			return false;
+		}
+	}
+
 	/**
 	 * 骗过编辑器，增加配置文件代码提示 
 	 * @return 配置对象

@@ -22,7 +22,10 @@ import com.github.fppt.jedismock.RedisServer;
 import cn.dev33.satoken.test.redis.JedisMockRedisSupport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.jupiter.api.Timeout;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.mock.env.MockEnvironment;
 
 import java.io.IOException;
@@ -214,6 +217,25 @@ public class SaAloneRedisInjectPatternTest {
 		env.setProperty("sa-token.alone-redis.timeout", "50ms");
 		env.setProperty("sa-token.alone-redis.lettuce.shutdown-timeout", "50ms");
 		return env;
+	}
+
+	/** 开启 ssl 后，Lettuce 客户端配置应启用 SSL */
+	@Test
+	void buildLettuceClientConfiguration_shouldUseSslWhenEnabled() {
+		RedisProperties cfg = new RedisProperties();
+		cfg.setSsl(true); // Spring Boot 2 布尔写法
+		LettuceClientConfiguration clientConfig = SaAloneRedisInject.buildLettuceClientConfiguration(
+				cfg, cfg.getLettuce(), new GenericObjectPoolConfig<>());
+		Assertions.assertTrue(clientConfig.isUseSsl());
+	}
+
+	/** 默认不启用 ssl */
+	@Test
+	void buildLettuceClientConfiguration_shouldNotUseSslByDefault() {
+		RedisProperties cfg = new RedisProperties();
+		LettuceClientConfiguration clientConfig = SaAloneRedisInject.buildLettuceClientConfiguration(
+				cfg, cfg.getLettuce(), new GenericObjectPoolConfig<>());
+		Assertions.assertFalse(clientConfig.isUseSsl());
 	}
 
 }
