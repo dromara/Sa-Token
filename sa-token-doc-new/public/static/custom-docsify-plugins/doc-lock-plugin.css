@@ -1,0 +1,347 @@
+/* 弹窗遮罩层样式 */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s, visibility 0.3s;
+}
+
+.modal-overlay.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* 弹窗主体样式 */
+.modal {
+	background: white;
+	border-radius: 4px; /* 弹窗圆角4px */
+	width: 90%;
+	max-width: 500px;
+	padding: 25px 30px;
+	box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+	transform: translateY(-20px);
+	transition: transform 0.3s;
+}
+
+.modal-overlay.active .modal {
+	transform: translateY(0);
+}
+
+/* 弹窗标题样式 */
+.modal-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+	/* color: green; */
+	/* color: #2d8cf0; */
+	color: green;
+}
+
+.modal-header i {
+	font-size: 1.8rem;
+	margin-right: 12px;
+}
+
+.modal-header h2 {
+	font-size: 16px;
+	/* color: #e74c3c; */
+	margin: 0;
+}
+
+/* 密码输入区域样式 */
+.password-form {
+	margin-bottom: 20px;
+}
+
+.password-input {
+	width: 100%;
+	padding: 14px;
+	border: 2px solid #ddd;
+	border-radius: 2px; /* 输入框圆角2px */
+	font-size: 1rem;
+	transition: border-color 0.3s;
+	margin-bottom: 15px;
+}
+
+.password-input:focus {
+	border-color: #2d8cf0;
+	outline: none;
+}
+
+/* 按钮区域样式 */
+.form-actions {
+	display: flex;
+	gap: 15px;
+	justify-content: flex-start;
+}
+
+.form-btn {
+	color: white;
+	border: none;
+	padding: 12px 24px;
+	border-radius: 3px; /* 按钮圆角2px */
+	font-weight: 400;
+	cursor: pointer;
+	font-size: 1rem;
+	transition: all 0.3s;
+	white-space: nowrap;
+	width: calc(50% - 5px);
+}
+
+.btn-verify {
+	background-color: #2d8cf0;
+}
+
+.btn-verify:hover {
+	background-color: #1c7ae0;
+}
+
+.btn-back {
+	background-color: #aaa;
+}
+
+.btn-back:hover {
+	background-color: #888;
+}
+
+/* 错误提示样式 */
+.error-message {
+	color: #e74c3c;
+	margin-bottom: 15px;
+	text-align: center;
+	font-weight: 600;
+	display: none;
+	background-color: #ffebee;
+	padding: 10px;
+	border-radius: 2px;
+	border-left: 3px solid #e74c3c;
+}
+
+.error-message.show {
+	display: block;
+}
+
+/* 提示区域样式 */
+.password-help-section {
+	margin-top: 25px;
+	border-top: 1px solid #eee;
+	padding-top: 20px;
+}
+
+.help-text {
+	text-align: left;
+	margin-bottom: 20px;
+	color: #666;
+	font-weight: 400;
+	font-size: 16px;
+}
+
+.help-text a {
+	color: #0c6ae0;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+.help-text a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+/* 二维码图片区域样式 */
+.images-container {
+	display: flex;
+	gap: 15px;
+	justify-content: center;
+	align-items: center;
+}
+
+.qr-image-container {
+	flex: 1;
+	position: relative;
+	overflow: hidden;
+	border-radius: 0px;
+	/* box-shadow: 0 0px 8px rgba(0, 0, 0, 0.1); */
+	border: 1px #ddd solid;
+	cursor: pointer;
+	transition: transform 0.3s;
+	padding-bottom: 5px;
+}
+
+.qr-image {
+	width: 100%;
+	height: 110px; /* 3:2比例 */
+	object-fit: cover;
+	display: block;
+	transition: transform 0.3s;
+}
+
+.qr-image-container:hover {
+	transform: translateY(-5px);
+}
+
+.qr-image-container:hover .qr-image {
+	transform: scale(1.05);
+}
+
+.image-label {
+	text-align: center;
+	font-size: 0.85rem;
+	color: #7f8c8d;
+	margin-top: 8px;
+	font-weight: 500;
+}
+
+/* 图片放大效果样式 */
+.image-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.9);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 2000;
+	cursor: pointer;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.image-overlay.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.enlarged-image {
+	max-width: 80%;
+	max-height: 80%;
+	border-radius: 8px;
+	box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+	transform: scale(0.8);
+	transition: transform 0.4s ease;
+}
+
+.image-overlay.active .enlarged-image {
+	transform: scale(1);
+}
+
+/* ============================ */
+/* 移动端适配样式 */
+/* ============================ */
+
+/* 移动端：屏幕宽度小于等于768px时应用 */
+@media (max-width: 768px) {
+	/* 弹窗宽度调整，左右留出边距 */
+	.modal {
+		width: calc(100% - 30px); /* 左右各15px边距 */
+		max-width: 100%;
+		padding: 20px;
+		margin: 0 15px;
+	}
+	
+	/* 弹窗标题调整 */
+	.modal-header {
+		margin-bottom: 15px;
+	}
+	
+	.modal-header h2 {
+		font-size: 1.1rem;
+		line-height: 1.3;
+	}
+	
+	.modal-header i {
+		font-size: 1.5rem;
+		margin-right: 10px;
+	}
+	
+	/* 密码输入框调整 */
+	.password-input {
+		padding: 12px;
+		font-size: 0.95rem;
+		margin-bottom: 10px;
+	}
+	
+	/* 按钮区域调整 */
+	.form-actions {
+		flex-direction: column; /* 按钮垂直排列 */
+		gap: 10px;
+		justify-content: stretch;
+	}
+	
+	.form-btn {
+		width: 100%;
+		padding: 14px;
+		font-size: 1rem;
+	}
+	
+	/* 错误提示调整 */
+	.error-message {
+		font-size: 0.9rem;
+		padding: 8px;
+		margin-bottom: 10px;
+	}
+	
+	/* 提示区域调整 */
+	.password-help-section {
+		margin-top: 15px;
+		padding-top: 15px;
+	}
+	
+	.help-text {
+		font-size: 0.95rem;
+		margin-bottom: 15px;
+	}
+	
+	/* 移动端隐藏图片区域 */
+	.images-container {
+		display: none; /* 移动端隐藏图片 */
+	}
+	
+	/* 图片放大效果在移动端隐藏 */
+	.image-overlay {
+		display: none;
+	}
+	
+	/* 弹窗内容垂直居中优化 */
+	.modal {
+		max-height: 80vh;
+		overflow-y: auto;
+	}
+}
+
+/* 超小屏幕适配：屏幕宽度小于等于480px时应用 */
+@media (max-width: 480px) {
+	.modal {
+		width: calc(100% - 20px); /* 左右各10px边距 */
+		margin: 0 10px;
+		padding: 15px;
+	}
+	
+	.modal-header h2 {
+		font-size: 1rem;
+	}
+	
+	.help-text {
+		font-size: 0.9rem;
+		line-height: 1.4;
+	}
+	
+	.password-input {
+		font-size: 0.9rem;
+	}
+	
+	.form-btn {
+		font-size: 0.95rem;
+	}
+}

@@ -38,9 +38,9 @@ public class SaTokenContextDubbo3Util {
 	 * @param rpcContext /
 	 */
 	public static void setContext(RpcContext rpcContext) {
-		SaRequest saRequest = new SaRequestForDubbo3(RpcContext.getServiceContext());
-		SaResponse saResponse = new SaResponseForDubbo3(RpcContext.getServiceContext());
-		SaStorage saStorage = new SaStorageForDubbo3(RpcContext.getServiceContext());
+		SaRequest saRequest = new SaRequestForDubbo3(rpcContext);
+		SaResponse saResponse = new SaResponseForDubbo3(rpcContext);
+		SaStorage saStorage = new SaStorageForDubbo3(rpcContext);
 		SaManager.getSaTokenContext().setContext(saRequest, saResponse, saStorage);
 	}
 

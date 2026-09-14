@@ -13,6 +13,7 @@
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
 	<!-- <a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
+	<img src="https://img.shields.io/badge/JDK-8~25-green.svg?style=flat-square" alt="JDK 8~25">
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 <!-- <p align="center">學習測試請拉取 master 分支，dev 是在開發分支 (在根目錄執行 `git checkout master`)</p> -->
@@ -27,9 +28,9 @@
 
 ### 📝 前言：
 
-回望 2020 年初，我為 Sa-Token 提交第一行代碼之際，彼時市面上 Java 缺少的不僅是一個簡潔好用的鑑權框架，更是一整套清晰、自洽的權限架構設計思想。
+回望 2020 年初，我為 Sa-Token 提交第一行代碼之際，**彼時市面上 Java 缺少的不僅是一個簡潔好用的鑑權框架，更是一整套清晰、自洽的權限架構設計思想**。
 
-因此，這幾年間我將大量時間傾注在 Sa-Token 的文檔編寫，幾乎每一章節、每一句話、每一個字都經過反覆修改、精細打磨，以求做到最清晰、幹練、易懂的表述。用心閱讀文檔，你學習到的將不止是 Sa-Token 框架本身，更是絕大多數場景下權限設計的最佳實踐。
+因此，這幾年間我將大量時間傾注在 Sa-Token 的文檔編寫，幾乎每一章節、每一句話、每一個字都經過反覆修改、精細打磨，以求做到最清晰、幹練、易懂的表述。**用心閱讀文檔，你學習到的將不止是 Sa-Token 框架本身，更是絕大多數場景下權限認證設計的最佳實踐**。
 
 
 
@@ -37,7 +38,7 @@
 
 Sa-Token 是一個輕量級 Java 權限認證框架，目前擁有五大核心模塊：登錄認證、權限認證、單點登錄、OAuth2.0、微服務鑑權。
 
-**你還在手搓以下功能？Stop ⚠️ 讓 Sa-Token 來！**
+你還在手搓以下功能？**Stop，讓 Sa-Token 來！**
 
 ![sa-token-jss](https://sa-token.com/big-file/index/intro/sa-token-jss--tran.png)
 
@@ -309,7 +310,7 @@ Sa-Token 社區成員貢獻了多語言實現版本：
 
 ### 📚 示例大全
 
-**我們為框架幾乎所有技術點均單獨製作了對應的集成示例，此壓縮包共計 60+ Demo**：涵蓋 Sa-Token 登錄認證、權限認證、SSO 單點登錄、OAUth2 統一認證、微服務鑑權、API Key 認證、JWT集成、跨系統調用參數簽名校驗 等鑑權認證的方方面面。
+**我們為框架幾乎所有技術點均單獨製作了對應的集成示例，此壓縮包共計 60+ Demo**：涵蓋 Sa-Token 登錄認證、權限認證、SSO 單點登錄、OAuth2 統一認證、微服務鑑權、API Key 認證、JWT集成、跨系統調用參數簽名校驗 等鑑權認證的方方面面。
 
 下載地址：[https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos) 
 

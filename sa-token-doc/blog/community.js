@@ -2,6 +2,12 @@
 window.SA_TOKEN_BLOG_COMMUNITY = [
   {
     "platform": "公众号",
+    "title": "Sa-Token 权限认证：替代Spring Security的轻量方案 ，从登录鉴权到微服务网关统一认证",
+    "url": "https://mp.weixin.qq.com/s/vgQev9SufoaLVA0wkGh8OQ",
+    "date": "2026-08-20"
+  },
+  {
+    "platform": "公众号",
     "title": "49K Star！Sa-Token：让 Java 鉴权简单到像写句子",
     "url": "https://mp.weixin.qq.com/s/6i8fMjOqCWNiKSMdmXOijQ",
     "date": "2026-08-13"

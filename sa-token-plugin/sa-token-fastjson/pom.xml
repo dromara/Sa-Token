@@ -23,5 +23,10 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-json-test-common</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

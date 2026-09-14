@@ -33,6 +33,17 @@
             <artifactId>solon-test</artifactId>
             <scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-dao-test-common</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- jedis 7 需要 commons-pool2（版本由 sa-token-dependencies 统一） -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 

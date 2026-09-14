@@ -1,0 +1,769 @@
+/*
+ * 正文观感：压 VitePress 默认样式，对齐旧站 vue.css + doc.css。
+ * 提示框、tabs、代码围栏/行号、顶栏搜索、GitHub 角、正文广告、徽章图都在这。
+ * 壳子（侧栏钉位、栏宽、折叠按钮）在 layout.css；旧站全局皮肤仍走 public/static/doc.css。
+ */
+.vp-doc .custom-block,
+.plugin-tabs {
+  border-radius: 0 !important;
+}
+
+/* 对齐旧站 docsify-tabs：身体无底色，边框留下 */
+.plugin-tabs {
+  background-color: transparent;
+  border: 1px solid #ddd;
+}
+.plugin-tabs--content {
+  background-color: transparent;
+}
+
+/* 提示框：对齐 docsify flexible-alerts flat + doc.css */
+.vp-doc .custom-block {
+  border-style: solid;
+  border-width: 1px;
+  padding: 0.75rem 1.25rem !important;
+  margin-bottom: 1rem;
+  font-size: inherit;
+  line-height: 1.8rem;
+}
+
+.vp-doc .custom-block .custom-block-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 600;
+  margin: 0;
+}
+
+.st-content.vp-doc .custom-block > p {
+  margin: 0.5rem 0;
+}
+/* 对齐 docsify：alert 里 ul/ol 走浏览器默认 1em，别压成 0.5rem / 末项 0 */
+.st-content.vp-doc .custom-block > ul,
+.st-content.vp-doc .custom-block > ol {
+  margin: 1em 0;
+}
+.st-content.vp-doc .custom-block p,
+.st-content.vp-doc .custom-block li,
+.st-content.vp-doc .custom-block ul,
+.st-content.vp-doc .custom-block ol {
+  line-height: 1.8rem;
+  word-spacing: 0.05rem;
+}
+.st-content.vp-doc .custom-block > .custom-block-title {
+  margin: 0;
+}
+.st-content.vp-doc .custom-block > :first-child {
+  margin-top: 0;
+}
+.st-content.vp-doc .custom-block > :last-child:not(ul):not(ol) {
+  margin-bottom: 0;
+}
+
+/* 框里代码块：压过 VitePress 的 8px，对齐 docsify .markdown-section pre */
+.st-content.vp-doc .custom-block div[class*='language-'] {
+  margin: 1.2em 0 !important;
+}
+
+.vp-doc .custom-block .custom-block-title::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  flex-shrink: 0;
+}
+
+.vp-doc .custom-block.info,
+.vp-doc .custom-block.note {
+  background-color: #e8f4ff;
+  border-color: #b4e6fc;
+  color: #02587f;
+}
+.vp-doc .custom-block.info .custom-block-title,
+.vp-doc .custom-block.note .custom-block-title {
+  color: #01354d;
+}
+.vp-doc .custom-block.info .custom-block-title::before,
+.vp-doc .custom-block.note .custom-block-title::before {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%2301354d' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E");
+}
+
+.vp-doc .custom-block.tip {
+  background-color: #f0f9eb;
+  border-color: #c9e7cb;
+  color: #285b2a;
+}
+.vp-doc .custom-block.tip .custom-block-title {
+  color: #18381a;
+}
+.vp-doc .custom-block.tip .custom-block-title::before {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%2301354d' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM8 5.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E");
+}
+
+.vp-doc .custom-block.warning {
+  background-color: #fdf6ec;
+  border-color: #ffc9ba;
+  color: #852d12;
+}
+.vp-doc .custom-block.warning .custom-block-title {
+  color: #581e0c;
+}
+.vp-doc .custom-block.warning .custom-block-title::before {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 17 16' fill='%23581e0c' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0 2z'/%3E%3C/svg%3E");
+}
+
+.vp-doc .custom-block.danger,
+.vp-doc .custom-block.caution {
+  background-color: #fdd9d7;
+  border-color: #fcc2bf;
+  color: #7f231c;
+}
+.vp-doc .custom-block.danger .custom-block-title,
+.vp-doc .custom-block.caution .custom-block-title {
+  color: #551713;
+}
+.vp-doc .custom-block.danger .custom-block-title::before,
+.vp-doc .custom-block.caution .custom-block-title::before {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='1em' height='1em' viewBox='0 0 16 16' fill='%23551713' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/%3E%3Cpath fill-rule='evenodd' d='M11.354 4.646a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+}
+
+body[data-st-theme] .vp-doc .custom-block.info,
+body[data-st-theme] .vp-doc .custom-block.note {
+  background-color: var(--st-alert-note-bg) !important;
+  border-color: var(--st-alert-note-border) !important;
+  color: var(--st-fg) !important;
+}
+body[data-st-theme] .vp-doc .custom-block.info .custom-block-title,
+body[data-st-theme] .vp-doc .custom-block.note .custom-block-title {
+  color: var(--st-alert-note-title) !important;
+}
+
+body[data-st-theme] .vp-doc .custom-block.tip {
+  background-color: var(--st-alert-tip-bg) !important;
+  border-color: var(--st-alert-tip-border) !important;
+  color: var(--st-fg) !important;
+}
+body[data-st-theme] .vp-doc .custom-block.tip .custom-block-title {
+  color: var(--st-alert-tip-title) !important;
+}
+
+body[data-st-theme] .vp-doc .custom-block.warning {
+  background-color: var(--st-alert-warn-bg) !important;
+  border-color: var(--st-alert-warn-border) !important;
+  color: var(--st-fg) !important;
+}
+body[data-st-theme] .vp-doc .custom-block.warning .custom-block-title {
+  color: var(--st-alert-warn-title) !important;
+}
+
+body[data-st-theme] .vp-doc .custom-block.danger,
+body[data-st-theme] .vp-doc .custom-block.caution {
+  background-color: var(--st-alert-attention-bg) !important;
+  border-color: var(--st-alert-attention-border) !important;
+  color: var(--st-fg) !important;
+}
+body[data-st-theme] .vp-doc .custom-block.danger .custom-block-title,
+body[data-st-theme] .vp-doc .custom-block.caution .custom-block-title {
+  color: var(--st-alert-attention-title) !important;
+}
+
+body[data-st-theme] .vp-doc .custom-block .custom-block-title::before {
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+/* 只覆盖 VitePress 把 img 设成 block，其余跟旧站 doc.css 一样 */
+.doc-header .logo-box {
+  display: inline-block !important;
+  white-space: nowrap;
+  height: 60px;
+  line-height: 60px;
+}
+.doc-header .logo-box img {
+  display: inline-block !important;
+  width: 50px !important;
+  height: 50px !important;
+  max-width: none !important;
+  vertical-align: middle;
+  position: relative !important;
+  top: -1px !important;
+  margin-right: 5px !important;
+}
+.doc-header .theme-btn {
+  display: inline-block !important;
+  width: 25px !important;
+  height: 25px !important;
+  max-width: none !important;
+}
+.doc-header .logo-text {
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #000;
+  vertical-align: middle;
+  font-size: 26px !important;
+  font-weight: 500 !important;
+  line-height: 60px;
+}
+
+/* doc.css 的 1600 公式会盖掉 layout.css 变量，这里再压一层 */
+@media (max-width: 1100px) {
+  body {
+    --doc-context-width: calc(100vw - var(--doc-left-width, 200px) - 40px);
+    --doc-right-width: 0px;
+  }
+}
+@media (max-width: 800px) {
+  body {
+    --doc-left-width: 0px !important;
+    --doc-context-width: 100% !important;
+  }
+}
+
+/* 对齐 docsify vue.css：right:0 + 80px，三角尖才能探出 60px 顶栏；right:-16px 会把尖裁掉看起来齐平 */
+.github-corner {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0;
+  z-index: 1001;
+  border-bottom: 0;
+  text-decoration: none;
+}
+.github-corner svg {
+  display: block;
+  color: #fff;
+  fill: var(--theme-color, #42b983);
+  height: 80px !important;
+  width: 80px !important;
+  max-height: none !important;
+  max-width: none !important;
+}
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 0.56s ease-in-out;
+}
+@media screen and (max-width: 1599px) {
+  .github-corner {
+    display: none !important;
+  }
+}
+@keyframes octocat-wave {
+  0%,
+  to {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+.sa-token-jss-img {
+  width: 100%;
+  display: block;
+  border: 0;
+}
+
+#main .doc-inline-ad,
+.markdown-section .doc-inline-ad {
+  font-size: 12px;
+  margin: 16px 0 20px;
+}
+#main .doc-inline-ad a,
+#main .doc-inline-ad a:hover,
+.markdown-section .doc-inline-ad a,
+.markdown-section .doc-inline-ad a:hover {
+  border-bottom: 0;
+  text-decoration: none;
+}
+.doc-inline-ad__card {
+  position: relative;
+  padding: 10px 28px 10px 10px;
+  background-color: #f4f8fa;
+  overflow: hidden;
+  line-height: 1.5;
+}
+.doc-inline-ad a {
+  display: block;
+  font-weight: 400;
+}
+.doc-inline-ad__close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  line-height: 18px;
+  text-align: center;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+.doc-inline-ad__close:hover {
+  color: #666;
+}
+.doc-inline-ad__body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.doc-inline-ad__img,
+.vp-doc .doc-inline-ad__img {
+  display: block !important;
+  height: 80px !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.doc-inline-ad__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.doc-inline-ad__text p,
+.vp-doc .doc-inline-ad__text p {
+  margin: 0 !important;
+  color: #999;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5 !important;
+  word-break: break-all;
+}
+
+.DocSearch-Button,
+.VPNavBarSearch {
+  width: auto;
+}
+
+.doc-header .sear-box {
+  width: auto !important;
+  vertical-align: middle;
+}
+
+.sear-box .VPNavBarSearch {
+  display: flex;
+  align-items: center;
+}
+
+.sear-box .VPNavBarSearchButton {
+  height: 30px !important;
+  width: auto;
+  padding: 0 18px 0 8px !important;
+  gap: 4px !important;
+  border: 1px solid #e3e3e3 !important;
+  border-radius: 15px !important;
+  background: rgba(255, 255, 255, 0.45) !important;
+  color: #999 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.sear-box .VPNavBarSearchButton .vpi-search {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  flex-shrink: 0;
+  color: #bbb;
+}
+
+.sear-box .VPNavBarSearchButton .text {
+  font-size: 13px;
+  font-weight: 400;
+  color: #999;
+}
+
+.sear-box .VPNavBarSearchButton .keys,
+.sear-box .VPNavBarSearchButton kbd {
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 13px;
+  font-weight: 400 !important;
+  color: #999;
+}
+
+.sear-box .VPNavBarSearchButton .keys {
+  gap: 0 !important;
+}
+
+.sear-box .VPNavBarSearchButton .key-ctrl::after {
+  content: " + ";
+}
+
+.doc-header .nav-right .zk-box:hover {
+  position: relative;
+  z-index: 1003;
+}
+.doc-header .nav-right .zk-context {
+  z-index: 1003;
+}
+
+/* 下拉面板项：对齐旧站 index.css .nav-right a:hover；暗色主题压过 water-change-theme 的 !important */
+.doc-header .nav-right .zk-box .zk-context a {
+  transition: color 0.2s;
+}
+.doc-header .nav-right .zk-box .zk-context a:hover {
+  color: #42b983;
+}
+body[data-st-theme] .zk-box .zk-context a:hover {
+  color: var(--st-accent) !important;
+}
+
+body[data-st-theme] .sear-box .VPNavBarSearchButton {
+  background: transparent !important;
+}
+
+.search-keyboard-shortcuts {
+  opacity: 1;
+  color: #666;
+}
+.search-keyboard-shortcuts kbd {
+  color: #444;
+  border-color: #ccc !important;
+  background: #f4f4f4 !important;
+}
+
+.badge-box {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-box a,
+.vp-doc .badge-box a,
+#main .badge-box a {
+  display: inline-block;
+  border-bottom: 0 !important;
+  text-decoration: none !important;
+}
+
+/* 压过后面的 .st-content.vp-doc img { margin: 1.2em 0 }，否则横缝被清掉、竖缝被撑开 */
+.badge-box img,
+.vp-doc .badge-box img,
+.st-content.vp-doc .badge-box img {
+  display: inline-block !important;
+  vertical-align: middle;
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  margin: 0;
+}
+
+.show-img {
+  cursor: pointer;
+}
+
+/* 正文排版对齐 docsify vue.css + doc.css */
+#main.markdown-section,
+.st-content.vp-doc {
+  font-size: 15px;
+  color: #34495e;
+}
+
+.st-content.vp-doc h1,
+.st-content.vp-doc h2,
+.st-content.vp-doc h3,
+.st-content.vp-doc h4,
+.st-content.vp-doc strong {
+  color: #2c3e50;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.st-content.vp-doc h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+.st-content.vp-doc h2 {
+  font-size: 1.6rem;
+  line-height: 1.3;
+  margin: 45px 0 0.8rem;
+  padding-top: 0;
+  border-top: none;
+}
+
+.st-content.vp-doc h2 .header-anchor {
+  top: 0;
+}
+
+.st-content.vp-doc h3 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  margin: 40px 0 0.6rem;
+}
+
+/* 旧站 vue.css 没写 h4~h6 的 margin，走浏览器默认。VitePress * { margin:0 } 清掉了，得补回来 */
+.st-content.vp-doc h4 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 1.33em 0;
+}
+
+.st-content.vp-doc h5,
+.st-content.vp-doc h6 {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.st-content.vp-doc h5 {
+  margin: 1.67em 0;
+}
+
+.st-content.vp-doc h6 {
+  color: #777;
+  margin: 2.33em 0;
+}
+
+.st-content.vp-doc p,
+.st-content.vp-doc li,
+.st-content.vp-doc ul,
+.st-content.vp-doc ol {
+  line-height: 1.6rem;
+  word-spacing: 0.05rem;
+}
+
+.st-content.vp-doc p {
+  margin: 1.2em 0;
+}
+
+/* 压过 VitePress .vp-doc summary { margin: 16px 0 }，否则对不上旧站 max-height:44px */
+.st-content.vp-doc details summary,
+.main-box details summary {
+  margin: 0;
+  line-height: 22px;
+}
+
+/* 对齐旧站 .main-box details pre { margin-left/right: 1em } */
+.st-content.vp-doc details div[class*='language-'] {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.st-content.vp-doc ul,
+.st-content.vp-doc ol {
+  padding-left: 1.5rem;
+  margin: 1.2em 0;
+}
+
+.st-content.vp-doc li + li {
+  margin-top: 0;
+}
+
+.st-content.vp-doc li > ol,
+.st-content.vp-doc li > ul {
+  margin: 0.4em 0;
+}
+
+.st-content.vp-doc img {
+  margin: 1.2em 0;
+}
+
+/* 盖住顶栏 z-index:1000；图必须高于遮罩 */
+.medium-zoom-overlay {
+  z-index: 10050 !important;
+}
+.medium-zoom-image.medium-zoom-image--opened {
+  z-index: 10051 !important;
+}
+
+.st-content.vp-doc em {
+  color: #7f8c8d;
+}
+
+.st-content.vp-doc a {
+  text-decoration: none;
+}
+
+.st-content.vp-doc blockquote {
+  margin: 2em 0;
+  border-left: 4px solid #42b983;
+  color: #858585;
+  padding: 1px 24px 1px 30px;
+  background-color: #f8f8f8;
+}
+
+.st-content.vp-doc blockquote > p {
+  margin: 1.2em 0;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+.st-content.vp-doc :not(pre) > code {
+  border-radius: 2px;
+  color: #e96900;
+  font-size: 0.8rem;
+  margin: 0 2px;
+  padding: 3px 5px;
+  /* 半透明：提示框绿底能透出来，别用 #f8f8f8 实底灰块 */
+  background-color: rgba(0, 0, 0, 0.04);
+  white-space: pre-wrap;
+}
+
+/* 代码围栏：对齐 docsify [v-pre] + .code-line-box（#191919 暗色） */
+.st-content.vp-doc {
+  --vp-code-block-bg: #191919;
+  --vp-code-block-color: #fff;
+  --vp-code-line-number-color: #aaa;
+  --vp-code-block-divider-color: #000;
+  --vp-code-lang-color: #888;
+  --vp-code-font-size: 0.8rem;
+  --vp-code-line-height: 1.5rem;
+  --vp-code-line-highlight-color: rgba(255, 255, 255, 0.08);
+  --vp-code-copy-code-bg: rgba(255, 255, 255, 0.08);
+  --vp-code-copy-code-hover-bg: rgba(255, 255, 255, 0.16);
+  --vp-code-copy-code-border-color: #333;
+  --vp-code-copy-code-hover-border-color: #555;
+  --vp-code-copy-code-active-text: #ccc;
+}
+
+.st-content.vp-doc div[class*='language-'],
+.st-content.vp-doc .plugin-tabs--content div[class*='language-'],
+.st-content.vp-doc .vp-block {
+  background-color: #191919 !important;
+  border-radius: 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* 压过 VitePress 小屏 margin: 16px -24px，别把代码块拽到屏幕边 */
+  margin: 1.2em 0;
+}
+
+.st-content.vp-doc [class*='language-'] pre,
+.st-content.vp-doc [class*='language-'] pre.shiki {
+  background-color: #191919 !important;
+  /* 和行号 gutter 同一套 rem，避免 em 基准不同导致对不齐 */
+  padding: 1.5rem 0;
+}
+
+.st-content.vp-doc [class*='language-'] code {
+  color: #fff;
+  padding: 0 1.3em;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+}
+
+/* 对齐旧站 .lang-url { color: #E96917 } */
+.st-content.vp-doc div.language-url code,
+.st-content.vp-doc div.language-url code span {
+  color: #e96917 !important;
+}
+
+/* 对齐 docsify pre:after 语言标签 */
+.st-content.vp-doc [class*='language-'] > span.lang {
+  top: 0;
+  right: 0;
+  padding: 5px 10px 0;
+  height: 15px;
+  line-height: 15px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #888;
+}
+
+.st-content.vp-doc div[class*='language-'].line-numbers-mode {
+  padding-left: 40px;
+}
+
+.st-content.vp-doc .line-numbers-wrapper {
+  width: 40px;
+  padding-top: 1.5rem;
+  background-color: #191919;
+  color: #aaa;
+  font-weight: 400;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+  border-right: 1px solid #000;
+}
+
+.st-content.vp-doc .vp-code-group .tabs {
+  border-radius: 2px 2px 0 0;
+}
+
+.st-content.vp-doc hr {
+  margin: 2em 0;
+  border: none;
+  border-bottom: 1px solid #eee;
+}
+
+.st-content.vp-doc th,
+.st-content.vp-doc td {
+  border: 1px solid #ddd;
+  padding: 6px 13px;
+}
+
+.st-content.vp-doc tr {
+  border-top: 1px solid #ccc;
+  background-color: transparent;
+}
+
+.st-content.vp-doc tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* 只按顶栏 60px 留空。VitePress 默认 .vp-doc [id] 还有一套 scroll-margin，
+   叠上 90px padding 会把标题顶到栏下很远 */
+html {
+  scroll-padding-top: 80px;
+}
+.vp-doc [id] {
+  scroll-margin-top: 0;
+}
+
+/* 右侧广告：去掉开场过渡。VitePress preflight 把 img 设成 display:block + max-width:100%，
+   叠上旧站 transition:all，图片撑开/配色落地都会动一下 */
+.st-aside .doc-right-more-item,
+.st-aside .mad-bg-box,
+.st-aside .mad-text,
+.st-aside .ad-box {
+  transition: none;
+}
+.main-box .st-aside .top-ad-box a img,
+.main-box .st-aside .top-ad-box .mad-img {
+  display: block;
+  float: left;
+  width: 130px !important;
+  max-width: 130px;
+  height: auto;
+  margin-right: 10px;
+  border: 0;
+  transition: box-shadow 0.1s !important;
+}
+.st-aside .help-btn {
+  transition: box-shadow 0.5s;
+}
+
+/* VitePress preflight 把 p 的 margin 清成 0，旧站走浏览器默认 1em 段间距 */
+.st-aside .ew-wa p {
+  margin: 1em 0;
+}
+
+/* 页脚在 Content 外面，吃不到 .st-content p；旧站走 vue.css .markdown-section p */
+#main footer p {
+  margin: 1.2em 0;
+}

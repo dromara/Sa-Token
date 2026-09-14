@@ -13,6 +13,7 @@
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
 	<!-- <a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
+	<img src="https://img.shields.io/badge/JDK-8~25-green.svg?style=flat-square" alt="JDK 8~25">
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 <!-- <p align="center"> 학습 및 테스트를 위해 마스터 브랜치를 당겨주세요. dev는 개발 브랜치에 있습니다(루트 디렉터리에서 `git checkout master` 실행)</p> -->
@@ -27,9 +28,9 @@
 
 ### 📝 서문:
 
-2020년 초를 되돌아보면 Sa-Token의 첫 번째 코드 라인을 제출했을 때 당시 시장에 출시된 Java에는 간단하고 사용하기 쉬운 인증 프레임워크뿐 아니라 명확하고 일관된 권한 아키텍처 설계 아이디어가 부족했습니다.
+2020년 초를 되돌아보면 Sa-Token의 첫 번째 코드 라인을 제출했을 때 **당시 시장에 출시된 Java에는 간단하고 사용하기 쉬운 인증 프레임워크뿐 아니라 명확하고 일관된 권한 아키텍처 설계 사상이 부족했습니다**.
 
-따라서 지난 몇 년 동안 저는 Sa-Token 문서를 작성하는 데 많은 시간을 투자했습니다. 가장 명확하고 간결하며 이해하기 쉬운 표현을 얻기 위해 거의 모든 장, 모든 문장, 모든 단어가 반복적으로 수정되고 세밀하게 다듬어졌습니다. 설명서를 주의 깊게 읽으면 Sa-Token 프레임워크 자체뿐만 아니라 대부분의 시나리오에서 권한 설계에 대한 모범 사례도 배울 수 있습니다.
+따라서 지난 몇 년 동안 저는 Sa-Token 문서를 작성하는 데 많은 시간을 투자했습니다. 가장 명확하고 간결하며 이해하기 쉬운 표현을 얻기 위해 거의 모든 장, 모든 문장, 모든 단어가 반복적으로 수정되고 세밀하게 다듬어졌습니다. **문서를 주의 깊게 읽으면 Sa-Token 프레임워크 자체뿐만 아니라 대부분의 시나리오에서 권한 인증 설계에 대한 모범 사례도 배울 수 있습니다**.
 
 
 
@@ -37,7 +38,7 @@
 
 Sa-Token은 현재 로그인 인증, 권한 인증, Single Sign-On, OAuth2.0 및 마이크로서비스 인증의 5가지 핵심 모듈이 있는 경량 Java 권한 인증 프레임워크입니다.
 
-**아직도 다음 기능을 사용하고 계시나요? 그만 ⚠️ Sa-Token을 오게 해주세요!**
+아직도 다음 기능을 손수 만들고 계신가요? **Stop, Sa-Token에게 맡기세요!**
 
 ![sa-token-jss](https://sa-token.com/big-file/index/intro/sa-token-jss--tran.png)
 
@@ -309,7 +310,7 @@ Sa-Token 커뮤니티 회원은 다국어 구현 버전에 기여했습니다.
 
 ### 📚 예시 모음
 
-**우리는 프레임워크의 거의 모든 기술적 사항에 대해 해당 통합 예제를 별도로 제작했습니다. 이 압축 패키지에는 Sa-Token 로그인 인증, 권한 인증, SSO 싱글 사인온, OAUth2 통합 인증, 마이크로서비스 인증, API 키 인증, JWT 통합, 시스템 간 호출 매개변수 서명 확인 등과 같은 인증 및 인증의 모든 측면을 다루는 총 60개 이상의 데모**가 있습니다.
+**우리는 프레임워크의 거의 모든 기술적 사항에 대해 해당 통합 예제를 별도로 제작했습니다. 이 압축 패키지에는 Sa-Token 로그인 인증, 권한 인증, SSO 싱글 사인온, OAuth2 통합 인증, 마이크로서비스 인증, API 키 인증, JWT 통합, 시스템 간 호출 매개변수 서명 확인 등과 같은 인증 및 인증의 모든 측면을 다루는 총 60개 이상의 데모**가 있습니다.
 
 다운로드 주소: [https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos)
 

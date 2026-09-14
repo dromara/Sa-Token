@@ -75,4 +75,18 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <!--
+            子模块单测默认带上 core 的 test-jar（@SaTokenTest / SaTokenExtension）。
+            写在 plugin / starter 聚合模块，避免塞进 sa-token-parent 和 core 形成 reactor 环。
+        -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>

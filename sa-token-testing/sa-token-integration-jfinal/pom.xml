@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>cn.dev33</groupId>
+		<artifactId>sa-token-testing</artifactId>
+		<version>${revision}</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<packaging>jar</packaging>
+
+	<name>sa-token-integration-jfinal</name>
+	<artifactId>sa-token-integration-jfinal</artifactId>
+	<description>JFinal HTTP integration tests for sa-token-jfinal-plugin (ActionHandler / annotation interceptor)</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-jfinal-plugin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jfinal</groupId>
+			<artifactId>jfinal</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- jfinal-undertow 2.x 需要 Servlet 4（MappingMatch）；BOM 默认是 3.1，这里盖掉 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${argLine} -Dfile.encoding=UTF-8</argLine>
+					<forkCount>1</forkCount>
+					<!-- Undertow / SaManager 占进程，测试类之间不复用 JVM -->
+					<reuseForks>false</reuseForks>
+					<runOrder>random</runOrder>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

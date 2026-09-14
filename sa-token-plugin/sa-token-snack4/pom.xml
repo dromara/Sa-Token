@@ -14,6 +14,10 @@
     <artifactId>sa-token-snack4</artifactId>
     <description>sa-token integrate Snack4</description>
 
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>cn.dev33</groupId>
@@ -23,5 +27,16 @@
             <groupId>org.noear</groupId>
             <artifactId>snack4</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-json-test-common</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
 </project>

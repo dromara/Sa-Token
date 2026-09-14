@@ -1,0 +1,175 @@
+# sa-token-testing
+
+测试基础设施与集成测试。公共接线在 `integration-boot2` 验一次；`integration-boot3/4` 只补版本差异，不重复全量。
+
+## 子模块
+
+### sa-token-test-support
+
+测试支持（无 `@Test`），提供共享测试模型（SysUser / SysRole）供各插件单测复用（如 sa-token-serializer-features）。
+
+### sa-token-json-test-common
+
+测试支持（无 `@Test`），供 JSON 插件单测复用：
+
+- sa-token-jackson
+- sa-token-jackson3
+- sa-token-fastjson
+- sa-token-fastjson2
+- sa-token-fory-json
+- sa-token-snack3
+- sa-token-snack4
+
+### sa-token-redis-dao-test-common
+
+测试支持（无 `@Test`），供 Redis Dao 插件单测复用：
+
+- sa-token-redisson
+- sa-token-redisx
+
+### sa-token-http-test-common
+
+测试支持（无 `@Test`），供 HTTP 客户端插件单测复用：
+
+- sa-token-forest
+- sa-token-okhttps
+- sa-token-rest-client
+- sa-token-rest-template
+
+### sa-token-integration-boot2
+
+集成测试（Boot 2 主集成，覆盖 Starter 接线与业务场景）：
+
+- sa-token-spring-boot-starter
+- sa-token-spring-boot-webmvc-reactor-v2v3v4-common
+- sa-token-servlet
+- sa-token-jackson（Starter 传递依赖）
+
+### sa-token-integration-beaninject-boot2
+
+Bean 注入专项集成测试（**独立模块 / 独立 JVM**，避免污染 `SaManager` 等全局静态状态）：
+
+- 覆盖 `SaBeanInject` + OAuth2 / SSO / Sign / ApiKey 全部 `*BeanInject` 注入点
+- 仅验证 Spring Bean → Manager/Strategy 的注入链路，不测插件业务
+
+### sa-token-integration-boot3
+
+集成测试（仅 Boot 3 与 Boot 2 的行为差异）：
+
+- sa-token-spring-boot3-starter
+- sa-token-spring-boot-webmvc-v3v4-common
+- sa-token-jakarta-servlet
+
+### sa-token-integration-boot4
+
+集成测试（仅 Boot 4 差异；`webmvc-v3v4-common` / `jakarta-servlet` 见 boot3）：
+
+- sa-token-spring-boot4-starter
+- sa-token-jackson3
+
+### sa-token-integration-reactor-boot2
+
+WebFlux 集成测试（Boot 2 主集成，基于 WebTestClient）：
+
+- sa-token-reactor-spring-boot-starter
+
+### sa-token-integration-reactor-boot3
+
+WebFlux 集成测试（仅 Boot 3 版本差异）：
+
+- sa-token-reactor-spring-boot3-starter（真身 reactor-v3v4-common）
+
+### sa-token-integration-reactor-boot4
+
+WebFlux 集成测试（仅 Boot 4 版本差异）：
+
+- sa-token-reactor-spring-boot4-starter（真身 reactor-v3v4-common）
+
+### sa-token-integration-solon
+
+Solon HTTP 集成测试（Filter / Interceptor、真实请求链路）：
+
+- sa-token-solon-plugin
+
+### sa-token-integration-beaninject-solon
+
+Bean 注入专项集成测试（**独立模块 / 独立 JVM**，避免污染 `SaManager` 等全局静态状态）：
+
+- 覆盖 `SaBeanInject` + OAuth2 / SSO / Sign / ApiKey 全部 `*BeanInject` 注入点
+- 仅验证 Solon Bean → Manager/Strategy 的注入链路，不测插件业务
+
+### sa-token-integration-loveqq
+
+LoveQQ 集成测试（HTTP Filter / Interceptor、Bean 注入、Redisson Dao 条件装配，真实请求链路）：
+
+- sa-token-loveqq-boot-starter
+
+### sa-token-integration-jfinal
+
+JFinal HTTP 集成测试（真实 Undertow、`SaTokenActionHandler` 上下文、`SaAnnotationInterceptor` 注解鉴权；不起 Redis）：
+
+- sa-token-jfinal-plugin
+
+### sa-token-integration-jboot
+
+JBoot HTTP 集成测试（真实 Undertow、`SaTokenContextForJboot` 上下文、`SaAnnotationInterceptor` 注解鉴权；不起 Redis / RPC）：
+
+- sa-token-jboot-plugin
+
+### sa-token-integration-sso
+
+SSO 协议 HTTP 集成测试（Spring Boot 2，同一进程挂 Server + Client 两套路由和两套 `StpLogic`；真 302 / Location，模式一 / 二 / 三跳转和单点注销；不起 Redis）：
+
+- sa-token-sso
+
+### sa-token-integration-oauth2
+
+OAuth2 协议 HTTP 集成测试（Spring Boot 2，真 302 / Location 和 token JSON；授权码 / 隐藏式 / 密码 / 凭证 / 刷新 / 回收 / 确认授权；不起 Redis）：
+
+- sa-token-oauth2
+
+### sa-token-integration-dubbo
+
+Dubbo 2.x Filter 集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provider，本机 `dubbo://`，`scope=remote` 避免 injvm 串 ThreadLocal；会话下传 / 回传、Same-Token；不起 Nacos / Redis）：
+
+- sa-token-dubbo
+
+### sa-token-integration-dubbo3
+
+Dubbo3 Filter 集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provider，本机 `dubbo://`，`scope=remote` 避免 injvm 串 ThreadLocal；会话下传 / 回传、Same-Token；不起 Nacos / Redis）：
+
+- sa-token-dubbo3
+
+### sa-token-integration-grpc
+
+gRPC 拦截器集成测试（Spring Boot 2，同一进程 Consumer HTTP + Provider，本机 gRPC 端口；Same-Token；不起 Nacos / Redis）。会话下传 / 回传、未登录匿名，对齐 dubbo 那 4 条：
+
+- sa-token-grpc
+
+### sa-token-coverage
+
+覆盖率聚合（非功能测试），汇总全仓库生产模块 JaCoCo 报告。
+
+## 运行
+
+```bash
+mvn test -pl sa-token-testing/sa-token-integration-boot2 -am
+mvn test -pl sa-token-testing/sa-token-integration-beaninject-boot2 -am
+mvn test -pl sa-token-testing/sa-token-integration-boot3 -am
+mvn test -pl sa-token-testing/sa-token-integration-boot4 -am
+mvn test -pl sa-token-testing/sa-token-integration-reactor-boot2 -am
+mvn test -pl sa-token-testing/sa-token-integration-reactor-boot3 -am
+mvn test -pl sa-token-testing/sa-token-integration-reactor-boot4 -am
+mvn test -pl sa-token-testing/sa-token-integration-solon -am
+mvn test -pl sa-token-testing/sa-token-integration-beaninject-solon -am
+mvn test -pl sa-token-testing/sa-token-integration-loveqq -am
+mvn test -pl sa-token-testing/sa-token-integration-jfinal -am
+mvn test -pl sa-token-testing/sa-token-integration-jboot -am
+mvn test -pl sa-token-testing/sa-token-integration-sso -am
+mvn test -pl sa-token-testing/sa-token-integration-oauth2 -am
+mvn test -pl sa-token-testing/sa-token-integration-dubbo -am
+mvn test -pl sa-token-testing/sa-token-integration-dubbo3 -am
+mvn test -pl sa-token-testing/sa-token-integration-grpc -am
+```
+
+根目录全量：`mvn test.bat`

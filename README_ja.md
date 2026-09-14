@@ -13,6 +13,7 @@
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
 	<!-- <a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
+	<img src="https://img.shields.io/badge/JDK-8~25-green.svg?style=flat-square" alt="JDK 8~25">
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 <!-- <p align="center"> 学習してテストするには、master ブランチをプルしてください。dev は開発ブランチにあります (ルート ディレクトリで `git checkout master` を実行します) </p> -->
@@ -27,9 +28,9 @@
 
 ### 📝 序文:
 
-私が Sa-Token のコードの最初の行を提出した 2020 年の初めを振り返ると、当時市場に出ていた Java に欠けていたのは、シンプルで使いやすい認証フレームワークだけでなく、明確で自己一貫性のあるパーミッション アーキテクチャの設計アイデアのセットでもありました。
+私が Sa-Token のコードの最初の行を提出した 2020 年の初めを振り返ると、**当時市場に出ていた Java に欠けていたのは、シンプルで使いやすい認証フレームワークだけでなく、明確で自己一貫性のあるパーミッション アーキテクチャの設計アイデア一式でもありました**。
 
-したがって、ここ数年、私は Sa-Token ドキュメントの作成に多くの時間を費やしてきました。ほぼすべての章、すべての文、すべての単語が、最も明確で簡潔でわかりやすい表現を達成するために、繰り返し修正され、細かく磨き上げられています。ドキュメントを注意深く読むと、Sa-Token フレームワーク自体だけでなく、ほとんどのシナリオにおける権限設計のベスト プラクティスについても学ぶことができます。
+したがって、ここ数年、私は Sa-Token ドキュメントの作成に多くの時間を費やしてきました。ほぼすべての章、すべての文、すべての単語が、最も明確で簡潔でわかりやすい表現を達成するために、繰り返し修正され、細かく磨き上げられています。**ドキュメントを注意深く読むと、Sa-Token フレームワーク自体だけでなく、ほとんどのシナリオにおける権限認証設計のベストプラクティスについても学ぶことができます**。
 
 
 
@@ -37,7 +38,7 @@
 
 Sa-Token は、軽量の Java 権限認証フレームワークであり、現在、ログイン認証、権限認証、シングル サインオン、OAuth2.0、およびマイクロサービス認証の 5 つのコア モジュールを備えています。
 
-**以下の機能をまだ使用していますか?Stop ⚠️ Sa-Token にお任せを！**
+以下の機能をまだ手作業で作っていますか？**Stop，Sa-Token にお任せを！**
 
 ![sa-token-jss](https://sa-token.com/big-file/index/intro/sa-token-jss--tran.png)
 
@@ -309,7 +310,7 @@ Sa-Token コミュニティのメンバーは、多言語実装バージョン�
 
 ### 📚 事例集
 
-**フレームワークのほぼすべての技術点に対応する統合例を別途作成しました。この圧縮パッケージには合計 60 以上のデモ**が含まれており、Sa-Token ログイン認証、権限認証、SSO シングル サインオン、OAUth2 統合認証、マイクロサービス認証、API キー認証、JWT 統合、システム間呼び出しパラメータ署名検証など、認証と認証のあらゆる側面をカバーしています。
+**フレームワークのほぼすべての技術点に対応する統合例を別途作成しました。この圧縮パッケージには合計 60 以上のデモ**が含まれており、Sa-Token ログイン認証、権限認証、SSO シングル サインオン、OAuth2 統合認証、マイクロサービス認証、API キー認証、JWT 統合、システム間呼び出しパラメータ署名検証など、認証と認証のあらゆる側面をカバーしています。
 
 ダウンロードアドレス: [https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos)
 

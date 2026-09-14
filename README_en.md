@@ -13,6 +13,7 @@
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
 	<!-- <a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
+	<img src="https://img.shields.io/badge/JDK-8~25-green.svg?style=flat-square" alt="JDK 8~25">
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 <!-- <p align="center"> To learn and test, please pull the master branch, dev is in the development branch (execute `git checkout master` in the root directory) </p> -->
@@ -27,9 +28,9 @@
 
 ### 📝 Foreword:
 
-Looking back at the beginning of 2020, when I submitted the first line of code for Sa-Token, what Java on the market lacked at that time was not only a simple and easy-to-use authentication framework, but also a set of clear and self-consistent permission architecture design ideas.
+Looking back at the beginning of 2020, when I submitted the first line of code for Sa-Token, **what Java on the market lacked at that time was not only a simple and easy-to-use authentication framework, but also a complete set of clear and self-consistent permission architecture design ideas**.
 
-Therefore, in the past few years, I have devoted a lot of time to writing Sa-Token documentation. Almost every chapter, every sentence, and every word has been repeatedly revised and finely polished in order to achieve the clearest, most concise, and easy-to-understand expression. Read the documentation carefully, and you will learn not only the Sa-Token framework itself, but also the best practices for permission design in most scenarios.
+Therefore, in the past few years, I have devoted a lot of time to writing Sa-Token documentation. Almost every chapter, every sentence, and every word has been repeatedly revised and finely polished in order to achieve the clearest, most concise, and easy-to-understand expression. **Read the documentation carefully, and you will learn not only the Sa-Token framework itself, but also the best practices for authentication and authorization design in most scenarios**.
 
 
 
@@ -37,7 +38,7 @@ Therefore, in the past few years, I have devoted a lot of time to writing Sa-Tok
 
 Sa-Token is a lightweight Java permission authentication framework that currently has five core modules: login authentication, permission authentication, single sign-on, OAuth2.0, and microservice authentication.
 
-**Still hand-rolling these features? Stop ⚠️ Let Sa-Token handle them!**
+Still hand-rolling these features? **Stop, let Sa-Token handle them!**
 
 ![sa-token-jss](https://sa-token.com/big-file/index/intro/sa-token-jss--tran.png)
 
@@ -309,7 +310,7 @@ We sincerely invite developers who are more proficient in the above languages to
 
 ### 📚 Collection of examples
 
-**We have separately produced corresponding integration examples for almost all technical points of the framework. This compressed package has a total of 60+ Demo**: covering all aspects of authentication and authentication such as Sa-Token login authentication, authority authentication, SSO single sign-on, OAUth2 unified authentication, microservice authentication, API Key authentication, JWT integration, cross-system call parameter signature verification, etc.
+**We have separately produced corresponding integration examples for almost all technical points of the framework. This compressed package has a total of 60+ Demo**: covering all aspects of authentication and authentication such as Sa-Token login authentication, authority authentication, SSO single sign-on, OAuth2 unified authentication, microservice authentication, API Key authentication, JWT integration, cross-system call parameter signature verification, etc.
 
 Download address: [https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos)
 

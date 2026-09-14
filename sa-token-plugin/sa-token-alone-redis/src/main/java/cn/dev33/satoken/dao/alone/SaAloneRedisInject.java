@@ -193,17 +193,8 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				// 连接池最大阻塞等待时间（使用负值表示没有限制）
 				poolConfig.setMaxWaitMillis(pool.getMaxWait().toMillis());
 			}
-			LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
-			// timeout 
-			if(cfg.getTimeout() != null) {
-				builder.commandTimeout(cfg.getTimeout());
-			}
-			// shutdownTimeout 
-			if(lettuce.getShutdownTimeout() != null) {
-				builder.shutdownTimeout(lettuce.getShutdownTimeout());
-			}
 			// 创建Factory对象
-			LettuceClientConfiguration clientConfig = builder.poolConfig(poolConfig).build();
+			LettuceClientConfiguration clientConfig = buildLettuceClientConfiguration(cfg, lettuce, poolConfig);
 			LettuceConnectionFactory factory = new LettuceConnectionFactory(redisAloneConfig, clientConfig);
 			factory.afterPropertiesSet();
 			
@@ -231,11 +222,50 @@ public class SaAloneRedisInject implements EnvironmentAware{
 			// 至此，说明开发者一个 redis 插件也没引入，或者引入的 redis 插件不在 sa-token-alone-redis 的支持范围内
 			throw new SaTokenException("未引入 sa-token-redis-xxx 相关插件，或引入的插件不在 Alone-Redis 支持范围内");
 
+		} catch (SaTokenException e) {
+			throw e;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new SaTokenException("Alone-Redis 注入失败", e);
 		}
 	}
 	
+	/**
+	 * 构建 Lettuce 客户端配置（连接池、超时与 SSL）
+	 */
+	static LettuceClientConfiguration buildLettuceClientConfiguration(RedisProperties cfg, Lettuce lettuce, GenericObjectPoolConfig poolConfig) {
+		LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+		// timeout 
+		if(cfg.getTimeout() != null) {
+			builder.commandTimeout(cfg.getTimeout());
+		}
+		// shutdownTimeout 
+		if(lettuce.getShutdownTimeout() != null) {
+			builder.shutdownTimeout(lettuce.getShutdownTimeout());
+		}
+		// ssl 配置：TLS-only Redis 服务端会直接关闭明文连接，必须按配置启用 SSL
+		if(isSslEnabled(cfg)) {
+			builder.useSsl();
+		}
+		return builder.poolConfig(poolConfig).build();
+	}
+
+	/**
+	 * 读取 ssl 开关：Spring Boot 3+ 为 getSsl().isEnabled() 对象，Spring Boot 2 为 isSsl() 布尔值。
+	 * 本模块按 Spring Boot 2 API 编译，高版本方法只能反射读取。
+	 */
+	static boolean isSslEnabled(RedisProperties cfg) {
+		try {
+			Object ssl = cfg.getClass().getMethod("getSsl").invoke(cfg);
+			Object enabled = ssl.getClass().getMethod("isEnabled").invoke(ssl);
+			return Boolean.TRUE.equals(enabled);
+		} catch (NoSuchMethodException e) {
+			// Spring Boot 2：布尔值
+			return cfg.isSsl();
+		} catch (ReflectiveOperationException e) {
+			return false;
+		}
+	}
+
 	/**
 	 * 骗过编辑器，增加配置文件代码提示 
 	 * @return 配置对象

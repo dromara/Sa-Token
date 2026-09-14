@@ -125,6 +125,22 @@ spring.redis.timeout=10s
 
 集群配置说明: alone-redis同样可以配置集群(cluster模式和sentinel模式), 且基础配置参数和spring redis集群配置别无二致
 
+### SSL/TLS 连接
+
+alone-redis 复用 spring redis 的配置模型，开启 SSL 同样按 spring 的写法即可（TLS-only Redis 服务端必须开启，否则明文连接会被服务端直接关闭）：
+
+``` yaml
+sa-token: 
+	# 配置 Sa-Token 单独使用的 Redis 连接 
+	alone-redis: 
+		host: 127.0.0.1
+		port: 6379
+		# 开启 SSL（Spring Boot 2.x 写法为布尔值：ssl: true）
+		ssl: 
+			enabled: true
+```
+
+
 集群配置示例可参考demo项目sa-token-demo-alone-redis-cluster
 
 

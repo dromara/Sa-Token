@@ -181,10 +181,8 @@ public class SaAloneRedisInject {
 			if(cfg.getTimeout() != null) {
 				builder.commandTimeout(cfg.getTimeout());
 			}
-			// shutdownTimeout
-			builder.shutdownTimeout(lettuce.getShutdownTimeout());
 			// 创建Factory对象
-			LettuceClientConfiguration clientConfig = builder.poolConfig(poolConfig).build();
+			LettuceClientConfiguration clientConfig = buildLettuceClientConfiguration(cfg, lettuce, poolConfig);
 			LettuceConnectionFactory factory = new LettuceConnectionFactory(redisAloneConfig, clientConfig);
 			factory.afterPropertiesSet();
 
@@ -211,8 +209,10 @@ public class SaAloneRedisInject {
 			// 至此，说明开发者一个 redis 插件也没引入，或者引入的 redis 插件不在 sa-token-alone-redis 的支持范围内
 			throw new SaTokenException("未引入 sa-token-redis-xxx 相关插件，或引入的插件不在 Alone-Redis 支持范围内");
 
+		} catch (SaTokenException e) {
+			throw e;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new SaTokenException("Alone-Redis 注入失败", e);
 		}
 	}
 
@@ -220,6 +220,24 @@ public class SaAloneRedisInject {
 	 * 骗过编辑器，增加配置文件代码提示
 	 * @return 配置对象
 	 */
+	/**
+	 * 构建 Lettuce 客户端配置（连接池、超时与 SSL）
+	 */
+	static LettuceClientConfiguration buildLettuceClientConfiguration(DataRedisProperties cfg, DataRedisProperties.Lettuce lettuce, GenericObjectPoolConfig poolConfig) {
+		LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+		// timeout
+		if(cfg.getTimeout() != null) {
+			builder.commandTimeout(cfg.getTimeout());
+		}
+		// shutdownTimeout
+		builder.shutdownTimeout(lettuce.getShutdownTimeout());
+		// ssl 配置：TLS-only Redis 服务端会直接关闭明文连接，必须按配置启用 SSL
+		if(cfg.getSsl().isEnabled()) {
+			builder.useSsl();
+		}
+		return builder.poolConfig(poolConfig).build();
+	}
+
 	@ConfigurationProperties(prefix = ALONE_PREFIX)
 	public DataRedisProperties getSaAloneRedisConfig() {
 		return new DataRedisProperties();

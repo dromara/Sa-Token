@@ -1,0 +1,26 @@
+sa-token:
+  is-print: false
+  is-log: false
+  timeout: 2592000
+  sso-server:
+    ticket-timeout: 300
+    home-route: /server/home
+    secret-key: sso-it-secret
+    is-check-sign: true
+    allow-anon-client: false
+    is-slo: true
+    auto-renew-timeout: false
+    clients:
+      sso-client3:
+        client: sso-client3
+        allow-url: http://127.0.0.1/*
+        is-push: true
+        is-slo: true
+        secret-key: sso-it-secret
+  sso-client:
+    client: sso-client3
+    is-http: true
+    is-slo: true
+    reg-logout-call: true
+    secret-key: sso-it-secret
+    is-check-sign: true

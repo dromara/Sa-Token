@@ -13,6 +13,7 @@
 	<a href="https://github.com/dromara/sa-token/network/members"><img src="https://img.shields.io/github/forks/dromara/sa-token?style=flat-square&logo=GitHub"></a>
 	<!-- <a href="https://github.com/dromara/sa-token/watchers"><img src="https://img.shields.io/github/watchers/dromara/sa-token?style=flat-square&logo=GitHub"></a> -->
 	<!-- <a href="https://github.com/dromara/sa-token/issues"><img src="https://img.shields.io/github/issues/dromara/sa-token.svg?style=flat-square&logo=GitHub"></a> -->
+	<img src="https://img.shields.io/badge/JDK-8~25-green.svg?style=flat-square" alt="JDK 8~25">
 	<a href="https://github.com/dromara/sa-token/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dromara/sa-token.svg?style=flat-square"></a>
 </p>
 <!-- <p align="center">学习测试请拉取 master 分支，dev 是在开发分支 (在根目录执行 `git checkout master`)</p> -->
@@ -27,17 +28,16 @@
 
 ### 📝 前言：
 
-回望 2020 年初，我为 Sa-Token 提交第一行代码之际，彼时市面上 Java 缺少的不仅是一个简洁好用的鉴权框架，更是一整套清晰、自洽的权限架构设计思想。
+回望 2020 年初，我为 Sa-Token 提交第一行代码之际，**彼时市面上 Java 缺少的不仅是一个简洁好用的鉴权框架，更是一整套清晰、自洽的权限架构设计思想**。
 
-因此，这几年间我将大量时间倾注在 Sa-Token 的文档编写，几乎每一章节、每一句话、每一个字都经过反复修改、精细打磨，以求做到最清晰、干练、易懂的表述。用心阅读文档，你学习到的将不止是 Sa-Token 框架本身，更是绝大多数场景下权限设计的最佳实践。
-
+因此，这几年间我将大量时间倾注在 Sa-Token 的文档编写，几乎每一章节、每一句话、每一个字都经过反复修改、精细打磨，以求做到最清晰、干练、易懂的表述。**用心阅读文档，你学习到的将不止是 Sa-Token 框架本身，更是绝大多数场景下权限认证设计的最佳实践**。
 
 
 ### 🛠️ Sa-Token 介绍
 
 Sa-Token 是一个轻量级 Java 权限认证框架，目前拥有五大核心模块：登录认证、权限认证、单点登录、OAuth2.0、微服务鉴权。
 
-**你还在手搓以下功能？Stop ⚠️ 让 Sa-Token 来！**
+你还在手搓以下功能？**Stop，让 Sa-Token 来！**
 
 ![sa-token-jss](https://sa-token.com/big-file/index/intro/sa-token-jss--tran.png)
 
@@ -309,7 +309,7 @@ Sa-Token 社区成员贡献了多语言实现版本：
 
 ### 📚 示例大全
 
-**我们为框架几乎所有技术点均单独制作了对应的集成示例，此压缩包共计 60+ Demo**：涵盖 Sa-Token 登录认证、权限认证、SSO 单点登录、OAUth2 统一认证、微服务鉴权、API Key 认证、JWT集成、跨系统调用参数签名校验 等鉴权认证的方方面面。
+**我们为框架几乎所有技术点均单独制作了对应的集成示例，此压缩包共计 60+ Demo**：涵盖 Sa-Token 登录认证、权限认证、SSO 单点登录、OAuth2 统一认证、微服务鉴权、API Key 认证、JWT集成、跨系统调用参数签名校验 等鉴权认证的方方面面。
 
 下载地址：[https://sa-token.com/doc.html#/more/download-demos](https://sa-token.com/doc.html#/more/download-demos) 
 

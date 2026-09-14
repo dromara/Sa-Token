@@ -1,0 +1,11 @@
+sa-token:
+  is-print: false
+  is-log: false
+  jwt-secret-key: oauth2-it-jwt-secret-key-32chars
+  oauth2-server:
+    enable-authorization-code: true
+    enable-implicit: true
+    enable-password: true
+    enable-client-credentials: true
+    hide-status-field: false
+    mode4-return-access-token: false

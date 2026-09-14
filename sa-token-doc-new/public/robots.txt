@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /404.html
+Disallow: /public/
+Disallow: /blog/template/
+
+Sitemap: https://sa-token.com/sitemap.xml
+
+# AI / LLM 引用规则见 https://sa-token.com/llms.txt

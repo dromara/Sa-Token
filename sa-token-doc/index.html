@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="UTF-8">
-		<title>Sa-Token</title>
+		<title>Sa-Token 官方文档 - java 权限认证框架</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="description"
 			content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后端分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
@@ -11,7 +11,7 @@
 			content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<link rel="canonical" href="https://sa-token.com/">
 		<meta property="og:type" content="website">
-		<meta property="og:title" content="Sa-Token">
+		<meta property="og:title" content="Sa-Token 官方文档 - java 权限认证框架">
 		<meta property="og:description" content="Sa-Token是一个java权限认证框架，功能全面，上手简单，登录认证、权限认证、Session会话、踢人下线、账号封禁、集成Redis、前后端分离、分布式会话、微服务网关鉴权、单点登录、OAuth2.0、临时Token验证、记住我模式、模拟他人账号、临时身份切换、多账号体系、注解式鉴权、路由拦截式鉴权、花式token、自动续签、同端互斥登录、会话治理、密码加密、jwt集成、Spring集成、WebFlux集成...，有了sa-token，你所有的权限认证问题，都不再是问题">
 		<meta property="og:url" content="https://sa-token.com/">
 		<meta property="og:image" content="https://sa-token.com/logo.png">
@@ -66,7 +66,7 @@
 						</div>
 					</a>
 					<!-- 语言切换：translate.js 会往这个容器里生成 select -->
-					<span id="translate" class="select-language-box ignore"></span>
+					<span id="translate" class="select-language-box ignore nav-t2"></span>
 				</div>
 				<nav class="nav-right">
 					<!-- <div class="zk-box p-none">
@@ -94,7 +94,7 @@
 					<a class="wzi" href="index.html">首页</a>
 					<a class="wzi" href="doc.html">文档</a>
 					<a class="wzi" href="/blog/index.html">博客</a>
-					<div class="zk-box">
+					<div class="zk-box nav-t3">
 						<a class="wzi" href="javascript:;">
 							<span>视频 </span>
 							<span class="zk-icon"></span>
@@ -119,7 +119,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="zk-box">
+					<div class="zk-box nav-t3">
 						<a class="wzi" href="javascript:;">
 							<span>案例 </span>
 							<span class="zk-icon"></span>
@@ -132,11 +132,11 @@
 							</div>
 						</div>
 					</div>
-					<a class="p-none wzi" href="doc.html#/more/join-group">加群</a>
-					<a class="p-none wzi" href="doc.html#/more/demand-commit">需求提交</a>
-					<a class="p-none wzi" href="doc.html#/more/sa-token-donate">赞助</a>
-					<a class="p-none wzi" href="https://sa-max.cn?way=st_index_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
-					<div class="zk-box">
+					<a class="p-none wzi nav-t3" href="doc.html#/more/join-group">加群</a>
+					<a class="p-none wzi nav-t3" href="doc.html#/more/demand-commit">需求提交</a>
+					<a class="p-none wzi nav-t3" href="doc.html#/more/sa-token-donate">赞助</a>
+					<a class="p-none wzi nav-t2" href="https://sa-max.cn?way=st_index_top" target="_blank">🔥 SSO/OAuth2 商业版</a>
+					<div class="zk-box nav-t3">
 						<a class="wzi" href="javascript:;">
 							<span>安全推荐 </span>
 							<span class="zk-icon"></span>
@@ -152,7 +152,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="zk-box">
+					<div class="zk-box nav-t2">
 						<a class="wzi" href="javascript:;">
 							<span>相关资源 </span>
 							<span class="zk-icon"></span>
@@ -236,10 +236,19 @@
 						</a>
 						<span class="dmt-link">
 							<img class="dmt-img" src="/big-file/index/platform/zong-4.png" alt="">
-							<span class="dmt-tips">B站、抖音、视频号 ...</span>
+							<span class="dmt-tips">公众号、B站、抖音、视频号 ...</span>
 							<div class="dmt-detail">
 								<h4>关注我们 → 分享“权限认证架构设计”干货视频</h4>
 								<div class="dmt-item-box">
+									<div class="dmt-item dmt-item-gzh">
+										<a href="javascript: layer.msg('请使用微信扫码关注公众号');">
+											<img class="dmt-qr-img" src="/big-file/contact/lykj-gzh.jpg" alt="">
+											<span class="dmt-logo-gzh">
+												<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#07C160" d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>
+												<span>微信公众号</span>
+											</span>
+										</a>
+									</div>
 									<div class="dmt-item dmt-item-bilibili">
 										<a href="https://space.bilibili.com/3546758575557094" target="_blank">
 											<img class="dmt-qr-img" src="/big-file/index/platform/bilibili-qr-fang.png" alt="">
@@ -1070,6 +1079,10 @@
 							<img class="lazy" data-original="/big-file/index/dromara/my-obj.svg"
 								msg="MyObj 是基于 Go 的开源家庭网盘系统，支持大文件上传、断点续传、秒传、文件分享与权限管理，可作为企业级对象存储的轻量化替代方案。">
 						</a>
+						<a href="https://gitee.com/dromara/sa-cm" target="_blank">
+							<img class="lazy" data-original="/big-file/index/dromara/sa-cm.png"
+								msg="局域网 Windows 性能监控副屏：CPU、内存、GPU、磁盘、网络、进程、功耗风扇，把吃灰的平板/手机用起来。">
+						</a>
 						
 						
 						<!-- <a href="https://dromara.org/zh/projects/" target="_blank">
@@ -1253,7 +1266,7 @@
 		<script src="/static/all-version-common.js"></script>
 
 		<!-- 多语言：translate.js + 本地初始化（见 static/sa-translate.js） -->
-		<script src="https://res.zvo.cn/translate/translate.js"></script>
+		<script src="./static/translate.js"></script>
 		<script src="./static/sa-translate.js"></script>
 		<script>initSaTranslate();</script>
 		

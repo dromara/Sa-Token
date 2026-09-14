@@ -40,5 +40,11 @@
 			</exclusions>-->
 		</dependency>
 
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-dao-test-common</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

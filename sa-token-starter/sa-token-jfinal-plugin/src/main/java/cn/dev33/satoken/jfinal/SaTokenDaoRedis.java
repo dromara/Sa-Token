@@ -39,6 +39,7 @@ public class SaTokenDaoRedis implements SaTokenDaoBySessionFollowObject {
     public SaTokenDaoRedis(String confName) {
         redis = Redis.use(confName);
         serializer = new SaJdkSerializer();
+        isInit = true;
     }
 
     /**

@@ -2,15 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sa-token.com/blog/index.html</loc>
-    <lastmod>2026-08-17</lastmod>
+    <lastmod>2026-08-27</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/release/sa-token-rust-v0-2-0-fa-bu-bei-ti-ming-g-star-fu-hua-xiang-mu.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/special/hao-wai-sa-token-rust-ru-zhu-kai-fang-yuan-zi-kai-yuan-ji-jin-hui-xuan-wu-she-qu.html</loc>
+    <lastmod>2026-08-20</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/release/sa-token-v1-46-0-fa-bu-xin-zeng-apache-fory-ji-cheng-du-li-redisson-ji-cheng.html</loc>
+    <lastmod>2026-08-18</lastmod>
   </url>
   <url>
     <loc>https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-nodejs-ban-ben-2.html</loc>
     <lastmod>2026-05-16</lastmod>
   </url>
   <url>
+    <loc>https://sa-token.com/blog/featured/9-da-kuang-jia-tong-yi-jie-ru-sa-token-rust-wei-shen-me-zhi-de-guan-zhu.html</loc>
+    <lastmod>2026-05-07</lastmod>
+  </url>
+  <url>
     <loc>https://sa-token.com/blog/release/sa-token-v1-45-0-fa-bu-zheng-shi-zhi-chi-spring-boot-4-xin-zeng-jackson3-snack4.html</loc>
     <lastmod>2026-03-09</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-go-ban-ben.html</loc>
+    <lastmod>2025-10-20</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/special/tai-qiang-le-sa-token-de-rust-ban-ben.html</loc>
+    <lastmod>2025-10-12</lastmod>
   </url>
   <url>
     <loc>https://sa-token.com/blog/release/sa-token-v1-43-0-fa-bu-xin-zeng-sso-dan-she-bei-zhu-xiao-xiao-xi-tui-song-duo-ac.html</loc>
@@ -187,5 +211,29 @@
   <url>
     <loc>https://sa-token.com/blog/release/sa-token-v-1-31-0-xin-zeng-lan-jie-qi-sainterceptor-gong-neng-shuo-ming-yi-ji-ji.html</loc>
     <lastmod>2023-04-24</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/other/zai-jian-shiro-quan-xian-ren-zheng-wo-xuan-ze-sa-token-jian-dan-you-ya.html</loc>
+    <lastmod>2021-09-02</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/release/sa-token-v1-20-0-fa-bu-xin-zeng-lin-shi-token.html</loc>
+    <lastmod>2021-06-17</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/other/shiro-kuai-lai-shi-shi-zhe-ge-qing-liang-ji-quan-xian-ren-zheng-kuang-jia.html</loc>
+    <lastmod>2021-03-15</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/release/sa-token-v1-9-0-ban-ben-yi-fa-bu-dai-lai-ji-dong-ren-xin-xin-te-xing-tong-duan-h.html</loc>
+    <lastmod>2021-01-06</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/release/java-sa-token-v1-8-0-ban-ben-yi-fa-bu-dai-lai-da-liang-ji-dong-ren-xin-de-te-xin.html</loc>
+    <lastmod>2021-01-02</lastmod>
+  </url>
+  <url>
+    <loc>https://sa-token.com/blog/other/sa-token-yi-ge-de-javaweb-qiang-da-jian-dan-hao-yong.html</loc>
+    <lastmod>2020-02-20</lastmod>
   </url>
 </urlset>

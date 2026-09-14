@@ -22,7 +22,7 @@ public class TestController {
     @Autowired
     public DemoService demoService;
 
-	// test
+	// test   --- http://localhost:8080/test
     @RequestMapping("test")
     public SaResult test() {
 		demoService.isLogin("----------- 登录前 " + StpUtil.isLogin());

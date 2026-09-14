@@ -27,6 +27,7 @@
 		    <groupId>cn.hutool</groupId>
 		    <artifactId>hutool-jwt</artifactId>
 		</dependency>
+
 	</dependencies>
 
 </project>
