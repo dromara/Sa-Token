@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 二级认证"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,二级认证,深入"
-description: "Sa-Token 二级认证：敏感操作前二次验证密码或凭证，如删除仓库前的安全确认。"
+description: "Sa-Token 二级认证：已登录后再 StpUtil.openSafe(秒) 做敏感操作二次确认，如删仓库前再输密码；isSafe、checkSafe、getSafeTime、closeSafe 控制有效窗口，可指定 client 等业务标识互不影响，也可用 @SaCheckSafe 注解拦截方法。"
 ---
 
 # 二级认证

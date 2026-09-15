@@ -1,3 +1,7 @@
+---
+description: "Sa-Max 统一认证商业版：在 SSO 与 OAuth2 文档 Demo 之上提供可直接启动的认证中心，支持跨域跨 Redis、前后端分离、API Key、OAuth2.0 及第三方开放平台申请应用。全套源码可二开、不限域名与项目数。与开源框架独立。首页入口跟踪参数 way=st_index_top。"
+---
+
 # Sa-Max 统一认证商业版
 
 ### 项目介绍

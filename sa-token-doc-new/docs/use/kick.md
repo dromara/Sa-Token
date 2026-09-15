@@ -2,7 +2,7 @@
 title: "踢人下线"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,踢人下线,基础,Java权限认证"
 
-description: "Sa-Token 踢人下线：按账号、指定端或 Token 强制注销或踢下线，用于后台治理会话。"
+description: "Sa-Token 踢人下线：StpUtil.logout、kickout、replaced 及 ByTokenValue 可按账号、指定端（如 PC）或 Token 强制注销、踢下线或顶人；注销后提示 Token 无效，踢下线保留 Token 并标记已被踢下线，replaced 用于登录时顶退旧设备。"
 ---
 
 # 踢人下线

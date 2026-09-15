@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 常见问题总结"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,常见问题总结,单点登录,SSO"
-description: "SSO 集成常见问题：Redis 分离、ticket 失效、跨域与模式选型等高频问答汇总。"
+description: "SSO 常见问题：返回 not handle 多为路由写错或 is-slo 未开；模式二 Ticket 无效先核 Client 与 Server 是否同 Redis；模式三勿重复校验 ticket；模式一检查 cookie.domain 与 is-read-cookie；Session 实体两端包名须一致。"
 ---
 
 # Sa-Token-SSO整合-常见问题总结

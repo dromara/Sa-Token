@@ -2,7 +2,7 @@
 title: "Session会话"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Session会话,基础,Java权限认证"
 
-description: "Sa-Token Session 会话：在登录态里缓存高频数据，区分 Account-Session、Token-Session 与自定义 Session。"
+description: "Sa-Token Session 会话：登录后用 StpUtil.getSession 缓存 user 等高频数据；Account-Session 按账号、Token-Session 按令牌、Custom-Session 用 SaSessionCustomUtil 按任意 key（如商品 id）分配。"
 ---
 
 # Session会话

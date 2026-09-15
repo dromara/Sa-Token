@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 依赖引入说明"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,依赖引入说明,微服务,微服务鉴权"
-description: "Sa-Token 微服务依赖引入：网关与子服务分别引入 Starter，避免父 pom 统一依赖导致鉴权异常。"
+description: "Sa-Token 微服务依赖引入：网关与子服务分开引 Starter，勿放顶级父 pom。Servlet/Zuul 用 sa-token-spring-boot-starter，Gateway/ShenYu 用 reactor-starter 并注册全局过滤器，二者不可同项目共存，另需 Redis 同步。"
 ---
 
 

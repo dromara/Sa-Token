@@ -2,7 +2,7 @@
 title: "Spring WebFlux 集成 Sa-Token 示例"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,WebFlux 环境集成,Spring Boot"
 
-description: "在 Spring WebFlux 中集成 Sa-Token，对接 Reactor 非阻塞模型，同样适用于 Spring Cloud Gateway 等响应式网关。"
+description: "在 Spring WebFlux 中集成 Sa-Token：引入 sa-token-reactor-spring-boot-starter 对接 Reactor 非阻塞模型，Boot 3/4 换对应包；同样适用于 Spring Cloud Gateway，官方示例 sa-token-demo-webflux。"
 ---
 
 # Spring WebFlux 集成 Sa-Token 示例

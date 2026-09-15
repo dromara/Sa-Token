@@ -1,7 +1,7 @@
 ---
 title: "为Sa-Token贡献代码"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,为Sa-Token贡献代码,附录"
-description: "为 Sa-Token 贡献代码：文档页跳转 Gitee/GitHub、PR 规范与社区贡献流程说明。"
+description: "为 Sa-Token 贡献代码：文档页底可跳 Gitee/GitHub 在线编辑提交审核；代码需 Fork dromara/sa-token，配 SSH、JDK 8+ 与 Maven，在 IDEA 提交后对 dev 分支提 Pull Request。国内推荐 Gitee（网速与中文界面），主仓用同步按钮更新。"
 ---
 
 # 如何更新在线文档

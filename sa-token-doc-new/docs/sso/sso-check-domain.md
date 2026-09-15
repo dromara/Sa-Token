@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 配置域名校验"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,配置域名校验,单点登录,SSO"
-description: "SSO 配置域名校验：allow-url 白名单限制授权回调地址，防止非法单点登录跳转。"
+description: "SSO 域名校验：clients.*.allow-url 白名单限制 /sso/auth 的 redirect，防 Ticket 劫持。生产禁止配 *，配到域名级安全性中等，建议写到 /sso/login 完整地址。非法 redirect 会被拒绝授权。先回传一次性 Ticket，避免长期 Token 出现在 URL。"
 ---
 
 # SSO整合-配置域名校验

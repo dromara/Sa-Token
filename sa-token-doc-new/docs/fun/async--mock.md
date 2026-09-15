@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 异步 & Mock 上下文"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,异步 & Mock 上下文,附录"
-description: "Sa-Token 异步与 Mock 上下文：在定时任务、MQ、单元测试中安全调用 StpUtil 等 Web 上下文 API。"
+description: "Sa-Token 异步与 Mock 上下文：new Thread、线程池、@Async、@Scheduled、MQ 等非 Web 线程调 StpUtil 会抛上下文未初始化。需 setMockContext 并写入 token；WebFlux 用 SaReactorSyncHolder.setContext。"
 ---
 
 # 异步 & Mock 上下文

@@ -1,3 +1,7 @@
+---
+description: "Sa-Max 统一认证商业版：面向已阅读 OAuth2 模块文档、需要把授权中心做成生产项目的团队。除同域跨域、跨 Redis、vue2/vue3 等 SSO 接入外，提供 API Key、OAuth2.0 与开放平台对接。源码交付无加密 jar、不限域名。本页链接使用 way=st_oauth2 区分来源渠道。"
+---
+
 # Sa-Max 统一认证商业版
 
 ### 项目介绍

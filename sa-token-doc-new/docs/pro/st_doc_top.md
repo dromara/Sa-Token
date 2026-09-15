@@ -1,3 +1,7 @@
+---
+description: "Sa-Max 统一认证商业版：文档顶部入口推荐的付费认证中心，缩短 SSO、OAuth2 从官方 Demo 到商业落地的周期，含跨 Redis、前后端分离、vue2/vue3 与开放平台。与开源 Sa-Token 互相独立，未购买不影响框架使用。Maven 中央仓代码不可撤回。跟踪参数 way=st_doc_top。"
+---
+
 # Sa-Max 统一认证商业版
 
 ### 项目介绍

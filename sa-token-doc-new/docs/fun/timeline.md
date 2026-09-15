@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token开源大事记"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Sa-Token开源大事记,附录"
-description: "Sa-Token 开源大事记：框架自 2020 年开源以来的版本里程碑与社区成长记录。"
+description: "Sa-Token 开源大事记：2020-02-04 GitHub 开源；2021 年加入 dromara、获 GVP，star 超过 Shiro 与 Spring Security；2022 年 GitHub 破万 star；2024 年 42.9k 登顶 Gitee；2026 年获 Gitee Web Top 2。"
 ---
 
 # Sa-Token 开源大事记

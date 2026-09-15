@@ -2,7 +2,7 @@
 
 title: "Sa-Token 源码技术栈"
 keywords: "Sa-Token,sa-token,satoken,Spring Boot,Redis,JWT,OAuth2"
-description: "Sa-Token 源码技术栈：框架内核、Starter 与插件模块使用的主要技术与依赖说明。"
+description: "Sa-Token 源码技术栈：Maven 多模块，内核用 Servlet、Cookie、Java8 默认方法与自定义注解；Starter 覆盖 SpringBoot2、AOP、yml 映射与拦截器。插件侧含 Redis、Jackson、Hutool、JWT、OAuth2 与 MD5、SHA、AES、RSA 加密。"
 ---
 
 # Sa-Token 源码用到的所有技术栈

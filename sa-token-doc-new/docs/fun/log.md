@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 全局 Log 输出"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,全局 Log 输出,附录"
-description: "Sa-Token 全局 Log 输出：开启登录、注销、二级认证等关键操作日志，支持转接到 Slf4j。"
+description: "Sa-Token 全局 Log 输出：yml 设 is-log=true 后，登录、注销、二级认证等关键步骤会打日志，默认打到控制台。实现 SaLog 可转接到 Slf4j；也可在 SaServletFilter.setAuth 里打印请求 path 与提交 token，方便开发调试与排查登录问题。"
 ---
 
 # 参考：全局 Log 输出

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 模拟他人 & 身份切换"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,模拟他人 & 身份切换,深入"
-description: "Sa-Token 模拟他人与身份切换：查询指定账号权限、Session，管理员运维与调试场景。"
+description: "Sa-Token 模拟他人与身份切换：用 getSessionByLoginId、hasPermission、logout(loginId) 操作指定账号；switchTo 把当前请求临时切到其它 loginId，lambda 写法自动 endSwitch，适合后台代查权限、Session 与运维调试。"
 ---
 
 # 模拟他人

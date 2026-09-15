@@ -1,7 +1,7 @@
 ---
 title: "赞助 Sa-Token"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,赞助 Sa-Token,其它"
-description: "赞助 Sa-Token：支持框架持续维护与社区运营，Apache-2.0 框架与文档永久免费开放。"
+description: "赞助 Sa-Token：框架采用 Apache-2.0，承诺源码与在线文档永久免费开放，但日常更新与社区运营靠爱发电难以长久。若框架帮到你，可用页面顶部微信赞赏码友情支持。开源永不收费，赞助纯属自愿。已捐赠列表展示赞助人、金额、留言与时间，支持按日期或金额排序并翻页查看，感谢每一位热心小伙伴的支持。"
 ---
 
 # 赞助 Sa-Token

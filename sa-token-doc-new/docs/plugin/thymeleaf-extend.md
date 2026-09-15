@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 和 Thymeleaf 集成"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,和 Thymeleaf 集成,插件"
-description: "Sa-Token 整合 Thymeleaf：模板标签方言，在页面中调用登录态与权限判断 API。"
+description: "Sa-Token 整合 Thymeleaf：引入 sa-token-thymeleaf，注册 SaTokenDialect 后可在模板用 sa:login、sa:hasRole、sa:hasPermission 标签做登录与权限判断。也可注入 stp 全局变量，在页面调用 StpLogic/SaSession API。"
 ---
 
 # Thymeleaf 标签方言

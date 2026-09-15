@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 使用注解校验 Access-Token"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,使用注解校验 Access-Token,OAuth2.0,OAuth2"
-description: "OAuth2 Access-Token 注解校验：@SaCheckAccessToken 等扩展注解的 scope 与 token 校验用法。"
+description: "OAuth2 注解校验：注册拦截器。@SaCheckAccessToken 校验 access_token、scope；@SaCheckClientToken 校验 client_token；@SaCheckClientIdSecret 校验 client_id 与 secret。token 可放参数或 Bearer。"
 ---
 
 # Sa-Token OAuth2 模块相关注解

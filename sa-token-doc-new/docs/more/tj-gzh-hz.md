@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 公众号合作"
 keywords: "Sa-Token,sa-token,satoken,公众号,互推合作"
-description: "与 Sa-Token 做公众号互推的合作说明：转载仓库介绍并留下官网链接，可获得文档与社群露出。"
+description: "与 Sa-Token 做公众号互推：Java 运营者无需专门撰文，复制仓库 README 并留下官网或 GitHub 链接即可发表，阅读量需 1000+。作为回报，文档推荐公众号页按日期倒序放二维码，交流群 @全体推广一次；新推文每周最多三次发到群里，群友多为 Java 工程师。示例可参考仓库介绍推文。"
 ---
 
 # 公众号合作

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token API 接口参数签名"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,API 接口参数签名,插件"
-description: "Sa-Token API 参数签名：防重放与篡改，跨系统 HTTP 调用的 timestamp、nonce、sign 校验。"
+description: "Sa-Token API 接口参数签名：sa-token-sign 用 timestamp、nonce、sign 防伪造、防篡改、防重放。SaSignUtil 自动补全签名参数，接收端 checkRequest 一句校验；支持 @SaCheckSign 注解与 sign-many 多应用不同秘钥及字典序拼参。"
 ---
 
 # API 接口参数签名

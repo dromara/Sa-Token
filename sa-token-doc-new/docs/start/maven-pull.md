@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Maven 依赖拉取失败排查"
 keywords: "Sa-Token,sa-token,satoken,Maven,依赖下载,阿里云镜像"
-description: "Maven 拉不下 Sa-Token 依赖时的排查：清理残包、检查阿里云镜像，以及本地仓库路径。"
+description: "Maven 拉不下 Sa-Token 依赖时的排查：先重启 IDE 并确认构建进度条走完；删除本地仓库 .m2/repository/cn/dev33 下残包再重建；注释 setting.xml 里阿里云镜像，改腾讯云 maven-public 或直连 Central；父子工程需先在子模块引用该依赖。"
 ---
 
 # Maven 依赖一直无法拉取成功？

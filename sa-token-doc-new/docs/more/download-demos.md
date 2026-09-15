@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 集成示例大全下载"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成示例大全下载"
-description: "Sa-Token 集成示例下载：60+ Demo 覆盖登录、SSO、OAuth2、微服务鉴权、JWT、API 签名等场景。"
+description: "Sa-Token 集成示例大全下载：为几乎所有技术点均单独制作对应 Demo，压缩包共计 60+ 个工程，覆盖登录认证、权限认证、SSO、OAuth2、微服务鉴权、API Key、JWT 集成与跨系统参数签名。加入 QQ 群 1098917026 或微信群（备注 sa）后，可在群公告查看网盘领取地址。"
 ---
 
 # Sa-Token 集成 Demos 示例大全下载

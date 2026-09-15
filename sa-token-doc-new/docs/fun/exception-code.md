@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 异常细分状态码"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,异常细分状态码,附录"
-description: "Sa-Token 异常细分状态码：NotLoginException、NotPermissionException 等类型与状态码对照。"
+description: "Sa-Token 异常细分状态码：同类 SaSsoException 可用 e.getCode() 区分，如 30001 无效 redirect、30004 无效 ticket。文内给出 core、Servlet、Spring Boot、Reactor、Solon、SSO、OAuth2、JWT 的 code 对照表。"
 ---
 
 # 异常细分状态码

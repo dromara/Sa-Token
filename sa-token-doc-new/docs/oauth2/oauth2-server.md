@@ -2,7 +2,7 @@
 title: "Sa-Token OAuth2-Server搭建"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-Server搭建,OAuth2.0,OAuth2"
 
-description: "搭建 Sa-Token OAuth2-Server：从 hosts 映射、依赖引入到授权流程，附官方可运行 demo。"
+description: "搭建 Sa-Token OAuth2-Server：hosts 映射域名，引入 sa-token-oauth2。SaClientModel 配签约 scope 与 authorization_code、implicit、password、client_credentials；/oauth2/* 走授权，附 demo。"
 ---
 
 # 搭建OAuth2-Server

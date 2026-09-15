@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 单点注销"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,单点注销,单点登录,SSO"
-description: "Sa-Token 单点注销：支持单端注销与全端下线（一处退出、多应用同步失效），含 SSO 注销 API 与客户端对接说明。"
+description: "Sa-Token 单点注销：单端走 /sso/logoutByAlone；全端走 /sso/logout，经 /sso/pushS?msgType=signout 再 /sso/pushC 通知各 Client。支持 ajax 无刷与跳页 back。登录时带 deviceId 可做单浏览器注销。需 is-slo。"
 ---
 
 # 单点注销

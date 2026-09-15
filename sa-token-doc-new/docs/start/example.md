@@ -2,7 +2,7 @@
 title: "SpringBoot 集成 Sa-Token 示例"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,在 SpringBoot 环境集成,Spring Boot"
 
-description: "从零把 Sa-Token 接到 Spring Boot：五步完成依赖、登录与鉴权，附官方 sa-token-demo-springboot 可运行示例。"
+description: "从零把 Sa-Token 接到 Spring Boot：引入 sa-token-spring-boot-starter（Boot 3/4 换对应包），yml 配 token-name 与 timeout，五步完成 StpUtil.login、isLogin，对照官方 sa-token-demo-springboot。"
 ---
 
 # SpringBoot 集成 Sa-Token 示例

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 内容合作群"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,内容合作群,其它"
-description: "Sa-Token 内容合作群：面向创作者的内容触达与协作交流，加群方式与合作说明。"
+description: "Sa-Token 内容合作群：面向写公众号、掘金、CSDN 或录 B 站视频的创作者。相关文章可转发至 30+ 微信粉丝群（约 500 人）与 10+ QQ 群，并挂到月 PV 20 万+ 的文档博客；官方文案开放转载无需申请、无 KPI 要求。加微信时请务必备注申请加入 Sa-Token 内容合作群。"
 ---
 
 # Sa-Token 内容合作群 

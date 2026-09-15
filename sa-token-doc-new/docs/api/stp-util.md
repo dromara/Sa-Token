@@ -2,7 +2,7 @@
 title: "Sa-Token StpUtil-鉴权工具类"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,StpUtil-鉴权工具类,API手册"
 
-description: "StpUtil 鉴权工具类 API：登录、注销、权限、Session、Token 读写等 Sa-Token 核心方法一览。"
+description: "StpUtil 鉴权工具类是 Sa-Token 功能核心：覆盖登录、注销、踢人与顶人下线，会话查询与 loginId 反查 Token，Account-Session 与匿名 Token-Session，角色权限校验，Token 有效期与冻结续签，账号封禁与阶梯封禁，以及身份切换、二级认证方法一览。"
 ---
 
 # StpUtil - 鉴权工具类

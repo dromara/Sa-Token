@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 全局侦听器"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,全局侦听器,深入"
-description: "Sa-Token 全局侦听器：订阅登录、注销、踢下线等事件，扩展审计与业务钩子逻辑。"
+description: "Sa-Token 全局侦听器：实现 SaTokenListener 并注册到 SaTokenEventCenter，订阅 doLogin、doLogout、doKickout、doDisable 等事件；可继承 SaTokenListenerForSimple，doBeforeLogout 适合注销前读取会话做审计。"
 ---
 
 # 全局侦听器

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 自定义注解"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义注解,附录"
-description: "Sa-Token 自定义注解：扩展 @SaCheck 系列，注入业务定制的注解鉴权与参数校验逻辑。"
+description: "Sa-Token 自定义注解：实现 SaAnnotationHandlerInterface 处理 @CheckAccount 等业务校验。Spring 用 @Component 注册，非 IOC 调 registerAnnotationHandler。也可用 @SaUserCheckLogin 简化多账号鉴权。"
 ---
 
 # 自定义注解

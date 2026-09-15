@@ -2,7 +2,7 @@
 title: "Sa-Token SSO模式三 Http请求获取会话"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO模式三 Http请求获取会话,单点登录,SSO"
 
-description: "Sa-Token SSO 模式三：既不同域也不同 Redis 时，用 HTTP 请求换取会话，适合完全拆开的多系统。"
+description: "Sa-Token SSO 模式三：既不同域也不同 Redis。Client 配 is-http、server-url 与 secret-key，经 HTTP 校验 ticket 并自管子会话；去掉 Alone-Redis。因会话分离，单点注销需走消息推送。熟读模式二再看本篇，示例为 sso3-client。"
 ---
 
 # SSO模式三 Http请求获取会话

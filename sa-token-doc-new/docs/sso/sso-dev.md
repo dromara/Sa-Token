@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token SSO 代码 API 参考"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO 代码 API 参考,单点登录,SSO"
-description: "SSO 代码 API 参考：SaSsoServerUtil、SaSsoClientUtil 等常用工具类方法说明。"
+description: "SSO 代码 API：SaSsoServerUtil 负责 Ticket 增删校验、Client 查询、重定向 URL 构建、ssoLogout 与消息推送；SaSsoClientUtil 可 buildServerAuthUrl，并构建 checkTicket、signout 消息供二次开发。两端工具类分开列出。"
 ---
 
 # Sa-Token SSO Server端 二次开发用到的所有函数说明 

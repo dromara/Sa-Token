@@ -1,7 +1,7 @@
 ---
 title: "自定义 SaTokenContext 指南"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义 SaTokenContext 指南,插件"
-description: "自定义 SaTokenContext：非 Spring Boot/WebFlux/Solon 框架的 Sa-Token 整合步骤。"
+description: "自定义 SaTokenContext：Starter 仅覆盖 SpringBoot、MVC、WebFlux、Solon。其他框架需封装 SaRequest、SaResponse、SaStorage，并 setContext。Servlet 可引入 sa-token-servlet；v1.42.0 起不推荐整接口重写。"
 ---
 
 # 自定义 SaTokenContext 指南 

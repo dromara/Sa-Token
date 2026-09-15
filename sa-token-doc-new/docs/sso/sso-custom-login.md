@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 定制化登录页面"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,定制化登录页面,单点登录,SSO"
-description: "SSO 定制化登录页：全局过滤器重定向未登录访问，自定义登录 UI 与跳转逻辑。"
+description: "SSO 定制登录页：前端按钮跳 /sso/login?back=，或 SaServletFilter 拦截未登录重定向；Ajax 可返回 401 再由前端跳转。notLoginView 换登录 UI，也可按 client 标识跳不同登录页。doLoginHandle 可用 SaHolder 取额外参数。"
 ---
 
 # SSO整合-定制化登录页面

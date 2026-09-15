@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 仓库目录"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,仓库目录,框架设计"
-description: "Sa-Token 仓库目录：core、starter、plugin、demo 等模块职责与 Awesome-Sa-Token 生态介绍。"
+description: "Sa-Token 仓库目录：core 内核、Spring Boot 2/3/4 依赖隔离；starter 整合 WebMvc、WebFlux、Solon；plugin 含 Redis、JWT、SSO、OAuth2；另有 60+ demo 与测试。文末介绍 Awesome-Sa-Token 及 Rust、Go 生态仓。"
 ---
 
 # 仓库目录介绍

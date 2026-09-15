@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 定制化登录页面与授权页面"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,定制化登录页面与授权页面,OAuth2.0,OAuth2"
-description: "OAuth2 定制登录与授权页：重写 notLoginView 策略，前后端分离下的登录与授权 UI 改造。"
+description: "OAuth2 定制登录与授权页：重写 notLoginView 返回登录视图，ajax 调 /oauth2/doLogin（name、pwd，其它参数用 SaHolder 取）。confirmView 定制确认页并调 /oauth2/doConfirm。也可自写同名接口。推荐提交当前页 query。"
 ---
 
 # OAuth2 定制化登录页面

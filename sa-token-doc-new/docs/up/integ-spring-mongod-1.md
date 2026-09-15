@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 集成 MongoDB 参考一"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成 MongoDB 参考一,附录"
-description: "Sa-Token 集成 MongoDB（一）：扩展 SaTokenDao 将 Session 持久化到 MongoDB，含 Spring Boot 3 示例。"
+description: "Sa-Token 集成 MongoDB（一）：Spring Boot 3 + Spring Data MongoDB 下实现 SaTokenDao，用 MongoTemplate 写入 Token/Session，expireAt TTL 自动清过期，NEVER_EXPIRE 时 expireAt 置空表示永久。"
 ---
 
 # Sa-Token 集成 MongoDB 

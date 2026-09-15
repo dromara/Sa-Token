@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Token 提交前缀"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Token 提交前缀,深入"
-description: "Sa-Token Token 提交前缀：处理 Bearer 等前缀，避免鉴权时把前缀误当作 token 一部分。"
+description: "Sa-Token Token 提交前缀：yml 配置 sa-token.token-prefix=Bearer，读取时裁掉前缀与空格得到真实 token，前缀与值之间必须有空格；Cookie 无法存空格，需 cookie-auto-fill-prefix=true 才能继续用 Cookie 模式提交。"
 ---
 
 # Token 提交前缀

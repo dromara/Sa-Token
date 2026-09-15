@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 会话查询"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,会话查询,深入"
-description: "Sa-Token 会话查询：按 loginId 获取已登录终端列表 SaTerminalInfo 字段说明。"
+description: "Sa-Token 会话查询：getTerminalListByLoginId 按账号列出已登录终端，SaTerminalInfo 含 index、deviceType、tokenValue、createTime 与 extra；searchTokenValue、searchSessionId 可分页检索全站会话。"
 ---
 
 # 会话查询

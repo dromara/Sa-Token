@@ -2,7 +2,7 @@
 title: "路由拦截鉴权"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,路由拦截鉴权,基础,Java权限认证"
 
-description: "Sa-Token 路由拦截鉴权：拦截器统一做登录校验，除登录接口外全部拦截，免去每个方法重复加注解。"
+description: "Sa-Token 路由拦截鉴权：用 SaInterceptor 配合 StpUtil.checkLogin 统一拦截并排除 /user/doLogin；再用 SaRouter.match 按 /user/**、/admin/** 分模块 checkPermission，免去每个方法重复加注解做登录校验。"
 ---
 
 # 路由拦截鉴权

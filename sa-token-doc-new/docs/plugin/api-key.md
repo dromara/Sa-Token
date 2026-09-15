@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token API Key 接口调用秘钥"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,API Key 接口调用秘钥,插件"
-description: "Sa-Token API Key：为开放接口生成调用秘钥，校验请求来源与访问权限。"
+description: "Sa-Token API Key 接口调用秘钥：sa-token-apikey 为开放接口生成绑定用户的调用凭证，用 scope 做最小化授权，避免第三方插件索要账号密码。SaApiKeyUtil 创建/校验，支持 @SaCheckApiKey、有效期回收、缓存或数据库模式。前端用 apikey 参数提交。"
 ---
 
 # API Key 接口调用秘钥

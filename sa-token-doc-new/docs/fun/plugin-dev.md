@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 插件开发指南"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,插件开发指南,插件"
-description: "Sa-Token 插件开发指南：在不改核心架构前提下扩展 SaTokenDao、上下文与鉴权逻辑。"
+description: "Sa-Token 插件开发指南：重写 SaStrategy、替换全局组件或自定义 SaTokenContext 即可扩展。自用加 @Component；对外用 Spring SPI 或 META-INF/satoken 的 SaTokenPlugin.install。文末练习用 hutool-json 替换序列化。"
 ---
 
 # Sa-Token 插件开发指南 

@@ -2,7 +2,7 @@
 title: "Sa-Token 同端互斥登录"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,同端互斥登录,深入"
 
-description: "Sa-Token 同端互斥登录：同一类设备只允许一处在线，不同类型设备可同时登录，类似 QQ 多端策略。"
+description: "Sa-Token 同端互斥登录：yml 将 isConcurrent=false，login(id, PC) 只顶掉同类设备，手机电脑可同时在线。logout(id, device) 按端注销，getLoginDevice 查当前设备，被顶再次访问抛 NotLoginException 场景值 -4。"
 ---
 
 # 同端互斥登录

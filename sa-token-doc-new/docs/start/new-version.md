@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 最新版本"
 keywords: "Sa-Token,sa-token,satoken,Spring Boot,Maven,版本号"
-description: "Sa-Token 最新版本号与 Maven 坐标，区分正式版与内测版，并指向依赖拉取失败的解决说明。"
+description: "Sa-Token 最新版本：正式版 v1.46.0 可上生产，Maven 坐标 cn.dev33:sa-token-spring-boot-starter:1.46.0（Boot3/4 换对应 starter）；内测版另行标注（当前暂无）。依赖无法加载时按 maven-pull 页排查残包与镜像仓库。"
 ---
 
 # Sa-Token 最新版本

@@ -1,6 +1,6 @@
 ---
 title: Sa-Token 框架介绍
-description: Sa-Token 是轻量级 Java 权限认证框架，覆盖登录认证、权限认证、SSO 单点登录、OAuth2.0、分布式 Session 与微服务网关鉴权。
+description: Sa-Token 是轻量级 Java 权限认证框架，开源免费，覆盖登录认证、权限认证、SSO 单点登录、OAuth2.0、分布式 Session 与微服务网关鉴权；无需写配置文件，一行 StpUtil.login、checkLogin、kickout 与 @SaCheckPermission 即可接入。
 keywords: Sa-Token,satoken,sa-token文档,Java权限认证,Spring Boot,框架介绍
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 推荐阅读"
 keywords: "Sa-Token,sa-token,satoken,推荐阅读,博客"
-description: "Sa-Token 推荐阅读：权限模型、OAuth2 与前端安全相关文章；完整列表已迁至官方博客。"
+description: "Sa-Token 推荐阅读：完整列表已迁至 /blog/index.html，本页列表不再更新。仍保留阮一峰《理解 OAuth 2.0》与四种授权方式、RBAC 从 ACL 到 RBAC3 实战（2026），以及掘金上 2018 年前端 XSS、CSRF 防护系列，方便对照权限模型与浏览器安全要点。"
 ---
 
 # 推荐阅读

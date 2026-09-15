@@ -2,7 +2,7 @@
 title: "注解鉴权"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,注解鉴权,基础,Java权限认证"
 
-description: "Sa-Token 注解鉴权：用 @SaCheckLogin、@SaCheckRole、@SaCheckPermission 把校验从业务代码里拆开。"
+description: "Sa-Token 注解鉴权：注册 SaInterceptor 后可用 @SaCheckLogin、@SaCheckRole、@SaCheckPermission、@SaCheckSafe、@SaIgnore 把登录、角色、权限、二级认证从业务拆开，注解可标在类上，并支持 SaMode.OR 与 orRole。"
 ---
 
 # 注解鉴权

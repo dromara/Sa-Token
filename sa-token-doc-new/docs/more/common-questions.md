@@ -2,7 +2,7 @@
 title: "Sa-Token 常见问题排查"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,常见问题排查,附录"
 
-description: "Sa-Token 常见问题排查：整理群里高频报错与配置坑，覆盖上下文未初始化、拦截器、Redis 与登录异常。"
+description: "Sa-Token 常见问题排查：整理群聊高频报错与配置坑，覆盖 SaTokenContext 未初始化（异步、404 转发 /error、SSE/Flux）、NotLoginException 读不到 Token、注解与拦截器不生效、Redis 或 JWT 导致 Token 无效等对应解法。欢迎补充 PR。"
 ---
 
 # 常见问题排查

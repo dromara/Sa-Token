@@ -2,7 +2,7 @@
 title: "登录认证"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,登录认证,基础,Java权限认证"
 
-description: "Sa-Token 登录认证：调用 StpUtil.login(id) 建立会话，覆盖登录、注销、Token 有效期与多端登录。"
+description: "Sa-Token 登录认证：调用 StpUtil.login(id) 签发 Token 并写入 Cookie，用 isLogin、checkLogin 校验，未登录抛 NotLoginException；可 getLoginId、getTokenValue、getTokenTimeout，并以 logout 注销。"
 ---
 
 # 登录认证

@@ -2,7 +2,7 @@
 title: "和 jwt 集成"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,整合 Sa-Token JWT,插件,JWT"
 
-description: "Sa-Token 整合 JWT：在现有鉴权上接入 jwt 插件，用无状态 Token 传递登录态，适合前后端分离。"
+description: "Sa-Token 整合 JWT：引入 sa-token-jwt 并配置 jwt-secret-key，按需注入 Simple/Mixin/Stateless 三种 StpLogic。可无状态传递登录态，登录时 setExtra 扩展参数；需注意 hutool-jwt 版本及踢人、Session 等能力因模式而异。"
 ---
 
 # 和 jwt 集成 

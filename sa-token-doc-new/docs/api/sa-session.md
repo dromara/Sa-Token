@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token SaSession-会话对象"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SaSession-会话对象,API手册"
-description: "SaSession 会话对象 API：Account-Session、Token-Session 数据读写与缓存组件用法说明。"
+description: "SaSession 会话对象 API：覆盖 Account-Session 与 Token-Session 的 id、创建时间、loginType、loginId 读写；SaTerminalInfo 终端列表增删、按设备类型筛选与信任设备判断；以及 get/set 类型转换、dataMap、超时续期与注销等缓存用法。"
 ---
 
 # SaSession-会话对象

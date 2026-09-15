@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 需求提交"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,需求提交,其它"
-description: "Sa-Token 需求提交：在线反馈文档不清、功能缺失或改进想法。比起赞美我们更重视批评与建议，欢迎共建框架与文档。"
+description: "Sa-Token 需求提交：文档写不清、功能不完善或有改进 idea，都可通过腾讯问卷在线提交需求。比起浮夸赞美我们更重视批评建议；简单特性会尽快开发，复杂项排期，超出鉴权范畴则视人数决定。也可走 Gitee、GitHub、AtomGit issue 或交流群反馈。请大胆提交、大胆咨询，请不必害羞。"
 ---
 
 # 需求提交

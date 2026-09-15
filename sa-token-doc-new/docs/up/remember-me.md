@@ -2,7 +2,7 @@
 title: "Sa-Token 记住我模式"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,记住我模式,深入"
 
-description: "在 Sa-Token 中实现记住我：勾选后关闭浏览器仍保持登录，通过 Token 有效期与 Cookie 超时控制。"
+description: "Sa-Token 记住我：login 默认写持久 Cookie，关浏览器仍登录；login(id,false) 写临时 Cookie。分离端用 localStorage 或 uni.setStorageSync 模拟持久，sessionStorage 模拟临时；SaLoginParameter 可指定 timeout。"
 ---
 
 # [记住我] 模式

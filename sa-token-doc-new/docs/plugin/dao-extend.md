@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 缓存层扩展"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,缓存层扩展,插件"
-description: "Sa-Token 缓存层扩展：实现 SaTokenDao 接口，对接 Redis、MongoDB 等不同持久化中间件。"
+description: "Sa-Token 缓存层扩展：权限数据经 SaTokenDao 抽象持久化。官方提供内存默认、Redis Template、Redisson、Caffeine、Hutool Timed-Cache、Redisx 及 Alone 分连接；也可自行实现接口对接 MongoDB 等中间件。升级请先清空旧 Redis 缓存。"
 ---
 
 # 缓存层扩展

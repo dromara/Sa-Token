@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 参考：把路由拦截鉴权动态化"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,参考：把路由拦截鉴权动态化,附录"
-description: "Sa-Token 动态路由鉴权：从数据库加载路由规则，实现登录与权限校验的运行时动态配置。"
+description: "Sa-Token 动态路由鉴权：把 excludePaths()、getAuthRules() 放进 SaInterceptor 的 lambda，运行时从库加载登录豁免 path 与 path→权限规则。excludePathPatterns 只在启动时执行一次，写在 lambda 外无法动态化。"
 ---
 
 # 参考：把路由拦截鉴权动态化

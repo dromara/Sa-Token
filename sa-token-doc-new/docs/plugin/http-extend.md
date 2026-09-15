@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token HTTP 请求扩展"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,HTTP 请求扩展,插件"
-description: "Sa-Token HTTP 请求扩展：自定义 SaHttpTemplate，用于 SSO 模式三、单点注销等 HTTP 调用。"
+description: "Sa-Token HTTP 请求扩展：SSO 模式三、单点注销、消息推送需走 SaHttpTemplate。可选 sa-token-forest、okhttps、rest-template、rest-client，SPI 自动注入。未配置会抛错误码 30010；classpath 只应有一个 HTTP 插件。"
 ---
 
 # HTTP 请求扩展

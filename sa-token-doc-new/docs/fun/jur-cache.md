@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 参考：把权限放在缓存里"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,参考：把权限放在缓存里,附录"
-description: "Sa-Token 权限缓存参考：将角色权限放入 Redis 等缓存，降低 StpInterface 数据库访问压力。"
+description: "Sa-Token 权限缓存参考：StpInterface 默认不缓存，可用 SaTokenDao 把角色与权限写入 Redis，示例 TTL 30 天。推荐缓存「账号id→角色id→权限列表」，不要直接缓存账号权限，否则改一个角色就要清十万账号，容易缓存雪崩。权限缓存模型要跟着 RBAC 走，角色缓存同理。"
 ---
 
 # 参考：将权限数据放在缓存里

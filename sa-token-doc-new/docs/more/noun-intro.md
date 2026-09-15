@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 框架名词解释"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,框架名词解释,附录"
-description: "Sa-Token 框架名词解释：梳理 Token、Session、StpUtil 等易混概念，减少权限认证开发中的理解偏差。"
+description: "Sa-Token 名词解释：区分会话 Token、临时 Token、OAuth2 令牌与 Same-Token；对照 timeout 与 active-timeout、三类 Session、loginId 与 loginType；并梳理单地、多地、同端互斥登录，以及代码、注解、路由三种鉴权方式，避免概念偏差。"
 ---
 
 # Sa-Token 名词解释 

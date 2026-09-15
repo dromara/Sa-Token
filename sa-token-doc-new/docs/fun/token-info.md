@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token TokenInfo参数详解"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,TokenInfo参数详解,附录"
-description: "Sa-Token TokenInfo 参数：tokenName、tokenValue、loginId、isLogin 等登录凭证字段说明。"
+description: "Sa-Token TokenInfo 参数：getTokenInfo() 返回 tokenName、tokenValue、isLogin、loginId、loginType、loginDevice，以及 tokenTimeout、sessionTimeout 等剩余秒数（-2 表示系统中不存在该缓存）。"
 ---
 
 # SaTokenInfo 参数详解

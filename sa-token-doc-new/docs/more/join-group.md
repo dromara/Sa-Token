@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 加入讨论群"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,加入讨论群,其它"
-description: "加入 Sa-Token 讨论群：QQ 群与微信入群方式，与社区开发者交流集成与排错经验。"
+description: "加入 Sa-Token 讨论群：QQ 群 1098917026，微信扫码备注 sa 入群，可第一时间收到版本、Bug 与开源案例通知。群规禁止擦边图与代理广告，违规将移出（7 天后可再申请）。写过 5 篇以上博客或开发过插件者可进内部群 939849926；友联商务请备注来意加微信 kite2020_。"
 ---
 
 # 加入讨论群

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token OAuth2-Server端前后台分离"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-Server端前后台分离,OAuth2.0,OAuth2"
-description: "OAuth2-Server 前后端分离：authorize、token 等接口的 H5/SPA 对接改造要点。"
+description: "OAuth2-Server 前后端分离：把 /oauth2/authorize 登录判断、scope 确认与 redirect 搬到 H5。后端 /oauth2/getRedirectUri 按 401 未登录、411 待确认、200 返回 redirect_uri；token、refresh 仍走后端。"
 ---
 
 # OAuth2-Server 端前后台分离

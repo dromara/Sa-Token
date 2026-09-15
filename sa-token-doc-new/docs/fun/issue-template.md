@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token issue 提问模板"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,issue 提问模板,附录"
-description: "Sa-Token issue 提问模板：提交 Bug 前先查 FAQ，按模板附上版本号、复现步骤与关键日志。"
+description: "Sa-Token issue 提问模板：提交前先查常见问题并搜已有 issue，勿重复开单；超 24 小时无追问将默认关闭。提供预期不符、Bug、功能提问、新功能建议、踩坑记录五套格式。须写清版本号与复现步骤，代码截图带行号，异常堆栈截全，Ajax 还要带请求地址、请求头和参数。描述不清可对照名词解释组织语句。"
 ---
 
 # issue 提问模板

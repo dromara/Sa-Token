@@ -2,7 +2,7 @@
 title: "Sa-Token 自定义 Token 风格"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义 Token 风格,深入"
 
-description: "自定义 Sa-Token 的 Token 生成风格：默认 UUID，也可改为随机字符串、tik 风格或自行实现策略。"
+description: "Sa-Token 自定义 Token 风格：yml 设 sa-token.token-style 可选 uuid、simple-uuid、random-32/64/128 或 tik；也可重写 SaStrategy.createToken 自行生成。改策略后需清 Redis 旧数据，否则登录仍可能沿用旧 token。"
 ---
 
 # 自定义 Token 风格

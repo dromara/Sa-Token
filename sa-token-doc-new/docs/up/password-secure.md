@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 密码加密"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,密码加密,深入"
-description: "Sa-Token 密码加密模块：封装常见加密算法，配合登录认证完成密码安全存储。"
+description: "Sa-Token 密码加密：SaSecureUtil 封装 md5/sha1/sha256、AES、RSA；另有 SaBase64Util、SaBase32Util、SaTotpUtil 动态口令与 BCrypt.hashpw 加盐存储，配合登录校验做安全存密，算法不够可再接 Hutool-crypto。"
 ---
 
 # 密码加密

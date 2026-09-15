@@ -1,7 +1,7 @@
 ---
 title: "SaTokenDao-数据持久接口"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SaTokenDao-数据持久接口,API手册"
-description: "SaTokenDao 数据持久接口：Session、Token 等权限数据的底层读写与 Redis 对接签名说明。"
+description: "SaTokenDao 数据持久接口：负责 Session、Token 等权限数据读写。含 NEVER_EXPIRE、NOT_VALUE_EXPIRE 常量，字符串、对象、Session 三套 get/set/update/delete 与超时 API，以及 searchData 搜索；对接 Redis 时按此签名实现。"
 ---
 
 # SaTokenDao-数据持久接口

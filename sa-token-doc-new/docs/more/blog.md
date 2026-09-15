@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 框架博客"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,框架博客,其它"
-description: "Sa-Token 框架博客：官方与社区技术文章收录，涵盖鉴权实战、版本发布与集成案例。"
+description: "Sa-Token 框架博客：社区投稿已全部迁至独立博客站 /blog/index.html，本页列表不再更新。原收录公众号、CSDN、51CTO、百家号等平台文章，涵盖鉴权入门实战、JWT 续期实践、OAuth2 静默授权、微服务权限，以及与 Shiro、Spring Security 的对比实践。"
 ---
 
 # 框架博客

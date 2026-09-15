@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 数据结构"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,数据结构,框架设计"
-description: "Sa-Token Redis 数据结构：Token、Session、索引 key 的命名规则与 value 字段格式说明。"
+description: "Sa-Token Redis 数据结构：登录会话 token 到 loginId、last-active 时间戳、三类 Session 的 key 命名与 value 字段；异常值 -1 至 -7 表示未读到、无效、过期、顶踢冻结等；并覆盖 SSO ticket、OAuth2 令牌与 API Key 插件索引。"
 ---
 
 # 数据结构

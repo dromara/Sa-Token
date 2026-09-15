@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 自定义 Scope 权限及处理器"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义 Scope 权限及处理器,OAuth2.0,OAuth2"
-description: "OAuth2 自定义 Scope：扩展第三方 client 可申请的权限范围与对应数据处理器。"
+description: "OAuth2 自定义 Scope：access_token 不含昵称头像。可开放 /oauth2/userinfo 并校验 userinfo 权限，也可写 ScopeHandler 在发 token 时追加字段。申请 code 时带 scope=userinfo，再走 /oauth2/token 换令牌。"
 ---
 
 # OAuth2-自定义 Scope 权限及处理器

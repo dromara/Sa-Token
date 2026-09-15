@@ -2,7 +2,7 @@
 title: "权限认证"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,权限认证,基础,Java权限认证"
 
-description: "Sa-Token 权限认证：按账号权限码校验接口与页面访问，支持角色、权限码及自定义权限加载。"
+description: "Sa-Token 权限认证：实现 StpInterface 加载 getPermissionList、getRoleList，再用 checkPermission、checkRole、hasPermission 校验接口；支持 AND/OR、art.* 通配符及 NotPermissionException。"
 ---
 
 # 权限认证

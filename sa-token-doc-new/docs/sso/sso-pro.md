@@ -3,7 +3,7 @@
 title: "Sa-Sso-Pro 单点登录商业版"
 keywords: "Sa-Sso-Pro,SSO,单点登录,Sa-Token,商业版"
 noindex: true
-description: "Sa-Sso-Pro 商业版：在开源 SSO 基础上提供企业级认证中心所需的高级功能。"
+description: "Sa-Sso-Pro 商业版：在开源 SSO 上提供账号增删改查、登录日志、用户报表与 Client 接入域名配置等企业认证中心能力。付费完整项目下载即可启动，绝大多数功能无需二次开发即可使用，可大大缩短统一认证中心接入周期。与免费 Sa-Token 框架独立，不购买也不影响开源使用，二者仍独立迭代。"
 ---
 
 # Sa-Sso-Pro 单点登录商业版

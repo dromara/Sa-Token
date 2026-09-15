@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Alone独立Redis插件"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Alone独立Redis插件,插件,Redis"
-description: "Sa-Token Alone 独立 Redis：权限数据与业务缓存分库部署，降低读写冲突与访问压力。"
+description: "Sa-Token Alone 独立 Redis：引入 sa-token-alone-redis（Boot 4 换 by-spring-boot4 包），alone-redis 与 spring.redis 分库，降低冲突。仅对 redis-template 生效，Redisson 请改用 Alone-Redisson。"
 ---
 
 # Sa-Token-Alone-Redis 独立Redis插件

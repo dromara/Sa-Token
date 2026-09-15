@@ -2,7 +2,7 @@
 title: "Sa-Token 集成 Redis"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成 Redis,深入,Redis"
 
-description: "把 Sa-Token 会话存进 Redis：避免重启丢数据和多节点登录态不一致，支持 RedisTemplate 等官方方案。"
+description: "Sa-Token 集成 Redis：引入 sa-token-redis-template 将会话迁到 Redis，避免重启丢失与多节点不一致；可换 Fastjson 或 Redisson，注意 Redis 6.0 KEEPTTL、Boot3 用 spring.data.redis，多项目用 db、wrapKey 隔离。"
 ---
 
 # Sa-Token 集成 Redis 

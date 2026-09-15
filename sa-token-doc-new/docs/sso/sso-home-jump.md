@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 平台中心跳转模式"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,平台中心跳转模式,单点登录,SSO"
-description: "SSO 平台中心跳转模式：将认证中心建成统一门户首页，登录后可从入口免登录进入各子系统，适合多业务线集中入口。"
+description: "SSO 平台中心跳转：把认证中心做成门户首页，配置 sso-server.home-route。入口写成 /sso/auth?client=&redirect=子系统/sso/login?back=首页；未登录先去 /sso/auth，HomeController 渲染入口，登录后点击即可免登录进入各业务子系统。"
 ---
 
 # SSO 平台中心跳转模式，点连接跳入子系统

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token AOP注解鉴权"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,AOP注解鉴权,插件"
-description: "Sa-Token AOP 注解鉴权：在 Service 等非 Controller 层使用 @SaCheckLogin 等注解校验。"
+description: "Sa-Token AOP 注解鉴权：默认拦截器只能在 Controller 用 @SaCheckLogin 等注解。引入 sa-token-spring-aop 后可在 Service 等任意层级鉴权。注意拦截器模式与 AOP 模式不可同时集成，否则 Controller 会校验两次。覆盖角色、权限等注解。"
 ---
 
 # AOP注解鉴权

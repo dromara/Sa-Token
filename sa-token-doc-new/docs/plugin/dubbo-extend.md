@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 和 Dubbo 集成"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,和 Dubbo 集成,插件"
-description: "Sa-Token 整合 Dubbo：RPC 调用传递 Token 与上下文，被调用端安全使用 StpUtil API。"
+description: "Sa-Token 整合 Dubbo：两端均引入 sa-token-dubbo（Dubbo3 用 sa-token-dubbo3），解决被调用端「无效上下文」并双向透传 Token。被调用端可安全使用 StpUtil；可开 check-same-token。限制：SaStorage 不通，setHeader 无效。"
 ---
 
 # 和 Dubbo 集成 

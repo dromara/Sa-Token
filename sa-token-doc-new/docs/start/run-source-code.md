@@ -2,7 +2,7 @@
 title: "源码运行指南"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,源码运行指南,Spring Boot"
 
-description: "本地运行 Sa-Token 源码与 Demo：从 Gitee / GitHub / AtomGit 克隆，到启动官方示例项目的步骤。"
+description: "本地运行 Sa-Token 源码与 Demo：从 Gitee、GitHub 或 AtomGit 克隆 master（提 PR 用 dev），IDEA 打开后运行 sa-token-demo 下示例；可选包编译失败时先跑 sa-token-demo-first-run 或根目录 mvn package。"
 ---
 
 # 源码运行指南

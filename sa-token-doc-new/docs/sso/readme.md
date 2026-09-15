@@ -2,7 +2,7 @@
 title: "Sa-Token 单点登录简述"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,单点登录简述,单点登录,SSO"
 
-description: "Sa-Token SSO 单点登录：一次登录打通多个子系统，介绍统一认证中心与三种对接模式的适用场景。"
+description: "Sa-Token SSO 单点登录：一次登录打通商城、论坛等子系统。按前端是否同域、后端是否同 Redis 分三种模式——共享 Cookie、URL 重定向、HTTP 换会话。内置域名校验、Ticket 防劫持，登录后参数不丢原路返回，权限认证与 SSO 可同一框架完成。建议先跑通官方 demo 再接入。"
 ---
 
 # Sa-Token-SSO 单点登录模块 

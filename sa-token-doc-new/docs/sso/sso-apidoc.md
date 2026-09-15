@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token SSO-Server 认证中心开放 API 接口"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO-Server 认证中心开放 API 接口,单点登录,SSO"
-description: "SSO-Server 认证中心开放 API：ticket 校验、登录、注销等 HTTP 接口与对接方式。"
+description: "SSO-Server 按 STS 协议开放 HTTP API：/sso/auth 授权（mode=simple|ticket）、/sso/doLogin、/sso/signout、/sso/pushS。Ticket 一次性、默认五分钟。Java 可用 SDK，非 Java 对照本页走 NoSDK 对接。"
 ---
 
 # SSO-Server 认证中心开放接口

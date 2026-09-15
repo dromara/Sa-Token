@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Token有效期详解"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Token有效期详解,附录"
-description: "Sa-Token Token 有效期：详解 timeout 与 active-timeout 两种过期策略的区别与 yml 配置示例。"
+description: "Sa-Token Token 有效期：timeout 为长久有效期，默认 30 天、-1 永不过期，v1.29+ 可用 renewTimeout 续期；active-timeout 为最低活跃频率，超时冻结抛 NotLoginException(-3)。二者可同时用，也可关 autoRenew 后手动续签。"
 ---
 
 # Token有效期详解

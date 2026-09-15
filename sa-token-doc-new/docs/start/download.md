@@ -2,7 +2,7 @@
 title: "其它环境引入 Sa-Token 的示例"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,其它环境集成示例,Spring Boot"
 
-description: "Sa-Token 在 Spring Boot、WebFlux、Solon、JFinal 等环境的依赖对照，以及各框架官方集成示例入口。"
+description: "Sa-Token 在 Spring Boot、WebFlux、Solon、JFinal、Jboot、LoveQQ、Quarkus 及裸 Servlet 的 Maven/Gradle 依赖对照：给出各 starter 坐标、Boot 3/4 包名差异、sa-token-core 以及官方集成示例入口。"
 ---
 
 # 其它环境引入 Sa-Token 的示例

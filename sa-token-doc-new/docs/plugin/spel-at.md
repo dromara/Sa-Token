@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 注解鉴权 SpEL 表达式"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,注解鉴权 SpEL 表达式,插件"
-description: "Sa-Token SpEL 注解鉴权：@SaCheckEL 使用 Spring 表达式实现灵活的条件权限校验。"
+description: "Sa-Token 注解鉴权 SpEL 表达式：引入 sa-token-spring-el（依赖 Spring AOP）后可用 @SaCheckEL 写登录、权限、参数长度、SaSession 取值等条件。支持多账号根对象扩展、this 成员变量、NEED() 包装条件，并可配合 @SaIgnore 忽略鉴权。"
 ---
 
 # SpEL 表达式注解鉴权

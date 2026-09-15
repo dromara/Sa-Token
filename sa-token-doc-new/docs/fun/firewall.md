@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 防火墙"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,防火墙,附录"
-description: "Sa-Token 防火墙 SaFirewallStrategy：拦截异常 path、SQL 注入等可能造成攻击的危险请求。"
+description: "Sa-Token 防火墙 SaFirewallStrategy：默认拦截双斜杠 path 等鉴权绕行。hooks 覆盖白黑名单、危险字符、目录遍历、Host、Method、Header、参数；可 registerHook、removeHook 或 IOC 注入，也可用 checkFailHandle 输出 JSON。"
 ---
 
 # 防火墙

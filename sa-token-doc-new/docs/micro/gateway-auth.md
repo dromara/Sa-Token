@@ -2,7 +2,7 @@
 title: "Sa-Token 网关统一鉴权"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,网关统一鉴权,微服务,微服务鉴权"
 
-description: "微服务网关统一鉴权：在 Spring Cloud Gateway 等网关一次校验登录与权限，业务服务不必各自鉴权。"
+description: "微服务网关统一鉴权：在 Spring Cloud Gateway 引入 sa-token-reactor-spring-boot-starter 与 Redis，注册 SaReactorFilter，用 SaRouter 做 checkLogin 并按 /user/** 等模块校验权限，业务服务不必各自鉴权。"
 ---
 
 # 微服务 - 网关统一鉴权

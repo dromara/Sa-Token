@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 从 Shiro、SpringSecurity、JWT 迁移"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,从 Shiro、SpringSecurity、JWT 迁移,附录"
-description: "从 Shiro、Spring Security、JWT 迁移到 Sa-Token：常见登录鉴权能力对照与代码示例。"
+description: "从 Shiro、Spring Security、JWT 迁移到 Sa-Token：对照登录注销、MD5 加盐、角色权限、注解与路由鉴权、Thymeleaf、前后端分离及 Redis 等常见能力的写法差异。案例仓库见 Gitee auth-framework-function-test，欢迎补充 PR。"
 ---
 
 # Java 权限认证框架功能 测试 / 对比 / 迁移。

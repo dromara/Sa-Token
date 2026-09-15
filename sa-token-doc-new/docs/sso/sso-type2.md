@@ -2,7 +2,7 @@
 title: "Sa-Token SSO模式二 URL重定向传播会话"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SSO模式二 URL重定向传播会话,单点登录,SSO"
 
-description: "Sa-Token SSO 模式二：系统不同域但后端同 Redis 时，用 URL 重定向传播会话，完成单点登录。"
+description: "Sa-Token SSO 模式二：系统不同域但后端同 Redis。未登录走 /sso/login?back= 再跳 /sso/auth?redirect=，认证中心带回 ticket，Client 从共享 Redis 取账号登录后跳回 back。须去掉 cookie.domain，勿与模式一混用。除登录页外均自动跳转。"
 ---
 
 # SSO模式二 URL重定向传播会话

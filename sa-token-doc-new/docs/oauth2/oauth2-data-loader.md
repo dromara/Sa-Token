@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 自定义数据加载器"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义数据加载器,OAuth2.0,OAuth2"
-description: "OAuth2 自定义数据加载器：SaOAuth2DataLoader 从数据库或配置加载 client 与 scope 信息。"
+description: "OAuth2 自定义数据加载器：测试可用 addClient 或 yml 配 clients。生产实现 SaOAuth2DataLoader，按 clientId 从库加载 secret、AllowRedirectUris、签约 scope 与 grant_type，并自定义 getOpenid 生成。"
 ---
 
 # OAuth2-自定义数据加载器

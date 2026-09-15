@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token OpenId 与 UnionId"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OpenId 与 UnionId,OAuth2.0,OAuth2"
-description: "OAuth2 OpenId 与 UnionId：clientId、openId、unionId 在授权流程中的含义与区别。"
+description: "OAuth2 OpenId 与 UnionId：openid 是用户在单个 client 下的标识，默认 md5(prefix_clientId_loginId)；unionid 按 subjectId 分组，同主体多应用一致。可改 digest-prefix 或 DataLoader 自定义，生产建议入库映射。"
 ---
 
 # OpenId 与 UnionId

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token OAuth2 代码 API 参考"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2 代码 API 参考,OAuth2.0,OAuth2"
-description: "OAuth2 代码 API 参考：SaOAuth2Util 等常用工具类方法，二次开发开放更多资源接口。"
+description: "OAuth2 代码 API：开放更多资源时用 SaOAuth2Util。可校验 clientSecret、签约 scope、redirect_uri，以及 checkCode、checkAccessToken、getLoginIdByAccessToken，并回收 Refresh-Token、Client-Token。"
 ---
 
 # Sa-Token-OAuth2 Server端 二次开发用到的所有函数说明 

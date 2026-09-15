@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 匿名 client 接入"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,匿名 client 接入,单点登录,SSO"
-description: "Sa-Token 匿名 Client 接入：无明确 client 标识的应用如何参与 SSO 授权与 ticket 校验。"
+description: "匿名 Client：未配 sso-client 标识，授权、校验 ticket、单点注销都不带 client 参数。Server 端设 allow-anon-client、allow-url 与 secret-key，或重写 getAnonClient() 指定回调、密钥与是否单点注销。匿名走全局默认密钥。"
 ---
 
 # 匿名 Client 接入

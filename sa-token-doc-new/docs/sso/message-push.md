@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 消息推送机制"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,消息推送机制,单点登录,SSO"
-description: "Sa-Token SSO 消息推送：client 按约定格式调用 server /sso/pushS 实现消息下发。"
+description: "SSO 消息推送：Client 调 Server /sso/pushS，Server 调 Client /sso/pushC。内置 checkTicket、signout 等 msgType，参数含 timestamp、nonce 与 md5 签名。模式三靠它换会话，也可注册自定义消息处理器扩展通知。"
 ---
 
 # 消息推送机制

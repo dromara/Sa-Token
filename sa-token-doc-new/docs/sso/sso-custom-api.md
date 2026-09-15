@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 自定义API路由"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,自定义API路由,单点登录,SSO"
-description: "SSO 自定义 API 路由：改写默认 /sso/auth 等路径，适配业务 URL 与网关规则。"
+description: "SSO 自定义 API 路由：改 ApiName 把默认 /sso/auth 换成业务路径，或把 /sso/* 拆成 auth、doLogin、pushS、signout 独立入口，调用 SaSsoServerProcessor 对应方法，以适配网关前缀与既有 URL。Client 侧路径须同步修改。"
 ---
 
 # SSO整合-自定义 API 路由 

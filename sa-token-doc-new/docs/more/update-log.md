@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 更新日志"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,更新日志,其它"
-description: "Sa-Token 更新日志：各版本新增特性、修复项与破坏性变更记录，按发布时间倒序。"
+description: "Sa-Token 更新日志：按发布时间倒序记录各版本新增特性、缺陷修复与不向下兼容变更。近期 v1.46.0（2026-8-18）含注销前钩子、JSON 反序列化白名单、SSE 异步上下文修复，以及 SSO/OAuth2 redirect 绕过 allow-url 的加固，升级前建议对照本页逐条评估。"
 ---
 
 # 更新日志 

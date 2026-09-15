@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token OAuth2-与登录会话实现数据互通"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,OAuth2-与登录会话实现数据互通,OAuth2.0,OAuth2"
-description: "OAuth2 与登录会话互通：资源令牌 accesstoken 与会话令牌 satoken 的数据打通方案。"
+description: "OAuth2 与登录会话互通：access_token 与 satoken 默认互不认。Server 可重写 createAccessToken 返回会话令牌；Client 用 SaLoginParameter.setToken 预定。互通后过期按 timeout 与 access-token-timeout 各算。"
 ---
 
 # OAuth2 与登录会话实现数据互通

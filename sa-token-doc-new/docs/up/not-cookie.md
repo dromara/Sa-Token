@@ -2,7 +2,7 @@
 title: "Sa-Token 前后端分离"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,前后端分离,深入"
 
-description: "前后端分离下使用 Sa-Token：无 Cookie 时如何下发、存储并提交 Token，覆盖 App、小程序与分离式 Web。"
+description: "Sa-Token 前后端分离（无 Cookie）：登录后用 getTokenInfo 把 tokenName、tokenValue 返回前端本地保存，请求时塞进 Header {tokenName: tokenValue}。App、小程序、分离 Web 均适用，后端仍按原 API 自动读 Token 鉴权。"
 ---
 
 # 前后端分离（无Cookie模式）

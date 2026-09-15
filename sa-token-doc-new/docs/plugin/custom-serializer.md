@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 序列化插件扩展包"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,序列化插件扩展包,插件"
-description: "Sa-Token 序列化扩展（娱乐向）：天干地支等趣味序列化方案，探索 SaTokenDao 序列化边界。"
+description: "Sa-Token 序列化插件扩展包：引入 sa-token-serializer-features，用天干地支、元素周期表、特殊符号或 Emoji 作为 Base64 元字符集，四种方案可切换。娱乐向、不建议上生产，仅通过替换 SaSerializerTemplate 探索 SaTokenDao 序列化边界。"
 ---
 
 # 序列化插件扩展包

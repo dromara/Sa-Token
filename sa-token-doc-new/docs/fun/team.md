@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 团队成员"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,团队成员,附录"
-description: "Sa-Token 团队成员：核心维护者与社区角色分工，含代码审核与 issue 处理职责。"
+description: "Sa-Token 团队成员：开发组负责代码开发、社区维护、issue 处理与 PR 审核，成员为作者小风筝、AppleOfGray、ly-chn。提案讨论组负责提案新增、讨论与投票，另有茉莉、药水、呆某人、春困夏倦秋乏、淡墨；作者在讨论组记为刘潇。表内附头像与 Gitee 主页。开发三人；讨论组八人，其中三位交叉任职。"
 ---
 
 # 团队成员 

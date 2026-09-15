@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 集成 MongoDB 参考二"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,集成 MongoDB 参考二,附录"
-description: "Sa-Token 集成 MongoDB（二）：Spring Data MongoDB 反序列化 SaSession 与 Demo 工程参考。"
+description: "Sa-Token 集成 MongoDB（二）：Spring Data 反序列化 SaSession 会因 dataMap 无 setter 报错，需继承 MySaSession 并重写 createSession；SaTokenDao 用 TTL 索引超时删除，timeout 为 null 表示永不过期。"
 ---
 
 # Sa-Token 集成 MongoDB 

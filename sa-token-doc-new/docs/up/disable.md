@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 账号封禁"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,账号封禁,深入"
-description: "Sa-Token 账号封禁：按服务维度封禁指定账号并可设定解封时间，配合踢人下线用于违规清退与再次登录拦截。"
+description: "Sa-Token 账号封禁：disable(id,秒) 可永久(-1)，登录前需 checkDisable（v1.31 起不再自动校验）；支持按 comment 等服务分类封禁与 disableLevel 阶梯处罚，注解 @SaCheckDisable，持久化可实现 isDisabled 查库补缓存。"
 ---
 
 # 账号封禁

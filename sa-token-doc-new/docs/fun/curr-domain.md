@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 解决反向代理 uri 丢失的问题"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,解决反向代理 uri 丢失的问题,附录"
-description: "Sa-Token 反向代理 URI 丢失：Nginx 等反代环境下 SaHolder.getRequest().getUrl() 正确取址配置。"
+description: "Sa-Token 反向代理 URI 丢失：Nginx 转发后 getUrl() 会偏址，SSO 等模块依赖该 API。可追加 Public-Network-URL 并重写 SaRequest.getUrl()，或配置 sa-token.curr-domain；header 方案两步须同步，防止前端假传。"
 ---
 
 # 解决反向代理 uri 丢失的问题

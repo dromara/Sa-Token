@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 和 gRPC 集成"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,和 gRPC 集成,插件"
-description: "Sa-Token 整合 gRPC：RPC 链路透传 Token，被调用端恢复 Sa-Token 上下文环境。"
+description: "Sa-Token 整合 gRPC：引入 sa-token-grpc（调用端与被调用端都要加）。RPC 链路透传 Token，被调用端恢复上下文后可安全调用 StpUtil；登录态双向回传，并支持 Same-Token 校验。限制：SaStorage 两端不通，被调用端 setHeader/setStatus 无效。"
 ---
 
 # 和 grpc 集成

@@ -2,7 +2,7 @@
 title: "Solon 集成 Sa-Token 示例"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Solon 环境集成,Spring Boot"
 
-description: "在 Solon 应用中集成 Sa-Token：依赖引入、登录鉴权步骤，以及官方 sa-token-demo-solon 可运行示例。"
+description: "在 Solon 应用中集成 Sa-Token：引入 sa-token-solon-plugin，可在 app.yml 配置 token-name、timeout、is-concurrent、token-style；按登录鉴权步骤接入，对照官方仓库 sa-token-demo-solon 可运行示例。"
 ---
 
 # Solon 集成 Sa-Token 示例

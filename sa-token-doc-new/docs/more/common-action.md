@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 全局类、方法"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,全局类、方法,API手册"
-description: "Sa-Token 全局类与方法：SaManager、SaTokenEventCenter、SaSignManager 等常用全局对象速查。"
+description: "Sa-Token 全局类与方法：SaManager 管理配置、Dao、StpLogic 等组件；SaHolder 取当前 Request、Storage；SaRouter 路由鉴权；SaFoxUtil 提供内部工具。另含配置工厂、SpringMVCUtil 与 Reactor Holder，以及事件中心与参数签名入口。"
 ---
 
 # 全局类、方法

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token JSON 序列化扩展"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,JSON 序列化扩展,插件"
-description: "Sa-Token JSON 序列化扩展：自定义 SaJsonTemplate，控制 Session 存 Redis 时的 JSON 转换。"
+description: "Sa-Token JSON 序列化扩展：Session 存 Redis 时经 SaJsonTemplate 转换。可选 jackson、jackson3、fastjson、fastjson2、Fory、Snack3/4。业务实体须进 JSON 类型白名单（SaJsonType），防止多态反序列化风险。"
 ---
 
 # JSON 序列化扩展

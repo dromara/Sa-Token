@@ -2,7 +2,7 @@
 title: "框架配置"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,框架配置,基础,Java权限认证"
 
-description: "Sa-Token 框架配置：可零配置启动，也可在 yml、properties 或代码里改 Token 名称、有效期与 Cookie。"
+description: "Sa-Token 框架配置：可零配置启动，也可在 application.yml、properties 或 SaTokenConfig 代码里改 token-name、timeout、active-timeout、is-concurrent、is-share、token-style 与 Cookie 读写。"
 ---
 
 # 框架配置

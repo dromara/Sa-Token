@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 用户数据同步 / 迁移"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,用户数据同步 / 迁移,单点登录,SSO"
-description: "SSO 用户数据同步与迁移：多系统账号、角色与权限对齐的架构参考，真实项目需结合自身微服务与数据架构取舍。"
+description: "SSO 用户数据同步：理想是 Client 不存 user。存量多套账号可统一迁到 Server、由 Server 推送强同步，或用邮箱等关键字段关联弱同步。架构分为统一迁移、实时同步与字段关联。连表查则需保留账号。checkTicketAppendData 可在校验 ticket 时追加字段。资料改在认证中心。"
 ---
 
 # 用户数据同步 / 迁移

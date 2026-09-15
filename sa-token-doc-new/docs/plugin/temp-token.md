@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 临时 Token 认证"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,临时 Token 认证,插件"
-description: "Sa-Token 临时 Token：五分钟、半小时等短时授权场景，如邀请链接与一次性操作凭证。"
+description: "Sa-Token 临时 Token 认证：sa-token-temp 已内嵌核心包。用 SaTempUtil.createToken 生成五分钟、半小时级短时凭证，适合公会邀请链接与一次性操作；支持业务前缀裁剪、按 value 反查 token，也可引入 sa-token-temp-jwt 以 JWT 为逻辑内核。"
 ---
 
 # 临时 Token 令牌认证  

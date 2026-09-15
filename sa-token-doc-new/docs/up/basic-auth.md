@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Http Basic/Digest 认证"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Http Basic/Digest 认证,深入"
-description: "Sa-Token Http Basic/Digest 认证：注解与 API 方式启用基础 HTTP 认证，简单场景快速鉴权。"
+description: "Sa-Token Http Basic/Digest 认证：SaHttpBasicUtil.check 或 @SaCheckHttpBasic 弹出浏览器账密框，yml 可配 http-basic；Digest 用 SaHttpDigestUtil 加密提交，二者均支持 URL 内 sa:pass@host 直通。"
 ---
 
 # Http Basic 认证 

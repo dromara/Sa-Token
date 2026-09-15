@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 前后端分离下的整合方案"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,前后端分离下的整合方案,单点登录,SSO"
-description: "SSO 前后端分离整合：将 /sso/login 路由中转放到前端，H5/SPA 单点登录对接示例。"
+description: "SSO 前后端分离：把 /sso/login 中转放到 H5。Client 开放 /sso/isLogin、getSsoAuthUrl、doLoginByTicket，并配 CORS。前端拿 ticket 调 doLoginByTicket 换 Token，示例含原生 H5、单应用注销与全端注销。前端保存 Token。"
 ---
 
 # SSO整合-前后端分离架构下的整合方案

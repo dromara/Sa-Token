@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Quick-Login快速登录插件"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Quick-Login快速登录插件,插件"
-description: "Sa-Token Quick-Login：为零代码监控页等轻量系统快速注入登录页面与鉴权能力。"
+description: "Sa-Token Quick-Login 快速登录：引入 sa-token-quick-login 即可为零代码监控页等轻量系统注入登录页与全局拦截。默认账号 sa/123456，支持 Http Basic、yml 配账号密码与拦截路径；也可打独立 jar 给静态站点加登录。页面不可定制，不适合正式登录模块。"
 ---
 
 # Sa-Token-Quick-Login 快速登录认证

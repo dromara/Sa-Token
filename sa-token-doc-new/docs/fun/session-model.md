@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token Session模型详解"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,Session模型详解,附录"
-description: "Sa-Token Session 模型：Account-Session、Token-Session 分层设计与 HttpSession 的差异说明。"
+description: "Sa-Token Session 模型：Account-Session 按账号 id 分配，PC 与 APP 同号可同步数据；Token-Session 按 token 隔离，适合单端无操作下线。另有 Custom-Session 按自定义 id 读写。仅登录时创建，支持 Cookie、Header、body 提交。"
 ---
 
 # Sa-Token 中的 Session会话 模型详解

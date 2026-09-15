@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 推荐公众号"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,推荐公众号,其它"
-description: "Sa-Token 推荐公众号：Java 技术、架构与源码分享类优质公众号收录列表。"
+description: "Sa-Token 推荐公众号：收录 Java 技术、架构设计、源码分享与开源工具类账号，如 JavaGuide、Hollis、程序猿DD、macrozheng、TJ君、HelloGitHub 等，表格展示二维码与简介，便于关注 Spring 与权限认证内容。互推请转载仓库介绍并达阅读量门槛，见合作页。"
 ---
 
 # 推荐公众号

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token 数据读写三大作用域"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,数据读写三大作用域,附录"
-description: "Sa-Token 数据读写三大作用域：SaStorage 请求域、SaSession 会话域与持久层职责划分。"
+description: "Sa-Token 数据读写三大作用域：SaStorage 为请求域，一次请求结束即清，无需登录；SaSession 为会话域，须登录后经 StpUtil.getSession 读写；SaApplication 为全局域，应用或 Redis 关闭后清除，同样无需登录，三者 get/set/delete 用法一致。"
 ---
 
 # 三大作用域 

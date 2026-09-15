@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token SaStrategy-全局策略"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,SaStrategy-全局策略,API手册"
-description: "SaStrategy 全局策略 API：从外部数据源动态读取 Sa-Token 配置，代理封装核心逻辑。"
+description: "SaStrategy 全局策略 API：用函数代理封装 createToken、createSession、路由匹配、CORS 与自动续期，可用 set 连缀重写。getSaTokenConfig 支持从数据库动态读配置并须自行缓存，策略内勿再调 SaManager.getConfig() 以免递归。"
 ---
 
 # SaStrategy-全局策略
