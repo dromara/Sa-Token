@@ -5,7 +5,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { SITE_ORIGIN } from './seo.ts'
+import { SITE_ORIGIN, SITE_TITLE_SLOGAN, ensureMetaDescription } from './seo.ts'
 
 type BlogSidebarItem = { title: string; url: string }
 type BlogSidebarGroup = { label: string; items: BlogSidebarItem[] }
@@ -80,11 +80,14 @@ function buildCategoryHtml(
   blogRightAsideTpl: string
 ) {
   const canonical = `${SITE_ORIGIN}/blog/${folder}/index.html`
-  const pageTitle = `Sa-Token 博客 - ${label}`
-  const description = `Sa-Token 官方博客「${label}」文章列表：${items
-    .slice(0, 3)
-    .map((i) => i.title)
-    .join('、')}等 ${items.length} 篇。`
+  const pageTitle = `Sa-Token 博客 - ${label} - ${SITE_TITLE_SLOGAN}`
+  const description = ensureMetaDescription(
+    `Sa-Token 官方博客「${label}」文章列表：${items
+      .slice(0, 3)
+      .map((i) => i.title)
+      .join('、')}等 ${items.length} 篇。`,
+    `博客 - ${label}`
+  )
   const extra = (CATEGORY_KEYWORDS[folder] || 'Java权限认证').split(',')
   const keywords = [...new Set(['Sa-Token', '博客', label, ...extra])].join(',')
   const jsonLd = JSON.stringify({

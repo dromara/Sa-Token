@@ -129,7 +129,7 @@ export default defineConfig({
   title: 'Sa-Token',
   srcDir: 'docs',              // markdown 在工程根下的 docs/
   outDir: 'dist',              // 构建产物，上传这个目录
-  // 浏览器标题：`Sa-Token 登录认证 - Sa-Token 官方文档`
+  // 浏览器标题：`登录认证 - Sa-Token 官方文档 - 一站式 Java 权限认证框架`
   titleTemplate: `:title - ${DOC_TITLE_SUFFIX}`,
   description: SITE_DESCRIPTION,
   // 不用 VitePress 自带亮暗切换，文档站走旧站 water-change-theme
@@ -160,7 +160,7 @@ export default defineConfig({
    *
    * VitePress 默认 title 往往是站点名或文件名，百度看到会很糊。
    * applyPageSeo（seo.ts）会：优先用 md 头里的 title/description；
-   * README 没有标题时改成「框架介绍」；否则从正文前几段抽 80～160 字当描述。
+   * README 没有标题时改成「框架介绍」；否则从正文前几段抽 150～160 字当描述。
    * 这里改完的 pageData，后面 transformHead 还能读到。
    */
   transformPageData(pageData, ctx) {

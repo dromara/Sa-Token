@@ -9,9 +9,13 @@ import { sidebar } from './sidebar.ts'
 
 export const SITE_ORIGIN = 'https://sa-token.com'
 export const SITE_DESCRIPTION =
-  'Sa-Token 官方文档：Java 权限认证框架接入指南，覆盖登录认证、权限认证、SSO 单点登录、OAuth2.0、微服务网关鉴权、分布式 Session、注解鉴权与路由拦截等。'
+  'Sa-Token 官方文档：轻量级 Java 权限认证框架接入指南，覆盖登录认证、权限认证、SSO 单点登录、OAuth2.0、微服务网关鉴权、分布式 Session、注解鉴权与路由拦截，支持 Spring Boot、WebFlux、Solon，开源免费可对照官方示例接入，适合鉴权入门以及生产落地。'
+/** Bing 站长后台要求 meta description 150～160 字，短了会进 SEO 提醒 */
+export const DESC_MIN = 150
+export const DESC_MAX = 160
 export const OG_IMAGE = `${SITE_ORIGIN}/logo.png`
-export const DOC_TITLE_SUFFIX = 'Sa-Token 官方文档'
+export const SITE_TITLE_SLOGAN = '一站式 Java 权限认证框架'
+export const DOC_TITLE_SUFFIX = `Sa-Token 官方文档 - ${SITE_TITLE_SLOGAN}`
 
 type SidebarGroup = {
   text: string
@@ -145,7 +149,44 @@ function generateKeywords(relPath: string, pageTitle: string, section?: string, 
   return [...seen].slice(0, 15).join(',')
 }
 
-/** 从正文前几段抽 80～160 字当 meta description；太短就用站点默认文案 */
+/** 超过 160 就在 150～160 之间找句读切开；没有合适句读就硬切，去掉末尾半截英文 */
+export function clipDescription(desc: string) {
+  if (desc.length <= DESC_MAX) return desc
+  const slice = desc.slice(0, DESC_MAX)
+  for (const ch of ['。', '！', '？', '；', '，', '、']) {
+    const cut = slice.lastIndexOf(ch)
+    if (cut >= DESC_MIN - 1) return slice.slice(0, cut + 1)
+  }
+  const trimmed = slice.replace(/[A-Za-z0-9.]+$/, '').replace(/[\s、，]+$/, '')
+  return trimmed.length >= DESC_MIN ? trimmed : slice
+}
+
+function joinDesc(a: string, b: string) {
+  const x = a.trim()
+  const y = b.trim()
+  if (!x) return y
+  if (!y) return x
+  if (x.includes(y.slice(0, Math.min(16, y.length)))) return x
+  return `${x.replace(/[。．.!?！？]+$/, '')}。${y}`
+}
+
+/** 按标题、分区拼一段补长文案，避免 109 页都去贴同一句站点介绍 */
+function pageDescPad(title: string, section?: string) {
+  const topic = (title || '').replace(/^Sa-Token\s+/i, '').trim() || '本页'
+  const where = section ? `「${section}」中关于「${topic}」` : `关于「${topic}」`
+  return `本文是 Sa-Token 官方文档${where}的说明，介绍用法、API、配置项与注意点，可在 Spring Boot、WebFlux、Solon 等 Java 项目中接入登录认证、权限认证、SSO 或 OAuth2.0，开源免费可对照示例接入。`
+}
+
+/** 短 description 补到 150～160 字：先用本页标题语境，还不够再接站点默认文案 */
+export function ensureMetaDescription(seed: string, title = '', section?: string) {
+  let desc = (seed || '').trim()
+  if (desc.length >= DESC_MIN) return clipDescription(desc)
+  desc = joinDesc(desc, pageDescPad(title, section))
+  if (desc.length < DESC_MIN) desc = joinDesc(desc, SITE_DESCRIPTION)
+  return clipDescription(desc)
+}
+
+/** 从正文前几段抽 150～160 字当 meta description；太短就用站点默认文案 */
 export function extractDescription(md: string, fallback: string) {
   let body = md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '')
   body = body.replace(/```[\s\S]*?```/g, '\n')
@@ -161,12 +202,11 @@ export function extractDescription(md: string, fallback: string) {
     const t = stripToPlain(line)
     if (t.length < 12) continue
     chunks.push(t)
-    if (chunks.join(' ').length >= 80) break
+    if (chunks.join(' ').length >= DESC_MIN) break
   }
-  let desc = chunks.join(' ')
+  const desc = chunks.join(' ')
   if (desc.length < 24) return fallback
-  if (desc.length > 160) desc = desc.slice(0, 157).replace(/[，,。.\s]+$/, '') + '…'
-  return desc
+  return clipDescription(desc)
 }
 
 /** 占位页、博客（博客 URL 由 buildEnd 从 blog/sitemap.xml 并入全站 sitemap）不进文档 sitemap */
@@ -198,6 +238,7 @@ export function stripSitemapJunkXml(xml: string) {
  *
  * 优先级：md 头 frontmatter.title/description → 侧栏标题 → H1
  * → README 兜底「框架介绍」→ 从正文抽一段 description。
+ * description 最终会补到 150～160 字（Bing 提醒阈值）。
  */
 export function applyPageSeo(pageData: PageData, srcDir: string) {
   if (pageData.isNotFound) {
@@ -222,11 +263,13 @@ export function applyPageSeo(pageData: PageData, srcDir: string) {
   }
 
   const fmDesc = pageData.frontmatter.description
-  if (typeof fmDesc === 'string' && fmDesc.trim()) {
-    pageData.description = fmDesc.trim()
-  } else if (md) {
-    pageData.description = extractDescription(md, SITE_DESCRIPTION)
-  }
+  const seed =
+    typeof fmDesc === 'string' && fmDesc.trim()
+      ? fmDesc.trim()
+      : md
+        ? extractDescription(md, '')
+        : ''
+  pageData.description = ensureMetaDescription(seed, pageData.title, section)
 }
 
 /**

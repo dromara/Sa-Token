@@ -5,7 +5,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { sidebar } from './sidebar.ts'
-import { SITE_ORIGIN } from './seo.ts'
+import { SITE_ORIGIN, SITE_TITLE_SLOGAN } from './seo.ts'
 
 type SidebarGroup = {
   text: string
@@ -68,9 +68,9 @@ export function renderLegacyDocHtml() {
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>Sa-Token 文档</title>
+  <title>Sa-Token 文档 - ${SITE_TITLE_SLOGAN}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Sa-Token 官方文档目录：登录认证、权限认证、SSO、OAuth2.0、微服务鉴权等章节。">
+  <meta name="description" content="Sa-Token 官方文档目录：覆盖登录认证、权限认证、注解鉴权、路由拦截、SSO 单点登录、OAuth2.0、微服务网关鉴权等章节，支持 Spring Boot、WebFlux、Solon。旧书签打开本页会跳到对应章节，建议收藏 sa-token.com 查阅，便于从目录进入各章节对照学习与接入。">
   <link rel="canonical" href="${DOC_CANONICAL}">
   <link rel="icon" href="/favicon.ico">
   <script>${HASH_REDIRECT_SCRIPT}</script>
