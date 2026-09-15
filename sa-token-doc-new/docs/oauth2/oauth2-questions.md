@@ -1,5 +1,5 @@
 ---
-title: "Sa-Token 常见问题总结"
+title: "OAuth2.0 常见问题"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,常见问题总结,OAuth2.0,OAuth2"
 description: "OAuth2 集成常见问题：访问错路由会返回 not handle，正确入口是 /oauth2/authorize。code 只能用一次，重复换 token 会报无效。多账号要在 configOAuth2Server 里 setStpLogic。授权码流程的 state 须随机、一次性，用来防止账号伪装。"
 ---
