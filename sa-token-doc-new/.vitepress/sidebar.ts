@@ -163,8 +163,6 @@ export const sidebar: DefaultTheme.Sidebar = [
     collapsed: false,
     "items": [
       { "text": "更新日志",            "link": "/more/update-log.html" },
-      { "text": "框架生态",            "link": "/more/link.html" },
-      { "text": "框架博客",            "link": "/more/blog.html" },
       // { "text": "推荐阅读",            "link": "/more/recommended.html" },
       { "text": "推荐公众号",          "link": "/more/tj-gzh.html" },
       // { "text": "公众号合作",          "link": "/more/tj-gzh-hz.html" },

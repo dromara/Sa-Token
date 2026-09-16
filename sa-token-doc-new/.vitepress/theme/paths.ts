@@ -18,7 +18,7 @@ export function isActivePath(current: string, link: string) {
 /** 文档站编译页（不含独立首页 / 博客） */
 export function isDocsSection(path: string) {
   const p = normalizePath(path)
-  return p !== '/' && p !== '/index' && !p.startsWith('/blog')
+  return p !== '/' && p !== '/index' && p !== '/cases' && !p.startsWith('/blog')
 }
 
 export function isExternalLink(link: string) {

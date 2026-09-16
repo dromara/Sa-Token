@@ -11,6 +11,7 @@ export type NavItem = {
 export const nav: NavItem[] = [
   { text: '首页', link: '/', external: true },
   { text: '文档', link: '/readme.html' },
+  { text: '案例', link: '/cases.html', external: true, hideOnNarrow: true },
   { text: '博客', link: '/blog/index.html', external: true },
   {
     text: '视频',
@@ -27,15 +28,6 @@ export const nav: NavItem[] = [
       { text: '达达-Java（26集）', link: 'https://www.bilibili.com/video/BV11u4y197JL/', external: true },
       { text: '晒太阳的盐（22集）', link: 'https://space.bilibili.com/473679148/video', external: true },
       { text: '[ + 课程提交 ]', link: 'https://wj.qq.com/s2/27539608/zzzd/', external: true }
-    ]
-  },
-  {
-    text: '案例',
-    hideOnNarrow: true,
-    items: [
-      { text: 'Gitee - Awesome-Sa-Token', link: 'https://gitee.com/sa-tokens/awesome-sa-token', external: true },
-      { text: 'GitHub - Awesome-Sa-Token', link: 'https://github.com/sa-tokens/awesome-sa-token', external: true },
-      { text: 'AtomGit - Awesome-Sa-Token', link: 'https://atomgit.com/sa-tokens/awesome-sa-token', external: true }
     ]
   },
   { text: '加群', link: '/more/join-group.html', hideOnNarrow: true },

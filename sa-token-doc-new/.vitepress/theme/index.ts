@@ -24,7 +24,7 @@ import './custom.css'
 /** 这些路径是 public 里的静态页，不能交给 VitePress 客户端路由 */
 function isStaticHtml(to: string) {
   const path = to.startsWith('http') ? new URL(to).pathname : to.split('?')[0].split('#')[0]
-  return path === '/' || path === '/index.html' || path === '/blog' || path.startsWith('/blog/')
+  return path === '/' || path === '/index.html' || path === '/cases.html' || path === '/cases' || path === '/blog' || path.startsWith('/blog/')
 }
 
 /** /use/foo.html 和 /use/foo 当成同一页 */

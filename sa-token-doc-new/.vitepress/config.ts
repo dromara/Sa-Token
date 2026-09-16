@@ -288,6 +288,7 @@ export default defineConfig({
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/readme.html`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/doc.html`, today)
+      xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/cases.html`, today)
       fs.writeFileSync(docsMap, xml)
     }
     fs.writeFileSync(docsMap, mergeSitemapFiles([docsMap, blogMap]))
