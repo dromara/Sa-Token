@@ -2,6 +2,12 @@ import fs from 'node:fs'
 
 type SitemapEntry = { loc: string; lastmod?: string }
 
+/** lastmod 统一成 YYYY-MM-DD。这是百度 / 搜狗 / 360 / Google / Bing 文档都认的交集格式。 */
+export function toSitemapLastmodDate(lastmod: string) {
+  const m = lastmod.trim().match(/^(\d{4}-\d{2}-\d{2})/)
+  return m ? m[1] : lastmod.trim()
+}
+
 /** 从 urlset XML 抽出 loc / lastmod */
 export function parseSitemapEntries(xml: string): SitemapEntry[] {
   const entries: SitemapEntry[] = []
@@ -12,6 +18,37 @@ export function parseSitemapEntries(xml: string): SitemapEntry[] {
     entries.push(lastmod ? { loc, lastmod } : { loc })
   }
   return entries
+}
+
+/** 官网入口页，合并后排到 sitemap 最前；其余条目保持原顺序 */
+const SITEMAP_FRONT_PATHS = [
+  '/',
+  '/index.html',
+  '/cases.html',
+  '/readme.html',
+  '/doc.html',
+  '/blog/index.html'
+]
+
+function sitemapPathname(loc: string) {
+  try {
+    return new URL(loc).pathname
+  } catch {
+    return loc
+  }
+}
+
+/** 把入口页抽到最前，找不到的 loc 跳过 */
+export function prioritizeSitemapEntries(entries: SitemapEntry[]) {
+  const taken = new Set<string>()
+  const front: SitemapEntry[] = []
+  for (const p of SITEMAP_FRONT_PATHS) {
+    const hit = entries.find((e) => sitemapPathname(e.loc) === p)
+    if (!hit || taken.has(hit.loc)) continue
+    front.push(hit)
+    taken.add(hit.loc)
+  }
+  return [...front, ...entries.filter((e) => !taken.has(e.loc))]
 }
 
 /** 多份 urlset 合并为一份，按 loc 去重（先出现的保留） */
@@ -31,7 +68,9 @@ export function mergeSitemapEntries(parts: SitemapEntry[][]): SitemapEntry[] {
 export function buildSitemapXml(entries: SitemapEntry[]) {
   const body = entries
     .map((entry) => {
-      const lastmod = entry.lastmod ? `\n    <lastmod>${entry.lastmod}</lastmod>` : ''
+      const lastmod = entry.lastmod
+        ? `\n    <lastmod>${toSitemapLastmodDate(entry.lastmod)}</lastmod>`
+        : ''
       return `  <url>\n    <loc>${entry.loc}</loc>${lastmod}\n  </url>`
     })
     .join('\n')
@@ -50,5 +89,5 @@ export function mergeSitemapFiles(paths: string[]) {
     if (!fs.existsSync(file)) continue
     parts.push(parseSitemapEntries(fs.readFileSync(file, 'utf8')))
   }
-  return buildSitemapXml(mergeSitemapEntries(parts))
+  return buildSitemapXml(prioritizeSitemapEntries(mergeSitemapEntries(parts)))
 }

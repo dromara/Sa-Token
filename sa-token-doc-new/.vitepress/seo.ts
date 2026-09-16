@@ -215,7 +215,7 @@ function isSitemapJunk(loc: string) {
   if (loc.includes('/blog/') || loc.includes('/public/') || loc.includes('/pro/')) return true
   if (loc.includes('/sso/sso-pro.html')) return true
   if (loc.endsWith('/404.html')) return true
-  // 营销首页 canonical 为 /，仅收录根路径；index.html 与 VitePress 文档壳不重复提交
+  // VitePress 文档壳的 /index.html 先丢掉；官网首页由 buildEnd 再补 / 和 /index.html
   if (loc.endsWith('/index.html')) return true
   return false
 }

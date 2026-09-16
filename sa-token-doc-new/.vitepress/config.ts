@@ -285,6 +285,7 @@ export default defineConfig({
       let xml = fs.readFileSync(docsMap, 'utf8')
       xml = stripSitemapJunkXml(xml)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/`, today)
+      xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/index.html`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/readme.html`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/doc.html`, today)
       xml = ensureSitemapUrl(xml, `${SITE_ORIGIN}/cases.html`, today)
