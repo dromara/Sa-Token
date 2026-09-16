@@ -513,6 +513,13 @@ body[data-st-theme] .sear-box .VPNavBarSearchButton {
   top: 0;
 }
 
+/* 点标题也能改锚并滚动，对齐博客正文 */
+.st-content.vp-doc h2[id],
+.st-content.vp-doc h3[id],
+.st-content.vp-doc h4[id] {
+  cursor: pointer;
+}
+
 .st-content.vp-doc h3 {
   font-size: 1.25rem;
   line-height: 1.35;

@@ -220,6 +220,33 @@ export function scrollToHashId(opts?: { fromTop?: boolean }) {
   scheduleTick(tick)
 }
 
+/** 优先用标题左侧 # 上的 href，没有再自己拼 */
+function hashForHeading(heading: HTMLElement) {
+  const href = heading.querySelector('a.header-anchor')?.getAttribute('href') || ''
+  if (href.startsWith('#')) return href
+  return '#' + encodeURIComponent(heading.id)
+}
+
+/** 点正文 h2/h3/h4：改地址栏 hash，再滚过去。标题里的链接仍走原来的跳转 */
+function onDocHeadingClick(e: MouseEvent) {
+  if (e.button !== 0) return
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+  const target = e.target as HTMLElement | null
+  if (!target?.closest) return
+  if (target.closest('a')) return
+  const heading = target.closest('h2[id], h3[id], h4[id]') as HTMLElement | null
+  if (!heading?.id) return
+  const root = document.querySelector('.st-content')
+  if (!root?.contains(heading)) return
+
+  const hash = hashForHeading(heading)
+  if (getHashId() !== heading.id) {
+    history.replaceState({ scrollPosition: window.scrollY }, '')
+    history.pushState({}, '', location.pathname + location.search + hash)
+  }
+  scrollToHashId()
+}
+
 let booted = false
 
 export function bootHashScroll() {
@@ -244,4 +271,5 @@ export function bootHashScroll() {
   })
   window.addEventListener('hashchange', () => scrollToHashId())
   window.addEventListener('popstate', () => scrollToHashId())
+  document.addEventListener('click', onDocHeadingClick)
 }
