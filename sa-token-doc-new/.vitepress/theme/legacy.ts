@@ -102,7 +102,7 @@ export async function bootLegacy() {
   await loadScript('/static/all-version-common.js')
   initVersion()
   try {
-    await loadScript('/static/translate.js')
+    await loadScript('/static/translate.min.js')
     await loadScript('/static/sa-translate.js')
     initTranslate()
   } catch {

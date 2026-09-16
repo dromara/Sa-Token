@@ -3,7 +3,7 @@
  *
  * 用法：
  * 1. 页面放容器：<span id="translate" class="select-language-box ignore"></span>
- * 2. 引入 translate.js + 本文件
+ * 2. 引入 translate.min.js + 本文件
  * 3. 文档页：挂到 Docsify plugins → saTranslatePlugin
  * 4. 首页等普通页：直接调 initSaTranslate()
  *
