@@ -273,7 +273,7 @@ Sa-Token은 Apache-2.0 오픈 소스 프로토콜을 채택하고 프레임워�
 
 
 
-하나씩 표시할 수 없는 우수한 오픈소스 사례가 더 있습니다. [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)을 참조하세요.
+더 많은 사례는 다음을 참고하세요: [Sa-Token 우수 오픈소스 통합 사례](https://sa-token.com/cases.html)
 
 
 ### 🌍 다른 언어 버전

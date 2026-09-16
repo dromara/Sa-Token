@@ -273,7 +273,7 @@ No. Sa-Token is not a backend template, nor is it a secondary encapsulation shel
 
 
 
-There are more excellent open source cases that cannot be displayed one by one, please refer to: [Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
+For more cases, please refer to: [Sa-Token Outstanding Open-Source Integrations](https://sa-token.com/cases.html)
 
 
 ### 🌍 Other language versions

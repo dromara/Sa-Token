@@ -272,7 +272,7 @@ Sa-Token 采用 Apache-2.0 开源协议，承诺框架本身与在线文档永�
 
 
 
-还有更多优秀开源案例无法逐一展示，请参考：[Awesome-Sa-Token](https://gitee.com/sa-token/awesome-sa-token)
+更多案例请参考：[Sa-Token 优秀开源集成案例](https://sa-token.com/cases.html)
 
 
 ### 🌍 其它语言版本

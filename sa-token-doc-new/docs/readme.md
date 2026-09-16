@@ -206,7 +206,7 @@ Sa-Token 社区成员贡献了多语言实现版本：
 
 
 ## 🚀 使用 Sa-Token 的开源项目 
-参考：[Sa-Token 生态](/more/link)
+参考：<a href="/cases.html" target="_blank" rel="noopener">Sa-Token 优秀开源集成案例</a>
 
 
 
