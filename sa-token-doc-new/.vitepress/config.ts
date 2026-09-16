@@ -90,12 +90,11 @@ function escapeGenericsOutsideFences(src: string) {
     .join('')
 }
 
-/** 编译 md 前的预处理：版本占位、去掉 [[toc]]、修 HTML 注释、补 .html 链接 */
+/** 编译 md 前的预处理：版本占位、修 HTML 注释、补 .html 链接 */
 function prepareMarkdown(md: { core: { ruler: { after: Function } } }) {
   md.core.ruler.after('normalize', 'sa-token-prepare', (state: { src: string }) => {
     state.src = state.src.replace(/\$\{sa\.top\.version\}/g, SA_TOKEN_VERSION)
-    // VitePress 自带大纲，旧站 [[toc]] 占位直接删
-    state.src = state.src.replace(/\[\[toc\]\]/gi, '')
+    // [[toc]] 留给 VitePress 自带 toc 插件，编成正文目录
     // HTML 注释里若出现 `--`，markdown-it 会解析失败，换成破折号
     state.src = state.src.replace(/<!--[\s\S]*?-->/g, (block: string) => {
       const inner = block.slice(4, -3).replace(/--+/g, '—')

@@ -291,8 +291,38 @@
 .st-content blue { color: blue; }
 
 .st-content .toc-box,
-.vp-doc .table-of-contents {
+.st-content.vp-doc .table-of-contents {
   margin: 12px 0 24px;
+}
+
+/* VitePress [[toc]]：对齐旧站 .toc-box，h2 大号无点，h3 缩进 */
+.st-content.vp-doc .table-of-contents ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.st-content.vp-doc .table-of-contents > ul > li {
+  margin: 20px 0 15px;
+  font-size: 18px;
+  list-style: none;
+}
+.st-content.vp-doc .table-of-contents > ul > li > a {
+  color: #34495e;
+  font-weight: 600;
+}
+.st-content.vp-doc .table-of-contents ul ul {
+  padding-left: 1em;
+  margin: 8px 0 0;
+}
+.st-content.vp-doc .table-of-contents ul ul li {
+  margin: 8px 0;
+  font-size: 15px;
+  font-weight: 400;
+}
+.st-content.vp-doc .table-of-contents a {
+  font-weight: inherit;
+  text-decoration: none;
+  border-bottom: 0;
 }
 
 .doc-header,
