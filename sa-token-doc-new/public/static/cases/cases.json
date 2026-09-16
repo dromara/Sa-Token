@@ -931,17 +931,6 @@
       "star": 196
     },
     {
-      "name": "real-token",
-      "author": "jinan-jimeng-network_0",
-      "desc": "面向 ThinkPHP 6 的轻量权限认证框架，借鉴 Sa-Token 设计，覆盖登录认证与权限校验，让 PHP 项目里的鉴权同样简单、优雅。",
-      "url": "https://gitee.com/jinan-jimeng-network_0/real-token",
-      "category": "多语言",
-      "categoryId": "lang",
-      "lang": "PHP",
-      "cover": "/big-file/index/case/case--real-token.png",
-      "star": 9
-    },
-    {
       "name": "xlt-token",
       "author": "xiaoLangtou",
       "desc": "xlt-token 是一个为 NestJS 设计的轻量级 token 认证库，灵感来源于 Java 的 Sa-Token。它提供了灵活的 token 管理、会话控制、多端登录支持，以及可插拔的存储策略。",
@@ -951,6 +940,17 @@
       "lang": "Node.js",
       "cover": "/big-file/index/case/case--xlt-token.png",
       "star": 32
+    },
+    {
+      "name": "real-token",
+      "author": "jinan-jimeng-network_0",
+      "desc": "面向 ThinkPHP 6 的轻量权限认证框架，借鉴 Sa-Token 设计，覆盖登录认证与权限校验，让 PHP 项目里的鉴权同样简单、优雅。",
+      "url": "https://gitee.com/jinan-jimeng-network_0/real-token",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "PHP",
+      "cover": "/big-file/index/case/case--real-token.png",
+      "star": 9
     },
     {
       "name": "customer_work",
