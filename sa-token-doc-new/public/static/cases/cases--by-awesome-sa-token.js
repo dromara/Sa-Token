@@ -1,0 +1,1257 @@
+/**
+ * 来源：awesome-sa-token（自愿登记）
+ *
+ * 本文件是案例页的数据源之一，由 doc-case--spider--awesome-sa-token 同步。
+ * 不要当页面数据用（页面读 cases.json）。
+ *
+ * 规则：
+ * 1. 项目顺序 = awesome-sa-token README 登记顺序
+ * 2. README 有、本地无 → 新增；README 无、本地有 → 删除（hidden: true 除外）
+ * 3. 同一 URL：更新 name / desc / category / lang / star；保留 cover、author、hidden
+ * 4. 缺封面才补占位图，已有截图不覆盖
+ *
+ * 同步会整文件重写。不要在项目条目里夹注释，会被冲掉。
+ * 要改这段说明，改 skill 脚本里的 SOURCE_HEADER。
+ */
+export default {
+  "source": "https://gitee.com/sa-tokens/awesome-sa-token",
+  "updatedAt": "2026-09-16",
+  "categories": [
+    {
+      "id": "admin",
+      "name": "后台管理",
+      "emoji": "📊"
+    },
+    {
+      "id": "microservice",
+      "name": "微服务相关",
+      "emoji": "🚀"
+    },
+    {
+      "id": "mall",
+      "name": "商城",
+      "emoji": "🛒"
+    },
+    {
+      "id": "blog",
+      "name": "博客",
+      "emoji": "📝"
+    },
+    {
+      "id": "plugin",
+      "name": "插件",
+      "emoji": "🔌"
+    },
+    {
+      "id": "lang",
+      "name": "多语言",
+      "emoji": "🌐"
+    },
+    {
+      "id": "other",
+      "name": "其它",
+      "emoji": "📦"
+    }
+  ],
+  "projects": [
+    {
+      "name": "art-design-pro-java",
+      "author": "anganing",
+      "desc": "SpringBoot17+Sa-token+Art-Design-Pro+Unibest 技术栈的企业级后台开发管理系统。",
+      "url": "https://github.com/anganing/art-design-pro-java",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--art-design-pro-java.png",
+      "star": 54
+    },
+    {
+      "name": "wemirr-platform",
+      "author": "battcn",
+      "desc": "JDK17、SCA2023、SC2024、Sa-Token、VBen5.x 全网最炫酷，功能最多，最优雅地真开源 多租户、SAAS 微服务项目。",
+      "url": "https://gitee.com/battcn/wemirr-platform",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--wemirr-platform.png",
+      "star": 2326
+    },
+    {
+      "name": "Lucky-Admin-Vue3",
+      "author": "xiaodu6",
+      "desc": "一个基于vue-admin-template的后台管理框架，集成了动态角色权限，动态路由，角色权限动态配置，日志框架，代码生成，Sa-Token权限校验，快速构建一个后台的开发框架。",
+      "url": "https://gitee.com/xiaodu6/lucky-admin-vue3",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--lucky-admin-vue3.png",
+      "star": 5
+    },
+    {
+      "name": "灯灯",
+      "author": "最后",
+      "desc": "基于java + SpringCloudAlibaba +SpringBoot 开发的微服务中后台快速开发平台，专注于多租户 (SaaS架构) 解决方案，亦可作为普通项目（非SaaS架构）的基础开发框架使用，目前已实现 数据源隔离、字段隔离、无租户隔离 等几种模式。",
+      "url": "https://github.com/dromara/lamp-cloud",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--lamp-cloud.png",
+      "star": 5756
+    },
+    {
+      "name": "橙单",
+      "author": "orange-form",
+      "desc": "技术栈Boot3 + Flowable7 + Sa-Token + Mybatis-Flex/Mybatis-Plus + Vue3，支持开箱即用且功能完成的工作流和在线表单功能，提供高颜值的流程和表单编辑器全部前后端源码。",
+      "url": "https://gitee.com/orangeform/orange-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--orange-admin.png",
+      "star": 4631
+    },
+    {
+      "name": "Sz-Admin",
+      "author": "feiyuchuixue",
+      "desc": "一个开源RBAC中后台框架，专为现代应用设计。它结合了最新的技术栈，包括后端的Spring Boot 3、JDK 21、Mybatis Flex、Sa-Token、Knife4j和Flyway，以及前端的Vue 3、Vite5、TypeScript和Element Plus，致力于为您提供一个直观、流畅且功能强大的开发体验。",
+      "url": "https://github.com/feiyuchuixue",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--sz-admin.png",
+      "star": 0
+    },
+    {
+      "name": "newbie-boot3",
+      "author": "zhangyuge7",
+      "desc": "企业级中大型项目快速开发平台，后端使用JDK21+SpringBoot3+SaToken+MybatisPlus等，前端基于FiveAdminV2后台管理系统模板开发，使用js+vue3+vite5+ElementPlus等最新技术栈。",
+      "url": "https://github.com/zhangyuge7/newbie-boot3",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--newbie-boot3.png",
+      "star": 12
+    },
+    {
+      "name": "EuBackend",
+      "author": "zhaoeryu",
+      "desc": "EuBackend 是一套全部开源的前后端分离 Java EE 企业级快速开发平台，基于最新技术栈SpringBoot、Sa-Token、MyBatisPlus等作为后端框架，使用RBAC作为权限控制模型，并且毫无保留给个人及企业免费使用。",
+      "url": "https://gitee.com/zhaoeryu/eu-backend",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--eubackend.png",
+      "star": 277
+    },
+    {
+      "name": "srppms",
+      "author": "cai-bin00",
+      "desc": "基于SpringBoot+Vue+sa-token前后端分离的科研项目管理平台。",
+      "url": "https://gitee.com/cai-bin00/srppms",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--srppms.png",
+      "star": 7
+    },
+    {
+      "name": "twelvet-fast",
+      "author": "twelvet",
+      "desc": "基于Spring Boot 3 JDK17的单体服务极速开发管理平台脚手架，先行体验最新技术栈。",
+      "url": "https://gitee.com/twelvet/twelvet-fast",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--twelvet-fast.png",
+      "star": 68
+    },
+    {
+      "name": "Sa-Plus",
+      "author": "click33",
+      "desc": "一个基于 SpringBoot 架构的快速开发框架，内置代码生成器。",
+      "url": "https://gitee.com/click33/sa-plus",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--sa-plus.png",
+      "star": 1176
+    },
+    {
+      "name": "dcy-fast",
+      "author": "dcy421",
+      "desc": "一个基于 SpringBoot + Sa-Token + Mybatis-Plus 的后台管理系统，前端vue-element-admin，并且内置代码生成器。",
+      "url": "https://gitee.com/dcy421/dcy-fast",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--dcy-fast.png",
+      "star": 451
+    },
+    {
+      "name": "Helio-Boot",
+      "author": "uncarbon97",
+      "desc": "基于 SpringBoot + Sa-Token + Mybatis-Plus 的单体开发脚手架，带有配套后台管理前端模板及代码生成器；拥有对应微服务版脚手架`Helio-Cloud",
+      "url": "https://gitee.com/uncarbon97/helio-boot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--helio-boot.png",
+      "star": 116
+    },
+    {
+      "name": "EasyAdmin",
+      "author": "lakernote",
+      "desc": "一个基于SpringBoot2 + Sa-Token + Mybatis-Plus + Snakerflow + Layui 的后台管理系统，灵活多变可前后端分离，也可单体，内置代码生成器、权限管理、工作流引擎等",
+      "url": "https://gitee.com/lakernote/easy-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--easyadmin.png",
+      "star": 1866
+    },
+    {
+      "name": "RuoYi-Vue-Plus",
+      "author": "疯狂的狮子Li",
+      "desc": "重写RuoYi-Vue所有功能 集成 Sa-Token+Mybatis-Plus+Jackson+Xxl-Job+knife4j+Hutool+OSS 定期同步",
+      "url": "https://gitee.com/dromara/RuoYi-Vue-Plus",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ruoyi-vue-plus.png",
+      "star": 16983
+    },
+    {
+      "name": "SpringBoot_v2",
+      "author": "开源oschina",
+      "desc": "SpringBoot_v2项目是努力打造springboot框架的极致细腻的脚手架。",
+      "url": "https://gitee.com/bdj/SpringBoot_v2",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--springboot_v2.png",
+      "star": 6100
+    },
+    {
+      "name": "Ruoyi-Satoken",
+      "author": "wangming123456",
+      "desc": "为 ruoyi 进行配置 sa-token",
+      "url": "https://gitee.com/wangming123456/ruoyi-satoken",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ruoyi-satoken.png",
+      "star": 96
+    },
+    {
+      "name": "vue-satoken-admin",
+      "author": "niluni",
+      "desc": "基于Vue2和Sa-Token1.18.0的后台权限系统。",
+      "url": "https://gitee.com/niluni/vue-satoken-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--vue-satoken-admin.png",
+      "star": 10
+    },
+    {
+      "name": "bootx-platform",
+      "author": "bootx",
+      "desc": "包含支付收单(支付宝、微信、聚合、组合支付)、工作流(Flowable)、三方对接(微信、钉钉、企微、短信)等模块，前端基于Vue2和Vue3分别打造，可应用在不同业务场景中，目标是致力实现媲美商业版应用脚手架。",
+      "url": "https://gitee.com/bootx/bootx-platform",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--bootx-platform.png",
+      "star": 881
+    },
+    {
+      "name": "spba-admin",
+      "author": "qkdja",
+      "desc": "基于SpringBoot、Vue开发的通用后台管理系统，做到开箱即用，为新项目开发省去了基础功能开发的步骤。主要使用Sa-Token权限认证、MyBatis-Plus、MySQL、Redis、validation、七牛云等技术。",
+      "url": "https://gitee.com/qkdja/spring-boot-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--spba-admin.png",
+      "star": 50
+    },
+    {
+      "name": "QForum-Core",
+      "author": "Project-QForum",
+      "desc": "QForum 论坛系统官方核心，可拓展性强、轻量级、高性能、前后端分离，基于 SpringBoot2 + Sa-Token + Mybatis-Plus",
+      "url": "https://github.com/Project-QForum/QForum-Core/",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--qforum-core.png",
+      "star": 8
+    },
+    {
+      "name": "ExciteCMS-Layui",
+      "author": "ExciteTeam",
+      "desc": "ExciteCMS 快速开发脚手架：一款后端基于 SpringBoot2 + Sa-Token + Mybatis-Plus，前端基于 Layuimini 的内容管理系统，具备RBAC、日志管理、代码生成等功能，并集成常用的支付、OSS等第三方服务，拥有详细的开发文档",
+      "url": "https://gitee.com/ExciteTeam/ExciteCMS-SpringBoot-Layui",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--excitecms-layui.png",
+      "star": 67
+    },
+    {
+      "name": "sra-admin",
+      "author": "CoCoTeaNet",
+      "desc": "快速开发脚手架，核心依赖：springboot3+sqltoy+satoken+hutool | 轻量级 | 只实现了用户、字典、角色、权限等常见功能，能够快速搭建一个web项目。",
+      "url": "https://github.com/CoCoTeaNet/sra-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--sra-admin.png",
+      "star": 26
+    },
+    {
+      "name": "QuickBuild",
+      "author": "CodeLiQing",
+      "desc": "快速构建 | 基于springboot+sa-token+neety+代码生产器（生成vue页面和增删改查代码）| 以及前端vue3和字节arco.design框架整合",
+      "url": "https://gitee.com/CodeLiQing/custom-quick-build-platform",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--quickbuild.png",
+      "star": 36
+    },
+    {
+      "name": "magic-boot",
+      "author": "ssssssss-team",
+      "desc": "基于 magic-api + Sa-Token 搭建的快速开发平台，可以实现在浏览器编写Vue代码，既改即生效",
+      "url": "https://gitee.com/ssssssss-team/magic-boot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--magic-boot.png",
+      "star": 536
+    },
+    {
+      "name": "chaos",
+      "author": "qishanor",
+      "desc": "一个基于 SpringBoot + Sa-Token + Mybatis-Plus的快速开发框架，前端vue-element-avue,内置代码生成器，代码最简洁，最佳学习实践方案。",
+      "url": "https://gitee.com/qishanor/chaos",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--chaos.png",
+      "star": 80
+    },
+    {
+      "name": "xzadmin",
+      "author": "xiaozhizxj",
+      "desc": "一个基于 Spring Boot+mybatis-plus+sotaken+Redis+Thymeleaf+hutool+easy-captcha+log4j的后台管理系统",
+      "url": "https://gitee.com/xiaozhizxj/xzadmin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--xzadmin.png",
+      "star": 7
+    },
+    {
+      "name": "Snowy",
+      "author": "小诺开源技术",
+      "desc": "国内首个国密前后分离快速开发平台，采用 Vue3 + AntDesignVue3 + Vite + SpringBoot + Mp + HuTool + SaToken",
+      "url": "https://gitee.com/xiaonuobase/snowy",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--snowy.jpg",
+      "star": 33234
+    },
+    {
+      "name": "XyyAdmin",
+      "author": "xyy12611",
+      "desc": "开箱即用的前后端分离后台权限系统，关键技术SpringBoot、Sa-Token、MySql、Vue3、AntDesignVue。",
+      "url": "https://gitee.com/xyy12611/springboot-xyy-admin-v3",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--xyyadmin.png",
+      "star": 38
+    },
+    {
+      "name": "Frsimple",
+      "author": "frsimple",
+      "desc": "一个基于 SpringBoot + Sa-token +  Tdesign-next + vite + vue3 + typescript 的开箱即中后台服务解决方案。",
+      "url": "https://gitee.com/frsimple/springboot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--frsimple.png",
+      "star": 103
+    },
+    {
+      "name": "RuoYi-Vue-CMS",
+      "author": "liweiyi",
+      "desc": "RuoYi-Vue-CMS是前后端分离的内容管理系统，支持站群管理、多平台静态化、元数据模型扩展、多语言、全文检索，能轻松组织各种复杂内容形态。技术栈：SpringBoot3 + VUE2 + MybatisPlus + Sa-Token + xxl-job + Freemarker + ES + Redis + MySQL。",
+      "url": "https://gitee.com/liweiyi/RuoYi-Vue-CMS",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ruoyi-vue-cms.png",
+      "star": 626
+    },
+    {
+      "name": "springboot-multi-tenant-sa-token",
+      "author": "willf",
+      "desc": "轻量的多租户后台管理系统脚手架（SpringBoot，Sa-Token，mybatis-plus，Vue & Element）。",
+      "url": "https://gitee.com/willf/springboot-multi-tenant-sa-token",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--springboot-multi-tenant-sa-token.png",
+      "star": 47
+    },
+    {
+      "name": "solon_angis_beetlsql",
+      "author": "smartcity",
+      "desc": "并元国产开发平台 solon、sa-token、beetlsql、smart-http",
+      "url": "https://gitee.com/smartcity/solon_angis_beetlsql",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--solon_angis_beetlsql.png",
+      "star": 51
+    },
+    {
+      "name": "zeta-kotlin",
+      "author": "xia5800",
+      "desc": "zeta-kotlin是使用kotlin语言基于spring boot、mybatis-plus、sa-token等框架开发的项目脚手架。",
+      "url": "https://gitee.com/xia5800/zeta-kotlin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--zeta-kotlin.png",
+      "star": 40
+    },
+    {
+      "name": "nebula-swagger-demo",
+      "author": "flgitee",
+      "desc": "springboot+nebula 集成knife4j案例",
+      "url": "https://gitee.com/flgitee/nebula-swagger-demo",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--nebula-swagger-demo.png",
+      "star": 27
+    },
+    {
+      "name": "warm-sun",
+      "author": "min290",
+      "desc": "基于solon+vue3开发，jdk17+satoken+redisx/redisson+mybaits-flex+hutool+jackson+mapstruct+poi",
+      "url": "https://gitee.com/min290/warm-sun",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--warm-sun.png",
+      "star": 186
+    },
+    {
+      "name": "ContiNew Admin",
+      "author": "Charles7c",
+      "desc": "ContiNew Admin 中后台管理框架/脚手架，Continue New Admin，持续以最新流行技术栈构建，拥抱变化，迭代优化。当前采用的技术栈：Vue3、TypeScript、Arco Design Vue、Spring Boot3（JDK17）、Undertow、Sa-Token、JWT、MariaDB、MyBatis Plus、Redis、Redisson、Easy Excel、Hutool 等。",
+      "url": "https://gitee.com/Charles7c/continew-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--continew-admin.png",
+      "star": 1426
+    },
+    {
+      "name": "laymini-admin",
+      "author": "wlf213",
+      "desc": "基于layuimini前端框架开发的一个简单的后台管理前后端不分离框架，主体技术mybatisplus+sa_token+springboot+freemarker，主要功能：RABC认证授权，后台管理功能，集成Quartz动态定时任务。",
+      "url": "https://gitee.com/wlf213/laymini-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--laymini-admin.png",
+      "star": 7
+    },
+    {
+      "name": "Smart-Admin",
+      "author": "1024创新实验室",
+      "desc": "SmartAdmin国内首个以「高质量代码」为核心，「简洁、高效、安全」中后台快速开发平台；基于SpringBoot + Sa-Token + Mybatis-Plus 和 Vue3 + Vite5 + Ant Design Vue 4.x (同时支持JavaScript和TypeScript双版本)；满足国家三级等保要求、支持登录限制、接口数据国产加解密、高防SQL注入等一系列安全体系。",
+      "url": "https://gitee.com/lab1024/smart-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--smart-admin.png",
+      "star": 10649
+    },
+    {
+      "name": "Halcyon-Admin",
+      "author": "hhfb8848",
+      "desc": "基于 Spring Boot 3 和 Vue 3 的通用后台管理系统，专注于提供基本的管理功能，而非特定的部门管理或业务功能。",
+      "url": "https://github.com/hhfb8848/halcyon-springboot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--halcyon-admin.png",
+      "star": 22
+    },
+    {
+      "name": "breeze-boot-satoken-xxx系统",
+      "author": "breeze-boot",
+      "desc": "breeze-boot-satoken-xxx 是一个开源免费（前后端分离）中后台管理系统基础解决方案，前端技术栈：（ Vue3、 TypeScript、Element Plus、Pinia 、Vite）后端技术栈：（jdk17、 springboot3、SaToken、MybatisPlus等）",
+      "url": "https://gitee.com/breeze-boot/breeze-boot-satoken-sso",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--breeze-boot-satoken-sso.png",
+      "star": 20
+    },
+    {
+      "name": "Summer-Flowers · 夏花",
+      "author": "Luv404",
+      "desc": "基于 **Spring Boot 3 + JPA + QueryDSL + Sa-Token** 的企业级后台开发框架，前端采用 **SoybeanAdmin**。不同于常见 MyBatis 体系，Summer-Flowers 以 **Entity 作为业务第一表达**，通过 QueryDSL 实现类型安全的复杂查询，配合代码生成器与模块化架构，显著降低中长期项目的维护成本。",
+      "url": "https://gitee.com/Luv404/summer-flowers",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--summer-flowers.png",
+      "star": 2
+    },
+    {
+      "name": "Ruoyi-Fast-Service",
+      "author": "zccbbg",
+      "desc": "重写 RuoYi-Vue 所有功能，集成 Sa-Token、Mybatis-Plus、SpringDoc、Hutool、OSS，定期同步更新。",
+      "url": "https://gitee.com/zccbbg/ruoyi-fast-service",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ruoyi-fast-service.png",
+      "star": 6400
+    },
+    {
+      "name": "ChestnutCMS",
+      "author": "liweiyi",
+      "desc": "前后端分离内容管理系统，基于 RuoYi-Vue 重构，技术栈 SpringBoot3 + Vue3 + Mybatis-Plus + Sa-Token + Freemarker + ES + Redis，支持站群管理、多平台静态化、元数据模型扩展与全文检索。",
+      "url": "https://gitee.com/liweiyi/ChestnutCMS",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--chestnutcms.png",
+      "star": 3195
+    },
+    {
+      "name": "SpringBoot-Manager",
+      "author": "zwens",
+      "desc": "基于 SpringBoot + Mybatis-Plus + Sa-Token + Thymeleaf + Layui 的后台管理系统，开箱即用。",
+      "url": "https://gitee.com/zwens/springboot-manager",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--springboot-manager.png",
+      "star": 1439
+    },
+    {
+      "name": "Ruoyi-Flex",
+      "author": "dataprince",
+      "desc": "SpringBoot3 平台快速开发框架，集成 JDK21、MyBatis-Flex、Sa-Token、Flowable、MinIO、PowerJob、Vue3 + ElementPlus + Vben 等，面向中长期项目维护。",
+      "url": "https://gitee.com/dataprince/ruoyi-flex",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ruoyi-flex.png",
+      "star": 832
+    },
+    {
+      "name": "Snowy-Lite",
+      "author": "xiaonuoadmin",
+      "desc": "Snowy 轻量版，采用 Solon + MyBatis-Flex + HuTool + Sa-Token 替代 Spring 生态，集成国密加解密，开源版完全免费。",
+      "url": "https://gitee.com/xiaonuoadmin/snowy-lite",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--snowy-lite.png",
+      "star": 745
+    },
+    {
+      "name": "SpringBoot-Admin",
+      "author": "wdjisn",
+      "desc": "基于 SpringBoot + Vue 的通用后台管理系统，集成 Sa-Token 权限认证、可视化大屏、RBAC 权限、操作日志与七牛云上传等，开箱即用。",
+      "url": "https://github.com/wdjisn/SpringBoot-Admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--springboot-admin.png",
+      "star": 176
+    },
+    {
+      "name": "Keen",
+      "author": "SinceNovember",
+      "desc": "基于 Vue + SpringBoot + Sa-Token + Mybatis + Netty 的前后端分离后台管理系统，含用户聊天、附件管理与 RBAC 权限。",
+      "url": "https://github.com/SinceNovember/keen",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--keen.png",
+      "star": 166
+    },
+    {
+      "name": "Youcan-Solon",
+      "author": "gollyhu",
+      "desc": "基于 Solon 框架的 WEB 脚手架，功能类似 RuoYi，采用国产开源组件栈，集成 Sa-Token-Solon 插件，适合后端开发者快速上手。",
+      "url": "https://gitee.com/gollyhu/youcan-solon",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--youcan-solon.png",
+      "star": 126
+    },
+    {
+      "name": "FNK-Server",
+      "author": "daxiangme",
+      "desc": "中后台服务端脚手架，基于 SpringBoot3 + Sa-Token + Naive UI + TypeScript，适合快速搭建管理类应用。",
+      "url": "https://github.com/daxiangme/fnk-server",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--fnk-server.png",
+      "star": 109
+    },
+    {
+      "name": "Lambda Fusion Framework",
+      "author": "westboy",
+      "desc": "基于 Spring Boot 4.0 + JDK 21 构建的全栈企业级微服务开发框架。提供开箱即用的权限管理、配置管理、数据字典、AI 智能平台等核心业务功能，助力快速构建微服务应用。",
+      "url": "https://gitee.com/westboy/lambda-fusion-parent",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--lambda-fusion-framework.png",
+      "star": 44
+    },
+    {
+      "name": "XHan Admin",
+      "author": "sun-xiaohan",
+      "desc": "XHan Admin 是一个开源免费（前后端分离）中后台管理系统基础解决方案, 无专业版收费，所有功能毫无保留的贡献给开源社区，使用最新技术栈全新开发，无任何历史代码包袱。",
+      "url": "https://gitee.com/sun-xiaohan/xh-admin-frontend",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--xhan-admin.png",
+      "star": 214
+    },
+    {
+      "name": "RuoYi-Cloud-Plus",
+      "author": "疯狂的狮子Li",
+      "desc": "重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba + Sa-Token + Dubbo + Mybatis-Plus + Xxl-Job 全方位升级 定期同步",
+      "url": "https://gitee.com/dromara/RuoYi-Cloud-Plus",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ruoyi-cloud-plus.png",
+      "star": 7184
+    },
+    {
+      "name": "Sp-Cloud",
+      "author": "click33",
+      "desc": "Sa-Plus的微服务版本, 基于Spring-Cloud-Alibaba，微服务下使用Sa-Token的样例",
+      "url": "https://gitee.com/click33/sp-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--sp-cloud.png",
+      "star": 172
+    },
+    {
+      "name": "YC-Framework",
+      "author": "youcongtech",
+      "desc": "致力于打造一款优秀的分布式微服务解决方案",
+      "url": "https://gitee.com/youcongtech/yc-framework",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--yc-framework.png",
+      "star": 44
+    },
+    {
+      "name": "falser-cloud",
+      "author": "falser",
+      "desc": "基于 SpringCloud Alibaba + SpringCloud gateway + SpringBoot + Sa-Token + vue-admin-template + Nacos + Rabbit MQ + Redis 的一个后台管理系统，前后端分离，权限管理，菜单管理，数据字典，停车场系统管理等功能",
+      "url": "https://gitee.com/falser/falser-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--falser-cloud.png",
+      "star": 34
+    },
+    {
+      "name": "dcy-fast-cloud",
+      "author": "dcy421",
+      "desc": "一个基于 SpringCloudAlibaba + Sa-Token + dubbo2.7.8 + Seata + knife4j + Mybatis-Plus + MapStruct +  的后台管理系统，前端vue-element-admin，并且内置代码生成器+动态路由权限等功能",
+      "url": "https://gitee.com/dcy421/dcy-fast-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--dcy-fast-cloud.png",
+      "star": 85
+    },
+    {
+      "name": "fhs-framework",
+      "author": "fhs-opensource",
+      "desc": "基于Springboot+Springcloud + Mybatis Plus + Sa-Token + Vue + ElementUI 的快速开发平台(低代码开发平台)，本框架永远免费，永久全开源",
+      "url": "https://gitee.com/fhs-opensource/fhs-framework",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--fhs-framework.png",
+      "star": 846
+    },
+    {
+      "name": "Pig-Satoken",
+      "author": "wchenyang",
+      "desc": "重写 Pig 授权方式为 Sa-Token，其他代码不变。",
+      "url": "https://gitee.com/wchenyang/cloud-satoken",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--pig-satoken.png",
+      "star": 64
+    },
+    {
+      "name": "Helio-Cloud",
+      "author": "uncarbon97",
+      "desc": "基于 SpringBoot + SpringCloud Alibaba + Sa-Token + Mybatis-Plus 的微服务开发脚手架，带有配套后台管理前端模板及代码生成器",
+      "url": "https://gitee.com/uncarbon97/helio-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--helio-cloud.png",
+      "star": 46
+    },
+    {
+      "name": "BudWk-V7",
+      "author": "budwk",
+      "desc": "基于 NutzBoot + Sa-Token + Dubbo + Nacos注册&配置中心 的微服务开发脚手架(同时提供单应用版本)，带有配套后台管理前端模板及代码生成器",
+      "url": "https://gitee.com/budwk/budwk",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--budwk-v7.png",
+      "star": 318
+    },
+    {
+      "name": "xr-satoken-cloud",
+      "author": "fzhxfw",
+      "desc": "一款基于SaToken轻量级Java权限认证框架构建的微服务后台开发脚手架，基于SpringCloud + SpringCloudAlibaba + Nacos + SaToken + Mybatis等技术搭建，内置RBAC权限管理，代码生成器，文件分片速传等，本项目完全开源免费，定期提交代码到dev开发分支，由个人开发者业余时间维护升级。",
+      "url": "https://gitee.com/fzhxfw/xr-satoken-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--xr-satoken-cloud.png",
+      "star": 14
+    },
+    {
+      "name": "CloudEon",
+      "author": "dromara",
+      "desc": "一款基于kubernetes的开源大数据平台，旨在为用户提供一种简单、高效、可扩展的大数据解决方案。",
+      "url": "https://gitee.com/dromara/CloudEon",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--cloudeon.png",
+      "star": 329
+    },
+    {
+      "name": "quick-boot",
+      "author": "csx-bill",
+      "desc": "一款基于 Spring Cloud 2022 、Spring Boot 3、AMIS 和 APIJSON 的低代码系统。",
+      "url": "https://github.com/csx-bill/quick-boot",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--quick-boot.png",
+      "star": 106
+    },
+    {
+      "name": "LangChat",
+      "author": "TyCoding",
+      "desc": "( OpenAI / Gemini / Ollama / Azure / 智谱 / 阿里通义大模型 / 百度千帆大模型), Java生态下AI大模型产品解决方案，快速构建企业级AI知识库、AI机器人应用",
+      "url": "https://github.com/TyCoding/langchat",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--langchat.png",
+      "star": 1281
+    },
+    {
+      "name": "Niucloud-Admin-Java",
+      "author": "niucloud-team",
+      "desc": "JAVA SaaS 多应用管理框架，插件化 + 云安装 + 云编译，基于 SpringBoot + MyBatis-Plus + Sa-Token，源码全部开源无加密。",
+      "url": "https://gitee.com/niucloud-team/niucloud-admin-java",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--niucloud-admin-java.png",
+      "star": 239
+    },
+    {
+      "name": "AI-Tourism",
+      "author": "1937983507",
+      "desc": "智能旅游规划系统，后端 Spring Boot 3 + LangChain4j + MyBatis + Sa-Token，集成多种 AI 能力，支持个性化路线推荐、会话管理与流式问答。",
+      "url": "https://github.com/1937983507/ai-tourism",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "cover": "/big-file/index/case/case--ai-tourism.png",
+      "star": 129
+    },
+    {
+      "name": "litemall-plus",
+      "author": "ysling-org",
+      "desc": "微信小程序SaaS商城系统，可支持多小程序同时运行。",
+      "url": "https://gitee.com/ysling-org/litemall-plus",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "cover": "/big-file/index/case/case--litemall-plus.png",
+      "star": 202
+    },
+    {
+      "name": "mall4j",
+      "author": "Mall4j商城系统",
+      "desc": "基于Spring Boot 3 JDK17的一个商城手脚架。",
+      "url": "https://gitee.com/gz-yami/mall4j",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "cover": "/big-file/index/case/case--mall4j.png",
+      "star": 17114
+    },
+    {
+      "name": "haorong-mall",
+      "author": "haorongtech",
+      "desc": "浩荣商城（Haorong Mall）是一套面向中小型商业落地的企业级全栈电商解决方案，核心特性是支持「单体架构 ↔ 微服务架构」自由切换，基于 Java 17 + Spring Boot 3 + Spring Cloud Alibaba + Dubbo + Sa-Token 技术栈构建，原生支持多租户，采用 MIT 协议开源，可直接用于企业级电商业务落地与二次开发。",
+      "url": "https://gitee.com/haorongtech/haorong-mall",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "cover": "/big-file/index/case/case--haorong-mall.png",
+      "star": 518
+    },
+    {
+      "name": "mall-swarm",
+      "author": "macrozheng",
+      "desc": "mall-swarm是一套微服务商城系统，采用了 Spring Cloud 2023 & Alibaba、Spring Boot 3.2、Sa-Token、MyBatis、Elasticsearch、Docker、Kubernetes等核心技术，同时提供了基于Vue的管理后台方便快速搭建系统。mall-swarm在电商业务的基础集成了注册中心、配置中心、监控中心、网关等系统功能。文档齐全，附带全套Spring Cloud教程。",
+      "url": "https://gitee.com/macrozheng/mall-swarm",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "cover": "/big-file/index/case/case--mall-swarm.png",
+      "star": 1874
+    },
+    {
+      "name": "RenZS Blog",
+      "author": "chen_fuyun",
+      "desc": "RenZS Blog - 基于 SpringBoot + Vue3 + Sa-Token 的前后端分离博客系统",
+      "url": "https://gitee.com/chen_fuyun/blog-satoken",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "cover": "/big-file/index/case/case--blog-satoken.png",
+      "star": 1
+    },
+    {
+      "name": "jthink",
+      "author": "wtsoftware",
+      "desc": "一个基于 SpringBoot + Sa-Token + Thymeleaf 的博客系统",
+      "url": "https://gitee.com/wtsoftware/jthink",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "cover": "/big-file/index/case/case--jthink.png",
+      "star": 99
+    },
+    {
+      "name": "拾壹博客",
+      "author": "bule",
+      "desc": "一款vue+springboot前后端分离的博客系统，博客后台管理系统使用了vue+elmentui开发，后端使用Sa-Token进行权限管理,支持动态菜单权限，动态定时任务，文件支持本地和七牛云上传，使用ElasticSearch作为全文检索服务，支持QQ、微博、码云登录。",
+      "url": "https://gitee.com/quequnlong/shiyi-blog",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "cover": "/big-file/index/case/case--shiyi-blog.png",
+      "star": 3040
+    },
+    {
+      "name": "June 12",
+      "author": "hanshaung",
+      "desc": "June 12 是一个纯开源免费的资讯/博客类网站，基于Spring Boot + Sa-Token + Vue开发。",
+      "url": "https://gitee.com/hanshaung/ants",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "cover": "/big-file/index/case/case--june-12.png",
+      "star": 34
+    },
+    {
+      "name": "YuanBlog",
+      "author": "wlf213",
+      "desc": "一款代码简单，功能丰富的多人社交博客平台。前后端分离，Vue+SpringBoot3，博客前端使用Quasar，后台管理前端使用NaiveUI，博客后端，后台管理后端分为两个系统，均使用Sa-Token进行认证授权。支持邮箱验证码登录。",
+      "url": "https://gitee.com/wlf213/yuan-blog",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "cover": "/big-file/index/case/case--yuanblog.png",
+      "star": 3
+    },
+    {
+      "name": "儒林小栈",
+      "author": "chengxuru",
+      "desc": "基于微服务架构的前后端分离博客系统，SpringBoot + Mybatis-Plus + Sa-Token + ElasticSearch，含面试题管理，支持本地/七牛云/阿里云 OSS 文件存储。",
+      "url": "https://gitee.com/chengxuru/rulin-blog",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "cover": "/big-file/index/case/case--rulin-blog.png",
+      "star": 114
+    },
+    {
+      "name": "Sa-Token-Plugin",
+      "author": "bootx",
+      "desc": "Sa-Token第三方插件实现，基于Sa-Token-Core，提供一些与官方不同实现机制的的插件集合，作为Sa-Token开源生态的补充",
+      "url": "https://gitee.com/bootx/sa-token-plugin",
+      "category": "插件",
+      "categoryId": "plugin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--sa-token-plugin.png",
+      "star": 19
+    },
+    {
+      "name": "quarkus-sa-token",
+      "author": "quarkiverse",
+      "desc": "quarkus 整合 Sa-Token。",
+      "url": "https://github.com/quarkiverse/quarkus-sa-token",
+      "category": "插件",
+      "categoryId": "plugin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--quarkus-sa-token.png",
+      "star": 11
+    },
+    {
+      "name": "sa-token-rust",
+      "author": "sa-tokens",
+      "desc": "一个轻量级、高性能的 Rust 认证授权框架。",
+      "url": "https://github.com/sa-tokens/sa-token-rust",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "Rust",
+      "cover": "/big-file/index/case/case--sa-token-rust.png",
+      "star": 161
+    },
+    {
+      "name": "sa-token-go",
+      "author": "sa-tokens",
+      "desc": "一个轻量级、高性能的 Go 权限认证框架。",
+      "url": "https://github.com/sa-tokens/sa-token-go",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "Go",
+      "cover": "/big-file/index/case/case--sa-token-go.png",
+      "star": 196
+    },
+    {
+      "name": "real-token",
+      "author": "jinan-jimeng-network_0",
+      "desc": "一个轻量级 thinkphp6 权限认证框架，让鉴权变得简单、优雅！",
+      "url": "https://gitee.com/jinan-jimeng-network_0/real-token",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "PHP",
+      "cover": "/big-file/index/case/case--real-token.png",
+      "star": 9
+    },
+    {
+      "name": "xlt-token",
+      "author": "xiaoLangtou",
+      "desc": "xlt-token 是一个为 NestJS 设计的轻量级 token 认证库，灵感来源于 Java 的 Sa-Token。它提供了灵活的 token 管理、会话控制、多端登录支持，以及可插拔的存储策略。",
+      "url": "https://github.com/xiaoLangtou/xlt-token",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "Node.js",
+      "cover": "/big-file/index/case/case--xlt-token.png",
+      "star": 32
+    },
+    {
+      "name": "customer_work",
+      "author": "liulangjietou",
+      "desc": "基于 Sa-Token 构建的企业级智能体客服系统，包含 H5 客户端与后台运营。",
+      "url": "https://github.com/liulangjietou/customer_work",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--customer_work.png",
+      "star": 129
+    },
+    {
+      "name": "kb-rag",
+      "author": "liulangjietou",
+      "desc": "可自托管的企业级知识库 RAG 系统，支持文档解析、向量与 BM25 混合检索、标注评测闭环。",
+      "url": "https://github.com/liulangjietou/kb-rag",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--kb-rag.png",
+      "star": 18
+    },
+    {
+      "name": "Petrichor",
+      "author": "Ciao1019",
+      "desc": "开源、自托管的知识平台，用 Markdown 写作，将内容编译成语义 Wiki，通过 Agentic RAG 生成可追溯的回答，权限认证引用 [sa-token-go](https://github.com/sa-tokens/sa-token-go)。",
+      "url": "https://github.com/Ciao1019/Petrichor",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--petrichor.png",
+      "star": 133
+    },
+    {
+      "name": "Lucky-Auth",
+      "author": "xiaodu6",
+      "desc": "面向软件开发者的云端授权服务：软件/版本/变量配置、卡密生成与计费（免费/时间收费/点数收费）、单卡/账密两种登录模式、代理分销体系、在线验证与监控。客户端（如易语言编写的软件）通过加密接口接入。",
+      "url": "https://gitee.com/xiaodu6/lucky-auth",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--lucky-auth.png",
+      "star": 2
+    },
+    {
+      "name": "NextDoc4j",
+      "author": "nextdoc4j",
+      "desc": "NextDoc4j 组织致力于打造专为 SpringDoc 和 OpenAPI 3 设计的现代化文档生态体系，核心目标是替代传统 Swagger UI，为开发者提供更美观、可定制性更强、体验更优的 API 文档展示与管理解决方案。",
+      "url": "https://gitee.com/nextdoc4j",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--nextdoc4j.png",
+      "star": 0
+    },
+    {
+      "name": "rag-bilibili",
+      "author": "zshs000",
+      "desc": "基于 B 站视频字幕内容构建的检索增强问答系统，采用 Spring Boot 3 + Vue 3 + Sa-Token + Spring AI Alibaba 等技术，支持导入视频字幕、向量化写入知识库，通过大模型结合检索结果进行流式问答。",
+      "url": "https://github.com/zshs000/rag-bilibili",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--rag-bilibili.png",
+      "star": 6
+    },
+    {
+      "name": "free-fs",
+      "author": "dromara",
+      "desc": "基于 Spring Boot 4.x的企业级网盘系统。支持分片上传、断点续传、秒传、文件分享、在线预览。集成阿里云OSS、七牛云Kodo、S3体系、本地存储等多种存储方式。提供文件管理、用户权限、存储配额、回收站等完整功能。适用于企业网盘、文件管理、云存储、资源管理等场景。",
+      "url": "https://gitee.com/dromara/free-fs",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--free-fs.png",
+      "star": 1493
+    },
+    {
+      "name": "Glowxq-OJ",
+      "author": "glowxq",
+      "desc": "Glowxq-OJ 专业开源在线编程测评系统 | 基于Spring Boot 3.x + Java 21 + Vue 3构建 | 支持ACM/ICPC竞赛、信奥赛训练、编程教育 | 多语言判题、实时竞赛、在线IDE | Docker一键部署 | Modern Online Judge Platform for Competitive Programming & Coding Education。",
+      "url": "https://github.com/glowxq/glowxq-oj",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--glowxq-oj.png",
+      "star": 327
+    },
+    {
+      "name": "FlyFlow",
+      "author": "junyue",
+      "desc": "基于SaToken开发的开源工作流系统：FlyFlow借鉴了钉钉与飞书的界面设计理念，致力于打造一款用户友好、快速上手的工作流程工具。",
+      "url": "https://gitee.com/junyue/flyflow",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--flyflow.png",
+      "star": 6444
+    },
+    {
+      "name": "Sa-Token-Study",
+      "author": "sa-tokens",
+      "desc": "以demo示例的方式讲解 Sa-Token 源码涉及到的技术点，连载中……",
+      "url": "https://gitee.com/sa-tokens/sa-token-study",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--sa-token-study.png",
+      "star": 62
+    },
+    {
+      "name": "SpringMvc+Sa-Token",
+      "author": "SRD_01",
+      "desc": "Jsp+SpringMVC+SSO+Sa-Token+Redis | Spring MVC 集成 SaToken Demo 项目",
+      "url": "https://gitee.com/SRD_01/spring-mvc-sa-token",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--springmvc+sa-token.png",
+      "star": 9
+    },
+    {
+      "name": "iot-kit",
+      "author": "open-iita",
+      "desc": "一个轻量级低门槛的物联网平台，包含了多协议设备接入、规则引擎、第三方平台接入、智能家居小程序等模块的项目，基于SpringBoot架构并集成了Sa-Token的OAuth2认证。",
+      "url": "https://gitee.com/open-iita/iotkitparent",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--iot-kit.png",
+      "star": 175
+    },
+    {
+      "name": "cubic",
+      "author": "dromara",
+      "desc": "一站式问题定位平台，实时线程栈监控、线程池监控、动态arthas命令集、依赖分析等等等，助你快速定位问题。",
+      "url": "https://gitee.com/dromara/cubic",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--cubic.png",
+      "star": 1932
+    },
+    {
+      "name": "ChatGPT-WEB",
+      "author": "dulaiduwang003",
+      "desc": "基于JDK17+SpringBoot3+UniApp 绘图 聊天 充值应用。（Web版本）",
+      "url": "https://github.com/dulaiduwang003/ChatGPT-WEB",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--chatgpt-web.png",
+      "star": 396
+    },
+    {
+      "name": "SuperBot-ChatGPTApp",
+      "author": "dulaiduwang003",
+      "desc": "基于JDK17+SpringBoot3+UniApp 绘图 聊天 充值应用。（小程序版本）",
+      "url": "https://github.com/dulaiduwang003/SuperBot-ChatGPTApp",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--superbot-chatgptapp.png",
+      "star": 781
+    },
+    {
+      "name": "ScribbleHub",
+      "author": "dulaiduwang003",
+      "desc": "基于SpringBoot+satoken+wxss开发的博客小程序",
+      "url": "https://github.com/dulaiduwang003/ScribbleHub",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--scribblehub.png",
+      "star": 396
+    },
+    {
+      "name": "TIME-SEA-chatgpt",
+      "author": "dulaiduwang003",
+      "desc": "基于SpringBoot+satoken+vue3+uniapp开发的多端Ai平台应用",
+      "url": "https://github.com/dulaiduwang003/TIME-SEA-chatgpt",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--time-sea-chatgpt.png",
+      "star": 456
+    },
+    {
+      "name": "SUPERBOT-GPT",
+      "author": "dulaiduwang003",
+      "desc": "基于SpringBoot3+satoken+uniapp开发的流量主小程序",
+      "url": "https://github.com/dulaiduwang003/SUPERBOT-GPT",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--superbot-gpt.png",
+      "star": 781
+    },
+    {
+      "name": "DaxPay",
+      "author": "dromara",
+      "desc": "一款免费开源的支付网关系统，支持支付宝、微信、云闪付等通道，提供收单、退款、聚合支付、对账、分账等功能。",
+      "url": "https://gitee.com/dromara/dax-pay",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--daxpay.png",
+      "star": 1920
+    },
+    {
+      "name": "Dinky",
+      "author": "DataLinkDC",
+      "desc": "基于Apache Flink的实时数据开发平台，实现敏捷的数据开发、部署和运维",
+      "url": "https://github.com/DataLinkDC/dinky",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--dinky.png",
+      "star": 3763
+    },
+    {
+      "name": "mldong",
+      "author": "mldong",
+      "desc": "SpringBoot + Vue3 快速开发平台、自研工作流引擎",
+      "url": "https://gitee.com/mldong/mldong",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--mldong.png",
+      "star": 10017
+    },
+    {
+      "name": "Flow",
+      "author": "lwj",
+      "desc": "企业级流程中心，基于 Flowable 和 bpmn.js 封装流程引擎，采用 SpringBoot + Mybatis-Plus + Sa-Token + Vue3(Vben) 技术栈，MIT 开源。",
+      "url": "https://gitee.com/lwj/flow",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--flow.png",
+      "star": 2553
+    },
+    {
+      "name": "H5VE-Boot",
+      "author": "h5ve",
+      "desc": "数据驱动的企业级低代码开发平台，集成 Warm-Flow 工作流引擎，技术栈 Spring Boot + Mybatis-Plus + Sa-Token + Vue + uni-app，支持可视化表单/流程/触发器开发与 AI 页面生成。",
+      "url": "https://gitee.com/h5ve/h5ve-boot",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--h5ve-boot.png",
+      "star": 1758
+    },
+    {
+      "name": "Van-App",
+      "author": "L1yp",
+      "desc": "SpringBoot + Flowable/Activiti/Camunda + RBAC + Mybatis-Plus 工作流实战项目，集成 Sa-Token 权限认证与 SpringCache。",
+      "url": "https://github.com/L1yp/van-app",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--van-app.png",
+      "star": 134
+    },
+    {
+      "name": "CourseArragement",
+      "author": "javashub",
+      "desc": "基于 SpringBoot + Sa-Token + Mybatis-Plus 的教务课程管理系统，前后端分离架构。",
+      "url": "https://github.com/javashub/CourseArragement",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "cover": "/big-file/index/case/case--coursearragement.png",
+      "star": 405
+    }
+  ]
+}
