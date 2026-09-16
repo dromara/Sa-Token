@@ -78,6 +78,7 @@ body{font-size: 16px; color: #34495E; font-family: "Source Sans Pro","Helvetica 
 	transition: transform 0.25s ease;
 }
 .doc-header .nav-right .wzi:hover::after,
+.doc-header .nav-right .zk-box:hover > .wzi::after,
 .doc-header .nav-right .wzi.nav-active::after{transform: scaleX(1);}
 
 /* 小章鱼：钉死右上角，避免被 nav-right 垂直居中带偏 */

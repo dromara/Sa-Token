@@ -148,6 +148,7 @@ body{
 	transition: transform 0.25s ease;
 }
 .doc-header .nav-right .wzi:hover::after,
+.doc-header .nav-right .zk-box:hover > .wzi::after,
 .doc-header .nav-right .wzi.nav-active::after{transform: scaleX(1);}
 
 .nav-right a{color: #34495E;}

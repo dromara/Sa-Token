@@ -40,7 +40,7 @@ function isFillIn(vm) {
 	}
 	
 	// 白名单路由不判断
-	const whiteList = ['/', '/more/link', '/more/demand-commit', '/more/join-group', '/more/sa-token-donate', '/more/wenjuan', 
+	const whiteList = ['/', '/more/demand-commit', '/more/join-group', '/more/sa-token-donate', '/more/wenjuan', 
 			'/sso/sso-pro', '/more/update-log', '/more/common-questions', '/fun/sa-token-test', '/fun/issue-template'];
 	if(whiteList.indexOf(vm.route.path) >= 0) {
 		console.log('white route ... wj');

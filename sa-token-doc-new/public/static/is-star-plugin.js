@@ -70,7 +70,7 @@ function isStarRepo(vm) {
 	}
 	
 	// 白名单路由不判断
-	const whiteList = ['/a', '/more/link', '/more/demand-commit', '/more/join-group', '/more/sa-token-donate', 
+	const whiteList = ['/a', '/more/demand-commit', '/more/join-group', '/more/sa-token-donate', 
 			'/sso/sso-pro', '/more/update-log', '/more/common-questions', '/fun/sa-token-test', '/fun/issue-template'];
 	if(whiteList.indexOf(vm.route.path) >= 0 && getParam('code') === null) {
 		console.log('white route ...');

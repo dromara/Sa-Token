@@ -36,14 +36,15 @@ body.blog-page.blog-sidebar-open {
 	box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
 }
 
-/* 下拉展开按钮（视频/案例等）不显示导航下划线；下拉项也不跟 vue.css 的 a:hover underline */
-.blog-page .doc-header .nav-right .zk-box > .wzi::after {
-	display: none;
+/* 下拉触发项走 doc.css 的 .wzi::after 下划线；面板项只变色、不要浏览器默认 underline */
+.blog-page .doc-header .nav-right .zk-box .zk-context a {
+	text-decoration: none;
+	transition: color 0.2s;
 }
 
-.blog-page .doc-header .nav-right .zk-box .zk-context a,
 .blog-page .doc-header .nav-right .zk-box .zk-context a:hover {
 	text-decoration: none;
+	color: var(--blog-theme);
 }
 
 /* 窄屏顶栏：分级隐藏由 doc.css 的 nav-t* 负责；这里只保证标题仍显示 */
