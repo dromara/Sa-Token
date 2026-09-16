@@ -22,7 +22,11 @@
 	}
 
 	function writeQuery() {
-		var q = new URLSearchParams()
+		var q = new URLSearchParams(location.search)
+		q.delete('type')
+		q.delete('c')
+		q.delete('q')
+		q.delete('sort')
 		if (state.categoryId !== 'all') q.set('type', state.categoryId)
 		if (state.keyword) q.set('q', state.keyword)
 		if (state.sort === 'star') q.set('sort', 'star')
