@@ -5,7 +5,7 @@
  * 不要当页面数据用（页面读 cases.json）。
  *
  * 规则：
- * 1. 项目顺序 = awesome-sa-token README 登记顺序
+ * 1. 项目顺序 = awesome-sa-token README 登记顺序（多语言里 real-token 固定排最后，见 doc-case--summary）
  * 2. README 有、本地无 → 新增；README 无、本地有 → 删除（hidden: true 除外）
  * 3. 同一 URL：更新 name / desc / category / lang / star；保留 cover、author、hidden
  * 4. 缺封面才补占位图，已有截图不覆盖
@@ -957,17 +957,6 @@ export default {
       "star": 196
     },
     {
-      "name": "real-token",
-      "author": "jinan-jimeng-network_0",
-      "desc": "一个轻量级 thinkphp6 权限认证框架，让鉴权变得简单、优雅！",
-      "url": "https://gitee.com/jinan-jimeng-network_0/real-token",
-      "category": "多语言",
-      "categoryId": "lang",
-      "lang": "PHP",
-      "cover": "/big-file/index/case/case--real-token.png",
-      "star": 9
-    },
-    {
       "name": "xlt-token",
       "author": "xiaoLangtou",
       "desc": "xlt-token 是一个为 NestJS 设计的轻量级 token 认证库，灵感来源于 Java 的 Sa-Token。它提供了灵活的 token 管理、会话控制、多端登录支持，以及可插拔的存储策略。",
@@ -977,6 +966,17 @@ export default {
       "lang": "Node.js",
       "cover": "/big-file/index/case/case--xlt-token.png",
       "star": 32
+    },
+    {
+      "name": "real-token",
+      "author": "jinan-jimeng-network_0",
+      "desc": "一个轻量级 thinkphp6 权限认证框架，让鉴权变得简单、优雅！",
+      "url": "https://gitee.com/jinan-jimeng-network_0/real-token",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "PHP",
+      "cover": "/big-file/index/case/case--real-token.png",
+      "star": 9
     },
     {
       "name": "customer_work",
