@@ -297,14 +297,14 @@ export default {
       "star": 67
     },
     {
-      "name": "sra-admin",
+      "name": "CyreneAdmin",
       "author": "CoCoTeaNet",
-      "desc": "快速开发脚手架，核心依赖：springboot3+sqltoy+satoken+hutool | 轻量级 | 只实现了用户、字典、角色、权限等常见功能，能够快速搭建一个web项目。",
-      "url": "https://github.com/CoCoTeaNet/sra-admin",
+      "desc": "CyreneAdmin 是一个现代化的后台管理系统，提供双框架支持（Spring Boot 和 Solon），集成了完善的权限管理、用户管理、菜单管理、操作日志等核心功能。",
+      "url": "https://github.com/CoCoTeaNet/CyreneAdmin",
       "category": "后台管理",
       "categoryId": "admin",
       "lang": "",
-      "cover": "/big-file/index/case/case--sra-admin.png",
+      "cover": "/big-file/index/case/case--cyreneadmin.png",
       "star": 26
     },
     {
