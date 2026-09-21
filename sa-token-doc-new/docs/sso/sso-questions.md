@@ -40,7 +40,7 @@ SSO 集成常见问题整理
 你可能会问：我看配置文件明明是同一个啊？
 
 我的建议是：排查时不要仅凭肉眼判断，分别在你的 `Client` 与 `Server` 启动后调用 `SaManager.getSaTokenDao().set("name", "value", 100000);` 
-随便写入一个值，看看能不能根据你的预期写进同一个Redis里，如果能的话才能证明 `Client` 与 `Server` 连接的Reids 是同一个，再进行下一步排查。
+随便写入一个值，看看能不能根据你的预期写进同一个Redis里，如果能的话才能证明 `Client` 与 `Server` 连接的Redis 是同一个，再进行下一步排查。
 
 ``` java
 @SpringBootApplication
@@ -48,7 +48,7 @@ public class SaSsoServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SaSsoServerApplication.class, args);
 		System.out.println("\n------ Sa-Token-SSO 统一认证中心启动成功 ");
-		// 分别在 Client 与 Server 启动后调用 set 数据代码，看看能否根据预期写入同一个 reids 
+		// 分别在 Client 与 Server 启动后调用 set 数据代码，看看能否根据预期写入同一个 redis 
 		SaManager.getSaTokenDao().set("name", "value", 100000);
 	}	
 }
@@ -154,7 +154,7 @@ sa-token:
 - `sa-token.sso-client.mode=client-2`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接。
 - `sa-token.sso-client.mode=client-2,h5`：代表当前系统为 sso-client 端，使用 SSO 模式二来对接，并且是前后端分离模式。
 - `sa-token.sso-server.mode=server-123`：代表当前系统为 sso-server 端，同时开放了 SSO 模式一、模式二、模式三。
-- `sa-token.sso-server.mode=server-2,client-2`：代表当前系统既是 sso-server 端，又是 sso-clent 端，使用模式二来对接。
+- `sa-token.sso-server.mode=server-2,client-2`：代表当前系统既是 sso-server 端，又是 sso-client 端，使用模式二来对接。
 - 等等等等...
 
 此配置项可以是任意字符串，你也可以自己整理一套合适的表达规则。

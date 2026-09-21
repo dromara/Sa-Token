@@ -262,7 +262,7 @@ public class SaTokenApplication {
 你可能会问：我看配置文件明明是同一个啊？
 
 我的回答是：别光看配置文件，不一定准确，在启动时直接执行 `SaManager.getSaTokenDao().set("name", "value", 100000);`，
-随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的话才能证明`代码连接的Reids` 和`你用管理工具看到的Redis` 是同一个，再进行下一步排查。
+随便写入一个值，看看能不能根据你的预期写进这个Redis，如果能的话才能证明`代码连接的Redis` 和`你用管理工具看到的Redis` 是同一个，再进行下一步排查。
 
 
 ### Q：报错：无效Same-Token：xxxxxxxxxxx
