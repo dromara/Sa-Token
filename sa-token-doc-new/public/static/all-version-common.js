@@ -5,9 +5,19 @@
  * - 百度统计 / 搜索引擎自动提交：引入即执行；localhost / 127.0.0.1 下跳过
  * - 文档版本下拉：不自动执行，文档页手动调用
  *   SaTokenVersions.initVersionSelects()
+ * - Access Report：动态加载 /static/ar.js（跨站 rec_client_id + 访问上报）
  *
  * 发新版时只需改 LATEST_VERSION / ALL_VERSIONS
  */
+(function () {
+	var src = '/static/ar.js';
+	if (document.querySelector('script[src="' + src + '"]')) return;
+	var el = document.createElement('script');
+	el.src = src;
+	el.async = false;
+	(document.head || document.documentElement).appendChild(el);
+})();
+
 (function (global) {
 	'use strict';
 
