@@ -9,7 +9,7 @@
  *     不满足条件时整份脚本直接退出：不写 client_id、不拦链接、不上报，如同未加载。
  *     - 1.1、reportType：open = 插入本页访问；heartbeat = 按 recVisitId 更新停留和滚动
  *     - 1.2、recClientId：客户端 id，本站首次访问随机生成（也可从 URL 继承），localStorage 持久
- *     - 1.3、recVisitId：每次打开 / F5 新生成，代表一次 PV（VitePress 切章节不重新加载脚本，仍算同一次）
+ *     - 1.3、recVisitId：每次打开 / F5 / SPA 切章新生成，代表一次 PV（切章不重载脚本，由主题派 st-ar-page）
  *     - 1.4、firstWay：首次接触渠道，localStorage.first_way，键不存在时写一次后不改
  *     - 1.5、activeWay：最近一次 ?way=（其次 ?hmsr=），对应 localStorage.way
  *     - 1.6、pageUrl：当前完整地址（上报前已去掉 rec_client_id）
@@ -156,7 +156,7 @@
 	}
 
 	var recClientId = getClientId();
-	var recVisitId = uuid(); // 每次打开 / F5 新生成
+	var recVisitId = ''; // 每次打开 / F5 / SPA 切章在 beginVisit 里生成
 
 	/** 指向 sa-max.cn 时返回带 rec_client_id 的跳转地址；否则空串。不改 a.href */
 	function outboundJumpUrl(href) {
@@ -195,8 +195,11 @@
 	document.addEventListener('click', interceptOutboundClick, true);
 	document.addEventListener('auxclick', interceptOutboundClick, true);
 
-	var pageOpenTime = Date.now();
+	var pageOpenTime = 0;
 	var maxScrollY = 0; // 本页滚过的最大 scrollY
+	var lastPageKey = ''; // pathname + search，用来判断是切章还是同页锚点
+	var spaFrom = document.referrer || '';
+	var pingTimer = null;
 
 	/** 记下本页滚动峰值，随心跳上报 */
 	function bumpScroll() {
@@ -226,13 +229,14 @@
 
 	/** 静默 POST：open 插记录，heartbeat 更新停留和滚动 */
 	function report(reportType) {
+		if (!recVisitId) return;
 		bumpScroll();
 		var body = new URLSearchParams({
 			reportType: reportType,
 			recClientId: recClientId,
 			recVisitId: recVisitId,
 			pageUrl: location.href,
-			referrer: document.referrer || '',
+			referrer: spaFrom,
 			pageHost: location.host,
 			firstWay: getFirstWay(),
 			activeWay: getWay(),
@@ -249,8 +253,26 @@
 		} catch (e) {}
 	}
 
+	/** 当前页键：不含 hash，同页锚点不算新访问 */
+	function pageKey() {
+		try {
+			var u = new URL(location.href);
+			return u.pathname + u.search;
+		} catch (e) {
+			return location.pathname || '';
+		}
+	}
+
+	function stopPing() {
+		if (pingTimer) {
+			clearTimeout(pingTimer);
+			pingTimer = null;
+		}
+	}
+
 	/** 按时刻表排下一次 heartbeat；定时器晚了只补当前这一跳 */
 	function scheduleNext() {
+		stopPing();
 		var elapsed = (Date.now() - pageOpenTime) / 1000;
 		var next = null;
 		for (var i = 0; i < pingAtSec.length; i++) {
@@ -261,20 +283,38 @@
 		}
 		if (next == null) return;
 		var delay = Math.max(0, next * 1000 - (Date.now() - pageOpenTime));
-		setTimeout(function () {
+		pingTimer = setTimeout(function () {
+			pingTimer = null;
 			report('heartbeat');
 			scheduleNext();
 		}, delay);
 	}
 
-	/** open + 排心跳 + 关页再补一枪 */
-	function startReport() {
-		window.addEventListener('scroll', bumpScroll, { passive: true });
+	/** 开一次 PV：新 recVisitId + open；SPA 切章先给上一章补心跳 */
+	function beginVisit() {
+		var key = pageKey();
+		if (key === lastPageKey) return;
+		stopPing();
+		if (lastPageKey) {
+			report('heartbeat');
+			spaFrom = location.origin + lastPageKey;
+		}
+		lastPageKey = key;
+		recVisitId = uuid();
+		pageOpenTime = Date.now();
+		maxScrollY = 0;
 		report('open');
 		scheduleNext();
+	}
+
+	/** 首次 open + 听 SPA 切章 + 关页再补一枪 */
+	function startReport() {
+		window.addEventListener('scroll', bumpScroll, { passive: true });
 		window.addEventListener('pagehide', function () {
 			report('heartbeat');
 		});
+		window.addEventListener('st-ar-page', beginVisit);
+		beginVisit();
 	}
 
 	if (document.readyState === 'loading') {

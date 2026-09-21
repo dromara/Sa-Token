@@ -117,10 +117,11 @@ export async function bootLegacy() {
   rcTips()
 }
 
-/** 文档 SPA 切页后：翻译重跑、赞助表重绑、侧栏滚到当前项 */
+/** 文档 SPA 切页后：翻译重跑、赞助表重绑、侧栏滚到当前项；通知 ar.js 开新访问 */
 export function onDocPageChange() {
   initTranslate()
   bindDonate()
   const el = document.querySelector('.sidebar .active-rep')
   el?.scrollIntoView({ block: 'center' })
+  window.dispatchEvent(new Event('st-ar-page'))
 }
