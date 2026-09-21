@@ -1,0 +1,13 @@
+server:
+  port: 18080
+
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: ${REDIS_PASSWORD}
+      database: 15
+
+sa-token:
+  is-log: true

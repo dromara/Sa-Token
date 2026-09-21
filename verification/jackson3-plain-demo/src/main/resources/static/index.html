@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Sa-Token Jackson3 Plain 验证</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 3rem auto; max-width: 980px; background: #f6f8fb; color: #172033; }
+    main { background: white; padding: 2rem; border-radius: 14px; box-shadow: 0 8px 24px #16233a15; }
+    button { background: #155eef; color: white; border: 0; border-radius: 7px; padding: .7rem 1rem; margin-right: .6rem; font-size: 1rem; cursor: pointer; }
+    pre { background: #101828; color: #e6edf5; padding: 1rem; border-radius: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .pass { color: #027a48; font-weight: 700; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Sa-Token Jackson3 Plain 真实链路验证</h1>
+  <p>写入 Redis 后读取 Session，确认 JSON 不含 <code>@class</code>，且 <code>getModel(key, Class)</code> 能恢复业务对象。</p>
+  <button onclick="writeSession()">1. 写入 Redis</button>
+  <button onclick="readSession()">2. 读取并恢复</button>
+  <p id="status"></p>
+  <pre id="result">等待请求…</pre>
+</main>
+<script>
+  async function request(path, method) {
+    const response = await fetch(path, { method });
+    const body = await response.json();
+    document.getElementById('result').textContent = JSON.stringify(body, null, 2);
+    document.getElementById('status').textContent = response.ok ? '✓ 请求成功' : '请求失败';
+    document.getElementById('status').className = response.ok ? 'pass' : '';
+  }
+  function writeSession() { return request('/verify/write', 'POST'); }
+  function readSession() { return request('/verify/read', 'GET'); }
+</script>
+</body>
+</html>
