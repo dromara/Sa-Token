@@ -14,53 +14,74 @@
 	'use strict';
 
 	var inited = false;
+	/** 顶栏语言选择可见时才自动翻译（小屏 nav-t2 / p-none 隐藏时保持中文原文） */
+	var autoTranslateEnabled = true;
+
+	/** 语言下拉是否实际展示（跟 doc.css / index.css 断点一致，读计算样式不硬编码宽度） */
+	function isTranslateUiVisible() {
+		var el = document.getElementById('translate');
+		if (!el) {
+			return true;
+		}
+		return global.getComputedStyle(el).display !== 'none';
+	}
+
+	function executeSaTranslate() {
+		if (!inited || !autoTranslateEnabled) {
+			return;
+		}
+		global.translate.execute();
+	}
 
 	/** 初始化翻译配置，并执行第一次翻译 */
 	function initSaTranslate() {
-		if (inited) {
-			return;
-		}
 		if (!global.translate || typeof global.translate.execute !== 'function' || typeof global.translate.version !== 'string') {
 			console.warn('[sa-translate] 未加载 translate.js，跳过多语言初始化');
 			return;
 		}
-		inited = true;
 
-		var translate = global.translate;
+		if (!inited) {
+			inited = true;
+			autoTranslateEnabled = isTranslateUiVisible();
 
-		// 当前网页原文语种
-		translate.language.setLocal('chinese_simplified');
+			var translate = global.translate;
 
-		// 免费通道：走浏览器端 Edge 翻译（无需 API Key）
-		translate.service.use('client.edge');
+			// 当前网页原文语种
+			translate.language.setLocal('chinese_simplified');
 
-		// 顶部下拉只展示这几种语言（可按需增减）
-		// 语种 ID 见：http://translate.zvo.cn/support_language.html
-		// 德语官方码是 deutsch（不是 german）
-		translate.selectLanguageTag.languages = [
-			'chinese_simplified',
-			'chinese_traditional',
-			'english',
-			'japanese',
-			'korean',
-			'russian',
-			'vietnamese',
-			'spanish',
-			'deutsch',
-			'french',
-			'indonesian'
-		].join(',');
+			// 免费通道：走浏览器端 Edge 翻译（无需 API Key）
+			translate.service.use('client.edge');
 
-		// 代码别被翻坏：忽略 code / pre
-		translate.ignore.tag.push('code');
-		translate.ignore.tag.push('pre');
+			// 顶部下拉只展示这几种语言（可按需增减）
+			// 语种 ID 见：http://translate.zvo.cn/support_language.html
+			// 德语官方码是 deutsch（不是 german）
+			translate.selectLanguageTag.languages = [
+				'chinese_simplified',
+				'chinese_traditional',
+				'english',
+				'japanese',
+				'korean',
+				'russian',
+				'vietnamese',
+				'spanish',
+				'deutsch',
+				'french',
+				'indonesian'
+			].join(',');
 
-		// 动态改 DOM 时也能跟上（Docsify 切页、首页轮播文案等）
-		translate.listener.start();
+			// 代码别被翻坏：忽略 code / pre
+			translate.ignore.tag.push('code');
+			translate.ignore.tag.push('pre');
+
+			// 动态改 DOM 时也能跟上（Docsify 切页、首页轮播文案等）
+			if (autoTranslateEnabled) {
+				translate.listener.start();
+			}
+		}
 
 		// 开始翻译（会同时在 #translate 里生成 select）
 		// 样式靠 CSS 选择器 #translateSelectLanguage，切换语种重绘也不丢
-		translate.execute();
+		executeSaTranslate();
 	}
 
 	/**
@@ -78,9 +99,7 @@
 			initSaTranslate();
 		});
 		hook.doneEach(function () {
-			if (inited) {
-				global.translate.execute();
-			}
+			executeSaTranslate();
 		});
 	}
 

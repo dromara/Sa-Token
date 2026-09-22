@@ -60,21 +60,10 @@ function initVersion() {
   w.SaTokenVersions?.initVersionSelects()
 }
 
-function isZvoTranslate(t: unknown): t is { execute: () => void } {
-  return (
-    typeof t === 'object' &&
-    t !== null &&
-    typeof (t as { execute?: unknown }).execute === 'function' &&
-    typeof (t as { version?: unknown }).version === 'string'
-  )
-}
-
 function initTranslate() {
-  const w = window as unknown as { initSaTranslate?: () => void; translate?: unknown }
+  const w = window as unknown as { initSaTranslate?: () => void }
   try {
     w.initSaTranslate?.()
-    const t = w.translate
-    if (isZvoTranslate(t)) t.execute()
   } catch {
     /* 浏览器翻译扩展会占用 window.translate，不能让它把整站打挂 */
   }
