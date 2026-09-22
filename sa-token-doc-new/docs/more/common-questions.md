@@ -469,7 +469,7 @@ String name = StpUtil.getSession().getString("name");
 参考：[https://juejin.cn/post/7247376558367981627](https://juejin.cn/post/7247376558367981627)
 
 
-### Q：前后端分离项目中，前端使用 vue，如果不打开 porxy 代理的话，调用 Sa-Token 登录不会将 token 自动注入到 Cookie 中，是因为跨域么？
+### Q：前后端分离项目中，前端使用 vue，如果不打开 proxy 代理的话，调用 Sa-Token 登录不会将 token 自动注入到 Cookie 中，是因为跨域么？
 是。
 
 参考：[前后端分离](/up/not-cookie) 
