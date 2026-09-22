@@ -17,6 +17,7 @@
  *     - 1.8、pageHost：当前域名
  *     - 1.9、maxScrollY：本页最大滚动；心跳带上，服务端 GREATEST
  *     - 1.10、IP / UA / 归属地 / 时间：前端不传，服务端写
+ *     - 1.11、url_rec_client_id（仅 open）：落地前 URL 上的 rec_client_id；仅当非空且与本地 recClientId 不等时才带；SPA 切章后的新 open 不带
  * 2、不改站内 href。way 只从 URL / localStorage 读，用于上报。
  * 3、对站外 sa-max.cn 拼接 rec_client_id（拦截 click / auxclick，不改 a.href）
  *     左键本页跳；target=_blank / Ctrl / ⌘ / Shift / 中键新开。右键复制仍是原地址。
@@ -145,16 +146,16 @@
 		return id;
 	}
 
-	/** 全站访客 id：已有 localStorage 则用；否则认 URL，再没有就随机并持久化 */
+	/** 全站访客 id：已有 localStorage 则用；否则认落地 URL，再没有就随机并持久化 */
 	function getClientId() {
-		var fromUrl = takeRecClientIdFromUrl();
 		var id = lsGet(LS_CLIENT);
 		if (id) return id;
-		id = fromUrl || uuid();
+		id = urlRecClientId || uuid();
 		lsSet(LS_CLIENT, id);
 		return id;
 	}
 
+	var urlRecClientId = takeRecClientIdFromUrl();
 	var recClientId = getClientId();
 	var recVisitId = ''; // 每次打开 / F5 / SPA 切章在 beginVisit 里生成
 
@@ -231,7 +232,7 @@
 	function report(reportType) {
 		if (!recVisitId) return;
 		bumpScroll();
-		var body = new URLSearchParams({
+		var params = {
 			reportType: reportType,
 			recClientId: recClientId,
 			recVisitId: recVisitId,
@@ -241,7 +242,14 @@
 			firstWay: getFirstWay(),
 			activeWay: getWay(),
 			maxScrollY: String(maxScrollY)
-		}).toString();
+		};
+		if (reportType === 'open') {
+			if (urlRecClientId && urlRecClientId !== recClientId) {
+				params.url_rec_client_id = urlRecClientId;
+			}
+			urlRecClientId = '';
+		}
+		var body = new URLSearchParams(params).toString();
 		try {
 			fetch(REPORT_URL, {
 				method: 'POST',
