@@ -1,0 +1,15 @@
+{
+  "restoredSessionType": "SaSessionForJackson3PlainCustomized",
+  "profile": {
+    "id": 10001,
+    "name": "张三",
+    "role": "ADMIN"
+  },
+  "preferences": {
+    "theme": "dark",
+    "notifications": true
+  },
+  "profileRestoredAsRequestedType": true,
+  "mapRestored": true,
+  "missingModel": null
+}

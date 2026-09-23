@@ -18,6 +18,7 @@ package cn.dev33.satoken.spring;
 import cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet;
 import cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet;
 import cn.dev33.satoken.filter.SaTokenCorsFilterForJakartaServlet;
+import cn.dev33.satoken.plugin.SaTokenPluginHolder;
 import cn.dev33.satoken.servlet.model.SaRequestForServlet;
 import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.servlet.model.SaStorageForServlet;
@@ -27,6 +28,7 @@ import cn.dev33.satoken.util.SaTokenConsts;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
@@ -38,9 +40,12 @@ import java.util.EnumSet;
  * @author click33
  * @since 1.34.0
  */
+@AutoConfiguration
 public class SaTokenContextRegister {
 
 	public SaTokenContextRegister() {
+		// Spring Boot 4 WebMVC starter uses this register as its entry point, so initialize SPI plugins here.
+		SaTokenPluginHolder.instance.init();
 		// 重写路由匹配算法
 		SaStrategy.instance.routeMatcher = (pattern, path) -> {
 			return SaPathPatternParserUtil.match(pattern, path);

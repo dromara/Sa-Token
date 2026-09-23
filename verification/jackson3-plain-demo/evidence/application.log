@@ -1,0 +1,25 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.3)
+
+2026-09-21T17:17:06.082+08:00  INFO 27204 --- [           main] c.d.s.v.Jackson3PlainDemoApplication     : Starting Jackson3PlainDemoApplication using Java 21.0.9 with PID 27204 (D:\download\sa-token-dev\Sa-Token\verification\jackson3-plain-demo\target\classes started by WSJ in D:\download\sa-token-dev\Sa-Token\verification\jackson3-plain-demo)
+2026-09-21T17:17:06.084+08:00  INFO 27204 --- [           main] c.d.s.v.Jackson3PlainDemoApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-09-21T17:17:06.501+08:00  INFO 27204 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18080 (http)
+2026-09-21T17:17:06.511+08:00  INFO 27204 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-21T17:17:06.511+08:00  INFO 27204 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-09-21T17:17:06.537+08:00  INFO 27204 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 426 ms
+2026-09-21T17:17:06.600+08:00  INFO 27204 --- [           main] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-09-21T17:17:06.717+08:00  INFO 27204 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 18080 (http) with context path '/'
+2026-09-21T17:17:06.720+08:00  INFO 27204 --- [           main] c.d.s.v.Jackson3PlainDemoApplication     : Started Jackson3PlainDemoApplication in 0.872 seconds (process running for 1.059)
+VERIFY spi.template=cn.dev33.satoken.json.SaJsonTemplateForJackson3Plain
+VERIFY spi.sessionType=cn.dev33.satoken.session.SaSessionForJackson3PlainCustomized
+VERIFY spi.createdSession=cn.dev33.satoken.session.SaSessionForJackson3PlainCustomized
+2026-09-21T17:17:21.763+08:00  INFO 27204 --- [io-18080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-21T17:17:21.763+08:00  INFO 27204 --- [io-18080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-21T17:17:21.764+08:00  INFO 27204 --- [io-18080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

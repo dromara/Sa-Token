@@ -1,0 +1,8 @@
+{
+  "sessionId": "jackson3-plain-real-session",
+  "template": "SaJsonTemplateForJackson3Plain",
+  "sessionType": "SaSessionForJackson3PlainCustomized",
+  "storedJson": "{\"createTime\":1789982241780,\"dataMap\":{\"preferences\":{\"theme\":\"dark\",\"notifications\":true},\"profile\":{\"id\":10001,\"name\":\"张三\",\"role\":\"ADMIN\"}},\"historyTerminalCount\":0,\"id\":\"jackson3-plain-real-session\",\"loginId\":null,\"loginType\":null,\"terminalList\":[],\"token\":null,\"type\":null}",
+  "containsClassMarker": false,
+  "nullSerialization": null
+}

@@ -1,7 +1,7 @@
 ---
 title: "Sa-Token JSON 序列化扩展"
 keywords: "Sa-Token,sa-token,satoken,Sa-Token文档,JSON 序列化扩展,插件"
-description: "Sa-Token JSON 序列化扩展：Session 存 Redis 时经 SaJsonTemplate 转换。可选 jackson、jackson3、fastjson、fastjson2、Fory、Snack3/4。业务实体须进 JSON 类型白名单（SaJsonType），防止多态反序列化风险。"
+description: "Sa-Token JSON 序列化扩展：Session 存 Redis 时经 SaJsonTemplate 转换。可选 jackson、jackson3、jackson3-plain、fastjson、fastjson2、Fory、Snack3/4。业务实体须进 JSON 类型白名单（SaJsonType），防止多态反序列化风险。"
 ---
 
 # JSON 序列化扩展
@@ -17,6 +17,7 @@ Sa-Token 在 Session 存储、Redis 缓存等场景下需要对对象进行 JSON
 
 - **sa-token-jackson**：集成 Jackson（com.fasterxml.jackson），适用于 SpringBoot2/3 等环境。
 - **sa-token-jackson3**：集成 Jackson 3（tools.jackson.core），适用于 SpringBoot4、Java 17+ 等环境。
+- **sa-token-jackson3-plain**：集成 Jackson 3 的纯 JSON 模式，不在 JSON 中写入类型信息，适用于 SpringBoot4、Java 17+ 等环境。
 - **sa-token-fastjson**：集成 Fastjson。
 - **sa-token-fastjson2**：集成 Fastjson2。
 - **sa-token-fory-json**：集成 [Apache Fory JSON](https://fory.apache.org/docs/json/)（高性能 JSON 编解码，不在 JSON 中写入类型信息，用法同 Fastjson2）。
@@ -55,6 +56,18 @@ Gradle 参考：`implementation 'cn.dev33:sa-token-jackson:${sa.top.version}'`
 </dependency>
 ```
 Gradle 参考：`implementation 'cn.dev33:sa-token-jackson3:${sa.top.version}'`
+
+== Jackson3 Plain
+
+``` xml
+<!-- Sa-Token 整合 Jackson3（纯 JSON，不写入类型信息） -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-jackson3-plain</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
+Gradle 参考：`implementation 'cn.dev33:sa-token-jackson3-plain:${sa.top.version}'`
 
 == Fastjson
 
@@ -120,6 +133,14 @@ Gradle 参考：`implementation 'cn.dev33:sa-token-snack4:${sa.top.version}'`
 
 
 
+## Jackson3 与 Jackson3 Plain 的选择
+
+`sa-token-jackson3` 会在 JSON 中写入 `@class` 类型信息，以便在 Session 等多态场景自动还原运行时类型；它通过 JSON 全局类型白名单限制可反序列化的类型。
+
+`sa-token-jackson3-plain` 不会写入 `@class` 或其他类型标记，JSON 更简洁，也不会让 JSON 输入决定要实例化的运行时类型。使用 Plain 插件时，业务对象从 Session 或 JSON 恢复必须显式给出目标类型，例如 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)`。
+
+同一应用只应选择其中一个 Jackson3 插件。Spring Boot 4 Starter 默认引入的是 `sa-token-jackson3`；如需 Plain 模式，请额外引入 `sa-token-jackson3-plain`，并避免手动配置另一个 JSON 插件。
+
 ## JSON 全局类型白名单机制
 
 ### 报错示例
@@ -138,7 +159,7 @@ Sa-Token 在 **集成 Redis** 等持久化场景下，会把 `SaSession` 以及 
 
 白名单内置常见 JDK 值类型，以及已实现 `SaJsonType` 的框架 Model 等；**你的业务实体类默认不在白名单中**，因此反序列化时会抛出上述异常。
 
-> 说明：`sa-token-fastjson` / `sa-token-fastjson2` / `sa-token-fory-json` / `sa-token-snack3` 默认不在 JSON 中写入类型信息，一般不会出现此报错；业务对象请通过 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)` 指定类型。
+> 说明：`sa-token-jackson3-plain` / `sa-token-fastjson` / `sa-token-fastjson2` / `sa-token-fory-json` / `sa-token-snack3` 默认不在 JSON 中写入类型信息，一般不会出现此报错；业务对象请通过 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)` 指定类型。
 
 白名单由 [SaJsonStrategy](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/strategy/SaJsonStrategy.java) 统一管理。**首次** 构建 JSON 插件（如 `SaJsonTemplateForJackson`）时会完成初始化；初始化之后不可再注册类型。
 
