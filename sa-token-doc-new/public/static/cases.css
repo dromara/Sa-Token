@@ -188,7 +188,50 @@ body.cases-page .z-div{min-height: 100vh; display: flex; flex-direction: column;
 	justify-content: flex-start;
 	gap: 28px;
 	margin-top: 12px;
-	margin-bottom: 80px;
+	margin-bottom: 28px;
+}
+.cases-pager{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	margin: 8px 0 80px;
+}
+.cases-pager[hidden]{display: none;}
+.cases-pager-btn{
+	appearance: none;
+	min-width: 36px;
+	height: 36px;
+	padding: 0 12px;
+	border: 1px solid #e5e7eb;
+	background: #fff;
+	color: #555;
+	font-size: 14px;
+	line-height: 1;
+	border-radius: 2px;
+	cursor: pointer;
+	transition: all .18s;
+}
+.cases-pager-btn:hover:not(:disabled):not(.is-active){
+	border-color: #42B983;
+	color: #42B983;
+}
+.cases-pager-btn.is-active{
+	background: #42B983;
+	border-color: #42B983;
+	color: #fff;
+}
+.cases-pager-btn:disabled{
+	opacity: .4;
+	cursor: not-allowed;
+}
+.cases-pager-ellipsis{
+	min-width: 20px;
+	text-align: center;
+	color: #9aa0a6;
+	font-size: 14px;
+	line-height: 36px;
 }
 .cases-page .s-case{flex: 0 0 calc((100% - 56px) / 3); margin-top: 0;}
 .cases-page .s-case-head{
@@ -289,4 +332,6 @@ body.cases-page .z-div{min-height: 100vh; display: flex; flex-direction: column;
 	.cases-main > .s-width{box-sizing: border-box; padding-left: 16px; padding-right: 16px;}
 	.cases-page .s-case-box{gap: 20px; justify-content: center;}
 	.cases-page .s-case{flex: 0 0 90%;}
+	.cases-pager{gap: 6px; margin-bottom: 48px;}
+	.cases-pager-btn{min-width: 34px; height: 34px; padding: 0 10px; font-size: 13px;}
 }

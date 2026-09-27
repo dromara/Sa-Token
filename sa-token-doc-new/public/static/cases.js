@@ -1,5 +1,6 @@
 (function () {
-	var state = { categoryId: 'all', keyword: '', sort: 'order', data: null }
+	var PAGE_SIZE = 24
+	var state = { categoryId: 'all', keyword: '', sort: 'order', page: 1, data: null }
 	var coverObserver = null
 
 	function $(id) {
@@ -19,6 +20,8 @@
 		state.categoryId = q.get('type') || q.get('c') || 'all'
 		state.keyword = q.get('q') || ''
 		state.sort = q.get('sort') === 'star' ? 'star' : 'order'
+		var page = parseInt(q.get('p'), 10)
+		state.page = page > 0 ? page : 1
 	}
 
 	function writeQuery() {
@@ -27,9 +30,11 @@
 		q.delete('c')
 		q.delete('q')
 		q.delete('sort')
+		q.delete('p')
 		if (state.categoryId !== 'all') q.set('type', state.categoryId)
 		if (state.keyword) q.set('q', state.keyword)
 		if (state.sort === 'star') q.set('sort', 'star')
+		if (state.page > 1) q.set('p', String(state.page))
 		var search = q.toString()
 		var next = location.pathname + (search ? '?' + search : '')
 		history.replaceState(null, '', next)
@@ -158,31 +163,60 @@
 		count.innerHTML = '已收录 ' + visible.length + ' 个开源项目：' + sortBtns()
 	}
 
+	function pageItems(current, total) {
+		var items = []
+		for (var i = 1; i <= total; i++) {
+			if (i === 1 || i === total || Math.abs(i - current) <= 2) items.push(i)
+			else if (items[items.length - 1] !== '…') items.push('…')
+		}
+		return items
+	}
+
+	function pagerBtn(page, text, disabled, active) {
+		return '<button type="button" class="cases-pager-btn' + (active ? ' is-active' : '') + '" data-page="' + page + '"' +
+			(disabled ? ' disabled' : '') +
+			(active ? ' aria-current="page"' : '') +
+			'>' + text + '</button>'
+	}
+
+	function renderPager(pages) {
+		var el = $('cases-pager')
+		if (pages <= 1) {
+			el.hidden = true
+			el.innerHTML = ''
+			return
+		}
+		el.hidden = false
+		var html = pagerBtn('prev', '上一页', state.page <= 1)
+		pageItems(state.page, pages).forEach(function (item) {
+			if (item === '…') html += '<span class="cases-pager-ellipsis">…</span>'
+			else html += pagerBtn(item, String(item), false, item === state.page)
+		})
+		html += pagerBtn('next', '下一页', state.page >= pages)
+		el.innerHTML = html
+	}
+
 	function renderList() {
 		var list = sortList(state.data.projects.filter(matchItem))
 		var box = $('cases-list')
 		var empty = $('cases-empty')
+		var pages = Math.ceil(list.length / PAGE_SIZE)
+		var pageBefore = state.page
+		if (state.page < 1) state.page = 1
+		if (pages && state.page > pages) state.page = pages
+		if (state.page !== pageBefore) writeQuery()
 		renderCount()
 		if (!list.length) {
 			box.innerHTML = ''
 			empty.classList.add('is-show')
+			renderPager(0)
 			return
 		}
 		empty.classList.remove('is-show')
-		var nodes = {}
-		box.querySelectorAll('.s-case[data-key]').forEach(function (el) {
-			nodes[el.getAttribute('data-key')] = el
-		})
-		var sameSet = list.length === Object.keys(nodes).length &&
-			list.every(function (item) { return nodes[itemKey(item)] })
-		if (sameSet) {
-			list.forEach(function (item) {
-				box.appendChild(nodes[itemKey(item)])
-			})
-			return
-		}
-		box.innerHTML = list.map(cardHtml).join('')
+		var start = (state.page - 1) * PAGE_SIZE
+		box.innerHTML = list.slice(start, start + PAGE_SIZE).map(cardHtml).join('')
 		bindCovers(box)
+		renderPager(pages)
 	}
 
 	function render() {
@@ -200,6 +234,7 @@
 		var btn = e.target.closest('.cases-cat')
 		if (!btn) return
 		state.categoryId = btn.getAttribute('data-id')
+		state.page = 1
 		writeQuery()
 		render()
 		scrollToStuckCats()
@@ -209,8 +244,24 @@
 		var btn = e.target.closest('.cases-sort')
 		if (!btn) return
 		state.sort = btn.getAttribute('data-sort') === 'star' ? 'star' : 'order'
+		state.page = 1
 		writeQuery()
 		renderList()
+	})
+
+	$('cases-pager').addEventListener('click', function (e) {
+		var btn = e.target.closest('[data-page]')
+		if (!btn || btn.disabled) return
+		var raw = btn.getAttribute('data-page')
+		var next = state.page
+		if (raw === 'prev') next = state.page - 1
+		else if (raw === 'next') next = state.page + 1
+		else next = parseInt(raw, 10)
+		if (!next || next === state.page) return
+		state.page = next
+		writeQuery()
+		renderList()
+		scrollToStuckCats()
 	})
 
 	var timer = 0
@@ -219,6 +270,7 @@
 		clearTimeout(timer)
 		timer = setTimeout(function () {
 			state.keyword = value
+			state.page = 1
 			writeQuery()
 			renderList()
 		}, 120)
