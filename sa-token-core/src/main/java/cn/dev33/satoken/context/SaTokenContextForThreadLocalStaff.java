@@ -56,6 +56,26 @@ public class SaTokenContextForThreadLocalStaff {
 	}
 
 	/**
+	 * 将调用方持有的 [ Box 存储器 ] 原样重新绑定到当前线程（用于嵌套上下文恢复，保持对象身份不变）
+	 * @param box 此前通过 {@link #getModelBoxOrNull()} 获取的 Box
+	 * @since 1.46.1
+	 */
+	public static void setModelBoxRaw(SaTokenContextModelBox box) {
+		modelBoxThreadLocal.set(box);
+	}
+
+	/**
+	 * 仅当当前线程的 [ Box 存储器 ] 恰好是 box 时才清除（避免误删并发场景下其它请求的上下文）
+	 * @param box 期望被清除的 Box
+	 * @since 1.46.1
+	 */
+	public static void clearModelBoxIfCurrent(SaTokenContextModelBox box) {
+		if(box != null && modelBoxThreadLocal.get() == box) {
+			modelBoxThreadLocal.remove();
+		}
+	}
+
+	/**
 	 * 获取当前线程的 [ Box 存储器 ]
 	 * @return /
 	 */

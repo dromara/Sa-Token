@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.reactor.filter;
 
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
@@ -128,8 +129,9 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 
 		// ---------- 全局认证处理
+		// 绑定前记录旧 Box，结束后恢复（嵌套在外层整请求绑定时保持外层上下文不被破坏）
+		SaTokenContextModelBox prevBox = SaReactorSyncHolder.bindContext(exchange);
 		try {
-			SaReactorSyncHolder.setContext(exchange);
 			beforeAuth.run(null);
 			SaRouter.match(includeList).notMatch(excludeList).check(r -> auth.run(null));
 		}
@@ -141,7 +143,7 @@ public class SaReactorFilter implements SaFilter, WebFilter {
 			return SaReactorOperateUtil.writeResult(exchange, String.valueOf(error.run(e)));
 		}
 		finally {
-			SaReactorSyncHolder.clearContext();
+			SaReactorSyncHolder.restoreContext(prevBox);
 		}
 
 		return chain.filter(exchange);

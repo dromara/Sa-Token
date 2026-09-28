@@ -16,6 +16,8 @@
 package cn.dev33.satoken.reactor.context;
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.context.SaTokenContextForThreadLocal;
+import cn.dev33.satoken.context.SaTokenContextForThreadLocalStaff;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
@@ -61,16 +63,70 @@ public class SaReactorSyncHolder {
 	}
 
 	/**
-	 * 将 exchange 写入到同步上下文中，并执行一段代码，执行完毕清除上下文
+	 * 在同步上下文写入 ServerWebExchange，并返回写入前的旧 Box（用于嵌套场景恢复）
+	 *
+	 * <p> 当前 SaTokenContext 为 ThreadLocal 实现时返回旧 Box（可能为 null），否则返回 null </p>
+	 *
+	 * @param exchange /
+	 * @return 绑定前的旧 Box，可能为 null
+	 * @since 1.46.1
+	 */
+	public static SaTokenContextModelBox bindContext(ServerWebExchange exchange) {
+		SaTokenContextModelBox prevBox = null;
+		if(SaManager.getSaTokenContext() instanceof SaTokenContextForThreadLocal) {
+			prevBox = SaTokenContextForThreadLocalStaff.getModelBoxOrNull();
+		}
+		setContext(exchange);
+		return prevBox;
+	}
+
+	/**
+	 * 恢复 {@link #bindContext} 返回的旧 Box；prevBox 为 null 时执行清除
+	 * @param prevBox bindContext 返回的旧 Box
+	 * @since 1.46.1
+	 */
+	public static void restoreContext(SaTokenContextModelBox prevBox) {
+		if(prevBox != null) {
+			SaTokenContextForThreadLocalStaff.setModelBoxRaw(prevBox);
+		} else {
+			clearContext();
+		}
+	}
+
+	/**
+	 * 读取当前线程的 Box；当前 SaTokenContext 非 ThreadLocal 实现时返回 null
+	 * @return /
+	 * @since 1.46.1
+	 */
+	public static SaTokenContextModelBox getCurrentBoxOrNull() {
+		if(SaManager.getSaTokenContext() instanceof SaTokenContextForThreadLocal) {
+			return SaTokenContextForThreadLocalStaff.getModelBoxOrNull();
+		}
+		return null;
+	}
+
+	/**
+	 * 仅当当前线程的 Box 恰好是 box 时才清除（避免并发场景下误删其它请求的上下文）
+	 * @param box 期望被清除的 Box
+	 * @since 1.46.1
+	 */
+	public static void clearContextIfCurrent(SaTokenContextModelBox box) {
+		if(SaManager.getSaTokenContext() instanceof SaTokenContextForThreadLocal) {
+			SaTokenContextForThreadLocalStaff.clearModelBoxIfCurrent(box);
+		}
+	}
+
+	/**
+	 * 将 exchange 写入到同步上下文中，并执行一段代码，执行完毕恢复上下文
 	 * @param exchange /
 	 * @param fun /
 	 */
 	public static <R>R setContext(ServerWebExchange exchange, SaRetGenericFunction<R> fun) {
+		SaTokenContextModelBox prevBox = bindContext(exchange);
 		try {
-			setContext(exchange);
 			return fun.run();
 		} finally {
-			clearContext();
+			restoreContext(prevBox);
 		}
 	}
 

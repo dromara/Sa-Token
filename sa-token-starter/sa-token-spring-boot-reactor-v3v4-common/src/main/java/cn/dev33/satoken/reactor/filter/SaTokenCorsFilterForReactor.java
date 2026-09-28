@@ -41,8 +41,9 @@ public class SaTokenCorsFilterForReactor implements WebFilter {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 
+		// 绑定前记录旧 Box，结束后恢复（嵌套在外层整请求绑定时保持外层上下文不被破坏）
+		SaTokenContextModelBox prevBox = SaReactorSyncHolder.bindContext(exchange);
 		try {
-			SaReactorSyncHolder.setContext(exchange);
 			SaTokenContextModelBox box = SaHolder.getContext().getModelBox();
 			SaStrategy.instance.corsHandle.execute(box.getRequest(), box.getResponse(), box.getStorage());
 		}
@@ -51,7 +52,7 @@ public class SaTokenCorsFilterForReactor implements WebFilter {
 			return SaReactorOperateUtil.writeResult(exchange, e.getMessage());
 		}
 		finally {
-			SaReactorSyncHolder.clearContext();
+			SaReactorSyncHolder.restoreContext(prevBox);
 		}
 
 		return chain.filter(exchange);
