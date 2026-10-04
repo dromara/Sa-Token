@@ -25,6 +25,7 @@ import org.redisson.client.codec.Codec;
 import org.redisson.client.codec.StringCodec;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -103,6 +104,21 @@ public class SaTokenDaoForRedisson implements SaTokenDaoByObjectFollowString, Sa
 			bucket.expireAsync(Duration.ofSeconds(timeout));
 			batch.execute();
 		}
+	}
+
+	/**
+	 * 写入Value，仅当该 key 不存在时生效 (单位: 秒)，原子操作 (trySet / SET NX)
+	 */
+	@Override
+	public boolean setIfAbsent(String key, String value, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return false;
+		}
+		// 判断是否为永不过期
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			return getBucket(key).trySet(value);
+		}
+		return getBucket(key).trySet(value, timeout, TimeUnit.SECONDS);
 	}
 
 	/**

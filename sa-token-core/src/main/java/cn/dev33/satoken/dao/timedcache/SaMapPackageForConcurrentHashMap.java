@@ -44,6 +44,11 @@ public class SaMapPackageForConcurrentHashMap<V> implements SaMapPackage<V> {
 	}
 
 	@Override
+	public V putIfAbsent(String key, V value) {
+		return map.putIfAbsent(key, value);
+	}
+
+	@Override
 	public void remove(String key) {
 		map.remove(key);
 	}
