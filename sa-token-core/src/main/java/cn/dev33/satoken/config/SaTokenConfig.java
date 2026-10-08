@@ -24,6 +24,8 @@ import cn.dev33.satoken.stp.parameter.enums.SaReplacedRange;
 import cn.dev33.satoken.util.SaFoxUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Sa-Token 配置类 Model
@@ -229,6 +231,9 @@ public class SaTokenConfig implements SaJsonType, Serializable {
 	 * 是否校验 Same-Token（部分rpc插件有效）
 	 */
 	private Boolean checkSameToken = false;
+
+    // 忽略
+    private List<String> ignoreSameTokenPaths = new ArrayList<>();
 
 	/**
 	 * Cookie配置对象 
@@ -993,4 +998,11 @@ public class SaTokenConfig implements SaJsonType, Serializable {
 		return this;
 	}
 
+    public List<String> getIgnoreSameTokenPaths() {
+        return ignoreSameTokenPaths;
+    }
+
+    public void setIgnoreSameTokenPaths(List<String> ignoreSameTokenPaths) {
+        this.ignoreSameTokenPaths = ignoreSameTokenPaths;
+    }
 }
