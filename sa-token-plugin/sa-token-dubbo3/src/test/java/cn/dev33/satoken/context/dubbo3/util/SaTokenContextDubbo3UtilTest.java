@@ -46,8 +46,8 @@ public class SaTokenContextDubbo3UtilTest {
 
 	/** setContext 应该把 Request / Response / Storage 都换成 Dubbo3 包装 */
 	@Test
-	public void setContext_wrapsServiceContext() {
-		SaTokenContextDubbo3Util.setContext(RpcContext.getServiceContext());
+	public void setContext_wrapsProviderAttachment() {
+		SaTokenContextDubbo3Util.setContext(RpcContext.getServerAttachment());
 		Assertions.assertTrue(SaHolder.getContext().isValid());
 		Assertions.assertTrue(SaHolder.getRequest() instanceof SaRequestForDubbo3);
 		Assertions.assertTrue(SaHolder.getResponse() instanceof SaResponseForDubbo3);
@@ -57,7 +57,7 @@ public class SaTokenContextDubbo3UtilTest {
 	/** setContext 应该用传入的 rpcContext 包装 */
 	@Test
 	public void setContext_usesPassedArgument() {
-		RpcContext ctx = RpcContext.getServiceContext();
+		RpcContext ctx = RpcContext.getServerAttachment();
 		SaTokenContextDubbo3Util.setContext(ctx);
 		Assertions.assertSame(ctx, SaHolder.getRequest().getSource());
 	}
@@ -65,7 +65,7 @@ public class SaTokenContextDubbo3UtilTest {
 	/** clearContext 之后 isValid 应该是 false */
 	@Test
 	public void clearContext_dropsBox() {
-		SaTokenContextDubbo3Util.setContext(RpcContext.getServiceContext());
+		SaTokenContextDubbo3Util.setContext(RpcContext.getServerAttachment());
 		SaTokenContextDubbo3Util.clearContext();
 		Assertions.assertFalse(SaHolder.getContext().isValid());
 	}

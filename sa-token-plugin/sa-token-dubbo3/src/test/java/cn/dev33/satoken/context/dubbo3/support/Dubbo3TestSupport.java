@@ -44,6 +44,9 @@ public final class Dubbo3TestSupport {
 		SaTokenContextMockUtil.clearContext();
 		RpcContext.removeContext();
 		RpcContext.removeServerContext();
+		RpcContext.removeClientAttachment();
+		RpcContext.removeServerAttachment();
+		RpcContext.removeServiceContext();
 	}
 
 	/** 造一条空的 RpcInvocation */
