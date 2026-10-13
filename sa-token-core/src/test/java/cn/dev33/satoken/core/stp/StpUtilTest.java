@@ -328,6 +328,16 @@ public class StpUtilTest {
 		});
 	}
 
+	/** 指定 token 的二级认证门面可在无请求上下文时调用 */
+	@Test
+	void safe_openWithToken_withoutContext() {
+		String token = SaTokenContextMockUtil.setMockContext(() -> StpUtil.getStpLogic().createLoginSession(USER_A));
+		StpUtil.openSafe(token, "pay", 60);
+		Assertions.assertTrue(StpUtil.isSafe(token, "pay"));
+		Assertions.assertFalse(StpUtil.isSafe(token, "edit"));
+		Assertions.assertThrows(NotLoginException.class, () -> StpUtil.openSafe("unknown", "pay", 60));
+	}
+
 	/** 身份切换：switchTo 期间 loginId 应变为目标账号，endSwitch 后恢复 */
 	@Test
 	void switchTo_andEndSwitch() {

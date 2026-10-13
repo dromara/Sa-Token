@@ -2920,14 +2920,43 @@ public class StpLogic {
 	 * @param safeTime 维持时间 (单位: 秒)
 	 */
 	public void openSafe(String service, long safeTime) {
-		// 1、开启二级认证前必须处于登录状态，否则抛出异常
+		// 开启二级认证前必须处于登录状态，否则抛出异常
 		checkLogin();
-
-		// 2、写入指定的 可以 标记，打开二级认证
 		String tokenValue = getTokenValueNotNull();
+		openSafeInternal(tokenValue, service, safeTime);
+	}
+
+	/**
+	 * 为指定 token 开启二级认证
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @param safeTime 维持时间 (单位: 秒)
+	 */
+	public void openSafe(String tokenValue, String service, long safeTime) {
+		// 1、与 isSafe(tokenValue, service) 一致，要求 token 对应有效的登录账号
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			throw NotLoginException.newInstance(loginType, NOT_TOKEN, NOT_TOKEN_MESSAGE, null).setCode(SaErrorCode.CODE_11011);
+		}
+		Object loginId = getLoginIdNotHandle(tokenValue);
+		if( ! isValidLoginId(loginId) ) {
+			throw NotLoginException.newInstance(loginType, INVALID_TOKEN, INVALID_TOKEN_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11012);
+		}
+		openSafeInternal(tokenValue, service, safeTime);
+	}
+
+	/**
+	 * 写入二级认证标记并发布事件，不校验 token，由调用入口负责校验
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @param safeTime 维持时间 (单位: 秒)
+	 */
+	protected void openSafeInternal(String tokenValue, String service, long safeTime) {
+		// 1、写入指定的 可以 标记，打开二级认证
 		getSaTokenDao().set(splicingKeySafe(tokenValue, service), SaTokenConsts.SAFE_AUTH_SAVE_VALUE, safeTime);
 
-		// 3、$$ 发布事件，某某 token 令牌开启了二级认证
+		// 2、$$ 发布事件，某某 token 令牌开启了二级认证
 		SaTokenEventCenter.doOpenSafe(loginType, tokenValue, service, safeTime);
 	}
 

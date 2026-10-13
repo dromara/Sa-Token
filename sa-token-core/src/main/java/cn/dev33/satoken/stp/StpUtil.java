@@ -1392,6 +1392,17 @@ public class StpUtil {
 	}
 
 	/**
+	 * 为指定 token 开启二级认证
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @param safeTime 维持时间 (单位: 秒)
+	 */
+	public static void openSafe(String tokenValue, String service, long safeTime) {
+		stpLogic.openSafe(tokenValue, service, safeTime);
+	}
+
+	/**
 	 * 判断：当前会话是否处于二级认证时间内
 	 *
 	 * @return true=二级认证已通过, false=尚未进行二级认证或认证已超时 
