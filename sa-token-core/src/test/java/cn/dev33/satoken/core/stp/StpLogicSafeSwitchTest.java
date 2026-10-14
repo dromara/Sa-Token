@@ -257,6 +257,82 @@ public class StpLogicSafeSwitchTest {
 		}
 	}
 
+	/** 指定 token 的完整二级认证流程（开启→校验→查询剩余时间→关闭）不依赖请求上下文 */
+	@Test
+	void safeLifecycle_withToken_withoutContext() {
+		String token = SaTokenContextMockUtil.setMockContext(() -> stpLogic.createLoginSession(90021));
+		String otherToken = SaTokenContextMockUtil.setMockContext(() -> stpLogic.createLoginSession(90022));
+
+		Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getSafeTime(token, "pay"));
+		Assertions.assertThrows(NotSafeException.class, () -> stpLogic.checkSafe(token, "pay"));
+
+		stpLogic.openSafe(token, "pay", 60);
+		Assertions.assertDoesNotThrow(() -> stpLogic.checkSafe(token, "pay"));
+		Assertions.assertThrows(NotSafeException.class, () -> stpLogic.checkSafe(token, "edit"));
+		Assertions.assertThrows(NotSafeException.class, () -> stpLogic.checkSafe(otherToken, "pay"));
+		long safeTime = stpLogic.getSafeTime(token, "pay");
+		Assertions.assertTrue(safeTime > 0 && safeTime <= 60);
+		Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getSafeTime(otherToken, "pay"));
+
+		stpLogic.closeSafe(token, "pay");
+		Assertions.assertFalse(stpLogic.isSafe(token, "pay"));
+		Assertions.assertThrows(NotSafeException.class, () -> stpLogic.checkSafe(token, "pay"));
+		Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getSafeTime(token, "pay"));
+	}
+
+	/** 指定 token 校验：空、未知或带异常登录标记的 token 抛 NotLoginException，而不是 NotSafeException */
+	@Test
+	void checkSafe_withInvalidToken_throwsNotLogin() {
+		Assertions.assertThrows(NotLoginException.class, () -> stpLogic.checkSafe(null, "pay"));
+		Assertions.assertThrows(NotLoginException.class, () -> stpLogic.checkSafe("", "pay"));
+		Assertions.assertThrows(NotLoginException.class, () -> stpLogic.checkSafe("unknown", "pay"));
+		for(String marker : NotLoginException.ABNORMAL_LIST) {
+			String token = "invalid-check-" + marker;
+			stpLogic.getSaTokenDao().set(stpLogic.splicingKeyTokenValue(token), marker, 60);
+			stpLogic.getSaTokenDao().set(stpLogic.splicingKeySafe(token, "pay"), SaTokenConsts.SAFE_AUTH_SAVE_VALUE, 60);
+			Assertions.assertThrows(NotLoginException.class, () -> stpLogic.checkSafe(token, "pay"));
+		}
+	}
+
+	/** 指定 token 查询/关闭：空 token 静默处理，与当前会话版本一致 */
+	@Test
+	void getSafeTimeAndCloseSafe_withEmptyToken_noop() {
+		Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getSafeTime(null, "pay"));
+		Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, stpLogic.getSafeTime("", "pay"));
+		Assertions.assertDoesNotThrow(() -> stpLogic.closeSafe(null, "pay"));
+		Assertions.assertDoesNotThrow(() -> stpLogic.closeSafe("", "pay"));
+	}
+
+	/** 在另一会话中关闭指定 token 的认证：只影响目标 token，事件携带目标 token */
+	@Test
+	void closeSafe_withToken_firesTargetEventAndKeepsCurrentSession() {
+		String token = SaTokenContextMockUtil.setMockContext(() -> stpLogic.createLoginSession(90023));
+		stpLogic.openSafe(token, "pay", 60);
+		int[] eventCount = {0};
+		SaTokenListenerForSimple listener = new SaTokenListenerForSimple() {
+			@Override
+			public void doCloseSafe(String loginType, String tokenValue, String service) {
+				Assertions.assertEquals(stpLogic.getLoginType(), loginType);
+				Assertions.assertEquals(token, tokenValue);
+				Assertions.assertEquals("pay", service);
+				eventCount[0]++;
+			}
+		};
+		SaTokenEventCenter.registerListener(listener);
+		try {
+			SaTokenContextMockUtil.setMockContext(() -> {
+				stpLogic.login(90024);
+				stpLogic.openSafe("pay", 60);
+				stpLogic.closeSafe(token, "pay");
+				Assertions.assertTrue(stpLogic.isSafe("pay"));
+			});
+			Assertions.assertFalse(stpLogic.isSafe(token, "pay"));
+			Assertions.assertEquals(1, eventCount[0]);
+		} finally {
+			SaTokenEventCenter.removeListener(listener);
+		}
+	}
+
 	/** 空 Token 调用 isSafe 应返回 false */
 	@Test
 	void isSafe_emptyToken_returnsFalse() {

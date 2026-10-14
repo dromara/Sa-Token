@@ -24,6 +24,7 @@ import cn.dev33.satoken.exception.ApiDisabledException;
 import cn.dev33.satoken.exception.DisableServiceException;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotSafeException;
 import cn.dev33.satoken.listener.SaTokenEventCenter;
 import cn.dev33.satoken.listener.SaTokenListenerForSimple;
 import cn.dev33.satoken.session.SaSession;
@@ -336,6 +337,18 @@ public class StpUtilTest {
 		Assertions.assertTrue(StpUtil.isSafe(token, "pay"));
 		Assertions.assertFalse(StpUtil.isSafe(token, "edit"));
 		Assertions.assertThrows(NotLoginException.class, () -> StpUtil.openSafe("unknown", "pay", 60));
+	}
+
+	/** 指定 token 的校验、剩余时间、关闭门面可在无请求上下文时调用 */
+	@Test
+	void safe_checkGetTimeCloseWithToken_withoutContext() {
+		String token = SaTokenContextMockUtil.setMockContext(() -> StpUtil.getStpLogic().createLoginSession(USER_A));
+		StpUtil.openSafe(token, "pay", 60);
+		Assertions.assertDoesNotThrow(() -> StpUtil.checkSafe(token, "pay"));
+		Assertions.assertTrue(StpUtil.getSafeTime(token, "pay") > 0);
+		StpUtil.closeSafe(token, "pay");
+		Assertions.assertThrows(NotSafeException.class, () -> StpUtil.checkSafe(token, "pay"));
+		Assertions.assertEquals(SaTokenDao.NOT_VALUE_EXPIRE, StpUtil.getSafeTime(token, "pay"));
 	}
 
 	/** 身份切换：switchTo 期间 loginId 应变为目标账号，endSwitch 后恢复 */

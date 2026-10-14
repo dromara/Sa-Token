@@ -1449,6 +1449,16 @@ public class StpUtil {
 	}
 
 	/**
+	 * 校验：检查指定 token 是否已通过指定业务的二级认证，如未通过则抛出异常
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 */
+	public static void checkSafe(String tokenValue, String service) {
+		stpLogic.checkSafe(tokenValue, service);
+	}
+
+	/**
 	 * 获取：当前会话的二级认证剩余有效时间（单位: 秒, 返回-2代表尚未通过二级认证）
 	 *
 	 * @return 剩余有效时间
@@ -1468,6 +1478,17 @@ public class StpUtil {
 	}
 
 	/**
+	 * 获取：指定 token 指定业务的二级认证剩余有效时间（单位: 秒, 返回-2代表尚未通过二级认证）
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @return 剩余有效时间
+	 */
+	public static long getSafeTime(String tokenValue, String service) {
+		return stpLogic.getSafeTime(tokenValue, service);
+	}
+
+	/**
 	 * 在当前会话 结束二级认证 
 	 */
 	public static void closeSafe() {
@@ -1481,6 +1502,16 @@ public class StpUtil {
 	 */
 	public static void closeSafe(String service) {
 		stpLogic.closeSafe(service);
+	}
+
+	/**
+	 * 为指定 token 结束指定业务标识的二级认证
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 */
+	public static void closeSafe(String tokenValue, String service) {
+		stpLogic.closeSafe(tokenValue, service);
 	}
 
 
