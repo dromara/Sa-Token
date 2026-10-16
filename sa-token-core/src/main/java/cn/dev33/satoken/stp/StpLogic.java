@@ -2920,14 +2920,52 @@ public class StpLogic {
 	 * @param safeTime 维持时间 (单位: 秒)
 	 */
 	public void openSafe(String service, long safeTime) {
-		// 1、开启二级认证前必须处于登录状态，否则抛出异常
+		// 开启二级认证前必须处于登录状态，否则抛出异常
 		checkLogin();
-
-		// 2、写入指定的 可以 标记，打开二级认证
 		String tokenValue = getTokenValueNotNull();
+		openSafeInternal(tokenValue, service, safeTime);
+	}
+
+	/**
+	 * 为指定 token 开启二级认证
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @param safeTime 维持时间 (单位: 秒)
+	 */
+	public void openSafe(String tokenValue, String service, long safeTime) {
+		// 1、与 isSafe(tokenValue, service) 一致，要求 token 对应有效的登录账号
+		checkSafeTokenValid(tokenValue);
+		openSafeInternal(tokenValue, service, safeTime);
+	}
+
+	/**
+	 * 校验：指定 token 是否对应有效的登录账号，判定规则与 isSafe(tokenValue, service) 一致，无效时抛出 NotLoginException
+	 *
+	 * @param tokenValue Token 值
+	 */
+	protected void checkSafeTokenValid(String tokenValue) {
+		if(SaFoxUtil.isEmpty(tokenValue)) {
+			throw NotLoginException.newInstance(loginType, NOT_TOKEN, NOT_TOKEN_MESSAGE, null).setCode(SaErrorCode.CODE_11011);
+		}
+		Object loginId = getLoginIdNotHandle(tokenValue);
+		if( ! isValidLoginId(loginId) ) {
+			throw NotLoginException.newInstance(loginType, INVALID_TOKEN, INVALID_TOKEN_MESSAGE, tokenValue).setCode(SaErrorCode.CODE_11012);
+		}
+	}
+
+	/**
+	 * 写入二级认证标记并发布事件，不校验 token，由调用入口负责校验
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @param safeTime 维持时间 (单位: 秒)
+	 */
+	protected void openSafeInternal(String tokenValue, String service, long safeTime) {
+		// 1、写入指定的 可以 标记，打开二级认证
 		getSaTokenDao().set(splicingKeySafe(tokenValue, service), SaTokenConsts.SAFE_AUTH_SAVE_VALUE, safeTime);
 
-		// 3、$$ 发布事件，某某 token 令牌开启了二级认证
+		// 2、$$ 发布事件，某某 token 令牌开启了二级认证
 		SaTokenEventCenter.doOpenSafe(loginType, tokenValue, service, safeTime);
 	}
 
@@ -3000,6 +3038,23 @@ public class StpLogic {
 	}
 
 	/**
+	 * 校验：检查指定 token 是否已通过指定业务的二级认证，如未通过则抛出异常
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 */
+	public void checkSafe(String tokenValue, String service) {
+		// 1、token 必须对应有效的登录账号，否则抛出 NotLoginException
+		checkSafeTokenValid(tokenValue);
+
+		// 2、如果缓存中可以查询出指定的键值，则代表已认证，否则抛出 NotSafeException
+		String value = getSaTokenDao().get(splicingKeySafe(tokenValue, service));
+		if(SaFoxUtil.isEmpty(value)) {
+			throw new NotSafeException(loginType, tokenValue, service).setCode(SaErrorCode.CODE_11071);
+		}
+	}
+
+	/**
 	 * 获取：当前会话的二级认证剩余有效时间（单位: 秒, 返回-2代表尚未通过二级认证）
 	 *
 	 * @return 剩余有效时间
@@ -3015,8 +3070,18 @@ public class StpLogic {
 	 * @return 剩余有效时间
 	 */
 	public long getSafeTime(String service) {
-		// 1、如果前端没有提交 Token，则直接视为未认证
-		String tokenValue = getTokenValue();
+		return getSafeTime(getTokenValue(), service);
+	}
+
+	/**
+	 * 获取：指定 token 指定业务的二级认证剩余有效时间（单位: 秒, 返回-2代表尚未通过二级认证）
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 * @return 剩余有效时间
+	 */
+	public long getSafeTime(String tokenValue, String service) {
+		// 1、如果 Token 为空，则直接视为未认证
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return SaTokenDao.NOT_VALUE_EXPIRE;
 		}
@@ -3038,8 +3103,17 @@ public class StpLogic {
 	 * @param service 业务标识
 	 */
 	public void closeSafe(String service) {
-		// 1、如果前端没有提交 Token，则无需任何操作
-		String tokenValue = getTokenValue();
+		closeSafe(getTokenValue(), service);
+	}
+
+	/**
+	 * 为指定 token 结束指定业务标识的二级认证
+	 *
+	 * @param tokenValue Token 值
+	 * @param service 业务标识
+	 */
+	public void closeSafe(String tokenValue, String service) {
+		// 1、如果 Token 为空，则无需任何操作
 		if(SaFoxUtil.isEmpty(tokenValue)) {
 			return;
 		}
