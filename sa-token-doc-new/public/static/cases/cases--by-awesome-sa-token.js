@@ -5,7 +5,7 @@
  * 不要当页面数据用（页面读 cases.json）。
  *
  * 规则：
- * 1. 项目顺序 = awesome-sa-token README 登记顺序（多语言里 real-token 固定排最后，见 doc-case--summary）
+ * 1. 项目顺序 = awesome-sa-token README 登记顺序
  * 2. README 有、本地无 → 新增；README 无、本地有 → 删除（hidden: true 除外）
  * 3. 同一 URL：更新 name / desc / category / lang / star；保留 cover、author、hidden
  * 4. 缺封面才补占位图，已有截图不覆盖
@@ -15,7 +15,7 @@
  */
 export default {
   "source": "https://gitee.com/sa-tokens/awesome-sa-token",
-  "updatedAt": "2026-09-16",
+  "updatedAt": "2026-10-16",
   "categories": [
     {
       "id": "admin",
@@ -63,7 +63,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--art-design-pro-java.png",
-      "star": 54
+      "star": 55
     },
     {
       "name": "wemirr-platform",
@@ -74,7 +74,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--wemirr-platform.png",
-      "star": 2326
+      "star": 2332
     },
     {
       "name": "Lucky-Admin-Vue3",
@@ -96,7 +96,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--lamp-cloud.png",
-      "star": 5756
+      "star": 5761
     },
     {
       "name": "橙单",
@@ -107,7 +107,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--orange-admin.png",
-      "star": 4631
+      "star": 4632
     },
     {
       "name": "Sz-Admin",
@@ -140,7 +140,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--eubackend.png",
-      "star": 277
+      "star": 276
     },
     {
       "name": "srppms",
@@ -173,7 +173,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--sa-plus.png",
-      "star": 1176
+      "star": 1175
     },
     {
       "name": "dcy-fast",
@@ -206,7 +206,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--easyadmin.png",
-      "star": 1866
+      "star": 1868
     },
     {
       "name": "RuoYi-Vue-Plus",
@@ -217,7 +217,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--ruoyi-vue-plus.png",
-      "star": 16983
+      "star": 17098
     },
     {
       "name": "SpringBoot_v2",
@@ -228,7 +228,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--springboot_v2.png",
-      "star": 6100
+      "star": 6098
     },
     {
       "name": "Ruoyi-Satoken",
@@ -305,7 +305,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--cyreneadmin.png",
-      "star": 26
+      "star": 27
     },
     {
       "name": "QuickBuild",
@@ -360,7 +360,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--snowy.jpg",
-      "star": 33234
+      "star": 33236
     },
     {
       "name": "XyyAdmin",
@@ -393,7 +393,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--ruoyi-vue-cms.png",
-      "star": 626
+      "star": 627
     },
     {
       "name": "springboot-multi-tenant-sa-token",
@@ -459,7 +459,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--continew-admin.png",
-      "star": 1426
+      "star": 1433
     },
     {
       "name": "laymini-admin",
@@ -470,7 +470,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--laymini-admin.png",
-      "star": 7
+      "star": 8
     },
     {
       "name": "Smart-Admin",
@@ -481,7 +481,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--smart-admin.png",
-      "star": 10649
+      "star": 10682
     },
     {
       "name": "Halcyon-Admin",
@@ -525,7 +525,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--ruoyi-fast-service.png",
-      "star": 6400
+      "star": 6419
     },
     {
       "name": "ChestnutCMS",
@@ -536,7 +536,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--chestnutcms.png",
-      "star": 3195
+      "star": 3205
     },
     {
       "name": "SpringBoot-Manager",
@@ -558,7 +558,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--ruoyi-flex.png",
-      "star": 832
+      "star": 830
     },
     {
       "name": "Snowy-Lite",
@@ -569,7 +569,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--snowy-lite.png",
-      "star": 745
+      "star": 746
     },
     {
       "name": "SpringBoot-Admin",
@@ -602,7 +602,7 @@ export default {
       "categoryId": "admin",
       "lang": "",
       "cover": "/big-file/index/case/case--youcan-solon.png",
-      "star": 126
+      "star": 125
     },
     {
       "name": "FNK-Server",
@@ -616,6 +616,17 @@ export default {
       "star": 109
     },
     {
+      "name": "Zhush-Ai-Boot",
+      "author": "primay",
+      "desc": "AI 优先的后台管理系统底座，基于 Spring Boot 4 + Java 21 + MyBatis-Flex + Sa-Token + AgentScope，支持多智能体编排、工具调用、SSE 流式对话与多模态生成，兼具 RBAC、页面化数据权限与 SQL 审计；前端配套 [Vue Vben Admin](https://gitee.com/primay/zhush-vue3-admin-ui-ai)。",
+      "url": "https://gitee.com/primay/zhush-boot4-ai-parent",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "cover": "/big-file/index/case/case--zhush-boot4-ai-parent.png",
+      "star": 1
+    },
+    {
       "name": "Lambda Fusion Framework",
       "author": "westboy",
       "desc": "基于 Spring Boot 4.0 + JDK 21 构建的全栈企业级微服务开发框架。提供开箱即用的权限管理、配置管理、数据字典、AI 智能平台等核心业务功能，助力快速构建微服务应用。",
@@ -624,7 +635,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--lambda-fusion-framework.png",
-      "star": 44
+      "star": 64
     },
     {
       "name": "XHan Admin",
@@ -646,7 +657,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--ruoyi-cloud-plus.png",
-      "star": 7184
+      "star": 7218
     },
     {
       "name": "Sp-Cloud",
@@ -701,7 +712,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--fhs-framework.png",
-      "star": 846
+      "star": 845
     },
     {
       "name": "Pig-Satoken",
@@ -734,7 +745,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--budwk-v7.png",
-      "star": 318
+      "star": 319
     },
     {
       "name": "xr-satoken-cloud",
@@ -767,7 +778,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--quick-boot.png",
-      "star": 106
+      "star": 107
     },
     {
       "name": "LangChat",
@@ -778,7 +789,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--langchat.png",
-      "star": 1281
+      "star": 1312
     },
     {
       "name": "Niucloud-Admin-Java",
@@ -800,7 +811,7 @@ export default {
       "categoryId": "microservice",
       "lang": "",
       "cover": "/big-file/index/case/case--ai-tourism.png",
-      "star": 129
+      "star": 130
     },
     {
       "name": "litemall-plus",
@@ -822,7 +833,7 @@ export default {
       "categoryId": "mall",
       "lang": "",
       "cover": "/big-file/index/case/case--mall4j.png",
-      "star": 17114
+      "star": 17119
     },
     {
       "name": "haorong-mall",
@@ -833,7 +844,7 @@ export default {
       "categoryId": "mall",
       "lang": "",
       "cover": "/big-file/index/case/case--haorong-mall.png",
-      "star": 518
+      "star": 519
     },
     {
       "name": "mall-swarm",
@@ -844,7 +855,7 @@ export default {
       "categoryId": "mall",
       "lang": "",
       "cover": "/big-file/index/case/case--mall-swarm.png",
-      "star": 1874
+      "star": 1877
     },
     {
       "name": "RenZS Blog",
@@ -877,7 +888,7 @@ export default {
       "categoryId": "blog",
       "lang": "",
       "cover": "/big-file/index/case/case--shiyi-blog.png",
-      "star": 3040
+      "star": 3045
     },
     {
       "name": "June 12",
@@ -943,7 +954,7 @@ export default {
       "categoryId": "lang",
       "lang": "Rust",
       "cover": "/big-file/index/case/case--sa-token-rust.png",
-      "star": 161
+      "star": 162
     },
     {
       "name": "sa-token-go",
@@ -954,18 +965,7 @@ export default {
       "categoryId": "lang",
       "lang": "Go",
       "cover": "/big-file/index/case/case--sa-token-go.png",
-      "star": 196
-    },
-    {
-      "name": "xlt-token",
-      "author": "xiaoLangtou",
-      "desc": "xlt-token 是一个为 NestJS 设计的轻量级 token 认证库，灵感来源于 Java 的 Sa-Token。它提供了灵活的 token 管理、会话控制、多端登录支持，以及可插拔的存储策略。",
-      "url": "https://github.com/xiaoLangtou/xlt-token",
-      "category": "多语言",
-      "categoryId": "lang",
-      "lang": "Node.js",
-      "cover": "/big-file/index/case/case--xlt-token.png",
-      "star": 32
+      "star": 199
     },
     {
       "name": "real-token",
@@ -979,6 +979,17 @@ export default {
       "star": 9
     },
     {
+      "name": "xlt-token",
+      "author": "xiaoLangtou",
+      "desc": "xlt-token 是一个为 NestJS 设计的轻量级 token 认证库，灵感来源于 Java 的 Sa-Token。它提供了灵活的 token 管理、会话控制、多端登录支持，以及可插拔的存储策略。",
+      "url": "https://github.com/xiaoLangtou/xlt-token",
+      "category": "多语言",
+      "categoryId": "lang",
+      "lang": "Node.js",
+      "cover": "/big-file/index/case/case--xlt-token.png",
+      "star": 33
+    },
+    {
       "name": "customer_work",
       "author": "liulangjietou",
       "desc": "基于 Sa-Token 构建的企业级智能体客服系统，包含 H5 客户端与后台运营。",
@@ -987,7 +998,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--customer_work.png",
-      "star": 129
+      "star": 137
     },
     {
       "name": "kb-rag",
@@ -998,7 +1009,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--kb-rag.png",
-      "star": 18
+      "star": 21
     },
     {
       "name": "Petrichor",
@@ -1009,7 +1020,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--petrichor.png",
-      "star": 133
+      "star": 149
     },
     {
       "name": "Lucky-Auth",
@@ -1053,7 +1064,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--free-fs.png",
-      "star": 1493
+      "star": 1510
     },
     {
       "name": "Glowxq-OJ",
@@ -1064,7 +1075,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--glowxq-oj.png",
-      "star": 327
+      "star": 328
     },
     {
       "name": "FlyFlow",
@@ -1119,7 +1130,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--cubic.png",
-      "star": 1932
+      "star": 1931
     },
     {
       "name": "ChatGPT-WEB",
@@ -1141,7 +1152,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--superbot-chatgptapp.png",
-      "star": 781
+      "star": 787
     },
     {
       "name": "ScribbleHub",
@@ -1163,7 +1174,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--time-sea-chatgpt.png",
-      "star": 456
+      "star": 454
     },
     {
       "name": "SUPERBOT-GPT",
@@ -1174,7 +1185,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--superbot-gpt.png",
-      "star": 781
+      "star": 787
     },
     {
       "name": "DaxPay",
@@ -1185,7 +1196,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--daxpay.png",
-      "star": 1920
+      "star": 1933
     },
     {
       "name": "Dinky",
@@ -1196,7 +1207,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--dinky.png",
-      "star": 3763
+      "star": 3770
     },
     {
       "name": "mldong",
@@ -1207,7 +1218,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--mldong.png",
-      "star": 10017
+      "star": 10014
     },
     {
       "name": "Flow",
@@ -1218,7 +1229,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--flow.png",
-      "star": 2553
+      "star": 2559
     },
     {
       "name": "H5VE-Boot",
@@ -1229,7 +1240,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--h5ve-boot.png",
-      "star": 1758
+      "star": 1762
     },
     {
       "name": "Van-App",
@@ -1251,7 +1262,7 @@ export default {
       "categoryId": "other",
       "lang": "",
       "cover": "/big-file/index/case/case--coursearragement.png",
-      "star": 405
+      "star": 403
     }
   ]
 }
