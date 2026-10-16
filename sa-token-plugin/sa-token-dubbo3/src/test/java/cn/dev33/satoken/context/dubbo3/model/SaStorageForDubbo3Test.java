@@ -36,7 +36,7 @@ public class SaStorageForDubbo3Test {
 	/** 构造后 getSource 应该就是传入的 RpcContext */
 	@Test
 	public void ctor_keepsSource() {
-		RpcContext ctx = RpcContext.getServiceContext();
+		RpcContext ctx = RpcContext.getServerAttachment();
 		SaStorageForDubbo3 storage = new SaStorageForDubbo3(ctx);
 		Assertions.assertSame(ctx, storage.getSource());
 	}
@@ -44,7 +44,7 @@ public class SaStorageForDubbo3Test {
 	/** 普通 key 应该能 set / get / delete，setter 连缀返回自身 */
 	@Test
 	public void setGetDelete_roundTrip() {
-		RpcContext ctx = RpcContext.getServiceContext();
+		RpcContext ctx = RpcContext.getServerAttachment();
 		SaStorageForDubbo3 storage = new SaStorageForDubbo3(ctx);
 		Assertions.assertSame(storage, storage.set("k", "v"));
 		Assertions.assertEquals("v", storage.get("k"));
@@ -55,7 +55,7 @@ public class SaStorageForDubbo3Test {
 	/** 写入 JUST_CREATED_NOT_PREFIX 时，还应该写到 ServerContext 给 Consumer 带回 */
 	@Test
 	public void setJustCreated_echoesToServerContext() {
-		RpcContext ctx = RpcContext.getServiceContext();
+		RpcContext ctx = RpcContext.getServerAttachment();
 		SaStorageForDubbo3 storage = new SaStorageForDubbo3(ctx);
 		storage.set(SaTokenConsts.JUST_CREATED_NOT_PREFIX, "tok");
 		Assertions.assertEquals("tok", storage.get(SaTokenConsts.JUST_CREATED_NOT_PREFIX));
@@ -66,7 +66,7 @@ public class SaStorageForDubbo3Test {
 	/** 普通 key 不应该去动 ServerContext */
 	@Test
 	public void setOtherKey_doesNotTouchServerContext() {
-		RpcContext ctx = RpcContext.getServiceContext();
+		RpcContext ctx = RpcContext.getServerAttachment();
 		SaStorageForDubbo3 storage = new SaStorageForDubbo3(ctx);
 		storage.set("other", "x");
 		Assertions.assertNull(RpcContext.getServerContext().getAttachment("other"));
