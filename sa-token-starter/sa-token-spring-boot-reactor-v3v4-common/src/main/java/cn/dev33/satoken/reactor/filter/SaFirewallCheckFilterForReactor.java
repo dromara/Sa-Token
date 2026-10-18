@@ -18,6 +18,7 @@ package cn.dev33.satoken.reactor.filter;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.FirewallCheckException;
 import cn.dev33.satoken.exception.StopMatchException;
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.reactor.context.SaReactorSyncHolder;
 import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
@@ -46,8 +47,9 @@ public class SaFirewallCheckFilterForReactor implements WebFilter {
 		SaRequest saRequest = SaStrategy.instance.createSaRequest.apply(exchange.getRequest());
 		SaResponse saResponse = SaStrategy.instance.createSaResponse.apply(exchange.getResponse());
 
+		// 绑定前记录旧 Box，结束后恢复（嵌套在外层整请求绑定时保持外层上下文不被破坏）
+		SaTokenContextModelBox prevBox = SaReactorSyncHolder.bindContext(exchange);
 		try {
-			SaReactorSyncHolder.setContext(exchange);
 			SaFirewallStrategy.instance.check.execute(saRequest, saResponse, exchange);
 		}
 		catch (StopMatchException ignored) {}
@@ -64,7 +66,7 @@ public class SaFirewallCheckFilterForReactor implements WebFilter {
 			}
 		}
 		finally {
-			SaReactorSyncHolder.clearContext();
+			SaReactorSyncHolder.restoreContext(prevBox);
 		}
 		// 更多异常则不处理，交由 Web 框架处理
 
