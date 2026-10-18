@@ -21,6 +21,7 @@ import cn.dev33.satoken.util.SaResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 /**
  * Boot 4 注解鉴权冒烟端点。
@@ -41,6 +42,15 @@ public class SaAnnotationController {
     @GetMapping("/checkLogin")
     public SaResult checkLogin() {
         return SaResult.ok();
+    }
+
+    /** 需要登录的异步端点：立即完成，用于触发 ASYNC 收尾派发（生产中对应 SseEmitter / StreamingResponseBody 长流） */
+    @SaCheckLogin
+    @GetMapping("/asyncDeferred")
+    public DeferredResult<SaResult> asyncDeferred() {
+        DeferredResult<SaResult> deferredResult = new DeferredResult<>();
+        deferredResult.setResult(SaResult.ok());
+        return deferredResult;
     }
 
 }
