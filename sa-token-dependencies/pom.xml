@@ -43,7 +43,7 @@
 		<fory-json.version>1.6.1</fory-json.version>
 		<redisson.version>3.45.0</redisson.version>
 		<hutool-cache.version>5.8.36</hutool-cache.version>
-		<hutool.version>5.8.36</hutool.version>
+		<hutool-json.version>5.8.36</hutool-json.version>
 		<caffeine.version>3.2.0</caffeine.version>
 		<forest.version>1.6.4</forest.version>
 		<okhttps.version>4.1.0</okhttps.version>
@@ -330,7 +330,7 @@
 			<dependency>
 				<groupId>cn.hutool</groupId>
 				<artifactId>hutool-json</artifactId>
-				<version>${hutool.version}</version>
+				<version>${hutool-json.version}</version>
 			</dependency>
 
 			<!-- Caffeine -->
