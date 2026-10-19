@@ -38,6 +38,18 @@ public class SaJsonTemplateForHutoolJsonTest extends SaJsonTemplateTestCommon {
 				"{\"id\":10001,\"name\":\"张三\",\"age\":18}", false, false);
 	}
 
+	/** 验证 Hutool Json 的 Session 常用类型往返（Date 按时间戳存储） */
+	@Test
+	void allowsCommonSessionTypes() {
+		assertCommonSessionTypes(new SaJsonTemplateForHutoolJson(), false);
+	}
+
+	/** 验证 Hutool Json 保留 Session Map 包装类型 */
+	@Test
+	void allowsWrapperTypesInSessionMap() {
+		assertWrapperTypesInSessionMap(new SaJsonTemplateForHutoolJson());
+	}
+
 	/** 验证 Hutool Json 将空字符串视为无值 */
 	@Test
 	void convertsEmptyStringsToNull() {
