@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-plugin</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>sa-token-jackson3-plain</artifactId>
+    <name>sa-token-jackson3-plain</name>
+    <description>Sa-Token Jackson 3 plain JSON integration</description>
+    <dependencies>
+        <dependency><groupId>cn.dev33</groupId><artifactId>sa-token-core</artifactId></dependency>
+        <dependency><groupId>tools.jackson.core</groupId><artifactId>jackson-databind</artifactId><optional>true</optional></dependency>
+        <dependency><groupId>cn.dev33</groupId><artifactId>sa-token-json-test-common</artifactId><scope>test</scope></dependency>
+    </dependencies>
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+    </properties>
+</project>

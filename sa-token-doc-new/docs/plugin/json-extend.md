@@ -17,6 +17,7 @@ Sa-Token 在 Session 存储、Redis 缓存等场景下需要对对象进行 JSON
 
 - **sa-token-jackson**：集成 Jackson（com.fasterxml.jackson），适用于 SpringBoot2/3 等环境。
 - **sa-token-jackson3**：集成 Jackson 3（tools.jackson.core），适用于 SpringBoot4、Java 17+ 等环境。
+- **sa-token-jackson3-plain**：集成 Jackson 3 的纯 JSON 模式，不写入 `@class` 类型信息，行为对齐 Fastjson2。
 - **sa-token-fastjson**：集成 Fastjson。
 - **sa-token-fastjson2**：集成 Fastjson2。
 - **sa-token-fory-json**：集成 [Apache Fory JSON](https://fory.apache.org/docs/json/)（高性能 JSON 编解码，不在 JSON 中写入类型信息，用法同 Fastjson2）。
@@ -55,6 +56,23 @@ Gradle 参考：`implementation 'cn.dev33:sa-token-jackson:${sa.top.version}'`
 </dependency>
 ```
 Gradle 参考：`implementation 'cn.dev33:sa-token-jackson3:${sa.top.version}'`
+
+== Jackson3 Plain
+
+``` xml
+<!-- Sa-Token 整合 Jackson3：不写入类型信息的纯 JSON 模式，要求 Java 17+ -->
+<dependency>
+    <groupId>cn.dev33</groupId>
+    <artifactId>sa-token-jackson3-plain</artifactId>
+    <version>${sa.top.version}</version>
+</dependency>
+```
+Gradle 参考：`implementation 'cn.dev33:sa-token-jackson3-plain:${sa.top.version}'`
+
+`sa-token-jackson3` 适用于需要在 JSON 中保留类型信息、通过类型白名单还原多态对象的场景。
+`sa-token-jackson3-plain` 适用于 Spring Boot 4 / Jackson 3 下希望使用纯 JSON 的场景，不自动写入 `@class` 类型信息。
+纯 JSON 不保留原始对象类型，业务对象请通过 `jsonToObject(json, Class)` 或 `session.getModel(key, Class)` 指定类型；直接读取 Session 数据可能得到 Map 等通用类型。
+切换插件前请处理存量 Session 数据的兼容性，不应假定两种模式可以无缝互换。
 
 == Fastjson
 
