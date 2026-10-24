@@ -14,6 +14,7 @@ public class SaSessionForJackson3PlainCustomized extends SaSession {
     private static final JsonMapper MAPPER = JsonMapper.builder()
             .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
             .build();
 
     public SaSessionForJackson3PlainCustomized() { super(); }

@@ -18,6 +18,8 @@ public class SaJsonTemplateForJackson3Plain implements SaJsonTemplate {
         this.objectMapper = JsonMapper.builder()
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                // Session values are first restored as Maps; avoid rounding decimals through Double.
+                .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS)
                 .build();
     }
 

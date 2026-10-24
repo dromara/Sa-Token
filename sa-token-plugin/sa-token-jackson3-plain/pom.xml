@@ -16,6 +16,8 @@
         <dependency><groupId>cn.dev33</groupId><artifactId>sa-token-core</artifactId></dependency>
         <dependency><groupId>tools.jackson.core</groupId><artifactId>jackson-databind</artifactId><optional>true</optional></dependency>
         <dependency><groupId>cn.dev33</groupId><artifactId>sa-token-json-test-common</artifactId><scope>test</scope></dependency>
+        <dependency><groupId>cn.dev33</groupId><artifactId>sa-token-jackson3</artifactId><scope>test</scope></dependency>
+        <dependency><groupId>cn.dev33</groupId><artifactId>sa-token-fastjson2</artifactId><scope>test</scope></dependency>
     </dependencies>
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
