@@ -170,9 +170,9 @@ Sa-Token SSO 分為三種模式，可解決：`同域、跨域、共享Redis、�
 
 | 系統架構						| 採用模式	| 簡介						        |  文檔鏈接	|
 | :--------						| :--------	|:----------------| :--------	|
-| 前端同域 + 後端同 Redis			| 模式一		| 共享Cookie同步會話			 | [文檔](https://sa-token.com/doc.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client)	|
-| 前端不同域 + 後端同 Redis		| 模式二		| URL重定向傳播會話 			  | [文檔](https://sa-token.com/doc.html#/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client)	|
-| 前端不同域 + 後端 不同Redis		| 模式三		| HTTP請求獲取會話			   | [文檔](https://sa-token.com/doc.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client)	|
+| 前端同域 + 後端同 Redis			| 模式一		| 共享Cookie同步會話			 | [文檔](https://sa-token.com/doc.html#/sso/sso-type1)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client)	|
+| 前端不同域 + 後端同 Redis		| 模式二		| URL重定向傳播會話 			  | [文檔](https://sa-token.com/doc.html#/sso/sso-type2)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client)	|
+| 前端不同域 + 後端 不同Redis		| 模式三		| HTTP請求獲取會話			   | [文檔](https://sa-token.com/doc.html#/sso/sso-type3)、[示例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client)	|
 
 
 1. 前端同域：就是指多個系統可以部署在同一個主域名之下，比如：`c1.domain.com`、`c2.domain.com`、`c3.domain.com`

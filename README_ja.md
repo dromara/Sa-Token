@@ -170,9 +170,9 @@ Sa-Token SSO は 3 つのモードに分かれており、`同域、跨域、共
 
 |システムアーキテクチャ |導入パターン |はじめに |ドキュメントへのリンク |
 | :--------						| :--------	|:----------------| :--------	|
-|同じドメイン内のフロントエンド + Redis と同じドメイン内のバックエンド |モード 1 |共有 Cookie 同期セッション | [文書](https://sa-token.com/doc.html#/sso/sso-type1)、[例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client) |
-|フロントエンドの異なるドメイン + Redis と同じバックエンド |モード 2 | URL リダイレクト伝播セッション | [文書](https://sa-token.com/doc.html#/sso/sso-type2)、[例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client) |
-|異なるフロントエンド ドメイン + 異なるバックエンド Redis |モード 3 |セッションを取得するための HTTP リクエスト | [文書](https://sa-token.com/doc.html#/sso/sso-type3)、[例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client) |
+|同じドメイン内のフロントエンド + Redis と同じドメイン内のバックエンド |モード 1 |共有 Cookie 同期セッション | [文書](https://sa-token.com/doc.html#/sso/sso-type1)、[例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client) |
+|フロントエンドの異なるドメイン + Redis と同じバックエンド |モード 2 | URL リダイレクト伝播セッション | [文書](https://sa-token.com/doc.html#/sso/sso-type2)、[例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client) |
+|異なるフロントエンド ドメイン + 異なるバックエンド Redis |モード 3 |セッションを取得するための HTTP リクエスト | [文書](https://sa-token.com/doc.html#/sso/sso-type3)、[例](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client) |
 
 
 1. フロントエンドの同じドメイン: `c1.domain.com`、`c2.domain.com`、`c3.domain.com` など、同じメイン ドメイン名の下に複数のシステムを展開できることを意味します。

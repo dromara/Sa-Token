@@ -170,9 +170,9 @@ Sa-Token SSO is divided into three modes, which can solve the SSO authentication
 
 | System Architecture | Adoption Patterns | Introduction | Documentation Links |
 | :--------						| :--------	|:----------------| :--------	|
-| Front-end in the same domain + back-end in the same domain as Redis | Mode 1 | Shared cookie synchronization session | [Document](https://sa-token.com/doc.html#/sso/sso-type1), [Example](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client) |
-| Different domains on the front end + the same backend as Redis | Mode 2 | URL redirection propagation session | [Document](https://sa-token.com/doc.html#/sso/sso-type2), [Example](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client) |
-| Different front-end domains + different back-end Redis | Mode 3 | HTTP request to obtain session | [Document](https://sa-token.com/doc.html#/sso/sso-type3), [Example](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client) |
+| Front-end in the same domain + back-end in the same domain as Redis | Mode 1 | Shared cookie synchronization session | [Document](https://sa-token.com/doc.html#/sso/sso-type1), [Example](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client) |
+| Different domains on the front end + the same backend as Redis | Mode 2 | URL redirection propagation session | [Document](https://sa-token.com/doc.html#/sso/sso-type2), [Example](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client) |
+| Different front-end domains + different back-end Redis | Mode 3 | HTTP request to obtain session | [Document](https://sa-token.com/doc.html#/sso/sso-type3), [Example](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client) |
 
 
 1. Front-end same domain: means that multiple systems can be deployed under the same main domain name, such as: `c1.domain.com`, `c2.domain.com`, `c3.domain.com`

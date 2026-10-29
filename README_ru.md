@@ -170,9 +170,9 @@ registry.addInterceptor(new SaInterceptor(handler -> {
 
 | Системная архитектура | Модели принятия | Введение | Ссылки на документацию |
 | :--------						| :--------	|:----------------| :--------	|
-| Интерфейсная часть в том же домене + серверная часть в том же домене, что и Redis | Режим 1 | Общий сеанс синхронизации файлов cookie | [Документ](https://sa-token.com/doc.html#/sso/sso-type1), [Пример](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client) |
-| Разные домены во внешнем интерфейсе + тот же серверный интерфейс, что и у Redis | Режим 2 | Сеанс распространения перенаправления URL | [Документ](https://sa-token.com/doc.html#/sso/sso-type2), [Пример](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client) |
-| Разные внешние домены + разные внутренние Redis | Режим 3 | HTTP-запрос для получения сеанса | [Документ](https://sa-token.com/doc.html#/sso/sso-type3), [Пример](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client) |
+| Интерфейсная часть в том же домене + серверная часть в том же домене, что и Redis | Режим 1 | Общий сеанс синхронизации файлов cookie | [Документ](https://sa-token.com/doc.html#/sso/sso-type1), [Пример](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client) |
+| Разные домены во внешнем интерфейсе + тот же серверный интерфейс, что и у Redis | Режим 2 | Сеанс распространения перенаправления URL | [Документ](https://sa-token.com/doc.html#/sso/sso-type2), [Пример](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client) |
+| Разные внешние домены + разные внутренние Redis | Режим 3 | HTTP-запрос для получения сеанса | [Документ](https://sa-token.com/doc.html#/sso/sso-type3), [Пример](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client) |
 
 
 1. Один и тот же домен внешнего интерфейса: означает, что несколько систем могут быть развернуты под одним и тем же основным именем домена, например: `c1.domain.com`, `c2.domain.com`, `c3.domain.com`.

@@ -170,9 +170,9 @@ Sa-Token SSO는 `同域、跨域、共享Redis、跨Redis、前后端一体、�
 
 | 시스템 아키텍처 | 채택 패턴 | 소개 | 문서 링크 |
 | :--------						| :--------	|:----------------| :--------	|
-| Redis와 동일한 도메인의 프런트엔드 + 동일한 도메인의 백엔드 | 모드 1 | 공유 쿠키 동기화 세션 | [문서](https://sa-token.com/doc.html#/sso/sso-type1), [예제](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso1-client) |
-| 프런트 엔드의 다른 도메인 + Redis와 동일한 백엔드 | 모드 2 | URL 리디렉션 전파 세션 | [문서](https://sa-token.com/doc.html#/sso/sso-type2), [예제](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso2-client) |
-| 다양한 프런트엔드 도메인 + 다양한 백엔드 Redis | 모드 3 | 세션을 얻기 위한 HTTP 요청 | [문서](https://sa-token.com/doc.html#/sso/sso-type3), [예제](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso3-client) |
+| Redis와 동일한 도메인의 프런트엔드 + 동일한 도메인의 백엔드 | 모드 1 | 공유 쿠키 동기화 세션 | [문서](https://sa-token.com/doc.html#/sso/sso-type1), [예제](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso1-client) |
+| 프런트 엔드의 다른 도메인 + Redis와 동일한 백엔드 | 모드 2 | URL 리디렉션 전파 세션 | [문서](https://sa-token.com/doc.html#/sso/sso-type2), [예제](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso2-client) |
+| 다양한 프런트엔드 도메인 + 다양한 백엔드 Redis | 모드 3 | 세션을 얻기 위한 HTTP 요청 | [문서](https://sa-token.com/doc.html#/sso/sso-type3), [예제](https://gitee.com/dromara/sa-token/blob/master/sa-token-demo/sa-token-demo-sso/sa-token-demo-sso3-client) |
 
 
 1. 프런트엔드 동일 도메인: `c1.domain.com`, `c2.domain.com`, `c3.domain.com`와 같이 동일한 기본 도메인 이름으로 여러 시스템을 배포할 수 있음을 의미합니다.
