@@ -238,6 +238,35 @@ public class SaSignTemplateTest {
                 () -> t.checkParamMap(noSign)).getMessage().contains("sign"));
     }
 
+    /**
+     * checkParamMap 签名无效的请求不应该消费 nonce：
+     * 攻击者抢先提交一个篡改参数但复用合法 nonce/timestamp/sign 的请求被拒后，
+     * 随后到达的真正合法请求应该照常通过，不能被“此 nonce 已被使用过”误拒
+     */
+    @Test
+    public void checkParamMap_invalidSignDoesNotConsumeNonce() {
+        SaSignTemplate t = template();
+        Map<String, String> valid = buildValidParamMap(t);
+
+        // 篡改业务参数、保留原 nonce/timestamp/sign：签名对不上，必须被拒绝
+        Map<String, String> tampered = new LinkedHashMap<>(valid);
+        tampered.put("name", "attacker");
+        SaSignException ex = Assertions.assertThrows(SaSignException.class, () -> t.checkParamMap(tampered));
+        Assertions.assertEquals(SaSignErrorCode.CODE_12202, ex.getCode());
+
+        // 携带同一 nonce 的真正合法请求随后到达：应该照常通过
+        Assertions.assertDoesNotThrow(() -> t.checkParamMap(valid));
+    }
+
+    /** checkParamMap 合法请求通过后，携带同一 nonce 的完整重放必须被拒绝（防重放不因顺序调整而弱化） */
+    @Test
+    public void checkParamMap_replaySameNonceStillRejected() {
+        SaSignTemplate t = template();
+        Map<String, String> valid = buildValidParamMap(t);
+        Assertions.assertDoesNotThrow(() -> t.checkParamMap(valid));
+        Assertions.assertThrows(SaSignException.class, () -> t.checkParamMap(valid));
+    }
+
     /** isValidRequest 不指定 paramNames 时应该校验全部参数，指定 paramNames 时应该只拿指定参数参与签名 */
     @Test
     public void isValidRequest_allAndSpecifiedParams() {
