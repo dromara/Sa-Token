@@ -230,7 +230,7 @@ public class SaRedisCache implements JbootCache {
 
             if (scanKeys != null && scanKeys.size() > 0) {
                 for (String key : scanKeys) {
-                    keys.add(key.substring(3));
+                    keys.add(key);
                 }
             }
 
@@ -246,6 +246,9 @@ public class SaRedisCache implements JbootCache {
         try {
             return jedisPool.getResource();
         } catch (JedisConnectionException e) {
+            if (config == null) {
+                throw e;
+            }
             throw new JbootIllegalConfigException("can not connect to redis host  " + config.getHost() + ":" + config.getPort() + " ," +
                     " cause : " + e, e);
         }

@@ -23,5 +23,10 @@
             <groupId>org.apache.fory</groupId>
             <artifactId>fory-json</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-json-test-common</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

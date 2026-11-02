@@ -75,15 +75,6 @@ cd ..
 
 cd ..
 
-:: test clean 
-
-cd sa-token-test
-call mvn clean
-cd ..
-
-
-
-
 :: 最后打印
 echo;
 echo;

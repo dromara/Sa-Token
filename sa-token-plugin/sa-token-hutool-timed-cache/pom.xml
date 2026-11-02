@@ -25,6 +25,7 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-cache</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

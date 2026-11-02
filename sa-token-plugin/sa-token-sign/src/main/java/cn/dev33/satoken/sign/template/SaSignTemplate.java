@@ -342,9 +342,12 @@ public class SaSignTemplate {
 		SaSignException.notEmpty(signValue, "缺少 sign 字段");
 
 		// 依次校验三个参数
+		// 注意：nonce 的消费必须放在验签之后，即先做无副作用的校验，最后才把 nonce 写入缓存。
+		// 否则一个签名无效的请求（例如攻击者抢先重放嗅探到的 nonce）也会消费掉合法 nonce，
+		// 导致随后到达的真正合法请求被“此 nonce 已被使用过”误拒。
 		checkTimestamp(Long.parseLong(timestampValue));
-		checkNonce(nonceValue);
 		checkSign(paramMap, signValue);
+		checkNonce(nonceValue);
 
 		// 通过 √
 	}

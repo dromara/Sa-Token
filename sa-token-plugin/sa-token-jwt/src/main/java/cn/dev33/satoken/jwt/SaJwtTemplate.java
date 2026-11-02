@@ -303,12 +303,12 @@ public class SaJwtTemplate {
     		return NOT_VALUE_EXPIRE;
     	}
     	
-    	// 取出数据 
+    	// 取出数据
     	JWT jwt;
     	try {
     		jwt = JWT.of(token);
-		} catch (JWTException e) {
-			// 解析失败 
+		} catch (JWTException | JSONException e) {
+			// 解析失败
 			return NOT_VALUE_EXPIRE;
 		}
     	JSONObject payloads = jwt.getPayloads();
@@ -324,13 +324,17 @@ public class SaJwtTemplate {
     		return NOT_VALUE_EXPIRE;
     	}
     	
-    	// 如果被设置为：永不过期 
+    	// 如果 token 无 eff 字段
     	Long effTime = payloads.get(EFF, Long.class);
+    	if(effTime == null) {
+    		return NOT_VALUE_EXPIRE;
+    	}
+    	// 如果被设置为：永不过期
     	if(effTime == NEVER_EXPIRE) {
     		return NEVER_EXPIRE;
     	}
-    	// 如果已经超时 
-    	if(effTime == null || effTime < System.currentTimeMillis()) {
+    	// 如果已经超时
+    	if(effTime < System.currentTimeMillis()) {
     		return NOT_VALUE_EXPIRE;
     	}
     	

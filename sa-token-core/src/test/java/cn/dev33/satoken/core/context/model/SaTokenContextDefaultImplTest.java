@@ -1,0 +1,57 @@
+/*
+ * Copyright 2020-2099 sa-token.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.dev33.satoken.core.context.model;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import cn.dev33.satoken.context.SaTokenContextDefaultImpl;
+import cn.dev33.satoken.context.mock.SaRequestForMock;
+import cn.dev33.satoken.context.mock.SaResponseForMock;
+import cn.dev33.satoken.context.mock.SaStorageForMock;
+import cn.dev33.satoken.error.SaErrorCode;
+import cn.dev33.satoken.exception.SaTokenContextException;
+
+/**
+ * 默认上下文测试 
+ * 
+ * @author click33
+ * @since 2022-9-5
+ */
+public class SaTokenContextDefaultImplTest {
+
+	/** 默认上下文在未集成 Web 框架时应抛出异常 */
+	@Test
+	public void testSaTokenContextDefaultImpl() {
+		SaTokenContextDefaultImpl context = new SaTokenContextDefaultImpl();
+		assertContextException(() -> context.setContext(new SaRequestForMock(), new SaResponseForMock(), new SaStorageForMock()));
+		assertContextException(context::clearContext);
+		assertContextException(context::isValid);
+		assertContextException(context::getModelBox);
+		assertContextException(context::getStorage);
+		assertContextException(context::getRequest);
+		assertContextException(context::getResponse);
+	}
+
+	/** 默认上下文的所有操作均应提示缺少有效的上下文处理器 */
+	private void assertContextException(Executable executable) {
+		SaTokenContextException ex = Assertions.assertThrows(SaTokenContextException.class, executable);
+		Assertions.assertEquals(SaTokenContextDefaultImpl.ERROR_MESSAGE, ex.getMessage());
+		Assertions.assertEquals(SaErrorCode.CODE_10001, ex.getCode());
+	}
+	
+}

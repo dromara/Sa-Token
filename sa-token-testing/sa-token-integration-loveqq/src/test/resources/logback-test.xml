@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} -- %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 探 servlet 实现类失败会打 ERROR，测试里是预期的，直接关掉 -->
+	<logger name="com.kfyty.loveqq.framework.core.utils.ReflectUtil" level="OFF"/>
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+	</root>
+</configuration>

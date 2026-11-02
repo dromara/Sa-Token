@@ -15,6 +15,9 @@
  */
 package cn.dev33.satoken.jboot;
 
+import cn.dev33.satoken.exception.BackResultException;
+import cn.dev33.satoken.exception.SaTokenException;
+import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
@@ -25,7 +28,18 @@ import com.jfinal.aop.Invocation;
 public class SaAnnotationInterceptor implements Interceptor {
     @Override
     public void intercept(Invocation invocation) {
-        SaAnnotationStrategy.instance.checkMethodAnnotation.accept((invocation.getMethod()));
+        try {
+            SaAnnotationStrategy.instance.checkMethodAnnotation.accept(invocation.getMethod());
+        } catch (StopMatchException e) {
+            invocation.invoke();
+            return;
+        } catch (BackResultException e) {
+            invocation.getController().renderText(e.getMessage());
+            return;
+        } catch (SaTokenException e) {
+            invocation.getController().renderText(e.getMessage());
+            return;
+        }
         invocation.invoke();
     }
 }

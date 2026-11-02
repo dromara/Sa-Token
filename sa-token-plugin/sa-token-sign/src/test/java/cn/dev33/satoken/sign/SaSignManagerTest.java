@@ -1,0 +1,90 @@
+/*
+ * Copyright 2020-2099 sa-token.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package cn.dev33.satoken.sign;
+
+import cn.dev33.satoken.sign.config.SaSignConfig;
+import cn.dev33.satoken.sign.support.SignTest;
+import cn.dev33.satoken.sign.template.SaSignTemplate;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * {@link SaSignManager} 全局组件 lazy init 与读写测试
+ *
+ * @author click33
+ * @since 1.46.0
+ */
+@SignTest
+public class SaSignManagerTest {
+
+    /** getConfig 多次调用应该返回同一个实例 */
+    @Test
+    public void getConfig_lazyInit() {
+        // 通过反射无法重置 static volatile，这里验证多次调用返回同一实例
+        SaSignConfig c1 = SaSignManager.getConfig();
+        SaSignConfig c2 = SaSignManager.getConfig();
+        Assertions.assertSame(c1, c2);
+    }
+
+    /** setConfig 写入后 getConfig 应该读到同一个实例 */
+    @Test
+    public void setConfig_readBack() {
+        SaSignConfig config = new SaSignConfig().setSecretKey("mgr-key");
+        SaSignManager.setConfig(config);
+        Assertions.assertSame(config, SaSignManager.getConfig());
+    }
+
+    /** getSignMany 多次调用应该返回非 null 的 map */
+    @Test
+    public void getSignMany_lazyInit() {
+        Assertions.assertNotNull(SaSignManager.getSignMany());
+    }
+
+    /** setSignMany 写入后 getSignMany 应该读到同一个实例 */
+    @Test
+    public void setSignMany_readBack() {
+        Map<String, SaSignConfig> map = new LinkedHashMap<>();
+        map.put("app1", new SaSignConfig().setSecretKey("k1"));
+        SaSignManager.setSignMany(map);
+        Assertions.assertSame(map, SaSignManager.getSignMany());
+        Assertions.assertEquals("k1", SaSignManager.getSignMany().get("app1").getSecretKey());
+    }
+
+    /** getSaSignTemplate 多次调用应该返回同一个实例 */
+    @Test
+    public void getSaSignTemplate_lazyInit() {
+        SaSignTemplate t1 = SaSignManager.getSaSignTemplate();
+        SaSignTemplate t2 = SaSignManager.getSaSignTemplate();
+        Assertions.assertSame(t1, t2);
+    }
+
+    /** setSaSignTemplate 写入后 getSaSignTemplate 应该读到同一个实例 */
+    @Test
+    public void setSaSignTemplate_readBack() {
+        SaSignTemplate template = new SaSignTemplate(new SaSignConfig().setSecretKey("t-key"));
+        SaSignManager.setSaSignTemplate(template);
+        Assertions.assertSame(template, SaSignManager.getSaSignTemplate());
+    }
+
+    /** 应测尽测：测试 SaSignManager 无参构造 */
+    @Test
+    public void constructor_instantiable() {
+        Assertions.assertNotNull(new SaSignManager());
+    }
+}

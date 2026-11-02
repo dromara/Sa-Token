@@ -1,0 +1,6 @@
+sa-token:
+  token-name: satoken
+  timeout: 2592000
+  is-concurrent: true
+  is-log: false
+  is-print: false

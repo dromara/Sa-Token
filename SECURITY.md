@@ -1,3 +1,5 @@
+[简体中文](./SECURITY_zh-CN.md) | English
+
 # Security Policy
 
 Thanks for helping keep Sa-Token and the wider [dromara](https://github.com/dromara) ecosystem secure.
@@ -14,6 +16,9 @@ Use one of these private channels instead:
 
 2. **Email.**
    If GitHub PVR is unavailable to you for any reason, email the project lead directly: [2393584716@qq.com](mailto:2393584716@qq.com).
+
+3. **WeChat.**
+   If you already use WeChat, you can also add the project lead at `kite2020_` for more timely follow-up. Please set the friend-request note to `Sa-Token 漏洞提交`.
 
 ## What to include
 

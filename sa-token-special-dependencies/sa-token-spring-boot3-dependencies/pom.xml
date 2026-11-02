@@ -21,6 +21,8 @@
         <springboot3.version>3.5.11</springboot3.version>
         <springboot3-spring.version>6.2.16</springboot3-spring.version>
         <reactor-core.version>3.7.4</reactor-core.version>
+        <!-- 与 Boot 3.5.11 配套；覆盖 sa-token-dependencies 里偏旧的 jackson2 -->
+        <jackson-databind.version>2.19.4</jackson-databind.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +61,20 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${springboot3.version}</version>
+            </dependency>
+
+            <!-- spring-boot-starter-test 测试 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${springboot3.version}</version>
+            </dependency>
+
+            <!-- jackson2，与 Boot 3.5.11 对齐 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-databind.version}</version>
             </dependency>
 
         </dependencies>

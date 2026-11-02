@@ -16,6 +16,10 @@
     <artifactId>sa-token-alone-redis-by-spring-boot4</artifactId>
 	<description>sa-token-alone-redis for Spring Boot 4</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
 		<!-- Spring Boot 4 Data Redis (provides DataRedisProperties) -->
 		<dependency>
@@ -38,6 +42,22 @@
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-pool2</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.dev33</groupId>
+			<artifactId>sa-token-redis-dao-test-common</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.fppt</groupId>
+			<artifactId>jedis-mock</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

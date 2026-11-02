@@ -1,0 +1,3054 @@
+/**
+ * 来源：GitHub used by（dromara/sa-token 依赖图谱）
+ *
+ * 本文件是案例页的数据源之一，由 doc-case--spider--github-used-by 同步。
+ * 不要当页面数据用（页面读 cases.json）。
+ *
+ * 规则：
+ * 1. 只收录 GitHub 公开仓库；Gitee 项目不在此列
+ * 2. star >= 30 才自动进入；10～29 在 temp-file 灰区，不进本文件
+ * 3. fork 默认不收录（star >= 100 的 fork 只进审阅文件）
+ * 4. demo / 作业 / 笔记等非正式项目不收录
+ * 5. desc 优先 README 首段，去掉 GitHub 页脚的 Contribute to… 后缀
+ * 6. 同步会整文件重写。不要在项目条目里夹注释
+ * 7. coverage 字段记录抓取覆盖率（页头总数 / 实爬 / 去重 / 最终收录），GitHub 单模块 HTML 上限约 1388
+ *
+ * 要改这段说明，改 skill 脚本里的 SOURCE_HEADER。
+ */
+export default {
+  "source": "https://github.com/dromara/sa-token/network/dependents",
+  "updatedAt": "2026-09-17",
+  "run": 1,
+  "coverage": {
+    "crawl": {
+      "updatedAt": "2026-09-17",
+      "tokenUsed": true,
+      "note": "headerTotalSum 为各模块页头数字相加（同一 repo 可出现在多个模块，会重复计数）。GitHub HTML dependents 单模块公开列表上限约 1388 条，页头总数无法通过网页翻页拿全；token 只能略增未登录时的页数，不能突破该上限。",
+      "modules": {
+        "total": 62,
+        "done": 62,
+        "skipped": 3,
+        "capped": 28
+      },
+      "headerTotalSum": 12053,
+      "rowsFetched": 5478,
+      "estimatedGap": 6575,
+      "perPackage": [
+        {
+          "name": "cn.dev33:sa-token-alone-redis",
+          "headerTotal": 346,
+          "fetched": 109,
+          "pages": 4,
+          "capped": true,
+          "gap": 237,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-alone-redis-by-spring-boot4",
+          "headerTotal": 4,
+          "fetched": 2,
+          "pages": 1,
+          "capped": true,
+          "gap": 2,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-alone-redisson",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-apikey",
+          "headerTotal": 6,
+          "fetched": 5,
+          "pages": 1,
+          "capped": false,
+          "gap": 1,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-bom",
+          "headerTotal": 61,
+          "fetched": 41,
+          "pages": 2,
+          "capped": true,
+          "gap": 20,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-caffeine",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-core",
+          "headerTotal": 705,
+          "fetched": 301,
+          "pages": 11,
+          "capped": true,
+          "gap": 404,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-dependencies",
+          "headerTotal": 27,
+          "fetched": 17,
+          "pages": 1,
+          "capped": true,
+          "gap": 10,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-dubbo",
+          "headerTotal": 32,
+          "fetched": 19,
+          "pages": 1,
+          "capped": true,
+          "gap": 13,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-dubbo3",
+          "headerTotal": 3,
+          "fetched": 43,
+          "pages": 2,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-fastjson",
+          "headerTotal": 8,
+          "fetched": 7,
+          "pages": 1,
+          "capped": false,
+          "gap": 1,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-fastjson2",
+          "headerTotal": 2,
+          "fetched": 8,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-forest",
+          "headerTotal": 5,
+          "fetched": 5,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-fory-json",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-freemarker",
+          "headerTotal": 3,
+          "fetched": 3,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-grpc",
+          "headerTotal": 15,
+          "fetched": 9,
+          "pages": 1,
+          "capped": true,
+          "gap": 6,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-hutool-timed-cache",
+          "headerTotal": 6,
+          "fetched": 5,
+          "pages": 1,
+          "capped": false,
+          "gap": 1,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-jackson",
+          "headerTotal": 9,
+          "fetched": 7,
+          "pages": 1,
+          "capped": true,
+          "gap": 2,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-jackson3",
+          "headerTotal": 3,
+          "fetched": 3,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-jakarta-servlet",
+          "headerTotal": 17,
+          "fetched": 12,
+          "pages": 1,
+          "capped": true,
+          "gap": 5,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-jboot-plugin",
+          "headerTotal": 15,
+          "fetched": 9,
+          "pages": 1,
+          "capped": true,
+          "gap": 6,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-jfinal-plugin",
+          "headerTotal": 15,
+          "fetched": 9,
+          "pages": 1,
+          "capped": true,
+          "gap": 6,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-jwt",
+          "headerTotal": 1359,
+          "fetched": 591,
+          "pages": 21,
+          "capped": true,
+          "gap": 768,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-loveqq-boot-starter",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-oauth2",
+          "headerTotal": 2,
+          "fetched": 61,
+          "pages": 3,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-okhttps",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-parent",
+          "headerTotal": 0,
+          "fetched": 0,
+          "pages": 0,
+          "capped": false,
+          "gap": 0,
+          "skipped": true
+        },
+        {
+          "name": "cn.dev33:sa-token-plugin",
+          "headerTotal": 15,
+          "fetched": 9,
+          "pages": 1,
+          "capped": true,
+          "gap": 6,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-quick-login",
+          "headerTotal": 115,
+          "fetched": 21,
+          "pages": 1,
+          "capped": true,
+          "gap": 94,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-reactor-spring-boot-starter",
+          "headerTotal": 494,
+          "fetched": 157,
+          "pages": 6,
+          "capped": true,
+          "gap": 337,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-reactor-spring-boot3-starter",
+          "headerTotal": 346,
+          "fetched": 218,
+          "pages": 8,
+          "capped": true,
+          "gap": 128,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-reactor-spring-boot4-starter",
+          "headerTotal": 5,
+          "fetched": 5,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-redis-jackson",
+          "headerTotal": 1508,
+          "fetched": 919,
+          "pages": 31,
+          "capped": true,
+          "gap": 589,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-redis-template",
+          "headerTotal": 104,
+          "fetched": 82,
+          "pages": 3,
+          "capped": true,
+          "gap": 22,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-redis-template-jdk-serializer",
+          "headerTotal": 3,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 1,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-redisson",
+          "headerTotal": 10,
+          "fetched": 8,
+          "pages": 1,
+          "capped": true,
+          "gap": 2,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-redisson-spring-boot-starter",
+          "headerTotal": 7,
+          "fetched": 6,
+          "pages": 1,
+          "capped": false,
+          "gap": 1,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-redisx",
+          "headerTotal": 19,
+          "fetched": 12,
+          "pages": 1,
+          "capped": true,
+          "gap": 7,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-rest-client",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-rest-template",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-serializer-features",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-servlet",
+          "headerTotal": 119,
+          "fetched": 19,
+          "pages": 1,
+          "capped": true,
+          "gap": 100,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-sign",
+          "headerTotal": 4,
+          "fetched": 5,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-snack3",
+          "headerTotal": 3,
+          "fetched": 4,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-snack4",
+          "headerTotal": 4,
+          "fetched": 3,
+          "pages": 1,
+          "capped": false,
+          "gap": 1,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-solon-plugin",
+          "headerTotal": 98,
+          "fetched": 17,
+          "pages": 1,
+          "capped": true,
+          "gap": 81,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-special-dependencies",
+          "headerTotal": 0,
+          "fetched": 0,
+          "pages": 0,
+          "capped": false,
+          "gap": 0,
+          "skipped": true
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-aop",
+          "headerTotal": 327,
+          "fetched": 92,
+          "pages": 4,
+          "capped": true,
+          "gap": 235,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot-reactor-v3v4-common",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot-starter",
+          "headerTotal": 4014,
+          "fetched": 1388,
+          "pages": 47,
+          "capped": true,
+          "gap": 2626,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot-webmvc-reactor-v2v3v4-common",
+          "headerTotal": 0,
+          "fetched": 0,
+          "pages": 0,
+          "capped": false,
+          "gap": 0,
+          "skipped": true
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot-webmvc-v3v4-common",
+          "headerTotal": 5,
+          "fetched": 5,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot2-dependencies",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot3-dependencies",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot3-starter",
+          "headerTotal": 1900,
+          "fetched": 1078,
+          "pages": 37,
+          "capped": true,
+          "gap": 822,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot4-dependencies",
+          "headerTotal": 2,
+          "fetched": 2,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-boot4-starter",
+          "headerTotal": 20,
+          "fetched": 21,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-spring-el",
+          "headerTotal": 4,
+          "fetched": 4,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-sso",
+          "headerTotal": 216,
+          "fetched": 87,
+          "pages": 3,
+          "capped": true,
+          "gap": 129,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-starter",
+          "headerTotal": 15,
+          "fetched": 9,
+          "pages": 1,
+          "capped": true,
+          "gap": 6,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-temp-jwt",
+          "headerTotal": 28,
+          "fetched": 14,
+          "pages": 1,
+          "capped": true,
+          "gap": 14,
+          "skipped": false
+        },
+        {
+          "name": "cn.dev33:sa-token-thymeleaf",
+          "headerTotal": 3,
+          "fetched": 3,
+          "pages": 1,
+          "capped": false,
+          "gap": 0,
+          "skipped": false
+        }
+      ]
+    },
+    "dedup": {
+      "uniqueRepos": 2447,
+      "rawRows": 5478
+    },
+    "enrich": {
+      "enriched": 197,
+      "kept": 196,
+      "reviewForkStar100": 0,
+      "droppedFork": 0,
+      "droppedGone": 0,
+      "droppedInformalDesc": 1
+    },
+    "verify": {
+      "checked": 196,
+      "kept": 170,
+      "passed": 184,
+      "inconclusive": 0,
+      "droppedNoUsage": 12,
+      "tokenUsed": true,
+      "manualReviewed": 51
+    },
+    "output": {
+      "kept": 170,
+      "starThreshold": 30
+    }
+  },
+  "projects": [
+    {
+      "name": "mall-swarm",
+      "author": "macrozheng",
+      "desc": "mall-swarm是一套微服务商城系统，采用了 Spring Cloud Alibaba、Spring Boot 3.5、Sa-Token、MyBatis、Elasticsearch、Docker、Kubernetes等核心技术，同时提供了基于Vue的管理后台方便快速搭建系统。mall-swarm在电商业务的基础集成了注册中心、配置中心、监控中心、网关等系统功能。",
+      "url": "https://github.com/macrozheng/mall-swarm",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 13145,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "zfile",
+      "author": "zfile-dev",
+      "desc": "ZFile 是面向个人与小团队的在线网盘程序，可对接 S3、本地存储、FTP 等多种存储源，在同一页面完成文件浏览、预览与分享，部署简单、维护成本低。",
+      "url": "https://github.com/zfile-dev/zfile",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 10841,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "lamp-cloud",
+      "author": "dromara",
+      "desc": "[灯灯]微服务中后台快速开发平台，支持jdk21、jdk17、jdk8，专注于多租户、开放平台解决方案，亦可作为普通项目（非SaaS架构）的基础开发框架使用，目前已实现插拔式数据库隔离、SCHEMA隔离、字段隔离 等租户隔离方案。",
+      "url": "https://github.com/dromara/lamp-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 5756,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-webmvc-v3v4-common",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ruoyi-ai",
+      "author": "ageerle",
+      "desc": "企业级 AI 应用开发框架，用于构建 AI 智能体与工作流。提供统一模型接入、RAG 知识库、工具调用与可视化编排能力，基于 Spring Boot 与 Sa-Token 权限体系，适合快速落地企业知识问答、办公助手等场景。",
+      "url": "https://github.com/ageerle/ruoyi-ai",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 5701,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "mall4j",
+      "author": "gz-yami",
+      "desc": "⭐️⭐️⭐️ 电商商城 小程序电商商城系统 PC商城 H5商城 APP商城 Java商城 O2O商城 跨境商城",
+      "url": "https://github.com/gz-yami/mall4j",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 5255,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "smart-admin",
+      "author": "1024-lab",
+      "desc": "SmartAdmin国内首个以「高质量代码」为核心，「简洁、高效、安全」快速开发平台；基于SpringBoot2/3 + Sa-Token + Mybatis-Plus 和 Vue3 + Vite5 + Ant Design Vue 4.x (同时支持JavaScript和TypeScript双版本)；满足国家三级等保要求、支持登录限制、接口数据国产加解密、高防SQL注入等一系列安全体系。",
+      "url": "https://github.com/1024-lab/smart-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 3868,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "dinky",
+      "author": "DataLinkDC",
+      "desc": "Dinky 是基于 Apache Flink 的一站式实时计算平台，提供可视化 FlinkSQL 开发、语法校验与多模式作业提交，面向实时数仓、流批一体与数据中台建设场景。",
+      "url": "https://github.com/DataLinkDC/dinky",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 3764,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "PlayEdu",
+      "author": "PlayEdu",
+      "desc": "PlayEdu 是面向企业与培训机构的在线学习平台，基于 Java + MySQL 前后端分离架构，提供部门与学员管理、视频学习、进度追踪与私有化存储等培训基础能力。",
+      "url": "https://github.com/PlayEdu/PlayEdu",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 3289,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "RuoYi-Vue-Plus",
+      "author": "dromara",
+      "desc": "多租户后台管理系统 重写RuoYi-Vue所有功能 集成 Sa-Token、Mybatis-Plus、WarmFlow、SpringDoc、Hutool、OSS 定期同步",
+      "url": "https://github.com/dromara/RuoYi-Vue-Plus",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 2681,
+      "packages": [
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "goodsKill",
+      "author": "techa03",
+      "desc": "🐎基于SpringCloud 2025.x + Dubbo 3.x + AI构建的模拟秒杀微服务项目，集成了Elasticsearch🔍、Gateway、Mybatis-Plus、Sharding-JDBC等常用开源组件",
+      "url": "https://github.com/techa03/goodsKill",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 2439,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot4-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "ai-beehive",
+      "author": "hncboy",
+      "desc": "AI 蜂巢，基于 Java 使用 Spring Boot 3 和 JDK 17，支持的功能有 ChatGPT、OpenAi Image、Midjourney、NewBing、文心一言等等",
+      "url": "https://github.com/hncboy/ai-beehive",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 2213,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "continew-admin",
+      "author": "continew-org",
+      "desc": "ContiNew Admin 是基于 Spring Boot 3 的多租户中后台管理系统，注重代码规范与界面设计，开箱即用，适合企业级后台与 SaaS 管理端快速开发。",
+      "url": "https://github.com/continew-org/continew-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 2111,
+      "packages": [
+        "cn.dev33:sa-token-sign"
+      ]
+    },
+    {
+      "name": "Springboot_v2",
+      "author": "fuce1314",
+      "desc": "SpringBoot_v2项目是努力打造springboot框架的极致细腻的脚手架。包括一套漂亮的前台。无其他杂七杂八的功能，原生纯净。",
+      "url": "https://github.com/fuce1314/Springboot_v2",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 1783,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "matecloud",
+      "author": "mateaix",
+      "desc": "MateCloud 是 AI 原生、云原生的 DDD 微服务脚手架，基于 Spring Boot 4 与 Spring Cloud，支持单体与微服务双形态切换，内置网关、认证、系统管理与 Spring AI 对话能力。",
+      "url": "https://github.com/mateaix/matecloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 1697,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "NutzWk",
+      "author": "Wizzercn",
+      "desc": "NutzWk（BudWk）是开源企业级 Java Web 开发框架，基于 Nutz 生态，提供权限、系统管理与模块化脚手架，适合中小型企业与个人快速搭建后台应用。",
+      "url": "https://github.com/Wizzercn/NutzWk",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 1608,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-servlet"
+      ]
+    },
+    {
+      "name": "xiaozhi-esp32-server-java",
+      "author": "joey-zhou",
+      "desc": "小智ESP32的Java企业级管理平台，提供设备监控、音色定制、角色切换和对话记录管理的前后端及服务端一体化解决方案",
+      "url": "https://github.com/joey-zhou/xiaozhi-esp32-server-java",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 1350,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "RuoYi-Cloud-Plus",
+      "author": "dromara",
+      "desc": "微服务管理系统 重写RuoYi-Cloud所有功能 整合 SpringCloudAlibaba、Dubbo3.0、Sa-Token、Mybatis-Plus、MQ、WarmFlow、ES、Docker 全方位升级 定期同步",
+      "url": "https://github.com/dromara/RuoYi-Cloud-Plus",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 1303,
+      "packages": [
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-dubbo3",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "langchat",
+      "author": "LangChat",
+      "desc": "LangChat 是 Java 生态下的企业级 AIGC 解决方案，集成 RBAC 与大模型能力，支持快速搭建 AI 知识库、企业机器人，并对接多家主流大模型服务。",
+      "url": "https://github.com/LangChat/langchat",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 1281,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "waynboot-mall",
+      "author": "wayn111",
+      "desc": "waynboot-mall 是基于 Spring Boot 3 与 Java 17 的 Maven 多模块商城后端，覆盖商品、订单、库存、支付、消息队列与搜索等能力，面向高并发电商交易链路。",
+      "url": "https://github.com/wayn111/waynboot-mall",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 1257,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "wms-ruoyi",
+      "author": "zccbbg",
+      "desc": "若依wms是一套基于若依的wms仓库管理系统，支持lodop和网页打印入库单、出库单。包括仓库/库区/货架管理，出入库管理，客户/供应商/承运商，库存看板、库存记录等功能。",
+      "url": "https://github.com/zccbbg/wms-ruoyi",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 1200,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "yu-picture",
+      "author": "liyupi",
+      "desc": "企业级智能协同云图库平台，基于 Vue 3 + Spring Boot，支持公开图库检索、团队空间、私有相册与 WebSocket 实时协同编辑，适用于设计素材、企业相册等场景。",
+      "url": "https://github.com/liyupi/yu-picture",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 1045,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "HuLa-Server",
+      "author": "HuLaSpark",
+      "desc": "HuLa 即时通讯系统服务端，基于 Spring Cloud、Spring Boot、Netty 与 RocketMQ 构建，为 HuLa 客户端提供消息、会话与群组等 IM 核心能力。",
+      "url": "https://github.com/HuLaSpark/HuLa-Server",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 905,
+      "packages": [
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-reactor-spring-boot4-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-webmvc-v3v4-common",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "dax-pay",
+      "author": "dromara",
+      "desc": "DaxPay是一款免费开源的支付管理系统，支持支付宝、微信、海科、乐刷等通道，提供收单、退款、聚合支付等功能。通过HTTP方式进行调用，不与其他系统产生耦合关联，提供可视化界面进行管理。",
+      "url": "https://github.com/dromara/dax-pay",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 895,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "flow",
+      "author": "Jzow",
+      "desc": "企业级流程中心（基于flowable和bpmn.js封装的流程引擎）. 2、配置数据源 修改flow-admin模块下的resources配置文件application-local.properties 3、启动应用程序 flow-admin模块下的com.dragon.flow.main.FlowAdminApplication",
+      "url": "https://github.com/Jzow/flow",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 848,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "Snowy",
+      "author": "xiaonuobase",
+      "desc": "💖Snowy是一款国内首个国密前后分离快速开发平台，采用Vue3+AntDesignVue3 + Vite+SpringBoot+Mp+HuTool+SaToken。集成国密加解密插件，在前后分离框架中，真正做到：前后分离“密”不可分；同时实现国产化机型、中间件、数据库适配，是您的不二之选；最后官网提供工作流、多租户、多数据源、Vue3表单设计器等丰富插件灵活使用。",
+      "url": "https://github.com/xiaonuobase/Snowy",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 814,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-forest",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-oauth2",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-redisson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-sso"
+      ]
+    },
+    {
+      "name": "comfyui-openrouter-ai",
+      "author": "dulaiduwang003",
+      "desc": "面向 AI 创作的全栈工作流平台，前端 Vue 3 + 后端 Spring Boot 3，集成 ComfyUI 编排、LLM 流式对话、对象存储与系统管理，适合 AIGC 应用搭建。",
+      "url": "https://github.com/dulaiduwang003/comfyui-openrouter-ai",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 781,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Code-Nest",
+      "author": "xiaou61",
+      "desc": "面向开发者的成长型社区平台，基于 Spring Boot 3 + Vue 3，整合题库、面试辅导、博客、IM、积分激励等模块，并提供 Sa-Token 权限与可观测性支持。",
+      "url": "https://github.com/xiaou61/Code-Nest",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 772,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "springboot-manager",
+      "author": "aitangbao",
+      "desc": "基于SpringBoot + Mybatis Plus + SaToken + Thymeleaf + Layui的后台管理系统",
+      "url": "https://github.com/aitangbao/springboot-manager",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 747,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "fish-island-backend",
+      "author": "lhccong",
+      "desc": "摸鱼岛🎣后端 基于爬虫 ➕ Netty ➕ SpringBoot ➕Redis➕ MySQL 开源🌟一站式摸鱼网",
+      "url": "https://github.com/lhccong/fish-island-backend",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 711,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "cloudSec",
+      "author": "libaibaia",
+      "desc": "云安全利用工具-云平台AK/SK-WEB利用工具，添加AK/SK自动检测资源，无需手动执行，支持云服务器、存储桶、数据库操作",
+      "url": "https://github.com/libaibaia/cloudSec",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 599,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "oci-start",
+      "author": "doubleDimple",
+      "desc": "基于 Oracle Cloud API 的实例全生命周期管理平台，支持实例创建、启停、同步、监控与回收，面向多云运维与自动化部署场景。",
+      "url": "https://github.com/doubleDimple/oci-start",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 574,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "spring-boot-init-template",
+      "author": "AntonyCheng",
+      "desc": "Spring Boot 企业级初始化模板，整合常用中间件与工程规范，支持 JDK 11/17，适合前后端分离项目快速起步与学习最佳实践。",
+      "url": "https://github.com/AntonyCheng/spring-boot-init-template",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 543,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "HivisionIDPhotos-wechat-weapp",
+      "author": "no1xuan",
+      "desc": "微信小程序版 AI 证件照工具，支持换底色、常用尺寸生成与智能抠图，基于 HivisionIDPhotos 能力，面向个人证件照制作场景。",
+      "url": "https://github.com/no1xuan/HivisionIDPhotos-wechat-weapp",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 538,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "cubic",
+      "author": "dromara",
+      "desc": "一站式问题定位平台，分布式实例监控、线程栈监控、线程池监控、动态arthas命令集、依赖分析等等等，助你快速定位问题",
+      "url": "https://github.com/dromara/cubic",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 524,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "mianshiya-next",
+      "author": "liyupi",
+      "desc": "企业级面试刷题平台，基于 Next.js SSR + Spring Boot + Redis + Elasticsearch，支持题库管理、分词检索、在线刷题与刷题记录，含缓存与安全治理实践。",
+      "url": "https://github.com/liyupi/mianshiya-next",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 513,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "CloudEon",
+      "author": "dromara",
+      "desc": "在使用helm + Kubernetes（具体可参考：源码 ）来部署管理大数据集群过程中，我们发现这种方法大大减少了部署时间，提高了部署大数据集群的成功率。然而，运维管理的体验不尽人意，因为使用通用型Kubernetes的管理工具来管理大数据服务是不容易的，这需要开发者掌握Pod、Service、Configmap等知识。",
+      "url": "https://github.com/dromara/CloudEon",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 495,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "tgDrive",
+      "author": "SkyDependence",
+      "desc": "基于 Telegram Bot 的网盘应用，利用 Telegram 存储能力实现不限容量与高速文件上传下载，支持 WebDAV、PicGo 等扩展，适合个人云盘与图床场景。",
+      "url": "https://github.com/SkyDependence/tgDrive",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 461,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "wehcatapp-chatgpt",
+      "author": "dulaiduwang003",
+      "desc": "基于SpringBoot3开发的Ai平台 含双端 网页以及小程序 包含各类Ai模型 和绘图 ,含支付 双端数据同步 支持自定义预设词,功能板块定义 web兼容手机展示",
+      "url": "https://github.com/dulaiduwang003/wehcatapp-chatgpt",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 456,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "orise-charge-cloud",
+      "author": "NaTieJun",
+      "desc": "⚡️充电桩开源云平台⚡️完整源代码，包含模拟桩模块，可通过docker编排快速部署测试。技术栈：SpringCloud、MySQL、Redis、RabbitMQ，前后端管理系统（管理后台、小程序），支持互联互通协议、市政协议、一对多方平台支持。支持高并发业务、业务动态伸缩、桩通信负载均衡（NLB）。",
+      "url": "https://github.com/NaTieJun/orise-charge-cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 455,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-dubbo3",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "shopzz",
+      "author": "whoiszxl",
+      "desc": "后端使用 SpringCloud Alibaba 开发，移动端使用 React Native 构建，管理后台使用 Arco Design 进行构建，并在支付上接入数字货币（比特币、以太坊UDST、平台Token）支付，后端采用 Hadoop 与 Flink 等大数据框架构建实时计算与离线计算体系。",
+      "url": "https://github.com/whoiszxl/shopzz",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 437,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "dive-into-spring-ai",
+      "author": "qifan777",
+      "desc": "《动手学SpringAI》包含SSE流/Agent智能体/知识图谱RAG/FunctionCall/历史消息/图片生成/图片理解/Embedding/VectorDatabase/RAG",
+      "url": "https://github.com/qifan777/dive-into-spring-ai",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 425,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "RuoYi-Flowable-Plus",
+      "author": "KonBAI-Q",
+      "desc": "基于 RuoYi-Vue-Plus 二次开发的工作流平台，集成 Flowable 引擎与在线表单设计，支持流程编排与审批场景，适合学习与毕业设计参考。",
+      "url": "https://github.com/KonBAI-Q/RuoYi-Flowable-Plus",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 408,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "CourseArragement",
+      "author": "javashub",
+      "desc": "课程编排系统，培训机构（高中）排课系统Java + Springboot2.x + MyBatis-Plus + MySQL 8.x + Vue",
+      "url": "https://github.com/javashub/CourseArragement",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 405,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "scribble-hub-wechatapp",
+      "author": "dulaiduwang003",
+      "desc": "基于SpringBoot3开发的轻量级技术博客小程序,支持 文章发布(支持上传音频内容或视频内容) 专题管理 搜索 以及渲染 以及文章评论功能 无需第三方OSS存储,使用的是服务器存储空间 详细请看yml中的file配置",
+      "url": "https://github.com/dulaiduwang003/scribble-hub-wechatapp",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "star": 396,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "backend",
+      "author": "mblog-backend",
+      "desc": "基于 Java + MySQL 的前后端分离微型博客系统，支持自部署、单用户或多用户模式，可将静态前端部署在 CDN、后端部署在私有服务器。",
+      "url": "https://github.com/mblog-backend/backend",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "star": 368,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ChatGPT-MP",
+      "author": "oldinaction",
+      "desc": "基于DeepSeek/ChatGPT等模型实现的聊天微信小程序，适配H5和WEB端。包含前后端，支持打字效果输出流式输出，支持AI聊天次数限制，支持分享增加次数等功能。",
+      "url": "https://github.com/oldinaction/ChatGPT-MP",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 352,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "tt-zhipin",
+      "author": "whoiszxl",
+      "desc": "头头直聘，仿Boss直聘实现。SpringCloud Alibaba 构建后端，React Native 构建移动端，Vue3.0 + Arco Design 构建管理后台，Hadoop + Flink 实现大数据体系。实现招聘、内容管理、IM即时通讯等业务。",
+      "url": "https://github.com/whoiszxl/tt-zhipin",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 320,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "wemirr-platform",
+      "author": "battcn",
+      "desc": "一款纯为爱发电的开源多租户、SAAS、系统，SpringCloud2024、Mysql、Mybatis-Plus、Spring Cloud Alibaba2023 、有BUG第一时间修复",
+      "url": "https://github.com/battcn/wemirr-platform",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 301,
+      "packages": [
+        "cn.dev33:sa-token-fastjson2",
+        "cn.dev33:sa-token-jackson",
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "budwk",
+      "author": "budwk",
+      "desc": "WK系列开发框架-V6至V8 Java微服务+API网关+Vue3 Element-Plus 前后端分离",
+      "url": "https://github.com/budwk/budwk",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 259,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-servlet"
+      ]
+    },
+    {
+      "name": "Sharine",
+      "author": "WolfLink-DevTeam",
+      "desc": "闪灵 Sharine 是一款 Web 短视频平台，基于 Spring Cloud + Consul 微服务架构，配合 Docker 与 Kubernetes 做容器化集群管理，数据层采用 MySQL + Redis。支持短视频浏览与账户体系，代码规范，适合学习微服务落地。",
+      "url": "https://github.com/WolfLink-DevTeam/Sharine",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 248,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "app",
+      "author": "youdeyunke",
+      "desc": "友得云客房产小程序是一款专为房产行业打造的开源的线上营销获客小程序，功能包括：一手房、二手房、租房房源发布、二维码海报、置业顾问电子名片，适用于房产开发商、代理商、房产自媒体等行业，拥有众多成功案例。前端采用微信小程序原生开发，后端采用java开发，社区版全部开源免费，您可以在此基础上进行修改和扩展，以适应您自己的业务。本项目所用技术栈有：java/springboot、js/vue",
+      "url": "https://github.com/youdeyunke/app",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 242,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "likeadmin_java",
+      "author": "likeadmin-likeshop",
+      "desc": "🚀🚀🚀li‌keadmin这套框架专为快速开发业务项目而生，含管理后台、微信小程序、手机 H5、PC 端等，集成常见业务场景，助你高效打造项目产品。PHP8、TypeScript、ThinkPHP6、Vue3、vite2、Element Plus1.2（ElementUI）、、ThinkPHP管理后台、前后端分离管理后台、Vue3管理后台、Element UI管理后台。",
+      "url": "https://github.com/likeadmin-likeshop/likeadmin_java",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 237,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "continew-starter",
+      "author": "continew-org",
+      "desc": "ContiNew Starter 是企业级 Spring Boot 启动器集合，封装 MyBatis-Plus、Sa-Token 等常用依赖与配置，帮助项目减少重复引入与样板代码。",
+      "url": "https://github.com/continew-org/continew-starter",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 213,
+      "packages": [
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redisson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "yc-framework",
+      "author": "developers-youcong",
+      "desc": "分布式微服务基础框架，基于 Spring Cloud 与 Spring Cloud Alibaba，强调模块化、易扩展与轻量部署，适合作为企业微服务项目的起步脚手架。",
+      "url": "https://github.com/developers-youcong/yc-framework",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 198,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "lego-admin",
+      "author": "zqliang-01",
+      "desc": "代码生成，表单设计，flowable审批工作流等，支持微服务模块化开发部署，数据源可彻底隔离，基于ShardingSphere5多模型分库分片表的新一代低代码开发框架。",
+      "url": "https://github.com/zqliang-01/lego-admin",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 187,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-reactor-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "minimalist-saas",
+      "author": "lmq2582609",
+      "desc": "极简多租户管理系统是一个多租户管理系统，多租户功能同时支持字段隔离和数据源隔离，项目基于SpringBoot3+Vue3的前后端分离的后台开发脚手架，具备一些常用的基础功能。",
+      "url": "https://github.com/lmq2582609/minimalist-saas",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 186,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ChestnutCMS",
+      "author": "liweiyi",
+      "desc": "ChestnutCMS是前后端分离的内容管理系统。技术栈：SpringBoot3 + VUE2 + MybatisPlus + Freemarker + ES + Redis + MySQL，项目基于RuoYi-Vue重构，集成SaToken用户权限，xxl-job任务调度。支持站群管理、多平台静态化、元数据模型扩展、轻松组织文章、音视频、图集等各种复杂内容形态、支持多语言、全文检索。",
+      "url": "https://github.com/liweiyi/ChestnutCMS",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 183,
+      "packages": [
+        "cn.dev33:sa-token-jackson3",
+        "cn.dev33:sa-token-spring-aop",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "PigHealthSmartMedicine",
+      "author": "linyshdhhcb",
+      "desc": "基于 RAG 的生猪健康管理智慧医药系统，集成 AI 兽医诊断、疾病与药品管理，采用 Spring Boot 3、Spring AI 与向量检索，面向养殖医疗数字化场景。",
+      "url": "https://github.com/linyshdhhcb/PigHealthSmartMedicine",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 182,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "SpringBoot-Admin",
+      "author": "wdjisn",
+      "desc": "基于 Spring Boot 与 Vue 的通用后台管理系统，集成 Sa-Token 权限、角色菜单、操作日志、数据大屏与文件上传等功能，适合作为新项目后台基础框架。",
+      "url": "https://github.com/wdjisn/SpringBoot-Admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 176,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "music-city",
+      "author": "fl1906",
+      "desc": "电音组队交友小程序-派之城 是一个微信音乐组队交友小程序，功能包括：发布音乐节活动、发布组队活动、城市组队匹配、聊天室、音乐播放、个人中心等。 它基于 、 、 、 实现。使用了最新的 全家桶技术栈。使用Mysql数据库存储，通过 提供的接口返回数据，前端使用 和 实现。",
+      "url": "https://github.com/fl1906/music-city",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 171,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "nft",
+      "author": "zohar888444",
+      "desc": "NFT数字藏品艺术品交易平台，数字藏品系统源码. 后端采用Spring Boot、Spring Data Jpa、Sa Token、 Redis、Mysql。 前端采用uniapp跨端开发，一套代码，可发布到iOS、Android、Web（响应式）等多个平台。 本项目主要供交流学习，请不要用于商业项目。",
+      "url": "https://github.com/zohar888444/nft",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 169,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "diyfile",
+      "author": "besscroft",
+      "desc": "Spring Boot 3 + Vue 驱动的在线文件列表程序，支持多存储源挂载与美观的公开浏览界面，适合个人与团队文件分享与静态资源展示。",
+      "url": "https://github.com/besscroft/diyfile",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 166,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "keen",
+      "author": "SinceNovember",
+      "desc": "​:star: 基于 vue springboot sa-token mybatis netty 开发的前后端分离并包含用户聊天、附件管理的RABC权限后台管理系统",
+      "url": "https://github.com/SinceNovember/keen",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 166,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "coolGuard",
+      "author": "wnhyang",
+      "desc": "基于LiteFlow/QLExpress规则引擎的风控决策系统，旨在为企业提供高效、灵活且可扩展的风险控制解决方案。",
+      "url": "https://github.com/wnhyang/coolGuard",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 164,
+      "packages": [
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "yuemu",
+      "author": "humenglover",
+      "desc": "悦目图库（曾用名：悦木图库）是一个面向学习和生活分享的图片社区平台，致力于为用户提供一个安全、友好的图片分享环境。",
+      "url": "https://github.com/humenglover/yuemu",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 152,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "paimon-webui",
+      "author": "apache",
+      "desc": "Apache Paimon 的 Web 管理界面，用于湖仓一体数据表的浏览、快照管理、分支与元数据运维，帮助团队通过可视化方式使用 Paimon 流批一体存储能力。",
+      "url": "https://github.com/apache/paimon-webui",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 147,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "admin-plus",
+      "author": "rstyro",
+      "desc": "基于 Sa-Token 的后台管理框架，由 admin 项目重构升级，提供用户权限、模块化公共包与清晰分层结构，适合快速搭建 RBAC 管理端。",
+      "url": "https://github.com/rstyro/admin-plus",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 146,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "rocket-pt",
+      "author": "PlexPt",
+      "desc": "基于 Java 的私有PT(private tracker)站点系统，可以提供高质量的连接服务和简单易用的界面。base on NexusPHP。",
+      "url": "https://github.com/PlexPt/rocket-pt",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 135,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-aop",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "van-app",
+      "author": "L1yp",
+      "desc": "基于 Spring Boot 的工作流实战项目，集成 Flowable / Activiti / Camunda、RBAC 权限、MyBatis-Plus 与 Spring Cache，并使用 Sa-Token 完成认证鉴权，适合学习 BPM 与权限模型落地。",
+      "url": "https://github.com/L1yp/van-app",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 134,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "SlothBoot",
+      "author": "GuoHuaijian",
+      "desc": "面向个人与中小团队的 Spring Boot 3 多模块脚手架，覆盖 Web、Redis、MQ、MyBatis、Gateway、OSS 与任务调度等高频能力，统一配置治理、开箱即用。",
+      "url": "https://github.com/GuoHuaijian/SlothBoot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 133,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Embodied",
+      "author": "MarsZone",
+      "desc": "Build you own Social Apps like facebook twitter etc. 使用kotlin和React来搭建一个社交apps，类似小红书，微博",
+      "url": "https://github.com/MarsZone/Embodied",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 133,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "MaxKB4j",
+      "author": "taishan666",
+      "desc": "MaxKB4j 是开源 LLMOps 平台，支持大模型工作流编排、知识库 RAG、多模型接入与对话应用发布，面向企业知识问答与智能助手场景，提供 Java 后端与可视化管理能力。",
+      "url": "https://github.com/taishan666/MaxKB4j",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 131,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-aop",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "steamed-bread-roll-mall",
+      "author": "mayingfa",
+      "desc": "花卷商城是基于 Spring Boot 与 Vue 的前后端分离电商练手项目，涵盖商品、订单、购物车与支付等基础商城业务流程。",
+      "url": "https://github.com/mayingfa/steamed-bread-roll-mall",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 122,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "cp-ems-ruoyi",
+      "author": "zhenyugu",
+      "desc": "本项目是基于ruoyi开发的能源管理系统（EMS），权限部分沿用了框架自带的体系，其余功能为定制开发，UI样式做了改造。 系统提供了能耗分析、定额管理、运维管理等功能，满足用户对能耗数据的监控和管理，个人和企业均可免费自用。",
+      "url": "https://github.com/zhenyugu/cp-ems-ruoyi",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 122,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "blog",
+      "author": "ttkican",
+      "desc": "基于 Spring Boot + Vue 3 的前后端分离个人博客，前台参考 Hexo 主题设计，后台基于若依二次开发，支持文章、评论、归档与响应式布局。",
+      "url": "https://github.com/ttkican/blog",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "star": 120,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "ruoyi-tdesign",
+      "author": "ruoyi-tdesign",
+      "desc": "基于RuoYi-Vue-Plus的重构版本。UI后台管理系统使用TDesign；定期同步RuoYi-Vue-Plus功能.",
+      "url": "https://github.com/ruoyi-tdesign/ruoyi-tdesign",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 115,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "fnk-server",
+      "author": "daxiangme",
+      "desc": "FNK Server 是前后端一体的开源后台脚手架，基于 Spring Boot 3 与 Sa-Token，提供用户权限、消息中心、代码生成与基础设施管理等企业常用能力，前端对接 Art Design Pro。",
+      "url": "https://github.com/daxiangme/fnk-server",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 109,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "okx-open",
+      "author": "chen-banxia",
+      "desc": "okx的开源项目，用来做虚拟币价格监控、开单监控，自动跟单，交易功能。引入钉钉机器人做提醒. 主要用于okx平台，交易员交易监控，okx公开带单的人，都可以监控，数据库配置就行 ruoyi的管理平台功能 引入钉钉机器人做提醒，后续可以自己更改别的机器人 okx： 主要交易员的开仓、平仓监控提醒 开单、跟单功能 货币价格的定时推送 api 介绍",
+      "url": "https://github.com/chen-banxia/okx-open",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 106,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "quick-boot",
+      "author": "csx-bill",
+      "desc": "基于AMIS前端框架 + Spring Boot后端框架构建的企业级低代码开发平台，旨在通过可视化配置方式大幅提升业务系统开发效率，降低技术门槛，实现快速应用交付。",
+      "url": "https://github.com/csx-bill/quick-boot",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 106,
+      "packages": [
+        "cn.dev33:sa-token-oauth2",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-aop",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "TestHub",
+      "author": "dromara",
+      "desc": "插件驱动的自动化测试与流程编排平台，通过可视化编排测试步骤，适用于接口测试、流程调度与自动化任务场景，支持灵活扩展测试能力。",
+      "url": "https://github.com/dromara/TestHub",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 106,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "isme-java-serve",
+      "author": "DHBin",
+      "desc": "本项目是 Vue Naive Admin 2.0 的一个轻量级的Java后端服务。最小启动要求不需要第三方中间件，兼容 H2、Mysql两种数据库，方便开发调试。基于SpringBoot、MybatisPlus、SaToken、MapStruct等实现。",
+      "url": "https://github.com/DHBin/isme-java-serve",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 92,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "xiaoyuanboke",
+      "author": "yuanprogrammer",
+      "desc": "个人博客平台（原创设计）开源，包括前台和后台管理，文章浏览，点赞，收藏，评论，搜索，问题反馈和建议反馈，文章档案，时间线，文章分类列表，博客留言，友链介绍，用户登录，用户注册（普通用户名注册，邮箱注册，手机号码注册），修改密码，忘记密码，个人信息修改，邮箱号码激活，音乐小插件听歌，后台可以有文章管理（发布编辑等）、文章分类管理、时间线管理、留言管理、用户管理、问题和建议反馈管理等",
+      "url": "https://github.com/yuanprogrammer/xiaoyuanboke",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 92,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "JavaaduBlog",
+      "author": "duqicauc",
+      "desc": "基于 Spring Boot + Vue 3 的前后端分离个人博客系统，前后台功能完整，适合作为博客类 Web 项目学习与二次开发参考。",
+      "url": "https://github.com/duqicauc/JavaaduBlog",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 89,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "kxmall",
+      "author": "zhengkaixing",
+      "desc": "kxmall 是面向中小商户的电商系统，基于 Spring Boot 与 uni-app，支持小程序、H5 与 App 多端，涵盖商品、订单、店铺与骑手配送等商城核心能力。",
+      "url": "https://github.com/zhengkaixing/kxmall",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 89,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "eu-backend",
+      "author": "zhaoeryu",
+      "desc": "EuBackend 是基于 Spring Boot、Sa-Token 与 MyBatis-Plus 的轻量级快速开发平台，提供 RBAC 权限、代码生成、数据权限与日志审计等企业常用能力。",
+      "url": "https://github.com/zhaoeryu/eu-backend",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 87,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Newlangs4",
+      "author": "houlangs",
+      "desc": "厚浪云 4 是开源二级域名分发系统，前后端分离，基于 Java Spring Boot 与 Node.js，支持实名认证与短信验证，强调性能、安全与易部署。",
+      "url": "https://github.com/houlangs/Newlangs4",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 86,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "RuoYi-Vue-Plus-Activiti",
+      "author": "sgs98",
+      "desc": "基于 RuoYi-Vue-Plus集成的工作流，flowable分支为flowable框架，master分支为activiti框架，支持 RBAC 动态权限、数据权限、工作流，可自由驳回、委托、转办、提交、会签、加签、减签、并行网关、分支网关、自由指定下一环节审批人等功能，定期同步 RuoYi-Vue-Plus。",
+      "url": "https://github.com/sgs98/RuoYi-Vue-Plus-Activiti",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 82,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "Snowy-Cloud",
+      "author": "xiaonuobase",
+      "desc": "💖💖💖Snowy-Cloud是小诺团队下基于SpringCloud Alibaba + SpringBoot+AntDesignVue开发的Java全新RBAC权限管理系统，微服务前后分离版",
+      "url": "https://github.com/xiaonuobase/Snowy-Cloud",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 80,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-forest",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-oauth2",
+        "cn.dev33:sa-token-reactor-spring-boot-starter",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-redisson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-sso"
+      ]
+    },
+    {
+      "name": "pandora",
+      "author": "cool-icu0",
+      "desc": "潘多拉魔盒是一个基于 Next.js + Spring Cloud + Redis + MySQL + Elasticsearch 构建的程序员智能刷题平台。旨在为用户提供便捷、高效、安全的刷题体验，同时为管理员提供全面的试题管理功能。",
+      "url": "https://github.com/cool-icu0/pandora",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 75,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "homestayHotelPublic",
+      "author": "giteecode",
+      "desc": "民宿酒店预订管理系统，基于 Spring Boot + Vue 3 前后端分离，覆盖民宿浏览、预订下单、入住续住与后台订单财务统计等场景。",
+      "url": "https://github.com/giteecode/homestayHotelPublic",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 75,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "uni-ai",
+      "author": "qifan777",
+      "desc": "国内外的ai聚合，统一页面可以选择不同的ai厂家和不同的模型，内置知识库，图片理解，文本对话，预置角色。支持阿里灵积/百度千帆/OpenAI/Kimi/智谱清言",
+      "url": "https://github.com/qifan777/uni-ai",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 72,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "wtfibought",
+      "author": "mamawai",
+      "desc": "面向 LLM 智能体的虚拟交易竞技场：智能体基于真实市场数据与虚拟资金自动交易，全程可观测、可回放，用于策略演示、教学实验与 Agent 能力评测。",
+      "url": "https://github.com/mamawai/wtfibought",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 71,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "redbook-campus",
+      "author": "a-yeyang",
+      "desc": "仿小红书的全栈校园社交内容平台，支持图文笔记发布、话题互动、关注与推荐流，前后端分离架构，集成 Sa-Token 鉴权，适合学习现代社区类产品开发。",
+      "url": "https://github.com/a-yeyang/redbook-campus",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 70,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "chatgpt-assistant",
+      "author": "qifan777",
+      "desc": "本次项目是基于ChatGPT的二次开发网站chatgpt-assistant，旨在实现在线聊天的功能。 使用的技术有前端框架Vue3、TypeScript和ElementUI以及后端技术SpringBoot、MongoDB、Spring Data MongoDB和Spring WebSocket。",
+      "url": "https://github.com/qifan777/chatgpt-assistant",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 70,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "donut-admin",
+      "author": "LenMotion",
+      "desc": "一款基于SpringBoot3、JDK17、SaToken、MybatisPlus的多租户开源管理系统，前端使用Vben(Vue3、Ant Design4)。提供基础的权限管理，与基础的系统设置，能够帮助你接私活、学习！",
+      "url": "https://github.com/LenMotion/donut-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 68,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Towelove",
+      "author": "Towelove",
+      "desc": "基于SpringCloud搭建的一个恋爱平台。涵盖主流开发技术。可以查看下面的文档来加入我。. 项目的部分文档信息直接贴在下面这个链接这里了",
+      "url": "https://github.com/Towelove/Towelove",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 67,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "we-go",
+      "author": "lhccong",
+      "desc": "微狗🐶是一个基于 Java ➕ Netty ➕ SpringBoot 开发的聊天网站🚀，旨在提供简洁、实时的聊天功能🌍。",
+      "url": "https://github.com/lhccong/we-go",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 66,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "MzMedia",
+      "author": "MzMedia",
+      "desc": "MzMedia 开源视频联动物联网平台，基于 Spring Boot 与 Vue 3，支持设备接入、视频监控、短视频推流与多协议 SDK，适合智能家居与工业监测场景。",
+      "url": "https://github.com/MzMedia/MzMedia",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 63,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "killbug",
+      "author": "tychozzz",
+      "desc": "KillBug 是面向开发者的编程辅助与协作工具平台，基于 Spring Boot 与 Sa-Token 构建，帮助团队沉淀问题、知识与实践经验。",
+      "url": "https://github.com/tychozzz/killbug",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 63,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-reactor-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "enstudy",
+      "author": "besscroft",
+      "desc": "嗯学英语是基于 Spring Boot 与 Vue 的英语学习应用，提供单词学习、计划管理与学习数据沉淀，适合个人英语自学与二次开发。",
+      "url": "https://github.com/besscroft/enstudy",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 62,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "xmgai-like",
+      "author": "xmgcode",
+      "desc": "本开源 AI 副业搞钱项目集成了强大功能，包括 AI 艺术二维码生成、AI 换脸、Delle3 绘画等，同时具备个人收付款、手机登录、金额充值及消费记录查询等实用特性。个人可以充分利用 AI 技术实现变现与搞钱，搭建自己的 AI 副业项目，只有有人使用，就有收益实时到账你个人微信，实时真正的躺赢。",
+      "url": "https://github.com/xmgcode/xmgai-like",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 60,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "cp-mes-ruoyi",
+      "author": "zhenyugu",
+      "desc": "本项目是基于ruoyi开发的生产工单管理系统（mes），权限部分沿用了框架自带的体系，其余功能为定制开发，UI样式做了改造。 系统提供了一系列生产管理的功能，适用中小生产型企业，满足用户对生产过程的管理需求，个人和企业均可免费自用，但禁止售卖代码获利。",
+      "url": "https://github.com/zhenyugu/cp-mes-ruoyi",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 60,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "NetworkDisk",
+      "author": "youngyangyang04",
+      "desc": "【代码随想录知识星球】项目分享-基于Vue和Spring Boot等技术构建的前后端分离、分布式的网盘系统",
+      "url": "https://github.com/youngyangyang04/NetworkDisk",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 57,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "bootx-platform",
+      "author": "xxm1995",
+      "desc": "包含基础功能、消息通知、支付、工作流等模块，支持支付宝、微信、云闪付、现金和钱包等多种支付方式进行组合，可应用在不同业务场景中，目标是致力实现媲美商业版应用框架的目标。",
+      "url": "https://github.com/xxm1995/bootx-platform",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 56,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "tansci-boot",
+      "author": "typ1805",
+      "desc": "基于 SpringBoot2 + magic-api + Vue3 + Element Plus + amis3.0 快速开发管理系统",
+      "url": "https://github.com/typ1805/tansci-boot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 54,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "budiot",
+      "author": "budwk",
+      "desc": "BudIot 是基于 Spring Boot 4 与 Spring Cloud 的微服务物联网平台，覆盖设备接入、协议解析、规则引擎、消息通知与多端管理后台。",
+      "url": "https://github.com/budwk/budiot",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 50,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot4-starter",
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "wanwu-code-backend",
+      "author": "lhccong",
+      "desc": "一个融合万物代码的小网站🌌-拥有鱼皮自主项目API开放平台、BI智能分析平台、博客系统、伙伴匹配功能、聚合搜索功能（融合了CSDN、以及博客园的内容）",
+      "url": "https://github.com/lhccong/wanwu-code-backend",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 50,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "AI-IDPhoto",
+      "author": "wmlcjj",
+      "desc": "开源证件照制作工具，支持换底色、常用尺寸与 AI 抠图，兼容微信 H5 与小程序多端部署，基于 HivisionIDPhotos 能力二次开发。",
+      "url": "https://github.com/wmlcjj/AI-IDPhoto",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 50,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "xh-admin-backend",
+      "author": "Alixhan",
+      "desc": "XHan Admin（后端）（晓寒管理系统）是一个开源免费（前后端分离）中后台管理系统基础解决方案，后端技术栈： jdk21, springboot3, spring-cloud, spring-cloud-alibaba, SaToken等",
+      "url": "https://github.com/Alixhan/xh-admin-backend",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 49,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot4-starter"
+      ]
+    },
+    {
+      "name": "nextdoc4j",
+      "author": "NextDoc4j",
+      "desc": "NextDoc4j是一个面向 Spring Boot 应用的 OpenAPI 3 接口文档增强解决方案，致力于提供比 Swagger-UI 更现代、可定制性更强的 UI 展示体验。 它深度集成 SpringDoc，搭配 NextDoc4j-ui 前端项目，为开发者提供完整的一体化 API 文档管理与调试平台。",
+      "url": "https://github.com/NextDoc4j/nextdoc4j",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 48,
+      "packages": [
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-core"
+      ]
+    },
+    {
+      "name": "es-plus",
+      "author": "zhaohaoh",
+      "desc": "java基于elasticsearch的封装。简化CRUD操作。索引托管。支持所有分词器。实现es分布式锁",
+      "url": "https://github.com/zhaohaoh/es-plus",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 46,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "ruoyi-ai",
+      "author": "ryu-shen",
+      "desc": "开箱即用的 AI 助手平台，基于 RuoYi 生态扩展大模型对话、知识库与多模型接入能力，帮助团队快速搭建私有化 AI 应用后台。",
+      "url": "https://github.com/ryu-shen/ruoyi-ai",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 45,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "super",
+      "author": "dulaiduwang003",
+      "desc": "基于SpringBoot3+uniappV3开发的GPT小程序, 支持对话文件识别 对话图片生成 语音对话",
+      "url": "https://github.com/dulaiduwang003/super",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 44,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "vben-java",
+      "author": "zsvg-com",
+      "desc": "vben 快速开发平台java版本后端。 基于疯狂的狮子 RuoYi-Vue-Plus 项目改造，自建工作流，参考了warm-flow activiti camunda flowable。",
+      "url": "https://github.com/zsvg-com/vben-java",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 44,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "GraduationManager",
+      "author": "Karma-93",
+      "desc": "基于 Spring Boot + Vue 的前后端分离毕业论文管理系统，支持学生、教师与管理员多角色，涵盖选题、资料提交、沟通与流程管理。",
+      "url": "https://github.com/Karma-93/GraduationManager",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 43,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "AniLinkService",
+      "author": "eventhorizonsky",
+      "desc": "一站式的NAS动漫弹幕媒体服务，集订阅、下载、自动识别匹配、弹幕播放于一体。支持 Web 在线播放（弹幕 + 字幕）、播放进度记录、Bangumi 追番联动、资源搜索与 RSS 自动下载。无需客户端，浏览器打开即用。",
+      "url": "https://github.com/eventhorizonsky/AniLinkService",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 42,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "hxds",
+      "author": "a-noah2021",
+      "desc": "商业级代驾业务多端全栈实战项目，覆盖下单、司机调度、支付结算与后台运营等完整流程，文档与模块划分清晰，适合作为出行类 SaaS 的参考实现。",
+      "url": "https://github.com/a-noah2021/hxds",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 40,
+      "packages": [
+        "cn.dev33:sa-token-spring-aop",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "ry-vue-flowable-xg",
+      "author": "huangxing2010",
+      "desc": "工程项目管理系统是一款专为工程项目公司打造的综合性OA办公系统，旨在满足工程项目进度及成本控制管理，助力企业高效办公，全方位整合信息技术与项目管理理念。该系统分为管理端和小程序端两部分，管理端基于基于若依框架ruoyi-vue二次开发，SpringBoot+Vue前后端分离，整合Warm-Flow工作流；移动解决方案，采用uniapp框架，一份代码多终端适配，同时支持APP、小程序、H5！",
+      "url": "https://github.com/huangxing2010/ry-vue-flowable-xg",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 39,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "sql-dog-backend",
+      "author": "lhccong",
+      "desc": "基于 SpringBoot + MySQL + SQL 慢镜🔍（自研）致力于 SQL 刷题、SQL 解析，帮助人们解决 SQL 能力薄弱问题，帮助每个人成为 SQL 宗师🚀。",
+      "url": "https://github.com/lhccong/sql-dog-backend",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 38,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "SRIC-blog",
+      "author": "soraincloud",
+      "desc": "简单的vue2+springboot+mysql的博客系统，提供前台显示和后台管理 主要主题为沃玛(warma)",
+      "url": "https://github.com/soraincloud/SRIC-blog",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "star": 37,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ai-chat",
+      "author": "jsdjiazhiheng",
+      "desc": "ai-chat是一个开源的聊天系统后端，支持多种AI模型，旨在提供智能化的聊天服务。它不仅支持文本聊天，还支持图片处理，为用户提供丰富的交互体验。提供多种模型文心一言、KIMI、智谱清言、DeepSeek、OPENAI、通义千问、星火、腾讯混元助手（待接入）、火山引擎（豆包）、百度SD、通义万象、触站AI、画宇宙等。",
+      "url": "https://github.com/jsdjiazhiheng/ai-chat",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 36,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "gpt-commercial",
+      "author": "tarenai",
+      "desc": "商用级 ChatGPT 服务平台，基于 Java 服务端与 React 前端，对接 OpenAI 官方 API，支持对话、图片、微调、会员与微信/支付宝支付等能力。",
+      "url": "https://github.com/tarenai/gpt-commercial",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 36,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "mystery-box",
+      "author": "qifan777",
+      "desc": "本项目模仿b站的魔力赏盲盒，每个盲盒中可以添加多个商品，支付成功后根据概率随机挑选盲盒内的商品。同时加入了VIP，优惠券，运费计算等功能。",
+      "url": "https://github.com/qifan777/mystery-box",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 35,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "voyage-bi",
+      "author": "shuangbofu",
+      "desc": "Voyage BI 是一个开源的可以定制化开发的开源BI平台/工具，通过配置数据源连接，开发数据集，图表开发中拖拉拽方式快速制作看板/报表并分享到外部。提供主题定制、组件定制、自由筛选联动等功能",
+      "url": "https://github.com/shuangbofu/voyage-bi",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 35,
+      "packages": [
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "RuoYi-Vue-Flex",
+      "author": "yhan219",
+      "desc": "RuoYi-Vue-Flex是基于RuoYi-Vue-Plus的一个快速开发框架。将RuoYi-Vue-Plus中使用的MyBatis-Plus替换为MyBatis-Flex,并根据两个ORM框架使用的不同修改了部分逻辑。 集成 Sa-Token、Mybatis-Flex、PowerJob、Jackson、SpringDoc、Hutool、OSS 定期同步等 - yhan219/RuoYi-",
+      "url": "https://github.com/yhan219/RuoYi-Vue-Flex",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 35,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "aiflowy",
+      "author": "yunyiforge",
+      "desc": "AIFlowy 是一个基于 Java 开发的企业级的开源 AI 应用开发平台 ，致力于为中国开发者和企业提供高效、开放、本土化的 AI 工具与能力。我们对标字节 Coze、腾讯元器和 Dify 等产品，但更加聚焦于中国环境下的 toB 场景深度应用与落地实践。",
+      "url": "https://github.com/yunyiforge/aiflowy",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 35,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "smallboot",
+      "author": "zhengqingya",
+      "desc": "Vue+SpringBoot前后端分离的项目快速开发脚手架 & 多微信公众号管理平台. > 学习总是在一点一滴中积累而成的，就像砌砖，总要结结实实。 > 踏踏实实的学吧！加油！成功属于努力的人！ > 🤖 希望你不只是关注+收藏！ 🤖",
+      "url": "https://github.com/zhengqingya/smallboot",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 33,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "simple-iot",
+      "author": "dingdaoyi",
+      "desc": "极简物联网平台：Spring Boot 4 + Vue 3 单二进制部署，内置设备接入、物模型、规则引擎与可视化面板，强调轻量、易部署，适合中小团队快速搭建 IoT 中台。",
+      "url": "https://github.com/dingdaoyi/simple-iot",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 31,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "twelvet-fast",
+      "author": "twelvet-projects",
+      "desc": "基于Spring Boot 3 JDK17的单体服务极速开发管理平台脚手架，先行体验最新技术栈，支持多数据源，分库分表",
+      "url": "https://github.com/twelvet-projects/twelvet-fast",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 31,
+      "packages": [
+        "cn.dev33:sa-token-redisson-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "LiteAgent",
+      "author": "LiteVar",
+      "desc": "AI Agents for Industrial Applications 工业领域的AI智能体. English · 中文",
+      "url": "https://github.com/LiteVar/LiteAgent",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 30,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "baolong-picture-backend",
+      "author": "SilasYan",
+      "desc": "暴龙图库（DDD 版本）后端代码. baolong-picture-backend 暴龙图库（DDD 版本）后端代码",
+      "url": "https://github.com/SilasYan/baolong-picture-backend",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 30,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "im-ai-server",
+      "author": "imchatkit",
+      "desc": "IM-AI-JAVAKIT是基于Java开发的企业级IM即时通讯系统，深度整合LLM模型，具备完整的IM通信能力和AI交互功能。支持iOS、Android、Web等多端SDK快速接入，提供开箱即用的二次开发接口，满足企业高效集成与定制化需求。",
+      "url": "https://github.com/imchatkit/im-ai-server",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 29,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-dubbo3",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "CyreneAdmin",
+      "author": "CoCoTeaNet",
+      "desc": "CyreneAdmin 是一个现代化的后台管理系统，提供双框架支持（Spring Boot 和 Solon），集成了完善的权限管理、用户管理、菜单管理、操作日志等核心功能",
+      "url": "https://github.com/CoCoTeaNet/CyreneAdmin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 26,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-fastjson2",
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-redisx",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "EasyAdmin",
+      "author": "lakernote",
+      "desc": "基于SpringBoot2+MybatiPlus+LayUI+Snaker+Mysql前后端分离或一体的简单、轻量级的后台管理系统脚手架。内置权限管理、工作流引擎等。可以理解为轻量、升级版的若依/RuoYi",
+      "url": "https://github.com/lakernote/EasyAdmin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 25,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "short-link-dog-backend",
+      "author": "lhccong",
+      "desc": "ShortLinkDog🐕是一个简单高效的URL缩短系统，旨在帮助你将长URL缩短为易于分享的简洁链接。使用ShortLinkDog，你可以使URL更加用户友好，并轻松管理你的链接。",
+      "url": "https://github.com/lhccong/short-link-dog-backend",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 25,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "micro-service-single",
+      "author": "jzfai",
+      "desc": "基于 Java 的单体版微服务后台解决方案，对标 vue3-admin-plus 生态，整合权限、代码生成、任务调度等常用企业能力，并集成 Sa-Token 统一认证。",
+      "url": "https://github.com/jzfai/micro-service-single",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 24,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "tio-boot",
+      "author": "litongjava",
+      "desc": "基于 Java AIO 与 t-io 的高性能 Web 框架，提供接近 Spring Boot 的开发体验，强调低资源占用与高并发长连接处理能力，适合 IM、推送与实时网关场景。",
+      "url": "https://github.com/litongjava/tio-boot",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 24,
+      "packages": [
+        "cn.dev33:sa-token-core"
+      ]
+    },
+    {
+      "name": "codestyle",
+      "author": "itxaiohanglover",
+      "desc": "CodeStyle（码蜂）是一款企业级代码知识库工具，通过\"官网在线制模 + 轻量化 MCP 插件检索\"的创新架构，让 AI 精准理解并复用团队的代码基因。",
+      "url": "https://github.com/itxaiohanglover/codestyle",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 23,
+      "packages": [
+        "cn.dev33:sa-token-sign"
+      ]
+    },
+    {
+      "name": "apply-room-record",
+      "author": "MuShanYu",
+      "desc": "单体项目，结构清晰，可作为项目模板。集消息通知、公告、预约、日志、服务监控、通用申请处理、签到签出、进出人员统计、签到时长统计、报表统计、基础功能、通用权限解决方案（按钮级别）、在线用户监控等。配有后台管理与小程序，完全开源。（工作不忙时继续优化与添加新机制）",
+      "url": "https://github.com/MuShanYu/apply-room-record",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 23,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "SlothNote",
+      "author": "holic512",
+      "desc": "SlothNote 是一个基于 Vue 3 和 Spring Boot 的云笔记平台，让你的笔记管理更加轻松高效！",
+      "url": "https://github.com/holic512/SlothNote",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "star": 22,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "websql",
+      "author": "cgy0214",
+      "desc": "websql网页SQL管理工具，SQL执行、数据开发、跨库联查、Text2Sql、ETL同步、动态数据源、SQL管理、数据监测等众多功能 ——— 开箱即用,简约而不简单",
+      "url": "https://github.com/cgy0214/websql",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 19,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "fa-antd-admin",
+      "author": "FaberSober",
+      "desc": "前端react18 + antd5.x + vite3，后端springboot2.4.x，环境mysql5.7 + redis4。前后端分离，mvn一键打包，jar部署前后端。",
+      "url": "https://github.com/FaberSober/fa-antd-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 19,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "mydata-boot",
+      "author": "LIEN321",
+      "desc": "MyData 数据融合平台，面向多应用数据集成的 Web API 与 Excel 对接方案，帮助团队安全、便捷地打通业务数据，构建统一数据中心。",
+      "url": "https://github.com/LIEN321/mydata-boot",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 19,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ordinaryroad",
+      "author": "OrdinaryRoad-Project",
+      "desc": "OrdinaryRoad开源框架，一个Spring微服务项目. 演示地址: 帐号10001，密码Abc123",
+      "url": "https://github.com/OrdinaryRoad-Project/ordinaryroad",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 19,
+      "packages": [
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-oauth2",
+        "cn.dev33:sa-token-reactor-spring-boot-starter",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Springboot-Multi-Tenant-SaToken",
+      "author": "u3breeze",
+      "desc": "It is a simple, elegant, and lightweight framework for a multi-tenant system.（SpringBoot，Sa-Token，mybatis-plus，Vue & Element）一个简约、优雅、轻量级的多租户管理系统的脚手架。",
+      "url": "https://github.com/u3breeze/Springboot-Multi-Tenant-SaToken",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 19,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "helio-starters",
+      "author": "uncarbon97",
+      "desc": "helio-starters 是 Helio 脚手架及其业务微服务模块的基础支撑构件，可以快速引入其他中间件和基础配置",
+      "url": "https://github.com/uncarbon97/helio-starters",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 19,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Daxpay",
+      "author": "haoyue1313",
+      "desc": "DaxPay是一款基于Apache License 2.0协议分发的开源软件，受中华人民共和国相关法律法规的保护和限制，可以在符合《用户授权使用协议》和 《Apache License 2.0》开源协议情况下进行免费使用、学习和交流。**在使用前请阅读上述协议，如果不同意请勿进行使用。**",
+      "url": "https://github.com/haoyue1313/Daxpay",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 18,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "jimuqu-admin",
+      "author": "chengliang4810",
+      "desc": "Jimuqu Admin 是基于 Java 21、Solon 3、Xbatis 与 Sa-Token 的企业管理后台，提供权限、限流、短信、邮件与 WebSocket 等基础模块。",
+      "url": "https://github.com/chengliang4810/jimuqu-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 17,
+      "packages": [
+        "cn.dev33:sa-token-apikey",
+        "cn.dev33:sa-token-bom",
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-redisson",
+        "cn.dev33:sa-token-snack4",
+        "cn.dev33:sa-token-solon-plugin"
+      ]
+    },
+    {
+      "name": "hutu-order",
+      "author": "IsNott",
+      "desc": "糊涂点餐，一个基于springboot2+mybatis-plus的点餐系统。. 目前正进行全面的重构，已重构的内容： 将各子项目从此仓库中剥离到各自的代码仓进行管理 小程序端完成静态mock数据的重构 管理端完成基础的业务管理功能+RABC权限设计 叫号屏完成叫号取餐的接口暴露。",
+      "url": "https://github.com/IsNott/hutu-order",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 17,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "mall",
+      "author": "quuuuj",
+      "desc": "基于 Spring Boot 3 + Vue 3 的电商平台练手项目，实现商品展示、购物车、订单等基础商城流程，适合 Java Web 入门与课程实践。",
+      "url": "https://github.com/quuuuj/mall",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 17,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "SugarIOT-Media",
+      "author": "XDTech",
+      "desc": "**SugarIOT-Media** 是一个基于 Spring Boot 3 开发的流媒体管理平台，专为物联网 (IoT) 应用设计，旨在提供稳定高效的音视频流管理解决方案，支持多设备接入和流数据处理,并且支持多租户",
+      "url": "https://github.com/XDTech/SugarIOT-Media",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 17,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "pilipala",
+      "author": "CxyJerry",
+      "desc": "Pilipala 噼里啪啦视频弹幕网 噼里啪啦视频弹幕网是一个专注于做视频点播的后端服务项目，通过对 FFmpeg 的集成，半遵循广电视频规格要求对视频规格进行限制（支持 1080P及以下规格视频），产出视频生产计划，并通过流水线+状态机完成视频转码。本项目持续更新中！",
+      "url": "https://github.com/CxyJerry/pilipala",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 16,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "Charging-pile-cloud-platform",
+      "author": "webVueBlog",
+      "desc": "Charging-pile-cloud-platform充电桩云平台，技术栈：SpringCloud、MySQL、Redis、RabbitMQ，前后端管理系统（管理后台、小程序），支持互联互通协议、市政协议、一对多方平台支持。支持高并发业务、业务动态伸缩、桩通信负载均衡（NLB）。",
+      "url": "https://github.com/webVueBlog/Charging-pile-cloud-platform",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 16,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "sol-cloud",
+      "author": "BgaSol",
+      "desc": "前后端分离的云管理平台，界面简洁，集成用户权限、系统监控与常用运维模块，使用 Sa-Token 做认证授权，适合作为中小型管理后台基础框架。",
+      "url": "https://github.com/BgaSol/sol-cloud",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 15,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "TikTok_Mall",
+      "author": "Lzhili",
+      "desc": "简易版微服务抖音商城后端，基于 Java 与 Dubbo 拆分用户、商品、购物车、订单与支付等服务，配合 Vue 前端完成电商核心链路演示。",
+      "url": "https://github.com/Lzhili/TikTok_Mall",
+      "category": "商城",
+      "categoryId": "mall",
+      "lang": "",
+      "star": 15,
+      "packages": [
+        "cn.dev33:sa-token-dubbo3",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "anno-admin",
+      "author": "sorghums",
+      "desc": "Anno-Admin是一个开源项目，旨在通过注解生成后台管理系统。它可以帮助开发者更轻松地创建功能强大的后台管理系统，无需手动编写大量代码。使用Anno-Admin，只需在代码中添加注解，就可以自动生成各种功能，包括用户管理、权限管理、数据管理等。这个项目适合需要快速开发后台管理系统的开发者，也适合想学习注解和代码生成技术的开发者。",
+      "url": "https://github.com/sorghums/anno-admin",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 15,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-redisx",
+        "cn.dev33:sa-token-snack3",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "eap-common",
+      "author": "eaopen",
+      "desc": "Open EAP 是基于 Spring Boot 3 的企业级应用开发框架，提供单体与微服务双形态、多租户、工作流与国际化等能力，适合企业应用快速起步。",
+      "url": "https://github.com/eaopen/eap-common",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 14,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "jeemooai-lite",
+      "author": "jeemoonet",
+      "desc": "快速落地各类企业应用场景，智能问答/客服、文档写作/审核、知识库、 业务系统整合、微信RPA机器人、智能体编排",
+      "url": "https://github.com/jeemoonet/jeemooai-lite",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 14,
+      "packages": [
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "ruoyi-fast-service",
+      "author": "zccbbg",
+      "desc": "重写RuoYi-Vue所有功能 集成 Sa-Token、Mybatis-Plus、SpringDoc、Hutool、OSS 定期同步",
+      "url": "https://github.com/zccbbg/ruoyi-fast-service",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 14,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-jwt",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "union-all-api",
+      "author": "quietforge-dev",
+      "desc": "多平台返利系统 本项目是一个基于Spring Boot的多平台返利系统，支持淘宝联盟、京东联盟、拼多多多多客等主流电商平台的返利对接。",
+      "url": "https://github.com/quietforge-dev/union-all-api",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 13,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "anypluspay",
+      "author": "remind",
+      "desc": "AnyPlusPay 是一套基于领域驱动设计（DDD）理念，采用微服务架构构建的高性能、高可用、易扩展的支付系统解决方案。本项目旨在为电商平台、产业互联网平台等提供从支付接入、交易处理、资金结算到对账管理的完整支付功能，快速适配各类在线支付需求。",
+      "url": "https://github.com/remind/anypluspay",
+      "category": "微服务相关",
+      "categoryId": "microservice",
+      "lang": "",
+      "star": 13,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "smart-flow",
+      "author": "lovefawn",
+      "desc": "SmartFlow 基于SmartAdmin和Dromara Warm-Flow工作流开源项目，实现了流程设计、流程实例、流程审批、流程监控等功能。",
+      "url": "https://github.com/lovefawn/smart-flow",
+      "category": "后台管理",
+      "categoryId": "admin",
+      "lang": "",
+      "star": 12,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ziyume-fast",
+      "author": "besscroft",
+      "desc": "基于 SpringBoot 3 的 Infra 解决方案！. ziyume-fast 支持安装在 LNMP、宝塔面板 等集成环境中, Docker、HeroKu 等容器环境中, 支持大部分能够运行 Java 的平台。",
+      "url": "https://github.com/besscroft/ziyume-fast",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 11,
+      "packages": [
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "ZfilePro",
+      "author": "makeok",
+      "desc": "ZFilePro 是基于 ZFile 升级的私有云盘方案，统一对接多种对象存储与本地存储，在同一 Web 界面完成浏览、预览与权限管理。",
+      "url": "https://github.com/makeok/ZfilePro",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 11,
+      "packages": [
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    },
+    {
+      "name": "quarkus-sa-token",
+      "author": "quarkiverse",
+      "desc": "Quarkus 扩展：在 Quarkus 应用中集成 Sa-Token 轻量级权限认证，支持登录校验、角色权限与注解式鉴权，方便云原生 Java 项目快速接入统一认证。",
+      "url": "https://github.com/quarkiverse/quarkus-sa-token",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 11,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-oauth2",
+        "cn.dev33:sa-token-sso"
+      ]
+    },
+    {
+      "name": "harvey-boot",
+      "author": "harvey91",
+      "desc": "一个基于JDK17、Spring Boot3、Mybatis-Plus、Spring Security6、JWT、Mysql、Redis、Knife4j、Vue3、Element-Plus等技术构建的前后端分离的企业级项目。",
+      "url": "https://github.com/harvey91/harvey-boot",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 10,
+      "packages": [
+        "cn.dev33:sa-token-core",
+        "cn.dev33:sa-token-redis-template",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "dcloud-meter",
+      "author": "jackxy",
+      "desc": "一站式自动化测试平台，覆盖接口自动化、压力测试与 UI 自动化，帮助研发团队统一测试环境、脚本与报告，提升交付质量与效率。",
+      "url": "https://github.com/jackxy/dcloud-meter",
+      "category": "其它",
+      "categoryId": "other",
+      "lang": "",
+      "star": 10,
+      "packages": [
+        "cn.dev33:sa-token-reactor-spring-boot3-starter",
+        "cn.dev33:sa-token-redis-jackson",
+        "cn.dev33:sa-token-spring-boot3-starter"
+      ]
+    },
+    {
+      "name": "msblog",
+      "author": "MusaTabitai",
+      "desc": "基于 Spring Boot 2.6 + Vue 2 的前后端分离博客管理系统，提供 RESTful API 与完整后台，涵盖用户、角色、菜单与文章管理，适合入门实战。",
+      "url": "https://github.com/MusaTabitai/msblog",
+      "category": "博客",
+      "categoryId": "blog",
+      "lang": "",
+      "star": 10,
+      "packages": [
+        "cn.dev33:sa-token-alone-redis",
+        "cn.dev33:sa-token-spring-aop",
+        "cn.dev33:sa-token-spring-boot-starter"
+      ]
+    }
+  ]
+}

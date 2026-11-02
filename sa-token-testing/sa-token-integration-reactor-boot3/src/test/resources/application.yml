@@ -1,0 +1,6 @@
+server:
+  port: 0
+
+sa-token:
+  token-name: satoken
+  timeout: 2592000

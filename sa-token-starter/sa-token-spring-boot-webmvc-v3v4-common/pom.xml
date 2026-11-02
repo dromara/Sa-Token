@@ -16,6 +16,10 @@
     <artifactId>sa-token-spring-boot-webmvc-v3v4-common</artifactId>
 	<description>sa-token springboot webmvc v3v4 common</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
 		<!-- spring-boot-starter-web -->
 		<dependency>
@@ -42,7 +46,13 @@
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>

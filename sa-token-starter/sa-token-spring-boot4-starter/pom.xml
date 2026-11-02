@@ -15,6 +15,10 @@
 	<name>sa-token-spring-boot4-starter</name>
     <artifactId>sa-token-spring-boot4-starter</artifactId>
 	<description>springboot4 integrate sa-token</description>
+
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
     
 	<dependencies>
 
@@ -28,6 +32,12 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-jackson3</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-starter</artifactId>
@@ -16,14 +16,18 @@
     <artifactId>sa-token-spring-boot-reactor-v3v4-common</artifactId>
 	<description>sa-token springboot reactor v3v4 common</description>
 
+	<properties>
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
 	<dependencies>
-		
+
 		<!-- sa-token-core -->
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-core</artifactId>
 		</dependency>
-		
+
 		<!-- spring-boot-starter (optional) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,14 +41,14 @@
 			<artifactId>spring-web</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
+
 		<!-- reactor-core (optional) -->
 	    <dependency>
 	    	<groupId>io.projectreactor</groupId>
 	    	<artifactId>reactor-core</artifactId>
 			<optional>true</optional>
 	    </dependency>
-		
+
 		<!-- spring-boot-configuration-processor (optional) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -56,6 +60,12 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot-webmvc-reactor-v2v3v4-common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

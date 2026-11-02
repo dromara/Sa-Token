@@ -1,0 +1,12 @@
+# 端口
+server:
+  port: 0
+
+# sa-token 集成测试配置
+sa-token:
+  token-name: satoken
+  timeout: 2592000
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  token-style: uuid

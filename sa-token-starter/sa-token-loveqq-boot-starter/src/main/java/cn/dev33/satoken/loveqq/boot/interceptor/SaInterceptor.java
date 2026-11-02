@@ -17,6 +17,7 @@ package cn.dev33.satoken.loveqq.boot.interceptor;
 
 import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.exception.BackResultException;
+import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.loveqq.boot.utils.SaTokenContextUtil;
@@ -128,6 +129,9 @@ public class SaInterceptor implements HandlerInterceptor {
         } catch (StopMatchException e) {
             // StopMatchException 异常代表：停止匹配，进入Controller
         } catch (BackResultException e) {
+            SaTokenOperateUtil.writeResult(response, e.getMessage());
+            return false;
+        } catch (SaTokenException e) {
             SaTokenOperateUtil.writeResult(response, e.getMessage());
             return false;
         } finally {
