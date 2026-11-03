@@ -2,6 +2,42 @@
 window.SA_TOKEN_BLOG_COMMUNITY = [
   {
     "platform": "公众号",
+    "title": "Sa-Token为什么没有Shiro的串号问题",
+    "url": "https://mp.weixin.qq.com/s/iIF_basTWmsZuVpnIzVizQ",
+    "date": "2026-11-02"
+  },
+  {
+    "platform": "公众号",
+    "title": "Sa-Token 如何实现一行代码认证登录？多账号体系怎么实现？简易的 SSO 怎么搭建使用？",
+    "url": "https://mp.weixin.qq.com/s/U1dEpAOS8yt9NetdaM2BLA",
+    "date": "2026-10-10"
+  },
+  {
+    "platform": "公众号",
+    "title": "下篇 | Sa-Token认证框架，源码分析、简易SSO、SaaS多租户、快速上手！选型对比！",
+    "url": "https://mp.weixin.qq.com/s/3ojk2GQWu7H-CZwegMeDbg",
+    "date": "2026-10-08"
+  },
+  {
+    "platform": "公众号",
+    "title": "上篇 | Sa-Token 轻量认证框架，开箱即用、二级认证、多账号体系，功能齐全实用！",
+    "url": "https://mp.weixin.qq.com/s/pfNk5l6FmDQ4uuzz55Tb1A",
+    "date": "2026-10-07"
+  },
+  {
+    "platform": "公众号",
+    "title": "手写 JWT 三天，Sa-Token 5 行搞定",
+    "url": "https://mp.weixin.qq.com/s/WTKih78e2_5bbutAlgHvIQ",
+    "date": "2026-09-15"
+  },
+  {
+    "platform": "公众号",
+    "title": "多个平台，一套登录：基于 Sa-Token 的第三方登录统一接入实战",
+    "url": "https://mp.weixin.qq.com/s/2S0bt-cO0pUJsyrzO69iyg",
+    "date": "2026-09-14"
+  },
+  {
+    "platform": "公众号",
     "title": "Spring Boot 集成 Sa-Token 实现高可用权限认证：登录鉴权、动态路由权限与接口防重放实战",
     "url": "https://mp.weixin.qq.com/s/xCFV-6boZM3y-IP94-rFBw",
     "date": "2026-09-09"
