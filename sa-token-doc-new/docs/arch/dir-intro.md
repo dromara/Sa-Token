@@ -63,6 +63,7 @@ description: "Sa-Token 仓库目录：core 内核、Spring Boot 2/3/4 依赖隔�
 		├── sa-token-fory-json                    // [插件] Sa-Token 整合 Apache Fory JSON (json序列化插件) 
 		├── sa-token-snack3                       // [插件] Sa-Token 整合 Snack3 (json序列化插件) 
 		├── sa-token-snack4                       // [插件] Sa-Token 整合 Snack4 (json序列化插件) 
+		├── sa-token-hutool-json                  // [插件] Sa-Token 整合 Hutool JSON (json序列化插件) 
 		├── sa-token-hutool-timed-cache           // [插件] Sa-Token 整合 Hutool 缓存组件 Timed-Cache（基于内存） (数据缓存插件) 
 		├── sa-token-caffeine                     // [插件] Sa-Token 整合 Caffeine 缓存组件（基于内存） (数据缓存插件) 
 		├── sa-token-thymeleaf                    // [插件] Sa-Token 整合 Thymeleaf (自定义标签方言) 

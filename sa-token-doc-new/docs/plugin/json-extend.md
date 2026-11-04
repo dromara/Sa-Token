@@ -23,6 +23,7 @@ Sa-Token 在 Session 存储、Redis 缓存等场景下需要对对象进行 JSON
 - **sa-token-fory-json**：集成 [Apache Fory JSON](https://fory.apache.org/docs/json/)（高性能 JSON 编解码，不在 JSON 中写入类型信息，用法同 Fastjson2）。
 - **sa-token-snack3**：集成 Snack3。
 - **sa-token-snack4**：集成 Snack4。
+- **sa-token-hutool-json**：集成 [Hutool JSON](https://hutool.cn/docs/#/json/JSON对象-JSONObject)，适用于已引入 Hutool 工具库的项目。
 
 > 默认 JSON 组件：
 > 
@@ -136,6 +137,18 @@ Gradle 参考：`implementation 'cn.dev33:sa-token-snack3:${sa.top.version}'`
 ```
 Gradle 参考：`implementation 'cn.dev33:sa-token-snack4:${sa.top.version}'`
 
+== Hutool JSON
+
+``` xml
+<!-- Sa-Token 整合 Hutool JSON -->
+<dependency>
+	<groupId>cn.dev33</groupId>
+	<artifactId>sa-token-hutool-json</artifactId>
+	<version>${sa.top.version}</version>
+</dependency>
+```
+Gradle 参考：`implementation 'cn.dev33:sa-token-hutool-json:${sa.top.version}'`
+
 :::
 
 
@@ -158,7 +171,7 @@ Sa-Token 在 **集成 Redis** 等持久化场景下，会把 `SaSession` 以及 
 
 白名单内置常见 JDK 值类型，以及已实现 `SaJsonType` 的框架 Model 等；**你的业务实体类默认不在白名单中**，因此反序列化时会抛出上述异常。
 
-> 说明：`sa-token-jackson3-plain` / `sa-token-fastjson` / `sa-token-fastjson2` / `sa-token-fory-json` / `sa-token-snack3` 默认不在 JSON 中写入类型信息，一般不会出现此报错；业务对象请通过 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)` 指定类型。
+> 说明：`sa-token-jackson3-plain` / `sa-token-fastjson` / `sa-token-fastjson2` / `sa-token-fory-json` / `sa-token-snack3` / `sa-token-hutool-json` 默认不在 JSON 中写入类型信息，一般不会出现此报错；业务对象请通过 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)` 指定类型。
 
 白名单由 [SaJsonStrategy](https://gitee.com/dromara/sa-token/blob/master/sa-token-core/src/main/java/cn/dev33/satoken/strategy/SaJsonStrategy.java) 统一管理。**首次** 构建 JSON 插件（如 `SaJsonTemplateForJackson`）时会完成初始化；初始化之后不可再注册类型。
 
