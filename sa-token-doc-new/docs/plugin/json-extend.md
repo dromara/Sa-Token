@@ -70,12 +70,7 @@ Gradle 参考：`implementation 'cn.dev33:sa-token-jackson3:${sa.top.version}'`
 ```
 Gradle 参考：`implementation 'cn.dev33:sa-token-jackson3-plain:${sa.top.version}'`
 
-> 说明：`sa-token-jackson3` 会在 JSON 中写入 `@class` 类型信息，配合 JSON 全局类型白名单还原对象；`sa-token-jackson3-plain` 不写入类型信息，适用于不需要自动还原原始对象类型的场景。
-> 业务对象请通过 `SaSession.getModel(key, Class)` 或 `jsonToObject(json, Class)` 指定类型，直接读取 Session 中的业务对象时可能得到 Map。
-> 未指定具体数值类型时，JSON 小数会读取为 `BigDecimal`，避免 Session 数据经过 Map 转换时丢失精度。
->
-> 如需在两种插件之间切换，请先验证已有 Session 数据能否正常读取。
-> 建议只选择一种显式 JSON 插件；与其它显式 JSON 插件同时引入时，最终使用的转换器取决于加载顺序。使用自定义 JSON 转换器时，也请确认最终生效的实现。
+> 说明：`sa-token-jackson3` 保留类型信息，适用于需要自动还原对象类型的场景；`sa-token-jackson3-plain` 使用不写入类型信息的纯 JSON。切换插件前，请先验证已有 Session 数据的兼容性。
 
 == Fastjson
 
