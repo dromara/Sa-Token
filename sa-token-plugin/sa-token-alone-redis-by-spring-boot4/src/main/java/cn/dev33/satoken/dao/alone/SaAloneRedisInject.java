@@ -106,10 +106,8 @@ public class SaAloneRedisInject {
 				if (cluster == null || cluster.getNodes() == null) {
 					throw new SaTokenException("Alone-Redis 集群模式需要配置 cluster.nodes");
 				}
-				List<RedisNode> serverList = cluster.getNodes().stream().map(node -> {
-					String[] ipAndPort = node.split(":");
-					return new RedisNode(ipAndPort[0].trim(), Integer.parseInt(ipAndPort[1]));
-				}).collect(Collectors.toList());
+				List<RedisNode> serverList = cluster.getNodes().stream()
+						.map(SaAloneRedisInject::parseRedisNode).collect(Collectors.toList());
 				redisClusterConfig.setClusterNodes(serverList);
 				if (cluster.getMaxRedirects() != null) {
 					redisClusterConfig.setMaxRedirects(cluster.getMaxRedirects());
@@ -128,10 +126,8 @@ public class SaAloneRedisInject {
 				}
 				redisSentinelConfiguration.setMaster(sentinel.getMaster());
 				redisSentinelConfiguration.setSentinelPassword(sentinel.getPassword());
-				List<RedisNode> serverList = sentinel.getNodes().stream().map(node -> {
-					String[] ipAndPort = node.split(":");
-					return new RedisNode(ipAndPort[0].trim(), Integer.parseInt(ipAndPort[1]));
-				}).collect(Collectors.toList());
+				List<RedisNode> serverList = sentinel.getNodes().stream()
+						.map(SaAloneRedisInject::parseRedisNode).collect(Collectors.toList());
 				redisSentinelConfiguration.setSentinels(serverList);
 
 				redisAloneConfig = redisSentinelConfiguration;
@@ -216,6 +212,16 @@ public class SaAloneRedisInject {
 		} catch (Exception e) {
 			throw new SaTokenException("Alone-Redis 注入失败", e);
 		}
+	}
+
+	/** 从最后一个冒号拆分端口，保留 IPv6 地址并去掉主机外的方括号。 */
+	private static RedisNode parseRedisNode(String node) {
+		int separator = node.lastIndexOf(':');
+		String host = node.substring(0, separator).trim();
+		if (host.startsWith("[") && host.endsWith("]")) {
+			host = host.substring(1, host.length() - 1);
+		}
+		return new RedisNode(host, Integer.parseInt(node.substring(separator + 1)));
 	}
 
 	/**
