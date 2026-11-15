@@ -2,6 +2,18 @@
 window.SA_TOKEN_BLOG_COMMUNITY = [
   {
     "platform": "公众号",
+    "title": "别再手搓登录鉴权了！一行代码搞定权限认证，SSO / OAuth2 / 微服务全包",
+    "url": "https://mp.weixin.qq.com/s/Vxe9V6YtW2fslxxM1JYWoA",
+    "date": "2026-11-09"
+  },
+  {
+    "platform": "公众号",
+    "title": "Spring Boot 4 + Sa-Token 跑 Agent：登录态怎么跨线程活着",
+    "url": "https://mp.weixin.qq.com/s/SYENF0RVCF8c3-WRx_mwrA",
+    "date": "2026-11-04"
+  },
+  {
+    "platform": "公众号",
     "title": "Sa-Token为什么没有Shiro的串号问题",
     "url": "https://mp.weixin.qq.com/s/iIF_basTWmsZuVpnIzVizQ",
     "date": "2026-11-02"
