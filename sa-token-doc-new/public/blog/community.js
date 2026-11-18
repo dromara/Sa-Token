@@ -2,6 +2,12 @@
 window.SA_TOKEN_BLOG_COMMUNITY = [
   {
     "platform": "公众号",
+    "title": "一行代码搞定的Java鉴权框架",
+    "url": "https://mp.weixin.qq.com/s/B5NR4L335h4dD8Y9l0HnMQ",
+    "date": "2026-11-15"
+  },
+  {
+    "platform": "公众号",
     "title": "别再手搓登录鉴权了！一行代码搞定权限认证，SSO / OAuth2 / 微服务全包",
     "url": "https://mp.weixin.qq.com/s/Vxe9V6YtW2fslxxM1JYWoA",
     "date": "2026-11-09"
