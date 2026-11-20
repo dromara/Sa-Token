@@ -181,10 +181,8 @@ public class SaAloneRedisInject {
 			if(cfg.getTimeout() != null) {
 				builder.commandTimeout(cfg.getTimeout());
 			}
-			// shutdownTimeout
-			builder.shutdownTimeout(lettuce.getShutdownTimeout());
 			// 创建Factory对象
-			LettuceClientConfiguration clientConfig = builder.poolConfig(poolConfig).build();
+			LettuceClientConfiguration clientConfig = buildLettuceClientConfiguration(cfg, lettuce, poolConfig);
 			LettuceConnectionFactory factory = new LettuceConnectionFactory(redisAloneConfig, clientConfig);
 			factory.afterPropertiesSet();
 
@@ -222,6 +220,24 @@ public class SaAloneRedisInject {
 	 * 骗过编辑器，增加配置文件代码提示
 	 * @return 配置对象
 	 */
+	/**
+	 * 构建 Lettuce 客户端配置（连接池、超时与 SSL）
+	 */
+	static LettuceClientConfiguration buildLettuceClientConfiguration(DataRedisProperties cfg, DataRedisProperties.Lettuce lettuce, GenericObjectPoolConfig poolConfig) {
+		LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+		// timeout
+		if(cfg.getTimeout() != null) {
+			builder.commandTimeout(cfg.getTimeout());
+		}
+		// shutdownTimeout
+		builder.shutdownTimeout(lettuce.getShutdownTimeout());
+		// ssl 配置：TLS-only Redis 服务端会直接关闭明文连接，必须按配置启用 SSL
+		if(cfg.getSsl().isEnabled()) {
+			builder.useSsl();
+		}
+		return builder.poolConfig(poolConfig).build();
+	}
+
 	@ConfigurationProperties(prefix = ALONE_PREFIX)
 	public DataRedisProperties getSaAloneRedisConfig() {
 		return new DataRedisProperties();
