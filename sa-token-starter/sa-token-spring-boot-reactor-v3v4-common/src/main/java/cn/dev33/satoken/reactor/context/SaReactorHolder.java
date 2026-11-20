@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.reactor.context;
 
+import cn.dev33.satoken.context.model.SaTokenContextModelBox;
 import cn.dev33.satoken.fun.SaRetGenericFunction;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -80,17 +81,17 @@ public class SaReactorHolder {
 	}
 
 	/**
-	 * 将 exchange 写入到同步上下文中，并执行一段代码，执行完毕清除上下文
+	 * 将 exchange 写入到同步上下文中，并执行一段代码，执行完毕恢复上下文
 	 *
 	 * @return /
 	 */
 	public static <R> Mono<R> sync(SaRetGenericFunction<R> fun) {
 		return Mono.deferContextual(ctx -> {
+			SaTokenContextModelBox prevBox = SaReactorSyncHolder.bindContext(ctx.get(EXCHANGE_KEY));
 			try {
-				SaReactorSyncHolder.setContext(ctx.get(EXCHANGE_KEY));
 				return Mono.just(fun.run());
 			} finally {
-				SaReactorSyncHolder.clearContext();
+				SaReactorSyncHolder.restoreContext(prevBox);
 			}
 		});
 	}
