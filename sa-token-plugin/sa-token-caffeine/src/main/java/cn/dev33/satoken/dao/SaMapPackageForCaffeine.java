@@ -62,6 +62,11 @@ public class SaMapPackageForCaffeine<V> implements SaMapPackage<V> {
 		cache.put(key, value);
 	}
 
+	@Override
+	public V putIfAbsent(String key, V value) {
+		return cache.asMap().putIfAbsent(key, value);
+	}
+
 	/**
 	 * 删
 	 * @param key /

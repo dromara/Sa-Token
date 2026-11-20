@@ -270,14 +270,11 @@ public class SaSignTemplate {
 			throw new SaSignException("nonce 为空，无效");
 		}
 
-		// 校验此 nonce 是否已被使用过
+		// 以「不存在则写入」的原子操作消费此 nonce，保证并发场景下同一 nonce 也只能通过一次校验
 		String key = splicingNonceSaveKey(nonce);
-		if(SaManager.getSaTokenDao().get(key) != null) {
+		if(! SaManager.getSaTokenDao().setIfAbsent(key, nonce, getSignConfigOrGlobal().getSaveNonceExpire() * 2 + 2)) {
 			throw new SaSignException("此 nonce 已被使用过，不可重复使用：" + nonce);
 		}
-
-		// 校验通过后，将此 nonce 保存在缓存中，保证下次校验无法通过
-		SaManager.getSaTokenDao().set(key, nonce, getSignConfigOrGlobal().getSaveNonceExpire() * 2 + 2);
 	}
 
 	/**

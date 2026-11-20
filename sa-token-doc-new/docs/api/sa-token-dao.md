@@ -21,6 +21,7 @@ SaTokenDao.NOT_VALUE_EXPIRE = -2;   // 常量，表示系统中不存在这个�
 ``` java
 dao.get(key);   // 获取Value，如无返空
 dao.set(key, value, timeout);   // 写入Value，并设定存活时间 (单位: 秒)
+dao.setIfAbsent(key, value, timeout);   // 写入Value，仅当key不存在时生效 (单位: 秒)，官方实现为原子操作，常用于防重放等场景
 dao.update(key, value);   // 更新Value (过期时间不变)
 dao.delete(key);   // 删除Value
 dao.getTimeout(key);   // 获取Value的剩余存活时间 (单位: 秒) 
@@ -33,6 +34,7 @@ dao.updateTimeout(key, timeout);   // 修改Value的剩余存活时间 (单位: 
 dao.getObject(key);   // 获取Object，如无返空
 dao.getObject(key, classType);   // 获取Object，并指定转换类型
 dao.setObject(key, value, timeout);   // 写入Object，并设定存活时间 (单位: 秒)
+dao.setObjectIfAbsent(key, value, timeout);   // 写入Object，仅当key不存在时生效 (单位: 秒)
 dao.updateObject(key, value);   // 更新Object (过期时间不变)
 dao.deleteObject(key);   // 删除Object
 dao.getObjectTimeout(key);   // 获取Object的剩余存活时间 (单位: 秒) 

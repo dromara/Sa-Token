@@ -55,6 +55,11 @@ public class SaTokenDaoDefaultImpl implements SaTokenDaoByStringFollowObject {
 	}
 
 	@Override
+	public boolean setObjectIfAbsent(String key, Object object, long timeout) {
+		return timedCache.setObjectIfAbsent(key, object, timeout);
+	}
+
+	@Override
 	public void updateObject(String key, Object object) {
 		timedCache.updateObject(key, object);
 	}

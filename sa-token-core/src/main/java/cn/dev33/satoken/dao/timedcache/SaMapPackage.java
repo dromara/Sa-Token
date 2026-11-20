@@ -50,6 +50,23 @@ public interface SaMapPackage<V> {
 	void put(String key, V value);
 
 	/**
+	 * 写，仅在 key 不存在时生效
+	 *
+	 * <p> 默认实现退化为 get + put 两步操作，非原子，实现类建议覆写为原子操作。
+	 *
+	 * @param key /
+	 * @param value /
+	 * @return key 原本对应的旧值，不存在时返回 null
+	 */
+	default V putIfAbsent(String key, V value) {
+		V oldValue = get(key);
+		if(oldValue == null) {
+			put(key, value);
+		}
+		return oldValue;
+	}
+
+	/**
 	 * 删
 	 * @param key /
 	 */

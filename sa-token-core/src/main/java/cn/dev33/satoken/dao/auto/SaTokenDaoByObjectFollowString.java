@@ -63,6 +63,12 @@ public interface SaTokenDaoByObjectFollowString extends SaTokenDaoBySessionFollo
 		set(key, jsonString, timeout);
 	}
 
+	@Override
+	default boolean setObjectIfAbsent(String key, Object object, long timeout) {
+		String jsonString = SaManager.getSaSerializerTemplate().objectToString(object);
+		return setIfAbsent(key, jsonString, timeout);
+	}
+
 	/**
 	 * 更新 Object （过期时间不变）
 	 * @param key 键名称 

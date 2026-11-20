@@ -36,6 +36,11 @@ public interface SaTokenDaoByStringFollowObject extends SaTokenDaoBySessionFollo
 	}
 
 	@Override
+	default boolean setIfAbsent(String key, String value, long timeout) {
+		return setObjectIfAbsent(key, value, timeout);
+	}
+
+	@Override
 	default void update(String key, String value) {
 		updateObject(key, value);
 	}

@@ -59,6 +59,30 @@ public interface SaTokenDao {
 	void set(String key, String value, long timeout);
 
 	/**
+	 * 写入 value，仅当该 key 不存在时生效，并设定存活时间（单位: 秒）
+	 *
+	 * <p>
+	 * 		官方实现中此操作为原子操作（如 Redis 的 SET NX EX），常用于 nonce 一次性消费、防重放等场景。
+	 * 		默认实现退化为 get + set 两步操作，非原子，自定义实现类建议覆写为原子操作。
+	 * </p>
+	 *
+	 * @param key 键名称 
+	 * @param value 值 
+	 * @param timeout 数据有效期（值大于0时限时存储，值=-1时永久存储，值=0或小于等于-2时不存储）
+	 * @return 是否写入成功（key 原本不存在且成功写入时返回 true）
+	 */
+	default boolean setIfAbsent(String key, String value, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE) {
+			return false;
+		}
+		if(get(key) != null) {
+			return false;
+		}
+		set(key, value, timeout);
+		return true;
+	}
+
+	/**
 	 * 更新 value （过期时间不变）
 	 * @param key 键名称 
 	 * @param value 值 
@@ -112,6 +136,30 @@ public interface SaTokenDao {
 	 * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于等于-2时不存储）
 	 */
 	void setObject(String key, Object object, long timeout);
+
+	/**
+	 * 写入 Object，仅当该 key 不存在时生效，并设定存活时间 （单位: 秒）
+	 *
+	 * <p>
+	 * 		官方实现中此操作为原子操作，常用于 nonce 一次性消费、防重放等场景。
+	 * 		默认实现退化为 getObject + setObject 两步操作，非原子，自定义实现类建议覆写为原子操作。
+	 * </p>
+	 *
+	 * @param key     键名称
+	 * @param object  值
+	 * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于等于-2时不存储）
+	 * @return 是否写入成功（key 原本不存在且成功写入时返回 true）
+	 */
+	default boolean setObjectIfAbsent(String key, Object object, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE) {
+			return false;
+		}
+		if(getObject(key) != null) {
+			return false;
+		}
+		setObject(key, object, timeout);
+		return true;
+	}
 
 	/**
 	 * 更新 Object （过期时间不变）

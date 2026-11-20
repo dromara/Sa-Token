@@ -207,4 +207,17 @@ public class SaTokenDaoForRedissonTest extends SaTokenDaoStringTestCommon {
 		assertSearchDataShouldReturnEmptyWhenStartBeyondEnd();
 	}
 
+
+	/** setIfAbsent 首次写入应该成功，重复写入应该失败且不覆盖旧值 */
+	@Test
+	void setIfAbsent_shouldSucceedOnlyOnce() {
+		assertSetIfAbsentShouldSucceedOnlyOnce();
+	}
+
+	/** setIfAbsent 的 timeout 语义应该与 set 保持一致 */
+	@Test
+	void setIfAbsent_shouldFollowTimeoutSemantics() {
+		assertSetIfAbsentShouldFollowTimeoutSemantics();
+	}
+
 }

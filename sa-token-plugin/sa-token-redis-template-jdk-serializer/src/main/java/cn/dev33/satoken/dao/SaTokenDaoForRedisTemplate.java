@@ -99,6 +99,22 @@ public class SaTokenDaoForRedisTemplate implements SaTokenDaoByObjectFollowStrin
 	}
 
 	/**
+	 * 写入Value，仅当该 key 不存在时生效 (单位: 秒)，原子操作 (SET NX EX)
+	 */
+	@Override
+	public boolean setIfAbsent(String key, String value, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return false;
+		}
+		String finalKey = wrapKey(key);
+		// 判断是否为永不过期 
+		if(timeout == SaTokenDao.NEVER_EXPIRE) {
+			return Boolean.TRUE.equals(stringRedisTemplate.opsForValue().setIfAbsent(finalKey, value));
+		}
+		return Boolean.TRUE.equals(stringRedisTemplate.opsForValue().setIfAbsent(finalKey, value, timeout, TimeUnit.SECONDS));
+	}
+
+	/**
 	 * 修改指定key-value键值对 (过期时间不变)
 	 *
 	 * <p> 使用 Redis SET KEEPTTL（{@link Expiration#keepTtl()}），要求 Redis 版本 >= 6.0。

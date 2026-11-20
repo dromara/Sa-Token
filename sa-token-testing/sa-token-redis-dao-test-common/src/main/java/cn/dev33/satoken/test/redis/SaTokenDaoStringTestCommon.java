@@ -255,4 +255,25 @@ public abstract class SaTokenDaoStringTestCommon {
 		Assertions.assertTrue(list.isEmpty());
 	}
 
+	/** setIfAbsent 首次写入应该成功，重复写入应该失败且不覆盖旧值 */
+	protected void assertSetIfAbsentShouldSucceedOnlyOnce() {
+		Assertions.assertTrue(dao.setIfAbsent("lock", "a", 60));
+		Assertions.assertEquals("a", dao.get("lock"));
+		Assertions.assertFalse(dao.setIfAbsent("lock", "b", 60));
+		Assertions.assertEquals("a", dao.get("lock"));
+	}
+
+	/** setIfAbsent 的 timeout 语义应该与 set 保持一致 */
+	protected void assertSetIfAbsentShouldFollowTimeoutSemantics() {
+		Assertions.assertFalse(dao.setIfAbsent("avatar", "1.jpg", 0));
+		Assertions.assertNull(dao.get("avatar"));
+
+		Assertions.assertTrue(dao.setIfAbsent("age", "20", SaTokenDao.NEVER_EXPIRE));
+		Assertions.assertEquals(SaTokenDao.NEVER_EXPIRE, dao.getTimeout("age"));
+
+		Assertions.assertTrue(dao.setIfAbsent("name", "zhangsan", 200));
+		long timeout = dao.getTimeout("name");
+		Assertions.assertTrue(timeout > 195 && timeout <= 200);
+	}
+
 }

@@ -60,6 +60,27 @@ public class SaTimedCache {
 		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
 	}
 
+	/**
+	 * 写入 Object，仅当该 key 不存在时生效，并设定存活时间（单位: 秒）
+	 *
+	 * @param key 键名称
+	 * @param object 值
+	 * @param timeout 存活时间（值大于0时限时存储，值=-1时永久存储，值=0或小于等于-2时不存储）
+	 * @return 是否写入成功（key 原本不存在且成功写入时返回 true）
+	 */
+	public boolean setObjectIfAbsent(String key, Object object, long timeout) {
+		if(timeout == 0 || timeout <= SaTokenDao.NOT_VALUE_EXPIRE)  {
+			return false;
+		}
+		// 先做一次惰性过期检查，避免已过期但尚未被清理的旧数据阻塞本次写入
+		clearKeyByTimeout(key);
+		if(dataMap.putIfAbsent(key, object) != null) {
+			return false;
+		}
+		expireMap.put(key, (timeout == SaTokenDao.NEVER_EXPIRE) ? (SaTokenDao.NEVER_EXPIRE) : (System.currentTimeMillis() + timeout * 1000));
+		return true;
+	}
+
 	public void updateObject(String key, Object object) {
 		if(getKeyTimeout(key) == SaTokenDao.NOT_VALUE_EXPIRE) {
 			return;
