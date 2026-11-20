@@ -19,9 +19,11 @@ import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.StopMatchException;
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.strategy.SaAnnotationStrategy;
+import org.springframework.web.context.request.async.WebAsyncUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
@@ -99,12 +101,25 @@ public class SaInterceptor implements HandlerInterceptor {
 	// ----------------- 验证方法 ----------------- 
 
 	/**
-	 * 每次请求之前触发的方法 
+	 * 每次请求之前触发的方法
+	 * <p>
+	 * 注意：异步请求的收尾派发（DispatcherType.ASYNC）在已持有并发结果时会整体跳过本方法，
+	 * 即通过 {@link #setBeforeAuth} / {@link #setAuth} 注入的自定义鉴权逻辑在该次派发中也不会执行；
+	 * 若有关键逻辑需要每次派发都执行，请勿只挂在这里。
 	 */
 	@Override
 	@SuppressWarnings("all")
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+
+		// 异步请求的收尾派发（DispatcherType.ASYNC 且已持有并发结果）不再重复鉴权：
+		// 首次 REQUEST 派发时注解鉴权已经通过，收尾派发时响应通常已提交（如 SSE 长流），
+		// 此时再因 token 失效抛出异常无法转为错误响应，只会被容器中止连接，导致客户端丢掉整条流；
+		// hasConcurrentResult 为 false 的跨资源 ASYNC 派发（如 AsyncContext.dispatch("/other")）仍会正常鉴权，避免越权。
+		if (request.getDispatcherType() == DispatcherType.ASYNC
+				&& WebAsyncUtils.getAsyncManager(request).hasConcurrentResult()) {
+			return true;
+		}
 
 		try {
 			// 前置函数：在注解鉴权之前执行

@@ -24,6 +24,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 
+import javax.servlet.DispatcherType;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -143,6 +144,23 @@ public class SaInterceptorTest {
         boolean pass = interceptor.preHandle(new MockHttpServletRequest(), new MockHttpServletResponse(), new Object());
 
         Assertions.assertTrue(pass);
+    }
+
+    /** ASYNC 派发但未持有并发结果（如 AsyncContext.dispatch("/other") 跨资源派发）时，仍应正常鉴权，避免越权 */
+    @Test
+    public void preHandle_asyncDispatchWithoutConcurrentResult_stillAuth() throws Exception {
+        AtomicReference<Object> auth = new AtomicReference<>();
+        HandlerMethod handlerMethod = handlerMethod("hello");
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/hello");
+        request.setDispatcherType(DispatcherType.ASYNC);
+
+        SaInterceptor interceptor = new SaInterceptor(auth::set).isAnnotation(false);
+
+        boolean pass = interceptor.preHandle(request, new MockHttpServletResponse(), handlerMethod);
+
+        Assertions.assertTrue(pass);
+        Assertions.assertSame(handlerMethod, auth.get());
     }
 
     private static HandlerMethod handlerMethod(String methodName) throws NoSuchMethodException {
