@@ -58,4 +58,13 @@ public class SaRequestForDubbo3Test {
 		Assertions.assertNull(req.forward("/x"));
 	}
 
+	/** Request headers are supplied through Dubbo's provider-side attachments. */
+	@Test
+	public void getHeader_readsServerAttachment() {
+		RpcContext ctx = RpcContext.getServerAttachment();
+		ctx.setAttachment("satoken", "rpc-token");
+		SaRequestForDubbo3 req = new SaRequestForDubbo3(ctx);
+		Assertions.assertEquals("rpc-token", req.getHeader("satoken"));
+	}
+
 }

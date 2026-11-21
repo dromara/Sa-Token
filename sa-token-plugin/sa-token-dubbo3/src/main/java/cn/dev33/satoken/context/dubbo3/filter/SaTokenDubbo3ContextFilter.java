@@ -37,7 +37,7 @@ public class SaTokenDubbo3ContextFilter implements Filter {
 			return invoker.invoke(invocation);
 		}
 		try {
-			SaTokenContextDubbo3Util.setContext(RpcContext.getServiceContext());
+			SaTokenContextDubbo3Util.setContext(RpcContext.getServerAttachment());
 			return invoker.invoke(invocation);
 		} finally {
 			SaTokenContextDubbo3Util.clearContext();

@@ -82,8 +82,8 @@ public class SaRequestForDubbo3 implements SaRequest {
 	 */
 	@Override
 	public String getHeader(String name) {
-		// 不传播 header 参数 
-		return null;
+		// Dubbo attachments carry request metadata between the consumer and provider.
+		return rpcContext.getAttachment(name);
 	}
 
 	/**

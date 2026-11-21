@@ -15,6 +15,7 @@
  */
 package cn.dev33.satoken.context.dubbo3.filter;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.dubbo3.model.SaRequestForDubbo3;
 import cn.dev33.satoken.context.dubbo3.support.Dubbo3TestSupport;
@@ -22,6 +23,7 @@ import cn.dev33.satoken.test.SaTokenTest;
 import org.apache.dubbo.rpc.AsyncRpcResult;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
+import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -65,6 +67,20 @@ public class SaTokenDubbo3ContextFilterTest {
 		Result result = filter.invoke(invoker, Dubbo3TestSupport.invocation());
 		Assertions.assertEquals("ok", result.getValue());
 		Assertions.assertFalse(SaHolder.getContext().isValid());
+	}
+
+	/** Provider context exposes consumer attachments as request headers. */
+	@Test
+	public void noContext_readsProviderAttachmentAsHeader() {
+		String tokenName = SaManager.getConfig().getTokenName();
+		RpcContext.getServerAttachment().setAttachment(tokenName, "rpc-token");
+		Invoker<Object> invoker = Dubbo3TestSupport.invoker(invo -> {
+			Assertions.assertEquals("rpc-token", SaHolder.getRequest().getHeader(tokenName));
+			return AsyncRpcResult.newDefaultAsyncResult("ok", invo);
+		});
+
+		Result result = filter.invoke(invoker, Dubbo3TestSupport.invocation());
+		Assertions.assertEquals("ok", result.getValue());
 	}
 
 	/** Invoker 抛异常时 finally 也必须把上下文清掉 */

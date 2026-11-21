@@ -38,7 +38,7 @@ public class SaTokenDubbo3ConsumerFilter implements Filter {
 		
 		// 追加 Same-Token 参数 
 		if(SaManager.getConfig().getCheckSameToken()) {
-			RpcContext.getServiceContext().setAttachment(SaSameUtil.SAME_TOKEN,SaSameUtil.getToken());
+			RpcContext.getClientAttachment().setAttachment(SaSameUtil.SAME_TOKEN, SaSameUtil.getToken());
 		}
 
 		// 无上下文时只做简单调用，不传递会话 token
@@ -47,7 +47,7 @@ public class SaTokenDubbo3ConsumerFilter implements Filter {
 		}
 		
 		// 1. 调用前，向下传递会话Token
-		RpcContext.getServiceContext().setAttachment(SaTokenConsts.JUST_CREATED, StpUtil.getTokenValueNotCut());
+		RpcContext.getClientAttachment().setAttachment(SaTokenConsts.JUST_CREATED, StpUtil.getTokenValueNotCut());
 
 		// 2. 开始调用 
 		Result invoke = invoker.invoke(invocation);

@@ -50,7 +50,7 @@ public class SaTokenDubbo3ConsumerFilterTest {
 		RpcInvocation invocation = Dubbo3TestSupport.invocation();
 		Result result = filter.invoke(Dubbo3TestSupport.okInvoker("ok"), invocation);
 		Assertions.assertEquals("ok", result.getValue());
-		Assertions.assertNull(RpcContext.getServiceContext().getAttachment(SaTokenConsts.JUST_CREATED));
+		Assertions.assertNull(RpcContext.getClientAttachment().getAttachment(SaTokenConsts.JUST_CREATED));
 	}
 
 	/** 开了 checkSameToken 时，就算没上下文也应该带上 Same-Token */
@@ -59,7 +59,7 @@ public class SaTokenDubbo3ConsumerFilterTest {
 		SaManager.getConfig().setCheckSameToken(true);
 		filter.invoke(Dubbo3TestSupport.okInvoker("ok"), Dubbo3TestSupport.invocation());
 		Assertions.assertEquals(SaSameUtil.getToken(),
-				RpcContext.getServiceContext().getAttachment(SaSameUtil.SAME_TOKEN));
+				RpcContext.getClientAttachment().getAttachment(SaSameUtil.SAME_TOKEN));
 	}
 
 	/** 没开 checkSameToken 时不应该往 RpcContext 塞 Same-Token */
@@ -68,7 +68,7 @@ public class SaTokenDubbo3ConsumerFilterTest {
 		SaManager.getConfig().setCheckSameToken(false);
 		Dubbo3TestSupport.mockContext();
 		filter.invoke(Dubbo3TestSupport.okInvoker("ok"), Dubbo3TestSupport.invocation());
-		Assertions.assertNull(RpcContext.getServiceContext().getAttachment(SaSameUtil.SAME_TOKEN));
+		Assertions.assertNull(RpcContext.getClientAttachment().getAttachment(SaSameUtil.SAME_TOKEN));
 	}
 
 	/** 有上下文且已登录时，应该把当前 token 写到 JUST_CREATED attachment */
@@ -78,7 +78,7 @@ public class SaTokenDubbo3ConsumerFilterTest {
 		StpUtil.login(10001);
 		String token = StpUtil.getTokenValueNotCut();
 		filter.invoke(Dubbo3TestSupport.okInvoker("ok"), Dubbo3TestSupport.invocation());
-		Assertions.assertEquals(token, RpcContext.getServiceContext().getAttachment(SaTokenConsts.JUST_CREATED));
+		Assertions.assertEquals(token, RpcContext.getClientAttachment().getAttachment(SaTokenConsts.JUST_CREATED));
 	}
 
 	/** 对端回传 JUST_CREATED_NOT_PREFIX 时，应该写回当前会话 */
