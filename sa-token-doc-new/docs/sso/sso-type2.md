@@ -159,7 +159,12 @@ implementation 'cn.dev33:sa-token-forest:${sa.top.version}'
 
 同 SSO-Server 一样，Sa-Token 为 SSO-Client 端所需代码也提供了完整的封装，你只需提供一个访问入口，接入 Sa-Token 的方法即可。
 
+如果应用配置了 `server.servlet.context-path`（例如 `/two`），首页链接和登录、单应用注销后的返回地址也需要包含此路径。下面通过 `request.getContextPath()` 动态获取，并对 `back` 参数进行 URL 编码；未配置上下文路径时仍返回应用根目录 `/`。
+
 ``` java
+
+import javax.servlet.http.HttpServletRequest;
+import cn.dev33.satoken.util.SaFoxUtil;
 
 /**
  * Sa-Token-SSO Client端 Controller 
@@ -169,14 +174,16 @@ public class SsoClientController {
 
 	// 首页 
 	@RequestMapping("/")
-	public String index() {
+	public String index(HttpServletRequest request) {
+		String contextPath = request.getContextPath();
+		String back = SaFoxUtil.encodeUrl(contextPath + "/");
 		String str = "<h2>Sa-Token SSO-Client 应用端 (模式二)</h2>" +
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
 					"<p> " +
-						"<a href='/sso/login?back=/'>登录</a> - " +
-						"<a href='/sso/logoutByAlone?back=/'>单应用注销</a> - " +
-						"<a href='/sso/logout?back=self'>全端注销</a> - " +
-						"<a href='/sso/myInfo' target='_blank'>账号资料</a>" +
+						"<a href='" + contextPath + "/sso/login?back=" + back + "'>登录</a> - " +
+						"<a href='" + contextPath + "/sso/logoutByAlone?back=" + back + "'>单应用注销</a> - " +
+						"<a href='" + contextPath + "/sso/logout?back=self'>全端注销</a> - " +
+						"<a href='" + contextPath + "/sso/myInfo' target='_blank'>账号资料</a>" +
 					"</p>";
 		return str;
 	}

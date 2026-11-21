@@ -6,10 +6,13 @@ import cn.dev33.satoken.sso.processor.SaSsoClientProcessor;
 import cn.dev33.satoken.sso.template.SaSsoClientTemplate;
 import cn.dev33.satoken.sso.template.SaSsoClientUtil;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaFoxUtil;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Sa-Token-SSO Client端 Controller 
@@ -20,15 +23,17 @@ public class SsoClientController {
 
 	// 首页 
 	@RequestMapping("/")
-	public String index() {
+	public String index(HttpServletRequest request) {
+		String contextPath = request.getContextPath();
+		String back = SaFoxUtil.encodeUrl(contextPath + "/");
 		String str = "<h2>Sa-Token SSO-Client 应用端 (模式二)</h2>" +
 					"<p>当前会话是否登录：" + StpUtil.isLogin() + " (" + StpUtil.getLoginId("") + ")</p>" +
 					"<p> " +
-						"<a href='/sso/login?back=/'>登录</a> - " +
-						"<a href='/sso/logoutByAlone?back=/'>单应用注销</a> - " +
-						"<a href='/sso/logout?back=self&singleDeviceIdLogout=true'>单浏览器注销</a> - " +
-						"<a href='/sso/logout?back=self'>全端注销</a> - " +
-						"<a href='/sso/myInfo' target='_blank'>账号资料</a>" +
+						"<a href='" + contextPath + "/sso/login?back=" + back + "'>登录</a> - " +
+						"<a href='" + contextPath + "/sso/logoutByAlone?back=" + back + "'>单应用注销</a> - " +
+						"<a href='" + contextPath + "/sso/logout?back=self&singleDeviceIdLogout=true'>单浏览器注销</a> - " +
+						"<a href='" + contextPath + "/sso/logout?back=self'>全端注销</a> - " +
+						"<a href='" + contextPath + "/sso/myInfo' target='_blank'>账号资料</a>" +
 					"</p>";
 		return str;
 	}
