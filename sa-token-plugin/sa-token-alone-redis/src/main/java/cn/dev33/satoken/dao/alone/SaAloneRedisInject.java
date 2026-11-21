@@ -112,10 +112,8 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				redisClusterConfig.setPassword(RedisPassword.of(cfg.getPassword()));
 
 				RedisProperties.Cluster cluster = cfg.getCluster();
-				List<RedisNode> serverList = cluster.getNodes().stream().map(node -> {
-					String[] ipAndPort = node.split(":");
-					return new RedisNode(ipAndPort[0].trim(), Integer.parseInt(ipAndPort[1]));
-				}).collect(Collectors.toList());
+				List<RedisNode> serverList = cluster.getNodes().stream()
+						.map(SaAloneRedisInject::parseRedisNode).collect(Collectors.toList());
 				redisClusterConfig.setClusterNodes(serverList);
 				redisClusterConfig.setMaxRedirects(cluster.getMaxRedirects());
 
@@ -135,10 +133,8 @@ public class SaAloneRedisInject implements EnvironmentAware{
 				RedisProperties.Sentinel sentinel = cfg.getSentinel();
 				redisSentinelConfiguration.setMaster(sentinel.getMaster());
 				redisSentinelConfiguration.setSentinelPassword(sentinel.getPassword());
-				List<RedisNode> serverList = sentinel.getNodes().stream().map(node -> {
-					String[] ipAndPort = node.split(":");
-					return new RedisNode(ipAndPort[0].trim(), Integer.parseInt(ipAndPort[1]));
-				}).collect(Collectors.toList());
+				List<RedisNode> serverList = sentinel.getNodes().stream()
+						.map(SaAloneRedisInject::parseRedisNode).collect(Collectors.toList());
 				redisSentinelConfiguration.setSentinels(serverList);
 
 				redisAloneConfig = redisSentinelConfiguration;
@@ -238,6 +234,16 @@ public class SaAloneRedisInject implements EnvironmentAware{
 		}
 	}
 	
+	/** 从最后一个冒号拆分端口，保留 IPv6 地址并去掉主机外的方括号。 */
+	private static RedisNode parseRedisNode(String node) {
+		int separator = node.lastIndexOf(':');
+		String host = node.substring(0, separator).trim();
+		if (host.startsWith("[") && host.endsWith("]")) {
+			host = host.substring(1, host.length() - 1);
+		}
+		return new RedisNode(host, Integer.parseInt(node.substring(separator + 1)));
+	}
+
 	/**
 	 * 骗过编辑器，增加配置文件代码提示 
 	 * @return 配置对象
