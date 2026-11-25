@@ -27,6 +27,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Boot 3 Starter 冒烟测试：验证容器能启动，且 Jakarta Servlet 自动配置 Bean 已注册。
  */
@@ -59,6 +64,14 @@ public class Boot3StarterSmokeTest {
         boolean contextFilterRegistered = applicationContext.getBeansOfType(FilterRegistrationBean.class).values().stream()
                 .anyMatch(bean -> bean.getFilter() instanceof SaTokenContextFilterForJakartaServlet);
         Assertions.assertTrue(contextFilterRegistered, "SaTokenContextFilterForJakartaServlet 应该通过 FilterRegistrationBean 注册");
+    }
+
+    /** 运行时类路径只应包含容器自带的 Servlet API，不应被 sa-token-jakarta-servlet 传递带入重复的 jakarta.servlet-api */
+    @Test
+    public void servletApi_shouldNotLeakDuplicateHttpServletClass() throws IOException {
+        List<URL> resources = Collections.list(getClass().getClassLoader().getResources("jakarta/servlet/http/HttpServlet.class"));
+        Assertions.assertEquals(1, resources.size(), "HttpServlet.class 应仅由容器提供，实际发现: " + resources);
+        Assertions.assertFalse(resources.get(0).toString().contains("jakarta.servlet-api"), "不应加载 jakarta.servlet-api jar: " + resources);
     }
 
 }
