@@ -27,11 +27,12 @@
             <artifactId>sa-token-core</artifactId>
         </dependency>
         
-        <!-- Servlet API -->
+        <!-- Servlet API (optional) -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-		</dependency>
+            <optional>true</optional>
+        </dependency>
 
 		<!-- 测试 -->
 		<dependency>
